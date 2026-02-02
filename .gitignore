@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Temp files
+*.tmp
+~$*
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Build outputs (keep generated docs for reference)
+*.log
+
+# Large binary files we don't need to track
+siteboon-ui/node_modules/

@@ -1,0 +1,291 @@
+% G3DT Sample Geotechnical Report
+% Based on 3001631 (Rubí) - Simple structure
+% Compile with: xelatex sample-report.tex
+
+\documentclass{g3dt-report}
+
+\begin{document}
+
+% ============================================================================
+% COVER PAGE
+% ============================================================================
+
+\makecover
+    {------}                                          % Client (anonymized)
+    {3001631}                                         % Expedient
+    {21/11/25}                                        % Date
+    {ESTUDI GEOLÒGIC / GEOTÈCNIC\\
+     PER A LA CONSTRUCCIÓ D'UN HABITATGE\\
+     UNIFAMILIAR MODULAR AÏLLAT}                      % Project description
+    {RUBÍ}                                            % Location (for header)
+
+% ============================================================================
+% TABLE OF CONTENTS
+% ============================================================================
+
+\tableofcontents
+\newpage
+
+% ============================================================================
+% 1. PRESENTACIÓ DE L'ESTUDI
+% ============================================================================
+
+\section{PRESENTACIÓ DE L'ESTUDI}
+
+A petició de: \textbf{------}
+
+G3 DT, S.L. ha realitzat el següent informe geotècnic segons les normes i recomanacions establertes en el DB SE-C Cimientos fetes pel ``Código Técnico de la Edificación'' (CTE), en vigor el 29 de març del 2006.
+
+\subsection{ANTECEDENTS}
+
+Segons ens indica el sol·licitant, es vol valorar les característiques geològiques i geotècniques d'una zona on es preveu la construcció d'un habitatge unifamiliar aïllat modular.
+
+L'edificació que es preveu construir presentarà les següents característiques:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\tableheader{Paràmetre} & \tableheader{Valor} \\
+\midrule
+Nº de plantes per habitatge & PB + Porxo \\
+Superfície de la parcel·la (m²) & 951 \\
+Superfície construïda total (m²) & 92 \\
+\bottomrule
+\end{tabular}
+\caption{Resum de les principals dades de l'edificació a construir.}
+\end{table}
+
+L'habitatge que es preveu construir es situarà a una parcel·la localitzada al Carrer de la Miranda nº 39, (PARC. 6-105) Rubí, Barcelona.
+
+% Figure placeholder
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.8\textwidth]{figures/figura1-situacio.png}
+\fbox{\parbox{0.8\textwidth}{\centering\vspace{3cm}[Figura 1: Situació zona d'estudi]\vspace{3cm}}}
+\caption{Situació de la zona d'estudi, amb color taronja. (Mapa topogràfic i ortofoto, ICGC 2025).}
+\end{figure}
+
+\subsection{CLASSIFICACIÓ DE L'OBRA SEGONS EL CTE}
+
+A partir de les dades exposades pel client, tant tipus d'edificació com tipus de l'obra, un tècnic qualificat en la realització de l'estudi geotècnic ha realitzat la següent classificació, segons els criteris que marca el DB SE-C del CTE vigent.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\tableheader{Classificació} & \tableheader{Valor} \\
+\midrule
+Tipus d'edificació considerada & C-0 \\
+Tipus de sòl considerat & T-1 \\
+\bottomrule
+\end{tabular}
+\caption{Classificació de la construcció segons DB-SE-C del CTE.}
+\end{table}
+
+\subsection{OBJECTIUS}
+
+Per la realització del present estudi, s'ha dut a terme una campanya de reconeixement del terreny, tenint en compte que els objectius de l'estudi són:
+
+\begin{itemize}
+    \item Estudi de l'entorn geològic de l'obra.
+    \item Reconeixement, caracterització i potència dels materials del subsòl de la zona, des del punt de vista geològic i geotècnic, i tenint en compte les recomanacions del CTE.
+    \item Cota del nivell freàtic, quan es detecti dins de les cotes assolides per la campanya.
+    \item Determinació de les càrregues admissibles dels materials sotmesos a càrrega, i recomanacions sobre solucions de fonamentació.
+    \item Estimació dels assentaments per a les càrregues admissibles calculades.
+    \item Recomanacions sobre condicionants geològics i geotècnics que puguin afectar a l'obra.
+\end{itemize}
+
+% ============================================================================
+% 2. TREBALLS DE CAMP
+% ============================================================================
+
+\section{TREBALLS DE CAMP}
+
+\subsection{TIPUS D'OBRA I RECONEIXEMENT DE CAMP}
+
+Tal com s'ha indicat en l'apartat 1.2, i seguint les recomanacions que marca el document DB SE-C del CTE, l'obra es defineix com a tipus \textbf{C-0}, que es correspon amb una construcció de menys de 4 plantes i superfície construïda inferior a 300 m².
+
+\subsection{SITUACIÓ DELS PUNTS DE RECONEIXEMENT}
+
+Els treballs de camp s'han centrat en la zona on s'ubicarà l'edificació prevista, així com les seves zones d'afecció.
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.8\textwidth}{\centering\vspace{3cm}[Figura 2: Emplaçament assaigs]\vspace{3cm}}}
+\caption{Emplaçament dels assaigs realitzats.}
+\end{figure}
+
+\subsection{RELACIÓ DE TREBALLS}
+
+A continuació s'enumeren els treballs de camp que s'han dut a terme per la realització del present estudi:
+
+\begin{itemize}
+    \item 3 penetròmetres DPSH (Norma UNE-EN ISO 22476-2)
+\end{itemize}
+
+\subsection{METODOLOGIA I DESCRIPCIÓ DELS TREBALLS DE CAMP}
+
+\subsubsection{PENETRÒMETRE DINÀMIC SUPERPESANT DPSH}
+
+L'assaig de penetració dinàmica és un tipus d'assaig de penetració contínua que permet conèixer la resistència del sòl que es va travessant.
+
+L'equip utilitzat correspon al DPSH normalitzat pel comitè europeu de normalització, consistent en una maça de 63,5 kg de pes, una alçada de caiguda lliure de 76 cm i una punta cònica de 90º d'angle i 50 mm de diàmetre.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lllll}
+\toprule
+\tableheader{Assaig} & \tableheader{X (ETRS89)} & \tableheader{Y (ETRS89)} & \tableheader{Cota (m.s.n.m.)} & \tableheader{Prof. (m)} \\
+\midrule
+P-1 & 420823 & 4594126 & 212.5 & 5.40 \\
+P-2 & 420831 & 4594132 & 212.3 & 3.40 \\
+P-3 & 420838 & 4594125 & 212.4 & 3.80 \\
+\bottomrule
+\end{tabular}
+\caption{Relació d'assaigs de penetració dinàmica DPSH realitzats.}
+\end{table}
+
+% ============================================================================
+% 3. DESCRIPCIÓ GEOLÒGICA I GEOTÈCNICA
+% ============================================================================
+
+\section{DESCRIPCIÓ GEOLÒGICA I GEOTÈCNICA}
+
+\subsection{GEOLOGIA REGIONAL}
+
+La zona d'estudi es situa geològicament a la Depressió del Vallès, una fossa tectònica que separa la Serralada Prelitoral de la Serralada Litoral.
+
+Els materials que afloren a la zona corresponen principalment a dipòsits quaternaris de naturalesa al·luvial i col·luvial, disposats sobre un substrat miocè.
+
+\subsection{GEOLOGIA LOCAL}
+
+Segons el mapa geològic 1:50.000 de l'ICGC, a la zona d'estudi afloren materials quaternaris del Pleistocè superior, corresponents a dipòsits al·luvials antics formats per graves, sorres i llims.
+
+\subsection{CARACTERITZACIÓ GEOTÈCNICA}
+
+A partir dels resultats obtinguts en la campanya de reconeixement del terreny, s'estableix la següent caracterització geotècnica:
+
+\textbf{Unitat Geotècnica 1: Graves i sorres amb matriu llimosa}
+
+Material granular de coloració marró, format per graves i sorres amb matriu llimosa. Presenta una compacitat densa a molt densa segons els valors de N\textsubscript{20} obtinguts.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\tableheader{Paràmetre} & \tableheader{Valor} \\
+\midrule
+Classificació USCS & GP-GM \\
+Densitat aparent ($\gamma$) & 20 kN/m³ \\
+Angle de fricció interna ($\phi'$) & 32-35º \\
+Cohesió efectiva (c') & 0 kPa \\
+\bottomrule
+\end{tabular}
+\caption{Paràmetres geotècnics adoptats per la Unitat Geotècnica 1.}
+\end{table}
+
+\subsection{NIVELL FREÀTIC}
+
+Durant la realització dels treballs de camp no s'ha detectat la presència de nivell freàtic dins de les cotes assolides pels assaigs de penetració.
+
+\subsection{AGRESSIVITAT DEL TERRENY}
+
+No s'han realitzat assaigs per determinar l'agressivitat química del terreny. Es recomana considerar una classe d'exposició IIa segons l'EHE-08 per defecte.
+
+\subsection{SISMICITAT}
+
+Segons la Norma de Construcció Sismorresistent NCSE-02, la zona d'estudi presenta una acceleració sísmica bàsica a\textsubscript{b} = 0,04g, classificant-se com a zona de sismicitat baixa.
+
+\subsection{RADÓ}
+
+Segons el mapa de zonificació del potencial de radó d'Espanya, la zona d'estudi es classifica com a \textbf{Zona 1} (potencial baix), per la qual cosa no es requereixen mesures de protecció específiques segons el CTE HS-6.
+
+% ============================================================================
+% 4. CONCLUSIONS
+% ============================================================================
+
+\section{CONCLUSIONS}
+
+\subsection{RESUM I VALORACIÓ}
+
+A partir dels treballs realitzats i de l'anàlisi de les dades obtingudes, es conclou que:
+
+\begin{enumerate}
+    \item El terreny investigat presenta una successió estratigràfica formada per dipòsits quaternaris de naturalesa granular (graves i sorres amb matriu llimosa).
+    \item Els materials presents mostren una compacitat densa a molt densa, amb valors de N\textsubscript{20} generalment superiors a 40 cops.
+    \item No s'ha detectat nivell freàtic dins de les cotes assolides.
+    \item Les condicions geotècniques són favorables per a l'execució de l'obra projectada.
+\end{enumerate}
+
+\subsection{CONDICIONS DE L'ESTUDI}
+
+Les conclusions d'aquest estudi són vàlides per a les condicions del terreny observades durant la campanya de reconeixement.
+
+\subsection{FONAMENTACIÓ}
+
+\subsubsection{Tipus de fonamentació}
+
+Es recomana una fonamentació de tipus \textbf{superficial} mitjançant sabates aïllades o corregudes.
+
+\subsubsection{Cota de fonamentació}
+
+La cota mínima de fonamentació es fixa a \textbf{-0.80 m} respecte la cota de terreny actual.
+
+\subsubsection{Tensió admissible}
+
+La tensió admissible del terreny es fixa en:
+
+\begin{center}
+\textbf{$\sigma_{adm}$ = 3.50 kg/cm² (350 kPa)}
+\end{center}
+
+Aquesta tensió és vàlida per a sabates amb ample mínim B $\geq$ 0.60 m.
+
+\subsubsection{Assentaments}
+
+Els assentaments esperats per a les càrregues admissibles calculades seran inferiors a 25 mm, valor acceptable per a l'estructura projectada.
+
+% ============================================================================
+% SIGNATURE PAGE
+% ============================================================================
+
+\signaturepage
+    {Els Omells de Na Gaia}
+    {novembre del 2025}
+    {G3 DT S.L.}
+
+% ============================================================================
+% ANNEXES (placeholders)
+% ============================================================================
+
+\appendix
+
+\section*{ANNEXES}
+\addcontentsline{toc}{section}{ANNEXES}
+
+\subsection*{ANNEX 1: Base de càlcul}
+\addcontentsline{toc}{subsection}{ANNEX 1: Base de càlcul}
+[Contingut de l'annex 1]
+
+\subsection*{ANNEX 2: Registre d'assaigs mecànics}
+\addcontentsline{toc}{subsection}{ANNEX 2: Registre d'assaigs mecànics}
+[Contingut de l'annex 2]
+
+\subsection*{ANNEX 3: Esquema situació assaigs}
+\addcontentsline{toc}{subsection}{ANNEX 3: Esquema situació assaigs}
+[Contingut de l'annex 3]
+
+\subsection*{ANNEX 4: Tall de correlació}
+\addcontentsline{toc}{subsection}{ANNEX 4: Tall de correlació}
+[Contingut de l'annex 4]
+
+\subsection*{ANNEX 5: Fotografies}
+\addcontentsline{toc}{subsection}{ANNEX 5: Fotografies}
+[Contingut de l'annex 5]
+
+\subsection*{ANNEX 6: Actes d'assaig de laboratori}
+\addcontentsline{toc}{subsection}{ANNEX 6: Actes d'assaig de laboratori}
+[Contingut de l'annex 6]
+
+\end{document}

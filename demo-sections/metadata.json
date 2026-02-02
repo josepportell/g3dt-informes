@@ -1,0 +1,88 @@
+{
+  "sample_project": {
+    "client": "SRA. JOANA MARTINEZ",
+    "expedient": "3001631",
+    "ubicacio": "RUBÍ",
+    "comarca": "Vallès Occidental",
+    "provincia": "Barcelona",
+    "adreca": "Carrer de la Miranda nº 39, (PARC. 6-105)",
+    "tipus_obra": "habitatge unifamiliar aïllat modular",
+    "plantes": "PB + Porxo",
+    "superficie_parcela": "951 m²",
+    "superficie_construida": "92 m²",
+    "cte_edificacio": "C-0",
+    "cte_sol": "T-1",
+    "data_camp": "14 de novembre de 2025",
+    "data_signatura": "17 de desembre de 2025",
+    "lloc_signatura": "Els Omells de Na Gaia"
+  },
+  "demo_scenarios": [
+    {
+      "id": "balaguer",
+      "client": "PROMOTORA PONENT SL",
+      "expedient": "4001700",
+      "ubicacio": "BALAGUER",
+      "comarca": "Noguera",
+      "provincia": "Lleida",
+      "adreca": "Carrer Major, 45",
+      "tipus_obra": "habitatge unifamiliar aïllat",
+      "plantes": "PB + 1",
+      "superficie_parcela": "600 m²",
+      "superficie_construida": "180 m²",
+      "cte_edificacio": "C-0",
+      "cte_sol": "T-1"
+    },
+    {
+      "id": "tarrega",
+      "client": "CONSTRUCCIONS XYZ SL",
+      "expedient": "4001701",
+      "ubicacio": "TÀRREGA",
+      "comarca": "Urgell",
+      "provincia": "Lleida",
+      "adreca": "Polígon Industrial El Segre, Parcel·la 15",
+      "tipus_obra": "nau industrial",
+      "plantes": "PB",
+      "superficie_parcela": "2500 m²",
+      "superficie_construida": "1800 m²",
+      "cte_edificacio": "C-1",
+      "cte_sol": "T-1"
+    },
+    {
+      "id": "mollerussa",
+      "client": "AJUNTAMENT DE MOLLERUSSA",
+      "expedient": "4001702",
+      "ubicacio": "MOLLERUSSA",
+      "comarca": "Pla d'Urgell",
+      "provincia": "Lleida",
+      "adreca": "Plaça de l'Ajuntament, s/n",
+      "tipus_obra": "equipament públic",
+      "plantes": "PB + 2",
+      "superficie_parcela": "1200 m²",
+      "superficie_construida": "800 m²",
+      "cte_edificacio": "C-1",
+      "cte_sol": "T-2"
+    }
+  ],
+  "sections": [
+    {
+      "file": "01-antecedents.md",
+      "name": "Presentació de l'Estudi",
+      "description": "Introducció, client, ubicació, classificació CTE, objectius"
+    },
+    {
+      "file": "02-treballs-camp.md",
+      "name": "Treballs de Camp",
+      "description": "Descripció zona, assaigs in-situ, resultats DPSH"
+    },
+    {
+      "file": "03-descripcio.md",
+      "name": "Descripció Geològica i Geotècnica",
+      "description": "Marc geològic, caracterització materials, hidrogeologia"
+    },
+    {
+      "file": "04-conclusions.md",
+      "name": "Conclusions",
+      "description": "Geologia, hidrogeologia, recomanacions fonamentació"
+    }
+  ]
+}

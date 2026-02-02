@@ -1,0 +1,461 @@
+Índex
+
+1 . PRESENTACIÓ DE L’ESTUDI	2
+
+1.1. ANTECEDENTS	2
+
+1.2. CLASSIFICACIÓ DE L’OBRA SEGONS EL CTE	3
+
+1.3. OBJECTIUS	3
+
+2. TREBALLS DE CAMP	4
+
+2.1. DESCRIPCIÓ DE LA ZONA D’ESTUDI	4
+
+2.1.1. Descripció de les parcel·les adjacents	4
+
+2.1.2. Descripció del solar	4
+
+2.2. RECONEIXEMENT DEL TERRENY	5
+
+2.3. JUSTIFICACIÓ DE COMPLIMENT DE CTE	6
+
+2.4. DESCRIPCIÓ DELS ASSAIGS IN SITU	7
+
+2.4.1. Assaigs de penetració tipus “DPSH”	7
+
+2.4.2. Assaig tipus S.P.T. (“Standard Penetration Test”)	8
+
+2.4.3. Resum dels assaigs in-situ realitzats	9
+
+2.5. ASSAIGS DE LABORATORI	9
+
+3. DESCRIPCIÓ GEOLÒGICA I GEOTÈCNICA	10
+
+3.1. MARC GEOLÒGIC	10
+
+3.2. CARACTERITZACIÓ DELS MATERIALS	11
+
+3.2.1.Nivell 1	12
+
+3.3. HIDROLOGIA I HIDROGEOLOGIA	13
+
+3.3.1. Hidrogeologia superficial	13
+
+3.3.2. Hidrogeologia subterrània i geotèrmia	13
+
+3.3.3. Permeabilitat dels materials	13
+
+3.4. AGRESSIVITAT DEL MEDI	14
+
+3.5. EXCAVABILITAT	14
+
+3.6. ACCELERACIÓ SISMICA DE REFERÈNCIA	15
+
+3.7. EXPOSICIÓ AL GAS RADÓ	16
+
+4. CONCLUSIONS	18
+
+4.1. GEOLOGIA	18
+
+4.2. HIDROGEOLOGIA I AGRESSIVITAT	19
+
+4.3. FONAMENTACIÓ	19
+
+Annexes
+
+Base de càlcul
+
+Registre assaigs mecànics
+
+Esquema situació assaigs
+
+Tall de correlació
+
+Fotografies
+
+Actes d’assaig de laboratori
+
+# 1 . PRESENTACIÓ DE L’ESTUDI
+
+A petició de:
+
+SRA. JOANA MARTINEZ
+
+G3 DT, S.L. ha realitzat el següent informe geotècnic segons les instruccions del DB SE-C Cimientos fetes pel “Código Técnico de la Edificación” CTE, que entrà en vigor el 29 de març del 2006.
+
+## 1.1. ANTECEDENTS
+
+Segons ens indica el sol·licitant, la SRA. JOANA MARTINEZ, es vol valorar les característiques geològiques i geotècniques d’una zona on es preveu la construcció d’un habitatge unifamiliar aïllat modular.
+
+L’edificació que es preveu construir presentarà les següents característiques:
+
+Taula 1. Resum de les principals dades de l’edificació a construir.
+
+L’habitatge que es preveu construir es situarà a una parcel·la ubicada al carrer de la Miranda nº 39, (PARC. 6-105) Rubí, Barcelona.
+
+Figura 1. Situació de la zona d’estudi, amb color taronja. (mapes topogràfic i ortofoto, ICGC 2025).
+
+## 1.2. CLASSIFICACIÓ DE L’OBRA SEGONS EL CTE
+
+A partir de les dades exposades pel client, tant tipus d’edificació com localització de l’obra, un tècnic qualificat en la realització de l’estudi realitza la següent classificació, segons els criteris que marca el DB SE-C del citat CTE:
+
+Taula 2. Classificació de la construcció segons DB-SE-C del CTE.
+
+## 1.3. OBJECTIUS
+
+Per la realització del present estudi, s’ha dut a terme una campanya de camp tenint en compte que els objectius de l’estudi són:
+
+Estudi de l’entorn geològic de l’obra.
+
+Reconeixement, caracterització i potència dels materials del subsòl de la zona, des del punt de vista geològic i geotècnic, i tenint en compte les recomanacions del CTE.
+
+Cota del nivell freàtic, quan es detecti dins de les cotes assajades.
+
+Determinació de les càrregues admissibles dels materials sota diferents solucions de fonamentació.
+
+Estimació dels assentaments per a les càrregues admissibles exposades.
+
+Recomanacions sobre condicionants geològics i geotècnics que puguin afectar a l’obra.
+
+# 2. TREBALLS DE CAMP
+
+El dia 14 de novembre de 2025, es va visitar l’obra per tal de:
+
+Realitzar una inspecció geològica de la zona, reconeixent el tipus de terreny.
+
+Dissenyar la campanya de camp.
+
+Comprovar l’accessibilitat de maquinària a l’interior del solar.
+
+Localitzar els punts on es realitzaran els assaigs.
+
+## 2.1. DESCRIPCIÓ DE LA ZONA D’ESTUDI
+
+### 2.1.1. Descripció de les parcel·les adjacents
+
+La parcel·la objecte d’estudi es situa al sud-oest del municipi de Rubí, pren una morfologia rectangular, i limita:
+
+Per la part nord, amb parcel·les sense edificacions i amb vegetació de petita alçada i arbres.
+
+Per la part sud, amb el carrer de la Miranda
+
+Finalment, Per la part est i oest, amb construccions de característiques similars.
+
+### 2.1.2. Descripció del solar
+
+El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.
+
+El solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera baixada, de sudoest a nord-est, es troba una diferència de cota d'uns 13.20 metres, des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m. respectivament, tot i que la zona de treball es mostra totalment plana. La pendent comença la zona posterior (a la meitat del fons ).
+
+En solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.
+
+Destacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.
+
+Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).
+
+## 2.2. RECONEIXEMENT DEL TERRENY
+
+La campanya de camp, que s’ha realitzat el dia 14 de novembre de 2025, ha consistit en la realització de:
+
+3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).
+
+1 assaig SPT amb recuperació de mostra (veure annex “Registre assaigs mecànics”).
+
+Observacions de camp realitzades pel tècnic de l’empresa desplaçat a l’obra.
+
+Reportatge fotogràfic (veure annex “Fotografies”).
+
+Els assaigs in situ han estat realitzats per TPS PROSPECCIÓ DEL SUBSÒL SL, laboratori d’assaigs per al control de qualitat de l’edificació.
+
+Figura 2. Situació de l’estructura projectada i els assaigs realitzats.
+
+## 2.3. JUSTIFICACIÓ DE COMPLIMENT DE CTE
+
+A partir de la campanya realitzada i la classificació de l’obra que s’obté segons l’apartat 1.2 del present estudi, es compleixen els mínims establerts pel DB SE-C del Código Técnico de la Edificación pel que fa referència al nombre de punts d’investigació realitzats, així com a les profunditats assolides en els mateixos i distància mínima entre ells.
+
+Les cales recomanades per part del CTE, s’intercanvien per la realització d’un assaig SPT amb recuperació de mostra, que permet la descripció de la columna de materials que conformen el subsòl del solar.
+
+## 2.4. DESCRIPCIÓ DELS ASSAIGS IN SITU
+
+### 2.4.1. Assaigs de penetració tipus “DPSH”
+
+L’assaig consisteix a clavar en el terreny una barnilla de secció circular mitjançant la caiguda d’una massa, per penetrar en intervals de 20 cm l’esmentada barilla. El comptatge del número de cops ens donarà un valor que anomenarem N20 , amb el que podrem obtenir la resistència a la penetració dinàmica del terreny en punta (ja que la punta és d’un diàmetre superior que la barnilla i no es produeix resistència per fuste), així com la compacitat del terreny granular.
+
+En el cas que el nombre de cops necessaris per travessar els 20 cm, sigui superior a 100, o quan es superin 3 intervals consecutius de 75 cops considerarem rebuig a la penetració i s’abandonarà l’assaig.
+
+Característiques de l’assaig:
+
+Alçada de caiguda del Pes: 75 cm
+
+Diàmetre de la punta de penetració:51 mm
+
+Interval de penetració: 20 cm
+
+Pes : 63.5 Kg
+
+En aquest cas s’utilitza la màquina de perforació model Rolatec ML-76A.
+
+Fotografia 2. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica DPSH.
+
+### 2.4.2. Assaig tipus S.P.T. (“Standard Penetration Test”)
+
+Per realitzar aquest assaig s’ha d’avançar primer amb un assaig normal fins arribar a la cota on interessa realitzar el test. En aquest punt s’introdueix la cullera normalitzada* fins el fons i es colpeja amb la massa. No es conten els cops necessaris per introduir els primers 15 centímetres, ja que se suposa que el terreny en el fons del sondeig pot estar alterat. Si que es conten els cops realitzats per introduir la cullera els següents 45 centímetres en trams de 15. La suma dels colpeigs dels dos trams centrals és el “número de penetració estàndard”, NSPT o N30. En el cas que el darrer dels trams tingui un valor de colpeig menor que el dels dos trams centrals, se sumaran els dos valors més petits dels tres darrers trams enregistrats.
+
+Figura 3. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez).
+
+Dins la cullera es recupera la mostra. Aquesta mostra es considera remoldejada ja que el gruix de les parets del tub és molt gran en relació al diàmetre interior. De tota manera, permet conèixer la composició granulomètrica dels materials
+
+### 2.4.3. Resum dels assaigs in-situ realitzats
+
+Els assaigs de camp realitzats es sintetitzen en el quadre que s’exposa a continuació:
+
+Taula 3 i 4. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.
+
+Les cotes d’inici dels assaigs s’han referit a la superfície actual del solar segons les coordenades del plànol topogràfic consultat a l’ICGC, i correlacionat amb les observacions de camp pel tècnic desplaçat a l’obra. Les cotes podrien variar lleugerament donat que no es realitza un replanteig topogràfic dels punts realitzats.
+
+## 2.5. ASSAIGS DE LABORATORI
+
+Els assaigs de laboratori han estat realitzats per TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG), laboratori d’assaigs per al control de qualitat de l’edificació.
+
+Donada la naturalesa dels materials s’han sol·licitat els següents assaigs:
+
+Taula 5. Resum dels assaigs de laboratori realitzats.
+
+# 3. DESCRIPCIÓ GEOLÒGICA I GEOTÈCNICA
+
+## 3.1. MARC GEOLÒGIC
+
+En primer lloc, s' ha procedit a la consulta de les diferents cartografies geològiques existents sobre la zona:
+
+Hoja 392: Sabadell, del Mapa geológico de España, 1:50.000 del IGME, 1998.
+
+Els estudis s’han realitzat sobre rocam d’edat Miocè que formen part de l’anomenada Fossa del Vallès-Penedès, en el seu sector Oriental, o Fossa del Vallès.
+
+Aquesta fossa tectònica, que separa les serralades Litoral i Prelitoral de , es formà a inicis del Miocè, dins d’una etapa de rifting relacionat amb la creació d’una conca marina entre Catalunya i Balears, dins el context de
+
+A principis del Miocè, en aquesta fossa, es produí l’enfonsament de materials paleozoics i mesozoics de l’antic Massís Catalano-Balear. Aquests materials enfonsats constituïren el sòcol sobre el qual es diposità la potent sèrie miocena.
+
+La sèrie estratigràfica miocena s’inicia amb la sedimentació de conglomerats i gresos continentals producte de ventalls al·luvials, durant el Burdigalià inferior.
+
+Al damunt s’observen dipòsits de lutites vermelles i grises i guixos, durant el Burdigalià superior, que representen dipòsits de transició continental-marí.
+
+Aquest dipòsits queden recoberts pels sediments del Languià, que són roques sedimentàries d’origen marí formades per gruixudes successions de margues grises amb fòssils marins abundants, amb intercalacions de nivells de gresos i gresos bioclàstics intensament bioturbats. Són dipòsits de ventalls litorals, que afloren al marge sud de la Fossa del Vallès-Penedès.
+
+Tot aquesta part inferior de la sèrie queda recoberta per les unitats del Miocè mitjà-superior (Serraval.lià-Tortonià), formades per dipòsits al·luvials amb lutites, arenites i conglomerats de tons rogencs i terrosos, ben exposades al N de la vall de l’Anoia. La part superior de la sèrie continental miocena, ben exposada entre Esparreguera i Piera, comprèn dipòsits conglomeràtics de textura i litologia molt diverses, degut a la gran varietat d’àrees font, juntament amb gresos i lutites de tons més rogencs, i que representen dipòsits de ventalls al·luvials.
+
+Finalment la sèrie acaba amb la deposició de materials Pliocens, disconformes sobre les successions del Miocè mitjà i superior, i constituïts per uns  de lutites vermelles, gresos i conglomerats d’origen al•luvial. Aquests dipòsits s’adapten a un paleorelleu, en el sectors de la Fortesa i Piera. Els dipòsits pliocens són difícils de distingir dels infrajacents, però solen presentar freqüents nòduls i crostes carbonàtiques i paleosòls fersialítics i hidromofs. Els materials al·luvials van dipositar-se en ventalls amb les zones proximals adossades al marge Nordoccidental de la Fossa del Vallès-Penedès.
+
+Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo, corresponents a gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics d’edat Miocè.
+
+Figura 4. Mapa geològic a escala 1:50.000 de la zona en estudi, (Font: ICGC, modificat).
+
+## 3.2. CARACTERITZACIÓ DELS MATERIALS
+
+A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):
+
+### 3.2.1.Nivell 1
+
+Descripció litològica
+
+El nivell 1 està format per graves i sorres, de coloracions marró clar. Aquests materials presenten materials carbonatats. Superficialment es detecta un tram de sòls vegetals entre 40-60 cm.
+
+Fotografia 3. Detall dels materials del primer nivell.
+
+Aquests materials han estat caracteritzats a partir de la interpretació de les dades dels assaigs de penetració dinàmica, la testificació dels materials recuperats en l’assaig SPT realitzat, i la correlació amb l’estudi de la geologia regional de la zona.
+
+Aquest materials s’associa als materials de la unitat NMgo, amb un tram superficial alterat i intercalant tram més consolidats en la base.
+
+D’una mostra recuperada d’aquests materials se’ls realitza un assaig d’identificació, amb la següent distribució granulomètrica:
+
+Gràfic 1. Distribució granulomètrica dels materials del primer nivell.
+
+Els fins recuperats es presenten NO PLÀSTICS. Per tant, a partir de tots aquests assaigs i la taula de classificació dels sòls del SUCS, es podran classificar els materials de com tipus SM.
+
+Localització
+
+A partir dels assaigs realitzats s’obté una potència màxima estudiada de 4.55 metres, tot I que a partir de l’estudi de la geologia regional de la zona se li podria atribuir potencies superiors, tenint en compte que es tracta de materials de substrat regional.
+
+Resistència
+
+Des del punt de vista geomecànic es tracta d’uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja. Dels assaigs de penetració dinàmica DPSH s’obté un valor de Nb mig de 48 fins assolir rebuig a la penetració, Nb >100, associada a materials de substrat regional carbonatat.
+
+## 3.3. HIDROLOGIA I HIDROGEOLOGIA
+
+### 3.3.1. Hidrogeologia superficial
+
+Al solar, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.
+
+Per altra banda, no s’ha localitzat cap curs d’aigua i/o torrent que pugui afectar al solar en estudi
+
+### 3.3.2. Hidrogeologia subterrània i geotèrmia
+
+En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.
+
+### 3.3.3. Permeabilitat dels materials
+
+A continuació s’exposen els valors del coeficient de permeabilitat (K) associats als materials detectats al subsòl del solar:
+
+Taula 6. Resum del coeficient de permeabilitat dels materials del subsòl.
+
+## 3.4. AGRESSIVITAT DEL MEDI
+
+D’una mostra dels materials del subsòl, on es preveu armar la fonamentació, s’ha realitzat els pertinents assaigs de laboratori per tal de determinar la seva agressivitat al formigó (segons CE-21)1.
+
+Els resultats obtinguts s’exposen en la següent taula:
+
+Taula 7. Valors obtinguts dels assaigs de laboratori.
+
+(1) Segons el Real decreto 470/2021, de 29 de junio, publicat al B.O.E. amb data 10/08/21.
+
+(*) Per a classificar el grau d’agressivitat dels materials front al formigó segons la taula de classificació de l’agressivitat química de el Codigo Estructural 21 (Real decreto 470/2021, de 29 de junio, publicat al B.O.E. amb data 10/08/21), a més a més del contingut en sulfats es deurà realitzar un assaig d’acidesa de Baumann-Gully, tot i que en aquest cas, i degut a les característiques dels materials no es considera necessària realitzar aquest assaigs ja que no es tracta d’un valor restrictiu.
+
+## 3.5. EXCAVABILITAT
+
+Segons el projecte executiu es preveu la construcció d’una estructura en planta baixa i porxo, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.
+
+Els materials del primer nivell en el seu tram inicial no presentaran problemes des del punt de vista de la seva ripabilitat, podent-se realitzar les excavacions amb maquinària convencional. En canvi en profunditat, en arribar als materials del primer nivell carbonatat, el rendiment de la màquina disminuirà, essent necessària la utilització de maquinaria més contundent tipus “martell pneumàtic”.
+
+## 3.6. ACCELERACIÓ SISMICA DE REFERÈNCIA
+
+A efectes d’aplicació de la Norma de Construcción Sismoresistente NCSE-02, es donaran el paràmetres de l’acceleració sísmica bàsica corresponent a la zona estudiada, i el coeficient C, depenent a les característiques geotècniques del terreny on es realitzarà la fonamentació.
+
+L’acceleració sísmica s’obté del Mapa de Perillositat Sísmica inclòs en la esmentada Norma i que estableix per a cada punt del territori l’acceleració sísmica bàsica, AB.
+
+A la zona d’estudi, en el municipi de Rubí (Barcelona), s’estableix una acceleració sísmica bàsica de:
+
+AB  =0,08 g  (essent g el valor de la gravetat)
+
+L’acceleració sísmica de càlcul, AC es defineix com el producte següent:
+
+AC = S * AB *
+
+On
+
+AB és l’acceleració sísmica bàsica
+
+és un coeficient adimensional de risc on el seu valor es dóna en funció de la vida de l’edifici en anys per la que es projecta l’edifici.
+
+Aquest paràmetre bé donat per:
+
+Construccions d’importància normal = 1,0
+
+Construccions d’importància especial = 1,3
+
+S coeficient d’amplificació del terreny. Es pren el valor:
+
+Per * AB <0,1g		S=C/1,25
+
+Per 0,1g<* AB<0,4g	S=C/1,25+0,33(*AB/g-0,1)(1-C/1,25)
+
+Per 0,4g<* AB		S=1,0
+
+C: Coeficient del terreny. Aquest coeficient depèn de les característiques geotècniques del terreny on es realitza la fonamentació.
+
+Per obtenir el coeficient C de càlcul es determinaran els espessors de cada un dels tipus de terrenys, existents els 30 primers metres sota la superfície, i s’adoptarà el valor de la mitjana ponderada.
+
+A cada un dels nivells establerts se’ls associa el següent tipus de terreny i el següents coeficients, que queden recollits en la següent taula:
+
+Taula 8. Valors de la potencia i coeficient C pel càlcul de l’acceleració sísmica.
+
+*Al nivell se li associa una potència molt superior.
+
+El projectista o en el seu cas el promotor haurà d’establir l’ús de l’edifici al llarg de la seva vida útil, a fi d’establir la classificació dins el grup corresponent, d’acord amb el que s’estableix a la “Norma de Construcción  Sismoresitente NCSE-02”.
+
+## 3.7. EXPOSICIÓ AL GAS RADÓ
+
+En el DB Secció HS-6 Protección frente a la exposición al radón del CTE (RD 732/2019) es determina que es necessari limitar el risc previsible d’exposició dels usuaris a concentracions inadequades de radó en edificis tancats situats en els termes municipals inclosos a l’apèndix B del document.
+
+Aquesta secció s’aplica:
+
+En edificis de nova construcció
+
+En intervencions en edificis existents com en ampliacions, un canvi d’ús ja sigui característic de l’edifici o d’alguna zona del mateix
+
+En obres de reforma quan es realitzen modificacions que permetin augmentar la protecció front el radó o alterin la protecció inicial.
+
+En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.
+
+Per a limitar el risc d’exposició dels usuaris a concentracions inadequades de radó procedent del terreny a l’interior dels locals habitables, s’estableix un nivell de referència per a la mitjana anual de concentració de radó a l’interior dels mateixos de 300Bq/m3.
+
+Les solucions  que es poden dur a terme segons la localització del terme municipal en ZONA 1 o en ZONA 2 són:
+
+En obra nova
+
+-	En termes municipals ZONA 1:
+
+Barrera de protecció
+
+Càmera d’aire ventilada
+
+-	En termes municipal ZONA 2:
+
+Barrera de protecció juntament amb una càmera d’aire ventilada
+
+Barrera de protecció juntament amb despressurització del terreny
+
+Rehabilitació d’edificis
+
+-	A part de les solucions anteriors, de manera alternativa o complementaria es pot utilitzar un segellat de tancaments en contacte amb el terreny i la millora de la ventilació.
+
+Es pot consultar la informació completa al DB Secció HS-6 Protección frente a la exposición al radón del CTE.
+
+La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas radó en edificis tancats.
+
+# 4. CONCLUSIONS
+
+Les recomanacions es donen en funció dels resultats obtinguts de la campanya de camp realitzada, així com les observacions realitzades pel tècnic de l’empresa desplaçat a l’obra.
+
+## 4.1. GEOLOGIA
+
+Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.
+
+El nivell 1 està format per graves i sorres, de coloracions marró clar. Aquests materials presenten materials carbonatats. Superficialment es detecta un tram de sòls vegetals entre 40-60 cm. Aquest materials s’associa als materials de la unitat NMgo, amb un tram superficial alterat i intercalant tram més consolidats en la base. A partir dels assaigs realitzats s’obté una potència màxima estudiada de 4.55 metres, tot I que a partir de l’estudi de la geologia regional de la zona se li podria atribuir potencies superiors, tenint en compte que es tracta de materials de substrat regional. Des del punt de vista geomecànic es tracta d’uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja.
+
+La distribució espaial dels materials al llarg de la parcel·la estudiada es recull en següent tall de correlació:
+
+Figura 5. Detall del tall de correlació que s’adjunta als annexes.
+
+Finalment, a partir de les litologies observades, s’ha associat al nivell descrit unes característiques geològiques i geotècniques que queden resumides en el quadre següent:
+
+Taula 9. Característiques geològiques i geotècnics dels materials del subsol.
+
+Els paràmetres de cohesió i angle de fregament intern, s’han obtingut de les relacions que s’estableixen en el llibre “Mecànica de suelos y cimentaciones” de l’autor Carlos Crespo Villalaz, a partir de la resistència dels materials.
+
+(1)Densitat està donada en gr/cm3.
+
+(2 i 3)La cohesió està expressada en Kg/cm2.Tan la cohesió com l’angle de fregament intern són valors efectius o llarg termini.
+
+(4)Mòdul de deformació, Kg/cm2
+
+## 4.2. HIDROGEOLOGIA I AGRESSIVITAT
+
+Es tracta d’un solar no antropitzat, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.
+
+Per altra banda, no s’ha localitzat cap curs d’aigua i/o torrent que pugui afectar al solar en estudi
+
+En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.
+
+A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, es presenten no agressius al formigó.
+
+## 4.3. FONAMENTACIÓ
+
+Segons el projecte executiu es preveu la construcció d’una estructura en planta baixa, per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació. Un cop realitzat aquesta anivellació i sanejament afloraran superficialment els materials del primer nivell descrit.
+
+Donada les propietats geomecànica dels materials del primer i segon nivell, es realitza una valoració per a la realització d’una fonamentació superficial mitjançant sabates, aïllades i/o corregudes o bé llosa en els materials del primer nivell
+
+Per una fonamentació mitjançant sabates o bé llosa, encastada entre 30-40 cm en els materials del primer nivell sanejat un cop extret el tram superficial, es podrà adoptar una tensió admissible de:
+
+Qa= 3.50 Kg/cm2  amb un factor de seguretat inclòs de F=3
+
+Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.50 cm, immediats en el temps donat el comportament granular dels materials.
+
+Com a valor de coeficient de balast referit a la placa de 30x30, es podrà adoptar un valor de K30= 6.0 kg/cm3.
+
+G3 D T S.L. sol·licita que si es detectessin anomalies respecte les dades que s’exposen, durant l’execució de la obra, agrairíem que ens avisessin, i igualment restem a la seva disposició per qualsevol consulta i/o dubte que vulguin realitzar, en el telèfon 973 33 12 12.
+
+Informe geològic / geotècnic,
+
+Expedient Núm.:  3001631
+
+Els Omells de Na  Gaia, 17 de desembre de 2025

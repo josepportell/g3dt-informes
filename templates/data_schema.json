@@ -1,0 +1,94 @@
+{
+  "client": "SRA. JOANA MARTINEZ",
+  "expedient": "3001631",
+  "location": "RUBÍ",
+  "data_camp_text": "14 de novembre de 2025",
+  "data_signatura_text": "17 de desembre de 2025",
+  "plantes": "PB + Porxo",
+  "superficie_parcela": "951",
+  "superficie_construida": "92",
+  "cte_edificacio": "C-0",
+  "cte_sol": "T-1",
+  "tipus_edificacio": "Habitatge unifamiliar aïllat modular",
+  "obra": "ESTUDI GEOLÒGIC / GEOTÈCNIC\nPER A LA CONSTRUCCIÓ D'UN HABITATGE\nUNIFAMILIAR MODULAR AÏLLAT",
+  "dpsh_results": [
+    {
+      "name": "P-1",
+      "x": "420823",
+      "y": "4594126",
+      "cota": "212.5",
+      "depth": "5.40"
+    },
+    {
+      "name": "P-2",
+      "x": "420831",
+      "y": "4594132",
+      "cota": "212.3",
+      "depth": "3.40"
+    },
+    {
+      "name": "P-3",
+      "x": "420838",
+      "y": "4594125",
+      "cota": "212.4",
+      "depth": "3.80"
+    }
+  ],
+  "num_dpsh": "3",
+  "lab_tests": [],
+  "has_lab_tests": false,
+  "marc_geologic": "La zona d'estudi es situa geològicament a la Depressió del Vallès, una fossa tectònica que separa la Serralada Prelitoral de la Serralada Litoral. Els materials que afloren a la zona corresponen principalment a dipòsits quaternaris de naturalesa al·luvial i col·luvial, disposats sobre un substrat miocè.",
+  "nivell1_nom": "Graves i sorres amb matriu llimosa",
+  "nivell1_litologia": "Material granular de coloració marró, format per graves i sorres amb matriu llimosa. Presenta una compacitat densa a molt densa segons els valors de N₂₀ obtinguts.",
+  "nivell1_uscs": "GP-GM",
+  "geotech_params": [
+    {
+      "param": "Classificació USCS",
+      "symbol": "",
+      "unit": "",
+      "value": "GP-GM"
+    },
+    {
+      "param": "Densitat aparent",
+      "symbol": "γ",
+      "unit": "kN/m³",
+      "value": "20"
+    },
+    {
+      "param": "Angle de fricció interna",
+      "symbol": "φ'",
+      "unit": "°",
+      "value": "32-35"
+    },
+    {
+      "param": "Cohesió efectiva",
+      "symbol": "c'",
+      "unit": "kPa",
+      "value": "0"
+    }
+  ],
+  "nf_detectat": false,
+  "nf_profunditat": "",
+  "nf_conclusio": "Durant la realització dels treballs de camp no s'ha detectat la presència de nivell freàtic dins de les cotes assolides pels assaigs de penetració.",
+  "agressivitat_conclusio": "No s'han realitzat assaigs per determinar l'agressivitat química del terreny. Es recomana considerar una classe d'exposició IIa segons l'EHE-08 per defecte.",
+  "sismica_ab": "0.04g",
+  "sismica_zona": "baixa",
+  "rado_zona": "Zona 1",
+  "rado_desc": "potencial baix",
+  "tipus_fonament": "sabates aïllades o corregudes",
+  "profunditat_encast": "-0.80 m",
+  "qa": "3.50",
+  "qa_kpa": "350",
+  "assentaments": "< 25 mm",
+  "k30": "6.0",
+  "lloc_signatura": "Els Omells de Na Gaia",
+  "data_signatura": "novembre del 2025",
+  "signant_nom": "[Nom del/la geòleg/a]",
+  "signant_titol": "Geòleg/a col. [XXXX]",
+  "signant_rol": "G3 DT S.L.",
+  "has_expansivity": false,
+  "has_slope_stability": false,
+  "has_earth_pressure": false,
+  "has_spt": false,
+  "has_sondeig": false
+}
