@@ -43,6 +43,7 @@ from ..municipal_data import (
     SeismicLookupResult,
     RadonInfoWithStatus,
 )
+from ..csn_radon import get_radon_potential_text
 
 if TYPE_CHECKING:
     from ..report_data import ReportData
@@ -916,6 +917,15 @@ class Section3Generator:
                 zone=radon_info.zone,
                 level=radon_info.level,
             )
+
+        # Add CSN coordinate-based potential if coordinates available
+        if self.data.utm_x and self.data.utm_y:
+            try:
+                csn_text = get_radon_potential_text(self.data.utm_x, self.data.utm_y)
+                if csn_text:
+                    result += "\n\n" + csn_text
+            except Exception as e:
+                logger.warning(f"Could not get CSN radon potential: {e}")
 
         return result
 
