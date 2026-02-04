@@ -36,6 +36,12 @@ from ..icgc_geology import (
     ICGCCoordinateError,
     ICGCNoDataError,
 )
+from ..municipal_data import (
+    get_seismic_ab,
+    is_seismic_norm_required,
+    get_radon_info,
+    RadonInfo,
+)
 
 if TYPE_CHECKING:
     from ..report_data import ReportData
@@ -784,30 +790,54 @@ class Section3Generator:
         """
         Generate seismic parameters section text (3.6).
 
-        Note: ab parameter requires municipality lookup table (not implemented).
+        Uses municipality lookup table for ab (basic seismic acceleration)
+        from NCSE-02 Annex 1.
 
         Returns:
-            Seismic section text with ab placeholder
+            Complete seismic section text with ab value
         """
         result = self.SISMICA_INTRO + "\n\n"
+
+        # Get ab value from municipality lookup
+        ab = get_seismic_ab(self.data.municipality or "")
+        ab_str = f"{ab:.2f}"
 
         # Determine S coefficient based on soil class
         if self.data.cte_soil_class == "T-1":
             S = "1.0"
+            S_val = 1.0
         elif self.data.cte_soil_class == "T-2":
             S = "1.2"
+            S_val = 1.2
         else:
             S = "1.4"
+            S_val = 1.4
 
         result += self.SISMICA_FORMULAS.format(
-            ab=self.SISMICA_AB_PLACEHOLDER,
+            ab=ab_str,
             S=S,
         )
 
-        result += (
-            f"\n\nNota: El valor de ab s'ha de consultar a l'Annex 1 de la NCSE-02 "
-            f"per al municipi de {self.data.municipality or '[municipi]'}."
-        )
+        # Calculate ac (seismic calculation acceleration)
+        # ac = S * rho * ab, where rho = 1.0 for normal importance
+        rho = 1.0
+        ac = S_val * rho * ab
+
+        # Add clarification about norm applicability
+        if not is_seismic_norm_required(ab):
+            result += (
+                f"\n\nCal indicar que l'aplicació de la norma sismorresistent "
+                f"no és obligatòria en el cas d'edificis d'importància normal "
+                f"quan l'acceleració sísmica de càlcul sigui inferior a 0,08 g. "
+                f"En aquest cas, ac = {S} × 1,0 × {ab_str} = {ac:.2f} g < 0,08 g, "
+                f"per tant no és obligatòria l'aplicació de la NCSE-02."
+            )
+        else:
+            result += (
+                f"\n\nEn aquest cas, l'acceleració sísmica de càlcul és "
+                f"ac = {S} × 1,0 × {ab_str} = {ac:.2f} g ≥ 0,08 g, "
+                f"per tant és obligatòria l'aplicació de la NCSE-02."
+            )
 
         return result
 
@@ -817,19 +847,43 @@ class Section3Generator:
         """
         Generate radon zone section text (3.7).
 
-        Note: Zone lookup requires municipality table (not implemented).
+        Uses municipality lookup table for radon zone classification
+        from RD 732/2019 (CTE DB HS6).
 
         Returns:
-            Radon section text with zone placeholder
+            Complete radon section text with zone and recommendations
         """
         result = self.RADO_INTRO + "\n\n"
-        result += self.RADO_ZONE_PLACEHOLDER
 
+        # Get radon info from municipality lookup
+        radon_info = get_radon_info(self.data.municipality or "")
+
+        # Format zone information
+        result += self.RADO_ZONE_TEMPLATE.format(
+            zone=radon_info.zone,
+            level=radon_info.level,
+            recommendation=radon_info.recommendation,
+        )
+
+        # Add municipality reference
         if self.data.municipality:
             result += (
-                f"\n\nNota: Consultar la zona de rado per al municipi de "
-                f"{self.data.municipality} al mapa del CSN."
+                f"\n\nLa parcel·la concreta d'estudi es localitza al terme municipal de "
+                f"{self.data.municipality.upper()} i, segons la taula existent a l'apèndix B "
+                f"del RD 732/2019, pertany a la ZONA {radon_info.zone}, "
             )
+            if radon_info.zone == 0:
+                result += "municipi amb baixes concentracions de gas radó."
+            elif radon_info.zone == 1:
+                result += (
+                    "municipi amb concentracions mitjanes de gas radó en edificis tancats. "
+                    "Es recomana la implementació de mesures bàsiques de protecció."
+                )
+            else:  # zone == 2
+                result += (
+                    "municipi amb concentracions potencialment elevades de gas radó en edificis tancats. "
+                    "És obligatòria la implementació de mesures de protecció segons CTE DB HS6."
+                )
 
         return result
 
