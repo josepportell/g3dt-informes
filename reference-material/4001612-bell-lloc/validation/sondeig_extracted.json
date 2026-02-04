@@ -1,0 +1,64 @@
+{
+  "source_file": "SONDEIG.pdf",
+  "extraction_date": "2026-02-04T15:45:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.92,
+  "status": "pending_review",
+  "metadata": {
+    "date": "6-10-2025",
+    "location": "Bell-Lloc",
+    "address": "C/ Antoni Bellet",
+    "operator": "Daniel Fernández",
+    "equipment": "ML76A",
+    "client": "G3",
+    "responsible": "Eva"
+  },
+  "sondeig_tests": [
+    {
+      "test_id": "S-1",
+      "total_depth_m": 1.80,
+      "layers": [
+        {
+          "depth_from_m": 0.0,
+          "depth_to_m": 1.0,
+          "description": "Grava con arenas",
+          "confidence": 0.95,
+          "note": null
+        },
+        {
+          "depth_from_m": 1.0,
+          "depth_to_m": 1.80,
+          "description": "Grava cementada",
+          "confidence": 0.90,
+          "note": "handwriting clear"
+        }
+      ],
+      "spt_results": [
+        {
+          "depth_m": 1.0,
+          "depth_range": "1.00-1.60m",
+          "n1": 24,
+          "n2": 34,
+          "n3": 28,
+          "n_total": 30,
+          "confidence": 0.85,
+          "note": "N_total=30 written on sheet; standard calc would give N2+N3=62. May be corrected value or different method."
+        }
+      ],
+      "water_level_m": null,
+      "water_detected": false,
+      "rock_depth_m": null,
+      "tubing": "HW W.B",
+      "extraction_notes": "Single drilling test S-1. Clear field sheet with two soil layers and one SPT. Site sketch on page 3 shows location relative to C/Antoni Bellet and C/Mestre Ramon Ortiz."
+    }
+  ],
+  "site_sketch": {
+    "has_sketch": true,
+    "page": 3,
+    "streets": ["C/ Antoni Bellet", "C/ Mestre Ramon Ortiz"],
+    "drilling_position": "S1 marked with approximate distances 4.2m and 11m from reference"
+  },
+  "reviewer_notes": "",
+  "approved_by": "",
+  "approval_date": null
+}
