@@ -1,0 +1,73 @@
+{
+  "source_file": "PENETROS.pdf",
+  "extraction_date": "2026-02-04T10:30:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.85,
+  "status": "pending_review",
+  "dpsh_tests": [
+    {
+      "test_id": "P-1",
+      "readings": [
+        {"depth_m": 0.20, "n20": 12, "confidence": 0.95, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 0.40, "n20": 15, "confidence": 0.90, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 0.60, "n20": 18, "confidence": 0.95, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 0.80, "n20": "??", "confidence": 0.0, "note": "illegible - ink smudged", "torque": null, "water_indicator": false},
+        {"depth_m": 1.00, "n20": 25, "confidence": 0.70, "note": "partially obscured", "torque": null, "water_indicator": false},
+        {"depth_m": 1.20, "n20": 32, "confidence": 0.95, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 1.40, "n20": 45, "confidence": 0.90, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 1.60, "n20": 100, "confidence": 1.0, "note": "refusal marker (R)", "torque": null, "water_indicator": false}
+      ],
+      "refusal_depth_m": 1.60,
+      "refusal_detected": true,
+      "water_detected": false,
+      "water_depth_m": null,
+      "correction_factor": 0.83,
+      "extraction_notes": "Sheet slightly wrinkled, some values harder to read"
+    },
+    {
+      "test_id": "P-2",
+      "readings": [
+        {"depth_m": 0.20, "n20": 10, "confidence": 1.0, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 0.40, "n20": 14, "confidence": 0.95, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 0.60, "n20": 16, "confidence": 0.85, "note": "7 or 6? interpreted as 6", "torque": null, "water_indicator": false},
+        {"depth_m": 0.80, "n20": 20, "confidence": 0.95, "note": null, "torque": null, "water_indicator": true},
+        {"depth_m": 1.00, "n20": 28, "confidence": 0.90, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 1.20, "n20": 35, "confidence": 0.95, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 1.40, "n20": 52, "confidence": 0.60, "note": "52 or 57? unclear", "torque": null, "water_indicator": false},
+        {"depth_m": 1.60, "n20": 78, "confidence": 0.95, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 1.80, "n20": 100, "confidence": 1.0, "note": "refusal", "torque": null, "water_indicator": false}
+      ],
+      "refusal_depth_m": 1.80,
+      "refusal_detected": true,
+      "water_detected": true,
+      "water_depth_m": 0.80,
+      "correction_factor": 0.83,
+      "extraction_notes": null
+    },
+    {
+      "test_id": "P-3",
+      "readings": [
+        {"depth_m": 0.20, "n20": 8, "confidence": 0.95, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 0.40, "n20": 11, "confidence": 0.90, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 0.60, "n20": 15, "confidence": 0.95, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 0.80, "n20": 19, "confidence": 1.0, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 1.00, "n20": 24, "confidence": 0.95, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": 1.20, "n20": 100, "confidence": 1.0, "note": "refusal - hit rock?", "torque": null, "water_indicator": false}
+      ],
+      "refusal_depth_m": 1.20,
+      "refusal_detected": true,
+      "water_detected": false,
+      "water_depth_m": null,
+      "correction_factor": 0.83,
+      "extraction_notes": "Shorter test - early refusal"
+    }
+  ],
+  "reviewer_notes": "",
+  "approved_by": "",
+  "approval_date": null,
+  "excel_comparison": {
+    "has_excel": true,
+    "differences_found": 2,
+    "notes": "P-1 depth 0.80m: Excel shows 22, extracted shows ??. P-2 depth 1.40m: Excel shows 55, extracted shows 52."
+  }
+}

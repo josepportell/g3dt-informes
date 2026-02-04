@@ -39,6 +39,31 @@ from .terzaghi_calculator import (
     calculate_from_dpsh,
 )
 
+from .data_schema import (
+    DATA_ENTRY_SCHEMA,
+    FieldDefinition,
+    ValidationError,
+    validate_data,
+    validate_field,
+    coerce_type,
+    coerce_all,
+    to_json_schema,
+    get_required_fields,
+)
+
+from .cte_classifier import (
+    CTEClassification,
+    parse_floor_count,
+    classify_building,
+    classify_soil,
+    get_cte_classification,
+)
+
+from .report_generator import (
+    ReportGenerator,
+    GenerationResult,
+)
+
 __all__ = [
     'DPSHExtractor',
     'DPSHData',
@@ -54,6 +79,22 @@ __all__ = [
     'BearingCapacityFactors',
     'FootingShape',
     'calculate_from_dpsh',
+    'DATA_ENTRY_SCHEMA',
+    'FieldDefinition',
+    'ValidationError',
+    'validate_data',
+    'validate_field',
+    'coerce_type',
+    'coerce_all',
+    'to_json_schema',
+    'get_required_fields',
+    'CTEClassification',
+    'parse_floor_count',
+    'classify_building',
+    'classify_soil',
+    'get_cte_classification',
+    'ReportGenerator',
+    'GenerationResult',
 ]
 
-__version__ = '0.2.0'
+__version__ = '0.5.0'

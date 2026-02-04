@@ -1,0 +1,55 @@
+{
+  "source_file": "SONDEIG.pdf",
+  "extraction_date": "2026-02-04T15:30:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.92,
+  "status": "pending_review",
+  "metadata": {
+    "date": "6-10-2025",
+    "location": "Bell-Lloc",
+    "address": "C/Antoni Bellet",
+    "operator": "Daniel Fernández",
+    "equipment": "ML76A",
+    "client": "G3",
+    "responsible": "Eva"
+  },
+  "sondeig_tests": [
+    {
+      "test_id": "S-1",
+      "total_depth_m": 1.80,
+      "layers": [
+        {
+          "depth_from_m": 0.0,
+          "depth_to_m": 1.0,
+          "description": "Grava con arenas",
+          "confidence": 0.95,
+          "note": null
+        },
+        {
+          "depth_from_m": 1.0,
+          "depth_to_m": 1.80,
+          "description": "Grava cementada",
+          "confidence": 0.85,
+          "note": "handwriting slightly unclear"
+        }
+      ],
+      "spt_results": [
+        {
+          "depth_m": 1.0,
+          "n1": 24,
+          "n2": 34,
+          "n3": 28,
+          "n_total": 30,
+          "confidence": 0.90,
+          "note": "SPT-1"
+        }
+      ],
+      "water_level_m": null,
+      "rock_depth_m": null,
+      "extraction_notes": "Single drilling test, clear field sheet"
+    }
+  ],
+  "reviewer_notes": "",
+  "approved_by": "",
+  "approval_date": null
+}

@@ -1,0 +1,75 @@
+{
+  "source_file": "PENETROS.pdf",
+  "extraction_date": "2026-02-04T10:30:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.85,
+  "status": "pending_review",
+  "excel_comparison": {
+    "has_excel": true,
+    "excel_file": "4001612_DPSH.xls",
+    "total_values": 23,
+    "matches": 19,
+    "discrepancies": 4
+  },
+  "dpsh_tests": [
+    {
+      "test_id": "P-1",
+      "readings": [
+        {"depth_m": 0.20, "n20": 12, "confidence": 1.0, "excel_value": 12, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.40, "n20": 15, "confidence": 1.0, "excel_value": 15, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.60, "n20": 18, "confidence": 1.0, "excel_value": 18, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.80, "n20": "??", "confidence": 0.0, "excel_value": 22, "has_discrepancy": true, "note": "illegible - ink smudged"},
+        {"depth_m": 1.00, "n20": 25, "confidence": 0.95, "excel_value": 25, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.20, "n20": 32, "confidence": 1.0, "excel_value": 32, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.40, "n20": 45, "confidence": 1.0, "excel_value": 45, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.60, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "refusal marker (R)"}
+      ],
+      "refusal_depth_m": 1.60,
+      "refusal_detected": true,
+      "water_detected": false,
+      "water_depth_m": null,
+      "correction_factor": 0.83,
+      "extraction_notes": "Sheet slightly wrinkled, one value illegible"
+    },
+    {
+      "test_id": "P-2",
+      "readings": [
+        {"depth_m": 0.20, "n20": 10, "confidence": 1.0, "excel_value": 10, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.40, "n20": 14, "confidence": 1.0, "excel_value": 14, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.60, "n20": 17, "confidence": 0.85, "excel_value": 16, "has_discrepancy": true, "note": "PDF shows 17, Excel has 16 - check original"},
+        {"depth_m": 0.80, "n20": 20, "confidence": 1.0, "excel_value": 20, "has_discrepancy": false, "note": null, "water_indicator": true},
+        {"depth_m": 1.00, "n20": 28, "confidence": 1.0, "excel_value": 28, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.20, "n20": 35, "confidence": 1.0, "excel_value": 35, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.40, "n20": 52, "confidence": 0.70, "excel_value": 57, "has_discrepancy": true, "note": "52 or 57? PDF unclear, Excel has 57"},
+        {"depth_m": 1.60, "n20": 78, "confidence": 1.0, "excel_value": 78, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.80, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "refusal"}
+      ],
+      "refusal_depth_m": 1.80,
+      "refusal_detected": true,
+      "water_detected": true,
+      "water_depth_m": 0.80,
+      "correction_factor": 0.83,
+      "extraction_notes": null
+    },
+    {
+      "test_id": "P-3",
+      "readings": [
+        {"depth_m": 0.20, "n20": 8, "confidence": 1.0, "excel_value": 8, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.40, "n20": 11, "confidence": 1.0, "excel_value": 11, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.60, "n20": 15, "confidence": 1.0, "excel_value": 15, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.80, "n20": 19, "confidence": 1.0, "excel_value": 19, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.00, "n20": 26, "confidence": 0.90, "excel_value": 24, "has_discrepancy": true, "note": "PDF shows 26, Excel has 24"},
+        {"depth_m": 1.20, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "refusal - hit rock?"}
+      ],
+      "refusal_depth_m": 1.20,
+      "refusal_detected": true,
+      "water_detected": false,
+      "water_depth_m": null,
+      "correction_factor": 0.83,
+      "extraction_notes": "Shorter test - early refusal"
+    }
+  ],
+  "reviewer_notes": "",
+  "approved_by": "",
+  "approval_date": null
+}

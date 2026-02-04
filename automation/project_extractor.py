@@ -25,7 +25,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 
-from dpsh_extractor import DPSHExtractor, DPSHData, GeotechCorrelations
+from .dpsh_extractor import DPSHExtractor, DPSHData, GeotechCorrelations
 
 
 @dataclass
@@ -338,7 +338,28 @@ class ProjectExtractor:
         return ClientData.from_file(client_file)
 
     def _extract_dpsh(self, inventory: FileInventory) -> Optional[DPSHData]:
-        """Extract DPSH data if Excel file exists."""
+        """
+        Extract DPSH data, prioritizing approved validation files.
+
+        Priority order:
+        1. validation/dpsh_approved.json (if exists and status is approved)
+        2. Excel file extraction (fallback)
+
+        Args:
+            inventory: FileInventory with file locations
+
+        Returns:
+            DPSHData if available from either source, None otherwise
+        """
+        # First, check for approved validation file
+        from .report_data import load_validated_dpsh
+        validated_dpsh = load_validated_dpsh(self.folder_path)
+        if validated_dpsh:
+            print(f"Using approved validation data from validation/dpsh_approved.json",
+                  file=sys.stderr)
+            return validated_dpsh
+
+        # Fallback to Excel extraction
         if not inventory.has_dpsh_excel or not inventory.dpsh_excel_path:
             return None
 

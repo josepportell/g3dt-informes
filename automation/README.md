@@ -155,21 +155,146 @@ gamma = GeotechCorrelations.n_to_density(n20)           # ~2.1 g/cm³
 }
 ```
 
+## Field Data Validation Layer
+
+The validation layer verifies data extracted from handwritten field documents (PENETROS.pdf) against the digitized Excel files, catching transcription errors before they reach the final report.
+
+### Workflow
+
+```
+PENETROS.pdf (handwritten)     DPSH.xls (transcribed by G3DT)
+         │                              │
+         ▼                              │
+   Claude Vision                        │
+   (extracts data)                      │
+         │                              │
+         ▼                              ▼
+    ┌─────────────────────────────────────┐
+    │         COMPARE VALUES              │
+    └─────────────────────────────────────┘
+                    │
+                    ▼
+         dpsh_extracted.json
+         (discrepancies flagged)
+                    │
+                    ▼
+    ┌─────────────────────────────────────┐
+    │   G3DT REVIEWS (review.html)        │
+    │   Only sees discrepancies           │
+    └─────────────────────────────────────┘
+                    │
+                    ▼
+         dpsh_approved.json
+         (verified data)
+                    │
+                    ▼
+         Report Generation
+         (uses approved data)
+```
+
+### Using the Validation Skill
+
+```bash
+# In Claude Code session:
+/g3dt-validar-penetros reference-material/4001612-bell-lloc/PENETROS.pdf
+```
+
+This will:
+1. Read the PDF visually (Claude's vision capabilities)
+2. Extract all N20 values from handwritten sheets
+3. Compare with Excel data
+4. Generate `validation/dpsh_extracted.json` with discrepancies flagged
+
+### Reviewing Discrepancies
+
+Open `templates/validation/review.html` in a browser:
+1. Click "Carregar fitxer JSON"
+2. Select the `dpsh_extracted.json` file
+3. Review only the flagged discrepancies
+4. Enter correct values in the "Decisió" column
+5. Click "Guardar com a Aprovat"
+
+The form shows:
+- 🟡 Yellow rows: PDF ≠ Excel (different values)
+- 🔴 Red rows: PDF illegible ("??")
+- Matching values collapsed at bottom (no review needed)
+
+### Validation Module
+
+```python
+from automation.validation import (
+    DPSHValidationFile,
+    DPSHTestExtracted,
+    DPSHReadingExtracted,
+    ValidationStatus,
+)
+
+# Load validation file
+validation = DPSHValidationFile.load(Path("validation/dpsh_extracted.json"))
+
+# Check status
+if validation.status == ValidationStatus.APPROVED:
+    # Use in report generation
+    ...
+
+# Check for discrepancies
+print(f"Discrepancies: {validation.excel_comparison.get('discrepancies', 0)}")
+```
+
+### CLI Extraction (Simulated)
+
+For testing without Claude vision:
+
+```bash
+uv run --with xlrd,pydantic python3 -m automation.validation.extractor \
+    reference-material/4001612-bell-lloc/PENETROS.pdf \
+    reference-material/4001612-bell-lloc/ANNEXES/4001612_DPSH.xls
+```
+
+Note: This uses simulated extraction (variations from Excel). For real extraction, use the `/g3dt-validar-penetros` skill.
+
+### Integration with Report Generation
+
+The report data module automatically checks for approved validation files:
+
+```python
+from automation.report_data import build_report_data
+
+# If validation/dpsh_approved.json exists and is approved,
+# it will be used instead of direct Excel extraction
+report_data = build_report_data(project_data, user_data)
+```
+
 ## Next Steps
 
 1. **Lab results parser** - Extract sulfate values, Lambe results from PDF
-2. **Terzaghi calculator** - Calculate Qa using their exact formulas
-3. **Report generator** - Integrate with Jinja2 template system
+2. **Terzaghi calculator** - Calculate Qa using their exact formulas ✓ (done)
+3. **Report generator** - Integrate with Jinja2 template system ✓ (done)
 4. **Data entry form** - UI for manual fields (architect, building specs, etc.)
+5. **Sondeig validation** - Extend validation layer for drilling logs
 
 ## Files
 
 ```
 automation/
-├── __init__.py           # Package exports
-├── dpsh_extractor.py     # DPSH Excel extraction
-├── project_extractor.py  # Full project extraction
-└── README.md             # This file
+├── __init__.py              # Package exports
+├── dpsh_extractor.py        # DPSH Excel extraction
+├── project_extractor.py     # Full project extraction
+├── report_data.py           # Unified report data model
+├── terzaghi_calculator.py   # Bearing capacity calculations
+├── cte_classifier.py        # CTE building/soil classification
+├── validation/              # Field data validation layer
+│   ├── __init__.py          # Validation exports
+│   ├── schemas.py           # Pydantic models for validation
+│   ├── prompts.py           # Extraction prompt templates
+│   └── extractor.py         # Extraction and comparison logic
+└── README.md                # This file
+
+templates/
+├── validation/
+│   ├── review.html          # Browser-based review form
+│   └── sample_*.json        # Sample validation files
+└── ...
 ```
 
 ---
