@@ -472,14 +472,24 @@ REGION_MAPPING = {
             'Balaguer', 'Bell-lloc d\'Urgell', 'Bellpuig', 'Mollerussa',
             'Tàrrega', 'Lleida', 'Alcarràs', 'Agramunt', 'Cervera',
             'Les Borges Blanques', 'Almacelles', 'Alpicat', 'Artesa de Segre',
+            'Linyola', 'Golmés', 'El Palau d\'Anglesola', 'Fondarella',
         ],
         # Quaternary alluvial codes typically found in the plain
-        'unit_codes': ['Q3D', 'Q2', 'Q1', 'Qt', 'Qa', 'Qvpu'],
-        # Also match any Quaternary period in the Ebre depression
-        'periods': ['Quaternari'],
+        'unit_codes': ['Q3D', 'Q1D', 'Qt', 'Qa', 'Qvpu'],
+    },
+    # Vallès-Penedès graben (prelitoral depression)
+    'valles_penedes': {
+        'municipalities': [
+            'Rubí', 'Castellar del Vallès', 'Terrassa', 'Sabadell',
+            'Sant Cugat del Vallès', 'Cerdanyola del Vallès', 'Barberà del Vallès',
+            'Vilafranca del Penedès', 'Martorell', 'Sant Sadurní d\'Anoia',
+            'Olesa de Montserrat', 'Esparreguera', 'Abrera', 'Sant Andreu de la Barca',
+            'Molins de Rei', 'Sant Feliu de Llobregat', 'Pallejà',
+        ],
+        # Quaternary codes typical of Vallès-Penedès
+        'unit_codes': ['Q2A', 'Q2F', 'Q2C', 'Q1A', 'NMmc', 'NMcg'],
     },
     # Add more regions as needed
-    # 'valles_penedes': {...},
     # 'serralada_litoral': {...},
 }
 
