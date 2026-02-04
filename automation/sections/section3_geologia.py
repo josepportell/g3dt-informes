@@ -1,0 +1,993 @@
+#!/usr/bin/env python3
+"""
+G3DT Section 3 Generator: DESCRIPCIO GEOLOGICA
+
+Generates content for the geological description section of geotechnical reports.
+Section 3 contains:
+  3.1 MARC GEOLOGIC - Regional geology from ICGC API + regional templates
+  3.2 MATERIALS - Soil level descriptions (PLACEHOLDER - needs zone templates)
+  3.3 HIDROGEOLOGIA - Surface/groundwater hydrology
+  3.4 AGRESSIVITAT - Sulfate classification (EHE-08)
+  3.5 EXCAVABILITAT - Excavation difficulty assessment
+  3.6 SISMICA - Seismic parameters (PLACEHOLDER - needs municipality lookup)
+  3.7 RADO - Radon zone (PLACEHOLDER - needs municipality lookup)
+
+Note: Section 3.1 now uses ICGC WMS API for authoritative geological data.
+Other subsections still use placeholders pending zone templates.
+
+Author: Eficients.cat
+Date: 2026-02-03
+Updated: 2026-02-04 - Added ICGC geology integration for section 3.1
+"""
+
+from __future__ import annotations
+
+import logging
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import TYPE_CHECKING
+
+from ..icgc_geology import (
+    get_geological_unit,
+    determine_region,
+    GeologicalUnit,
+    ICGCError,
+    ICGCConnectionError,
+    ICGCCoordinateError,
+    ICGCNoDataError,
+)
+
+if TYPE_CHECKING:
+    from ..report_data import ReportData
+
+logger = logging.getLogger(__name__)
+
+
+@dataclass
+class PermeabilityRow:
+    """Single row of permeability table (Taula 7)."""
+    material: str
+    permeabilitat: str
+    k_m_s: str
+
+
+@dataclass
+class Section3Content:
+    """Generated content for Section 3."""
+    # 3.1 MARC GEOLOGIC
+    marc_geologic: str  # Placeholder - needs zone templates
+    figura4_reference: str
+
+    # 3.2 MATERIALS
+    materials_intro: str
+    materials_levels: list[str]  # Placeholders for level descriptions
+    sample_photos: list[str]
+
+    # 3.3 HIDROGEOLOGIA
+    hidrogeologia_surface: str
+    hidrogeologia_groundwater: str
+    taula7_permeability: list[PermeabilityRow]
+
+    # 3.4 AGRESSIVITAT
+    agressivitat: str
+
+    # 3.5 EXCAVABILITAT
+    excavabilitat: str
+
+    # 3.6 SISMICA
+    sismica: str  # Partial placeholder for ab parameter
+
+    # 3.7 RADO
+    rado: str  # Placeholder for zone lookup
+
+
+class Section3Generator:
+    """Generates Section 3: DESCRIPCIO GEOLOGICA."""
+
+    # === 3.1 MARC GEOLOGIC - Templates ===
+    # Regional templates directory (relative to this file)
+    TEMPLATES_DIR = Path(__file__).parent.parent.parent / "templates" / "geological_regions"
+
+    # Common instruction suffix for fallback/incomplete texts
+    _MANUAL_INSTRUCTION_SUFFIX = (
+        "Si us plau, introduïu manualment el text de marc geològic o "
+        "verifiqueu les coordenades UTM del projecte."
+    )
+
+    # Fallback placeholder when ICGC/templates unavailable
+    MARC_GEOLOGIC_PLACEHOLDER = (
+        "[PENDENT: Text de marc geologic regional]\n\n"
+        "No s'ha pogut obtenir la informació geològica de l'ICGC. "
+        "Contacteu amb l'administrador o introduïu el text manualment."
+    )
+
+    # Regional template content (loaded from files)
+    # Format: region_name -> list of paragraphs
+    REGIONAL_TEMPLATES: dict[str, list[str]] = {
+        'depressio_ebre': [
+            # Paragraph 1: Regional context
+            (
+                "La zona que avarca aquest estudi es troba situada dins la Depressió de l'Ebre, "
+                "en el seu extrem oriental, que rep el nom de Depressió Central Catalana. "
+                "Aquesta és una unitat morfoestructural que forma part d'una conca sedimentària "
+                "d'avantpaís desenvolupada entre la fi del Cretaci superior i el Miocè Superior."
+            ),
+            # Paragraph 2: Tectonic evolution
+            (
+                "La conca de l'Ebre està relacionada amb l'evolució de l'orogen pirinenc, "
+                "i es desenvolupa com a resposta de l'apropament de la placa Ibèrica sota "
+                "la placa Euroasiàtica, amb inici de subducció de la primera respecte la segona. "
+                "D'aquesta manera, aquesta conca és una fossa tectònica formada entre els Pirineus, "
+                "al nord, i les Serralades Costaneres Catalanes, al sud-est."
+            ),
+            # Paragraph 3: Eocene conditions
+            (
+                "Durant l'Eocè, la conca de l'Ebre estava connectada amb l'oceà Atlàntic per l'oest. "
+                "Fruit de la col·lisió entre les dues plaques tectòniques, s'inicia la col·locació "
+                "de làmines encavalcants o mantells de corriment que van avançant, progressivament, "
+                "cap al sud en el cas del Pirineu i cap al nord en el cas de les Serralades "
+                "Costaneres Catalanes."
+            ),
+            # Paragraph 4: Oligocene sedimentation
+            (
+                "A partir de finals de l'Eocè i durant tot l'Oligocè, la conca de l'Ebre actua "
+                "com a conca endorreica, tancada, on la sedimentació que es produeix és d'origen "
+                "continental. Els sediments continentals terciaris es troben organitzats en fàcies "
+                "clàstiques al·luvials a prop de les serralades emergides (conglomerats i gresos), "
+                "que passen a fàcies lacustres (margues, guixos i calcàries) cap a les zones "
+                "centrals de la conca."
+            ),
+            # Paragraph 5: Present erosion
+            (
+                "Des de finals de l'Oligocè fins a l'actualitat la depressió de l'Ebre ha deixat "
+                "d'actuar com a conca sedimentària i ha esdevingut una cubeta on l'agent predominant "
+                "principal ha estat l'erosió. Localment, durant el Quaternari s'han dipositat "
+                "materials sedimentaris recents en forma de terrasses fluvials, cons al·luvials "
+                "i glacis associats als cursos fluvials actuals i a la dinàmica dels vessants."
+            ),
+        ],
+    }
+
+    # === 3.2 MATERIALS - Templates ===
+    MATERIALS_INTRO_TEMPLATE = (
+        "A partir dels resultats dels assaigs de penetracio dinamica realitzats, "
+        "s'han identificat {num_levels} {nivell_word} geotecnic{plural} fins a la "
+        "fondaria investigada."
+    )
+
+    MATERIALS_LEVEL_PLACEHOLDER = (
+        "[PENDENT: Descripcio del nivell {level_num}]\n\n"
+        "Requereix plantilla de zona per a descriure la litologia, "
+        "color, consistencia i caracteristiques del material."
+    )
+
+    # === 3.3 HIDROGEOLOGIA - Templates ===
+    HIDROGEOLOGIA_SURFACE_URBAN = (
+        "La parcel.la es troba en zona urbana consolidada, amb un sistema "
+        "de drenatge municipal que recull les aigues superficials. "
+        "No s'observen cursos d'aigua naturals ni zones d'acumulacio "
+        "d'aigua a les proximitats immediates."
+    )
+
+    HIDROGEOLOGIA_SURFACE_RURAL = (
+        "La parcel.la es troba en zona rural o periurbana. "
+        "Les aigues superficials drenen de forma natural seguint "
+        "la topografia del terreny. S'ha de considerar la possible "
+        "presencia de cursos d'aigua estacionals a les proximitats."
+    )
+
+    HIDROGEOLOGIA_WATER_DETECTED = (
+        "Durant l'execucio dels treballs de camp s'ha detectat presencia "
+        "de nivell freatic a una fondaria de {depth:.2f} m respecte la rasant actual. "
+        "Es recomana tenir en compte aquest nivell per al disseny de la fonamentacio "
+        "i l'execucio de l'excavacio."
+    )
+
+    HIDROGEOLOGIA_WATER_NOT_DETECTED = (
+        "Durant l'execucio dels treballs de camp no s'ha detectat presencia "
+        "de nivell freatic dins la fondaria investigada. No obstant aixo, "
+        "es recomana preveure possibles oscil.lacions estacionals del nivell "
+        "d'aigua en funcio de les condicions climatiques."
+    )
+
+    # === 3.4 AGRESSIVITAT - Templates (EHE-08) ===
+    AGRESSIVITAT_INTRO = (
+        "S'han realitzat assaigs de laboratori per determinar el contingut "
+        "en sulfats solubles del terreny, d'acord amb la norma UNE 83963."
+    )
+
+    AGRESSIVITAT_RESULT_TEMPLATE = (
+        "El contingut en sulfats del terreny es de {sulfate:.0f} mg/kg, "
+        "el que classifica el terreny com a {classification}."
+    )
+
+    AGRESSIVITAT_NO_DATA = (
+        "[PENDENT: Resultats d'assaig de sulfats]\n\n"
+        "No es disposa de dades de contingut en sulfats. "
+        "Es recomana realitzar l'assaig corresponent."
+    )
+
+    # EHE-08 thresholds for sulfate classification
+    SULFATE_THRESHOLDS = {
+        'no_aggressive': (0, 2000, '', 'no agressiu al formigo'),
+        'weak': (2000, 3000, 'Qa', 'debilment agressiu al formigo (classe Qa)'),
+        'medium': (3000, 12000, 'Qb', 'moderadament agressiu al formigo (classe Qb)'),
+        'strong': (12000, float('inf'), 'Qc', 'fortament agressiu al formigo (classe Qc)'),
+    }
+
+    # === 3.5 EXCAVABILITAT - Templates ===
+    EXCAVABILITAT_GRANULAR = (
+        "Segons les caracteristiques del terreny observades, "
+        "la excavacio es considera FACIL amb mitjans mecanics convencionals. "
+        "Els materials granulars (graves i sorres) permeten l'excavacio "
+        "amb retroexcavadora sense necessitat d'equips especials."
+    )
+
+    EXCAVABILITAT_COHESIU = (
+        "Segons les caracteristiques del terreny observades, "
+        "la excavacio es considera de dificultat MITJANA. "
+        "Els materials cohesius poden requerir l'us de martell "
+        "hidraulic en algunes zones mes compactes."
+    )
+
+    EXCAVABILITAT_PLACEHOLDER = (
+        "L'excavabilitat del terreny dependra de les caracteristiques "
+        "dels materials presents. [PENDENT: Determinar tipus de material "
+        "a partir de les plantilles de zona]"
+    )
+
+    # === 3.6 SISMICA - Templates ===
+    SISMICA_INTRO = (
+        "D'acord amb la Norma de Construccio Sismorresistent NCSE-02, "
+        "s'ha de considerar l'accio sismica en el disseny de l'estructura."
+    )
+
+    SISMICA_FORMULAS = (
+        "Els parametres sismics de disseny son:\n\n"
+        "- Acceleracio sismica basica: ab = {ab} g\n"
+        "- Coeficient de contribucio: K = 1.0\n"
+        "- Coeficient d'amplificacio del terreny: S = {S}\n"
+        "- Acceleracio sismica de calcul: ac = S * rho * ab\n\n"
+        "On rho es el coeficient adimensional de risc (1.0 per a "
+        "construccions d'importancia normal)."
+    )
+
+    SISMICA_AB_PLACEHOLDER = "[PENDENT: Consultar ab per al municipi]"
+    SISMICA_S_DEFAULT = "1.0"  # Conservative default for T-1 soils
+
+    # === 3.7 RADO - Templates ===
+    RADO_INTRO = (
+        "Segons el mapa de potencial de rado d'Espanya elaborat pel "
+        "Consell de Seguretat Nuclear (CSN), el municipi es classifica "
+        "dins la zona de potencial de rado:"
+    )
+
+    RADO_ZONE_PLACEHOLDER = (
+        "[PENDENT: Consultar zona de rado per al municipi]\n\n"
+        "Les zones es classifiquen en:\n"
+        "- ZONA 0: Potencial baix (<300 Bq/m3)\n"
+        "- ZONA 1: Potencial mitja (300-600 Bq/m3)\n"
+        "- ZONA 2: Potencial alt (>600 Bq/m3)"
+    )
+
+    RADO_ZONE_TEMPLATE = (
+        "ZONA {zone}: Potencial {level}\n\n"
+        "{recommendation}"
+    )
+
+    RADO_RECOMMENDATIONS = {
+        0: "No es requereixen mesures especifiques de proteccio contra el rado.",
+        1: "Es recomana considerar mesures basiques de ventilacio en soterranis.",
+        2: "Es requereixen mesures de proteccio contra el rado segons el CTE DB HS6.",
+    }
+
+    # Permeability lookup by material type
+    PERMEABILITY_TABLE = {
+        'graves': ('Alta', '10^-2 a 10^-4'),
+        'sorres': ('Mitjana-Alta', '10^-3 a 10^-5'),
+        'llims': ('Baixa', '10^-5 a 10^-7'),
+        'argiles': ('Molt baixa', '10^-7 a 10^-9'),
+        'granular': ('Mitjana-Alta', '10^-3 a 10^-5'),  # Default for granular soils
+    }
+
+    FALLBACK_VALUE = "-"
+
+    def __init__(self, data: ReportData):
+        """
+        Initialize generator with report data.
+
+        Args:
+            data: ReportData instance with all project information
+        """
+        self.data = data
+
+    def _safe_value(self, value: str | None) -> str:
+        """Return value or fallback for display."""
+        if value and str(value).strip():
+            return str(value).strip()
+        return self.FALLBACK_VALUE
+
+    def _pluralize(self, count: int, singular: str, plural: str) -> str:
+        """Return singular or plural form based on count."""
+        return singular if count == 1 else plural
+
+    # === 3.1 MARC GEOLOGIC ===
+
+    def generate_marc_geologic(self) -> str:
+        """
+        Generate regional geology text (3.1).
+
+        Uses ICGC WMS API for authoritative geological unit data combined
+        with regional templates for tectonic/historical context.
+
+        Flow:
+        1. Query ICGC for geological unit at project coordinates
+        2. Determine geological region from unit/municipality
+        3. Load regional template paragraphs (1-5)
+        4. Generate paragraph 6 from ICGC unit data
+        5. Combine into complete section text
+
+        Returns:
+            Complete regional geology text, or placeholder if data unavailable
+        """
+        # Check if we have coordinates
+        if not self.data.utm_x or not self.data.utm_y:
+            logger.warning("No UTM coordinates available for ICGC query")
+            return self._generate_marc_geologic_fallback(
+                "No es disposa de coordenades UTM per consultar l'ICGC."
+            )
+
+        # Query ICGC for geological unit
+        try:
+            unit = get_geological_unit(
+                utm_x=self.data.utm_x,
+                utm_y=self.data.utm_y,
+                use_cache=True,
+            )
+            logger.info(f"ICGC unit: {unit.code} - {unit.description}")
+        except ICGCCoordinateError as e:
+            logger.error(f"Invalid coordinates: {e}")
+            return self._generate_marc_geologic_fallback(
+                "Les coordenades UTM estan fora dels límits de Catalunya."
+            )
+        except ICGCConnectionError as e:
+            logger.error(f"ICGC connection error: {e}")
+            return self._generate_marc_geologic_fallback(
+                "No s'ha pogut connectar amb el servei ICGC."
+            )
+        except ICGCNoDataError as e:
+            logger.warning(f"No ICGC data for location: {e}")
+            return self._generate_marc_geologic_fallback(
+                "No s'ha trobat informació geològica per a aquesta ubicació."
+            )
+        except ICGCError as e:
+            logger.error(f"ICGC error: {e}")
+            return self._generate_marc_geologic_fallback(str(e))
+
+        # Determine geological region
+        region = determine_region(unit, self.data.municipality)
+        logger.info(f"Determined geological region: {region}")
+
+        # Get regional template paragraphs
+        regional_paragraphs = self._load_regional_template(region)
+        if not regional_paragraphs:
+            logger.warning(f"No template for region '{region}', using generic")
+            return self._generate_marc_geologic_with_icgc_only(unit)
+
+        # Build complete text: regional paragraphs + ICGC unit paragraph
+        paragraphs = regional_paragraphs.copy()
+
+        # Add paragraph 6: ICGC unit reference
+        icgc_paragraph = unit.format_for_report()
+        paragraphs.append(icgc_paragraph)
+
+        return "\n\n".join(paragraphs)
+
+    def _load_regional_template(self, region: str) -> list[str]:
+        """
+        Load regional template paragraphs.
+
+        Checks hardcoded REGIONAL_TEMPLATES first (primary source),
+        falls back to markdown file if not found.
+
+        Args:
+            region: Region identifier (e.g., 'depressio_ebre')
+
+        Returns:
+            List of paragraph strings, or empty list if not found
+        """
+        # Primary source: hardcoded templates (tested and verified)
+        if region in self.REGIONAL_TEMPLATES:
+            return self.REGIONAL_TEMPLATES[region]
+
+        # Fallback: try loading from markdown file
+        template_path = self.TEMPLATES_DIR / f"{region}.md"
+        if not template_path.exists():
+            logger.debug(f"No template file found at {template_path}")
+            return []
+
+        try:
+            content = template_path.read_text(encoding='utf-8')
+            paragraphs = self._parse_markdown_template(content)
+            if paragraphs:
+                logger.info(f"Loaded {len(paragraphs)} paragraphs from {template_path}")
+            return paragraphs
+        except Exception as e:
+            logger.warning(f"Error loading template from {template_path}: {e}")
+            return []
+
+    def _parse_markdown_template(self, content: str) -> list[str]:
+        """
+        Parse markdown template content into paragraph list.
+
+        Expects format with `## Paràgraf N:` headers separating paragraphs.
+
+        Args:
+            content: Raw markdown file content
+
+        Returns:
+            List of paragraph text strings
+        """
+        import re
+
+        paragraphs = []
+        # Split on paragraph headers (## Paràgraf N: ...)
+        pattern = r'##\s*Paràgraf\s+\d+[^#]*'
+        matches = re.findall(pattern, content, re.IGNORECASE)
+
+        for match in matches:
+            # Remove the header line and clean up
+            lines = match.strip().split('\n')
+            # Skip the header line (first line with ## Paràgraf)
+            body_lines = [line.strip() for line in lines[1:] if line.strip()]
+            if body_lines:
+                # Join non-empty lines into a single paragraph
+                paragraph = ' '.join(body_lines)
+                paragraphs.append(paragraph)
+
+        return paragraphs
+
+    def _generate_marc_geologic_fallback(self, error_msg: str) -> str:
+        """
+        Generate fallback text when ICGC data unavailable.
+
+        Args:
+            error_msg: Specific error message to include
+
+        Returns:
+            Placeholder text with error context
+        """
+        return (
+            f"[PENDENT: Text de marc geològic regional]\n\n"
+            f"{error_msg}\n\n"
+            f"{self._MANUAL_INSTRUCTION_SUFFIX}"
+        )
+
+    def _generate_marc_geologic_with_icgc_only(self, unit: GeologicalUnit) -> str:
+        """
+        Generate text when we have ICGC data but no regional template.
+
+        Args:
+            unit: Geological unit from ICGC
+
+        Returns:
+            Basic geological context from ICGC data
+        """
+        return (
+            f"[NOTA: Plantilla regional no disponible]\n\n"
+            f"{unit.format_for_report()}\n\n"
+            f"Per a un text complet de marc geològic, cal afegir la descripció "
+            f"del context regional (evolució tectònica, sedimentació, etc.). "
+            f"{self._MANUAL_INSTRUCTION_SUFFIX}"
+        )
+
+    def generate_figura4_reference(self) -> str:
+        """Generate reference to Figure 4 (geological map)."""
+        return "[FIGURA 4: Mapa geologic de la zona (ICGC)]"
+
+    # === 3.2 MATERIALS ===
+
+    def generate_materials_intro(self) -> str:
+        """
+        Generate materials introduction paragraph (3.2).
+
+        Returns:
+            Introduction text with level count from DPSH interpretation
+        """
+        num_levels = len(self.data.soil_levels) if self.data.soil_levels else 1
+
+        return self.MATERIALS_INTRO_TEMPLATE.format(
+            num_levels=num_levels,
+            nivell_word=self._pluralize(num_levels, "nivell", "nivells"),
+            plural="" if num_levels == 1 else "s",
+        )
+
+    def generate_materials_levels(self) -> list[str]:
+        """
+        Generate level descriptions (3.2).
+
+        Note: Currently returns placeholders - requires zone templates.
+
+        Returns:
+            List of level description strings (placeholders)
+        """
+        levels = []
+
+        if self.data.soil_levels:
+            for level in self.data.soil_levels:
+                # Use placeholder with basic info from DPSH
+                level_text = (
+                    f"Nivell {level.level_number}: {level.description}\n"
+                    f"N20 mitja: {level.n20_average:.0f} cops\n"
+                    f"Gruix: {level.thickness_m:.2f} m" if level.thickness_m
+                    else f"Nivell {level.level_number}: {level.description}\n"
+                    f"N20 mitja: {level.n20_average:.0f} cops\n"
+                    f"Gruix: Continua fins a la fondaria investigada"
+                )
+                level_text += "\n\n" + self.MATERIALS_LEVEL_PLACEHOLDER.format(
+                    level_num=level.level_number
+                )
+                levels.append(level_text)
+        else:
+            levels.append(self.MATERIALS_LEVEL_PLACEHOLDER.format(level_num=1))
+
+        return levels
+
+    def generate_sample_photos(self) -> list[str]:
+        """
+        Get list of sample photo references for Section 3.
+
+        Returns:
+            List of photo reference placeholders
+        """
+        photos = []
+
+        if self.data.soil_levels:
+            for i, level in enumerate(self.data.soil_levels, 1):
+                photos.append(f"[FOTO {i}: Mostra del nivell {level.level_number}]")
+        else:
+            photos.append("[FOTO: Mostra del terreny]")
+
+        return photos
+
+    # === 3.3 HIDROGEOLOGIA ===
+
+    def generate_hidrogeologia_surface(self) -> str:
+        """
+        Generate surface hydrology text (3.3).
+
+        Returns:
+            Urban or rural surface hydrology template
+        """
+        if self.data.is_urban:
+            return self.HIDROGEOLOGIA_SURFACE_URBAN
+        return self.HIDROGEOLOGIA_SURFACE_RURAL
+
+    def generate_hidrogeologia_groundwater(self) -> str:
+        """
+        Generate groundwater statement (3.3).
+
+        Uses DPSH water detection data when available.
+
+        Returns:
+            Groundwater presence/absence statement
+        """
+        if self.data.water_detected:
+            depth = self._get_water_depth()
+            if depth is not None:
+                return self.HIDROGEOLOGIA_WATER_DETECTED.format(depth=depth)
+            return (
+                "Durant l'execucio dels treballs de camp s'ha detectat presencia "
+                "de nivell freatic (fondaria no determinada amb precisio)."
+            )
+        return self.HIDROGEOLOGIA_WATER_NOT_DETECTED
+
+    def _get_water_depth(self) -> float | None:
+        """Get water depth from DPSH data if available."""
+        if not self.data.dpsh or not self.data.dpsh.tests:
+            return None
+
+        for test in self.data.dpsh.tests:
+            for reading in test.readings:
+                if reading.water_level:
+                    return abs(reading.depth_m)
+        return None
+
+    def generate_taula7_permeability(self) -> list[PermeabilityRow]:
+        """
+        Generate permeability table (Taula 7).
+
+        Returns:
+            List of PermeabilityRow for each identified material
+        """
+        rows = []
+
+        if self.data.soil_levels:
+            for level in self.data.soil_levels:
+                # Try to match material type from description
+                material_type = self._identify_material_type(level.description)
+                perm_data = self.PERMEABILITY_TABLE.get(
+                    material_type,
+                    self.PERMEABILITY_TABLE['granular']
+                )
+
+                rows.append(PermeabilityRow(
+                    material=level.description,
+                    permeabilitat=perm_data[0],
+                    k_m_s=perm_data[1],
+                ))
+        else:
+            # Default row with placeholder
+            rows.append(PermeabilityRow(
+                material="[Material no determinat]",
+                permeabilitat=self.FALLBACK_VALUE,
+                k_m_s=self.FALLBACK_VALUE,
+            ))
+
+        return rows
+
+    def _identify_material_type(self, description: str) -> str:
+        """
+        Identify material type from description for permeability lookup.
+
+        Args:
+            description: Soil level description
+
+        Returns:
+            Material type key for permeability lookup
+        """
+        desc_lower = description.lower()
+
+        if 'grava' in desc_lower or 'graves' in desc_lower:
+            return 'graves'
+        if 'sorra' in desc_lower or 'sorres' in desc_lower:
+            return 'sorres'
+        if 'llim' in desc_lower:
+            return 'llims'
+        if 'argila' in desc_lower or 'argiles' in desc_lower:
+            return 'argiles'
+
+        # Default to granular for most construction soils
+        return 'granular'
+
+    # === 3.4 AGRESSIVITAT ===
+
+    def generate_agressivitat(self) -> str:
+        """
+        Generate aggressivity section text (3.4).
+
+        Classifies soil aggressivity based on sulfate content per EHE-08.
+
+        Returns:
+            Complete aggressivity section text with classification
+        """
+        if self.data.sulfate_mg_kg is None:
+            return self.AGRESSIVITAT_NO_DATA
+
+        sulfate = self.data.sulfate_mg_kg
+        agg_class, classification = self.classify_aggressivity(sulfate)
+
+        result = self.AGRESSIVITAT_INTRO + "\n\n"
+        result += self.AGRESSIVITAT_RESULT_TEMPLATE.format(
+            sulfate=sulfate,
+            classification=classification,
+        )
+
+        # Add recommendations based on class
+        if agg_class == 'Qa':
+            result += (
+                "\n\nNo es requereix l'us de ciment especial segons EHE-08."
+            )
+        elif agg_class == 'Qb':
+            result += (
+                "\n\nEs recomana l'us de ciment tipus SR (sulforesistent) "
+                "per als elements de formigo en contacte amb el terreny."
+            )
+        elif agg_class == 'Qc':
+            result += (
+                "\n\nEs obligatori l'us de ciment tipus SR (sulforesistent) "
+                "i es recomana considerar mesures addicionals de proteccio "
+                "per als elements de formigo en contacte amb el terreny."
+            )
+
+        return result
+
+    @staticmethod
+    def classify_aggressivity(sulfate_mg_kg: float) -> tuple[str, str]:
+        """
+        Classify soil aggressivity based on sulfate content (EHE-08).
+
+        Args:
+            sulfate_mg_kg: Sulfate content in mg/kg
+
+        Returns:
+            Tuple of (class_code, class_text)
+            - class_code: '', 'Qa', 'Qb', or 'Qc'
+            - class_text: Human-readable classification
+        """
+        if sulfate_mg_kg < 2000:
+            return ('', 'no agressiu al formigo')
+        elif sulfate_mg_kg < 3000:
+            return ('Qa', 'debilment agressiu al formigo (classe Qa)')
+        elif sulfate_mg_kg < 12000:
+            return ('Qb', 'moderadament agressiu al formigo (classe Qb)')
+        else:
+            return ('Qc', 'fortament agressiu al formigo (classe Qc)')
+
+    # === 3.5 EXCAVABILITAT ===
+
+    def generate_excavabilitat(self) -> str:
+        """
+        Generate excavability section text (3.5).
+
+        Returns:
+            Excavability assessment based on material type
+        """
+        if not self.data.soil_levels:
+            return self.EXCAVABILITAT_PLACEHOLDER
+
+        # Check dominant material type
+        for level in self.data.soil_levels:
+            material_type = self._identify_material_type(level.description)
+            if material_type in ('graves', 'sorres', 'granular'):
+                return self.EXCAVABILITAT_GRANULAR
+            if material_type in ('argiles', 'llims'):
+                return self.EXCAVABILITAT_COHESIU
+
+        return self.EXCAVABILITAT_PLACEHOLDER
+
+    # === 3.6 SISMICA ===
+
+    def generate_sismica(self) -> str:
+        """
+        Generate seismic parameters section text (3.6).
+
+        Note: ab parameter requires municipality lookup table (not implemented).
+
+        Returns:
+            Seismic section text with ab placeholder
+        """
+        result = self.SISMICA_INTRO + "\n\n"
+
+        # Determine S coefficient based on soil class
+        if self.data.cte_soil_class == "T-1":
+            S = "1.0"
+        elif self.data.cte_soil_class == "T-2":
+            S = "1.2"
+        else:
+            S = "1.4"
+
+        result += self.SISMICA_FORMULAS.format(
+            ab=self.SISMICA_AB_PLACEHOLDER,
+            S=S,
+        )
+
+        result += (
+            f"\n\nNota: El valor de ab s'ha de consultar a l'Annex 1 de la NCSE-02 "
+            f"per al municipi de {self.data.municipality or '[municipi]'}."
+        )
+
+        return result
+
+    # === 3.7 RADO ===
+
+    def generate_rado(self) -> str:
+        """
+        Generate radon zone section text (3.7).
+
+        Note: Zone lookup requires municipality table (not implemented).
+
+        Returns:
+            Radon section text with zone placeholder
+        """
+        result = self.RADO_INTRO + "\n\n"
+        result += self.RADO_ZONE_PLACEHOLDER
+
+        if self.data.municipality:
+            result += (
+                f"\n\nNota: Consultar la zona de rado per al municipi de "
+                f"{self.data.municipality} al mapa del CSN."
+            )
+
+        return result
+
+    # === Generate All ===
+
+    def generate_all(self) -> Section3Content:
+        """
+        Generate all Section 3 content.
+
+        Returns:
+            Section3Content dataclass with all generated content
+        """
+        return Section3Content(
+            # 3.1 MARC GEOLOGIC
+            marc_geologic=self.generate_marc_geologic(),
+            figura4_reference=self.generate_figura4_reference(),
+            # 3.2 MATERIALS
+            materials_intro=self.generate_materials_intro(),
+            materials_levels=self.generate_materials_levels(),
+            sample_photos=self.generate_sample_photos(),
+            # 3.3 HIDROGEOLOGIA
+            hidrogeologia_surface=self.generate_hidrogeologia_surface(),
+            hidrogeologia_groundwater=self.generate_hidrogeologia_groundwater(),
+            taula7_permeability=self.generate_taula7_permeability(),
+            # 3.4 AGRESSIVITAT
+            agressivitat=self.generate_agressivitat(),
+            # 3.5 EXCAVABILITAT
+            excavabilitat=self.generate_excavabilitat(),
+            # 3.6 SISMICA
+            sismica=self.generate_sismica(),
+            # 3.7 RADO
+            rado=self.generate_rado(),
+        )
+
+
+# CLI for testing
+if __name__ == '__main__':
+    from dataclasses import dataclass as dc
+    from dataclasses import field as dc_field
+    from datetime import date
+
+    # Minimal data classes for standalone testing
+    @dc
+    class ClientData:
+        company_name: str
+        contact_name: str | None = None
+        nif: str | None = None
+        address: str | None = None
+
+    @dc
+    class SoilLevel:
+        level_number: int
+        description: str
+        thickness_m: float | None
+        n20_average: float
+
+    @dc
+    class DPSHReading:
+        depth_m: float
+        n20: int
+        nb: float
+        water_level: bool = False
+
+    @dc
+    class DPSHTest:
+        test_id: str
+        readings: list = dc_field(default_factory=list)
+
+    @dc
+    class DPSHData:
+        expedient: str
+        tests: list = dc_field(default_factory=list)
+        source_file: str = ""
+
+        @property
+        def any_water_detected(self) -> bool:
+            for test in self.tests:
+                for r in test.readings:
+                    if r.water_level:
+                        return True
+            return False
+
+    @dc
+    class ReportData:
+        expedient: str
+        municipality: str
+        report_date: date
+        client: ClientData
+        is_urban: bool = True
+        is_sloped: bool = False
+        dpsh: DPSHData | None = None
+        soil_levels: list = dc_field(default_factory=list)
+        sulfate_mg_kg: float | None = None
+        cte_soil_class: str = "T-1"
+
+        @property
+        def water_detected(self) -> bool:
+            return self.dpsh.any_water_detected if self.dpsh else False
+
+    print("=" * 60)
+    print("G3DT Section 3 Generator - Test")
+    print("=" * 60)
+
+    # Create test data
+    client = ClientData(company_name="Construccions Test SL")
+
+    soil_levels = [
+        SoilLevel(
+            level_number=1,
+            description="Graves i sorres amb matriu llimosa",
+            thickness_m=None,
+            n20_average=36.0,
+        )
+    ]
+
+    dpsh_readings = [
+        DPSHReading(depth_m=-0.6, n20=28, nb=7),
+        DPSHReading(depth_m=-1.2, n20=35, nb=9),
+        DPSHReading(depth_m=-1.8, n20=42, nb=11),
+    ]
+    dpsh_test = DPSHTest(test_id="P-1", readings=dpsh_readings)
+    dpsh_data = DPSHData(expedient="4001612", tests=[dpsh_test])
+
+    test_data = ReportData(
+        expedient="4001612",
+        municipality="Bell-lloc d'Urgell",
+        report_date=date.today(),
+        client=client,
+        is_urban=True,
+        is_sloped=False,
+        dpsh=dpsh_data,
+        soil_levels=soil_levels,
+        sulfate_mg_kg=850.0,
+        cte_soil_class="T-1",
+    )
+
+    # Generate content
+    generator = Section3Generator(test_data)
+    content = generator.generate_all()
+
+    # Display results
+    print("\n" + "-" * 60)
+    print("3.1 MARC GEOLOGIC")
+    print("-" * 60)
+    print(content.marc_geologic)
+    print(f"\n{content.figura4_reference}")
+
+    print("\n" + "-" * 60)
+    print("3.2 MATERIALS")
+    print("-" * 60)
+    print("\n[Intro]")
+    print(content.materials_intro)
+    print("\n[Level Descriptions]")
+    for level in content.materials_levels:
+        print(level)
+        print()
+    print("[Sample Photos]")
+    for photo in content.sample_photos:
+        print(f"  - {photo}")
+
+    print("\n" + "-" * 60)
+    print("3.3 HIDROGEOLOGIA")
+    print("-" * 60)
+    print("\n[Surface Hydrology]")
+    print(content.hidrogeologia_surface)
+    print("\n[Groundwater]")
+    print(content.hidrogeologia_groundwater)
+    print("\n[Taula 7: Permeabilitat]")
+    print("  Material | Permeabilitat | k (m/s)")
+    print("  " + "-" * 45)
+    for row in content.taula7_permeability:
+        print(f"  {row.material[:20]} | {row.permeabilitat} | {row.k_m_s}")
+
+    print("\n" + "-" * 60)
+    print("3.4 AGRESSIVITAT")
+    print("-" * 60)
+    print(content.agressivitat)
+
+    print("\n" + "-" * 60)
+    print("3.5 EXCAVABILITAT")
+    print("-" * 60)
+    print(content.excavabilitat)
+
+    print("\n" + "-" * 60)
+    print("3.6 SISMICA")
+    print("-" * 60)
+    print(content.sismica)
+
+    print("\n" + "-" * 60)
+    print("3.7 RADO")
+    print("-" * 60)
+    print(content.rado)
+
+    print("\n" + "=" * 60)
+    print("Test completed successfully!")
+    print("=" * 60)
+
+    # Test aggressivity classification
+    print("\n--- Aggressivity Classification Test ---")
+    test_values = [500, 1500, 2500, 5000, 15000]
+    for val in test_values:
+        code, text = Section3Generator.classify_aggressivity(val)
+        print(f"  {val} mg/kg -> {code or 'N/A'}: {text}")
