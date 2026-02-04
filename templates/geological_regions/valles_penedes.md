@@ -28,6 +28,41 @@ En l'actualitat, la Depressió del Vallès-Penedès presenta una morfologia plan
 
 ---
 
+## Característiques dels Materials (Secció 3.2)
+
+### Colors Típics
+- **Granulars (graves, sorres):** marrons, marrons foscos, vermellosos
+- **Cohesius (argiles, llims):** marrons, grisos, vermellosos
+- **Llacustres:** grisos, blanquinosos
+
+### Característiques Regionals
+- Materials generalment **silícics** amb components **granítics** (procedents de les serralades)
+- Origen **al·luvial**, de **con de dejecció** o **llacustre**
+- Matriu **argilosa** o **llimosa** més abundant que a l'Ebre
+- Presència ocasional de **nivells argilosos** intercalats
+
+### Plantilla Nivell Granular
+
+El nivell {level_num} està format per {lithology}, de coloracions marrons a vermelloses. Aquests materials presenten una composició silícia típica dels dipòsits del Vallès-Penedès, amb components procedents de l'erosió de les serralades adjacents. {surface_note}
+
+Aquest nivell s'ha identificat com a materials {epoch}, unitat {icgc_code} segons l'ICGC.
+
+A partir dels assaigs realitzats, aquest nivell es detecta {depth_range}. Aquests materials presenten un valor mitjà de N20 de {n20_avg} cops.
+
+Des del punt de vista geomecànic es tracta d'uns materials de caràcter {granular_type}, amb una densitat i una capacitat portant {bearing_capacity}. Dels assaigs de penetració dinàmica es dedueix una consistència {consistency}.
+
+### Plantilla Nivell Cohesiu
+
+El nivell {level_num} està format per {lithology}, de coloracions marrons a grisenques. Aquests materials presenten una plasticitat {plasticity} i són típics dels dipòsits de la fossa del Vallès-Penedès. {surface_note}
+
+Aquest nivell s'ha identificat com a materials {epoch}, unitat {icgc_code} segons l'ICGC.
+
+A partir dels assaigs realitzats, aquest nivell es detecta {depth_range}. Aquests materials presenten un valor mitjà de N20 de {n20_avg} cops.
+
+Des del punt de vista geomecànic es tracta d'uns materials de caràcter cohesiu, amb una consistència {consistency} i una capacitat portant {bearing_capacity}.
+
+---
+
 ## Notes d'Ús
 
 - El paràgraf 6 (referència ICGC) es genera dinàmicament a partir de l'API de l'ICGC

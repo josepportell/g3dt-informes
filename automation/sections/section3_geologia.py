@@ -211,6 +211,96 @@ class Section3Generator:
         "color, consistencia i caracteristiques del material."
     )
 
+    # N20 classification thresholds for geomechanical characterization
+    N20_THRESHOLDS = {
+        # (min, max): (consistency_cat, bearing_cat, granular_desc)
+        (0, 5): ('molt fluixa', 'baixa', 'solts'),
+        (5, 10): ('fluixa', 'baixa a mitja', 'poc compactes'),
+        (10, 20): ('mitja', 'mitja', 'mitjanament compactes'),
+        (20, 35): ('compacta', 'mitja a elevada', 'compactes'),
+        (35, 50): ('molt compacta', 'elevada', 'molt compactes'),
+        (50, 1000): ('densa', 'molt elevada', 'molt densos'),
+    }
+
+    # Regional material templates
+    MATERIALS_TEMPLATES = {
+        'depressio_ebre': {
+            'granular': {
+                'colors': 'coloracions clars a marró clar',
+                'characteristics': (
+                    'Aquests materials presenten característiques carbonatades '
+                    'típiques de la Depressió de l\'Ebre.'
+                ),
+                'template': (
+                    'El nivell {level_num} està format per {lithology}, de {colors}. '
+                    '{characteristics} {surface_note}\n\n'
+                    'Aquest nivell s\'ha identificat com a materials {epoch}, '
+                    'unitat {icgc_code} segons l\'ICGC.\n\n'
+                    'A partir dels assaigs realitzats, aquest nivell es detecta {depth_range}. '
+                    'Aquests materials presenten un valor mitjà de N20 de {n20_avg:.0f} cops.\n\n'
+                    'Des del punt de vista geomecànic es tracta d\'uns materials de caràcter '
+                    'generalment granulars, amb una densitat i una capacitat portant {bearing}. '
+                    'Dels assaigs de penetració dinàmica es dedueix una consistència {consistency}.'
+                ),
+            },
+            'cohesiu': {
+                'colors': 'coloracions marrons a grisenques',
+                'characteristics': (
+                    'Aquests materials presenten una plasticitat variable i són '
+                    'típics dels dipòsits de la Depressió de l\'Ebre.'
+                ),
+                'template': (
+                    'El nivell {level_num} està format per {lithology}, de {colors}. '
+                    '{characteristics} {surface_note}\n\n'
+                    'Aquest nivell s\'ha identificat com a materials {epoch}, '
+                    'unitat {icgc_code} segons l\'ICGC.\n\n'
+                    'A partir dels assaigs realitzats, aquest nivell es detecta {depth_range}. '
+                    'Aquests materials presenten un valor mitjà de N20 de {n20_avg:.0f} cops.\n\n'
+                    'Des del punt de vista geomecànic es tracta d\'uns materials de caràcter '
+                    'cohesiu, amb una consistència {consistency} i una capacitat portant {bearing}.'
+                ),
+            },
+        },
+        'valles_penedes': {
+            'granular': {
+                'colors': 'coloracions marrons a vermelloses',
+                'characteristics': (
+                    'Aquests materials presenten una composició silícia típica dels '
+                    'dipòsits del Vallès-Penedès, amb components procedents de l\'erosió '
+                    'de les serralades adjacents.'
+                ),
+                'template': (
+                    'El nivell {level_num} està format per {lithology}, de {colors}. '
+                    '{characteristics} {surface_note}\n\n'
+                    'Aquest nivell s\'ha identificat com a materials {epoch}, '
+                    'unitat {icgc_code} segons l\'ICGC.\n\n'
+                    'A partir dels assaigs realitzats, aquest nivell es detecta {depth_range}. '
+                    'Aquests materials presenten un valor mitjà de N20 de {n20_avg:.0f} cops.\n\n'
+                    'Des del punt de vista geomecànic es tracta d\'uns materials de caràcter '
+                    'generalment granulars, amb una densitat i una capacitat portant {bearing}. '
+                    'Dels assaigs de penetració dinàmica es dedueix una consistència {consistency}.'
+                ),
+            },
+            'cohesiu': {
+                'colors': 'coloracions marrons a grisenques',
+                'characteristics': (
+                    'Aquests materials presenten una plasticitat variable i són '
+                    'típics dels dipòsits de la fossa del Vallès-Penedès.'
+                ),
+                'template': (
+                    'El nivell {level_num} està format per {lithology}, de {colors}. '
+                    '{characteristics} {surface_note}\n\n'
+                    'Aquest nivell s\'ha identificat com a materials {epoch}, '
+                    'unitat {icgc_code} segons l\'ICGC.\n\n'
+                    'A partir dels assaigs realitzats, aquest nivell es detecta {depth_range}. '
+                    'Aquests materials presenten un valor mitjà de N20 de {n20_avg:.0f} cops.\n\n'
+                    'Des del punt de vista geomecànic es tracta d\'uns materials de caràcter '
+                    'cohesiu, amb una consistència {consistency} i una capacitat portant {bearing}.'
+                ),
+            },
+        },
+    }
+
     # === 3.3 HIDROGEOLOGIA - Templates ===
     HIDROGEOLOGIA_SURFACE_URBAN = (
         "La parcel.la es troba en zona urbana consolidada, amb un sistema "
@@ -552,34 +642,133 @@ class Section3Generator:
             plural="" if num_levels == 1 else "s",
         )
 
-    def generate_materials_levels(self) -> list[str]:
+    def _get_n20_classification(self, n20: float) -> tuple[str, str, str]:
         """
-        Generate level descriptions (3.2).
+        Classify N20 value into consistency and bearing capacity categories.
 
-        Note: Currently returns placeholders - requires zone templates.
+        Args:
+            n20: Average N20 blow count
 
         Returns:
-            List of level description strings (placeholders)
+            Tuple of (consistency, bearing_capacity, granular_description)
+        """
+        for (min_val, max_val), (consistency, bearing, granular) in self.N20_THRESHOLDS.items():
+            if min_val <= n20 < max_val:
+                return consistency, bearing, granular
+        return 'variable', 'variable', 'de compacitat variable'
+
+    def _get_icgc_unit_cached(self) -> GeologicalUnit | None:
+        """Get ICGC unit, caching the result for reuse."""
+        if not hasattr(self, '_cached_icgc_unit'):
+            self._cached_icgc_unit = None
+            if self.data.utm_x and self.data.utm_y:
+                try:
+                    self._cached_icgc_unit = get_geological_unit(
+                        utm_x=self.data.utm_x,
+                        utm_y=self.data.utm_y,
+                        use_cache=True,
+                    )
+                except ICGCError as e:
+                    logger.warning(f"Could not get ICGC unit: {e}")
+        return self._cached_icgc_unit
+
+    def _get_region_cached(self) -> str:
+        """Get geological region, caching the result for reuse."""
+        if not hasattr(self, '_cached_region'):
+            unit = self._get_icgc_unit_cached()
+            self._cached_region = determine_region(unit, self.data.municipality)
+        return self._cached_region
+
+    def generate_materials_levels(self) -> list[str]:
+        """
+        Generate level descriptions (3.2) using ICGC data and regional templates.
+
+        Returns:
+            List of level description strings
         """
         levels = []
 
-        if self.data.soil_levels:
-            for level in self.data.soil_levels:
-                # Use placeholder with basic info from DPSH
-                level_text = (
-                    f"Nivell {level.level_number}: {level.description}\n"
-                    f"N20 mitja: {level.n20_average:.0f} cops\n"
-                    f"Gruix: {level.thickness_m:.2f} m" if level.thickness_m
-                    else f"Nivell {level.level_number}: {level.description}\n"
-                    f"N20 mitja: {level.n20_average:.0f} cops\n"
-                    f"Gruix: Continua fins a la fondaria investigada"
-                )
-                level_text += "\n\n" + self.MATERIALS_LEVEL_PLACEHOLDER.format(
-                    level_num=level.level_number
-                )
-                levels.append(level_text)
-        else:
+        if not self.data.soil_levels:
             levels.append(self.MATERIALS_LEVEL_PLACEHOLDER.format(level_num=1))
+            return levels
+
+        # Get ICGC unit and region for template selection
+        icgc_unit = self._get_icgc_unit_cached()
+        region = self._get_region_cached()
+
+        # Get regional templates (default to depressio_ebre)
+        region_templates = self.MATERIALS_TEMPLATES.get(
+            region, self.MATERIALS_TEMPLATES['depressio_ebre']
+        )
+
+        for i, level in enumerate(self.data.soil_levels):
+            # Determine material type from description
+            material_type = self._identify_material_type(level.description)
+            is_granular = material_type in ('graves', 'sorres', 'granular')
+
+            # Select appropriate template
+            template_key = 'granular' if is_granular else 'cohesiu'
+            template_data = region_templates.get(template_key, region_templates['granular'])
+
+            # Get N20 classification
+            consistency, bearing, _ = self._get_n20_classification(level.n20_average)
+
+            # Format depth range
+            if i == 0:
+                depth_start = "superficialment"
+            else:
+                prev_level = self.data.soil_levels[i - 1]
+                depth_start = f"a partir de {prev_level.depth_to_m:.2f} m"
+
+            if level.thickness_m:
+                depth_range = f"{depth_start} i fins a {level.depth_to_m:.2f} m, amb un gruix de {level.thickness_m:.2f} m"
+            else:
+                depth_range = f"{depth_start} i fins a la cota de finalització dels assaigs"
+
+            # Surface note for first level
+            surface_note = ""
+            if i == 0:
+                surface_note = (
+                    "Superficialment es detecta un tram de sòl vegetal i/o "
+                    "materials antropitzats de petit gruix."
+                )
+
+            # Get lithology from DPSH description or ICGC
+            lithology = level.description.lower()
+            if not lithology or lithology == "sense descripció":
+                if icgc_unit:
+                    # Extract main lithology from ICGC description
+                    lithology = icgc_unit.description.split('(')[0].strip().lower()
+                else:
+                    lithology = "materials granulars" if is_granular else "materials cohesius"
+
+            # Get epoch from ICGC or use generic
+            epoch = "quaternaris"
+            icgc_code = "Qx"
+            if icgc_unit:
+                epoch = icgc_unit.epoch.lower() if icgc_unit.epoch else "quaternaris"
+                icgc_code = icgc_unit.code
+
+            # Format the level text
+            try:
+                level_text = template_data['template'].format(
+                    level_num=level.level_number,
+                    lithology=lithology,
+                    colors=template_data['colors'],
+                    characteristics=template_data['characteristics'],
+                    surface_note=surface_note,
+                    epoch=epoch,
+                    icgc_code=icgc_code,
+                    depth_range=depth_range,
+                    n20_avg=level.n20_average,
+                    bearing=bearing,
+                    consistency=consistency,
+                )
+            except KeyError as e:
+                logger.warning(f"Template formatting error: {e}")
+                level_text = self.MATERIALS_LEVEL_PLACEHOLDER.format(level_num=level.level_number)
+
+            levels.append(level_text)
 
         return levels
 

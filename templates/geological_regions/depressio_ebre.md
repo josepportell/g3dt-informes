@@ -28,6 +28,41 @@ Des de finals de l'Oligocè fins a l'actualitat la depressió de l'Ebre ha deixa
 
 ---
 
+## Característiques dels Materials (Secció 3.2)
+
+### Colors Típics
+- **Granulars (graves, sorres):** coloracions clars, marrons clars, beixos
+- **Cohesius (argiles, llims):** marrons, grisos clars
+- **Carbonatats:** blanquinosos, crema
+
+### Característiques Regionals
+- Materials generalment **carbonatats** (presència de CaCO3)
+- Origen **al·luvial** i de **terrassa fluvial**
+- Matriu **sorrenca** o **llimosa**
+- Cimentació variable (de fluixa a moderada)
+
+### Plantilla Nivell Granular
+
+El nivell {level_num} està format per {lithology}, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. {surface_note}
+
+Aquest nivell s'ha identificat com a materials {epoch}, unitat {icgc_code} segons l'ICGC.
+
+A partir dels assaigs realitzats, aquest nivell es detecta {depth_range}. Aquests materials presenten un valor mitjà de N20 de {n20_avg} cops.
+
+Des del punt de vista geomecànic es tracta d'uns materials de caràcter {granular_type}, amb una densitat i una capacitat portant {bearing_capacity}. Dels assaigs de penetració dinàmica es dedueix una consistència {consistency}.
+
+### Plantilla Nivell Cohesiu
+
+El nivell {level_num} està format per {lithology}, de coloracions marró a gris. Aquests materials presenten una plasticitat {plasticity} i són típics dels dipòsits de la Depressió de l'Ebre. {surface_note}
+
+Aquest nivell s'ha identificat com a materials {epoch}, unitat {icgc_code} segons l'ICGC.
+
+A partir dels assaigs realitzats, aquest nivell es detecta {depth_range}. Aquests materials presenten un valor mitjà de N20 de {n20_avg} cops.
+
+Des del punt de vista geomecànic es tracta d'uns materials de caràcter cohesiu, amb una consistència {consistency} i una capacitat portant {bearing_capacity}.
+
+---
+
 ## Notes d'Ús
 
 - El paràgraf 6 (referència ICGC) es genera dinàmicament a partir de l'API de l'ICGC
