@@ -104,6 +104,13 @@ SEISMIC_AB_VALUES: dict[str, float] = {
 SEISMIC_AB_DEFAULT = 0.04
 
 
+@dataclass
+class SeismicLookupResult:
+    """Result of seismic ab lookup."""
+    ab: float
+    found: bool  # True if municipality was in lookup table
+
+
 def get_seismic_ab(municipality: str) -> float:
     """
     Get basic seismic acceleration (ab) for a municipality.
@@ -114,22 +121,35 @@ def get_seismic_ab(municipality: str) -> float:
     Returns:
         ab value in units of g (gravity)
     """
+    return get_seismic_ab_with_status(municipality).ab
+
+
+def get_seismic_ab_with_status(municipality: str) -> SeismicLookupResult:
+    """
+    Get basic seismic acceleration (ab) for a municipality with lookup status.
+
+    Args:
+        municipality: Municipality name (case-insensitive)
+
+    Returns:
+        SeismicLookupResult with ab value and whether municipality was found
+    """
     if not municipality:
-        return SEISMIC_AB_DEFAULT
+        return SeismicLookupResult(ab=SEISMIC_AB_DEFAULT, found=False)
 
     # Normalize: lowercase, strip whitespace
     key = municipality.lower().strip()
 
     # Try exact match
     if key in SEISMIC_AB_VALUES:
-        return SEISMIC_AB_VALUES[key]
+        return SeismicLookupResult(ab=SEISMIC_AB_VALUES[key], found=True)
 
     # Try partial match (municipality name contained in key or vice versa)
     for muni_key, ab_value in SEISMIC_AB_VALUES.items():
         if muni_key in key or key in muni_key:
-            return ab_value
+            return SeismicLookupResult(ab=ab_value, found=True)
 
-    return SEISMIC_AB_DEFAULT
+    return SeismicLookupResult(ab=SEISMIC_AB_DEFAULT, found=False)
 
 
 def is_seismic_norm_required(ab: float) -> bool:
@@ -288,6 +308,13 @@ class RadonInfo:
             )
 
 
+@dataclass
+class RadonLookupResult:
+    """Result of radon zone lookup."""
+    zone: RadonZone
+    found: bool  # True if municipality was in lookup table
+
+
 def get_radon_zone(municipality: str) -> RadonZone:
     """
     Get radon zone classification for a municipality.
@@ -298,22 +325,42 @@ def get_radon_zone(municipality: str) -> RadonZone:
     Returns:
         Radon zone (0, 1, or 2)
     """
+    return get_radon_zone_with_status(municipality).zone
+
+
+def get_radon_zone_with_status(municipality: str) -> RadonLookupResult:
+    """
+    Get radon zone classification for a municipality with lookup status.
+
+    Args:
+        municipality: Municipality name (case-insensitive)
+
+    Returns:
+        RadonLookupResult with zone and whether municipality was found
+    """
     if not municipality:
-        return RADON_ZONE_DEFAULT
+        return RadonLookupResult(zone=RADON_ZONE_DEFAULT, found=False)
 
     # Normalize: lowercase, strip whitespace
     key = municipality.lower().strip()
 
     # Try exact match
     if key in RADON_ZONES:
-        return RADON_ZONES[key]
+        return RadonLookupResult(zone=RADON_ZONES[key], found=True)
 
     # Try partial match
     for muni_key, zone in RADON_ZONES.items():
         if muni_key in key or key in muni_key:
-            return zone
+            return RadonLookupResult(zone=zone, found=True)
 
-    return RADON_ZONE_DEFAULT
+    return RadonLookupResult(zone=RADON_ZONE_DEFAULT, found=False)
+
+
+@dataclass
+class RadonInfoWithStatus:
+    """Complete radon info with lookup status."""
+    info: RadonInfo
+    found: bool  # True if municipality was in lookup table
 
 
 def get_radon_info(municipality: str) -> RadonInfo:
@@ -326,8 +373,22 @@ def get_radon_info(municipality: str) -> RadonInfo:
     Returns:
         RadonInfo with zone, level, and recommendations
     """
-    zone = get_radon_zone(municipality)
-    return RadonInfo.from_zone(zone)
+    return get_radon_info_with_status(municipality).info
+
+
+def get_radon_info_with_status(municipality: str) -> RadonInfoWithStatus:
+    """
+    Get complete radon information for a municipality with lookup status.
+
+    Args:
+        municipality: Municipality name (case-insensitive)
+
+    Returns:
+        RadonInfoWithStatus with radon info and whether municipality was found
+    """
+    result = get_radon_zone_with_status(municipality)
+    info = RadonInfo.from_zone(result.zone)
+    return RadonInfoWithStatus(info=info, found=result.found)
 
 
 # === CLI for testing ===

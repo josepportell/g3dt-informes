@@ -37,10 +37,11 @@ from ..icgc_geology import (
     ICGCNoDataError,
 )
 from ..municipal_data import (
-    get_seismic_ab,
+    get_seismic_ab_with_status,
     is_seismic_norm_required,
-    get_radon_info,
-    RadonInfo,
+    get_radon_info_with_status,
+    SeismicLookupResult,
+    RadonInfoWithStatus,
 )
 
 if TYPE_CHECKING:
@@ -786,6 +787,13 @@ class Section3Generator:
 
     # === 3.6 SISMICA ===
 
+    # Verification warning for unknown municipalities
+    SISMICA_VERIFICATION_WARNING = (
+        "\n\n⚠️ VERIFICACIÓ REQUERIDA: El municipi '{municipality}' no es troba "
+        "a la taula de consulta. El valor ab = {ab} g és un valor per defecte. "
+        "Si us plau, verifiqueu l'acceleració sísmica bàsica a l'Annex 1 de la NCSE-02."
+    )
+
     def generate_sismica(self) -> str:
         """
         Generate seismic parameters section text (3.6).
@@ -798,8 +806,9 @@ class Section3Generator:
         """
         result = self.SISMICA_INTRO + "\n\n"
 
-        # Get ab value from municipality lookup
-        ab = get_seismic_ab(self.data.municipality or "")
+        # Get ab value from municipality lookup (with status)
+        seismic_result = get_seismic_ab_with_status(self.data.municipality or "")
+        ab = seismic_result.ab
         ab_str = f"{ab:.2f}"
 
         # Determine S coefficient based on soil class
@@ -839,9 +848,23 @@ class Section3Generator:
                 f"per tant és obligatòria l'aplicació de la NCSE-02."
             )
 
+        # Add verification warning if municipality not found in lookup table
+        if not seismic_result.found and self.data.municipality:
+            result += self.SISMICA_VERIFICATION_WARNING.format(
+                municipality=self.data.municipality,
+                ab=ab_str,
+            )
+
         return result
 
     # === 3.7 RADO ===
+
+    # Verification warning for unknown municipalities
+    RADO_VERIFICATION_WARNING = (
+        "\n\n⚠️ VERIFICACIÓ REQUERIDA: El municipi '{municipality}' no es troba "
+        "a la taula de consulta. La zona {zone} (potencial {level}) és un valor per defecte. "
+        "Si us plau, verifiqueu la classificació de radó a l'Apèndix B del RD 732/2019."
+    )
 
     def generate_rado(self) -> str:
         """
@@ -855,8 +878,9 @@ class Section3Generator:
         """
         result = self.RADO_INTRO + "\n\n"
 
-        # Get radon info from municipality lookup
-        radon_info = get_radon_info(self.data.municipality or "")
+        # Get radon info from municipality lookup (with status)
+        radon_result = get_radon_info_with_status(self.data.municipality or "")
+        radon_info = radon_result.info
 
         # Format zone information
         result += self.RADO_ZONE_TEMPLATE.format(
@@ -884,6 +908,14 @@ class Section3Generator:
                     "municipi amb concentracions potencialment elevades de gas radó en edificis tancats. "
                     "És obligatòria la implementació de mesures de protecció segons CTE DB HS6."
                 )
+
+        # Add verification warning if municipality not found in lookup table
+        if not radon_result.found and self.data.municipality:
+            result += self.RADO_VERIFICATION_WARNING.format(
+                municipality=self.data.municipality,
+                zone=radon_info.zone,
+                level=radon_info.level,
+            )
 
         return result
 
