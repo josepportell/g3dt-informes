@@ -1,0 +1,2523 @@
+{
+  "metadata": {
+    "source": "CTE DB HS6 Apéndice B - Clasificación de municipios en función del potencial de radón",
+    "legal_reference": "RD 732/2019",
+    "boe": "BOE-A-2019-18528",
+    "source_date": "2019-12-27",
+    "extracted_date": "2026-02-04",
+    "pdf_source": "/tmp/cte_municipios.pdf",
+    "zone_definitions": {
+      "zone_0": "Low risk (<300 Bq/m³) - not listed in source",
+      "zone_1": "Moderate risk (300-600 Bq/m³)",
+      "zone_2": "High risk (>600 Bq/m³)"
+    },
+    "zone_1_count": 325,
+    "zone_2_count": 175,
+    "unmatched_count": 0
+  },
+  "zone_1": [
+    {
+      "name": "Abrera",
+      "province": "Barcelona",
+      "ine_code": "08001"
+    },
+    {
+      "name": "Aiguafreda",
+      "province": "Barcelona",
+      "ine_code": "08014"
+    },
+    {
+      "name": "Artés",
+      "province": "Barcelona",
+      "ine_code": "08010"
+    },
+    {
+      "name": "Avinyó",
+      "province": "Barcelona",
+      "ine_code": "08012"
+    },
+    {
+      "name": "Badia del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08904"
+    },
+    {
+      "name": "Balenyà",
+      "province": "Barcelona",
+      "ine_code": "08017"
+    },
+    {
+      "name": "Balsareny",
+      "province": "Barcelona",
+      "ine_code": "08018"
+    },
+    {
+      "name": "Barberà del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08252"
+    },
+    {
+      "name": "Barcelona",
+      "province": "Barcelona",
+      "ine_code": "08019"
+    },
+    {
+      "name": "Brull, El",
+      "province": "Barcelona",
+      "ine_code": "08026"
+    },
+    {
+      "name": "Calldetenes",
+      "province": "Barcelona",
+      "ine_code": "08037"
+    },
+    {
+      "name": "Callús",
+      "province": "Barcelona",
+      "ine_code": "08038"
+    },
+    {
+      "name": "Campins",
+      "province": "Barcelona",
+      "ine_code": "08039"
+    },
+    {
+      "name": "Canovelles",
+      "province": "Barcelona",
+      "ine_code": "08041"
+    },
+    {
+      "name": "Cardedeu",
+      "province": "Barcelona",
+      "ine_code": "08046"
+    },
+    {
+      "name": "Castellar del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08051"
+    },
+    {
+      "name": "Castellbisbal",
+      "province": "Barcelona",
+      "ine_code": "08054"
+    },
+    {
+      "name": "Castellfollit de Riubregós",
+      "province": "Barcelona",
+      "ine_code": "08060"
+    },
+    {
+      "name": "Castellgalí",
+      "province": "Barcelona",
+      "ine_code": "08061"
+    },
+    {
+      "name": "Centelles",
+      "province": "Barcelona",
+      "ine_code": "08067"
+    },
+    {
+      "name": "Cerdanyola del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08266"
+    },
+    {
+      "name": "Cervelló",
+      "province": "Barcelona",
+      "ine_code": "08068"
+    },
+    {
+      "name": "Corbera de Llobregat",
+      "province": "Barcelona",
+      "ine_code": "08072"
+    },
+    {
+      "name": "Cornellà de Llobregat",
+      "province": "Barcelona",
+      "ine_code": "08073"
+    },
+    {
+      "name": "Esparreguera",
+      "province": "Barcelona",
+      "ine_code": "08076"
+    },
+    {
+      "name": "Esplugues de Llobregat",
+      "province": "Barcelona",
+      "ine_code": "08077"
+    },
+    {
+      "name": "Fogars de Montclús",
+      "province": "Barcelona",
+      "ine_code": "08081"
+    },
+    {
+      "name": "Folgueroles",
+      "province": "Barcelona",
+      "ine_code": "08083"
+    },
+    {
+      "name": "Franqueses del Vallès, Les",
+      "province": "Barcelona",
+      "ine_code": "08086"
+    },
+    {
+      "name": "Gelida",
+      "province": "Barcelona",
+      "ine_code": "08091"
+    },
+    {
+      "name": "Gisclareny",
+      "province": "Barcelona",
+      "ine_code": "08093"
+    },
+    {
+      "name": "Granollers",
+      "province": "Barcelona",
+      "ine_code": "08096"
+    },
+    {
+      "name": "Gurb",
+      "province": "Barcelona",
+      "ine_code": "08100"
+    },
+    {
+      "name": "Hospitalet de Llobregat, L'",
+      "province": "Barcelona",
+      "ine_code": "08101"
+    },
+    {
+      "name": "Llagosta, La",
+      "province": "Barcelona",
+      "ine_code": "08105"
+    },
+    {
+      "name": "Lliçà d'Amunt",
+      "province": "Barcelona",
+      "ine_code": "08107"
+    },
+    {
+      "name": "Lliçà de Vall",
+      "province": "Barcelona",
+      "ine_code": "08108"
+    },
+    {
+      "name": "Malla",
+      "province": "Barcelona",
+      "ine_code": "08111"
+    },
+    {
+      "name": "Manlleu",
+      "province": "Barcelona",
+      "ine_code": "08112"
+    },
+    {
+      "name": "Manresa",
+      "province": "Barcelona",
+      "ine_code": "08113"
+    },
+    {
+      "name": "Martorell",
+      "province": "Barcelona",
+      "ine_code": "08114"
+    },
+    {
+      "name": "Masies de Roda, Les",
+      "province": "Barcelona",
+      "ine_code": "08116"
+    },
+    {
+      "name": "Masies de Voltregà, Les",
+      "province": "Barcelona",
+      "ine_code": "08117"
+    },
+    {
+      "name": "Matadepera",
+      "province": "Barcelona",
+      "ine_code": "08120"
+    },
+    {
+      "name": "Molins de Rei",
+      "province": "Barcelona",
+      "ine_code": "08123"
+    },
+    {
+      "name": "Mollet del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08124"
+    },
+    {
+      "name": "Monistrol de Calders",
+      "province": "Barcelona",
+      "ine_code": "08128"
+    },
+    {
+      "name": "Montesquiu",
+      "province": "Barcelona",
+      "ine_code": "08131"
+    },
+    {
+      "name": "Montmeló",
+      "province": "Barcelona",
+      "ine_code": "08135"
+    },
+    {
+      "name": "Navarcles",
+      "province": "Barcelona",
+      "ine_code": "08140"
+    },
+    {
+      "name": "Navàs",
+      "province": "Barcelona",
+      "ine_code": "08141"
+    },
+    {
+      "name": "Olesa de Montserrat",
+      "province": "Barcelona",
+      "ine_code": "08147"
+    },
+    {
+      "name": "Orís",
+      "province": "Barcelona",
+      "ine_code": "08150"
+    },
+    {
+      "name": "Palau-solità i Plegamans",
+      "province": "Barcelona",
+      "ine_code": "08156"
+    },
+    {
+      "name": "Pallejà",
+      "province": "Barcelona",
+      "ine_code": "08157"
+    },
+    {
+      "name": "Palma de Cervelló, La",
+      "province": "Barcelona",
+      "ine_code": "08905"
+    },
+    {
+      "name": "Papiol, El",
+      "province": "Barcelona",
+      "ine_code": "08158"
+    },
+    {
+      "name": "Parets del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08159"
+    },
+    {
+      "name": "Pobla de Lillet, La",
+      "province": "Barcelona",
+      "ine_code": "08166"
+    },
+    {
+      "name": "Polinyà",
+      "province": "Barcelona",
+      "ine_code": "08167"
+    },
+    {
+      "name": "Pont de Vilomara i Rocafort, El",
+      "province": "Barcelona",
+      "ine_code": "08182"
+    },
+    {
+      "name": "Prat de Llobregat, El",
+      "province": "Barcelona",
+      "ine_code": "08169"
+    },
+    {
+      "name": "Premià de Mar",
+      "province": "Barcelona",
+      "ine_code": "08172"
+    },
+    {
+      "name": "Ripollet",
+      "province": "Barcelona",
+      "ine_code": "08180"
+    },
+    {
+      "name": "Roda de Ter",
+      "province": "Barcelona",
+      "ine_code": "08183"
+    },
+    {
+      "name": "Rubí",
+      "province": "Barcelona",
+      "ine_code": "08184"
+    },
+    {
+      "name": "Sabadell",
+      "province": "Barcelona",
+      "ine_code": "08187"
+    },
+    {
+      "name": "Saldes",
+      "province": "Barcelona",
+      "ine_code": "08190"
+    },
+    {
+      "name": "Sallent",
+      "province": "Barcelona",
+      "ine_code": "08191"
+    },
+    {
+      "name": "Sant Adrià de Besòs",
+      "province": "Barcelona",
+      "ine_code": "08194"
+    },
+    {
+      "name": "Sant Andreu de la Barca",
+      "province": "Barcelona",
+      "ine_code": "08196"
+    },
+    {
+      "name": "Sant Boi de Llobregat",
+      "province": "Barcelona",
+      "ine_code": "08200"
+    },
+    {
+      "name": "Sant Cugat del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08205"
+    },
+    {
+      "name": "Sant Esteve de Palautordera",
+      "province": "Barcelona",
+      "ine_code": "08207"
+    },
+    {
+      "name": "Sant Feliu de Codines",
+      "province": "Barcelona",
+      "ine_code": "08210"
+    },
+    {
+      "name": "Sant Feliu de Llobregat",
+      "province": "Barcelona",
+      "ine_code": "08211"
+    },
+    {
+      "name": "Sant Joan Despí",
+      "province": "Barcelona",
+      "ine_code": "08217"
+    },
+    {
+      "name": "Sant Joan de Vilatorrada",
+      "province": "Barcelona",
+      "ine_code": "08218"
+    },
+    {
+      "name": "Sant Julià de Cerdanyola",
+      "province": "Barcelona",
+      "ine_code": "08903"
+    },
+    {
+      "name": "Sant Julià de Vilatorta",
+      "province": "Barcelona",
+      "ine_code": "08220"
+    },
+    {
+      "name": "Sant Just Desvern",
+      "province": "Barcelona",
+      "ine_code": "08221"
+    },
+    {
+      "name": "Sant Llorenç Savall",
+      "province": "Barcelona",
+      "ine_code": "08223"
+    },
+    {
+      "name": "Sant Martí de Centelles",
+      "province": "Barcelona",
+      "ine_code": "08224"
+    },
+    {
+      "name": "Sant Mateu de Bages",
+      "province": "Barcelona",
+      "ine_code": "08229"
+    },
+    {
+      "name": "Sant Pere de Torelló",
+      "province": "Barcelona",
+      "ine_code": "08233"
+    },
+    {
+      "name": "Sant Pere de Vilamajor",
+      "province": "Barcelona",
+      "ine_code": "08234"
+    },
+    {
+      "name": "Sant Quirze de Besora",
+      "province": "Barcelona",
+      "ine_code": "08237"
+    },
+    {
+      "name": "Sant Quirze del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08238"
+    },
+    {
+      "name": "Sant Vicenç de Castellet",
+      "province": "Barcelona",
+      "ine_code": "08262"
+    },
+    {
+      "name": "Sant Vicenç de Torelló",
+      "province": "Barcelona",
+      "ine_code": "08265"
+    },
+    {
+      "name": "Sant Vicenç dels Horts",
+      "province": "Barcelona",
+      "ine_code": "08263"
+    },
+    {
+      "name": "Santa Coloma de Cervelló",
+      "province": "Barcelona",
+      "ine_code": "08244"
+    },
+    {
+      "name": "Santa Eugènia de Berga",
+      "province": "Barcelona",
+      "ine_code": "08246"
+    },
+    {
+      "name": "Santa Perpètua de Mogoda",
+      "province": "Barcelona",
+      "ine_code": "08260"
+    },
+    {
+      "name": "Sentmenat",
+      "province": "Barcelona",
+      "ine_code": "08267"
+    },
+    {
+      "name": "Seva",
+      "province": "Barcelona",
+      "ine_code": "08269"
+    },
+    {
+      "name": "Súria",
+      "province": "Barcelona",
+      "ine_code": "08274"
+    },
+    {
+      "name": "Taradell",
+      "province": "Barcelona",
+      "ine_code": "08278"
+    },
+    {
+      "name": "Tavèrnoles",
+      "province": "Barcelona",
+      "ine_code": "08275"
+    },
+    {
+      "name": "Terrassa",
+      "province": "Barcelona",
+      "ine_code": "08279"
+    },
+    {
+      "name": "Tona",
+      "province": "Barcelona",
+      "ine_code": "08283"
+    },
+    {
+      "name": "Torelló",
+      "province": "Barcelona",
+      "ine_code": "08285"
+    },
+    {
+      "name": "Vic",
+      "province": "Barcelona",
+      "ine_code": "08298"
+    },
+    {
+      "name": "Viladecans",
+      "province": "Barcelona",
+      "ine_code": "08301"
+    },
+    {
+      "name": "Viladecavalls",
+      "province": "Barcelona",
+      "ine_code": "08300"
+    },
+    {
+      "name": "Vilassar de Mar",
+      "province": "Barcelona",
+      "ine_code": "08219"
+    },
+    {
+      "name": "Agullana",
+      "province": "Girona",
+      "ine_code": "17001"
+    },
+    {
+      "name": "Aiguaviva",
+      "province": "Girona",
+      "ine_code": "17002"
+    },
+    {
+      "name": "Albanyà",
+      "province": "Girona",
+      "ine_code": "17003"
+    },
+    {
+      "name": "Argelaguer",
+      "province": "Girona",
+      "ine_code": "17010"
+    },
+    {
+      "name": "Armentera, L'",
+      "province": "Girona",
+      "ine_code": "17011"
+    },
+    {
+      "name": "Banyoles",
+      "province": "Girona",
+      "ine_code": "17015"
+    },
+    {
+      "name": "Besalú",
+      "province": "Girona",
+      "ine_code": "17019"
+    },
+    {
+      "name": "Bescanó",
+      "province": "Girona",
+      "ine_code": "17020"
+    },
+    {
+      "name": "Beuda",
+      "province": "Girona",
+      "ine_code": "17021"
+    },
+    {
+      "name": "Bisbal d'Empordà, La",
+      "province": "Girona",
+      "ine_code": "17022"
+    },
+    {
+      "name": "Boadella i les Escaules",
+      "province": "Girona",
+      "ine_code": "17029"
+    },
+    {
+      "name": "Bolvir",
+      "province": "Girona",
+      "ine_code": "17024"
+    },
+    {
+      "name": "Bordils",
+      "province": "Girona",
+      "ine_code": "17025"
+    },
+    {
+      "name": "Breda",
+      "province": "Girona",
+      "ine_code": "17027"
+    },
+    {
+      "name": "Cabanelles",
+      "province": "Girona",
+      "ine_code": "17031"
+    },
+    {
+      "name": "Cabanes",
+      "province": "Girona",
+      "ine_code": "17030"
+    },
+    {
+      "name": "Campdevànol",
+      "province": "Girona",
+      "ine_code": "17036"
+    },
+    {
+      "name": "Campllong",
+      "province": "Girona",
+      "ine_code": "17038"
+    },
+    {
+      "name": "Camós",
+      "province": "Girona",
+      "ine_code": "17035"
+    },
+    {
+      "name": "Canet d'Adri",
+      "province": "Girona",
+      "ine_code": "17040"
+    },
+    {
+      "name": "Cantallops",
+      "province": "Girona",
+      "ine_code": "17041"
+    },
+    {
+      "name": "Capmany",
+      "province": "Girona",
+      "ine_code": "17042"
+    },
+    {
+      "name": "Castelló d'Empúries",
+      "province": "Girona",
+      "ine_code": "17047"
+    },
+    {
+      "name": "Cellera de Ter, La",
+      "province": "Girona",
+      "ine_code": "17189"
+    },
+    {
+      "name": "Celrà",
+      "province": "Girona",
+      "ine_code": "17049"
+    },
+    {
+      "name": "Cervià de Ter",
+      "province": "Girona",
+      "ine_code": "17050"
+    },
+    {
+      "name": "Cistella",
+      "province": "Girona",
+      "ine_code": "17051"
+    },
+    {
+      "name": "Cornellà del Terri",
+      "province": "Girona",
+      "ine_code": "17056"
+    },
+    {
+      "name": "Corçà",
+      "province": "Girona",
+      "ine_code": "17057"
+    },
+    {
+      "name": "Cruïlles, Monells i Sant Sadurní de l'Heura",
+      "province": "Girona",
+      "ine_code": "17901"
+    },
+    {
+      "name": "Darnius",
+      "province": "Girona",
+      "ine_code": "17060"
+    },
+    {
+      "name": "Escala, L'",
+      "province": "Girona",
+      "ine_code": "17062"
+    },
+    {
+      "name": "Far d'Empordà, El",
+      "province": "Girona",
+      "ine_code": "17005"
+    },
+    {
+      "name": "Figueres",
+      "province": "Girona",
+      "ine_code": "17066"
+    },
+    {
+      "name": "Flaçà",
+      "province": "Girona",
+      "ine_code": "17067"
+    },
+    {
+      "name": "Foixà",
+      "province": "Girona",
+      "ine_code": "17068"
+    },
+    {
+      "name": "Fontcoberta",
+      "province": "Girona",
+      "ine_code": "17071"
+    },
+    {
+      "name": "Forallac",
+      "province": "Girona",
+      "ine_code": "17902"
+    },
+    {
+      "name": "Fortià",
+      "province": "Girona",
+      "ine_code": "17074"
+    },
+    {
+      "name": "Girona",
+      "province": "Girona",
+      "ine_code": "17079"
+    },
+    {
+      "name": "Gombrèn",
+      "province": "Girona",
+      "ine_code": "17080"
+    },
+    {
+      "name": "Isòvol",
+      "province": "Girona",
+      "ine_code": "17084"
+    },
+    {
+      "name": "Juià",
+      "province": "Girona",
+      "ine_code": "17087"
+    },
+    {
+      "name": "Llambilles",
+      "province": "Girona",
+      "ine_code": "17090"
+    },
+    {
+      "name": "Llers",
+      "province": "Girona",
+      "ine_code": "17093"
+    },
+    {
+      "name": "Llosses, Les",
+      "province": "Girona",
+      "ine_code": "17096"
+    },
+    {
+      "name": "Llívia",
+      "province": "Girona",
+      "ine_code": "17094"
+    },
+    {
+      "name": "Madremanya",
+      "province": "Girona",
+      "ine_code": "17097"
+    },
+    {
+      "name": "Maià de Montcal",
+      "province": "Girona",
+      "ine_code": "17098"
+    },
+    {
+      "name": "Masarac",
+      "province": "Girona",
+      "ine_code": "17100"
+    },
+    {
+      "name": "Maçanet de Cabrenys",
+      "province": "Girona",
+      "ine_code": "17102"
+    },
+    {
+      "name": "Mieres",
+      "province": "Girona",
+      "ine_code": "17105"
+    },
+    {
+      "name": "Mollet de Peralada",
+      "province": "Girona",
+      "ine_code": "17106"
+    },
+    {
+      "name": "Montagut i Oix",
+      "province": "Girona",
+      "ine_code": "17109"
+    },
+    {
+      "name": "Navata",
+      "province": "Girona",
+      "ine_code": "17111"
+    },
+    {
+      "name": "Olot",
+      "province": "Girona",
+      "ine_code": "17114"
+    },
+    {
+      "name": "Palau-sator",
+      "province": "Girona",
+      "ine_code": "17121"
+    },
+    {
+      "name": "Palau-saverdera",
+      "province": "Girona",
+      "ine_code": "17120"
+    },
+    {
+      "name": "Palol de Revardit",
+      "province": "Girona",
+      "ine_code": "17123"
+    },
+    {
+      "name": "Pals",
+      "province": "Girona",
+      "ine_code": "17124"
+    },
+    {
+      "name": "Parlavà",
+      "province": "Girona",
+      "ine_code": "17126"
+    },
+    {
+      "name": "Pau",
+      "province": "Girona",
+      "ine_code": "17128"
+    },
+    {
+      "name": "Pedret i Marzà",
+      "province": "Girona",
+      "ine_code": "17129"
+    },
+    {
+      "name": "Pera, La",
+      "province": "Girona",
+      "ine_code": "17130"
+    },
+    {
+      "name": "Peralada",
+      "province": "Girona",
+      "ine_code": "17132"
+    },
+    {
+      "name": "Planes d'Hostoles, Les",
+      "province": "Girona",
+      "ine_code": "17133"
+    },
+    {
+      "name": "Pont de Molins",
+      "province": "Girona",
+      "ine_code": "17135"
+    },
+    {
+      "name": "Porqueres",
+      "province": "Girona",
+      "ine_code": "17137"
+    },
+    {
+      "name": "Preses, Les",
+      "province": "Girona",
+      "ine_code": "17139"
+    },
+    {
+      "name": "Puigcerdà",
+      "province": "Girona",
+      "ine_code": "17141"
+    },
+    {
+      "name": "Quart",
+      "province": "Girona",
+      "ine_code": "17142"
+    },
+    {
+      "name": "Regencós",
+      "province": "Girona",
+      "ine_code": "17144"
+    },
+    {
+      "name": "Ripoll",
+      "province": "Girona",
+      "ine_code": "17147"
+    },
+    {
+      "name": "Riudaura",
+      "province": "Girona",
+      "ine_code": "17149"
+    },
+    {
+      "name": "Riudellots de la Selva",
+      "province": "Girona",
+      "ine_code": "17150"
+    },
+    {
+      "name": "Riumors",
+      "province": "Girona",
+      "ine_code": "17151"
+    },
+    {
+      "name": "Rupià",
+      "province": "Girona",
+      "ine_code": "17153"
+    },
+    {
+      "name": "Salt",
+      "province": "Girona",
+      "ine_code": "17155"
+    },
+    {
+      "name": "Sant Aniol de Finestres",
+      "province": "Girona",
+      "ine_code": "17183"
+    },
+    {
+      "name": "Sant Feliu de Pallerols",
+      "province": "Girona",
+      "ine_code": "17161"
+    },
+    {
+      "name": "Sant Ferriol",
+      "province": "Girona",
+      "ine_code": "17162"
+    },
+    {
+      "name": "Sant Gregori",
+      "province": "Girona",
+      "ine_code": "17163"
+    },
+    {
+      "name": "Sant Jaume de Llierca",
+      "province": "Girona",
+      "ine_code": "17165"
+    },
+    {
+      "name": "Sant Joan de Mollet",
+      "province": "Girona",
+      "ine_code": "17168"
+    },
+    {
+      "name": "Sant Joan de les Abadesses",
+      "province": "Girona",
+      "ine_code": "17167"
+    },
+    {
+      "name": "Sant Jordi Desvalls",
+      "province": "Girona",
+      "ine_code": "17166"
+    },
+    {
+      "name": "Sant Julià de Ramis",
+      "province": "Girona",
+      "ine_code": "17169"
+    },
+    {
+      "name": "Sant Julià del Llor i Bonmatí",
+      "province": "Girona",
+      "ine_code": "17903"
+    },
+    {
+      "name": "Sant Llorenç de la Muga",
+      "province": "Girona",
+      "ine_code": "17171"
+    },
+    {
+      "name": "Sant Martí Vell",
+      "province": "Girona",
+      "ine_code": "17173"
+    },
+    {
+      "name": "Sant Martí de Llémena",
+      "province": "Girona",
+      "ine_code": "17172"
+    },
+    {
+      "name": "Sant Miquel de Campmajor",
+      "province": "Girona",
+      "ine_code": "17174"
+    },
+    {
+      "name": "Sant Pau de Segúries",
+      "province": "Girona",
+      "ine_code": "17177"
+    },
+    {
+      "name": "Sant Pere Pescador",
+      "province": "Girona",
+      "ine_code": "17178"
+    },
+    {
+      "name": "Santa Pau",
+      "province": "Girona",
+      "ine_code": "17184"
+    },
+    {
+      "name": "Sarrià de Ter",
+      "province": "Girona",
+      "ine_code": "17186"
+    },
+    {
+      "name": "Serinyà",
+      "province": "Girona",
+      "ine_code": "17190"
+    },
+    {
+      "name": "Siurana",
+      "province": "Girona",
+      "ine_code": "17052"
+    },
+    {
+      "name": "Torrent",
+      "province": "Girona",
+      "ine_code": "17197"
+    },
+    {
+      "name": "Torroella de Fluvià",
+      "province": "Girona",
+      "ine_code": "17198"
+    },
+    {
+      "name": "Tortellà",
+      "province": "Girona",
+      "ine_code": "17200"
+    },
+    {
+      "name": "Ullastret",
+      "province": "Girona",
+      "ine_code": "17205"
+    },
+    {
+      "name": "Vajol, La",
+      "province": "Girona",
+      "ine_code": "17014"
+    },
+    {
+      "name": "Vall d'en Bas, La",
+      "province": "Girona",
+      "ine_code": "17207"
+    },
+    {
+      "name": "Vall de Bianya, La",
+      "province": "Girona",
+      "ine_code": "17208"
+    },
+    {
+      "name": "Vallfogona de Ripollès",
+      "province": "Girona",
+      "ine_code": "17170"
+    },
+    {
+      "name": "Ventalló",
+      "province": "Girona",
+      "ine_code": "17210"
+    },
+    {
+      "name": "Vila-sacra",
+      "province": "Girona",
+      "ine_code": "17230"
+    },
+    {
+      "name": "Vilabertran",
+      "province": "Girona",
+      "ine_code": "17214"
+    },
+    {
+      "name": "Vilablareix",
+      "province": "Girona",
+      "ine_code": "17215"
+    },
+    {
+      "name": "Vilafant",
+      "province": "Girona",
+      "ine_code": "17221"
+    },
+    {
+      "name": "Vilajuïga",
+      "province": "Girona",
+      "ine_code": "17223"
+    },
+    {
+      "name": "Vilamacolum",
+      "province": "Girona",
+      "ine_code": "17225"
+    },
+    {
+      "name": "Vilamalla",
+      "province": "Girona",
+      "ine_code": "17226"
+    },
+    {
+      "name": "Vilanant",
+      "province": "Girona",
+      "ine_code": "17228"
+    },
+    {
+      "name": "Vilobí d'Onyar",
+      "province": "Girona",
+      "ine_code": "17233"
+    },
+    {
+      "name": "Agramunt",
+      "province": "Lleida",
+      "ine_code": "25003"
+    },
+    {
+      "name": "Aitona",
+      "province": "Lleida",
+      "ine_code": "25038"
+    },
+    {
+      "name": "Albatàrrec",
+      "province": "Lleida",
+      "ine_code": "25007"
+    },
+    {
+      "name": "Albesa",
+      "province": "Lleida",
+      "ine_code": "25008"
+    },
+    {
+      "name": "Alcanó",
+      "province": "Lleida",
+      "ine_code": "25010"
+    },
+    {
+      "name": "Alcarràs",
+      "province": "Lleida",
+      "ine_code": "25011"
+    },
+    {
+      "name": "Alcoletge",
+      "province": "Lleida",
+      "ine_code": "25012"
+    },
+    {
+      "name": "Alguaire",
+      "province": "Lleida",
+      "ine_code": "25016"
+    },
+    {
+      "name": "Almacelles",
+      "province": "Lleida",
+      "ine_code": "25019"
+    },
+    {
+      "name": "Alpicat",
+      "province": "Lleida",
+      "ine_code": "25023"
+    },
+    {
+      "name": "Anglesola",
+      "province": "Lleida",
+      "ine_code": "25027"
+    },
+    {
+      "name": "Balaguer",
+      "province": "Lleida",
+      "ine_code": "25040"
+    },
+    {
+      "name": "Barbens",
+      "province": "Lleida",
+      "ine_code": "25041"
+    },
+    {
+      "name": "Bell-lloc d'Urgell",
+      "province": "Lleida",
+      "ine_code": "25048"
+    },
+    {
+      "name": "Bellcaire d'Urgell",
+      "province": "Lleida",
+      "ine_code": "25047"
+    },
+    {
+      "name": "Bellpuig",
+      "province": "Lleida",
+      "ine_code": "25050"
+    },
+    {
+      "name": "Biosca",
+      "province": "Lleida",
+      "ine_code": "25055"
+    },
+    {
+      "name": "Bossòst",
+      "province": "Lleida",
+      "ine_code": "25059"
+    },
+    {
+      "name": "Cabó",
+      "province": "Lleida",
+      "ine_code": "25061"
+    },
+    {
+      "name": "Castellnou de Seana",
+      "province": "Lleida",
+      "ine_code": "25068"
+    },
+    {
+      "name": "Castellserà",
+      "province": "Lleida",
+      "ine_code": "25070"
+    },
+    {
+      "name": "Cervera",
+      "province": "Lleida",
+      "ine_code": "25072"
+    },
+    {
+      "name": "Corbins",
+      "province": "Lleida",
+      "ine_code": "25078"
+    },
+    {
+      "name": "Espot",
+      "province": "Lleida",
+      "ine_code": "25082"
+    },
+    {
+      "name": "Estaràs",
+      "province": "Lleida",
+      "ine_code": "25085"
+    },
+    {
+      "name": "Fuliola, La",
+      "province": "Lleida",
+      "ine_code": "25096"
+    },
+    {
+      "name": "Fígols i Alinyà",
+      "province": "Lleida",
+      "ine_code": "25908"
+    },
+    {
+      "name": "Gimenells i el Pla de la Font",
+      "province": "Lleida",
+      "ine_code": "25912"
+    },
+    {
+      "name": "Ivars d'Urgell",
+      "province": "Lleida",
+      "ine_code": "25113"
+    },
+    {
+      "name": "Josa i Tuixén",
+      "province": "Lleida",
+      "ine_code": "25910"
+    },
+    {
+      "name": "Lleida",
+      "province": "Lleida",
+      "ine_code": "25120"
+    },
+    {
+      "name": "Massalcoreig",
+      "province": "Lleida",
+      "ine_code": "25131"
+    },
+    {
+      "name": "Menàrguens",
+      "province": "Lleida",
+      "ine_code": "25134"
+    },
+    {
+      "name": "Montgai",
+      "province": "Lleida",
+      "ine_code": "25138"
+    },
+    {
+      "name": "Montoliu de Lleida",
+      "province": "Lleida",
+      "ine_code": "25142"
+    },
+    {
+      "name": "Montoliu de Segarra",
+      "province": "Lleida",
+      "ine_code": "25141"
+    },
+    {
+      "name": "Montornès de Segarra",
+      "province": "Lleida",
+      "ine_code": "25143"
+    },
+    {
+      "name": "Oluges, Les",
+      "province": "Lleida",
+      "ine_code": "25152"
+    },
+    {
+      "name": "Organyà",
+      "province": "Lleida",
+      "ine_code": "25155"
+    },
+    {
+      "name": "Ossó de Sió",
+      "province": "Lleida",
+      "ine_code": "25157"
+    },
+    {
+      "name": "Penelles",
+      "province": "Lleida",
+      "ine_code": "25164"
+    },
+    {
+      "name": "Plans de Sió, Els",
+      "province": "Lleida",
+      "ine_code": "25911"
+    },
+    {
+      "name": "Poal, El",
+      "province": "Lleida",
+      "ine_code": "25168"
+    },
+    {
+      "name": "Ponts",
+      "province": "Lleida",
+      "ine_code": "25172"
+    },
+    {
+      "name": "Portella, La",
+      "province": "Lleida",
+      "ine_code": "25174"
+    },
+    {
+      "name": "Prats i Sansor",
+      "province": "Lleida",
+      "ine_code": "25175"
+    },
+    {
+      "name": "Preixens",
+      "province": "Lleida",
+      "ine_code": "25177"
+    },
+    {
+      "name": "Puigverd d'Agramunt",
+      "province": "Lleida",
+      "ine_code": "25181"
+    },
+    {
+      "name": "Puigverd de Lleida",
+      "province": "Lleida",
+      "ine_code": "25182"
+    },
+    {
+      "name": "Ribera d'Ondara",
+      "province": "Lleida",
+      "ine_code": "25905"
+    },
+    {
+      "name": "Sanaüja",
+      "province": "Lleida",
+      "ine_code": "25191"
+    },
+    {
+      "name": "Senterada",
+      "province": "Lleida",
+      "ine_code": "25202"
+    },
+    {
+      "name": "Sentiu de Sió, La",
+      "province": "Lleida",
+      "ine_code": "25035"
+    },
+    {
+      "name": "Soses",
+      "province": "Lleida",
+      "ine_code": "25210"
+    },
+    {
+      "name": "Sudanell",
+      "province": "Lleida",
+      "ine_code": "25211"
+    },
+    {
+      "name": "Talavera",
+      "province": "Lleida",
+      "ine_code": "25216"
+    },
+    {
+      "name": "Tarroja de Segarra",
+      "province": "Lleida",
+      "ine_code": "25219"
+    },
+    {
+      "name": "Tornabous",
+      "province": "Lleida",
+      "ine_code": "25225"
+    },
+    {
+      "name": "Torrefeta i Florejacs",
+      "province": "Lleida",
+      "ine_code": "25907"
+    },
+    {
+      "name": "Torrelameu",
+      "province": "Lleida",
+      "ine_code": "25231"
+    },
+    {
+      "name": "Torres de Segre",
+      "province": "Lleida",
+      "ine_code": "25232"
+    },
+    {
+      "name": "Torà",
+      "province": "Lleida",
+      "ine_code": "25223"
+    },
+    {
+      "name": "Tàrrega",
+      "province": "Lleida",
+      "ine_code": "25217"
+    },
+    {
+      "name": "Térmens",
+      "province": "Lleida",
+      "ine_code": "25220"
+    },
+    {
+      "name": "Vallfogona de Balaguer",
+      "province": "Lleida",
+      "ine_code": "25240"
+    },
+    {
+      "name": "Vansa i Fórnols, La",
+      "province": "Lleida",
+      "ine_code": "25909"
+    },
+    {
+      "name": "Vila-sana",
+      "province": "Lleida",
+      "ine_code": "25252"
+    },
+    {
+      "name": "Vilagrassa",
+      "province": "Lleida",
+      "ine_code": "25244"
+    },
+    {
+      "name": "Vilanova de Segrià",
+      "province": "Lleida",
+      "ine_code": "25251"
+    },
+    {
+      "name": "Vilanova de l'Aguda",
+      "province": "Lleida",
+      "ine_code": "25249"
+    },
+    {
+      "name": "Vilanova de la Barca",
+      "province": "Lleida",
+      "ine_code": "25254"
+    },
+    {
+      "name": "Ametlla de Mar, L'",
+      "province": "Tarragona",
+      "ine_code": "43013"
+    },
+    {
+      "name": "Argentera, L'",
+      "province": "Tarragona",
+      "ine_code": "43017"
+    },
+    {
+      "name": "Arnes",
+      "province": "Tarragona",
+      "ine_code": "43018"
+    },
+    {
+      "name": "Cambrils",
+      "province": "Tarragona",
+      "ine_code": "43038"
+    },
+    {
+      "name": "Canonja, La",
+      "province": "Tarragona",
+      "ine_code": "43907"
+    },
+    {
+      "name": "Capafonts",
+      "province": "Tarragona",
+      "ine_code": "43039"
+    },
+    {
+      "name": "Caseres",
+      "province": "Tarragona",
+      "ine_code": "43041"
+    },
+    {
+      "name": "Catllar, El",
+      "province": "Tarragona",
+      "ine_code": "43043"
+    },
+    {
+      "name": "Colldejou",
+      "province": "Tarragona",
+      "ine_code": "43045"
+    },
+    {
+      "name": "Constantí",
+      "province": "Tarragona",
+      "ine_code": "43047"
+    },
+    {
+      "name": "Duesaigües",
+      "province": "Tarragona",
+      "ine_code": "43053"
+    },
+    {
+      "name": "Llorac",
+      "province": "Tarragona",
+      "ine_code": "43073"
+    },
+    {
+      "name": "Mont-ral",
+      "province": "Tarragona",
+      "ine_code": "43091"
+    },
+    {
+      "name": "Mont-roig del Camp",
+      "province": "Tarragona",
+      "ine_code": "43092"
+    },
+    {
+      "name": "Montbrió del Camp",
+      "province": "Tarragona",
+      "ine_code": "43088"
+    },
+    {
+      "name": "Morell, El",
+      "province": "Tarragona",
+      "ine_code": "43095"
+    },
+    {
+      "name": "Pallaresos, Els",
+      "province": "Tarragona",
+      "ine_code": "43100"
+    },
+    {
+      "name": "Perafort",
+      "province": "Tarragona",
+      "ine_code": "43103"
+    },
+    {
+      "name": "Pobla de Mafumet, La",
+      "province": "Tarragona",
+      "ine_code": "43109"
+    },
+    {
+      "name": "Poboleda",
+      "province": "Tarragona",
+      "ine_code": "43112"
+    },
+    {
+      "name": "Pradell de la Teixeta",
+      "province": "Tarragona",
+      "ine_code": "43115"
+    },
+    {
+      "name": "Pratdip",
+      "province": "Tarragona",
+      "ine_code": "43118"
+    },
+    {
+      "name": "Reus",
+      "province": "Tarragona",
+      "ine_code": "43123"
+    },
+    {
+      "name": "Riudoms",
+      "province": "Tarragona",
+      "ine_code": "43129"
+    },
+    {
+      "name": "Salou",
+      "province": "Tarragona",
+      "ine_code": "43905"
+    },
+    {
+      "name": "Selva del Camp, La",
+      "province": "Tarragona",
+      "ine_code": "43145"
+    },
+    {
+      "name": "Tarragona",
+      "province": "Tarragona",
+      "ine_code": "43148"
+    },
+    {
+      "name": "Torre de Fontaubella, La",
+      "province": "Tarragona",
+      "ine_code": "43151"
+    },
+    {
+      "name": "Vallfogona de Riucorb",
+      "province": "Tarragona",
+      "ine_code": "43159"
+    },
+    {
+      "name": "Vandellòs i l'Hospitalet de l'Infant",
+      "province": "Tarragona",
+      "ine_code": "43162"
+    },
+    {
+      "name": "Vila-seca",
+      "province": "Tarragona",
+      "ine_code": "43171"
+    },
+    {
+      "name": "Vinyols i els Arcs",
+      "province": "Tarragona",
+      "ine_code": "43178"
+    }
+  ],
+  "zone_2": [
+    {
+      "name": "Alella",
+      "province": "Barcelona",
+      "ine_code": "08003"
+    },
+    {
+      "name": "Ametlla del Vallès, L'",
+      "province": "Barcelona",
+      "ine_code": "08005"
+    },
+    {
+      "name": "Arenys de Mar",
+      "province": "Barcelona",
+      "ine_code": "08006"
+    },
+    {
+      "name": "Arenys de Munt",
+      "province": "Barcelona",
+      "ine_code": "08007"
+    },
+    {
+      "name": "Argentona",
+      "province": "Barcelona",
+      "ine_code": "08009"
+    },
+    {
+      "name": "Badalona",
+      "province": "Barcelona",
+      "ine_code": "08015"
+    },
+    {
+      "name": "Bagà",
+      "province": "Barcelona",
+      "ine_code": "08016"
+    },
+    {
+      "name": "Bigues i Riells del Fai",
+      "province": "Barcelona",
+      "ine_code": "08023"
+    },
+    {
+      "name": "Cabrera de Mar",
+      "province": "Barcelona",
+      "ine_code": "08029"
+    },
+    {
+      "name": "Cabrils",
+      "province": "Barcelona",
+      "ine_code": "08030"
+    },
+    {
+      "name": "Caldes d'Estrac",
+      "province": "Barcelona",
+      "ine_code": "08032"
+    },
+    {
+      "name": "Caldes de Montbui",
+      "province": "Barcelona",
+      "ine_code": "08033"
+    },
+    {
+      "name": "Calella",
+      "province": "Barcelona",
+      "ine_code": "08035"
+    },
+    {
+      "name": "Canet de Mar",
+      "province": "Barcelona",
+      "ine_code": "08040"
+    },
+    {
+      "name": "Castellar de n'Hug",
+      "province": "Barcelona",
+      "ine_code": "08052"
+    },
+    {
+      "name": "Dosrius",
+      "province": "Barcelona",
+      "ine_code": "08075"
+    },
+    {
+      "name": "Figaró-Montmany",
+      "province": "Barcelona",
+      "ine_code": "08134"
+    },
+    {
+      "name": "Fogars de la Selva",
+      "province": "Barcelona",
+      "ine_code": "08082"
+    },
+    {
+      "name": "Garriga, La",
+      "province": "Barcelona",
+      "ine_code": "08088"
+    },
+    {
+      "name": "Gualba",
+      "province": "Barcelona",
+      "ine_code": "08097"
+    },
+    {
+      "name": "Guardiola de Berguedà",
+      "province": "Barcelona",
+      "ine_code": "08099"
+    },
+    {
+      "name": "Llinars del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08106"
+    },
+    {
+      "name": "Malgrat de Mar",
+      "province": "Barcelona",
+      "ine_code": "08110"
+    },
+    {
+      "name": "Martorelles",
+      "province": "Barcelona",
+      "ine_code": "08115"
+    },
+    {
+      "name": "Masnou, El",
+      "province": "Barcelona",
+      "ine_code": "08118"
+    },
+    {
+      "name": "Mataró",
+      "province": "Barcelona",
+      "ine_code": "08121"
+    },
+    {
+      "name": "Montcada i Reixac",
+      "province": "Barcelona",
+      "ine_code": "08125"
+    },
+    {
+      "name": "Montgat",
+      "province": "Barcelona",
+      "ine_code": "08126"
+    },
+    {
+      "name": "Montornès del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08136"
+    },
+    {
+      "name": "Palafolls",
+      "province": "Barcelona",
+      "ine_code": "08155"
+    },
+    {
+      "name": "Pineda de Mar",
+      "province": "Barcelona",
+      "ine_code": "08163"
+    },
+    {
+      "name": "Premià de Dalt",
+      "province": "Barcelona",
+      "ine_code": "08230"
+    },
+    {
+      "name": "Roca del Vallès, La",
+      "province": "Barcelona",
+      "ine_code": "08181"
+    },
+    {
+      "name": "Sant Andreu de Llavaneres",
+      "province": "Barcelona",
+      "ine_code": "08197"
+    },
+    {
+      "name": "Sant Cebrià de Vallalta",
+      "province": "Barcelona",
+      "ine_code": "08203"
+    },
+    {
+      "name": "Sant Celoni",
+      "province": "Barcelona",
+      "ine_code": "08202"
+    },
+    {
+      "name": "Sant Fost de Campsentelles",
+      "province": "Barcelona",
+      "ine_code": "08209"
+    },
+    {
+      "name": "Sant Iscle de Vallalta",
+      "province": "Barcelona",
+      "ine_code": "08193"
+    },
+    {
+      "name": "Sant Pol de Mar",
+      "province": "Barcelona",
+      "ine_code": "08235"
+    },
+    {
+      "name": "Sant Sadurní d'Osormort",
+      "province": "Barcelona",
+      "ine_code": "08241"
+    },
+    {
+      "name": "Sant Vicenç de Montalt",
+      "province": "Barcelona",
+      "ine_code": "08264"
+    },
+    {
+      "name": "Santa Coloma de Gramenet",
+      "province": "Barcelona",
+      "ine_code": "08245"
+    },
+    {
+      "name": "Santa Eulàlia de Ronçana",
+      "province": "Barcelona",
+      "ine_code": "08248"
+    },
+    {
+      "name": "Santa Maria de Martorelles",
+      "province": "Barcelona",
+      "ine_code": "08256"
+    },
+    {
+      "name": "Santa Maria de Palautordera",
+      "province": "Barcelona",
+      "ine_code": "08259"
+    },
+    {
+      "name": "Santa Susanna",
+      "province": "Barcelona",
+      "ine_code": "08261"
+    },
+    {
+      "name": "Teià",
+      "province": "Barcelona",
+      "ine_code": "08281"
+    },
+    {
+      "name": "Tiana",
+      "province": "Barcelona",
+      "ine_code": "08282"
+    },
+    {
+      "name": "Tordera",
+      "province": "Barcelona",
+      "ine_code": "08284"
+    },
+    {
+      "name": "Vallgorguina",
+      "province": "Barcelona",
+      "ine_code": "08294"
+    },
+    {
+      "name": "Vallromanes",
+      "province": "Barcelona",
+      "ine_code": "08296"
+    },
+    {
+      "name": "Vilalba Sasserra",
+      "province": "Barcelona",
+      "ine_code": "08306"
+    },
+    {
+      "name": "Vilanova de Sau",
+      "province": "Barcelona",
+      "ine_code": "08303"
+    },
+    {
+      "name": "Vilanova del Vallès",
+      "province": "Barcelona",
+      "ine_code": "08902"
+    },
+    {
+      "name": "Vilassar de Dalt",
+      "province": "Barcelona",
+      "ine_code": "08214"
+    },
+    {
+      "name": "Òrrius",
+      "province": "Barcelona",
+      "ine_code": "08153"
+    },
+    {
+      "name": "Alp",
+      "province": "Girona",
+      "ine_code": "17006"
+    },
+    {
+      "name": "Amer",
+      "province": "Girona",
+      "ine_code": "17007"
+    },
+    {
+      "name": "Anglès",
+      "province": "Girona",
+      "ine_code": "17008"
+    },
+    {
+      "name": "Arbúcies",
+      "province": "Girona",
+      "ine_code": "17009"
+    },
+    {
+      "name": "Begur",
+      "province": "Girona",
+      "ine_code": "17013"
+    },
+    {
+      "name": "Biure",
+      "province": "Girona",
+      "ine_code": "17234"
+    },
+    {
+      "name": "Blanes",
+      "province": "Girona",
+      "ine_code": "17023"
+    },
+    {
+      "name": "Brunyola i Sant Martí Sapresa",
+      "province": "Girona",
+      "ine_code": "17028"
+    },
+    {
+      "name": "Cadaqués",
+      "province": "Girona",
+      "ine_code": "17032"
+    },
+    {
+      "name": "Caldes de Malavella",
+      "province": "Girona",
+      "ine_code": "17033"
+    },
+    {
+      "name": "Calonge i Sant Antoni",
+      "province": "Girona",
+      "ine_code": "17034"
+    },
+    {
+      "name": "Campelles",
+      "province": "Girona",
+      "ine_code": "17037"
+    },
+    {
+      "name": "Camprodon",
+      "province": "Girona",
+      "ine_code": "17039"
+    },
+    {
+      "name": "Cassà de la Selva",
+      "province": "Girona",
+      "ine_code": "17044"
+    },
+    {
+      "name": "Castell d'Aro, Platja d'Aro i s'Agaró",
+      "province": "Girona",
+      "ine_code": "17048"
+    },
+    {
+      "name": "Colera",
+      "province": "Girona",
+      "ine_code": "17054"
+    },
+    {
+      "name": "Das",
+      "province": "Girona",
+      "ine_code": "17061"
+    },
+    {
+      "name": "Espinelves",
+      "province": "Girona",
+      "ine_code": "17063"
+    },
+    {
+      "name": "Espolla",
+      "province": "Girona",
+      "ine_code": "17064"
+    },
+    {
+      "name": "Fontanals de Cerdanya",
+      "province": "Girona",
+      "ine_code": "17069"
+    },
+    {
+      "name": "Garriguella",
+      "province": "Girona",
+      "ine_code": "17077"
+    },
+    {
+      "name": "Ger",
+      "province": "Girona",
+      "ine_code": "17078"
+    },
+    {
+      "name": "Guils de Cerdanya",
+      "province": "Girona",
+      "ine_code": "17082"
+    },
+    {
+      "name": "Hostalric",
+      "province": "Girona",
+      "ine_code": "17083"
+    },
+    {
+      "name": "Jonquera, La",
+      "province": "Girona",
+      "ine_code": "17086"
+    },
+    {
+      "name": "Llagostera",
+      "province": "Girona",
+      "ine_code": "17089"
+    },
+    {
+      "name": "Llanars",
+      "province": "Girona",
+      "ine_code": "17091"
+    },
+    {
+      "name": "Llançà",
+      "province": "Girona",
+      "ine_code": "17092"
+    },
+    {
+      "name": "Lloret de Mar",
+      "province": "Girona",
+      "ine_code": "17095"
+    },
+    {
+      "name": "Massanes",
+      "province": "Girona",
+      "ine_code": "17101"
+    },
+    {
+      "name": "Maçanet de la Selva",
+      "province": "Girona",
+      "ine_code": "17103"
+    },
+    {
+      "name": "Meranges",
+      "province": "Girona",
+      "ine_code": "17099"
+    },
+    {
+      "name": "Molló",
+      "province": "Girona",
+      "ine_code": "17107"
+    },
+    {
+      "name": "Mont-ras",
+      "province": "Girona",
+      "ine_code": "17110"
+    },
+    {
+      "name": "Ogassa",
+      "province": "Girona",
+      "ine_code": "17112"
+    },
+    {
+      "name": "Osor",
+      "province": "Girona",
+      "ine_code": "17116"
+    },
+    {
+      "name": "Palafrugell",
+      "province": "Girona",
+      "ine_code": "17117"
+    },
+    {
+      "name": "Palamós",
+      "province": "Girona",
+      "ine_code": "17118"
+    },
+    {
+      "name": "Pardines",
+      "province": "Girona",
+      "ine_code": "17125"
+    },
+    {
+      "name": "Planoles",
+      "province": "Girona",
+      "ine_code": "17134"
+    },
+    {
+      "name": "Port de la Selva, El",
+      "province": "Girona",
+      "ine_code": "17140"
+    },
+    {
+      "name": "Portbou",
+      "province": "Girona",
+      "ine_code": "17138"
+    },
+    {
+      "name": "Queralbs",
+      "province": "Girona",
+      "ine_code": "17043"
+    },
+    {
+      "name": "Rabós",
+      "province": "Girona",
+      "ine_code": "17143"
+    },
+    {
+      "name": "Ribes de Freser",
+      "province": "Girona",
+      "ine_code": "17145"
+    },
+    {
+      "name": "Riells i Viabrea",
+      "province": "Girona",
+      "ine_code": "17146"
+    },
+    {
+      "name": "Riudarenes",
+      "province": "Girona",
+      "ine_code": "17148"
+    },
+    {
+      "name": "Roses",
+      "province": "Girona",
+      "ine_code": "17152"
+    },
+    {
+      "name": "Sant Climent Sescebes",
+      "province": "Girona",
+      "ine_code": "17158"
+    },
+    {
+      "name": "Sant Feliu de Buixalleu",
+      "province": "Girona",
+      "ine_code": "17159"
+    },
+    {
+      "name": "Sant Feliu de Guíxols",
+      "province": "Girona",
+      "ine_code": "17160"
+    },
+    {
+      "name": "Sant Hilari Sacalm",
+      "province": "Girona",
+      "ine_code": "17164"
+    },
+    {
+      "name": "Santa Coloma de Farners",
+      "province": "Girona",
+      "ine_code": "17180"
+    },
+    {
+      "name": "Santa Cristina d'Aro",
+      "province": "Girona",
+      "ine_code": "17181"
+    },
+    {
+      "name": "Selva de Mar, La",
+      "province": "Girona",
+      "ine_code": "17188"
+    },
+    {
+      "name": "Setcases",
+      "province": "Girona",
+      "ine_code": "17192"
+    },
+    {
+      "name": "Sils",
+      "province": "Girona",
+      "ine_code": "17193"
+    },
+    {
+      "name": "Susqueda",
+      "province": "Girona",
+      "ine_code": "17194"
+    },
+    {
+      "name": "Toses",
+      "province": "Girona",
+      "ine_code": "17201"
+    },
+    {
+      "name": "Tossa de Mar",
+      "province": "Girona",
+      "ine_code": "17202"
+    },
+    {
+      "name": "Urús",
+      "province": "Girona",
+      "ine_code": "17206"
+    },
+    {
+      "name": "Vall-llobrega",
+      "province": "Girona",
+      "ine_code": "17209"
+    },
+    {
+      "name": "Vidreres",
+      "province": "Girona",
+      "ine_code": "17213"
+    },
+    {
+      "name": "Viladrau",
+      "province": "Girona",
+      "ine_code": "17220"
+    },
+    {
+      "name": "Vilallonga de Ter",
+      "province": "Girona",
+      "ine_code": "17224"
+    },
+    {
+      "name": "Vilamaniscle",
+      "province": "Girona",
+      "ine_code": "17227"
+    },
+    {
+      "name": "Alins",
+      "province": "Lleida",
+      "ine_code": "25017"
+    },
+    {
+      "name": "Alt Àneu",
+      "province": "Lleida",
+      "ine_code": "25024"
+    },
+    {
+      "name": "Alàs i Cerc",
+      "province": "Lleida",
+      "ine_code": "25005"
+    },
+    {
+      "name": "Arres",
+      "province": "Lleida",
+      "ine_code": "25031"
+    },
+    {
+      "name": "Arsèguel",
+      "province": "Lleida",
+      "ine_code": "25032"
+    },
+    {
+      "name": "Baix Pallars",
+      "province": "Lleida",
+      "ine_code": "25039"
+    },
+    {
+      "name": "Bausen",
+      "province": "Lleida",
+      "ine_code": "25045"
+    },
+    {
+      "name": "Bellver de Cerdanya",
+      "province": "Lleida",
+      "ine_code": "25051"
+    },
+    {
+      "name": "Bòrdes, Es",
+      "province": "Lleida",
+      "ine_code": "25057"
+    },
+    {
+      "name": "Canejan",
+      "province": "Lleida",
+      "ine_code": "25063"
+    },
+    {
+      "name": "Cava",
+      "province": "Lleida",
+      "ine_code": "25071"
+    },
+    {
+      "name": "Estamariu",
+      "province": "Lleida",
+      "ine_code": "25088"
+    },
+    {
+      "name": "Esterri d'Àneu",
+      "province": "Lleida",
+      "ine_code": "25086"
+    },
+    {
+      "name": "Esterri de Cardós",
+      "province": "Lleida",
+      "ine_code": "25087"
+    },
+    {
+      "name": "Farrera",
+      "province": "Lleida",
+      "ine_code": "25089"
+    },
+    {
+      "name": "Guingueta d'Àneu, La",
+      "province": "Lleida",
+      "ine_code": "25903"
+    },
+    {
+      "name": "Les",
+      "province": "Lleida",
+      "ine_code": "25121"
+    },
+    {
+      "name": "Lladorre",
+      "province": "Lleida",
+      "ine_code": "25123"
+    },
+    {
+      "name": "Llavorsí",
+      "province": "Lleida",
+      "ine_code": "25126"
+    },
+    {
+      "name": "Lles de Cerdanya",
+      "province": "Lleida",
+      "ine_code": "25127"
+    },
+    {
+      "name": "Montellà i Martinet",
+      "province": "Lleida",
+      "ine_code": "25139"
+    },
+    {
+      "name": "Montferrer i Castellbò",
+      "province": "Lleida",
+      "ine_code": "25140"
+    },
+    {
+      "name": "Naut Aran",
+      "province": "Lleida",
+      "ine_code": "25025"
+    },
+    {
+      "name": "Pont de Bar, El",
+      "province": "Lleida",
+      "ine_code": "25030"
+    },
+    {
+      "name": "Pont de Suert, El",
+      "province": "Lleida",
+      "ine_code": "25173"
+    },
+    {
+      "name": "Prullans",
+      "province": "Lleida",
+      "ine_code": "25179"
+    },
+    {
+      "name": "Rialp",
+      "province": "Lleida",
+      "ine_code": "25183"
+    },
+    {
+      "name": "Ribera d'Urgellet",
+      "province": "Lleida",
+      "ine_code": "25185"
+    },
+    {
+      "name": "Riu de Cerdanya",
+      "province": "Lleida",
+      "ine_code": "25913"
+    },
+    {
+      "name": "Sarroca de Bellera",
+      "province": "Lleida",
+      "ine_code": "25201"
+    },
+    {
+      "name": "Seu d'Urgell, La",
+      "province": "Lleida",
+      "ine_code": "25203"
+    },
+    {
+      "name": "Soriguera",
+      "province": "Lleida",
+      "ine_code": "25208"
+    },
+    {
+      "name": "Sort",
+      "province": "Lleida",
+      "ine_code": "25209"
+    },
+    {
+      "name": "Torre de Cabdella, La",
+      "province": "Lleida",
+      "ine_code": "25227"
+    },
+    {
+      "name": "Tírvia",
+      "province": "Lleida",
+      "ine_code": "25221"
+    },
+    {
+      "name": "Vall de Boí, La",
+      "province": "Lleida",
+      "ine_code": "25043"
+    },
+    {
+      "name": "Vall de Cardós",
+      "province": "Lleida",
+      "ine_code": "25901"
+    },
+    {
+      "name": "Valls d'Aguilar, Les",
+      "province": "Lleida",
+      "ine_code": "25906"
+    },
+    {
+      "name": "Valls de Valira, Les",
+      "province": "Lleida",
+      "ine_code": "25239"
+    },
+    {
+      "name": "Vielha e Mijaran",
+      "province": "Lleida",
+      "ine_code": "25243"
+    },
+    {
+      "name": "Vilaller",
+      "province": "Lleida",
+      "ine_code": "25245"
+    },
+    {
+      "name": "Vilamòs",
+      "province": "Lleida",
+      "ine_code": "25247"
+    },
+    {
+      "name": "Aleixar, L'",
+      "province": "Tarragona",
+      "ine_code": "43007"
+    },
+    {
+      "name": "Alforja",
+      "province": "Tarragona",
+      "ine_code": "43009"
+    },
+    {
+      "name": "Almoster",
+      "province": "Tarragona",
+      "ine_code": "43011"
+    },
+    {
+      "name": "Borges del Camp, Les",
+      "province": "Tarragona",
+      "ine_code": "43031"
+    },
+    {
+      "name": "Botarell",
+      "province": "Tarragona",
+      "ine_code": "43033"
+    },
+    {
+      "name": "Castellvell del Camp",
+      "province": "Tarragona",
+      "ine_code": "43042"
+    },
+    {
+      "name": "Maspujols",
+      "province": "Tarragona",
+      "ine_code": "43081"
+    },
+    {
+      "name": "Riudecanyes",
+      "province": "Tarragona",
+      "ine_code": "43127"
+    },
+    {
+      "name": "Riudecols",
+      "province": "Tarragona",
+      "ine_code": "43128"
+    },
+    {
+      "name": "Vilanova d'Escornalbou",
+      "province": "Tarragona",
+      "ine_code": "43167"
+    },
+    {
+      "name": "Vilaplana",
+      "province": "Tarragona",
+      "ine_code": "43169"
+    }
+  ],
+  "unmatched": []
+}

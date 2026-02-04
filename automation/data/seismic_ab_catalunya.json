@@ -1,0 +1,4786 @@
+{
+  "metadata": {
+    "source": "NCSE-02 Annex 1 - Valores de la aceleración sísmica básica (ab)",
+    "legal_reference": "Real Decreto 997/2002 - Norma de Construcción Sismorresistente",
+    "boe": "BOE-A-2002-19687",
+    "boe_url": "https://www.boe.es/buscar/doc.php?id=BOE-A-2002-19687",
+    "pdf_source": "https://www.boe.es/boe/dias/2002/10/11/pdfs/A35898-35967.pdf",
+    "source_date": "2002-10-11",
+    "extracted_date": "2026-02-04",
+    "default_ab": 0.04,
+    "notes": [
+      "Municipalities not listed in NCSE-02 Annex 1 have ab < 0.04g (no seismic requirement)",
+      "K coefficient is typically 1.0 for most of Catalunya",
+      "Values extracted from PDF pages 58-62",
+      "Municipality names matched against INE 2024 official list"
+    ],
+    "statistics": {
+      "total_listed": 678,
+      "by_province": {
+        "Barcelona": 277,
+        "Girona": 207,
+        "Lleida": 48,
+        "Tarragona": 146
+      },
+      "ab_distribution": {
+        "0.04": 365,
+        "0.05": 64,
+        "0.08": 61,
+        "0.07": 46,
+        "0.09": 45,
+        "0.06": 46,
+        "0.10": 40,
+        "0.11": 11
+      }
+    }
+  },
+  "listed_municipalities": {
+    "ABRERA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08001",
+      "ine_name": "Abrera"
+    },
+    "AIGUAFREDA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08014",
+      "ine_name": "Aiguafreda"
+    },
+    "ALELLA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08003",
+      "ine_name": "Alella"
+    },
+    "ALPENS": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08004",
+      "ine_name": "Alpens"
+    },
+    "AMETLLA DEL VALLÈS, L'": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08005",
+      "ine_name": "Ametlla del Vallès, L'"
+    },
+    "ARENYS DE MAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08006",
+      "ine_name": "Arenys de Mar"
+    },
+    "ARENYS DE MUNT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08007",
+      "ine_name": "Arenys de Munt"
+    },
+    "ARGENTONA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08009",
+      "ine_name": "Argentona"
+    },
+    "ARTÉS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08010",
+      "ine_name": "Artés"
+    },
+    "AVIÀ": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08011",
+      "ine_name": "Avià"
+    },
+    "AVINYÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08012",
+      "ine_name": "Avinyó"
+    },
+    "AVINYONET DEL PENEDÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08013",
+      "ine_name": "Avinyonet del Penedès"
+    },
+    "BADALONA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08015",
+      "ine_name": "Badalona"
+    },
+    "BADIA DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08904",
+      "ine_name": "Badia del Vallès"
+    },
+    "BAGÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08016",
+      "ine_name": "Bagà"
+    },
+    "BALENYÀ": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08017",
+      "ine_name": "Balenyà"
+    },
+    "BALSARENY": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08018",
+      "ine_name": "Balsareny"
+    },
+    "BARBERÀ DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08252",
+      "ine_name": "Barberà del Vallès"
+    },
+    "BARCELONA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08019",
+      "ine_name": "Barcelona"
+    },
+    "BEGUES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08020",
+      "ine_name": "Begues"
+    },
+    "BELLPRAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08021",
+      "ine_name": "Bellprat"
+    },
+    "BERGA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08022",
+      "ine_name": "Berga"
+    },
+    "BORREDÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08024",
+      "ine_name": "Borredà"
+    },
+    "BRUC, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08025",
+      "ine_name": "Bruc, El"
+    },
+    "BRULL, EL": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08026",
+      "ine_name": "Brull, El"
+    },
+    "CABANYES, LES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08027",
+      "ine_name": "Cabanyes, Les"
+    },
+    "CABRERA DE MAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08029",
+      "ine_name": "Cabrera de Mar"
+    },
+    "CABRILS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08030",
+      "ine_name": "Cabrils"
+    },
+    "CALDERS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08034",
+      "ine_name": "Calders"
+    },
+    "CALDES D'ESTRAC": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08032",
+      "ine_name": "Caldes d'Estrac"
+    },
+    "CALELLA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08035",
+      "ine_name": "Calella"
+    },
+    "CAMPINS": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08039",
+      "ine_name": "Campins"
+    },
+    "CANET DE MAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08040",
+      "ine_name": "Canet de Mar"
+    },
+    "CANOVELLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08041",
+      "ine_name": "Canovelles"
+    },
+    "MASIES DE VOLTREGÀ, LES": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08117",
+      "ine_name": "Masies de Voltregà, Les"
+    },
+    "CÀNOVES I SAMALÚS": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08042",
+      "ine_name": "Cànoves i Samalús"
+    },
+    "MASNOU, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08118",
+      "ine_name": "Masnou, El"
+    },
+    "CANYELLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08043",
+      "ine_name": "Canyelles"
+    },
+    "MASQUEFA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08119",
+      "ine_name": "Masquefa"
+    },
+    "CAPELLADES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08044",
+      "ine_name": "Capellades"
+    },
+    "MATADEPERA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08120",
+      "ine_name": "Matadepera"
+    },
+    "CAPOLAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08045",
+      "ine_name": "Capolat"
+    },
+    "MATARÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08121",
+      "ine_name": "Mataró"
+    },
+    "CARDEDEU": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08046",
+      "ine_name": "Cardedeu"
+    },
+    "MEDIONA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08122",
+      "ine_name": "Mediona"
+    },
+    "CARME": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08048",
+      "ine_name": "Carme"
+    },
+    "MOIÀ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08138",
+      "ine_name": "Moià"
+    },
+    "CASSERRES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08049",
+      "ine_name": "Casserres"
+    },
+    "MOLINS DE REI": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08123",
+      "ine_name": "Molins de Rei"
+    },
+    "CASTELL DE L'ARENY": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08057",
+      "ine_name": "Castell de l'Areny"
+    },
+    "MOLLET DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08124",
+      "ine_name": "Mollet del Vallès"
+    },
+    "CASTELLAR DE N'HUG": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08052",
+      "ine_name": "Castellar de n'Hug"
+    },
+    "MONISTROL DE CALDERS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08128",
+      "ine_name": "Monistrol de Calders"
+    },
+    "CASTELLAR DEL RIU": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08050",
+      "ine_name": "Castellar del Riu"
+    },
+    "MONISTROL DE MONTSERRAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08127",
+      "ine_name": "Monistrol de Montserrat"
+    },
+    "CASTELLAR DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08051",
+      "ine_name": "Castellar del Vallès"
+    },
+    "MONTCADA I REIXAC": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08125",
+      "ine_name": "Montcada i Reixac"
+    },
+    "CASTELLBELL I EL VILAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08053",
+      "ine_name": "Castellbell i el Vilar"
+    },
+    "MONTCLAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08130",
+      "ine_name": "Montclar"
+    },
+    "CASTELLBISBAL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08054",
+      "ine_name": "Castellbisbal"
+    },
+    "MONTESQUIU": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08131",
+      "ine_name": "Montesquiu"
+    },
+    "CASTELLCIR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08055",
+      "ine_name": "Castellcir"
+    },
+    "MONTGAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08126",
+      "ine_name": "Montgat"
+    },
+    "CASTELLDEFELS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08056",
+      "ine_name": "Castelldefels"
+    },
+    "MONTMELÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08135",
+      "ine_name": "Montmeló"
+    },
+    "CASTELLET I LA GORNAL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08058",
+      "ine_name": "Castellet i la Gornal"
+    },
+    "MONTORNÈS DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08136",
+      "ine_name": "Montornès del Vallès"
+    },
+    "CASTELLFOLLIT DEL BOIX": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08059",
+      "ine_name": "Castellfollit del Boix"
+    },
+    "MONTSENY": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08137",
+      "ine_name": "Montseny"
+    },
+    "CASTELLGALÍ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08061",
+      "ine_name": "Castellgalí"
+    },
+    "MUNTANYOLA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08129",
+      "ine_name": "Muntanyola"
+    },
+    "CASTELLOLÍ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08063",
+      "ine_name": "Castellolí"
+    },
+    "MURA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08139",
+      "ine_name": "Mura"
+    },
+    "CASTELLTERÇOL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08064",
+      "ine_name": "Castellterçol"
+    },
+    "NAVARCLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08140",
+      "ine_name": "Navarcles"
+    },
+    "CASTELLVÍ DE LA MARCA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08065",
+      "ine_name": "Castellví de la Marca"
+    },
+    "NOU DE BERGUEDÀ, LA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08142",
+      "ine_name": "Nou de Berguedà, La"
+    },
+    "CASTELLVÍ DE ROSANES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08066",
+      "ine_name": "Castellví de Rosanes"
+    },
+    "ÒDENA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08143",
+      "ine_name": "Òdena"
+    },
+    "CENTELLES": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08067",
+      "ine_name": "Centelles"
+    },
+    "OLÈRDOLA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08145",
+      "ine_name": "Olèrdola"
+    },
+    "CERCS": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08268",
+      "ine_name": "Cercs"
+    },
+    "OLESA DE BONESVALLS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08146",
+      "ine_name": "Olesa de Bonesvalls"
+    },
+    "CERDANYOLA DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08266",
+      "ine_name": "Cerdanyola del Vallès"
+    },
+    "OLESA DE MONTSERRAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08147",
+      "ine_name": "Olesa de Montserrat"
+    },
+    "CERVELLÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08068",
+      "ine_name": "Cervelló"
+    },
+    "OLIVELLA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08148",
+      "ine_name": "Olivella"
+    },
+    "COLLBATÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08069",
+      "ine_name": "Collbató"
+    },
+    "OLOST": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08149",
+      "ine_name": "Olost"
+    },
+    "COLLSUSPINA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08070",
+      "ine_name": "Collsuspina"
+    },
+    "OLVAN": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08144",
+      "ine_name": "Olvan"
+    },
+    "CORBERA DE LLOBREGAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08072",
+      "ine_name": "Corbera de Llobregat"
+    },
+    "ORÍS": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08150",
+      "ine_name": "Orís"
+    },
+    "CORNELLÀ DE LLOBREGAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08073",
+      "ine_name": "Cornellà de Llobregat"
+    },
+    "ORISTÀ": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08151",
+      "ine_name": "Oristà"
+    },
+    "CUBELLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08074",
+      "ine_name": "Cubelles"
+    },
+    "ORPÍ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08152",
+      "ine_name": "Orpí"
+    },
+    "DOSRIUS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08075",
+      "ine_name": "Dosrius"
+    },
+    "ÒRRIUS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08153",
+      "ine_name": "Òrrius"
+    },
+    "ESPARREGUERA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08076",
+      "ine_name": "Esparreguera"
+    },
+    "PACS DEL PENEDÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08154",
+      "ine_name": "Pacs del Penedès"
+    },
+    "ESPLUGUES DE LLOBREGAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08077",
+      "ine_name": "Esplugues de Llobregat"
+    },
+    "PALAFOLLS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08155",
+      "ine_name": "Palafolls"
+    },
+    "ESPUNYOLA, L'": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08078",
+      "ine_name": "Espunyola, L'"
+    },
+    "ESTANY, L'": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08079",
+      "ine_name": "Estany, L'"
+    },
+    "PALMA DE CERVELLÓ, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08905",
+      "ine_name": "Palma de Cervelló, La"
+    },
+    "PALLEJÀ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08157",
+      "ine_name": "Pallejà"
+    },
+    "FÍGOLS": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08080",
+      "ine_name": "Fígols"
+    },
+    "PAPIOL, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08158",
+      "ine_name": "Papiol, El"
+    },
+    "FOGARS DE LA SELVA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08082",
+      "ine_name": "Fogars de la Selva"
+    },
+    "PARETS DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08159",
+      "ine_name": "Parets del Vallès"
+    },
+    "FOGARS DE MONTCLÚS": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08081",
+      "ine_name": "Fogars de Montclús"
+    },
+    "PERAFITA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08160",
+      "ine_name": "Perafita"
+    },
+    "FOLGUEROLES": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08083",
+      "ine_name": "Folgueroles"
+    },
+    "PIERA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08161",
+      "ine_name": "Piera"
+    },
+    "PINEDA DE MAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08163",
+      "ine_name": "Pineda de Mar"
+    },
+    "FRANQUESES DEL VALLÈS, LES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08086",
+      "ine_name": "Franqueses del Vallès, Les"
+    },
+    "PLA DEL PENEDÈS, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08164",
+      "ine_name": "Pla del Penedès, El"
+    },
+    "GAIÀ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08090",
+      "ine_name": "Gaià"
+    },
+    "POBLA DE CLARAMUNT, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08165",
+      "ine_name": "Pobla de Claramunt, La"
+    },
+    "GALLIFA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08087",
+      "ine_name": "Gallifa"
+    },
+    "POBLA DE LILLET, LA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08166",
+      "ine_name": "Pobla de Lillet, La"
+    },
+    "GARRIGA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08088",
+      "ine_name": "Garriga, La"
+    },
+    "POLINYÀ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08167",
+      "ine_name": "Polinyà"
+    },
+    "GAVÀ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08089",
+      "ine_name": "Gavà"
+    },
+    "GIRONELLA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08092",
+      "ine_name": "Gironella"
+    },
+    "PONTONS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08168",
+      "ine_name": "Pontons"
+    },
+    "GISCLARENY": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08093",
+      "ine_name": "Gisclareny"
+    },
+    "PRAT DE LLOBREGAT, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08169",
+      "ine_name": "Prat de Llobregat, El"
+    },
+    "GRANADA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08094",
+      "ine_name": "Granada, La"
+    },
+    "PRATS DE LLUÇANÈS": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08171",
+      "ine_name": "Prats de Lluçanès"
+    },
+    "GRANERA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08095",
+      "ine_name": "Granera"
+    },
+    "PREMIÀ DE DALT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08230",
+      "ine_name": "Premià de Dalt"
+    },
+    "GRANOLLERS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08096",
+      "ine_name": "Granollers"
+    },
+    "PREMIÀ DE MAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08172",
+      "ine_name": "Premià de Mar"
+    },
+    "GUALBA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08097",
+      "ine_name": "Gualba"
+    },
+    "PUIGDÀLBER": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08174",
+      "ine_name": "Puigdàlber"
+    },
+    "GUARDIOLA DE BERGUEDÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08099",
+      "ine_name": "Guardiola de Berguedà"
+    },
+    "GURB": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08100",
+      "ine_name": "Gurb"
+    },
+    "QUAR, LA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08177",
+      "ine_name": "Quar, La"
+    },
+    "HOSPITALET DE LLOBREGAT, L'": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08101",
+      "ine_name": "Hospitalet de Llobregat, L'"
+    },
+    "RELLINARS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08179",
+      "ine_name": "Rellinars"
+    },
+    "HOSTALETS DE PIEROLA, ELS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08162",
+      "ine_name": "Hostalets de Pierola, Els"
+    },
+    "RIPOLLET": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08180",
+      "ine_name": "Ripollet"
+    },
+    "IGUALADA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08102",
+      "ine_name": "Igualada"
+    },
+    "ROCA DEL VALLÈS, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08181",
+      "ine_name": "Roca del Vallès, La"
+    },
+    "JORBA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08103",
+      "ine_name": "Jorba"
+    },
+    "RODA DE TER": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08183",
+      "ine_name": "Roda de Ter"
+    },
+    "LLACUNA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08104",
+      "ine_name": "Llacuna, La"
+    },
+    "RUBÍ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08184",
+      "ine_name": "Rubí"
+    },
+    "LLAGOSTA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08105",
+      "ine_name": "Llagosta, La"
+    },
+    "RUBIÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08185",
+      "ine_name": "Rubió"
+    },
+    "LLIÇÀ D'AMUNT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08107",
+      "ine_name": "Lliçà d'Amunt"
+    },
+    "RUPIT I PRUIT": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08901",
+      "ine_name": "Rupit i Pruit"
+    },
+    "LLIÇÀ DE VALL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08108",
+      "ine_name": "Lliçà de Vall"
+    },
+    "SABADELL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08187",
+      "ine_name": "Sabadell"
+    },
+    "LLINARS DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08106",
+      "ine_name": "Llinars del Vallès"
+    },
+    "SAGÀS": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08188",
+      "ine_name": "Sagàs"
+    },
+    "LLUÇÀ": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08109",
+      "ine_name": "Lluçà"
+    },
+    "SALDES": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08190",
+      "ine_name": "Saldes"
+    },
+    "MALGRAT DE MAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08110",
+      "ine_name": "Malgrat de Mar"
+    },
+    "SALLENT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08191",
+      "ine_name": "Sallent"
+    },
+    "MALLA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08111",
+      "ine_name": "Malla"
+    },
+    "SANT ADRIÀ DE BESÒS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08194",
+      "ine_name": "Sant Adrià de Besòs"
+    },
+    "MANLLEU": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08112",
+      "ine_name": "Manlleu"
+    },
+    "SANT AGUSTÍ DE LLUÇANÈS": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08195",
+      "ine_name": "Sant Agustí de Lluçanès"
+    },
+    "MANRESA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08113",
+      "ine_name": "Manresa"
+    },
+    "SANT ANDREU DE LA BARCA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08196",
+      "ine_name": "Sant Andreu de la Barca"
+    },
+    "MARGANELL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08242",
+      "ine_name": "Marganell"
+    },
+    "SANT ANDREU DE LLAVANERES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08197",
+      "ine_name": "Sant Andreu de Llavaneres"
+    },
+    "MARTORELL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08114",
+      "ine_name": "Martorell"
+    },
+    "SANT ANTONI DE VILAMAJOR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08198",
+      "ine_name": "Sant Antoni de Vilamajor"
+    },
+    "MARTORELLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08115",
+      "ine_name": "Martorelles"
+    },
+    "SANT BARTOMEU DEL GRAU": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08199",
+      "ine_name": "Sant Bartomeu del Grau"
+    },
+    "MASIES DE RODA, LES": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08116",
+      "ine_name": "Masies de Roda, Les"
+    },
+    "SANT BOI DE LLOBREGAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08200",
+      "ine_name": "Sant Boi de Llobregat"
+    },
+    "SANT BOI DE LLUÇANÈS": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08201",
+      "ine_name": "Sant Boi de Lluçanès"
+    },
+    "TERRASSA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08279",
+      "ine_name": "Terrassa"
+    },
+    "SANT CEBRIÀ DE VALLALTA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08203",
+      "ine_name": "Sant Cebrià de Vallalta"
+    },
+    "TIANA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08282",
+      "ine_name": "Tiana"
+    },
+    "SANT CELONI": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08202",
+      "ine_name": "Sant Celoni"
+    },
+    "TONA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08283",
+      "ine_name": "Tona"
+    },
+    "SANT CLIMENT DE LLOBREGAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08204",
+      "ine_name": "Sant Climent de Llobregat"
+    },
+    "TORDERA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08284",
+      "ine_name": "Tordera"
+    },
+    "SANT CUGAT DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08205",
+      "ine_name": "Sant Cugat del Vallès"
+    },
+    "TORELLÓ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08285",
+      "ine_name": "Torelló"
+    },
+    "SANT CUGAT SESGARRIGUES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08206",
+      "ine_name": "Sant Cugat Sesgarrigues"
+    },
+    "TORRE DE CLARAMUNT, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08286",
+      "ine_name": "Torre de Claramunt, La"
+    },
+    "SANT ESTEVE DE PALAUTORDERA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08207",
+      "ine_name": "Sant Esteve de Palautordera"
+    },
+    "TORRELAVIT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08287",
+      "ine_name": "Torrelavit"
+    },
+    "SANT ESTEVE SESROVIRES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08208",
+      "ine_name": "Sant Esteve Sesrovires"
+    },
+    "TORRELLES DE FOIX": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08288",
+      "ine_name": "Torrelles de Foix"
+    },
+    "SANT FELIU DE CODINES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08210",
+      "ine_name": "Sant Feliu de Codines"
+    },
+    "TORRELLES DE LLOBREGAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08289",
+      "ine_name": "Torrelles de Llobregat"
+    },
+    "SANT FELIU DE LLOBREGAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08211",
+      "ine_name": "Sant Feliu de Llobregat"
+    },
+    "ULLASTRELL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08290",
+      "ine_name": "Ullastrell"
+    },
+    "SANT FELIU SASSERRA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08212",
+      "ine_name": "Sant Feliu Sasserra"
+    },
+    "VACARISSES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08291",
+      "ine_name": "Vacarisses"
+    },
+    "SANT FOST DE CAMPSENTELLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08209",
+      "ine_name": "Sant Fost de Campsentelles"
+    },
+    "VALLBONA D'ANOIA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08292",
+      "ine_name": "Vallbona d'Anoia"
+    },
+    "SANT FRUITÓS DE BAGES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08213",
+      "ine_name": "Sant Fruitós de Bages"
+    },
+    "VALLCEBRE": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08293",
+      "ine_name": "Vallcebre"
+    },
+    "SANT HIPÒLIT DE VOLTREGÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08215",
+      "ine_name": "Sant Hipòlit de Voltregà"
+    },
+    "VALLGORGUINA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08294",
+      "ine_name": "Vallgorguina"
+    },
+    "SANT ISCLE DE VALLALTA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08193",
+      "ine_name": "Sant Iscle de Vallalta"
+    },
+    "VALLIRANA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08295",
+      "ine_name": "Vallirana"
+    },
+    "SANT JAUME DE FRONTANYÀ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08216",
+      "ine_name": "Sant Jaume de Frontanyà"
+    },
+    "VALLROMANES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08296",
+      "ine_name": "Vallromanes"
+    },
+    "SANT JOAN DE VILATORRADA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08218",
+      "ine_name": "Sant Joan de Vilatorrada"
+    },
+    "VIC": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08298",
+      "ine_name": "Vic"
+    },
+    "VILADA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08299",
+      "ine_name": "Vilada"
+    },
+    "SANT JOAN DESPÍ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08217",
+      "ine_name": "Sant Joan Despí"
+    },
+    "VILADECANS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08301",
+      "ine_name": "Viladecans"
+    },
+    "SANT JULIÀ DE CERDANYOLA": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08903",
+      "ine_name": "Sant Julià de Cerdanyola"
+    },
+    "VILADECAVALLS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08300",
+      "ine_name": "Viladecavalls"
+    },
+    "SANT JULIÀ DE VILATORTA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08220",
+      "ine_name": "Sant Julià de Vilatorta"
+    },
+    "VILAFRANCA DEL PENEDÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08305",
+      "ine_name": "Vilafranca del Penedès"
+    },
+    "SANT JUST DESVERN": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08221",
+      "ine_name": "Sant Just Desvern"
+    },
+    "VILALBA SASSERRA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08306",
+      "ine_name": "Vilalba Sasserra"
+    },
+    "SANT LLORENÇ D'HORTONS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08222",
+      "ine_name": "Sant Llorenç d'Hortons"
+    },
+    "VILANOVA DE SAU": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08303",
+      "ine_name": "Vilanova de Sau"
+    },
+    "SANT LLORENÇ SAVALL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08223",
+      "ine_name": "Sant Llorenç Savall"
+    },
+    "VILANOVA DEL CAMÍ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08302",
+      "ine_name": "Vilanova del Camí"
+    },
+    "SANT MARTÍ D'ALBARS": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08225",
+      "ine_name": "Sant Martí d'Albars"
+    },
+    "VILANOVA DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08902",
+      "ine_name": "Vilanova del Vallès"
+    },
+    "SANT MARTÍ DE CENTELLES": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08224",
+      "ine_name": "Sant Martí de Centelles"
+    },
+    "VILANOVA I LA GELTRÚ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08307",
+      "ine_name": "Vilanova i la Geltrú"
+    },
+    "SANT MARTÍ DE TOUS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08226",
+      "ine_name": "Sant Martí de Tous"
+    },
+    "VILASSAR DE DALT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08214",
+      "ine_name": "Vilassar de Dalt"
+    },
+    "SANT MARTÍ SARROCA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08227",
+      "ine_name": "Sant Martí Sarroca"
+    },
+    "VILASSAR DE MAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08219",
+      "ine_name": "Vilassar de Mar"
+    },
+    "SANT PERE DE RIBES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08231",
+      "ine_name": "Sant Pere de Ribes"
+    },
+    "VILOBÍ DEL PENEDÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08304",
+      "ine_name": "Vilobí del Penedès"
+    },
+    "SANT PERE DE RIUDEBITLLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08232",
+      "ine_name": "Sant Pere de Riudebitlles"
+    },
+    "SANT PERE DE TORELLÓ": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08233",
+      "ine_name": "Sant Pere de Torelló"
+    },
+    "SANT PERE DE VILAMAJOR": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08234",
+      "ine_name": "Sant Pere de Vilamajor"
+    },
+    "SANT QUINTÍ DE MEDIONA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08236",
+      "ine_name": "Sant Quintí de Mediona"
+    },
+    "AGULLANA": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17001",
+      "ine_name": "Agullana"
+    },
+    "SANT QUIRZE DE BESORA": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08237",
+      "ine_name": "Sant Quirze de Besora"
+    },
+    "AIGUAVIVA": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17002",
+      "ine_name": "Aiguaviva"
+    },
+    "SANT QUIRZE DEL VALLÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08238",
+      "ine_name": "Sant Quirze del Vallès"
+    },
+    "ALBANYÀ": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17003",
+      "ine_name": "Albanyà"
+    },
+    "SANT QUIRZE SAFAJA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08239",
+      "ine_name": "Sant Quirze Safaja"
+    },
+    "ALBONS": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17004",
+      "ine_name": "Albons"
+    },
+    "SANT SADURNÍ D'ANOIA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08240",
+      "ine_name": "Sant Sadurní d'Anoia"
+    },
+    "ALP": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17006",
+      "ine_name": "Alp"
+    },
+    "SANT SADURNÍ D'OSORMORT": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08241",
+      "ine_name": "Sant Sadurní d'Osormort"
+    },
+    "AMER": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17007",
+      "ine_name": "Amer"
+    },
+    "SANT SALVADOR DE GUARDIOLA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08098",
+      "ine_name": "Sant Salvador de Guardiola"
+    },
+    "ANGLÈS": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17008",
+      "ine_name": "Anglès"
+    },
+    "SANT VICENÇ DE CASTELLET": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08262",
+      "ine_name": "Sant Vicenç de Castellet"
+    },
+    "ARBÚCIES": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17009",
+      "ine_name": "Arbúcies"
+    },
+    "SANT VICENÇ DE MONTALT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08264",
+      "ine_name": "Sant Vicenç de Montalt"
+    },
+    "ARGELAGUER": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17010",
+      "ine_name": "Argelaguer"
+    },
+    "SANT VICENÇ DE TORELLÓ": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08265",
+      "ine_name": "Sant Vicenç de Torelló"
+    },
+    "ARMENTERA, L'": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17011",
+      "ine_name": "Armentera, L'"
+    },
+    "SANT VICENÇ DELS HORTS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08263",
+      "ine_name": "Sant Vicenç dels Horts"
+    },
+    "AVINYONET DE PUIGVENTÓS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17012",
+      "ine_name": "Avinyonet de Puigventós"
+    },
+    "SANTA CECÍLIA DE VOLTREGÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08243",
+      "ine_name": "Santa Cecília de Voltregà"
+    },
+    "BANYOLES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17015",
+      "ine_name": "Banyoles"
+    },
+    "SANTA COLOMA DE CERVELLÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08244",
+      "ine_name": "Santa Coloma de Cervelló"
+    },
+    "BÀSCARA": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17016",
+      "ine_name": "Bàscara"
+    },
+    "SANTA COLOMA DE GRAMENET": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08245",
+      "ine_name": "Santa Coloma de Gramenet"
+    },
+    "BEGUR": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17013",
+      "ine_name": "Begur"
+    },
+    "SANTA EUGÈNIA DE BERGA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08246",
+      "ine_name": "Santa Eugènia de Berga"
+    },
+    "BELLCAIRE D'EMPORDÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17018",
+      "ine_name": "Bellcaire d'Empordà"
+    },
+    "SANTA EULÀLIA DE RIUPRIMER": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08247",
+      "ine_name": "Santa Eulàlia de Riuprimer"
+    },
+    "BESALÚ": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17019",
+      "ine_name": "Besalú"
+    },
+    "SANTA EULÀLIA DE RONÇANA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08248",
+      "ine_name": "Santa Eulàlia de Ronçana"
+    },
+    "BESCANÓ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17020",
+      "ine_name": "Bescanó"
+    },
+    "SANTA FE DEL PENEDÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08249",
+      "ine_name": "Santa Fe del Penedès"
+    },
+    "BEUDA": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17021",
+      "ine_name": "Beuda"
+    },
+    "SANTA MARGARIDA DE MONTBUI": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08250",
+      "ine_name": "Santa Margarida de Montbui"
+    },
+    "BISBAL D'EMPORDÀ, LA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17022",
+      "ine_name": "Bisbal d'Empordà, La"
+    },
+    "SANTA MARGARIDA I ELS MONJOS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08251",
+      "ine_name": "Santa Margarida i els Monjos"
+    },
+    "BIURE": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17234",
+      "ine_name": "Biure"
+    },
+    "SANTA MARIA DE BESORA": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08253",
+      "ine_name": "Santa Maria de Besora"
+    },
+    "BLANES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17023",
+      "ine_name": "Blanes"
+    },
+    "SANTA MARIA DE MARTORELLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08256",
+      "ine_name": "Santa Maria de Martorelles"
+    },
+    "BOLVIR": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17024",
+      "ine_name": "Bolvir"
+    },
+    "SANTA MARIA DE MERLÈS": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08255",
+      "ine_name": "Santa Maria de Merlès"
+    },
+    "BORDILS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17025",
+      "ine_name": "Bordils"
+    },
+    "SANTA MARIA DE MIRALLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08257",
+      "ine_name": "Santa Maria de Miralles"
+    },
+    "BORRASSÀ": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17026",
+      "ine_name": "Borrassà"
+    },
+    "SANTA MARIA DE PALAUTORDERA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08259",
+      "ine_name": "Santa Maria de Palautordera"
+    },
+    "BREDA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17027",
+      "ine_name": "Breda"
+    },
+    "SANTA MARIA D'OLÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08258",
+      "ine_name": "Santa Maria d'Oló"
+    },
+    "SANTA PERPÈTUA DE MOGODA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08260",
+      "ine_name": "Santa Perpètua de Mogoda"
+    },
+    "CABANELLES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17031",
+      "ine_name": "Cabanelles"
+    },
+    "SANTA SUSANNA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08261",
+      "ine_name": "Santa Susanna"
+    },
+    "CABANES": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17030",
+      "ine_name": "Cabanes"
+    },
+    "SANTPEDOR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08192",
+      "ine_name": "Santpedor"
+    },
+    "CADAQUÉS": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17032",
+      "ine_name": "Cadaqués"
+    },
+    "SENTMENAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08267",
+      "ine_name": "Sentmenat"
+    },
+    "CALDES DE MALAVELLA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17033",
+      "ine_name": "Caldes de Malavella"
+    },
+    "SEVA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08269",
+      "ine_name": "Seva"
+    },
+    "SITGES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08270",
+      "ine_name": "Sitges"
+    },
+    "CAMÓS": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17035",
+      "ine_name": "Camós"
+    },
+    "SOBREMUNT": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08271",
+      "ine_name": "Sobremunt"
+    },
+    "CAMPDEVÀNOL": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17036",
+      "ine_name": "Campdevànol"
+    },
+    "SORA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08272",
+      "ine_name": "Sora"
+    },
+    "CAMPELLES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17037",
+      "ine_name": "Campelles"
+    },
+    "SUBIRATS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08273",
+      "ine_name": "Subirats"
+    },
+    "CAMPLLONG": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17038",
+      "ine_name": "Campllong"
+    },
+    "TAGAMANENT": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08276",
+      "ine_name": "Tagamanent"
+    },
+    "CAMPRODON": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17039",
+      "ine_name": "Camprodon"
+    },
+    "TALAMANCA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08277",
+      "ine_name": "Talamanca"
+    },
+    "CANET D'ADRI": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17040",
+      "ine_name": "Canet d'Adri"
+    },
+    "TARADELL": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08278",
+      "ine_name": "Taradell"
+    },
+    "CANTALLOPS": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17041",
+      "ine_name": "Cantallops"
+    },
+    "TAVÈRNOLES": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08275",
+      "ine_name": "Tavèrnoles"
+    },
+    "CAPMANY": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17042",
+      "ine_name": "Capmany"
+    },
+    "TAVERTET": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08280",
+      "ine_name": "Tavertet"
+    },
+    "CASSÀ DE LA SELVA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17044",
+      "ine_name": "Cassà de la Selva"
+    },
+    "TEIÀ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Barcelona",
+      "ine_code": "08281",
+      "ine_name": "Teià"
+    },
+    "CASTELLFOLLIT DE LA ROCA": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17046",
+      "ine_name": "Castellfollit de la Roca"
+    },
+    "CASTELLÓ D'EMPÚRIES": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17047",
+      "ine_name": "Castelló d'Empúries"
+    },
+    "PARDINES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17125",
+      "ine_name": "Pardines"
+    },
+    "PARLAVÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17126",
+      "ine_name": "Parlavà"
+    },
+    "CELLERA DE TER, LA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17189",
+      "ine_name": "Cellera de Ter, La"
+    },
+    "PAU": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17128",
+      "ine_name": "Pau"
+    },
+    "CELRÀ": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17049",
+      "ine_name": "Celrà"
+    },
+    "PEDRET I MARZÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17129",
+      "ine_name": "Pedret i Marzà"
+    },
+    "CERVIÀ DE TER": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17050",
+      "ine_name": "Cervià de Ter"
+    },
+    "PERA, LA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17130",
+      "ine_name": "Pera, La"
+    },
+    "CISTELLA": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17051",
+      "ine_name": "Cistella"
+    },
+    "PERALADA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17132",
+      "ine_name": "Peralada"
+    },
+    "COLERA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17054",
+      "ine_name": "Colera"
+    },
+    "PLANES D'HOSTOLES, LES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17133",
+      "ine_name": "Planes d'Hostoles, Les"
+    },
+    "COLOMERS": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17055",
+      "ine_name": "Colomers"
+    },
+    "PLANOLES": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17134",
+      "ine_name": "Planoles"
+    },
+    "CORÇÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17057",
+      "ine_name": "Corçà"
+    },
+    "PONT DE MOLINS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17135",
+      "ine_name": "Pont de Molins"
+    },
+    "CORNELLÀ DEL TERRI": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17056",
+      "ine_name": "Cornellà del Terri"
+    },
+    "PONTÓS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17136",
+      "ine_name": "Pontós"
+    },
+    "CRESPIÀ": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17058",
+      "ine_name": "Crespià"
+    },
+    "PORQUERES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17137",
+      "ine_name": "Porqueres"
+    },
+    "PORTBOU": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17138",
+      "ine_name": "Portbou"
+    },
+    "DARNIUS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17060",
+      "ine_name": "Darnius"
+    },
+    "PRESES, LES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17139",
+      "ine_name": "Preses, Les"
+    },
+    "DAS": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17061",
+      "ine_name": "Das"
+    },
+    "PUIGCERDÀ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17141",
+      "ine_name": "Puigcerdà"
+    },
+    "ESCALA, L'": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17062",
+      "ine_name": "Escala, L'"
+    },
+    "QUART": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17142",
+      "ine_name": "Quart"
+    },
+    "ESPINELVES": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17063",
+      "ine_name": "Espinelves"
+    },
+    "QUERALBS": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17043",
+      "ine_name": "Queralbs"
+    },
+    "ESPOLLA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17064",
+      "ine_name": "Espolla"
+    },
+    "RABÓS": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17143",
+      "ine_name": "Rabós"
+    },
+    "ESPONELLÀ": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17065",
+      "ine_name": "Esponellà"
+    },
+    "REGENCÓS": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17144",
+      "ine_name": "Regencós"
+    },
+    "FAR D'EMPORDÀ, EL": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17005",
+      "ine_name": "Far d'Empordà, El"
+    },
+    "RIBES DE FRESER": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17145",
+      "ine_name": "Ribes de Freser"
+    },
+    "FIGUERES": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17066",
+      "ine_name": "Figueres"
+    },
+    "RIELLS I VIABREA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17146",
+      "ine_name": "Riells i Viabrea"
+    },
+    "FLAÇÀ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17067",
+      "ine_name": "Flaçà"
+    },
+    "RIPOLL": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17147",
+      "ine_name": "Ripoll"
+    },
+    "FOIXÀ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17068",
+      "ine_name": "Foixà"
+    },
+    "RIUDARENES": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17148",
+      "ine_name": "Riudarenes"
+    },
+    "FONTANALS DE CERDANYA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17069",
+      "ine_name": "Fontanals de Cerdanya"
+    },
+    "RIUDAURA": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17149",
+      "ine_name": "Riudaura"
+    },
+    "FONTANILLES": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17070",
+      "ine_name": "Fontanilles"
+    },
+    "RIUDELLOTS DE LA SELVA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17150",
+      "ine_name": "Riudellots de la Selva"
+    },
+    "FONTCOBERTA": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17071",
+      "ine_name": "Fontcoberta"
+    },
+    "RIUMORS": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17151",
+      "ine_name": "Riumors"
+    },
+    "FORALLAC": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17902",
+      "ine_name": "Forallac"
+    },
+    "ROSES": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17152",
+      "ine_name": "Roses"
+    },
+    "FORNELLS DE LA SELVA": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17073",
+      "ine_name": "Fornells de la Selva"
+    },
+    "RUPIÀ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17153",
+      "ine_name": "Rupià"
+    },
+    "FORTIÀ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17074",
+      "ine_name": "Fortià"
+    },
+    "SALES DE LLIERCA": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17154",
+      "ine_name": "Sales de Llierca"
+    },
+    "GARRIGÀS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17075",
+      "ine_name": "Garrigàs"
+    },
+    "SALT": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17155",
+      "ine_name": "Salt"
+    },
+    "GARRIGOLES": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17076",
+      "ine_name": "Garrigoles"
+    },
+    "SANT ANDREU SALOU": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17157",
+      "ine_name": "Sant Andreu Salou"
+    },
+    "GARRIGUELLA": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17077",
+      "ine_name": "Garriguella"
+    },
+    "SANT ANIOL DE FINESTRES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17183",
+      "ine_name": "Sant Aniol de Finestres"
+    },
+    "GER": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17078",
+      "ine_name": "Ger"
+    },
+    "SANT CLIMENT SESCEBES": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17158",
+      "ine_name": "Sant Climent Sescebes"
+    },
+    "GIRONA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17079",
+      "ine_name": "Girona"
+    },
+    "SANT FELIU DE BUIXALLEU": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17159",
+      "ine_name": "Sant Feliu de Buixalleu"
+    },
+    "GOMBRÈN": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17080",
+      "ine_name": "Gombrèn"
+    },
+    "SANT FELIU DE GUÍXOLS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17160",
+      "ine_name": "Sant Feliu de Guíxols"
+    },
+    "GUALTA": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17081",
+      "ine_name": "Gualta"
+    },
+    "SANT FELIU DE PALLEROLS": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17161",
+      "ine_name": "Sant Feliu de Pallerols"
+    },
+    "GUILS DE CERDANYA": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17082",
+      "ine_name": "Guils de Cerdanya"
+    },
+    "SANT FERRIOL": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17162",
+      "ine_name": "Sant Ferriol"
+    },
+    "HOSTALRIC": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17083",
+      "ine_name": "Hostalric"
+    },
+    "SANT GREGORI": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17163",
+      "ine_name": "Sant Gregori"
+    },
+    "ISÒVOL": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17084",
+      "ine_name": "Isòvol"
+    },
+    "SANT HILARI SACALM": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17164",
+      "ine_name": "Sant Hilari Sacalm"
+    },
+    "JAFRE": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17085",
+      "ine_name": "Jafre"
+    },
+    "SANT JAUME DE LLIERCA": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17165",
+      "ine_name": "Sant Jaume de Llierca"
+    },
+    "JONQUERA, LA": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17086",
+      "ine_name": "Jonquera, La"
+    },
+    "SANT JOAN DE LES ABADESSES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17167",
+      "ine_name": "Sant Joan de les Abadesses"
+    },
+    "JUIÀ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17087",
+      "ine_name": "Juià"
+    },
+    "SANT JOAN DE MOLLET": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17168",
+      "ine_name": "Sant Joan de Mollet"
+    },
+    "LLADÓ": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17088",
+      "ine_name": "Lladó"
+    },
+    "SANT JOAN LES FONTS": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17185",
+      "ine_name": "Sant Joan les Fonts"
+    },
+    "LLAGOSTERA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17089",
+      "ine_name": "Llagostera"
+    },
+    "SANT JORDI DESVALLS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17166",
+      "ine_name": "Sant Jordi Desvalls"
+    },
+    "LLAMBILLES": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17090",
+      "ine_name": "Llambilles"
+    },
+    "SANT JULIÀ DE RAMIS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17169",
+      "ine_name": "Sant Julià de Ramis"
+    },
+    "LLANARS": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17091",
+      "ine_name": "Llanars"
+    },
+    "SANT JULIÀ DEL LLOR I BONMATÍ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17903",
+      "ine_name": "Sant Julià del Llor i Bonmatí"
+    },
+    "LLANÇÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17092",
+      "ine_name": "Llançà"
+    },
+    "SANT LLORENÇ DE LA MUGA": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17171",
+      "ine_name": "Sant Llorenç de la Muga"
+    },
+    "LLERS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17093",
+      "ine_name": "Llers"
+    },
+    "SANT MARTÍ DE LLÉMENA": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17172",
+      "ine_name": "Sant Martí de Llémena"
+    },
+    "LLÍVIA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17094",
+      "ine_name": "Llívia"
+    },
+    "SANT MARTÍ VELL": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17173",
+      "ine_name": "Sant Martí Vell"
+    },
+    "LLORET DE MAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17095",
+      "ine_name": "Lloret de Mar"
+    },
+    "SANT MIQUEL DE CAMPMAJOR": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17174",
+      "ine_name": "Sant Miquel de Campmajor"
+    },
+    "LLOSSES, LES": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17096",
+      "ine_name": "Llosses, Les"
+    },
+    "SANT MIQUEL DE FLUVIÀ": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17175",
+      "ine_name": "Sant Miquel de Fluvià"
+    },
+    "MAÇANET DE CABRENYS": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17102",
+      "ine_name": "Maçanet de Cabrenys"
+    },
+    "SANT MORI": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17176",
+      "ine_name": "Sant Mori"
+    },
+    "MAÇANET DE LA SELVA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17103",
+      "ine_name": "Maçanet de la Selva"
+    },
+    "SANT PAU DE SEGÚRIES": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17177",
+      "ine_name": "Sant Pau de Segúries"
+    },
+    "MADREMANYA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17097",
+      "ine_name": "Madremanya"
+    },
+    "SANT PERE PESCADOR": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17178",
+      "ine_name": "Sant Pere Pescador"
+    },
+    "MAIÀ DE MONTCAL": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17098",
+      "ine_name": "Maià de Montcal"
+    },
+    "SANTA COLOMA DE FARNERS": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17180",
+      "ine_name": "Santa Coloma de Farners"
+    },
+    "MASARAC": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17100",
+      "ine_name": "Masarac"
+    },
+    "SANTA CRISTINA D'ARO": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17181",
+      "ine_name": "Santa Cristina d'Aro"
+    },
+    "MASSANES": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17101",
+      "ine_name": "Massanes"
+    },
+    "SANTA LLOGAIA D'ÀLGUEMA": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17182",
+      "ine_name": "Santa Llogaia d'Àlguema"
+    },
+    "MERANGES": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17099",
+      "ine_name": "Meranges"
+    },
+    "SANTA PAU": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17184",
+      "ine_name": "Santa Pau"
+    },
+    "MIERES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17105",
+      "ine_name": "Mieres"
+    },
+    "SARRIÀ DE TER": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17186",
+      "ine_name": "Sarrià de Ter"
+    },
+    "MOLLET DE PERALADA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17106",
+      "ine_name": "Mollet de Peralada"
+    },
+    "MOLLÓ": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17107",
+      "ine_name": "Molló"
+    },
+    "SELVA DE MAR, LA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17188",
+      "ine_name": "Selva de Mar, La"
+    },
+    "SERINYÀ": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17190",
+      "ine_name": "Serinyà"
+    },
+    "SERRA DE DARÓ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17191",
+      "ine_name": "Serra de Daró"
+    },
+    "NAVATA": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17111",
+      "ine_name": "Navata"
+    },
+    "SETCASES": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17192",
+      "ine_name": "Setcases"
+    },
+    "OGASSA": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17112",
+      "ine_name": "Ogassa"
+    },
+    "SILS": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17193",
+      "ine_name": "Sils"
+    },
+    "OLOT": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17114",
+      "ine_name": "Olot"
+    },
+    "SIURANA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17052",
+      "ine_name": "Siurana"
+    },
+    "ORDIS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17115",
+      "ine_name": "Ordis"
+    },
+    "SUSQUEDA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17194",
+      "ine_name": "Susqueda"
+    },
+    "OSOR": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17116",
+      "ine_name": "Osor"
+    },
+    "TALLADA D'EMPORDÀ, LA": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17195",
+      "ine_name": "Tallada d'Empordà, La"
+    },
+    "PALAFRUGELL": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17117",
+      "ine_name": "Palafrugell"
+    },
+    "TERRADES": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17196",
+      "ine_name": "Terrades"
+    },
+    "PALAMÓS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17118",
+      "ine_name": "Palamós"
+    },
+    "TORRENT": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17197",
+      "ine_name": "Torrent"
+    },
+    "PALAU DE SANTA EULÀLIA": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17119",
+      "ine_name": "Palau de Santa Eulàlia"
+    },
+    "TORROELLA DE FLUVIÀ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17198",
+      "ine_name": "Torroella de Fluvià"
+    },
+    "TORROELLA DE MONTGRÍ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17199",
+      "ine_name": "Torroella de Montgrí"
+    },
+    "TORTELLÀ": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17200",
+      "ine_name": "Tortellà"
+    },
+    "PALOL DE REVARDIT": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17123",
+      "ine_name": "Palol de Revardit"
+    },
+    "TOSES": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17201",
+      "ine_name": "Toses"
+    },
+    "PALS": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17124",
+      "ine_name": "Pals"
+    },
+    "TOSSA DE MAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17202",
+      "ine_name": "Tossa de Mar"
+    },
+    "ULLÀ": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17204",
+      "ine_name": "Ullà"
+    },
+    "VALL DE CARDÓS": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25901",
+      "ine_name": "Vall de Cardós"
+    },
+    "ULLASTRET": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17205",
+      "ine_name": "Ullastret"
+    },
+    "VALLS D'AGUILAR, LES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25906",
+      "ine_name": "Valls d'Aguilar, Les"
+    },
+    "ULTRAMORT": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17203",
+      "ine_name": "Ultramort"
+    },
+    "VALLS DE VALIRA, LES": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25239",
+      "ine_name": "Valls de Valira, Les"
+    },
+    "URÚS": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17206",
+      "ine_name": "Urús"
+    },
+    "VANSA I FÓRNOLS, LA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25909",
+      "ine_name": "Vansa i Fórnols, La"
+    },
+    "VAJOL, LA": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17014",
+      "ine_name": "Vajol, La"
+    },
+    "VIELHA E MIJARAN": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25243",
+      "ine_name": "Vielha e Mijaran"
+    },
+    "VALL DE BIANYA, LA": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17208",
+      "ine_name": "Vall de Bianya, La"
+    },
+    "VILAMÒS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25247",
+      "ine_name": "Vilamòs"
+    },
+    "VALL D'EN BAS, LA": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17207",
+      "ine_name": "Vall d'en Bas, La"
+    },
+    "VILOSELL, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25253",
+      "ine_name": "Vilosell, El"
+    },
+    "VALLFOGONA DE RIPOLLÈS": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17170",
+      "ine_name": "Vallfogona de Ripollès"
+    },
+    "VENTALLÓ": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17210",
+      "ine_name": "Ventalló"
+    },
+    "VIDRÀ": {
+      "ab": 0.1,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17212",
+      "ine_name": "Vidrà"
+    },
+    "AIGUAMÚRCIA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43001",
+      "ine_name": "Aiguamúrcia"
+    },
+    "VIDRERES": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17213",
+      "ine_name": "Vidreres"
+    },
+    "ALBINYANA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43002",
+      "ine_name": "Albinyana"
+    },
+    "VILABERTRAN": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17214",
+      "ine_name": "Vilabertran"
+    },
+    "ALBIOL, L'": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43003",
+      "ine_name": "Albiol, L'"
+    },
+    "VILABLAREIX": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17215",
+      "ine_name": "Vilablareix"
+    },
+    "ALCOVER": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43005",
+      "ine_name": "Alcover"
+    },
+    "VILADAMAT": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17217",
+      "ine_name": "Viladamat"
+    },
+    "ALDEA, L'": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43904",
+      "ine_name": "Aldea, L'"
+    },
+    "VILADASENS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17216",
+      "ine_name": "Viladasens"
+    },
+    "ALDOVER": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43006",
+      "ine_name": "Aldover"
+    },
+    "VILADEMULS": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17218",
+      "ine_name": "Vilademuls"
+    },
+    "ALEIXAR, L'": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43007",
+      "ine_name": "Aleixar, L'"
+    },
+    "VILADRAU": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17220",
+      "ine_name": "Viladrau"
+    },
+    "ALFORJA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43009",
+      "ine_name": "Alforja"
+    },
+    "VILAFANT": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17221",
+      "ine_name": "Vilafant"
+    },
+    "ALIÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43010",
+      "ine_name": "Alió"
+    },
+    "VILAJUÏGA": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17223",
+      "ine_name": "Vilajuïga"
+    },
+    "ALMOSTER": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43011",
+      "ine_name": "Almoster"
+    },
+    "VILALLONGA DE TER": {
+      "ab": 0.11,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17224",
+      "ine_name": "Vilallonga de Ter"
+    },
+    "ALTAFULLA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43012",
+      "ine_name": "Altafulla"
+    },
+    "VILAMACOLUM": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17225",
+      "ine_name": "Vilamacolum"
+    },
+    "AMETLLA DE MAR, L'": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43013",
+      "ine_name": "Ametlla de Mar, L'"
+    },
+    "VILAMALLA": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17226",
+      "ine_name": "Vilamalla"
+    },
+    "VILAMANISCLE": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17227",
+      "ine_name": "Vilamaniscle"
+    },
+    "AMPOSTA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43014",
+      "ine_name": "Amposta"
+    },
+    "VILANANT": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17228",
+      "ine_name": "Vilanant"
+    },
+    "ARBOÇ, L'": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43016",
+      "ine_name": "Arboç, L'"
+    },
+    "ARBOLÍ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43015",
+      "ine_name": "Arbolí"
+    },
+    "VILAÜR": {
+      "ab": 0.09,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17222",
+      "ine_name": "Vilaür"
+    },
+    "ARGENTERA, L'": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43017",
+      "ine_name": "Argentera, L'"
+    },
+    "VILOBÍ D'ONYAR": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17233",
+      "ine_name": "Vilobí d'Onyar"
+    },
+    "ASCÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43019",
+      "ine_name": "Ascó"
+    },
+    "VILOPRIU": {
+      "ab": 0.08,
+      "K": 1.0,
+      "province": "Girona",
+      "ine_code": "17232",
+      "ine_name": "Vilopriu"
+    },
+    "BANYERES DEL PENEDÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43020",
+      "ine_name": "Banyeres del Penedès"
+    },
+    "BARBERÀ DE LA CONCA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43021",
+      "ine_name": "Barberà de la Conca"
+    },
+    "BELLMUNT DEL PRIORAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43023",
+      "ine_name": "Bellmunt del Priorat"
+    },
+    "BENIFALLET": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43025",
+      "ine_name": "Benifallet"
+    },
+    "ALÀS I CERC": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25005",
+      "ine_name": "Alàs i Cerc"
+    },
+    "BENISSANET": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43026",
+      "ine_name": "Benissanet"
+    },
+    "ALINS": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25017",
+      "ine_name": "Alins"
+    },
+    "BISBAL DE FALSET, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43027",
+      "ine_name": "Bisbal de Falset, La"
+    },
+    "ALT ÀNEU": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25024",
+      "ine_name": "Alt Àneu"
+    },
+    "BISBAL DEL PENEDÈS, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43028",
+      "ine_name": "Bisbal del Penedès, La"
+    },
+    "ARRES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25031",
+      "ine_name": "Arres"
+    },
+    "BLANCAFORT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43029",
+      "ine_name": "Blancafort"
+    },
+    "ARSÈGUEL": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25032",
+      "ine_name": "Arsèguel"
+    },
+    "BONASTRE": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43030",
+      "ine_name": "Bonastre"
+    },
+    "BAUSEN": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25045",
+      "ine_name": "Bausen"
+    },
+    "BORGES DEL CAMP, LES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43031",
+      "ine_name": "Borges del Camp, Les"
+    },
+    "BELLAGUARDA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25170",
+      "ine_name": "Bellaguarda"
+    },
+    "BOTARELL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43033",
+      "ine_name": "Botarell"
+    },
+    "BELLVER DE CERDANYA": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25051",
+      "ine_name": "Bellver de Cerdanya"
+    },
+    "BRÀFIM": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43034",
+      "ine_name": "Bràfim"
+    },
+    "BÒRDES, ES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25057",
+      "ine_name": "Bòrdes, Es"
+    },
+    "CABACÉS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43035",
+      "ine_name": "Cabacés"
+    },
+    "BOSSÒST": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25059",
+      "ine_name": "Bossòst"
+    },
+    "CABRA DEL CAMP": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43036",
+      "ine_name": "Cabra del Camp"
+    },
+    "CANEJAN": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25063",
+      "ine_name": "Canejan"
+    },
+    "CALAFELL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43037",
+      "ine_name": "Calafell"
+    },
+    "CAVA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25071",
+      "ine_name": "Cava"
+    },
+    "CAMARLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43903",
+      "ine_name": "Camarles"
+    },
+    "COMA I LA PEDRA, LA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25163",
+      "ine_name": "Coma i la Pedra, La"
+    },
+    "CAMBRILS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43038",
+      "ine_name": "Cambrils"
+    },
+    "ESPOT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25082",
+      "ine_name": "Espot"
+    },
+    "CAPAFONTS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43039",
+      "ine_name": "Capafonts"
+    },
+    "ESTAMARIU": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25088",
+      "ine_name": "Estamariu"
+    },
+    "CAPÇANES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43040",
+      "ine_name": "Capçanes"
+    },
+    "ESTERRI D'ÀNEU": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25086",
+      "ine_name": "Esterri d'Àneu"
+    },
+    "CASTELLVELL DEL CAMP": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43042",
+      "ine_name": "Castellvell del Camp"
+    },
+    "ESTERRI DE CARDÓS": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25087",
+      "ine_name": "Esterri de Cardós"
+    },
+    "CATLLAR, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43043",
+      "ine_name": "Catllar, El"
+    },
+    "FARRERA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25089",
+      "ine_name": "Farrera"
+    },
+    "COLLDEJOU": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43045",
+      "ine_name": "Colldejou"
+    },
+    "GÓSOL": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25100",
+      "ine_name": "Gósol"
+    },
+    "CONESA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43046",
+      "ine_name": "Conesa"
+    },
+    "GUINGUETA D'ÀNEU, LA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25903",
+      "ine_name": "Guingueta d'Àneu, La"
+    },
+    "CONSTANTÍ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43047",
+      "ine_name": "Constantí"
+    },
+    "GUIXERS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25111",
+      "ine_name": "Guixers"
+    },
+    "CORBERA D'EBRE": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43048",
+      "ine_name": "Corbera d'Ebre"
+    },
+    "JOSA I TUIXÉN": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25910",
+      "ine_name": "Josa i Tuixén"
+    },
+    "CORNUDELLA DE MONTSANT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43049",
+      "ine_name": "Cornudella de Montsant"
+    },
+    "LES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25121",
+      "ine_name": "Les"
+    },
+    "CREIXELL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43050",
+      "ine_name": "Creixell"
+    },
+    "LLADORRE": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25123",
+      "ine_name": "Lladorre"
+    },
+    "CUNIT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43051",
+      "ine_name": "Cunit"
+    },
+    "LLAVORSÍ": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25126",
+      "ine_name": "Llavorsí"
+    },
+    "DELTEBRE": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43901",
+      "ine_name": "Deltebre"
+    },
+    "LLES DE CERDANYA": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25127",
+      "ine_name": "Lles de Cerdanya"
+    },
+    "DUESAIGÜES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43053",
+      "ine_name": "Duesaigües"
+    },
+    "MONTELLÀ I MARTINET": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25139",
+      "ine_name": "Montellà i Martinet"
+    },
+    "ESPLUGA DE FRANCOLÍ, L'": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43054",
+      "ine_name": "Espluga de Francolí, L'"
+    },
+    "MONTFERRER I CASTELLBÒ": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25140",
+      "ine_name": "Montferrer i Castellbò"
+    },
+    "FALSET": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43055",
+      "ine_name": "Falset"
+    },
+    "NAUT ARAN": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25025",
+      "ine_name": "Naut Aran"
+    },
+    "FATARELLA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43056",
+      "ine_name": "Fatarella, La"
+    },
+    "POBLA DE CÉRVOLES, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25169",
+      "ine_name": "Pobla de Cérvoles, La"
+    },
+    "FEBRÓ, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43057",
+      "ine_name": "Febró, La"
+    },
+    "PONT DE BAR, EL": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25030",
+      "ine_name": "Pont de Bar, El"
+    },
+    "FIGUERA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43058",
+      "ine_name": "Figuera, La"
+    },
+    "PRATS I SANSOR": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25175",
+      "ine_name": "Prats i Sansor"
+    },
+    "FIGUEROLA DEL CAMP": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43059",
+      "ine_name": "Figuerola del Camp"
+    },
+    "PRULLANS": {
+      "ab": 0.07,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25179",
+      "ine_name": "Prullans"
+    },
+    "FLIX": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43060",
+      "ine_name": "Flix"
+    },
+    "RIALP": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25183",
+      "ine_name": "Rialp"
+    },
+    "FORÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43061",
+      "ine_name": "Forès"
+    },
+    "RIBERA D'URGELLET": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25185",
+      "ine_name": "Ribera d'Urgellet"
+    },
+    "FREGINALS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43062",
+      "ine_name": "Freginals"
+    },
+    "SANT LLORENÇ DE MORUNYS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25193",
+      "ine_name": "Sant Llorenç de Morunys"
+    },
+    "GARCIA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43065",
+      "ine_name": "Garcia"
+    },
+    "SEU D'URGELL, LA": {
+      "ab": 0.06,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25203",
+      "ine_name": "Seu d'Urgell, La"
+    },
+    "GARIDELLS, ELS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43066",
+      "ine_name": "Garidells, Els"
+    },
+    "SORIGUERA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25208",
+      "ine_name": "Soriguera"
+    },
+    "GINESTAR": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43067",
+      "ine_name": "Ginestar"
+    },
+    "SORT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25209",
+      "ine_name": "Sort"
+    },
+    "GRATALLOPS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43069",
+      "ine_name": "Gratallops"
+    },
+    "TARRÉS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25218",
+      "ine_name": "Tarrés"
+    },
+    "GUIAMETS, ELS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43070",
+      "ine_name": "Guiamets, Els"
+    },
+    "TÍRVIA": {
+      "ab": 0.05,
+      "K": 1.0,
+      "province": "Lleida",
+      "ine_code": "25221",
+      "ine_name": "Tírvia"
+    },
+    "LLOAR, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43072",
+      "ine_name": "Lloar, El"
+    },
+    "LLORENÇ DEL PENEDÈS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43074",
+      "ine_name": "Llorenç del Penedès"
+    },
+    "ULLDEMOLINS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43157",
+      "ine_name": "Ulldemolins"
+    },
+    "MARÇÀ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43076",
+      "ine_name": "Marçà"
+    },
+    "VALLCLARA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43158",
+      "ine_name": "Vallclara"
+    },
+    "MARGALEF": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43075",
+      "ine_name": "Margalef"
+    },
+    "VALLMOLL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43160",
+      "ine_name": "Vallmoll"
+    },
+    "MASDENVERGE": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43078",
+      "ine_name": "Masdenverge"
+    },
+    "VALLS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43161",
+      "ine_name": "Valls"
+    },
+    "MASLLORENÇ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43079",
+      "ine_name": "Masllorenç"
+    },
+    "MASPUJOLS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43081",
+      "ine_name": "Maspujols"
+    },
+    "VENDRELL, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43163",
+      "ine_name": "Vendrell, El"
+    },
+    "MASROIG, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43082",
+      "ine_name": "Masroig, El"
+    },
+    "VESPELLA DE GAIÀ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43164",
+      "ine_name": "Vespella de Gaià"
+    },
+    "MILÀ, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43083",
+      "ine_name": "Milà, El"
+    },
+    "VILABELLA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43165",
+      "ine_name": "Vilabella"
+    },
+    "MIRAVET": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43084",
+      "ine_name": "Miravet"
+    },
+    "VILALLONGA DEL CAMP": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43166",
+      "ine_name": "Vilallonga del Camp"
+    },
+    "MOLAR, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43085",
+      "ine_name": "Molar, El"
+    },
+    "VILANOVA DE PRADES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43168",
+      "ine_name": "Vilanova de Prades"
+    },
+    "MONTBLANC": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43086",
+      "ine_name": "Montblanc"
+    },
+    "VILANOVA D'ESCORNALBOU": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43167",
+      "ine_name": "Vilanova d'Escornalbou"
+    },
+    "MONTBRIÓ DEL CAMP": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43088",
+      "ine_name": "Montbrió del Camp"
+    },
+    "VILAPLANA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43169",
+      "ine_name": "Vilaplana"
+    },
+    "MONTFERRI": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43089",
+      "ine_name": "Montferri"
+    },
+    "MONTMELL, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43090",
+      "ine_name": "Montmell, El"
+    },
+    "VILAVERD": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43172",
+      "ine_name": "Vilaverd"
+    },
+    "VILELLA ALTA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43173",
+      "ine_name": "Vilella Alta, La"
+    },
+    "MÓRA D'EBRE": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43093",
+      "ine_name": "Móra d'Ebre"
+    },
+    "VILELLA BAIXA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43174",
+      "ine_name": "Vilella Baixa, La"
+    },
+    "MÓRA LA NOVA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43094",
+      "ine_name": "Móra la Nova"
+    },
+    "MORELL, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43095",
+      "ine_name": "Morell, El"
+    },
+    "VINEBRE": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43177",
+      "ine_name": "Vinebre"
+    },
+    "MORERA DE MONTSANT, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43096",
+      "ine_name": "Morera de Montsant, La"
+    },
+    "VINYOLS I ELS ARCS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43178",
+      "ine_name": "Vinyols i els Arcs"
+    },
+    "NOU DE GAIÀ, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43097",
+      "ine_name": "Nou de Gaià, La"
+    },
+    "XERTA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43052",
+      "ine_name": "Xerta"
+    },
+    "NULLES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43098",
+      "ine_name": "Nulles"
+    },
+    "PALLARESOS, ELS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43100",
+      "ine_name": "Pallaresos, Els"
+    },
+    "PALMA D'EBRE, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43099",
+      "ine_name": "Palma d'Ebre, La"
+    },
+    "PERAFORT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43103",
+      "ine_name": "Perafort"
+    },
+    "PERELLÓ, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43104",
+      "ine_name": "Perelló, El"
+    },
+    "PINELL DE BRAI, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43106",
+      "ine_name": "Pinell de Brai, El"
+    },
+    "PIRA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43107",
+      "ine_name": "Pira"
+    },
+    "PLA DE SANTA MARIA, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43108",
+      "ine_name": "Pla de Santa Maria, El"
+    },
+    "POBLA DE MONTORNÈS, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43111",
+      "ine_name": "Pobla de Montornès, La"
+    },
+    "POBOLEDA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43112",
+      "ine_name": "Poboleda"
+    },
+    "PONT D'ARMENTERA, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43113",
+      "ine_name": "Pont d'Armentera, El"
+    },
+    "PONTILS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43141",
+      "ine_name": "Pontils"
+    },
+    "PORRERA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43114",
+      "ine_name": "Porrera"
+    },
+    "PRADELL DE LA TEIXETA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43115",
+      "ine_name": "Pradell de la Teixeta"
+    },
+    "PRADES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43116",
+      "ine_name": "Prades"
+    },
+    "PRATDIP": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43118",
+      "ine_name": "Pratdip"
+    },
+    "PUIGPELAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43119",
+      "ine_name": "Puigpelat"
+    },
+    "QUEROL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43120",
+      "ine_name": "Querol"
+    },
+    "RASQUERA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43121",
+      "ine_name": "Rasquera"
+    },
+    "RENAU": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43122",
+      "ine_name": "Renau"
+    },
+    "REUS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43123",
+      "ine_name": "Reus"
+    },
+    "RIBA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43124",
+      "ine_name": "Riba, La"
+    },
+    "RIERA DE GAIÀ, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43126",
+      "ine_name": "Riera de Gaià, La"
+    },
+    "RIUDECANYES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43127",
+      "ine_name": "Riudecanyes"
+    },
+    "RIUDECOLS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43128",
+      "ine_name": "Riudecols"
+    },
+    "RIUDOMS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43129",
+      "ine_name": "Riudoms"
+    },
+    "ROCAFORT DE QUERALT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43130",
+      "ine_name": "Rocafort de Queralt"
+    },
+    "RODONYÀ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43132",
+      "ine_name": "Rodonyà"
+    },
+    "ROQUETES": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43133",
+      "ine_name": "Roquetes"
+    },
+    "ROURELL, EL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43134",
+      "ine_name": "Rourell, El"
+    },
+    "SALOMÓ": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43135",
+      "ine_name": "Salomó"
+    },
+    "SALOU": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43905",
+      "ine_name": "Salou"
+    },
+    "SANT JAUME DELS DOMENYS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43137",
+      "ine_name": "Sant Jaume dels Domenys"
+    },
+    "SANT JAUME D'ENVEJA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43902",
+      "ine_name": "Sant Jaume d'Enveja"
+    },
+    "SANTA BÀRBARA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43138",
+      "ine_name": "Santa Bàrbara"
+    },
+    "SANTA COLOMA DE QUERALT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43139",
+      "ine_name": "Santa Coloma de Queralt"
+    },
+    "SANTA OLIVA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43140",
+      "ine_name": "Santa Oliva"
+    },
+    "SARRAL": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43142",
+      "ine_name": "Sarral"
+    },
+    "SECUITA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43144",
+      "ine_name": "Secuita, La"
+    },
+    "SELVA DEL CAMP, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43145",
+      "ine_name": "Selva del Camp, La"
+    },
+    "SOLIVELLA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43147",
+      "ine_name": "Solivella"
+    },
+    "TARRAGONA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43148",
+      "ine_name": "Tarragona"
+    },
+    "TIVENYS": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43149",
+      "ine_name": "Tivenys"
+    },
+    "TIVISSA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43150",
+      "ine_name": "Tivissa"
+    },
+    "TORRE DE FONTAUBELLA, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43151",
+      "ine_name": "Torre de Fontaubella, La"
+    },
+    "TORRE DE L'ESPANYOL, LA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43152",
+      "ine_name": "Torre de l'Espanyol, La"
+    },
+    "TORREDEMBARRA": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43153",
+      "ine_name": "Torredembarra"
+    },
+    "TORROJA DEL PRIORAT": {
+      "ab": 0.04,
+      "K": 1.0,
+      "province": "Tarragona",
+      "ine_code": "43154",
+      "ine_name": "Torroja del Priorat"
+    }
+  },
+  "listed_count": 678
+}
