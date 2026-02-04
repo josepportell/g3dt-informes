@@ -356,24 +356,61 @@ class Section3Generator:
     }
 
     # === 3.5 EXCAVABILITAT - Templates ===
-    EXCAVABILITAT_GRANULAR = (
-        "Segons les caracteristiques del terreny observades, "
-        "la excavacio es considera FACIL amb mitjans mecanics convencionals. "
-        "Els materials granulars (graves i sorres) permeten l'excavacio "
-        "amb retroexcavadora sense necessitat d'equips especials."
+    # N20-based rippability classification (standard geotechnical practice)
+    # Lower N20 = easier excavation, Higher N20 = may need special equipment
+    RIPPABILITY_THRESHOLDS = {
+        # (min_n20, max_n20): (difficulty, equipment, notes)
+        (0, 15): ('fàcil', 'retroexcavadora convencional', 'sense necessitat d\'equips especials'),
+        (15, 30): ('mitjana', 'retroexcavadora convencional', 'pot requerir ripper en zones més compactes'),
+        (30, 50): ('difícil', 'retroexcavadora amb ripper o martell hidràulic', 'materials compactes'),
+        (50, 1000): ('molt difícil', 'martell hidràulic o voladura controlada', 'materials molt densos o cimentats'),
+    }
+
+    EXCAVABILITAT_INTRO = (
+        "A continuació s'avalua la ripabilitat dels materials del subsòl "
+        "en funció de les seves característiques geotècniques i els resultats "
+        "dels assaigs de penetració dinàmica realitzats."
     )
 
-    EXCAVABILITAT_COHESIU = (
-        "Segons les caracteristiques del terreny observades, "
-        "la excavacio es considera de dificultat MITJANA. "
-        "Els materials cohesius poden requerir l'us de martell "
-        "hidraulic en algunes zones mes compactes."
+    EXCAVABILITAT_LEVEL_TEMPLATE = (
+        "Els materials del {level_desc} ({material_type}), amb un N20 mitjà de {n20:.0f} cops, "
+        "presentaran una dificultat d'excavació {difficulty}, podent-se realitzar les excavacions "
+        "amb {equipment}."
+    )
+
+    EXCAVABILITAT_SINGLE_TEMPLATE = (
+        "Els materials del subsòl ({material_type}), amb un N20 mitjà de {n20:.0f} cops, "
+        "no presentaran problemes des del punt de vista de la seva ripabilitat, "
+        "podent-se realitzar les excavacions amb {equipment} {notes}."
+    )
+
+    EXCAVABILITAT_MULTI_TEMPLATE = (
+        "Els materials del primer nivell en els primers {depth:.1f} metres ({material_type_1}) "
+        "no presentaran problemes des del punt de vista de la seva ripabilitat, "
+        "podent-se realitzar les excavacions amb maquinària convencional. "
+        "{deeper_assessment}"
+    )
+
+    EXCAVABILITAT_DEEPER_EASY = (
+        "En cas d'arribar a major fondària, els materials subjacents ({material_type}) "
+        "també permeten l'excavació amb mitjans convencionals."
+    )
+
+    EXCAVABILITAT_DEEPER_HARDER = (
+        "En cas d'arribar a major fondària, cal tenir en compte que els materials subjacents "
+        "({material_type}, N20 = {n20:.0f} cops) presentaran una dificultat d'excavació {difficulty}, "
+        "requerint possiblement {equipment}."
+    )
+
+    EXCAVABILITAT_RECOMMENDATION = (
+        "\n\nEs recomana adaptar la maquinària d'excavació a les condicions reals del terreny "
+        "observades durant l'execució de l'obra."
     )
 
     EXCAVABILITAT_PLACEHOLDER = (
-        "L'excavabilitat del terreny dependra de les caracteristiques "
-        "dels materials presents. [PENDENT: Determinar tipus de material "
-        "a partir de les plantilles de zona]"
+        "L'excavabilitat del terreny dependrà de les característiques "
+        "dels materials presents. Es recomana avaluar la ripabilitat "
+        "en funció dels resultats dels assaigs de camp."
     )
 
     # === 3.6 SISMICA - Templates ===
@@ -955,25 +992,105 @@ class Section3Generator:
 
     # === 3.5 EXCAVABILITAT ===
 
+    def _get_rippability(self, n20: float) -> tuple[str, str, str]:
+        """
+        Get rippability classification based on N20 value.
+
+        Args:
+            n20: Average N20 blow count
+
+        Returns:
+            Tuple of (difficulty, equipment, notes)
+        """
+        for (min_val, max_val), (difficulty, equipment, notes) in self.RIPPABILITY_THRESHOLDS.items():
+            if min_val <= n20 < max_val:
+                return difficulty, equipment, notes
+        return 'variable', 'maquinària adaptada', 'segons condicions reals'
+
+    def _format_material_type_catalan(self, material_type: str, description: str) -> str:
+        """Format material type for Catalan text."""
+        type_map = {
+            'graves': 'graves',
+            'sorres': 'sorres',
+            'granular': 'materials granulars',
+            'argiles': 'argiles',
+            'llims': 'llims',
+        }
+        # Use description if available, otherwise use mapped type
+        if description and description.lower() not in ('sense descripció', ''):
+            return description.lower()
+        return type_map.get(material_type, 'materials del subsòl')
+
     def generate_excavabilitat(self) -> str:
         """
         Generate excavability section text (3.5).
 
+        Provides N20-based rippability assessment for each soil level,
+        with specific equipment recommendations.
+
         Returns:
-            Excavability assessment based on material type
+            Excavability assessment based on material type and N20 values
         """
         if not self.data.soil_levels:
             return self.EXCAVABILITAT_PLACEHOLDER
 
-        # Check dominant material type
-        for level in self.data.soil_levels:
-            material_type = self._identify_material_type(level.description)
-            if material_type in ('graves', 'sorres', 'granular'):
-                return self.EXCAVABILITAT_GRANULAR
-            if material_type in ('argiles', 'llims'):
-                return self.EXCAVABILITAT_COHESIU
+        result = self.EXCAVABILITAT_INTRO + "\n\n"
 
-        return self.EXCAVABILITAT_PLACEHOLDER
+        # Single level case
+        if len(self.data.soil_levels) == 1:
+            level = self.data.soil_levels[0]
+            material_type = self._identify_material_type(level.description)
+            material_desc = self._format_material_type_catalan(material_type, level.description)
+            difficulty, equipment, notes = self._get_rippability(level.n20_average)
+
+            result += self.EXCAVABILITAT_SINGLE_TEMPLATE.format(
+                material_type=material_desc,
+                n20=level.n20_average,
+                difficulty=difficulty,
+                equipment=equipment,
+                notes=notes,
+            )
+            result += self.EXCAVABILITAT_RECOMMENDATION
+            return result
+
+        # Multiple levels case
+        first_level = self.data.soil_levels[0]
+        material_type_1 = self._identify_material_type(first_level.description)
+        material_desc_1 = self._format_material_type_catalan(material_type_1, first_level.description)
+        difficulty_1, equipment_1, _ = self._get_rippability(first_level.n20_average)
+
+        # Check deeper levels
+        deeper_assessments = []
+        for level in self.data.soil_levels[1:]:
+            material_type = self._identify_material_type(level.description)
+            material_desc = self._format_material_type_catalan(material_type, level.description)
+            difficulty, equipment, _ = self._get_rippability(level.n20_average)
+
+            if difficulty in ('fàcil', 'mitjana'):
+                deeper_assessments.append(
+                    self.EXCAVABILITAT_DEEPER_EASY.format(material_type=material_desc)
+                )
+            else:
+                deeper_assessments.append(
+                    self.EXCAVABILITAT_DEEPER_HARDER.format(
+                        material_type=material_desc,
+                        n20=level.n20_average,
+                        difficulty=difficulty,
+                        equipment=equipment,
+                    )
+                )
+
+        # Build the multi-level text
+        deeper_text = " ".join(deeper_assessments) if deeper_assessments else ""
+
+        result += self.EXCAVABILITAT_MULTI_TEMPLATE.format(
+            depth=first_level.depth_to_m if first_level.thickness_m else 1.5,
+            material_type_1=material_desc_1,
+            deeper_assessment=deeper_text,
+        )
+        result += self.EXCAVABILITAT_RECOMMENDATION
+
+        return result
 
     # === 3.6 SISMICA ===
 
