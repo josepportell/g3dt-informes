@@ -719,27 +719,44 @@ class ReportGenerator:
             context['materials_geomech_text'] = ''
             context['conclusions_level_1'] = context.get('materials_level_1', '')
 
-            # Soil level for table 5
-            if self.report_data.soil_levels:
-                level = self.report_data.soil_levels[0]
-                context['soil_level_name'] = '1er nivell.'
-                context['soil_level_material'] = level.description
-            else:
-                context['soil_level_name'] = ''
-                context['soil_level_material'] = ''
+            # === Multi-level table context ===
+            from .dpsh_extractor import GeotechCorrelations
 
-            # Permeability table
+            soil_levels = self.report_data.soil_levels or []
+            dpsh = self.report_data.dpsh
+
+            # Table 5: Soil level summary rows
+            context['soil_level_rows'] = []
+            for level in soil_levels:
+                context['soil_level_rows'].append({
+                    'name': f'{_catalan_ordinal(level.level_number)} nivell.',
+                    'material': level.description,
+                })
+            if not context['soil_level_rows']:
+                context['soil_level_rows'] = [{'name': '', 'material': ''}]
+
+            # Table 6: Permeability rows
+            context['perm_rows'] = []
             if sections.get('section3') and sections['section3'].taula7_permeability:
-                perm = sections['section3'].taula7_permeability[0]
-                context['perm_level_name'] = '1er nivell'
-                context['perm_k_value'] = perm.k_m_s
-                context['perm_material'] = perm.material
-            else:
-                context['perm_level_name'] = ''
-                context['perm_k_value'] = ''
-                context['perm_material'] = ''
+                for i, perm in enumerate(sections['section3'].taula7_permeability):
+                    ordinal = _catalan_ordinal(i + 1)
+                    context['perm_rows'].append({
+                        'name': f'{ordinal} nivell',
+                        'k_value': perm.k_m_s,
+                        'material': perm.material,
+                    })
+            # Ensure at least one row per soil level (fallback with empty k)
+            if not context['perm_rows']:
+                for level in soil_levels:
+                    context['perm_rows'].append({
+                        'name': f'{_catalan_ordinal(level.level_number)} nivell',
+                        'k_value': '',
+                        'material': level.description,
+                    })
+            if not context['perm_rows']:
+                context['perm_rows'] = [{'name': '', 'k_value': '', 'material': ''}]
 
-            # Sulfates
+            # Table 7: Sulfates (stays single-row, NOT an array)
             context['sulfate_level_name'] = '1er nivell'
             context['sulfate_value'] = (
                 f"{self.report_data.sulfate_mg_kg:.1f}"
@@ -752,59 +769,83 @@ class ReportGenerator:
                 else ''
             )
 
-            # Seismic table
-            context['seismic_level_num'] = '1'
-            context['seismic_terrain_type'] = 'Tipus II'
-            if self.report_data.dpsh and self.report_data.dpsh.tests:
-                max_depths = [
-                    test.depth_reached
-                    for test in self.report_data.dpsh.tests
-                    if test.readings
-                ]
-                max_depth_val = max(max_depths) if max_depths else 0
-                context['seismic_thickness'] = f"{max_depth_val:.2f}"
-            else:
-                context['seismic_thickness'] = ''
-            context['seismic_c_coeff'] = '1.3'
-
-            # Geotechnical table
-            if self.report_data.geotechnical_params and self.report_data.dpsh:
-                gp = self.report_data.geotechnical_params
-                dpsh = self.report_data.dpsh
-
-                # Nb range (from DPSH tests)
-                nb_values = []
-                for test in dpsh.tests:
-                    for r in test.readings:
-                        nb_values.append(r.nb)
-                if nb_values:
-                    nb_min = min(nb_values)
-                    nb_max = max(nb_values)
-                    has_refusal = any(
-                        r.n20 >= 100
-                        for test in dpsh.tests
-                        for r in test.readings
-                    )
-                    nb_range = (
-                        f"{nb_min:.0f}-R" if has_refusal
-                        else f"{nb_min:.0f}-{nb_max:.0f}"
-                    )
+            # Table 8: Seismic rows (one per soil level)
+            context['seismic_rows'] = []
+            for level in soil_levels:
+                avg_n20 = level.n20_average
+                # Terrain type based on N20
+                if avg_n20 >= 30:
+                    terrain_type = 'Tipus II'
+                elif avg_n20 >= 10:
+                    terrain_type = 'Tipus III'
                 else:
-                    nb_range = ''
+                    terrain_type = 'Tipus IV'
+                thickness = f"{level.thickness_m:.2f}" if level.thickness_m else ''
+                # C coefficient based on terrain type
+                c_coeff = {
+                    'Tipus I': '1.0', 'Tipus II': '1.3',
+                    'Tipus III': '1.6', 'Tipus IV': '2.0',
+                }.get(terrain_type, '1.3')
+                context['seismic_rows'].append({
+                    'num': str(level.level_number),
+                    'terrain_type': terrain_type,
+                    'thickness': thickness,
+                    'c_coeff': c_coeff,
+                })
+            if not context['seismic_rows']:
+                context['seismic_rows'] = [{'num': '', 'terrain_type': '', 'thickness': '', 'c_coeff': ''}]
 
-                context['geotech_level_name'] = (
-                    f"1er nivell. {self.report_data.soil_levels[0].description}."
-                    if self.report_data.soil_levels else '1er nivell.'
-                )
-                context['geotech_nb'] = nb_range
-                context['geotech_n'] = (
-                    str(int(dpsh.overall_average_n20))
-                    if dpsh.overall_average_n20 else ''
-                )
-                context['geotech_density'] = f"{gp.gamma:.1f}"
-                context['geotech_cohesion'] = f"{gp.cohesion:.2f}"
-                context['geotech_phi'] = f"{gp.phi:.0f}\u00b0"
-                context['geotech_E'] = f"{gp.E:.0f}"
+            # Table 9: Geotechnical parameters rows (one per soil level)
+            context['geotech_rows'] = []
+            if dpsh and dpsh.tests:
+                all_readings = [r for test in dpsh.tests for r in test.readings]
+                for level in soil_levels:
+                    avg_n20 = level.n20_average
+                    # Filter readings by depth range from sondeig_layers
+                    level_readings = all_readings  # default: all
+                    sondeig_layers = self.user_data.get('sondeig_layers', [])
+                    if sondeig_layers and level.level_number <= len(sondeig_layers):
+                        sl = sondeig_layers[level.level_number - 1]
+                        d_from = sl.get('depth_from_m', 0)
+                        d_to = sl.get('depth_to_m', 999)
+                        level_readings = [r for r in all_readings if d_from <= abs(r.depth_m) <= d_to]
+
+                    # Nb range for this level
+                    if level_readings:
+                        nb_values = [r.nb for r in level_readings]
+                        nb_min = min(nb_values)
+                        nb_max = max(nb_values)
+                        has_refusal = any(r.n20 >= 100 for r in level_readings)
+                        nb_range = f"{nb_min:.0f}-R" if has_refusal else f"{nb_min:.0f}-{nb_max:.0f}"
+                    else:
+                        nb_range = ''
+
+                    # Per-level geotechnical params
+                    gamma = GeotechCorrelations.n_to_density(avg_n20)
+                    phi = GeotechCorrelations.n_to_friction_angle(avg_n20)
+                    E = GeotechCorrelations.n_to_deformation_modulus(avg_n20)
+
+                    context['geotech_rows'].append({
+                        'name': f"{_catalan_ordinal(level.level_number)} nivell. {level.description}.",
+                        'nb': nb_range,
+                        'n': str(int(avg_n20)) if avg_n20 else '',
+                        'density': f"{gamma:.1f}",
+                        'cohesion': '0.00',  # Granular soils
+                        'phi': f"{phi:.0f}\u00b0",
+                        'E': f"{E:.0f}",
+                    })
+            if not context['geotech_rows']:
+                context['geotech_rows'] = [{'name': '', 'nb': '', 'n': '', 'density': '', 'cohesion': '', 'phi': '', 'E': ''}]
+
+            # Keep old single-value vars for backward compatibility (used in text paragraphs)
+            if context['geotech_rows'] and context['geotech_rows'][0]['name']:
+                context['geotech_level_name'] = context['geotech_rows'][0]['name']
+                context['geotech_nb'] = context['geotech_rows'][0]['nb']
+                context['geotech_n'] = context['geotech_rows'][0]['n']
+                context['geotech_density'] = context['geotech_rows'][0]['density']
+                context['geotech_cohesion'] = context['geotech_rows'][0]['cohesion']
+                context['geotech_phi'] = context['geotech_rows'][0]['phi']
+                context['geotech_E'] = context['geotech_rows'][0]['E']
             else:
                 context['geotech_level_name'] = ''
                 context['geotech_nb'] = ''
@@ -813,6 +854,12 @@ class ReportGenerator:
                 context['geotech_cohesion'] = ''
                 context['geotech_phi'] = ''
                 context['geotech_E'] = ''
+            # Also keep single perm/soil vars for any paragraph references
+            context['soil_level_name'] = context['soil_level_rows'][0]['name'] if context['soil_level_rows'] else ''
+            context['soil_level_material'] = context['soil_level_rows'][0]['material'] if context['soil_level_rows'] else ''
+            context['perm_level_name'] = context['perm_rows'][0]['name'] if context['perm_rows'] else ''
+            context['perm_k_value'] = context['perm_rows'][0]['k_value'] if context['perm_rows'] else ''
+            context['perm_material'] = context['perm_rows'][0]['material'] if context['perm_rows'] else ''
 
             # K30 ballast coefficient
             if self.report_data.geotechnical_params:
