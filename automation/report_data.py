@@ -53,6 +53,8 @@ class SoilLevel:
     description: str
     thickness_m: float | None  # None si es desconegut o continua
     n20_average: float
+    depth_from_m: float = 0.0  # Top of layer (meters below surface)
+    depth_to_m: float | None = None  # Bottom of layer (None = unknown/continues)
 
 
 @dataclass
@@ -470,6 +472,8 @@ def to_dict(report_data: ReportData) -> dict[str, Any]:
                 'description': level.description,
                 'thickness_m': level.thickness_m,
                 'n20_average': level.n20_average,  # Full precision for serialization
+                'depth_from_m': level.depth_from_m,
+                'depth_to_m': level.depth_to_m,
             }
             for level in report_data.soil_levels
         ],
@@ -542,6 +546,8 @@ def from_dict(data: dict[str, Any]) -> ReportData:
             description=sl['description'],
             thickness_m=sl.get('thickness_m'),
             n20_average=sl['n20_average'],
+            depth_from_m=sl.get('depth_from_m', 0.0),
+            depth_to_m=sl.get('depth_to_m'),
         )
         for sl in data.get('soil_levels', [])
     ]
@@ -742,16 +748,21 @@ def _generate_soil_levels(
                 description=description,
                 thickness_m=thickness,
                 n20_average=avg_n20,
+                depth_from_m=depth_from,
+                depth_to_m=depth_to if depth_to > 0 else None,
             ))
         return levels
 
     # Fallback: single level with global average
+    max_depth = max((abs(r.depth_m) for r in all_readings), default=0)
     return [
         SoilLevel(
             level_number=1,
             description="Nivell principal",
-            thickness_m=None,
+            thickness_m=max_depth if max_depth > 0 else None,
             n20_average=dpsh_data.overall_average_n20,
+            depth_from_m=0.0,
+            depth_to_m=max_depth if max_depth > 0 else None,
         )
     ]
 

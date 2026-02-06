@@ -1,22 +1,27 @@
 # Auditoria Automatització Informe Geotècnic - v5
 ## Projecte referència: 4001612 Bell-Lloc d'Urgell
 
-**Data:** 2026-02-06
-**Versió:** v5 (consolidació: adjacents visor + dates PDF + lab PDF + slope MDT)
+**Data:** 2026-02-06 (actualitzat)
+**Versió:** v5.1 (v5 + multi-nivell sòl + ordinals + taules dinàmiques)
 **Branca:** `main`
-**Basat en:** Auditoria v3, implementacions i tests en viu de 4 noves funcionalitats
+**Basat en:** Auditoria v3, implementacions i tests en viu
 
 ---
 
 ### Resum Executiu
 
-**Millora global:** De ~92% (v3) a **~95%** (v5)
+**Millora global:** De ~92% (v3) a **~96%** (v5.1)
 
-Canvis realitzats en sessió 2026-02-06:
+Canvis sessió 2026-02-06:
 1. Skill `/g3dt-adjacents-visor` operatiu i testat (Playwright + Claude Vision)
 2. **Dates de camp** auto-extretes del DPSH PDF + Lab PDF (PyMuPDF)
 3. **Sulfats i dades lab** auto-extrets de LAB-SIG.pdf (PyMuPDF)
 4. **Pendent del terreny** calculat des d'ICGC MDT 2m (5 punts, gradient)
+5. **`num_soil_levels` auto-fill** des de `sondeig_extracted.json` (compta capes)
+6. **Multi-nivell sòl**: `_generate_soil_levels()` parteix DPSH N20 per capa sondeig
+7. **Ordinals corregits**: "Nivell 1" → "1er Nivell", "2n Nivell" (català)
+8. **Taules dinàmiques**: Taules 5, 6, 8, 9 amb `{%tr for %}` loops (docxtpl)
+9. **Fix SoilLevel**: Afegits `depth_from_m`/`depth_to_m` (eliminat crash section 3)
 
 **Camps resolts (de manual a automàtic):**
 
@@ -28,6 +33,15 @@ Canvis realitzats en sessió 2026-02-06:
 | `sulfate_mg_kg` | Manual | Auto | LAB-SIG.pdf (PyMuPDF) |
 | `lab_tests[]` | Manual | Auto | LAB-SIG.pdf (PyMuPDF) |
 | `is_sloped` | Default estàtic | Auto | ICGC MDT 2m (5-punt gradient) |
+
+**Camps resolts addicionals (v5.1):**
+
+| Camp | v5 | v5.1 | Font |
+|------|----|----|------|
+| `num_soil_levels` | Default `1` | Auto | `sondeig_extracted.json` (compta `layers`) |
+| Ordinals heading | "Nivell 1" | "1er Nivell" | `_catalan_ordinal()` + template |
+| Taules multi-nivell | 1 fila | N files | `{%tr for %}` (docxtpl) |
+| `SoilLevel.depth_from_m/to_m` | No existia | Calculat | Sondeig layers → fix crash section 3 |
 
 **Problemes pendents (sense canvis des de v3, esperant G3DT):**
 
@@ -160,7 +174,7 @@ slope_direction: SW                           ✅
 
 ### Automatització user_data.json — Inventari complet
 
-#### Camps totalment automatitzats (28 camps — 64%)
+#### Camps totalment automatitzats (29 camps — 66%)
 
 | # | Camp | Font | Mètode | Des de |
 |---|------|------|--------|--------|
@@ -192,6 +206,7 @@ slope_direction: SW                           ✅
 | 26 | `sulfate_mg_kg` | LAB-SIG.pdf | PyMuPDF regex | **v5** |
 | 27 | `lab_tests[]` | LAB-SIG.pdf | PyMuPDF regex | **v5** |
 | 28 | `is_sloped` | ICGC MDT 2m | 5-punt gradient (>15%) | **v5** |
+| 29 | `num_soil_levels` | sondeig_extracted.json | `len(layers)` | **v5.1** |
 
 #### Camps semi-automatitzats (7 camps — 16%)
 
@@ -212,14 +227,15 @@ slope_direction: SW                           ✅
 | 39 | `foundation_depth_m` | Decisió professional del geòleg |
 | 40 | `architect_company` | No sempre present al plànol |
 
-#### Camps amb defaults raonables (4 camps — 9%)
+#### Camps amb defaults raonables (3 camps — 7%)
 
 | # | Camp | Default | Correcte en |
 |---|------|---------|------------|
 | 41 | `is_anthropized` | `true` | >90% projectes urbans |
 | 42 | `site_position` | `"centre"` | ~70% casos |
-| 43 | `num_soil_levels` | `1` | ~60% |
-| 44 | `foundation_depth_m` | `0.3` | ~80% residencial |
+| 43 | `foundation_depth_m` | `0.3` | ~80% residencial |
+
+> **Nota v5.1:** `num_soil_levels` mogut a "auto" — ara s'extreu de `sondeig_extracted.json`.
 
 ---
 
@@ -227,16 +243,16 @@ slope_direction: SW                           ✅
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  AUTOMATITZACIÓ user_data.json — v5                      │
+│  AUTOMATITZACIÓ user_data.json — v5.1                    │
 │                                                          │
-│  ████████████████████████████░░  28 camps (64%) AUTO     │
+│  █████████████████████████████░░ 29 camps (66%) AUTO     │
 │  ███████░░░░░░░░░░░░░░░░░░░░░░   7 camps (16%) SEMI-AUTO│
 │  █████░░░░░░░░░░░░░░░░░░░░░░░░   5 camps (11%) MANUAL   │
-│  ████░░░░░░░░░░░░░░░░░░░░░░░░░   4 camps  (9%) DEFAULTS │
+│  ███░░░░░░░░░░░░░░░░░░░░░░░░░░   3 camps  (7%) DEFAULTS │
 │                                                          │
 │  Total: 44 camps                                         │
-│  Automatització efectiva: 80% (auto + semi-auto)         │
-│  Requereix intervenció: 20% (manual + defaults)          │
+│  Automatització efectiva: 82% (auto + semi-auto)         │
+│  Requereix intervenció: 18% (manual + defaults)          │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -319,17 +335,20 @@ slope_direction: SW                           ✅
 
 ### Taula comparativa v1 → v2 → v3 → v5
 
-| Mètrica | v1 | v2 | v3 | v5 | Tendència |
-|---------|-----|-----|-----|-----|-----------|
-| ✅ Correcte (>95% match) | 171 (75%) | ~200 (88%) | ~210 (92%) | ~217 (95%) | +46 des de v1 |
-| ⚠️ Modificat (80-95%) | 23 (10%) | ~12 (5%) | ~8 (4%) | ~5 (2%) | -18 |
-| ❌ No implementat (<50%) | 33 (15%) | ~15 (7%) | ~9 (4%) | ~5 (2%) | -28 |
+| Mètrica | v1 | v2 | v3 | v5.1 | Tendència |
+|---------|-----|-----|-----|------|-----------|
+| ✅ Correcte (>95% match) | 171 (75%) | ~200 (88%) | ~210 (92%) | ~219 (96%) | +48 des de v1 |
+| ⚠️ Modificat (80-95%) | 23 (10%) | ~12 (5%) | ~8 (4%) | ~4 (2%) | -19 |
+| ❌ No implementat (<50%) | 33 (15%) | ~15 (7%) | ~9 (4%) | ~4 (2%) | -29 |
 
-**Detall millores v5 vs v3:**
+**Detall millores v5.1 vs v3:**
 - ~3 PARAs dels adjacents (situació, descripció solar, conclusions)
 - ~2 PARAs de dates camp (capçalera, secció 2)
 - ~2 PARAs de sulfats/lab (secció 3, taules)
 - ~1 PARA de pendent (secció 1 descripció)
+- Taules multi-nivell amb paràmetres geotècnics per capa
+- Ordinals "1er Nivell", "2n Nivell" (match exacte format G3DT)
+- Fix crash section 3 (`SoilLevel.depth_to_m`)
 
 ---
 
@@ -350,7 +369,7 @@ slope_direction: SW                           ✅
 | 11 | Plantilles geologia | Esperant contingut | G3DT proporciona textos per zona | MITJÀ |
 | 12 | Text sondeig descriptiu | Esperant contingut | G3DT proporciona paràgrafs | BAIX-MITJÀ |
 | 13 | Descripció litològica | Contingut | "Graves en matriu sorrenca carbonatades" | MITJÀ |
-| 14 | Ordinals ("1er" vs "Nivell 1") | Format | Ajustar template | BAIX |
+| ~~14~~ | ~~Ordinals ("1er" vs "Nivell 1")~~ | ✅ v5.1 | `_catalan_ordinal()` + template | FET |
 
 ---
 
@@ -362,24 +381,25 @@ slope_direction: SW                           ✅
 | C | Wizard interactiu (5 preguntes) | UX millor | BAIX |
 | D | Template `site_description` | -1 camp manual | BAIX |
 | E | Template `access_description` | -1 camp manual | BAIX |
-| G | DPSH N20 transitions → `num_soil_levels` | -1 default | BAIX |
+| ~~G~~ | ~~`num_soil_levels` des de sondeig~~ | ✅ v5.1 | FET |
 
 **Quick wins (D+E):** Reduirien camps manuals de 5 a 3.
 
 ---
 
-### Fitxers nous i modificats v3 → v5
+### Fitxers nous i modificats v3 → v5.1
 
-| Fitxer | Acció | Línies |
+| Fitxer | Acció | Detall |
 |--------|-------|--------|
-| `automation/lab_extractor.py` | **NOU** | 247 |
-| `automation/dpsh_extractor.py` | Modificat | +120 (`extract_field_dates`, `format_dates_catalan`, `_extract_dates_from_pdf`) |
-| `automation/icgc_geology.py` | Modificat | +40 (`get_slope`, `import math`, `__all__` update) |
-| `automation/report_generator.py` | Modificat | +30 (3 blocs auto-fill: dates L417, lab L640, slope L529) |
+| `automation/lab_extractor.py` | **NOU** | 247 línies. Extracció sulfats/sample del lab PDF |
+| `automation/dpsh_extractor.py` | Modificat | +120 (`extract_field_dates`, `format_dates_catalan`) |
+| `automation/icgc_geology.py` | Modificat | +40 (`get_slope` 5-punt gradient) |
+| `automation/report_generator.py` | Modificat | +190 (auto-fills + taules multi-nivell + ordinals) |
+| `automation/report_data.py` | Modificat | `SoilLevel` +`depth_from_m/to_m`, `_generate_soil_levels()` multi-capa |
 | `automation/__init__.py` | Modificat | +3 (exports lab_extractor) |
-| `.claude/commands/g3dt-adjacents-visor.md` | **NOU** | 161 |
-| `reference-material/.../validation/adjacents_visor.json` | **NOU** | 28 (output skill) |
-| `reference-material/.../validation/adjacents_visor_screenshot.png` | **NOU** | screenshot |
+| `templates/g3dt-jinja-template.docx` | Modificat | Heading ordinals + `{%tr for %}` a taules 5,6,8,9 |
+| `.claude/commands/g3dt-adjacents-visor.md` | **NOU** | 161 línies. Skill Playwright |
+| `reference-material/.../validation/adjacents_visor.json` | **NOU** | 28 línies (output skill) |
 
 **Dependència afegida:** PyMuPDF (fitz) — ja estava instal·lat (`fitz.version = 1.26.7`).
 
@@ -395,4 +415,4 @@ slope_direction: SW                           ✅
 
 ---
 
-*Auditoria generada: 2026-02-06. 4 funcionalitats implementades i testades amb èxit sobre Bell-Lloc.*
+*Auditoria generada: 2026-02-06 (actualitzada). 9 funcionalitats implementades i testades amb èxit sobre Bell-Lloc. Verificat amb mostra 4001607 (2 nivells reals).*
