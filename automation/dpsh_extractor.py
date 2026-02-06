@@ -165,7 +165,10 @@ class DPSHData:
                         {
                             'depth_m': round(abs(r.depth_m), 2),
                             'n20': r.n20,
-                            'nb': round(r.nb, 2)
+                            'nb': round(r.nb, 2),
+                            'torque': r.torque,
+                            'water_level': r.water_level,
+                            'soil_level': r.soil_level,
                         }
                         for r in t.readings
                     ]
@@ -476,6 +479,148 @@ class GeotechCorrelations:
             return "Dens / Dense"
         else:
             return "Molt dens / Very dense"
+
+
+def _extract_dates_from_pdf(pdf_path: Path, patterns: list[str]) -> set[str]:
+    """
+    Extract dates from a PDF using the given regex patterns.
+
+    Each pattern must have 3 groups: (day, month, year).
+
+    Returns set of ISO date strings.
+    """
+    import re
+
+    try:
+        import fitz  # PyMuPDF
+    except ImportError:
+        return set()
+
+    dates: set[str] = set()
+    try:
+        doc = fitz.open(str(pdf_path))
+        for page in doc:
+            text = page.get_text()
+            for pat in patterns:
+                for match in re.finditer(pat, text):
+                    day, month, year = match.groups()
+                    try:
+                        iso_date = f"{year}-{int(month):02d}-{int(day):02d}"
+                        if 2020 <= int(year) <= 2030 and 1 <= int(month) <= 12 and 1 <= int(day) <= 31:
+                            dates.add(iso_date)
+                    except ValueError:
+                        continue
+        doc.close()
+    except Exception:
+        pass
+
+    return dates
+
+
+def extract_field_dates(project_path: str | Path) -> list[str]:
+    """
+    Extract field work dates from all available project PDFs.
+
+    Sources (in order):
+    1. DPSH PDF: "DATA: dd/mm/yyyy" (DPSH test dates)
+    2. Lab PDF: "Data extracció: dd/mm/yyyy" (sample extraction date = sondeig date)
+
+    Args:
+        project_path: Path to the project folder
+
+    Returns:
+        Sorted list of unique ISO date strings (e.g., ['2025-10-01', '2025-10-06'])
+        Empty list if no PDFs found or no dates extracted.
+    """
+    project_path = Path(project_path)
+    dates: set[str] = set()
+
+    # Source 1: DPSH PDF — "DATA: dd/mm/yyyy"
+    dpsh_patterns = [r'DATA:\s*(\d{1,2})/(\d{1,2})/(\d{4})']
+    for glob_pat in ('PDF/ANNEXES/*_DPSH.pdf', 'ANNEXES/*_DPSH.pdf', '*_DPSH.pdf'):
+        candidates = list(project_path.glob(glob_pat))
+        if candidates:
+            dates |= _extract_dates_from_pdf(candidates[0], dpsh_patterns)
+            break
+
+    # Source 2: Lab PDF — only the earliest date (= "Data extracció" = field date)
+    # Lab PDFs contain multiple dates (extracció, recepció, realització, expedició).
+    # The earliest is always the field extraction date; later ones are lab-internal.
+    lab_all_patterns = [r'(\d{1,2})/(\d{1,2})/(\d{4})']
+    for glob_pat in ('PDF/ANNEXES/LAB*.pdf', 'PDF/ANNEXES/lab*.pdf', 'ANNEXES/LAB*.pdf'):
+        candidates = list(project_path.glob(glob_pat))
+        if candidates:
+            lab_dates = _extract_dates_from_pdf(candidates[0], lab_all_patterns)
+            if lab_dates:
+                dates.add(min(lab_dates))  # Earliest = field extraction date
+            break
+
+    return sorted(dates)
+
+
+def format_dates_catalan(dates: list[str]) -> str:
+    """
+    Format ISO date list as Catalan text for the report.
+
+    Examples:
+        ['2025-10-01'] -> "1 d'octubre de 2025"
+        ['2025-10-01', '2025-10-06'] -> "1 i 6 d'octubre de 2025"
+        ['2025-10-01', '2025-11-15'] -> "1 d'octubre i 15 de novembre de 2025"
+
+    Args:
+        dates: Sorted list of ISO date strings
+
+    Returns:
+        Catalan formatted text, or empty string if no dates
+    """
+    if not dates:
+        return ''
+
+    MESOS = {
+        1: 'gener', 2: 'febrer', 3: 'març', 4: 'abril',
+        5: 'maig', 6: 'juny', 7: 'juliol', 8: 'agost',
+        9: 'setembre', 10: 'octubre', 11: 'novembre', 12: 'desembre',
+    }
+
+    # Catalan: months starting with vowel use "d'" prefix, consonant use "de "
+    VOWEL_MONTHS = {4, 8, 10}  # abril, agost, octubre
+
+    parsed = []
+    for d in dates:
+        parts = d.split('-')
+        parsed.append((int(parts[0]), int(parts[1]), int(parts[2])))
+
+    if len(parsed) == 1:
+        y, m, d = parsed[0]
+        prefix = "d'" if m in VOWEL_MONTHS else "de "
+        return f"{d} {prefix}{MESOS[m]} de {y}"
+
+    # Check if all dates are in the same month and year
+    same_month = all(p[0] == parsed[0][0] and p[1] == parsed[0][1] for p in parsed)
+
+    if same_month:
+        y, m, _ = parsed[0]
+        days = [str(p[2]) for p in parsed]
+        if len(days) == 2:
+            days_text = f"{days[0]} i {days[1]}"
+        else:
+            days_text = ', '.join(days[:-1]) + f' i {days[-1]}'
+        prefix = "d'" if m in VOWEL_MONTHS else "de "
+        return f"{days_text} {prefix}{MESOS[m]} de {y}"
+
+    # Different months - format each date
+    parts = []
+    for y, m, d in parsed:
+        prefix = "d'" if m in VOWEL_MONTHS else "de "
+        parts.append(f"{d} {prefix}{MESOS[m]}")
+
+    if len(parts) == 2:
+        text = f"{parts[0]} i {parts[1]}"
+    else:
+        text = ', '.join(parts[:-1]) + f' i {parts[-1]}'
+
+    # Add year (assuming same year for all)
+    return f"{text} de {parsed[0][0]}"
 
 
 def main():

@@ -6,7 +6,8 @@ Queries the Institut Cartogràfic i Geològic de Catalunya (ICGC) WMS service
 to retrieve authoritative geological unit information for a given location.
 
 The ICGC provides official geological mapping for Catalunya at various scales.
-This module uses the 1:250,000 geological units layer which covers all of Catalunya.
+This module queries the 1:50,000 geological units layer (higher resolution) with
+automatic fallback to the 1:250,000 layer when the 50k layer has no data.
 
 API Documentation:
     https://www.icgc.cat/ca/Administracio-i-empresa/Serveis/Geoserveis-en-linia-Inspire
@@ -29,6 +30,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import math
 import os
 import re
 import socket
@@ -53,13 +55,19 @@ __all__ = [
     'ICGCParseError',
     'ICGCNoDataError',
     'ICGCCoordinateError',
+    'ICGCElevationError',
+    'get_elevation',
+    'format_cota_referencia',
+    'get_slope',
 ]
 
 
 # === Configuration ===
 
 ICGC_WMS_URL = "https://geoserveis.icgc.cat/servei/catalunya/geologia-territorial/wms"
-ICGC_LAYER = "unitats-geologiques-250000"
+ICGC_LAYER_50K = "unitats-geologiques-50000"
+ICGC_LAYER_250K = "unitats-geologiques-250000"
+ICGC_LAYER = ICGC_LAYER_50K  # Default: higher resolution
 ICGC_CRS = "EPSG:25831"  # ETRS89 / UTM zone 31N
 ICGC_INFO_FORMAT = "text/plain"
 
@@ -152,6 +160,11 @@ class ICGCCoordinateError(ICGCError):
     pass
 
 
+class ICGCElevationError(ICGCError):
+    """Failed to get elevation from ICGC MDT."""
+    pass
+
+
 def _validate_coordinates(utm_x: float, utm_y: float) -> None:
     """
     Validate that coordinates are within Catalunya bounds.
@@ -171,6 +184,42 @@ def _validate_coordinates(utm_x: float, utm_y: float) -> None:
         )
 
 
+def _fetch_wms(url: str) -> str:
+    """
+    Fetch WMS response with retry logic for transient connection errors.
+
+    Args:
+        url: Full WMS GetFeatureInfo URL
+
+    Returns:
+        Response text (UTF-8 decoded)
+
+    Raises:
+        ICGCConnectionError: If all retry attempts fail
+    """
+    max_attempts = 3
+    last_error: ICGCConnectionError | None = None
+
+    for attempt in range(max_attempts):
+        try:
+            request = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
+            with urllib.request.urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
+                return response.read().decode('utf-8')
+        except urllib.error.URLError as e:
+            last_error = ICGCConnectionError(f"Failed to connect to ICGC: {e}")
+        except (TimeoutError, socket.timeout) as e:
+            last_error = ICGCConnectionError(f"ICGC request timed out: {e}")
+
+        # Retry with exponential backoff (1s, 2s, 4s)
+        if attempt < max_attempts - 1:
+            delay = 2 ** attempt
+            logger.debug(f"ICGC request attempt {attempt + 1} failed, retrying in {delay}s...")
+            time.sleep(delay)
+
+    # All attempts failed
+    raise last_error  # type: ignore[misc]
+
+
 def get_geological_unit(
     utm_x: float,
     utm_y: float,
@@ -178,6 +227,9 @@ def get_geological_unit(
 ) -> GeologicalUnit:
     """
     Query ICGC WMS for geological unit at given UTM coordinates.
+
+    Tries the 1:50,000 layer first (higher resolution), then falls back
+    to the 1:250,000 layer if no data is found at 50k.
 
     Args:
         utm_x: UTM X coordinate (ETRS89 zone 31N / EPSG:25831)
@@ -191,7 +243,7 @@ def get_geological_unit(
         ICGCCoordinateError: If coordinates are outside Catalunya bounds
         ICGCConnectionError: If connection to ICGC fails
         ICGCParseError: If response cannot be parsed
-        ICGCNoDataError: If no geological data found for location
+        ICGCNoDataError: If no geological data found at either scale
     """
     # Validate coordinates
     _validate_coordinates(utm_x, utm_y)
@@ -203,51 +255,42 @@ def get_geological_unit(
             logger.debug(f"Cache hit for ({utm_x}, {utm_y})")
             return cached
 
-    # Build WMS GetFeatureInfo request
-    url = _build_wms_url(utm_x, utm_y)
-    logger.debug(f"Querying ICGC: {url}")
+    # Try 50k first, then fallback to 250k
+    layers_to_try = [ICGC_LAYER_50K, ICGC_LAYER_250K]
 
-    # Execute request with retry logic for transient connection errors
-    max_attempts = 3
-    last_error: ICGCConnectionError | None = None
+    for layer in layers_to_try:
+        url = _build_wms_url(utm_x, utm_y, layer=layer)
+        logger.debug(f"Querying ICGC layer {layer}: {url}")
 
-    for attempt in range(max_attempts):
+        response_text = _fetch_wms(url)
+
         try:
-            request = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
-            with urllib.request.urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
-                response_text = response.read().decode('utf-8')
-            break  # Success, exit retry loop
-        except urllib.error.URLError as e:
-            last_error = ICGCConnectionError(f"Failed to connect to ICGC: {e}")
-        except (TimeoutError, socket.timeout) as e:
-            last_error = ICGCConnectionError(f"ICGC request timed out: {e}")
+            unit = _parse_response(response_text, layer=layer)
+            if use_cache:
+                _save_to_cache(utm_x, utm_y, unit)
+            return unit
+        except ICGCNoDataError:
+            if layer == ICGC_LAYER_50K:
+                logger.info(
+                    "1:50k layer returned no data for (%.1f, %.1f), falling back to 1:250k",
+                    utm_x, utm_y,
+                )
+                continue
+            raise
 
-        # Retry with exponential backoff (1s, 2s, 4s)
-        if attempt < max_attempts - 1:
-            delay = 2 ** attempt
-            logger.debug(f"ICGC request attempt {attempt + 1} failed, retrying in {delay}s...")
-            time.sleep(delay)
-    else:
-        # All attempts failed
-        raise last_error  # type: ignore[misc]
-
-    # Parse response
-    unit = _parse_response(response_text)
-
-    # Save to cache
-    if use_cache:
-        _save_to_cache(utm_x, utm_y, unit)
-
-    return unit
+    raise ICGCNoDataError("No geological data found at 50k or 250k scale")
 
 
-def _build_wms_url(utm_x: float, utm_y: float) -> str:
+def _build_wms_url(utm_x: float, utm_y: float, layer: str | None = None) -> str:
     """
     Build WMS GetFeatureInfo URL for given coordinates.
 
     Uses a small bounding box centered on the point and queries
     the center pixel of the resulting image.
     """
+    if layer is None:
+        layer = ICGC_LAYER
+
     # Create bbox around point
     min_x = utm_x - BBOX_BUFFER_M
     min_y = utm_y - BBOX_BUFFER_M
@@ -264,8 +307,8 @@ def _build_wms_url(utm_x: float, utm_y: float) -> str:
         f"SERVICE=WMS",
         f"VERSION=1.3.0",
         f"REQUEST=GetFeatureInfo",
-        f"LAYERS={ICGC_LAYER}",
-        f"QUERY_LAYERS={ICGC_LAYER}",
+        f"LAYERS={layer}",
+        f"QUERY_LAYERS={layer}",
         f"CRS={ICGC_CRS}",
         f"BBOX={min_x},{min_y},{max_x},{max_y}",
         f"WIDTH={width}",
@@ -278,12 +321,12 @@ def _build_wms_url(utm_x: float, utm_y: float) -> str:
     return f"{ICGC_WMS_URL}?{'&'.join(params)}"
 
 
-def _parse_response(response_text: str) -> GeologicalUnit:
+def _parse_response(response_text: str, layer: str | None = None) -> GeologicalUnit:
     """
     Parse ICGC GetFeatureInfo plain text response.
 
     The ICGC WMS returns a single line with headers and data separated by space:
-        @unitats-geologiques-250000 OBJECTID;Codi;...;Descripcio_protolit; 231;Q3D;...;Null;
+        @unitats-geologiques-50000 OBJECTID;Codi;...;Descripcio_protolit; 231;Q3D;...;Null;
 
     Format: @layer_name HEADERS... DATA_VALUES...
     - Headers end with "; " (semicolon followed by space before numeric ID)
@@ -306,7 +349,7 @@ def _parse_response(response_text: str) -> GeologicalUnit:
     if not response.startswith('@'):
         raise ICGCParseError("Unexpected response format (missing @ prefix)")
 
-    # Remove layer prefix (@unitats-geologiques-250000 )
+    # Remove layer prefix (@unitats-geologiques-50000 or @unitats-geologiques-250000)
     space_idx = response.find(' ')
     if space_idx < 0:
         raise ICGCParseError("Unexpected response format (no space after layer name)")
@@ -336,7 +379,8 @@ def _parse_response(response_text: str) -> GeologicalUnit:
         if header and i < len(values):
             data_dict[header.lower()] = values[i]
 
-    logger.debug(f"Parsed ICGC data: {data_dict}")
+    layer_info = f" (layer: {layer})" if layer else ""
+    logger.debug(f"Parsed ICGC data{layer_info}: {data_dict}")
 
     # Extract required fields
     code = data_dict.get('codi', '')
@@ -530,6 +574,219 @@ def determine_region(
     return 'depressio_ebre'
 
 
+# === MDT Elevation Support ===
+
+ICGC_MDT_WMS_URL = "https://geoserveis.icgc.cat/icgc_mdt2m/wms/service"
+ICGC_MDT_LAYER = "MET2m"
+MDT_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "icgc_elevation"
+
+
+def get_elevation(
+    utm_x: float,
+    utm_y: float,
+    use_cache: bool = True,
+) -> float:
+    """
+    Query ICGC MDT 2m for elevation at given UTM coordinates.
+
+    Uses WMS GetFeatureInfo on the MET2m layer (2m resolution LiDAR-derived MDT).
+
+    Args:
+        utm_x: UTM X coordinate (ETRS89 zone 31N / EPSG:25831)
+        utm_y: UTM Y coordinate (ETRS89 zone 31N / EPSG:25831)
+        use_cache: Whether to use cached responses (default True)
+
+    Returns:
+        Elevation in meters above sea level
+
+    Raises:
+        ICGCCoordinateError: If coordinates are outside Catalunya bounds
+        ICGCConnectionError: If connection to ICGC fails
+        ICGCElevationError: If elevation cannot be parsed from response
+    """
+    _validate_coordinates(utm_x, utm_y)
+
+    # Check cache
+    if use_cache:
+        cached = _load_elevation_from_cache(utm_x, utm_y)
+        if cached is not None:
+            logger.debug(f"Elevation cache hit for ({utm_x}, {utm_y}): {cached}m")
+            return cached
+
+    # Build WMS GetFeatureInfo URL for MDT
+    delta = 1.0  # 1m buffer around point
+    url = (
+        f"{ICGC_MDT_WMS_URL}"
+        f"?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo"
+        f"&LAYERS={ICGC_MDT_LAYER}&QUERY_LAYERS={ICGC_MDT_LAYER}"
+        f"&CRS={ICGC_CRS}"
+        f"&BBOX={utm_x - delta},{utm_y - delta},{utm_x + delta},{utm_y + delta}"
+        f"&WIDTH=2&HEIGHT=2&I=1&J=1"
+        f"&INFO_FORMAT=text/plain"
+    )
+
+    logger.debug(f"Querying ICGC MDT: {url}")
+
+    response_text = _fetch_wms(url)
+
+    # Parse response: "@MET2m Stretch.Pixel Value; 199.320007;"
+    match = re.search(r'Pixel Value;\s*(-?\d+\.?\d*)', response_text)
+    if not match:
+        raise ICGCElevationError(
+            f"Could not parse elevation from ICGC MDT response: {response_text[:200]}"
+        )
+
+    try:
+        elevation = float(match.group(1))
+    except ValueError:
+        raise ICGCElevationError(
+            f"Invalid elevation value '{match.group(1)}' from ICGC MDT response"
+        )
+
+    # Validate reasonable range for Catalunya (0-3143m, Pica d'Estats)
+    if elevation < -10 or elevation > 3200:
+        raise ICGCElevationError(
+            f"Elevation {elevation}m outside reasonable range for Catalunya"
+        )
+
+    # Cache
+    if use_cache:
+        _save_elevation_to_cache(utm_x, utm_y, elevation)
+
+    return elevation
+
+
+def format_cota_referencia(elevation: float) -> str:
+    """
+    Format elevation as cota de referencia for the report.
+
+    Rounds to nearest 0.50m and formats as "+XXX.XX".
+
+    Args:
+        elevation: Elevation in meters
+
+    Returns:
+        Formatted cota string, e.g., "+199.50"
+    """
+    # Round to nearest 0.50m
+    rounded = round(elevation * 2) / 2
+    sign = "+" if rounded >= 0 else ""
+    return f"{sign}{rounded:.2f}"
+
+
+def get_slope(
+    utm_x: float,
+    utm_y: float,
+    offset_m: float = 10.0,
+    use_cache: bool = True,
+) -> tuple[float, str]:
+    """
+    Calculate terrain slope at given coordinates using ICGC MDT 2m.
+
+    Queries 5 points (center + 4 cardinal at offset_m distance) and
+    calculates the maximum gradient.
+
+    Args:
+        utm_x: UTM X coordinate (ETRS89 zone 31N / EPSG:25831)
+        utm_y: UTM Y coordinate
+        offset_m: Distance from center for cardinal points (default 10m)
+        use_cache: Whether to use cached elevation responses
+
+    Returns:
+        Tuple of (slope_percent, dominant_direction)
+        - slope_percent: Slope as percentage (e.g., 5.0 means 5%)
+        - dominant_direction: Cardinal direction of max slope ('N','S','E','W','NE','NW','SE','SW')
+
+    Raises:
+        ICGCElevationError: If elevation queries fail
+    """
+    # Query 5 points
+    z_center = get_elevation(utm_x, utm_y, use_cache=use_cache)
+    z_north = get_elevation(utm_x, utm_y + offset_m, use_cache=use_cache)
+    z_south = get_elevation(utm_x, utm_y - offset_m, use_cache=use_cache)
+    z_east = get_elevation(utm_x + offset_m, utm_y, use_cache=use_cache)
+    z_west = get_elevation(utm_x - offset_m, utm_y, use_cache=use_cache)
+
+    # Calculate gradients
+    dz_ns = (z_north - z_south) / (2 * offset_m)  # positive = slopes up northward
+    dz_ew = (z_east - z_west) / (2 * offset_m)    # positive = slopes up eastward
+
+    # Max slope
+    slope_ratio = math.sqrt(dz_ns**2 + dz_ew**2)
+    slope_percent = slope_ratio * 100
+
+    # Determine dominant direction (direction slope descends toward)
+    angle_rad = math.atan2(-dz_ns, -dz_ew)  # negative because we want downhill direction
+    angle_deg = math.degrees(angle_rad)
+
+    # Map angle to cardinal direction
+    if angle_deg < 0:
+        angle_deg += 360
+
+    directions = ['E', 'NE', 'N', 'NW', 'W', 'SW', 'S', 'SE']
+    idx = round(angle_deg / 45) % 8
+    direction = directions[idx]
+
+    logger.info(f"Slope at ({utm_x}, {utm_y}): {slope_percent:.1f}% toward {direction}")
+
+    return slope_percent, direction
+
+
+# === MDT Elevation Cache ===
+
+def _elevation_cache_key(utm_x: float, utm_y: float) -> str:
+    """Generate cache key for elevation query."""
+    x_rounded = round(utm_x / 10) * 10  # Round to nearest 10m
+    y_rounded = round(utm_y / 10) * 10
+    key_str = f"elev_{x_rounded}_{y_rounded}"
+    return hashlib.sha256(key_str.encode()).hexdigest()[:12]
+
+
+def _load_elevation_from_cache(utm_x: float, utm_y: float) -> float | None:
+    """Load elevation from cache if available and not expired."""
+    cache_path = MDT_CACHE_DIR / f"{_elevation_cache_key(utm_x, utm_y)}.json"
+    if not cache_path.exists():
+        return None
+
+    try:
+        with open(cache_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        cached_at = datetime.fromisoformat(data.get('cached_at', '2000-01-01'))
+        if datetime.now() - cached_at > timedelta(days=CACHE_TTL_DAYS):
+            cache_path.unlink()
+            return None
+
+        return data.get('elevation')
+    except (json.JSONDecodeError, KeyError, ValueError):
+        cache_path.unlink(missing_ok=True)
+        return None
+
+
+def _save_elevation_to_cache(utm_x: float, utm_y: float, elevation: float) -> None:
+    """Save elevation to cache."""
+    MDT_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    cache_path = MDT_CACHE_DIR / f"{_elevation_cache_key(utm_x, utm_y)}.json"
+
+    data = {
+        'cached_at': datetime.now().isoformat(),
+        'coordinates': {'utm_x': utm_x, 'utm_y': utm_y},
+        'elevation': elevation,
+    }
+
+    try:
+        fd, temp_path = tempfile.mkstemp(dir=MDT_CACHE_DIR, suffix='.tmp')
+        try:
+            with os.fdopen(fd, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            Path(temp_path).rename(cache_path)
+        except Exception:
+            Path(temp_path).unlink(missing_ok=True)
+            raise
+    except OSError as e:
+        logger.warning(f"Failed to cache elevation: {e}")
+
+
 # === CLI for Testing ===
 
 if __name__ == '__main__':
@@ -541,9 +798,10 @@ if __name__ == '__main__':
     print("ICGC Geology Integration - Test")
     print("=" * 60)
 
-    # Test coordinates (Bell-Lloc d'Urgell area)
+    # Test coordinates
     test_coords = [
-        (307500.0, 4615500.0, "Bell-Lloc d'Urgell"),
+        (314508.67, 4611192.86, "Bell-Lloc d'Urgell"),  # Should return Qvpu at 50k
+        (307500.0, 4615500.0, "West of Bell-Lloc"),
         (297500.0, 4618000.0, "Balaguer area"),
     ]
 
@@ -561,6 +819,25 @@ if __name__ == '__main__':
             print(f"\nRegion: {determine_region(unit, name)}")
         except ICGCError as e:
             print(f"Error: {e}")
+
+    # Test elevation
+    print("\n--- Elevation Test ---")
+    try:
+        elevation = get_elevation(314508.67, 4611192.86, use_cache=False)
+        cota = format_cota_referencia(elevation)
+        print(f"Elevation: {elevation:.2f} m")
+        print(f"Cota referencia: {cota}")
+    except ICGCError as e:
+        print(f"Elevation error: {e}")
+
+    # Test slope
+    print("\n--- Slope Test ---")
+    try:
+        slope_pct, slope_dir = get_slope(314508.67, 4611192.86, use_cache=False)
+        print(f"Slope: {slope_pct:.1f}% toward {slope_dir}")
+        print(f"Is sloped (>15%): {slope_pct > 15.0}")
+    except ICGCError as e:
+        print(f"Slope error: {e}")
 
     print("\n" + "=" * 60)
     print("Test completed!")

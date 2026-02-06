@@ -59,6 +59,12 @@ from .cte_classifier import (
     get_cte_classification,
 )
 
+from .lab_extractor import (
+    LabTestResult,
+    LabResults,
+    extract_lab_results,
+)
+
 from .report_generator import (
     ReportGenerator,
     GenerationResult,
@@ -93,6 +99,9 @@ __all__ = [
     'classify_building',
     'classify_soil',
     'get_cte_classification',
+    'LabTestResult',
+    'LabResults',
+    'extract_lab_results',
     'ReportGenerator',
     'GenerationResult',
 ]
