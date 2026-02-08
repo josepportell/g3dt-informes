@@ -55,6 +55,25 @@ Extreu dades del plànol de l'arquitecte per a l'informe.
 4. Genera JSON amb nivells de confiança
 5. G3DT revisa i corregeix si cal
 
+### /g3dt-adjacents-visor
+Agent visual per identificar parcel·les adjacents usant el visor cartogràfic del Cadastre.
+
+```
+/g3dt-adjacents-visor reference-material/4001612-bell-lloc
+```
+
+**Què fa:**
+1. Obre el visor del Cadastre amb Playwright (per referència catastral)
+2. Fa screenshot del mapa amb la parcel·la centrada
+3. Analitza visualment els adjacents (carrers i parcel·les veïnes)
+4. Genera JSON amb adjacents i nivells de confiança
+5. Opcionalment actualitza user_data.json
+
+**Prioritat al report_generator.py:**
+1. user_data.json (camps ja omplerts)
+2. validation/adjacents_visor.json (generat per aquest skill)
+3. cadastre_adjacents.py API probes (fallback automàtic)
+
 ### /g3dt-informe-geotecnic
 Genera un informe geotècnic complet a partir de les dades del projecte.
 
@@ -69,7 +88,8 @@ clients/g3dt/
 │   └── commands/             # Commands específics G3DT
 │       ├── g3dt-validar-penetros.md
 │       ├── g3dt-validar-sondeig.md
-│       └── g3dt-extreure-planol.md
+│       ├── g3dt-extreure-planol.md
+│       └── g3dt-adjacents-visor.md
 ├── automation/               # Mòduls d'extracció i càlcul
 │   ├── dpsh_extractor.py     # Extracció de dades DPSH d'Excel
 │   ├── project_extractor.py  # Extracció de tot el projecte

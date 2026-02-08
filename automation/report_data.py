@@ -105,7 +105,13 @@ class ReportData:
     field_work_dates: list[str] = field(default_factory=list)
     field_work_dates_text: str = ""
 
+    # Laboratori d'assaigs
+    lab_company: str = ""            # "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    lab_company_alias: str = ""      # "SOIL ASSAIG" (optional brand name)
+    lab_description: str = ""        # "laboratori d'assaigs per al control de qualitat de l'edificació"
+
     # Dades de camp (sondeig/SPT)
+    sondeig_tests: list[dict] | None = None  # From sondeig_extracted.json
     spt_data: dict | None = None
     lab_tests: list[dict] = field(default_factory=list)
 
@@ -365,6 +371,9 @@ def build_report_data(
         cota_referencia=user_data.get('cota_referencia', ''),
         field_work_dates=user_data.get('field_work_dates', []),
         field_work_dates_text=user_data.get('field_work_dates_text', ''),
+        lab_company=user_data.get('lab_company', ''),
+        lab_company_alias=user_data.get('lab_company_alias', ''),
+        lab_description=user_data.get('lab_description', ''),
         spt_data=user_data.get('spt_data'),
         lab_tests=user_data.get('lab_tests', []),
         # Observacions terreny
@@ -376,6 +385,7 @@ def build_report_data(
         is_anthropized=user_data.get('is_anthropized', False),
         # Dades assaig
         dpsh=dpsh_data,
+        sondeig_tests=user_data.get('sondeig_tests'),
         has_sondeig=user_data.get('has_sondeig', files.get('has_sondeig', False)),
         has_spt=False,  # No implementat encara
         # Laboratori
@@ -440,7 +450,11 @@ def to_dict(report_data: ReportData) -> dict[str, Any]:
             'cota_referencia': report_data.cota_referencia,
             'field_work_dates': report_data.field_work_dates,
             'field_work_dates_text': report_data.field_work_dates_text,
+            'lab_company': report_data.lab_company,
+            'lab_company_alias': report_data.lab_company_alias,
+            'lab_description': report_data.lab_description,
         },
+        'sondeig_tests': report_data.sondeig_tests,
         'spt_data': report_data.spt_data,
         'lab_tests': report_data.lab_tests,
         'site': {
@@ -601,6 +615,10 @@ def from_dict(data: dict[str, Any]) -> ReportData:
         cota_referencia=descriptions.get('cota_referencia', ''),
         field_work_dates=descriptions.get('field_work_dates', []),
         field_work_dates_text=descriptions.get('field_work_dates_text', ''),
+        lab_company=descriptions.get('lab_company', ''),
+        lab_company_alias=descriptions.get('lab_company_alias', ''),
+        lab_description=descriptions.get('lab_description', ''),
+        sondeig_tests=data.get('sondeig_tests'),
         spt_data=data.get('spt_data'),
         lab_tests=data.get('lab_tests', []),
         adjacent_parcels=site.get('adjacent_parcels', {}),

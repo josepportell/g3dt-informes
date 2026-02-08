@@ -205,27 +205,30 @@ class ReportGenerator:
                 except Exception as e:
                     self.warnings.append(f"Terzaghi calculation failed: {e}")
 
-            # Auto-fill num_soil_levels and layer boundaries from sondeig_extracted.json
-            if self.user_data.get('num_soil_levels', 1) == 1:
-                try:
-                    sondeig_path = self.project_path / 'validation' / 'sondeig_extracted.json'
-                    if sondeig_path.exists():
-                        with open(sondeig_path, 'r', encoding='utf-8') as f:
-                            sondeig_data = json.load(f)
-                        sondeig_tests = sondeig_data.get('sondeig_tests', [])
-                        if not sondeig_tests:
-                            raise ValueError("Empty sondeig_tests in JSON")
-                        layers = sondeig_tests[0].get('layers', [])
-                        num_layers = len(layers)
-                        if num_layers > 0:
-                            self.user_data['num_soil_levels'] = num_layers
-                            self.user_data['sondeig_layers'] = layers
-                            logger.info(
-                                "Auto-filled num_soil_levels=%d from sondeig_extracted.json",
-                                num_layers,
-                            )
-                except Exception as e:
-                    self.warnings.append(f"Could not auto-fill num_soil_levels from sondeig: {e}")
+            # Auto-fill from sondeig_extracted.json: soil levels + sondeig test data
+            try:
+                sondeig_path = self.project_path / 'validation' / 'sondeig_extracted.json'
+                if sondeig_path.exists():
+                    with open(sondeig_path, 'r', encoding='utf-8') as f:
+                        sondeig_data = json.load(f)
+                    sondeig_tests = sondeig_data.get('sondeig_tests', [])
+                    if sondeig_tests:
+                        # Store full test data for the sondeig summary table
+                        self.user_data['sondeig_tests'] = sondeig_tests
+
+                        # Auto-fill soil levels if not already set
+                        if self.user_data.get('num_soil_levels', 1) == 1:
+                            layers = sondeig_tests[0].get('layers', [])
+                            num_layers = len(layers)
+                            if num_layers > 0:
+                                self.user_data['num_soil_levels'] = num_layers
+                                self.user_data['sondeig_layers'] = layers
+                                logger.info(
+                                    "Auto-filled num_soil_levels=%d from sondeig_extracted.json",
+                                    num_layers,
+                                )
+            except Exception as e:
+                self.warnings.append(f"Could not auto-fill from sondeig_extracted.json: {e}")
 
             self.report_data = build_report_data(
                 project_data=self.project_data,
@@ -487,6 +490,14 @@ class ReportGenerator:
             # Descriptions
             context['access_description'] = self.report_data.access_description or ''
             context['site_description'] = self.report_data.site_description or ''
+
+            # Laboratori d'assaigs
+            context['lab_field_company'] = self.report_data.lab_company or 'TPS PROSPECCIÓ DEL SUBSÒL SL'
+            context['lab_field_description'] = self.report_data.lab_description or "laboratori d'assaigs per al control de qualitat de l'edificació"
+            lab_alias = f" ({self.report_data.lab_company_alias})" if self.report_data.lab_company_alias else ""
+            context['lab_testing_company'] = (self.report_data.lab_company or 'TPS PROSPECCIÓ DEL SUBSÒL SL') + lab_alias
+            context['lab_testing_description'] = self.report_data.lab_description or "laboratori d'assaigs per al control de qualitat de l'edificació"
+
             # Auto-fill cota_referencia from ICGC MDT if not provided
             if not self.report_data.cota_referencia and self.report_data.utm_x and self.report_data.utm_y:
                 try:
@@ -622,17 +633,7 @@ class ReportGenerator:
                 context['section_empentes_num'] = ''
                 context['section_estabilitat_num'] = '4.4' if include_slope_stability else ''
 
-            # Soil levels for section 3.2
-            if self.report_data.soil_levels:
-                context['soil_levels'] = [
-                    {
-                        'description': level.description,
-                        'ordinal': _catalan_ordinal(level.level_number),
-                    }
-                    for level in self.report_data.soil_levels
-                ]
-            else:
-                context['soil_levels'] = [{'description': '', 'ordinal': '1er'}]
+            # Soil levels for section 3.2 - built later after section3 processing
 
             # DPSH summary
             if self.report_data.dpsh:
@@ -659,6 +660,12 @@ class ReportGenerator:
                         'water': water,
                     })
             context['dpsh_tests'] = dpsh_tests
+
+            # Sondeig summary table rows
+            sondeig_table_tests = []
+            if sections.get('section2') and sections['section2'].taula4_sondeig:
+                sondeig_table_tests = sections['section2'].taula4_sondeig
+            context['sondeig_tests'] = sondeig_table_tests
 
             # SPT data
             spt = self.report_data.spt_data or {}
@@ -690,6 +697,7 @@ class ReportGenerator:
 
             # Geology paragraphs from section 3
             context['materials_level_1'] = ''
+            context['materials_intro'] = ''
             context['seismic_ab_text'] = ''
             for i in range(6):
                 context[f'geology_para_{i+1}'] = ''
@@ -708,6 +716,8 @@ class ReportGenerator:
                 else:
                     context['materials_level_1'] = ''
 
+                context['materials_intro'] = s3.materials_intro
+
                 # Sismica (extract ab value from generated text)
                 if s3.sismica:
                     ab_match = re.search(r'ab\s*=\s*([\d.]+)', s3.sismica)
@@ -718,6 +728,40 @@ class ReportGenerator:
             context['materials_depth_text'] = ''
             context['materials_geomech_text'] = ''
             context['conclusions_level_1'] = context.get('materials_level_1', '')
+
+            # Soil levels for section 3.2 (needs section3 data)
+            s3_materials = []
+            s3_depth_texts = []
+            s3_geomech_texts = []
+            if sections.get('section3'):
+                s3 = sections['section3']
+                if hasattr(s3, 'materials_levels'):
+                    s3_materials = s3.materials_levels or []
+                if hasattr(s3, 'depth_texts'):
+                    s3_depth_texts = s3.depth_texts or []
+                if hasattr(s3, 'geomech_texts'):
+                    s3_geomech_texts = s3.geomech_texts or []
+
+            if self.report_data.soil_levels:
+                context['soil_levels'] = []
+                for i, level in enumerate(self.report_data.soil_levels):
+                    materials_text = s3_materials[i] if i < len(s3_materials) else ''
+                    context['soil_levels'].append({
+                        'description': level.description,
+                        'ordinal': _catalan_ordinal(level.level_number),
+                        'materials_text': materials_text,
+                        'depth_text': s3_depth_texts[i] if i < len(s3_depth_texts) else '',
+                        'geomech_text': s3_geomech_texts[i] if i < len(s3_geomech_texts) else '',
+                    })
+            else:
+                context['soil_levels'] = [{'description': '', 'ordinal': '1er', 'materials_text': '', 'depth_text': '', 'geomech_text': ''}]
+
+            # Conclusions geology intro (dynamic level count)
+            num_levels = len(self.report_data.soil_levels) if self.report_data.soil_levels else 1
+            if num_levels == 1:
+                context['conclusions_levels_detected'] = "Es detecta un sol nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
+            else:
+                context['conclusions_levels_detected'] = f"Es detecten {num_levels} nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
 
             # === Multi-level table context ===
             from .dpsh_extractor import GeotechCorrelations
@@ -898,6 +942,16 @@ class ReportGenerator:
             raise FileNotFoundError(f"Template not found: {self.template_path}")
 
         doc = DocxTemplate(str(self.template_path))
+
+        # Add images to context (InlineImage requires the DocxTemplate instance)
+        try:
+            from .image_manager import ImageManager
+            img_mgr = ImageManager(self.project_path, self.report_data, doc)
+            image_ctx = img_mgr.build_context()
+            context.update(image_ctx)
+        except Exception as e:
+            self.warnings.append(f"Image insertion failed (report will have placeholders): {e}")
+
         doc.render(context)
         doc.save(str(output_path))
 

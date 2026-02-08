@@ -59,6 +59,8 @@ __all__ = [
     'get_elevation',
     'format_cota_referencia',
     'get_slope',
+    'get_orthophoto_image',
+    'get_geological_map_image',
 ]
 
 
@@ -74,6 +76,7 @@ ICGC_INFO_FORMAT = "text/plain"
 # Cache settings
 CACHE_DIR = Path.home() / ".g3dt" / "cache" / "icgc_units"
 CACHE_TTL_DAYS = 30
+CACHE_TTL_FALLBACK_DAYS = 3  # Shorter TTL for 250k fallback results
 COORDINATE_PRECISION = 100  # Round to nearest 100m for cache key
 
 # Request settings
@@ -267,7 +270,7 @@ def get_geological_unit(
         try:
             unit = _parse_response(response_text, layer=layer)
             if use_cache:
-                _save_to_cache(utm_x, utm_y, unit)
+                _save_to_cache(utm_x, utm_y, unit, source_layer=layer)
             return unit
         except ICGCNoDataError:
             if layer == ICGC_LAYER_50K:
@@ -435,6 +438,9 @@ def _load_from_cache(utm_x: float, utm_y: float) -> GeologicalUnit | None:
     """
     Load geological unit from cache if available and not expired.
 
+    Uses a shorter TTL for 250k fallback results so that when the 50k layer
+    becomes available again, we re-query and get the higher-resolution data.
+
     Returns None if not cached or expired.
     """
     cache_path = _get_cache_path(utm_x, utm_y)
@@ -446,10 +452,12 @@ def _load_from_cache(utm_x: float, utm_y: float) -> GeologicalUnit | None:
         with open(cache_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
 
-        # Check expiration
+        # Check expiration (shorter TTL for 250k fallback results)
         cached_at = datetime.fromisoformat(data.get('cached_at', '2000-01-01'))
-        if datetime.now() - cached_at > timedelta(days=CACHE_TTL_DAYS):
-            logger.debug(f"Cache expired for ({utm_x}, {utm_y})")
+        source_layer = data.get('source_layer', ICGC_LAYER_50K)
+        ttl = CACHE_TTL_FALLBACK_DAYS if source_layer == ICGC_LAYER_250K else CACHE_TTL_DAYS
+        if datetime.now() - cached_at > timedelta(days=ttl):
+            logger.debug(f"Cache expired for ({utm_x}, {utm_y}), source_layer={source_layer}, ttl={ttl}d")
             cache_path.unlink()  # Delete expired cache
             return None
 
@@ -461,7 +469,7 @@ def _load_from_cache(utm_x: float, utm_y: float) -> GeologicalUnit | None:
         return None
 
 
-def _save_to_cache(utm_x: float, utm_y: float, unit: GeologicalUnit) -> None:
+def _save_to_cache(utm_x: float, utm_y: float, unit: GeologicalUnit, source_layer: str = ICGC_LAYER_50K) -> None:
     """Save geological unit to cache using atomic write."""
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     cache_path = _get_cache_path(utm_x, utm_y)
@@ -470,6 +478,7 @@ def _save_to_cache(utm_x: float, utm_y: float, unit: GeologicalUnit) -> None:
         'cached_at': datetime.now().isoformat(),
         'coordinates': {'utm_x': utm_x, 'utm_y': utm_y},
         'unit': unit.to_dict(),
+        'source_layer': source_layer,
     }
 
     try:
@@ -785,6 +794,145 @@ def _save_elevation_to_cache(utm_x: float, utm_y: float, elevation: float) -> No
             raise
     except OSError as e:
         logger.warning(f"Failed to cache elevation: {e}")
+
+
+# === WMS GetMap Image Downloads ===
+
+ICGC_ORTHO_WMS_URL = "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms"
+ICGC_ORTHO_LAYER = "ortofoto_color_vigent"
+
+
+def get_orthophoto_image(
+    utm_x: float,
+    utm_y: float,
+    output_path: str | Path,
+    buffer_m: float = 200.0,
+    width: int = 800,
+    height: int = 600,
+) -> Path:
+    """
+    Download ICGC orthophoto image centered on given UTM coordinates.
+
+    Uses the ICGC multibase WMS service (free, official orthophoto).
+
+    Args:
+        utm_x: UTM X coordinate (ETRS89 zone 31N / EPSG:25831)
+        utm_y: UTM Y coordinate
+        output_path: Where to save the JPEG image
+        buffer_m: Buffer around point in meters (default 200m)
+        width: Image width in pixels
+        height: Image height in pixels
+
+    Returns:
+        Path to saved image
+
+    Raises:
+        ICGCCoordinateError: If coordinates are outside Catalunya
+        ICGCConnectionError: If download fails
+    """
+    _validate_coordinates(utm_x, utm_y)
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    x_min = utm_x - buffer_m
+    y_min = utm_y - buffer_m
+    x_max = utm_x + buffer_m
+    y_max = utm_y + buffer_m
+
+    url = (
+        f"{ICGC_ORTHO_WMS_URL}"
+        f"?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap"
+        f"&LAYERS={ICGC_ORTHO_LAYER}"
+        f"&STYLES=&SRS=EPSG:25831"
+        f"&BBOX={x_min},{y_min},{x_max},{y_max}"
+        f"&WIDTH={width}&HEIGHT={height}"
+        f"&FORMAT=image/jpeg"
+    )
+
+    logger.debug(f"Downloading orthophoto: {url}")
+
+    try:
+        urllib.request.urlretrieve(url, str(output_path))
+    except (urllib.error.URLError, TimeoutError, socket.timeout, OSError) as e:
+        raise ICGCConnectionError(f"Failed to download orthophoto: {e}")
+
+    # Validate response is actually JPEG, not XML error
+    with open(output_path, 'rb') as f:
+        header = f.read(4)
+    if header[:2] != b'\xff\xd8':
+        output_path.unlink(missing_ok=True)
+        raise ICGCConnectionError("Orthophoto download returned non-JPEG response (likely WMS error)")
+
+    logger.info(f"Orthophoto saved to {output_path}")
+    return output_path
+
+
+def get_geological_map_image(
+    utm_x: float,
+    utm_y: float,
+    output_path: str | Path,
+    buffer_m: float = 1000.0,
+    width: int = 800,
+    height: int = 600,
+) -> Path:
+    """
+    Download ICGC geological map image centered on given UTM coordinates.
+
+    Uses the same WMS URL already configured as ICGC_WMS_URL in this module.
+    Wider buffer (1000m) than orthophoto for geological context.
+
+    Args:
+        utm_x: UTM X coordinate (ETRS89 zone 31N / EPSG:25831)
+        utm_y: UTM Y coordinate
+        output_path: Where to save the JPEG image
+        buffer_m: Buffer around point in meters (default 1000m)
+        width: Image width in pixels
+        height: Image height in pixels
+
+    Returns:
+        Path to saved image
+
+    Raises:
+        ICGCCoordinateError: If coordinates are outside Catalunya
+        ICGCConnectionError: If download fails
+    """
+    _validate_coordinates(utm_x, utm_y)
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    x_min = utm_x - buffer_m
+    y_min = utm_y - buffer_m
+    x_max = utm_x + buffer_m
+    y_max = utm_y + buffer_m
+
+    url = (
+        f"{ICGC_WMS_URL}"
+        f"?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap"
+        f"&LAYERS=unitats-geologiques-50000"
+        f"&STYLES=&SRS=EPSG:25831"
+        f"&BBOX={x_min},{y_min},{x_max},{y_max}"
+        f"&WIDTH={width}&HEIGHT={height}"
+        f"&FORMAT=image/jpeg"
+    )
+
+    logger.debug(f"Downloading geological map: {url}")
+
+    try:
+        urllib.request.urlretrieve(url, str(output_path))
+    except (urllib.error.URLError, TimeoutError, socket.timeout, OSError) as e:
+        raise ICGCConnectionError(f"Failed to download geological map: {e}")
+
+    # Validate response is actually JPEG, not XML error
+    with open(output_path, 'rb') as f:
+        header = f.read(4)
+    if header[:2] != b'\xff\xd8':
+        output_path.unlink(missing_ok=True)
+        raise ICGCConnectionError("Geological map download returned non-JPEG response (likely WMS error)")
+
+    logger.info(f"Geological map saved to {output_path}")
+    return output_path
 
 
 # === CLI for Testing ===

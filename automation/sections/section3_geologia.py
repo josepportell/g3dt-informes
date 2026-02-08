@@ -88,6 +88,10 @@ class Section3Content:
     # 3.7 RADO
     rado: str  # Placeholder for zone lookup
 
+    # Per-level generated texts (for template loop)
+    depth_texts: list[str] = field(default_factory=list)  # Per-level depth/location descriptions
+    geomech_texts: list[str] = field(default_factory=list)  # Per-level geomechanical descriptions
+
 
 class Section3Generator:
     """Generates Section 3: DESCRIPCIO GEOLOGICA."""
@@ -765,10 +769,16 @@ class Section3Generator:
             # Surface note for first level
             surface_note = ""
             if i == 0:
-                surface_note = (
-                    "Superficialment es detecta un tram de sòl vegetal i/o "
-                    "materials antropitzats de petit gruix."
-                )
+                if self.data.is_anthropized:
+                    surface_note = (
+                        "Superficialment es detecta un tram de sòl vegetal i/o "
+                        "materials antropitzats de petit gruix."
+                    )
+                else:
+                    surface_note = (
+                        "Superficialment es detecta un tram de sòl vegetal "
+                        "de petit gruix."
+                    )
 
             # Get lithology from DPSH description or ICGC
             lithology = level.description.lower()
@@ -808,6 +818,127 @@ class Section3Generator:
             levels.append(level_text)
 
         return levels
+
+    def generate_depth_texts(self) -> list[str]:
+        """
+        Generate per-level depth/location paragraphs ("Localitzacio").
+
+        For each soil level, describes where the level is found in terms
+        of depth range and thickness based on DPSH test results.
+
+        Returns:
+            List of depth description strings, one per soil level
+        """
+        texts = []
+        if not self.data.soil_levels:
+            return texts
+
+        # Check if any test reached refusal
+        any_refusal = False
+        if self.data.dpsh and self.data.dpsh.tests:
+            any_refusal = any(t.refusal_reached for t in self.data.dpsh.tests)
+
+        num_levels = len(self.data.soil_levels)
+
+        for i, level in enumerate(self.data.soil_levels):
+            is_last = (i == num_levels - 1)
+
+            # Depth end description
+            if is_last and any_refusal and level.depth_to_m is None:
+                depth_end = (
+                    "fins a la cota de finalització dels assaigs "
+                    "(rebuig a la penetració)"
+                )
+            elif level.depth_to_m is not None:
+                depth_end = f"fins a {level.depth_to_m:.2f} m de profunditat"
+            else:
+                depth_end = (
+                    "fins a la cota de finalització de tots els assaigs"
+                )
+
+            # Thickness note
+            if level.thickness_m is not None:
+                thickness_note = (
+                    f", amb potències estudiades de {level.thickness_m:.2f} metres"
+                )
+            else:
+                thickness_note = (
+                    ", amb potències estudiades de com a mínim "
+                    f"{abs(level.depth_from_m - (level.depth_to_m if level.depth_to_m is not None else level.depth_from_m)):.2f} metres"
+                    if level.depth_to_m is not None
+                    else ""
+                )
+
+            # Build sentence based on position
+            if level.level_number == 1:
+                text = (
+                    "A partir dels assaigs realitzats, aquest nivell es detecta "
+                    f"superficialment i {depth_end}{thickness_note}."
+                )
+            else:
+                text = (
+                    "A partir dels assaigs realitzats, aquest nivell es detecta "
+                    f"a partir de {level.depth_from_m:.2f} m i {depth_end}"
+                    f"{thickness_note}."
+                )
+
+            texts.append(text)
+
+        return texts
+
+    def generate_geomech_texts(self) -> list[str]:
+        """
+        Generate per-level geomechanical paragraphs ("Resistencia").
+
+        For each soil level, describes geomechanical properties including
+        material character, bearing capacity, and N20 averages.
+
+        Returns:
+            List of geomechanical description strings, one per soil level
+        """
+        texts = []
+        if not self.data.soil_levels:
+            return texts
+
+        # Check per-level refusal from DPSH readings
+        any_refusal = False
+        if self.data.dpsh and self.data.dpsh.tests:
+            any_refusal = any(t.refusal_reached for t in self.data.dpsh.tests)
+
+        num_levels = len(self.data.soil_levels)
+
+        for i, level in enumerate(self.data.soil_levels):
+            material_type = self._identify_material_type(level.description)
+            is_granular = material_type in ('graves', 'sorres', 'granular')
+            character = "granular" if is_granular else "cohesiu"
+
+            _, bearing, _ = self._get_n20_classification(level.n20_average)
+
+            # Refusal note for last level with high N20
+            is_last = (i == num_levels - 1)
+            if is_last and any_refusal:
+                refusal_note = (
+                    ", assolint rebuig a la penetració pels trams més profunds"
+                )
+            else:
+                refusal_note = ""
+
+            if is_granular:
+                property_phrase = "densitat i una capacitat"
+            else:
+                property_phrase = "consistència i una capacitat"
+
+            text = (
+                "Des del punt de vista geomecànic es tracta d'uns materials "
+                f"de caràcter {character}, amb una {property_phrase} "
+                f"portant {bearing}. Dels assaigs de penetració dinàmica DPSH "
+                f"s'obté un valor de Nb mig de {level.n20_average:.0f} cops"
+                f"{refusal_note}."
+            )
+
+            texts.append(text)
+
+        return texts
 
     def generate_sample_photos(self) -> list[str]:
         """
@@ -1264,6 +1395,9 @@ class Section3Generator:
             sismica=self.generate_sismica(),
             # 3.7 RADO
             rado=self.generate_rado(),
+            # Per-level texts
+            depth_texts=self.generate_depth_texts(),
+            geomech_texts=self.generate_geomech_texts(),
         )
 
 
@@ -1287,6 +1421,8 @@ if __name__ == '__main__':
         description: str
         thickness_m: float | None
         n20_average: float
+        depth_from_m: float = 0.0
+        depth_to_m: float | None = None
 
     @dc
     class DPSHReading:
@@ -1299,6 +1435,7 @@ if __name__ == '__main__':
     class DPSHTest:
         test_id: str
         readings: list = dc_field(default_factory=list)
+        refusal_reached: bool = False
 
     @dc
     class DPSHData:
@@ -1322,10 +1459,13 @@ if __name__ == '__main__':
         client: ClientData
         is_urban: bool = True
         is_sloped: bool = False
+        is_anthropized: bool = False
         dpsh: DPSHData | None = None
         soil_levels: list = dc_field(default_factory=list)
         sulfate_mg_kg: float | None = None
         cte_soil_class: str = "T-1"
+        utm_x: float | None = None
+        utm_y: float | None = None
 
         @property
         def water_detected(self) -> bool:
