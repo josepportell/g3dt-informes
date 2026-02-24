@@ -55,6 +55,8 @@ class SoilLevel:
     n20_average: float
     depth_from_m: float = 0.0  # Top of layer (meters below surface)
     depth_to_m: float | None = None  # Bottom of layer (None = unknown/continues)
+    n20_min: float | None = None  # Min N20 in layer (excl. refusal)
+    n20_max: float | None = None  # Max N20 in layer (100 = refusal)
 
 
 @dataclass
@@ -145,6 +147,9 @@ class ReportData:
     icgc_unit_code: str = ""
     icgc_unit_description: str = ""
     icgc_unit_epoch: str = ""
+
+    # Geomech overrides (Nb, N from user_data.geomech_params)
+    _geomech_overrides: dict = field(default_factory=dict)
 
     # Seccions condicionals
     include_expansivity: bool = False
@@ -461,6 +466,11 @@ def build_report_data(
         icgc_unit_code=user_data.get('icgc_unit_code', ''),
         icgc_unit_description=user_data.get('icgc_unit_description', ''),
         icgc_unit_epoch=user_data.get('icgc_unit_epoch', ''),
+        # Geomech overrides (Nb, N for Taula 10)
+        _geomech_overrides={
+            'Nb': geomech.get('Nb', ''),
+            'N': geomech.get('N', ''),
+        },
         # Seccions condicionals
         include_expansivity=False,  # Determinat per tipus de sol
         include_earth_pressure=include_earth_pressure,
@@ -552,6 +562,8 @@ def to_dict(report_data: ReportData) -> dict[str, Any]:
                 'n20_average': level.n20_average,  # Full precision for serialization
                 'depth_from_m': level.depth_from_m,
                 'depth_to_m': level.depth_to_m,
+                'n20_min': level.n20_min,
+                'n20_max': level.n20_max,
             }
             for level in report_data.soil_levels
         ],
@@ -626,6 +638,8 @@ def from_dict(data: dict[str, Any]) -> ReportData:
             n20_average=sl['n20_average'],
             depth_from_m=sl.get('depth_from_m', 0.0),
             depth_to_m=sl.get('depth_to_m'),
+            n20_min=sl.get('n20_min'),
+            n20_max=sl.get('n20_max'),
         )
         for sl in data.get('soil_levels', [])
     ]
@@ -825,6 +839,10 @@ def _generate_soil_levels(
             avg_n20 = sum(layer_n20) / len(layer_n20) if layer_n20 else dpsh_data.overall_average_n20
             thickness = depth_to - depth_from if depth_to > depth_from else None
 
+            # Compute min/max N20 for Nb column
+            n20_min = min(layer_n20) if layer_n20 else None
+            n20_max = max(layer_n20) if layer_n20 else None
+
             levels.append(SoilLevel(
                 level_number=i + 1,
                 description=description,
@@ -832,11 +850,14 @@ def _generate_soil_levels(
                 n20_average=avg_n20,
                 depth_from_m=depth_from,
                 depth_to_m=depth_to if depth_to > 0 else None,
+                n20_min=n20_min,
+                n20_max=n20_max,
             ))
         return levels
 
     # Fallback: single level with global average
     max_depth = max((abs(r.depth_m) for r in all_readings), default=0)
+    all_n20 = [r.n20 for r in all_readings]
     return [
         SoilLevel(
             level_number=1,
@@ -845,6 +866,8 @@ def _generate_soil_levels(
             n20_average=dpsh_data.overall_average_n20,
             depth_from_m=0.0,
             depth_to_m=max_depth if max_depth > 0 else None,
+            n20_min=min(all_n20) if all_n20 else None,
+            n20_max=max(all_n20) if all_n20 else None,
         )
     ]
 
