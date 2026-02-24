@@ -310,13 +310,17 @@ class ReportGenerator:
         # Project figures come first (from architect's project)
         fig_counter = num_project_figures
 
-        # Location map (topographic + orthophoto)
+        # Cadastre map (from architect plan crops)
         fig_counter += 1
-        fig_location_num = fig_counter
+        fig_cadastre_num = fig_counter
 
-        # Building/structure position
+        # Aerial view (from architect plan crops)
         fig_counter += 1
-        fig_building_num = fig_counter
+        fig_aerea_num = fig_counter
+
+        # Main architect plan with building layout
+        fig_counter += 1
+        fig_main_plan_num = fig_counter
 
         # SPT spoon diagram (if present in section 2.4)
         fig_counter += 1
@@ -333,13 +337,21 @@ class ReportGenerator:
         # === PHOTO NUMBERING ===
         photo_counter = 0
 
-        # Site view(s) - usually 1 or 2 photos
-        num_site_photos = self.user_data.get('num_site_photos', 1)
+        # Site view(s) - auto-detect from FOTOGRAFIES/ if not explicitly set
+        num_site_photos = self.user_data.get('num_site_photos', 0)
+        if num_site_photos == 0:
+            # Auto-detect: count vista_general_* files in FOTOGRAFIES/
+            foto_dir = self.project_path / 'FOTOGRAFIES'
+            if foto_dir.exists():
+                site_photos = sorted(foto_dir.glob('vista_general_*'))
+                num_site_photos = min(len(site_photos), 2)
+            if num_site_photos == 0:
+                num_site_photos = 1  # Fallback default
         photo_counter += num_site_photos
         if num_site_photos == 1:
-            photo_site_text = f"Fotografia 1"
+            photo_site_text = "Fotografia 1"
         else:
-            photo_site_text = f"Fotografia 1 i Fotografia 2"
+            photo_site_text = "Fotografia 1 i Fotografia 2"
 
         # DPSH machine photo
         photo_counter += 1
@@ -399,11 +411,15 @@ class ReportGenerator:
 
         return {
             # Figure numbers
-            'fig_location_num': fig_location_num,
-            'fig_building_num': fig_building_num,
+            'fig_cadastre_num': fig_cadastre_num,
+            'fig_aerea_num': fig_aerea_num,
+            'fig_main_plan_num': fig_main_plan_num,
             'fig_spt_cullera_num': fig_spt_cullera_num,
             'fig_geological_num': fig_geological_num,
             'fig_correlation_num': fig_correlation_num,
+            # Backward-compat aliases
+            'fig_location_num': fig_cadastre_num,
+            'fig_building_num': fig_main_plan_num,
             # Photo numbers
             'photo_site_text': photo_site_text,
             'photo_dpsh_num': photo_dpsh_num,
@@ -463,11 +479,32 @@ class ReportGenerator:
             # Architect
             context['architect_name'] = self.report_data.architect_name or ''
             context['architect_company'] = self.report_data.architect_company or ''
+            context['architect_name_upper'] = (self.report_data.architect_name or '').upper()
 
             # Building
             context['building_type'] = self.report_data.building_type or ''
+            context['building_type_lower'] = (self.report_data.building_type or '').lower()
             context['num_floors'] = self.report_data.num_floors or ''
-            context['building_structure_desc'] = self.report_data.building_type or 'una estructura'
+
+            # Building structure description from num_floors
+            # "en planta baixa" when foundation starts at ground level (PB, PB+P1, etc.)
+            # "de soterrani" when there's a basement (PS, etc.)
+            num_floors_raw = (self.report_data.num_floors or '').upper()
+            if num_floors_raw.startswith('PB'):
+                context['building_structure_desc'] = 'en planta baixa'
+            elif num_floors_raw.startswith('PS'):
+                context['building_structure_desc'] = 'de soterrani'
+            else:
+                context['building_structure_desc'] = self.report_data.building_type or 'una estructura'
+
+            # Municipality uppercase
+            context['municipality_upper'] = (self.report_data.municipality or '').upper()
+
+            # Street split: "Carrer X, 25220 Bell-Lloc" → street_1="Carrer X", street_2="Bell-Lloc d'Urgell"
+            street = self.report_data.street_address or ''
+            parts = street.split(',', 1)
+            context['street_1'] = parts[0].strip() if parts else ''
+            context['street_2'] = parts[1].strip().lstrip('0123456789 ') if len(parts) > 1 else ''
 
             # CTE Classification (original names)
             context['cte_building_class'] = self.report_data.cte_building_class or 'C-0'
@@ -560,6 +597,39 @@ class ReportGenerator:
             context['adjacent_south'] = adj.get('south', '')
             context['adjacent_east'] = adj.get('east', '')
             context['adjacent_west'] = adj.get('west', '')
+            context['adjacent_south_street'] = adj.get('south', '')
+
+            # Adjacent formatting with Catalan articles
+            def _format_adjacent(direction_cat: str, value: str) -> str:
+                if not value:
+                    return f'Per la part {direction_cat}, sense informació.'
+                v = value.strip().rstrip('.')
+                if v.lower().startswith(('carrer ', 'camí ', 'passeig ')):
+                    return f'Per la part {direction_cat} amb el {v}.'
+                if v.lower().startswith(('avinguda ', 'plaça ', 'ronda ', 'travessia ')):
+                    return f'Per la part {direction_cat} amb la {v}.'
+                if v.lower().startswith(('parcel·la', 'construcció', 'edificació', 'nau ')):
+                    return f'Per la part {direction_cat} amb una {v}.'
+                if v.lower().startswith(('solar', 'edifici', 'magatzem', 'terreny')):
+                    return f'Per la part {direction_cat} amb un {v}.'
+                return f'Per la part {direction_cat} amb {v}.'
+
+            context['adjacent_north_fmt'] = _format_adjacent('nord', adj.get('north', ''))
+            context['adjacent_south_fmt'] = _format_adjacent('sud', adj.get('south', ''))
+            context['adjacent_east_fmt'] = _format_adjacent('est', adj.get('east', ''))
+
+            # West gets special "I finalment" prefix
+            west_val = adj.get('west', '')
+            if west_val:
+                west_body = _format_adjacent('oest', west_val)
+                context['adjacent_west_fmt'] = 'I finalment, p' + west_body[1:]  # "Per" -> "per"
+            else:
+                context['adjacent_west_fmt'] = _format_adjacent('oest', '')
+
+            # Access street extraction
+            access = self.report_data.access_description or ''
+            access_match = re.search(r'(?:des del|des de la|pel)\s+(.+?)(?:\.|$)', access, re.IGNORECASE)
+            context['access_street'] = access_match.group(1).strip() if access_match else access
 
             # Site condition
             is_anthropized = getattr(self.report_data, 'is_anthropized', False)
@@ -595,12 +665,10 @@ class ReportGenerator:
                 context['section_sondeig_num'] = '2.4.2'
                 context['section_spt_num'] = '2.4.3'
                 context['section_resum_num'] = '2.4.4'
-                context['photo_sondeig_num'] = '3'  # After DPSH photos
             else:
                 context['section_sondeig_num'] = ''  # Not used
                 context['section_spt_num'] = '2.4.2'
                 context['section_resum_num'] = '2.4.3'
-                context['photo_sondeig_num'] = ''
 
             # Geothermal section
             context['include_geothermal'] = getattr(self.report_data, 'include_geothermal', False)
@@ -609,6 +677,11 @@ class ReportGenerator:
             include_expansivity = getattr(self.report_data, 'include_expansivity', False)
             include_earth_pressure = getattr(self.report_data, 'include_earth_pressure', False)
             include_slope_stability = getattr(self.report_data, 'include_slope_stability', False)
+
+            # Auto-activate slope stability section if slope was auto-detected
+            if context.get('is_sloped') and not include_slope_stability:
+                include_slope_stability = True
+                logger.info("Auto-activated §4.5 slope stability (slope auto-detected from ICGC MDT)")
 
             context['include_expansivity'] = include_expansivity
             context['include_earth_pressure'] = include_earth_pressure
@@ -765,6 +838,10 @@ class ReportGenerator:
 
             # === Multi-level table context ===
             from .dpsh_extractor import GeotechCorrelations
+            from .cte_geomech import (
+                nspt_to_phi, nspt_to_E_kg_cm2, nspt_to_gamma_g_cm3,
+                is_rock, rock_params_default,
+            )
 
             soil_levels = self.report_data.soil_levels or []
             dpsh = self.report_data.dpsh
@@ -865,18 +942,43 @@ class ReportGenerator:
                         nb_range = ''
 
                     # Per-level geotechnical params
-                    gamma = GeotechCorrelations.n_to_density(avg_n20)
-                    phi = GeotechCorrelations.n_to_friction_angle(avg_n20)
-                    E = GeotechCorrelations.n_to_deformation_modulus(avg_n20)
+                    # Priority: user_data override > CTE correlations
+                    geomech = self.user_data.get('geomech_params', {})
+
+                    if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
+                        # Manual override — use exactly what G3DT specified
+                        gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20)
+                        phi = geomech.get('phi') or nspt_to_phi(avg_n20)
+                        E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
+                        cohesion = geomech.get('cohesion', 0.0)
+                    elif is_rock(avg_n20, level.description):
+                        # Rock detected — use CTE rock defaults
+                        rock = rock_params_default()
+                        gamma = rock['gamma']
+                        phi = rock['phi']
+                        E = rock['E']
+                        cohesion = rock['cohesion']
+                    else:
+                        # CTE correlations for soil
+                        gamma = nspt_to_gamma_g_cm3(avg_n20)
+                        phi = nspt_to_phi(avg_n20)
+                        E = nspt_to_E_kg_cm2(avg_n20)
+                        cohesion = 0.0
+
+                    # N display: G3DT may write "R" (refusal) instead of numeric
+                    n_display = geomech.get('N') or (str(int(avg_n20)) if avg_n20 else '')
+                    # Nb override
+                    if geomech.get('Nb'):
+                        nb_range = geomech['Nb']
 
                     context['geotech_rows'].append({
                         'name': f"{_catalan_ordinal(level.level_number)} nivell. {level.description}.",
                         'nb': nb_range,
-                        'n': str(int(avg_n20)) if avg_n20 else '',
-                        'density': f"{gamma:.1f}",
-                        'cohesion': '0.00',  # Granular soils
+                        'n': str(n_display),
+                        'density': f"{gamma:.2f}",
+                        'cohesion': f"{cohesion:.2f}",
                         'phi': f"{phi:.0f}\u00b0",
-                        'E': f"{E:.0f}",
+                        'E': f"{E:.0f}" if isinstance(E, (int, float)) else str(E),
                     })
             if not context['geotech_rows']:
                 context['geotech_rows'] = [{'name': '', 'nb': '', 'n': '', 'density': '', 'cohesion': '', 'phi': '', 'E': ''}]

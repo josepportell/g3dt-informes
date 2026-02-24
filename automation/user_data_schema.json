@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "G3DT User Data Schema",
+  "description": "Data that cannot be automatically extracted from project files - must be provided from quote request or manual input",
+  "type": "object",
+  "properties": {
+    "architect_name": {
+      "type": "string",
+      "description": "Full name of the requesting architect (from quote request)"
+    },
+    "architect_company": {
+      "type": ["string", "null"],
+      "description": "Architecture firm or company name (optional)"
+    },
+    "building_type": {
+      "type": "string",
+      "description": "Type of building: 'Habitatge unifamiliar', 'Habitatge plurifamiliar', 'Nau industrial', 'Edifici comercial', etc.",
+      "examples": ["Habitatge unifamiliar", "Habitatge plurifamiliar", "Nau industrial"]
+    },
+    "num_floors": {
+      "type": "string",
+      "description": "Floor configuration in Catalan notation: Pb = planta baixa, Pp = planta pis, Ps = planta soterrani",
+      "examples": ["Pb + 1Pp", "Pb + 2Pp", "Ps + Pb + 2Pp", "Pb"]
+    },
+    "superficie_parcela_m2": {
+      "type": "number",
+      "description": "Total parcel area in square meters (0 if not specified)",
+      "minimum": 0
+    },
+    "superficie_construida_m2": {
+      "type": "number",
+      "description": "Built area in square meters (0 if not specified)",
+      "minimum": 0
+    },
+    "has_basement": {
+      "type": "boolean",
+      "description": "Whether the building has a basement (planta soterrani)",
+      "default": false
+    },
+    "has_retaining_walls": {
+      "type": "boolean",
+      "description": "Whether the project includes retaining walls (murs de contenció)",
+      "default": false
+    },
+    "street_address": {
+      "type": "string",
+      "description": "Full street address including municipality name"
+    },
+    "utm_x": {
+      "type": ["number", "null"],
+      "description": "UTM X coordinate (easting) ETRS89 Huso 31 - preferably from cadastral WFS, not geocoding"
+    },
+    "utm_y": {
+      "type": ["number", "null"],
+      "description": "UTM Y coordinate (northing) ETRS89 Huso 31 - preferably from cadastral WFS, not geocoding"
+    },
+    "referencia_catastral": {
+      "type": ["string", "null"],
+      "description": "14-char cadastral reference (e.g. '4613172CG1141S'). Used to obtain precise UTM coordinates via Cadastre WFS API",
+      "pattern": "^[0-9]{7}[A-Z]{2}[0-9]{4}[A-Z]$"
+    },
+    "adjacent_north": {
+      "type": "string",
+      "description": "What borders the parcel to the north: street name or 'parcel·la veïna'"
+    },
+    "adjacent_south": {
+      "type": "string",
+      "description": "What borders the parcel to the south: street name or 'parcel·la veïna'"
+    },
+    "adjacent_east": {
+      "type": "string",
+      "description": "What borders the parcel to the east: street name or 'parcel·la veïna'"
+    },
+    "adjacent_west": {
+      "type": "string",
+      "description": "What borders the parcel to the west: street name or 'parcel·la veïna'"
+    },
+    "site_position": {
+      "type": "string",
+      "description": "Position of building on parcel",
+      "enum": ["centre", "nord", "sud", "est", "oest", "nord-est", "nord-oest", "sud-est", "sud-oest"]
+    },
+    "parcel_shape": {
+      "type": "string",
+      "description": "General shape of the parcel",
+      "enum": ["rectangular", "quadrada", "triangular", "irregular", "trapezoidal"]
+    },
+    "is_urban": {
+      "type": "boolean",
+      "description": "Whether the site is in an urban area (sol urba)",
+      "default": true
+    },
+    "is_sloped": {
+      "type": "boolean",
+      "description": "Whether the terrain has significant slope",
+      "default": false
+    },
+    "geological_zone": {
+      "type": ["string", "null"],
+      "description": "Geological zone classification if known from maps - null to auto-detect"
+    },
+    "num_soil_levels": {
+      "type": "integer",
+      "description": "Number of distinct soil levels identified in the study",
+      "minimum": 1,
+      "default": 1
+    },
+    "is_anthropized": {
+      "type": "boolean",
+      "description": "Whether the site shows anthropic fill or disturbance",
+      "default": true
+    },
+    "field_work_dates": {
+      "type": "array",
+      "items": { "type": "string", "format": "date" },
+      "description": "ISO dates of field work visits (e.g. ['2025-10-01', '2025-10-06'])"
+    },
+    "field_work_dates_text": {
+      "type": "string",
+      "description": "Human-readable field work dates in Catalan (e.g. '1 i 6 d'octubre de 2025')"
+    },
+    "site_description": {
+      "type": "string",
+      "description": "Description of the parcel from field visit (shape, levelling, vegetation)"
+    },
+    "access_description": {
+      "type": "string",
+      "description": "How to access the site (e.g. 'des del Carrer existent al sud')"
+    },
+    "cota_referencia": {
+      "type": "string",
+      "description": "Reference elevation. Can be absolute ICGC MDT (e.g. '+569.50') or relative to street level (e.g. '-4.0'). If empty, auto-filled from ICGC MDT."
+    },
+    "foundation_depth_m": {
+      "type": "number",
+      "description": "Foundation depth in meters. Typically 0.3m for residential (topsoil removal). Critical for Terzaghi Qa calculation",
+      "minimum": 0.1,
+      "maximum": 5.0,
+      "default": 0.3
+    },
+    "spt_data": {
+      "type": ["object", "null"],
+      "description": "SPT test data if available",
+      "properties": {
+        "test_id": { "type": "string" },
+        "location": { "type": "string" },
+        "depth_range": { "type": "string" },
+        "n30": { "type": "integer" },
+        "lithology": { "type": "string" }
+      }
+    },
+    "lab_tests": {
+      "type": "array",
+      "description": "Laboratory tests performed",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "sample_id": { "type": "string" },
+          "location": { "type": "string" },
+          "depth": { "type": "string" }
+        }
+      }
+    },
+    "sulfate_mg_kg": {
+      "type": ["number", "null"],
+      "description": "Sulfate content in mg/kg from lab analysis (UNE 83963:2008)"
+    },
+    "icgc_unit_code": {
+      "type": ["string", "null"],
+      "description": "Override ICGC geological unit code from 1:25k map (e.g. 'ECbc', 'Tm2'). If set, bypasses WMS 1:50k auto-query"
+    },
+    "icgc_unit_description": {
+      "type": ["string", "null"],
+      "description": "Description of the ICGC geological unit (e.g. 'Bretxes calcàries amb intercalacions de lutites')"
+    },
+    "icgc_unit_epoch": {
+      "type": ["string", "null"],
+      "description": "Geological epoch of the ICGC unit (e.g. 'Eocè', 'Triàsic')"
+    },
+    "geomech_params": {
+      "type": ["object", "null"],
+      "description": "Manual override of geotechnical parameters. If set, bypasses CTE DB SE-C auto-calculation. Priority: manual > rock detection CTE > CTE correlations > Peck/Hanson",
+      "properties": {
+        "gamma": { "type": "number", "description": "Density in g/cm³ (e.g. 2.20)" },
+        "cohesion": { "type": "number", "description": "Cohesion in kg/cm² (e.g. 1.0)" },
+        "phi": { "type": "number", "description": "Friction angle in degrees (e.g. 35)" },
+        "E": { "type": "number", "description": "Deformation modulus in kg/cm² (e.g. 500)" },
+        "Nb": { "type": "string", "description": "Nb value for table display (e.g. '17-R')" },
+        "N": { "type": "string", "description": "N value for table display (e.g. 'R')" }
+      }
+    }
+  },
+  "required": [
+    "architect_name",
+    "building_type",
+    "num_floors",
+    "street_address",
+    "adjacent_north",
+    "adjacent_south",
+    "adjacent_east",
+    "adjacent_west"
+  ]
+}
