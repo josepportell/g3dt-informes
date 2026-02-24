@@ -163,4 +163,30 @@ Prefills es carreguen de `user_data.json` anterior si existeixen.
 | 6 | §4.4/§4.5 no generades | SIGNIFICATIU | RESOLT |
 | 7 | CTE C-0 vs C-1 | SIGNIFICATIU | RESOLT |
 | 8 | Dades client buides | MENOR | RESOLT (integrat al wizard) |
-| 9 | SPT i sulfats | MENOR | Pendent |
+| 9 | SPT i sulfats | MENOR | RESOLT |
+| 10 | Nb/N columnes Taula 10 | SIGNIFICATIU | RESOLT |
+| 11 | Nb/N des de DPSH data | SIGNIFICATIU | RESOLT (integrat Fix 10) |
+| 12 | ICGC unit a §4.1 conclusions | SIGNIFICATIU | RESOLT |
+
+## Resum d'estat actual (run005)
+
+**Informe generat:** Castellar (3001621) — generació neta sense errors ni warnings.
+
+**Taula 10 amb Nb/N:**
+| Camp | Generat (auto) | Referència G3DT | Nota |
+|------|----------------|-----------------|------|
+| Nb | 7-R | 17-R | Auto inclou capa superficial; override manual corregeix |
+| N | 38 | R | Override manual necessari per roca |
+| γ | 2.17 | 2.20 | Override manual (geomech_params.gamma) |
+| c | 0.00 | 1.0 | Override manual (geomech_params.cohesion) |
+| φ | 38° | 35° | Override manual (geomech_params.phi) |
+| E | 729 | >500 | Override manual (geomech_params.E) |
+
+**Conclusió:** Tots els gaps restants són **dades** (user_data.json), no codi. Executar el wizard amb dades correctes resol la discrepància.
+
+**Gaps de dades pendents (per projecte):**
+- `architect_name`, `building_type`, `num_floors`, `superficie_construida_m2`
+- `geomech_params` (override per roca)
+- `icgc_unit_code/description/epoch` (override 25k)
+- `sulfate_mg_kg` (del lab PDF)
+- `cota_referencia` (relativa vs absoluta)
