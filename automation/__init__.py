@@ -70,6 +70,8 @@ from .report_generator import (
     GenerationResult,
 )
 
+from .folder_utils import parse_folder_name
+
 __all__ = [
     'DPSHExtractor',
     'DPSHData',
@@ -104,6 +106,7 @@ __all__ = [
     'extract_lab_results',
     'ReportGenerator',
     'GenerationResult',
+    'parse_folder_name',
 ]
 
 __version__ = '0.5.0'

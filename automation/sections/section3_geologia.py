@@ -502,51 +502,33 @@ class Section3Generator:
         with regional templates for tectonic/historical context.
 
         Flow:
-        1. Query ICGC for geological unit at project coordinates
+        1. Get geological unit (manual override or ICGC WMS query)
         2. Determine geological region from unit/municipality
         3. Load regional template paragraphs (1-5)
-        4. Generate paragraph 6 from ICGC unit data
+        4. Generate paragraph 6 from unit data
         5. Combine into complete section text
 
         Returns:
             Complete regional geology text, or placeholder if data unavailable
         """
-        # Check if we have coordinates
-        if not self.data.utm_x or not self.data.utm_y:
-            logger.warning("No UTM coordinates available for ICGC query")
-            return self._generate_marc_geologic_fallback(
-                "No es disposa de coordenades UTM per consultar l'ICGC."
-            )
+        # Get unit via cached method (checks manual override first)
+        unit = self._get_icgc_unit_cached()
 
-        # Query ICGC for geological unit
-        try:
-            unit = get_geological_unit(
-                utm_x=self.data.utm_x,
-                utm_y=self.data.utm_y,
-                use_cache=True,
-            )
-            logger.info(f"ICGC unit: {unit.code} - {unit.description}")
-        except ICGCCoordinateError as e:
-            logger.error(f"Invalid coordinates: {e}")
-            return self._generate_marc_geologic_fallback(
-                "Les coordenades UTM estan fora dels límits de Catalunya."
-            )
-        except ICGCConnectionError as e:
-            logger.error(f"ICGC connection error: {e}")
-            return self._generate_marc_geologic_fallback(
-                "No s'ha pogut connectar amb el servei ICGC."
-            )
-        except ICGCNoDataError as e:
-            logger.warning(f"No ICGC data for location: {e}")
-            return self._generate_marc_geologic_fallback(
-                "No s'ha trobat informació geològica per a aquesta ubicació."
-            )
-        except ICGCError as e:
-            logger.error(f"ICGC error: {e}")
-            return self._generate_marc_geologic_fallback(str(e))
+        if not unit:
+            if not self.data.utm_x or not self.data.utm_y:
+                logger.warning("No UTM coordinates and no manual ICGC override")
+                return self._generate_marc_geologic_fallback(
+                    "No es disposa de coordenades UTM per consultar l'ICGC."
+                )
+            else:
+                return self._generate_marc_geologic_fallback(
+                    "No s'ha pogut obtenir informació geològica de l'ICGC."
+                )
+
+        logger.info(f"ICGC unit: {unit.code} - {unit.description}")
 
         # Determine geological region
-        region = determine_region(unit, self.data.municipality)
+        region = self._get_region_cached()
         logger.info(f"Determined geological region: {region}")
 
         # Get regional template paragraphs
@@ -699,10 +681,26 @@ class Section3Generator:
         return 'variable', 'variable', 'de compacitat variable'
 
     def _get_icgc_unit_cached(self) -> GeologicalUnit | None:
-        """Get ICGC unit, caching the result for reuse."""
+        """Get ICGC unit, caching the result for reuse.
+
+        Priority: manual override (user_data) > WMS 1:50k query.
+        """
         if not hasattr(self, '_cached_icgc_unit'):
             self._cached_icgc_unit = None
-            if self.data.utm_x and self.data.utm_y:
+            # Check for manual override (e.g., from 1:25k map lookup)
+            if self.data.icgc_unit_code:
+                self._cached_icgc_unit = GeologicalUnit(
+                    code=self.data.icgc_unit_code,
+                    description=self.data.icgc_unit_description or '',
+                    era='',
+                    period='',
+                    epoch=self.data.icgc_unit_epoch or '',
+                    raw_response='manual_override',
+                )
+                logger.info(
+                    f"Using manual ICGC unit override: {self.data.icgc_unit_code}"
+                )
+            elif self.data.utm_x and self.data.utm_y:
                 try:
                     self._cached_icgc_unit = get_geological_unit(
                         utm_x=self.data.utm_x,

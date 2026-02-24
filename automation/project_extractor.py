@@ -256,29 +256,74 @@ class ProjectExtractor:
 
         # Extract expedient and municipality from folder name
         # Supports both "4001612 BELL-LLOC" and "4001612-bell-lloc" formats
-        folder_name = self.folder_path.name
+        from .folder_utils import parse_folder_name
+        self.expedient, self.municipality = parse_folder_name(self.folder_path.name)
 
-        # Try space-separated first (original format)
-        if ' ' in folder_name:
-            parts = folder_name.split(maxsplit=1)
-            self.expedient = parts[0]
-            self.municipality = parts[1].replace('-', ' ').title() if len(parts) > 1 else ""
-        # Try hyphen after expedient number
-        elif '-' in folder_name:
-            # Find where the number ends
-            match = re.match(r'^(\d+)[_-](.+)$', folder_name)
-            if match:
-                self.expedient = match.group(1)
-                self.municipality = match.group(2).replace('-', ' ').title()
-            else:
-                self.expedient = folder_name
-                self.municipality = ""
-        else:
-            self.expedient = folder_name
-            self.municipality = ""
+    def _find_files_from_mapping(self) -> FileInventory | None:
+        """Try to build FileInventory from file_mapping.json (single source of truth).
+
+        Returns None if file_mapping.json doesn't exist or is invalid.
+        """
+        from .file_scanner import FileScanner
+
+        scanner = FileScanner(self.folder_path)
+        mapping = scanner.load()
+        if mapping is None:
+            return None
+
+        inv = FileInventory()
+        roles = mapping.roles
+
+        # dpsh_excel
+        if 'dpsh_excel' in roles:
+            inv.has_dpsh_excel = True
+            inv.dpsh_excel_path = str(self.folder_path / roles['dpsh_excel'].path)
+
+        # sondeig_field_sheet
+        if 'sondeig_field_sheet' in roles:
+            inv.has_sondeig = True
+            inv.sondeig_path = str(self.folder_path / roles['sondeig_field_sheet'].path)
+
+        # dpsh_field_sheet (PDF)
+        if 'dpsh_field_sheet' in roles:
+            inv.has_dpsh_pdf = True
+
+        # sondeig_field_sheet (also flags the PDF)
+        if 'sondeig_field_sheet' in roles:
+            inv.has_sondeig_pdf = True
+
+        # lab_results_pdf
+        if 'lab_results_pdf' in roles:
+            inv.has_lab_results = True
+            inv.lab_results_path = str(self.folder_path / roles['lab_results_pdf'].path)
+
+        # lab_order
+        if 'lab_order' in roles:
+            inv.has_lab_request = True
+            inv.lab_request_path = str(self.folder_path / roles['lab_order'].path)
+
+        # photos_dir
+        if 'photos_dir' in roles:
+            inv.has_photos = True
+            photo_dir = self.folder_path / roles['photos_dir'].path
+            if photo_dir.exists():
+                for subdir in ['DPSH', 'SONDEIG', '']:
+                    d = photo_dir / subdir if subdir else photo_dir
+                    if d.exists():
+                        for f in d.iterdir():
+                            if f.suffix.lower() in ['.jpg', '.jpeg', '.png']:
+                                inv.photo_paths.append(str(f))
+
+        # reference_report (cover check — look for PORTADA doc)
+        for f in self.folder_path.iterdir():
+            if 'portada' in f.name.lower():
+                inv.has_cover = True
+                break
+
+        return inv
 
     def _find_files(self) -> FileInventory:
-        """Scan folder structure and inventory available files."""
+        """Scan folder structure and inventory available files (legacy fallback)."""
         inv = FileInventory()
 
         # Check ANNEXES folder
@@ -374,11 +419,15 @@ class ProjectExtractor:
         """
         Extract all available data from the project folder.
 
+        Tries file_mapping.json first (single source of truth),
+        falls back to legacy folder scanning if not available.
+
         Returns:
             ProjectData object with all extracted information
         """
-        # Scan for files first
-        inventory = self._find_files()
+        inventory = self._find_files_from_mapping()
+        if inventory is None:
+            inventory = self._find_files()
 
         # Extract data from various sources
         client = self._extract_client()

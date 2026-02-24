@@ -20,21 +20,117 @@ Genera un informe geotècnic complet: extracció de dades + wizard interactiu + 
 
 Quan l'usuari invoca aquest skill:
 
+### Fase 0: Descobriment de fitxers
+
+Escaneja la carpeta del projecte, classifica cada fitxer pel seu rol, i genera un `file_mapping.json` que tot el pipeline llegeix.
+
+**1. Comprovar si ja existeix file_mapping.json:**
+
+```bash
+cd /home/josep/projects/claudecode-job/clients/g3dt && .venv/bin/python -c "
+from automation.file_scanner import FileScanner
+s = FileScanner('{project_path}')
+existing = s.load()
+if existing:
+    print('file_mapping.json existent trobat')
+    print(s.summary(existing))
+else:
+    print('Cap file_mapping.json trobat')
+"
+```
+
+**2. Si ja existeix:** Re-escanejar per detectar canvis i mostrar diferències. Si no hi ha canvis, mostrar "Mapeig actualitzat, sense canvis" i continuar a Fase 1.
+
+**3. Si NO existeix o hi ha canvis:** Executar escaneig complet:
+
+```bash
+cd /home/josep/projects/claudecode-job/clients/g3dt && .venv/bin/python -c "
+from automation.file_scanner import FileScanner
+s = FileScanner('{project_path}')
+m = s.scan()
+print(s.summary(m))
+"
+```
+
+**4. Si `needs_confirmation` és True** (hi ha fitxers sense assignar O rols obligatoris buits):
+
+   **4a. Resolució semàntica (Claude llegeix fitxers no assignats):**
+   - Per a cada fitxer `unassigned` que sigui un PDF, llegeix visualment la primera pàgina amb el Read tool
+   - Determina el rol pel contingut visual:
+     - Gràfiques de penetració amb valors N20 → `dpsh_field_sheet`
+     - Columnes litològiques / capes de sòl → `sondeig_field_sheet`
+     - Plànol amb caixetí d'arquitecte → `architect_plan`
+     - Mapa topogràfic amb ubicació → `situation_plan`
+     - Taules de resultats de laboratori → `lab_results_pdf`
+     - Secció transversal del terreny → `correlation_section`
+   - Si es detecta un rol, actualitza el mapping:
+   ```bash
+   cd /home/josep/projects/claudecode-job/clients/g3dt && .venv/bin/python -c "
+   from automation.file_scanner import FileScanner, FileRole
+   s = FileScanner('{project_path}')
+   m = s.load() or s.scan()
+   m.roles['NOM_DEL_ROL'] = FileRole(path='FITXER.pdf', confidence='high', detection='semantic_claude')
+   if 'FITXER.pdf' in m.unassigned:
+       m.unassigned.remove('FITXER.pdf')
+   s.save(m)
+   "
+   ```
+
+   **4b. Si múltiples candidats pel mateix rol** → preguntar a l'usuari amb AskUserQuestion
+
+   **4c. Mostrar mapeig final** → confirmar amb AskUserQuestion ("Confirmeu el mapeig de fitxers?")
+
+**5. Guardar el mapeig:**
+
+```bash
+cd /home/josep/projects/claudecode-job/clients/g3dt && .venv/bin/python -c "
+from automation.file_scanner import FileScanner
+s = FileScanner('{project_path}')
+m = s.scan()
+path = s.save(m)
+print(f'Guardat: {path}')
+"
+```
+
+**Nota:** Si l'usuari confirma el mapeig, actualitzar `confirmed_by_user: true` al JSON:
+
+```bash
+cd /home/josep/projects/claudecode-job/clients/g3dt && .venv/bin/python -c "
+import json
+from pathlib import Path
+p = Path('{project_path}') / 'file_mapping.json'
+data = json.loads(p.read_text())
+data['_metadata']['confirmed_by_user'] = True
+p.write_text(json.dumps(data, indent=2, ensure_ascii=False))
+print('Confirmat per usuari')
+"
+```
+
+Mostrar resum:
+
+```
+============================================================
+Fase 0: Descobriment de fitxers
+============================================================
+  [output del summary()]
+============================================================
+```
+
 ### Fase 1: Extracció de dades (automàtica)
 
 Busca els fitxers font al directori `{project_path}` i executa les extraccions corresponents. Cada extracció regenera el JSON per garantir dades fresques.
 
-**1. Plànol** — Busca un fitxer `A.*.pdf` al directori. Si en troba un, usa'l. Si n'hi ha més d'un, usa `A.01.pdf` per defecte:
+**1. Plànol** — Llegeix `file_mapping.json` → `architect_plan`. Fallback: busca `A.*.pdf` al directori. Si n'hi ha més d'un, usa `A.01.pdf` per defecte:
    - Si existeix: invoca el skill `/g3dt-extreure-planol {project_path}/{fitxer_trobat}`
    - Genera: `{project_path}/validation/planol_extracted.json`
    - Si no existeix: saltar (mostrar avís)
 
-**2. Sondeig** — Busca `{project_path}/SONDEIG.pdf` (o `SONDEIG*.pdf`):
+**2. Sondeig** — Llegeix `file_mapping.json` → `sondeig_field_sheet`. Fallback: busca `SONDEIG.pdf` (o `SONDEIG*.pdf`):
    - Si existeix: invoca el skill `/g3dt-validar-sondeig {project_path}/SONDEIG.pdf`
    - Genera: `{project_path}/validation/sondeig_extracted.json`
    - Si no existeix: saltar (mostrar avís)
 
-**3. DPSH (Penetròmetres)** — Busca `{project_path}/PENETROS.pdf` (o `PENETROS*.pdf`):
+**3. DPSH (Penetròmetres)** — Llegeix `file_mapping.json` → `dpsh_field_sheet`. Fallback: busca `PENETROS.pdf` (o `PENETROS*.pdf`):
    - Si existeix: invoca el skill `/g3dt-validar-penetros {project_path}/PENETROS.pdf`
    - Genera: `{project_path}/validation/dpsh_extracted.json`
    - Si no existeix: saltar (mostrar avís)

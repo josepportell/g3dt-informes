@@ -42,6 +42,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 import time
+import unicodedata
 
 logger = logging.getLogger(__name__)
 
@@ -547,6 +548,11 @@ REGION_MAPPING = {
 }
 
 
+def _strip_accents(s: str) -> str:
+    """Remove accents/diacritics for fuzzy comparison (e.g., 'Vallès' → 'Valles')."""
+    return unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode()
+
+
 def determine_region(
     unit: GeologicalUnit,
     municipality: str | None = None
@@ -563,11 +569,16 @@ def determine_region(
     """
     # First try municipality match (most accurate)
     if municipality:
-        municipality_lower = municipality.lower()
+        municipality_norm = _strip_accents(municipality).lower()
         for region, criteria in REGION_MAPPING.items():
             for muni in criteria.get('municipalities', []):
-                if muni.lower() in municipality_lower or municipality_lower in muni.lower():
+                muni_norm = _strip_accents(muni).lower()
+                if muni_norm in municipality_norm or municipality_norm in muni_norm:
                     return region
+
+    # If no unit (e.g. missing UTM coords), default after municipality check
+    if unit is None:
+        return 'depressio_ebre'
 
     # Then try unit code match
     for region, criteria in REGION_MAPPING.items():

@@ -29,7 +29,9 @@ logger = logging.getLogger(__name__)
 IMAGE_WIDTH_LOCATION = 150  # Orthophoto / location map
 IMAGE_WIDTH_GEOLOGICAL = 150  # Geological map
 IMAGE_WIDTH_PHOTO = 120  # Field photos (DPSH, sondeig, site)
-IMAGE_WIDTH_SPT_CULLERA = 100  # SPT spoon diagram (smaller, technical)
+IMAGE_WIDTH_SPT_CULLERA = 150  # SPT spoon diagram (full-width, same as other figures)
+IMAGE_WIDTH_SIDE_BY_SIDE = 70   # Each image in 2-column layout (mm)
+IMAGE_WIDTH_MAIN_PLAN = 150     # Big architect plan crop (full-width)
 
 PLACEHOLDER_TEXT = "[Imatge pendent]"
 
@@ -195,6 +197,18 @@ class ImageManager:
                 return matches[0]
         return None
 
+    def _load_file_mapping(self) -> dict | None:
+        """Load file roles from file_mapping.json if it exists."""
+        mapping_path = self.project_path / 'file_mapping.json'
+        if not mapping_path.exists():
+            return None
+        try:
+            import json
+            return json.loads(mapping_path.read_text()).get('roles', {})
+        except Exception as e:
+            logger.warning(f"Could not read file_mapping.json: {e}")
+            return None
+
     def _render_pdf_to_image(self, pdf_path: Path, output_path: Path, dpi: int = 150) -> Path | None:
         """Render first page of PDF to JPEG using pymupdf."""
         try:
@@ -209,6 +223,50 @@ class ImageManager:
         except Exception as e:
             logger.warning(f"Failed to render PDF {pdf_path.name}: {e}")
             return None
+
+    def _render_pdf_region(self, pdf_path: Path, output_path: Path, clip_rect: tuple, dpi: int = 200) -> Path | None:
+        """Render a clipped region of the first page of a PDF to JPEG."""
+        try:
+            import fitz
+            doc = fitz.open(str(pdf_path))
+            page = doc[0]
+            pix = page.get_pixmap(dpi=dpi, clip=fitz.Rect(*clip_rect))
+            pix.save(str(output_path))
+            doc.close()
+            logger.info(f"Rendered PDF region to image: {pdf_path.name} clip={clip_rect} -> {output_path.name}")
+            return output_path
+        except Exception as e:
+            logger.warning(f"Failed to render PDF region {pdf_path.name}: {e}")
+            return None
+
+    def _find_architect_plan_with_points(self) -> tuple[Path | None, dict | None]:
+        """
+        Find 'A.01 amb punts.pdf' with clip coordinates.
+
+        Priority 1: file_mapping.json role architect_plan_with_points with clip_regions
+        Priority 2: Glob for A.01*punts*.pdf (no predefined clips)
+
+        Returns (pdf_path, clip_regions_dict) or (None, None).
+        """
+        roles = self._load_file_mapping()
+
+        # Priority 1: file_mapping.json
+        if roles and 'architect_plan_with_points' in roles:
+            role = roles['architect_plan_with_points']
+            candidate = self.project_path / role['path']
+            if candidate.exists():
+                clip_regions = role.get('clip_regions')
+                logger.info(f"Found architect plan with points: {candidate.name} (clip_regions={'yes' if clip_regions else 'no'})")
+                return candidate, clip_regions
+
+        # Priority 2: Glob fallback
+        for pattern in ['A.01*punts*.pdf', 'A.*punts*.pdf']:
+            matches = sorted(self.project_path.glob(pattern))
+            if matches:
+                logger.info(f"Found architect plan with points via glob: {matches[0].name} (no clip_regions)")
+                return matches[0], None
+
+        return None, None
 
     def _download_icgc_images(self) -> dict[str, Path]:
         """
@@ -319,16 +377,67 @@ class ImageManager:
         else:
             context['photo_materials_image'] = PLACEHOLDER_TEXT
 
-        # 3. ICGC images (orthophoto + geological map)
-        icgc_images = self._download_icgc_images()
+        # 3. Architect plan crops (replaces orthophoto for location figures)
+        self._cache_dir.mkdir(parents=True, exist_ok=True)
+        roles = self._load_file_mapping()
 
-        if 'orthophoto' in icgc_images:
-            context['fig_location_image'] = InlineImage(
-                self.tpl, str(icgc_images['orthophoto']), width=Mm(IMAGE_WIDTH_LOCATION)
-            )
+        plan_pdf, clip_regions = self._find_architect_plan_with_points()
+        has_plan_crops = False
+
+        if plan_pdf and clip_regions:
+            # Extract 3 crops from architect plan with points
+            for region_name, var_name, width in [
+                ('cadastre', 'fig_cadastre_image', IMAGE_WIDTH_SIDE_BY_SIDE),
+                ('aerea', 'fig_aerea_image', IMAGE_WIDTH_SIDE_BY_SIDE),
+                ('main_plan', 'fig_main_plan_image', IMAGE_WIDTH_MAIN_PLAN),
+            ]:
+                if region_name in clip_regions:
+                    clip_rect = clip_regions[region_name]
+                    if not (isinstance(clip_rect, (list, tuple)) and len(clip_rect) == 4):
+                        logger.warning(f"Invalid clip_rect for {region_name}: {clip_rect}")
+                        continue
+                    cached = self._cache_dir / f"{region_name}_{plan_pdf.stem}.jpg"
+                    if not cached.exists():
+                        self._render_pdf_region(plan_pdf, cached, tuple(clip_rect))
+                    if cached.exists():
+                        context[var_name] = InlineImage(
+                            self.tpl, str(cached), width=Mm(width)
+                        )
+                        has_plan_crops = True
+            context.setdefault('fig_cadastre_image', PLACEHOLDER_TEXT)
+            context.setdefault('fig_aerea_image', PLACEHOLDER_TEXT)
+            context.setdefault('fig_main_plan_image', PLACEHOLDER_TEXT)
         else:
-            context['fig_location_image'] = PLACEHOLDER_TEXT
+            # Fallback: no "amb punts" file
+            # Use full-page A.01.pdf render for main plan
+            planol_pdf = None
+            if roles and 'architect_plan' in roles:
+                candidate = self.project_path / roles['architect_plan']['path']
+                if candidate.exists():
+                    planol_pdf = candidate
+            if planol_pdf is None:
+                planol_pdf = self._find_project_pdf(['A.01.pdf', 'A.*.pdf'])
+            if planol_pdf:
+                cached = self._cache_dir / f"planol_{planol_pdf.stem}.jpg"
+                if not cached.exists():
+                    self._render_pdf_to_image(planol_pdf, cached)
+                if cached.exists():
+                    context['fig_main_plan_image'] = InlineImage(
+                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
+                    )
+            context.setdefault('fig_main_plan_image', PLACEHOLDER_TEXT)
+            # No cadastre/aerea crops available — use placeholders
+            context['fig_cadastre_image'] = PLACEHOLDER_TEXT
+            context['fig_aerea_image'] = PLACEHOLDER_TEXT
 
+        context['has_plan_crops'] = has_plan_crops
+
+        # Backward-compat aliases
+        context['fig_location_image'] = context.get('fig_cadastre_image', PLACEHOLDER_TEXT)
+        context['fig_building_image'] = context.get('fig_main_plan_image', PLACEHOLDER_TEXT)
+
+        # ICGC: only geological map (orthophoto removed — AEREA crop replaces it)
+        icgc_images = self._download_icgc_images()
         if 'geological_map' in icgc_images:
             context['fig_geological_image'] = InlineImage(
                 self.tpl, str(icgc_images['geological_map']), width=Mm(IMAGE_WIDTH_GEOLOGICAL)
@@ -336,23 +445,14 @@ class ImageManager:
         else:
             context['fig_geological_image'] = PLACEHOLDER_TEXT
 
-        # 4. PDF-rendered images (building plan + correlation cross-section)
-        self._cache_dir.mkdir(parents=True, exist_ok=True)
-
-        # Building plan from A.01.pdf
-        planol_pdf = self._find_project_pdf(['A.01.pdf', 'A.*.pdf'])
-        if planol_pdf:
-            cached = self._cache_dir / f"planol_{planol_pdf.stem}.jpg"
-            if not cached.exists():
-                self._render_pdf_to_image(planol_pdf, cached)
-            if cached.exists():
-                context['fig_building_image'] = InlineImage(
-                    self.tpl, str(cached), width=Mm(IMAGE_WIDTH_LOCATION)
-                )
-        context.setdefault('fig_building_image', PLACEHOLDER_TEXT)
-
-        # Correlation cross-section from tall.pdf
-        tall_pdf = self._find_project_pdf(['tall.pdf', 'tall*.pdf'])
+        # Correlation section: file_mapping -> fallback glob
+        tall_pdf = None
+        if roles and 'correlation_section' in roles:
+            candidate = self.project_path / roles['correlation_section']['path']
+            if candidate.exists():
+                tall_pdf = candidate
+        if tall_pdf is None:
+            tall_pdf = self._find_project_pdf(['tall.pdf', 'tall*.pdf'])
         if tall_pdf:
             cached = self._cache_dir / f"tall_{tall_pdf.stem}.jpg"
             if not cached.exists():

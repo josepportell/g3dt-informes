@@ -68,11 +68,26 @@ def _find_lab_pdf(project_path: Path) -> Path | None:
     Find lab results PDF in the project folder.
 
     Searches in order:
+    0. file_mapping.json → lab_results_pdf role
     1. PDF/ANNEXES/LAB*.pdf
     2. ANNEXES/LAB*.pdf
     3. PDF/ANNEXES/*laboratori*.pdf
     4. Any PDF with 'lab' in name
     """
+    # Check file_mapping.json first (single source of truth)
+    mapping_path = project_path / 'file_mapping.json'
+    if mapping_path.exists():
+        try:
+            data = json.loads(mapping_path.read_text(encoding='utf-8'))
+            lab_role = data.get('roles', {}).get('lab_results_pdf')
+            if lab_role:
+                candidate = project_path / lab_role['path']
+                if candidate.exists():
+                    return candidate
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+
+    # Fallback to glob patterns
     search_patterns = [
         'PDF/ANNEXES/LAB*.pdf',
         'PDF/ANNEXES/lab*.pdf',
