@@ -141,6 +141,11 @@ class ReportData:
     # Resultat Terzaghi (de terzaghi_calculator)
     terzaghi_result: BearingCapacityResult | None = None
 
+    # Override ICGC unit (from 1:25k manual lookup)
+    icgc_unit_code: str = ""
+    icgc_unit_description: str = ""
+    icgc_unit_epoch: str = ""
+
     # Seccions condicionals
     include_expansivity: bool = False
     include_earth_pressure: bool = False
@@ -178,6 +183,13 @@ class ReportData:
 class ReportDataValidationError(ValueError):
     """Error raised when input data to build_report_data is invalid."""
     pass
+
+
+def _expedient_from_folder(folder_name: str) -> str:
+    """Extract just the expedient code from a project folder name."""
+    from .folder_utils import parse_folder_name
+    expedient, _ = parse_folder_name(folder_name)
+    return expedient
 
 
 def load_validated_dpsh(project_path: Path) -> DPSHData | None:
@@ -232,7 +244,7 @@ def load_validated_dpsh(project_path: Path) -> DPSHData | None:
             ))
 
         return DPSHData(
-            expedient=approved_path.parent.parent.name.split()[0],
+            expedient=_expedient_from_folder(approved_path.parent.parent.name),
             tests=tests,
             source_file=f"validation/{approved_path.name}",
         )
@@ -242,12 +254,38 @@ def load_validated_dpsh(project_path: Path) -> DPSHData | None:
         return None
 
 
+def _detect_spt(user_data: dict, project_path: str = '') -> bool:
+    """Auto-detect SPT availability from user_data or sondeig extraction."""
+    # 1. Explicit user_data flag
+    if user_data.get('has_spt') is True:
+        return True
+    # 2. Manual SPT data in user_data
+    if user_data.get('spt_data'):
+        return True
+    # 3. Sondeig extraction with SPT results
+    if project_path:
+        import json
+        from pathlib import Path
+        sondeig_path = Path(project_path) / 'validation' / 'sondeig_extracted.json'
+        if sondeig_path.exists():
+            try:
+                with open(sondeig_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                for test in data.get('sondeig_tests', []):
+                    if test.get('spt_results'):
+                        return True
+            except (json.JSONDecodeError, KeyError):
+                pass
+    return False
+
+
 def build_report_data(
     project_data: dict,
     user_data: dict,
     dpsh_data: DPSHData | None = None,
     terzaghi_result: BearingCapacityResult | None = None,
     report_date: date | None = None,
+    project_path: str = '',
 ) -> ReportData:
     """
     Construeix ReportData a partir de totes les fonts de dades.
@@ -312,15 +350,37 @@ def build_report_data(
         'west': user_data.get('adjacent_west', ''),
     }
 
-    # Calcula parametres geotecnics si tenim DPSH
+    # Calcula parametres geotecnics (manual override > CTE > Peck/Hanson)
     geotechnical_params = None
+    geomech = user_data.get('geomech_params', {})
     if dpsh_data and dpsh_data.tests:
         avg_n20 = dpsh_data.overall_average_n20
+        try:
+            from .cte_geomech import (
+                nspt_to_phi, nspt_to_E_kg_cm2, nspt_to_gamma_g_cm3,
+                is_rock, rock_params_default,
+            )
+            if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
+                gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20)
+                phi = geomech.get('phi') or nspt_to_phi(avg_n20)
+                E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
+                cohesion = geomech.get('cohesion', 0.0)
+            elif is_rock(avg_n20):
+                rock = rock_params_default()
+                gamma, phi, E, cohesion = rock['gamma'], rock['phi'], rock['E'], rock['cohesion']
+            else:
+                gamma = nspt_to_gamma_g_cm3(avg_n20)
+                phi = nspt_to_phi(avg_n20)
+                E = nspt_to_E_kg_cm2(avg_n20)
+                cohesion = 0.0
+        except ImportError:
+            # Fallback to old Peck/Hanson if cte_geomech not available
+            gamma = geomech.get('gamma') or GeotechCorrelations.n_to_density(avg_n20)
+            phi = geomech.get('phi') or GeotechCorrelations.n_to_friction_angle(avg_n20)
+            E = geomech.get('E') or GeotechCorrelations.n_to_deformation_modulus(avg_n20)
+            cohesion = geomech.get('cohesion', 0.0)
         geotechnical_params = GeotechnicalParams(
-            gamma=GeotechCorrelations.n_to_density(avg_n20),
-            cohesion=0.0,  # Sols granulars per defecte
-            phi=GeotechCorrelations.n_to_friction_angle(avg_n20),
-            E=GeotechCorrelations.n_to_deformation_modulus(avg_n20),
+            gamma=gamma, cohesion=cohesion, phi=phi, E=E,
         )
 
     # Genera nivells de sol basics
@@ -387,7 +447,7 @@ def build_report_data(
         dpsh=dpsh_data,
         sondeig_tests=user_data.get('sondeig_tests'),
         has_sondeig=user_data.get('has_sondeig', files.get('has_sondeig', False)),
-        has_spt=False,  # No implementat encara
+        has_spt=_detect_spt(user_data, project_path),
         # Laboratori
         sulfate_mg_kg=user_data.get('sulfate_mg_kg'),
         aggressivity_class="",
@@ -397,6 +457,10 @@ def build_report_data(
         soil_levels=soil_levels,
         geotechnical_params=geotechnical_params,
         terzaghi_result=terzaghi_result,
+        # Override ICGC unit (manual 1:25k lookup)
+        icgc_unit_code=user_data.get('icgc_unit_code', ''),
+        icgc_unit_description=user_data.get('icgc_unit_description', ''),
+        icgc_unit_epoch=user_data.get('icgc_unit_epoch', ''),
         # Seccions condicionals
         include_expansivity=False,  # Determinat per tipus de sol
         include_earth_pressure=include_earth_pressure,

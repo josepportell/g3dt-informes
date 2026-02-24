@@ -234,6 +234,7 @@ class ReportGenerator:
                 project_data=self.project_data,
                 user_data=self.user_data,
                 terzaghi_result=terzaghi_result,
+                project_path=str(self.project_path),
             )
             return self.report_data
 
