@@ -1,0 +1,79 @@
+{
+  "architect_name": "",
+  "architect_company": "",
+  "building_type": "habitatge unifamiliar",
+  "site_description": "Solar amb pendent pronunciada (36%), vegetació abundant, edificacions veïnes al nord i est",
+  "access_description": "Des del carrer Arbrells al sud de la parcel·la",
+  "adjacent_north": "Parcel·les sense construir, amb herbes altes i arbres, així com una parcel·la amb planta baixa i una planta pis, paral·lela al carrer Turó Roig",
+  "adjacent_south": "Carrer Arbrells",
+  "adjacent_east": "Parcel·la construïda amb piscina",
+  "adjacent_west": "Parcel·les sense construir amb herbes altes i arbres",
+  "is_anthropized": true,
+  "num_soil_levels": 2,
+  "foundation_depth_m": 0.3,
+  "utm_x": 423182.0,
+  "utm_y": 4609623.0,
+  "_metadata": {
+    "generated_at": "2026-02-24T17:35:00",
+    "wizard_used": true,
+    "updated_at": "2026-02-25",
+    "updated_by": "auto_extract + test defaults"
+  },
+  "utm_points": {
+    "P-1": {
+      "x": 423167.0,
+      "y": 4609608.0,
+      "z": 571.5
+    },
+    "P-2": {
+      "x": 423174.0,
+      "y": 4609616.0,
+      "z": 570.5
+    },
+    "S-1": {
+      "x": 423182.0,
+      "y": 4609623.0,
+      "z": 570.9
+    },
+    "P-4": {
+      "x": 423189.0,
+      "y": 4609627.9,
+      "z": 570.5
+    },
+    "P-3": {
+      "x": 423195.0,
+      "y": 4609636.0,
+      "z": 570.9
+    }
+  },
+  "field_work_dates": [
+    "2025-10-24"
+  ],
+  "field_work_dates_text": "24 d'octubre de 2025",
+  "lab_tests": [
+    {
+      "type": "Contingut en sulfats solubles UNE 103100:95",
+      "sample_id": "",
+      "location": "",
+      "depth": "-1.0 a -1.2",
+      "value": null,
+      "unit": "",
+      "standard": ""
+    }
+  ],
+  "icgc_unit_code": "PEcg",
+  "icgc_unit_description": "Conglomerats heteromètrics",
+  "icgc_unit_epoch": "Eocè",
+  "cota_referencia": "+569.50",
+  "is_sloped": true,
+  "slope_percent": 36.0,
+  "slope_direction": "SE",
+  "num_floors": "PB+1PP",
+  "has_sondeig": true,
+  "has_soterrani": false,
+  "superficie_parcela_m2": 400,
+  "referencia_catastral": "",
+  "municipio": "Castellar del Vallès",
+  "provincia": "Barcelona",
+  "comarca": "Vallès Occidental"
+}

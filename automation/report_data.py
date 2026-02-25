@@ -123,6 +123,8 @@ class ReportData:
     parcel_shape: str = "rectangular"
     is_urban: bool = True
     is_sloped: bool = False
+    slope_percent: float | None = None  # Pendent del terreny (%)
+    slope_direction: str | None = None  # Direcció dominant del pendent
     is_anthropized: bool = False  # Solar antropitzat (urbanitzat/modificat)
 
     # Dades d'assaig (de dpsh_extractor)
@@ -447,6 +449,8 @@ def build_report_data(
         parcel_shape=user_data.get('parcel_shape', 'rectangular'),
         is_urban=user_data.get('is_urban', True),
         is_sloped=user_data.get('is_sloped', False),
+        slope_percent=user_data.get('slope_percent'),
+        slope_direction=user_data.get('slope_direction'),
         is_anthropized=user_data.get('is_anthropized', False),
         # Dades assaig
         dpsh=dpsh_data,
@@ -537,6 +541,8 @@ def to_dict(report_data: ReportData) -> dict[str, Any]:
             'shape': report_data.parcel_shape,
             'is_urban': report_data.is_urban,
             'is_sloped': report_data.is_sloped,
+            'slope_percent': report_data.slope_percent,
+            'slope_direction': report_data.slope_direction,
             'is_anthropized': report_data.is_anthropized,
         },
         'tests': {
@@ -704,6 +710,8 @@ def from_dict(data: dict[str, Any]) -> ReportData:
         parcel_shape=site.get('shape', 'rectangular'),
         is_urban=site.get('is_urban', True),
         is_sloped=site.get('is_sloped', False),
+        slope_percent=site.get('slope_percent'),
+        slope_direction=site.get('slope_direction'),
         is_anthropized=site.get('is_anthropized', False),
         dpsh=dpsh_data,
         has_sondeig=tests.get('has_sondeig', False),

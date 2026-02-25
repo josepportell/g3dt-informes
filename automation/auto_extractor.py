@@ -373,6 +373,12 @@ def _phase3_slope(utm_x: float, utm_y: float, result: AutoExtractionResult) -> N
         result.prefills['is_sloped'] = is_sloped
         result.sources['is_sloped'] = f"ICGC MDT ({slope_pct:.0f}% {direction})"
 
+        # Preserve numeric slope data for slope stability calculation (§4.5)
+        result.prefills['slope_percent'] = round(slope_pct, 1)
+        result.sources['slope_percent'] = "ICGC MDT 2m"
+        result.prefills['slope_direction'] = direction
+        result.sources['slope_direction'] = "ICGC MDT 2m"
+
         status = "pendent" if is_sloped else "pla"
         result.steps_completed.append(
             f"Pendent: {slope_pct:.0f}% {direction} → {status}"

@@ -429,20 +429,124 @@ class Section4Generator:
         """
         Generate slope stability section (4.6) if applicable.
 
-        This is a complex calculation (Hoek & Bray) and may require deferral
-        to manual analysis for non-standard cases.
+        Uses the infinite slope method (Hoek & Bray, 1977) when slope_percent
+        and geotechnical params are available. Falls back to generic text otherwise.
         """
         if not self.data.include_slope_stability:
             return None
 
+        slope_pct = getattr(self.data, 'slope_percent', None)
+        slope_dir = getattr(self.data, 'slope_direction', None)
+        params = self.data.geotechnical_params
+
+        # If we have the data to calculate, use slope_calculator
+        if slope_pct and slope_pct > 0 and params and params.phi > 0:
+            try:
+                from ..slope_calculator import calculate_slope_stability
+
+                result = calculate_slope_stability(
+                    slope_percent=slope_pct,
+                    phi_deg=params.phi,
+                    gamma_g_cm3=params.gamma,
+                    cohesion_kg_cm2=params.cohesion,
+                    water_detected=self.data.water_detected,
+                    slope_direction=slope_dir,
+                )
+
+                return self._format_estabilitat_calculated(result, params)
+            except Exception:
+                pass  # Fall through to generic text
+
+        # Fallback: generic recommendation
         return (
-            "Donada la presència de vessant a la zona del projecte, "
-            "es recomana realitzar un estudi específic d'estabilitat "
-            "de talussos segons el mètode de Hoek & Bray o equivalent. "
-            "S'haurà de considerar l'angle del vessant natural, "
-            "les característiques resistents del terreny i les "
-            "condicions hidrològiques de la zona."
+            "Donada la presencia de vessant a la zona del projecte, "
+            "es recomana realitzar un estudi especific d'estabilitat "
+            "de talussos segons el metode de Hoek & Bray o equivalent. "
+            "S'haura de considerar l'angle del vessant natural, "
+            "les caracteristiques resistents del terreny i les "
+            "condicions hidrologiques de la zona."
         )
+
+    def _format_estabilitat_calculated(self, result, params) -> str:
+        """Format slope stability section with calculated values."""
+        lines = []
+
+        lines.append(
+            "Per a la realitzacio de les recomanacions d'estabilitat de talussos "
+            "s'han tingut en compte les seguents premisses:"
+        )
+        lines.append("")
+
+        # Premises
+        dir_text = f" en direccio {result.slope_direction}" if result.slope_direction else ""
+        lines.append(
+            f"- El solar presenta un pendent del {result.slope_percent:.0f}% "
+            f"({result.slope_angle_deg:.0f} graus){dir_text}."
+        )
+
+        if result.water_detected:
+            lines.append(
+                "- S'ha detectat presencia de nivell freatic durant els treballs de camp."
+            )
+        else:
+            lines.append(
+                "- Talussos sense presencia de nivell freatic."
+            )
+
+        lines.append(
+            f"- Factor de seguretat minim F={result.fs_required} "
+            f"(CTE DB SE-C apartat 7.2.2.1, situacio persistent)."
+        )
+
+        # Determine level description for params reference
+        level_desc = "1r nivell"
+        if self.data.soil_levels:
+            level_desc = f"1r nivell ({self.data.soil_levels[0].description})"
+
+        lines.append(
+            f"- S'han considerat els parametres geomecanics del {level_desc} "
+            f"(phi={params.phi:.0f} graus, gamma={params.gamma:.2f} g/cm3"
+            + (f", c={params.cohesion:.2f} kg/cm2" if params.cohesion > 0 else "")
+            + ")."
+        )
+
+        lines.append("")
+
+        # Method and calculation
+        lines.append(
+            f"El metode de calcul utilitzat es el del talus infinit ({result.method}), "
+            f"aplicable a ruptures superficials paral.leles al vessant."
+        )
+        lines.append("")
+
+        if result.cohesion_kg_cm2 > 0 and result.slope_height_m:
+            lines.append(
+                f"FS = (c + gamma*H*cos^2(beta)*tan(phi)) / (gamma*H*sin(beta)*cos(beta)) "
+                f"= {result.safety_factor:.2f}"
+            )
+        else:
+            lines.append(
+                f"FS = tan(phi) / tan(beta) = "
+                f"tan({result.phi_deg:.0f} graus) / tan({result.slope_angle_deg:.0f} graus) "
+                f"= {result.safety_factor:.2f}"
+            )
+
+        lines.append("")
+
+        # Conclusion
+        if result.compliant:
+            lines.append(
+                f"El factor de seguretat obtingut (FS={result.safety_factor:.2f}) es superior "
+                f"al minim exigit (F={result.fs_required}), complint les premisses del CTE."
+            )
+        else:
+            lines.append(
+                f"El factor de seguretat obtingut (FS={result.safety_factor:.2f}) es inferior "
+                f"al minim exigit (F={result.fs_required}), no complint les premisses del CTE. "
+                f"Es recomana adoptar mesures d'estabilitzacio del talus."
+            )
+
+        return "\n".join(lines)
 
     def generate_all(self) -> Section4Content:
         """
