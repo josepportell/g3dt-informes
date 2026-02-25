@@ -56,17 +56,19 @@ def calculate_slope_stability(
     fs_required: float = 1.5,
 ) -> SlopeStabilityResult:
     """
-    Calculate slope stability using the infinite slope method.
+    Calculate slope stability.
 
-    For granular soils (c ~ 0): FS = tan(phi) / tan(beta)
-    For cohesive soils (c > 0): requires slope_height_m (H)
+    Routes to the appropriate method:
+    - Cohesive soils (c > 0) with known H: Hoek & Bray circular failure
+    - Granular soils (c ~ 0): Infinite slope (tan(phi)/tan(beta))
+    - Cohesive without H: Infinite slope with cohesion (fallback)
 
     Args:
         slope_percent: Slope gradient in % (e.g. 25 means 25%)
         phi_deg: Internal friction angle in degrees
         gamma_g_cm3: Soil density in g/cm3
         cohesion_kg_cm2: Cohesion in kg/cm2 (default 0 for granular)
-        slope_height_m: Slope height in meters (required if c > 0)
+        slope_height_m: Slope height in meters (required for Hoek & Bray)
         water_detected: Whether water level was detected in DPSH tests
         slope_direction: Dominant slope direction (N, NE, E, etc.)
         fs_required: Required safety factor (default 1.5, CTE DB SE-C)
@@ -88,11 +90,42 @@ def calculate_slope_stability(
 
     phi_rad = math.radians(phi_deg)
 
+    # Route: Hoek & Bray circular failure for cohesive materials with known H
     if cohesion_kg_cm2 > 0 and slope_height_m and slope_height_m > 0:
-        # Full formula with cohesion
-        # Convert units: cohesion kg/cm2 -> t/m2 (x10), gamma g/cm3 -> t/m3
-        c_t_m2 = cohesion_kg_cm2 * 10.0  # kg/cm2 -> t/m2
-        gamma_t_m3 = gamma_g_cm3  # g/cm3 = t/m3 numerically
+        try:
+            from .hoek_bray import calculate_hoek_bray
+
+            hb = calculate_hoek_bray(
+                cohesion_kg_cm2=cohesion_kg_cm2,
+                phi_deg=phi_deg,
+                gamma_g_cm3=gamma_g_cm3,
+                slope_height_m=slope_height_m,
+                slope_percent=slope_percent,
+                water_detected=water_detected,
+                slope_direction=slope_direction,
+                fs_required=fs_required,
+            )
+
+            return SlopeStabilityResult(
+                slope_angle_deg=hb.slope_angle_deg,
+                slope_percent=slope_percent,
+                phi_deg=phi_deg,
+                gamma_g_cm3=gamma_g_cm3,
+                cohesion_kg_cm2=cohesion_kg_cm2,
+                slope_height_m=slope_height_m,
+                safety_factor=hb.safety_factor,
+                fs_required=fs_required,
+                compliant=hb.compliant,
+                water_detected=water_detected,
+                slope_direction=slope_direction,
+                method=hb.method,
+            )
+        except Exception:
+            pass  # Fall through to infinite slope fallback
+
+        # Fallback: infinite slope with cohesion
+        c_t_m2 = cohesion_kg_cm2 * 10.0
+        gamma_t_m3 = gamma_g_cm3
 
         numerator = (
             c_t_m2

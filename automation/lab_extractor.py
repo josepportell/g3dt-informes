@@ -127,7 +127,7 @@ def _extract_sulfate(text: str) -> float | None:
             value_str = match.group(1).replace(',', '.')
             try:
                 value = float(value_str)
-                if 0 < value < 100000:  # Reasonable range for mg/kg
+                if 0 <= value < 100000:  # Reasonable range for mg/kg
                     return value
             except ValueError:
                 continue

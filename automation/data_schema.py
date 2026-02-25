@@ -196,6 +196,12 @@ DATA_ENTRY_SCHEMA: dict[str, FieldDefinition] = {
         description="Direccio dominant del pendent (N, NE, E, SE, S, SW, W, NW)",
         example="SE"
     ),
+    'slope_height_m': FieldDefinition(
+        field_type='float',
+        required=False,
+        description="Alcada del talus en metres (necessari per Hoek & Bray)",
+        example="4.0"
+    ),
 
     # === Zona geologica (determina plantilles a usar) ===
     'geological_zone': FieldDefinition(

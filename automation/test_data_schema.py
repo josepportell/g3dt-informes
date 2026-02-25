@@ -565,7 +565,7 @@ def test_helper_functions(results: TestResults):
     )
 
     float_fields = get_field_names_by_type('float')
-    expected_float = ['superficie_parcela_m2', 'superficie_construida_m2', 'utm_x', 'utm_y', 'slope_percent']
+    expected_float = ['superficie_parcela_m2', 'superficie_construida_m2', 'utm_x', 'utm_y', 'slope_percent', 'slope_height_m']
     results.record(
         "get_field_names_by_type('float') returns correct fields",
         set(float_fields) == set(expected_float),

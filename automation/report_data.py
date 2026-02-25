@@ -126,6 +126,7 @@ class ReportData:
     slope_percent: float | None = None  # Pendent del terreny (%)
     slope_direction: str | None = None  # Direcció dominant del pendent
     is_anthropized: bool = False  # Solar antropitzat (urbanitzat/modificat)
+    slope_height_m: float | None = None  # Alçada del talús (m), per Hoek & Bray
 
     # Dades d'assaig (de dpsh_extractor)
     dpsh: DPSHData | None = None
@@ -367,12 +368,22 @@ def build_report_data(
                 nspt_to_phi, nspt_to_E_kg_cm2, nspt_to_gamma_g_cm3,
                 is_rock, rock_params_default,
             )
+            # Build description for rock detection from sondeig layers or ICGC
+            rock_description = ""
+            sondeig_layers = user_data.get('sondeig_layers', [])
+            if sondeig_layers:
+                rock_description = " ".join(
+                    l.get('description', '') for l in sondeig_layers
+                )
+            if not rock_description:
+                rock_description = user_data.get('icgc_unit_description', '')
+
             if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
                 gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20)
                 phi = geomech.get('phi') or nspt_to_phi(avg_n20)
                 E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
                 cohesion = geomech.get('cohesion', 0.0)
-            elif is_rock(avg_n20):
+            elif is_rock(avg_n20, rock_description):
                 rock = rock_params_default()
                 gamma, phi, E, cohesion = rock['gamma'], rock['phi'], rock['E'], rock['cohesion']
             else:
@@ -451,6 +462,7 @@ def build_report_data(
         is_sloped=user_data.get('is_sloped', False),
         slope_percent=user_data.get('slope_percent'),
         slope_direction=user_data.get('slope_direction'),
+        slope_height_m=user_data.get('slope_height_m'),
         is_anthropized=user_data.get('is_anthropized', False),
         # Dades assaig
         dpsh=dpsh_data,
@@ -543,6 +555,7 @@ def to_dict(report_data: ReportData) -> dict[str, Any]:
             'is_sloped': report_data.is_sloped,
             'slope_percent': report_data.slope_percent,
             'slope_direction': report_data.slope_direction,
+            'slope_height_m': report_data.slope_height_m,
             'is_anthropized': report_data.is_anthropized,
         },
         'tests': {
@@ -712,6 +725,7 @@ def from_dict(data: dict[str, Any]) -> ReportData:
         is_sloped=site.get('is_sloped', False),
         slope_percent=site.get('slope_percent'),
         slope_direction=site.get('slope_direction'),
+        slope_height_m=site.get('slope_height_m'),
         is_anthropized=site.get('is_anthropized', False),
         dpsh=dpsh_data,
         has_sondeig=tests.get('has_sondeig', False),
