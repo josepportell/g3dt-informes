@@ -80,6 +80,21 @@ Genera un informe geotècnic complet a partir de les dades del projecte.
 ### /g3dt-demo-informe
 Demostra la generació d'informes amb dades de mostra.
 
+## Pipeline de Generació d'Informes
+
+```
+Fase 0:   FileScanner         → file_mapping.json (classificació fitxers)
+Fase 0.5: auto_extract()      → prefills automàtics (DPSH, Lab, ICGC, Cadastre)
+Fase 1:   Validació visual    → planol/sondeig/dpsh_extracted.json (Claude vision)
+Fase 2:   Wizard (skill)      → user_data.json (Eva confirma/corregeix prefills)
+Fase 3:   ReportGenerator     → {expedient}_generated.docx
+```
+
+**Fase 0.5** (`automation/auto_extractor.py`) executa en ~3s:
+- Fase 1 local: FileScanner, DPSH Excel (N20, refús), dates de camp
+- Fase 2 PDF: Lab results (sulfats mg/kg) via PyMuPDF
+- Fase 3 HTTP: ICGC geologia/elevació/pendent + Cadastre adjacents (requereix UTM)
+
 ## Estructura de Carpetes
 
 ```
@@ -91,6 +106,7 @@ clients/g3dt/
 │       ├── g3dt-extreure-planol.md
 │       └── g3dt-adjacents-visor.md
 ├── automation/               # Mòduls d'extracció i càlcul
+│   ├── auto_extractor.py     # Fase 0.5: pre-omple camps automàticament
 │   ├── dpsh_extractor.py     # Extracció de dades DPSH d'Excel
 │   ├── project_extractor.py  # Extracció de tot el projecte
 │   ├── report_data.py        # Model de dades unificat

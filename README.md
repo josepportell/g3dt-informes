@@ -1,8 +1,8 @@
 # G3DT - Client Overview
 
-**Status:** PILOT CONFIRMED (January 2026 start)
+**Status:** PHASE 2 IN PROGRESS (Implementation approved Feb 9, 2026)
 **Type:** First paying customer
-**Last Updated:** 2026-01-01
+**Last Updated:** 2026-02-10
 
 ---
 
@@ -48,21 +48,35 @@ G3DT is both:
 
 ---
 
-## Pilot Agreement
+## Project Agreement
 
-### Terms (Agreed Dec 2025)
+### Structure (6 weeks, 2 phases, 3 payments)
 
-| Item | Value |
-|------|-------|
-| **Type** | Pilot ("sensatament" - cautious start) |
-| **Duration** | 4 weeks (possibly 4-6, not finalized) |
-| **Price** | €1,200 for 4 weeks (€300/week) |
-| **Start** | January 2026 (after winter holidays) |
-| **Payment** | TBD (proposal to be sent after receiving sample materials) |
+| Phase | Duration | Description |
+|-------|----------|-------------|
+| **Phase 1: Pilot** | Weeks 1-3 | Prototype: text, tables, images, citations, Excel formulas, UI |
+| **Phase 2: Implementation** | Weeks 4-6 | Production system, multi-computer, training, documentation |
+
+### Payment Schedule
+
+| Milestone | When | If Continues | If Doesn't Continue | Status |
+|-----------|------|--------------|---------------------|--------|
+| 1. Signature | Week 1 | €1,200 + IVA | €1,200 + IVA | ✅ Paid |
+| 2. Phase 1 Review | Week 3 | €1,200 + IVA | €600 + IVA | ✅ Approved (Feb 9) → €1,200 |
+| 3. Final Delivery | Week 6 | €1,200 + IVA | — | ⏳ Pending |
+| **Total** | | **€3,600 + IVA (€4,356)** | **€1,800 + IVA (€2,178)** | |
+
+**Decision: G3DT approved continuation → Total project = €3,600 + IVA**
+
+### Phase 1 Review Meeting (Feb 9, 2026)
+
+- **Attendees:** Eva Vázquez Marcet (Silvia did not attend)
+- **Outcome:** Reviewed progress, liked it a lot, **decided to proceed to Phase 2**
+- **Implication:** Second payment = full €1,200 (not €600 early-exit amount)
 
 ### Scope
 
-**Primary deliverable:** Reproduce ONE sample report automatically
+**Primary deliverable:** Automated geotechnical report generation system
 
 **Success criteria:** Report quality is "good enough" (their words)
 
@@ -101,14 +115,16 @@ G3DT is both:
 
 ---
 
-## Sales History Summary
+## Sales & Project History
 
 | Date | Event | Outcome |
 |------|-------|---------|
 | ~Nov 8-10 | Initial contact | Meeting scheduled |
 | Nov 12 | Discovery meeting (2h) | Very positive ("wish come true" demo reaction) |
 | Nov 12-20 | Follow-up attempts | WhatsApp + LinkedIn (limited response) |
-| Dec 4 | Meeting with G3DT + TüvSüd | **PILOT AGREED** - €1,200/4 weeks, Jan 2026 start |
+| Dec 4 | Meeting with G3DT + TüvSüd | **PILOT AGREED** - 6 weeks, €3,600 total |
+| Jan 2026 | Phase 1 started | Development began |
+| **Feb 9** | **Phase 1 Review (Eva only)** | **✅ APPROVED - Proceeding to Phase 2** |
 
 **Full sales history:** `../eficients-business-system/sales/prospects/g3dt/CONTACT-LOG.md`
 

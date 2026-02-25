@@ -15,8 +15,42 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Build outputs (keep generated docs for reference)
+# Build outputs
 *.log
 
-# Large binary files we don't need to track
-siteboon-ui/node_modules/
+# ── Generated reports & outputs ──
+# Template backups (old versions of g3dt-jinja-template.docx)
+templates/*.backup*
+
+# Demo generated outputs
+demo-sections/generated/*.docx
+demo/base-template-clean.docx
+demo/styled-balaguer.docx
+demo/extracted-images/
+
+# Proof/test generated docs
+templates/proof_generated_balaguer.docx
+
+# ── Reference material: generated outputs (NOT originals from Eva) ──
+# Generated/edited reports (our outputs)
+reference-material/4001612-bell-lloc/4001612_generated.docx
+reference-material/4001612-bell-lloc/4001612_generated_edited.docx
+reference-material/4001612-bell-lloc/4001612_AUDIT_VISUAL.docx
+reference-material/4001612-bell-lloc/4001612_AUDIT_VISUAL_v9.docx
+reference-material/4001612-bell-lloc/validation/4001612_generated_AUDIT_VISUAL.docx
+
+# PDF copies (originals are the .doc/.docx)
+reference-material/4001612-bell-lloc/PDF/
+reference-material/4001612-bell-lloc/PDF V0/
+
+# Generated samples (our test outputs)
+samples/4001612_generated.docx
+samples/test_belllloc_automatitzat.docx
+
+# ── Folders with large binary content ──
+reference-material/4001612-bell-lloc/FOTOGRAFIES/
+reference-material/4001612-bell-lloc/ACCEPTACIO/
+reference-material/4001612-bell-lloc/25.0647/
+
+# Database files (may contain credentials)
+*.db
