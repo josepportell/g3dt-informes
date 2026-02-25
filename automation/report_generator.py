@@ -131,10 +131,16 @@ class ReportGenerator:
         """
         Load user data from dict or JSON file.
 
-        Returns empty dict if None or loading fails.
+        Auto-discovers user_data.json in project folder if None.
+        Returns empty dict if nothing found or loading fails.
         """
         if user_data is None:
-            return {}
+            # Auto-discover user_data.json in project folder
+            auto_path = self.project_path / 'user_data.json'
+            if auto_path.exists():
+                user_data = auto_path
+            else:
+                return {}
 
         if isinstance(user_data, dict):
             return user_data
@@ -216,17 +222,20 @@ class ReportGenerator:
                         # Store full test data for the sondeig summary table
                         self.user_data['sondeig_tests'] = sondeig_tests
 
-                        # Auto-fill soil levels if not already set
-                        if self.user_data.get('num_soil_levels', 1) == 1:
-                            layers = sondeig_tests[0].get('layers', [])
-                            num_layers = len(layers)
-                            if num_layers > 0:
-                                self.user_data['num_soil_levels'] = num_layers
-                                self.user_data['sondeig_layers'] = layers
-                                logger.info(
-                                    "Auto-filled num_soil_levels=%d from sondeig_extracted.json",
-                                    num_layers,
-                                )
+                        # Always populate sondeig_layers (needed for rock
+                        # detection and per-layer N20 computation)
+                        layers = sondeig_tests[0].get('layers', [])
+                        if layers and 'sondeig_layers' not in self.user_data:
+                            self.user_data['sondeig_layers'] = layers
+
+                        # Auto-fill num_soil_levels if still at default
+                        num_layers = len(layers)
+                        if self.user_data.get('num_soil_levels', 1) == 1 and num_layers > 0:
+                            self.user_data['num_soil_levels'] = num_layers
+                            logger.info(
+                                "Auto-filled num_soil_levels=%d from sondeig_extracted.json",
+                                num_layers,
+                            )
             except Exception as e:
                 self.warnings.append(f"Could not auto-fill from sondeig_extracted.json: {e}")
 
@@ -886,12 +895,12 @@ class ReportGenerator:
             context['sulfate_level_name'] = '1er nivell'
             context['sulfate_value'] = (
                 f"{self.report_data.sulfate_mg_kg:.1f}"
-                if self.report_data.sulfate_mg_kg else ''
+                if self.report_data.sulfate_mg_kg is not None else ''
             )
             context['sulfate_baumann'] = '---'
             context['sulfate_classification'] = (
                 'No Agressius'
-                if self.report_data.sulfate_mg_kg and self.report_data.sulfate_mg_kg < 2000
+                if self.report_data.sulfate_mg_kg is not None and self.report_data.sulfate_mg_kg < 2000
                 else ''
             )
 
@@ -1014,7 +1023,13 @@ class ReportGenerator:
 
             # K30 ballast coefficient
             if self.report_data.geotechnical_params:
-                k30 = self.report_data.geotechnical_params.E / 100
+                gp = self.report_data.geotechnical_params
+                if gp.cohesion and gp.cohesion > 0:
+                    # Rock: K30 = E / 60 (CTE D.29, rocas algo alteradas)
+                    k30 = gp.E / 60
+                else:
+                    # Granular soil: K30 = E / 100
+                    k30 = gp.E / 100
                 context['k30_value'] = f"{k30:.1f}"
             else:
                 context['k30_value'] = ''

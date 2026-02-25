@@ -78,8 +78,8 @@ class Section4Generator:
         "de nivell freàtic a una fondària de {depth:.2f} m respecte la rasant actual del terreny."
     )
     WATER_NOT_DETECTED_TEXT = (
-        "Durant l'execució dels treballs de camp no s'ha detectat presència "
-        "de nivell freàtic dins la fondària investigada."
+        "En data de la realització dels treballs de camp, i fins la cota estudiada, "
+        "no es va detectar presència de nivell freàtic en cap dels punts estudiats."
     )
 
     AGGRESSIVITY_TEXTS = {
@@ -271,12 +271,24 @@ class Section4Generator:
         if self.data.water_detected:
             depth = self._get_water_depth()
             if depth is not None:
-                return self.WATER_DETECTED_TEXT.format(depth=depth)
-            return (
-                "Durant l'execució dels treballs de camp s'ha detectat presència "
-                "de nivell freàtic (fondària no determinada amb precisió)."
+                text = self.WATER_DETECTED_TEXT.format(depth=depth)
+            else:
+                text = (
+                    "Durant l'execució dels treballs de camp s'ha detectat presència "
+                    "de nivell freàtic (fondària no determinada amb precisió)."
+                )
+        else:
+            text = self.WATER_NOT_DETECTED_TEXT
+
+        # Add drainage recommendation for sloped terrain
+        if getattr(self.data, 'is_sloped', False):
+            text += (
+                "\n\nAmb tot, donada la pendent de la zona, es recomana dimensionar "
+                "una correcta xarxa de recollida d'aigües per a què no circuli "
+                "lliurement damunt de la superfície del solar."
             )
-        return self.WATER_NOT_DETECTED_TEXT
+
+        return text
 
     def _get_water_depth(self) -> float | None:
         """Get water depth from DPSH data if available."""
@@ -444,11 +456,13 @@ class Section4Generator:
             try:
                 from ..slope_calculator import calculate_slope_stability
 
+                slope_h = getattr(self.data, 'slope_height_m', None)
                 result = calculate_slope_stability(
                     slope_percent=slope_pct,
                     phi_deg=params.phi,
                     gamma_g_cm3=params.gamma,
                     cohesion_kg_cm2=params.cohesion,
+                    slope_height_m=slope_h,
                     water_detected=self.data.water_detected,
                     slope_direction=slope_dir,
                 )
@@ -499,9 +513,20 @@ class Section4Generator:
         )
 
         # Determine level description for params reference
-        level_desc = "1r nivell"
+        level_desc = "terreny"
         if self.data.soil_levels:
-            level_desc = f"1r nivell ({self.data.soil_levels[0].description})"
+            matched = self.data.soil_levels[0]  # default: first level
+            if params.cohesion > 0:
+                # Rock params → find the rock level
+                from ..cte_geomech import is_rock
+                for lvl in self.data.soil_levels:
+                    if is_rock(lvl.n20_average or 0, lvl.description):
+                        matched = lvl
+                        break
+            idx = self.data.soil_levels.index(matched)
+            ordinals = ["1r", "2n", "3r", "4t"]
+            ordinal = ordinals[idx] if idx < len(ordinals) else f"{idx+1}è"
+            level_desc = f"{ordinal} nivell ({matched.description})"
 
         lines.append(
             f"- S'han considerat els parametres geomecanics del {level_desc} "
@@ -513,28 +538,55 @@ class Section4Generator:
         lines.append("")
 
         # Method and calculation
-        lines.append(
-            f"El metode de calcul utilitzat es el del talus infinit ({result.method}), "
-            f"aplicable a ruptures superficials paral.leles al vessant."
-        )
+        is_hoek_bray = "Hoek" in result.method
+        if is_hoek_bray:
+            lines.append(
+                f"El metode de calcul utilitzat es el de ruptura circular "
+                f"({result.method}), "
+                f"aplicable a talussos amb cohesio on la superficie de ruptura "
+                f"es de tipus circular."
+            )
+        else:
+            lines.append(
+                f"El metode de calcul utilitzat es el del talus infinit ({result.method}), "
+                f"aplicable a ruptures superficials paral.leles al vessant."
+            )
         lines.append("")
 
-        if result.cohesion_kg_cm2 > 0 and result.slope_height_m:
+        # Display FS, capping display at >3.5 for very high values
+        fs_display = (
+            "FS > 3.5" if result.safety_factor > 3.5
+            else f"FS = {result.safety_factor:.2f}"
+        )
+
+        if is_hoek_bray and result.cohesion_kg_cm2 > 0 and result.slope_height_m:
+            lines.append(
+                f"Amb c={result.cohesion_kg_cm2:.2f} kg/cm2, "
+                f"H={result.slope_height_m:.1f} m, beta={result.slope_angle_deg:.0f} graus: "
+                f"{fs_display}"
+            )
+        elif result.cohesion_kg_cm2 > 0 and result.slope_height_m:
             lines.append(
                 f"FS = (c + gamma*H*cos^2(beta)*tan(phi)) / (gamma*H*sin(beta)*cos(beta)) "
-                f"= {result.safety_factor:.2f}"
+                f"= {fs_display.replace('FS = ', '').replace('FS > ', '> ')}"
             )
         else:
             lines.append(
                 f"FS = tan(phi) / tan(beta) = "
                 f"tan({result.phi_deg:.0f} graus) / tan({result.slope_angle_deg:.0f} graus) "
-                f"= {result.safety_factor:.2f}"
+                f"= {fs_display.replace('FS = ', '').replace('FS > ', '> ')}"
             )
 
         lines.append("")
 
         # Conclusion
-        if result.compliant:
+        if result.safety_factor > 3.5:
+            lines.append(
+                f"Els factors de seguretat obtinguts son superiors a 3.5, "
+                f"complint amb escreix les premisses del CTE "
+                f"(minim exigit F={result.fs_required})."
+            )
+        elif result.compliant:
             lines.append(
                 f"El factor de seguretat obtingut (FS={result.safety_factor:.2f}) es superior "
                 f"al minim exigit (F={result.fs_required}), complint les premisses del CTE."
