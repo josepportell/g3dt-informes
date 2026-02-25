@@ -119,12 +119,16 @@ def nspt_to_phi(nspt: float) -> float:
     return 35.0  # fallback
 
 
-def nspt_to_E_kg_cm2(nspt: float) -> float:
+def nspt_to_E_kg_cm2(nspt: float, conservative: bool = True) -> float:
     """
-    Deformation modulus from NSPT using CTE Table D.23 (interpolation within range).
+    Deformation modulus from NSPT using CTE Table D.23.
 
     Args:
         nspt: SPT/DPSH N value
+        conservative: If True (default), use lower portion of the CTE range
+            (E_min + 10% of range). Matches G3DT professional practice where
+            Eva consistently uses conservative E values for safety.
+            If False, interpolate linearly across the full range.
 
     Returns:
         E in kg/cm² (1 MN/m² = 10.2 kg/cm²)
@@ -133,12 +137,16 @@ def nspt_to_E_kg_cm2(nspt: float) -> float:
 
     for nspt_min, nspt_max, _, _, _, E_min, E_max in TABLE_D23:
         if nspt_min <= nspt < nspt_max:
-            # Interpolate within the range
-            if nspt_max == 999:
-                ratio = min((nspt - nspt_min) / 50, 1.0)
+            if conservative:
+                # Conservative: E_min + 10% of range (matches Eva's practice)
+                E_MN = E_min + 0.1 * (E_max - E_min)
             else:
-                ratio = (nspt - nspt_min) / (nspt_max - nspt_min)
-            E_MN = E_min + ratio * (E_max - E_min)
+                # Full interpolation within the range
+                if nspt_max == 999:
+                    ratio = min((nspt - nspt_min) / 50, 1.0)
+                else:
+                    ratio = (nspt - nspt_min) / (nspt_max - nspt_min)
+                E_MN = E_min + ratio * (E_max - E_min)
             return E_MN * MN_TO_KG_CM2
 
     # Dense/rock: use upper range
