@@ -1,0 +1,45 @@
+{
+  "source_file": "PENETROS + SONDEIG.pdf",
+  "extraction_date": "2026-02-24T17:30:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.85,
+  "status": "pending_review",
+  "metadata": {
+    "date": "24-10-2025",
+    "location": "Castellar del Vallès",
+    "address": "C/Arbrells",
+    "operator": "Daniel Fernández",
+    "equipment": "ML76A",
+    "client": "G3",
+    "responsible": "Eva"
+  },
+  "sondeig_tests": [
+    {
+      "test_id": "S-1",
+      "total_depth_m": 1.20,
+      "layers": [
+        {
+          "depth_from_m": 0.0,
+          "depth_to_m": 0.50,
+          "description": "Llims argilosos amb grava grossa",
+          "confidence": 0.80,
+          "note": "Handwriting partially unclear — reads 'llimos argillos, son grossa' or similar"
+        },
+        {
+          "depth_from_m": 0.50,
+          "depth_to_m": 1.20,
+          "description": "Roca fracturada",
+          "confidence": 0.85,
+          "note": "Consistent with albarà: 0.70m in hard rock/concrete"
+        }
+      ],
+      "spt_results": [],
+      "water_level_m": null,
+      "rock_depth_m": 0.50,
+      "extraction_notes": "Single borehole. Albarà confirms 0.50m soil + 0.70m hard rock = 1.20m total. Page rotated 90 degrees, handwriting moderately legible."
+    }
+  ],
+  "reviewer_notes": "Layer 1 description needs G3DT confirmation — handwriting difficult to read with certainty",
+  "approved_by": "",
+  "approval_date": null
+}

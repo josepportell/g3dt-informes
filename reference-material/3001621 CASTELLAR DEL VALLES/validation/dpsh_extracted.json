@@ -1,0 +1,72 @@
+{
+  "source_file": "PENETROS + SONDEIG.pdf",
+  "extraction_date": "2026-02-24T17:30:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.97,
+  "status": "pending_review",
+  "excel_comparison": {
+    "has_excel": true,
+    "excel_file": "3001621_DPSH.xls",
+    "total_values": 17,
+    "matches": 17,
+    "discrepancies": 0
+  },
+  "dpsh_tests": [
+    {
+      "test_id": "P-1",
+      "readings": [
+        {"depth_m": 0.4, "n20": 6, "confidence": 1.0, "excel_value": 6, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.6, "n20": 10, "confidence": 1.0, "excel_value": 10, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.8, "n20": 13, "confidence": 1.0, "excel_value": 13, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.0, "n20": 38, "confidence": 1.0, "excel_value": 38, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.2, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "Refusal"}
+      ],
+      "refusal_depth_m": 1.08,
+      "refusal_detected": true,
+      "water_detected": false,
+      "correction_factor": 0.83
+    },
+    {
+      "test_id": "P-2",
+      "readings": [
+        {"depth_m": 0.4, "n20": 15, "confidence": 0.95, "excel_value": 15, "has_discrepancy": false, "note": "First digit slightly unclear, consistent with Excel"},
+        {"depth_m": 0.6, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "Refusal"}
+      ],
+      "refusal_depth_m": 0.48,
+      "refusal_detected": true,
+      "water_detected": false,
+      "correction_factor": 0.83
+    },
+    {
+      "test_id": "P-3",
+      "readings": [
+        {"depth_m": 0.4, "n20": 16, "confidence": 1.0, "excel_value": 16, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.6, "n20": 46, "confidence": 1.0, "excel_value": 46, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.8, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "Refusal"}
+      ],
+      "refusal_depth_m": 0.76,
+      "refusal_detected": true,
+      "water_detected": false,
+      "correction_factor": 0.83
+    },
+    {
+      "test_id": "P-4",
+      "readings": [
+        {"depth_m": 0.4, "n20": 8, "confidence": 1.0, "excel_value": 8, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.6, "n20": 8, "confidence": 1.0, "excel_value": 8, "has_discrepancy": false, "note": null},
+        {"depth_m": 0.8, "n20": 12, "confidence": 1.0, "excel_value": 12, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.0, "n20": 27, "confidence": 1.0, "excel_value": 27, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.2, "n20": 21, "confidence": 1.0, "excel_value": 21, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.4, "n20": 28, "confidence": 1.0, "excel_value": 28, "has_discrepancy": false, "note": null},
+        {"depth_m": 1.6, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "Refusal"}
+      ],
+      "refusal_depth_m": 1.55,
+      "refusal_detected": true,
+      "water_detected": false,
+      "correction_factor": 0.83
+    }
+  ],
+  "reviewer_notes": "",
+  "approved_by": "",
+  "approval_date": null
+}

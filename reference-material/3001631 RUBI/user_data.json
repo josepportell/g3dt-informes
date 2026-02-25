@@ -1,0 +1,32 @@
+{
+  "architect_name": "",
+  "architect_company": "Viviendas Modulares",
+  "building_type": "Habitatge aillat",
+  "site_description": "",
+  "access_description": "",
+  "adjacent_north": "",
+  "adjacent_south": "",
+  "adjacent_east": "",
+  "adjacent_west": "",
+  "is_anthropized": true,
+  "num_soil_levels": 1,
+  "foundation_depth_m": 0.3,
+  "field_work_dates": ["2025-11-14"],
+  "field_work_dates_text": "14 de novembre de 2025",
+  "sulfate_mg_kg": 632.3,
+  "lab_tests": [
+    {
+      "type": "Contingut en sulfats solubles UNE 103100:95",
+      "sample_id": "",
+      "location": "",
+      "depth": "-0.6 a -1.2",
+      "value": 632.3,
+      "unit": "mg/kg",
+      "standard": ""
+    }
+  ],
+  "_metadata": {
+    "generated_at": "2026-02-24T22:30:00",
+    "wizard_used": true
+  }
+}

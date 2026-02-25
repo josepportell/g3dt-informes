@@ -68,6 +68,7 @@
   "is_sloped": true,
   "slope_percent": 36.0,
   "slope_direction": "SE",
+  "slope_height_m": 4.0,
   "num_floors": "PB+1PP",
   "has_sondeig": true,
   "has_soterrani": false,

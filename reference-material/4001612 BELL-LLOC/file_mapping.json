@@ -1,0 +1,152 @@
+{
+  "roles": {
+    "reference_report": {
+      "path": "4001612_informe.doc",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "gtl_report": {
+      "path": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "architect_plan_with_points": {
+      "path": "A.01 amb punts.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "architect_plan": {
+      "path": "A.01.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "photos_dir": {
+      "path": "FOTOGRAFIES",
+      "confidence": "high",
+      "detection": "directory_name"
+    },
+    "dpsh_field_sheet": {
+      "path": "PENETROS.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "sondeig_field_sheet": {
+      "path": "SONDEIG.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "lab_order": {
+      "path": "comanda laboratori_4001612_BELL-LLOC.xls",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "situation_plan": {
+      "path": "pl. situaci.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "correlation_section": {
+      "path": "tall.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "dpsh_excel": {
+      "path": "ANNEXES/4001612_DPSH.xls",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "lab_results_pdf": {
+      "path": "PDF/ANNEXES/LAB-SIG.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    }
+  },
+  "ignored": [
+    {
+      "path": "25.0647/",
+      "reason": "numeric_dir"
+    },
+    {
+      "path": "4001612_PORTADA_25.doc",
+      "reason": "cover_doc"
+    },
+    {
+      "path": "4001612_informe_DETALLAT (Reparado).doc",
+      "reason": "detailed_doc"
+    },
+    {
+      "path": "4001612_informe_DETALLAT.doc",
+      "reason": "detailed_doc"
+    },
+    {
+      "path": "ACCEPTACIO/",
+      "reason": "acceptance_dir"
+    },
+    {
+      "path": "EXPLICACIÓ DETALLS.docx",
+      "reason": "explanation_doc"
+    },
+    {
+      "path": "PDF/",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "PDF V0/",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "Thumbs.db",
+      "reason": "temp_file"
+    },
+    {
+      "path": "~$01612_informe_DETALLAT.doc",
+      "reason": "detailed_doc"
+    },
+    {
+      "path": "~$01612_informe_v0.doc",
+      "reason": "temp_file"
+    },
+    {
+      "path": "ANNEXES/4001612_fotografies.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/4001612_plànol de situació.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/4001612_sondeig.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/4001612_tall de correlació.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_DPSH.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_fotografies.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_plànol de situació.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_sondeig.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_tall de correlació.pdf",
+      "reason": "exported_annex_pdf"
+    }
+  ],
+  "unassigned": [],
+  "_metadata": {
+    "scanned_at": "2026-02-25T08:40:18.863157+00:00",
+    "confirmed_by_user": false,
+    "scanner_version": "2.0"
+  }
+}

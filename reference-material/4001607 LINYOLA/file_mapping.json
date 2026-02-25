@@ -1,0 +1,120 @@
+{
+  "roles": {
+    "reference_report": {
+      "path": "4001607_informe.doc",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "gtl_report": {
+      "path": "4672-GTL-25 Linyola.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "photos_dir": {
+      "path": "FOTOGRAFIES",
+      "confidence": "high",
+      "detection": "directory_name"
+    },
+    "dpsh_field_sheet": {
+      "path": "PENETROS.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "lab_order": {
+      "path": "comanda laboratori_4001607_LINYOLA.xls",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "situation_plan": {
+      "path": "pl situ.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "correlation_section": {
+      "path": "tall.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "dpsh_excel": {
+      "path": "ANNEXES/4001607_DPSH.xls",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "lab_results_pdf": {
+      "path": "PDF/ANNEXES/lab-sig.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    }
+  },
+  "ignored": [
+    {
+      "path": "25.0616/",
+      "reason": "numeric_dir"
+    },
+    {
+      "path": "4001607_PORTADA_25.doc",
+      "reason": "cover_doc"
+    },
+    {
+      "path": "ACCEPTACIO/",
+      "reason": "acceptance_dir"
+    },
+    {
+      "path": "CONTACTE.txt",
+      "reason": "text_file"
+    },
+    {
+      "path": "DTE.txt",
+      "reason": "text_file"
+    },
+    {
+      "path": "PDF/",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "RV_ Realització geotècnic.msg",
+      "reason": "email_file"
+    },
+    {
+      "path": "Thumbs.db",
+      "reason": "temp_file"
+    },
+    {
+      "path": "ANNEXES/4001607_fotografies.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/4001607_plànol de situació.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/4001607_tall de correlació.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "PDF/ANNEXES/4001607_DPSH.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/4001607_fotografies.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/4001607_plànol de situació.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/4001607_tall de correlació.pdf",
+      "reason": "exported_annex_pdf"
+    }
+  ],
+  "unassigned": [
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf"
+  ],
+  "_metadata": {
+    "scanned_at": "2026-02-24T17:45:27.964765+00:00",
+    "confirmed_by_user": false,
+    "scanner_version": "2.0"
+  }
+}

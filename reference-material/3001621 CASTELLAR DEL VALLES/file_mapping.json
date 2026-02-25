@@ -1,0 +1,158 @@
+{
+  "roles": {
+    "reference_report": {
+      "path": "3001621_informe_v0.doc",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "gtl_report": {
+      "path": "4687-GTL-25 Castellar del Vallés.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "photos_dir": {
+      "path": "FOTOGRAFIES",
+      "confidence": "high",
+      "detection": "directory_name"
+    },
+    "dpsh_field_sheet": {
+      "path": "PENETROS + SONDEIG.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "sondeig_field_sheet": {
+      "path": "PENETROS + SONDEIG.pdf",
+      "confidence": "high",
+      "detection": "combined_file",
+      "is_combined": true
+    },
+    "lab_order": {
+      "path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "correlation_section": {
+      "path": "tall.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "dpsh_excel": {
+      "path": "ANNEXES/3001621_DPSH.xls",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "lab_results_pdf": {
+      "path": "PDF/ANNEXES/LAB-SIG.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    }
+  },
+  "ignored": [
+    {
+      "path": "25.0493/",
+      "reason": "numeric_dir"
+    },
+    {
+      "path": "3001621_PORTADA_25.doc",
+      "reason": "cover_doc"
+    },
+    {
+      "path": "3001621_generated.docx",
+      "reason": "our_output"
+    },
+    {
+      "path": "3001621_test_run003.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "3001621_test_run004.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "3001621_test_run005.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "ACCEPTACIO/",
+      "reason": "acceptance_dir"
+    },
+    {
+      "path": "DTE.txt",
+      "reason": "text_file"
+    },
+    {
+      "path": "PDF/",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "PDF-V0/",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+      "reason": "email_file"
+    },
+    {
+      "path": "file_mapping.json",
+      "reason": "our_output"
+    },
+    {
+      "path": "user_data.json",
+      "reason": "our_output"
+    },
+    {
+      "path": "validation/",
+      "reason": "output_dir"
+    },
+    {
+      "path": "ANNEXES/3001621_fotografies.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/3001621_plànol de situació.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/3001621_sondeig.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/3001621_tall de correlació.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/ALTRES/",
+      "reason": "misc_subdir"
+    },
+    {
+      "path": "ANNEXES/EF7DB361.tmp",
+      "reason": "temp_file"
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_DPSH.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_fotografies.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_sondeig.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+      "reason": "exported_annex_pdf"
+    }
+  ],
+  "unassigned": [],
+  "_metadata": {
+    "scanned_at": "2026-02-25T09:40:04.013418+00:00",
+    "confirmed_by_user": true,
+    "scanner_version": "2.0"
+  }
+}

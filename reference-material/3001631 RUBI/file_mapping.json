@@ -1,0 +1,104 @@
+{
+  "roles": {
+    "dpsh_field_sheet": {
+      "path": "3001631 - PENETROS.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "reference_report": {
+      "path": "3001631_informe.doc",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "gtl_report": {
+      "path": "4703-GTL-25 Rubí.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "photos_dir": {
+      "path": "FOTOGRAFIES",
+      "confidence": "high",
+      "detection": "directory_name"
+    },
+    "lab_order": {
+      "path": "comanda laboratori_3001631_RUBI.xls",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "correlation_section": {
+      "path": "tall.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "dpsh_excel": {
+      "path": "ANNEXES/3001631_DPSH.xls",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    },
+    "lab_results_pdf": {
+      "path": "PDF/ANNEXES/LAB-SIG.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern"
+    }
+  },
+  "ignored": [
+    {
+      "path": "25.0794/",
+      "reason": "numeric_dir"
+    },
+    {
+      "path": "3001631_PORTADA_25.doc",
+      "reason": "cover_doc"
+    },
+    {
+      "path": "ACCEPTACIO/",
+      "reason": "acceptance_dir"
+    },
+    {
+      "path": "PDF/",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "Thumbs.db",
+      "reason": "temp_file"
+    },
+    {
+      "path": "ANNEXES/3001631_fotografies.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/3001631_plànol de situació.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/3001631_tall de correlació.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/Altres/",
+      "reason": "misc_subdir"
+    },
+    {
+      "path": "PDF/ANNEXES/3001631_DPSH.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/3001631_fotografies.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/3001631_plànol de situació.pdf",
+      "reason": "exported_annex_pdf"
+    },
+    {
+      "path": "PDF/ANNEXES/3001631_tall de correlació.pdf",
+      "reason": "exported_annex_pdf"
+    }
+  ],
+  "unassigned": [],
+  "_metadata": {
+    "scanned_at": "2026-02-24T17:45:23.070065+00:00",
+    "confirmed_by_user": false,
+    "scanner_version": "2.0"
+  }
+}
