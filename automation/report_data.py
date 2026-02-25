@@ -408,6 +408,10 @@ def build_report_data(
         user_data.get('sondeig_layers'),
     )
 
+    # Merge levels if Eva has flagged it
+    if user_data.get('merge_to_single_level', False) and len(soil_levels) > 1:
+        soil_levels = _merge_soil_levels(soil_levels)
+
     # Determina classes CTE
     cte_building_class = classify_building(
         area_m2=user_data.get('superficie_construida_m2', 0),
@@ -469,8 +473,8 @@ def build_report_data(
         sondeig_tests=user_data.get('sondeig_tests'),
         has_sondeig=user_data.get('has_sondeig', files.get('has_sondeig', False)),
         has_spt=_detect_spt(user_data, project_path),
-        # Laboratori
-        sulfate_mg_kg=user_data.get('sulfate_mg_kg'),
+        # Laboratori — auto-extract sulfate from lab PDF if not in user_data
+        sulfate_mg_kg=_resolve_sulfate(user_data, project_path),
         aggressivity_class="",
         # Valors calculats
         cte_building_class=cte_building_class,
@@ -893,6 +897,79 @@ def _generate_soil_levels(
         )
     ]
 
+
+
+def _merge_soil_levels(levels: list[SoilLevel]) -> list[SoilLevel]:
+    """
+    Merge multiple soil levels into a single representative level.
+
+    Used when Eva decides the multi-level split is not meaningful
+    (e.g., thin superficial layer that's just topsoil).
+    """
+    if not levels or len(levels) <= 1:
+        return levels
+
+    # Combined description
+    descriptions = [lvl.description for lvl in levels]
+    combined_desc = descriptions[0]  # Use primary level description
+
+    # Overall depth range
+    depth_from = levels[0].depth_from_m
+    depth_to = max(
+        (lvl.depth_to_m for lvl in levels if lvl.depth_to_m is not None),
+        default=None,
+    )
+    thickness = (depth_to - depth_from) if depth_to is not None else None
+
+    # Weighted average N20 by thickness (or simple average if thickness unknown)
+    total_weight = 0.0
+    weighted_sum = 0.0
+    for lvl in levels:
+        w = lvl.thickness_m or 1.0
+        weighted_sum += lvl.n20_average * w
+        total_weight += w
+    avg_n20 = weighted_sum / total_weight if total_weight > 0 else levels[0].n20_average
+
+    # Min/max across all levels
+    all_mins = [lvl.n20_min for lvl in levels if lvl.n20_min is not None]
+    all_maxs = [lvl.n20_max for lvl in levels if lvl.n20_max is not None]
+
+    return [SoilLevel(
+        level_number=1,
+        description=combined_desc,
+        thickness_m=thickness,
+        n20_average=avg_n20,
+        depth_from_m=depth_from,
+        depth_to_m=depth_to,
+        n20_min=min(all_mins) if all_mins else None,
+        n20_max=max(all_maxs) if all_maxs else None,
+    )]
+
+
+def _resolve_sulfate(
+    user_data: dict,
+    project_path: Path | None,
+) -> float | None:
+    """
+    Resolve sulfate value: user_data first, then auto-extract from lab PDF.
+    """
+    value = user_data.get('sulfate_mg_kg')
+    if value is not None:
+        return value
+
+    if not project_path:
+        return None
+
+    try:
+        from .lab_extractor import extract_lab_results
+        lab = extract_lab_results(project_path)
+        if lab.sulfate_mg_kg is not None:
+            logger.info(f"Auto-extracted sulfate: {lab.sulfate_mg_kg} mg/kg")
+            return lab.sulfate_mg_kg
+    except Exception as e:
+        logger.debug(f"Lab extraction failed: {e}")
+
+    return None
 
 
 def _determine_soil_class(dpsh_data: DPSHData | None) -> str:

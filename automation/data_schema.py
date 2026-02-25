@@ -216,6 +216,12 @@ DATA_ENTRY_SCHEMA: dict[str, FieldDefinition] = {
         default=1,
         description="Nombre de nivells de sol identificats"
     ),
+    'merge_to_single_level': FieldDefinition(
+        field_type='bool',
+        required=False,
+        default=False,
+        description="Consolidar múltiples nivells en un sol nivell a l'informe (criteri Eva)"
+    ),
 }
 
 
