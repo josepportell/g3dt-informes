@@ -679,10 +679,14 @@ class ReportGenerator:
             include_earth_pressure = getattr(self.report_data, 'include_earth_pressure', False)
             include_slope_stability = getattr(self.report_data, 'include_slope_stability', False)
 
-            # Auto-activate slope stability section if slope was auto-detected
-            if context.get('is_sloped') and not include_slope_stability:
-                include_slope_stability = True
-                logger.info("Auto-activated §4.5 slope stability (slope auto-detected from ICGC MDT)")
+            # Auto-activate slope stability + earth pressure when slope detected
+            if context.get('is_sloped'):
+                if not include_slope_stability:
+                    include_slope_stability = True
+                    logger.info("Auto-activated slope stability (slope auto-detected from ICGC MDT)")
+                if not include_earth_pressure:
+                    include_earth_pressure = True
+                    logger.info("Auto-activated earth pressure (slope auto-detected → retaining walls needed)")
 
             context['include_expansivity'] = include_expansivity
             context['include_earth_pressure'] = include_earth_pressure
@@ -1021,6 +1025,36 @@ class ReportGenerator:
                 context['qa_value'] = f"{tr.Qa:.2f}"
                 context['settlement'] = f"{tr.settlement_cm:.2f}" if tr.settlement_cm else ''
 
+            # Section 4 conditional content (empentes, estabilitat, expansivitat)
+            if sections.get('section4'):
+                s4 = sections['section4']
+                if s4.empentes_paragraph:
+                    context['empentes_paragraph'] = s4.empentes_paragraph
+                if s4.ka_value is not None:
+                    context['ka_value'] = f"{s4.ka_value:.3f}"
+                if s4.kp_value is not None:
+                    context['kp_value'] = f"{s4.kp_value:.3f}"
+                if s4.estabilitat_paragraph:
+                    context['estabilitat_paragraph'] = s4.estabilitat_paragraph
+                if s4.expansivitat_paragraph:
+                    context['expansivitat_paragraph'] = s4.expansivitat_paragraph
+                if s4.geologia_summary:
+                    context['conclusions_geologia_summary'] = s4.geologia_summary
+                if s4.water_statement:
+                    context['conclusions_water_statement'] = s4.water_statement
+                if s4.aggressivity_statement:
+                    context['conclusions_aggressivity_statement'] = s4.aggressivity_statement
+
+            # Defaults for conditional section content
+            context.setdefault('empentes_paragraph', '')
+            context.setdefault('ka_value', '')
+            context.setdefault('kp_value', '')
+            context.setdefault('estabilitat_paragraph', '')
+            context.setdefault('expansivitat_paragraph', '')
+            context.setdefault('conclusions_geologia_summary', '')
+            context.setdefault('conclusions_water_statement', '')
+            context.setdefault('conclusions_aggressivity_statement', '')
+
             # Include full structured data for advanced templates
             context['project'] = report_data_to_dict(self.report_data)
 
@@ -1103,6 +1137,16 @@ class ReportGenerator:
                 errors=self.errors.copy(),
                 warnings=self.warnings.copy(),
             )
+
+        # Step 2b: Auto-activate conditional sections before generation
+        # (Section4Generator checks these flags to decide what to generate)
+        if getattr(self.report_data, 'is_sloped', False):
+            if not getattr(self.report_data, 'include_slope_stability', False):
+                self.report_data.include_slope_stability = True
+                logger.info("Auto-activated slope stability (is_sloped=True)")
+            if not getattr(self.report_data, 'include_earth_pressure', False):
+                self.report_data.include_earth_pressure = True
+                logger.info("Auto-activated earth pressure (is_sloped=True → retaining walls)")
 
         # Step 3: Generate sections
         sections = self.generate_sections()
