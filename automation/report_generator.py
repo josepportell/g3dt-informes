@@ -1021,15 +1021,16 @@ class ReportGenerator:
             context['perm_k_value'] = context['perm_rows'][0]['k_value'] if context['perm_rows'] else ''
             context['perm_material'] = context['perm_rows'][0]['material'] if context['perm_rows'] else ''
 
-            # K30 ballast coefficient
+            # K30 ballast coefficient — Winkler: K30 = E / (α × B₀)
+            # B₀ = 30 cm (standard plate), α = depth influence factor
             if self.report_data.geotechnical_params:
                 gp = self.report_data.geotechnical_params
                 if gp.cohesion and gp.cohesion > 0:
-                    # Rock: K30 = E / 60 (CTE D.29, rocas algo alteradas)
+                    # Rock (α=2.0): K30 = E / 60
                     k30 = gp.E / 60
                 else:
-                    # Granular soil: K30 = E / 100
-                    k30 = gp.E / 100
+                    # Granular (α=2.5): K30 = E / 75
+                    k30 = gp.E / 75
                 context['k30_value'] = f"{k30:.1f}"
             else:
                 context['k30_value'] = ''
