@@ -70,6 +70,17 @@ from .report_generator import (
     GenerationResult,
 )
 
+from .auto_extractor import (
+    auto_extract,
+    AutoExtractionResult,
+)
+
+from .content_discovery import (
+    discover_content,
+    ContentDiscoveryResult,
+    DiscoveredItem,
+)
+
 from .folder_utils import parse_folder_name
 
 __all__ = [
@@ -106,7 +117,12 @@ __all__ = [
     'extract_lab_results',
     'ReportGenerator',
     'GenerationResult',
+    'auto_extract',
+    'AutoExtractionResult',
+    'discover_content',
+    'ContentDiscoveryResult',
+    'DiscoveredItem',
     'parse_folder_name',
 ]
 
-__version__ = '0.5.0'
+__version__ = '0.6.0'
