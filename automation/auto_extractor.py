@@ -253,6 +253,14 @@ def _phase1_dpsh(project_path: Path, result: AutoExtractionResult) -> None:
                     result.prefills['foundation_depth_m'] = round(min_refusal, 1)
                     result.sources['foundation_depth_m'] = f"DPSH refús a {min_refusal:.1f}m"
 
+            # Compute suggested Es for Schmertmann settlement
+            avg_n20 = dpsh_data.overall_average_n20
+            if avg_n20 > 0:
+                nb = avg_n20 / 0.83
+                Es_suggested = round(2.5 * nb)
+                result.prefills['Es_settlement'] = Es_suggested
+                result.sources['Es_settlement'] = f"2.5×Nb (Nb={nb:.1f})"
+
             info = (
                 f"{dpsh_data.num_tests} assaigs, "
                 f"prof. max {max(t.depth_reached for t in dpsh_data.tests):.1f}m"

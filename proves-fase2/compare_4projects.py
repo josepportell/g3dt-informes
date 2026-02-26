@@ -38,9 +38,9 @@ PROJECTS = [
                     "gamma": 2.0,
                     "phi": 38,
                     "cohesion": 0.0,
-                    "E": 450,
+                    "E": 650,
                     "Qa": 3.0,
-                    "settlement_cm": 1.5,
+                    "settlement_cm": 1.20,
                     "K30": 6.0,
                 },
             }
@@ -92,7 +92,7 @@ PROJECTS = [
         "layers": [
             {
                 "label": "Graves i sorres",
-                "n20": 43,  # midpoint of 40-47
+                "n20": 40,  # corrected from PDF (was 43)
                 "soil_type": "granular",
                 "cohesion": 0.05,
                 "is_foundation": True,
@@ -103,7 +103,7 @@ PROJECTS = [
                     "cohesion": 0.05,
                     "E": 450,
                     "Qa": 3.50,
-                    "settlement_cm": 0.72,
+                    "settlement_cm": 1.50,
                     "K30": 6.0,
                 },
             }

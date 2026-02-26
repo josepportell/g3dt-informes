@@ -351,6 +351,7 @@ class TerzaghiCalculator:
         nspt: Optional[float] = None,
         is_granular: bool = True,
         soil_type: str | None = None,
+        Es_override: Optional[float] = None,
     ) -> BearingCapacityResult:
         """
         Calculate allowable bearing capacity Qa with full results.
@@ -364,6 +365,7 @@ class TerzaghiCalculator:
             E: Deformation modulus in kg/cm² (for settlement calculation)
             nspt: SPT/DPSH N value for Terzaghi-Peck empirical check (optional)
             is_granular: Whether soil is granular (T-P only applies to granular)
+            Es_override: Schmertmann Es in kg/cm² from wizard (overrides auto)
 
         Returns:
             BearingCapacityResult with all calculation details
@@ -415,25 +417,23 @@ class TerzaghiCalculator:
                 else:
                     E = 500
 
-            # Try Schmertmann (1978) if we have nspt + soil_type for qc
-            if nspt is not None and soil_type is not None:
-                try:
-                    try:
-                        from .cte_geomech import nb_to_qc
-                    except ImportError:
-                        from cte_geomech import nb_to_qc
-                    qc = nb_to_qc(nspt, soil_type)
-                    # Es depends on footing shape (Eva's methodology)
-                    if shape == FootingShape.STRIP:
-                        Es = 3.5 * qc
-                    else:
-                        Es = 2.5 * qc
-                    settlement = schmertmann_settlement(
-                        q_net=Qa, B=B, Df=Df, Es=Es,
-                        gamma=self.gamma, shape=shape,
-                    )
-                except ImportError:
-                    settlement = self._calculate_settlement(Qa, B, E)
+            # Schmertmann (1978) settlement: Es = 2.5×Nb (square) or 3.5×Nb (strip)
+            # Back-engineered from Eva's reports (±1-8% deviation)
+            if Es_override is not None:
+                Es = Es_override
+                settlement = schmertmann_settlement(
+                    q_net=Qa, B=B, Df=Df, Es=Es,
+                    gamma=self.gamma, shape=shape,
+                )
+            elif nspt is not None:
+                if shape == FootingShape.STRIP:
+                    Es = 3.5 * nspt
+                else:
+                    Es = 2.5 * nspt
+                settlement = schmertmann_settlement(
+                    q_net=Qa, B=B, Df=Df, Es=Es,
+                    gamma=self.gamma, shape=shape,
+                )
             else:
                 # Boussinesq fallback
                 settlement = self._calculate_settlement(Qa, B, E)
@@ -562,7 +562,7 @@ def schmertmann_settlement(
     - Iz_integral = area under strain influence diagram:
         Square: 0.525 * B  (influence depth 2B, peak Iz=0.5 at B/2)
         Strip:  1.10 * B   (influence depth 4B, peak Iz=0.5 at B)
-    - Es = deformation modulus (2.5*qc for square, 3.5*qc for strip)
+    - Es = deformation modulus (2.5*Nb for square, 3.5*Nb for strip)
 
     Args:
         q_net: Net foundation pressure (Qa) in kg/cm²
@@ -577,7 +577,7 @@ def schmertmann_settlement(
 
     Reference:
         Schmertmann, J.H. (1978). "Improved Strain Influence Factor Diagrams."
-        Eva's methodology: Es = 2.5*qc (isolated), 3.5*qc (strip).
+        Eva's methodology: Es = 2.5*Nb (isolated), 3.5*Nb (strip).
     """
     if Es <= 0 or q_net <= 0:
         return 0.0

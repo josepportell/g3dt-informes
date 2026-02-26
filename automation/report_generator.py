@@ -247,11 +247,14 @@ class ReportGenerator:
                     is_granular = gp.cohesion < 0.5
                     # Soil type from first soil level
                     soil_type = self.report_data.soil_levels[0].soil_type if self.report_data.soil_levels else 'granular'
+                    # Es_settlement from wizard/user_data (overrides auto 2.5×Nb)
+                    Es_override = self.user_data.get('Es_settlement')
                     self.report_data.terzaghi_result = calc.calculate_qa(
                         B=B, Df=Df, shape=FootingShape.SQUARE,
                         E=gp.E,
                         nspt=nb_for_tp, is_granular=is_granular,
                         soil_type=soil_type,
+                        Es_override=Es_override,
                     )
                 except Exception as e:
                     self.warnings.append(f"Terzaghi calculation failed: {e}")

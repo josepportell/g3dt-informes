@@ -47,6 +47,7 @@ WIZARD_FIELDS = [
 # Expert override fields (optional, for when auto-detection gives wrong results)
 EXPERT_ICGC_FIELDS = ['icgc_unit_code', 'icgc_unit_description', 'icgc_unit_epoch']
 EXPERT_GEOMECH_FIELDS = ['gamma', 'cohesion', 'phi', 'E']
+EXPERT_SETTLEMENT_FIELDS = ['Es_settlement']
 
 
 class UserDataWizard:
@@ -250,6 +251,11 @@ class UserDataWizard:
                     val = geomech.get(field)
                     if val is not None:
                         self.prefills[f'geomech_{field}'] = {'value': val, 'source': source}
+            # Load Es_settlement override
+            for field in EXPERT_SETTLEMENT_FIELDS:
+                val = data.get(field)
+                if val is not None:
+                    self.prefills[field] = {'value': val, 'source': source}
             # Load soil_types as individual level prefills
             existing_soil_types = data.get('soil_types', [])
             for i, st in enumerate(existing_soil_types):
@@ -660,6 +666,23 @@ class UserDataWizard:
                 except ValueError:
                     print(f'     [AV\u00cdS: "{raw}" no \u00e9s num\u00e8ric, ignorat]')
 
+        # Es settlement override (Schmertmann)
+        print(f'\n  \u2699\ufe0f  Es assentament Schmertmann')
+        prefill = self.prefills.get('Es_settlement')
+        current = prefill['value'] if prefill else None
+        display = current if current is not None else '(auto: 2.5\u00d7Nb)'
+        print(f'\n  25. Es assentament Schmertmann (kg/cm\u00b2): {display}')
+        if prefill:
+            print(self._format_source(prefill))
+        raw = input('     Valor (ex: 75) o Enter per auto: ').strip()
+        if raw:
+            try:
+                self.user_data['Es_settlement'] = float(raw.replace(',', '.'))
+            except ValueError:
+                print(f'     [AV\u00cdS: "{raw}" no \u00e9s num\u00e8ric, ignorat]')
+        elif current is not None:
+            self.user_data['Es_settlement'] = current
+
     def save(self) -> Path:
         """Merge wizard results into user_data.json and save."""
         output_path = self.project_path / 'user_data.json'
@@ -686,6 +709,10 @@ class UserDataWizard:
         # Update expert geomech override fields
         if hasattr(self, '_expert_geomech') and self._expert_geomech:
             existing.setdefault('geomech_params', {}).update(self._expert_geomech)
+
+        # Update Es_settlement (top-level, not inside geomech_params)
+        if 'Es_settlement' in self.user_data:
+            existing['Es_settlement'] = self.user_data['Es_settlement']
 
         # Update metadata
         meta = existing.setdefault('_metadata', {})
