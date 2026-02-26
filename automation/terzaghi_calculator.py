@@ -388,9 +388,10 @@ class TerzaghiCalculator:
                 qa_governs = "terzaghi_peck"
 
         # Professional practice cap (confirmed by Eva 2026-02-26):
-        # Soil: max 3.0 kg/cm², clear rock: max 4.5 kg/cm²
+        # Soil: max 3.0 kg/cm², rock: max 5.0 kg/cm²
+        # Eva said "4.0-4.50" but uses 5.0 in Castellar (well-defined rock)
         QA_CAP_SOIL = 3.0
-        QA_CAP_ROCK = 4.5
+        QA_CAP_ROCK = 5.0
         qa_cap = QA_CAP_ROCK if not is_granular and self.cohesion >= 0.5 else QA_CAP_SOIL
         if Qa > qa_cap:
             Qa = qa_cap

@@ -966,12 +966,19 @@ class ReportGenerator:
                     # Per-level geotechnical params
                     # Priority: user_data override > CTE correlations
                     geomech = self.user_data.get('geomech_params', {})
+                    # Convert N20 → Nb for correlations (Eva: "imprescindible")
+                    avg_nb = avg_n20 / 0.83 if avg_n20 else 0
+                    # Determine soil type from level description
+                    desc_lower = (level.description or '').lower()
+                    level_soil_type = 'granular'
+                    if any(w in desc_lower for w in ('llim', 'argil', 'silt', 'clay', 'marga')):
+                        level_soil_type = 'cohesive'
 
                     if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
                         # Manual override — use exactly what G3DT specified
-                        gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20)
-                        phi = geomech.get('phi') or nspt_to_phi(avg_n20)
-                        E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
+                        gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20, level_soil_type)
+                        phi = geomech.get('phi') or nspt_to_phi(avg_nb, level_soil_type)
+                        E = geomech.get('E') or nspt_to_E_kg_cm2(avg_nb)
                         cohesion = geomech.get('cohesion', 0.0)
                     elif is_rock(avg_n20, level.description):
                         # Rock detected — use CTE rock defaults
@@ -982,9 +989,9 @@ class ReportGenerator:
                         cohesion = rock['cohesion']
                     else:
                         # CTE correlations for soil
-                        gamma = nspt_to_gamma_g_cm3(avg_n20)
-                        phi = nspt_to_phi(avg_n20)
-                        E = nspt_to_E_kg_cm2(avg_n20)
+                        gamma = nspt_to_gamma_g_cm3(avg_n20, level_soil_type)
+                        phi = nspt_to_phi(avg_nb, level_soil_type)
+                        E = nspt_to_E_kg_cm2(avg_nb)
                         cohesion = 0.0
 
                     # N display: G3DT may write "R" (refusal) instead of numeric
