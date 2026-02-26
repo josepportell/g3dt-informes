@@ -63,7 +63,10 @@ TABLE_D28 = {
 # === Table 4.1: NSPT → phi for granular soils ===
 
 TABLE_4_1_PHI = [
-    # (nspt, phi_degrees)
+    # (nspt, phi_degrees) — CTE Table 4.1 for sands
+    # Extended below N=10 for Schmertmann correction on fine-grained soils
+    (0, 26),
+    (5, 28),
     (10, 30),
     (15, 32),
     (22, 34),
@@ -72,6 +75,23 @@ TABLE_4_1_PHI = [
     (45, 40),
     (55, 42),
 ]
+
+
+# === Schmertmann (1970) grain-size correction factors ===
+# Factor n adjusts the effective N before entering the phi table.
+# Finer soils get lower effective N → lower phi for the same blow count.
+# Reference: Eva's document Spt-correlacions.doc
+SCHMERTMANN_N_FACTORS = {
+    "granular": 2.0,       # Gravels, clean sands
+    "grava": 2.0,
+    "arena": 2.0,
+    "arena_limosa": 1.6,   # Silty sands
+    "cohesive": 1.25,      # Sandy silts, silty clays
+    "limo": 1.25,
+    "arcilla": 1.0,        # Clays
+}
+# Baseline: n=2.5 (from Schmertmann's original, for "slightly silty sands")
+SCHMERTMANN_N_BASELINE = 2.5
 
 
 # === Table D.29: Ballast coefficient K30 (MN/m³) ===
@@ -93,27 +113,40 @@ TABLE_D29_K30 = {
 
 # === Lookup functions ===
 
-def nspt_to_phi(nspt: float) -> float:
+def nspt_to_phi(nspt: float, soil_type: str = "granular") -> float:
     """
-    Friction angle from NSPT using CTE Table 4.1 (linear interpolation).
+    Friction angle from N value using CTE Table 4.1 with Schmertmann (1970)
+    grain-size correction.
+
+    CTE Table 4.1 is calibrated for clean sands. Schmertmann's factor n
+    adjusts the effective N for finer-grained soils, giving lower phi
+    for the same blow count (fines reduce dilatancy).
 
     Args:
-        nspt: SPT/DPSH N value
+        nspt: SPT/DPSH N value (should be Nb, not raw N20)
+        soil_type: Soil classification for Schmertmann correction.
+            "granular"/"grava"/"arena" → n=2.0
+            "arena_limosa" → n=1.6
+            "cohesive"/"limo" → n=1.25
+            "arcilla" → n=1.0
 
     Returns:
         Friction angle in degrees
     """
-    if nspt <= TABLE_4_1_PHI[0][0]:
+    # Apply Schmertmann grain-size correction
+    n_factor = SCHMERTMANN_N_FACTORS.get(soil_type, 2.0)
+    n_eff = nspt * (n_factor / SCHMERTMANN_N_BASELINE)
+
+    if n_eff <= TABLE_4_1_PHI[0][0]:
         return TABLE_4_1_PHI[0][1]
-    if nspt >= TABLE_4_1_PHI[-1][0]:
+    if n_eff >= TABLE_4_1_PHI[-1][0]:
         return TABLE_4_1_PHI[-1][1]
 
     for i in range(len(TABLE_4_1_PHI) - 1):
         n1, phi1 = TABLE_4_1_PHI[i]
         n2, phi2 = TABLE_4_1_PHI[i + 1]
-        if n1 <= nspt <= n2:
-            # Linear interpolation
-            ratio = (nspt - n1) / (n2 - n1)
+        if n1 <= n_eff <= n2:
+            ratio = (n_eff - n1) / (n2 - n1)
             return phi1 + ratio * (phi2 - phi1)
 
     return 35.0  # fallback

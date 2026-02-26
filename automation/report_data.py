@@ -384,17 +384,24 @@ def build_report_data(
             if not rock_description:
                 rock_description = user_data.get('icgc_unit_description', '')
 
+            # Determine soil type for Schmertmann correction
+            soil_type = user_data.get('soil_type', 'granular')
+            if soil_type == 'granular' and rock_description:
+                desc_lower = rock_description.lower()
+                if any(w in desc_lower for w in ('llim', 'argil', 'silt', 'clay', 'marga')):
+                    soil_type = 'cohesive'
+
             if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
-                gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20)
-                phi = geomech.get('phi') or nspt_to_phi(avg_nb)
+                gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20, soil_type)
+                phi = geomech.get('phi') or nspt_to_phi(avg_nb, soil_type)
                 E = geomech.get('E') or nspt_to_E_kg_cm2(avg_nb)
                 cohesion = geomech.get('cohesion', 0.0)
             elif is_rock(avg_n20, rock_description):
                 rock = rock_params_default()
                 gamma, phi, E, cohesion = rock['gamma'], rock['phi'], rock['E'], rock['cohesion']
             else:
-                gamma = nspt_to_gamma_g_cm3(avg_n20)
-                phi = nspt_to_phi(avg_nb)
+                gamma = nspt_to_gamma_g_cm3(avg_n20, soil_type)
+                phi = nspt_to_phi(avg_nb, soil_type)
                 E = nspt_to_E_kg_cm2(avg_nb)
                 cohesion = 0.0
         except ImportError:
