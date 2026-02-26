@@ -207,7 +207,15 @@ class ReportGenerator:
                     # Use user-provided footing dimensions or defaults
                     B = self.user_data.get('footing_width_m', 1.0)
                     Df = self.user_data.get('foundation_depth_m', 0.8)
-                    terzaghi_result = calc.calculate_qa(B=B, Df=Df, shape=FootingShape.SQUARE)
+                    # Convert N20 → Nb for Terzaghi-Peck (Eva: "imprescindible")
+                    n20_raw = geotech.get('average_n20')
+                    nb_for_tp = n20_raw / 0.83 if n20_raw else None
+                    # T-P only applies to granular soils (not cohesive/rock)
+                    is_granular = geotech.get('soil_type', 'granular') != 'cohesive'
+                    terzaghi_result = calc.calculate_qa(
+                        B=B, Df=Df, shape=FootingShape.SQUARE,
+                        nspt=nb_for_tp, is_granular=is_granular,
+                    )
                 except Exception as e:
                     self.warnings.append(f"Terzaghi calculation failed: {e}")
 

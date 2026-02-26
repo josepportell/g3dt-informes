@@ -363,6 +363,12 @@ def build_report_data(
     geomech = user_data.get('geomech_params', {})
     if dpsh_data and dpsh_data.tests:
         avg_n20 = dpsh_data.overall_average_n20
+        # Convert N20 → Nb (Borrows) for all correlations.
+        # DPSH has more energy than Borrows; dividing by 0.83 corrects
+        # for the energy difference.  Eva confirmed this is essential.
+        # Ref: Dapena, Lacasa & García (2000).
+        NB_FACTOR = 0.83
+        avg_nb = avg_n20 / NB_FACTOR
         try:
             from .cte_geomech import (
                 nspt_to_phi, nspt_to_E_kg_cm2, nspt_to_gamma_g_cm3,
@@ -380,16 +386,16 @@ def build_report_data(
 
             if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
                 gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20)
-                phi = geomech.get('phi') or nspt_to_phi(avg_n20)
-                E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
+                phi = geomech.get('phi') or nspt_to_phi(avg_nb)
+                E = geomech.get('E') or nspt_to_E_kg_cm2(avg_nb)
                 cohesion = geomech.get('cohesion', 0.0)
             elif is_rock(avg_n20, rock_description):
                 rock = rock_params_default()
                 gamma, phi, E, cohesion = rock['gamma'], rock['phi'], rock['E'], rock['cohesion']
             else:
                 gamma = nspt_to_gamma_g_cm3(avg_n20)
-                phi = nspt_to_phi(avg_n20)
-                E = nspt_to_E_kg_cm2(avg_n20)
+                phi = nspt_to_phi(avg_nb)
+                E = nspt_to_E_kg_cm2(avg_nb)
                 cohesion = 0.0
         except ImportError:
             # Fallback to old Peck/Hanson if cte_geomech not available
@@ -827,6 +833,8 @@ def _reconstruct_terzaghi_from_dict(data: dict) -> BearingCapacityResult:
         Qa=results.get('Qa_kg_cm2', 0),
         settlement_cm=results.get('settlement_cm'),
         settlement_type=results.get('settlement_type', 'immediat'),
+        qa_terzaghi_peck=results.get('qa_terzaghi_peck_kg_cm2'),
+        qa_governs=results.get('qa_governs', 'terzaghi'),
     )
 
 

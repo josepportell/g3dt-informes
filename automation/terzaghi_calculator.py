@@ -98,6 +98,10 @@ class BearingCapacityResult:
     settlement_cm: Optional[float] = None
     settlement_type: str = "immediat"  # or "diferit" for clays
 
+    # Terzaghi-Peck empirical check
+    qa_terzaghi_peck: Optional[float] = None  # T-P empirical Qa (kg/cm²), if computed
+    qa_governs: str = "terzaghi"  # Which method governs: "terzaghi" or "terzaghi_peck"
+
     def to_dict(self) -> dict:
         return {
             'inputs': {
@@ -123,6 +127,8 @@ class BearingCapacityResult:
                 'Qa_kg_cm2': round(self.Qa, 2),
                 'settlement_cm': round(self.settlement_cm, 2) if self.settlement_cm else None,
                 'settlement_type': self.settlement_type,
+                'qa_terzaghi_peck_kg_cm2': round(self.qa_terzaghi_peck, 2) if self.qa_terzaghi_peck else None,
+                'qa_governs': self.qa_governs,
             }
         }
 
@@ -342,6 +348,8 @@ class TerzaghiCalculator:
         shape: FootingShape = FootingShape.STRIP,
         calculate_settlement: bool = True,
         E: Optional[float] = None,
+        nspt: Optional[float] = None,
+        is_granular: bool = True,
     ) -> BearingCapacityResult:
         """
         Calculate allowable bearing capacity Qa with full results.
@@ -353,6 +361,8 @@ class TerzaghiCalculator:
             shape: Foundation shape
             calculate_settlement: Whether to estimate settlement
             E: Deformation modulus in kg/cm² (for settlement calculation)
+            nspt: SPT/DPSH N value for Terzaghi-Peck empirical check (optional)
+            is_granular: Whether soil is granular (T-P only applies to granular)
 
         Returns:
             BearingCapacityResult with all calculation details
@@ -365,6 +375,27 @@ class TerzaghiCalculator:
 
         # Calculate allowable bearing capacity
         Qa = qu / self.safety_factor
+
+        # Terzaghi-Peck empirical check (Eva's practice: take the lower)
+        # Only for granular soils (cohesion ≈ 0) — T-P is not valid for
+        # cohesive soils or rock.
+        qa_tp = None
+        qa_governs = "terzaghi"
+        if nspt is not None and nspt < 100 and is_granular:
+            qa_tp = terzaghi_peck_qa(nspt, B, Df)
+            if qa_tp < Qa:
+                Qa = qa_tp
+                qa_governs = "terzaghi_peck"
+
+        # Professional practice cap (confirmed by Eva 2026-02-26):
+        # Soil: max 3.0 kg/cm², clear rock: max 4.5 kg/cm²
+        QA_CAP_SOIL = 3.0
+        QA_CAP_ROCK = 4.5
+        qa_cap = QA_CAP_ROCK if not is_granular and self.cohesion >= 0.5 else QA_CAP_SOIL
+        if Qa > qa_cap:
+            Qa = qa_cap
+            if qa_governs == "terzaghi":
+                qa_governs = "cap"
 
         # Calculate settlement if requested
         settlement = None
@@ -413,6 +444,8 @@ class TerzaghiCalculator:
             Qa=Qa,
             settlement_cm=settlement,
             settlement_type=settlement_type,
+            qa_terzaghi_peck=qa_tp,
+            qa_governs=qa_governs,
         )
 
     def _calculate_settlement(
@@ -456,6 +489,39 @@ class TerzaghiCalculator:
         settlement_cm = q * B_cm * (1 - nu**2) * Iw / E
 
         return settlement_cm
+
+
+def terzaghi_peck_qa(
+    nspt: float,
+    B: float,
+    Df: float = 0.0,
+    S_cm: float = 2.54,
+) -> float:
+    """
+    Terzaghi-Peck empirical bearing capacity for granular soils.
+
+    Formula from Eva's reports (Rodríguez Ortiz / Terzaghi & Peck):
+        Qadm = N/12 × S / ((B + 0.3) / B)² × Fd
+
+    With depth correction (Bowles, Coduto):
+        Fd = 1 + 0.33 × (Df / B), max 1.33
+
+    Only valid for granular soils (sands, gravels). NOT for cohesive
+    soils or rock.
+
+    Args:
+        nspt: SPT/DPSH N value (N20)
+        B: Foundation width in meters
+        Df: Foundation depth in meters (for depth correction)
+        S_cm: Allowable settlement in cm (default 1 inch = 2.54 cm)
+
+    Returns:
+        Allowable bearing capacity in kg/cm²
+    """
+    correction = ((B + 0.3) / B) ** 2
+    Fd = min(1 + 0.33 * (Df / B), 1.33) if B > 0 and Df > 0 else 1.0
+    qa = (nspt / 12.0) * (S_cm / 2.54) / correction * Fd
+    return qa
 
 
 def calculate_from_dpsh(

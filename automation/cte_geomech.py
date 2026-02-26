@@ -155,39 +155,33 @@ def nspt_to_E_kg_cm2(nspt: float, conservative: bool = True) -> float:
 
 def nspt_to_gamma_g_cm3(nspt: float, soil_type: str = "granular") -> float:
     """
-    Density from NSPT using CTE Table D.27 ranges.
+    Density from CTE Table D.27 "peso específico", fixed by soil type.
 
-    Maps NSPT compacity to position within the D.27 gamma range
-    for the given soil type.
+    Eva's practice: pick a representative value from D.27 by lithology,
+    not interpolate with N20. Values confirmed from 4 reference projects.
 
     Args:
-        nspt: SPT/DPSH N value
+        nspt: SPT/DPSH N value (unused — kept for API compatibility)
         soil_type: 'granular', 'cohesive', 'grava', 'arena', 'limo', 'arcilla'
 
     Returns:
         Density in g/cm³ (= T/m³)
     """
-    KN_TO_G_CM3 = 1 / 9.81  # kN/m³ to g/cm³ (≈ T/m³)
-
-    # Map soil_type to D.27 key
-    type_map = {
-        "granular": "grava",
-        "grava": "grava",
-        "arena": "arena",
-        "cohesive": "arcilla",
-        "limo": "limo",
-        "arcilla": "arcilla",
+    # Fixed values from D.27 "peso específico", matching Eva's practice:
+    # - Granulars (graves, sorres): ~2.0 g/cm³ (mid-low of D.27 range 19-22 kN/m³)
+    # - Llims/cohesive: ~1.90 g/cm³ (low of D.27 range 17-20 kN/m³)
+    # - Argiles: ~1.90 g/cm³ (conservative within 15-22 kN/m³)
+    # - Rock: handled separately by rock_params_default() → 2.20 g/cm³
+    GAMMA_BY_TYPE = {
+        "granular": 2.0,
+        "grava": 2.0,
+        "arena": 2.0,
+        "cohesive": 1.90,
+        "limo": 1.90,
+        "arcilla": 1.90,
     }
-    d27_key = type_map.get(soil_type, "arena")
-    props = TABLE_D27.get(d27_key, TABLE_D27["arena"])
 
-    gamma_min, gamma_max = props["gamma_kN_m3"]
-
-    # Use NSPT to interpolate within the range (0-50 maps to min-max)
-    ratio = min(nspt / 50.0, 1.0)
-    gamma_kN = gamma_min + ratio * (gamma_max - gamma_min)
-
-    return gamma_kN * KN_TO_G_CM3
+    return GAMMA_BY_TYPE.get(soil_type, 2.0)
 
 
 def is_rock(nspt: float, description: str = "") -> bool:
