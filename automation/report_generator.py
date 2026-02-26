@@ -194,31 +194,6 @@ class ReportGenerator:
             return None
 
         try:
-            # Calculate Terzaghi if we have geotechnical parameters
-            terzaghi_result = None
-            geotech = self.project_data.get('geotechnical', {})
-            if geotech:
-                try:
-                    calc = TerzaghiCalculator(
-                        phi=geotech.get('friction_angle_deg', 30),
-                        cohesion=0.0,  # Granular soils
-                        gamma=geotech.get('density_g_cm3', 2.0),
-                    )
-                    # Use user-provided footing dimensions or defaults
-                    B = self.user_data.get('footing_width_m', 1.0)
-                    Df = self.user_data.get('foundation_depth_m', 0.8)
-                    # Convert N20 → Nb for Terzaghi-Peck (Eva: "imprescindible")
-                    n20_raw = geotech.get('average_n20')
-                    nb_for_tp = n20_raw / 0.83 if n20_raw else None
-                    # T-P only applies to granular soils (not cohesive/rock)
-                    is_granular = geotech.get('soil_type', 'granular') != 'cohesive'
-                    terzaghi_result = calc.calculate_qa(
-                        B=B, Df=Df, shape=FootingShape.SQUARE,
-                        nspt=nb_for_tp, is_granular=is_granular,
-                    )
-                except Exception as e:
-                    self.warnings.append(f"Terzaghi calculation failed: {e}")
-
             # Auto-fill from sondeig_extracted.json: soil levels + sondeig test data
             try:
                 sondeig_path = self.project_path / 'validation' / 'sondeig_extracted.json'
@@ -250,9 +225,37 @@ class ReportGenerator:
             self.report_data = build_report_data(
                 project_data=self.project_data,
                 user_data=self.user_data,
-                terzaghi_result=terzaghi_result,
+                terzaghi_result=None,
                 project_path=str(self.project_path),
             )
+
+            # Calculate Terzaghi AFTER build_report_data (needs correct cohesion for rock cap)
+            if self.report_data.geotechnical_params:
+                try:
+                    gp = self.report_data.geotechnical_params
+                    calc = TerzaghiCalculator(
+                        phi=gp.phi,
+                        cohesion=gp.cohesion,
+                        gamma=gp.gamma,
+                    )
+                    B = self.user_data.get('footing_width_m', 1.0)
+                    Df = self.user_data.get('foundation_depth_m', 0.8)
+                    # Nb for Terzaghi-Peck
+                    avg_n20 = self.report_data.dpsh.overall_average_n20 if self.report_data.dpsh else None
+                    nb_for_tp = avg_n20 / 0.83 if avg_n20 else None
+                    # Granular if cohesion < 0.5 (consistent with rock cap logic)
+                    is_granular = gp.cohesion < 0.5
+                    # Soil type from first soil level
+                    soil_type = self.report_data.soil_levels[0].soil_type if self.report_data.soil_levels else 'granular'
+                    self.report_data.terzaghi_result = calc.calculate_qa(
+                        B=B, Df=Df, shape=FootingShape.SQUARE,
+                        E=gp.E,
+                        nspt=nb_for_tp, is_granular=is_granular,
+                        soil_type=soil_type,
+                    )
+                except Exception as e:
+                    self.warnings.append(f"Terzaghi calculation failed: {e}")
+
             return self.report_data
 
         except Exception as e:
@@ -975,7 +978,7 @@ class ReportGenerator:
                         # Manual override — use exactly what G3DT specified
                         gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20, level_soil_type)
                         phi = geomech.get('phi') or nspt_to_phi(avg_nb, level_soil_type)
-                        E = geomech.get('E') or nspt_to_E_kg_cm2(avg_nb)
+                        E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
                         cohesion = geomech.get('cohesion', 0.0)
                     elif is_rock(avg_n20, level.description):
                         # Rock detected — use CTE rock defaults
@@ -988,7 +991,7 @@ class ReportGenerator:
                         # CTE correlations for soil
                         gamma = nspt_to_gamma_g_cm3(avg_n20, level_soil_type)
                         phi = nspt_to_phi(avg_nb, level_soil_type)
-                        E = nspt_to_E_kg_cm2(avg_nb)
+                        E = nspt_to_E_kg_cm2(avg_n20)
                         cohesion = 0.0
 
                     # N display: G3DT may write "R" (refusal) instead of numeric

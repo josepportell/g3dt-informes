@@ -53,7 +53,7 @@ PROJECTS = [
             {
                 "label": "Llims argilosos (soil level)",
                 "n20": 12,
-                "soil_type": "cohesive",
+                "soil_type": "limo",
                 "cohesion": 0.0,
                 "is_foundation": False,
                 "is_rock": False,
@@ -70,7 +70,7 @@ PROJECTS = [
             {
                 "label": "Roca fracturada (foundation level)",
                 "n20": 100,
-                "soil_type": "granular",  # will be overridden by rock
+                "soil_type": "granular",  # overridden by is_rock
                 "cohesion": 1.0,
                 "is_foundation": True,
                 "is_rock": True,
@@ -116,7 +116,7 @@ PROJECTS = [
             {
                 "label": "Llims argilosos (foundation level)",
                 "n20": 13,
-                "soil_type": "cohesive",
+                "soil_type": "limo",
                 "cohesion": 0.05,
                 "is_foundation": True,
                 "is_rock": False,
@@ -157,6 +157,7 @@ PROJECTS = [
 def compute_layer(layer: dict) -> dict:
     """Compute geotechnical parameters for one layer."""
     n20 = layer["n20"]
+    nb = n20 / 0.83  # Eva: "imprescindible, DPSH → Nb dividint per 0.83"
     soil_type = layer["soil_type"]
     cohesion = layer["cohesion"]
     is_foundation = layer["is_foundation"]
@@ -168,13 +169,13 @@ def compute_layer(layer: dict) -> dict:
     else:
         gamma = nspt_to_gamma_g_cm3(n20, soil_type)
 
-    # --- phi ---
+    # --- phi (uses Nb + Schmertmann soil_type correction) ---
     if layer["is_rock"]:
         phi = rock_params_default()["phi"]
     else:
-        phi = nspt_to_phi(n20)
+        phi = nspt_to_phi(nb, soil_type)
 
-    # --- E ---
+    # --- E (uses Nb) ---
     if layer["is_rock"]:
         E = rock_params_default()["E"]
     else:
@@ -204,6 +205,9 @@ def compute_layer(layer: dict) -> dict:
             Df=0.6,
             shape=FootingShape.SQUARE,
             E=E,
+            nspt=nb,
+            is_granular=(soil_type not in ('limo', 'arcilla', 'cohesive')),
+            soil_type=soil_type,
         )
         Qa = result.Qa
         settlement_cm = result.settlement_cm
@@ -347,8 +351,8 @@ def main():
     print(f"\n{sep}")
     print("  NOTES:")
     print("  - gamma uses fixed CTE D.27 values by soil type (not N20 interpolation)")
-    print("  - phi uses CTE Table 4.1 linear interpolation")
-    print("  - E uses CTE Table D.23 conservative (min + 10% of range)")
+    print("  - phi uses Nb (N20/0.83) + Schmertmann (1970) soil_type correction + CTE 4.1")
+    print("  - E uses N20 (not Nb) + CTE Table D.23 conservative (min + 10% of range)")
     print("  - Rock params use rock_params_default() (gamma=2.20, phi=35, E=500, c=1.0)")
     print("  - K30 = E/75 (granular) or E/60 (rock)")
     print("  - Qa via Terzaghi: qu = c*Nc*sc + gamma*Df*Nq*sq + 0.5*gamma*B*Ngamma*sgamma")

@@ -350,6 +350,7 @@ class TerzaghiCalculator:
         E: Optional[float] = None,
         nspt: Optional[float] = None,
         is_granular: bool = True,
+        soil_type: str | None = None,
     ) -> BearingCapacityResult:
         """
         Calculate allowable bearing capacity Qa with full results.
@@ -392,7 +393,7 @@ class TerzaghiCalculator:
         # Eva said "4.0-4.50" but uses 5.0 in Castellar (well-defined rock)
         QA_CAP_SOIL = 3.0
         QA_CAP_ROCK = 5.0
-        qa_cap = QA_CAP_ROCK if not is_granular and self.cohesion >= 0.5 else QA_CAP_SOIL
+        qa_cap = QA_CAP_ROCK if self.cohesion >= 0.5 else QA_CAP_SOIL
         if Qa > qa_cap:
             Qa = qa_cap
             if qa_governs == "terzaghi":
@@ -403,12 +404,8 @@ class TerzaghiCalculator:
         settlement_type = "immediat"
 
         if calculate_settlement:
-            # Use provided E or estimate from N correlation
+            # Use provided E or estimate from phi
             if E is None:
-                # Rough estimate: E ≈ 10 × N (kg/cm²) for granular soils
-                # We don't have N directly, but can back-calculate from phi
-                # For phi=38°, N≈35-50, so E≈350-500 kg/cm²
-                # Use a conservative estimate based on phi
                 if self.phi < 30:
                     E = 200
                 elif self.phi < 35:
@@ -418,13 +415,34 @@ class TerzaghiCalculator:
                 else:
                     E = 500
 
-            settlement = self._calculate_settlement(Qa, B, E)
+            # Try Schmertmann (1978) if we have nspt + soil_type for qc
+            if nspt is not None and soil_type is not None:
+                try:
+                    try:
+                        from .cte_geomech import nb_to_qc
+                    except ImportError:
+                        from cte_geomech import nb_to_qc
+                    qc = nb_to_qc(nspt, soil_type)
+                    # Es depends on footing shape (Eva's methodology)
+                    if shape == FootingShape.STRIP:
+                        Es = 3.5 * qc
+                    else:
+                        Es = 2.5 * qc
+                    settlement = schmertmann_settlement(
+                        q_net=Qa, B=B, Df=Df, Es=Es,
+                        gamma=self.gamma, shape=shape,
+                    )
+                except ImportError:
+                    settlement = self._calculate_settlement(Qa, B, E)
+            else:
+                # Boussinesq fallback
+                settlement = self._calculate_settlement(Qa, B, E)
 
             # Settlement type depends on soil
-            if self.cohesion > 0.1:  # Cohesive soil
-                settlement_type = "diferit"  # Delayed (consolidation)
+            if self.cohesion > 0.1:
+                settlement_type = "diferit"
             else:
-                settlement_type = "immediat"  # Immediate (elastic)
+                settlement_type = "immediat"
 
         return BearingCapacityResult(
             phi=self.phi,
@@ -523,6 +541,67 @@ def terzaghi_peck_qa(
     Fd = min(1 + 0.33 * (Df / B), 1.33) if B > 0 and Df > 0 else 1.0
     qa = (nspt / 12.0) * (S_cm / 2.54) / correction * Fd
     return qa
+
+
+def schmertmann_settlement(
+    q_net: float,
+    B: float,
+    Df: float,
+    Es: float,
+    gamma: float = 2.0,
+    shape: FootingShape = FootingShape.SQUARE,
+) -> float:
+    """
+    Schmertmann (1978) improved settlement for granular soils.
+
+    Simplified single-layer formula:
+        s = C1 * Δq * Iz_integral / Es
+
+    Where:
+    - C1 = max(1 - 0.5 * σ'v0 / Δq, 0.5)  — depth correction
+    - Iz_integral = area under strain influence diagram:
+        Square: 0.525 * B  (influence depth 2B, peak Iz=0.5 at B/2)
+        Strip:  1.10 * B   (influence depth 4B, peak Iz=0.5 at B)
+    - Es = deformation modulus (2.5*qc for square, 3.5*qc for strip)
+
+    Args:
+        q_net: Net foundation pressure (Qa) in kg/cm²
+        B: Foundation width in meters
+        Df: Foundation depth in meters
+        Es: Secant modulus in kg/cm² (typically 2.5*qc or 3.5*qc)
+        gamma: Soil unit weight in g/cm³ (= t/m³)
+        shape: Foundation shape (SQUARE or STRIP)
+
+    Returns:
+        Settlement in cm
+
+    Reference:
+        Schmertmann, J.H. (1978). "Improved Strain Influence Factor Diagrams."
+        Eva's methodology: Es = 2.5*qc (isolated), 3.5*qc (strip).
+    """
+    if Es <= 0 or q_net <= 0:
+        return 0.0
+
+    B_cm = B * 100  # meters to cm
+
+    # Overburden pressure at foundation level (kg/cm²)
+    # gamma (g/cm³) × Df (m) → multiply by 0.1 to get kg/cm²
+    sigma_v0 = gamma * Df * 0.1
+
+    # C1: depth correction factor
+    C1 = max(1.0 - 0.5 * sigma_v0 / q_net, 0.5)
+
+    # Iz_integral: analytical area under strain influence diagram
+    if shape == FootingShape.STRIP:
+        Iz_integral = 1.10 * B_cm
+    else:
+        # Square / rectangular / circular
+        Iz_integral = 0.525 * B_cm
+
+    # Settlement
+    settlement_cm = C1 * q_net * Iz_integral / Es
+
+    return settlement_cm
 
 
 def calculate_from_dpsh(

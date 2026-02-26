@@ -156,6 +156,10 @@ def nspt_to_E_kg_cm2(nspt: float, conservative: bool = True) -> float:
     """
     Deformation modulus from NSPT using CTE Table D.23.
 
+    Note: Callers should pass N20 (not Nb). The CTE D.23 brackets are
+    calibrated for direct blow counts. Nb conversion is only needed for
+    phi (CTE Table 4.1 / Schmertmann).
+
     Args:
         nspt: SPT/DPSH N value
         conservative: If True (default), use lower portion of the CTE range
@@ -317,3 +321,33 @@ def permeability_from_type(soil_type: str) -> tuple[float, float]:
 
     # Default: sand/gravel mix
     return TABLE_D28["arena_neta_o_grava_arena"]["K_m_s"]
+
+
+# === Robertson (1983) N → qc conversion ===
+
+ROBERTSON_QC_RATIO = {
+    "grava": 8.0,
+    "arena": 4.5,
+    "granular": 4.5,
+    "arena_limosa": 3.5,
+    "limo": 2.5,
+    "cohesive": 2.5,
+    "arcilla": 1.5,
+}
+
+
+def nb_to_qc(nb: float, soil_type: str = "granular") -> float:
+    """
+    Convert Nb (SPT blow count) to cone resistance qc (kg/cm²).
+
+    Uses Robertson (1983) empirical ratios qc/N for different soil types.
+
+    Args:
+        nb: SPT/Borrows N value
+        soil_type: Soil classification
+
+    Returns:
+        qc in kg/cm²
+    """
+    ratio = ROBERTSON_QC_RATIO.get(soil_type, 4.5)
+    return nb * ratio

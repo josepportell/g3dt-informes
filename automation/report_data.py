@@ -398,7 +398,7 @@ def build_report_data(
             if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
                 gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20, soil_type)
                 phi = geomech.get('phi') or nspt_to_phi(avg_nb, soil_type)
-                E = geomech.get('E') or nspt_to_E_kg_cm2(avg_nb)
+                E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
                 cohesion = geomech.get('cohesion', 0.0)
             elif is_rock(avg_n20, rock_description):
                 rock = rock_params_default()
@@ -406,7 +406,7 @@ def build_report_data(
             else:
                 gamma = nspt_to_gamma_g_cm3(avg_n20, soil_type)
                 phi = nspt_to_phi(avg_nb, soil_type)
-                E = nspt_to_E_kg_cm2(avg_nb)
+                E = nspt_to_E_kg_cm2(avg_n20)
                 cohesion = 0.0
         except ImportError:
             # Fallback to old Peck/Hanson if cte_geomech not available
