@@ -18,6 +18,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from .cte_geomech import detect_soil_type
 from .data_schema import BUILDING_TYPES
 
 # Maps fuzzy keywords from planol extraction to canonical building types
@@ -39,7 +40,7 @@ WIZARD_FIELDS = [
     'num_floors', 'superficie_construida_m2',
     'site_description', 'access_description',
     'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
-    'is_anthropized', 'num_soil_levels', 'foundation_depth_m',
+    'is_anthropized', 'num_soil_levels', 'soil_types', 'foundation_depth_m',
     'cota_referencia', 'has_basement', 'has_retaining_walls',
 ]
 
@@ -249,6 +250,11 @@ class UserDataWizard:
                     val = geomech.get(field)
                     if val is not None:
                         self.prefills[f'geomech_{field}'] = {'value': val, 'source': source}
+            # Load soil_types as individual level prefills
+            existing_soil_types = data.get('soil_types', [])
+            for i, st in enumerate(existing_soil_types):
+                field = f'soil_type_level_{i + 1}'
+                self.prefills[field] = {'value': st, 'source': source}
         except (json.JSONDecodeError, KeyError, TypeError) as e:
             print(f'  [AVÍS: error carregant {path.name}: {e}]')
 
@@ -548,8 +554,45 @@ class UserDataWizard:
             except (ValueError, TypeError):
                 self.user_data['num_soil_levels'] = 1
 
+        # Soil type per level (auto-detected from sondeig, Eva confirms)
+        num_levels = self.user_data['num_soil_levels']
+        soil_types = []
+
+        # Load sondeig layers for description context
+        sondeig_path = self.project_path / 'validation' / 'sondeig_extracted.json'
+        sondeig_layers = []
+        if sondeig_path.exists():
+            try:
+                with open(sondeig_path, 'r', encoding='utf-8') as f:
+                    sondeig_data = json.load(f)
+                tests = sondeig_data.get('sondeig_tests', [])
+                if tests:
+                    sondeig_layers = tests[0].get('layers', [])
+            except (json.JSONDecodeError, KeyError, TypeError):
+                pass
+
+        SOIL_TYPE_OPTIONS = ['granular', 'arena', 'grava', 'arena_limosa', 'limo', 'arcilla']
+
+        for i in range(num_levels):
+            # Auto-detect from sondeig description
+            if i < len(sondeig_layers):
+                desc = sondeig_layers[i].get('description', '')
+                auto = detect_soil_type(desc)
+                label = f'Tipus s\u00f2l nivell {i + 1} ({desc[:40]})'
+            else:
+                auto = 'granular'
+                label = f'Tipus s\u00f2l nivell {i + 1}'
+
+            field_name = f'soil_type_level_{i + 1}'
+            if field_name not in self.prefills:
+                self.prefills[field_name] = {'value': auto, 'source': 'auto-detecci\u00f3 descripci\u00f3'}
+            result = self.ask_choice(field_name, label, SOIL_TYPE_OPTIONS, 14 + i)
+            soil_types.append(result)
+
+        self.user_data['soil_types'] = soil_types
+
         result_fd = self.ask_confirm(
-            'foundation_depth_m', 'Profunditat fonamentaci\u00f3 (m)', 14
+            'foundation_depth_m', 'Profunditat fonamentaci\u00f3 (m)', 14 + num_levels
         )
         try:
             self.user_data['foundation_depth_m'] = float(
@@ -559,13 +602,13 @@ class UserDataWizard:
             self.user_data['foundation_depth_m'] = 0.3
 
         self.user_data['cota_referencia'] = self.ask_input(
-            'cota_referencia', 'Cota refer\u00e8ncia (abs: +569.50 / rel: -4.0 / buit=ICGC)', 15
+            'cota_referencia', 'Cota refer\u00e8ncia (abs: +569.50 / rel: -4.0 / buit=ICGC)', 15 + num_levels
         )
         self.user_data['has_basement'] = self.ask_bool(
-            'has_basement', 'Planta soterrani (activa \u00a74.4 empentes)', 16
+            'has_basement', 'Planta soterrani (activa \u00a74.4 empentes)', 16 + num_levels
         )
         self.user_data['has_retaining_walls'] = self.ask_bool(
-            'has_retaining_walls', 'Murs de contenci\u00f3 (activa \u00a74.4 empentes)', 17
+            'has_retaining_walls', 'Murs de contenci\u00f3 (activa \u00a74.4 empentes)', 17 + num_levels
         )
 
         # Group 4: EXPERT OVERRIDES (optional)

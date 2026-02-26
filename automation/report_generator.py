@@ -969,10 +969,7 @@ class ReportGenerator:
                     # Convert N20 → Nb for correlations (Eva: "imprescindible")
                     avg_nb = avg_n20 / 0.83 if avg_n20 else 0
                     # Determine soil type from level description
-                    desc_lower = (level.description or '').lower()
-                    level_soil_type = 'granular'
-                    if any(w in desc_lower for w in ('llim', 'argil', 'silt', 'clay', 'marga')):
-                        level_soil_type = 'cohesive'
+                    level_soil_type = level.soil_type
 
                     if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
                         # Manual override — use exactly what G3DT specified

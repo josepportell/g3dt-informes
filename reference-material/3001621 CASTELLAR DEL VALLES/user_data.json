@@ -1,7 +1,7 @@
 {
   "architect_name": "",
   "architect_company": "",
-  "building_type": "habitatge unifamiliar",
+  "building_type": "Habitatge aïllat",
   "site_description": "Solar amb pendent pronunciada (36%), vegetació abundant, edificacions veïnes al nord i est",
   "access_description": "Des del carrer Arbrells al sud de la parcel·la",
   "adjacent_north": "Parcel·les sense construir, amb herbes altes i arbres, així com una parcel·la amb planta baixa i una planta pis, paral·lela al carrer Turó Roig",
@@ -14,7 +14,7 @@
   "utm_x": 423182.0,
   "utm_y": 4609623.0,
   "_metadata": {
-    "generated_at": "2026-02-24T17:35:00",
+    "generated_at": "2026-02-26T17:31:08",
     "wizard_used": true,
     "updated_at": "2026-02-25",
     "updated_by": "auto_extract + test defaults"
@@ -76,5 +76,12 @@
   "referencia_catastral": "",
   "municipio": "Castellar del Vallès",
   "provincia": "Barcelona",
-  "comarca": "Vallès Occidental"
+  "comarca": "Vallès Occidental",
+  "superficie_construida_m2": 0.0,
+  "soil_types": [
+    "grava",
+    "granular"
+  ],
+  "has_basement": false,
+  "has_retaining_walls": false
 }

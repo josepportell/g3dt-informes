@@ -264,6 +264,36 @@ def rock_params_default() -> dict:
     }
 
 
+# === Soil type auto-detection from lithological description ===
+
+SOIL_TYPE_KEYWORDS = {
+    "arena_limosa": ["sorra limosa", "arena limosa", "sorr.*llim"],
+    "grava": ["grav", "gravel"],
+    "arena": ["sorr", "arena", "sand"],
+    "limo": ["llim", "silt", "marga"],
+    "arcilla": ["argil", "clay", "argila"],
+}
+
+
+def detect_soil_type(description: str) -> str:
+    """Auto-detect soil type from lithological description.
+
+    Checks most specific patterns first (arena_limosa before arena).
+
+    Returns: 'grava', 'arena', 'arena_limosa', 'limo', 'arcilla', or 'granular'
+    """
+    import re
+    desc = description.lower()
+    for soil_type, keywords in SOIL_TYPE_KEYWORDS.items():
+        for kw in keywords:
+            if '.*' in kw:
+                if re.search(kw, desc):
+                    return soil_type
+            elif kw in desc:
+                return soil_type
+    return "granular"
+
+
 def permeability_from_type(soil_type: str) -> tuple[float, float]:
     """
     Permeability range from CTE Table D.28.

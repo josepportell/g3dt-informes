@@ -57,6 +57,7 @@ class SoilLevel:
     depth_to_m: float | None = None  # Bottom of layer (None = unknown/continues)
     n20_min: float | None = None  # Min N20 in layer (excl. refusal)
     n20_max: float | None = None  # Max N20 in layer (100 = refusal)
+    soil_type: str = "granular"     # granular/arena/grava/arena_limosa/limo/arcilla
 
 
 @dataclass
@@ -384,12 +385,15 @@ def build_report_data(
             if not rock_description:
                 rock_description = user_data.get('icgc_unit_description', '')
 
-            # Determine soil type for Schmertmann correction
-            soil_type = user_data.get('soil_type', 'granular')
-            if soil_type == 'granular' and rock_description:
-                desc_lower = rock_description.lower()
-                if any(w in desc_lower for w in ('llim', 'argil', 'silt', 'clay', 'marga')):
-                    soil_type = 'cohesive'
+            # Determine soil type: use first level from wizard, fallback to auto-detection
+            from .cte_geomech import detect_soil_type
+            soil_types_list = user_data.get('soil_types', [])
+            if soil_types_list:
+                soil_type = soil_types_list[0]
+            elif rock_description:
+                soil_type = detect_soil_type(rock_description)
+            else:
+                soil_type = 'granular'
 
             if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
                 gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20, soil_type)
@@ -419,6 +423,7 @@ def build_report_data(
         dpsh_data,
         user_data.get('num_soil_levels', 1),
         user_data.get('sondeig_layers'),
+        user_data.get('soil_types'),
     )
 
     # Merge levels if Eva has flagged it
@@ -600,6 +605,7 @@ def to_dict(report_data: ReportData) -> dict[str, Any]:
                 'depth_to_m': level.depth_to_m,
                 'n20_min': level.n20_min,
                 'n20_max': level.n20_max,
+                'soil_type': level.soil_type,
             }
             for level in report_data.soil_levels
         ],
@@ -676,6 +682,7 @@ def from_dict(data: dict[str, Any]) -> ReportData:
             depth_to_m=sl.get('depth_to_m'),
             n20_min=sl.get('n20_min'),
             n20_max=sl.get('n20_max'),
+            soil_type=sl.get('soil_type', 'granular'),
         )
         for sl in data.get('soil_levels', [])
     ]
@@ -849,6 +856,7 @@ def _generate_soil_levels(
     dpsh_data: DPSHData | None,
     num_levels: int,
     sondeig_layers: list[dict] | None = None,
+    soil_types: list[str] | None = None,
 ) -> list[SoilLevel]:
     """
     Genera nivells de sòl a partir de les capes del sondeig i lectures DPSH.
@@ -857,6 +865,8 @@ def _generate_soil_levels(
     DPSH per rang de profunditat i calculem N20 mitjana per capa.
     Si no, retornem un sol nivell amb la mitjana global.
     """
+    from .cte_geomech import detect_soil_type
+
     if not dpsh_data or not dpsh_data.tests:
         return []
 
@@ -884,6 +894,9 @@ def _generate_soil_levels(
             n20_min = min(layer_n20) if layer_n20 else None
             n20_max = max(layer_n20) if layer_n20 else None
 
+            # Determine soil_type: wizard override > auto-detection
+            st = soil_types[i] if soil_types and i < len(soil_types) else detect_soil_type(description)
+
             levels.append(SoilLevel(
                 level_number=i + 1,
                 description=description,
@@ -893,12 +906,14 @@ def _generate_soil_levels(
                 depth_to_m=depth_to if depth_to > 0 else None,
                 n20_min=n20_min,
                 n20_max=n20_max,
+                soil_type=st,
             ))
         return levels
 
     # Fallback: single level with global average
     max_depth = max((abs(r.depth_m) for r in all_readings), default=0)
     all_n20 = [r.n20 for r in all_readings]
+    st = soil_types[0] if soil_types else "granular"
     return [
         SoilLevel(
             level_number=1,
@@ -909,6 +924,7 @@ def _generate_soil_levels(
             depth_to_m=max_depth if max_depth > 0 else None,
             n20_min=min(all_n20) if all_n20 else None,
             n20_max=max(all_n20) if all_n20 else None,
+            soil_type=st,
         )
     ]
 
@@ -958,6 +974,7 @@ def _merge_soil_levels(levels: list[SoilLevel]) -> list[SoilLevel]:
         depth_to_m=depth_to,
         n20_min=min(all_mins) if all_mins else None,
         n20_max=max(all_maxs) if all_maxs else None,
+        soil_type=levels[0].soil_type,
     )]
 
 
