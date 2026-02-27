@@ -126,7 +126,7 @@ class ReportData:
     is_sloped: bool = False
     slope_percent: float | None = None  # Pendent del terreny (%)
     slope_direction: str | None = None  # Direcció dominant del pendent
-    is_anthropized: bool = False  # Solar antropitzat (urbanitzat/modificat)
+    is_anthropized: bool = True  # Solar antropitzat (urbanitzat/modificat)
     slope_height_m: float | None = None  # Alçada del talús (m), per Hoek & Bray
 
     # Dades d'assaig (de dpsh_extractor)
@@ -431,11 +431,17 @@ def build_report_data(
         soil_levels = _merge_soil_levels(soil_levels)
 
     # Determina classes CTE
-    cte_building_class = classify_building(
-        area_m2=user_data.get('superficie_construida_m2', 0),
-        floors=user_data.get('num_floors', 'Pb'),
-        has_basement=user_data.get('has_basement', False),
-    )
+    # If both area and floors are missing/default, C-1 is a safe default
+    _area = user_data.get('superficie_construida_m2', 0)
+    _floors = user_data.get('num_floors', '')
+    if not _area and not _floors:
+        cte_building_class = "C-1"
+    else:
+        cte_building_class = classify_building(
+            area_m2=_area,
+            floors=_floors or 'Pb',
+            has_basement=user_data.get('has_basement', False),
+        )
     cte_soil_class = _determine_soil_class(dpsh_data)
 
     # Determina seccions condicionals
@@ -485,7 +491,7 @@ def build_report_data(
         slope_percent=user_data.get('slope_percent'),
         slope_direction=user_data.get('slope_direction'),
         slope_height_m=user_data.get('slope_height_m'),
-        is_anthropized=user_data.get('is_anthropized', False),
+        is_anthropized=user_data.get('is_anthropized', True),
         # Dades assaig
         dpsh=dpsh_data,
         sondeig_tests=user_data.get('sondeig_tests'),
@@ -750,7 +756,7 @@ def from_dict(data: dict[str, Any]) -> ReportData:
         slope_percent=site.get('slope_percent'),
         slope_direction=site.get('slope_direction'),
         slope_height_m=site.get('slope_height_m'),
-        is_anthropized=site.get('is_anthropized', False),
+        is_anthropized=site.get('is_anthropized', True),
         dpsh=dpsh_data,
         has_sondeig=tests.get('has_sondeig', False),
         has_spt=tests.get('has_spt', False),

@@ -519,7 +519,7 @@ class ReportGenerator:
             elif num_floors_raw.startswith('PS'):
                 context['building_structure_desc'] = 'de soterrani'
             else:
-                context['building_structure_desc'] = self.report_data.building_type or 'una estructura'
+                context['building_structure_desc'] = self.report_data.building_type or 'en planta baixa'
 
             # Municipality uppercase
             context['municipality_upper'] = (self.report_data.municipality or '').upper()

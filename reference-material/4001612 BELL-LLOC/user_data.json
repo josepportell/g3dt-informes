@@ -1,0 +1,21 @@
+{
+    "architect_name": "Jordi Bosch Novell",
+    "architect_company": "Arquitectura Bosch Novell",
+    "building_type": "Habitatge aïllat",
+    "num_floors": "Pb+1Pp",
+    "superficie_parcela_m2": 995,
+    "superficie_construida_m2": 366,
+    "street_address": "Carrer Antoni Bellet, Bell-Lloc d'Urgell",
+    "adjacent_north": "Parcel·la buida",
+    "adjacent_south": "Carrer Antoni Bellet",
+    "adjacent_east": "Carrer Mestre Ramon Ortiz",
+    "adjacent_west": "Parcel·la amb construcció aïllada de fins a dos plantes sobre rasant",
+    "site_description": "Parcel·la delimitada per tanques de parcel·les veïnes, anivellada a la rasant del carrer, només uns 15 cm per sota, sense pavimentar, i amb vegetació de petita alçada",
+    "access_description": "Des del Carrer existent al sud",
+    "is_anthropized": true,
+    "num_soil_levels": 1,
+    "foundation_depth_m": 0.3,
+    "has_sondeig": true,
+    "field_work_dates": ["2025-10-01", "2025-10-06"],
+    "cota_referencia": "+199.50"
+}

@@ -1,0 +1,64 @@
+{
+    "source_file": "SONDEIG.pdf",
+    "extraction_date": "2026-02-27T10:00:00",
+    "extraction_method": "claude_vision",
+    "overall_confidence": 0.93,
+    "status": "pending_review",
+    "metadata": {
+        "date": "6-10-2025",
+        "date_end": "6-10-2025",
+        "location": "Bell-Lloc d'Urgell",
+        "address": "C/Antoni Bellet",
+        "operator": "Daniel Fernández",
+        "equipment": "ML-76A",
+        "drill_type": "BW 101",
+        "client": "G3 - Eva",
+        "responsible": "Eva Vázquez Marcet, Geòlega núm. 4302",
+        "company": "TPS, S.L.",
+        "cota_z": 199.50
+    },
+    "sondeig_tests": [
+        {
+            "test_id": "S-1",
+            "total_depth_m": 1.80,
+            "layers": [
+                {
+                    "depth_from_m": 0.0,
+                    "depth_to_m": 1.0,
+                    "description": "Llims argilosos amb graves cohesives de coloració marronosa",
+                    "description_field_sheet": "Graves con arenes",
+                    "confidence": 0.95,
+                    "note": "Field sheet says 'Graves con arenes'; reference report has fuller description with 'llims argilosos'"
+                },
+                {
+                    "depth_from_m": 1.0,
+                    "depth_to_m": 1.80,
+                    "description": "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clars. Tram totalment carbonatat.",
+                    "description_field_sheet": "Graves carbonatades",
+                    "confidence": 0.95,
+                    "note": "Field sheet shorthand 'Graves carbonatades' matches reference 'aspectes carbonatats'"
+                }
+            ],
+            "spt_results": [
+                {
+                    "test_name": "SPT-1",
+                    "depth_from_m": 1.00,
+                    "depth_to_m": 1.60,
+                    "blows": [24, 34, 28, 30],
+                    "blows_note": "4 values for 60cm test (4x15cm). Standard NSPT = N2+N3 = 34+28 = 62. The 4th value (30) is the last 15cm drive. Reference annex confirms all 4 values.",
+                    "n_spt": 62,
+                    "n_spt_note": "Calculated as N2+N3 (standard). Verify with Eva: Bell-Lloc reference table shows N=54 which does not match 62. Possible different convention.",
+                    "confidence": 0.90
+                }
+            ],
+            "water_level_m": null,
+            "water_level_note": "No water level detected. Field sheet text near 'Nivell Freàtic' unclear but reference annex shows no water.",
+            "rock_depth_m": null,
+            "rock_note": "No rock sensu stricto, but layer 2 (1.0-1.80m) is 'totalment carbonatat' = cemented gravels behaving as soft rock",
+            "extraction_notes": "Single borehole. Field sheet (p2, rotated 90°) cross-referenced with Eva's final annex (4001612_sondeig.pdf). Layer descriptions taken from reference annex (more detailed). Location sketch (p3): S-1 positioned 4.2m x 11m from parcel corners, between C/Antoni Bellet and C/Mestre Ramon Ortiz."
+        }
+    ],
+    "reviewer_notes": "IMPORTANT: NSPT=62 (standard calc) vs N=54 in Eva's reference table. Ask Eva which convention she uses for the 4-value 60cm SPT test.",
+    "approved_by": "",
+    "approval_date": null
+}
