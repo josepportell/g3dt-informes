@@ -60,19 +60,10 @@ PROJECT_SPECIFIC = [
     "Jordi bosch", "ramon mitjana",
 ]
 
-# Patterns that signal Eva-dependent values (PINK).
-EVA_PATTERNS = [
-    "3.18", "3,18",        # Qa differs from reference 3.0
-    "188", "345",          # E values divergent from reference 650
-    "0.72", "0,72",        # settlement value
-    "3.7", "3,7",          # K30 value
-]
-
-# Broader Eva keywords -- if a paragraph contains BOTH a number AND one of
-# these words, it is likely an Eva-dependent geotechnical parameter.
-EVA_KEYWORDS = [
-    "permeabilitat", "coeficient de balast",
-]
+# Eva-dependent patterns: REMOVED.
+# The wizard now asks Eva to confirm/edit key parameters (Qa, E, Es, K30)
+# before the report is generated. By the time the audit runs, these values
+# are Eva-approved. They classify normally via best_match().
 
 # Known dynamic value patterns: short strings rendered from Jinja template
 # variables that should be classified as dynamic (groc), not template (verd).
@@ -140,16 +131,7 @@ def contains_project_specific(text: str) -> bool:
     return contains_any(text, PROJECT_SPECIFIC)
 
 
-def is_eva_dependent(text: str) -> bool:
-    """Check if text contains Eva-dependent values."""
-    # Direct pattern match
-    if contains_any(text, EVA_PATTERNS, case_sensitive=True):
-        return True
-    # Keyword + number combination
-    low = text.lower()
-    if any(kw in low for kw in EVA_KEYWORDS) and re.search(r"\d", text):
-        return True
-    return False
+# is_eva_dependent() removed — wizard handles Eva confirmation pre-generation.
 
 
 def is_dynamic_value(text: str) -> bool:
@@ -341,11 +323,7 @@ def classify_text(text: str, reference_pool: list[str]) -> tuple[str, str, float
 
     stripped = text.strip()
 
-    # 1) Eva-dependent values take priority
-    if is_eva_dependent(stripped):
-        return CAT_PINK, "[NOTA: Valor pendent confirmacio Eva]", 0.0
-
-    # 2) Template expansion (geology regional)
+    # 1) Template expansion (geology regional)
     #    But only for longer descriptive paragraphs, not short mentions
     if is_template_expansion(stripped) and len(stripped) > 60:
         return CAT_ORANGE, "[NOTA: Template geologic regional -- cal ampliar per altres municipis]", 0.0
