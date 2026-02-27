@@ -1,0 +1,18 @@
+[project]
+name = "g3dt"
+version = "0.7.0"
+description = "G3DT - Automatització d'Informes Geotècnics"
+requires-python = ">=3.11"
+dependencies = [
+    "docxtpl>=0.16",
+    "xlrd>=2.0",
+    "pydantic>=2.0",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+]
+
+[project.optional-dependencies]
+pdf = ["pymupdf>=1.24"]
+
+[tool.uv]
+dev-dependencies = []

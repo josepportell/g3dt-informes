@@ -1,0 +1,108 @@
+"""
+FastAPI router with all API endpoints for the G3DT web wizard.
+"""
+
+from __future__ import annotations
+
+import logging
+from pathlib import Path
+from typing import Any
+
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
+from pydantic import BaseModel
+
+from . import wizard_service
+
+logger = logging.getLogger(__name__)
+
+router = APIRouter(prefix="/api")
+
+
+# --- Request/response models ---
+
+class WizardSaveRequest(BaseModel):
+    wizard_fields: dict[str, Any]
+    expert_overrides: dict[str, Any] | None = None
+
+
+class GenerateResponse(BaseModel):
+    success: bool
+    output_name: str | None = None
+    errors: list[str] = []
+    warnings: list[str] = []
+
+
+# --- Endpoints ---
+
+@router.get("/projects")
+def list_projects():
+    """List available projects from reference-material/."""
+    return wizard_service.list_projects()
+
+
+@router.get("/prefills/{project_name:path}")
+def get_prefills(project_name: str, refresh: bool = False):
+    """Get auto-extracted + wizard prefills for a project."""
+    try:
+        return wizard_service.get_prefills(project_name, force_refresh=refresh)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.exception("Error getting prefills for %s", project_name)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/user-data/{project_name:path}")
+def get_user_data(project_name: str):
+    """Read existing user_data.json for a project."""
+    try:
+        return wizard_service.load_user_data(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@router.post("/wizard/{project_name:path}")
+def save_wizard(project_name: str, req: WizardSaveRequest):
+    """Save wizard data to user_data.json."""
+    try:
+        path = wizard_service.save_wizard(
+            project_name, req.wizard_fields, req.expert_overrides
+        )
+        return {"saved": True, "path": str(path)}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.exception("Error saving wizard for %s", project_name)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/generate/{project_name:path}", response_model=GenerateResponse)
+def generate_report(project_name: str):
+    """Generate the geotechnical report .docx."""
+    try:
+        result = wizard_service.generate_report(project_name)
+        return GenerateResponse(**result)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.exception("Error generating report for %s", project_name)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/report/{project_name:path}")
+def download_report(project_name: str):
+    """Download the generated .docx report."""
+    try:
+        report_path = wizard_service.find_report(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    if not report_path or not report_path.exists():
+        raise HTTPException(status_code=404, detail="Informe no trobat. Genera'l primer.")
+
+    return FileResponse(
+        path=str(report_path),
+        filename=report_path.name,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    )

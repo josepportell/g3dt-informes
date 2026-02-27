@@ -713,6 +713,239 @@
         .planol-form-table tr:hover {
             background-color: #f8f9fa;
         }
+        /* === Wizard Tab Styles === */
+        .project-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: #eaf2fa;
+            border-radius: 8px;
+            border: 1px solid #b8d4f0;
+        }
+        .project-selector label {
+            font-weight: 600;
+            color: #2c3e50;
+            white-space: nowrap;
+        }
+        .project-selector select {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #b8d4f0;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            max-width: 400px;
+        }
+        .wizard-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e0e0e0;
+            border-top-color: #3498db;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .wizard-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .wizard-group {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .wizard-group-header {
+            background: #f8f9fa;
+            padding: 12px 16px;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: default;
+        }
+        .wizard-group-header.collapsible {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .wizard-group-header.collapsible:hover {
+            background: #ecf0f1;
+        }
+        .wizard-group-body {
+            padding: 16px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .wizard-group-body.collapsed {
+            display: none;
+        }
+        .wizard-group-body.single-col {
+            grid-template-columns: 1fr;
+        }
+        .wizard-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .wizard-field.full-width {
+            grid-column: 1 / -1;
+        }
+        .wizard-field label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+        }
+        .wizard-field input,
+        .wizard-field select,
+        .wizard-field textarea {
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .wizard-field input:focus,
+        .wizard-field select:focus,
+        .wizard-field textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52,152,219,0.15);
+        }
+        .wizard-field textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+        .wizard-field .has-user-value {
+            border-color: #27ae60;
+            background: #f0faf3;
+        }
+        .source-badge {
+            display: inline-block;
+            font-size: 11px;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        .source-badge.auto {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .source-badge.user {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .source-badge.default {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+        .toggle-switch-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 0;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: none;
+            padding: 0;
+        }
+        .toggle-switch.active {
+            background: #27ae60;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+        .toggle-switch-label {
+            font-size: 14px;
+            color: #333;
+        }
+        .soil-levels-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .soil-level-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .soil-level-row label {
+            min-width: 70px;
+            font-size: 13px;
+        }
+        .soil-level-row select {
+            flex: 1;
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .wizard-actions {
+            display: flex;
+            gap: 12px;
+            padding: 20px 0 0;
+            border-top: 2px solid #e0e0e0;
+        }
+        .wizard-result {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+        }
+        .wizard-result.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wizard-result.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .wizard-result a {
+            color: #155724;
+            font-weight: 600;
+        }
+        .wizard-unsaved {
+            color: #e67e22;
+            font-size: 13px;
+            font-weight: 600;
+            display: none;
+        }
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
@@ -752,6 +985,15 @@
             <span id="statusBadge" class="status-badge status-pending">Pendent de revisio</span>
         </header>
 
+        <!-- Project Selector (for Wizard tab) -->
+        <div class="project-selector" id="projectSelector">
+            <label for="projectSelect">Projecte:</label>
+            <select id="projectSelect" onchange="onProjectChange(this.value)">
+                <option value="">-- Selecciona projecte --</option>
+            </select>
+            <span class="wizard-unsaved" id="wizardUnsaved">Canvis sense guardar</span>
+        </div>
+
         <div id="message" class="message"></div>
 
         <div class="file-controls">
@@ -776,6 +1018,7 @@
                 <button class="tab" id="tab-dpsh" data-tab="dpsh" onclick="switchTab('dpsh')">DPSH</button>
                 <button class="tab" id="tab-sondeig" data-tab="sondeig" onclick="switchTab('sondeig')">Sondeig</button>
                 <button class="tab" id="tab-planol" data-tab="planol" onclick="switchTab('planol')">Planol</button>
+                <button class="tab disabled" id="tab-wizard" data-tab="wizard" onclick="switchTab('wizard')">Wizard</button>
             </div>
 
             <div id="noExcelWarning" class="no-excel-warning" style="display:none;">
@@ -877,6 +1120,180 @@
                 <div id="planolContainer"></div>
             </div>
 
+            <!-- Wizard Tab Content -->
+            <div class="tab-content" id="wizard-content">
+                <div id="wizardLoading" class="wizard-loading" style="display:none;">
+                    <div class="spinner"></div>
+                    <span>Carregant dades del projecte...</span>
+                </div>
+                <div id="wizardForm" style="display:none;">
+                    <div class="wizard-form">
+                        <!-- Group 1: Dades del Projecte -->
+                        <div class="wizard-group">
+                            <div class="wizard-group-header">Dades del Projecte</div>
+                            <div class="wizard-group-body">
+                                <div class="wizard-field">
+                                    <label>Arquitecte <span class="source-badge" id="src-architect_name"></span></label>
+                                    <input type="text" id="wiz-architect_name" data-field="architect_name" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Empresa arquitecte <span class="source-badge" id="src-architect_company"></span></label>
+                                    <input type="text" id="wiz-architect_company" data-field="architect_company" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Tipus edificacio <span class="source-badge" id="src-building_type"></span></label>
+                                    <select id="wiz-building_type" data-field="building_type" onchange="markWizardDirty()">
+                                        <option value="">-- Selecciona --</option>
+                                        <option value="Habitatge aïllat">Habitatge aillat</option>
+                                        <option value="Habitatge plurifamiliar">Habitatge plurifamiliar</option>
+                                        <option value="Nau industrial">Nau industrial</option>
+                                        <option value="Edifici comercial">Edifici comercial</option>
+                                        <option value="Edifici públic">Edifici public</option>
+                                    </select>
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Plantes (ex: Pb + 1Pp) <span class="source-badge" id="src-num_floors"></span></label>
+                                    <input type="text" id="wiz-num_floors" data-field="num_floors" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Superficie construida (m2) <span class="source-badge" id="src-superficie_construida_m2"></span></label>
+                                    <input type="number" step="0.1" id="wiz-superficie_construida_m2" data-field="superficie_construida_m2" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Descripcio del terreny <span class="source-badge" id="src-site_description"></span></label>
+                                    <textarea id="wiz-site_description" data-field="site_description" onchange="markWizardDirty()"></textarea>
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Descripcio d'acces <span class="source-badge" id="src-access_description"></span></label>
+                                    <textarea id="wiz-access_description" data-field="access_description" onchange="markWizardDirty()"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Group 2: Adjacents -->
+                        <div class="wizard-group">
+                            <div class="wizard-group-header">Adjacents</div>
+                            <div class="wizard-group-body">
+                                <div class="wizard-field">
+                                    <label>Nord <span class="source-badge" id="src-adjacent_north"></span></label>
+                                    <input type="text" id="wiz-adjacent_north" data-field="adjacent_north" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Sud <span class="source-badge" id="src-adjacent_south"></span></label>
+                                    <input type="text" id="wiz-adjacent_south" data-field="adjacent_south" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Est <span class="source-badge" id="src-adjacent_east"></span></label>
+                                    <input type="text" id="wiz-adjacent_east" data-field="adjacent_east" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Oest <span class="source-badge" id="src-adjacent_west"></span></label>
+                                    <input type="text" id="wiz-adjacent_west" data-field="adjacent_west" onchange="markWizardDirty()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Group 3: Parametres -->
+                        <div class="wizard-group">
+                            <div class="wizard-group-header">Parametres</div>
+                            <div class="wizard-group-body">
+                                <div class="wizard-field">
+                                    <label>Terreny antropitzat <span class="source-badge" id="src-is_anthropized"></span></label>
+                                    <div class="toggle-switch-container">
+                                        <button type="button" class="toggle-switch active" id="wiz-is_anthropized" onclick="toggleSwitch(this); markWizardDirty()"></button>
+                                        <span class="toggle-switch-label" id="wiz-is_anthropized-label">Si</span>
+                                    </div>
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Nivells de sol <span class="source-badge" id="src-num_soil_levels"></span></label>
+                                    <input type="number" min="1" max="10" id="wiz-num_soil_levels" data-field="num_soil_levels" value="1"
+                                           onchange="updateSoilLevelSelectors(); markWizardDirty()">
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Tipus sol per nivell</label>
+                                    <div class="soil-levels-container" id="soilLevelsContainer"></div>
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Profunditat fonamentacio (m) <span class="source-badge" id="src-foundation_depth_m"></span></label>
+                                    <input type="number" step="0.1" id="wiz-foundation_depth_m" data-field="foundation_depth_m" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Cota referencia <span class="source-badge" id="src-cota_referencia"></span></label>
+                                    <input type="text" id="wiz-cota_referencia" data-field="cota_referencia" placeholder="abs: +569.50 / rel: -4.0 / buit=ICGC" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Planta soterrani <span class="source-badge" id="src-has_basement"></span></label>
+                                    <div class="toggle-switch-container">
+                                        <button type="button" class="toggle-switch" id="wiz-has_basement" onclick="toggleSwitch(this); markWizardDirty()"></button>
+                                        <span class="toggle-switch-label" id="wiz-has_basement-label">No</span>
+                                    </div>
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Murs de contencio <span class="source-badge" id="src-has_retaining_walls"></span></label>
+                                    <div class="toggle-switch-container">
+                                        <button type="button" class="toggle-switch" id="wiz-has_retaining_walls" onclick="toggleSwitch(this); markWizardDirty()"></button>
+                                        <span class="toggle-switch-label" id="wiz-has_retaining_walls-label">No</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Group 4: Expert Overrides (collapsible) -->
+                        <div class="wizard-group">
+                            <div class="wizard-group-header collapsible" onclick="toggleWizardGroup(this)">
+                                <span class="collapsed-arrow">&#9654;</span>
+                                Overrides Experts (opcional)
+                            </div>
+                            <div class="wizard-group-body single-col collapsed" id="expertOverridesBody">
+                                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px;">
+                                    <div class="wizard-field">
+                                        <label>Codi unitat ICGC <span class="source-badge" id="src-icgc_unit_code"></span></label>
+                                        <input type="text" id="wiz-icgc_unit_code" placeholder="ex: ECbc, Tm2" onchange="markWizardDirty()">
+                                    </div>
+                                    <div class="wizard-field">
+                                        <label>Descripcio unitat ICGC</label>
+                                        <input type="text" id="wiz-icgc_unit_description" onchange="markWizardDirty()">
+                                    </div>
+                                    <div class="wizard-field">
+                                        <label>Epoca ICGC</label>
+                                        <input type="text" id="wiz-icgc_unit_epoch" placeholder="ex: Eoce, Triasic" onchange="markWizardDirty()">
+                                    </div>
+                                    <div class="wizard-field">
+                                        <label>gamma densitat (g/cm3) <span class="source-badge" id="src-geomech_gamma"></span></label>
+                                        <input type="number" step="0.01" id="wiz-geomech_gamma" placeholder="ex: 2.20" onchange="markWizardDirty()">
+                                    </div>
+                                    <div class="wizard-field">
+                                        <label>c cohesio (kg/cm2) <span class="source-badge" id="src-geomech_cohesion"></span></label>
+                                        <input type="number" step="0.01" id="wiz-geomech_cohesion" placeholder="ex: 1.0" onchange="markWizardDirty()">
+                                    </div>
+                                    <div class="wizard-field">
+                                        <label>phi angle friccio (graus) <span class="source-badge" id="src-geomech_phi"></span></label>
+                                        <input type="number" step="0.1" id="wiz-geomech_phi" placeholder="ex: 35" onchange="markWizardDirty()">
+                                    </div>
+                                    <div class="wizard-field">
+                                        <label>E modul deformacio (kg/cm2) <span class="source-badge" id="src-geomech_E"></span></label>
+                                        <input type="number" step="1" id="wiz-geomech_E" placeholder="ex: 500" onchange="markWizardDirty()">
+                                    </div>
+                                    <div class="wizard-field">
+                                        <label>Es assentament Schmertmann (kg/cm2) <span class="source-badge" id="src-Es_settlement"></span></label>
+                                        <input type="number" step="1" id="wiz-Es_settlement" placeholder="auto: 2.5xNb" onchange="markWizardDirty()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="wizard-actions">
+                            <button class="btn btn-primary" id="btnSaveWizard" onclick="saveWizard()">Guardar Dades</button>
+                            <button class="btn btn-success" id="btnGenerateReport" onclick="generateReport()">Generar Informe</button>
+                        </div>
+
+                        <!-- Result area -->
+                        <div class="wizard-result" id="wizardResult" style="display:none;"></div>
+                    </div>
+                </div>
+            </div>
+
             <div class="approval-section">
                 <div class="approval-form">
                     <label for="approverName">Revisat per:</label>
@@ -899,6 +1316,13 @@
         let decisions = {};
         let currentTab = 'dpsh';
         let availableTabs = [];
+
+        // Wizard state
+        let selectedProject = '';
+        let wizardPrefills = {};
+        let wizardUserData = {};
+        let wizardDataLoaded = false;
+        let wizardDirty = false;
 
         // HTML escaping for XSS prevention
         function escapeHtml(text) {
@@ -963,28 +1387,40 @@
             const viewToggle = document.querySelector('.view-toggle');
             viewToggle.style.display = (tabName === 'dpsh' && hasExcelComparison()) ? 'flex' : 'none';
 
+            // Lazy-load wizard data on first switch
+            if (tabName === 'wizard' && selectedProject && !wizardDataLoaded) {
+                loadWizardData();
+            }
+
             // Update stats for current tab
-            updateStatsForTab(tabName);
+            if (tabName !== 'wizard') {
+                updateStatsForTab(tabName);
+            }
         }
 
         function detectAvailableTabs() {
             availableTabs = [];
-            if (currentData.dpsh_tests && currentData.dpsh_tests.length > 0) {
+            if (currentData && currentData.dpsh_tests && currentData.dpsh_tests.length > 0) {
                 availableTabs.push('dpsh');
             }
-            if (currentData.sondeig_tests && currentData.sondeig_tests.length > 0) {
+            if (currentData && currentData.sondeig_tests && currentData.sondeig_tests.length > 0) {
                 availableTabs.push('sondeig');
             }
-            if (currentData.architect_data) {
+            if (currentData && currentData.architect_data) {
                 availableTabs.push('planol');
+            }
+            // Wizard tab available when a project is selected
+            if (selectedProject) {
+                availableTabs.push('wizard');
             }
             return availableTabs;
         }
 
         function updateTabVisibility() {
-            const tabs = ['dpsh', 'sondeig', 'planol'];
+            const tabs = ['dpsh', 'sondeig', 'planol', 'wizard'];
             tabs.forEach(tab => {
                 const tabBtn = document.getElementById(`tab-${tab}`);
+                if (!tabBtn) return;
                 if (availableTabs.includes(tab)) {
                     tabBtn.classList.remove('disabled');
                 } else {
@@ -1976,6 +2412,460 @@
             renderData();
             showMessage(`Fitxer guardat: ${filename}`, 'success');
         }
+        // ============================================================
+        // WIZARD FUNCTIONS
+        // ============================================================
+
+        const SOIL_TYPE_OPTIONS = [
+            { value: 'granular', label: 'Granular' },
+            { value: 'arena', label: 'Arena' },
+            { value: 'grava', label: 'Grava' },
+            { value: 'arena_limosa', label: 'Arena limosa' },
+            { value: 'limo', label: 'Limo' },
+            { value: 'arcilla', label: 'Arcilla' },
+        ];
+
+        // Load project list on startup (only when served by FastAPI)
+        (function loadProjects() {
+            fetch('/api/projects')
+                .then(r => r.ok ? r.json() : Promise.reject('No API'))
+                .then(projects => {
+                    const sel = document.getElementById('projectSelect');
+                    projects.forEach(p => {
+                        const opt = document.createElement('option');
+                        opt.value = p.folder;
+                        opt.textContent = `${p.expedient} ${p.municipality}`;
+                        sel.appendChild(opt);
+                    });
+                })
+                .catch(() => {
+                    // Not running under FastAPI — hide project selector
+                    document.getElementById('projectSelector').style.display = 'none';
+                });
+        })();
+
+        function onProjectChange(projectName) {
+            selectedProject = projectName;
+            wizardDataLoaded = false;
+            wizardDirty = false;
+            document.getElementById('wizardUnsaved').style.display = 'none';
+
+            // Re-detect available tabs (wizard tab requires selected project)
+            detectAvailableTabs();
+            updateTabVisibility();
+
+            // Show dataContent if hidden (wizard can work without file upload)
+            if (selectedProject) {
+                document.getElementById('dataContent').style.display = 'block';
+            }
+
+            // Reset wizard form
+            document.getElementById('wizardLoading').style.display = 'none';
+            document.getElementById('wizardForm').style.display = 'none';
+            const resultDiv = document.getElementById('wizardResult');
+            resultDiv.style.display = 'none';
+            resultDiv.className = 'wizard-result';
+        }
+
+        async function loadWizardData() {
+            if (!selectedProject) return;
+
+            const loadingDiv = document.getElementById('wizardLoading');
+            const formDiv = document.getElementById('wizardForm');
+            loadingDiv.style.display = 'flex';
+            formDiv.style.display = 'none';
+
+            try {
+                const [prefillsRes, userDataRes] = await Promise.all([
+                    fetch(`/api/prefills/${encodeURIComponent(selectedProject)}`),
+                    fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`),
+                ]);
+
+                if (!prefillsRes.ok) throw new Error('Error carregant prefills');
+                wizardPrefills = await prefillsRes.json();
+                wizardUserData = userDataRes.ok ? await userDataRes.json() : {};
+
+                renderWizardForm();
+                wizardDataLoaded = true;
+                wizardDirty = false;
+                document.getElementById('wizardUnsaved').style.display = 'none';
+            } catch (err) {
+                showMessage('Error carregant dades wizard: ' + err.message, 'error');
+            } finally {
+                loadingDiv.style.display = 'none';
+                formDiv.style.display = 'block';
+            }
+        }
+
+        function getWizardValue(field) {
+            // Priority: user_data > prefill > null
+            if (wizardUserData[field] !== undefined && wizardUserData[field] !== null) {
+                return { value: wizardUserData[field], source: 'user' };
+            }
+            const pf = wizardPrefills[field];
+            if (pf && pf.value !== undefined && pf.value !== null) {
+                return { value: pf.value, source: pf.source || 'auto' };
+            }
+            return { value: null, source: null };
+        }
+
+        function setSourceBadge(field, source) {
+            const badge = document.getElementById(`src-${field}`);
+            if (!badge) return;
+            if (!source) {
+                badge.textContent = '';
+                badge.className = 'source-badge';
+                return;
+            }
+            let label = source;
+            let cls = 'auto';
+            if (source === 'user' || source === 'user_data.json anterior') {
+                label = 'user_data';
+                cls = 'user';
+            } else if (source.includes('default') || source.includes('estandard')) {
+                label = 'defecte';
+                cls = 'default';
+            } else if (source.includes('plantilla')) {
+                label = 'plantilla';
+                cls = 'auto';
+            } else if (label.length > 20) {
+                label = label.substring(0, 18) + '...';
+            }
+            badge.textContent = label;
+            badge.className = `source-badge ${cls}`;
+        }
+
+        function renderWizardForm() {
+            // Standard text/number fields
+            const textFields = [
+                'architect_name', 'architect_company', 'num_floors',
+                'superficie_construida_m2', 'site_description', 'access_description',
+                'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
+                'foundation_depth_m', 'cota_referencia',
+            ];
+            textFields.forEach(field => {
+                const { value, source } = getWizardValue(field);
+                const el = document.getElementById(`wiz-${field}`);
+                if (el) {
+                    el.value = value !== null ? value : '';
+                    if (value !== null && source === 'user') el.classList.add('has-user-value');
+                }
+                setSourceBadge(field, source);
+            });
+
+            // Building type select
+            const btVal = getWizardValue('building_type');
+            const btEl = document.getElementById('wiz-building_type');
+            if (btEl && btVal.value) {
+                // Try exact match first, then keyword match
+                let matched = false;
+                for (const opt of btEl.options) {
+                    if (opt.value === btVal.value) {
+                        btEl.value = btVal.value;
+                        matched = true;
+                        break;
+                    }
+                }
+                if (!matched) {
+                    // Keyword matching for planol extraction values
+                    const keywords = {
+                        'unifamiliar': 'Habitatge aïllat', 'aillat': 'Habitatge aïllat',
+                        'plurifamiliar': 'Habitatge plurifamiliar',
+                        'nau': 'Nau industrial', 'industrial': 'Nau industrial',
+                        'comercial': 'Edifici comercial',
+                        'public': 'Edifici públic', 'públic': 'Edifici públic',
+                    };
+                    const lower = String(btVal.value).toLowerCase();
+                    for (const [kw, canonical] of Object.entries(keywords)) {
+                        if (lower.includes(kw)) {
+                            btEl.value = canonical;
+                            break;
+                        }
+                    }
+                }
+            }
+            setSourceBadge('building_type', btVal.source);
+
+            // Boolean toggle switches
+            ['is_anthropized', 'has_basement', 'has_retaining_walls'].forEach(field => {
+                const { value, source } = getWizardValue(field);
+                const btn = document.getElementById(`wiz-${field}`);
+                const label = document.getElementById(`wiz-${field}-label`);
+                if (btn) {
+                    const isActive = value === true || value === 'true';
+                    btn.classList.toggle('active', isActive);
+                    if (label) label.textContent = isActive ? 'Si' : 'No';
+                }
+                setSourceBadge(field, source);
+            });
+
+            // Num soil levels + soil type selectors
+            const nslVal = getWizardValue('num_soil_levels');
+            const nslEl = document.getElementById('wiz-num_soil_levels');
+            if (nslEl) {
+                nslEl.value = nslVal.value !== null ? nslVal.value : 1;
+            }
+            setSourceBadge('num_soil_levels', nslVal.source);
+            updateSoilLevelSelectors();
+
+            // Expert overrides
+            const expertFields = [
+                'icgc_unit_code', 'icgc_unit_description', 'icgc_unit_epoch', 'Es_settlement',
+            ];
+            expertFields.forEach(field => {
+                const { value, source } = getWizardValue(field);
+                const el = document.getElementById(`wiz-${field}`);
+                if (el && value !== null) el.value = value;
+                setSourceBadge(field, source);
+            });
+
+            // Geomech overrides from nested geomech_params or prefills
+            ['gamma', 'cohesion', 'phi', 'E'].forEach(param => {
+                let value = null, source = null;
+                // Check user_data.geomech_params first
+                if (wizardUserData.geomech_params && wizardUserData.geomech_params[param] !== undefined) {
+                    value = wizardUserData.geomech_params[param];
+                    source = 'user';
+                }
+                // Then check prefills
+                const pfKey = `geomech_${param}`;
+                if (value === null) {
+                    const pf = wizardPrefills[pfKey];
+                    if (pf && pf.value !== undefined) {
+                        value = pf.value;
+                        source = pf.source || 'auto';
+                    }
+                }
+                const el = document.getElementById(`wiz-geomech_${param}`);
+                if (el && value !== null) el.value = value;
+                setSourceBadge(`geomech_${param}`, source);
+            });
+        }
+
+        function updateSoilLevelSelectors() {
+            const n = parseInt(document.getElementById('wiz-num_soil_levels').value) || 1;
+            const container = document.getElementById('soilLevelsContainer');
+            container.innerHTML = '';
+
+            for (let i = 0; i < n; i++) {
+                const levelNum = i + 1;
+                const row = document.createElement('div');
+                row.className = 'soil-level-row';
+
+                // Get existing value
+                let existingVal = 'granular';
+                // Check user_data.soil_types array
+                if (wizardUserData.soil_types && wizardUserData.soil_types[i]) {
+                    existingVal = wizardUserData.soil_types[i];
+                }
+                // Check prefills for individual level
+                const pfKey = `soil_type_level_${levelNum}`;
+                const pf = wizardPrefills[pfKey];
+                if (pf && pf.value && !wizardUserData.soil_types) {
+                    existingVal = pf.value;
+                }
+
+                let optionsHtml = '';
+                SOIL_TYPE_OPTIONS.forEach(opt => {
+                    const sel = opt.value === existingVal ? ' selected' : '';
+                    optionsHtml += `<option value="${opt.value}"${sel}>${opt.label}</option>`;
+                });
+
+                row.innerHTML = `
+                    <label>Nivell ${levelNum}:</label>
+                    <select id="wiz-soil_type_${levelNum}" onchange="markWizardDirty()">${optionsHtml}</select>
+                `;
+                container.appendChild(row);
+            }
+        }
+
+        function toggleSwitch(btn) {
+            btn.classList.toggle('active');
+            const isActive = btn.classList.contains('active');
+            const label = document.getElementById(btn.id + '-label');
+            if (label) label.textContent = isActive ? 'Si' : 'No';
+        }
+
+        function toggleWizardGroup(header) {
+            const arrow = header.querySelector('.collapsed-arrow');
+            const body = header.nextElementSibling;
+            arrow.classList.toggle('expanded');
+            body.classList.toggle('collapsed');
+        }
+
+        function markWizardDirty() {
+            wizardDirty = true;
+            document.getElementById('wizardUnsaved').style.display = 'inline';
+        }
+
+        function collectWizardFields() {
+            const fields = {};
+
+            // Text/number inputs
+            ['architect_name', 'architect_company', 'num_floors',
+             'site_description', 'access_description',
+             'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
+             'cota_referencia',
+            ].forEach(field => {
+                const el = document.getElementById(`wiz-${field}`);
+                if (el) fields[field] = el.value;
+            });
+
+            // Numeric fields
+            ['superficie_construida_m2', 'foundation_depth_m'].forEach(field => {
+                const el = document.getElementById(`wiz-${field}`);
+                if (el && el.value) fields[field] = parseFloat(el.value);
+            });
+
+            // Building type
+            fields.building_type = document.getElementById('wiz-building_type').value;
+
+            // Booleans
+            fields.is_anthropized = document.getElementById('wiz-is_anthropized').classList.contains('active');
+            fields.has_basement = document.getElementById('wiz-has_basement').classList.contains('active');
+            fields.has_retaining_walls = document.getElementById('wiz-has_retaining_walls').classList.contains('active');
+
+            // Num soil levels
+            const nsl = parseInt(document.getElementById('wiz-num_soil_levels').value) || 1;
+            fields.num_soil_levels = nsl;
+
+            // Soil types array
+            const soilTypes = [];
+            for (let i = 1; i <= nsl; i++) {
+                const el = document.getElementById(`wiz-soil_type_${i}`);
+                soilTypes.push(el ? el.value : 'granular');
+            }
+            fields.soil_types = soilTypes;
+
+            return fields;
+        }
+
+        function collectExpertOverrides() {
+            const overrides = {};
+
+            // ICGC fields
+            const icgcCode = document.getElementById('wiz-icgc_unit_code').value.trim();
+            if (icgcCode) {
+                overrides.icgc_unit_code = icgcCode;
+                overrides.icgc_unit_description = document.getElementById('wiz-icgc_unit_description').value.trim();
+                overrides.icgc_unit_epoch = document.getElementById('wiz-icgc_unit_epoch').value.trim();
+            }
+
+            // Geomech params
+            const geomech = {};
+            ['gamma', 'cohesion', 'phi', 'E'].forEach(param => {
+                const el = document.getElementById(`wiz-geomech_${param}`);
+                if (el && el.value) geomech[param] = parseFloat(el.value);
+            });
+            if (Object.keys(geomech).length > 0) {
+                overrides.geomech_params = geomech;
+            }
+
+            // Es settlement
+            const esEl = document.getElementById('wiz-Es_settlement');
+            if (esEl && esEl.value) {
+                overrides.Es_settlement = parseFloat(esEl.value);
+            }
+
+            return Object.keys(overrides).length > 0 ? overrides : null;
+        }
+
+        async function saveWizard() {
+            if (!selectedProject) return;
+
+            const btn = document.getElementById('btnSaveWizard');
+            btn.disabled = true;
+            btn.textContent = 'Guardant...';
+
+            try {
+                const body = {
+                    wizard_fields: collectWizardFields(),
+                    expert_overrides: collectExpertOverrides(),
+                };
+
+                const res = await fetch(`/api/wizard/${encodeURIComponent(selectedProject)}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || 'Error guardant');
+                }
+
+                wizardDirty = false;
+                document.getElementById('wizardUnsaved').style.display = 'none';
+                showMessage('Dades guardades correctament', 'success');
+            } catch (err) {
+                showMessage('Error guardant: ' + err.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Guardar Dades';
+            }
+        }
+
+        async function generateReport() {
+            if (!selectedProject) return;
+
+            // Always save first
+            await saveWizard();
+
+            const btn = document.getElementById('btnGenerateReport');
+            const resultDiv = document.getElementById('wizardResult');
+            btn.disabled = true;
+            btn.textContent = 'Generant informe...';
+            resultDiv.style.display = 'none';
+
+            try {
+                const res = await fetch(`/api/generate/${encodeURIComponent(selectedProject)}`, {
+                    method: 'POST',
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    const downloadUrl = `/api/report/${encodeURIComponent(selectedProject)}`;
+                    let html = `<strong>Informe generat correctament!</strong><br>
+                        <a href="${downloadUrl}" target="_blank">Descarregar ${escapeHtml(data.output_name)}</a>`;
+                    if (data.warnings && data.warnings.length > 0) {
+                        html += '<br><br><strong>Avisos:</strong><ul>';
+                        data.warnings.forEach(w => { html += `<li>${escapeHtml(w)}</li>`; });
+                        html += '</ul>';
+                    }
+                    resultDiv.innerHTML = html;
+                    resultDiv.className = 'wizard-result success';
+                    resultDiv.style.display = 'block';
+                } else {
+                    let html = '<strong>Error generant informe:</strong><ul>';
+                    (data.errors || []).forEach(e => { html += `<li>${escapeHtml(e)}</li>`; });
+                    html += '</ul>';
+                    if (data.warnings && data.warnings.length > 0) {
+                        html += '<strong>Avisos:</strong><ul>';
+                        data.warnings.forEach(w => { html += `<li>${escapeHtml(w)}</li>`; });
+                        html += '</ul>';
+                    }
+                    resultDiv.innerHTML = html;
+                    resultDiv.className = 'wizard-result error';
+                    resultDiv.style.display = 'block';
+                }
+            } catch (err) {
+                resultDiv.innerHTML = `<strong>Error:</strong> ${escapeHtml(err.message)}`;
+                resultDiv.className = 'wizard-result error';
+                resultDiv.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Generar Informe';
+            }
+        }
+
+        // Warn before leaving with unsaved wizard changes
+        window.addEventListener('beforeunload', function(e) {
+            if (wizardDirty) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
     </script>
 </body>
 </html>
