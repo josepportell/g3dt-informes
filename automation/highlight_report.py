@@ -42,9 +42,9 @@ from docx.shared import Pt
 # ---------------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-GENERATED = BASE_DIR / "reference-material/4001612-bell-lloc/4001612_generated.docx"
-REFERENCE = BASE_DIR / "reference-material/4001612-bell-lloc/4001612_informe.docx"
-OUTPUT = BASE_DIR / "reference-material/4001612-bell-lloc/4001612_AUDIT_VISUAL.docx"
+GENERATED = BASE_DIR / "reference-material/4001612 BELL-LLOC/4001612_generated.docx"
+REFERENCE = BASE_DIR / "reference-material/4001612 BELL-LLOC/4001612_informe.docx"
+OUTPUT = BASE_DIR / "reference-material/4001612 BELL-LLOC/4001612_AUDIT_VISUAL.docx"
 
 # ---------------------------------------------------------------------------
 # Classification constants
@@ -215,11 +215,14 @@ def best_match(text: str, reference_pool: list[str], threshold: float = 0.4):
 
 def highlight_paragraph(paragraph, color):
     """Apply highlight color to all runs in a paragraph, including nested ones."""
-    xml_color = COLOR_TO_XML.get(color, "yellow")
-
-    # Use high-level API for direct runs
-    for run in paragraph.runs:
-        run.font.highlight_color = color
+    if isinstance(color, str):
+        # Raw XML color string (e.g. "darkGreen") — skip high-level API
+        xml_color = color
+    else:
+        xml_color = COLOR_TO_XML.get(color, "yellow")
+        # Use high-level API for direct runs (only works with WD_COLOR_INDEX)
+        for run in paragraph.runs:
+            run.font.highlight_color = color
 
     # Also handle runs inside hyperlinks, fldSimple, and other wrappers
     # that python-docx's paragraph.runs doesn't cover.
@@ -301,11 +304,13 @@ CAT_TURQUOISE = "turquoise"
 CAT_ORANGE = "orange"
 CAT_PINK = "pink"
 CAT_RED = "red"
+CAT_YELLOW_IMPERFECT = "yellow_imperfect"
 CAT_EMPTY = "empty"
 
 CAT_TO_COLOR = {
     CAT_GREEN: WD_COLOR_INDEX.YELLOW,         # dynamic match now yellow (Eva's yellow = modify)
     CAT_YELLOW: WD_COLOR_INDEX.BRIGHT_GREEN,  # template now green (Eva's green = don't touch)
+    CAT_YELLOW_IMPERFECT: "darkGreen",        # raw XML color, not WD_COLOR_INDEX
     CAT_TURQUOISE: WD_COLOR_INDEX.TURQUOISE,
     CAT_ORANGE: WD_COLOR_INDEX.DARK_YELLOW,
     CAT_PINK: WD_COLOR_INDEX.PINK,
@@ -315,6 +320,7 @@ CAT_TO_COLOR = {
 CAT_LABELS = {
     CAT_GREEN: "Groc (match >= 90%)",
     CAT_YELLOW: "Verd (text fix plantilla)",
+    CAT_YELLOW_IMPERFECT: "Verd clar (plantilla < 100%)",
     CAT_TURQUOISE: "Cian (match funcional >= 70%)",
     CAT_ORANGE: "Taronja (templates regionals)",
     CAT_PINK: "Rosa (pendent Eva)",
@@ -344,58 +350,65 @@ def classify_text(text: str, reference_pool: list[str]) -> tuple[str, str, float
     if is_template_expansion(stripped) and len(stripped) > 60:
         return CAT_ORANGE, "[NOTA: Template geologic regional -- cal ampliar per altres municipis]", 0.0
 
-    # 3) Section headers and TOC lines are always template
-    if is_section_header_or_toc(stripped):
-        return CAT_YELLOW, "", 0.0
-
-    # 4) Compare against reference pool
+    # 3) Compare against reference pool
     ratio, matched = best_match(stripped, reference_pool)
 
-    # 4a) Very high match
+    # 4) Section headers and TOC lines are template
+    if is_section_header_or_toc(stripped):
+        if ratio >= 0.995 or ratio < 0.40:
+            # Perfect match OR no match at all (new section, still template)
+            return CAT_YELLOW, "", ratio
+        else:
+            return CAT_YELLOW_IMPERFECT, f"[PLANTILLA: capcalera match {ratio*100:.0f}%]", ratio
+
+    # 5) Very high match
     if ratio >= 0.90:
         # Distinguish pure template (no project data) vs dynamic match
         if not contains_project_specific(stripped) and not is_dynamic_value(stripped) and ratio >= 0.95:
-            return CAT_YELLOW, "", ratio
+            if ratio >= 0.995:
+                return CAT_YELLOW, "", ratio
+            else:
+                return CAT_YELLOW_IMPERFECT, f"[PLANTILLA: match {ratio*100:.1f}%]", ratio
         return CAT_GREEN, "", ratio
 
-    # 4b) Functional match
+    # 5b) Functional match
     if ratio >= 0.70:
         return CAT_TURQUOISE, f"[NOTA: Match {ratio*100:.0f}% -- difereix lleugerament de la referencia]", ratio
 
-    # 4c) Moderate match -- be lenient for short text (table cells etc)
+    # 5c) Moderate match -- be lenient for short text (table cells etc)
     if ratio >= 0.55 and len(stripped) < 50:
         return CAT_TURQUOISE, f"[NOTA: Match {ratio*100:.0f}%]", ratio
 
-    # 5) Template expansion for shorter geo mentions
+    # 6) Template expansion for shorter geo mentions
     if is_template_expansion(stripped):
         return CAT_ORANGE, "[NOTA: Template geologic regional]", ratio
 
-    # 5b) Broader geology content detection -- these are regional template
+    # 6b) Broader geology content detection -- these are regional template
     #     descriptions that differ from the reference but are not errors.
     if is_geology_content(stripped):
         return CAT_ORANGE, "[NOTA: Descripcio geologica regional -- depen de la zona]", ratio
 
-    # 6) Very short text (single words, numbers) that are likely labels
+    # 7) Very short text (single words, numbers) that are likely labels
     if len(stripped) < 15:
         # Check if it's a dynamic value pattern first
         if is_dynamic_value(stripped):
             return CAT_GREEN, "", ratio
         return CAT_YELLOW, "", ratio
 
-    # 7) Figure / table captions (structural, usually close enough)
+    # 8) Figure / table captions (structural, usually close enough)
     if re.match(r"^(Figura|Taula|Gr\u00e0fic|Foto)\s+\d+", stripped):
         return CAT_TURQUOISE, f"[NOTA: Caption -- match {ratio*100:.0f}%]", ratio
 
-    # 8) Fallback: check if it could be methodology/legal boilerplate
+    # 9) Fallback: check if it could be methodology/legal boilerplate
     #    (text with no project-specific data and some match)
     if ratio >= 0.45 and not contains_project_specific(stripped):
         return CAT_TURQUOISE, f"[NOTA: Match {ratio*100:.0f}%]", ratio
 
-    # 9) Moderate match with project-specific data (still partially correct)
+    # 10) Moderate match with project-specific data (still partially correct)
     if ratio >= 0.40:
         return CAT_TURQUOISE, f"[NOTA: Match {ratio*100:.0f}%]", ratio
 
-    # 10) Otherwise: RED
+    # 11) Otherwise: RED
     return CAT_RED, f"[NOTA: No coincideix amb la referencia -- match {ratio*100:.0f}%]", ratio
 
 
@@ -426,6 +439,7 @@ def extract_text_pool(doc: Document) -> list[str]:
 
 LEGEND_ITEMS = [
     ("green", "VERD -- Text fix de plantilla (boilerplate, metodologia, normativa). Coincideix amb el VERD del document DETALLAT d'Eva."),
+    ("darkGreen", "VERD CLAR -- Plantilla amb diferencies menors (< 100% match). Indica text de plantilla que necessita revisio."),
     ("yellow", "GROC -- Match >= 90%: text auto-generat correctament que coincideix amb la referencia. Coincideix amb el GROC del document DETALLAT d'Eva (camps a modificar cada vegada)."),
     ("cyan", "CIAN -- Match funcional: contingut correcte amb diferencies menors (>= 70%)"),
     ("darkYellow", "TARONJA -- Templates regionals/geologics a ampliar per a altres municipis"),
@@ -467,46 +481,32 @@ def make_paragraph_element(text: str, highlight_color: str = None,
     return p
 
 
-def insert_legend(doc: Document):
-    """Insert a color legend at the very beginning of the document."""
-    body = doc.element.body
-    first_child = body[0] if len(body) > 0 else None
+def append_legend(doc: Document):
+    """Append a color legend at the end of the document."""
+    doc.add_paragraph()  # blank line
 
-    elements = []
+    p = doc.add_paragraph()
+    run = p.add_run("=" * 70)
+    run.font.size = Pt(8)
 
-    # Title
-    elements.append(make_paragraph_element(
-        "LLEGENDA DE COLORS \u2014 AUDIT VISUAL",
-        bold=True, size_pt=14
-    ))
+    p = doc.add_paragraph()
+    run = p.add_run("LLEGENDA DE COLORS \u2014 AUDIT VISUAL")
+    run.bold = True
+    run.font.size = Pt(14)
 
-    # Blank line
-    elements.append(make_paragraph_element(" "))
+    p = doc.add_paragraph()
+    run = p.add_run("=" * 70)
+    run.font.size = Pt(8)
 
-    # Legend rows
+    doc.add_paragraph()  # blank line
+
     for color_xml, description in LEGEND_ITEMS:
-        elements.append(make_paragraph_element(
+        body = doc.element.body
+        body.append(make_paragraph_element(
             f"  {description}",
             highlight_color=color_xml,
             size_pt=9
         ))
-
-    # Separator
-    elements.append(make_paragraph_element(" "))
-    elements.append(make_paragraph_element(
-        "=" * 70, size_pt=8
-    ))
-    elements.append(make_paragraph_element(" "))
-
-    # Insert in order at the beginning.
-    # addprevious inserts immediately before the reference element,
-    # so we iterate in forward order to build the correct sequence.
-    if first_child is not None:
-        for elem in elements:
-            first_child.addprevious(elem)
-    else:
-        for elem in elements:
-            body.append(elem)
 
 
 # ---------------------------------------------------------------------------
@@ -514,7 +514,7 @@ def insert_legend(doc: Document):
 # ---------------------------------------------------------------------------
 
 def append_statistics(doc: Document, stats: dict):
-    """Append a statistics summary at the end of the document."""
+    """Append split statistics: template quality + content quality."""
     total_content = sum(v for k, v in stats.items() if k != CAT_EMPTY)
 
     doc.add_paragraph()  # blank line
@@ -533,14 +533,6 @@ def append_statistics(doc: Document, stats: dict):
 
     doc.add_paragraph()
 
-    def add_stat_line(label, count, color=None):
-        p = doc.add_paragraph()
-        pct = f"{count / total_content * 100:.1f}%" if total_content > 0 else "0%"
-        run = p.add_run(f"  {label}: {count:>6}  ({pct})")
-        run.font.size = Pt(10)
-        if color:
-            run.font.highlight_color = color
-
     p = doc.add_paragraph()
     run = p.add_run(f"Total paragrafs/cel\u00b7les amb contingut: {total_content}")
     run.font.size = Pt(10)
@@ -548,26 +540,60 @@ def append_statistics(doc: Document, stats: dict):
 
     doc.add_paragraph()
 
+    # --- TEMPLATE QUALITY ---
+    tpl_perfect = stats.get(CAT_YELLOW, 0)
+    tpl_imperfect = stats.get(CAT_YELLOW_IMPERFECT, 0)
+    tpl_total = tpl_perfect + tpl_imperfect
+    tpl_quality = tpl_perfect / tpl_total * 100 if tpl_total > 0 else 100.0
+
+    p = doc.add_paragraph()
+    run = p.add_run(f"QUALITAT PLANTILLA: {tpl_quality:.1f}%")
+    run.bold = True
+    run.font.size = Pt(11)
+
+    def add_stat_line(label, count, color=None):
+        p = doc.add_paragraph()
+        pct = f"{count / total_content * 100:.1f}%" if total_content > 0 else "0%"
+        run = p.add_run(f"  {label}: {count:>6}  ({pct})")
+        run.font.size = Pt(10)
+        if color and not isinstance(color, str):
+            run.font.highlight_color = color
+
+    add_stat_line(CAT_LABELS[CAT_YELLOW], tpl_perfect, CAT_TO_COLOR[CAT_YELLOW])
+    add_stat_line(CAT_LABELS[CAT_YELLOW_IMPERFECT], tpl_imperfect)
+
+    p = doc.add_paragraph()
+    run = p.add_run(f"  Total plantilla: {tpl_total}")
+    run.font.size = Pt(10)
+
+    doc.add_paragraph()
+
+    # --- CONTENT QUALITY ---
+    content_good = stats.get(CAT_GREEN, 0) + stats.get(CAT_TURQUOISE, 0)
+    content_bad = stats.get(CAT_ORANGE, 0) + stats.get(CAT_PINK, 0) + stats.get(CAT_RED, 0)
+    content_total = content_good + content_bad
+    content_quality = content_good / content_total * 100 if content_total > 0 else 100.0
+
+    p = doc.add_paragraph()
+    run = p.add_run(f"QUALITAT CONTINGUT: {content_quality:.1f}%")
+    run.bold = True
+    run.font.size = Pt(11)
+
     add_stat_line(CAT_LABELS[CAT_GREEN], stats.get(CAT_GREEN, 0), CAT_TO_COLOR[CAT_GREEN])
-    add_stat_line(CAT_LABELS[CAT_YELLOW], stats.get(CAT_YELLOW, 0), CAT_TO_COLOR[CAT_YELLOW])
     add_stat_line(CAT_LABELS[CAT_TURQUOISE], stats.get(CAT_TURQUOISE, 0), CAT_TO_COLOR[CAT_TURQUOISE])
     add_stat_line(CAT_LABELS[CAT_ORANGE], stats.get(CAT_ORANGE, 0), CAT_TO_COLOR[CAT_ORANGE])
     add_stat_line(CAT_LABELS[CAT_PINK], stats.get(CAT_PINK, 0), CAT_TO_COLOR[CAT_PINK])
     add_stat_line(CAT_LABELS[CAT_RED], stats.get(CAT_RED, 0), CAT_TO_COLOR[CAT_RED])
 
     p = doc.add_paragraph()
-    run = p.add_run(f"  {CAT_LABELS[CAT_EMPTY]}: {stats.get(CAT_EMPTY, 0):>6}")
+    run = p.add_run(f"  Total contingut: {content_total}")
     run.font.size = Pt(10)
 
     doc.add_paragraph()
 
-    quality_count = stats.get(CAT_GREEN, 0) + stats.get(CAT_YELLOW, 0) + stats.get(CAT_TURQUOISE, 0)
-    quality_pct = quality_count / total_content * 100 if total_content > 0 else 0
-
     p = doc.add_paragraph()
-    run = p.add_run(f"Qualitat generacio: {quality_pct:.1f}% (groc + verd + cian)")
-    run.bold = True
-    run.font.size = Pt(11)
+    run = p.add_run(f"  {CAT_LABELS[CAT_EMPTY]}: {stats.get(CAT_EMPTY, 0):>6}")
+    run.font.size = Pt(10)
 
 
 # ---------------------------------------------------------------------------
@@ -602,12 +628,12 @@ def main():
 
     # Statistics counter
     stats = {
-        CAT_GREEN: 0, CAT_YELLOW: 0, CAT_TURQUOISE: 0,
+        CAT_GREEN: 0, CAT_YELLOW: 0, CAT_YELLOW_IMPERFECT: 0, CAT_TURQUOISE: 0,
         CAT_ORANGE: 0, CAT_PINK: 0, CAT_RED: 0, CAT_EMPTY: 0,
     }
 
     # Categories that get a red annotation
-    ANNOTATED_CATS = {CAT_TURQUOISE, CAT_ORANGE, CAT_PINK, CAT_RED}
+    ANNOTATED_CATS = {CAT_TURQUOISE, CAT_ORANGE, CAT_PINK, CAT_RED, CAT_YELLOW_IMPERFECT}
 
     def process_paragraph(paragraph):
         """Classify and highlight a single paragraph.
@@ -668,9 +694,9 @@ def main():
                 for para, reason in reversed(cell_annotations):
                     insert_annotation_after(para, reason)
 
-    # Insert legend at top
-    print("Inserting legend...")
-    insert_legend(doc)
+    # Append legend at end (preserves cover page)
+    print("Appending legend...")
+    append_legend(doc)
 
     # Append statistics
     print("Appending statistics...")
@@ -687,15 +713,28 @@ def main():
     print(f"AUDIT VISUAL COMPLETE")
     print(f"{'='*50}")
     print(f"Total with content: {total_content}")
-    for cat in [CAT_GREEN, CAT_YELLOW, CAT_TURQUOISE, CAT_ORANGE, CAT_PINK, CAT_RED]:
+
+    # Template quality
+    tpl_perfect = stats[CAT_YELLOW]
+    tpl_imperfect = stats[CAT_YELLOW_IMPERFECT]
+    tpl_total = tpl_perfect + tpl_imperfect
+    tpl_pct = tpl_perfect / tpl_total * 100 if tpl_total > 0 else 100.0
+    print(f"\nQUALITAT PLANTILLA: {tpl_pct:.1f}%")
+    print(f"  {CAT_LABELS[CAT_YELLOW]}: {tpl_perfect}")
+    print(f"  {CAT_LABELS[CAT_YELLOW_IMPERFECT]}: {tpl_imperfect}")
+
+    # Content quality
+    content_good = stats[CAT_GREEN] + stats[CAT_TURQUOISE]
+    content_bad = stats[CAT_ORANGE] + stats[CAT_PINK] + stats[CAT_RED]
+    content_total = content_good + content_bad
+    content_pct = content_good / content_total * 100 if content_total > 0 else 100.0
+    print(f"\nQUALITAT CONTINGUT: {content_pct:.1f}%")
+    for cat in [CAT_GREEN, CAT_TURQUOISE, CAT_ORANGE, CAT_PINK, CAT_RED]:
         count = stats[cat]
         pct = count / total_content * 100 if total_content > 0 else 0
         print(f"  {CAT_LABELS[cat]}: {count} ({pct:.1f}%)")
-    print(f"  {CAT_LABELS[CAT_EMPTY]}: {stats[CAT_EMPTY]}")
 
-    quality = stats[CAT_GREEN] + stats[CAT_YELLOW] + stats[CAT_TURQUOISE]
-    quality_pct = quality / total_content * 100 if total_content > 0 else 0
-    print(f"\nQualitat generacio: {quality_pct:.1f}%")
+    print(f"\n  {CAT_LABELS[CAT_EMPTY]}: {stats[CAT_EMPTY]}")
     print(f"Output: {OUTPUT}")
 
 
