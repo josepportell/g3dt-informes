@@ -1,8 +1,8 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-02-26
+Last updated: 2026-02-27
 
 ## Current State
-**Metodologia Eva confirmada + settlement calibrat** — Back-engineering de 4 projectes completat. Es = 2.5×Nb implementat (reemplaça Robertson qc). Wizard permet override d'Es per Eva.
+**Audit visual split: plantilla vs contingut** — highlight_report.py ara separa QUALITAT PLANTILLA (84.0%) de QUALITAT CONTINGUT (79.8%). Nova categoria "verd clar" (darkGreen) per plantilla <100% match.
 
 Pipeline complet: FileScanner → auto_extract → validació visual → wizard → report_generator.
 
@@ -19,6 +19,15 @@ Pipeline complet: FileScanner → auto_extract → validació visual → wizard 
 
 \* Bell-Lloc E=650 (carbonatades, Eva ajusta manualment) → settlement segueix el gap d'E
 \*\* Rubí Qa=3.50 supera cap 3.0 — pendent preguntar a Eva
+
+### Canvis sessió 2026-02-27
+
+| # | Canvi | Fitxer | Impacte |
+|---|-------|--------|---------|
+| 1 | Split audit: plantilla vs contingut | `highlight_report.py` | Dues mètriques separades |
+| 2 | CAT_YELLOW_IMPERFECT (darkGreen) | `highlight_report.py` | Plantilla 95-99.5% match |
+| 3 | Section headers amb ratio | `highlight_report.py` | Capçaleres checked via best_match() |
+| 4 | highlight_paragraph() raw XML | `highlight_report.py` | Suporta string colors (darkGreen) |
 
 ### Canvis sessió 2026-02-26
 
@@ -49,6 +58,7 @@ Pipeline complet: FileScanner → auto_extract → validació visual → wizard 
 - [x] Fixes post-comparació Castellar (6 fixes + 3 correccions)
 - [x] Metodologia Eva confirmada (Nb, T-P, Qa cap, gamma D.27)
 - [x] Settlement calibrat: Es = 2.5×Nb (+2.3% Rubí, +27.9% Bell-Lloc per E gap)
+- [x] Audit visual split: plantilla 84.0% + contingut 79.8%
 - [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54
 - [ ] Test multi-nivell amb Linyola (sòls expansius)
 - [ ] Validació amb G3DT del flux complet (extracció → wizard → informe → audit)
