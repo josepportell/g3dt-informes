@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import sys
 import time
 from dataclasses import dataclass, field
@@ -101,11 +102,18 @@ def auto_extract(
     # --- Phase 2: PDF extraction ---
     _phase2_lab_results(project_path, result)
 
+    # --- Phase 2.5: Geocode coordinates (if UTM missing) ---
     # --- Phase 3: HTTP APIs (needs UTM coords) ---
-    # UTM source priority: user_data.json > content_discovery > skip
+    # UTM source priority: user_data.json > content_discovery > geocode > skip
     if not skip_phase3:
         utm_x = existing_user_data.get('utm_x') or result.prefills.get('utm_x')
         utm_y = existing_user_data.get('utm_y') or result.prefills.get('utm_y')
+
+        if not (utm_x and utm_y):
+            utm_x, utm_y = _phase25_geocode(
+                existing_user_data, result, project_path,
+            )
+
         superficie = (
             existing_user_data.get('superficie_parcela_m2', 0)
             or result.prefills.get('superficie_parcela_m2', 0)
@@ -330,6 +338,136 @@ def _phase2_lab_results(project_path: Path, result: AutoExtractionResult) -> Non
         result.steps_skipped.append(("Lab PDF", "PyMuPDF no disponible"))
     except Exception as exc:
         result.steps_skipped.append(("Lab PDF", str(exc)))
+
+
+# ---------------------------------------------------------------------------
+# Phase 2.5: Geocode coordinates fallback
+# ---------------------------------------------------------------------------
+
+def _phase25_geocode(
+    existing_user_data: dict[str, Any],
+    result: AutoExtractionResult,
+    project_path: Path,
+) -> tuple[float | None, float | None]:
+    """
+    Attempt to derive UTM coordinates from the project's street address.
+
+    Called when no COORDENADES.txt was found and no UTM coords are available.
+    Uses Nominatim + Cadastre APIs to geocode the address.
+
+    Returns:
+        Tuple of (utm_x, utm_y) or (None, None) if geocoding fails.
+    """
+    try:
+        from .geocode_coordinates import geocode_project
+    except ImportError as e:
+        result.steps_skipped.append(("Geocodificació", f"mòdul no disponible: {e}"))
+        return None, None
+
+    # Get address from existing data or prefills
+    address = (
+        existing_user_data.get('street_address')
+        or existing_user_data.get('site_address')
+        or result.prefills.get('site_address')
+    )
+    if not address:
+        result.steps_skipped.append(
+            ("Geocodificació", "sense adreça disponible")
+        )
+        return None, None
+
+    # Get municipality from folder name (e.g., "4001612 BELL-LLOC" -> "Bell-Lloc")
+    municipality = _extract_municipality(project_path)
+    if not municipality:
+        result.steps_skipped.append(
+            ("Geocodificació", "sense municipi (nom carpeta)")
+        )
+        return None, None
+
+    # Get point IDs from DPSH data if available
+    point_ids = ['P-1']
+    if result.dpsh_data and hasattr(result.dpsh_data, 'test_ids'):
+        point_ids = result.dpsh_data.test_ids or ['P-1']
+
+    logger.info(
+        f"Geocodificant: '{address}', {municipality}, punts: {point_ids}"
+    )
+
+    try:
+        geo_result = geocode_project(
+            address, municipality, point_ids, output_dir=None,
+        )
+    except Exception as exc:
+        result.steps_skipped.append(("Geocodificació", str(exc)))
+        return None, None
+
+    if geo_result is None:
+        result.steps_skipped.append(
+            ("Geocodificació", "no s'han trobat coordenades")
+        )
+        return None, None
+
+    # Store results in prefills
+    utm_x = geo_result['utm_x']
+    utm_y = geo_result['utm_y']
+    source = geo_result.get('source', 'geocode')
+
+    result.prefills['utm_x'] = round(utm_x, 2)
+    result.sources['utm_x'] = source
+    result.prefills['utm_y'] = round(utm_y, 2)
+    result.sources['utm_y'] = source
+
+    if geo_result.get('points'):
+        result.prefills['utm_points'] = geo_result['points']
+        result.sources['utm_points'] = source
+
+    if geo_result.get('rc'):
+        result.prefills['cadastral_ref'] = geo_result['rc']
+        result.sources['cadastral_ref'] = source
+
+    result.steps_completed.append(
+        f"Geocodificació: UTM ({utm_x:.0f}, {utm_y:.0f}) [{source}]"
+    )
+
+    return utm_x, utm_y
+
+
+def _extract_municipality(project_path: Path) -> str | None:
+    """
+    Extract municipality name from project folder name.
+
+    Folder names follow the pattern: "4001612 BELL-LLOC" or
+    "3001621 CASTELLAR DEL VALLES". We strip the expedient number
+    and convert to title case with proper formatting.
+    """
+    folder_name = project_path.name
+
+    # Remove expedient number prefix (digits + space)
+    match = re.match(r'^\d+\s+(.+)$', folder_name)
+    if not match:
+        return None
+
+    raw_name = match.group(1).strip()
+
+    # Convert "BELL-LLOC" -> "Bell-Lloc", "CASTELLAR DEL VALLES" -> "Castellar del Vallès"
+    # Common replacements for Catalan place names
+    name = raw_name.title()
+
+    # Fix common articles that shouldn't be capitalized
+    for article in (' Del ', ' De ', ' D\'', ' El ', ' La ', ' Les ', ' Els ', ' Dels '):
+        name = name.replace(article, article.lower())
+
+    # Known corrections for accent marks lost in folder names
+    corrections = {
+        'Valles': 'Vallès',
+        'Rubi': 'Rubí',
+        'Urgell': 'Urgell',
+        "D'Urgell": "d'Urgell",
+    }
+    for wrong, right in corrections.items():
+        name = name.replace(wrong, right)
+
+    return name
 
 
 # ---------------------------------------------------------------------------
