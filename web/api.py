@@ -90,6 +90,29 @@ def generate_report(project_name: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+class GeolocalitzarRequest(BaseModel):
+    address: str | None = None
+
+
+@router.post("/geolocalitzar/{project_name:path}")
+def geolocalitzar(project_name: str, req: GeolocalitzarRequest | None = None):
+    """Geocode project address to UTM coordinates."""
+    try:
+        address = req.address if req else None
+        result = wizard_service.geocode_coords(project_name, address)
+        return {
+            "utm_x": round(result["utm_x"], 2),
+            "utm_y": round(result["utm_y"], 2),
+            "rc": result.get("rc"),
+            "source": result.get("source", "geocode"),
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    except Exception as e:
+        logger.exception("Error geocoding %s", project_name)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/report/{project_name:path}")
 def download_report(project_name: str):
     """Download the generated .docx report."""

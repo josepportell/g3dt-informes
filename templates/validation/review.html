@@ -834,6 +834,28 @@
             border-color: #27ae60;
             background: #f0faf3;
         }
+        .utm-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .utm-btn {
+            background: #ecf0f1;
+            color: #2c3e50;
+            border: 1px solid #bdc3c7;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .utm-btn:hover {
+            background: #d5dbdb;
+        }
+        .utm-warning {
+            color: #e67e22;
+            font-size: 12px;
+            margin-top: 4px;
+        }
         .source-badge {
             display: inline-block;
             font-size: 11px;
@@ -1233,6 +1255,27 @@
                                     <div class="toggle-switch-container">
                                         <button type="button" class="toggle-switch" id="wiz-has_retaining_walls" onclick="toggleSwitch(this); markWizardDirty()"></button>
                                         <span class="toggle-switch-label" id="wiz-has_retaining_walls-label">No</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Group: Coordenades UTM -->
+                        <div class="wizard-group">
+                            <div class="wizard-group-header">Coordenades UTM (ETRS89 H31)</div>
+                            <div class="wizard-group-body">
+                                <div class="wizard-field">
+                                    <label>UTM X <span class="source-badge" id="src-utm_x"></span></label>
+                                    <input type="number" step="0.01" id="wiz-utm_x" data-field="utm_x" placeholder="X ETRS89 H31, ex: 323456" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>UTM Y <span class="source-badge" id="src-utm_y"></span></label>
+                                    <input type="number" step="0.01" id="wiz-utm_y" data-field="utm_y" placeholder="Y ETRS89 H31, ex: 4618123" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <div class="utm-actions">
+                                        <button type="button" class="btn utm-btn" onclick="geolocalitzar()">Geolocalitzar amb ICGC</button>
+                                        <button type="button" class="btn utm-btn" onclick="refreshPrefills()">Actualitzar prefills</button>
                                     </div>
                                 </div>
                             </div>
@@ -2542,6 +2585,7 @@
                 'superficie_construida_m2', 'site_description', 'access_description',
                 'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
                 'foundation_depth_m', 'cota_referencia',
+                'utm_x', 'utm_y',
             ];
             textFields.forEach(field => {
                 const { value, source } = getWizardValue(field);
@@ -2640,6 +2684,29 @@
                 if (el && value !== null) el.value = value;
                 setSourceBadge(`geomech_${param}`, source);
             });
+
+            // UTM bounds validation (Catalonia)
+            ['utm_x', 'utm_y'].forEach(field => {
+                const el = document.getElementById(`wiz-${field}`);
+                if (!el) return;
+                el.addEventListener('input', () => {
+                    const val = parseFloat(el.value);
+                    let warning = el.parentElement.querySelector('.utm-warning');
+                    if (!warning) {
+                        warning = document.createElement('div');
+                        warning.className = 'utm-warning';
+                        el.parentElement.appendChild(warning);
+                    }
+                    if (!val) { warning.textContent = ''; return; }
+                    if (field === 'utm_x' && (val < 250000 || val > 550000)) {
+                        warning.textContent = 'Fora del rang de Catalunya (250000-550000)';
+                    } else if (field === 'utm_y' && (val < 4450000 || val > 4750000)) {
+                        warning.textContent = 'Fora del rang de Catalunya (4450000-4750000)';
+                    } else {
+                        warning.textContent = '';
+                    }
+                });
+            });
         }
 
         function updateSoilLevelSelectors() {
@@ -2712,7 +2779,7 @@
             });
 
             // Numeric fields
-            ['superficie_construida_m2', 'foundation_depth_m'].forEach(field => {
+            ['superficie_construida_m2', 'foundation_depth_m', 'utm_x', 'utm_y'].forEach(field => {
                 const el = document.getElementById(`wiz-${field}`);
                 if (el && el.value) fields[field] = parseFloat(el.value);
             });
@@ -2768,6 +2835,62 @@
             }
 
             return Object.keys(overrides).length > 0 ? overrides : null;
+        }
+
+        async function geolocalitzar() {
+            if (!selectedProject) return;
+            const btn = document.querySelector('[onclick="geolocalitzar()"]');
+            const origText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Geocodificant...';
+            try {
+                const res = await fetch(`/api/geolocalitzar/${encodeURIComponent(selectedProject)}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({}),
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.detail || 'Error geocodificant');
+                }
+                // Populate UTM fields with result
+                const xEl = document.getElementById('wiz-utm_x');
+                const yEl = document.getElementById('wiz-utm_y');
+                if (xEl && data.utm_x) xEl.value = data.utm_x;
+                if (yEl && data.utm_y) yEl.value = data.utm_y;
+                markWizardDirty();
+                // Update source badges
+                setSourceBadge('utm_x', data.source || 'geocode');
+                setSourceBadge('utm_y', data.source || 'geocode');
+                // Clear any validation warnings
+                ['utm_x', 'utm_y'].forEach(f => {
+                    const w = document.getElementById(`wiz-${f}`)?.parentElement?.querySelector('.utm-warning');
+                    if (w) w.textContent = '';
+                });
+                const rcInfo = data.rc ? ` (RC: ${data.rc})` : '';
+                showMessage(`Coordenades obtingudes: X=${data.utm_x}, Y=${data.utm_y}${rcInfo}`, 'success');
+            } catch (err) {
+                showMessage(err.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = origText;
+            }
+        }
+
+        async function refreshPrefills() {
+            if (!selectedProject) return;
+            showMessage('Actualitzant prefills...', 'info');
+            try {
+                const res = await fetch(`/api/prefills/${encodeURIComponent(selectedProject)}?refresh=true`);
+                if (!res.ok) throw new Error('Error actualitzant prefills');
+                wizardPrefills = await res.json();
+                const udRes = await fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`);
+                wizardUserData = udRes.ok ? await udRes.json() : {};
+                renderWizardForm();
+                showMessage('Prefills actualitzats', 'success');
+            } catch (err) {
+                showMessage('Error actualitzant prefills: ' + err.message, 'error');
+            }
         }
 
         async function saveWizard() {

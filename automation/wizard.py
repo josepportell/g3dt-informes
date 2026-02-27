@@ -42,6 +42,7 @@ WIZARD_FIELDS = [
     'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
     'is_anthropized', 'num_soil_levels', 'soil_types', 'foundation_depth_m',
     'cota_referencia', 'has_basement', 'has_retaining_walls',
+    'utm_x', 'utm_y',
 ]
 
 # Expert override fields (optional, for when auto-detection gives wrong results)

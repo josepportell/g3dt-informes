@@ -103,7 +103,85 @@ def save_wizard(
     project_path = _resolve_project(project_name)
 
     from automation.wizard import save_wizard_data
-    return save_wizard_data(project_path, wizard_fields, expert_overrides)
+    result = save_wizard_data(project_path, wizard_fields, expert_overrides)
+    _prefill_cache.pop(project_name, None)
+    return result
+
+
+def geocode_coords(
+    project_name: str,
+    address: str | None = None,
+) -> dict[str, Any]:
+    """Run geocoding pipeline to derive UTM coordinates from address.
+
+    Args:
+        project_name: Project folder name.
+        address: Street address override. If None, derived from project data.
+
+    Returns:
+        Dict with utm_x, utm_y, rc, source keys.
+
+    Raises:
+        ValueError: If project not found or no address available.
+    """
+    project_path = _resolve_project(project_name)
+
+    # Get municipality from folder name
+    from automation.folder_utils import parse_folder_name
+    _, municipality = parse_folder_name(project_path.name)
+    if not municipality:
+        raise ValueError("No s'ha pogut extreure el municipi del nom de carpeta")
+
+    # Resolve address: parameter > user_data > adjacent_south
+    if not address:
+        ud = load_user_data(project_name)
+        address = (
+            ud.get('street_address')
+            or ud.get('site_address')
+            or ud.get('adjacent_south')
+        )
+    if not address:
+        raise ValueError(
+            "Cal una adreça per geocodificar. "
+            "Introdueix-la al camp 'adjacent_south' o passa-la com a paràmetre."
+        )
+
+    # Get point IDs from DPSH if available
+    point_ids = ['P-1']
+    dpsh_path = project_path / 'validation' / 'dpsh_extracted.json'
+    if dpsh_path.exists():
+        try:
+            dpsh_data = json.loads(dpsh_path.read_text(encoding='utf-8'))
+            ids = [t.get('test_id') for t in dpsh_data.get('dpsh_tests', []) if t.get('test_id')]
+            if ids:
+                point_ids = ids
+        except (json.JSONDecodeError, KeyError):
+            pass
+
+    # Run geocoding
+    from automation.geocode_coordinates import geocode_project, GeocodeError
+    try:
+        result = geocode_project(address, municipality, point_ids, output_dir=project_path)
+    except GeocodeError as e:
+        raise ValueError(f"Error de geocodificació: {e}")
+
+    if result is None:
+        raise ValueError(
+            f"No s'han trobat coordenades per '{address}, {municipality}'. "
+            "Verifica l'adreça o introdueix les coordenades UTM manualment."
+        )
+
+    # Save utm_x/utm_y to user_data.json
+    from automation.wizard import save_wizard_data
+    save_wizard_data(project_path, {
+        'utm_x': round(result['utm_x'], 2),
+        'utm_y': round(result['utm_y'], 2),
+    })
+
+    # Invalidate prefill cache so Phase 3 re-runs
+    _prefill_cache.pop(project_name, None)
+
+    return result
 
 
 def generate_report(project_name: str) -> dict[str, Any]:
