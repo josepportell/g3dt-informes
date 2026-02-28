@@ -74,6 +74,21 @@ Agent visual per identificar parcel·les adjacents usant el visor cartogràfic d
 2. validation/adjacents_visor.json (generat per aquest skill)
 3. cadastre_adjacents.py API probes (fallback automàtic)
 
+### /g3dt-geocodificar
+Deriva coordenades UTM aproximades a partir de l'adreça del projecte quan no hi ha COORDENADES.txt (sense GPS de camp).
+
+```
+/g3dt-geocodificar reference-material/4001612 BELL-LLOC
+```
+
+**Què fa:**
+1. Cerca l'adreça a Nominatim (OpenStreetMap) → lat/lon
+2. Localitza la parcel·la al Cadastre (API OVC) → referència cadastral
+3. Obté geometria parcel·la via WFS INSPIRE → polígon EPSG:25831
+4. Distribueix punts d'investigació dins la parcel·la
+5. Consulta elevacions ICGC MDT per cada punt
+6. Genera COORDENADES.txt al format estàndard
+
 ### /g3dt-informe-geotecnic
 Genera un informe geotècnic complet a partir de les dades del projecte.
 
@@ -85,14 +100,16 @@ Demostra la generació d'informes amb dades de mostra.
 ```
 Fase 0:   FileScanner         → file_mapping.json (classificació fitxers)
 Fase 0.5: auto_extract()      → prefills automàtics (DPSH, Lab, ICGC, Cadastre)
+Fase 2.5: geocode_project()   → UTM coords (fallback si no hi ha COORDENADES.txt)
 Fase 1:   Validació visual    → planol/sondeig/dpsh_extracted.json (Claude vision)
-Fase 2:   Wizard (skill)      → user_data.json (Eva confirma/corregeix prefills)
+Fase 2:   Wizard (web/CLI)    → user_data.json (Eva confirma/corregeix prefills)
 Fase 3:   ReportGenerator     → {expedient}_generated.docx
 ```
 
 **Fase 0.5** (`automation/auto_extractor.py`) executa en ~3s:
 - Fase 1 local: FileScanner, DPSH Excel (N20, refús), dates de camp
 - Fase 2 PDF: Lab results (sulfats mg/kg) via PyMuPDF
+- Fase 2.5 geocode: Nominatim + Cadastre → UTM (si no hi ha COORDENADES.txt)
 - Fase 3 HTTP: ICGC geologia/elevació/pendent + Cadastre adjacents (requereix UTM)
 
 ## Estructura de Carpetes
@@ -100,14 +117,16 @@ Fase 3:   ReportGenerator     → {expedient}_generated.docx
 ```
 clients/g3dt/
 ├── .claude/
-│   └── commands/             # Commands específics G3DT
+│   └── commands/             # Skills específics G3DT
 │       ├── g3dt-validar-penetros.md
 │       ├── g3dt-validar-sondeig.md
 │       ├── g3dt-extreure-planol.md
-│       └── g3dt-adjacents-visor.md
+│       ├── g3dt-adjacents-visor.md
+│       └── g3dt-geocodificar.md
 ├── automation/               # Mòduls d'extracció i càlcul
 │   ├── auto_extractor.py     # Fase 0.5: pre-omple camps automàticament
 │   ├── dpsh_extractor.py     # Extracció de dades DPSH d'Excel
+│   ├── geocode_coordinates.py # Geocodificació adreça → UTM (Nominatim+Cadastre)
 │   ├── project_extractor.py  # Extracció de tot el projecte
 │   ├── report_data.py        # Model de dades unificat
 │   ├── terzaghi_calculator.py # Càlcul de capacitat portant
@@ -115,15 +134,17 @@ clients/g3dt/
 │       ├── schemas.py        # Models Pydantic
 │       ├── prompts.py        # Prompts d'extracció
 │       └── extractor.py      # Lògica de comparació
+├── web/                      # Servidor web wizard
+│   ├── __init__.py           # App FastAPI + static files
+│   ├── api.py                # Endpoints REST (7 rutes)
+│   └── wizard_service.py     # Capa de servei (prefills, save, geocode)
 ├── templates/
 │   ├── g3dt-jinja-template.docx  # Plantilla Word principal
 │   └── validation/
-│       ├── review.html       # Formulari de revisió HTML (3 pestanyes)
-│       ├── sample_sondeig.json   # Dades de mostra sondeig
-│       └── sample_planol.json    # Dades de mostra plànol
-├── reference-material/       # Projectes de mostra
-│   └── 4001612-bell-lloc/    # Projecte Bell-Lloc (referència)
-└── samples/                  # Informes generats de prova
+│       └── review.html       # UI web: 4 pestanyes (DPSH, Sondeig, Plànol, Wizard)
+├── docs/                     # Documentació tècnica
+├── reference-material/       # Projectes de mostra (4 projectes)
+└── tests/                    # Tests (geocode: 47 tests)
 ```
 
 ## Flux de Treball de Validació
@@ -184,15 +205,58 @@ Plànol de l'arquitecte amb dades del projecte:
 
 ## Formulari de Revisió (review.html)
 
-El formulari té tres pestanyes per als diferents documents:
+El formulari té quatre pestanyes per als diferents documents:
 
 | Pestanya | Document | Comparació | Focus |
 |----------|----------|------------|-------|
 | DPSH | PENETROS.pdf | vs Excel | Discrepàncies |
 | Sondeig | SONDEIG.pdf | Cap | Baixa confiança |
 | Plànol | A.01.pdf | Cap | Tots els camps |
+| Wizard | user_data.json | Prefills vs user | Tots els camps + UTM + overrides |
 
 Per obrir: `cd templates/validation && python3 -m http.server 8765`
+
+## Web Wizard (FastAPI)
+
+Servidor web que substitueix el wizard CLI per una interfície de navegador.
+
+```bash
+# Iniciar servidor
+uv run python -m web
+# Obre http://localhost:8765/review.html
+```
+
+**Arquitectura:**
+- `web/api.py` — 7 endpoints REST (`/api/projects`, `/api/prefills/{p}`, `/api/wizard/{p}`, `/api/generate/{p}`, `/api/report/{p}`, `/api/user-data/{p}`, `/api/geolocalitzar/{p}`)
+- `web/wizard_service.py` — Capa de servei: auto_extract + wizard prefills + geocodificació + cache
+- `templates/validation/review.html` — UI amb 4 pestanyes
+
+**Pestanya Wizard:**
+- Camps agrupats: Dades Projecte, Adjacents, Paràmetres, Coordenades UTM, Overrides Experts
+- Source badges (blau=auto, verd=user_data, gris=defecte) per cada camp
+- Botó "Geolocalitzar amb ICGC": geocodifica adreça → UTM via Nominatim+Cadastre
+- Botó "Actualitzar prefills": re-executa Fase 3 amb noves coordenades UTM
+- Validació límits Catalunya (X: 250000-550000, Y: 4450000-4750000)
+- Guardar → user_data.json → Generar Informe → descarregar .docx
+
+## Geocodificació UTM
+
+Quan un projecte no té COORDENADES.txt (GPS de camp), el sistema deriva coordenades UTM aproximades.
+
+**Pipeline** (`automation/geocode_coordinates.py`):
+1. Nominatim (OpenStreetMap) → lat/lon (~50-200m precisió)
+2. Cadastre OVC API → referència cadastral + adreça verificada
+3. Cadastre WFS INSPIRE → geometria parcel·la EPSG:25831
+4. Distribució punts dins parcel·la (centroide o eix major)
+5. ICGC MDT → elevacions per punt
+
+**Integració:**
+- `auto_extractor.py` Fase 2.5: s'executa automàticament si no hi ha UTM
+- Wizard web: botó "Geolocalitzar amb ICGC" (`POST /api/geolocalitzar/{p}`)
+- Skill: `/g3dt-geocodificar reference-material/{projecte}`
+- Cache: 90 dies a `~/.g3dt/cache/geocode/`
+
+**Fonts d'adreça** (prioritat): `street_address` > `site_address` > `adjacent_south`
 
 ## Comandaments Útils
 

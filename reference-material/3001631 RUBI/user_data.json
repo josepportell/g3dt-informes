@@ -1,7 +1,7 @@
 {
   "architect_name": "",
   "architect_company": "Viviendas Modulares",
-  "building_type": "Habitatge aillat",
+  "building_type": "Habitatge aïllat",
   "site_description": "",
   "access_description": "",
   "adjacent_north": "",
@@ -11,7 +11,9 @@
   "is_anthropized": true,
   "num_soil_levels": 1,
   "foundation_depth_m": 0.3,
-  "field_work_dates": ["2025-11-14"],
+  "field_work_dates": [
+    "2025-11-14"
+  ],
   "field_work_dates_text": "14 de novembre de 2025",
   "sulfate_mg_kg": 632.3,
   "lab_tests": [
@@ -26,7 +28,20 @@
     }
   ],
   "_metadata": {
-    "generated_at": "2026-02-24T22:30:00",
+    "generated_at": "2026-02-27T18:53:24",
     "wizard_used": true
-  }
+  },
+  "num_floors": "",
+  "soil_types": [
+    "granular"
+  ],
+  "cota_referencia": "+209.50",
+  "has_basement": false,
+  "has_retaining_walls": false,
+  "utm_x": 418215,
+  "utm_y": 4595658,
+  "icgc_unit_code": "NMcg",
+  "icgc_unit_description": "Conglomerats amb matriu sorrenca sense cimentar",
+  "icgc_unit_epoch": "Miocè",
+  "Es_settlement": 119
 }

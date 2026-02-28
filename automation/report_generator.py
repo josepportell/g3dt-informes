@@ -165,6 +165,36 @@ class ReportGenerator:
             self.errors.append(f"Error loading user data: {e}")
             return {}
 
+    def _extract_spt_from_sondeig(self) -> dict | None:
+        """Extract SPT data from sondeig_extracted.json when user_data has none."""
+        sondeig_path = self.project_path / 'validation' / 'sondeig_extracted.json'
+        if not sondeig_path.exists():
+            return None
+        try:
+            with open(sondeig_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            for test in data.get('sondeig_tests', []):
+                for spt in test.get('spt_results', []):
+                    depth_from = spt.get('depth_from_m', '')
+                    depth_to = spt.get('depth_to_m', '')
+                    depth_range = f"-{depth_from:.2f} a {depth_to:.2f}" if depth_from != '' and depth_to != '' else ''
+                    # Get lithology from the layer at SPT depth
+                    lithology = ''
+                    for layer in test.get('layers', []):
+                        if layer.get('depth_from_m', 0) <= (depth_from or 0) < layer.get('depth_to_m', 99):
+                            lithology = layer.get('description', '')
+                            break
+                    return {
+                        'test_id': spt.get('test_name', 'SPT-1'),
+                        'location': test.get('test_id', 'S-1'),
+                        'depth_range': depth_range,
+                        'n30': spt.get('n_spt', ''),
+                        'lithology': lithology,
+                    }
+        except Exception as e:
+            logger.warning(f"Could not extract SPT from sondeig: {e}")
+        return None
+
     def extract_project_data(self) -> dict:
         """
         Extract all data from project folder.
@@ -621,7 +651,16 @@ class ReportGenerator:
             context['adjacent_south'] = adj.get('south', '')
             context['adjacent_east'] = adj.get('east', '')
             context['adjacent_west'] = adj.get('west', '')
-            context['adjacent_south_street'] = adj.get('south', '')
+            # Find the second bordering street (any direction, different from street_1)
+            street_prefixes = ('carrer ', 'camí ', 'passeig ', 'avinguda ', 'plaça ', 'ronda ', 'travessia ')
+            street_1_lower = context.get('street_1', '').lower()
+            second_street = ''
+            for direction in ('south', 'east', 'west', 'north'):
+                val = adj.get(direction, '').strip()
+                if val and val.lower().startswith(street_prefixes) and val.lower() != street_1_lower:
+                    second_street = val
+                    break
+            context['adjacent_south_street'] = second_street
 
             # Adjacent formatting with Catalan articles
             def _format_adjacent(direction_cat: str, value: str) -> str:
@@ -714,6 +753,7 @@ class ReportGenerator:
             context['include_expansivity'] = include_expansivity
             context['include_earth_pressure'] = include_earth_pressure
             context['include_slope_stability'] = include_slope_stability
+            context['show_granulometric'] = getattr(self.report_data, 'show_granulometric', False)
 
             # Dynamic section numbering for Section 3 (affected by expansivity)
             if include_expansivity:
@@ -768,8 +808,11 @@ class ReportGenerator:
                 sondeig_table_tests = sections['section2'].taula4_sondeig
             context['sondeig_tests'] = sondeig_table_tests
 
-            # SPT data
-            spt = self.report_data.spt_data or {}
+            # SPT data — from user_data, fallback to sondeig_extracted.json
+            spt = self.report_data.spt_data
+            if not spt and self.report_data.has_spt:
+                spt = self._extract_spt_from_sondeig()
+            spt = spt or {}
             context['spt_test_id'] = spt.get('test_id', '')
             context['spt_location'] = spt.get('location', '')
             context['spt_depth_range'] = spt.get('depth_range', '')

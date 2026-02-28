@@ -70,6 +70,10 @@ PROJECT_SPECIFIC = [
 DYNAMIC_VALUE_RES = [
     re.compile(r"^[CT]-\d$"),       # CTE classifications: C-0, C-1, T-1, T-2
     re.compile(r"^\d{7}$"),         # Project numbers: 4001612
+    re.compile(r"^Pb\+?\d*Pp?.*$", re.IGNORECASE),  # Floor notation: Pb+1Pp, Pb+2Pp
+    re.compile(r"^\d{1,5}$"),       # Numeric values (areas, counts): 995, 366
+    re.compile(r"^\d+[+]\d+$"),     # Breakdown format: 280+86
+    re.compile(r"^\d+[.,]\d+$"),    # Decimal values: 3.18, 199.50
 ]
 
 # Template-expansion patterns (geology regional descriptions).
@@ -93,6 +97,11 @@ GEOLOGY_KEYWORDS = [
     "coloracions clar", "marr\u00f3 clar",
     "NMgo", "P8G", "unitat",
     "cartografi", "geol\u00f2gi",
+    # Soil description terms (geomechanical tables, sondeig descriptions)
+    "llims", "argil\u00f3s", "argilosos", "cohesi", "coloraci\u00f3",
+    "marronos", "marr\u00f3", "argiles", "sorres", "graves amb",
+    "carbonat", "compacte", "consistent", "tou", "ferm",
+    "sorrenc", "llim\u00f3s", "bretxa", "calc\u00e0ria",
 ]
 
 # Section headers and TOC entries are always template text.
@@ -391,6 +400,39 @@ def classify_text(text: str, reference_pool: list[str]) -> tuple[str, str, float
 
 
 # ---------------------------------------------------------------------------
+# Paragraph markers (e.g. [p042], [t1_r3_c0])
+# ---------------------------------------------------------------------------
+
+def _insert_marker_run(paragraph, marker_text: str):
+    """Prepend a grey 7pt marker run like [p054] at the start of a paragraph."""
+    from docx.oxml.ns import qn
+
+    r = OxmlElement("w:r")
+    rPr = OxmlElement("w:rPr")
+    sz = OxmlElement("w:sz")
+    sz.set(qn("w:val"), "14")  # 7pt in half-points
+    szCs = OxmlElement("w:szCs")
+    szCs.set(qn("w:val"), "14")
+    rPr.append(sz)
+    rPr.append(szCs)
+    color_elem = OxmlElement("w:color")
+    color_elem.set(qn("w:val"), "888888")
+    rPr.append(color_elem)
+    r.append(rPr)
+
+    t_elem = OxmlElement("w:t")
+    t_elem.text = f"[{marker_text}] "
+    t_elem.set(qn("xml:space"), "preserve")
+    r.append(t_elem)
+
+    first_run = paragraph._element.find(qn("w:r"))
+    if first_run is not None:
+        first_run.addprevious(r)
+    else:
+        paragraph._element.append(r)
+
+
+# ---------------------------------------------------------------------------
 # Reference pool extraction
 # ---------------------------------------------------------------------------
 
@@ -423,6 +465,7 @@ LEGEND_ITEMS = [
     ("darkYellow", "TARONJA -- Templates regionals/geologics a ampliar per a altres municipis"),
     ("magenta", "ROSA -- Depen de confirmacio Eva (K, gamma, E, criteri nivells)"),
     ("red", "VERMELL -- Error o contingut absent a la referencia"),
+    (None, "MARCADORS: [p054] = Paragraf 54 del cos | [t0_r1_c2] = Taula 0, fila 1, columna 2"),
 ]
 
 
@@ -547,8 +590,9 @@ def append_statistics(doc: Document, stats: dict):
     doc.add_paragraph()
 
     # --- CONTENT QUALITY ---
-    content_good = stats.get(CAT_GREEN, 0) + stats.get(CAT_TURQUOISE, 0)
-    content_bad = stats.get(CAT_ORANGE, 0) + stats.get(CAT_PINK, 0) + stats.get(CAT_RED, 0)
+    # ORANGE = regional templates (expected variation, not errors)
+    content_good = stats.get(CAT_GREEN, 0) + stats.get(CAT_TURQUOISE, 0) + stats.get(CAT_ORANGE, 0)
+    content_bad = stats.get(CAT_PINK, 0) + stats.get(CAT_RED, 0)
     content_total = content_good + content_bad
     content_quality = content_good / content_total * 100 if content_total > 0 else 100.0
 
@@ -639,10 +683,13 @@ def main():
     # Process body paragraphs
     print("Processing body paragraphs...")
     body_annotations = []
-    for para in doc.paragraphs:
+    for idx, para in enumerate(doc.paragraphs):
         result = process_paragraph(para)
         if result:
             body_annotations.append(result)
+        # Insert marker AFTER classification (so marker text doesn't affect matching)
+        if para.text.strip():
+            _insert_marker_run(para, f"p{idx:03d}")
 
     # Insert body annotations (reverse order to preserve positions)
     for para, reason in reversed(body_annotations):
@@ -656,8 +703,8 @@ def main():
     seen_tc_elements = []  # keep references alive to prevent id reuse
     seen_tc_ids = set()
     for ti, table in enumerate(doc.tables):
-        for row in table.rows:
-            for cell in row.cells:
+        for ri, row in enumerate(table.rows):
+            for ci, cell in enumerate(row.cells):
                 tc_elem = cell._element
                 tc_id = id(tc_elem)
                 if tc_id in seen_tc_ids:
@@ -669,6 +716,9 @@ def main():
                     result = process_paragraph(para)
                     if result:
                         cell_annotations.append(result)
+                    # Insert marker AFTER classification
+                    if para.text.strip():
+                        _insert_marker_run(para, f"t{ti}_r{ri}_c{ci}")
                 for para, reason in reversed(cell_annotations):
                     insert_annotation_after(para, reason)
 
@@ -701,9 +751,9 @@ def main():
     print(f"  {CAT_LABELS[CAT_YELLOW]}: {tpl_perfect}")
     print(f"  {CAT_LABELS[CAT_YELLOW_IMPERFECT]}: {tpl_imperfect}")
 
-    # Content quality
-    content_good = stats[CAT_GREEN] + stats[CAT_TURQUOISE]
-    content_bad = stats[CAT_ORANGE] + stats[CAT_PINK] + stats[CAT_RED]
+    # Content quality (ORANGE = regional templates = acceptable)
+    content_good = stats[CAT_GREEN] + stats[CAT_TURQUOISE] + stats[CAT_ORANGE]
+    content_bad = stats[CAT_PINK] + stats[CAT_RED]
     content_total = content_good + content_bad
     content_pct = content_good / content_total * 100 if content_total > 0 else 100.0
     print(f"\nQUALITAT CONTINGUT: {content_pct:.1f}%")

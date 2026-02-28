@@ -11,10 +11,10 @@
   "is_anthropized": true,
   "num_soil_levels": 2,
   "foundation_depth_m": 0.3,
-  "utm_x": 423182.0,
-  "utm_y": 4609623.0,
+  "utm_x": 423182,
+  "utm_y": 4609623,
   "_metadata": {
-    "generated_at": "2026-02-26T17:31:08",
+    "generated_at": "2026-02-27T18:11:51",
     "wizard_used": true,
     "updated_at": "2026-02-25",
     "updated_by": "auto_extract + test defaults"
@@ -77,11 +77,12 @@
   "municipio": "Castellar del Vallès",
   "provincia": "Barcelona",
   "comarca": "Vallès Occidental",
-  "superficie_construida_m2": 0.0,
+  "superficie_construida_m2": 0,
   "soil_types": [
     "grava",
     "granular"
   ],
   "has_basement": false,
-  "has_retaining_walls": false
+  "has_retaining_walls": false,
+  "Es_settlement": 115
 }

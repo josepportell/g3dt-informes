@@ -27,6 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from automation.geocode_coordinates import (
     _wgs84_to_utm31n,
+    _parse_address,
     distribute_points,
     generate_coordenades_txt,
 )
@@ -179,7 +180,86 @@ def test_extract_municipality() -> None:
     check("just numbers", _extract_municipality(Path("4001612")) is None)
 
 
+def test_parse_address() -> None:
+    """Test address parsing for Cadastre Callejero API."""
+    print("\n--- _parse_address ---")
+
+    # Basic Catalan street types
+    sigla, calle, num = _parse_address("Carrer Mestre Ramon Ortiz, 5")
+    check("carrer sigla", sigla == "CL")
+    check("carrer calle", calle == "Mestre Ramon Ortiz")
+    check("carrer numero", num == "5")
+
+    sigla, calle, num = _parse_address("Av. Catalunya, 12")
+    check("avinguda sigla", sigla == "AV")
+    check("avinguda calle", calle == "Catalunya")
+    check("avinguda numero", num == "12")
+
+    # Number with letter suffix
+    sigla, calle, num = _parse_address("Carrer Major, 5A")
+    check("letter suffix sigla", sigla == "CL")
+    check("letter suffix calle", calle == "Major")
+    check("letter suffix numero", num == "5A")
+
+    # No number
+    sigla, calle, num = _parse_address("Partida Fontanals")
+    check("no number sigla", sigla == "PD")
+    check("no number calle", calle == "Fontanals")
+    check("no number numero", num == "")
+
+    # Plaça
+    sigla, calle, num = _parse_address("Plaça Major, 1")
+    check("plaça sigla", sigla == "PZ")
+    check("plaça calle", calle == "Major")
+
+    # Spanish variant
+    sigla, calle, num = _parse_address("Calle Mayor, 10")
+    check("calle sigla", sigla == "CL")
+    check("calle name", calle == "Mayor")
+
+    # Number without comma (trailing space + digits)
+    sigla, calle, num = _parse_address("Carrer Major 3")
+    check("no comma numero", num == "3")
+
+    # Edge: empty string
+    sigla, calle, num = _parse_address("")
+    check("empty string", sigla == "" and calle == "" and num == "")
+
+
 # === Online Integration Tests ===
+
+def test_cadastre_address_lookup() -> None:
+    """Test Cadastre Callejero address lookup (requires network)."""
+    print("\n--- cadastre_address_lookup (ONLINE) ---")
+    from automation.geocode_coordinates import cadastre_address_lookup, cadastre_rc_to_utm
+
+    # Bell-Lloc: known address with house number 13 (5 doesn't exist in Cadastre)
+    result = cadastre_address_lookup(
+        "Carrer Mestre Ramon Ortiz, 13", "Bell-Lloc d'Urgell"
+    )
+    check("DNPLOC returns result", result is not None)
+    if result:
+        check("has RC", bool(result.get("rc")))
+        check("RC starts with expected", result["rc"].startswith("4613"))
+        print(f"  INFO  RC={result['rc']}")
+
+        # Test CPMRC with the RC
+        utm = cadastre_rc_to_utm(result["rc"])
+        check("CPMRC returns UTM", utm is not None)
+        if utm:
+            x, y = utm
+            check("UTM X plausible", 314000 < x < 315000, f"x={x:.1f}")
+            check("UTM Y plausible", 4611000 < y < 4612000, f"y={y:.1f}")
+            print(f"  INFO  UTM=({x:.1f}, {y:.1f})")
+
+    # Test with non-existent number (should retry without number)
+    result2 = cadastre_address_lookup(
+        "Carrer Mestre Ramon Ortiz, 5", "Bell-Lloc d'Urgell"
+    )
+    check("non-existent number still returns", result2 is not None)
+    if result2:
+        print(f"  INFO  fallback RC={result2['rc']}")
+
 
 def test_nominatim_geocode() -> None:
     """Test Nominatim geocoding (requires network)."""
@@ -221,7 +301,9 @@ def test_geocode_project_bell_lloc() -> None:
     check("total distance < 100m", total < 100, f"total={total:.1f}m")
     check("has cadastral ref", result.get("rc") is not None)
     check("has 3 points", len(result.get("points", {})) == 3)
-    check("source tag", result.get("source") == "geocode:nominatim+cadastre")
+    check("source tag", result.get("source", "").startswith("geocode:"),
+          f"got '{result.get('source')}'")
+    print(f"  INFO  source={result.get('source')}")
 
     # Check point elevations are reasonable (~199m for Bell-Lloc)
     for pid, pt in result.get("points", {}).items():
@@ -268,12 +350,14 @@ def main() -> None:
     test_distribute_points()
     test_generate_coordenades_txt()
     test_extract_municipality()
+    test_parse_address()
 
     # Online tests (only with --online flag)
     if online:
         print("\n" + "=" * 60)
         print("ONLINE INTEGRATION TESTS")
         print("=" * 60)
+        test_cadastre_address_lookup()
         test_nominatim_geocode()
         test_geocode_project_bell_lloc()
         test_auto_extract_with_geocode()

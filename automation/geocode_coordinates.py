@@ -4,8 +4,8 @@ UTM Coordinate Geocoding Fallback
 
 When a project has no COORDENADES.txt (no GPS from fieldwork), derives
 approximate UTM coordinates from the project street address using:
-1. Nominatim (OpenStreetMap) for address -> lat/lon
-2. Spanish Cadastre OVC API for parcel identification
+1. Cadastre Callejero address lookup (primary — 2 API calls, fast)
+2. Nominatim + Cadastre grid search (fallback — slow, 290+ probes)
 3. Cadastre INSPIRE WFS for parcel geometry in EPSG:25831
 4. ICGC MDT for elevations
 
@@ -24,6 +24,7 @@ import re
 import socket
 import tempfile
 import time
+import urllib.parse
 import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
@@ -33,7 +34,7 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-__all__ = ['geocode_project', 'GeocodeError']
+__all__ = ['geocode_project', 'GeocodeError', 'cadastre_address_lookup', 'cadastre_rc_to_utm']
 
 
 # === Configuration ===
@@ -51,6 +52,7 @@ CATALUNYA_UTM_Y_MAX = 4750000
 
 # Cadastre API endpoints
 CADASTRE_URL = "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCoordenadas.asmx"
+CADASTRE_CALLEJERO_URL = "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx"
 CADASTRE_WFS_URL = "https://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx"
 
 
@@ -195,6 +197,290 @@ def _wgs84_to_utm31n(lat: float, lon: float) -> tuple[float, float]:
     y = 0.9996 * (M + N * math.tan(lat_rad) * (A ** 2 / 2 + (5 - T + 9 * C + 4 * C ** 2) * A ** 4 / 24))
 
     return x, y
+
+
+# === Cadastre Address Lookup (Primary Path) ===
+
+_STREET_TYPE_MAP = {
+    'carrer': 'CL', 'calle': 'CL', 'c/': 'CL', 'c.': 'CL',
+    'avinguda': 'AV', 'avenida': 'AV', 'av.': 'AV', 'av': 'AV',
+    'plaça': 'PZ', 'plaza': 'PZ', 'pl.': 'PZ', 'pl': 'PZ',
+    'passeig': 'PS', 'paseo': 'PS', 'pg.': 'PS', 'pg': 'PS',
+    'carretera': 'CR', 'ctra.': 'CR', 'ctra': 'CR',
+    'travessia': 'TR', 'travesía': 'TR',
+    'camí': 'CM', 'camino': 'CM',
+    'ronda': 'RD',
+    'rambla': 'RB',
+    'partida': 'PD',
+}
+
+# Pre-sorted: longer prefixes first so "ctra." matches before "c."
+_STREET_TYPE_PREFIXES = sorted(_STREET_TYPE_MAP.keys(), key=len, reverse=True)
+
+
+def _parse_address(address: str) -> tuple[str, str, str]:
+    """
+    Parse a street address into components for the Cadastre Callejero API.
+
+    Examples:
+        "Carrer Mestre Ramon Ortiz, 5" -> ("CL", "Mestre Ramon Ortiz", "5")
+        "Av. Catalunya, 12"            -> ("AV", "Catalunya", "12")
+        "Partida Fontanals"            -> ("PD", "Fontanals", "")
+
+    Args:
+        address: Street address string
+
+    Returns:
+        Tuple of (sigla, calle, numero)
+    """
+    # Extract house number: look for comma + number or trailing number
+    numero = ""
+    addr_part = address.strip()
+    m = re.search(r',\s*(\d+[A-Za-z]?)\s*$', addr_part)
+    if m:
+        numero = m.group(1)
+        addr_part = addr_part[:m.start()].strip()
+    else:
+        m = re.search(r'\s+(\d+[A-Za-z]?)\s*$', addr_part)
+        if m:
+            numero = m.group(1)
+            addr_part = addr_part[:m.start()].strip()
+
+    # Match street type at the beginning
+    sigla = ""
+    calle = addr_part
+    addr_lower = addr_part.lower()
+
+    for prefix in _STREET_TYPE_PREFIXES:
+        if addr_lower.startswith(prefix):
+            # Check that prefix is followed by a word boundary (space or end)
+            rest = addr_part[len(prefix):]
+            if rest == "" or rest[0] in (' ', '.', '/'):
+                sigla = _STREET_TYPE_MAP[prefix]
+                calle = rest.lstrip(' ./')
+                break
+
+    return sigla, calle, numero
+
+
+_CATALAN_PROVINCES = ["LLEIDA", "BARCELONA", "GIRONA", "TARRAGONA"]
+
+
+def cadastre_address_lookup(
+    address: str,
+    municipality: str,
+    province: str = "",
+) -> dict | None:
+    """
+    Look up a cadastral reference by street address using the Cadastre
+    Callejero API (Consulta_DNPLOC).
+
+    This is the fast path: 1-4 API calls to get the cadastral reference
+    directly from the street address, vs 290+ grid probes.
+
+    If province is not provided, tries all 4 Catalan provinces.
+
+    Args:
+        address: Street address (e.g. "Carrer Mestre Ramon Ortiz, 5")
+        municipality: Municipality name (e.g. "Bell-Lloc d'Urgell")
+        province: Province name (e.g. "LLEIDA"). If empty, auto-detected.
+
+    Returns:
+        Dict with keys: rc, xcen, ycen. Or None if lookup fails.
+    """
+    sigla, calle, numero = _parse_address(address)
+    logger.debug(
+        f"Cadastre address lookup: sigla={sigla!r} calle={calle!r} "
+        f"numero={numero!r} municipality={municipality!r}"
+    )
+
+    # Province is required by the API; try all Catalan ones if not provided
+    provinces = [province.upper()] if province else _CATALAN_PROVINCES
+
+    def _query_dnploc(prov: str, num: str) -> dict | None:
+        # API requires uppercase municipality/province and all address fields
+        params = (
+            f"?Provincia={urllib.parse.quote(prov)}"
+            f"&Municipio={urllib.parse.quote(municipality.upper())}"
+            f"&Sigla={urllib.parse.quote(sigla)}"
+            f"&Calle={urllib.parse.quote(calle.upper())}"
+            f"&Numero={urllib.parse.quote(num)}"
+            f"&Bloque=&Escalera=&Planta=&Puerta="
+        )
+        url = f"{CADASTRE_CALLEJERO_URL}/Consulta_DNPLOC{params}"
+        logger.debug(f"Consulta_DNPLOC URL: {url}")
+
+        try:
+            response_text = _fetch_url(url)
+        except GeocodeConnectionError as e:
+            logger.warning(f"Cadastre Callejero connection failed: {e}")
+            return None
+
+        try:
+            root = ET.fromstring(response_text)
+        except ET.ParseError as e:
+            logger.warning(f"Cadastre Callejero XML parse error: {e}")
+            return None
+
+        # Check for error responses — any error means lookup failed
+        for err_elem in _find_all_elements(root, "err"):
+            err_text = ""
+            des_elem = _find_element(err_elem, "des")
+            if des_elem is not None and des_elem.text:
+                err_text = des_elem.text
+            elif err_elem.text:
+                err_text = err_elem.text
+            if err_text:
+                logger.debug(f"Cadastre Callejero error: {err_text}")
+                return None
+
+        for lerr_elem in _find_all_elements(root, "lerr"):
+            for err_child in _find_all_elements(lerr_elem, "err"):
+                des_elem = _find_element(err_child, "des")
+                err_text = ""
+                if des_elem is not None and des_elem.text:
+                    err_text = des_elem.text
+                elif err_child.text:
+                    err_text = err_child.text
+                if err_text:
+                    logger.debug(f"Cadastre Callejero error: {err_text}")
+                    return None
+
+        # Extract cadastral reference from first bi element
+        bi_elems = _find_all_elements(root, "bi")
+        if not bi_elems:
+            # Try finding pc1/pc2 directly
+            pc1_elems = _find_all_elements(root, "pc1")
+            pc2_elems = _find_all_elements(root, "pc2")
+            if pc1_elems and pc1_elems[0].text:
+                pc1 = pc1_elems[0].text.strip()
+                pc2 = pc2_elems[0].text.strip() if pc2_elems and pc2_elems[0].text else ""
+                rc = pc1 + pc2
+            else:
+                logger.debug("Cadastre Callejero: no bi/pc elements found")
+                return None
+        else:
+            bi = bi_elems[0]
+            pc1_elem = _find_element(bi, "idbi/rc/pc1")
+            if pc1_elem is None:
+                pc1_elems = _find_all_elements(bi, "pc1")
+                pc1_elem = pc1_elems[0] if pc1_elems else None
+            pc2_elem = _find_element(bi, "idbi/rc/pc2")
+            if pc2_elem is None:
+                pc2_elems = _find_all_elements(bi, "pc2")
+                pc2_elem = pc2_elems[0] if pc2_elems else None
+
+            if pc1_elem is None or not pc1_elem.text:
+                logger.debug("Cadastre Callejero: no pc1 in bi element")
+                return None
+
+            pc1 = pc1_elem.text.strip()
+            pc2 = pc2_elem.text.strip() if pc2_elem is not None and pc2_elem.text else ""
+            rc = pc1 + pc2
+
+        # Extract coordinates if available
+        xcen = ycen = None
+        xcen_elems = _find_all_elements(root, "xcen")
+        ycen_elems = _find_all_elements(root, "ycen")
+        if xcen_elems and xcen_elems[0].text:
+            try:
+                xcen = float(xcen_elems[0].text.strip())
+            except ValueError:
+                pass
+        if ycen_elems and ycen_elems[0].text:
+            try:
+                ycen = float(ycen_elems[0].text.strip())
+            except ValueError:
+                pass
+
+        logger.info(f"Cadastre Callejero found RC={rc} (xcen={xcen}, ycen={ycen})")
+        return {"rc": rc, "xcen": xcen, "ycen": ycen}
+
+    # Try each province until we get a result
+    for prov in provinces:
+        # Try with house number first
+        result = _query_dnploc(prov, numero)
+        if result is not None:
+            return result
+
+        # If number didn't work and we had one, retry without it
+        if numero:
+            logger.debug(f"Retrying Cadastre Callejero without house number (prov={prov})")
+            time.sleep(0.3)
+            result = _query_dnploc(prov, "")
+            if result is not None:
+                return result
+
+        time.sleep(0.2)
+
+    return None
+
+
+def cadastre_rc_to_utm(rc: str) -> tuple[float, float] | None:
+    """
+    Get UTM centroid for a cadastral reference using Consulta_CPMRC.
+
+    Args:
+        rc: Full cadastral reference
+
+    Returns:
+        Tuple of (utm_x, utm_y) in EPSG:25831, or None if lookup fails.
+    """
+    params = (
+        f"?Provincia=&Municipio=&SRS=EPSG:25831"
+        f"&RC={urllib.parse.quote(rc)}"
+    )
+    url = f"{CADASTRE_URL}/Consulta_CPMRC{params}"
+    logger.debug(f"Consulta_CPMRC URL: {url}")
+
+    try:
+        response_text = _fetch_url(url)
+    except GeocodeConnectionError as e:
+        logger.warning(f"Cadastre CPMRC connection failed: {e}")
+        return None
+
+    try:
+        root = ET.fromstring(response_text)
+    except ET.ParseError as e:
+        logger.warning(f"Cadastre CPMRC XML parse error: {e}")
+        return None
+
+    # Look for xcen/ycen under coord elements
+    xcen_elem = None
+    ycen_elem = None
+    coord_elems = _find_all_elements(root, "coord")
+    if coord_elems:
+        for coord in coord_elems:
+            xc = _find_element(coord, "xcen")
+            yc = _find_element(coord, "ycen")
+            if xc is not None and xc.text and yc is not None and yc.text:
+                xcen_elem = xc
+                ycen_elem = yc
+                break
+
+    # Fallback: find xcen/ycen anywhere
+    if xcen_elem is None:
+        xcen_elems = _find_all_elements(root, "xcen")
+        ycen_elems = _find_all_elements(root, "ycen")
+        if xcen_elems and xcen_elems[0].text:
+            xcen_elem = xcen_elems[0]
+        if ycen_elems and ycen_elems[0].text:
+            ycen_elem = ycen_elems[0]
+
+    if xcen_elem is None or ycen_elem is None:
+        logger.warning(f"Cadastre CPMRC: no coordinates found for RC={rc}")
+        return None
+
+    try:
+        utm_x = float(xcen_elem.text.strip())
+        utm_y = float(ycen_elem.text.strip())
+    except ValueError as e:
+        logger.warning(f"Cadastre CPMRC: invalid coordinate values: {e}")
+        return None
+
+    logger.info(f"Cadastre CPMRC: RC={rc} -> UTM ({utm_x:.1f}, {utm_y:.1f})")
+    time.sleep(0.3)
+    return utm_x, utm_y
 
 
 # === Nominatim Geocoding ===
@@ -627,8 +913,8 @@ def geocode_project(
 
     Orchestrates the full pipeline:
     1. Check cache
-    2. Nominatim geocode address -> lat/lon
-    3. Cadastre parcel lookup -> cadastral reference
+    2. PRIMARY: Cadastre Callejero address lookup (fast, 2 API calls)
+    3. FALLBACK: Nominatim + Cadastre grid search (slow, 290+ probes)
     4. Cadastre WFS -> parcel geometry in EPSG:25831
     5. Distribute investigation points within parcel
     6. Get elevations from ICGC MDT
@@ -636,7 +922,7 @@ def geocode_project(
     8. Cache result
 
     Falls back gracefully at each step. If geometry is unavailable but
-    lat/lon is available, converts to UTM and places all points at centroid.
+    UTM centroid is available, places all points at centroid.
 
     Args:
         address: Street address of the project
@@ -653,19 +939,51 @@ def geocode_project(
         logger.debug(f"Cache hit for geocode '{address}, {municipality}'")
         return cached
 
-    # 2. Nominatim geocode
-    coords = nominatim_geocode(address, municipality)
-    if coords is None:
-        logger.warning(f"Geocoding failed for '{address}, {municipality}'")
-        return None
+    # 2. PRIMARY PATH: Cadastre address lookup
+    rc: str | None = None
+    centroid_x: float | None = None
+    centroid_y: float | None = None
+    source = "geocode:cadastre_address"
 
-    lat, lon = coords
+    cadastre_result = cadastre_address_lookup(address, municipality)
+    if cadastre_result:
+        rc = cadastre_result["rc"]
+        # Get UTM centroid via Consulta_CPMRC
+        utm_coords = cadastre_rc_to_utm(rc)
+        if utm_coords:
+            centroid_x, centroid_y = utm_coords
+        elif cadastre_result.get("xcen") and cadastre_result.get("ycen"):
+            # Fallback: use DNPLOC xcen/ycen (may be geographic, convert if needed)
+            xcen = cadastre_result["xcen"]
+            ycen = cadastre_result["ycen"]
+            if xcen < 1000 and ycen < 1000:
+                # Geographic coordinates (lon, lat) — convert to UTM
+                centroid_x, centroid_y = _wgs84_to_utm31n(ycen, xcen)
+                source = "geocode:cadastre_address(dnploc_geo)"
+            elif CATALUNYA_UTM_X_MIN <= xcen <= CATALUNYA_UTM_X_MAX:
+                # Already UTM
+                centroid_x, centroid_y = xcen, ycen
+                source = "geocode:cadastre_address(dnploc_utm)"
 
-    # 3. Cadastre parcel lookup
-    parcel = cadastre_find_parcel(lat, lon, address)
-    rc = parcel["rc"] if parcel else None
+    # 3. FALLBACK: Nominatim + grid search (only if primary failed)
+    if centroid_x is None:
+        source = "geocode:nominatim+cadastre"
+        logger.info("Primary cadastre address lookup failed, falling back to Nominatim")
+        coords = nominatim_geocode(address, municipality)
+        if coords is None:
+            logger.warning(f"Geocoding failed for '{address}, {municipality}'")
+            return None
+        lat, lon = coords
 
-    # 4. Get parcel geometry
+        # Cadastre parcel lookup via grid search (only override RC if not already set)
+        parcel = cadastre_find_parcel(lat, lon, address)
+        if parcel and rc is None:
+            rc = parcel["rc"]
+
+        # Convert to UTM as fallback centroid
+        centroid_x, centroid_y = _wgs84_to_utm31n(lat, lon)
+
+    # 4. Get parcel geometry (for point distribution) — try if we have RC
     polygon: list[tuple[float, float]] | None = None
     if rc and len(rc) >= 14:
         try:
@@ -673,16 +991,14 @@ def geocode_project(
         except GeocodeError as e:
             logger.warning(f"Could not get parcel geometry for {rc[:14]}: {e}")
 
-    # 5. Distribute points and compute centroid UTM
+    # 5. Distribute points — if polygon available, use it; otherwise centroid
     if polygon and len(polygon) >= 3:
-        # Centroid from polygon
+        # Override centroid with polygon centroid (more precise)
         n = len(polygon)
         centroid_x = sum(p[0] for p in polygon) / n
         centroid_y = sum(p[1] for p in polygon) / n
         points = distribute_points(polygon, point_ids)
     else:
-        # Fallback: convert Nominatim lat/lon to UTM
-        centroid_x, centroid_y = _wgs84_to_utm31n(lat, lon)
         # Place all points at centroid
         points = {pid: {"x": centroid_x, "y": centroid_y} for pid in point_ids}
 
@@ -732,7 +1048,7 @@ def geocode_project(
         "utm_y": centroid_y,
         "points": points_with_z,
         "rc": rc,
-        "source": "geocode:nominatim+cadastre",
+        "source": source,
     }
 
     # 10. Cache result

@@ -159,6 +159,7 @@ class ReportData:
     include_expansivity: bool = False
     include_earth_pressure: bool = False
     include_slope_stability: bool = False
+    show_granulometric: bool = False
     include_geothermal: bool = False
 
     @property
@@ -520,6 +521,7 @@ def build_report_data(
         include_earth_pressure=include_earth_pressure,
         include_slope_stability=include_slope_stability,
         include_geothermal=user_data.get('include_geothermal', False),
+        show_granulometric=user_data.get('show_granulometric', False),
     )
 
 
@@ -622,6 +624,7 @@ def to_dict(report_data: ReportData) -> dict[str, Any]:
             'include_earth_pressure': report_data.include_earth_pressure,
             'include_slope_stability': report_data.include_slope_stability,
             'include_geothermal': report_data.include_geothermal,
+            'show_granulometric': report_data.show_granulometric,
         },
     }
 
@@ -770,6 +773,7 @@ def from_dict(data: dict[str, Any]) -> ReportData:
         include_expansivity=conditional.get('include_expansivity', False),
         include_earth_pressure=conditional.get('include_earth_pressure', False),
         include_slope_stability=conditional.get('include_slope_stability', False),
+        show_granulometric=conditional.get('show_granulometric', False),
         include_geothermal=conditional.get('include_geothermal', False),
     )
 

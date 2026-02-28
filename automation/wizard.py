@@ -618,6 +618,10 @@ class UserDataWizard:
             'has_retaining_walls', 'Murs de contenci\u00f3 (activa \u00a74.4 empentes)', 17 + num_levels
         )
 
+        self.user_data['show_granulometric'] = self.ask_bool(
+            'show_granulometric', 'Incloure secci\u00f3 granulom\u00e8trica (assaig contractat)', 18 + num_levels
+        )
+
         # Group 4: EXPERT OVERRIDES (optional)
         print(f'\n  \U0001f527 OVERRIDES EXPERTS (opcional)')
         print('     Per quan la detecci\u00f3 autom\u00e0tica no \u00e9s correcta.')

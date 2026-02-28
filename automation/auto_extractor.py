@@ -436,38 +436,30 @@ def _extract_municipality(project_path: Path) -> str | None:
     """
     Extract municipality name from project folder name.
 
-    Folder names follow the pattern: "4001612 BELL-LLOC" or
-    "3001621 CASTELLAR DEL VALLES". We strip the expedient number
-    and convert to title case with proper formatting.
+    Thin wrapper around folder_utils.parse_folder_name() that adds
+    Catalan accent corrections for folder names that lost diacritics.
     """
-    folder_name = project_path.name
-
-    # Remove expedient number prefix (digits + space)
-    match = re.match(r'^\d+\s+(.+)$', folder_name)
-    if not match:
+    from .folder_utils import parse_folder_name
+    _, municipality = parse_folder_name(project_path.name)
+    if not municipality:
         return None
 
-    raw_name = match.group(1).strip()
-
-    # Convert "BELL-LLOC" -> "Bell-Lloc", "CASTELLAR DEL VALLES" -> "Castellar del Vallès"
-    # Common replacements for Catalan place names
-    name = raw_name.title()
-
     # Fix common articles that shouldn't be capitalized
+    # (parse_folder_name handles hyphens well, but space-separated
+    # folders like "CASTELLAR DEL VALLES" get .title() with uppercase articles)
     for article in (' Del ', ' De ', ' D\'', ' El ', ' La ', ' Les ', ' Els ', ' Dels '):
-        name = name.replace(article, article.lower())
+        municipality = municipality.replace(article, article.lower())
 
-    # Known corrections for accent marks lost in folder names
-    corrections = {
+    # Known corrections for accent marks lost in uppercase folder names
+    _ACCENT_CORRECTIONS = {
         'Valles': 'Vallès',
         'Rubi': 'Rubí',
-        'Urgell': 'Urgell',
         "D'Urgell": "d'Urgell",
     }
-    for wrong, right in corrections.items():
-        name = name.replace(wrong, right)
+    for wrong, right in _ACCENT_CORRECTIONS.items():
+        municipality = municipality.replace(wrong, right)
 
-    return name
+    return municipality
 
 
 # ---------------------------------------------------------------------------

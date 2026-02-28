@@ -91,6 +91,7 @@ dependencies = [
     { name = "docxtpl" },
     { name = "fastapi" },
     { name = "pydantic" },
+    { name = "pymupdf" },
     { name = "uvicorn", extra = ["standard"] },
     { name = "xlrd" },
 ]
@@ -105,6 +106,7 @@ requires-dist = [
     { name = "docxtpl", specifier = ">=0.16" },
     { name = "fastapi", specifier = ">=0.115" },
     { name = "pydantic", specifier = ">=2.0" },
+    { name = "pymupdf", specifier = ">=1.27.1" },
     { name = "pymupdf", marker = "extra == 'pdf'", specifier = ">=1.24" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.30" },
     { name = "xlrd", specifier = ">=2.0" },
