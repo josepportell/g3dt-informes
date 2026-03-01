@@ -90,6 +90,7 @@ _COMARCA_TEMPLATE: dict[str, str] = {
     'Alta Ribagorca': 'Ribagorça',
     'Alt Urgell': 'PREPIRINEUS',
     'Val d\'Aran': 'Vall d\'Aran',
+    'Garrotxa': 'Olot',
 }
 
 
