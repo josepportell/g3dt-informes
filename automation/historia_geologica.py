@@ -32,12 +32,65 @@ __all__ = ['lookup_municipality', 'extract_paragraphs', 'HistoriaLookupResult']
 _TEMPLATES_ROOT = Path(__file__).parent.parent / "templates" / "historia-geologica"
 _INDEX_PATH = _TEMPLATES_ROOT / "index.json"
 
-# Module-level cache for the index
+# Comarca data file
+_COMARQUES_PATH = Path(__file__).parent / "data" / "comarques.json"
+
+# Module-level caches
 _INDEX_CACHE: list[dict[str, Any]] | None = None
+_MUNICIPI_COMARCA_CACHE: dict[str, str] | None = None  # normalized name → comarca
 
 # Matching thresholds
 _MATCH_THRESHOLD = 0.75
 _CANDIDATE_THRESHOLD = 0.75
+
+# Comarca → best template location in index.json
+# Tier 2 (comarca/zone specific)
+# Tier 3 (regional / broader geographic area)
+_COMARCA_TEMPLATE: dict[str, str] = {
+    # --- Tier 2: comarca-specific templates ---
+    'Bages': 'Bages General',
+    'Moianes': 'Bages General',
+    'Baix Llobregat': 'Baix llobregat general',
+    'Valles Occidental': 'vallès',
+    'Valles Oriental': 'Valles oriental',
+    'Alt Penedes': 'Penedès',
+    'Anoia': 'igualada',
+    'Maresme': 'maresme',
+    'Tarragones': 'Tarragona',
+    'Baix Penedes': 'vendrell',
+    # --- Tier 3: regional templates ---
+    'Barcelones': 'Barcelona',
+    'Garraf': 'Vilanova',
+    'Bergueda': 'Bergueda',
+    'Cerdanya': 'Cerdanya',
+    'Solsones': 'Prelitoral',
+    'Osona': 'Prelitoral',
+    'Ripolles': 'Ripoll_Vallfogona',
+    'Girones': 'Girona',
+    'Selva': 'Fossa de la Selva',
+    'Alt Emporda': 'Empordà',
+    'Baix Emporda': 'Empordà',
+    'Pla de l\'Estany': 'Banyoles',
+    'Alt Camp': 'Fossa del Camp',
+    'Baix Camp': 'reus-valls',
+    'Priorat': 'Priorat',
+    'Conca de Barbera': 'Montblanc',
+    'Ribera d\'Ebre': 'historia depresio ebre',
+    'Terra Alta': 'Gandesa',
+    'Baix Ebre': 'DELTA EBRE',
+    'Montsia': 'DELTA EBRE',
+    'Segria': 'Lleida',
+    'Pla d\'Urgell': 'Lleida',
+    'Noguera': 'Lleida',
+    'Urgell': 'Lleida',
+    'Garrigues': 'Lleida',
+    'Segarra': 'Lleida',
+    'Pallars Jussa': 'Pallars',
+    'Pallars Sobira': 'Pallars',
+    'Alta Ribagorca': 'Ribagorça',
+    'Alt Urgell': 'PREPIRINEUS',
+    'Val d\'Aran': 'Vall d\'Aran',
+}
 
 
 @dataclass
@@ -108,15 +161,82 @@ def _normalize(name: str) -> str:
     return ' '.join(s.split())
 
 
+def _load_comarca_mapping() -> dict[str, str]:
+    """Load and cache the normalized municipality → comarca reverse lookup."""
+    global _MUNICIPI_COMARCA_CACHE
+    if _MUNICIPI_COMARCA_CACHE is not None:
+        return _MUNICIPI_COMARCA_CACHE
+
+    _MUNICIPI_COMARCA_CACHE = {}
+    if not _COMARQUES_PATH.exists():
+        logger.warning("Comarques data not found: %s", _COMARQUES_PATH)
+        return _MUNICIPI_COMARCA_CACHE
+
+    try:
+        data = json.loads(_COMARQUES_PATH.read_text(encoding='utf-8'))
+        for comarca, municipis in data.items():
+            if comarca.startswith('_'):
+                continue
+            norm_comarca = _normalize(comarca)
+            for m in municipis:
+                norm_m = _normalize(m)
+                if norm_m:
+                    _MUNICIPI_COMARCA_CACHE[norm_m] = norm_comarca
+    except (json.JSONDecodeError, OSError) as e:
+        logger.warning("Error loading comarques data: %s", e)
+
+    return _MUNICIPI_COMARCA_CACHE
+
+
+def _find_in_index(location_query: str) -> dict | None:
+    """Find the best matching entry in index.json for a given location string."""
+    index = _load_index()
+    norm_query = _normalize(location_query)
+    if not norm_query:
+        return None
+
+    best: dict | None = None
+    best_score = 0.0
+
+    for entry in index:
+        if entry.get('tier', 99) >= 4:
+            continue
+        location = entry.get('location', '')
+        norm_loc = _normalize(location)
+        if not norm_loc:
+            continue
+
+        score = SequenceMatcher(None, norm_query, norm_loc).ratio()
+        if score >= _CANDIDATE_THRESHOLD and score > best_score:
+            # Prefer Catalan
+            if best and best.get('lang') == 'ca' and entry.get('lang') != 'ca' and score - best_score < 0.1:
+                continue
+            best = {
+                'location': location,
+                'file': entry['file'],
+                'tier': entry.get('tier', 1),
+                'lang': entry.get('lang', 'ca'),
+                'score': round(score, 3),
+            }
+            best_score = score
+
+    return best
+
+
 def lookup_municipality(municipality: str) -> HistoriaLookupResult | None:
     """
     Find the best matching geological history template for a municipality.
 
+    Hierarchical lookup:
+    1. Fuzzy match municipality name → tier 1 templates (exact/near match)
+    2. If no match: look up comarca → find tier 2/3 template for that comarca
+    3. If no comarca match: return None (falls back to hardcoded templates)
+
     Args:
-        municipality: Municipality name (e.g., "Rubí", "Castellar del Vallès")
+        municipality: Municipality name (e.g., "Rubí", "Bell-Lloc")
 
     Returns:
-        HistoriaLookupResult if a match >= 0.75 found, None otherwise
+        HistoriaLookupResult if a match found, None otherwise
     """
     index = _load_index()
     if not index:
@@ -126,10 +246,10 @@ def lookup_municipality(municipality: str) -> HistoriaLookupResult | None:
     if not norm_query:
         return None
 
+    # --- Step 1: Direct fuzzy match against all index entries ---
     matches: list[dict] = []
 
     for entry in index:
-        # Filter: prefer Catalan, skip tier 4
         if entry.get('tier', 99) >= 4:
             continue
 
@@ -149,34 +269,84 @@ def lookup_municipality(municipality: str) -> HistoriaLookupResult | None:
                 'score': round(score, 3),
             })
 
-    if not matches:
+    if matches:
+        # Sort: prefer Catalan, lowest tier, highest score, shortest name
+        matches.sort(key=lambda m: (
+            0 if m['lang'] == 'ca' else 1,
+            m['tier'],
+            -m['score'],
+            len(m['location']),
+        ))
+
+        best = matches[0]
+
+        # Guard against false positives for short names:
+        # "valls" → "vallès" (0.91) or "ripoll" → "ripollet" (0.86) are wrong.
+        # If score < 0.95 and query is short, prefer comarca fallback.
+        if best['score'] >= 0.95 or len(norm_query) >= 8:
+            file_path = _resolve_file_path(best['file'])
+            candidates = [m for m in matches[1:] if m['score'] >= _CANDIDATE_THRESHOLD]
+            return HistoriaLookupResult(
+                matched_location=best['location'],
+                file_path=str(file_path),
+                tier=best['tier'],
+                score=best['score'],
+                candidates=candidates,
+            )
+        # For ambiguous short-name matches, fall through to comarca lookup
+
+    # --- Step 2: Comarca fallback ---
+    comarca_map = _load_comarca_mapping()
+    comarca = comarca_map.get(norm_query)
+    if not comarca:
+        # Try prefix matching: "bell-lloc" matches "bell-lloc d'urgell"
+        # Prefer shortest match (closest to query) to avoid "sant cugat" → "sant cugat sesgarrigues"
+        prefix_matches = []
+        for norm_m, com in comarca_map.items():
+            if norm_m.startswith(norm_query) and len(norm_query) >= 4:
+                prefix_matches.append((norm_m, com))
+        if prefix_matches:
+            prefix_matches.sort(key=lambda x: len(x[0]))
+            comarca = prefix_matches[0][1]
+    if not comarca:
+        # Try fuzzy matching against comarca municipality list
+        best_score = 0.0
+        for norm_m, com in comarca_map.items():
+            score = SequenceMatcher(None, norm_query, norm_m).ratio()
+            if score >= 0.85 and score > best_score:
+                comarca = com
+                best_score = score
+
+    if not comarca:
         return None
 
-    # Sort: prefer Catalan, lowest tier, highest score, shortest name
-    matches.sort(key=lambda m: (
-        0 if m['lang'] == 'ca' else 1,
-        m['tier'],
-        -m['score'],
-        len(m['location']),
-    ))
+    # Find the template location for this comarca
+    template_location = _COMARCA_TEMPLATE.get(comarca)
+    if not template_location:
+        # Try normalized comarca name against _COMARCA_TEMPLATE keys
+        for key, loc in _COMARCA_TEMPLATE.items():
+            if _normalize(key) == comarca:
+                template_location = loc
+                break
 
-    best = matches[0]
+    if not template_location:
+        logger.debug("No template mapping for comarca '%s'", comarca)
+        return None
 
-    # Resolve file path
-    file_path = _resolve_file_path(best['file'])
+    # Find the template in the index
+    match = _find_in_index(template_location)
+    if not match:
+        logger.debug("Template '%s' not found in index for comarca '%s'", template_location, comarca)
+        return None
 
-    # Build candidates (exclude the primary match)
-    candidates = [
-        m for m in matches[1:]
-        if m['score'] >= _CANDIDATE_THRESHOLD
-    ]
+    file_path = _resolve_file_path(match['file'])
 
     return HistoriaLookupResult(
-        matched_location=best['location'],
+        matched_location=f"{match['location']} (via comarca)",
         file_path=str(file_path),
-        tier=best['tier'],
-        score=best['score'],
-        candidates=candidates,
+        tier=match['tier'],
+        score=match['score'],
+        candidates=[],
     )
 
 
