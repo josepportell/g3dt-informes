@@ -902,7 +902,8 @@ class ReportGenerator:
                 if s3.sismica:
                     ab_match = re.search(r'ab\s*=\s*([\d.]+)', s3.sismica)
                     if ab_match:
-                        context['seismic_ab_text'] = ab_match.group(1)
+                        # Use comma as decimal separator (Catalan format)
+                        context['seismic_ab_text'] = ab_match.group(1).replace('.', ',')
 
             # Section-derived text variables
             context['materials_depth_text'] = ''
