@@ -1,9 +1,10 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-02-27
+Last updated: 2026-03-01
 
 ## Current State
 
 Pipeline complet operatiu amb web wizard i geocodificació integrada.
+Branca `fix/report-quality-audit` amb correccions alineades amb l'informe de referència d'Eva.
 
 **Qualitat (audit visual):** Plantilla 84.0% | Contingut 79.8%
 
@@ -41,6 +42,16 @@ Pipeline complet operatiu amb web wizard i geocodificació integrada.
 
 \* Bell-Lloc E=650 (carbonatades, Eva ajusta manualment)
 \*\* Rubí Qa=3.50 supera cap 3.0 — pendent preguntar a Eva
+
+### Fixes recents (branca fix/report-quality-audit)
+
+| Fix | Descripció | Commit |
+|-----|-----------|--------|
+| Taula 4 sondeig | Columnes alineades amb Eva: Punt, SPT/MA, N.F. | baacdaa |
+| Nivells Bell-Lloc | 2→1 nivell: respecta num_levels del wizard | baacdaa |
+| Profunditat refús DPSH | Usa anotació manuscrita "R:" (1.35/2.45) vs última fila Excel | baacdaa |
+| Fórmula sísmica | A<sub>b</sub> amb subíndex, "<" en lloc de "=", coma decimal | 892a5f5 |
+| Mapa geològic transparent | Topo base + geologia al 35% opacitat + punt vermell ubicació | a5eff89 |
 
 ## Active Blockers
 
