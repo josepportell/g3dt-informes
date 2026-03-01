@@ -48,6 +48,7 @@ WIZARD_FIELDS = [
 EXPERT_ICGC_FIELDS = ['icgc_unit_code', 'icgc_unit_description', 'icgc_unit_epoch']
 EXPERT_GEOMECH_FIELDS = ['gamma', 'cohesion', 'phi', 'E']
 EXPERT_SETTLEMENT_FIELDS = ['Es_settlement']
+EXPERT_HISTORIA_FIELDS = ['historia_geologica_template']
 
 
 class UserDataWizard:
@@ -255,6 +256,11 @@ class UserDataWizard:
             for field in EXPERT_SETTLEMENT_FIELDS:
                 val = data.get(field)
                 if val is not None:
+                    self.prefills[field] = {'value': val, 'source': source}
+            # Load historia geologica template
+            for field in EXPERT_HISTORIA_FIELDS:
+                val = data.get(field)
+                if val:
                     self.prefills[field] = {'value': val, 'source': source}
             # Load soil_types as individual level prefills
             existing_soil_types = data.get('soil_types', [])
@@ -683,6 +689,29 @@ class UserDataWizard:
         elif current is not None:
             self.user_data['Es_settlement'] = current
 
+        # Historia geologica template override
+        print(f'\n  \U0001f4dc Historia geològica (plantilla Eva)')
+        prefill = self.prefills.get('historia_geologica_template')
+        current = prefill['value'] if prefill else None
+        display = current if current is not None else '(sense plantilla)'
+        # Show just the filename for readability
+        if current:
+            from pathlib import Path as _P
+            short = _P(current).name
+            print(f'\n  26. Plantilla historia geològica: {short}')
+        else:
+            print(f'\n  26. Plantilla historia geològica: {display}')
+        if prefill:
+            print(self._format_source(prefill))
+        print('     Buit = manté actual, "no" = desactiva, o escriu path alternatiu')
+        raw = input('     Valor o Enter per confirmar: ').strip()
+        if raw.lower() == 'no':
+            self.user_data['historia_geologica_template'] = ''
+        elif raw:
+            self.user_data['historia_geologica_template'] = raw
+        elif current:
+            self.user_data['historia_geologica_template'] = current
+
     def save(self) -> Path:
         """Merge wizard results into user_data.json and save."""
         output_path = self.project_path / 'user_data.json'
@@ -713,6 +742,10 @@ class UserDataWizard:
         # Update Es_settlement (top-level, not inside geomech_params)
         if 'Es_settlement' in self.user_data:
             existing['Es_settlement'] = self.user_data['Es_settlement']
+
+        # Update historia geologica template
+        if 'historia_geologica_template' in self.user_data:
+            existing['historia_geologica_template'] = self.user_data['historia_geologica_template']
 
         # Update metadata
         meta = existing.setdefault('_metadata', {})

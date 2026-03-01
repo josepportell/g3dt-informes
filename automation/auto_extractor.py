@@ -93,6 +93,7 @@ def auto_extract(
     # --- Phase 0.1: Content discovery ---
     _phase1_file_scanner(project_path, result)
     _phase01_content_discovery(project_path, result)
+    _phase01_historia_geologica(project_path, result)
 
     # --- Phase 1: Local files ---
     _phase1_dpsh(project_path, result)
@@ -216,6 +217,35 @@ def _phase01_content_discovery(project_path: Path, result: AutoExtractionResult)
 
     except Exception as exc:
         result.steps_skipped.append(("Contingut", str(exc)))
+
+
+def _phase01_historia_geologica(project_path: Path, result: AutoExtractionResult) -> None:
+    """Match project municipality to Eva's geological history templates."""
+    try:
+        from .folder_utils import parse_folder_name
+        from .historia_geologica import lookup_municipality
+
+        _, municipality = parse_folder_name(project_path.name)
+        if not municipality:
+            result.steps_skipped.append(("Historia geològica", "sense municipi al nom de carpeta"))
+            return
+
+        match = lookup_municipality(municipality)
+        if match:
+            result.prefills['historia_geologica_template'] = match.file_path
+            result.sources['historia_geologica_template'] = (
+                f"Eva template: '{match.matched_location}' (tier {match.tier})"
+            )
+            result.steps_completed.append(
+                f"Historia geològica: '{match.matched_location}' (tier {match.tier}, score {match.score:.2f})"
+            )
+        else:
+            result.steps_skipped.append(
+                ("Historia geològica", f"cap match per '{municipality}'")
+            )
+
+    except Exception as exc:
+        result.steps_skipped.append(("Historia geològica", str(exc)))
 
 
 # ---------------------------------------------------------------------------

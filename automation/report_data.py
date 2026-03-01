@@ -152,6 +152,9 @@ class ReportData:
     icgc_unit_description: str = ""
     icgc_unit_epoch: str = ""
 
+    # Historia geologica template (Eva's .docx path, from auto-extractor or wizard)
+    historia_geologica_template: str = ""
+
     # Geomech overrides (Nb, N from user_data.geomech_params)
     _geomech_overrides: dict = field(default_factory=dict)
 
@@ -504,6 +507,8 @@ def build_report_data(
         icgc_unit_code=user_data.get('icgc_unit_code', ''),
         icgc_unit_description=user_data.get('icgc_unit_description', ''),
         icgc_unit_epoch=user_data.get('icgc_unit_epoch', ''),
+        # Historia geologica template path
+        historia_geologica_template=user_data.get('historia_geologica_template', ''),
         # Geomech overrides (Nb, N for Taula 10)
         _geomech_overrides={
             'Nb': geomech.get('Nb', ''),

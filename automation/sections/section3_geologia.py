@@ -498,19 +498,26 @@ class Section3Generator:
         """
         Generate regional geology text (3.1).
 
-        Uses ICGC WMS API for authoritative geological unit data combined
-        with regional templates for tectonic/historical context.
-
-        Flow:
-        1. Get geological unit (manual override or ICGC WMS query)
-        2. Determine geological region from unit/municipality
-        3. Load regional template paragraphs (1-5)
-        4. Generate paragraph 6 from unit data
-        5. Combine into complete section text
+        Priority:
+        1. Eva's municipality-specific template (.docx) — if historia_geologica_template set
+        2. ICGC WMS API + hardcoded regional templates (existing flow)
 
         Returns:
             Complete regional geology text, or placeholder if data unavailable
         """
+        # Try Eva's template first (from auto-extractor or wizard)
+        historia_path = getattr(self.data, 'historia_geologica_template', '')
+        if historia_path:
+            try:
+                from ..historia_geologica import extract_paragraphs
+                eva_paras = extract_paragraphs(historia_path)
+                if eva_paras:
+                    logger.info(f"Using Eva's historia geologica template: {historia_path}")
+                    return self._build_marc_geologic_from_eva(eva_paras)
+            except Exception as e:
+                logger.warning(f"Historia geologica template failed: {e}")
+
+        # Existing flow: ICGC WMS + hardcoded regional templates
         # Get unit via cached method (checks manual override first)
         unit = self._get_icgc_unit_cached()
 
@@ -545,6 +552,28 @@ class Section3Generator:
         paragraphs.append(icgc_paragraph)
 
         return "\n\n".join(paragraphs)
+
+    def _build_marc_geologic_from_eva(self, eva_paras: list[str]) -> str:
+        """
+        Build marc geologic text from Eva's template paragraphs + ICGC unit.
+
+        Fits Eva's paragraphs into slots 1-5 (merging overflow into slot 5),
+        then appends ICGC unit reference as the final paragraph.
+        """
+        MAX_SLOTS = 5
+        if len(eva_paras) > MAX_SLOTS:
+            # Merge overflow into slot 5
+            paras = eva_paras[:MAX_SLOTS - 1]
+            paras.append('\n\n'.join(eva_paras[MAX_SLOTS - 1:]))
+        else:
+            paras = eva_paras.copy()
+
+        # Append ICGC unit reference as final paragraph
+        unit = self._get_icgc_unit_cached()
+        if unit:
+            paras.append(unit.format_for_report())
+
+        return "\n\n".join(paras)
 
     def _load_regional_template(self, region: str) -> list[str]:
         """
