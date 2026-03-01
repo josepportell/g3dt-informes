@@ -1,12 +1,44 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-02-26
+Last updated: 2026-03-01
 
 ## Current State
-**Metodologia Eva confirmada + settlement calibrat** — Back-engineering de 4 projectes completat. Es = 2.5×Nb implementat (reemplaça Robertson qc). Wizard permet override d'Es per Eva.
 
-Pipeline complet: FileScanner → auto_extract → validació visual → wizard → report_generator.
+Pipeline complet operatiu. Història geològica integrada amb plantilles d'Eva.
 
-### Desviacions actuals (4 projectes)
+**Qualitat (audit visual):** Plantilla 84.0% | Contingut 79.8%
+
+### Components operatius
+
+| Component | Estat | Notes |
+|-----------|-------|-------|
+| FileScanner (Fase 0) | ✅ | Classificació automàtica de fitxers |
+| auto_extract (Fase 0.5) | ✅ | DPSH, Lab, ICGC, Cadastre, geocode, **historia geològica** |
+| Geocodificació UTM (Fase 2.5) | ✅ | Nominatim + Cadastre + WFS (47 tests) |
+| Validació visual (Fase 1) | ✅ | DPSH, Sondeig, Plànol via Claude vision |
+| Web Wizard (Fase 2) | ✅ | FastAPI + review.html, 4 pestanyes |
+| ReportGenerator (Fase 3) | ✅ | .docx amb Jinja2, tots els annexos |
+| Historia geològica | ✅ | 238 plantilles Eva, lookup jeràrquic municipi→comarca→region |
+| Audit visual | ✅ | Split plantilla vs contingut |
+
+## Branques actives
+
+| Branca | Base | Contingut | Estat |
+|--------|------|-----------|-------|
+| `main` | — | Pipeline base fins a settlement calibrat | Estable |
+| `fix/report-quality-audit` | `main` | Audit 100%, Cadastre lookup, image fallbacks, CE-21 | En curs |
+| `feat/historia-geologica` | `main` | Plantilles regionals + lookup jeràrquic | **Funcional** |
+
+**IMPORTANT per merge:** `feat/historia-geologica` surt de `main`, NO de `fix/report-quality-audit`.
+Primer merge `fix/report-quality-audit` → `main`, després `feat/historia-geologica` → `main`.
+
+### feat/historia-geologica (2026-03-01)
+- 238 .docx plantilles d'Eva, `index.json` amb 240 entrades
+- `historia_geologica.py`: lookup fuzzy + fallback jeràrquic (municipi→comarca→region)
+- `comarques.json`: 42 comarques, ~908 municipis → mapa comarca→plantilla
+- Integrat a: auto_extractor (prefill), wizard (override), section3 (genera §3.1)
+- **Testat:** Rubí→tier1, Castellar→tier1, Bell-Lloc→Lleida(comarca), Linyola→Lleida(comarca), Sant Cugat→vallès(comarca), 19 municipis verificats
+
+## Desviacions actuals (4 projectes)
 
 | Paràmetre | Bell-Lloc | Rubí | Castellar | Linyola |
 |-----------|-----------|------|-----------|---------|
@@ -17,39 +49,25 @@ Pipeline complet: FileScanner → auto_extract → validació visual → wizard 
 | settlement | +27.9%* | +2.3% | - | - |
 | K30 | +4.2% | +4.2% | +4.1% | - |
 
-\* Bell-Lloc E=650 (carbonatades, Eva ajusta manualment) → settlement segueix el gap d'E
+\* Bell-Lloc E=650 (carbonatades, Eva ajusta manualment)
 \*\* Rubí Qa=3.50 supera cap 3.0 — pendent preguntar a Eva
 
-### Canvis sessió 2026-02-26
-
-| # | Canvi | Fitxer | Impacte |
-|---|-------|--------|---------|
-| 1 | Es = 2.5×Nb (square), 3.5×Nb (strip) | `terzaghi_calculator.py` | Reemplaça Robertson qc path |
-| 2 | `Es_override` param | `terzaghi_calculator.py` | Wizard Es té prioritat |
-| 3 | Es_settlement prefill | `auto_extractor.py` | 2.5×Nb des de DPSH avg |
-| 4 | Es_settlement al wizard | `wizard.py` | Eva pot ajustar Es |
-| 5 | Pass-through Es_settlement | `report_generator.py` | user_data → calculate_qa() |
-| 6 | Referència comparació corregida | `compare_4projects.py` | BL E=650/s=1.20, Rubí N20=40/s=1.50 |
-
-### Gaps pendents
-
-| Gap | Descripció | Prioritat |
-|-----|-----------|-----------|
-| Bell-Lloc E | Eva puja E a 650 per "carbonatades" — criteri professional, no fórmula | Baixa (wizard override) |
-| Rubí Qa=3.50 | Supera cap 3.0. T-P governs? Cap més alt per graves denses? | Mitjana (preguntar Eva) |
-| Linyola E +14% | E=114 vs 100. CTE formula dóna lleugerament per sobre | Baixa |
-| K30 | Castellar: real=8.0 vs generat=8.33 (+4.1%) | Baixa |
-| Bell-Lloc N=54 | És SPT (sondeig) o N20? Ambigüitat a la taula d'Eva | Baixa (preguntar Eva) |
-
 ## Active Blockers
-- Cap blocker crític.
+
+Cap blocker crític.
 
 ## Next Milestones
-- [x] Fase 0.5: auto_extractor.py (DPSH, Lab, ICGC, Cadastre)
-- [x] Fixes post-comparació Castellar (6 fixes + 3 correccions)
-- [x] Metodologia Eva confirmada (Nb, T-P, Qa cap, gamma D.27)
-- [x] Settlement calibrat: Es = 2.5×Nb (+2.3% Rubí, +27.9% Bell-Lloc per E gap)
+
+- [x] Pipeline complet: FileScanner → auto_extract → wizard → report
+- [x] Web wizard amb FastAPI (substitueix wizard CLI)
+- [x] Geocodificació UTM (Nominatim + Cadastre + WFS INSPIRE)
+- [x] UTM al wizard web (camps, source badges, geocode button, refresh prefills)
+- [x] Audit visual split: plantilla 84.0% + contingut 79.8%
+- [x] Settlement calibrat: Es = 2.5×Nb
+- [x] Plantilles història geològica extretes + index.json generat
+- [x] Lògica lookup municipi → plantilla (fuzzy match + jerarquia comarca)
+- [x] Extracció text .docx → inserció al report (§3.1 MARC GEOLÒGIC)
+- [ ] Eva revisa index.json (duplicats, variants geològiques)
 - [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54
 - [ ] Test multi-nivell amb Linyola (sòls expansius)
-- [ ] Validació amb G3DT del flux complet (extracció → wizard → informe → audit)
-- [ ] v2: Lectura portada .doc, geocodificació adreça→UTM, ref cadastral→UTM via WFS
+- [ ] Validació amb Eva del flux complet web (extracció → wizard → informe → audit)
