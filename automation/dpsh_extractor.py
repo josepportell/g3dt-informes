@@ -42,6 +42,7 @@ class DPSHTest:
     test_id: str                    # e.g., "P-1", "P-2"
     readings: list[DPSHReading] = field(default_factory=list)
     correction_factor: float = 0.83  # Energy correction (default)
+    refusal_depth_annotated: Optional[float] = None  # "R:" annotation from handwritten field sheet
 
     @property
     def max_depth(self) -> float:
@@ -52,7 +53,14 @@ class DPSHTest:
 
     @property
     def depth_reached(self) -> float:
-        """Absolute depth reached (positive value for display)."""
+        """Absolute depth reached (positive value for display).
+
+        Prefers the handwritten "R:" refusal annotation (from dpsh_extracted.json)
+        over the Excel last-row depth, since the Excel rounds up to the next
+        0.20m grid interval while the field annotation is the actual depth.
+        """
+        if self.refusal_depth_annotated is not None:
+            return abs(self.refusal_depth_annotated)
         return abs(self.max_depth)
 
     @property

@@ -918,6 +918,12 @@ def _generate_soil_levels(
                 n20_max=n20_max,
                 soil_type=st,
             ))
+
+        # Respect num_levels: if user/wizard says fewer levels than
+        # extracted layers, merge down (e.g. Bell-Lloc: 2 layers → 1 nivell)
+        if num_levels < len(levels):
+            levels = _merge_soil_levels(levels)
+
         return levels
 
     # Fallback: single level with global average

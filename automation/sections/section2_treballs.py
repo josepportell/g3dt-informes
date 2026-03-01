@@ -427,24 +427,19 @@ class Section2Generator:
                 else:
                     water = "No detectat"
 
-                # Build observations from layers and SPT
-                observations = []
-                layers = test.get('layers', [])
-                if layers:
-                    observations.append(f"{len(layers)} capes detectades")
+                # SPT/MA count: "n_spt/n_ma" (e.g. "1/--", "2/1")
                 spt_results = test.get('spt_results', [])
-                if spt_results:
-                    spt_depths = [f"-{s['depth_m']}m" for s in spt_results if 'depth_m' in s]
-                    if spt_depths:
-                        observations.append(f"SPT a {', '.join(spt_depths)}")
-                obs_text = "; ".join(observations) if observations else self.FALLBACK_VALUE
+                ma_results = test.get('ma_results', [])
+                n_spt = len(spt_results)
+                n_ma = len(ma_results)
+                spt_ma = f"{n_spt}/{n_ma if n_ma else '--'}"
 
                 rows.append({
                     'test_id': test_id,
                     'cota': cota,
                     'depth': f"-{total_depth:.2f}" if total_depth else self.FALLBACK_VALUE,
+                    'spt_ma': spt_ma,
                     'water': water,
-                    'observations': obs_text,
                 })
             return rows
 
@@ -453,8 +448,8 @@ class Section2Generator:
             'test_id': 'S-1',
             'cota': self.data.cota_referencia or self.FALLBACK_VALUE,
             'depth': self.FALLBACK_VALUE,
+            'spt_ma': self.FALLBACK_VALUE,
             'water': self.FALLBACK_VALUE,
-            'observations': self.FALLBACK_VALUE,
         }]
 
     def generate_taula5_spt(self) -> list[dict[str, str]] | None:

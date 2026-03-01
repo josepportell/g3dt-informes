@@ -241,9 +241,10 @@ class ReportGenerator:
                         if layers and 'sondeig_layers' not in self.user_data:
                             self.user_data['sondeig_layers'] = layers
 
-                        # Auto-fill num_soil_levels if still at default
+                        # Auto-fill num_soil_levels only if NOT already set in user_data
+                        # (user/wizard choice takes precedence over auto-detection)
                         num_layers = len(layers)
-                        if self.user_data.get('num_soil_levels', 1) == 1 and num_layers > 0:
+                        if 'num_soil_levels' not in self.user_data and num_layers > 0:
                             self.user_data['num_soil_levels'] = num_layers
                             logger.info(
                                 "Auto-filled num_soil_levels=%d from sondeig_extracted.json",
@@ -252,12 +253,47 @@ class ReportGenerator:
             except Exception as e:
                 self.warnings.append(f"Could not auto-fill from sondeig_extracted.json: {e}")
 
+            # Auto-fill annotated refusal depths from dpsh_extracted.json
+            # (handwritten "R:" annotation is more accurate than Excel last-row depth)
+            try:
+                dpsh_ext_path = self.project_path / 'validation' / 'dpsh_extracted.json'
+                if dpsh_ext_path.exists():
+                    with open(dpsh_ext_path, 'r', encoding='utf-8') as f:
+                        dpsh_ext_data = json.load(f)
+                    # Store refusal depths indexed by test_id for patching DPSHTest later
+                    refusal_map = {}
+                    for test in dpsh_ext_data.get('dpsh_tests', []):
+                        tid = test.get('test_id', '')
+                        rdm = test.get('refusal_depth_m')
+                        if tid and rdm is not None:
+                            refusal_map[tid] = rdm
+                    if refusal_map:
+                        self.user_data['_dpsh_refusal_annotated'] = refusal_map
+                        logger.info(
+                            "Loaded annotated refusal depths from dpsh_extracted.json: %s",
+                            refusal_map,
+                        )
+            except Exception as e:
+                self.warnings.append(f"Could not load dpsh_extracted.json refusal depths: {e}")
+
             self.report_data = build_report_data(
                 project_data=self.project_data,
                 user_data=self.user_data,
                 terzaghi_result=None,
                 project_path=str(self.project_path),
             )
+
+            # Patch DPSHTest objects with annotated refusal depths from field sheet
+            refusal_map = self.user_data.get('_dpsh_refusal_annotated', {})
+            if refusal_map and self.report_data.dpsh:
+                for test in self.report_data.dpsh.tests:
+                    if test.test_id in refusal_map:
+                        test.refusal_depth_annotated = refusal_map[test.test_id]
+                        logger.info(
+                            "Patched %s depth: Excel %.2f → annotated %.2f",
+                            test.test_id, abs(test.max_depth),
+                            abs(test.refusal_depth_annotated),
+                        )
 
             # Calculate Terzaghi AFTER build_report_data (needs correct cohesion for rock cap)
             if self.report_data.geotechnical_params:
