@@ -507,6 +507,18 @@ class Section3Generator:
         """
         # Try Eva's template first (from auto-extractor or wizard)
         historia_path = getattr(self.data, 'historia_geologica_template', '')
+        if not historia_path:
+            # Live lookup if not prefilled (e.g. no user_data.json yet)
+            try:
+                from ..historia_geologica import lookup_municipality
+                municipality = getattr(self.data, 'municipality', '')
+                if municipality:
+                    match = lookup_municipality(municipality)
+                    if match:
+                        historia_path = match.file_path
+                        logger.info(f"Live historia lookup: {municipality} → {match.matched_location} (tier {match.tier})")
+            except Exception as e:
+                logger.debug(f"Historia geologica live lookup failed: {e}")
         if historia_path:
             try:
                 from ..historia_geologica import extract_paragraphs

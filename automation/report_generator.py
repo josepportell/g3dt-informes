@@ -97,13 +97,13 @@ class ReportGenerator:
             template_path: Custom template path (uses default if None)
         """
         self.project_path = Path(project_path)
-        self.template_path = Path(template_path) if template_path else self._find_template()
-        self.user_data = self._load_user_data(user_data)
-
         self.project_data: dict = {}
         self.report_data: ReportData | None = None
         self.errors: list[str] = []
         self.warnings: list[str] = []
+
+        self.template_path = Path(template_path) if template_path else self._find_template()
+        self.user_data = self._load_user_data(user_data)
 
     def _find_template(self) -> Path:
         """
