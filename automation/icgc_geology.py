@@ -1049,6 +1049,14 @@ def get_geological_map_with_terrain(
         topo = Image.open(topo_tmp.name).convert('RGBA')
         geo = Image.open(geo_tmp.name).convert('RGBA')
         composite = Image.blend(topo, geo, alpha=opacity)
+
+        # Draw red dot at site location (center of image)
+        from PIL import ImageDraw
+        draw = ImageDraw.Draw(composite)
+        cx, cy = width // 2, height // 2
+        r = 6  # radius in pixels
+        draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill='red')
+
         composite.save(str(output_path), 'PNG')
 
         logger.info(f"Geological composite map saved to {output_path}")
