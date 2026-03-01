@@ -314,14 +314,22 @@ class ImageManager:
             logger.warning(f"Failed to download orthophoto: {e}")
 
         try:
-            from .icgc_geology import get_geological_map_image, ICGCError
-            geo_path = self._cache_dir / f"geological_{utm_x:.0f}_{utm_y:.0f}.jpg"
-            if not geo_path.exists():
-                get_geological_map_image(utm_x, utm_y, geo_path)
-            result['geological_map'] = geo_path
-            logger.info(f"Geological map ready: {geo_path}")
+            from .icgc_geology import get_geological_map_with_terrain, get_geological_map_image, ICGCError
+            composite_path = self._cache_dir / f"geological_composite_{utm_x:.0f}_{utm_y:.0f}.png"
+            if not composite_path.exists():
+                get_geological_map_with_terrain(utm_x, utm_y, composite_path)
+            result['geological_map'] = composite_path
+            logger.info(f"Geological composite map ready: {composite_path}")
         except Exception as e:
-            logger.warning(f"Failed to download geological map: {e}")
+            logger.warning(f"Composite geological map failed, falling back to opaque: {e}")
+            try:
+                geo_path = self._cache_dir / f"geological_{utm_x:.0f}_{utm_y:.0f}.jpg"
+                if not geo_path.exists():
+                    get_geological_map_image(utm_x, utm_y, geo_path)
+                result['geological_map'] = geo_path
+                logger.info(f"Geological map (opaque fallback) ready: {geo_path}")
+            except Exception as e2:
+                logger.warning(f"Failed to download geological map: {e2}")
 
         return result
 
