@@ -20,6 +20,7 @@ Date: 2026-02-07
 from __future__ import annotations
 
 import logging
+import re
 from pathlib import Path
 from typing import Any
 
@@ -147,10 +148,14 @@ class ImageManager:
 
         # Fallback subdirectories (used when slug not found)
         fallback_subdirs: dict[str, Path | None] = {
-            'site': None,  # root, no subfolder fallback
+            'site': foto_dir,  # root of FOTOGRAFIES/ for site views
             'dpsh': foto_dir / 'DPSH',
             'sondeig': foto_dir / 'SONDEIG',
-            'materials': None,
+            'materials': foto_dir / 'SONDEIG',  # materials detail often in SONDEIG/
+        }
+        # Max fallback images per category (site needs 2 for side-by-side)
+        fallback_max: dict[str, int] = {
+            'site': 2, 'dpsh': 1, 'sondeig': 1, 'materials': 1,
         }
 
         for key, slug in PHOTO_SLUGS.items():
@@ -158,16 +163,28 @@ class ImageManager:
             if matches:
                 result[key] = matches
             else:
-                # Fallback: first image in subfolder (legacy behavior)
+                # Fallback: first image(s) in directory (legacy behavior)
+                # Prefer numbered photos (P1.jpg, P2.jpg) over WhatsApp/random names
                 fallback_dir = fallback_subdirs[key]
                 if fallback_dir and fallback_dir.exists():
                     fallback = _glob_photos(fallback_dir)
                     if fallback:
-                        result[key] = fallback[:1]
+                        # Exclude photos already claimed by other categories
+                        claimed = {str(p) for cat_photos in result.values() for p in cat_photos}
+                        available = [f for f in fallback if str(f) not in claimed]
+                        if not available:
+                            available = fallback
+                        numbered = [f for f in available if re.match(r'^[Pp]\d', f.name)]
+                        chosen = numbered if numbered else available
+                        # Materials: pick last photo (core box taken last in field)
+                        if key == 'materials':
+                            chosen = chosen[-1:]
+                        n = fallback_max.get(key, 1)
+                        result[key] = chosen[:n]
                         logger.warning(
                             f"No '{slug}*' photo found for '{key}', "
-                            f"using first file in {fallback_dir.name}/. "
-                            f"Consider renaming to {slug}_1{fallback[0].suffix}"
+                            f"using first {n} file(s) in {fallback_dir.name}/. "
+                            f"Consider renaming to {slug}_1{chosen[0].suffix}"
                         )
 
         logger.info(
@@ -346,14 +363,22 @@ class ImageManager:
             logger.info("Falling back to plain orthophoto (no parcel outline)")
 
         try:
-            from .icgc_geology import get_geological_map_image, ICGCError
-            geo_path = self._cache_dir / f"geological_{utm_x:.0f}_{utm_y:.0f}.jpg"
-            if not geo_path.exists():
-                get_geological_map_image(utm_x, utm_y, geo_path)
-            result['geological_map'] = geo_path
-            logger.info(f"Geological map ready: {geo_path}")
+            from .icgc_geology import get_geological_map_with_terrain, get_geological_map_image, ICGCError
+            composite_path = self._cache_dir / f"geological_composite_{utm_x:.0f}_{utm_y:.0f}.png"
+            if not composite_path.exists():
+                get_geological_map_with_terrain(utm_x, utm_y, composite_path)
+            result['geological_map'] = composite_path
+            logger.info(f"Geological composite map ready: {composite_path}")
         except Exception as e:
-            logger.warning(f"Failed to download geological map: {e}")
+            logger.warning(f"Composite geological map failed, falling back to opaque: {e}")
+            try:
+                geo_path = self._cache_dir / f"geological_{utm_x:.0f}_{utm_y:.0f}.jpg"
+                if not geo_path.exists():
+                    get_geological_map_image(utm_x, utm_y, geo_path)
+                result['geological_map'] = geo_path
+                logger.info(f"Geological map (opaque fallback) ready: {geo_path}")
+            except Exception as e2:
+                logger.warning(f"Failed to download geological map: {e2}")
 
         return result
 
@@ -427,57 +452,77 @@ class ImageManager:
             context['photo_materials_image'] = PLACEHOLDER_TEXT
 
         # 3. Architect plan crops (replaces orthophoto for location figures)
+        #    cadastre + aerea: from "amb punts" (WITH dots — shows investigation points)
+        #    main_plan: from A.01.pdf (WITHOUT dots — shows "punt de partida")
         self._cache_dir.mkdir(parents=True, exist_ok=True)
         roles = self._load_file_mapping()
-
-        plan_pdf, clip_regions = self._find_architect_plan_with_points()
         has_plan_crops = False
 
-        if plan_pdf and clip_regions:
-            # Extract 3 crops from architect plan with points
+        # 3a. Cadastre + aerea from architect_plan_with_points (with dots)
+        points_pdf, points_clips = self._find_architect_plan_with_points()
+        if points_pdf and points_clips:
             for region_name, var_name, width in [
                 ('cadastre', 'fig_cadastre_image', IMAGE_WIDTH_SIDE_BY_SIDE),
                 ('aerea', 'fig_aerea_image', IMAGE_WIDTH_SIDE_BY_SIDE),
-                ('main_plan', 'fig_main_plan_image', IMAGE_WIDTH_MAIN_PLAN),
             ]:
-                if region_name in clip_regions:
-                    clip_rect = clip_regions[region_name]
+                if region_name in points_clips:
+                    clip_rect = points_clips[region_name]
                     if not (isinstance(clip_rect, (list, tuple)) and len(clip_rect) == 4):
                         logger.warning(f"Invalid clip_rect for {region_name}: {clip_rect}")
                         continue
-                    cached = self._cache_dir / f"{region_name}_{plan_pdf.stem}.jpg"
+                    cached = self._cache_dir / f"{region_name}_{points_pdf.stem}.jpg"
                     if not cached.exists():
-                        self._render_pdf_region(plan_pdf, cached, tuple(clip_rect))
+                        self._render_pdf_region(points_pdf, cached, tuple(clip_rect))
                     if cached.exists():
                         context[var_name] = InlineImage(
                             self.tpl, str(cached), width=Mm(width)
                         )
                         has_plan_crops = True
-            context.setdefault('fig_cadastre_image', PLACEHOLDER_TEXT)
-            context.setdefault('fig_aerea_image', PLACEHOLDER_TEXT)
-            context.setdefault('fig_main_plan_image', PLACEHOLDER_TEXT)
-        else:
-            # Fallback: no "amb punts" file
-            # Use full-page A.01.pdf render for main plan
-            planol_pdf = None
-            if roles and 'architect_plan' in roles:
-                candidate = self.project_path / roles['architect_plan']['path']
-                if candidate.exists():
-                    planol_pdf = candidate
-            if planol_pdf is None:
-                planol_pdf = self._find_project_pdf(['A.01.pdf', 'A.*.pdf'])
-            if planol_pdf:
-                cached = self._cache_dir / f"planol_{planol_pdf.stem}.jpg"
+        context.setdefault('fig_cadastre_image', PLACEHOLDER_TEXT)
+        context.setdefault('fig_aerea_image', PLACEHOLDER_TEXT)
+
+        # 3b. Main plan from architect_plan (WITHOUT dots — punt de partida)
+        base_plan_pdf = None
+        base_clip_regions = None
+        if roles and 'architect_plan' in roles:
+            role = roles['architect_plan']
+            candidate = self.project_path / role['path']
+            if candidate.exists():
+                base_plan_pdf = candidate
+                base_clip_regions = role.get('clip_regions')
+
+        if base_plan_pdf and base_clip_regions and 'main_plan' in base_clip_regions:
+            clip_rect = base_clip_regions['main_plan']
+            if isinstance(clip_rect, (list, tuple)) and len(clip_rect) == 4:
+                cached = self._cache_dir / f"main_plan_{base_plan_pdf.stem}.jpg"
                 if not cached.exists():
-                    self._render_pdf_to_image(planol_pdf, cached)
+                    self._render_pdf_region(base_plan_pdf, cached, tuple(clip_rect))
                 if cached.exists():
                     context['fig_main_plan_image'] = InlineImage(
                         self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
                     )
-            context.setdefault('fig_main_plan_image', PLACEHOLDER_TEXT)
-            # No cadastre/aerea crops available — use placeholders
-            context['fig_cadastre_image'] = PLACEHOLDER_TEXT
-            context['fig_aerea_image'] = PLACEHOLDER_TEXT
+                    has_plan_crops = True
+        elif base_plan_pdf:
+            # Has A.01.pdf but no clip_regions — render full page
+            cached = self._cache_dir / f"planol_{base_plan_pdf.stem}.jpg"
+            if not cached.exists():
+                self._render_pdf_to_image(base_plan_pdf, cached)
+            if cached.exists():
+                context['fig_main_plan_image'] = InlineImage(
+                    self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
+                )
+        else:
+            # Fallback: no base plan, try "amb punts" or glob
+            fallback_pdf = points_pdf or self._find_project_pdf(['A.01.pdf', 'A.*.pdf'])
+            if fallback_pdf:
+                cached = self._cache_dir / f"planol_{fallback_pdf.stem}.jpg"
+                if not cached.exists():
+                    self._render_pdf_to_image(fallback_pdf, cached)
+                if cached.exists():
+                    context['fig_main_plan_image'] = InlineImage(
+                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
+                    )
+        context.setdefault('fig_main_plan_image', PLACEHOLDER_TEXT)
 
         context['has_plan_crops'] = has_plan_crops
 
@@ -501,12 +546,14 @@ class ImageManager:
                     self.tpl, str(icgc_images['orthophoto_parcel']),
                     width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
                 )
+                context['fig_location_image'] = context['fig_aerea_image']
                 logger.info("Using ICGC orthophoto with parcel outline as fig_aerea_image")
             elif 'orthophoto_parcel_plain' in icgc_images:
                 context['fig_aerea_image'] = InlineImage(
                     self.tpl, str(icgc_images['orthophoto_parcel_plain']),
                     width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
                 )
+                context['fig_location_image'] = context['fig_aerea_image']
                 logger.info("Using plain ICGC orthophoto as fig_aerea_image (parcel outline unavailable)")
 
         # Correlation section: file_mapping -> fallback glob

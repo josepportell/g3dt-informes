@@ -42,6 +42,7 @@ WIZARD_FIELDS = [
     'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
     'is_anthropized', 'num_soil_levels', 'soil_types', 'foundation_depth_m',
     'cota_referencia', 'has_basement', 'has_retaining_walls',
+    'utm_x', 'utm_y',
 ]
 
 # Expert override fields (optional, for when auto-detection gives wrong results)
@@ -623,6 +624,10 @@ class UserDataWizard:
             'has_retaining_walls', 'Murs de contenci\u00f3 (activa \u00a74.4 empentes)', 17 + num_levels
         )
 
+        self.user_data['show_granulometric'] = self.ask_bool(
+            'show_granulometric', 'Incloure secci\u00f3 granulom\u00e8trica (assaig contractat)', 18 + num_levels
+        )
+
         # Group 4: EXPERT OVERRIDES (optional)
         print(f'\n  \U0001f527 OVERRIDES EXPERTS (opcional)')
         print('     Per quan la detecci\u00f3 autom\u00e0tica no \u00e9s correcta.')
@@ -714,48 +719,82 @@ class UserDataWizard:
 
     def save(self) -> Path:
         """Merge wizard results into user_data.json and save."""
-        output_path = self.project_path / 'user_data.json'
-
-        # Load existing file to preserve non-wizard fields
-        existing: dict = {}
-        if output_path.exists():
-            try:
-                with open(output_path, 'r', encoding='utf-8') as f:
-                    existing = json.load(f)
-            except (json.JSONDecodeError, TypeError):
-                existing = {}
-
-        # Update only wizard fields
-        for field in WIZARD_FIELDS:
-            if field in self.user_data:
-                existing[field] = self.user_data[field]
-
-        # Update expert ICGC override fields
+        expert_overrides = {}
+        if hasattr(self, '_expert_geomech') and self._expert_geomech:
+            expert_overrides['geomech_params'] = self._expert_geomech
+        if 'Es_settlement' in self.user_data:
+            expert_overrides['Es_settlement'] = self.user_data.pop('Es_settlement')
         for field in EXPERT_ICGC_FIELDS:
             if field in self.user_data and self.user_data[field]:
-                existing[field] = self.user_data[field]
+                expert_overrides[field] = self.user_data.pop(field)
 
-        # Update expert geomech override fields
-        if hasattr(self, '_expert_geomech') and self._expert_geomech:
-            existing.setdefault('geomech_params', {}).update(self._expert_geomech)
+        return save_wizard_data(self.project_path, self.user_data, expert_overrides)
 
-        # Update Es_settlement (top-level, not inside geomech_params)
-        if 'Es_settlement' in self.user_data:
-            existing['Es_settlement'] = self.user_data['Es_settlement']
 
-        # Update historia geologica template
-        if 'historia_geologica_template' in self.user_data:
-            existing['historia_geologica_template'] = self.user_data['historia_geologica_template']
+def save_wizard_data(
+    project_path: str | Path,
+    wizard_fields: dict,
+    expert_overrides: dict | None = None,
+) -> Path:
+    """Merge wizard fields + expert overrides into user_data.json and save.
 
-        # Update metadata
-        meta = existing.setdefault('_metadata', {})
-        meta['generated_at'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
-        meta['wizard_used'] = True
+    This is the shared save logic used by both the CLI wizard and the web API.
 
-        with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump(existing, f, ensure_ascii=False, indent=2)
+    Args:
+        project_path: Path to the project folder.
+        wizard_fields: Dict of standard wizard fields (from WIZARD_FIELDS).
+        expert_overrides: Optional dict with keys like 'geomech_params',
+            'Es_settlement', 'icgc_unit_code', etc.
 
-        return output_path
+    Returns:
+        Path to the saved user_data.json file.
+    """
+    project_path = Path(project_path)
+    output_path = project_path / 'user_data.json'
+    expert_overrides = expert_overrides or {}
+
+    # Load existing file to preserve non-wizard fields
+    existing: dict = {}
+    if output_path.exists():
+        try:
+            with open(output_path, 'r', encoding='utf-8') as f:
+                existing = json.load(f)
+        except (json.JSONDecodeError, TypeError):
+            existing = {}
+
+    # Update only wizard fields
+    for field in WIZARD_FIELDS:
+        if field in wizard_fields:
+            existing[field] = wizard_fields[field]
+
+    # Update expert ICGC override fields
+    for field in EXPERT_ICGC_FIELDS:
+        val = expert_overrides.get(field)
+        if val:
+            existing[field] = val
+
+    # Update expert geomech override fields
+    geomech = expert_overrides.get('geomech_params')
+    if geomech:
+        existing.setdefault('geomech_params', {}).update(geomech)
+
+    # Update Es_settlement (top-level, not inside geomech_params)
+    if 'Es_settlement' in expert_overrides:
+        existing['Es_settlement'] = expert_overrides['Es_settlement']
+
+    # Update historia geologica template
+    if 'historia_geologica_template' in wizard_fields:
+        existing['historia_geologica_template'] = wizard_fields['historia_geologica_template']
+
+    # Update metadata
+    meta = existing.setdefault('_metadata', {})
+    meta['generated_at'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+    meta['wizard_used'] = True
+
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(existing, f, ensure_ascii=False, indent=2)
+
+    return output_path
 
 
 def _generate_report(project_path: str, user_data_path: str) -> None:

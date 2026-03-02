@@ -334,10 +334,11 @@ class Section3Generator:
         "d'aigua en funcio de les condicions climatiques."
     )
 
-    # === 3.4 AGRESSIVITAT - Templates (EHE-08) ===
+    # === 3.4 AGRESSIVITAT - Templates (CE-21, RD 470/2021) ===
     AGRESSIVITAT_INTRO = (
-        "S'han realitzat assaigs de laboratori per determinar el contingut "
-        "en sulfats solubles del terreny, d'acord amb la norma UNE 83963."
+        "D'una mostra dels materials del subsòl, on es preveu armar la fonamentació, "
+        "s'ha realitzat els pertinents assaigs de laboratori per tal de determinar "
+        "la seva agressivitat al formigó (segons CE-21)."
     )
 
     AGRESSIVITAT_RESULT_TEMPLATE = (
@@ -351,7 +352,7 @@ class Section3Generator:
         "Es recomana realitzar l'assaig corresponent."
     )
 
-    # EHE-08 thresholds for sulfate classification
+    # CE-21 thresholds for sulfate classification
     SULFATE_THRESHOLDS = {
         'no_aggressive': (0, 2000, '', 'no agressiu al formigo'),
         'weak': (2000, 3000, 'Qa', 'debilment agressiu al formigo (classe Qa)'),
@@ -1122,7 +1123,7 @@ class Section3Generator:
         # Add recommendations based on class
         if agg_class == 'Qa':
             result += (
-                "\n\nNo es requereix l'us de ciment especial segons EHE-08."
+                "\n\nNo es requereix l'us de ciment especial segons CE-21."
             )
         elif agg_class == 'Qb':
             result += (

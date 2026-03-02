@@ -165,6 +165,36 @@ class ReportGenerator:
             self.errors.append(f"Error loading user data: {e}")
             return {}
 
+    def _extract_spt_from_sondeig(self) -> dict | None:
+        """Extract SPT data from sondeig_extracted.json when user_data has none."""
+        sondeig_path = self.project_path / 'validation' / 'sondeig_extracted.json'
+        if not sondeig_path.exists():
+            return None
+        try:
+            with open(sondeig_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            for test in data.get('sondeig_tests', []):
+                for spt in test.get('spt_results', []):
+                    depth_from = spt.get('depth_from_m', '')
+                    depth_to = spt.get('depth_to_m', '')
+                    depth_range = f"-{depth_from:.2f} a {depth_to:.2f}" if depth_from != '' and depth_to != '' else ''
+                    # Get lithology from the layer at SPT depth
+                    lithology = ''
+                    for layer in test.get('layers', []):
+                        if layer.get('depth_from_m', 0) <= (depth_from or 0) < layer.get('depth_to_m', 99):
+                            lithology = layer.get('description', '')
+                            break
+                    return {
+                        'test_id': spt.get('test_name', 'SPT-1'),
+                        'location': test.get('test_id', 'S-1'),
+                        'depth_range': depth_range,
+                        'n30': spt.get('n_spt', ''),
+                        'lithology': lithology,
+                    }
+        except Exception as e:
+            logger.warning(f"Could not extract SPT from sondeig: {e}")
+        return None
+
     def extract_project_data(self) -> dict:
         """
         Extract all data from project folder.
@@ -211,9 +241,10 @@ class ReportGenerator:
                         if layers and 'sondeig_layers' not in self.user_data:
                             self.user_data['sondeig_layers'] = layers
 
-                        # Auto-fill num_soil_levels if still at default
+                        # Auto-fill num_soil_levels only if NOT already set in user_data
+                        # (user/wizard choice takes precedence over auto-detection)
                         num_layers = len(layers)
-                        if self.user_data.get('num_soil_levels', 1) == 1 and num_layers > 0:
+                        if 'num_soil_levels' not in self.user_data and num_layers > 0:
                             self.user_data['num_soil_levels'] = num_layers
                             logger.info(
                                 "Auto-filled num_soil_levels=%d from sondeig_extracted.json",
@@ -222,12 +253,47 @@ class ReportGenerator:
             except Exception as e:
                 self.warnings.append(f"Could not auto-fill from sondeig_extracted.json: {e}")
 
+            # Auto-fill annotated refusal depths from dpsh_extracted.json
+            # (handwritten "R:" annotation is more accurate than Excel last-row depth)
+            try:
+                dpsh_ext_path = self.project_path / 'validation' / 'dpsh_extracted.json'
+                if dpsh_ext_path.exists():
+                    with open(dpsh_ext_path, 'r', encoding='utf-8') as f:
+                        dpsh_ext_data = json.load(f)
+                    # Store refusal depths indexed by test_id for patching DPSHTest later
+                    refusal_map = {}
+                    for test in dpsh_ext_data.get('dpsh_tests', []):
+                        tid = test.get('test_id', '')
+                        rdm = test.get('refusal_depth_m')
+                        if tid and rdm is not None:
+                            refusal_map[tid] = rdm
+                    if refusal_map:
+                        self.user_data['_dpsh_refusal_annotated'] = refusal_map
+                        logger.info(
+                            "Loaded annotated refusal depths from dpsh_extracted.json: %s",
+                            refusal_map,
+                        )
+            except Exception as e:
+                self.warnings.append(f"Could not load dpsh_extracted.json refusal depths: {e}")
+
             self.report_data = build_report_data(
                 project_data=self.project_data,
                 user_data=self.user_data,
                 terzaghi_result=None,
                 project_path=str(self.project_path),
             )
+
+            # Patch DPSHTest objects with annotated refusal depths from field sheet
+            refusal_map = self.user_data.get('_dpsh_refusal_annotated', {})
+            if refusal_map and self.report_data.dpsh:
+                for test in self.report_data.dpsh.tests:
+                    if test.test_id in refusal_map:
+                        test.refusal_depth_annotated = refusal_map[test.test_id]
+                        logger.info(
+                            "Patched %s depth: Excel %.2f → annotated %.2f",
+                            test.test_id, abs(test.max_depth),
+                            abs(test.refusal_depth_annotated),
+                        )
 
             # Calculate Terzaghi AFTER build_report_data (needs correct cohesion for rock cap)
             if self.report_data.geotechnical_params:
@@ -519,7 +585,7 @@ class ReportGenerator:
             elif num_floors_raw.startswith('PS'):
                 context['building_structure_desc'] = 'de soterrani'
             else:
-                context['building_structure_desc'] = self.report_data.building_type or 'una estructura'
+                context['building_structure_desc'] = self.report_data.building_type or 'en planta baixa'
 
             # Municipality uppercase
             context['municipality_upper'] = (self.report_data.municipality or '').upper()
@@ -621,7 +687,16 @@ class ReportGenerator:
             context['adjacent_south'] = adj.get('south', '')
             context['adjacent_east'] = adj.get('east', '')
             context['adjacent_west'] = adj.get('west', '')
-            context['adjacent_south_street'] = adj.get('south', '')
+            # Find the second bordering street (any direction, different from street_1)
+            street_prefixes = ('carrer ', 'camí ', 'passeig ', 'avinguda ', 'plaça ', 'ronda ', 'travessia ')
+            street_1_lower = context.get('street_1', '').lower()
+            second_street = ''
+            for direction in ('south', 'east', 'west', 'north'):
+                val = adj.get(direction, '').strip()
+                if val and val.lower().startswith(street_prefixes) and val.lower() != street_1_lower:
+                    second_street = val
+                    break
+            context['adjacent_south_street'] = second_street
 
             # Adjacent formatting with Catalan articles
             def _format_adjacent(direction_cat: str, value: str) -> str:
@@ -714,6 +789,7 @@ class ReportGenerator:
             context['include_expansivity'] = include_expansivity
             context['include_earth_pressure'] = include_earth_pressure
             context['include_slope_stability'] = include_slope_stability
+            context['show_granulometric'] = getattr(self.report_data, 'show_granulometric', False)
 
             # Dynamic section numbering for Section 3 (affected by expansivity)
             if include_expansivity:
@@ -768,8 +844,11 @@ class ReportGenerator:
                 sondeig_table_tests = sections['section2'].taula4_sondeig
             context['sondeig_tests'] = sondeig_table_tests
 
-            # SPT data
-            spt = self.report_data.spt_data or {}
+            # SPT data — from user_data, fallback to sondeig_extracted.json
+            spt = self.report_data.spt_data
+            if not spt and self.report_data.has_spt:
+                spt = self._extract_spt_from_sondeig()
+            spt = spt or {}
             context['spt_test_id'] = spt.get('test_id', '')
             context['spt_location'] = spt.get('location', '')
             context['spt_depth_range'] = spt.get('depth_range', '')
@@ -823,7 +902,8 @@ class ReportGenerator:
                 if s3.sismica:
                     ab_match = re.search(r'ab\s*=\s*([\d.]+)', s3.sismica)
                     if ab_match:
-                        context['seismic_ab_text'] = ab_match.group(1)
+                        # Use comma as decimal separator (Catalan format)
+                        context['seismic_ab_text'] = ab_match.group(1).replace('.', ',')
 
             # Section-derived text variables
             context['materials_depth_text'] = ''

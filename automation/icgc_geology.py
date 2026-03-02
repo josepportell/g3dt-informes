@@ -63,6 +63,7 @@ __all__ = [
     'get_orthophoto_image',
     'get_orthophoto_with_parcel',
     'get_geological_map_image',
+    'get_geological_map_with_terrain',
 ]
 
 
@@ -945,6 +946,132 @@ def get_geological_map_image(
 
     logger.info(f"Geological map saved to {output_path}")
     return output_path
+
+
+ICGC_TOPO_WMS_URL = "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wms"
+ICGC_TOPO_LAYER = "topografic"
+
+
+def get_geological_map_with_terrain(
+    utm_x: float,
+    utm_y: float,
+    output_path: str | Path,
+    buffer_m: float = 1000.0,
+    width: int = 800,
+    height: int = 600,
+    opacity: float = 0.35,
+) -> Path:
+    """
+    Download geological map composited over topographic base map with transparency.
+
+    Downloads the ICGC topographic base map and the geological map (with transparent
+    background), then blends them using Pillow so roads and town labels are visible
+    beneath the geological colours.
+
+    Args:
+        utm_x: UTM X coordinate (ETRS89 zone 31N / EPSG:25831)
+        utm_y: UTM Y coordinate
+        output_path: Where to save the composite PNG image
+        buffer_m: Buffer around point in meters (default 1000m)
+        width: Image width in pixels
+        height: Image height in pixels
+        opacity: Geological layer opacity (0.0 = fully transparent, 1.0 = opaque)
+
+    Returns:
+        Path to saved composite PNG image
+
+    Raises:
+        ICGCCoordinateError: If coordinates are outside Catalunya
+        ICGCConnectionError: If download or compositing fails
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        raise ICGCConnectionError("Pillow (PIL) required for geological map compositing")
+
+    _validate_coordinates(utm_x, utm_y)
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    x_min = utm_x - buffer_m
+    y_min = utm_y - buffer_m
+    x_max = utm_x + buffer_m
+    y_max = utm_y + buffer_m
+
+    bbox_params = f"&BBOX={x_min},{y_min},{x_max},{y_max}&WIDTH={width}&HEIGHT={height}"
+
+    topo_url = (
+        f"{ICGC_TOPO_WMS_URL}"
+        f"?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap"
+        f"&LAYERS={ICGC_TOPO_LAYER}"
+        f"&STYLES=&SRS={ICGC_CRS}"
+        f"{bbox_params}"
+        f"&FORMAT=image/png"
+    )
+
+    geo_url = (
+        f"{ICGC_WMS_URL}"
+        f"?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap"
+        f"&LAYERS={ICGC_LAYER_50K}"
+        f"&STYLES=&SRS={ICGC_CRS}"
+        f"{bbox_params}"
+        f"&FORMAT=image/png&TRANSPARENT=TRUE"
+    )
+
+    topo_tmp = None
+    geo_tmp = None
+    try:
+        topo_tmp = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
+        topo_tmp.close()
+        geo_tmp = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
+        geo_tmp.close()
+
+        logger.debug(f"Downloading topographic base for composite: {topo_url}")
+        try:
+            urllib.request.urlretrieve(topo_url, topo_tmp.name)
+        except (urllib.error.URLError, TimeoutError, socket.timeout, OSError) as e:
+            raise ICGCConnectionError(f"Failed to download topographic base for composite: {e}")
+
+        logger.debug(f"Downloading transparent geological map: {geo_url}")
+        try:
+            urllib.request.urlretrieve(geo_url, geo_tmp.name)
+        except (urllib.error.URLError, TimeoutError, socket.timeout, OSError) as e:
+            raise ICGCConnectionError(f"Failed to download geological map for composite: {e}")
+
+        # Validate PNG headers
+        for label, path in [("Topographic base", topo_tmp.name), ("Geological map", geo_tmp.name)]:
+            with open(path, 'rb') as f:
+                header = f.read(4)
+            if header[:4] != b'\x89PNG':
+                raise ICGCConnectionError(f"{label} for composite returned non-PNG response (likely WMS error)")
+
+        # Composite: blend geological layer over topographic base
+        topo = Image.open(topo_tmp.name).convert('RGBA')
+        geo = Image.open(geo_tmp.name).convert('RGBA')
+        composite = Image.blend(topo, geo, alpha=opacity)
+
+        # Draw red dot at site location (center of image)
+        from PIL import ImageDraw
+        draw = ImageDraw.Draw(composite)
+        cx, cy = width // 2, height // 2
+        r = 6  # radius in pixels
+        draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill='red')
+
+        composite.save(str(output_path), 'PNG')
+
+        logger.info(f"Geological composite map saved to {output_path}")
+        return output_path
+
+    except ICGCError:
+        raise
+    except Exception as e:
+        raise ICGCConnectionError(f"Failed to create geological composite map: {e}")
+    finally:
+        if topo_tmp is not None:
+            Path(topo_tmp.name).unlink(missing_ok=True)
+        if geo_tmp is not None:
+            Path(geo_tmp.name).unlink(missing_ok=True)
 
 
 # === Orthophoto with Parcel Outline ===

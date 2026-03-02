@@ -83,10 +83,10 @@ class Section4Generator:
     )
 
     AGGRESSIVITY_TEXTS = {
-        'Qa': "El terreny es classifica com a NO AGRESSIU al formigó segons la norma EHE-08.",
-        'Qb': "El terreny presenta una agressivitat FEBLE al formigó segons la norma EHE-08. "
+        'Qa': "El terreny es classifica com a NO AGRESSIU al formigó segons el Codi Estructural (CE-21).",
+        'Qb': "El terreny presenta una agressivitat FEBLE al formigó segons el Codi Estructural (CE-21). "
               "Es recomana l'ús de ciment tipus SR (sulforesistent).",
-        'Qc': "El terreny presenta una agressivitat MITJANA al formigó segons la norma EHE-08. "
+        'Qc': "El terreny presenta una agressivitat MITJANA al formigó segons el Codi Estructural (CE-21). "
               "És obligatori l'ús de ciment tipus SR (sulforesistent).",
         '': "No s'han realitzat assaigs de contingut en sulfats.",
     }

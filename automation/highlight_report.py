@@ -42,9 +42,9 @@ from docx.shared import Pt
 # ---------------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-GENERATED = BASE_DIR / "reference-material/4001612-bell-lloc/4001612_generated.docx"
-REFERENCE = BASE_DIR / "reference-material/4001612-bell-lloc/4001612_informe.docx"
-OUTPUT = BASE_DIR / "reference-material/4001612-bell-lloc/4001612_AUDIT_VISUAL.docx"
+GENERATED = BASE_DIR / "reference-material/4001612 BELL-LLOC/4001612_generated.docx"
+REFERENCE = BASE_DIR / "reference-material/4001612 BELL-LLOC/4001612_informe.docx"
+OUTPUT = BASE_DIR / "reference-material/4001612 BELL-LLOC/4001612_AUDIT_VISUAL.docx"
 
 # ---------------------------------------------------------------------------
 # Classification constants
@@ -60,25 +60,20 @@ PROJECT_SPECIFIC = [
     "Jordi bosch", "ramon mitjana",
 ]
 
-# Patterns that signal Eva-dependent values (PINK).
-EVA_PATTERNS = [
-    "3.18", "3,18",        # Qa differs from reference 3.0
-    "188", "345",          # E values divergent from reference 650
-    "0.72", "0,72",        # settlement value
-    "3.7", "3,7",          # K30 value
-]
-
-# Broader Eva keywords -- if a paragraph contains BOTH a number AND one of
-# these words, it is likely an Eva-dependent geotechnical parameter.
-EVA_KEYWORDS = [
-    "permeabilitat", "coeficient de balast",
-]
+# Eva-dependent patterns: REMOVED.
+# The wizard now asks Eva to confirm/edit key parameters (Qa, E, Es, K30)
+# before the report is generated. By the time the audit runs, these values
+# are Eva-approved. They classify normally via best_match().
 
 # Known dynamic value patterns: short strings rendered from Jinja template
 # variables that should be classified as dynamic (groc), not template (verd).
 DYNAMIC_VALUE_RES = [
     re.compile(r"^[CT]-\d$"),       # CTE classifications: C-0, C-1, T-1, T-2
     re.compile(r"^\d{7}$"),         # Project numbers: 4001612
+    re.compile(r"^Pb\+?\d*Pp?.*$", re.IGNORECASE),  # Floor notation: Pb+1Pp, Pb+2Pp
+    re.compile(r"^\d{1,5}$"),       # Numeric values (areas, counts): 995, 366
+    re.compile(r"^\d+[+]\d+$"),     # Breakdown format: 280+86
+    re.compile(r"^\d+[.,]\d+$"),    # Decimal values: 3.18, 199.50
 ]
 
 # Template-expansion patterns (geology regional descriptions).
@@ -102,6 +97,11 @@ GEOLOGY_KEYWORDS = [
     "coloracions clar", "marr\u00f3 clar",
     "NMgo", "P8G", "unitat",
     "cartografi", "geol\u00f2gi",
+    # Soil description terms (geomechanical tables, sondeig descriptions)
+    "llims", "argil\u00f3s", "argilosos", "cohesi", "coloraci\u00f3",
+    "marronos", "marr\u00f3", "argiles", "sorres", "graves amb",
+    "carbonat", "compacte", "consistent", "tou", "ferm",
+    "sorrenc", "llim\u00f3s", "bretxa", "calc\u00e0ria",
 ]
 
 # Section headers and TOC entries are always template text.
@@ -140,16 +140,7 @@ def contains_project_specific(text: str) -> bool:
     return contains_any(text, PROJECT_SPECIFIC)
 
 
-def is_eva_dependent(text: str) -> bool:
-    """Check if text contains Eva-dependent values."""
-    # Direct pattern match
-    if contains_any(text, EVA_PATTERNS, case_sensitive=True):
-        return True
-    # Keyword + number combination
-    low = text.lower()
-    if any(kw in low for kw in EVA_KEYWORDS) and re.search(r"\d", text):
-        return True
-    return False
+# is_eva_dependent() removed — wizard handles Eva confirmation pre-generation.
 
 
 def is_dynamic_value(text: str) -> bool:
@@ -215,11 +206,14 @@ def best_match(text: str, reference_pool: list[str], threshold: float = 0.4):
 
 def highlight_paragraph(paragraph, color):
     """Apply highlight color to all runs in a paragraph, including nested ones."""
-    xml_color = COLOR_TO_XML.get(color, "yellow")
-
-    # Use high-level API for direct runs
-    for run in paragraph.runs:
-        run.font.highlight_color = color
+    if isinstance(color, str):
+        # Raw XML color string (e.g. "darkGreen") — skip high-level API
+        xml_color = color
+    else:
+        xml_color = COLOR_TO_XML.get(color, "yellow")
+        # Use high-level API for direct runs (only works with WD_COLOR_INDEX)
+        for run in paragraph.runs:
+            run.font.highlight_color = color
 
     # Also handle runs inside hyperlinks, fldSimple, and other wrappers
     # that python-docx's paragraph.runs doesn't cover.
@@ -301,11 +295,13 @@ CAT_TURQUOISE = "turquoise"
 CAT_ORANGE = "orange"
 CAT_PINK = "pink"
 CAT_RED = "red"
+CAT_YELLOW_IMPERFECT = "yellow_imperfect"
 CAT_EMPTY = "empty"
 
 CAT_TO_COLOR = {
     CAT_GREEN: WD_COLOR_INDEX.YELLOW,         # dynamic match now yellow (Eva's yellow = modify)
     CAT_YELLOW: WD_COLOR_INDEX.BRIGHT_GREEN,  # template now green (Eva's green = don't touch)
+    CAT_YELLOW_IMPERFECT: "darkGreen",        # raw XML color, not WD_COLOR_INDEX
     CAT_TURQUOISE: WD_COLOR_INDEX.TURQUOISE,
     CAT_ORANGE: WD_COLOR_INDEX.DARK_YELLOW,
     CAT_PINK: WD_COLOR_INDEX.PINK,
@@ -315,6 +311,7 @@ CAT_TO_COLOR = {
 CAT_LABELS = {
     CAT_GREEN: "Groc (match >= 90%)",
     CAT_YELLOW: "Verd (text fix plantilla)",
+    CAT_YELLOW_IMPERFECT: "Verd clar (plantilla < 100%)",
     CAT_TURQUOISE: "Cian (match funcional >= 70%)",
     CAT_ORANGE: "Taronja (templates regionals)",
     CAT_PINK: "Rosa (pendent Eva)",
@@ -335,68 +332,104 @@ def classify_text(text: str, reference_pool: list[str]) -> tuple[str, str, float
 
     stripped = text.strip()
 
-    # 1) Eva-dependent values take priority
-    if is_eva_dependent(stripped):
-        return CAT_PINK, "[NOTA: Valor pendent confirmacio Eva]", 0.0
-
-    # 2) Template expansion (geology regional)
+    # 1) Template expansion (geology regional)
     #    But only for longer descriptive paragraphs, not short mentions
     if is_template_expansion(stripped) and len(stripped) > 60:
         return CAT_ORANGE, "[NOTA: Template geologic regional -- cal ampliar per altres municipis]", 0.0
 
-    # 3) Section headers and TOC lines are always template
-    if is_section_header_or_toc(stripped):
-        return CAT_YELLOW, "", 0.0
-
-    # 4) Compare against reference pool
+    # 3) Compare against reference pool
     ratio, matched = best_match(stripped, reference_pool)
 
-    # 4a) Very high match
+    # 4) Section headers and TOC lines are template
+    if is_section_header_or_toc(stripped):
+        if ratio >= 0.995 or ratio < 0.40:
+            # Perfect match OR no match at all (new section, still template)
+            return CAT_YELLOW, "", ratio
+        else:
+            return CAT_YELLOW_IMPERFECT, f"[PLANTILLA: capcalera match {ratio*100:.0f}%]", ratio
+
+    # 5) Very high match
     if ratio >= 0.90:
         # Distinguish pure template (no project data) vs dynamic match
         if not contains_project_specific(stripped) and not is_dynamic_value(stripped) and ratio >= 0.95:
-            return CAT_YELLOW, "", ratio
+            if ratio >= 0.995:
+                return CAT_YELLOW, "", ratio
+            else:
+                return CAT_YELLOW_IMPERFECT, f"[PLANTILLA: match {ratio*100:.1f}%]", ratio
         return CAT_GREEN, "", ratio
 
-    # 4b) Functional match
+    # 5b) Functional match
     if ratio >= 0.70:
         return CAT_TURQUOISE, f"[NOTA: Match {ratio*100:.0f}% -- difereix lleugerament de la referencia]", ratio
 
-    # 4c) Moderate match -- be lenient for short text (table cells etc)
+    # 5c) Moderate match -- be lenient for short text (table cells etc)
     if ratio >= 0.55 and len(stripped) < 50:
         return CAT_TURQUOISE, f"[NOTA: Match {ratio*100:.0f}%]", ratio
 
-    # 5) Template expansion for shorter geo mentions
+    # 6) Template expansion for shorter geo mentions
     if is_template_expansion(stripped):
         return CAT_ORANGE, "[NOTA: Template geologic regional]", ratio
 
-    # 5b) Broader geology content detection -- these are regional template
+    # 6b) Broader geology content detection -- these are regional template
     #     descriptions that differ from the reference but are not errors.
     if is_geology_content(stripped):
         return CAT_ORANGE, "[NOTA: Descripcio geologica regional -- depen de la zona]", ratio
 
-    # 6) Very short text (single words, numbers) that are likely labels
+    # 7) Very short text (single words, numbers) that are likely labels
     if len(stripped) < 15:
         # Check if it's a dynamic value pattern first
         if is_dynamic_value(stripped):
             return CAT_GREEN, "", ratio
         return CAT_YELLOW, "", ratio
 
-    # 7) Figure / table captions (structural, usually close enough)
+    # 8) Figure / table captions (structural, usually close enough)
     if re.match(r"^(Figura|Taula|Gr\u00e0fic|Foto)\s+\d+", stripped):
         return CAT_TURQUOISE, f"[NOTA: Caption -- match {ratio*100:.0f}%]", ratio
 
-    # 8) Fallback: check if it could be methodology/legal boilerplate
+    # 9) Fallback: check if it could be methodology/legal boilerplate
     #    (text with no project-specific data and some match)
     if ratio >= 0.45 and not contains_project_specific(stripped):
         return CAT_TURQUOISE, f"[NOTA: Match {ratio*100:.0f}%]", ratio
 
-    # 9) Moderate match with project-specific data (still partially correct)
+    # 10) Moderate match with project-specific data (still partially correct)
     if ratio >= 0.40:
         return CAT_TURQUOISE, f"[NOTA: Match {ratio*100:.0f}%]", ratio
 
-    # 10) Otherwise: RED
+    # 11) Otherwise: RED
     return CAT_RED, f"[NOTA: No coincideix amb la referencia -- match {ratio*100:.0f}%]", ratio
+
+
+# ---------------------------------------------------------------------------
+# Paragraph markers (e.g. [p042], [t1_r3_c0])
+# ---------------------------------------------------------------------------
+
+def _insert_marker_run(paragraph, marker_text: str):
+    """Prepend a grey 7pt marker run like [p054] at the start of a paragraph."""
+    from docx.oxml.ns import qn
+
+    r = OxmlElement("w:r")
+    rPr = OxmlElement("w:rPr")
+    sz = OxmlElement("w:sz")
+    sz.set(qn("w:val"), "14")  # 7pt in half-points
+    szCs = OxmlElement("w:szCs")
+    szCs.set(qn("w:val"), "14")
+    rPr.append(sz)
+    rPr.append(szCs)
+    color_elem = OxmlElement("w:color")
+    color_elem.set(qn("w:val"), "888888")
+    rPr.append(color_elem)
+    r.append(rPr)
+
+    t_elem = OxmlElement("w:t")
+    t_elem.text = f"[{marker_text}] "
+    t_elem.set(qn("xml:space"), "preserve")
+    r.append(t_elem)
+
+    first_run = paragraph._element.find(qn("w:r"))
+    if first_run is not None:
+        first_run.addprevious(r)
+    else:
+        paragraph._element.append(r)
 
 
 # ---------------------------------------------------------------------------
@@ -426,11 +459,13 @@ def extract_text_pool(doc: Document) -> list[str]:
 
 LEGEND_ITEMS = [
     ("green", "VERD -- Text fix de plantilla (boilerplate, metodologia, normativa). Coincideix amb el VERD del document DETALLAT d'Eva."),
+    ("darkGreen", "VERD CLAR -- Plantilla amb diferencies menors (< 100% match). Indica text de plantilla que necessita revisio."),
     ("yellow", "GROC -- Match >= 90%: text auto-generat correctament que coincideix amb la referencia. Coincideix amb el GROC del document DETALLAT d'Eva (camps a modificar cada vegada)."),
     ("cyan", "CIAN -- Match funcional: contingut correcte amb diferencies menors (>= 70%)"),
     ("darkYellow", "TARONJA -- Templates regionals/geologics a ampliar per a altres municipis"),
     ("magenta", "ROSA -- Depen de confirmacio Eva (K, gamma, E, criteri nivells)"),
     ("red", "VERMELL -- Error o contingut absent a la referencia"),
+    (None, "MARCADORS: [p054] = Paragraf 54 del cos | [t0_r1_c2] = Taula 0, fila 1, columna 2"),
 ]
 
 
@@ -467,46 +502,32 @@ def make_paragraph_element(text: str, highlight_color: str = None,
     return p
 
 
-def insert_legend(doc: Document):
-    """Insert a color legend at the very beginning of the document."""
-    body = doc.element.body
-    first_child = body[0] if len(body) > 0 else None
+def append_legend(doc: Document):
+    """Append a color legend at the end of the document."""
+    doc.add_paragraph()  # blank line
 
-    elements = []
+    p = doc.add_paragraph()
+    run = p.add_run("=" * 70)
+    run.font.size = Pt(8)
 
-    # Title
-    elements.append(make_paragraph_element(
-        "LLEGENDA DE COLORS \u2014 AUDIT VISUAL",
-        bold=True, size_pt=14
-    ))
+    p = doc.add_paragraph()
+    run = p.add_run("LLEGENDA DE COLORS \u2014 AUDIT VISUAL")
+    run.bold = True
+    run.font.size = Pt(14)
 
-    # Blank line
-    elements.append(make_paragraph_element(" "))
+    p = doc.add_paragraph()
+    run = p.add_run("=" * 70)
+    run.font.size = Pt(8)
 
-    # Legend rows
+    doc.add_paragraph()  # blank line
+
     for color_xml, description in LEGEND_ITEMS:
-        elements.append(make_paragraph_element(
+        body = doc.element.body
+        body.append(make_paragraph_element(
             f"  {description}",
             highlight_color=color_xml,
             size_pt=9
         ))
-
-    # Separator
-    elements.append(make_paragraph_element(" "))
-    elements.append(make_paragraph_element(
-        "=" * 70, size_pt=8
-    ))
-    elements.append(make_paragraph_element(" "))
-
-    # Insert in order at the beginning.
-    # addprevious inserts immediately before the reference element,
-    # so we iterate in forward order to build the correct sequence.
-    if first_child is not None:
-        for elem in elements:
-            first_child.addprevious(elem)
-    else:
-        for elem in elements:
-            body.append(elem)
 
 
 # ---------------------------------------------------------------------------
@@ -514,7 +535,7 @@ def insert_legend(doc: Document):
 # ---------------------------------------------------------------------------
 
 def append_statistics(doc: Document, stats: dict):
-    """Append a statistics summary at the end of the document."""
+    """Append split statistics: template quality + content quality."""
     total_content = sum(v for k, v in stats.items() if k != CAT_EMPTY)
 
     doc.add_paragraph()  # blank line
@@ -533,14 +554,6 @@ def append_statistics(doc: Document, stats: dict):
 
     doc.add_paragraph()
 
-    def add_stat_line(label, count, color=None):
-        p = doc.add_paragraph()
-        pct = f"{count / total_content * 100:.1f}%" if total_content > 0 else "0%"
-        run = p.add_run(f"  {label}: {count:>6}  ({pct})")
-        run.font.size = Pt(10)
-        if color:
-            run.font.highlight_color = color
-
     p = doc.add_paragraph()
     run = p.add_run(f"Total paragrafs/cel\u00b7les amb contingut: {total_content}")
     run.font.size = Pt(10)
@@ -548,26 +561,61 @@ def append_statistics(doc: Document, stats: dict):
 
     doc.add_paragraph()
 
+    # --- TEMPLATE QUALITY ---
+    tpl_perfect = stats.get(CAT_YELLOW, 0)
+    tpl_imperfect = stats.get(CAT_YELLOW_IMPERFECT, 0)
+    tpl_total = tpl_perfect + tpl_imperfect
+    tpl_quality = tpl_perfect / tpl_total * 100 if tpl_total > 0 else 100.0
+
+    p = doc.add_paragraph()
+    run = p.add_run(f"QUALITAT PLANTILLA: {tpl_quality:.1f}%")
+    run.bold = True
+    run.font.size = Pt(11)
+
+    def add_stat_line(label, count, color=None):
+        p = doc.add_paragraph()
+        pct = f"{count / total_content * 100:.1f}%" if total_content > 0 else "0%"
+        run = p.add_run(f"  {label}: {count:>6}  ({pct})")
+        run.font.size = Pt(10)
+        if color and not isinstance(color, str):
+            run.font.highlight_color = color
+
+    add_stat_line(CAT_LABELS[CAT_YELLOW], tpl_perfect, CAT_TO_COLOR[CAT_YELLOW])
+    add_stat_line(CAT_LABELS[CAT_YELLOW_IMPERFECT], tpl_imperfect)
+
+    p = doc.add_paragraph()
+    run = p.add_run(f"  Total plantilla: {tpl_total}")
+    run.font.size = Pt(10)
+
+    doc.add_paragraph()
+
+    # --- CONTENT QUALITY ---
+    # ORANGE = regional templates (expected variation, not errors)
+    content_good = stats.get(CAT_GREEN, 0) + stats.get(CAT_TURQUOISE, 0) + stats.get(CAT_ORANGE, 0)
+    content_bad = stats.get(CAT_PINK, 0) + stats.get(CAT_RED, 0)
+    content_total = content_good + content_bad
+    content_quality = content_good / content_total * 100 if content_total > 0 else 100.0
+
+    p = doc.add_paragraph()
+    run = p.add_run(f"QUALITAT CONTINGUT: {content_quality:.1f}%")
+    run.bold = True
+    run.font.size = Pt(11)
+
     add_stat_line(CAT_LABELS[CAT_GREEN], stats.get(CAT_GREEN, 0), CAT_TO_COLOR[CAT_GREEN])
-    add_stat_line(CAT_LABELS[CAT_YELLOW], stats.get(CAT_YELLOW, 0), CAT_TO_COLOR[CAT_YELLOW])
     add_stat_line(CAT_LABELS[CAT_TURQUOISE], stats.get(CAT_TURQUOISE, 0), CAT_TO_COLOR[CAT_TURQUOISE])
     add_stat_line(CAT_LABELS[CAT_ORANGE], stats.get(CAT_ORANGE, 0), CAT_TO_COLOR[CAT_ORANGE])
     add_stat_line(CAT_LABELS[CAT_PINK], stats.get(CAT_PINK, 0), CAT_TO_COLOR[CAT_PINK])
     add_stat_line(CAT_LABELS[CAT_RED], stats.get(CAT_RED, 0), CAT_TO_COLOR[CAT_RED])
 
     p = doc.add_paragraph()
-    run = p.add_run(f"  {CAT_LABELS[CAT_EMPTY]}: {stats.get(CAT_EMPTY, 0):>6}")
+    run = p.add_run(f"  Total contingut: {content_total}")
     run.font.size = Pt(10)
 
     doc.add_paragraph()
 
-    quality_count = stats.get(CAT_GREEN, 0) + stats.get(CAT_YELLOW, 0) + stats.get(CAT_TURQUOISE, 0)
-    quality_pct = quality_count / total_content * 100 if total_content > 0 else 0
-
     p = doc.add_paragraph()
-    run = p.add_run(f"Qualitat generacio: {quality_pct:.1f}% (groc + verd + cian)")
-    run.bold = True
-    run.font.size = Pt(11)
+    run = p.add_run(f"  {CAT_LABELS[CAT_EMPTY]}: {stats.get(CAT_EMPTY, 0):>6}")
+    run.font.size = Pt(10)
 
 
 # ---------------------------------------------------------------------------
@@ -602,12 +650,12 @@ def main():
 
     # Statistics counter
     stats = {
-        CAT_GREEN: 0, CAT_YELLOW: 0, CAT_TURQUOISE: 0,
+        CAT_GREEN: 0, CAT_YELLOW: 0, CAT_YELLOW_IMPERFECT: 0, CAT_TURQUOISE: 0,
         CAT_ORANGE: 0, CAT_PINK: 0, CAT_RED: 0, CAT_EMPTY: 0,
     }
 
     # Categories that get a red annotation
-    ANNOTATED_CATS = {CAT_TURQUOISE, CAT_ORANGE, CAT_PINK, CAT_RED}
+    ANNOTATED_CATS = {CAT_TURQUOISE, CAT_ORANGE, CAT_PINK, CAT_RED, CAT_YELLOW_IMPERFECT}
 
     def process_paragraph(paragraph):
         """Classify and highlight a single paragraph.
@@ -635,10 +683,13 @@ def main():
     # Process body paragraphs
     print("Processing body paragraphs...")
     body_annotations = []
-    for para in doc.paragraphs:
+    for idx, para in enumerate(doc.paragraphs):
         result = process_paragraph(para)
         if result:
             body_annotations.append(result)
+        # Insert marker AFTER classification (so marker text doesn't affect matching)
+        if para.text.strip():
+            _insert_marker_run(para, f"p{idx:03d}")
 
     # Insert body annotations (reverse order to preserve positions)
     for para, reason in reversed(body_annotations):
@@ -652,8 +703,8 @@ def main():
     seen_tc_elements = []  # keep references alive to prevent id reuse
     seen_tc_ids = set()
     for ti, table in enumerate(doc.tables):
-        for row in table.rows:
-            for cell in row.cells:
+        for ri, row in enumerate(table.rows):
+            for ci, cell in enumerate(row.cells):
                 tc_elem = cell._element
                 tc_id = id(tc_elem)
                 if tc_id in seen_tc_ids:
@@ -665,12 +716,15 @@ def main():
                     result = process_paragraph(para)
                     if result:
                         cell_annotations.append(result)
+                    # Insert marker AFTER classification
+                    if para.text.strip():
+                        _insert_marker_run(para, f"t{ti}_r{ri}_c{ci}")
                 for para, reason in reversed(cell_annotations):
                     insert_annotation_after(para, reason)
 
-    # Insert legend at top
-    print("Inserting legend...")
-    insert_legend(doc)
+    # Append legend at end (preserves cover page)
+    print("Appending legend...")
+    append_legend(doc)
 
     # Append statistics
     print("Appending statistics...")
@@ -687,15 +741,28 @@ def main():
     print(f"AUDIT VISUAL COMPLETE")
     print(f"{'='*50}")
     print(f"Total with content: {total_content}")
-    for cat in [CAT_GREEN, CAT_YELLOW, CAT_TURQUOISE, CAT_ORANGE, CAT_PINK, CAT_RED]:
+
+    # Template quality
+    tpl_perfect = stats[CAT_YELLOW]
+    tpl_imperfect = stats[CAT_YELLOW_IMPERFECT]
+    tpl_total = tpl_perfect + tpl_imperfect
+    tpl_pct = tpl_perfect / tpl_total * 100 if tpl_total > 0 else 100.0
+    print(f"\nQUALITAT PLANTILLA: {tpl_pct:.1f}%")
+    print(f"  {CAT_LABELS[CAT_YELLOW]}: {tpl_perfect}")
+    print(f"  {CAT_LABELS[CAT_YELLOW_IMPERFECT]}: {tpl_imperfect}")
+
+    # Content quality (ORANGE = regional templates = acceptable)
+    content_good = stats[CAT_GREEN] + stats[CAT_TURQUOISE] + stats[CAT_ORANGE]
+    content_bad = stats[CAT_PINK] + stats[CAT_RED]
+    content_total = content_good + content_bad
+    content_pct = content_good / content_total * 100 if content_total > 0 else 100.0
+    print(f"\nQUALITAT CONTINGUT: {content_pct:.1f}%")
+    for cat in [CAT_GREEN, CAT_TURQUOISE, CAT_ORANGE, CAT_PINK, CAT_RED]:
         count = stats[cat]
         pct = count / total_content * 100 if total_content > 0 else 0
         print(f"  {CAT_LABELS[cat]}: {count} ({pct:.1f}%)")
-    print(f"  {CAT_LABELS[CAT_EMPTY]}: {stats[CAT_EMPTY]}")
 
-    quality = stats[CAT_GREEN] + stats[CAT_YELLOW] + stats[CAT_TURQUOISE]
-    quality_pct = quality / total_content * 100 if total_content > 0 else 0
-    print(f"\nQualitat generacio: {quality_pct:.1f}%")
+    print(f"\n  {CAT_LABELS[CAT_EMPTY]}: {stats[CAT_EMPTY]}")
     print(f"Output: {OUTPUT}")
 
 

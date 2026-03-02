@@ -3,7 +3,8 @@ Last updated: 2026-03-01
 
 ## Current State
 
-Pipeline complet operatiu. Història geològica integrada amb plantilles d'Eva.
+Pipeline complet operatiu amb web wizard i geocodificació integrada.
+Branca `fix/report-quality-audit` amb correccions alineades amb l'informe de referència d'Eva.
 
 **Qualitat (audit visual):** Plantilla 84.0% | Contingut 79.8%
 
@@ -19,6 +20,15 @@ Pipeline complet operatiu. Història geològica integrada amb plantilles d'Eva.
 | ReportGenerator (Fase 3) | ✅ | .docx amb Jinja2, tots els annexos |
 | Historia geològica | ✅ | 238 plantilles Eva, lookup jeràrquic municipi→comarca→region |
 | Audit visual | ✅ | Split plantilla vs contingut |
+
+### Web Wizard — Funcionalitats
+
+- Selector de projecte amb 4 pestanyes (DPSH, Sondeig, Plànol, Wizard)
+- Source badges per camp (auto/user_data/defecte)
+- Coordenades UTM amb geocodificació en viu (botó "Geolocalitzar amb ICGC")
+- Actualitzar prefills (re-executa Fase 3 amb UTM actualitzades)
+- Expert overrides (ICGC, geomech, Es settlement)
+- Generar informe + descarregar .docx
 
 ## Branques actives
 
@@ -52,6 +62,16 @@ Primer merge `fix/report-quality-audit` → `main`, després `feat/historia-geol
 \* Bell-Lloc E=650 (carbonatades, Eva ajusta manualment)
 \*\* Rubí Qa=3.50 supera cap 3.0 — pendent preguntar a Eva
 
+### Fixes recents (branca fix/report-quality-audit)
+
+| Fix | Descripció | Commit |
+|-----|-----------|--------|
+| Taula 4 sondeig | Columnes alineades amb Eva: Punt, SPT/MA, N.F. | baacdaa |
+| Nivells Bell-Lloc | 2→1 nivell: respecta num_levels del wizard | baacdaa |
+| Profunditat refús DPSH | Usa anotació manuscrita "R:" (1.35/2.45) vs última fila Excel | baacdaa |
+| Fórmula sísmica | A<sub>b</sub> amb subíndex, "<" en lloc de "=", coma decimal | 892a5f5 |
+| Mapa geològic transparent | Topo base + geologia al 35% opacitat + punt vermell ubicació | a5eff89 |
+
 ## Active Blockers
 
 Cap blocker crític.
@@ -71,3 +91,4 @@ Cap blocker crític.
 - [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54
 - [ ] Test multi-nivell amb Linyola (sòls expansius)
 - [ ] Validació amb Eva del flux complet web (extracció → wizard → informe → audit)
+- [ ] Millorar precisió geocodificació (~100m actual → parcel·la exacta)

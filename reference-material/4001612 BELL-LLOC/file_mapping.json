@@ -13,12 +13,22 @@
     "architect_plan_with_points": {
       "path": "A.01 amb punts.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "clip_regions": {
+        "cadastre": [1380, 20, 2030, 470],
+        "aerea": [1380, 550, 2030, 980],
+        "main_plan": [30, 20, 1370, 960]
+      }
     },
     "architect_plan": {
       "path": "A.01.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "clip_regions": {
+        "cadastre": [1380, 20, 2030, 470],
+        "aerea": [1380, 550, 2030, 980],
+        "main_plan": [30, 20, 1370, 960]
+      }
     },
     "photos_dir": {
       "path": "FOTOGRAFIES",

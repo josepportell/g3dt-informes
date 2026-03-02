@@ -126,7 +126,7 @@ class ReportData:
     is_sloped: bool = False
     slope_percent: float | None = None  # Pendent del terreny (%)
     slope_direction: str | None = None  # Direcció dominant del pendent
-    is_anthropized: bool = False  # Solar antropitzat (urbanitzat/modificat)
+    is_anthropized: bool = True  # Solar antropitzat (urbanitzat/modificat)
     slope_height_m: float | None = None  # Alçada del talús (m), per Hoek & Bray
 
     # Dades d'assaig (de dpsh_extractor)
@@ -162,6 +162,7 @@ class ReportData:
     include_expansivity: bool = False
     include_earth_pressure: bool = False
     include_slope_stability: bool = False
+    show_granulometric: bool = False
     include_geothermal: bool = False
 
     @property
@@ -434,11 +435,17 @@ def build_report_data(
         soil_levels = _merge_soil_levels(soil_levels)
 
     # Determina classes CTE
-    cte_building_class = classify_building(
-        area_m2=user_data.get('superficie_construida_m2', 0),
-        floors=user_data.get('num_floors', 'Pb'),
-        has_basement=user_data.get('has_basement', False),
-    )
+    # If both area and floors are missing/default, C-1 is a safe default
+    _area = user_data.get('superficie_construida_m2', 0)
+    _floors = user_data.get('num_floors', '')
+    if not _area and not _floors:
+        cte_building_class = "C-1"
+    else:
+        cte_building_class = classify_building(
+            area_m2=_area,
+            floors=_floors or 'Pb',
+            has_basement=user_data.get('has_basement', False),
+        )
     cte_soil_class = _determine_soil_class(dpsh_data)
 
     # Determina seccions condicionals
@@ -488,7 +495,7 @@ def build_report_data(
         slope_percent=user_data.get('slope_percent'),
         slope_direction=user_data.get('slope_direction'),
         slope_height_m=user_data.get('slope_height_m'),
-        is_anthropized=user_data.get('is_anthropized', False),
+        is_anthropized=user_data.get('is_anthropized', True),
         # Dades assaig
         dpsh=dpsh_data,
         sondeig_tests=user_data.get('sondeig_tests'),
@@ -519,6 +526,7 @@ def build_report_data(
         include_earth_pressure=include_earth_pressure,
         include_slope_stability=include_slope_stability,
         include_geothermal=user_data.get('include_geothermal', False),
+        show_granulometric=user_data.get('show_granulometric', False),
     )
 
 
@@ -621,6 +629,7 @@ def to_dict(report_data: ReportData) -> dict[str, Any]:
             'include_earth_pressure': report_data.include_earth_pressure,
             'include_slope_stability': report_data.include_slope_stability,
             'include_geothermal': report_data.include_geothermal,
+            'show_granulometric': report_data.show_granulometric,
         },
     }
 
@@ -755,7 +764,7 @@ def from_dict(data: dict[str, Any]) -> ReportData:
         slope_percent=site.get('slope_percent'),
         slope_direction=site.get('slope_direction'),
         slope_height_m=site.get('slope_height_m'),
-        is_anthropized=site.get('is_anthropized', False),
+        is_anthropized=site.get('is_anthropized', True),
         dpsh=dpsh_data,
         has_sondeig=tests.get('has_sondeig', False),
         has_spt=tests.get('has_spt', False),
@@ -769,6 +778,7 @@ def from_dict(data: dict[str, Any]) -> ReportData:
         include_expansivity=conditional.get('include_expansivity', False),
         include_earth_pressure=conditional.get('include_earth_pressure', False),
         include_slope_stability=conditional.get('include_slope_stability', False),
+        show_granulometric=conditional.get('show_granulometric', False),
         include_geothermal=conditional.get('include_geothermal', False),
     )
 
@@ -913,6 +923,12 @@ def _generate_soil_levels(
                 n20_max=n20_max,
                 soil_type=st,
             ))
+
+        # Respect num_levels: if user/wizard says fewer levels than
+        # extracted layers, merge down (e.g. Bell-Lloc: 2 layers → 1 nivell)
+        if num_levels < len(levels):
+            levels = _merge_soil_levels(levels)
+
         return levels
 
     # Fallback: single level with global average

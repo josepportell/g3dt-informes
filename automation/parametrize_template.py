@@ -331,16 +331,39 @@ def parametrize_paragraphs(doc):
             "fonamentaci\u00f3."
         )
 
-    # --- P333: Seismic AB value ---
+    # --- P333: Seismic AB value (Ab with subscript b, "<" not "=") ---
     idx = find_paragraph(paras, "AB")
     if idx is not None:
-        # Find the specific "AB  =0,08" paragraph
+        # Find the specific "AB  =0,08" paragraph (or already-parametrized)
         for i in range(len(paras)):
-            if "=0,08" in paras[i].text or ("AB" in paras[i].text and "g  (essent" in paras[i].text):
-                clear_and_set(
-                    paras[i],
-                    "AB  ={{ seismic_ab_text }} g  (essent g el valor de la gravetat)"
+            if "=0,08" in paras[i].text or ("AB" in paras[i].text and "g  (essent" in paras[i].text) or ("Ab" in paras[i].text and "g  (essent" in paras[i].text):
+                p = paras[i]
+                # Capture font from first run
+                fn = fs = None
+                if p.runs:
+                    fn = p.runs[0].font.name
+                    fs = p.runs[0].font.size
+                # Clear all runs
+                for run in p.runs:
+                    run.text = ""
+                # Run 1: "A" (reuse first run)
+                if p.runs:
+                    p.runs[0].text = "A"
+                else:
+                    r = p.add_run("A")
+                    r.font.name = fn
+                    r.font.size = fs
+                # Run 2: "b" with subscript
+                rb = p.add_run("b")
+                if fn: rb.font.name = fn
+                if fs: rb.font.size = fs
+                rb.font.subscript = True
+                # Run 3: rest of text with "<" instead of "="
+                rr = p.add_run(
+                    "  <{{ seismic_ab_text }} g  (essent g el valor de la gravetat)"
                 )
+                if fn: rr.font.name = fn
+                if fs: rr.font.size = fs
                 break
 
     # --- P409: Section 4.1 level description ---
