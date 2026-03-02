@@ -270,9 +270,9 @@ class ImageManager:
 
     def _download_icgc_images(self) -> dict[str, Path]:
         """
-        Download orthophoto + geological map if UTM coords available.
+        Download orthophoto + geological map + parcel orthophoto if UTM coords available.
 
-        Returns dict with keys 'orthophoto' and/or 'geological_map',
+        Returns dict with keys 'orthophoto', 'orthophoto_parcel', and/or 'geological_map',
         values are paths to downloaded images. Missing keys = download failed.
         """
         result: dict[str, Path] = {}
@@ -295,6 +295,55 @@ class ImageManager:
             logger.info(f"Orthophoto ready: {ortho_path}")
         except Exception as e:
             logger.warning(f"Failed to download orthophoto: {e}")
+
+        # Shared cadastre lookup for parcel overlay (Google or ICGC)
+        rc14 = None
+        polygon = None
+        try:
+            from .cadastre_adjacents import get_cadastral_reference, get_parcel_geometry_utm
+            rc14_full, _ldt = get_cadastral_reference(utm_x, utm_y)
+            if rc14_full and len(rc14_full) >= 14:
+                rc14 = rc14_full[:14]
+                polygon = get_parcel_geometry_utm(rc14)
+        except Exception as e:
+            logger.warning(f"Failed to get cadastre geometry: {e}")
+
+        # Try Google satellite first (preferred source for parcel overlay)
+        if rc14 and polygon:
+            try:
+                from .google_satellite import (
+                    get_google_satellite_with_parcel,
+                    GoogleSatelliteNoAPIKeyError,
+                    GoogleSatelliteError,
+                )
+                google_path = self._cache_dir / f"google_sat_parcel_{utm_x:.0f}_{utm_y:.0f}.png"
+                if not google_path.exists():
+                    get_google_satellite_with_parcel(utm_x, utm_y, polygon, google_path)
+                if google_path.exists():
+                    result['orthophoto_parcel'] = google_path
+                    logger.info(f"Google satellite with parcel outline ready: {google_path}")
+            except GoogleSatelliteNoAPIKeyError:
+                logger.info("No GOOGLE_MAPS_API_KEY set, falling back to ICGC orthophoto")
+            except GoogleSatelliteError as e:
+                logger.warning(f"Google satellite failed: {e}, falling back to ICGC")
+
+        # Fall back to ICGC parcel overlay
+        if 'orthophoto_parcel' not in result and rc14 and polygon:
+            try:
+                from .icgc_geology import get_orthophoto_with_parcel
+                parcel_path = self._cache_dir / f"orthophoto_parcel_{utm_x:.0f}_{utm_y:.0f}.png"
+                if not parcel_path.exists():
+                    get_orthophoto_with_parcel(utm_x, utm_y, polygon, parcel_path)
+                if parcel_path.exists():
+                    result['orthophoto_parcel'] = parcel_path
+                    logger.info(f"ICGC orthophoto with parcel outline ready: {parcel_path}")
+            except Exception as e:
+                logger.warning(f"Failed to create ICGC parcel orthophoto: {e}")
+
+        # Fall back to plain orthophoto if no parcel overlay available
+        if 'orthophoto' in result and 'orthophoto_parcel' not in result:
+            result['orthophoto_parcel_plain'] = result['orthophoto']
+            logger.info("Falling back to plain orthophoto (no parcel outline)")
 
         try:
             from .icgc_geology import get_geological_map_image, ICGCError
@@ -436,7 +485,7 @@ class ImageManager:
         context['fig_location_image'] = context.get('fig_cadastre_image', PLACEHOLDER_TEXT)
         context['fig_building_image'] = context.get('fig_main_plan_image', PLACEHOLDER_TEXT)
 
-        # ICGC: only geological map (orthophoto removed — AEREA crop replaces it)
+        # ICGC images: geological map + orthophoto with parcel outline as aerea fallback
         icgc_images = self._download_icgc_images()
         if 'geological_map' in icgc_images:
             context['fig_geological_image'] = InlineImage(
@@ -444,6 +493,21 @@ class ImageManager:
             )
         else:
             context['fig_geological_image'] = PLACEHOLDER_TEXT
+
+        # Fallback: if fig_aerea_image is still a placeholder, use parcel orthophoto
+        if context.get('fig_aerea_image') == PLACEHOLDER_TEXT:
+            if 'orthophoto_parcel' in icgc_images:
+                context['fig_aerea_image'] = InlineImage(
+                    self.tpl, str(icgc_images['orthophoto_parcel']),
+                    width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
+                )
+                logger.info("Using ICGC orthophoto with parcel outline as fig_aerea_image")
+            elif 'orthophoto_parcel_plain' in icgc_images:
+                context['fig_aerea_image'] = InlineImage(
+                    self.tpl, str(icgc_images['orthophoto_parcel_plain']),
+                    width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
+                )
+                logger.info("Using plain ICGC orthophoto as fig_aerea_image (parcel outline unavailable)")
 
         # Correlation section: file_mapping -> fallback glob
         tall_pdf = None

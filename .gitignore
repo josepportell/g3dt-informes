@@ -52,5 +52,8 @@ reference-material/4001612-bell-lloc/FOTOGRAFIES/
 reference-material/4001612-bell-lloc/ACCEPTACIO/
 reference-material/4001612-bell-lloc/25.0647/
 
+# Environment variables (API keys - NEVER commit)
+.env
+
 # Database files (may contain credentials)
 *.db

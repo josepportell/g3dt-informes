@@ -61,6 +61,7 @@ __all__ = [
     'format_cota_referencia',
     'get_slope',
     'get_orthophoto_image',
+    'get_orthophoto_with_parcel',
     'get_geological_map_image',
 ]
 
@@ -944,6 +945,114 @@ def get_geological_map_image(
 
     logger.info(f"Geological map saved to {output_path}")
     return output_path
+
+
+# === Orthophoto with Parcel Outline ===
+
+def get_orthophoto_with_parcel(
+    utm_x: float,
+    utm_y: float,
+    polygon_utm: list[tuple[float, float]],
+    output_path: str | Path,
+    buffer_m: float = 200.0,
+    width: int = 800,
+    height: int = 600,
+) -> Path:
+    """
+    Download ICGC orthophoto and overlay a red parcel polygon outline.
+
+    Combines the ICGC WMS orthophoto with a Cadastre parcel polygon
+    drawn as a red outline, similar to Eva's reference "Foto Emplaçament".
+
+    Args:
+        utm_x: UTM X coordinate (EPSG:25831) for centering
+        utm_y: UTM Y coordinate
+        polygon_utm: List of (x, y) UTM coordinate tuples forming the parcel polygon
+        output_path: Where to save the PNG image
+        buffer_m: Buffer around center point in meters (default 200m)
+        width: Image width in pixels
+        height: Image height in pixels
+
+    Returns:
+        Path to saved image
+
+    Raises:
+        ICGCCoordinateError: If coordinates are outside Catalunya
+        ICGCConnectionError: If orthophoto download fails
+    """
+    from PIL import Image, ImageDraw
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Compute WMS bbox with aspect-ratio correction
+    # buffer_m defines the vertical extent; horizontal is scaled to image aspect ratio
+    aspect = width / height
+    buffer_x = buffer_m * aspect
+    buffer_y = buffer_m
+    x_min = utm_x - buffer_x
+    y_min = utm_y - buffer_y
+    x_max = utm_x + buffer_x
+    y_max = utm_y + buffer_y
+
+    # Download base orthophoto to a temp file using corrected bbox
+    temp_ortho = output_path.with_suffix('.ortho.jpg')
+    try:
+        _validate_coordinates(utm_x, utm_y)
+
+        url = (
+            f"{ICGC_ORTHO_WMS_URL}"
+            f"?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap"
+            f"&LAYERS={ICGC_ORTHO_LAYER}"
+            f"&STYLES=&SRS=EPSG:25831"
+            f"&BBOX={x_min},{y_min},{x_max},{y_max}"
+            f"&WIDTH={width}&HEIGHT={height}"
+            f"&FORMAT=image/jpeg"
+        )
+
+        try:
+            urllib.request.urlretrieve(url, str(temp_ortho))
+        except (urllib.error.URLError, TimeoutError, socket.timeout, OSError) as e:
+            raise ICGCConnectionError(f"Failed to download orthophoto: {e}")
+
+        with open(temp_ortho, 'rb') as f:
+            header = f.read(4)
+        if header[:2] != b'\xff\xd8':
+            temp_ortho.unlink(missing_ok=True)
+            raise ICGCConnectionError("Orthophoto download returned non-JPEG response")
+
+        # Open and convert to RGBA for drawing
+        img = Image.open(str(temp_ortho)).convert("RGBA")
+        img_w, img_h = img.size
+
+        # Convert polygon UTM coords to pixel coords using actual image dimensions
+        pixel_coords = []
+        for vx, vy in polygon_utm:
+            px = (vx - x_min) / (x_max - x_min) * img_w
+            py = img_h - (vy - y_min) / (y_max - y_min) * img_h  # Y inverted
+            pixel_coords.append((px, py))
+
+        if len(pixel_coords) >= 3:
+            # Draw semi-transparent red fill
+            overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
+            draw_overlay = ImageDraw.Draw(overlay)
+            draw_overlay.polygon(pixel_coords, fill=(255, 0, 0, 40))
+            img = Image.alpha_composite(img, overlay)
+
+            # Draw red outline on top (multiple passes for thickness)
+            draw = ImageDraw.Draw(img)
+            draw.polygon(pixel_coords, outline='red')
+            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                shifted = [(x + dx, y + dy) for x, y in pixel_coords]
+                draw.polygon(shifted, outline='red')
+
+        # Save as PNG
+        img.convert("RGB").save(str(output_path), "PNG")
+        logger.info(f"Orthophoto with parcel outline saved to {output_path}")
+        return output_path
+
+    finally:
+        temp_ortho.unlink(missing_ok=True)
 
 
 # === CLI for Testing ===

@@ -44,6 +44,8 @@ logger = logging.getLogger(__name__)
 
 __all__ = [
     'get_adjacent_parcels',
+    'get_parcel_geometry_utm',
+    'get_cadastral_reference',
     'CadastreError',
     'CadastreConnectionError',
     'CadastreParseError',
@@ -55,6 +57,7 @@ __all__ = [
 
 CADASTRE_URL = "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCoordenadas.asmx"
 CADASTRE_DATA_URL = "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx"
+CADASTRE_WFS_URL = "https://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx"
 SRS = "EPSG:25831"  # UTM zone 31N (same as ICGC)
 CACHE_DIR = Path.home() / ".g3dt" / "cache" / "cadastre_adjacents"
 CACHE_TTL_DAYS = 90
@@ -589,6 +592,88 @@ def _save_to_cache(utm_x: float, utm_y: float, adjacents: dict[str, str]) -> Non
             raise
     except OSError as e:
         logger.warning(f"Failed to cache adjacents result: {e}")
+
+
+# === Public Wrappers ===
+
+def get_cadastral_reference(utm_x: float, utm_y: float) -> tuple[str | None, str | None]:
+    """
+    Get cadastral reference at given UTM coordinates.
+
+    Args:
+        utm_x: UTM X coordinate (EPSG:25831)
+        utm_y: UTM Y coordinate (EPSG:25831)
+
+    Returns:
+        Tuple of (cadastral_reference, ldt_address).
+        cadastral_reference is None if the point falls on a street or error.
+    """
+    return _query_ref_by_coords(utm_x, utm_y)
+
+
+# === Parcel Geometry via INSPIRE WFS ===
+
+def get_parcel_geometry_utm(rc14: str) -> list[tuple[float, float]]:
+    """
+    Get parcel polygon geometry in EPSG:25831 from Cadastre INSPIRE WFS.
+
+    Args:
+        rc14: First 14 characters of cadastral reference
+
+    Returns:
+        List of (x, y) UTM coordinate tuples forming the parcel polygon
+
+    Raises:
+        CadastreConnectionError: If WFS request fails
+        CadastreParseError: If geometry cannot be parsed
+        CadastreNoDataError: If no geometry found for the reference
+    """
+    url = (
+        f"{CADASTRE_WFS_URL}"
+        f"?service=WFS&version=2.0.0&request=GetFeature"
+        f"&StoredQuery_id=GetParcel&REFCAT={rc14}&srsname=EPSG:25831"
+    )
+
+    logger.debug(f"Querying Cadastre WFS for parcel geometry: {url}")
+
+    response_text = _fetch_xml(url)
+
+    try:
+        root = ET.fromstring(response_text)
+    except ET.ParseError as e:
+        raise CadastreParseError(f"Invalid XML from Cadastre WFS: {e}")
+
+    # Find posList element (contains space-separated coordinate pairs)
+    pos_list_elems = _find_all_elements(root, "posList")
+    if not pos_list_elems:
+        raise CadastreNoDataError(f"No geometry found for parcel {rc14}")
+
+    pos_text = pos_list_elems[0].text
+    if not pos_text or not pos_text.strip():
+        raise CadastreNoDataError(f"Empty geometry for parcel {rc14}")
+
+    # Parse space-separated values as (x, y) pairs
+    values = pos_text.strip().split()
+    if len(values) < 4 or len(values) % 2 != 0:
+        raise CadastreParseError(
+            f"Invalid posList format for parcel {rc14}: {len(values)} values"
+        )
+
+    polygon: list[tuple[float, float]] = []
+    for i in range(0, len(values), 2):
+        try:
+            x = float(values[i])
+            y = float(values[i + 1])
+            # INSPIRE WFS 2.0 with EPSG:25831 may return (northing, easting)
+            # Detect and swap if needed
+            if x > 1_000_000 and y < 1_000_000:
+                x, y = y, x
+            polygon.append((x, y))
+        except ValueError as e:
+            raise CadastreParseError(f"Invalid coordinate value in posList: {e}")
+
+    logger.info(f"Parcel {rc14} geometry: {len(polygon)} vertices")
+    return polygon
 
 
 # === CLI for Testing ===
