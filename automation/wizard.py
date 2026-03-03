@@ -200,15 +200,43 @@ class UserDataWizard:
             source_file = arch.get('source_file', 'A.01.pdf')
             source = f"planol {source_file}"
 
+            # Core wizard fields
             self._set_prefill('architect_name', arch.get('architect'), source, overall_conf)
+            self._set_prefill('architect_company', arch.get('architect_company'), source, overall_conf)
             self._set_prefill('building_type', arch.get('project_name'), source, overall_conf)
 
-            # Store non-wizard fields for template generation (first-run support)
+            # Dimensions → wizard fields
             dims = arch.get('dimensions', {})
+
+            footprint = dims.get('building_footprint_m2', {})
+            footprint_val = footprint.get('pdf_value') if isinstance(footprint, dict) else footprint
+            if footprint_val is not None:
+                self._set_prefill('superficie_construida_m2', footprint_val, source, overall_conf)
+
+            floors = dims.get('num_floors', {})
+            floors_val = floors.get('pdf_value') if isinstance(floors, dict) else floors
+            if floors_val is not None:
+                self._set_prefill('num_floors', str(floors_val), source, overall_conf)
+
+            # Non-wizard fields → stored in _user_data_full for report generation
+            location = arch.get('location')
+            if location:
+                self._user_data_full.setdefault('street_address', location)
+
+            promotor = arch.get('promotor')
+            if promotor:
+                self._user_data_full.setdefault('promoter_name', promotor)
+
+            height = dims.get('max_height_m', {})
+            height_val = height.get('pdf_value') if isinstance(height, dict) else height
+            if height_val is not None:
+                self._user_data_full.setdefault('building_height_m', height_val)
+
             parcel_area = dims.get('parcel_area_m2', {})
             area_val = parcel_area.get('pdf_value') if isinstance(parcel_area, dict) else parcel_area
             if area_val is not None:
                 self._user_data_full.setdefault('superficie_parcela_m2', area_val)
+
             # Infer parcel_shape from plot dimensions if available
             length_info = dims.get('plot_length_m', {})
             width_info = dims.get('plot_width_m', {})

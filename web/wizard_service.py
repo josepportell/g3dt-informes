@@ -47,7 +47,7 @@ def list_projects() -> list[dict[str, str]]:
 
 
 def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str, Any]:
-    """Run auto_extract + wizard prefill chain for a project.
+    """Run auto_extract + vision + wizard prefill chain for a project.
 
     Returns a dict of {field: {value, source, confidence?}} entries.
     Results are cached per project_name; pass force_refresh=True to re-run.
@@ -57,11 +57,14 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
 
     project_path = _resolve_project(project_name)
 
-    # Phase 1: auto_extract (DPSH, lab, ICGC, cadastre)
+    # Phase 0-3: auto_extract (DPSH, lab, ICGC, cadastre — Python only, ~3-5s)
     from automation.auto_extractor import auto_extract
     auto_result = auto_extract(project_path)
 
-    # Phase 2: wizard prefill chain (defaults, sondeig, planol, adjacents_visor, user_data)
+    # Phase 1: Claude vision (API calls, ~30s — saves JSONs to validation/)
+    _run_vision_phase(project_path, force_refresh)
+
+    # Phase 2: wizard prefill chain (reads validation/ JSONs including vision output)
     from automation.wizard import UserDataWizard
     wizard = UserDataWizard(str(project_path))
     wizard.load_prefills()
@@ -74,12 +77,29 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
         source = auto_result.sources.get(key, 'auto')
         merged[key] = {'value': value, 'source': source}
 
-    # Overlay wizard prefills (higher priority)
+    # Overlay wizard prefills (higher priority — includes vision-derived fields)
     for key, entry in wizard.prefills.items():
         merged[key] = entry
 
+    # Add non-wizard vision fields (street_address, promoter_name, building_height_m)
+    # These come from wizard._user_data_full which was populated by _load_planol()
+    for key in ('street_address', 'promoter_name', 'building_height_m'):
+        if key not in merged and key in wizard._user_data_full:
+            merged[key] = {'value': wizard._user_data_full[key], 'source': 'planol vision'}
+
     _prefill_cache[project_name] = merged
     return merged
+
+
+def _run_vision_phase(project_path: Path, force_refresh: bool) -> None:
+    """Run Claude vision extraction (Phase 1). Non-fatal on failure."""
+    try:
+        from automation.vision_extractor import run_vision_extraction
+        run_vision_extraction(project_path, force_refresh=force_refresh)
+    except ImportError:
+        logger.warning("Vision extraction not available (anthropic not installed)")
+    except Exception as e:
+        logger.warning("Vision extraction failed: %s", e)
 
 
 def load_user_data(project_name: str) -> dict[str, Any]:

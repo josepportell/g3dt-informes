@@ -149,6 +149,75 @@ OUTPUT FORMAT (JSON):
 Extract all soil layer information from this document. Be thorough and note any uncertainties.'''
 
 
+# ============================================================================
+# Plànol (A.01.pdf) — Architect plan extraction
+# ============================================================================
+
+PLANOL_JSON_EXAMPLE = '''
+{
+  "architect_data": {
+    "source_file": "A.01.pdf",
+    "project_name": "Habitatge Unifamiliar Aïllat",
+    "location": "C/ Mestre Ramon Ortiz, 25220 Bell-Lloc d'Urgell",
+    "promotor": "Ramon Mitjana SL",
+    "architect": "Jordi Bosch Novell",
+    "architect_company": "Bosch Arquitectura SLP",
+    "dimensions": {
+      "parcel_area_m2": {"pdf_value": 598.0, "confidence": 0.95},
+      "building_footprint_m2": {"pdf_value": 296.88, "confidence": 0.90},
+      "num_floors": {"pdf_value": "Pb+P1", "confidence": 1.0},
+      "max_height_m": {"pdf_value": 8.38, "confidence": 0.85},
+      "plot_length_m": {"pdf_value": 24.57, "confidence": 0.90},
+      "plot_width_m": {"pdf_value": 24.72, "confidence": 0.90}
+    }
+  },
+  "overall_confidence": 0.90,
+  "extraction_notes": "Caixetí clear, dimensions from site plan"
+}
+'''
+
+PLANOL_EXTRACTION_PROMPT = f'''Analyze this architectural plan (plànol) for a construction project.
+
+TASK: Extract project and building data into structured JSON.
+
+DOCUMENT STRUCTURE:
+- Caixetí/title block (typically bottom-right corner):
+  - Project name/type (e.g., "Habitatge Unifamiliar Aïllat", "Nau Industrial")
+  - Location: street, number, postal code, municipality
+  - Promotor: company or individual name
+  - Architect: name and college number
+  - Architect company: SLP or firm name (may be separate from architect name)
+  - Scale, date
+- Site plan / emplaçament:
+  - Parcel area in m²
+  - Parcel dimensions (length × width)
+  - Building footprint in m² or percentage
+- Section / alzat:
+  - Number of floors (PB, PB+1, Ps+PB+2Pp, etc.)
+  - Maximum building height in meters
+
+EXTRACTION RULES:
+1. Extract text EXACTLY as written (Catalan/Spanish)
+2. For dimensions, prefer values with explicit units (m, m²)
+3. Number of floors: use the format as written (e.g., "Pb+P1", "Ps+Pb+2Pp")
+4. If a value has multiple interpretations, use the most specific one
+5. Set null for fields not found in the document
+6. Building footprint may be labeled "ocupació", "superfície construïda", or similar
+7. If architect_company is not separately listed, set null (do not guess from architect name)
+
+CONFIDENCE SCORING:
+- 1.0: Clear printed text, unambiguous
+- 0.9: Readable with minimal uncertainty
+- 0.7-0.8: Readable but small text or requires interpretation
+- 0.5: Difficult to read or ambiguous
+- Use null for values not found
+
+OUTPUT FORMAT (JSON):
+{PLANOL_JSON_EXAMPLE}
+
+Extract all visible data from this architectural plan.'''
+
+
 # System prompt for general extraction context
 EXTRACTION_SYSTEM_PROMPT = '''You are a geotechnical data extraction specialist. Your task is to
 carefully extract data from handwritten field documents and convert them to structured JSON.
