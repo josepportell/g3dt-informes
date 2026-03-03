@@ -25,22 +25,39 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-SCANNER_VERSION = "2.0"
+SCANNER_VERSION = "2.1"
 
+# Role definitions: description + optional vision_type for Claude API extraction.
+# vision_type maps to extraction prompts: "planol", "dpsh", "sondeig"
+# First role with a given vision_type wins (order matters).
 ROLE_DEFINITIONS = {
-    'architect_plan':       "Planol de l'arquitecte",
-    'architect_plan_with_points': "Planol de l'arquitecte amb punts d'assaig",
-    'dpsh_field_sheet':     "Full de camp DPSH (penetrometres)",
-    'dpsh_excel':           "Excel DPSH amb dades transcrites",
-    'sondeig_field_sheet':  "Full de camp sondeig a rotacio",
-    'correlation_section':  "Tall de correlacio",
-    'lab_order':            "Comanda de laboratori",
-    'situation_plan':       "Planol de situacio",
-    'photos_dir':           "Carpeta de fotografies de camp",
-    'reference_report':     "Informe .doc de referencia",
-    'lab_results_pdf':      "Resultats de laboratori (PDF)",
-    'gtl_report':           "Informe GTL del laboratori",
+    'architect_plan':       {"desc": "Planol de l'arquitecte",                   "vision_type": "planol"},
+    'architect_plan_with_points': {"desc": "Planol de l'arquitecte amb punts d'assaig", "vision_type": "planol"},
+    'dpsh_field_sheet':     {"desc": "Full de camp DPSH (penetrometres)",         "vision_type": "dpsh"},
+    'dpsh_excel':           {"desc": "Excel DPSH amb dades transcrites"},
+    'sondeig_field_sheet':  {"desc": "Full de camp sondeig a rotacio",            "vision_type": "sondeig"},
+    'correlation_section':  {"desc": "Tall de correlacio"},
+    'lab_order':            {"desc": "Comanda de laboratori"},
+    'situation_plan':       {"desc": "Planol de situacio",                        "vision_type": "planol"},
+    'photos_dir':           {"desc": "Carpeta de fotografies de camp"},
+    'reference_report':     {"desc": "Informe .doc de referencia"},
+    'lab_results_pdf':      {"desc": "Resultats de laboratori (PDF)"},
+    'gtl_report':           {"desc": "Informe GTL del laboratori"},
 }
+
+def _role_desc(role_name: str) -> str:
+    """Get description string from a role definition (supports old str and new dict format)."""
+    defn = ROLE_DEFINITIONS.get(role_name, {})
+    if isinstance(defn, str):
+        return defn
+    return defn.get('desc', role_name)
+
+def get_vision_type(role_name: str) -> str | None:
+    """Get the vision extraction type for a role, or None if no vision needed."""
+    defn = ROLE_DEFINITIONS.get(role_name, {})
+    if isinstance(defn, dict):
+        return defn.get('vision_type')
+    return None
 
 REQUIRED_ROLES = [
     'architect_plan',
@@ -157,6 +174,7 @@ class FileRole:
     confidence: str
     detection: str
     is_combined: bool = False
+    vision_type: str | None = None
 
 
 @dataclass
@@ -211,6 +229,7 @@ class FileScanner:
                         path=rel_path,
                         confidence=confidence,
                         detection=detection,
+                        vision_type=get_vision_type(role_name),
                     )
                     classified_paths.add(rel_path)
 
@@ -269,6 +288,7 @@ class FileScanner:
                     'confidence': role.confidence,
                     'detection': role.detection,
                     **(({'is_combined': True} if role.is_combined else {})),
+                    **(({'vision_type': role.vision_type} if role.vision_type else {})),
                 }
                 for name, role in mapping.roles.items()
             },
@@ -300,11 +320,14 @@ class FileScanner:
             data = json.loads(json_path.read_text(encoding='utf-8'))
             mapping = FileMapping()
             for name, role_data in data.get('roles', {}).items():
+                # vision_type: prefer JSON value, fall back to ROLE_DEFINITIONS
+                vt = role_data.get('vision_type') or get_vision_type(name)
                 mapping.roles[name] = FileRole(
                     path=role_data['path'],
                     confidence=role_data['confidence'],
                     detection=role_data['detection'],
                     is_combined=role_data.get('is_combined', False),
+                    vision_type=vt,
                 )
             for ig_data in data.get('ignored', []):
                 mapping.ignored.append(IgnoredFile(
@@ -444,6 +467,7 @@ class FileScanner:
                             confidence='high',
                             detection='combined_file',
                             is_combined=True,
+                            vision_type=get_vision_type(secondary_role),
                         )
                 break
 
@@ -490,6 +514,7 @@ class FileScanner:
                     path=preferred,
                     confidence='medium',
                     detection=current.detection,
+                    vision_type=get_vision_type(role_name),
                 )
             else:
                 # Current is already preferred, just lower confidence
@@ -497,4 +522,5 @@ class FileScanner:
                     path=current.path,
                     confidence='medium',
                     detection=current.detection,
+                    vision_type=get_vision_type(role_name),
                 )

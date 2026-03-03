@@ -209,6 +209,17 @@ def extract_from_sondeig(pdf_path: Path) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Vision type registry: maps vision_type → (extract_fn, cache_filename)
+# ---------------------------------------------------------------------------
+
+VISION_REGISTRY: dict[str, tuple[Any, str]] = {
+    'planol':  (extract_from_planol,   'planol_extracted.json'),
+    'dpsh':    (extract_from_penetros, 'dpsh_extracted.json'),
+    'sondeig': (extract_from_sondeig,  'sondeig_extracted.json'),
+}
+
+
+# ---------------------------------------------------------------------------
 # Orchestrator
 # ---------------------------------------------------------------------------
 
@@ -219,10 +230,11 @@ def run_vision_extraction(
 ) -> dict[str, dict | None]:
     """Run all available vision extractions for a project.
 
-    Uses FileScanner to find PDFs, extracts data, saves to validation/.
+    Iterates file_scanner roles, checks vision_type on each, and extracts
+    the first match per vision_type. Saves results to validation/.
     Skips extraction if cached JSON already exists (unless force_refresh).
 
-    Returns dict with keys: planol, penetros, sondeig (each a dict or None).
+    Returns dict keyed by vision_type (e.g., planol, dpsh, sondeig).
     """
     from .file_scanner import FileScanner
 
@@ -238,44 +250,47 @@ def run_vision_extraction(
         mapping = scanner.scan()
         scanner.save(mapping)
 
-    # --- Plànol ---
-    results['planol'] = _extract_or_cache(
-        project_path, mapping, 'architect_plan',
-        validation_dir / 'planol_extracted.json',
-        extract_from_planol, force_refresh,
-    )
+    # Collect first role per vision_type (order in ROLE_DEFINITIONS = priority)
+    vision_sources: dict[str, tuple[str, str]] = {}  # vision_type → (role_name, path)
+    for role_name, role in mapping.roles.items():
+        vt = role.vision_type
+        if vt and vt in VISION_REGISTRY and vt not in vision_sources:
+            vision_sources[vt] = (role_name, role.path)
 
-    # --- Penetros (DPSH) ---
-    results['penetros'] = _extract_or_cache(
-        project_path, mapping, 'dpsh_field_sheet',
-        validation_dir / 'dpsh_extracted.json',
-        extract_from_penetros, force_refresh,
-    )
+    # Extract each vision type
+    for vt, (role_name, rel_path) in vision_sources.items():
+        extract_fn, cache_filename = VISION_REGISTRY[vt]
+        cache_path = validation_dir / cache_filename
+        pdf_path = project_path / rel_path
 
-    # --- Sondeig ---
-    results['sondeig'] = _extract_or_cache(
-        project_path, mapping, 'sondeig_field_sheet',
-        validation_dir / 'sondeig_extracted.json',
-        extract_from_sondeig, force_refresh,
-    )
+        results[vt] = _extract_or_cache(
+            vt, role_name, pdf_path, cache_path, extract_fn, force_refresh,
+        )
+
+    # Mark missing vision types
+    for vt in VISION_REGISTRY:
+        if vt not in results:
+            results[vt] = None
+            logger.info("%s: no PDF with vision_type=%s in file mapping", vt, vt)
 
     elapsed = time.monotonic() - t0
     n_extracted = sum(1 for v in results.values() if v is not None)
-    logger.info("Vision extraction: %d/3 types in %.1fs", n_extracted, elapsed)
+    n_total = len(VISION_REGISTRY)
+    logger.info("Vision extraction: %d/%d types in %.1fs", n_extracted, n_total, elapsed)
 
     return results
 
 
 def _extract_or_cache(
-    project_path: Path,
-    mapping,
+    vision_type: str,
     role_name: str,
+    pdf_path: Path,
     cache_path: Path,
     extract_fn,
     force_refresh: bool,
 ) -> dict | None:
     """Extract from PDF or use cached JSON."""
-    label = role_name.replace('_', ' ').title()
+    label = f"{vision_type} ({role_name})"
 
     # Check cache
     if cache_path.exists() and not force_refresh:
@@ -285,15 +300,8 @@ def _extract_or_cache(
         except (json.JSONDecodeError, OSError):
             pass  # Fall through to re-extract
 
-    # Find PDF via file mapping
-    role = mapping.roles.get(role_name)
-    if not role:
-        logger.info("%s: no PDF found in file mapping", label)
-        return None
-
-    pdf_path = project_path / role.path
     if not pdf_path.exists():
-        logger.warning("%s: PDF path %s does not exist", label, role.path)
+        logger.warning("%s: PDF %s does not exist", label, pdf_path)
         return None
 
     try:
