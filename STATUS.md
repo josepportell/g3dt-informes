@@ -1,5 +1,5 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-03-02
+Last updated: 2026-03-03
 
 ## Current State
 
@@ -13,9 +13,9 @@ Pipeline complet operatiu. Claude Code és el runtime de producció — s'instal
 
 | Component | Estat | Notes |
 |-----------|-------|-------|
-| FileScanner (Fase 0) | ✅ | Classificació automàtica de fitxers |
+| FileScanner (Fase 0) | ✅ | Classificació automàtica + `vision_type` per rol (v2.1) |
 | auto_extract (Fase 0.5) | ✅ | DPSH, Lab, ICGC, Cadastre, geocode, historia geològica |
-| Claude vision (Fase 1) | ✅ | Plànol, Sondeig, Penetros — integrat al pipeline |
+| Claude vision (Fase 1) | ✅ | Anthropic API (sonnet), VISION_REGISTRY genèric, cache JSON |
 | Web Wizard (Fase 2) | ✅ | FastAPI + review.html, 4 pestanyes |
 | ReportGenerator (Fase 3) | ✅ | .docx amb Jinja2, tots els annexos |
 | Historia geològica | ✅ | 238 plantilles Eva, lookup jeràrquic municipi→comarca→region |
@@ -32,12 +32,13 @@ Pipeline complet operatiu. Claude Code és el runtime de producció — s'instal
 **IMPORTANT per merge:** `feat/historia-geologica` surt de `main`, NO de `fix/report-quality-audit`.
 Primer merge `fix/report-quality-audit` → `main`, després `feat/historia-geologica` → `main`.
 
-### feat/historia-geologica (2026-03-02)
+### feat/historia-geologica (2026-03-03)
 - 238 .docx plantilles d'Eva, `index.json` amb 240 entrades
 - `historia_geologica.py`: lookup fuzzy + fallback jeràrquic (municipi→comarca→region)
 - `comarques.json`: 42 comarques, ~908 municipis → mapa comarca→plantilla
 - Integrat a: auto_extractor (prefill), wizard (override), section3 (genera §3.1)
 - **Fixes audit (2026-03-02):** Historia dinàmica (for-loop), filtre sondeig, desc material deepest layer, short material tables, Nb range
+- **Vision integration (2026-03-03):** `vision_extractor.py` (Anthropic API), `vision_type` al file_scanner, prompts plànol, wizard prefills visió
 
 ## Desviacions actuals (4 projectes)
 
@@ -67,6 +68,14 @@ Primer merge `fix/report-quality-audit` → `main`, després `feat/historia-geol
 
 Cap blocker crític.
 
+## Commits recents (2026-03-03)
+
+| Commit | Descripció |
+|--------|-----------|
+| `57c9bd3` | fix: audit critical bugs (geologia dinàmica, filtre sondeig, material desc) |
+| `348fe88` | feat: integrate Claude vision into wizard pipeline (Anthropic API) |
+| `401838b` | refactor: file_scanner declares vision_type, vision_extractor genèric |
+
 ## Audit Quality (2026-03-02)
 
 | Projecte | Score | Notes |
@@ -89,8 +98,11 @@ Scores baixos de Castellar/Rubí/Linyola són per **dades d'entrada incompletes*
 - [x] Fix: historia dinàmica (for-loop, sense límit 6 slots)
 - [x] Fix: filtre sondeig (num_levels vs sondeig_layers)
 - [x] Fix: descripció material (deepest layer = bearing stratum)
-- [ ] Integrar Claude vision (Fase 1) al pipeline automàtic del wizard
+- [x] Integrar Claude vision (Fase 1) al pipeline automàtic del wizard
+- [x] `vision_type` al file_scanner (desacoblament vision_extractor ↔ nomenclatura rols)
+- [ ] Category C vocabulary (to d'Eva per secció Materials)
 - [ ] Eva revisa index.json (duplicats, variants geològiques)
 - [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54
 - [ ] Test multi-nivell amb Linyola (sòls expansius)
 - [ ] Validació amb Eva del flux complet (projecte nou de zero)
+- [ ] Merge feat/historia-geologica → main (quan validat amb Eva)
