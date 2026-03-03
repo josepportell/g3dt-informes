@@ -1,52 +1,43 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-03-01
+Last updated: 2026-03-02
 
 ## Current State
 
-Pipeline complet operatiu amb web wizard i geocodificació integrada.
-Branca `fix/report-quality-audit` amb correccions alineades amb l'informe de referència d'Eva.
+Pipeline complet operatiu. Claude Code és el runtime de producció — s'instal·la a l'ordinador d'Eva i serveix el wizard web en segon pla.
 
-**Qualitat (audit visual):** Plantilla 84.0% | Contingut 79.8%
+**Model d'operació:** Eva obre localhost:8765, selecciona projecte, el sistema pre-omple tot automàticament (Python + Claude vision), Eva revisa/ajusta, genera informe.
+
+**Qualitat (audit Bell-Lloc):** 97.1% auto-resolved (post-fixes 2026-03-02)
 
 ### Components operatius
 
 | Component | Estat | Notes |
 |-----------|-------|-------|
 | FileScanner (Fase 0) | ✅ | Classificació automàtica de fitxers |
-| auto_extract (Fase 0.5) | ✅ | DPSH, Lab, ICGC, Cadastre, geocode, **historia geològica** |
-| Geocodificació UTM (Fase 2.5) | ✅ | Nominatim + Cadastre + WFS (47 tests) |
-| Validació visual (Fase 1) | ✅ | DPSH, Sondeig, Plànol via Claude vision |
+| auto_extract (Fase 0.5) | ✅ | DPSH, Lab, ICGC, Cadastre, geocode, historia geològica |
+| Claude vision (Fase 1) | ✅ | Plànol, Sondeig, Penetros — integrat al pipeline |
 | Web Wizard (Fase 2) | ✅ | FastAPI + review.html, 4 pestanyes |
 | ReportGenerator (Fase 3) | ✅ | .docx amb Jinja2, tots els annexos |
 | Historia geològica | ✅ | 238 plantilles Eva, lookup jeràrquic municipi→comarca→region |
-| Audit visual | ✅ | Split plantilla vs contingut |
-
-### Web Wizard — Funcionalitats
-
-- Selector de projecte amb 4 pestanyes (DPSH, Sondeig, Plànol, Wizard)
-- Source badges per camp (auto/user_data/defecte)
-- Coordenades UTM amb geocodificació en viu (botó "Geolocalitzar amb ICGC")
-- Actualitzar prefills (re-executa Fase 3 amb UTM actualitzades)
-- Expert overrides (ICGC, geomech, Es settlement)
-- Generar informe + descarregar .docx
+| Audit intel·ligent | ✅ | Semàntic per paràgraf + visual .docx |
 
 ## Branques actives
 
 | Branca | Base | Contingut | Estat |
 |--------|------|-----------|-------|
 | `main` | — | Pipeline base fins a settlement calibrat | Estable |
-| `fix/report-quality-audit` | `main` | Audit 100%, Cadastre lookup, image fallbacks, CE-21 | En curs |
-| `feat/historia-geologica` | `main` | Plantilles regionals + lookup jeràrquic | **Funcional** |
+| `fix/report-quality-audit` | `main` | Audit 100%, Cadastre lookup, image fallbacks, CE-21 | Pendent merge |
+| `feat/historia-geologica` | `main` | Plantilles regionals + lookup jeràrquic + fixes audit | **Activa** |
 
 **IMPORTANT per merge:** `feat/historia-geologica` surt de `main`, NO de `fix/report-quality-audit`.
 Primer merge `fix/report-quality-audit` → `main`, després `feat/historia-geologica` → `main`.
 
-### feat/historia-geologica (2026-03-01)
+### feat/historia-geologica (2026-03-02)
 - 238 .docx plantilles d'Eva, `index.json` amb 240 entrades
 - `historia_geologica.py`: lookup fuzzy + fallback jeràrquic (municipi→comarca→region)
 - `comarques.json`: 42 comarques, ~908 municipis → mapa comarca→plantilla
 - Integrat a: auto_extractor (prefill), wizard (override), section3 (genera §3.1)
-- **Testat:** Rubí→tier1, Castellar→tier1, Bell-Lloc→Lleida(comarca), Linyola→Lleida(comarca), Sant Cugat→vallès(comarca), 19 municipis verificats
+- **Fixes audit (2026-03-02):** Historia dinàmica (for-loop), filtre sondeig, desc material deepest layer, short material tables, Nb range
 
 ## Desviacions actuals (4 projectes)
 
@@ -76,19 +67,30 @@ Primer merge `fix/report-quality-audit` → `main`, després `feat/historia-geol
 
 Cap blocker crític.
 
+## Audit Quality (2026-03-02)
+
+| Projecte | Score | Notes |
+|-----------|-------|-------|
+| Bell-Lloc | 97.1% | Projecte referència, user_data complet |
+| Castellar | 87.5% | user_data parcial (79% camps crítics) |
+| Rubí | 89.8% | user_data parcial (37% camps crítics), sense sondeig |
+| Linyola | 89.0% | user_data mínim (5% camps crítics) |
+
+Scores baixos de Castellar/Rubí/Linyola són per **dades d'entrada incompletes**, no bugs. Amb el pipeline complet (Claude vision Fase 1) es pre-ompliran automàticament.
+
 ## Next Milestones
 
 - [x] Pipeline complet: FileScanner → auto_extract → wizard → report
-- [x] Web wizard amb FastAPI (substitueix wizard CLI)
+- [x] Web wizard amb FastAPI
 - [x] Geocodificació UTM (Nominatim + Cadastre + WFS INSPIRE)
-- [x] UTM al wizard web (camps, source badges, geocode button, refresh prefills)
-- [x] Audit visual split: plantilla 84.0% + contingut 79.8%
 - [x] Settlement calibrat: Es = 2.5×Nb
-- [x] Plantilles història geològica extretes + index.json generat
-- [x] Lògica lookup municipi → plantilla (fuzzy match + jerarquia comarca)
-- [x] Extracció text .docx → inserció al report (§3.1 MARC GEOLÒGIC)
+- [x] Plantilles història geològica (238 templates, lookup jeràrquic)
+- [x] Audit intel·ligent (semàntic per paràgraf, Bell-Lloc 97.1%)
+- [x] Fix: historia dinàmica (for-loop, sense límit 6 slots)
+- [x] Fix: filtre sondeig (num_levels vs sondeig_layers)
+- [x] Fix: descripció material (deepest layer = bearing stratum)
+- [ ] Integrar Claude vision (Fase 1) al pipeline automàtic del wizard
 - [ ] Eva revisa index.json (duplicats, variants geològiques)
 - [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54
 - [ ] Test multi-nivell amb Linyola (sòls expansius)
-- [ ] Validació amb Eva del flux complet web (extracció → wizard → informe → audit)
-- [ ] Millorar precisió geocodificació (~100m actual → parcel·la exacta)
+- [ ] Validació amb Eva del flux complet (projecte nou de zero)

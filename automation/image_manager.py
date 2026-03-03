@@ -547,7 +547,8 @@ class ImageManager:
                     width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
                 )
                 context['fig_location_image'] = context['fig_aerea_image']
-                logger.info("Using ICGC orthophoto with parcel outline as fig_aerea_image")
+                source = "Google satellite" if "google_sat" in str(icgc_images['orthophoto_parcel']) else "ICGC orthophoto"
+                logger.info(f"Using {source} with parcel outline as fig_aerea_image")
             elif 'orthophoto_parcel_plain' in icgc_images:
                 context['fig_aerea_image'] = InlineImage(
                     self.tpl, str(icgc_images['orthophoto_parcel_plain']),

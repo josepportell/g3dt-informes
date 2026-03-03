@@ -63,8 +63,7 @@ class PermeabilityRow:
 class Section3Content:
     """Generated content for Section 3."""
     # 3.1 MARC GEOLOGIC
-    marc_geologic: str  # Placeholder - needs zone templates
-    figura4_reference: str
+    marc_geologic: str  # Full text (joined by \n\n) for backward compat
 
     # 3.2 MATERIALS
     materials_intro: str
@@ -88,6 +87,10 @@ class Section3Content:
     # 3.7 RADO
     rado: str  # Placeholder for zone lookup
 
+    # Fields with defaults (must come after non-default fields)
+    # 3.1 continued
+    marc_geologic_paragraphs: list[str] = field(default_factory=list)  # Individual paragraphs for template loop
+    figura4_reference: str = ""
     # Per-level generated texts (for template loop)
     depth_texts: list[str] = field(default_factory=list)  # Per-level depth/location descriptions
     geomech_texts: list[str] = field(default_factory=list)  # Per-level geomechanical descriptions
@@ -495,7 +498,7 @@ class Section3Generator:
 
     # === 3.1 MARC GEOLOGIC ===
 
-    def generate_marc_geologic(self) -> str:
+    def generate_marc_geologic(self) -> tuple[str, list[str]]:
         """
         Generate regional geology text (3.1).
 
@@ -504,7 +507,7 @@ class Section3Generator:
         2. ICGC WMS API + hardcoded regional templates (existing flow)
 
         Returns:
-            Complete regional geology text, or placeholder if data unavailable
+            Tuple of (complete text joined by \\n\\n, list of individual paragraphs)
         """
         # Try Eva's template first (from auto-extractor or wizard)
         historia_path = getattr(self.data, 'historia_geologica_template', '')
@@ -537,13 +540,15 @@ class Section3Generator:
         if not unit:
             if not self.data.utm_x or not self.data.utm_y:
                 logger.warning("No UTM coordinates and no manual ICGC override")
-                return self._generate_marc_geologic_fallback(
+                text = self._generate_marc_geologic_fallback(
                     "No es disposa de coordenades UTM per consultar l'ICGC."
                 )
+                return text, [text]
             else:
-                return self._generate_marc_geologic_fallback(
+                text = self._generate_marc_geologic_fallback(
                     "No s'ha pogut obtenir informació geològica de l'ICGC."
                 )
+                return text, [text]
 
         logger.info(f"ICGC unit: {unit.code} - {unit.description}")
 
@@ -555,38 +560,35 @@ class Section3Generator:
         regional_paragraphs = self._load_regional_template(region)
         if not regional_paragraphs:
             logger.warning(f"No template for region '{region}', using generic")
-            return self._generate_marc_geologic_with_icgc_only(unit)
+            text = self._generate_marc_geologic_with_icgc_only(unit)
+            return text, [text]
 
         # Build complete text: regional paragraphs + ICGC unit paragraph
         paragraphs = regional_paragraphs.copy()
 
-        # Add paragraph 6: ICGC unit reference
+        # Add ICGC unit reference as final paragraph
         icgc_paragraph = unit.format_for_report()
         paragraphs.append(icgc_paragraph)
 
-        return "\n\n".join(paragraphs)
+        return "\n\n".join(paragraphs), paragraphs
 
-    def _build_marc_geologic_from_eva(self, eva_paras: list[str]) -> str:
+    def _build_marc_geologic_from_eva(self, eva_paras: list[str]) -> tuple[str, list[str]]:
         """
         Build marc geologic text from Eva's template paragraphs + ICGC unit.
 
-        Fits Eva's paragraphs into slots 1-5 (merging overflow into slot 5),
-        then appends ICGC unit reference as the final paragraph.
+        Returns all paragraphs without truncation (no more MAX_SLOTS limit).
+
+        Returns:
+            Tuple of (joined text for backward compat, list of individual paragraphs)
         """
-        MAX_SLOTS = 5
-        if len(eva_paras) > MAX_SLOTS:
-            # Merge overflow into slot 5
-            paras = eva_paras[:MAX_SLOTS - 1]
-            paras.append('\n\n'.join(eva_paras[MAX_SLOTS - 1:]))
-        else:
-            paras = eva_paras.copy()
+        paras = eva_paras.copy()
 
         # Append ICGC unit reference as final paragraph
         unit = self._get_icgc_unit_cached()
         if unit:
             paras.append(unit.format_for_report())
 
-        return "\n\n".join(paras)
+        return "\n\n".join(paras), paras
 
     def _load_regional_template(self, region: str) -> list[str]:
         """
@@ -1415,9 +1417,11 @@ class Section3Generator:
         Returns:
             Section3Content dataclass with all generated content
         """
+        marc_text, marc_paras = self.generate_marc_geologic()
         return Section3Content(
             # 3.1 MARC GEOLOGIC
-            marc_geologic=self.generate_marc_geologic(),
+            marc_geologic=marc_text,
+            marc_geologic_paragraphs=marc_paras,
             figura4_reference=self.generate_figura4_reference(),
             # 3.2 MATERIALS
             materials_intro=self.generate_materials_intro(),

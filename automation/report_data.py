@@ -890,6 +890,29 @@ def _generate_soil_levels(
 
     # If we have sondeig layer boundaries, split readings by depth range
     if sondeig_layers and len(sondeig_layers) > 1:
+        # When user says 1 level but sondeig has 2+ layers, use ALL readings
+        # (DPSH goes deeper than sondeig — filtering by sondeig depth loses readings)
+        if num_levels < len(sondeig_layers):
+            # Single merged level: use global N20 + deepest layer's description
+            # (the bearing stratum is the deeper layer, not necessarily the thickest)
+            max_depth = max((abs(r.depth_m) for r in all_readings), default=0)
+            all_n20 = [r.n20 for r in all_readings]
+            # Pick deepest (last) layer for description — this is the bearing material
+            deepest = sondeig_layers[-1]
+            desc = deepest.get('description', 'Nivell principal')
+            st = soil_types[0] if soil_types else detect_soil_type(desc)
+            return [SoilLevel(
+                level_number=1,
+                description=desc,
+                thickness_m=max_depth if max_depth > 0 else None,
+                n20_average=dpsh_data.overall_average_n20,
+                depth_from_m=0.0,
+                depth_to_m=max_depth if max_depth > 0 else None,
+                n20_min=min(all_n20) if all_n20 else None,
+                n20_max=max(all_n20) if all_n20 else None,
+                soil_type=st,
+            )]
+
         levels = []
         for i, layer in enumerate(sondeig_layers):
             depth_from = layer.get('depth_from_m', 0.0)
@@ -924,11 +947,6 @@ def _generate_soil_levels(
                 soil_type=st,
             ))
 
-        # Respect num_levels: if user/wizard says fewer levels than
-        # extracted layers, merge down (e.g. Bell-Lloc: 2 layers → 1 nivell)
-        if num_levels < len(levels):
-            levels = _merge_soil_levels(levels)
-
         return levels
 
     # Fallback: single level with global average
@@ -961,9 +979,9 @@ def _merge_soil_levels(levels: list[SoilLevel]) -> list[SoilLevel]:
     if not levels or len(levels) <= 1:
         return levels
 
-    # Combined description
-    descriptions = [lvl.description for lvl in levels]
-    combined_desc = descriptions[0]  # Use primary level description
+    # Use the deepest (last) layer's description — this is the bearing material
+    # (surface layers are typically topsoil/fill that gets excavated)
+    combined_desc = levels[-1].description
 
     # Overall depth range
     depth_from = levels[0].depth_from_m
@@ -995,7 +1013,7 @@ def _merge_soil_levels(levels: list[SoilLevel]) -> list[SoilLevel]:
         depth_to_m=depth_to,
         n20_min=min(all_mins) if all_mins else None,
         n20_max=max(all_maxs) if all_maxs else None,
-        soil_type=levels[0].soil_type,
+        soil_type=levels[-1].soil_type,
     )]
 
 

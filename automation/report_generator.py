@@ -52,6 +52,23 @@ def _catalan_ordinal(n: int) -> str:
     return ordinals.get(n, f'{n}è')
 
 
+def _shorten_material_desc(desc: str) -> str:
+    """Shorten a sondeig layer description for table cells.
+
+    Strips secondary details after first comma or period, keeping only
+    the primary material identification.
+    E.g.: "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clars. Tram totalment carbonatat."
+    -> "Graves incloses en matriu sorrenca d'aspectes carbonatats"
+    """
+    if not desc:
+        return desc
+    for sep in [', i de ', ', de ', '. ', ', ']:
+        idx = desc.find(sep)
+        if idx > 0:
+            return desc[:idx]
+    return desc
+
+
 @dataclass
 class GenerationResult:
     """Result of report generation."""
@@ -238,7 +255,7 @@ class ReportGenerator:
                         # Always populate sondeig_layers (needed for rock
                         # detection and per-layer N20 computation)
                         layers = sondeig_tests[0].get('layers', [])
-                        if layers and 'sondeig_layers' not in self.user_data:
+                        if layers and not self.user_data.get('sondeig_layers'):
                             self.user_data['sondeig_layers'] = layers
 
                         # Auto-fill num_soil_levels only if NOT already set in user_data
@@ -881,14 +898,18 @@ class ReportGenerator:
             context['seismic_ab_text'] = ''
             for i in range(6):
                 context[f'geology_para_{i+1}'] = ''
+            context['geology_paragraphs'] = []
             if sections.get('section3'):
                 s3 = sections['section3']
 
-                # Geology paragraphs (split marc_geologic by double newline)
-                geo_paras = s3.marc_geologic.split('\n\n') if s3.marc_geologic else []
+                # Use paragraph list directly (no more split/truncation)
+                geo_paras = s3.marc_geologic_paragraphs if s3.marc_geologic_paragraphs else []
+                # Populate legacy geology_para_N for backward compat
                 for i in range(6):
                     key = f'geology_para_{i+1}'
                     context[key] = geo_paras[i] if i < len(geo_paras) else ''
+                # Pass full list for dynamic template loop
+                context['geology_paragraphs'] = geo_paras
 
                 # Materials
                 if s3.materials_levels:
@@ -929,13 +950,14 @@ class ReportGenerator:
                     materials_text = s3_materials[i] if i < len(s3_materials) else ''
                     context['soil_levels'].append({
                         'description': level.description,
+                        'description_short': _shorten_material_desc(level.description),
                         'ordinal': _catalan_ordinal(level.level_number),
                         'materials_text': materials_text,
                         'depth_text': s3_depth_texts[i] if i < len(s3_depth_texts) else '',
                         'geomech_text': s3_geomech_texts[i] if i < len(s3_geomech_texts) else '',
                     })
             else:
-                context['soil_levels'] = [{'description': '', 'ordinal': '1er', 'materials_text': '', 'depth_text': '', 'geomech_text': ''}]
+                context['soil_levels'] = [{'description': '', 'description_short': '', 'ordinal': '1er', 'materials_text': '', 'depth_text': '', 'geomech_text': ''}]
 
             # Conclusions geology intro (dynamic level count)
             num_levels = len(self.report_data.soil_levels) if self.report_data.soil_levels else 1
@@ -959,10 +981,11 @@ class ReportGenerator:
             for level in soil_levels:
                 context['soil_level_rows'].append({
                     'name': f'{_catalan_ordinal(level.level_number)} nivell.',
-                    'material': level.description,
+                    'material': _shorten_material_desc(level.description),
+                    'material_short': _shorten_material_desc(level.description),
                 })
             if not context['soil_level_rows']:
-                context['soil_level_rows'] = [{'name': '', 'material': ''}]
+                context['soil_level_rows'] = [{'name': '', 'material': '', 'material_short': ''}]
 
             # Table 6: Permeability rows
             context['perm_rows'] = []
@@ -972,7 +995,8 @@ class ReportGenerator:
                     context['perm_rows'].append({
                         'name': f'{ordinal} nivell',
                         'k_value': perm.k_m_s,
-                        'material': perm.material,
+                        'material': _shorten_material_desc(perm.material),
+                        'material_short': _shorten_material_desc(perm.material),
                     })
             # Ensure at least one row per soil level (fallback with empty k)
             if not context['perm_rows']:
@@ -980,10 +1004,11 @@ class ReportGenerator:
                     context['perm_rows'].append({
                         'name': f'{_catalan_ordinal(level.level_number)} nivell',
                         'k_value': '',
-                        'material': level.description,
+                        'material': _shorten_material_desc(level.description),
+                        'material_short': _shorten_material_desc(level.description),
                     })
             if not context['perm_rows']:
-                context['perm_rows'] = [{'name': '', 'k_value': '', 'material': ''}]
+                context['perm_rows'] = [{'name': '', 'k_value': '', 'material': '', 'material_short': ''}]
 
             # Table 7: Sulfates (stays single-row, NOT an array)
             context['sulfate_level_name'] = '1er nivell'
@@ -1033,7 +1058,9 @@ class ReportGenerator:
                     # Filter readings by depth range from sondeig_layers
                     level_readings = all_readings  # default: all
                     sondeig_layers = self.user_data.get('sondeig_layers', [])
-                    if sondeig_layers and level.level_number <= len(sondeig_layers):
+                    num_user_levels = self.user_data.get('num_soil_levels', 1)
+                    # Only filter by sondeig layer depth when user level count matches sondeig layer count
+                    if sondeig_layers and num_user_levels == len(sondeig_layers) and level.level_number <= len(sondeig_layers):
                         sl = sondeig_layers[level.level_number - 1]
                         d_from = sl.get('depth_from_m', 0)
                         d_to = sl.get('depth_to_m', 999)
@@ -1041,11 +1068,27 @@ class ReportGenerator:
 
                     # Nb range for this level
                     if level_readings:
-                        nb_values = [r.nb for r in level_readings]
-                        nb_min = min(nb_values)
-                        nb_max = max(nb_values)
-                        has_refusal = any(r.n20 >= 100 for r in level_readings)
-                        nb_range = f"{nb_min:.0f}-R" if has_refusal else f"{nb_min:.0f}-{nb_max:.0f}"
+                        # Check for Nb override from geomech_params
+                        geomech = self.user_data.get('geomech_params', {})
+                        nb_override = geomech.get('Nb', '')
+                        if nb_override:
+                            nb_range = str(nb_override)
+                        else:
+                            # When merged level, exclude shallow layer readings from Nb range
+                            if sondeig_layers and num_user_levels < len(sondeig_layers):
+                                # Exclude first (shallow) layer — include everything below it
+                                shallow_max = sondeig_layers[0].get('depth_to_m', 0)
+                                deep_readings = [r for r in level_readings if abs(r.depth_m) > shallow_max]
+                                if deep_readings:
+                                    nb_values = [r.nb for r in deep_readings]
+                                else:
+                                    nb_values = [r.nb for r in level_readings]
+                            else:
+                                nb_values = [r.nb for r in level_readings]
+                            nb_min = min(nb_values)
+                            nb_max = max(nb_values)
+                            has_refusal = any(r.n20 >= 100 for r in level_readings)
+                            nb_range = f"{nb_min:.0f}-R" if has_refusal else f"{nb_min:.0f}-{nb_max:.0f}"
                     else:
                         nb_range = ''
 
@@ -1084,7 +1127,8 @@ class ReportGenerator:
                         nb_range = geomech['Nb']
 
                     context['geotech_rows'].append({
-                        'name': f"{_catalan_ordinal(level.level_number)} nivell. {level.description}.",
+                        'name': f"{_catalan_ordinal(level.level_number)} nivell. {_shorten_material_desc(level.description)}.",
+                        'material_short': _shorten_material_desc(level.description),
                         'nb': nb_range,
                         'n': str(n_display),
                         'density': f"{gamma:.2f}",
@@ -1093,7 +1137,7 @@ class ReportGenerator:
                         'E': f"{E:.0f}" if isinstance(E, (int, float)) else str(E),
                     })
             if not context['geotech_rows']:
-                context['geotech_rows'] = [{'name': '', 'nb': '', 'n': '', 'density': '', 'cohesion': '', 'phi': '', 'E': ''}]
+                context['geotech_rows'] = [{'name': '', 'material_short': '', 'nb': '', 'n': '', 'density': '', 'cohesion': '', 'phi': '', 'E': ''}]
 
             # Keep old single-value vars for backward compatibility (used in text paragraphs)
             if context['geotech_rows'] and context['geotech_rows'][0]['name']:

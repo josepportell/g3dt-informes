@@ -638,6 +638,19 @@ def align_paragraphs(
         rendered = re.sub(r'\s+', ' ', rendered)
         template_rendered.append(rendered)
 
+    # Build set of known list-variable values for for-loop matching
+    known_list_values = set()
+    for k, v in context.items():
+        if isinstance(v, str) and v.startswith('['):
+            try:
+                parsed = json.loads(v)
+                if isinstance(parsed, list):
+                    for item in parsed:
+                        if isinstance(item, str) and len(item) > 20:
+                            known_list_values.add(normalize_text(item))
+            except (json.JSONDecodeError, TypeError):
+                pass
+
     # Track which reference paragraphs have been matched
     ref_matched = set()
 
@@ -715,6 +728,14 @@ def align_paragraphs(
         classification, match_ratio, ref_match_ratio, notes = classify_paragraph(
             template_para, gen_text, ref_text, context
         )
+
+        # Override classification for paragraphs that match for-loop list values
+        if known_list_values and not is_table:
+            gen_norm = normalize_text(gen_text)
+            is_loop_value = gen_norm in known_list_values
+            if is_loop_value and classification == 'needs_review':
+                classification = 'likely_correct'
+                notes = 'Matches for-loop list value in context'
 
         elem_id = _flat_idx_to_elem_id(
             gen_idx, gen_body_count, gen_table_coords or {}

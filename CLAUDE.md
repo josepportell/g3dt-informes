@@ -11,106 +11,70 @@ G3DT genera informes geotècnics per a projectes de construcció. Cada informe i
 - Càlculs de capacitat portant
 - Recomanacions de fonamentació
 
+## Model d'Operació
+
+**Claude Code és el runtime de producció**, no una eina de desenvolupament. S'instal·la a l'ordinador d'Eva i s'executa en segon pla. Eva interactua amb el sistema a través del wizard web (localhost).
+
+```
+Eva obre localhost:8765 al navegador
+         ↓
+Wizard mostra dropdown amb projectes (escaneja reference-material/)
+         ↓
+Eva selecciona el projecte que vol generar
+         ↓
+Fases 0 + 0.5 + 1 s'executen automàticament:
+  - Python: FileScanner, DPSH Excel, Lab, ICGC, Cadastre
+  - Claude vision: plànol, sondeig PDF, penetros PDF
+         ↓
+Wizard es pobla amb tots els prefills (~95% camps omplerts)
+         ↓
+Eva revisa i ajusta els camps que cregui convenient (~30s)
+         ↓
+Eva prem "Generar Informe" → .docx descarregable
+```
+
+**Clau:** La visió de Claude (lectura de PDFs de camp i plànols) s'integra directament al pipeline perquè Claude Code és present al runtime. No cal invocar skills manualment — tot és automàtic quan Eva selecciona un projecte.
+
 ## Skills Disponibles
 
-### /g3dt-validar-penetros
-Extreu i valida dades DPSH de fulls de camp escanejats comparant amb l'Excel.
+Skills per a desenvolupament, testing i invocació manual. En producció, la majoria s'integren automàticament al pipeline via el wizard.
 
-```
-/g3dt-validar-penetros reference-material/4001612-bell-lloc/PENETROS.pdf
-```
+### Pipeline (integrats al wizard)
+- `/g3dt-validar-penetros` — Extreu/valida N20 de PENETROS.pdf vs Excel (Claude vision)
+- `/g3dt-validar-sondeig` — Extreu capes de sòl de SONDEIG.pdf (Claude vision)
+- `/g3dt-extreure-planol` — Extreu dades del plànol A.01.pdf (Claude vision)
+- `/g3dt-geocodificar` — Adreça → UTM via Nominatim + Cadastre + WFS INSPIRE
+- `/g3dt-adjacents-visor` — Identifica adjacents via visor cartogràfic Cadastre (Playwright)
+- `/g3dt-generar-informe` — Genera informe .docx complet
 
-**Què fa:**
-1. Llegeix visualment el PDF de camp (escrit a mà)
-2. Extreu valors N20 per a cada assaig
-3. Compara amb les dades Excel existents
-4. Genera JSON amb discrepàncies marcades
-5. G3DT revisa només les diferències
-
-### /g3dt-validar-sondeig
-Extreu dades de sondeigs a rotació de fulls de camp escanejats.
-
-```
-/g3dt-validar-sondeig reference-material/4001612-bell-lloc/SONDEIG.pdf
-```
-
-**Què fa:**
-1. Llegeix visualment el PDF de camp (escrit a mà)
-2. Extreu capes de sòl amb descripcions
-3. Extreu resultats SPT si n'hi ha
-4. Genera JSON amb nivells de confiança
-5. G3DT revisa valors amb baixa confiança
-
-### /g3dt-extreure-planol
-Extreu dades del plànol de l'arquitecte per a l'informe.
-
-```
-/g3dt-extreure-planol reference-material/4001612-bell-lloc/A.01.pdf
-```
-
-**Què fa:**
-1. Llegeix visualment el PDF del plànol
-2. Extreu: nom projecte, ubicació, promotor, arquitecte
-3. Extreu dimensions: parcel·la, ocupació, plantes, alçada
-4. Genera JSON amb nivells de confiança
-5. G3DT revisa i corregeix si cal
-
-### /g3dt-adjacents-visor
-Agent visual per identificar parcel·les adjacents usant el visor cartogràfic del Cadastre.
-
-```
-/g3dt-adjacents-visor reference-material/4001612-bell-lloc
-```
-
-**Què fa:**
-1. Obre el visor del Cadastre amb Playwright (per referència catastral)
-2. Fa screenshot del mapa amb la parcel·la centrada
-3. Analitza visualment els adjacents (carrers i parcel·les veïnes)
-4. Genera JSON amb adjacents i nivells de confiança
-5. Opcionalment actualitza user_data.json
-
-**Prioritat al report_generator.py:**
-1. user_data.json (camps ja omplerts)
-2. validation/adjacents_visor.json (generat per aquest skill)
-3. cadastre_adjacents.py API probes (fallback automàtic)
-
-### /g3dt-geocodificar
-Deriva coordenades UTM aproximades a partir de l'adreça del projecte quan no hi ha COORDENADES.txt (sense GPS de camp).
-
-```
-/g3dt-geocodificar reference-material/4001612 BELL-LLOC
-```
-
-**Què fa:**
-1. Cerca l'adreça a Nominatim (OpenStreetMap) → lat/lon
-2. Localitza la parcel·la al Cadastre (API OVC) → referència cadastral
-3. Obté geometria parcel·la via WFS INSPIRE → polígon EPSG:25831
-4. Distribueix punts d'investigació dins la parcel·la
-5. Consulta elevacions ICGC MDT per cada punt
-6. Genera COORDENADES.txt al format estàndard
-
-### /g3dt-informe-geotecnic
-Genera un informe geotècnic complet a partir de les dades del projecte.
-
-### /g3dt-demo-informe
-Demostra la generació d'informes amb dades de mostra.
+### Utilitats
+- `/g3dt-audit-informe` — Audit intel·ligent: compara generat vs referència, genera visual .docx
+- `/g3dt-editar-informe` — Edita un informe generat existent
 
 ## Pipeline de Generació d'Informes
 
+Activat quan Eva selecciona un projecte al wizard web. Tot és automàtic.
+
 ```
 Fase 0:   FileScanner         → file_mapping.json (classificació fitxers)
-Fase 0.5: auto_extract()      → prefills automàtics (DPSH, Lab, ICGC, Cadastre)
-Fase 2.5: geocode_project()   → UTM coords (fallback si no hi ha COORDENADES.txt)
-Fase 1:   Validació visual    → planol/sondeig/dpsh_extracted.json (Claude vision)
-Fase 2:   Wizard (web/CLI)    → user_data.json (Eva confirma/corregeix prefills)
+Fase 0.5: auto_extract()      → prefills automàtics (DPSH, Lab, ICGC, Cadastre, geocode)
+Fase 1:   Claude vision       → planol/sondeig/dpsh_extracted.json (lectura PDFs)
+Fase 2:   Wizard (web)        → Eva revisa prefills, ajusta camps → user_data.json
 Fase 3:   ReportGenerator     → {expedient}_generated.docx
 ```
 
-**Fase 0.5** (`automation/auto_extractor.py`) executa en ~3s:
-- Fase 1 local: FileScanner, DPSH Excel (N20, refús), dates de camp
-- Fase 2 PDF: Lab results (sulfats mg/kg) via PyMuPDF
-- Fase 2.5 geocode: Nominatim + Cadastre → UTM (si no hi ha COORDENADES.txt)
-- Fase 3 HTTP: ICGC geologia/elevació/pendent + Cadastre adjacents (requereix UTM)
+**Fase 0.5** (`automation/auto_extractor.py`) — Python, ~3-5s:
+- FileScanner: classifica fitxers del projecte
+- DPSH Excel: N20, refús, dates de camp
+- Lab PDF: sulfats mg/kg via PyMuPDF
+- Geocode: Nominatim + Cadastre → UTM (si no hi ha COORDENADES.txt)
+- HTTP: ICGC geologia/elevació/pendent + Cadastre adjacents
+
+**Fase 1** — Claude vision (integrada al pipeline):
+- Plànol (A.01.pdf): arquitecte, promotor, dimensions, plantes, alçada
+- Sondeig (SONDEIG.pdf): capes de sòl, descripcions, SPT
+- Penetros (PENETROS.pdf): validació N20 vs Excel, discrepàncies
+- S'executa automàticament perquè Claude Code és el runtime de producció
 
 ## Estructura de Carpetes
 
@@ -147,29 +111,25 @@ clients/g3dt/
 └── tests/                    # Tests (geocode: 47 tests)
 ```
 
-## Flux de Treball de Validació
+## Flux de Treball d'Eva (producció)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ DPSH (PENETROS.pdf):                                        │
-│ 1. G3DT fa treball de camp → PENETROS.pdf (escrit a mà)    │
-│ 2. G3DT transcriu → DPSH.xls (Excel)                        │
-│ 3. Claude llegeix PDF → extreu dades visualment             │
-│ 4. Sistema compara PDF vs Excel → marca discrepàncies       │
-│ 5. G3DT revisa NOMÉS discrepàncies (review.html → DPSH)     │
-│ 6. Dades aprovades → informe final                          │
+│ PREPARACIÓ (Eva, al camp/oficina):                          │
+│ 1. Eva fa treball de camp → PDFs (PENETROS, SONDEIG)        │
+│ 2. Eva transcriu DPSH → Excel (.xls)                        │
+│ 3. Arquitecte envia plànol → A.01.pdf                       │
+│ 4. Eva deixa tot a la carpeta del projecte (com sempre)     │
 ├─────────────────────────────────────────────────────────────┤
-│ SONDEIG (SONDEIG.pdf):                                      │
-│ 1. G3DT fa sondeig → SONDEIG.pdf (escrit a mà)             │
-│ 2. Claude llegeix PDF → extreu capes i SPT                  │
-│ 3. G3DT revisa valors baixa confiança (review.html → Sondeig)│
-│ 4. Dades aprovades → informe final                          │
-├─────────────────────────────────────────────────────────────┤
-│ PLÀNOL (A.01.pdf):                                          │
-│ 1. Arquitecte proporciona plànol → A.01.pdf                 │
-│ 2. Claude llegeix PDF → extreu dimensions i dades           │
-│ 3. G3DT revisa/corregeix (review.html → Plànol)             │
-│ 4. Dades aprovades → informe final                          │
+│ GENERACIÓ (Eva, al wizard):                                 │
+│ 1. Eva obre localhost:8765 al navegador                     │
+│ 2. Selecciona projecte del dropdown                         │
+│ 3. Sistema executa automàticament:                          │
+│    - Python: Excel, Lab, ICGC, Cadastre, geocode (~5s)      │
+│    - Claude vision: plànol, sondeig, penetros (~30s)         │
+│ 4. Wizard mostra camps pre-omplerts (~95%)                  │
+│ 5. Eva revisa, ajusta el que cal (~30s)                     │
+│ 6. Eva prem "Generar Informe" → descarrega .docx            │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -203,41 +163,39 @@ Plànol de l'arquitecte amb dades del projecte:
 
 **Sense Excel** - Dades del caixetí i cotes del plànol.
 
-## Formulari de Revisió (review.html)
+## Pestanyes del Wizard
 
-El formulari té quatre pestanyes per als diferents documents:
-
-| Pestanya | Document | Comparació | Focus |
-|----------|----------|------------|-------|
-| DPSH | PENETROS.pdf | vs Excel | Discrepàncies |
-| Sondeig | SONDEIG.pdf | Cap | Baixa confiança |
-| Plànol | A.01.pdf | Cap | Tots els camps |
-| Wizard | user_data.json | Prefills vs user | Tots els camps + UTM + overrides |
-
-Per obrir: `cd templates/validation && python3 -m http.server 8765`
+| Pestanya | Font | Funció |
+|----------|------|--------|
+| DPSH | PENETROS.pdf vs Excel | Revisar discrepàncies N20 |
+| Sondeig | SONDEIG.pdf | Revisar capes sòl (baixa confiança) |
+| Plànol | A.01.pdf | Revisar dades extretes del plànol |
+| Wizard | Tots els prefills | Revisar/ajustar tots els camps + generar |
 
 ## Web Wizard (FastAPI)
 
-Servidor web que substitueix el wizard CLI per una interfície de navegador.
+Interfície principal d'Eva. Claude Code serveix el wizard en segon pla.
 
 ```bash
-# Iniciar servidor
-uv run python -m web
-# Obre http://localhost:8765/review.html
+# Iniciar (Claude Code ho fa automàticament)
+.venv/bin/python -m web
+# Eva obre http://localhost:8765/review.html
 ```
 
 **Arquitectura:**
-- `web/api.py` — 7 endpoints REST (`/api/projects`, `/api/prefills/{p}`, `/api/wizard/{p}`, `/api/generate/{p}`, `/api/report/{p}`, `/api/user-data/{p}`, `/api/geolocalitzar/{p}`)
+- `web/api.py` — Endpoints REST (`/api/projects`, `/api/prefills/{p}`, `/api/wizard/{p}`, `/api/generate/{p}`, `/api/report/{p}`, `/api/user-data/{p}`, `/api/geolocalitzar/{p}`)
 - `web/wizard_service.py` — Capa de servei: auto_extract + wizard prefills + geocodificació + cache
 - `templates/validation/review.html` — UI amb 4 pestanyes
 
-**Pestanya Wizard:**
-- Camps agrupats: Dades Projecte, Adjacents, Paràmetres, Coordenades UTM, Overrides Experts
-- Source badges (blau=auto, verd=user_data, gris=defecte) per cada camp
-- Botó "Geolocalitzar amb ICGC": geocodifica adreça → UTM via Nominatim+Cadastre
-- Botó "Actualitzar prefills": re-executa Fase 3 amb noves coordenades UTM
-- Validació límits Catalunya (X: 250000-550000, Y: 4450000-4750000)
-- Guardar → user_data.json → Generar Informe → descarregar .docx
+**Flux al seleccionar projecte:**
+1. Eva selecciona projecte → crida `/api/prefills/{p}`
+2. Backend executa Fase 0 + 0.5 (Python, ~5s)
+3. Backend invoca Claude vision per Fase 1 (PDFs, ~30s)
+4. Wizard es pobla amb tots els prefills
+5. Source badges: blau=auto, verd=user_data, gris=defecte
+6. Eva ajusta → Guardar → Generar Informe → descarregar .docx
+
+**Camps:** Dades Projecte, Adjacents, Paràmetres, Coordenades UTM, Overrides Experts
 
 ## Geocodificació UTM
 
