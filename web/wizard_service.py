@@ -16,8 +16,25 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 # Base dir for reference-material/ (relative to g3dt project root)
-# Override with G3DT_PROJECTS_DIR env var for production (e.g. /mnt/c/claude/g3dt/projectes)
+# Override with G3DT_PROJECTS_DIR env var or .env file
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+def _load_env() -> None:
+    """Load .env from project root if it exists (no external dependencies)."""
+    env_path = _PROJECT_ROOT / '.env'
+    if not env_path.exists():
+        return
+    for line in env_path.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith('#'):
+            continue
+        if '=' in line:
+            key, _, value = line.partition('=')
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            os.environ.setdefault(key, value)
+
+_load_env()
 _REF_DIR = Path(os.getenv('G3DT_PROJECTS_DIR', str(_PROJECT_ROOT / 'reference-material')))
 
 # Production path where Eva keeps signed reference reports
