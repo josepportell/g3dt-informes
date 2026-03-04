@@ -2743,7 +2743,7 @@
         async function loadProjectData() {
             try {
                 const [prefillsRes, userDataRes] = await Promise.all([
-                    fetch(`/api/prefills/${encodeURIComponent(selectedProject)}`),
+                    fetch(`/api/prefills/${encodeURIComponent(selectedProject)}?refresh=true`),
                     fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`),
                 ]);
 
@@ -2898,7 +2898,7 @@
 
             try {
                 const [prefillsRes, userDataRes] = await Promise.all([
-                    fetch(`/api/prefills/${encodeURIComponent(selectedProject)}`),
+                    fetch(`/api/prefills/${encodeURIComponent(selectedProject)}?refresh=true`),
                     fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`),
                 ]);
 
