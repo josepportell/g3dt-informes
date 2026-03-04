@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G3DT - Revisio de Dades de Camp</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <style>
         * {
             box-sizing: border-box;
@@ -51,12 +52,7 @@
             background-color: #d4edda;
             color: #155724;
         }
-        .file-controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
+        /* file-controls removed — replaced by pipeline stepper */
         .btn {
             padding: 12px 24px;
             border: none;
@@ -450,6 +446,107 @@
             margin-bottom: 20px;
             opacity: 0.5;
         }
+        /* Pipeline stepper */
+        .pipeline-stepper {
+            display: none;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+        }
+        .pipeline-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        .pipeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 0 0 auto;
+        }
+        .step-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            border: 2px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #999;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .step-circle svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+        }
+        .step-label {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+            white-space: nowrap;
+            transition: color 0.3s ease;
+        }
+        .pipeline-step.active .step-circle {
+            background: #fff;
+            border-color: #4a90d9;
+            color: #4a90d9;
+            box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.2);
+        }
+        .pipeline-step.active .step-label {
+            color: #4a90d9;
+            font-weight: 600;
+        }
+        .pipeline-step.done .step-circle {
+            background: #4a90d9;
+            border-color: #4a90d9;
+            color: #fff;
+        }
+        .pipeline-step.done .step-label {
+            color: #333;
+        }
+        .step-connector {
+            width: 60px;
+            height: 2px;
+            background: #e0e0e0;
+            margin: 0 4px;
+            margin-bottom: 26px;
+            transition: background 0.4s ease;
+        }
+        .step-connector.done {
+            background: #4a90d9;
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(74, 144, 217, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(74, 144, 217, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 144, 217, 0); }
+        }
+        .pipeline-step.active .step-circle {
+            animation: pulse-ring 1.5s infinite;
+        }
+        /* Spinner inside active step */
+        .step-spinner {
+            display: none;
+            width: 18px; height: 18px;
+            border: 2px solid rgba(74,144,217,0.3);
+            border-top-color: #4a90d9;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .pipeline-step.active .step-spinner { display: block; }
+        .pipeline-step.active .step-icon { display: none; }
+        .pipeline-step.done .step-spinner { display: none; }
+        .pipeline-step.done .step-icon { display: block; }
         .no-excel-warning {
             background-color: #fff3cd;
             border: 1px solid #ffc107;
@@ -984,9 +1081,7 @@
                 gap: 15px;
                 text-align: center;
             }
-            .file-controls {
-                justify-content: center;
-            }
+            /* file-controls responsive removed */
             .tabs {
                 flex-wrap: wrap;
             }
@@ -1004,6 +1099,123 @@
                 flex-direction: column;
                 gap: 8px;
             }
+        }
+
+        /* Instruction Banner */
+        .wizard-instructions {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+        .wizard-instructions.collapsed .instructions-body {
+            display: none;
+        }
+        .instructions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .instructions-header h3 {
+            font-size: 15px;
+            color: #2c3e50;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .instructions-toggle {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 0 4px;
+        }
+        .instructions-body {
+            margin-top: 14px;
+        }
+        .vision-badges {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .vision-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            color: #495057;
+        }
+        .vision-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .vision-dot.done { background: #27ae60; }
+        .vision-dot.pending { background: #e67e22; }
+        .copy-command {
+            display: flex;
+            align-items: center;
+            background: #1e1e1e;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
+            gap: 10px;
+        }
+        .copy-command code {
+            flex: 1;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 13px;
+            color: #d4d4d4;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+        .copy-command .btn-copy {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .copy-command .btn-copy:hover {
+            background: #2980b9;
+        }
+        .instructions-steps {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .instructions-steps li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 4px 0;
+            font-size: 13px;
+            color: #495057;
+        }
+        .step-num {
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .step-num.done {
+            background: #27ae60;
         }
     </style>
 </head>
@@ -1025,128 +1237,63 @@
 
         <div id="message" class="message"></div>
 
-        <div class="file-controls">
-            <label class="btn btn-primary" for="fileInput">
-                Carregar fitxer JSON
-            </label>
-            <input type="file" id="fileInput" accept=".json">
-            <button class="btn btn-secondary" id="loadSample" style="display:none;">Carregar exemple</button>
+        <div id="pipelineStepper" class="pipeline-stepper">
+            <div class="pipeline-steps">
+                <div class="pipeline-step" id="step-scan">
+                    <div class="step-circle">
+                        <div class="step-spinner"></div>
+                        <span class="step-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                        </span>
+                    </div>
+                    <span class="step-label">Fitxers</span>
+                </div>
+                <div class="step-connector" id="conn-1"></div>
+                <div class="pipeline-step" id="step-extract">
+                    <div class="step-circle">
+                        <div class="step-spinner"></div>
+                        <span class="step-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                        </span>
+                    </div>
+                    <span class="step-label">Extraccio</span>
+                </div>
+                <div class="step-connector" id="conn-2"></div>
+                <div class="pipeline-step" id="step-vision">
+                    <div class="step-circle">
+                        <div class="step-spinner"></div>
+                        <span class="step-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        </span>
+                    </div>
+                    <span class="step-label">Visio IA</span>
+                </div>
+                <div class="step-connector" id="conn-3"></div>
+                <div class="pipeline-step" id="step-wizard">
+                    <div class="step-circle">
+                        <div class="step-spinner"></div>
+                        <span class="step-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        </span>
+                    </div>
+                    <span class="step-label">Wizard</span>
+                </div>
+            </div>
         </div>
 
         <div id="emptyState" class="empty-state">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            <h2>Cap fitxer carregat</h2>
-            <p>Selecciona un fitxer JSON de validacio per revisar les dades</p>
+            <h2>Selecciona un projecte</h2>
+            <p>Tria un projecte del desplegable per carregar les dades automaticament</p>
         </div>
 
         <div id="dataContent" style="display:none;">
             <!-- Tab Navigation -->
             <div class="tabs" id="tabNav">
-                <button class="tab" id="tab-dpsh" data-tab="dpsh" onclick="switchTab('dpsh')">DPSH</button>
-                <button class="tab" id="tab-sondeig" data-tab="sondeig" onclick="switchTab('sondeig')">Sondeig</button>
-                <button class="tab" id="tab-planol" data-tab="planol" onclick="switchTab('planol')">Planol</button>
-                <button class="tab disabled" id="tab-wizard" data-tab="wizard" onclick="switchTab('wizard')">Wizard</button>
-            </div>
-
-            <div id="noExcelWarning" class="no-excel-warning" style="display:none;">
-                <strong>Sense dades Excel:</strong> No s'han trobat dades Excel per comparar. Es mostren nomes els valors extrets del PDF.
-            </div>
-
-            <div class="view-toggle">
-                <button class="toggle-btn active" id="toggleDiscrepancies" onclick="setViewMode('discrepancies')">Nomes discrepancies</button>
-                <button class="toggle-btn" id="toggleAll" onclick="setViewMode('all')">Tot</button>
-            </div>
-
-            <div class="legend" id="legend-dpsh">
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#fff3cd;"></div>
-                    <span>Discrepancia (PDF != Excel)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#f8d7da;"></div>
-                    <span>Valor il.legible (??)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#d4edda;"></div>
-                    <span>Coincideix</span>
-                </div>
-            </div>
-            <div class="legend" id="legend-extraction" style="display:none;">
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#fff3cd;"></div>
-                    <span>Baixa confianca (&lt; 0.9)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#d4edda;"></div>
-                    <span>Alta confianca (&ge; 0.9)</span>
-                </div>
-            </div>
-
-            <!-- DPSH Stats -->
-            <div class="summary-cards" id="summaryCards-dpsh">
-                <div class="card card-discrepancy">
-                    <div class="card-value" id="totalDiscrepancies">0</div>
-                    <div class="card-label">Discrepancies</div>
-                </div>
-                <div class="card card-match">
-                    <div class="card-value" id="totalMatches">0</div>
-                    <div class="card-label">Coincidencies</div>
-                </div>
-                <div class="card card-pending">
-                    <div class="card-value" id="pendingReview">0</div>
-                    <div class="card-label">Pendents de decisio</div>
-                </div>
-                <div class="card">
-                    <div class="card-value" id="totalTests">0</div>
-                    <div class="card-label">Assaigs</div>
-                </div>
-            </div>
-            <!-- Sondeig Stats (extraction-only) -->
-            <div class="summary-cards" id="summaryCards-sondeig" style="display:none;">
-                <div class="card">
-                    <div class="card-value" id="sondeigTotalLayers">0</div>
-                    <div class="card-label">Total capes</div>
-                </div>
-                <div class="card card-discrepancy">
-                    <div class="card-value" id="sondeigLowConfidence">0</div>
-                    <div class="card-label">Baixa confianca</div>
-                </div>
-                <div class="card">
-                    <div class="card-value" id="sondeigSptCount">0</div>
-                    <div class="card-label">SPT tests</div>
-                </div>
-                <div class="card">
-                    <div class="card-value" id="sondeigTestCount">0</div>
-                    <div class="card-label">Sondeigs</div>
-                </div>
-            </div>
-            <!-- Planol Stats -->
-            <div class="summary-cards" id="summaryCards-planol" style="display:none;">
-                <div class="card">
-                    <div class="card-value" id="planolTotalFields">0</div>
-                    <div class="card-label">Camps extrets</div>
-                </div>
-                <div class="card card-match">
-                    <div class="card-value" id="planolLowConfidence">0</div>
-                    <div class="card-label">Correccions</div>
-                </div>
-            </div>
-
-            <!-- Tab Contents -->
-            <div class="tab-content" id="dpsh-content">
-                <div id="dpshTestsContainer"></div>
-                <div id="dpshCollapsedMatchesContainer"></div>
-            </div>
-
-            <div class="tab-content" id="sondeig-content">
-                <div id="sondeigTestsContainer"></div>
-                <div id="sondeigCollapsedMatchesContainer"></div>
-            </div>
-
-            <div class="tab-content" id="planol-content">
-                <div id="planolContainer"></div>
+                <button class="tab" id="tab-wizard" data-tab="wizard" onclick="switchTab('wizard')">Wizard</button>
+                <button class="tab disabled" id="tab-explicacio" data-tab="explicacio" onclick="switchTab('explicacio')">Explicacio</button>
             </div>
 
             <!-- Wizard Tab Content -->
@@ -1155,6 +1302,7 @@
                     <div class="spinner"></div>
                     <span>Carregant dades del projecte...</span>
                 </div>
+                <div id="wizardInstructions" class="wizard-instructions" style="display:none;"></div>
                 <div id="wizardForm" style="display:none;">
                     <div class="wizard-form">
                         <!-- Group 1: Dades del Projecte -->
@@ -1366,15 +1514,15 @@
                 </div>
             </div>
 
-            <div class="approval-section">
-                <div class="approval-form">
-                    <label for="approverName">Revisat per:</label>
-                    <input type="text" id="approverName" placeholder="Nom del revisor">
-                    <textarea id="reviewerNotes" placeholder="Notes de revisio (opcional)"></textarea>
-                </div>
-                <div style="margin-top:20px; display:flex; gap:15px;">
-                    <button class="btn btn-success" id="saveApproved">Guardar com a Aprovat</button>
-                    <button class="btn btn-secondary" id="saveProgress">Guardar Progres</button>
+            <!-- Explicacio Tab Content -->
+            <div class="tab-content" id="explicacio-content">
+                <div style="padding: 40px; text-align: center; color: #7f8c8d;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:16px;">
+                        <path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                    </svg>
+                    <h3 style="color: #2c3e50; margin-bottom: 8px;">Explicacio de l'informe</h3>
+                    <p>Aqui es mostraran els criteris i regulacions aplicats per generar l'informe.</p>
+                    <p style="margin-top: 8px; font-size: 13px;">Properament disponible</p>
                 </div>
             </div>
         </div>
@@ -1386,7 +1534,7 @@
         let originalFilename = '';
         let viewMode = 'discrepancies';
         let decisions = {};
-        let currentTab = 'dpsh';
+        let currentTab = 'wizard';
         let availableTabs = [];
 
         // Wizard state
@@ -1405,16 +1553,103 @@
         }
 
         // DOM elements
-        const fileInput = document.getElementById('fileInput');
         const emptyState = document.getElementById('emptyState');
         const dataContent = document.getElementById('dataContent');
         const statusBadge = document.getElementById('statusBadge');
         const messageDiv = document.getElementById('message');
 
-        // Event listeners
-        fileInput.addEventListener('change', handleFileLoad);
-        document.getElementById('saveApproved').addEventListener('click', () => saveData(true));
-        document.getElementById('saveProgress').addEventListener('click', () => saveData(false));
+        // Pipeline stepper
+        const PIPELINE_STEPS = ['scan', 'extract', 'vision', 'wizard'];
+        let stepperTimers = [];
+
+        function showStepper() {
+            document.getElementById('pipelineStepper').style.display = 'block';
+            emptyState.style.display = 'none';
+            // Reset all steps
+            PIPELINE_STEPS.forEach(s => {
+                document.getElementById(`step-${s}`).className = 'pipeline-step';
+            });
+            ['conn-1','conn-2','conn-3'].forEach(c => {
+                document.getElementById(c).className = 'step-connector';
+            });
+        }
+
+        function setStepState(stepId, state) {
+            const el = document.getElementById(`step-${stepId}`);
+            el.className = 'pipeline-step' + (state ? ` ${state}` : '');
+            // Mark preceding connectors as done
+            const idx = PIPELINE_STEPS.indexOf(stepId);
+            if (idx > 0 && state === 'active') {
+                document.getElementById(`conn-${idx}`).className = 'step-connector done';
+            }
+            if (state === 'done' && idx < 3) {
+                document.getElementById(`conn-${idx + 1}`).className = 'step-connector';
+            }
+        }
+
+        function advanceStepper(stepIdx) {
+            if (stepIdx > 0) {
+                setStepState(PIPELINE_STEPS[stepIdx - 1], 'done');
+                const connIdx = stepIdx;
+                if (connIdx <= 3) document.getElementById(`conn-${connIdx}`).className = 'step-connector done';
+            }
+            if (stepIdx < PIPELINE_STEPS.length) {
+                setStepState(PIPELINE_STEPS[stepIdx], 'active');
+            }
+        }
+
+        let stepperStartTime = 0;
+        let dataReadyCallback = null;
+
+        function startStepperAnimation() {
+            stepperTimers.forEach(t => clearTimeout(t));
+            stepperTimers = [];
+            dataReadyCallback = null;
+            stepperStartTime = Date.now();
+            showStepper();
+            // Step 0: Fitxers — immediate
+            advanceStepper(0);
+            // Steps 1-3 on fixed schedule
+            stepperTimers.push(setTimeout(() => advanceStepper(1), 600));
+            stepperTimers.push(setTimeout(() => advanceStepper(2), 1400));
+            stepperTimers.push(setTimeout(() => advanceStepper(3), 2200));
+            // After full animation, mark all done
+            stepperTimers.push(setTimeout(() => {
+                finishStepper();
+            }, 3000));
+        }
+
+        function finishStepper() {
+            PIPELINE_STEPS.forEach((s, i) => {
+                setStepState(s, 'done');
+                if (i < 3) document.getElementById(`conn-${i + 1}`).className = 'step-connector done';
+            });
+            // If data arrived early, fire the callback now
+            if (dataReadyCallback) {
+                const cb = dataReadyCallback;
+                dataReadyCallback = null;
+                cb();
+            }
+        }
+
+        function completeStepperAnimation(onComplete) {
+            const elapsed = Date.now() - stepperStartTime;
+            const minDuration = 3000;
+            if (elapsed >= minDuration) {
+                // Animation already finished — complete immediately
+                finishStepper();
+                if (onComplete) onComplete();
+            } else {
+                // Data arrived early — wait for animation to finish, then fire callback
+                dataReadyCallback = onComplete || null;
+            }
+        }
+
+        function hideStepper() {
+            stepperTimers.forEach(t => clearTimeout(t));
+            stepperTimers = [];
+            document.getElementById('pipelineStepper').style.display = 'none';
+        }
 
         function showMessage(text, type) {
             messageDiv.textContent = text;
@@ -1446,50 +1681,22 @@
             });
             document.getElementById(`${tabName}-content`).classList.add('active');
 
-            // Show/hide appropriate stats cards
-            document.getElementById('summaryCards-dpsh').style.display = tabName === 'dpsh' ? 'grid' : 'none';
-            document.getElementById('summaryCards-sondeig').style.display = tabName === 'sondeig' ? 'grid' : 'none';
-            document.getElementById('summaryCards-planol').style.display = tabName === 'planol' ? 'grid' : 'none';
-
-            // Show/hide appropriate legend
-            document.getElementById('legend-dpsh').style.display = tabName === 'dpsh' ? 'flex' : 'none';
-            document.getElementById('legend-extraction').style.display = tabName === 'sondeig' ? 'flex' : 'none';
-
-            // Show/hide view toggle (only for DPSH with Excel comparison)
-            const viewToggle = document.querySelector('.view-toggle');
-            viewToggle.style.display = (tabName === 'dpsh' && hasExcelComparison()) ? 'flex' : 'none';
-
             // Lazy-load wizard data on first switch
             if (tabName === 'wizard' && selectedProject && !wizardDataLoaded) {
                 loadWizardData();
             }
-
-            // Update stats for current tab
-            if (tabName !== 'wizard') {
-                updateStatsForTab(tabName);
-            }
         }
 
         function detectAvailableTabs() {
-            availableTabs = [];
-            if (currentData && currentData.dpsh_tests && currentData.dpsh_tests.length > 0) {
-                availableTabs.push('dpsh');
-            }
-            if (currentData && currentData.sondeig_tests && currentData.sondeig_tests.length > 0) {
-                availableTabs.push('sondeig');
-            }
-            if (currentData && currentData.architect_data) {
-                availableTabs.push('planol');
-            }
-            // Wizard tab available when a project is selected
+            availableTabs = ['wizard'];
             if (selectedProject) {
-                availableTabs.push('wizard');
+                availableTabs.push('explicacio');
             }
             return availableTabs;
         }
 
         function updateTabVisibility() {
-            const tabs = ['dpsh', 'sondeig', 'planol', 'wizard'];
+            const tabs = ['wizard', 'explicacio'];
             tabs.forEach(tab => {
                 const tabBtn = document.getElementById(`tab-${tab}`);
                 if (!tabBtn) return;
@@ -1501,34 +1708,7 @@
             });
         }
 
-        function handleFileLoad(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            originalFilename = file.name;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    currentData = JSON.parse(e.target.result);
-                    // Validate JSON structure
-                    if (!currentData.dpsh_tests && !currentData.sondeig_tests && !currentData.architect_data) {
-                        throw new Error('Fitxer JSON no valid: no conte dpsh_tests, sondeig_tests ni architect_data');
-                    }
-                    // Reset decisions on new file load
-                    decisions = {};
-                    // Load any existing decisions from the data
-                    if (currentData.reviewer_decisions) {
-                        decisions = currentData.reviewer_decisions;
-                    }
-                    renderData();
-                    showMessage('Fitxer carregat correctament', 'success');
-                } catch (err) {
-                    showMessage('Error llegint el fitxer. Comproveu que es un fitxer JSON valid.', 'error');
-                    currentData = null;
-                }
-            };
-            reader.readAsText(file);
-        }
+        // Legacy handleFileLoad removed — data now loads automatically on project select
 
         function hasExcelComparison() {
             return currentData && currentData.excel_comparison && currentData.excel_comparison.has_excel;
@@ -1550,22 +1730,10 @@
             }
             switchTab(currentTab);
 
-            // Show/hide no-excel warning
-            const noExcelWarning = document.getElementById('noExcelWarning');
-            noExcelWarning.style.display = hasExcelComparison() ? 'none' : 'block';
-
             // Update status badge
             const status = currentData.status || 'pending_review';
             statusBadge.textContent = status === 'approved' ? 'Aprovat' : 'Pendent de revisio';
             statusBadge.className = `status-badge status-${status === 'approved' ? 'approved' : 'pending'}`;
-
-            // Pre-fill reviewer info if available
-            if (currentData.approved_by) {
-                document.getElementById('approverName').value = currentData.approved_by;
-            }
-            if (currentData.reviewer_notes) {
-                document.getElementById('reviewerNotes').value = currentData.reviewer_notes;
-            }
 
             // Render all tab contents
             renderAllTabs();
@@ -2284,14 +2452,6 @@
                 return;
             }
 
-            const approverName = document.getElementById('approverName').value.trim();
-            const reviewerNotes = document.getElementById('reviewerNotes').value.trim();
-
-            if (asApproved && !approverName) {
-                showMessage('Cal indicar el nom del revisor per aprovar', 'error');
-                return;
-            }
-
             // Apply decisions to DPSH data
             if (currentData.dpsh_tests) {
                 currentData.dpsh_tests.forEach((test, testIdx) => {
@@ -2431,12 +2591,10 @@
             // Update metadata
             if (asApproved) {
                 currentData.status = 'approved';
-                currentData.approved_by = approverName;
                 currentData.approval_date = new Date().toISOString();
             } else {
                 currentData.status = 'in_review';
             }
-            currentData.reviewer_notes = reviewerNotes;
 
             // Recalculate overall confidence
             let totalConf = 0;
@@ -2522,25 +2680,140 @@
             wizardDirty = false;
             document.getElementById('wizardUnsaved').style.display = 'none';
 
-            // Re-detect available tabs (wizard tab requires selected project)
-            detectAvailableTabs();
-            updateTabVisibility();
-
-            // Show dataContent if hidden (wizard can work without file upload)
-            if (selectedProject) {
-                document.getElementById('dataContent').style.display = 'block';
-            }
-
             // Reset wizard form
             document.getElementById('wizardLoading').style.display = 'none';
             document.getElementById('wizardForm').style.display = 'none';
             const resultDiv = document.getElementById('wizardResult');
             resultDiv.style.display = 'none';
             resultDiv.className = 'wizard-result';
+
+            if (!selectedProject) {
+                hideStepper();
+                dataContent.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            // Start pipeline stepper animation and load data
+            startStepperAnimation();
+            dataContent.style.display = 'none';
+            loadProjectData();
+        }
+
+        async function loadProjectData() {
+            try {
+                const [prefillsRes, userDataRes] = await Promise.all([
+                    fetch(`/api/prefills/${encodeURIComponent(selectedProject)}`),
+                    fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`),
+                ]);
+
+                if (!prefillsRes.ok) throw new Error('Error carregant prefills');
+                wizardPrefills = await prefillsRes.json();
+                wizardUserData = userDataRes.ok ? await userDataRes.json() : {};
+
+                // Signal data ready — stepper will call showWizardContent when animation finishes
+                completeStepperAnimation(showWizardContent);
+            } catch (err) {
+                hideStepper();
+                emptyState.style.display = 'block';
+                showMessage('Error carregant dades: ' + err.message, 'error');
+            }
+        }
+
+        function renderInstructions(prefills) {
+            const container = document.getElementById('wizardInstructions');
+            if (!container || !selectedProject) { container && (container.style.display = 'none'); return; }
+
+            const vs = prefills._vision_status ? prefills._vision_status.value : {};
+            const allDone = vs.planol && vs.dpsh && vs.sondeig;
+            const cmd = `/g3dt-visio-projecte reference-material/${selectedProject}`;
+
+            const badges = ['planol', 'dpsh', 'sondeig'].map(k => {
+                const done = !!vs[k];
+                return `<span class="vision-badge"><span class="vision-dot ${done ? 'done' : 'pending'}"></span>${k}</span>`;
+            }).join('');
+
+            const doneCount = [vs.planol, vs.dpsh, vs.sondeig].filter(Boolean).length;
+
+            container.innerHTML = `
+                <div class="instructions-header" onclick="toggleInstructions()">
+                    <h3>${allDone ? 'Visio completada' : 'Instruccions'} (${doneCount}/3)</h3>
+                    <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">${allDone ? '+' : '-'}</button>
+                </div>
+                <div class="instructions-body">
+                    <div class="vision-badges">${badges}</div>
+                    ${!allDone ? `
+                    <div class="copy-command">
+                        <code id="visionCmd">${cmd}</code>
+                        <button class="btn-copy" onclick="copyVisionCommand(event)">Copiar</button>
+                    </div>` : ''}
+                    <ol class="instructions-steps">
+                        <li>
+                            <span class="step-num ${allDone ? 'done' : ''}">1</span>
+                            <span>${allDone ? 'Visio completada' : 'Executa la comanda al terminal de Claude Code'}</span>
+                        </li>
+                        <li>
+                            <span class="step-num">2</span>
+                            <span>Prem <strong>Actualitzar prefills</strong> per carregar les dades de visio</span>
+                        </li>
+                        <li>
+                            <span class="step-num">3</span>
+                            <span>Revisa els camps pre-omplerts i ajusta si cal</span>
+                        </li>
+                        <li>
+                            <span class="step-num">4</span>
+                            <span>Prem <strong>Generar Informe</strong> per descarregar el .docx</span>
+                        </li>
+                    </ol>
+                </div>
+            `;
+
+            container.className = 'wizard-instructions' + (allDone ? ' collapsed' : '');
+            container.style.display = 'block';
+        }
+
+        function toggleInstructions() {
+            const container = document.getElementById('wizardInstructions');
+            if (container) container.classList.toggle('collapsed');
+            const btn = container?.querySelector('.instructions-toggle');
+            if (btn) btn.textContent = container.classList.contains('collapsed') ? '+' : '-';
+        }
+
+        function copyVisionCommand(event) {
+            event.stopPropagation();
+            const code = document.getElementById('visionCmd');
+            if (!code) return;
+            navigator.clipboard.writeText(code.textContent).then(() => {
+                const btn = event.target;
+                const orig = btn.textContent;
+                btn.textContent = 'Copiat!';
+                setTimeout(() => btn.textContent = orig, 1500);
+            });
+        }
+
+        function showWizardContent() {
+            detectAvailableTabs();
+            updateTabVisibility();
+            dataContent.style.display = 'block';
+
+            renderWizardForm();
+            renderInstructions(wizardPrefills);
+            wizardDataLoaded = true;
+            wizardDirty = false;
+            document.getElementById('wizardLoading').style.display = 'none';
+            document.getElementById('wizardForm').style.display = 'block';
+            document.getElementById('wizardUnsaved').style.display = 'none';
+            switchTab('wizard');
         }
 
         async function loadWizardData() {
             if (!selectedProject) return;
+            // Data already loaded by loadProjectData() — just render
+            if (wizardDataLoaded) {
+                document.getElementById('wizardLoading').style.display = 'none';
+                document.getElementById('wizardForm').style.display = 'block';
+                return;
+            }
 
             const loadingDiv = document.getElementById('wizardLoading');
             const formDiv = document.getElementById('wizardForm');
@@ -2558,6 +2831,7 @@
                 wizardUserData = userDataRes.ok ? await userDataRes.json() : {};
 
                 renderWizardForm();
+                renderInstructions(wizardPrefills);
                 wizardDataLoaded = true;
                 wizardDirty = false;
                 document.getElementById('wizardUnsaved').style.display = 'none';
@@ -2916,16 +3190,21 @@
 
         async function refreshPrefills() {
             if (!selectedProject) return;
-            showMessage('Actualitzant prefills...', 'info');
+            startStepperAnimation();
+            document.getElementById('pipelineStepper').style.display = 'block';
             try {
                 const res = await fetch(`/api/prefills/${encodeURIComponent(selectedProject)}?refresh=true`);
                 if (!res.ok) throw new Error('Error actualitzant prefills');
                 wizardPrefills = await res.json();
                 const udRes = await fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`);
                 wizardUserData = udRes.ok ? await udRes.json() : {};
-                renderWizardForm();
-                showMessage('Prefills actualitzats', 'success');
+                completeStepperAnimation(() => {
+                    renderWizardForm();
+                    renderInstructions(wizardPrefills);
+                    showMessage('Prefills actualitzats', 'success');
+                });
             } catch (err) {
+                hideStepper();
                 showMessage('Error actualitzant prefills: ' + err.message, 'error');
             }
         }
