@@ -65,8 +65,10 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
     from automation.auto_extractor import auto_extract
     auto_result = auto_extract(project_path)
 
-    # Phase 1: Claude vision (API calls, ~30s — saves JSONs to validation/)
-    _run_vision_phase(project_path, force_refresh)
+    # Phase 1: Claude vision — never force-refresh from here.
+    # Vision JSONs are created by /g3dt-visio-projecte (Claude Code native)
+    # or a previous SDK run. The refresh button only re-reads existing JSONs.
+    _run_vision_phase(project_path, force_refresh=False)
 
     # Phase 2: wizard prefill chain (reads validation/ JSONs including vision output)
     from automation.wizard import UserDataWizard
@@ -91,19 +93,32 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
     if 'street_address' not in merged and 'street_address' in wizard._user_data_full:
         merged['street_address'] = {'value': wizard._user_data_full['street_address'], 'source': 'planol vision'}
 
+    # Vision status: which extraction JSONs exist?
+    vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json'}
+    vision_status = {}
+    for vt, filename in vision_types.items():
+        vision_status[vt] = (project_path / 'validation' / filename).exists()
+    merged['_vision_status'] = {'value': vision_status, 'source': 'system'}
+
     _prefill_cache[project_name] = merged
     return merged
 
 
 def _run_vision_phase(project_path: Path, force_refresh: bool) -> None:
-    """Run Claude vision extraction (Phase 1). Non-fatal on failure."""
+    """Run Claude vision extraction (Phase 1) via Anthropic SDK. Non-fatal on failure.
+
+    In the native Claude Code path, vision JSONs are pre-created by
+    /g3dt-visio-projecte. This function only fills in missing JSONs via the SDK
+    (if available). It should NEVER be called with force_refresh=True from the
+    web wizard — that would hang without an API key.
+    """
     try:
         from automation.vision_extractor import run_vision_extraction
         run_vision_extraction(project_path, force_refresh=force_refresh)
     except ImportError:
         logger.warning("Vision extraction not available (anthropic not installed)")
     except Exception as e:
-        logger.warning("Vision extraction failed: %s", e)
+        logger.warning("Vision extraction failed (SDK): %s", e)
 
 
 def load_user_data(project_name: str) -> dict[str, Any]:
