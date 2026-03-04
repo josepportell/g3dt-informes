@@ -2692,12 +2692,14 @@
             { value: 'arcilla', label: 'Arcilla' },
         ];
 
-        // Load project list on startup (only when served by FastAPI)
-        (function loadProjects() {
+        // Load project list from API. Called on startup and can be re-called on refresh.
+        function loadProjects() {
             fetch('/api/projects')
                 .then(r => r.ok ? r.json() : Promise.reject('No API'))
                 .then(projects => {
                     const sel = document.getElementById('projectSelect');
+                    // Clear existing options (keep placeholder)
+                    while (sel.options.length > 1) sel.remove(1);
                     projects.forEach(p => {
                         const opt = document.createElement('option');
                         opt.value = p.folder;
@@ -2709,7 +2711,8 @@
                     // Not running under FastAPI — hide project selector
                     document.getElementById('projectSelector').style.display = 'none';
                 });
-        })();
+        }
+        loadProjects();
 
         function onProjectChange(projectName) {
             selectedProject = projectName;
