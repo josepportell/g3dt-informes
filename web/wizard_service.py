@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +17,9 @@ logger = logging.getLogger(__name__)
 # Base dir for reference-material/ (relative to g3dt project root)
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 _REF_DIR = _PROJECT_ROOT / 'reference-material'
+
+# Production path where Eva keeps signed reference reports
+_INFORMES_DIR = Path('/mnt/c/claude/g3dt/4-informes')
 
 # In-memory prefill cache: project_name -> prefills dict
 _prefill_cache: dict[str, dict[str, Any]] = {}
@@ -81,11 +85,11 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
     for key, entry in wizard.prefills.items():
         merged[key] = entry
 
-    # Add non-wizard vision fields (street_address, promoter_name, building_height_m)
-    # These come from wizard._user_data_full which was populated by _load_planol()
-    for key in ('street_address', 'promoter_name', 'building_height_m'):
-        if key not in merged and key in wizard._user_data_full:
-            merged[key] = {'value': wizard._user_data_full[key], 'source': 'planol vision'}
+    # Add non-wizard field street_address from _user_data_full (populated by _load_planol)
+    # Note: promoter_name and building_height_m are now proper wizard fields
+    # (client_name and building_height_m) and flow through wizard.prefills.
+    if 'street_address' not in merged and 'street_address' in wizard._user_data_full:
+        merged['street_address'] = {'value': wizard._user_data_full['street_address'], 'source': 'planol vision'}
 
     _prefill_cache[project_name] = merged
     return merged
@@ -146,15 +150,17 @@ def geocode_coords(
     """
     project_path = _resolve_project(project_name)
 
-    # Get municipality from folder name
+    # Get municipality: site_municipality (wizard) > folder name
     from automation.folder_utils import parse_folder_name
-    _, municipality = parse_folder_name(project_path.name)
+    ud = load_user_data(project_name)
+    municipality = ud.get('site_municipality') or ''
+    if not municipality:
+        _, municipality = parse_folder_name(project_path.name)
     if not municipality:
         raise ValueError("No s'ha pogut extreure el municipi del nom de carpeta")
 
     # Resolve address: parameter > user_data > adjacent_south
     if not address:
-        ud = load_user_data(project_name)
         address = (
             ud.get('street_address')
             or ud.get('site_address')
@@ -163,7 +169,7 @@ def geocode_coords(
     if not address:
         raise ValueError(
             "Cal una adreça per geocodificar. "
-            "Introdueix-la al camp 'adjacent_south' o passa-la com a paràmetre."
+            "Introdueix-la al camp 'Adreca del solar' o passa-la com a paràmetre."
         )
 
     # Get point IDs from DPSH if available
@@ -232,5 +238,104 @@ def find_report(project_name: str) -> Path | None:
     matches = list(project_path.glob('*_generated.docx'))
     if matches:
         # Return most recently modified
+        return max(matches, key=lambda p: p.stat().st_mtime)
+    return None
+
+
+def _find_reference_report(project_path: Path) -> Path | None:
+    """Find the reference .docx for a project.
+
+    Search order:
+    1. /mnt/c/claude/g3dt/4-informes/{folder_name}/*_informe*.docx
+    2. project_path/*_informe*.docx
+    If only .doc found, convert via soffice.
+    """
+    folder_name = project_path.name
+
+    for search_dir in [_INFORMES_DIR / folder_name, project_path]:
+        if not search_dir.is_dir():
+            continue
+
+        # Try .docx first
+        docx_matches = list(search_dir.glob('*_informe*.docx'))
+        if docx_matches:
+            return max(docx_matches, key=lambda p: p.stat().st_mtime)
+
+        # Fallback: .doc → convert
+        doc_matches = [p for p in search_dir.glob('*_informe*.doc') if not p.name.startswith('~')]
+        if doc_matches:
+            doc_path = max(doc_matches, key=lambda p: p.stat().st_mtime)
+            try:
+                subprocess.run(
+                    ['soffice', '--headless', '--convert-to', 'docx',
+                     '--outdir', str(search_dir), str(doc_path)],
+                    capture_output=True, timeout=30,
+                )
+                converted = doc_path.with_suffix('.docx')
+                if converted.exists():
+                    return converted
+            except (subprocess.TimeoutExpired, FileNotFoundError):
+                logger.warning("soffice conversion failed for %s", doc_path)
+
+    return None
+
+
+def run_audit_visual(project_name: str) -> dict[str, Any]:
+    """Run intelligent audit comparing generated vs reference report."""
+    project_path = _resolve_project(project_name)
+
+    # Find generated report
+    generated = find_report(project_name)
+    if not generated:
+        return {
+            'success': False,
+            'output_name': None,
+            'errors': ["No s'ha trobat l'informe generat. Genera'l primer."],
+            'warnings': [],
+        }
+
+    # Find reference report
+    reference = _find_reference_report(project_path)
+    if not reference:
+        return {
+            'success': False,
+            'output_name': None,
+            'errors': ["No s'ha trobat l'informe de referència (signat per Eva)."],
+            'warnings': [],
+        }
+
+    try:
+        from automation.intelligent_audit import run_audit
+        result = run_audit(generated, reference, project_path=project_path)
+        stats = result.get('statistics', {})
+        highlight_file = result.get('highlight_file')
+        output_name = Path(highlight_file).name if highlight_file else None
+        return {
+            'success': True,
+            'output_name': output_name,
+            'auto_resolved_pct': stats.get('auto_resolved_pct', 0),
+            'needs_review': stats.get('needs_review', 0),
+            'missing': stats.get('missing_in_generated', 0),
+            'errors': [],
+            'warnings': [],
+        }
+    except Exception as e:
+        logger.exception("Audit failed for %s", project_name)
+        return {
+            'success': False,
+            'output_name': None,
+            'errors': [str(e)],
+            'warnings': [],
+        }
+
+
+def find_audit_report(project_name: str) -> Path | None:
+    """Locate the most recent AUDIT_VISUAL .docx for a project."""
+    project_path = _resolve_project(project_name)
+    validation_dir = project_path / 'validation'
+    if not validation_dir.is_dir():
+        return None
+    matches = list(validation_dir.glob('*_AUDIT_VISUAL.docx'))
+    if matches:
         return max(matches, key=lambda p: p.stat().st_mtime)
     return None

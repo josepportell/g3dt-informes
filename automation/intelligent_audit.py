@@ -24,6 +24,7 @@ Author: Eficients.cat
 Date: 2026-02-08
 """
 
+import bisect
 import json
 import logging
 import re
@@ -700,8 +701,10 @@ def align_paragraphs(
                 ref_abs_idx = ref_body_count + ref_rel_idx
                 ref_text = reference_paras[ref_abs_idx]
                 ref_matched.add(ref_abs_idx)
+                matched_ref_idx = ref_abs_idx
             else:
                 ref_text = ''
+                matched_ref_idx = -1
         else:
             # SIMILARITY matching for body paragraphs
             tmpl_idx, tmpl_sim = find_best_match(gen_text, template_clean, threshold=0.25)
@@ -718,6 +721,7 @@ def align_paragraphs(
             ref_text = reference_paras[ref_idx] if ref_idx >= 0 else ''
             if ref_idx >= 0:
                 ref_matched.add(ref_idx)
+            matched_ref_idx = ref_idx
 
         # Get variable values for this template paragraph
         var_values = {}
@@ -744,6 +748,7 @@ def align_paragraphs(
         para_dict = {
             'idx': gen_idx,
             'elem_id': elem_id,
+            'ref_idx': matched_ref_idx,
             'template_text': template_para.text,
             'template_variables': template_para.variables,
             'variable_values': var_values,
@@ -803,6 +808,7 @@ def align_paragraphs(
 
     result.statistics = {
         'total_generated': total,
+        'total_reference': len(reference_paras),
         'static_match': static_count,
         'likely_correct': likely_count,
         'needs_review': review_count,
@@ -1146,26 +1152,55 @@ def generate_highlighted_docx(
 
     # ---- Insert MISSING paragraph notes ----
     # Try to insert each missing note near where it would appear.
-    # Use the ref_idx to find the nearest generated paragraph.
+    # Build a ref→gen mapping from aligned paragraphs, then use bisect
+    # to find the nearest preceding match for each missing paragraph.
     if missing_paras:
         doc_para_count = original_body_count
+
+        # Build sorted (ref_idx, gen_idx) pairs from aligned paragraphs
+        ref_to_gen = []
+        for gen_idx_m, info in sorted(para_lookup.items()):
+            ri = info.get('ref_idx', -1)
+            if ri >= 0:
+                ref_to_gen.append((ri, gen_idx_m))
+        ref_to_gen.sort()
+        ref_keys = [r for r, _g in ref_to_gen]
+
         for mp in reversed(missing_paras):  # reverse to preserve positions
             ref_idx = mp.get('ref_idx', -1)
             ref_text = mp.get('reference_text', '')
             if not ref_text.strip():
                 continue
-            # Find the nearest document paragraph to insert after
-            # Use a heuristic: insert near the proportional position
-            if doc_para_count > 0 and ref_idx >= 0:
-                # Map reference index to generated document position proportionally
-                ref_total = audit_data.get('statistics', {}).get('total_generated', doc_para_count)
-                approx_pos = min(int(ref_idx / max(ref_total, 1) * doc_para_count), doc_para_count - 1)
+
+            target_para = None
+
+            # Find nearest previous matched reference paragraph
+            if ref_keys and ref_idx >= 0:
+                pos = bisect.bisect_right(ref_keys, ref_idx) - 1
+                if pos >= 0:
+                    _, nearest_gen_idx = ref_to_gen[pos]
+                    target_para = last_para_by_idx.get(nearest_gen_idx)
+                else:
+                    # No previous match -- use first paragraph
+                    target_para = last_para_by_idx.get(0)
+
+            # Fallback: proportional mapping with correct denominator
+            if target_para is None and doc_para_count > 0 and ref_idx >= 0:
+                total_ref = audit_data.get('statistics', {}).get(
+                    'total_reference', doc_para_count
+                )
+                approx_pos = min(
+                    int(ref_idx / max(total_ref, 1) * doc_para_count),
+                    doc_para_count - 1,
+                )
                 target_para = last_para_by_idx.get(approx_pos)
-                if target_para is None:
-                    # Fallback: use last paragraph
-                    target_para = last_para_by_idx.get(doc_para_count - 1)
-                if target_para is not None:
-                    _insert_missing_note(target_para, ref_text)
+
+            # Last resort: last paragraph
+            if target_para is None:
+                target_para = last_para_by_idx.get(doc_para_count - 1)
+
+            if target_para is not None:
+                _insert_missing_note(target_para, ref_text)
 
     # ---- Process table cells ----
     # Must iterate without deduplication to match extract_docx_paragraphs(),

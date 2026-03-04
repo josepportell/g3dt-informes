@@ -7,7 +7,7 @@ Pipeline complet operatiu. Claude Code és el runtime de producció — s'instal
 
 **Model d'operació:** Eva obre localhost:8765, selecciona projecte, el sistema pre-omple tot automàticament (Python + Claude vision), Eva revisa/ajusta, genera informe.
 
-**Qualitat (audit Bell-Lloc):** 97.1% auto-resolved (post-fixes 2026-03-02)
+**Qualitat audit (Bell-Lloc):** 97.1% amb user_data complet, **94.9% des de zero** (sense cap intervenció humana)
 
 ### Components operatius
 
@@ -15,30 +15,20 @@ Pipeline complet operatiu. Claude Code és el runtime de producció — s'instal
 |-----------|-------|-------|
 | FileScanner (Fase 0) | ✅ | Classificació automàtica + `vision_type` per rol (v2.1) |
 | auto_extract (Fase 0.5) | ✅ | DPSH, Lab, ICGC, Cadastre, geocode, historia geològica |
-| Claude vision (Fase 1) | ✅ | Anthropic API (sonnet), VISION_REGISTRY genèric, cache JSON |
+| Claude vision (Fase 1) | ✅ | Anthropic SDK (sonnet), VISION_REGISTRY genèric, cache JSON |
 | Web Wizard (Fase 2) | ✅ | FastAPI + review.html, 4 pestanyes |
 | ReportGenerator (Fase 3) | ✅ | .docx amb Jinja2, tots els annexos |
 | Historia geològica | ✅ | 238 plantilles Eva, lookup jeràrquic municipi→comarca→region |
 | Audit intel·ligent | ✅ | Semàntic per paràgraf + visual .docx |
 
-## Branques actives
+### Visió: dues vies
 
-| Branca | Base | Contingut | Estat |
-|--------|------|-----------|-------|
-| `main` | — | Pipeline base fins a settlement calibrat | Estable |
-| `fix/report-quality-audit` | `main` | Audit 100%, Cadastre lookup, image fallbacks, CE-21 | Pendent merge |
-| `feat/historia-geologica` | `main` | Plantilles regionals + lookup jeràrquic + fixes audit | **Activa** |
+- **Via SDK (Anthropic API):** Implementada, testejada, operativa. Pendent aprovació del client per activar-la en producció (implica cost API).
+- **Via Claude Code nativa (Read tool):** Claude Code llegeix els PDFs directament, sense SDK ni api_key. S'activarà per demos i mentre no hi hagi aprovació de l'SDK. Implementació pendent (prevista 2026-03-04).
 
-**IMPORTANT per merge:** `feat/historia-geologica` surt de `main`, NO de `fix/report-quality-audit`.
-Primer merge `fix/report-quality-audit` → `main`, després `feat/historia-geologica` → `main`.
+## Branques
 
-### feat/historia-geologica (2026-03-03)
-- 238 .docx plantilles d'Eva, `index.json` amb 240 entrades
-- `historia_geologica.py`: lookup fuzzy + fallback jeràrquic (municipi→comarca→region)
-- `comarques.json`: 42 comarques, ~908 municipis → mapa comarca→plantilla
-- Integrat a: auto_extractor (prefill), wizard (override), section3 (genera §3.1)
-- **Fixes audit (2026-03-02):** Historia dinàmica (for-loop), filtre sondeig, desc material deepest layer, short material tables, Nb range
-- **Vision integration (2026-03-03):** `vision_extractor.py` (Anthropic API), `vision_type` al file_scanner, prompts plànol, wizard prefills visió
+`main` conté tot el codi. Merge fast-forward completat 2026-03-03 (`feat/historia-geologica` + `fix/report-quality-audit` → `main`). Branca `feat/historia-geologica` activa per desenvolupament.
 
 ## Desviacions actuals (4 projectes)
 
@@ -54,38 +44,36 @@ Primer merge `fix/report-quality-audit` → `main`, després `feat/historia-geol
 \* Bell-Lloc E=650 (carbonatades, Eva ajusta manualment)
 \*\* Rubí Qa=3.50 supera cap 3.0 — pendent preguntar a Eva
 
-### Fixes recents (branca fix/report-quality-audit)
-
-| Fix | Descripció | Commit |
-|-----|-----------|--------|
-| Taula 4 sondeig | Columnes alineades amb Eva: Punt, SPT/MA, N.F. | baacdaa |
-| Nivells Bell-Lloc | 2→1 nivell: respecta num_levels del wizard | baacdaa |
-| Profunditat refús DPSH | Usa anotació manuscrita "R:" (1.35/2.45) vs última fila Excel | baacdaa |
-| Fórmula sísmica | A<sub>b</sub> amb subíndex, "<" en lloc de "=", coma decimal | 892a5f5 |
-| Mapa geològic transparent | Topo base + geologia al 35% opacitat + punt vermell ubicació | a5eff89 |
-
 ## Active Blockers
 
 Cap blocker crític.
 
-## Commits recents (2026-03-03)
+## Audit Quality (2026-03-03)
 
-| Commit | Descripció |
-|--------|-----------|
-| `57c9bd3` | fix: audit critical bugs (geologia dinàmica, filtre sondeig, material desc) |
-| `348fe88` | feat: integrate Claude vision into wizard pipeline (Anthropic API) |
-| `401838b` | refactor: file_scanner declares vision_type, vision_extractor genèric |
+### Amb user_data (dades prèvies d'Eva)
 
-## Audit Quality (2026-03-02)
+| Projecte | Score | Needs review | Missing |
+|-----------|:---:|:---:|:---:|
+| Bell-Lloc | **97.1%** | 10 | 10 |
+| Rubí | 92.3% | 25 | 39 |
+| Linyola | 91.0% | 29 | 71 |
+| Castellar | 90.9% | 35 | 55 |
 
-| Projecte | Score | Notes |
-|-----------|-------|-------|
-| Bell-Lloc | 97.1% | Projecte referència, user_data complet |
-| Castellar | 87.5% | user_data parcial (79% camps crítics) |
-| Rubí | 89.8% | user_data parcial (37% camps crítics), sense sondeig |
-| Linyola | 89.0% | user_data mínim (5% camps crítics) |
+### Des de zero (sense user_data, només fitxers font)
 
-Scores baixos de Castellar/Rubí/Linyola són per **dades d'entrada incompletes**, no bugs. Amb el pipeline complet (Claude vision Fase 1) es pre-ompliran automàticament.
+| Projecte | Score | Needs review | Missing | Visió |
+|-----------|:---:|:---:|:---:|---|
+| Bell-Lloc2 | **94.9%** | 17 | 25 | 3/3 PDFs (A.01 + PENETROS + SONDEIG) |
+| Linyola2 | 91.0% | 29 | 74 | 2/2 PDFs (PENETROS + pl situ) |
+
+**Bell-Lloc2 a 94.9% sense cap intervenció humana.** La visió omple: arquitecte, empresa, tipus edificació, plantes, superfície construïda, nivells de sòl (sondeig). El 2.2% de diferència són overrides manuals d'Eva (adjacents detallats, E/phi ajustats, descripcions personalitzades).
+
+### Temps de processament (des de zero)
+
+| Projecte | Fase 0+0.5 (Python) | Fase 1 (visió) | Total |
+|-----------|:---:|:---:|:---:|
+| Bell-Lloc2 (3 PDFs) | ~5s | ~90s | ~95s |
+| Linyola2 (2 PDFs) | ~5s | ~40s | ~45s |
 
 ## Next Milestones
 
@@ -100,9 +88,11 @@ Scores baixos de Castellar/Rubí/Linyola són per **dades d'entrada incompletes*
 - [x] Fix: descripció material (deepest layer = bearing stratum)
 - [x] Integrar Claude vision (Fase 1) al pipeline automàtic del wizard
 - [x] `vision_type` al file_scanner (desacoblament vision_extractor ↔ nomenclatura rols)
+- [x] Merge feat/historia-geologica → main (fast-forward, 0 conflictes)
+- [x] Test full pipeline des de zero (Bell-Lloc2: 94.9%, Linyola2: 91.0%)
 - [ ] Category C vocabulary (to d'Eva per secció Materials)
 - [ ] Eva revisa index.json (duplicats, variants geològiques)
 - [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54
 - [ ] Test multi-nivell amb Linyola (sòls expansius)
-- [ ] Validació amb Eva del flux complet (projecte nou de zero)
-- [ ] Merge feat/historia-geologica → main (quan validat amb Eva)
+- [ ] Visió nativa Claude Code (Read tool directe) — per demos i ús interim mentre SDK pendent aprovació
+- [ ] Validació amb Eva del flux complet (projecte nou de zero, amb Eva present)

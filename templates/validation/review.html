@@ -87,6 +87,13 @@
         .btn-secondary:hover {
             background-color: #7f8c8d;
         }
+        .btn-audit {
+            background-color: #8e44ad;
+            color: white;
+        }
+        .btn-audit:hover {
+            background-color: #7d3c98;
+        }
         input[type="file"] {
             display: none;
         }
@@ -1163,6 +1170,18 @@
                                     <input type="text" id="wiz-architect_company" data-field="architect_company" onchange="markWizardDirty()">
                                 </div>
                                 <div class="wizard-field">
+                                    <label>Client / Promotor <span class="source-badge" id="src-client_name"></span></label>
+                                    <input type="text" id="wiz-client_name" data-field="client_name" placeholder="Ex: SRA. JOANA MARTINEZ" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Adreca del solar <span class="source-badge" id="src-street_address"></span></label>
+                                    <input type="text" id="wiz-street_address" data-field="street_address" placeholder="Ex: Clot de la Llacuna 16" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Municipi del solar <span class="source-badge" id="src-site_municipality"></span></label>
+                                    <input type="text" id="wiz-site_municipality" data-field="site_municipality" placeholder="Ex: Linyola" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
                                     <label>Tipus edificacio <span class="source-badge" id="src-building_type"></span></label>
                                     <select id="wiz-building_type" data-field="building_type" onchange="markWizardDirty()">
                                         <option value="">-- Selecciona --</option>
@@ -1180,6 +1199,14 @@
                                 <div class="wizard-field">
                                     <label>Superficie construida (m2) <span class="source-badge" id="src-superficie_construida_m2"></span></label>
                                     <input type="number" step="0.1" id="wiz-superficie_construida_m2" data-field="superficie_construida_m2" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Superficie parcella (m2) <span class="source-badge" id="src-superficie_parcela_m2"></span></label>
+                                    <input type="number" step="0.1" id="wiz-superficie_parcela_m2" data-field="superficie_parcela_m2" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Alcada edificacio (m) <span class="source-badge" id="src-building_height_m"></span></label>
+                                    <input type="number" step="0.01" id="wiz-building_height_m" data-field="building_height_m" onchange="markWizardDirty()">
                                 </div>
                                 <div class="wizard-field full-width">
                                     <label>Descripcio del terreny <span class="source-badge" id="src-site_description"></span></label>
@@ -1329,10 +1356,12 @@
                         <div class="wizard-actions">
                             <button class="btn btn-primary" id="btnSaveWizard" onclick="saveWizard()">Guardar Dades</button>
                             <button class="btn btn-success" id="btnGenerateReport" onclick="generateReport()">Generar Informe</button>
+                            <button class="btn btn-audit" id="btnAuditVisual" onclick="auditVisual()">Audit Visual</button>
                         </div>
 
                         <!-- Result area -->
                         <div class="wizard-result" id="wizardResult" style="display:none;"></div>
+                        <div class="wizard-result" id="auditResult" style="display:none;"></div>
                     </div>
                 </div>
             </div>
@@ -2581,8 +2610,11 @@
         function renderWizardForm() {
             // Standard text/number fields
             const textFields = [
-                'architect_name', 'architect_company', 'num_floors',
-                'superficie_construida_m2', 'site_description', 'access_description',
+                'architect_name', 'architect_company', 'client_name',
+                'street_address', 'site_municipality',
+                'num_floors',
+                'superficie_construida_m2', 'superficie_parcela_m2', 'building_height_m',
+                'site_description', 'access_description',
                 'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
                 'foundation_depth_m', 'cota_referencia',
                 'utm_x', 'utm_y',
@@ -2769,7 +2801,9 @@
             const fields = {};
 
             // Text/number inputs
-            ['architect_name', 'architect_company', 'num_floors',
+            ['architect_name', 'architect_company', 'client_name',
+             'street_address', 'site_municipality',
+             'num_floors',
              'site_description', 'access_description',
              'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
              'cota_referencia',
@@ -2779,7 +2813,8 @@
             });
 
             // Numeric fields
-            ['superficie_construida_m2', 'foundation_depth_m', 'utm_x', 'utm_y'].forEach(field => {
+            ['superficie_construida_m2', 'superficie_parcela_m2', 'building_height_m',
+             'foundation_depth_m', 'utm_x', 'utm_y'].forEach(field => {
                 const el = document.getElementById(`wiz-${field}`);
                 if (el && el.value) fields[field] = parseFloat(el.value);
             });
@@ -2844,10 +2879,12 @@
             btn.disabled = true;
             btn.textContent = 'Geocodificant...';
             try {
+                const addrEl = document.getElementById('wiz-street_address');
+                const address = addrEl ? addrEl.value.trim() : '';
                 const res = await fetch(`/api/geolocalitzar/${encodeURIComponent(selectedProject)}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({}),
+                    body: JSON.stringify(address ? { address } : {}),
                 });
                 const data = await res.json();
                 if (!res.ok) {
@@ -2979,6 +3016,53 @@
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Generar Informe';
+            }
+        }
+
+        async function auditVisual() {
+            if (!selectedProject) return;
+
+            const btn = document.getElementById('btnAuditVisual');
+            const resultDiv = document.getElementById('auditResult');
+            btn.disabled = true;
+            btn.textContent = 'Executant audit...';
+            resultDiv.style.display = 'none';
+
+            try {
+                const res = await fetch(`/api/audit/${encodeURIComponent(selectedProject)}`, {
+                    method: 'POST',
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    const downloadUrl = `/api/audit-report/${encodeURIComponent(selectedProject)}`;
+                    let html = `<strong>Audit completat — ${escapeHtml(String(data.auto_resolved_pct || '?'))}% auto-resolt</strong><br>
+                        <a href="${downloadUrl}" target="_blank">Descarregar ${escapeHtml(data.output_name || 'audit')}</a>`;
+                    if (data.needs_review > 0) {
+                        html += `<br><small>${data.needs_review} paràgrafs pendents de revisió</small>`;
+                    }
+                    if (data.missing > 0) {
+                        html += `<br><small>${data.missing} paràgrafs absents al generat</small>`;
+                    }
+                    resultDiv.innerHTML = html;
+                    resultDiv.className = 'wizard-result success';
+                    resultDiv.style.display = 'block';
+                } else {
+                    let html = '<strong>Error executant audit:</strong><ul>';
+                    (data.errors || []).forEach(e => { html += `<li>${escapeHtml(e)}</li>`; });
+                    html += '</ul>';
+                    resultDiv.innerHTML = html;
+                    resultDiv.className = 'wizard-result error';
+                    resultDiv.style.display = 'block';
+                }
+            } catch (err) {
+                resultDiv.innerHTML = `<strong>Error:</strong> ${escapeHtml(err.message)}`;
+                resultDiv.className = 'wizard-result error';
+                resultDiv.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Audit Visual';
             }
         }
 

@@ -33,6 +33,16 @@ class GenerateResponse(BaseModel):
     warnings: list[str] = []
 
 
+class AuditResponse(BaseModel):
+    success: bool
+    output_name: str | None = None
+    auto_resolved_pct: float = 0
+    needs_review: int = 0
+    missing: int = 0
+    errors: list[str] = []
+    warnings: list[str] = []
+
+
 # --- Endpoints ---
 
 @router.get("/projects")
@@ -123,6 +133,37 @@ def download_report(project_name: str):
 
     if not report_path or not report_path.exists():
         raise HTTPException(status_code=404, detail="Informe no trobat. Genera'l primer.")
+
+    return FileResponse(
+        path=str(report_path),
+        filename=report_path.name,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    )
+
+
+@router.post("/audit/{project_name:path}", response_model=AuditResponse)
+def run_audit(project_name: str):
+    """Run intelligent audit: compare generated vs reference report."""
+    try:
+        result = wizard_service.run_audit_visual(project_name)
+        return AuditResponse(**result)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.exception("Error running audit for %s", project_name)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/audit-report/{project_name:path}")
+def download_audit_report(project_name: str):
+    """Download the AUDIT_VISUAL .docx."""
+    try:
+        report_path = wizard_service.find_audit_report(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    if not report_path or not report_path.exists():
+        raise HTTPException(status_code=404, detail="Audit visual no trobat. Executa l'audit primer.")
 
     return FileResponse(
         path=str(report_path),

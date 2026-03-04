@@ -118,8 +118,9 @@ ROLE_PATTERNS = {
         'patterns': [
             r'(?i)^pl.*situaci.*\.pdf$',
             r'(?i)^pl[\.\s]?\s*situ.*\.pdf$',
+            r'(?i)^\d+[_\s]pl[àa]n[oò]l.*situaci[oó].*\.pdf$',
         ],
-        'search_in': '',
+        'search_in': ['', 'PDF/ANNEXES'],
     },
     'photos_dir': {
         'patterns': ['FOTOGRAFIES'],
@@ -438,8 +439,11 @@ class FileScanner:
 
         return None
 
-    def _in_scope(self, rel_path: str, search_in: str) -> bool:
+    def _in_scope(self, rel_path: str, search_in: str | list[str]) -> bool:
         """Check whether rel_path is within the expected search scope."""
+        # Support list of scopes (e.g. ['', 'PDF/ANNEXES'])
+        if isinstance(search_in, list):
+            return any(self._in_scope(rel_path, s) for s in search_in)
         if not search_in:
             return '/' not in rel_path
         parent = rel_path.rsplit('/', 1)[0] if '/' in rel_path else ''

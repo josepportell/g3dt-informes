@@ -345,6 +345,15 @@ def build_report_data(
         address=_build_full_address(client_dict),
     )
 
+    # User override for client name (from wizard client_name field)
+    if user_data.get('client_name'):
+        client = ClientData(
+            company_name=user_data['client_name'],
+            contact_name=client.contact_name,
+            nif=client.nif,
+            address=client.address,
+        )
+
     # Determina DPSHData
     # Prioritza el parametre dpsh_data, sino mira project_data
     if dpsh_data is None and 'dpsh' in project_data and project_data['dpsh']:

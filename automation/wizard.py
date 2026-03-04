@@ -36,8 +36,10 @@ _BUILDING_TYPE_KEYWORDS = {
 
 # The 13 wizard fields grouped for display
 WIZARD_FIELDS = [
-    'architect_name', 'architect_company', 'building_type',
+    'architect_name', 'architect_company', 'client_name',
+    'building_type',
     'num_floors', 'superficie_construida_m2',
+    'superficie_parcela_m2', 'building_height_m',
     'site_description', 'access_description',
     'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
     'is_anthropized', 'num_soil_levels', 'soil_types', 'foundation_depth_m',
@@ -218,24 +220,24 @@ class UserDataWizard:
             if floors_val is not None:
                 self._set_prefill('num_floors', str(floors_val), source, overall_conf)
 
-            # Non-wizard fields → stored in _user_data_full for report generation
+            # Fields now promoted to proper wizard fields (editable in UI)
             location = arch.get('location')
             if location:
                 self._user_data_full.setdefault('street_address', location)
 
             promotor = arch.get('promotor')
             if promotor:
-                self._user_data_full.setdefault('promoter_name', promotor)
+                self._set_prefill('client_name', promotor, source, overall_conf)
 
             height = dims.get('max_height_m', {})
             height_val = height.get('pdf_value') if isinstance(height, dict) else height
             if height_val is not None:
-                self._user_data_full.setdefault('building_height_m', height_val)
+                self._set_prefill('building_height_m', height_val, source, overall_conf)
 
             parcel_area = dims.get('parcel_area_m2', {})
             area_val = parcel_area.get('pdf_value') if isinstance(parcel_area, dict) else parcel_area
             if area_val is not None:
-                self._user_data_full.setdefault('superficie_parcela_m2', area_val)
+                self._set_prefill('superficie_parcela_m2', area_val, source, overall_conf)
 
             # Infer parcel_shape from plot dimensions if available
             length_info = dims.get('plot_length_m', {})
