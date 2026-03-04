@@ -6,11 +6,14 @@ Executa totes les extraccions visuals (planol, DPSH, sondeig) per a un projecte 
 
 ## Arguments
 
+> El path del projecte depèn de `G3DT_PROJECTS_DIR` (default: `reference-material/`).
+
 `$ARGUMENTS` = path del projecte (requerit), opcionalment seguit de `--force`
 
 Exemples:
 ```
 /g3dt-visio-projecte reference-material/3001621 CASTELLAR DEL VALLES
+/g3dt-visio-projecte /mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC
 /g3dt-visio-projecte reference-material/4001612 BELL-LLOC --force
 ```
 

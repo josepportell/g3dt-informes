@@ -4,11 +4,11 @@ Genera un informe geotècnic complet: extracció de dades + wizard interactiu + 
 
 <command-name>g3dt-generar-informe</command-name>
 
+> El path del projecte depèn de `G3DT_PROJECTS_DIR` (default: `reference-material/`).
+
 ## Arguments
 
-- `project_path` (required): Path a la carpeta del projecte (ex: `reference-material/4001612-bell-lloc`)
-
-> project_path és relatiu al directori arrel del projecte G3DT: /home/josep/projects/claudecode-job/clients/g3dt/
+- `project_path` (required): Path a la carpeta del projecte (ex: `reference-material/4001612-bell-lloc` o `/mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC`)
 
 ## Exemples
 

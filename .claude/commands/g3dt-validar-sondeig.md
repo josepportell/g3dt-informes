@@ -4,9 +4,11 @@ Extreu dades de sondeigs a rotació de fulls de camp escanejats (SONDEIG.pdf).
 
 <command-name>g3dt-validar-sondeig</command-name>
 
+> El path del projecte depèn de `G3DT_PROJECTS_DIR` (default: `reference-material/`).
+
 ## Arguments
 
-- `pdf_path` (required): Path al fitxer SONDEIG.pdf
+- `pdf_path` (required): Path al fitxer SONDEIG.pdf (ex: `reference-material/4001612-bell-lloc/SONDEIG.pdf` o `/mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC/SONDEIG.pdf`)
 
 ## Exemples
 

@@ -2917,13 +2917,15 @@
         }
 
         function getWizardValue(field) {
-            // Priority: user_data > prefill > null
-            if (wizardUserData[field] !== undefined && wizardUserData[field] !== null) {
-                return { value: wizardUserData[field], source: 'user' };
-            }
+            // Priority: user_data value > prefill value > null
+            // Source: always prefer prefill source (preserves original provenance)
             const pf = wizardPrefills[field];
+            const prefillSource = pf ? (pf.source || 'auto') : null;
+            if (wizardUserData[field] !== undefined && wizardUserData[field] !== null) {
+                return { value: wizardUserData[field], source: prefillSource || 'user' };
+            }
             if (pf && pf.value !== undefined && pf.value !== null) {
-                return { value: pf.value, source: pf.source || 'auto' };
+                return { value: pf.value, source: prefillSource };
             }
             return { value: null, source: null };
         }
@@ -2934,6 +2936,7 @@
             if (!source) {
                 badge.textContent = '';
                 badge.className = 'source-badge';
+                badge.title = '';
                 return;
             }
             let label = source;
@@ -2952,6 +2955,7 @@
             }
             badge.textContent = label;
             badge.className = `source-badge ${cls}`;
+            badge.title = label !== source ? source : '';
         }
 
         function renderWizardForm() {

@@ -4,9 +4,11 @@ Extreu dades del plànol de l'arquitecte (A.01.pdf o similar) per a l'informe ge
 
 <command-name>g3dt-extreure-planol</command-name>
 
+> El path del projecte depèn de `G3DT_PROJECTS_DIR` (default: `reference-material/`).
+
 ## Arguments
 
-- `pdf_path` (required): Path al fitxer del plànol (A.01.pdf, plànol situació, etc.)
+- `pdf_path` (required): Path al fitxer del plànol (A.01.pdf, plànol situació, etc.) (ex: `reference-material/4001612-bell-lloc/A.01.pdf` o `/mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC/A.01.pdf`)
 
 ## Exemples
 

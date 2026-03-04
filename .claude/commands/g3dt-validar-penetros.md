@@ -4,9 +4,11 @@ Extreu i valida dades DPSH de fulls de camp escanejats (PENETROS.pdf) comparant 
 
 <command-name>g3dt-validar-penetros</command-name>
 
+> El path del projecte depèn de `G3DT_PROJECTS_DIR` (default: `reference-material/`).
+
 ## Arguments
 
-- `pdf_path` (required): Path al fitxer PENETROS.pdf
+- `pdf_path` (required): Path al fitxer PENETROS.pdf (ex: `reference-material/4001612-bell-lloc/PENETROS.pdf` o `/mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC/PENETROS.pdf`)
 - `excel_path` (optional): Path al fitxer DPSH.xls. Si no s'especifica, es busca a ANNEXES/{expedient}_DPSH.xls
 
 ## Exemples

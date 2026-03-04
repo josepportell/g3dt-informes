@@ -4,9 +4,11 @@ Geocodifica l'adreça d'un projecte per obtenir coordenades UTM aproximades quan
 
 <command-name>g3dt-geocodificar</command-name>
 
+> El path del projecte depèn de `G3DT_PROJECTS_DIR` (default: `reference-material/`).
+
 ## Arguments
 
-- `project_path` (required): Path a la carpeta del projecte (ex: `reference-material/4001612 BELL-LLOC`)
+- `project_path` (required): Path a la carpeta del projecte (ex: `reference-material/4001612 BELL-LLOC` o `/mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC`)
 
 ## Exemples
 

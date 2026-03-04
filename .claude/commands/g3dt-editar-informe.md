@@ -4,12 +4,12 @@ Revisa i corregeix automàticament un informe geotècnic generat: gramàtica cat
 
 <command-name>g3dt-editar-informe</command-name>
 
+> El path del projecte depèn de `G3DT_PROJECTS_DIR` (default: `reference-material/`).
+
 ## Arguments
 
-- `generated_path` (required): Path al fitxer .docx generat (ex: `reference-material/4001612-bell-lloc/4001612_generated.docx`)
+- `generated_path` (required): Path al fitxer .docx generat (ex: `reference-material/4001612-bell-lloc/4001612_generated.docx` o `/mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC/4001612_generated.docx`)
 - `--reference` (optional): Path al .docx de referència (activa Mode B — només per Bell-Lloc/testing)
-
-> Paths relatius al directori arrel G3DT: /home/josep/projects/claudecode-job/clients/g3dt/
 
 ## Exemples
 

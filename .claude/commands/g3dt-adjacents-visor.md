@@ -4,9 +4,11 @@ Agent visual per identificar parcel·les adjacents usant el visor cartogràfic d
 
 <command-name>g3dt-adjacents-visor</command-name>
 
+> El path del projecte depèn de `G3DT_PROJECTS_DIR` (default: `reference-material/`).
+
 ## Arguments
 
-- `project_path` (required): Path a la carpeta del projecte (ex: `reference-material/4001612-bell-lloc`)
+- `project_path` (required): Path a la carpeta del projecte (ex: `reference-material/4001612-bell-lloc` o `/mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC`)
 
 ## Exemples
 
