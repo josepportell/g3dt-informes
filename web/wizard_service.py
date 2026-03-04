@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -15,8 +16,9 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 # Base dir for reference-material/ (relative to g3dt project root)
+# Override with G3DT_PROJECTS_DIR env var for production (e.g. /mnt/c/claude/g3dt/projectes)
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
-_REF_DIR = _PROJECT_ROOT / 'reference-material'
+_REF_DIR = Path(os.getenv('G3DT_PROJECTS_DIR', str(_PROJECT_ROOT / 'reference-material')))
 
 # Production path where Eva keeps signed reference reports
 _INFORMES_DIR = Path('/mnt/c/claude/g3dt/4-informes')
@@ -100,6 +102,20 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
         vision_status[vt] = (project_path / 'validation' / filename).exists()
     merged['_vision_status'] = {'value': vision_status, 'source': 'system'}
 
+    # File mapping: which project files were detected and their roles
+    if auto_result.file_mapping:
+        fm = auto_result.file_mapping
+        fm_serialized = {}
+        for role_name, role_obj in fm.roles.items():
+            fm_serialized[role_name] = {
+                'path': role_obj.path if hasattr(role_obj, 'path') else str(role_obj),
+                'confidence': getattr(role_obj, 'confidence', None),
+            }
+        merged['_file_mapping'] = {'value': fm_serialized, 'source': 'system'}
+
+    # Projects base path (for frontend to build vision command)
+    merged['_projects_base'] = {'value': str(_REF_DIR), 'source': 'system'}
+
     _prefill_cache[project_name] = merged
     return merged
 
@@ -141,8 +157,15 @@ def save_wizard(
     """Save wizard data to user_data.json."""
     project_path = _resolve_project(project_name)
 
+    # Collect current sources from prefill cache so they survive save/reload
+    current_sources = {}
+    if project_name in _prefill_cache:
+        for k, v in _prefill_cache[project_name].items():
+            if isinstance(v, dict) and 'source' in v and not k.startswith('_'):
+                current_sources[k] = v['source']
+
     from automation.wizard import save_wizard_data
-    result = save_wizard_data(project_path, wizard_fields, expert_overrides)
+    result = save_wizard_data(project_path, wizard_fields, expert_overrides, sources=current_sources)
     _prefill_cache.pop(project_name, None)
     return result
 

@@ -1157,6 +1157,43 @@
         }
         .vision-dot.done { background: #27ae60; }
         .vision-dot.pending { background: #e67e22; }
+        .file-list {
+            margin: 12px 0 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 4px 16px;
+        }
+        .file-list li {
+            font-size: 12px;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 2px 0;
+        }
+        .file-list .file-role {
+            color: #6c757d;
+            min-width: 80px;
+            text-align: right;
+            font-size: 11px;
+        }
+        .file-list .file-path {
+            color: #2c3e50;
+            font-family: monospace;
+            font-size: 11px;
+        }
+        .file-list-toggle {
+            background: none;
+            border: none;
+            color: #3498db;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 4px 0;
+            margin-top: 4px;
+        }
+        .file-list-toggle:hover { text-decoration: underline; }
         .copy-command {
             display: flex;
             align-items: center;
@@ -2726,7 +2763,8 @@
 
             const vs = prefills._vision_status ? prefills._vision_status.value : {};
             const allDone = vs.planol && vs.dpsh && vs.sondeig;
-            const cmd = `/g3dt-visio-projecte reference-material/${selectedProject}`;
+            const basePath = prefills._projects_base ? prefills._projects_base.value : `reference-material`;
+            const cmd = `/g3dt-visio-projecte ${basePath}/${selectedProject}`;
 
             const badges = ['planol', 'dpsh', 'sondeig'].map(k => {
                 const done = !!vs[k];
@@ -2734,6 +2772,29 @@
             }).join('');
 
             const doneCount = [vs.planol, vs.dpsh, vs.sondeig].filter(Boolean).length;
+
+            // Build file list from _file_mapping
+            const fm = prefills._file_mapping ? prefills._file_mapping.value : {};
+            const roleLabels = {
+                'dpsh_excel': 'DPSH Excel', 'penetros_pdf': 'Penetros PDF',
+                'sondeig_pdf': 'Sondeig PDF', 'architect_plan': 'Planol',
+                'architect_plan_with_points': 'Planol+punts',
+                'lab_results_pdf': 'Lab PDF', 'reference_report': 'Informe ref.',
+                'gtl_report': 'GTL', 'coordenades': 'Coordenades',
+                'situation_plan': 'Planol situacio',
+            };
+            const roleEntries = Object.entries(fm);
+            const fileListHtml = roleEntries.length > 0 ? `
+                <div style="margin-top:10px">
+                    <button class="file-list-toggle" onclick="toggleFileList(event)">${roleEntries.length} fitxers detectats</button>
+                    <ul class="file-list" id="fileListItems" style="display:none">
+                        ${roleEntries.map(([role, info]) => {
+                            const label = roleLabels[role] || role.replace(/_/g, ' ');
+                            const path = typeof info === 'object' ? info.path : info;
+                            return `<li><span class="file-role">${label}</span><span class="file-path">${path}</span></li>`;
+                        }).join('')}
+                    </ul>
+                </div>` : '';
 
             container.innerHTML = `
                 <div class="instructions-header" onclick="toggleInstructions()">
@@ -2765,6 +2826,7 @@
                             <span>Prem <strong>Generar Informe</strong> per descarregar el .docx</span>
                         </li>
                     </ol>
+                    ${fileListHtml}
                 </div>
             `;
 
@@ -2777,6 +2839,17 @@
             if (container) container.classList.toggle('collapsed');
             const btn = container?.querySelector('.instructions-toggle');
             if (btn) btn.textContent = container.classList.contains('collapsed') ? '+' : '-';
+        }
+
+        function toggleFileList(event) {
+            event.stopPropagation();
+            const list = document.getElementById('fileListItems');
+            if (!list) return;
+            const visible = list.style.display !== 'none';
+            list.style.display = visible ? 'none' : 'grid';
+            event.target.textContent = visible
+                ? event.target.textContent.replace('Amagar', '').replace('fitxers', 'fitxers detectats')
+                : event.target.textContent.replace('detectats', '').trim() + ' — Amagar';
         }
 
         function copyVisionCommand(event) {

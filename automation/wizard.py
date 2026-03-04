@@ -264,18 +264,21 @@ class UserDataWizard:
                 data = json.load(f)
             # Merge: user_data values win, but keep earlier values (e.g. from planol vision)
             self._user_data_full.update(data)
-            source = 'user_data.json anterior'
+            fallback_source = 'user_data.json anterior'
+            saved_sources = data.get('_sources', {})
             for field in WIZARD_FIELDS:
                 val = data.get(field)
                 if val is not None:
                     # Override any existing prefill
                     self.prefills.pop(field, None)
+                    source = saved_sources.get(field, fallback_source)
                     entry: dict = {'value': val, 'source': source}
                     self.prefills[field] = entry
             # Load expert ICGC override fields as prefills
             for field in EXPERT_ICGC_FIELDS:
                 val = data.get(field)
                 if val:
+                    source = saved_sources.get(field, fallback_source)
                     self.prefills[field] = {'value': val, 'source': source}
             # Load expert geomech override fields as prefills
             geomech = data.get('geomech_params', {})
@@ -283,21 +286,25 @@ class UserDataWizard:
                 for field in EXPERT_GEOMECH_FIELDS:
                     val = geomech.get(field)
                     if val is not None:
+                        source = saved_sources.get(f'geomech_{field}', fallback_source)
                         self.prefills[f'geomech_{field}'] = {'value': val, 'source': source}
             # Load Es_settlement override
             for field in EXPERT_SETTLEMENT_FIELDS:
                 val = data.get(field)
                 if val is not None:
+                    source = saved_sources.get(field, fallback_source)
                     self.prefills[field] = {'value': val, 'source': source}
             # Load historia geologica template
             for field in EXPERT_HISTORIA_FIELDS:
                 val = data.get(field)
                 if val:
+                    source = saved_sources.get(field, fallback_source)
                     self.prefills[field] = {'value': val, 'source': source}
             # Load soil_types as individual level prefills
             existing_soil_types = data.get('soil_types', [])
             for i, st in enumerate(existing_soil_types):
                 field = f'soil_type_level_{i + 1}'
+                source = saved_sources.get(field, fallback_source)
                 self.prefills[field] = {'value': st, 'source': source}
         except (json.JSONDecodeError, KeyError, TypeError) as e:
             print(f'  [AVÍS: error carregant {path.name}: {e}]')
@@ -766,6 +773,7 @@ def save_wizard_data(
     project_path: str | Path,
     wizard_fields: dict,
     expert_overrides: dict | None = None,
+    sources: dict[str, str] | None = None,
 ) -> Path:
     """Merge wizard fields + expert overrides into user_data.json and save.
 
@@ -776,6 +784,9 @@ def save_wizard_data(
         wizard_fields: Dict of standard wizard fields (from WIZARD_FIELDS).
         expert_overrides: Optional dict with keys like 'geomech_params',
             'Es_settlement', 'icgc_unit_code', etc.
+        sources: Optional dict mapping field names to their original source
+            (e.g. 'planol A.01.pdf', 'ICGC WMS 1:50k'). Persisted as _sources
+            so original provenance survives save/reload cycles.
 
     Returns:
         Path to the saved user_data.json file.
@@ -816,6 +827,12 @@ def save_wizard_data(
     # Update historia geologica template
     if 'historia_geologica_template' in wizard_fields:
         existing['historia_geologica_template'] = wizard_fields['historia_geologica_template']
+
+    # Persist original sources so badges survive save/reload
+    if sources:
+        existing_sources = existing.get('_sources', {})
+        existing_sources.update(sources)
+        existing['_sources'] = existing_sources
 
     # Update metadata
     meta = existing.setdefault('_metadata', {})
