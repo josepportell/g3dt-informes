@@ -1,5 +1,5 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-03-03
+Last updated: 2026-03-04
 
 ## Current State
 
@@ -16,7 +16,7 @@ Pipeline complet operatiu. Claude Code és el runtime de producció — s'instal
 | FileScanner (Fase 0) | ✅ | Classificació automàtica + `vision_type` per rol (v2.1) |
 | auto_extract (Fase 0.5) | ✅ | DPSH, Lab, ICGC, Cadastre, geocode, historia geològica |
 | Claude vision (Fase 1) | ✅ | Anthropic SDK (sonnet), VISION_REGISTRY genèric, cache JSON |
-| Web Wizard (Fase 2) | ✅ | FastAPI + review.html, 4 pestanyes |
+| Web Wizard (Fase 2) | ✅ | FastAPI + review.html, 4 pestanyes, camps client/superfícies/alçada |
 | ReportGenerator (Fase 3) | ✅ | .docx amb Jinja2, tots els annexos |
 | Historia geològica | ✅ | 238 plantilles Eva, lookup jeràrquic municipi→comarca→region |
 | Audit intel·ligent | ✅ | Semàntic per paràgraf + visual .docx |
@@ -24,7 +24,7 @@ Pipeline complet operatiu. Claude Code és el runtime de producció — s'instal
 ### Visió: dues vies
 
 - **Via SDK (Anthropic API):** Implementada, testejada, operativa. Pendent aprovació del client per activar-la en producció (implica cost API).
-- **Via Claude Code nativa (Read tool):** Claude Code llegeix els PDFs directament, sense SDK ni api_key. S'activarà per demos i mentre no hi hagi aprovació de l'SDK. Implementació pendent (prevista 2026-03-04).
+- **Via Claude Code nativa (Read tool):** Claude Code llegeix els PDFs directament, sense SDK ni api_key. S'activarà per demos i mentre no hi hagi aprovació de l'SDK. Implementació pendent.
 
 ## Branques
 
@@ -47,6 +47,20 @@ Pipeline complet operatiu. Claude Code és el runtime de producció — s'instal
 ## Active Blockers
 
 Cap blocker crític.
+
+## Fixes recents (2026-03-04)
+
+### Wizard & Data Pipeline
+- **client_name** com a camp wizard editable (planol vision → wizard → report `{{ client }}`)
+- **superficie_construida_m2**, **superficie_parcela_m2**, **building_height_m** com a camps wizard editables
+- Superfícies accepten **expressions aritmètiques** ("70+20", "260+68") — es mostren tal qual a l'informe, s'avaluen internament per CTE
+- **street_address** (adreça del solar) es pre-omple des de planol vision
+- Fix `_user_data_full` merge (`.update()` en lloc de replace)
+
+### FileScanner
+- **situation_plan** detecta fitxers amb prefix d'expedient (`3001631_plànol de situació.pdf`)
+- `search_in` suporta múltiples àmbits (`['', 'PDF/ANNEXES']`)
+- Rubí: detecta correctament el plànol de situació a `PDF/ANNEXES/`
 
 ## Audit Quality (2026-03-03)
 
@@ -90,6 +104,9 @@ Cap blocker crític.
 - [x] `vision_type` al file_scanner (desacoblament vision_extractor ↔ nomenclatura rols)
 - [x] Merge feat/historia-geologica → main (fast-forward, 0 conflictes)
 - [x] Test full pipeline des de zero (Bell-Lloc2: 94.9%, Linyola2: 91.0%)
+- [x] client_name, superfícies, alçada com a camps wizard editables
+- [x] FileScanner: situation_plan amb prefix expedient + search_in múltiple
+- [x] Superfícies amb expressions aritmètiques (70+20)
 - [ ] Category C vocabulary (to d'Eva per secció Materials)
 - [ ] Eva revisa index.json (duplicats, variants geològiques)
 - [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54
