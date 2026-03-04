@@ -159,8 +159,8 @@ class Section1Generator:
         return {
             "Tipus de construccio": self._safe_value(self.data.building_type),
             "Num. de plantes": self._safe_value(self.data.num_floors),
-            "Superficie parcela": f"{self.data.superficie_parcela:.2f} m2" if self.data.superficie_parcela else self.FALLBACK_VALUE,
-            "Superficie construida": f"{self.data.superficie_construida:.2f} m2" if self.data.superficie_construida else self.FALLBACK_VALUE,
+            "Superficie parcela": f"{self.data.superficie_parcela} m2" if self.data.superficie_parcela else self.FALLBACK_VALUE,
+            "Superficie construida": f"{self.data.superficie_construida} m2" if self.data.superficie_construida else self.FALLBACK_VALUE,
             "Tipus fonamentacio": fonamentacio,
             "Soterranis": soterrani,
         }
@@ -308,8 +308,8 @@ if __name__ == '__main__':
         architect_company: str
         building_type: str
         num_floors: str
-        superficie_parcela: float
-        superficie_construida: float
+        superficie_parcela: str
+        superficie_construida: str
         has_basement: bool
         has_retaining_walls: bool
         street_address: str
@@ -338,8 +338,8 @@ if __name__ == '__main__':
         architect_company="Arquitectura i Disseny SLP",
         building_type="Habitatge unifamiliar aillat",
         num_floors="Pb + 1Pp",
-        superficie_parcela=450.0,
-        superficie_construida=220.0,
+        superficie_parcela="450",
+        superficie_construida="220",
         has_basement=False,
         has_retaining_walls=False,
         street_address="Carrer Mestre Ramon Ortiz, s/n",

@@ -37,6 +37,35 @@ logger = logging.getLogger(__name__)
 from .terzaghi_calculator import BearingCapacityResult, FootingShape
 
 
+def _eval_numeric(val: Any) -> float:
+    """Evaluate a numeric value or simple arithmetic expression (e.g. '70+20' → 90.0).
+
+    Used internally when a numeric result is needed from user_data fields
+    that may contain expressions like '260+68'.
+    """
+    if isinstance(val, (int, float)):
+        return float(val)
+    if isinstance(val, str):
+        val = val.strip()
+        if not val:
+            return 0.0
+        # Only allow digits, decimal points, +, -, *, / and whitespace
+        import re
+        if re.fullmatch(r'[\d\s.+\-*/()]+', val):
+            try:
+                result = eval(val, {"__builtins__": {}})  # noqa: S307
+                if isinstance(result, (int, float)):
+                    return float(result)
+            except Exception:
+                pass
+        # Try simple float parse as fallback
+        try:
+            return float(val)
+        except (ValueError, TypeError):
+            return 0.0
+    return 0.0
+
+
 @dataclass
 class ClientData:
     """Dades del client per a l'informe."""
@@ -91,8 +120,8 @@ class ReportData:
     architect_company: str
     building_type: str
     num_floors: str
-    superficie_parcela: float
-    superficie_construida: float
+    superficie_parcela: str
+    superficie_construida: str
     has_basement: bool
     has_retaining_walls: bool
 
@@ -445,7 +474,8 @@ def build_report_data(
 
     # Determina classes CTE
     # If both area and floors are missing/default, C-1 is a safe default
-    _area = user_data.get('superficie_construida_m2', 0)
+    _area_raw = user_data.get('superficie_construida_m2', '')
+    _area = _eval_numeric(_area_raw)
     _floors = user_data.get('num_floors', '')
     if not _area and not _floors:
         cte_building_class = "C-1"
@@ -476,8 +506,8 @@ def build_report_data(
         architect_company=user_data.get('architect_company', ''),
         building_type=user_data.get('building_type', ''),
         num_floors=user_data.get('num_floors', ''),
-        superficie_parcela=user_data.get('superficie_parcela_m2', 0.0),
-        superficie_construida=user_data.get('superficie_construida_m2', 0.0),
+        superficie_parcela=str(user_data.get('superficie_parcela_m2', '') or ''),
+        superficie_construida=str(user_data.get('superficie_construida_m2', '') or ''),
         has_basement=user_data.get('has_basement', False),
         has_retaining_walls=user_data.get('has_retaining_walls', False),
         # Ubicacio
@@ -747,8 +777,8 @@ def from_dict(data: dict[str, Any]) -> ReportData:
         architect_company=architect.get('company', ''),
         building_type=building.get('type', ''),
         num_floors=building.get('num_floors', ''),
-        superficie_parcela=building.get('superficie_parcela_m2', 0.0),
-        superficie_construida=building.get('superficie_construida_m2', 0.0),
+        superficie_parcela=str(building.get('superficie_parcela_m2', '') or ''),
+        superficie_construida=str(building.get('superficie_construida_m2', '') or ''),
         has_basement=building.get('has_basement', False),
         has_retaining_walls=building.get('has_retaining_walls', False),
         street_address=location.get('street_address', ''),

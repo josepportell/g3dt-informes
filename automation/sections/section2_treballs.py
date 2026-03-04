@@ -639,8 +639,8 @@ if __name__ == '__main__':
         architect_company: str = ""
         building_type: str = ""
         num_floors: str = ""
-        superficie_parcela: float = 0.0
-        superficie_construida: float = 0.0
+        superficie_parcela: str = ''
+        superficie_construida: str = ''
         has_basement: bool = False
         has_retaining_walls: bool = False
         street_address: str = ""

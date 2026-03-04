@@ -89,16 +89,16 @@ DATA_ENTRY_SCHEMA: dict[str, FieldDefinition] = {
         description="Nombre de plantes (ex: Pb, Pb + 1Pp, Pb + 2Pp)"
     ),
     'superficie_parcela_m2': FieldDefinition(
-        field_type='float',
+        field_type='str',
         required=True,
-        description="Superficie total de la parcel·la en metres quadrats",
-        example="450.0"
+        description="Superficie total de la parcel·la en metres quadrats (accepta expressions: 260+68)",
+        example="450"
     ),
     'superficie_construida_m2': FieldDefinition(
-        field_type='float',
+        field_type='str',
         required=True,
-        description="Superficie construida prevista en metres quadrats",
-        example="180.0"
+        description="Superficie construida prevista en metres quadrats (accepta expressions: 70+20)",
+        example="70+20"
     ),
     'has_basement': FieldDefinition(
         field_type='bool',

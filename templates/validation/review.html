@@ -1198,15 +1198,15 @@
                                 </div>
                                 <div class="wizard-field">
                                     <label>Superficie construida (m2) <span class="source-badge" id="src-superficie_construida_m2"></span></label>
-                                    <input type="number" step="0.1" id="wiz-superficie_construida_m2" data-field="superficie_construida_m2" onchange="markWizardDirty()">
+                                    <input type="text" inputmode="decimal" id="wiz-superficie_construida_m2" data-field="superficie_construida_m2" placeholder="Ex: 90 o 70+20" onchange="markWizardDirty()">
                                 </div>
                                 <div class="wizard-field">
                                     <label>Superficie parcella (m2) <span class="source-badge" id="src-superficie_parcela_m2"></span></label>
-                                    <input type="number" step="0.1" id="wiz-superficie_parcela_m2" data-field="superficie_parcela_m2" onchange="markWizardDirty()">
+                                    <input type="text" inputmode="decimal" id="wiz-superficie_parcela_m2" data-field="superficie_parcela_m2" placeholder="Ex: 250" onchange="markWizardDirty()">
                                 </div>
                                 <div class="wizard-field">
                                     <label>Alcada edificacio (m) <span class="source-badge" id="src-building_height_m"></span></label>
-                                    <input type="number" step="0.01" id="wiz-building_height_m" data-field="building_height_m" onchange="markWizardDirty()">
+                                    <input type="text" inputmode="decimal" id="wiz-building_height_m" data-field="building_height_m" placeholder="Ex: 6.5" onchange="markWizardDirty()">
                                 </div>
                                 <div class="wizard-field full-width">
                                     <label>Descripcio del terreny <span class="source-badge" id="src-site_description"></span></label>
@@ -2804,6 +2804,7 @@
             ['architect_name', 'architect_company', 'client_name',
              'street_address', 'site_municipality',
              'num_floors',
+             'superficie_construida_m2', 'superficie_parcela_m2', 'building_height_m',
              'site_description', 'access_description',
              'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
              'cota_referencia',
@@ -2813,8 +2814,7 @@
             });
 
             // Numeric fields
-            ['superficie_construida_m2', 'superficie_parcela_m2', 'building_height_m',
-             'foundation_depth_m', 'utm_x', 'utm_y'].forEach(field => {
+            ['foundation_depth_m', 'utm_x', 'utm_y'].forEach(field => {
                 const el = document.getElementById(`wiz-${field}`);
                 if (el && el.value) fields[field] = parseFloat(el.value);
             });

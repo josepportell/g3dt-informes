@@ -622,14 +622,8 @@ class ReportGenerator:
 
             # Building dimensions for template
             context['plantes'] = self.report_data.num_floors or ''
-            context['superficie_parcela'] = (
-                f"{self.report_data.superficie_parcela:.0f}"
-                if self.report_data.superficie_parcela else ''
-            )
-            context['superficie_construida'] = (
-                f"{self.report_data.superficie_construida:.0f}"
-                if self.report_data.superficie_construida else ''
-            )
+            context['superficie_parcela'] = self.report_data.superficie_parcela or ''
+            context['superficie_construida'] = self.report_data.superficie_construida or ''
 
             # Descriptions
             context['access_description'] = self.report_data.access_description or ''
@@ -683,7 +677,8 @@ class ReportGenerator:
             if any_still_empty and self.report_data.utm_x and self.report_data.utm_y:
                 try:
                     from .cadastre_adjacents import get_adjacent_parcels, CadastreError
-                    superficie = self.report_data.superficie_parcela or 600.0
+                    from .report_data import _eval_numeric
+                    superficie = _eval_numeric(self.report_data.superficie_parcela) or 600.0
                     auto_adj = get_adjacent_parcels(
                         self.report_data.utm_x,
                         self.report_data.utm_y,

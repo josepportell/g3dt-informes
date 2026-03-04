@@ -727,8 +727,8 @@ if __name__ == '__main__':
         architect_company: str
         building_type: str
         num_floors: str
-        superficie_parcela: float
-        superficie_construida: float
+        superficie_parcela: str
+        superficie_construida: str
         has_basement: bool
         has_retaining_walls: bool
         street_address: str
@@ -814,8 +814,8 @@ if __name__ == '__main__':
         architect_company="Arquitectura SLP",
         building_type="Habitatge unifamiliar",
         num_floors="Pb + 1Pp",
-        superficie_parcela=450.0,
-        superficie_construida=220.0,
+        superficie_parcela="450",
+        superficie_construida="220",
         has_basement=True,
         has_retaining_walls=True,
         street_address="Carrer Major, 1",
