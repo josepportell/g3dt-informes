@@ -50,7 +50,16 @@ Cap blocker crític.
 
 ## Fixes recents (2026-03-04)
 
-### Wizard & Data Pipeline
+### 3 Millores Wizard (demo-ready)
+- **Fitxers detectats:** banner mostra llista collapsable de fitxers trobats al projecte (DPSH.xls, PENETROS.pdf, etc.)
+- **Carpeta Windows:** `G3DT_PROJECTS_DIR` configurable via `.env` (default: `/mnt/c/claude/g3dt/projectes`). Projectes copiats a Windows.
+- **Fonts preservades:** badges mostren font real (e.g. "planol A.01.pdf", "ICGC WMS 1:50k") en lloc de "user_data" — sobreviuen save/reload via `_sources` a user_data.json
+- **Dropdown dinàmic:** F5 al navegador recarrega llista de projectes. Noves carpetes apareixen immediatament.
+- **Cache fix:** seleccionar projecte sempre re-escaneja fitxers (sense cache stale)
+- **Tooltip:** badges truncats mostren font completa al hover
+- **`.env` support:** wizard_service.py llegeix `.env` del project root (sense dependències externes)
+
+### Wizard & Data Pipeline (anteriors)
 - **client_name** com a camp wizard editable (planol vision → wizard → report `{{ client }}`)
 - **superficie_construida_m2**, **superficie_parcela_m2**, **building_height_m** com a camps wizard editables
 - Superfícies accepten **expressions aritmètiques** ("70+20", "260+68") — es mostren tal qual a l'informe, s'avaluen internament per CTE
@@ -107,6 +116,7 @@ Cap blocker crític.
 - [x] client_name, superfícies, alçada com a camps wizard editables
 - [x] FileScanner: situation_plan amb prefix expedient + search_in múltiple
 - [x] Superfícies amb expressions aritmètiques (70+20)
+- [x] Wizard demo-ready: fitxers detectats, carpeta Windows, fonts preservades, cache fix
 - [ ] Category C vocabulary (to d'Eva per secció Materials)
 - [ ] Eva revisa index.json (duplicats, variants geològiques)
 - [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54
