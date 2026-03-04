@@ -262,7 +262,8 @@ class UserDataWizard:
         try:
             with open(path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-            self._user_data_full = data
+            # Merge: user_data values win, but keep earlier values (e.g. from planol vision)
+            self._user_data_full.update(data)
             source = 'user_data.json anterior'
             for field in WIZARD_FIELDS:
                 val = data.get(field)
