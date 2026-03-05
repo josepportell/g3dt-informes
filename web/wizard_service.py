@@ -9,7 +9,9 @@ from __future__ import annotations
 import json
 import logging
 import os
+import queue
 import subprocess
+import threading
 from pathlib import Path
 from typing import Any
 
@@ -135,6 +137,105 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
 
     _prefill_cache[project_name] = merged
     return merged
+
+
+def get_prefills_streaming(project_name: str):
+    """Generator yielding SSE events during auto_extract, then final prefills."""
+    project_path = _resolve_project(project_name)
+
+    event_queue: queue.Queue = queue.Queue()
+    auto_result_holder: list = []
+    error_holder: list = []
+
+    def progress_callback(event_type: str, detail: dict):
+        event_queue.put((event_type, detail))
+
+    def run_extract():
+        try:
+            from automation.auto_extractor import auto_extract
+            result = auto_extract(project_path, on_progress=progress_callback)
+            auto_result_holder.append(result)
+        except Exception as e:
+            error_holder.append(e)
+        finally:
+            event_queue.put(None)  # Sentinel
+
+    thread = threading.Thread(target=run_extract, daemon=True)
+    thread.start()
+
+    # Yield SSE events as they arrive
+    while True:
+        item = event_queue.get()
+        if item is None:
+            break
+        event_type, detail = item
+        yield f"event: {event_type}\ndata: {json.dumps(detail, ensure_ascii=False)}\n\n"
+
+    thread.join()
+
+    if error_holder:
+        yield f"event: error_event\ndata: {json.dumps({'message': str(error_holder[0])})}\n\n"
+        return
+
+    auto_result = auto_result_holder[0]
+
+    # Same merge logic as get_prefills()
+    _run_vision_phase(project_path, force_refresh=False)
+
+    from automation.wizard import UserDataWizard
+    wizard = UserDataWizard(str(project_path))
+    wizard.load_prefills()
+
+    merged: dict[str, Any] = {}
+    for key, value in auto_result.prefills.items():
+        source = auto_result.sources.get(key, 'auto')
+        merged[key] = {'value': value, 'source': source}
+
+    for key, entry in wizard.prefills.items():
+        merged[key] = entry
+
+    if 'street_address' not in merged and 'street_address' in wizard._user_data_full:
+        merged['street_address'] = {'value': wizard._user_data_full['street_address'], 'source': 'planol vision'}
+
+    vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json'}
+    vision_status = {}
+    for vt, filename in vision_types.items():
+        vision_status[vt] = (project_path / 'validation' / filename).exists()
+    merged['_vision_status'] = {'value': vision_status, 'source': 'system'}
+
+    if auto_result.file_mapping:
+        fm = auto_result.file_mapping
+        fm_serialized = {}
+        for role_name, role_obj in fm.roles.items():
+            fm_serialized[role_name] = {
+                'path': role_obj.path if hasattr(role_obj, 'path') else str(role_obj),
+                'confidence': getattr(role_obj, 'confidence', None),
+            }
+        merged['_file_mapping'] = {'value': fm_serialized, 'source': 'system'}
+
+    merged['_projects_base'] = {'value': str(_REF_DIR), 'source': 'system'}
+
+    _prefill_cache[project_name] = merged
+
+    yield f"event: prefills\ndata: {json.dumps(merged, ensure_ascii=False)}\n\n"
+
+
+def get_vision_status(project_name: str) -> dict[str, Any]:
+    """Check which vision extraction JSONs exist and their mtime."""
+    project_path = _resolve_project(project_name)
+    vision_files = {
+        'planol': 'planol_extracted.json',
+        'dpsh': 'dpsh_extracted.json',
+        'sondeig': 'sondeig_extracted.json',
+    }
+    status = {}
+    for key, filename in vision_files.items():
+        path = project_path / 'validation' / filename
+        if path.exists():
+            status[key] = {"exists": True, "mtime": path.stat().st_mtime}
+        else:
+            status[key] = {"exists": False, "mtime": None}
+    return status
 
 
 def _run_vision_phase(project_path: Path, force_refresh: bool) -> None:

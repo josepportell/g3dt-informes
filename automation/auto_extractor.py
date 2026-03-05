@@ -37,7 +37,7 @@ import sys
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 logger = logging.getLogger(__name__)
 
@@ -73,6 +73,7 @@ def auto_extract(
     project_path: str | Path,
     *,
     skip_phase3: bool = False,
+    on_progress: Callable[[str, dict], None] | None = None,
 ) -> AutoExtractionResult:
     """
     Run all extraction phases on a project folder.
@@ -88,20 +89,34 @@ def auto_extract(
     project_path = Path(project_path)
     result = AutoExtractionResult()
 
+    def emit(event_type: str, detail: dict):
+        if on_progress:
+            on_progress(event_type, detail)
+
     # Load existing user_data.json for UTM coords (needed by Phase 3)
     existing_user_data = _load_existing_user_data(project_path)
 
     # --- Phase 0.1: Content discovery ---
+    emit("step", {"step": "scan", "status": "active"})
     _phase1_file_scanner(project_path, result)
+    if result.file_mapping and hasattr(result.file_mapping, 'roles'):
+        for role_name, role_obj in result.file_mapping.roles.items():
+            path = role_obj.path if hasattr(role_obj, 'path') else str(role_obj)
+            emit("file", {"name": Path(path).name, "role": role_name})
     _phase01_content_discovery(project_path, result)
     _phase01_historia_geologica(project_path, result)
+    emit("step", {"step": "scan", "status": "done", "count": len(result.file_mapping.roles) if result.file_mapping and hasattr(result.file_mapping, 'roles') else 0})
 
     # --- Phase 1: Local files ---
+    emit("step", {"step": "extract", "status": "active"})
     _phase1_dpsh(project_path, result)
+    emit("source", {"name": "DPSH Excel", "ok": result.dpsh_data is not None and bool(getattr(result.dpsh_data, 'tests', None))})
     _phase1_field_dates(project_path, result)
+    emit("source", {"name": "Dates camp", "ok": 'field_work_dates' in result.prefills})
 
     # --- Phase 2: PDF extraction ---
     _phase2_lab_results(project_path, result)
+    emit("source", {"name": "Lab PDF", "ok": result.lab_results is not None and result.lab_results.sulfate_mg_kg is not None})
 
     # --- Phase 2.5: Geocode coordinates (if UTM missing) ---
     # --- Phase 3: HTTP APIs (needs UTM coords) ---
@@ -114,6 +129,7 @@ def auto_extract(
             utm_x, utm_y = _phase25_geocode(
                 existing_user_data, result, project_path,
             )
+        emit("source", {"name": "Geocode", "ok": bool(utm_x and utm_y)})
 
         superficie = (
             existing_user_data.get('superficie_parcela_m2', 0)
@@ -122,14 +138,21 @@ def auto_extract(
 
         if utm_x and utm_y:
             _phase3_geology(utm_x, utm_y, result)
+            emit("source", {"name": "ICGC geologia", "ok": 'icgc_unit_code' in result.prefills})
             _phase3_elevation(utm_x, utm_y, result)
+            emit("source", {"name": "ICGC elevació", "ok": 'cota_referencia' in result.prefills})
             _phase3_slope(utm_x, utm_y, result)
+            emit("source", {"name": "ICGC pendent", "ok": 'is_sloped' in result.prefills})
             _phase3_adjacents(utm_x, utm_y, superficie, result)
+            emit("source", {"name": "Cadastre adj.", "ok": any(f'adjacent_{d}' in result.prefills for d in ('north', 'south', 'east', 'west'))})
         else:
+            emit("source", {"name": "APIs HTTP", "ok": False, "reason": "sense UTM"})
             result.steps_skipped.append(
                 ("Fase 3: APIs HTTP", "sense coordenades UTM")
             )
 
+    emit("step", {"step": "extract", "status": "done"})
+    emit("step", {"step": "ready", "status": "done"})
     result.duration_seconds = time.monotonic() - t0
     return result
 

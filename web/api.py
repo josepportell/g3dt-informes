@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 
 from . import wizard_service
@@ -68,6 +68,33 @@ def get_user_data(project_name: str):
     """Read existing user_data.json for a project."""
     try:
         return wizard_service.load_user_data(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@router.get("/prefills-stream/{project_name:path}")
+def prefills_stream(project_name: str):
+    """SSE endpoint: streams progress events during extraction, then final prefills."""
+    try:
+        wizard_service._resolve_project(project_name)  # Validate project exists
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    return StreamingResponse(
+        wizard_service.get_prefills_streaming(project_name),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
+
+@router.get("/vision-status/{project_name:path}")
+def vision_status(project_name: str):
+    """Check which vision extraction JSONs exist and their mtime."""
+    try:
+        return wizard_service.get_vision_status(project_name)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 

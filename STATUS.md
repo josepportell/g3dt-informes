@@ -1,5 +1,5 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-03-05
+Last updated: 2026-03-06
 
 ## Current State
 
@@ -48,7 +48,15 @@ Pipeline complet operatiu. Claude Code és el runtime de producció — s'instal
 
 Cap blocker crític.
 
-## Fixes recents (2026-03-04)
+## Fixes recents (2026-03-06)
+
+### Real-time SSE stepper + manual vision stepper
+- **Stepper 1 (automàtic, SSE):** Fitxers → Dades → Llest. Backend streams events via `/api/prefills-stream/{project}` a mesura que cada fase completa. Fitxers i fonts de dades apareixen sota les icones en temps real.
+- **Stepper 2 (visió manual):** Copiar → Terminal → Actualitzar. Guia Eva pel procés de visió IA (manual al terminal). Pas 1: clic "Copiar". Pas 2: polling `/api/vision-status/{project}` detecta nous JSONs cada 3s. Pas 3: clic "Actualitzar prefills" + fetch. Es col·lapsa a "Visió completada" quan tots 3 JSONs existeixen.
+- **Backend:** `auto_extract()` ara accepta `on_progress` callback (retrocompatible). Nou endpoint SSE + endpoint vision-status.
+- **Eliminat:** stepper cosmètic amb setTimeout, acordió de fitxers a instruccions (migrat al stepper).
+
+## Fixes anteriors (2026-03-04)
 
 ### 3 Millores Wizard (demo-ready)
 - **Fitxers detectats:** banner mostra llista collapsable de fitxers trobats al projecte (DPSH.xls, PENETROS.pdf, etc.)
@@ -119,6 +127,8 @@ Cap blocker crític.
 - [x] Wizard demo-ready: fitxers detectats, carpeta Windows, fonts preservades, cache fix
 - [x] Condicions carpeta projecte (`docs/CONDICIONS-CARPETA-PROJECTE.md`) — doc per Eva
 - [x] Radó dinàmic: ZONA + descripció per municipi (municipal_data) + paràgraf CSN Bq/m³ per coordenades (csn_radon)
+- [x] Stepper amb progrés real via SSE (elimina animació cosmètica)
+- [x] Stepper visió manual amb polling de fitxers (guia Eva pel terminal)
 - [ ] Category C vocabulary (to d'Eva per secció Materials)
 - [ ] Eva revisa index.json (duplicats, variants geològiques)
 - [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54

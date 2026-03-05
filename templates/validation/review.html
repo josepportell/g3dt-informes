@@ -440,7 +440,7 @@
         }
         .pipeline-steps {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             gap: 0;
             max-width: 100%;
@@ -505,7 +505,7 @@
             height: 2px;
             background: #e0e0e0;
             margin: 0 4px;
-            margin-bottom: 26px;
+            margin-top: 17px; /* Center on 36px circle */
             transition: background 0.4s ease;
         }
         .step-connector.done {
@@ -533,6 +533,32 @@
         .pipeline-step.active .step-icon { display: none; }
         .pipeline-step.done .step-spinner { display: none; }
         .pipeline-step.done .step-icon { display: block; }
+        /* Step files list under each stepper icon */
+        .step-files {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+            margin-top: 4px;
+            font-size: 10px;
+            color: #aaa;
+            max-width: 100px;
+            min-height: 0;
+        }
+        .step-file-item {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 100%;
+            opacity: 0;
+            animation: stepFileIn 0.3s ease forwards;
+        }
+        .step-file-item.ok { color: #4a90d9; }
+        .step-file-item.skip { color: #ccc; text-decoration: line-through; }
+        @keyframes stepFileIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .no-excel-warning {
             background-color: #fff3cd;
             border: 1px solid #ffc107;
@@ -1224,22 +1250,85 @@
             font-size: 13px;
             color: #495057;
         }
-        .step-num {
-            background: #3498db;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
+        /* Vision stepper (manual, inside instructions) */
+        .vision-stepper {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
-            flex-shrink: 0;
+            gap: 0;
+            padding: 12px 0 8px;
         }
-        .step-num.done {
-            background: #27ae60;
+        .vision-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 0 0 auto;
         }
+        .vstep-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            border: 2px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #999;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .vstep-circle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
+        .vstep-label {
+            margin-top: 6px;
+            font-size: 10px;
+            color: #999;
+            text-align: center;
+            white-space: nowrap;
+            transition: color 0.3s ease;
+        }
+        .vstep-connector {
+            width: 50px;
+            height: 2px;
+            background: #e0e0e0;
+            margin: 0 4px;
+            margin-bottom: 22px;
+            transition: background 0.4s ease;
+        }
+        .vstep-connector.done { background: #4a90d9; }
+        .vision-step.active .vstep-circle {
+            background: #fff;
+            border-color: #4a90d9;
+            color: #4a90d9;
+            animation: pulse-ring 1.5s infinite;
+        }
+        .vision-step.active .vstep-label { color: #4a90d9; font-weight: 600; }
+        .vision-step.done .vstep-circle {
+            background: #4a90d9;
+            border-color: #4a90d9;
+            color: #fff;
+        }
+        .vision-step.done .vstep-label { color: #333; }
+        .vision-step.ready .vstep-circle {
+            background: #fff;
+            border-color: #27ae60;
+            color: #27ae60;
+            animation: pulse-ring 1.5s infinite;
+        }
+        .vision-step.ready .vstep-label { color: #27ae60; font-weight: 600; }
+        .vstep-spinner {
+            display: none;
+            width: 16px; height: 16px;
+            border: 2px solid rgba(74,144,217,0.3);
+            border-top-color: #4a90d9;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .vision-step.active .vstep-spinner { display: block; }
+        .vision-step.active .vstep-icon { display: none; }
+        .vision-step.done .vstep-spinner { display: none; }
+        .vision-step.done .vstep-icon { display: block; }
     </style>
 </head>
 <body>
@@ -1269,6 +1358,7 @@
                         </span>
                     </div>
                     <span class="step-label">Fitxers</span>
+                    <div class="step-files" id="step-files-scan"></div>
                 </div>
                 <div class="step-connector" id="conn-1"></div>
                 <div class="pipeline-step" id="step-extract">
@@ -1278,27 +1368,18 @@
                             <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                         </span>
                     </div>
-                    <span class="step-label">Extraccio</span>
+                    <span class="step-label">Dades</span>
+                    <div class="step-files" id="step-files-extract"></div>
                 </div>
                 <div class="step-connector" id="conn-2"></div>
-                <div class="pipeline-step" id="step-vision">
-                    <div class="step-circle">
-                        <div class="step-spinner"></div>
-                        <span class="step-icon">
-                            <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                        </span>
-                    </div>
-                    <span class="step-label">Visio IA</span>
-                </div>
-                <div class="step-connector" id="conn-3"></div>
-                <div class="pipeline-step" id="step-wizard">
+                <div class="pipeline-step" id="step-ready">
                     <div class="step-circle">
                         <div class="step-spinner"></div>
                         <span class="step-icon">
                             <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                         </span>
                     </div>
-                    <span class="step-label">Wizard</span>
+                    <span class="step-label">Llest</span>
                 </div>
             </div>
         </div>
@@ -1579,98 +1660,79 @@
         const dataContent = document.getElementById('dataContent');
         const messageDiv = document.getElementById('message');
 
-        // Pipeline stepper
-        const PIPELINE_STEPS = ['scan', 'extract', 'vision', 'wizard'];
-        let stepperTimers = [];
+        // Pipeline stepper (SSE-based, 3 steps: scan → extract → ready)
+        const PIPELINE_STEPS = ['scan', 'extract', 'ready'];
+        let activeEventSource = null;
 
         function showStepper() {
             document.getElementById('pipelineStepper').style.display = 'block';
             emptyState.style.display = 'none';
-            // Reset all steps
+            // Reset all steps and file lists
             PIPELINE_STEPS.forEach(s => {
                 document.getElementById(`step-${s}`).className = 'pipeline-step';
             });
-            ['conn-1','conn-2','conn-3'].forEach(c => {
+            ['conn-1','conn-2'].forEach(c => {
                 document.getElementById(c).className = 'step-connector';
             });
+            // Clear step-files
+            document.querySelectorAll('.step-files').forEach(el => el.innerHTML = '');
         }
 
         function setStepState(stepId, state) {
             const el = document.getElementById(`step-${stepId}`);
+            if (!el) return;
             el.className = 'pipeline-step' + (state ? ` ${state}` : '');
-            // Mark preceding connectors as done
             const idx = PIPELINE_STEPS.indexOf(stepId);
-            if (idx > 0 && state === 'active') {
+            if (idx > 0 && (state === 'active' || state === 'done')) {
                 document.getElementById(`conn-${idx}`).className = 'step-connector done';
             }
-            if (state === 'done' && idx < 3) {
-                document.getElementById(`conn-${idx + 1}`).className = 'step-connector';
-            }
-        }
-
-        function advanceStepper(stepIdx) {
-            if (stepIdx > 0) {
-                setStepState(PIPELINE_STEPS[stepIdx - 1], 'done');
-                const connIdx = stepIdx;
-                if (connIdx <= 3) document.getElementById(`conn-${connIdx}`).className = 'step-connector done';
-            }
-            if (stepIdx < PIPELINE_STEPS.length) {
-                setStepState(PIPELINE_STEPS[stepIdx], 'active');
-            }
-        }
-
-        let stepperStartTime = 0;
-        let dataReadyCallback = null;
-
-        function startStepperAnimation() {
-            stepperTimers.forEach(t => clearTimeout(t));
-            stepperTimers = [];
-            dataReadyCallback = null;
-            stepperStartTime = Date.now();
-            showStepper();
-            // Step 0: Fitxers — immediate
-            advanceStepper(0);
-            // Steps 1-3 on fixed schedule
-            stepperTimers.push(setTimeout(() => advanceStepper(1), 600));
-            stepperTimers.push(setTimeout(() => advanceStepper(2), 1400));
-            stepperTimers.push(setTimeout(() => advanceStepper(3), 2200));
-            // After full animation, mark all done
-            stepperTimers.push(setTimeout(() => {
-                finishStepper();
-            }, 3000));
         }
 
         function finishStepper() {
             PIPELINE_STEPS.forEach((s, i) => {
                 setStepState(s, 'done');
-                if (i < 3) document.getElementById(`conn-${i + 1}`).className = 'step-connector done';
+                if (i < PIPELINE_STEPS.length - 1) {
+                    document.getElementById(`conn-${i + 1}`).className = 'step-connector done';
+                }
             });
-            // If data arrived early, fire the callback now
-            if (dataReadyCallback) {
-                const cb = dataReadyCallback;
-                dataReadyCallback = null;
-                cb();
-            }
-        }
-
-        function completeStepperAnimation(onComplete) {
-            const elapsed = Date.now() - stepperStartTime;
-            const minDuration = 3000;
-            if (elapsed >= minDuration) {
-                // Animation already finished — complete immediately
-                finishStepper();
-                if (onComplete) onComplete();
-            } else {
-                // Data arrived early — wait for animation to finish, then fire callback
-                dataReadyCallback = onComplete || null;
-            }
         }
 
         function hideStepper() {
-            stepperTimers.forEach(t => clearTimeout(t));
-            stepperTimers = [];
+            if (activeEventSource) {
+                activeEventSource.close();
+                activeEventSource = null;
+            }
             document.getElementById('pipelineStepper').style.display = 'none';
         }
+
+        function appendStepFile(stepId, fileName, status) {
+            const container = document.getElementById(`step-files-${stepId}`);
+            if (!container) return;
+            const item = document.createElement('span');
+            item.className = `step-file-item ${status}`;
+            item.textContent = fileName;
+            container.appendChild(item);
+        }
+
+        // Role labels for file display under stepper icons
+        const ROLE_LABELS = {
+            'dpsh_excel': 'DPSH Excel', 'penetros_pdf': 'Penetros PDF',
+            'sondeig_pdf': 'Sondeig PDF', 'architect_plan': 'Planol',
+            'architect_plan_with_points': 'Planol+punts',
+            'lab_results_pdf': 'Lab PDF', 'reference_report': 'Informe ref.',
+            'gtl_report': 'GTL', 'coordenades': 'Coordenades',
+            'situation_plan': 'Planol situacio',
+            'dpsh_field_sheet': 'Penetros PDF', 'sondeig_field_sheet': 'Sondeig PDF',
+            'lab_order': 'Comanda lab', 'photos_dir': 'Fotos',
+            'correlation_section': 'Tall geologic',
+        };
+        // Roles most relevant to Eva (shown under stepper); others hidden to avoid clutter
+        const PRIORITY_ROLES = new Set([
+            'dpsh_excel', 'penetros_pdf', 'dpsh_field_sheet',
+            'sondeig_pdf', 'sondeig_field_sheet',
+            'architect_plan', 'architect_plan_with_points',
+            'lab_results_pdf', 'coordenades',
+        ]);
 
         function showMessage(text, type) {
             messageDiv.textContent = text;
@@ -2713,25 +2775,81 @@
                 return;
             }
 
-            // Start pipeline stepper animation and load data
-            startStepperAnimation();
+            // Start pipeline stepper and load data via SSE
+            showStepper();
             dataContent.style.display = 'none';
             loadProjectData();
         }
 
         async function loadProjectData() {
+            // Close previous SSE connection if any
+            if (activeEventSource) {
+                activeEventSource.close();
+                activeEventSource = null;
+            }
+
+            // Load user_data in parallel (independent of SSE stream)
+            fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`)
+                .then(r => r.ok ? r.json() : {})
+                .then(d => { wizardUserData = d; })
+                .catch(() => { wizardUserData = {}; });
+
+            // SSE stream for prefills with real-time progress
+            const es = new EventSource(`/api/prefills-stream/${encodeURIComponent(selectedProject)}`);
+            activeEventSource = es;
+
+            es.addEventListener('step', (e) => {
+                const data = JSON.parse(e.data);
+                setStepState(data.step, data.status);
+            });
+
+            es.addEventListener('file', (e) => {
+                const data = JSON.parse(e.data);
+                if (!PRIORITY_ROLES.has(data.role)) return; // Only show key files
+                const label = ROLE_LABELS[data.role] || data.name;
+                appendStepFile('scan', label, 'ok');
+            });
+
+            es.addEventListener('source', (e) => {
+                const data = JSON.parse(e.data);
+                appendStepFile('extract', data.name, data.ok ? 'ok' : 'skip');
+            });
+
+            es.addEventListener('prefills', (e) => {
+                wizardPrefills = JSON.parse(e.data);
+                es.close();
+                activeEventSource = null;
+                showWizardContent();
+            });
+
+            es.addEventListener('error_event', (e) => {
+                const data = JSON.parse(e.data);
+                es.close();
+                activeEventSource = null;
+                hideStepper();
+                emptyState.style.display = 'block';
+                showMessage('Error carregant dades: ' + data.message, 'error');
+            });
+
+            es.onerror = () => {
+                es.close();
+                activeEventSource = null;
+                // Fallback to regular fetch
+                loadProjectDataFallback();
+            };
+        }
+
+        async function loadProjectDataFallback() {
             try {
                 const [prefillsRes, userDataRes] = await Promise.all([
                     fetch(`/api/prefills/${encodeURIComponent(selectedProject)}?refresh=true`),
                     fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`),
                 ]);
-
                 if (!prefillsRes.ok) throw new Error('Error carregant prefills');
                 wizardPrefills = await prefillsRes.json();
                 wizardUserData = userDataRes.ok ? await userDataRes.json() : {};
-
-                // Signal data ready — stepper will call showWizardContent when animation finishes
-                completeStepperAnimation(showWizardContent);
+                finishStepper();
+                showWizardContent();
             } catch (err) {
                 hideStepper();
                 emptyState.style.display = 'block';
@@ -2739,9 +2857,18 @@
             }
         }
 
+        // --- Vision stepper (manual, 3 steps: copy → terminal → refresh) ---
+        let visionPollTimer = null;
+        let visionBaseline = {};
+        let visionStepperState = {copy: null, terminal: null, refresh: null};
+
         function renderInstructions(prefills) {
             const container = document.getElementById('wizardInstructions');
             if (!container || !selectedProject) { container && (container.style.display = 'none'); return; }
+
+            // Stop any existing polling
+            if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
+            visionStepperState = {copy: null, terminal: null, refresh: null};
 
             const vs = prefills._vision_status ? prefills._vision_status.value : {};
             const allDone = vs.planol && vs.dpsh && vs.sondeig;
@@ -2755,65 +2882,118 @@
 
             const doneCount = [vs.planol, vs.dpsh, vs.sondeig].filter(Boolean).length;
 
-            // Build file list from _file_mapping
-            const fm = prefills._file_mapping ? prefills._file_mapping.value : {};
-            const roleLabels = {
-                'dpsh_excel': 'DPSH Excel', 'penetros_pdf': 'Penetros PDF',
-                'sondeig_pdf': 'Sondeig PDF', 'architect_plan': 'Planol',
-                'architect_plan_with_points': 'Planol+punts',
-                'lab_results_pdf': 'Lab PDF', 'reference_report': 'Informe ref.',
-                'gtl_report': 'GTL', 'coordenades': 'Coordenades',
-                'situation_plan': 'Planol situacio',
-            };
-            const roleEntries = Object.entries(fm);
-            const fileListHtml = roleEntries.length > 0 ? `
-                <div style="margin-top:10px">
-                    <button class="file-list-toggle" onclick="toggleFileList(event)">${roleEntries.length} fitxers detectats</button>
-                    <ul class="file-list" id="fileListItems" style="display:none">
-                        ${roleEntries.map(([role, info]) => {
-                            const label = roleLabels[role] || role.replace(/_/g, ' ');
-                            const path = typeof info === 'object' ? info.path : info;
-                            return `<li><span class="file-role">${label}</span><span class="file-path">${path}</span></li>`;
-                        }).join('')}
-                    </ul>
-                </div>` : '';
+            if (allDone) {
+                container.innerHTML = `
+                    <div class="instructions-header" onclick="toggleInstructions()">
+                        <h3>Visio completada (${doneCount}/3)</h3>
+                        <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">+</button>
+                    </div>
+                    <div class="instructions-body">
+                        <div class="vision-badges">${badges}</div>
+                    </div>
+                `;
+                container.className = 'wizard-instructions collapsed';
+                container.style.display = 'block';
+                return;
+            }
 
             container.innerHTML = `
                 <div class="instructions-header" onclick="toggleInstructions()">
-                    <h3>${allDone ? 'Visio completada' : 'Instruccions'} (${doneCount}/3)</h3>
-                    <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">${allDone ? '+' : '-'}</button>
+                    <h3>Visio IA (${doneCount}/3)</h3>
+                    <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">-</button>
                 </div>
                 <div class="instructions-body">
-                    <div class="vision-badges">${badges}</div>
-                    ${!allDone ? `
+                    <div class="vision-stepper">
+                        <div class="vision-step" id="vstep-copy">
+                            <div class="vstep-circle">
+                                <div class="vstep-spinner"></div>
+                                <span class="vstep-icon">
+                                    <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                </span>
+                            </div>
+                            <span class="vstep-label">Copiar</span>
+                        </div>
+                        <div class="vstep-connector" id="vconn-1"></div>
+                        <div class="vision-step" id="vstep-terminal">
+                            <div class="vstep-circle">
+                                <div class="vstep-spinner"></div>
+                                <span class="vstep-icon">
+                                    <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                                </span>
+                            </div>
+                            <span class="vstep-label">Terminal</span>
+                        </div>
+                        <div class="vstep-connector" id="vconn-2"></div>
+                        <div class="vision-step" id="vstep-refresh">
+                            <div class="vstep-circle">
+                                <div class="vstep-spinner"></div>
+                                <span class="vstep-icon">
+                                    <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+                                </span>
+                            </div>
+                            <span class="vstep-label">Actualitzar</span>
+                        </div>
+                    </div>
                     <div class="copy-command">
                         <code id="visionCmd">${cmd}</code>
-                        <button class="btn-copy" onclick="copyVisionCommand(event)">Copiar</button>
-                    </div>` : ''}
-                    <ol class="instructions-steps">
-                        <li>
-                            <span class="step-num ${allDone ? 'done' : ''}">1</span>
-                            <span>${allDone ? 'Visio completada' : 'Executa la comanda al terminal de Claude Code'}</span>
-                        </li>
-                        <li>
-                            <span class="step-num">2</span>
-                            <span>Prem <strong>Actualitzar prefills</strong> per carregar les dades de visio</span>
-                        </li>
-                        <li>
-                            <span class="step-num">3</span>
-                            <span>Revisa els camps pre-omplerts i ajusta si cal</span>
-                        </li>
-                        <li>
-                            <span class="step-num">4</span>
-                            <span>Prem <strong>Generar Informe</strong> per descarregar el .docx</span>
-                        </li>
-                    </ol>
-                    ${fileListHtml}
+                        <button class="btn-copy" id="btnCopyVision" onclick="copyVisionCommand(event)">Copiar</button>
+                    </div>
+                    <div class="vision-badges">${badges}</div>
                 </div>
             `;
 
-            container.className = 'wizard-instructions' + (allDone ? ' collapsed' : '');
+            container.className = 'wizard-instructions';
             container.style.display = 'block';
+        }
+
+        function setVisionStepState(stepId, state) {
+            const el = document.getElementById(`vstep-${stepId}`);
+            if (!el) return;
+            el.className = 'vision-step' + (state ? ` ${state}` : '');
+            visionStepperState[stepId] = state;
+            // Mark preceding connectors
+            const steps = ['copy', 'terminal', 'refresh'];
+            const idx = steps.indexOf(stepId);
+            if (idx > 0 && (state === 'active' || state === 'done')) {
+                document.getElementById(`vconn-${idx}`).className = 'vstep-connector done';
+            }
+        }
+
+        function startVisionPolling() {
+            // Capture baseline: which JSONs exist NOW (before terminal runs)
+            fetch(`/api/vision-status/${encodeURIComponent(selectedProject)}`)
+                .then(r => r.json())
+                .then(status => {
+                    visionBaseline = status;
+                    visionPollTimer = setInterval(checkVisionFiles, 3000);
+                });
+        }
+
+        function checkVisionFiles() {
+            if (!selectedProject) return;
+            fetch(`/api/vision-status/${encodeURIComponent(selectedProject)}`)
+                .then(r => r.json())
+                .then(status => {
+                    let newFiles = 0;
+                    for (const key of ['planol', 'dpsh', 'sondeig']) {
+                        const base = visionBaseline[key] || {};
+                        const curr = status[key] || {};
+                        if (curr.exists && (!base.exists || (curr.mtime && base.mtime && curr.mtime > base.mtime))) {
+                            newFiles++;
+                            // Update individual badge
+                            const dot = document.querySelector(`.vision-dot.pending`);
+                        }
+                    }
+                    if (newFiles > 0) {
+                        clearInterval(visionPollTimer);
+                        visionPollTimer = null;
+                        setVisionStepState('terminal', 'done');
+                        // Highlight the refresh button
+                        setVisionStepState('refresh', 'ready');
+                        showMessage('Visio detectada! Prem Actualitzar prefills.', 'success');
+                    }
+                })
+                .catch(() => {}); // Silent fail on polling
         }
 
         function toggleInstructions() {
@@ -2821,17 +3001,6 @@
             if (container) container.classList.toggle('collapsed');
             const btn = container?.querySelector('.instructions-toggle');
             if (btn) btn.textContent = container.classList.contains('collapsed') ? '+' : '-';
-        }
-
-        function toggleFileList(event) {
-            event.stopPropagation();
-            const list = document.getElementById('fileListItems');
-            if (!list) return;
-            const visible = list.style.display !== 'none';
-            list.style.display = visible ? 'none' : 'grid';
-            event.target.textContent = visible
-                ? event.target.textContent.replace('Amagar', '').replace('fitxers', 'fitxers detectats')
-                : event.target.textContent.replace('detectats', '').trim() + ' — Amagar';
         }
 
         function copyVisionCommand(event) {
@@ -2843,6 +3012,11 @@
                 const orig = btn.textContent;
                 btn.textContent = 'Copiat!';
                 setTimeout(() => btn.textContent = orig, 1500);
+
+                // Mark vision step 1 as done, step 2 as active
+                setVisionStepState('copy', 'done');
+                setVisionStepState('terminal', 'active');
+                startVisionPolling();
             });
         }
 
@@ -2859,6 +3033,13 @@
             document.getElementById('wizardForm').style.display = 'block';
             document.getElementById('wizardUnsaved').style.display = 'none';
             switchTab('wizard');
+
+            // Complete vision stepper step 3 if this was a refresh
+            if (pendingVisionRefresh) {
+                pendingVisionRefresh = false;
+                setVisionStepState('refresh', 'done');
+                showMessage('Prefills actualitzats', 'success');
+            }
         }
 
         async function loadWizardData() {
@@ -3247,25 +3428,29 @@
             }
         }
 
+        let pendingVisionRefresh = false;
+
         async function refreshPrefills() {
             if (!selectedProject) return;
-            startStepperAnimation();
-            document.getElementById('pipelineStepper').style.display = 'block';
-            try {
-                const res = await fetch(`/api/prefills/${encodeURIComponent(selectedProject)}?refresh=true`);
-                if (!res.ok) throw new Error('Error actualitzant prefills');
-                wizardPrefills = await res.json();
-                const udRes = await fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`);
-                wizardUserData = udRes.ok ? await udRes.json() : {};
-                completeStepperAnimation(() => {
-                    renderWizardForm();
-                    renderInstructions(wizardPrefills);
-                    showMessage('Prefills actualitzats', 'success');
-                });
-            } catch (err) {
-                hideStepper();
-                showMessage('Error actualitzant prefills: ' + err.message, 'error');
+
+            // If vision stepper exists, mark steps appropriately
+            // Retroactively mark steps 1+2 if Eva skipped copy
+            if (visionStepperState.copy !== 'done') {
+                setVisionStepState('copy', 'done');
+                setVisionStepState('terminal', 'done');
             }
+            if (visionStepperState.terminal === 'active' || visionStepperState.terminal === 'ready') {
+                setVisionStepState('terminal', 'done');
+            }
+            setVisionStepState('refresh', 'active');
+            pendingVisionRefresh = true;
+
+            // Stop vision polling if running
+            if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
+
+            showStepper();
+            document.getElementById('pipelineStepper').style.display = 'block';
+            loadProjectData();
         }
 
         async function saveWizard() {
