@@ -38,20 +38,6 @@
             color: #2c3e50;
             font-size: 24px;
         }
-        .status-badge {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .status-pending {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-        .status-approved {
-            background-color: #d4edda;
-            color: #155724;
-        }
         /* file-controls removed — replaced by pipeline stepper */
         .btn {
             padding: 12px 24px;
@@ -1260,7 +1246,6 @@
     <div class="container">
         <header>
             <h1>G3DT - Revisio de Dades de Camp</h1>
-            <span id="statusBadge" class="status-badge status-pending">Pendent de revisio</span>
         </header>
 
         <!-- Project Selector (for Wizard tab) -->
@@ -1592,7 +1577,6 @@
         // DOM elements
         const emptyState = document.getElementById('emptyState');
         const dataContent = document.getElementById('dataContent');
-        const statusBadge = document.getElementById('statusBadge');
         const messageDiv = document.getElementById('message');
 
         // Pipeline stepper
@@ -1766,11 +1750,6 @@
                 currentTab = availableTabs[0];
             }
             switchTab(currentTab);
-
-            // Update status badge
-            const status = currentData.status || 'pending_review';
-            statusBadge.textContent = status === 'approved' ? 'Aprovat' : 'Pendent de revisio';
-            statusBadge.className = `status-badge status-${status === 'approved' ? 'approved' : 'pending'}`;
 
             // Render all tab contents
             renderAllTabs();
