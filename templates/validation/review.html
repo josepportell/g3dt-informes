@@ -443,9 +443,9 @@
             align-items: flex-start;
             justify-content: center;
             gap: 0;
-            max-width: 100%;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
         .pipeline-step {
             display: flex;
@@ -501,10 +501,11 @@
             color: #333;
         }
         .step-connector {
-            width: 60px;
+            flex: 1;
+            max-width: 200px;
             height: 2px;
             background: #e0e0e0;
-            margin: 0 4px;
+            margin: 0 8px;
             margin-top: 17px; /* Center on 36px circle */
             transition: background 0.4s ease;
         }
@@ -1256,7 +1257,9 @@
             align-items: center;
             justify-content: center;
             gap: 0;
-            padding: 12px 0 8px;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 12px 20px 8px;
         }
         .vision-step {
             display: flex;
@@ -1289,10 +1292,11 @@
             transition: color 0.3s ease;
         }
         .vstep-connector {
-            width: 50px;
+            flex: 1;
+            max-width: 160px;
             height: 2px;
             background: #e0e0e0;
-            margin: 0 4px;
+            margin: 0 8px;
             margin-bottom: 22px;
             transition: background 0.4s ease;
         }
@@ -2825,6 +2829,7 @@
                 wizardPrefills = JSON.parse(e.data);
                 es.close();
                 activeEventSource = null;
+                finishStepper();
                 showWizardContent();
             });
 
@@ -3038,9 +3043,12 @@
             document.getElementById('wizardUnsaved').style.display = 'none';
             switchTab('wizard');
 
-            // Complete vision stepper step 3 if this was a refresh
+            // Complete vision stepper if this was a refresh
+            // (renderInstructions above rebuilt the HTML, so re-apply all done states)
             if (pendingVisionRefresh) {
                 pendingVisionRefresh = false;
+                setVisionStepState('copy', 'done');
+                setVisionStepState('terminal', 'done');
                 setVisionStepState('refresh', 'done');
                 showMessage('Prefills actualitzats', 'success');
             }
