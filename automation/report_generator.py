@@ -894,6 +894,9 @@ class ReportGenerator:
             context['materials_level_1'] = ''
             context['materials_intro'] = ''
             context['seismic_ab_text'] = ''
+            context['radon_zone'] = '1'
+            context['radon_zone_description'] = ''
+            context['csn_radon_text'] = ''
             for i in range(6):
                 context[f'geology_para_{i+1}'] = ''
             context['geology_paragraphs'] = []
@@ -923,6 +926,38 @@ class ReportGenerator:
                     if ab_match:
                         # Use comma as decimal separator (Catalan format)
                         context['seismic_ab_text'] = ab_match.group(1).replace('.', ',')
+
+                # Radon (zone + CSN coordinate potential)
+                municipality = self.report_data.municipality or ''
+                if municipality:
+                    from .municipal_data import get_radon_info_with_status
+                    radon_result = get_radon_info_with_status(municipality)
+                    radon_info = radon_result.info
+                    context['radon_zone'] = str(radon_info.zone)
+                    if radon_info.zone == 0:
+                        context['radon_zone_description'] = ', municipi amb baixes concentracions de gas radó.'
+                    elif radon_info.zone == 1:
+                        context['radon_zone_description'] = (
+                            ', municipi amb concentracions mitjanes de gas radó en edificis tancats. '
+                            'Es recomana la implementació de mesures bàsiques de protecció.'
+                        )
+                    else:  # zone == 2
+                        context['radon_zone_description'] = (
+                            ', municipi amb concentracions potencialment elevades de gas radó en edificis tancats. '
+                            'És obligatòria la implementació de mesures de protecció segons CTE DB HS6.'
+                        )
+
+                utm_x = self.report_data.utm_x
+                utm_y = self.report_data.utm_y
+                if utm_x and utm_y:
+                    try:
+                        from .csn_radon import get_radon_potential_text
+                        csn_text = get_radon_potential_text(utm_x, utm_y)
+                        if csn_text:
+                            context['csn_radon_text'] = csn_text
+                    except Exception as e:
+                        import logging
+                        logging.getLogger(__name__).warning(f"Could not get CSN radon potential: {e}")
 
             # Section-derived text variables
             context['materials_depth_text'] = ''
