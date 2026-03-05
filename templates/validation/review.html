@@ -1663,8 +1663,10 @@
         // Pipeline stepper (SSE-based, 3 steps: scan → extract → ready)
         const PIPELINE_STEPS = ['scan', 'extract', 'ready'];
         let activeEventSource = null;
+        let visionPollTimer = null;
 
         function showStepper() {
+            if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
             document.getElementById('pipelineStepper').style.display = 'block';
             emptyState.style.display = 'none';
             // Reset all steps and file lists
@@ -2799,11 +2801,13 @@
             activeEventSource = es;
 
             es.addEventListener('step', (e) => {
+                if (activeEventSource !== es) return;
                 const data = JSON.parse(e.data);
                 setStepState(data.step, data.status);
             });
 
             es.addEventListener('file', (e) => {
+                if (activeEventSource !== es) return;
                 const data = JSON.parse(e.data);
                 if (!PRIORITY_ROLES.has(data.role)) return; // Only show key files
                 const label = ROLE_LABELS[data.role] || data.name;
@@ -2811,11 +2815,13 @@
             });
 
             es.addEventListener('source', (e) => {
+                if (activeEventSource !== es) return;
                 const data = JSON.parse(e.data);
                 appendStepFile('extract', data.name, data.ok ? 'ok' : 'skip');
             });
 
             es.addEventListener('prefills', (e) => {
+                if (activeEventSource !== es) return;
                 wizardPrefills = JSON.parse(e.data);
                 es.close();
                 activeEventSource = null;
@@ -2823,6 +2829,7 @@
             });
 
             es.addEventListener('error_event', (e) => {
+                if (activeEventSource !== es) return;
                 const data = JSON.parse(e.data);
                 es.close();
                 activeEventSource = null;
@@ -2858,7 +2865,6 @@
         }
 
         // --- Vision stepper (manual, 3 steps: copy → terminal → refresh) ---
-        let visionPollTimer = null;
         let visionBaseline = {};
         let visionStepperState = {copy: null, terminal: null, refresh: null};
 
@@ -2980,8 +2986,6 @@
                         const curr = status[key] || {};
                         if (curr.exists && (!base.exists || (curr.mtime && base.mtime && curr.mtime > base.mtime))) {
                             newFiles++;
-                            // Update individual badge
-                            const dot = document.querySelector(`.vision-dot.pending`);
                         }
                     }
                     if (newFiles > 0) {

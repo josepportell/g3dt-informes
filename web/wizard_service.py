@@ -86,42 +86,35 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
     from automation.auto_extractor import auto_extract
     auto_result = auto_extract(project_path)
 
-    # Phase 1: Claude vision — never force-refresh from here.
-    # Vision JSONs are created by /g3dt-visio-projecte (Claude Code native)
-    # or a previous SDK run. The refresh button only re-reads existing JSONs.
+    return _merge_prefills(project_name, project_path, auto_result)
+
+
+def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> dict[str, Any]:
+    """Merge auto_extract result with vision + wizard prefills. Shared by sync and streaming paths."""
     _run_vision_phase(project_path, force_refresh=False)
 
-    # Phase 2: wizard prefill chain (reads validation/ JSONs including vision output)
     from automation.wizard import UserDataWizard
     wizard = UserDataWizard(str(project_path))
     wizard.load_prefills()
 
-    # Merge: wizard prefills take priority, auto_extract fills gaps
     merged: dict[str, Any] = {}
 
-    # Add auto_extract prefills as {value, source}
     for key, value in auto_result.prefills.items():
         source = auto_result.sources.get(key, 'auto')
         merged[key] = {'value': value, 'source': source}
 
-    # Overlay wizard prefills (higher priority — includes vision-derived fields)
     for key, entry in wizard.prefills.items():
         merged[key] = entry
 
-    # Add non-wizard field street_address from _user_data_full (populated by _load_planol)
-    # Note: promoter_name and building_height_m are now proper wizard fields
-    # (client_name and building_height_m) and flow through wizard.prefills.
     if 'street_address' not in merged and 'street_address' in wizard._user_data_full:
         merged['street_address'] = {'value': wizard._user_data_full['street_address'], 'source': 'planol vision'}
 
-    # Vision status: which extraction JSONs exist?
     vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json'}
     vision_status = {}
     for vt, filename in vision_types.items():
         vision_status[vt] = (project_path / 'validation' / filename).exists()
     merged['_vision_status'] = {'value': vision_status, 'source': 'system'}
 
-    # File mapping: which project files were detected and their roles
     if auto_result.file_mapping:
         fm = auto_result.file_mapping
         fm_serialized = {}
@@ -132,7 +125,6 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
             }
         merged['_file_mapping'] = {'value': fm_serialized, 'source': 'system'}
 
-    # Projects base path (for frontend to build vision command)
     merged['_projects_base'] = {'value': str(_REF_DIR), 'source': 'system'}
 
     _prefill_cache[project_name] = merged
@@ -177,47 +169,17 @@ def get_prefills_streaming(project_name: str):
         yield f"event: error_event\ndata: {json.dumps({'message': str(error_holder[0])})}\n\n"
         return
 
-    auto_result = auto_result_holder[0]
+    if not auto_result_holder:
+        yield f"event: error_event\ndata: {json.dumps({'message': 'Extraction ended without result'})}\n\n"
+        return
 
-    # Same merge logic as get_prefills()
-    _run_vision_phase(project_path, force_refresh=False)
-
-    from automation.wizard import UserDataWizard
-    wizard = UserDataWizard(str(project_path))
-    wizard.load_prefills()
-
-    merged: dict[str, Any] = {}
-    for key, value in auto_result.prefills.items():
-        source = auto_result.sources.get(key, 'auto')
-        merged[key] = {'value': value, 'source': source}
-
-    for key, entry in wizard.prefills.items():
-        merged[key] = entry
-
-    if 'street_address' not in merged and 'street_address' in wizard._user_data_full:
-        merged['street_address'] = {'value': wizard._user_data_full['street_address'], 'source': 'planol vision'}
-
-    vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json'}
-    vision_status = {}
-    for vt, filename in vision_types.items():
-        vision_status[vt] = (project_path / 'validation' / filename).exists()
-    merged['_vision_status'] = {'value': vision_status, 'source': 'system'}
-
-    if auto_result.file_mapping:
-        fm = auto_result.file_mapping
-        fm_serialized = {}
-        for role_name, role_obj in fm.roles.items():
-            fm_serialized[role_name] = {
-                'path': role_obj.path if hasattr(role_obj, 'path') else str(role_obj),
-                'confidence': getattr(role_obj, 'confidence', None),
-            }
-        merged['_file_mapping'] = {'value': fm_serialized, 'source': 'system'}
-
-    merged['_projects_base'] = {'value': str(_REF_DIR), 'source': 'system'}
-
-    _prefill_cache[project_name] = merged
-
-    yield f"event: prefills\ndata: {json.dumps(merged, ensure_ascii=False)}\n\n"
+    try:
+        auto_result = auto_result_holder[0]
+        merged = _merge_prefills(project_name, project_path, auto_result)
+        yield f"event: prefills\ndata: {json.dumps(merged, ensure_ascii=False)}\n\n"
+    except Exception as e:
+        logger.exception("Error merging prefills for streaming")
+        yield f"event: error_event\ndata: {json.dumps({'message': str(e)})}\n\n"
 
 
 def get_vision_status(project_name: str) -> dict[str, Any]:
