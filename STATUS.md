@@ -1,5 +1,5 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-03-04
+Last updated: 2026-03-05
 
 ## Current State
 
@@ -117,6 +117,8 @@ Cap blocker crític.
 - [x] FileScanner: situation_plan amb prefix expedient + search_in múltiple
 - [x] Superfícies amb expressions aritmètiques (70+20)
 - [x] Wizard demo-ready: fitxers detectats, carpeta Windows, fonts preservades, cache fix
+- [x] Condicions carpeta projecte (`docs/CONDICIONS-CARPETA-PROJECTE.md`) — doc per Eva
+- [x] Radó dinàmic: ZONA + descripció per municipi (municipal_data) + paràgraf CSN Bq/m³ per coordenades (csn_radon)
 - [ ] Category C vocabulary (to d'Eva per secció Materials)
 - [ ] Eva revisa index.json (duplicats, variants geològiques)
 - [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54
