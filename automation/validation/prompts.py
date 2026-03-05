@@ -77,11 +77,13 @@ SONDEIG_JSON_EXAMPLE = '''
     {
       "test_id": "S-1",
       "total_depth_m": 6.0,
+      "num_geological_levels": 2,
       "layers": [
         {
           "depth_from_m": 0.0,
           "depth_to_m": 0.5,
           "description": "Terra vegetal",
+          "geological_level": 1,
           "uscs_classification": null,
           "color": "marro",
           "moisture": "humit",
@@ -94,6 +96,7 @@ SONDEIG_JSON_EXAMPLE = '''
           "depth_from_m": 0.5,
           "depth_to_m": 3.2,
           "description": "Argila marronosa amb graves",
+          "geological_level": 2,
           "uscs_classification": "CL",
           "color": "marro clar",
           "moisture": "humit",
@@ -126,15 +129,25 @@ DOCUMENT STRUCTURE:
 - Water level (N.F.) may be indicated
 - Rock or refusal may be noted at bottom
 
+CRITICAL — "Unitat litològica" COLUMN:
+The field sheet has a column labeled "Unitat litològica" (or "U. Litol.") that groups
+soil strata into geological LEVELS (NIVELL 1, NIVELL 2, etc.). This is the AUTHORITATIVE
+source for the number of geological levels. Multiple soil strata (visible transitions in
+the graphic column) may belong to the SAME geological level. For example, if the "Unitat
+litològica" column only shows "NIVELL 1" for the entire borehole depth, then
+num_geological_levels = 1, even if you see 2 or more distinct soil descriptions.
+
 EXTRACTION RULES:
 1. For each borehole, extract ALL soil layers from surface to final depth
 2. Depths should be continuous (each layer's depth_to_m = next layer's depth_from_m)
 3. Extract soil descriptions in Catalan as written
-4. Note USCS classification if visible (typically in a separate column)
-5. Moisture states: sec, humit, saturat
-6. Consistency (cohesive soils): tova, ferma, dura
-7. Density (granular soils): fluixa, mitja, densa
-8. Mark uncertain values with appropriate confidence scores
+4. For each layer, set "geological_level" to the NIVELL number from the "Unitat litològica" column
+5. Set "num_geological_levels" to the count of DISTINCT values in the "Unitat litològica" column
+6. Note USCS classification if visible (typically in a separate column)
+7. Moisture states: sec, humit, saturat
+8. Consistency (cohesive soils): tova, ferma, dura
+9. Density (granular soils): fluixa, mitja, densa
+10. Mark uncertain values with appropriate confidence scores
 
 CONFIDENCE SCORING:
 - 1.0: Clear, unambiguous description

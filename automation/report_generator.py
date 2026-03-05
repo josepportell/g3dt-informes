@@ -260,12 +260,15 @@ class ReportGenerator:
 
                         # Auto-fill num_soil_levels only if NOT already set in user_data
                         # (user/wizard choice takes precedence over auto-detection)
-                        num_layers = len(layers)
-                        if 'num_soil_levels' not in self.user_data and num_layers > 0:
-                            self.user_data['num_soil_levels'] = num_layers
+                        # Prefer num_geological_levels (from "Unitat litològica" column)
+                        # over len(layers) which counts individual soil strata
+                        geo_levels = sondeig_tests[0].get('num_geological_levels')
+                        num_levels = geo_levels if geo_levels is not None else len(layers)
+                        if 'num_soil_levels' not in self.user_data and num_levels > 0:
+                            self.user_data['num_soil_levels'] = num_levels
                             logger.info(
                                 "Auto-filled num_soil_levels=%d from sondeig_extracted.json",
-                                num_layers,
+                                num_levels,
                             )
             except Exception as e:
                 self.warnings.append(f"Could not auto-fill from sondeig_extracted.json: {e}")

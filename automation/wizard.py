@@ -157,18 +157,22 @@ class UserDataWizard:
             overall_conf = data.get('overall_confidence')
             tests = data.get('sondeig_tests', [])
             if tests:
-                max_layers = 0
+                best_levels = 0
                 source_test_id = 'S-1'
                 for test in tests:
+                    # Prefer num_geological_levels (from "Unitat litològica" column)
+                    # over len(layers) which counts individual soil strata
+                    geo_levels = test.get('num_geological_levels')
                     layers = test.get('layers', [])
-                    if len(layers) > max_layers:
-                        max_layers = len(layers)
+                    n = geo_levels if geo_levels is not None else len(layers)
+                    if n > best_levels:
+                        best_levels = n
                         source_test_id = test.get('test_id', 'S-1')
-                if max_layers > 0:
+                if best_levels > 0:
                     source = f"sondeig {source_test_id}"
                     # Override the default
                     self.prefills.pop('num_soil_levels', None)
-                    self._set_prefill('num_soil_levels', max_layers, source, overall_conf)
+                    self._set_prefill('num_soil_levels', best_levels, source, overall_conf)
         except (json.JSONDecodeError, KeyError, TypeError) as e:
             print(f'  [AVÍS: error carregant {path.name}: {e}]')
 

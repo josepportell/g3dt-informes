@@ -21,12 +21,14 @@
         {
             "test_id": "S-1",
             "total_depth_m": 1.80,
+            "num_geological_levels": 1,
             "layers": [
                 {
                     "depth_from_m": 0.0,
                     "depth_to_m": 1.0,
                     "description": "Llims argilosos amb graves cohesives de coloració marronosa",
                     "description_field_sheet": "Graves con arenes",
+                    "geological_level": 1,
                     "confidence": 0.95,
                     "note": "Field sheet says 'Graves con arenes'; reference report has fuller description with 'llims argilosos'"
                 },
@@ -35,6 +37,7 @@
                     "depth_to_m": 1.80,
                     "description": "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clars. Tram totalment carbonatat.",
                     "description_field_sheet": "Graves carbonatades",
+                    "geological_level": 1,
                     "confidence": 0.95,
                     "note": "Field sheet shorthand 'Graves carbonatades' matches reference 'aspectes carbonatats'"
                 }
