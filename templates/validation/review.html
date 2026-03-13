@@ -1170,6 +1170,14 @@
         }
         .vision-dot.done { background: #27ae60; }
         .vision-dot.pending { background: #e67e22; }
+        .vision-dot.active {
+            background: #4a90d9;
+            animation: pulse-dot 1.2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.6; }
+        }
         .file-list {
             margin: 12px 0 0;
             padding: 0;
@@ -2849,7 +2857,7 @@
 
             const badges = ['planol', 'dpsh', 'sondeig'].map(k => {
                 const done = !!vs[k];
-                return `<span class="vision-badge"><span class="vision-dot ${done ? 'done' : 'pending'}"></span>${k}</span>`;
+                return `<span class="vision-badge"><span class="vision-dot ${done ? 'done' : 'pending'}" id="vdot-${k}"></span>${k}</span>`;
             }).join('');
 
             const doneCount = [vs.planol, vs.dpsh, vs.sondeig].filter(Boolean).length;
@@ -2900,6 +2908,7 @@
             }
             visionRunning = true;
             visionStartTime = Date.now();
+            visionDetected = new Set();
 
             const progressEl = document.getElementById('visionProgressText');
             if (progressEl) { progressEl.style.display = 'block'; progressEl.textContent = 'Iniciant visio IA...'; }
@@ -2943,9 +2952,11 @@
                 });
         }
 
+        let visionDetected = new Set(); // track which files we've already marked as done
+
         function checkVisionFiles() {
             if (!selectedProject) return;
-            const timeoutMs = 300 * 1000; // generous frontend timeout; backend handles real completion
+            const timeoutMs = 300 * 1000;
             if (visionStartTime && (Date.now() - visionStartTime > timeoutMs)) {
                 clearInterval(visionPollTimer);
                 visionPollTimer = null;
@@ -2961,32 +2972,55 @@
                 .then(status => {
                     const process = status._process || {};
                     const progressEl = document.getElementById('visionProgressText');
+                    const visionKeys = ['planol', 'dpsh', 'sondeig'];
 
-                    // Count new/updated files
+                    // Update each badge individually
                     let newFiles = 0;
-                    let detectedNames = [];
-                    for (const key of ['planol', 'dpsh', 'sondeig']) {
+                    let newlyDetectedThisCycle = false;
+                    for (const key of visionKeys) {
                         const base = visionBaseline[key] || {};
                         const curr = status[key] || {};
-                        if (curr.exists && (!base.exists || (curr.mtime && base.mtime && curr.mtime > base.mtime))) {
-                            newFiles++;
-                            detectedNames.push(key);
+                        const isNew = curr.exists && (!base.exists || (curr.mtime && base.mtime && curr.mtime > base.mtime));
+
+                        if (isNew && !visionDetected.has(key)) {
+                            visionDetected.add(key);
+                            const dot = document.getElementById(`vdot-${key}`);
+                            if (dot) { dot.className = 'vision-dot done'; }
+                            newlyDetectedThisCycle = true;
+                        }
+                        if (isNew) newFiles++;
+                    }
+
+                    // Only activate the next pending badge if nothing was newly
+                    // detected THIS cycle — gives a 3s gap so Eva sees the green
+                    // before the next blue starts pulsing
+                    if (!newlyDetectedThisCycle && process.running) {
+                        const pendingKeys = visionKeys.filter(k => !visionDetected.has(k));
+                        if (pendingKeys.length > 0) {
+                            const dot = document.getElementById(`vdot-${pendingKeys[0]}`);
+                            if (dot) { dot.className = 'vision-dot active'; }
                         }
                     }
 
                     // Update progress text
-                    if (progressEl && newFiles > 0) {
-                        progressEl.textContent = `Detectats: ${detectedNames.join(', ')} (${newFiles}/3)`;
+                    if (progressEl) {
+                        if (visionDetected.size > 0 && visionDetected.size < 3) {
+                            const done = [...visionDetected].join(', ');
+                            progressEl.textContent = `Completat: ${done} (${visionDetected.size}/3)`;
+                            progressEl.style.display = 'block';
+                        } else if (visionDetected.size === 0 && process.running) {
+                            progressEl.textContent = 'Llegint PDFs amb IA...';
+                            progressEl.style.display = 'block';
+                        }
                     }
 
-                    // Process finished (with or without new files)
+                    // Process finished
                     if (!process.running && process.returncode !== null) {
                         clearInterval(visionPollTimer);
                         visionPollTimer = null;
                         visionRunning = false;
 
                         if (newFiles > 0) {
-                            // Auto-refresh prefills with new vision data
                             showMessage(`Visio completada! ${newFiles} fitxer(s) extrets. Actualitzant...`, 'success');
                             loadProjectData(selectedProject);
                         } else if (process.returncode !== 0) {
@@ -2994,7 +3028,6 @@
                             const btn = document.getElementById('btnStartVision');
                             if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Reintentar'; }
                         } else {
-                            // rc=0 but no new files — all were cached
                             showMessage('Visio completada (fitxers ja existien).', 'info');
                             const btn = document.getElementById('btnStartVision');
                             if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Llegir PDFs de camp'; }
@@ -3003,7 +3036,7 @@
                         return;
                     }
 
-                    // Still running, detected new files — auto-refresh already
+                    // All 3 detected while process still running
                     if (newFiles >= 3) {
                         clearInterval(visionPollTimer);
                         visionPollTimer = null;
@@ -3013,7 +3046,7 @@
                         loadProjectData(selectedProject);
                     }
                 })
-                .catch(() => {}); // Silent fail on polling
+                .catch(() => {});
         }
 
         function toggleInstructions() {

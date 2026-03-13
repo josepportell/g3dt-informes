@@ -47,6 +47,8 @@ _prefill_cache: dict[str, dict[str, Any]] = {}
 
 # Vision subprocess tracking: project_name -> Popen
 _vision_processes: dict[str, subprocess.Popen] = {}
+# Vision last result: project_name -> returncode (persists after cleanup)
+_vision_last_rc: dict[str, int] = {}
 _vision_lock = threading.Lock()
 
 
@@ -224,14 +226,23 @@ def start_vision_cli(project_name: str, force: bool = False) -> dict[str, Any]:
             return {"status": "already_running"}
 
         force_flag = " --force" if force else ""
-        cmd = [claude_path, "-p", f"/g3dt-visio-projecte {project_path}{force_flag}"]
+        prompt = f"/g3dt-visio-projecte {project_path}{force_flag}"
+        cmd = [
+            claude_path, "-p", prompt,
+            "--permission-mode", "bypassPermissions",
+        ]
+
+        # Clear last result so polling knows a new run started
+        _vision_last_rc.pop(project_name, None)
 
         try:
             proc = subprocess.Popen(
                 cmd,
+                stdin=subprocess.DEVNULL,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 cwd=str(_PROJECT_ROOT),
+                start_new_session=True,
             )
         except FileNotFoundError:
             return {
@@ -243,14 +254,19 @@ def start_vision_cli(project_name: str, force: bool = False) -> dict[str, Any]:
         _vision_processes[project_name] = proc
 
     def _wait_and_cleanup():
-        timeout = int(os.getenv('G3DT_VISION_TIMEOUT', '120'))
+        timeout = int(os.getenv('G3DT_VISION_TIMEOUT', '300'))
         try:
             _, stderr_bytes = proc.communicate(timeout=timeout)
         except subprocess.TimeoutExpired:
-            proc.kill()
+            import signal
+            try:
+                os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+            except (ProcessLookupError, OSError):
+                proc.kill()
             proc.communicate()
             logger.warning("Vision CLI timed out after %ds for %s", timeout, project_name)
             with _vision_lock:
+                _vision_last_rc[project_name] = -1
                 if _vision_processes.get(project_name) is proc:
                     del _vision_processes[project_name]
             return
@@ -261,6 +277,7 @@ def start_vision_cli(project_name: str, force: bool = False) -> dict[str, Any]:
         else:
             logger.info("Vision CLI completed successfully for %s", project_name)
         with _vision_lock:
+            _vision_last_rc[project_name] = rc
             if _vision_processes.get(project_name) is proc:
                 del _vision_processes[project_name]
 
@@ -272,12 +289,16 @@ def get_vision_process_status(project_name: str) -> dict[str, Any]:
     """Check if a vision subprocess is running for this project."""
     with _vision_lock:
         proc = _vision_processes.get(project_name)
-        if proc is None:
-            return {"running": False, "returncode": None}
-        rc = proc.poll()
-        if rc is None:
-            return {"running": True, "returncode": None}
-        return {"running": False, "returncode": rc}
+        if proc is not None:
+            rc = proc.poll()
+            if rc is None:
+                return {"running": True, "returncode": None}
+            return {"running": False, "returncode": rc}
+        # Process already cleaned up — check last result
+        last_rc = _vision_last_rc.get(project_name)
+        if last_rc is not None:
+            return {"running": False, "returncode": last_rc}
+        return {"running": False, "returncode": None}
 
 
 def _run_vision_phase(project_path: Path, force_refresh: bool) -> None:
