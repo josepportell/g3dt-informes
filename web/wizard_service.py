@@ -45,10 +45,18 @@ _INFORMES_DIR = Path('/mnt/c/claude/g3dt/4-informes')
 # In-memory prefill cache: project_name -> prefills dict
 _prefill_cache: dict[str, dict[str, Any]] = {}
 
+# Vision subprocess tracking: project_name -> Popen
+_vision_processes: dict[str, subprocess.Popen] = {}
+_vision_lock = threading.Lock()
+
 
 def _resolve_project(project_name: str) -> Path:
     """Resolve a project name to its folder path. Raises ValueError if not found."""
     candidate = _REF_DIR / project_name
+    try:
+        candidate.resolve().relative_to(_REF_DIR.resolve())
+    except ValueError:
+        raise ValueError(f"Projecte no trobat: {project_name}")
     if candidate.is_dir():
         return candidate
     raise ValueError(f"Projecte no trobat: {project_name}")
@@ -198,6 +206,78 @@ def get_vision_status(project_name: str) -> dict[str, Any]:
         else:
             status[key] = {"exists": False, "mtime": None}
     return status
+
+
+def start_vision_cli(project_name: str, force: bool = False) -> dict[str, Any]:
+    """Start Claude CLI vision extraction as a background subprocess.
+
+    Returns immediately with status: 'started', 'already_running', or 'error'.
+    The subprocess creates validation/*_extracted.json files that the frontend
+    detects via polling /api/vision-status/.
+    """
+    project_path = _resolve_project(project_name)
+    claude_path = os.getenv('G3DT_CLAUDE_PATH', 'claude')
+
+    with _vision_lock:
+        existing = _vision_processes.get(project_name)
+        if existing and existing.poll() is None:
+            return {"status": "already_running"}
+
+        force_flag = " --force" if force else ""
+        cmd = [claude_path, "-p", f"/g3dt-visio-projecte {project_path}{force_flag}"]
+
+        try:
+            proc = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                cwd=str(_PROJECT_ROOT),
+            )
+        except FileNotFoundError:
+            return {
+                "status": "error",
+                "message": f"claude CLI no trobat al PATH (buscat: '{claude_path}'). "
+                           "Verifica que Claude Code esta instal·lat.",
+            }
+
+        _vision_processes[project_name] = proc
+
+    def _wait_and_cleanup():
+        timeout = int(os.getenv('G3DT_VISION_TIMEOUT', '120'))
+        try:
+            _, stderr_bytes = proc.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.communicate()
+            logger.warning("Vision CLI timed out after %ds for %s", timeout, project_name)
+            with _vision_lock:
+                if _vision_processes.get(project_name) is proc:
+                    del _vision_processes[project_name]
+            return
+        rc = proc.returncode
+        if rc != 0:
+            stderr = stderr_bytes.decode(errors='replace') if stderr_bytes else ""
+            logger.warning("Vision CLI ended rc=%d for %s: %s", rc, project_name, stderr[:500])
+        else:
+            logger.info("Vision CLI completed successfully for %s", project_name)
+        with _vision_lock:
+            if _vision_processes.get(project_name) is proc:
+                del _vision_processes[project_name]
+
+    threading.Thread(target=_wait_and_cleanup, daemon=True).start()
+    return {"status": "started"}
+
+
+def get_vision_process_status(project_name: str) -> dict[str, Any]:
+    """Check if a vision subprocess is running for this project."""
+    with _vision_lock:
+        proc = _vision_processes.get(project_name)
+        if proc is None:
+            return {"running": False, "returncode": None}
+        rc = proc.poll()
+        if rc is None:
+            return {"running": True, "returncode": None}
+        return {"running": False, "returncode": rc}
 
 
 def _run_vision_phase(project_path: Path, force_refresh: bool) -> None:

@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
 from . import wizard_service
@@ -90,11 +90,32 @@ def prefills_stream(project_name: str):
     )
 
 
+class VisionStartRequest(BaseModel):
+    force: bool = False
+
+
+@router.post("/vision/{project_name:path}")
+def start_vision(project_name: str, req: VisionStartRequest | None = None):
+    """Start Claude CLI vision extraction for a project (non-blocking)."""
+    force = req.force if req else False
+    try:
+        result = wizard_service.start_vision_cli(project_name, force=force)
+        status_code = 202 if result["status"] == "started" else 200
+        return JSONResponse(content=result, status_code=status_code)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.exception("Error starting vision for %s", project_name)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/vision-status/{project_name:path}")
 def vision_status(project_name: str):
-    """Check which vision extraction JSONs exist and their mtime."""
+    """Check which vision extraction JSONs exist, their mtime, and process status."""
     try:
-        return wizard_service.get_vision_status(project_name)
+        file_status = wizard_service.get_vision_status(project_name)
+        process_status = wizard_service.get_vision_process_status(project_name)
+        return {**file_status, "_process": process_status}
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 

@@ -1251,88 +1251,50 @@
             font-size: 13px;
             color: #495057;
         }
-        /* Vision stepper (manual, inside instructions) */
-        .vision-stepper {
-            display: flex;
+        /* Vision button (integrated, replaces manual stepper) */
+        .btn-vision {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 0;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 12px 20px 8px;
-        }
-        .vision-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            flex: 0 0 auto;
-        }
-        .vstep-circle {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #e0e0e0;
-            border: 2px solid #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #999;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-        .vstep-circle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
-        .vstep-label {
-            margin-top: 6px;
-            font-size: 10px;
-            color: #999;
-            text-align: center;
-            white-space: nowrap;
-            transition: color 0.3s ease;
-        }
-        .vstep-connector {
-            flex: 1;
-            max-width: 160px;
-            height: 2px;
-            background: #e0e0e0;
-            margin: 0 8px;
-            margin-bottom: 22px;
-            transition: background 0.4s ease;
-        }
-        .vstep-connector.done { background: #4a90d9; }
-        .vision-step.active .vstep-circle {
-            background: #fff;
-            border-color: #4a90d9;
-            color: #4a90d9;
-            animation: pulse-ring 1.5s infinite;
-        }
-        .vision-step.active .vstep-label { color: #4a90d9; font-weight: 600; }
-        .vision-step.done .vstep-circle {
+            gap: 8px;
+            padding: 10px 24px;
             background: #4a90d9;
-            border-color: #4a90d9;
-            color: #fff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        .vision-step.done .vstep-label { color: #333; }
-        .vision-step.ready .vstep-circle {
-            background: #fff;
-            border-color: #27ae60;
-            color: #27ae60;
-            animation: pulse-ring 1.5s infinite;
+        .btn-vision:hover:not(:disabled) { background: #3a7bc8; }
+        .btn-vision:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
-        .vision-step.ready .vstep-label { color: #27ae60; font-weight: 600; }
-        .vstep-spinner {
-            display: none;
+        .btn-vision svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+        .btn-vision .vstep-spinner-inline {
+            display: inline-block;
             width: 16px; height: 16px;
-            border: 2px solid rgba(74,144,217,0.3);
-            border-top-color: #4a90d9;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
-        .vision-step.active .vstep-spinner { display: block; }
-        .vision-step.active .vstep-icon { display: none; }
-        .vision-step.done .vstep-spinner { display: none; }
-        .vision-step.done .vstep-icon { display: block; }
+        .btn-vision-force {
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 11px;
+            cursor: pointer;
+            padding: 4px 8px;
+            margin-left: 8px;
+        }
+        .btn-vision-force:hover { color: #4a90d9; text-decoration: underline; }
+        .vision-progress-text {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -2869,9 +2831,11 @@
             }
         }
 
-        // --- Vision stepper (manual, 3 steps: copy → terminal → refresh) ---
+        // --- Vision button (integrated, replaces manual stepper) ---
         let visionBaseline = {};
-        let visionStepperState = {copy: null, terminal: null, refresh: null};
+        let visionRunning = false;
+        let visionStartTime = null;
+        const VISION_EYE_SVG = '<svg viewBox="0 0 24 24" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
 
         function renderInstructions(prefills) {
             const container = document.getElementById('wizardInstructions');
@@ -2879,12 +2843,9 @@
 
             // Stop any existing polling
             if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
-            visionStepperState = {copy: null, terminal: null, refresh: null};
 
             const vs = prefills._vision_status ? prefills._vision_status.value : {};
             const allDone = vs.planol && vs.dpsh && vs.sondeig;
-            const basePath = prefills._projects_base ? prefills._projects_base.value : `reference-material`;
-            const cmd = `/g3dt-visio-projecte ${basePath}/${selectedProject}`;
 
             const badges = ['planol', 'dpsh', 'sondeig'].map(k => {
                 const done = !!vs[k];
@@ -2901,6 +2862,7 @@
                     </div>
                     <div class="instructions-body">
                         <div class="vision-badges">${badges}</div>
+                        <button class="btn-vision-force" onclick="startVisionExtraction(true)">Re-extreure</button>
                     </div>
                 `;
                 container.className = 'wizard-instructions collapsed';
@@ -2914,42 +2876,12 @@
                     <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">-</button>
                 </div>
                 <div class="instructions-body">
-                    <div class="vision-stepper">
-                        <div class="vision-step" id="vstep-copy">
-                            <div class="vstep-circle">
-                                <div class="vstep-spinner"></div>
-                                <span class="vstep-icon">
-                                    <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                                </span>
-                            </div>
-                            <span class="vstep-label">Copiar</span>
-                        </div>
-                        <div class="vstep-connector" id="vconn-1"></div>
-                        <div class="vision-step" id="vstep-terminal">
-                            <div class="vstep-circle">
-                                <div class="vstep-spinner"></div>
-                                <span class="vstep-icon">
-                                    <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-                                </span>
-                            </div>
-                            <span class="vstep-label">Terminal</span>
-                        </div>
-                        <div class="vstep-connector" id="vconn-2"></div>
-                        <div class="vision-step" id="vstep-refresh">
-                            <div class="vstep-circle">
-                                <div class="vstep-spinner"></div>
-                                <span class="vstep-icon">
-                                    <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
-                                </span>
-                            </div>
-                            <span class="vstep-label">Actualitzar</span>
-                        </div>
-                    </div>
-                    <div class="copy-command">
-                        <code id="visionCmd">${cmd}</code>
-                        <button class="btn-copy" id="btnCopyVision" onclick="copyVisionCommand(event)">Copiar</button>
-                    </div>
-                    <div class="vision-badges">${badges}</div>
+                    <button class="btn-vision" id="btnStartVision" onclick="startVisionExtraction(false)">
+                        ${VISION_EYE_SVG}
+                        Llegir PDFs de camp
+                    </button>
+                    <div class="vision-badges" style="margin-top: 8px;">${badges}</div>
+                    <div id="visionProgressText" class="vision-progress-text" style="display:none"></div>
                 </div>
             `;
 
@@ -2957,21 +2889,52 @@
             container.style.display = 'block';
         }
 
-        function setVisionStepState(stepId, state) {
-            const el = document.getElementById(`vstep-${stepId}`);
-            if (!el) return;
-            el.className = 'vision-step' + (state ? ` ${state}` : '');
-            visionStepperState[stepId] = state;
-            // Mark preceding connectors
-            const steps = ['copy', 'terminal', 'refresh'];
-            const idx = steps.indexOf(stepId);
-            if (idx > 0 && (state === 'active' || state === 'done')) {
-                document.getElementById(`vconn-${idx}`).className = 'vstep-connector done';
+        async function startVisionExtraction(force) {
+            const btn = document.getElementById('btnStartVision');
+            if (!selectedProject) return;
+
+            // Disable button and show spinner
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<div class="vstep-spinner-inline"></div> Llegint PDFs...';
+            }
+            visionRunning = true;
+            visionStartTime = Date.now();
+
+            const progressEl = document.getElementById('visionProgressText');
+            if (progressEl) { progressEl.style.display = 'block'; progressEl.textContent = 'Iniciant visio IA...'; }
+
+            try {
+                const res = await fetch(`/api/vision/${encodeURIComponent(selectedProject)}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({force: !!force}),
+                });
+                const data = await res.json();
+
+                if (data.status === 'already_running') {
+                    if (progressEl) progressEl.textContent = 'La visio ja esta en curs...';
+                } else if (data.status === 'error') {
+                    visionRunning = false;
+                    if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Llegir PDFs de camp'; }
+                    showMessage(data.message, 'error');
+                    if (progressEl) progressEl.style.display = 'none';
+                    return;
+                }
+
+                // Capture baseline and start polling
+                startVisionPolling();
+
+            } catch (err) {
+                visionRunning = false;
+                if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Llegir PDFs de camp'; }
+                showMessage('Error iniciant visio: ' + err.message, 'error');
+                if (progressEl) progressEl.style.display = 'none';
             }
         }
 
         function startVisionPolling() {
-            // Capture baseline: which JSONs exist NOW (before terminal runs)
+            // Capture baseline: which JSONs exist NOW
             fetch(`/api/vision-status/${encodeURIComponent(selectedProject)}`)
                 .then(r => r.json())
                 .then(status => {
@@ -2982,24 +2945,72 @@
 
         function checkVisionFiles() {
             if (!selectedProject) return;
+            const timeoutMs = 300 * 1000; // generous frontend timeout; backend handles real completion
+            if (visionStartTime && (Date.now() - visionStartTime > timeoutMs)) {
+                clearInterval(visionPollTimer);
+                visionPollTimer = null;
+                visionRunning = false;
+                showMessage('La visio ha superat el temps maxim (300s). Verifica que Claude Code esta actiu.', 'warning');
+                const btn = document.getElementById('btnStartVision');
+                if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Reintentar'; }
+                return;
+            }
+
             fetch(`/api/vision-status/${encodeURIComponent(selectedProject)}`)
                 .then(r => r.json())
                 .then(status => {
+                    const process = status._process || {};
+                    const progressEl = document.getElementById('visionProgressText');
+
+                    // Count new/updated files
                     let newFiles = 0;
+                    let detectedNames = [];
                     for (const key of ['planol', 'dpsh', 'sondeig']) {
                         const base = visionBaseline[key] || {};
                         const curr = status[key] || {};
                         if (curr.exists && (!base.exists || (curr.mtime && base.mtime && curr.mtime > base.mtime))) {
                             newFiles++;
+                            detectedNames.push(key);
                         }
                     }
-                    if (newFiles > 0) {
+
+                    // Update progress text
+                    if (progressEl && newFiles > 0) {
+                        progressEl.textContent = `Detectats: ${detectedNames.join(', ')} (${newFiles}/3)`;
+                    }
+
+                    // Process finished (with or without new files)
+                    if (!process.running && process.returncode !== null) {
                         clearInterval(visionPollTimer);
                         visionPollTimer = null;
-                        setVisionStepState('terminal', 'done');
-                        // Highlight the refresh button
-                        setVisionStepState('refresh', 'ready');
-                        showMessage('Visio detectada! Prem Actualitzar prefills.', 'success');
+                        visionRunning = false;
+
+                        if (newFiles > 0) {
+                            // Auto-refresh prefills with new vision data
+                            showMessage(`Visio completada! ${newFiles} fitxer(s) extrets. Actualitzant...`, 'success');
+                            loadProjectData(selectedProject);
+                        } else if (process.returncode !== 0) {
+                            showMessage('La visio ha fallat. Verifica que Claude Code esta actiu i els PDFs existeixen.', 'error');
+                            const btn = document.getElementById('btnStartVision');
+                            if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Reintentar'; }
+                        } else {
+                            // rc=0 but no new files — all were cached
+                            showMessage('Visio completada (fitxers ja existien).', 'info');
+                            const btn = document.getElementById('btnStartVision');
+                            if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Llegir PDFs de camp'; }
+                        }
+                        if (progressEl) progressEl.style.display = 'none';
+                        return;
+                    }
+
+                    // Still running, detected new files — auto-refresh already
+                    if (newFiles >= 3) {
+                        clearInterval(visionPollTimer);
+                        visionPollTimer = null;
+                        visionRunning = false;
+                        showMessage('Visio completada! Actualitzant prefills...', 'success');
+                        if (progressEl) progressEl.style.display = 'none';
+                        loadProjectData(selectedProject);
                     }
                 })
                 .catch(() => {}); // Silent fail on polling
@@ -3010,23 +3021,6 @@
             if (container) container.classList.toggle('collapsed');
             const btn = container?.querySelector('.instructions-toggle');
             if (btn) btn.textContent = container.classList.contains('collapsed') ? '+' : '-';
-        }
-
-        function copyVisionCommand(event) {
-            event.stopPropagation();
-            const code = document.getElementById('visionCmd');
-            if (!code) return;
-            navigator.clipboard.writeText(code.textContent).then(() => {
-                const btn = event.target;
-                const orig = btn.textContent;
-                btn.textContent = 'Copiat!';
-                setTimeout(() => btn.textContent = orig, 1500);
-
-                // Mark vision step 1 as done, step 2 as active
-                setVisionStepState('copy', 'done');
-                setVisionStepState('terminal', 'active');
-                startVisionPolling();
-            });
         }
 
         function showWizardContent() {
@@ -3042,16 +3036,6 @@
             document.getElementById('wizardForm').style.display = 'block';
             document.getElementById('wizardUnsaved').style.display = 'none';
             switchTab('wizard');
-
-            // Complete vision stepper if this was a refresh
-            // (renderInstructions above rebuilt the HTML, so re-apply all done states)
-            if (pendingVisionRefresh) {
-                pendingVisionRefresh = false;
-                setVisionStepState('copy', 'done');
-                setVisionStepState('terminal', 'done');
-                setVisionStepState('refresh', 'done');
-                showMessage('Prefills actualitzats', 'success');
-            }
         }
 
         async function loadWizardData() {
@@ -3440,29 +3424,13 @@
             }
         }
 
-        let pendingVisionRefresh = false;
-
         async function refreshPrefills() {
             if (!selectedProject) return;
-
-            // If vision stepper exists, mark steps appropriately
-            // Retroactively mark steps 1+2 if Eva skipped copy
-            if (visionStepperState.copy !== 'done') {
-                setVisionStepState('copy', 'done');
-                setVisionStepState('terminal', 'done');
-            }
-            if (visionStepperState.terminal === 'active' || visionStepperState.terminal === 'ready') {
-                setVisionStepState('terminal', 'done');
-            }
-            setVisionStepState('refresh', 'active');
-            pendingVisionRefresh = true;
 
             // Stop vision polling if running
             if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
 
-            showStepper();
-            document.getElementById('pipelineStepper').style.display = 'block';
-            loadProjectData();
+            loadProjectData(selectedProject);
         }
 
         async function saveWizard() {
