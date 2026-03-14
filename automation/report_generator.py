@@ -626,8 +626,15 @@ class ReportGenerator:
 
             # Building dimensions for template
             context['plantes'] = format_floor_notation(self.report_data.num_floors or '')
-            context['superficie_parcela'] = self.report_data.superficie_parcela or ''
+            # Prefer cadastral surface for Taula 1 (official parcel area)
+            # Fall back to planol surface if cadastral not available
+            context['superficie_parcela'] = (
+                self.report_data.superficie_cadastral
+                or self.report_data.superficie_parcela
+                or ''
+            )
             context['superficie_cadastral'] = self.report_data.superficie_cadastral or ''
+            context['superficie_parcela_planol'] = self.report_data.superficie_parcela or ''
             context['superficie_construida'] = self.report_data.superficie_construida or ''
 
             # Descriptions
