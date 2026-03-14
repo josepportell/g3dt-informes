@@ -215,16 +215,24 @@ class UserDataWizard:
             # Dimensions → wizard fields
             dims = arch.get('dimensions', {})
 
-            # Per-floor surfaces → "280+86" format (preferred)
+            # Per-floor surfaces → "280+86" format (grouped by actual floor level)
+            # Vision may return sub-zones (PB Habitatge, PB Garatge, PB Porxo) —
+            # group by floor prefix and sum within each floor.
             floor_surfaces = dims.get('floor_surfaces', [])
             if floor_surfaces and isinstance(floor_surfaces, list) and len(floor_surfaces) > 0:
-                areas = []
+                import re as _re
+                floor_totals = {}  # ordered dict (Python 3.7+)
                 for fs in floor_surfaces:
                     area = fs.get('area_m2')
-                    if area is not None:
-                        areas.append(str(round(area)))
-                if areas:
-                    sup_expr = '+'.join(areas)
+                    if area is None:
+                        continue
+                    label = (fs.get('floor') or '').upper()
+                    # Extract floor level: "PB GARATGE" → "PB", "P1 SALA" → "P1", "PS" → "PS"
+                    m = _re.match(r'(P[BSb0-9]+)', label)
+                    floor_key = m.group(1) if m else label or 'PB'
+                    floor_totals[floor_key] = floor_totals.get(floor_key, 0) + area
+                if floor_totals:
+                    sup_expr = '+'.join(str(round(v)) for v in floor_totals.values())
                     self._set_prefill('superficie_construida_m2', sup_expr, source, overall_conf)
 
             # Fallback: single footprint value

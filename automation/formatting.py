@@ -24,6 +24,7 @@ def format_floor_notation(value: str) -> str:
         return value
 
     raw = value.strip()
+    raw = re.sub(r"[''´\"]+$", '', raw)
     parts = [p.strip() for p in raw.split('+')]
     result = []
     pp_count = 0

@@ -509,7 +509,7 @@ def build_report_data(
         num_floors=user_data.get('num_floors', ''),
         superficie_parcela=str(user_data.get('superficie_parcela_m2', '') or ''),
         superficie_cadastral=str(user_data.get('superficie_cadastral_m2', '') or ''),
-        superficie_construida=str(user_data.get('superficie_construida_m2', '') or ''),
+        superficie_construida=str(int(_area)) if _area else '',
         has_basement=user_data.get('has_basement', False),
         has_retaining_walls=user_data.get('has_retaining_walls', False),
         # Ubicacio
