@@ -259,12 +259,19 @@ class UserDataWizard:
             if area_val is not None:
                 self._set_prefill('superficie_parcela_m2', area_val, source, overall_conf)
 
-            # Cadastral surface from planol (fallback if geocode didn't provide it)
+            # Cadastral surface: prefer parcela_projecte_m2 (from JUSTIFICACIO PLANEJAMENT
+            # table "Projecte" column) over parcel_area_m2 (from site plan dimensions)
             if 'superficie_cadastral_m2' not in self.prefills:
-                parcel = dims.get('parcel_area_m2', {})
-                parcel_val = parcel.get('pdf_value') if isinstance(parcel, dict) else parcel
-                if parcel_val is not None:
-                    self._set_prefill('superficie_cadastral_m2', parcel_val, source, overall_conf)
+                projecte_parcel = dims.get('parcela_projecte_m2', {})
+                projecte_val = projecte_parcel.get('pdf_value') if isinstance(projecte_parcel, dict) else projecte_parcel
+                if projecte_val is not None:
+                    self._set_prefill('superficie_cadastral_m2', projecte_val, source, overall_conf)
+                else:
+                    # Fallback: use parcel_area_m2 from site plan
+                    parcel = dims.get('parcel_area_m2', {})
+                    parcel_val = parcel.get('pdf_value') if isinstance(parcel, dict) else parcel
+                    if parcel_val is not None:
+                        self._set_prefill('superficie_cadastral_m2', parcel_val, source, overall_conf)
 
             # Infer parcel_shape from plot dimensions if available
             length_info = dims.get('plot_length_m', {})

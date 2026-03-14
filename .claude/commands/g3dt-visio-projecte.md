@@ -192,6 +192,11 @@ Analitza aquest planol arquitectonic d'un projecte de construccio.
   - Superficie de cada planta individualment (PB: 280m2, P1: 86m2, Ps: 120m2)
   - Pot etiquetar-se "sup. util", "sup. construida", "ocupacio", "m2 construits", etc.
   - Busca a: quadres de superficies, taules, llegendes, anotacions al planol
+- Taula JUSTIFICACIO PLANEJAMENT (si existeix):
+  - Taula amb dues columnes: "Planejament" (norma urbanistica) i "Projecte" (valor real del projecte)
+  - Fila "Parcel·la mínima": la columna "Projecte" conte la **superficie total de la parcella** (ex: 995,00m2)
+  - IMPORTANT: extreu el valor de la columna "Projecte", NO de "Planejament" (que es el minim urbanistic)
+  - Aquest valor es la "superficie de la parcella segons planols cadastrals" per Taula 1 de l'informe
 - Seccio / alcat:
   - Numero de plantes (PB, PB+1, Ps+PB+2Pp, etc.)
   - Alcada maxima de l'edifici en metres
@@ -205,6 +210,7 @@ Analitza aquest planol arquitectonic d'un projecte de construccio.
 6. L'ocupacio pot etiquetar-se "ocupacio", "superficie construida", o similar
 7. Si architect_company no esta llistat separadament, posa null (no inventis del nom de l'arquitecte)
 8. Busca superficies per planta individualment — si el planol mostra un quadre de superficies o anotacions amb m2 per planta, extreu-les a `floor_surfaces` (array d'objectes amb `floor` i `area_m2`). Si nomes hi ha una superficie total, posa-la com a unic element.
+9. Si hi ha taula JUSTIFICACIO PLANEJAMENT, extreu la superficie de la parcella de la columna "Projecte" de la fila "Parcel·la mínima" (o similar) com a `parcela_projecte_m2`. NO confondre amb el valor de "Planejament" (minim urbanistic).
 
 **CONFIANCA:**
 - 1.0: Text impres clar, inequivoc
@@ -310,6 +316,7 @@ Analitza aquest full de camp de Sondeig (perforacio a rotacio).
     "architect_company": null,
     "dimensions": {
       "parcel_area_m2": {"pdf_value": 598.0, "confidence": 0.95},
+      "parcela_projecte_m2": {"pdf_value": 995.0, "confidence": 1.0},
       "building_footprint_m2": {"pdf_value": 296.88, "confidence": 0.90},
       "num_floors": {"pdf_value": "Pb+P1", "confidence": 1.0},
       "max_height_m": {"pdf_value": 8.38, "confidence": 0.85},
@@ -330,7 +337,9 @@ Analitza aquest full de camp de Sondeig (perforacio a rotacio).
 
 **Camps obligatoris de `architect_data`:** `source_file`, `project_name`, `location`, `promotor`, `architect`, `architect_company`, `dimensions`
 **Camps obligatoris de `dimensions`:** `parcel_area_m2`, `building_footprint_m2`, `num_floors`, `max_height_m`, `plot_length_m`, `plot_width_m`
-**Camp opcional:** `floor_surfaces` — array d'objectes `{"floor": "PB", "area_m2": 280.0, "confidence": 0.90}`. Si no es troben superficies per planta, ometre o posar array buit `[]`.
+**Camps opcionals:**
+- `floor_surfaces` — array d'objectes `{"floor": "PB", "area_m2": 280.0, "confidence": 0.90}`. Si no es troben superficies per planta, ometre o posar array buit `[]`.
+- `parcela_projecte_m2` — superficie total de la parcella del projecte, extreta de la columna "Projecte" de la taula JUSTIFICACIO PLANEJAMENT (fila "Parcel·la mínima" o similar). Es la superficie cadastral real, diferent de `parcel_area_m2` (que es la del planol de situacio).
 **Cada dimensio** es un objecte `{"pdf_value": <number|string|null>, "confidence": <float>}` o `null` si no trobat.
 
 ### dpsh_extracted.json
