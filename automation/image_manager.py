@@ -256,6 +256,44 @@ class ImageManager:
             logger.warning(f"Failed to render PDF region {pdf_path.name}: {e}")
             return None
 
+    def _find_situation_plan(self, roles: dict | None) -> Path | None:
+        """Find situation plan PDF (plànol de situació) for cadastral map crop."""
+        # Priority 1: file_mapping.json role
+        if roles and 'situation_plan' in roles:
+            candidate = self.project_path / roles['situation_plan']['path']
+            if candidate.exists():
+                return candidate
+        # Priority 2: glob for common names
+        for pattern in ['pl*situaci*.pdf', '*planol*situacio*.pdf', '*plànol*situació*.pdf']:
+            matches = sorted(self.project_path.glob(pattern))
+            if matches:
+                return matches[0]
+        # Priority 3: PDF/ANNEXES/ subfolder
+        for annexes in [self.project_path / 'PDF' / 'ANNEXES', self.project_path / 'ANNEXES']:
+            for pattern in ['*situaci*.pdf', '*situació*.pdf']:
+                matches = sorted(annexes.glob(pattern))
+                if matches:
+                    return matches[0]
+        return None
+
+    def _render_situation_plan_left(self, pdf_path: Path, output_path: Path, dpi: int = 200) -> Path | None:
+        """Render left ~38% of situation plan page (cadastral maps area)."""
+        try:
+            import fitz
+            doc = fitz.open(str(pdf_path))
+            page = doc[0]
+            r = page.rect
+            # Situation plans have cadastral maps on the left ~38% of the page
+            left_clip = fitz.Rect(r.x0, r.y0, r.x0 + r.width * 0.38, r.y1)
+            pix = page.get_pixmap(dpi=dpi, clip=left_clip)
+            pix.save(str(output_path))
+            doc.close()
+            logger.info(f"Rendered situation plan left crop: {pdf_path.name} -> {output_path.name}")
+            return output_path
+        except Exception as e:
+            logger.warning(f"Failed to render situation plan crop {pdf_path.name}: {e}")
+            return None
+
     def _find_architect_plan_with_points(self) -> tuple[Path | None, dict | None]:
         """
         Find 'A.01 amb punts.pdf' with clip coordinates.
@@ -452,13 +490,14 @@ class ImageManager:
             context['photo_materials_image'] = PLACEHOLDER_TEXT
 
         # 3. Architect plan crops (replaces orthophoto for location figures)
-        #    cadastre + aerea: from "amb punts" (WITH dots — shows investigation points)
+        #    cadastre: left portion of situation_plan PDF (cadastral maps)
+        #    aerea: ICGC/Google satellite fallback (handled below)
         #    main_plan: from A.01.pdf (WITHOUT dots — shows "punt de partida")
         self._cache_dir.mkdir(parents=True, exist_ok=True)
         roles = self._load_file_mapping()
         has_plan_crops = False
 
-        # 3a. Cadastre + aerea from architect_plan_with_points (with dots)
+        # 3a. Cadastre + aerea from architect_plan_with_points clip_regions (if defined)
         points_pdf, points_clips = self._find_architect_plan_with_points()
         if points_pdf and points_clips:
             for region_name, var_name, width in [
@@ -478,6 +517,20 @@ class ImageManager:
                             self.tpl, str(cached), width=Mm(width)
                         )
                         has_plan_crops = True
+
+        # 3a-fallback. Cadastre from situation_plan: crop left ~38% (cadastral maps)
+        if 'fig_cadastre_image' not in context:
+            sit_plan_pdf = self._find_situation_plan(roles)
+            if sit_plan_pdf:
+                cached = self._cache_dir / f"cadastre_sitplan_{sit_plan_pdf.stem}.jpg"
+                if not cached.exists():
+                    self._render_situation_plan_left(sit_plan_pdf, cached)
+                if cached.exists():
+                    context['fig_cadastre_image'] = InlineImage(
+                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
+                    )
+                    has_plan_crops = True
+
         context.setdefault('fig_cadastre_image', PLACEHOLDER_TEXT)
         context.setdefault('fig_aerea_image', PLACEHOLDER_TEXT)
 
