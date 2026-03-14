@@ -245,7 +245,7 @@ PLANOL_JSON_EXAMPLE = '''
       "floor_surfaces": [
         {"floor": "PB", "area_m2": 297.0, "confidence": 0.90},
         {"floor": "P1", "area_m2": 110.0, "confidence": 0.90}
-      ],
+      ],  // NOTE: each floor is a SEPARATE entry — never combine as "PB+P1"
       "num_floors": {"pdf_value": "Pb+P1", "confidence": 1.0},
       "max_height_m": {"pdf_value": 8.38, "confidence": 0.85},
       "plot_length_m": {"pdf_value": 24.57, "confidence": 0.90},
@@ -286,7 +286,7 @@ EXTRACTION RULES:
 5. Set null for fields not found in the document
 6. Building footprint may be labeled "ocupació", "superfície construïda", or similar
 7. If architect_company is not separately listed, set null (do not guess from architect name)
-8. Look for per-floor surfaces (quadre de superfícies, m² per planta). Extract each floor separately into `floor_surfaces` array with `floor` (e.g. "PB", "P1", "PS") and `area_m2`. If only a total surface exists, put it as a single entry.
+8. Look for per-floor surfaces (quadre de superfícies, m² per planta). Extract each floor as a SEPARATE entry in `floor_surfaces` array. NEVER combine floors into a single entry (e.g., never use "PB+PP" or "PB+P1" as a floor label). Each entry must have a single floor level: "PB", "P1", "PS", "PP", etc. If the plan shows "PB 297 m² + PP 100 m²", that is TWO separate entries, one per floor. If only a total built surface is available with no per-floor breakdown, use `building_footprint_m2` for the ground floor and derive upper floors from total minus footprint if `num_floors` indicates multiple levels.
 
 CONFIDENCE SCORING:
 - 1.0: Clear printed text, unambiguous

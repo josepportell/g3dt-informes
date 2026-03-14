@@ -139,6 +139,10 @@ class UserDataWizard:
         self._load_planol()
         self._load_docs_intel()
         self._load_existing_user_data()
+        # Folder-name municipality as last-resort fallback (lowest priority)
+        _, municipality = self._parse_folder_name()
+        if municipality:
+            self._set_prefill('site_municipality', municipality, 'nom carpeta')
         self._generate_template_prefills()
 
     def _load_defaults(self) -> None:
@@ -147,10 +151,8 @@ class UserDataWizard:
         self._set_prefill('num_soil_levels', 1, 'default estandard')
         self._set_prefill('has_basement', False, 'default estandard')
         self._set_prefill('has_retaining_walls', False, 'default estandard')
-        # Municipality from folder name as lowest-priority default
-        _, municipality = self._parse_folder_name()
-        if municipality:
-            self._set_prefill('site_municipality', municipality, 'nom carpeta')
+        # Municipality from folder name is set AFTER all other sources
+        # (see load_prefills) because _set_prefill is first-writer-wins.
 
     def _load_dpsh(self) -> None:
         """Load DPSH-derived prefills from dpsh_extracted.json."""
@@ -265,15 +267,56 @@ class UserDataWizard:
             if floor_surfaces and isinstance(floor_surfaces, list) and len(floor_surfaces) > 0:
                 import re as _re
                 floor_totals = {}  # ordered dict (Python 3.7+)
+                floors_with_null = []  # floors with null area_m2
+
+                footprint = dims.get('building_footprint_m2', {})
+                fp_val = footprint.get('pdf_value') if isinstance(footprint, dict) else footprint
+
                 for fs in floor_surfaces:
                     area = fs.get('area_m2')
-                    if area is None:
-                        continue
                     label = (fs.get('floor') or '').upper()
-                    # Extract floor level: "PB GARATGE" → "PB", "P1 SALA" → "P1", "PS" → "PS"
+
+                    # Detect combined floor labels like "PB+PP" BEFORE regex
+                    if _re.search(r'[+/]', label) and area is not None:
+                        parts = _re.split(r'[+/]', label)
+                        parts = [p.strip() for p in parts if p.strip()]
+                        if len(parts) >= 2 and fp_val is not None:
+                            try:
+                                fp = float(fp_val)
+                                floor_totals[parts[0]] = floor_totals.get(parts[0], 0) + fp
+                                remaining = area - fp
+                                if remaining > 0:
+                                    per_upper = remaining / (len(parts) - 1)
+                                    for p in parts[1:]:
+                                        floor_totals[p] = floor_totals.get(p, 0) + per_upper
+                                # else: footprint >= total, only ground floor
+                            except (ValueError, TypeError):
+                                floor_totals[parts[0]] = floor_totals.get(parts[0], 0) + area
+                        elif len(parts) >= 2:
+                            per_floor = area / len(parts)
+                            for p in parts:
+                                floor_totals[p] = floor_totals.get(p, 0) + per_floor
+                        else:
+                            floor_totals[label] = floor_totals.get(label, 0) + area
+                        continue
+
                     m = _re.match(r'(P[BSb0-9]+)', label)
                     floor_key = m.group(1) if m else label or 'PB'
+                    if area is None:
+                        floors_with_null.append(floor_key)
+                        continue
                     floor_totals[floor_key] = floor_totals.get(floor_key, 0) + area
+
+                # If a floor has null area, try to derive it from total edificabilitat
+                if floors_with_null and floor_totals:
+                    planning = arch.get('planning_data', {})
+                    total_edif = planning.get('edificabilitat_project_m2')
+                    if total_edif is not None:
+                        known_sum = sum(floor_totals.values())
+                        remaining = total_edif - known_sum
+                        if remaining > 0 and len(floors_with_null) == 1:
+                            floor_totals[floors_with_null[0]] = remaining
+
                 if floor_totals:
                     sup_expr = '+'.join(str(round(v)) for v in floor_totals.values())
                     self._set_prefill('superficie_construida_m2', sup_expr, source, overall_conf)
