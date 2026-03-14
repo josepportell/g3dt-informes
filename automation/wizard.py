@@ -222,8 +222,7 @@ class UserDataWizard:
                 for fs in floor_surfaces:
                     area = fs.get('area_m2')
                     if area is not None:
-                        # Format as integer if whole number, else 1 decimal
-                        areas.append(str(int(area)) if area == int(area) else str(area))
+                        areas.append(str(round(area)))
                 if areas:
                     sup_expr = '+'.join(areas)
                     self._set_prefill('superficie_construida_m2', sup_expr, source, overall_conf)
