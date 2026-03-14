@@ -242,6 +242,10 @@ PLANOL_JSON_EXAMPLE = '''
     "dimensions": {
       "parcel_area_m2": {"pdf_value": 598.0, "confidence": 0.95},
       "building_footprint_m2": {"pdf_value": 296.88, "confidence": 0.90},
+      "floor_surfaces": [
+        {"floor": "PB", "area_m2": 297.0, "confidence": 0.90},
+        {"floor": "P1", "area_m2": 110.0, "confidence": 0.90}
+      ],
       "num_floors": {"pdf_value": "Pb+P1", "confidence": 1.0},
       "max_height_m": {"pdf_value": 8.38, "confidence": 0.85},
       "plot_length_m": {"pdf_value": 24.57, "confidence": 0.90},
@@ -282,6 +286,7 @@ EXTRACTION RULES:
 5. Set null for fields not found in the document
 6. Building footprint may be labeled "ocupació", "superfície construïda", or similar
 7. If architect_company is not separately listed, set null (do not guess from architect name)
+8. Look for per-floor surfaces (quadre de superfícies, m² per planta). Extract each floor separately into `floor_surfaces` array with `floor` (e.g. "PB", "P1", "PS") and `area_m2`. If only a total surface exists, put it as a single entry.
 
 CONFIDENCE SCORING:
 - 1.0: Clear printed text, unambiguous
