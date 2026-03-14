@@ -188,6 +188,10 @@ Analitza aquest planol arquitectonic d'un projecte de construccio.
   - Superficie parcella en m2
   - Dimensions parcella (longitud x amplada)
   - Ocupacio edifici en m2 o percentatge
+- Superficies per planta (pot apareixer en taula, quadre de superficies, o anotacions):
+  - Superficie de cada planta individualment (PB: 280m2, P1: 86m2, Ps: 120m2)
+  - Pot etiquetar-se "sup. util", "sup. construida", "ocupacio", "m2 construits", etc.
+  - Busca a: quadres de superficies, taules, llegendes, anotacions al planol
 - Seccio / alcat:
   - Numero de plantes (PB, PB+1, Ps+PB+2Pp, etc.)
   - Alcada maxima de l'edifici en metres
@@ -200,6 +204,7 @@ Analitza aquest planol arquitectonic d'un projecte de construccio.
 5. Posa null per camps no trobats
 6. L'ocupacio pot etiquetar-se "ocupacio", "superficie construida", o similar
 7. Si architect_company no esta llistat separadament, posa null (no inventis del nom de l'arquitecte)
+8. Busca superficies per planta individualment — si el planol mostra un quadre de superficies o anotacions amb m2 per planta, extreu-les a `floor_surfaces` (array d'objectes amb `floor` i `area_m2`). Si nomes hi ha una superficie total, posa-la com a unic element.
 
 **CONFIANCA:**
 - 1.0: Text impres clar, inequivoc
@@ -309,7 +314,11 @@ Analitza aquest full de camp de Sondeig (perforacio a rotacio).
       "num_floors": {"pdf_value": "Pb+P1", "confidence": 1.0},
       "max_height_m": {"pdf_value": 8.38, "confidence": 0.85},
       "plot_length_m": {"pdf_value": 24.57, "confidence": 0.90},
-      "plot_width_m": {"pdf_value": 24.72, "confidence": 0.90}
+      "plot_width_m": {"pdf_value": 24.72, "confidence": 0.90},
+      "floor_surfaces": [
+        {"floor": "PB", "area_m2": 280.0, "confidence": 0.90},
+        {"floor": "P1", "area_m2": 86.0, "confidence": 0.85}
+      ]
     }
   },
   "extraction_notes": "Caixeti clear, dimensions from site plan",
@@ -321,6 +330,7 @@ Analitza aquest full de camp de Sondeig (perforacio a rotacio).
 
 **Camps obligatoris de `architect_data`:** `source_file`, `project_name`, `location`, `promotor`, `architect`, `architect_company`, `dimensions`
 **Camps obligatoris de `dimensions`:** `parcel_area_m2`, `building_footprint_m2`, `num_floors`, `max_height_m`, `plot_length_m`, `plot_width_m`
+**Camp opcional:** `floor_surfaces` — array d'objectes `{"floor": "PB", "area_m2": 280.0, "confidence": 0.90}`. Si no es troben superficies per planta, ometre o posar array buit `[]`.
 **Cada dimensio** es un objecte `{"pdf_value": <number|string|null>, "confidence": <float>}` o `null` si no trobat.
 
 ### dpsh_extracted.json

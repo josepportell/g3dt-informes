@@ -215,10 +215,25 @@ class UserDataWizard:
             # Dimensions → wizard fields
             dims = arch.get('dimensions', {})
 
-            footprint = dims.get('building_footprint_m2', {})
-            footprint_val = footprint.get('pdf_value') if isinstance(footprint, dict) else footprint
-            if footprint_val is not None:
-                self._set_prefill('superficie_construida_m2', footprint_val, source, overall_conf)
+            # Per-floor surfaces → "280+86" format (preferred)
+            floor_surfaces = dims.get('floor_surfaces', [])
+            if floor_surfaces and isinstance(floor_surfaces, list) and len(floor_surfaces) > 0:
+                areas = []
+                for fs in floor_surfaces:
+                    area = fs.get('area_m2')
+                    if area is not None:
+                        # Format as integer if whole number, else 1 decimal
+                        areas.append(str(int(area)) if area == int(area) else str(area))
+                if areas:
+                    sup_expr = '+'.join(areas)
+                    self._set_prefill('superficie_construida_m2', sup_expr, source, overall_conf)
+
+            # Fallback: single footprint value
+            if 'superficie_construida_m2' not in self.prefills:
+                footprint = dims.get('building_footprint_m2', {})
+                footprint_val = footprint.get('pdf_value') if isinstance(footprint, dict) else footprint
+                if footprint_val is not None:
+                    self._set_prefill('superficie_construida_m2', footprint_val, source, overall_conf)
 
             floors = dims.get('num_floors', {})
             floors_val = floors.get('pdf_value') if isinstance(floors, dict) else floors
