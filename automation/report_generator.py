@@ -33,6 +33,7 @@ import logging
 import re
 import sys
 
+from .formatting import format_floor_notation
 from .project_extractor import ProjectExtractor
 from .report_data import ReportData, build_report_data, to_dict as report_data_to_dict
 from .terzaghi_calculator import TerzaghiCalculator, FootingShape
@@ -594,7 +595,7 @@ class ReportGenerator:
             # Building
             context['building_type'] = self.report_data.building_type or ''
             context['building_type_lower'] = (self.report_data.building_type or '').lower()
-            context['num_floors'] = self.report_data.num_floors or ''
+            context['num_floors'] = format_floor_notation(self.report_data.num_floors or '')
 
             # Building structure description from num_floors
             # "en planta baixa" when foundation starts at ground level (PB, PB+P1, etc.)
@@ -624,8 +625,9 @@ class ReportGenerator:
             context['cte_sol'] = self.report_data.cte_soil_class or 'T-1'
 
             # Building dimensions for template
-            context['plantes'] = self.report_data.num_floors or ''
+            context['plantes'] = format_floor_notation(self.report_data.num_floors or '')
             context['superficie_parcela'] = self.report_data.superficie_parcela or ''
+            context['superficie_cadastral'] = self.report_data.superficie_cadastral or ''
             context['superficie_construida'] = self.report_data.superficie_construida or ''
 
             # Descriptions

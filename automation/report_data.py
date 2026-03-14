@@ -121,6 +121,7 @@ class ReportData:
     building_type: str
     num_floors: str
     superficie_parcela: str
+    superficie_cadastral: str
     superficie_construida: str
     has_basement: bool
     has_retaining_walls: bool
@@ -507,6 +508,7 @@ def build_report_data(
         building_type=user_data.get('building_type', ''),
         num_floors=user_data.get('num_floors', ''),
         superficie_parcela=str(user_data.get('superficie_parcela_m2', '') or ''),
+        superficie_cadastral=str(user_data.get('superficie_cadastral_m2', '') or ''),
         superficie_construida=str(user_data.get('superficie_construida_m2', '') or ''),
         has_basement=user_data.get('has_basement', False),
         has_retaining_walls=user_data.get('has_retaining_walls', False),
@@ -599,6 +601,7 @@ def to_dict(report_data: ReportData) -> dict[str, Any]:
             'type': report_data.building_type,
             'num_floors': report_data.num_floors,
             'superficie_parcela_m2': report_data.superficie_parcela,
+            'superficie_cadastral_m2': report_data.superficie_cadastral,
             'superficie_construida_m2': report_data.superficie_construida,
             'has_basement': report_data.has_basement,
             'has_retaining_walls': report_data.has_retaining_walls,
@@ -778,6 +781,7 @@ def from_dict(data: dict[str, Any]) -> ReportData:
         building_type=building.get('type', ''),
         num_floors=building.get('num_floors', ''),
         superficie_parcela=str(building.get('superficie_parcela_m2', '') or ''),
+        superficie_cadastral=str(building.get('superficie_cadastral_m2', '') or ''),
         superficie_construida=str(building.get('superficie_construida_m2', '') or ''),
         has_basement=building.get('has_basement', False),
         has_retaining_walls=building.get('has_retaining_walls', False),

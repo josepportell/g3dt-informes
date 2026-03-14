@@ -1433,6 +1433,10 @@
                                     <input type="text" inputmode="decimal" id="wiz-superficie_parcela_m2" data-field="superficie_parcela_m2" placeholder="Ex: 250" onchange="markWizardDirty()">
                                 </div>
                                 <div class="wizard-field">
+                                    <label>Superficie cadastral (m2) <span class="source-badge" id="src-superficie_cadastral_m2"></span></label>
+                                    <input type="text" inputmode="decimal" id="wiz-superficie_cadastral_m2" data-field="superficie_cadastral_m2" placeholder="Ex: 995" onchange="markWizardDirty()">
+                                </div>
+                                <div class="wizard-field">
                                     <label>Alcada edificacio (m) <span class="source-badge" id="src-building_height_m"></span></label>
                                     <input type="text" inputmode="decimal" id="wiz-building_height_m" data-field="building_height_m" placeholder="Ex: 6.5" onchange="markWizardDirty()">
                                 </div>
@@ -3161,7 +3165,7 @@
                 'architect_name', 'architect_company', 'client_name',
                 'street_address', 'site_municipality',
                 'num_floors',
-                'superficie_construida_m2', 'superficie_parcela_m2', 'building_height_m',
+                'superficie_construida_m2', 'superficie_parcela_m2', 'superficie_cadastral_m2', 'building_height_m',
                 'site_description', 'access_description',
                 'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
                 'foundation_depth_m', 'cota_referencia',
@@ -3383,7 +3387,7 @@
             ['architect_name', 'architect_company', 'client_name',
              'street_address', 'site_municipality',
              'num_floors',
-             'superficie_construida_m2', 'superficie_parcela_m2', 'building_height_m',
+             'superficie_construida_m2', 'superficie_parcela_m2', 'superficie_cadastral_m2', 'building_height_m',
              'site_description', 'access_description',
              'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
              'cota_referencia',

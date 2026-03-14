@@ -20,6 +20,8 @@ from typing import Any, TYPE_CHECKING
 if TYPE_CHECKING:
     from ..report_data import ReportData
 
+from ..formatting import format_floor_notation
+
 
 @dataclass
 class Section1Content:
@@ -130,7 +132,7 @@ class Section1Generator:
 
         # Number of floors
         if self.data.num_floors:
-            parts.append(f"de {self.data.num_floors}")
+            parts.append(f"de {format_floor_notation(self.data.num_floors)}")
 
         # Basement mention
         if self.data.has_basement:
@@ -158,7 +160,7 @@ class Section1Generator:
 
         return {
             "Tipus de construccio": self._safe_value(self.data.building_type),
-            "Num. de plantes": self._safe_value(self.data.num_floors),
+            "Num. de plantes": self._safe_value(format_floor_notation(self.data.num_floors) if self.data.num_floors else None),
             "Superficie parcela": f"{self.data.superficie_parcela} m2" if self.data.superficie_parcela else self.FALLBACK_VALUE,
             "Superficie construida": f"{self.data.superficie_construida} m2" if self.data.superficie_construida else self.FALLBACK_VALUE,
             "Tipus fonamentacio": fonamentacio,

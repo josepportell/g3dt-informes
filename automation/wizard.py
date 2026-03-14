@@ -39,7 +39,7 @@ WIZARD_FIELDS = [
     'architect_name', 'architect_company', 'client_name',
     'building_type',
     'num_floors', 'superficie_construida_m2',
-    'superficie_parcela_m2', 'building_height_m',
+    'superficie_parcela_m2', 'superficie_cadastral_m2', 'building_height_m',
     'site_description', 'access_description',
     'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
     'is_anthropized', 'num_soil_levels', 'soil_types', 'foundation_depth_m',

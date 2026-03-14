@@ -547,6 +547,10 @@ def _phase25_geocode(
         result.prefills['cadastral_ref'] = geo_result['rc']
         result.sources['cadastral_ref'] = source
 
+    if geo_result.get('parcel_area'):
+        result.prefills['superficie_cadastral_m2'] = int(geo_result['parcel_area'])
+        result.sources['superficie_cadastral_m2'] = source
+
     result.steps_completed.append(
         f"Geocodificació: UTM ({utm_x:.0f}, {utm_y:.0f}) [{source}]"
     )

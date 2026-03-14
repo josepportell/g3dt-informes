@@ -992,12 +992,20 @@ def geocode_project(
             logger.warning(f"Could not get parcel geometry for {rc[:14]}: {e}")
 
     # 5. Distribute points — if polygon available, use it; otherwise centroid
+    parcel_area: float | None = None
     if polygon and len(polygon) >= 3:
         # Override centroid with polygon centroid (more precise)
         n = len(polygon)
         centroid_x = sum(p[0] for p in polygon) / n
         centroid_y = sum(p[1] for p in polygon) / n
         points = distribute_points(polygon, point_ids)
+        # Compute cadastral area via Shoelace formula (UTM m2)
+        parcel_area = abs(sum(
+            polygon[i][0] * polygon[(i + 1) % n][1]
+            - polygon[(i + 1) % n][0] * polygon[i][1]
+            for i in range(n)
+        )) / 2.0
+        logger.info(f"Cadastral parcel area (Shoelace): {parcel_area:.0f} m2")
     else:
         # Place all points at centroid
         points = {pid: {"x": centroid_x, "y": centroid_y} for pid in point_ids}
@@ -1050,6 +1058,8 @@ def geocode_project(
         "rc": rc,
         "source": source,
     }
+    if parcel_area is not None:
+        result["parcel_area"] = round(parcel_area, 0)
 
     # 10. Cache result
     _save_to_cache(address, municipality, result)
