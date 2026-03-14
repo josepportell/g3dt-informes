@@ -227,20 +227,28 @@ def start_vision_cli(project_name: str, force: bool = False) -> dict[str, Any]:
 
         force_flag = " --force" if force else ""
         prompt = f"/g3dt-visio-projecte {project_path}{force_flag}"
-        cmd = [
-            claude_path, "-p", prompt,
-            "--permission-mode", "bypassPermissions",
-        ]
-
         # Clear last result so polling knows a new run started
         _vision_last_rc.pop(project_name, None)
 
+        # Log stdout/stderr to temp file for timing diagnosis
+        log_path = Path('/tmp') / f'claude-vision-{project_name.replace("/","_")}.log'
+        logger.info("Vision CLI log: %s", log_path)
+
+        # Replicate exactly the manual command that works:
+        #   claude -p "..." --permission-mode bypassPermissions < /dev/null > log 2>&1
+        # Using shell=True to match the bash invocation behavior.
+        import shlex
+        shell_cmd = (
+            f'{shlex.quote(claude_path)} -p {shlex.quote(prompt)}'
+            f' --permission-mode bypassPermissions'
+            f' < /dev/null > {shlex.quote(str(log_path))} 2>&1'
+        )
+        logger.info("Vision CLI cmd: %s", shell_cmd)
+
         try:
             proc = subprocess.Popen(
-                cmd,
-                stdin=subprocess.DEVNULL,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                shell_cmd,
+                shell=True,
                 cwd=str(_PROJECT_ROOT),
                 start_new_session=True,
             )
@@ -254,16 +262,16 @@ def start_vision_cli(project_name: str, force: bool = False) -> dict[str, Any]:
         _vision_processes[project_name] = proc
 
     def _wait_and_cleanup():
-        timeout = int(os.getenv('G3DT_VISION_TIMEOUT', '300'))
+        timeout = int(os.getenv('G3DT_VISION_TIMEOUT', '600'))
         try:
-            _, stderr_bytes = proc.communicate(timeout=timeout)
+            proc.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
             import signal
             try:
                 os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
             except (ProcessLookupError, OSError):
                 proc.kill()
-            proc.communicate()
+            proc.wait()
             logger.warning("Vision CLI timed out after %ds for %s", timeout, project_name)
             with _vision_lock:
                 _vision_last_rc[project_name] = -1
@@ -272,10 +280,9 @@ def start_vision_cli(project_name: str, force: bool = False) -> dict[str, Any]:
             return
         rc = proc.returncode
         if rc != 0:
-            stderr = stderr_bytes.decode(errors='replace') if stderr_bytes else ""
-            logger.warning("Vision CLI ended rc=%d for %s: %s", rc, project_name, stderr[:500])
+            logger.warning("Vision CLI ended rc=%d for %s (see %s)", rc, project_name, log_path)
         else:
-            logger.info("Vision CLI completed successfully for %s", project_name)
+            logger.info("Vision CLI completed successfully for %s (see %s)", project_name, log_path)
         with _vision_lock:
             _vision_last_rc[project_name] = rc
             if _vision_processes.get(project_name) is proc:

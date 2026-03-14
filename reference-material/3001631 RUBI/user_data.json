@@ -3,11 +3,11 @@
   "architect_company": "Viviendas Modulares",
   "building_type": "Habitatge aïllat",
   "site_description": "",
-  "access_description": "",
-  "adjacent_north": "",
-  "adjacent_south": "",
-  "adjacent_east": "",
-  "adjacent_west": "",
+  "access_description": "carrer de la Miranda",
+  "adjacent_north": "parcel·les sense edificacions i amb vegetació de petita alçada i arbres",
+  "adjacent_south": "carrer de la Miranda",
+  "adjacent_east": "construccions de característiques similars",
+  "adjacent_west": "construccions de característiques similars",
   "is_anthropized": true,
   "num_soil_levels": 1,
   "foundation_depth_m": 0.3,
@@ -28,10 +28,10 @@
     }
   ],
   "_metadata": {
-    "generated_at": "2026-02-27T18:53:24",
+    "generated_at": "2026-03-04T16:55:43",
     "wizard_used": true
   },
-  "num_floors": "",
+  "num_floors": "Pb + porxo",
   "soil_types": [
     "granular"
   ],
@@ -43,5 +43,9 @@
   "icgc_unit_code": "NMcg",
   "icgc_unit_description": "Conglomerats amb matriu sorrenca sense cimentar",
   "icgc_unit_epoch": "Miocè",
-  "Es_settlement": 119
+  "Es_settlement": 119,
+  "client_name": "SRA. JOANA MARTINEZ",
+  "superficie_construida_m2": "70+20",
+  "superficie_parcela_m2": "",
+  "building_height_m": ""
 }

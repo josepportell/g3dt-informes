@@ -35,7 +35,7 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-__all__ = ['run_vision_extraction', 'extract_from_planol', 'extract_from_penetros', 'extract_from_sondeig']
+__all__ = ['run_vision_extraction', 'extract_from_planol', 'extract_from_penetros', 'extract_from_sondeig', 'extract_from_sondeig_annex']
 
 # Model: sonnet for cost/quality balance (~$0.03-0.10 per project)
 VISION_MODEL = "claude-sonnet-4-6"
@@ -208,14 +208,32 @@ def extract_from_sondeig(pdf_path: Path) -> dict:
     return data
 
 
+def extract_from_sondeig_annex(pdf_path: Path) -> dict:
+    """Read formatted sondeig annex PDF and extract soil layers with geological levels."""
+    from .validation.prompts import SONDEIG_ANNEX_EXTRACTION_PROMPT, EXTRACTION_SYSTEM_PROMPT
+
+    images = _pdf_to_images(pdf_path)
+    logger.info("Sondeig annex: sending %d page(s) to Claude API", len(images))
+    text = _call_vision(images, SONDEIG_ANNEX_EXTRACTION_PROMPT, EXTRACTION_SYSTEM_PROMPT)
+    data = _extract_json(text)
+
+    data.setdefault('source_file', pdf_path.name)
+    data.setdefault('extraction_date', datetime.now().isoformat())
+    data.setdefault('extraction_method', 'claude_vision')
+    data.setdefault('status', 'pending_review')
+
+    return data
+
+
 # ---------------------------------------------------------------------------
 # Vision type registry: maps vision_type → (extract_fn, cache_filename)
 # ---------------------------------------------------------------------------
 
 VISION_REGISTRY: dict[str, tuple[Any, str]] = {
-    'planol':  (extract_from_planol,   'planol_extracted.json'),
-    'dpsh':    (extract_from_penetros, 'dpsh_extracted.json'),
-    'sondeig': (extract_from_sondeig,  'sondeig_extracted.json'),
+    'planol':        (extract_from_planol,        'planol_extracted.json'),
+    'dpsh':          (extract_from_penetros,       'dpsh_extracted.json'),
+    'sondeig':       (extract_from_sondeig,        'sondeig_extracted.json'),
+    'sondeig_annex': (extract_from_sondeig_annex,  'sondeig_extracted.json'),
 }
 
 
@@ -294,9 +312,19 @@ def _extract_or_cache(
 
     # Check cache
     if cache_path.exists() and not force_refresh:
-        logger.info("%s: using cached %s", label, cache_path.name)
         try:
-            return json.loads(cache_path.read_text(encoding='utf-8'))
+            cached = json.loads(cache_path.read_text(encoding='utf-8'))
+            # Invalidate cache if source_file changed (e.g., switched from
+            # field sheet to formatted annex for the same vision type)
+            cached_source = cached.get('source_file', '')
+            if cached_source and cached_source != pdf_path.name:
+                logger.info(
+                    "%s: cache source_file mismatch (%s != %s), re-extracting",
+                    label, cached_source, pdf_path.name,
+                )
+            else:
+                logger.info("%s: using cached %s", label, cache_path.name)
+                return cached
         except (json.JSONDecodeError, OSError):
             pass  # Fall through to re-extract
 

@@ -3,7 +3,8 @@
     "dpsh_field_sheet": {
       "path": "3001631 - PENETROS.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": "dpsh"
     },
     "reference_report": {
       "path": "3001631_informe.doc",
@@ -35,6 +36,12 @@
       "confidence": "high",
       "detection": "filename_pattern"
     },
+    "situation_plan": {
+      "path": "PDF/ANNEXES/3001631_plànol de situació.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": "planol"
+    },
     "lab_results_pdf": {
       "path": "PDF/ANNEXES/LAB-SIG.pdf",
       "confidence": "high",
@@ -51,6 +58,22 @@
       "reason": "cover_doc"
     },
     {
+      "path": "3001631_generated.docx",
+      "reason": "our_output"
+    },
+    {
+      "path": "3001631_informe.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "3001631_test_gamma_fix.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "3001631_test_validation.docx",
+      "reason": "legacy_word"
+    },
+    {
       "path": "ACCEPTACIO/",
       "reason": "acceptance_dir"
     },
@@ -61,6 +84,14 @@
     {
       "path": "Thumbs.db",
       "reason": "temp_file"
+    },
+    {
+      "path": "user_data.json",
+      "reason": "our_output"
+    },
+    {
+      "path": "validation/",
+      "reason": "output_dir"
     },
     {
       "path": "ANNEXES/3001631_fotografies.FH11",
@@ -75,6 +106,10 @@
       "reason": "freehand_file"
     },
     {
+      "path": "ANNEXES/ALTRES/",
+      "reason": "misc_subdir"
+    },
+    {
       "path": "ANNEXES/Altres/",
       "reason": "misc_subdir"
     },
@@ -87,18 +122,14 @@
       "reason": "exported_annex_pdf"
     },
     {
-      "path": "PDF/ANNEXES/3001631_plànol de situació.pdf",
-      "reason": "exported_annex_pdf"
-    },
-    {
       "path": "PDF/ANNEXES/3001631_tall de correlació.pdf",
       "reason": "exported_annex_pdf"
     }
   ],
   "unassigned": [],
   "_metadata": {
-    "scanned_at": "2026-02-24T17:45:23.070065+00:00",
+    "scanned_at": "2026-03-04T15:24:23.941231+00:00",
     "confirmed_by_user": false,
-    "scanner_version": "2.0"
+    "scanner_version": "2.1"
   }
 }

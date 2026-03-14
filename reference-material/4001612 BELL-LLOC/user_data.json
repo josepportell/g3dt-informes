@@ -30,7 +30,7 @@
   "utm_x": 314418.94,
   "utm_y": 4611117.63,
   "_metadata": {
-    "generated_at": "2026-02-27T16:40:44",
+    "generated_at": "2026-03-03T18:23:53",
     "wizard_used": true
   },
   "adjacents": {
@@ -38,5 +38,8 @@
     "south": "Carrer Antoni Bellet",
     "east": "Carrer Mestre Ramon Ortiz",
     "west": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant"
-  }
+  },
+  "icgc_unit_code": "Qvpu",
+  "icgc_unit_description": "Graves amb matriu lutítica i llentillons sorrencs",
+  "icgc_unit_epoch": "Plistocè"
 }

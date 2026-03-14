@@ -3,72 +3,80 @@
     "reference_report": {
       "path": "4001612_informe.doc",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "gtl_report": {
       "path": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "architect_plan_with_points": {
       "path": "A.01 amb punts.pdf",
       "confidence": "high",
       "detection": "filename_pattern",
-      "clip_regions": {
-        "cadastre": [1380, 20, 2030, 470],
-        "aerea": [1380, 550, 2030, 980],
-        "main_plan": [30, 20, 1370, 960]
-      }
+      "vision_type": "planol"
     },
     "architect_plan": {
       "path": "A.01.pdf",
       "confidence": "high",
       "detection": "filename_pattern",
-      "clip_regions": {
-        "cadastre": [1380, 20, 2030, 470],
-        "aerea": [1380, 550, 2030, 980],
-        "main_plan": [30, 20, 1370, 960]
-      }
+      "vision_type": "planol"
     },
     "photos_dir": {
       "path": "FOTOGRAFIES",
       "confidence": "high",
-      "detection": "directory_name"
+      "detection": "directory_name",
+      "vision_type": null
     },
     "dpsh_field_sheet": {
       "path": "PENETROS.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": "dpsh"
     },
     "sondeig_field_sheet": {
       "path": "SONDEIG.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "lab_order": {
       "path": "comanda laboratori_4001612_BELL-LLOC.xls",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "situation_plan": {
       "path": "pl. situaci.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": "planol"
     },
     "correlation_section": {
       "path": "tall.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "dpsh_excel": {
       "path": "ANNEXES/4001612_DPSH.xls",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "sondeig_annex": {
+      "path": "PDF/ANNEXES/4001612_sondeig.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": "sondeig_annex"
     },
     "lab_results_pdf": {
       "path": "PDF/ANNEXES/LAB-SIG.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     }
   },
   "ignored": [
@@ -77,8 +85,20 @@
       "reason": "numeric_dir"
     },
     {
+      "path": "4001612_AUDIT_VISUAL.docx",
+      "reason": "legacy_word"
+    },
+    {
       "path": "4001612_PORTADA_25.doc",
       "reason": "cover_doc"
+    },
+    {
+      "path": "4001612_generated.docx",
+      "reason": "our_output"
+    },
+    {
+      "path": "4001612_informe.docx",
+      "reason": "legacy_word"
     },
     {
       "path": "4001612_informe_DETALLAT (Reparado).doc",
@@ -87,6 +107,26 @@
     {
       "path": "4001612_informe_DETALLAT.doc",
       "reason": "detailed_doc"
+    },
+    {
+      "path": "4001612_test_fase2.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "4001612_test_gamma_fix.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "4001612_test_google_sat.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "4001612_test_google_sat2.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "4001612_test_ortho.docx",
+      "reason": "legacy_word"
     },
     {
       "path": "ACCEPTACIO/",
@@ -107,6 +147,18 @@
     {
       "path": "Thumbs.db",
       "reason": "temp_file"
+    },
+    {
+      "path": "file_mapping.json",
+      "reason": "our_output"
+    },
+    {
+      "path": "user_data.json",
+      "reason": "our_output"
+    },
+    {
+      "path": "validation/",
+      "reason": "output_dir"
     },
     {
       "path": "~$01612_informe_DETALLAT.doc",
@@ -133,6 +185,10 @@
       "reason": "freehand_file"
     },
     {
+      "path": "ANNEXES/ALTRES/",
+      "reason": "misc_subdir"
+    },
+    {
       "path": "PDF/ANNEXES/4001612_DPSH.pdf",
       "reason": "exported_annex_pdf"
     },
@@ -141,22 +197,16 @@
       "reason": "exported_annex_pdf"
     },
     {
-      "path": "PDF/ANNEXES/4001612_plànol de situació.pdf",
-      "reason": "exported_annex_pdf"
-    },
-    {
-      "path": "PDF/ANNEXES/4001612_sondeig.pdf",
-      "reason": "exported_annex_pdf"
-    },
-    {
       "path": "PDF/ANNEXES/4001612_tall de correlació.pdf",
       "reason": "exported_annex_pdf"
     }
   ],
-  "unassigned": [],
+  "unassigned": [
+    "PDF/ANNEXES/4001612_plànol de situació.pdf"
+  ],
   "_metadata": {
-    "scanned_at": "2026-02-25T08:40:18.863157+00:00",
+    "scanned_at": "2026-03-13T19:27:56.877889+00:00",
     "confirmed_by_user": false,
-    "scanner_version": "2.0"
+    "scanner_version": "2.2"
   }
 }

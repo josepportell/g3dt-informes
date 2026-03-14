@@ -1,137 +1,36 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-03-06
+Last updated: 2026-03-14
 
 ## Current State
 
-Pipeline complet operatiu. Claude Code és el runtime de producció — s'instal·la a l'ordinador d'Eva i serveix el wizard web en segon pla.
+Pipeline complet operatiu i preparat per instal·lar a l'ordinador d'Eva. Wizard web integrat — Eva selecciona projecte, clica "Llegir PDFs de camp", revisa prefills, genera informe.
 
-**Model d'operació:** Eva obre localhost:8765, selecciona projecte, el sistema pre-omple tot automàticament (Python + Claude vision), Eva revisa/ajusta, genera informe.
+**Flux complet (wizard):**
+1. Fase 0+0.5 (Python, ~5s): FileScanner v2.2, DPSH, Lab, ICGC, Cadastre, geocode
+2. Fase 1 (Claude vision, ~5 min): botó al wizard invoca `claude -p` via subprocess
+3. Fase 2: Eva revisa/ajusta camps pre-omplerts (~30s)
+4. Fase 3: Genera .docx
 
-**Qualitat audit (Bell-Lloc):** 97.1% amb user_data complet, **94.9% des de zero** (sense cap intervenció humana)
-
-### Components operatius
-
-| Component | Estat | Notes |
-|-----------|-------|-------|
-| FileScanner (Fase 0) | ✅ | Classificació automàtica + `vision_type` per rol (v2.1) |
-| auto_extract (Fase 0.5) | ✅ | DPSH, Lab, ICGC, Cadastre, geocode, historia geològica |
-| Claude vision (Fase 1) | ✅ | Anthropic SDK (sonnet), VISION_REGISTRY genèric, cache JSON |
-| Web Wizard (Fase 2) | ✅ | FastAPI + review.html, 4 pestanyes, camps client/superfícies/alçada |
-| ReportGenerator (Fase 3) | ✅ | .docx amb Jinja2, tots els annexos |
-| Historia geològica | ✅ | 238 plantilles Eva, lookup jeràrquic municipi→comarca→region |
-| Audit intel·ligent | ✅ | Semàntic per paràgraf + visual .docx |
-
-### Visió: dues vies
-
-- **Via SDK (Anthropic API):** Implementada, testejada, operativa. Pendent aprovació del client per activar-la en producció (implica cost API).
-- **Via Claude Code nativa (Read tool):** Claude Code llegeix els PDFs directament, sense SDK ni api_key. S'activarà per demos i mentre no hi hagi aprovació de l'SDK. Implementació pendent.
-
-## Branques
-
-`main` conté tot el codi. Merge fast-forward completat 2026-03-03 (`feat/historia-geologica` + `fix/report-quality-audit` → `main`). Branca `feat/historia-geologica` activa per desenvolupament.
-
-## Desviacions actuals (4 projectes)
-
-| Paràmetre | Bell-Lloc | Rubí | Castellar | Linyola |
-|-----------|-----------|------|-----------|---------|
-| gamma | 0% | 0% | 0% | 0% |
-| phi | +1.5% | -1.1% | 0% | +4.0% |
-| E | -27.8%* | +4.2% | 0% | +14.2% |
-| Qa | -0.2% | -14.4%** | 0% | +3.1% |
-| settlement | +27.9%* | +2.3% | - | - |
-| K30 | +4.2% | +4.2% | +4.1% | - |
-
-\* Bell-Lloc E=650 (carbonatades, Eva ajusta manualment)
-\*\* Rubí Qa=3.50 supera cap 3.0 — pendent preguntar a Eva
+**Qualitat audit (Bell-Lloc):** 97.1% amb user_data, 94.9% des de zero
 
 ## Active Blockers
 
-Cap blocker crític.
+Cap blocker actiu.
 
-## Fixes recents (2026-03-06)
+## Branques
 
-### Real-time SSE stepper + manual vision stepper
-- **Stepper 1 (automàtic, SSE):** Fitxers → Dades → Llest. Backend streams events via `/api/prefills-stream/{project}` a mesura que cada fase completa. Fitxers i fonts de dades apareixen sota les icones en temps real.
-- **Stepper 2 (visió manual):** Copiar → Terminal → Actualitzar. Guia Eva pel procés de visió IA (manual al terminal). Pas 1: clic "Copiar". Pas 2: polling `/api/vision-status/{project}` detecta nous JSONs cada 3s. Pas 3: clic "Actualitzar prefills" + fetch. Es col·lapsa a "Visió completada" quan tots 3 JSONs existeixen.
-- **Backend:** `auto_extract()` ara accepta `on_progress` callback (retrocompatible). Nou endpoint SSE + endpoint vision-status.
-- **Eliminat:** stepper cosmètic amb setTimeout, acordió de fitxers a instruccions (migrat al stepper).
+- `main` — codi estable
+- `feat/vision-wizard-integration` — botó visió + sondeig annex (pendent merge)
 
-## Fixes anteriors (2026-03-04)
+## Desplegament
 
-### 3 Millores Wizard (demo-ready)
-- **Fitxers detectats:** banner mostra llista collapsable de fitxers trobats al projecte (DPSH.xls, PENETROS.pdf, etc.)
-- **Carpeta Windows:** `G3DT_PROJECTS_DIR` configurable via `.env` (default: `/mnt/c/claude/g3dt/projectes`). Projectes copiats a Windows.
-- **Fonts preservades:** badges mostren font real (e.g. "planol A.01.pdf", "ICGC WMS 1:50k") en lloc de "user_data" — sobreviuen save/reload via `_sources` a user_data.json
-- **Dropdown dinàmic:** F5 al navegador recarrega llista de projectes. Noves carpetes apareixen immediatament.
-- **Cache fix:** seleccionar projecte sempre re-escaneja fitxers (sense cache stale)
-- **Tooltip:** badges truncats mostren font completa al hover
-- **`.env` support:** wizard_service.py llegeix `.env` del project root (sense dependències externes)
-
-### Wizard & Data Pipeline (anteriors)
-- **client_name** com a camp wizard editable (planol vision → wizard → report `{{ client }}`)
-- **superficie_construida_m2**, **superficie_parcela_m2**, **building_height_m** com a camps wizard editables
-- Superfícies accepten **expressions aritmètiques** ("70+20", "260+68") — es mostren tal qual a l'informe, s'avaluen internament per CTE
-- **street_address** (adreça del solar) es pre-omple des de planol vision
-- Fix `_user_data_full` merge (`.update()` en lloc de replace)
-
-### FileScanner
-- **situation_plan** detecta fitxers amb prefix d'expedient (`3001631_plànol de situació.pdf`)
-- `search_in` suporta múltiples àmbits (`['', 'PDF/ANNEXES']`)
-- Rubí: detecta correctament el plànol de situació a `PDF/ANNEXES/`
-
-## Audit Quality (2026-03-03)
-
-### Amb user_data (dades prèvies d'Eva)
-
-| Projecte | Score | Needs review | Missing |
-|-----------|:---:|:---:|:---:|
-| Bell-Lloc | **97.1%** | 10 | 10 |
-| Rubí | 92.3% | 25 | 39 |
-| Linyola | 91.0% | 29 | 71 |
-| Castellar | 90.9% | 35 | 55 |
-
-### Des de zero (sense user_data, només fitxers font)
-
-| Projecte | Score | Needs review | Missing | Visió |
-|-----------|:---:|:---:|:---:|---|
-| Bell-Lloc2 | **94.9%** | 17 | 25 | 3/3 PDFs (A.01 + PENETROS + SONDEIG) |
-| Linyola2 | 91.0% | 29 | 74 | 2/2 PDFs (PENETROS + pl situ) |
-
-**Bell-Lloc2 a 94.9% sense cap intervenció humana.** La visió omple: arquitecte, empresa, tipus edificació, plantes, superfície construïda, nivells de sòl (sondeig). El 2.2% de diferència són overrides manuals d'Eva (adjacents detallats, E/phi ajustats, descripcions personalitzades).
-
-### Temps de processament (des de zero)
-
-| Projecte | Fase 0+0.5 (Python) | Fase 1 (visió) | Total |
-|-----------|:---:|:---:|:---:|
-| Bell-Lloc2 (3 PDFs) | ~5s | ~90s | ~95s |
-| Linyola2 (2 PDFs) | ~5s | ~40s | ~45s |
+- Guia d'instal·lació completa: `guides/GUIA-INSTALLACIO-EVA.md`
+- Scripts escriptori: `scripts/G3DT-Wizard.bat` + `scripts/G3DT-Claude.bat`
 
 ## Next Milestones
 
-- [x] Pipeline complet: FileScanner → auto_extract → wizard → report
-- [x] Web wizard amb FastAPI
-- [x] Geocodificació UTM (Nominatim + Cadastre + WFS INSPIRE)
-- [x] Settlement calibrat: Es = 2.5×Nb
-- [x] Plantilles història geològica (238 templates, lookup jeràrquic)
-- [x] Audit intel·ligent (semàntic per paràgraf, Bell-Lloc 97.1%)
-- [x] Fix: historia dinàmica (for-loop, sense límit 6 slots)
-- [x] Fix: filtre sondeig (num_levels vs sondeig_layers)
-- [x] Fix: descripció material (deepest layer = bearing stratum)
-- [x] Integrar Claude vision (Fase 1) al pipeline automàtic del wizard
-- [x] `vision_type` al file_scanner (desacoblament vision_extractor ↔ nomenclatura rols)
-- [x] Merge feat/historia-geologica → main (fast-forward, 0 conflictes)
-- [x] Test full pipeline des de zero (Bell-Lloc2: 94.9%, Linyola2: 91.0%)
-- [x] client_name, superfícies, alçada com a camps wizard editables
-- [x] FileScanner: situation_plan amb prefix expedient + search_in múltiple
-- [x] Superfícies amb expressions aritmètiques (70+20)
-- [x] Wizard demo-ready: fitxers detectats, carpeta Windows, fonts preservades, cache fix
-- [x] Condicions carpeta projecte (`docs/CONDICIONS-CARPETA-PROJECTE.md`) — doc per Eva
-- [x] Radó dinàmic: ZONA + descripció per municipi (municipal_data) + paràgraf CSN Bq/m³ per coordenades (csn_radon)
-- [x] Stepper amb progrés real via SSE (elimina animació cosmètica)
-- [x] Stepper visió manual amb polling de fitxers (guia Eva pel terminal)
-- [ ] Category C vocabulary (to d'Eva per secció Materials)
-- [ ] Eva revisa index.json (duplicats, variants geològiques)
-- [ ] Preguntar Eva: Rubí Qa=3.50, Bell-Lloc N=54
+- [ ] Instal·lar a l'ordinador d'Eva (seguint guia d'instal·lació)
+- [ ] Validació amb Eva del flux complet (projecte nou de zero)
+- [ ] Merge `feat/vision-wizard-integration` → `main`
+- [ ] Category C vocabulary (text d'Eva per secció Materials)
 - [ ] Test multi-nivell amb Linyola (sòls expansius)
-- [ ] Visió nativa Claude Code (Read tool directe) — per demos i ús interim mentre SDK pendent aprovació
-- [ ] Validació amb Eva del flux complet (projecte nou de zero, amb Eva present)

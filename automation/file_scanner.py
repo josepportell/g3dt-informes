@@ -25,7 +25,7 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-SCANNER_VERSION = "2.1"
+SCANNER_VERSION = "2.2"
 
 # Role definitions: description + optional vision_type for Claude API extraction.
 # vision_type maps to extraction prompts: "planol", "dpsh", "sondeig"
@@ -35,6 +35,7 @@ ROLE_DEFINITIONS = {
     'architect_plan_with_points': {"desc": "Planol de l'arquitecte amb punts d'assaig", "vision_type": "planol"},
     'dpsh_field_sheet':     {"desc": "Full de camp DPSH (penetrometres)",         "vision_type": "dpsh"},
     'dpsh_excel':           {"desc": "Excel DPSH amb dades transcrites"},
+    'sondeig_annex':        {"desc": "Annex formatat del sondeig (PDF vectorial)",   "vision_type": "sondeig_annex"},
     'sondeig_field_sheet':  {"desc": "Full de camp sondeig a rotacio",            "vision_type": "sondeig"},
     'correlation_section':  {"desc": "Tall de correlacio"},
     'lab_order':            {"desc": "Comanda de laboratori"},
@@ -98,6 +99,10 @@ ROLE_PATTERNS = {
     'dpsh_excel': {
         'patterns': [r'(?i).*dpsh.*\.xls'],
         'search_in': 'ANNEXES',
+    },
+    'sondeig_annex': {
+        'patterns': [r'(?i)\d+_sondeig\.pdf$'],
+        'search_in': ['PDF/ANNEXES', 'ANNEXES', 'PDF-V0/ANNEXES'],
     },
     'sondeig_field_sheet': {
         'patterns': [
@@ -270,6 +275,17 @@ class FileScanner:
                 mapping.unassigned.append(rel_path)
                 classified_paths.add(rel_path)
 
+        # If sondeig_annex detected, remove vision_type from sondeig_field_sheet
+        # (annex has priority — field sheet not needed for vision)
+        if 'sondeig_annex' in mapping.roles and 'sondeig_field_sheet' in mapping.roles:
+            mapping.roles['sondeig_field_sheet'] = FileRole(
+                path=mapping.roles['sondeig_field_sheet'].path,
+                confidence=mapping.roles['sondeig_field_sheet'].confidence,
+                detection=mapping.roles['sondeig_field_sheet'].detection,
+                is_combined=mapping.roles['sondeig_field_sheet'].is_combined,
+                vision_type=None,  # annex takes priority
+            )
+
         # Phase 4: handle roles with 'prefer' -- demote non-preferred candidates
         self._apply_preferences(mapping)
 
@@ -289,7 +305,7 @@ class FileScanner:
                     'confidence': role.confidence,
                     'detection': role.detection,
                     **(({'is_combined': True} if role.is_combined else {})),
-                    **(({'vision_type': role.vision_type} if role.vision_type else {})),
+                    'vision_type': role.vision_type,
                 }
                 for name, role in mapping.roles.items()
             },
@@ -321,8 +337,9 @@ class FileScanner:
             data = json.loads(json_path.read_text(encoding='utf-8'))
             mapping = FileMapping()
             for name, role_data in data.get('roles', {}).items():
-                # vision_type: prefer JSON value, fall back to ROLE_DEFINITIONS
-                vt = role_data.get('vision_type') or get_vision_type(name)
+                # vision_type: use JSON value if key present (even if None = suppressed),
+                # only fall back to ROLE_DEFINITIONS for legacy files without the key
+                vt = role_data.get('vision_type') if 'vision_type' in role_data else get_vision_type(name)
                 mapping.roles[name] = FileRole(
                     path=role_data['path'],
                     confidence=role_data['confidence'],
@@ -377,7 +394,7 @@ class FileScanner:
 
     # Directories where unmatched files are silently ignored (not flagged
     # as unassigned).  We scan these for specific roles only.
-    _AUXILIARY_SCOPES = {'PDF/ANNEXES'}
+    _AUXILIARY_SCOPES = {'PDF/ANNEXES', 'PDF-V0/ANNEXES'}
 
     def _list_entries(self) -> list[tuple[str, bool, bool]]:
         """
@@ -405,6 +422,11 @@ class FileScanner:
         if pdf_annexes.is_dir():
             for item in sorted(pdf_annexes.iterdir()):
                 entries.append((f"PDF/ANNEXES/{item.name}", item.is_dir(), True))
+
+        pdf_v0_annexes = self.project_path / 'PDF-V0' / 'ANNEXES'
+        if pdf_v0_annexes.is_dir():
+            for item in sorted(pdf_v0_annexes.iterdir()):
+                entries.append((f"PDF-V0/ANNEXES/{item.name}", item.is_dir(), True))
 
         return entries
 

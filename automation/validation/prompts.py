@@ -137,6 +137,13 @@ the graphic column) may belong to the SAME geological level. For example, if the
 litològica" column only shows "NIVELL 1" for the entire borehole depth, then
 num_geological_levels = 1, even if you see 2 or more distinct soil descriptions.
 
+FALLBACK RULE:
+If the document does NOT have a "Unitat litològica" column (common in handwritten field sheets),
+set `num_geological_levels = 1` by default. Only set it to >1 if there is EXPLICIT evidence of
+separate geological levels marked in the document (e.g., clear "NIVELL 1", "NIVELL 2" labels).
+Different material descriptions within the same borehole do NOT automatically mean different
+geological levels — they may be sub-layers within the same geological unit.
+
 EXTRACTION RULES:
 1. For each borehole, extract ALL soil layers from surface to final depth
 2. Depths should be continuous (each layer's depth_to_m = next layer's depth_from_m)
@@ -160,6 +167,62 @@ OUTPUT FORMAT (JSON):
 {SONDEIG_JSON_EXAMPLE}
 
 Extract all soil layer information from this document. Be thorough and note any uncertainties.'''
+
+
+SONDEIG_ANNEX_EXTRACTION_PROMPT = f'''Analyze this formatted borehole log (sondeig annex).
+
+TASK: Extract all soil layer data into a structured JSON format.
+
+DOCUMENT TYPE: This is a FORMATTED document (vectorial PDF, not handwritten). It is the official
+annex version of the borehole log, generated from FreeHand or similar software. Data should be
+clearer than handwritten field sheets — use higher base confidence.
+
+DOCUMENT STRUCTURE:
+- The document shows a borehole log for one or more boreholes (S-1, S-2, etc.)
+- It has a graphic column showing soil layers with depth ranges
+- For each layer: depth range, soil description, color, moisture, consistency/density
+- May include USCS classification, SPT values, RQD
+- Water level (N.F.) may be indicated
+- Rock or refusal may be noted at bottom
+
+CRITICAL — "Unitat litològica" COLUMN:
+This document has a column labeled "Unitat litològica" (or "U. Litol.", "Nivell", "N") that groups
+soil strata into geological LEVELS (NIVELL 1, NIVELL 2, etc. or just 1, 2, etc.).
+
+THIS IS THE AUTHORITATIVE SOURCE for the number of geological levels.
+
+Multiple soil descriptions (material transitions in the graphic column) may belong to the SAME
+geological level. For example:
+- "Graves en matriu sorrenca" from 0-2m and "Graves en matriu sorrenca carbonatades" from 2-6m
+  might BOTH be NIVELL 1 if the "Unitat litològica" column shows a single "1" spanning both.
+
+Rules for `num_geological_levels`:
+1. COUNT the distinct values in the "Unitat litològica" column
+2. Do NOT count material transitions — only count distinct LEVEL numbers
+3. If the column shows only "1" (or "NIVELL 1") for the entire depth, then num_geological_levels = 1
+
+EXTRACTION RULES:
+1. For each borehole, extract ALL soil layers from surface to final depth
+2. Depths should be continuous (each layer's depth_to_m = next layer's depth_from_m)
+3. Extract soil descriptions in Catalan as written
+4. For each layer, set "geological_level" to the LEVEL number from the "Unitat litològica" column
+5. Set "num_geological_levels" to the count of DISTINCT values in that column
+6. Note USCS classification if visible
+7. Moisture states: sec, humit, saturat
+8. Consistency (cohesive soils): tova, ferma, dura
+9. Density (granular soils): fluixa, mitja, densa
+
+CONFIDENCE SCORING (higher base for formatted docs):
+- 1.0: Clear printed text (most values in formatted docs)
+- 0.9: Readable with minor uncertainty
+- 0.7-0.8: Some ambiguity in interpretation
+- <0.7: Unclear or partially obscured
+
+OUTPUT FORMAT (JSON):
+{SONDEIG_JSON_EXAMPLE}
+
+Extract all soil layer information from this formatted document. Pay special attention to the
+"Unitat litològica" column for determining num_geological_levels.'''
 
 
 # ============================================================================

@@ -18,7 +18,8 @@
     "dpsh_field_sheet": {
       "path": "PENETROS.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": "dpsh"
     },
     "lab_order": {
       "path": "comanda laboratori_4001607_LINYOLA.xls",
@@ -28,7 +29,8 @@
     "situation_plan": {
       "path": "pl situ.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": "planol"
     },
     "correlation_section": {
       "path": "tall.pdf",
@@ -56,6 +58,22 @@
       "reason": "cover_doc"
     },
     {
+      "path": "4001607_generated.docx",
+      "reason": "our_output"
+    },
+    {
+      "path": "4001607_informe.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "4001607_test_gamma_fix.docx",
+      "reason": "legacy_word"
+    },
+    {
+      "path": "4001607_test_validation.docx",
+      "reason": "legacy_word"
+    },
+    {
       "path": "ACCEPTACIO/",
       "reason": "acceptance_dir"
     },
@@ -80,6 +98,14 @@
       "reason": "temp_file"
     },
     {
+      "path": "user_data.json",
+      "reason": "our_output"
+    },
+    {
+      "path": "validation/",
+      "reason": "output_dir"
+    },
+    {
       "path": "ANNEXES/4001607_fotografies.FH11",
       "reason": "freehand_file"
     },
@@ -90,6 +116,10 @@
     {
       "path": "ANNEXES/4001607_tall de correlació.FH11",
       "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/ALTRES/",
+      "reason": "misc_subdir"
     },
     {
       "path": "PDF/ANNEXES/4001607_DPSH.pdf",
@@ -113,8 +143,8 @@
     "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf"
   ],
   "_metadata": {
-    "scanned_at": "2026-02-24T17:45:27.964765+00:00",
+    "scanned_at": "2026-03-03T16:06:51.979794+00:00",
     "confirmed_by_user": false,
-    "scanner_version": "2.0"
+    "scanner_version": "2.1"
   }
 }

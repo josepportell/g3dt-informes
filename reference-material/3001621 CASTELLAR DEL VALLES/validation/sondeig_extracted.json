@@ -1,45 +1,335 @@
 {
-  "source_file": "PENETROS + SONDEIG.pdf",
-  "extraction_date": "2026-02-24T17:30:00",
-  "extraction_method": "claude_vision",
-  "overall_confidence": 0.85,
-  "status": "pending_review",
-  "metadata": {
-    "date": "24-10-2025",
-    "location": "Castellar del Vallès",
-    "address": "C/Arbrells",
-    "operator": "Daniel Fernández",
-    "equipment": "ML76A",
-    "client": "G3",
-    "responsible": "Eva"
-  },
   "sondeig_tests": [
     {
       "test_id": "S-1",
-      "total_depth_m": 1.20,
+      "total_depth_m": 1.2,
       "layers": [
         {
           "depth_from_m": 0.0,
-          "depth_to_m": 0.50,
-          "description": "Llims argilosos amb grava grossa",
-          "confidence": 0.80,
-          "note": "Handwriting partially unclear — reads 'llimos argillos, son grossa' or similar"
+          "depth_to_m": 0.5,
+          "description": "Capa superficial - material no especificat",
+          "uscs_classification": null,
+          "color": null,
+          "moisture": null,
+          "consistency": null,
+          "density": null,
+          "confidence": 0.4,
+          "note": "The rotary drilling field sheet (Full de camp sondeig a rotació) is photographed at an angle making layer details very difficult to read. Depth range estimated from visible column structure."
         },
         {
-          "depth_from_m": 0.50,
-          "depth_to_m": 1.20,
-          "description": "Roca fracturada",
-          "confidence": 0.85,
-          "note": "Consistent with albarà: 0.70m in hard rock/concrete"
+          "depth_from_m": 0.5,
+          "depth_to_m": 1.2,
+          "description": "Capa inferior - material no especificat",
+          "uscs_classification": null,
+          "color": null,
+          "moisture": null,
+          "consistency": null,
+          "density": null,
+          "confidence": 0.3,
+          "note": "Partially readable. The document indicates 0.50 m in sols entre 0-20m and 0.70 m in roca dura/formigó entre 0-20m from the albara sheet, suggesting two main units encountered."
         }
       ],
-      "spt_results": [],
       "water_level_m": null,
-      "rock_depth_m": 0.50,
-      "extraction_notes": "Single borehole. Albarà confirms 0.50m soil + 0.70m hard rock = 1.20m total. Page rotated 90 degrees, handwriting moderately legible."
+      "rock_detected": true,
+      "rock_depth_m": 0.5,
+      "drill_type": "Rotació",
+      "sonda_type": "ML76A",
+      "operator": "Daniel Fernandez",
+      "date_start": "24-10-2025",
+      "date_end": "24-10-2025",
+      "address": "C/ Arbrells - Castellar del Vallès",
+      "client": "G3",
+      "responsible": "Eva",
+      "extraction_notes": "The Full de camp sondeig a rotació sheet is heavily rotated/angled in the photograph, making individual layer entries in the graphic log columns (colour, moisture, type, samples, blows) essentially illegible. Key quantities recovered from the Albarà sheet: 0.50 ml in soils 0-20m and 0.70 ml in rock/concrete 0-20m. Total drilled = ~1.20 m. No SPT tests recorded (marked No). No piezometric installation. Nivel Freàtic box states 'C/Arbrells - 4m' which may cross-reference the dynamic penetrometer water level note rather than a confirmed borehole water strike."
     }
   ],
-  "reviewer_notes": "Layer 1 description needs G3DT confirmation — handwriting difficult to read with certainty",
-  "approved_by": "",
-  "approval_date": null
+  "penetrometer_tests": [
+    {
+      "test_id": "P1",
+      "test_type": "Penetròmetre Dinàmic",
+      "date": "24-10-2025",
+      "address": "C/ Arbrells - Castellar del Vallès",
+      "sonda_type": "ML76A",
+      "operator": "Daniel Fernandez",
+      "reference_point": "C/ Arbrells",
+      "cota_inici_m": -4.0,
+      "carencia_colpeig_mesura1": 15,
+      "carencia_colpeig_mesura2": null,
+      "water_level_detected": false,
+      "water_level_m": null,
+      "refusal_depth_m": -1.4,
+      "refusal_value": "R: 1.08",
+      "readings": [
+        {
+          "depth_m": -0.2,
+          "blows": null,
+          "confidence": 0.5,
+          "note": "No value recorded at this depth for P1"
+        },
+        {
+          "depth_m": -0.4,
+          "blows": 6,
+          "confidence": 0.9
+        },
+        {
+          "depth_m": -0.6,
+          "blows": 10,
+          "confidence": 0.9
+        },
+        {
+          "depth_m": -0.8,
+          "blows": 13,
+          "confidence": 0.9
+        },
+        {
+          "depth_m": -1.0,
+          "blows": 38,
+          "confidence": 0.9
+        },
+        {
+          "depth_m": -1.2,
+          "blows": 100,
+          "confidence": 0.95
+        },
+        {
+          "depth_m": -1.4,
+          "blows": null,
+          "refusal": "R: 1.08",
+          "confidence": 0.9,
+          "note": "Refusal recorded at -1.4m, R=1.08"
+        }
+      ],
+      "extraction_notes": "P1 starts at cota -4.0m (i.e. 4m below some reference datum). Readings go from -4.2 to -5.4m absolute, but are presented as relative depths -0.2 to -1.4m from start point. Refusal (R:1.08) reached at -1.4m relative depth."
+    },
+    {
+      "test_id": "P2",
+      "test_type": "Penetròmetre Dinàmic",
+      "date": "24-10-2025",
+      "address": "C/ Arbrells - Castellar del Vallès",
+      "sonda_type": "ML76A",
+      "operator": "Daniel Fernandez",
+      "reference_point": "C/ Arbrells",
+      "cota_inici_m": -4.2,
+      "carencia_colpeig_mesura1": 15,
+      "carencia_colpeig_mesura2": null,
+      "water_level_detected": false,
+      "water_level_m": null,
+      "refusal_depth_m": -0.8,
+      "refusal_value": "R: 0.48",
+      "readings": [
+        {
+          "depth_m": -0.2,
+          "blows": 7,
+          "confidence": 0.8,
+          "note": "Value partially legible"
+        },
+        {
+          "depth_m": -0.4,
+          "blows": 6,
+          "confidence": 0.9
+        },
+        {
+          "depth_m": -0.6,
+          "blows": 15,
+          "confidence": 0.9
+        },
+        {
+          "depth_m": -0.8,
+          "blows": 100,
+          "refusal": "R: 0.48",
+          "confidence": 0.9,
+          "note": "Refusal at -0.8m relative, R=0.48"
+        }
+      ],
+      "extraction_notes": "P2 starts at cota -4.2m. Very quick refusal at only 0.8m penetration."
+    },
+    {
+      "test_id": "P3",
+      "test_type": "Penetròmetre Dinàmic",
+      "date": "24-10-2025",
+      "address": "C/ Arbrells - Castellar del Vallès",
+      "sonda_type": "ML76A",
+      "operator": "Daniel Fernandez",
+      "reference_point": "C/ Arbrells",
+      "cota_inici_m": -4.0,
+      "carencia_colpeig_mesura1": 15,
+      "carencia_colpeig_mesura2": null,
+      "water_level_detected": false,
+      "water_level_m": null,
+      "refusal_depth_m": -0.8,
+      "refusal_value": "R: 0.76",
+      "readings": [
+        {
+          "depth_m": -0.2,
+          "blows": null,
+          "confidence": 0.4,
+          "note": "Value not clearly visible"
+        },
+        {
+          "depth_m": -0.4,
+          "blows": 16,
+          "confidence": 0.8,
+          "note": "Possibly 16, partially legible"
+        },
+        {
+          "depth_m": -0.6,
+          "blows": 46,
+          "confidence": 0.85
+        },
+        {
+          "depth_m": -0.8,
+          "blows": 100,
+          "refusal": "R: 0.76",
+          "confidence": 0.9,
+          "note": "Refusal at -0.8m relative, R=0.76"
+        }
+      ],
+      "extraction_notes": "P3 starts at cota -4.0m. Refusal at 0.8m penetration."
+    },
+    {
+      "test_id": "P4",
+      "test_type": "Penetròmetre Dinàmic",
+      "date": "24-10-2025",
+      "address": "C/ Arbrells - Castellar del Vallès",
+      "sonda_type": "ML76A",
+      "operator": "Daniel Fernandez",
+      "reference_point": "C/ Arbrells",
+      "cota_inici_m": -4.0,
+      "carencia_colpeig_mesura1": 15,
+      "carencia_colpeig_mesura2": null,
+      "water_level_detected": false,
+      "water_level_m": null,
+      "refusal_depth_m": -1.8,
+      "refusal_value": "R: 1.55",
+      "readings": [
+        {
+          "depth_m": -0.2,
+          "blows": 1,
+          "confidence": 0.8
+        },
+        {
+          "depth_m": -0.4,
+          "blows": 8,
+          "confidence": 0.9
+        },
+        {
+          "depth_m": -0.6,
+          "blows": 8,
+          "confidence": 0.9
+        },
+        {
+          "depth_m": -0.8,
+          "blows": 12,
+          "confidence": 0.9
+        },
+        {
+          "depth_m": -1.0,
+          "blows": 27,
+          "confidence": 0.85
+        },
+        {
+          "depth_m": -1.2,
+          "blows": 31,
+          "confidence": 0.8,
+          "note": "Value partially legible, could be 31 or 37"
+        },
+        {
+          "depth_m": -1.4,
+          "blows": 28,
+          "confidence": 0.85
+        },
+        {
+          "depth_m": -1.6,
+          "blows": 100,
+          "confidence": 0.95
+        },
+        {
+          "depth_m": -1.8,
+          "blows": null,
+          "refusal": "R: 1.55",
+          "confidence": 0.9,
+          "note": "Refusal recorded at -1.8m relative depth"
+        }
+      ],
+      "extraction_notes": "P4 is recorded on a separate Fitxa 01 sheet (third image). Test ID inferred as P4 based on the Albarà sheet indicating 4 penetrometers total. Cota inici -4m. Deepest test reaching 1.8m before refusal."
+    }
+  ],
+  "albare_summary": {
+    "document_type": "Albarà (Delivery Note)",
+    "company": "TPS Prospecció del Subsòl",
+    "equipment": "ML76A",
+    "operator": "Daniel Fernandez",
+    "date": "24-10-2025",
+    "address": "C/ Arbrells",
+    "population": "Castellar del Vallès",
+    "client_company": "G3",
+    "client_responsible": "Eva",
+    "displacements": {
+      "desplacament_equips_personal_obra": true,
+      "canvi_emplacament_dins_mateixa_poblacio": false,
+      "canvi_emplacament_obra_diferents_poblacions": false,
+      "altres": false
+    },
+    "ml_perforacio": {
+      "num_penetrometres_realitzats": 4,
+      "ml_penetrometre_5_minims": "20.00",
+      "mi_previs_perforacio_spt_mi": false,
+      "confidence_ml": 0.8,
+      "note": "Value reads as 2000 or 20.00 ml; most likely 20.00 ml total penetration across 4 tests"
+    },
+    "assaigs_in_situ": {
+      "assaigs_spt_mi": false,
+      "altres": false
+    }
+  },
+  "rotary_drilling_albara": {
+    "document_type": "Albarà Sondeig a Rotació",
+    "equipment": "ML76A",
+    "sondista": "Daniel Fernandez",
+    "address": "C/ Arbrells",
+    "population": "Castellar del Vallès",
+    "client_company": "G3",
+    "client_responsible": "Eva",
+    "date_start": "24-10-2025",
+    "date_end": "24-10-2025",
+    "desplacaments": {
+      "desplacament_equip_sondeig_personal_obra": true,
+      "canvi_emplacament_entre_sondeig_mes_500m": false,
+      "altres": false
+    },
+    "ml_perforacio": {
+      "ml_sols_0_20m": 0.5,
+      "ml_sorres_sota_nf_0_20m": null,
+      "ml_roca_tova_0_20m": null,
+      "ml_graves_0_20m": null,
+      "ml_roca_dura_formigo_0_20m": 0.7,
+      "ml_graves_bolos_0_20m": null,
+      "ml_sondeig_revestit": null,
+      "confidence": 0.85
+    },
+    "assaigs_in_situ": {
+      "assaigs_spt": false,
+      "mostres_inalterades": false,
+      "mostres_parafinades": false,
+      "inalterades_paret_prima_shelby": false,
+      "hores_assaig_lugeon": false,
+      "hores_assaig_pressiometric": false,
+      "hores_assaig_lefranc": false
+    },
+    "material_piezometric": {
+      "installed": false
+    },
+    "altres_treballs": {
+      "mi_perforacio_destruccio_0_25m": false,
+      "mi_perforacio_destruccio_25_50m": false,
+      "mi_sondeig_rotopercussio": false,
+      "mi_assaig_penetracio_dinamica": false
+    }
+  },
+  "overall_confidence": 0.72,
+  "extraction_notes": "Four documents analysed: (1) Penetrometer Albarà, (2) Full de Camp Penetròmetre Dinàmic covering P1/P2/P3, (3) Full de Camp Penetròmetre Dinàmic covering P4 (labelled PL on sheet, interpreted as P4), (4) Rotary Drilling Albarà, (5) Full de camp sondeig a rotació (S-1). The rotary drilling field log sheet (image 5) is photographed at a severe angle making layer-by-layer lithological data unreadable - confidence on S-1 layer details is very low (0.3-0.4). Penetrometer data is generally clear and well-readable (confidence 0.8-0.95). Total of 4 penetrometer tests performed, all encountering refusal within 0.8-1.8m from start cota of approximately -4.0 to -4.2m, suggesting a hard layer (rock or concrete) at roughly 5-6m absolute depth. One rotary borehole drilled to ~1.2m total (0.5m soil + 0.7m rock/concrete).",
+  "source_file": "PENETROS + SONDEIG.pdf",
+  "extraction_date": "2026-03-04T19:55:47.058413",
+  "extraction_method": "claude_vision",
+  "status": "pending_review"
 }
