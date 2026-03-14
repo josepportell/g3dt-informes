@@ -208,6 +208,29 @@ def get_vision_status(project_name: str) -> dict[str, Any]:
             status[key] = {"exists": True, "mtime": path.stat().st_mtime}
         else:
             status[key] = {"exists": False, "mtime": None}
+
+    # If any vision file is newly available, refresh the cached prefills
+    cached = _prefill_cache.get(project_name)
+    if cached:
+        cached_vision = cached.get('_vision_status', {}).get('value', {})
+        newly_available = any(
+            status[k]['exists'] and not cached_vision.get(k, False)
+            for k in vision_files
+        )
+        if newly_available:
+            logger.info("New vision files detected for %s, refreshing prefills", project_name)
+            # Update vision status in cache
+            cached['_vision_status'] = {'value': {k: v['exists'] for k, v in status.items()}, 'source': 'system'}
+            # Re-run wizard prefill loading to pick up new vision data
+            try:
+                from automation.wizard import UserDataWizard
+                wizard = UserDataWizard(str(project_path))
+                wizard.load_prefills()
+                for key, entry in wizard.prefills.items():
+                    cached[key] = entry
+            except Exception as e:
+                logger.warning("Failed to refresh wizard prefills: %s", e)
+
     return status
 
 

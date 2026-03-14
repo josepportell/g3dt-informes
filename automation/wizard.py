@@ -238,7 +238,8 @@ class UserDataWizard:
             floors = dims.get('num_floors', {})
             floors_val = floors.get('pdf_value') if isinstance(floors, dict) else floors
             if floors_val is not None:
-                self._set_prefill('num_floors', str(floors_val), source, overall_conf)
+                from .formatting import format_floor_notation
+                self._set_prefill('num_floors', format_floor_notation(str(floors_val)), source, overall_conf)
 
             # Fields now promoted to proper wizard fields (editable in UI)
             location = arch.get('location')
@@ -258,6 +259,13 @@ class UserDataWizard:
             area_val = parcel_area.get('pdf_value') if isinstance(parcel_area, dict) else parcel_area
             if area_val is not None:
                 self._set_prefill('superficie_parcela_m2', area_val, source, overall_conf)
+
+            # Cadastral surface from planol (fallback if geocode didn't provide it)
+            if 'superficie_cadastral_m2' not in self.prefills:
+                parcel = dims.get('parcel_area_m2', {})
+                parcel_val = parcel.get('pdf_value') if isinstance(parcel, dict) else parcel
+                if parcel_val is not None:
+                    self._set_prefill('superficie_cadastral_m2', parcel_val, source, overall_conf)
 
             # Infer parcel_shape from plot dimensions if available
             length_info = dims.get('plot_length_m', {})
