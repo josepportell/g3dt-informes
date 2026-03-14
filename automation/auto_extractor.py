@@ -146,6 +146,9 @@ def auto_extract(
             emit("source", {"name": "ICGC pendent", "ok": 'is_sloped' in result.prefills})
             _phase3_adjacents(utm_x, utm_y, superficie, result)
             emit("source", {"name": "Cadastre adj.", "ok": any(f'adjacent_{d}' in result.prefills for d in ('north', 'south', 'east', 'west'))})
+            # Cadastral parcel area (if not already from geocode)
+            if 'superficie_cadastral_m2' not in result.prefills:
+                _phase3_cadastral_area(utm_x, utm_y, result)
         else:
             emit("source", {"name": "APIs HTTP", "ok": False, "reason": "sense UTM"})
             result.steps_skipped.append(
@@ -675,6 +678,41 @@ def _phase3_adjacents(
         result.steps_completed.append(f"Cadastre: {n} adjacents detectats")
     except Exception as exc:
         result.steps_skipped.append(("Cadastre adjacents", str(exc)))
+
+
+def _phase3_cadastral_area(
+    utm_x: float,
+    utm_y: float,
+    result: AutoExtractionResult,
+) -> None:
+    """Get cadastral parcel area from Cadastre WFS (RC lookup + polygon + Shoelace)."""
+    try:
+        from .cadastre_adjacents import get_cadastral_reference, get_parcel_geometry_utm
+
+        rc, _ = get_cadastral_reference(utm_x, utm_y)
+        if not rc or len(rc) < 14:
+            return
+
+        result.prefills['cadastral_ref'] = rc
+        result.sources['cadastral_ref'] = "Cadastre API"
+
+        polygon = get_parcel_geometry_utm(rc[:14])
+        if not polygon or len(polygon) < 3:
+            return
+
+        # Shoelace formula for polygon area (UTM m2)
+        n = len(polygon)
+        area = abs(sum(
+            polygon[i][0] * polygon[(i + 1) % n][1]
+            - polygon[(i + 1) % n][0] * polygon[i][1]
+            for i in range(n)
+        )) / 2.0
+
+        result.prefills['superficie_cadastral_m2'] = int(round(area))
+        result.sources['superficie_cadastral_m2'] = "Cadastre WFS"
+        logger.info(f"Cadastral parcel area: {area:.0f} m2 (RC: {rc[:14]})")
+    except Exception as exc:
+        logger.debug(f"Cadastral area lookup failed: {exc}")
 
 
 # ---------------------------------------------------------------------------
