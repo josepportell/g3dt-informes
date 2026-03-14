@@ -1408,15 +1408,16 @@
                                 </div>
                                 <div class="wizard-field">
                                     <label>Tipus edificacio <span class="source-badge" id="src-building_type"></span></label>
-                                    <input type="text" list="building_type_options" id="wiz-building_type" data-field="building_type" placeholder="Ex: Habitatge unifamiliar" onchange="markWizardDirty()" oninput="markWizardDirty()">
-                                    <datalist id="building_type_options">
-                                        <option value="Habitatge aïllat">
-                                        <option value="Habitatge unifamiliar">
-                                        <option value="Habitatge plurifamiliar">
-                                        <option value="Nau industrial">
-                                        <option value="Edifici comercial">
-                                        <option value="Edifici públic">
-                                    </datalist>
+                                    <select id="wiz-building_type-quick" style="margin-bottom:4px" onchange="var v=this.value; var inp=document.getElementById('wiz-building_type'); if(v){inp.value=v;} this.selectedIndex=0; markWizardDirty();">
+                                        <option value="" disabled selected>-- Opcions rapides --</option>
+                                        <option value="Habitatge aïllat">Habitatge aillat</option>
+                                        <option value="Habitatge unifamiliar">Habitatge unifamiliar</option>
+                                        <option value="Habitatge plurifamiliar">Habitatge plurifamiliar</option>
+                                        <option value="Nau industrial">Nau industrial</option>
+                                        <option value="Edifici comercial">Edifici comercial</option>
+                                        <option value="Edifici públic">Edifici public</option>
+                                    </select>
+                                    <input type="text" id="wiz-building_type" data-field="building_type" placeholder="O escriu aqui el tipus" onchange="markWizardDirty()" oninput="markWizardDirty()">
                                 </div>
                                 <div class="wizard-field">
                                     <label>Plantes (ex: Pb + 1Pp) <span class="source-badge" id="src-num_floors"></span></label>
