@@ -2890,7 +2890,7 @@
 
             container.innerHTML = `
                 <div class="instructions-header" onclick="toggleInstructions()">
-                    <h3>Visio IA (${doneCount}/${visionAllKeys.length})</h3>
+                    <h3 id="visionHeader">Visio IA (${doneCount}/${visionAllKeys.length})</h3>
                     <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">-</button>
                 </div>
                 <div class="instructions-body">
@@ -3010,6 +3010,12 @@
                             const dot = document.getElementById(`vdot-${pendingKeys[0]}`);
                             if (dot) { dot.className = 'vision-dot active'; }
                         }
+                    }
+
+                    // Update header counter
+                    const visionHeader = document.getElementById('visionHeader');
+                    if (visionHeader) {
+                        visionHeader.textContent = `Visio IA (${visionDetected.size}/${visionKeys.length})`;
                     }
 
                     // Update progress text
