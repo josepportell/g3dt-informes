@@ -55,6 +55,44 @@ EXPERT_SETTLEMENT_FIELDS = ['Es_settlement']
 EXPERT_HISTORIA_FIELDS = ['historia_geologica_template']
 
 
+def _split_address(location: str) -> tuple[str, str]:
+    """Split a full location into (street, municipality).
+
+    Handles Catalan address formats:
+      "Carrer Mestre Ramon Ortiz, 25220 Bell-lloc d'Urgell (Lleida)"
+      "C/ Major 5, 25250 Bellpuig"
+      "Carrer Nou, 14, 08290 Cerdanyola del Vallès"
+      "Passeig de Gràcia, 92, Barcelona"
+
+    Returns (street_only, municipality) where municipality has no postal
+    code or province. Used as fallback for old planol_extracted.json files
+    that have a single 'location' field instead of split fields.
+    """
+    import re
+    # Strip trailing province in parentheses: "(Lleida)", "(Barcelona)"
+    loc = re.sub(r'\s*\([^)]*\)\s*$', '', location.strip())
+
+    # Strategy: find the postal code (5 digits) — everything before it
+    # (minus trailing comma/space) is street, everything after is municipality.
+    m = re.search(r',?\s*\b(\d{5})\s+(.+)', loc)
+    if m:
+        street = loc[:m.start()].rstrip(' ,')
+        municipality = m.group(2).strip()
+        return street, municipality
+
+    # No postal code — split on last comma (city is typically the last part)
+    parts = [p.strip() for p in loc.split(',')]
+    if len(parts) >= 2:
+        last = parts[-1]
+        # If last part is just a number, it's the street number, not a city
+        if re.match(r'^\d+\s*$', last):
+            return loc, ''
+        street = ', '.join(parts[:-1])
+        return street, last
+
+    return location.strip(), ''
+
+
 class UserDataWizard:
     """Interactive wizard that walks through 12 user_data fields."""
 
@@ -109,6 +147,10 @@ class UserDataWizard:
         self._set_prefill('num_soil_levels', 1, 'default estandard')
         self._set_prefill('has_basement', False, 'default estandard')
         self._set_prefill('has_retaining_walls', False, 'default estandard')
+        # Municipality from folder name as lowest-priority default
+        _, municipality = self._parse_folder_name()
+        if municipality:
+            self._set_prefill('site_municipality', municipality, 'nom carpeta')
 
     def _load_dpsh(self) -> None:
         """Load DPSH-derived prefills from dpsh_extracted.json."""
@@ -236,11 +278,15 @@ class UserDataWizard:
                     sup_expr = '+'.join(str(round(v)) for v in floor_totals.values())
                     self._set_prefill('superficie_construida_m2', sup_expr, source, overall_conf)
 
-            # Fallback: single footprint value
+            # Fallback: single footprint value (rounded to int)
             if 'superficie_construida_m2' not in self.prefills:
                 footprint = dims.get('building_footprint_m2', {})
                 footprint_val = footprint.get('pdf_value') if isinstance(footprint, dict) else footprint
                 if footprint_val is not None:
+                    try:
+                        footprint_val = str(round(float(footprint_val)))
+                    except (ValueError, TypeError):
+                        pass
                     self._set_prefill('superficie_construida_m2', footprint_val, source, overall_conf)
 
             floors = dims.get('num_floors', {})
@@ -249,10 +295,22 @@ class UserDataWizard:
                 from .formatting import format_floor_notation
                 self._set_prefill('num_floors', format_floor_notation(str(floors_val)), source, overall_conf)
 
-            # Fields now promoted to proper wizard fields (editable in UI)
-            location = arch.get('location')
-            if location:
-                self._user_data_full.setdefault('street_address', location)
+            # Street address and municipality — prefer new split fields,
+            # fall back to old 'location' field with regex splitting
+            street = arch.get('street_address')
+            municipality = arch.get('municipality')
+            if street:
+                self._set_prefill('street_address', street, source, overall_conf)
+            if municipality:
+                self._set_prefill('site_municipality', municipality, source, overall_conf)
+            # Backward compat: old planol_extracted.json with single 'location'
+            if not street and not municipality:
+                location = arch.get('location')
+                if location:
+                    street, municipality = _split_address(location)
+                    self._set_prefill('street_address', street, source, overall_conf)
+                    if municipality:
+                        self._set_prefill('site_municipality', municipality, source, overall_conf)
 
             promotor = arch.get('promotor')
             if promotor:

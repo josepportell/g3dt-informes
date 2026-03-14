@@ -180,7 +180,8 @@ Analitza aquest planol arquitectonic d'un projecte de construccio.
 **ESTRUCTURA DEL DOCUMENT:**
 - Caixeti/cartutx (tipicament cantonada inferior dreta):
   - Nom/tipus del projecte (ex: "Habitatge Unifamiliar Aillat", "Nau Industrial")
-  - Ubicacio: carrer, numero, codi postal, municipi
+  - Adreça: carrer i numero (SENSE codi postal ni municipi) → "street_address"
+  - Municipi (SENSE codi postal ni provincia) → "municipality"
   - Promotor: empresa o particular
   - Arquitecte: nom i numero de collegiat
   - Empresa d'arquitectura: SLP o nom de firma (pot ser separat del nom de l'arquitecte)
@@ -312,7 +313,8 @@ Analitza aquest full de camp de Sondeig (perforacio a rotacio).
   "architect_data": {
     "source_file": "A.01.pdf",
     "project_name": "Habitatge Unifamiliar Aillat",
-    "location": "C/ Mestre Ramon Ortiz, 25220 Bell-Lloc d'Urgell",
+    "street_address": "C/ Mestre Ramon Ortiz",
+    "municipality": "Bell-Lloc d'Urgell",
     "promotor": "Ramon Mitjana SL",
     "architect": "Jordi Bosch Novell",
     "architect_company": null,
@@ -337,7 +339,7 @@ Analitza aquest full de camp de Sondeig (perforacio a rotacio).
 }
 ```
 
-**Camps obligatoris de `architect_data`:** `source_file`, `project_name`, `location`, `promotor`, `architect`, `architect_company`, `dimensions`
+**Camps obligatoris de `architect_data`:** `source_file`, `project_name`, `street_address`, `municipality`, `promotor`, `architect`, `architect_company`, `dimensions`
 **Camps obligatoris de `dimensions`:** `parcel_area_m2`, `building_footprint_m2`, `num_floors`, `max_height_m`, `plot_length_m`, `plot_width_m`
 **Camps opcionals:**
 - `floor_surfaces` — array d'objectes `{"floor": "PB", "area_m2": 280.0, "confidence": 0.90}`. Si no es troben superficies per planta, ometre o posar array buit `[]`.

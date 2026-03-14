@@ -40,7 +40,8 @@ Quan llegeixis el plànol, busca:
 
 ### Caixetí / Cartutx (típicament a la cantonada inferior dreta)
 - **Nom del projecte**: "Habitatge unifamiliar aïllat", "Nau industrial", etc.
-- **Emplaçament**: Carrer, número, codi postal, població
+- **Adreça**: Carrer i número (SENSE codi postal ni municipi) → "street_address"
+- **Municipi**: Nom del municipi (SENSE codi postal ni província) → "municipality"
 - **Promotor**: Nom de l'empresa o particular
 - **Arquitecte**: Nom i col·legiat
 - **Escala**: 1:100, 1:200, etc.
@@ -67,7 +68,8 @@ Quan llegeixis el plànol, busca:
   "architect_data": {
     "source_file": "A.01.pdf",
     "project_name": "Habitatge Unifamiliar Aïllat",
-    "location": "C/ Mestre Ramon Ortiz, 25220 Bell-Lloc d'Urgell",
+    "street_address": "C/ Mestre Ramon Ortiz",
+    "municipality": "Bell-Lloc d'Urgell",
     "promotor": "Ramon Mitjana SL",
     "architect": "Jordi Bosch Novell",
     "dimensions": {
@@ -113,7 +115,8 @@ Tot i així, algunes cotes poden ser petites o poc llegibles.
 Extracció Plànol: A.01.pdf (Bell-Lloc)
 ============================================================
 Projecte: Habitatge Unifamiliar Aïllat
-Ubicació: C/ Mestre Ramon Ortiz, 25220 Bell-Lloc d'Urgell
+Adreça: C/ Mestre Ramon Ortiz
+Municipi: Bell-Lloc d'Urgell
 Promotor: Ramon Mitjana SL
 Arquitecte: Jordi Bosch Novell
 

@@ -234,7 +234,8 @@ PLANOL_JSON_EXAMPLE = '''
   "architect_data": {
     "source_file": "A.01.pdf",
     "project_name": "Habitatge Unifamiliar Aïllat",
-    "location": "C/ Mestre Ramon Ortiz, 25220 Bell-Lloc d'Urgell",
+    "street_address": "C/ Mestre Ramon Ortiz",
+    "municipality": "Bell-Lloc d'Urgell",
     "promotor": "Ramon Mitjana SL",
     "architect": "Jordi Bosch Novell",
     "architect_company": "Bosch Arquitectura SLP",
@@ -259,7 +260,8 @@ TASK: Extract project and building data into structured JSON.
 DOCUMENT STRUCTURE:
 - Caixetí/title block (typically bottom-right corner):
   - Project name/type (e.g., "Habitatge Unifamiliar Aïllat", "Nau Industrial")
-  - Location: street, number, postal code, municipality
+  - Location: street + number (WITHOUT postal code or municipality) → "street_address"
+  - Municipality name (WITHOUT postal code or province) → "municipality"
   - Promotor: company or individual name
   - Architect: name and college number
   - Architect company: SLP or firm name (may be separate from architect name)
