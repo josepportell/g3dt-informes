@@ -339,14 +339,19 @@ def _run_vision_phase(project_path: Path, force_refresh: bool) -> None:
     /g3dt-visio-projecte. This function only fills in missing JSONs via the SDK
     (if available). It should NEVER be called with force_refresh=True from the
     web wizard — that would hang without an API key.
+
+    NOTE: SDK path disabled until G3DT provides their own API key.
+    Vision runs exclusively via Claude Code CLI (/g3dt-visio-projecte).
     """
-    try:
-        from automation.vision_extractor import run_vision_extraction
-        run_vision_extraction(project_path, force_refresh=force_refresh)
-    except ImportError:
-        logger.warning("Vision extraction not available (anthropic not installed)")
-    except Exception as e:
-        logger.warning("Vision extraction failed (SDK): %s", e)
+    # TODO: re-enable when G3DT has their own Anthropic API key
+    # try:
+    #     from automation.vision_extractor import run_vision_extraction
+    #     run_vision_extraction(project_path, force_refresh=force_refresh)
+    # except ImportError:
+    #     logger.warning("Vision extraction not available (anthropic not installed)")
+    # except Exception as e:
+    #     logger.warning("Vision extraction failed (SDK): %s", e)
+    pass
 
 
 def load_user_data(project_name: str) -> dict[str, Any]:
