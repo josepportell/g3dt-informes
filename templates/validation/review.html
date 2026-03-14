@@ -1408,17 +1408,15 @@
                                 </div>
                                 <div class="wizard-field">
                                     <label>Tipus edificacio <span class="source-badge" id="src-building_type"></span></label>
-                                    <select id="wiz-building_type-select" onchange="onBuildingTypeSelect(this); markWizardDirty()">
-                                        <option value="">-- Selecciona --</option>
-                                        <option value="Habitatge aïllat">Habitatge aillat</option>
-                                        <option value="Habitatge plurifamiliar">Habitatge plurifamiliar</option>
-                                        <option value="Nau industrial">Nau industrial</option>
-                                        <option value="Edifici comercial">Edifici comercial</option>
-                                        <option value="Edifici públic">Edifici public</option>
-                                        <option value="__custom__">Altre (escriure)...</option>
-                                    </select>
-                                    <input type="text" id="wiz-building_type-custom" placeholder="Ex: habitatge unifamiliar" style="display:none; margin-top:4px;" oninput="document.getElementById('wiz-building_type').value = this.value; markWizardDirty()">
-                                    <input type="hidden" id="wiz-building_type" data-field="building_type">
+                                    <input type="text" list="building_type_options" id="wiz-building_type" data-field="building_type" placeholder="Ex: Habitatge unifamiliar" onchange="markWizardDirty()" oninput="markWizardDirty()">
+                                    <datalist id="building_type_options">
+                                        <option value="Habitatge aïllat">
+                                        <option value="Habitatge unifamiliar">
+                                        <option value="Habitatge plurifamiliar">
+                                        <option value="Nau industrial">
+                                        <option value="Edifici comercial">
+                                        <option value="Edifici públic">
+                                    </datalist>
                                 </div>
                                 <div class="wizard-field">
                                     <label>Plantes (ex: Pb + 1Pp) <span class="source-badge" id="src-num_floors"></span></label>
@@ -3181,50 +3179,11 @@
                 setSourceBadge(field, source);
             });
 
-            // Building type combo (select + custom input)
+            // Building type (text input with datalist suggestions)
             const btVal = getWizardValue('building_type');
-            const btSelect = document.getElementById('wiz-building_type-select');
-            const btCustom = document.getElementById('wiz-building_type-custom');
-            const btHidden = document.getElementById('wiz-building_type');
-            if (btSelect && btVal.value) {
-                // Try exact match first, then keyword match
-                let matched = false;
-                let resolvedValue = btVal.value;
-                for (const opt of btSelect.options) {
-                    if (opt.value && opt.value !== '__custom__' && opt.value === btVal.value) {
-                        matched = true;
-                        break;
-                    }
-                }
-                if (!matched) {
-                    // Keyword matching for planol extraction values
-                    const keywords = {
-                        'unifamiliar': 'Habitatge aïllat', 'aillat': 'Habitatge aïllat',
-                        'plurifamiliar': 'Habitatge plurifamiliar',
-                        'nau': 'Nau industrial', 'industrial': 'Nau industrial',
-                        'comercial': 'Edifici comercial',
-                        'public': 'Edifici públic', 'públic': 'Edifici públic',
-                    };
-                    const lower = String(btVal.value).toLowerCase();
-                    for (const [kw, canonical] of Object.entries(keywords)) {
-                        if (lower.includes(kw)) {
-                            resolvedValue = canonical;
-                            matched = true;
-                            break;
-                        }
-                    }
-                }
-                if (matched) {
-                    btSelect.value = resolvedValue;
-                    btCustom.style.display = 'none';
-                    btHidden.value = resolvedValue;
-                } else {
-                    // No match — show as custom value
-                    btSelect.value = '__custom__';
-                    btCustom.value = btVal.value;
-                    btCustom.style.display = 'block';
-                    btHidden.value = btVal.value;
-                }
+            const btEl = document.getElementById('wiz-building_type');
+            if (btEl && btVal.value) {
+                btEl.value = btVal.value;
             }
             setSourceBadge('building_type', btVal.source);
 
@@ -3358,19 +3317,6 @@
             body.classList.toggle('collapsed');
         }
 
-        function onBuildingTypeSelect(sel) {
-            const customInput = document.getElementById('wiz-building_type-custom');
-            const hiddenInput = document.getElementById('wiz-building_type');
-            if (sel.value === '__custom__') {
-                customInput.style.display = 'block';
-                customInput.focus();
-                hiddenInput.value = customInput.value;
-            } else {
-                customInput.style.display = 'none';
-                hiddenInput.value = sel.value;
-            }
-        }
-
         let _autoSaveTimer = null;
         function markWizardDirty() {
             wizardDirty = true;
@@ -3386,7 +3332,7 @@
             // Text/number inputs
             ['architect_name', 'architect_company', 'client_name',
              'street_address', 'site_municipality',
-             'num_floors',
+             'building_type', 'num_floors',
              'superficie_construida_m2', 'superficie_parcela_m2', 'superficie_cadastral_m2', 'building_height_m',
              'site_description', 'access_description',
              'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
@@ -3401,9 +3347,6 @@
                 const el = document.getElementById(`wiz-${field}`);
                 if (el && el.value) fields[field] = parseFloat(el.value);
             });
-
-            // Building type
-            fields.building_type = document.getElementById('wiz-building_type').value;
 
             // Booleans
             fields.is_anthropized = document.getElementById('wiz-is_anthropized').classList.contains('active');
