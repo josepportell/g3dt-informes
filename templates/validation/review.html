@@ -2853,19 +2853,21 @@
             if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
 
             const vs = prefills._vision_status ? prefills._vision_status.value : {};
-            const allDone = vs.planol && vs.dpsh && vs.sondeig;
+            const visionAllKeys = ['planol', 'dpsh', 'sondeig', 'docs'];
+            const visionLabels = {'planol': 'Planol', 'dpsh': 'DPSH', 'sondeig': 'Sondeig', 'docs': 'Docs'};
+            const allDone = visionAllKeys.every(k => vs[k]);
 
-            const badges = ['planol', 'dpsh', 'sondeig'].map(k => {
+            const badges = visionAllKeys.map(k => {
                 const done = !!vs[k];
-                return `<span class="vision-badge"><span class="vision-dot ${done ? 'done' : 'pending'}" id="vdot-${k}"></span>${k}</span>`;
+                return `<span class="vision-badge"><span class="vision-dot ${done ? 'done' : 'pending'}" id="vdot-${k}"></span>${visionLabels[k] || k}</span>`;
             }).join('');
 
-            const doneCount = [vs.planol, vs.dpsh, vs.sondeig].filter(Boolean).length;
+            const doneCount = visionAllKeys.filter(k => vs[k]).length;
 
             if (allDone) {
                 container.innerHTML = `
                     <div class="instructions-header" onclick="toggleInstructions()">
-                        <h3>Visio completada (${doneCount}/3)</h3>
+                        <h3>Visio completada (${doneCount}/${visionAllKeys.length})</h3>
                         <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">+</button>
                     </div>
                     <div class="instructions-body">
@@ -2880,7 +2882,7 @@
 
             container.innerHTML = `
                 <div class="instructions-header" onclick="toggleInstructions()">
-                    <h3>Visio IA (${doneCount}/3)</h3>
+                    <h3>Visio IA (${doneCount}/${visionAllKeys.length})</h3>
                     <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">-</button>
                 </div>
                 <div class="instructions-body">
@@ -2972,7 +2974,7 @@
                 .then(status => {
                     const process = status._process || {};
                     const progressEl = document.getElementById('visionProgressText');
-                    const visionKeys = ['planol', 'dpsh', 'sondeig'];
+                    const visionKeys = ['planol', 'dpsh', 'sondeig', 'docs'];
 
                     // Update each badge individually
                     let newFiles = 0;
@@ -3004,9 +3006,9 @@
 
                     // Update progress text
                     if (progressEl) {
-                        if (visionDetected.size > 0 && visionDetected.size < 3) {
+                        if (visionDetected.size > 0 && visionDetected.size < visionKeys.length) {
                             const done = [...visionDetected].join(', ');
-                            progressEl.textContent = `Completat: ${done} (${visionDetected.size}/3)`;
+                            progressEl.textContent = `Completat: ${done} (${visionDetected.size}/${visionKeys.length})`;
                             progressEl.style.display = 'block';
                         } else if (visionDetected.size === 0 && process.running) {
                             progressEl.textContent = 'Llegint PDFs amb IA...';

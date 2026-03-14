@@ -104,6 +104,7 @@ def auto_extract(
             path = role_obj.path if hasattr(role_obj, 'path') else str(role_obj)
             emit("file", {"name": Path(path).name, "role": role_name})
     _phase01_content_discovery(project_path, result)
+    _phase01_pressupost_pdf(project_path, result)
     _phase01_historia_geologica(project_path, result)
     emit("step", {"step": "scan", "status": "done", "count": len(result.file_mapping.roles) if result.file_mapping and hasattr(result.file_mapping, 'roles') else 0})
 
@@ -248,6 +249,74 @@ def _phase01_content_discovery(project_path: Path, result: AutoExtractionResult)
 
     except Exception as exc:
         result.steps_skipped.append(("Contingut", str(exc)))
+
+
+def _phase01_pressupost_pdf(project_path: Path, result: AutoExtractionResult) -> None:
+    """Extract architect company from pressupost PDF (page 1, OBRA field)."""
+    try:
+        import fitz  # PyMuPDF
+    except ImportError:
+        result.steps_skipped.append(("Pressupost PDF", "PyMuPDF no disponible"))
+        return
+
+    # Find pressupost PDF in ACCEPTACIO/ or numbered subfolder (e.g. 25.0647/)
+    candidates = []
+    for subdir in (project_path / 'ACCEPTACIO', project_path):
+        if subdir.is_dir():
+            candidates.extend(subdir.glob('PRESSUPOST*.pdf'))
+    # Also check numbered subfolders (e.g. 25.0647/)
+    for child in project_path.iterdir():
+        if child.is_dir() and re.match(r'^\d', child.name):
+            candidates.extend(child.glob('PRESSUPOST*.pdf'))
+
+    if not candidates:
+        result.steps_skipped.append(("Pressupost PDF", "fitxer no trobat"))
+        return
+
+    # Use the first found
+    pdf_path = candidates[0]
+    try:
+        doc = fitz.open(str(pdf_path))
+        if len(doc) == 0:
+            result.steps_skipped.append(("Pressupost PDF", "PDF buit"))
+            return
+
+        # Read page 1 — architect company is typically after "OBRA:" header
+        text = doc[0].get_text()
+        doc.close()
+
+        if not text.strip():
+            result.steps_skipped.append(("Pressupost PDF", "pàgina 1 sense text"))
+            return
+
+        # Parse: look for OBRA line followed by architect company name
+        # Format typically:
+        #   OBRA:
+        #   ARQUITECTURA BOSCH NOVELL
+        #   ESTUDI GEOTECNIC
+        lines = [l.strip() for l in text.split('\n') if l.strip()]
+        architect_company = None
+        for i, line in enumerate(lines):
+            if re.match(r'^OBRA\s*:?\s*$', line, re.IGNORECASE):
+                # Next non-empty line is the architect company
+                if i + 1 < len(lines):
+                    candidate = lines[i + 1]
+                    # Skip if it's "ESTUDI GEOTECNIC" or similar generic text
+                    if not re.match(r'^ESTUDI\s+GEO', candidate, re.IGNORECASE):
+                        architect_company = candidate
+                break
+
+        if architect_company and 'architect_company' not in result.prefills:
+            result.prefills['architect_company'] = architect_company
+            result.sources['architect_company'] = f"pressupost:{pdf_path.name}"
+            result.steps_completed.append(
+                f"Pressupost PDF: empresa arquitecte = '{architect_company}'"
+            )
+        else:
+            result.steps_skipped.append(("Pressupost PDF", "empresa arquitecte no trobada"))
+
+    except Exception as exc:
+        result.steps_skipped.append(("Pressupost PDF", str(exc)))
 
 
 def _phase01_historia_geologica(project_path: Path, result: AutoExtractionResult) -> None:

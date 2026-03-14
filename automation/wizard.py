@@ -98,6 +98,7 @@ class UserDataWizard:
         self._load_sondeig()
         self._load_adjacents_visor()
         self._load_planol()
+        self._load_docs_intel()
         self._load_existing_user_data()
         self._generate_template_prefills()
 
@@ -257,6 +258,30 @@ class UserDataWizard:
                     pass
         except (json.JSONDecodeError, KeyError, TypeError) as e:
             print(f'  [AVÍS: error carregant {path.name}: {e}]')
+
+    def _load_docs_intel(self) -> None:
+        """Load prefills from docs_extracted.json (Phase 1.5: intelligent doc reading)."""
+        path = self.project_path / 'validation' / 'docs_extracted.json'
+        if not path.exists():
+            return
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            fields = data.get('fields', {})
+            source_base = 'docs intel'
+            for field_name, field_data in fields.items():
+                if not isinstance(field_data, dict):
+                    continue
+                value = field_data.get('value')
+                confidence = field_data.get('confidence')
+                field_source = field_data.get('source')
+                # Only use fields with a value and sufficient confidence
+                if value is None or (confidence is not None and confidence < 0.7):
+                    continue
+                source = f"{source_base} ({field_source})" if field_source else source_base
+                self._set_prefill(field_name, value, source, confidence)
+        except (json.JSONDecodeError, KeyError, TypeError) as e:
+            print(f'  [AVIS: error carregant {path.name}: {e}]')
 
     def _load_existing_user_data(self) -> None:
         """Load from existing user_data.json -- highest priority, overrides all."""

@@ -566,7 +566,7 @@ class ReportGenerator:
             # Format company suffix: SL -> S.L., SLU -> S.L.U.
             client_name = re.sub(r'\bSLU\b', 'S.L.U.', client_name)
             client_name = re.sub(r'\bSL\b', 'S.L.', client_name)
-            context['client'] = client_name
+            context['client'] = client_name.upper()
             context['expedient'] = self.report_data.expedient or ''
             context['street_address'] = self.report_data.street_address or ''
             context['municipality'] = self.report_data.municipality or ''

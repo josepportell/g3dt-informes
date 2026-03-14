@@ -81,6 +81,48 @@ Per a cada PDF que cal processar:
 
 **IMPORTANT:** Cada extracció és independent. Si una falla, continua amb les altres.
 
+### Pas 5.5: Lectura intel·ligent de documents
+
+Després de les extraccions visuals, llegeix documents de text del projecte per extreure metadades que Python regex i visió no han obtingut.
+
+**Cache:** Si `{project_path}/validation/docs_extracted.json` existeix I `--force` NO s'ha passat → **SKIP** (mostra "cache hit").
+
+**Passos:**
+
+1. **Identificar fitxers llegibles** al directori del projecte:
+   - `ACCEPTACIO/PRESSUPOST*.pdf` — pressupostos amb capa de text
+   - `ACCEPTACIO/DADES CLIENT.txt` — dades del client
+   - Fitxers `.msg` — només el nom del fitxer (conté info de l'arquitecte)
+   - `comanda laboratori*.xls` — només el nom del fitxer
+   - Qualsevol `.txt` al directori arrel o subdirectoris
+   - Noms de subcarpetes com `25.0647/` (contenen pressupostos numerats)
+
+2. **Extreure text** de cada fitxer:
+   - Per PDFs, usa Bash amb PyMuPDF:
+     ```bash
+     cd /home/josep/projects/claudecode-job/clients/g3dt && .venv/bin/python -c "
+     import fitz
+     doc = fitz.open('{pdf_path}')
+     for page in doc:
+         print(page.get_text())
+     doc.close()
+     "
+     ```
+   - Per fitxers `.txt`, usa el Read tool directament.
+   - Per fitxers `.msg`, anota només el nom del fitxer (conté metadades útils).
+
+3. **Analitzar el text combinat** i extreure camps estructurats:
+   - `architect_company` — de "OBRA:" al pressupost o del nom del fitxer .msg
+   - `building_category` — C0/C1/C2 del text del pressupost
+   - `num_planned_dpsh` — nombre d'assaigs DPSH al pressupost
+   - `num_planned_sondeig` — nombre de sondeigs al pressupost
+   - `num_planned_spt` — assaigs SPT mencionats al pressupost
+   - Qualsevol altra metadada rellevant del projecte
+
+4. **Guardar** a `{project_path}/validation/docs_extracted.json` amb el format especificat (veure secció Formats JSON).
+
+**IMPORTANT:** Noms de camps com `architect_company` han de ser en MAJÚSCULES per a noms propis.
+
 ### Pas 6: Resum final
 
 Mostra un resum com:
@@ -91,9 +133,10 @@ Visio Projecte: {project_name}
   planol:  A.01.pdf → planol_extracted.json ✓ (conf: 0.92)
   dpsh:    PENETROS.pdf → dpsh_extracted.json ✓ (conf: 0.95)
   sondeig: SONDEIG.pdf → sondeig_extracted.json ✓ (conf: 0.88)
+  docs:    PRESSUPOST*.pdf + DADES CLIENT.txt → docs_extracted.json ✓
 
-  Temps total: ~35s
-  Fitxers generats: 3/3
+  Temps total: ~40s
+  Fitxers generats: 4/4
 
 Per continuar: Eva obre localhost:8765, selecciona el projecte al wizard.
 ============================================================
@@ -375,6 +418,26 @@ Analitza aquest full de camp de Sondeig (perforacio a rotacio).
   "approval_date": null
 }
 ```
+
+### docs_extracted.json
+
+```json
+{
+  "source_files": ["PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf", "DADES CLIENT.txt"],
+  "extraction_date": "2026-03-14T10:00:00",
+  "extraction_method": "claude_docs_intel",
+  "fields": {
+    "architect_company": {"value": "ARQUITECTURA BOSCH NOVELL", "source": "PRESSUPOST p.1 OBRA field", "confidence": 0.95},
+    "building_category": {"value": "C1", "source": "PRESSUPOST p.2 'Tipus d'edifici: C1'", "confidence": 1.0},
+    "num_planned_dpsh": {"value": 2, "source": "PRESSUPOST p.4 '2,00 UNITATS D'ASSAIG'", "confidence": 1.0},
+    "num_planned_sondeig": {"value": 1, "source": "PRESSUPOST p.4 'SONDEIG A ROTACIO'", "confidence": 1.0},
+    "num_planned_spt": {"value": null, "source": null, "confidence": null}
+  },
+  "extraction_notes": "Pressupost PDF had clear text layer. DADES CLIENT.txt confirmed client info."
+}
+```
+
+**Camps opcionals de `fields`:** Qualsevol camp rellevant trobat als documents. Cada camp és un objecte `{"value": <any|null>, "source": <string|null>, "confidence": <float|null>}`.
 
 ---
 

@@ -100,7 +100,7 @@ class Section1Generator:
         Returns:
             Formatted introduction paragraph with client name
         """
-        return f"A peticio de:\n\n{self._get_client_name()},"
+        return f"A peticio de:\n\n{self._get_client_name().upper()},"
 
     def generate_antecedents_paragraph(self) -> str:
         """
@@ -113,8 +113,8 @@ class Section1Generator:
         building_desc = self._build_building_description()
 
         return (
-            f"Segons ens indica el sol.licitant, el SR. {self._get_architect_name()}, "
-            f"de {self._get_architect_company()}, en nom de {self._get_client_name()}, "
+            f"Segons ens indica el sol.licitant, el SR. {self._get_architect_name().upper()}, "
+            f"de {self._get_architect_company().upper()}, en nom de {self._get_client_name().upper()}, "
             f"es preveu la construccio de {building_desc}."
         )
 

@@ -119,7 +119,7 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
     if 'street_address' not in merged and 'street_address' in wizard._user_data_full:
         merged['street_address'] = {'value': wizard._user_data_full['street_address'], 'source': 'planol vision'}
 
-    vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json'}
+    vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json', 'docs': 'docs_extracted.json'}
     vision_status = {}
     for vt, filename in vision_types.items():
         vision_status[vt] = (project_path / 'validation' / filename).exists()
@@ -199,6 +199,7 @@ def get_vision_status(project_name: str) -> dict[str, Any]:
         'planol': 'planol_extracted.json',
         'dpsh': 'dpsh_extracted.json',
         'sondeig': 'sondeig_extracted.json',
+        'docs': 'docs_extracted.json',
     }
     status = {}
     for key, filename in vision_files.items():
