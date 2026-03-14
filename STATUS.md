@@ -21,6 +21,9 @@ Pipeline complet operatiu. Branca `fix/report-small-fixes` conté 14 millores de
 - Auto-save wizard (debounced 2s), auto-scroll post-generació
 - Tipus edificació: select + input editable
 - Noms client/arquitecte en MAJÚSCULES als paràgrafs p047/p054
+- Fix stepper duplicat: llista fitxers es doblava després de visió
+- Source badges: verd immediat quan Eva canvia un camp + persisit a `_sources`
+- `street_address` i `site_municipality` afegits a WIZARD_FIELDS (es perdien al guardar)
 
 **Qualitat audit (Bell-Lloc):** 97.1% amb user_data, 94.9% des de zero
 

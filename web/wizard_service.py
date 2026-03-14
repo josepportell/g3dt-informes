@@ -374,12 +374,37 @@ def save_wizard(
     """Save wizard data to user_data.json."""
     project_path = _resolve_project(project_name)
 
-    # Collect current sources from prefill cache so they survive save/reload
+    # Collect current sources from prefill cache so they survive save/reload.
+    # Mark fields Eva changed as 'user' so badges turn green on reload.
     current_sources = {}
-    if project_name in _prefill_cache:
-        for k, v in _prefill_cache[project_name].items():
-            if isinstance(v, dict) and 'source' in v and not k.startswith('_'):
-                current_sources[k] = v['source']
+    cached = _prefill_cache.get(project_name, {})
+    for k, v in cached.items():
+        if isinstance(v, dict) and 'source' in v and not k.startswith('_'):
+            current_sources[k] = v['source']
+    def _prefill_val(key):
+        pf = cached.get(key)
+        return pf['value'] if isinstance(pf, dict) and 'value' in pf else None
+
+    def _is_changed(key, new_val):
+        old = _prefill_val(key)
+        if old is None:
+            # No prefill existed — only mark as user if Eva typed something
+            return bool(new_val) and str(new_val).strip() != ''
+        return str(new_val) != str(old)
+
+    # Detect changes: compare wizard_fields against prefill values
+    for field, new_val in wizard_fields.items():
+        if _is_changed(field, new_val):
+            current_sources[field] = 'user'
+    # Detect expert override changes
+    if expert_overrides:
+        for field, new_val in expert_overrides.items():
+            if field == 'geomech_params' and isinstance(new_val, dict):
+                for param, val in new_val.items():
+                    if _is_changed(f'geomech_{param}', val):
+                        current_sources[f'geomech_{param}'] = 'user'
+            elif _is_changed(field, new_val):
+                current_sources[field] = 'user'
 
     from automation.wizard import save_wizard_data
     result = save_wizard_data(project_path, wizard_fields, expert_overrides, sources=current_sources)

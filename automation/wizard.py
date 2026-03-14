@@ -37,6 +37,7 @@ _BUILDING_TYPE_KEYWORDS = {
 # The 13 wizard fields grouped for display
 WIZARD_FIELDS = [
     'architect_name', 'architect_company', 'client_name',
+    'street_address', 'site_municipality',
     'building_type',
     'num_floors', 'superficie_construida_m2',
     'superficie_parcela_m2', 'superficie_cadastral_m2', 'building_height_m',
