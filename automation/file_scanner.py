@@ -33,6 +33,7 @@ SCANNER_VERSION = "2.2"
 ROLE_DEFINITIONS = {
     'architect_plan':       {"desc": "Planol de l'arquitecte",                   "vision_type": "planol"},
     'architect_plan_with_points': {"desc": "Planol de l'arquitecte amb punts d'assaig", "vision_type": "planol"},
+    'architect_project':    {"desc": "Projecte basic de l'arquitecte (normativa + planol)", "vision_type": "planol"},
     'dpsh_field_sheet':     {"desc": "Full de camp DPSH (penetrometres)",         "vision_type": "dpsh"},
     'dpsh_excel':           {"desc": "Excel DPSH amb dades transcrites"},
     'sondeig_annex':        {"desc": "Annex formatat del sondeig (PDF vectorial)",   "vision_type": "sondeig_annex"},
@@ -77,6 +78,12 @@ COMBINED_ROLES = {
 }
 
 ROLE_PATTERNS = {
+    # architect_project FIRST — Eva renames the architect's multi-page
+    # project PDF to "PROJECTE_BASIC*.pdf" for easy identification.
+    'architect_project': {
+        'patterns': [r'(?i)^PROJECTE[_\s]*BASIC.*\.pdf$'],
+        'search_in': '',
+    },
     # architect_plan_with_points BEFORE architect_plan so the more
     # specific "amb punts" pattern wins over the broad A.XX pattern.
     'architect_plan_with_points': {

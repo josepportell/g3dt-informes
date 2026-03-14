@@ -49,6 +49,7 @@ Del `file_mapping.json`, busca rols amb `vision_type`:
 
 | Rol al mapping | vision_type | PDF típic | JSON sortida |
 |----------------|-------------|-----------|--------------|
+| `architect_project` | `planol` | PROJECTE_BASIC.pdf | `validation/planol_extracted.json` |
 | `architect_plan` | `planol` | A.01.pdf | `validation/planol_extracted.json` |
 | `architect_plan_with_points` | `planol` | A.01 amb punts.pdf | `validation/planol_extracted.json` |
 | `situation_plan` | `planol` | Pl. situacio.pdf | `validation/planol_extracted.json` |
@@ -56,7 +57,7 @@ Del `file_mapping.json`, busca rols amb `vision_type`:
 | `sondeig_field_sheet` | `sondeig` | SONDEIG.pdf | `validation/sondeig_extracted.json` |
 
 **Regles:**
-- Si múltiples rols tenen el MATEIX `vision_type`, processa només el PRIMER trobat (ex: si hi ha `architect_plan` i `situation_plan`, ambdós `planol`, processa només `architect_plan`)
+- Si múltiples rols tenen el MATEIX `vision_type`, processa per prioritat: `architect_project` > `architect_plan_with_points` > `architect_plan` > `situation_plan`. El primer trobat guanya.
 - Ignora rols sense `vision_type` (ex: `dpsh_excel`, `correlation_section`)
 
 ### Pas 4: Comprovar cache
