@@ -1303,6 +1303,59 @@
             font-size: 12px;
             color: #666;
         }
+        /* Fast vision button */
+        .btn-vision-fast {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 8px;
+        }
+        .btn-vision-fast:hover:not(:disabled) { background: #d35400; }
+        .btn-vision-fast:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .btn-vision-fast svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+        .btn-vision-fast .vstep-spinner-inline {
+            display: inline-block;
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .vision-timing-panel {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: #1a1a2e;
+            border-radius: 6px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 11px;
+            color: #a0d0a0;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+        .vision-timing-panel .timing-line {
+            padding: 1px 0;
+            white-space: pre;
+        }
+        .vision-timing-panel .timing-line.complete {
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+        .vision-timing-panel .timing-line.error {
+            color: #ff6b6b;
+        }
     </style>
 </head>
 <body>
@@ -2894,12 +2947,19 @@
                     <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">-</button>
                 </div>
                 <div class="instructions-body">
-                    <button class="btn-vision" id="btnStartVision" onclick="startVisionExtraction(false)">
-                        ${VISION_EYE_SVG}
-                        Llegir PDFs de camp
-                    </button>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <button class="btn-vision" id="btnStartVision" onclick="startVisionExtraction(false)">
+                            ${VISION_EYE_SVG}
+                            Llegir PDFs de camp
+                        </button>
+                        <button class="btn-vision-fast" id="btnStartVisionFast" onclick="startVisionFast(false)">
+                            ${VISION_EYE_SVG}
+                            Visio rapida
+                        </button>
+                    </div>
                     <div class="vision-badges" style="margin-top: 8px;">${badges}</div>
                     <div id="visionProgressText" class="vision-progress-text" style="display:none"></div>
+                    <div id="visionTimingPanel" class="vision-timing-panel"></div>
                 </div>
             `;
 
@@ -3060,6 +3120,116 @@
                         showMessage('Visio completada! Actualitzant prefills...', 'success');
                         if (progressEl) progressEl.style.display = 'none';
                         loadProjectData(selectedProject);
+                    }
+                })
+                .catch(() => {});
+        }
+
+        // === FAST VISION ===
+        let fastVisionPollTimer = null;
+
+        async function startVisionFast(force) {
+            const btn = document.getElementById('btnStartVisionFast');
+            if (!selectedProject) return;
+
+            // Disable both buttons
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<div class="vstep-spinner-inline"></div> Visio rapida...';
+            }
+            const slowBtn = document.getElementById('btnStartVision');
+            if (slowBtn) slowBtn.disabled = true;
+
+            visionRunning = true;
+            visionStartTime = Date.now();
+            visionDetected = new Set();
+
+            const timingPanel = document.getElementById('visionTimingPanel');
+            if (timingPanel) {
+                timingPanel.style.display = 'block';
+                timingPanel.innerHTML = '<div class="timing-line">Iniciant visio rapida...</div>';
+            }
+
+            try {
+                const res = await fetch(`/api/vision-fast/${encodeURIComponent(selectedProject)}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({force: !!force}),
+                });
+                const data = await res.json();
+
+                if (data.status === 'already_running') {
+                    if (timingPanel) timingPanel.innerHTML += '<div class="timing-line">Ja en curs...</div>';
+                } else if (data.status === 'error') {
+                    visionRunning = false;
+                    if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Visio rapida'; }
+                    if (slowBtn) slowBtn.disabled = false;
+                    showMessage(data.message, 'error');
+                    if (timingPanel) timingPanel.innerHTML += `<div class="timing-line error">Error: ${data.message}</div>`;
+                    return;
+                }
+
+                // Start polling for both file status and timing
+                startVisionPolling();
+                startFastVisionPolling();
+
+            } catch (err) {
+                visionRunning = false;
+                if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Visio rapida'; }
+                if (slowBtn) slowBtn.disabled = false;
+                showMessage('Error iniciant visio rapida: ' + err.message, 'error');
+            }
+        }
+
+        function startFastVisionPolling() {
+            if (fastVisionPollTimer) clearInterval(fastVisionPollTimer);
+            fastVisionPollTimer = setInterval(checkFastVisionStatus, 2000);
+        }
+
+        function checkFastVisionStatus() {
+            if (!selectedProject) return;
+
+            fetch(`/api/vision-fast-status/${encodeURIComponent(selectedProject)}`)
+                .then(r => r.json())
+                .then(data => {
+                    const timingPanel = document.getElementById('visionTimingPanel');
+                    if (!timingPanel) return;
+
+                    // Update timing panel with steps
+                    if (data.steps && data.steps.length > 0) {
+                        let html = '';
+                        for (const step of data.steps) {
+                            const cls = step.step === 'complete' ? 'complete' :
+                                       (step.note && step.note.startsWith('error')) ? 'error' : '';
+                            html += `<div class="timing-line ${cls}">[${step.elapsed.toFixed(1)}s] ${step.step}: ${step.note || ''}</div>`;
+                        }
+                        timingPanel.innerHTML = html;
+                        timingPanel.scrollTop = timingPanel.scrollHeight;
+                    }
+
+                    // Check if done
+                    if (data.status === 'completed' || data.status === 'error') {
+                        clearInterval(fastVisionPollTimer);
+                        fastVisionPollTimer = null;
+
+                        const btn = document.getElementById('btnStartVisionFast');
+                        const slowBtn = document.getElementById('btnStartVision');
+                        if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Visio rapida'; }
+                        if (slowBtn) slowBtn.disabled = false;
+
+                        if (data.status === 'completed') {
+                            const elapsed = data.elapsed ? data.elapsed.toFixed(1) : '?';
+                            timingPanel.innerHTML += `<div class="timing-line complete">Completat en ${elapsed}s</div>`;
+                            // Also stop the file polling and reload
+                            if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
+                            visionRunning = false;
+                            showMessage(`Visio rapida completada en ${elapsed}s! Actualitzant...`, 'success');
+                            loadProjectData(selectedProject);
+                        } else {
+                            timingPanel.innerHTML += `<div class="timing-line error">Error (rc=${data.returncode || '?'})</div>`;
+                            visionRunning = false;
+                            showMessage('La visio rapida ha fallat. Prova amb la visio normal.', 'error');
+                        }
                     }
                 })
                 .catch(() => {});

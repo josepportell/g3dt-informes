@@ -13,6 +13,7 @@ from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
 from . import wizard_service
+from . import vision_fast
 
 logger = logging.getLogger(__name__)
 
@@ -116,6 +117,35 @@ def vision_status(project_name: str):
         file_status = wizard_service.get_vision_status(project_name)
         process_status = wizard_service.get_vision_process_status(project_name)
         return {**file_status, "_process": process_status}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@router.post("/vision-fast/{project_name:path}")
+def start_vision_fast(project_name: str, req: VisionStartRequest | None = None):
+    """Start fast vision extraction (claude -p from /tmp, no CLAUDE.md overhead)."""
+    force = req.force if req else False
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+        result = vision_fast.start_vision_fast(
+            project_name, project_path, wizard_service._PROJECT_ROOT, force=force
+        )
+        status_code = 202 if result["status"] == "started" else 200
+        return JSONResponse(content=result, status_code=status_code)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.exception("Error starting fast vision for %s", project_name)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/vision-fast-status/{project_name:path}")
+def vision_fast_status(project_name: str):
+    """Check fast vision extraction status and timing."""
+    try:
+        fast = vision_fast.get_fast_status(project_name)
+        file_status = wizard_service.get_vision_status(project_name)
+        return {**fast, "files": file_status}
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
