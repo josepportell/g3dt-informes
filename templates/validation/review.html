@@ -1408,14 +1408,17 @@
                                 </div>
                                 <div class="wizard-field">
                                     <label>Tipus edificacio <span class="source-badge" id="src-building_type"></span></label>
-                                    <select id="wiz-building_type" data-field="building_type" onchange="markWizardDirty()">
+                                    <select id="wiz-building_type-select" onchange="onBuildingTypeSelect(this); markWizardDirty()">
                                         <option value="">-- Selecciona --</option>
                                         <option value="Habitatge aïllat">Habitatge aillat</option>
                                         <option value="Habitatge plurifamiliar">Habitatge plurifamiliar</option>
                                         <option value="Nau industrial">Nau industrial</option>
                                         <option value="Edifici comercial">Edifici comercial</option>
                                         <option value="Edifici públic">Edifici public</option>
+                                        <option value="__custom__">Altre (escriure)...</option>
                                     </select>
+                                    <input type="text" id="wiz-building_type-custom" placeholder="Ex: habitatge unifamiliar" style="display:none; margin-top:4px;" oninput="document.getElementById('wiz-building_type').value = this.value; markWizardDirty()">
+                                    <input type="hidden" id="wiz-building_type" data-field="building_type">
                                 </div>
                                 <div class="wizard-field">
                                     <label>Plantes (ex: Pb + 1Pp) <span class="source-badge" id="src-num_floors"></span></label>
@@ -3174,15 +3177,17 @@
                 setSourceBadge(field, source);
             });
 
-            // Building type select
+            // Building type combo (select + custom input)
             const btVal = getWizardValue('building_type');
-            const btEl = document.getElementById('wiz-building_type');
-            if (btEl && btVal.value) {
+            const btSelect = document.getElementById('wiz-building_type-select');
+            const btCustom = document.getElementById('wiz-building_type-custom');
+            const btHidden = document.getElementById('wiz-building_type');
+            if (btSelect && btVal.value) {
                 // Try exact match first, then keyword match
                 let matched = false;
-                for (const opt of btEl.options) {
-                    if (opt.value === btVal.value) {
-                        btEl.value = btVal.value;
+                let resolvedValue = btVal.value;
+                for (const opt of btSelect.options) {
+                    if (opt.value && opt.value !== '__custom__' && opt.value === btVal.value) {
                         matched = true;
                         break;
                     }
@@ -3199,10 +3204,22 @@
                     const lower = String(btVal.value).toLowerCase();
                     for (const [kw, canonical] of Object.entries(keywords)) {
                         if (lower.includes(kw)) {
-                            btEl.value = canonical;
+                            resolvedValue = canonical;
+                            matched = true;
                             break;
                         }
                     }
+                }
+                if (matched) {
+                    btSelect.value = resolvedValue;
+                    btCustom.style.display = 'none';
+                    btHidden.value = resolvedValue;
+                } else {
+                    // No match — show as custom value
+                    btSelect.value = '__custom__';
+                    btCustom.value = btVal.value;
+                    btCustom.style.display = 'block';
+                    btHidden.value = btVal.value;
                 }
             }
             setSourceBadge('building_type', btVal.source);
@@ -3335,6 +3352,19 @@
             const body = header.nextElementSibling;
             arrow.classList.toggle('expanded');
             body.classList.toggle('collapsed');
+        }
+
+        function onBuildingTypeSelect(sel) {
+            const customInput = document.getElementById('wiz-building_type-custom');
+            const hiddenInput = document.getElementById('wiz-building_type');
+            if (sel.value === '__custom__') {
+                customInput.style.display = 'block';
+                customInput.focus();
+                hiddenInput.value = customInput.value;
+            } else {
+                customInput.style.display = 'none';
+                hiddenInput.value = sel.value;
+            }
         }
 
         function markWizardDirty() {
@@ -3534,6 +3564,7 @@
                     resultDiv.innerHTML = html;
                     resultDiv.className = 'wizard-result success';
                     resultDiv.style.display = 'block';
+                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 } else {
                     let html = '<strong>Error generant informe:</strong><ul>';
                     (data.errors || []).forEach(e => { html += `<li>${escapeHtml(e)}</li>`; });
@@ -3546,11 +3577,13 @@
                     resultDiv.innerHTML = html;
                     resultDiv.className = 'wizard-result error';
                     resultDiv.style.display = 'block';
+                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
             } catch (err) {
                 resultDiv.innerHTML = `<strong>Error:</strong> ${escapeHtml(err.message)}`;
                 resultDiv.className = 'wizard-result error';
                 resultDiv.style.display = 'block';
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Generar Informe';
@@ -3586,6 +3619,7 @@
                     resultDiv.innerHTML = html;
                     resultDiv.className = 'wizard-result success';
                     resultDiv.style.display = 'block';
+                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 } else {
                     let html = '<strong>Error executant audit:</strong><ul>';
                     (data.errors || []).forEach(e => { html += `<li>${escapeHtml(e)}</li>`; });
@@ -3593,11 +3627,13 @@
                     resultDiv.innerHTML = html;
                     resultDiv.className = 'wizard-result error';
                     resultDiv.style.display = 'block';
+                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
             } catch (err) {
                 resultDiv.innerHTML = `<strong>Error:</strong> ${escapeHtml(err.message)}`;
                 resultDiv.className = 'wizard-result error';
                 resultDiv.style.display = 'block';
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Audit Visual';
