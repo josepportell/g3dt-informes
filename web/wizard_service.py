@@ -119,6 +119,31 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
     if 'street_address' not in merged and 'street_address' in wizard._user_data_full:
         merged['street_address'] = {'value': wizard._user_data_full['street_address'], 'source': 'planol vision'}
 
+    # Use site_address from auto_extract (pressupost/docs intel) to fill or improve
+    # street_address and site_municipality.  site_address typically contains the
+    # street + number + city (e.g. "C/MESTRE RAMON ORTIZ 15, BELL-LLOC") and is
+    # more complete than planol vision which may omit the street number.
+    site_addr_entry = merged.get('site_address')
+    if site_addr_entry:
+        import re
+        site_addr_val = site_addr_entry['value'] if isinstance(site_addr_entry, dict) else site_addr_entry
+        site_addr_source = (site_addr_entry.get('source', 'auto') if isinstance(site_addr_entry, dict) else 'auto')
+        if site_addr_val and isinstance(site_addr_val, str):
+            from automation.wizard import _split_address
+            sa_street, sa_municipality = _split_address(site_addr_val)
+            # Fill street_address if missing, or upgrade if current one lacks a number
+            cur_street = merged.get('street_address')
+            cur_street_val = (cur_street['value'] if isinstance(cur_street, dict) else cur_street) if cur_street else ''
+            has_number = bool(re.search(r'\d', str(cur_street_val)))
+            sa_has_number = bool(re.search(r'\d', sa_street))
+            if not cur_street_val or (not has_number and sa_has_number):
+                merged['street_address'] = {'value': sa_street, 'source': site_addr_source}
+            # Fill municipality if missing or is just folder name default
+            cur_muni = merged.get('site_municipality')
+            cur_muni_source = (cur_muni.get('source', '') if isinstance(cur_muni, dict) else '') if cur_muni else ''
+            if sa_municipality and (not cur_muni or cur_muni_source == 'nom carpeta'):
+                merged['site_municipality'] = {'value': sa_municipality, 'source': site_addr_source}
+
     vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json', 'docs': 'docs_extracted.json'}
     vision_status = {}
     for vt, filename in vision_types.items():
