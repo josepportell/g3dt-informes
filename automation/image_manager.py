@@ -478,16 +478,6 @@ class ImageManager:
                             self.tpl, str(cached), width=Mm(width)
                         )
                         has_plan_crops = True
-        elif points_pdf:
-            # Has "amb punts" PDF but no clip_regions — render full page as cadastre
-            cached = self._cache_dir / f"cadastre_{points_pdf.stem}.jpg"
-            if not cached.exists():
-                self._render_pdf_to_image(points_pdf, cached)
-            if cached.exists():
-                context['fig_cadastre_image'] = InlineImage(
-                    self.tpl, str(cached), width=Mm(IMAGE_WIDTH_LOCATION)
-                )
-                has_plan_crops = True
         context.setdefault('fig_cadastre_image', PLACEHOLDER_TEXT)
         context.setdefault('fig_aerea_image', PLACEHOLDER_TEXT)
 
