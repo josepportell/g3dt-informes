@@ -3044,8 +3044,8 @@
                         return;
                     }
 
-                    // All 3 detected while process still running
-                    if (newFiles >= 3) {
+                    // All vision types detected while process still running
+                    if (newFiles >= visionKeys.length) {
                         clearInterval(visionPollTimer);
                         visionPollTimer = null;
                         visionRunning = false;
