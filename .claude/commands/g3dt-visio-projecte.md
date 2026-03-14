@@ -192,10 +192,11 @@ Analitza aquest planol arquitectonic d'un projecte de construccio.
   - Superficie de cada planta individualment (PB: 280m2, P1: 86m2, Ps: 120m2)
   - Pot etiquetar-se "sup. util", "sup. construida", "ocupacio", "m2 construits", etc.
   - Busca a: quadres de superficies, taules, llegendes, anotacions al planol
-- Taula JUSTIFICACIO PLANEJAMENT (si existeix):
-  - Taula amb dues columnes: "Planejament" (norma urbanistica) i "Projecte" (valor real del projecte)
-  - Fila "Parcel·la mínima": la columna "Projecte" conte la **superficie total de la parcella** (ex: 995,00m2)
-  - IMPORTANT: extreu el valor de la columna "Projecte", NO de "Planejament" (que es el minim urbanistic)
+- Taula JUSTIFICACIO PLANEJAMENT o NORMATIVA URBANÍSTICA (si existeix):
+  - Taula amb dues columnes: una de norma urbanistica i una de "Projecte" (valor real del projecte)
+  - La columna de norma pot etiquetar-se "Planejament", "Normativa", o contenir codis com "CLAU 6B"
+  - Fila "Parcel·la mínima": la columna "Projecte" conte la **superficie total de la parcella** (ex: 995,00m2 o 571m2)
+  - IMPORTANT: extreu el valor de la columna "Projecte", NO de la columna de norma (que es el minim urbanistic)
   - Aquest valor es la "superficie de la parcella segons planols cadastrals" per Taula 1 de l'informe
 - Seccio / alcat:
   - Numero de plantes (PB, PB+1, Ps+PB+2Pp, etc.)
