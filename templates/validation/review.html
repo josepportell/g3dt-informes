@@ -3367,9 +3367,13 @@
             }
         }
 
+        let _autoSaveTimer = null;
         function markWizardDirty() {
             wizardDirty = true;
             document.getElementById('wizardUnsaved').style.display = 'inline';
+            // Auto-save after 2s of inactivity
+            if (_autoSaveTimer) clearTimeout(_autoSaveTimer);
+            _autoSaveTimer = setTimeout(() => { if (wizardDirty) saveWizard(); }, 2000);
         }
 
         function collectWizardFields() {
