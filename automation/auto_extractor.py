@@ -144,7 +144,7 @@ def auto_extract(
             emit("source", {"name": "ICGC elevació", "ok": 'cota_referencia' in result.prefills})
             _phase3_slope(utm_x, utm_y, result)
             emit("source", {"name": "ICGC pendent", "ok": 'is_sloped' in result.prefills})
-            _phase3_adjacents(utm_x, utm_y, superficie, result)
+            _phase3_adjacents(utm_x, utm_y, superficie, result, project_path, existing_user_data)
             emit("source", {"name": "Cadastre adj.", "ok": any(f'adjacent_{d}' in result.prefills for d in ('north', 'south', 'east', 'west'))})
             # Cadastral parcel area (if not already from geocode)
             if 'superficie_cadastral_m2' not in result.prefills:
@@ -660,29 +660,81 @@ def _phase3_adjacents(
     utm_y: float,
     superficie: float,
     result: AutoExtractionResult,
+    project_path: Path | None = None,
+    existing_user_data: dict[str, Any] | None = None,
 ) -> None:
-    """Query Cadastre API for adjacent parcels."""
+    """Query Cadastre API for adjacent parcels.
+
+    For adjacents, the PROJECT PARCEL address (from planol/docs) is preferred
+    over the DPSH test point coordinates (from COORDENADES.txt), because test
+    points may be on a neighboring parcel.
+    """
     try:
-        from .cadastre_adjacents import get_adjacent_parcels
+        from .cadastre_adjacents import get_adjacent_parcels, get_cadastral_reference
 
         if superficie <= 0:
             superficie = 500.0  # Conservative default
 
+        municipality = _extract_municipality(project_path) if project_path else None
+
+        # Prefer planol/docs street address for adjacents — geocode it to find
+        # the correct project parcel (DPSH test points may be on a neighbor)
+        adj_x, adj_y = utm_x, utm_y
+        adj_source = "DPSH coords"
+        # Try planol street_address first, then site_address from docs/pressupost
+        address_candidates = []
+        for key in ('street_address', 'site_address'):
+            val = result.prefills.get(key) or (existing_user_data or {}).get(key)
+            if val and isinstance(val, str) and len(val) > 3:
+                address_candidates.append(val)
+
+        if municipality and address_candidates:
+            for addr in address_candidates:
+                geocoded = _geocode_for_adjacents(addr, municipality)
+                if geocoded:
+                    adj_x, adj_y = geocoded
+                    adj_source = f"geocode({addr})"
+                    logger.info(
+                        f"Adjacents: using geocoded address ({adj_x:.0f}, {adj_y:.0f}) "
+                        f"instead of DPSH coords ({utm_x:.0f}, {utm_y:.0f})"
+                    )
+                    break
+
         rc14 = result.prefills.get('cadastral_ref')
-        municipality = _extract_municipality(project_path)
         adjacents = get_adjacent_parcels(
-            utm_x, utm_y, superficie, rc14=rc14, municipality=municipality,
+            adj_x, adj_y, superficie, rc14=rc14, municipality=municipality,
         )
         for direction in ('north', 'south', 'east', 'west'):
             key = f'adjacent_{direction}'
             if direction in adjacents and adjacents[direction]:
                 result.prefills[key] = adjacents[direction]
-                result.sources[key] = "Cadastre API"
+                result.sources[key] = f"Cadastre API ({adj_source})"
 
         n = sum(1 for d in ('north', 'south', 'east', 'west') if d in adjacents)
         result.steps_completed.append(f"Cadastre: {n} adjacents detectats")
     except Exception as exc:
         result.steps_skipped.append(("Cadastre adjacents", str(exc)))
+
+
+def _geocode_for_adjacents(
+    street_address: str,
+    municipality: str,
+) -> tuple[float, float] | None:
+    """Geocode a street address to UTM for adjacents probing.
+
+    Returns (utm_x, utm_y) or None if geocoding fails.
+    """
+    try:
+        from .geocode_coordinates import geocode_project
+
+        geo_result = geocode_project(
+            street_address, municipality, ['centre'], output_dir=None,
+        )
+        if geo_result and geo_result.get('utm_x') and geo_result.get('utm_y'):
+            return geo_result['utm_x'], geo_result['utm_y']
+    except Exception as e:
+        logger.debug(f"Geocode for adjacents failed: {e}")
+    return None
 
 
 def _phase3_cadastral_area(
