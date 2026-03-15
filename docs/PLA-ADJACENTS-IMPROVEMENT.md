@@ -2,6 +2,16 @@
 
 Data: 2026-03-15
 Branca: `improve/adjacents-section-2.1.1`
+Commit: `66c1be2`
+
+## Estat
+
+| Fase | Estat | Commit |
+|------|-------|--------|
+| Fase 2: Neteja noms de carrer | ✅ Implementada | `66c1be2` |
+| Fase 1: Sondeig per geometria | ✅ Implementada | `66c1be2` |
+| Fase 3: DNPRC edificació veïna | ✅ Implementada | `66c1be2` |
+| Fase 4: Cross-ref plànol | ❌ Descartada | — |
 
 ## Problema
 
@@ -187,36 +197,12 @@ cadastre_adjacents.py  get_adjacent_parcels(utm_x, utm_y, superficie)
 
 ---
 
-### Fase 4: Referència Creuada amb Plànol (bonus, baixa prioritat)
+### ~~Fase 4: Referència Creuada amb Plànol~~ (descartada)
 
-**Fitxer:** `automation/auto_extractor.py` — dins `_phase3_adjacents()`
-
-**Idea:** `planol_extracted.json` té `street_address: "Carrer Mestre Ramon Ortiz"`. Si aquest carrer apareix a un dels 4 adjacents, confirma la direcció. Si no apareix a cap, alerta.
-
-**Implementació:**
-1. Després de `get_adjacent_parcels()`, carregar `planol_extracted.json` si existeix
-2. Extreure `street_address`
-3. Fuzzy match contra els 4 valors d'adjacents
-4. Si match → validat. Si no match → warning al log
-
-**Depèn de:** Que el pipeline de visió (Fase 1 del wizard) hagi generat `planol_extracted.json`. Implementació defensiva (skip si no existeix).
-
----
-
-## Ordre d'Implementació
-
-```
-Fase 2 (Neteja noms)     → Més simple, impacte visual immediat
-      ↓
-Fase 1 (Geometria)       → Més impactant per correcció de direccions
-      ↓
-Fase 3 (DNPRC edificació) → Funcionalitat nova, enriqueix descripcions
-      ↓
-Fase 4 (Plànol cross-ref) → Bonus, validació
-```
-
-Les fases 1, 2 i 3 són independents entre si (poden implementar-se en paral·lel),
-però l'ordre recomanat és 2→1→3→4 per valor incremental.
+**Motiu de descart:** Les fases 1-3 ja resolen els problemes principals. La cross-referència amb plànol afegiria valor marginal perquè:
+1. `planol_extracted.json` només existeix després que el pipeline de visió s'executi al wizard d'Eva (no disponible durant auto-extracció)
+2. Eva ja veu `street_address` als prefills del wizard i pot verificar manualment
+3. La geometria WFS (Fase 1) ja corregeix les direccions, que era el problema principal
 
 ## Què Seguirà Necessitant Revisió Manual d'Eva
 
@@ -230,15 +216,15 @@ però l'ordre recomanat és 2→1→3→4 per valor incremental.
 
 Les badges de font al wizard (blau=auto, verd=user) indicaran correctament què ve de l'API i què ha editat Eva.
 
-## Fitxers Afectats
+## Fitxers Modificats
 
 | Fitxer | Canvis |
 |--------|--------|
-| `automation/cadastre_adjacents.py` | Fases 1, 2, 3: geometria, neteja noms, DNPRC |
-| `automation/auto_extractor.py` | Fase 4: cross-ref plànol; passar `rc14` a adjacents |
-| `tests/test_cadastre_adjacents.py` | Nou: tests unitaris per les 3 fases |
+| `automation/cadastre_adjacents.py` | Fases 1, 2, 3: geometria, neteja noms, DNPRC (+485 línies) |
+| `automation/auto_extractor.py` | Passa `rc14` i `municipality` a adjacents |
+| `automation/report_generator.py` | Passa `rc14` i `municipality` al fallback d'adjacents |
 
-Fitxers que **NO** cal tocar:
+Fitxers que NO va caldre tocar:
 - `section2_treballs.py` — ja renderitza el text correctament, les millores són a l'input
 - `report_data.py` — estructura `adjacent_parcels: dict` no canvia
 - `review.html` — els 4 camps del wizard no canvien
