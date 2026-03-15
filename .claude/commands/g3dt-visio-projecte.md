@@ -242,7 +242,7 @@ Analitza aquest full de camp DPSH (Dynamic Probing Super Heavy).
 3. Els valors N20 son enters (cops)
 4. Marca valors illegibles o incerts amb confianca < 1.0
 5. Usa "??" per valors N20 completament illegibles (confianca 0.0)
-6. Nota qualsevol refus (marcador R o N20 >= 100)
+6. Nota qualsevol refus (marcador R o N20 >= 100). Si el full de camp te una anotacio manuscrita "R x,xx" (ex: "R 1,35", "R 2,45"), usa AQUEST valor com a `refusal_depth_m` — es la profunditat exacta de refus, mes precisa que la profunditat de la fila amb N20=100 (que arrodoneix a la graella de 0.20m).
 7. Nota nivell freatic si s'indica
 8. **Si el full de camp inclou un assaig SPT**, extreu-lo a la clau `spt_in_dpsh` amb els camps: `test_id`, `location` (punt DPSH on es va fer, ex: "P-3"), `depth_from_m`, `depth_to_m`, `blows` (array de cops per 15cm), `n_spt` (suma dels 2 cops centrals: blows[1]+blows[2]), `confidence`. **Posa `null` si no hi ha SPT.**
 

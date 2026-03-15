@@ -110,21 +110,53 @@ def _find_and_normalize_dpsh_spt(data: dict) -> dict | None:
     return None
 
 
+def _normalize_dpsh_test_refusal(test: dict) -> None:
+    """Normalize refusal depth within a DPSH test entry.
+
+    Prefers exact refusal annotation (from handwritten "R x.xx") over
+    grid-rounded depth. Vision model may produce:
+    - refusal_exact_m (Rubí variant)
+    - refusal_notation (older variant)
+
+    These are more accurate than refusal_depth_m which rounds to 0.20m grid.
+    After normalization, refusal_depth_m contains the best available value.
+    """
+    exact = (
+        test.get('refusal_exact_m')
+        or test.get('refusal_notation')
+    )
+    if exact is not None:
+        try:
+            exact_val = float(exact)
+            test['refusal_depth_m'] = exact_val
+        except (ValueError, TypeError):
+            pass
+    # Clean up variant keys
+    test.pop('refusal_exact_m', None)
+    test.pop('refusal_notation', None)
+
+
 def normalize_dpsh(data: dict) -> dict:
     """Normalize a dpsh_extracted.json dict in place.
 
-    Moves SPT data to canonical 'spt_in_dpsh' key and normalizes field names.
+    - Moves SPT data to canonical 'spt_in_dpsh' key
+    - Normalizes refusal depths (prefer exact annotation over grid-rounded)
     """
     spt = _find_and_normalize_dpsh_spt(data)
 
-    # Remove variant keys
+    # Remove variant SPT keys
     for key in ('spt_data', 'spt_test'):
         data.pop(key, None)
     if 'document_metadata' in data and isinstance(data['document_metadata'], dict):
         data['document_metadata'].pop('spt_test', None)
 
-    # Set canonical key
+    # Set canonical SPT key
     data['spt_in_dpsh'] = spt
+
+    # Normalize refusal depths in each DPSH test
+    for test in data.get('dpsh_tests', []):
+        _normalize_dpsh_test_refusal(test)
+
     return data
 
 

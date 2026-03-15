@@ -64,7 +64,7 @@ EXTRACTION RULES:
 3. N20 values are integers (blow counts)
 4. Mark any illegible or uncertain values with confidence < 1.0
 5. Use "??" for completely illegible N20 values (set confidence to 0.0)
-6. Note any refusal (R marker or N20 >= 100)
+6. Note any refusal (R marker or N20 >= 100). If the field sheet has a handwritten "R x.xx" annotation (e.g. "R 1,35", "R 2,45"), use THAT value as `refusal_depth_m` — it is the exact refusal depth, more accurate than the row depth with N20=100 (which rounds to the 0.20m grid).
 7. Note water level if indicated
 8. If the field sheet includes an SPT test, extract it to `spt_in_dpsh` with: test_id, location (DPSH point), depth_from_m, depth_to_m, blows (array of 15cm blow counts), n_spt (blows[1]+blows[2]), confidence. Set `spt_in_dpsh` to null if no SPT.
 

@@ -306,6 +306,21 @@ class ReportGenerator:
                                 "Auto-filled num_soil_levels=%d from sondeig_extracted.json",
                                 num_levels,
                             )
+
+                    # Auto-fill cota_referencia from borehole elevation_z
+                    # (field-measured, more accurate than ICGC MDT)
+                    metadata = sondeig_data.get('metadata') or sondeig_data.get('borehole_metadata', {})
+                    elev_z = metadata.get('elevation_z') or metadata.get('cota_z')
+                    if elev_z is not None and not self.user_data.get('cota_referencia'):
+                        try:
+                            cota_val = float(elev_z)
+                            self.user_data['cota_referencia'] = f"+{cota_val:.2f}"
+                            logger.info(
+                                "Auto-filled cota_referencia=+%.2f from sondeig elevation_z",
+                                cota_val,
+                            )
+                        except (ValueError, TypeError):
+                            pass
             except Exception as e:
                 self.warnings.append(f"Could not auto-fill from sondeig_extracted.json: {e}")
 
