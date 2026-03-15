@@ -325,8 +325,14 @@ def _detect_spt(user_data: dict, project_path: str = '') -> bool:
             try:
                 with open(dpsh_path, 'r', encoding='utf-8') as f:
                     dpsh_data = json.load(f)
-                if dpsh_data.get('document_metadata', {}).get('spt_test'):
-                    return True
+                # Vision model may place SPT under different keys across runs
+                for spt_candidate in [
+                    dpsh_data.get('document_metadata', {}).get('spt_test'),
+                    dpsh_data.get('spt_data'),
+                    dpsh_data.get('spt_test'),
+                ]:
+                    if spt_candidate and isinstance(spt_candidate, dict):
+                        return True
             except (json.JSONDecodeError, KeyError):
                 pass
     return False

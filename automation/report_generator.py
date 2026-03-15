@@ -53,6 +53,25 @@ def _catalan_ordinal(n: int) -> str:
     return ordinals.get(n, f'{n}è')
 
 
+def _find_spt_in_dpsh(dpsh_data: dict) -> dict | None:
+    """Find SPT test data in dpsh_extracted.json regardless of vision key names.
+
+    The vision model may place SPT data under different keys across runs:
+    - document_metadata.spt_test (variant 1)
+    - spt_data (top-level, variant 2)
+    - field_sheet_metadata with assaigs_spt > 0 hints at presence
+    """
+    # Check known locations
+    for path in [
+        dpsh_data.get('document_metadata', {}).get('spt_test'),
+        dpsh_data.get('spt_data'),
+        dpsh_data.get('spt_test'),
+    ]:
+        if path and isinstance(path, dict):
+            return path
+    return None
+
+
 def _shorten_material_desc(desc: str) -> str:
     """Shorten a sondeig layer description for table cells.
 
@@ -230,18 +249,18 @@ class ReportGenerator:
             try:
                 with open(dpsh_path, 'r', encoding='utf-8') as f:
                     dpsh_data = json.load(f)
-                spt_test = dpsh_data.get('document_metadata', {}).get('spt_test')
+                spt_test = _find_spt_in_dpsh(dpsh_data)
                 if spt_test:
-                    depth_from = spt_test.get('depth_from_m', '')
-                    depth_to = spt_test.get('depth_to_m', '')
+                    depth_from = spt_test.get('depth_from_m') or spt_test.get('cota_from', '')
+                    depth_to = spt_test.get('depth_to_m') or spt_test.get('cota_to', '')
                     depth_range = f"-{depth_from:.2f} a -{depth_to:.2f}" if depth_from != '' and depth_to != '' else ''
                     # n30 from blows array (middle two 15cm intervals)
                     n30 = ''
-                    blows = spt_test.get('blows', [])
+                    blows = spt_test.get('blows') or spt_test.get('blows_15_30_45_60', [])
                     if len(blows) >= 3:
                         n30 = blows[1] + blows[2]
                     # Format reference as P-N (add hyphen if missing)
-                    ref = spt_test.get('reference', '')
+                    ref = spt_test.get('reference') or spt_test.get('test_id', '')
                     if ref and '-' not in ref:
                         ref = re.sub(r'([A-Za-z]+)(\d+)', r'\1-\2', ref)
                     return {
