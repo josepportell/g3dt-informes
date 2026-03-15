@@ -1,0 +1,35 @@
+Com treballem:
+
+Brain dump to reorder/rewrite:
+* Una empresa que crea informes d'enginyeria repetitius ens contacta/contracte.
+* L'objectiu: poder prémer un botó i que els informes es generin automàticament, proveint tan sols una carpeta amb les fonts d'informació necessàries.
+
+
+* Cada informe pot ser més o menys repetitiu (segons variables), que anotem.
+* Agafem un informe a automatitzar i hi assenyalem (highlight) parts estàtiques i parts dinàmiques.
+* A cada part dinàmica anotem de quina/quines font/s s'obté la informació.
+
+* El primer que fem és crear un document plantilla per obtenir el format adequat ràpidament. 
+* Després identifiquem variables. 
+* Comencem a automatitzar per reemplaçar variables per valors, un a un.
+* Secció a secció, paràgraf a paràgraf, imatge a imatge, taula a taula, annex a annex, anem implementant cada part de l'informe.
+* En unes setmanes el·laborem un pilot. Primer automatitzem un informe de referència; després ampliem l'abast a les diferents casuístiques.
+
+
+Treballem amb Claude Code d'Anthropic. 
+Connectem amb fonts oficials per obtenir dades addicionals necessàries, exactament igual com far l'enginyer (cadastre, mapes, ...).
+Ens basem en les normatives que l'enginyer aplica.
+Apliquem les mateixes fórmules que aplica l'enginyer.
+
+Entreguem una interfície web per gestionar la creació automàtica dels informes (sel·leccionar carpeta del projecte, obtenir dades automàticament, editar dades, i botó de generar informe).
+Mentre implementem, construim un document d'audit visual, que és una còpia de l'informe generat a partir de l'informe de referència, subratllant cada àrea amb colors segons el nivell de qualitat assolit. Permet obtenir una idea ràpida de què ja funciona i què necessita ajustos. 
+Una vegada funcionant amb un nivell de qualitat suficient, ampliem casuístiques a contemplar.
+
+A vegades podem demanar cert 'ordre' en la carpeta de documentació del projecte. Hi ha dades massa rel·levants per què faltin, hi ha dades impossibles d'aconseguir automàticament (dades client, dates, pressupost, descripció de feines del projecte ...)
+
+Instal·lem Claude Code a l'ordinador del client, i programes per executar-ho tot amb 1 sol clic.
+
+MANTENIMENT:
+Una vegada el client comença a utilitzar l'automatització per generar els informes, van apareixent millores a fer.
+Sempre apareixen millores.
+Cada mes, segons el nivell de manteniment contractat, anem incorporant millores per extendre la utilitat dels informes automàtics.

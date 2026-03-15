@@ -47,7 +47,7 @@ Quan l'arquitecte t'envia el PDF del projecte basic, renombra'l a:
 o qualsevol nom que comenci per `PROJECTE_BASIC`. Exemples valids:
 
 - `PROJECTE_BASIC_GARCIA.pdf`
-- `PROJECTE BASIC LLOTJA.pdf`
+- `PROJECTE BASIC BELL-LLOC.pdf`
 - `PROJECTE_BASIC.pdf`
 
 Amb aquest fitxer, el wizard extreu automaticament la superficie de la parcella que ara escrius a ma. Renombrar triga 2 segons, estalvia minuts.
