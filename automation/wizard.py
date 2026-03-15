@@ -511,9 +511,13 @@ class UserDataWizard:
         return '. '.join(parts) if parts else ''
 
     def _generate_access_description(self) -> str:
-        """Generate a default access_description from adjacent data."""
-        # Map keyword to correct Catalan preposition for "des de..."
-        street_prepositions = {
+        """Generate access route from the first street-facing direction.
+
+        Returns a clause like "del Carrer X existent al sud" designed to
+        complete the template "a trav\u00e9s {{ access_description }}."
+        Access is always from a street, never from an adjacent parcel.
+        """
+        STREET_ACCESS_PREPOSITIONS = {
             'carrer': 'del',
             'avinguda': "de l'",
             'cam\u00ed': 'del',
@@ -521,6 +525,9 @@ class UserDataWizard:
             'passeig': 'del',
             'pla\u00e7a': 'de la',
             'ronda': 'de la',
+            'partida': 'de la',
+            'carretera': 'de la',
+            'travessia': 'de la',
         }
         for direction, direction_cat in [
             ('south', 'sud'), ('north', 'nord'),
@@ -528,14 +535,12 @@ class UserDataWizard:
         ]:
             field = f'adjacent_{direction}'
             val = self._get_data_value(field)
-            if val:
-                val_lower = val.lower()
-                for kw, prep in street_prepositions.items():
-                    if kw in val_lower:
-                        return (
-                            f"L'acc\u00e9s al solar es realitza des "
-                            f"{prep} {val} existent al {direction_cat}."
-                        )
+            if not val:
+                continue
+            val_lower = val.lower()
+            for kw, prep in STREET_ACCESS_PREPOSITIONS.items():
+                if kw in val_lower:
+                    return f"{prep} {val} existent al {direction_cat}"
         return ''
 
     def _generate_template_prefills(self) -> None:

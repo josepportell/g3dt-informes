@@ -249,7 +249,7 @@ def parametrize_paragraphs(doc):
         clear_and_set(
             paras[idx],
             "El dia dels treballs de camp es realitza l\u2019entrada a la zona "
-            "d\u2019estudi a trav\u00e9s de {{ access_description }}."
+            "d\u2019estudi a trav\u00e9s {{ access_description }}."
         )
 
     # --- P109: Site description (full paragraph) ---

@@ -805,9 +805,13 @@ class ReportGenerator:
             else:
                 context['adjacent_west_fmt'] = _format_adjacent('oest', '')
 
-            # Access street extraction
+            # Access street extraction — strip preposition and "existent al ..." suffix
+            # to get just the street name (e.g. "del Carrer X existent al sud" → "Carrer X")
             access = self.report_data.access_description or ''
-            access_match = re.search(r'(?:des del|des de la|pel)\s+(.+?)(?:\.|$)', access, re.IGNORECASE)
+            access_match = re.search(
+                r"(?:des del|des de la|del|de la|de l['\u2019]?)\s*(.+?)(?:\s+existent\b|\.|$)",
+                access, re.IGNORECASE,
+            )
             context['access_street'] = access_match.group(1).strip() if access_match else access
 
             # Site condition

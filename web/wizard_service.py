@@ -81,6 +81,71 @@ def list_projects() -> list[dict[str, str]]:
     return projects
 
 
+def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
+    """Generate site/access descriptions from merged prefill data.
+
+    Runs after auto_extract + wizard prefills are merged, so adjacents
+    data is available for access_description generation.
+    """
+    def _get_val(key: str) -> str:
+        entry = merged.get(key)
+        if entry is None:
+            return ''
+        if isinstance(entry, dict):
+            return str(entry.get('value', '') or '')
+        return str(entry)
+
+    # Access description: pick first street-facing direction
+    if not _get_val('access_description'):
+        STREET_PREPOSITIONS = {
+            'carrer': 'del', 'avinguda': "de l'", 'camí': 'del',
+            'passatge': 'del', 'passeig': 'del', 'plaça': 'de la',
+            'ronda': 'de la', 'partida': 'de la', 'carretera': 'de la',
+            'travessia': 'de la',
+        }
+        for direction, direction_cat in [
+            ('south', 'sud'), ('north', 'nord'),
+            ('east', 'est'), ('west', 'oest'),
+        ]:
+            val = _get_val(f'adjacent_{direction}')
+            if not val:
+                continue
+            val_lower = val.lower()
+            for kw, prep in STREET_PREPOSITIONS.items():
+                if kw in val_lower:
+                    sep = '' if prep.endswith("'") else ' '
+                    merged['access_description'] = {
+                        'value': f"{prep}{sep}{val} existent al {direction_cat}",
+                        'source': 'plantilla generada',
+                    }
+                    break
+            if _get_val('access_description'):
+                break
+
+    # Site description: generate from shape, area, anthropized state
+    if not _get_val('site_description'):
+        parts = []
+        shape = _get_val('parcel_shape') or 'rectangular'
+        area = _get_val('superficie_parcela_m2') or _get_val('superficie_cadastral_m2')
+        if area:
+            try:
+                parts.append(
+                    f"parcel\u00b7la de forma {shape} amb superf\u00edcie de {int(float(area))} m2"
+                )
+            except (ValueError, TypeError):
+                parts.append(f"parcel\u00b7la de forma {shape}")
+
+        is_anthropized = _get_val('is_anthropized')
+        if is_anthropized and is_anthropized.lower() not in ('false', '0', ''):
+            parts.append("El terreny es presenta antropitzat")
+
+        if parts:
+            merged['site_description'] = {
+                'value': '. '.join(parts),
+                'source': 'plantilla generada',
+            }
+
+
 def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str, Any]:
     """Run auto_extract + vision + wizard prefill chain for a project.
 
@@ -180,6 +245,10 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
         merged['_file_mapping'] = {'value': fm_serialized, 'source': 'system'}
 
     merged['_projects_base'] = {'value': str(_REF_DIR), 'source': 'system'}
+
+    # Generate template prefills (access/site description) AFTER merge,
+    # because they depend on adjacents data from auto_extract.
+    _generate_template_prefills_from_merged(merged)
 
     _prefill_cache[project_name] = merged
     return merged
