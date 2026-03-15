@@ -912,11 +912,13 @@ def get_adjacent_parcels(
         )
     logger.info(f"Our cadastral ref: {our_ref} ({our_ldt})")
 
-    # Fase 1: Try geometry-based probing if rc14 is available
+    # Fase 1: Try geometry-based probing using parcel polygon
+    # Use provided rc14, or fall back to our_ref from the coordinate query
+    effective_rc14 = rc14 or our_ref
     polygon = None
-    if rc14:
+    if effective_rc14 and len(effective_rc14) >= 14:
         try:
-            polygon = get_parcel_geometry_utm(rc14[:14])
+            polygon = get_parcel_geometry_utm(effective_rc14[:14])
             if polygon and len(polygon) >= 3:
                 logger.info(
                     f"Using geometry-based probing ({len(polygon)} vertices)"
