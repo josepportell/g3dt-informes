@@ -353,8 +353,8 @@ def parametrize_paragraphs(doc):
                     r = p.add_run("A")
                     r.font.name = fn
                     r.font.size = fs
-                # Run 2: "b" with subscript
-                rb = p.add_run("b")
+                # Run 2: "B" with subscript
+                rb = p.add_run("B")
                 if fn: rb.font.name = fn
                 if fs: rb.font.size = fs
                 rb.font.subscript = True

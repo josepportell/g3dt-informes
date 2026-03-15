@@ -509,7 +509,7 @@ class ReportGenerator:
                 site_photos = sorted(foto_dir.glob('vista_general_*'))
                 num_site_photos = min(len(site_photos), 2)
             if num_site_photos == 0:
-                num_site_photos = 1  # Fallback default
+                num_site_photos = 2  # Eva always places 2 side-by-side photos
         photo_counter += num_site_photos
         if num_site_photos == 1:
             photo_site_text = "Fotografia 1"

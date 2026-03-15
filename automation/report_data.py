@@ -510,7 +510,7 @@ def build_report_data(
     return ReportData(
         # Identificacio
         expedient=project.get('expedient', ''),
-        municipality=project.get('municipality', ''),
+        municipality=user_data.get('site_municipality') or project.get('municipality', ''),
         report_date=report_date,
         # Client
         client=client,

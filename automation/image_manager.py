@@ -32,6 +32,7 @@ IMAGE_WIDTH_GEOLOGICAL = 150  # Geological map
 IMAGE_WIDTH_PHOTO = 120  # Field photos (DPSH, sondeig, site)
 IMAGE_WIDTH_SPT_CULLERA = 150  # SPT spoon diagram (full-width, same as other figures)
 IMAGE_WIDTH_SIDE_BY_SIDE = 70   # Each image in 2-column layout (mm)
+IMAGE_HEIGHT_SIDE_BY_SIDE = 52  # 4:3 landscape aspect ratio (70 * 3/4 ≈ 52mm)
 IMAGE_WIDTH_MAIN_PLAN = 150     # Big architect plan crop (full-width)
 
 PLACEHOLDER_TEXT = "[Imatge pendent]"
@@ -450,17 +451,21 @@ class ImageManager:
         # 2. Field photos
         photos = self.discover_photos()
 
-        # Site photos (up to 2)
+        # Site photos (up to 2) — forced 4:3 landscape to match Eva's layout
         if photos['site']:
             context['photo_site_image_1'] = InlineImage(
-                self.tpl, str(photos['site'][0]), width=Mm(IMAGE_WIDTH_PHOTO)
+                self.tpl, str(photos['site'][0]),
+                width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE),
+                height=Mm(IMAGE_HEIGHT_SIDE_BY_SIDE),
             )
         else:
             context['photo_site_image_1'] = PLACEHOLDER_TEXT
 
         if len(photos['site']) >= 2:
             context['photo_site_image_2'] = InlineImage(
-                self.tpl, str(photos['site'][1]), width=Mm(IMAGE_WIDTH_PHOTO)
+                self.tpl, str(photos['site'][1]),
+                width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE),
+                height=Mm(IMAGE_HEIGHT_SIDE_BY_SIDE),
             )
         else:
             context['photo_site_image_2'] = PLACEHOLDER_TEXT
