@@ -743,10 +743,14 @@ class ReportGenerator:
                     from .cadastre_adjacents import get_adjacent_parcels, CadastreError
                     from .report_data import _eval_numeric
                     superficie = _eval_numeric(self.report_data.superficie_parcela) or 600.0
+                    rc14 = getattr(self.report_data, 'cadastral_ref', None)
+                    municipality = self.report_data.municipality
                     auto_adj = get_adjacent_parcels(
                         self.report_data.utm_x,
                         self.report_data.utm_y,
                         superficie,
+                        rc14=rc14,
+                        municipality=municipality,
                     )
                     for d in ('north', 'south', 'east', 'west'):
                         if not adj.get(d) and auto_adj.get(d):

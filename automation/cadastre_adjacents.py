@@ -113,6 +113,22 @@ STREET_TRANSLATIONS: dict[str, str] = {
     'PD': 'Partida',
 }
 
+CASTILIAN_TO_CATALAN_NAMES: dict[str, str] = {
+    'ANTONIO': 'Antoni', 'FRANCISCO': 'Francesc', 'JOSE': 'Josep',
+    'JUAN': 'Joan', 'PEDRO': 'Pere', 'MIGUEL': 'Miquel',
+    'JAIME': 'Jaume', 'JORGE': 'Jordi', 'LUIS': 'Lluís',
+    'ANDRES': 'Andreu', 'RAMON': 'Ramon', 'CARLOS': 'Carles',
+    'ALBERTO': 'Albert', 'FERNANDO': 'Ferran', 'PABLO': 'Pau',
+    'SANTIAGO': 'Jaume', 'TERESA': 'Teresa', 'MARIA': 'Maria',
+}
+
+CASTILIAN_TO_CATALAN_WORDS: dict[str, str] = {
+    'MAYOR': 'Major', 'NUEVA': 'Nova', 'NUEVO': 'Nou',
+    'IGLESIA': 'Església', 'FUENTE': 'Font',
+}
+
+CATALAN_LOWERCASE_MIDWORDS: set[str] = {'I', 'De', 'Del', 'La', 'El', 'Les', 'Els', 'Dels'}
+
 # Cardinal directions: name -> (dx, dy)
 DIRECTIONS: dict[str, tuple[int, int]] = {
     'north': (0, 1),
@@ -321,18 +337,183 @@ def _query_address_by_ref(ref: str) -> str:
     return ""
 
 
+# === Neighbor Parcel Description (DNPRC) ===
+
+def _query_building_data(ref: str) -> dict | None:
+    """
+    Query building data for a cadastral reference via Consulta_DNPRC.
+
+    Args:
+        ref: Cadastral reference string (14+ chars)
+
+    Returns:
+        Dict with building info or None if query fails:
+        {
+            'num_floors_above': int,
+            'num_floors_below': int,
+            'total_built_m2': float,
+            'primary_use': str,  # 'RESIDENCIAL', 'INDUSTRIAL', etc.
+            'has_building': bool,
+        }
+    """
+    try:
+        url = (
+            f"{CADASTRE_DATA_URL}/Consulta_DNPRC"
+            f"?Provincia=&Municipio=&RC={ref}"
+        )
+        logger.debug(f"Querying Cadastre DNPRC: {url}")
+
+        response_text = _fetch_xml(url)
+        root = ET.fromstring(response_text)
+
+        # Extract construction elements
+        lcons_elems = _find_all_elements(root, "lcons")
+
+        if not lcons_elems:
+            return {
+                'num_floors_above': 0,
+                'num_floors_below': 0,
+                'total_built_m2': 0.0,
+                'primary_use': '',
+                'has_building': False,
+            }
+
+        seen_above: set[str] = set()
+        seen_below: set[str] = set()
+        total_m2 = 0.0
+        primary_use = ''
+
+        for lcons in lcons_elems:
+            # Floor type — deduplicate by stl value to avoid overcounting
+            # multi-unit buildings (multiple lcons with same floor identifier)
+            stl_elems = _find_all_elements(lcons, "stl")
+            stl = stl_elems[0].text.strip().upper() if stl_elems and stl_elems[0].text else ''
+
+            if 'SOTANO' in stl or 'SÓTANO' in stl:
+                seen_below.add(stl)
+            elif 'PLANTA' in stl or 'SUELO' in stl:
+                seen_above.add(stl)
+
+            # Surface
+            sfc_elems = _find_all_elements(lcons, "sfc")
+            if sfc_elems and sfc_elems[0].text:
+                try:
+                    total_m2 += float(sfc_elems[0].text.strip())
+                except ValueError:
+                    pass
+
+            # Primary use (first occurrence)
+            if not primary_use:
+                luso_elems = _find_all_elements(lcons, "luso")
+                if luso_elems and luso_elems[0].text:
+                    primary_use = luso_elems[0].text.strip()
+
+        return {
+            'num_floors_above': len(seen_above),
+            'num_floors_below': len(seen_below),
+            'total_built_m2': total_m2,
+            'primary_use': primary_use,
+            'has_building': True,
+        }
+
+    except Exception as e:
+        logger.debug(f"DNPRC query failed for {ref}: {e}")
+        return None
+
+
+_CATALAN_NUMBERS = {
+    1: 'una', 2: 'dos', 3: 'tres', 4: 'quatre', 5: 'cinc',
+    6: 'sis', 7: 'set', 8: 'vuit', 9: 'nou', 10: 'deu',
+}
+
+
+def _num_to_catalan(n: int) -> str:
+    """Convert small integer to Catalan word."""
+    return _CATALAN_NUMBERS.get(n, str(n))
+
+
+def _describe_neighbor(ref: str) -> str:
+    """
+    Generate a Catalan description of a neighbor parcel based on Cadastre data.
+
+    Queries building data via DNPRC and generates descriptions matching
+    Eva's vocabulary in geotechnical reports.
+
+    Args:
+        ref: Cadastral reference of the neighbor parcel
+
+    Returns:
+        Description string, e.g. "parcel·la buida",
+        "parcel·la amb construccio aillada de fins a dos plantes sobre rasant"
+    """
+    try:
+        data = _query_building_data(ref)
+    except Exception:
+        return "parcel·la veïna"
+
+    if data is None:
+        return "parcel·la veïna"
+
+    if not data['has_building']:
+        return "parcel·la buida"
+
+    # Special use types
+    use = data['primary_use'].upper() if data['primary_use'] else ''
+    if 'INDUSTRIAL' in use:
+        return "nau industrial"
+    if 'AGRARIO' in use or 'AGRÍCOLA' in use:
+        return "terreny agrícola"
+    if 'ALMACEN' in use or 'ALMACÉN' in use:
+        return "magatzem"
+
+    # Residential/generic building description
+    floors = data['num_floors_above']
+    if floors <= 0:
+        return "parcel·la amb construcció"
+
+    basement = data['num_floors_below'] > 0
+
+    if floors == 1:
+        desc = "parcel·la amb construcció aïllada d'una planta sobre rasant"
+    elif floors == 2:
+        desc = "parcel·la amb construcció aïllada de fins a dos plantes sobre rasant"
+    else:
+        desc = (
+            f"parcel·la amb construcció aïllada de fins a "
+            f"{_num_to_catalan(floors)} plantes sobre rasant"
+        )
+
+    if basement:
+        desc += " i soterrani"
+
+    return desc
+
+
 # === Street Name Translation ===
 
-def _translate_street_name(raw_address: str) -> str:
+def _translate_street_name(raw_address: str, municipality: str | None = None) -> str:
     """
     Translate a raw address string from Castilian to Catalan.
 
     Handles formats like:
-    - "CALLE MESTRE RAMON ORTIZ 0005 BELL-LLOC D'URGELL (LLEIDA)"
+    - "CALLE ANTONIO BELLET Y PEREZ 0005 BELL-LLOC D'URGELL (LLEIDA)"
     - "CL MESTRE RAMON ORTIZ"
     - "AVENIDA CATALUNYA"
 
-    Returns translated and cleaned street name, e.g. "Carrer Mestre Ramon Ortiz".
+    Applies:
+    - Street type translation (CALLE → Carrer, etc.)
+    - Province and municipality stripping
+    - Spanish "Y" → "i" conjunction
+    - Castilian first name translation (ANTONIO → Antoni)
+    - Double surname shortening (truncate at " i " conjunction)
+    - Catalan mid-word lowercasing (De, Del, La, etc.)
+
+    Args:
+        raw_address: Raw LDT or address string from Cadastre API
+        municipality: Optional municipality name to strip from the end
+
+    Returns:
+        Translated and cleaned street name, e.g. "Carrer Antoni Bellet".
     """
     if not raw_address:
         return ""
@@ -342,9 +523,14 @@ def _translate_street_name(raw_address: str) -> str:
     # Remove "(PROVINCE)" suffix at the end
     text = re.sub(r'\s*\(.*\)\s*$', '', text)
 
-    # Remove house number + municipality: "41 BELL-LLOC D'URGELL", "0005 BELL-LLOC"
-    # Pattern: digits followed by a word starting with uppercase (municipality)
-    text = re.sub(r'\s+\d+\s+[A-Z].*$', '', text)
+    # Strip municipality from the end (case-insensitive) if provided
+    if municipality:
+        muni_pattern = re.escape(municipality)
+        text = re.sub(r'\s+' + muni_pattern + r'\s*$', '', text, flags=re.IGNORECASE)
+
+    # Remove house number + municipality: "0005 BELL-LLOC D'URGELL", "41 Rubi"
+    # Pattern: digits followed by any word starting with uppercase letter (including accented)
+    text = re.sub(r'\s+\d{1,5}\s+[A-ZÀÁÈÉÍÏÒÓÚÜ].*$', '', text)
 
     # Remove "PROVIENE DE ..." cadastre annotation
     text = re.sub(r'\s+PROVIENE DE\s+.*$', '', text, flags=re.IGNORECASE)
@@ -367,15 +553,223 @@ def _translate_street_name(raw_address: str) -> str:
     translated_type = STREET_TRANSLATIONS.get(first_word, None)
 
     if translated_type:
-        # Title-case the rest of the name
-        name = rest.title() if rest else ""
-        return f"{translated_type} {name}".strip()
+        if rest:
+            # Replace standalone "Y" or "I" conjunction with "i"
+            # Cadastre uses "Y" (Spanish) or "I" (Catalan) between surnames
+            rest = re.sub(r'\b[YI]\b', 'i', rest)
+
+            # Translate Castilian first names (position 0 only)
+            rest_words = rest.split()
+            has_personal_name = False
+            if rest_words and rest_words[0].upper() in CASTILIAN_TO_CATALAN_NAMES:
+                rest_words[0] = CASTILIAN_TO_CATALAN_NAMES[rest_words[0].upper()]
+                has_personal_name = True
+
+            # Translate common Castilian words only for non-personal-name streets
+            # (avoids turning surname "Mayor" into "Major")
+            if not has_personal_name:
+                rest_words = [
+                    CASTILIAN_TO_CATALAN_WORDS.get(w.upper(), w)
+                    for w in rest_words
+                ]
+            rest = ' '.join(rest_words)
+
+            # Shorten double surnames: truncate at " i " (the conjunction)
+            # Only when a personal name was detected, to avoid cutting
+            # legitimate names like "Indústria i Comerç"
+            if has_personal_name:
+                i_pos = rest.find(' i ')
+                if i_pos != -1:
+                    rest = rest[:i_pos]
+
+            # Title-case the name
+            name = rest.title()
+
+            # Lowercase mid-words (articles/prepositions in Catalan)
+            name_words = name.split()
+            for idx in range(len(name_words)):
+                if name_words[idx] in CATALAN_LOWERCASE_MIDWORDS:
+                    name_words[idx] = name_words[idx].lower()
+                # Handle D' prefix: "D'Almenar" → "d'Almenar"
+                elif name_words[idx].startswith("D'") or name_words[idx].startswith("D\u2019"):
+                    name_words[idx] = "d'" + name_words[idx][2:]
+            name = ' '.join(name_words)
+
+            return f"{translated_type} {name}".strip()
+        return translated_type
 
     # No translation found; return as title case
     return text.title()
 
 
 # === Probe Logic ===
+
+def _compute_polygon_centroid(polygon: list[tuple[float, float]]) -> tuple[float, float]:
+    """Compute centroid of a polygon using the shoelace formula."""
+    n = len(polygon)
+    # If closed ring, skip the duplicate last point
+    if n > 1 and polygon[0] == polygon[-1]:
+        n -= 1
+
+    if n == 0:
+        return (0.0, 0.0)
+
+    signed_area = 0.0
+    cx = 0.0
+    cy = 0.0
+
+    for i in range(n):
+        j = (i + 1) % n
+        x0, y0 = polygon[i]
+        x1, y1 = polygon[j]
+        cross = x0 * y1 - x1 * y0
+        signed_area += cross
+        cx += (x0 + x1) * cross
+        cy += (y0 + y1) * cross
+
+    area6 = 3.0 * signed_area  # 6A / 2 = 3A (signed_area is 2A)
+    if abs(area6) < 1e-10:
+        # Degenerate polygon — fallback to simple average
+        return (
+            sum(polygon[i][0] for i in range(n)) / n,
+            sum(polygon[i][1] for i in range(n)) / n,
+        )
+
+    return (cx / area6, cy / area6)
+
+
+def _classify_edges_by_direction(
+    polygon: list[tuple[float, float]],
+) -> dict[str, tuple[tuple[float, float], tuple[float, float]]]:
+    """
+    Classify polygon edges by cardinal direction based on outward normal.
+
+    For each cardinal direction (north, south, east, west), finds the most
+    representative edge (longest projection) and returns its midpoint and
+    outward unit normal vector.
+
+    Returns:
+        Dict mapping direction name to (midpoint, normal_unit_vector).
+        midpoint and normal are both (x, y) tuples.
+    """
+    centroid = _compute_polygon_centroid(polygon)
+    n = len(polygon)
+    # Handle closed ring
+    closed = n > 1 and polygon[0] == polygon[-1]
+    num_edges = (n - 1) if closed else n
+
+    # Track best edge per direction: {direction: (projection, midpoint, normal)}
+    best: dict[str, tuple[float, tuple[float, float], tuple[float, float]]] = {}
+
+    for i in range(num_edges):
+        j = (i + 1) % n
+        x1, y1 = polygon[i]
+        x2, y2 = polygon[j]
+
+        dx = x2 - x1
+        dy = y2 - y1
+        edge_len = math.sqrt(dx * dx + dy * dy)
+        if edge_len < 0.01:
+            continue
+
+        # Edge midpoint
+        mx = (x1 + x2) / 2.0
+        my = (y1 + y2) / 2.0
+
+        # Two possible perpendiculars: (-dy, dx) and (dy, -dx)
+        # Pick the one pointing away from centroid
+        to_centroid_x = centroid[0] - mx
+        to_centroid_y = centroid[1] - my
+
+        nx_a, ny_a = -dy, dx
+        dot = nx_a * to_centroid_x + ny_a * to_centroid_y
+        if dot > 0:
+            # This normal points toward centroid, use the other one
+            nx_a, ny_a = dy, -dx
+
+        # Normalize
+        nx_a /= edge_len
+        ny_a /= edge_len
+
+        # Classify by dominant component
+        if abs(ny_a) > abs(nx_a):
+            direction = 'north' if ny_a > 0 else 'south'
+            projection = edge_len * abs(ny_a)
+        else:
+            direction = 'east' if nx_a > 0 else 'west'
+            projection = edge_len * abs(nx_a)
+
+        if direction not in best or projection > best[direction][0]:
+            best[direction] = (projection, (mx, my), (nx_a, ny_a))
+
+    return {d: (mid, nrm) for d, (_, mid, nrm) in best.items()}
+
+
+def _probe_from_edge(
+    midpoint: tuple[float, float],
+    normal: tuple[float, float],
+    our_ref: str,
+    municipality: str | None = None,
+    max_distance: float = 30.0,
+    step: float = 2.0,
+) -> str:
+    """
+    Probe outward from a polygon edge midpoint to find what is adjacent.
+
+    Similar to _probe_direction but starts from the actual edge midpoint
+    and follows the outward normal vector, giving much better accuracy
+    for irregular parcels.
+    """
+    crossed_street = False
+
+    # Start just outside the parcel boundary (1m along the normal)
+    start_offset = 1.0
+    num_probes = int((max_distance - start_offset) / step) + 1
+
+    for i in range(num_probes):
+        distance = start_offset + i * step
+        probe_x = midpoint[0] + normal[0] * distance
+        probe_y = midpoint[1] + normal[1] * distance
+
+        logger.debug(
+            f"Edge probe at distance {distance:.1f}m -> "
+            f"({probe_x:.2f}, {probe_y:.2f})"
+        )
+
+        try:
+            ref, ldt = _query_ref_by_coords(probe_x, probe_y)
+        except CadastreError as e:
+            logger.warning(f"Edge probe failed at ({probe_x}, {probe_y}): {e}")
+            return "desconegut"
+
+        if ref is None:
+            logger.debug(f"Street detected at distance {distance:.1f}m")
+            crossed_street = True
+            continue
+
+        if ref[:14] == our_ref[:14]:
+            logger.debug(f"Still on our parcel at distance {distance:.1f}m")
+            continue
+
+        # Found a different parcel
+        if crossed_street:
+            if ldt:
+                street = _translate_street_name(ldt, municipality=municipality)
+                if street:
+                    logger.debug(f"Street name from neighbor LDT: {street}")
+                    return street
+            return "via pública"
+
+        return _describe_neighbor(ref)
+
+    if crossed_street:
+        return "via pública"
+
+    logger.warning(
+        f"Could not exit parcel after {num_probes} edge probes"
+    )
+    return "desconegut"
+
 
 def _probe_direction(
     utm_x: float,
@@ -384,6 +778,7 @@ def _probe_direction(
     dx: int,
     dy: int,
     superficie: float,
+    municipality: str | None = None,
 ) -> str:
     """
     Probe in one direction to find what is adjacent to our parcel.
@@ -405,6 +800,7 @@ def _probe_direction(
         dx: X direction multiplier (-1, 0, or 1)
         dy: Y direction multiplier (-1, 0, or 1)
         superficie: Parcel area in m2
+        municipality: Optional municipality name for street name cleaning
 
     Returns:
         Description of what is adjacent: street name or "parcel·la veïna"
@@ -450,14 +846,14 @@ def _probe_direction(
             # Use the NEIGHBOR's LDT for the street name (error responses
             # don't include LDT, but addressed parcels always do)
             if ldt:
-                street = _translate_street_name(ldt)
+                street = _translate_street_name(ldt, municipality=municipality)
                 if street:
                     logger.debug(f"Street name from neighbor LDT: {street}")
                     return street
             return "via pública"
 
         # Direct neighbor (no street in between)
-        return "parcel·la veïna"
+        return _describe_neighbor(ref)
 
     # Exhausted probes without finding a neighbor
     if crossed_street:
@@ -477,6 +873,8 @@ def get_adjacent_parcels(
     utm_y: float,
     superficie: float,
     use_cache: bool = True,
+    municipality: str | None = None,
+    rc14: str | None = None,
 ) -> dict[str, str]:
     """
     Detect adjacent parcels and streets around a cadastral parcel.
@@ -486,6 +884,8 @@ def get_adjacent_parcels(
         utm_y: Parcel centroid UTM Y (EPSG:25831)
         superficie: Parcel area in m2 (used to calculate probe distance)
         use_cache: Whether to use cached results (default True)
+        municipality: Optional municipality name for street name cleaning
+        rc14: Optional cadastral reference (14 chars) for geometry-based probing
 
     Returns:
         Dict with keys: north, south, east, west.
@@ -512,12 +912,63 @@ def get_adjacent_parcels(
         )
     logger.info(f"Our cadastral ref: {our_ref} ({our_ldt})")
 
-    # Probe all four directions
+    # Fase 1: Try geometry-based probing if rc14 is available
+    polygon = None
+    if rc14:
+        try:
+            polygon = get_parcel_geometry_utm(rc14[:14])
+            if polygon and len(polygon) >= 3:
+                logger.info(
+                    f"Using geometry-based probing ({len(polygon)} vertices)"
+                )
+            else:
+                logger.warning(
+                    f"Polygon too small ({len(polygon) if polygon else 0} vertices), "
+                    "falling back to centroid-based probing"
+                )
+                polygon = None
+        except CadastreError as e:
+            logger.warning(
+                f"Could not get parcel geometry for {rc14[:14]}: {e}. "
+                "Falling back to centroid-based probing"
+            )
+            polygon = None
+
     result: dict[str, str] = {}
-    for direction, (dx, dy) in DIRECTIONS.items():
-        logger.info(f"Probing {direction}...")
-        result[direction] = _probe_direction(utm_x, utm_y, our_ref, dx, dy, superficie)
-        logger.info(f"  {direction}: {result[direction]}")
+
+    if polygon:
+        # Geometry-based probing: use actual edge midpoints and outward normals
+        edge_info = _classify_edges_by_direction(polygon)
+        for direction in ('north', 'south', 'east', 'west'):
+            if direction in edge_info:
+                midpoint, normal = edge_info[direction]
+                logger.info(
+                    f"Probing {direction} from edge midpoint "
+                    f"({midpoint[0]:.1f}, {midpoint[1]:.1f})..."
+                )
+                result[direction] = _probe_from_edge(
+                    midpoint, normal, our_ref, municipality=municipality,
+                )
+            else:
+                logger.warning(
+                    f"No edge found for {direction}, using centroid fallback"
+                )
+                dx, dy = DIRECTIONS[direction]
+                result[direction] = _probe_direction(
+                    utm_x, utm_y, our_ref, dx, dy, superficie,
+                    municipality=municipality,
+                )
+            logger.info(f"  {direction}: {result[direction]}")
+    else:
+        # Centroid-based probing (original method)
+        logger.info("Using centroid-based probing")
+        for direction, (dx, dy) in DIRECTIONS.items():
+            logger.info(f"Probing {direction}...")
+            result[direction] = _probe_direction(
+                utm_x, utm_y, our_ref, dx, dy, superficie,
+                municipality=municipality,
+            )
+            logger.info(f"  {direction}: {result[direction]}")
 
     # Cache the result
     if use_cache:
@@ -530,7 +981,7 @@ def get_adjacent_parcels(
 
 def _get_cache_key(utm_x: float, utm_y: float) -> str:
     """Generate cache key from coordinates."""
-    key_str = f"adj_{round(utm_x)}_{round(utm_y)}"
+    key_str = f"v2_adj_{round(utm_x)}_{round(utm_y)}"
     return hashlib.sha256(key_str.encode()).hexdigest()[:12]
 
 
