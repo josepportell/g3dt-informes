@@ -956,23 +956,23 @@ def get_geological_map_with_terrain(
     utm_x: float,
     utm_y: float,
     output_path: str | Path,
-    buffer_m: float = 1000.0,
+    buffer_m: float = 700.0,
     width: int = 800,
     height: int = 600,
-    opacity: float = 0.35,
+    opacity: float = 0.65,
 ) -> Path:
     """
     Download geological map composited over topographic base map with transparency.
 
     Downloads the ICGC topographic base map and the geological map (with transparent
-    background), then blends them using Pillow so roads and town labels are visible
-    beneath the geological colours.
+    background), then composites them using Pillow alpha compositing so roads and
+    town labels are visible beneath the geological colours and unit labels (Qvpu etc.).
 
     Args:
         utm_x: UTM X coordinate (ETRS89 zone 31N / EPSG:25831)
         utm_y: UTM Y coordinate
         output_path: Where to save the composite PNG image
-        buffer_m: Buffer around point in meters (default 1000m)
+        buffer_m: Buffer around point in meters (default 700m)
         width: Image width in pixels
         height: Image height in pixels
         opacity: Geological layer opacity (0.0 = fully transparent, 1.0 = opaque)
@@ -1046,17 +1046,23 @@ def get_geological_map_with_terrain(
             if header[:4] != b'\x89PNG':
                 raise ICGCConnectionError(f"{label} for composite returned non-PNG response (likely WMS error)")
 
-        # Composite: blend geological layer over topographic base
+        # Composite: reduce geo layer alpha, then alpha-composite over topo
+        # (preserves geo unit labels better than Image.blend)
+        import numpy as np
         topo = Image.open(topo_tmp.name).convert('RGBA')
         geo = Image.open(geo_tmp.name).convert('RGBA')
-        composite = Image.blend(topo, geo, alpha=opacity)
+        geo_arr = np.array(geo)
+        mask = geo_arr[:, :, 3] > 0
+        geo_arr[mask, 3] = (geo_arr[mask, 3] * opacity).astype(np.uint8)
+        geo_reduced = Image.fromarray(geo_arr)
+        composite = Image.alpha_composite(topo, geo_reduced)
 
         # Draw red dot at site location (center of image)
         from PIL import ImageDraw
         draw = ImageDraw.Draw(composite)
         cx, cy = width // 2, height // 2
-        r = 6  # radius in pixels
-        draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill='red')
+        r = 10  # radius in pixels
+        draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill='red', outline='darkred', width=2)
 
         composite.save(str(output_path), 'PNG')
 
