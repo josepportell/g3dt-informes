@@ -669,7 +669,7 @@ def _phase3_adjacents(
             superficie = 500.0  # Conservative default
 
         rc14 = result.prefills.get('cadastral_ref')
-        municipality = result.prefills.get('municipality')
+        municipality = _extract_municipality(project_path)
         adjacents = get_adjacent_parcels(
             utm_x, utm_y, superficie, rc14=rc14, municipality=municipality,
         )
