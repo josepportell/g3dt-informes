@@ -334,6 +334,12 @@ def _detect_spt(user_data: dict, project_path: str = '') -> bool:
     return False
 
 
+def _clean_municipality(name: str) -> str:
+    """Strip trailing version digits from folder-derived municipality names."""
+    from .folder_utils import municipality_for_report
+    return municipality_for_report(name)
+
+
 def build_report_data(
     project_data: dict,
     user_data: dict,
@@ -510,7 +516,7 @@ def build_report_data(
     return ReportData(
         # Identificacio
         expedient=project.get('expedient', ''),
-        municipality=user_data.get('site_municipality') or project.get('municipality', ''),
+        municipality=user_data.get('site_municipality') or _clean_municipality(project.get('municipality', '')),
         report_date=report_date,
         # Client
         client=client,

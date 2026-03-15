@@ -26,8 +26,6 @@ def parse_folder_name(folder_name: str) -> tuple[str, str]:
         parts = folder_name.split(maxsplit=1)
         expedient = parts[0]
         municipality = parts[1].title() if len(parts) > 1 else ""
-        # Strip trailing version digits: "Linyola2" -> "Linyola"
-        municipality = re.sub(r'\d+$', '', municipality)
         return expedient, municipality
 
     # Hyphen-separated: "4001612-bell-lloc" or "4001612-bell-lloc-d-urgell"
@@ -35,13 +33,20 @@ def parse_folder_name(folder_name: str) -> tuple[str, str]:
     if match:
         expedient = match.group(1)
         raw_municipality = match.group(2)
-        # Strip trailing version digits: "bell-lloc4" -> "bell-lloc"
-        raw_municipality = re.sub(r'\d+$', '', raw_municipality)
         municipality = _format_catalan_municipality(raw_municipality)
         return expedient, municipality
 
     # Bare code: "4001612"
     return folder_name, ""
+
+
+def municipality_for_report(name: str) -> str:
+    """Strip trailing digits from a municipality name for use in report text.
+
+    Folder names like "BELL-LLOC4" include a version suffix that should not
+    appear in the report prose.  "Bell-Lloc4" -> "Bell-Lloc".
+    """
+    return re.sub(r'\d+$', '', name)
 
 
 def _format_catalan_municipality(raw: str) -> str:

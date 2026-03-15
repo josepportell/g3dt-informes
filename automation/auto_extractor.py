@@ -568,10 +568,11 @@ def _extract_municipality(project_path: Path) -> str | None:
     Thin wrapper around folder_utils.parse_folder_name() that adds
     Catalan accent corrections for folder names that lost diacritics.
     """
-    from .folder_utils import parse_folder_name
+    from .folder_utils import parse_folder_name, municipality_for_report
     _, municipality = parse_folder_name(project_path.name)
     if not municipality:
         return None
+    municipality = municipality_for_report(municipality)
 
     # Fix common articles that shouldn't be capitalized
     # (parse_folder_name handles hyphens well, but space-separated
