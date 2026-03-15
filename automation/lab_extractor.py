@@ -190,17 +190,30 @@ def _extract_sample_info(text: str) -> dict[str, str]:
     return info
 
 
+def _normalize_une(raw: str) -> str:
+    """Normalize UNE standard refs like 'UNE 83963 / 08' → 'UNE 83963:2008'."""
+    m = re.match(r'(UNE)\s+(\d+)\s*[:/]\s*(\d+)', raw.strip())
+    if m:
+        year = m.group(3)
+        if len(year) == 2:
+            year = ('19' if int(year) > 50 else '20') + year
+        return f"{m.group(1)} {m.group(2)}:{year}"
+    # No year part — just normalize whitespace
+    return re.sub(r'\s+', ' ', raw).strip()
+
+
 def _extract_test_type(text: str) -> str:
     """Extract the type of lab test performed."""
-    # Look for UNE standard references
-    une_match = re.search(r'(UNE\s+\d+[:\-]?\d*)', text)
 
     if re.search(r'(?i)sulfat', text):
-        standard = une_match.group(1) if une_match else 'UNE 83963:2008'
+        # Look for UNE near "sulfat" keyword to avoid picking up sample-prep standards
+        une_sulfat = re.search(r'(?i)sulfat.*?(UNE\s+\d+(?:\s*[:/]\s*\d+)?)', text)
+        standard = _normalize_une(une_sulfat.group(1)) if une_sulfat else 'UNE 83963:2008'
         return f"Contingut en sulfats solubles {standard}"
 
     if re.search(r'(?i)granulom', text):
-        standard = une_match.group(1) if une_match else ''
+        une_gran = re.search(r'(?i)granulom.*?(UNE\s+\d+(?:\s*[:/]\s*\d+)?)', text)
+        standard = _normalize_une(une_gran.group(1)) if une_gran else ''
         return f"Analisi granulometrica {standard}".strip()
 
     if re.search(r'(?i)atterberg|plasticitat|liquid', text):
