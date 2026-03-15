@@ -183,35 +183,81 @@ class ReportGenerator:
             self.errors.append(f"Error loading user data: {e}")
             return {}
 
-    def _extract_spt_from_sondeig(self) -> dict | None:
-        """Extract SPT data from sondeig_extracted.json when user_data has none."""
+    def _extract_spt_data(self) -> dict | None:
+        """Extract SPT data from sondeig_extracted.json or dpsh_extracted.json.
+
+        Checks sondeig first (spt_results and spt_tests keys), then falls back
+        to dpsh_extracted.json document_metadata.spt_test for projects without
+        a sondeig (e.g. Rubí).
+        """
+        # --- Source 1: sondeig_extracted.json ---
         sondeig_path = self.project_path / 'validation' / 'sondeig_extracted.json'
-        if not sondeig_path.exists():
-            return None
-        try:
-            with open(sondeig_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            for test in data.get('sondeig_tests', []):
-                for spt in test.get('spt_results', []):
-                    depth_from = spt.get('depth_from_m', '')
-                    depth_to = spt.get('depth_to_m', '')
-                    depth_range = f"-{depth_from:.2f} a {depth_to:.2f}" if depth_from != '' and depth_to != '' else ''
-                    # Get lithology from the layer at SPT depth
-                    lithology = ''
-                    for layer in test.get('layers', []):
-                        if layer.get('depth_from_m', 0) <= (depth_from or 0) < layer.get('depth_to_m', 99):
-                            lithology = layer.get('description', '')
-                            break
+        if sondeig_path.exists():
+            try:
+                with open(sondeig_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                for test in data.get('sondeig_tests', []):
+                    spt_list = test.get('spt_results') or test.get('spt_tests', [])
+                    for spt in spt_list:
+                        depth_from = spt.get('depth_from_m', '')
+                        depth_to = spt.get('depth_to_m', '')
+                        depth_range = f"-{depth_from:.2f} a {depth_to:.2f}" if depth_from != '' and depth_to != '' else ''
+                        # Get lithology from the layer at SPT depth
+                        lithology = ''
+                        for layer in test.get('layers', []):
+                            if layer.get('depth_from_m', 0) <= (depth_from or 0) < layer.get('depth_to_m', 99):
+                                lithology = layer.get('description', '')
+                                break
+                        # Calculate n30 from blow_counts if n_spt not present
+                        n30 = spt.get('n_spt', '')
+                        if not n30 and spt.get('blow_counts'):
+                            bc = spt['blow_counts']
+                            if len(bc) >= 3:
+                                n30 = bc[1] + bc[2]
+                        return {
+                            'test_id': spt.get('test_id') or spt.get('test_name', 'SPT-1'),
+                            'location': test.get('test_id', 'S-1'),
+                            'depth_range': depth_range,
+                            'n30': n30,
+                            'lithology': lithology,
+                        }
+            except Exception as e:
+                logger.warning(f"Could not extract SPT from sondeig: {e}")
+
+        # --- Source 2: dpsh_extracted.json (SPT in DPSH field sheet) ---
+        dpsh_path = self.project_path / 'validation' / 'dpsh_extracted.json'
+        if dpsh_path.exists():
+            try:
+                with open(dpsh_path, 'r', encoding='utf-8') as f:
+                    dpsh_data = json.load(f)
+                spt_test = dpsh_data.get('document_metadata', {}).get('spt_test')
+                if spt_test:
+                    depth_from = spt_test.get('depth_from_m', '')
+                    depth_to = spt_test.get('depth_to_m', '')
+                    depth_range = f"-{depth_from:.2f} a -{depth_to:.2f}" if depth_from != '' and depth_to != '' else ''
+                    # n30 from blows array (middle two 15cm intervals)
+                    n30 = ''
+                    blows = spt_test.get('blows', [])
+                    if len(blows) >= 3:
+                        n30 = blows[1] + blows[2]
+                    # Format reference as P-N (add hyphen if missing)
+                    ref = spt_test.get('reference', '')
+                    if ref and '-' not in ref:
+                        ref = re.sub(r'([A-Za-z]+)(\d+)', r'\1-\2', ref)
                     return {
-                        'test_id': spt.get('test_name', 'SPT-1'),
-                        'location': test.get('test_id', 'S-1'),
+                        'test_id': 'SPT-1',
+                        'location': ref,
                         'depth_range': depth_range,
-                        'n30': spt.get('n_spt', ''),
-                        'lithology': lithology,
+                        'n30': n30,
+                        'lithology': '',
                     }
-        except Exception as e:
-            logger.warning(f"Could not extract SPT from sondeig: {e}")
+            except Exception as e:
+                logger.warning(f"Could not extract SPT from dpsh: {e}")
+
         return None
+
+    # Keep old name as alias for backwards compatibility
+    _extract_spt_from_sondeig = _extract_spt_data
 
     def extract_project_data(self) -> dict:
         """

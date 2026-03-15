@@ -315,8 +315,18 @@ def _detect_spt(user_data: dict, project_path: str = '') -> bool:
                 with open(sondeig_path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                 for test in data.get('sondeig_tests', []):
-                    if test.get('spt_results'):
+                    if test.get('spt_results') or test.get('spt_tests'):
                         return True
+            except (json.JSONDecodeError, KeyError):
+                pass
+        # 4. SPT recorded in DPSH field sheet (e.g. Rubí — no sondeig)
+        dpsh_path = Path(project_path) / 'validation' / 'dpsh_extracted.json'
+        if dpsh_path.exists():
+            try:
+                with open(dpsh_path, 'r', encoding='utf-8') as f:
+                    dpsh_data = json.load(f)
+                if dpsh_data.get('document_metadata', {}).get('spt_test'):
+                    return True
             except (json.JSONDecodeError, KeyError):
                 pass
     return False
