@@ -144,6 +144,25 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
             if sa_municipality and (not cur_muni or cur_muni_source == 'nom carpeta'):
                 merged['site_municipality'] = {'value': sa_municipality, 'source': site_addr_source}
 
+    # Override cota_referencia with sondeig elevation_z (field-measured)
+    # if the current value is NOT a manual Eva edit.
+    # Sondeig field measurement (e.g. +199.50) is more accurate than ICGC DTM (e.g. +199.00).
+    cota_entry = merged.get('cota_referencia')
+    cota_source = (cota_entry.get('source', '') if isinstance(cota_entry, dict) else '') if cota_entry else ''
+    if cota_source != 'user':
+        sondeig_path = project_path / 'validation' / 'sondeig_extracted.json'
+        if sondeig_path.exists():
+            try:
+                from automation.vision_normalizer import load_sondeig_json
+                sondeig_data = load_sondeig_json(sondeig_path)
+                metadata = sondeig_data.get('metadata') or sondeig_data.get('borehole_metadata', {})
+                elev_z = metadata.get('elevation_z') or metadata.get('cota_z')
+                if elev_z is not None:
+                    cota_val = float(elev_z)
+                    merged['cota_referencia'] = {'value': f"+{cota_val:.2f}", 'source': 'sondeig elevation_z'}
+            except Exception:
+                pass
+
     vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json', 'docs': 'docs_extracted.json'}
     vision_status = {}
     for vt, filename in vision_types.items():
@@ -253,6 +272,21 @@ def get_vision_status(project_name: str) -> dict[str, Any]:
                 wizard.load_prefills()
                 for key, entry in wizard.prefills.items():
                     cached[key] = entry
+                # Override cota_referencia with sondeig elevation_z if not user-set
+                cota_entry = cached.get('cota_referencia')
+                cota_source = (cota_entry.get('source', '') if isinstance(cota_entry, dict) else '') if cota_entry else ''
+                if cota_source != 'user':
+                    sondeig_path = project_path / 'validation' / 'sondeig_extracted.json'
+                    if sondeig_path.exists():
+                        try:
+                            from automation.vision_normalizer import load_sondeig_json
+                            sdata = load_sondeig_json(sondeig_path)
+                            meta = sdata.get('metadata') or sdata.get('borehole_metadata', {})
+                            ez = meta.get('elevation_z') or meta.get('cota_z')
+                            if ez is not None:
+                                cached['cota_referencia'] = {'value': f"+{float(ez):.2f}", 'source': 'sondeig elevation_z'}
+                        except Exception:
+                            pass
             except Exception as e:
                 logger.warning("Failed to refresh wizard prefills: %s", e)
 
