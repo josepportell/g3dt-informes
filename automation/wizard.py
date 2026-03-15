@@ -20,6 +20,7 @@ from pathlib import Path
 
 from .cte_geomech import detect_soil_type
 from .data_schema import BUILDING_TYPES
+from .vision_normalizer import load_dpsh_json, load_sondeig_json
 
 # Maps fuzzy keywords from planol extraction to canonical building types
 _BUILDING_TYPE_KEYWORDS = {
@@ -160,8 +161,7 @@ class UserDataWizard:
         if not path.exists():
             return
         try:
-            with open(path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
+            data = load_dpsh_json(path)
             overall_conf = data.get('overall_confidence')
             tests = data.get('dpsh_tests', [])
             if not tests:
@@ -198,8 +198,7 @@ class UserDataWizard:
         if not path.exists():
             return
         try:
-            with open(path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
+            data = load_sondeig_json(path)
             overall_conf = data.get('overall_confidence')
             tests = data.get('sondeig_tests', [])
             if tests:
@@ -782,8 +781,7 @@ class UserDataWizard:
         sondeig_layers = []
         if sondeig_path.exists():
             try:
-                with open(sondeig_path, 'r', encoding='utf-8') as f:
-                    sondeig_data = json.load(f)
+                sondeig_data = load_sondeig_json(sondeig_path)
                 tests = sondeig_data.get('sondeig_tests', [])
                 if tests:
                     sondeig_layers = tests[0].get('layers', [])

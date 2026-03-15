@@ -428,7 +428,8 @@ class Section2Generator:
                     water = "No detectat"
 
                 # SPT/MA count: "n_spt/n_ma" (e.g. "1/--", "2/1")
-                spt_results = test.get('spt_results') or test.get('spt_tests', [])
+                # After normalization, only 'spt_results' exists (canonical key)
+                spt_results = test.get('spt_results', [])
                 ma_results = test.get('ma_results', [])
                 n_spt = len(spt_results)
                 n_ma = len(ma_results)

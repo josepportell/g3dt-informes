@@ -37,6 +37,7 @@ from .formatting import format_floor_notation
 from .project_extractor import ProjectExtractor
 from .report_data import ReportData, build_report_data, to_dict as report_data_to_dict
 from .terzaghi_calculator import TerzaghiCalculator, FootingShape
+from .vision_normalizer import load_dpsh_json, load_sondeig_json
 from .sections import (
     Section1Generator,
     Section2Generator,
@@ -53,23 +54,8 @@ def _catalan_ordinal(n: int) -> str:
     return ordinals.get(n, f'{n}è')
 
 
-def _find_spt_in_dpsh(dpsh_data: dict) -> dict | None:
-    """Find SPT test data in dpsh_extracted.json regardless of vision key names.
 
-    The vision model may place SPT data under different keys across runs:
-    - document_metadata.spt_test (variant 1)
-    - spt_data (top-level, variant 2)
-    - field_sheet_metadata with assaigs_spt > 0 hints at presence
-    """
-    # Check known locations
-    for path in [
-        dpsh_data.get('document_metadata', {}).get('spt_test'),
-        dpsh_data.get('spt_data'),
-        dpsh_data.get('spt_test'),
-    ]:
-        if path and isinstance(path, dict):
-            return path
-    return None
+
 
 
 def _shorten_material_desc(desc: str) -> str:
@@ -205,19 +191,16 @@ class ReportGenerator:
     def _extract_spt_data(self) -> dict | None:
         """Extract SPT data from sondeig_extracted.json or dpsh_extracted.json.
 
-        Checks sondeig first (spt_results and spt_tests keys), then falls back
-        to dpsh_extracted.json document_metadata.spt_test for projects without
-        a sondeig (e.g. Rubí).
+        Uses vision_normalizer for canonical key access.
+        Checks sondeig first (spt_results), then falls back to dpsh (spt_in_dpsh).
         """
         # --- Source 1: sondeig_extracted.json ---
         sondeig_path = self.project_path / 'validation' / 'sondeig_extracted.json'
         if sondeig_path.exists():
             try:
-                with open(sondeig_path, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
+                data = load_sondeig_json(sondeig_path)
                 for test in data.get('sondeig_tests', []):
-                    spt_list = test.get('spt_results') or test.get('spt_tests', [])
-                    for spt in spt_list:
+                    for spt in test.get('spt_results', []):
                         depth_from = spt.get('depth_from_m', '')
                         depth_to = spt.get('depth_to_m', '')
                         depth_range = f"-{depth_from:.2f} a {depth_to:.2f}" if depth_from != '' and depth_to != '' else ''
@@ -227,17 +210,11 @@ class ReportGenerator:
                             if layer.get('depth_from_m', 0) <= (depth_from or 0) < layer.get('depth_to_m', 99):
                                 lithology = layer.get('description', '')
                                 break
-                        # Calculate n30 from blow_counts if n_spt not present
-                        n30 = spt.get('n_spt', '')
-                        if not n30 and spt.get('blow_counts'):
-                            bc = spt['blow_counts']
-                            if len(bc) >= 3:
-                                n30 = bc[1] + bc[2]
                         return {
-                            'test_id': spt.get('test_id') or spt.get('test_name', 'SPT-1'),
+                            'test_id': spt.get('test_id', 'SPT-1'),
                             'location': test.get('test_id', 'S-1'),
                             'depth_range': depth_range,
-                            'n30': n30,
+                            'n30': spt.get('n_spt', ''),
                             'lithology': lithology,
                         }
             except Exception as e:
@@ -247,27 +224,21 @@ class ReportGenerator:
         dpsh_path = self.project_path / 'validation' / 'dpsh_extracted.json'
         if dpsh_path.exists():
             try:
-                with open(dpsh_path, 'r', encoding='utf-8') as f:
-                    dpsh_data = json.load(f)
-                spt_test = _find_spt_in_dpsh(dpsh_data)
-                if spt_test:
-                    depth_from = spt_test.get('depth_from_m') or spt_test.get('cota_from', '')
-                    depth_to = spt_test.get('depth_to_m') or spt_test.get('cota_to', '')
+                dpsh_data = load_dpsh_json(dpsh_path)
+                spt = dpsh_data.get('spt_in_dpsh')
+                if spt:
+                    depth_from = spt.get('depth_from_m', '')
+                    depth_to = spt.get('depth_to_m', '')
                     depth_range = f"-{depth_from:.2f} a -{depth_to:.2f}" if depth_from != '' and depth_to != '' else ''
-                    # n30 from blows array (middle two 15cm intervals)
-                    n30 = ''
-                    blows = spt_test.get('blows') or spt_test.get('blows_15_30_45_60', [])
-                    if len(blows) >= 3:
-                        n30 = blows[1] + blows[2]
-                    # Format reference as P-N (add hyphen if missing)
-                    ref = spt_test.get('reference') or spt_test.get('test_id', '')
+                    # Format location as P-N (add hyphen if missing)
+                    ref = spt.get('location', '')
                     if ref and '-' not in ref:
                         ref = re.sub(r'([A-Za-z]+)(\d+)', r'\1-\2', ref)
                     return {
-                        'test_id': 'SPT-1',
+                        'test_id': spt.get('test_id', 'SPT-1'),
                         'location': ref,
                         'depth_range': depth_range,
-                        'n30': n30,
+                        'n30': spt.get('n_spt', ''),
                         'lithology': '',
                     }
             except Exception as e:
@@ -311,8 +282,7 @@ class ReportGenerator:
             try:
                 sondeig_path = self.project_path / 'validation' / 'sondeig_extracted.json'
                 if sondeig_path.exists():
-                    with open(sondeig_path, 'r', encoding='utf-8') as f:
-                        sondeig_data = json.load(f)
+                    sondeig_data = load_sondeig_json(sondeig_path)
                     sondeig_tests = sondeig_data.get('sondeig_tests', [])
                     if sondeig_tests:
                         # Store full test data for the sondeig summary table
@@ -344,8 +314,7 @@ class ReportGenerator:
             try:
                 dpsh_ext_path = self.project_path / 'validation' / 'dpsh_extracted.json'
                 if dpsh_ext_path.exists():
-                    with open(dpsh_ext_path, 'r', encoding='utf-8') as f:
-                        dpsh_ext_data = json.load(f)
+                    dpsh_ext_data = load_dpsh_json(dpsh_ext_path)
                     # Store refusal depths indexed by test_id for patching DPSHTest later
                     refusal_map = {}
                     for test in dpsh_ext_data.get('dpsh_tests', []):

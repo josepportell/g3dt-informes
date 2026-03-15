@@ -234,6 +234,7 @@ Analitza aquest full de camp DPSH (Dynamic Probing Super Heavy).
 - Pot incloure: valors de parell (PAR/torque), indicadors de nivell freatic (N.F.), marcadors de nivell de sol
 - Un factor de correccio (tipicament 0.83) pot apareixer a la part superior
 - El refus s'indica amb "R" o valors molt alts (>=100)
+- **IMPORTANT:** El full de camp pot incloure un assaig SPT (Standard Penetration Test). Si hi ha una seccio SPT amb cops per tram de 15cm, extreu-la a `spt_in_dpsh`.
 
 **REGLES D'EXTRACCIO:**
 1. Per cada punt d'assaig, extreu TOTS els parells profunditat/N20
@@ -243,6 +244,7 @@ Analitza aquest full de camp DPSH (Dynamic Probing Super Heavy).
 5. Usa "??" per valors N20 completament illegibles (confianca 0.0)
 6. Nota qualsevol refus (marcador R o N20 >= 100)
 7. Nota nivell freatic si s'indica
+8. **Si el full de camp inclou un assaig SPT**, extreu-lo a la clau `spt_in_dpsh` amb els camps: `test_id`, `location` (punt DPSH on es va fer, ex: "P-3"), `depth_from_m`, `depth_to_m`, `blows` (array de cops per 15cm), `n_spt` (suma dels 2 cops centrals: blows[1]+blows[2]), `confidence`. **Posa `null` si no hi ha SPT.**
 
 **COMPARACIO AMB EXCEL:**
 - Si hi ha `dpsh_excel` al file_mapping.json, carrega l'Excel amb:
@@ -385,6 +387,15 @@ Analitza aquest full de camp de Sondeig (perforacio a rotacio).
       "extraction_notes": "Test completed normally"
     }
   ],
+  "spt_in_dpsh": {
+    "test_id": "SPT-1",
+    "location": "P-3",
+    "depth_from_m": 0.60,
+    "depth_to_m": 1.20,
+    "blows": [16, 20, 20, 24],
+    "n_spt": 40,
+    "confidence": 0.90
+  },
   "reviewer_notes": "",
   "approved_by": "",
   "approval_date": null
@@ -392,6 +403,8 @@ Analitza aquest full de camp de Sondeig (perforacio a rotacio).
 ```
 
 **Si NO hi ha Excel** de comparacio, posa `excel_comparison.has_excel: false` i omit `excel_value`/`has_discrepancy` dels readings.
+
+**`spt_in_dpsh`:** Objecte amb dades SPT si el full de camp inclou un assaig SPT, o `null` si no n'hi ha. Camps: `test_id`, `location` (punt DPSH), `depth_from_m`, `depth_to_m`, `blows` (array 4 valors per 15cm), `n_spt` (blows[1]+blows[2]), `confidence`.
 
 ### sondeig_extracted.json
 
@@ -429,7 +442,16 @@ Analitza aquest full de camp de Sondeig (perforacio a rotacio).
           "note": null
         }
       ],
-      "spt_results": [],
+      "spt_results": [
+        {
+          "test_id": "SPT-1",
+          "depth_from_m": 1.00,
+          "depth_to_m": 1.60,
+          "blows": [24, 14, 28, 30],
+          "n_spt": 42,
+          "confidence": 0.90
+        }
+      ],
       "water_level_m": null,
       "rock_detected": false,
       "rock_depth_m": null,

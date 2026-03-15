@@ -33,6 +33,15 @@ DPSH_JSON_EXAMPLE = '''
       "extraction_notes": "Test completed normally"
     }
   ],
+  "spt_in_dpsh": {
+    "test_id": "SPT-1",
+    "location": "P-3",
+    "depth_from_m": 0.60,
+    "depth_to_m": 1.20,
+    "blows": [16, 20, 20, 24],
+    "n_spt": 40,
+    "confidence": 0.90
+  },
   "overall_confidence": 0.85,
   "extraction_notes": "Some values partially illegible due to ink smudges"
 }
@@ -57,6 +66,7 @@ EXTRACTION RULES:
 5. Use "??" for completely illegible N20 values (set confidence to 0.0)
 6. Note any refusal (R marker or N20 >= 100)
 7. Note water level if indicated
+8. If the field sheet includes an SPT test, extract it to `spt_in_dpsh` with: test_id, location (DPSH point), depth_from_m, depth_to_m, blows (array of 15cm blow counts), n_spt (blows[1]+blows[2]), confidence. Set `spt_in_dpsh` to null if no SPT.
 
 CONFIDENCE SCORING:
 - 1.0: Clear, unambiguous value
@@ -104,6 +114,16 @@ SONDEIG_JSON_EXAMPLE = '''
           "density": null,
           "confidence": 0.9,
           "note": "USCS classification uncertain"
+        }
+      ],
+      "spt_results": [
+        {
+          "test_id": "SPT-1",
+          "depth_from_m": 1.00,
+          "depth_to_m": 1.60,
+          "blows": [24, 14, 28, 30],
+          "n_spt": 42,
+          "confidence": 0.90
         }
       ],
       "water_level_m": null,
@@ -155,6 +175,7 @@ EXTRACTION RULES:
 8. Consistency (cohesive soils): tova, ferma, dura
 9. Density (granular soils): fluixa, mitja, densa
 10. Mark uncertain values with appropriate confidence scores
+11. If SPT tests are recorded, extract each to `spt_results` array with: test_id, depth_from_m, depth_to_m, blows (array of 15cm blow counts), n_spt (blows[1]+blows[2]), confidence. Use empty array `[]` if no SPT.
 
 CONFIDENCE SCORING:
 - 1.0: Clear, unambiguous description

@@ -298,24 +298,27 @@ def load_validated_dpsh(project_path: Path) -> DPSHData | None:
 
 
 def _detect_spt(user_data: dict, project_path: str = '') -> bool:
-    """Auto-detect SPT availability from user_data or sondeig extraction."""
+    """Auto-detect SPT availability from user_data or sondeig/dpsh extraction.
+
+    Uses vision_normalizer for canonical key access.
+    """
     # 1. Explicit user_data flag
     if user_data.get('has_spt') is True:
         return True
     # 2. Manual SPT data in user_data
     if user_data.get('spt_data'):
         return True
-    # 3. Sondeig extraction with SPT results
+    # 3. Check normalized vision JSONs
     if project_path:
-        import json
         from pathlib import Path
+        from .vision_normalizer import load_sondeig_json, load_dpsh_json
+
         sondeig_path = Path(project_path) / 'validation' / 'sondeig_extracted.json'
         if sondeig_path.exists():
             try:
-                with open(sondeig_path, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
+                data = load_sondeig_json(sondeig_path)
                 for test in data.get('sondeig_tests', []):
-                    if test.get('spt_results') or test.get('spt_tests'):
+                    if test.get('spt_results'):
                         return True
             except (json.JSONDecodeError, KeyError):
                 pass
@@ -323,16 +326,9 @@ def _detect_spt(user_data: dict, project_path: str = '') -> bool:
         dpsh_path = Path(project_path) / 'validation' / 'dpsh_extracted.json'
         if dpsh_path.exists():
             try:
-                with open(dpsh_path, 'r', encoding='utf-8') as f:
-                    dpsh_data = json.load(f)
-                # Vision model may place SPT under different keys across runs
-                for spt_candidate in [
-                    dpsh_data.get('document_metadata', {}).get('spt_test'),
-                    dpsh_data.get('spt_data'),
-                    dpsh_data.get('spt_test'),
-                ]:
-                    if spt_candidate and isinstance(spt_candidate, dict):
-                        return True
+                dpsh_data = load_dpsh_json(dpsh_path)
+                if dpsh_data.get('spt_in_dpsh'):
+                    return True
             except (json.JSONDecodeError, KeyError):
                 pass
     return False
