@@ -173,7 +173,6 @@ IGNORE_PATTERNS = [
     (r'^~\$', 'temp_file'),
     (r'^Thumbs\.db$', 'temp_file'),
     (r'.*\.tmp$', 'temp_file'),
-    (r'^\d+\.\d+/?$', 'numeric_dir'),
     (r'.*\.txt$', 'text_file'),
     (r'(?i)^ALTRES/?$', 'misc_subdir'),
 ]
