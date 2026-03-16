@@ -126,6 +126,7 @@ SONDEIG_JSON_EXAMPLE = '''
           "confidence": 0.90
         }
       ],
+      "elevation_z": 199.50,
       "water_level_m": null,
       "rock_detected": false,
       "rock_depth_m": null,
@@ -176,6 +177,7 @@ EXTRACTION RULES:
 9. Density (granular soils): fluixa, mitja, densa
 10. Mark uncertain values with appropriate confidence scores
 11. If SPT tests are recorded, extract each to `spt_results` array with: test_id, depth_from_m, depth_to_m, blows (array of 15cm blow counts), n_spt (blows[1]+blows[2]), confidence. Use empty array `[]` if no SPT.
+12. Extract `elevation_z` (cota z in meters) from the borehole header if present (e.g., "Cota z=199.50m" or "z=199.50"). Set to null if not found.
 
 CONFIDENCE SCORING:
 - 1.0: Clear, unambiguous description
