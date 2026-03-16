@@ -513,10 +513,15 @@ class UserDataWizard:
     def _generate_access_description(self) -> str:
         """Generate access route from the first street-facing direction.
 
-        Returns a clause like "del Carrer X existent al sud" designed to
-        complete the template "a trav\u00e9s {{ access_description }}."
+        Returns the full sentence, e.g. "El dia dels treballs de camp es
+        realitza l'entrada a la zona d'estudi a trav\u00e9s del Carrer X
+        existent al sud."
         Access is always from a street, never from an adjacent parcel.
         """
+        _ACCESS_PREFIX = (
+            "El dia dels treballs de camp es realitza l\u2019entrada a la zona "
+            "d\u2019estudi a trav\u00e9s "
+        )
         STREET_ACCESS_PREPOSITIONS = {
             'carrer': 'del',
             'avinguda': "de l'",
@@ -540,7 +545,7 @@ class UserDataWizard:
             val_lower = val.lower()
             for kw, prep in STREET_ACCESS_PREPOSITIONS.items():
                 if kw in val_lower:
-                    return f"{prep} {val} existent al {direction_cat}"
+                    return f"{_ACCESS_PREFIX}{prep} {val} existent al {direction_cat}."
         return ''
 
     def _generate_template_prefills(self) -> None:

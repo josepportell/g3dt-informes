@@ -158,9 +158,13 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
             return str(entry.get('value', '') or '')
         return str(entry)
 
-    # Access description: pick first street-facing direction
+    # Access description: pick first street-facing direction (full sentence)
     if not _get_val('access_description'):
         import re as _re
+        _ACCESS_PREFIX = (
+            "El dia dels treballs de camp es realitza l\u2019entrada a la zona "
+            "d\u2019estudi a trav\u00e9s "
+        )
         STREET_PREPOSITIONS = {
             'carrer': 'del', 'avinguda': "de l'", 'camí': 'del',
             'passatge': 'del', 'passeig': 'del', 'plaça': 'de la',
@@ -185,7 +189,7 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
                 if kw in val_lower:
                     sep = '' if prep.endswith("'") else ' '
                     merged['access_description'] = {
-                        'value': f"{prep}{sep}{val} existent al {direction_cat}",
+                        'value': f"{_ACCESS_PREFIX}{prep}{sep}{val} existent al {direction_cat}.",
                         'source': 'plantilla generada',
                     }
                     break

@@ -851,9 +851,14 @@ class ReportGenerator:
             else:
                 context['adjacent_west_fmt'] = _format_adjacent('oest', '')
 
-            # Access street extraction — strip preposition and "existent al ..." suffix
-            # to get just the street name (e.g. "del Carrer X existent al sud" → "Carrer X")
+            # Access street extraction — strip sentence prefix + preposition + suffix
+            # to get just the street name (e.g. "El dia dels treballs ... a través del Carrer X existent al sud." → "Carrer X")
             access = self.report_data.access_description or ''
+            # Strip full-sentence prefix if present (new format)
+            _prefix_pat = r"El dia dels treballs de camp es realitza l['\u2019]entrada a la zona d['\u2019]estudi a trav[eé]s\s*"
+            _prefix_m = re.match(_prefix_pat, access, re.IGNORECASE)
+            if _prefix_m:
+                access = access[_prefix_m.end():]
             access_match = re.search(
                 r"(?:des del|des de la|del|de la|de l['\u2019]?)\s*(.+?)(?:\s+existent\b|\.|$)",
                 access, re.IGNORECASE,
