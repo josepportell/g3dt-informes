@@ -722,18 +722,48 @@ def _geocode_for_adjacents(
 ) -> tuple[float, float] | None:
     """Geocode a street address to UTM for adjacents probing.
 
+    Tries the full address first, then strips the street type prefix
+    (Nominatim often fails on "Carrer X" but succeeds on bare "X"
+    for small Catalan towns).
+
     Returns (utm_x, utm_y) or None if geocoding fails.
     """
     try:
         from .geocode_coordinates import geocode_project
+    except ImportError as e:
+        logger.debug(f"geocode_coordinates not available: {e}")
+        return None
 
-        geo_result = geocode_project(
-            street_address, municipality, ['centre'], output_dir=None,
-        )
-        if geo_result and geo_result.get('utm_x') and geo_result.get('utm_y'):
-            return geo_result['utm_x'], geo_result['utm_y']
-    except Exception as e:
-        logger.debug(f"Geocode for adjacents failed: {e}")
+    # Build candidate addresses: full → stripped number → bare name
+    candidates = [street_address]
+
+    # Strip house number variants: "Nº 39", ", 16", "18A-18B-20"
+    import re
+    stripped = re.sub(r'[\s,]+(?:Nº\s*|nº\s*|n[úu]m\.?\s*)?\d[\dA-Za-z\-]*\s*$', '', street_address).strip()
+    if stripped and stripped != street_address:
+        candidates.append(stripped)
+
+    # Strip street type prefix: "Carrer X" → "X", "C/ X" → "X"
+    bare = re.sub(
+        r'^(?:Carrer|Calle|CL|C/|Avinguda|Avenida|AV|Camí|Camino|'
+        r'Passeig|Paseo|Plaça|Plaza|Travessia|Travesia|Partida|'
+        r'Ronda|Passatge|Carretera)\s+',
+        '', stripped or street_address, flags=re.IGNORECASE,
+    ).strip()
+    if bare and bare != stripped and bare != street_address:
+        candidates.append(bare)
+
+    for addr in candidates:
+        try:
+            geo_result = geocode_project(
+                addr, municipality, ['centre'], output_dir=None,
+            )
+            if geo_result and geo_result.get('utm_x') and geo_result.get('utm_y'):
+                logger.info(f"Geocode for adjacents OK: '{addr}' → ({geo_result['utm_x']:.0f}, {geo_result['utm_y']:.0f})")
+                return geo_result['utm_x'], geo_result['utm_y']
+        except Exception as e:
+            logger.debug(f"Geocode attempt '{addr}' failed: {e}")
+
     return None
 
 
