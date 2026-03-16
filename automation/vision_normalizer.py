@@ -233,15 +233,20 @@ def _normalize_sondeig_spt_fields(spt: dict) -> dict:
 def _extract_elevation_from_notes(text: str) -> float | None:
     """Extract elevation_z from free-text extraction_notes.
 
-    Handles: "Cota z=199.50m", "cota z 199,50", "Cota Z=+199.50m."
+    Handles: "Cota z=199.50m", "cota z 199,50", "Cota Z=+199.50m.",
+             "elevation z = 199.50 m", "elevation_z: 199.50"
     """
-    match = re.search(r'[Cc]ota\s+[Zz]\s*=?\s*\+?([\d.,]+)\s*m?', text)
-    if match:
-        val_str = match.group(1).replace(',', '.')
-        try:
-            return float(val_str)
-        except (ValueError, TypeError):
-            pass
+    for pattern in [
+        r'[Cc]ota\s+[Zz]\s*=?\s*\+?([\d.,]+)\s*m?\b',
+        r'[Ee]levation[\s_]+[Zz]\s*[=:]\s*\+?([\d.,]+)\s*m?\b',
+    ]:
+        match = re.search(pattern, text)
+        if match:
+            val_str = match.group(1).replace(',', '.')
+            try:
+                return float(val_str)
+            except (ValueError, TypeError):
+                pass
     return None
 
 

@@ -160,12 +160,14 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
 
     # Access description: pick first street-facing direction
     if not _get_val('access_description'):
+        import re as _re
         STREET_PREPOSITIONS = {
             'carrer': 'del', 'avinguda': "de l'", 'camí': 'del',
             'passatge': 'del', 'passeig': 'del', 'plaça': 'de la',
             'ronda': 'de la', 'partida': 'de la', 'carretera': 'de la',
             'travessia': 'de la',
         }
+        _muni_val = _get_val('site_municipality')
         for direction, direction_cat in [
             ('south', 'sud'), ('north', 'nord'),
             ('east', 'est'), ('west', 'oest'),
@@ -173,6 +175,11 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
             val = _get_val(f'adjacent_{direction}')
             if not val:
                 continue
+            # Strip trailing municipality from street name (Fix B, upstream)
+            if _muni_val:
+                cleaned = _re.sub(r'\s+' + _re.escape(_muni_val) + r'\s*$', '', val, flags=_re.IGNORECASE).strip()
+                if cleaned and cleaned != val:
+                    val = cleaned
             val_lower = val.lower()
             for kw, prep in STREET_PREPOSITIONS.items():
                 if kw in val_lower:
