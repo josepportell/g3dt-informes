@@ -285,6 +285,10 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
                 sondeig_data = load_sondeig_json(sondeig_path)
                 metadata = sondeig_data.get('metadata') or sondeig_data.get('borehole_metadata', {})
                 elev_z = metadata.get('elevation_z') or metadata.get('cota_z')
+                if elev_z is None:
+                    tests = sondeig_data.get('sondeig_tests', [])
+                    if tests and isinstance(tests, list):
+                        elev_z = tests[0].get('elevation_z') or tests[0].get('cota_z')
                 if elev_z is not None:
                     cota_val = float(elev_z)
                     merged['cota_referencia'] = {'value': f"+{cota_val:.2f}", 'source': 'sondeig elevation_z'}
@@ -419,6 +423,10 @@ def get_vision_status(project_name: str) -> dict[str, Any]:
                             sdata = load_sondeig_json(sondeig_path)
                             meta = sdata.get('metadata') or sdata.get('borehole_metadata', {})
                             ez = meta.get('elevation_z') or meta.get('cota_z')
+                            if ez is None:
+                                tests = sdata.get('sondeig_tests', [])
+                                if tests and isinstance(tests, list):
+                                    ez = tests[0].get('elevation_z') or tests[0].get('cota_z')
                             if ez is not None:
                                 cached['cota_referencia'] = {'value': f"+{float(ez):.2f}", 'source': 'sondeig elevation_z'}
                         except Exception:

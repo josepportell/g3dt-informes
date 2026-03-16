@@ -667,7 +667,11 @@ class ReportGenerator:
             street = self.report_data.street_address or ''
             parts = street.split(',', 1)
             context['street_1'] = parts[0].strip() if parts else ''
-            context['street_2'] = parts[1].strip().lstrip('0123456789 ') if len(parts) > 1 else ''
+            street_2 = parts[1].strip().lstrip('0123456789 ') if len(parts) > 1 else ''
+            # Fall back to municipality if no comma in address
+            if not street_2:
+                street_2 = self.report_data.municipality or ''
+            context['street_2'] = street_2
 
             # CTE Classification (original names)
             context['cte_building_class'] = self.report_data.cte_building_class or 'C-0'

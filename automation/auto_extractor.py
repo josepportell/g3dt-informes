@@ -675,7 +675,13 @@ def _phase3_adjacents(
         if superficie <= 0:
             superficie = 500.0  # Conservative default
 
-        municipality = _extract_municipality(project_path) if project_path else None
+        # Prefer full municipality from user_data/prefills (has articles like "d'Urgell")
+        # Fall back to folder name extraction (may lose articles)
+        municipality = (
+            (existing_user_data or {}).get('site_municipality')
+            or result.prefills.get('site_municipality')
+            or (_extract_municipality(project_path) if project_path else None)
+        )
 
         # Prefer planol/docs street address for adjacents — geocode it to find
         # the correct project parcel (DPSH test points may be on a neighbor)
