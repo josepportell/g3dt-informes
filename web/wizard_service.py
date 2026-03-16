@@ -81,6 +81,69 @@ def list_projects() -> list[dict[str, str]]:
     return projects
 
 
+def _fill_missing_adjacents(merged: dict[str, Any], project_path: Path) -> None:
+    """Run adjacents detection from planol address when auto_extract skipped it.
+
+    Only fires when ALL adjacents are empty (Phase 3 was skipped due to
+    missing UTM coords) AND a street address + municipality are available
+    from vision/wizard data. This avoids re-running for projects that
+    already have adjacents from DPSH coordinates.
+    """
+    def _get_val(key: str) -> str:
+        entry = merged.get(key)
+        if entry is None:
+            return ''
+        if isinstance(entry, dict):
+            return str(entry.get('value', ''))
+        return str(entry)
+
+    # Only run if ALL adjacents are empty
+    has_any_adjacent = any(
+        _get_val(f'adjacent_{d}')
+        for d in ('north', 'south', 'east', 'west')
+    )
+    if has_any_adjacent:
+        return
+
+    street_address = _get_val('street_address')
+    municipality = _get_val('site_municipality')
+    if not street_address or not municipality:
+        return
+
+    logger.info(
+        f"No adjacents from auto_extract — geocoding from planol: "
+        f"'{street_address}', {municipality}"
+    )
+
+    try:
+        from automation.auto_extractor import _geocode_for_adjacents, _extract_municipality
+        from automation.cadastre_adjacents import get_adjacent_parcels
+
+        geocoded = _geocode_for_adjacents(street_address, municipality)
+        if not geocoded:
+            logger.info("Geocode for missing adjacents failed")
+            return
+
+        utm_x, utm_y = geocoded
+        superficie = float(_get_val('superficie_parcela_m2') or _get_val('superficie_cadastral_m2') or 500)
+        muni_clean = _extract_municipality(project_path) or municipality
+
+        adjacents = get_adjacent_parcels(
+            utm_x, utm_y, superficie, municipality=muni_clean,
+        )
+        for direction in ('north', 'south', 'east', 'west'):
+            val = adjacents.get(direction)
+            if val:
+                merged[f'adjacent_{direction}'] = {
+                    'value': val,
+                    'source': f"Cadastre API (geocode post-visió)",
+                }
+        logger.info(f"Filled {sum(1 for d in adjacents.values() if d)} adjacents from planol address")
+
+    except Exception as e:
+        logger.warning(f"Failed to fill missing adjacents: {e}")
+
+
 def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
     """Generate site/access descriptions from merged prefill data.
 
@@ -245,6 +308,10 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
         merged['_file_mapping'] = {'value': fm_serialized, 'source': 'system'}
 
     merged['_projects_base'] = {'value': str(_REF_DIR), 'source': 'system'}
+
+    # If auto_extract skipped adjacents (no UTM coords), try geocoding from
+    # planol address now that vision data is available in the merged prefills.
+    _fill_missing_adjacents(merged, project_path)
 
     # Generate template prefills (access/site description) AFTER merge,
     # because they depend on adjacents data from auto_extract.
