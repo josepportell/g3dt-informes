@@ -18,6 +18,7 @@ Date: 2026-03-15
 
 import json
 import logging
+import re
 from pathlib import Path
 from typing import Any
 
@@ -229,13 +230,94 @@ def _normalize_sondeig_spt_fields(spt: dict) -> dict:
     return normalized
 
 
+def _extract_elevation_from_notes(text: str) -> float | None:
+    """Extract elevation_z from free-text extraction_notes.
+
+    Handles: "Cota z=199.50m", "cota z 199,50", "Cota Z=+199.50m."
+    """
+    match = re.search(r'[Cc]ota\s+[Zz]\s*=?\s*\+?([\d.,]+)\s*m?', text)
+    if match:
+        val_str = match.group(1).replace(',', '.')
+        try:
+            return float(val_str)
+        except (ValueError, TypeError):
+            pass
+    return None
+
+
+def _normalize_elevation_z(data: dict) -> None:
+    """Extract elevation_z from any location and write to canonical data['elevation_z'].
+
+    Search order (first non-None wins):
+    1. data['metadata']['elevation_z'] or data['metadata']['cota_z']
+    2. data['borehole_metadata']['elevation_z'] or ['cota_z']
+    3. data['elevation_z'] or data['cota_z'] (top-level)
+    4. data['sondeig_tests'][0]['elevation_z'] or ['cota_z']
+    5. Regex on extraction_notes (per-test then top-level):
+       Pattern: r'[Cc]ota\\s+[Zz]\\s*=?\\s*\\+?([\\d.,]+)\\s*m?'
+    """
+    elev_z = None
+
+    # 1. metadata
+    metadata = data.get('metadata')
+    if isinstance(metadata, dict):
+        elev_z = metadata.get('elevation_z')
+        if elev_z is None:
+            elev_z = metadata.get('cota_z')
+
+    # 2. borehole_metadata
+    if elev_z is None:
+        bh_meta = data.get('borehole_metadata')
+        if isinstance(bh_meta, dict):
+            elev_z = bh_meta.get('elevation_z')
+            if elev_z is None:
+                elev_z = bh_meta.get('cota_z')
+
+    # 3. top-level
+    if elev_z is None:
+        elev_z = data.get('elevation_z')
+        if elev_z is None:
+            elev_z = data.get('cota_z')
+
+    # 4. first sondeig_test structured key
+    if elev_z is None:
+        tests = data.get('sondeig_tests', [])
+        if tests and isinstance(tests, list):
+            elev_z = tests[0].get('elevation_z')
+            if elev_z is None:
+                elev_z = tests[0].get('cota_z')
+
+    # 5. regex on extraction_notes (per-test first, then top-level)
+    if elev_z is None:
+        for test in data.get('sondeig_tests', []):
+            notes = test.get('extraction_notes', '')
+            if notes and isinstance(notes, str):
+                elev_z = _extract_elevation_from_notes(notes)
+                if elev_z is not None:
+                    break
+    if elev_z is None:
+        top_notes = data.get('extraction_notes', '')
+        if top_notes and isinstance(top_notes, str):
+            elev_z = _extract_elevation_from_notes(top_notes)
+
+    # Write canonical key (None if not found anywhere)
+    if elev_z is not None:
+        try:
+            data['elevation_z'] = float(str(elev_z).replace(',', '.'))
+        except (ValueError, TypeError):
+            pass
+
+
 def normalize_sondeig(data: dict) -> dict:
     """Normalize a sondeig_extracted.json dict in place.
 
     For each sondeig test:
     - Renames 'spt_tests' to 'spt_results' (canonical key)
     - Normalizes SPT field names within each entry
+    - Extracts elevation_z to canonical top-level key
     """
+    _normalize_elevation_z(data)
+
     for test in data.get('sondeig_tests', []):
         # Move spt_tests → spt_results if needed
         spt_list = test.get('spt_results') or test.get('spt_tests', [])

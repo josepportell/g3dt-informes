@@ -310,8 +310,7 @@ class ReportGenerator:
                     # Override cota_referencia with borehole elevation_z
                     # (field-measured, more accurate than ICGC MDT satellite data).
                     # Always override unless source is explicitly 'user' (Eva typed it).
-                    metadata = sondeig_data.get('metadata') or sondeig_data.get('borehole_metadata', {})
-                    elev_z = metadata.get('elevation_z') or metadata.get('cota_z')
+                    elev_z = sondeig_data.get('elevation_z')
                     if elev_z is not None:
                         cota_source = self.user_data.get('_sources', {}).get('cota_referencia', '')
                         if cota_source != 'user':
@@ -767,11 +766,22 @@ class ReportGenerator:
                 except Exception as e:
                     self.warnings.append(f"Unexpected error during adjacent auto-fill: {e}")
 
+            # Clean municipality from adjacent street names (cadastre LDT may include it)
+            if self.report_data.municipality:
+                _muni_pattern = re.escape(self.report_data.municipality)
+                for direction in ('north', 'south', 'east', 'west'):
+                    val = adj.get(direction, '')
+                    if val:
+                        cleaned = re.sub(r'\s+' + _muni_pattern + r'\s*$', '', val, flags=re.IGNORECASE).strip()
+                        if cleaned and cleaned != val:
+                            adj[direction] = cleaned
+                            logger.info(f"Cleaned municipality from adjacent_{direction}: '{val}' → '{cleaned}'")
+
             context['adjacent_north'] = adj.get('north', '')
             context['adjacent_south'] = adj.get('south', '')
             context['adjacent_east'] = adj.get('east', '')
             context['adjacent_west'] = adj.get('west', '')
-            # Find the second bordering street (any direction, different from street_1)
+            # Find the second bordering street (any direction: S→E→W→N, different from street_1)
             street_prefixes = ('carrer ', 'camí ', 'passeig ', 'avinguda ', 'plaça ', 'ronda ', 'travessia ')
             street_1_lower = context.get('street_1', '').lower()
             second_street = ''
@@ -780,7 +790,39 @@ class ReportGenerator:
                 if val and val.lower().startswith(street_prefixes) and val.lower() != street_1_lower:
                     second_street = val
                     break
-            context['adjacent_south_street'] = second_street
+            context['adjacent_nearest_street'] = second_street
+
+            # Build grammatically correct location sentence for P60
+            # Catalan articles: el (masc), la (fem), l' (before vowel)
+            def _street_article(name: str) -> str:
+                s = name.strip().lower()
+                if s.startswith(('avinguda', 'autopista')):
+                    return "l'"
+                if s.startswith(('plaça', 'ronda', 'travessia', 'partida')):
+                    return 'la '
+                return 'el '
+
+            municipality = self.report_data.municipality or ''
+            muni_suffix = f" de {municipality}" if municipality else ''
+            st1 = context.get('street_1', '')
+            if street_1_lower and second_street:
+                art1 = _street_article(st1)
+                art2 = _street_article(second_street)
+                context['location_sentence'] = f"entre {art1}{st1} i {art2}{second_street}{muni_suffix}"
+            elif street_1_lower:
+                art = _street_article(st1)
+                # Catalan preposition "a" + article: al (a+el), a la, a l'
+                if art == "l'":
+                    loc_prep = "a l'"
+                elif art == 'la ':
+                    loc_prep = "a la "
+                else:
+                    loc_prep = "al "  # a + el contraction
+                context['location_sentence'] = f"{loc_prep}{st1}{muni_suffix}"
+            elif municipality:
+                context['location_sentence'] = f"al terme municipal de {municipality}"
+            else:
+                context['location_sentence'] = "en una ubicació no especificada"
 
             # Adjacent formatting with Catalan articles
             def _format_adjacent(direction_cat: str, value: str) -> str:

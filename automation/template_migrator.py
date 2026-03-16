@@ -47,10 +47,10 @@ PARAGRAPH_MIGRATIONS = [
     {
         'id': 'P60-ubicacio',
         'paragraph_index': 60,
-        'old_contains': "L'habitatge que es preveu construir",
+        'old_contains': "es situarà",
         'new_text': (
-            "L'edificació que es preveu construir es situarà entre el "
-            "{{ street_1 }} de {{ street_2 }}."
+            "L'edificació que es preveu construir es situarà "
+            "{{ location_sentence }}."
         ),
     },
     {
