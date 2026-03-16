@@ -275,6 +275,13 @@ PLANOL_JSON_EXAMPLE = '''
       "plot_width_m": {"pdf_value": 24.72, "confidence": 0.90}
     }
   },
+  "floor_plan_bbox": {
+    "top_pct": 0.0,
+    "left_pct": 0.0,
+    "bottom_pct": 71.0,
+    "right_pct": 60.0,
+    "confidence": 0.90
+  },
   "overall_confidence": 0.90,
   "extraction_notes": "Caixetí clear, dimensions from site plan"
 }
@@ -310,6 +317,15 @@ EXTRACTION RULES:
 6. Building footprint may be labeled "ocupació", "superfície construïda", or similar
 7. If architect_company is not separately listed, set null (do not guess from architect name)
 8. Look for per-floor surfaces (quadre de superfícies, m² per planta). Extract each floor as a SEPARATE entry in `floor_surfaces` array. NEVER combine floors into a single entry (e.g., never use "PB+PP" or "PB+P1" as a floor label). Each entry must have a single floor level: "PB", "P1", "PS", "PP", etc. If the plan shows "PB 297 m² + PP 100 m²", that is TWO separate entries, one per floor. If only a total built surface is available with no per-floor breakdown, use `building_footprint_m2` for the ground floor and derive upper floors from total minus footprint if `num_floors` indicates multiple levels.
+
+FLOOR PLAN BOUNDING BOX:
+Identify the bounding box of the site plan / floor plan drawing area. This is the main architectural drawing showing the building footprint, plot boundaries, and dimensions. EXCLUDE the title block (caixetí), legends, section views (alzat/secció), and any annotations outside the main plan drawing.
+Return as percentage coordinates of the full page:
+- top_pct: distance from top edge (0 = very top)
+- left_pct: distance from left edge (0 = very left)
+- bottom_pct: distance from top edge (100 = very bottom)
+- right_pct: distance from left edge (100 = very right)
+Include a small margin (~1-2%) around the drawing for breathing room.
 
 CONFIDENCE SCORING:
 - 1.0: Clear printed text, unambiguous

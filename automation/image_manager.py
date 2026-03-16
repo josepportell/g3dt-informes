@@ -324,6 +324,53 @@ class ImageManager:
 
         return None, None
 
+    def _get_planol_bbox_clip(self, pdf_path: Path) -> tuple[float, float, float, float] | None:
+        """Read floor_plan_bbox from planol_extracted.json and convert to PyMuPDF clip rect.
+
+        Returns (x0, y0, x1, y1) in PDF points, or None if not available.
+        """
+        planol_json = self.project_path / 'validation' / 'planol_extracted.json'
+        if not planol_json.exists():
+            return None
+
+        try:
+            import json
+            data = json.loads(planol_json.read_text(encoding='utf-8'))
+            bbox = data.get('floor_plan_bbox')
+            if not bbox:
+                return None
+
+            confidence = bbox.get('confidence', 0)
+            if confidence < 0.7:
+                logger.info("floor_plan_bbox confidence %.2f < 0.7, using full page", confidence)
+                return None
+
+            top_pct = bbox.get('top_pct', 0)
+            left_pct = bbox.get('left_pct', 0)
+            bottom_pct = bbox.get('bottom_pct', 100)
+            right_pct = bbox.get('right_pct', 100)
+
+            # Convert percentages to absolute PDF coordinates
+            import fitz
+            doc = fitz.open(str(pdf_path))
+            page = doc[0]
+            r = page.rect
+            doc.close()
+
+            x0 = r.x0 + r.width * left_pct / 100
+            y0 = r.y0 + r.height * top_pct / 100
+            x1 = r.x0 + r.width * right_pct / 100
+            y1 = r.y0 + r.height * bottom_pct / 100
+
+            logger.info(
+                "floor_plan_bbox: %.1f%%,%.1f%% → %.1f%%,%.1f%% (confidence=%.2f) → clip=(%.0f,%.0f,%.0f,%.0f)",
+                left_pct, top_pct, right_pct, bottom_pct, confidence, x0, y0, x1, y1
+            )
+            return (x0, y0, x1, y1)
+        except Exception as e:
+            logger.warning("Failed to read floor_plan_bbox: %s", e)
+            return None
+
     def _download_icgc_images(self) -> dict[str, Path]:
         """
         Download orthophoto + geological map + parcel orthophoto if UTM coords available.
@@ -561,14 +608,31 @@ class ImageManager:
                     )
                     has_plan_crops = True
         elif base_plan_pdf:
-            # Has A.01.pdf but no clip_regions — render full page
-            cached = self._cache_dir / f"planol_{base_plan_pdf.stem}.jpg"
-            if not cached.exists():
-                self._render_pdf_to_image(base_plan_pdf, cached)
-            if cached.exists():
-                context['fig_main_plan_image'] = InlineImage(
-                    self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
-                )
+            # Priority 2: vision-detected floor_plan_bbox from planol_extracted.json
+            bbox_clip = self._get_planol_bbox_clip(base_plan_pdf)
+            if bbox_clip:
+                cached = self._cache_dir / f"main_plan_crop_{base_plan_pdf.stem}.jpg"
+                # Invalidate if planol_extracted.json is newer than cached image
+                planol_json = self.project_path / 'validation' / 'planol_extracted.json'
+                if cached.exists() and planol_json.exists() and planol_json.stat().st_mtime > cached.stat().st_mtime:
+                    cached.unlink()
+                    logger.info("Invalidated stale main_plan crop cache")
+                if not cached.exists():
+                    self._render_pdf_region(base_plan_pdf, cached, bbox_clip)
+                if cached.exists():
+                    context['fig_main_plan_image'] = InlineImage(
+                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
+                    )
+                    has_plan_crops = True
+            else:
+                # Priority 3: full page render (no bbox available)
+                cached = self._cache_dir / f"planol_{base_plan_pdf.stem}.jpg"
+                if not cached.exists():
+                    self._render_pdf_to_image(base_plan_pdf, cached)
+                if cached.exists():
+                    context['fig_main_plan_image'] = InlineImage(
+                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
+                    )
         else:
             # Fallback: no base plan, try "amb punts" or glob
             fallback_pdf = points_pdf or self._find_project_pdf(['A.01.pdf', 'A.*.pdf'])
