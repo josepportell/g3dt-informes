@@ -994,6 +994,44 @@
             background: #f3f4f6;
             color: #6b7280;
         }
+        .alt-badge {
+            display: inline-block;
+            font-size: 10px;
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+            margin-left: 4px;
+            vertical-align: middle;
+            background: #fef3c7;
+            color: #92400e;
+            cursor: pointer;
+        }
+        .alt-badge:hover {
+            background: #fde68a;
+        }
+        .alt-dropdown {
+            display: none;
+            position: absolute;
+            z-index: 100;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 4px 0;
+            min-width: 280px;
+            max-width: 400px;
+        }
+        .alt-dropdown.visible { display: block; }
+        .alt-item {
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .alt-item:last-child { border-bottom: none; }
+        .alt-item:hover { background: #f0f9ff; }
+        .alt-item .alt-value { font-weight: 500; }
+        .alt-item .alt-source { color: #6b7280; font-size: 11px; }
         .toggle-switch-container {
             display: flex;
             align-items: center;
@@ -1422,8 +1460,41 @@
         <div id="dataContent" style="display:none;">
             <!-- Tab Navigation -->
             <div class="tabs" id="tabNav">
+                <button class="tab" id="tab-smartscan" data-tab="smartscan" onclick="switchTab('smartscan')">SmartScan</button>
                 <button class="tab" id="tab-wizard" data-tab="wizard" onclick="switchTab('wizard')">Wizard</button>
                 <button class="tab disabled" id="tab-explicacio" data-tab="explicacio" onclick="switchTab('explicacio')">Explicacio</button>
+            </div>
+
+            <!-- SmartScan Tab Content -->
+            <div class="tab-content" id="smartscan-content">
+                <div id="smartscanLoading" style="display:none; text-align:center; padding:40px;">
+                    <div class="spinner"></div>
+                    <span>Analitzant fitxers del projecte...</span>
+                </div>
+                <div id="smartscanResults" style="display:none;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <h3 style="margin:0;">Analisi de Fitxers</h3>
+                        <div>
+                            <span id="smartscanDuration" style="color:#7f8c8d; font-size:13px; margin-right:12px;"></span>
+                            <button class="btn btn-secondary" onclick="loadSmartScan(true)" style="padding:6px 14px; font-size:13px;">Re-escanejar</button>
+                        </div>
+                    </div>
+                    <div id="smartscanMissing" style="display:none; background:#fff3cd; border:1px solid #ffc107; border-radius:6px; padding:12px; margin-bottom:12px;">
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; font-size:14px;">
+                        <thead>
+                            <tr style="background:#f8f9fa; border-bottom:2px solid #dee2e6;">
+                                <th style="padding:10px; text-align:left;">Fitxer</th>
+                                <th style="padding:10px; text-align:left;">Rol Detectat</th>
+                                <th style="padding:10px; text-align:center; width:60px;">Tier</th>
+                                <th style="padding:10px; text-align:center; width:70px;">Conf.</th>
+                                <th style="padding:10px; text-align:center; width:100px;">Accio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="smartscanTableBody">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Wizard Tab Content -->
@@ -1678,6 +1749,7 @@
         let wizardPrefills = {};
         let wizardUserData = {};
         let wizardDataLoaded = false;
+        let smartscanLoaded = false;
         let wizardDirty = false;
 
         // HTML escaping for XSS prevention
@@ -1752,14 +1824,16 @@
         // Role labels for file display under stepper icons
         const ROLE_LABELS = {
             'dpsh_excel': 'DPSH Excel', 'penetros_pdf': 'Penetros PDF',
-            'sondeig_pdf': 'Sondeig PDF', 'architect_plan': 'Planol',
+            'sondeig_pdf': 'Sondeig PDF', 'architect_plan': 'Planol arquitecte',
             'architect_plan_with_points': 'Planol+punts',
-            'lab_results_pdf': 'Lab PDF', 'reference_report': 'Informe ref.',
+            'architect_project': 'Projecte basic',
+            'lab_results_pdf': 'Resultats lab', 'reference_report': 'Informe ref.',
             'gtl_report': 'GTL', 'coordenades': 'Coordenades',
             'situation_plan': 'Planol situacio',
-            'dpsh_field_sheet': 'Penetros PDF', 'sondeig_field_sheet': 'Sondeig PDF',
-            'lab_order': 'Comanda lab', 'photos_dir': 'Fotos',
-            'correlation_section': 'Tall geologic',
+            'dpsh_field_sheet': 'DPSH camp', 'sondeig_field_sheet': 'Sondeig camp',
+            'sondeig_annex': 'Sondeig annex',
+            'lab_order': 'Comanda lab', 'photos_dir': 'Fotografies',
+            'correlation_section': 'Tall correlacio',
         };
         // Roles most relevant to Eva (shown under stepper); others hidden to avoid clutter
         const PRIORITY_ROLES = new Set([
@@ -1799,14 +1873,17 @@
             });
             document.getElementById(`${tabName}-content`).classList.add('active');
 
-            // Lazy-load wizard data on first switch
+            // Lazy-load data on first switch
+            if (tabName === 'smartscan' && selectedProject && !smartscanLoaded) {
+                loadSmartScan();
+            }
             if (tabName === 'wizard' && selectedProject && !wizardDataLoaded) {
                 loadWizardData();
             }
         }
 
         function detectAvailableTabs() {
-            availableTabs = ['wizard'];
+            availableTabs = ['smartscan', 'wizard'];
             if (selectedProject) {
                 availableTabs.push('explicacio');
             }
@@ -1814,7 +1891,7 @@
         }
 
         function updateTabVisibility() {
-            const tabs = ['wizard', 'explicacio'];
+            const tabs = ['smartscan', 'wizard', 'explicacio'];
             tabs.forEach(tab => {
                 const tabBtn = document.getElementById(`tab-${tab}`);
                 if (!tabBtn) return;
@@ -2793,6 +2870,7 @@
         function onProjectChange(projectName) {
             selectedProject = projectName;
             wizardDataLoaded = false;
+            smartscanLoaded = false;
             wizardDirty = false;
             document.getElementById('wizardUnsaved').style.display = 'none';
 
@@ -3257,6 +3335,223 @@
             switchTab('wizard');
         }
 
+        // ── SmartScan ──────────────────────────────────────────
+        const TIER_BADGES = {
+            'filename': {label: 'T1', color: '#3498db', title: 'Regex nom fitxer'},
+            'fingerprint': {label: 'T2', color: '#e67e22', title: 'Fingerprint estructural'},
+            'vision': {label: 'T3', color: '#9b59b6', title: 'Claude vision'},
+            'manual': {label: 'M', color: '#27ae60', title: 'Assignat manualment'},
+        };
+
+        const REQUIRED_ROLES = ['architect_plan', 'dpsh_field_sheet', 'sondeig_field_sheet', 'correlation_section'];
+
+        async function loadSmartScan(force) {
+            if (!selectedProject) return;
+            const loading = document.getElementById('smartscanLoading');
+            const results = document.getElementById('smartscanResults');
+            loading.style.display = 'block';
+            results.style.display = 'none';
+
+            try {
+                const url = force
+                    ? `/api/smartscan/${encodeURIComponent(selectedProject)}`
+                    : `/api/smartscan/${encodeURIComponent(selectedProject)}`;
+                const resp = await fetch(url);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const data = await resp.json();
+                renderSmartScan(data);
+                smartscanLoaded = true;
+            } catch(e) {
+                console.error('SmartScan error:', e);
+                results.innerHTML = `<div style="color:red; padding:20px;">Error: ${e.message}</div>`;
+                results.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderSmartScan(data) {
+            const results = document.getElementById('smartscanResults');
+            const tbody = document.getElementById('smartscanTableBody');
+            const duration = document.getElementById('smartscanDuration');
+            const missing = document.getElementById('smartscanMissing');
+
+            duration.textContent = `${data.scan_duration_ms}ms`;
+            tbody.innerHTML = '';
+
+            // Remove any previous warning divs
+            results.querySelectorAll('.smartscan-warnings').forEach(el => el.remove());
+
+            // Combine all classifications and sort by path (natural folder grouping)
+            const allFiles = [...(data.classifications || []), ...(data.unclassified || [])];
+            allFiles.sort((a, b) => (a.file_path || '').localeCompare(b.file_path || ''));
+
+            // Split into: classified/unknown (main table) vs informative (collapsed)
+            const mainFiles = [];
+            const infoFiles = [];
+            allFiles.forEach(clf => {
+                // Skip directory entries — we show their contents instead
+                if (clf.is_directory) return;
+                if (clf.category === 'informative') {
+                    infoFiles.push(clf);
+                } else {
+                    mainFiles.push(clf);
+                }
+            });
+
+            // Track assigned roles for missing detection
+            const assignedRoles = new Set();
+            allFiles.forEach(clf => {
+                if (clf.role) assignedRoles.add(clf.role);
+                if (clf.combined_roles) clf.combined_roles.forEach(r => assignedRoles.add(r));
+            });
+
+            // Render main files grouped by folder
+            let lastFolder = null;
+            mainFiles.forEach(clf => {
+                const parts = clf.file_path.split('/');
+                const name = parts[parts.length - 1];
+                const folder = parts.length > 1 ? parts.slice(0, -1).join('/') : '';
+
+                // Folder separator row
+                if (folder !== lastFolder) {
+                    lastFolder = folder;
+                    if (folder) {
+                        const sep = document.createElement('tr');
+                        sep.innerHTML = `<td colspan="5" style="padding:6px 8px; background:#e8f4fd; font-weight:600; font-size:13px; color:#2c3e50; border-bottom:1px solid #bee5eb;">📁 ${folder}/</td>`;
+                        tbody.appendChild(sep);
+                    }
+                }
+
+                tbody.appendChild(_buildSmartScanRow(clf, name, folder));
+            });
+
+            // Informative section (collapsed)
+            if (infoFiles.length > 0) {
+                const sepRow = document.createElement('tr');
+                sepRow.innerHTML = `<td colspan="5" style="padding:10px 8px; background:#f0f0f0; cursor:pointer; font-size:13px; color:#7f8c8d;" onclick="this.parentElement.querySelectorAll('.ss-info-row').forEach(r => r.style.display = r.style.display === 'none' ? '' : 'none')">
+                    ▶ Fitxers informatius (${infoFiles.length}) — Thumbs.db, exports, fotos... <span style="font-size:11px">(clic per expandir)</span>
+                </td>`;
+                tbody.appendChild(sepRow);
+
+                let lastInfoFolder = null;
+                infoFiles.forEach(clf => {
+                    const parts = clf.file_path.split('/');
+                    const name = parts[parts.length - 1];
+                    const folder = parts.length > 1 ? parts.slice(0, -1).join('/') : '';
+
+                    if (folder !== lastInfoFolder) {
+                        lastInfoFolder = folder;
+                        if (folder) {
+                            const sep = document.createElement('tr');
+                            sep.className = 'ss-info-row';
+                            sep.style.display = 'none';
+                            sep.innerHTML = `<td colspan="5" style="padding:4px 8px 4px 16px; background:#f8f8f8; font-size:12px; color:#999;">📁 ${folder}/</td>`;
+                            tbody.appendChild(sep);
+                        }
+                    }
+
+                    const tr = _buildSmartScanRow(clf, name, folder);
+                    tr.className = 'ss-info-row';
+                    tr.style.display = 'none';
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Show missing required roles
+            const missingRoles = REQUIRED_ROLES.filter(r => !assignedRoles.has(r));
+            if (missingRoles.length > 0) {
+                missing.style.display = 'block';
+                missing.innerHTML = `<strong>Rols pendents:</strong> ${missingRoles.map(r => ROLE_LABELS[r] || r).join(', ')}`;
+            } else {
+                missing.style.display = 'none';
+            }
+
+            // Show warnings
+            if (data.warnings && data.warnings.length > 0) {
+                const warnDiv = document.createElement('div');
+                warnDiv.className = 'smartscan-warnings';
+                warnDiv.style.cssText = 'background:#f8d7da; border:1px solid #f5c6cb; border-radius:6px; padding:10px; margin-top:12px; font-size:13px;';
+                warnDiv.innerHTML = data.warnings.map(w => `<div>${w}</div>`).join('');
+                results.appendChild(warnDiv);
+            }
+
+            results.style.display = 'block';
+        }
+
+        function _buildSmartScanRow(clf, name, folder) {
+            const tr = document.createElement('tr');
+            const confPct = Math.round((clf.confidence || 0) * 100);
+            const confColor = confPct >= 90 ? '#27ae60' : (confPct >= 70 ? '#f39c12' : (confPct > 0 ? '#e74c3c' : '#bdc3c7'));
+            const tierInfo = TIER_BADGES[clf.tier] || {label: '?', color: '#bdc3c7', title: ''};
+
+            // Indent nested files
+            const indent = folder ? 'padding-left:24px;' : '';
+
+            // Role display
+            let roleDisplay = '';
+            if (clf.role) {
+                roleDisplay = ROLE_LABELS[clf.role] || clf.role;
+                if (clf.is_combined) roleDisplay += ' [combinat]';
+            } else if (clf.category === 'informative') {
+                roleDisplay = `<span style="color:#95a5a6">${clf.summary || 'informatiu'}</span>`;
+            } else if (clf.category === 'suggestion') {
+                roleDisplay = `<span style="color:#f39c12">${clf.summary || '?'}</span>`;
+            } else if (clf.summary) {
+                roleDisplay = `<span style="color:#bdc3c7">${clf.summary}</span>`;
+            } else {
+                roleDisplay = '<span style="color:#bdc3c7">-</span>';
+            }
+
+            // Action: only for FILES that have no role and aren't informative
+            let actionHtml = '';
+            if (!clf.role && clf.category !== 'informative' && !clf.is_directory) {
+                const escapedPath = clf.file_path.replace(/'/g, "\\'");
+                actionHtml = `<select onchange="overrideRole('${escapedPath}', this.value)" style="font-size:12px; padding:2px 4px;">
+                    <option value="">-</option>
+                    ${Object.entries(ROLE_LABELS).map(([k,v]) => `<option value="${k}">${v}</option>`).join('')}
+                </select>`;
+            }
+
+            tr.innerHTML = `
+                <td style="padding:6px 8px; border-bottom:1px solid #f0f0f0; ${indent}" title="${clf.file_path}">${name}</td>
+                <td style="padding:6px 8px; border-bottom:1px solid #f0f0f0;">${roleDisplay}</td>
+                <td style="padding:6px 8px; border-bottom:1px solid #f0f0f0; text-align:center;">
+                    ${clf.role || clf.category === 'suggestion' ? `<span style="background:${tierInfo.color}; color:white; padding:2px 6px; border-radius:3px; font-size:11px; font-weight:bold;" title="${tierInfo.title}">${tierInfo.label}</span>` : ''}
+                </td>
+                <td style="padding:6px 8px; border-bottom:1px solid #f0f0f0; text-align:center; color:${confColor}; font-weight:bold;">
+                    ${confPct > 0 ? confPct + '%' : ''}
+                </td>
+                <td style="padding:6px 8px; border-bottom:1px solid #f0f0f0; text-align:center;">${actionHtml}</td>
+            `;
+
+            // Row background
+            if (clf.category === 'informative') {
+                tr.style.backgroundColor = '#fafafa';
+                tr.style.color = '#aaa';
+            } else if (!clf.role && clf.category !== 'suggestion') {
+                tr.style.backgroundColor = '#fff8f0';
+            }
+
+            return tr;
+        }
+
+        async function overrideRole(filePath, role) {
+            if (!role || !selectedProject) return;
+            try {
+                const resp = await fetch(`/api/smartscan-override/${encodeURIComponent(selectedProject)}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({file_path: filePath, role: role}),
+                });
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                // Reload SmartScan to reflect the change
+                loadSmartScan(true);
+            } catch(e) {
+                alert('Error: ' + e.message);
+            }
+        }
+
         async function loadWizardData() {
             if (!selectedProject) return;
             // Data already loaded by loadProjectData() — just render
@@ -3334,6 +3629,50 @@
             badge.textContent = label;
             badge.className = `source-badge ${cls}`;
             badge.title = label !== source ? source : '';
+
+            // Show +N alternatives badge if available
+            const alts = (wizardPrefills._alternatives && wizardPrefills._alternatives.value)
+                ? wizardPrefills._alternatives.value[field] : null;
+            // Remove any existing alt badge
+            const existing = badge.parentNode.querySelector('.alt-badge');
+            if (existing) existing.remove();
+            if (alts && alts.length > 0) {
+                const altBadge = document.createElement('span');
+                altBadge.className = 'alt-badge';
+                altBadge.textContent = `+${alts.length}`;
+                altBadge.title = `${alts.length} fonts alternatives`;
+                altBadge.onclick = (e) => { e.stopPropagation(); showAlternatives(field, alts, altBadge); };
+                badge.parentNode.appendChild(altBadge);
+            }
+        }
+
+        function showAlternatives(field, alts, anchor) {
+            // Remove any existing dropdown
+            document.querySelectorAll('.alt-dropdown').forEach(d => d.remove());
+            const dd = document.createElement('div');
+            dd.className = 'alt-dropdown visible';
+            alts.forEach(alt => {
+                const item = document.createElement('div');
+                item.className = 'alt-item';
+                const valStr = String(alt.value || '').substring(0, 60);
+                const srcStr = (alt.source || '').split('/').pop();
+                item.innerHTML = `<div class="alt-value">${valStr}</div><div class="alt-source">${srcStr} (conf: ${(alt.confidence || 0).toFixed(2)})</div>`;
+                item.onclick = () => {
+                    // Apply this alternative value to the field
+                    const el = document.getElementById(`wiz-${field}`);
+                    if (el) { el.value = alt.value; el.dispatchEvent(new Event('change')); }
+                    dd.remove();
+                };
+                dd.appendChild(item);
+            });
+            // Position relative to anchor
+            anchor.style.position = 'relative';
+            anchor.parentNode.style.position = 'relative';
+            anchor.parentNode.appendChild(dd);
+            // Close on outside click
+            setTimeout(() => {
+                document.addEventListener('click', function close() { dd.remove(); document.removeEventListener('click', close); });
+            }, 10);
         }
 
         function renderWizardForm() {

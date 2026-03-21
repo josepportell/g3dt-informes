@@ -53,6 +53,8 @@ class AutoExtractionResult:
     lab_results: Any = None         # LabResults | None
     file_mapping: Any = None        # FileMapping | None
     content_discovery: Any = None   # ContentDiscoveryResult | None
+    mining_result: Any = None       # MiningResult | None (FileMiner)
+    mining_alternatives: dict[str, list] = field(default_factory=dict)  # var → [Signal, ...]
     steps_completed: list[str] = field(default_factory=list)
     steps_skipped: list[tuple[str, str]] = field(default_factory=list)
     duration_seconds: float = 0.0
@@ -107,6 +109,11 @@ def auto_extract(
     _phase01_pressupost_pdf(project_path, result)
     _phase01_historia_geologica(project_path, result)
     emit("step", {"step": "scan", "status": "done", "count": len(result.file_mapping.roles) if result.file_mapping and hasattr(result.file_mapping, 'roles') else 0})
+
+    # --- Phase 0.3: FileMiner ---
+    emit("step", {"step": "mine", "status": "active"})
+    _phase03_fileminer(project_path, result)
+    emit("step", {"step": "mine", "status": "done", "count": len(result.mining_result.signals) if result.mining_result else 0})
 
     # --- Phase 1: Local files ---
     emit("step", {"step": "extract", "status": "active"})
@@ -166,7 +173,46 @@ def auto_extract(
 # ---------------------------------------------------------------------------
 
 def _phase1_file_scanner(project_path: Path, result: AutoExtractionResult) -> None:
-    """Run FileScanner to classify project files."""
+    """Run FileScanner (or SmartScan if enabled) to classify project files."""
+    import os
+    use_smartscan = os.environ.get('G3DT_USE_SMARTSCAN', '').strip()
+
+    if use_smartscan == '1':
+        try:
+            from .smartscan import scan_project
+            from .file_scanner import FileScanner, FileMapping, FileRole
+
+            scan_result = scan_project(project_path, max_tier=2)
+            fm_dict = scan_result.to_file_mapping()
+
+            # Build FileMapping from SmartScan result (backward compat)
+            mapping = FileMapping()
+            for name, role_data in fm_dict.get('roles', {}).items():
+                from .file_scanner import IgnoredFile, get_vision_type
+                mapping.roles[name] = FileRole(
+                    path=role_data['path'],
+                    confidence=role_data['confidence'],
+                    detection=role_data['detection'],
+                    is_combined=role_data.get('is_combined', False),
+                    vision_type=role_data.get('vision_type'),
+                )
+            from .file_scanner import IgnoredFile
+            for ig in fm_dict.get('ignored', []):
+                mapping.ignored.append(IgnoredFile(path=ig['path'], reason=ig['reason']))
+            mapping.unassigned = fm_dict.get('unassigned', [])
+
+            result.file_mapping = mapping
+            n_roles = len(mapping.roles)
+            result.steps_completed.append(f"SmartScan: {n_roles} rols detectats")
+
+            # Also save file_mapping.json for compatibility
+            scanner = FileScanner(project_path)
+            scanner.save(mapping)
+            return
+        except Exception as exc:
+            logger.warning(f"SmartScan failed, falling back to FileScanner: {exc}")
+
+    # Default: original FileScanner
     try:
         from .file_scanner import FileScanner
         scanner = FileScanner(project_path)
@@ -182,6 +228,54 @@ def _phase1_file_scanner(project_path: Path, result: AutoExtractionResult) -> No
         result.steps_completed.append(f"FileScanner: {n_roles} rols detectats")
     except Exception as exc:
         result.steps_skipped.append(("FileScanner", str(exc)))
+
+
+def _phase03_fileminer(project_path: Path, result: AutoExtractionResult) -> None:
+    """Run FileMiner to extract data signals from all project files."""
+    try:
+        from .fileminer import mine_project, resolve_competition
+
+        # Convert file_mapping to dict format for FileMiner
+        fm_dict = None
+        if result.file_mapping:
+            try:
+                fm_dict = result.file_mapping.to_dict() if hasattr(result.file_mapping, 'to_dict') else None
+            except Exception:
+                pass
+
+        mining = mine_project(project_path, file_mapping=fm_dict)
+        result.mining_result = mining
+
+        if not mining.signals:
+            result.steps_completed.append(
+                f"FileMiner: {mining.files_mined} fitxers, cap senyal"
+            )
+            return
+
+        resolved = resolve_competition(mining.signals)
+
+        # Feed resolved values into prefills (don't override existing prefills
+        # from dedicated extractors which are more precise)
+        n_added = 0
+        for variable, rv in resolved.items():
+            if variable not in result.prefills:
+                result.prefills[variable] = rv.value
+                result.sources[variable] = f"fileminer:{rv.signal.source_file}"
+                n_added += 1
+            # Always store alternatives for wizard display
+            if rv.alternatives:
+                result.mining_alternatives[variable] = [
+                    {'value': alt.value, 'source': alt.source_file, 'confidence': alt.confidence}
+                    for alt in rv.alternatives
+                ]
+
+        result.steps_completed.append(
+            f"FileMiner: {len(mining.signals)} senyals, {len(resolved)} variables, {n_added} nous prefills"
+        )
+
+    except Exception as exc:
+        logger.warning("FileMiner failed: %s", exc)
+        result.steps_skipped.append(("FileMiner", str(exc)))
 
 
 def _phase01_content_discovery(project_path: Path, result: AutoExtractionResult) -> None:

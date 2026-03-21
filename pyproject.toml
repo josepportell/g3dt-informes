@@ -12,6 +12,7 @@ dependencies = [
     "pymupdf>=1.27.1",
     "anthropic>=0.40",
     "shapely>=2.0",
+    "openpyxl>=3.1",
 ]
 
 [project.optional-dependencies]

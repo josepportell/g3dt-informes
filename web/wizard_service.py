@@ -319,6 +319,13 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
 
     merged['_projects_base'] = {'value': str(_REF_DIR), 'source': 'system'}
 
+    # FileMiner alternatives — enables +N badges in wizard UI
+    if hasattr(auto_result, 'mining_alternatives') and auto_result.mining_alternatives:
+        merged['_alternatives'] = {
+            'value': auto_result.mining_alternatives,
+            'source': 'fileminer',
+        }
+
     # If auto_extract skipped adjacents (no UTM coords), try geocoding from
     # planol address now that vision data is available in the merged prefills.
     _fill_missing_adjacents(merged, project_path)
