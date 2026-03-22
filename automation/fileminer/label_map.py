@@ -139,6 +139,7 @@ SOURCE_PRIORITY: dict[str, int] = {
     "dades_camp_excel": 35,         # Client-provided prep sheet
     "comanda_lab_excel": 35,
     "geocode_nominatim": 40,        # Derived, less precise
+    "groq_llm": 42,                 # LLM extraction, between geocode and generic
     "content_pdf": 45,              # Generic PDF text
     "content_docx": 45,             # Generic docx text
     "content_excel": 45,            # Generic Excel (not DADES)
