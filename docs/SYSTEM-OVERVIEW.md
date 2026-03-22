@@ -118,11 +118,23 @@ G3DT_VISION_TIMEOUT=600        # Vision timeout in seconds
 
 ## 8. Geocoding
 
-Geocoding supports all Spanish provinces (not just Catalunya). The pipeline:
-1. **Cadastre Callejero** — address lookup with province from Groq/FileMiner
-2. **Nominatim** fallback — uses province in query (default: "Catalunya, Spain" for Catalan projects)
-3. **UTM conversion** — auto-detects zone 30 (lon < 0) vs zone 31 (lon >= 0)
-4. **ICGC elevation** — Catalunya only; gracefully skipped for other provinces
+Geocoding supports all Spanish provinces (not just Catalunya). The pipeline uses a **progressive resolution chain**:
+
+1. **ConsultaMunicipio** — fuzzy-match municipality from hint (e.g., "Bell-Lloc" → "BELL-LLOC D'URGELL")
+2. **ConsultaVia** — fuzzy-match street from hint (e.g., "Ferraz" → "GRAL. FERRAZ AG ANCILES")
+3. **Consulta_DNPLOC** — lookup with resolved names → cadastral reference (RC)
+4. **Consulta_CPMRC** — RC → UTM coordinates
+5. **Nominatim** fallback — if progressive chain fails, geocodes via OpenStreetMap
+6. **UTM conversion** — auto-detects zone 30 (lon < 0) vs zone 31 (lon >= 0)
+7. **ICGC elevation** — Catalunya only; gracefully skipped for other provinces
+
+Matching features:
+- Accent-insensitive comparison (Rubí = RUBI, Segrià = SEGRIA)
+- Abbreviation expansion (Sta. → Santa, Gral. → General, Mn. → Mossen)
+- Progressive hint shortening ("Clot de la Llacuna" → "Clot de la" → "Clot")
+- Nearest-number recovery (if number 20 doesn't exist, picks nearest available)
+
+Tested: 7/7 projects resolve to valid cadastral references via progressive lookup.
 
 ## 9. File Exclusions
 
@@ -132,7 +144,23 @@ FileMiner skips these files/directories:
 - **Patterns**: `{expedient}_informe*.doc(x)`, `{expedient}_portada*.doc(x)` — Eva's reference reports
 - **Generated**: `file_mapping.json`, `user_data.json`
 
-## 10. Running
+## 10. Groq Model Selection
+
+The Groq text miner model is selectable at runtime:
+- **ENV var**: `GROQ_MODEL=qwen/qwen3-32b` (default)
+- **Wizard UI**: dropdown next to project selector, calls `POST /api/groq-model`
+- **Available**: Llama 3.1 8B (fast), Qwen3 32B (default), Llama 3.3 70B (best), Llama 4 Scout 17Bx16E (MoE)
+- Vision model (Llama 4 Scout) is separate and fixed — requires vision capability
+
+## 11. Caching
+
+Four cache layers, all bypassed with `G3DT_NO_CACHE=1`:
+- **Groq text miner**: `~/.g3dt/cache/groq/` (SHA256 of file+model, 90-day TTL)
+- **Geocode**: `~/.g3dt/cache/geocode/` (SHA256 of address+municipality, 90-day TTL)
+- **Vision JSON**: `{project}/validation/*_extracted.json` (file-based, no TTL)
+- **In-memory prefills**: process lifetime (cleared on project change or server restart)
+
+## 12. Running
 
 ```bash
 # Start wizard server
