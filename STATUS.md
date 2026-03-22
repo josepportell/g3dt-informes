@@ -3,49 +3,56 @@ Last updated: 2026-03-22
 
 ## Current State
 
-**Pipeline complet amb suport multi-província i geocodificació progressiva.**
+**SmartScan v2 "Read First, Decide After" complet — imatges, emails, figures integrats.**
 
-- **156/156 tests passen** (29 Groq + 50 FileMiner + 56 SmartScan + 21 Cadastre progressiu)
-- Testat amb 7 projectes reals: Bell-Lloc (32/34), Anciles (31/34), Castellar (26/34), Linyola (26/34), Vilanova (21/34), Rubí (22/34), Alcoletge
-- Geocodificació progressiva: ConsultaMunicipio → ConsultaVia → DNPLOC (7/7 projectes resolts)
-- Multi-província: Huesca, Barcelona, Lleida — tot funciona
-- Cache bypass: `G3DT_NO_CACHE=1` per testing
-- Selector de model Groq al wizard UI
+- **164/164 tests passen** (55 SmartScan + 50 FileMiner + 29 Groq + 21 Cadastre + 9 misc)
+- SmartScan v2: 3 tiers (filename → fingerprint → Groq vision) classifiquen TOTS els fitxers
+- 375 fitxers inventariats, 112 gaps identificats → la majoria resolts
+- Imatges (.jpg/.jpeg/.png): classificades per rol, no ignorades
+- Emails (.msg): MsgMiner extreu cos + adjunts (PDFs d'arquitecte recuperats!)
+- Figures/fotos: col·locació per rol SmartScan, no per posició a carpeta
+- Groq Llama 4 Scout: classificació d'imatges 100% precisa (~$0.003/imatge)
 
-**Pipeline:**
+**Pipeline (actualitzat):**
 ```
-Phase 0:    SmartScan      → file_mapping.json
-Phase 0.3:  FileMiner      → signals + alternatives (regex)
-Phase 0.4:  GroqMiner      → signals (LLM, gap-filling)
+Phase 0:    SmartScan v2   → file_mapping.json (3 tiers: regex, fingerprint, Groq vision)
+Phase 0.3:  FileMiner      → signals (regex) + MsgMiner (emails + adjunts)
+Phase 0.4:  GroqMiner      → signals (LLM, gap-filling, threshold adaptatiu)
 Phase 0.5:  auto_extract   → prefills (DPSH, Lab, ICGC, Cadastre)
-Phase 1:    Groq Vision    → planol/sondeig/dpsh_extracted.json
+Phase 1:    Vision         → planol/sondeig/dpsh_extracted.json (PDFs + imatges)
 Phase 2:    HTTP APIs      → geocode progressiu, adjacents, geologia
 Phase 3:    Wizard         → Eva revisa + genera
+Phase 4:    Report         → .docx amb figures/fotos per rol SmartScan
 ```
 
 **Qualitat audit (Bell-Lloc):** 97.1% amb user_data
 
 ## Active Blockers
 
-- Confirmació formal de Sílvia per l'ampliació
-- Merge branques pendents → `main`
+- Merge `feat/smartscan` → `main` (10 commits pendents)
+- Instal·lar a l'ordinador d'Eva
 
-## Pending (to implement)
+## Completed — SmartScan v2 (2026-03-22)
 
-### "Read First, Decide After" — SmartScan v2 (feat/smartscan)
-Pla complet: `docs/smartscan/PLA-READ-FIRST-DECIDE-AFTER.md`
-Inventari: `docs/smartscan/01-INVENTARI-FITXERS.md` (375 fitxers, 112 gaps)
-Mapa: `docs/smartscan/02-MAPA-EXTRACCIO.md`
+| Phase | Què | Impacte |
+|-------|-----|---------|
+| 1 | Inventari 375 fitxers + mapa d'extracció | 112 gaps identificats |
+| 2.1 | Tier 1 patrons imatge | CROQUIS.jpeg, PENETROS.jpeg, figures (F1 SIT, F2 PUNTS...) |
+| 2.2 | Tier 2 fingerprint imatge (Pillow) | Color/EXIF separa documents de fotos, cost $0 |
+| 2.3 | Tier 3 Groq vision imatges | WhatsApp plànols → architect_plan (100% accuracy) |
+| 2.4 | Vision pipeline routing | Imatges entren al pipeline d'extracció com PDFs |
+| 3 | MsgMiner + adjunts | 20 emails processats, A01_TIPOL.pdf recuperat d'adjunts |
+| 4.1 | FOTOGRAFIES desbloquejat | Fora de _SKIP_DIRS |
+| 5 | Prompts resilients | Format-agnòstic, accepta 6 tipus de document |
+| 6 | Figures/fotos per rol | F1 SIT → fig_cadastre, F4 MGEOL → fig_geological |
 
-- [ ] **Phase 2: Imatges** — 105 imatges ignorades. PENETROS.jpeg (Alcoletge) = DPSH data ONLY as JPEG. Tier 1 patterns + Tier 2 fingerprint + Tier 3 Groq vision
-- [ ] **Phase 3: Emails .msg** — 20 emails ignorats, alguns amb 5-7MB (adjunts PDF/plànols). MsgMiner + extracció d'adjunts
-- [ ] **Phase 4: Directoris** — FOTOGRAFIES/ fora de _SKIP_DIRS, PDF/ segueix skip
-- [ ] **Phase 5: Layouts variant** — prompts vision resilients a formats d'arquitecte diferents
-- [ ] **Phase 6: Figures i fotos** — 0% cobertura actual. Classificar imatges per slot de l'informe (figure_situation_map, photo_dpsh_equipment, etc.)
+**Bugs resolts:** ANEXOS scope per dpsh_excel (Vilanova)
 
-### Bugs trobats a l'inventari
-- [ ] **ANEXOS no reconegut com a scope per dpsh_excel** — Vilanova (4001671) té DPSH.xls a ANEXOS/ però SmartScan només reconeix ANNEXES/ANEJOS. Cal afegir ANEXOS a scopes
-- [ ] **MULTICA_61.xls/pdf** (Vilanova) — Fitxer desconegut, potser resultats multi-assaig de laboratori. Verificar contingut manualment
+## Pending
+
+### Bugs/verificacions
+- [ ] **MULTICA_61.xls/pdf** (Vilanova) — Verificar contingut manualment
+- [ ] Regenerar file_mapping.json per tots els projectes amb SmartScan v2
 
 ### Altres pendents
 - [ ] **`cadastre_address` variable Groq** — defer, lookup progressiu funciona bé
@@ -61,8 +68,9 @@ Mapa: `docs/smartscan/02-MAPA-EXTRACCIO.md`
 - [x] FileMiner: extracció de dades dels fitxers + wizard alternatives
 - [x] Phase G: Groq LLM miner per casos edge
 - [x] Post-Anciles: multi-província, cache bypass, variable mapping, .doc support
-- [x] Geocodificació progressiva (ConsultaMunicipio → ConsultaVia → DNPLOC)
+- [x] Geocodificació progressiva (7/7 projectes)
 - [x] Test pipeline complet amb 7 projectes
-- [x] Phase 1: Inventari complet 375 fitxers + mapa d'extracció (112 gaps identificats)
-- [ ] Phase 2-6: "Read First, Decide After" (imatges, emails, figures)
+- [x] **SmartScan v2 "Read First, Decide After" — Phase 1-6 complet**
+- [ ] Testing end-to-end amb SmartScan v2 (regenerar file_mappings, verificar wizard)
+- [ ] Merge `feat/smartscan` → `main`
 - [ ] Instal·lar a l'ordinador d'Eva
