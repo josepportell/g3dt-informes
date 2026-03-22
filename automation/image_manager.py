@@ -53,6 +53,26 @@ PHOTO_CATEGORY_DIRS = {
     'materials': '',      # root of FOTOGRAFIES/
 }
 
+# SmartScan role → photo category mapping (Phase 6: role-based image placement)
+# When SmartScan classifies an image with one of these roles, use it for the
+# corresponding report photo slot — regardless of filename or folder location.
+ROLE_TO_PHOTO_CATEGORY = {
+    'photo_site_overview': 'site',
+    'photo_dpsh_equipment': 'dpsh',
+    'photo_sondeig_equipment': 'sondeig',
+    'photo_spt_sample': 'materials',
+    'photo_test_point': 'site',  # fallback: test point photos as site views
+}
+
+# SmartScan role → figure context variable mapping
+# These roles provide images for specific figure slots in the report.
+ROLE_TO_FIGURE_VAR = {
+    'figure_situation_map': 'fig_cadastre_image',
+    'figure_geological_map': 'fig_geological_image',
+    'figure_test_points': 'fig_test_points_image',
+    'figure_correlation': 'fig_correlation_image',
+}
+
 
 class ImageManager:
     """
@@ -81,23 +101,37 @@ class ImageManager:
 
     def discover_photos(self) -> dict[str, list[Path]]:
         """
-        Scan FOTOGRAFIES/ for field photos using slug-based naming convention.
+        Discover field photos using SmartScan roles first, then slug-based fallback.
 
-        Naming convention (case-insensitive prefix match):
-        - vista_general*.jpg → Site view photos (1-2)
-        - maquina_dpsh*.jpg → DPSH machine photo
-        - maquina_sondeig*.jpg → Sondeig machine photo
-        - detall_materials*.jpg → Materials detail photo
-
-        Falls back to first file in subfolder if slug not found.
+        Priority chain:
+        1. SmartScan roles (Phase 6): if file_mapping.json has photo_dpsh_equipment,
+           photo_site_overview, etc., use those images directly
+        2. Slug-based naming: vista_general*.jpg, maquina_dpsh*.jpg, etc.
+        3. First file in subfolder (legacy fallback)
         """
-        foto_dir = self.project_path / 'FOTOGRAFIES'
         result: dict[str, list[Path]] = {
             'site': [], 'dpsh': [], 'sondeig': [], 'materials': [],
         }
 
-        if not foto_dir.exists():
-            logger.warning(f"FOTOGRAFIES/ folder not found at {foto_dir}")
+        # ── Priority 1: SmartScan role-based discovery ──
+        roles = self._load_file_mapping()
+        if roles:
+            for role_name, category in ROLE_TO_PHOTO_CATEGORY.items():
+                if role_name in roles:
+                    photo_path = self.project_path / roles[role_name]['path']
+                    if photo_path.exists() and photo_path not in result[category]:
+                        result[category].append(photo_path)
+                        logger.info(f"Photo from SmartScan role: {role_name} → {category} ({photo_path.name})")
+
+            # If SmartScan filled all categories, we're done
+            if all(result.values()):
+                logger.info("All photo categories filled by SmartScan roles")
+                return result
+
+        # ── Priority 2+3: Slug-based + fallback (original logic) ──
+        foto_dir = self._find_photos_dir()
+        if not foto_dir:
+            logger.warning("No photos directory found")
             return result
 
         image_exts = {'.jpg', '.jpeg', '.png'}
@@ -194,6 +228,28 @@ class ImageManager:
             f"materials={len(result['materials'])}"
         )
         return result
+
+    def _find_photos_dir(self) -> Path | None:
+        """Find the photos directory using SmartScan role or common names."""
+        # Priority 1: SmartScan photos_dir role
+        roles = self._load_file_mapping()
+        if roles and 'photos_dir' in roles:
+            candidate = self.project_path / roles['photos_dir']['path']
+            if candidate.exists() and candidate.is_dir():
+                return candidate
+
+        # Priority 2: common directory names
+        for name in ['FOTOGRAFIES', 'FOTOS DE CAMP + PLANOL PUNTS', 'FOTOGRAFÍAS']:
+            candidate = self.project_path / name
+            if candidate.exists() and candidate.is_dir():
+                return candidate
+
+        # Priority 3: glob for FOTOS*
+        for d in sorted(self.project_path.iterdir()):
+            if d.is_dir() and d.name.upper().startswith('FOTOS'):
+                return d
+
+        return None
 
     def _get_cullera_spt_path(self) -> Path | None:
         """Get path to static cullera SPT image."""
@@ -679,22 +735,36 @@ class ImageManager:
                 context['fig_location_image'] = context['fig_aerea_image']
                 logger.info("Using plain ICGC orthophoto as fig_aerea_image (parcel outline unavailable)")
 
-        # Correlation section: file_mapping -> fallback glob
-        tall_pdf = None
-        if roles and 'correlation_section' in roles:
-            candidate = self.project_path / roles['correlation_section']['path']
-            if candidate.exists():
-                tall_pdf = candidate
-        if tall_pdf is None:
-            tall_pdf = self._find_project_pdf(['tall.pdf', 'tall*.pdf'])
-        if tall_pdf:
-            cached = self._cache_dir / f"tall_{tall_pdf.stem}.jpg"
-            if not cached.exists():
-                self._render_pdf_to_image(tall_pdf, cached)
-            if cached.exists():
-                context['fig_correlation_image'] = InlineImage(
-                    self.tpl, str(cached), width=Mm(IMAGE_WIDTH_LOCATION)
-                )
+        # ── SmartScan figure roles (Phase 6) ──
+        # If SmartScan classified images as figure roles, use them directly.
+        # These override the derived/downloaded versions (ICGC, PDF crops).
+        if roles:
+            for role_name, var_name in ROLE_TO_FIGURE_VAR.items():
+                if role_name in roles and var_name not in context:
+                    fig_path = self.project_path / roles[role_name]['path']
+                    if fig_path.exists():
+                        context[var_name] = InlineImage(
+                            self.tpl, str(fig_path), width=Mm(IMAGE_WIDTH_LOCATION)
+                        )
+                        logger.info(f"Figure from SmartScan role: {role_name} → {var_name} ({fig_path.name})")
+
+        # Correlation section: SmartScan role → file_mapping → fallback glob
+        if 'fig_correlation_image' not in context:
+            tall_pdf = None
+            if roles and 'correlation_section' in roles:
+                candidate = self.project_path / roles['correlation_section']['path']
+                if candidate.exists():
+                    tall_pdf = candidate
+            if tall_pdf is None:
+                tall_pdf = self._find_project_pdf(['tall.pdf', 'tall*.pdf'])
+            if tall_pdf:
+                cached = self._cache_dir / f"tall_{tall_pdf.stem}.jpg"
+                if not cached.exists():
+                    self._render_pdf_to_image(tall_pdf, cached)
+                if cached.exists():
+                    context['fig_correlation_image'] = InlineImage(
+                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_LOCATION)
+                    )
         context.setdefault('fig_correlation_image', PLACEHOLDER_TEXT)
 
         # Log summary
