@@ -64,10 +64,15 @@ def scan_project(
     all_classifications: list[FileClassification] = list(tier1_results)
 
     # ── Step 3: Tier 2 — Fingerprinting (if enabled) ─────────
+    tier2_needs_vision: list[FileClassification] = []
     if max_tier >= 2:
         tier2_results = classify_tier2(project_path, entries, classified_paths)
         for clf in tier2_results:
-            classified_paths.add(clf.file_path)
+            if clf.category == "needs_vision":
+                # Don't mark as classified — let Tier 3 process these
+                tier2_needs_vision.append(clf)
+            else:
+                classified_paths.add(clf.file_path)
         all_classifications.extend(tier2_results)
 
     # ── Step 4: Tier 3 — Vision (if enabled) ─────────────────
@@ -76,6 +81,10 @@ def scan_project(
         for clf in tier3_results:
             classified_paths.add(clf.file_path)
         all_classifications.extend(tier3_results)
+    else:
+        # Tier 3 not running — needs_vision items stay as-is in results
+        for clf in tier2_needs_vision:
+            classified_paths.add(clf.file_path)
 
     # ── Step 5: Handle remaining unclassified files ──────────
     unclassified: list[FileClassification] = []
