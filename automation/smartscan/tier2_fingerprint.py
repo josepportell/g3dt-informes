@@ -144,7 +144,7 @@ def classify_tier2(
     Classify unclassified files using structural fingerprinting.
 
     Only processes files NOT already classified by Tier 1.
-    Uses PyMuPDF for PDFs and xlrd for Excel files.
+    Uses PyMuPDF for PDFs, xlrd for Excel, Pillow for images.
 
     Args:
         project_path: Absolute path to the project folder
@@ -169,6 +169,10 @@ def classify_tier2(
                 results.append(clf)
         elif ext in ('.xls', '.xlsx'):
             clf = _fingerprint_excel(rel_path, abs_path)
+            if clf:
+                results.append(clf)
+        elif ext in ('.jpg', '.jpeg', '.png'):
+            clf = _fingerprint_image(rel_path, abs_path)
             if clf:
                 results.append(clf)
 
@@ -463,3 +467,176 @@ def _fingerprint_excel(rel_path: str, abs_path: Path) -> FileClassification | No
         logger.warning(f"Tier 2 Excel analysis failed for {rel_path}: {e}")
 
     return None
+
+
+# ──────────────────────────────────────────────────────────────
+# Image fingerprinting (Pillow)
+# ──────────────────────────────────────────────────────────────
+
+def _fingerprint_image(rel_path: str, abs_path: Path) -> FileClassification | None:
+    """Analyze an image to determine if it's a document/plan photo or a field photo.
+
+    Uses Pillow for cheap structural analysis (zero API cost):
+    - Resolution: tiny images are thumbnails → informative
+    - Color analysis: documents are mostly white/light; field photos are colorful
+    - EXIF: phone camera → field photo; no EXIF → screenshot/scan
+    - Aspect ratio: A4-like suggests scanned document
+
+    Returns classification or None (leaves for Tier 3 vision).
+    """
+    try:
+        from PIL import Image
+        from PIL.ExifTags import Base as ExifBase
+    except ImportError:
+        logger.warning("Pillow not available for Tier 2 image fingerprinting")
+        return None
+
+    try:
+        img = Image.open(str(abs_path))
+        w, h = img.size
+        file_size_kb = abs_path.stat().st_size // 1024
+
+        # ── 1. Tiny images → informative (thumbnail/icon)
+        total_pixels = w * h
+        if total_pixels < 160_000:  # ~400x400
+            return FileClassification(
+                file_path=rel_path,
+                role=None,
+                confidence=0.9,
+                tier=ClassificationTier.FINGERPRINT,
+                category="informative",
+                summary=f"thumbnail ({w}x{h})",
+                fingerprint_data={'width': w, 'height': h, 'reason': 'too_small'},
+            )
+
+        # ── 2. EXIF analysis
+        exif = img.getexif()
+        has_camera_exif = bool(exif.get(ExifBase.Make) or exif.get(ExifBase.Model))
+
+        # ── 3. Color analysis (sample pixels for white-dominance + saturation)
+        lightness_ratio, saturation_ratio = _compute_color_profile(img)
+
+        # ── 4. Build fingerprint data
+        aspect_ratio = max(w, h) / min(w, h) if min(w, h) > 0 else 1.0
+        is_a4_like = 1.3 <= aspect_ratio <= 1.55  # A4 = 1.414
+        is_large = total_pixels >= 500_000  # ~700x700 or bigger
+
+        fingerprint: dict = {
+            'width': w,
+            'height': h,
+            'aspect_ratio': round(aspect_ratio, 2),
+            'file_size_kb': file_size_kb,
+            'has_camera_exif': has_camera_exif,
+            'lightness_ratio': round(lightness_ratio, 2),
+            'saturation_ratio': round(saturation_ratio, 2),
+            'is_a4_like': is_a4_like,
+        }
+
+        img.close()
+
+        # ── 5. Classify using a scoring approach
+        # Documents (plans, field sheets, forms) are:
+        #   - Mostly white/light (>50%) OR low saturation (technical drawing)
+        #   - Often A4-like aspect ratio
+        # Photos of documents on a surface may have dark borders but the
+        # center is still light → we use a lenient threshold.
+        # Field photos: colorful, high saturation, varied lightness.
+
+        is_document_like = (
+            lightness_ratio >= 0.50  # Clean scan/screenshot of document
+            or (lightness_ratio >= 0.30 and saturation_ratio < 0.15)  # Desaturated = technical drawing
+        )
+
+        if is_document_like:
+            summary = "document_photo" if lightness_ratio >= 0.60 else "possible_document"
+            return FileClassification(
+                file_path=rel_path,
+                role=None,
+                confidence=0.7 if lightness_ratio >= 0.60 else 0.55,
+                tier=ClassificationTier.FINGERPRINT,
+                category="needs_vision",
+                summary=summary,
+                fingerprint_data=fingerprint,
+            )
+
+        # Field photo with camera EXIF → informative
+        if has_camera_exif:
+            return FileClassification(
+                file_path=rel_path,
+                role=None,
+                confidence=0.8,
+                tier=ClassificationTier.FINGERPRINT,
+                category="informative",
+                summary="field_photo_exif",
+                fingerprint_data=fingerprint,
+            )
+
+        # No EXIF, not document-like, but reasonably large → needs_vision
+        # Could be a screenshot (Google Maps, geological map, site overview)
+        if is_large:
+            return FileClassification(
+                file_path=rel_path,
+                role=None,
+                confidence=0.5,
+                tier=ClassificationTier.FINGERPRINT,
+                category="needs_vision",
+                summary="screenshot_or_map",
+                fingerprint_data=fingerprint,
+            )
+
+        # Fallback: unclassified image with fingerprint data
+        return FileClassification(
+            file_path=rel_path,
+            role=None,
+            confidence=0.0,
+            tier=ClassificationTier.FINGERPRINT,
+            category="unknown",
+            summary=f"image {w}x{h}, light={lightness_ratio:.0%}",
+            fingerprint_data=fingerprint,
+        )
+
+    except Exception as e:
+        logger.warning(f"Tier 2 image analysis failed for {rel_path}: {e}")
+
+    return None
+
+
+def _compute_color_profile(img) -> tuple[float, float]:
+    """Compute lightness ratio and saturation ratio of an image.
+
+    Returns (lightness_ratio, saturation_ratio) both in 0.0-1.0.
+
+    - lightness_ratio: fraction of pixels that are 'light' (white/cream/gray)
+      Documents > 0.5, field photos < 0.3
+    - saturation_ratio: fraction of pixels that are 'colorful' (not gray)
+      Field photos > 0.3, technical drawings < 0.15
+    """
+    try:
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
+
+        # Resize to small thumbnail for fast analysis (~1ms)
+        thumb = img.resize((100, 100))
+        _getdata = getattr(thumb, 'get_flattened_data', None) or thumb.getdata
+        pixels = list(_getdata())
+        n = len(pixels)
+        if n == 0:
+            return 0.0, 0.0
+
+        light_threshold = 180
+        sat_threshold = 40  # Min difference between max and min channel
+
+        light_count = 0
+        saturated_count = 0
+
+        for r, g, b in pixels:
+            if r > light_threshold and g > light_threshold and b > light_threshold:
+                light_count += 1
+            chan_range = max(r, g, b) - min(r, g, b)
+            if chan_range > sat_threshold:
+                saturated_count += 1
+
+        return light_count / n, saturated_count / n
+
+    except Exception:
+        return 0.0, 0.5

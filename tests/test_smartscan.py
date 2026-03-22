@@ -451,3 +451,51 @@ class TestSmartScanFigureRoles:
 
         assert "figure_correlation" in role_map
         assert "F5 TALL" in role_map["figure_correlation"].file_path
+
+
+class TestSmartScanImageFingerprint:
+    """Test Tier 2 image fingerprinting (Phase 2.2)."""
+
+    def test_rubi_whatsapp_floor_plans_need_vision(self):
+        """WhatsApp photos of floor plans should be flagged needs_vision."""
+        project_path = REF_DIR / "3001631 RUBI"
+        if not project_path.exists():
+            pytest.skip("Rubi not available")
+
+        result = scan_project(project_path, max_tier=2)
+
+        # These WhatsApp images are photos of floor plans
+        for c in result.classifications:
+            if "IMG-20251104" in c.file_path:
+                assert c.category == "needs_vision", (
+                    f"{c.file_path} should be needs_vision but is {c.category}"
+                )
+
+    def test_rubi_f3_vg_needs_vision(self):
+        """F3 VG.png (Google Street View screenshot) should be needs_vision."""
+        project_path = REF_DIR / "3001631 RUBI"
+        if not project_path.exists():
+            pytest.skip("Rubi not available")
+
+        result = scan_project(project_path, max_tier=2)
+
+        f3_results = [c for c in result.classifications if "F3 VG" in c.file_path]
+        assert len(f3_results) == 1
+        assert f3_results[0].category == "needs_vision"
+
+    def test_alcoletge_ampliacio_is_document(self):
+        """ampliació habitatge v2.png (floor plan) should be needs_vision/document."""
+        project_path = REF_DIR / "4001670 ALCOLETGE"
+        if not project_path.exists():
+            pytest.skip("Alcoletge not available")
+
+        result = scan_project(project_path, max_tier=2)
+
+        amp_results = [c for c in result.classifications
+                       if "ampliació habitatge" in c.file_path.lower()]
+        assert len(amp_results) == 1
+        # It's a suggestion (Tier 1 matched architect_plan but A.01.pdf wins)
+        # OR it could be needs_vision from Tier 2. Both are correct.
+        assert amp_results[0].category in ("suggestion", "needs_vision"), (
+            f"ampliació should be suggestion or needs_vision, got {amp_results[0].category}"
+        )
