@@ -126,6 +126,12 @@ def _fill_missing_adjacents(merged: dict[str, Any], project_path: Path) -> None:
             return
 
         utm_x, utm_y = geocoded
+
+        # Save UTM coords to prefills if not already set
+        if 'utm_x' not in merged or not _get_val('utm_x'):
+            merged['utm_x'] = {'value': round(utm_x, 2), 'source': 'geocode:adjacents_fallback'}
+            merged['utm_y'] = {'value': round(utm_y, 2), 'source': 'geocode:adjacents_fallback'}
+
         superficie = float(_get_val('superficie_parcela_m2') or _get_val('superficie_cadastral_m2') or 500)
         muni_clean = _extract_municipality(project_path) or municipality
 

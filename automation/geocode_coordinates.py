@@ -18,6 +18,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import unicodedata
 import math
 import os
 import re
@@ -337,8 +338,11 @@ def _consulta_municipio(province: str, municipality_hint: str) -> tuple[str, str
         logger.debug(f"ConsultaMunicipio: no muni elements for '{municipality_hint}' in '{province}'")
         return None
 
-    hint_upper = municipality_hint.upper().strip()
-    hint_words = set(hint_upper.split())
+    def _strip_accents(s: str) -> str:
+        return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
+
+    hint_norm = _strip_accents(municipality_hint.upper().strip())
+    hint_words = set(hint_norm.split())
     candidates: list[tuple[int, int, str, str, str]] = []
 
     for muni_elem in muni_elems:
@@ -353,15 +357,15 @@ def _consulta_municipio(province: str, municipality_hint: str) -> tuple[str, str
         cp = cp_elem.text.strip() if cp_elem is not None and cp_elem.text else ""
         cm = cm_elem.text.strip() if cm_elem is not None and cm_elem.text else ""
 
-        name_upper = official_name.upper()
+        name_norm = _strip_accents(official_name.upper())
 
-        # Score candidates
-        if name_upper == hint_upper:
+        # Score candidates (accent-insensitive comparison)
+        if name_norm == hint_norm:
             score = 100
-        elif name_upper.startswith(hint_upper):
+        elif name_norm.startswith(hint_norm):
             score = 80
         else:
-            candidate_words = set(name_upper.split())
+            candidate_words = set(name_norm.split())
             if hint_words and hint_words.issubset(candidate_words):
                 score = 60
             elif hint_words & candidate_words:
@@ -459,8 +463,11 @@ def _consulta_via_single(
             return None
 
     # Find street candidates — look for <dir> or <calle> elements
-    hint_upper = street_hint.upper().strip()
-    hint_words = set(hint_upper.split())
+    def _strip_accents(s: str) -> str:
+        return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
+
+    hint_norm = _strip_accents(street_hint.upper().strip())
+    hint_words = set(hint_norm.split())
     # Filter out short/common words for overlap scoring
     significant_words = {w for w in hint_words if len(w) > 2}
 
@@ -480,14 +487,14 @@ def _consulta_via_single(
             tipo_via = tv_elem.text.strip() if tv_elem is not None and tv_elem.text else ""
             cv = cv_elem.text.strip() if cv_elem is not None and cv_elem.text else ""
 
-            name_upper = street_name.upper()
-            candidate_words = set(name_upper.split())
+            name_norm = _strip_accents(street_name.upper())
+            candidate_words = set(name_norm.split())
             significant_candidate = {w for w in candidate_words if len(w) > 2}
 
-            # Score
+            # Score (accent-insensitive)
             if hint_words and hint_words.issubset(candidate_words):
                 score = 80
-            elif hint_upper in name_upper:
+            elif hint_norm in name_norm:
                 score = 60
             elif significant_words and significant_words & significant_candidate:
                 score = 40
