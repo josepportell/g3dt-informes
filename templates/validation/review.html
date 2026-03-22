@@ -1535,6 +1535,7 @@
                         <thead>
                             <tr style="background:#f8f9fa; border-bottom:2px solid #dee2e6;">
                                 <th style="padding:10px; text-align:left;">Fitxer</th>
+                                <th style="padding:10px; text-align:center; width:60px;">Vista</th>
                                 <th style="padding:10px; text-align:left;">Rol Detectat</th>
                                 <th style="padding:10px; text-align:center; width:60px;">Tier</th>
                                 <th style="padding:10px; text-align:center; width:70px;">Conf.</th>
@@ -3635,7 +3636,7 @@
                     lastFolder = folder;
                     if (folder) {
                         const sep = document.createElement('tr');
-                        sep.innerHTML = `<td colspan="5" style="padding:6px 8px; background:#e8f4fd; font-weight:600; font-size:13px; color:#2c3e50; border-bottom:1px solid #bee5eb;">📁 ${folder}/</td>`;
+                        sep.innerHTML = `<td colspan="6" style="padding:6px 8px; background:#e8f4fd; font-weight:600; font-size:13px; color:#2c3e50; border-bottom:1px solid #bee5eb;">📁 ${folder}/</td>`;
                         tbody.appendChild(sep);
                     }
                 }
@@ -3646,7 +3647,7 @@
             // Informative section (collapsed)
             if (infoFiles.length > 0) {
                 const sepRow = document.createElement('tr');
-                sepRow.innerHTML = `<td colspan="5" style="padding:10px 8px; background:#f0f0f0; cursor:pointer; font-size:13px; color:#7f8c8d;" onclick="this.parentElement.querySelectorAll('.ss-info-row').forEach(r => r.style.display = r.style.display === 'none' ? '' : 'none')">
+                sepRow.innerHTML = `<td colspan="6" style="padding:10px 8px; background:#f0f0f0; cursor:pointer; font-size:13px; color:#7f8c8d;" onclick="this.parentElement.querySelectorAll('.ss-info-row').forEach(r => r.style.display = r.style.display === 'none' ? '' : 'none')">
                     ▶ Fitxers informatius (${infoFiles.length}) — Thumbs.db, exports, fotos... <span style="font-size:11px">(clic per expandir)</span>
                 </td>`;
                 tbody.appendChild(sepRow);
@@ -3663,7 +3664,7 @@
                             const sep = document.createElement('tr');
                             sep.className = 'ss-info-row';
                             sep.style.display = 'none';
-                            sep.innerHTML = `<td colspan="5" style="padding:4px 8px 4px 16px; background:#f8f8f8; font-size:12px; color:#999;">📁 ${folder}/</td>`;
+                            sep.innerHTML = `<td colspan="6" style="padding:4px 8px 4px 16px; background:#f8f8f8; font-size:12px; color:#999;">📁 ${folder}/</td>`;
                             tbody.appendChild(sep);
                         }
                     }
@@ -3730,8 +3731,18 @@
                 </select>`;
             }
 
+            // Thumbnail: show for image files
+            const ext = name.split('.').pop().toLowerCase();
+            const isImage = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'tif'].includes(ext);
+            let thumbHtml = '';
+            if (isImage && selectedProject) {
+                const thumbUrl = `/api/thumbnail/${encodeURIComponent(selectedProject)}?file=${encodeURIComponent(clf.file_path)}&size=60`;
+                thumbHtml = `<img src="${thumbUrl}" style="max-width:60px; max-height:45px; border-radius:3px; cursor:pointer; border:1px solid #ddd;" onclick="window.open('/api/thumbnail/${encodeURIComponent(selectedProject)}?file=${encodeURIComponent(clf.file_path)}&size=600', '_blank')" title="Clic per ampliar" loading="lazy">`;
+            }
+
             tr.innerHTML = `
                 <td style="padding:6px 8px; border-bottom:1px solid #f0f0f0; ${indent}" title="${clf.file_path}">${name}</td>
+                <td style="padding:6px 8px; border-bottom:1px solid #f0f0f0; text-align:center;">${thumbHtml}</td>
                 <td style="padding:6px 8px; border-bottom:1px solid #f0f0f0;">${roleDisplay}</td>
                 <td style="padding:6px 8px; border-bottom:1px solid #f0f0f0; text-align:center;">
                     ${clf.role || clf.category === 'suggestion' ? `<span style="background:${tierInfo.color}; color:white; padding:2px 6px; border-radius:3px; font-size:11px; font-weight:bold;" title="${tierInfo.title}">${tierInfo.label}</span>` : ''}

@@ -220,6 +220,50 @@ def download_report(project_name: str):
     )
 
 
+# --- Thumbnail endpoint ---
+
+_IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.tif'}
+
+
+@router.get("/thumbnail/{project_name:path}")
+def get_thumbnail(project_name: str, file: str, size: int = 80):
+    """Serve a thumbnail of an image file from a project folder."""
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    # Security: prevent path traversal
+    file_path = (project_path / file).resolve()
+    if not str(file_path).startswith(str(project_path.resolve())):
+        raise HTTPException(status_code=403, detail="Path traversal not allowed")
+
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="File not found")
+
+    if file_path.suffix.lower() not in _IMAGE_EXTENSIONS:
+        raise HTTPException(status_code=400, detail="Not an image file")
+
+    # Generate thumbnail in memory
+    try:
+        from PIL import Image
+        import io
+
+        img = Image.open(str(file_path))
+        img.thumbnail((size, size))
+        buf = io.BytesIO()
+        fmt = 'PNG' if file_path.suffix.lower() == '.png' else 'JPEG'
+        img.save(buf, format=fmt, quality=75)
+        img.close()
+        buf.seek(0)
+
+        media_type = 'image/png' if fmt == 'PNG' else 'image/jpeg'
+        return StreamingResponse(buf, media_type=media_type)
+    except Exception as e:
+        logger.warning("Thumbnail generation failed for %s: %s", file, e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # --- SmartScan endpoints ---
 
 @router.get("/smartscan/{project_name:path}")
