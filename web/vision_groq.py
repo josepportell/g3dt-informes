@@ -151,7 +151,7 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
         (project_path / "validation").mkdir(exist_ok=True)
 
         def process_task(vtype: str, task_info: dict) -> tuple[str, bool, str]:
-            pdf_path = project_path / task_info["path"]
+            file_path = project_path / task_info["path"]
             output_path = project_path / "validation" / task_info["output"]
             prompt = task_info["prompt"]
 
@@ -159,14 +159,14 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
                 prompt = prompt + excel_context
 
             try:
-                images = _render_pdf_to_images(pdf_path)
+                images = _file_to_images(file_path)
                 if not images:
-                    return vtype, False, "no images rendered"
+                    return vtype, False, "no images from file"
 
                 _log_step(
                     project_name,
                     f"render:{vtype}",
-                    f"{len(images)} pages ({pdf_path.name})",
+                    f"{len(images)} image(s) ({file_path.name})",
                 )
 
                 result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
@@ -212,6 +212,58 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
         with _groq_lock:
             if project_name in _groq_status:
                 _groq_status[project_name]["status"] = "error"
+
+
+_IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.tif'}
+
+
+def _file_to_images(
+    file_path: Path, dpi: int = 200, max_pages: int = 5
+) -> list[str]:
+    """Convert a file (PDF or image) to base64-encoded images for Groq vision.
+
+    For PDFs: renders pages as JPEG via PyMuPDF.
+    For images: reads directly and encodes as base64.
+
+    Returns list of base64 strings.
+    """
+    ext = file_path.suffix.lower()
+
+    if ext in _IMAGE_EXTENSIONS:
+        return _read_image_as_b64(file_path)
+
+    if ext == '.pdf':
+        return _render_pdf_to_images(file_path, dpi, max_pages)
+
+    logger.warning("Unsupported file type for vision: %s", file_path.name)
+    return []
+
+
+def _read_image_as_b64(image_path: Path) -> list[str]:
+    """Read an image file and return as single-element base64 list."""
+    try:
+        img_bytes = image_path.read_bytes()
+
+        # Check 4MB limit for Groq — resize if needed
+        if len(img_bytes) > 4 * 1024 * 1024:
+            try:
+                from PIL import Image
+                import io
+                img = Image.open(io.BytesIO(img_bytes))
+                img.thumbnail((2000, 2000))
+                buf = io.BytesIO()
+                img.save(buf, format='JPEG', quality=80)
+                img_bytes = buf.getvalue()
+                img.close()
+            except ImportError:
+                logger.warning("Image too large and Pillow not available: %s", image_path.name)
+                return []
+
+        b64 = base64.b64encode(img_bytes).decode("utf-8")
+        return [b64]
+    except Exception as e:
+        logger.warning("Cannot read image %s: %s", image_path.name, e)
+        return []
 
 
 def _render_pdf_to_images(

@@ -73,8 +73,33 @@ def _get_client():
 
 
 # ---------------------------------------------------------------------------
-# PDF → images
+# File → images (PDF rendering or direct image read)
 # ---------------------------------------------------------------------------
+
+_IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.tif'}
+
+
+def _file_to_images(file_path: Path, dpi: int = RENDER_DPI) -> list[tuple[bytes, str]]:
+    """Convert a file (PDF or image) to image data for Claude vision.
+
+    For PDFs: renders pages as PNG via PyMuPDF.
+    For images: reads directly.
+
+    Returns list of (image_bytes, media_type) tuples.
+    """
+    ext = file_path.suffix.lower()
+
+    if ext in _IMAGE_EXTENSIONS:
+        img_bytes = file_path.read_bytes()
+        media_type = 'image/png' if ext == '.png' else 'image/jpeg'
+        return [(img_bytes, media_type)]
+
+    if ext == '.pdf':
+        return _pdf_to_images(file_path, dpi)
+
+    logger.warning("Unsupported file type for vision: %s", file_path.name)
+    return []
+
 
 def _pdf_to_images(pdf_path: Path, dpi: int = RENDER_DPI) -> list[tuple[bytes, str]]:
     """Convert PDF pages to PNG images using PyMuPDF.
@@ -160,7 +185,7 @@ def extract_from_planol(pdf_path: Path) -> dict:
     """Read A.01.pdf and extract architect data + dimensions."""
     from .validation.prompts import PLANOL_EXTRACTION_PROMPT, EXTRACTION_SYSTEM_PROMPT
 
-    images = _pdf_to_images(pdf_path)
+    images = _file_to_images(pdf_path)
     logger.info("Plànol: sending %d page(s) to Claude API", len(images))
     text = _call_vision(images, PLANOL_EXTRACTION_PROMPT, EXTRACTION_SYSTEM_PROMPT)
     data = _extract_json(text)
@@ -178,7 +203,7 @@ def extract_from_penetros(pdf_path: Path) -> dict:
     """Read PENETROS.pdf and extract DPSH N20 values."""
     from .validation.prompts import DPSH_EXTRACTION_PROMPT, EXTRACTION_SYSTEM_PROMPT
 
-    images = _pdf_to_images(pdf_path)
+    images = _file_to_images(pdf_path)
     logger.info("Penetros: sending %d page(s) to Claude API", len(images))
     text = _call_vision(images, DPSH_EXTRACTION_PROMPT, EXTRACTION_SYSTEM_PROMPT)
     data = _extract_json(text)
@@ -195,7 +220,7 @@ def extract_from_sondeig(pdf_path: Path) -> dict:
     """Read SONDEIG.pdf and extract soil layers."""
     from .validation.prompts import SONDEIG_EXTRACTION_PROMPT, EXTRACTION_SYSTEM_PROMPT
 
-    images = _pdf_to_images(pdf_path)
+    images = _file_to_images(pdf_path)
     logger.info("Sondeig: sending %d page(s) to Claude API", len(images))
     text = _call_vision(images, SONDEIG_EXTRACTION_PROMPT, EXTRACTION_SYSTEM_PROMPT)
     data = _extract_json(text)
@@ -212,7 +237,7 @@ def extract_from_sondeig_annex(pdf_path: Path) -> dict:
     """Read formatted sondeig annex PDF and extract soil layers with geological levels."""
     from .validation.prompts import SONDEIG_ANNEX_EXTRACTION_PROMPT, EXTRACTION_SYSTEM_PROMPT
 
-    images = _pdf_to_images(pdf_path)
+    images = _file_to_images(pdf_path)
     logger.info("Sondeig annex: sending %d page(s) to Claude API", len(images))
     text = _call_vision(images, SONDEIG_ANNEX_EXTRACTION_PROMPT, EXTRACTION_SYSTEM_PROMPT)
     data = _extract_json(text)

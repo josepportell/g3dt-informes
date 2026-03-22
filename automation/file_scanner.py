@@ -45,6 +45,18 @@ ROLE_DEFINITIONS = {
     'reference_report':     {"desc": "Informe .doc de referencia"},
     'lab_results_pdf':      {"desc": "Resultats de laboratori (PDF)"},
     'gtl_report':           {"desc": "Informe GTL del laboratori"},
+    # ── New roles from SmartScan v2 (image classification + report figures) ──
+    'field_croquis':        {"desc": "Croquis de camp amb punts d'assaig",       "vision_type": "planol"},
+    'figure_situation_map': {"desc": "Imatge mapa de situacio (per informe)"},
+    'figure_test_points':   {"desc": "Imatge mapa de punts d'assaig (per informe)"},
+    'figure_geological_map': {"desc": "Imatge mapa geologic (per informe)"},
+    'figure_correlation':   {"desc": "Imatge tall de correlacio (per informe)"},
+    'photo_test_point':     {"desc": "Foto punt d'assaig"},
+    'photo_dpsh_equipment': {"desc": "Foto equip DPSH"},
+    'photo_sondeig_equipment': {"desc": "Foto equip sondeig"},
+    'photo_spt_sample':     {"desc": "Foto mostra SPT"},
+    'photo_site_overview':  {"desc": "Foto vista general de l'obra"},
+    'project_email':        {"desc": "Correu del projecte (.msg)"},
 }
 
 def _role_desc(role_name: str) -> str:
