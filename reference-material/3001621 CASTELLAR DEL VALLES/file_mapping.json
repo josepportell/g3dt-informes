@@ -3,54 +3,110 @@
     "reference_report": {
       "path": "3001621_informe_v0.doc",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "gtl_report": {
       "path": "4687-GTL-25 Castellar del Vallés.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "dpsh_excel": {
+      "path": "ANNEXES/3001621_DPSH.xls",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "figure_geological_map": {
+      "path": "ANNEXES/ALTRES/M1.png",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "photos_dir": {
       "path": "FOTOGRAFIES",
       "confidence": "high",
-      "detection": "directory_name"
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_dpsh_equipment": {
+      "path": "FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_test_point": {
+      "path": "FOTOGRAFIES/P1.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_sondeig_equipment": {
+      "path": "FOTOGRAFIES/SONDEIG/maquina_sondeig.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_spt_sample": {
+      "path": "FOTOGRAFIES/detall_materials.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_site_overview": {
+      "path": "FOTOGRAFIES/vista_general_1.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "sondeig_annex": {
+      "path": "PDF/ANNEXES/3001621_sondeig.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": "sondeig_annex"
+    },
+    "lab_results_pdf": {
+      "path": "PDF/ANNEXES/LAB-SIG.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "dpsh_field_sheet": {
       "path": "PENETROS + SONDEIG.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": "dpsh",
+      "is_combined": true
     },
     "sondeig_field_sheet": {
       "path": "PENETROS + SONDEIG.pdf",
       "confidence": "high",
-      "detection": "combined_file",
+      "detection": "filename_pattern",
+      "vision_type": null,
       "is_combined": true
     },
     "lab_order": {
       "path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "correlation_section": {
       "path": "tall.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
-    },
-    "dpsh_excel": {
-      "path": "ANNEXES/3001621_DPSH.xls",
-      "confidence": "high",
-      "detection": "filename_pattern"
-    },
-    "lab_results_pdf": {
-      "path": "PDF/ANNEXES/LAB-SIG.pdf",
-      "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     }
   },
   "ignored": [
     {
-      "path": "25.0493/",
-      "reason": "numeric_dir"
+      "path": "25.0493/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "25.0493/validation",
+      "reason": "output_dir"
     },
     {
       "path": "3001621_PORTADA_25.doc",
@@ -61,47 +117,15 @@
       "reason": "our_output"
     },
     {
-      "path": "3001621_test_run003.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "3001621_test_run004.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "3001621_test_run005.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "ACCEPTACIO/",
+      "path": "ACCEPTACIO",
       "reason": "acceptance_dir"
     },
     {
-      "path": "DTE.txt",
-      "reason": "text_file"
+      "path": "ACCEPTACIO/Thumbs.db",
+      "reason": "Windows thumbnail cache"
     },
     {
-      "path": "PDF/",
-      "reason": "exported_pdf_dir"
-    },
-    {
-      "path": "PDF-V0/",
-      "reason": "exported_pdf_dir"
-    },
-    {
-      "path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
-      "reason": "email_file"
-    },
-    {
-      "path": "file_mapping.json",
-      "reason": "our_output"
-    },
-    {
-      "path": "user_data.json",
-      "reason": "our_output"
-    },
-    {
-      "path": "validation/",
+      "path": "ACCEPTACIO/validation",
       "reason": "output_dir"
     },
     {
@@ -121,38 +145,175 @@
       "reason": "freehand_file"
     },
     {
-      "path": "ANNEXES/ALTRES/",
-      "reason": "misc_subdir"
+      "path": "ANNEXES/ALTRES/6_mapa Geologic_CAT_VS.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/ALTRES/Thumbs.db",
+      "reason": "Windows thumbnail cache"
     },
     {
       "path": "ANNEXES/EF7DB361.tmp",
-      "reason": "temp_file"
+      "reason": "Temporary file"
+    },
+    {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 09.37.01_63bb48b8.jpg",
+      "reason": "photo_or_acceptance"
+    },
+    {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 10.02.53_404bc72b.jpg",
+      "reason": "photo_or_acceptance"
+    },
+    {
+      "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg",
+      "reason": "photo_or_acceptance"
+    },
+    {
+      "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.14_4f05eb48.jpg",
+      "reason": "photo_or_acceptance"
+    },
+    {
+      "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
+      "reason": "photo_or_acceptance"
+    },
+    {
+      "path": "FOTOGRAFIES/S1/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "FOTOGRAFIES/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "PDF",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "PDF/3001621_informe.pdf",
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/3001621_DPSH.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/3001621_fotografies.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
-      "reason": "exported_annex_pdf"
-    },
-    {
-      "path": "PDF/ANNEXES/3001621_sondeig.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/LLETRA",
+      "reason": "letter_dir"
+    },
+    {
+      "path": "PDF/LLETRA/3001621_PORTADA_25.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/LLETRA/3001621_informe_v0.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF-V0",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "PDF-V0/3001621_informe_v0.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF-V0/ANNEXES/3001621_DPSH.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF-V0/ANNEXES/3001621_fotografies.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF-V0/ANNEXES/3001621_plànol de situació.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF-V0/ANNEXES/3001621_tall de correlació.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF-V0/LLETRA",
+      "reason": "letter_dir"
+    },
+    {
+      "path": "PDF-V0/LLETRA/3001621_PORTADA_25_v0.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF-V0/LLETRA/3001621_informe_v0.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "file_mapping.json",
+      "reason": "our_output"
+    },
+    {
+      "path": "validation",
+      "reason": "output_dir"
     }
   ],
-  "unassigned": [],
+  "unassigned": [
+    "25.0493",
+    "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+    "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+    "3001621_test_fase2.docx",
+    "3001621_test_run003.docx",
+    "3001621_test_run004.docx",
+    "3001621_test_run005.docx",
+    "ANNEXES",
+    "ANNEXES/ALTRES",
+    "ANNEXES/ALTRES/COORDENADES.txt",
+    "DTE.txt",
+    "FOTOGRAFIES/DPSH",
+    "FOTOGRAFIES/S1",
+    "FOTOGRAFIES/SONDEIG",
+    "PDF/ANNEXES",
+    "PDF-V0/ANNEXES",
+    "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+    "validation/dpsh_extracted.json",
+    "validation/sondeig_extracted.json",
+    "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+    "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg",
+    "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+    "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+    "ANNEXES/ALTRES/M10.png",
+    "ANNEXES/ALTRES/M11.png",
+    "ANNEXES/ALTRES/M2.png",
+    "ANNEXES/ALTRES/M3.png",
+    "ANNEXES/ALTRES/M4.png",
+    "ANNEXES/ALTRES/m12 mgeol.png",
+    "ANNEXES/ALTRES/m5.png",
+    "ANNEXES/ALTRES/m6.png",
+    "ANNEXES/ALTRES/m7.png",
+    "ANNEXES/ALTRES/m8.png",
+    "ANNEXES/ALTRES/m9.png",
+    "FOTOGRAFIES/DPSH/maquina_dpsh_2.jpg",
+    "FOTOGRAFIES/DPSH/maquina_dpsh_3.jpg",
+    "FOTOGRAFIES/P2.jpg",
+    "FOTOGRAFIES/P3.jpg",
+    "FOTOGRAFIES/P4.jpg",
+    "FOTOGRAFIES/detall_materials_2.jpg",
+    "PDF-V0/ANNEXES/3001621_sondeig.pdf"
+  ],
   "_metadata": {
-    "scanned_at": "2026-02-25T09:40:04.013418+00:00",
-    "confirmed_by_user": true,
-    "scanner_version": "2.0"
+    "scanned_at": "2026-03-22T19:48:16.738577+00:00",
+    "confirmed_by_user": false,
+    "scanner_version": "smartscan-1.0",
+    "scan_duration_ms": 231
   }
 }
