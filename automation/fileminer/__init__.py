@@ -32,16 +32,19 @@ __all__ = [
 logger = logging.getLogger(__name__)
 
 # Directories to skip when walking the project tree
+# Note: FOTOGRAFIES removed — FileMiner walks it but naturally skips images
+# (image extensions are in _SKIP_EXTENSIONS). Text files there get mined.
 _SKIP_DIRS = {
-    'FOTOGRAFIES', 'PDF', 'PDF-V0', 'PDF_V0', 'validation',
+    'PDF', 'PDF-V0', 'PDF_V0', 'validation',
     '.git', '__pycache__', '.venv', 'node_modules',
 }
 
 # Extensions to skip entirely (images handled by vision pipeline, not FileMiner)
+# Note: .msg removed — MsgMiner now processes email files
 _SKIP_EXTENSIONS = {
     '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.tif',
     '.fh11', '.psd', '.ai',
-    '.db', '.tmp', '.msg',
+    '.db', '.tmp',
 }
 
 # Our own generated outputs -- never mine these

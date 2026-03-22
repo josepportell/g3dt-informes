@@ -140,6 +140,8 @@ SOURCE_PRIORITY: dict[str, int] = {
     "comanda_lab_excel": 35,
     "geocode_nominatim": 40,        # Derived, less precise
     "groq_llm": 42,                 # LLM extraction, between geocode and generic
+    "content_email": 43,            # Email body text (addresses, contacts)
+    "content_email_attachment": 44,  # Signals from files attached to emails
     "content_pdf": 45,              # Generic PDF text
     "content_docx": 45,             # Generic docx text
     "content_excel": 45,            # Generic Excel (not DADES)

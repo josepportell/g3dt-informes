@@ -37,5 +37,8 @@ def get_miners_for_file(
     elif suffix in ('.doc', '.docx'):
         from .docx_miner import DocxMiner
         miners.append(DocxMiner(project_path, source_type))
+    elif suffix == '.msg':
+        from .msg_miner import MsgMiner
+        miners.append(MsgMiner(project_path, source_type))
 
     return miners

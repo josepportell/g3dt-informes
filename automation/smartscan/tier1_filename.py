@@ -45,7 +45,7 @@ IGNORE_PATTERNS = [
     (r'(?i).*_portada.*\.doc[x]?$', "cover_doc"),
     (r'(?i).*_DETALLAT.*\.doc$', "detailed_doc"),
     (r'(?i).*EXPLICACI[OÓ].*\.docx?$', "explanation_doc"),
-    (r'.*\.msg$', "email_file"),
+    # .msg files are now mined by MsgMiner — don't ignore them
     (r'(?i)^LLETRA/?$', "letter_dir"),
     (r'(?i)^LETRA/?$', "letter_dir"),
 ]
