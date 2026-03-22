@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 # === Configuration ===
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODEL = os.environ.get("GROQ_MODEL", "qwen/qwen3-32b")
+GROQ_MODEL_DEFAULT = "qwen/qwen3-32b"
 GROQ_MAX_TOKENS = 2048
 GROQ_TEMPERATURE = 0.0
 
@@ -131,7 +131,7 @@ class GroqMiner(BaseMiner):
     @classmethod
     def get_usage_summary(cls) -> dict:
         """Return usage stats and estimated costs for the current session."""
-        model = GROQ_MODEL
+        model = os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT)
         pricing = {
             "llama-3.1-8b-instant": (0.05, 0.08),
             "qwen/qwen3-32b": (0.29, 0.59),
@@ -364,7 +364,7 @@ class GroqMiner(BaseMiner):
             logger.debug("Groq: no API key, skipping")
             return None
 
-        model = GROQ_MODEL
+        model = os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT)
 
         # Qwen3 thinking mode: disable to get clean JSON
         if "qwen3" in model.lower():
@@ -549,7 +549,7 @@ class GroqMiner(BaseMiner):
 
     @staticmethod
     def _file_hash(file_path: Path) -> str:
-        model = GROQ_MODEL
+        model = os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT)
         h = hashlib.sha256()
         h.update(file_path.read_bytes())
         h.update(model.encode())

@@ -941,6 +941,7 @@ def _phase3_adjacents(
 def _geocode_for_adjacents(
     street_address: str,
     municipality: str,
+    province: str = "",
 ) -> tuple[float, float] | None:
     """Geocode a street address to UTM for adjacents probing.
 
@@ -978,7 +979,7 @@ def _geocode_for_adjacents(
     for addr in candidates:
         try:
             geo_result = geocode_project(
-                addr, municipality, ['centre'], output_dir=None,
+                addr, municipality, ['centre'], output_dir=None, province=province,
             )
             if geo_result and geo_result.get('utm_x') and geo_result.get('utm_y'):
                 logger.info(f"Geocode for adjacents OK: '{addr}' → ({geo_result['utm_x']:.0f}, {geo_result['utm_y']:.0f})")

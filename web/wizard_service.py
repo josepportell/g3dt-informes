@@ -119,7 +119,8 @@ def _fill_missing_adjacents(merged: dict[str, Any], project_path: Path) -> None:
         from automation.auto_extractor import _geocode_for_adjacents, _extract_municipality
         from automation.cadastre_adjacents import get_adjacent_parcels
 
-        geocoded = _geocode_for_adjacents(street_address, municipality)
+        province = _get_val('province')
+        geocoded = _geocode_for_adjacents(street_address, municipality, province=province)
         if not geocoded:
             logger.info("Geocode for missing adjacents failed")
             return
