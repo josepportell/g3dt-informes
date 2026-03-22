@@ -251,33 +251,52 @@ def _is_inside_content_dir(rel_path: str) -> bool:
     return any(p.match(rel_path) for p in _CONTENT_DIR_PATTERNS)
 
 
-# Known field photo filename patterns — files matching these in FOTOGRAFIES
-# are definitely photos, not documents. Everything else falls through to Tier 2/3.
-_PHOTO_NAME_PATTERNS = [
-    re.compile(r'^P\d+', re.IGNORECASE),
-    re.compile(r'^S\d+', re.IGNORECASE),
-    re.compile(r'^SPT', re.IGNORECASE),
-    re.compile(r'^DETALL', re.IGNORECASE),
-    re.compile(r'^EMPL\s', re.IGNORECASE),
-    re.compile(r'^ZONA\s', re.IGNORECASE),
-    re.compile(r'^INTERIOR', re.IGNORECASE),
-    re.compile(r'(?i)^DES\s+(DE|DEL)\s'),
-    re.compile(r'^vista[_\s]general', re.IGNORECASE),
-    re.compile(r'^maquina[_\s]', re.IGNORECASE),
-    re.compile(r'^m[àa]quina[_\s]', re.IGNORECASE),
-    re.compile(r'^Imag[eo]n?\s+de\s+WhatsApp', re.IGNORECASE),
-    re.compile(r'^Imatge\s+de\s+WhatsApp', re.IGNORECASE),
-    re.compile(r'^WhatsApp\s+Image', re.IGNORECASE),
-    re.compile(r'^IMG-\d{8}', re.IGNORECASE),
-    re.compile(r'^detall[_\s]material', re.IGNORECASE),
-    re.compile(r'^Thumbs\.db$'),
-    re.compile(r'^spt\s', re.IGNORECASE),
+# Known field photo filename patterns with role assignment.
+# Pattern → photo role (or None for generic informative).
+# Files matching these in FOTOGRAFIES/ get the role assigned.
+# Everything else falls through to Tier 2/3.
+_PHOTO_ROLE_PATTERNS: list[tuple[re.Pattern, str | None]] = [
+    # Equipment photos (specific role for report placement)
+    (re.compile(r'^vista[_\s]general', re.IGNORECASE), 'photo_site_overview'),
+    (re.compile(r'^maquina[_\s]dpsh', re.IGNORECASE), 'photo_dpsh_equipment'),
+    (re.compile(r'^m[àa]quina[_\s]dpsh', re.IGNORECASE), 'photo_dpsh_equipment'),
+    (re.compile(r'^maquina[_\s]sond', re.IGNORECASE), 'photo_sondeig_equipment'),
+    (re.compile(r'^m[àa]quina[_\s]sond', re.IGNORECASE), 'photo_sondeig_equipment'),
+    (re.compile(r'^detall[_\s]material', re.IGNORECASE), 'photo_spt_sample'),
+    (re.compile(r'^SPT', re.IGNORECASE), 'photo_spt_sample'),
+    (re.compile(r'^spt\s', re.IGNORECASE), 'photo_spt_sample'),
+    (re.compile(r'^DETALL\s+SPT', re.IGNORECASE), 'photo_spt_sample'),
+    # Test point photos
+    (re.compile(r'^P\d+', re.IGNORECASE), 'photo_test_point'),
+    # Site overview photos
+    (re.compile(r'^INTERIOR', re.IGNORECASE), 'photo_site_overview'),
+    (re.compile(r'(?i)^DES\s+(DE|DEL)\s'), 'photo_site_overview'),
+    (re.compile(r'^ZONA\s', re.IGNORECASE), 'photo_site_overview'),
+    # Sondeig/borehole photos
+    (re.compile(r'^S\d+', re.IGNORECASE), 'photo_sondeig_equipment'),
+    (re.compile(r'^EMPL\s', re.IGNORECASE), 'photo_sondeig_equipment'),
+    (re.compile(r'^DETALL\s', re.IGNORECASE), 'photo_spt_sample'),
+    # Generic photos (no specific role, just informative)
+    (re.compile(r'^Imag[eo]n?\s+de\s+WhatsApp', re.IGNORECASE), None),
+    (re.compile(r'^Imatge\s+de\s+WhatsApp', re.IGNORECASE), None),
+    (re.compile(r'^WhatsApp\s+Image', re.IGNORECASE), None),
+    (re.compile(r'^IMG-\d{8}', re.IGNORECASE), None),
+    (re.compile(r'^Thumbs\.db$'), None),
 ]
 
 
-def _is_known_photo(name: str) -> bool:
-    """Check if filename matches known field photo patterns."""
-    return any(p.match(name) for p in _PHOTO_NAME_PATTERNS)
+def _classify_photo(name: str) -> tuple[bool, str | None]:
+    """Check if filename matches known photo patterns and return its role.
+
+    Returns (is_photo, role_or_none).
+    - (True, "photo_dpsh_equipment") → known photo with specific role
+    - (True, None) → known photo, generic (informative)
+    - (False, None) → not a known photo, let Tier 2/3 handle
+    """
+    for pattern, role in _PHOTO_ROLE_PATTERNS:
+        if pattern.match(name):
+            return True, role
+    return False, None
 
 
 def classify_tier1(
@@ -368,15 +387,16 @@ def classify_tier1(
 
         # ── 4. Files inside content dirs → selective handling
         if not is_dir and _is_inside_content_dir(rel_path):
-            # Check if filename looks like a known field photo
-            if _is_known_photo(name):
+            # Check if filename matches a known photo pattern
+            is_photo, photo_role = _classify_photo(name)
+            if is_photo:
                 results.append(FileClassification(
                     file_path=rel_path,
-                    role=None,
-                    confidence=1.0,
+                    role=photo_role,  # e.g. "photo_dpsh_equipment" or None
+                    confidence=0.90 if photo_role else 1.0,
                     tier=ClassificationTier.FILENAME,
-                    category="informative",
-                    summary="photo_or_acceptance",
+                    category="classified" if photo_role else "informative",
+                    summary=photo_role or "photo_or_acceptance",
                     is_directory=False,
                 ))
                 continue

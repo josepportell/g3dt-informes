@@ -408,12 +408,17 @@ class TestSmartScanImageClassification:
 
         result = scan_project(project_path, max_tier=2)
 
-        photo_files = [c for c in result.classifications
-                       if "P1 - ALCOLETGE" in c.file_path or "P2 - ALCOLETGE" in c.file_path]
-        for c in photo_files:
-            assert c.category == "informative", (
-                f"{c.file_path} should be informative (photo) but is {c.category}"
-            )
+        # P1 gets photo_test_point role, P2 becomes suggestion (only one winner per role)
+        p1 = [c for c in result.classifications if "P1 - ALCOLETGE" in c.file_path]
+        assert len(p1) == 1
+        assert p1[0].role == "photo_test_point", (
+            f"P1 should be photo_test_point but got role={p1[0].role}"
+        )
+        p2 = [c for c in result.classifications if "P2 - ALCOLETGE" in c.file_path]
+        assert len(p2) == 1
+        assert p2[0].category == "suggestion", (
+            f"P2 should be suggestion (P1 wins) but got {p2[0].category}"
+        )
 
 
 class TestSmartScanFigureRoles:
