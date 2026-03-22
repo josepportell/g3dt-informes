@@ -910,9 +910,10 @@ def _phase3_adjacents(
             if val and isinstance(val, str) and len(val) > 3:
                 address_candidates.append(val)
 
+        province = result.prefills.get('province', '')
         if municipality and address_candidates:
             for addr in address_candidates:
-                geocoded = _geocode_for_adjacents(addr, municipality)
+                geocoded = _geocode_for_adjacents(addr, municipality, province=province)
                 if geocoded:
                     adj_x, adj_y = geocoded
                     adj_source = f"geocode({addr})"
@@ -935,6 +936,7 @@ def _phase3_adjacents(
         n = sum(1 for d in ('north', 'south', 'east', 'west') if d in adjacents)
         result.steps_completed.append(f"Cadastre: {n} adjacents detectats")
     except Exception as exc:
+        logger.warning(f"Cadastre adjacents failed: {exc}")
         result.steps_skipped.append(("Cadastre adjacents", str(exc)))
 
 
