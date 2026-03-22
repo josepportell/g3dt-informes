@@ -143,10 +143,13 @@ def auto_extract(
             )
         emit("source", {"name": "Geocode", "ok": bool(utm_x and utm_y)})
 
-        superficie = (
-            existing_user_data.get('superficie_parcela_m2', 0)
-            or result.prefills.get('superficie_parcela_m2', 0)
-        )
+        try:
+            superficie = float(
+                existing_user_data.get('superficie_parcela_m2', 0)
+                or result.prefills.get('superficie_parcela_m2', 0)
+            )
+        except (TypeError, ValueError):
+            superficie = 0
 
         if utm_x and utm_y:
             _phase3_geology(utm_x, utm_y, result)
