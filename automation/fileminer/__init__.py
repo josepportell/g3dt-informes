@@ -322,10 +322,23 @@ def mine_project_groq(
 
         # Count how many mapped signals Python miners found for this file
         n_mapped = _count_mapped_signals(existing_signals, rel_path)
-        if n_mapped >= 3:
+
+        # Threshold: skip files with enough signals UNLESS missing_variables
+        # suggests this file type might fill important gaps.
+        # Default threshold: 3 signals. But if we still have critical missing
+        # variables AND this file's source_type could produce them, lower to 1.
+        threshold = 3
+        if missing_variables and n_mapped >= 1:
+            # High-value source types that often contain unique data:
+            # emails may have addresses, pressupost has architect info
+            high_value_sources = {'content_email', 'pressupost_pdf', 'dades_camp_excel'}
+            if source_type in high_value_sources:
+                threshold = 5  # Be more generous with high-value sources
+
+        if n_mapped >= threshold:
             logger.debug(
-                "Groq: skipping %s (source_type=%s, python_signals=%d >= 3)",
-                rel_path, source_type, n_mapped,
+                "Groq: skipping %s (source_type=%s, python_signals=%d >= %d)",
+                rel_path, source_type, n_mapped, threshold,
             )
             continue
 

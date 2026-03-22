@@ -291,64 +291,83 @@ PLANOL_EXTRACTION_PROMPT = f'''Analyze this architectural plan (plànol) for a c
 
 TASK: Extract project and building data into structured JSON.
 
-DOCUMENT STRUCTURE:
-- Caixetí/title block (typically bottom-right corner):
-  - Project name/type (e.g., "Habitatge Unifamiliar Aïllat", "Nau Industrial")
+IMPORTANT: Architect plans come in MANY different formats and layouts. The title block (caixetí)
+may be in any corner or edge of the page. The document may be:
+- A formal CAD plan with caixetí (title block) and floor plan drawings
+- A site plan (emplaçament) with cadastral map and/or satellite image
+- An informal sketch or "punts de sondeig" plan with test point locations
+- A photo of a printed plan (rotated, with dark edges and table surface visible)
+- A typology sheet with area tables per unit type (no floor plan drawing)
+- A simple situation map showing the parcel location
+
+Adapt your extraction to WHATEVER format you see. Extract what is available — do not fail
+because the document doesn't match a specific expected layout.
+
+WHERE TO FIND DATA:
+- Title block / caixetí (ANY position — bottom-right, bottom-left, bottom-center, or side):
+  - Project name/type (e.g., "Habitatge Unifamiliar Aïllat", "Avantprojecte", "Estudi de Detall")
   - Location: street + number (WITHOUT postal code or municipality) → "street_address"
   - Municipality name (WITHOUT postal code or province) → "municipality"
-  - Promotor: company or individual name
-  - Architect: name and college number
-  - Architect company: SLP or firm name (may be separate from architect name)
+  - Promotor / Propietari: company or individual name
+  - Architect: name and college number (nºCol.)
+  - Architect company / studio: firm name (may be a logo or letterhead, e.g., "Bunyesc", "Rocar", "Graus")
   - Scale, date
-- Site plan / emplaçament:
+- Plan drawing area (may contain):
   - Parcel area in m²
-  - Parcel dimensions (length × width)
-  - Building footprint in m² or percentage
-- Section / alzat:
-  - Number of floors (PB, PB+1, Ps+PB+2Pp, etc.)
+  - Parcel dimensions (length × width, labeled in meters)
+  - Building footprint in m² or as percentage
+- Area tables (quadre de superfícies, may be on a separate page or in a table):
+  - Per-floor surfaces (PB, P1, PS, PP, "Planta Baja", "Planta Primera", etc.)
+  - Per-unit/typology areas (T1, T2, T3 — sum for total)
+  - Total built surface
+- Section / alzat / sección (if present):
+  - Number of floors (PB, PB+1, Ps+PB+2Pp, "Sótano + Planta Baja + Planta 1", etc.)
   - Maximum building height in meters
 
 EXTRACTION RULES:
-1. Extract text EXACTLY as written (Catalan/Spanish)
+1. Extract text EXACTLY as written (Catalan or Spanish — do not translate)
 2. For dimensions, prefer values with explicit units (m, m²)
-3. Number of floors: use the format as written (e.g., "Pb+P1", "Ps+Pb+2Pp")
+3. Number of floors: use the format as written (e.g., "Pb+P1", "Ps+Pb+2Pp", "SÓTANO, PLANTA BAJA y PLANTA 1")
 4. If a value has multiple interpretations, use the most specific one
-5. Set null for fields not found in the document
-6. Building footprint may be labeled "ocupació", "superfície construïda", or similar
-7. If architect_company is not separately listed, set null (do not guess from architect name)
-8. Look for per-floor surfaces (quadre de superfícies, m² per planta). Extract each floor as a SEPARATE entry in `floor_surfaces` array. NEVER combine floors into a single entry (e.g., never use "PB+PP" or "PB+P1" as a floor label). Each entry must have a single floor level: "PB", "P1", "PS", "PP", etc. If the plan shows "PB 297 m² + PP 100 m²", that is TWO separate entries, one per floor. If only a total built surface is available with no per-floor breakdown, use `building_footprint_m2` for the ground floor and derive upper floors from total minus footprint if `num_floors` indicates multiple levels.
+5. Set null for fields not found in the document — this is FINE, not every plan has every field
+6. Building footprint may be labeled "ocupació", "superfície construïda", "sup. construida", or similar
+7. If architect_company is not separately listed but a logo or studio name is visible, extract that
+8. Per-floor surfaces: extract each floor as a SEPARATE entry in `floor_surfaces` array. NEVER combine floors. If a typology table shows areas per unit type, extract the TOTAL per floor across all types
+9. If the document is a photo of a plan, ignore background elements (table surface, hands, edges) and focus on the plan content
 
 FLOOR PLAN BOUNDING BOX:
-Identify the bounding box of the site plan / floor plan drawing area. This is the main architectural drawing showing the building footprint, plot boundaries, and dimensions. EXCLUDE the title block (caixetí), legends, section views (alzat/secció), and any annotations outside the main plan drawing.
-Return as percentage coordinates of the full page:
-- top_pct: distance from top edge (0 = very top)
-- left_pct: distance from left edge (0 = very left)
-- bottom_pct: distance from top edge (100 = very bottom)
-- right_pct: distance from left edge (100 = very right)
-Include a small margin (~1-2%) around the drawing for breathing room.
+Identify the bounding box of the main drawing area (site plan, floor plan, or sketch).
+EXCLUDE the title block, legends, section views, and annotations outside the main drawing.
+Return as percentage coordinates of the full page. If no clear drawing area exists (e.g., pure
+table of areas or situation map), set floor_plan_bbox to null.
 
 CONFIDENCE SCORING:
 - 1.0: Clear printed text, unambiguous
 - 0.9: Readable with minimal uncertainty
 - 0.7-0.8: Readable but small text or requires interpretation
-- 0.5: Difficult to read or ambiguous
+- 0.5: Difficult to read or ambiguous (e.g., photo of plan, low resolution)
 - Use null for values not found
 
 OUTPUT FORMAT (JSON):
 {PLANOL_JSON_EXAMPLE}
 
-Extract all visible data from this architectural plan.'''
+Extract all visible data from this architectural document. If the document only has partial
+information (e.g., only parcel dimensions and no building details), extract what you can.'''
 
 
 # System prompt for general extraction context
 EXTRACTION_SYSTEM_PROMPT = '''You are a geotechnical data extraction specialist. Your task is to
-carefully extract data from handwritten field documents and convert them to structured JSON.
+carefully extract data from field documents, architectural plans, and project files, converting
+them to structured JSON.
 
 KEY PRINCIPLES:
 1. ACCURACY: Only extract what you can clearly see. Never guess or fabricate values.
 2. UNCERTAINTY: Mark uncertain values with lower confidence scores.
 3. COMPLETENESS: Extract ALL data visible in the document.
 4. STRUCTURE: Follow the exact JSON format specified.
+5. ADAPTABILITY: Documents come in many formats — formal CAD plans, informal sketches,
+   photos of printed documents, screenshots, scanned handwritten sheets. Adapt to whatever
+   format you receive. Extract what is available, set null for what is not.
 
 When a value is unclear:
 - If partially readable, extract your best interpretation and note confidence < 1.0
