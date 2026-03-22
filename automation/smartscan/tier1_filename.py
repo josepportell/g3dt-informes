@@ -75,9 +75,14 @@ ROLE_PATTERNS: dict[str, dict] = {
         'patterns': [
             r'^A\.\d+\.pdf$',
             r'^A\.\d+\s.*\.pdf$',
+            r'(?i)^ampliaci[oó].*\.(png|jpe?g|pdf)$',
         ],
         'scopes': [''],
         'prefer': r'^A\.\d+\.pdf$',
+    },
+    'field_croquis': {
+        'patterns': [r'(?i)^CROQUIS\.(jpe?g|png|pdf)$'],
+        'scopes': [''],
     },
 
     # ── DPSH field sheet (PENETROS) ──────────────────────────
@@ -88,6 +93,9 @@ ROLE_PATTERNS: dict[str, dict] = {
             r'(?i)^PENETROS\s*\+\s*SONDEIG.*\.pdf$',
             # ES variants
             r'(?i)^PENETR[OÓ]METRO.*\.pdf$',
+            # Image variants (phone photos of field sheets)
+            r'^PENETROS.*\.(jpe?g|png)$',
+            r'(?i)^\d+\s*-?\s*PENETROS.*\.(jpe?g|png)$',
         ],
         'scopes': [''],
         'combined': {
@@ -187,6 +195,32 @@ ROLE_PATTERNS: dict[str, dict] = {
         'patterns': [r'(?i)^\d+-GTL-\d+\s.*\.pdf$'],
         'scopes': [''],
     },
+
+    # ── Report figures (images for specific report slots) ────
+    'figure_situation_map': {
+        'patterns': [
+            r'(?i)^F\d+[\s_]*(SIT|UBI).*\.(png|jpe?g|pdf)$',
+        ],
+        'scopes': ['ANNEXES/ALTRES', 'ANNEXES/Altres', 'ANEXOS/OTROS'],
+    },
+    'figure_test_points': {
+        'patterns': [
+            r'(?i)^F\d+[\s_]*(PUNTS?|PUNT).*\.(png|jpe?g|pdf)$',
+        ],
+        'scopes': ['ANNEXES/ALTRES', 'ANNEXES/Altres', 'ANEXOS/OTROS'],
+    },
+    'figure_geological_map': {
+        'patterns': [
+            r'(?i)^(M\d+|F\d+[\s_]*MGEOL).*\.(png|jpe?g)$',
+        ],
+        'scopes': ['ANNEXES/ALTRES', 'ANNEXES/Altres', 'ANEXOS/OTROS'],
+    },
+    'figure_correlation': {
+        'patterns': [
+            r'(?i)^F\d+[\s_]*TALL.*\.(png|jpe?g)$',
+        ],
+        'scopes': ['ANNEXES/ALTRES', 'ANNEXES/Altres', 'ANEXOS/OTROS'],
+    },
 }
 
 
@@ -215,6 +249,35 @@ def _is_inside_export_dir(rel_path: str) -> bool:
 def _is_inside_content_dir(rel_path: str) -> bool:
     """Check if a path is inside a photos/acceptance directory."""
     return any(p.match(rel_path) for p in _CONTENT_DIR_PATTERNS)
+
+
+# Known field photo filename patterns — files matching these in FOTOGRAFIES
+# are definitely photos, not documents. Everything else falls through to Tier 2/3.
+_PHOTO_NAME_PATTERNS = [
+    re.compile(r'^P\d+', re.IGNORECASE),
+    re.compile(r'^S\d+', re.IGNORECASE),
+    re.compile(r'^SPT', re.IGNORECASE),
+    re.compile(r'^DETALL', re.IGNORECASE),
+    re.compile(r'^EMPL\s', re.IGNORECASE),
+    re.compile(r'^ZONA\s', re.IGNORECASE),
+    re.compile(r'^INTERIOR', re.IGNORECASE),
+    re.compile(r'(?i)^DES\s+(DE|DEL)\s'),
+    re.compile(r'^vista[_\s]general', re.IGNORECASE),
+    re.compile(r'^maquina[_\s]', re.IGNORECASE),
+    re.compile(r'^m[àa]quina[_\s]', re.IGNORECASE),
+    re.compile(r'^Imag[eo]n?\s+de\s+WhatsApp', re.IGNORECASE),
+    re.compile(r'^Imatge\s+de\s+WhatsApp', re.IGNORECASE),
+    re.compile(r'^WhatsApp\s+Image', re.IGNORECASE),
+    re.compile(r'^IMG-\d{8}', re.IGNORECASE),
+    re.compile(r'^detall[_\s]material', re.IGNORECASE),
+    re.compile(r'^Thumbs\.db$'),
+    re.compile(r'^spt\s', re.IGNORECASE),
+]
+
+
+def _is_known_photo(name: str) -> bool:
+    """Check if filename matches known field photo patterns."""
+    return any(p.match(name) for p in _PHOTO_NAME_PATTERNS)
 
 
 def classify_tier1(
@@ -303,17 +366,29 @@ def classify_tier1(
             ))
             continue
 
-        # ── 4. Files inside content dirs → informative (photo/acceptance)
+        # ── 4. Files inside content dirs → selective handling
         if not is_dir and _is_inside_content_dir(rel_path):
-            results.append(FileClassification(
-                file_path=rel_path,
-                role=None,
-                confidence=1.0,
-                tier=ClassificationTier.FILENAME,
-                category="informative",
-                summary="photo_or_acceptance",
-                is_directory=False,
-            ))
+            # Check if filename looks like a known field photo
+            if _is_known_photo(name):
+                results.append(FileClassification(
+                    file_path=rel_path,
+                    role=None,
+                    confidence=1.0,
+                    tier=ClassificationTier.FILENAME,
+                    category="informative",
+                    summary="photo_or_acceptance",
+                    is_directory=False,
+                ))
+                continue
+            # Not a known photo — try role matching with root scope
+            # (content dir files like PENETROS.jpeg have non-standard parents)
+            clf = _match_role(rel_path, name, '', is_dir)
+            if clf:
+                # Slightly lower confidence: secondary copy in photos dir
+                clf.confidence = max(clf.confidence - 0.05, 0.5)
+                results.append(clf)
+                continue
+            # Unknown file in content dir — leave for Tier 2/3
             continue
 
         # ── 5. Try role patterns (scoped matching)

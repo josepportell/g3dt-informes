@@ -66,6 +66,7 @@ GROUND_TRUTH: dict[str, dict[str, str | None]] = {
         "architect_plan": "A.01.pdf",
         "dpsh_field_sheet": "PENETROS.pdf",
         "dpsh_excel": "ANNEXES/4001670_DPSH.xls",
+        "field_croquis": "FOTOS DE CAMP + PLANOL PUNTS/CROQUIS.jpeg",
         "sondeig_field_sheet": None,  # No sondeig
         "correlation_section": "tall.pdf",
         "photos_dir": "FOTOS DE CAMP + PLANOL PUNTS",
@@ -370,3 +371,83 @@ class TestSmartScanNonStandard:
 
         assert "situation_plan" in role_map
         assert role_map["situation_plan"].file_path == "pl. situaci.pdf"
+
+
+class TestSmartScanImageClassification:
+    """Test image file classification (Phase 2)."""
+
+    def test_alcoletge_croquis_classified(self):
+        """CROQUIS.jpeg in content dir must get field_croquis role."""
+        project_path = REF_DIR / "4001670 ALCOLETGE"
+        if not project_path.exists():
+            pytest.skip("Alcoletge not available")
+
+        result = scan_project(project_path, max_tier=2)
+        role_map = result.role_map
+
+        assert "field_croquis" in role_map
+        assert role_map["field_croquis"].file_path == "FOTOS DE CAMP + PLANOL PUNTS/CROQUIS.jpeg"
+
+    def test_alcoletge_penetros_jpeg_is_suggestion(self):
+        """PENETROS.jpeg should be a suggestion (PENETROS.pdf is primary)."""
+        project_path = REF_DIR / "4001670 ALCOLETGE"
+        if not project_path.exists():
+            pytest.skip("Alcoletge not available")
+
+        result = scan_project(project_path, max_tier=2)
+
+        suggestions = [c for c in result.classifications
+                       if c.category == "suggestion" and "PENETROS.jpeg" in c.file_path]
+        assert len(suggestions) == 1, "PENETROS.jpeg should be a suggestion (alternative to PENETROS.pdf)"
+
+    def test_alcoletge_field_photos_stay_informative(self):
+        """P1, P2, P3 photos in content dir must remain informative."""
+        project_path = REF_DIR / "4001670 ALCOLETGE"
+        if not project_path.exists():
+            pytest.skip("Alcoletge not available")
+
+        result = scan_project(project_path, max_tier=2)
+
+        photo_files = [c for c in result.classifications
+                       if "P1 - ALCOLETGE" in c.file_path or "P2 - ALCOLETGE" in c.file_path]
+        for c in photo_files:
+            assert c.category == "informative", (
+                f"{c.file_path} should be informative (photo) but is {c.category}"
+            )
+
+
+class TestSmartScanFigureRoles:
+    """Test report figure/photo role classification (Phase 6 prep)."""
+
+    def test_vilanova_figure_maps(self):
+        """Vilanova ANEXOS/OTROS/ has F1 SIT, F2 PUNTS, F4 MGEOL images."""
+        project_path = REF_DIR / "4001671 VILANOVA DE SEGRIA"
+        if not project_path.exists():
+            pytest.skip("Vilanova not available")
+
+        result = scan_project(project_path, max_tier=2)
+        role_map = result.role_map
+
+        assert "figure_situation_map" in role_map
+        assert "F1 SIT" in role_map["figure_situation_map"].file_path
+
+        assert "figure_test_points" in role_map
+        assert "F2 PUNTS" in role_map["figure_test_points"].file_path
+
+        assert "figure_geological_map" in role_map
+        assert "F4 MGEOL" in role_map["figure_geological_map"].file_path
+
+    def test_rubi_figure_roles(self):
+        """Rubi ANNEXES/Altres/ has F1 UBI, F4 MGEOL, F5 TALL images."""
+        project_path = REF_DIR / "3001631 RUBI"
+        if not project_path.exists():
+            pytest.skip("Rubi not available")
+
+        result = scan_project(project_path, max_tier=2)
+        role_map = result.role_map
+
+        assert "figure_situation_map" in role_map
+        assert "F1 UBI" in role_map["figure_situation_map"].file_path
+
+        assert "figure_correlation" in role_map
+        assert "F5 TALL" in role_map["figure_correlation"].file_path
