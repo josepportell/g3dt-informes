@@ -50,6 +50,13 @@ CATALUNYA_UTM_X_MAX = 530000
 CATALUNYA_UTM_Y_MIN = 4480000
 CATALUNYA_UTM_Y_MAX = 4750000
 
+# Spanish peninsular UTM bounds (zones 29-31, covers all mainland Spain)
+SPAIN_UTM_X_MIN = 100000
+SPAIN_UTM_X_MAX = 800000
+SPAIN_UTM_Y_MIN = 4050000
+SPAIN_UTM_Y_MAX = 4850000
+
+
 # Cadastre API endpoints
 CADASTRE_URL = "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCoordenadas.asmx"
 CADASTRE_CALLEJERO_URL = "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx"
@@ -158,9 +165,34 @@ def _find_all_elements(root: ET.Element, local_name: str) -> list[ET.Element]:
 
 # === WGS84 to UTM Zone 31N Conversion ===
 
+def _wgs84_to_utm(lat: float, lon: float) -> tuple[float, float, int]:
+    """
+    Convert WGS84 lat/lon to UTM, auto-detecting zone 30 or 31.
+
+    Zone 30: lon < 0 (western Spain: Huesca, Madrid, etc.) — EPSG:25830
+    Zone 31: lon >= 0 (eastern Spain: Catalunya, etc.) — EPSG:25831
+
+    Returns:
+        Tuple of (utm_x, utm_y, zone)
+    """
+    zone = 31 if lon >= 0 else 30
+    lon0_deg = 3.0 if zone == 31 else -3.0
+    x, y = _wgs84_to_utm_zone(lat, lon, lon0_deg)
+    return x, y, zone
+
+
 def _wgs84_to_utm31n(lat: float, lon: float) -> tuple[float, float]:
     """
     Convert WGS84 lat/lon to UTM zone 31N (EPSG:25831).
+    Kept for backward compatibility. Use _wgs84_to_utm() for multi-zone support.
+    """
+    x, y = _wgs84_to_utm_zone(lat, lon, 3.0)
+    return x, y
+
+
+def _wgs84_to_utm_zone(lat: float, lon: float, lon0_deg: float) -> tuple[float, float]:
+    """
+    Convert WGS84 lat/lon to UTM using a given central meridian.
 
     Standard UTM projection (Snyder series to 4th order), sub-meter accuracy
     for the coordinate conversion itself. Overall geocoding accuracy depends
@@ -169,13 +201,14 @@ def _wgs84_to_utm31n(lat: float, lon: float) -> tuple[float, float]:
     Args:
         lat: Latitude in degrees
         lon: Longitude in degrees
+        lon0_deg: Central meridian in degrees (3.0 for zone 31, -3.0 for zone 30)
 
     Returns:
         Tuple of (utm_x, utm_y)
     """
     lat_rad = math.radians(lat)
     lon_rad = math.radians(lon)
-    lon0 = math.radians(3.0)  # Central meridian for zone 31
+    lon0 = math.radians(lon0_deg)
 
     a = 6378137.0  # WGS84 semi-major
     f = 1 / 298.257223563
@@ -294,8 +327,11 @@ def cadastre_address_lookup(
         f"numero={numero!r} municipality={municipality!r}"
     )
 
-    # Province is required by the API; try all Catalan ones if not provided
-    provinces = [province.upper()] if province else _CATALAN_PROVINCES
+    # Province is required by the API; try provided, then Catalan, then all Spanish
+    if province:
+        provinces = [province.upper()]
+    else:
+        provinces = list(_CATALAN_PROVINCES)
 
     def _query_dnploc(prov: str, num: str) -> dict | None:
         # API requires uppercase municipality/province and all address fields
@@ -485,18 +521,22 @@ def cadastre_rc_to_utm(rc: str) -> tuple[float, float] | None:
 
 # === Nominatim Geocoding ===
 
-def nominatim_geocode(address: str, municipality: str) -> tuple[float, float] | None:
+def nominatim_geocode(address: str, municipality: str, province: str = "") -> tuple[float, float] | None:
     """
     Geocode an address using Nominatim (OpenStreetMap).
 
     Args:
         address: Street address
         municipality: Municipality name
+        province: Province name (e.g. "Huesca"). If empty, uses "Spain" directly.
 
     Returns:
         Tuple of (lat, lon) or None if not found
     """
-    query = f"{address}, {municipality}, Catalunya, Spain"
+    if province:
+        query = f"{address}, {municipality}, {province}, Spain"
+    else:
+        query = f"{address}, {municipality}, Catalunya, Spain"
     encoded_query = urllib.request.quote(query)
     url = (
         f"https://nominatim.openstreetmap.org/search"
@@ -852,6 +892,9 @@ def _load_from_cache(address: str, municipality: str) -> dict | None:
 
     Returns None if not cached or expired.
     """
+    if os.environ.get("G3DT_NO_CACHE") == "1":
+        return None
+
     cache_path = _get_cache_path(address, municipality)
 
     if not cache_path.exists():
@@ -907,6 +950,7 @@ def geocode_project(
     municipality: str,
     point_ids: list[str],
     output_dir: Path | None = None,
+    province: str = "",
 ) -> dict | None:
     """
     Geocode a project address to UTM coordinates.
@@ -943,9 +987,10 @@ def geocode_project(
     rc: str | None = None
     centroid_x: float | None = None
     centroid_y: float | None = None
+    utm_zone: int = 31  # default; overwritten by _wgs84_to_utm if conversion happens
     source = "geocode:cadastre_address"
 
-    cadastre_result = cadastre_address_lookup(address, municipality)
+    cadastre_result = cadastre_address_lookup(address, municipality, province=province)
     if cadastre_result:
         rc = cadastre_result["rc"]
         # Get UTM centroid via Consulta_CPMRC
@@ -958,9 +1003,9 @@ def geocode_project(
             ycen = cadastre_result["ycen"]
             if xcen < 1000 and ycen < 1000:
                 # Geographic coordinates (lon, lat) — convert to UTM
-                centroid_x, centroid_y = _wgs84_to_utm31n(ycen, xcen)
+                centroid_x, centroid_y, utm_zone = _wgs84_to_utm(ycen, xcen)
                 source = "geocode:cadastre_address(dnploc_geo)"
-            elif CATALUNYA_UTM_X_MIN <= xcen <= CATALUNYA_UTM_X_MAX:
+            elif SPAIN_UTM_X_MIN <= xcen <= SPAIN_UTM_X_MAX:
                 # Already UTM
                 centroid_x, centroid_y = xcen, ycen
                 source = "geocode:cadastre_address(dnploc_utm)"
@@ -969,7 +1014,7 @@ def geocode_project(
     if centroid_x is None:
         source = "geocode:nominatim+cadastre"
         logger.info("Primary cadastre address lookup failed, falling back to Nominatim")
-        coords = nominatim_geocode(address, municipality)
+        coords = nominatim_geocode(address, municipality, province=province)
         if coords is None:
             logger.warning(f"Geocoding failed for '{address}, {municipality}'")
             return None
@@ -980,8 +1025,8 @@ def geocode_project(
         if parcel and rc is None:
             rc = parcel["rc"]
 
-        # Convert to UTM as fallback centroid
-        centroid_x, centroid_y = _wgs84_to_utm31n(lat, lon)
+        # Convert to UTM (auto-detect zone from longitude)
+        centroid_x, centroid_y, utm_zone = _wgs84_to_utm(lat, lon)
 
     # 4. Get parcel geometry (for point distribution) — try if we have RC
     polygon: list[tuple[float, float]] | None = None
@@ -1010,26 +1055,33 @@ def geocode_project(
         # Place all points at centroid
         points = {pid: {"x": centroid_x, "y": centroid_y} for pid in point_ids}
 
-    # 6. Validate centroid within Catalonia bounds
-    if not (CATALUNYA_UTM_X_MIN <= centroid_x <= CATALUNYA_UTM_X_MAX):
-        logger.warning(f"Centroid UTM X {centroid_x} outside Catalonia bounds")
+    # 6. Validate centroid within Spanish peninsular bounds
+    if not (SPAIN_UTM_X_MIN <= centroid_x <= SPAIN_UTM_X_MAX):
+        logger.warning(f"Centroid UTM X {centroid_x} outside Spain bounds")
         return None
-    if not (CATALUNYA_UTM_Y_MIN <= centroid_y <= CATALUNYA_UTM_Y_MAX):
-        logger.warning(f"Centroid UTM Y {centroid_y} outside Catalonia bounds")
+    if not (SPAIN_UTM_Y_MIN <= centroid_y <= SPAIN_UTM_Y_MAX):
+        logger.warning(f"Centroid UTM Y {centroid_y} outside Spain bounds")
         return None
 
-    # 7. Get elevations for each point
+    # 7. Get elevations for each point (ICGC is Catalunya-only)
+    _catalan_provs = {p.upper() for p in _CATALAN_PROVINCES}
+    is_catalan = province.upper() in _catalan_provs if province else True  # default to trying
     elevations: dict[str, float] = {}
-    try:
-        from .icgc_geology import get_elevation
-        for pid, pt in points.items():
-            try:
-                elevations[pid] = get_elevation(pt["x"], pt["y"])
-            except Exception as e:
-                logger.warning(f"Could not get elevation for {pid}: {e}")
+    if is_catalan:
+        try:
+            from .icgc_geology import get_elevation
+            for pid, pt in points.items():
+                try:
+                    elevations[pid] = get_elevation(pt["x"], pt["y"])
+                except Exception as e:
+                    logger.warning(f"Could not get elevation for {pid}: {e}")
+                    elevations[pid] = 0.0
+        except ImportError:
+            logger.warning("icgc_geology module not available, skipping elevations")
+            for pid in points:
                 elevations[pid] = 0.0
-    except ImportError:
-        logger.warning("icgc_geology module not available, skipping elevations")
+    else:
+        logger.info(f"Skipping ICGC elevations (province={province!r} is outside Catalunya)")
         for pid in points:
             elevations[pid] = 0.0
 

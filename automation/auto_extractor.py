@@ -113,6 +113,10 @@ def auto_extract(
     # --- Phase 0.3: FileMiner ---
     emit("step", {"step": "mine", "status": "active"})
     _phase03_fileminer(project_path, result)
+    emit("groq", {"name": "FileMiner regex", "ok": bool(result.mining_result and result.mining_result.signals)})
+
+    # --- Phase 0.4: Groq Deep Mine (targeted gap-filling) ---
+    _phase04_groq_deep_mine(project_path, result, emit)
     emit("step", {"step": "mine", "status": "done", "count": len(result.mining_result.signals) if result.mining_result else 0})
 
     # --- Phase 1: Local files ---
@@ -276,6 +280,122 @@ def _phase03_fileminer(project_path: Path, result: AutoExtractionResult) -> None
     except Exception as exc:
         logger.warning("FileMiner failed: %s", exc)
         result.steps_skipped.append(("FileMiner", str(exc)))
+
+
+def _phase04_groq_deep_mine(project_path: Path, result: AutoExtractionResult, emit=None) -> None:
+    """Phase 0.4: Use Groq LLM to extract data from files where Python miners underperformed."""
+    import os
+
+    if not emit:
+        emit = lambda *a, **kw: None
+    if os.environ.get('G3DT_USE_GROQ', '').strip() != '1':
+        emit("groq", {"name": "Groq (disabled)", "ok": False})
+        return
+
+    try:
+        from .fileminer import mine_project_groq, resolve_competition
+        from .fileminer.miners.groq_miner import TARGET_VARIABLES
+
+        # Identify which high-value variables are still missing
+        missing = [
+            var for var in TARGET_VARIABLES
+            if var not in result.prefills
+        ]
+
+        if not missing:
+            logger.info("Phase 0.4 Groq: all target variables already filled, skipping")
+            result.steps_completed.append("Groq Deep Mine: cap variable pendent")
+            emit("groq", {"name": "Groq (tot cobert)", "ok": True})
+            return
+
+        logger.info(
+            "Phase 0.4 Groq: %d missing variables: %s",
+            len(missing), missing[:10],
+        )
+
+        # Get file_mapping dict
+        fm_dict = None
+        if result.file_mapping:
+            try:
+                fm_dict = result.file_mapping.to_dict() if hasattr(result.file_mapping, 'to_dict') else None
+            except Exception:
+                pass
+
+        # Get existing signals from Python miners
+        existing_signals = result.mining_result.signals if result.mining_result else []
+
+        # Run Groq miner on candidate files
+        groq_signals = mine_project_groq(
+            project_path,
+            file_mapping=fm_dict,
+            missing_variables=missing,
+            existing_signals=existing_signals,
+        )
+
+        if not groq_signals:
+            result.steps_completed.append("Groq Deep Mine: cap senyal nou")
+            emit("groq", {"name": "Groq: 0 senyals", "ok": False})
+            return
+
+        # Combine with existing signals and re-resolve competition
+        all_signals = list(existing_signals) + groq_signals
+        resolved = resolve_competition(all_signals)
+
+        # Boolean string → Python bool conversion for toggle fields
+        _BOOL_FIELDS = {"has_basement", "has_retaining_walls"}
+
+        # Merge new resolved values into prefills (don't override existing)
+        # Note: variable names are already wizard-compatible via maps_to remap in groq_miner
+        n_new = 0
+        for variable, rv in resolved.items():
+            value = rv.value
+            # Convert boolean string fields to Python bool
+            if variable in _BOOL_FIELDS and isinstance(value, str):
+                value = value.lower() in ("true", "si", "sí", "yes", "1")
+            if variable not in result.prefills:
+                result.prefills[variable] = value
+                result.sources[variable] = f"groq_llm:{rv.signal.source_file}"
+                n_new += 1
+                logger.info(
+                    "Phase 0.4 Groq: new prefill %s=%r from %s",
+                    variable, value, rv.signal.source_file,
+                )
+            # Store alternatives for wizard display
+            if rv.alternatives:
+                existing_alts = result.mining_alternatives.get(variable, [])
+                for alt in rv.alternatives:
+                    if alt.extraction_method == "groq_llm":
+                        existing_alts.append({
+                            'value': alt.value,
+                            'source': alt.source_file,
+                            'confidence': alt.confidence,
+                        })
+                if existing_alts:
+                    result.mining_alternatives[variable] = existing_alts
+
+        try:
+            from .fileminer.miners.groq_miner import GroqMiner
+            usage = GroqMiner.get_usage_summary()
+            result.steps_completed.append(
+                f"Groq Deep Mine ({usage['model'].split('/')[-1]}): "
+                f"{len(groq_signals)} senyals, {n_new} nous prefills, "
+                f"{usage['api_calls']} calls, {usage['cache_hits']} cache hits, "
+                f"{usage['total_tokens']} tokens (~${usage['estimated_cost_usd']:.4f})"
+            )
+        except Exception:
+            result.steps_completed.append(
+                f"Groq Deep Mine: {len(groq_signals)} senyals, {n_new} nous prefills"
+            )
+        logger.info(
+            "Phase 0.4 Groq: %d new signals, %d new prefills",
+            len(groq_signals), n_new,
+        )
+        emit("groq", {"name": f"Groq: +{n_new} prefills", "ok": n_new > 0})
+
+    except Exception as exc:
+        logger.warning("Phase 0.4 Groq failed: %s", exc)
+        result.steps_skipped.append(("Groq Deep Mine", str(exc)))
+        emit("groq", {"name": "Groq (error)", "ok": False})
 
 
 def _phase01_content_discovery(project_path: Path, result: AutoExtractionResult) -> None:
@@ -612,9 +732,11 @@ def _phase25_geocode(
         f"Geocodificant: '{address}', {municipality}, punts: {point_ids}"
     )
 
+    province = result.prefills.get('province', '')
+
     try:
         geo_result = geocode_project(
-            address, municipality, point_ids, output_dir=None,
+            address, municipality, point_ids, output_dir=None, province=province,
         )
     except Exception as exc:
         result.steps_skipped.append(("Geocodificació", str(exc)))

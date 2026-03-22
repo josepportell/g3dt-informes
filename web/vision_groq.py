@@ -1,0 +1,349 @@
+"""
+Groq Vision extraction: sends PDF pages as images to Llama 4 Scout
+for structured data extraction. Runs in parallel, ~2-5s per PDF.
+"""
+
+from __future__ import annotations
+
+import base64
+import json
+import logging
+import os
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
+GROQ_VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
+GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
+
+_groq_status: dict[str, dict] = {}
+_groq_lock = threading.Lock()
+
+
+def start_vision_groq(
+    project_name: str,
+    project_path: Path,
+    force: bool = False,
+) -> dict:
+    """Start Groq vision extraction. Returns immediately with status."""
+    with _groq_lock:
+        existing = _groq_status.get(project_name, {})
+        if existing.get("status") == "running":
+            return {"status": "already_running", "started": existing.get("start_time")}
+
+        _groq_status[project_name] = {
+            "status": "running",
+            "start_time": time.time(),
+            "tasks": {},
+            "log": [],
+        }
+
+    thread = threading.Thread(
+        target=_run_vision_groq,
+        args=(project_name, project_path, force),
+        daemon=True,
+    )
+    thread.start()
+    return {"status": "started"}
+
+
+def get_groq_vision_status(project_name: str) -> dict:
+    """Get current status of Groq vision extraction."""
+    with _groq_lock:
+        return dict(_groq_status.get(project_name, {"status": "not_started"}))
+
+
+def _log_step(project_name: str, step: str, note: str):
+    start = _groq_status.get(project_name, {}).get("start_time", time.time())
+    elapsed = time.time() - start
+    with _groq_lock:
+        if project_name in _groq_status:
+            _groq_status[project_name]["log"].append(
+                f"[{elapsed:.1f}s] {step}: {note}"
+            )
+    logger.info("vision_groq [%s] %s: %s (%.1fs)", project_name, step, note, elapsed)
+
+
+def _run_vision_groq(project_name: str, project_path: Path, force: bool):
+    """Background thread: render PDFs, send to Groq in parallel."""
+    try:
+        from automation.file_scanner import FileScanner
+        from automation.validation.prompts import (
+            DPSH_EXTRACTION_PROMPT,
+            EXTRACTION_SYSTEM_PROMPT,
+            PLANOL_EXTRACTION_PROMPT,
+            SONDEIG_ANNEX_EXTRACTION_PROMPT,
+            SONDEIG_EXTRACTION_PROMPT,
+        )
+
+        # Step 1: Load file mapping
+        scanner = FileScanner(project_path)
+        mapping = scanner.load()
+        if not mapping:
+            mapping = scanner.scan()
+            scanner.save(mapping)
+        _log_step(project_name, "file_mapping", "loaded")
+
+        # Step 2: Identify vision tasks
+        prompt_map = {
+            "planol": PLANOL_EXTRACTION_PROMPT,
+            "dpsh": DPSH_EXTRACTION_PROMPT,
+            "sondeig": SONDEIG_EXTRACTION_PROMPT,
+            "sondeig_annex": SONDEIG_ANNEX_EXTRACTION_PROMPT,
+        }
+        output_map = {
+            "planol": "planol_extracted.json",
+            "dpsh": "dpsh_extracted.json",
+            "sondeig": "sondeig_extracted.json",
+            "sondeig_annex": "sondeig_extracted.json",
+        }
+
+        vision_tasks = {}
+        seen_types: set[str] = set()
+        for role_name, role in mapping.roles.items():
+            vtype = role.vision_type
+            if vtype and vtype in prompt_map and vtype not in seen_types:
+                seen_types.add(vtype)
+                output_path = project_path / "validation" / output_map[vtype]
+                if not force and os.environ.get("G3DT_NO_CACHE") != "1" and output_path.exists():
+                    _log_step(project_name, f"cache:{vtype}", "skipped (exists)")
+                    continue
+                vision_tasks[vtype] = {
+                    "role": role_name,
+                    "path": role.path,
+                    "prompt": prompt_map[vtype],
+                    "output": output_map[vtype],
+                }
+
+        _log_step(project_name, "identify_tasks", f"{len(vision_tasks)} tasks")
+
+        if not vision_tasks:
+            _log_step(project_name, "complete", "all cached")
+            with _groq_lock:
+                _groq_status[project_name]["status"] = "completed"
+                _groq_status[project_name]["elapsed"] = (
+                    time.time() - _groq_status[project_name]["start_time"]
+                )
+            return
+
+        # Step 3: Add DPSH Excel data if needed (for comparison)
+        excel_context = ""
+        if "dpsh" in vision_tasks:
+            try:
+                from automation.dpsh_extractor import DPSHExtractor
+
+                excel_role = mapping.roles.get("dpsh_excel")
+                if excel_role:
+                    ext = DPSHExtractor(str(project_path / excel_role.path))
+                    dpsh_data = ext.extract_all()
+                    excel_context = (
+                        "\n\nEXCEL COMPARISON DATA:\n"
+                        + json.dumps(dpsh_data.to_dict(), indent=2, ensure_ascii=False)
+                        + "\nCompare each N20 value you extract with the Excel values above."
+                    )
+            except Exception as e:
+                _log_step(project_name, "excel_extract", f"error: {e}")
+
+        # Step 4: Run all tasks in parallel
+        (project_path / "validation").mkdir(exist_ok=True)
+
+        def process_task(vtype: str, task_info: dict) -> tuple[str, bool, str]:
+            pdf_path = project_path / task_info["path"]
+            output_path = project_path / "validation" / task_info["output"]
+            prompt = task_info["prompt"]
+
+            if vtype == "dpsh" and excel_context:
+                prompt = prompt + excel_context
+
+            try:
+                images = _render_pdf_to_images(pdf_path)
+                if not images:
+                    return vtype, False, "no images rendered"
+
+                _log_step(
+                    project_name,
+                    f"render:{vtype}",
+                    f"{len(images)} pages ({pdf_path.name})",
+                )
+
+                result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+                if result is None:
+                    return vtype, False, "API call failed"
+
+                output_path.write_text(
+                    json.dumps(result, indent=2, ensure_ascii=False),
+                    encoding="utf-8",
+                )
+                _log_step(project_name, f"done:{vtype}", f"saved to {task_info['output']}")
+                return vtype, True, "ok"
+
+            except Exception as e:
+                _log_step(project_name, f"error:{vtype}", str(e))
+                return vtype, False, str(e)
+
+        results = {}
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            futures = {
+                executor.submit(process_task, vtype, info): vtype
+                for vtype, info in vision_tasks.items()
+            }
+            for future in as_completed(futures):
+                vtype = futures[future]
+                try:
+                    vtype, success, msg = future.result()
+                    results[vtype] = {"success": success, "message": msg}
+                except Exception as e:
+                    results[vtype] = {"success": False, "message": str(e)}
+
+        elapsed = time.time() - _groq_status[project_name]["start_time"]
+        ok_count = sum(1 for r in results.values() if r["success"])
+        _log_step(project_name, "complete", f"{ok_count}/{len(results)} ok in {elapsed:.1f}s")
+
+        with _groq_lock:
+            _groq_status[project_name]["status"] = "completed"
+            _groq_status[project_name]["elapsed"] = elapsed
+            _groq_status[project_name]["tasks"] = results
+
+    except Exception:
+        logger.exception("vision_groq failed for %s", project_name)
+        with _groq_lock:
+            if project_name in _groq_status:
+                _groq_status[project_name]["status"] = "error"
+
+
+def _render_pdf_to_images(
+    pdf_path: Path, dpi: int = 200, max_pages: int = 5
+) -> list[str]:
+    """Render PDF pages to base64 JPEG images.
+
+    Returns list of base64-encoded JPEG strings.
+    DPI 200 gives good quality while keeping under 4MB per image.
+    """
+    import fitz  # PyMuPDF
+
+    images = []
+    doc = fitz.open(str(pdf_path))
+    try:
+        for page_num in range(min(len(doc), max_pages)):
+            page = doc[page_num]
+            zoom = dpi / 72
+            mat = fitz.Matrix(zoom, zoom)
+            pix = page.get_pixmap(matrix=mat)
+
+            img_bytes = pix.tobytes(output="jpeg", jpg_quality=85)
+
+            # Check 4MB limit for Groq
+            if len(img_bytes) > 4 * 1024 * 1024:
+                zoom = 150 / 72
+                mat = fitz.Matrix(zoom, zoom)
+                pix = page.get_pixmap(matrix=mat)
+                img_bytes = pix.tobytes(output="jpeg", jpg_quality=75)
+
+            b64 = base64.b64encode(img_bytes).decode("utf-8")
+            images.append(b64)
+            logger.debug("Rendered page %d: %d bytes", page_num + 1, len(img_bytes))
+    finally:
+        doc.close()
+
+    return images
+
+
+def _call_groq_vision(
+    extraction_prompt: str,
+    images: list[str],
+    system_prompt: str,
+    max_retries: int = 3,
+) -> dict | None:
+    """Call Groq Vision API with images and extraction prompt.
+
+    Returns parsed JSON dict or None on failure.
+    """
+    import httpx
+
+    api_key = os.environ.get("GROQ_API_KEY")
+    if not api_key:
+        logger.warning("Groq Vision: no API key")
+        return None
+
+    content: list[dict] = [{"type": "text", "text": extraction_prompt}]
+    for b64_img in images:
+        content.append(
+            {
+                "type": "image_url",
+                "image_url": {"url": f"data:image/jpeg;base64,{b64_img}"},
+            }
+        )
+
+    payload = {
+        "model": GROQ_VISION_MODEL,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": content},
+        ],
+        "temperature": 0.0,
+        "max_tokens": 4096,
+        "response_format": {"type": "json_object"},
+    }
+
+    for attempt in range(1, max_retries + 1):
+        t0 = time.monotonic()
+        try:
+            with httpx.Client(timeout=60.0) as client:
+                resp = client.post(
+                    GROQ_API_URL,
+                    json=payload,
+                    headers={
+                        "Authorization": f"Bearer {api_key}",
+                        "Content-Type": "application/json",
+                    },
+                )
+            elapsed_ms = int((time.monotonic() - t0) * 1000)
+
+            if resp.status_code == 429:
+                logger.warning(
+                    "Groq Vision: rate limited (attempt %d/%d)", attempt, max_retries
+                )
+                if attempt < max_retries:
+                    time.sleep(5)
+                    continue
+                return None
+
+            if resp.status_code != 200:
+                logger.warning(
+                    "Groq Vision: HTTP %d %s (attempt %d/%d)",
+                    resp.status_code,
+                    resp.text[:200],
+                    attempt,
+                    max_retries,
+                )
+                if attempt < max_retries:
+                    time.sleep(2)
+                    continue
+                return None
+
+            data = resp.json()
+            content_str = data["choices"][0]["message"]["content"]
+            result = json.loads(content_str)
+
+            usage = data.get("usage", {})
+            logger.info(
+                "Groq Vision: ok in %dms (%d in + %d out tokens)",
+                elapsed_ms,
+                usage.get("prompt_tokens", 0),
+                usage.get("completion_tokens", 0),
+            )
+            return result
+
+        except (httpx.HTTPError, json.JSONDecodeError, KeyError, IndexError) as exc:
+            logger.warning(
+                "Groq Vision: %s (attempt %d/%d)", exc, attempt, max_retries
+            )
+            if attempt < max_retries:
+                time.sleep(2)
+                continue
+            return None
+
+    return None

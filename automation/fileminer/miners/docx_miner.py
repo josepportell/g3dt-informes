@@ -81,11 +81,46 @@ class DocxMiner(BaseMiner):
         return signals
 
     @staticmethod
+    def _extract_doc_legacy(file_path: Path) -> str | None:
+        """Extract text from legacy .doc files using antiword or libreoffice."""
+        import subprocess
+
+        # Try antiword first (fast, lightweight)
+        try:
+            result = subprocess.run(
+                ["antiword", str(file_path)],
+                capture_output=True, text=True, timeout=10,
+            )
+            if result.returncode == 0 and result.stdout.strip():
+                logger.debug("Extracted .doc via antiword: %s (%d chars)", file_path.name, len(result.stdout))
+                return result.stdout
+        except FileNotFoundError:
+            pass  # antiword not installed
+
+        # Fallback: libreoffice conversion to txt
+        try:
+            import tempfile
+            with tempfile.TemporaryDirectory() as tmpdir:
+                subprocess.run(
+                    ["libreoffice", "--headless", "--convert-to", "txt:Text", "--outdir", tmpdir, str(file_path)],
+                    capture_output=True, timeout=30,
+                )
+                txt_path = Path(tmpdir) / f"{file_path.stem}.txt"
+                if txt_path.exists():
+                    text = txt_path.read_text(encoding='utf-8', errors='replace')
+                    logger.debug("Extracted .doc via libreoffice: %s (%d chars)", file_path.name, len(text))
+                    return text
+        except FileNotFoundError:
+            pass  # libreoffice not installed
+
+        logger.warning("Cannot extract .doc text (no antiword or libreoffice): %s", file_path.name)
+        return None
+
+    @staticmethod
     def _extract_docx_text(file_path: Path) -> str | None:
         """Extract text from paragraphs and tables in a Word document.
 
-        For .doc (legacy), attempts python-docx first. If it fails, skips
-        gracefully -- .doc support can be added later with antiword/libreoffice.
+        For .doc (legacy), falls back to antiword/libreoffice.
         """
         try:
             from docx import Document
@@ -96,6 +131,8 @@ class DocxMiner(BaseMiner):
         try:
             doc = Document(str(file_path))
         except Exception as exc:
+            if file_path.suffix.lower() == '.doc':
+                return DocxMiner._extract_doc_legacy(file_path)
             logger.debug("Could not open Word doc %s: %s", file_path, exc)
             return None
 

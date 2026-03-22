@@ -8,6 +8,7 @@ SmartScan classifies files (what IS this?); FileMiner extracts data (what's IN i
 from __future__ import annotations
 
 import logging
+import re
 import time
 from collections.abc import Callable
 from pathlib import Path
@@ -20,6 +21,7 @@ from .models import MiningResult, ResolvedValue, Signal, SignalType
 
 __all__ = [
     'mine_project',
+    'mine_project_groq',
     'resolve_competition',
     'MiningResult',
     'ResolvedValue',
@@ -31,7 +33,7 @@ logger = logging.getLogger(__name__)
 
 # Directories to skip when walking the project tree
 _SKIP_DIRS = {
-    'FOTOGRAFIES', 'PDF', 'PDF-V0', 'validation',
+    'FOTOGRAFIES', 'PDF', 'PDF-V0', 'PDF_V0', 'validation',
     '.git', '__pycache__', '.venv', 'node_modules',
 }
 
@@ -46,6 +48,12 @@ _SKIP_EXTENSIONS = {
 _OUR_OUTPUTS = {
     'file_mapping.json', 'user_data.json',
 }
+
+# Reference report patterns to skip (Eva's existing reports, used for comparison only)
+_SKIP_FILENAME_PATTERNS = [
+    re.compile(r'^\d+_informe.*\.docx?$', re.IGNORECASE),
+    re.compile(r'^\d+_portada.*\.docx?$', re.IGNORECASE),
+]
 
 # SmartScan role -> FileMiner source_type mapping
 _ROLE_TO_SOURCE: dict[str, str] = {
@@ -164,6 +172,11 @@ def mine_project(
             result.files_skipped += 1
             continue
 
+        # Skip reference report files
+        if any(pat.match(item.name) for pat in _SKIP_FILENAME_PATTERNS):
+            result.files_skipped += 1
+            continue
+
         files_to_mine.append(item)
 
     # Mine each file
@@ -210,3 +223,140 @@ def mine_project(
     )
 
     return result
+
+
+# Source types that should never be sent to Groq (already handled by vision/dedicated extractors)
+_GROQ_SKIP_SOURCES = {
+    'dades_camp_excel', 'coordenades_txt',
+    'dpsh_vision', 'sondeig_vision', 'planol_vision',
+}
+
+
+def _count_mapped_signals(
+    signals: list[Signal],
+    rel_path: str,
+) -> int:
+    """Count how many signals from a file have maps_to set."""
+    return sum(
+        1 for s in signals
+        if s.source_file == rel_path and s.maps_to is not None
+    )
+
+
+def mine_project_groq(
+    project_path: str | Path,
+    *,
+    file_mapping: dict[str, Any] | None = None,
+    missing_variables: list[str] | None = None,
+    existing_signals: list[Signal] | None = None,
+) -> list[Signal]:
+    """Run Groq LLM miner on files where Python miners underperformed.
+
+    Identifies files with <3 mapped signals from the Python miners and sends
+    them to Groq for deeper extraction, focusing on still-missing variables.
+
+    Args:
+        project_path: Path to the project directory
+        file_mapping: SmartScan result as dict
+        missing_variables: List of variable names still unfilled
+        existing_signals: Signals from the Python mining phase
+
+    Returns:
+        List of new Signal objects from Groq extraction
+    """
+    import os
+
+    project_path = Path(project_path)
+    existing_signals = existing_signals or []
+
+    if os.environ.get("G3DT_USE_GROQ", "").strip() != "1":
+        logger.debug("mine_project_groq: disabled (G3DT_USE_GROQ != 1)")
+        return []
+    if not os.environ.get("GROQ_API_KEY"):
+        logger.debug("mine_project_groq: disabled (GROQ_API_KEY not set)")
+        return []
+
+    from .miners.groq_miner import GroqMiner
+
+    miner = GroqMiner(
+        project_path,
+        source_type="groq_llm",
+        missing_variables=missing_variables,
+    )
+
+    # Build set of files and their source types
+    file_source_types: dict[str, str] = {}
+    for item in sorted(project_path.rglob('*')):
+        if not item.is_file():
+            continue
+        rel_parts = item.relative_to(project_path).parts
+        if any(part in _SKIP_DIRS for part in rel_parts[:-1]):
+            continue
+        if item.suffix.lower() in _SKIP_EXTENSIONS:
+            continue
+        if _is_our_output(item.name):
+            continue
+        if any(pat.match(item.name) for pat in _SKIP_FILENAME_PATTERNS):
+            continue
+        rel_path = str(item.relative_to(project_path))
+        source_type = _resolve_source_type(item, project_path, file_mapping)
+        file_source_types[rel_path] = source_type
+
+    # Select candidate files
+    new_signals: list[Signal] = []
+    files_sent = 0
+
+    for rel_path, source_type in file_source_types.items():
+        file_path = project_path / rel_path
+
+        # Skip files handled by dedicated extractors
+        if source_type in _GROQ_SKIP_SOURCES:
+            logger.debug(
+                "Groq: skipping %s (source_type=%s, handled by dedicated extractor)",
+                rel_path, source_type,
+            )
+            continue
+
+        # Count how many mapped signals Python miners found for this file
+        n_mapped = _count_mapped_signals(existing_signals, rel_path)
+        if n_mapped >= 3:
+            logger.debug(
+                "Groq: skipping %s (source_type=%s, python_signals=%d >= 3)",
+                rel_path, source_type, n_mapped,
+            )
+            continue
+
+        # Check if miner can handle this file type
+        if not miner.can_mine(file_path):
+            continue
+
+        logger.info(
+            "Groq: will mine %s (source_type=%s, python_signals=%d, missing=%s)",
+            rel_path, source_type, n_mapped,
+            missing_variables[:5] if missing_variables else "all",
+        )
+
+        try:
+            signals = miner.mine(file_path)
+            new_signals.extend(signals)
+            files_sent += 1
+        except Exception as exc:
+            logger.warning("Groq: error mining %s: %s", rel_path, exc)
+
+    logger.info(
+        "mine_project_groq: %d new signals from %d files",
+        len(new_signals), files_sent,
+    )
+
+    try:
+        usage = GroqMiner.get_usage_summary()
+        logger.info(
+            "Groq usage: %d calls, %d cache hits, %d+%d tokens, est. $%.4f (%s)",
+            usage["api_calls"], usage["cache_hits"],
+            usage["input_tokens"], usage["output_tokens"],
+            usage["estimated_cost_usd"], usage["model"],
+        )
+    except Exception:
+        pass
+
+    return new_signals

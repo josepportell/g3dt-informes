@@ -226,7 +226,7 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
     Returns a dict of {field: {value, source, confidence?}} entries.
     Results are cached per project_name; pass force_refresh=True to re-run.
     """
-    if not force_refresh and project_name in _prefill_cache:
+    if not force_refresh and project_name in _prefill_cache and os.environ.get("G3DT_NO_CACHE") != "1":
         return _prefill_cache[project_name]
 
     project_path = _resolve_project(project_name)
@@ -253,6 +253,10 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
         merged[key] = {'value': value, 'source': source}
 
     for key, entry in wizard.prefills.items():
+        # Don't let wizard defaults overwrite real extracted data
+        source = entry.get('source', '') if isinstance(entry, dict) else ''
+        if source == 'default estandard' and key in merged:
+            continue
         merged[key] = entry
 
     if 'street_address' not in merged and 'street_address' in wizard._user_data_full:
@@ -675,10 +679,16 @@ def geocode_coords(
         except (json.JSONDecodeError, KeyError):
             pass
 
+    # Get province from prefills or user_data
+    province = ud.get('province', '')
+    if not province and project_name in _prefill_cache:
+        prov_entry = _prefill_cache[project_name].get('province')
+        province = (prov_entry['value'] if isinstance(prov_entry, dict) else prov_entry) if prov_entry else ''
+
     # Run geocoding
     from automation.geocode_coordinates import geocode_project, GeocodeError
     try:
-        result = geocode_project(address, municipality, point_ids, output_dir=project_path)
+        result = geocode_project(address, municipality, point_ids, output_dir=project_path, province=province)
     except GeocodeError as e:
         raise ValueError(f"Error de geocodificació: {e}")
 
