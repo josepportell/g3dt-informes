@@ -296,6 +296,407 @@ def _parse_address(address: str) -> tuple[str, str, str]:
     return sigla, calle, numero
 
 
+# === Progressive Cadastre Resolution (fuzzy municipality + street) ===
+
+def _consulta_municipio(province: str, municipality_hint: str) -> tuple[str, str, str] | None:
+    """
+    Fuzzy-resolve a municipality name via Cadastre ConsultaMunicipio.
+
+    Args:
+        province: Province name (e.g., "LLEIDA", "HUESCA")
+        municipality_hint: Partial or approximate municipality name
+
+    Returns:
+        Tuple of (official_name, cp, cm) or None if not found.
+        cp = INE province code, cm = INE municipality code.
+    """
+    url = (
+        f"{CADASTRE_CALLEJERO_URL}/ConsultaMunicipio"
+        f"?Provincia={urllib.parse.quote(province)}"
+        f"&Municipio={urllib.parse.quote(municipality_hint)}"
+    )
+    logger.debug(f"ConsultaMunicipio URL: {url}")
+
+    try:
+        response_text = _fetch_url(url)
+    except GeocodeConnectionError as e:
+        logger.warning(f"ConsultaMunicipio connection failed: {e}")
+        return None
+    finally:
+        time.sleep(0.3)
+
+    try:
+        root = ET.fromstring(response_text)
+    except ET.ParseError as e:
+        logger.warning(f"ConsultaMunicipio XML parse error: {e}")
+        return None
+
+    # Find all <muni> elements
+    muni_elems = _find_all_elements(root, "muni")
+    if not muni_elems:
+        logger.debug(f"ConsultaMunicipio: no muni elements for '{municipality_hint}' in '{province}'")
+        return None
+
+    hint_upper = municipality_hint.upper().strip()
+    hint_words = set(hint_upper.split())
+    candidates: list[tuple[int, int, str, str, str]] = []
+
+    for muni_elem in muni_elems:
+        nm_elem = _find_element(muni_elem, "nm")
+        if nm_elem is None or not nm_elem.text:
+            continue
+        official_name = nm_elem.text.strip()
+
+        # Extract loine/cp and loine/cm
+        cp_elem = _find_element(muni_elem, "loine/cp")
+        cm_elem = _find_element(muni_elem, "loine/cm")
+        cp = cp_elem.text.strip() if cp_elem is not None and cp_elem.text else ""
+        cm = cm_elem.text.strip() if cm_elem is not None and cm_elem.text else ""
+
+        name_upper = official_name.upper()
+
+        # Score candidates
+        if name_upper == hint_upper:
+            score = 100
+        elif name_upper.startswith(hint_upper):
+            score = 80
+        else:
+            candidate_words = set(name_upper.split())
+            if hint_words and hint_words.issubset(candidate_words):
+                score = 60
+            elif hint_words & candidate_words:
+                score = 40
+            else:
+                continue
+
+        # Store: (-score for desc sort, len for asc tiebreak, name, cp, cm)
+        candidates.append((-score, len(official_name), official_name, cp, cm))
+
+    if not candidates:
+        logger.debug(f"ConsultaMunicipio: no match for '{municipality_hint}' in '{province}'")
+        return None
+
+    candidates.sort()
+    best = candidates[0]
+    return best[2], best[3], best[4]
+
+
+def _consulta_via(province: str, municipality: str, street_hint: str) -> tuple[str, str, str] | None:
+    """
+    Fuzzy-resolve a street name via Cadastre ConsultaVia.
+
+    Args:
+        province: Province name
+        municipality: Official municipality name (from _consulta_municipio)
+        street_hint: Partial street name (e.g., "Ferraz", "Mestre Ramon")
+
+    Returns:
+        Tuple of (official_street_name, tipo_via, cv) or None.
+        tipo_via = street type code (CL, AV, etc.), cv = street code.
+    """
+    # Expand common Spanish abbreviations before searching
+    _ABBREVIATIONS = {
+        "sta.": "Santa", "sta": "Santa", "sto.": "Santo", "sto": "Santo",
+        "gral.": "General", "gral": "General",
+        "dr.": "Doctor", "dr": "Doctor",
+        "av.": "Avenida", "avda.": "Avenida",
+        "ctra.": "Carretera",
+        "mn.": "Mossen", "mn": "Mossen",
+    }
+    expanded_words = []
+    for w in street_hint.strip().split():
+        expanded_words.append(_ABBREVIATIONS.get(w.lower(), w))
+    expanded_hint = " ".join(expanded_words)
+
+    # Try progressively shorter hints if no results
+    hint_words = expanded_hint.split()
+    attempts = [expanded_hint]
+    if expanded_hint != street_hint.strip():
+        attempts.insert(0, street_hint.strip())  # try original first
+    for i in range(len(hint_words) - 1, 0, -1):
+        attempts.append(" ".join(hint_words[:i]))
+
+    for current_hint in attempts:
+        result = _consulta_via_single(province, municipality, current_hint)
+        if result is not None:
+            return result
+
+    return None
+
+
+def _consulta_via_single(
+    province: str, municipality: str, street_hint: str
+) -> tuple[str, str, str] | None:
+    """Single ConsultaVia API call with fuzzy matching."""
+    url = (
+        f"{CADASTRE_CALLEJERO_URL}/ConsultaVia"
+        f"?Provincia={urllib.parse.quote(province)}"
+        f"&Municipio={urllib.parse.quote(municipality)}"
+        f"&TipoVia="
+        f"&NombreVia={urllib.parse.quote(street_hint)}"
+    )
+    logger.debug(f"ConsultaVia URL: {url}")
+
+    try:
+        response_text = _fetch_url(url)
+    except GeocodeConnectionError as e:
+        logger.warning(f"ConsultaVia connection failed: {e}")
+        return None
+    finally:
+        time.sleep(0.3)
+
+    try:
+        root = ET.fromstring(response_text)
+    except ET.ParseError as e:
+        logger.warning(f"ConsultaVia XML parse error: {e}")
+        return None
+
+    # Check for errors
+    for err_elem in _find_all_elements(root, "err"):
+        des_elem = _find_element(err_elem, "des")
+        if des_elem is not None and des_elem.text:
+            logger.debug(f"ConsultaVia error: {des_elem.text}")
+            return None
+
+    # Find street candidates — look for <dir> or <calle> elements
+    hint_upper = street_hint.upper().strip()
+    hint_words = set(hint_upper.split())
+    # Filter out short/common words for overlap scoring
+    significant_words = {w for w in hint_words if len(w) > 2}
+
+    candidates: list[tuple[int, int, str, str, str]] = []
+
+    # Try multiple element structures the API might return
+    for tag in ("dir", "calle"):
+        for elem in _find_all_elements(root, tag):
+            nv_elem = _find_element(elem, "nv")
+            tv_elem = _find_element(elem, "tv")
+            cv_elem = _find_element(elem, "cv")
+
+            if nv_elem is None or not nv_elem.text:
+                continue
+
+            street_name = nv_elem.text.strip()
+            tipo_via = tv_elem.text.strip() if tv_elem is not None and tv_elem.text else ""
+            cv = cv_elem.text.strip() if cv_elem is not None and cv_elem.text else ""
+
+            name_upper = street_name.upper()
+            candidate_words = set(name_upper.split())
+            significant_candidate = {w for w in candidate_words if len(w) > 2}
+
+            # Score
+            if hint_words and hint_words.issubset(candidate_words):
+                score = 80
+            elif hint_upper in name_upper:
+                score = 60
+            elif significant_words and significant_words & significant_candidate:
+                score = 40
+            else:
+                continue
+
+            candidates.append((-score, len(street_name), street_name, tipo_via, cv))
+
+    if not candidates:
+        logger.debug(f"ConsultaVia: no match for '{street_hint}' in {municipality}")
+        return None
+
+    candidates.sort()
+    best = candidates[0]
+    return best[2], best[3], best[4]
+
+
+def _pick_nearest_rc_from_numerero(root: ET.Element, house_number: str) -> str | None:
+    """Extract RC from the nearest house number in a DNPLOC <numerero> block.
+
+    When the Cadastre API returns error 43 (number doesn't exist), it may
+    include a <numerero> block with nearby house numbers and their RCs.
+    This picks the one closest to the requested number.
+
+    Note: <nump> structure is <nump> -> <pc> -> <pc1>,<pc2> and <nump> -> <num> -> <pnp>,
+    so we use _find_element with path notation (e.g. "pc/pc1") for nested children.
+    """
+    nump_elems = _find_all_elements(root, "nump")
+    if not nump_elems:
+        return None
+    try:
+        target = int(house_number) if house_number else 1
+    except ValueError:
+        target = 1
+    best_rc = None
+    best_dist = float("inf")
+    for nump in nump_elems:
+        pnp_elem = _find_element(nump, "num/pnp")
+        pc1_elem = _find_element(nump, "pc/pc1")
+        pc2_elem = _find_element(nump, "pc/pc2")
+        if pnp_elem is not None and pnp_elem.text and pc1_elem is not None and pc1_elem.text:
+            try:
+                num_val = int(pnp_elem.text.strip())
+            except ValueError:
+                continue
+            dist = abs(num_val - target)
+            if dist < best_dist:
+                best_dist = dist
+                pc1 = pc1_elem.text.strip()
+                pc2 = pc2_elem.text.strip() if pc2_elem is not None and pc2_elem.text else ""
+                best_rc = pc1 + pc2
+    return best_rc
+
+
+def cadastre_progressive_lookup(
+    street_name: str,
+    house_number: str,
+    municipality_hint: str,
+    province: str,
+) -> dict | None:
+    """
+    Progressive Cadastre resolution: fuzzy municipality -> fuzzy street -> DNPLOC.
+
+    More robust than direct Consulta_DNPLOC because it uses Cadastre's own
+    fuzzy search to resolve municipality and street names before lookup.
+
+    Returns: {"rc": str, "xcen": float|None, "ycen": float|None} or None.
+    """
+    # Step 1: Resolve municipality
+    muni_result = _consulta_municipio(province, municipality_hint)
+    if muni_result is None:
+        logger.warning(f"Progressive cadastre: municipality '{municipality_hint}' not found in {province}")
+        return None
+    official_muni, cp, cm = muni_result
+    logger.info(f"Progressive cadastre: municipality '{municipality_hint}' -> '{official_muni}'")
+
+    # Step 2: Resolve street
+    via_result = _consulta_via(province, official_muni, street_name)
+    if via_result is None:
+        logger.warning(f"Progressive cadastre: street '{street_name}' not found in {official_muni}")
+        return None
+    official_street, tipo_via, cv = via_result
+    logger.info(f"Progressive cadastre: street '{street_name}' -> '{official_street}' ({tipo_via})")
+
+    # Step 3: DNPLOC with resolved names
+    params = (
+        f"?Provincia={urllib.parse.quote(province)}"
+        f"&Municipio={urllib.parse.quote(official_muni)}"
+        f"&Sigla={urllib.parse.quote(tipo_via)}"
+        f"&Calle={urllib.parse.quote(official_street)}"
+        f"&Numero={urllib.parse.quote(house_number)}"
+        f"&Bloque=&Escalera=&Planta=&Puerta="
+    )
+    url = f"{CADASTRE_CALLEJERO_URL}/Consulta_DNPLOC{params}"
+    logger.debug(f"Progressive DNPLOC URL: {url}")
+
+    try:
+        response_text = _fetch_url(url)
+    except GeocodeConnectionError as e:
+        logger.warning(f"Progressive DNPLOC connection failed: {e}")
+        return None
+
+    time.sleep(0.3)
+
+    try:
+        root = ET.fromstring(response_text)
+    except ET.ParseError as e:
+        logger.warning(f"Progressive DNPLOC XML parse error: {e}")
+        return None
+
+    # Check for errors — but try to recover from common ones
+    error_codes = set()
+    for err_elem in _find_all_elements(root, "err"):
+        cod_elem = _find_element(err_elem, "cod")
+        des_elem = _find_element(err_elem, "des")
+        cod = cod_elem.text.strip() if cod_elem is not None and cod_elem.text else ""
+        des = des_elem.text.strip() if des_elem is not None and des_elem.text else ""
+        error_codes.add(cod)
+        logger.debug(f"Progressive DNPLOC error {cod}: {des}")
+
+    # Error 43 = "number doesn't exist" — API may return nearby numbers in <numerero>
+    # Error 41 = "number is required" — empty house_number
+    if "43" in error_codes:
+        # Try to pick nearest house number from <numerero> block
+        rc = _pick_nearest_rc_from_numerero(root, house_number)
+        if rc:
+            logger.info(f"Progressive cadastre: nearest number fallback -> RC {rc}")
+            xcen: float | None = None
+            ycen: float | None = None
+            utm_coords = cadastre_rc_to_utm(rc)
+            if utm_coords:
+                xcen, ycen = utm_coords
+            return {"rc": rc, "xcen": xcen, "ycen": ycen}
+        logger.warning("Progressive cadastre: number not found and no nearby numbers")
+        return None
+
+    if "41" in error_codes and not house_number.strip():
+        # Empty house number — retry DNPLOC with "1" as fallback
+        logger.info("Progressive cadastre: empty number, retrying DNPLOC with '1'")
+        time.sleep(0.3)
+        retry_params = (
+            f"?Provincia={urllib.parse.quote(province)}"
+            f"&Municipio={urllib.parse.quote(official_muni)}"
+            f"&Sigla={urllib.parse.quote(tipo_via)}"
+            f"&Calle={urllib.parse.quote(official_street)}"
+            f"&Numero=1"
+            f"&Bloque=&Escalera=&Planta=&Puerta="
+        )
+        retry_url = f"{CADASTRE_CALLEJERO_URL}/Consulta_DNPLOC{retry_params}"
+        try:
+            retry_text = _fetch_url(retry_url)
+        except GeocodeConnectionError as e:
+            logger.warning(f"Progressive DNPLOC retry connection failed: {e}")
+            return None
+        try:
+            retry_root = ET.fromstring(retry_text)
+        except ET.ParseError:
+            return None
+        # On retry, accept either a direct hit or pick from nearby numbers
+        retry_err_codes = set()
+        for err_elem in _find_all_elements(retry_root, "err"):
+            cod_elem = _find_element(err_elem, "cod")
+            if cod_elem is not None and cod_elem.text:
+                retry_err_codes.add(cod_elem.text.strip())
+        if "43" in retry_err_codes:
+            # Number 1 doesn't exist — pick first available from nearby
+            rc = _pick_nearest_rc_from_numerero(retry_root, "1")
+            if rc:
+                logger.info(f"Progressive cadastre: retry nearest number -> RC {rc}")
+                xcen_r: float | None = None
+                ycen_r: float | None = None
+                utm_coords = cadastre_rc_to_utm(rc)
+                if utm_coords:
+                    xcen_r, ycen_r = utm_coords
+                return {"rc": rc, "xcen": xcen_r, "ycen": ycen_r}
+            return None
+        if not retry_err_codes:
+            # Direct hit with number=1 — use retry response for RC extraction
+            root = retry_root
+            error_codes = set()  # Clear errors so we fall through to RC extraction
+        else:
+            return None
+
+    if error_codes:
+        logger.warning(f"Progressive cadastre: unrecoverable errors {error_codes}")
+        return None
+
+    # Extract RC (pc1 + pc2)
+    pc1_elems = _find_all_elements(root, "pc1")
+    pc2_elems = _find_all_elements(root, "pc2")
+    if not pc1_elems or not pc1_elems[0].text:
+        logger.warning("Progressive cadastre: no pc1 in DNPLOC response")
+        return None
+
+    pc1 = pc1_elems[0].text.strip()
+    pc2 = pc2_elems[0].text.strip() if pc2_elems and pc2_elems[0].text else ""
+    rc = pc1 + pc2
+    logger.info(f"Progressive cadastre: found RC {rc}")
+
+    # Step 4: Get UTM coordinates via existing helper
+    xcen: float | None = None
+    ycen: float | None = None
+    utm_coords = cadastre_rc_to_utm(rc)
+    if utm_coords:
+        xcen, ycen = utm_coords
+
+    return {"rc": rc, "xcen": xcen, "ycen": ycen}
+
+
 _CATALAN_PROVINCES = ["LLEIDA", "BARCELONA", "GIRONA", "TARRAGONA"]
 
 
@@ -983,14 +1384,28 @@ def geocode_project(
         logger.debug(f"Cache hit for geocode '{address}, {municipality}'")
         return cached
 
-    # 2. PRIMARY PATH: Cadastre address lookup
+    # 2. PRIMARY PATH: Progressive Cadastre resolution (fuzzy municipality + street)
     rc: str | None = None
     centroid_x: float | None = None
     centroid_y: float | None = None
     utm_zone: int = 31  # default; overwritten by _wgs84_to_utm if conversion happens
-    source = "geocode:cadastre_address"
+    source = "geocode:cadastre_progressive"
 
-    cadastre_result = cadastre_address_lookup(address, municipality, province=province)
+    # Extract components from address for progressive lookup
+    sigla, parsed_street, parsed_number = _parse_address(address)
+
+    cadastre_result = cadastre_progressive_lookup(
+        street_name=parsed_street,
+        house_number=parsed_number,
+        municipality_hint=municipality,
+        province=province,
+    )
+
+    if not cadastre_result:
+        # Fall back to direct DNPLOC (previous approach)
+        source = "geocode:cadastre_address"
+        cadastre_result = cadastre_address_lookup(address, municipality, province=province)
+
     if cadastre_result:
         rc = cadastre_result["rc"]
         # Get UTM centroid via Consulta_CPMRC
