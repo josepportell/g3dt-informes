@@ -994,6 +994,10 @@
             background: #f3f4f6;
             color: #6b7280;
         }
+        .source-badge.groq {
+            background: #fef3c7;
+            color: #92400e;
+        }
         .alt-badge {
             display: inline-block;
             font-size: 10px;
@@ -1371,6 +1375,36 @@
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
+        /* Groq vision button */
+        .btn-vision-groq {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: #f59e0b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 8px;
+        }
+        .btn-vision-groq:hover:not(:disabled) { background: #d97706; }
+        .btn-vision-groq:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .btn-vision-groq svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+        .btn-vision-groq .vstep-spinner-inline {
+            display: inline-block;
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
         .vision-timing-panel {
             margin-top: 10px;
             padding: 8px 12px;
@@ -1408,6 +1442,10 @@
             <select id="projectSelect" onchange="onProjectChange(this.value)">
                 <option value="">-- Selecciona projecte --</option>
             </select>
+            <select id="groqModelSelect" onchange="onGroqModelChange(this.value)"
+                    title="Model Groq text miner"
+                    style="margin-left:12px; font-size:0.82em; padding:2px 6px; max-width:180px; color:#666;">
+            </select>
             <span class="wizard-unsaved" id="wizardUnsaved">Canvis sense guardar</span>
         </div>
 
@@ -1426,6 +1464,17 @@
                     <div class="step-files" id="step-files-scan"></div>
                 </div>
                 <div class="step-connector" id="conn-1"></div>
+                <div class="pipeline-step" id="step-mine">
+                    <div class="step-circle">
+                        <div class="step-spinner"></div>
+                        <span class="step-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </span>
+                    </div>
+                    <span class="step-label">Miner</span>
+                    <div class="step-files" id="step-files-mine"></div>
+                </div>
+                <div class="step-connector" id="conn-2"></div>
                 <div class="pipeline-step" id="step-extract">
                     <div class="step-circle">
                         <div class="step-spinner"></div>
@@ -1436,7 +1485,7 @@
                     <span class="step-label">Dades</span>
                     <div class="step-files" id="step-files-extract"></div>
                 </div>
-                <div class="step-connector" id="conn-2"></div>
+                <div class="step-connector" id="conn-3"></div>
                 <div class="pipeline-step" id="step-ready">
                     <div class="step-circle">
                         <div class="step-spinner"></div>
@@ -1463,6 +1512,7 @@
                 <button class="tab" id="tab-smartscan" data-tab="smartscan" onclick="switchTab('smartscan')">SmartScan</button>
                 <button class="tab" id="tab-wizard" data-tab="wizard" onclick="switchTab('wizard')">Wizard</button>
                 <button class="tab disabled" id="tab-explicacio" data-tab="explicacio" onclick="switchTab('explicacio')">Explicacio</button>
+                <button class="tab" id="tab-dev" data-tab="dev" onclick="switchTab('dev')">Dev</button>
             </div>
 
             <!-- SmartScan Tab Content -->
@@ -1721,6 +1771,16 @@
                 </div>
             </div>
 
+            <!-- Dev Analysis Tab Content -->
+            <div class="tab-content" id="dev-content">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <h2 style="margin:0;">Dev Analysis</h2>
+                    <button class="btn btn-secondary" onclick="loadDevAnalysis()" style="padding:8px 16px;">Refresh</button>
+                </div>
+                <div id="devLoading" style="display:none; text-align:center; padding:40px; color:#7f8c8d;">Loading analysis...</div>
+                <div id="devResults"></div>
+            </div>
+
             <!-- Explicacio Tab Content -->
             <div class="tab-content" id="explicacio-content">
                 <div style="padding: 40px; text-align: center; color: #7f8c8d;">
@@ -1766,7 +1826,7 @@
         const messageDiv = document.getElementById('message');
 
         // Pipeline stepper (SSE-based, 3 steps: scan → extract → ready)
-        const PIPELINE_STEPS = ['scan', 'extract', 'ready'];
+        const PIPELINE_STEPS = ['scan', 'mine', 'extract', 'ready'];
         let activeEventSource = null;
         let visionPollTimer = null;
 
@@ -1778,7 +1838,7 @@
             PIPELINE_STEPS.forEach(s => {
                 document.getElementById(`step-${s}`).className = 'pipeline-step';
             });
-            ['conn-1','conn-2'].forEach(c => {
+            ['conn-1','conn-2','conn-3'].forEach(c => {
                 document.getElementById(c).className = 'step-connector';
             });
             // Clear step-files
@@ -1880,18 +1940,22 @@
             if (tabName === 'wizard' && selectedProject && !wizardDataLoaded) {
                 loadWizardData();
             }
+            if (tabName === 'dev' && !devLoaded && selectedProject) {
+                loadDevAnalysis();
+            }
         }
 
         function detectAvailableTabs() {
             availableTabs = ['smartscan', 'wizard'];
             if (selectedProject) {
                 availableTabs.push('explicacio');
+                availableTabs.push('dev');
             }
             return availableTabs;
         }
 
         function updateTabVisibility() {
-            const tabs = ['smartscan', 'wizard', 'explicacio'];
+            const tabs = ['smartscan', 'wizard', 'explicacio', 'dev'];
             tabs.forEach(tab => {
                 const tabBtn = document.getElementById(`tab-${tab}`);
                 if (!tabBtn) return;
@@ -2867,6 +2931,37 @@
         }
         loadProjects();
 
+        // Load Groq model selector
+        function loadGroqModels() {
+            fetch('/api/groq-models')
+                .then(r => r.ok ? r.json() : Promise.reject('No API'))
+                .then(data => {
+                    const sel = document.getElementById('groqModelSelect');
+                    sel.innerHTML = '';
+                    data.models.forEach(m => {
+                        const opt = document.createElement('option');
+                        opt.value = m.id;
+                        opt.textContent = m.name;
+                        if (m.id === data.current_model) opt.selected = true;
+                        sel.appendChild(opt);
+                    });
+                })
+                .catch(() => {
+                    document.getElementById('groqModelSelect').style.display = 'none';
+                });
+        }
+        loadGroqModels();
+
+        function onGroqModelChange(model) {
+            fetch('/api/groq-model', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({model}),
+            }).then(r => r.json()).then(data => {
+                console.log('Groq model set to:', data.model);
+            });
+        }
+
         function onProjectChange(projectName) {
             selectedProject = projectName;
             wizardDataLoaded = false;
@@ -2931,6 +3026,12 @@
                 if (activeEventSource !== es) return;
                 const data = JSON.parse(e.data);
                 appendStepFile('extract', data.name, data.ok ? 'ok' : 'skip');
+            });
+
+            es.addEventListener('groq', (e) => {
+                if (activeEventSource !== es) return;
+                const data = JSON.parse(e.data);
+                appendStepFile('mine', data.name, data.ok ? 'ok' : 'skip');
             });
 
             es.addEventListener('prefills', (e) => {
@@ -3033,6 +3134,10 @@
                         <button class="btn-vision-fast" id="btnStartVisionFast" onclick="startVisionFast(false)">
                             ${VISION_EYE_SVG}
                             Visio rapida
+                        </button>
+                        <button class="btn-vision-groq" id="btnStartVisionGroq" onclick="startVisionGroq(false)">
+                            ${VISION_EYE_SVG}
+                            Visio Groq
                         </button>
                     </div>
                     <div class="vision-badges" style="margin-top: 8px;">${badges}</div>
@@ -3307,6 +3412,118 @@
                             timingPanel.innerHTML += `<div class="timing-line error">Error (rc=${data.returncode || '?'})</div>`;
                             visionRunning = false;
                             showMessage('La visio rapida ha fallat. Prova amb la visio normal.', 'error');
+                        }
+                    }
+                })
+                .catch(() => {});
+        }
+
+        // --- Groq Vision (Llama 4 Scout, parallel, ~5s) ---
+        let groqVisionPollTimer = null;
+
+        async function startVisionGroq(force) {
+            const btn = document.getElementById('btnStartVisionGroq');
+            if (!selectedProject) return;
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<div class="vstep-spinner-inline"></div> Processant...';
+            }
+            const slowBtn = document.getElementById('btnStartVision');
+            const fastBtn = document.getElementById('btnStartVisionFast');
+            if (slowBtn) slowBtn.disabled = true;
+            if (fastBtn) fastBtn.disabled = true;
+
+            const timingPanel = document.getElementById('visionTimingPanel');
+            if (timingPanel) {
+                timingPanel.style.display = 'block';
+                timingPanel.innerHTML = '<div class="timing-line">Iniciant Visio Groq...</div>';
+            }
+
+            try {
+                const res = await fetch(`/api/vision-groq/${encodeURIComponent(selectedProject)}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({force: !!force}),
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || `HTTP ${res.status}`);
+                }
+
+                const data = await res.json();
+                if (data.status === 'already_running') {
+                    if (timingPanel) timingPanel.innerHTML += '<div class="timing-line">Ja en curs...</div>';
+                }
+
+                startGroqVisionPolling();
+
+            } catch (err) {
+                if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Visio Groq'; }
+                if (slowBtn) slowBtn.disabled = false;
+                if (fastBtn) fastBtn.disabled = false;
+                showMessage('Error iniciant Visio Groq: ' + err.message, 'error');
+                if (timingPanel) timingPanel.style.display = 'none';
+            }
+        }
+
+        function startGroqVisionPolling() {
+            if (groqVisionPollTimer) clearInterval(groqVisionPollTimer);
+            groqVisionPollTimer = setInterval(checkGroqVisionStatus, 1500);
+        }
+
+        function checkGroqVisionStatus() {
+            if (!selectedProject) return;
+
+            fetch(`/api/vision-groq-status/${encodeURIComponent(selectedProject)}`)
+                .then(r => r.json())
+                .then(data => {
+                    const timingPanel = document.getElementById('visionTimingPanel');
+                    if (!timingPanel) return;
+
+                    // Update timing panel with log entries
+                    if (data.log && data.log.length > 0) {
+                        let html = '';
+                        for (const line of data.log) {
+                            const cls = line.includes('complete') ? 'complete' :
+                                       line.includes('error') ? 'error' : '';
+                            html += `<div class="timing-line ${cls}">${line}</div>`;
+                        }
+                        timingPanel.innerHTML = html;
+                        timingPanel.scrollTop = timingPanel.scrollHeight;
+                    }
+
+                    // Update vision dots
+                    if (data.files) {
+                        for (const [key, val] of Object.entries(data.files)) {
+                            const dot = document.getElementById(`vdot-${key}`);
+                            if (dot && val) dot.className = 'vision-dot done';
+                        }
+                    }
+
+                    if (data.status === 'completed' || data.status === 'error') {
+                        clearInterval(groqVisionPollTimer);
+                        groqVisionPollTimer = null;
+
+                        const btn = document.getElementById('btnStartVisionGroq');
+                        const slowBtn = document.getElementById('btnStartVision');
+                        const fastBtn = document.getElementById('btnStartVisionFast');
+                        if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Visio Groq'; }
+                        if (slowBtn) slowBtn.disabled = false;
+                        if (fastBtn) fastBtn.disabled = false;
+
+                        if (data.status === 'completed') {
+                            const elapsed = data.elapsed ? data.elapsed.toFixed(1) : '?';
+                            timingPanel.innerHTML += `<div class="timing-line complete">Completat en ${elapsed}s</div>`;
+                            if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
+                            visionRunning = false;
+                            showMessage(`Visio Groq completada en ${elapsed}s! Actualitzant...`, 'success');
+                            loadProjectData(selectedProject);
+                        } else {
+                            timingPanel.innerHTML += `<div class="timing-line error">Error en Visio Groq</div>`;
+                            visionRunning = false;
+                            showMessage('La Visio Groq ha fallat.', 'error');
                         }
                     }
                 })
@@ -3623,6 +3840,9 @@
             } else if (source.includes('plantilla')) {
                 label = 'plantilla';
                 cls = 'auto';
+            } else if (source.startsWith('groq_llm:')) {
+                label = 'groq:' + source.split('/').pop();
+                cls = 'groq';
             } else if (label.length > 20) {
                 label = label.substring(0, 18) + '...';
             }
@@ -4119,6 +4339,107 @@
                 btn.disabled = false;
                 btn.textContent = 'Audit Visual';
             }
+        }
+
+        // --- Dev Analysis Tab ---
+        let devLoaded = false;
+
+        async function loadDevAnalysis() {
+            if (!selectedProject) return;
+            const loading = document.getElementById('devLoading');
+            const results = document.getElementById('devResults');
+            loading.style.display = 'block';
+            results.style.display = 'none';
+
+            try {
+                const resp = await fetch(`/api/dev-analysis/${encodeURIComponent(selectedProject)}`);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const data = await resp.json();
+                renderDevAnalysis(data);
+                devLoaded = true;
+            } catch(e) {
+                results.innerHTML = `<div style="color:red; padding:20px;">Error: ${e.message}</div>`;
+                results.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderDevAnalysis(data) {
+            const results = document.getElementById('devResults');
+
+            // Coverage bar
+            const pct = data.coverage_pct;
+            const barColor = pct > 70 ? '#27ae60' : pct > 40 ? '#f39c12' : '#e74c3c';
+
+            let html = `
+                <div style="background:#f8f9fa; border-radius:8px; padding:16px; margin-bottom:20px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                        <span><strong>${data.filled_count}</strong> / ${data.total_target} variables filled</span>
+                        <span style="font-weight:600; color:${barColor}">${pct}%</span>
+                    </div>
+                    <div style="background:#e0e0e0; border-radius:4px; height:8px; overflow:hidden;">
+                        <div style="background:${barColor}; height:100%; width:${pct}%; transition:width 0.3s;"></div>
+                    </div>
+                </div>
+            `;
+
+            // Category cards
+            const catColors = {
+                fileminer: '#3498db',
+                groq_llm: '#f59e0b',
+                contingut: '#8b5cf6',
+                vision: '#10b981',
+                icgc: '#06b6d4',
+                other: '#6b7280',
+            };
+
+            for (const [catKey, cat] of Object.entries(data.categories)) {
+                const color = catColors[catKey] || '#6b7280';
+                const count = Object.keys(cat.items).length;
+
+                let itemsHtml = '';
+                for (const [varName, info] of Object.entries(cat.items)) {
+                    const altCount = (data.alternatives[varName] || []).length;
+                    const altBadge = altCount > 0 ? `<span style="background:#e0e0e0; color:#555; font-size:10px; padding:1px 5px; border-radius:8px; margin-left:4px;">+${altCount}</span>` : '';
+                    itemsHtml += `
+                        <tr>
+                            <td style="padding:4px 8px; font-family:monospace; font-size:12px; color:#555; white-space:nowrap;">${varName}</td>
+                            <td style="padding:4px 8px; font-size:13px; max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${info.value}${altBadge}</td>
+                        </tr>
+                    `;
+                }
+
+                html += `
+                    <div style="border:1px solid #e0e0e0; border-radius:8px; margin-bottom:12px; overflow:hidden;">
+                        <div style="background:${color}; color:white; padding:10px 16px; display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:600;">${cat.label}</span>
+                            <span style="background:rgba(255,255,255,0.2); padding:2px 10px; border-radius:12px; font-size:13px;">${count} vars</span>
+                        </div>
+                        <table style="width:100%; border-collapse:collapse;">
+                            ${itemsHtml}
+                        </table>
+                    </div>
+                `;
+            }
+
+            // Unfilled variables
+            if (data.unfilled.length > 0) {
+                html += `
+                    <div style="border:1px solid #fecaca; border-radius:8px; margin-bottom:12px; overflow:hidden;">
+                        <div style="background:#fee2e2; color:#991b1b; padding:10px 16px; display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:600;">Unfilled</span>
+                            <span style="background:rgba(153,27,27,0.1); padding:2px 10px; border-radius:12px; font-size:13px;">${data.unfilled.length} vars</span>
+                        </div>
+                        <div style="padding:12px 16px; display:flex; flex-wrap:wrap; gap:6px;">
+                            ${data.unfilled.map(v => `<span style="background:#f3f4f6; padding:3px 8px; border-radius:4px; font-family:monospace; font-size:12px; color:#6b7280;">${v}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            results.innerHTML = html;
+            results.style.display = 'block';
         }
 
         // Warn before leaving with unsaved wizard changes
