@@ -113,7 +113,7 @@ class ImageManager:
             'site': [], 'dpsh': [], 'sondeig': [], 'materials': [],
         }
 
-        # ── Priority 1: SmartScan role-based discovery ──
+        # ── Priority 1: SmartScan role-based discovery (seeds results) ──
         roles = self._load_file_mapping()
         if roles:
             for role_name, category in ROLE_TO_PHOTO_CATEGORY.items():
@@ -123,14 +123,15 @@ class ImageManager:
                         result[category].append(photo_path)
                         logger.info(f"Photo from SmartScan role: {role_name} → {category} ({photo_path.name})")
 
-            # If SmartScan filled all categories, we're done
-            if all(result.values()):
-                logger.info("All photo categories filled by SmartScan roles")
-                return result
+        # Always continue with slug-based search to find ADDITIONAL photos.
+        # The report needs multiple photos per category (e.g., 2 site photos
+        # side-by-side). SmartScan roles give one winner per role — slugs supplement.
 
-        # ── Priority 2+3: Slug-based + fallback (original logic) ──
+        # ── Priority 2+3: Slug-based + fallback (supplements role results) ──
         foto_dir = self._find_photos_dir()
         if not foto_dir:
+            if all(result.values()):
+                return result  # roles found enough, no photos dir needed
             logger.warning("No photos directory found")
             return result
 
@@ -194,6 +195,9 @@ class ImageManager:
         }
 
         for key, slug in PHOTO_SLUGS.items():
+            if result[key]:
+                # Already seeded by SmartScan roles — skip slug search for this category
+                continue
             matches = _find_by_slug(slug, search_dirs[key])
             if matches:
                 result[key] = matches
