@@ -74,6 +74,34 @@ ROLE_TO_FIGURE_VAR = {
 }
 
 
+# ──────────────────────────────────────────────────────────────
+# AI Photo Selection prompt (Phase 7)
+# ──────────────────────────────────────────────────────────────
+
+PHOTO_SELECTION_PROMPT = """You are selecting field photographs for a geotechnical report.
+
+The report needs these photos in specific slots:
+
+SLOT 1 — "site_1": General view of the construction site or plot. Wide angle showing
+  the terrain, surroundings, access road. The reader should understand WHERE the project is.
+SLOT 2 — "site_2": Second site overview from a different angle or showing a different aspect.
+  Together with site_1, these go side-by-side to give a complete picture of the site.
+SLOT 3 — "dpsh": The DPSH penetrometer machine/equipment during testing. Shows the rig,
+  the tube going into the ground, or the hammer mechanism.
+SLOT 4 — "sondeig": The borehole/drilling (sondeig) machine during testing. Shows the
+  rotary rig, drill rods, or the drilling process. ONLY if borehole testing was performed.
+SLOT 5 — "materials": Close-up of soil samples, SPT spoon with soil, core boxes, or
+  material detail. Shows what the soil/rock looks like.
+
+Below are numbered thumbnail images from the project's field photos folder.
+For each slot, pick the BEST image number. If no image fits a slot, use null.
+An image can only be assigned to ONE slot (no duplicates).
+
+Respond in JSON:
+{"site_1": <number>, "site_2": <number>, "dpsh": <number>, "sondeig": <number|null>, "materials": <number>}
+"""
+
+
 class ImageManager:
     """
     Manages image discovery and InlineImage context building.
@@ -83,6 +111,8 @@ class ImageManager:
     2. Field photos (from FOTOGRAFIES/ subfolders)
     3. Orthophoto ICGC (aerial location view)
     4. Geological map ICGC
+
+    Phase 7: AI photo selection — Claude/Groq sees all photos and picks best per slot.
     """
 
     def __init__(
@@ -232,6 +262,271 @@ class ImageManager:
             f"materials={len(result['materials'])}"
         )
         return result
+
+    def select_photos_ai(self) -> dict[str, list[Path]] | None:
+        """Phase 7: AI-based photo selection.
+
+        Gathers all candidate photos, creates a numbered thumbnail grid,
+        and asks Claude Code (or Groq fallback) to pick the best photo
+        for each report slot.
+
+        Returns dict matching discover_photos() format, or None if AI
+        selection not available (caller falls back to pattern matching).
+        """
+        foto_dir = self._find_photos_dir()
+        if not foto_dir:
+            return None
+
+        # Gather ALL image files recursively from photos dir
+        image_exts = {'.jpg', '.jpeg', '.png'}
+        candidates: list[Path] = []
+        for f in sorted(foto_dir.rglob('*')):
+            if f.is_file() and f.suffix.lower() in image_exts and f.name != 'Thumbs.db':
+                candidates.append(f)
+
+        if len(candidates) < 2:
+            return None  # Not enough photos to warrant AI selection
+
+        # Check cache
+        cache_path = self.project_path / 'validation' / 'photo_selection.json'
+        if cache_path.exists():
+            try:
+                import json
+                cached = json.loads(cache_path.read_text(encoding='utf-8'))
+                selection = self._parse_ai_selection(cached, candidates)
+                if selection:
+                    logger.info("Photo selection loaded from cache (%d slots filled)",
+                                sum(1 for v in selection.values() if v))
+                    return selection
+            except Exception:
+                pass
+
+        # Build thumbnail grid
+        grid_bytes = self._build_thumbnail_grid(candidates)
+        if not grid_bytes:
+            return None
+
+        # Build prompt with numbered legend
+        legend = "\n".join(f"  {i+1}. {c.name} ({c.parent.name}/)" for i, c in enumerate(candidates))
+        prompt = PHOTO_SELECTION_PROMPT + f"\n\nAvailable photos ({len(candidates)} total):\n{legend}"
+
+        # Try Claude Code CLI first (we ARE the runtime)
+        result = self._call_claude_for_photos(prompt, grid_bytes)
+
+        # Fallback: Groq Llama 4 Scout
+        if result is None:
+            result = self._call_groq_for_photos(prompt, grid_bytes)
+
+        if result is None:
+            logger.info("AI photo selection not available, falling back to pattern matching")
+            return None
+
+        # Cache result
+        try:
+            import json
+            (self.project_path / 'validation').mkdir(exist_ok=True)
+            cache_path.write_text(json.dumps(result, indent=2), encoding='utf-8')
+        except Exception:
+            pass
+
+        selection = self._parse_ai_selection(result, candidates)
+        if selection:
+            logger.info("AI photo selection: %s",
+                        {k: [p.name for p in v] for k, v in selection.items() if v})
+        return selection
+
+    def _build_thumbnail_grid(self, candidates: list[Path], thumb_size: int = 200) -> bytes | None:
+        """Create a grid image with numbered thumbnails of all candidate photos."""
+        try:
+            from PIL import Image, ImageDraw, ImageFont
+        except ImportError:
+            logger.warning("Pillow not available for thumbnail grid")
+            return None
+
+        try:
+            n = len(candidates)
+            cols = min(4, n)
+            rows = (n + cols - 1) // cols
+            cell_w = thumb_size + 10
+            cell_h = thumb_size + 30  # extra space for number label
+            grid_w = cols * cell_w + 10
+            grid_h = rows * cell_h + 10
+
+            grid = Image.new('RGB', (grid_w, grid_h), (255, 255, 255))
+            draw = ImageDraw.Draw(grid)
+
+            for idx, photo_path in enumerate(candidates):
+                row, col = divmod(idx, cols)
+                x = col * cell_w + 10
+                y = row * cell_h + 25  # leave space for number at top
+
+                try:
+                    img = Image.open(str(photo_path))
+                    img.thumbnail((thumb_size, thumb_size))
+                    grid.paste(img, (x, y))
+                    img.close()
+                except Exception:
+                    # Draw placeholder rectangle
+                    draw.rectangle([x, y, x + thumb_size, y + thumb_size], outline='gray')
+
+                # Draw number label
+                draw.text((x + 2, y - 18), f"{idx + 1}", fill='black')
+
+            import io
+            buf = io.BytesIO()
+            grid.save(buf, format='JPEG', quality=85)
+            return buf.getvalue()
+
+        except Exception as e:
+            logger.warning("Failed to build thumbnail grid: %s", e)
+            return None
+
+    def _call_claude_for_photos(self, prompt: str, grid_bytes: bytes) -> dict | None:
+        """Call Claude Code CLI with thumbnail grid for photo selection."""
+        import base64
+        import json
+        import os
+        import subprocess
+
+        claude_path = os.getenv("G3DT_CLAUDE_PATH", "claude")
+
+        # Write grid to temp file for Claude to read
+        grid_path = self.project_path / 'validation' / '_photo_grid.jpg'
+        grid_path.parent.mkdir(exist_ok=True)
+        grid_path.write_bytes(grid_bytes)
+
+        full_prompt = (
+            f"Read the image at {grid_path} and analyze the numbered photos.\n\n"
+            f"{prompt}\n\n"
+            "Respond with ONLY the JSON object, nothing else."
+        )
+
+        try:
+            result = subprocess.run(
+                [claude_path, '-p', full_prompt, '--output-format', 'json'],
+                capture_output=True, text=True, timeout=60,
+                cwd='/tmp',  # avoid loading project CLAUDE.md
+            )
+
+            if result.returncode != 0:
+                logger.warning("Claude CLI photo selection failed: %s", result.stderr[:200])
+                return None
+
+            # Parse Claude's response — extract JSON from output
+            output = result.stdout.strip()
+            try:
+                # claude --output-format json wraps in {"result": "..."}
+                wrapper = json.loads(output)
+                text = wrapper.get('result', output)
+            except json.JSONDecodeError:
+                text = output
+
+            json_start = text.find('{')
+            json_end = text.rfind('}') + 1
+            if json_start >= 0 and json_end > json_start:
+                selection = json.loads(text[json_start:json_end])
+                logger.info("Claude photo selection: %s", selection)
+                return selection
+
+        except FileNotFoundError:
+            logger.debug("Claude CLI not found at %s", claude_path)
+        except subprocess.TimeoutExpired:
+            logger.warning("Claude CLI photo selection timed out")
+        except Exception as e:
+            logger.warning("Claude CLI photo selection error: %s", e)
+        finally:
+            try:
+                grid_path.unlink(missing_ok=True)
+            except Exception:
+                pass
+
+        return None
+
+    def _call_groq_for_photos(self, prompt: str, grid_bytes: bytes) -> dict | None:
+        """Fallback: call Groq Llama 4 Scout for photo selection."""
+        import base64
+        import json
+        import os
+
+        api_key = os.environ.get("GROQ_API_KEY")
+        if not api_key:
+            return None
+
+        try:
+            import httpx
+        except ImportError:
+            return None
+
+        img_b64 = base64.b64encode(grid_bytes).decode('utf-8')
+
+        payload = {
+            "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+            "messages": [{
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": prompt + "\n\nRespond with ONLY the JSON object."},
+                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{img_b64}"}},
+                ],
+            }],
+            "temperature": 0.0,
+            "max_tokens": 256,
+            "response_format": {"type": "json_object"},
+        }
+
+        try:
+            with httpx.Client(timeout=30.0) as client:
+                resp = client.post(
+                    "https://api.groq.com/openai/v1/chat/completions",
+                    json=payload,
+                    headers={
+                        "Authorization": f"Bearer {api_key}",
+                        "Content-Type": "application/json",
+                    },
+                )
+            if resp.status_code != 200:
+                logger.warning("Groq photo selection: HTTP %d", resp.status_code)
+                return None
+
+            data = resp.json()
+            content = data["choices"][0]["message"]["content"]
+            result = json.loads(content)
+            logger.info("Groq photo selection: %s", result)
+            return result
+
+        except Exception as e:
+            logger.warning("Groq photo selection error: %s", e)
+            return None
+
+    def _parse_ai_selection(
+        self, selection: dict, candidates: list[Path]
+    ) -> dict[str, list[Path]] | None:
+        """Parse AI selection JSON into discover_photos() format."""
+        result: dict[str, list[Path]] = {
+            'site': [], 'dpsh': [], 'sondeig': [], 'materials': [],
+        }
+
+        slot_to_category = {
+            'site_1': 'site', 'site_2': 'site',
+            'dpsh': 'dpsh', 'sondeig': 'sondeig', 'materials': 'materials',
+        }
+
+        for slot, category in slot_to_category.items():
+            idx = selection.get(slot)
+            if idx is None:
+                continue
+            try:
+                idx = int(idx) - 1  # 1-indexed to 0-indexed
+                if 0 <= idx < len(candidates):
+                    photo = candidates[idx]
+                    if photo not in result[category]:
+                        result[category].append(photo)
+            except (ValueError, TypeError):
+                continue
+
+        # Only return if AI actually selected something
+        if any(result.values()):
+            return result
+        return None
 
     def _find_photos_dir(self) -> Path | None:
         """Find the photos directory using SmartScan role or common names."""
@@ -555,8 +850,8 @@ class ImageManager:
         else:
             context['fig_spt_cullera_image'] = PLACEHOLDER_TEXT
 
-        # 2. Field photos
-        photos = self.discover_photos()
+        # 2. Field photos — Phase 7 AI selection first, pattern matching fallback
+        photos = self.select_photos_ai() or self.discover_photos()
 
         # Site photos (up to 2) — forced 4:3 landscape to match Eva's layout
         if photos['site']:
