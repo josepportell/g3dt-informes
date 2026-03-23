@@ -3647,8 +3647,8 @@
             // Informative section (collapsed)
             if (infoFiles.length > 0) {
                 const sepRow = document.createElement('tr');
-                sepRow.innerHTML = `<td colspan="6" style="padding:10px 8px; background:#f0f0f0; cursor:pointer; font-size:13px; color:#7f8c8d;" onclick="this.parentElement.querySelectorAll('.ss-info-row').forEach(r => r.style.display = r.style.display === 'none' ? '' : 'none')">
-                    ▶ Fitxers informatius (${infoFiles.length}) — Thumbs.db, exports, fotos... <span style="font-size:11px">(clic per expandir)</span>
+                sepRow.innerHTML = `<td colspan="6" style="padding:10px 8px; background:#f0f0f0; cursor:pointer; font-size:13px; color:#7f8c8d;" onclick="this.closest('tbody').querySelectorAll('.ss-info-row').forEach(r => r.style.display = r.style.display === 'none' ? '' : 'none'); this.querySelector('span.ss-toggle').textContent = this.querySelector('span.ss-toggle').textContent === '▶' ? '▼' : '▶'">
+                    <span class="ss-toggle">▶</span> Fitxers informatius (${infoFiles.length}) — Thumbs.db, exports, fotos... <span style="font-size:11px">(clic per expandir)</span>
                 </td>`;
                 tbody.appendChild(sepRow);
 

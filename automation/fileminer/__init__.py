@@ -86,6 +86,7 @@ _EXT_TO_SOURCE: dict[str, str] = {
     '.txt': 'content_text',
     '.doc': 'content_docx',
     '.docx': 'content_docx',
+    '.msg': 'content_email',
 }
 
 
@@ -217,6 +218,62 @@ def mine_project(
         else:
             result.files_skipped += 1
 
+    # Second pass: mine files extracted from .msg attachments
+    # (validation/msg_attachments/ is inside _SKIP_DIRS so the main walk misses them)
+    abs_project = project_path.resolve()
+    processed_paths: set[Path] = {f.resolve() for f in files_to_mine}
+    att_count = 0
+    for sig in list(all_signals):
+        if sig.label != 'msg_attachment':
+            continue
+        att_path = Path(sig.value).resolve()
+        if not att_path.is_file():
+            continue
+        if att_path.suffix.lower() in _SKIP_EXTENSIONS:
+            continue
+        if att_path.suffix.lower() == '.msg':
+            continue
+        if att_path in processed_paths:
+            continue
+        if _is_our_output(att_path.name):
+            continue
+        processed_paths.add(att_path)
+
+        source_type = _resolve_source_type(att_path, abs_project, file_mapping)
+        priority = get_priority(source_type)
+        miners = get_miners_for_file(att_path, abs_project, source_type)
+        if not miners:
+            continue
+
+        try:
+            rel_path = str(att_path.relative_to(abs_project))
+        except ValueError:
+            continue
+        if on_progress:
+            on_progress('mining_file', {'file': rel_path, 'source_type': source_type})
+
+        mined_any = False
+        for miner in miners:
+            if not miner.can_mine(att_path):
+                continue
+            try:
+                signals = miner.mine(att_path)
+                for s in signals:
+                    s.priority = priority
+                all_signals.extend(signals)
+                mined_any = True
+            except Exception as exc:
+                error_msg = f"Error mining {rel_path} with {type(miner).__name__}: {exc}"
+                logger.warning(error_msg)
+                result.errors.append(error_msg)
+
+        if mined_any:
+            result.files_mined += 1
+            att_count += 1
+
+    if att_count:
+        logger.info("FileMiner: %d msg attachments re-processed", att_count)
+
     result.signals = all_signals
     result.duration_ms = int((time.monotonic() - t0) * 1000)
 
@@ -304,6 +361,24 @@ def mine_project_groq(
         rel_path = str(item.relative_to(project_path))
         source_type = _resolve_source_type(item, project_path, file_mapping)
         file_source_types[rel_path] = source_type
+
+    # Include files extracted from .msg attachments (validation/msg_attachments/ is in _SKIP_DIRS)
+    msg_att_dir = project_path / 'validation' / 'msg_attachments'
+    if msg_att_dir.is_dir():
+        for item in sorted(msg_att_dir.rglob('*')):
+            if not item.is_file():
+                continue
+            if item.suffix.lower() in _SKIP_EXTENSIONS:
+                continue
+            if item.suffix.lower() == '.msg':
+                continue
+            if _is_our_output(item.name):
+                continue
+            if any(pat.match(item.name) for pat in _SKIP_FILENAME_PATTERNS):
+                continue
+            rel_path = str(item.relative_to(project_path))
+            source_type = _resolve_source_type(item, project_path, file_mapping)
+            file_source_types[rel_path] = source_type
 
     # Select candidate files
     new_signals: list[Signal] = []

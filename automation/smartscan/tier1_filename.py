@@ -196,6 +196,12 @@ ROLE_PATTERNS: dict[str, dict] = {
         'scopes': [''],
     },
 
+    # ── Project email (.msg) ──────────────────────────────────
+    'project_email': {
+        'patterns': [r'(?i).*\.msg$'],
+        'scopes': ['*'],
+    },
+
     # ── Report figures (images for specific report slots) ────
     'figure_situation_map': {
         'patterns': [
@@ -473,6 +479,8 @@ def _match_role(
 def _in_scope(parent: str, scopes: list[str]) -> bool:
     """Check if the parent directory matches any of the allowed scopes."""
     for scope in scopes:
+        if scope == '*':
+            return True
         if not scope and not parent:
             return True
         if scope and parent == scope:
