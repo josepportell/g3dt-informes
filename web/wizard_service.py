@@ -44,6 +44,8 @@ _INFORMES_DIR = Path('/mnt/c/claude/g3dt/4-informes')
 
 # In-memory prefill cache: project_name -> prefills dict
 _prefill_cache: dict[str, dict[str, Any]] = {}
+# Cache raw AutoExtractionResult for dev-analysis-v2 (signal trace)
+_auto_result_cache: dict[str, Any] = {}  # project_name -> AutoExtractionResult
 
 # Vision subprocess tracking: project_name -> Popen
 _vision_processes: dict[str, subprocess.Popen] = {}
@@ -120,17 +122,24 @@ def _fill_missing_adjacents(merged: dict[str, Any], project_path: Path) -> None:
         from automation.cadastre_adjacents import get_adjacent_parcels
 
         province = _get_val('province')
-        geocoded = _geocode_for_adjacents(street_address, municipality, province=province)
-        if not geocoded:
+        geo_result = _geocode_for_adjacents(street_address, municipality, province=province)
+        if not geo_result:
             logger.info("Geocode for missing adjacents failed")
             return
 
-        utm_x, utm_y = geocoded
+        utm_x, utm_y = geo_result['utm_x'], geo_result['utm_y']
 
         # Save UTM coords to prefills if not already set
         if 'utm_x' not in merged or not _get_val('utm_x'):
             merged['utm_x'] = {'value': round(utm_x, 2), 'source': 'geocode:adjacents_fallback'}
             merged['utm_y'] = {'value': round(utm_y, 2), 'source': 'geocode:adjacents_fallback'}
+
+        # Save cadastral area if available
+        if geo_result.get('parcel_area') and not _get_val('superficie_cadastral_m2'):
+            merged['superficie_cadastral_m2'] = {
+                'value': int(geo_result['parcel_area']),
+                'source': 'Cadastre WFS (geocode)',
+            }
 
         superficie = float(_get_val('superficie_parcela_m2') or _get_val('superficie_cadastral_m2') or 500)
         muni_clean = _extract_municipality(project_path) or municipality
@@ -346,6 +355,7 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
     _generate_template_prefills_from_merged(merged)
 
     _prefill_cache[project_name] = merged
+    _auto_result_cache[project_name] = auto_result
     return merged
 
 
@@ -631,6 +641,7 @@ def save_wizard(
     from automation.wizard import save_wizard_data
     result = save_wizard_data(project_path, wizard_fields, expert_overrides, sources=current_sources)
     _prefill_cache.pop(project_name, None)
+    _auto_result_cache.pop(project_name, None)
     return result
 
 
@@ -714,6 +725,7 @@ def geocode_coords(
 
     # Invalidate prefill cache so Phase 3 re-runs
     _prefill_cache.pop(project_name, None)
+    _auto_result_cache.pop(project_name, None)
 
     return result
 
@@ -835,6 +847,11 @@ def run_audit_visual(project_name: str) -> dict[str, Any]:
             'errors': [str(e)],
             'warnings': [],
         }
+
+
+def get_auto_result(project_name: str) -> Any | None:
+    """Get cached AutoExtractionResult for dev-analysis-v2. Returns None if not cached."""
+    return _auto_result_cache.get(project_name)
 
 
 def find_audit_report(project_name: str) -> Path | None:

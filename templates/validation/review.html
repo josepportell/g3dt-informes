@@ -1513,6 +1513,7 @@
                 <button class="tab" id="tab-wizard" data-tab="wizard" onclick="switchTab('wizard')">Wizard</button>
                 <button class="tab disabled" id="tab-explicacio" data-tab="explicacio" onclick="switchTab('explicacio')">Explicacio</button>
                 <button class="tab" id="tab-dev" data-tab="dev" onclick="switchTab('dev')">Dev</button>
+                <button class="tab" id="tab-pipeline" data-tab="pipeline" onclick="switchTab('pipeline')">Pipeline</button>
             </div>
 
             <!-- SmartScan Tab Content -->
@@ -1782,6 +1783,15 @@
                 <div id="devResults"></div>
             </div>
 
+            <!-- Pipeline Log Tab Content -->
+            <div class="tab-content" id="pipeline-content">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <h2 style="margin:0;">Pipeline Log</h2>
+                    <button class="btn btn-secondary" id="pipelineRunBtn" onclick="startPipelineLog()" style="padding:8px 16px;">Executar</button>
+                </div>
+                <div id="pipelineLog" style="background:#1e1e1e; color:#d4d4d4; border-radius:8px; padding:16px; font-family:'Fira Code',monospace; font-size:12px; line-height:1.7; max-height:600px; overflow-y:auto; white-space:pre-wrap;"></div>
+            </div>
+
             <!-- Explicacio Tab Content -->
             <div class="tab-content" id="explicacio-content">
                 <div style="padding: 40px; text-align: center; color: #7f8c8d;">
@@ -1951,12 +1961,13 @@
             if (selectedProject) {
                 availableTabs.push('explicacio');
                 availableTabs.push('dev');
+                availableTabs.push('pipeline');
             }
             return availableTabs;
         }
 
         function updateTabVisibility() {
-            const tabs = ['smartscan', 'wizard', 'explicacio', 'dev'];
+            const tabs = ['smartscan', 'wizard', 'explicacio', 'dev', 'pipeline'];
             tabs.forEach(tab => {
                 const tabBtn = document.getElementById(`tab-${tab}`);
                 if (!tabBtn) return;
@@ -2967,6 +2978,7 @@
             selectedProject = projectName;
             wizardDataLoaded = false;
             smartscanLoaded = false;
+            devLoaded = false;
             wizardDirty = false;
             document.getElementById('wizardUnsaved').style.display = 'none';
 
@@ -4352,7 +4364,7 @@
             }
         }
 
-        // --- Dev Analysis Tab ---
+        // --- Dev Analysis Tab (v2: full signal trace) ---
         let devLoaded = false;
 
         async function loadDevAnalysis() {
@@ -4363,10 +4375,10 @@
             results.style.display = 'none';
 
             try {
-                const resp = await fetch(`/api/dev-analysis/${encodeURIComponent(selectedProject)}`);
+                const resp = await fetch(`/api/dev-analysis-v2/${encodeURIComponent(selectedProject)}`);
                 if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
                 const data = await resp.json();
-                renderDevAnalysis(data);
+                renderDevAnalysisV2(data);
                 devLoaded = true;
             } catch(e) {
                 results.innerHTML = `<div style="color:red; padding:20px;">Error: ${e.message}</div>`;
@@ -4376,81 +4388,448 @@
             }
         }
 
-        function renderDevAnalysis(data) {
+        function renderDevAnalysisV2(data) {
             const results = document.getElementById('devResults');
+            const cov = data.coverage;
+            const barColor = cov.pct > 70 ? '#27ae60' : cov.pct > 40 ? '#f39c12' : '#e74c3c';
 
-            // Coverage bar
-            const pct = data.coverage_pct;
-            const barColor = pct > 70 ? '#27ae60' : pct > 40 ? '#f39c12' : '#e74c3c';
+            let html = '';
 
-            let html = `
+            // 1. Coverage bar
+            html += `
                 <div style="background:#f8f9fa; border-radius:8px; padding:16px; margin-bottom:20px;">
                     <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                        <span><strong>${data.filled_count}</strong> / ${data.total_target} variables filled</span>
-                        <span style="font-weight:600; color:${barColor}">${pct}%</span>
+                        <span><strong>${cov.filled}</strong> / ${cov.total} variables filled</span>
+                        <span style="font-weight:600; color:${barColor}">${cov.pct}%</span>
                     </div>
                     <div style="background:#e0e0e0; border-radius:4px; height:8px; overflow:hidden;">
-                        <div style="background:${barColor}; height:100%; width:${pct}%; transition:width 0.3s;"></div>
+                        <div style="background:${barColor}; height:100%; width:${cov.pct}%; transition:width 0.3s;"></div>
                     </div>
                 </div>
             `;
 
-            // Category cards
-            const catColors = {
-                fileminer: '#3498db',
-                groq_llm: '#f59e0b',
-                contingut: '#8b5cf6',
-                vision: '#10b981',
-                icgc: '#06b6d4',
-                other: '#6b7280',
+            // 2. Pipeline stage cards
+            const stageLabels = {
+                fileminer: {label: 'FileMiner (regex)', color: '#3498db'},
+                groq_llm: {label: 'Groq LLM', color: '#f59e0b'},
+                content_discovery: {label: 'Content Discovery', color: '#8b5cf6'},
+                vision: {label: 'Claude Vision', color: '#10b981'},
+                icgc: {label: 'ICGC/Cadastre', color: '#06b6d4'},
+                other: {label: 'Other', color: '#6b7280'},
             };
 
-            for (const [catKey, cat] of Object.entries(data.categories)) {
-                const color = catColors[catKey] || '#6b7280';
-                const count = Object.keys(cat.items).length;
+            const stages = data.pipeline_stages;
+            if (Object.keys(stages).length > 0) {
+                html += `<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">`;
+                for (const [key, stats] of Object.entries(stages)) {
+                    const si = stageLabels[key] || {label: key, color: '#6b7280'};
+                    html += `
+                        <div style="flex:1; min-width:140px; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden;">
+                            <div style="background:${si.color}; color:white; padding:8px 12px; font-size:13px; font-weight:600;">${si.label}</div>
+                            <div style="padding:10px 12px; font-size:12px; line-height:1.8;">
+                                <div>Senyals: <strong>${stats.signals}</strong></div>
+                                <div>Mapejats: <strong>${stats.mapped}</strong></div>
+                                <div>Guanyadors: <strong style="color:${si.color}">${stats.won}</strong></div>
+                            </div>
+                        </div>
+                    `;
+                }
+                html += `</div>`;
+            }
 
-                let itemsHtml = '';
-                for (const [varName, info] of Object.entries(cat.items)) {
-                    const altCount = (data.alternatives[varName] || []).length;
-                    const altBadge = altCount > 0 ? `<span style="background:#e0e0e0; color:#555; font-size:10px; padding:1px 5px; border-radius:8px; margin-left:4px;">+${altCount}</span>` : '';
-                    itemsHtml += `
-                        <tr>
-                            <td style="padding:4px 8px; font-family:monospace; font-size:12px; color:#555; white-space:nowrap;">${varName}</td>
-                            <td style="padding:4px 8px; font-size:13px; max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${info.value}${altBadge}</td>
+            // 3. Variables table (expandable rows)
+            html += `
+                <div style="border:1px solid #e0e0e0; border-radius:8px; margin-bottom:20px; overflow:hidden;">
+                    <div style="background:#2c3e50; color:white; padding:10px 16px; font-weight:600;">
+                        Variables (${cov.total})
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                        <thead>
+                            <tr style="background:#f8f9fa; border-bottom:2px solid #e0e0e0;">
+                                <th style="padding:8px; text-align:left; width:25%;">Variable</th>
+                                <th style="padding:8px; text-align:left; width:30%;">Valor</th>
+                                <th style="padding:8px; text-align:left;">Fitxer font</th>
+                                <th style="padding:8px; text-align:left; width:100px;">Metode</th>
+                                <th style="padding:8px; text-align:center; width:50px;">Conf</th>
+                                <th style="padding:8px; text-align:center; width:40px;">Alt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            for (const [varName, info] of Object.entries(data.variables)) {
+                if (info === null) {
+                    // Unfilled variable
+                    html += `
+                        <tr style="border-bottom:1px solid #f0f0f0; background:#fff5f5;">
+                            <td style="padding:6px 8px; font-family:monospace; font-size:12px; color:#991b1b;">${varName}</td>
+                            <td colspan="5" style="padding:6px 8px; color:#991b1b; font-style:italic;">cap senyal</td>
+                        </tr>
+                    `;
+                } else {
+                    const w = info.winner;
+                    const altCount = info.alternatives.length;
+                    const confPct = Math.round(w.confidence * 100);
+                    const confColor = confPct >= 80 ? '#27ae60' : confPct >= 50 ? '#f39c12' : '#e74c3c';
+                    const hasAlts = altCount > 0;
+                    const rowId = `dev-var-${varName}`;
+                    const cursor = hasAlts ? 'cursor:pointer;' : '';
+                    const expandIcon = hasAlts ? `<span class="dev-expand-icon" style="font-size:10px; margin-right:4px; display:inline-block; transition:transform 0.2s;">▶</span>` : '';
+
+                    html += `
+                        <tr style="border-bottom:1px solid #f0f0f0; ${cursor}" ${hasAlts ? `onclick="toggleDevAlts('${rowId}')"` : ''}>
+                            <td style="padding:6px 8px; font-family:monospace; font-size:12px; color:#555;">${expandIcon}${varName}</td>
+                            <td style="padding:6px 8px; max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${(w.value || '').replace(/"/g, '&quot;')}">${w.value || ''}</td>
+                            <td style="padding:6px 8px; font-size:12px; color:#7f8c8d; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${w.source_file}">${w.source_file}</td>
+                            <td style="padding:6px 8px;"><span style="background:#e8f4f8; color:#2980b9; padding:2px 6px; border-radius:4px; font-size:11px;">${w.extraction_method}</span></td>
+                            <td style="padding:6px 8px; text-align:center;"><span style="color:${confColor}; font-weight:600; font-size:12px;">${confPct}%</span></td>
+                            <td style="padding:6px 8px; text-align:center;">${altCount > 0 ? `<span style="background:#e0e0e0; color:#555; font-size:10px; padding:1px 6px; border-radius:8px;">+${altCount}</span>` : ''}</td>
+                        </tr>
+                    `;
+
+                    // Expandable alternatives rows (hidden by default)
+                    if (hasAlts) {
+                        for (const alt of info.alternatives) {
+                            const aConfPct = Math.round(alt.confidence * 100);
+                            html += `
+                                <tr class="dev-alt-row ${rowId}" style="display:none; background:#f8f9fa; border-bottom:1px solid #f0f0f0;">
+                                    <td style="padding:4px 8px 4px 28px; font-size:11px; color:#95a5a6;">↳ ${alt.label}</td>
+                                    <td style="padding:4px 8px; font-size:12px; color:#7f8c8d; max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${(alt.value || '').replace(/"/g, '&quot;')}">${alt.value || ''}</td>
+                                    <td style="padding:4px 8px; font-size:11px; color:#95a5a6;">${alt.source_file}</td>
+                                    <td style="padding:4px 8px;"><span style="background:#f0f0f0; color:#7f8c8d; padding:1px 5px; border-radius:4px; font-size:10px;">${alt.extraction_method}</span></td>
+                                    <td style="padding:4px 8px; text-align:center; font-size:11px; color:#95a5a6;">${aConfPct}%</td>
+                                    <td style="padding:4px 8px; text-align:center; font-size:11px; color:#95a5a6;">p${alt.priority}</td>
+                                </tr>
+                            `;
+                        }
+                    }
+                }
+            }
+
+            html += `</tbody></table></div>`;
+
+            // 4. File contribution table
+            const files = data.files_summary;
+            if (Object.keys(files).length > 0) {
+                html += `
+                    <div style="border:1px solid #e0e0e0; border-radius:8px; margin-bottom:20px; overflow:hidden;">
+                        <div style="background:#34495e; color:white; padding:10px 16px; font-weight:600;">
+                            Contribucio per fitxer (${Object.keys(files).length})
+                        </div>
+                        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                            <thead>
+                                <tr style="background:#f8f9fa; border-bottom:2px solid #e0e0e0;">
+                                    <th style="padding:8px; text-align:left;">Fitxer</th>
+                                    <th style="padding:8px; text-align:center; width:70px;">Senyals</th>
+                                    <th style="padding:8px; text-align:center; width:70px;">Mapejats</th>
+                                    <th style="padding:8px; text-align:left;">Variables guanyades</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                for (const [fname, fs] of Object.entries(files)) {
+                    const wonBadges = (fs.variables_won || []).map(v =>
+                        `<span style="background:#d5f5e3; color:#1e8449; padding:1px 5px; border-radius:4px; font-size:11px; margin:1px;">${v}</span>`
+                    ).join(' ');
+                    html += `
+                        <tr style="border-bottom:1px solid #f0f0f0;">
+                            <td style="padding:6px 8px; font-size:12px; max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${fname}">${fname}</td>
+                            <td style="padding:6px 8px; text-align:center;">${fs.signals_total}</td>
+                            <td style="padding:6px 8px; text-align:center;">${fs.signals_mapped}</td>
+                            <td style="padding:6px 8px; display:flex; flex-wrap:wrap; gap:2px;">${wonBadges || '<span style="color:#bdc3c7; font-size:12px;">-</span>'}</td>
                         </tr>
                     `;
                 }
-
-                html += `
-                    <div style="border:1px solid #e0e0e0; border-radius:8px; margin-bottom:12px; overflow:hidden;">
-                        <div style="background:${color}; color:white; padding:10px 16px; display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-weight:600;">${cat.label}</span>
-                            <span style="background:rgba(255,255,255,0.2); padding:2px 10px; border-radius:12px; font-size:13px;">${count} vars</span>
-                        </div>
-                        <table style="width:100%; border-collapse:collapse;">
-                            ${itemsHtml}
-                        </table>
-                    </div>
-                `;
+                html += `</tbody></table></div>`;
             }
 
-            // Unfilled variables
-            if (data.unfilled.length > 0) {
+            // 5. Unmapped signals
+            const unmapped = data.unmapped_signals;
+            if (unmapped.length > 0) {
                 html += `
-                    <div style="border:1px solid #fecaca; border-radius:8px; margin-bottom:12px; overflow:hidden;">
-                        <div style="background:#fee2e2; color:#991b1b; padding:10px 16px; display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-weight:600;">Unfilled</span>
-                            <span style="background:rgba(153,27,27,0.1); padding:2px 10px; border-radius:12px; font-size:13px;">${data.unfilled.length} vars</span>
+                    <div style="border:1px solid #fde68a; border-radius:8px; margin-bottom:20px; overflow:hidden;">
+                        <div style="background:#fef3c7; color:#92400e; padding:10px 16px; display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:600;">Senyals no mapejats</span>
+                            <span style="background:rgba(146,64,14,0.1); padding:2px 10px; border-radius:12px; font-size:13px;">${unmapped.length}</span>
                         </div>
-                        <div style="padding:12px 16px; display:flex; flex-wrap:wrap; gap:6px;">
-                            ${data.unfilled.map(v => `<span style="background:#f3f4f6; padding:3px 8px; border-radius:4px; font-family:monospace; font-size:12px; color:#6b7280;">${v}</span>`).join('')}
-                        </div>
-                    </div>
+                        <div style="max-height:300px; overflow-y:auto;">
+                        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                            <thead>
+                                <tr style="background:#fffbeb; border-bottom:1px solid #fde68a;">
+                                    <th style="padding:6px 8px; text-align:left;">Label</th>
+                                    <th style="padding:6px 8px; text-align:left;">Valor</th>
+                                    <th style="padding:6px 8px; text-align:left;">Fitxer</th>
+                                    <th style="padding:6px 8px; text-align:left;">Metode</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                 `;
+                for (const s of unmapped) {
+                    html += `
+                        <tr style="border-bottom:1px solid #fef3c7;">
+                            <td style="padding:4px 8px; font-family:monospace; color:#92400e;">${s.label}</td>
+                            <td style="padding:4px 8px; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${(s.value || '').replace(/"/g, '&quot;')}">${s.value}</td>
+                            <td style="padding:4px 8px; color:#7f8c8d;">${s.source_file}</td>
+                            <td style="padding:4px 8px;"><span style="background:#fef3c7; padding:1px 5px; border-radius:4px; font-size:11px;">${s.extraction_method}</span></td>
+                        </tr>
+                    `;
+                }
+                html += `</tbody></table></div></div>`;
+            }
+
+            // 6. Final Prefills (all sources: vision, ICGC, cadastre, groq, fileminer)
+            const fp = data.final_prefills;
+            if (fp && Object.keys(fp).length > 0) {
+                const srcColors = {
+                    'groq_llm': '#f59e0b',
+                    'fileminer': '#3498db',
+                    'content_discovery': '#8b5cf6',
+                    'icgc_cadastre': '#e74c3c',
+                    'vision_field': '#10b981',
+                    'generated': '#95a5a6',
+                    'user': '#27ae60',
+                    'other': '#6b7280',
+                };
+                const srcLabels = {
+                    'groq_llm': 'Groq LLM',
+                    'fileminer': 'FileMiner',
+                    'content_discovery': 'Content Discovery',
+                    'icgc_cadastre': 'ICGC / Cadastre',
+                    'vision_field': 'Vision / Camp',
+                    'generated': 'Generat',
+                    'user': 'Eva (manual)',
+                    'other': 'Altres',
+                };
+
+                // Source count badges
+                const counts = data.prefill_source_counts || {};
+                let badgesHtml = '';
+                for (const [cat, count] of Object.entries(counts)) {
+                    const color = srcColors[cat] || '#6b7280';
+                    const label = srcLabels[cat] || cat;
+                    badgesHtml += `<span style="background:${color}; color:white; padding:3px 10px; border-radius:12px; font-size:12px; margin:2px;">${label}: ${count}</span> `;
+                }
+
+                function classifySrc(src) {
+                    if (!src) return 'other';
+                    const sl = src.toLowerCase();
+                    if (sl.startsWith('groq_llm:')) return 'groq_llm';
+                    if (sl.startsWith('fileminer:')) return 'fileminer';
+                    if (sl.startsWith('contingut:')) return 'content_discovery';
+                    if (['icgc','cadastre','geocode'].some(x => sl.includes(x))) return 'icgc_cadastre';
+                    if (['sondeig','planol','vision','dpsh'].some(x => sl.includes(x))) return 'vision_field';
+                    if (['plantilla','default','nom carpeta'].some(x => sl.includes(x))) return 'generated';
+                    if (sl === 'user') return 'user';
+                    return 'other';
+                }
+
+                html += `
+                    <div style="border:1px solid #e0e0e0; border-radius:8px; margin-bottom:20px; overflow:hidden;">
+                        <div style="background:#1a1a2e; color:white; padding:10px 16px; font-weight:600;">
+                            Prefills finals (${Object.keys(fp).length}) — totes les fonts
+                        </div>
+                        <div style="padding:8px 16px; background:#f8f9fa; display:flex; flex-wrap:wrap; gap:4px;">
+                            ${badgesHtml}
+                        </div>
+                        <div style="max-height:500px; overflow-y:auto;">
+                        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                            <thead>
+                                <tr style="background:#f8f9fa; border-bottom:2px solid #e0e0e0;">
+                                    <th style="padding:8px; text-align:left; width:25%;">Camp</th>
+                                    <th style="padding:8px; text-align:left; width:40%;">Valor</th>
+                                    <th style="padding:8px; text-align:left;">Font</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                for (const [key, info] of Object.entries(fp)) {
+                    const cat = classifySrc(info.source);
+                    const color = srcColors[cat] || '#6b7280';
+                    const dotStyle = `display:inline-block; width:8px; height:8px; border-radius:50%; background:${color}; margin-right:6px;`;
+                    html += `
+                        <tr style="border-bottom:1px solid #f0f0f0;">
+                            <td style="padding:5px 8px; font-family:monospace; font-size:12px; color:#555;">${key}</td>
+                            <td style="padding:5px 8px; max-width:350px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${(info.value || '').replace(/"/g, '&quot;')}">${info.value || ''}</td>
+                            <td style="padding:5px 8px; font-size:12px;"><span style="${dotStyle}"></span><span style="color:#7f8c8d;" title="${info.source}">${info.source.length > 50 ? info.source.substring(0,47)+'...' : info.source}</span></td>
+                        </tr>
+                    `;
+                }
+                html += `</tbody></table></div></div>`;
             }
 
             results.innerHTML = html;
             results.style.display = 'block';
+        }
+
+        // --- Pipeline Log Tab ---
+        let pipelineEventSource = null;
+
+        function startPipelineLog() {
+            if (!selectedProject) return;
+            const log = document.getElementById('pipelineLog');
+            const btn = document.getElementById('pipelineRunBtn');
+            log.innerHTML = '';
+            btn.disabled = true;
+            btn.textContent = 'Executant...';
+
+            if (pipelineEventSource) {
+                pipelineEventSource.close();
+            }
+
+            const url = `/api/pipeline-log/${encodeURIComponent(selectedProject)}`;
+            pipelineEventSource = new EventSource(url);
+
+            const phaseColors = {
+                '0.1': '#8b5cf6',  // content discovery
+                '0.3': '#3498db',  // fileminer
+                '0.4': '#f59e0b',  // groq
+                '1': '#10b981',    // dpsh
+                '2': '#06b6d4',    // lab
+                '3': '#e74c3c',    // apis
+            };
+            let currentPhase = '';
+
+            function appendLog(html) {
+                log.innerHTML += html;
+                log.scrollTop = log.scrollHeight;
+            }
+
+            function colorFor(phase) {
+                return phaseColors[phase] || '#d4d4d4';
+            }
+
+            function ts() {
+                return new Date().toLocaleTimeString('ca-ES', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+            }
+
+            pipelineEventSource.addEventListener('phase_start', (e) => {
+                const d = JSON.parse(e.data);
+                currentPhase = d.phase;
+                appendLog(`<div style="margin-top:8px; color:${colorFor(d.phase)}; font-weight:bold;">` +
+                    `[${ts()}] ▶ Fase ${d.phase}: ${d.name}</div>`);
+            });
+
+            pipelineEventSource.addEventListener('phase_complete', (e) => {
+                const d = JSON.parse(e.data);
+                let detail = '';
+                if (d.signals !== undefined) detail += ` | ${d.signals} senyals`;
+                if (d.mapped !== undefined) detail += ` | ${d.mapped} mapejats`;
+                if (d.new_prefills !== undefined) detail += ` | +${d.new_prefills} prefills`;
+                if (d.error) detail += ` | ERROR: ${d.error}`;
+                appendLog(`<div style="color:${colorFor(d.phase)};">` +
+                    `[${ts()}] ✓ Fase ${d.phase} completada${detail}</div>`);
+            });
+
+            pipelineEventSource.addEventListener('file_mined', (e) => {
+                const d = JSON.parse(e.data);
+                appendLog(`<div style="color:#888; padding-left:16px;">` +
+                    `  ⛏ ${d.file} <span style="color:#555;">(${d.source_type || ''})</span></div>`);
+            });
+
+            pipelineEventSource.addEventListener('file_mined_summary', (e) => {
+                const d = JSON.parse(e.data);
+                const mapColor = d.mapped > 0 ? '#27ae60' : '#888';
+                appendLog(`<div style="color:#aaa; padding-left:24px; font-size:11px;">` +
+                    `    📄 ${d.file}: ${d.signals} senyals, <span style="color:${mapColor}">${d.mapped} mapejats</span></div>`);
+            });
+
+            pipelineEventSource.addEventListener('signal_resolved', (e) => {
+                const d = JSON.parse(e.data);
+                const altText = d.alts > 0 ? ` (+${d.alts} alt)` : '';
+                appendLog(`<div style="color:#d4d4d4; padding-left:24px; font-size:11px;">` +
+                    `    ✔ <span style="color:#569cd6">${d.variable}</span> = "${d.value}" ← ${d.winner}${altText}</div>`);
+            });
+
+            pipelineEventSource.addEventListener('groq_start', (e) => {
+                const d = JSON.parse(e.data);
+                appendLog(`<div style="color:#f59e0b; padding-left:16px;">` +
+                    `  🔍 Groq buscant ${d.count} variables: ${(d.missing || []).slice(0,8).join(', ')}${d.count > 8 ? '...' : ''}</div>`);
+            });
+
+            pipelineEventSource.addEventListener('groq_found', (e) => {
+                const d = JSON.parse(e.data);
+                appendLog(`<div style="color:#fbbf24; padding-left:24px; font-size:11px;">` +
+                    `    ✨ <span style="color:#f59e0b">${d.variable}</span> = "${d.value}" ← ${d.file}</div>`);
+            });
+
+            pipelineEventSource.addEventListener('api_call', (e) => {
+                const d = JSON.parse(e.data);
+                let detail = d.utm ? ` @ ${d.utm}` : '';
+                if (d.superficie) detail += ` (sup: ${d.superficie} m2)`;
+                appendLog(`<div style="color:#888; padding-left:16px; font-size:11px;">` +
+                    `  → ${d.api}: ${d.action}${detail}</div>`);
+            });
+
+            pipelineEventSource.addEventListener('source', (e) => {
+                const d = JSON.parse(e.data);
+                const icon = d.ok ? '✓' : '✗';
+                const color = d.ok ? '#27ae60' : '#e74c3c';
+                const reason = d.reason ? ` (${d.reason})` : '';
+                appendLog(`<div style="color:${color}; padding-left:16px;">` +
+                    `  ${icon} ${d.name}${reason}</div>`);
+                // Show returned data detail
+                if (d.data && d.ok) {
+                    const data = d.data;
+                    let lines = [];
+                    if (data.code) lines.push(`codi: ${data.code} — ${data.description || ''} (${data.epoch || ''})`);
+                    if (data.cota) lines.push(`cota: ${data.cota}`);
+                    if (data.percent !== undefined && data.percent !== '') lines.push(`pendent: ${data.percent}% ${data.direction || ''}`);
+                    if (data.adjacents) {
+                        for (const [dir, val] of Object.entries(data.adjacents)) {
+                            lines.push(`${dir}: ${val}`);
+                        }
+                    }
+                    if (data.superficie_cadastral_m2) lines.push(`sup. cadastral: ${data.superficie_cadastral_m2} m2`);
+                    if (data.cadastral_ref) lines.push(`ref. cadastral: ${data.cadastral_ref}`);
+                    if (data.utm_x) lines.push(`UTM: (${data.utm_x}, ${data.utm_y})`);
+                    for (const line of lines) {
+                        appendLog(`<div style="color:#aaa; padding-left:32px; font-size:11px;">    ${line}</div>`);
+                    }
+                }
+            });
+
+            pipelineEventSource.addEventListener('step', (e) => {
+                const d = JSON.parse(e.data);
+                if (d.status === 'done' && d.step === 'ready') {
+                    appendLog(`<div style="margin-top:8px; color:#27ae60; font-weight:bold;">` +
+                        `[${ts()}] ✓ Pipeline complet</div>`);
+                }
+            });
+
+            pipelineEventSource.addEventListener('error', (e) => {
+                try {
+                    const d = JSON.parse(e.data);
+                    appendLog(`<div style="color:#e74c3c; font-weight:bold;">` +
+                        `[${ts()}] ✗ Error: ${d.message}</div>`);
+                } catch(_) {}
+            });
+
+            pipelineEventSource.addEventListener('done', () => {
+                pipelineEventSource.close();
+                pipelineEventSource = null;
+                btn.disabled = false;
+                btn.textContent = 'Executar';
+            });
+
+            pipelineEventSource.onerror = () => {
+                pipelineEventSource.close();
+                pipelineEventSource = null;
+                btn.disabled = false;
+                btn.textContent = 'Executar';
+                appendLog(`<div style="color:#e74c3c;">[${ts()}] Connexio tancada</div>`);
+            };
+        }
+
+        function toggleDevAlts(rowId) {
+            const rows = document.querySelectorAll(`.${rowId}`);
+            const visible = rows.length > 0 && rows[0].style.display !== 'none';
+            rows.forEach(r => r.style.display = visible ? 'none' : '');
+            // Toggle expand icon on the parent row
+            const parentRow = document.querySelector(`[onclick*="${rowId}"]`);
+            if (parentRow) {
+                const icon = parentRow.querySelector('.dev-expand-icon');
+                if (icon) icon.style.transform = visible ? '' : 'rotate(90deg)';
+            }
         }
 
         // Warn before leaving with unsaved wizard changes

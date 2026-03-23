@@ -92,6 +92,56 @@ def prefills_stream(project_name: str):
     )
 
 
+@router.get("/pipeline-log/{project_name:path}")
+def pipeline_log(project_name: str):
+    """SSE endpoint: streams signal-level progress events during extraction."""
+    import json as _json
+    import queue
+    import threading
+
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    def generate():
+        event_queue: queue.Queue = queue.Queue()
+
+        def on_progress(event_type: str, detail: dict):
+            event_queue.put((event_type, detail))
+
+        def run_extract():
+            try:
+                from automation.auto_extractor import auto_extract
+                auto_extract(project_path, on_progress=on_progress)
+            except Exception as e:
+                event_queue.put(("error", {"message": str(e)}))
+            finally:
+                event_queue.put(None)
+
+        thread = threading.Thread(target=run_extract, daemon=True)
+        thread.start()
+
+        while True:
+            item = event_queue.get()
+            if item is None:
+                yield f"event: done\ndata: {{}}\n\n"
+                break
+            event_type, detail = item
+            yield f"event: {event_type}\ndata: {_json.dumps(detail, ensure_ascii=False)}\n\n"
+
+        thread.join(timeout=5)
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
+
 class VisionStartRequest(BaseModel):
     force: bool = False
 
@@ -596,6 +646,210 @@ def dev_analysis(project_name: str):
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         logger.exception("Error in dev analysis for %s", project_name)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/dev-analysis-v2/{project_name:path}")
+def dev_analysis_v2(project_name: str):
+    """Enhanced dev analysis: full signal trace with winner/alternatives per variable."""
+    try:
+        # Ensure prefills are loaded (populates auto_result cache)
+        wizard_service.get_prefills(project_name)
+        auto_result = wizard_service.get_auto_result(project_name)
+        if not auto_result or not auto_result.mining_result:
+            raise HTTPException(
+                status_code=400,
+                detail="No mining data available. Load the project first.",
+            )
+
+        from automation.fileminer.competition import resolve_competition
+
+        all_signals = auto_result.mining_result.signals
+        resolved = resolve_competition(all_signals)
+
+        # All target variables
+        target_vars = [
+            "architect_name", "architect_company", "client_name", "client_nif",
+            "client_phone", "client_email", "client_address",
+            "street_address", "site_municipality", "municipality", "province",
+            "building_type", "num_floors",
+            "superficie_construida_m2", "superficie_parcela_m2", "superficie_cadastral_m2",
+            "building_height_m", "has_basement", "has_retaining_walls",
+            "adjacent_north", "adjacent_south", "adjacent_east", "adjacent_west",
+            "utm_x", "utm_y", "cota_referencia",
+            "icgc_unit_code", "icgc_unit_description",
+            "expedient", "field_date", "report_date",
+            "access_url", "contact_name", "lab_company",
+        ]
+
+        # Build per-variable detail
+        variables: dict[str, Any] = {}
+        for var in target_vars:
+            rv = resolved.get(var)
+            if rv:
+                variables[var] = {
+                    "winner": {
+                        "value": str(rv.signal.value)[:200],
+                        "label": rv.signal.label,
+                        "source_file": rv.signal.source_file,
+                        "extraction_method": rv.signal.extraction_method,
+                        "confidence": rv.signal.confidence,
+                        "priority": rv.signal.priority,
+                    },
+                    "alternatives": [
+                        {
+                            "value": str(a.value)[:200],
+                            "label": a.label,
+                            "source_file": a.source_file,
+                            "extraction_method": a.extraction_method,
+                            "confidence": a.confidence,
+                            "priority": a.priority,
+                        }
+                        for a in rv.alternatives
+                    ],
+                }
+            else:
+                variables[var] = None
+
+        # Unmapped signals (maps_to is None, skip trivial labels)
+        trivial_labels = {"msg_attachment", "embedded_image", "photo"}
+        unmapped = [
+            {
+                "label": s.label,
+                "value": str(s.value)[:200],
+                "source_file": s.source_file,
+                "extraction_method": s.extraction_method,
+                "confidence": s.confidence,
+            }
+            for s in all_signals
+            if s.maps_to is None and s.label not in trivial_labels
+        ]
+
+        # File contribution summary
+        from collections import defaultdict
+        file_stats: dict[str, dict] = defaultdict(lambda: {
+            "signals_total": 0, "signals_mapped": 0,
+            "variables_won": [], "variables_lost": [],
+        })
+        for s in all_signals:
+            fs = file_stats[s.source_file]
+            fs["signals_total"] += 1
+            if s.maps_to is not None:
+                fs["signals_mapped"] += 1
+        for var, rv in resolved.items():
+            fs = file_stats[rv.signal.source_file]
+            if var not in fs["variables_won"]:
+                fs["variables_won"].append(var)
+            for a in rv.alternatives:
+                afs = file_stats[a.source_file]
+                if var not in afs["variables_lost"]:
+                    afs["variables_lost"].append(var)
+
+        files_summary = {
+            f: {**stats} for f, stats in sorted(file_stats.items())
+        }
+
+        # Pipeline stage stats
+        _FILEMINER_METHODS = {
+            "label_value", "label_adjacent", "cell_adjacent", "cell_scan",
+            "regex", "regex_phone", "regex_url", "regex_email",
+            "msg_header", "msg_body", "msg_sender", "msg_attachment",
+            "embedded_image",
+        }
+
+        def _classify_stage(method: str) -> str:
+            if method.startswith("groq_"):
+                return "groq_llm"
+            if method in _FILEMINER_METHODS:
+                return "fileminer"
+            if method.startswith("contingut") or method == "content_discovery":
+                return "content_discovery"
+            if "icgc" in method or "cadastre" in method or "geocode" in method:
+                return "icgc"
+            if "vision" in method:
+                return "vision"
+            return "other"
+
+        stage_stats: dict[str, dict] = defaultdict(lambda: {
+            "signals": 0, "mapped": 0, "won": 0,
+        })
+        for s in all_signals:
+            stage = _classify_stage(s.extraction_method)
+            stage_stats[stage]["signals"] += 1
+            if s.maps_to is not None:
+                stage_stats[stage]["mapped"] += 1
+
+        # Count wins per stage
+        for var, rv in resolved.items():
+            stage = _classify_stage(rv.signal.extraction_method)
+            stage_stats[stage]["won"] += 1
+
+        filled = sum(1 for v in variables.values() if v is not None)
+        total = len(target_vars)
+
+        # Final merged prefills: shows ALL sources including vision, ICGC, cadastre
+        prefills = wizard_service.get_prefills(project_name)
+        final_prefills = {}
+        for k, v in sorted(prefills.items()):
+            if k.startswith('_'):
+                continue
+            if not isinstance(v, dict):
+                continue
+            src = v.get('source', '?')
+            val = v.get('value', '')
+            # Skip complex objects (lists, dicts) — just show scalar values
+            if isinstance(val, (list, dict)):
+                val = f"[{type(val).__name__}: {len(val)} items]"
+            else:
+                val = str(val)[:150]
+            final_prefills[k] = {"value": val, "source": src}
+
+        # Classify final prefills by source type
+        def _classify_source(src: str) -> str:
+            if not src:
+                return "other"
+            sl = src.lower()
+            if sl.startswith("groq_llm:"):
+                return "groq_llm"
+            if sl.startswith("fileminer:"):
+                return "fileminer"
+            if sl.startswith("contingut:"):
+                return "content_discovery"
+            if any(x in sl for x in ("icgc", "cadastre", "geocode")):
+                return "icgc_cadastre"
+            if any(x in sl for x in ("sondeig", "planol", "vision", "dpsh")):
+                return "vision_field"
+            if any(x in sl for x in ("plantilla", "default", "nom carpeta")):
+                return "generated"
+            if sl == "user":
+                return "user"
+            return "other"
+
+        prefill_by_source: dict[str, int] = defaultdict(int)
+        for v in final_prefills.values():
+            cat = _classify_source(v["source"])
+            prefill_by_source[cat] += 1
+
+        return {
+            "variables": variables,
+            "unmapped_signals": unmapped,
+            "files_summary": files_summary,
+            "pipeline_stages": dict(stage_stats),
+            "coverage": {
+                "filled": filled,
+                "unfilled": total - filled,
+                "total": total,
+                "pct": round(filled / total * 100, 1) if total else 0,
+            },
+            "final_prefills": final_prefills,
+            "prefill_source_counts": dict(prefill_by_source),
+        }
+    except HTTPException:
+        raise
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.exception("Error in dev analysis v2 for %s", project_name)
         raise HTTPException(status_code=500, detail=str(e))
 
 

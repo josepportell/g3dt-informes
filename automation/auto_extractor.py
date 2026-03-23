@@ -112,27 +112,35 @@ def auto_extract(
 
     # --- Phase 0.3: FileMiner ---
     emit("step", {"step": "mine", "status": "active"})
-    _phase03_fileminer(project_path, result)
+    emit("phase_start", {"phase": "0.3", "name": "FileMiner"})
+    _phase03_fileminer(project_path, result, emit)
+    fm_sigs = len(result.mining_result.signals) if result.mining_result else 0
+    fm_mapped = sum(1 for s in (result.mining_result.signals if result.mining_result else []) if s.maps_to)
+    emit("phase_complete", {"phase": "0.3", "name": "FileMiner", "signals": fm_sigs, "mapped": fm_mapped})
     emit("groq", {"name": "FileMiner regex", "ok": bool(result.mining_result and result.mining_result.signals)})
 
     # --- Phase 0.4: Groq Deep Mine (targeted gap-filling) ---
+    emit("phase_start", {"phase": "0.4", "name": "Groq LLM"})
     _phase04_groq_deep_mine(project_path, result, emit)
     emit("step", {"step": "mine", "status": "done", "count": len(result.mining_result.signals) if result.mining_result else 0})
 
     # --- Phase 1: Local files ---
     emit("step", {"step": "extract", "status": "active"})
+    emit("phase_start", {"phase": "1", "name": "DPSH + Dates"})
     _phase1_dpsh(project_path, result)
     emit("source", {"name": "DPSH Excel", "ok": result.dpsh_data is not None and bool(getattr(result.dpsh_data, 'tests', None))})
     _phase1_field_dates(project_path, result)
     emit("source", {"name": "Dates camp", "ok": 'field_work_dates' in result.prefills})
+    emit("phase_complete", {"phase": "1", "name": "DPSH + Dates"})
 
     # --- Phase 2: PDF extraction ---
+    emit("phase_start", {"phase": "2", "name": "Lab PDF"})
     _phase2_lab_results(project_path, result)
     emit("source", {"name": "Lab PDF", "ok": result.lab_results is not None and result.lab_results.sulfate_mg_kg is not None})
+    emit("phase_complete", {"phase": "2", "name": "Lab PDF"})
 
-    # --- Phase 2.5: Geocode coordinates (if UTM missing) ---
-    # --- Phase 3: HTTP APIs (needs UTM coords) ---
-    # UTM source priority: user_data.json > content_discovery > geocode > skip
+    # --- Phase 2.5+3: Geocode + HTTP APIs ---
+    emit("phase_start", {"phase": "3", "name": "APIs HTTP"})
     if not skip_phase3:
         utm_x = existing_user_data.get('utm_x') or result.prefills.get('utm_x')
         utm_y = existing_user_data.get('utm_y') or result.prefills.get('utm_y')
@@ -141,7 +149,11 @@ def auto_extract(
             utm_x, utm_y = _phase25_geocode(
                 existing_user_data, result, project_path,
             )
-        emit("source", {"name": "Geocode", "ok": bool(utm_x and utm_y)})
+        geocode_data = {"utm_x": utm_x, "utm_y": utm_y} if utm_x and utm_y else None
+        if geocode_data:
+            geocode_data["superficie_cadastral_m2"] = result.prefills.get('superficie_cadastral_m2', '')
+            geocode_data["cadastral_ref"] = result.prefills.get('cadastral_ref', '')
+        emit("source", {"name": "Geocode", "ok": bool(utm_x and utm_y), "data": geocode_data})
 
         try:
             superficie = float(
@@ -152,14 +164,50 @@ def auto_extract(
             superficie = 0
 
         if utm_x and utm_y:
+            emit("api_call", {"api": "ICGC WMS", "action": "geologia", "utm": f"({utm_x:.0f}, {utm_y:.0f})"})
             _phase3_geology(utm_x, utm_y, result)
-            emit("source", {"name": "ICGC geologia", "ok": 'icgc_unit_code' in result.prefills})
+            geo_ok = 'icgc_unit_code' in result.prefills
+            emit("source", {
+                "name": "ICGC geologia", "ok": geo_ok,
+                "data": {
+                    "code": result.prefills.get('icgc_unit_code', ''),
+                    "description": result.prefills.get('icgc_unit_description', ''),
+                    "epoch": result.prefills.get('icgc_unit_epoch', ''),
+                } if geo_ok else None,
+            })
+
+            emit("api_call", {"api": "ICGC MDT", "action": "elevacio", "utm": f"({utm_x:.0f}, {utm_y:.0f})"})
             _phase3_elevation(utm_x, utm_y, result)
-            emit("source", {"name": "ICGC elevació", "ok": 'cota_referencia' in result.prefills})
+            elev_ok = 'cota_referencia' in result.prefills
+            emit("source", {
+                "name": "ICGC elevació", "ok": elev_ok,
+                "data": {"cota": result.prefills.get('cota_referencia', '')} if elev_ok else None,
+            })
+
+            emit("api_call", {"api": "ICGC MDT", "action": "pendent", "utm": f"({utm_x:.0f}, {utm_y:.0f})"})
             _phase3_slope(utm_x, utm_y, result)
-            emit("source", {"name": "ICGC pendent", "ok": 'is_sloped' in result.prefills})
+            slope_ok = 'is_sloped' in result.prefills
+            emit("source", {
+                "name": "ICGC pendent", "ok": slope_ok,
+                "data": {
+                    "percent": result.prefills.get('slope_percent', ''),
+                    "direction": result.prefills.get('slope_direction', ''),
+                    "is_sloped": result.prefills.get('is_sloped', ''),
+                } if slope_ok else None,
+            })
+
+            emit("api_call", {"api": "Cadastre", "action": "adjacents", "utm": f"({utm_x:.0f}, {utm_y:.0f})", "superficie": superficie})
             _phase3_adjacents(utm_x, utm_y, superficie, result, project_path, existing_user_data)
-            emit("source", {"name": "Cadastre adj.", "ok": any(f'adjacent_{d}' in result.prefills for d in ('north', 'south', 'east', 'west'))})
+            adj_found = {d: result.prefills.get(f'adjacent_{d}', '') for d in ('north', 'south', 'east', 'west') if result.prefills.get(f'adjacent_{d}')}
+            emit("source", {
+                "name": "Cadastre adj.", "ok": bool(adj_found),
+                "data": {
+                    "adjacents": adj_found,
+                    "superficie_cadastral_m2": result.prefills.get('superficie_cadastral_m2', ''),
+                    "cadastral_ref": result.prefills.get('cadastral_ref', ''),
+                } if adj_found else None,
+            })
+
             # Cadastral parcel area (if not already from geocode)
             if 'superficie_cadastral_m2' not in result.prefills:
                 _phase3_cadastral_area(utm_x, utm_y, result)
@@ -169,6 +217,7 @@ def auto_extract(
                 ("Fase 3: APIs HTTP", "sense coordenades UTM")
             )
 
+    emit("phase_complete", {"phase": "3", "name": "APIs HTTP"})
     emit("step", {"step": "extract", "status": "done"})
     emit("step", {"step": "ready", "status": "done"})
     result.duration_seconds = time.monotonic() - t0
@@ -237,8 +286,10 @@ def _phase1_file_scanner(project_path: Path, result: AutoExtractionResult) -> No
         result.steps_skipped.append(("FileScanner", str(exc)))
 
 
-def _phase03_fileminer(project_path: Path, result: AutoExtractionResult) -> None:
+def _phase03_fileminer(project_path: Path, result: AutoExtractionResult, emit=None) -> None:
     """Run FileMiner to extract data signals from all project files."""
+    if not emit:
+        emit = lambda *a, **kw: None
     try:
         from .fileminer import mine_project, resolve_competition
 
@@ -250,8 +301,19 @@ def _phase03_fileminer(project_path: Path, result: AutoExtractionResult) -> None
             except Exception:
                 pass
 
-        mining = mine_project(project_path, file_mapping=fm_dict)
+        def _mining_progress(event_type, detail):
+            if event_type == 'mining_file':
+                emit("file_mined", detail)
+
+        mining = mine_project(project_path, file_mapping=fm_dict, on_progress=_mining_progress)
         result.mining_result = mining
+
+        # Emit per-file signal summary
+        from collections import Counter
+        file_signal_counts = Counter(s.source_file for s in mining.signals)
+        for fname, count in file_signal_counts.most_common():
+            mapped = sum(1 for s in mining.signals if s.source_file == fname and s.maps_to)
+            emit("file_mined_summary", {"file": fname, "signals": count, "mapped": mapped})
 
         if not mining.signals:
             result.steps_completed.append(
@@ -275,6 +337,13 @@ def _phase03_fileminer(project_path: Path, result: AutoExtractionResult) -> None
                     {'value': alt.value, 'source': alt.source_file, 'confidence': alt.confidence}
                     for alt in rv.alternatives
                 ]
+            emit("signal_resolved", {
+                "variable": variable,
+                "winner": rv.signal.source_file,
+                "value": str(rv.value)[:100],
+                "alts": len(rv.alternatives),
+                "method": rv.signal.extraction_method,
+            })
 
         result.steps_completed.append(
             f"FileMiner: {len(mining.signals)} senyals, {len(resolved)} variables, {n_added} nous prefills"
@@ -311,6 +380,7 @@ def _phase04_groq_deep_mine(project_path: Path, result: AutoExtractionResult, em
             emit("groq", {"name": "Groq (tot cobert)", "ok": True})
             return
 
+        emit("groq_start", {"missing": missing[:15], "count": len(missing)})
         logger.info(
             "Phase 0.4 Groq: %d missing variables: %s",
             len(missing), missing[:10],
@@ -340,6 +410,10 @@ def _phase04_groq_deep_mine(project_path: Path, result: AutoExtractionResult, em
             emit("groq", {"name": "Groq: 0 senyals", "ok": False})
             return
 
+        # Append Groq signals to mining_result so dev-analysis-v2 sees them
+        if result.mining_result:
+            result.mining_result.signals.extend(groq_signals)
+
         # Combine with existing signals and re-resolve competition
         all_signals = list(existing_signals) + groq_signals
         resolved = resolve_competition(all_signals)
@@ -359,6 +433,11 @@ def _phase04_groq_deep_mine(project_path: Path, result: AutoExtractionResult, em
                 result.prefills[variable] = value
                 result.sources[variable] = f"groq_llm:{rv.signal.source_file}"
                 n_new += 1
+                emit("groq_found", {
+                    "variable": variable,
+                    "value": str(value)[:100],
+                    "file": rv.signal.source_file,
+                })
                 logger.info(
                     "Phase 0.4 Groq: new prefill %s=%r from %s",
                     variable, value, rv.signal.source_file,
@@ -393,11 +472,13 @@ def _phase04_groq_deep_mine(project_path: Path, result: AutoExtractionResult, em
             "Phase 0.4 Groq: %d new signals, %d new prefills",
             len(groq_signals), n_new,
         )
+        emit("phase_complete", {"phase": "0.4", "name": "Groq LLM", "signals": len(groq_signals), "new_prefills": n_new})
         emit("groq", {"name": f"Groq: +{n_new} prefills", "ok": n_new > 0})
 
     except Exception as exc:
         logger.warning("Phase 0.4 Groq failed: %s", exc)
         result.steps_skipped.append(("Groq Deep Mine", str(exc)))
+        emit("phase_complete", {"phase": "0.4", "name": "Groq LLM", "signals": 0, "error": str(exc)})
         emit("groq", {"name": "Groq (error)", "ok": False})
 
 
@@ -916,10 +997,14 @@ def _phase3_adjacents(
         province = result.prefills.get('province', '')
         if municipality and address_candidates:
             for addr in address_candidates:
-                geocoded = _geocode_for_adjacents(addr, municipality, province=province)
-                if geocoded:
-                    adj_x, adj_y = geocoded
+                geo_res = _geocode_for_adjacents(addr, municipality, province=province)
+                if geo_res:
+                    adj_x, adj_y = geo_res['utm_x'], geo_res['utm_y']
                     adj_source = f"geocode({addr})"
+                    # Store cadastral area if found
+                    if geo_res.get('parcel_area') and 'superficie_cadastral_m2' not in result.prefills:
+                        result.prefills['superficie_cadastral_m2'] = int(geo_res['parcel_area'])
+                        result.sources['superficie_cadastral_m2'] = 'Cadastre WFS (geocode)'
                     logger.info(
                         f"Adjacents: using geocoded address ({adj_x:.0f}, {adj_y:.0f}) "
                         f"instead of DPSH coords ({utm_x:.0f}, {utm_y:.0f})"
@@ -947,14 +1032,14 @@ def _geocode_for_adjacents(
     street_address: str,
     municipality: str,
     province: str = "",
-) -> tuple[float, float] | None:
+) -> dict | None:
     """Geocode a street address to UTM for adjacents probing.
 
     Tries the full address first, then strips the street type prefix
     (Nominatim often fails on "Carrer X" but succeeds on bare "X"
     for small Catalan towns).
 
-    Returns (utm_x, utm_y) or None if geocoding fails.
+    Returns full geo_result dict (utm_x, utm_y, parcel_area, rc, ...) or None.
     """
     try:
         from .geocode_coordinates import geocode_project
@@ -988,7 +1073,7 @@ def _geocode_for_adjacents(
             )
             if geo_result and geo_result.get('utm_x') and geo_result.get('utm_y'):
                 logger.info(f"Geocode for adjacents OK: '{addr}' → ({geo_result['utm_x']:.0f}, {geo_result['utm_y']:.0f})")
-                return geo_result['utm_x'], geo_result['utm_y']
+                return geo_result
         except Exception as e:
             logger.debug(f"Geocode attempt '{addr}' failed: {e}")
 
