@@ -1,17 +1,17 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-03-22
+Last updated: 2026-03-26
 
 ## Current State
 
-**SmartScan v2 "Read First, Decide After" complet — imatges, emails, figures integrats.**
+**Report Readiness panel + Cadastre robustness fixes.**
 
-- **164/164 tests passen** (55 SmartScan + 50 FileMiner + 29 Groq + 21 Cadastre + 9 misc)
-- SmartScan v2: 3 tiers (filename → fingerprint → Groq vision) classifiquen TOTS els fitxers
-- 375 fitxers inventariats, 112 gaps identificats → la majoria resolts
-- Imatges (.jpg/.jpeg/.png): classificades per rol, no ignorades
-- Emails (.msg): MsgMiner extreu cos + adjunts (PDFs d'arquitecte recuperats!)
-- Figures/fotos: col·locació per rol SmartScan, no per posició a carpeta
-- Groq Llama 4 Scout: classificació d'imatges 100% precisa (~$0.003/imatge)
+- **164/164 tests passen**
+- **Report Readiness** (Dev tab): mostra 43 variables reals de l'informe amb % d'ompliment per categoria
+  - Bell-Lloc: 100% (43/43), Castellar: 60.5%, Alcoletge: 58.5%
+  - Executa pipeline complet (extract + sections + càlculs) sense generar .docx
+  - 9 categories: Identificació, Ubicació, Edificació, Camp DPSH/Sondeig/Lab, Geologia, Geotècnia, Càlculs
+- **Cadastre circuit breaker**: ConsultaVia HTTP 500 ja no bloqueja el servidor (abort immediat)
+- **Address parsing**: `#7`, `nº7`, `Nº 12`, `núm. 5` ara es parsegen correctament
 
 **Pipeline (actualitzat):**
 ```
@@ -29,8 +29,9 @@ Phase 4:    Report         → .docx amb figures/fotos per rol SmartScan
 
 ## Active Blockers
 
-- Merge `feat/smartscan` → `main` (10 commits pendents)
+- Merge `feat/smartscan` → `main` (10+ commits pendents)
 - Instal·lar a l'ordinador d'Eva
+- Silvia: extensió 2 setmanes pendent d'aprovació
 
 ## Completed — SmartScan v2 (2026-03-22)
 

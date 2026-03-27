@@ -76,6 +76,14 @@ def _shorten_material_desc(desc: str) -> str:
 
 
 @dataclass
+class ContextPreviewResult:
+    """Result of a dry-run context build (no template rendering)."""
+    context: dict[str, Any]
+    errors: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+
+
+@dataclass
 class GenerationResult:
     """Result of report generation."""
     success: bool
@@ -1480,6 +1488,49 @@ class ReportGenerator:
         return GenerationResult(
             success=True,
             output_path=str(output_path),
+            errors=self.errors.copy(),
+            warnings=self.warnings.copy(),
+        )
+
+    def build_context_preview(self) -> ContextPreviewResult:
+        """Build full template context without rendering (for readiness check).
+
+        Runs the same pipeline as generate() — extract, build, sections,
+        context — but stops before render_template(). No stages skipped.
+        """
+        # Step 1: Extract project data
+        self.extract_project_data()
+        if self.errors:
+            return ContextPreviewResult(
+                context={},
+                errors=self.errors.copy(),
+                warnings=self.warnings.copy(),
+            )
+
+        # Step 2: Build unified report data
+        self.build_report_data()
+        if not self.report_data:
+            return ContextPreviewResult(
+                context={},
+                errors=self.errors.copy(),
+                warnings=self.warnings.copy(),
+            )
+
+        # Step 2b: Auto-activate conditional sections (same as generate())
+        if getattr(self.report_data, 'is_sloped', False):
+            if not getattr(self.report_data, 'include_slope_stability', False):
+                self.report_data.include_slope_stability = True
+            if not getattr(self.report_data, 'include_earth_pressure', False):
+                self.report_data.include_earth_pressure = True
+
+        # Step 3: Generate sections
+        sections = self.generate_sections()
+
+        # Step 4: Build template context
+        context = self._build_template_context(sections)
+
+        return ContextPreviewResult(
+            context=context,
             errors=self.errors.copy(),
             warnings=self.warnings.copy(),
         )

@@ -853,6 +853,175 @@ def dev_analysis_v2(project_name: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# --- Report Readiness ---
+
+# Curated list of report-critical template variables, grouped by category.
+# These are the variables from report_generator._build_template_context()
+# that must be filled for a complete report.
+READINESS_VARIABLES: dict[str, list[dict]] = {
+    "Identificacio": [
+        {"key": "client", "label": "Client / Promotor"},
+        {"key": "expedient", "label": "Expedient"},
+        {"key": "architect_name", "label": "Arquitecte"},
+        {"key": "architect_company", "label": "Despatx arquitecte"},
+        {"key": "data_camp_text", "label": "Data de camp"},
+        {"key": "data_signatura_text", "label": "Data signatura"},
+    ],
+    "Ubicacio": [
+        {"key": "street_address", "label": "Adreca"},
+        {"key": "municipality", "label": "Municipi"},
+        {"key": "location_sentence", "label": "Frase ubicacio"},
+        {"key": "adjacent_north", "label": "Limita nord"},
+        {"key": "adjacent_south", "label": "Limita sud"},
+        {"key": "adjacent_east", "label": "Limita est"},
+        {"key": "adjacent_west", "label": "Limita oest"},
+    ],
+    "Edificacio": [
+        {"key": "building_type", "label": "Tipus edifici"},
+        {"key": "num_floors", "label": "Plantes"},
+        {"key": "superficie_construida", "label": "Sup. construida"},
+        {"key": "superficie_parcela", "label": "Sup. parcela"},
+        {"key": "cota_referencia", "label": "Cota referencia"},
+        {"key": "site_condition", "label": "Estat terreny"},
+        {"key": "site_description", "label": "Descripcio solar"},
+        {"key": "access_description", "label": "Acces"},
+    ],
+    "Camp DPSH": [
+        {"key": "num_dpsh_tests", "label": "Num. assaigs DPSH", "check": "truthy_nonzero"},
+        {"key": "dpsh_test_ids", "label": "IDs assaigs"},
+        {"key": "dpsh_avg_n20", "label": "N20 mitja"},
+        {"key": "dpsh_tests", "label": "Taula DPSH", "check": "array_filled"},
+    ],
+    "Camp Sondeig": [
+        {"key": "sondeig_tests", "label": "Taula sondeig", "check": "array_filled",
+         "conditional": "has_sondeig"},
+        {"key": "spt_test_id", "label": "SPT test ID", "conditional": "has_sondeig"},
+    ],
+    "Camp Lab": [
+        {"key": "sulfate_value", "label": "Sulfats (mg/kg)"},
+        {"key": "lab_sample_id", "label": "ID mostra lab"},
+    ],
+    "Geologia": [
+        {"key": "geology_paragraphs", "label": "Paragrafs geologia", "check": "array_filled"},
+        {"key": "radon_zone", "label": "Zona rado"},
+        {"key": "seismic_ab_text", "label": "Coeficient sismic ab"},
+        {"key": "materials_level_1", "label": "Materials nivell 1"},
+    ],
+    "Geotecnia": [
+        {"key": "geotech_density", "label": "Densitat gamma"},
+        {"key": "geotech_cohesion", "label": "Cohesio c"},
+        {"key": "geotech_phi", "label": "Angle friccio phi"},
+        {"key": "geotech_E", "label": "Modul deformacio E"},
+        {"key": "geotech_nb", "label": "Nb"},
+        {"key": "soil_level_rows", "label": "Taula nivells sol", "check": "array_filled"},
+        {"key": "perm_rows", "label": "Taula permeabilitat", "check": "array_filled"},
+    ],
+    "Calculs": [
+        {"key": "qa_value", "label": "Qa capacitat portant"},
+        {"key": "settlement", "label": "Assentament"},
+        {"key": "k30_value", "label": "Coef. balast K30"},
+    ],
+}
+
+
+def _is_filled(value: Any, check: str = "truthy") -> bool:
+    """Check if a template context value is meaningfully filled."""
+    if check == "truthy_nonzero":
+        return value is not None and value != '' and value != 0 and value != '0'
+    if check == "array_filled":
+        if not isinstance(value, list) or len(value) == 0:
+            return False
+        # Check first element has at least one non-empty value
+        first = value[0]
+        if isinstance(first, dict):
+            return any(bool(v) for v in first.values())
+        return bool(first)
+    # Default: truthy
+    return bool(value)
+
+
+@router.get("/report-readiness/{project_name:path}")
+def report_readiness(project_name: str):
+    """Run full report pipeline (minus rendering) and return variable fill status."""
+    import time
+    t0 = time.monotonic()
+
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+
+        from automation.report_generator import ReportGenerator
+        generator = ReportGenerator(project_path=str(project_path))
+        result = generator.build_context_preview()
+
+        ctx = result.context
+        categories = []
+        total_filled = 0
+        total_count = 0
+
+        for cat_name, var_defs in READINESS_VARIABLES.items():
+            cat_vars = []
+            cat_filled = 0
+            cat_total = 0
+
+            for vdef in var_defs:
+                key = vdef["key"]
+                # Skip conditional variables when condition is false
+                cond = vdef.get("conditional")
+                if cond and not ctx.get(cond):
+                    continue
+
+                check = vdef.get("check", "truthy")
+                value = ctx.get(key)
+                filled = _is_filled(value, check)
+                cat_total += 1
+                if filled:
+                    cat_filled += 1
+
+                # Truncate display value
+                display = ""
+                if value is not None:
+                    if isinstance(value, list):
+                        display = f"[{len(value)} items]"
+                    else:
+                        display = str(value)[:120]
+
+                cat_vars.append({
+                    "key": key,
+                    "label": vdef["label"],
+                    "filled": filled,
+                    "value": display,
+                })
+
+            total_filled += cat_filled
+            total_count += cat_total
+            categories.append({
+                "name": cat_name,
+                "filled": cat_filled,
+                "total": cat_total,
+                "pct": round(cat_filled / cat_total * 100, 1) if cat_total else 0,
+                "variables": cat_vars,
+            })
+
+        elapsed_ms = round((time.monotonic() - t0) * 1000)
+
+        return {
+            "overall": {
+                "filled": total_filled,
+                "total": total_count,
+                "pct": round(total_filled / total_count * 100, 1) if total_count else 0,
+            },
+            "categories": categories,
+            "errors": result.errors,
+            "warnings": result.warnings,
+            "elapsed_ms": elapsed_ms,
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.exception("Error in report readiness for %s", project_name)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # --- Groq Vision endpoints ---
 
 @router.post("/vision-groq/{project_name:path}")

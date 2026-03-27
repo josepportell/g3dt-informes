@@ -268,14 +268,15 @@ def _parse_address(address: str) -> tuple[str, str, str]:
         Tuple of (sigla, calle, numero)
     """
     # Extract house number: look for comma + number or trailing number
+    # Handles: "18A", "#7", "nº7", "núm. 5", "num 3", "Nº 12"
     numero = ""
     addr_part = address.strip()
-    m = re.search(r',\s*(\d+[A-Za-z]?)\s*$', addr_part)
+    m = re.search(r',\s*(?:(?:#|nº|n[uú]m\.?)\s*)?(\d+[A-Za-z]?)\s*$', addr_part, re.IGNORECASE)
     if m:
         numero = m.group(1)
         addr_part = addr_part[:m.start()].strip()
     else:
-        m = re.search(r'\s+(\d+[A-Za-z]?)\s*$', addr_part)
+        m = re.search(r'\s+(?:(?:#|nº|n[uú]m\.?)\s*)?(\d+[A-Za-z]?)\s*$', addr_part, re.IGNORECASE)
         if m:
             numero = m.group(1)
             addr_part = addr_part[:m.start()].strip()
@@ -421,7 +422,12 @@ def _consulta_via(province: str, municipality: str, street_hint: str) -> tuple[s
         attempts.append(" ".join(hint_words[:i]))
 
     for current_hint in attempts:
-        result = _consulta_via_single(province, municipality, current_hint)
+        try:
+            result = _consulta_via_single(province, municipality, current_hint)
+        except GeocodeConnectionError:
+            # Server is down — abort immediately, don't try more hints
+            logger.warning("ConsultaVia server unreachable, aborting street lookup")
+            return None
         if result is not None:
             return result
 
@@ -445,7 +451,7 @@ def _consulta_via_single(
         response_text = _fetch_url(url)
     except GeocodeConnectionError as e:
         logger.warning(f"ConsultaVia connection failed: {e}")
-        return None
+        raise  # Let caller decide whether to retry with different hint
     finally:
         time.sleep(0.3)
 

@@ -1775,6 +1775,25 @@
 
             <!-- Dev Analysis Tab Content -->
             <div class="tab-content" id="dev-content">
+                <!-- Report Readiness Panel -->
+                <div id="readinessPanel" style="margin-bottom:24px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <h2 style="margin:0; color:#1a5276;">Report Readiness</h2>
+                        <div style="display:flex; gap:8px; align-items:center;">
+                            <span id="readinessElapsed" style="color:#7f8c8d; font-size:12px;"></span>
+                            <button class="btn btn-primary" id="btnCheckReadiness" onclick="loadReportReadiness()" style="padding:8px 16px;">Check Readiness</button>
+                        </div>
+                    </div>
+                    <div id="readinessLoading" style="display:none; text-align:center; padding:30px; color:#7f8c8d;">
+                        <span style="display:inline-block; animation:spin 1s linear infinite; margin-right:8px;">&#9881;</span>
+                        Running full pipeline (extract + sections + calculations)...
+                    </div>
+                    <div id="readinessResults"></div>
+                </div>
+
+                <hr style="margin:0 0 24px 0; border:none; border-top:1px solid #e0e0e0;">
+
+                <!-- Existing SmartScan Analysis -->
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                     <h2 style="margin:0;">Dev Analysis</h2>
                     <button class="btn btn-secondary" onclick="loadDevAnalysis()" style="padding:8px 16px;">Refresh</button>
@@ -1828,7 +1847,7 @@
             if (text === null || text === undefined) return '';
             const div = document.createElement('div');
             div.textContent = String(text);
-            return div.innerHTML;
+            return div.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
 
         // DOM elements
@@ -4362,6 +4381,113 @@
                 btn.disabled = false;
                 btn.textContent = 'Audit Visual';
             }
+        }
+
+        // --- Report Readiness ---
+
+        async function loadReportReadiness() {
+            if (!selectedProject) return;
+            const btn = document.getElementById('btnCheckReadiness');
+            const loading = document.getElementById('readinessLoading');
+            const results = document.getElementById('readinessResults');
+            btn.disabled = true;
+            loading.style.display = 'block';
+            results.innerHTML = '';
+            document.getElementById('readinessElapsed').textContent = '';
+
+            try {
+                const resp = await fetch(`/api/report-readiness/${encodeURIComponent(selectedProject)}`);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const data = await resp.json();
+                results.innerHTML = renderReportReadiness(data);
+                document.getElementById('readinessElapsed').textContent = `${(data.elapsed_ms / 1000).toFixed(1)}s`;
+            } catch(e) {
+                results.innerHTML = `<div style="color:#e74c3c; padding:12px;">Error: ${escapeHtml(e.message)}</div>`;
+            } finally {
+                loading.style.display = 'none';
+                btn.disabled = false;
+            }
+        }
+
+        function renderReportReadiness(data) {
+            const ov = data.overall;
+            const barColor = ov.pct > 80 ? '#27ae60' : ov.pct > 50 ? '#f39c12' : '#e74c3c';
+            let html = '';
+
+            // Overall progress bar
+            html += `
+                <div style="background:#f0f4f8; border:1px solid #d5dce4; border-radius:8px; padding:16px; margin-bottom:16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;">
+                        <span style="font-size:24px; font-weight:700; color:${barColor}">${ov.pct}%</span>
+                        <span style="color:#5a6c7d; font-size:14px;"><strong>${ov.filled}</strong> / ${ov.total} variables</span>
+                    </div>
+                    <div style="background:#d5dce4; border-radius:4px; height:10px; overflow:hidden;">
+                        <div style="background:${barColor}; height:100%; width:${ov.pct}%; transition:width 0.3s;"></div>
+                    </div>`;
+
+            // Errors/warnings
+            if (data.errors.length > 0) {
+                html += `<div style="margin-top:10px; color:#e74c3c; font-size:12px;">Errors: ${data.errors.map(e => escapeHtml(e)).join('; ')}</div>`;
+            }
+            if (data.warnings.length > 0) {
+                html += `<div style="margin-top:6px; color:#f39c12; font-size:12px;">Warnings: ${data.warnings.length}</div>`;
+            }
+            html += `</div>`;
+
+            // Category cards grid
+            html += `<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:10px; margin-bottom:16px;">`;
+            for (const cat of data.categories) {
+                const catColor = cat.pct === 100 ? '#27ae60' : cat.pct > 0 ? '#f39c12' : '#e74c3c';
+                const catBg = cat.pct === 100 ? '#eafaf1' : cat.pct > 0 ? '#fef9e7' : '#fdedec';
+                const catId = `readiness-cat-${cat.name.replace(/\s/g, '-')}`;
+                html += `
+                    <div onclick="toggleReadinessDetail('${catId}')"
+                         style="background:${catBg}; border:1px solid ${catColor}30; border-radius:6px; padding:12px; cursor:pointer; transition:box-shadow 0.2s;"
+                         onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)'" onmouseout="this.style.boxShadow='none'">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <span style="font-weight:600; font-size:13px; color:#2c3e50;">${cat.name}</span>
+                            <span style="font-weight:700; color:${catColor}; font-size:13px;">${cat.pct}%</span>
+                        </div>
+                        <div style="background:#fff; border-radius:3px; height:5px; overflow:hidden;">
+                            <div style="background:${catColor}; height:100%; width:${cat.pct}%;"></div>
+                        </div>
+                        <div style="margin-top:4px; font-size:11px; color:#7f8c8d;">${cat.filled}/${cat.total}</div>
+                    </div>`;
+            }
+            html += `</div>`;
+
+            // Expandable detail tables per category
+            for (const cat of data.categories) {
+                const catId = `readiness-cat-${cat.name.replace(/\s/g, '-')}`;
+                html += `<div id="${catId}" style="display:none; margin-bottom:12px;">`;
+                html += `<table style="width:100%; border-collapse:collapse; font-size:13px;">`;
+                html += `<thead><tr style="background:#f8f9fa; border-bottom:2px solid #dee2e6;">
+                    <th style="padding:6px 10px; text-align:left; width:30px;"></th>
+                    <th style="padding:6px 10px; text-align:left;">Variable</th>
+                    <th style="padding:6px 10px; text-align:left;">Valor</th>
+                </tr></thead><tbody>`;
+                for (const v of cat.variables) {
+                    const dot = v.filled
+                        ? '<span style="color:#27ae60; font-size:16px;">&#9679;</span>'
+                        : '<span style="color:#e74c3c; font-size:16px;">&#9675;</span>';
+                    const valDisplay = v.filled
+                        ? `<span style="color:#2c3e50;">${escapeHtml(v.value)}</span>`
+                        : '<span style="color:#bdc3c7; font-style:italic;">buit</span>';
+                    html += `<tr style="border-bottom:1px solid #f0f0f0;">
+                        <td style="padding:5px 10px; text-align:center;">${dot}</td>
+                        <td style="padding:5px 10px;"><span style="font-family:monospace; font-size:12px; color:#7f8c8d;">${v.key}</span><br><span style="font-size:12px;">${v.label}</span></td>
+                        <td style="padding:5px 10px; max-width:350px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${escapeHtml(v.value)}">${valDisplay}</td>
+                    </tr>`;
+                }
+                html += `</tbody></table></div>`;
+            }
+
+            return html;
+        }
+
+        function toggleReadinessDetail(catId) {
+            const el = document.getElementById(catId);
+            if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
         }
 
         // --- Dev Analysis Tab (v2: full signal trace) ---
