@@ -110,7 +110,12 @@ def _fill_missing_adjacents(merged: dict[str, Any], project_path: Path) -> None:
     street_address = _get_val('street_address')
     municipality = _get_val('site_municipality')
     if not street_address or not municipality:
-        return
+        # P1: Try client_address as fallback if street_address is empty
+        client_addr = _get_val('client_address')
+        if client_addr and len(client_addr) > 10 and any(c.isdigit() for c in client_addr) and municipality:
+            street_address = client_addr
+        else:
+            return
 
     logger.info(
         f"No adjacents from auto_extract — geocoding from planol: "
@@ -401,6 +406,37 @@ def get_prefills_streaming(project_name: str):
         yield f"event: error_event\ndata: {json.dumps({'message': 'Extraction ended without result'})}\n\n"
         return
 
+    # --- Vision phase (after auto_extract, before merge) ---
+    if auto_result_holder:
+        from .vision_groq import groq_available
+        if groq_available():
+            yield f"event: step\ndata: {json.dumps({'step': 'vision', 'status': 'active'})}\n\n"
+
+            vision_queue: queue.Queue = queue.Queue()
+
+            def run_vision():
+                try:
+                    def vision_cb(event_type, detail):
+                        vision_queue.put((event_type, detail))
+                    _run_vision_phase(project_path, force_refresh=False, on_progress=vision_cb)
+                except Exception as e:
+                    logger.warning("Vision phase error: %s", e)
+                finally:
+                    vision_queue.put(None)
+
+            vision_thread = threading.Thread(target=run_vision, daemon=True)
+            vision_thread.start()
+
+            while True:
+                item = vision_queue.get()
+                if item is None:
+                    break
+                event_type, detail = item
+                yield f"event: {event_type}\ndata: {json.dumps(detail, ensure_ascii=False)}\n\n"
+
+            vision_thread.join()
+            yield f"event: step\ndata: {json.dumps({'step': 'vision', 'status': 'done'})}\n\n"
+
     try:
         auto_result = auto_result_holder[0]
         merged = _merge_prefills(project_name, project_path, auto_result)
@@ -564,26 +600,18 @@ def get_vision_process_status(project_name: str) -> dict[str, Any]:
         return {"running": False, "returncode": None}
 
 
-def _run_vision_phase(project_path: Path, force_refresh: bool) -> None:
-    """Run Claude vision extraction (Phase 1) via Anthropic SDK. Non-fatal on failure.
+def _run_vision_phase(project_path: Path, force_refresh: bool, on_progress=None) -> None:
+    """Run vision extraction if Groq API is available. Non-fatal on failure."""
+    try:
+        from .vision_groq import groq_available, run_vision_groq_sync
+        if groq_available():
+            logger.info("Vision phase: running Groq extraction for %s", project_path.name)
+            run_vision_groq_sync(project_path, force_refresh=force_refresh, on_progress=on_progress)
+            return
+    except Exception as e:
+        logger.warning("Vision extraction failed (Groq): %s", e)
 
-    In the native Claude Code path, vision JSONs are pre-created by
-    /g3dt-visio-projecte. This function only fills in missing JSONs via the SDK
-    (if available). It should NEVER be called with force_refresh=True from the
-    web wizard — that would hang without an API key.
-
-    NOTE: SDK path disabled until G3DT provides their own API key.
-    Vision runs exclusively via Claude Code CLI (/g3dt-visio-projecte).
-    """
-    # TODO: re-enable when G3DT has their own Anthropic API key
-    # try:
-    #     from automation.vision_extractor import run_vision_extraction
-    #     run_vision_extraction(project_path, force_refresh=force_refresh)
-    # except ImportError:
-    #     logger.warning("Vision extraction not available (anthropic not installed)")
-    # except Exception as e:
-    #     logger.warning("Vision extraction failed (SDK): %s", e)
-    pass
+    logger.info("Vision phase: no vision API available, skipping")
 
 
 def load_user_data(project_name: str) -> dict[str, Any]:

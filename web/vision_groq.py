@@ -399,3 +399,172 @@ def _call_groq_vision(
             return None
 
     return None
+
+
+def _load_env():
+    """Load .env file from project root if not already loaded."""
+    env_path = Path(__file__).resolve().parent.parent / '.env'
+    if env_path.exists():
+        for line in env_path.read_text().splitlines():
+            line = line.strip()
+            if line and not line.startswith('#') and '=' in line:
+                key, _, value = line.partition('=')
+                os.environ.setdefault(key.strip(), value.strip())
+
+
+def groq_available() -> bool:
+    """Check if Groq API key is configured for vision extraction."""
+    _load_env()
+    return bool(os.environ.get("GROQ_API_KEY"))
+
+
+def run_vision_groq_sync(
+    project_path: Path,
+    *,
+    force_refresh: bool = False,
+    on_progress: callable | None = None,
+) -> dict[str, dict]:
+    """Run Groq vision synchronously (blocking). For use in full_prepare pipeline.
+
+    Same logic as _run_vision_groq() but runs inline (not threaded) and
+    emits progress via on_progress callback instead of _groq_status dict.
+
+    on_progress signature: (event_type: str, detail: dict) -> None
+    Events emitted: ('vision', {'step': vtype, 'status': 'active'|'done'|'error', 'message': ...})
+    """
+    def _emit(step: str, status: str, message: str = ""):
+        if on_progress:
+            detail = {"step": step, "status": status}
+            if message:
+                detail["message"] = message
+            on_progress("vision", detail)
+
+    from automation.file_scanner import FileScanner
+    from automation.validation.prompts import (
+        DPSH_EXTRACTION_PROMPT,
+        EXTRACTION_SYSTEM_PROMPT,
+        PLANOL_EXTRACTION_PROMPT,
+        SONDEIG_ANNEX_EXTRACTION_PROMPT,
+        SONDEIG_EXTRACTION_PROMPT,
+    )
+
+    # Step 1: Load file mapping
+    scanner = FileScanner(project_path)
+    mapping = scanner.load()
+    if not mapping:
+        mapping = scanner.scan()
+        scanner.save(mapping)
+
+    # Step 2: Identify vision tasks
+    prompt_map = {
+        "planol": PLANOL_EXTRACTION_PROMPT,
+        "dpsh": DPSH_EXTRACTION_PROMPT,
+        "sondeig": SONDEIG_EXTRACTION_PROMPT,
+        "sondeig_annex": SONDEIG_ANNEX_EXTRACTION_PROMPT,
+    }
+    output_map = {
+        "planol": "planol_extracted.json",
+        "dpsh": "dpsh_extracted.json",
+        "sondeig": "sondeig_extracted.json",
+        "sondeig_annex": "sondeig_extracted.json",
+    }
+
+    vision_tasks = {}
+    seen_types: set[str] = set()
+    for role_name, role in mapping.roles.items():
+        vtype = role.vision_type
+        if vtype and vtype in prompt_map and vtype not in seen_types:
+            seen_types.add(vtype)
+            output_path = project_path / "validation" / output_map[vtype]
+            if not force_refresh and os.environ.get("G3DT_NO_CACHE") != "1" and output_path.exists():
+                logger.info("vision_groq_sync cache:%s skipped (exists)", vtype)
+                continue
+            vision_tasks[vtype] = {
+                "role": role_name,
+                "path": role.path,
+                "prompt": prompt_map[vtype],
+                "output": output_map[vtype],
+            }
+
+    logger.info("vision_groq_sync: %d tasks identified", len(vision_tasks))
+
+    if not vision_tasks:
+        return {}
+
+    # Step 3: Add DPSH Excel data if needed (for comparison)
+    excel_context = ""
+    if "dpsh" in vision_tasks:
+        try:
+            from automation.dpsh_extractor import DPSHExtractor
+
+            excel_role = mapping.roles.get("dpsh_excel")
+            if excel_role:
+                ext = DPSHExtractor(str(project_path / excel_role.path))
+                dpsh_data = ext.extract_all()
+                excel_context = (
+                    "\n\nEXCEL COMPARISON DATA:\n"
+                    + json.dumps(dpsh_data.to_dict(), indent=2, ensure_ascii=False)
+                    + "\nCompare each N20 value you extract with the Excel values above."
+                )
+        except Exception as e:
+            logger.warning("vision_groq_sync excel_extract error: %s", e)
+
+    # Step 4: Run tasks sequentially (better for progress tracking and rate limits)
+    (project_path / "validation").mkdir(exist_ok=True)
+    results: dict[str, dict] = {}
+
+    for vtype, task_info in vision_tasks.items():
+        file_path = project_path / task_info["path"]
+        output_path = project_path / "validation" / task_info["output"]
+        prompt = task_info["prompt"]
+
+        if vtype == "dpsh" and excel_context:
+            prompt = prompt + excel_context
+
+        _emit(vtype, "active")
+
+        try:
+            images = _file_to_images(file_path)
+            if not images:
+                _emit(vtype, "error", message="no images from file")
+                results[vtype] = {"success": False, "message": "no images from file"}
+                continue
+
+            logger.info(
+                "vision_groq_sync render:%s %d image(s) (%s)",
+                vtype, len(images), file_path.name,
+            )
+
+            result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+            if result is None:
+                _emit(vtype, "error", message="API call failed")
+                results[vtype] = {"success": False, "message": "API call failed"}
+                continue
+
+            output_path.write_text(
+                json.dumps(result, indent=2, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            _emit(vtype, "done")
+            results[vtype] = {"success": True, "message": "ok"}
+            logger.info("vision_groq_sync done:%s saved to %s", vtype, task_info["output"])
+
+        except Exception as e:
+            _emit(vtype, "error", message=str(e))
+            results[vtype] = {"success": False, "message": str(e)}
+            logger.warning("vision_groq_sync error:%s %s", vtype, e)
+
+        # Rate limit: 1s between API calls
+        time.sleep(1)
+
+    # Step 5: Run Python docs extraction if available (no API call)
+    try:
+        from .vision_fast import _extract_docs_python
+        _extract_docs_python(project_path, mapping.roles, force_refresh)
+        logger.info("vision_groq_sync: docs_extracted.json done (Python regex)")
+    except ImportError:
+        pass
+    except Exception as e:
+        logger.warning("vision_groq_sync: docs extraction failed: %s", e)
+
+    return results

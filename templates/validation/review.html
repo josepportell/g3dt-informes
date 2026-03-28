@@ -1486,6 +1486,17 @@
                     <div class="step-files" id="step-files-extract"></div>
                 </div>
                 <div class="step-connector" id="conn-3"></div>
+                <div class="pipeline-step" id="step-vision">
+                    <div class="step-circle">
+                        <div class="step-spinner"></div>
+                        <span class="step-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        </span>
+                    </div>
+                    <span class="step-label">Visio</span>
+                    <div class="step-files" id="step-files-vision"></div>
+                </div>
+                <div class="step-connector" id="conn-4"></div>
                 <div class="pipeline-step" id="step-ready">
                     <div class="step-circle">
                         <div class="step-spinner"></div>
@@ -1709,7 +1720,7 @@
                                 <div class="wizard-field full-width">
                                     <div class="utm-actions">
                                         <button type="button" class="btn utm-btn" onclick="geolocalitzar()">Geolocalitzar amb ICGC</button>
-                                        <button type="button" class="btn utm-btn" onclick="refreshPrefills()">Actualitzar prefills</button>
+                                        <button type="button" class="btn utm-btn" id="btnRefreshPrefills" onclick="refreshPrefills()">Actualitzar prefills</button>
                                     </div>
                                 </div>
                             </div>
@@ -1826,6 +1837,10 @@
     </div>
 
     <script>
+        // Dev mode: append ?dev=1 to URL to show Dev/Pipeline tabs and vision buttons
+        const urlParams = new URLSearchParams(window.location.search);
+        const DEV_MODE = urlParams.get('dev') === '1';
+
         // State
         let currentData = null;
         let originalFilename = '';
@@ -1855,8 +1870,8 @@
         const dataContent = document.getElementById('dataContent');
         const messageDiv = document.getElementById('message');
 
-        // Pipeline stepper (SSE-based, 3 steps: scan → extract → ready)
-        const PIPELINE_STEPS = ['scan', 'mine', 'extract', 'ready'];
+        // Pipeline stepper (SSE-based: scan → mine → extract → vision → ready)
+        const PIPELINE_STEPS = ['scan', 'mine', 'extract', 'vision', 'ready'];
         let activeEventSource = null;
         let visionPollTimer = null;
 
@@ -1868,7 +1883,7 @@
             PIPELINE_STEPS.forEach(s => {
                 document.getElementById(`step-${s}`).className = 'pipeline-step';
             });
-            ['conn-1','conn-2','conn-3'].forEach(c => {
+            ['conn-1','conn-2','conn-3','conn-4'].forEach(c => {
                 document.getElementById(c).className = 'step-connector';
             });
             // Clear step-files
@@ -1979,8 +1994,10 @@
             availableTabs = ['smartscan', 'wizard'];
             if (selectedProject) {
                 availableTabs.push('explicacio');
-                availableTabs.push('dev');
-                availableTabs.push('pipeline');
+                if (DEV_MODE) {
+                    availableTabs.push('dev');
+                    availableTabs.push('pipeline');
+                }
             }
             return availableTabs;
         }
@@ -2962,6 +2979,14 @@
         }
         loadProjects();
 
+        // Hide dev-only UI elements in production mode
+        if (!DEV_MODE) {
+            const btnRefresh = document.getElementById('btnRefreshPrefills');
+            if (btnRefresh) btnRefresh.style.display = 'none';
+            const btnAudit = document.getElementById('btnAuditVisual');
+            if (btnAudit) btnAudit.style.display = 'none';
+        }
+
         // Load Groq model selector
         function loadGroqModels() {
             fetch('/api/groq-models')
@@ -3066,11 +3091,28 @@
                 appendStepFile('mine', data.name, data.ok ? 'ok' : 'skip');
             });
 
+            es.addEventListener('vision', (e) => {
+                if (activeEventSource !== es) return;
+                const data = JSON.parse(e.data);
+                if (data.status !== 'done') {
+                    setStepState('vision', 'active');
+                }
+                if (data.step) {
+                    const label = {planol: 'Planol', dpsh: 'DPSH', sondeig: 'Sondeig', sondeig_annex: 'Sondeig Annex'}[data.step] || data.step;
+                    appendStepFile('vision', label, data.status === 'done' ? 'ok' : (data.status === 'error' ? 'skip' : 'active'));
+                }
+            });
+
             es.addEventListener('prefills', (e) => {
                 if (activeEventSource !== es) return;
                 wizardPrefills = JSON.parse(e.data);
                 es.close();
                 activeEventSource = null;
+                // Auto-complete vision step if it was never activated (no vision API)
+                const visionStep = document.getElementById('step-vision');
+                if (visionStep && !visionStep.classList.contains('done') && !visionStep.classList.contains('active')) {
+                    setStepState('vision', 'done');
+                }
                 finishStepper();
                 showWizardContent();
             });
@@ -3144,7 +3186,7 @@
                     </div>
                     <div class="instructions-body">
                         <div class="vision-badges">${badges}</div>
-                        <button class="btn-vision-force" onclick="startVisionExtraction(true)">Re-extreure</button>
+                        ${DEV_MODE ? '<button class="btn-vision-force" onclick="startVisionExtraction(true)">Re-extreure</button>' : ''}
                     </div>
                 `;
                 container.className = 'wizard-instructions collapsed';
@@ -3158,7 +3200,7 @@
                     <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">-</button>
                 </div>
                 <div class="instructions-body">
-                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    ${DEV_MODE ? `<div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
                         <button class="btn-vision" id="btnStartVision" onclick="startVisionExtraction(false)">
                             ${VISION_EYE_SVG}
                             Llegir PDFs de camp
@@ -3171,7 +3213,7 @@
                             ${VISION_EYE_SVG}
                             Visio Groq
                         </button>
-                    </div>
+                    </div>` : ''}
                     <div class="vision-badges" style="margin-top: 8px;">${badges}</div>
                     <div id="visionProgressText" class="vision-progress-text" style="display:none"></div>
                     <div id="visionTimingPanel" class="vision-timing-panel"></div>

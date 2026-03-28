@@ -853,6 +853,18 @@ def dev_analysis_v2(project_name: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.get("/api-capabilities")
+def api_capabilities():
+    """Report which API keys are configured."""
+    import shutil
+    return {
+        "groq": bool(os.environ.get("GROQ_API_KEY")),
+        "anthropic": bool(os.environ.get("ANTHROPIC_API_KEY")),
+        "claude_cli": bool(shutil.which(os.environ.get("G3DT_CLAUDE_PATH", "claude"))),
+        "vision_auto": bool(os.environ.get("GROQ_API_KEY")),
+    }
+
+
 # --- Report Readiness ---
 
 # Curated list of report-critical template variables, grouped by category.
@@ -895,11 +907,9 @@ READINESS_VARIABLES: dict[str, list[dict]] = {
     "Camp Sondeig": [
         {"key": "sondeig_tests", "label": "Taula sondeig", "check": "array_filled",
          "conditional": "has_sondeig"},
-        {"key": "spt_test_id", "label": "SPT test ID", "conditional": "has_sondeig"},
     ],
     "Camp Lab": [
         {"key": "sulfate_value", "label": "Sulfats (mg/kg)"},
-        {"key": "lab_sample_id", "label": "ID mostra lab"},
     ],
     "Geologia": [
         {"key": "geology_paragraphs", "label": "Paragrafs geologia", "check": "array_filled"},
@@ -949,8 +959,27 @@ def report_readiness(project_name: str):
     try:
         project_path = wizard_service._resolve_project(project_name)
 
+        # Merge current prefills into user_data so the readiness check
+        # reflects what SmartScan/auto_extract found (not just saved data).
+        prefills = wizard_service.get_prefills(project_name)
+        user_data_path = project_path / 'user_data.json'
+        merged_ud: dict[str, Any] = {}
+        if user_data_path.exists():
+            import json as _json
+            try:
+                merged_ud = _json.loads(user_data_path.read_text(encoding='utf-8'))
+            except Exception:
+                pass
+        # Flatten prefills {key: {value, source}} -> {key: value}
+        for k, v in prefills.items():
+            if k.startswith('_'):
+                continue
+            val = v.get('value') if isinstance(v, dict) else v
+            if val and k not in merged_ud:
+                merged_ud[k] = val
+
         from automation.report_generator import ReportGenerator
-        generator = ReportGenerator(project_path=str(project_path))
+        generator = ReportGenerator(project_path=str(project_path), user_data=merged_ud)
         result = generator.build_context_preview()
 
         ctx = result.context
