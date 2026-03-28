@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-03-28T08:47:27.397852+00:00",
+  "projects": [
+    {
+      "expedient": "3001621",
+      "municipality": "Castellar del Valles",
+      "file": "3001621-benchmark.json"
+    },
+    {
+      "expedient": "3001631",
+      "municipality": "Rubi",
+      "file": "3001631-benchmark.json"
+    },
+    {
+      "expedient": "4001607",
+      "municipality": "Linyola",
+      "file": "4001607-benchmark.json"
+    },
+    {
+      "expedient": "4001612",
+      "municipality": "Bell-Lloc",
+      "file": "4001612-benchmark.json"
+    },
+    {
+      "expedient": "4001670",
+      "municipality": "Alcoletge",
+      "file": "4001670-benchmark.json"
+    },
+    {
+      "expedient": "4001671",
+      "municipality": "Vilanova de Segria",
+      "file": "4001671-benchmark.json"
+    },
+    {
+      "expedient": "4001679",
+      "municipality": "Anciles",
+      "file": "4001679-benchmark.json"
+    }
+  ]
+}
