@@ -28,8 +28,13 @@ BENCHMARKS_DIR = _PROJECT_ROOT / "docs" / "benchmarks"
 VALIDATION_DIR = _PROJECT_ROOT / "docs" / "validation-latest"
 
 # ---------------------------------------------------------------------------
-# Variable classification
+# Variable classification: type (numeric vs text) and tier (A/B/C)
 # ---------------------------------------------------------------------------
+#
+# Tier A: Auto-extractable — pipeline should get these right. Target ~95%.
+# Tier B: Manual/on-site — requires Eva's input or external data (Street View).
+# Tier C: Professional judgment — Eva's expertise. Correct unless formula is wrong.
+# Excluded: data_signatura_text (correct by design — always today's date).
 
 NUMERIC_KEYS = {
     "geotech_density",
@@ -58,7 +63,6 @@ TEXT_KEYS = {
     "num_floors",
     "site_condition",
     "data_camp_text",
-    "data_signatura_text",
     "dpsh_test_ids",
     "location_sentence",
     "adjacent_north",
@@ -69,6 +73,28 @@ TEXT_KEYS = {
     "access_description",
     "radon_zone",
     "seismic_ab_text",
+}
+
+# Excluded from comparison (correct by design)
+EXCLUDED_KEYS = {"data_signatura_text"}
+
+VARIABLE_TIER: dict[str, str] = {
+    # Tier A: Auto-extractable
+    "municipality": "A", "street_address": "A", "cota_referencia": "A",
+    "num_dpsh_tests": "A", "dpsh_test_ids": "A", "dpsh_avg_n20": "A",
+    "sulfate_value": "A", "radon_zone": "A", "seismic_ab_text": "A",
+    "geotech_density": "A", "geotech_cohesion": "A", "geotech_phi": "A",
+    "geotech_nb": "A", "data_camp_text": "A",
+    "client": "A", "architect_name": "A", "architect_company": "A",
+    "building_type": "A", "num_floors": "A",
+    "superficie_construida": "A", "superficie_parcela": "A",
+    # Tier B: Manual / on-site observation
+    "adjacent_north": "B", "adjacent_south": "B",
+    "adjacent_east": "B", "adjacent_west": "B",
+    "site_condition": "B", "site_description": "B",
+    "access_description": "B", "location_sentence": "B",
+    # Tier C: Professional judgment
+    "geotech_E": "C", "qa_value": "C", "settlement": "C", "k30_value": "C",
 }
 
 # ---------------------------------------------------------------------------
@@ -261,6 +287,9 @@ def compare_project(
     results: list[dict[str, Any]] = []
 
     for key, bench_val in bench_vars.items():
+        # Skip excluded keys (correct by design)
+        if key in EXCLUDED_KEYS:
+            continue
         # Skip arrays and nulls on benchmark side
         if bench_val is None or isinstance(bench_val, (list, dict)):
             continue
@@ -372,6 +401,10 @@ def compare_project(
                 "type": "text",
             })
 
+    # Add tier to each result
+    for r in results:
+        r["tier"] = VARIABLE_TIER.get(r["key"], "A")
+
     total = len(results)
     match = sum(1 for r in results if r["status"] == "MATCH")
     close = sum(1 for r in results if r["status"] == "CLOSE")
@@ -382,10 +415,24 @@ def compare_project(
         1 for k, v in bench_vars.items()
         if v is not None
         and not isinstance(v, (list, dict))
+        and k not in EXCLUDED_KEYS
         and (k in NUMERIC_KEYS or k in TEXT_KEYS)
         and k not in compared_keys
     )
     correctness = round(match / total * 100, 1) if total else 0.0
+
+    # Per-tier summary
+    tier_summary = {}
+    for tier in ("A", "B", "C"):
+        tier_results = [r for r in results if r["tier"] == tier]
+        t = len(tier_results)
+        m = sum(1 for r in tier_results if r["status"] == "MATCH")
+        c = sum(1 for r in tier_results if r["status"] == "CLOSE")
+        x = sum(1 for r in tier_results if r["status"] == "MISMATCH")
+        tier_summary[tier] = {
+            "total": t, "match": m, "close": c, "mismatch": x,
+            "correctness_pct": round(m / t * 100, 1) if t else 0.0,
+        }
 
     return {
         "expedient": expedient,
@@ -399,6 +446,7 @@ def compare_project(
             "missing": missing,
             "correctness_pct": correctness,
         },
+        "tier_summary": tier_summary,
     }
 
 
@@ -503,6 +551,15 @@ def main() -> None:
     # Global summary
     global_correctness = round(global_match / global_total * 100, 1) if global_total else 0.0
 
+    # Per-tier global aggregation
+    tier_global: dict[str, dict[str, int]] = {}
+    for tier in ("A", "B", "C"):
+        tier_global[tier] = {"total": 0, "match": 0, "close": 0, "mismatch": 0}
+    for proj in all_projects:
+        for tier, ts in proj.get("tier_summary", {}).items():
+            for k in ("total", "match", "close", "mismatch"):
+                tier_global[tier][k] += ts[k]
+
     print(f"=== Global Summary ===")
     print(
         f"Projects: {len(all_projects)} | "
@@ -512,6 +569,15 @@ def main() -> None:
         f"Mismatch: {global_mismatch}"
     )
     print(f"Overall correctness: {global_correctness}%")
+    print()
+    print("Per-tier correctness:")
+    tier_labels = {"A": "Auto-extractable", "B": "Manual/on-site", "C": "Professional judgment"}
+    for tier in ("A", "B", "C"):
+        tg = tier_global[tier]
+        pct = round(tg["match"] / tg["total"] * 100, 1) if tg["total"] else 0.0
+        label = tier_labels[tier]
+        print(f"  Tier {tier} ({label}): {tg['match']}/{tg['total']} match ({pct}%)")
+    print(f"  (Excluded: data_signatura_text — correct by design)")
 
     # Write comparison JSON
     comparison = {
