@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
 import sys
 import time
@@ -211,6 +212,19 @@ def auto_extract(
             # Cadastral parcel area (if not already from geocode)
             if 'superficie_cadastral_m2' not in result.prefills:
                 _phase3_cadastral_area(utm_x, utm_y, result)
+
+            # Phase 3.5: Ortho enrichment (ICGC orthophoto + vision analysis)
+            if os.environ.get('G3DT_ORTHO_ENRICHMENT', '') == '1':
+                emit("api_call", {"api": "ICGC Ortho", "action": "enrichment", "utm": f"({utm_x:.0f}, {utm_y:.0f})"})
+                _phase35_ortho_enrichment(utm_x, utm_y, result)
+                enriched_ok = bool(result.prefills.get('site_description_enriched'))
+                emit("source", {
+                    "name": "ICGC ortho+visió", "ok": enriched_ok,
+                    "data": {
+                        "is_anthropized": result.prefills.get('is_anthropized_enriched', ''),
+                        "site_description": (result.prefills['site_description_enriched'][:80] + '...') if result.prefills.get('site_description_enriched') else '',
+                    } if enriched_ok else None,
+                })
         else:
             emit("source", {"name": "APIs HTTP", "ok": False, "reason": "sense UTM"})
             result.steps_skipped.append(
@@ -994,6 +1008,15 @@ def _phase3_adjacents(
             if val and isinstance(val, str) and len(val) > 3:
                 address_candidates.append(val)
 
+        # P1: Also try client_address as last resort (often from Groq, may have better spelling)
+        # Filter: must look like a real street address (has digit, length > 10) to avoid
+        # partial addresses like "LLEIDA" that would geocode to city center
+        for key in ('client_address',):
+            val = result.prefills.get(key) or (existing_user_data or {}).get(key)
+            if val and isinstance(val, str) and len(val) > 10 and re.search(r'\d', val):
+                if val not in address_candidates:
+                    address_candidates.append(val)
+
         province = result.prefills.get('province', '')
         if municipality and address_candidates:
             for addr in address_candidates:
@@ -1050,9 +1073,9 @@ def _geocode_for_adjacents(
     # Build candidate addresses: full → stripped number → bare name
     candidates = [street_address]
 
-    # Strip house number variants: "Nº 39", ", 16", "18A-18B-20"
+    # Strip house number variants: "#7", "Nº 39", "nº7", ", 16", "18A-18B-20"
     import re
-    stripped = re.sub(r'[\s,]+(?:Nº\s*|nº\s*|n[úu]m\.?\s*)?\d[\dA-Za-z\-]*\s*$', '', street_address).strip()
+    stripped = re.sub(r'[\s,]+(?:#|Nº\s*|nº\s*|n[úu]m\.?\s*)?\d[\dA-Za-z\-]*\s*$', '', street_address).strip()
     if stripped and stripped != street_address:
         candidates.append(stripped)
 
@@ -1098,6 +1121,92 @@ def _phase3_cadastral_area(
         logger.info(f"Cadastral reference: {rc[:14]}")
     except Exception as exc:
         logger.debug(f"Cadastral reference lookup failed: {exc}")
+
+
+# ---------------------------------------------------------------------------
+# Phase 3.5: Ortho enrichment (ICGC orthophoto + vision analysis)
+# ---------------------------------------------------------------------------
+
+def _phase35_ortho_enrichment(
+    utm_x: float,
+    utm_y: float,
+    result: AutoExtractionResult,
+) -> None:
+    """Download ICGC orthophoto chips, run vision analysis, generate enriched text."""
+    try:
+        from .cadastre_adjacents import get_parcel_geometry_utm
+        from .ortho_enrichment import download_ortho_chips
+        from .ortho_vision import analyze_site
+        from .site_text_generator import generate_enriched_texts
+
+        # Get parcel polygon
+        rc14 = result.prefills.get('cadastral_ref', '')
+        if not rc14 or len(rc14) < 14:
+            logger.info("Ortho enrichment: skipped (no cadastral reference)")
+            result.steps_skipped.append(("Ortho enrichment", "sense ref. cadastral"))
+            return
+
+        polygon = get_parcel_geometry_utm(rc14[:14])
+        if not polygon or len(polygon) < 3:
+            logger.info("Ortho enrichment: skipped (no parcel polygon)")
+            result.steps_skipped.append(("Ortho enrichment", "sense polígon"))
+            return
+
+        # Download orthophoto chips
+        chips = download_ortho_chips(utm_x, utm_y, polygon)
+        if chips.tight_chip_path is None and chips.wide_chip_path is None:
+            logger.warning("Ortho enrichment: no chips downloaded")
+            result.steps_skipped.append(("Ortho enrichment", "ICGC WMS error"))
+            return
+
+        # Collect existing Cadastre adjacents
+        cadastre_adj = {
+            d: result.prefills.get(f'adjacent_{d}', '')
+            for d in ('north', 'south', 'east', 'west')
+        }
+
+        # Run vision analysis
+        analysis = analyze_site(
+            tight_chip_path=chips.tight_chip_path,
+            wide_chip_path=chips.wide_chip_path,
+            boundary_strip_paths=chips.boundary_strips,
+            cadastre_adjacents=cadastre_adj,
+        )
+        if analysis is None:
+            logger.warning("Ortho enrichment: vision analysis failed")
+            result.steps_skipped.append(("Ortho enrichment", "visió fallida"))
+            return
+
+        # Generate enriched text
+        enriched = generate_enriched_texts(
+            analysis=analysis,
+            cadastre_adjacents=cadastre_adj,
+            street_address=result.prefills.get('street_address', ''),
+            municipality=result.prefills.get('site_municipality', ''),
+            building_type=result.prefills.get('building_type', ''),
+        )
+
+        # Store enriched values with _enriched suffix (wizard_service will merge)
+        for key, value in enriched.items():
+            if value is not None and value != '':
+                result.prefills[f'{key}_enriched'] = value
+                result.sources[f'{key}_enriched'] = 'ICGC ortho+visió'
+
+        # Store ortho chip paths for wizard evidence panel
+        if chips.tight_chip_path:
+            result.prefills['_ortho_tight_chip'] = str(chips.tight_chip_path)
+        if chips.wide_chip_path:
+            result.prefills['_ortho_wide_chip'] = str(chips.wide_chip_path)
+        for direction, path in chips.boundary_strips.items():
+            result.prefills[f'_ortho_strip_{direction}'] = str(path)
+
+        n_enriched = sum(1 for k in enriched if enriched[k])
+        result.steps_completed.append(f"Ortho enrichment: {n_enriched} camps enriquits")
+        logger.info(f"Ortho enrichment: {n_enriched} fields enriched")
+
+    except Exception as exc:
+        logger.warning(f"Ortho enrichment failed: {exc}")
+        result.steps_skipped.append(("Ortho enrichment", str(exc)))
 
 
 # ---------------------------------------------------------------------------

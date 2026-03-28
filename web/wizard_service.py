@@ -179,6 +179,36 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
             return str(entry.get('value', '') or '')
         return str(entry)
 
+    # Phase 3.5 enriched values: prefer over template-generated if available
+    _ENRICHED_FIELDS = (
+        'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
+        'site_description', 'access_description', 'location_sentence',
+    )
+    for field_name in _ENRICHED_FIELDS:
+        enriched_key = f'{field_name}_enriched'
+        enriched_entry = merged.get(enriched_key)
+        enriched_val = ''
+        if isinstance(enriched_entry, dict):
+            enriched_val = str(enriched_entry.get('value', '') or '')
+        elif enriched_entry is not None:
+            enriched_val = str(enriched_entry)
+        if enriched_val and not _get_val(field_name):
+            merged[field_name] = {
+                'value': enriched_val,
+                'source': 'ICGC ortho+visió',
+            }
+
+    # is_anthropized from enrichment (replaces hardcoded True)
+    enriched_anthro = merged.get('is_anthropized_enriched')
+    if enriched_anthro is not None and not _get_val('is_anthropized'):
+        val = enriched_anthro
+        if isinstance(val, dict):
+            val = val.get('value', True)
+        merged['is_anthropized'] = {
+            'value': val,
+            'source': 'ICGC ortho+visió',
+        }
+
     # Access description: pick first street-facing direction (full sentence)
     if not _get_val('access_description'):
         import re as _re

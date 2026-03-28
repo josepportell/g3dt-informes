@@ -257,7 +257,8 @@ PLANOL_JSON_EXAMPLE = '''
   "architect_data": {
     "source_file": "A.01.pdf",
     "project_name": "Habitatge Unifamiliar Aïllat",
-    "street_address": "C/ Mestre Ramon Ortiz",
+    "building_type": "habitatge unifamiliar aïllat",
+    "street_address": "C/ Mestre Ramon Ortiz nº 12",
     "municipality": "Bell-Lloc d'Urgell",
     "promotor": "Ramon Mitjana SL",
     "architect": "Jordi Bosch Novell",
@@ -306,7 +307,15 @@ because the document doesn't match a specific expected layout.
 WHERE TO FIND DATA:
 - Title block / caixetí (ANY position — bottom-right, bottom-left, bottom-center, or side):
   - Project name/type (e.g., "Habitatge Unifamiliar Aïllat", "Avantprojecte", "Estudi de Detall")
-  - Location: street + number (WITHOUT postal code or municipality) → "street_address"
+  - Building type / classification → "building_type": a SHORT descriptive classification of what
+    is being built (e.g., "habitatge unifamiliar aïllat", "nau industrial", "vivienda unifamiliar
+    aislada", "3 habitatges unifamiliars"). Look in the project description, title block subtitle,
+    or infer from the project name. This should be the building classification, NOT the full project
+    title (e.g., NOT "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UN HABITATGE...")
+  - Location: street + house/plot number (WITHOUT postal code or municipality) → "street_address"
+    IMPORTANT: Always include the house or plot number (nº, num, número, s/n) if visible in the
+    caixetí. E.g., "Carrer de la Miranda nº 39", NOT just "Carrer de la Miranda". The number is
+    critical for accurate geocoding.
   - Municipality name (WITHOUT postal code or province) → "municipality"
   - Promotor / Propietari: company or individual name
   - Architect: name and college number (nºCol.)

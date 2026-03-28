@@ -27,6 +27,7 @@ _G3_CIF = "B25364589"
 # G3's own data — must be excluded from client-facing signals
 _G3_INTERNAL_NIFS = {_G3_CIF}
 _G3_INTERNAL_PLACES = {"ELS OMELLS DE NA GAIA"}  # G3 office town
+_G3_INTERNAL_NAMES = {"G3 DESENVOLUPAMENT TERRITORIAL", "INTECSON"}  # G3 + lab subcontractor
 
 # Excel epoch for serial date conversion
 _EXCEL_EPOCH = datetime(1899, 12, 30)
@@ -178,6 +179,10 @@ class ExcelMiner(BaseMiner):
                     value = self._find_adjacent_value(grid, row_idx, col_idx)
                     if value is not None:
                         value_str = self._normalize_value(value, maps_to)
+                        # Skip if the "value" is itself a known label (below-
+                        # cell fallback picked up the next label, not a value)
+                        if value_str.upper().rstrip(":. ") in LABEL_TO_VARIABLE:
+                            continue
                         # Validate URL fields actually contain URLs
                         if maps_to == "access_url" and not _URL_RE.search(value_str):
                             continue
@@ -185,6 +190,10 @@ class ExcelMiner(BaseMiner):
                         if maps_to == "client_nif" and value_str in _G3_INTERNAL_NIFS:
                             continue
                         if maps_to == "municipality" and value_str.upper() in _G3_INTERNAL_PLACES:
+                            continue
+                        if maps_to == "client_name" and any(
+                            name in value_str.upper() for name in _G3_INTERNAL_NAMES
+                        ):
                             continue
                         if value_str:
                             sig = Signal(

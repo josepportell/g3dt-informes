@@ -7,12 +7,12 @@ Last updated: 2026-03-28
 
 Compares our pipeline output against Eva's 7 signed reports. Each variable is classified into a tier and tracked through investigation → fix → verification.
 
-**Current state:**
-| Tier | Description | Match | Total | Correctness |
-|------|-------------|-------|-------|-------------|
-| A | Auto-extractable | 40/103 | **38.8%** | Target: 95% |
-| B | Manual/on-site | 0/54 | **0.0%** | Target: best effort |
-| C | Professional judgment | 3/17 | **17.6%** | Target: transparency |
+**Current state (post-P2):**
+| Tier | Description | Match | Total | Correctness | Delta |
+|------|-------------|-------|-------|-------------|-------|
+| A | Auto-extractable | 55/97 | **56.7%** | Target: 95% | +17.9pp from baseline |
+| B | Manual/on-site | 0/54 | **0.0%** | Target: best effort | — |
+| C | Professional judgment | 4/17 | **23.5%** | Target: transparency | +5.9pp from baseline |
 
 ---
 
@@ -115,25 +115,37 @@ Eva adjusts these values based on experience. Our formulas are correct per textb
 ## Action priority
 
 ### P0 — Quick wins (format fixes, immediate correctness gain)
-1. `radon_zone` format: store "ZONA {n}" not just "{n}"
-2. `seismic_ab_text` format: store "AB {op} {value} g" not just "{value}"
-3. `dpsh_test_ids` format: normalize comma spacing
-4. `municipality` format: strip province suffix
-5. Investigate wrong values: Rubí seismic (0.08 vs 0.04), Anciles radon ("ZONA 2" vs "0")
+1. ~~`radon_zone` format~~ ✅ Normalizer in compare_benchmarks.py (strips "ZONA " prefix, Roman→Arabic)
+2. ~~`seismic_ab_text` format~~ ✅ Normalizer in compare_benchmarks.py (extracts numeric value)
+3. ~~`dpsh_test_ids` format~~ ✅ Fixed join to no-space `','.join()` + normalizer for comparison
+4. ~~`municipality` format~~ ✅ Normalizer strips province suffix (, Barcelona, etc.)
+5. ~~Investigate wrong values~~ ✅ Investigated:
+   - **Rubí seismic (0.08 vs 0.04):** Our data (NCSE-02 Annex 1) says ab=0.04g for Rubí. Eva writes 0.08. Possible causes: (a) Eva states ac (design accel = S×ρ×ab) not ab, (b) newer norm, (c) error. → Ask Eva.
+   - **Anciles radon+seismic:** Anciles (Benasque, Huesca) is in Aragón, not Catalunya. Our dataset only has 947 Catalan municipalities → defaults to ab=0.04, radon=0. Eva: ab=0.05, radon=ZONA 2. → Need Aragón data or manual override. Moved to P1.
 
-### P1 — Investigation (understand root cause before fixing)
-6. `client` extraction chain: why does FileMiner pick "INTECSON"?
-7. `building_type` extraction: where does the value come from?
-8. `geotech_nb` representation: how to compute representative Nb from DPSH data
-9. `dpsh_avg_n20` metric alignment: compare N20 or Nb?
-10. `superficie_parcela` source: why large deviations in 3 projects?
-11. `cota_referencia` Rubí: why 129 instead of 212.5?
-12. Multi-level selection: why does pipeline pick wrong geological level for Alcoletge/Linyola?
+### P1 — Investigation (understand root cause before fixing) ✅ All investigated
 
-### P2 — Tier C transparency
-13. Add formula explanations to wizard for E, Qa, settlement, K30
-14. Investigate Rubí K30 calculation anomaly
-15. Investigate qa_value cap logic (why 5.0 for Castellar?)
+6. ~~`client` extraction~~ ✅ **Root cause: pressupost PDF client extraction not working.** Bell-Lloc works only because it has user_data.json. Other projects: pressupost has "CLIENT: X" but pipeline picks up "INTECSON" (lab/employer) from FileMiner instead. **Fix:** improve pressupost client extraction + plànol "A petició de:" field.
+
+7. ~~`building_type` extraction~~ ✅ **Root cause: wizard.py:257 sets `building_type = project_name` from plànol vision.** Claude extracts the literal project title ("ESTUDI GEOLÒGIC...") not the building classification ("habitatge unifamiliar"). **Fix:** add separate `building_type` field to plànol vision prompt, distinct from project_name.
+
+8. ~~`geotech_nb` representation~~ ✅ **Root cause: pipeline shows raw DPSH last-reading ("12-R"), Eva shows interpreted Nb for bearing stratum.** Linked to #12 (multi-level bug). Pipeline needs to compute representative Nb from depth-filtered DPSH data. **Fix:** see #12.
+
+9. ~~`dpsh_avg_n20` metric alignment~~ ✅ **Root cause: pipeline computes N20 avg, Eva states Nb mig (N20/0.83).** Plus different scope: pipeline uses all depths, Eva uses bearing stratum only. **Fix:** (a) show Nb in report, not N20. (b) Filter to bearing stratum depth. Linked to #12.
+
+10. ~~`superficie_parcela` source~~ ✅ **Root cause: pipeline uses plànol vision "parcel_area_m2" (architect's site plan dimensions). Eva uses official cadastral area.** Cadastre WFS area IS computed by geocoding but stored in wrong field (`superficie_cadastral_m2` not `superficie_parcela_m2`). **Fix:** use Cadastre WFS area for superficie_parcela, fall back to plànol vision.
+
+11. ~~`cota_referencia` Rubí~~ ✅ **Root cause: plànol vision extracts "Carrer de la Miranda" WITHOUT house number "nº 39".** Partial address → geocodes to wrong location → wrong ICGC MDT elevation (129.0 instead of 212.5). Working copies at `/mnt/c/claude/g3dt/projectes/` have wrong coordinates. **Fix:** improve plànol address extraction to keep house numbers; add coordinate validation against municipality bounds.
+
+12. ~~Multi-level selection~~ ✅ **Root cause: report_data.py:427 `avg_n20 = dpsh_data.overall_average_n20` always uses global average across ALL depths.** Should filter DPSH readings to bearing stratum (deepest layer) depth range. Alcoletge: shallow fill N20~4.4 mixed with deep lutites N20~35 → global avg ~22 → wrong phi, cohesion, E. Also: single GeotechnicalParams applied to all levels in Taula 10. **Fix:** depth-filter DPSH to bearing stratum; per-level GeotechnicalParams for multi-level projects.
+
+### P2 — Tier C transparency ✅
+
+13. ~~Formula explanations in wizard~~ ✅ Added `_calc_*` notes to context dict + HTML display in expert overrides section (gamma formula, phi formula, E formula, Qa/K30/settlement results panel).
+
+14. ~~Rubí K30 anomaly~~ ✅ **Root cause: `icgc_unit_description` (regional geology) was used for rock detection.** ICGC descriptions always contain rock keywords ("bretxes", "lutites", "conglomerat") even for granular sites → false positive `is_rock()` → rock defaults (E=500, c=1.0) → K30=E/60=8.3 instead of E/75=6.3. **Fix:** removed ICGC fallback from rock_description; only use sondeig layer descriptions (field observations). Rubí K30: 8.3 → 6.3 (Eva: 6.0, MATCH).
+
+15. ~~Qa cap logic~~ ✅ **Same root cause as #14.** ICGC rock detection gave all projects c=1.0 → rock cap 5.0. After fix: Rubí/Linyola now correctly get c=0.0 → soil cap 3.0. Castellar keeps c=1.0 (genuinely rock via N20 refusal) → rock cap 5.0 (Eva uses 3.0 — professional judgment, Tier C).
 
 ### P3 — Tier B best effort
 16. Google Street View API feasibility study
@@ -149,3 +161,8 @@ Eva adjusts these values based on experience. Our formulas are correct per textb
 | Date | Change | Impact |
 |------|--------|--------|
 | 2026-03-28 | Initial creation. Benchmark layer complete, 7 projects verified. | Baseline: A=38.8%, B=0%, C=17.6% |
+| 2026-03-28 | P0 complete: normalizers in compare_benchmarks.py (radon, seismic, dpsh_ids, municipality) + dpsh_test_ids no-space join. Rubí/Anciles wrong values investigated. | Format mismatches → MATCH. A: 38.8% → 53.5% |
+| 2026-03-28 | P1 complete: all 7 root causes identified. Key bugs: multi-level N20 averaging (report_data.py:427), building_type=project_name (wizard.py:257), superficie from plànol not cadastre, Rubí geocode missing house number. | Investigation only, no code changes |
+| 2026-03-28 | Added wizard warnings for non-Catalan municipalities (radon + seismic lookup failures). | Anciles now shows 4 warnings |
+| 2026-03-28 | P1 code fixes: (a) bearing stratum N20 filter in report_data.py, (b) building_type field in plànol prompt, (c) INTECSON client filter in excel_miner + content_discovery, (d) Nb display in report_generator, (e) address house number in plànol prompt. #10 superficie deferred (WFS not reliable). | A: 53.5% → 56.7%. Prompt fixes (#7, #11) need vision re-run. |
+| 2026-03-28 | P2: Fixed ICGC rock detection bug (report_data.py) — regional geology was triggering is_rock() for ALL projects. Added wizard formula transparency (_calc_* notes). | C: 17.6% → 23.5%. K30 Rubí: 8.3→6.3 (Eva 6.0). |

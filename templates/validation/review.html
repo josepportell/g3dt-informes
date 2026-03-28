@@ -913,6 +913,88 @@
         .wizard-group-body.single-col {
             grid-template-columns: 1fr;
         }
+        /* Evidence panel */
+        .evidence-panel {
+            margin-top: -1px;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+        }
+        .evidence-header {
+            background: #eef6fc;
+            padding: 10px 16px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #2c3e50;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .evidence-header:hover {
+            background: #dceefb;
+        }
+        .evidence-body {
+            padding: 16px;
+            background: #fafcfe;
+        }
+        .evidence-main-img {
+            max-width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .evidence-caption {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 4px;
+        }
+        .evidence-strips {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .strip-card {
+            text-align: center;
+            cursor: pointer;
+        }
+        .strip-card img {
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            transition: transform 0.15s ease;
+        }
+        .strip-card img:hover {
+            transform: scale(1.05);
+            border-color: #3498db;
+        }
+        .strip-card span {
+            display: block;
+            font-size: 0.75em;
+            color: #555;
+            margin-top: 2px;
+        }
+        .evidence-expanded-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            cursor: pointer;
+        }
+        .evidence-expanded-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
         .wizard-field {
             display: flex;
             flex-direction: column;
@@ -1660,6 +1742,38 @@
                             </div>
                         </div>
 
+                        <!-- Evidence panel (ortho chips, shown only when data available) -->
+                        <div class="evidence-panel" id="evidence-panel" style="display:none;">
+                            <div class="evidence-header" onclick="toggleEvidence()">
+                                Evidencia visual (ICGC ortofoto)
+                                <span id="evidence-toggle">&#9654;</span>
+                            </div>
+                            <div id="evidence-content" style="display:none;" class="evidence-body">
+                                <div id="evidence-main-container">
+                                    <img id="evidence-tight-chip" class="evidence-main-img" alt="Ortofoto amb contorn de parcella" />
+                                    <p class="evidence-caption">Ortofoto ICGC amb contorn de parcella</p>
+                                </div>
+                                <div class="evidence-strips" id="evidence-strips">
+                                    <div class="strip-card" data-dir="north">
+                                        <img id="evidence-strip-north" alt="Franja nord" onclick="expandEvidence(this)" />
+                                        <span>Nord</span>
+                                    </div>
+                                    <div class="strip-card" data-dir="south">
+                                        <img id="evidence-strip-south" alt="Franja sud" onclick="expandEvidence(this)" />
+                                        <span>Sud</span>
+                                    </div>
+                                    <div class="strip-card" data-dir="east">
+                                        <img id="evidence-strip-east" alt="Franja est" onclick="expandEvidence(this)" />
+                                        <span>Est</span>
+                                    </div>
+                                    <div class="strip-card" data-dir="west">
+                                        <img id="evidence-strip-west" alt="Franja oest" onclick="expandEvidence(this)" />
+                                        <span>Oest</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Group 3: Parametres -->
                         <div class="wizard-group">
                             <div class="wizard-group-header">Parametres</div>
@@ -1749,6 +1863,7 @@
                                     <div class="wizard-field">
                                         <label>gamma densitat (g/cm3) <span class="source-badge" id="src-geomech_gamma"></span></label>
                                         <input type="number" step="0.01" id="wiz-geomech_gamma" placeholder="ex: 2.20" onchange="markWizardDirty(event)">
+                                        <small class="calc-note" id="calc-gamma" style="color:#888;font-size:11px;display:block"></small>
                                     </div>
                                     <div class="wizard-field">
                                         <label>c cohesio (kg/cm2) <span class="source-badge" id="src-geomech_cohesion"></span></label>
@@ -1757,14 +1872,22 @@
                                     <div class="wizard-field">
                                         <label>phi angle friccio (graus) <span class="source-badge" id="src-geomech_phi"></span></label>
                                         <input type="number" step="0.1" id="wiz-geomech_phi" placeholder="ex: 35" onchange="markWizardDirty(event)">
+                                        <small class="calc-note" id="calc-phi" style="color:#888;font-size:11px;display:block"></small>
                                     </div>
                                     <div class="wizard-field">
                                         <label>E modul deformacio (kg/cm2) <span class="source-badge" id="src-geomech_E"></span></label>
                                         <input type="number" step="1" id="wiz-geomech_E" placeholder="ex: 500" onchange="markWizardDirty(event)">
+                                        <small class="calc-note" id="calc-E" style="color:#888;font-size:11px;display:block"></small>
                                     </div>
                                     <div class="wizard-field">
                                         <label>Es assentament Schmertmann (kg/cm2) <span class="source-badge" id="src-Es_settlement"></span></label>
                                         <input type="number" step="1" id="wiz-Es_settlement" placeholder="auto: 2.5xNb" onchange="markWizardDirty(event)">
+                                    </div>
+                                    <div style="grid-column: 1 / -1; margin-top: 8px; padding: 8px 12px; background: #f0f4f8; border-radius: 6px; font-size: 12px; color: #555;">
+                                        <strong>Resultats calculats:</strong>
+                                        <span id="calc-results-qa"></span>
+                                        <span id="calc-results-k30"></span>
+                                        <span id="calc-results-settlement"></span>
                                     </div>
                                 </div>
                             </div>
@@ -3618,6 +3741,7 @@
 
             renderWizardForm();
             renderInstructions(wizardPrefills);
+            loadEvidence(selectedProject);
             wizardDataLoaded = true;
             wizardDirty = false;
             document.getElementById('wizardLoading').style.display = 'none';
@@ -3879,6 +4003,7 @@
 
                 renderWizardForm();
                 renderInstructions(wizardPrefills);
+                loadEvidence(selectedProject);
                 wizardDataLoaded = true;
                 wizardDirty = false;
                 document.getElementById('wizardUnsaved').style.display = 'none';
@@ -4064,6 +4189,34 @@
                 setSourceBadge(`geomech_${param}`, source);
             });
 
+            // Populate calculation notes (Tier C transparency)
+            const calcNoteKeys = {
+                'gamma': '_calc_gamma', 'phi': '_calc_phi', 'E': '_calc_E',
+            };
+            Object.entries(calcNoteKeys).forEach(([field, key]) => {
+                const pf = wizardPrefills[key];
+                const note = pf ? (typeof pf === 'object' ? pf.value : pf) : '';
+                const el = document.getElementById(`calc-${field}`);
+                if (el && note) el.textContent = note;
+            });
+            // Results panel (Qa, K30, settlement)
+            const resultNotes = [
+                ['calc-results-qa', '_calc_qa', 'qa_value', 'Qa'],
+                ['calc-results-k30', '_calc_k30', 'k30_value', 'K30'],
+                ['calc-results-settlement', '_calc_settlement', 'settlement', 'Assentament'],
+            ];
+            resultNotes.forEach(([elId, noteKey, valKey, label]) => {
+                const el = document.getElementById(elId);
+                if (!el) return;
+                const val = wizardPrefills[valKey];
+                const valStr = val ? (typeof val === 'object' ? val.value : val) : '';
+                const note = wizardPrefills[noteKey];
+                const noteStr = note ? (typeof note === 'object' ? note.value : note) : '';
+                if (valStr) {
+                    el.innerHTML = ` | <strong>${label}=${valStr}</strong> <span style="color:#999">(${noteStr})</span>`;
+                }
+            });
+
             // UTM bounds validation (Catalonia)
             ['utm_x', 'utm_y'].forEach(field => {
                 const el = document.getElementById(`wiz-${field}`);
@@ -4137,6 +4290,64 @@
             const body = header.nextElementSibling;
             arrow.classList.toggle('expanded');
             body.classList.toggle('collapsed');
+        }
+
+        // --- Evidence panel ---
+
+        async function loadEvidence(projectName) {
+            try {
+                const resp = await fetch(`/api/evidence/${encodeURIComponent(projectName)}`);
+                if (!resp.ok) return;
+                const data = await resp.json();
+                if (!data.tight_chip && !data.wide_chip && !Object.keys(data.strips || {}).length) return;
+
+                document.getElementById('evidence-panel').style.display = 'block';
+                if (data.tight_chip) {
+                    document.getElementById('evidence-tight-chip').src = data.tight_chip;
+                } else if (data.wide_chip) {
+                    document.getElementById('evidence-tight-chip').src = data.wide_chip;
+                } else {
+                    document.getElementById('evidence-main-container').style.display = 'none';
+                }
+                const stripsContainer = document.getElementById('evidence-strips');
+                let hasStrips = false;
+                for (const dir of ['north', 'south', 'east', 'west']) {
+                    const img = document.getElementById(`evidence-strip-${dir}`);
+                    const card = img ? img.closest('.strip-card') : null;
+                    if (data.strips && data.strips[dir]) {
+                        img.src = data.strips[dir];
+                        hasStrips = true;
+                    } else if (card) {
+                        card.style.display = 'none';
+                    }
+                }
+                if (!hasStrips) stripsContainer.style.display = 'none';
+            } catch (e) {
+                console.log('Evidence panel: no data available', e);
+            }
+        }
+
+        function toggleEvidence() {
+            const content = document.getElementById('evidence-content');
+            const toggle = document.getElementById('evidence-toggle');
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                toggle.innerHTML = '&#9660;';
+            } else {
+                content.style.display = 'none';
+                toggle.innerHTML = '&#9654;';
+            }
+        }
+
+        function expandEvidence(img) {
+            if (!img.src) return;
+            const overlay = document.createElement('div');
+            overlay.className = 'evidence-expanded-overlay';
+            overlay.onclick = function() { document.body.removeChild(overlay); };
+            const expanded = document.createElement('img');
+            expanded.src = img.src;
+            overlay.appendChild(expanded);
+            document.body.appendChild(overlay);
         }
 
         let _autoSaveTimer = null;

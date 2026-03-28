@@ -959,8 +959,15 @@ class ReportGenerator:
             if self.report_data.dpsh:
                 dpsh = self.report_data.dpsh
                 context['num_dpsh_tests'] = dpsh.num_tests
-                context['dpsh_test_ids'] = ', '.join(dpsh.test_ids)
-                context['dpsh_avg_n20'] = f"{dpsh.overall_average_n20:.1f}"
+                context['dpsh_test_ids'] = ','.join(dpsh.test_ids)
+                # Eva shows "Nb mig" (Nb average), not N20 average.
+                # Use bearing stratum N20 when available, convert to Nb (N20/0.83), integer format.
+                bearing_n20 = (
+                    self.report_data.soil_levels[0].n20_average
+                    if self.report_data.soil_levels
+                    else dpsh.overall_average_n20
+                )
+                context['dpsh_avg_n20'] = f"{bearing_n20 / 0.83:.0f}"
 
             # DPSH table rows
             dpsh_tests = []
@@ -1055,12 +1062,29 @@ class ReportGenerator:
                         # Use comma as decimal separator (Catalan format)
                         context['seismic_ab_text'] = ab_match.group(1).replace('.', ',')
 
-                # Radon (zone + CSN coordinate potential)
+                # Check if seismic lookup found the municipality
                 municipality = self.report_data.municipality or ''
+                if municipality:
+                    from .municipal_data import get_seismic_ab_with_status
+                    seismic_result = get_seismic_ab_with_status(municipality)
+                    if not seismic_result.found:
+                        self.warnings.append(
+                            f"Municipi '{municipality}' no trobat a la base de dades sísmica "
+                            f"(només Catalunya). Valor ab per defecte: {seismic_result.ab}g. "
+                            f"Reviseu manualment."
+                        )
+
+                # Radon (zone + CSN coordinate potential)
                 if municipality:
                     from .municipal_data import get_radon_info_with_status
                     radon_result = get_radon_info_with_status(municipality)
                     radon_info = radon_result.info
+                    if not radon_result.found:
+                        self.warnings.append(
+                            f"Municipi '{municipality}' no trobat a la base de dades de radó "
+                            f"(només Catalunya). Zona per defecte: {radon_info.zone}. "
+                            f"Reviseu manualment."
+                        )
                     context['radon_zone'] = str(radon_info.zone)
                     if radon_info.zone == 0:
                         context['radon_zone_description'] = ', municipi amb baixes concentracions de gas radó.'
@@ -1227,31 +1251,20 @@ class ReportGenerator:
                         d_to = sl.get('depth_to_m', 999)
                         level_readings = [r for r in all_readings if d_from <= abs(r.depth_m) <= d_to]
 
-                    # Nb range for this level
+                    # Representative Nb for this level (Eva shows average Nb as integer, e.g. "25-R")
                     if level_readings:
                         # Check for Nb override from geomech_params
                         geomech = self.user_data.get('geomech_params', {})
                         nb_override = geomech.get('Nb', '')
                         if nb_override:
-                            nb_range = str(nb_override)
+                            nb_display = str(nb_override)
                         else:
-                            # When merged level, exclude shallow layer readings from Nb range
-                            if sondeig_layers and num_user_levels < len(sondeig_layers):
-                                # Exclude first (shallow) layer — include everything below it
-                                shallow_max = sondeig_layers[0].get('depth_to_m', 0)
-                                deep_readings = [r for r in level_readings if abs(r.depth_m) > shallow_max]
-                                if deep_readings:
-                                    nb_values = [r.nb for r in deep_readings]
-                                else:
-                                    nb_values = [r.nb for r in level_readings]
-                            else:
-                                nb_values = [r.nb for r in level_readings]
-                            nb_min = min(nb_values)
-                            nb_max = max(nb_values)
+                            # Use level's bearing stratum N20 average, convert to Nb
+                            avg_nb_display = avg_n20 / 0.83 if avg_n20 else 0
                             has_refusal = any(r.n20 >= 100 for r in level_readings)
-                            nb_range = f"{nb_min:.0f}-R" if has_refusal else f"{nb_min:.0f}-{nb_max:.0f}"
+                            nb_display = f"{avg_nb_display:.0f}-R" if has_refusal else f"{avg_nb_display:.0f}"
                     else:
-                        nb_range = ''
+                        nb_display = ''
 
                     # Per-level geotechnical params
                     # Priority: user_data override > CTE correlations
@@ -1285,12 +1298,12 @@ class ReportGenerator:
                     n_display = geomech.get('N') or (str(int(avg_n20)) if avg_n20 else '')
                     # Nb override
                     if geomech.get('Nb'):
-                        nb_range = geomech['Nb']
+                        nb_display = geomech['Nb']
 
                     context['geotech_rows'].append({
                         'name': f"{_catalan_ordinal(level.level_number)} nivell. {_shorten_material_desc(level.description)}.",
                         'material_short': _shorten_material_desc(level.description),
-                        'nb': nb_range,
+                        'nb': nb_display,
                         'n': str(n_display),
                         'density': f"{gamma:.2f}",
                         'cohesion': f"{cohesion:.2f}",
@@ -1309,6 +1322,14 @@ class ReportGenerator:
                 context['geotech_cohesion'] = context['geotech_rows'][0]['cohesion']
                 context['geotech_phi'] = context['geotech_rows'][0]['phi']
                 context['geotech_E'] = context['geotech_rows'][0]['E']
+                # Calculation transparency for Tier C variables
+                gp = self.report_data.geotechnical_params
+                if gp:
+                    sl = self.report_data.soil_levels[0] if self.report_data.soil_levels else None
+                    n20_src = f"N20={sl.n20_average:.0f}" if sl and sl.n20_average else ""
+                    context['_calc_E'] = f"CTE D.23 {n20_src}" if n20_src else ""
+                    context['_calc_phi'] = f"Schmertmann Nb={sl.n20_average/0.83:.0f}" if sl and sl.n20_average else ""
+                    context['_calc_gamma'] = f"CTE D.27 {sl.soil_type}" if sl else ""
             else:
                 context['geotech_level_name'] = ''
                 context['geotech_nb'] = ''
@@ -1331,18 +1352,34 @@ class ReportGenerator:
                 if gp.cohesion and gp.cohesion > 0:
                     # Rock (α=2.0): K30 = E / 60
                     k30 = gp.E / 60
+                    k30_formula = f"E/60 = {gp.E:.0f}/60 (roca, c={gp.cohesion})"
                 else:
                     # Granular (α=2.5): K30 = E / 75
                     k30 = gp.E / 75
+                    k30_formula = f"E/75 = {gp.E:.0f}/75 (granular)"
                 context['k30_value'] = f"{k30:.1f}"
+                context['_calc_k30'] = k30_formula
             else:
                 context['k30_value'] = ''
+                context['_calc_k30'] = ''
 
             # Terzaghi results
             if self.report_data.terzaghi_result:
                 tr = self.report_data.terzaghi_result
                 context['qa_value'] = f"{tr.Qa:.2f}"
                 context['settlement'] = f"{tr.settlement_cm:.2f}" if tr.settlement_cm else ''
+                # Calculation transparency notes
+                B = self.user_data.get('footing_width_m', 1.0)
+                Df = self.user_data.get('foundation_depth_m', 0.8)
+                avg_n20 = self.report_data.dpsh.overall_average_n20 if self.report_data.dpsh else None
+                nb = avg_n20 / 0.83 if avg_n20 else None
+                context['_calc_qa'] = (
+                    f"Terzaghi Nb={nb:.0f}, B={B}m, Df={Df}m"
+                    + (f", cap={tr.Qa:.2f}" if tr.Qa == tr.Qa else "")
+                ) if nb else ""
+                context['_calc_settlement'] = (
+                    f"Schmertmann Es={tr.Es_used:.0f}, B={B}m"
+                ) if tr.settlement_cm and hasattr(tr, 'Es_used') else ""
 
             # Section 4 conditional content (empentes, estabilitat, expansivitat)
             if sections.get('section4'):

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-28T13:42:16.462378+00:00",
+  "timestamp": "2026-03-28T17:07:43.557203+00:00",
   "tolerance_pct": 5,
   "projects": [
     {
@@ -10,7 +10,7 @@
           "key": "client",
           "label": "Client / Promotor",
           "benchmark": "WOOD COMFORT PROMOCIONS SLU",
-          "pipeline": "INTECSON",
+          "pipeline": "GRUP ALMA",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -46,7 +46,7 @@
           "pipeline": "Castellar del Vallès, Barcelona",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "CLOSE",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -175,10 +175,10 @@
           "key": "dpsh_test_ids",
           "label": "IDs assaigs",
           "benchmark": "P-1,P-2,P-3,P-4",
-          "pipeline": "P-1, P-2, P-3, P-4",
+          "pipeline": "P-1,P-2,P-3,P-4",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "MISMATCH",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -186,9 +186,9 @@
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
           "benchmark": 17,
-          "pipeline": "38.1",
-          "pipeline_parsed": 38.1,
-          "deviation_pct": 124.1,
+          "pipeline": "46",
+          "pipeline_parsed": 46.0,
+          "deviation_pct": 170.6,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "A"
@@ -211,7 +211,7 @@
           "pipeline": "1",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "CLOSE",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -222,7 +222,7 @@
           "pipeline": "0,04",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "CLOSE",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -274,9 +274,9 @@
           "key": "geotech_nb",
           "label": "Nb",
           "benchmark": 17,
-          "pipeline": "7-R",
-          "pipeline_parsed": 7.0,
-          "deviation_pct": -58.8,
+          "pipeline": "46-R",
+          "pipeline_parsed": 46.0,
+          "deviation_pct": 170.6,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "A"
@@ -317,19 +317,19 @@
       ],
       "summary": {
         "total": 28,
-        "match": 8,
-        "close": 3,
-        "mismatch": 17,
+        "match": 12,
+        "close": 0,
+        "mismatch": 16,
         "missing": 2,
-        "correctness_pct": 28.6
+        "correctness_pct": 42.9
       },
       "tier_summary": {
         "A": {
           "total": 16,
-          "match": 6,
-          "close": 3,
-          "mismatch": 7,
-          "correctness_pct": 37.5
+          "match": 10,
+          "close": 0,
+          "mismatch": 6,
+          "correctness_pct": 62.5
         },
         "B": {
           "total": 8,
@@ -520,10 +520,10 @@
           "key": "dpsh_test_ids",
           "label": "IDs assaigs",
           "benchmark": "P-1,P-2,P-3",
-          "pipeline": "P-1, P-2, P-3",
+          "pipeline": "P-1,P-2,P-3",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "MISMATCH",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -531,10 +531,10 @@
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
           "benchmark": 48,
-          "pipeline": "39.5",
-          "pipeline_parsed": 39.5,
-          "deviation_pct": -17.7,
-          "status": "MISMATCH",
+          "pipeline": "48",
+          "pipeline_parsed": 48.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
           "type": "numeric",
           "tier": "A"
         },
@@ -556,7 +556,7 @@
           "pipeline": "1",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "CLOSE",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -619,10 +619,10 @@
           "key": "geotech_nb",
           "label": "Nb",
           "benchmark": 47,
-          "pipeline": "12-R",
-          "pipeline_parsed": 12.0,
-          "deviation_pct": -74.5,
-          "status": "MISMATCH",
+          "pipeline": "48-R",
+          "pipeline_parsed": 48.0,
+          "deviation_pct": 2.1,
+          "status": "MATCH",
           "type": "numeric",
           "tier": "A"
         },
@@ -630,9 +630,9 @@
           "key": "qa_value",
           "label": "Qa capacitat portant",
           "benchmark": 3.5,
-          "pipeline": "5.00",
-          "pipeline_parsed": 5.0,
-          "deviation_pct": 42.9,
+          "pipeline": "2.74",
+          "pipeline_parsed": 2.74,
+          "deviation_pct": -21.7,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "C"
@@ -641,9 +641,9 @@
           "key": "settlement",
           "label": "Assentament",
           "benchmark": 1.5,
-          "pipeline": "2.18",
-          "pipeline_parsed": 2.18,
-          "deviation_pct": 45.3,
+          "pipeline": "1.18",
+          "pipeline_parsed": 1.18,
+          "deviation_pct": -21.3,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "C"
@@ -652,29 +652,29 @@
           "key": "k30_value",
           "label": "Coef. balast K30",
           "benchmark": 6.0,
-          "pipeline": "8.3",
-          "pipeline_parsed": 8.3,
-          "deviation_pct": 38.3,
-          "status": "MISMATCH",
+          "pipeline": "6.3",
+          "pipeline_parsed": 6.3,
+          "deviation_pct": 5.0,
+          "status": "MATCH",
           "type": "numeric",
           "tier": "C"
         }
       ],
       "summary": {
         "total": 28,
-        "match": 7,
-        "close": 2,
-        "mismatch": 19,
+        "match": 12,
+        "close": 1,
+        "mismatch": 15,
         "missing": 3,
-        "correctness_pct": 25.0
+        "correctness_pct": 42.9
       },
       "tier_summary": {
         "A": {
           "total": 16,
-          "match": 6,
-          "close": 2,
-          "mismatch": 8,
-          "correctness_pct": 37.5
+          "match": 10,
+          "close": 1,
+          "mismatch": 5,
+          "correctness_pct": 62.5
         },
         "B": {
           "total": 8,
@@ -685,10 +685,10 @@
         },
         "C": {
           "total": 4,
-          "match": 1,
+          "match": 2,
           "close": 0,
-          "mismatch": 3,
-          "correctness_pct": 25.0
+          "mismatch": 2,
+          "correctness_pct": 50.0
         }
       }
     },
@@ -700,7 +700,7 @@
           "key": "client",
           "label": "Client / Promotor",
           "benchmark": "SRA. SÍLVIA EROLES BALAGUERÓ",
-          "pipeline": "INTECSON",
+          "pipeline": "BUNYESC ARQUITECCTURA EFICIENT, SLP",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -722,7 +722,7 @@
           "key": "street_address",
           "label": "Adreca",
           "benchmark": "Carrer Clot de la Llacuna nº16",
-          "pipeline": "Carrer Clot de la Llacuna, 16",
+          "pipeline": "Carrer Clot de la Llaguna nº16",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -744,7 +744,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "benchmark": "El solar on s'emplaçarà el nou habitatge unifamiliar es situa al Carrer Clot de la Llacuna nº16 de Linyola",
-          "pipeline": "entre el Carrer Clot de la Llacuna i el Camí Arcs,Dels de Linyola",
+          "pipeline": "entre el Carrer Clot de la Llaguna nº16 i el Camí Arcs,Dels de Linyola",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -799,10 +799,10 @@
           "key": "building_type",
           "label": "Tipus edifici",
           "benchmark": "habitatge unifamiliar",
-          "pipeline": "Estudi Geològic / Geotècnic per la construcció d'un habitatge al Carrer Clot de la Liacuna nº16 de Linyola",
+          "pipeline": "habitatge unifamiliar aïllat",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "MISMATCH",
+          "status": "CLOSE",
           "type": "text",
           "tier": "A"
         },
@@ -876,10 +876,10 @@
           "key": "dpsh_test_ids",
           "label": "IDs assaigs",
           "benchmark": "P-1,P-2,P-3",
-          "pipeline": "P-1, P-2, P-3",
+          "pipeline": "P-1,P-2,P-3",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "MISMATCH",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -887,9 +887,9 @@
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
           "benchmark": 11.0,
-          "pipeline": "29.2",
-          "pipeline_parsed": 29.2,
-          "deviation_pct": 165.5,
+          "pipeline": "35",
+          "pipeline_parsed": 35.0,
+          "deviation_pct": 218.2,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "A"
@@ -912,7 +912,7 @@
           "pipeline": "0,04",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "CLOSE",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -964,9 +964,9 @@
           "key": "geotech_nb",
           "label": "Nb",
           "benchmark": 13.0,
-          "pipeline": "5-R",
-          "pipeline_parsed": 5.0,
-          "deviation_pct": -61.5,
+          "pipeline": "35-R",
+          "pipeline_parsed": 35.0,
+          "deviation_pct": 169.2,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "A"
@@ -975,9 +975,9 @@
           "key": "qa_value",
           "label": "Qa capacitat portant",
           "benchmark": 3.0,
-          "pipeline": "5.00",
-          "pipeline_parsed": 5.0,
-          "deviation_pct": 66.7,
+          "pipeline": "1.90",
+          "pipeline_parsed": 1.9,
+          "deviation_pct": -36.7,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "C"
@@ -986,29 +986,29 @@
           "key": "settlement",
           "label": "Assentament",
           "benchmark": 1.0,
-          "pipeline": "2.96",
-          "pipeline_parsed": 2.96,
-          "deviation_pct": 196.0,
-          "status": "MISMATCH",
+          "pipeline": "1.12",
+          "pipeline_parsed": 1.12,
+          "deviation_pct": 12.0,
+          "status": "CLOSE",
           "type": "numeric",
           "tier": "C"
         }
       ],
       "summary": {
         "total": 27,
-        "match": 5,
-        "close": 2,
-        "mismatch": 20,
+        "match": 7,
+        "close": 3,
+        "mismatch": 17,
         "missing": 3,
-        "correctness_pct": 18.5
+        "correctness_pct": 25.9
       },
       "tier_summary": {
         "A": {
           "total": 16,
-          "match": 5,
+          "match": 7,
           "close": 2,
-          "mismatch": 9,
-          "correctness_pct": 31.2
+          "mismatch": 7,
+          "correctness_pct": 43.8
         },
         "B": {
           "total": 8,
@@ -1020,8 +1020,8 @@
         "C": {
           "total": 3,
           "match": 0,
-          "close": 0,
-          "mismatch": 3,
+          "close": 1,
+          "mismatch": 2,
           "correctness_pct": 0.0
         }
       }
@@ -1254,7 +1254,7 @@
           "key": "dpsh_test_ids",
           "label": "IDs assaigs",
           "benchmark": "P-1, P-2",
-          "pipeline": "P-1, P-2",
+          "pipeline": "P-1,P-2",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MATCH",
@@ -1265,9 +1265,9 @@
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
           "benchmark": 25,
-          "pipeline": "36.7",
-          "pipeline_parsed": 36.7,
-          "deviation_pct": 46.8,
+          "pipeline": "32",
+          "pipeline_parsed": 32.0,
+          "deviation_pct": 28.0,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "A"
@@ -1290,7 +1290,7 @@
           "pipeline": "1",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "CLOSE",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -1301,7 +1301,7 @@
           "pipeline": "0,04",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "CLOSE",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -1353,9 +1353,9 @@
           "key": "geotech_nb",
           "label": "Nb",
           "benchmark": 25,
-          "pipeline": "12-R",
-          "pipeline_parsed": 12.0,
-          "deviation_pct": -52.0,
+          "pipeline": "32-R",
+          "pipeline_parsed": 32.0,
+          "deviation_pct": 28.0,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "A"
@@ -1385,19 +1385,19 @@
       ],
       "summary": {
         "total": 32,
-        "match": 12,
-        "close": 6,
+        "match": 14,
+        "close": 4,
         "mismatch": 14,
         "missing": 0,
-        "correctness_pct": 37.5
+        "correctness_pct": 43.8
       },
       "tier_summary": {
         "A": {
           "total": 21,
-          "match": 12,
-          "close": 5,
+          "match": 14,
+          "close": 3,
           "mismatch": 4,
-          "correctness_pct": 57.1
+          "correctness_pct": 66.7
         },
         "B": {
           "total": 8,
@@ -1423,7 +1423,7 @@
           "key": "client",
           "label": "Client / Promotor",
           "benchmark": "SR. ALBERT SANS BONVEHI",
-          "pipeline": "INTECSON",
+          "pipeline": "ALBERT SANS BONVEHI TEL. 675639431 - ETESNOB91@GMAIL.COM <MAILTO:ETESNOB91@GMAIL.COM>",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -1445,7 +1445,7 @@
           "key": "street_address",
           "label": "Adreca",
           "benchmark": "Carrer Girasols nº7, Urbanització El Roser",
-          "pipeline": "Carrer Girassols #7",
+          "pipeline": "Carrer Girassols nº 7",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -1467,7 +1467,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "benchmark": "L'ampliació que es preveu construir es situarà a una parcel·la ubicada al Carrer Girasols nº7, Urbanització El Roser d'Alcoletge.",
-          "pipeline": "al Carrer Girassols #7 de Alcoletge",
+          "pipeline": "al Carrer Girassols nº 7 de Alcoletge",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -1522,7 +1522,7 @@
           "key": "building_type",
           "label": "Tipus edifici",
           "benchmark": "ampliació d'un edifici en planta baixa",
-          "pipeline": "PROJECTE DE TANCAMENT DE PORXÓ EN HABITATGE UNIFAMILIAR",
+          "pipeline": "habitatge unifamiliar",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -1588,7 +1588,7 @@
           "key": "dpsh_test_ids",
           "label": "IDs assaigs",
           "benchmark": "P-1, P-2, P-3",
-          "pipeline": "P-1, P-3, P-2",
+          "pipeline": "P-1,P-3,P-2",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -1599,9 +1599,9 @@
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
           "benchmark": 5,
-          "pipeline": "21.7",
-          "pipeline_parsed": 21.7,
-          "deviation_pct": 334.0,
+          "pipeline": "26",
+          "pipeline_parsed": 26.0,
+          "deviation_pct": 420.0,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "A"
@@ -1613,7 +1613,7 @@
           "pipeline": "1",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "MISMATCH",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -1624,7 +1624,7 @@
           "pipeline": "0,04",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "CLOSE",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -1676,7 +1676,7 @@
           "key": "geotech_nb",
           "label": "Nb",
           "benchmark": "R",
-          "pipeline": "1-R",
+          "pipeline": "26-R",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -1708,19 +1708,19 @@
       ],
       "summary": {
         "total": 26,
-        "match": 6,
-        "close": 3,
-        "mismatch": 17,
+        "match": 8,
+        "close": 2,
+        "mismatch": 16,
         "missing": 4,
-        "correctness_pct": 23.1
+        "correctness_pct": 30.8
       },
       "tier_summary": {
         "A": {
           "total": 16,
-          "match": 6,
-          "close": 2,
-          "mismatch": 8,
-          "correctness_pct": 37.5
+          "match": 8,
+          "close": 1,
+          "mismatch": 7,
+          "correctness_pct": 50.0
         },
         "B": {
           "total": 7,
@@ -1743,21 +1743,10 @@
       "municipality": "Vilanova de Segria",
       "variables": [
         {
-          "key": "client",
-          "label": "Client / Promotor",
-          "benchmark": "GRUPO CUENCA GUERRERO, S.L.",
-          "pipeline": "INTECSON",
-          "pipeline_parsed": null,
-          "deviation_pct": null,
-          "status": "MISMATCH",
-          "type": "text",
-          "tier": "A"
-        },
-        {
           "key": "street_address",
           "label": "Adreca",
           "benchmark": "Calle STA. GEMMA nº 4, URB. LA SERRA",
-          "pipeline": "Calle Santa Gemma Nº4",
+          "pipeline": "Calle Santa Gemma nº4",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -1779,7 +1768,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "benchmark": "La nueva vivienda unifamiliar proyectada se situará en la Calle STA. GEMMA nº 4, URB. LA SERRA del municipio de VILANOVA DE SEGRIÀ.",
-          "pipeline": "entre el Calle Santa Gemma Nº4 i el Carrer Santa Gemma Anterior 25313A00700066 de Vilanova de Segrià",
+          "pipeline": "entre el Calle Santa Gemma nº4 i el Carrer Santa Gemma Anterior 25313A00700066 de Vilanova de Segrià",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -1834,10 +1823,10 @@
           "key": "building_type",
           "label": "Tipus edifici",
           "benchmark": "vivienda unifamiliar aislada",
-          "pipeline": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO",
+          "pipeline": "vivienda unifamiliar",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "MISMATCH",
+          "status": "CLOSE",
           "type": "text",
           "tier": "A"
         },
@@ -1903,7 +1892,7 @@
           "pipeline": "1",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "MISMATCH",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -1914,26 +1903,26 @@
           "pipeline": "0,04",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "CLOSE",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         }
       ],
       "summary": {
-        "total": 16,
-        "match": 3,
+        "total": 15,
+        "match": 5,
         "close": 1,
-        "mismatch": 12,
-        "missing": 13,
-        "correctness_pct": 18.8
+        "mismatch": 9,
+        "missing": 14,
+        "correctness_pct": 33.3
       },
       "tier_summary": {
         "A": {
-          "total": 8,
-          "match": 3,
+          "total": 7,
+          "match": 5,
           "close": 1,
-          "mismatch": 4,
-          "correctness_pct": 37.5
+          "mismatch": 1,
+          "correctness_pct": 71.4
         },
         "B": {
           "total": 8,
@@ -1959,7 +1948,7 @@
           "key": "client",
           "label": "Client / Promotor",
           "benchmark": "ALBA MARIA BARRAU CASTÁN",
-          "pipeline": "INTECSON",
+          "pipeline": "MARIA ALBA BARRAU CASTÁN 616523792",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -1992,10 +1981,10 @@
           "key": "municipality",
           "label": "Municipi",
           "benchmark": "Anciles, Benasque",
-          "pipeline": "Benasque",
+          "pipeline": "Arciles",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "CLOSE",
+          "status": "MISMATCH",
           "type": "text",
           "tier": "A"
         },
@@ -2003,7 +1992,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "benchmark": "La nueva edificación proyectada se sitúa en la calle Gral Ferraz nº20 en el municipio de Anciles, Benasque.",
-          "pipeline": "al Calle Gral Ferraz nº20 de Benasque",
+          "pipeline": "al Calle Gral Ferraz nº20 de Arciles",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -2058,7 +2047,7 @@
           "key": "building_type",
           "label": "Tipus edifici",
           "benchmark": "viviendas unifamiliares adosadas",
-          "pipeline": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE 7 VIVIENDAS ADOSADAS EN LA CALLE GRAL FERRAZ N20 DE ARCILES, BENAS",
+          "pipeline": "viviendas adosadas",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -2124,10 +2113,10 @@
           "key": "radon_zone",
           "label": "Zona rado",
           "benchmark": "ZONA 2",
-          "pipeline": "0",
+          "pipeline": "2",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "MISMATCH",
+          "status": "MATCH",
           "type": "text",
           "tier": "A"
         },
@@ -2145,19 +2134,19 @@
       ],
       "summary": {
         "total": 17,
-        "match": 2,
-        "close": 1,
+        "match": 3,
+        "close": 0,
         "mismatch": 14,
         "missing": 13,
-        "correctness_pct": 11.8
+        "correctness_pct": 17.6
       },
       "tier_summary": {
         "A": {
           "total": 10,
-          "match": 2,
-          "close": 1,
+          "match": 3,
+          "close": 0,
           "mismatch": 7,
-          "correctness_pct": 20.0
+          "correctness_pct": 30.0
         },
         "B": {
           "total": 7,
@@ -2177,11 +2166,11 @@
     }
   ],
   "global_summary": {
-    "total_vars": 174,
-    "match": 43,
-    "close": 18,
-    "mismatch": 113,
-    "missing": 38,
-    "correctness_pct": 24.7
+    "total_vars": 173,
+    "match": 61,
+    "close": 11,
+    "mismatch": 101,
+    "missing": 39,
+    "correctness_pct": 35.3
   }
 }

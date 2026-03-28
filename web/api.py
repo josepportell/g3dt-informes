@@ -270,6 +270,58 @@ def download_report(project_name: str):
     )
 
 
+# --- Evidence endpoint (ortho chips for wizard panel) ---
+
+@router.get("/evidence/{project_name:path}")
+def get_evidence(project_name: str):
+    """Return ortho enrichment evidence images as base64 for the wizard panel."""
+    import base64
+
+    try:
+        prefills = wizard_service.get_prefills(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception:
+        return JSONResponse(content={})
+
+    result: dict[str, Any] = {"tight_chip": None, "wide_chip": None, "strips": {}}
+
+    def _encode(path_str: str | None) -> str | None:
+        if not path_str:
+            return None
+        p = Path(path_str)
+        if not p.exists():
+            return None
+        suffix = p.suffix.lower()
+        mime = "image/png" if suffix == ".png" else "image/jpeg"
+        try:
+            data = p.read_bytes()
+            return f"data:{mime};base64,{base64.b64encode(data).decode('ascii')}"
+        except Exception as exc:
+            logger.warning("Evidence encode failed for %s: %s", path_str, exc)
+            return None
+
+    # Extract paths from prefills (stored as {value, source} dicts)
+    def _val(key: str) -> str | None:
+        entry = prefills.get(key)
+        if isinstance(entry, dict):
+            return entry.get("value")
+        return entry
+
+    result["tight_chip"] = _encode(_val("_ortho_tight_chip"))
+    result["wide_chip"] = _encode(_val("_ortho_wide_chip"))
+    for direction in ("north", "south", "east", "west"):
+        encoded = _encode(_val(f"_ortho_strip_{direction}"))
+        if encoded:
+            result["strips"][direction] = encoded
+
+    # Only return data if there's at least one image
+    if not result["tight_chip"] and not result["wide_chip"] and not result["strips"]:
+        return JSONResponse(content={})
+
+    return JSONResponse(content=result)
+
+
 # --- Thumbnail endpoint ---
 
 _IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.tif'}

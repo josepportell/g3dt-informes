@@ -421,10 +421,13 @@ def build_report_data(
     }
 
     # Calcula parametres geotecnics (manual override > CTE > Peck/Hanson)
+    # For multi-level projects, use bearing stratum (deepest layer) N20,
+    # not global average which mixes shallow fill with bearing material.
     geotechnical_params = None
     geomech = user_data.get('geomech_params', {})
     if dpsh_data and dpsh_data.tests:
-        avg_n20 = dpsh_data.overall_average_n20
+        sondeig_layers = user_data.get('sondeig_layers', [])
+        avg_n20 = _bearing_stratum_n20(dpsh_data, sondeig_layers)
         # Convert N20 → Nb (Borrows) for all correlations.
         # DPSH has more energy than Borrows; dividing by 0.83 corrects
         # for the energy difference.  Eva confirmed this is essential.
@@ -436,21 +439,22 @@ def build_report_data(
                 nspt_to_phi, nspt_to_E_kg_cm2, nspt_to_gamma_g_cm3,
                 is_rock, rock_params_default,
             )
-            # Build description for rock detection from sondeig layers or ICGC
+            # Build description for rock detection — use deepest layer (bearing stratum)
+            # IMPORTANT: Only use sondeig layer descriptions (field observations),
+            # NOT icgc_unit_description (regional geology). ICGC describes the
+            # formation-level geology which always contains rock terms
+            # ("bretxes", "lutites", "conglomerat") even for granular sites.
             rock_description = ""
-            sondeig_layers = user_data.get('sondeig_layers', [])
             if sondeig_layers:
-                rock_description = " ".join(
-                    l.get('description', '') for l in sondeig_layers
-                )
-            if not rock_description:
-                rock_description = user_data.get('icgc_unit_description', '')
+                deepest = sondeig_layers[-1]
+                rock_description = deepest.get('description', '')
 
-            # Determine soil type: use first level from wizard, fallback to auto-detection
+            # Determine soil type: use deepest level for bearing stratum
             from .cte_geomech import detect_soil_type
             soil_types_list = user_data.get('soil_types', [])
             if soil_types_list:
-                soil_type = soil_types_list[0]
+                # Use last soil type (bearing stratum) for multi-level
+                soil_type = soil_types_list[-1] if len(soil_types_list) > 1 else soil_types_list[0]
             elif rock_description:
                 soil_type = detect_soil_type(rock_description)
             else:
@@ -928,6 +932,37 @@ def _reconstruct_terzaghi_from_dict(data: dict) -> BearingCapacityResult:
     )
 
 
+def _bearing_stratum_n20(dpsh_data: DPSHData, sondeig_layers: list[dict]) -> float:
+    """Get average N20 for the bearing stratum (deepest sondeig layer).
+
+    For multi-level projects, the bearing stratum is the deepest layer from
+    the sondeig. DPSH readings in shallower fill layers should not influence
+    the geotechnical parameters used for foundation design.
+
+    Falls back to global average when:
+    - No sondeig layers exist (single-level project)
+    - Only one sondeig layer
+    - No DPSH readings fall in the deepest layer's depth range
+    """
+    if not sondeig_layers or len(sondeig_layers) < 2:
+        return dpsh_data.overall_average_n20
+
+    deepest = sondeig_layers[-1]
+    depth_from = deepest.get('depth_from_m', 0.0)
+
+    # Collect all DPSH readings in the bearing stratum depth range
+    bearing_n20 = []
+    for test in dpsh_data.tests:
+        for r in test.readings:
+            if abs(r.depth_m) >= depth_from:
+                bearing_n20.append(r.n20)
+
+    if not bearing_n20:
+        return dpsh_data.overall_average_n20
+
+    return sum(bearing_n20) / len(bearing_n20)
+
+
 def _generate_soil_levels(
     dpsh_data: DPSHData | None,
     num_levels: int,
@@ -954,19 +989,26 @@ def _generate_soil_levels(
         # When user says 1 level but sondeig has 2+ layers, use ALL readings
         # (DPSH goes deeper than sondeig — filtering by sondeig depth loses readings)
         if num_levels < len(sondeig_layers):
-            # Single merged level: use global N20 + deepest layer's description
+            # Single merged level: use bearing stratum N20 + deepest layer's description
             # (the bearing stratum is the deeper layer, not necessarily the thickest)
             max_depth = max((abs(r.depth_m) for r in all_readings), default=0)
-            all_n20 = [r.n20 for r in all_readings]
             # Pick deepest (last) layer for description — this is the bearing material
             deepest = sondeig_layers[-1]
             desc = deepest.get('description', 'Nivell principal')
-            st = soil_types[0] if soil_types else detect_soil_type(desc)
+            st = soil_types[-1] if soil_types else detect_soil_type(desc)
+            # Filter N20 to bearing stratum (deepest layer) depth range
+            bearing_avg = _bearing_stratum_n20(dpsh_data, sondeig_layers)
+            depth_from = deepest.get('depth_from_m', 0.0)
+            bearing_n20 = [
+                r.n20 for r in all_readings
+                if abs(r.depth_m) >= depth_from
+            ]
+            all_n20 = bearing_n20 if bearing_n20 else [r.n20 for r in all_readings]
             return [SoilLevel(
                 level_number=1,
                 description=desc,
                 thickness_m=max_depth if max_depth > 0 else None,
-                n20_average=dpsh_data.overall_average_n20,
+                n20_average=bearing_avg,
                 depth_from_m=0.0,
                 depth_to_m=max_depth if max_depth > 0 else None,
                 n20_min=min(all_n20) if all_n20 else None,

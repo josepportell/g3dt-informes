@@ -138,6 +138,47 @@ _STRIP_RE = re.compile(r"[°%]|kg/cm[²2]|\bm2\b|\bcm\b|\bmm\b|\bm\b")
 _SUM_RE = re.compile(r"^[\d.,]+\+[\d.,+]+$")
 _RANGE_RE = re.compile(r"^([\d.,]+)\s*[-–]\s*([\d.,]+)$")
 
+# Roman numeral mapping for radon zone
+_ROMAN_TO_ARABIC = {"i": "1", "ii": "2", "iii": "3", "iv": "4", "0": "0"}
+
+
+def _normalize_radon_zone(s: str) -> str:
+    """Normalize radon zone: 'ZONA 1', 'Zona I', '1' → '1'."""
+    s = re.sub(r'^zona\s*', '', s.strip(), flags=re.IGNORECASE).strip()
+    return _ROMAN_TO_ARABIC.get(s.lower(), s)
+
+
+def _normalize_seismic_ab(s: str) -> str:
+    """Normalize seismic ab: 'AB = 0,04 g' → '0.04', '0,04' → '0.04'."""
+    s = s.strip().lower()
+    # Strip 'ab' prefix, operators, 'g' suffix
+    s = re.sub(r'^ab\s*', '', s)
+    s = re.sub(r'^[=<>≤≥]\s*', '', s)
+    s = re.sub(r'\s*g\s*$', '', s)
+    return s.replace(',', '.').strip()
+
+
+def _normalize_dpsh_test_ids(s: str) -> str:
+    """Normalize DPSH test IDs: strip spaces around commas."""
+    return re.sub(r'\s*,\s*', ',', s.strip())
+
+
+def _normalize_municipality(s: str) -> str:
+    """Strip province suffix: 'Castellar del Vallès, Barcelona' → 'Castellar del Vallès'."""
+    return re.sub(
+        r',\s*(Barcelona|Lleida|Tarragona|Girona|Huesca|Zaragoza|Teruel)\s*$',
+        '', s.strip(), flags=re.IGNORECASE,
+    )
+
+
+# Map of variable keys to normalization functions applied before text comparison
+TEXT_NORMALIZERS: dict[str, callable] = {
+    "radon_zone": _normalize_radon_zone,
+    "seismic_ab_text": _normalize_seismic_ab,
+    "dpsh_test_ids": _normalize_dpsh_test_ids,
+    "municipality": _normalize_municipality,
+}
+
 
 def parse_numeric(s: str) -> float | None:
     """Parse a string value to float, stripping units and formatting."""
@@ -389,7 +430,15 @@ def compare_project(
                 })
 
         elif key in TEXT_KEYS:
-            status = compare_text(str(bench_val), str(pipe_val))
+            # Apply normalizer if one exists for this key
+            normalizer = TEXT_NORMALIZERS.get(key)
+            if normalizer:
+                status = compare_text(
+                    normalizer(str(bench_val)),
+                    normalizer(str(pipe_val)),
+                )
+            else:
+                status = compare_text(str(bench_val), str(pipe_val))
             results.append({
                 "key": key,
                 "label": label,

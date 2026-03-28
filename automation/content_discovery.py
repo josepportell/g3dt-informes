@@ -499,7 +499,10 @@ def _classify_field_prep_excel(
                             if row[next_col]:
                                 value = row[next_col]
                                 break
-                        found[kw] = value
+                        # Keep first occurrence — later sheets may have
+                        # static lookup tables (e.g. "CLIENT" → "INTECSON")
+                        if kw not in found:
+                            found[kw] = value
                         break
 
     # Need 2+ strong, or 1 strong + 2 weak

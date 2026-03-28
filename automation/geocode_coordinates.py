@@ -18,6 +18,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import difflib
 import unicodedata
 import math
 import os
@@ -162,6 +163,11 @@ def _find_all_elements(root: ET.Element, local_name: str) -> list[ET.Element]:
         if _strip_ns(elem.tag) == local_name:
             results.append(elem)
     return results
+
+
+def _strip_accents(s: str) -> str:
+    """Strip accent marks for accent-insensitive comparison."""
+    return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
 
 
 # === WGS84 to UTM Zone 31N Conversion ===
@@ -339,9 +345,6 @@ def _consulta_municipio(province: str, municipality_hint: str) -> tuple[str, str
         logger.debug(f"ConsultaMunicipio: no muni elements for '{municipality_hint}' in '{province}'")
         return None
 
-    def _strip_accents(s: str) -> str:
-        return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
-
     hint_norm = _strip_accents(municipality_hint.upper().strip())
     hint_words = set(hint_norm.split())
     candidates: list[tuple[int, int, str, str, str]] = []
@@ -386,14 +389,25 @@ def _consulta_municipio(province: str, municipality_hint: str) -> tuple[str, str
     return best[2], best[3], best[4]
 
 
-def _consulta_via(province: str, municipality: str, street_hint: str) -> tuple[str, str, str] | None:
+def _consulta_via(
+    province: str, municipality: str, street_hint: str,
+    full_address_context: str = "",
+) -> tuple[str, str, str] | None:
     """
     Fuzzy-resolve a street name via Cadastre ConsultaVia.
+
+    Uses a 3-layer approach:
+    1. Progressive exact matching (substring shortening)
+    2. difflib fuzzy matching (Levenshtein + article stripping)
+    3. LLM street picker (Groq) — semantic matching as last resort
 
     Args:
         province: Province name
         municipality: Official municipality name (from _consulta_municipio)
-        street_hint: Partial street name (e.g., "Ferraz", "Mestre Ramon")
+        street_hint: Partial street name (e.g., "Ferraz", "Mestre Ramon").
+            Must be name-only (no type prefix) for fuzzy/LLM matching.
+        full_address_context: Optional full address string for LLM context
+            (e.g., "Carrer Girassols nº7, Urbanització El Roser")
 
     Returns:
         Tuple of (official_street_name, tipo_via, cv) or None.
@@ -431,7 +445,271 @@ def _consulta_via(province: str, municipality: str, street_hint: str) -> tuple[s
         if result is not None:
             return result
 
+    # All progressive hints failed — try fuzzy matching against full street list
+    # Only for manageable municipality sizes (skip large cities)
+    all_streets = _consulta_via_all_streets(province, municipality)
+    if all_streets and len(all_streets) <= 500:
+        hint_clean = _strip_accents(street_hint.strip().upper())
+        if len(hint_clean) < 4:
+            return None  # Too short for reliable fuzzy matching
+        street_names_upper = [_strip_accents(s[0].upper()) for s in all_streets]
+
+        # Phase 1: Full-string fuzzy match (e.g., "GIRASOLS" vs "GIRASOLS")
+        matches = difflib.get_close_matches(
+            hint_clean, street_names_upper, n=1, cutoff=0.8
+        )
+        if matches:
+            idx = street_names_upper.index(matches[0])
+            matched = all_streets[idx]
+            ratio = difflib.SequenceMatcher(None, hint_clean, matches[0]).ratio()
+            logger.info(
+                f"Progressive cadastre: fuzzy match '{street_hint}' -> "
+                f"'{matched[0]}' (ratio={ratio:.2f})"
+            )
+            return matched
+
+        # Phase 2: Word-level match for multi-word street names
+        # Cadastre often prefixes articles: "DELS GIRASOLS", "DE LA FONT"
+        # Our hint "GIRASSOLS" won't match full string at 0.8 but will match
+        # the significant word "GIRASOLS" at 0.94
+        _ARTICLES = {'DE', 'DEL', 'DELS', 'DE LA', 'DE LES', 'DE LOS',
+                      'EL', 'LA', 'LES', 'ELS', 'LOS', 'LAS', 'D'}
+        best_ratio = 0.0
+        best_idx = -1
+        for i, full_name in enumerate(street_names_upper):
+            words = full_name.split()
+            if len(words) < 2:
+                continue
+            # Strip leading articles to get the significant part
+            significant = full_name
+            for art in sorted(_ARTICLES, key=len, reverse=True):
+                if full_name.startswith(art + ' '):
+                    significant = full_name[len(art) + 1:]
+                    break
+            if significant == full_name:
+                continue  # No article stripped, already tried in Phase 1
+            ratio = difflib.SequenceMatcher(None, hint_clean, significant).ratio()
+            if ratio > best_ratio:
+                best_ratio = ratio
+                best_idx = i
+
+        if best_ratio >= 0.8 and best_idx >= 0:
+            matched = all_streets[best_idx]
+            logger.info(
+                f"Progressive cadastre: fuzzy word match '{street_hint}' -> "
+                f"'{matched[0]}' (ratio={best_ratio:.2f}, stripped article)"
+            )
+            return matched
+
+        # Phase 3: LLM street picker — semantic matching via Groq
+        # Handles cases difflib can't: OCR errors + articles, urbanitzacions,
+        # Catalan/Spanish variants, abbreviations, etc.
+        llm_match = _llm_pick_street(
+            street_hint, municipality, all_streets,
+            full_address_context=full_address_context,
+        )
+        if llm_match is not None:
+            return llm_match
+
     return None
+
+
+def _consulta_via_all_streets(
+    province: str, municipality: str
+) -> list[tuple[str, str, str]]:
+    """
+    Fetch ALL streets in a municipality via ConsultaVia with empty NombreVia.
+
+    Returns list of (street_name, tipo_via, cv) tuples.
+    Used as fallback for fuzzy matching when exact hint matching fails.
+    """
+    url = (
+        f"{CADASTRE_CALLEJERO_URL}/ConsultaVia"
+        f"?Provincia={urllib.parse.quote(province)}"
+        f"&Municipio={urllib.parse.quote(municipality)}"
+        f"&TipoVia=&NombreVia="
+    )
+    logger.debug(f"ConsultaVia (all streets) URL: {url}")
+
+    try:
+        response_text = _fetch_url(url)
+    except GeocodeConnectionError as e:
+        logger.warning(f"ConsultaVia all-streets connection failed: {e}")
+        return []
+    finally:
+        time.sleep(0.3)
+
+    try:
+        root = ET.fromstring(response_text)
+    except ET.ParseError:
+        return []
+
+    # Check for errors
+    for err_elem in _find_all_elements(root, "err"):
+        des_elem = _find_element(err_elem, "des")
+        if des_elem is not None and des_elem.text:
+            logger.debug(f"ConsultaVia all-streets error: {des_elem.text}")
+            return []
+
+    streets: list[tuple[str, str, str]] = []
+    seen: set[str] = set()
+    for tag in ("dir", "calle"):
+        for elem in _find_all_elements(root, tag):
+            nv_elem = _find_element(elem, "nv")
+            tv_elem = _find_element(elem, "tv")
+            cv_elem = _find_element(elem, "cv")
+            if nv_elem is not None and nv_elem.text:
+                street_name = nv_elem.text.strip()
+                if street_name in seen:
+                    continue
+                seen.add(street_name)
+                tipo_via = tv_elem.text.strip() if tv_elem is not None and tv_elem.text else ""
+                cv = cv_elem.text.strip() if cv_elem is not None and cv_elem.text else ""
+                streets.append((street_name, tipo_via, cv))
+
+    return streets
+
+
+# === LLM Street Picker (Layer 3) ===
+
+_LLM_STREET_PICKER_PROMPT = """\
+You are matching a project address to an official Spanish Cadastre street list.
+
+**Address hint:** "{hint}"
+**Municipality:** {municipality}
+{context_line}
+**Official streets in {municipality} (from Cadastre):**
+{street_list}
+
+Which official street BEST matches the address hint? Consider:
+- OCR typos: doubled/missing letters (ss↔s, rr↔r, ll↔l)
+- Catalan/Spanish articles the Cadastre may prepend: del, dels, de la, de les, el, la, d'
+- Street type differences: Carrer/Calle, Plaça/Plaza, Avinguda/Avenida
+- Urbanització/Polígon names that may appear differently in the Cadastre
+- Abbreviations: Sta.→Santa, Dr.→Doctor, Mn.→Mossen
+
+Reply with ONLY the exact official street name from the list above.
+If no street matches, reply with exactly: NONE"""
+
+
+def _llm_pick_street(
+    street_hint: str,
+    municipality: str,
+    all_streets: list[tuple[str, str, str]],
+    full_address_context: str = "",
+) -> tuple[str, str, str] | None:
+    """
+    Use an LLM (Groq) to semantically match a street hint against the
+    official Cadastre street list. Last-resort fallback after difflib fails.
+
+    Only active when GROQ_API_KEY is set. Returns None silently if not.
+
+    Args:
+        street_hint: Parsed street name (no type prefix)
+        municipality: Official municipality name
+        all_streets: Full street list from _consulta_via_all_streets()
+        full_address_context: Optional full address for extra context
+
+    Returns:
+        Tuple of (street_name, tipo_via, cv) or None if no match.
+    """
+    api_key = os.environ.get("GROQ_API_KEY")
+    if not api_key:
+        logger.debug("LLM street picker: skipped (no GROQ_API_KEY)")
+        return None
+
+    # Build compact street list for the prompt (name + type abbreviation)
+    street_lines = []
+    for name, tv, cv in all_streets:
+        street_lines.append(f"- {name} ({tv})" if tv else f"- {name}")
+    street_list_text = "\n".join(street_lines)
+
+    context_line = ""
+    if full_address_context and full_address_context.strip() != street_hint:
+        context_line = f'**Full address from project documents:** "{full_address_context}"'
+
+    prompt = _LLM_STREET_PICKER_PROMPT.format(
+        hint=street_hint,
+        municipality=municipality,
+        context_line=context_line,
+        street_list=street_list_text,
+    )
+
+    model = os.environ.get("GROQ_MODEL", "qwen/qwen3-32b")
+
+    # Qwen3: disable thinking mode for clean output
+    if "qwen3" in model.lower():
+        messages = [
+            {"role": "user", "content": prompt + "\n\n/no_think"},
+        ]
+    else:
+        messages = [
+            {"role": "user", "content": prompt},
+        ]
+
+    payload = {
+        "model": model,
+        "messages": messages,
+        "temperature": 0.0,
+        "max_tokens": 60,
+    }
+
+    logger.info(
+        f"LLM street picker: matching '{street_hint}' against "
+        f"{len(all_streets)} streets in {municipality}"
+    )
+
+    try:
+        import httpx
+        with httpx.Client(timeout=15.0) as client:
+            resp = client.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                json=payload,
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+            )
+
+        if resp.status_code != 200:
+            logger.warning(f"LLM street picker: Groq HTTP {resp.status_code}")
+            return None
+
+        data = resp.json()
+        content = data["choices"][0]["message"]["content"].strip()
+
+        # Strip Qwen3 <think>...</think> tags
+        content = re.sub(r'<think>.*?</think>', '', content, flags=re.DOTALL).strip()
+
+        # Strip any markdown/quotes the LLM might add
+        content = content.strip('"\'`* \n')
+
+        # Strip type suffix the LLM may copy from prompt: "DELS GIRASOLS (CL)" → "DELS GIRASOLS"
+        content = re.sub(r'\s*\([A-Z]{1,3}\)\s*$', '', content).strip()
+
+        if not content or content.upper() == "NONE":
+            logger.info(f"LLM street picker: no match for '{street_hint}'")
+            return None
+
+        # Validate: the response MUST be an exact street name from our list
+        content_upper = content.upper()
+        for name, tv, cv in all_streets:
+            if name.upper() == content_upper:
+                logger.info(
+                    f"LLM street picker: '{street_hint}' -> '{name}' ({tv}) "
+                    f"in {municipality}"
+                )
+                return (name, tv, cv)
+
+        # LLM returned something not in the list — reject it
+        logger.warning(
+            f"LLM street picker: response '{content}' not in street list, ignoring"
+        )
+        return None
+
+    except Exception as e:
+        logger.warning(f"LLM street picker failed: {e}")
+        return None
 
 
 def _consulta_via_single(
@@ -469,9 +747,6 @@ def _consulta_via_single(
             return None
 
     # Find street candidates — look for <dir> or <calle> elements
-    def _strip_accents(s: str) -> str:
-        return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
-
     hint_norm = _strip_accents(street_hint.upper().strip())
     hint_words = set(hint_norm.split())
     # Filter out short/common words for overlap scoring
@@ -560,6 +835,7 @@ def cadastre_progressive_lookup(
     house_number: str,
     municipality_hint: str,
     province: str,
+    full_address: str = "",
 ) -> dict | None:
     """
     Progressive Cadastre resolution: fuzzy municipality -> fuzzy street -> DNPLOC.
@@ -567,18 +843,41 @@ def cadastre_progressive_lookup(
     More robust than direct Consulta_DNPLOC because it uses Cadastre's own
     fuzzy search to resolve municipality and street names before lookup.
 
+    Args:
+        street_name: Parsed street name (no type prefix)
+        house_number: House number
+        municipality_hint: Approximate municipality name
+        province: Province name
+        full_address: Full original address string for LLM context
+
     Returns: {"rc": str, "xcen": float|None, "ycen": float|None} or None.
     """
     # Step 1: Resolve municipality
     muni_result = _consulta_municipio(province, municipality_hint)
+    effective_province = province
     if muni_result is None:
-        logger.warning(f"Progressive cadastre: municipality '{municipality_hint}' not found in {province}")
+        # P3: Try border provinces before giving up
+        border_provs = _BORDER_PROVINCES.get(province.upper(), [])
+        for neighbor_prov in border_provs:
+            muni_result = _consulta_municipio(neighbor_prov, municipality_hint)
+            if muni_result is not None:
+                effective_province = neighbor_prov
+                logger.info(
+                    f"Progressive cadastre: cross-province '{municipality_hint}' "
+                    f"found in {neighbor_prov} (was {province})"
+                )
+                break
+    if muni_result is None:
+        logger.warning(f"Progressive cadastre: municipality '{municipality_hint}' not found in {province} or neighbors")
         return None
     official_muni, cp, cm = muni_result
     logger.info(f"Progressive cadastre: municipality '{municipality_hint}' -> '{official_muni}'")
 
     # Step 2: Resolve street
-    via_result = _consulta_via(province, official_muni, street_name)
+    via_result = _consulta_via(
+        effective_province, official_muni, street_name,
+        full_address_context=full_address,
+    )
     if via_result is None:
         logger.warning(f"Progressive cadastre: street '{street_name}' not found in {official_muni}")
         return None
@@ -587,7 +886,7 @@ def cadastre_progressive_lookup(
 
     # Step 3: DNPLOC with resolved names
     params = (
-        f"?Provincia={urllib.parse.quote(province)}"
+        f"?Provincia={urllib.parse.quote(effective_province)}"
         f"&Municipio={urllib.parse.quote(official_muni)}"
         f"&Sigla={urllib.parse.quote(tipo_via)}"
         f"&Calle={urllib.parse.quote(official_street)}"
@@ -642,7 +941,7 @@ def cadastre_progressive_lookup(
         logger.info("Progressive cadastre: empty number, retrying DNPLOC with '1'")
         time.sleep(0.3)
         retry_params = (
-            f"?Provincia={urllib.parse.quote(province)}"
+            f"?Provincia={urllib.parse.quote(effective_province)}"
             f"&Municipio={urllib.parse.quote(official_muni)}"
             f"&Sigla={urllib.parse.quote(tipo_via)}"
             f"&Calle={urllib.parse.quote(official_street)}"
@@ -711,6 +1010,15 @@ def cadastre_progressive_lookup(
 
 
 _CATALAN_PROVINCES = ["LLEIDA", "BARCELONA", "GIRONA", "TARRAGONA"]
+
+_BORDER_PROVINCES: dict[str, list[str]] = {
+    "LLEIDA": ["HUESCA", "BARCELONA", "TARRAGONA"],
+    "BARCELONA": ["LLEIDA", "GIRONA", "TARRAGONA"],
+    "GIRONA": ["BARCELONA"],
+    "TARRAGONA": ["LLEIDA", "BARCELONA"],
+    "HUESCA": ["LLEIDA"],
+    "ZARAGOZA": ["LLEIDA", "TARRAGONA"],
+}
 
 
 def cadastre_address_lookup(
@@ -947,10 +1255,12 @@ def nominatim_geocode(address: str, municipality: str, province: str = "") -> tu
     Returns:
         Tuple of (lat, lon) or None if not found
     """
+    # Clean house number prefixes that confuse Nominatim: "#7" → "7", "nº7" → "7"
+    clean_addr = re.sub(r'(?:#|nº|Nº|n[úu]m\.?)\s*(?=\d)', '', address)
     if province:
-        query = f"{address}, {municipality}, {province}, Spain"
+        query = f"{clean_addr}, {municipality}, {province}, Spain"
     else:
-        query = f"{address}, {municipality}, Catalunya, Spain"
+        query = f"{clean_addr}, {municipality}, Catalunya, Spain"
     encoded_query = urllib.request.quote(query)
     url = (
         f"https://nominatim.openstreetmap.org/search"
@@ -983,6 +1293,77 @@ def nominatim_geocode(address: str, municipality: str, province: str = "") -> tu
         return None
 
     logger.info(f"Nominatim geocoded '{query}' -> ({lat:.6f}, {lon:.6f})")
+
+    # Rate limit: Nominatim requires max 1 request per second
+    time.sleep(1.5)
+
+    return lat, lon
+
+
+def nominatim_geocode_structured(
+    address: str, municipality: str, province: str = ""
+) -> tuple[float, float] | None:
+    """
+    Geocode using Nominatim structured query (separate street/city/state params).
+
+    Better than free-text for small towns where Nominatim's parser may fail.
+    Used as first fallback before the free-text nominatim_geocode().
+
+    Args:
+        address: Street address (e.g. "Carrer Girasols 7")
+        municipality: Municipality name
+        province: Province name (optional)
+
+    Returns:
+        Tuple of (lat, lon) or None if not found
+    """
+    # Parse address into street components
+    sigla, street_name, number = _parse_address(address)
+    # Reconstruct street param: "street_name number" (no type prefix for Nominatim)
+    street_param = street_name
+    if number:
+        street_param = f"{street_name} {number}"
+
+    # Clean house number prefixes that confuse Nominatim
+    street_param = re.sub(r'(?:#|nº|Nº|n[úu]m\.?)\s*(?=\d)', '', street_param)
+
+    state = province if province else "Catalunya"
+    params = urllib.parse.urlencode({
+        'street': street_param,
+        'city': municipality,
+        'state': state,
+        'country': 'Spain',
+        'format': 'json',
+        'limit': '1',
+    })
+    url = f"https://nominatim.openstreetmap.org/search?{params}"
+
+    logger.info(f"Nominatim structured query: street='{street_param}', city='{municipality}'")
+
+    try:
+        response_text = _fetch_url(url, expect_json=True)
+    except GeocodeConnectionError as e:
+        logger.warning(f"Nominatim structured connection failed: {e}")
+        return None
+
+    try:
+        results = json.loads(response_text)
+    except json.JSONDecodeError as e:
+        logger.warning(f"Nominatim structured JSON parse error: {e}")
+        return None
+
+    if not results:
+        logger.debug(f"Nominatim structured returned no results for: street='{street_param}', city='{municipality}'")
+        return None
+
+    try:
+        lat = float(results[0]['lat'])
+        lon = float(results[0]['lon'])
+    except (KeyError, ValueError, IndexError) as e:
+        logger.warning(f"Nominatim structured response missing lat/lon: {e}")
+        return None
+
+    logger.info(f"Nominatim structured geocoded -> ({lat:.6f}, {lon:.6f})")
 
     # Rate limit: Nominatim requires max 1 request per second
     time.sleep(1.5)
@@ -1412,6 +1793,7 @@ def geocode_project(
         house_number=parsed_number,
         municipality_hint=municipality,
         province=province,
+        full_address=address,
     )
 
     if not cadastre_result:
@@ -1440,9 +1822,14 @@ def geocode_project(
 
     # 3. FALLBACK: Nominatim + grid search (only if primary failed)
     if centroid_x is None:
-        source = "geocode:nominatim+cadastre"
+        source = "geocode:nominatim_structured+cadastre"
         logger.info("Primary cadastre address lookup failed, falling back to Nominatim")
-        coords = nominatim_geocode(address, municipality, province=province)
+        # Try structured query first (better for small towns)
+        coords = nominatim_geocode_structured(address, municipality, province=province)
+        if coords is None:
+            # Fall back to free-text query
+            source = "geocode:nominatim+cadastre"
+            coords = nominatim_geocode(address, municipality, province=province)
         if coords is None:
             logger.warning(f"Geocoding failed for '{address}, {municipality}'")
             return None

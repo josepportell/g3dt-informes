@@ -254,7 +254,9 @@ class UserDataWizard:
             # Core wizard fields
             self._set_prefill('architect_name', arch.get('architect'), source, overall_conf)
             self._set_prefill('architect_company', arch.get('architect_company'), source, overall_conf)
-            self._set_prefill('building_type', arch.get('project_name'), source, overall_conf)
+            bt = arch.get('building_type') or arch.get('project_name')
+            if bt:
+                self._set_prefill('building_type', bt, source, overall_conf)
 
             # Dimensions → wizard fields
             dims = arch.get('dimensions', {})
