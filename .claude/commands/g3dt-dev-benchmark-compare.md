@@ -1,115 +1,110 @@
 ---
-description: "Benchmark comparison: Eva's values vs pipeline"
+description: "Benchmark comparison: Eva's values vs pipeline (tiered)"
 ---
 
 # /g3dt-dev-benchmark-compare
 
-Mostra la comparacio entre els valors de referencia d'Eva (benchmarks) i els valors del nostre pipeline.
+Mostra la comparacio entre els valors de referencia d'Eva (benchmarks) i els valors del nostre pipeline, organitzada per tiers.
 
 ## Instruccions
 
 ### Pas 1: Localitzar dades
 
-Busca les dades en aquest ordre:
-
-1. **`docs/benchmarks/_comparison.json`** — Fitxer generat per `scripts/compare_benchmarks.py`. Si existeix i te menys d'una setmana, utilitza'l.
-2. Si no existeix o es antic, suggereix:
+1. **`docs/benchmarks/_comparison.json`** — generat per `scripts/compare_benchmarks.py`.
+2. **`docs/CORRECTNESS-TRACKER.md`** — document viu amb analisi de cada desviacio.
+3. Si _comparison.json no existeix o es antic (>1 setmana):
    ```
-   Executa primer:
-   python scripts/extract_reference_text.py    # Extreu text dels .docx
-   python scripts/extract_benchmark_values.py  # Extreu valors estructurats (requereix API)
-   python scripts/compare_benchmarks.py        # Genera la comparacio
+   python scripts/compare_benchmarks.py
    ```
 
-### Pas 2: Taula de correctesa per projecte
-
-Per cada projecte al JSON, mostra:
+### Pas 2: Resum per projecte amb tiers
 
 ```markdown
-## Benchmark Comparison -- {data}
+## Benchmark — {data}
 
-### {expedient} {municipality} ({correctness_pct}% correct)
-
-| Variable | Eva | Pipeline | Desv. | Status |
-|----------|-----|----------|-------|--------|
-| geotech_E | 650 | 469 | -27.8% | **MISMATCH** |
-| qa_value | 2.98 | 2.40 | -19.5% | **MISMATCH** |
-| geotech_phi | 39 | 35° | -10.3% | CLOSE |
-| client | RAMON MITJANA S.L. | RAMON MITJANA S.L. | - | MATCH |
-| ... | ... | ... | ... | ... |
+| Projecte | Readiness | Tier A | Tier B | Tier C | Overall |
+|----------|-----------|--------|--------|--------|---------|
+| **Bell-Lloc** | 100% | 12/21 (57%) | 0/8 (0%) | 0/3 (0%) | 12/32 (38%) |
 ```
 
-**Regles de format:**
-- **MISMATCH** en negreta vermell (usa `**MISMATCH**`)
-- CLOSE en text normal
-- MATCH en text normal (o ometre si `--verbose` no es demana)
-- Ordena: MISMATCH primer, despres CLOSE, despres MATCH
-- Per variables numeriques, mostra la desviacio %
-- Per variables de text, mostra "-" a la columna desviacio
+**Tiers:**
+- **A (Auto-extractable)**: pipeline hauria de fer-ho be. Objectiu: 95%.
+- **B (Manual/on-site)**: requereix input d'Eva o dades externes (Street View). Objectiu: best effort.
+- **C (Criteri professional)**: Eva ajusta per experiencia. Objectiu: transparencia.
+- **Exclòs**: `data_signatura_text` (correcte per disseny — sempre data actual).
 
-### Pas 3: Resum global
+### Pas 3: Detall per tier
+
+#### Tier A
+
+Agrupa les variables per status:
 
 ```markdown
-## Resum Global
+### Tier A — Auto-extractable (objectiu: 95%)
 
-| Projecte | Correctesa | Match | Close | Mismatch | Missing |
-|----------|------------|-------|-------|----------|---------|
-| **Bell-Lloc** | **72.0%** | 18 | 3 | 4 | 5 |
-| **Rubi** | **85.0%** | 20 | 2 | 2 | 1 |
-| ... | ... | ... | ... | ... | ... |
+**OK (100% match):** `num_dpsh_tests`, `sulfate_value`, `architect_company`
 
-**Total**: {N} variables comparades. {match} MATCH, {close} CLOSE, {mismatch} MISMATCH.
-Correctesa global: {pct}%
+**Format mismatch (quick fix):**
+- `radon_zone`: "ZONA 1" vs "1" — pipeline guarda nomes el numero
+- `seismic_ab_text`: "AB < 0,04 g" vs "0,04" — pipeline guarda nomes el valor
+- `dpsh_test_ids`: "P-1,P-2" vs "P-1, P-2" — espais
+
+**Metric mismatch (redesign):**
+- `dpsh_avg_n20`: Eva diu Nb, pipeline calcula N20 — metriques diferents
+- `geotech_nb`: Eva diu Nb numeric, pipeline mostra notacio de refus ("12-R")
+
+**Partial (investigar per projecte):**
+- `client`: 1/7 — pipeline pilla "INTECSON" (laboratori, no client)
+- `building_type`: 0/7 — pipeline mostra titol del projecte, no tipus edifici
+- etc.
 ```
 
-### Pas 4: Analisi de gaps
+Per cada variable PARTIAL o WRONG, consulta `docs/CORRECTNESS-TRACKER.md` per la causa arrel i accions pendents.
+
+#### Tier B
 
 ```markdown
-## Variables amb mes MISMATCH
+### Tier B — Manual/on-site (0/54)
 
-1. **geotech_E** — MISMATCH a {N} projectes. Causa probable: Eva ajusta E per criteri professional (carbonatades, etc.)
-2. **qa_value** — MISMATCH a {N} projectes. Causa: diferencia entre T-P auto i cap d'Eva.
-3. ...
-
-## Variables amb 100% MATCH
-
-{Llista de variables que sempre coincideixen — indica que el pipeline es fiable per aquelles.}
+| Variable | Problema | Millora proposada |
+|----------|----------|-------------------|
+| `adjacent_*` | Cadastre labels vs prosa d'Eva | Street View API, satellite |
+| `site_condition` | Hardcoded "antropitzat" | Street View, classificacio satellit |
+| `location_sentence` | Template formulaic | Millorar template amb context |
 ```
 
-### Pas 5: Readiness vs Correctness
-
-Si existeix `docs/validation-latest/_summary.json`, creua les dades:
+#### Tier C
 
 ```markdown
-## Readiness vs Correctness
+### Tier C — Criteri professional (3/17)
 
-| Projecte | Readiness | Correctesa | Gap |
-|----------|-----------|------------|-----|
-| Bell-Lloc | 100% | 72% | 28% |
-| Rubi | 95% | 85% | 10% |
-
-**Interpretacio**: Readiness = camp omplert. Correctesa = valor correcte.
-Un projecte pot tenir 100% readiness pero baixa correctesa (camps plens amb valors erronis).
+| Variable | Pipeline | Eva | Formula | Nota |
+|----------|----------|-----|---------|------|
+| `geotech_E` | 469 | 650 | CTE D.23 | Eva ajusta per carbonatades |
+| `qa_value` | 2.40 | 3.0 | Terzaghi-Peck | Eva aplica topall |
 ```
 
-### Pas 6: Accions prioritzades
+Mostrar les formules que apliquem i per que el resultat difereix. Objectiu: Eva veu que entenem el calcul i pot dir-nos si hem de canviar algo.
+
+### Pas 4: Prioritats d'accio
+
+Consulta `docs/CORRECTNESS-TRACKER.md` seccio "Action priority" i mostra:
 
 ```markdown
-## Accions per millorar correctesa
+### Accions prioritzades
 
-1. **{variable}** (desv. mitja {X}%, afecta {N} projectes): {accio suggerida}
-2. ...
+**P0 (quick wins):** format fixes que donen millora immediata
+**P1 (investigacio):** entendre causa arrel abans de tocar codi
+**P2 (transparencia):** mostrar formules al wizard per Tier C
+**P3 (best effort):** Street View, satellite, millorar Tier B
 ```
 
-Exemples d'accions:
-- `geotech_E`: "Eva ajusta E manualment. Auto-prefill es orientatiu. Considerar flag 'needs_review'."
-- `qa_value`: "Revisar terzaghi_calculator.py — cap professional vs formula."
-- `settlement`: "Revisar Es default (2.5*Nb). Eva pot usar diferent Es."
-- Text mismatches: "Revisar prompt d'extraccio SmartScan per al camp afectat."
+### Pas 5: Historial de canvis
+
+Mostra les ultimes entrades del Change log de `docs/CORRECTNESS-TRACKER.md`.
 
 ## Notes
 
 - Aquesta skill NO executa scripts. Nomes llegeix dades ja generades.
-- Benchmarks son els valors CORRECTES d'Eva (signed reports). Pipeline son els nostres valors auto-generats.
-- La tolerancia per defecte es 5% per numerics. CLOSE es <= 15%.
-- Variables d'array (dpsh_tests, sondeig_tests, etc.) no es comparen — massa complexes per comparacio escalar.
+- El document `docs/CORRECTNESS-TRACKER.md` es el document viu — actualitzar-lo a cada fix.
+- Cada fix hauria de: (1) actualitzar codi, (2) re-executar `compare_benchmarks.py`, (3) actualitzar CORRECTNESS-TRACKER.md amb el nou resultat.
