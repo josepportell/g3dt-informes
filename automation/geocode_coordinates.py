@@ -1056,12 +1056,15 @@ def cadastre_address_lookup(
         provinces = list(_CATALAN_PROVINCES)
 
     def _query_dnploc(prov: str, num: str) -> dict | None:
-        # API requires uppercase municipality/province and all address fields
+        # API requires uppercase municipality/province and all address fields.
+        # Strip accents: Cadastre Callejero rejects accented chars
+        # (e.g. "CASTELLAR DEL VALLÈS" → NOT FOUND, "CASTELLAR DEL VALLES" → OK)
+        muni_clean = _strip_accents(municipality.upper())
         params = (
-            f"?Provincia={urllib.parse.quote(prov)}"
-            f"&Municipio={urllib.parse.quote(municipality.upper())}"
+            f"?Provincia={urllib.parse.quote(_strip_accents(prov))}"
+            f"&Municipio={urllib.parse.quote(muni_clean)}"
             f"&Sigla={urllib.parse.quote(sigla)}"
-            f"&Calle={urllib.parse.quote(calle.upper())}"
+            f"&Calle={urllib.parse.quote(_strip_accents(calle.upper()))}"
             f"&Numero={urllib.parse.quote(num)}"
             f"&Bloque=&Escalera=&Planta=&Puerta="
         )
