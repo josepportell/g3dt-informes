@@ -712,6 +712,7 @@ def _probe_from_edge(
     municipality: str | None = None,
     max_distance: float = 30.0,
     step: float = 2.0,
+    our_ldt: str | None = None,
 ) -> str:
     """
     Probe outward from a polygon edge midpoint to find what is adjacent.
@@ -753,10 +754,18 @@ def _probe_from_edge(
 
         # Found a different parcel
         if crossed_street:
+            # Prefer our own LDT for the street name: the source parcel's
+            # address is the street it faces, whereas the far neighbor may
+            # front on a completely different street.
+            if our_ldt:
+                street = _translate_street_name(our_ldt, municipality=municipality)
+                if street:
+                    logger.debug(f"Street name from our LDT: {street}")
+                    return street
             if ldt:
                 street = _translate_street_name(ldt, municipality=municipality)
                 if street:
-                    logger.debug(f"Street name from neighbor LDT: {street}")
+                    logger.debug(f"Street name from neighbor LDT (fallback): {street}")
                     return street
             return "via pública"
 
@@ -779,6 +788,7 @@ def _probe_direction(
     dy: int,
     superficie: float,
     municipality: str | None = None,
+    our_ldt: str | None = None,
 ) -> str:
     """
     Probe in one direction to find what is adjacent to our parcel.
@@ -842,13 +852,19 @@ def _probe_direction(
 
         # Found a different parcel
         if crossed_street:
-            # We crossed a street to get here → adjacent is a street
-            # Use the NEIGHBOR's LDT for the street name (error responses
-            # don't include LDT, but addressed parcels always do)
+            # We crossed a street to get here → adjacent is a street.
+            # Prefer our own LDT for the street name: the source parcel's
+            # address is the street it faces, whereas the far neighbor may
+            # front on a completely different street.
+            if our_ldt:
+                street = _translate_street_name(our_ldt, municipality=municipality)
+                if street:
+                    logger.debug(f"Street name from our LDT: {street}")
+                    return street
             if ldt:
                 street = _translate_street_name(ldt, municipality=municipality)
                 if street:
-                    logger.debug(f"Street name from neighbor LDT: {street}")
+                    logger.debug(f"Street name from neighbor LDT (fallback): {street}")
                     return street
             return "via pública"
 
@@ -950,6 +966,7 @@ def get_adjacent_parcels(
                 )
                 result[direction] = _probe_from_edge(
                     midpoint, normal, our_ref, municipality=municipality,
+                    our_ldt=our_ldt,
                 )
             else:
                 logger.warning(
@@ -958,7 +975,7 @@ def get_adjacent_parcels(
                 dx, dy = DIRECTIONS[direction]
                 result[direction] = _probe_direction(
                     utm_x, utm_y, our_ref, dx, dy, superficie,
-                    municipality=municipality,
+                    municipality=municipality, our_ldt=our_ldt,
                 )
             logger.info(f"  {direction}: {result[direction]}")
     else:
@@ -968,7 +985,7 @@ def get_adjacent_parcels(
             logger.info(f"Probing {direction}...")
             result[direction] = _probe_direction(
                 utm_x, utm_y, our_ref, dx, dy, superficie,
-                municipality=municipality,
+                municipality=municipality, our_ldt=our_ldt,
             )
             logger.info(f"  {direction}: {result[direction]}")
 

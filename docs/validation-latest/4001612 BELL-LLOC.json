@@ -71,7 +71,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el C/ MESTRE RAMON ORTIZ 15 BELL-LLOC i el Carrer Antoni Bellet i Perez de Bell-Lloc d'Urgell"
+          "value": "entre el C/ MESTRE RAMON ORTIZ 15 BELL-LLOC i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell"
         },
         {
           "key": "adjacent_north",
@@ -83,13 +83,13 @@
           "key": "adjacent_south",
           "label": "Limita sud",
           "filled": true,
-          "value": "Carrer Antoni Bellet i Perez"
+          "value": "Carrer Mestre Ramon Ortiz"
         },
         {
           "key": "adjacent_east",
           "label": "Limita est",
           "filled": true,
-          "value": "Carrer Via Ferrea"
+          "value": "Carrer Mestre Ramon Ortiz"
         },
         {
           "key": "adjacent_west",
@@ -151,7 +151,7 @@
           "key": "access_description",
           "label": "Acces",
           "filled": true,
-          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Antoni Bellet i Perez existent"
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Mestre Ramon Ortiz existent al"
         }
       ]
     },
@@ -326,5 +326,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 27328
+  "elapsed_ms": 39370
 }
