@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-29T06:28:48.755078+00:00",
+  "timestamp": "2026-03-29T07:01:11.792351+00:00",
   "tolerance_pct": 5,
   "projects": [
     {
@@ -76,7 +76,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "benchmark": "L'edificació que es preveu construir es situarà entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell.",
-          "pipeline": "entre el C/ MESTRE RAMON ORTIZ 15 BELL-LLOC i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell",
+          "pipeline": "entre el C/ MESTRE RAMON ORTIZ 15 BELL-LLOC i el Carrer Antoni Bellet Pérez de Bell-Lloc d'Urgell",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -98,10 +98,10 @@
           "key": "adjacent_south",
           "label": "Limita sud",
           "benchmark": "Carrer Antoni Bellet",
-          "pipeline": "Carrer Mestre Ramon Ortiz",
+          "pipeline": "Carrer Antoni Bellet Pérez",
           "pipeline_parsed": null,
           "deviation_pct": null,
-          "status": "MISMATCH",
+          "status": "CLOSE",
           "type": "text",
           "tier": "B"
         },
@@ -208,7 +208,7 @@
           "key": "access_description",
           "label": "Acces",
           "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través de la del Carrer existent al sud.",
-          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Mestre Ramon Ortiz existent al",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Antoni Bellet Pérez existent a",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -362,8 +362,8 @@
       "summary": {
         "total": 32,
         "match": 16,
-        "close": 4,
-        "mismatch": 12,
+        "close": 5,
+        "mismatch": 11,
         "missing": 0,
         "correctness_pct": 50.0
       },
@@ -378,8 +378,8 @@
         "B": {
           "total": 8,
           "match": 2,
-          "close": 0,
-          "mismatch": 6,
+          "close": 1,
+          "mismatch": 5,
           "correctness_pct": 25.0
         },
         "C": {
@@ -395,8 +395,8 @@
   "global_summary": {
     "total_vars": 32,
     "match": 16,
-    "close": 4,
-    "mismatch": 12,
+    "close": 5,
+    "mismatch": 11,
     "missing": 0,
     "correctness_pct": 50.0
   }

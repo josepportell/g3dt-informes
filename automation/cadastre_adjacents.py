@@ -60,9 +60,14 @@ CADASTRE_DATA_URL = "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/
 CADASTRE_WFS_URL = "https://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx"
 SRS = "EPSG:25831"  # UTM zone 31N (same as ICGC)
 CACHE_DIR = Path.home() / ".g3dt" / "cache" / "cadastre_adjacents"
+NOMINATIM_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "nominatim_streets"
 CACHE_TTL_DAYS = 90
 REQUEST_TIMEOUT_SECONDS = 15
 USER_AGENT = "G3DT-Automation/1.0 (Eficients.cat; geotechnical report generation)"
+NOMINATIM_USER_AGENT = "G3DT-Geotechnical-Reports/1.0 (eficients.cat)"
+
+# Module-level rate-limit state for Nominatim (1 req/sec policy)
+_last_nominatim_call: float = 0.0
 
 # Namespace used by the Cadastre API responses
 CADASTRE_NS = {'ovc': 'http://www.catastro.meh.es/'}
@@ -602,6 +607,183 @@ def _translate_street_name(raw_address: str, municipality: str | None = None) ->
     return text.title()
 
 
+# === UTM to WGS84 Conversion ===
+
+def _utm_to_wgs84(utm_x: float, utm_y: float, zone: int = 31) -> tuple[float, float]:
+    """Convert UTM EPSG:25831 (zone 31N) to WGS84 lat/lon."""
+    a = 6378137.0
+    f = 1 / 298.257223563
+    e2 = 2 * f - f * f
+    e_prime2 = e2 / (1 - e2)
+    k0 = 0.9996
+
+    x = utm_x - 500000.0  # Remove false easting
+    y = utm_y  # Northern hemisphere, no false northing
+
+    M = y / k0
+    mu = M / (a * (1 - e2 / 4 - 3 * e2**2 / 64 - 5 * e2**3 / 256))
+
+    e1 = (1 - math.sqrt(1 - e2)) / (1 + math.sqrt(1 - e2))
+
+    phi1 = mu + (3 * e1 / 2 - 27 * e1**3 / 32) * math.sin(2 * mu)
+    phi1 += (21 * e1**2 / 16 - 55 * e1**4 / 32) * math.sin(4 * mu)
+    phi1 += (151 * e1**3 / 96) * math.sin(6 * mu)
+
+    N1 = a / math.sqrt(1 - e2 * math.sin(phi1) ** 2)
+    T1 = math.tan(phi1) ** 2
+    C1 = e_prime2 * math.cos(phi1) ** 2
+    R1 = a * (1 - e2) / (1 - e2 * math.sin(phi1) ** 2) ** 1.5
+    D = x / (N1 * k0)
+
+    lat = phi1 - (N1 * math.tan(phi1) / R1) * (
+        D**2 / 2
+        - (5 + 3 * T1 + 10 * C1 - 4 * C1**2 - 9 * e_prime2) * D**4 / 24
+        + (61 + 90 * T1 + 298 * C1 + 45 * T1**2 - 252 * e_prime2 - 3 * C1**2)
+        * D**6
+        / 720
+    )
+
+    lon0 = math.radians((zone - 1) * 6 - 180 + 3)  # Central meridian
+    lon = lon0 + (
+        D
+        - (1 + 2 * T1 + C1) * D**3 / 6
+        + (5 - 2 * C1 + 28 * T1 - 3 * C1**2 + 8 * e_prime2 + 24 * T1**2)
+        * D**5
+        / 120
+    ) / math.cos(phi1)
+
+    return math.degrees(lat), math.degrees(lon)
+
+
+# === Nominatim Reverse Geocoding ===
+
+def _load_nominatim_cache(utm_x: float, utm_y: float) -> str | None:
+    """Load cached Nominatim street name. Returns None on miss/expiry."""
+    key_str = f"{utm_x:.0f}_{utm_y:.0f}"
+    cache_key = hashlib.sha256(key_str.encode()).hexdigest()[:12]
+    cache_path = NOMINATIM_CACHE_DIR / f"{cache_key}.json"
+
+    if not cache_path.exists():
+        return None
+
+    try:
+        with open(cache_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        cached_at = datetime.fromisoformat(data.get('cached_at', '2000-01-01'))
+        if datetime.now() - cached_at > timedelta(days=CACHE_TTL_DAYS):
+            cache_path.unlink()
+            return None
+
+        return data.get('street', '')
+    except (json.JSONDecodeError, KeyError, ValueError):
+        cache_path.unlink(missing_ok=True)
+        return None
+
+
+def _save_nominatim_cache(utm_x: float, utm_y: float, street: str) -> None:
+    """Save Nominatim street name to cache using atomic write."""
+    NOMINATIM_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    key_str = f"{utm_x:.0f}_{utm_y:.0f}"
+    cache_key = hashlib.sha256(key_str.encode()).hexdigest()[:12]
+    cache_path = NOMINATIM_CACHE_DIR / f"{cache_key}.json"
+
+    data = {
+        'cached_at': datetime.now().isoformat(),
+        'coordinates': {'utm_x': utm_x, 'utm_y': utm_y},
+        'street': street,
+    }
+
+    try:
+        fd, temp_path = tempfile.mkstemp(dir=NOMINATIM_CACHE_DIR, suffix='.tmp')
+        try:
+            with os.fdopen(fd, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            Path(temp_path).rename(cache_path)
+        except Exception:
+            Path(temp_path).unlink(missing_ok=True)
+            raise
+    except OSError as e:
+        logger.warning(f"Failed to cache Nominatim result: {e}")
+
+
+def _normalize_osm_street(name: str) -> str:
+    """Normalize OSM street name to match Eva's Cadastre-style formatting.
+
+    OSM returns "Carrer d'Antoni Bellet Pérez", Eva writes "Carrer Antoni Bellet".
+    Strip the connecting article (d'/de/del/de la/de l') between street type and name.
+    """
+    _STREET_TYPES = (
+        'Carrer', 'Avinguda', 'Plaça', 'Passeig', 'Passatge', 'Ronda',
+        'Travessia', 'Camí', 'Carretera', 'Partida', 'Calle', 'Avenida',
+        'Plaza', 'Paseo',
+    )
+    for st in _STREET_TYPES:
+        if name.startswith(st + ' '):
+            rest = name[len(st) + 1:]
+            for article in ("d'", "de l'", "de la ", "del ", "de "):
+                if rest.startswith(article):
+                    rest = rest[len(article):]
+                    break
+            return f"{st} {rest}"
+    return name
+
+
+def _reverse_geocode_street(utm_x: float, utm_y: float) -> str:
+    """Reverse geocode a UTM point to get the OSM street name.
+
+    Uses Nominatim (OpenStreetMap). Rate limit: 1 request per second.
+    Returns empty string on failure.
+    """
+    global _last_nominatim_call
+
+    # Check cache first (no rate limit needed)
+    cached = _load_nominatim_cache(utm_x, utm_y)
+    if cached is not None:
+        logger.debug(f"Nominatim cache hit for ({utm_x:.0f}, {utm_y:.0f}): {cached}")
+        return cached
+
+    # Convert UTM to WGS84
+    lat, lon = _utm_to_wgs84(utm_x, utm_y)
+
+    # Rate limiting: respect Nominatim 1 req/sec policy
+    now = time.monotonic()
+    elapsed = now - _last_nominatim_call
+    if elapsed < 1.1:
+        time.sleep(1.1 - elapsed)
+
+    url = (
+        f"https://nominatim.openstreetmap.org/reverse"
+        f"?lat={lat}&lon={lon}&format=json&zoom=17"
+        f"&accept-language=ca"
+    )
+    headers = {"User-Agent": NOMINATIM_USER_AGENT}
+
+    try:
+        request = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
+            _last_nominatim_call = time.monotonic()
+            result = json.loads(response.read().decode('utf-8'))
+
+        street = result.get("address", {}).get("road", "")
+        if street:
+            street = _normalize_osm_street(street)
+            logger.info(f"Nominatim: {street} at ({utm_x:.0f}, {utm_y:.0f})")
+        else:
+            logger.warning(
+                f"Nominatim: no road found at ({utm_x:.0f}, {utm_y:.0f})"
+            )
+
+        # Cache even empty results to avoid repeated lookups
+        _save_nominatim_cache(utm_x, utm_y, street)
+        return street
+
+    except (urllib.error.URLError, TimeoutError, socket.timeout, json.JSONDecodeError) as e:
+        _last_nominatim_call = time.monotonic()
+        logger.warning(f"Nominatim reverse geocode failed at ({utm_x:.0f}, {utm_y:.0f}): {e}")
+        return ""
+
+
 # === Probe Logic ===
 
 def _compute_polygon_centroid(polygon: list[tuple[float, float]]) -> tuple[float, float]:
@@ -722,6 +904,7 @@ def _probe_from_edge(
     for irregular parcels.
     """
     crossed_street = False
+    street_null_points: list[tuple[float, float]] = []
 
     # Start just outside the parcel boundary (1m along the normal)
     start_offset = 1.0
@@ -746,6 +929,7 @@ def _probe_from_edge(
         if ref is None:
             logger.debug(f"Street detected at distance {distance:.1f}m")
             crossed_street = True
+            street_null_points.append((probe_x, probe_y))
             continue
 
         if ref[:14] == our_ref[:14]:
@@ -754,9 +938,15 @@ def _probe_from_edge(
 
         # Found a different parcel
         if crossed_street:
-            # Prefer our own LDT for the street name: the source parcel's
-            # address is the street it faces, whereas the far neighbor may
-            # front on a completely different street.
+            # Try Nominatim at the middle of the NULL zone
+            if street_null_points:
+                avg_x = sum(p[0] for p in street_null_points) / len(street_null_points)
+                avg_y = sum(p[1] for p in street_null_points) / len(street_null_points)
+                osm_street = _reverse_geocode_street(avg_x, avg_y)
+                if osm_street:
+                    logger.debug(f"Street name from Nominatim: {osm_street}")
+                    return osm_street
+            # Fallback: our own LDT for the street name
             if our_ldt:
                 street = _translate_street_name(our_ldt, municipality=municipality)
                 if street:
@@ -772,6 +962,14 @@ def _probe_from_edge(
         return _describe_neighbor(ref)
 
     if crossed_street:
+        # Try Nominatim even when we never found the far side
+        if street_null_points:
+            avg_x = sum(p[0] for p in street_null_points) / len(street_null_points)
+            avg_y = sum(p[1] for p in street_null_points) / len(street_null_points)
+            osm_street = _reverse_geocode_street(avg_x, avg_y)
+            if osm_street:
+                logger.debug(f"Street name from Nominatim (no far side): {osm_street}")
+                return osm_street
         return "via pública"
 
     logger.warning(
@@ -821,6 +1019,7 @@ def _probe_direction(
     max_probes = 8
 
     crossed_street = False  # Track if we crossed a street (NULL zone)
+    street_null_points: list[tuple[float, float]] = []
 
     for i in range(max_probes):
         distance = start_distance + (i * step)
@@ -842,6 +1041,7 @@ def _probe_direction(
             # No cadastral reference -> we're on a street
             logger.debug(f"Street detected at distance {distance:.1f}m")
             crossed_street = True
+            street_null_points.append((probe_x, probe_y))
             continue
 
         # Compare first 14 chars (parcel+plot) to handle pc2 variations
@@ -852,10 +1052,15 @@ def _probe_direction(
 
         # Found a different parcel
         if crossed_street:
-            # We crossed a street to get here → adjacent is a street.
-            # Prefer our own LDT for the street name: the source parcel's
-            # address is the street it faces, whereas the far neighbor may
-            # front on a completely different street.
+            # Try Nominatim at the middle of the NULL zone
+            if street_null_points:
+                avg_x = sum(p[0] for p in street_null_points) / len(street_null_points)
+                avg_y = sum(p[1] for p in street_null_points) / len(street_null_points)
+                osm_street = _reverse_geocode_street(avg_x, avg_y)
+                if osm_street:
+                    logger.debug(f"Street name from Nominatim: {osm_street}")
+                    return osm_street
+            # Fallback: our own LDT for the street name
             if our_ldt:
                 street = _translate_street_name(our_ldt, municipality=municipality)
                 if street:
@@ -873,7 +1078,14 @@ def _probe_direction(
 
     # Exhausted probes without finding a neighbor
     if crossed_street:
-        # We found a street but never reached the other side
+        # Try Nominatim even when we never found the far side
+        if street_null_points:
+            avg_x = sum(p[0] for p in street_null_points) / len(street_null_points)
+            avg_y = sum(p[1] for p in street_null_points) / len(street_null_points)
+            osm_street = _reverse_geocode_street(avg_x, avg_y)
+            if osm_street:
+                logger.debug(f"Street name from Nominatim (no far side): {osm_street}")
+                return osm_street
         return "via pública"
 
     logger.warning(

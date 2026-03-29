@@ -198,7 +198,7 @@ def auto_extract(
             })
 
             emit("api_call", {"api": "Cadastre", "action": "adjacents", "utm": f"({utm_x:.0f}, {utm_y:.0f})", "superficie": superficie})
-            _phase3_adjacents(utm_x, utm_y, superficie, result, project_path, existing_user_data)
+            resolved_x, resolved_y = _phase3_adjacents(utm_x, utm_y, superficie, result, project_path, existing_user_data)
             adj_found = {d: result.prefills.get(f'adjacent_{d}', '') for d in ('north', 'south', 'east', 'west') if result.prefills.get(f'adjacent_{d}')}
             emit("source", {
                 "name": "Cadastre adj.", "ok": bool(adj_found),
@@ -209,14 +209,24 @@ def auto_extract(
                 } if adj_found else None,
             })
 
+            # P4a: Store resolved coordinates so downstream consumers use the
+            # correct project parcel (DPSH test point may be on a neighbor).
+            if (resolved_x, resolved_y) != (utm_x, utm_y):
+                result.prefills['_resolved_utm_x'] = resolved_x
+                result.prefills['_resolved_utm_y'] = resolved_y
+                result.sources['_resolved_utm_x'] = 'geocode (address resolution)'
+                result.sources['_resolved_utm_y'] = 'geocode (address resolution)'
+                logger.info(f"Resolved UTM: ({resolved_x:.0f}, {resolved_y:.0f}) instead of DPSH ({utm_x:.0f}, {utm_y:.0f})")
+
             # Cadastral parcel area (if not already from geocode)
             if 'superficie_cadastral_m2' not in result.prefills:
                 _phase3_cadastral_area(utm_x, utm_y, result)
 
             # Phase 3.5: Ortho enrichment (ICGC orthophoto + vision analysis)
+            # Uses resolved coordinates (project parcel) rather than DPSH test point
             if os.environ.get('G3DT_ORTHO_ENRICHMENT', '') == '1':
-                emit("api_call", {"api": "ICGC Ortho", "action": "enrichment", "utm": f"({utm_x:.0f}, {utm_y:.0f})"})
-                _phase35_ortho_enrichment(utm_x, utm_y, result)
+                emit("api_call", {"api": "ICGC Ortho", "action": "enrichment", "utm": f"({resolved_x:.0f}, {resolved_y:.0f})"})
+                _phase35_ortho_enrichment(resolved_x, resolved_y, result)
                 enriched_ok = bool(result.prefills.get('site_description_enriched'))
                 emit("source", {
                     "name": "ICGC ortho+visió", "ok": enriched_ok,
@@ -976,12 +986,15 @@ def _phase3_adjacents(
     result: AutoExtractionResult,
     project_path: Path | None = None,
     existing_user_data: dict[str, Any] | None = None,
-) -> None:
+) -> tuple[float, float]:
     """Query Cadastre API for adjacent parcels.
 
     For adjacents, the PROJECT PARCEL address (from planol/docs) is preferred
     over the DPSH test point coordinates (from COORDENADES.txt), because test
     points may be on a neighboring parcel.
+
+    Returns (adj_x, adj_y) — the coordinates actually used (may differ from
+    input if geocoded from street address).
     """
     try:
         from .cadastre_adjacents import get_adjacent_parcels, get_cadastral_reference
@@ -1046,9 +1059,11 @@ def _phase3_adjacents(
 
         n = sum(1 for d in ('north', 'south', 'east', 'west') if d in adjacents)
         result.steps_completed.append(f"Cadastre: {n} adjacents detectats")
+        return (adj_x, adj_y)
     except Exception as exc:
         logger.warning(f"Cadastre adjacents failed: {exc}")
         result.steps_skipped.append(("Cadastre adjacents", str(exc)))
+        return (utm_x, utm_y)
 
 
 def _geocode_for_adjacents(
