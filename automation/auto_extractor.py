@@ -222,6 +222,46 @@ def auto_extract(
             if 'superficie_cadastral_m2' not in result.prefills:
                 _phase3_cadastral_area(utm_x, utm_y, result)
 
+            # Phase 2.9: Parcel resolution — detect multi-parcel sites
+            planol_area = None
+            for key in ('superficie_parcela_m2', 'superficie_cadastral_m2'):
+                val = result.prefills.get(key) or (existing_user_data or {}).get(key)
+                if val:
+                    try:
+                        planol_area = float(val)
+                        break
+                    except (ValueError, TypeError):
+                        pass
+            if planol_area and planol_area > 0:
+                try:
+                    from .parcel_resolver import resolve_parcel
+                    resolved = resolve_parcel(
+                        resolved_x, resolved_y,
+                        planol_area_m2=planol_area,
+                        municipality=result.prefills.get('site_municipality', ''),
+                    )
+                    if resolved and resolved.is_merged:
+                        emit("source", {
+                            "name": "Parcel merge", "ok": True,
+                            "data": {
+                                "refs": resolved.merged_refs,
+                                "area": f"{resolved.area_m2:.0f} m²",
+                                "method": resolved.resolution_method,
+                            },
+                        })
+                        result.prefills['_resolved_polygon'] = resolved.polygon
+                        result.prefills['_resolved_area_m2'] = resolved.area_m2
+                        result.prefills['_merged_refs'] = resolved.merged_refs
+                        result.sources['_resolved_polygon'] = 'parcel merge'
+                        # Update superficie_cadastral with merged area
+                        result.prefills['superficie_cadastral_m2'] = int(resolved.area_m2)
+                        result.sources['superficie_cadastral_m2'] = f'Cadastre WFS (merge {len(resolved.merged_refs)} parcels)'
+                        # Use merged centroid for downstream
+                        resolved_x, resolved_y = resolved.centroid
+                        logger.info(f"Parcel merge: {resolved.merged_refs} → {resolved.area_m2:.0f} m²")
+                except Exception as exc:
+                    logger.debug(f"Parcel resolution failed: {exc}")
+
             # Phase 3.5: Ortho enrichment (ICGC orthophoto + vision analysis)
             # Uses resolved coordinates (project parcel) rather than DPSH test point
             if os.environ.get('G3DT_ORTHO_ENRICHMENT', '') == '1':
