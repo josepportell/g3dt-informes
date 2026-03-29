@@ -391,8 +391,8 @@ class ReportGenerator:
                     nb_for_tp = avg_n20 / 0.83 if avg_n20 else None
                     # Granular if cohesion < 0.5 (consistent with rock cap logic)
                     is_granular = gp.cohesion < 0.5
-                    # Soil type from first soil level
-                    soil_type = self.report_data.soil_levels[0].soil_type if self.report_data.soil_levels else 'granular'
+                    # Soil type from bearing stratum (deepest level)
+                    soil_type = self.report_data.soil_levels[-1].soil_type if self.report_data.soil_levels else 'granular'
                     # Es_settlement from wizard/user_data (overrides auto 2.5×Nb)
                     Es_override = self.user_data.get('Es_settlement')
                     self.report_data.terzaghi_result = calc.calculate_qa(
@@ -963,7 +963,7 @@ class ReportGenerator:
                 # Eva shows "Nb mig" (Nb average), not N20 average.
                 # Use bearing stratum N20 when available, convert to Nb (N20/0.83), integer format.
                 bearing_n20 = (
-                    self.report_data.soil_levels[0].n20_average
+                    self.report_data.soil_levels[-1].n20_average
                     if self.report_data.soil_levels
                     else dpsh.overall_average_n20
                 )
@@ -1314,18 +1314,20 @@ class ReportGenerator:
                 context['geotech_rows'] = [{'name': '', 'material_short': '', 'nb': '', 'n': '', 'density': '', 'cohesion': '', 'phi': '', 'E': ''}]
 
             # Keep old single-value vars for backward compatibility (used in text paragraphs)
-            if context['geotech_rows'] and context['geotech_rows'][0]['name']:
-                context['geotech_level_name'] = context['geotech_rows'][0]['name']
-                context['geotech_nb'] = context['geotech_rows'][0]['nb']
-                context['geotech_n'] = context['geotech_rows'][0]['n']
-                context['geotech_density'] = context['geotech_rows'][0]['density']
-                context['geotech_cohesion'] = context['geotech_rows'][0]['cohesion']
-                context['geotech_phi'] = context['geotech_rows'][0]['phi']
-                context['geotech_E'] = context['geotech_rows'][0]['E']
+            # Use deepest level (bearing stratum) — Eva's reports always show bearing stratum params
+            if context['geotech_rows'] and context['geotech_rows'][-1]['name']:
+                bearing = context['geotech_rows'][-1]
+                context['geotech_level_name'] = bearing['name']
+                context['geotech_nb'] = bearing['nb']
+                context['geotech_n'] = bearing['n']
+                context['geotech_density'] = bearing['density']
+                context['geotech_cohesion'] = bearing['cohesion']
+                context['geotech_phi'] = bearing['phi']
+                context['geotech_E'] = bearing['E']
                 # Calculation transparency for Tier C variables
                 gp = self.report_data.geotechnical_params
                 if gp:
-                    sl = self.report_data.soil_levels[0] if self.report_data.soil_levels else None
+                    sl = self.report_data.soil_levels[-1] if self.report_data.soil_levels else None
                     n20_src = f"N20={sl.n20_average:.0f}" if sl and sl.n20_average else ""
                     context['_calc_E'] = f"CTE D.23 {n20_src}" if n20_src else ""
                     context['_calc_phi'] = f"Schmertmann Nb={sl.n20_average/0.83:.0f}" if sl and sl.n20_average else ""
