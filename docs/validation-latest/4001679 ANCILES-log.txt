@@ -1,6 +1,0 @@
-2026-03-29 13:22:44,195 automation.geocode_coordinates WARNING Cadastre CPMRC connection failed: Failed to connect: <urlopen error [Errno -3] Temporary failure in name resolution>
-2026-03-29 13:25:27,977 automation.cadastre_adjacents WARNING Edge probe failed at (295741.69193056604, 4718512.872290072): Failed to connect to Cadastre: <urlopen error [Errno -3] Temporary failure in name resolution>
-2026-03-29 13:26:13,657 automation.cadastre_adjacents WARNING Edge probe failed at (295759.50250096107, 4718457.7068818435): Failed to connect to Cadastre: <urlopen error timed out>
-2026-03-29 13:27:00,571 automation.cadastre_adjacents WARNING Edge probe failed at (295771.62541544327, 4718486.332942487): Failed to connect to Cadastre: <urlopen error [Errno -3] Temporary failure in name resolution>
-2026-03-29 13:27:38,789 automation.ortho_enrichment WARNING Both WMS sources failed for tight chip: WMS download failed: <urlopen error [Errno 111] Connection refused>
-2026-03-29 13:27:38,790 automation.auto_extractor WARNING Ortho enrichment: no chips downloaded

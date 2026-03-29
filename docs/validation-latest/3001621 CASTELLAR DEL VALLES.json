@@ -89,7 +89,7 @@
           "key": "adjacent_east",
           "label": "Limita est",
           "filled": true,
-          "value": "Carrer Alzina"
+          "value": "parcel·la amb construcció"
         },
         {
           "key": "adjacent_west",
@@ -127,7 +127,7 @@
           "key": "superficie_parcela",
           "label": "Sup. parcela",
           "filled": true,
-          "value": "1458"
+          "value": "440"
         },
         {
           "key": "cota_referencia",
@@ -145,7 +145,7 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al sud."
+          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al sud. La parcel·la es troba delimitada per vorad"
         },
         {
           "key": "access_description",
@@ -326,5 +326,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 165664
+  "elapsed_ms": 30838
 }

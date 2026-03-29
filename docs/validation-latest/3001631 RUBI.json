@@ -145,7 +145,7 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al nord."
+          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al nord. La parcel·la es troba delimitada per tanq"
         },
         {
           "key": "access_description",
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 151639
+  "elapsed_ms": 35888
 }

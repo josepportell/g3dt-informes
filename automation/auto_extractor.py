@@ -1007,13 +1007,29 @@ def _phase25_geocode(
 
     province = result.prefills.get('province', '')
 
+    # Try direct Callejero first (exact RC from address database)
+    geo_result = None
     try:
-        geo_result = geocode_project(
-            address, municipality, point_ids, output_dir=None, province=province,
-        )
-    except Exception as exc:
-        result.steps_skipped.append(("Geocodificació", str(exc)))
-        return None, None
+        from .geocode_coordinates import callejero_address_to_rc
+        callejero_result = callejero_address_to_rc(address, municipality, province=province)
+        if callejero_result and callejero_result.get('utm_x'):
+            logger.info(
+                f"Callejero direct: RC {callejero_result.get('rc','?')[:14]} "
+                f"({callejero_result['utm_x']:.0f}, {callejero_result['utm_y']:.0f})"
+            )
+            geo_result = callejero_result
+    except Exception as e:
+        logger.debug(f"Callejero direct failed: {e}")
+
+    # Fallback to geocode_project() if Callejero didn't work
+    if geo_result is None:
+        try:
+            geo_result = geocode_project(
+                address, municipality, point_ids, output_dir=None, province=province,
+            )
+        except Exception as exc:
+            result.steps_skipped.append(("Geocodificació", str(exc)))
+            return None, None
 
     if geo_result is None:
         result.steps_skipped.append(
@@ -1245,12 +1261,26 @@ def _geocode_for_adjacents(
 ) -> dict | None:
     """Geocode a street address to UTM for adjacents probing.
 
-    Tries the full address first, then strips the street type prefix
-    (Nominatim often fails on "Carrer X" but succeeds on bare "X"
-    for small Catalan towns).
+    Strategy:
+    1. Direct Callejero lookup (fast, precise — gives exact RC from address database)
+    2. Fallback: geocode_project() with progressive address stripping
 
     Returns full geo_result dict (utm_x, utm_y, parcel_area, rc, ...) or None.
     """
+    # ── 1. Try direct Callejero (address → RC → polygon → UTM centroid)
+    try:
+        from .geocode_coordinates import callejero_address_to_rc
+        result = callejero_address_to_rc(street_address, municipality, province=province)
+        if result and result.get('utm_x') and result.get('utm_y'):
+            logger.info(
+                f"Callejero direct OK: '{street_address}' → RC {result.get('rc','?')[:14]} "
+                f"({result['utm_x']:.0f}, {result['utm_y']:.0f})"
+            )
+            return result
+    except Exception as e:
+        logger.debug(f"Callejero direct failed for '{street_address}': {e}")
+
+    # ── 2. Fallback: geocode_project() with address variants
     try:
         from .geocode_coordinates import geocode_project
     except ImportError as e:
@@ -1261,7 +1291,6 @@ def _geocode_for_adjacents(
     candidates = [street_address]
 
     # Strip house number variants: "#7", "Nº 39", "nº7", ", 16", "18A-18B-20"
-    import re
     stripped = re.sub(r'[\s,]+(?:#|Nº\s*|nº\s*|n[úu]m\.?\s*)?\d[\dA-Za-z\-]*\s*$', '', street_address).strip()
     if stripped and stripped != street_address:
         candidates.append(stripped)
@@ -1282,7 +1311,7 @@ def _geocode_for_adjacents(
                 addr, municipality, ['centre'], output_dir=None, province=province,
             )
             if geo_result and geo_result.get('utm_x') and geo_result.get('utm_y'):
-                logger.info(f"Geocode for adjacents OK: '{addr}' → ({geo_result['utm_x']:.0f}, {geo_result['utm_y']:.0f})")
+                logger.info(f"Geocode fallback OK: '{addr}' → ({geo_result['utm_x']:.0f}, {geo_result['utm_y']:.0f})")
                 return geo_result
         except Exception as e:
             logger.debug(f"Geocode attempt '{addr}' failed: {e}")

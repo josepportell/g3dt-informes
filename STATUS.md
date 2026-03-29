@@ -1,38 +1,39 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-03-28
+Last updated: 2026-03-29
 
 ## Current State
 
-**Benchmark layer complet + full_prepare pipeline implementat. Comparació correctesa 23.8% (dades parcials — pendent executar pipeline complet amb visió).**
+**P4 geocode fixes in progress. Address extraction + accent bugs fixed (Steps 0-1). Correctness 36.8% (174 vars). Next: direct Callejero path for exact parcel RC.**
 
-- **Benchmark layer**: 7 informes signats d'Eva extrets, valors verificats manualment projecte per projecte
-- **full_prepare pipeline**: `auto_extract` + Groq vision s'executen automàticament quan l'usuari selecciona projecte al wizard
-- **Wizard simplificat**: mode producció (2 accions: seleccionar projecte + generar informe), mode dev amb `?dev=1`
-- **collect_readiness.py**: pipeline complet per defecte, `--project bell-lloc` per un sol projecte, `--skip-vision` opcional
-- **Readiness**: 12/15 Tier 1 (>=90%), 5 a 100%
-- **Correctesa**: 23.8% global — però 6/7 projectes mai van passar Phase 1 (visió). Pendent re-executar amb pipeline complet
+- **Steps 0+1 DONE** (commit `448ed19`): G3 internal address filter, email body block, accent stripping in ConsultaMunicipio, village→municipality mapping, address municipality cleanup
+- **Validated**: G3 filter catches Rubí/Alcoletge/Vilanova. Accent fix resolves Castellar/Vilanova municipalities. Linyola no longer geocodes email footer.
+- **Step 2 next**: Direct Callejero lookup in `_geocode_for_adjacents()` — bypass complex fallback chain for exact cadastral reference
+- **Benchmark**: 64/174 match (36.8%), Tier A 56.9%, Tier B 3.6% exact / 7.3% semantic, Tier C 23.5%
+- **Readiness**: Bell-Lloc 100%, Castellar/Rubí/Linyola/Alcoletge ~90%, Vilanova 55%, Anciles 58%
 
 ## Active Blockers
 
-- Executar pipeline complet per als 7 projectes benchmark (requereix Groq credits, ~20 API calls)
-- Merge `feat/smartscan` → `main` (15+ commits pendents)
+- Step 2: direct Callejero → exact parcel RC (unblocks adjacents accuracy)
+- Castellar: municipality found but error 42 (house number mismatch) — Callejero will fix
+- Anciles: DNS resolution failures during last run (transient) — village mapping untested
+- Merge `feat/smartscan` → `main` (20+ commits pending)
 - Instal·lar a l'ordinador d'Eva
-- Silvia: extensió 2 setmanes pendent d'aprovació
 
 ## Next Milestones
 
-- [ ] Executar `collect_readiness.py --project bell-lloc` per validar pipeline complet
-- [ ] Executar pipeline complet per 7 projectes benchmark, re-comparar correctesa
-- [ ] Produir resum combinat readiness + correctesa
-- [ ] Fix DPSH extraction per Vilanova + Anciles (~58% → ~90%)
+- [ ] Step 2: Direct Callejero path in `_geocode_for_adjacents()`
+- [ ] Step 3: Polygon override for merged parcels (Bell-Lloc)
+- [ ] Re-validate all 7 projects after Steps 2+3
+- [ ] Executar pipeline complet amb visió (Groq) per tots 7 projectes
 - [ ] Merge `feat/smartscan` → `main`
 
 ## Key Metrics
 
 | Mètrica | Valor | Nota |
 |---------|-------|------|
-| Projectes a 100% readiness | 5/15 | Bell-Lloc, BL3-5, Linyola3 |
-| Readiness mitjà | 89.3% | Excloent Bell-Lloc-WIN (error) |
-| Correctesa benchmark | 23.8% | 42/181 match — pendent pipeline complet |
-| Variables sempre correctes | 5 | municipality, num_dpsh_tests, sulfate_value, geotech_density, cota_referencia |
-| Variables sempre errònies | 8 | data_signatura, adjacents(4), site_condition, site_description, location_sentence |
+| Correctesa global | 36.8% | 64/174 match |
+| Tier A (auto) | 56.9% | 58/102 |
+| Tier B (manual/site) | 3.6% exact, 7.3% semantic | 2/55 exact, 4/55 semantic |
+| Tier C (judgment) | 23.5% | 4/17 |
+| Projectes a 100% readiness | 1/7 | Bell-Lloc |
+| G3 filter activat | 3 projectes | Rubí, Alcoletge, Vilanova |

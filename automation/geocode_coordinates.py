@@ -810,7 +810,9 @@ def _pick_nearest_rc_from_numerero(root: ET.Element, house_number: str) -> str |
     if not nump_elems:
         return None
     try:
-        target = int(house_number) if house_number else 1
+        # Strip trailing letter suffix: "18A" → 18, "39B" → 39
+        num_digits = re.sub(r'[A-Za-z]+$', '', house_number.strip()) if house_number else ''
+        target = int(num_digits) if num_digits else 1
     except ValueError:
         target = 1
     best_rc = None
@@ -902,12 +904,15 @@ def cadastre_progressive_lookup(
     logger.info(f"Progressive cadastre: street '{street_name}' -> '{official_street}' ({tipo_via})")
 
     # Step 3: DNPLOC with resolved names
+    # Strip letter suffix from house number — API only accepts digits
+    # (error 42: "EL NÚMERO DEBE SER UNA SECUENCIA DE HASTA 4 DÍGITOS")
+    clean_number = re.sub(r'[A-Za-z]+$', '', house_number.strip()) if house_number else house_number
     params = (
         f"?Provincia={urllib.parse.quote(effective_province)}"
         f"&Municipio={urllib.parse.quote(official_muni)}"
         f"&Sigla={urllib.parse.quote(tipo_via)}"
         f"&Calle={urllib.parse.quote(official_street)}"
-        f"&Numero={urllib.parse.quote(house_number)}"
+        f"&Numero={urllib.parse.quote(clean_number)}"
         f"&Bloque=&Escalera=&Planta=&Puerta="
     )
     url = f"{CADASTRE_CALLEJERO_URL}/Consulta_DNPLOC{params}"
@@ -950,6 +955,56 @@ def cadastre_progressive_lookup(
             if utm_coords:
                 xcen, ycen = utm_coords
             return {"rc": rc, "xcen": xcen, "ycen": ycen}
+
+        # If number has a letter suffix (e.g. "18A"), retry with just the digits
+        num_digits = re.sub(r'[A-Za-z]+$', '', house_number.strip())
+        if num_digits and num_digits != house_number.strip():
+            logger.info(f"Progressive cadastre: retrying with number '{num_digits}' (was '{house_number}')")
+            time.sleep(0.3)
+            retry_params = (
+                f"?Provincia={urllib.parse.quote(effective_province)}"
+                f"&Municipio={urllib.parse.quote(official_muni)}"
+                f"&Sigla={urllib.parse.quote(tipo_via)}"
+                f"&Calle={urllib.parse.quote(official_street)}"
+                f"&Numero={urllib.parse.quote(num_digits)}"
+                f"&Bloque=&Escalera=&Planta=&Puerta="
+            )
+            retry_url = f"{CADASTRE_CALLEJERO_URL}/Consulta_DNPLOC{retry_params}"
+            try:
+                retry_text = _fetch_url(retry_url)
+                retry_root = ET.fromstring(retry_text)
+                # Check for errors in retry
+                retry_errs = {
+                    (_find_element(e, "cod").text.strip() if _find_element(e, "cod") is not None and _find_element(e, "cod").text else "")
+                    for e in _find_all_elements(retry_root, "err")
+                }
+                if not retry_errs:
+                    # Direct hit — extract RC
+                    pc1_r = _find_all_elements(retry_root, "pc1")
+                    pc2_r = _find_all_elements(retry_root, "pc2")
+                    if pc1_r and pc1_r[0].text:
+                        rc = pc1_r[0].text.strip() + (pc2_r[0].text.strip() if pc2_r and pc2_r[0].text else "")
+                        logger.info(f"Progressive cadastre: stripped-number hit -> RC {rc}")
+                        xcen2: float | None = None
+                        ycen2: float | None = None
+                        utm_c = cadastre_rc_to_utm(rc)
+                        if utm_c:
+                            xcen2, ycen2 = utm_c
+                        return {"rc": rc, "xcen": xcen2, "ycen": ycen2}
+                elif "43" in retry_errs:
+                    # Still not found — try nearest from retry response
+                    rc = _pick_nearest_rc_from_numerero(retry_root, num_digits)
+                    if rc:
+                        logger.info(f"Progressive cadastre: stripped-number nearest -> RC {rc}")
+                        xcen3: float | None = None
+                        ycen3: float | None = None
+                        utm_c2 = cadastre_rc_to_utm(rc)
+                        if utm_c2:
+                            xcen3, ycen3 = utm_c2
+                        return {"rc": rc, "xcen": xcen3, "ycen": ycen3}
+            except Exception as e:
+                logger.debug(f"Progressive cadastre: stripped-number retry failed: {e}")
+
         logger.warning("Progressive cadastre: number not found and no nearby numbers")
         return None
 
@@ -1024,6 +1079,89 @@ def cadastre_progressive_lookup(
         xcen, ycen = utm_coords
 
     return {"rc": rc, "xcen": xcen, "ycen": ycen}
+
+
+def callejero_address_to_rc(
+    street_address: str,
+    municipality: str,
+    province: str = "",
+) -> dict | None:
+    """
+    Resolve a street address to cadastral reference via direct Callejero lookup.
+
+    This is the fast, precise path: address → (fuzzy muni + fuzzy street + DNPLOC)
+    → RC → polygon → UTM centroid.  Bypasses Nominatim and grid search entirely.
+
+    Args:
+        street_address: Full street address (e.g. "Carrer Arbrells, 18")
+        municipality: Municipality name (may have accents)
+        province: Province name.  If empty, tries all 4 Catalan provinces.
+
+    Returns:
+        Dict with keys: rc, utm_x, utm_y, parcel_area, polygon.  Or None.
+    """
+    sigla, calle, numero = _parse_address(street_address)
+    if not calle:
+        logger.debug("callejero_address_to_rc: no street name parsed from %r", street_address)
+        return None
+
+    # Determine provinces to try
+    if province:
+        provinces = [province.upper()]
+    else:
+        provinces = list(_CATALAN_PROVINCES)
+
+    # Try progressive lookup (fuzzy muni + fuzzy street + DNPLOC with error recovery)
+    for prov in provinces:
+        result = cadastre_progressive_lookup(
+            street_name=calle,
+            house_number=numero,
+            municipality_hint=municipality,
+            province=prov,
+            full_address=street_address,
+        )
+        if result and result.get("rc"):
+            rc = result["rc"]
+            logger.info(f"callejero_address_to_rc: RC {rc} from progressive lookup ({prov})")
+
+            # Get polygon + centroid for precise UTM
+            utm_x: float | None = None
+            utm_y: float | None = None
+            parcel_area: float | None = None
+            polygon: list[tuple[float, float]] = []
+
+            try:
+                polygon = get_parcel_geometry_utm(rc[:14])
+                if polygon:
+                    xs = [p[0] for p in polygon]
+                    ys = [p[1] for p in polygon]
+                    utm_x = sum(xs) / len(xs)
+                    utm_y = sum(ys) / len(ys)
+                    # Approximate area via Shoelace formula
+                    n = len(polygon)
+                    area = 0.0
+                    for i in range(n):
+                        j = (i + 1) % n
+                        area += polygon[i][0] * polygon[j][1]
+                        area -= polygon[j][0] * polygon[i][1]
+                    parcel_area = abs(area) / 2.0
+            except Exception as e:
+                logger.debug(f"callejero_address_to_rc: polygon fetch failed for {rc[:14]}: {e}")
+                # Fall back to DNPLOC-provided coordinates
+                utm_x = result.get("xcen")
+                utm_y = result.get("ycen")
+
+            if utm_x and utm_y:
+                return {
+                    "rc": rc,
+                    "utm_x": utm_x,
+                    "utm_y": utm_y,
+                    "parcel_area": parcel_area,
+                    "polygon": polygon,
+                    "source": f"Callejero ({prov})",
+                }
+
+    return None
 
 
 _CATALAN_PROVINCES = ["LLEIDA", "BARCELONA", "GIRONA", "TARRAGONA"]

@@ -77,19 +77,19 @@
           "key": "adjacent_north",
           "label": "Limita nord",
           "filled": true,
-          "value": "desconegut"
+          "value": "parcel·la buida"
         },
         {
           "key": "adjacent_south",
           "label": "Limita sud",
           "filled": true,
-          "value": "desconegut"
+          "value": "parcel·la buida"
         },
         {
           "key": "adjacent_east",
           "label": "Limita est",
           "filled": true,
-          "value": "desconegut"
+          "value": "parcel·la buida"
         },
         {
           "key": "adjacent_west",
@@ -127,7 +127,7 @@
           "key": "superficie_parcela",
           "label": "Sup. parcela",
           "filled": true,
-          "value": "1656"
+          "value": "1655"
         },
         {
           "key": "cota_referencia",
@@ -145,7 +145,7 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "El terreny es presenta antropitzat"
+          "value": "El solar es presenta sense pavimentar i amb escassa cobertura vegetal."
         },
         {
           "key": "access_description",
@@ -329,5 +329,5 @@
     "Could not auto-fill cota_referencia from ICGC MDT: Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; ",
     "Could not calculate slope from ICGC MDT: Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; "
   ],
-  "elapsed_ms": 343088
+  "elapsed_ms": 77063
 }
