@@ -329,5 +329,5 @@
     "Could not auto-fill cota_referencia from ICGC MDT: Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; ",
     "Could not calculate slope from ICGC MDT: Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; "
   ],
-  "elapsed_ms": 37330
+  "elapsed_ms": 60432
 }

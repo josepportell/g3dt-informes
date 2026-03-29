@@ -71,7 +71,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer de la Miranda i el Passeig Francesc Macia de Rubí"
+          "value": "entre el Carrer de la Miranda i el Carrer Creu de Rubí"
         },
         {
           "key": "adjacent_north",
@@ -83,7 +83,7 @@
           "key": "adjacent_south",
           "label": "Limita sud",
           "filled": true,
-          "value": "Passeig Francesc Macia"
+          "value": "Carrer Creu"
         },
         {
           "key": "adjacent_east",
@@ -151,7 +151,7 @@
           "key": "access_description",
           "label": "Acces",
           "filled": true,
-          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Passeig Francesc Macia existent al su"
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Creu existent al sud."
         }
       ]
     },
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 31508
+  "elapsed_ms": 52881
 }

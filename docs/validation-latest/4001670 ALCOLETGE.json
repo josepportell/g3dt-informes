@@ -1,8 +1,8 @@
 {
   "overall": {
-    "filled": 36,
+    "filled": 37,
     "total": 40,
-    "pct": 90.0
+    "pct": 92.5
   },
   "categories": [
     {
@@ -71,13 +71,13 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "al Carrer Girassols nº 7 de Alcoletge"
+          "value": "entre el Carrer Girassols nº 7 i el Carrer dels Gira-sols de Alcoletge"
         },
         {
           "key": "adjacent_north",
           "label": "Limita nord",
           "filled": true,
-          "value": "via pública"
+          "value": "Carrer dels Gira-sols"
         },
         {
           "key": "adjacent_south",
@@ -101,9 +101,9 @@
     },
     {
       "name": "Edificacio",
-      "filled": 5,
+      "filled": 6,
       "total": 8,
-      "pct": 62.5,
+      "pct": 75.0,
       "variables": [
         {
           "key": "building_type",
@@ -150,8 +150,8 @@
         {
           "key": "access_description",
           "label": "Acces",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer dels Gira-sols existent al nor"
         }
       ]
     },
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 11827
+  "elapsed_ms": 23508
 }

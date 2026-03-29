@@ -71,13 +71,13 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer Arbrells i el Carrer Alzina de L' de Castellar del Vallès, Barcelona"
+          "value": "entre el Carrer Arbrells i el Carrer Alzina de Castellar del Vallès, Barcelona"
         },
         {
           "key": "adjacent_north",
           "label": "Limita nord",
           "filled": true,
-          "value": "Carrer Arbrells dels"
+          "value": "Carrer dels Arbrells"
         },
         {
           "key": "adjacent_south",
@@ -89,7 +89,7 @@
           "key": "adjacent_east",
           "label": "Limita est",
           "filled": true,
-          "value": "Carrer Alzina de L'"
+          "value": "Carrer Alzina"
         },
         {
           "key": "adjacent_west",
@@ -145,13 +145,13 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al nord. El solar es presenta sense pavimentar i a"
+          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al nord. La parcel·la es troba delimitada per vora"
         },
         {
           "key": "access_description",
           "label": "Acces",
           "filled": true,
-          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Arbrells dels existent al nord"
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer dels Arbrells existent al nord"
         }
       ]
     },
@@ -326,5 +326,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 18864
+  "elapsed_ms": 27495
 }

@@ -71,7 +71,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Calle Santa Gemma nº4 i el Carrer Santa Gemma Anterior 25313A00700066 de Vilanova de Segrià"
+          "value": "entre el Calle Santa Gemma nº4 i el Carrer Santa Gemma de Vilanova de Segrià"
         },
         {
           "key": "adjacent_north",
@@ -95,7 +95,7 @@
           "key": "adjacent_west",
           "label": "Limita oest",
           "filled": true,
-          "value": "Carrer Santa Gemma Anterior 25313A00700066"
+          "value": "Carrer Santa Gemma"
         }
       ]
     },
@@ -151,7 +151,7 @@
           "key": "access_description",
           "label": "Acces",
           "filled": true,
-          "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer Santa Gemma Anterior 25313A007"
+          "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer Santa Gemma existent al oest."
         }
       ]
     },
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 14141
+  "elapsed_ms": 23993
 }

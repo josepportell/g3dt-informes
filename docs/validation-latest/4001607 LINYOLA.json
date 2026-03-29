@@ -71,7 +71,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer Clot de la Llaguna nº16 i el Camí Arcs,Dels de Linyola"
+          "value": "entre el Carrer Clot de la Llaguna nº16 i el Camí dels Arcs de Linyola"
         },
         {
           "key": "adjacent_north",
@@ -83,7 +83,7 @@
           "key": "adjacent_south",
           "label": "Limita sud",
           "filled": true,
-          "value": "Polígono"
+          "value": "Camí dels Arcs"
         },
         {
           "key": "adjacent_east",
@@ -95,7 +95,7 @@
           "key": "adjacent_west",
           "label": "Limita oest",
           "filled": true,
-          "value": "Camí Arcs,Dels"
+          "value": "Carrer Clot de la Llacuna"
         }
       ]
     },
@@ -145,13 +145,13 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "La parcel·la es troba delimitada per vorada. El solar es presenta sense pavimentar i amb vegetació de petita alçada. En "
+          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al oest. La parcel·la es troba delimitada per vora"
         },
         {
           "key": "access_description",
           "label": "Acces",
           "filled": true,
-          "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Camí Arcs,Dels existent al oest."
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Clot de la Llacuna existent al"
         }
       ]
     },
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 50292
+  "elapsed_ms": 69310
 }
