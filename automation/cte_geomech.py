@@ -221,6 +221,27 @@ def nspt_to_gamma_g_cm3(nspt: float, soil_type: str = "granular") -> float:
     return GAMMA_BY_TYPE.get(soil_type, 2.0)
 
 
+def soil_type_to_cohesion(soil_type: str) -> float:
+    """Cohesion (kg/cm²) by soil type, from Eva's Spt-correlacions.doc.
+
+    Eva's practice (confirmed 2026-02-26):
+    - Granular (graves, sorres): c = 0.0 (non-cohesive)
+    - Slightly cohesive (llims, arenes limoses): c = 0.05 (Hunt table Cu=qu/2)
+    - Clay: c = 0.10
+    - Rock: handled by rock_params_default() → c = 1.0
+    """
+    COHESION_BY_TYPE = {
+        "granular": 0.0,
+        "grava": 0.0,
+        "arena": 0.0,
+        "arena_limosa": 0.05,
+        "cohesive": 0.05,
+        "limo": 0.05,
+        "arcilla": 0.10,
+    }
+    return COHESION_BY_TYPE.get(soil_type, 0.0)
+
+
 def is_rock(nspt: float, description: str = "") -> bool:
     """
     Determine if the material is rock based on NSPT and/or description.
@@ -270,31 +291,49 @@ def rock_params_default() -> dict:
 
 # === Soil type auto-detection from lithological description ===
 
-SOIL_TYPE_KEYWORDS = {
-    "arena_limosa": ["sorra limosa", "arena limosa", "sorr.*llim"],
-    "grava": ["grav", "gravel"],
-    "arena": ["sorr", "arena", "sand"],
-    "limo": ["llim", "silt", "marga"],
-    "arcilla": ["argil", "clay", "argila"],
-}
-
-
 def detect_soil_type(description: str) -> str:
     """Auto-detect soil type from lithological description.
 
-    Checks most specific patterns first (arena_limosa before arena).
+    Strategy: the FIRST significant noun determines the type.
+    "Llims argilosos i sorrencs" → limo (starts with llim)
+    "Sorres argiloses" → arena (starts with sorr)
+    "Graves en matriu sorrenca" → grava (starts with grav)
 
     Returns: 'grava', 'arena', 'arena_limosa', 'limo', 'arcilla', or 'granular'
     """
     import re
     desc = description.lower()
-    for soil_type, keywords in SOIL_TYPE_KEYWORDS.items():
-        for kw in keywords:
-            if '.*' in kw:
-                if re.search(kw, desc):
-                    return soil_type
-            elif kw in desc:
-                return soil_type
+
+    # Compound types: check first (most specific)
+    if re.search(r'sorr.*limos|arena.*limos', desc):
+        return "arena_limosa"
+    if re.search(r'sorra limosa|arena limosa', desc):
+        return "arena_limosa"
+
+    # First-word strategy: the leading material dominates
+    # Strip common prefixes: ordinals, articles
+    stripped = re.sub(r'^(\d+[er|on|rt]+\s+nivell\.?\s*)', '', desc)
+    stripped = re.sub(r'^(el|la|les|els|los|las|un|una)\s+', '', stripped)
+
+    if stripped.startswith(('llim', 'silt', 'marg')):
+        return "limo"
+    if stripped.startswith(('argil', 'clay')):
+        return "arcilla"
+    if stripped.startswith(('grav', 'gravel')):
+        return "grava"
+    if stripped.startswith(('sorr', 'aren', 'sand')):
+        return "arena"
+
+    # Fallback: any keyword anywhere in description
+    if any(kw in desc for kw in ('llim', 'silt', 'marg')):
+        return "limo"
+    if any(kw in desc for kw in ('argil', 'clay', 'argila')):
+        return "arcilla"
+    if any(kw in desc for kw in ('grav', 'gravel')):
+        return "grava"
+    if any(kw in desc for kw in ('sorr', 'arena', 'sand')):
+        return "arena"
+
     return "granular"
 
 

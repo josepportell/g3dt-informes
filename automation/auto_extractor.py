@@ -60,13 +60,40 @@ def _is_g3_internal_address(value: str) -> bool:
     return any(street in upper and number in upper for street, number in _G3_ADDRESS_PATTERNS)
 
 
-def _clean_street_address(address: str, municipality: str) -> str:
-    """Post-process extracted street address: strip trailing municipality/postal code.
+_ADDR_ABBREVIATIONS = [
+    # (pattern, replacement_title, replacement_upper)
+    # Title case for mixed-case input, upper for ALL-CAPS input
+    (re.compile(r'\bC/\s*', re.IGNORECASE), 'Carrer ', 'CARRER '),
+    (re.compile(r'\bAv(?:da?)?\.\s*', re.IGNORECASE), 'Avinguda ', 'AVINGUDA '),
+    (re.compile(r'\bPl\.\s*', re.IGNORECASE), 'Plaça ', 'PLAÇA '),
+]
 
-    Bell-Lloc: "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC" → "C/ MESTRE RAMON ORTIZ 15"
+
+def _expand_street_abbreviations(address: str) -> str:
+    """Expand common street abbreviations: C/ → Carrer, Av./Avda. → Avinguda, Pl. → Plaça.
+
+    Case-preserving: if the input is ALL-CAPS, the expansion is ALL-CAPS.
+    Does NOT expand STA. → Santa (may be official cadastre name).
+    Also strips 'nº' before numbers (keeps the number).
+    """
+    is_upper = address == address.upper()
+    for pattern, repl_title, repl_upper in _ADDR_ABBREVIATIONS:
+        address = pattern.sub(repl_upper if is_upper else repl_title, address)
+    # Strip 'nº' but keep the number (e.g. "nº16" → "16", "nº 7" → "7")
+    address = re.sub(r'nº\s*', '', address)
+    return address
+
+
+def _clean_street_address(address: str, municipality: str) -> str:
+    """Post-process extracted street address: expand abbreviations, strip trailing municipality/postal code.
+
+    Bell-Lloc: "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC" → "Carrer MESTRE RAMON ORTIZ 15"
     """
     if not address or not municipality:
         return address
+
+    # Expand abbreviations first (before municipality stripping)
+    address = _expand_street_abbreviations(address)
 
     def _strip(s: str) -> str:
         return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn').upper()

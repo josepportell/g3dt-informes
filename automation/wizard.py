@@ -254,7 +254,7 @@ class UserDataWizard:
             # Core wizard fields
             self._set_prefill('architect_name', arch.get('architect'), source, overall_conf)
             self._set_prefill('architect_company', arch.get('architect_company'), source, overall_conf)
-            bt = arch.get('building_type') or arch.get('project_name')
+            bt = arch.get('building_type')
             if bt:
                 self._set_prefill('building_type', bt, source, overall_conf)
 
@@ -356,9 +356,9 @@ class UserDataWizard:
                     if municipality:
                         self._set_prefill('site_municipality', municipality, source, overall_conf)
 
-            promotor = arch.get('promotor')
-            if promotor:
-                self._set_prefill('client_name', promotor, source, overall_conf)
+            client_from_planol = arch.get('client_name') or arch.get('promotor')
+            if client_from_planol:
+                self._set_prefill('client_name', client_from_planol, source, overall_conf)
 
             height = dims.get('max_height_m', {})
             height_val = height.get('pdf_value') if isinstance(height, dict) else height

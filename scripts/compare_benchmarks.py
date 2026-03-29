@@ -15,7 +15,10 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import logging
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -171,12 +174,56 @@ def _normalize_municipality(s: str) -> str:
     )
 
 
+_STREET_ABBREVS = [
+    (r'\bc/\s*', 'carrer '),
+    (r'\bav(?:da?)?\.\s*', 'avinguda '),
+    (r'\bpl\.\s*', 'plaça '),
+    (r'\bpsg\.\s*', 'passeig '),
+    (r'\bpg\.\s*', 'passeig '),
+    (r'\bctra\.\s*', 'carretera '),
+    (r'\bsta\.\s*', 'santa '),
+]
+
+# Municipalities that may appear as suffix in street addresses
+_STREET_MUNICIPALITY_SUFFIXES = re.compile(
+    r',?\s*(?:Castellar del Vall[eè]s|Bell-Lloc d\'Urgell|Linyola|Alcoletge'
+    r'|Vilanova de la Barca|Rub[ií]|Barcelona|Lleida|Tarragona|Girona)\s*$',
+    re.IGNORECASE,
+)
+
+
+def _normalize_street_address(s: str) -> str:
+    """Normalize street address for comparison only (does not change stored data).
+
+    - Lowercase
+    - Expand abbreviations (C/ → carrer, Av. → avinguda, etc.)
+    - Strip 'nº' (keep the number)
+    - Strip 5-digit postal codes
+    - Strip trailing municipality names
+    - Collapse whitespace, strip trailing commas
+    """
+    s = s.strip().lower()
+    # Expand abbreviations
+    for pattern, replacement in _STREET_ABBREVS:
+        s = re.sub(pattern, replacement, s, flags=re.IGNORECASE)
+    # Strip 'nº' but keep the number
+    s = re.sub(r'nº\s*', '', s)
+    # Strip 5-digit postal codes
+    s = re.sub(r'\b\d{5}\b', '', s)
+    # Strip municipality suffixes
+    s = _STREET_MUNICIPALITY_SUFFIXES.sub('', s)
+    # Collapse whitespace, strip trailing commas/spaces
+    s = re.sub(r'\s+', ' ', s).strip(' ,')
+    return s
+
+
 # Map of variable keys to normalization functions applied before text comparison
 TEXT_NORMALIZERS: dict[str, callable] = {
     "radon_zone": _normalize_radon_zone,
     "seismic_ab_text": _normalize_seismic_ab,
     "dpsh_test_ids": _normalize_dpsh_test_ids,
     "municipality": _normalize_municipality,
+    "street_address": _normalize_street_address,
 }
 
 
@@ -256,6 +303,120 @@ def compare_text(benchmark: str, pipeline: str) -> str:
     return "MISMATCH"
 
 
+logger = logging.getLogger(__name__)
+
+_LLM_JUDGE_CACHE_PATH = BENCHMARKS_DIR / "_llm_judge_cache.json"
+_LLM_JUDGE_MODEL = "claude-haiku-4-5-20251001"
+
+_LLM_JUDGE_CACHE: dict[str, dict] = {}
+
+
+def _load_env() -> None:
+    """Load .env file from project root if it exists."""
+    env_path = _PROJECT_ROOT / '.env'
+    if env_path.exists():
+        for line in env_path.read_text().splitlines():
+            line = line.strip()
+            if line and not line.startswith('#') and '=' in line:
+                key, _, value = line.partition('=')
+                os.environ.setdefault(key.strip(), value.strip())
+
+
+def _load_llm_cache() -> None:
+    """Load LLM judge cache from disk."""
+    global _LLM_JUDGE_CACHE
+    if _LLM_JUDGE_CACHE_PATH.exists():
+        try:
+            _LLM_JUDGE_CACHE = json.loads(
+                _LLM_JUDGE_CACHE_PATH.read_text(encoding="utf-8")
+            )
+        except (json.JSONDecodeError, OSError):
+            _LLM_JUDGE_CACHE = {}
+
+
+def _save_llm_cache() -> None:
+    """Persist LLM judge cache to disk."""
+    _LLM_JUDGE_CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    _LLM_JUDGE_CACHE_PATH.write_text(
+        json.dumps(_LLM_JUDGE_CACHE, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+
+def _cache_key(variable_name: str, benchmark: str, pipeline: str) -> str:
+    """MD5 hash of the comparison triple."""
+    raw = f"{variable_name}|{benchmark}|{pipeline}"
+    return hashlib.md5(raw.encode("utf-8")).hexdigest()
+
+
+def compare_text_llm(
+    variable_name: str,
+    benchmark: str,
+    pipeline: str,
+    client: Any,
+) -> tuple[str, int, str]:
+    """LLM-as-judge for Tier B text. Returns (status, score_1_5, explanation)."""
+    ck = _cache_key(variable_name, benchmark, pipeline)
+    if ck in _LLM_JUDGE_CACHE:
+        cached = _LLM_JUDGE_CACHE[ck]
+        return cached["status"], cached["score"], cached["explanation"]
+
+    system_msg = (
+        "You compare geotechnical report fields written in Catalan or Spanish. "
+        "Rate semantic similarity 1-5. Respond JSON only.\n\n"
+        "Domain vocabulary (treat as synonyms):\n"
+        "- 'solar buit' = 'parcel·la buida' = 'parcela vacía' (empty building lot)\n"
+        "- 'parcel·la amb construcció' = 'parcel·la construïda' (built parcel)\n"
+        "- 'carrer' = 'calle' = 'C/' (street)\n"
+        "- 'Pb+1Pp' = ground floor + 1 upper floor = 2 floors\n\n"
+        "Scale:\n"
+        "5 = Identical or trivially different (article, capitalization, language variant)\n"
+        "4 = Same meaning, minor wording differences or singular/plural\n"
+        "3 = Mostly correct, captures the key information but misses some details\n"
+        "2 = Partially correct, gets some elements right but significant differences\n"
+        "1 = Wrong or completely different content\n\n"
+        'Response format: {"score": <int 1-5>, "explanation": "<brief reason>"}'
+    )
+    user_msg = (
+        f"Variable: {variable_name}\n"
+        f"Benchmark (Eva's text): {benchmark}\n"
+        f"Pipeline (ours): {pipeline}"
+    )
+
+    try:
+        response = client.messages.create(
+            model=_LLM_JUDGE_MODEL,
+            max_tokens=256,
+            system=system_msg,
+            messages=[{"role": "user", "content": user_msg}],
+        )
+        raw = response.content[0].text.strip()
+        # Parse JSON (handle markdown code fences)
+        if raw.startswith("```"):
+            raw = re.sub(r"^```(?:json)?\s*", "", raw)
+            raw = re.sub(r"\s*```$", "", raw)
+        parsed = json.loads(raw)
+        score = int(parsed["score"])
+        explanation = str(parsed.get("explanation", ""))
+    except Exception as exc:
+        logger.warning("LLM judge failed for %s, falling back: %s", variable_name, exc)
+        fallback = compare_text(benchmark, pipeline)
+        return fallback, 0, f"LLM fallback: {exc}"
+
+    score = max(1, min(5, score))
+    if score >= 5:
+        status = "MATCH"
+    elif score >= 3:
+        status = "CLOSE"
+    else:
+        status = "MISMATCH"
+
+    _LLM_JUDGE_CACHE[ck] = {
+        "score": score, "status": status, "explanation": explanation,
+    }
+    return status, score, explanation
+
+
 def compare_numeric(
     benchmark: float, pipeline: float, tolerance: float,
 ) -> tuple[float, str]:
@@ -311,6 +472,7 @@ def build_pipeline_lookup(pipeline_data: dict) -> dict[str, dict]:
 
 def compare_project(
     benchmark_path: Path, tolerance: float,
+    llm_judge: bool = False, client: Any | None = None,
 ) -> dict[str, Any] | None:
     """Compare one benchmark project against its pipeline data."""
     benchmark = json.loads(benchmark_path.read_text(encoding="utf-8"))
@@ -430,16 +592,28 @@ def compare_project(
                 })
 
         elif key in TEXT_KEYS:
-            # Apply normalizer if one exists for this key
-            normalizer = TEXT_NORMALIZERS.get(key)
-            if normalizer:
-                status = compare_text(
-                    normalizer(str(bench_val)),
-                    normalizer(str(pipe_val)),
+            tier = VARIABLE_TIER.get(key, "A")
+            bench_val_str = str(bench_val)
+            pipe_val_str = str(pipe_val)
+            llm_score = None
+            llm_explanation = None
+
+            if llm_judge and client and tier == "B":
+                status, llm_score, llm_explanation = compare_text_llm(
+                    key, bench_val_str, pipe_val_str, client,
                 )
             else:
-                status = compare_text(str(bench_val), str(pipe_val))
-            results.append({
+                # Apply normalizer if one exists for this key
+                normalizer = TEXT_NORMALIZERS.get(key)
+                if normalizer:
+                    status = compare_text(
+                        normalizer(bench_val_str),
+                        normalizer(pipe_val_str),
+                    )
+                else:
+                    status = compare_text(bench_val_str, pipe_val_str)
+
+            entry: dict[str, Any] = {
                 "key": key,
                 "label": label,
                 "benchmark": bench_val,
@@ -448,7 +622,11 @@ def compare_project(
                 "deviation_pct": None,
                 "status": status,
                 "type": "text",
-            })
+            }
+            if llm_score is not None:
+                entry["llm_score"] = llm_score
+                entry["llm_explanation"] = llm_explanation
+            results.append(entry)
 
     # Add tier to each result
     for r in results:
@@ -524,6 +702,12 @@ def main() -> None:
         action="store_true",
         help="Show all variables including MATCHes",
     )
+    parser.add_argument(
+        "--llm-judge",
+        action="store_true",
+        default=False,
+        help="Use Claude LLM-as-judge for Tier B text variables (requires API key)",
+    )
     args = parser.parse_args()
 
     if not BENCHMARKS_DIR.is_dir():
@@ -547,6 +731,20 @@ def main() -> None:
         print("No benchmark files found.")
         sys.exit(1)
 
+    # LLM judge setup
+    llm_client = None
+    if args.llm_judge:
+        _load_env()
+        try:
+            from anthropic import Anthropic
+            llm_client = Anthropic()
+            _load_llm_cache()
+            print("LLM judge enabled (Tier B text variables)")
+        except Exception as exc:
+            print(f"Warning: Could not initialize Anthropic client: {exc}")
+            print("Falling back to substring matching for Tier B.")
+            args.llm_judge = False
+
     print(f"=== Benchmark Comparison ===")
     print()
 
@@ -558,7 +756,10 @@ def main() -> None:
     global_total = 0
 
     for bf in benchmark_files:
-        result = compare_project(bf, args.tolerance)
+        result = compare_project(
+            bf, args.tolerance,
+            llm_judge=args.llm_judge, client=llm_client,
+        )
         if result is None:
             exp = bf.stem.replace("-benchmark", "")
             print(f"{exp}  -- no pipeline data found, skipping")
@@ -591,11 +792,24 @@ def main() -> None:
                 pipe_str = f"Ours: {var['pipeline']:<10}"
                 dev_str = f"Dev: {var['deviation_pct']:+.1f}%"
                 print(f"  {status_str} {key_str} {bench_str} {pipe_str} {dev_str}")
+            elif "llm_score" in var:
+                score = var["llm_score"]
+                explanation = var.get("llm_explanation", "")[:60]
+                bench_short = str(var["benchmark"])[:25]
+                pipe_short = str(var["pipeline"])[:25]
+                print(
+                    f"  {status_str} {key_str} Score: {score}/5  "
+                    f"\"{bench_short}\" ~ \"{pipe_short}\" -- {explanation}"
+                )
             else:
                 bench_short = str(var["benchmark"])[:30]
                 pipe_short = str(var["pipeline"])[:30]
                 print(f"  {status_str} {key_str} Eva: {bench_short:<32} Ours: {pipe_short}")
         print()
+
+    # Persist LLM cache if used
+    if args.llm_judge and _LLM_JUDGE_CACHE:
+        _save_llm_cache()
 
     # Global summary
     global_correctness = round(global_match / global_total * 100, 1) if global_total else 0.0

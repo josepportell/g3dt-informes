@@ -1155,7 +1155,7 @@ class ReportGenerator:
             from .dpsh_extractor import GeotechCorrelations
             from .cte_geomech import (
                 nspt_to_phi, nspt_to_E_kg_cm2, nspt_to_gamma_g_cm3,
-                is_rock, rock_params_default,
+                is_rock, rock_params_default, soil_type_to_cohesion,
             )
 
             soil_levels = self.report_data.soil_levels or []
@@ -1292,7 +1292,7 @@ class ReportGenerator:
                         gamma = nspt_to_gamma_g_cm3(avg_n20, level_soil_type)
                         phi = nspt_to_phi(avg_nb, level_soil_type)
                         E = nspt_to_E_kg_cm2(avg_n20)
-                        cohesion = 0.0
+                        cohesion = soil_type_to_cohesion(level_soil_type)
 
                     # N display: G3DT may write "R" (refusal) instead of numeric
                     n_display = geomech.get('N') or (str(int(avg_n20)) if avg_n20 else '')

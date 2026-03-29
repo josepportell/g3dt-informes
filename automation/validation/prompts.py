@@ -258,6 +258,7 @@ PLANOL_JSON_EXAMPLE = '''
     "source_file": "A.01.pdf",
     "project_name": "Habitatge Unifamiliar Aïllat",
     "building_type": "habitatge unifamiliar aïllat",
+    "client_name": "RAMON MITJANA S.L.",
     "street_address": "C/ Mestre Ramon Ortiz nº 12",
     "municipality": "Bell-Lloc d'Urgell",
     "promotor": "Ramon Mitjana SL",
@@ -309,15 +310,20 @@ WHERE TO FIND DATA:
   - Project name/type (e.g., "Habitatge Unifamiliar Aïllat", "Avantprojecte", "Estudi de Detall")
   - Building type / classification → "building_type": a SHORT descriptive classification of what
     is being built (e.g., "habitatge unifamiliar aïllat", "nau industrial", "vivienda unifamiliar
-    aislada", "3 habitatges unifamiliars"). Look in the project description, title block subtitle,
-    or infer from the project name. This should be the building classification, NOT the full project
-    title (e.g., NOT "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UN HABITATGE...")
+    aislada", "3 habitatges unifamiliars", "ampliació", "viviendas adosadas"). Look in the project
+    description, title block subtitle, or infer from the project name. This is NOT the study title
+    — never return "ESTUDI GEOLÒGIC...", "ESTUDI GEOTÈCNIC...", or any long study/project title here.
+    Keep it to 1-4 words describing the building type only.
   - Location: street + house/plot number (WITHOUT postal code or municipality) → "street_address"
     IMPORTANT: Always include the house or plot number (nº, num, número, s/n) if visible in the
     caixetí. E.g., "Carrer de la Miranda nº 39", NOT just "Carrer de la Miranda". The number is
     critical for accurate geocoding.
   - Municipality name (WITHOUT postal code or province) → "municipality"
-  - Promotor / Propietari: company or individual name
+  - Promotor / Propietari: company or individual name → "promotor"
+  - Client name → "client_name": Name of the client/promotor/propietari who commissioned the
+    project. Look for "A petició de:", "Client:", "Promotor:", "Propietari:" in the title block
+    (caixetí). Return the company or person name only, without titles (Sr., Sra.). May overlap
+    with "promotor" — extract both independently.
   - Architect: name and college number (nºCol.)
   - Architect company / studio: firm name (may be a logo or letterhead, e.g., "Bunyesc", "Rocar", "Graus")
   - Scale, date

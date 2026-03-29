@@ -152,12 +152,12 @@ def _generate_site_description(
 ) -> str:
     sentences: list[str] = []
 
-    # 1. Access
+    # 1. Access (matches Eva's phrasing from access_description)
     if access_direction:
         dir_cat = DIRECTION_CAT.get(access_direction, access_direction)
         sentences.append(
-            f"L'entrada a la zona d'estudi es realitza a trav\u00e9s "
-            f"del carrer existent al {dir_cat}."
+            f"El dia dels treballs de camp es realitza l'entrada "
+            f"a la zona d'estudi a trav\u00e9s del carrer existent al {dir_cat}."
         )
 
     # 2. Delimitation (from boundary enclosures)
@@ -189,21 +189,20 @@ def _generate_site_description(
         else:
             sentences.append(f"El solar es presenta {surface_txt}.")
 
-    # 4. Surroundings
-    pattern = analysis.nearby_building_pattern
-    if pattern and pattern != "none" and _confidence_ge(analysis.confidence, "medium"):
-        sentences.append(
-            "En solars propers s'observen construccions de "
-            "caracter\u00edstiques similars a l'obra projectada."
-        )
+    # 4. Surroundings (Eva's fixed boilerplate — identical in all reports)
+    sentences.append(
+        "En solars propers existeixen construccions de "
+        "caracter\u00edstiques similars a la obra projectada que "
+        "el dia dels treballs de camp no presentaven patologies "
+        "aparents a les seves parets exteriors visibles."
+    )
 
-    # 5. Subsoil
-    subsoil = analysis.subsoil_visible
-    if subsoil is False and _confidence_ge(analysis.confidence, "medium"):
-        sentences.append(
-            "No s'observen afloraments dels materials del subs\u00f2l "
-            "ni a la parcel\u00b7la ni a l'entorn proper."
-        )
+    # 5. Subsoil (Eva's fixed boilerplate — identical in all reports)
+    sentences.append(
+        "Destacar que no es poden veure aflorar els materials "
+        "que conformen el subs\u00f2l del solar ni en la "
+        "parcel\u00b7la ni en zones properes."
+    )
 
     return " ".join(sentences)
 
@@ -271,15 +270,23 @@ def _generate_location_sentence(
     else:
         loc = f"al terme municipal de {municipality}"
 
+    # Municipality preposition: "de {M}" or "d'{M}" (Catalan elision before vowel)
+    if municipality:
+        muni_lower = municipality.lower().lstrip()
+        if muni_lower[0:1] in "aeiouàèéíòóú":
+            muni_part = f"d'{municipality}"
+        else:
+            muni_part = f"de {municipality}"
+
     if building_type and municipality and street_address:
         return (
             f"L'edificaci\u00f3 que es preveu construir, consistent en "
-            f"{building_type}, es situar\u00e0 {loc}, al municipi de {municipality}."
+            f"{building_type}, es situar\u00e0 {loc} {muni_part}."
         )
     if municipality and street_address:
         return (
             f"L'edificaci\u00f3 que es preveu construir es situar\u00e0 "
-            f"{loc}, al municipi de {municipality}."
+            f"{loc} {muni_part}."
         )
     return f"L'edificaci\u00f3 que es preveu construir es situar\u00e0 {loc}."
 
