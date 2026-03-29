@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-29T15:36:49.739994+00:00",
+  "timestamp": "2026-03-29T17:01:16.839768+00:00",
   "tolerance_pct": 5,
   "projects": [
     {
@@ -32,7 +32,7 @@
           "key": "street_address",
           "label": "Adreca",
           "benchmark": "Carrer dels Arbrells, 18",
-          "pipeline": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona",
+          "pipeline": "Carrer Arbrells Nº 18A-18B-20",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -43,7 +43,7 @@
           "key": "municipality",
           "label": "Municipi",
           "benchmark": "Castellar del Vallès",
-          "pipeline": "Castellar del Vallès, Barcelona",
+          "pipeline": "Castellar del Vallès",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MATCH",
@@ -54,13 +54,13 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "benchmark": "El solar on s'emplaçarà els nous habitatges unifamiliars e situa en el Carrer dels Arbrells, 18 de Castellar del Vallès.",
-          "pipeline": "entre el Carrer Arbrells i el Carrer dels Arbrells de Castellar del Vallès, Barcelona",
+          "pipeline": "entre el Carrer Arbrells Nº 18A-18B-20 i el Carrer dels Arbrells de Castellar del Vallès",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
           "type": "text",
           "llm_score": 2,
-          "llm_explanation": "Both texts reference the same location (Castellar del Vallès) and street (Carrer dels Arbrells), but differ significantly in content. The benchmark specifies a precise address (number 18) and describes it as an empty lot (solar) for single-family homes. The pipeline output omits the address number, adds Barcelona (which may be incorrect or redundant), and ambiguously suggests the location is 'between' two street references (potentially listing the same street twice with different articles). The core location is partially preserved but key details are lost or altered.",
+          "llm_explanation": "Both texts identify the same general location (Carrer dels Arbrells in Castellar del Vallès), but differ significantly in specificity and format. Eva's text refers to a single address (Nº 18) while the pipeline output specifies a range (18A-18B-20) and mentions 'entre' (between), suggesting multiple street segments. The pipeline also adds house numbers that weren't in the original, changing the location definition. Key elements are partially aligned but the semantic meaning differs regarding which specific parcel is being referenced.",
           "tier": "B"
         },
         {
@@ -119,7 +119,7 @@
           "key": "building_type",
           "label": "Tipus edifici",
           "benchmark": "habitatges unifamiliars",
-          "pipeline": "CONSTR 3 HAB UNIF",
+          "pipeline": "habitatge unifamiliar aïllat",
           "pipeline_parsed": null,
           "deviation_pct": null,
           "status": "MISMATCH",
@@ -202,10 +202,10 @@
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
           "benchmark": 14,
-          "pipeline": "14",
-          "pipeline_parsed": 14.0,
-          "deviation_pct": 0.0,
-          "status": "MATCH",
+          "pipeline": "52",
+          "pipeline_parsed": 52.0,
+          "deviation_pct": 271.4,
+          "status": "MISMATCH",
           "type": "numeric",
           "tier": "A"
         },
@@ -246,10 +246,1400 @@
           "key": "geotech_density",
           "label": "Densitat gamma",
           "benchmark": 2.2,
+          "pipeline": "2.20",
+          "pipeline_parsed": 2.2,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "benchmark": 1.0,
+          "pipeline": "1.00",
+          "pipeline_parsed": 1.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "benchmark": 35,
+          "pipeline": "35°",
+          "pipeline_parsed": 35.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "benchmark": ">500",
+          "pipeline": "500",
+          "pipeline_parsed": 500.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "threshold_min",
+          "tier": "C"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "benchmark": 17,
+          "pipeline": "52-R",
+          "pipeline_parsed": 52.0,
+          "deviation_pct": 205.9,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "benchmark": 3.0,
+          "pipeline": "5.00",
+          "pipeline_parsed": 5.0,
+          "deviation_pct": 66.7,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "benchmark": 1.0,
+          "pipeline": "2.27",
+          "pipeline_parsed": 2.27,
+          "deviation_pct": 127.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "k30_value",
+          "label": "Coef. balast K30",
+          "benchmark": 8.0,
+          "pipeline": "8.3",
+          "pipeline_parsed": 8.3,
+          "deviation_pct": 3.8,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "C"
+        }
+      ],
+      "summary": {
+        "total": 28,
+        "match": 11,
+        "close": 3,
+        "mismatch": 14,
+        "missing": 2,
+        "correctness_pct": 39.3
+      },
+      "tier_summary": {
+        "A": {
+          "total": 16,
+          "match": 9,
+          "close": 0,
+          "mismatch": 7,
+          "correctness_pct": 56.2
+        },
+        "B": {
+          "total": 8,
+          "match": 0,
+          "close": 3,
+          "mismatch": 5,
+          "correctness_pct": 0.0
+        },
+        "C": {
+          "total": 4,
+          "match": 2,
+          "close": 0,
+          "mismatch": 2,
+          "correctness_pct": 50.0
+        }
+      }
+    },
+    {
+      "expedient": "3001631",
+      "municipality": "Rubi",
+      "variables": [
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "benchmark": "14 de novembre de 2025",
+          "pipeline": "14 de novembre de 2025",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "carrer de la Miranda nº 39, (PARC. 6-105)",
+          "pipeline": "Carrer de la Miranda nº 39",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "Rubí",
+          "pipeline": "Rubí",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "L'habitatge que es preveu construir es situarà a una parcel·la ubicada al carrer de la Miranda nº 39, (PARC. 6-105) Rubí, Barcelona.",
+          "pipeline": "entre el Carrer de la Miranda nº 39 i l'Avinguda Can Tapis de Rubí",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "Both texts describe a location in Rubí, Barcelona near Carrer de la Miranda nº 39, but with significant differences. The benchmark provides a specific property parcel (PARC. 6-105) and states it will be located AT that address. The pipeline describes a location BETWEEN two streets (Carrer de la Miranda nº 39 AND Avinguda Can Tapis), which is a different geographic specification. The pipeline omits the parcel number and Barcelona reference, and uses 'entre' (between) rather than identifying a specific parcel location. These represent partially overlapping but distinct location descriptions.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "parcel·les sense edificacions i amb vegetació de petita alçada i arbres",
+          "pipeline": "Passeig Miranda",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different content. Benchmark describes the physical characteristics of adjacent parcels (empty lots with low vegetation and trees). Pipeline provides only a street name (Passeig Miranda). These do not convey the same information at all.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "carrer de la Miranda",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different content. Benchmark describes a street (carrer de la Miranda), while pipeline describes a building lot type (parcel·la amb construcció). These are unrelated concepts - one is a location identifier, the other is a property classification.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "construccions de característiques similars",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "The benchmark describes 'constructions with similar characteristics' (a qualitative assessment of adjacent buildings), while the pipeline only states 'built parcel' (a categorical classification). Both relate to adjacent easterly properties with construction, but the benchmark provides descriptive detail about similarity of characteristics, whereas the pipeline merely categorizes the property type. Partially correct but significant difference in specificity and information content.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "construccions de característiques similars",
+          "pipeline": "Avinguda Can Tapis",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "These fields describe completely different information. The benchmark describes the characteristics of adjacent constructions (similar construction types), while the pipeline output names a specific street/avenue. They are not semantically related and address different aspects of the geotechnical report.",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "habitatge unifamiliar aïllat modular",
+          "pipeline": "habitatge unifamiliar aïllat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "benchmark": 951,
+          "pipeline": "1414",
+          "pipeline_parsed": 1414.0,
+          "deviation_pct": 48.7,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "benchmark": 212.5,
+          "pipeline": "+209.50",
+          "pipeline_parsed": 209.5,
+          "deviation_pct": -1.4,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "sense construccions i pavimentacions",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Opposite meanings. Benchmark describes absence of constructions and paving ('without constructions and pavements'), while pipeline describes human-modified/urbanized condition ('anthropized'). These are contradictory characterizations of site condition.",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer de la Miranda. El solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera baixada, de sudoest a nord-est, es troba una diferència de cota d'uns 13.20 metres, des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m. respectivament, tot i que la zona de treball es mostra totalment plana. La pendent comença la zona posterior (a la meitat del fons ). En solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles. Destacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer existent al nord. La parcel·la",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "The pipeline text is incomplete (cuts off mid-sentence at 'La parcel·la'), making full comparison impossible. However, the beginning already shows significant differences: the benchmark specifies 'carrer de la Miranda' (specific street name) while the pipeline says 'carrer existent al nord' (generic directional reference). The benchmark provides detailed topographic information, construction status, slope measurements, and subsurface observations that are entirely absent from the incomplete pipeline text. Only the initial framing about field work entry is partially aligned.",
+          "tier": "B"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer de la Miranda.",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Passeig Miranda existent al nord.",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "Both texts describe field work access to the study zone, but differ significantly in the street identifier. Benchmark specifies 'carrer de la Miranda' (Miranda Street) while pipeline states 'Passeig Miranda' (Miranda Promenade/Boulevard) with additional location detail 'al nord' (to the north). These are potentially different thoroughfares or different names for the same location - the semantic difference is material and not trivial.",
+          "tier": "B"
+        },
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "benchmark": 3,
+          "pipeline": "3",
+          "pipeline_parsed": 3.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "benchmark": "P-1,P-2,P-3",
+          "pipeline": "P-1,P-2,P-3",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "benchmark": 40,
+          "pipeline": "48",
+          "pipeline_parsed": 48.0,
+          "deviation_pct": 20.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "benchmark": 632.3,
+          "pipeline": "632.3",
+          "pipeline_parsed": 632.3,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "benchmark": "ZONA 1",
+          "pipeline": "1",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB = 0,08 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "benchmark": 2.0,
           "pipeline": "2.00",
           "pipeline_parsed": 2.0,
-          "deviation_pct": -9.1,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "benchmark": 0.05,
+          "pipeline": "0.00",
+          "pipeline_parsed": 0.0,
+          "deviation_pct": -100.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "benchmark": 39,
+          "pipeline": "38°",
+          "pipeline_parsed": 38.0,
+          "deviation_pct": -2.6,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "benchmark": 450,
+          "pipeline": "469",
+          "pipeline_parsed": 469.0,
+          "deviation_pct": 4.2,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "benchmark": 47,
+          "pipeline": "48-R",
+          "pipeline_parsed": 48.0,
+          "deviation_pct": 2.1,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "benchmark": 3.5,
+          "pipeline": "3.00",
+          "pipeline_parsed": 3.0,
+          "deviation_pct": -14.3,
           "status": "CLOSE",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "benchmark": 1.5,
+          "pipeline": "1.28",
+          "pipeline_parsed": 1.28,
+          "deviation_pct": -14.7,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "k30_value",
+          "label": "Coef. balast K30",
+          "benchmark": 6.0,
+          "pipeline": "6.3",
+          "pipeline_parsed": 6.3,
+          "deviation_pct": 5.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "C"
+        }
+      ],
+      "summary": {
+        "total": 28,
+        "match": 12,
+        "close": 4,
+        "mismatch": 12,
+        "missing": 3,
+        "correctness_pct": 42.9
+      },
+      "tier_summary": {
+        "A": {
+          "total": 16,
+          "match": 10,
+          "close": 2,
+          "mismatch": 4,
+          "correctness_pct": 62.5
+        },
+        "B": {
+          "total": 8,
+          "match": 0,
+          "close": 0,
+          "mismatch": 8,
+          "correctness_pct": 0.0
+        },
+        "C": {
+          "total": 4,
+          "match": 2,
+          "close": 2,
+          "mismatch": 0,
+          "correctness_pct": 50.0
+        }
+      }
+    },
+    {
+      "expedient": "4001607",
+      "municipality": "Linyola",
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "benchmark": "SRA. SÍLVIA EROLES BALAGUERÓ",
+          "pipeline": "BUNYESC ARQUITECCTURA EFICIENT, SLP",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "benchmark": "1 d'octubre de 2025",
+          "pipeline": "1 d'octubre de 2025",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "Carrer Clot de la Llacuna nº16",
+          "pipeline": "Carrer Clot de la Llacuna, 16, 25240 Linyola, Lleida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "Linyola",
+          "pipeline": "Linyola",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "El solar on s'emplaçarà el nou habitatge unifamiliar es situa al Carrer Clot de la Llacuna nº16 de Linyola",
+          "pipeline": "al Carrer Clot de la Llacuna de Linyola",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "llm_score": 3,
+          "llm_explanation": "Both texts refer to the same location (Carrer Clot de la Llacuna in Linyola), but the pipeline version omits the street number (nº16) and the contextual information about it being a plot for a single-family dwelling. The core location is captured correctly, but significant details are missing.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "parcel·la ocupada per un habitatge unifamiliar",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely opposite meanings. Benchmark describes an occupied parcel with a single-family dwelling ('parcel·la ocupada per un habitatge unifamiliar'), while pipeline describes an empty building lot ('parcel·la buida'). These are fundamentally different conditions.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "parcel·les buides",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "llm_score": 4,
+          "llm_explanation": "Same meaning and concept (empty building lots), minor difference in number: benchmark uses plural 'parcel·les' while pipeline uses singular 'parcel·la'. Both refer to the same domain concept with only grammatical variation.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "parcel·les buides",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "llm_score": 4,
+          "llm_explanation": "Same meaning and semantic content (empty building lots), with only a number difference: plural 'parcel·les buides' vs singular 'parcel·la buida'. Both refer to the same concept of vacant parcels to the east.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "carrer per on es realitza l'entrada",
+          "pipeline": "Carrer Clot de la Llacuna",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "Both reference a street to the west, but the benchmark describes the functional purpose ('street where the entrance is made'), while the pipeline provides a specific street name ('Clot de la Llacuna'). The pipeline is more concrete but doesn't capture the functional detail about the entrance. Partial overlap in addressing the adjacent west variable.",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "habitatge unifamiliar",
+          "pipeline": "CONSTR HABITATGE",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "benchmark": 571.0,
+          "pipeline": "571",
+          "pipeline_parsed": 571.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "benchmark": 245.0,
+          "pipeline": "+245.00",
+          "pipeline_parsed": 245.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "explanada, sense pavimentar, amb vegetació puntual de petita alçada",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different content. Benchmark describes specific site conditions: an unpaved esplanade with scattered low vegetation. Pipeline uses 'antropitzat' (anthropized/human-modified), which is a generic land use classification that doesn't capture the detailed descriptive information about the actual surface conditions, pavement status, or vegetation present.",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer adjacent situat al oest. La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada. En solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles. Destacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d'estudi ni en zones properes.",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer existent al oest. La parcel·la",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "llm_score": 3,
+          "llm_explanation": "The pipeline text starts identically to the benchmark but is incomplete (cuts off at 'La parcel·la'). The visible portion shows the same meaning with only a minor wording difference ('adjacent' vs 'existent' for the street descriptor), which are near-synonymous in this context. However, the pipeline text is truncated and missing approximately 75% of the benchmark content, including critical details about elevation differences, ground conditions, vegetation, nearby construction characteristics, and subsurface material visibility. This represents a significant loss of information despite correct initial phrasing.",
+          "tier": "B"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer adjacent situat al oest.",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Clot de la Llacuna existent al",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "llm_score": 3,
+          "llm_explanation": "Both texts describe field work access through a western street, capturing the key information. However, the pipeline version is incomplete (cuts off mid-sentence with 'existent al'), and specifies a particular street name ('Carrer Clot de la Llacuna') while the benchmark uses the generic term 'carrer adjacent situat al oest'. The pipeline provides more concrete detail but is truncated, preventing full evaluation of semantic equivalence.",
+          "tier": "B"
+        },
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "benchmark": 3,
+          "pipeline": "3",
+          "pipeline_parsed": 3.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "benchmark": "P-1,P-2,P-3",
+          "pipeline": "P-1,P-2,P-3",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "benchmark": 9,
+          "pipeline": "35",
+          "pipeline_parsed": 35.0,
+          "deviation_pct": 288.9,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "benchmark": 0.0,
+          "pipeline": "0.0",
+          "pipeline_parsed": 0.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB < 0,04 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "benchmark": 1.9,
+          "pipeline": "2.00",
+          "pipeline_parsed": 2.0,
+          "deviation_pct": 5.3,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "benchmark": 0.05,
+          "pipeline": "0.00",
+          "pipeline_parsed": 0.0,
+          "deviation_pct": -100.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "benchmark": 28.0,
+          "pipeline": "36°",
+          "pipeline_parsed": 36.0,
+          "deviation_pct": 28.6,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "benchmark": 100.0,
+          "pipeline": "469",
+          "pipeline_parsed": 469.0,
+          "deviation_pct": 369.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "benchmark": 13.0,
+          "pipeline": "35-R",
+          "pipeline_parsed": 35.0,
+          "deviation_pct": 169.2,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "benchmark": 3.0,
+          "pipeline": "1.90",
+          "pipeline_parsed": 1.9,
+          "deviation_pct": -36.7,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "benchmark": 1.0,
+          "pipeline": "1.12",
+          "pipeline_parsed": 1.12,
+          "deviation_pct": 12.0,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "C"
+        }
+      ],
+      "summary": {
+        "total": 27,
+        "match": 8,
+        "close": 7,
+        "mismatch": 12,
+        "missing": 3,
+        "correctness_pct": 29.6
+      },
+      "tier_summary": {
+        "A": {
+          "total": 16,
+          "match": 8,
+          "close": 1,
+          "mismatch": 7,
+          "correctness_pct": 50.0
+        },
+        "B": {
+          "total": 8,
+          "match": 0,
+          "close": 5,
+          "mismatch": 3,
+          "correctness_pct": 0.0
+        },
+        "C": {
+          "total": 3,
+          "match": 0,
+          "close": 1,
+          "mismatch": 2,
+          "correctness_pct": 0.0
+        }
+      }
+    },
+    {
+      "expedient": "4001612",
+      "municipality": "Bell-Lloc",
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "benchmark": "RAMON MITJANA S.L.",
+          "pipeline": "RAMON MITJANA S.L.",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "architect_name",
+          "label": "Arquitecte",
+          "benchmark": "JORDI BOSCH NOVELL",
+          "pipeline": "Jordi Bosch Novell",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "architect_company",
+          "label": "Despatx arquitecte",
+          "benchmark": "ARQUITECTURA BOSCH NOVELL",
+          "pipeline": "Arquitectura Bosch Novell",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "benchmark": "1 i 6 d'octubre de 2025",
+          "pipeline": "1 i 6 d'octubre de 2025",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz",
+          "pipeline": "Carrer Mestre Ramon Ortiz",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "Bell-Lloc d'Urgell",
+          "pipeline": "Bell-Lloc d'Urgell",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "L'edificació que es preveu construir es situarà entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell.",
+          "pipeline": "al Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "The pipeline text captures one street name correctly (Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell), but it omits the crucial locational information about the building being situated BETWEEN two streets. The benchmark specifies both boundary streets ('entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell'), while the pipeline only mentions one street. This represents a significant loss of spatial information despite partial accuracy.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "parcel·la buida",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "llm_score": 5,
+          "llm_explanation": "Identical text - both entries are exactly the same ('parcel·la buida' in Catalan).",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "Carrer Antoni Bellet",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different content. Benchmark describes a street name (Carrer Antoni Bellet), while pipeline describes a property type (empty building lot). These are unrelated geotechnical elements - one identifies an adjacent location, the other describes the subject property itself.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "Carrer Mestre Ramon Ortiz",
+          "pipeline": "Carrer Mestre Ramon Ortiz",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "llm_score": 5,
+          "llm_explanation": "Identical text. Both references name the same street with identical spelling and formatting.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different content. Benchmark describes a parcel with an isolated building up to two floors above ground level. Pipeline describes an empty building lot. These are contradictory descriptions of the western adjacent parcel.",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "habitatge unifamiliar",
+          "pipeline": "habitatge unifamiliar aïllat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "num_floors",
+          "label": "Plantes",
+          "benchmark": "Pb+1Pp",
+          "pipeline": "??",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_construida",
+          "label": "Sup. construida",
+          "benchmark": 366,
+          "pipeline": "297",
+          "pipeline_parsed": 297.0,
+          "deviation_pct": -18.9,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "benchmark": 995,
+          "pipeline": "607.5",
+          "pipeline_parsed": 607.5,
+          "deviation_pct": -38.9,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "benchmark": 199.5,
+          "pipeline": "+199.50",
+          "pipeline_parsed": 199.5,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "delimitada per tanques de parcel·les veïnes, anivellada a la rasant del carrer, sense pavimentar, amb vegetació de petita alçada",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different content. Benchmark describes specific site conditions (fenced boundaries, level with street grade, unpaved, low vegetation). Pipeline provides only a generic descriptor ('anthropized/human-modified') without the detailed characterization of the actual site state. No semantic overlap in the descriptive elements.",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través de la del Carrer existent al sud. La parcel·la, que es troba delimitada tanques de parcel·les veïnes, està anivellada a la rasant del carrer, només uns 15 cm per sota, sense pavimentar, i amb vegetació de petita alçada. En solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles. Destacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer existent al est. La parcel·la ",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "The pipeline text begins identically to the benchmark ('El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del'), but contains a critical directional error: 'carrer existent al est' (east) contradicts the benchmark's 'Carrer existent al sud' (south). Additionally, the pipeline text is incomplete—it cuts off after 'La parcel·la' without providing the detailed description of topography, vegetation, neighboring constructions, or subsurface materials that constitute the bulk of the benchmark text. Only the opening phrase is correct.",
+          "tier": "B"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través de la del Carrer existent al sud.",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Mestre Ramon Ortiz existent al",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "llm_score": 4,
+          "llm_explanation": "Both texts describe the same access method (entry to study zone via an existing street on the south side during fieldwork). The pipeline version provides additional specific detail (street name 'Mestre Ramon Ortiz') and appears truncated, but the core semantic meaning is identical. The difference is essentially additional information rather than contradictory content.",
+          "tier": "B"
+        },
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "benchmark": 2,
+          "pipeline": "2",
+          "pipeline_parsed": 2.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "benchmark": "P-1, P-2",
+          "pipeline": "P-1,P-2",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "benchmark": 21,
+          "pipeline": "70",
+          "pipeline_parsed": 70.0,
+          "deviation_pct": 233.3,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "benchmark": 89.8,
+          "pipeline": "89.8",
+          "pipeline_parsed": 89.8,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "benchmark": "ZONA 1",
+          "pipeline": "1",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB < 0,04 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "benchmark": 2.0,
+          "pipeline": "2.00",
+          "pipeline_parsed": 2.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "benchmark": 0.0,
+          "pipeline": "0.00",
+          "pipeline_parsed": 0.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "benchmark": 38,
+          "pipeline": "42°",
+          "pipeline_parsed": 42.0,
+          "deviation_pct": 10.5,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "benchmark": 650,
+          "pipeline": "1428",
+          "pipeline_parsed": 1428.0,
+          "deviation_pct": 119.7,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "benchmark": 25,
+          "pipeline": "70-R",
+          "pipeline_parsed": 70.0,
+          "deviation_pct": 180.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "benchmark": 3.0,
+          "pipeline": "2.40",
+          "pipeline_parsed": 2.4,
+          "deviation_pct": -20.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "benchmark": 1.2,
+          "pipeline": "1.12",
+          "pipeline_parsed": 1.12,
+          "deviation_pct": -6.7,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "C"
+        }
+      ],
+      "summary": {
+        "total": 32,
+        "match": 15,
+        "close": 5,
+        "mismatch": 12,
+        "missing": 0,
+        "correctness_pct": 46.9
+      },
+      "tier_summary": {
+        "A": {
+          "total": 21,
+          "match": 13,
+          "close": 3,
+          "mismatch": 5,
+          "correctness_pct": 61.9
+        },
+        "B": {
+          "total": 8,
+          "match": 2,
+          "close": 1,
+          "mismatch": 5,
+          "correctness_pct": 25.0
+        },
+        "C": {
+          "total": 3,
+          "match": 0,
+          "close": 1,
+          "mismatch": 2,
+          "correctness_pct": 0.0
+        }
+      }
+    },
+    {
+      "expedient": "4001670",
+      "municipality": "Alcoletge",
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "benchmark": "SR. ALBERT SANS BONVEHI",
+          "pipeline": "ALBERT SANS BONVEHI TEL. 675639431 - ETESNOB91@GMAIL.COM <MAILTO:ETESNOB91@GMAIL.COM>",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "benchmark": "16 de febrer de 2026",
+          "pipeline": "16 de febrer de 2026",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "Carrer Girasols nº7, Urbanització El Roser",
+          "pipeline": "Carrer Girassols nº 7",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "Alcoletge",
+          "pipeline": "Alella",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "L'ampliació que es preveu construir es situarà a una parcel·la ubicada al Carrer Girasols nº7, Urbanització El Roser d'Alcoletge.",
+          "pipeline": "al Carrer Girassols nº 7 de Alella",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different locations. Benchmark specifies Carrer Girasols nº7 in Urbanització El Roser d'Alcoletge, while pipeline states Carrer Girassols nº7 in Alella. Different street names (Girasols vs Girassols spelling), different municipalities (Alcoletge vs Alella), and missing urbanization context. Only the street number matches.",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "ampliació d'un edifici en planta baixa",
+          "pipeline": "habitatge unifamiliar",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "ocupat per una zona explanada i un edifici en planta baixa a la meitat nord",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "Both describe human modification of the site, but differ significantly in specificity. The benchmark provides concrete details (explanada/leveled area + ground floor building on north half), while 'antropitzat' (anthropized) is a generic term indicating human activity without describing what structures or modifications exist. The benchmark conveys actionable site information; the pipeline result is overly vague.",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer existent al nord. El solar està actualment ocupat per una zona explanada i un edifici en planta baixa a la meitat nord. L'ampliació d'aquest edifici es preveu realitzar a la part posterior, zona on es pot accedir sense problemes amb la maquinaria prevista. En solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles. Destacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+          "pipeline": "El terreny es presenta antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "The pipeline text is drastically different from the benchmark. The benchmark provides a detailed site description including access route (north street), current occupation (leveled area + ground floor building on north half), planned expansion location, accessibility for machinery, similar neighboring constructions without visible pathologies, and absence of visible subsurface materials. The pipeline text only provides a generic statement that the terrain is anthropized (human-modified), missing virtually all specific site information.",
+          "tier": "B"
+        },
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "benchmark": 3,
+          "pipeline": "3",
+          "pipeline_parsed": 3.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "benchmark": "P-1, P-2, P-3",
+          "pipeline": "P-1,P-3,P-2",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "benchmark": 4,
+          "pipeline": "26",
+          "pipeline_parsed": 26.0,
+          "deviation_pct": 550.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "benchmark": "Zona I",
+          "pipeline": "2",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB < 0,04 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "benchmark": 2.0,
+          "pipeline": "2.00",
+          "pipeline_parsed": 2.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
           "type": "numeric",
           "tier": "A"
         },
@@ -267,10 +1657,10 @@
         {
           "key": "geotech_phi",
           "label": "Angle friccio phi",
-          "benchmark": 35,
-          "pipeline": "30°",
-          "pipeline_parsed": 30.0,
-          "deviation_pct": -14.3,
+          "benchmark": 30,
+          "pipeline": "34°",
+          "pipeline_parsed": 34.0,
+          "deviation_pct": 13.3,
           "status": "CLOSE",
           "type": "numeric",
           "tier": "A"
@@ -278,10 +1668,10 @@
         {
           "key": "geotech_E",
           "label": "Modul deformacio E",
-          "benchmark": ">500",
+          "benchmark": ">400",
           "pipeline": "114",
           "pipeline_parsed": 114.0,
-          "deviation_pct": -77.2,
+          "deviation_pct": -71.5,
           "status": "MISMATCH",
           "type": "threshold_min",
           "tier": "C"
@@ -289,21 +1679,21 @@
         {
           "key": "geotech_nb",
           "label": "Nb",
-          "benchmark": 17,
-          "pipeline": "14",
-          "pipeline_parsed": 14.0,
-          "deviation_pct": -17.6,
+          "benchmark": "R",
+          "pipeline": "26-R",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
           "status": "MISMATCH",
-          "type": "numeric",
+          "type": "refusal",
           "tier": "A"
         },
         {
           "key": "qa_value",
           "label": "Qa capacitat portant",
-          "benchmark": 3.0,
-          "pipeline": "2.49",
-          "pipeline_parsed": 2.49,
-          "deviation_pct": -17.0,
+          "benchmark": 3.5,
+          "pipeline": "1.41",
+          "pipeline_parsed": 1.41,
+          "deviation_pct": -59.7,
           "status": "MISMATCH",
           "type": "numeric",
           "tier": "C"
@@ -318,58 +1708,481 @@
           "status": "CLOSE",
           "type": "numeric",
           "tier": "C"
-        },
-        {
-          "key": "k30_value",
-          "label": "Coef. balast K30",
-          "benchmark": 8.0,
-          "pipeline": "6.3",
-          "pipeline_parsed": 6.3,
-          "deviation_pct": -21.3,
-          "status": "MISMATCH",
-          "type": "numeric",
-          "tier": "C"
         }
       ],
       "summary": {
-        "total": 28,
-        "match": 7,
-        "close": 6,
-        "mismatch": 15,
-        "missing": 2,
-        "correctness_pct": 25.0
+        "total": 20,
+        "match": 4,
+        "close": 2,
+        "mismatch": 14,
+        "missing": 10,
+        "correctness_pct": 20.0
       },
       "tier_summary": {
         "A": {
-          "total": 16,
-          "match": 7,
-          "close": 2,
-          "mismatch": 7,
-          "correctness_pct": 43.8
+          "total": 14,
+          "match": 4,
+          "close": 1,
+          "mismatch": 9,
+          "correctness_pct": 28.6
         },
         "B": {
-          "total": 8,
+          "total": 3,
           "match": 0,
-          "close": 3,
-          "mismatch": 5,
+          "close": 0,
+          "mismatch": 3,
           "correctness_pct": 0.0
         },
         "C": {
-          "total": 4,
+          "total": 3,
           "match": 0,
           "close": 1,
-          "mismatch": 3,
+          "mismatch": 2,
+          "correctness_pct": 0.0
+        }
+      }
+    },
+    {
+      "expedient": "4001671",
+      "municipality": "Vilanova de Segria",
+      "variables": [
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "Calle STA. GEMMA nº 4, URB. LA SERRA",
+          "pipeline": "Calle Santa Gemma nº 4",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "VILANOVA DE SEGRIÀ",
+          "pipeline": "Vilanova de Segrià",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "La nueva vivienda unifamiliar proyectada se situará en la Calle STA. GEMMA nº 4, URB. LA SERRA del municipio de VILANOVA DE SEGRIÀ.",
+          "pipeline": "entre el Calle Santa Gemma nº 4 i el Carrer Santa Gemma de Vilanova de Segrià",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "llm_score": 3,
+          "llm_explanation": "Both texts identify the same location (Santa Gemma street, number 4, Vilanova de Segrià), but with notable differences: (1) Benchmark specifies 'Calle' + full abbreviation 'STA.' while pipeline uses 'Calle Santa Gemma' (expanded form); (2) Benchmark includes 'URB. LA SERRA' (urbanization name) which pipeline omits; (3) Pipeline adds 'i el Carrer' (and the street) suggesting location between two points, which isn't in benchmark; (4) Language mix in pipeline ('Calle' Spanish + 'Carrer' Catalan) vs consistent Spanish in benchmark. Core location is correct but structural and completeness differences are significant.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "parcelas de similares características a las proyectadas en el estudio",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different content. Benchmark describes 'parcels with similar characteristics to those projected in the study' (a comparative analysis), while pipeline states 'built parcel' (a property classification). These convey entirely different information about the northern adjacent property.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "parcela sin edificaciones, alguna pavimentación, vegetación herbácea de pequeña altura y algún árbol",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "Both refer to an empty/unbuilt parcel (synonymous terms), but the benchmark provides substantial descriptive details (paving, herbaceous vegetation, small trees) while the pipeline response gives only the basic classification. The pipeline captures the core concept but omits significant site-specific information.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "parcelas de similares características a las proyectadas en el estudio",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "These are completely different semantic meanings. The benchmark describes 'parcels with similar characteristics to those projected in the study' (a comparative description of parcel properties), while the pipeline output simply states 'built parcel' (a basic land use classification). They capture entirely different information about the eastern adjacent property.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "calle STA. GEMMA",
+          "pipeline": "Carrer Santa Gemma",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "llm_score": 5,
+          "llm_explanation": "Identical semantic content. 'calle' (Spanish) and 'Carrer' (Catalan) are synonymous terms for street. 'STA. GEMMA' and 'Santa Gemma' refer to the same street, with the pipeline using the full form instead of abbreviation. Language variant and formatting difference only.",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "vivienda unifamiliar aislada",
+          "pipeline": "vivienda unifamiliar",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "benchmark": 406,
+          "pipeline": "406",
+          "pipeline_parsed": 406.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "benchmark": 321.0,
+          "pipeline": "+321.50",
+          "pipeline_parsed": 321.5,
+          "deviation_pct": 0.2,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "delimitada por los muros de las parcelas contiguas, sin pavimentar, con vegetación de tamaño pequeño",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different content. Benchmark describes specific site characteristics (delimited by adjacent walls, unpaved, small vegetation). Pipeline uses only 'antropitzat' (anthropized/human-modified), which is a general classification that doesn't capture the detailed descriptive information about boundaries, paving, or vegetation provided in the benchmark text.",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la calle se encuentra sin ningún tipo de valla o muro, se encuentra expuesta directamente a la calle. La zona de entrada se encuentra y el patio, se encuentran sin pavimentar y con vegetación de tamaño pequeño. A excepción, del extremo Oeste, se encuentra una franja pavimentada y con vallado. En solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles. Destacar que no se pueden ver aflorar los materiales que conforman el subsuelo del solar ni en la parcela objeto de estudio ni en zonas cercanas.",
+          "pipeline": "El terreny es presenta antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "The benchmark text provides detailed site description including access point (west street), boundary conditions (adjoining walls), entrance conditions (no fence/wall, exposed), surface conditions (unpaved entrance and patio with small vegetation), paved strip on west end, nearby similar constructions, and subsurface visibility. The pipeline text 'El terreny es presenta antropitzat' (The terrain presents as anthropized/human-modified) is extremely vague, captures almost none of the specific descriptive details, and represents a fundamentally different level of site characterization. They address completely different aspects of the site.",
+          "tier": "B"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "benchmark": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste.",
+          "pipeline": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer Santa Gemma existent al oest.",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "llm_score": 4,
+          "llm_explanation": "Both texts describe the same essential information: field work access occurs from a street located to the west. Minor differences include: (1) language variant (Spanish vs Catalan), (2) pipeline specifies the actual street name ('Carrer Santa Gemma') while benchmark is generic ('la calle'), (3) pipeline says 'entrada a la zona d'estudi' (study area) vs benchmark's 'entrada en la parcela' (parcel entry) - both convey access but with slight scope differences. The core meaning is preserved; differences are wording choices rather than semantic divergence.",
+          "tier": "B"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "benchmark": "Zona I",
+          "pipeline": "1",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB < 0,04 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        }
+      ],
+      "summary": {
+        "total": 15,
+        "match": 6,
+        "close": 4,
+        "mismatch": 5,
+        "missing": 14,
+        "correctness_pct": 40.0
+      },
+      "tier_summary": {
+        "A": {
+          "total": 7,
+          "match": 5,
+          "close": 2,
+          "mismatch": 0,
+          "correctness_pct": 71.4
+        },
+        "B": {
+          "total": 8,
+          "match": 1,
+          "close": 2,
+          "mismatch": 5,
+          "correctness_pct": 12.5
+        },
+        "C": {
+          "total": 0,
+          "match": 0,
+          "close": 0,
+          "mismatch": 0,
+          "correctness_pct": 0.0
+        }
+      }
+    },
+    {
+      "expedient": "4001679",
+      "municipality": "Anciles",
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "benchmark": "ALBA MARIA BARRAU CASTÁN",
+          "pipeline": "MARIA ALBA BARRAU CASTÁN 616523792",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "calle Gral Ferraz nº20",
+          "pipeline": "Calle Gral Ferraz nº20",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "Anciles, Benasque",
+          "pipeline": "Arciles",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "La nueva edificación proyectada se sitúa en la calle Gral Ferraz nº20 en el municipio de Anciles, Benasque.",
+          "pipeline": "al Calle Gral Ferraz nº20 de Arciles",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "Both texts reference the same street (Gral Ferraz nº20), but significant differences exist: (1) Municipality name differs: 'Anciles, Benasque' vs 'Arciles' - appears to be a spelling error or different reference in the pipeline; (2) Pipeline omits the municipality context entirely; (3) Benchmark provides complete location hierarchy (street + municipality + region), while pipeline is incomplete; (4) 'al Calle' in pipeline is grammatically awkward (should be 'en la Calle'). The core address element is partially correct but critical location information is missing or incorrect.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "campo de conreo herbáceo",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "These refer to completely different land uses. 'Campo de conreo herbáceo' (herbaceous crop field) describes active agricultural land with vegetation, while 'parcel·la buida' (empty building lot) describes an undeveloped urban/suburban parcel. Despite both being unbuilt land, they represent fundamentally different contexts and purposes.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "edificio de hasta 4 plantas sobre rasante",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different content. Benchmark describes a building with up to 4 above-ground floors (edificio de hasta 4 plantas sobre rasante), while pipeline describes an empty building lot (parcel·la buida). These are opposite concepts - one is an existing structure, the other is vacant land.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "zona yerma con vegetación",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "llm_score": 3,
+          "llm_explanation": "Both describe an empty/vacant area to the east, but with different emphasis. 'Zona yerma con vegetación' (barren zone with vegetation) focuses on the uncultivated nature and vegetation present, while 'parcel·la buida' (empty building lot) refers to a vacant parcel without specifying vegetation. They capture the same general concept of an unbuilt area, but 'zona yerma' includes environmental detail that 'parcel·la buida' omits. Semantically related but not equivalent descriptions of the same adjacent property.",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "jardín",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "Partially correct but significant difference. 'Jardín' (garden) and 'parcel·la buida' (empty building lot) are different features. A garden is a landscaped/cultivated space, while an empty parcel is vacant land. These are related but distinct adjacent features.",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "viviendas unifamiliares adosadas",
+          "pipeline": "viviendas adosadas",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "num_floors",
+          "label": "Plantes",
+          "benchmark": "5 viviendas con Pb + 1Pp + Bc / 2 viviendas con Ss + Pb + 1Pp + Bc",
+          "pipeline": "SÓTANO, PLANTA BAJA y PLANTA 1",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "benchmark": 1655.01,
+          "pipeline": "1655",
+          "pipeline_parsed": 1655.0,
+          "deviation_pct": -0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "bastante explanada, sin pavimentaciones, con vegetación de pequeña envergadura y algún árbol puntual",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 1,
+          "llm_explanation": "Completely different semantic content. Benchmark describes a detailed site condition: fairly leveled/cleared ground, unpaved, with small vegetation and occasional trees. Pipeline only states 'antropitzat' (anthropized/human-modified), which is a generic classification without descriptive detail. These represent fundamentally different approaches to documenting site condition.",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte. El interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual. En solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles. Dada la geomorfología de la zona y su urbanización no se pueden observar en la zona ningún tipo de afloramiento de los materiales que serán atravesados por los ensayos previstos.",
+          "pipeline": "El solar es presenta sense pavimentar i amb escassa cobertura vegetal. En solars propers existeixen construccions de car",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "llm_score": 2,
+          "llm_explanation": "The pipeline text (in Catalan) captures some key elements from the benchmark (in Spanish) - both mention unpaved/unleveled ground, sparse vegetation, and nearby constructions. However, the pipeline text is incomplete (cuts off mid-sentence at 'car'), missing significant details present in the benchmark: the access route from the north, the explanada condition, the absence of visible pathologies in nearby buildings, the geomorphological context, and the observation about lack of material outcrops. The incomplete sentence and missing contextual information constitute a significant omission.",
+          "tier": "B"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "benchmark": "ZONA 2",
+          "pipeline": "2",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB = 0.05 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        }
+      ],
+      "summary": {
+        "total": 15,
+        "match": 3,
+        "close": 1,
+        "mismatch": 11,
+        "missing": 15,
+        "correctness_pct": 20.0
+      },
+      "tier_summary": {
+        "A": {
+          "total": 8,
+          "match": 3,
+          "close": 0,
+          "mismatch": 5,
+          "correctness_pct": 37.5
+        },
+        "B": {
+          "total": 7,
+          "match": 0,
+          "close": 1,
+          "mismatch": 6,
+          "correctness_pct": 0.0
+        },
+        "C": {
+          "total": 0,
+          "match": 0,
+          "close": 0,
+          "mismatch": 0,
           "correctness_pct": 0.0
         }
       }
     }
   ],
   "global_summary": {
-    "total_vars": 28,
-    "match": 7,
-    "close": 6,
-    "mismatch": 15,
-    "missing": 2,
-    "correctness_pct": 25.0
+    "total_vars": 165,
+    "match": 59,
+    "close": 26,
+    "mismatch": 80,
+    "missing": 47,
+    "correctness_pct": 35.8
   }
 }

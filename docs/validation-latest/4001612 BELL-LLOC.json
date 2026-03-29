@@ -59,7 +59,7 @@
           "key": "street_address",
           "label": "Adreca",
           "filled": true,
-          "value": "Carrer Antoni Bellet, Bell-Lloc d'Urgell"
+          "value": "Carrer Mestre Ramon Ortiz"
         },
         {
           "key": "municipality",
@@ -71,7 +71,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell"
+          "value": "al Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell"
         },
         {
           "key": "adjacent_north",
@@ -109,25 +109,25 @@
           "key": "building_type",
           "label": "Tipus edifici",
           "filled": true,
-          "value": "Habitatge aïllat"
+          "value": "habitatge unifamiliar aïllat"
         },
         {
           "key": "num_floors",
           "label": "Plantes",
           "filled": true,
-          "value": "Pb+1Pp"
+          "value": "??"
         },
         {
           "key": "superficie_construida",
           "label": "Sup. construida",
           "filled": true,
-          "value": "366"
+          "value": "297"
         },
         {
           "key": "superficie_parcela",
           "label": "Sup. parcela",
           "filled": true,
-          "value": "598.0"
+          "value": "607.5"
         },
         {
           "key": "cota_referencia",
@@ -177,7 +177,7 @@
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
           "filled": true,
-          "value": "55"
+          "value": "70"
         },
         {
           "key": "dpsh_tests",
@@ -243,7 +243,7 @@
           "key": "materials_level_1",
           "label": "Materials nivell 1",
           "filled": true,
-          "value": "El nivell 1 està format per graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clars. tram tota"
+          "value": "El nivell 1 està format per llims argilosos amb graves cohesives de coloració marrònosia, de coloracions clars a marró c"
         }
       ]
     },
@@ -269,31 +269,31 @@
           "key": "geotech_phi",
           "label": "Angle friccio phi",
           "filled": true,
-          "value": "40°"
+          "value": "42°"
         },
         {
           "key": "geotech_E",
           "label": "Modul deformacio E",
           "filled": true,
-          "value": "469"
+          "value": "1428"
         },
         {
           "key": "geotech_nb",
           "label": "Nb",
           "filled": true,
-          "value": "55-R"
+          "value": "70-R"
         },
         {
           "key": "soil_level_rows",
           "label": "Taula nivells sol",
           "filled": true,
-          "value": "[1 items]"
+          "value": "[2 items]"
         },
         {
           "key": "perm_rows",
           "label": "Taula permeabilitat",
           "filled": true,
-          "value": "[1 items]"
+          "value": "[2 items]"
         }
       ]
     },
@@ -319,12 +319,12 @@
           "key": "k30_value",
           "label": "Coef. balast K30",
           "filled": true,
-          "value": "6.3"
+          "value": "19.0"
         }
       ]
     }
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 34432
+  "elapsed_ms": 68256
 }

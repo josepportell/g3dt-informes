@@ -1,8 +1,8 @@
 {
   "overall": {
-    "filled": 33,
+    "filled": 20,
     "total": 40,
-    "pct": 82.5
+    "pct": 50.0
   },
   "categories": [
     {
@@ -59,7 +59,7 @@
           "key": "street_address",
           "label": "Adreca",
           "filled": true,
-          "value": "Calle Santa Gemma nº4"
+          "value": "Calle Santa Gemma nº 4"
         },
         {
           "key": "municipality",
@@ -71,7 +71,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Calle Santa Gemma nº4 i el Carrer Santa Gemma de Vilanova de Segrià"
+          "value": "entre el Calle Santa Gemma nº 4 i el Carrer Santa Gemma de Vilanova de Segrià"
         },
         {
           "key": "adjacent_north",
@@ -157,33 +157,33 @@
     },
     {
       "name": "Camp DPSH",
-      "filled": 4,
+      "filled": 0,
       "total": 4,
-      "pct": 100.0,
+      "pct": 0.0,
       "variables": [
         {
           "key": "num_dpsh_tests",
           "label": "Num. assaigs DPSH",
-          "filled": true,
-          "value": "3"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "dpsh_test_ids",
           "label": "IDs assaigs",
-          "filled": true,
-          "value": "P-1,P-2,P-3"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
-          "filled": true,
-          "value": "28"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "dpsh_tests",
           "label": "Taula DPSH",
-          "filled": true,
-          "value": "[3 items]"
+          "filled": false,
+          "value": "[0 items]"
         }
       ]
     },
@@ -236,50 +236,50 @@
           "key": "materials_level_1",
           "label": "Materials nivell 1",
           "filled": true,
-          "value": "El nivell 1 està format per nivell principal, de coloracions clars a marró clar. Aquests materials presenten característ"
+          "value": "[PENDENT: Descripcio del nivell 1]\n\nRequereix plantilla de zona per a descriure la litologia, color, consistencia i cara"
         }
       ]
     },
     {
       "name": "Geotecnia",
-      "filled": 7,
+      "filled": 1,
       "total": 7,
-      "pct": 100.0,
+      "pct": 14.3,
       "variables": [
         {
           "key": "geotech_density",
           "label": "Densitat gamma",
-          "filled": true,
-          "value": "2.00"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "geotech_cohesion",
           "label": "Cohesio c",
-          "filled": true,
-          "value": "0.00"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "geotech_phi",
           "label": "Angle friccio phi",
-          "filled": true,
-          "value": "34°"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "geotech_E",
           "label": "Modul deformacio E",
-          "filled": true,
-          "value": "114"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "geotech_nb",
           "label": "Nb",
-          "filled": true,
-          "value": "28-R"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "soil_level_rows",
           "label": "Taula nivells sol",
-          "filled": true,
+          "filled": false,
           "value": "[1 items]"
         },
         {
@@ -292,32 +292,32 @@
     },
     {
       "name": "Calculs",
-      "filled": 3,
+      "filled": 0,
       "total": 3,
-      "pct": 100.0,
+      "pct": 0.0,
       "variables": [
         {
           "key": "qa_value",
           "label": "Qa capacitat portant",
-          "filled": true,
-          "value": "1.51"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "settlement",
           "label": "Assentament",
-          "filled": true,
-          "value": "1.11"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "k30_value",
           "label": "Coef. balast K30",
-          "filled": true,
-          "value": "1.5"
+          "filled": false,
+          "value": ""
         }
       ]
     }
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 34148
+  "elapsed_ms": 35082
 }

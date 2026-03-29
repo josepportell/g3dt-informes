@@ -33,7 +33,7 @@
           "key": "architect_company",
           "label": "Despatx arquitecte",
           "filled": true,
-          "value": "WOOD COMFORT PROMOCIONS SLU"
+          "value": "G3"
         },
         {
           "key": "data_camp_text",
@@ -59,19 +59,19 @@
           "key": "street_address",
           "label": "Adreca",
           "filled": true,
-          "value": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona"
+          "value": "Carrer Arbrells Nº 18A-18B-20"
         },
         {
           "key": "municipality",
           "label": "Municipi",
           "filled": true,
-          "value": "Castellar del Vallès, Barcelona"
+          "value": "Castellar del Vallès"
         },
         {
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer Arbrells i el Carrer dels Arbrells de Castellar del Vallès, Barcelona"
+          "value": "entre el Carrer Arbrells Nº 18A-18B-20 i el Carrer dels Arbrells de Castellar del Vallès"
         },
         {
           "key": "adjacent_north",
@@ -109,7 +109,7 @@
           "key": "building_type",
           "label": "Tipus edifici",
           "filled": true,
-          "value": "CONSTR 3 HAB UNIF"
+          "value": "habitatge unifamiliar aïllat"
         },
         {
           "key": "num_floors",
@@ -133,7 +133,7 @@
           "key": "cota_referencia",
           "label": "Cota referencia",
           "filled": true,
-          "value": "+569.50"
+          "value": "+570.90"
         },
         {
           "key": "site_condition",
@@ -177,7 +177,7 @@
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
           "filled": true,
-          "value": "14"
+          "value": "52"
         },
         {
           "key": "dpsh_tests",
@@ -243,7 +243,7 @@
           "key": "materials_level_1",
           "label": "Materials nivell 1",
           "filled": true,
-          "value": "El nivell 1 està format per capa superficial - material no especificat, de coloracions marrons a vermelloses. Aquests ma"
+          "value": "El nivell 1 està format per terra vegetal. llims argilosos de color marró fosc amb graves i algunes arrels., de coloraci"
         }
       ]
     },
@@ -257,31 +257,31 @@
           "key": "geotech_density",
           "label": "Densitat gamma",
           "filled": true,
-          "value": "2.00"
+          "value": "2.20"
         },
         {
           "key": "geotech_cohesion",
           "label": "Cohesio c",
           "filled": true,
-          "value": "0.00"
+          "value": "1.00"
         },
         {
           "key": "geotech_phi",
           "label": "Angle friccio phi",
           "filled": true,
-          "value": "30°"
+          "value": "35°"
         },
         {
           "key": "geotech_E",
           "label": "Modul deformacio E",
           "filled": true,
-          "value": "114"
+          "value": "500"
         },
         {
           "key": "geotech_nb",
           "label": "Nb",
           "filled": true,
-          "value": "14"
+          "value": "52-R"
         },
         {
           "key": "soil_level_rows",
@@ -307,24 +307,24 @@
           "key": "qa_value",
           "label": "Qa capacitat portant",
           "filled": true,
-          "value": "2.49"
+          "value": "5.00"
         },
         {
           "key": "settlement",
           "label": "Assentament",
           "filled": true,
-          "value": "1.12"
+          "value": "2.27"
         },
         {
           "key": "k30_value",
           "label": "Coef. balast K30",
           "filled": true,
-          "value": "6.3"
+          "value": "8.3"
         }
       ]
     }
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 17989
+  "elapsed_ms": 75238
 }

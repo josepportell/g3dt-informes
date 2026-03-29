@@ -1,27 +1,27 @@
 {
   "overall": {
-    "filled": 0,
-    "total": 40,
-    "pct": 0.0
+    "filled": 21,
+    "total": 41,
+    "pct": 51.2
   },
   "categories": [
     {
       "name": "Identificacio",
-      "filled": 0,
+      "filled": 3,
       "total": 6,
-      "pct": 0.0,
+      "pct": 50.0,
       "variables": [
         {
           "key": "client",
           "label": "Client / Promotor",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "MARIA ALBA BARRAU CASTÁN 616523792"
         },
         {
           "key": "expedient",
           "label": "Expedient",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "4001679"
         },
         {
           "key": "architect_name",
@@ -44,78 +44,78 @@
         {
           "key": "data_signatura_text",
           "label": "Data signatura",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "29 de març de 2026"
         }
       ]
     },
     {
       "name": "Ubicacio",
-      "filled": 0,
+      "filled": 7,
       "total": 7,
-      "pct": 0.0,
+      "pct": 100.0,
       "variables": [
         {
           "key": "street_address",
           "label": "Adreca",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "Calle Gral Ferraz nº20"
         },
         {
           "key": "municipality",
           "label": "Municipi",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "Arciles"
         },
         {
           "key": "location_sentence",
           "label": "Frase ubicacio",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "al Calle Gral Ferraz nº20 de Arciles"
         },
         {
           "key": "adjacent_north",
           "label": "Limita nord",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "parcel·la buida"
         },
         {
           "key": "adjacent_south",
           "label": "Limita sud",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "parcel·la buida"
         },
         {
           "key": "adjacent_east",
           "label": "Limita est",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "parcel·la buida"
         },
         {
           "key": "adjacent_west",
           "label": "Limita oest",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "parcel·la buida"
         }
       ]
     },
     {
       "name": "Edificacio",
-      "filled": 0,
+      "filled": 5,
       "total": 8,
-      "pct": 0.0,
+      "pct": 62.5,
       "variables": [
         {
           "key": "building_type",
           "label": "Tipus edifici",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "viviendas adosadas"
         },
         {
           "key": "num_floors",
           "label": "Plantes",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "SÓTANO, PLANTA BAJA y PLANTA 1"
         },
         {
           "key": "superficie_construida",
@@ -126,8 +126,8 @@
         {
           "key": "superficie_parcela",
           "label": "Sup. parcela",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "1655"
         },
         {
           "key": "cota_referencia",
@@ -138,14 +138,14 @@
         {
           "key": "site_condition",
           "label": "Estat terreny",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "antropitzat"
         },
         {
           "key": "site_description",
           "label": "Descripcio solar",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "El solar es presenta sense pavimentar i amb escassa cobertura vegetal. En solars propers existeixen construccions de car"
         },
         {
           "key": "access_description",
@@ -183,16 +183,23 @@
           "key": "dpsh_tests",
           "label": "Taula DPSH",
           "filled": false,
-          "value": ""
+          "value": "[0 items]"
         }
       ]
     },
     {
       "name": "Camp Sondeig",
-      "filled": 0,
-      "total": 0,
-      "pct": 0,
-      "variables": []
+      "filled": 1,
+      "total": 1,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "sondeig_tests",
+          "label": "Taula sondeig",
+          "filled": true,
+          "value": "[1 items]"
+        }
+      ]
     },
     {
       "name": "Camp Lab",
@@ -210,41 +217,41 @@
     },
     {
       "name": "Geologia",
-      "filled": 0,
+      "filled": 4,
       "total": 4,
-      "pct": 0.0,
+      "pct": 100.0,
       "variables": [
         {
           "key": "geology_paragraphs",
           "label": "Paragrafs geologia",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "[6 items]"
         },
         {
           "key": "radon_zone",
           "label": "Zona rado",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "2"
         },
         {
           "key": "seismic_ab_text",
           "label": "Coeficient sismic ab",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "0,04"
         },
         {
           "key": "materials_level_1",
           "label": "Materials nivell 1",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "[PENDENT: Descripcio del nivell 1]\n\nRequereix plantilla de zona per a descriure la litologia, color, consistencia i cara"
         }
       ]
     },
     {
       "name": "Geotecnia",
-      "filled": 0,
+      "filled": 1,
       "total": 7,
-      "pct": 0.0,
+      "pct": 14.3,
       "variables": [
         {
           "key": "geotech_density",
@@ -280,13 +287,13 @@
           "key": "soil_level_rows",
           "label": "Taula nivells sol",
           "filled": false,
-          "value": ""
+          "value": "[1 items]"
         },
         {
           "key": "perm_rows",
           "label": "Taula permeabilitat",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "[1 items]"
         }
       ]
     },
@@ -317,9 +324,10 @@
       ]
     }
   ],
-  "errors": [
-    "Error building report data: 'NoneType' object has no attribute 'lower'"
+  "errors": [],
+  "warnings": [
+    "Could not auto-fill cota_referencia from ICGC MDT: Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; ",
+    "Could not calculate slope from ICGC MDT: Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; "
   ],
-  "warnings": [],
-  "elapsed_ms": 101071
+  "elapsed_ms": 99934
 }

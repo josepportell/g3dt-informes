@@ -9,32 +9,38 @@
     "reference_report": {
       "path": "3001631_informe.doc",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "gtl_report": {
       "path": "4703-GTL-25 Rubí.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "photos_dir": {
       "path": "FOTOGRAFIES",
       "confidence": "high",
-      "detection": "directory_name"
+      "detection": "directory_name",
+      "vision_type": null
     },
     "lab_order": {
       "path": "comanda laboratori_3001631_RUBI.xls",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "correlation_section": {
       "path": "tall.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "dpsh_excel": {
       "path": "ANNEXES/3001631_DPSH.xls",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "situation_plan": {
       "path": "PDF/ANNEXES/3001631_plànol de situació.pdf",
@@ -45,14 +51,11 @@
     "lab_results_pdf": {
       "path": "PDF/ANNEXES/LAB-SIG.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     }
   },
   "ignored": [
-    {
-      "path": "25.0794/",
-      "reason": "numeric_dir"
-    },
     {
       "path": "3001631_PORTADA_25.doc",
       "reason": "cover_doc"
@@ -60,14 +63,6 @@
     {
       "path": "3001631_generated.docx",
       "reason": "our_output"
-    },
-    {
-      "path": "3001631_informe.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "3001631_test_gamma_fix.docx",
-      "reason": "legacy_word"
     },
     {
       "path": "3001631_test_validation.docx",
@@ -84,10 +79,6 @@
     {
       "path": "Thumbs.db",
       "reason": "temp_file"
-    },
-    {
-      "path": "user_data.json",
-      "reason": "our_output"
     },
     {
       "path": "validation/",
@@ -126,10 +117,12 @@
       "reason": "exported_annex_pdf"
     }
   ],
-  "unassigned": [],
+  "unassigned": [
+    "25.0794"
+  ],
   "_metadata": {
-    "scanned_at": "2026-03-04T15:24:23.941231+00:00",
+    "scanned_at": "2026-03-29T16:32:59.605065+00:00",
     "confirmed_by_user": false,
-    "scanner_version": "2.1"
+    "scanner_version": "2.2"
   }
 }

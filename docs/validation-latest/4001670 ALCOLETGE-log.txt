@@ -1,3 +1,18 @@
-2026-03-29 16:43:02,980 automation.auto_extractor WARNING FileMiner: REJECTED G3 internal address for street_address: 'C/ Vallbona, 22'
-2026-03-29 16:43:12,643 automation.cadastre_adjacents WARNING No edge found for north, using centroid fallback
-2026-03-29 16:43:23,382 automation.cadastre_adjacents WARNING Could not exit parcel after 8 probes in direction (0, 1)
+2026-03-29 18:36:33,562 automation.auto_extractor WARNING FileMiner: REJECTED G3 internal address for street_address: 'C/ Vallbona, 22'
+2026-03-29 18:36:38,394 automation.geocode_coordinates WARNING LLM street picker: response 'GIRASSOLS' not in street list, ignoring
+2026-03-29 18:36:38,395 automation.geocode_coordinates WARNING Progressive cadastre: street 'Girassols' not found in ALELLA
+2026-03-29 18:36:41,134 automation.geocode_coordinates WARNING LLM street picker: response 'CARRER GIRASSOLS' not in street list, ignoring
+2026-03-29 18:36:41,134 automation.geocode_coordinates WARNING Progressive cadastre: street 'Girassols' not found in ALELLA
+2026-03-29 18:36:44,755 automation.geocode_coordinates WARNING LLM street picker: response 'CARRER GIRASSOLS' not in street list, ignoring
+2026-03-29 18:36:44,756 automation.geocode_coordinates WARNING Progressive cadastre: street 'Girassols' not found in ALELLA
+2026-03-29 18:36:48,917 automation.geocode_coordinates WARNING LLM street picker: response 'CARRER GIRASSOLS' not in street list, ignoring
+2026-03-29 18:36:48,918 automation.geocode_coordinates WARNING Progressive cadastre: street 'Girassols' not found in ALELLA
+2026-03-29 18:36:49,592 automation.geocode_coordinates WARNING Progressive cadastre: municipality 'Alella' not found in  or neighbors
+2026-03-29 18:36:57,135 automation.geocode_coordinates WARNING Nominatim returned no results for: Carrer Girassols 7, Alella, Catalunya, Spain
+2026-03-29 18:36:57,135 automation.geocode_coordinates WARNING Geocoding failed for 'Carrer Girassols nº 7, Alella'
+2026-03-29 18:36:57,852 automation.geocode_coordinates WARNING Progressive cadastre: municipality 'Alella' not found in  or neighbors
+2026-03-29 18:37:01,964 automation.geocode_coordinates WARNING Nominatim returned no results for: Carrer Girassols, Alella, Catalunya, Spain
+2026-03-29 18:37:01,965 automation.geocode_coordinates WARNING Geocoding failed for 'Carrer Girassols, Alella'
+2026-03-29 18:37:02,640 automation.geocode_coordinates WARNING Progressive cadastre: municipality 'Alella' not found in  or neighbors
+2026-03-29 18:37:08,968 automation.geocode_coordinates WARNING Nominatim returned no results for: Girassols, Alella, Catalunya, Spain
+2026-03-29 18:37:08,968 automation.geocode_coordinates WARNING Geocoding failed for 'Girassols, Alella'

@@ -1,270 +1,140 @@
 {
   "dpsh_tests": [
     {
-      "test_id": "P1",
-      "cota_inicio": -4.0,
+      "test_id": "P-1",
       "readings": [
         {
           "depth_m": 0.2,
-          "n20": 7,
-          "confidence": 0.85,
-          "note": "value partially unclear",
-          "torque": null,
-          "water_indicator": false
+          "n20": 6,
+          "confidence": 1.0
         },
         {
           "depth_m": 0.4,
-          "n20": 6,
-          "confidence": 0.9,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
+          "n20": 15,
+          "confidence": 1.0
         },
         {
           "depth_m": 0.6,
           "n20": 10,
-          "confidence": 0.9,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
+          "confidence": 1.0
         },
         {
           "depth_m": 0.8,
           "n20": 13,
-          "confidence": 0.9,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
+          "confidence": 1.0
         },
         {
           "depth_m": 1.0,
           "n20": 38,
-          "confidence": 0.9,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
+          "confidence": 1.0
         },
         {
           "depth_m": 1.2,
           "n20": 100,
           "confidence": 1.0,
-          "note": "refusal value",
-          "torque": null,
-          "water_indicator": false
-        },
-        {
-          "depth_m": 1.4,
-          "n20": 100,
-          "confidence": 1.0,
-          "note": "refusal confirmed - R:1.08 noted",
-          "torque": 1.08,
-          "water_indicator": false
+          "note": "R 1.20"
         }
       ],
-      "refusal_depth_m": 1.4,
+      "refusal_depth_m": 1.2,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
-      "correction_factor": null,
-      "carencia_colpeig_mesura1": 15,
-      "carencia_colpeig_mesura2": null,
-      "extraction_notes": "Refusal R:1.08 recorded at approximately -1.40m from cota inicio of -4.0m. Column header shows N.F. Par col."
+      "correction_factor": 0.83
     },
     {
-      "test_id": "P2",
-      "cota_inicio": -4.2,
+      "test_id": "P-2",
       "readings": [
         {
-          "depth_m": 0.2,
-          "n20": 7,
-          "confidence": 0.8,
-          "note": "value partially unclear",
-          "torque": null,
-          "water_indicator": false
-        },
-        {
           "depth_m": 0.4,
-          "n20": 6,
-          "confidence": 0.85,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
-        },
-        {
-          "depth_m": 0.6,
-          "n20": 10,
-          "confidence": 0.85,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
-        },
-        {
-          "depth_m": 0.8,
-          "n20": 100,
-          "confidence": 1.0,
-          "note": "refusal value; torque R:0.48 noted",
-          "torque": 0.48,
-          "water_indicator": false
-        }
-      ],
-      "refusal_depth_m": 0.8,
-      "refusal_detected": true,
-      "water_detected": false,
-      "water_depth_m": null,
-      "correction_factor": null,
-      "carencia_colpeig_mesura1": 15,
-      "carencia_colpeig_mesura2": null,
-      "extraction_notes": "Refusal R:0.48 recorded at approximately -0.80m from cota inicio of -4.2m. N20=15 at 0.40m is uncertain - value may be 15 or 6, confidence reduced."
-    },
-    {
-      "test_id": "P3",
-      "cota_inicio": -4.0,
-      "readings": [
-        {
-          "depth_m": 0.2,
-          "n20": 16,
-          "confidence": 0.85,
-          "note": "value partially unclear",
-          "torque": null,
-          "water_indicator": false
-        },
-        {
-          "depth_m": 0.4,
-          "n20": 46,
-          "confidence": 0.85,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
+          "n20": 15,
+          "confidence": 1.0
         },
         {
           "depth_m": 0.6,
           "n20": 100,
           "confidence": 1.0,
-          "note": "refusal value; torque R:0.76 noted",
-          "torque": 0.76,
-          "water_indicator": false
+          "note": "R 0.60"
         }
       ],
       "refusal_depth_m": 0.6,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
-      "correction_factor": null,
-      "carencia_colpeig_mesura1": 15,
-      "carencia_colpeig_mesura2": null,
-      "extraction_notes": "Refusal R:0.76 recorded at approximately -0.60m from cota inicio of -4.0m. Only 3 readings before refusal."
+      "correction_factor": 0.83
     },
     {
-      "test_id": "P4",
-      "cota_inicio": -4.0,
+      "test_id": "P-3",
       "readings": [
         {
-          "depth_m": 0.2,
-          "n20": 1,
-          "confidence": 0.85,
-          "note": "small value, possibly 1",
-          "torque": null,
-          "water_indicator": false
+          "depth_m": 0.4,
+          "n20": 16,
+          "confidence": 1.0
         },
+        {
+          "depth_m": 0.6,
+          "n20": 46,
+          "confidence": 1.0
+        },
+        {
+          "depth_m": 0.8,
+          "n20": 100,
+          "confidence": 1.0,
+          "note": "R 0.80"
+        }
+      ],
+      "refusal_depth_m": 0.8,
+      "refusal_detected": true,
+      "water_detected": false,
+      "water_depth_m": null,
+      "correction_factor": 0.83
+    },
+    {
+      "test_id": "P-4",
+      "readings": [
         {
           "depth_m": 0.4,
           "n20": 8,
-          "confidence": 0.9,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
+          "confidence": 1.0
         },
         {
           "depth_m": 0.6,
           "n20": 8,
-          "confidence": 0.9,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
+          "confidence": 1.0
         },
         {
           "depth_m": 0.8,
           "n20": 12,
-          "confidence": 0.9,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
+          "confidence": 1.0
         },
         {
           "depth_m": 1.0,
           "n20": 27,
-          "confidence": 0.85,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
+          "confidence": 1.0
         },
         {
           "depth_m": 1.2,
           "n20": 21,
-          "confidence": 0.85,
-          "note": "value uncertain, could be 21 or 27",
-          "torque": null,
-          "water_indicator": false
+          "confidence": 1.0
         },
         {
           "depth_m": 1.4,
           "n20": 28,
-          "confidence": 0.85,
-          "note": null,
-          "torque": null,
-          "water_indicator": false
+          "confidence": 1.0
         },
         {
           "depth_m": 1.6,
           "n20": 100,
           "confidence": 1.0,
-          "note": "refusal value; R:1.55 noted",
-          "torque": 1.55,
-          "water_indicator": false
+          "note": "R 1.60"
         }
       ],
       "refusal_depth_m": 1.6,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
-      "correction_factor": null,
-      "carencia_colpeig_mesura1": 15,
-      "carencia_colpeig_mesura2": null,
-      "extraction_notes": "This test appears on the second field sheet (Fitxa 01, page 2) labeled PL (likely P4). Refusal R:1.55 recorded at approximately -1.60m from cota inicio of -4.0m."
+      "correction_factor": 0.83
     }
   ],
-  "project_info": {
-    "company": "TPS - Prospecció del Subsòl",
-    "date": "24-10-2025",
-    "address": "C/ Arbrells",
-    "town": "Castellar del Vallès",
-    "client_company": "G3",
-    "client_responsible": "Eva",
-    "operator": "Daniel Fernandez",
-    "equipment": "ML76A",
-    "document_type": "Full de Camp Penetròmetre Dinàmic",
-    "total_penetrometers": 4,
-    "total_ml_penetration": "20.00 ml (as per albara sheet - 5 minims)",
-    "spt_assays": "No",
-    "reference_point": "C/ Arbrells"
-  },
-  "rotation_boring_info": {
-    "equipment": "ML76A",
-    "sondista": "Daniel Fernandez",
-    "date_start": "24-10-2025",
-    "date_end": "24-10-2025",
-    "ml_perforacio_sols_0_20m": 0.5,
-    "ml_perforacio_roca_dura_formigo_0_20m": 0.7,
-    "assaigs_spt": "No",
-    "sondeig_id": "S-1",
-    "tipus_sonda": "ML76A",
-    "nivel_freatico": "C/ Arbrells - 4m (approximately)",
-    "extraction_notes": "Rotation boring albarà and field sheet also present. Depth intervals: 0m to 0.50m soils, 0m to 0.70m rock/concrete. Field sheet shows coronas HM W6, water loss noted approx. 0.4-1.20m range."
-  },
-  "overall_confidence": 0.82,
-  "extraction_notes": "Four DPSH tests extracted from two field sheets (P1, P2, P3 on sheet 1; P4/PL on sheet 2). All tests show early refusal between 0.6m and 1.6m below cota inicio (which is at approximately -4.0m to -4.2m). Torque measurements recorded at refusal points. Some values in P1 column slightly uncertain due to handwriting overlap. P4 depth values 1.00m and 1.20m have reduced confidence due to similar digit shapes (27 vs 21). An additional rotation boring (S-1) was performed at the same site per the separate albarà and field sheet.",
-  "source_file": "PENETROS + SONDEIG.pdf",
-  "extraction_date": "2026-03-04T19:54:26.202994",
-  "extraction_method": "claude_vision",
-  "status": "pending_review"
+  "spt_in_dpsh": null,
+  "overall_confidence": 1.0
 }

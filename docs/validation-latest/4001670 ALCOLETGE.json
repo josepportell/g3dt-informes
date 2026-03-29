@@ -1,8 +1,8 @@
 {
   "overall": {
-    "filled": 35,
+    "filled": 30,
     "total": 40,
-    "pct": 87.5
+    "pct": 75.0
   },
   "categories": [
     {
@@ -15,7 +15,7 @@
           "key": "client",
           "label": "Client / Promotor",
           "filled": true,
-          "value": "ALBERT SANS BONVEHI"
+          "value": "ALBERT SANS BONVEHI TEL. 675639431 - ETESNOB91@GMAIL.COM <MAILTO:ETESNOB91@GMAIL.COM>"
         },
         {
           "key": "expedient",
@@ -27,13 +27,13 @@
           "key": "architect_name",
           "label": "Arquitecte",
           "filled": true,
-          "value": "DAVID GRAUS ROBINAT, ARQUITECTE TÈCNIC COL·LEGIAT Nº 699"
+          "value": "David Graus Robinet"
         },
         {
           "key": "architect_company",
           "label": "Despatx arquitecte",
           "filled": true,
-          "value": "GRAUS"
+          "value": "2 Graus Arquitectes Tècnics"
         },
         {
           "key": "data_camp_text",
@@ -51,65 +51,65 @@
     },
     {
       "name": "Ubicacio",
-      "filled": 7,
+      "filled": 3,
       "total": 7,
-      "pct": 100.0,
+      "pct": 42.9,
       "variables": [
         {
           "key": "street_address",
           "label": "Adreca",
           "filled": true,
-          "value": "CARRER GIRASOLS, Nº7"
+          "value": "Carrer Girassols nº 7"
         },
         {
           "key": "municipality",
           "label": "Municipi",
           "filled": true,
-          "value": "ALCOLETGE"
+          "value": "Alella"
         },
         {
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "al CARRER GIRASOLS de ALCOLETGE"
+          "value": "al Carrer Girassols nº 7 de Alella"
         },
         {
           "key": "adjacent_north",
           "label": "Limita nord",
-          "filled": true,
-          "value": "desconegut"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "adjacent_south",
           "label": "Limita sud",
-          "filled": true,
-          "value": "parcel·la amb construcció"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "adjacent_east",
           "label": "Limita est",
-          "filled": true,
-          "value": "parcel·la amb construcció"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "adjacent_west",
           "label": "Limita oest",
-          "filled": true,
-          "value": "parcel·la buida"
+          "filled": false,
+          "value": ""
         }
       ]
     },
     {
       "name": "Edificacio",
-      "filled": 4,
+      "filled": 3,
       "total": 8,
-      "pct": 50.0,
+      "pct": 37.5,
       "variables": [
         {
           "key": "building_type",
           "label": "Tipus edifici",
           "filled": true,
-          "value": "PROJECTE DE TANCAMENT DE PORXO EN HABITATGE UNIFAMILIAR"
+          "value": "habitatge unifamiliar"
         },
         {
           "key": "num_floors",
@@ -132,8 +132,8 @@
         {
           "key": "cota_referencia",
           "label": "Cota referencia",
-          "filled": true,
-          "value": "+188.50"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "site_condition",
@@ -145,7 +145,7 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "La parcel·la es troba delimitada per vorada, tanques metàl·liques. El solar es presenta sense pavimentar i amb vegetació"
+          "value": "El terreny es presenta antropitzat"
         },
         {
           "key": "access_description",
@@ -218,13 +218,13 @@
           "key": "geology_paragraphs",
           "label": "Paragrafs geologia",
           "filled": true,
-          "value": "[10 items]"
+          "value": "[9 items]"
         },
         {
           "key": "radon_zone",
           "label": "Zona rado",
           "filled": true,
-          "value": "1"
+          "value": "2"
         },
         {
           "key": "seismic_ab_text",
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 38673
+  "elapsed_ms": 47870
 }

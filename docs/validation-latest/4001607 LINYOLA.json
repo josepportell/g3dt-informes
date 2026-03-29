@@ -59,7 +59,7 @@
           "key": "street_address",
           "label": "Adreca",
           "filled": true,
-          "value": "Carrer Clot de la Liacuna nº16"
+          "value": "Carrer Clot de la Llacuna, 16, 25240 Linyola, Lleida"
         },
         {
           "key": "municipality",
@@ -71,7 +71,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer Clot de la Liacuna nº16 i el Carrer Clot de la Llacuna de Linyola"
+          "value": "al Carrer Clot de la Llacuna de Linyola"
         },
         {
           "key": "adjacent_north",
@@ -109,7 +109,7 @@
           "key": "building_type",
           "label": "Tipus edifici",
           "filled": true,
-          "value": "habitatge unifamiliar aïllat"
+          "value": "CONSTR HABITATGE"
         },
         {
           "key": "num_floors",
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 46274
+  "elapsed_ms": 46702
 }

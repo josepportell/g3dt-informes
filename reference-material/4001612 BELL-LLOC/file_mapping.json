@@ -81,10 +81,6 @@
   },
   "ignored": [
     {
-      "path": "25.0647/",
-      "reason": "numeric_dir"
-    },
-    {
       "path": "4001612_AUDIT_VISUAL.docx",
       "reason": "legacy_word"
     },
@@ -97,10 +93,6 @@
       "reason": "our_output"
     },
     {
-      "path": "4001612_informe.docx",
-      "reason": "legacy_word"
-    },
-    {
       "path": "4001612_informe_DETALLAT (Reparado).doc",
       "reason": "detailed_doc"
     },
@@ -110,22 +102,6 @@
     },
     {
       "path": "4001612_test_fase2.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "4001612_test_gamma_fix.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "4001612_test_google_sat.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "4001612_test_google_sat2.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "4001612_test_ortho.docx",
       "reason": "legacy_word"
     },
     {
@@ -147,14 +123,6 @@
     {
       "path": "Thumbs.db",
       "reason": "temp_file"
-    },
-    {
-      "path": "file_mapping.json",
-      "reason": "our_output"
-    },
-    {
-      "path": "user_data.json",
-      "reason": "our_output"
     },
     {
       "path": "validation/",
@@ -202,10 +170,11 @@
     }
   ],
   "unassigned": [
+    "25.0647",
     "PDF/ANNEXES/4001612_plànol de situació.pdf"
   ],
   "_metadata": {
-    "scanned_at": "2026-03-13T19:27:56.877889+00:00",
+    "scanned_at": "2026-03-29T16:34:59.118192+00:00",
     "confirmed_by_user": false,
     "scanner_version": "2.2"
   }

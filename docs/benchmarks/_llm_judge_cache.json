@@ -238,5 +238,70 @@
     "score": 2,
     "status": "MISMATCH",
     "explanation": "The pipeline text is incomplete (cuts off at 'La parcel·la'), making proper comparison impossible. What is present shows minor differences: 'carrer existent' vs 'carrer adjacent' (slightly different descriptors), and switches from 'solar' to 'parcel·la' (synonymous terms). However, the text is truncated and missing ~80% of the benchmark content, including critical details about topography, slope, work platform elevation, nearby constructions, and subsurface conditions. Cannot assess full semantic equivalence due to incompleteness."
+  },
+  "2067c81ba2fbbcf97eea3a13d9b086c3": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both texts identify the same general location (Carrer dels Arbrells in Castellar del Vallès), but differ significantly in specificity and format. Eva's text refers to a single address (Nº 18) while the pipeline output specifies a range (18A-18B-20) and mentions 'entre' (between), suggesting multiple street segments. The pipeline also adds house numbers that weren't in the original, changing the location definition. Key elements are partially aligned but the semantic meaning differs regarding which specific parcel is being referenced."
+  },
+  "f4b1efc08a57a246de598188520c5a6c": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both texts refer to the same location (Carrer Clot de la Llacuna in Linyola), but the pipeline version omits the street number (nº16) and the contextual information about it being a plot for a single-family dwelling. The core location is captured correctly, but significant details are missing."
+  },
+  "6be7017659462e62c042da278bd06769": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text captures one street name correctly (Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell), but it omits the crucial locational information about the building being situated BETWEEN two streets. The benchmark specifies both boundary streets ('entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell'), while the pipeline only mentions one street. This represents a significant loss of spatial information despite partial accuracy."
+  },
+  "f3833ed7d50fc42a7e866ee2c8933da3": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different locations. Benchmark specifies Carrer Girasols nº7 in Urbanització El Roser d'Alcoletge, while pipeline states Carrer Girassols nº7 in Alella. Different street names (Girasols vs Girassols spelling), different municipalities (Alcoletge vs Alella), and missing urbanization context. Only the street number matches."
+  },
+  "4d90134d103bd80a6f2db1478b9e3949": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text is drastically different from the benchmark. The benchmark provides a detailed site description including access route (north street), current occupation (leveled area + ground floor building on north half), planned expansion location, accessibility for machinery, similar neighboring constructions without visible pathologies, and absence of visible subsurface materials. The pipeline text only provides a generic statement that the terrain is anthropized (human-modified), missing virtually all specific site information."
+  },
+  "4c82c9f2b67047c6339bbb2adc4555e1": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both texts identify the same location (Santa Gemma street, number 4, Vilanova de Segrià), but with notable differences: (1) Benchmark specifies 'Calle' + full abbreviation 'STA.' while pipeline uses 'Calle Santa Gemma' (expanded form); (2) Benchmark includes 'URB. LA SERRA' (urbanization name) which pipeline omits; (3) Pipeline adds 'i el Carrer' (and the street) suggesting location between two points, which isn't in benchmark; (4) Language mix in pipeline ('Calle' Spanish + 'Carrer' Catalan) vs consistent Spanish in benchmark. Core location is correct but structural and completeness differences are significant."
+  },
+  "3fa810922eac5f96b085ded7314077fd": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both texts reference the same street (Gral Ferraz nº20), but significant differences exist: (1) Municipality name differs: 'Anciles, Benasque' vs 'Arciles' - appears to be a spelling error or different reference in the pipeline; (2) Pipeline omits the municipality context entirely; (3) Benchmark provides complete location hierarchy (street + municipality + region), while pipeline is incomplete; (4) 'al Calle' in pipeline is grammatically awkward (should be 'en la Calle'). The core address element is partially correct but critical location information is missing or incorrect."
+  },
+  "ea823c9092e6cc026ac0a27cd17707a1": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "These refer to completely different land uses. 'Campo de conreo herbáceo' (herbaceous crop field) describes active agricultural land with vegetation, while 'parcel·la buida' (empty building lot) describes an undeveloped urban/suburban parcel. Despite both being unbuilt land, they represent fundamentally different contexts and purposes."
+  },
+  "85f0a82389911feef7b58f48a272b1c5": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different content. Benchmark describes a building with up to 4 above-ground floors (edificio de hasta 4 plantas sobre rasante), while pipeline describes an empty building lot (parcel·la buida). These are opposite concepts - one is an existing structure, the other is vacant land."
+  },
+  "0855cd1be1a2654f49af24bf992c0b8b": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both describe an empty/vacant area to the east, but with different emphasis. 'Zona yerma con vegetación' (barren zone with vegetation) focuses on the uncultivated nature and vegetation present, while 'parcel·la buida' (empty building lot) refers to a vacant parcel without specifying vegetation. They capture the same general concept of an unbuilt area, but 'zona yerma' includes environmental detail that 'parcel·la buida' omits. Semantically related but not equivalent descriptions of the same adjacent property."
+  },
+  "42a59b48fe005496da6e3897bd919cc6": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Partially correct but significant difference. 'Jardín' (garden) and 'parcel·la buida' (empty building lot) are different features. A garden is a landscaped/cultivated space, while an empty parcel is vacant land. These are related but distinct adjacent features."
+  },
+  "b6eb36bb6ad1db4a686b6b7bc921cebf": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different semantic content. Benchmark describes a detailed site condition: fairly leveled/cleared ground, unpaved, with small vegetation and occasional trees. Pipeline only states 'antropitzat' (anthropized/human-modified), which is a generic classification without descriptive detail. These represent fundamentally different approaches to documenting site condition."
+  },
+  "02f5714de8a40ccff5f0b3866ebfabcb": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text (in Catalan) captures some key elements from the benchmark (in Spanish) - both mention unpaved/unleveled ground, sparse vegetation, and nearby constructions. However, the pipeline text is incomplete (cuts off mid-sentence at 'car'), missing significant details present in the benchmark: the access route from the north, the explanada condition, the absence of visible pathologies in nearby buildings, the geomorphological context, and the observation about lack of material outcrops. The incomplete sentence and missing contextual information constitute a significant omission."
   }
 }

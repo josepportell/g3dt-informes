@@ -1,21 +1,21 @@
 {
   "overall": {
-    "filled": 39,
+    "filled": 36,
     "total": 40,
-    "pct": 97.5
+    "pct": 90.0
   },
   "categories": [
     {
       "name": "Identificacio",
-      "filled": 5,
+      "filled": 4,
       "total": 6,
-      "pct": 83.3,
+      "pct": 66.7,
       "variables": [
         {
           "key": "client",
           "label": "Client / Promotor",
-          "filled": true,
-          "value": "SRA. JOANA MARTINEZ"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "expedient",
@@ -33,7 +33,7 @@
           "key": "architect_company",
           "label": "Despatx arquitecte",
           "filled": true,
-          "value": "Viviendas Modulares"
+          "value": "JOANA MARTINEZ"
         },
         {
           "key": "data_camp_text",
@@ -101,27 +101,27 @@
     },
     {
       "name": "Edificacio",
-      "filled": 8,
+      "filled": 6,
       "total": 8,
-      "pct": 100.0,
+      "pct": 75.0,
       "variables": [
         {
           "key": "building_type",
           "label": "Tipus edifici",
           "filled": true,
-          "value": "Habitatge aïllat"
+          "value": "habitatge unifamiliar aïllat"
         },
         {
           "key": "num_floors",
           "label": "Plantes",
-          "filled": true,
-          "value": "Pb+porxo"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "superficie_construida",
           "label": "Sup. construida",
-          "filled": true,
-          "value": "70+20"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "superficie_parcela",
@@ -300,13 +300,13 @@
           "key": "qa_value",
           "label": "Qa capacitat portant",
           "filled": true,
-          "value": "2.58"
+          "value": "3.00"
         },
         {
           "key": "settlement",
           "label": "Assentament",
           "filled": true,
-          "value": "1.13"
+          "value": "1.28"
         },
         {
           "key": "k30_value",
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 45758
+  "elapsed_ms": 57941
 }

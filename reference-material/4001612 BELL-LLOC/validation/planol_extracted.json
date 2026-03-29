@@ -1,36 +1,49 @@
 {
-  "source_file": "A.01.pdf",
-  "extraction_date": "2026-03-16T12:00:00",
-  "extraction_method": "claude_vision",
-  "status": "pending_review",
   "architect_data": {
     "source_file": "A.01.pdf",
-    "project_name": "Habitatge Unifamiliar Aïllat",
-    "street_address": "C/ Mestre Ramon Ortiz",
+    "project_name": "HABITATGE UNIFAMILIAR AILLAT",
+    "building_type": "habitatge unifamiliar aïllat",
+    "client_name": "RAMON MITJANA S.L.",
+    "street_address": "Carrer Mestre Ramon Ortiz",
     "municipality": "Bell-Lloc d'Urgell",
     "promotor": "Ramon Mitjana SL",
     "architect": "Jordi Bosch Novell",
-    "architect_company": null,
+    "architect_company": "Arquitectura Bosch Novell",
     "dimensions": {
-      "parcel_area_m2": {"pdf_value": 598.0, "confidence": 0.95},
-      "building_footprint_m2": {"pdf_value": 296.88, "confidence": 0.90},
-      "floor_surfaces": [
-        {"floor": "PB", "area_m2": 297.0, "confidence": 0.90},
-        {"floor": "PP", "area_m2": 100.0, "confidence": 0.85}
-      ],
-      "num_floors": {"pdf_value": "PB+PP", "confidence": 1.0},
-      "max_height_m": {"pdf_value": 8.38, "confidence": 0.85},
-      "plot_length_m": {"pdf_value": 24.57, "confidence": 0.90},
-      "plot_width_m": {"pdf_value": 24.72, "confidence": 0.90}
+      "parcel_area_m2": {
+        "pdf_value": 607.5,
+        "confidence": 0.95
+      },
+      "building_footprint_m2": {
+        "pdf_value": 296.8,
+        "confidence": 0.9
+      },
+      "floor_surfaces": [],
+      "num_floors": {
+        "pdf_value": "??",
+        "confidence": 0.0
+      },
+      "max_height_m": {
+        "pdf_value": 6.5,
+        "confidence": 0.85
+      },
+      "plot_length_m": {
+        "pdf_value": 24.72,
+        "confidence": 0.9
+      },
+      "plot_width_m": {
+        "pdf_value": 24.57,
+        "confidence": 0.9
+      }
     }
   },
   "floor_plan_bbox": {
     "top_pct": 0.0,
     "left_pct": 0.0,
-    "bottom_pct": 71.0,
+    "bottom_pct": 80.0,
     "right_pct": 60.0,
-    "confidence": 0.90
+    "confidence": 0.9
   },
-  "overall_confidence": 0.90,
-  "extraction_notes": "Caixetí clear, dimensions from site plan. Floor plan bbox excludes cadastre maps, aerial views, justificació table, and title block."
+  "overall_confidence": 0.9,
+  "extraction_notes": "Caixetí clear, dimensions from site plan and building footprint"
 }

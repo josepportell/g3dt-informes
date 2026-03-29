@@ -3,17 +3,20 @@
     "reference_report": {
       "path": "4001607_informe.doc",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "gtl_report": {
       "path": "4672-GTL-25 Linyola.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "photos_dir": {
       "path": "FOTOGRAFIES",
       "confidence": "high",
-      "detection": "directory_name"
+      "detection": "directory_name",
+      "vision_type": null
     },
     "dpsh_field_sheet": {
       "path": "PENETROS.pdf",
@@ -24,7 +27,8 @@
     "lab_order": {
       "path": "comanda laboratori_4001607_LINYOLA.xls",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "situation_plan": {
       "path": "pl situ.pdf",
@@ -35,39 +39,26 @@
     "correlation_section": {
       "path": "tall.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "dpsh_excel": {
       "path": "ANNEXES/4001607_DPSH.xls",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "lab_results_pdf": {
       "path": "PDF/ANNEXES/lab-sig.pdf",
       "confidence": "high",
-      "detection": "filename_pattern"
+      "detection": "filename_pattern",
+      "vision_type": null
     }
   },
   "ignored": [
     {
-      "path": "25.0616/",
-      "reason": "numeric_dir"
-    },
-    {
       "path": "4001607_PORTADA_25.doc",
       "reason": "cover_doc"
-    },
-    {
-      "path": "4001607_generated.docx",
-      "reason": "our_output"
-    },
-    {
-      "path": "4001607_informe.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "4001607_test_gamma_fix.docx",
-      "reason": "legacy_word"
     },
     {
       "path": "4001607_test_validation.docx",
@@ -98,10 +89,6 @@
       "reason": "temp_file"
     },
     {
-      "path": "user_data.json",
-      "reason": "our_output"
-    },
-    {
       "path": "validation/",
       "reason": "output_dir"
     },
@@ -130,21 +117,19 @@
       "reason": "exported_annex_pdf"
     },
     {
-      "path": "PDF/ANNEXES/4001607_plànol de situació.pdf",
-      "reason": "exported_annex_pdf"
-    },
-    {
       "path": "PDF/ANNEXES/4001607_tall de correlació.pdf",
       "reason": "exported_annex_pdf"
     }
   ],
   "unassigned": [
+    "25.0616",
     "Punts de Sondeig_Silvia_Jaume (1).pdf",
-    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf"
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf"
   ],
   "_metadata": {
-    "scanned_at": "2026-03-03T16:06:51.979794+00:00",
+    "scanned_at": "2026-03-29T16:34:02.500620+00:00",
     "confirmed_by_user": false,
-    "scanner_version": "2.1"
+    "scanner_version": "2.2"
   }
 }
