@@ -427,6 +427,21 @@ def build_report_data(
     geomech = user_data.get('geomech_params', {})
     if dpsh_data and dpsh_data.tests:
         sondeig_layers = user_data.get('sondeig_layers', [])
+        # Auto-fill from sondeig_extracted.json when user_data has no layers
+        # (defense-in-depth: report_generator also does this, but
+        # build_report_data may be called independently e.g. from audit)
+        if not sondeig_layers and project_path:
+            try:
+                from .vision_normalizer import load_sondeig_json
+                sondeig_json = Path(project_path) / 'validation' / 'sondeig_extracted.json'
+                if sondeig_json.exists():
+                    sdata = load_sondeig_json(sondeig_json)
+                    tests = sdata.get('sondeig_tests', [])
+                    if tests and tests[0].get('layers'):
+                        sondeig_layers = tests[0]['layers']
+                        logger.info("Auto-filled sondeig_layers from sondeig_extracted.json in build_report_data")
+            except Exception:
+                pass
         avg_n20 = _bearing_stratum_n20(dpsh_data, sondeig_layers)
         # Convert N20 → Nb (Borrows) for all correlations.
         # DPSH has more energy than Borrows; dividing by 0.83 corrects

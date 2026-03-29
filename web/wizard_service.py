@@ -284,6 +284,20 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
             }
 
 
+def _clear_stale_user_data(project_path: Path) -> None:
+    """Back up stale user_data.json before a fresh pipeline run.
+
+    Prevents outdated fields (e.g. soil_types, num_soil_levels) from a
+    previous run from overriding correct auto-extracted values.  The
+    backup is kept as _user_data_prev.json for safety.
+    """
+    user_data_path = project_path / 'user_data.json'
+    if user_data_path.exists():
+        backup_path = project_path / '_user_data_prev.json'
+        user_data_path.rename(backup_path)
+        logger.info("Backed up stale user_data.json -> _user_data_prev.json")
+
+
 def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str, Any]:
     """Run auto_extract + vision + wizard prefill chain for a project.
 
@@ -294,6 +308,7 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
         return _prefill_cache[project_name]
 
     project_path = _resolve_project(project_name)
+    _clear_stale_user_data(project_path)
 
     # Phase 0-3: auto_extract (DPSH, lab, ICGC, cadastre — Python only, ~3-5s)
     from automation.auto_extractor import auto_extract
@@ -410,6 +425,7 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
 def get_prefills_streaming(project_name: str):
     """Generator yielding SSE events during auto_extract, then final prefills."""
     project_path = _resolve_project(project_name)
+    _clear_stale_user_data(project_path)
 
     event_queue: queue.Queue = queue.Queue()
     auto_result_holder: list = []
