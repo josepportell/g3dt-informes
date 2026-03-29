@@ -298,6 +298,161 @@ def _clear_stale_user_data(project_path: Path) -> None:
         logger.info("Backed up stale user_data.json -> _user_data_prev.json")
 
 
+def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any) -> None:
+    """Add geotech params + calc transparency notes to wizard prefills.
+
+    Replicates the computation from ReportGenerator.build_context_preview()
+    so the wizard can display geomech values and Tier C calc notes without
+    running the full report pipeline.
+
+    Skips any key where merged already has source="user" (Eva's edits win).
+    """
+    from automation.cte_geomech import (
+        nspt_to_phi, nspt_to_E_kg_cm2, nspt_to_gamma_g_cm3,
+        is_rock, rock_params_default, soil_type_to_cohesion,
+    )
+    from automation.report_generator import _TYPICAL_RANGES
+    from automation.terzaghi_calculator import TerzaghiCalculator, FootingShape
+
+    dpsh = auto_result.dpsh_data if hasattr(auto_result, 'dpsh_data') else None
+    if not dpsh:
+        return
+    avg_n20 = getattr(dpsh, 'overall_average_n20', None)
+    if not avg_n20 or avg_n20 <= 0:
+        return
+
+    nb = avg_n20 / 0.83
+
+    # Determine deepest-level soil type from merged prefills
+    num_levels = 1
+    nle = merged.get('num_geological_levels') or merged.get('num_soil_levels')
+    if nle:
+        nle_val = nle['value'] if isinstance(nle, dict) else nle
+        try:
+            num_levels = int(nle_val)
+        except (ValueError, TypeError):
+            pass
+
+    soil_type_key = f'soil_type_level_{num_levels}'
+    st_entry = merged.get(soil_type_key) or merged.get('soil_type_level_1')
+    soil_type = (st_entry['value'] if isinstance(st_entry, dict) else st_entry) if st_entry else 'granular'
+    if not soil_type:
+        soil_type = 'granular'
+    soil_type = soil_type.lower()
+
+    # Get deepest-level description for rock detection
+    desc_key = f'sondeig_layer_desc_{num_levels}'
+    desc_entry = merged.get(desc_key, merged.get('sondeig_layer_desc_1'))
+    description = (desc_entry['value'] if isinstance(desc_entry, dict) else (desc_entry or '')) if desc_entry else ''
+
+    # Compute geomech params (same logic as report_generator)
+    if is_rock(avg_n20, description):
+        rock = rock_params_default()
+        gamma, phi, E, cohesion = rock['gamma'], rock['phi'], rock['E'], rock['cohesion']
+    else:
+        gamma = nspt_to_gamma_g_cm3(avg_n20, soil_type)
+        phi = nspt_to_phi(nb, soil_type)
+        E = nspt_to_E_kg_cm2(avg_n20)
+        cohesion = soil_type_to_cohesion(soil_type)
+
+    is_granular = cohesion < 0.5
+    soil_cat = 'rock' if cohesion >= 0.5 else ('cohesive' if soil_type == 'cohesive' else 'granular')
+    ranges = _TYPICAL_RANGES.get(soil_cat, _TYPICAL_RANGES['granular'])
+
+    def _set(key: str, value: Any, source: str) -> None:
+        """Set merged[key] only if not already a user edit."""
+        existing = merged.get(key)
+        if isinstance(existing, dict) and existing.get('source') == 'user':
+            return
+        merged[key] = {'value': value, 'source': source}
+
+    # Geomech prefills (populate expert override fields)
+    _set('geomech_gamma', gamma, f'CTE D.27 ({soil_type})')
+    _set('geomech_cohesion', cohesion, f'soil_type={soil_type}')
+    _set('geomech_phi', round(phi, 1), f'Schmertmann Nb={nb:.0f}')
+    _set('geomech_E', round(E), f'CTE D.23 N20={avg_n20:.0f}')
+
+    # Calc transparency notes
+    n20_src = f"N20={avg_n20:.0f}"
+    _set('_calc_gamma', f"CTE D.27 {soil_type} | Rang Eva: {ranges['gamma']}", 'system')
+    _set('_calc_phi', f"Schmertmann Nb={nb:.0f} | Rang Eva: {ranges['phi']}", 'system')
+    _set('_calc_E', f"CTE D.23 {n20_src} | Rang Eva: {ranges['E']}", 'system')
+    _set('_calc_cohesion', f"Rang Eva: {ranges['c']}", 'system')
+
+    # Run Terzaghi for Qa + settlement
+    try:
+        B_entry = merged.get('footing_width_m')
+        B = float((B_entry['value'] if isinstance(B_entry, dict) else B_entry) or 1.0)
+        if B <= 0:
+            B = 1.0
+        Df_entry = merged.get('foundation_depth_m')
+        Df = float((Df_entry['value'] if isinstance(Df_entry, dict) else Df_entry) or 0.8)
+        if Df <= 0:
+            Df = 0.8
+
+        # Check for wizard Es override
+        Es_entry = merged.get('Es_settlement')
+        Es_override = None
+        if Es_entry:
+            es_val = Es_entry['value'] if isinstance(Es_entry, dict) else Es_entry
+            if es_val:
+                try:
+                    Es_override = float(es_val)
+                except (ValueError, TypeError):
+                    pass
+
+        calc = TerzaghiCalculator(phi=phi, cohesion=cohesion, gamma=gamma)
+        tr = calc.calculate_qa(
+            B=B, Df=Df, shape=FootingShape.SQUARE,
+            nspt=avg_n20, is_granular=is_granular,
+            E=E, Es_override=Es_override,
+        )
+
+        _set('qa_value', f"{tr.Qa:.2f}", 'Terzaghi-Peck')
+        if tr.settlement_cm is not None:
+            _set('settlement', f"{tr.settlement_cm:.2f}", 'Schmertmann')
+
+        # K30 ballast coefficient
+        if cohesion and cohesion > 0:
+            k30 = E / 60
+            k30_formula = f"E/60 = {E:.0f}/60 (roca, c={cohesion})"
+        else:
+            k30 = E / 75
+            k30_formula = f"E/75 = {E:.0f}/75 (granular)"
+        _set('k30_value', f"{k30:.1f}", 'Winkler')
+        _set('_calc_k30', k30_formula, 'system')
+
+        # Qa transparency
+        if nb:
+            formula = f"Nb/12={nb:.0f}/12={nb/12:.2f}"
+            if tr.Fw is not None:
+                formula += f" / Fw={tr.Fw:.2f}"
+            if tr.Fd_tp is not None:
+                formula += f" x Fd={tr.Fd_tp:.2f}"
+            if tr.Qa_uncapped is not None:
+                _set('_calc_qa', f"{formula} = {tr.Qa_uncapped:.2f} | Cap: {tr.Qa:.2f} ({ranges['Qa_cap']})", 'system')
+            else:
+                _set('_calc_qa', f"{formula} = {tr.Qa:.2f} | Rang Eva: {ranges['Qa_cap']}", 'system')
+
+        # Settlement transparency with sensitivity
+        if tr.settlement_cm and tr.Es_used:
+            Es = tr.Es_used
+            base = tr.settlement_cm
+            Es_low = Es * 0.75
+            Es_high = Es * 1.25
+            s_low = base * Es / Es_high
+            s_high = base * Es / Es_low
+            _set('_calc_settlement',
+                 f"Schmertmann Es={Es:.0f}, B={B}m \u2192 {base:.2f} cm"
+                 f" | Si Es={Es_low:.0f}: {s_high:.2f} cm"
+                 f" | Si Es={Es_high:.0f}: {s_low:.2f} cm",
+                 'system')
+            _set('_calc_Es', f"Es={Es:.0f} (2.5\u00d7Nb) | \u00b125%: {Es_low:.0f}-{Es_high:.0f}", 'system')
+
+    except Exception as exc:
+        logger.warning("Geotech prefill calc failed: %s", exc)
+
+
 def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str, Any]:
     """Run auto_extract + vision + wizard prefill chain for a project.
 
@@ -416,6 +571,9 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
     # Generate template prefills (access/site description) AFTER merge,
     # because they depend on adjacents data from auto_extract.
     _generate_template_prefills_from_merged(merged)
+
+    # Compute geotech params + calc transparency notes for wizard display
+    _compute_geotech_prefills(merged, project_path, auto_result)
 
     _prefill_cache[project_name] = merged
     _auto_result_cache[project_name] = auto_result
