@@ -1,18 +1,23 @@
-2026-03-29 10:00:50,691 automation.geocode_coordinates WARNING Progressive cadastre: street 'Vallbona' not found in RUBI
-2026-03-29 10:00:52,518 automation.geocode_coordinates WARNING Nominatim returned no results for: C/ Vallbona, 22, Rubí, Barcelona, Spain
-2026-03-29 10:00:52,519 automation.geocode_coordinates WARNING Geocoding failed for 'C/ Vallbona, 22, Rubí'
-2026-03-29 10:00:58,438 automation.geocode_coordinates WARNING Progressive cadastre: street 'Vallbona' not found in RUBI
-2026-03-29 10:00:59,446 automation.geocode_coordinates WARNING Nominatim returned no results for: C/ Vallbona, Rubí, Barcelona, Spain
-2026-03-29 10:00:59,446 automation.geocode_coordinates WARNING Geocoding failed for 'C/ Vallbona, Rubí'
-2026-03-29 10:01:02,656 automation.geocode_coordinates WARNING Progressive cadastre: street 'Vallbona' not found in RUBI
-2026-03-29 10:01:03,668 automation.geocode_coordinates WARNING Nominatim returned no results for: Vallbona, Rubí, Barcelona, Spain
-2026-03-29 10:01:03,668 automation.geocode_coordinates WARNING Geocoding failed for 'Vallbona, Rubí'
-2026-03-29 10:01:06,274 automation.geocode_coordinates WARNING Progressive cadastre: street 'Vallbona' not found in RUBI
-2026-03-29 10:01:08,005 automation.geocode_coordinates WARNING Nominatim returned no results for: C/ Vallbona, 22, Rubí, Barcelona, Spain
-2026-03-29 10:01:08,005 automation.geocode_coordinates WARNING Geocoding failed for 'C/ Vallbona, 22, Rubí'
-2026-03-29 10:01:10,479 automation.geocode_coordinates WARNING Progressive cadastre: street 'Vallbona' not found in RUBI
-2026-03-29 10:01:11,558 automation.geocode_coordinates WARNING Nominatim returned no results for: C/ Vallbona, Rubí, Barcelona, Spain
-2026-03-29 10:01:11,558 automation.geocode_coordinates WARNING Geocoding failed for 'C/ Vallbona, Rubí'
-2026-03-29 10:01:14,291 automation.geocode_coordinates WARNING Progressive cadastre: street 'Vallbona' not found in RUBI
-2026-03-29 10:01:15,392 automation.geocode_coordinates WARNING Nominatim returned no results for: Vallbona, Rubí, Barcelona, Spain
-2026-03-29 10:01:15,392 automation.geocode_coordinates WARNING Geocoding failed for 'Vallbona, Rubí'
+2026-03-29 13:02:27,539 automation.auto_extractor WARNING FileMiner: REJECTED G3 internal address for street_address: 'C/ Vallbona, 22'
+2026-03-29 13:02:53,128 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 1/3)
+2026-03-29 13:03:02,102 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 2/3)
+2026-03-29 13:03:16,585 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 3/3)
+2026-03-29 13:03:19,483 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 1/3)
+2026-03-29 13:03:24,520 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 2/3)
+2026-03-29 13:03:29,535 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 3/3)
+2026-03-29 13:03:43,646 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 1/3)
+2026-03-29 13:03:56,821 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 2/3)
+2026-03-29 13:04:14,135 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 3/3)
+2026-03-29 13:04:16,831 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 1/3)
+2026-03-29 13:04:21,938 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 2/3)
+2026-03-29 13:04:33,735 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 3/3)
+2026-03-29 13:04:36,599 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 1/3)
+2026-03-29 13:04:53,802 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 2/3)
+2026-03-29 13:05:05,600 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 3/3)

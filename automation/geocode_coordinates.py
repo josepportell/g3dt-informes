@@ -318,10 +318,13 @@ def _consulta_municipio(province: str, municipality_hint: str) -> tuple[str, str
         Tuple of (official_name, cp, cm) or None if not found.
         cp = INE province code, cm = INE municipality code.
     """
+    # Strip accents before API call — Cadastre rejects accented chars
+    # (e.g. "Castellar del Vallès" → no results, "Castellar del Valles" → OK)
+    hint_clean = _strip_accents(municipality_hint)
     url = (
         f"{CADASTRE_CALLEJERO_URL}/ConsultaMunicipio"
-        f"?Provincia={urllib.parse.quote(province)}"
-        f"&Municipio={urllib.parse.quote(municipality_hint)}"
+        f"?Provincia={urllib.parse.quote(_strip_accents(province))}"
+        f"&Municipio={urllib.parse.quote(hint_clean)}"
     )
     logger.debug(f"ConsultaMunicipio URL: {url}")
 
@@ -868,6 +871,20 @@ def cadastre_progressive_lookup(
                 )
                 break
     if muni_result is None:
+        # Try village→municipality mapping (e.g., Anciles → Benasque)
+        village_entry = _VILLAGE_TO_MUNICIPALITY.get(
+            _strip_accents(municipality_hint).upper().strip()
+        )
+        if village_entry:
+            parent_muni, parent_prov = village_entry
+            logger.info(
+                f"Progressive cadastre: trying village mapping "
+                f"'{municipality_hint}' → '{parent_muni}' ({parent_prov})"
+            )
+            muni_result = _consulta_municipio(parent_prov, parent_muni)
+            if muni_result:
+                effective_province = parent_prov
+    if muni_result is None:
         logger.warning(f"Progressive cadastre: municipality '{municipality_hint}' not found in {province} or neighbors")
         return None
     official_muni, cp, cm = muni_result
@@ -1018,6 +1035,16 @@ _BORDER_PROVINCES: dict[str, list[str]] = {
     "TARRAGONA": ["LLEIDA", "BARCELONA"],
     "HUESCA": ["LLEIDA"],
     "ZARAGOZA": ["LLEIDA", "TARRAGONA"],
+}
+
+# Village → parent municipality mapping for villages that are not
+# municipalities themselves (Cadastre API needs the municipality name).
+_VILLAGE_TO_MUNICIPALITY: dict[str, tuple[str, str]] = {
+    # (village_upper → (municipality, province))
+    "ANCILES": ("BENASQUE", "HUESCA"),
+    "CERLER": ("BENASQUE", "HUESCA"),
+    "ERISTE": ("SAHUN", "HUESCA"),
+    "BENAS": ("BENASQUE", "HUESCA"),
 }
 
 

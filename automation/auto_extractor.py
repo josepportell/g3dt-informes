@@ -36,6 +36,7 @@ import os
 import re
 import sys
 import time
+import unicodedata
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
@@ -43,6 +44,55 @@ from typing import Any, Callable
 logger = logging.getLogger(__name__)
 
 __all__ = ['auto_extract', 'AutoExtractionResult']
+
+# ── G3 internal address patterns (must NOT become project street_address) ──
+# G3 Desenvolupament Territorial SL office: C/ Vallbona, 22 — Rubí
+# Each tuple is (street_fragment, house_number) — BOTH must match to avoid
+# false positives on legitimate "Vallbona" addresses in other municipalities.
+_G3_ADDRESS_PATTERNS: list[tuple[str, str]] = [
+    ('VALLBONA', '22'),  # G3 office: C/ Vallbona, 22 — Rubí
+]
+
+
+def _is_g3_internal_address(value: str) -> bool:
+    """Return True if value looks like G3's own office address, not a project site."""
+    upper = value.upper().strip()
+    return any(street in upper and number in upper for street, number in _G3_ADDRESS_PATTERNS)
+
+
+def _clean_street_address(address: str, municipality: str) -> str:
+    """Post-process extracted street address: strip trailing municipality/postal code.
+
+    Bell-Lloc: "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC" → "C/ MESTRE RAMON ORTIZ 15"
+    """
+    if not address or not municipality:
+        return address
+
+    def _strip(s: str) -> str:
+        return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn').upper()
+
+    # Normalize to NFC so stripped-index == original-index (NFD has extra chars)
+    address = unicodedata.normalize('NFC', address)
+    addr_stripped = _strip(address)
+    muni_stripped = _strip(municipality)
+    # Also try common variants: "BELL-LLOC D'URGELL" → "BELL-LLOC"
+    muni_words = muni_stripped.split()
+
+    # Try full municipality name first, then first word (for "BELL-LLOC D'URGELL" → "BELL-LLOC")
+    for candidate in (muni_stripped, muni_words[0] if muni_words else ''):
+        if not candidate or len(candidate) < 3:
+            continue
+        idx = addr_stripped.rfind(candidate)
+        if idx > 0:  # Must not be at the start (the street name itself)
+            # Remove municipality and any preceding comma/space/postal code
+            prefix = address[:idx].rstrip(' ,\t')
+            # Also strip postal codes like "25220"
+            prefix = re.sub(r'[\s,]+\d{5}\s*$', '', prefix)
+            if len(prefix) > 3:
+                logger.debug("Cleaned address: %r → %r (removed %r)", address, prefix, municipality)
+                return prefix
+
+    return address
 
 
 @dataclass
@@ -225,7 +275,13 @@ def auto_extract(
             )
             province = result.prefills.get('province', '')
             for addr_candidate in (street_addr, site_addr):
-                if addr_candidate and muni and len(addr_candidate) > 3:
+                if not addr_candidate or not muni or len(addr_candidate) <= 3:
+                    continue
+                if _is_g3_internal_address(addr_candidate):
+                    logger.warning("Geocode-first: REJECTED G3 internal address %r", addr_candidate)
+                    continue
+                addr_candidate = _clean_street_address(addr_candidate, muni)
+                if addr_candidate and len(addr_candidate) > 3:
                     geo_res = _geocode_for_adjacents(addr_candidate, muni, province=province)
                     if geo_res:
                         parcel_x = geo_res['utm_x']
@@ -432,9 +488,25 @@ def _phase03_fileminer(project_path: Path, result: AutoExtractionResult, emit=No
         # Feed resolved values into prefills (don't override existing prefills
         # from dedicated extractors which are more precise)
         n_added = 0
+        _ADDRESS_VARS = {'street_address', 'site_address', 'client_address'}
         for variable, rv in resolved.items():
             if variable not in result.prefills:
-                result.prefills[variable] = rv.value
+                # G3 internal address filter: reject G3 office address as project site
+                value = rv.value
+                if variable in _ADDRESS_VARS and _is_g3_internal_address(str(value)):
+                    logger.warning("FileMiner: REJECTED G3 internal address for %s: %r", variable, value)
+                    # Try alternatives
+                    promoted = False
+                    for alt in rv.alternatives:
+                        if not _is_g3_internal_address(str(alt.value)):
+                            value = alt.value
+                            rv = rv.model_copy(update={'value': value, 'signal': alt})
+                            logger.info("FileMiner: promoted alternative for %s: %r", variable, value)
+                            promoted = True
+                            break
+                    if not promoted:
+                        continue  # All alternatives are also G3 internal, skip entirely
+                result.prefills[variable] = value
                 result.sources[variable] = f"fileminer:{rv.signal.source_file}"
                 n_added += 1
             # Always store alternatives for wizard display
@@ -905,6 +977,14 @@ def _phase25_geocode(
         )
         return None, None
 
+    # Reject G3 internal address
+    if _is_g3_internal_address(address):
+        logger.warning("Geocodificació: REJECTED G3 internal address %r", address)
+        result.steps_skipped.append(
+            ("Geocodificació", f"adreça interna G3: {address[:40]}")
+        )
+        return None, None
+
     # Get municipality from folder name (e.g., "4001612 BELL-LLOC" -> "Bell-Lloc")
     municipality = _extract_municipality(project_path)
     if not municipality:
@@ -912,6 +992,9 @@ def _phase25_geocode(
             ("Geocodificació", "sense municipi (nom carpeta)")
         )
         return None, None
+
+    # Strip municipality name from address (e.g., "MESTRE RAMON ORTIZ 15 BELL-LLOC" → clean)
+    address = _clean_street_address(address, municipality)
 
     # Get point IDs from DPSH data if available
     point_ids = ['P-1']
@@ -1101,6 +1184,11 @@ def _phase3_adjacents(
         for key in ('street_address', 'site_address'):
             val = result.prefills.get(key) or (existing_user_data or {}).get(key)
             if val and isinstance(val, str) and len(val) > 3:
+                if _is_g3_internal_address(val):
+                    logger.warning("Adjacents: REJECTED G3 internal address for %s: %r", key, val)
+                    continue
+                if municipality:
+                    val = _clean_street_address(val, municipality)
                 address_candidates.append(val)
 
         # P1: Also try client_address as last resort (often from Groq, may have better spelling)
@@ -1109,6 +1197,8 @@ def _phase3_adjacents(
         for key in ('client_address',):
             val = result.prefills.get(key) or (existing_user_data or {}).get(key)
             if val and isinstance(val, str) and len(val) > 10 and re.search(r'\d', val):
+                if _is_g3_internal_address(val):
+                    continue
                 if val not in address_candidates:
                     address_candidates.append(val)
 

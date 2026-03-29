@@ -77,13 +77,13 @@
           "key": "adjacent_north",
           "label": "Limita nord",
           "filled": true,
-          "value": "parcel·la buida"
+          "value": "parcel·la amb construcció"
         },
         {
           "key": "adjacent_south",
           "label": "Limita sud",
           "filled": true,
-          "value": "parcel·la amb construcció"
+          "value": "parcel·la buida"
         },
         {
           "key": "adjacent_east",
@@ -127,7 +127,7 @@
           "key": "superficie_parcela",
           "label": "Sup. parcela",
           "filled": true,
-          "value": "405"
+          "value": "406"
         },
         {
           "key": "cota_referencia",
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 23980
+  "elapsed_ms": 46103
 }

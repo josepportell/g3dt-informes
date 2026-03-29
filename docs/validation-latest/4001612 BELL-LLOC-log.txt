@@ -1,0 +1,21 @@
+2026-03-29 13:14:11,789 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 1/3)
+2026-03-29 13:15:16,185 automation.ortho_vision WARNING Groq ortho vision: _ssl.c:983: The handshake operation timed out (attempt 2/3)
+2026-03-29 13:15:28,219 automation.ortho_vision WARNING Groq ortho vision: [Errno -3] Temporary failure in name resolution (attempt 3/3)
+2026-03-29 13:15:38,252 automation.ortho_vision WARNING Groq ortho vision: [Errno -3] Temporary failure in name resolution (attempt 1/3)
+2026-03-29 13:16:07,462 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 2/3)
+2026-03-29 13:16:38,673 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 3/3)
+2026-03-29 13:17:08,341 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 1/3)
+2026-03-29 13:17:29,351 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 2/3)
+2026-03-29 13:17:43,524 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 3/3)
+2026-03-29 13:18:07,934 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 1/3)
+2026-03-29 13:18:32,377 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 2/3)
+2026-03-29 13:18:46,815 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 3/3)
+2026-03-29 13:19:05,864 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 1/3)
+2026-03-29 13:19:16,984 automation.ortho_vision WARNING Groq ortho vision: HTTP 503 {"error":{"message":"meta-llama/llama-4-scout-17b-16e-instruct is currently over capacity. Please try again and back off exponentially. Visit https://groqstatus.com to see if there is an active incide (attempt 2/3)
+2026-03-29 13:19:41,091 automation.ortho_vision WARNING Groq ortho vision: HTTP 500 {"error":{"message":"Internal Server Error","type":"internal_server_error"}}
+ (attempt 3/3)

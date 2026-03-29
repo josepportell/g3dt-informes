@@ -1,119 +1,242 @@
-# P4 Next: Debug Geocode Flow + Move the Needle on Tier B
+# P4 Next: Fix Address Extraction + Geocode Flow → Correct Parcel ID
 
 Created: 2026-03-29
+Updated: 2026-03-29
 Status: Ready to start
 
 ## The Problem
 
-Tier B is stuck at 3.6% exact (2/55) because adjacents are wrong for 5/7 projects. The root cause is **geocoding resolves to the wrong parcel**. Even when the Cadastre Callejero API finds the correct parcel, `geocode_project()` returns a different (wrong) result.
+Tier B is stuck at 3.6% exact (2/55) because adjacents are wrong for 5/7 projects. The plan was "bypass geocode_project() and call Callejero directly" — but **the real root cause is upstream: the pipeline sends WRONG addresses to the geocoder**.
 
-## Concrete Example: Castellar del Vallès
+Even a perfect Callejero call will fail if the input is "administracion@g3dt.com" or "C/ Vallbona, 22" (G3's office).
 
+## Three Failure Modes (from validation logs 2026-03-29)
+
+### Mode 1: Wrong address inputs (3/7 projects) — HIGHEST IMPACT
+
+| Project | Pipeline sends to geocoder | Eva's correct address |
+|---------|--------------------------|----------------------|
+| **Rubí** | `C/ Vallbona, 22` (G3's office!) | `carrer de la Miranda nº 39` |
+| **Linyola** | `administracion@g3dt.com <mailto:...>` (email footer!) | `Carrer Clot de la Llacuna nº16` |
+| **Bell-Lloc** | `C/ MESTRE RAMON ORTIZ 15 BELL-LLOC` (city in address) | `entre el C/ Antoni Bellet i el C/ Mestre Ramon Ortiz` |
+
+Root causes:
+- **Rubí**: `groq_miner.py` has `_G3_EXCLUSIONS` for "VALLBONA, 22" but the exclusion doesn't fire in all code paths. The field_prep/pressupost extraction picks up G3's address instead of the project site.
+- **Linyola**: `msg_miner.py` runs `run_all_detectors()` on email body+footer. The email signature text gets misclassified as a street address.
+- **Bell-Lloc**: Planol vision extraction includes "BELL-LLOC" in the address string. `user_data.json` has `"C/ MESTRE RAMON ORTIZ 15 BELL-LLOC"` — the municipality is embedded.
+
+### Mode 2: Municipality matching fails (3/7 projects)
+
+| Project | Log error | Root cause |
+|---------|-----------|------------|
+| **Castellar** | `'Castellar del Vallès' not found in Barcelona or neighbors` | Accent `è` not stripped in `_consulta_municipio()` |
+| **Vilanova** | `'Vilanova de Segrià' not found in Lleida or neighbors` | Accent `à` not stripped |
+| **Anciles** | `'Anciles' not found in Huesca or neighbors` | Anciles is a village; municipality is Benasque |
+
+Despite commit `5da1237` (strip accents in Callejero), the accent stripping doesn't propagate to `cadastre_progressive_lookup()` → `_consulta_municipio()`.
+
+### Mode 3: Street name variants (1/7 projects)
+
+| Project | Issue |
+|---------|-------|
+| **Alcoletge** | Cadastre has `Gira-sols` (hyphenated), input is `Girasols` |
+
+## Verification Table: Expected vs Actual
+
+| Project | Eva's address | Expected RC | Pipeline status |
+|---------|-------------|-------------|-----------------|
+| Castellar | Arbrells 18 | 3298012DG1039S | FAIL: municipality accent |
+| Rubí | Miranda 39 | TBD (verify) | FAIL: wrong address (Vallbona) |
+| Linyola | Clot Llacuna 16 | TBD (verify) | FAIL: garbage address (email) |
+| Bell-Lloc | M. Ramon Ortiz 15 | 4613172YG1041S | OK (from COORDENADES.txt) |
+| Alcoletge | Girasols 7 | TBD (verify) | PARTIAL: street variant |
+| Vilanova | Sta Gemma 4 | TBD (verify) | FAIL: municipality accent |
+| Anciles | Gral Ferraz 20 | 5684607BH9158N | PARTIAL: wrong municipality |
+
+## Implementation Plan
+
+### Step 0: Fix address extraction inputs
+
+This is the highest-impact fix. 3/7 projects have completely wrong addresses reaching the geocoder.
+
+**0a. Block email body/footer as address source**
+- In `fileminer/miners/msg_miner.py`: do NOT run address detectors on email body text. Email bodies are for extracting project metadata (dates, names), not street addresses.
+- Only extract addresses from msg ATTACHMENTS (PDFs, Excel), not the email text itself.
+
+**0b. Strengthen G3 address exclusion**
+- The `_G3_EXCLUSIONS` list in `groq_miner.py` only filters groq results. But other code paths (field_prep Excel, pressupost PDF) can still extract G3's own address.
+- Add a centralized `is_g3_internal_address()` check that runs on ALL extracted `street_address` / `site_address` values before they enter prefills.
+- Pattern: any address containing "Vallbona" + "22" + "Rubí" → reject.
+
+**0c. Strip municipality/postal from planol-extracted addresses**
+- Vision prompt already says "WITHOUT postal code or municipality" but extraction still includes it (Bell-Lloc: "MESTRE RAMON ORTIZ 15 BELL-LLOC").
+- Add post-processing: strip known municipality name from the end of extracted `street_address`.
+- Logic: if address ends with municipality name (fuzzy match), remove it.
+
+**0d. Address source priority chain**
+Formalize in `auto_extractor.py`:
 ```
-Callejero API directly:  "Arbrells 18, Castellar del Valles" → RC 3298012 (CORRECT)
-geocode_project():       "Carrer Arbrells 18, Castellar del Vallès" → RC 3298002 (#16, WRONG)
+1. COORDENADES.txt metadata (field-measured, highest trust)
+2. planol_extracted.json → street_address (vision, cleaned)
+3. field_prep Excel → ADREÇA OBRA (if not G3 internal)
+4. NEVER: email body, email footer, email signature
 ```
 
-The Callejero finds the right answer but geocode_project() returns something else. Why?
+**Files to modify:**
+- `automation/fileminer/miners/msg_miner.py` — block address from email body
+- `automation/auto_extractor.py` — centralized G3 filter + priority chain
+- `automation/vision_extractor.py` or post-processing — strip municipality from address
 
-## Debug Plan
+### Step 1: Fix municipality matching
 
-### Step 1: Trace geocode_project() for Castellar
+**1a. Verify accent stripping in `_consulta_municipio()`**
+- Commit `5da1237` fixed Callejero calls but progressive_lookup may use a different path.
+- Trace: `cadastre_progressive_lookup()` → `_consulta_municipio(province, municipality_hint)` — does it strip accents from `municipality_hint` BEFORE the API call?
+- Fix: add `unicodedata.normalize('NFD', ...).encode('ascii', 'ignore').decode()` at the entry of `_consulta_municipio()`.
 
-Run with DEBUG logging:
+**1b. Add village→municipality mapping for Aragón**
+- Anciles is a village within the municipality of Benasque (Huesca).
+- The Cadastre API needs "Benasque", not "Anciles".
+- Options:
+  - Small lookup table for known villages (simplest, but doesn't scale)
+  - If `_consulta_municipio(province, "Anciles")` fails, try Nominatim to resolve the municipality name, then retry Cadastre with the resolved name
+  - This is an edge case (only 1 project). If a table with 5 entries solves it, do that.
+
+**Files to modify:**
+- `automation/geocode_coordinates.py` — `_consulta_municipio()` accent stripping
+- `automation/geocode_coordinates.py` — village→municipality fallback
+
+### Step 2: Direct Callejero path in parcel_resolver
+
+Once address inputs are correct, add a direct Callejero lookup that bypasses the complex `geocode_project()` fallback chain.
+
+**2a. New function: `_callejero_address_to_rc(street_address, municipality, province)`**
+- Parse address → (street_type, street_name, number) using `_parse_address()`
+- Strip accents from municipality
+- Call `ConsultaNumero` directly: `Consulta_DNPLOC(Provincia, Municipio, TipoVia, NombreVia, Numero)`
+- Return RC (14 chars) or None
+
+**2b. Integrate into parcel resolution flow**
+In `parcel_resolver.py` or `auto_extractor.py`:
 ```python
-import logging
-logging.basicConfig(level=logging.DEBUG)
-from automation.geocode_coordinates import geocode_project
-r = geocode_project('Carrer Arbrells 18', 'Castellar del Vallès', ['centre'], output_dir=None, province='Barcelona')
+# Try direct Callejero FIRST (fast, precise)
+rc = _callejero_address_to_rc(address, municipality, province)
+if rc:
+    polygon = get_parcel_geometry_utm(rc)
+    # proceed with adjacents
+else:
+    # Fall back to geocode_project() existing chain
+    ...
 ```
 
-Look for:
-- Does it attempt Consulta_DNPLOC? If not, why?
-- Does Consulta_DNPLOC succeed but get overridden by a later step?
-- Does it fall through to Nominatim? If so, Nominatim returns ~50m imprecise coords
-- Is there a cache returning a stale result?
+**2c. Why this is still necessary even after Step 0**
+Even with correct addresses, `geocode_project()` can return a neighbor parcel because:
+- Nominatim returns ~50-200m imprecise coords
+- Grid search may land on adjacent parcel
+- Direct Callejero gives EXACT cadastral reference from the official address database
 
-Key functions to trace in `automation/geocode_coordinates.py`:
-- `geocode_project()` (main entry, line ~1755)
-- `_cadastre_address_lookup()` (Callejero path, line ~1030)
-- `_parse_address()` (address parsing, line ~263)
-- `_resolve_municipality()` (municipality matching, line ~340)
+**Files to modify:**
+- `automation/geocode_coordinates.py` — new `_callejero_address_to_rc()`
+- `automation/parcel_resolver.py` or `auto_extractor.py` — integration
 
-### Step 2: Compare Callejero vs geocode_project for all 7 projects
+### Step 3: Polygon override for merged parcels
 
-```python
-# Direct Callejero (correct)
-callejero('Barcelona', 'CASTELLAR DEL VALLES', 'CL', 'ARBRELLS', '18') → 3298012
-
-# geocode_project (may be wrong)
-geocode_project('Carrer Arbrells 18', 'Castellar del Vallès', ...) → 3298002
-```
-
-Run both for all 7 projects. Document where they agree and disagree.
-
-### Step 3: Fix the divergence
-
-Likely causes:
-1. `_parse_address()` doesn't extract the house number correctly for certain formats
-2. `_resolve_municipality()` fails on accented names → skips Callejero → falls to Nominatim
-3. Callejero succeeds but returns coords that fall on a neighbor parcel (coord precision)
-4. A caching layer returns a stale result from a previous run
-
-Possible fixes:
-- **Add direct Callejero path in parcel_resolver.py**: bypass geocode_project entirely for address→RC lookup. Call ConsultaNumero directly with stripped accents. This is the cleanest approach — we already proved it works in our manual tests.
-- **Fix _resolve_municipality()**: ensure accent stripping propagates to all Callejero calls
-- **Fix _parse_address()**: ensure house numbers are correctly extracted for all formats
-
-### Step 4: After geocoding is fixed, re-evaluate P4b sequencing
-
-The P4b sequencing change (merge BEFORE adjacents) broke Bell-Lloc because:
-- Bell-Lloc's geocode resolves to parcel 4613172 (single parcel, 500 m²)
+Bell-Lloc works but P4b sequencing broke adjacents when merging:
+- Bell-Lloc geocode → parcel 4613172 (500 m²)
 - P4b merges 4613172 + 4613173 → merged polygon (1012 m²)
-- But the merge changed the centroid → adjacents probe ran from wrong position
-- The issue: `_phase3_adjacents()` re-geocodes internally → may get a different parcel
+- Merged polygon has different centroid → adjacents probe from wrong position
+- `_phase3_adjacents()` re-geocodes internally → may get different parcel
 
-Fix: when P4b produces a merged polygon, pass it directly to `get_adjacent_parcels()` as a `polygon_override` parameter, bypassing the internal parcel lookup. This requires modifying `get_adjacent_parcels()` to accept an optional polygon.
+**Fix:** When parcel_resolver produces a merged polygon, pass it directly to `get_adjacent_parcels()` as `polygon_override`, bypassing the internal parcel lookup.
 
-### Step 5: Validate with benchmarks
+**Files to modify:**
+- `automation/cadastre_adjacents.py` — `get_adjacent_parcels()` accept optional polygon
+- `automation/auto_extractor.py` — pass merged polygon through
 
-After each fix, run:
+### Step 4: Validate per-project with expected RCs
+
+After each step, run:
 ```bash
-rm -rf ~/.g3dt/cache/cadastre_adjacents/*.json ~/.g3dt/cache/nominatim_streets/ ~/.g3dt/cache/ortho_enrichment/ ~/.g3dt/cache/geocode/
+# Clear stale caches (selective, not all)
+rm -f ~/.g3dt/cache/geocode/*.json
+rm -f ~/.g3dt/cache/cadastre_adjacents/*.json
+
+# Re-run pipeline
 G3DT_ORTHO_ENRICHMENT=1 .venv/bin/python scripts/collect_readiness.py --skip-vision --output-dir docs/validation-latest
+
+# Compare
 .venv/bin/python scripts/compare_benchmarks.py
 ```
 
-Target: Tier B > 10% exact, > 50% semantic.
+Check per-project:
+1. Correct address reaches geocoder (from logs)
+2. Correct RC returned (from validation JSON)
+3. Adjacents directions match Eva's (N/S/E/W)
+
+## Targets (phased)
+
+**Phase 1 — Correct parcel RC** (Steps 0-2):
+- Target: 6/7 projects get correct RC (Anciles may remain edge case)
+- Metric: RC in validation JSON matches expected RC table above
+
+**Phase 2 — Correct adjacents directions** (Step 3 + existing adjacents logic):
+- Target: 4/4 adjacents correct for 4/7 projects
+- Metric: adjacents in `_comparison.json` show MATCH for direction/street
+
+**Phase 3 — Enriched adjacents descriptions** (future, not in this plan):
+- Currently: "parcel·la amb construcció"
+- Eva writes: "parcel·la construïda amb piscina", "parcel·les sense construir, amb herbes altes i arbres"
+- This requires better ortho enrichment quality — separate work item
+
+## Tier B scope reminder
+
+Tier B has **8 variables per project** (56 total), not just adjacents:
+
+| Variable | Current | Blocked by parcel? | Fix path |
+|----------|---------|-------------------|----------|
+| `location_sentence` | 0/7 match | Yes (wrong street names) | Fix address → auto-generates |
+| `adjacent_N/S/E/W` | 2/28 match | Yes (wrong parcel) | Steps 0-3 |
+| `site_condition` | 0/7 match | No (always "antropitzat") | Ortho enrichment quality |
+| `site_description` | 0/7 match | No (template-driven) | Ortho enrichment quality |
+| `access_description` | ~3/7 close | Partially | Minor template tweaks |
+
+Steps 0-3 unblock **location_sentence + adjacents = 5 vars × 7 = 35 vars** (63% of Tier B).
+The remaining `site_condition` + `site_description` (2 vars × 7 = 14 vars) need ortho enrichment improvements — separate plan.
 
 ## What NOT to change
 
 - ICGC geology/elevation/slope still use DPSH coords (regional data, correct)
-- Don't change the adjacents probe logic (edge classification, Nominatim streets — these work)
-- Don't change the ortho enrichment pipeline (site_description is a success)
+- Don't change the adjacents probe logic (edge classification, Nominatim streets — these work once on the right parcel)
+- Don't change the ortho enrichment pipeline in THIS plan
 - Don't touch the Jinja template or report_generator for Tier B
 
-## Project test matrix
+## Project test matrix (updated)
 
-| Project | Blocker | Expected fix |
-|---------|---------|--------------|
-| Bell-Lloc | Working! Keep as regression test | P4b polygon_override for merged adjacents |
-| Castellar | geocode → #16 not #18 | Direct Callejero path |
-| Rubí | geocode → wrong street | Direct Callejero path |
-| Linyola | geocode → same street, different RC | Direct Callejero / area merge |
-| Alcoletge | geocode fails (Nominatim) | Street name variant ("Girasols" vs "Gira-sols") |
-| Vilanova | accent issue (Segrià) | Accent stripping already fixed |
-| Anciles | No COORDENADES, Benasque not found | Special case — Aragón, not Catalunya |
+| Project | Blocker | Step that fixes it |
+|---------|---------|-------------------|
+| Bell-Lloc | Working! Regression test | Step 3 (polygon override for merged) |
+| Castellar | Municipality accent | Step 1a |
+| Rubí | Wrong address (G3 office) | Step 0b |
+| Linyola | Garbage address (email) | Step 0a |
+| Alcoletge | Street variant (Gira-sols) | Step 2 (fuzzy street in Callejero) |
+| Vilanova | Municipality accent | Step 1a |
+| Anciles | Village ≠ municipality | Step 1b |
 
-## Recommended approach
+## Execution order
 
-**Simplest path to biggest impact: add a direct Callejero lookup in parcel_resolver.py.**
+```
+Step 0a (msg_miner email block)  ─┐
+Step 0b (G3 address filter)      ─┼─ Can be done in parallel
+Step 0c (strip municipality)     ─┘
+         ↓
+Step 1a (accent in _consulta_municipio)  ─┐
+Step 1b (village→municipality mapping)    ─┘ Parallel
+         ↓
+Step 2 (direct Callejero path)
+         ↓
+Step 3 (polygon override)
+         ↓
+Step 4 (validate all 7 projects)
+```
 
-Instead of relying on geocode_project() (complex, many fallbacks, imprecise), call the Cadastre Callejero API directly with:
-1. Street type + name + number (from `_parse_address()`)
-2. Municipality (stripped accents)
-3. Province
-
-This gives us the EXACT cadastral reference from the official address database. We already proved this works for 5/7 projects in our manual tests.
-
-Then use that RC to get the polygon via `get_parcel_geometry_utm()` and proceed with adjacents.
+Estimated: Steps 0+1 fix 6/7 projects. Step 2 makes it robust. Step 3 fixes Bell-Lloc regression.

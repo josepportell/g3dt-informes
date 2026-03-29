@@ -71,19 +71,19 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer de la Miranda i el Carrer Creu de Rubí"
+          "value": "entre el Carrer de la Miranda i l'Avinguda Can Tapis de Rubí"
         },
         {
           "key": "adjacent_north",
           "label": "Limita nord",
           "filled": true,
-          "value": "parcel·la amb construcció"
+          "value": "Passeig Miranda"
         },
         {
           "key": "adjacent_south",
           "label": "Limita sud",
           "filled": true,
-          "value": "Carrer Creu"
+          "value": "parcel·la amb construcció"
         },
         {
           "key": "adjacent_east",
@@ -95,7 +95,7 @@
           "key": "adjacent_west",
           "label": "Limita oest",
           "filled": true,
-          "value": "Carrer Rafael Casanova"
+          "value": "Avinguda Can Tapis"
         }
       ]
     },
@@ -145,13 +145,13 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al sud. La parcel·la es troba delimitada per vorad"
+          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al nord."
         },
         {
           "key": "access_description",
           "label": "Acces",
           "filled": true,
-          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Creu existent al sud."
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Passeig Miranda existent al nord."
         }
       ]
     },
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 51298
+  "elapsed_ms": 151639
 }

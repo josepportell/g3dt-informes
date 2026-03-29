@@ -46,17 +46,31 @@ class MsgMiner(BaseMiner):
         rel_path = self._relative_path(file_path)
 
         try:
-            # ── 1. Mine email body text
+            # ── 1. Mine email body text (exclude address fields — email
+            #    bodies/footers are unreliable address sources; Linyola got
+            #    "administracion@g3dt.com..." parsed as street_address)
+            _ADDRESS_LABELS = {
+                'street_address', 'site_address', 'client_address',
+                'Street address', 'Site address',
+            }
             body = msg.body or ''
             if body:
                 body_signals = run_all_detectors(body, rel_path, confidence_offset=-0.05)
-                signals.extend(body_signals)
+                for sig in body_signals:
+                    if sig.label in _ADDRESS_LABELS or getattr(sig, 'maps_to', None) in _ADDRESS_LABELS:
+                        logger.debug("Skipping address signal from email body: %s=%r", sig.label, sig.value)
+                        continue
+                    signals.append(sig)
 
-            # ── 2. Mine subject line for project hints
+            # ── 2. Mine subject line for project hints (same address filter)
             subject = msg.subject or ''
             if subject:
                 subject_signals = run_all_detectors(subject, rel_path, confidence_offset=-0.10)
-                signals.extend(subject_signals)
+                for sig in subject_signals:
+                    if sig.label in _ADDRESS_LABELS or getattr(sig, 'maps_to', None) in _ADDRESS_LABELS:
+                        logger.debug("Skipping address signal from email subject: %s=%r", sig.label, sig.value)
+                        continue
+                    signals.append(sig)
 
             # ── 3. Extract sender email/name
             sender = msg.sender or ''
