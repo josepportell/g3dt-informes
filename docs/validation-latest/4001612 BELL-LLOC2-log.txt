@@ -1,0 +1,4 @@
+2026-03-27 20:02:04,870 automation.geocode_coordinates WARNING Nominatim returned no results for: CARRER MESTRE RAMON ORTIZ, 25220 BELL.LLOC D'URGELL, Bell-Lloc, Lleida, Spain
+2026-03-27 20:02:04,871 automation.geocode_coordinates WARNING Geocoding failed for 'CARRER MESTRE RAMON ORTIZ, 25220 BELL.LLOC D'URGELL, Bell-Lloc'
+2026-03-27 20:02:09,180 automation.geocode_coordinates WARNING Nominatim returned no results for: MESTRE RAMON ORTIZ, 25220 BELL.LLOC D'URGELL, Bell-Lloc, Lleida, Spain
+2026-03-27 20:02:09,181 automation.geocode_coordinates WARNING Geocoding failed for 'MESTRE RAMON ORTIZ, 25220 BELL.LLOC D'URGELL, Bell-Lloc'

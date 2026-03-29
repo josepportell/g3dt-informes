@@ -179,7 +179,8 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
             return str(entry.get('value', '') or '')
         return str(entry)
 
-    # Phase 3.5 enriched values: prefer over template-generated if available
+    # Phase 3.5 enriched values: override template-generated and auto-extracted,
+    # but NOT user edits (source='user')
     _ENRICHED_FIELDS = (
         'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
         'site_description', 'access_description', 'location_sentence',
@@ -192,19 +193,31 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
             enriched_val = str(enriched_entry.get('value', '') or '')
         elif enriched_entry is not None:
             enriched_val = str(enriched_entry)
-        if enriched_val and not _get_val(field_name):
+        if enriched_val:
+            # Only skip if user manually edited this field
+            existing = merged.get(field_name)
+            existing_source = ''
+            if isinstance(existing, dict):
+                existing_source = str(existing.get('source', '') or '')
+            if existing_source == 'user':
+                continue  # User edits always win
             merged[field_name] = {
                 'value': enriched_val,
                 'source': 'ICGC ortho+visió',
             }
 
-    # is_anthropized from enrichment (replaces hardcoded True)
+    # is_anthropized from enrichment (overrides default, not user edits)
     enriched_anthro = merged.get('is_anthropized_enriched')
-    if enriched_anthro is not None and not _get_val('is_anthropized'):
-        val = enriched_anthro
-        if isinstance(val, dict):
-            val = val.get('value', True)
-        merged['is_anthropized'] = {
+    if enriched_anthro is not None:
+        existing = merged.get('is_anthropized')
+        existing_source = ''
+        if isinstance(existing, dict):
+            existing_source = str(existing.get('source', '') or '')
+        if existing_source != 'user':
+            val = enriched_anthro
+            if isinstance(val, dict):
+                val = val.get('value', True)
+            merged['is_anthropized'] = {
             'value': val,
             'source': 'ICGC ortho+visió',
         }

@@ -1,0 +1,323 @@
+{
+  "overall": {
+    "filled": 36,
+    "total": 40,
+    "pct": 90.0
+  },
+  "categories": [
+    {
+      "name": "Identificacio",
+      "filled": 5,
+      "total": 6,
+      "pct": 83.3,
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "filled": true,
+          "value": "INTECSON"
+        },
+        {
+          "key": "expedient",
+          "label": "Expedient",
+          "filled": true,
+          "value": "3001631"
+        },
+        {
+          "key": "architect_name",
+          "label": "Arquitecte",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "architect_company",
+          "label": "Despatx arquitecte",
+          "filled": true,
+          "value": "G3"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "filled": true,
+          "value": "14 de novembre de 2025"
+        },
+        {
+          "key": "data_signatura_text",
+          "label": "Data signatura",
+          "filled": true,
+          "value": "29 de març de 2026"
+        }
+      ]
+    },
+    {
+      "name": "Ubicacio",
+      "filled": 7,
+      "total": 7,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "filled": true,
+          "value": "Carrer de la Miranda"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "filled": true,
+          "value": "Rubí"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "filled": true,
+          "value": "entre el Carrer de la Miranda i el Passeig Francesc Macia de Rubí"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "filled": true,
+          "value": "parcel·la amb construcció"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "filled": true,
+          "value": "Passeig Francesc Macia"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "filled": true,
+          "value": "parcel·la amb construcció"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "filled": true,
+          "value": "Carrer Rafael Casanova"
+        }
+      ]
+    },
+    {
+      "name": "Edificacio",
+      "filled": 5,
+      "total": 8,
+      "pct": 62.5,
+      "variables": [
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "filled": true,
+          "value": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT"
+        },
+        {
+          "key": "num_floors",
+          "label": "Plantes",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "superficie_construida",
+          "label": "Sup. construida",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "filled": true,
+          "value": "+129.00"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "filled": true,
+          "value": "antropitzat"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "filled": true,
+          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al sud. La parcel·la es troba delimitada per vorad"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "filled": true,
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Passeig Francesc Macia existent al su"
+        }
+      ]
+    },
+    {
+      "name": "Camp DPSH",
+      "filled": 4,
+      "total": 4,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "filled": true,
+          "value": "3"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "filled": true,
+          "value": "P-1,P-2,P-3"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "filled": true,
+          "value": "48"
+        },
+        {
+          "key": "dpsh_tests",
+          "label": "Taula DPSH",
+          "filled": true,
+          "value": "[3 items]"
+        }
+      ]
+    },
+    {
+      "name": "Camp Sondeig",
+      "filled": 0,
+      "total": 0,
+      "pct": 0,
+      "variables": []
+    },
+    {
+      "name": "Camp Lab",
+      "filled": 1,
+      "total": 1,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "filled": true,
+          "value": "632.3"
+        }
+      ]
+    },
+    {
+      "name": "Geologia",
+      "filled": 4,
+      "total": 4,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "geology_paragraphs",
+          "label": "Paragrafs geologia",
+          "filled": true,
+          "value": "[9 items]"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "filled": true,
+          "value": "1"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "filled": true,
+          "value": "0,04"
+        },
+        {
+          "key": "materials_level_1",
+          "label": "Materials nivell 1",
+          "filled": true,
+          "value": "El nivell 1 està format per nivell principal, de coloracions marrons a vermelloses. Aquests materials presenten una comp"
+        }
+      ]
+    },
+    {
+      "name": "Geotecnia",
+      "filled": 7,
+      "total": 7,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "filled": true,
+          "value": "2.00"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "filled": true,
+          "value": "0.00"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "filled": true,
+          "value": "38°"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "filled": true,
+          "value": "469"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "filled": true,
+          "value": "48-R"
+        },
+        {
+          "key": "soil_level_rows",
+          "label": "Taula nivells sol",
+          "filled": true,
+          "value": "[1 items]"
+        },
+        {
+          "key": "perm_rows",
+          "label": "Taula permeabilitat",
+          "filled": true,
+          "value": "[1 items]"
+        }
+      ]
+    },
+    {
+      "name": "Calculs",
+      "filled": 3,
+      "total": 3,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "filled": true,
+          "value": "2.74"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "filled": true,
+          "value": "1.18"
+        },
+        {
+          "key": "k30_value",
+          "label": "Coef. balast K30",
+          "filled": true,
+          "value": "6.3"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "elapsed_ms": 31508
+}

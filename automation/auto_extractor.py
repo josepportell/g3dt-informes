@@ -1139,8 +1139,17 @@ def _phase35_ortho_enrichment(
         from .ortho_vision import analyze_site
         from .site_text_generator import generate_enriched_texts
 
-        # Get parcel polygon
+        # Get parcel polygon — fetch cadastral ref if not already available
         rc14 = result.prefills.get('cadastral_ref', '')
+        if not rc14 or len(rc14) < 14:
+            from .cadastre_adjacents import get_cadastral_reference
+            try:
+                rc14, _ = get_cadastral_reference(utm_x, utm_y)
+                if rc14 and len(rc14) >= 14:
+                    result.prefills['cadastral_ref'] = rc14
+                    result.sources['cadastral_ref'] = 'Cadastre API (ortho)'
+            except Exception as e:
+                logger.debug(f"Cadastral ref lookup for ortho failed: {e}")
         if not rc14 or len(rc14) < 14:
             logger.info("Ortho enrichment: skipped (no cadastral reference)")
             result.steps_skipped.append(("Ortho enrichment", "sense ref. cadastral"))

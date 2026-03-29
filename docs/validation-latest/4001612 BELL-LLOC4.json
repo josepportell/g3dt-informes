@@ -1,0 +1,330 @@
+{
+  "overall": {
+    "filled": 41,
+    "total": 41,
+    "pct": 100.0
+  },
+  "categories": [
+    {
+      "name": "Identificacio",
+      "filled": 6,
+      "total": 6,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "filled": true,
+          "value": "RAMON MITJANA S.L."
+        },
+        {
+          "key": "expedient",
+          "label": "Expedient",
+          "filled": true,
+          "value": "4001612"
+        },
+        {
+          "key": "architect_name",
+          "label": "Arquitecte",
+          "filled": true,
+          "value": "Jordi Bosch Novell"
+        },
+        {
+          "key": "architect_company",
+          "label": "Despatx arquitecte",
+          "filled": true,
+          "value": "Arquitectura Bosch Novell"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "filled": true,
+          "value": "1 i 6 d'octubre de 2025"
+        },
+        {
+          "key": "data_signatura_text",
+          "label": "Data signatura",
+          "filled": true,
+          "value": "27 de març de 2026"
+        }
+      ]
+    },
+    {
+      "name": "Ubicacio",
+      "filled": 7,
+      "total": 7,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "filled": true,
+          "value": "Carrer Mestre Ramon Ortiz"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "filled": true,
+          "value": "Bell-Lloc d'Urgell"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "filled": true,
+          "value": "entre el Carrer Mestre Ramon Ortiz i el Carrer Antoni Bellet i Perez de Bell-Lloc d'Urgell"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "filled": true,
+          "value": "Carrer Antoni Bellet i Perez"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "filled": true,
+          "value": "parcel·la amb construcció"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "filled": true,
+          "value": "parcel·la amb construcció"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "filled": true,
+          "value": "parcel·la amb construcció"
+        }
+      ]
+    },
+    {
+      "name": "Edificacio",
+      "filled": 8,
+      "total": 8,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "filled": true,
+          "value": "Habitatge Unifamiliar Aïllat"
+        },
+        {
+          "key": "num_floors",
+          "label": "Plantes",
+          "filled": true,
+          "value": "Pb+1Pp"
+        },
+        {
+          "key": "superficie_construida",
+          "label": "Sup. construida",
+          "filled": true,
+          "value": "297+100"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "filled": true,
+          "value": "598"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "filled": true,
+          "value": "+199.50"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "filled": true,
+          "value": "antropitzat"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "filled": true,
+          "value": "parcel·la de forma quadrada amb superfície de 598 m2. El terreny es presenta antropitzat"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "filled": true,
+          "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer Antoni Bellet i Perez existent"
+        }
+      ]
+    },
+    {
+      "name": "Camp DPSH",
+      "filled": 4,
+      "total": 4,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "filled": true,
+          "value": "2"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "filled": true,
+          "value": "P-1, P-2"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "filled": true,
+          "value": "36.7"
+        },
+        {
+          "key": "dpsh_tests",
+          "label": "Taula DPSH",
+          "filled": true,
+          "value": "[2 items]"
+        }
+      ]
+    },
+    {
+      "name": "Camp Sondeig",
+      "filled": 1,
+      "total": 1,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "sondeig_tests",
+          "label": "Taula sondeig",
+          "filled": true,
+          "value": "[1 items]"
+        }
+      ]
+    },
+    {
+      "name": "Camp Lab",
+      "filled": 1,
+      "total": 1,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "filled": true,
+          "value": "89.8"
+        }
+      ]
+    },
+    {
+      "name": "Geologia",
+      "filled": 4,
+      "total": 4,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "geology_paragraphs",
+          "label": "Paragrafs geologia",
+          "filled": true,
+          "value": "[10 items]"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "filled": true,
+          "value": "1"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "filled": true,
+          "value": "0,04"
+        },
+        {
+          "key": "materials_level_1",
+          "label": "Materials nivell 1",
+          "filled": true,
+          "value": "El nivell 1 està format per tram totalment carbonatat., de coloracions clars a marró clar. Aquests materials presenten c"
+        }
+      ]
+    },
+    {
+      "name": "Geotecnia",
+      "filled": 7,
+      "total": 7,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "filled": true,
+          "value": "2.00"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "filled": true,
+          "value": "0.00"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "filled": true,
+          "value": "38°"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "filled": true,
+          "value": "469"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "filled": true,
+          "value": "12-R"
+        },
+        {
+          "key": "soil_level_rows",
+          "label": "Taula nivells sol",
+          "filled": true,
+          "value": "[1 items]"
+        },
+        {
+          "key": "perm_rows",
+          "label": "Taula permeabilitat",
+          "filled": true,
+          "value": "[1 items]"
+        }
+      ]
+    },
+    {
+      "name": "Calculs",
+      "filled": 3,
+      "total": 3,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "filled": true,
+          "value": "2.40"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "filled": true,
+          "value": "1.12"
+        },
+        {
+          "key": "k30_value",
+          "label": "Coef. balast K30",
+          "filled": true,
+          "value": "6.3"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "elapsed_ms": 37599
+}

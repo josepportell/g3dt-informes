@@ -1,0 +1,9 @@
+2026-03-29 07:58:36,288 automation.geocode_coordinates WARNING Progressive cadastre: street 'Vallbona' not found in RUBI
+2026-03-29 07:58:38,478 automation.geocode_coordinates WARNING Nominatim returned no results for: C/ Vallbona, 22, Rubí, Barcelona, Spain
+2026-03-29 07:58:38,478 automation.geocode_coordinates WARNING Geocoding failed for 'C/ Vallbona, 22, Rubí'
+2026-03-29 07:58:42,194 automation.geocode_coordinates WARNING Progressive cadastre: street 'Vallbona' not found in RUBI
+2026-03-29 07:58:43,829 automation.geocode_coordinates WARNING Nominatim returned no results for: C/ Vallbona, Rubí, Barcelona, Spain
+2026-03-29 07:58:43,830 automation.geocode_coordinates WARNING Geocoding failed for 'C/ Vallbona, Rubí'
+2026-03-29 07:58:46,816 automation.geocode_coordinates WARNING Progressive cadastre: street 'Vallbona' not found in RUBI
+2026-03-29 07:58:48,381 automation.geocode_coordinates WARNING Nominatim returned no results for: Vallbona, Rubí, Barcelona, Spain
+2026-03-29 07:58:48,381 automation.geocode_coordinates WARNING Geocoding failed for 'Vallbona, Rubí'

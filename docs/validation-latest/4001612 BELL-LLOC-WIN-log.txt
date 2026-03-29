@@ -1,0 +1,20 @@
+2026-03-27 20:01:54,661 __main__ ERROR Failed processing 4001612 BELL-LLOC-WIN
+Traceback (most recent call last):
+  File "/home/josep/projects/claudecode-job/clients/g3dt/web/wizard_service.py", line 61, in _resolve_project
+    candidate.resolve().relative_to(_REF_DIR.resolve())
+  File "/usr/lib/python3.12/pathlib.py", line 682, in relative_to
+    raise ValueError(f"{str(self)!r} is not in the subpath of {str(other)!r}")
+ValueError: '/mnt/c/claude/g3dt/4-informes/4001612 BELL-LLOC' is not in the subpath of '/mnt/c/claude/g3dt/projectes'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/josep/projects/claudecode-job/clients/g3dt/scripts/collect_readiness.py", line 234, in main
+    result = process_project(folder)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/josep/projects/claudecode-job/clients/g3dt/scripts/collect_readiness.py", line 115, in process_project
+    project_path = wizard_service._resolve_project(project_folder)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/josep/projects/claudecode-job/clients/g3dt/web/wizard_service.py", line 63, in _resolve_project
+    raise ValueError(f"Projecte no trobat: {project_name}")
+ValueError: Projecte no trobat: 4001612 BELL-LLOC-WIN

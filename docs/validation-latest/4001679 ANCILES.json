@@ -1,0 +1,333 @@
+{
+  "overall": {
+    "filled": 24,
+    "total": 41,
+    "pct": 58.5
+  },
+  "categories": [
+    {
+      "name": "Identificacio",
+      "filled": 5,
+      "total": 6,
+      "pct": 83.3,
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "filled": true,
+          "value": "MARIA ALBA BARRAU CASTÁN 616523792"
+        },
+        {
+          "key": "expedient",
+          "label": "Expedient",
+          "filled": true,
+          "value": "4001679"
+        },
+        {
+          "key": "architect_name",
+          "label": "Arquitecte",
+          "filled": true,
+          "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA"
+        },
+        {
+          "key": "architect_company",
+          "label": "Despatx arquitecte",
+          "filled": true,
+          "value": "PICO DE OLA ARQUITECTURA Y PROMOCION S.L."
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "data_signatura_text",
+          "label": "Data signatura",
+          "filled": true,
+          "value": "29 de març de 2026"
+        }
+      ]
+    },
+    {
+      "name": "Ubicacio",
+      "filled": 7,
+      "total": 7,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "filled": true,
+          "value": "Calle Gral Ferraz nº20"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "filled": true,
+          "value": "Arciles"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "filled": true,
+          "value": "al Calle Gral Ferraz nº20 de Arciles"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "filled": true,
+          "value": "parcel·la buida"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "filled": true,
+          "value": "parcel·la buida"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "filled": true,
+          "value": "parcel·la buida"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "filled": true,
+          "value": "parcel·la buida"
+        }
+      ]
+    },
+    {
+      "name": "Edificacio",
+      "filled": 6,
+      "total": 8,
+      "pct": 75.0,
+      "variables": [
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "filled": true,
+          "value": "viviendas adosadas"
+        },
+        {
+          "key": "num_floors",
+          "label": "Plantes",
+          "filled": true,
+          "value": "SÓTANO, PLANTA BAJA y PLANTA 1"
+        },
+        {
+          "key": "superficie_construida",
+          "label": "Sup. construida",
+          "filled": true,
+          "value": "1265.86"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "filled": true,
+          "value": "265"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "filled": true,
+          "value": "antropitzat"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "filled": true,
+          "value": "El solar es presenta sense pavimentar i amb escassa cobertura vegetal."
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "filled": false,
+          "value": ""
+        }
+      ]
+    },
+    {
+      "name": "Camp DPSH",
+      "filled": 0,
+      "total": 4,
+      "pct": 0.0,
+      "variables": [
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "dpsh_tests",
+          "label": "Taula DPSH",
+          "filled": false,
+          "value": "[0 items]"
+        }
+      ]
+    },
+    {
+      "name": "Camp Sondeig",
+      "filled": 1,
+      "total": 1,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "sondeig_tests",
+          "label": "Taula sondeig",
+          "filled": true,
+          "value": "[1 items]"
+        }
+      ]
+    },
+    {
+      "name": "Camp Lab",
+      "filled": 0,
+      "total": 1,
+      "pct": 0.0,
+      "variables": [
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "filled": false,
+          "value": ""
+        }
+      ]
+    },
+    {
+      "name": "Geologia",
+      "filled": 4,
+      "total": 4,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "geology_paragraphs",
+          "label": "Paragrafs geologia",
+          "filled": true,
+          "value": "[6 items]"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "filled": true,
+          "value": "2"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "filled": true,
+          "value": "0,04"
+        },
+        {
+          "key": "materials_level_1",
+          "label": "Materials nivell 1",
+          "filled": true,
+          "value": "[PENDENT: Descripcio del nivell 1]\n\nRequereix plantilla de zona per a descriure la litologia, color, consistencia i cara"
+        }
+      ]
+    },
+    {
+      "name": "Geotecnia",
+      "filled": 1,
+      "total": 7,
+      "pct": 14.3,
+      "variables": [
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "soil_level_rows",
+          "label": "Taula nivells sol",
+          "filled": false,
+          "value": "[1 items]"
+        },
+        {
+          "key": "perm_rows",
+          "label": "Taula permeabilitat",
+          "filled": true,
+          "value": "[1 items]"
+        }
+      ]
+    },
+    {
+      "name": "Calculs",
+      "filled": 0,
+      "total": 3,
+      "pct": 0.0,
+      "variables": [
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "k30_value",
+          "label": "Coef. balast K30",
+          "filled": false,
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "warnings": [
+    "Could not auto-fill cota_referencia from ICGC MDT: Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; ",
+    "Could not calculate slope from ICGC MDT: Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; "
+  ],
+  "elapsed_ms": 37330
+}

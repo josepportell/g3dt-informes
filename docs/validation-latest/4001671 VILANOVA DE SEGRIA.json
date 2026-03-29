@@ -1,0 +1,323 @@
+{
+  "overall": {
+    "filled": 22,
+    "total": 40,
+    "pct": 55.0
+  },
+  "categories": [
+    {
+      "name": "Identificacio",
+      "filled": 4,
+      "total": 6,
+      "pct": 66.7,
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "expedient",
+          "label": "Expedient",
+          "filled": true,
+          "value": "4001671"
+        },
+        {
+          "key": "architect_name",
+          "label": "Arquitecte",
+          "filled": true,
+          "value": "jordi carner"
+        },
+        {
+          "key": "architect_company",
+          "label": "Despatx arquitecte",
+          "filled": true,
+          "value": "rocar"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "data_signatura_text",
+          "label": "Data signatura",
+          "filled": true,
+          "value": "29 de març de 2026"
+        }
+      ]
+    },
+    {
+      "name": "Ubicacio",
+      "filled": 7,
+      "total": 7,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "filled": true,
+          "value": "Calle Santa Gemma nº4"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "filled": true,
+          "value": "Vilanova de Segrià"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "filled": true,
+          "value": "entre el Calle Santa Gemma nº4 i el Carrer Santa Gemma Anterior 25313A00700066 de Vilanova de Segrià"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "filled": true,
+          "value": "parcel·la buida"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "filled": true,
+          "value": "parcel·la amb construcció"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "filled": true,
+          "value": "parcel·la amb construcció"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "filled": true,
+          "value": "Carrer Santa Gemma Anterior 25313A00700066"
+        }
+      ]
+    },
+    {
+      "name": "Edificacio",
+      "filled": 6,
+      "total": 8,
+      "pct": 75.0,
+      "variables": [
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "filled": true,
+          "value": "vivienda unifamiliar"
+        },
+        {
+          "key": "num_floors",
+          "label": "Plantes",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "superficie_construida",
+          "label": "Sup. construida",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "filled": true,
+          "value": "405"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "filled": true,
+          "value": "+321.50"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "filled": true,
+          "value": "antropitzat"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "filled": true,
+          "value": "El terreny es presenta antropitzat"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "filled": true,
+          "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer Santa Gemma Anterior 25313A007"
+        }
+      ]
+    },
+    {
+      "name": "Camp DPSH",
+      "filled": 0,
+      "total": 4,
+      "pct": 0.0,
+      "variables": [
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "dpsh_tests",
+          "label": "Taula DPSH",
+          "filled": false,
+          "value": "[0 items]"
+        }
+      ]
+    },
+    {
+      "name": "Camp Sondeig",
+      "filled": 0,
+      "total": 0,
+      "pct": 0,
+      "variables": []
+    },
+    {
+      "name": "Camp Lab",
+      "filled": 0,
+      "total": 1,
+      "pct": 0.0,
+      "variables": [
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "filled": false,
+          "value": ""
+        }
+      ]
+    },
+    {
+      "name": "Geologia",
+      "filled": 4,
+      "total": 4,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "geology_paragraphs",
+          "label": "Paragrafs geologia",
+          "filled": true,
+          "value": "[10 items]"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "filled": true,
+          "value": "1"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "filled": true,
+          "value": "0,04"
+        },
+        {
+          "key": "materials_level_1",
+          "label": "Materials nivell 1",
+          "filled": true,
+          "value": "[PENDENT: Descripcio del nivell 1]\n\nRequereix plantilla de zona per a descriure la litologia, color, consistencia i cara"
+        }
+      ]
+    },
+    {
+      "name": "Geotecnia",
+      "filled": 1,
+      "total": 7,
+      "pct": 14.3,
+      "variables": [
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "soil_level_rows",
+          "label": "Taula nivells sol",
+          "filled": false,
+          "value": "[1 items]"
+        },
+        {
+          "key": "perm_rows",
+          "label": "Taula permeabilitat",
+          "filled": true,
+          "value": "[1 items]"
+        }
+      ]
+    },
+    {
+      "name": "Calculs",
+      "filled": 0,
+      "total": 3,
+      "pct": 0.0,
+      "variables": [
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "k30_value",
+          "label": "Coef. balast K30",
+          "filled": false,
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "elapsed_ms": 14141
+}

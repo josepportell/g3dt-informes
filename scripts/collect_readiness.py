@@ -141,7 +141,11 @@ def process_project(project_folder: str, *, full_pipeline: bool = False) -> dict
         if k.startswith('_'):
             continue
         val = v.get('value') if isinstance(v, dict) else v
+        source = v.get('source', '') if isinstance(v, dict) else ''
         if val and k not in merged_ud:
+            merged_ud[k] = val
+        elif val and source == 'ICGC ortho+visió':
+            # Enriched values override non-user entries
             merged_ud[k] = val
 
     generator = ReportGenerator(project_path=str(project_path), user_data=merged_ud)

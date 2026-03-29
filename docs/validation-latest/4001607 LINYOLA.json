@@ -1,0 +1,323 @@
+{
+  "overall": {
+    "filled": 36,
+    "total": 40,
+    "pct": 90.0
+  },
+  "categories": [
+    {
+      "name": "Identificacio",
+      "filled": 4,
+      "total": 6,
+      "pct": 66.7,
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "filled": true,
+          "value": "BUNYESC ARQUITECCTURA EFICIENT, SLP"
+        },
+        {
+          "key": "expedient",
+          "label": "Expedient",
+          "filled": true,
+          "value": "4001607"
+        },
+        {
+          "key": "architect_name",
+          "label": "Arquitecte",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "architect_company",
+          "label": "Despatx arquitecte",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "filled": true,
+          "value": "1 d'octubre de 2025"
+        },
+        {
+          "key": "data_signatura_text",
+          "label": "Data signatura",
+          "filled": true,
+          "value": "29 de març de 2026"
+        }
+      ]
+    },
+    {
+      "name": "Ubicacio",
+      "filled": 7,
+      "total": 7,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "filled": true,
+          "value": "Carrer Clot de la Llaguna nº16"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "filled": true,
+          "value": "Linyola"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "filled": true,
+          "value": "entre el Carrer Clot de la Llaguna nº16 i el Camí Arcs,Dels de Linyola"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "filled": true,
+          "value": "parcel·la amb construcció"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "filled": true,
+          "value": "Polígono"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "filled": true,
+          "value": "parcel·la buida"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "filled": true,
+          "value": "Camí Arcs,Dels"
+        }
+      ]
+    },
+    {
+      "name": "Edificacio",
+      "filled": 6,
+      "total": 8,
+      "pct": 75.0,
+      "variables": [
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "filled": true,
+          "value": "habitatge unifamiliar aïllat"
+        },
+        {
+          "key": "num_floors",
+          "label": "Plantes",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "superficie_construida",
+          "label": "Sup. construida",
+          "filled": false,
+          "value": ""
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "filled": true,
+          "value": "387"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "filled": true,
+          "value": "+245.00"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "filled": true,
+          "value": "antropitzat"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "filled": true,
+          "value": "La parcel·la es troba delimitada per vorada. El solar es presenta sense pavimentar i amb vegetació de petita alçada. En "
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "filled": true,
+          "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Camí Arcs,Dels existent al oest."
+        }
+      ]
+    },
+    {
+      "name": "Camp DPSH",
+      "filled": 4,
+      "total": 4,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "filled": true,
+          "value": "3"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "filled": true,
+          "value": "P-1,P-2,P-3"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "filled": true,
+          "value": "35"
+        },
+        {
+          "key": "dpsh_tests",
+          "label": "Taula DPSH",
+          "filled": true,
+          "value": "[3 items]"
+        }
+      ]
+    },
+    {
+      "name": "Camp Sondeig",
+      "filled": 0,
+      "total": 0,
+      "pct": 0,
+      "variables": []
+    },
+    {
+      "name": "Camp Lab",
+      "filled": 1,
+      "total": 1,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "filled": true,
+          "value": "0.0"
+        }
+      ]
+    },
+    {
+      "name": "Geologia",
+      "filled": 4,
+      "total": 4,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "geology_paragraphs",
+          "label": "Paragrafs geologia",
+          "filled": true,
+          "value": "[10 items]"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "filled": true,
+          "value": "0"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "filled": true,
+          "value": "0,04"
+        },
+        {
+          "key": "materials_level_1",
+          "label": "Materials nivell 1",
+          "filled": true,
+          "value": "El nivell 1 està format per nivell principal, de coloracions clars a marró clar. Aquests materials presenten característ"
+        }
+      ]
+    },
+    {
+      "name": "Geotecnia",
+      "filled": 7,
+      "total": 7,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "filled": true,
+          "value": "2.00"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "filled": true,
+          "value": "0.00"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "filled": true,
+          "value": "36°"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "filled": true,
+          "value": "469"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "filled": true,
+          "value": "35-R"
+        },
+        {
+          "key": "soil_level_rows",
+          "label": "Taula nivells sol",
+          "filled": true,
+          "value": "[1 items]"
+        },
+        {
+          "key": "perm_rows",
+          "label": "Taula permeabilitat",
+          "filled": true,
+          "value": "[1 items]"
+        }
+      ]
+    },
+    {
+      "name": "Calculs",
+      "filled": 3,
+      "total": 3,
+      "pct": 100.0,
+      "variables": [
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "filled": true,
+          "value": "1.90"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "filled": true,
+          "value": "1.12"
+        },
+        {
+          "key": "k30_value",
+          "label": "Coef. balast K30",
+          "filled": true,
+          "value": "6.3"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "elapsed_ms": 50292
+}
