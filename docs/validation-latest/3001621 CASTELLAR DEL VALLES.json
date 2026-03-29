@@ -145,7 +145,7 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer existent al sud. El solar es p"
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer existent al sud. La parcel·la "
         },
         {
           "key": "access_description",
@@ -326,5 +326,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 24911
+  "elapsed_ms": 17989
 }

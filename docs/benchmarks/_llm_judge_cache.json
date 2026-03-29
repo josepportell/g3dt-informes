@@ -233,5 +233,10 @@
     "score": 4,
     "status": "CLOSE",
     "explanation": "Both texts describe the same essential information: field work access occurs from a street located to the west. Minor differences include: (1) language variant (Spanish vs Catalan), (2) pipeline specifies the actual street name ('Carrer Santa Gemma') while benchmark is generic ('la calle'), (3) pipeline says 'entrada a la zona d'estudi' (study area) vs benchmark's 'entrada en la parcela' (parcel entry) - both convey access but with slight scope differences. The core meaning is preserved; differences are wording choices rather than semantic divergence."
+  },
+  "2ba3e16c9ee2a4e70a65c099bee02ced": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text is incomplete (cuts off at 'La parcel·la'), making proper comparison impossible. What is present shows minor differences: 'carrer existent' vs 'carrer adjacent' (slightly different descriptors), and switches from 'solar' to 'parcel·la' (synonymous terms). However, the text is truncated and missing ~80% of the benchmark content, including critical details about topography, slope, work platform elevation, nearby constructions, and subsurface conditions. Cannot assess full semantic equivalence due to incompleteness."
   }
 }
