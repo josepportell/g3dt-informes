@@ -263,6 +263,54 @@ class ImageManager:
         )
         return result
 
+    def _load_user_photo_selection(self) -> dict[str, list[Path]] | None:
+        """Load user-curated photo selection from photo_selection.json.
+
+        Returns dict matching discover_photos() format if a user selection
+        exists (source == "user"), or None to fall through to AI/pattern.
+        """
+        cache_path = self.project_path / 'validation' / 'photo_selection.json'
+        if not cache_path.exists():
+            return None
+
+        try:
+            import json
+            data = json.loads(cache_path.read_text(encoding='utf-8'))
+        except Exception:
+            return None
+
+        if data.get('source') != 'user':
+            return None
+
+        result: dict[str, list[Path]] = {
+            'site': [], 'dpsh': [], 'sondeig': [], 'materials': [],
+        }
+
+        slot_to_category = {
+            'site_1': 'site', 'site_2': 'site',
+            'dpsh': 'dpsh', 'sondeig': 'sondeig', 'materials': 'materials',
+        }
+
+        for slot, category in slot_to_category.items():
+            rel_path = data.get(slot)
+            if not rel_path:
+                continue
+            full_path = self.project_path / rel_path
+            if not str(full_path.resolve()).startswith(str(self.project_path.resolve())):
+                continue
+            photo = full_path.resolve()
+            if photo.is_file() and photo not in result[category]:
+                result[category].append(photo)
+
+        if any(result.values()):
+            logger.info(
+                "User photo selection loaded: %s",
+                {k: [p.name for p in v] for k, v in result.items() if v},
+            )
+            return result
+
+        return None
+
     def select_photos_ai(self) -> dict[str, list[Path]] | None:
         """Phase 7: AI-based photo selection.
 
@@ -287,12 +335,15 @@ class ImageManager:
         if len(candidates) < 2:
             return None  # Not enough photos to warrant AI selection
 
-        # Check cache
+        # Check cache — never overwrite user-curated selection
         cache_path = self.project_path / 'validation' / 'photo_selection.json'
         if cache_path.exists():
             try:
                 import json
                 cached = json.loads(cache_path.read_text(encoding='utf-8'))
+                if cached.get('source') == 'user':
+                    logger.info("User photo selection exists, skipping AI selection")
+                    return None
                 selection = self._parse_ai_selection(cached, candidates)
                 if selection:
                     logger.info("Photo selection loaded from cache (%d slots filled)",
@@ -850,8 +901,12 @@ class ImageManager:
         else:
             context['fig_spt_cullera_image'] = PLACEHOLDER_TEXT
 
-        # 2. Field photos — Phase 7 AI selection first, pattern matching fallback
-        photos = self.select_photos_ai() or self.discover_photos()
+        # 2. Field photos — user selection > AI selection > pattern matching
+        photos = (
+            self._load_user_photo_selection()
+            or self.select_photos_ai()
+            or self.discover_photos()
+        )
 
         # Site photos (up to 2) — forced 4:3 landscape to match Eva's layout
         if photos['site']:

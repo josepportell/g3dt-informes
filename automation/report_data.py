@@ -942,7 +942,11 @@ def _reconstruct_terzaghi_from_dict(data: dict) -> BearingCapacityResult:
         Qa=results.get('Qa_kg_cm2', 0),
         settlement_cm=results.get('settlement_cm'),
         settlement_type=results.get('settlement_type', 'immediat'),
+        Es_used=results.get('Es_used_kg_cm2'),
         qa_terzaghi_peck=results.get('qa_terzaghi_peck_kg_cm2'),
+        Qa_uncapped=results.get('Qa_uncapped_kg_cm2'),
+        Fw=results.get('Fw'),
+        Fd_tp=results.get('Fd_tp'),
         qa_governs=results.get('qa_governs', 'terzaghi'),
     )
 

@@ -47,6 +47,13 @@ from .sections import (
 
 logger = logging.getLogger(__name__)
 
+# Eva's typical value ranges by soil category (confirmed 2026-02-26)
+_TYPICAL_RANGES = {
+    'granular': {'gamma': '2.0', 'c': '0.0-0.05', 'phi': '38-39', 'E': '450-650', 'Qa_cap': '3.0'},
+    'cohesive': {'gamma': '1.90', 'c': '0.05', 'phi': '28', 'E': '100', 'Qa_cap': '3.0'},
+    'rock': {'gamma': '2.20', 'c': '1.0', 'phi': '30-35', 'E': '>500-800', 'Qa_cap': '4.0-4.5'},
+}
+
 
 def _catalan_ordinal(n: int) -> str:
     """Return Catalan ordinal abbreviation: 1er, 2n, 3r, 4t, 5è, 6è..."""
@@ -1313,6 +1320,13 @@ class ReportGenerator:
             if not context['geotech_rows']:
                 context['geotech_rows'] = [{'name': '', 'material_short': '', 'nb': '', 'n': '', 'density': '', 'cohesion': '', 'phi': '', 'E': ''}]
 
+            # Determine soil category for Eva's typical ranges (used by both geotech and Qa blocks)
+            gp = self.report_data.geotechnical_params
+            sl = self.report_data.soil_levels[-1] if self.report_data.soil_levels else None
+            soil_cat = 'rock' if (gp and gp.cohesion and gp.cohesion >= 0.5) else (
+                'cohesive' if sl and sl.soil_type == 'cohesive' else 'granular')
+            ranges = _TYPICAL_RANGES.get(soil_cat, _TYPICAL_RANGES['granular'])
+
             # Keep old single-value vars for backward compatibility (used in text paragraphs)
             # Use deepest level (bearing stratum) — Eva's reports always show bearing stratum params
             if context['geotech_rows'] and context['geotech_rows'][-1]['name']:
@@ -1325,13 +1339,14 @@ class ReportGenerator:
                 context['geotech_phi'] = bearing['phi']
                 context['geotech_E'] = bearing['E']
                 # Calculation transparency for Tier C variables
-                gp = self.report_data.geotechnical_params
                 if gp:
-                    sl = self.report_data.soil_levels[-1] if self.report_data.soil_levels else None
                     n20_src = f"N20={sl.n20_average:.0f}" if sl and sl.n20_average else ""
-                    context['_calc_E'] = f"CTE D.23 {n20_src}" if n20_src else ""
-                    context['_calc_phi'] = f"Schmertmann Nb={sl.n20_average/0.83:.0f}" if sl and sl.n20_average else ""
-                    context['_calc_gamma'] = f"CTE D.27 {sl.soil_type}" if sl else ""
+                    context['_calc_E'] = f"CTE D.23 {n20_src} | Rang Eva: {ranges['E']}" if n20_src else ""
+                    context['_calc_phi'] = (
+                        f"Schmertmann Nb={sl.n20_average/0.83:.0f} | Rang Eva: {ranges['phi']}"
+                    ) if sl and sl.n20_average else ""
+                    context['_calc_gamma'] = f"CTE D.27 {sl.soil_type} | Rang Eva: {ranges['gamma']}" if sl else ""
+                    context['_calc_cohesion'] = f"Rang Eva: {ranges['c']}"
             else:
                 context['geotech_level_name'] = ''
                 context['geotech_nb'] = ''
@@ -1340,6 +1355,10 @@ class ReportGenerator:
                 context['geotech_cohesion'] = ''
                 context['geotech_phi'] = ''
                 context['geotech_E'] = ''
+                context['_calc_E'] = ''
+                context['_calc_phi'] = ''
+                context['_calc_gamma'] = ''
+                context['_calc_cohesion'] = ''
             # Also keep single perm/soil vars for any paragraph references
             context['soil_level_name'] = context['soil_level_rows'][0]['name'] if context['soil_level_rows'] else ''
             context['soil_level_material'] = context['soil_level_rows'][0]['material'] if context['soil_level_rows'] else ''
@@ -1375,13 +1394,43 @@ class ReportGenerator:
                 Df = self.user_data.get('foundation_depth_m', 0.8)
                 avg_n20 = self.report_data.dpsh.overall_average_n20 if self.report_data.dpsh else None
                 nb = avg_n20 / 0.83 if avg_n20 else None
-                context['_calc_qa'] = (
-                    f"Terzaghi Nb={nb:.0f}, B={B}m, Df={Df}m"
-                    + (f", cap={tr.Qa:.2f}" if tr.Qa == tr.Qa else "")
-                ) if nb else ""
-                context['_calc_settlement'] = (
-                    f"Schmertmann Es={tr.Es_used:.0f}, B={B}m"
-                ) if tr.settlement_cm and hasattr(tr, 'Es_used') else ""
+                # Soil category for Eva's Qa cap range (uses shared soil_cat/ranges)
+                # Qa note with Terzaghi-Peck breakdown
+                if nb:
+                    formula = f"Nb/12={nb:.0f}/12={nb/12:.2f}"
+                    if tr.Fw is not None:
+                        formula += f" / Fw={tr.Fw:.2f}"
+                    if tr.Fd_tp is not None:
+                        formula += f" x Fd={tr.Fd_tp:.2f}"
+                    if tr.Qa_uncapped is not None:
+                        context['_calc_qa'] = f"{formula} = {tr.Qa_uncapped:.2f} | Cap: {tr.Qa:.2f} ({ranges['Qa_cap']})"
+                    else:
+                        context['_calc_qa'] = f"{formula} = {tr.Qa:.2f} | Rang Eva: {ranges['Qa_cap']}"
+                else:
+                    context['_calc_qa'] = ""
+                # Settlement note with sensitivity +/-25% Es
+                if tr.settlement_cm and tr.Es_used:
+                    Es = tr.Es_used
+                    base = tr.settlement_cm
+                    Es_low = Es * 0.75
+                    Es_high = Es * 1.25
+                    s_low = base * Es / Es_high
+                    s_high = base * Es / Es_low
+                    context['_calc_settlement'] = (
+                        f"Schmertmann Es={Es:.0f}, B={B}m \u2192 {base:.2f} cm"
+                        f" | Si Es={Es_low:.0f}: {s_high:.2f} cm"
+                        f" | Si Es={Es_high:.0f}: {s_low:.2f} cm"
+                    )
+                    context['_calc_Es'] = f"Es={Es:.0f} (2.5\u00d7Nb) | \u00b125%: {Es_low:.0f}-{Es_high:.0f}"
+                else:
+                    context['_calc_settlement'] = ""
+                    context['_calc_Es'] = ""
+            else:
+                context['qa_value'] = ''
+                context['settlement'] = ''
+                context['_calc_qa'] = ''
+                context['_calc_settlement'] = ''
+                context['_calc_Es'] = ''
 
             # Section 4 conditional content (empentes, estabilitat, expansivitat)
             if sections.get('section4'):

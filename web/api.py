@@ -8,6 +8,7 @@ import logging
 import os
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
@@ -229,6 +230,14 @@ def generate_report(project_name: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+class PhotoSelectionRequest(BaseModel):
+    site_1: str | None = None
+    site_2: str | None = None
+    dpsh: str | None = None
+    sondeig: str | None = None
+    materials: str | None = None
+
+
 class GeolocalitzarRequest(BaseModel):
     address: str | None = None
 
@@ -364,6 +373,129 @@ def get_thumbnail(project_name: str, file: str, size: int = 80):
     except Exception as e:
         logger.warning("Thumbnail generation failed for %s: %s", file, e)
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# --- Photo picker endpoints ---
+
+_PHOTO_SLOTS = {
+    "site_1": {"category": "site", "label": "Vista general 1"},
+    "site_2": {"category": "site", "label": "Vista general 2"},
+    "dpsh": {"category": "dpsh", "label": "DPSH"},
+    "sondeig": {"category": "sondeig", "label": "Sondeig"},
+    "materials": {"category": "materials", "label": "Materials"},
+}
+
+
+@router.get("/photos/{project_name:path}")
+def list_photos(project_name: str):
+    """List candidate photos and current selection for a project."""
+    import json as _json
+
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    # Find photos directory
+    foto_dir: Path | None = None
+    for name in ['FOTOGRAFIES', 'FOTOS DE CAMP + PLANOL PUNTS', 'FOTOGRAFÍAS']:
+        candidate = project_path / name
+        if candidate.is_dir():
+            foto_dir = candidate
+            break
+    if foto_dir is None:
+        for d in sorted(project_path.iterdir()):
+            if d.is_dir() and d.name.upper().startswith('FOTOS'):
+                foto_dir = d
+                break
+
+    photos: list[dict[str, str]] = []
+    if foto_dir:
+        for f in sorted(foto_dir.rglob('*')):
+            if f.is_file() and f.suffix.lower() in _IMAGE_EXTENSIONS and f.name != 'Thumbs.db':
+                rel = str(f.relative_to(project_path))
+                photos.append({
+                    "filename": f.name,
+                    "relative_path": rel,
+                    "thumbnail_url": f"/api/thumbnail/{quote(project_name, safe='')}?file={quote(rel, safe='/')}",
+                })
+
+    # Load current selection
+    sel_path = project_path / 'validation' / 'photo_selection.json'
+    current_selection: dict[str, Any] | None = None
+    if sel_path.exists():
+        try:
+            current_selection = _json.loads(sel_path.read_text(encoding='utf-8'))
+        except Exception:
+            pass
+
+    # Slot info for the frontend
+    slot_info = {
+        "site": {"count": 2, "label": "Vista general"},
+        "dpsh": {"count": 1, "label": "DPSH"},
+        "sondeig": {"count": 1, "label": "Sondeig"},
+        "materials": {"count": 1, "label": "Materials"},
+    }
+
+    return {
+        "photos": photos,
+        "current_selection": current_selection,
+        "slot_info": slot_info,
+    }
+
+
+@router.post("/photos/{project_name:path}/select")
+def select_photos(project_name: str, req: PhotoSelectionRequest):
+    """Save user photo selection for report generation."""
+    import json as _json
+
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    resolved_project = project_path.resolve()
+
+    # Validate each path
+    selection: dict[str, Any] = {"source": "user"}
+    for slot in ("site_1", "site_2", "dpsh", "sondeig", "materials"):
+        rel_path = getattr(req, slot)
+        if rel_path is None:
+            selection[slot] = None
+            continue
+
+        # Security: resolve and check within project
+        file_path = (project_path / rel_path).resolve()
+        if not str(file_path).startswith(str(resolved_project)):
+            raise HTTPException(status_code=403, detail=f"Path traversal not allowed: {slot}")
+        if not file_path.exists():
+            raise HTTPException(status_code=404, detail=f"File not found: {rel_path}")
+        if file_path.suffix.lower() not in _IMAGE_EXTENSIONS:
+            raise HTTPException(status_code=400, detail=f"Not an image file: {rel_path}")
+
+        selection[slot] = rel_path
+
+    sel_dir = project_path / 'validation'
+    sel_dir.mkdir(exist_ok=True)
+    sel_path = sel_dir / 'photo_selection.json'
+    sel_path.write_text(_json.dumps(selection, indent=2, ensure_ascii=False), encoding='utf-8')
+
+    return {"status": "saved"}
+
+
+@router.post("/photos/{project_name:path}/reset")
+def reset_photos(project_name: str):
+    """Delete user photo selection, reverting to AI/auto selection."""
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    sel_path = project_path / 'validation' / 'photo_selection.json'
+    if sel_path.exists():
+        sel_path.unlink()
+
+    return {"status": "reset"}
 
 
 # --- SmartScan endpoints ---

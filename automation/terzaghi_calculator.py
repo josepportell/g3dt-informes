@@ -97,9 +97,13 @@ class BearingCapacityResult:
     # Settlement (if calculated)
     settlement_cm: Optional[float] = None
     settlement_type: str = "immediat"  # or "diferit" for clays
+    Es_used: Optional[float] = None  # Schmertmann Es actually used (kg/cm²)
 
     # Terzaghi-Peck empirical check
     qa_terzaghi_peck: Optional[float] = None  # T-P empirical Qa (kg/cm²), if computed
+    Qa_uncapped: Optional[float] = None  # Qa before professional cap
+    Fw: Optional[float] = None  # T-P width correction ((B+0.3)/B)²
+    Fd_tp: Optional[float] = None  # T-P depth factor min(1+0.33*Df/B, 1.33)
     qa_governs: str = "terzaghi"  # Which method governs: "terzaghi" or "terzaghi_peck"
 
     def to_dict(self) -> dict:
@@ -125,9 +129,13 @@ class BearingCapacityResult:
                 'qu_kg_cm2': round(self.qu, 3),
                 'safety_factor': self.safety_factor,
                 'Qa_kg_cm2': round(self.Qa, 2),
+                'Qa_uncapped_kg_cm2': round(self.Qa_uncapped, 2) if self.Qa_uncapped else None,
                 'settlement_cm': round(self.settlement_cm, 2) if self.settlement_cm else None,
                 'settlement_type': self.settlement_type,
+                'Es_used_kg_cm2': round(self.Es_used, 1) if self.Es_used else None,
                 'qa_terzaghi_peck_kg_cm2': round(self.qa_terzaghi_peck, 2) if self.qa_terzaghi_peck else None,
+                'Fw': round(self.Fw, 4) if self.Fw else None,
+                'Fd_tp': round(self.Fd_tp, 4) if self.Fd_tp else None,
                 'qa_governs': self.qa_governs,
             }
         }
@@ -384,7 +392,11 @@ class TerzaghiCalculator:
         # cohesive soils or rock.
         qa_tp = None
         qa_governs = "terzaghi"
+        Fw = None
+        Fd_tp = None
         if nspt is not None and nspt < 100 and is_granular:
+            Fw = ((B + 0.3) / B) ** 2
+            Fd_tp = min(1 + 0.33 * (Df / B), 1.33) if B > 0 and Df > 0 else 1.0
             qa_tp = terzaghi_peck_qa(nspt, B, Df)
             if qa_tp < Qa:
                 Qa = qa_tp
@@ -396,6 +408,7 @@ class TerzaghiCalculator:
         QA_CAP_SOIL = 3.0
         QA_CAP_ROCK = 5.0
         qa_cap = QA_CAP_ROCK if self.cohesion >= 0.5 else QA_CAP_SOIL
+        Qa_uncapped = Qa
         if Qa > qa_cap:
             Qa = qa_cap
             if qa_governs == "terzaghi":
@@ -404,6 +417,7 @@ class TerzaghiCalculator:
         # Calculate settlement if requested
         settlement = None
         settlement_type = "immediat"
+        Es_used = None
 
         if calculate_settlement:
             # Use provided E or estimate from phi
@@ -421,6 +435,7 @@ class TerzaghiCalculator:
             # Back-engineered from Eva's reports (±1-8% deviation)
             if Es_override is not None:
                 Es = Es_override
+                Es_used = Es
                 settlement = schmertmann_settlement(
                     q_net=Qa, B=B, Df=Df, Es=Es,
                     gamma=self.gamma, shape=shape,
@@ -430,6 +445,7 @@ class TerzaghiCalculator:
                     Es = 3.5 * nspt
                 else:
                     Es = 2.5 * nspt
+                Es_used = Es
                 settlement = schmertmann_settlement(
                     q_net=Qa, B=B, Df=Df, Es=Es,
                     gamma=self.gamma, shape=shape,
@@ -463,7 +479,11 @@ class TerzaghiCalculator:
             Qa=Qa,
             settlement_cm=settlement,
             settlement_type=settlement_type,
+            Es_used=Es_used,
             qa_terzaghi_peck=qa_tp,
+            Qa_uncapped=Qa_uncapped if Qa_uncapped != Qa else None,
+            Fw=Fw,
+            Fd_tp=Fd_tp,
             qa_governs=qa_governs,
         )
 
