@@ -375,6 +375,153 @@ def get_thumbnail(project_name: str, file: str, size: int = 80):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# --- Figure preview endpoint ---
+
+_FIGURE_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "images"
+_G3DT_ROOT = Path(__file__).resolve().parent.parent
+
+# Prefix patterns in cache dir → figure slot key
+_CACHE_PREFIX_TO_SLOT: list[tuple[str, str, str]] = [
+    # (glob prefix, slot_key, human source label)
+    ("cadastre_sitplan_*", "fig_cadastre", "PDF crop situation plan"),
+    ("cadastre_*", "fig_cadastre", "Architect plan crop"),
+    ("google_sat_parcel_*", "fig_aerea", "Google satellite"),
+    ("orthophoto_parcel_*", "fig_aerea", "ICGC orthophoto"),
+    ("main_plan_*", "fig_main_plan", "Architect plan crop"),
+    ("planol_*", "fig_main_plan", "Full plan render"),
+    ("geological_composite_*", "fig_geological", "ICGC geological composite"),
+    ("geological_*", "fig_geological", "ICGC geological map"),
+    ("tall_*", "fig_correlation", "Correlation section PDF"),
+]
+
+# SmartScan role → figure slot key
+_ROLE_TO_FIGURE_SLOT: dict[str, tuple[str, str]] = {
+    "figure_situation_map": ("fig_cadastre", "SmartScan figure"),
+    "figure_geological_map": ("fig_geological", "SmartScan figure"),
+    "figure_test_points": ("fig_test_points", "SmartScan figure"),
+    "figure_correlation": ("fig_correlation", "SmartScan figure"),
+}
+
+
+def _collect_figure_previews(
+    project_path: Path, project_name: str
+) -> dict[str, dict[str, str]]:
+    """
+    Collect figure image previews from cache, SmartScan roles, and static assets.
+
+    Returns: {slot_key: {filename, thumbnail_url, source}} for each found figure.
+    """
+    import json as _json
+
+    figures: dict[str, dict[str, str]] = {}
+    encoded_name = quote(project_name, safe='')
+
+    # 1. Scan cache dir for known prefixes
+    if _FIGURE_CACHE_DIR.is_dir():
+        for glob_prefix, slot_key, source_label in _CACHE_PREFIX_TO_SLOT:
+            if slot_key in figures:
+                continue  # first match wins per slot
+            matches = sorted(_FIGURE_CACHE_DIR.glob(glob_prefix))
+            if matches:
+                f = matches[-1]  # most recent by name
+                if f.is_file() and f.suffix.lower() in _IMAGE_EXTENSIONS:
+                    figures[slot_key] = {
+                        "filename": f.name,
+                        "thumbnail_url": (
+                            f"/api/figure-preview/{encoded_name}"
+                            f"?slot={slot_key}&file={quote(f.name, safe='')}"
+                        ),
+                        "source": source_label,
+                    }
+
+    # 2. SmartScan figure roles from file_mapping.json
+    fm_path = project_path / "file_mapping.json"
+    if fm_path.exists():
+        try:
+            fm = _json.loads(fm_path.read_text(encoding="utf-8"))
+            roles = fm.get("roles", {})
+            for role_name, (slot_key, source_label) in _ROLE_TO_FIGURE_SLOT.items():
+                if slot_key in figures:
+                    continue
+                if role_name in roles:
+                    fig_file = project_path / roles[role_name]["path"]
+                    if fig_file.exists() and fig_file.suffix.lower() in _IMAGE_EXTENSIONS:
+                        rel = str(fig_file.relative_to(project_path))
+                        figures[slot_key] = {
+                            "filename": fig_file.name,
+                            "thumbnail_url": (
+                                f"/api/thumbnail/{encoded_name}"
+                                f"?file={quote(rel, safe='/')}"
+                            ),
+                            "source": source_label,
+                        }
+        except Exception as e:
+            logger.warning("Failed to read file_mapping.json for figures: %s", e)
+
+    # 3. Static cullera SPT image
+    if "fig_spt_cullera" not in figures:
+        for ext in (".jpg", ".png"):
+            p = _G3DT_ROOT / "templates" / "images" / f"cullera_spt{ext}"
+            if p.exists():
+                figures["fig_spt_cullera"] = {
+                    "filename": p.name,
+                    "thumbnail_url": (
+                        f"/api/figure-preview/{encoded_name}"
+                        f"?slot=fig_spt_cullera&file={quote(p.name, safe='')}"
+                    ),
+                    "source": "Static template",
+                }
+                break
+
+    return figures
+
+
+@router.get("/figure-preview/{project_name:path}")
+def get_figure_preview(project_name: str, slot: str, file: str, size: int = 200):
+    """Serve a thumbnail of a figure image from cache or static assets."""
+    # Validate project exists (security: only serve for valid projects)
+    try:
+        wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    # Resolve figure file: check cache dir first, then static templates
+    file_path: Path | None = None
+    candidate = (_FIGURE_CACHE_DIR / file).resolve()
+    if candidate.is_file() and str(candidate).startswith(str(_FIGURE_CACHE_DIR.resolve())):
+        file_path = candidate
+
+    if file_path is None:
+        candidate = (_G3DT_ROOT / "templates" / "images" / file).resolve()
+        templates_dir = (_G3DT_ROOT / "templates" / "images").resolve()
+        if candidate.is_file() and str(candidate).startswith(str(templates_dir)):
+            file_path = candidate
+
+    if file_path is None:
+        raise HTTPException(status_code=404, detail="Figure file not found")
+
+    if file_path.suffix.lower() not in _IMAGE_EXTENSIONS:
+        raise HTTPException(status_code=400, detail="Not an image file")
+
+    try:
+        from PIL import Image
+        import io
+
+        img = Image.open(str(file_path))
+        img.thumbnail((size, size))
+        buf = io.BytesIO()
+        fmt = "PNG" if file_path.suffix.lower() == ".png" else "JPEG"
+        img.save(buf, format=fmt, quality=75)
+        img.close()
+        buf.seek(0)
+
+        media_type = "image/png" if fmt == "PNG" else "image/jpeg"
+        return StreamingResponse(buf, media_type=media_type)
+    except Exception as e:
+        logger.warning("Figure thumbnail generation failed for %s: %s", file, e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # --- Photo picker endpoints ---
 
 _PHOTO_SLOTS = {
@@ -437,8 +584,12 @@ def list_photos(project_name: str):
         "materials": {"count": 1, "label": "Materials"},
     }
 
+    # Collect figure previews (cache, SmartScan, static)
+    figures = _collect_figure_previews(project_path, project_name)
+
     return {
         "photos": photos,
+        "figures": figures,
         "current_selection": current_selection,
         "slot_info": slot_info,
     }

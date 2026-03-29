@@ -1917,11 +1917,11 @@
                     <span>Carregant fotografies...</span>
                 </div>
                 <div id="photosEmpty" style="display:none; text-align:center; padding:40px; color:#7f8c8d;">
-                    <p>No s'han trobat fotografies al projecte.</p>
+                    <p>No s'han trobat imatges (fotografies ni figures) al projecte.</p>
                 </div>
                 <div id="photosContent" style="display:none;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                        <h3 style="margin:0;">Seleccio de Fotografies</h3>
+                        <h3 style="margin:0;">Imatges de l'Informe</h3>
                         <div style="display:flex; gap:8px; align-items:center;">
                             <span id="photosSource" style="color:#7f8c8d; font-size:13px;"></span>
                             <button class="btn btn-secondary" onclick="resetPhotos()" style="padding:6px 14px; font-size:13px;">Restablir seleccio IA</button>
@@ -4781,11 +4781,20 @@
         let lastPhotosData = null;
 
         const REPORT_SLOTS = [
-            { key: 'site_1', label: 'Foto vista general 1', size: '70mm costat' },
-            { key: 'site_2', label: 'Foto vista general 2', size: '70mm costat' },
-            { key: 'dpsh', label: 'Foto penetrometre DPSH', size: '120mm' },
-            { key: 'sondeig', label: 'Foto sondeig', size: '120mm, condicional' },
-            { key: 'materials', label: 'Foto materials', size: '120mm' },
+            // Figures (report order)
+            { key: 'fig_cadastre', label: 'Figura 1 - Situacio (cadastre)', size: '70mm', type: 'figure' },
+            { key: 'fig_aerea', label: 'Figura 2 - Vista aeria', size: '70mm', type: 'figure' },
+            { key: 'fig_main_plan', label: 'Figura 3 - Planol planta', size: '150mm', type: 'figure' },
+            // Field photos
+            { key: 'site_1', label: 'Foto vista general 1', size: '70mm costat', type: 'photo' },
+            { key: 'site_2', label: 'Foto vista general 2', size: '70mm costat', type: 'photo' },
+            { key: 'dpsh', label: 'Foto penetrometre DPSH', size: '120mm', type: 'photo' },
+            { key: 'sondeig', label: 'Foto sondeig', size: '120mm, condicional', type: 'photo' },
+            { key: 'materials', label: 'Foto materials', size: '120mm', type: 'photo' },
+            // More figures
+            { key: 'fig_spt_cullera', label: 'Cullera SPT', size: '150mm', type: 'figure' },
+            { key: 'fig_geological', label: 'Mapa geologic (ICGC)', size: '150mm', type: 'figure' },
+            { key: 'fig_correlation', label: 'Tall geotecnic', size: '150mm', type: 'figure' },
         ];
 
         async function loadPhotos() {
@@ -4798,7 +4807,10 @@
                 if (!resp.ok) throw new Error(await resp.text());
                 const data = await resp.json();
 
-                if (!data.photos || data.photos.length === 0) {
+                const hasPhotos = data.photos && data.photos.length > 0;
+                const hasFigures = data.figures && Object.keys(data.figures).length > 0;
+
+                if (!hasPhotos && !hasFigures) {
                     document.getElementById('photosLoading').style.display = 'none';
                     document.getElementById('photosEmpty').style.display = 'block';
                     return;
@@ -4842,7 +4854,8 @@
         function renderPhotoSlots(data) {
             const slotsDiv = document.getElementById('photoSlots');
             lastPhotosData = data;
-            const photos = data.photos;
+            const photos = data.photos || [];
+            const figures = data.figures || {};
 
             // Build slot label lookup for "used in" badges
             const slotLabels = {};
@@ -4851,66 +4864,100 @@
             let html = '';
 
             for (const slot of REPORT_SLOTS) {
-                const selectedPath = photosSelection[slot.key];
-                const selectedPhoto = selectedPath ? photos.find(p => p.relative_path === selectedPath) : null;
+                if (slot.type === 'figure') {
+                    // --- Figure slot: preview-only, no alternatives ---
+                    const fig = figures[slot.key];
+                    const hasFig = !!fig;
+                    const borderColor = hasFig ? '#8e44ad' : '#dee2e6';
 
-                html += `<div style="margin-bottom:28px; padding:16px; background:#f8f9fa; border-radius:8px; border-left:4px solid ${selectedPhoto ? '#3498db' : '#dee2e6'};">`;
-
-                // Header
-                html += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">`;
-                html += `<div>`;
-                html += `<strong style="font-size:14px; color:#2c3e50;">${escapeHtml(slot.label)}</strong>`;
-                html += `<span style="color:#95a5a6; font-size:12px; margin-left:8px;">${escapeHtml(slot.size)}</span>`;
-                html += `</div>`;
-                if (selectedPhoto) {
-                    html += `<span style="color:#27ae60; font-size:12px;">${escapeHtml(selectedPhoto.filename)}</span>`;
-                } else {
-                    html += `<span style="color:#e74c3c; font-size:12px;">Cap foto seleccionada</span>`;
-                }
-                html += `</div>`;
-
-                // Selected photo (large)
-                if (selectedPhoto) {
-                    html += `<div style="margin-bottom:12px; display:inline-block; position:relative; cursor:pointer; border:3px solid #3498db; border-radius:6px; overflow:hidden;" onclick="selectPhotoForSlot('${escapeHtml(slot.key)}', '${escapeHtml(selectedPhoto.relative_path)}')">`;
-                    html += `<img src="${escapeHtml(selectedPhoto.thumbnail_url)}" style="height:180px; display:block; border-radius:4px;" loading="lazy" alt="${escapeHtml(selectedPhoto.filename)}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding:30px;text-align:center;color:#aaa;font-size:11px\\'>Error</div>'">`;
-                    html += `<div style="position:absolute; top:6px; right:6px; background:#3498db; color:white; border-radius:4px; padding:2px 8px; font-size:11px;">Seleccionada</div>`;
+                    html += `<div style="margin-bottom:28px; padding:16px; background:#f5f0f8; border-radius:8px; border-left:4px solid ${borderColor};">`;
+                    html += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">`;
+                    html += `<div>`;
+                    html += `<strong style="font-size:14px; color:#2c3e50;">${escapeHtml(slot.label)}</strong>`;
+                    html += `<span style="color:#95a5a6; font-size:12px; margin-left:8px;">${escapeHtml(slot.size)}</span>`;
+                    html += `<span style="background:#8e44ad; color:white; font-size:10px; padding:1px 6px; border-radius:3px; margin-left:8px;">Figura</span>`;
                     html += `</div>`;
-                }
-
-                // Alternatives grid (all OTHER photos)
-                const alternatives = photos.filter(p => p.relative_path !== selectedPath);
-                if (alternatives.length > 0) {
-                    html += `<div style="font-size:12px; color:#7f8c8d; margin-bottom:6px;">Alternatives (${alternatives.length}):</div>`;
-                    html += `<div style="display:flex; flex-wrap:wrap; gap:8px;">`;
-                    for (const photo of alternatives) {
-                        // Check if this photo is used in another slot
-                        let usedInKey = null;
-                        for (const [sk, sp] of Object.entries(photosSelection)) {
-                            if (sp === photo.relative_path && sk !== slot.key) {
-                                usedInKey = sk;
-                                break;
-                            }
-                        }
-
-                        const opacity = usedInKey ? '0.5' : '1';
-                        const border = usedInKey ? '2px dashed #95a5a6' : '2px solid transparent';
-                        const usedLabel = usedInKey ? (slotLabels[usedInKey] || usedInKey) : '';
-
-                        html += `<div style="cursor:pointer; border:${border}; border-radius:4px; opacity:${opacity}; transition:all 0.15s; position:relative;" `;
-                        html += `onclick="selectPhotoForSlot('${escapeHtml(slot.key)}', '${escapeHtml(photo.relative_path)}')" `;
-                        html += `title="${escapeHtml(photo.filename)}${usedInKey ? ' (usat a ' + escapeHtml(usedLabel) + ')' : ''}">`;
-                        html += `<img src="${escapeHtml(photo.thumbnail_url)}" style="height:70px; width:90px; object-fit:cover; border-radius:3px; display:block;" loading="lazy" alt="${escapeHtml(photo.filename)}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding:15px;text-align:center;color:#aaa;font-size:9px\\'>Error</div>'">`;
-                        if (usedInKey) {
-                            html += `<div style="position:absolute; bottom:2px; left:2px; background:rgba(0,0,0,0.6); color:white; font-size:9px; padding:1px 4px; border-radius:2px;">${escapeHtml(usedLabel)}</div>`;
-                        }
-                        html += `</div>`;
+                    if (hasFig) {
+                        html += `<span style="color:#27ae60; font-size:12px;">${escapeHtml(fig.source)}</span>`;
+                    } else {
+                        html += `<span style="color:#e74c3c; font-size:12px;">Imatge pendent</span>`;
                     }
                     html += `</div>`;
-                } else {
-                    html += `<div style="color:#95a5a6; font-size:12px;">No hi ha altres fotos disponibles</div>`;
-                }
 
-                html += `</div>`;
+                    if (hasFig) {
+                        html += `<div style="display:inline-block; border:2px solid #8e44ad; border-radius:6px; overflow:hidden;">`;
+                        html += `<img src="${escapeHtml(fig.thumbnail_url)}&size=300" style="max-height:200px; display:block;" loading="lazy" alt="${escapeHtml(fig.filename)}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding:30px;text-align:center;color:#aaa;font-size:11px\\'>Error carregant</div>'">`;
+                        html += `</div>`;
+                        html += `<div style="color:#7f8c8d; font-size:11px; margin-top:4px;">${escapeHtml(fig.filename)}</div>`;
+                    } else {
+                        html += `<div style="padding:20px; color:#e74c3c; font-size:13px; background:#fdf0f0; border-radius:4px; display:inline-block;">Imatge pendent (es generara al executar el pipeline)</div>`;
+                    }
+
+                    html += `</div>`;
+
+                } else {
+                    // --- Photo slot: clickable alternatives to swap ---
+                    const selectedPath = photosSelection[slot.key];
+                    const selectedPhoto = selectedPath ? photos.find(p => p.relative_path === selectedPath) : null;
+
+                    html += `<div style="margin-bottom:28px; padding:16px; background:#f8f9fa; border-radius:8px; border-left:4px solid ${selectedPhoto ? '#3498db' : '#dee2e6'};">`;
+
+                    // Header
+                    html += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">`;
+                    html += `<div>`;
+                    html += `<strong style="font-size:14px; color:#2c3e50;">${escapeHtml(slot.label)}</strong>`;
+                    html += `<span style="color:#95a5a6; font-size:12px; margin-left:8px;">${escapeHtml(slot.size)}</span>`;
+                    html += `</div>`;
+                    if (selectedPhoto) {
+                        html += `<span style="color:#27ae60; font-size:12px;">${escapeHtml(selectedPhoto.filename)}</span>`;
+                    } else {
+                        html += `<span style="color:#e74c3c; font-size:12px;">Cap foto seleccionada</span>`;
+                    }
+                    html += `</div>`;
+
+                    // Selected photo (large)
+                    if (selectedPhoto) {
+                        html += `<div style="margin-bottom:12px; display:inline-block; position:relative; cursor:pointer; border:3px solid #3498db; border-radius:6px; overflow:hidden;" onclick="selectPhotoForSlot('${escapeHtml(slot.key)}', '${escapeHtml(selectedPhoto.relative_path)}')">`;
+                        html += `<img src="${escapeHtml(selectedPhoto.thumbnail_url)}" style="height:180px; display:block; border-radius:4px;" loading="lazy" alt="${escapeHtml(selectedPhoto.filename)}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding:30px;text-align:center;color:#aaa;font-size:11px\\'>Error</div>'">`;
+                        html += `<div style="position:absolute; top:6px; right:6px; background:#3498db; color:white; border-radius:4px; padding:2px 8px; font-size:11px;">Seleccionada</div>`;
+                        html += `</div>`;
+                    }
+
+                    // Alternatives grid (all OTHER photos)
+                    const alternatives = photos.filter(p => p.relative_path !== selectedPath);
+                    if (alternatives.length > 0) {
+                        html += `<div style="font-size:12px; color:#7f8c8d; margin-bottom:6px;">Alternatives (${alternatives.length}):</div>`;
+                        html += `<div style="display:flex; flex-wrap:wrap; gap:8px;">`;
+                        for (const photo of alternatives) {
+                            // Check if this photo is used in another slot
+                            let usedInKey = null;
+                            for (const [sk, sp] of Object.entries(photosSelection)) {
+                                if (sp === photo.relative_path && sk !== slot.key) {
+                                    usedInKey = sk;
+                                    break;
+                                }
+                            }
+
+                            const opacity = usedInKey ? '0.5' : '1';
+                            const border = usedInKey ? '2px dashed #95a5a6' : '2px solid transparent';
+                            const usedLabel = usedInKey ? (slotLabels[usedInKey] || usedInKey) : '';
+
+                            html += `<div style="cursor:pointer; border:${border}; border-radius:4px; opacity:${opacity}; transition:all 0.15s; position:relative;" `;
+                            html += `onclick="selectPhotoForSlot('${escapeHtml(slot.key)}', '${escapeHtml(photo.relative_path)}')" `;
+                            html += `title="${escapeHtml(photo.filename)}${usedInKey ? ' (usat a ' + escapeHtml(usedLabel) + ')' : ''}">`;
+                            html += `<img src="${escapeHtml(photo.thumbnail_url)}" style="height:70px; width:90px; object-fit:cover; border-radius:3px; display:block;" loading="lazy" alt="${escapeHtml(photo.filename)}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding:15px;text-align:center;color:#aaa;font-size:9px\\'>Error</div>'">`;
+                            if (usedInKey) {
+                                html += `<div style="position:absolute; bottom:2px; left:2px; background:rgba(0,0,0,0.6); color:white; font-size:9px; padding:1px 4px; border-radius:2px;">${escapeHtml(usedLabel)}</div>`;
+                            }
+                            html += `</div>`;
+                        }
+                        html += `</div>`;
+                    } else {
+                        html += `<div style="color:#95a5a6; font-size:12px;">No hi ha altres fotos disponibles</div>`;
+                    }
+
+                    html += `</div>`;
+                }
             }
 
             slotsDiv.innerHTML = html;
