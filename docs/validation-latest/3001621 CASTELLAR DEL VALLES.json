@@ -145,7 +145,7 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al sud. La parcel·la es troba delimitada per vorad"
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer existent al sud. El solar es p"
         },
         {
           "key": "access_description",
@@ -177,7 +177,7 @@
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
           "filled": true,
-          "value": "46"
+          "value": "14"
         },
         {
           "key": "dpsh_tests",
@@ -243,7 +243,7 @@
           "key": "materials_level_1",
           "label": "Materials nivell 1",
           "filled": true,
-          "value": "El nivell 1 està format per roca, de coloracions marrons a vermelloses. Aquests materials presenten una composició silíc"
+          "value": "El nivell 1 està format per capa superficial - material no especificat, de coloracions marrons a vermelloses. Aquests ma"
         }
       ]
     },
@@ -257,43 +257,43 @@
           "key": "geotech_density",
           "label": "Densitat gamma",
           "filled": true,
-          "value": "2.20"
+          "value": "2.00"
         },
         {
           "key": "geotech_cohesion",
           "label": "Cohesio c",
           "filled": true,
-          "value": "1.00"
+          "value": "0.00"
         },
         {
           "key": "geotech_phi",
           "label": "Angle friccio phi",
           "filled": true,
-          "value": "35°"
+          "value": "30°"
         },
         {
           "key": "geotech_E",
           "label": "Modul deformacio E",
           "filled": true,
-          "value": "500"
+          "value": "114"
         },
         {
           "key": "geotech_nb",
           "label": "Nb",
           "filled": true,
-          "value": "46-R"
+          "value": "14"
         },
         {
           "key": "soil_level_rows",
           "label": "Taula nivells sol",
           "filled": true,
-          "value": "[1 items]"
+          "value": "[2 items]"
         },
         {
           "key": "perm_rows",
           "label": "Taula permeabilitat",
           "filled": true,
-          "value": "[1 items]"
+          "value": "[2 items]"
         }
       ]
     },
@@ -307,24 +307,24 @@
           "key": "qa_value",
           "label": "Qa capacitat portant",
           "filled": true,
-          "value": "5.00"
+          "value": "2.49"
         },
         {
           "key": "settlement",
           "label": "Assentament",
           "filled": true,
-          "value": "2.27"
+          "value": "1.12"
         },
         {
           "key": "k30_value",
           "label": "Coef. balast K30",
           "filled": true,
-          "value": "8.3"
+          "value": "6.3"
         }
       ]
     }
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 30838
+  "elapsed_ms": 24911
 }

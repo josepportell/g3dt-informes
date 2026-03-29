@@ -1,21 +1,21 @@
 {
   "overall": {
-    "filled": 34,
+    "filled": 11,
     "total": 40,
-    "pct": 85.0
+    "pct": 27.5
   },
   "categories": [
     {
       "name": "Identificacio",
-      "filled": 3,
+      "filled": 2,
       "total": 6,
-      "pct": 50.0,
+      "pct": 33.3,
       "variables": [
         {
           "key": "client",
           "label": "Client / Promotor",
-          "filled": true,
-          "value": "SRA. SÍLVIA EROLES BALAGUERÓ"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "expedient",
@@ -45,71 +45,71 @@
           "key": "data_signatura_text",
           "label": "Data signatura",
           "filled": true,
-          "value": "27 de març de 2026"
+          "value": "29 de març de 2026"
         }
       ]
     },
     {
       "name": "Ubicacio",
-      "filled": 7,
+      "filled": 2,
       "total": 7,
-      "pct": 100.0,
+      "pct": 28.6,
       "variables": [
         {
           "key": "street_address",
           "label": "Adreca",
-          "filled": true,
-          "value": "Carrer Clot de la Llacuna nº16"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "municipality",
           "label": "Municipi",
           "filled": true,
-          "value": "Linyola"
+          "value": "Linyola2"
         },
         {
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer Clot de la Llacuna nº16 i el Carrer el Sitjar de Linyola"
+          "value": "al terme municipal de Linyola2"
         },
         {
           "key": "adjacent_north",
           "label": "Limita nord",
-          "filled": true,
-          "value": "parcel·la buida"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "adjacent_south",
           "label": "Limita sud",
-          "filled": true,
-          "value": "parcel·la amb construcció"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "adjacent_east",
           "label": "Limita est",
-          "filled": true,
-          "value": "Carrer el Sitjar"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "adjacent_west",
           "label": "Limita oest",
-          "filled": true,
-          "value": "parcel·la buida"
+          "filled": false,
+          "value": ""
         }
       ]
     },
     {
       "name": "Edificacio",
-      "filled": 6,
+      "filled": 2,
       "total": 8,
-      "pct": 75.0,
+      "pct": 25.0,
       "variables": [
         {
           "key": "building_type",
           "label": "Tipus edifici",
-          "filled": true,
-          "value": "Habitatge"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "num_floors",
@@ -126,14 +126,14 @@
         {
           "key": "superficie_parcela",
           "label": "Sup. parcela",
-          "filled": true,
-          "value": "583"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "cota_referencia",
           "label": "Cota referencia",
-          "filled": true,
-          "value": "+245.00"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "site_condition",
@@ -150,40 +150,40 @@
         {
           "key": "access_description",
           "label": "Acces",
-          "filled": true,
-          "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer el Sitjar existent al est."
+          "filled": false,
+          "value": ""
         }
       ]
     },
     {
       "name": "Camp DPSH",
-      "filled": 4,
+      "filled": 0,
       "total": 4,
-      "pct": 100.0,
+      "pct": 0.0,
       "variables": [
         {
           "key": "num_dpsh_tests",
           "label": "Num. assaigs DPSH",
-          "filled": true,
-          "value": "3"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "dpsh_test_ids",
           "label": "IDs assaigs",
-          "filled": true,
-          "value": "P-1, P-2, P-3"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
-          "filled": true,
-          "value": "29.2"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "dpsh_tests",
           "label": "Taula DPSH",
-          "filled": true,
-          "value": "[3 items]"
+          "filled": false,
+          "value": "[0 items]"
         }
       ]
     },
@@ -218,7 +218,7 @@
           "key": "geology_paragraphs",
           "label": "Paragrafs geologia",
           "filled": true,
-          "value": "[10 items]"
+          "value": "[9 items]"
         },
         {
           "key": "radon_zone",
@@ -236,50 +236,50 @@
           "key": "materials_level_1",
           "label": "Materials nivell 1",
           "filled": true,
-          "value": "El nivell 1 està format per nivell principal, de coloracions clars a marró clar. Aquests materials presenten característ"
+          "value": "[PENDENT: Descripcio del nivell 1]\n\nRequereix plantilla de zona per a descriure la litologia, color, consistencia i cara"
         }
       ]
     },
     {
       "name": "Geotecnia",
-      "filled": 7,
+      "filled": 1,
       "total": 7,
-      "pct": 100.0,
+      "pct": 14.3,
       "variables": [
         {
           "key": "geotech_density",
           "label": "Densitat gamma",
-          "filled": true,
-          "value": "2.00"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "geotech_cohesion",
           "label": "Cohesio c",
-          "filled": true,
-          "value": "0.00"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "geotech_phi",
           "label": "Angle friccio phi",
-          "filled": true,
-          "value": "36°"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "geotech_E",
           "label": "Modul deformacio E",
-          "filled": true,
-          "value": "469"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "geotech_nb",
           "label": "Nb",
-          "filled": true,
-          "value": "5-R"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "soil_level_rows",
           "label": "Taula nivells sol",
-          "filled": true,
+          "filled": false,
           "value": "[1 items]"
         },
         {
@@ -292,32 +292,32 @@
     },
     {
       "name": "Calculs",
-      "filled": 3,
+      "filled": 0,
       "total": 3,
-      "pct": 100.0,
+      "pct": 0.0,
       "variables": [
         {
           "key": "qa_value",
           "label": "Qa capacitat portant",
-          "filled": true,
-          "value": "5.00"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "settlement",
           "label": "Assentament",
-          "filled": true,
-          "value": "2.95"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "k30_value",
           "label": "Coef. balast K30",
-          "filled": true,
-          "value": "8.3"
+          "filled": false,
+          "value": ""
         }
       ]
     }
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 11838
+  "elapsed_ms": 31
 }

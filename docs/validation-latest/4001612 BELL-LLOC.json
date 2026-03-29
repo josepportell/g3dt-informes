@@ -59,7 +59,7 @@
           "key": "street_address",
           "label": "Adreca",
           "filled": true,
-          "value": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC"
+          "value": "Carrer Antoni Bellet, Bell-Lloc d'Urgell"
         },
         {
           "key": "municipality",
@@ -71,7 +71,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el C/ MESTRE RAMON ORTIZ 15 BELL-LLOC i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell"
+          "value": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell"
         },
         {
           "key": "adjacent_north",
@@ -109,7 +109,7 @@
           "key": "building_type",
           "label": "Tipus edifici",
           "filled": true,
-          "value": "Habitatge Unifamiliar Aïllat"
+          "value": "Habitatge aïllat"
         },
         {
           "key": "num_floors",
@@ -121,13 +121,13 @@
           "key": "superficie_construida",
           "label": "Sup. construida",
           "filled": true,
-          "value": "297+110"
+          "value": "366"
         },
         {
           "key": "superficie_parcela",
           "label": "Sup. parcela",
           "filled": true,
-          "value": "598"
+          "value": "598.0"
         },
         {
           "key": "cota_referencia",
@@ -145,7 +145,7 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al est. La parcel·la es troba delimitada per vorad"
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer existent al est. La parcel·la "
         },
         {
           "key": "access_description",
@@ -177,7 +177,7 @@
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
           "filled": true,
-          "value": "32"
+          "value": "55"
         },
         {
           "key": "dpsh_tests",
@@ -243,7 +243,7 @@
           "key": "materials_level_1",
           "label": "Materials nivell 1",
           "filled": true,
-          "value": "El nivell 1 està format per llims argilosos amb graves cohesives de coloració marrònosia, de coloracions clars a marró c"
+          "value": "El nivell 1 està format per graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clars. tram tota"
         }
       ]
     },
@@ -269,7 +269,7 @@
           "key": "geotech_phi",
           "label": "Angle friccio phi",
           "filled": true,
-          "value": "35°"
+          "value": "40°"
         },
         {
           "key": "geotech_E",
@@ -281,19 +281,19 @@
           "key": "geotech_nb",
           "label": "Nb",
           "filled": true,
-          "value": "32-R"
+          "value": "55-R"
         },
         {
           "key": "soil_level_rows",
           "label": "Taula nivells sol",
           "filled": true,
-          "value": "[2 items]"
+          "value": "[1 items]"
         },
         {
           "key": "perm_rows",
           "label": "Taula permeabilitat",
           "filled": true,
-          "value": "[2 items]"
+          "value": "[1 items]"
         }
       ]
     },
@@ -319,12 +319,12 @@
           "key": "k30_value",
           "label": "Coef. balast K30",
           "filled": true,
-          "value": "19.0"
+          "value": "6.3"
         }
       ]
     }
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 46353
+  "elapsed_ms": 34432
 }

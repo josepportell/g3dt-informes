@@ -1,39 +1,39 @@
 {
   "overall": {
-    "filled": 24,
-    "total": 41,
-    "pct": 58.5
+    "filled": 0,
+    "total": 40,
+    "pct": 0.0
   },
   "categories": [
     {
       "name": "Identificacio",
-      "filled": 5,
+      "filled": 0,
       "total": 6,
-      "pct": 83.3,
+      "pct": 0.0,
       "variables": [
         {
           "key": "client",
           "label": "Client / Promotor",
-          "filled": true,
-          "value": "MARIA ALBA BARRAU CASTÁN 616523792"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "expedient",
           "label": "Expedient",
-          "filled": true,
-          "value": "4001679"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "architect_name",
           "label": "Arquitecte",
-          "filled": true,
-          "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "architect_company",
           "label": "Despatx arquitecte",
-          "filled": true,
-          "value": "PICO DE OLA ARQUITECTURA Y PROMOCION S.L."
+          "filled": false,
+          "value": ""
         },
         {
           "key": "data_camp_text",
@@ -44,90 +44,90 @@
         {
           "key": "data_signatura_text",
           "label": "Data signatura",
-          "filled": true,
-          "value": "29 de març de 2026"
+          "filled": false,
+          "value": ""
         }
       ]
     },
     {
       "name": "Ubicacio",
-      "filled": 7,
+      "filled": 0,
       "total": 7,
-      "pct": 100.0,
+      "pct": 0.0,
       "variables": [
         {
           "key": "street_address",
           "label": "Adreca",
-          "filled": true,
-          "value": "Calle Gral Ferraz nº20"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "municipality",
           "label": "Municipi",
-          "filled": true,
-          "value": "Arciles"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "location_sentence",
           "label": "Frase ubicacio",
-          "filled": true,
-          "value": "al Calle Gral Ferraz nº20 de Arciles"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "adjacent_north",
           "label": "Limita nord",
-          "filled": true,
-          "value": "parcel·la buida"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "adjacent_south",
           "label": "Limita sud",
-          "filled": true,
-          "value": "parcel·la buida"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "adjacent_east",
           "label": "Limita est",
-          "filled": true,
-          "value": "parcel·la buida"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "adjacent_west",
           "label": "Limita oest",
-          "filled": true,
-          "value": "parcel·la buida"
+          "filled": false,
+          "value": ""
         }
       ]
     },
     {
       "name": "Edificacio",
-      "filled": 6,
+      "filled": 0,
       "total": 8,
-      "pct": 75.0,
+      "pct": 0.0,
       "variables": [
         {
           "key": "building_type",
           "label": "Tipus edifici",
-          "filled": true,
-          "value": "viviendas adosadas"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "num_floors",
           "label": "Plantes",
-          "filled": true,
-          "value": "SÓTANO, PLANTA BAJA y PLANTA 1"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "superficie_construida",
           "label": "Sup. construida",
-          "filled": true,
-          "value": "1265.86"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "superficie_parcela",
           "label": "Sup. parcela",
-          "filled": true,
-          "value": "1655"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "cota_referencia",
@@ -138,14 +138,14 @@
         {
           "key": "site_condition",
           "label": "Estat terreny",
-          "filled": true,
-          "value": "antropitzat"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "site_description",
           "label": "Descripcio solar",
-          "filled": true,
-          "value": "El solar es presenta sense pavimentar i amb escassa cobertura vegetal."
+          "filled": false,
+          "value": ""
         },
         {
           "key": "access_description",
@@ -183,23 +183,16 @@
           "key": "dpsh_tests",
           "label": "Taula DPSH",
           "filled": false,
-          "value": "[0 items]"
+          "value": ""
         }
       ]
     },
     {
       "name": "Camp Sondeig",
-      "filled": 1,
-      "total": 1,
-      "pct": 100.0,
-      "variables": [
-        {
-          "key": "sondeig_tests",
-          "label": "Taula sondeig",
-          "filled": true,
-          "value": "[1 items]"
-        }
-      ]
+      "filled": 0,
+      "total": 0,
+      "pct": 0,
+      "variables": []
     },
     {
       "name": "Camp Lab",
@@ -217,41 +210,41 @@
     },
     {
       "name": "Geologia",
-      "filled": 4,
+      "filled": 0,
       "total": 4,
-      "pct": 100.0,
+      "pct": 0.0,
       "variables": [
         {
           "key": "geology_paragraphs",
           "label": "Paragrafs geologia",
-          "filled": true,
-          "value": "[6 items]"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "radon_zone",
           "label": "Zona rado",
-          "filled": true,
-          "value": "2"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "seismic_ab_text",
           "label": "Coeficient sismic ab",
-          "filled": true,
-          "value": "0,04"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "materials_level_1",
           "label": "Materials nivell 1",
-          "filled": true,
-          "value": "[PENDENT: Descripcio del nivell 1]\n\nRequereix plantilla de zona per a descriure la litologia, color, consistencia i cara"
+          "filled": false,
+          "value": ""
         }
       ]
     },
     {
       "name": "Geotecnia",
-      "filled": 1,
+      "filled": 0,
       "total": 7,
-      "pct": 14.3,
+      "pct": 0.0,
       "variables": [
         {
           "key": "geotech_density",
@@ -287,13 +280,13 @@
           "key": "soil_level_rows",
           "label": "Taula nivells sol",
           "filled": false,
-          "value": "[1 items]"
+          "value": ""
         },
         {
           "key": "perm_rows",
           "label": "Taula permeabilitat",
-          "filled": true,
-          "value": "[1 items]"
+          "filled": false,
+          "value": ""
         }
       ]
     },
@@ -324,10 +317,9 @@
       ]
     }
   ],
-  "errors": [],
-  "warnings": [
-    "Could not auto-fill cota_referencia from ICGC MDT: Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; ",
-    "Could not calculate slope from ICGC MDT: Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; "
+  "errors": [
+    "Error building report data: 'NoneType' object has no attribute 'lower'"
   ],
-  "elapsed_ms": 77063
+  "warnings": [],
+  "elapsed_ms": 101071
 }

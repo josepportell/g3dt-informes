@@ -1,15 +1,15 @@
 {
   "overall": {
-    "filled": 22,
+    "filled": 33,
     "total": 40,
-    "pct": 55.0
+    "pct": 82.5
   },
   "categories": [
     {
       "name": "Identificacio",
-      "filled": 4,
+      "filled": 2,
       "total": 6,
-      "pct": 66.7,
+      "pct": 33.3,
       "variables": [
         {
           "key": "client",
@@ -26,14 +26,14 @@
         {
           "key": "architect_name",
           "label": "Arquitecte",
-          "filled": true,
-          "value": "jordi carner"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "architect_company",
           "label": "Despatx arquitecte",
-          "filled": true,
-          "value": "rocar"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "data_camp_text",
@@ -157,33 +157,33 @@
     },
     {
       "name": "Camp DPSH",
-      "filled": 0,
+      "filled": 4,
       "total": 4,
-      "pct": 0.0,
+      "pct": 100.0,
       "variables": [
         {
           "key": "num_dpsh_tests",
           "label": "Num. assaigs DPSH",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "3"
         },
         {
           "key": "dpsh_test_ids",
           "label": "IDs assaigs",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "P-1,P-2,P-3"
         },
         {
           "key": "dpsh_avg_n20",
           "label": "N20 mitja",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "28"
         },
         {
           "key": "dpsh_tests",
           "label": "Taula DPSH",
-          "filled": false,
-          "value": "[0 items]"
+          "filled": true,
+          "value": "[3 items]"
         }
       ]
     },
@@ -236,50 +236,50 @@
           "key": "materials_level_1",
           "label": "Materials nivell 1",
           "filled": true,
-          "value": "[PENDENT: Descripcio del nivell 1]\n\nRequereix plantilla de zona per a descriure la litologia, color, consistencia i cara"
+          "value": "El nivell 1 està format per nivell principal, de coloracions clars a marró clar. Aquests materials presenten característ"
         }
       ]
     },
     {
       "name": "Geotecnia",
-      "filled": 1,
+      "filled": 7,
       "total": 7,
-      "pct": 14.3,
+      "pct": 100.0,
       "variables": [
         {
           "key": "geotech_density",
           "label": "Densitat gamma",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "2.00"
         },
         {
           "key": "geotech_cohesion",
           "label": "Cohesio c",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "0.00"
         },
         {
           "key": "geotech_phi",
           "label": "Angle friccio phi",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "34°"
         },
         {
           "key": "geotech_E",
           "label": "Modul deformacio E",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "114"
         },
         {
           "key": "geotech_nb",
           "label": "Nb",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "28-R"
         },
         {
           "key": "soil_level_rows",
           "label": "Taula nivells sol",
-          "filled": false,
+          "filled": true,
           "value": "[1 items]"
         },
         {
@@ -292,32 +292,32 @@
     },
     {
       "name": "Calculs",
-      "filled": 0,
+      "filled": 3,
       "total": 3,
-      "pct": 0.0,
+      "pct": 100.0,
       "variables": [
         {
           "key": "qa_value",
           "label": "Qa capacitat portant",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "1.51"
         },
         {
           "key": "settlement",
           "label": "Assentament",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "1.11"
         },
         {
           "key": "k30_value",
           "label": "Coef. balast K30",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "1.5"
         }
       ]
     }
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 27203
+  "elapsed_ms": 34148
 }

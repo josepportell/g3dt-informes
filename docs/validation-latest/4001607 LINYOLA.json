@@ -59,7 +59,7 @@
           "key": "street_address",
           "label": "Adreca",
           "filled": true,
-          "value": "Carrer Clot de la Llaguna nº16"
+          "value": "Carrer Clot de la Liacuna nº16"
         },
         {
           "key": "municipality",
@@ -71,7 +71,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer Clot de la Llaguna nº16 i el Carrer Clot de la Llacuna de Linyola"
+          "value": "entre el Carrer Clot de la Liacuna nº16 i el Carrer Clot de la Llacuna de Linyola"
         },
         {
           "key": "adjacent_north",
@@ -145,7 +145,7 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al oest. La parcel·la es troba delimitada per vora"
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer existent al oest. La parcel·la"
         },
         {
           "key": "access_description",
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 48813
+  "elapsed_ms": 46274
 }

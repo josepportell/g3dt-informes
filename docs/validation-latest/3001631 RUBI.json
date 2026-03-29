@@ -1,8 +1,8 @@
 {
   "overall": {
-    "filled": 36,
+    "filled": 39,
     "total": 40,
-    "pct": 90.0
+    "pct": 97.5
   },
   "categories": [
     {
@@ -15,7 +15,7 @@
           "key": "client",
           "label": "Client / Promotor",
           "filled": true,
-          "value": "INTECSON"
+          "value": "SRA. JOANA MARTINEZ"
         },
         {
           "key": "expedient",
@@ -33,7 +33,7 @@
           "key": "architect_company",
           "label": "Despatx arquitecte",
           "filled": true,
-          "value": "G3"
+          "value": "Viviendas Modulares"
         },
         {
           "key": "data_camp_text",
@@ -59,7 +59,7 @@
           "key": "street_address",
           "label": "Adreca",
           "filled": true,
-          "value": "Carrer de la Miranda"
+          "value": "Carrer de la Miranda nº 39"
         },
         {
           "key": "municipality",
@@ -71,7 +71,7 @@
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer de la Miranda i l'Avinguda Can Tapis de Rubí"
+          "value": "entre el Carrer de la Miranda nº 39 i l'Avinguda Can Tapis de Rubí"
         },
         {
           "key": "adjacent_north",
@@ -101,39 +101,39 @@
     },
     {
       "name": "Edificacio",
-      "filled": 5,
+      "filled": 8,
       "total": 8,
-      "pct": 62.5,
+      "pct": 100.0,
       "variables": [
         {
           "key": "building_type",
           "label": "Tipus edifici",
           "filled": true,
-          "value": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT"
+          "value": "Habitatge aïllat"
         },
         {
           "key": "num_floors",
           "label": "Plantes",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "Pb+porxo"
         },
         {
           "key": "superficie_construida",
           "label": "Sup. construida",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "70+20"
         },
         {
           "key": "superficie_parcela",
           "label": "Sup. parcela",
-          "filled": false,
-          "value": ""
+          "filled": true,
+          "value": "1414"
         },
         {
           "key": "cota_referencia",
           "label": "Cota referencia",
           "filled": true,
-          "value": "+129.00"
+          "value": "+209.50"
         },
         {
           "key": "site_condition",
@@ -145,7 +145,7 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al nord. La parcel·la es troba delimitada per tanq"
+          "value": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer existent al nord. La parcel·la"
         },
         {
           "key": "access_description",
@@ -300,13 +300,13 @@
           "key": "qa_value",
           "label": "Qa capacitat portant",
           "filled": true,
-          "value": "2.74"
+          "value": "2.58"
         },
         {
           "key": "settlement",
           "label": "Assentament",
           "filled": true,
-          "value": "1.18"
+          "value": "1.13"
         },
         {
           "key": "k30_value",
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 35888
+  "elapsed_ms": 45758
 }

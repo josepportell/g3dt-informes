@@ -1,8 +1,8 @@
 {
   "overall": {
-    "filled": 37,
+    "filled": 35,
     "total": 40,
-    "pct": 92.5
+    "pct": 87.5
   },
   "categories": [
     {
@@ -15,7 +15,7 @@
           "key": "client",
           "label": "Client / Promotor",
           "filled": true,
-          "value": "ALBERT SANS BONVEHI TEL. 675639431 - ETESNOB91@GMAIL.COM <MAILTO:ETESNOB91@GMAIL.COM>"
+          "value": "ALBERT SANS BONVEHI"
         },
         {
           "key": "expedient",
@@ -27,13 +27,13 @@
           "key": "architect_name",
           "label": "Arquitecte",
           "filled": true,
-          "value": "David Graus Robinet"
+          "value": "DAVID GRAUS ROBINAT, ARQUITECTE TÈCNIC COL·LEGIAT Nº 699"
         },
         {
           "key": "architect_company",
           "label": "Despatx arquitecte",
           "filled": true,
-          "value": "2 Graus Arquitectes Tècnics"
+          "value": "GRAUS"
         },
         {
           "key": "data_camp_text",
@@ -59,25 +59,25 @@
           "key": "street_address",
           "label": "Adreca",
           "filled": true,
-          "value": "Carrer Girassols nº 7"
+          "value": "CARRER GIRASOLS, Nº7"
         },
         {
           "key": "municipality",
           "label": "Municipi",
           "filled": true,
-          "value": "Alcoletge"
+          "value": "ALCOLETGE"
         },
         {
           "key": "location_sentence",
           "label": "Frase ubicacio",
           "filled": true,
-          "value": "entre el Carrer Girassols nº 7 i el Carrer dels Gira-sols de Alcoletge"
+          "value": "al CARRER GIRASOLS de ALCOLETGE"
         },
         {
           "key": "adjacent_north",
           "label": "Limita nord",
           "filled": true,
-          "value": "Carrer dels Gira-sols"
+          "value": "desconegut"
         },
         {
           "key": "adjacent_south",
@@ -101,15 +101,15 @@
     },
     {
       "name": "Edificacio",
-      "filled": 6,
+      "filled": 4,
       "total": 8,
-      "pct": 75.0,
+      "pct": 50.0,
       "variables": [
         {
           "key": "building_type",
           "label": "Tipus edifici",
           "filled": true,
-          "value": "habitatge unifamiliar"
+          "value": "PROJECTE DE TANCAMENT DE PORXO EN HABITATGE UNIFAMILIAR"
         },
         {
           "key": "num_floors",
@@ -126,8 +126,8 @@
         {
           "key": "superficie_parcela",
           "label": "Sup. parcela",
-          "filled": true,
-          "value": "1167"
+          "filled": false,
+          "value": ""
         },
         {
           "key": "cota_referencia",
@@ -145,13 +145,13 @@
           "key": "site_description",
           "label": "Descripcio solar",
           "filled": true,
-          "value": "El terreny es presenta antropitzat"
+          "value": "La parcel·la es troba delimitada per vorada, tanques metàl·liques. El solar es presenta sense pavimentar i amb vegetació"
         },
         {
           "key": "access_description",
           "label": "Acces",
-          "filled": true,
-          "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer dels Gira-sols existent al nor"
+          "filled": false,
+          "value": ""
         }
       ]
     },
@@ -319,5 +319,5 @@
   ],
   "errors": [],
   "warnings": [],
-  "elapsed_ms": 27994
+  "elapsed_ms": 38673
 }
