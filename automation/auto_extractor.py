@@ -165,6 +165,7 @@ def auto_extract(
             superficie = 0
 
         if utm_x and utm_y:
+            # --- ICGC APIs use DPSH coords (regional data, ~1km resolution) ---
             emit("api_call", {"api": "ICGC WMS", "action": "geologia", "utm": f"({utm_x:.0f}, {utm_y:.0f})"})
             _phase3_geology(utm_x, utm_y, result)
             geo_ok = 'icgc_unit_code' in result.prefills
@@ -197,8 +198,49 @@ def auto_extract(
                 } if slope_ok else None,
             })
 
-            emit("api_call", {"api": "Cadastre", "action": "adjacents", "utm": f"({utm_x:.0f}, {utm_y:.0f})", "superficie": superficie})
-            resolved_x, resolved_y = _phase3_adjacents(utm_x, utm_y, superficie, result, project_path, existing_user_data)
+            # --- Geocode-first for parcel identification ---
+            # DPSH coordinates indicate where the test MACHINE was, not the
+            # project parcel. The street address (from plànol/pressupost) is
+            # a more reliable indicator of the project location. Geocoded
+            # coords are used for Cadastre adjacents, ortho enrichment, and
+            # all parcel-specific operations. DPSH coords remain for ICGC
+            # geology/elevation/slope (regional data, ~1km resolution).
+            #
+            # Evidence: 4/4 projects with COORDENADES.txt have DPSH on a
+            # different Cadastre parcel (Bell-Lloc: 113m off, Castellar: 65m,
+            # Linyola: 46m). This is normal — the DPSH truck parks on the
+            # nearest accessible ground, often a neighboring parcel or road.
+            parcel_x, parcel_y = utm_x, utm_y  # default: DPSH coords
+            street_addr = (
+                result.prefills.get('street_address')
+                or (existing_user_data or {}).get('street_address', '')
+            )
+            site_addr = (
+                result.prefills.get('site_address')
+                or (existing_user_data or {}).get('site_address', '')
+            )
+            muni = (
+                result.prefills.get('site_municipality')
+                or (existing_user_data or {}).get('site_municipality', '')
+            )
+            province = result.prefills.get('province', '')
+            for addr_candidate in (street_addr, site_addr):
+                if addr_candidate and muni and len(addr_candidate) > 3:
+                    geo_res = _geocode_for_adjacents(addr_candidate, muni, province=province)
+                    if geo_res:
+                        parcel_x = geo_res['utm_x']
+                        parcel_y = geo_res['utm_y']
+                        logger.info(
+                            f"Geocode-first: using ({parcel_x:.0f}, {parcel_y:.0f}) "
+                            f"from '{addr_candidate}' instead of DPSH ({utm_x:.0f}, {utm_y:.0f})"
+                        )
+                        if geo_res.get('parcel_area') and 'superficie_cadastral_m2' not in result.prefills:
+                            result.prefills['superficie_cadastral_m2'] = int(geo_res['parcel_area'])
+                            result.sources['superficie_cadastral_m2'] = 'Cadastre WFS (geocode-first)'
+                        break
+
+            emit("api_call", {"api": "Cadastre", "action": "adjacents", "utm": f"({parcel_x:.0f}, {parcel_y:.0f})", "superficie": superficie})
+            resolved_x, resolved_y = _phase3_adjacents(parcel_x, parcel_y, superficie, result, project_path, existing_user_data)
             adj_found = {d: result.prefills.get(f'adjacent_{d}', '') for d in ('north', 'south', 'east', 'west') if result.prefills.get(f'adjacent_{d}')}
             emit("source", {
                 "name": "Cadastre adj.", "ok": bool(adj_found),

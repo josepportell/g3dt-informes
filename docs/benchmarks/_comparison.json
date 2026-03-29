@@ -1,7 +1,1956 @@
 {
-  "timestamp": "2026-03-29T07:24:32.352799+00:00",
+  "timestamp": "2026-03-29T08:05:56.865665+00:00",
   "tolerance_pct": 5,
   "projects": [
+    {
+      "expedient": "3001621",
+      "municipality": "Castellar del Valles",
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "benchmark": "WOOD COMFORT PROMOCIONS SLU",
+          "pipeline": "GRUP ALMA",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "benchmark": "24 de octubre de 2025",
+          "pipeline": "24 d'octubre de 2025",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "Carrer dels Arbrells, 18",
+          "pipeline": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "Castellar del Vallès",
+          "pipeline": "Castellar del Vallès, Barcelona",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "El solar on s'emplaçarà els nous habitatges unifamiliars e situa en el Carrer dels Arbrells, 18 de Castellar del Vallès.",
+          "pipeline": "entre el Carrer Arbrells i el Carrer Alzina de Castellar del Vallès, Barcelona",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "parcel·les sense construir, amb herbes altes i arbres, així com una parcel·la amb planta baixa i una planta pis, paral·lela al carrer Turó Roig",
+          "pipeline": "Carrer dels Arbrells",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "carrer Arbrells",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "parcel·la construïda amb piscina",
+          "pipeline": "Carrer Alzina",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "parcel·les sense construir amb herbes altes i arbres",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "habitatges unifamiliars",
+          "pipeline": "CONSTR 3 HAB UNIF",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "benchmark": 1284,
+          "pipeline": "1342",
+          "pipeline_parsed": 1342.0,
+          "deviation_pct": 4.5,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "sense construccions ni pavimentacions, desbroçat",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer adjacent situat al sud. El solar es localitza sense construccions ni pavimentacions, s'ha realitzat un desbroç de la zona de treball i s'ha adequat un accés a la zona de treball. Topogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina, situada aproximadament 4.0 metres respecte el carrer. En solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles. Destacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d'estudi ni en zones properes.",
+          "pipeline": "L'entrada a la zona d'estudi es realitza a través del carrer existent al nord. La parcel·la es troba delimitada per vora",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer adjacent situat al sud.",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer dels Arbrells existent al nord",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "benchmark": 4,
+          "pipeline": "4",
+          "pipeline_parsed": 4.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "benchmark": "P-1,P-2,P-3,P-4",
+          "pipeline": "P-1,P-2,P-3,P-4",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "benchmark": 17,
+          "pipeline": "46",
+          "pipeline_parsed": 46.0,
+          "deviation_pct": 170.6,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "benchmark": 0.0,
+          "pipeline": "0.0",
+          "pipeline_parsed": 0.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "benchmark": "Zona 1",
+          "pipeline": "1",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB = 0,04 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "benchmark": 2.2,
+          "pipeline": "2.20",
+          "pipeline_parsed": 2.2,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "benchmark": 1.0,
+          "pipeline": "1.00",
+          "pipeline_parsed": 1.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "benchmark": 35,
+          "pipeline": "35°",
+          "pipeline_parsed": 35.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "benchmark": ">500",
+          "pipeline": "500",
+          "pipeline_parsed": 500.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "threshold_min",
+          "tier": "C"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "benchmark": 17,
+          "pipeline": "46-R",
+          "pipeline_parsed": 46.0,
+          "deviation_pct": 170.6,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "benchmark": 3.0,
+          "pipeline": "5.00",
+          "pipeline_parsed": 5.0,
+          "deviation_pct": 66.7,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "benchmark": 1.0,
+          "pipeline": "2.27",
+          "pipeline_parsed": 2.27,
+          "deviation_pct": 127.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "k30_value",
+          "label": "Coef. balast K30",
+          "benchmark": 8.0,
+          "pipeline": "8.3",
+          "pipeline_parsed": 8.3,
+          "deviation_pct": 3.8,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "C"
+        }
+      ],
+      "summary": {
+        "total": 28,
+        "match": 12,
+        "close": 0,
+        "mismatch": 16,
+        "missing": 2,
+        "correctness_pct": 42.9
+      },
+      "tier_summary": {
+        "A": {
+          "total": 16,
+          "match": 10,
+          "close": 0,
+          "mismatch": 6,
+          "correctness_pct": 62.5
+        },
+        "B": {
+          "total": 8,
+          "match": 0,
+          "close": 0,
+          "mismatch": 8,
+          "correctness_pct": 0.0
+        },
+        "C": {
+          "total": 4,
+          "match": 2,
+          "close": 0,
+          "mismatch": 2,
+          "correctness_pct": 50.0
+        }
+      }
+    },
+    {
+      "expedient": "3001631",
+      "municipality": "Rubi",
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "benchmark": "SRA. JOANA MARTINEZ",
+          "pipeline": "INTECSON",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "benchmark": "14 de novembre de 2025",
+          "pipeline": "14 de novembre de 2025",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "carrer de la Miranda nº 39, (PARC. 6-105)",
+          "pipeline": "Carrer de la Miranda",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "Rubí",
+          "pipeline": "Rubí",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "L'habitatge que es preveu construir es situarà a una parcel·la ubicada al carrer de la Miranda nº 39, (PARC. 6-105) Rubí, Barcelona.",
+          "pipeline": "entre el Carrer de la Miranda i el Carrer Creu de Rubí",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "parcel·les sense edificacions i amb vegetació de petita alçada i arbres",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "carrer de la Miranda",
+          "pipeline": "Carrer Creu",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "construccions de característiques similars",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "construccions de característiques similars",
+          "pipeline": "Carrer Rafael Casanova",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "habitatge unifamiliar aïllat modular",
+          "pipeline": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "benchmark": 212.5,
+          "pipeline": "+129.00",
+          "pipeline_parsed": 129.0,
+          "deviation_pct": -39.3,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "sense construccions i pavimentacions",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer de la Miranda. El solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera baixada, de sudoest a nord-est, es troba una diferència de cota d'uns 13.20 metres, des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m. respectivament, tot i que la zona de treball es mostra totalment plana. La pendent comença la zona posterior (a la meitat del fons ). En solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles. Destacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+          "pipeline": "L'entrada a la zona d'estudi es realitza a través del carrer existent al sud. La parcel·la es troba delimitada per vorad",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer de la Miranda.",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Creu existent al sud.",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "benchmark": 3,
+          "pipeline": "3",
+          "pipeline_parsed": 3.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "benchmark": "P-1,P-2,P-3",
+          "pipeline": "P-1,P-2,P-3",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "benchmark": 48,
+          "pipeline": "48",
+          "pipeline_parsed": 48.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "benchmark": 632.3,
+          "pipeline": "632.3",
+          "pipeline_parsed": 632.3,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "benchmark": "ZONA 1",
+          "pipeline": "1",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB = 0,08 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "benchmark": 2.0,
+          "pipeline": "2.00",
+          "pipeline_parsed": 2.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "benchmark": 0.05,
+          "pipeline": "0.00",
+          "pipeline_parsed": 0.0,
+          "deviation_pct": -100.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "benchmark": 39,
+          "pipeline": "38°",
+          "pipeline_parsed": 38.0,
+          "deviation_pct": -2.6,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "benchmark": 450,
+          "pipeline": "469",
+          "pipeline_parsed": 469.0,
+          "deviation_pct": 4.2,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "benchmark": 47,
+          "pipeline": "48-R",
+          "pipeline_parsed": 48.0,
+          "deviation_pct": 2.1,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "benchmark": 3.5,
+          "pipeline": "2.74",
+          "pipeline_parsed": 2.74,
+          "deviation_pct": -21.7,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "benchmark": 1.5,
+          "pipeline": "1.18",
+          "pipeline_parsed": 1.18,
+          "deviation_pct": -21.3,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "k30_value",
+          "label": "Coef. balast K30",
+          "benchmark": 6.0,
+          "pipeline": "6.3",
+          "pipeline_parsed": 6.3,
+          "deviation_pct": 5.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "C"
+        }
+      ],
+      "summary": {
+        "total": 28,
+        "match": 12,
+        "close": 1,
+        "mismatch": 15,
+        "missing": 3,
+        "correctness_pct": 42.9
+      },
+      "tier_summary": {
+        "A": {
+          "total": 16,
+          "match": 10,
+          "close": 1,
+          "mismatch": 5,
+          "correctness_pct": 62.5
+        },
+        "B": {
+          "total": 8,
+          "match": 0,
+          "close": 0,
+          "mismatch": 8,
+          "correctness_pct": 0.0
+        },
+        "C": {
+          "total": 4,
+          "match": 2,
+          "close": 0,
+          "mismatch": 2,
+          "correctness_pct": 50.0
+        }
+      }
+    },
+    {
+      "expedient": "4001607",
+      "municipality": "Linyola",
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "benchmark": "SRA. SÍLVIA EROLES BALAGUERÓ",
+          "pipeline": "BUNYESC ARQUITECCTURA EFICIENT, SLP",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "benchmark": "1 d'octubre de 2025",
+          "pipeline": "1 d'octubre de 2025",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "Carrer Clot de la Llacuna nº16",
+          "pipeline": "Carrer Clot de la Llaguna nº16",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "Linyola",
+          "pipeline": "Linyola",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "El solar on s'emplaçarà el nou habitatge unifamiliar es situa al Carrer Clot de la Llacuna nº16 de Linyola",
+          "pipeline": "entre el Carrer Clot de la Llaguna nº16 i el Camí dels Arcs de Linyola",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "parcel·la ocupada per un habitatge unifamiliar",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "parcel·les buides",
+          "pipeline": "Camí dels Arcs",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "parcel·les buides",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "carrer per on es realitza l'entrada",
+          "pipeline": "Carrer Clot de la Llacuna",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "habitatge unifamiliar",
+          "pipeline": "habitatge unifamiliar aïllat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "benchmark": 571.0,
+          "pipeline": "387",
+          "pipeline_parsed": 387.0,
+          "deviation_pct": -32.2,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "benchmark": 245.0,
+          "pipeline": "+245.00",
+          "pipeline_parsed": 245.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "explanada, sense pavimentar, amb vegetació puntual de petita alçada",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer adjacent situat al oest. La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada. En solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles. Destacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d'estudi ni en zones properes.",
+          "pipeline": "L'entrada a la zona d'estudi es realitza a través del carrer existent al oest. La parcel·la es troba delimitada per vora",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del carrer adjacent situat al oest.",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Clot de la Llacuna existent al",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "benchmark": 3,
+          "pipeline": "3",
+          "pipeline_parsed": 3.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "benchmark": "P-1,P-2,P-3",
+          "pipeline": "P-1,P-2,P-3",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "benchmark": 11.0,
+          "pipeline": "35",
+          "pipeline_parsed": 35.0,
+          "deviation_pct": 218.2,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "benchmark": 0.0,
+          "pipeline": "0.0",
+          "pipeline_parsed": 0.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB < 0,04 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "benchmark": 1.9,
+          "pipeline": "2.00",
+          "pipeline_parsed": 2.0,
+          "deviation_pct": 5.3,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "benchmark": 0.05,
+          "pipeline": "0.00",
+          "pipeline_parsed": 0.0,
+          "deviation_pct": -100.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "benchmark": 28.0,
+          "pipeline": "36°",
+          "pipeline_parsed": 36.0,
+          "deviation_pct": 28.6,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "benchmark": 100.0,
+          "pipeline": "469",
+          "pipeline_parsed": 469.0,
+          "deviation_pct": 369.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "benchmark": 13.0,
+          "pipeline": "35-R",
+          "pipeline_parsed": 35.0,
+          "deviation_pct": 169.2,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "benchmark": 3.0,
+          "pipeline": "1.90",
+          "pipeline_parsed": 1.9,
+          "deviation_pct": -36.7,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "benchmark": 1.0,
+          "pipeline": "1.12",
+          "pipeline_parsed": 1.12,
+          "deviation_pct": 12.0,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "C"
+        }
+      ],
+      "summary": {
+        "total": 27,
+        "match": 7,
+        "close": 3,
+        "mismatch": 17,
+        "missing": 3,
+        "correctness_pct": 25.9
+      },
+      "tier_summary": {
+        "A": {
+          "total": 16,
+          "match": 7,
+          "close": 2,
+          "mismatch": 7,
+          "correctness_pct": 43.8
+        },
+        "B": {
+          "total": 8,
+          "match": 0,
+          "close": 0,
+          "mismatch": 8,
+          "correctness_pct": 0.0
+        },
+        "C": {
+          "total": 3,
+          "match": 0,
+          "close": 1,
+          "mismatch": 2,
+          "correctness_pct": 0.0
+        }
+      }
+    },
+    {
+      "expedient": "4001612",
+      "municipality": "Bell-Lloc",
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "benchmark": "RAMON MITJANA S.L.",
+          "pipeline": "RAMON MITJANA S.L.",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "architect_name",
+          "label": "Arquitecte",
+          "benchmark": "JORDI BOSCH NOVELL",
+          "pipeline": "Jordi Bosch Novell",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "architect_company",
+          "label": "Despatx arquitecte",
+          "benchmark": "ARQUITECTURA BOSCH NOVELL",
+          "pipeline": "Arquitectura Bosch Novell",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "benchmark": "1 i 6 d'octubre de 2025",
+          "pipeline": "1 i 6 d'octubre de 2025",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz",
+          "pipeline": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "Bell-Lloc d'Urgell",
+          "pipeline": "Bell-Lloc d'Urgell",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "L'edificació que es preveu construir es situarà entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell.",
+          "pipeline": "entre el C/ MESTRE RAMON ORTIZ 15 BELL-LLOC i el Carrer Antoni Bellet Pérez de Bell-Lloc d'Urgell",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "parcel·la buida",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "Carrer Antoni Bellet",
+          "pipeline": "Carrer Antoni Bellet Pérez",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "Carrer Mestre Ramon Ortiz",
+          "pipeline": "Carrer Mestre Ramon Ortiz",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "habitatge unifamiliar",
+          "pipeline": "Habitatge Unifamiliar Aïllat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "num_floors",
+          "label": "Plantes",
+          "benchmark": "Pb+1Pp",
+          "pipeline": "Pb+1Pp",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_construida",
+          "label": "Sup. construida",
+          "benchmark": 366,
+          "pipeline": "297+110",
+          "pipeline_parsed": 407.0,
+          "deviation_pct": 11.2,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "benchmark": 995,
+          "pipeline": "598",
+          "pipeline_parsed": 598.0,
+          "deviation_pct": -39.9,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "benchmark": 199.5,
+          "pipeline": "+199.50",
+          "pipeline_parsed": 199.5,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "delimitada per tanques de parcel·les veïnes, anivellada a la rasant del carrer, sense pavimentar, amb vegetació de petita alçada",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través de la del Carrer existent al sud. La parcel·la, que es troba delimitada tanques de parcel·les veïnes, està anivellada a la rasant del carrer, només uns 15 cm per sota, sense pavimentar, i amb vegetació de petita alçada. En solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles. Destacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+          "pipeline": "L'entrada a la zona d'estudi es realitza a través del carrer existent al sud. La parcel·la es troba delimitada per vorad",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través de la del Carrer existent al sud.",
+          "pipeline": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer Antoni Bellet Pérez existent a",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "benchmark": 2,
+          "pipeline": "2",
+          "pipeline_parsed": 2.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "benchmark": "P-1, P-2",
+          "pipeline": "P-1,P-2",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "benchmark": 25,
+          "pipeline": "32",
+          "pipeline_parsed": 32.0,
+          "deviation_pct": 28.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "sulfate_value",
+          "label": "Sulfats (mg/kg)",
+          "benchmark": 89.8,
+          "pipeline": "89.8",
+          "pipeline_parsed": 89.8,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "benchmark": "ZONA 1",
+          "pipeline": "1",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB < 0,04 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "benchmark": 2.0,
+          "pipeline": "2.00",
+          "pipeline_parsed": 2.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "benchmark": 0.0,
+          "pipeline": "0.00",
+          "pipeline_parsed": 0.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "benchmark": 38,
+          "pipeline": "35°",
+          "pipeline_parsed": 35.0,
+          "deviation_pct": -7.9,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "benchmark": 650,
+          "pipeline": "469",
+          "pipeline_parsed": 469.0,
+          "deviation_pct": -27.8,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "benchmark": 25,
+          "pipeline": "32-R",
+          "pipeline_parsed": 32.0,
+          "deviation_pct": 28.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "benchmark": 3.0,
+          "pipeline": "2.40",
+          "pipeline_parsed": 2.4,
+          "deviation_pct": -20.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "benchmark": 1.2,
+          "pipeline": "1.12",
+          "pipeline_parsed": 1.12,
+          "deviation_pct": -6.7,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "C"
+        }
+      ],
+      "summary": {
+        "total": 32,
+        "match": 16,
+        "close": 5,
+        "mismatch": 11,
+        "missing": 0,
+        "correctness_pct": 50.0
+      },
+      "tier_summary": {
+        "A": {
+          "total": 21,
+          "match": 14,
+          "close": 3,
+          "mismatch": 4,
+          "correctness_pct": 66.7
+        },
+        "B": {
+          "total": 8,
+          "match": 2,
+          "close": 1,
+          "mismatch": 5,
+          "correctness_pct": 25.0
+        },
+        "C": {
+          "total": 3,
+          "match": 0,
+          "close": 1,
+          "mismatch": 2,
+          "correctness_pct": 0.0
+        }
+      }
+    },
+    {
+      "expedient": "4001670",
+      "municipality": "Alcoletge",
+      "variables": [
+        {
+          "key": "client",
+          "label": "Client / Promotor",
+          "benchmark": "SR. ALBERT SANS BONVEHI",
+          "pipeline": "ALBERT SANS BONVEHI TEL. 675639431 - ETESNOB91@GMAIL.COM <MAILTO:ETESNOB91@GMAIL.COM>",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "data_camp_text",
+          "label": "Data de camp",
+          "benchmark": "16 de febrer de 2026",
+          "pipeline": "16 de febrer de 2026",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "Carrer Girasols nº7, Urbanització El Roser",
+          "pipeline": "Carrer Girassols nº 7",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "Alcoletge",
+          "pipeline": "Alcoletge",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "L'ampliació que es preveu construir es situarà a una parcel·la ubicada al Carrer Girasols nº7, Urbanització El Roser d'Alcoletge.",
+          "pipeline": "entre el Carrer Girassols nº 7 i el Carrer dels Gira-sols de Alcoletge",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "camí d'accés",
+          "pipeline": "Carrer dels Gira-sols",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "parcel·la on existeix un edifici aïllat en planta baixa",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "tres parcel·les ocupades per edificis aïllats de fins a dos plantes sobre rasant i una amb soterrani i piscina",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "solar buit",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "ampliació d'un edifici en planta baixa",
+          "pipeline": "habitatge unifamiliar",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "benchmark": 1167,
+          "pipeline": "1167",
+          "pipeline_parsed": 1167.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "benchmark": 188.2,
+          "pipeline": "+188.50",
+          "pipeline_parsed": 188.5,
+          "deviation_pct": 0.2,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "ocupat per una zona explanada i un edifici en planta baixa a la meitat nord",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer existent al nord. El solar està actualment ocupat per una zona explanada i un edifici en planta baixa a la meitat nord. L'ampliació d'aquest edifici es preveu realitzar a la part posterior, zona on es pot accedir sense problemes amb la maquinaria prevista. En solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles. Destacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+          "pipeline": "El terreny es presenta antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "benchmark": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del Carrer existent al nord.",
+          "pipeline": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer dels Gira-sols existent al nor",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "num_dpsh_tests",
+          "label": "Num. assaigs DPSH",
+          "benchmark": 3,
+          "pipeline": "3",
+          "pipeline_parsed": 3.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_test_ids",
+          "label": "IDs assaigs",
+          "benchmark": "P-1, P-2, P-3",
+          "pipeline": "P-1,P-3,P-2",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "dpsh_avg_n20",
+          "label": "N20 mitja",
+          "benchmark": 5,
+          "pipeline": "26",
+          "pipeline_parsed": 26.0,
+          "deviation_pct": 420.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "benchmark": "Zona I",
+          "pipeline": "1",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB < 0,04 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_density",
+          "label": "Densitat gamma",
+          "benchmark": 2.0,
+          "pipeline": "2.00",
+          "pipeline_parsed": 2.0,
+          "deviation_pct": 0.0,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_cohesion",
+          "label": "Cohesio c",
+          "benchmark": 1.0,
+          "pipeline": "0.00",
+          "pipeline_parsed": 0.0,
+          "deviation_pct": -100.0,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_phi",
+          "label": "Angle friccio phi",
+          "benchmark": 30,
+          "pipeline": "34°",
+          "pipeline_parsed": 34.0,
+          "deviation_pct": 13.3,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "geotech_E",
+          "label": "Modul deformacio E",
+          "benchmark": ">400",
+          "pipeline": "114",
+          "pipeline_parsed": 114.0,
+          "deviation_pct": -71.5,
+          "status": "MISMATCH",
+          "type": "threshold_min",
+          "tier": "C"
+        },
+        {
+          "key": "geotech_nb",
+          "label": "Nb",
+          "benchmark": "R",
+          "pipeline": "26-R",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "refusal",
+          "tier": "A"
+        },
+        {
+          "key": "qa_value",
+          "label": "Qa capacitat portant",
+          "benchmark": 3.5,
+          "pipeline": "1.41",
+          "pipeline_parsed": 1.41,
+          "deviation_pct": -59.7,
+          "status": "MISMATCH",
+          "type": "numeric",
+          "tier": "C"
+        },
+        {
+          "key": "settlement",
+          "label": "Assentament",
+          "benchmark": 1.0,
+          "pipeline": "1.12",
+          "pipeline_parsed": 1.12,
+          "deviation_pct": 12.0,
+          "status": "CLOSE",
+          "type": "numeric",
+          "tier": "C"
+        }
+      ],
+      "summary": {
+        "total": 27,
+        "match": 8,
+        "close": 2,
+        "mismatch": 17,
+        "missing": 3,
+        "correctness_pct": 29.6
+      },
+      "tier_summary": {
+        "A": {
+          "total": 16,
+          "match": 8,
+          "close": 1,
+          "mismatch": 7,
+          "correctness_pct": 50.0
+        },
+        "B": {
+          "total": 8,
+          "match": 0,
+          "close": 0,
+          "mismatch": 8,
+          "correctness_pct": 0.0
+        },
+        "C": {
+          "total": 3,
+          "match": 0,
+          "close": 1,
+          "mismatch": 2,
+          "correctness_pct": 0.0
+        }
+      }
+    },
+    {
+      "expedient": "4001671",
+      "municipality": "Vilanova de Segria",
+      "variables": [
+        {
+          "key": "street_address",
+          "label": "Adreca",
+          "benchmark": "Calle STA. GEMMA nº 4, URB. LA SERRA",
+          "pipeline": "Calle Santa Gemma nº4",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "municipality",
+          "label": "Municipi",
+          "benchmark": "VILANOVA DE SEGRIÀ",
+          "pipeline": "Vilanova de Segrià",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "location_sentence",
+          "label": "Frase ubicacio",
+          "benchmark": "La nueva vivienda unifamiliar proyectada se situará en la Calle STA. GEMMA nº 4, URB. LA SERRA del municipio de VILANOVA DE SEGRIÀ.",
+          "pipeline": "entre el Calle Santa Gemma nº4 i el Carrer Santa Gemma de Vilanova de Segrià",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_north",
+          "label": "Limita nord",
+          "benchmark": "parcelas de similares características a las proyectadas en el estudio",
+          "pipeline": "parcel·la buida",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_south",
+          "label": "Limita sud",
+          "benchmark": "parcela sin edificaciones, alguna pavimentación, vegetación herbácea de pequeña altura y algún árbol",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_east",
+          "label": "Limita est",
+          "benchmark": "parcelas de similares características a las proyectadas en el estudio",
+          "pipeline": "parcel·la amb construcció",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "adjacent_west",
+          "label": "Limita oest",
+          "benchmark": "calle STA. GEMMA",
+          "pipeline": "Carrer Santa Gemma",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "building_type",
+          "label": "Tipus edifici",
+          "benchmark": "vivienda unifamiliar aislada",
+          "pipeline": "vivienda unifamiliar",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "CLOSE",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "superficie_parcela",
+          "label": "Sup. parcela",
+          "benchmark": 406,
+          "pipeline": "405",
+          "pipeline_parsed": 405.0,
+          "deviation_pct": -0.2,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "cota_referencia",
+          "label": "Cota referencia",
+          "benchmark": 321.0,
+          "pipeline": "+321.50",
+          "pipeline_parsed": 321.5,
+          "deviation_pct": 0.2,
+          "status": "MATCH",
+          "type": "numeric",
+          "tier": "A"
+        },
+        {
+          "key": "site_condition",
+          "label": "Estat terreny",
+          "benchmark": "delimitada por los muros de las parcelas contiguas, sin pavimentar, con vegetación de tamaño pequeño",
+          "pipeline": "antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "site_description",
+          "label": "Descripcio solar",
+          "benchmark": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la calle se encuentra sin ningún tipo de valla o muro, se encuentra expuesta directamente a la calle. La zona de entrada se encuentra y el patio, se encuentran sin pavimentar y con vegetación de tamaño pequeño. A excepción, del extremo Oeste, se encuentra una franja pavimentada y con vallado. En solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles. Destacar que no se pueden ver aflorar los materiales que conforman el subsuelo del solar ni en la parcela objeto de estudio ni en zonas cercanas.",
+          "pipeline": "El terreny es presenta antropitzat",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "access_description",
+          "label": "Acces",
+          "benchmark": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste.",
+          "pipeline": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer Santa Gemma existent al oest.",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MISMATCH",
+          "type": "text",
+          "tier": "B"
+        },
+        {
+          "key": "radon_zone",
+          "label": "Zona rado",
+          "benchmark": "Zona I",
+          "pipeline": "1",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        },
+        {
+          "key": "seismic_ab_text",
+          "label": "Coeficient sismic ab",
+          "benchmark": "AB < 0,04 g",
+          "pipeline": "0,04",
+          "pipeline_parsed": null,
+          "deviation_pct": null,
+          "status": "MATCH",
+          "type": "text",
+          "tier": "A"
+        }
+      ],
+      "summary": {
+        "total": 15,
+        "match": 5,
+        "close": 1,
+        "mismatch": 9,
+        "missing": 14,
+        "correctness_pct": 33.3
+      },
+      "tier_summary": {
+        "A": {
+          "total": 7,
+          "match": 5,
+          "close": 1,
+          "mismatch": 1,
+          "correctness_pct": 71.4
+        },
+        "B": {
+          "total": 8,
+          "match": 0,
+          "close": 0,
+          "mismatch": 8,
+          "correctness_pct": 0.0
+        },
+        "C": {
+          "total": 0,
+          "match": 0,
+          "close": 0,
+          "mismatch": 0,
+          "correctness_pct": 0.0
+        }
+      }
+    },
     {
       "expedient": "4001679",
       "municipality": "Anciles",
@@ -228,11 +2177,11 @@
     }
   ],
   "global_summary": {
-    "total_vars": 17,
-    "match": 3,
-    "close": 0,
-    "mismatch": 14,
-    "missing": 13,
-    "correctness_pct": 17.6
+    "total_vars": 174,
+    "match": 63,
+    "close": 12,
+    "mismatch": 99,
+    "missing": 38,
+    "correctness_pct": 36.2
   }
 }
