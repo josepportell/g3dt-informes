@@ -7,12 +7,18 @@ Last updated: 2026-03-28
 
 Compares our pipeline output against Eva's 7 signed reports. Each variable is classified into a tier and tracked through investigation → fix → verification.
 
-**Current state (post-P2):**
+**Current state (post-P3):**
 | Tier | Description | Match | Total | Correctness | Delta |
 |------|-------------|-------|-------|-------------|-------|
-| A | Auto-extractable | 55/97 | **56.7%** | Target: 95% | +17.9pp from baseline |
-| B | Manual/on-site | 0/54 | **0.0%** | Target: best effort | — |
+| A | Auto-extractable | 57/102 | **55.9%** | Target: 95% | +17.1pp from baseline |
+| B | Manual/on-site | 2/54 | **3.7%** | Target: best effort | +3.7pp from 0% |
 | C | Professional judgment | 4/17 | **23.5%** | Target: transparency | +5.9pp from baseline |
+
+**P3 qualitative wins (not captured by exact-match metric):**
+- `site_description`: 1 formulaic sentence → 5 evidence-based sentences matching Eva's structure
+- `access_description`: template with correct street name and direction
+- `location_sentence`: full sentence with building type
+- `is_anthropized`: vision-derived from ICGC orthophoto, no longer hardcoded
 
 ---
 
@@ -147,12 +153,20 @@ Eva adjusts these values based on experience. Our formulas are correct per textb
 
 15. ~~Qa cap logic~~ ✅ **Same root cause as #14.** ICGC rock detection gave all projects c=1.0 → rock cap 5.0. After fix: Rubí/Linyola now correctly get c=0.0 → soil cap 3.0. Castellar keeps c=1.0 (genuinely rock via N20 refusal) → rock cap 5.0 (Eva uses 3.0 — professional judgment, Tier C).
 
-### P3 — Tier B best effort
-16. Google Street View API feasibility study
-17. Google Earth / satellite imagery feasibility
-18. Improve Cadastre adjacent labels (add street names, building types)
-19. Improve location_sentence template
-20. Stop hardcoding site_condition = "antropitzat"
+### P3 — Tier B enrichment ✅ DONE
+16. ~~Google Street View API feasibility~~ ✅ **Replaced with ICGC orthophotos + Mapillary.** Google Street View ToS prohibits automated data extraction. ICGC WMS (free, 25cm territorial / 10cm local) + Mapillary API (free, street-level) implemented.
+17. ~~Google Earth / satellite imagery~~ ✅ **ICGC orthophotos serve this purpose.** Downloads tight chip (parcel bbox + 40m) + wide chip (100m context), crops 4 boundary strips per cardinal edge. Groq Llama 4 Scout vision extracts structured micro-fields.
+18. ~~Improve Cadastre adjacent labels~~ ✅ **Vision enrichment adds building type, floors, enclosure, vegetation.** Also fixed: street name now uses source parcel's own LDT instead of far neighbor's. Bell-Lloc east: "Via Ferrea" → "Mestre Ramon Ortiz" (correct).
+19. ~~Improve location_sentence template~~ ✅ **Now includes building_type + proper Catalan structure.**
+20. ~~Stop hardcoding site_condition~~ ✅ **`is_anthropized` now derived from ICGC orthophoto vision analysis.** Templates generate "antropitzat"/"no antropitzat" from vision result.
+
+**P3 results:** Bell-Lloc Tier B: 0% → 25% (2/8 exact match). `site_description` generates 5-sentence evidence-based paragraph matching Eva's structure (access, delimitation, surface+vegetation, surroundings, subsoil). Remaining gaps: corner parcel LDT limitation (1 address for 2 streets), multi-parcel sites, text wording differences.
+
+### P4 — LLM-in-the-Cadastre-loop (planned)
+21. **Visual parcel validation**: Download Cadastre parcel image + plànol (A.01.pdf), send both to vision LLM to verify the Cadastre polygon matches the architect's plan. Detects wrong-parcel (DPSH test point vs project location) and multi-parcel sites (plànol footprint larger than single Cadastre parcel).
+22. **Multi-parcel merge**: When vision detects footprint mismatch, auto-identify adjacent parcels to merge. Combined polygon → correct outer-edge adjacents. Solves Bell-Lloc 172+173 problem (superficie 598 vs Eva's 995).
+23. **Corner parcel street resolution**: For parcels at street intersections, use per-edge LDT queries or vision to identify different street names on different sides. Currently all street-facing sides get the same LDT address.
+24. **Adjacents detail from vision**: Use ICGC orthophoto boundary strips to add floor count, building type (aïllada/mitgeres), and specific descriptions to adjacent parcels. Transforms "parcel·la amb construcció" → "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant".
 
 ---
 
@@ -166,3 +180,7 @@ Eva adjusts these values based on experience. Our formulas are correct per textb
 | 2026-03-28 | Added wizard warnings for non-Catalan municipalities (radon + seismic lookup failures). | Anciles now shows 4 warnings |
 | 2026-03-28 | P1 code fixes: (a) bearing stratum N20 filter in report_data.py, (b) building_type field in plànol prompt, (c) INTECSON client filter in excel_miner + content_discovery, (d) Nb display in report_generator, (e) address house number in plànol prompt. #10 superficie deferred (WFS not reliable). | A: 53.5% → 56.7%. Prompt fixes (#7, #11) need vision re-run. |
 | 2026-03-28 | P2: Fixed ICGC rock detection bug (report_data.py) — regional geology was triggering is_rock() for ALL projects. Added wizard formula transparency (_calc_* notes). | C: 17.6% → 23.5%. K30 Rubí: 8.3→6.3 (Eva 6.0). |
+| 2026-03-29 | P3: ICGC orthophoto + Mapillary + Groq vision enrichment. New modules: ortho_enrichment.py, ortho_vision.py, site_text_generator.py, mapillary_client.py. Phase 3.5 in auto_extractor. Wizard evidence panel. | B: 0% → 3.7%. site_description: 5-sentence evidence-based paragraph. |
+| 2026-03-29 | P3 fix: Cadastre street name from own LDT (not far neighbor). Bell-Lloc east: "Via Ferrea" → "Mestre Ramon Ortiz". | Bell-Lloc B: 12.5% → 25%. |
+| 2026-03-29 | P3 fix: Phase 3.5 fetches own cadastral_ref. Enriched values override template-generated in wizard_service. collect_readiness respects enriched sources. | Pipeline integration complete. |
+| 2026-03-29 | Populated Eva's Tier B reference values in all 7 benchmark JSONs from signed report text. P4 roadmap: LLM-in-the-Cadastre-loop for visual parcel validation. | Benchmark Tier B measurable. |
