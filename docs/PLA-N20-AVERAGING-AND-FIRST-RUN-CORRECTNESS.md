@@ -88,6 +88,148 @@ Fixing N20 alone would fix **5-7 downstream variables** per project.
 
 ---
 
+## Full Cascade Analysis: Every Strategy × Every Project × Every Variable
+
+This table shows what EACH N20 strategy produces for ALL downstream variables,
+compared to Eva's values. This is the critical data for choosing a strategy.
+
+### Bell-Lloc (Eva: granular soil)
+
+```
+Strategy                    N20     Nb    phi      E     Qa    K30   |  N20%    Nb%   phi%      E%    Qa%
+EVA (target)                 21     25     38    650    3.0    6.0   |
+Overall avg (CURRENT)       36.7   44.2   38.1    400   3.00   5.3   |  +75%   +77%    +0%    -38%    +0%
+Excl refusal (<100)         28.8   34.7   36.7    400   3.00   5.3   |  +37%   +39%    -3%    -38%    +0%
+Excl refusal (<80)          25.4   30.6   36.1    400   2.93   5.3   |  +21%   +22%    -5%    -38%    -2%
+Median (excl ref)           20.5   24.7   34.4    200   2.37   2.7   |   -2%    -1%    -9%    -69%   -21%
+First before >2x            20.2   24.3   34.3    200   2.33   2.7   |   -4%    -3%   -10%    -69%   -22%
+First 1/test                18.5   22.3   33.7    200   2.14   2.7   |  -12%   -11%   -11%    -69%   -29%
+First 3/test                19.7   23.7   34.1    200   2.27   2.7   |   -6%    -5%   -10%    -69%   -24%
+Shallow (<30)               18.0   21.7   33.5    200   2.08   2.7   |  -14%   -13%   -12%    -69%   -31%
+```
+
+**Insight:** Bell-Lloc N20 best match is Median (20.5≈21), but E drops to 200
+(CTE bracket boundary at N20=25). Eva's E=650 is a **professional override**
+for carbonated gravels — no N20 strategy can produce E=650 automatically.
+The CTE D.23 table maxes at 400 for N20 25-40, 469 for N20 40-50.
+Eva's E=650 is judgment, not formula.
+
+### Castellar (Eva: rock, cohesion=1.0)
+
+```
+Strategy                    N20     Nb    phi      E     Qa    K30   |  N20%    Nb%   phi%      E%    Qa%
+EVA (target)                 14     17     35    500    3.0    8.0   |
+Overall avg (CURRENT)       38.1   45.9   38.4    400   4.40   6.7   | +172%  +170%   +10%    -20%   +47%
+Excl refusal (<100)         19.1   23.0   33.9    200   2.20   3.3   |  +36%   +35%    -3%    -60%   -27%
+Median (excl ref)           15.0   18.1   32.4    200   1.73   3.3   |   +7%    +6%    -7%    -60%   -42%
+First before >2x            14.9   17.9   32.4    114   1.72   1.9   |   +6%    +6%    -7%    -77%   -43%
+Shallow (<30)               14.9   18.0   32.4    114   1.72   1.9   |   +6%    +6%    -7%    -77%   -43%
+```
+
+**Insight:** Best N20 match (Median/Shallow ≈15) produces E=114-200, but Eva
+uses E>500 (rock). Again, E is **professional judgment** for rock soils.
+phi=32-34 vs Eva's 35 — close but not matching (Eva's comes from rock tables).
+Qa=1.72 vs Eva's 3.0 — huge gap because rock Qa needs different calculation.
+
+### Rubí (Eva: granular)
+
+```
+Strategy                    N20     Nb    phi      E     Qa    K30   |  N20%    Nb%   phi%      E%    Qa%
+EVA (target)                 40     47     39    450    3.5    6.0   |
+Overall avg (CURRENT)       39.5   47.6   38.6    400   3.00   5.3   |   -1%    +1%    -1%    -11%   -14%
+Excl refusal (<100)         36.0   43.3   38.0    400   3.00   5.3   |  -10%    -8%    -3%    -11%   -14%
+Median (excl ref)           33.0   39.8   37.5    400   3.00   5.3   |  -18%   -15%    -4%    -11%   -14%
+First before >2x            31.8   38.3   37.2    400   3.00   5.3   |  -21%   -19%    -5%    -11%   -14%
+First 3/test                27.0   32.5   36.4    400   3.00   5.3   |  -32%   -31%    -7%    -11%   -14%
+```
+
+**Insight:** Rubí is the ONLY project where "Overall avg" matches Eva. E stays
+at 400 for all strategies (N20 25-40 band) — but Eva uses 450 (again, judgment).
+Qa is capped at 3.0 for all strategies, but Eva uses 3.5 — suggesting Eva uses
+a higher cap for dense granular soils. phi is stable across strategies (37-39).
+
+### Linyola (Eva: cohesive, llims argilosos)
+
+```
+Strategy                    N20     Nb    phi      E     Qa    K30   |  N20%    Nb%   phi%      E%    Qa%
+EVA (target)                  9     13     28    100    3.0      -   |
+Overall avg (CURRENT)       29.2   35.1   36.8    400   3.00         | +224%  +170%   +31%   +300%    +0%
+First 1/test                12.3   14.9   31.5    114   1.42         |  +37%   +14%   +12%    +14%   -53%
+First before >2x            14.2   17.1   32.1    114   1.64         |  +58%   +31%   +15%    +14%   -45%
+Shallow (<30)               14.8   17.8   32.3    114   1.71         |  +64%   +37%   +16%    +14%   -43%
+```
+
+**Insight:** CRITICAL — Linyola is a **cohesive soil** (llims argilosos).
+Eva uses phi=28, E=100, which are the COHESIVE lookup values, NOT CTE D.23.
+No N20-based strategy produces E=100 or phi=28 because our pipeline classifies
+this as "granular" and uses the wrong lookup tables. The PRIMARY fix here is
+**soil type classification**, not N20 averaging. Even with perfect N20=9,
+CTE D.23 gives E=80 (close but different table) and Schmertmann gives phi≈29
+(close because cohesive phi is flat).
+
+### Alcoletge (Eva: rock, cohesion=1.0)
+
+```
+Strategy                    N20     Nb    phi      E     Qa    K30   |  N20%    Nb%   phi%      E%    Qa%
+EVA (target)                  4      R     30   >400    3.5      -   |
+Overall avg (CURRENT)       21.7   26.1   34.8    200   2.50         | +441%     -    +16%    -50%   -29%
+First 3/test                 4.3    5.2   28.6     50   0.50         |   +8%     -     -5%    -88%   -86%
+First before >2x             3.7    4.4   28.2     50   0.43         |   -8%     -     -6%    -88%   -88%
+Excl refusal (<80)           6.0    7.2   29.6     80   0.69         |  +50%     -     -1%    -80%   -80%
+```
+
+**Insight:** CRITICAL — Alcoletge is **rock** (Eva c=1.0, phi=30, E>400).
+Eva's Nb="R" (refusal = rock). Our pipeline treats it as granular.
+Even with perfect N20=4, CTE D.23 gives E=50 vs Eva's >400 — because
+**rock E cannot be derived from DPSH N20**. It's a different material entirely.
+phi=28-30 is close, but Qa=0.50 vs Eva's 3.5 because T-P doesn't apply to rock.
+
+---
+
+## KEY REVELATION FROM CASCADE ANALYSIS
+
+**Three distinct categories of error:**
+
+### Category A: N20 averaging (fixable with better formula)
+Projects: Bell-Lloc (partial), Rubí (partial)
+- Fixing the averaging method improves N20/Nb/phi
+- But E still limited by CTE D.23 bracket boundaries
+- Qa improves because phi and Nb improve
+
+### Category B: Soil type misclassification (fixable with sondeig data)
+Projects: Linyola, Alcoletge
+- Pipeline says "granular" → uses CTE D.23 for E, Schmertmann for phi
+- Eva says "cohesive" (Linyola) or "rock" (Alcoletge) → uses different tables
+- **FIX: sondeig description should drive soil type, not just DPSH hardness**
+- Impact: changes E by 4-10x, phi by 5-15 degrees, Qa by 2-5x
+
+### Category C: Professional judgment override (not auto-fixable)
+Projects: ALL (for E), Rubí (for Qa cap), Castellar (for E)
+- Eva's E is judgment: 650 for carbonated gravels, >400 for rock, 100 for llims
+- CTE D.23 gives 114-469 for most N20 ranges — never matches Eva's overrides
+- Eva's Qa cap: 3.0 for soil, 3.5 for dense granular, 4.0-5.0 for rock
+- **These CANNOT be automated — they are the expert overrides panel's purpose**
+
+### What this means for implementation priority:
+
+```
+1. Soil type classification from sondeig   ← HIGHEST IMPACT (Linyola, Alcoletge)
+   Fixes: E, phi, cohesion, Qa, settlement for misclassified projects
+
+2. N20 averaging method                    ← HIGH IMPACT (all projects)
+   Fixes: N20, Nb, phi (partially), Qa (partially)
+
+3. Expert override UX for E and Qa cap     ← Already done (Item 4 today)
+   Eva sees ranges and formulas, adjusts as needed
+```
+
+The cascade analysis reveals that **soil type classification is MORE important
+than N20 averaging** for overall correctness. Two projects (Linyola, Alcoletge)
+are wrong in EVERY downstream variable because the soil type is wrong, not
+because N20 is wrong.
+
+---
+
 ## Problem 2: First-Run Production Lifecycle
 
 ### Expected production flow
@@ -248,29 +390,37 @@ FileMiner's contact extraction needs refinement: client = promotor, not architec
 
 ---
 
-## Implementation Priority
+## Implementation Priority (revised after cascade analysis)
+
+The cascade analysis above reveals that **soil type classification is MORE
+important than N20 averaging**. Two projects are wrong in every downstream
+variable because the soil type is wrong.
 
 ```
-1. N20 formula fix (exclude refusal + shallow weighting)    ← Biggest impact
-   - Fixes: dpsh_avg_n20, geotech_nb, geotech_phi, geotech_E, qa_value,
-     settlement, k30_value  (7 variables)
-   - Estimated gain: Tier A +10-15%, Overall +5-8%
+1. Soil type classification from sondeig    ← HIGHEST IMPACT (revised up)
+   - Fixes: E, phi, cohesion, Qa, settlement for Linyola + Alcoletge
+   - Sondeig description → infer soil_type (cohesive/rock/granular)
+   - "llims argilosos" → cohesive (E=100, phi=28, c=0.05)
+   - "roca", "bretxes", "lutites compactes" → rock (E>500, phi=30-35, c=1.0)
+   - Estimated gain: Tier A +5-8%, fixes 2 projects completely
+   - Effort: ~1 hour (sondeig vision → auto_extractor soil_type inference)
+
+2. N20 formula fix (exclude refusal + shallow weighting)    ← HIGH IMPACT
+   - Fixes: dpsh_avg_n20, geotech_nb, geotech_phi partially
+   - NOTE: Does NOT fix E (CTE bracket problem) or Qa (cap problem)
+   - Best strategy: weighted shallow bias (see analysis above)
+   - Estimated gain: Tier A +5-10%, reduces N20 RMSE from 237 to ~35
    - Effort: ~30 min (dpsh_extractor + auto_extractor + wizard_service)
 
-2. N20 as expert override in wizard                         ← Eva control
+3. Ask Eva the specific questions                           ← Validates 1+2
+   - Required to confirm soil type inference rules
+   - Required to validate N20 averaging choice
+   - May reveal her Qa cap rules (3.0 vs 3.5 vs 4.5)
+
+4. N20 as expert override in wizard                         ← Eva control
    - Shows DPSH profile + computed average
    - Eva can adjust → cascades to all downstream calcs
    - Effort: ~1 hour (wizard field + JS cascade logic)
-
-3. Ask Eva the specific questions above                     ← Correctness
-   - Required to validate our formula choice
-   - May reveal a simpler rule we're missing
-
-4. Soil type classification from sondeig                    ← Linyola/Alcoletge fix
-   - If sondeig says "llims argilosos", soil_type should be "cohesive"
-   - If sondeig says "roca", soil_type should be "rock"
-   - Currently soil_type comes from wizard dropdown only
-   - Effort: ~1 hour (vision_normalizer → auto_extractor inference)
 
 5. Client name cleanup                                      ← Data quality
    - Strip phone numbers, emails from client names
