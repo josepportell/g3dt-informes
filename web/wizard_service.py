@@ -346,7 +346,7 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     description = (desc_entry['value'] if isinstance(desc_entry, dict) else (desc_entry or '')) if desc_entry else ''
 
     # Compute geomech params (same logic as report_generator)
-    if is_rock(avg_n20, description):
+    if soil_type == 'rock' or is_rock(avg_n20, description):
         rock = rock_params_default()
         gamma, phi, E, cohesion = rock['gamma'], rock['phi'], rock['E'], rock['cohesion']
     else:

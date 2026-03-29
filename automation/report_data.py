@@ -452,7 +452,7 @@ def build_report_data(
         try:
             from .cte_geomech import (
                 nspt_to_phi, nspt_to_E_kg_cm2, nspt_to_gamma_g_cm3,
-                is_rock, rock_params_default,
+                is_rock, rock_params_default, soil_type_to_cohesion,
             )
             # Build description for rock detection — use deepest layer (bearing stratum)
             # IMPORTANT: Only use sondeig layer descriptions (field observations),
@@ -480,14 +480,14 @@ def build_report_data(
                 phi = geomech.get('phi') or nspt_to_phi(avg_nb, soil_type)
                 E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
                 cohesion = geomech.get('cohesion', 0.0)
-            elif is_rock(avg_n20, rock_description):
+            elif soil_type == 'rock' or is_rock(avg_n20, rock_description):
                 rock = rock_params_default()
                 gamma, phi, E, cohesion = rock['gamma'], rock['phi'], rock['E'], rock['cohesion']
             else:
                 gamma = nspt_to_gamma_g_cm3(avg_n20, soil_type)
                 phi = nspt_to_phi(avg_nb, soil_type)
                 E = nspt_to_E_kg_cm2(avg_n20)
-                cohesion = 0.0
+                cohesion = soil_type_to_cohesion(soil_type)
         except ImportError:
             # Fallback to old Peck/Hanson if cte_geomech not available
             gamma = geomech.get('gamma') or GeotechCorrelations.n_to_density(avg_n20)
@@ -973,7 +973,7 @@ def _bearing_stratum_n20(dpsh_data: DPSHData, sondeig_layers: list[dict]) -> flo
     bearing_n20 = []
     for test in dpsh_data.tests:
         for r in test.readings:
-            if abs(r.depth_m) >= depth_from:
+            if abs(r.depth_m) >= depth_from and r.n20 < 100:
                 bearing_n20.append(r.n20)
 
     if not bearing_n20:
@@ -1020,9 +1020,9 @@ def _generate_soil_levels(
             depth_from = deepest.get('depth_from_m', 0.0)
             bearing_n20 = [
                 r.n20 for r in all_readings
-                if abs(r.depth_m) >= depth_from
+                if abs(r.depth_m) >= depth_from and r.n20 < 100
             ]
-            all_n20 = bearing_n20 if bearing_n20 else [r.n20 for r in all_readings]
+            all_n20 = bearing_n20 if bearing_n20 else [r.n20 for r in all_readings if r.n20 < 100]
             return [SoilLevel(
                 level_number=1,
                 description=desc,
@@ -1043,9 +1043,10 @@ def _generate_soil_levels(
 
             # Filter DPSH readings within this layer's depth range
             # Readings have negative depths; layer boundaries are positive
+            # Exclude refusal values (N20 >= 100)
             layer_n20 = [
                 r.n20 for r in all_readings
-                if depth_from <= abs(r.depth_m) <= depth_to
+                if depth_from <= abs(r.depth_m) <= depth_to and r.n20 < 100
             ]
             avg_n20 = sum(layer_n20) / len(layer_n20) if layer_n20 else dpsh_data.overall_average_n20
             thickness = depth_to - depth_from if depth_to > depth_from else None
@@ -1073,7 +1074,7 @@ def _generate_soil_levels(
 
     # Fallback: single level with global average
     max_depth = max((abs(r.depth_m) for r in all_readings), default=0)
-    all_n20 = [r.n20 for r in all_readings]
+    all_n20 = [r.n20 for r in all_readings if r.n20 < 100]
     st = soil_types[0] if soil_types else "granular"
     return [
         SoilLevel(

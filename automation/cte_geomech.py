@@ -89,6 +89,7 @@ SCHMERTMANN_N_FACTORS = {
     "cohesive": 1.25,      # Sandy silts, silty clays
     "limo": 1.25,
     "arcilla": 1.0,        # Clays
+    "rock": 2.0,           # Rock — N/A (handled by rock_params_default), but safe fallback
 }
 # Baseline: n=2.5 (from Schmertmann's original, for "slightly silty sands")
 SCHMERTMANN_N_BASELINE = 2.5
@@ -216,6 +217,7 @@ def nspt_to_gamma_g_cm3(nspt: float, soil_type: str = "granular") -> float:
         "cohesive": 1.90,
         "limo": 1.90,
         "arcilla": 1.90,
+        "rock": 2.20,
     }
 
     return GAMMA_BY_TYPE.get(soil_type, 2.0)
@@ -238,6 +240,7 @@ def soil_type_to_cohesion(soil_type: str) -> float:
         "cohesive": 0.05,
         "limo": 0.05,
         "arcilla": 0.10,
+        "rock": 1.0,
     }
     return COHESION_BY_TYPE.get(soil_type, 0.0)
 
@@ -294,16 +297,48 @@ def rock_params_default() -> dict:
 def detect_soil_type(description: str) -> str:
     """Auto-detect soil type from lithological description.
 
-    Strategy: the FIRST significant noun determines the type.
+    Priority: rock > cohesive > granular sub-types.
+    Rock is checked first because "bretxes amb matriu sorrenca" is rock, not granular.
+    Soft marls ("marga tova", "margues toves") are cohesive, not rock.
+
+    Strategy for non-rock: the FIRST significant noun determines the type.
     "Llims argilosos i sorrencs" → limo (starts with llim)
     "Sorres argiloses" → arena (starts with sorr)
     "Graves en matriu sorrenca" → grava (starts with grav)
 
-    Returns: 'grava', 'arena', 'arena_limosa', 'limo', 'arcilla', or 'granular'
+    Returns: 'rock', 'grava', 'arena', 'arena_limosa', 'limo', 'arcilla', or 'granular'
     """
     import re
     desc = description.lower()
 
+    # --- Rock detection (highest priority) ---
+    # Soft marls are cohesive, not rock — check before rock keywords
+    soft_marl = any(kw in desc for kw in ('marga tova', 'margues toves'))
+
+    rock_keywords = [
+        'substrat rocós', 'roca mare', 'roca',
+        'bretx',  # bretxa, bretxes
+        'calcàri',  # calcària, calcàries
+        'gresos', 'gres',
+        'conglomerat cimentat',
+        'lutites compactes',
+        'pissarra',
+    ]
+    # "margues"/"marga" are rock unless soft
+    rock_keywords_secondary = ['margues', 'marga']
+
+    has_rock = any(kw in desc for kw in rock_keywords)
+    has_rock_secondary = not soft_marl and any(kw in desc for kw in rock_keywords_secondary)
+
+    # Check for granular/cohesive presence (needed for rock_secondary tie-breaking)
+    has_granular = any(kw in desc for kw in ('grav', 'sorr', 'aren', 'còdol', 'balast'))
+
+    if has_rock:
+        return "rock"
+    if has_rock_secondary and not has_granular:
+        return "rock"
+
+    # --- Soil sub-type detection ---
     # Compound types: check first (most specific)
     if re.search(r'sorr.*limos|arena.*limos', desc):
         return "arena_limosa"
@@ -315,7 +350,9 @@ def detect_soil_type(description: str) -> str:
     stripped = re.sub(r'^(\d+[er|on|rt]+\s+nivell\.?\s*)', '', desc)
     stripped = re.sub(r'^(el|la|les|els|los|las|un|una)\s+', '', stripped)
 
-    if stripped.startswith(('llim', 'silt', 'marg')):
+    if stripped.startswith(('llim', 'silt')):
+        return "limo"
+    if soft_marl or stripped.startswith('marg'):
         return "limo"
     if stripped.startswith(('argil', 'clay')):
         return "arcilla"
@@ -325,7 +362,7 @@ def detect_soil_type(description: str) -> str:
         return "arena"
 
     # Fallback: any keyword anywhere in description
-    if any(kw in desc for kw in ('llim', 'silt', 'marg')):
+    if any(kw in desc for kw in ('llim', 'silt')):
         return "limo"
     if any(kw in desc for kw in ('argil', 'clay', 'argila')):
         return "arcilla"

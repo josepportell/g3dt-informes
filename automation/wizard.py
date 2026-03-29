@@ -203,6 +203,7 @@ class UserDataWizard:
             tests = data.get('sondeig_tests', [])
             if tests:
                 best_levels = 0
+                best_layers = []
                 source_test_id = 'S-1'
                 for test in tests:
                     # Prefer num_geological_levels (from "Unitat litològica" column)
@@ -212,12 +213,21 @@ class UserDataWizard:
                     n = geo_levels if geo_levels is not None else len(layers)
                     if n > best_levels:
                         best_levels = n
+                        best_layers = layers
                         source_test_id = test.get('test_id', 'S-1')
                 if best_levels > 0:
                     source = f"sondeig {source_test_id}"
                     # Override the default
                     self.prefills.pop('num_soil_levels', None)
                     self._set_prefill('num_soil_levels', best_levels, source, overall_conf)
+
+                    # Infer soil_type per level from layer descriptions
+                    from .cte_geomech import detect_soil_type
+                    for i, layer in enumerate(best_layers[:best_levels]):
+                        desc = layer.get('description') or layer.get('material') or ''
+                        soil_type = detect_soil_type(desc)
+                        field = f'soil_type_level_{i + 1}'
+                        self._set_prefill(field, soil_type, f'sondeig descripció', overall_conf)
         except (json.JSONDecodeError, KeyError, TypeError) as e:
             print(f'  [AVÍS: error carregant {path.name}: {e}]')
 
@@ -800,7 +810,7 @@ class UserDataWizard:
             except (json.JSONDecodeError, KeyError, TypeError):
                 pass
 
-        SOIL_TYPE_OPTIONS = ['granular', 'arena', 'grava', 'arena_limosa', 'limo', 'arcilla']
+        SOIL_TYPE_OPTIONS = ['granular', 'arena', 'grava', 'arena_limosa', 'limo', 'arcilla', 'rock']
 
         for i in range(num_levels):
             # Auto-detect from sondeig description

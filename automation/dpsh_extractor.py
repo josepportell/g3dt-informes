@@ -137,7 +137,36 @@ class DPSHData:
 
     @property
     def overall_average_n20(self) -> float:
-        """Average N20 across all tests."""
+        """Weighted average N20 across all tests.
+
+        Excludes refusal values (N20 >= 100) and weights shallow readings
+        (first 1.0m depth, ~5 readings per test) at 2x to approximate
+        Eva's focus on foundation soil zone.
+        """
+        weighted_sum = 0.0
+        total_weight = 0.0
+
+        for test in self.tests:
+            for i, reading in enumerate(test.readings):
+                if reading.n20 >= 100:
+                    continue
+                weight = 2.0 if i < 5 else 1.0
+                weighted_sum += reading.n20 * weight
+                total_weight += weight
+
+        if total_weight == 0:
+            all_non_refusal = []
+            for test in self.tests:
+                all_non_refusal.extend(v for v in test.n20_values if v < 100)
+            if not all_non_refusal:
+                return 0.0
+            return sum(all_non_refusal) / len(all_non_refusal)
+
+        return weighted_sum / total_weight
+
+    @property
+    def raw_average_n20(self) -> float:
+        """Simple arithmetic mean of ALL N20 readings (including refusal)."""
         all_values = []
         for test in self.tests:
             all_values.extend(test.n20_values)
