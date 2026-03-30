@@ -913,6 +913,69 @@
         .wizard-group-body.single-col {
             grid-template-columns: 1fr;
         }
+        /* Geomech live recalc */
+        @keyframes geomech-flash {
+            0% { background-color: #fff9c4; }
+            100% { background-color: transparent; }
+        }
+        .geomech-flash {
+            animation: geomech-flash 1.2s ease-out;
+        }
+        .geomech-results-card {
+            grid-column: 1 / -1;
+            margin-top: 8px;
+            padding: 12px 16px;
+            background: #eef6fc;
+            border: 1px solid #b3d4fc;
+            border-radius: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: baseline;
+        }
+        .geomech-result-item {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a5276;
+        }
+        .geomech-result-item small {
+            font-weight: 400;
+            font-size: 11px;
+            color: #666;
+            display: block;
+            margin-top: 2px;
+        }
+        .geomech-dep-hint {
+            font-size: 11px;
+            color: #7f8c8d;
+            margin-top: 2px;
+        }
+        .geomech-out-of-range {
+            border-color: #e67e22 !important;
+            box-shadow: 0 0 0 2px rgba(230,126,34,0.25);
+        }
+        .icgc-subsection-header {
+            cursor: pointer;
+            font-size: 12px;
+            color: #7f8c8d;
+            padding: 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            grid-column: 1 / -1;
+        }
+        .icgc-subsection-header:hover {
+            color: #2c3e50;
+        }
+        .icgc-subsection-body {
+            display: none;
+            grid-column: 1 / -1;
+        }
+        .icgc-subsection-body.visible {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
         /* Evidence panel */
         .evidence-panel {
             margin-top: -1px;
@@ -1797,7 +1860,7 @@
                                 </div>
                                 <div class="wizard-field">
                                     <label>Profunditat fonamentacio (m) <span class="source-badge" id="src-foundation_depth_m"></span></label>
-                                    <input type="number" step="0.1" id="wiz-foundation_depth_m" data-field="foundation_depth_m" onchange="markWizardDirty(event)">
+                                    <input type="number" step="0.1" id="wiz-foundation_depth_m" data-field="foundation_depth_m" onchange="markWizardDirty(event); recalcGeomech('Df')">
                                 </div>
                                 <div class="wizard-field">
                                     <label>Cota referencia <span class="source-badge" id="src-cota_referencia"></span></label>
@@ -1820,6 +1883,83 @@
                             </div>
                         </div>
 
+                        <!-- Group: Parametres Geomecanics (was Expert Overrides) -->
+                        <div class="wizard-group">
+                            <div class="wizard-group-header">Parametres Geomecanics</div>
+                            <div class="wizard-group-body" id="expertOverridesBody">
+                                <div class="wizard-field">
+                                    <label>gamma densitat (g/cm3) <span class="source-badge" id="src-geomech_gamma"></span></label>
+                                    <input type="number" step="0.01" id="wiz-geomech_gamma" placeholder="ex: 2.20" onchange="markWizardDirty(event); recalcGeomech('gamma')">
+                                    <small class="calc-note" id="calc-gamma" style="color:#888;font-size:11px;display:block"></small>
+                                    <div class="geomech-dep-hint">&#8594; afecta Qa</div>
+                                </div>
+                                <div class="wizard-field">
+                                    <label>c cohesio (kg/cm2) <span class="source-badge" id="src-geomech_cohesion"></span></label>
+                                    <input type="number" step="0.01" id="wiz-geomech_cohesion" placeholder="ex: 1.0" onchange="markWizardDirty(event); recalcGeomech('cohesion')">
+                                    <small class="calc-note" id="calc-cohesion" style="color:#888;font-size:11px;display:block"></small>
+                                    <div class="geomech-dep-hint">&#8594; afecta Qa, cap sol/roca</div>
+                                </div>
+                                <div class="wizard-field">
+                                    <label>phi angle friccio (graus) <span class="source-badge" id="src-geomech_phi"></span></label>
+                                    <input type="number" step="0.1" id="wiz-geomech_phi" placeholder="ex: 35" onchange="markWizardDirty(event); recalcGeomech('phi')">
+                                    <small class="calc-note" id="calc-phi" style="color:#888;font-size:11px;display:block"></small>
+                                    <div class="geomech-dep-hint">&#8594; afecta Qa (Nc, Nq, N&#947;)</div>
+                                </div>
+                                <div class="wizard-field">
+                                    <label>E modul deformacio (kg/cm2) <span class="source-badge" id="src-geomech_E"></span></label>
+                                    <input type="number" step="1" id="wiz-geomech_E" placeholder="ex: 500" onchange="markWizardDirty(event); recalcGeomech('E')">
+                                    <small class="calc-note" id="calc-E" style="color:#888;font-size:11px;display:block"></small>
+                                    <div class="geomech-dep-hint">&#8594; afecta K30</div>
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Es assentament Schmertmann (kg/cm2) <span class="source-badge" id="src-Es_settlement"></span></label>
+                                    <input type="number" step="1" id="wiz-Es_settlement" placeholder="auto: 2.5xNb" onchange="markWizardDirty(event); recalcGeomech('Es')">
+                                    <small class="calc-note" id="calc-Es" style="color:#888;font-size:11px;display:block"></small>
+                                    <div class="geomech-dep-hint">&#8594; afecta assentament</div>
+                                </div>
+                                <!-- Live results card -->
+                                <div class="geomech-results-card" id="geomechResultsCard">
+                                    <div class="geomech-result-item" id="geomech-res-qa">
+                                        Qa = <span id="geomech-val-qa">--</span> kg/cm2
+                                        <small id="geomech-gov-qa"></small>
+                                    </div>
+                                    <div class="geomech-result-item" id="geomech-res-k30">
+                                        K30 = <span id="geomech-val-k30">--</span> kg/cm3
+                                        <small id="geomech-gov-k30"></small>
+                                    </div>
+                                    <div class="geomech-result-item" id="geomech-res-settlement">
+                                        Assentament = <span id="geomech-val-settlement">--</span> cm
+                                        <small id="geomech-gov-settlement"></small>
+                                    </div>
+                                    <!-- Server calc notes (Tier C transparency) -->
+                                    <div style="width:100%; font-size:11px; color:#666; border-top:1px solid #d0e0f0; padding-top:6px; margin-top:4px;">
+                                        <span id="calc-results-qa"></span>
+                                        <span id="calc-results-k30"></span>
+                                        <span id="calc-results-settlement"></span>
+                                    </div>
+                                </div>
+                                <!-- ICGC collapsible sub-section -->
+                                <div class="icgc-subsection-header" onclick="toggleIcgcSubsection()">
+                                    <span class="collapsed-arrow" id="icgc-arrow">&#9654;</span>
+                                    Dades ICGC (geologia regional)
+                                </div>
+                                <div class="icgc-subsection-body" id="icgcSubsectionBody">
+                                    <div class="wizard-field">
+                                        <label>Codi unitat ICGC <span class="source-badge" id="src-icgc_unit_code"></span></label>
+                                        <input type="text" id="wiz-icgc_unit_code" placeholder="ex: ECbc, Tm2" onchange="markWizardDirty(event)">
+                                    </div>
+                                    <div class="wizard-field">
+                                        <label>Descripcio unitat ICGC</label>
+                                        <input type="text" id="wiz-icgc_unit_description" onchange="markWizardDirty(event)">
+                                    </div>
+                                    <div class="wizard-field">
+                                        <label>Epoca ICGC</label>
+                                        <input type="text" id="wiz-icgc_unit_epoch" placeholder="ex: Eoce, Triasic" onchange="markWizardDirty(event)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Group: Coordenades UTM -->
                         <div class="wizard-group">
                             <div class="wizard-group-header">Coordenades UTM (ETRS89 H31)</div>
@@ -1836,61 +1976,6 @@
                                     <div class="utm-actions">
                                         <button type="button" class="btn utm-btn" onclick="geolocalitzar()">Geolocalitzar amb ICGC</button>
                                         <button type="button" class="btn utm-btn" id="btnRefreshPrefills" onclick="refreshPrefills()">Actualitzar prefills</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Group 4: Expert Overrides (collapsible) -->
-                        <div class="wizard-group">
-                            <div class="wizard-group-header collapsible" onclick="toggleWizardGroup(this)">
-                                <span class="collapsed-arrow">&#9654;</span>
-                                Overrides Experts (opcional)
-                            </div>
-                            <div class="wizard-group-body single-col collapsed" id="expertOverridesBody">
-                                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px;">
-                                    <div class="wizard-field">
-                                        <label>Codi unitat ICGC <span class="source-badge" id="src-icgc_unit_code"></span></label>
-                                        <input type="text" id="wiz-icgc_unit_code" placeholder="ex: ECbc, Tm2" onchange="markWizardDirty(event)">
-                                    </div>
-                                    <div class="wizard-field">
-                                        <label>Descripcio unitat ICGC</label>
-                                        <input type="text" id="wiz-icgc_unit_description" onchange="markWizardDirty(event)">
-                                    </div>
-                                    <div class="wizard-field">
-                                        <label>Epoca ICGC</label>
-                                        <input type="text" id="wiz-icgc_unit_epoch" placeholder="ex: Eoce, Triasic" onchange="markWizardDirty(event)">
-                                    </div>
-                                    <div class="wizard-field">
-                                        <label>gamma densitat (g/cm3) <span class="source-badge" id="src-geomech_gamma"></span></label>
-                                        <input type="number" step="0.01" id="wiz-geomech_gamma" placeholder="ex: 2.20" onchange="markWizardDirty(event)">
-                                        <small class="calc-note" id="calc-gamma" style="color:#888;font-size:11px;display:block"></small>
-                                    </div>
-                                    <div class="wizard-field">
-                                        <label>c cohesio (kg/cm2) <span class="source-badge" id="src-geomech_cohesion"></span></label>
-                                        <input type="number" step="0.01" id="wiz-geomech_cohesion" placeholder="ex: 1.0" onchange="markWizardDirty(event)">
-                                        <small class="calc-note" id="calc-cohesion" style="color:#888;font-size:11px;display:block"></small>
-                                    </div>
-                                    <div class="wizard-field">
-                                        <label>phi angle friccio (graus) <span class="source-badge" id="src-geomech_phi"></span></label>
-                                        <input type="number" step="0.1" id="wiz-geomech_phi" placeholder="ex: 35" onchange="markWizardDirty(event)">
-                                        <small class="calc-note" id="calc-phi" style="color:#888;font-size:11px;display:block"></small>
-                                    </div>
-                                    <div class="wizard-field">
-                                        <label>E modul deformacio (kg/cm2) <span class="source-badge" id="src-geomech_E"></span></label>
-                                        <input type="number" step="1" id="wiz-geomech_E" placeholder="ex: 500" onchange="markWizardDirty(event)">
-                                        <small class="calc-note" id="calc-E" style="color:#888;font-size:11px;display:block"></small>
-                                    </div>
-                                    <div class="wizard-field">
-                                        <label>Es assentament Schmertmann (kg/cm2) <span class="source-badge" id="src-Es_settlement"></span></label>
-                                        <input type="number" step="1" id="wiz-Es_settlement" placeholder="auto: 2.5xNb" onchange="markWizardDirty(event)">
-                                        <small class="calc-note" id="calc-Es" style="color:#888;font-size:11px;display:block"></small>
-                                    </div>
-                                    <div style="grid-column: 1 / -1; margin-top: 8px; padding: 8px 12px; background: #f0f4f8; border-radius: 6px; font-size: 12px; color: #555;">
-                                        <strong>Resultats calculats:</strong>
-                                        <span id="calc-results-qa"></span>
-                                        <span id="calc-results-k30"></span>
-                                        <span id="calc-results-settlement"></span>
                                     </div>
                                 </div>
                             </div>
@@ -4249,6 +4334,9 @@
                 }
             });
 
+            // Trigger initial live recalculation with populated values
+            recalcGeomech();
+
             // UTM bounds validation (Catalonia)
             ['utm_x', 'utm_y'].forEach(field => {
                 const el = document.getElementById(`wiz-${field}`);
@@ -4322,6 +4410,221 @@
             const body = header.nextElementSibling;
             arrow.classList.toggle('expanded');
             body.classList.toggle('collapsed');
+        }
+
+        function toggleIcgcSubsection() {
+            const arrow = document.getElementById('icgc-arrow');
+            const body = document.getElementById('icgcSubsectionBody');
+            arrow.classList.toggle('expanded');
+            body.classList.toggle('visible');
+        }
+
+        // --- Live geomech recalculation ---
+
+        const TERZAGHI_TABLE = [
+            {phi:0, Nc:5.70, Nq:1.00, Ng:0.00},
+            {phi:5, Nc:7.30, Nq:1.60, Ng:0.50},
+            {phi:10, Nc:9.60, Nq:2.70, Ng:1.20},
+            {phi:15, Nc:12.90, Nq:4.40, Ng:2.50},
+            {phi:20, Nc:17.70, Nq:7.40, Ng:5.00},
+            {phi:25, Nc:25.10, Nq:12.70, Ng:9.70},
+            {phi:26, Nc:27.10, Nq:14.20, Ng:11.00},
+            {phi:28, Nc:31.60, Nq:17.80, Ng:14.60},
+            {phi:30, Nc:37.20, Nq:22.50, Ng:19.70},
+            {phi:32, Nc:44.00, Nq:28.50, Ng:27.00},
+            {phi:34, Nc:52.60, Nq:36.50, Ng:36.00},
+            {phi:35, Nc:57.80, Nq:41.40, Ng:42.40},
+            {phi:36, Nc:63.50, Nq:47.20, Ng:49.00},
+            {phi:38, Nc:77.50, Nq:61.50, Ng:67.40},
+            {phi:40, Nc:95.70, Nq:81.30, Ng:100.40},
+            {phi:42, Nc:119.70, Nq:108.80, Ng:155.60},
+            {phi:44, Nc:151.90, Nq:147.70, Ng:244.60},
+            {phi:45, Nc:172.30, Nq:173.30, Ng:297.50},
+        ];
+
+        const GEOMECH_RANGES = {
+            gamma: [1.90, 2.20],
+            cohesion: [0.0, 1.0],
+            phi: [28, 39],
+            E: [100, 800],
+            Es: [50, 200],
+        };
+
+        let _prevGeomechResults = {qa: null, k30: null, settlement: null};
+
+        function interpolateTerzaghi(phi) {
+            if (phi <= 0) return {Nc:5.70, Nq:1.00, Ng:0.00};
+            if (phi >= 45) return {Nc:172.30, Nq:173.30, Ng:297.50};
+            let lo = TERZAGHI_TABLE[0], hi = TERZAGHI_TABLE[0];
+            for (let i = 0; i < TERZAGHI_TABLE.length - 1; i++) {
+                if (TERZAGHI_TABLE[i].phi <= phi && TERZAGHI_TABLE[i+1].phi >= phi) {
+                    lo = TERZAGHI_TABLE[i];
+                    hi = TERZAGHI_TABLE[i+1];
+                    break;
+                }
+            }
+            if (lo.phi === hi.phi) return {Nc:lo.Nc, Nq:lo.Nq, Ng:lo.Ng};
+            const t = (phi - lo.phi) / (hi.phi - lo.phi);
+            return {
+                Nc: lo.Nc + t * (hi.Nc - lo.Nc),
+                Nq: lo.Nq + t * (hi.Nq - lo.Nq),
+                Ng: lo.Ng + t * (hi.Ng - lo.Ng),
+            };
+        }
+
+        function recalcGeomech(changedField) {
+            const gammaEl = document.getElementById('wiz-geomech_gamma');
+            const cEl = document.getElementById('wiz-geomech_cohesion');
+            const phiEl = document.getElementById('wiz-geomech_phi');
+            const eEl = document.getElementById('wiz-geomech_E');
+            const esEl = document.getElementById('wiz-Es_settlement');
+
+            const gamma = parseFloat(gammaEl.value) || 0;
+            const c = parseFloat(cEl.value) || 0;
+            const phi = parseFloat(phiEl.value) || 0;
+            const E = parseFloat(eEl.value) || 0;
+            const Es = parseFloat(esEl.value) || 0;
+
+            // Range warnings
+            _checkGeomechRange(gammaEl, 'gamma', gamma);
+            _checkGeomechRange(cEl, 'cohesion', c);
+            _checkGeomechRange(phiEl, 'phi', phi);
+            _checkGeomechRange(eEl, 'E', E);
+            _checkGeomechRange(esEl, 'Es', Es);
+
+            // Get B and Df from wizard
+            const dfEl = document.getElementById('wiz-foundation_depth_m');
+            const B = 1.0;
+            const Df = parseFloat(dfEl ? dfEl.value : '') || 0.5;
+
+            // Get Nb from Es_settlement prefill (Es = 2.5*Nb => Nb = Es/2.5)
+            // Or from the prefills if available
+            // Nb = Es / 2.5 (since Es_settlement = 2.5 * Nb)
+            // Use current field value so T-P recalculates when Eva edits Es
+            let Nb = Es > 0 ? Es / 2.5 : null;
+
+            // Calculate if we have minimum required values
+            if (!gamma || !phi) {
+                _updateGeomechDisplay('--', '--', '--', '', '', '');
+                return;
+            }
+
+            // Terzaghi bearing capacity
+            const factors = interpolateTerzaghi(phi);
+            const gamma_kgcm2 = gamma * 0.1;
+            // Shape factors for SQUARE footing (matches report_generator.py + terzaghi_calculator.py)
+            const sc = 1.3, sq = 1.0, sg = 0.8;
+            const term1 = c * factors.Nc * sc;
+            const term2 = gamma_kgcm2 * Df * factors.Nq * sq;
+            const term3 = 0.5 * gamma_kgcm2 * B * factors.Ng * sg;
+            const qu = term1 + term2 + term3;
+            let Qa = qu / 3.0;
+            let governs = 'Terzaghi';
+
+            // Terzaghi-Peck (granular with Nb)
+            if (Nb && Nb > 0 && c < 0.5) {
+                const Fw = Math.pow((B + 0.3) / B, 2.0);
+                const Fd = Math.min(1 + 0.33 * Df / B, 1.33);
+                const qa_tp = (Nb / 12.0) / Fw * Fd;
+                if (qa_tp < Qa) {
+                    Qa = qa_tp;
+                    governs = 'T-P';
+                }
+            }
+
+            // Qa cap
+            const cap = c >= 0.5 ? 5.0 : 3.0;
+            if (Qa > cap) {
+                Qa = cap;
+                governs = 'cap ' + (c >= 0.5 ? 'roca' : 'sol');
+            }
+
+            // K30
+            let k30 = '--';
+            let k30Gov = '';
+            if (E > 0) {
+                if (c >= 0.5) {
+                    k30 = (E / 60.0).toFixed(1);
+                    k30Gov = 'E/60 (roca)';
+                } else {
+                    k30 = (E / 75.0).toFixed(1);
+                    k30Gov = 'E/75 (granular)';
+                }
+            }
+
+            // Schmertmann settlement
+            let settlement = '--';
+            let settlGov = '';
+            if (Es > 0 && Qa > 0) {
+                // Match Python terzaghi_calculator.py: uses Qa directly (not delta_q)
+                const sigma_v0 = gamma * 0.1 * Df;
+                if (Qa > 0) {
+                    const C1 = Math.max(1 - 0.5 * sigma_v0 / Qa, 0.5);
+                    const Iz_integral = 0.525 * B;
+                    const s_m = C1 * Qa * Iz_integral / Es;
+                    settlement = (s_m * 100).toFixed(2);
+                    settlGov = 'Schmertmann';
+                }
+            }
+
+            _updateGeomechDisplay(
+                Qa.toFixed(2), k30, settlement,
+                governs, k30Gov, settlGov
+            );
+        }
+
+        function _checkGeomechRange(el, field, value) {
+            if (!el) return;
+            const range = GEOMECH_RANGES[field];
+            if (!range) return;
+            if (el.value === '') {
+                el.classList.remove('geomech-out-of-range');
+                return;
+            }
+            if (value < range[0] || value > range[1]) {
+                el.classList.add('geomech-out-of-range');
+            } else {
+                el.classList.remove('geomech-out-of-range');
+            }
+        }
+
+        function _updateGeomechDisplay(qa, k30, settlement, qaGov, k30Gov, settlGov) {
+            const qaEl = document.getElementById('geomech-val-qa');
+            const k30El = document.getElementById('geomech-val-k30');
+            const sEl = document.getElementById('geomech-val-settlement');
+
+            if (qaEl) {
+                const changed = _prevGeomechResults.qa !== qa;
+                qaEl.textContent = qa;
+                if (changed && qa !== '--') _flashGeomechResult('geomech-res-qa');
+            }
+            if (k30El) {
+                const changed = _prevGeomechResults.k30 !== k30;
+                k30El.textContent = k30;
+                if (changed && k30 !== '--') _flashGeomechResult('geomech-res-k30');
+            }
+            if (sEl) {
+                const changed = _prevGeomechResults.settlement !== settlement;
+                sEl.textContent = settlement;
+                if (changed && settlement !== '--') _flashGeomechResult('geomech-res-settlement');
+            }
+
+            const qaGovEl = document.getElementById('geomech-gov-qa');
+            const k30GovEl = document.getElementById('geomech-gov-k30');
+            const sGovEl = document.getElementById('geomech-gov-settlement');
+            if (qaGovEl) qaGovEl.textContent = qaGov ? 'Governa: ' + qaGov : '';
+            if (k30GovEl) k30GovEl.textContent = k30Gov || '';
+            if (sGovEl) sGovEl.textContent = settlGov || '';
+
+            _prevGeomechResults = {qa, k30, settlement};
+        }
+
+        function _flashGeomechResult(elementId) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            el.classList.remove('geomech-flash');
+            void el.offsetWidth;
+            el.classList.add('geomech-flash');
         }
 
         // --- Evidence panel ---
