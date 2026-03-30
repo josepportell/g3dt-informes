@@ -1860,7 +1860,7 @@
                                 </div>
                                 <div class="wizard-field">
                                     <label>Profunditat fonamentacio (m) <span class="source-badge" id="src-foundation_depth_m"></span></label>
-                                    <input type="number" step="0.1" id="wiz-foundation_depth_m" data-field="foundation_depth_m" onchange="markWizardDirty(event); recalcGeomech('Df')">
+                                    <input type="number" step="0.1" id="wiz-foundation_depth_m" data-field="foundation_depth_m" oninput="recalcGeomech('Df')" onchange="markWizardDirty(event)">
                                 </div>
                                 <div class="wizard-field">
                                     <label>Cota referencia <span class="source-badge" id="src-cota_referencia"></span></label>
@@ -1889,31 +1889,31 @@
                             <div class="wizard-group-body" id="expertOverridesBody">
                                 <div class="wizard-field">
                                     <label>gamma densitat (g/cm3) <span class="source-badge" id="src-geomech_gamma"></span></label>
-                                    <input type="number" step="0.01" id="wiz-geomech_gamma" placeholder="ex: 2.20" onchange="markWizardDirty(event); recalcGeomech('gamma')">
+                                    <input type="number" step="0.01" id="wiz-geomech_gamma" placeholder="ex: 2.20" oninput="recalcGeomech('gamma')" onchange="markWizardDirty(event)">
                                     <small class="calc-note" id="calc-gamma" style="color:#888;font-size:11px;display:block"></small>
                                     <div class="geomech-dep-hint">&#8594; afecta Qa</div>
                                 </div>
                                 <div class="wizard-field">
                                     <label>c cohesio (kg/cm2) <span class="source-badge" id="src-geomech_cohesion"></span></label>
-                                    <input type="number" step="0.01" id="wiz-geomech_cohesion" placeholder="ex: 1.0" onchange="markWizardDirty(event); recalcGeomech('cohesion')">
+                                    <input type="number" step="0.01" id="wiz-geomech_cohesion" placeholder="ex: 1.0" oninput="recalcGeomech('cohesion')" onchange="markWizardDirty(event)">
                                     <small class="calc-note" id="calc-cohesion" style="color:#888;font-size:11px;display:block"></small>
                                     <div class="geomech-dep-hint">&#8594; afecta Qa, cap sol/roca</div>
                                 </div>
                                 <div class="wizard-field">
                                     <label>phi angle friccio (graus) <span class="source-badge" id="src-geomech_phi"></span></label>
-                                    <input type="number" step="0.1" id="wiz-geomech_phi" placeholder="ex: 35" onchange="markWizardDirty(event); recalcGeomech('phi')">
+                                    <input type="number" step="0.1" id="wiz-geomech_phi" placeholder="ex: 35" oninput="recalcGeomech('phi')" onchange="markWizardDirty(event)">
                                     <small class="calc-note" id="calc-phi" style="color:#888;font-size:11px;display:block"></small>
                                     <div class="geomech-dep-hint">&#8594; afecta Qa (Nc, Nq, N&#947;)</div>
                                 </div>
                                 <div class="wizard-field">
                                     <label>E modul deformacio (kg/cm2) <span class="source-badge" id="src-geomech_E"></span></label>
-                                    <input type="number" step="1" id="wiz-geomech_E" placeholder="ex: 500" onchange="markWizardDirty(event); recalcGeomech('E')">
+                                    <input type="number" step="1" id="wiz-geomech_E" placeholder="ex: 500" oninput="recalcGeomech('E')" onchange="markWizardDirty(event)">
                                     <small class="calc-note" id="calc-E" style="color:#888;font-size:11px;display:block"></small>
                                     <div class="geomech-dep-hint">&#8594; afecta K30</div>
                                 </div>
                                 <div class="wizard-field">
                                     <label>Es assentament Schmertmann (kg/cm2) <span class="source-badge" id="src-Es_settlement"></span></label>
-                                    <input type="number" step="1" id="wiz-Es_settlement" placeholder="auto: 2.5xNb" onchange="markWizardDirty(event); recalcGeomech('Es')">
+                                    <input type="number" step="1" id="wiz-Es_settlement" placeholder="auto: 2.5xNb" oninput="recalcGeomech('Es')" onchange="markWizardDirty(event)">
                                     <small class="calc-note" id="calc-Es" style="color:#888;font-size:11px;display:block"></small>
                                     <div class="geomech-dep-hint">&#8594; afecta assentament</div>
                                 </div>
