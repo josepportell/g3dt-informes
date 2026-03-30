@@ -1,6 +1,7 @@
 # G3DT System Overview
 
 Development reference for the geotechnical report automation pipeline.
+Last updated: 2026-03-30.
 
 ## 1. What G3DT Does
 
@@ -9,24 +10,36 @@ G3DT generates geotechnical reports (.docx) from project files. Eva (geologist a
 ## 2. Pipeline Overview
 
 ```
-Project folder (PDFs, Excel, .doc)
-    |
-Phase 0:   SmartScan -----------> file_mapping.json (classify files by role)
-    |
-Phase 0.3: FileMiner -----------> signals (Python regex extraction from all files)
-    |
-Phase 0.4: Groq LLM Miner -----> signals (LLM extraction from underperforming files)
-    |
-Phase 0.5: auto_extract --------> prefills (DPSH Excel, Lab PDF, field dates)
-    |
-Phase 1:   Vision ---------------> planol/sondeig/dpsh_extracted.json
-    |          Options: Claude CLI | Claude Fast | Groq Vision (Llama 4 Scout)
-    |
-Phase 2:   HTTP APIs ------------> prefills (ICGC geology/elevation, Cadastre, geocode)
-    |
-Phase 3:   Wizard ---------------> user_data.json (Eva reviews, adjusts, confirms)
-    |
-Phase 4:   ReportGenerator ------> {expedient}_generated.docx
+Project folder (PDFs, Excel, .doc, .jpg, .msg)
+    │
+Phase 0:   SmartScan (Tier 1→2→3) → file_mapping.json (classify ALL files by role)
+    │         Tier 1: Filename regex (30+ roles, CA/ES variants)
+    │         Tier 2: Content fingerprint (PDF keywords, Excel depth, image EXIF)
+    │         Tier 3: Groq Vision classification (Llama 4 Scout, ~$0.003/file)
+    │
+Phase 0.3: FileMiner ──────────→ signals (Python regex from all files, incl .msg)
+    │         MsgMiner: extracts email body + saves attachments → re-mines them
+    │
+Phase 0.4: Groq LLM Miner ────→ signals (LLM for files where regex underperformed)
+    │
+Phase 1:   auto_extract ──────→ prefills (DPSH Excel, Lab PDF, field dates)
+    │         DPSH: file_mapping role → glob fallback → N20, refusal, Es_settlement
+    │
+Phase 1.5: Vision (Groq) ─────→ planol/sondeig/dpsh_extracted.json
+    │         Determined by file_mapping roles with vision_type
+    │         Supports PDFs AND images (.jpg/.png) natively
+    │
+Phase 2:   HTTP APIs ──────────→ prefills (ICGC geology/elevation, Cadastre, geocode)
+    │
+Phase 2.5: Merge + Compute ───→ geomech params (gamma, phi, E, c → Qa, K30, settlement)
+    │         _merge_prefills(): auto_extract + vision + user_data
+    │         _compute_geotech_prefills(): Terzaghi, Schmertmann, CTE D.27
+    │         _fill_missing_adjacents(): geocode from planol address if Phase 2 skipped
+    │
+Phase 3:   Wizard ─────────────→ user_data.json (Eva reviews, adjusts, confirms)
+    │         Live recalculation: changing phi → Qa/K30/settlement update instantly
+    │
+Phase 4:   ReportGenerator ───→ {expedient}_generated.docx
 ```
 
 ## 3. Data Flow
@@ -97,17 +110,107 @@ Unknown source types default to priority 50.
 ## 6. Environment Variables
 
 ```bash
-G3DT_USE_SMARTSCAN=1           # Enable SmartScan (vs legacy FileScanner)
-G3DT_USE_GROQ=1                # Enable Groq LLM miner (Phase 0.4)
-GROQ_API_KEY=gsk_...           # Groq API key (required if G3DT_USE_GROQ=1)
+# Required (in .env)
+ANTHROPIC_API_KEY=sk-ant-...   # Claude API key (for vision_extractor.py Claude path)
+GROQ_API_KEY=gsk_...           # Groq API key (vision + LLM miner)
+
+# Feature toggles (all default to '1' = ON since 2026-03-30)
+G3DT_USE_SMARTSCAN=1           # SmartScan vs legacy FileScanner (killswitch: =0)
+G3DT_USE_GROQ=1                # Groq LLM miner Phase 0.4 (killswitch: =0)
+
+# Optional
 GROQ_MODEL=qwen/qwen3-32b     # Groq text model (default: qwen/qwen3-32b)
-G3DT_NO_CACHE=1                # Bypass all caches (Groq, geocode, vision, prefill) — for testing
-G3DT_PROJECTS_DIR=/path/to/projects  # Project folder (default: reference-material/)
+G3DT_NO_CACHE=1                # Bypass all caches (Groq, geocode, vision, prefill)
+G3DT_PROJECTS_DIR=/path/...    # Project folder (default: reference-material/)
 G3DT_CLAUDE_PATH=claude        # Claude CLI binary path
 G3DT_VISION_TIMEOUT=600        # Vision timeout in seconds
 ```
 
-## 7. Wizard Tabs
+**Important:** The web server does NOT auto-reload. After code changes, kill and restart `python -m web`.
+
+## 7. SmartScan Deep Dive
+
+SmartScan is a **superset of the legacy FileScanner**. It produces the same `FileMapping` → `file_mapping.json` format, so all downstream code (vision_groq, auto_extractor, report_generator) works unchanged.
+
+### What SmartScan adds vs FileScanner
+
+| Capability | FileScanner | SmartScan |
+|------------|-------------|-----------|
+| Directories scanned | Root + ANNEXES/ + PDF/ANNEXES/ (flat) | **Recursive** (entire project tree) |
+| Roles assigned | 15 | **30+** (photos, figures, emails, croquis) |
+| Folder name variants | ANNEXES only | **ANNEXES, ANEXOS, ANEJOS** + all CA/ES combos |
+| Image classification | Ignored | Tier 1 (filename) + Tier 2 (EXIF, color, size) |
+| Email processing | Ignored (.msg in IGNORE_PATTERNS) | **project_email** role, MsgMiner extracts body + attachments |
+| Content analysis | No | Tier 2: PDF keywords, Excel depth patterns |
+| LLM fallback | No | Tier 3: Groq Vision for unrecognized files |
+
+### How vision_type flows through the pipeline
+
+```
+SmartScan assigns role (e.g. dpsh_field_sheet)
+    ↓
+models.py to_file_mapping() calls get_vision_type("dpsh_field_sheet") → "dpsh"
+    ↓
+Saves to file_mapping.json: {"dpsh_field_sheet": {"path": "PENETROS.pdf", "vision_type": "dpsh"}}
+    ↓
+vision_groq.py loads file_mapping.json via FileScanner.load()
+    ↓
+Creates vision task for each role with vision_type → calls Groq Llama 4 Scout
+    ↓
+Saves dpsh_extracted.json → consumed by _merge_prefills()
+```
+
+**Key insight (discovered 2026-03-30):** SmartScan was fully implemented but never activated because `G3DT_USE_SMARTSCAN` defaulted to empty string. Now defaults to `'1'`.
+
+### Roles with vision_type (trigger vision extraction)
+
+| Role | vision_type | What it extracts |
+|------|-------------|-----------------|
+| architect_plan | planol | Architect, promotor, dimensions, floors |
+| architect_plan_with_points | planol | Same + test point locations |
+| situation_plan | planol | Site location |
+| field_croquis | planol | Test point positions on plot |
+| dpsh_field_sheet | dpsh | N20 values, refusal, water table |
+| sondeig_field_sheet | sondeig | Soil layers, SPT, descriptions |
+| sondeig_annex | sondeig_annex | Formatted borehole log (vector PDF) |
+
+**Image support:** vision_groq.py `_file_to_images()` handles `.jpg`, `.jpeg`, `.png` directly (no PDF rendering needed). If SmartScan assigns `dpsh_field_sheet` to `PENETROS.jpeg`, vision will extract N20 from it.
+
+### Role conflict resolution
+
+When multiple files match the same role (e.g. `PENETROS.pdf` and `PENETROS.jpeg` both match `dpsh_field_sheet`), `role_map` keeps the one with highest confidence. For Tier 1 exact matches, the one scanned first wins (typically root-level PDF over subfolder image). This is correct: PDFs are higher quality sources than photos of field sheets.
+
+### Directories excluded from scanning
+
+SmartScan's `_enumerate_files()` skips: `validation/`, `.git`, `__pycache__`, `.venv`, `node_modules`. This prevents re-scanning our own outputs (mined_images/, msg_attachments/, *_extracted.json).
+
+## 8. Geomech Computation Chain
+
+When Eva selects a project, the wizard computes geomech parameters automatically:
+
+```
+DPSH Excel → avg_n20 → Nb (= N20/0.83)
+    ↓
+Sondeig description → soil_type (rock/cohesive/granular)
+    ↓
+CTE D.27: gamma (by soil_type)
+Schmertmann: phi (from Nb, grain size factor)
+CTE D.23: E (from N20, bracket lookup)
+Hunt: cohesion (by soil_type)
+    ↓
+Terzaghi (1943): qu = c·Nc·sc + γ·Df·Nq·sq + 0.5·γ·B·Nγ·sγ → Qa = qu/3
+Terzaghi-Peck: qa_tp = Nb/12 / Fw × Fd (granular only)
+Professional cap: 3.0 (soil) or 5.0 (rock, c≥0.5)
+    ↓
+K30 = E/75 (granular) or E/60 (rock)
+Schmertmann settlement: C1 × Qa × Iz_integral / Es
+```
+
+**Live recalculation (since 2026-03-30):** The wizard recomputes Qa, K30, settlement in JavaScript on every keystroke. Shape factors match Python (SQUARE: sc=1.3, sq=1.0, sg=0.8). Flash animation highlights changed values.
+
+**Key dependency:** If DPSH Excel extraction fails (`dpsh_data` is None), ALL geomech params stay empty. The `_compute_geotech_prefills()` function returns early at line 318-322.
+
+## 9. Wizard Tabs
 
 | Tab | Purpose |
 |-----|---------|
@@ -116,7 +219,7 @@ G3DT_VISION_TIMEOUT=600        # Vision timeout in seconds
 | **Explicacio** | (Disabled) Future: explanation of extraction logic |
 | **Dev** | Extraction analysis per subsystem -- debugging view |
 
-## 8. Geocoding
+## 10. Geocoding
 
 Geocoding supports all Spanish provinces (not just Catalunya). The pipeline uses a **progressive resolution chain**:
 
@@ -136,7 +239,7 @@ Matching features:
 
 Tested: 7/7 projects resolve to valid cadastral references via progressive lookup.
 
-## 9. File Exclusions
+## 11. File Exclusions
 
 FileMiner skips these files/directories:
 - **Dirs**: `FOTOGRAFIES`, `PDF`, `PDF-V0`, `PDF_V0`, `validation`, `.git`, etc.
@@ -144,7 +247,7 @@ FileMiner skips these files/directories:
 - **Patterns**: `{expedient}_informe*.doc(x)`, `{expedient}_portada*.doc(x)` — Eva's reference reports
 - **Generated**: `file_mapping.json`, `user_data.json`
 
-## 10. Groq Model Selection
+## 12. Groq Model Selection
 
 The Groq text miner model is selectable at runtime:
 - **ENV var**: `GROQ_MODEL=qwen/qwen3-32b` (default)
@@ -152,7 +255,7 @@ The Groq text miner model is selectable at runtime:
 - **Available**: Llama 3.1 8B (fast), Qwen3 32B (default), Llama 3.3 70B (best), Llama 4 Scout 17Bx16E (MoE)
 - Vision model (Llama 4 Scout) is separate and fixed — requires vision capability
 
-## 11. Caching
+## 13. Caching
 
 Four cache layers, all bypassed with `G3DT_NO_CACHE=1`:
 - **Groq text miner**: `~/.g3dt/cache/groq/` (SHA256 of file+model, 90-day TTL)
@@ -160,7 +263,7 @@ Four cache layers, all bypassed with `G3DT_NO_CACHE=1`:
 - **Vision JSON**: `{project}/validation/*_extracted.json` (file-based, no TTL)
 - **In-memory prefills**: process lifetime (cleared on project change or server restart)
 
-## 12. Running
+## 14. Running
 
 ```bash
 # Start wizard server
@@ -175,4 +278,69 @@ G3DT_NO_CACHE=1 G3DT_USE_GROQ=1 .venv/bin/python -m web
 
 # Run tests
 .venv/bin/python -m pytest tests/ -v
+
+# Run benchmark comparison (all 7 projects)
+.venv/bin/python scripts/compare_benchmarks.py
+```
+
+## 15. Correctness (as of 2026-03-30)
+
+Benchmark compares pipeline output (no user_data.json, clean auto-extraction) against Eva's signed reference reports for 7 projects.
+
+### Variable Tiers
+
+- **Tier A (auto-extractable):** Values the pipeline SHOULD get right automatically (client, address, N20, phi, E, Qa, dates, surfaces)
+- **Tier B (manual/on-site):** Values requiring human observation or external sources (adjacents descriptions, site condition, access description)
+- **Tier C (professional judgment):** Values Eva adjusts based on experience (E override, Qa cap override, Es settlement)
+
+### Global Metrics
+
+| Metric | Value | Note |
+|--------|-------|------|
+| Overall match | 35.2% (58/165) | Clean baseline, no user_data |
+| Match+Close | 43.6% (72/165) | Close = within 5% tolerance |
+| Tier A | 53.1% (52/98) | Auto-extractable |
+| Tier B | 4.0% (2/50) | Requires human/vision |
+| Tier C | 23.5% (4/17) | Professional judgment |
+
+### Per-Project
+
+| Project | Match | Close | Mismatch | % |
+|---------|-------|-------|----------|---|
+| Castellar del Vallès | 11/28 | 0 | 17 | 39% |
+| Rubí | 12/28 | 4 | 12 | 43% |
+| Linyola | 8/27 | 2 | 17 | 30% |
+| Bell-Lloc | 15/32 | 4 | 13 | 47% |
+| Alcoletge | 4/20 | 2 | 14 | 20% |
+| Vilanova de Segria | 5/15 | 2 | 8 | 33% |
+| Anciles | 3/15 | 0 | 12 | 20% |
+
+### Main Tier A Error Categories
+
+| Category | Count | Root cause | Fix needed |
+|----------|-------|-----------|------------|
+| dpsh_avg_n20 / geotech_nb | 10 | Refusal values (N20≥100) included in averaging | Ask Eva: N20 averaging criteria |
+| building_type | 4 | Partial terminology match | Vocabulary normalization |
+| superficie_parcela | 3 | Cadastre source vs Eva's source differ | Investigate which is authoritative |
+| client name | 3 | Phone/email noise in name | Client name cleanup regex |
+| street_address | 3 | Minor format differences | Address normalization |
+| municipality | 2 | Geocode errors (Alcoletge→Alella, Anciles→Arciles) | Geocode bug investigation |
+| seismic_ab | 2 | NCSE-02 source mismatch | Verify seismic data source |
+
+### What the metrics DON'T capture
+
+- **Photo/figure placement:** SmartScan now assigns 15-20 photo+figure roles per project vs 0 with FileScanner. Not in benchmark.
+- **Email data extraction:** MsgMiner extracts client_email, NIF, num_floors from .msg files. Not all map to benchmark variables.
+- **Completeness improvement:** SmartScan finds DPSH Excel in ANEXOS/ANEJOS folders that FileScanner missed entirely (Vilanova, Anciles).
+
+### Benchmark scripts
+
+```bash
+# Extract reference values from Eva's reports
+.venv/bin/python scripts/extract_benchmark_values.py
+
+# Compare pipeline output against benchmarks
+.venv/bin/python scripts/compare_benchmarks.py
+
+# Results saved to docs/benchmarks/_comparison.json
 ```
