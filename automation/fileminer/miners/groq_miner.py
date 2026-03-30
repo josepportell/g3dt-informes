@@ -172,7 +172,7 @@ class GroqMiner(BaseMiner):
         self._api_key: str | None = os.environ.get("GROQ_API_KEY")
 
     def can_mine(self, file_path: Path) -> bool:
-        if os.environ.get("G3DT_USE_GROQ", "").strip() != "1":
+        if os.environ.get("G3DT_USE_GROQ", "1").strip() != "1":
             logger.debug("Groq: disabled (G3DT_USE_GROQ != 1)")
             return False
         if not os.environ.get("GROQ_API_KEY"):

@@ -565,7 +565,7 @@ def _phase04_groq_deep_mine(project_path: Path, result: AutoExtractionResult, em
 
     if not emit:
         emit = lambda *a, **kw: None
-    if os.environ.get('G3DT_USE_GROQ', '').strip() != '1':
+    if os.environ.get('G3DT_USE_GROQ', '1').strip() != '1':
         emit("groq", {"name": "Groq (disabled)", "ok": False})
         return
 

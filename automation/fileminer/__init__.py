@@ -329,7 +329,7 @@ def mine_project_groq(
     project_path = Path(project_path)
     existing_signals = existing_signals or []
 
-    if os.environ.get("G3DT_USE_GROQ", "").strip() != "1":
+    if os.environ.get("G3DT_USE_GROQ", "1").strip() != "1":
         logger.debug("mine_project_groq: disabled (G3DT_USE_GROQ != 1)")
         return []
     if not os.environ.get("GROQ_API_KEY"):
