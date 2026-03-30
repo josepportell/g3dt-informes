@@ -117,11 +117,16 @@ def scan_project(
     )
 
 
+# Directories to skip entirely (our own outputs, not project data)
+_SKIP_DIRS = {'validation', '.git', '__pycache__', '.venv', 'node_modules'}
+
+
 def _enumerate_files(project_path: Path) -> list[tuple[str, bool]]:
     """
     Enumerate ALL files and directories in a project, recursively.
 
     Every single file is listed so that SmartScan can account for it.
+    Skips our own output directories (validation/, mined_images/, etc.).
     Returns (relative_path, is_directory) tuples sorted by path.
     """
     entries: list[tuple[str, bool]] = []
@@ -130,6 +135,8 @@ def _enumerate_files(project_path: Path) -> list[tuple[str, bool]]:
         if not current.is_dir():
             return
         for item in sorted(current.iterdir()):
+            if item.is_dir() and item.name in _SKIP_DIRS:
+                continue
             rel = f"{prefix}/{item.name}" if prefix else item.name
             entries.append((rel, item.is_dir()))
             if item.is_dir():
