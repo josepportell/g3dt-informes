@@ -7,8 +7,8 @@
       "layers": [
         {
           "depth_from_m": 0.0,
-          "depth_to_m": 1.6,
-          "description": "Llims argilosos amb graves cohesives de coloració marrònosia",
+          "depth_to_m": 1.0,
+          "description": "Llims argilosos amb graves cohesives de coloració marrònosa",
           "geological_level": 1,
           "uscs_classification": null,
           "color": "marró",
@@ -19,7 +19,7 @@
           "note": null
         },
         {
-          "depth_from_m": 1.6,
+          "depth_from_m": 1.0,
           "depth_to_m": 8.0,
           "description": "Graves incloses en matriu sorrenca d'aspecte carbonatats, i de coloracions clares. Tram totalment carbonatat",
           "geological_level": 2,

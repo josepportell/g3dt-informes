@@ -8,10 +8,10 @@
         {
           "depth_from_m": 0.0,
           "depth_to_m": 0.5,
-          "description": "Terra vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
+          "description": "Terra vegetal. Llits argilosos de color marró fosc amb graves i algunes arrels.",
           "geological_level": 1,
           "uscs_classification": null,
-          "color": "marró",
+          "color": "marró fosc",
           "moisture": "humit",
           "consistency": null,
           "density": null,
@@ -41,5 +41,5 @@
     }
   ],
   "overall_confidence": 1.0,
-  "extraction_notes": "Document in good condition"
+  "extraction_notes": "Document in good condition, clear data extraction"
 }

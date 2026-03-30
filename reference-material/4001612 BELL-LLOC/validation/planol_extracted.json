@@ -11,7 +11,7 @@
     "architect_company": "Arquitectura Bosch Novell",
     "dimensions": {
       "parcel_area_m2": {
-        "pdf_value": 607.5,
+        "pdf_value": 607.0,
         "confidence": 0.95
       },
       "building_footprint_m2": {
@@ -20,12 +20,12 @@
       },
       "floor_surfaces": [],
       "num_floors": {
-        "pdf_value": "??",
+        "pdf_value": "",
         "confidence": 0.0
       },
       "max_height_m": {
-        "pdf_value": 6.5,
-        "confidence": 0.85
+        "pdf_value": "",
+        "confidence": 0.0
       },
       "plot_length_m": {
         "pdf_value": 24.72,
@@ -40,7 +40,7 @@
   "floor_plan_bbox": {
     "top_pct": 0.0,
     "left_pct": 0.0,
-    "bottom_pct": 80.0,
+    "bottom_pct": 71.0,
     "right_pct": 60.0,
     "confidence": 0.9
   },
