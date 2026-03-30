@@ -3,41 +3,48 @@ Last updated: 2026-03-30
 
 ## Current State
 
-**feat/smartscan mergejat a main (62 commits). Pla de delivery definit. Focus: UX overrides + projectes nous + instal·lació Eva.**
+**SmartScan + Groq activats per defecte. Overrides redesenyats amb recàlcul en viu. Focus: extracció imatges + instal·lació Eva.**
 
-- **Merge completat**: feat/smartscan → main, pushed to origin (2026-03-30)
-- **Photo picker**: 11 slots (figures + photos) en ordre de report. Eva selecciona fotos
-- **Tier C transparency**: Expert overrides amb fórmules + rangs típics d'Eva
-- **N20 averaging**: Exclude refusal + shallow weighting (RMSE 237% → ~35%)
-- **Soil type inference**: Auto-classifica des de sondeig (rock/cohesive/granular)
-- **Castellar verified**: 6/6 paràmetres geotècnics coincideixen amb Eva
+- **SmartScan ON**: 30+ rols (vs 15 FileScanner), variants CA/ES, imatges, .msg
+- **Groq deep mine ON**: LLM gap-filling per fitxers on regex falla
+- **Paràmetres Geomecànics**: Secció visible amb recàlcul dinàmic (Qa, K30, assentament)
+- **feat/smartscan**: Mergejat a main, pushed to origin (2026-03-30)
+
+## Done (2026-03-30)
+
+- [x] Merge feat/smartscan → main (62 commits)
+- [x] UX: Paràmetres geomecànics visibles + recàlcul dinàmic + flash
+- [x] SmartScan activat per defecte (era implementat però mai activat)
+- [x] Groq deep mine activat per defecte (idem)
 
 ## Active Blockers
 
-- UX Expert Overrides massa amagats — cal redisseny (secció visible + recàlcul dinàmic)
-- Projectes nous poden fallar amb noms de fitxer inesperats (preocupació Sílvia 23/3)
-- 4/7 projects sense sondeig vision data → soil type inference incompleta
+- Extracció d'imatges (.jpg/.png) com a documents — SmartScan les classifica però no s'extreuen dades
 - Preguntes pendents a Eva: N20 criteri, Qa cap, E carbonatades
 - Instal·lació a l'ordinador d'Eva pendent
 
 ## Next Milestones
 
-- [ ] UX: Paràmetres geomecànics visibles + recàlcul dinàmic (Qa, K30, settlement)
+- [ ] Extracció imatges → vision pipeline (PENETROS.jpeg, plans .png)
 - [ ] Test amb projecte nou real (validar SmartScan end-to-end)
-- [ ] Instal·lació a Eva (git clone + uv sync + configurar paths)
+- [ ] Instal·lació a Eva (git clone + uv sync + .env)
 - [ ] Preguntar a Eva (N20, Qa caps, E carbonatades) — aprofitar visita
-- [ ] Extracció imatges/emails (112 fitxers GAP)
+
+## Pendents menors (no bloquejants)
+
+- [ ] Stepper cosmètic: Geocode/APIs HTTP es marquen tatxats però les dades arriben via merge posterior
+- [ ] Lab PDF: `MULTICA_61.pdf` (Vilanova) no reconegut — cal afegir patró
+- [ ] Dates camp: `field_date` extret per FileMiner no es promociona a `field_work_dates`
+- [ ] `.xlsx` (nou format Excel): "not supported" — caldria migrar de xlrd a openpyxl
 
 ## Key Metrics
 
 | Mètrica | Valor | Nota |
 |---------|-------|------|
 | Correctesa global | 35.8% (clean baseline) | 59/165 match (no user_data.json) |
-| Tier A (auto) | 53.1% | 52/98 — expected +10-15% after N20+soil fixes |
-| Tier B (manual/site) | 6.0% | 3/50 (adjacents + site descriptions) |
+| Tier A (auto) | 53.1% | 52/98 |
+| Tier B (manual/site) | 4.0% | 2/50 (adjacents + site descriptions) |
 | Tier C (judgment) | 23.5% | 4/17 — expert overrides panel ajuda Eva |
-| N20 RMSE | ~35% (was 237%) | After exclude-refusal + shallow weighting |
-| Castellar geotech | 6/6 match | After rock classification fix |
 
 ## Pla de Delivery
 
