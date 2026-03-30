@@ -420,7 +420,7 @@ def auto_extract(
 def _phase1_file_scanner(project_path: Path, result: AutoExtractionResult) -> None:
     """Run FileScanner (or SmartScan if enabled) to classify project files."""
     import os
-    use_smartscan = os.environ.get('G3DT_USE_SMARTSCAN', '').strip()
+    use_smartscan = os.environ.get('G3DT_USE_SMARTSCAN', '1').strip()
 
     if use_smartscan == '1':
         try:
