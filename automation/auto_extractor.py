@@ -427,7 +427,7 @@ def _phase1_file_scanner(project_path: Path, result: AutoExtractionResult) -> No
             from .smartscan import scan_project
             from .file_scanner import FileScanner, FileMapping, FileRole
 
-            scan_result = scan_project(project_path, max_tier=2)
+            scan_result = scan_project(project_path, max_tier=3)
             fm_dict = scan_result.to_file_mapping()
 
             # Build FileMapping from SmartScan result (backward compat)

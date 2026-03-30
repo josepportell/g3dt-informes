@@ -68,7 +68,7 @@ def scan_project(
     if max_tier >= 2:
         tier2_results = classify_tier2(project_path, entries, classified_paths)
         for clf in tier2_results:
-            if clf.category == "needs_vision":
+            if clf.category in ("needs_vision", "suggestion"):
                 # Don't mark as classified — let Tier 3 process these
                 tier2_needs_vision.append(clf)
             else:
