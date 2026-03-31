@@ -36,25 +36,39 @@ Last updated: 2026-03-30
 - [ ] `.xlsx` format: xlrd no llegeix .xlsx — migrar a openpyxl
 - [ ] Client name cleanup: strip telèfon/email del nom (Anciles, Alcoletge)
 - [ ] Selector max_tier al wizard (futur)
+- [ ] Valorar capa "LLM de síntesi" per inferir camps buits a partir de dades ja extretes
+- [ ] Millorar prompt visió plànol: extreure taula JUSTIFICACIÓ PLANEJAMENT (sup, alçada, plantes)
+- [ ] Prioritzar ACCEPTACIO/ per client name (pressupost signat té promotor clar)
 
-## Key Metrics (benchmark 2026-03-30)
+## Key Metrics (benchmark 2026-03-30, amb avaluació semàntica Tier B)
 
 | Mètrica | Valor | Detall |
 |---------|-------|--------|
-| **Correctesa global** | 35.2% (58/165 match) | Clean baseline, no user_data.json |
-| **Match+Close** | 43.6% (72/165) | Close = dins tolerància 5% |
-| **Tier A** (auto-extractable) | 53.1% (52/98) | 37 MISMATCH, 9 CLOSE |
-| **Tier B** (manual/site) | 4.0% (2/50) | Adjacents, site descriptions |
-| **Tier C** (judici expert) | 23.5% (4/17) | Expert overrides panel ajuda Eva |
+| **Correct** (MATCH + SEMANTIC_MATCH) | 44.8% (74/165) | Semànticament correcte |
+| **Acceptable** (+ PARTIAL) | 56.4% (93/165) | Direcció correcta, menys detall |
+| **Wrong** (MISMATCH) | 35.2% (58/165) | Factual error |
+| **Tier A** (auto-extractable) | 53% (52/98) acceptable | 37 wrong |
+| **Tier B** (manual/site) | 74% (37/50) acceptable | 13 wrong (Cadastre vs camp) |
+| **Tier C** (judici expert) | 24% (4/17) acceptable | 8 wrong (esperat: Eva ajusta) |
+
+### Camps buits al wizard (19% = 35/182)
+
+| Camp | Buits | Causa |
+|------|-------|-------|
+| superficie_construida | 7/7 | No s'extreu (taula JUSTIFICACIÓ al plànol) |
+| building_height_m | 7/7 | Idem |
+| superficie_parcela_m2 | 5/7 | Cadastre dóna valor diferent |
+| num_floors | 4/7 | Difícil extreure (varia format) |
+| cota_referencia | 2/7 | Sense sondeig o ICGC |
 
 ### Tier A MISMATCH principals (37 errors)
 
 | Categoria | Count | Causa | Fix |
 |-----------|-------|-------|-----|
 | dpsh_avg_n20 / geotech_nb | 10 | Refús inclòs en mitjana | Preguntar Eva criteri N20 |
-| superficie_parcela | 3 | Cadastre vs Eva (fonts diferents) | Investigar |
-| client | 3 | Nom amb soroll (telèfon, empresa arquitecte) | Client name cleanup |
 | building_type | 4 | Terminologia parcial vs Eva | Vocabulari |
+| superficie_parcela | 3 | Cadastre vs Eva (fonts diferents) | Investigar |
+| client | 3 | Nom amb soroll (telèfon, empresa arquitecte) | Prioritzar ACCEPTACIO |
 | street_address | 3 | Format lleugerament diferent | Normalització |
 | municipality | 2 | Alcoletge→Alella, Anciles→Arciles | Geocode bug |
 | seismic_ab | 2 | Font NCSE-02 vs Eva | Investigar |
