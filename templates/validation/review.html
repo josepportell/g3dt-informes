@@ -3453,6 +3453,10 @@
                             ${VISION_EYE_SVG}
                             Visio Groq
                         </button>
+                        <button class="btn-vision-groq" id="btnStartVisionClaude" onclick="startVisionClaude(false)" style="background:#7c3aed;">
+                            ${VISION_EYE_SVG}
+                            Visio Claude
+                        </button>
                     </div>` : ''}
                     <div class="vision-badges" style="margin-top: 8px;">${badges}</div>
                     <div id="visionProgressText" class="vision-progress-text" style="display:none"></div>
@@ -3778,6 +3782,58 @@
                 if (slowBtn) slowBtn.disabled = false;
                 if (fastBtn) fastBtn.disabled = false;
                 showMessage('Error iniciant Visio Groq: ' + err.message, 'error');
+                if (timingPanel) timingPanel.style.display = 'none';
+            }
+        }
+
+        async function startVisionClaude(force) {
+            const btn = document.getElementById('btnStartVisionClaude');
+            const groqBtn = document.getElementById('btnStartVisionGroq');
+            if (!selectedProject) return;
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<div class="vstep-spinner-inline"></div> Claude...';
+            }
+            if (groqBtn) groqBtn.disabled = true;
+            const slowBtn = document.getElementById('btnStartVision');
+            const fastBtn = document.getElementById('btnStartVisionFast');
+            if (slowBtn) slowBtn.disabled = true;
+            if (fastBtn) fastBtn.disabled = true;
+
+            const timingPanel = document.getElementById('visionTimingPanel');
+            if (timingPanel) {
+                timingPanel.style.display = 'block';
+                timingPanel.innerHTML = '<div class="timing-line">Iniciant Visio Claude (Sonnet)...</div>';
+            }
+
+            try {
+                const res = await fetch(`/api/vision-claude/${encodeURIComponent(selectedProject)}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({force: true}),
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || `HTTP ${res.status}`);
+                }
+
+                const data = await res.json();
+                if (timingPanel) {
+                    timingPanel.innerHTML += '<div class="timing-line" style="color:#16a34a;">Claude vision completat</div>';
+                }
+
+                // Refresh prefills to pick up new vision data
+                showMessage('Visio Claude completada. Actualitzant prefills...', 'success');
+                setTimeout(() => loadProjectData(selectedProject), 1000);
+
+            } catch (err) {
+                if (btn) { btn.disabled = false; btn.innerHTML = VISION_EYE_SVG + ' Visio Claude'; }
+                if (groqBtn) groqBtn.disabled = false;
+                if (slowBtn) slowBtn.disabled = false;
+                if (fastBtn) fastBtn.disabled = false;
+                showMessage('Error Visio Claude: ' + err.message, 'error');
                 if (timingPanel) timingPanel.style.display = 'none';
             }
         }

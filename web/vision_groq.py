@@ -412,6 +412,79 @@ def _load_env():
                 os.environ.setdefault(key.strip(), value.strip())
 
 
+def _call_anthropic_vision(
+    extraction_prompt: str,
+    images: list[str],
+    system_prompt: str,
+) -> dict | None:
+    """Call Anthropic Claude API with images and extraction prompt.
+
+    More capable than Groq for small text and complex layouts (~27x more expensive).
+    Returns parsed JSON dict or None on failure.
+    """
+    _load_env()
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        logger.warning("Anthropic Vision: no API key")
+        return None
+
+    try:
+        import anthropic
+    except ImportError:
+        logger.warning("Anthropic Vision: anthropic package not installed")
+        return None
+
+    content: list[dict] = []
+    for b64_img in images:
+        content.append({
+            "type": "image",
+            "source": {"type": "base64", "media_type": "image/jpeg", "data": b64_img},
+        })
+    content.append({"type": "text", "text": extraction_prompt})
+
+    client = anthropic.Anthropic(api_key=api_key)
+    t0 = time.monotonic()
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=4096,
+            system=system_prompt,
+            messages=[{"role": "user", "content": content}],
+        )
+        elapsed_ms = int((time.monotonic() - t0) * 1000)
+
+        text = response.content[0].text
+        # Claude returns reasoning + JSON in markdown code block — extract the JSON
+        if "```" in text:
+            parts = text.split("```")
+            for part in parts[1::2]:  # odd-indexed parts are inside code blocks
+                cleaned = part.strip()
+                if cleaned.startswith("json"):
+                    cleaned = cleaned[4:].strip()
+                try:
+                    result = json.loads(cleaned)
+                    break
+                except json.JSONDecodeError:
+                    continue
+            else:
+                result = json.loads(text)  # fallback: try the whole thing
+        else:
+            result = json.loads(text)
+
+        logger.info(
+            "Anthropic Vision: ok in %dms (%d in + %d out tokens)",
+            elapsed_ms,
+            response.usage.input_tokens,
+            response.usage.output_tokens,
+        )
+        return result
+
+    except Exception as exc:
+        elapsed_ms = int((time.monotonic() - t0) * 1000)
+        logger.warning("Anthropic Vision: %s (%dms)", exc, elapsed_ms)
+        return None
+
+
 def groq_available() -> bool:
     """Check if Groq API key is configured for vision extraction."""
     _load_env()
@@ -423,8 +496,12 @@ def run_vision_groq_sync(
     *,
     force_refresh: bool = False,
     on_progress: callable | None = None,
+    vision_backend: str = "groq",
 ) -> dict[str, dict]:
-    """Run Groq vision synchronously (blocking). For use in full_prepare pipeline.
+    """Run vision extraction synchronously (blocking).
+
+    Args:
+        vision_backend: "groq" (default, cheap) or "claude" (better for small text).
 
     Same logic as _run_vision_groq() but runs inline (not threaded) and
     emits progress via on_progress callback instead of _groq_status dict.
@@ -555,10 +632,13 @@ def run_vision_groq_sync(
                 vtype, len(images), file_path.name,
             )
 
-            result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+            if vision_backend == "claude":
+                result = _call_anthropic_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+            else:
+                result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
             if result is None:
-                _emit(vtype, "error", message="API call failed")
-                results[vtype] = {"success": False, "message": "API call failed"}
+                _emit(vtype, "error", message=f"API call failed ({vision_backend})")
+                results[vtype] = {"success": False, "message": f"API call failed ({vision_backend})"}
                 continue
 
             output_path.write_text(

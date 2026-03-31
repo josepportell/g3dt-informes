@@ -1409,6 +1409,26 @@ def start_vision_groq_endpoint(project_name: str, req: VisionStartRequest | None
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.post("/vision-claude/{project_name:path}")
+def start_vision_claude_endpoint(project_name: str, req: VisionStartRequest | None = None):
+    """Start Claude vision extraction (Sonnet, better for small text, ~27x more expensive)."""
+    force = req.force if req else False
+
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        raise HTTPException(status_code=400, detail="ANTHROPIC_API_KEY not set")
+
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+        from .vision_groq import run_vision_groq_sync
+        result = run_vision_groq_sync(project_path, force_refresh=force, vision_backend="claude")
+        return {"status": "done", "results": {k: v for k, v in result.items()}}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.exception("Error starting Claude vision for %s", project_name)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/vision-groq-status/{project_name:path}")
 def vision_groq_status(project_name: str):
     """Check Groq vision extraction status."""
