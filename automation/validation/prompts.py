@@ -254,6 +254,11 @@ Extract all soil layer information from this formatted document. Pay special att
 
 PLANOL_JSON_EXAMPLE = '''
 {
+  "data_sources_found": ["Title block (caixeti)", "Planning/normativa table", "Site plan drawing"],
+  "planning_table_raw": {
+    "planejament": {"parcel_min": "600 m2", "occupancy": "30%", "floors": "PB+PP", "height": "6.60 m"},
+    "projecte": {"parcel": "995 m2", "occupancy": "296.88 m2", "floors": "PB+PP", "height": "6.88 m"}
+  },
   "architect_data": {
     "source_file": "A.01.pdf",
     "project_name": "Habitatge Unifamiliar Aïllat",
@@ -265,132 +270,89 @@ PLANOL_JSON_EXAMPLE = '''
     "architect": "Jordi Bosch Novell",
     "architect_company": "Bosch Arquitectura SLP",
     "dimensions": {
-      "parcel_area_m2": {"pdf_value": 598.0, "confidence": 0.95},
-      "building_footprint_m2": {"pdf_value": 296.88, "confidence": 0.90},
+      "parcel_area_m2": {"pdf_value": 995.0, "confidence": 0.95, "source": "Projecte column"},
+      "building_footprint_m2": {"pdf_value": 296.88, "confidence": 0.90, "source": "Projecte column"},
       "floor_surfaces": [
         {"floor": "PB", "area_m2": 297.0, "confidence": 0.90},
         {"floor": "P1", "area_m2": 110.0, "confidence": 0.90}
-      ],  // NOTE: each floor is a SEPARATE entry — never combine as "PB+P1"
-      "num_floors": {"pdf_value": "Pb+P1", "confidence": 1.0},
-      "max_height_m": {"pdf_value": 8.38, "confidence": 0.85},
+      ],
+      "num_floors": {"pdf_value": "PB+PP", "confidence": 1.0, "source": "Projecte column"},
+      "max_height_m": {"pdf_value": 6.88, "confidence": 0.95, "source": "Projecte column"},
       "plot_length_m": {"pdf_value": 24.57, "confidence": 0.90},
       "plot_width_m": {"pdf_value": 24.72, "confidence": 0.90}
     }
   },
-  "floor_plan_bbox": {
-    "top_pct": 0.0,
-    "left_pct": 0.0,
-    "bottom_pct": 71.0,
-    "right_pct": 60.0,
-    "confidence": 0.90
-  },
   "overall_confidence": 0.90,
-  "extraction_notes": "Caixetí clear, dimensions from site plan"
+  "extraction_notes": "Caixeti clear. Planning table found: Projecte column used for dimensions."
 }
 '''
 
-PLANOL_EXTRACTION_PROMPT = f'''Analyze this architectural plan (plànol) for a construction project.
+PLANOL_EXTRACTION_PROMPT = f'''You are a senior architect reviewing a colleague's project documentation.
 
-TASK: Extract project and building data into structured JSON.
+TASK: Analyze this architectural plan and extract project data through structured reasoning.
 
-IMPORTANT: Architect plans come in MANY different formats and layouts. The title block (caixetí)
-may be in any corner or edge of the page. The document may be:
-- A formal CAD plan with caixetí (title block) and floor plan drawings
-- A site plan (emplaçament) with cadastral map and/or satellite image
-- An informal sketch or "punts de sondeig" plan with test point locations
-- A photo of a printed plan (rotated, with dark edges and table surface visible)
-- A typology sheet with area tables per unit type (no floor plan drawing)
-- A simple situation map showing the parcel location
+IMPORTANT: Plans come in many formats — CAD with caixetí, site plans, informal sketches,
+photos of printed plans, typology sheets. Adapt to whatever format you see.
 
-Adapt your extraction to WHATEVER format you see. Extract what is available — do not fail
-because the document doesn't match a specific expected layout.
+Follow these steps IN ORDER:
 
-WHERE TO FIND DATA (check ALL these sources — do NOT stop after the caixetí):
+STEP 1 — IDENTIFY ALL DATA SOURCES ON THE PAGE:
+Scan the entire page and list every distinct source of information:
+- Title block (caixetí) — usually at the bottom, contains project metadata
+- Planning/normativa table — comparing urbanistic limits vs project values
+- Site plan drawing — with dimensions, parcel boundaries
+- Area tables (quadre de superfícies) — per-floor surface breakdowns
+- Section/alzat — showing building height and floor count
+- Any other tables, legends, annotations, cadastral references
 
-SOURCE 1 — Title block / caixetí (ANY position — bottom-right, bottom-left, bottom-center, or side):
-  - Project name/type (e.g., "Habitatge Unifamiliar Aïllat", "Avantprojecte", "Estudi de Detall")
-  - Building type / classification → "building_type": a SHORT descriptive classification of what
-    is being built (e.g., "habitatge unifamiliar aïllat", "nau industrial", "vivienda unifamiliar
-    aislada", "3 habitatges unifamiliars", "ampliació", "viviendas adosadas"). Look in the project
-    description, title block subtitle, or infer from the project name. This is NOT the study title
-    — never return "ESTUDI GEOLÒGIC...", "ESTUDI GEOTÈCNIC...", or any long study/project title here.
-    Keep it to 1-4 words describing the building type only.
-  - Location: street + house/plot number (WITHOUT postal code or municipality) → "street_address"
-    IMPORTANT: Always include the house or plot number (nº, num, número, s/n) if visible in the
-    caixetí. E.g., "Carrer de la Miranda nº 39", NOT just "Carrer de la Miranda". The number is
-    critical for accurate geocoding.
-  - Municipality name (WITHOUT postal code or province) → "municipality"
-  - Promotor / Propietari / Promotors: company or individual name → "promotor"
-  - Client name → "client_name": Name of the client/promotor/propietari who commissioned the
-    project. Look for "A petició de:", "Client:", "Promotor:", "Promotors:", "Propietari:" in the
-    title block (caixetí). Return the company or person name only, without titles (Sr., Sra.).
-    May overlap with "promotor" — extract both independently.
-  - Architect: name and college number (nºCol.)
-  - Architect company / studio: firm name (may be a logo or letterhead, e.g., "Bunyesc", "Rocar", "Graus")
-  - Scale, date
+STEP 2 — EXTRACT RAW DATA FROM THE PLANNING TABLE:
+If a planning table exists ("NORMATIVA URBANÍSTICA", "JUSTIFICACIÓ PLANEJAMENT",
+"PARÀMETRES URBANÍSTICS", or similar), it typically has TWO columns:
+  - Left: "Planejament" / "Ordenació" — urbanistic LIMITS (min/max from regulations)
+  - Right: "Projecte" — ACTUAL project values ← THIS is what matters for us
+Read EVERY row of BOTH columns and transcribe them into "planning_table_raw".
+This is critical — do not skip this step even if the table text is small.
 
-SOURCE 2 — CRITICAL: Urbanistic / planning table ("NORMATIVA URBANÍSTICA", "JUSTIFICACIÓ
-  PLANEJAMENT", "PARÀMETRES URBANÍSTICS", or similar). This table is VERY IMPORTANT — it
-  contains dimensions that are often the ONLY source for parcel area, height, and floors.
-  It typically has TWO columns:
-    - Left column: "Planejament" / "Ordenació" (urbanistic LIMITS — minimums/maximums)
-    - Right column: "Projecte" (ACTUAL project values — THIS is what we want)
-  ALWAYS extract from the PROJECTE column, not the Planejament column.
-  Look for these rows (names may vary in Catalan or Spanish):
-    - "Parcel·la mínima" / "Parcela mín." → parcel_area_m2 (from PROJECTE column)
-    - "Ocupació" / "Sup. construïda" → building_footprint_m2 (from PROJECTE column)
-    - "N. plantes" / "Nombre màxim plantes" / "Plantas" → num_floors (from PROJECTE column)
-    - "Alçada reguladora" / "H. max" / "Altura máx." → max_height_m (from PROJECTE column)
-    - "Fondària" / "Profunditat edificable" → plot dimensions
-    - "Frontal" / "Façana" → plot frontage
+STEP 3 — EXTRACT DATA FROM THE TITLE BLOCK (CAIXETÍ):
+Look for (may be in ANY corner or edge of the page):
+- Project name/type → "project_name"
+- Building type → "building_type": SHORT description (1-4 words: "habitatge unifamiliar aïllat",
+  "nau industrial", "viviendas adosadas"). NOT the study title, just the building type.
+- Location → "street_address": street + number (WITHOUT postal code or municipality).
+  IMPORTANT: include the house/plot number (nº, num, s/n) if visible.
+  Get this from the EMPLAÇAMENT field in the caixetí, not from maps or comarca names.
+- Municipality → "municipality": town name only (no postal code, no province)
+- Promotor / Client → "promotor" and "client_name": Look for "Promotor:", "Promotors:",
+  "Client:", "Propietari:", "A petició de:". Person or company name, no titles (Sr/Sra).
+- Architect → "architect": name (and college number if visible)
+- Architect firm → "architect_company": studio/firm name (may be logo or letterhead)
 
-SOURCE 3 — Plan drawing area (may contain):
-  - Parcel area in m² (may also appear as text annotation "571 m²" on the parcel outline)
-  - Parcel dimensions (length × width, labeled in meters)
-  - Building footprint in m² or as percentage
-  - Cadastral reference (ref: 5098344CG2159N0000US)
-
-SOURCE 4 — Area tables (quadre de superfícies, may be on page 1 or a separate page):
-  - "SUPERFÍCIES ÚTILS", "SUPERFÍCIES CONSTRUÏDES", "SUP. TOTALS EDIFICACIÓ"
-  - Per-floor surfaces (PB, P1, PS, PP, "Planta Baja", "Planta Primera", etc.)
-  - Per-unit/typology areas (T1, T2, T3 — sum for total)
-  - Total built surface → building_footprint_m2
-  - "Superficie construïda TOTAL PBaixa: 250.91 m²" → building_footprint_m2
-
-SOURCE 5 — Section / alzat / sección (if present):
-  - Number of floors (PB, PB+1, Ps+PB+2Pp, "Sótano + Planta Baja + Planta 1", etc.)
-  - Maximum building height in meters
+STEP 4 — MAP TO VARIABLES:
+Using data from Steps 2-3, assign values. ALWAYS prefer PROJECTE column over Planejament:
+- parcel_area_m2: from PROJECTE column (actual parcel), NOT minimum from planejament
+- building_footprint_m2: "ocupació", "sup. construïda" from PROJECTE column. If only percentage,
+  calculate: percentage × parcel_area_m2
+- num_floors: from PROJECTE column. Format as written ("PB", "PB+PP", "Pb+1Pp", "Ps+PB+2Pp")
+- max_height_m: "alçada reguladora", "H. max" from PROJECTE column (meters)
+- floor_surfaces: per-floor areas from area tables (if present on any page)
+- plot_length_m, plot_width_m: from drawing annotations or table
 
 EXTRACTION RULES:
 1. Extract text EXACTLY as written (Catalan or Spanish — do not translate)
 2. For dimensions, prefer values with explicit units (m, m²)
-3. Number of floors: use the format as written (e.g., "Pb+P1", "Ps+Pb+2Pp", "PB+PP", "SÓTANO, PLANTA BAJA y PLANTA 1")
-4. If a value appears in BOTH the planning table AND drawing annotations, prefer the planning table "PROJECTE" column (more precise)
-5. Set null for fields not found in the document — this is FINE, not every plan has every field
-6. Building footprint may be labeled "ocupació", "superfície construïda", "sup. construida", "superficie construïda TOTAL", or similar
-7. If architect_company is not separately listed but a logo or studio name is visible, extract that
-8. Per-floor surfaces: extract each floor as a SEPARATE entry in `floor_surfaces` array. NEVER combine floors. If a typology table shows areas per unit type, extract the TOTAL per floor across all types
-9. If the document is a photo of a plan, ignore background elements (table surface, hands, edges) and focus on the plan content
-10. CRITICAL: Do NOT leave num_floors or max_height_m empty if a planning table exists on the page. These are almost always present in the "PROJECTE" column. "PB+PP" = 2 floors. "PB" = 1 floor.
+3. If a value appears in BOTH planning table AND drawing, prefer the PROJECTE column
+4. Set null for fields not found — this is fine, not every plan has every field
+5. Per-floor surfaces: each floor as a SEPARATE entry. Never combine floors.
+6. CRITICAL: Do NOT leave num_floors or max_height_m empty if a planning table exists.
 
-FLOOR PLAN BOUNDING BOX:
-Identify the bounding box of the main drawing area (site plan, floor plan, or sketch).
-EXCLUDE the title block, legends, section views, and annotations outside the main drawing.
-Return as percentage coordinates of the full page. If no clear drawing area exists (e.g., pure
-table of areas or situation map), set floor_plan_bbox to null.
-
-CONFIDENCE SCORING:
-- 1.0: Clear printed text, unambiguous
-- 0.9: Readable with minimal uncertainty
-- 0.7-0.8: Readable but small text or requires interpretation
-- 0.5: Difficult to read or ambiguous (e.g., photo of plan, low resolution)
-- Use null for values not found
+CONFIDENCE & SOURCE:
+- 1.0: Clear printed text — 0.9: Readable — 0.7-0.8: Small or requires interpretation — 0.5: Difficult
+- Always indicate "source" for dimensions: "Projecte column", "drawing annotation", "area table"
 
 OUTPUT FORMAT (JSON):
 {PLANOL_JSON_EXAMPLE}
 
-Extract all visible data from this architectural document. If the document only has partial
-information (e.g., only parcel dimensions and no building details), extract what you can.'''
+Be thorough. Check every corner of every page. The planning table is CRITICAL — do not skip it.'''
 
 
 # System prompt for general extraction context
