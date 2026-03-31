@@ -3440,15 +3440,7 @@
                     <button class="instructions-toggle" aria-label="Expandir/col\u00b7lapsar">-</button>
                 </div>
                 <div class="instructions-body">
-                    ${DEV_MODE ? `<div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                        <button class="btn-vision" id="btnStartVision" onclick="startVisionExtraction(false)">
-                            ${VISION_EYE_SVG}
-                            Llegir PDFs de camp
-                        </button>
-                        <button class="btn-vision-fast" id="btnStartVisionFast" onclick="startVisionFast(false)">
-                            ${VISION_EYE_SVG}
-                            Visio rapida
-                        </button>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
                         <button class="btn-vision-groq" id="btnStartVisionGroq" onclick="startVisionGroq(false)">
                             ${VISION_EYE_SVG}
                             Visio Groq
@@ -3457,7 +3449,16 @@
                             ${VISION_EYE_SVG}
                             Visio Claude
                         </button>
-                    </div>` : ''}
+                        ${DEV_MODE ? `
+                        <button class="btn-vision" id="btnStartVision" onclick="startVisionExtraction(false)">
+                            ${VISION_EYE_SVG}
+                            CLI lent
+                        </button>
+                        <button class="btn-vision-fast" id="btnStartVisionFast" onclick="startVisionFast(false)">
+                            ${VISION_EYE_SVG}
+                            CLI rapid
+                        </button>` : ''}
+                    </div>
                     <div class="vision-badges" style="margin-top: 8px;">${badges}</div>
                     <div id="visionProgressText" class="vision-progress-text" style="display:none"></div>
                     <div id="visionTimingPanel" class="vision-timing-panel"></div>
