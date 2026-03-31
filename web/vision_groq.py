@@ -469,22 +469,42 @@ def run_vision_groq_sync(
         "sondeig_annex": "sondeig_extracted.json",
     }
 
+    # For planol vision_type, prefer architect_plan over architect_plan_with_points
+    # (the "amb punts" version is Eva's annotated copy, often missing the normativa table)
+    _PLANOL_ROLE_PRIORITY = [
+        'architect_plan', 'architect_project', 'architect_plan_with_points',
+        'situation_plan', 'field_croquis',
+    ]
+
     vision_tasks = {}
     seen_types: set[str] = set()
+
+    # First pass: collect all candidates per vision_type
+    candidates: dict[str, list[tuple[str, Any]]] = {}
     for role_name, role in mapping.roles.items():
         vtype = role.vision_type
-        if vtype and vtype in prompt_map and vtype not in seen_types:
-            seen_types.add(vtype)
-            output_path = project_path / "validation" / output_map[vtype]
-            if not force_refresh and os.environ.get("G3DT_NO_CACHE") != "1" and output_path.exists():
-                logger.info("vision_groq_sync cache:%s skipped (exists)", vtype)
-                continue
-            vision_tasks[vtype] = {
-                "role": role_name,
-                "path": role.path,
-                "prompt": prompt_map[vtype],
-                "output": output_map[vtype],
-            }
+        if vtype and vtype in prompt_map:
+            candidates.setdefault(vtype, []).append((role_name, role))
+
+    # Second pass: pick best candidate per vision_type
+    for vtype, cands in candidates.items():
+        if vtype == 'planol' and len(cands) > 1:
+            # Sort by priority order
+            cands.sort(key=lambda x: (
+                _PLANOL_ROLE_PRIORITY.index(x[0]) if x[0] in _PLANOL_ROLE_PRIORITY else 99
+            ))
+        role_name, role = cands[0]
+        seen_types.add(vtype)
+        output_path = project_path / "validation" / output_map[vtype]
+        if not force_refresh and os.environ.get("G3DT_NO_CACHE") != "1" and output_path.exists():
+            logger.info("vision_groq_sync cache:%s skipped (exists)", vtype)
+            continue
+        vision_tasks[vtype] = {
+            "role": role_name,
+            "path": role.path,
+            "prompt": prompt_map[vtype],
+            "output": output_map[vtype],
+        }
 
     logger.info("vision_groq_sync: %d tasks identified", len(vision_tasks))
 

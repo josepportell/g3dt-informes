@@ -305,8 +305,9 @@ may be in any corner or edge of the page. The document may be:
 Adapt your extraction to WHATEVER format you see. Extract what is available — do not fail
 because the document doesn't match a specific expected layout.
 
-WHERE TO FIND DATA:
-- Title block / caixetí (ANY position — bottom-right, bottom-left, bottom-center, or side):
+WHERE TO FIND DATA (check ALL these sources — do NOT stop after the caixetí):
+
+SOURCE 1 — Title block / caixetí (ANY position — bottom-right, bottom-left, bottom-center, or side):
   - Project name/type (e.g., "Habitatge Unifamiliar Aïllat", "Avantprojecte", "Estudi de Detall")
   - Building type / classification → "building_type": a SHORT descriptive classification of what
     is being built (e.g., "habitatge unifamiliar aïllat", "nau industrial", "vivienda unifamiliar
@@ -319,36 +320,58 @@ WHERE TO FIND DATA:
     caixetí. E.g., "Carrer de la Miranda nº 39", NOT just "Carrer de la Miranda". The number is
     critical for accurate geocoding.
   - Municipality name (WITHOUT postal code or province) → "municipality"
-  - Promotor / Propietari: company or individual name → "promotor"
+  - Promotor / Propietari / Promotors: company or individual name → "promotor"
   - Client name → "client_name": Name of the client/promotor/propietari who commissioned the
-    project. Look for "A petició de:", "Client:", "Promotor:", "Propietari:" in the title block
-    (caixetí). Return the company or person name only, without titles (Sr., Sra.). May overlap
-    with "promotor" — extract both independently.
+    project. Look for "A petició de:", "Client:", "Promotor:", "Promotors:", "Propietari:" in the
+    title block (caixetí). Return the company or person name only, without titles (Sr., Sra.).
+    May overlap with "promotor" — extract both independently.
   - Architect: name and college number (nºCol.)
   - Architect company / studio: firm name (may be a logo or letterhead, e.g., "Bunyesc", "Rocar", "Graus")
   - Scale, date
-- Plan drawing area (may contain):
-  - Parcel area in m²
+
+SOURCE 2 — CRITICAL: Urbanistic / planning table ("NORMATIVA URBANÍSTICA", "JUSTIFICACIÓ
+  PLANEJAMENT", "PARÀMETRES URBANÍSTICS", or similar). This table is VERY IMPORTANT — it
+  contains dimensions that are often the ONLY source for parcel area, height, and floors.
+  It typically has TWO columns:
+    - Left column: "Planejament" / "Ordenació" (urbanistic LIMITS — minimums/maximums)
+    - Right column: "Projecte" (ACTUAL project values — THIS is what we want)
+  ALWAYS extract from the PROJECTE column, not the Planejament column.
+  Look for these rows (names may vary in Catalan or Spanish):
+    - "Parcel·la mínima" / "Parcela mín." → parcel_area_m2 (from PROJECTE column)
+    - "Ocupació" / "Sup. construïda" → building_footprint_m2 (from PROJECTE column)
+    - "N. plantes" / "Nombre màxim plantes" / "Plantas" → num_floors (from PROJECTE column)
+    - "Alçada reguladora" / "H. max" / "Altura máx." → max_height_m (from PROJECTE column)
+    - "Fondària" / "Profunditat edificable" → plot dimensions
+    - "Frontal" / "Façana" → plot frontage
+
+SOURCE 3 — Plan drawing area (may contain):
+  - Parcel area in m² (may also appear as text annotation "571 m²" on the parcel outline)
   - Parcel dimensions (length × width, labeled in meters)
   - Building footprint in m² or as percentage
-- Area tables (quadre de superfícies, may be on a separate page or in a table):
+  - Cadastral reference (ref: 5098344CG2159N0000US)
+
+SOURCE 4 — Area tables (quadre de superfícies, may be on page 1 or a separate page):
+  - "SUPERFÍCIES ÚTILS", "SUPERFÍCIES CONSTRUÏDES", "SUP. TOTALS EDIFICACIÓ"
   - Per-floor surfaces (PB, P1, PS, PP, "Planta Baja", "Planta Primera", etc.)
   - Per-unit/typology areas (T1, T2, T3 — sum for total)
-  - Total built surface
-- Section / alzat / sección (if present):
+  - Total built surface → building_footprint_m2
+  - "Superficie construïda TOTAL PBaixa: 250.91 m²" → building_footprint_m2
+
+SOURCE 5 — Section / alzat / sección (if present):
   - Number of floors (PB, PB+1, Ps+PB+2Pp, "Sótano + Planta Baja + Planta 1", etc.)
   - Maximum building height in meters
 
 EXTRACTION RULES:
 1. Extract text EXACTLY as written (Catalan or Spanish — do not translate)
 2. For dimensions, prefer values with explicit units (m, m²)
-3. Number of floors: use the format as written (e.g., "Pb+P1", "Ps+Pb+2Pp", "SÓTANO, PLANTA BAJA y PLANTA 1")
-4. If a value has multiple interpretations, use the most specific one
+3. Number of floors: use the format as written (e.g., "Pb+P1", "Ps+Pb+2Pp", "PB+PP", "SÓTANO, PLANTA BAJA y PLANTA 1")
+4. If a value appears in BOTH the planning table AND drawing annotations, prefer the planning table "PROJECTE" column (more precise)
 5. Set null for fields not found in the document — this is FINE, not every plan has every field
-6. Building footprint may be labeled "ocupació", "superfície construïda", "sup. construida", or similar
+6. Building footprint may be labeled "ocupació", "superfície construïda", "sup. construida", "superficie construïda TOTAL", or similar
 7. If architect_company is not separately listed but a logo or studio name is visible, extract that
 8. Per-floor surfaces: extract each floor as a SEPARATE entry in `floor_surfaces` array. NEVER combine floors. If a typology table shows areas per unit type, extract the TOTAL per floor across all types
 9. If the document is a photo of a plan, ignore background elements (table surface, hands, edges) and focus on the plan content
+10. CRITICAL: Do NOT leave num_floors or max_height_m empty if a planning table exists on the page. These are almost always present in the "PROJECTE" column. "PB+PP" = 2 floors. "PB" = 1 floor.
 
 FLOOR PLAN BOUNDING BOX:
 Identify the bounding box of the main drawing area (site plan, floor plan, or sketch).
