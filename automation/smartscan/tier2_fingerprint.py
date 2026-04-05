@@ -2,7 +2,7 @@
 SmartScan Tier 2: Structural fingerprinting.
 
 Classifies files by their actual content, independent of filename.
-Uses PyMuPDF for PDFs and xlrd for Excel files.
+Uses PyMuPDF for PDFs, openpyxl for .xlsx, and xlrd for .xls files.
 
 This is the heart of SmartScan's robustness — it works with files
 named ANYTHING by analyzing what the file IS, not what it's called.
@@ -144,7 +144,7 @@ def classify_tier2(
     Classify unclassified files using structural fingerprinting.
 
     Only processes files NOT already classified by Tier 1.
-    Uses PyMuPDF for PDFs, xlrd for Excel, Pillow for images.
+    Uses PyMuPDF for PDFs, openpyxl/xlrd for Excel, Pillow for images.
 
     Args:
         project_path: Absolute path to the project folder
@@ -375,43 +375,85 @@ def _score_pdf_role(
     return max(0.0, min(score, 0.95))
 
 
-def _fingerprint_excel(rel_path: str, abs_path: Path) -> FileClassification | None:
-    """Analyze an Excel file's content to determine its role."""
-    try:
-        import xlrd
-    except ImportError:
-        logger.warning("xlrd not available for Tier 2 Excel fingerprinting")
-        return None
+def _read_excel_text(rel_path: str, abs_path: Path) -> tuple[str | None, bool]:
+    """Read text from an Excel file (.xls or .xlsx). Returns (all_text, has_depth_pattern)."""
+    suffix = abs_path.suffix.lower()
+    all_text = ""
+    has_depth_pattern = False
 
-    try:
-        wb = xlrd.open_workbook(str(abs_path), on_demand=True)
-    except Exception as e:
-        logger.warning(f"Cannot open Excel {rel_path}: {e}")
-        return None
-
-    try:
-        # Gather text from headers and first rows
-        all_text = ""
-        has_depth_pattern = False
-
-        for sheet_name in wb.sheet_names():
-            sheet = wb.sheet_by_name(sheet_name)
-            all_text += sheet_name.lower() + " "
-
-            # Read first 20 rows
-            for row_idx in range(min(sheet.nrows, 20)):
-                for col_idx in range(min(sheet.ncols, 20)):
-                    try:
-                        val = sheet.cell_value(row_idx, col_idx)
+    if suffix == '.xlsx':
+        try:
+            import openpyxl
+        except ImportError:
+            logger.warning("openpyxl not available for .xlsx fingerprinting")
+            return None, False
+        try:
+            wb = openpyxl.load_workbook(str(abs_path), read_only=True, data_only=True)
+        except Exception as e:
+            logger.warning("Cannot open Excel %s: %s", rel_path, e)
+            return None, False
+        try:
+            for sheet_name in wb.sheetnames:
+                ws = wb[sheet_name]
+                all_text += sheet_name.lower() + " "
+                for row_idx, row in enumerate(ws.iter_rows(max_row=20, max_col=20, values_only=True)):
+                    if row_idx >= 20:
+                        break
+                    for val in row:
                         if isinstance(val, str):
                             all_text += val.lower() + " "
                         elif isinstance(val, (int, float)):
-                            # Check for depth pattern (0.20, 0.40, 0.60, ...)
                             if abs(val % 0.20) < 0.01 and 0 < val < 20:
                                 has_depth_pattern = True
-                    except Exception:
-                        pass
+            wb.close()
+        except Exception as e:
+            logger.warning("Tier 2 Excel analysis failed for %s: %s", rel_path, e)
+            return None, False
+    else:
+        # .xls via xlrd
+        try:
+            import xlrd
+        except ImportError:
+            logger.warning("xlrd not available for .xls fingerprinting")
+            return None, False
+        try:
+            wb = xlrd.open_workbook(str(abs_path), on_demand=True)
+        except Exception as e:
+            logger.warning("Cannot open Excel %s: %s", rel_path, e)
+            return None, False
+        try:
+            for sheet_name in wb.sheet_names():
+                sheet = wb.sheet_by_name(sheet_name)
+                all_text += sheet_name.lower() + " "
+                for row_idx in range(min(sheet.nrows, 20)):
+                    for col_idx in range(min(sheet.ncols, 20)):
+                        try:
+                            val = sheet.cell_value(row_idx, col_idx)
+                            if isinstance(val, str):
+                                all_text += val.lower() + " "
+                            elif isinstance(val, (int, float)):
+                                if abs(val % 0.20) < 0.01 and 0 < val < 20:
+                                    has_depth_pattern = True
+                        except Exception:
+                            pass
+            wb.release_resources()
+        except Exception as e:
+            logger.warning("Tier 2 Excel analysis failed for %s: %s", rel_path, e)
+            return None, False
 
+    return all_text, has_depth_pattern
+
+
+def _fingerprint_excel(rel_path: str, abs_path: Path) -> FileClassification | None:
+    """Analyze an Excel file's content to determine its role.
+
+    Supports both .xls (xlrd) and .xlsx (openpyxl).
+    """
+    all_text, has_depth_pattern = _read_excel_text(rel_path, abs_path)
+    if all_text is None:
+        return None
+
+    try:
         # Score DPSH Excel
         dpsh_score = 0.0
         dpsh_def = ROLE_FINGERPRINTS.get('dpsh_excel', {})
@@ -431,8 +473,6 @@ def _fingerprint_excel(rel_path: str, abs_path: Path) -> FileClassification | No
 
         if lab_hits >= 2:
             lab_score = tier2_confidence(keyword_hits=lab_hits)
-
-        wb.release_resources()
 
         # Return best match
         best_role: str | None = None
