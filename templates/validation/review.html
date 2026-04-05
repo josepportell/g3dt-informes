@@ -1144,6 +1144,70 @@
             background: #fef3c7;
             color: #92400e;
         }
+        /* Format Learning */
+        .format-learning-banner {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .format-learning-banner.active {
+            display: block;
+        }
+        .format-learning-banner h3 {
+            color: #92400e;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+        .format-learning-banner p {
+            color: #78350f;
+            font-size: 13px;
+            margin: 0;
+        }
+        .format-learning-banner .fl-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+        }
+        .format-learning-banner .btn-fl {
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            border: 1px solid #d97706;
+            background: white;
+            color: #92400e;
+        }
+        .format-learning-banner .btn-fl:hover {
+            background: #fef3c7;
+        }
+        .format-learning-field {
+            border: 2px solid #f59e0b !important;
+            background-color: #fffbeb !important;
+        }
+        .source-badge.format-learning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .format-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #059669;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .format-toast.show {
+            opacity: 1;
+        }
         .alt-badge {
             display: inline-block;
             font-size: 10px;
@@ -1716,6 +1780,14 @@
                 <div id="wizardInstructions" class="wizard-instructions" style="display:none;"></div>
                 <div id="wizardForm" style="display:none;">
                     <div class="wizard-form">
+                        <!-- Format Learning Banner -->
+                        <div id="formatLearningBanner" class="format-learning-banner">
+                            <h3 id="flTitle">Format nou detectat</h3>
+                            <p id="flDescription"></p>
+                            <div class="fl-actions">
+                                <button class="btn-fl" onclick="dismissFormatLearning()">Amagar</button>
+                            </div>
+                        </div>
                         <!-- Group 1: Dades del Projecte -->
                         <div class="wizard-group">
                             <div class="wizard-group-header">Dades del Projecte</div>
@@ -4417,6 +4489,82 @@
                     }
                 });
             });
+
+            // -- Format Learning UI --
+            renderFormatLearning();
+        }
+
+        // ============================================================
+        // Format Learning
+        // ============================================================
+
+        function renderFormatLearning() {
+            const banner = document.getElementById('formatLearningBanner');
+            if (!banner) return;
+
+            const fl = wizardPrefills._format_learning;
+            if (!fl || !fl.value || !fl.value.active) {
+                banner.classList.remove('active');
+                return;
+            }
+
+            const detections = fl.value.detections || [];
+            if (detections.length === 0) {
+                banner.classList.remove('active');
+                return;
+            }
+
+            // Show banner
+            banner.classList.add('active');
+
+            // Build description from primary detection
+            const det = detections[0];
+            const coverage = Math.round((det.extraction_coverage || 0) * 100);
+            const extracted = (det.extracted_fields || []).length;
+            const total = (det.expected_fields || []).length;
+            const missingFields = det.missing_fields || [];
+
+            document.getElementById('flTitle').textContent =
+                `Format nou detectat: ${det.file_path || 'document'}`;
+            document.getElementById('flDescription').textContent =
+                `S'han extret ${extracted} de ${total} camps esperats (${coverage}%). ` +
+                `Revisa els camps marcats en taronja.`;
+
+            // Highlight missing fields with amber border
+            missingFields.forEach(fieldName => {
+                const candidates = [
+                    `wiz-${fieldName}`,
+                    `wiz-${fieldName.replace(/_/g, '-')}`,
+                ];
+                for (const id of candidates) {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.classList.add('format-learning-field');
+                        break;
+                    }
+                }
+                const badge = document.getElementById(`src-${fieldName}`);
+                if (badge) {
+                    badge.textContent = 'revisar';
+                    badge.className = 'source-badge format-learning';
+                }
+            });
+        }
+
+        function dismissFormatLearning() {
+            const banner = document.getElementById('formatLearningBanner');
+            if (banner) banner.classList.remove('active');
+            document.querySelectorAll('.format-learning-field').forEach(el => {
+                el.classList.remove('format-learning-field');
+            });
+        }
+
+        function showFormatToast(message) {
+            const toast = document.getElementById('formatToast');
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         function updateSoilLevelSelectors() {
@@ -4914,6 +5062,10 @@
                 wizardDirty = false;
                 document.getElementById('wizardUnsaved').style.display = 'none';
                 showMessage('Dades guardades correctament', 'success');
+                // Format learning toast
+                if (wizardPrefills._format_learning && wizardPrefills._format_learning.value && wizardPrefills._format_learning.value.active) {
+                    showFormatToast('Format desat. Proper cop s\'extrauran automaticament.');
+                }
             } catch (err) {
                 showMessage('Error guardant: ' + err.message, 'error');
             } finally {
@@ -5863,5 +6015,6 @@
             }
         });
     </script>
+<div id="formatToast" class="format-toast"></div>
 </body>
 </html>

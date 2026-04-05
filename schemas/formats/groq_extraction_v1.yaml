@@ -1,0 +1,42 @@
+format_id: groq_extraction_v1
+name: "Groq LLM Extraction"
+description: "Groq LLM extraction targets for structured data from scanned or complex documents."
+document_roles: []
+source_type: groq_llm
+created_by: system
+label_mappings:
+  # Client
+  - labels: ["CLIENT", "CLIENTE", "PROMOTOR"]
+    concept_id: client_name
+    confidence: 0.85
+
+  # Architect
+  - labels: ["ARQUITECTE", "ARQUITECTO"]
+    concept_id: architect_name
+    confidence: 0.85
+
+  # Building type
+  - labels: ["TIPUS EDIFICACIÓ", "TIPO EDIFICACIÓN", "OBRA"]
+    concept_id: building_type
+    confidence: 0.85
+
+  # Floors
+  - labels: ["PLANTES", "PLANTAS", "PB+"]
+    concept_id: num_floors
+    confidence: 0.80
+
+  # Surfaces
+  - labels: ["SUPERFÍCIE PARCEL·LA", "SUPERFICIE PARCELA"]
+    concept_id: superficie_parcela
+    confidence: 0.80
+  - labels: ["SUPERFÍCIE CONSTRUÏDA", "SUPERFICIE CONSTRUIDA"]
+    concept_id: superficie_construida
+    confidence: 0.80
+
+  # Basement / retaining walls (no label_map equivalent, but Groq targets)
+  # These are Groq-specific extraction targets without label equivalents
+
+  # Dates
+  - labels: ["DATA", "FECHA", "DATA CAMP"]
+    concept_id: field_date
+    confidence: 0.80

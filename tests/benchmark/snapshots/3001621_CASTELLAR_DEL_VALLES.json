@@ -1,0 +1,132 @@
+{
+  "project": "3001621 CASTELLAR DEL VALLES",
+  "signal_summary": {
+    "total_signals": 112,
+    "mapped_signals": 35,
+    "by_file": {
+      "25.0493/DADES PER ANAR A CAMP_v1.xlsx": 7,
+      "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx": 1,
+      "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg": 8,
+      "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf": 7,
+      "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf": 7,
+      "3001621_test_fase2.docx": 10,
+      "3001621_test_run003.docx": 10,
+      "3001621_test_run004.docx": 10,
+      "3001621_test_run005.docx": 10,
+      "4687-GTL-25 Castellar del Vallés.pdf": 8,
+      "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf": 8,
+      "ANNEXES/ALTRES/COORDENADES.txt": 5,
+      "PENETROS + SONDEIG.pdf": 5,
+      "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg": 8,
+      "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls": 4,
+      "tall.pdf": 3,
+      "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/PLAN_COST_CATELLAR DEL VALLÈS.xlsx": 1
+    },
+    "by_variable": {
+      "access_url": 2,
+      "building_type": 1,
+      "client_email": 8,
+      "client_name": 2,
+      "client_nif": 5,
+      "client_phone": 5,
+      "contact_name": 1,
+      "field_date": 2,
+      "municipality": 1,
+      "street_address": 3,
+      "utm_coordinates": 5
+    }
+  },
+  "resolved": {
+    "access_url": {
+      "value": "https://maps.app.goo.gl/jqhyCq9kfT2ofFK7A",
+      "source_file": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+      "source_type": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 1
+    },
+    "building_type": {
+      "value": "CONSTR 3 HAB UNIF",
+      "source_file": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+      "source_type": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 0
+    },
+    "client_email": {
+      "value": "administracion@g3dt.com",
+      "source_file": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "source_type": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "confidence": 0.75,
+      "priority": 30,
+      "alternatives_count": 7
+    },
+    "client_name": {
+      "value": "GRUP ALMA",
+      "source_file": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "source_type": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "confidence": 0.7999999999999999,
+      "priority": 30,
+      "alternatives_count": 1
+    },
+    "client_nif": {
+      "value": "B25461443",
+      "source_file": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+      "source_type": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 30,
+      "alternatives_count": 4
+    },
+    "client_phone": {
+      "value": "902333833",
+      "source_file": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+      "source_type": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+      "confidence": 0.75,
+      "priority": 30,
+      "alternatives_count": 4
+    },
+    "contact_name": {
+      "value": "ROC",
+      "source_file": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+      "source_type": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 0
+    },
+    "field_date": {
+      "value": "2025.11.19",
+      "source_file": "4687-GTL-25 Castellar del Vallés.pdf",
+      "source_type": "4687-GTL-25 Castellar del Vallés.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 45,
+      "alternatives_count": 1
+    },
+    "municipality": {
+      "value": "CASTELLAR DEL VALLÈS",
+      "source_file": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+      "source_type": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 0
+    },
+    "street_address": {
+      "value": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona",
+      "source_file": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+      "source_type": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 2
+    },
+    "utm_coordinates": {
+      "value": "{'point_id': 'P-1', 'x': 423167.0, 'y': 4609608.0, 'z': 571.5}",
+      "source_file": "ANNEXES/ALTRES/COORDENADES.txt",
+      "source_type": "ANNEXES/ALTRES/COORDENADES.txt",
+      "confidence": 0.95,
+      "priority": 25,
+      "alternatives_count": 4
+    }
+  },
+  "files_mined": 19,
+  "files_skipped": 140,
+  "errors": []
+}

@@ -1,0 +1,31 @@
+format_id: pressupost_pdf_v1
+name: "G3 Pressupost PDF"
+description: "G3's budget/quote PDFs with client, address and project details."
+document_roles: [pressupost_pdf]
+source_type: pressupost_pdf
+created_by: system
+label_mappings:
+  # Client
+  - labels: ["CLIENT", "CLIENTE", "PROMOTOR", "PROPIETARI"]
+    concept_id: client_name
+    confidence: 0.90
+
+  # Address
+  - labels: ["ADREÇA OBRA", "DIRECCIÓN OBRA", "ADREÇA", "EMPLAÇAMENT"]
+    concept_id: street_address
+    confidence: 0.90
+
+  # Municipality
+  - labels: ["MUNICIPI", "MUNICIPIO", "POBLACIÓ", "POBLACIÓN"]
+    concept_id: municipality
+    confidence: 0.90
+
+  # Architect
+  - labels: ["ARQUITECTE", "ARQUITECTO"]
+    concept_id: architect_name
+    confidence: 0.85
+
+  # Building type
+  - labels: ["TIPUS EDIFICACIÓ", "TIPO EDIFICACIÓN", "OBRA"]
+    concept_id: building_type
+    confidence: 0.85

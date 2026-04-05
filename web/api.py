@@ -729,6 +729,37 @@ def smartscan_override(project_name: str, req: SmartScanOverrideRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.get("/document-pages/{project_name:path}")
+def get_document_pages(project_name: str, file: str = ""):
+    """Get page count and metadata for a document (for format learning drawer)."""
+    import fitz  # PyMuPDF
+
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    file_path = project_path / file
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail=f"File not found: {file}")
+
+    pages = 0
+    if file_path.suffix.lower() == ".pdf":
+        try:
+            doc = fitz.open(str(file_path))
+            pages = len(doc)
+            doc.close()
+        except Exception:
+            pages = 0
+
+    return {
+        "file": file,
+        "pages": pages,
+        "role": "",  # Could look up from file_mapping
+        "size_bytes": file_path.stat().st_size,
+    }
+
+
 @router.post("/audit/{project_name:path}", response_model=AuditResponse)
 def run_audit(project_name: str):
     """Run intelligent audit: compare generated vs reference report."""

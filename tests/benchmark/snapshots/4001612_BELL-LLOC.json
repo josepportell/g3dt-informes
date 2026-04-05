@@ -1,0 +1,157 @@
+{
+  "project": "4001612 BELL-LLOC",
+  "signal_summary": {
+    "total_signals": 202,
+    "mapped_signals": 63,
+    "by_file": {
+      "25.0647/4613172CG1141S0001SU-15.pdf": 3,
+      "25.0647/4613173CG1141S0001ZU-13.pdf": 3,
+      "25.0647/A.01.pdf": 6,
+      "25.0647/DADES PER ANAR A CAMP_v1.xlsx": 6,
+      "25.0647/PLAN_COST_BELL-LLOC.xlsx": 1,
+      "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf": 9,
+      "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg": 14,
+      "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg": 19,
+      "4001612_AUDIT_VISUAL.docx": 10,
+      "4001612_test_fase2.docx": 10,
+      "4677-GTL-25 Bell-Lloc d'Urgell.pdf": 8,
+      "A.01 amb punts.pdf": 6,
+      "A.01.pdf": 6,
+      "ACCEPTACIO/DADES CLIENT.txt": 4,
+      "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf": 10,
+      "ANNEXES/ALTRES/COORDENADES.txt": 1,
+      "EXPLICACIÓ DETALLS.docx": 11,
+      "PDF V0/4001612_informe_v0.pdf": 16,
+      "PDF V0/ANNEXES/4001612_DPSH.pdf": 2,
+      "PDF V0/ANNEXES/4001612_fotografies.pdf": 4,
+      "PDF V0/ANNEXES/4001612_plànol de situació.pdf": 3,
+      "PDF V0/ANNEXES/4001612_sondeig.pdf": 3,
+      "PDF V0/ANNEXES/4001612_tall de correlació.pdf": 1,
+      "PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf": 5,
+      "PDF V0/LLETRA/4001612_informe_v0.pdf": 11,
+      "PENETROS.pdf": 2,
+      "SONDEIG.pdf": 3,
+      "comanda laboratori_4001612_BELL-LLOC.xls": 4,
+      "pl. situaci.pdf": 11,
+      "tall.pdf": 3,
+      "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/4613172CG1141S0001SU.pdf": 3,
+      "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/4613173CG1141S0001ZU.pdf": 3,
+      "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/PLAN_COST_BELL-LLOC.xlsx": 1
+    },
+    "by_variable": {
+      "access_url": 2,
+      "building_type": 6,
+      "client_email": 17,
+      "client_name": 5,
+      "client_nif": 5,
+      "client_phone": 13,
+      "contact_name": 1,
+      "expedient": 2,
+      "field_date": 7,
+      "municipality": 1,
+      "street_address": 3,
+      "utm_coordinates": 1
+    }
+  },
+  "resolved": {
+    "access_url": {
+      "value": "https://www.google.com/maps/place/41%C2%B037",
+      "source_file": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "source_type": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "confidence": 0.75,
+      "priority": 30,
+      "alternatives_count": 1
+    },
+    "building_type": {
+      "value": "Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+      "source_file": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "source_type": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "confidence": 0.7999999999999999,
+      "priority": 30,
+      "alternatives_count": 5
+    },
+    "client_email": {
+      "value": "g3@g3dt.com",
+      "source_file": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+      "source_type": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+      "confidence": 0.75,
+      "priority": 30,
+      "alternatives_count": 16
+    },
+    "client_name": {
+      "value": "ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com <mailto:571?e.arquitectura@boschnovell.com>",
+      "source_file": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "source_type": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "confidence": 0.7999999999999999,
+      "priority": 30,
+      "alternatives_count": 4
+    },
+    "client_nif": {
+      "value": "B25461443",
+      "source_file": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+      "source_type": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 30,
+      "alternatives_count": 4
+    },
+    "client_phone": {
+      "value": "620199571",
+      "source_file": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+      "source_type": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 30,
+      "alternatives_count": 12
+    },
+    "contact_name": {
+      "value": "JORDI",
+      "source_file": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+      "source_type": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 0
+    },
+    "expedient": {
+      "value": "4001612_v0",
+      "source_file": "PDF V0/4001612_informe_v0.pdf",
+      "source_type": "PDF V0/4001612_informe_v0.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 45,
+      "alternatives_count": 1
+    },
+    "field_date": {
+      "value": "2025.09.30",
+      "source_file": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+      "source_type": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 30,
+      "alternatives_count": 6
+    },
+    "municipality": {
+      "value": "BELL-LLOC",
+      "source_file": "comanda laboratori_4001612_BELL-LLOC.xls",
+      "source_type": "comanda laboratori_4001612_BELL-LLOC.xls",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 0
+    },
+    "street_address": {
+      "value": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC",
+      "source_file": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+      "source_type": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 2
+    },
+    "utm_coordinates": {
+      "value": "{'point_id': 'P-1', 'x': 314418.9, 'y': 4611117.6, 'z': 198.9}",
+      "source_file": "ANNEXES/ALTRES/COORDENADES.txt",
+      "source_type": "ANNEXES/ALTRES/COORDENADES.txt",
+      "confidence": 0.95,
+      "priority": 25,
+      "alternatives_count": 0
+    }
+  },
+  "files_mined": 34,
+  "files_skipped": 177,
+  "errors": []
+}

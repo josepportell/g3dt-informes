@@ -1,0 +1,49 @@
+format_id: planol_vision_v1
+name: "Planol Vision Extraction"
+description: "Architect plans (A.01.pdf) read via Claude vision, extracting project metadata from the title block."
+document_roles: [architect_plan]
+source_type: planol_vision
+created_by: system
+label_mappings:
+  # Architect
+  - labels: ["ARQUITECTE", "ARQUITECTO", "DIRECTOR D'OBRA"]
+    concept_id: architect_name
+    confidence: 0.85
+
+  # Architect company
+  - labels: ["DESPATX", "DESPACHO", "ESTUDI", "ESTUDIO"]
+    concept_id: architect_company
+    confidence: 0.85
+
+  # Client / Promotor
+  - labels: ["CLIENT", "CLIENTE", "PROMOTOR", "PROPIETARI"]
+    concept_id: client_name
+    confidence: 0.85
+
+  # Address
+  - labels: ["ADREÇA", "DIRECCIÓN", "EMPLAÇAMENT", "UBICACIÓ"]
+    concept_id: street_address
+    confidence: 0.85
+
+  # Municipality
+  - labels: ["MUNICIPI", "MUNICIPIO", "POBLACIÓ"]
+    concept_id: municipality
+    confidence: 0.85
+
+  # Building type
+  - labels: ["TIPUS EDIFICACIÓ", "TIPO EDIFICACIÓN", "OBRA"]
+    concept_id: building_type
+    confidence: 0.85
+
+  # Floors
+  - labels: ["PLANTES", "PLANTAS", "PB+"]
+    concept_id: num_floors
+    confidence: 0.80
+
+  # Surfaces
+  - labels: ["SUPERFÍCIE PARCEL·LA", "SUPERFICIE PARCELA"]
+    concept_id: superficie_parcela
+    confidence: 0.80
+  - labels: ["SUPERFÍCIE CONSTRUÏDA", "SUPERFICIE CONSTRUIDA"]
+    concept_id: superficie_construida
+    confidence: 0.80

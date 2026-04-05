@@ -51,6 +51,10 @@ Skills per a desenvolupament, testing i invocació manual. En producció, la maj
 - `/g3dt-audit-informe` — Audit intel·ligent: compara generat vs referència, genera visual .docx
 - `/g3dt-editar-informe` — Edita un informe generat existent
 
+### Desenvolupament
+- `/g3dt-dev-eva-vs-pipeline` — Compara valors d'Eva vs pipeline (per refinar extraccions)
+- `/g3dt-dev-benchmark-compare` — Benchmark tiered (auto/manual/judici)
+
 ## Pipeline de Generació d'Informes
 
 Activat quan Eva selecciona un projecte al wizard web. Tot és automàtic.
@@ -87,12 +91,22 @@ clients/g3dt/
 │       ├── g3dt-extreure-planol.md
 │       ├── g3dt-adjacents-visor.md
 │       └── g3dt-geocodificar.md
+├── schemas/                  # Schemas YAML (conceptes + formats)
+│   ├── concepts/
+│   │   └── report_variables.yaml  # 53 conceptes, prioritats per font
+│   └── formats/
+│       ├── *.yaml            # 8 formats del sistema
+│       └── learned/          # Formats apresos per Eva (auto-generats)
 ├── automation/               # Mòduls d'extracció i càlcul
 │   ├── auto_extractor.py     # Fase 0.5: pre-omple camps automàticament
 │   ├── dpsh_extractor.py     # Extracció de dades DPSH d'Excel
+│   ├── format_learner.py     # Detecció + aprenentatge de formats nous
 │   ├── geocode_coordinates.py # Geocodificació adreça → UTM (Nominatim+Cadastre)
 │   ├── project_extractor.py  # Extracció de tot el projecte
 │   ├── report_data.py        # Model de dades unificat
+│   ├── schemas/              # Carregadors Python per schemas YAML
+│   │   ├── models.py         # ConceptDefinition, FormatSchema, LabelMapping
+│   │   └── loader.py         # ConceptRegistry + FormatRegistry (singletons)
 │   ├── terzaghi_calculator.py # Càlcul de capacitat portant
 │   └── validation/           # Capa de validació de dades de camp
 │       ├── schemas.py        # Models Pydantic
@@ -107,8 +121,11 @@ clients/g3dt/
 │   └── validation/
 │       └── review.html       # UI web: 4 pestanyes (DPSH, Sondeig, Plànol, Wizard)
 ├── docs/                     # Documentació tècnica
-├── reference-material/       # Projectes de mostra (4 projectes)
-└── tests/                    # Tests (geocode: 47 tests)
+│   ├── ARQUITECTURA-CONCEPT-FORMAT-SCHEMAS.md  # Disseny concepte/format
+│   └── REFERENCE-EXTRACTOR.md                  # Enginyeria inversa informes Eva
+├── reference-material/       # Projectes de mostra (7 projectes)
+│   └── {project}/validation/eva_reference_values.json  # Valors extrets d'Eva
+└── tests/                    # Tests (197 tests)
 ```
 
 ## Flux de Treball d'Eva (producció)
@@ -132,6 +149,27 @@ clients/g3dt/
 │ 6. Eva prem "Generar Informe" → descarrega .docx            │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+## Arquitectura Concepte-Format
+
+El sistema separa **conceptes** (què significa cada dada) de **formats** (on la trobem al document):
+
+- **Schema de Conceptes** (`schemas/concepts/report_variables.yaml`): 53 variables de l'informe amb tipus, grup, i prioritats de font per concepte
+- **Schemas de Format** (`schemas/formats/*.yaml`): 8 formats del sistema que mapegen etiquetes → concept_ids
+- **Format Learning**: quan un document té un format desconegut (<60% camps extrets), el wizard mostra un banner ambar. Eva omple els camps que falten, desa, i el sistema genera un format schema YAML a `schemas/formats/learned/` per a futures extraccions automàtiques
+
+**Doc complet:** `docs/ARQUITECTURA-CONCEPT-FORMAT-SCHEMAS.md`
+
+## Reference Extractor (Enginyeria Inversa)
+
+Extreu ~30-37 variables amb posició exacta dels informes reals d'Eva (`.doc`/`.docx`) via alineació amb la plantilla Jinja. Resultats a `validation/eva_reference_values.json` per projecte. Permet comparar el pipeline amb els valors reals d'Eva.
+
+```bash
+.venv/bin/python -m automation.reference_extractor                    # tots 7 projectes
+.venv/bin/python -m automation.reference_extractor "reference-material/4001612 BELL-LLOC"  # un sol
+```
+
+**Doc complet:** `docs/REFERENCE-EXTRACTOR.md`
 
 ## Documents de Camp
 

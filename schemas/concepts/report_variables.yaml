@@ -1,0 +1,657 @@
+# G3DT Report Variables - Concept Schema
+# Defineix TOTES les variables (conceptes) del pipeline d'informes geotecnics.
+# Cada concepte te un tipus, grup, descripcio i prioritats de font.
+#
+# source_priority: numero mes baix = mes fiable = guanya en conflicte.
+# Referencia: automation/fileminer/label_map.py SOURCE_PRIORITY
+
+version: "1.0"
+
+concepts:
+
+  # ---------------------------------------------------------------------------
+  # CLIENT - Dades del client/promotor
+  # ---------------------------------------------------------------------------
+  client_name:
+    type: text
+    group: client
+    required: true
+    description_ca: Nom del client o promotor
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      dades_camp_excel: 35
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+      content_excel: 45
+      folder_name: 60
+
+  contact_name:
+    type: text
+    group: client
+    required: false
+    description_ca: Persona de contacte
+    source_priority:
+      user: 10
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+
+  client_nif:
+    type: text
+    group: client
+    required: false
+    description_ca: NIF/CIF/DNI del client
+    source_priority:
+      user: 10
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+
+  client_phone:
+    type: text
+    group: client
+    required: false
+    description_ca: Telefon del client
+    source_priority:
+      user: 10
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+
+  client_email:
+    type: text
+    group: client
+    required: false
+    description_ca: Correu electronic del client
+    source_priority:
+      user: 10
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+
+  # ---------------------------------------------------------------------------
+  # ARCHITECT - Dades de l'arquitecte
+  # ---------------------------------------------------------------------------
+  architect_name:
+    type: text
+    group: architect
+    required: true
+    description_ca: Nom de l'arquitecte
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+
+  architect_company:
+    type: text
+    group: architect
+    required: false
+    description_ca: Despatx o estudi d'arquitectura
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+
+  # ---------------------------------------------------------------------------
+  # LOCATION - Ubicacio de l'obra
+  # ---------------------------------------------------------------------------
+  street_address:
+    type: text
+    group: location
+    required: true
+    description_ca: Adreca completa de l'obra
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      dades_camp_excel: 35
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+      content_text: 45
+      folder_name: 60
+
+  municipality:
+    type: text
+    group: location
+    required: true
+    wizard_field: site_municipality
+    description_ca: Municipi de l'obra
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      dades_camp_excel: 35
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+      folder_name: 60
+
+  province:
+    type: text
+    group: location
+    required: false
+    description_ca: Provincia
+    source_priority:
+      user: 10
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_pdf: 45
+      content_docx: 45
+      folder_name: 60
+
+  # ---------------------------------------------------------------------------
+  # BUILDING - Dades de l'edificacio
+  # ---------------------------------------------------------------------------
+  building_type:
+    type: text
+    group: building
+    required: true
+    description_ca: Tipus d'edificacio (unifamiliar, plurifamiliar, nau, etc.)
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+
+  num_floors:
+    type: text
+    group: building
+    required: true
+    description_ca: "Nombre de plantes (ex: Pb+1Pp)"
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_pdf: 45
+      content_docx: 45
+
+  superficie_parcela:
+    type: text
+    group: building
+    required: true
+    wizard_field: superficie_parcela_m2
+    description_ca: Superficie de la parcella en m2
+    source_priority:
+      user: 10
+      planol_vision: 20
+      cadastre_api: 30
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_pdf: 45
+      content_docx: 45
+
+  superficie_construida:
+    type: text
+    group: building
+    required: true
+    wizard_field: superficie_construida_m2
+    description_ca: Superficie construida en m2
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_email: 43
+      content_pdf: 45
+      content_docx: 45
+
+  superficie_cadastral:
+    type: text
+    group: building
+    required: false
+    wizard_field: superficie_cadastral_m2
+    description_ca: Superficie cadastral en m2
+    source_priority:
+      user: 10
+      cadastre_api: 30
+      planol_vision: 20
+
+  building_height_m:
+    type: numeric
+    group: building
+    required: false
+    description_ca: Alcada de l'edifici en metres
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_pdf: 45
+
+  has_basement:
+    type: boolean
+    group: building
+    required: false
+    default: false
+    description_ca: Si l'edifici te planta soterrani
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_pdf: 45
+
+  has_retaining_walls:
+    type: boolean
+    group: building
+    required: false
+    default: false
+    description_ca: Si el projecte inclou murs de contencio
+    source_priority:
+      user: 10
+      planol_vision: 20
+      pressupost_pdf: 30
+      groq_llm: 42
+      content_pdf: 45
+
+  # ---------------------------------------------------------------------------
+  # PROJECT - Referencia i dates del projecte
+  # ---------------------------------------------------------------------------
+  expedient:
+    type: text
+    group: project
+    required: false
+    description_ca: Numero d'expedient o referencia del projecte
+    source_priority:
+      user: 10
+      pressupost_pdf: 30
+      dades_camp_excel: 35
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_docx: 45
+      folder_name: 60
+
+  field_date:
+    type: date
+    group: project
+    required: false
+    description_ca: Data del treball de camp
+    source_priority:
+      user: 10
+      dades_camp_excel: 35
+      groq_llm: 42
+      content_email: 43
+      content_pdf: 45
+
+  access_url:
+    type: url
+    group: project
+    required: false
+    description_ca: Enllac Google Maps d'acces a l'obra
+    source_priority:
+      user: 10
+      groq_llm: 42
+      content_email: 43
+      content_email_attachment: 44
+      content_pdf: 45
+      content_text: 45
+
+  # ---------------------------------------------------------------------------
+  # FIELD_WORK - Dades de camp (auto_extractor, no tipicament de documents)
+  # ---------------------------------------------------------------------------
+  field_work_dates:
+    type: list
+    group: field_work
+    required: false
+    description_ca: Dates de camp en format ISO (llista)
+    source_priority:
+      user: 10
+      dades_camp_excel: 35
+      dpsh_vision: 20
+
+  field_work_dates_text:
+    type: text
+    group: field_work
+    required: false
+    description_ca: "Dates de camp en text catala (ex: 1 i 6 d'octubre de 2025)"
+    source_priority:
+      user: 10
+      dades_camp_excel: 35
+      dpsh_vision: 20
+
+  site_description:
+    type: text
+    group: field_work
+    required: false
+    description_ca: Descripcio del solar (anivellament, vegetacio, estat)
+    source_priority:
+      user: 10
+
+  access_description:
+    type: text
+    group: field_work
+    required: false
+    description_ca: Descripcio d'acces al solar
+    source_priority:
+      user: 10
+
+  cota_referencia:
+    type: text
+    group: field_work
+    required: false
+    description_ca: Cota de referencia (absoluta ICGC MDT o relativa)
+    source_priority:
+      user: 10
+      sondeig_vision: 20
+      icgc_api: 30
+
+  # ---------------------------------------------------------------------------
+  # PARCEL - Adjacents i caracteristiques del solar
+  # ---------------------------------------------------------------------------
+  adjacent_north:
+    type: text
+    group: parcel
+    required: true
+    description_ca: Confrontant nord (carrer o parcella veina)
+    source_priority:
+      user: 10
+      cadastre_api: 30
+      planol_vision: 20
+      groq_llm: 42
+      content_email: 43
+      content_pdf: 45
+
+  adjacent_south:
+    type: text
+    group: parcel
+    required: true
+    description_ca: Confrontant sud (carrer o parcella veina)
+    source_priority:
+      user: 10
+      cadastre_api: 30
+      planol_vision: 20
+      groq_llm: 42
+      content_email: 43
+      content_pdf: 45
+
+  adjacent_east:
+    type: text
+    group: parcel
+    required: true
+    description_ca: Confrontant est (carrer o parcella veina)
+    source_priority:
+      user: 10
+      cadastre_api: 30
+      planol_vision: 20
+      groq_llm: 42
+      content_email: 43
+      content_pdf: 45
+
+  adjacent_west:
+    type: text
+    group: parcel
+    required: true
+    description_ca: Confrontant oest (carrer o parcella veina)
+    source_priority:
+      user: 10
+      cadastre_api: 30
+      planol_vision: 20
+      groq_llm: 42
+      content_email: 43
+      content_pdf: 45
+
+  site_position:
+    type: text
+    group: parcel
+    required: false
+    description_ca: Posicio de l'edifici dins la parcella
+    source_priority:
+      user: 10
+      planol_vision: 20
+
+  parcel_shape:
+    type: text
+    group: parcel
+    required: false
+    description_ca: Forma general de la parcella
+    source_priority:
+      user: 10
+      planol_vision: 20
+      cadastre_api: 30
+
+  is_urban:
+    type: boolean
+    group: parcel
+    required: false
+    default: true
+    description_ca: Si el solar es en sol urba
+    source_priority:
+      user: 10
+      cadastre_api: 30
+
+  is_sloped:
+    type: boolean
+    group: parcel
+    required: false
+    default: false
+    description_ca: Si el terreny te pendent significatiu
+    source_priority:
+      user: 10
+      icgc_api: 30
+
+  slope_percent:
+    type: numeric
+    group: parcel
+    required: false
+    description_ca: Pendent del terreny en percentatge
+    source_priority:
+      user: 10
+      icgc_api: 30
+
+  slope_direction:
+    type: text
+    group: parcel
+    required: false
+    description_ca: Direccio dominant del pendent
+    source_priority:
+      user: 10
+      icgc_api: 30
+
+  is_anthropized:
+    type: boolean
+    group: parcel
+    required: false
+    default: true
+    description_ca: Si el solar mostra reblerts o alteracions antropiques
+    source_priority:
+      user: 10
+
+  # ---------------------------------------------------------------------------
+  # GEOTECHNICAL - Parametres geomecanics (overrides experts, nomes user)
+  # ---------------------------------------------------------------------------
+  num_soil_levels:
+    type: integer
+    group: geotechnical
+    required: false
+    default: 1
+    description_ca: Nombre de nivells geologics diferenciats
+    source_priority:
+      user: 10
+      sondeig_vision: 20
+
+  foundation_depth_m:
+    type: numeric
+    group: geotechnical
+    required: false
+    default: 0.3
+    description_ca: Profunditat de fonamentacio en metres
+    source_priority:
+      user: 10
+
+  geomech_gamma:
+    type: numeric
+    group: geotechnical
+    required: false
+    description_ca: Densitat del sol (g/cm3)
+    source_priority:
+      user: 10
+
+  geomech_cohesion:
+    type: numeric
+    group: geotechnical
+    required: false
+    description_ca: Cohesio del sol (kg/cm2)
+    source_priority:
+      user: 10
+
+  geomech_phi:
+    type: numeric
+    group: geotechnical
+    required: false
+    description_ca: Angle de friccio interna (graus)
+    source_priority:
+      user: 10
+
+  geomech_E:
+    type: numeric
+    group: geotechnical
+    required: false
+    description_ca: Modul de deformacio (kg/cm2)
+    source_priority:
+      user: 10
+
+  Es_settlement:
+    type: numeric
+    group: geotechnical
+    required: false
+    description_ca: Modul per al calcul d'assentaments (kg/cm2)
+    source_priority:
+      user: 10
+
+  historia_geologica_template:
+    type: text
+    group: geotechnical
+    required: false
+    description_ca: Plantilla .docx per a la historia geologica
+    source_priority:
+      user: 10
+
+  # ---------------------------------------------------------------------------
+  # LAB - Dades de laboratori
+  # ---------------------------------------------------------------------------
+  sulfate_mg_kg:
+    type: numeric
+    group: lab
+    required: false
+    description_ca: Contingut de sulfats en mg/kg (UNE 83963:2008)
+    source_priority:
+      user: 10
+      comanda_lab_excel: 35
+      content_pdf: 45
+
+  lab_tests:
+    type: list
+    group: lab
+    required: false
+    description_ca: Resultats d'assaigs de laboratori
+    source_priority:
+      user: 10
+      comanda_lab_excel: 35
+      content_pdf: 45
+
+  # ---------------------------------------------------------------------------
+  # GEOLOGY - Dades geologiques ICGC (de l'API, no de documents)
+  # ---------------------------------------------------------------------------
+  icgc_unit_code:
+    type: text
+    group: geology
+    required: false
+    description_ca: Codi de la unitat geologica ICGC 1:25k
+    source_priority:
+      user: 10
+      icgc_api: 30
+
+  icgc_unit_description:
+    type: text
+    group: geology
+    required: false
+    description_ca: Descripcio de la unitat geologica ICGC
+    source_priority:
+      user: 10
+      icgc_api: 30
+
+  icgc_unit_epoch:
+    type: text
+    group: geology
+    required: false
+    description_ca: Epoca geologica de la unitat ICGC
+    source_priority:
+      user: 10
+      icgc_api: 30
+
+  # ---------------------------------------------------------------------------
+  # COORDINATES - Coordenades UTM i referencia cadastral
+  # ---------------------------------------------------------------------------
+  utm_x:
+    type: numeric
+    group: coordinates
+    required: false
+    description_ca: Coordenada UTM X (easting) ETRS89 Fus 31
+    source_priority:
+      user: 10
+      coordenades_txt: 25
+      cadastre_api: 30
+      geocode_nominatim: 40
+
+  utm_y:
+    type: numeric
+    group: coordinates
+    required: false
+    description_ca: Coordenada UTM Y (northing) ETRS89 Fus 31
+    source_priority:
+      user: 10
+      coordenades_txt: 25
+      cadastre_api: 30
+      geocode_nominatim: 40
+
+  referencia_catastral:
+    type: text
+    group: coordinates
+    required: false
+    description_ca: Referencia cadastral de 14 caracters
+    source_priority:
+      user: 10
+      cadastre_api: 30
+      geocode_nominatim: 40

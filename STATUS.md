@@ -1,9 +1,16 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-03-30
+Last updated: 2026-04-05
 
 ## Current State
 
-**SmartScan + Groq + Tier 3 activats. Overrides redesenyats. Pipeline funcional end-to-end per a imatges i emails. Pendent: instal·lació Eva + test projecte nou.**
+**Arquitectura Concepte-Format implementada. Reference Extractor operatiu (7 projectes). Pipeline funcional. Pendent: comparacio Eva vs pipeline, instal·lacio Eva.**
+
+## Done (2026-04-05)
+
+- [x] Arquitectura Concepte-Format: 53 conceptes YAML + 8 formats + format learning UI (`docs/ARQUITECTURA-CONCEPT-FORMAT-SCHEMAS.md`)
+- [x] Reference Extractor: enginyeria inversa dels 7 informes d'Eva → `validation/eva_reference_values.json` (`docs/REFERENCE-EXTRACTOR.md`)
+- [x] 197 tests passen (snapshot regression + schema loader + format learner + fileminer + smartscan + geocode)
+- [x] Branch: `feature/concept-format-separation`
 
 ## Done (2026-03-30)
 

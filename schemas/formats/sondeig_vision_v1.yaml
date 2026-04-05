@@ -1,0 +1,7 @@
+format_id: sondeig_vision_v1
+name: "Sondeig Vision Extraction"
+description: "Borehole logs (SONDEIG.pdf) read via Claude vision. Uses structured prompts, not label matching."
+document_roles: [sondeig_field_sheet, sondeig_annex]
+source_type: sondeig_vision
+created_by: system
+label_mappings: []

@@ -33,6 +33,7 @@ class Signal(BaseModel):
 
     # Where it maps
     maps_to: str | None = None          # Report variable: "street_address"
+    concept_id: str | None = None       # Concept schema ID (same as maps_to for now)
 
     # Provenance
     source_file: str                    # Relative path within project
@@ -53,6 +54,7 @@ class MiningResult(BaseModel):
     files_skipped: int = 0
     errors: list[str] = Field(default_factory=list)
     duration_ms: int = 0
+    format_detections: list = Field(default_factory=list)  # list[FormatDetectionResult]
 
 
 class ResolvedValue(BaseModel):

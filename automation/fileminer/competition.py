@@ -63,24 +63,28 @@ def _parse_date_value(value: str) -> float:
 
 def resolve_competition(
     signals: list[Signal],
+    *,
+    use_concept_id: bool = True,
 ) -> dict[str, ResolvedValue]:
     """Resolve competing signals into one winner per report variable.
 
-    Groups signals by maps_to, then for each variable picks the best signal.
-    Signals with maps_to=None are skipped (unmapped data).
+    Groups signals by maps_to (default) or concept_id, then for each variable
+    picks the best signal. Signals whose grouping key is None are skipped.
 
     For report_date: among same-priority signals, prefer the most recent date.
 
     Args:
         signals: All signals from all miners
+        use_concept_id: When True, group by concept_id instead of maps_to
 
     Returns:
         Dict of variable_name -> ResolvedValue (winner + alternatives)
     """
     grouped: dict[str, list[Signal]] = {}
     for s in signals:
-        if s.maps_to is not None:
-            grouped.setdefault(s.maps_to, []).append(s)
+        key = (s.concept_id or s.maps_to) if use_concept_id else s.maps_to
+        if key is not None:
+            grouped.setdefault(key, []).append(s)
 
     resolved: dict[str, ResolvedValue] = {}
     for variable, candidates in grouped.items():

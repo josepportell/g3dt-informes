@@ -1,0 +1,589 @@
+{
+  "project": "4001679 ANCILES",
+  "source_file": "4001679_informe_V0.doc",
+  "extraction_date": "2026-04-05T22:17:08.112101",
+  "template_file": "g3dt-jinja-template.docx",
+  "extractor_version": "1.0",
+  "statistics": {
+    "total_template_variables": 56,
+    "total_extracted": 52,
+    "extraction_rate": 92.9,
+    "by_method": {
+      "paragraph_single": 12,
+      "loop_table": 5,
+      "table_cell": 13,
+      "intelligent_analysis": 22
+    },
+    "body_paragraphs": {
+      "template": 489,
+      "reference": 489
+    },
+    "tables": {
+      "template": 14,
+      "reference": 12,
+      "matched": 10
+    }
+  },
+  "variables": {
+    "access_street": {
+      "value": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.",
+      "position": "p115",
+      "position_description": "Body paragraph 115",
+      "confidence": 0.217,
+      "extraction_method": "paragraph_single",
+      "template_text": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del {{ access_street }}.",
+      "reference_text": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte."
+    },
+    "data_camp_text": {
+      "value": "El día 19 de febrero de 2026, se visitó la obra para:",
+      "position": "p095",
+      "position_description": "Body paragraph 95",
+      "confidence": 0.166,
+      "extraction_method": "paragraph_single",
+      "template_text": "El dia {{ data_camp_text }}, es va visitar l’obra per tal de:",
+      "reference_text": "El día 19 de febrero de 2026, se visitó la obra para:"
+    },
+    "data_signatura_text": {
+      "value": "Els Omells de Na Gaia, 16 de marzo de 2026",
+      "position": "p477",
+      "position_description": "Body paragraph 477",
+      "confidence": 0.206,
+      "extraction_method": "paragraph_single",
+      "template_text": "Els Omells de Na  Gaia, {{ data_signatura_text }}",
+      "reference_text": "Els Omells de Na Gaia, 16 de marzo de 2026"
+    },
+    "dpsh_tests": {
+      "value": [
+        {
+          "test_id": "P-1",
+          "cota": "+1106.40",
+          "depth": "-3.58",
+          "refusal": "Si",
+          "water": "No detectado"
+        },
+        {
+          "test_id": "P-2",
+          "cota": "+1106.30",
+          "depth": "-4.59",
+          "refusal": "Si",
+          "water": "No detectado"
+        },
+        {
+          "test_id": "P-3",
+          "cota": "+1106.40",
+          "depth": "-3.77",
+          "refusal": "Si",
+          "water": "No detectado"
+        },
+        {
+          "test_id": "P-4",
+          "cota": "+1106.30",
+          "depth": "-5.92",
+          "refusal": "Si",
+          "water": "No detectado"
+        },
+        {
+          "test_id": "P-5",
+          "cota": "+1106.42 -",
+          "depth": "-4.18",
+          "refusal": "Si",
+          "water": "No detectado"
+        },
+        {
+          "test_id": "P-6",
+          "cota": "+1106.65 -",
+          "depth": "-5.70",
+          "refusal": "Si",
+          "water": "No detectado"
+        }
+      ],
+      "position": "t4",
+      "position_description": "Loop table 4 (dpsh_tests)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['test_id', 'cota', 'depth', 'refusal', 'water']",
+      "reference_text": "6 data rows"
+    },
+    "expedient": {
+      "value": "Expediente Núm.: 4001679_v0",
+      "position": "p474",
+      "position_description": "Body paragraph 474",
+      "confidence": 0.214,
+      "extraction_method": "paragraph_single",
+      "template_text": "Expedient Núm.:  {{ expedient }}",
+      "reference_text": "Expediente Núm.: 4001679_v0"
+    },
+    "geotech_rows": {
+      "value": [
+        {
+          "name": "2do nivel. Bolos y gravas en matriz areno-arcillosa",
+          "nb": "15-R",
+          "n": "--",
+          "density": "2.00",
+          "cohesion": "0.00",
+          "phi": "38º",
+          "E": ">350"
+        }
+      ],
+      "position": "t12",
+      "position_description": "Loop table 12 (geotech_rows)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['name', 'nb', 'n', 'density', 'cohesion', 'phi', 'E']",
+      "reference_text": "1 data rows"
+    },
+    "lab_depth": {
+      "value": "Profundidad: -2.80 a -3.00 m",
+      "position": "t7_r0_c2",
+      "position_description": "Table 7, row 0, col 2",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "Profunditat: {{ lab_depth }}",
+      "reference_text": "Profundidad: -2.80 a -3.00 m"
+    },
+    "lab_location": {
+      "value": "Punto:  S-2",
+      "position": "t7_r0_c1",
+      "position_description": "Table 7, row 0, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "Punt: {{ lab_location }}",
+      "reference_text": "Punto:  S-2"
+    },
+    "lab_sample_id": {
+      "value": "Muestra: MA-1",
+      "position": "t7_r0_c0",
+      "position_description": "Table 7, row 0, col 0",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "Mostra : {{ lab_sample_id }}",
+      "reference_text": "Muestra: MA-1"
+    },
+    "lab_tests_text": {
+      "value": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08",
+      "position": "t7_r1_c1",
+      "position_description": "Table 7, row 1, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ lab_tests_text }}",
+      "reference_text": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08"
+    },
+    "location_sentence": {
+      "value": "en la calle Gral Ferraz nº20 en el municipio de Anciles, Benasque",
+      "position": "p072",
+      "position_description": "Body paragraph 72",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "La nueva edificación proyectada se sitúa en la calle Gral Ferraz nº20 en el municipio de Anciles, Benasque."
+    },
+    "municipality": {
+      "value": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:",
+      "position": "p340",
+      "position_description": "Body paragraph 340",
+      "confidence": 0.218,
+      "extraction_method": "paragraph_single",
+      "template_text": "A la zona d’estudi, en el municipi de {{ municipality }}, s’estableix una acceleració sísmica bàsica de:",
+      "reference_text": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:"
+    },
+    "num_dpsh_tests": {
+      "value": "2 ensayos SPT con recuperación de muestra (ver registro de los ensayos mecánicos).",
+      "position": "p130",
+      "position_description": "Body paragraph 130",
+      "confidence": 0.488,
+      "extraction_method": "paragraph_single",
+      "template_text": "{{ num_dpsh_tests }} assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\").",
+      "reference_text": "2 ensayos SPT con recuperación de muestra (ver registro de los ensayos mecánicos)."
+    },
+    "perm_rows": {
+      "value": [
+        {
+          "name": "2do nivel",
+          "k_value": "10 – 10-1",
+          "material": "Bolos y gravas con arenas arcillosas"
+        }
+      ],
+      "position": "t9",
+      "position_description": "Loop table 9 (perm_rows)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['name', 'k_value', 'material']",
+      "reference_text": "1 data rows"
+    },
+    "plantes": {
+      "value": "C-1",
+      "position": "t0_r0_c1",
+      "position_description": "Table 0, row 0, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ plantes }}",
+      "reference_text": "C-1"
+    },
+    "qa_value": {
+      "value": "2.0 Kg/cm2 con un factor de seguridad incluido de F=3",
+      "position": "p458",
+      "position_description": "Body paragraph 458",
+      "confidence": 0.717,
+      "extraction_method": "paragraph_single",
+      "template_text": "Qa= {{ qa_value }} Kg/cm2  amb un factor de seguretat inclòs de F=3",
+      "reference_text": "Qa= 2.0 Kg/cm2 con un factor de seguridad incluido de F=3"
+    },
+    "seismic_ab_text": {
+      "value": "AB = 0.05 g (siento g el valor de la gravedad)",
+      "position": "p342",
+      "position_description": "Body paragraph 342",
+      "confidence": 0.248,
+      "extraction_method": "paragraph_single",
+      "template_text": "AB  <{{ seismic_ab_text }} g  (essent g el valor de la gravetat)",
+      "reference_text": "AB = 0.05 g (siento g el valor de la gravedad)"
+    },
+    "seismic_rows": {
+      "value": [
+        {
+          "num": "1",
+          "terrain_type": "Tipo IV",
+          "thickness": "4.00",
+          "c_coeff": "2.00"
+        },
+        {
+          "num": "2",
+          "terrain_type": "Tipo IV",
+          "thickness": "3.92*",
+          "c_coeff": "2.00"
+        }
+      ],
+      "position": "t11",
+      "position_description": "Loop table 11 (seismic_rows)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['num', 'terrain_type', 'thickness', 'c_coeff']",
+      "reference_text": "2 data rows"
+    },
+    "settlement": {
+      "value": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm.",
+      "position": "p460",
+      "position_description": "Body paragraph 460",
+      "confidence": 0.178,
+      "extraction_method": "paragraph_single",
+      "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
+      "reference_text": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm."
+    },
+    "site_condition": {
+      "value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+      "position": "p284",
+      "position_description": "Body paragraph 284",
+      "confidence": 0.198,
+      "extraction_method": "paragraph_single",
+      "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+      "reference_text": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial."
+    },
+    "sondeig_tests": {
+      "value": [
+        {
+          "test_id": "S-1",
+          "cota": "+1106.65",
+          "depth": "-2.40",
+          "spt_ma": "1/0/0",
+          "water": "No detectado"
+        },
+        {
+          "test_id": "S-2",
+          "cota": "+1106.42",
+          "depth": "-3.00",
+          "spt_ma": "1/0/1",
+          "water": "No detectado"
+        }
+      ],
+      "position": "t5",
+      "position_description": "Loop table 5 (sondeig_tests)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['test_id', 'cota', 'depth', 'spt_ma', 'water']",
+      "reference_text": "2 data rows"
+    },
+    "spt_depth_range": {
+      "value": "-1.00 a -1.60",
+      "position": "t6_r2_c2",
+      "position_description": "Table 6, row 2, col 2",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ spt_depth_range }}",
+      "reference_text": "-1.00 a -1.60"
+    },
+    "spt_lithology": {
+      "value": "Arcilla arenosa con gravitas",
+      "position": "t6_r2_c4",
+      "position_description": "Table 6, row 2, col 4",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ spt_lithology }}",
+      "reference_text": "Arcilla arenosa con gravitas"
+    },
+    "spt_location": {
+      "value": "S-1",
+      "position": "t6_r2_c1",
+      "position_description": "Table 6, row 2, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ spt_location }}",
+      "reference_text": "S-1"
+    },
+    "spt_n30": {
+      "value": "6",
+      "position": "t6_r2_c3",
+      "position_description": "Table 6, row 2, col 3",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ spt_n30 }}",
+      "reference_text": "6"
+    },
+    "spt_test_id": {
+      "value": "SPT-1",
+      "position": "t6_r2_c0",
+      "position_description": "Table 6, row 2, col 0",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ spt_test_id }}",
+      "reference_text": "SPT-1"
+    },
+    "sulfate_baumann": {
+      "value": "---",
+      "position": "t10_r1_c2",
+      "position_description": "Table 10, row 1, col 2",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ sulfate_baumann }}",
+      "reference_text": "---"
+    },
+    "sulfate_level_name": {
+      "value": "2do nivel",
+      "position": "t10_r1_c0",
+      "position_description": "Table 10, row 1, col 0",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ sulfate_level_name }}",
+      "reference_text": "2do nivel"
+    },
+    "superficie_parcela": {
+      "value": "T-1",
+      "position": "t0_r1_c1",
+      "position_description": "Table 0, row 1, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ superficie_parcela }}",
+      "reference_text": "T-1"
+    },
+    "table_dpsh_range": {
+      "value": "Tabla 3, 4 y 5. Resumen de los ensayos in situ realizados.",
+      "position": "p193",
+      "position_description": "Body paragraph 193",
+      "confidence": 0.161,
+      "extraction_method": "paragraph_single",
+      "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
+      "reference_text": "Tabla 3, 4 y 5. Resumen de los ensayos in situ realizados."
+    },
+    "client": {
+      "value": "SRA. ALBA MARIA BARRAU CASTÁN",
+      "position": "p059",
+      "position_description": "Body paragraph 59",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "SRA. ALBA MARIA BARRAU CASTÁN"
+    },
+    "architect_name_upper": {
+      "value": "ALBA MARIA BARRAU CASTÁN",
+      "position": "p066",
+      "position_description": "Body paragraph 66",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "ALBA MARIA BARRAU CASTÁN"
+    },
+    "building_type_lower": {
+      "value": "7 viviendas unifamiliares adosadas",
+      "position": "p066",
+      "position_description": "Body paragraph 66",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "7 viviendas unifamiliares adosadas"
+    },
+    "adjacent_east_fmt": {
+      "value": "Por la parte noreste con un campo de conreo herbáceo.",
+      "position": "p122",
+      "position_description": "Body paragraph 122",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Por la parte noreste con un campo de conreo herbáceo."
+    },
+    "adjacent_south_fmt": {
+      "value": "Por la parte suroeste con un edificio de hasta 4 plantas sobre rasante.",
+      "position": "p124",
+      "position_description": "Body paragraph 124",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Por la parte suroeste con un edificio de hasta 4 plantas sobre rasante."
+    },
+    "adjacent_north_fmt": {
+      "value": "Por la parte noroeste con un jardín.",
+      "position": "p123",
+      "position_description": "Body paragraph 123",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Por la parte noroeste con un jardín."
+    },
+    "adjacent_west_fmt": {
+      "value": "Y finalmente por el sureste, con una zona yerma con vegetación.",
+      "position": "p125",
+      "position_description": "Body paragraph 125",
+      "confidence": 0.8,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Y finalmente por el sureste, con una zona yerma con vegetación."
+    },
+    "site_description": {
+      "value": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual.\nEn solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles.\nDada la geomorfología de la zona y su urbanización no se pueden observar en la zona ningún tipo de afloramiento de los materiales que serán atravesados por los ensayos previstos.",
+      "position": "p129",
+      "position_description": "Body paragraph 129",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaci..."
+    },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p149",
+      "position_description": "Body paragraph 149",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_field_description": {
+      "value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "position": "p149",
+      "position_description": "Body paragraph 149",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
+    },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p217",
+      "position_description": "Body paragraph 217",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_testing_description": {
+      "value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "position": "p217",
+      "position_description": "Body paragraph 217",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
+    },
+    "radon_zone": {
+      "value": "2",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "2"
+    },
+    "radon_zone_description": {
+      "value": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2."
+    },
+    "csn_radon_text": {
+      "value": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de que los edificios construidos en la zona sin soluciones específicas de protección frente al radón presenten concentraciones de radón superiores al nivel de referencia.",
+      "position": "p385",
+      "position_description": "Body paragraph 385",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de..."
+    },
+    "conclusions_levels_detected": {
+      "value": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
+      "position": "p416",
+      "position_description": "Body paragraph 416",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo."
+    },
+    "conclusions_water_statement": {
+      "value": "Con fecha de la realización de los trabajos de campo, y hasta la cota ensayada, no se detectó presencia de nivel freático en ninguno de los ensayos realizados.",
+      "position": "p441",
+      "position_description": "Body paragraph 441",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Con fecha de la realización de los trabajos de campo, y hasta la cota ensayada, no se detectó presencia de nivel freático en ninguno de los ensayos realizados."
+    },
+    "conclusions_aggressivity_statement": {
+      "value": "A partir de los ensayos realizados se determina que los materiales del 2do nivel descrito se presentan, a priori xxxxxxx al hormigón.",
+      "position": "p443",
+      "position_description": "Body paragraph 443",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "A partir de los ensayos realizados se determina que los materiales del 2do nivel descrito se presentan, a priori xxxxxxx al hormigón."
+    },
+    "materials_intro": {
+      "value": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
+      "position": "p248",
+      "position_description": "Body paragraph 248",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos me..."
+    },
+    "geo_p": {
+      "value": "Desde finales del Oligoceno hasta la actualidad la depresión del Ebro ha dejado de actuar como una cuenca sedimentaria y ha pasado a ser una cubeta donde el agente predominante principal ha sido la erosión. Localmente, en algunos puntos de la cuenca, hay depósitos del Terciario superior y principalmente del Cuaternario. Estos corresponden a los materiales no consolidados que aparecen entre las rocas sedimentarias y la superficie, formados por arenas, limos y arcillas, donde abundan los caliches.",
+      "position": "p238",
+      "position_description": "Body paragraph 238",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Desde finales del Oligoceno hasta la actualidad la depresión del Ebro ha dejado de actuar como una cuenca sedimentaria y ha pasado a ser una cubeta donde el agente predominante principal ha sido la er..."
+    },
+    "building_structure_desc": {
+      "value": "un semisótano en dos de las siete viviendas previstas",
+      "position": "p333",
+      "position_description": "Body paragraph 333",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "...se prevé la construcción de un semisótano en dos de las siete viviendas previstas..."
+    },
+    "empentes_paragraph": {
+      "value": "Para el dimensionado de los muros del sótano y para el cálculo del empuje de tierras habrá que tener en cuenta los parámetros geomecánicos de los materiales del primer nivel que se considera el más desfavorable.\nHabrá que tener en cuenta que en el trasdós del muro se tendrá que instalar un correcto drenaje para evitar que se acumule el agua y se produzca una sobrecarga en su trasdós.",
+      "position": "p463",
+      "position_description": "Body paragraph 463",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Para el dimensionado de los muros del sótano y para el cálculo del empuje de tierras habrá que tener en cuenta los parámetros geomecánicos de los materiales del primer nivel que se considera el más de..."
+    }
+  },
+  "warnings": [
+    "Converted 4001679_informe_V0.doc -> .docx",
+    "Table matching: 10/14 template tables matched",
+    "p053: Variable 'client' has no static context for matching",
+    "p102: Variable 'adjacent_east_fmt' has no static context for matching",
+    "p106: Variable 'adjacent_south_fmt' has no static context for matching",
+    "p108: Variable 'adjacent_north_fmt' has no static context for matching",
+    "p109: Variable 'adjacent_south_fmt' has no static context for matching",
+    "p110: Variable 'adjacent_east_fmt' has no static context for matching",
+    "p111: Variable 'adjacent_west_fmt' has no static context for matching",
+    "p117: Variable 'site_description' has no static context for matching",
+    "p213: Variable 'geo_p' has no static context for matching",
+    "p238: Variable 'materials_intro' has no static context for matching",
+    "p327: No match for 'building_structure_desc' (best_score=0.35, skeleton='Segons el projecte executiu es preveu la construcció d’una e...')",
+    "p408: Variable 'csn_radon_text' has no static context for matching",
+    "p416: Variable 'conclusions_levels_detected' has no static context for matching",
+    "p418: Variable 'conclusions_level_1' has no static context for matching",
+    "p445: Variable 'conclusions_water_statement' has no static context for matching",
+    "p447: Variable 'conclusions_aggressivity_statement' has no static context for matching",
+    "p452: No match for 'building_structure_desc' (best_score=0.35, skeleton='Segons el projecte executiu es preveu la construcció d’una e...')",
+    "p462: No match for 'k30_value' (best_score=0.47, skeleton='Com a valor de coeficient de balast referit a la placa de 30...')",
+    "p465: Variable 'empentes_paragraph' has no static context for matching",
+    "p469: Variable 'estabilitat_paragraph' has no static context for matching",
+    "t0_r2_c1: Cell out of range in ref table for 'superficie_construida'",
+    "t2_r0_c1: No matching ref table for 'cte_edificacio'",
+    "t2_r1_c1: No matching ref table for 'cte_sol'",
+    "Loop table t8 (soil_level_rows): no matching reference table"
+  ]
+}

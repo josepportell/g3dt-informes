@@ -1,0 +1,89 @@
+format_id: generic_document_v1
+name: "Generic Document"
+description: "Catch-all format for any unclassified PDF, docx or text file. Contains ALL known labels to ensure complete coverage."
+document_roles: []
+source_type: content_pdf
+created_by: system
+label_mappings:
+  # Client / Promotor
+  - labels: ["CLIENT", "CLIENTE", "PROMOTOR", "PROPIETARI", "PROMOTOR/PROPIETARI", "NOM CLIENT", "NOMBRE CLIENTE"]
+    concept_id: client_name
+    confidence: 0.80
+
+  # Contact
+  - labels: ["CONTACTE", "CONTACTO", "PERSONA DE CONTACTE"]
+    concept_id: contact_name
+    confidence: 0.80
+
+  # NIF/CIF
+  - labels: ["NIF", "CIF", "DNI", "NIF/CIF"]
+    concept_id: client_nif
+    confidence: 0.80
+
+  # Phone
+  - labels: ["TELÈFON", "TELÉFONO", "TLF", "TEL", "MÒBIL", "MÓVIL"]
+    concept_id: client_phone
+    confidence: 0.80
+
+  # Email
+  - labels: ["EMAIL", "CORREU", "CORREU ELECTRÒNIC", "CORREO", "E-MAIL"]
+    concept_id: client_email
+    confidence: 0.80
+
+  # Address / Location
+  - labels: ["ADREÇA OBRA", "DIRECCIÓN OBRA", "ADREÇA", "DIRECCIÓ", "DIRECCIÓN", "EMPLAÇAMENT", "EMPLAZAMIENTO", "UBICACIÓ", "UBICACIÓN"]
+    concept_id: street_address
+    confidence: 0.80
+
+  # Municipality
+  - labels: ["MUNICIPI", "MUNICIPIO", "POBLACIÓ", "POBLACIÓN", "LOCALITAT", "LOCALIDAD"]
+    concept_id: municipality
+    confidence: 0.80
+
+  # Province
+  - labels: ["PROVÍNCIA", "PROVINCIA"]
+    concept_id: province
+    confidence: 0.80
+
+  # Access
+  - labels: ["ACCES A LA ZONA D'ESTUDI", "ACCESO", "ACCÉS", "GOOGLE MAPS", "ENLLAÇ", "ENLACE"]
+    concept_id: access_url
+    confidence: 0.75
+
+  # Architect
+  - labels: ["ARQUITECTE", "ARQUITECTO", "DIRECTOR D'OBRA", "DIRECTOR DE OBRA"]
+    concept_id: architect_name
+    confidence: 0.80
+
+  # Architect company
+  - labels: ["DESPATX", "DESPACHO", "ESTUDI", "ESTUDIO"]
+    concept_id: architect_company
+    confidence: 0.80
+
+  # Building type
+  - labels: ["TIPUS EDIFICACIÓ", "TIPO EDIFICACIÓN", "TIPUS D'OBRA", "TIPO DE OBRA", "OBRA"]
+    concept_id: building_type
+    confidence: 0.80
+
+  # Floors
+  - labels: ["PLANTES", "PLANTAS", "NOMBRE DE PLANTES", "NÚMERO DE PLANTAS", "Nº PLANTES", "Nº PLANTAS", "PB+"]
+    concept_id: num_floors
+    confidence: 0.75
+
+  # Surfaces
+  - labels: ["SUPERFÍCIE PARCEL·LA", "SUPERFICIE PARCELA", "SUP. PARCEL·LA"]
+    concept_id: superficie_parcela
+    confidence: 0.80
+  - labels: ["SUPERFÍCIE CONSTRUÏDA", "SUPERFICIE CONSTRUIDA", "SUP. CONSTRUÏDA"]
+    concept_id: superficie_construida
+    confidence: 0.80
+
+  # Expedient
+  - labels: ["EXPEDIENT", "EXPEDIENTE", "Nº EXPEDIENT", "REF", "REFERÈNCIA"]
+    concept_id: expedient
+    confidence: 0.80
+
+  # Dates
+  - labels: ["DATA", "FECHA", "DATA CAMP", "DATA INICI", "FECHA CAMPO"]
+    concept_id: field_date
+    confidence: 0.75

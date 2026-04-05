@@ -1,0 +1,152 @@
+{
+  "project": "4001607 LINYOLA",
+  "signal_summary": {
+    "total_signals": 224,
+    "mapped_signals": 121,
+    "by_file": {
+      "25.0616/25·0616.pdf": 10,
+      "25.0616/2_02B_DG_Silvia_Jaume.pdf": 15,
+      "25.0616/DADES PER ANAR A CAMP_v1.xlsx": 8,
+      "25.0616/PLAN_COST_LINYOLA.xlsx": 1,
+      "25.0616/Punts de Sondeig_Silvia_Jaume.pdf": 5,
+      "25.0616/RE_ pressupost geotècnic.msg": 19,
+      "25.0616/RV_ pressupost geotècnic.msg": 17,
+      "25.0616/pressupost geotècnic.msg": 13,
+      "4001607_test_validation.docx": 10,
+      "4672-GTL-25 Linyola.pdf": 10,
+      "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf": 14,
+      "ACCEPTACIO/RV_ Realització geotècnic.msg": 8,
+      "ANNEXES/ALTRES/COORDENADES.txt": 3,
+      "CONTACTE.txt": 1,
+      "PENETROS.pdf": 3,
+      "Punts de Sondeig_Silvia_Jaume (1).pdf": 5,
+      "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf": 5,
+      "RV_ Realització geotècnic.msg": 9,
+      "comanda laboratori_4001607_LINYOLA.xls": 4,
+      "pl situ.pdf": 1,
+      "tall.pdf": 3,
+      "validation/msg_attachments/RE_ pressupost geotècnic/PLAN_COST_LINYOLA.xlsx": 1,
+      "validation/msg_attachments/RV_ Realització geotècnic/G3DT_Silvia_Jaume signat.pdf": 14,
+      "validation/msg_attachments/RV_ Realització geotècnic/Punts de Sondeig_Silvia_Jaume (1).pdf": 5,
+      "validation/msg_attachments/RV_ pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf": 15,
+      "validation/msg_attachments/RV_ pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf": 5,
+      "validation/msg_attachments/pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf": 15,
+      "validation/msg_attachments/pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf": 5
+    },
+    "by_variable": {
+      "access_url": 2,
+      "building_type": 1,
+      "client_email": 39,
+      "client_name": 4,
+      "client_nif": 13,
+      "client_phone": 25,
+      "contact_name": 10,
+      "expedient": 9,
+      "field_date": 11,
+      "municipality": 1,
+      "street_address": 3,
+      "utm_coordinates": 3
+    }
+  },
+  "resolved": {
+    "access_url": {
+      "value": "https://maps.app.goo.gl/2bfFiHQVibDjzzDQ7",
+      "source_file": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+      "source_type": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 1
+    },
+    "building_type": {
+      "value": "CONSTR HABITATGE",
+      "source_file": "comanda laboratori_4001607_LINYOLA.xls",
+      "source_type": "comanda laboratori_4001607_LINYOLA.xls",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 0
+    },
+    "client_email": {
+      "value": "g3@g3dt.com",
+      "source_file": "25.0616/25·0616.pdf",
+      "source_type": "25.0616/25·0616.pdf",
+      "confidence": 0.75,
+      "priority": 20,
+      "alternatives_count": 38
+    },
+    "client_name": {
+      "value": "Dades Clienta:",
+      "source_file": "25.0616/RE_ pressupost geotècnic.msg",
+      "source_type": "25.0616/RE_ pressupost geotècnic.msg",
+      "confidence": 0.7999999999999999,
+      "priority": 30,
+      "alternatives_count": 3
+    },
+    "client_nif": {
+      "value": "B25461443",
+      "source_file": "25.0616/25·0616.pdf",
+      "source_type": "25.0616/25·0616.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 20,
+      "alternatives_count": 12
+    },
+    "client_phone": {
+      "value": "973157519",
+      "source_file": "25.0616/25·0616.pdf",
+      "source_type": "25.0616/25·0616.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 20,
+      "alternatives_count": 24
+    },
+    "contact_name": {
+      "value": "SILVIA EROLES BALAGUERO",
+      "source_file": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+      "source_type": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 9
+    },
+    "expedient": {
+      "value": "13/52/04",
+      "source_file": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+      "source_type": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 45,
+      "alternatives_count": 8
+    },
+    "field_date": {
+      "value": "AGOST 2025",
+      "source_file": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+      "source_type": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 45,
+      "alternatives_count": 10
+    },
+    "municipality": {
+      "value": "LINYOLA",
+      "source_file": "comanda laboratori_4001607_LINYOLA.xls",
+      "source_type": "comanda laboratori_4001607_LINYOLA.xls",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 0
+    },
+    "street_address": {
+      "value": "Carrer Clot de la Llacuna, 16, 25240 Linyola, Lleida",
+      "source_file": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+      "source_type": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 2
+    },
+    "utm_coordinates": {
+      "value": "{'point_id': 'P-1', 'x': 324935.0, 'y': 4619561.0, 'z': 244.9}",
+      "source_file": "ANNEXES/ALTRES/COORDENADES.txt",
+      "source_type": "ANNEXES/ALTRES/COORDENADES.txt",
+      "confidence": 0.95,
+      "priority": 25,
+      "alternatives_count": 2
+    }
+  },
+  "files_mined": 30,
+  "files_skipped": 116,
+  "errors": []
+}

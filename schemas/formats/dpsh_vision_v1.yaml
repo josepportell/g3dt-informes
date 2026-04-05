@@ -1,0 +1,7 @@
+format_id: dpsh_vision_v1
+name: "DPSH Vision Extraction"
+description: "DPSH field sheets (PENETROS.pdf) read via Claude vision. Uses structured prompts, not label matching."
+document_roles: [dpsh_field_sheet]
+source_type: dpsh_vision
+created_by: system
+label_mappings: []

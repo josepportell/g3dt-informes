@@ -1,0 +1,100 @@
+{
+  "project": "3001631 RUBI",
+  "signal_summary": {
+    "total_signals": 64,
+    "mapped_signals": 22,
+    "by_file": {
+      "25.0794/DADES PER ANAR A CAMP_v1.xlsx": 1,
+      "25.0794/PLAN_COST_RUBI.xlsx": 1,
+      "25.0794/PRESSU.msg": 7,
+      "25.0794/PRESSUPOST GEOTEC.RUBI.pdf": 9,
+      "25.0794/RE_ PRESSU.msg": 11,
+      "3001631 - PENETROS.pdf": 3,
+      "3001631_test_validation.docx": 10,
+      "4703-GTL-25 Rubí.pdf": 11,
+      "ANNEXES/ALTRES/COORDENADES.txt": 3,
+      "comanda laboratori_3001631_RUBI.xls": 4,
+      "tall.pdf": 3,
+      "validation/msg_attachments/RE_ PRESSU/PLAN_COST_RUBI.xlsx": 1
+    },
+    "by_variable": {
+      "building_type": 1,
+      "client_email": 7,
+      "client_nif": 2,
+      "client_phone": 4,
+      "field_date": 2,
+      "municipality": 1,
+      "street_address": 2,
+      "utm_coordinates": 3
+    }
+  },
+  "resolved": {
+    "building_type": {
+      "value": "CONSTR HABITATGE UNI",
+      "source_file": "comanda laboratori_3001631_RUBI.xls",
+      "source_type": "comanda laboratori_3001631_RUBI.xls",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 0
+    },
+    "client_email": {
+      "value": "g3@g3dt.com",
+      "source_file": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+      "source_type": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+      "confidence": 0.75,
+      "priority": 30,
+      "alternatives_count": 6
+    },
+    "client_nif": {
+      "value": "B25461443",
+      "source_file": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+      "source_type": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 30,
+      "alternatives_count": 1
+    },
+    "client_phone": {
+      "value": "696040077",
+      "source_file": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+      "source_type": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 30,
+      "alternatives_count": 3
+    },
+    "field_date": {
+      "value": "2025.12.17",
+      "source_file": "4703-GTL-25 Rubí.pdf",
+      "source_type": "4703-GTL-25 Rubí.pdf",
+      "confidence": 0.7999999999999999,
+      "priority": 45,
+      "alternatives_count": 1
+    },
+    "municipality": {
+      "value": "RUBI",
+      "source_file": "comanda laboratori_3001631_RUBI.xls",
+      "source_type": "comanda laboratori_3001631_RUBI.xls",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 0
+    },
+    "street_address": {
+      "value": "C/ Vallbona, 22",
+      "source_file": "comanda laboratori_3001631_RUBI.xls",
+      "source_type": "comanda laboratori_3001631_RUBI.xls",
+      "confidence": 0.9,
+      "priority": 35,
+      "alternatives_count": 1
+    },
+    "utm_coordinates": {
+      "value": "{'point_id': 'P-1', 'x': 418215.0, 'y': 4595648.0, 'z': 212.2}",
+      "source_file": "ANNEXES/ALTRES/COORDENADES.txt",
+      "source_type": "ANNEXES/ALTRES/COORDENADES.txt",
+      "confidence": 0.95,
+      "priority": 25,
+      "alternatives_count": 2
+    }
+  },
+  "files_mined": 13,
+  "files_skipped": 81,
+  "errors": []
+}

@@ -1,0 +1,564 @@
+{
+  "project": "4001671 VILANOVA DE SEGRIA",
+  "source_file": "4001671_informe.docx",
+  "extraction_date": "2026-04-05T22:17:06.461358",
+  "template_file": "g3dt-jinja-template.docx",
+  "extractor_version": "1.0",
+  "statistics": {
+    "total_template_variables": 56,
+    "total_extracted": 52,
+    "extraction_rate": 92.9,
+    "by_method": {
+      "paragraph_single": 12,
+      "table_cell": 16,
+      "loop_table": 4,
+      "intelligent_analysis": 20
+    },
+    "body_paragraphs": {
+      "template": 489,
+      "reference": 468
+    },
+    "tables": {
+      "template": 14,
+      "reference": 12,
+      "matched": 10
+    }
+  },
+  "variables": {
+    "building_structure_desc": {
+      "value": "sin nivel de sótano",
+      "position": "p327",
+      "position_description": "Body paragraph 327",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Según el proyecto ejecutivo se prevé la construcción de una estructura sin nivel de sótano..."
+    },
+    "cte_edificacio": {
+      "value": "C-0",
+      "position": "t2_r0_c1",
+      "position_description": "Table 2, row 0, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ cte_edificacio }}",
+      "reference_text": "C-0"
+    },
+    "cte_sol": {
+      "value": "T-1",
+      "position": "t2_r1_c1",
+      "position_description": "Table 2, row 1, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ cte_sol }}",
+      "reference_text": "T-1"
+    },
+    "data_camp_text": {
+      "value": "El día 19 de febrero de 2026, se visitó la obra para:",
+      "position": "p095",
+      "position_description": "Body paragraph 95",
+      "confidence": 0.166,
+      "extraction_method": "paragraph_single",
+      "template_text": "El dia {{ data_camp_text }}, es va visitar l’obra per tal de:",
+      "reference_text": "El día 19 de febrero de 2026, se visitó la obra para:"
+    },
+    "data_signatura_text": {
+      "value": "Els Omells de Na Gaia, 16 de marzo de 2026",
+      "position": "p477",
+      "position_description": "Body paragraph 477",
+      "confidence": 0.206,
+      "extraction_method": "paragraph_single",
+      "template_text": "Els Omells de Na  Gaia, {{ data_signatura_text }}",
+      "reference_text": "Els Omells de Na Gaia, 16 de marzo de 2026"
+    },
+    "dpsh_tests": {
+      "value": [
+        {
+          "test_id": "P-1",
+          "cota": "+321.00",
+          "depth": "-1.48",
+          "refusal": "Si",
+          "water": "No detectado"
+        },
+        {
+          "test_id": "P-2",
+          "cota": "+321.00",
+          "depth": "-2.18",
+          "refusal": "Si",
+          "water": "No detectado"
+        },
+        {
+          "test_id": "P-3",
+          "cota": "+320.00",
+          "depth": "-3.78",
+          "refusal": "Si",
+          "water": "-1.00"
+        }
+      ],
+      "position": "t4",
+      "position_description": "Loop table 4 (dpsh_tests)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['test_id', 'cota', 'depth', 'refusal', 'water']",
+      "reference_text": "3 data rows"
+    },
+    "expedient": {
+      "value": "Expediente Núm.: 4001671",
+      "position": "p474",
+      "position_description": "Body paragraph 474",
+      "confidence": 0.231,
+      "extraction_method": "paragraph_single",
+      "template_text": "Expedient Núm.:  {{ expedient }}",
+      "reference_text": "Expediente Núm.: 4001671"
+    },
+    "geotech_rows": {
+      "value": [
+        {
+          "name": "1er nivel:  Arcilla limosa y arenosa con gravas",
+          "nb": "9",
+          "n": "10",
+          "density": "1.90",
+          "cohesion": "0.10",
+          "phi": "25º",
+          "E": "50"
+        },
+        {
+          "name": "2do nivel: Areniscas, arenas, sustrato",
+          "nb": "57-R",
+          "n": "24",
+          "density": "2.20",
+          "cohesion": "0.50",
+          "phi": "34º",
+          "E": "550"
+        }
+      ],
+      "position": "t12",
+      "position_description": "Loop table 12 (geotech_rows)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['name', 'nb', 'n', 'density', 'cohesion', 'phi', 'E']",
+      "reference_text": "2 data rows"
+    },
+    "lab_depth": {
+      "value": "Profundidad: -1.00 a -1.60 m",
+      "position": "t7_r0_c2",
+      "position_description": "Table 7, row 0, col 2",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "Profunditat: {{ lab_depth }}",
+      "reference_text": "Profundidad: -1.00 a -1.60 m"
+    },
+    "lab_location": {
+      "value": "Punto:  P-3",
+      "position": "t7_r0_c1",
+      "position_description": "Table 7, row 0, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "Punt: {{ lab_location }}",
+      "reference_text": "Punto:  P-3"
+    },
+    "lab_sample_id": {
+      "value": "Muestra: SPT-1",
+      "position": "t7_r0_c0",
+      "position_description": "Table 7, row 0, col 0",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "Mostra : {{ lab_sample_id }}",
+      "reference_text": "Muestra: SPT-1"
+    },
+    "lab_tests_text": {
+      "value": "Determinación del contenido en ion sulfato en suelos UNE 83963 / 08",
+      "position": "t7_r1_c1",
+      "position_description": "Table 7, row 1, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ lab_tests_text }}",
+      "reference_text": "Determinación del contenido en ion sulfato en suelos UNE 83963 / 08"
+    },
+    "location_sentence": {
+      "value": "en la Calle STA. GEMMA nº 4, URB. LA SERRA del municipio de VILANOVA DE SEGRIÀ",
+      "position": "p069",
+      "position_description": "Body paragraph 69",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "La nueva vivienda unifamiliar proyectada se situará en la Calle STA. GEMMA nº 4, URB. LA SERRA del municipio de VILANOVA DE SEGRIÀ."
+    },
+    "municipality": {
+      "value": "En la zona en estudio, en la población de VILANOVA DE SEGRIÀ, se establece una aceleración sísmica básica de:",
+      "position": "p340",
+      "position_description": "Body paragraph 340",
+      "confidence": 0.218,
+      "extraction_method": "paragraph_single",
+      "template_text": "A la zona d’estudi, en el municipi de {{ municipality }}, s’estableix una acceleració sísmica bàsica de:",
+      "reference_text": "En la zona en estudio, en la población de VILANOVA DE SEGRIÀ, se establece una aceleración sísmica básica de:"
+    },
+    "num_dpsh_tests": {
+      "value": "3 ensayos de penetración dinámica DPSH (ver registro de los ensayos mecánicos).",
+      "position": "p130",
+      "position_description": "Body paragraph 130",
+      "confidence": 0.652,
+      "extraction_method": "paragraph_single",
+      "template_text": "{{ num_dpsh_tests }} assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\").",
+      "reference_text": "3 ensayos de penetración dinámica DPSH (ver registro de los ensayos mecánicos)."
+    },
+    "perm_rows": {
+      "value": [
+        {
+          "name": "1er nivel",
+          "k_value": "10-2-10-4",
+          "material": "Arcilla limosa y arenosa con algunas gravas"
+        },
+        {
+          "name": "2do nivel",
+          "k_value": "10-3-10-6",
+          "material": "Areniscas, arenas, sustrato"
+        }
+      ],
+      "position": "t9",
+      "position_description": "Loop table 9 (perm_rows)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['name', 'k_value', 'material']",
+      "reference_text": "2 data rows"
+    },
+    "plantes": {
+      "value": "Pb",
+      "position": "t0_r0_c1",
+      "position_description": "Table 0, row 0, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ plantes }}",
+      "reference_text": "Pb"
+    },
+    "qa_value": {
+      "value": "2.50 Kg/cm2 con un factor de seguridad incluido de F=3",
+      "position": "p458",
+      "position_description": "Body paragraph 458",
+      "confidence": 0.71,
+      "extraction_method": "paragraph_single",
+      "template_text": "Qa= {{ qa_value }} Kg/cm2  amb un factor de seguretat inclòs de F=3",
+      "reference_text": "Qa= 2.50 Kg/cm2 con un factor de seguridad incluido de F=3"
+    },
+    "seismic_ab_text": {
+      "value": "AB < 0,04 g (siento g el valor de la gravedad)",
+      "position": "p342",
+      "position_description": "Body paragraph 342",
+      "confidence": 0.255,
+      "extraction_method": "paragraph_single",
+      "template_text": "AB  <{{ seismic_ab_text }} g  (essent g el valor de la gravetat)",
+      "reference_text": "AB < 0,04 g (siento g el valor de la gravedad)"
+    },
+    "seismic_rows": {
+      "value": [
+        {
+          "num": "1",
+          "terrain_type": "Tipo IV",
+          "thickness": "2.20",
+          "c_coeff": "2.0"
+        },
+        {
+          "num": "2",
+          "terrain_type": "Tipo II-I",
+          "thickness": "1.58*",
+          "c_coeff": "1.3-1.0"
+        }
+      ],
+      "position": "t11",
+      "position_description": "Loop table 11 (seismic_rows)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['num', 'terrain_type', 'thickness', 'c_coeff']",
+      "reference_text": "2 data rows"
+    },
+    "settlement": {
+      "value": "Los asientos máximos previstos para la carga recomendada anteriormente serán menospreciables o inferiores a 1.0 cm.",
+      "position": "p460",
+      "position_description": "Body paragraph 460",
+      "confidence": 0.182,
+      "extraction_method": "paragraph_single",
+      "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
+      "reference_text": "Los asientos máximos previstos para la carga recomendada anteriormente serán menospreciables o inferiores a 1.0 cm."
+    },
+    "site_condition": {
+      "value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+      "position": "p284",
+      "position_description": "Body paragraph 284",
+      "confidence": 0.198,
+      "extraction_method": "paragraph_single",
+      "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+      "reference_text": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial."
+    },
+    "spt_depth_range": {
+      "value": "-0.80 a -1.40",
+      "position": "t6_r2_c2",
+      "position_description": "Table 6, row 2, col 2",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ spt_depth_range }}",
+      "reference_text": "-0.80 a -1.40"
+    },
+    "spt_lithology": {
+      "value": "Arcilla limosa y arenosa con algunas gravas",
+      "position": "t6_r2_c4",
+      "position_description": "Table 6, row 2, col 4",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ spt_lithology }}",
+      "reference_text": "Arcilla limosa y arenosa con algunas gravas"
+    },
+    "spt_location": {
+      "value": "P-1",
+      "position": "t6_r2_c1",
+      "position_description": "Table 6, row 2, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ spt_location }}",
+      "reference_text": "P-1"
+    },
+    "spt_n30": {
+      "value": "10",
+      "position": "t6_r2_c3",
+      "position_description": "Table 6, row 2, col 3",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ spt_n30 }}",
+      "reference_text": "10"
+    },
+    "spt_test_id": {
+      "value": "SPT-1",
+      "position": "t6_r2_c0",
+      "position_description": "Table 6, row 2, col 0",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ spt_test_id }}",
+      "reference_text": "SPT-1"
+    },
+    "sulfate_baumann": {
+      "value": "---",
+      "position": "t10_r1_c2",
+      "position_description": "Table 10, row 1, col 2",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ sulfate_baumann }}",
+      "reference_text": "---"
+    },
+    "sulfate_level_name": {
+      "value": "1er nivel",
+      "position": "t10_r1_c0",
+      "position_description": "Table 10, row 1, col 0",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ sulfate_level_name }}",
+      "reference_text": "1er nivel"
+    },
+    "superficie_construida": {
+      "value": "406",
+      "position": "t0_r2_c1",
+      "position_description": "Table 0, row 2, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ superficie_construida }}",
+      "reference_text": "406"
+    },
+    "superficie_parcela": {
+      "value": "100",
+      "position": "t0_r1_c1",
+      "position_description": "Table 0, row 1, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ superficie_parcela }}",
+      "reference_text": "100"
+    },
+    "table_dpsh_range": {
+      "value": "Tabla 3 y 4. Resumen de los ensayos in situ realizados.",
+      "position": "p193",
+      "position_description": "Body paragraph 193",
+      "confidence": 0.164,
+      "extraction_method": "paragraph_single",
+      "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
+      "reference_text": "Tabla 3 y 4. Resumen de los ensayos in situ realizados."
+    },
+    "client": {
+      "value": "GRUPO CUENCA GUERRERO, S.L",
+      "position": "p056",
+      "position_description": "Body paragraph 56",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "GRUPO CUENCA GUERRERO, S.L"
+    },
+    "architect_name_upper": {
+      "value": "JUAN JOSÉ TORRES POVEDANO",
+      "position": "p063",
+      "position_description": "Body paragraph 63",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "JUAN JOSÉ TORRES POVEDANO"
+    },
+    "building_type_lower": {
+      "value": "una vivienda unifamiliar aislada",
+      "position": "p063",
+      "position_description": "Body paragraph 63",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "una vivienda unifamiliar aislada"
+    },
+    "adjacent_east_fmt": {
+      "value": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio.",
+      "position": "p112",
+      "position_description": "Body paragraph 112",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio."
+    },
+    "adjacent_south_fmt": {
+      "value": "Por la parte sur, con una parcela, sin edificaciones, alguna pavimentación, vegetación herbácea de pequeña altura y algún árbol.",
+      "position": "p113",
+      "position_description": "Body paragraph 113",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Por la parte sur, con una parcela, sin edificaciones, alguna pavimentación, vegetación herbácea de pequeña altura y algún árbol."
+    },
+    "adjacent_north_fmt": {
+      "value": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio.",
+      "position": "p112",
+      "position_description": "Body paragraph 112",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio."
+    },
+    "adjacent_west_fmt": {
+      "value": "Y finalmente, Por la parte oeste con la calle STA. GEMMA.",
+      "position": "p114",
+      "position_description": "Body paragraph 114",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Y finalmente, Por la parte oeste con la calle STA. GEMMA."
+    },
+    "site_description": {
+      "value": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la calle se encuentra sin ningún tipo de valla o muro, se encuentra expuesta directamente a la calle.\nLa zona de entrada se encuentra y el patio, se encuentran sin pavimentar y con vegetación de tamaño pequeño. A excepción, del extremo Oeste, se encuentra una franja pavimentada y con vallado.",
+      "position": "p118",
+      "position_description": "Body paragraph 118",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la cal..."
+    },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p138",
+      "position_description": "Body paragraph 138",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_field_description": {
+      "value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "position": "p138",
+      "position_description": "Body paragraph 138",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
+    },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p201",
+      "position_description": "Body paragraph 201",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_testing_description": {
+      "value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "position": "p201",
+      "position_description": "Body paragraph 201",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
+    },
+    "radon_zone": {
+      "value": "1",
+      "position": "p397",
+      "position_description": "Body paragraph 397",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "1"
+    },
+    "radon_zone_description": {
+      "value": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentraciones inadecuadas de Gas Radón procedente del terreno en el interior de los locales habitables.",
+      "position": "p397",
+      "position_description": "Body paragraph 397",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentracione..."
+    },
+    "csn_radon_text": {
+      "value": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de que los edificios construidos en la zona sin soluciones específicas de protección frente al radón presenten concentraciones de radón superiores al nivel de referencia.",
+      "position": "p375",
+      "position_description": "Body paragraph 375",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de..."
+    },
+    "conclusions_levels_detected": {
+      "value": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
+      "position": "p406",
+      "position_description": "Body paragraph 406",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo."
+    },
+    "conclusions_water_statement": {
+      "value": "En la fecha que se realizaron los trabajos de campo, y hasta la cota ensayada, se detecta un aumento importante de la humedad de los materiales en uno de los ensayos realizados, en concreto, en el P-1 a -1.00 m.",
+      "position": "p431",
+      "position_description": "Body paragraph 431",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "En la fecha que se realizaron los trabajos de campo, y hasta la cota ensayada, se detecta un aumento importante de la humedad de los materiales en uno de los ensayos realizados, en concreto, en el P-1..."
+    },
+    "photo_site_text": {
+      "value": "Fotografía 1. Detalle de la parcela de estudio.",
+      "position": "p122",
+      "position_description": "Body paragraph 122",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Fotografía 1. Detalle de la parcela de estudio."
+    },
+    "materials_intro": {
+      "value": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
+      "position": "p234",
+      "position_description": "Body paragraph 234",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos me..."
+    },
+    "geo_p": {
+      "value": "Desde finales del Oligoceno hasta la actualidad, la depresión del Ebro ha dejado de actuar como cuenca sedimentaria y se ha convertido en una cubeta donde el agente predominante ha sido la erosión. Localmente, en algunos puntos de la cuenca, existen depósitos del Terciario superior y principalmente del Cuaternario. Estos corresponden a materiales subconsolidados que aparecen entre las rocas sedimentarias y la superficie, formados por arenas, limos y arcillas, donde abundan las costras carbonatadas.",
+      "position": "p224",
+      "position_description": "Body paragraph 224",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "Desde finales del Oligoceno hasta la actualidad, la depresión del Ebro ha dejado de actuar como cuenca sedimentaria y se ha convertido en una cubeta donde el agente predominante ha sido la erosión. Lo..."
+    }
+  },
+  "warnings": [
+    "Table matching: 10/14 template tables matched",
+    "p053: Variable 'client' has no static context for matching",
+    "p102: Variable 'adjacent_east_fmt' has no static context for matching",
+    "p106: Variable 'adjacent_south_fmt' has no static context for matching",
+    "p108: Variable 'adjacent_north_fmt' has no static context for matching",
+    "p109: Variable 'adjacent_south_fmt' has no static context for matching",
+    "p110: Variable 'adjacent_east_fmt' has no static context for matching",
+    "p111: Variable 'adjacent_west_fmt' has no static context for matching",
+    "p115: No match for 'access_street' (best_score=0.41, skeleton='El dia dels treballs de camp es realitza l'entrada a la zona...')",
+    "p117: Variable 'site_description' has no static context for matching",
+    "p213: Variable 'geo_p' has no static context for matching",
+    "p238: Variable 'materials_intro' has no static context for matching",
+    "p408: Variable 'csn_radon_text' has no static context for matching",
+    "p416: Variable 'conclusions_levels_detected' has no static context for matching",
+    "p418: Variable 'conclusions_level_1' has no static context for matching",
+    "p445: Variable 'conclusions_water_statement' has no static context for matching",
+    "p447: Variable 'conclusions_aggressivity_statement' has no static context for matching",
+    "p462: No match for 'k30_value' (best_score=0.47, skeleton='Com a valor de coeficient de balast referit a la placa de 30...')",
+    "p465: Variable 'empentes_paragraph' has no static context for matching",
+    "p469: Variable 'estabilitat_paragraph' has no static context for matching",
+    "Loop table t5 (sondeig_tests): no matching reference table",
+    "Loop table t8 (soil_level_rows): no matching reference table"
+  ]
+}

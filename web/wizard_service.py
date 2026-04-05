@@ -575,6 +575,46 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
     # Compute geotech params + calc transparency notes for wizard display
     _compute_geotech_prefills(merged, project_path, auto_result)
 
+    # -- Format learning detection ---
+    # Check if any mined files have unrecognized formats
+    if auto_result.mining_result:
+        from automation.format_learner import FormatLearner
+        learner = FormatLearner()
+        detections = []
+
+        # Get file_mapping for role lookups
+        fm_path = project_path / "file_mapping.json"
+        file_mapping = None
+        if fm_path.exists():
+            file_mapping = json.loads(fm_path.read_text())
+
+        if file_mapping and "roles" in file_mapping:
+            for role_name, role_info in file_mapping["roles"].items():
+                role_path = role_info.get("path", "")
+                file_path = project_path / role_path
+                if not file_path.exists():
+                    continue
+                # Get signals for this file
+                file_signals = [
+                    s for s in auto_result.mining_result.signals
+                    if s.source_file == role_path
+                ]
+                detection = learner.detect_format(
+                    file_path, role_name, file_signals,
+                    file_mapping=file_mapping,
+                )
+                if detection.is_new:
+                    detections.append(detection.model_dump())
+
+        if detections:
+            merged["_format_learning"] = {
+                "value": {
+                    "active": True,
+                    "detections": detections,
+                },
+                "source": "system",
+            }
+
     _prefill_cache[project_name] = merged
     _auto_result_cache[project_name] = auto_result
     return merged
@@ -885,9 +925,52 @@ def save_wizard(
 
     from automation.wizard import save_wizard_data
     result = save_wizard_data(project_path, wizard_fields, expert_overrides, sources=current_sources)
+
+    # -- Format learning: save confirmed format if learning was active ---
+    if cached.get("_format_learning"):
+        fl = cached["_format_learning"]
+        if isinstance(fl, dict) and fl.get("value", {}).get("active"):
+            _save_learned_formats(project_path, wizard_fields, fl["value"].get("detections", []))
+
     _prefill_cache.pop(project_name, None)
     _auto_result_cache.pop(project_name, None)
     return result
+
+
+def _save_learned_formats(
+    project_path: Path,
+    wizard_fields: dict[str, Any],
+    detections: list[dict],
+) -> None:
+    """Save format schemas from Eva's confirmed wizard edits."""
+    from automation.format_learner import FormatLearner
+    learner = FormatLearner()
+
+    for det in detections:
+        role = det.get("role", "")
+        source_file = det.get("file_path", "")
+        missing_fields = det.get("missing_fields", [])
+
+        # Build confirmed mappings from wizard_fields that fill missing fields
+        confirmed = []
+        for field_name in missing_fields:
+            val = wizard_fields.get(field_name)
+            if val and str(val).strip():
+                # Eva provided a value for this missing field
+                confirmed.append({
+                    "label": field_name.upper().replace("_", " "),
+                    "concept_id": field_name,
+                })
+
+        if confirmed:
+            try:
+                learner.confirm_mappings(
+                    role=role,
+                    source_file=source_file,
+                    confirmed_mappings=confirmed,
+                )
+            except Exception:
+                logger.warning("Failed to save learned format for %s", source_file, exc_info=True)
 
 
 def geocode_coords(

@@ -1,0 +1,26 @@
+format_id: email_content_v1
+name: "Email Body Content"
+description: "Email body text extracted from .msg files, containing contact, address and access information."
+document_roles: []
+source_type: content_email
+created_by: system
+label_mappings:
+  # Contact
+  - labels: ["CONTACTE", "CONTACTO", "PERSONA DE CONTACTE"]
+    concept_id: contact_name
+    confidence: 0.80
+
+  # Address
+  - labels: ["ADREÇA", "DIRECCIÓN", "EMPLAÇAMENT", "UBICACIÓ"]
+    concept_id: street_address
+    confidence: 0.80
+
+  # Municipality
+  - labels: ["MUNICIPI", "MUNICIPIO", "POBLACIÓ"]
+    concept_id: municipality
+    confidence: 0.80
+
+  # Access URL
+  - labels: ["ACCES A LA ZONA D'ESTUDI", "ACCESO", "ACCÉS", "GOOGLE MAPS", "ENLLAÇ", "ENLACE"]
+    concept_id: access_url
+    confidence: 0.85
