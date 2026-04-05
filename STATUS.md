@@ -5,10 +5,27 @@ Last updated: 2026-04-05
 
 **Arquitectura Concepte-Format implementada. Reference Extractor operatiu (7 projectes). Pipeline funcional. Pendent: comparacio Eva vs pipeline, instal·lacio Eva.**
 
+## Foto Pipeline vs Eva (2026-04-05)
+
+**43 variables comparades, 238 sense dades pipeline (nomes fases Python, sense vision/calculs)**
+
+| Variable | M | C | X | Problema |
+|----------|---|---|---|----------|
+| building_type | 0 | 0 | 7 | comanda_lab abrevia ("CONSTR HAB UNIF") |
+| client | 0 | 0 | 5 | DADES CAMP te arquitecte, no promotor |
+| adjacents (4 dirs) | 0 | 2 | 18 | Cadastre API dona info minima vs Eva descriu |
+| municipality | 3 | 4 | 0 | Format/majuscules (CLOSE) |
+| expedient | 0 | 1 | 1 | Confon ref. interna |
+| architect_company | 1 | 0 | 0 | OK |
+
+**238 NO_DATA**: vision (architect, superficies, plantes), calculs (Qa, settlement, CTE), lab (sulfats, SPT), templates (site_description, adjacents descriptius)
+
 ## Done (2026-04-05)
 
 - [x] Arquitectura Concepte-Format: 53 conceptes YAML + 8 formats + format learning UI (`docs/ARQUITECTURA-CONCEPT-FORMAT-SCHEMAS.md`)
 - [x] Reference Extractor: enginyeria inversa dels 7 informes d'Eva → `validation/eva_reference_values.json` (`docs/REFERENCE-EXTRACTOR.md`)
+- [x] Comparacio Eva vs Pipeline: `/g3dt-dev-eva-vs-pipeline` operatiu, baseline 23% match+close
+- [x] SmartScan Tier 2: suport .xlsx (openpyxl)
 - [x] 197 tests passen (snapshot regression + schema loader + format learner + fileminer + smartscan + geocode)
 - [x] Branch: `feature/concept-format-separation`
 
