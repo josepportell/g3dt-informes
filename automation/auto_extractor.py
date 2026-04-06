@@ -996,6 +996,26 @@ def _phase2_lab_results(project_path: Path, result: AutoExtractionResult) -> Non
             result.prefills['lab_tests'] = lab_tests_data
             result.sources['lab_tests'] = lab.source_file or "LAB PDF"
 
+        # Wire lab metadata fields to prefills
+        gtl_fields = [
+            'lab_location', 'lab_sample_id', 'lab_depth', 'lab_tests_text',
+        ]
+        constant_fields = [
+            'lab_field_company', 'lab_testing_company',
+            'lab_field_description', 'lab_testing_description',
+        ]
+        gtl_source = lab.gtl_source_file or lab.source_file or "GTL report"
+        for field_name in gtl_fields:
+            value = getattr(lab, field_name, '')
+            if value:
+                result.prefills[field_name] = value
+                result.sources[field_name] = gtl_source
+        for field_name in constant_fields:
+            value = getattr(lab, field_name, '')
+            if value:
+                result.prefills[field_name] = value
+                result.sources[field_name] = "constant"
+
     except ImportError:
         result.steps_skipped.append(("Lab PDF", "PyMuPDF no disponible"))
     except Exception as exc:

@@ -54,12 +54,33 @@ class LabResults:
     sulfate_mg_kg: float | None = None
     source_file: str = ''
     raw_text: str = ''
+    # Lab metadata fields for prefills
+    lab_field_company: str = ''
+    lab_testing_company: str = ''
+    lab_field_description: str = ''
+    lab_testing_description: str = ''
+    lab_location: str = ''
+    lab_sample_id: str = ''
+    lab_depth: str = ''
+    lab_tests_text: str = ''
+    language: str = 'ca'
+    gtl_source_file: str = ''
 
     def to_dict(self) -> dict[str, Any]:
         return {
             'sulfate_mg_kg': self.sulfate_mg_kg,
             'source_file': self.source_file,
             'tests': [t.to_dict() for t in self.tests],
+            'lab_field_company': self.lab_field_company,
+            'lab_testing_company': self.lab_testing_company,
+            'lab_field_description': self.lab_field_description,
+            'lab_testing_description': self.lab_testing_description,
+            'lab_location': self.lab_location,
+            'lab_sample_id': self.lab_sample_id,
+            'lab_depth': self.lab_depth,
+            'lab_tests_text': self.lab_tests_text,
+            'language': self.language,
+            'gtl_source_file': self.gtl_source_file,
         }
 
 
@@ -157,7 +178,7 @@ def _extract_sample_info(text: str) -> dict[str, str]:
         info['location'] = f"{spt_combo.group(3)}-{spt_combo.group(4)}"
     else:
         sample_match = re.search(
-            r'(?i)mostra:\s*\n?\s*(SPT-?\d+|M-?\d+|MO?-?\d+)',
+            r'(?i)(?:mostra|muestra):\s*\n?\s*(SPT-?\d+|M-?\d+|MO?-?\d+|MA-?\d+)',
             text,
         )
         if sample_match:
@@ -225,6 +246,45 @@ def _extract_test_type(text: str) -> str:
     return "Assaig de laboratori"
 
 
+def _find_gtl_pdf(project_path: Path) -> Path | None:
+    """Find GTL lab report PDF via file_mapping.json gtl_report role."""
+    mapping_path = project_path / 'file_mapping.json'
+    if mapping_path.exists():
+        try:
+            data = json.loads(mapping_path.read_text(encoding='utf-8'))
+            gtl_role = data.get('roles', {}).get('gtl_report')
+            if gtl_role:
+                candidate = project_path / gtl_role['path']
+                if candidate.exists():
+                    return candidate
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+def _extract_tests_text(text: str, language: str = 'ca') -> str:
+    """Extract the tests performed text from GTL page 2."""
+    patterns = [
+        r'(?i)ASSAIGS\s+REALITZATS\s*:\s*(.+?)(?:\n\s*\n|OBSERVACIONS|RESULTATS|Pàgina|$)',
+        r'(?i)ENSAYOS\s+REALIZADOS\s*:\s*(.+?)(?:\n\s*\n|OBSERVACIONES|RESULTADOS|Página|$)',
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, text, re.DOTALL)
+        if match:
+            result = match.group(1).strip()
+            return result[:500] if len(result) > 500 else result
+    return ''
+
+
+def _detect_language(text: str) -> str:
+    """Detect CA vs ES from GTL PDF text."""
+    es_markers = ['Muestra', 'Profundidad', 'Ensayos', 'Punto']
+    ca_markers = ['Mostra', 'Profunditat', 'Assaigs', 'Punt']
+    es_count = sum(1 for m in es_markers if m.lower() in text.lower())
+    ca_count = sum(1 for m in ca_markers if m.lower() in text.lower())
+    return 'es' if es_count > ca_count else 'ca'
+
+
 def extract_lab_results(project_path: str | Path) -> LabResults:
     """
     Extract laboratory test results from project PDF.
@@ -284,5 +344,51 @@ def extract_lab_results(project_path: str | Path) -> LabResults:
             unit='mg/kg' if sulfate else '',
         )
         results.tests.append(test)
+
+    # Try GTL report for full sample metadata
+    gtl_path = _find_gtl_pdf(project_path)
+    gtl_text = ''
+    if gtl_path:
+        results.gtl_source_file = str(gtl_path)
+        try:
+            doc = fitz.open(str(gtl_path))
+            for page in doc:
+                gtl_text += page.get_text() + '\n'
+            doc.close()
+        except Exception as e:
+            logger.warning(f"Failed to read GTL PDF {gtl_path}: {e}")
+
+    # Use GTL text if available, otherwise fall back to lab PDF text
+    metadata_text = gtl_text or full_text
+
+    # Detect language
+    lang = _detect_language(metadata_text)
+    results.language = lang
+
+    # Extract sample info from GTL (or lab PDF as fallback)
+    if metadata_text:
+        gtl_sample_info = _extract_sample_info(metadata_text) if gtl_text else sample_info
+
+        if gtl_sample_info.get('location'):
+            results.lab_location = gtl_sample_info['location']
+
+        if gtl_sample_info.get('sample_id'):
+            results.lab_sample_id = gtl_sample_info['sample_id']
+
+        if gtl_sample_info.get('depth'):
+            results.lab_depth = f"{gtl_sample_info['depth']} m"
+
+        results.lab_tests_text = _extract_tests_text(metadata_text, lang)
+
+    # Set constant/template fields
+    results.lab_field_company = 'TPS PROSPECCIÓ DEL SUBSÒL SL'
+    results.lab_testing_company = 'TPS PROSPECCIÓ DEL SUBSÒL SL'
+
+    if lang == 'es':
+        results.lab_field_description = "laboratorio de ensayos para el control de calidad de la edificación"
+        results.lab_testing_description = "laboratorio de ensayos para el control de calidad de la edificación"
+    else:
+        results.lab_field_description = "laboratori d'assaigs per al control de qualitat de l'edificació"
+        results.lab_testing_description = "laboratori d'assaigs per al control de qualitat de l'edificació"
 
     return results

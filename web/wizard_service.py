@@ -453,6 +453,137 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
         logger.warning("Geotech prefill calc failed: %s", exc)
 
 
+# Aragonese municipalities served by G3DT (Spanish, not Catalan)
+_ES_MUNICIPALITIES = frozenset({
+    'anciles', 'benasque', 'castejón de sos', 'campo', 'graus',
+    'barbastro', 'monzón', 'binéfar', 'tamarite de litera',
+})
+
+# Spanish-language markers (words that don't appear in Catalan texts)
+_ES_MARKERS = ('vivienda', 'ensayo', 'calle ', 'sótano', 'planta baja')
+
+
+def _get_project_language(prefills: dict[str, Any]) -> str:
+    """Detect project language from municipality and prefill text.
+
+    Returns 'ca' (Catalan, default) or 'es' (Spanish).
+    """
+    def _val(key: str) -> str:
+        entry = prefills.get(key)
+        if entry is None:
+            return ''
+        if isinstance(entry, dict):
+            return str(entry.get('value', '') or '')
+        return str(entry)
+
+    # Check municipality against known ES list
+    muni = _val('site_municipality').lower().strip()
+    if muni in _ES_MUNICIPALITIES:
+        return 'es'
+
+    # Check prefill text for Spanish markers
+    sample = ' '.join(
+        _val(k) for k in ('building_type', 'street_address', 'site_description')
+    ).lower()
+    if any(marker in sample for marker in _ES_MARKERS):
+        return 'es'
+
+    return 'ca'
+
+
+def _compute_narrative_prefills(
+    merged: dict[str, Any],
+    auto_result: Any,
+    project_path: Path,
+) -> None:
+    """Compute narrative template variables from existing data.
+
+    Sets num_dpsh_tests, table_dpsh_range, and building_structure_desc.
+    Respects user edits (source='user').
+    """
+
+    def _set(key: str, value: Any, source: str) -> None:
+        existing = merged.get(key)
+        if isinstance(existing, dict) and existing.get('source') == 'user':
+            return
+        merged[key] = {'value': value, 'source': source}
+
+    def _get_val(key: str) -> str:
+        entry = merged.get(key)
+        if entry is None:
+            return ''
+        if isinstance(entry, dict):
+            return str(entry.get('value', '') or '')
+        return str(entry)
+
+    lang = _get_project_language(merged)
+
+    # --- num_dpsh_tests + table_dpsh_range ---
+    dpsh = auto_result.dpsh_data if hasattr(auto_result, 'dpsh_data') else None
+    num_tests = dpsh.num_tests if dpsh else 0
+
+    # Fallback: count tests in dpsh_extracted.json (vision result)
+    if num_tests == 0:
+        dpsh_json_path = project_path / 'validation' / 'dpsh_extracted.json'
+        if dpsh_json_path.exists():
+            try:
+                dpsh_json = json.loads(dpsh_json_path.read_text(encoding='utf-8'))
+                num_tests = len(dpsh_json.get('dpsh_tests', []))
+            except (json.JSONDecodeError, KeyError):
+                pass
+
+    if num_tests > 0:
+        if lang == 'es':
+            _set(
+                'num_dpsh_tests',
+                f'{num_tests} ensayos de penetración dinámica DPSH '
+                f'(ver registro de los ensayos mecánicos).',
+                'computed',
+            )
+        else:
+            _set(
+                'num_dpsh_tests',
+                f'{num_tests} assaigs de penetració dinàmica tipus DPSH '
+                f'(veure annex "Registre assaigs mecànics").',
+                'computed',
+            )
+
+        # table_dpsh_range: table numbering depends on test count
+        if num_tests <= 2:
+            range_str = '3 y 4' if lang == 'es' else '3 i 4'
+        else:
+            range_str = '3, 4 y 5' if lang == 'es' else '3, 4 i 5'
+
+        _set('table_dpsh_range', range_str, 'computed')
+
+    # --- building_structure_desc ---
+    num_floors = _get_val('num_floors').strip()
+    has_basement_entry = merged.get('has_basement')
+    has_basement = False
+    if has_basement_entry is not None:
+        bval = has_basement_entry.get('value') if isinstance(has_basement_entry, dict) else has_basement_entry
+        has_basement = str(bval).lower() in ('true', '1', 'yes', 'sí', 'si')
+
+    # Detect basement from num_floors notation (Ps / PS = planta soterrani)
+    import re
+    if num_floors:
+        if re.search(r'\bP[Ss]\b', num_floors):
+            has_basement = True
+        # Ground-floor only: "Pb" or "PB" with no upper floors (no "Pp")
+        is_ground_only = bool(
+            re.search(r'\bP[Bb]\b', num_floors)
+        ) and not re.search(r'\bP[Pp]\b', num_floors) and not re.search(r'\d+\s*P[Pp]', num_floors, re.IGNORECASE)
+
+        if has_basement:
+            desc = 'con nivel de sótano' if lang == 'es' else 'amb nivell de soterrani'
+        elif is_ground_only:
+            desc = 'en planta baja' if lang == 'es' else 'en planta baixa'
+        else:
+            desc = 'sin nivel de sótano' if lang == 'es' else 'sense nivell de soterrani'
+
+        _set('building_structure_desc', desc, 'computed')
+
+
 def _compute_lookup_prefills(merged: dict[str, Any], auto_result: Any) -> None:
     """Set CTE, seismic, and radon prefills from municipality lookups.
 
@@ -774,6 +905,9 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
 
     # Map existing extracted data (SPT, sulfate classification) to prefill keys
     _compute_mapping_prefills(merged, auto_result, project_path)
+
+    # Narrative template variables (num_dpsh_tests, table_dpsh_range, building_structure_desc)
+    _compute_narrative_prefills(merged, auto_result, project_path)
 
     # CTE, seismic, radon lookups from municipality + building data
     _compute_lookup_prefills(merged, auto_result)

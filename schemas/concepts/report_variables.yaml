@@ -591,6 +591,78 @@ concepts:
       comanda_lab_excel: 35
       content_pdf: 45
 
+  lab_field_company:
+    type: text
+    group: lab
+    required: false
+    description_ca: Nom de l'empresa de camp (prospeccio)
+    source_priority:
+      user: 10
+      gtl_report: 20
+
+  lab_testing_company:
+    type: text
+    group: lab
+    required: false
+    description_ca: Nom del laboratori d'assaigs
+    source_priority:
+      user: 10
+      gtl_report: 20
+
+  lab_field_description:
+    type: text
+    group: lab
+    required: false
+    description_ca: Descripcio del servei de camp
+    source_priority:
+      user: 10
+      gtl_report: 20
+
+  lab_testing_description:
+    type: text
+    group: lab
+    required: false
+    description_ca: Descripcio del servei de laboratori
+    source_priority:
+      user: 10
+      gtl_report: 20
+
+  lab_location:
+    type: text
+    group: lab
+    required: false
+    description_ca: Punt de mostreig (ex Punt S-1)
+    source_priority:
+      user: 10
+      gtl_report: 20
+
+  lab_sample_id:
+    type: text
+    group: lab
+    required: false
+    description_ca: Identificador de mostra (ex Mostra SPT-1)
+    source_priority:
+      user: 10
+      gtl_report: 20
+
+  lab_depth:
+    type: text
+    group: lab
+    required: false
+    description_ca: Profunditat de mostreig (ex -1.0 a -1.60 m)
+    source_priority:
+      user: 10
+      gtl_report: 20
+
+  lab_tests_text:
+    type: text
+    group: lab
+    required: false
+    description_ca: Llistat d'assaigs realitzats al laboratori
+    source_priority:
+      user: 10
+      gtl_report: 20
+
   # ---------------------------------------------------------------------------
   # GEOLOGY - Dades geologiques ICGC (de l'API, no de documents)
   # ---------------------------------------------------------------------------
@@ -655,3 +727,33 @@ concepts:
       user: 10
       cadastre_api: 30
       geocode_nominatim: 40
+
+  # ---------------------------------------------------------------------------
+  # NARRATIVE - Frases compostes a partir de dades existents
+  # ---------------------------------------------------------------------------
+  num_dpsh_tests:
+    type: text
+    group: narrative
+    required: false
+    description_ca: Nombre d'assaigs DPSH en format narratiu
+    source_priority:
+      user: 10
+      computed: 20
+
+  table_dpsh_range:
+    type: text
+    group: narrative
+    required: false
+    description_ca: Rang de taules DPSH (ex 3, 4 i 5)
+    source_priority:
+      user: 10
+      computed: 20
+
+  building_structure_desc:
+    type: text
+    group: narrative
+    required: false
+    description_ca: Descripcio de l'estructura de l'edifici
+    source_priority:
+      user: 10
+      computed: 20
