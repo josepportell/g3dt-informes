@@ -1,49 +1,72 @@
 {
+  "source_file": "A.01.pdf",
+  "extraction_date": "2026-04-06T19:00:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.95,
+  "status": "pending_review",
   "architect_data": {
-    "source_file": "A.01.pdf",
-    "project_name": "HABITATGE UNIFAMILIAR AILLAT",
+    "source_file": "A.01",
+    "project_name": "HABITATGE UNIFAMILIAR AÏLLAT",
     "building_type": "habitatge unifamiliar aïllat",
-    "client_name": "RAMON MITJANA S.L.",
     "street_address": "Carrer Mestre Ramon Ortiz",
     "municipality": "Bell-Lloc d'Urgell",
-    "promotor": "Ramon Mitjana SL",
+    "promotor": "RAMON MITJANA SL",
+    "client_name": "RAMON MITJANA SL",
     "architect": "Jordi Bosch Novell",
-    "architect_company": "Arquitectura Bosch Novell",
+    "architect_company": "ARQUITECTURA BOSCH NOVELL",
     "dimensions": {
-      "parcel_area_m2": {
-        "pdf_value": 607.0,
-        "confidence": 0.95
-      },
-      "building_footprint_m2": {
-        "pdf_value": 296.8,
-        "confidence": 0.9
-      },
+      "parcel_area_m2": {"pdf_value": 995.0, "confidence": 1.0, "source": "Projecte column: Parcel\u00b7la minima"},
+      "parcela_projecte_m2": {"pdf_value": 995.0, "confidence": 1.0, "source": "Projecte column: Parcel\u00b7la minima"},
+      "building_footprint_m2": {"pdf_value": 296.88, "confidence": 1.0, "source": "Projecte column: Ocupacio"},
+      "num_floors": {"pdf_value": "PB+PP", "confidence": 1.0, "source": "Projecte column: N. plantes"},
+      "max_height_m": {"pdf_value": 8.38, "confidence": 1.0, "source": "Projecte column: H. max"},
+      "plot_length_m": {"pdf_value": 24.57, "confidence": 0.95, "source": "drawing annotation east side"},
+      "plot_width_m": {"pdf_value": 24.72, "confidence": 0.95, "source": "drawing annotation south side"},
       "floor_surfaces": [],
-      "num_floors": {
-        "pdf_value": "",
-        "confidence": 0.0
-      },
-      "max_height_m": {
-        "pdf_value": "",
-        "confidence": 0.0
-      },
-      "plot_length_m": {
-        "pdf_value": 24.72,
-        "confidence": 0.9
-      },
-      "plot_width_m": {
-        "pdf_value": 24.57,
-        "confidence": 0.9
-      }
+      "ien_m2": {"pdf_value": 397.0, "confidence": 1.0, "source": "Projecte column: IEN"}
     }
   },
+  "planning_table_raw": {
+    "planejament": {
+      "tipus_ordenacio": "A\u00efllada",
+      "parcela_minima": "CLAU 6B min 600,00 m2",
+      "facana_minima": "15 mts",
+      "ocupacio_maxima": "30% (293,50 m2 max)",
+      "solids": "6-3-3 (coer-lateral-fons)",
+      "h_max": "8,60 mts max",
+      "n_plantes": "PB+PP",
+      "ien": "0,4m2st/m2s (393,00 m2 max)",
+      "tanca": "H max 1,60m (0,60m mass\u00eds + resta vegetal)"
+    },
+    "projecte": {
+      "tipus_ordenacio": "A\u00efllada",
+      "parcela_minima": "995,00m2",
+      "facana_minima": "24,07 mts",
+      "ocupacio": "296,88m2",
+      "solids": "9-3-3",
+      "h_max": "8,38 m",
+      "n_plantes": "PB+PP",
+      "ien": "397,00 m2",
+      "tanca": "Compleix"
+    }
+  },
+  "data_sources_found": [
+    "Title block (caixet\u00ed) at bottom-right",
+    "Planning table (JUSTIFICACIO PLANEJAMENT) at bottom-center",
+    "Site plan drawing at top-left with dimension annotations",
+    "Planta Coberta (roof plan) at bottom-left E.1/100",
+    "Cadastre extract at right E.1/750",
+    "Two aerial views at E.1/500 and E.1/750"
+  ],
+  "extraction_notes": "Clear plan with standard caixet\u00ed and full JUSTIFICACIO PLANEJAMENT table. All Projecte column values extracted. Parcel 995m2, footprint 296.88m2, H 8.38m, PB+PP, IEN 397m2. Per-floor surface breakdown (280+86) not on this page - may be on separate area schedule sheet.",
   "floor_plan_bbox": {
     "top_pct": 0.0,
     "left_pct": 0.0,
-    "bottom_pct": 71.0,
-    "right_pct": 60.0,
+    "bottom_pct": 65.0,
+    "right_pct": 50.0,
     "confidence": 0.9
   },
-  "overall_confidence": 0.9,
-  "extraction_notes": "Caixetí clear, dimensions from site plan and building footprint"
+  "reviewer_notes": "",
+  "approved_by": "",
+  "approval_date": null
 }

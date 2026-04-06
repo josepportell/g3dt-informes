@@ -1,0 +1,32 @@
+{
+  "source_files": [
+    "PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+    "PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+    "PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf"
+  ],
+  "extraction_date": "2026-03-29T16:32:28.066296+00:00",
+  "extraction_method": "python_regex",
+  "fields": {
+    "architect_company": {
+      "value": "WOOD COMFORT PROMOCIONS SLU",
+      "source": "PRESSUPOST p.1 OBRA field",
+      "confidence": 0.9
+    },
+    "num_planned_dpsh": {
+      "value": 2,
+      "source": "PRESSUPOST text",
+      "confidence": 1.0
+    },
+    "num_planned_sondeig": {
+      "value": 3,
+      "source": "PRESSUPOST text",
+      "confidence": 1.0
+    },
+    "site_address": {
+      "value": "CP I POBLACIÓ:",
+      "source": "PRESSUPOST text",
+      "confidence": 0.85
+    }
+  },
+  "extraction_notes": "Python regex extraction from 3 files"
+}

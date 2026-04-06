@@ -1,59 +1,74 @@
 {
+  "source_file": "SONDEIG.pdf",
+  "extraction_date": "2026-04-06T19:20:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.92,
+  "status": "pending_review",
+  "metadata": {
+    "date": "6-10-2025",
+    "date_end": "6-10-2025",
+    "location": "Bell-Lloc",
+    "address": "C/Antoni Bellet",
+    "operator": "Daniel Fernandez",
+    "equipment": "ML76A",
+    "client": "G3",
+    "responsible": "Eva",
+    "water_level_note": "Est\u00e0tic Bellet +/-0"
+  },
   "sondeig_tests": [
     {
       "test_id": "S-1",
-      "total_depth_m": 8.0,
-      "num_geological_levels": 2,
+      "total_depth_m": 1.80,
       "layers": [
         {
           "depth_from_m": 0.0,
-          "depth_to_m": 1.0,
-          "description": "Llims argilosos amb graves cohesives de coloració marrònosa",
-          "geological_level": 1,
-          "uscs_classification": null,
-          "color": "marró",
-          "moisture": "humit",
-          "consistency": null,
-          "density": null,
-          "confidence": 1.0,
-          "note": null
-        },
-        {
-          "depth_from_m": 1.0,
-          "depth_to_m": 8.0,
-          "description": "Graves incloses en matriu sorrenca d'aspecte carbonatats, i de coloracions clares. Tram totalment carbonatat",
-          "geological_level": 2,
+          "depth_to_m": 1.60,
+          "description": "Grava con arena",
           "uscs_classification": null,
           "color": null,
           "moisture": null,
           "consistency": null,
           "density": null,
-          "confidence": 1.0,
-          "note": null
+          "confidence": 0.90,
+          "note": "Handwritten on rotated field sheet. Coronas: 101 W.B"
+        },
+        {
+          "depth_from_m": 1.60,
+          "depth_to_m": 1.80,
+          "description": "Grava carbonatada",
+          "uscs_classification": null,
+          "color": null,
+          "moisture": null,
+          "consistency": null,
+          "density": null,
+          "confidence": 0.85,
+          "note": "Handwritten. Short layer at bottom of borehole. Coronas: 101 W.B"
         }
       ],
       "spt_results": [
         {
           "test_id": "SPT-1",
-          "depth_from_m": -1.0,
-          "depth_to_m": -1.6,
-          "blows": [
-            24,
-            34,
-            28,
-            30
-          ],
-          "n_spt": 86,
-          "confidence": 1.0
+          "depth_from_m": 1.00,
+          "depth_to_m": 1.60,
+          "blows": [24, 34, 28, 30],
+          "n_spt": 62,
+          "confidence": 0.95,
+          "note": "Blows per 15cm interval. N30 = blows[1]+blows[2] = 34+28 = 62. Visible on both albar\u00e0 (p1) and field sheet (p2)."
         }
       ],
-      "elevation_z": 199.5,
       "water_level_m": null,
       "rock_detected": false,
       "rock_depth_m": null,
-      "extraction_notes": null
+      "extraction_notes": "2 layers detected from field sheet (page 2, rotated 90\u00b0). SPT-1 at 1.00-1.60m with 4 blow counts. Croquis (page 3) shows S1 position: 4.2m and 11m from parcel edges, corner of C/Antoni Bellet and C/Mestre Ramon Ortiz."
     }
   ],
-  "overall_confidence": 1.0,
-  "extraction_notes": "Document in good condition"
+  "croquis": {
+    "has_sketch": true,
+    "page": 3,
+    "s1_position": "4.2m from one edge, 11m from another",
+    "streets": ["C/Antoni Bellet", "C/Mestre Ramon Ortiz"]
+  },
+  "reviewer_notes": "",
+  "approved_by": "",
+  "approval_date": null
 }

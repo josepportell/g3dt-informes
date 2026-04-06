@@ -1,0 +1,37 @@
+{
+  "architect_data": {
+    "source_file": "plà.pdf",
+    "project_name": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+    "building_type": "habitatge unifamiliar aïllat",
+    "client_name": null,
+    "street_address": "Carrer Arbrells nº 18A-18B-20",
+    "municipality": "Castellar del Vallès",
+    "promotor": null,
+    "architect": null,
+    "architect_company": "G3",
+    "dimensions": {
+      "parcel_area_m2": null,
+      "building_footprint_m2": null,
+      "floor_surfaces": [],
+      "num_floors": null,
+      "max_height_m": null,
+      "plot_length_m": {
+        "pdf_value": 40.0,
+        "confidence": 0.9
+      },
+      "plot_width_m": {
+        "pdf_value": 20.0,
+        "confidence": 0.9
+      }
+    }
+  },
+  "floor_plan_bbox": {
+    "top_pct": 0.0,
+    "left_pct": 0.0,
+    "bottom_pct": 100.0,
+    "right_pct": 50.0,
+    "confidence": 1.0
+  },
+  "overall_confidence": 0.9,
+  "extraction_notes": "Title block found, dimensions from site plan"
+}

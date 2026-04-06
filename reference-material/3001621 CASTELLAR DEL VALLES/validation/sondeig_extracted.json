@@ -1,45 +1,68 @@
 {
+  "source_file": "PENETROS + SONDEIG.pdf",
+  "extraction_date": "2026-04-06T19:40:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.85,
+  "status": "pending_review",
+  "metadata": {
+    "date": "24-10-2025",
+    "date_end": "24-10-2025",
+    "location": "Castellar del Valles",
+    "address": "C/Arbrells",
+    "operator": "Daniel Fernandez",
+    "equipment": "ML76A",
+    "client": "G3",
+    "responsible": "Eva",
+    "water_level_note": null
+  },
   "sondeig_tests": [
     {
       "test_id": "S-1",
-      "total_depth_m": 1.2,
-      "num_geological_levels": 2,
+      "total_depth_m": 1.20,
       "layers": [
         {
           "depth_from_m": 0.0,
-          "depth_to_m": 0.5,
-          "description": "Terra vegetal. Llits argilosos de color marró fosc amb graves i algunes arrels.",
-          "geological_level": 1,
-          "uscs_classification": null,
-          "color": "marró fosc",
-          "moisture": "humit",
-          "consistency": null,
-          "density": null,
-          "confidence": 1.0,
-          "note": null
-        },
-        {
-          "depth_from_m": 0.5,
-          "depth_to_m": 1.2,
-          "description": "Substrat rocós. Breixes amb intercalacions de lutites i gresos vermells.",
-          "geological_level": 2,
+          "depth_to_m": 0.50,
+          "description": "Limos argilosos, con grava",
           "uscs_classification": null,
           "color": null,
           "moisture": null,
           "consistency": null,
           "density": null,
-          "confidence": 1.0,
-          "note": null
+          "confidence": 0.85,
+          "note": "Handwritten on rotated field sheet (page 5). Coronas: 101 W.B"
+        },
+        {
+          "depth_from_m": 0.50,
+          "depth_to_m": 1.20,
+          "description": "Roca fracturada",
+          "uscs_classification": null,
+          "color": null,
+          "moisture": null,
+          "consistency": null,
+          "density": null,
+          "confidence": 0.85,
+          "note": "Coronas: 101 W.B. ML perf roca dura/formig\u00f3: 0.70m (from albar\u00e0)"
         }
       ],
-      "spt_results": [],
-      "elevation_z": 570.9,
+      "spt_results": [
+        {
+          "test_id": "SPT-1",
+          "depth_from_m": 1.00,
+          "depth_to_m": 1.20,
+          "blows": null,
+          "n_spt": null,
+          "confidence": 0.60,
+          "note": "Albar\u00e0 says 'Assaigs SPT: No' but field sheet shows sample at 1.00-1.20m. Eva's reference says spt_n30=R (refusal). Likely hit rock and could not complete SPT."
+        }
+      ],
       "water_level_m": null,
       "rock_detected": true,
-      "rock_depth_m": 0.5,
-      "extraction_notes": null
+      "rock_depth_m": 0.50,
+      "extraction_notes": "2 layers. Shallow soil (0-0.50m limos) over fractured rock (0.50-1.20m). Total perf: 0.50m soil + 0.70m rock = 1.20m. SPT attempted at 1.00-1.20m but likely refusal in rock."
     }
   ],
-  "overall_confidence": 1.0,
-  "extraction_notes": "Document in good condition, clear data extraction"
+  "reviewer_notes": "",
+  "approved_by": "",
+  "approval_date": null
 }

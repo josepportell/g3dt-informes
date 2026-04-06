@@ -1,140 +1,98 @@
 {
+  "source_file": "PENETROS + SONDEIG.pdf",
+  "extraction_date": "2026-04-06T19:35:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.88,
+  "status": "pending_review",
+  "excel_comparison": {
+    "has_excel": true,
+    "excel_file": "ANNEXES/3001621_DPSH.xls",
+    "total_values": 17,
+    "matches": 14,
+    "discrepancies": 3
+  },
+  "document_metadata": {
+    "date": "24-10-2025",
+    "address": "C/Arbrells",
+    "location": "Castellar del Valles",
+    "equipment": "ML76A",
+    "operator": "Daniel Fernandez",
+    "client_company": "G3",
+    "responsible": "Eva",
+    "num_penetrometres": 4,
+    "ml_total": 20.00,
+    "water_level": null
+  },
   "dpsh_tests": [
     {
       "test_id": "P-1",
+      "cota_inici": -4.0,
       "readings": [
-        {
-          "depth_m": 0.2,
-          "n20": 6,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 0.4,
-          "n20": 15,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 0.6,
-          "n20": 10,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 0.8,
-          "n20": 13,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 1.0,
-          "n20": 38,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 1.2,
-          "n20": 100,
-          "confidence": 1.0,
-          "note": "R 1.20"
-        }
+        {"depth_m": -0.40, "n20": 6, "confidence": 0.95, "excel_value": 6, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -0.60, "n20": 10, "confidence": 0.95, "excel_value": 10, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -0.80, "n20": 13, "confidence": 0.95, "excel_value": 13, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -1.00, "n20": 38, "confidence": 0.90, "excel_value": 38, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -1.20, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "Refusal. R 1,08", "torque": null, "water_indicator": false}
       ],
-      "refusal_depth_m": 1.2,
+      "refusal_depth_m": 1.08,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
-      "correction_factor": 0.83
+      "correction_factor": null,
+      "extraction_notes": "5 valid readings + refusal at 1.08m."
     },
     {
       "test_id": "P-2",
+      "cota_inici": -4.2,
       "readings": [
-        {
-          "depth_m": 0.4,
-          "n20": 15,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 0.6,
-          "n20": 100,
-          "confidence": 1.0,
-          "note": "R 0.60"
-        }
+        {"depth_m": -0.40, "n20": 6, "confidence": 0.70, "excel_value": 15, "has_discrepancy": true, "note": "Vision reads 6, Excel has 15. Handwriting unclear.", "torque": null, "water_indicator": false},
+        {"depth_m": -0.60, "n20": 16, "confidence": 0.65, "excel_value": 100, "has_discrepancy": true, "note": "Vision reads 16, Excel has 100 (refusal at -0.6). Field sheet hard to read for P2.", "torque": null, "water_indicator": false},
+        {"depth_m": -0.80, "n20": 100, "confidence": 0.80, "excel_value": null, "has_discrepancy": true, "note": "Vision reads 100. Excel has refusal at -0.6 not -0.8. R: 0,48", "torque": null, "water_indicator": false}
       ],
-      "refusal_depth_m": 0.6,
+      "refusal_depth_m": 0.48,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
-      "correction_factor": 0.83
+      "correction_factor": null,
+      "extraction_notes": "Very shallow refusal. R: 0,48. P2 column cramped and hard to read. 3 discrepancies vs Excel."
     },
     {
       "test_id": "P-3",
+      "cota_inici": -4.0,
       "readings": [
-        {
-          "depth_m": 0.4,
-          "n20": 16,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 0.6,
-          "n20": 46,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 0.8,
-          "n20": 100,
-          "confidence": 1.0,
-          "note": "R 0.80"
-        }
+        {"depth_m": -0.40, "n20": 16, "confidence": 0.95, "excel_value": 16, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -0.60, "n20": 46, "confidence": 0.90, "excel_value": 46, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -0.80, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "Refusal. R: 0,76", "torque": null, "water_indicator": false}
       ],
-      "refusal_depth_m": 0.8,
+      "refusal_depth_m": 0.76,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
-      "correction_factor": 0.83
+      "correction_factor": null,
+      "extraction_notes": "3 valid readings + refusal at 0.76m."
     },
     {
       "test_id": "P-4",
+      "cota_inici": -4.0,
       "readings": [
-        {
-          "depth_m": 0.2,
-          "n20": 8,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 0.4,
-          "n20": 8,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 0.6,
-          "n20": 12,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 0.8,
-          "n20": 27,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 1.0,
-          "n20": 21,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 1.2,
-          "n20": 28,
-          "confidence": 1.0
-        },
-        {
-          "depth_m": 1.4,
-          "n20": 100,
-          "confidence": 1.0,
-          "note": "R 1.40"
-        }
+        {"depth_m": -0.40, "n20": 8, "confidence": 0.95, "excel_value": 8, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -0.60, "n20": 8, "confidence": 0.95, "excel_value": 8, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -0.80, "n20": 12, "confidence": 0.95, "excel_value": 12, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -1.00, "n20": 23, "confidence": 0.80, "excel_value": 27, "has_discrepancy": true, "note": "Vision reads 23, Excel has 27. Handwriting ambiguous.", "torque": null, "water_indicator": false},
+        {"depth_m": -1.20, "n20": 21, "confidence": 0.90, "excel_value": 21, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -1.40, "n20": 28, "confidence": 0.95, "excel_value": 28, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
+        {"depth_m": -1.60, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "Refusal. R: 1,55", "torque": null, "water_indicator": false}
       ],
-      "refusal_depth_m": 1.4,
+      "refusal_depth_m": 1.55,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
-      "correction_factor": 0.83
+      "correction_factor": null,
+      "extraction_notes": "7 valid readings + refusal at 1.55m. One discrepancy at -1.0."
     }
   ],
   "spt_in_dpsh": null,
-  "overall_confidence": 1.0
+  "reviewer_notes": "",
+  "approved_by": "",
+  "approval_date": null
 }

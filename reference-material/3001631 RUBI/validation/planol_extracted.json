@@ -1,0 +1,48 @@
+{
+  "source_file": "25.0794/IMG-20251104-WA0015.jpg",
+  "extraction_date": "2026-04-06T20:00:00",
+  "extraction_method": "claude_vision",
+  "overall_confidence": 0.60,
+  "status": "pending_review",
+  "architect_data": {
+    "source_file": "IMG-20251104-WA0015.jpg",
+    "project_name": "PLANO DE PLANTA MODELO MEDITERRANEO",
+    "building_type": "habitatge unifamiliar",
+    "street_address": null,
+    "municipality": null,
+    "promotor": null,
+    "client_name": null,
+    "architect": null,
+    "architect_company": null,
+    "dimensions": {
+      "parcel_area_m2": null,
+      "parcela_projecte_m2": null,
+      "building_footprint_m2": {"pdf_value": 64.0, "confidence": 0.85, "source": "8.00m x 8.00m from drawing annotations"},
+      "num_floors": {"pdf_value": "PB", "confidence": 0.80, "source": "Single floor plan visible, title says PLANTA"},
+      "max_height_m": null,
+      "plot_length_m": {"pdf_value": 8.00, "confidence": 0.90, "source": "drawing annotation"},
+      "plot_width_m": {"pdf_value": 8.00, "confidence": 0.90, "source": "drawing annotation"},
+      "floor_surfaces": [
+        {"floor": "PB", "area_m2": 64.0, "confidence": 0.80, "source": "8x8=64 from drawing"}
+      ]
+    }
+  },
+  "planning_table_raw": null,
+  "data_sources_found": [
+    "Floor plan drawing with room dimensions",
+    "Title: PLANO DE PLANTA MODELO MEDITERRANEO",
+    "Company logo/text: Rf Mapio, phone 630 72 62 / 628 POMBAL",
+    "No caixet\u00ed, no planning table, no promotor/architect info"
+  ],
+  "extraction_notes": "This is a WhatsApp photo of a prefab house catalogue floor plan (Modelo Mediterraneo), NOT a site-specific architect plan. 8x8m single floor layout with rooms labeled. No project-specific data (no address, promotor, architect). Very limited value for pipeline extraction. The real architect plan for this project may not exist in the folder.",
+  "floor_plan_bbox": {
+    "top_pct": 5.0,
+    "left_pct": 5.0,
+    "bottom_pct": 95.0,
+    "right_pct": 95.0,
+    "confidence": 0.9
+  },
+  "reviewer_notes": "",
+  "approved_by": "",
+  "approval_date": null
+}

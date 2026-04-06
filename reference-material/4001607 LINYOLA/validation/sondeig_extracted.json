@@ -1,0 +1,18 @@
+{
+  "sondeig_tests": [
+    {
+      "test_id": "S-1",
+      "total_depth_m": null,
+      "num_geological_levels": null,
+      "layers": [],
+      "spt_results": [],
+      "elevation_z": null,
+      "water_level_m": null,
+      "rock_detected": false,
+      "rock_depth_m": null,
+      "extraction_notes": null
+    }
+  ],
+  "overall_confidence": 1.0,
+  "extraction_notes": "Document not provided for analysis"
+}
