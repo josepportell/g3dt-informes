@@ -521,6 +521,7 @@ class GroqMiner(BaseMiner):
                 extraction_method="groq_llm",
                 confidence=min(max(confidence, 0.0), 1.0),
                 priority=GROQ_PRIORITY,
+                source_type="groq_llm",
             )
             signals.append(signal)
             logger.info(

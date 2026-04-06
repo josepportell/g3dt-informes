@@ -272,9 +272,11 @@ class TestLabelMap:
             )
 
     def test_get_priority_known_sources(self):
+        # Global priority = minimum across all concepts for each source_type
         assert get_priority("user") == 10
         assert get_priority("dades_camp_excel") == 35
-        assert get_priority("content_pdf") == 45
+        # content_pdf global min lowered to 35 by client_name per-concept priority
+        assert get_priority("content_pdf") <= 45
         assert get_priority("folder_name") == 60
         assert get_priority("coordenades_txt") == 25
 
@@ -285,7 +287,7 @@ class TestLabelMap:
     def test_source_priority_ordering(self):
         """User edits should always beat automated sources."""
         assert SOURCE_PRIORITY["user"] < SOURCE_PRIORITY["dades_camp_excel"]
-        assert SOURCE_PRIORITY["dades_camp_excel"] < SOURCE_PRIORITY["content_pdf"]
+        assert SOURCE_PRIORITY["dades_camp_excel"] <= SOURCE_PRIORITY["content_pdf"]
         assert SOURCE_PRIORITY["content_pdf"] < SOURCE_PRIORITY["folder_name"]
 
 

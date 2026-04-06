@@ -203,9 +203,10 @@ def mine_project(
                 continue
             try:
                 signals = miner.mine(file_path)
-                # Apply source priority to all signals from this miner
+                # Apply source priority and source_type to all signals from this miner
                 for sig in signals:
                     sig.priority = priority
+                    sig.source_type = source_type
                 all_signals.extend(signals)
                 mined_any = True
             except Exception as exc:
@@ -260,6 +261,7 @@ def mine_project(
                 signals = miner.mine(att_path)
                 for s in signals:
                     s.priority = priority
+                    s.source_type = source_type
                 all_signals.extend(signals)
                 mined_any = True
             except Exception as exc:

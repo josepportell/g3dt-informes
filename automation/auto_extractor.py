@@ -512,12 +512,46 @@ def _phase03_fileminer(project_path: Path, result: AutoExtractionResult, emit=No
 
         resolved = resolve_competition(mining.signals)
 
-        # Feed resolved values into prefills (don't override existing prefills
-        # from dedicated extractors which are more precise)
+        # Feed resolved values into prefills.
+        # Override existing Phase 0.1 values when FileMiner has a better
+        # (lower) per-concept priority for the same variable.
+        from automation.schemas.loader import ConceptRegistry
+        _cr = ConceptRegistry()
+
         n_added = 0
         _ADDRESS_VARS = {'street_address', 'site_address', 'client_address'}
+        # Phase 0.1 source types that FileMiner may legitimately override
+        _OVERRIDABLE_SOURCES = {
+            'contingut:', 'content_discovery:', 'pressupost:',
+        }
         for variable, rv in resolved.items():
+            should_write = False
             if variable not in result.prefills:
+                should_write = True
+            else:
+                # Check if FileMiner winner has better per-concept priority
+                existing_src = result.sources.get(variable, '')
+                if any(existing_src.startswith(pfx) for pfx in _OVERRIDABLE_SOURCES):
+                    fm_pri = rv.signal.priority
+                    # Infer existing source type from source string
+                    existing_pri = 50  # default
+                    if 'DADES' in existing_src.upper() or 'dades_camp' in existing_src:
+                        existing_pri = _cr.get_priority(variable, 'dades_camp_excel')
+                    elif 'PRESSUPOST' in existing_src.upper() or 'pressupost' in existing_src:
+                        existing_pri = _cr.get_priority(variable, 'pressupost_pdf')
+                    elif 'content_pdf' in existing_src or '.pdf' in existing_src.lower():
+                        existing_pri = _cr.get_priority(variable, 'content_pdf')
+                    elif 'content_excel' in existing_src or '.xls' in existing_src.lower():
+                        existing_pri = _cr.get_priority(variable, 'content_excel')
+                    if fm_pri < existing_pri:
+                        logger.info(
+                            "FileMiner: overriding %s (pri %d < %d): %r -> %r",
+                            variable, fm_pri, existing_pri,
+                            str(result.prefills[variable])[:50], str(rv.value)[:50],
+                        )
+                        should_write = True
+
+            if should_write:
                 # G3 internal address filter: reject G3 office address as project site
                 value = rv.value
                 if variable in _ADDRESS_VARS and _is_g3_internal_address(str(value)):

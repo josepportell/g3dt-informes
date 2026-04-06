@@ -839,32 +839,11 @@ class ReportGenerator:
             else:
                 context['location_sentence'] = "en una ubicació no especificada"
 
-            # Adjacent formatting with Catalan articles
-            def _format_adjacent(direction_cat: str, value: str) -> str:
-                if not value:
-                    return f'Per la part {direction_cat}, sense informació.'
-                v = value.strip().rstrip('.')
-                if v.lower().startswith(('carrer ', 'camí ', 'passeig ')):
-                    return f'Per la part {direction_cat} amb el {v}.'
-                if v.lower().startswith(('avinguda ', 'plaça ', 'ronda ', 'travessia ')):
-                    return f'Per la part {direction_cat} amb la {v}.'
-                if v.lower().startswith(('parcel·la', 'construcció', 'edificació', 'nau ')):
-                    return f'Per la part {direction_cat} amb una {v}.'
-                if v.lower().startswith(('solar', 'edifici', 'magatzem', 'terreny')):
-                    return f'Per la part {direction_cat} amb un {v}.'
-                return f'Per la part {direction_cat} amb {v}.'
-
-            context['adjacent_north_fmt'] = _format_adjacent('nord', adj.get('north', ''))
-            context['adjacent_south_fmt'] = _format_adjacent('sud', adj.get('south', ''))
-            context['adjacent_east_fmt'] = _format_adjacent('est', adj.get('east', ''))
-
-            # West gets special "I finalment" prefix
-            west_val = adj.get('west', '')
-            if west_val:
-                west_body = _format_adjacent('oest', west_val)
-                context['adjacent_west_fmt'] = 'I finalment, p' + west_body[1:]  # "Per" -> "per"
-            else:
-                context['adjacent_west_fmt'] = _format_adjacent('oest', '')
+            # Adjacent formatting with bilingual support (Catalan/Spanish)
+            from automation.adjacent_formatter import format_all_adjacents
+            municipality = self.report_data.municipality or None
+            adj_formatted = format_all_adjacents(adj, municipality)
+            context.update(adj_formatted)
 
             # Access street extraction — strip sentence prefix + preposition + suffix
             # to get just the street name (e.g. "El dia dels treballs ... a través del Carrer X existent al sud." → "Carrer X")

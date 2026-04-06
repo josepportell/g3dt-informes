@@ -20,14 +20,14 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
-      pressupost_pdf: 30
-      dades_camp_excel: 35
+      content_pdf: 35
+      content_docx: 35
       groq_llm: 42
       content_email: 43
       content_email_attachment: 44
-      content_pdf: 45
-      content_docx: 45
       content_excel: 45
+      pressupost_pdf: 50
+      dades_camp_excel: 50
       folder_name: 60
 
   contact_name:
@@ -96,9 +96,9 @@ concepts:
     description_ca: Nom de l'arquitecte
     source_priority:
       user: 10
-      planol_vision: 20
-      pressupost_pdf: 30
-      groq_llm: 42
+      planol_vision: 15
+      pressupost_pdf: 40
+      groq_llm: 45
       content_email: 43
       content_email_attachment: 44
       content_pdf: 45

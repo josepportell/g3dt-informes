@@ -11,7 +11,11 @@ from __future__ import annotations
 import re
 from datetime import datetime
 
+from automation.schemas.loader import ConceptRegistry
+
 from .models import Signal, ResolvedValue
+
+_concept_registry = ConceptRegistry()
 
 
 # Month name → number mapping (Spanish/Catalan)
@@ -88,6 +92,11 @@ def resolve_competition(
 
     resolved: dict[str, ResolvedValue] = {}
     for variable, candidates in grouped.items():
+        # Apply per-concept priority (overrides global default)
+        for sig in candidates:
+            if sig.source_type and sig.source_type != "unknown":
+                sig.priority = _concept_registry.get_priority(variable, sig.source_type)
+
         if variable == "report_date":
             # For dates: priority first (lower wins), then most recent date
             ranked = sorted(

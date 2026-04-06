@@ -404,7 +404,7 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
         calc = TerzaghiCalculator(phi=phi, cohesion=cohesion, gamma=gamma)
         tr = calc.calculate_qa(
             B=B, Df=Df, shape=FootingShape.SQUARE,
-            nspt=avg_n20, is_granular=is_granular,
+            nspt=nb, is_granular=is_granular,
             E=E, Es_override=Es_override,
         )
 
@@ -567,6 +567,23 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
     # If auto_extract skipped adjacents (no UTM coords), try geocoding from
     # planol address now that vision data is available in the merged prefills.
     _fill_missing_adjacents(merged, project_path)
+
+    # Generate formatted adjacent sentences for diagnostic comparison
+    def _get_merged_val(key: str) -> str:
+        entry = merged.get(key)
+        if entry is None:
+            return ''
+        if isinstance(entry, dict):
+            return str(entry.get('value', ''))
+        return str(entry)
+
+    from automation.adjacent_formatter import format_all_adjacents
+    adj_raw = {d: _get_merged_val(f'adjacent_{d}') for d in ('north', 'south', 'east', 'west')}
+    municipality_for_fmt = _get_merged_val('site_municipality')
+    if any(adj_raw.values()):
+        adj_fmt = format_all_adjacents(adj_raw, municipality_for_fmt or None)
+        for key, val in adj_fmt.items():
+            merged[key] = {'value': val, 'source': 'formatted from Cadastre'}
 
     # Generate template prefills (access/site description) AFTER merge,
     # because they depend on adjacents data from auto_extract.

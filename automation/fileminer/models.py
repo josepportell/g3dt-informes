@@ -43,6 +43,7 @@ class Signal(BaseModel):
     # Quality
     confidence: float = 0.5             # 0.0-1.0
     priority: int = 50                  # Lower = wins in conflicts
+    source_type: str = "unknown"        # e.g. "dades_camp_excel", "groq_llm"
 
 
 class MiningResult(BaseModel):
