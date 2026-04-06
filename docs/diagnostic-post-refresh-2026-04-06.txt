@@ -1,0 +1,734 @@
+Full Pipeline Diagnostic: Eva vs Pipeline
+Runs: auto_extract + vision + geotech calculations
+Tolerance: 5.0%
+
+  Running full pipeline for 4001612 BELL-LLOC... /home/josep/projects/claudecode-job/clients/g3dt/.venv/lib/python3.12/site-packages/openpyxl/worksheet/_reader.py:329: UserWarning: Data Validation extension is not supported and will be removed
+  warn(msg)
+(85 values)
+
+==========================================================================================
+  4001612 BELL-LLOC  (vision: planol, sondeig, dpsh)
+  Phases: scan+ mine+ groq+ content+ budget+ geo_hist+ dpsh+ dates+ lab+ elev+ cadastre+
+==========================================================================================
+  17 match  1 close  12 mismatch  14 not_extracted  / 44 vars
+  Match+Close rate: 60.0% (of 30 compared)
+
+  Variable                     Eva                          Pipeline                     Source                    Status
+  ---------------------------- ---------------------------- ---------------------------- ------------------------- ------------
+  adjacent_south_fmt           Per la part sud amb el Car.. Per la part sud amb una pa.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_west_fmt            I finalment, per la part o.. I finalment, per la part o.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  building_type                un habitatge unifamiliar     habitatge unifamiliar aïllat planol A.01               MISMATCH    
+    -> #1 pri=30 conf=0.80 'Bell-lloc - CL MESTRE RAMON ORTIZ..'  25.0647/Pressupost C1 - Bell-lloc -c_ Me
+      #2 pri=30 conf=0.80 'Bell-lloc - CL MESTRE RAMON ORTIZ..'  25.0647/RE_ Pressupost C1 - Bell-lloc -c
+      #3 pri=45 conf=0.80 'Estudi geològic/ geotècnic per la..'  PDF V0/4001612_informe_v0.pdf
+      #4 pri=45 conf=0.80 'C7 MESTRE RAMON ORTIZ 15         ..'  PDF V0/ANNEXES/4001612_DPSH.pdf
+      #5 pri=45 conf=0.80 'Estudi geològic/ geotècnic per la..'  PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf
+    -> Correct exists? NO -- need better extraction
+  client_name                  RAMON MITJANA S.L            RAMON MITJANA SL             planol A.01               MISMATCH    
+    -> #1 pri=35 conf=0.80 'RAMON MITJANA S.L.'  PDF V0/4001612_informe_v0.pdf
+      #2 pri=35 conf=0.80 'RAMON MITJANA S.L.'  PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf
+      #3 pri=50 conf=0.90 'ARQUITECCTURA BOSCH NOVELL'  25.0647/DADES PER ANAR A CAMP_v1.xlsx
+      #4 pri=50 conf=0.80 'ARQUITECTURA BOSCH NOVELL -Jordi ..'  25.0647/Pressupost C1 - Bell-lloc -c_ Me
+      #5 pri=50 conf=0.80 'ARQUITECTURA BOSCH NOVELL -Jordi ..'  25.0647/RE_ Pressupost C1 - Bell-lloc -c
+    -> Correct exists? YES -- signal #1 (PDF V0/4001612_informe_v0.pdf, pri=35)
+  expedient                    4001612                      25·0647                      docs intel (PRESSUPOST .. MISMATCH    
+    -> #1 pri=45 conf=0.80 '4001612_v0'  PDF V0/4001612_informe_v0.pdf
+      #2 pri=45 conf=0.80 '4001612_v0'  PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf
+    -> Correct exists? YES -- signal #1 (PDF V0/4001612_informe_v0.pdf, pri=45)
+  field_work_dates_text        1 d’octubre de 2025          1 i 6 d'octubre de 2025      DPSH/Lab PDF              MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  qa_value                     3.0                          1.64                         Terzaghi-Peck             MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Nb=?, B=1.0[DEF], Df=0.8[DEF], c=?, phi=?, cap=3.0
+  settlement                   Els assentaments màxims pr.. 1.11                         Schmertmann               MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Es=76, qa=1.64
+  site_description             El dia dels treballs de ca.. parcel·la de forma quadrad.. plantilla generada        MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  spt_lithology                Graves en matriu sorrenca    Grava con arena              sondeig vision            MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  spt_n30                      54                           62                           sondeig vision            MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  superficie_construida_m2     280+86                       297                          planol A.01               MISMATCH    
+    -> #1 pri=50 conf=0.95 '24.72'  25.0647/A.01.pdf
+      #2 pri=50 conf=0.95 '24.72'  A.01 amb punts.pdf
+      #3 pri=50 conf=0.95 '24.72'  A.01.pdf
+      #4 pri=50 conf=0.95 '180'  PDF V0/ANNEXES/4001612_sondeig.pdf
+      #5 pri=50 conf=0.95 '366'  PDF V0/LLETRA/4001612_informe_v0.pdf
+    -> Correct exists? YES -- signal #5 (PDF V0/LLETRA/4001612_informe_, pri=50)
+  municipality                 Bell-lloc d’Urgell           BELL-LLOC                    docs intel (PRESSUPOST .. CLOSE       
+  access_street                El dia dels treballs de ca.. --                           --                        NOT_EXTRACTED
+  building_structure_desc      en planta baixa              --                           --                        NOT_EXTRACTED
+  lab_depth                    Profunditat:  -1.0  a -1.6.. --                           --                        NOT_EXTRACTED
+  lab_field_company            TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_field_description        laboratori d’assaigs per a.. --                           --                        NOT_EXTRACTED
+  lab_location                 Punt: S-1                    --                           --                        NOT_EXTRACTED
+  lab_sample_id                Mostra : SPT-1               --                           --                        NOT_EXTRACTED
+  lab_testing_company          TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_testing_description      laboratori d’assaigs per a.. --                           --                        NOT_EXTRACTED
+  lab_tests_text               1 assaig de contingut en s.. --                           --                        NOT_EXTRACTED
+  location_sentence            entre el Carrer Antoni Bel.. --                           --                        NOT_EXTRACTED
+  num_dpsh_tests               2 assaigs de penetració di.. --                           --                        NOT_EXTRACTED
+  site_condition               Degut a que es tracta d’un.. --                           --                        NOT_EXTRACTED
+  table_dpsh_range             3, 4 i 5                     --                           --                        NOT_EXTRACTED
+  adjacent_east_fmt            Per la part est amb el Car.. Per la part est amb el Car.. formatted from Cadastre   MATCH       
+  adjacent_north_fmt           Per la part nord amb una p.. Per la part nord amb una p.. formatted from Cadastre   MATCH       
+  architect_company            ARQUITECTURA BOSCH NOVELL    ARQUITECTURA BOSCH NOVELL    planol A.01               MATCH       
+  architect_name               JORDI BOSCH NOVELL           Jordi Bosch Novell           planol A.01               MATCH       
+  cte_edificacio               C-1                          C-1                          CTE DB SE-C (habitatge .. MATCH       
+  cte_sol                      T-1                          T-1                          CTE DB SE-C (N20=25)      MATCH       
+  num_floors                   Pb+1Pp                       Pb+1Pp                       planol A.01               MATCH       
+  radon_zone                   1                            1                            CTE DB HS6 (Bell-Lloc d.. MATCH       
+  seismic_ab_text              0,04                         0,04                         NCSE-02 (Bell-Lloc d'Ur.. MATCH       
+  spt_depth_range              -1.00 a 1.60                 -1.00 a 1.60                 sondeig vision            MATCH       
+  spt_location                 S-1                          S-1                          sondeig vision            MATCH       
+  spt_test_id                  SPT-1                        SPT-1                        sondeig vision            MATCH       
+  sulfate_baumann              ---                          ---                          RD 470/2021               MATCH       
+  sulfate_classification       No Agressius                 No Agressius                 RD 470/2021               MATCH       
+  sulfate_level_name           1er nivell                   1er nivell                   default                   MATCH       
+  sulfate_mg_kg                89.8                         89.8                         /home/josep/projects/cl.. MATCH       
+  superficie_parcela_m2        995                          995.0                        planol A.01               MATCH       
+
+────────────────────────────────────────────────────────────
+  SUMMARY (4001612 BELL-LLOC):
+    MATCH             17
+    CLOSE              1
+    MISMATCH          12
+    NOT_EXTRACTED     14
+  Running full pipeline for 3001621 CASTELLAR DEL VALLES... WARNING:automation.smartscan.tier3_vision:Groq Tier 3: HTTP 500 for 25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg
+/home/josep/projects/claudecode-job/clients/g3dt/.venv/lib/python3.12/site-packages/openpyxl/worksheet/_reader.py:329: UserWarning: Data Validation extension is not supported and will be removed
+  warn(msg)
+(74 values)
+
+==========================================================================================
+  3001621 CASTELLAR DEL VALLES  (vision: planol, sondeig, dpsh)
+  Phases: scan+ mine+ groq+ content+ budget+ geo_hist+ dpsh+ dates+ lab+ elev+ cadastre+
+==========================================================================================
+  9 match  2 close  14 mismatch  18 not_extracted  / 43 vars
+  Match+Close rate: 44.0% (of 25 compared)
+
+  Variable                     Eva                          Pipeline                     Source                    Status
+  ---------------------------- ---------------------------- ---------------------------- ------------------------- ------------
+  adjacent_east_fmt            Per la part est, amb una p.. Per la part est amb una pa.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_north_fmt           Per la part nord, amb parc.. Per la part nord amb una p.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_south_fmt           Per la part sud, amb el ca.. Per la part sud amb el Car.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_west_fmt            I finalment, per la part o.. I finalment, per la part o.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  building_type                3 habitatges unifamiliars .. habitatge unifamiliar aïllat planol plà.pdf            MISMATCH    
+    -> #1 pri=50 conf=0.90 'CONSTR 3 HAB UNIF'  comanda laboratori_3001621_CASTELLAR DEL
+    -> Correct exists? NO -- need better extraction
+  client_name                  WOOD COMFORT PROMOCIONS SLU  GRUP ALMA                    contingut:25.0493/DADES.. MISMATCH    
+    -> #1 pri=50 conf=0.90 'GRUP ALMA'  25.0493/DADES PER ANAR A CAMP_v1.xlsx
+      #2 pri=50 conf=0.80 'GRUP ALMA'  25.0493/PRESSUPOST 3 HAB CASTELLAR DEL V
+    -> Correct exists? NO -- need better extraction
+  cte_sol                      T-1                          T-2                          CTE DB SE-C (N20=19)      MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  field_work_dates_text        24 de octubre de 2025        24 d'octubre de 2025         DPSH/Lab PDF              MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  k30_value                    Si s’optés per una fonamen.. 8.3                          Winkler                   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: E=?
+  qa_value                     3.0                          5.00                         Terzaghi-Peck             MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Nb=?, B=1.0[DEF], Df=0.8[DEF], c=?, phi=?, cap=3.0
+  settlement                   Els assentaments màxims pr.. 4.66                         Schmertmann               MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Es=56, qa=5.00
+  site_description             El dia dels treballs de ca.. El terreny es presenta ant.. plantilla generada        MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  spt_depth_range              -1.00 a -1.20                -1.00 a 1.20                 sondeig vision            MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  spt_lithology                Limolites i bretxes          Roca fracturada              sondeig vision            MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  seismic_ab_text              AB  = 0,04 g  (essent g el.. 0,04                         NCSE-02 (Castellar del .. CLOSE       
+  sulfate_baumann              --                           ---                          RD 470/2021               CLOSE       
+  access_street                El dia dels treballs de ca.. --                           --                        NOT_EXTRACTED
+  building_structure_desc      sense nivell de soterrani    --                           --                        NOT_EXTRACTED
+  lab_depth                    Profunditat:  -1.00  a -1... --                           --                        NOT_EXTRACTED
+  lab_field_company            TPS PROSPECCIÓ DEL SUBSÒL,.. --                           --                        NOT_EXTRACTED
+  lab_field_description        laboratori d’assaigs per a.. --                           --                        NOT_EXTRACTED
+  lab_location                 Punt: S-1                    --                           --                        NOT_EXTRACTED
+  lab_sample_id                Mostra : SPT-1               --                           --                        NOT_EXTRACTED
+  lab_testing_company          TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_testing_description      laboratori d’assaigs per a.. --                           --                        NOT_EXTRACTED
+  lab_tests_text               1 assaig de contingut en s.. --                           --                        NOT_EXTRACTED
+  location_sentence            en el Carrer dels Arbrells.. --                           --                        NOT_EXTRACTED
+  num_dpsh_tests               4 assaigs de penetració di.. --                           --                        NOT_EXTRACTED
+  num_floors                   Pb+1Pp                       --                           --                        NOT_EXTRACTED
+  site_condition               Tot i no ser un solar pla,.. --                           --                        NOT_EXTRACTED
+  spt_n30                      R                            --                           --                        NOT_EXTRACTED
+  superficie_construida_m2     120 m2                       --                           --                        NOT_EXTRACTED
+  superficie_parcela_m2        1.284                        --                           --                        NOT_EXTRACTED
+  table_dpsh_range             3, 4 i 5                     --                           --                        NOT_EXTRACTED
+  cte_edificacio               C-1                          C-1                          CTE DB SE-C (habitatge .. MATCH       
+  expedient                    3001621                      3001621                      groq_llm:tall.pdf         MATCH       
+  municipality                 Castellar del Vallès         CASTELLAR DEL VALLÈS         fileminer:comanda labor.. MATCH       
+  radon_zone                   1                            1                            CTE DB HS6 (Castellar d.. MATCH       
+  spt_location                 S-1                          S-1                          sondeig vision            MATCH       
+  spt_test_id                  SPT-1                        SPT-1                        sondeig vision            MATCH       
+  sulfate_classification       No Agressius                 No Agressius                 RD 470/2021               MATCH       
+  sulfate_level_name           1er nivell                   1er nivell                   default                   MATCH       
+  sulfate_mg_kg                0.0                          --                           /home/josep/projects/cl.. MATCH       
+
+────────────────────────────────────────────────────────────
+  SUMMARY (3001621 CASTELLAR DEL VALLES):
+    MATCH              9
+    CLOSE              2
+    MISMATCH          14
+    NOT_EXTRACTED     18
+  Running full pipeline for 3001631 RUBI... WARNING:automation.auto_extractor:FileMiner: REJECTED G3 internal address for street_address: 'C/ Vallbona, 22'
+(67 values)
+
+==========================================================================================
+  3001631 RUBI  (vision: planol, dpsh)
+  Phases: scan+ mine+ groq+ content+ budget+ geo_hist+ dpsh+ dates+ lab+ elev+ cadastre+
+==========================================================================================
+  8 match  3 close  12 mismatch  16 not_extracted  / 39 vars
+  Match+Close rate: 47.8% (of 23 compared)
+
+  Variable                     Eva                          Pipeline                     Source                    Status
+  ---------------------------- ---------------------------- ---------------------------- ------------------------- ------------
+  adjacent_east_fmt            Finalment, Per la part est.. Per la part est amb una pa.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_north_fmt           Per la part nord, amb parc.. Per la part nord amb el Pa.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_south_fmt           Per la part sud, amb el ca.. Per la part sud amb una pa.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_west_fmt            Finalment, Per la part est.. I finalment, per la part o.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  architect_name               JOANA MARTINEZ               SR.                          groq_llm:3001631_test_v.. MISMATCH    
+    -> #1 pri=45 conf=0.60 'SR.'  3001631_test_validation.docx
+    -> Correct exists? NO -- need better extraction
+  cte_edificacio               C-0                          C-1                          CTE DB SE-C (habitatge .. MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  municipality                 Rubí (Barcelona)             RUBI                         fileminer:comanda labor.. MISMATCH    
+    -> #1 pri=50 conf=0.90 'RUBI'  comanda laboratori_3001631_RUBI.xls
+    -> Correct exists? NO -- need better extraction
+  qa_value                     3.50                         2.74                         Terzaghi-Peck             MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Nb=?, B=1.0[DEF], Df=0.8[DEF], c=?, phi=?, cap=3.0
+  radon_zone                   1                            0                            CTE DB HS6 (Rubi)         MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  seismic_ab_text              AB  =0,08 g  (essent g el .. 0,04                         NCSE-02 (Rubi)            MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  site_description             El dia dels treballs de ca.. El terreny es presenta ant.. plantilla generada        MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  superficie_construida_m2     92                           64                           planol IMG-20251104-WA0.. MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  building_type                un habitatge unifamiliar a.. habitatge unifamiliar        planol IMG-20251104-WA0.. CLOSE       
+  num_floors                   PB + Porxo                   Pb                           planol IMG-20251104-WA0.. CLOSE       
+  settlement                   1.50                         1.33                         Schmertmann               CLOSE       
+  access_street                El dia dels treballs de ca.. --                           --                        NOT_EXTRACTED
+  building_structure_desc      en planta baixa              --                           --                        NOT_EXTRACTED
+  client_name                  SRA. JOANA MARTINEZ          --                           --                        NOT_EXTRACTED
+  lab_depth                    Profunditat:  -0.60  a -1... --                           --                        NOT_EXTRACTED
+  lab_field_company            TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_field_description        laboratori d’assaigs per a.. --                           --                        NOT_EXTRACTED
+  lab_location                 Punt: P-3                    --                           --                        NOT_EXTRACTED
+  lab_sample_id                Mostra : SPT-1               --                           --                        NOT_EXTRACTED
+  lab_testing_company          TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_testing_description      laboratori d’assaigs per a.. --                           --                        NOT_EXTRACTED
+  lab_tests_text               Anàlisi granulomètrica d'u.. --                           --                        NOT_EXTRACTED
+  location_sentence            a una parcel·la ubicada al.. --                           --                        NOT_EXTRACTED
+  num_dpsh_tests               3 assaigs de penetració di.. --                           --                        NOT_EXTRACTED
+  site_condition               Es tracta d’un solar no an.. --                           --                        NOT_EXTRACTED
+  superficie_parcela_m2        951                          --                           --                        NOT_EXTRACTED
+  table_dpsh_range             3 i 4                        --                           --                        NOT_EXTRACTED
+  cte_sol                      T-1                          T-1                          CTE DB SE-C (N20=35)      MATCH       
+  expedient                    3001631                      3001631                      groq_llm:tall.pdf         MATCH       
+  field_work_dates_text        14 de novembre de 2025       14 de novembre de 2025       DPSH/Lab PDF              MATCH       
+  k30_value                    6.0                          6.3                          Winkler                   MATCH       
+  sulfate_baumann              ---                          ---                          RD 470/2021               MATCH       
+  sulfate_classification       No Agressius                 No Agressius                 RD 470/2021               MATCH       
+  sulfate_level_name           1er nivell                   1er nivell                   default                   MATCH       
+  sulfate_mg_kg                632.3                        632.3                        /home/josep/projects/cl.. MATCH       
+
+────────────────────────────────────────────────────────────
+  SUMMARY (3001631 RUBI):
+    MATCH              8
+    CLOSE              3
+    MISMATCH          12
+    NOT_EXTRACTED     16
+  Running full pipeline for 4001607 LINYOLA... /home/josep/projects/claudecode-job/clients/g3dt/.venv/lib/python3.12/site-packages/openpyxl/reader/drawings.py:67: UserWarning: wmf image format is not supported so the image is being dropped
+  warn(msg)
+(68 values)
+
+==========================================================================================
+  4001607 LINYOLA  (vision: planol, sondeig, dpsh)
+  Phases: scan+ mine+ groq+ content+ budgetx(fitxer no trobat) geo_hist+ dpsh+ dates+ lab+ elev+ cadastre+
+==========================================================================================
+  7 match  3 close  14 mismatch  15 not_extracted  / 39 vars
+  Match+Close rate: 41.7% (of 24 compared)
+
+  Variable                     Eva                          Pipeline                     Source                    Status
+  ---------------------------- ---------------------------- ---------------------------- ------------------------- ------------
+  adjacent_east_fmt            Per la part est i pel sud .. Per la part est amb una pa.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_north_fmt           Per la part nord amb una p.. Per la part nord amb una p.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_south_fmt           Per la part est i pel sud .. Per la part sud amb una pa.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_west_fmt            I finalment, per la part o.. I finalment, per la part o.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  architect_name               SÍLVIA EROLES BALAGUERÓ      JOSEP BUNYESC PALACÍN        planol Punts de Sondeig.. MISMATCH    
+    -> #1 pri=45 conf=0.70 'SR.'  4001607_test_validation.docx
+    -> Correct exists? NO -- need better extraction
+  building_type                un nou habitatge unifamiliar habitatge unifamiliar aïllat planol Punts de Sondeig.. MISMATCH    
+    -> #1 pri=50 conf=0.90 'CONSTR HABITATGE'  comanda laboratori_4001607_LINYOLA.xls
+    -> Correct exists? NO -- need better extraction
+  cte_edificacio               C-0                          C-1                          CTE DB SE-C (habitatge .. MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  cte_sol                      T-1                          T-2                          CTE DB SE-C (N20=19)      MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  expedient                    4001607                      13/52/04                     fileminer:25.0616/2_02B.. MISMATCH    
+    -> #1 pri=45 conf=0.80 '13/52/04'  25.0616/2_02B_DG_Silvia_Jaume.pdf
+      #2 pri=45 conf=0.80 '13/52/04'  25.0616/Punts de Sondeig_Silvia_Jaume.pd
+      #3 pri=45 conf=0.80 '13/52/04'  Punts de Sondeig_Silvia_Jaume (1).pdf
+      #4 pri=45 conf=0.80 '13/52/04'  Punts de Sondeig_Silvia_Jaume (1)_REDIBU
+      #5 pri=45 conf=0.80 '13/52/04'  validation/msg_attachments/RV_ pressupos
+    -> Correct exists? NO -- need better extraction
+  field_work_dates_text        1 d ‘octubre de 2025         1 d'octubre de 2025          DPSH/Lab PDF              MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  qa_value                     3.0                          1.30                         Terzaghi-Peck             MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Nb=?, B=1.0[DEF], Df=0.8[DEF], c=?, phi=?, cap=3.0
+  settlement                   Els assentaments màxims pr.. 1.15                         Schmertmann               MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Es=57, qa=1.30
+  site_description             El dia dels treballs de ca.. parcel·la de forma rectang.. plantilla generada        MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  sulfate_level_name           2on nivell                   1er nivell                   default                   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  architect_company            BUNYESC ARQUITECTURA EFICI.. BUNYESC ARQUITECTURA EFICI.. planol Punts de Sondeig.. CLOSE       
+  client_name                  SRA. SÍLVIA EROLES BALAGUERÓ SÍLVIA EROLES BALAGUERÓ      planol Punts de Sondeig.. CLOSE       
+  sulfate_baumann              --                           ---                          RD 470/2021               CLOSE       
+  access_street                El dia 1 d ‘octubre de 202.. --                           --                        NOT_EXTRACTED
+  building_structure_desc      sense nivell de soterrani    --                           --                        NOT_EXTRACTED
+  lab_depth                    Profunditat:  -1.00  a -1... --                           --                        NOT_EXTRACTED
+  lab_field_company            TPS PROSPECCIÓ DEL SUBSÒL,.. --                           --                        NOT_EXTRACTED
+  lab_field_description        laboratori d’assaigs per a.. --                           --                        NOT_EXTRACTED
+  lab_location                 Punt: P-3                    --                           --                        NOT_EXTRACTED
+  lab_sample_id                Mostra : SPT-1               --                           --                        NOT_EXTRACTED
+  lab_testing_company          TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_testing_description      laboratori d’assaigs per a.. --                           --                        NOT_EXTRACTED
+  lab_tests_text               Assaig de Límits d’Atterbe.. --                           --                        NOT_EXTRACTED
+  location_sentence            al Carrer Clot de la Llacu.. --                           --                        NOT_EXTRACTED
+  num_dpsh_tests               3 assaigs de penetració di.. --                           --                        NOT_EXTRACTED
+  site_condition               Com que es tracta d’un sol.. --                           --                        NOT_EXTRACTED
+  superficie_construida_m2     250.91                       --                           --                        NOT_EXTRACTED
+  table_dpsh_range             3, 4 i 5                     --                           --                        NOT_EXTRACTED
+  municipality                 Linyola                      LINYOLA                      fileminer:comanda labor.. MATCH       
+  num_floors                   Pb                           Pb                           planol Punts de Sondeig.. MATCH       
+  radon_zone                   0                            0                            CTE DB HS6 (Linyola)      MATCH       
+  seismic_ab_text              0,04                         0,04                         NCSE-02 (Linyola)         MATCH       
+  sulfate_classification       No agressius                 No Agressius                 RD 470/2021               MATCH       
+  sulfate_mg_kg                0.0                          --                           /home/josep/projects/cl.. MATCH       
+  superficie_parcela_m2        571                          569.0                        planol Punts de Sondeig.. MATCH       
+
+────────────────────────────────────────────────────────────
+  SUMMARY (4001607 LINYOLA):
+    MATCH              7
+    CLOSE              3
+    MISMATCH          14
+    NOT_EXTRACTED     15
+  Running full pipeline for 4001670 ALCOLETGE... WARNING:automation.auto_extractor:FileMiner: REJECTED G3 internal address for street_address: 'C/ Vallbona, 22'
+(63 values)
+
+==========================================================================================
+  4001670 ALCOLETGE  (vision: planol, dpsh)
+  Phases: scan+ mine+ groq+ content+ budgetx(pàgina 1 sense text) geo_hist+ dpsh+ dates+ labx(fitxer no trobat) elev+ cadastre+
+==========================================================================================
+  5 match  1 close  12 mismatch  20 not_extracted  / 38 vars
+  Match+Close rate: 33.3% (of 18 compared)
+
+  Variable                     Eva                          Pipeline                     Source                    Status
+  ---------------------------- ---------------------------- ---------------------------- ------------------------- ------------
+  adjacent_east_fmt            Per la part est amb tres p.. Per la part est amb el Car.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_north_fmt           Per la part nord amb el ca.. Per la part nord amb una p.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_south_fmt           Per la part sud amb una pa.. Per la part sud amb una pa.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_west_fmt            I finalment, per la part o.. I finalment, per la part o.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  architect_name               ALBERT SANS BONVEHI          DAVID GRAUS ROBINAT          planol A.01.pdf           MISMATCH    
+    -> #1 pri=45 conf=0.98 'DAVID GRAUS ROBINAT'  4001670_generated (1).docx
+      #2 pri=45 conf=0.98 'DAVID GRAUS ROBINAT'  4001670_generated_utms.docx
+      #3 pri=45 conf=0.95 'David Graus Robinat'  26.0049/planol-1.pdf
+      #4 pri=45 conf=0.95 'David Graus Robinat'  validation/msg_attachments/geotècnic Amp
+    -> Correct exists? NO -- need better extraction
+  building_type                l'ampliació d'un edifici e.. habitatge unifamiliar        planol A.01.pdf           MISMATCH    
+    -> #1 pri=43 conf=0.80 'CARRER GIRASOLS 7, (URBANITZACIÓ ..'  26.0049/RE_ geotècnic Ampliació Albert S
+      #2 pri=43 conf=0.80 'CARRER GIRASOLS 7, (URBANITZACIÓ ..'  26.0049/geotècnic Ampliació Albert Sans 
+      #3 pri=50 conf=0.90 'CONSTR HAB UNIF'  comanda laboratori_4001670_ALCOLETGE.xls
+    -> Correct exists? NO -- need better extraction
+  client_name                  SR. ALBERT SANS BONVEHI      ALBERT SANS BONVEHÍ          planol A.01.pdf           MISMATCH    
+    -> #1 pri=43 conf=0.80 'ALBERT SANS BONVEHI tel. 67563943..'  26.0049/RE_ geotècnic Ampliació Albert S
+      #2 pri=43 conf=0.80 'ALBERT SANS BONVEHI tel. 67563943..'  26.0049/geotècnic Ampliació Albert Sans 
+    -> Correct exists? NO -- need better extraction
+  cte_edificacio               C-0                          C-1                          CTE DB SE-C (habitatge .. MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  cte_sol                      T-1                          T-2                          CTE DB SE-C (N20=8)       MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  qa_value                     3.50                         0.51                         Terzaghi-Peck             MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Nb=?, B=1.0[DEF], Df=0.8[DEF], c=?, phi=?, cap=3.0
+  settlement                   Els assentaments màxims pr.. 1.09                         Schmertmann               MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Es=23, qa=0.51
+  site_description             El dia dels treballs de ca.. El terreny es presenta ant.. plantilla generada        MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  municipality                 A la zona d’estudi, en el .. ALCOLETGE                    fileminer:comanda labor.. CLOSE       
+  access_street                El dia dels treballs de ca.. --                           --                        NOT_EXTRACTED
+  building_structure_desc      sense nivell de soterrani    --                           --                        NOT_EXTRACTED
+  lab_depth                    Profunditat:  -0.80  a -1... --                           --                        NOT_EXTRACTED
+  lab_field_company            TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_field_description        laboratori d’assaigs per a.. --                           --                        NOT_EXTRACTED
+  lab_location                 Punt: P-3                    --                           --                        NOT_EXTRACTED
+  lab_sample_id                Mostra : SPT-1               --                           --                        NOT_EXTRACTED
+  lab_testing_company          TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_testing_description      laboratori d’assaigs per a.. --                           --                        NOT_EXTRACTED
+  lab_tests_text               Assaig de plasticitat de L.. --                           --                        NOT_EXTRACTED
+  location_sentence            a una parcel·la ubicada al.. --                           --                        NOT_EXTRACTED
+  num_dpsh_tests               3 assaigs de penetració di.. --                           --                        NOT_EXTRACTED
+  site_condition               Com que es tracta d’un sol.. --                           --                        NOT_EXTRACTED
+  sulfate_baumann              ---                          --                           --                        NOT_EXTRACTED
+  sulfate_classification       No Agressius                 --                           --                        NOT_EXTRACTED
+  sulfate_level_name           2on nivell                   --                           --                        NOT_EXTRACTED
+  sulfate_mg_kg                297.9                        --                           --                        NOT_EXTRACTED
+  superficie_construida_m2     100                          --                           --                        NOT_EXTRACTED
+  superficie_parcela_m2        1167                         --                           --                        NOT_EXTRACTED
+  table_dpsh_range             3 i 4                        --                           --                        NOT_EXTRACTED
+  expedient                    4001670                      4001670                      groq_llm:tall.pdf         MATCH       
+  field_work_dates_text        16 de febrer de 2026         16 de febrer de 2026         DPSH/Lab PDF              MATCH       
+  num_floors                   Pb                           Pb                           planol A.01.pdf           MATCH       
+  radon_zone                   1                            1                            CTE DB HS6 (Alcoletge)    MATCH       
+  seismic_ab_text              0,04                         0,04                         NCSE-02 (Alcoletge)       MATCH       
+
+────────────────────────────────────────────────────────────
+  SUMMARY (4001670 ALCOLETGE):
+    MATCH              5
+    CLOSE              1
+    MISMATCH          12
+    NOT_EXTRACTED     20
+  Running full pipeline for 4001671 VILANOVA DE SEGRIA... WARNING:automation.auto_extractor:FileMiner: REJECTED G3 internal address for street_address: 'C/ Vallbona, 22'
+WARNING:automation.geocode_coordinates:Progressive cadastre: municipality 'Vilanova del Segrià' not found in LLEIDA or neighbors
+WARNING:automation.geocode_coordinates:Progressive cadastre: municipality 'Vilanova del Segrià' not found in Lleida or neighbors
+WARNING:automation.geocode_coordinates:Nominatim returned no results for: C. Santa Gemma, 4, Vilanova del Segrià, Lleida, Spain
+WARNING:automation.geocode_coordinates:Geocoding failed for 'C. Santa Gemma, 4, Vilanova del Segrià'
+WARNING:automation.geocode_coordinates:Progressive cadastre: municipality 'Vilanova del Segrià' not found in Lleida or neighbors
+WARNING:automation.geocode_coordinates:Nominatim returned no results for: C. Santa Gemma, Vilanova del Segrià, Lleida, Spain
+WARNING:automation.geocode_coordinates:Geocoding failed for 'C. Santa Gemma, Vilanova del Segrià'
+(40 values)
+
+==========================================================================================
+  4001671 VILANOVA DE SEGRIA  (vision: planol, dpsh)
+  Phases: scan+ mine+ groq+ content+ budgetx(fitxer no trobat) geo_hist+ dpsh+ datesx(cap data trobada als..) labx(fitxer no trobat) geocodex(sense adreça disponi..)
+==========================================================================================
+  1 match  4 close  10 mismatch  25 not_extracted  / 40 vars
+  Match+Close rate: 33.3% (of 15 compared)
+
+  Variable                     Eva                          Pipeline                     Source                    Status
+  ---------------------------- ---------------------------- ---------------------------- ------------------------- ------------
+  architect_name               JUAN JOSÉ TORRES POVEDANO    Jordi Carner Rocar           planol 1.0.pdf            MISMATCH    
+    -> #1 pri=45 conf=0.95 'jordi carner'  26.0050/1.0.pdf
+    -> Correct exists? NO -- need better extraction
+  building_type                una vivienda unifamiliar a.. habitatge unifamiliar aïllat planol 1.0.pdf            MISMATCH    
+    -> #1 pri=50 conf=0.90 'CONSTR HAB UNIF'  comanda laboratori_4001671_VILANOVA DE S
+    -> Correct exists? NO -- need better extraction
+  cte_edificacio               C-0                          C-1                          CTE DB SE-C (habitatge .. MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  cte_sol                      T-1                          T-2                          CTE DB SE-C (N20=14)      MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  qa_value                     2.50 Kg/cm2 con un factor .. 0.88                         Terzaghi-Peck             MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Nb=?, B=1.0[DEF], Df=0.8[DEF], c=?, phi=?, cap=3.0
+  radon_zone                   1                            0                            CTE DB HS6 (Vilanova de.. MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  settlement                   Los asientos máximos previ.. 1.09                         Schmertmann               MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Es=41, qa=0.88
+  site_description             El día de los trabajos de .. parcel·la de forma rectang.. plantilla generada        MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  superficie_construida_m2     406                          137                          planol 1.0.pdf            MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  superficie_parcela_m2        100                          430.0                        planol 1.0.pdf            MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  client_name                  GRUPO CUENCA GUERRERO, S.L   Grupo CUENCA GUERRERO        planol 1.0.pdf            CLOSE       
+  expedient                    Expediente Núm.: 4001671     4001671                      groq_llm:pl situació.pdf  CLOSE       
+  municipality                 En la zona en estudio, en .. VILANOVA DE SEGRIÀ           fileminer:comanda labor.. CLOSE       
+  seismic_ab_text              AB < 0,04 g (siento g el v.. 0,04                         NCSE-02 (Vilanova del S.. CLOSE       
+  adjacent_east_fmt            Por la parte norte y este,.. --                           --                        NOT_EXTRACTED
+  adjacent_north_fmt           Por la parte norte y este,.. --                           --                        NOT_EXTRACTED
+  adjacent_south_fmt           Por la parte sur, con una .. --                           --                        NOT_EXTRACTED
+  adjacent_west_fmt            Y finalmente, Por la parte.. --                           --                        NOT_EXTRACTED
+  building_structure_desc      sin nivel de sótano          --                           --                        NOT_EXTRACTED
+  field_work_dates_text        El día 19 de febrero de 20.. --                           --                        NOT_EXTRACTED
+  lab_depth                    Profundidad: -1.00 a -1.60 m --                           --                        NOT_EXTRACTED
+  lab_field_company            TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_field_description        laboratorio de ensayos par.. --                           --                        NOT_EXTRACTED
+  lab_location                 Punto:  P-3                  --                           --                        NOT_EXTRACTED
+  lab_sample_id                Muestra: SPT-1               --                           --                        NOT_EXTRACTED
+  lab_testing_company          TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_testing_description      laboratorio de ensayos par.. --                           --                        NOT_EXTRACTED
+  lab_tests_text               Determinación del contenid.. --                           --                        NOT_EXTRACTED
+  location_sentence            en la Calle STA. GEMMA nº .. --                           --                        NOT_EXTRACTED
+  num_dpsh_tests               3 ensayos de penetración d.. --                           --                        NOT_EXTRACTED
+  site_condition               En la zona de estudio no s.. --                           --                        NOT_EXTRACTED
+  spt_depth_range              -0.80 a -1.40                --                           --                        NOT_EXTRACTED
+  spt_lithology                Arcilla limosa y arenosa c.. --                           --                        NOT_EXTRACTED
+  spt_location                 P-1                          --                           --                        NOT_EXTRACTED
+  spt_n30                      10                           --                           --                        NOT_EXTRACTED
+  spt_test_id                  SPT-1                        --                           --                        NOT_EXTRACTED
+  sulfate_baumann              ---                          --                           --                        NOT_EXTRACTED
+  sulfate_level_name           1er nivel                    --                           --                        NOT_EXTRACTED
+  table_dpsh_range             Tabla 3 y 4. Resumen de lo.. --                           --                        NOT_EXTRACTED
+  num_floors                   Pb                           Pb                           planol 1.0.pdf            MATCH       
+
+────────────────────────────────────────────────────────────
+  SUMMARY (4001671 VILANOVA DE SEGRIA):
+    MATCH              1
+    CLOSE              4
+    MISMATCH          10
+    NOT_EXTRACTED     25
+  Running full pipeline for 4001679 ANCILES... (67 values)
+
+==========================================================================================
+  4001679 ANCILES  (vision: planol, sondeig, dpsh)
+  Phases: scan+ mine+ groq+ content+ budgetx(fitxer no trobat) geo_histx(cap match per 'Ancil..) dpsh+ datesx(cap data trobada als..) labx(fitxer no trobat) geocode+ icgc_slopex(Could not parse elev..) cadastre+
+==========================================================================================
+  4 match  2 close  14 mismatch  18 not_extracted  / 38 vars
+  Match+Close rate: 30.0% (of 20 compared)
+
+  Variable                     Eva                          Pipeline                     Source                    Status
+  ---------------------------- ---------------------------- ---------------------------- ------------------------- ------------
+  adjacent_east_fmt            Por la parte noreste con u.. Per la part est amb Carret.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_north_fmt           Por la parte noroeste con .. Per la part nord amb Calle.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_south_fmt           Por la parte suroeste con .. Per la part sud amb una pa.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  adjacent_west_fmt            Y finalmente por el surest.. I finalment, per la part o.. formatted from Cadastre   MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  architect_name               ALBA MARIA BARRAU CASTÁN     ALBA BARRAU, MIRIAM CASTEL   planol A01_TIPOL.pdf      MISMATCH    
+    -> #1 pri=45 conf=0.98 'ANDRÉS AMAT y ENRIQUE M. GARDETA'  24.0807/A01_TIPOL.pdf
+      #2 pri=45 conf=0.98 'MIRIAM CASTEL, ALBA BARRAU'  24.0807/IV_PLANOS.pdf
+      #3 pri=45 conf=0.98 'ANDRÉS AMAT y ENRIQUE M. GARDETA'  validation/msg_attachments/Presupuesto P
+      #4 pri=45 conf=0.95 'ANDRÉS AMAT y ENRIQUE M. GARDETA'  24.0807/SITE_prop A.pdf
+      #5 pri=45 conf=0.95 'ANDRÉS AMAT y ENRIQUE M. GARDETA'  validation/msg_attachments/Presupuesto P
+    -> Correct exists? NO -- need better extraction
+  building_type                7 viviendas unifamiliares .. 7 viviendas adosadas         planol A01_TIPOL.pdf      MISMATCH    
+    -> #1 pri=50 conf=0.90 'CONSTR GRUPO DE VIVIENDAS'  comanda laboratori_4001679_ANCILES.xls
+    -> Correct exists? NO -- need better extraction
+  client_name                  SRA. ALBA MARIA BARRAU CAS.. ANDRÉS AMAT y ENRIQUE M. G.. planol A01_TIPOL.pdf      MISMATCH    
+    -> #1 pri=50 conf=0.90 'MARIA ALBA BARRAU CASTÁN'  24.0807/DADES PER ANAR A CAMP_v1.xlsx
+    -> Correct exists? NO -- need better extraction
+  num_floors                   C-1                          Ps+Pb+Pbc+1Pp                planol A01_TIPOL.pdf      MISMATCH    
+    -> #1 pri=43 conf=0.80 'SÓTANO, PLANTA BAJA y PLANTA 1'  24.0807/Presupuesto Parcela Anciles.msg
+      #2 pri=43 conf=0.80 'SÓTANO, PLANTA BAJA y PLANTA 1'  24.0807/RE_ Presupuesto Parcela Anciles.
+    -> Correct exists? NO -- need better extraction
+  qa_value                     2.0 Kg/cm2 con un factor d.. 1.16                         Terzaghi-Peck             MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Nb=?, B=1.0[DEF], Df=0.8[DEF], c=?, phi=?, cap=3.0
+  seismic_ab_text              AB = 0.05 g (siento g el v.. 0,04                         NCSE-02 (Anciles - Bena.. MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  settlement                   Los asientos máximos previ.. 1.26                         Schmertmann               MISMATCH    
+    -> Correct exists? NO -- need better extraction
+    -> Calc inputs: Es=44, qa=1.16
+  site_description             El día de los trabajos de .. El terreny es presenta ant.. plantilla generada        MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  spt_depth_range              -1.00 a -1.60                -1.00 a 1.60                 sondeig vision            MISMATCH    
+    -> Correct exists? NO -- need better extraction
+  superficie_parcela_m2        T-1                          1655.01                      groq_llm:24.0807/IV_PLA.. MISMATCH    
+    -> #1 pri=50 conf=0.98 '1655.01'  24.0807/IV_PLANOS.pdf
+    -> Correct exists? NO -- need better extraction
+  expedient                    Expediente Núm.: 4001679_v0  4001679                      groq_llm:pl situ.pdf      CLOSE       
+  municipality                 En la zona en estudio, en .. ANCILES                      fileminer:comanda labor.. CLOSE       
+  access_street                El día de los trabajos de .. --                           --                        NOT_EXTRACTED
+  building_structure_desc      un semisótano en dos de la.. --                           --                        NOT_EXTRACTED
+  field_work_dates_text        El día 19 de febrero de 20.. --                           --                        NOT_EXTRACTED
+  lab_depth                    Profundidad: -2.80 a -3.00 m --                           --                        NOT_EXTRACTED
+  lab_field_company            TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_field_description        laboratorio de ensayos par.. --                           --                        NOT_EXTRACTED
+  lab_location                 Punto:  S-2                  --                           --                        NOT_EXTRACTED
+  lab_sample_id                Muestra: MA-1                --                           --                        NOT_EXTRACTED
+  lab_testing_company          TPS PROSPECCIÓ DEL SUBSÒL SL --                           --                        NOT_EXTRACTED
+  lab_testing_description      laboratorio de ensayos par.. --                           --                        NOT_EXTRACTED
+  lab_tests_text               Determinación del contenid.. --                           --                        NOT_EXTRACTED
+  location_sentence            en la calle Gral Ferraz nº.. --                           --                        NOT_EXTRACTED
+  num_dpsh_tests               2 ensayos SPT con recupera.. --                           --                        NOT_EXTRACTED
+  site_condition               En la zona de estudio no s.. --                           --                        NOT_EXTRACTED
+  spt_lithology                Arcilla arenosa con gravitas --                           --                        NOT_EXTRACTED
+  sulfate_baumann              ---                          --                           --                        NOT_EXTRACTED
+  sulfate_level_name           2do nivel                    --                           --                        NOT_EXTRACTED
+  table_dpsh_range             Tabla 3, 4 y 5. Resumen de.. --                           --                        NOT_EXTRACTED
+  radon_zone                   2                            2                            CTE DB HS6 (Anciles - B.. MATCH       
+  spt_location                 S-1                          S-1                          sondeig vision            MATCH       
+  spt_n30                      6                            6                            sondeig vision            MATCH       
+  spt_test_id                  SPT-1                        SPT-1                        sondeig vision            MATCH       
+
+────────────────────────────────────────────────────────────
+  SUMMARY (4001679 ANCILES):
+    MATCH              4
+    CLOSE              2
+    MISMATCH          14
+    NOT_EXTRACTED     18
+
+====================================================================================================
+  CROSS-PROJECT SUMMARY (7 projects)
+====================================================================================================
+  Total: 281 var-comparisons  |  51 match  16 close  88 mismatch  126 not_extracted
+  Match+Close rate: 43.2% (of 155 compared)
+
+  Variable                     |  MATCH  |  CLOSE  | MISMATCH | NO_DATA | Note
+  -----------------------------+---------+---------+----------+---------+------
+  qa_value                     |    -    |    -    |    7     |    -    | ALL wrong
+  site_description             |    -    |    -    |    7     |    -    | ALL wrong
+  adjacent_south_fmt           |    -    |    -    |    6     |    1    | 6 wrong, 1 missing
+  adjacent_west_fmt            |    -    |    -    |    6     |    1    | 6 wrong, 1 missing
+  building_type                |    -    |    1    |    6     |    -    | 
+  settlement                   |    -    |    1    |    6     |    -    | 
+  adjacent_east_fmt            |    1    |    -    |    5     |    1    | 5 wrong, 1 missing
+  adjacent_north_fmt           |    1    |    -    |    5     |    1    | 5 wrong, 1 missing
+  architect_name               |    1    |    -    |    5     |    -    | 
+  client_name                  |    -    |    2    |    4     |    1    | 4 wrong, 1 missing
+  cte_edificacio               |    2    |    -    |    4     |    -    | 
+  cte_sol                      |    2    |    -    |    4     |    -    | 
+  superficie_construida_m2     |    -    |    -    |    3     |    3    | 3 wrong, 3 missing
+  field_work_dates_text        |    2    |    -    |    3     |    2    | 3 wrong, 2 missing
+  superficie_parcela_m2        |    2    |    -    |    2     |    3    | 2 wrong, 3 missing
+  spt_lithology                |    -    |    -    |    2     |    2    | 2 wrong, 2 missing
+  spt_depth_range              |    1    |    -    |    2     |    1    | 2 wrong, 1 missing
+  expedient                    |    3    |    2    |    2     |    -    | 
+  radon_zone                   |    5    |    -    |    2     |    -    | 
+  seismic_ab_text              |    3    |    2    |    2     |    -    | 
+  sulfate_level_name           |    3    |    -    |    1     |    3    | 1 wrong, 3 missing
+  spt_n30                      |    1    |    -    |    1     |    2    | 1 wrong, 2 missing
+  num_floors                   |    4    |    1    |    1     |    1    | 1 wrong, 1 missing
+  k30_value                    |    1    |    -    |    1     |    -    | 
+  municipality                 |    2    |    4    |    1     |    -    | 
+  building_structure_desc      |    -    |    -    |    -     |    7    | never extracted
+  lab_depth                    |    -    |    -    |    -     |    7    | never extracted
+  lab_field_company            |    -    |    -    |    -     |    7    | never extracted
+  lab_field_description        |    -    |    -    |    -     |    7    | never extracted
+  lab_location                 |    -    |    -    |    -     |    7    | never extracted
+  lab_sample_id                |    -    |    -    |    -     |    7    | never extracted
+  lab_testing_company          |    -    |    -    |    -     |    7    | never extracted
+  lab_testing_description      |    -    |    -    |    -     |    7    | never extracted
+  lab_tests_text               |    -    |    -    |    -     |    7    | never extracted
+  location_sentence            |    -    |    -    |    -     |    7    | never extracted
+  num_dpsh_tests               |    -    |    -    |    -     |    7    | never extracted
+  site_condition               |    -    |    -    |    -     |    7    | never extracted
+  table_dpsh_range             |    -    |    -    |    -     |    7    | never extracted
+  access_street                |    -    |    -    |    -     |    6    | 
+  sulfate_baumann              |    2    |    2    |    -     |    3    | 
+  spt_location                 |    3    |    -    |    -     |    1    | 
+  spt_test_id                  |    3    |    -    |    -     |    1    | 
+  sulfate_classification       |    4    |    -    |    -     |    1    | 
+  sulfate_mg_kg                |    4    |    -    |    -     |    1    | 
+  architect_company            |    1    |    1    |    -     |    -    | 
+
+================================================================================
+  MISMATCH CLASSIFICATION
+================================================================================
+
+  PRIORITY     (3) -- Correct value exists as alternative signal
+    - client_name(4001612)
+    - expedient(4001612)
+    - superficie_construida_m2(4001612)
+
+  CALC         (14) -- Geotech calculation (qa/settlement/k30)
+    - k30_value(3001621)
+    - qa_value(3001621)
+    - qa_value(3001631)
+    - qa_value(4001607)
+    - qa_value(4001612)
+    - qa_value(4001670)
+    - qa_value(4001671)
+    - qa_value(4001679)
+    - settlement(3001621)
+    - settlement(4001607)
+    - settlement(4001612)
+    - settlement(4001670)
+    - settlement(4001671)
+    - settlement(4001679)
+
+  EXTRACTION   (64) -- No correct signal found
+    - adjacent_east_fmt(3001621)
+    - adjacent_east_fmt(3001631)
+    - adjacent_east_fmt(4001607)
+    - adjacent_east_fmt(4001670)
+    - adjacent_east_fmt(4001679)
+    - adjacent_north_fmt(3001621)
+    - adjacent_north_fmt(3001631)
+    - adjacent_north_fmt(4001607)
+    - adjacent_north_fmt(4001670)
+    - adjacent_north_fmt(4001679)
+    - adjacent_south_fmt(3001621)
+    - adjacent_south_fmt(3001631)
+    - adjacent_south_fmt(4001607)
+    - adjacent_south_fmt(4001612)
+    - adjacent_south_fmt(4001670)
+    - adjacent_south_fmt(4001679)
+    - adjacent_west_fmt(3001621)
+    - adjacent_west_fmt(3001631)
+    - adjacent_west_fmt(4001607)
+    - adjacent_west_fmt(4001612)
+    - adjacent_west_fmt(4001670)
+    - adjacent_west_fmt(4001679)
+    - architect_name(3001631)
+    - architect_name(4001607)
+    - architect_name(4001670)
+    - architect_name(4001671)
+    - architect_name(4001679)
+    - building_type(3001621)
+    - building_type(4001607)
+    - building_type(4001612)
+    - building_type(4001670)
+    - building_type(4001671)
+    - building_type(4001679)
+    - client_name(3001621)
+    - client_name(4001670)
+    - client_name(4001679)
+    - cte_edificacio(3001631)
+    - cte_edificacio(4001607)
+    - cte_edificacio(4001670)
+    - cte_edificacio(4001671)
+    - cte_sol(3001621)
+    - cte_sol(4001607)
+    - cte_sol(4001670)
+    - cte_sol(4001671)
+    - expedient(4001607)
+    - field_work_dates_text(3001621)
+    - field_work_dates_text(4001607)
+    - field_work_dates_text(4001612)
+    - municipality(3001631)
+    - num_floors(4001679)
+    - radon_zone(3001631)
+    - radon_zone(4001671)
+    - seismic_ab_text(3001631)
+    - seismic_ab_text(4001679)
+    - spt_depth_range(3001621)
+    - spt_depth_range(4001679)
+    - spt_lithology(3001621)
+    - spt_lithology(4001612)
+    - spt_n30(4001612)
+    - sulfate_level_name(4001607)
+    - superficie_construida_m2(3001631)
+    - superficie_construida_m2(4001671)
+    - superficie_parcela_m2(4001671)
+    - superficie_parcela_m2(4001679)
+
+  NARRATIVE    (7) -- Narrative/description text
+    - site_description(3001621)
+    - site_description(3001631)
+    - site_description(4001607)
+    - site_description(4001612)
+    - site_description(4001670)
+    - site_description(4001671)
+    - site_description(4001679)
