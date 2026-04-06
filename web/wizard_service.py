@@ -457,6 +457,7 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
 _ES_MUNICIPALITIES = frozenset({
     'anciles', 'benasque', 'castejón de sos', 'campo', 'graus',
     'barbastro', 'monzón', 'binéfar', 'tamarite de litera',
+    'vilanova de segrià', 'vilanova de segria',  # Eva writes these in Spanish
 })
 
 # Spanish-language markers (words that don't appear in Catalan texts)
@@ -636,6 +637,332 @@ def _compute_lookup_prefills(merged: dict[str, Any], auto_result: Any) -> None:
     if municipality:
         zone = lookup_radon_zone(municipality)
         _set('radon_zone', str(zone), f'CTE DB HS6 ({municipality})')
+
+
+def _extract_comanda_building_info(project_path: Path) -> str:
+    """Extract building info from comanda_lab Excel file.
+
+    Looks for patterns like "CONSTR 3 HAB UNIF", "CONSTR GRUPO DE VIVIENDAS" etc.
+    Returns the raw text found, or empty string.
+    """
+    import re
+
+    # Find comanda file via file_mapping.json
+    mapping_path = project_path / 'file_mapping.json'
+    comanda_path = None
+
+    if mapping_path.exists():
+        try:
+            data = json.loads(mapping_path.read_text(encoding='utf-8'))
+            for role_name in ('lab_order', 'lab_excel', 'comanda_lab'):
+                role = data.get('roles', {}).get(role_name)
+                if role:
+                    candidate = project_path / role['path']
+                    if candidate.exists():
+                        comanda_path = candidate
+                        break
+        except Exception:
+            pass
+
+    # Fallback: glob for comanda*.xls
+    if not comanda_path:
+        matches = (
+            list(project_path.glob('comanda*laboratori*.xls'))
+            + list(project_path.glob('comanda*laboratori*.xlsx'))
+        )
+        if matches:
+            comanda_path = matches[0]
+
+    if not comanda_path:
+        return ''
+
+    try:
+        import xlrd
+        wb = xlrd.open_workbook(str(comanda_path))
+        text_parts = []
+        for sheet in wb.sheets():
+            for row_idx in range(min(sheet.nrows, 20)):  # First 20 rows only
+                for col_idx in range(sheet.ncols):
+                    cell = sheet.cell(row_idx, col_idx)
+                    if cell.ctype == xlrd.XL_CELL_TEXT and cell.value:
+                        text_parts.append(cell.value.strip())
+
+        full_text = ' '.join(text_parts)
+
+        # Look for construction/building patterns
+        patterns = [
+            r'(?i)(CONSTR(?:UCCI[OÓ]N?)?\s+\d+\s+HAB\w*(?:\s+\w+)*)',
+            r'(?i)(CONSTR(?:UCCI[OÓ]N?)?\s+(?:GRUP(?:O|E)\s+DE\s+)?(?:VIVIEND|HABITA)\w*(?:\s+\w+)*)',
+            r'(?i)(CONSTR(?:UCCI[OÓ]N?)?\s+(?:NAU|EDIFIC|AMPLIA)\w*(?:\s+\w+)*)',
+            r'(?i)(\d+\s+(?:HABITATGES?|VIVIENDAS?)\s+\w+)',
+        ]
+
+        for pattern in patterns:
+            match = re.search(pattern, full_text)
+            if match:
+                return match.group(1).strip()
+
+        return ''
+
+    except ImportError:
+        logger.info("xlrd not available, cannot read comanda_lab")
+        return ''
+    except Exception as e:
+        logger.debug("Failed to read comanda_lab %s: %s", comanda_path, e)
+        return ''
+
+
+def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
+    """Use Claude API to synthesize building_type, architect/client, location_sentence
+    from all pre-extracted sources. One API call per project."""
+
+    def _get_val(key: str) -> str:
+        entry = merged.get(key)
+        if entry is None:
+            return ''
+        if isinstance(entry, dict):
+            return str(entry.get('value', '') or '')
+        return str(entry)
+
+    def _get_source(key: str) -> str:
+        entry = merged.get(key)
+        if isinstance(entry, dict):
+            return entry.get('source', '')
+        return ''
+
+    def _set(key: str, value: str, source: str = 'llm_synthesis') -> None:
+        existing = merged.get(key)
+        if isinstance(existing, dict) and existing.get('source') == 'user':
+            return  # Eva's manual edits always win
+        if value:  # Only set non-empty
+            merged[key] = {'value': value, 'source': source}
+
+    # Skip if no API key available
+    try:
+        import anthropic
+    except ImportError:
+        logger.info("anthropic package not available, skipping LLM synthesis")
+        return
+
+    api_key = os.environ.get('ANTHROPIC_API_KEY')
+    if not api_key:
+        logger.info("No ANTHROPIC_API_KEY, skipping LLM synthesis")
+        return
+
+    # Check if ALL fields already have user edits -- skip synthesis if so
+    user_fields = [
+        k for k in ('building_type', 'architect_name', 'client_name', 'location_sentence')
+        if _get_source(k) == 'user'
+    ]
+    if len(user_fields) == 4:
+        logger.info("All synthesis fields have user edits, skipping LLM synthesis")
+        return
+
+    # --- Gather all source data ---
+
+    # Building type sources
+    building_type_current = _get_val('building_type')
+    building_type_source = _get_source('building_type')
+
+    # Project title from planol
+    planol_path = project_path / 'validation' / 'planol_extracted.json'
+    project_title = ''
+    planol_data = {}
+    if planol_path.exists():
+        try:
+            planol_data = json.loads(planol_path.read_text(encoding='utf-8'))
+            arch = planol_data.get('architect_data', {})
+            project_title = (
+                arch.get('project_name', '')
+                or arch.get('project_title', '')
+                or ''
+            )
+        except Exception:
+            pass
+
+    # Comanda lab building info
+    comanda_building_info = _extract_comanda_building_info(project_path)
+
+    # Architect/client from all sources
+    architect_current = _get_val('architect_name')
+    architect_source = _get_source('architect_name')
+    client_current = _get_val('client_name')
+    client_source = _get_source('client_name')
+
+    # Planol architect data
+    planol_architect = ''
+    planol_company = ''
+    planol_promotor = ''
+    if planol_data:
+        arch = planol_data.get('architect_data', {})
+        planol_architect = arch.get('architect', '') or ''
+        planol_company = arch.get('architect_company', '') or ''
+        planol_promotor = arch.get('promotor', '') or arch.get('client_name', '') or ''
+
+    # Docs extracted data
+    docs_path = project_path / 'validation' / 'docs_extracted.json'
+    docs_architect = ''
+    docs_client = ''
+    if docs_path.exists():
+        try:
+            docs_data = json.loads(docs_path.read_text(encoding='utf-8'))
+            raw_arch = docs_data.get('architect_name')
+            docs_architect = (
+                raw_arch.get('value', '') if isinstance(raw_arch, dict)
+                else (raw_arch or '')
+            )
+            raw_cli = docs_data.get('client_name')
+            docs_client = (
+                raw_cli.get('value', '') if isinstance(raw_cli, dict)
+                else (raw_cli or '')
+            )
+        except Exception:
+            pass
+
+    # Location data
+    street_address = _get_val('street_address')
+    municipality = _get_val('site_municipality')
+    adjacent_north = _get_val('adjacent_north_formatted') or _get_val('adjacent_north')
+    adjacent_south = _get_val('adjacent_south_formatted') or _get_val('adjacent_south')
+    adjacent_east = _get_val('adjacent_east_formatted') or _get_val('adjacent_east')
+    adjacent_west = _get_val('adjacent_west_formatted') or _get_val('adjacent_west')
+
+    # Language
+    lang = _get_project_language(merged)
+    lang_name = 'Spanish' if lang == 'es' else 'Catalan'
+
+    # --- Build prompt ---
+
+    prompt = f"""You are a geotechnical report assistant. Given data extracted from multiple sources about a construction project, synthesize the final values for 4 fields.
+
+## Rules
+
+### building_type
+- Output in {lang_name}
+- Include the article (un/una/l'/los/las)
+- Include quantity if more than 1 (e.g., "3 habitatges unifamiliars")
+- Include relevant descriptors from the project title or comanda (e.g., "modular", "d'estructura lleugera, fusta", "adosadas")
+- If the project title mentions "ampliacio", "tancament", "reforma" -> the building_type should reflect this (e.g., "l'ampliacio d'un edifici en planta baixa")
+- Keep it concise (3-10 words)
+
+### architect_name
+- Look at all sources and determine who the correct architect/technical director is
+- Sometimes it is the plan-signing architect (e.g., Bell-Lloc: BOSCH NOVELL)
+- Sometimes it is the promotor/client who also acts as project director (e.g., Linyola: EROLES)
+- Use the few-shot examples below as guidance for each case
+- Use UPPERCASE for names
+- Do NOT include honorifics (Sr./Sra.)
+
+### client_name
+- Add honorific: "SR." for male, "SRA." for female names. For companies, no honorific.
+- If the client is clearly a company (S.L, S.L.U, etc.), use the company name without honorific
+- Use UPPERCASE
+
+### location_sentence
+- Compose a location description from the available address and municipality data
+- In {lang_name}
+- Format examples:
+  - "al Carrer X nY de Z" (simple address)
+  - "entre el Carrer X i el Carrer Y de Z" (between two streets -- use when adjacent streets are available on 2+ sides)
+  - "a una parcella ubicada al Carrer X nY, Z" (with parcel reference)
+  - "en la calle X nY en el municipio de Z" (Spanish)
+- If you don't have enough data for a specific part, omit it rather than guessing
+
+## Eva's Reference Examples
+
+1. Bell-Lloc (CA): building_type="un habitatge unifamiliar", architect="JORDI BOSCH NOVELL", client="RAMON MITJANA S.L", location="entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell"
+2. Castellar (CA): building_type="3 habitatges unifamiliars d'estructura lleugera, fusta", client="WOOD COMFORT PROMOCIONS SLU", location="en el Carrer dels Arbrells, 18 de Castellar del Valles"
+3. Rubi (CA): building_type="un habitatge unifamiliar aillat modular", architect="JOANA MARTINEZ", client="SRA. JOANA MARTINEZ", location="a una parcella ubicada al carrer de la Miranda n 39, (PARC. 6-105) Rubi, Barcelona"
+4. Linyola (CA): building_type="un nou habitatge unifamiliar", architect="SILVIA EROLES BALAGUERO", client="SRA. SILVIA EROLES BALAGUERO", location="al Carrer Clot de la Llacuna n16 de Linyola"
+5. Alcoletge (CA): building_type="l'ampliacio d'un edifici en planta baixa", architect="ALBERT SANS BONVEHI", client="SR. ALBERT SANS BONVEHI", location="a una parcella ubicada al Carrer Girasols n7, Urbanitzacio El Roser d'Alcoletge"
+6. Vilanova (ES): building_type="una vivienda unifamiliar aislada", architect="JUAN JOSE TORRES POVEDANO", client="GRUPO CUENCA GUERRERO, S.L", location="en la Calle STA. GEMMA n 4, URB. LA SERRA del municipio de VILANOVA DE SEGRIA"
+7. Anciles (ES): building_type="7 viviendas unifamiliares adosadas", architect="ALBA MARIA BARRAU CASTAN", client="SRA. ALBA MARIA BARRAU CASTAN", location="en la calle Gral Ferraz n20 en el municipio de Anciles, Benasque"
+
+## Current Project Data
+
+**Language:** {lang_name}
+**Municipality:** {municipality}
+
+**Building type sources:**
+- Vision extraction (from architectural plan): "{building_type_current}" (source: {building_type_source})
+- Project title (from plan header): "{project_title}"
+- Comanda lab (lab order form): "{comanda_building_info}"
+
+**Architect/client sources:**
+- Current pipeline architect: "{architect_current}" (source: {architect_source})
+- Current pipeline client: "{client_current}" (source: {client_source})
+- Planol architect (plan signer): "{planol_architect}"
+- Planol company: "{planol_company}"
+- Planol promotor: "{planol_promotor}"
+- Docs extracted architect: "{docs_architect}"
+- Docs extracted client: "{docs_client}"
+
+**Location sources:**
+- Street address: "{street_address}"
+- Municipality: "{municipality}"
+- Adjacent north: "{adjacent_north}"
+- Adjacent south: "{adjacent_south}"
+- Adjacent east: "{adjacent_east}"
+- Adjacent west: "{adjacent_west}"
+
+## Output
+
+Return ONLY a JSON object with exactly these 4 keys:
+```json
+{{
+  "building_type": "...",
+  "architect_name": "...",
+  "client_name": "...",
+  "location_sentence": "..."
+}}
+```
+
+If you cannot determine a value with reasonable confidence, use an empty string ""."""
+
+    # --- Call Claude API ---
+    try:
+        import re as _re
+
+        client = anthropic.Anthropic()
+        response = client.messages.create(
+            model='claude-sonnet-4-6',
+            max_tokens=500,
+            messages=[{'role': 'user', 'content': prompt}],
+        )
+        response_text = response.content[0].text
+
+        # Parse JSON from response
+        json_match = _re.search(
+            r'```(?:json)?\s*\n(.*?)\n```', response_text, _re.DOTALL,
+        )
+        if json_match:
+            result = json.loads(json_match.group(1))
+        else:
+            start = response_text.find('{')
+            end = response_text.rfind('}')
+            if start >= 0 and end > start:
+                result = json.loads(response_text[start:end + 1])
+            else:
+                logger.warning("LLM synthesis: no JSON in response")
+                return
+
+        # Apply synthesized values
+        for field in ('building_type', 'architect_name', 'client_name', 'location_sentence'):
+            value = result.get(field, '')
+            if value and _get_source(field) != 'user':
+                _set(field, value)
+
+        logger.info(
+            "LLM synthesis: %d fields updated for %s",
+            sum(
+                1 for f in ('building_type', 'architect_name', 'client_name', 'location_sentence')
+                if result.get(f)
+            ),
+            project_path.name,
+        )
+
+    except Exception as e:
+        logger.warning("LLM synthesis failed: %s", e)
 
 
 def _compute_mapping_prefills(
@@ -911,6 +1238,9 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
 
     # CTE, seismic, radon lookups from municipality + building data
     _compute_lookup_prefills(merged, auto_result)
+
+    # LLM synthesis for building_type, architect/client, location_sentence
+    _synthesize_with_llm(merged, project_path)
 
     # -- Format learning detection ---
     # Check if any mined files have unrecognized formats

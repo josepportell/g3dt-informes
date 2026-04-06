@@ -757,3 +757,12 @@ concepts:
     source_priority:
       user: 10
       computed: 20
+
+  location_sentence:
+    type: text
+    group: narrative
+    required: false
+    description_ca: Frase de localitzacio de l'obra
+    source_priority:
+      user: 10
+      llm_synthesis: 20
