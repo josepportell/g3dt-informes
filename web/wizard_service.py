@@ -453,6 +453,186 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
         logger.warning("Geotech prefill calc failed: %s", exc)
 
 
+def _compute_lookup_prefills(merged: dict[str, Any], auto_result: Any) -> None:
+    """Set CTE, seismic, and radon prefills from municipality lookups.
+
+    Uses existing modules (cte_classifier, municipal_data) via the
+    municipal_lookups facade. Respects user edits (source='user').
+    """
+    from automation.municipal_lookups import (
+        lookup_cte_edificacio,
+        lookup_cte_sol,
+        lookup_seismic_ab,
+        lookup_radon_zone,
+        format_seismic_ab_text,
+    )
+
+    def _get_val(key: str) -> str:
+        entry = merged.get(key)
+        if entry is None:
+            return ''
+        if isinstance(entry, dict):
+            return str(entry.get('value', '') or '')
+        return str(entry)
+
+    def _set(key: str, value: Any, source: str) -> None:
+        existing = merged.get(key)
+        if isinstance(existing, dict) and existing.get('source') == 'user':
+            return
+        merged[key] = {'value': value, 'source': source}
+
+    # CTE building classification
+    building_type = _get_val('building_type')
+    num_floors = _get_val('num_floors')
+    if building_type or num_floors:
+        cte_edif = lookup_cte_edificacio(building_type or 'habitatge', num_floors or '1')
+        _set('cte_edificacio', cte_edif, f'CTE DB SE-C ({building_type or "default"})')
+
+    # CTE soil classification
+    dpsh = auto_result.dpsh_data if hasattr(auto_result, 'dpsh_data') else None
+    avg_n20 = getattr(dpsh, 'overall_average_n20', None) if dpsh else None
+    cte_sol = lookup_cte_sol(average_n20=avg_n20)
+    _set('cte_sol', cte_sol, 'CTE DB SE-C' + (f' (N20={avg_n20:.0f})' if avg_n20 else ''))
+
+    # Seismic acceleration
+    municipality = _get_val('site_municipality')
+    if municipality:
+        ab = lookup_seismic_ab(municipality)
+        ab_text = format_seismic_ab_text(ab)
+        _set('seismic_ab_text', ab_text, f'NCSE-02 ({municipality})')
+
+    # Radon zone
+    if municipality:
+        zone = lookup_radon_zone(municipality)
+        _set('radon_zone', str(zone), f'CTE DB HS6 ({municipality})')
+
+
+def _compute_mapping_prefills(
+    merged: dict[str, Any],
+    auto_result: Any,
+    project_path: Path,
+) -> None:
+    """Map existing extracted data to prefill variables (Block 4).
+
+    Wires SPT data from sondeig_extracted.json and derives sulfate
+    classification from sulfate_mg_kg. Skips keys where merged already
+    has source='user' (Eva's edits win).
+    """
+
+    def _set(key: str, value: Any, source: str) -> None:
+        existing = merged.get(key)
+        if isinstance(existing, dict) and existing.get('source') == 'user':
+            return
+        merged[key] = {'value': value, 'source': source}
+
+    def _get_val(key: str) -> str:
+        entry = merged.get(key)
+        if entry is None:
+            return ''
+        if isinstance(entry, dict):
+            return str(entry.get('value', ''))
+        return str(entry)
+
+    # --- 4.1  SPT data from sondeig_extracted.json ---
+    sondeig_path = project_path / 'validation' / 'sondeig_extracted.json'
+    if sondeig_path.exists():
+        try:
+            from automation.vision_normalizer import load_sondeig_json
+            sondeig_data = load_sondeig_json(sondeig_path)
+            tests = sondeig_data.get('sondeig_tests', [])
+            if tests:
+                test = tests[0]
+                spt_list = test.get('spt_results', [])
+                if spt_list:
+                    spt = spt_list[0]
+                    _set('spt_test_id', spt.get('test_id', 'SPT-1'), 'sondeig vision')
+
+                    # N30: standard SPT = blows[1]+blows[2] (middle two 15cm intervals)
+                    blows = spt.get('blows', [])
+                    if len(blows) >= 3:
+                        n30 = blows[1] + blows[2]
+                    elif spt.get('n_spt'):
+                        n30 = spt['n_spt']
+                    else:
+                        n30 = None
+                    if n30 is not None:
+                        _set('spt_n30', str(n30), 'sondeig vision')
+
+                    # Depth range: absolute values, formatted as "-1.00 a 1.60"
+                    depth_from = spt.get('depth_from_m')
+                    depth_to = spt.get('depth_to_m')
+                    if depth_from is not None and depth_to is not None:
+                        df = abs(float(depth_from))
+                        dt = abs(float(depth_to))
+                        _set('spt_depth_range', f"-{df:.2f} a {dt:.2f}", 'sondeig vision')
+
+                    # Lithology: find the sondeig layer at SPT depth
+                    lithology = ''
+                    spt_depth = abs(float(depth_from)) if depth_from is not None else 0
+                    for layer in test.get('layers', []):
+                        lf = abs(float(layer.get('depth_from_m', 0)))
+                        lt = abs(float(layer.get('depth_to_m', 99)))
+                        if lf <= spt_depth < lt:
+                            lithology = layer.get('description', '')
+                            break
+                    if lithology:
+                        _set('spt_lithology', lithology, 'sondeig vision')
+
+                    # Location: sondeig test id (e.g. "S-1")
+                    _set('spt_location', test.get('test_id', 'S-1'), 'sondeig vision')
+        except Exception as e:
+            logger.warning("SPT mapping from sondeig failed: %s", e)
+
+    # --- 4.2  Sulfate classification from sulfate_mg_kg (RD 470/2021) ---
+    sulfate_raw = _get_val('sulfate_mg_kg')
+    if sulfate_raw:
+        try:
+            sulfate = float(sulfate_raw)
+            if sulfate < 2000:
+                classification = 'No Agressius'
+                baumann = '---'
+            elif sulfate < 3000:
+                classification = 'Dèbilment agressius'
+                baumann = ''
+            elif sulfate < 12000:
+                classification = 'Moderadament agressius'
+                baumann = ''
+            elif sulfate < 24000:
+                classification = 'Altament agressius'
+                baumann = ''
+            else:
+                classification = 'Molt altament agressius'
+                baumann = ''
+
+            _set('sulfate_classification', classification, 'RD 470/2021')
+            _set('sulfate_baumann', baumann, 'RD 470/2021')
+        except (ValueError, TypeError):
+            pass
+
+    # Sulfate level name: default to first geological level
+    if sulfate_raw:
+        _set('sulfate_level_name', '1er nivell', 'default')
+
+    # --- 4.3  num_floors from planol_extracted.json (safety net) ---
+    # Already wired through wizard._load_planol(), but catch edge cases
+    # where planol_extracted exists but wizard didn't process dimensions.
+    if not _get_val('num_floors'):
+        planol_path = project_path / 'validation' / 'planol_extracted.json'
+        if planol_path.exists():
+            try:
+                with open(planol_path, 'r', encoding='utf-8') as f:
+                    planol_data = json.load(f)
+                arch = planol_data.get('architect_data', {})
+                dims = arch.get('dimensions', {})
+                floors = dims.get('num_floors', {})
+                floors_val = floors.get('pdf_value') if isinstance(floors, dict) else floors
+                if floors_val:
+                    from automation.formatting import format_floor_notation
+                    _set('num_floors', format_floor_notation(str(floors_val)), 'planol vision (fallback)')
+            except Exception as e:
+                logger.warning("num_floors fallback mapping failed: %s", e)
+
+
 def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str, Any]:
     """Run auto_extract + vision + wizard prefill chain for a project.
 
@@ -591,6 +771,12 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
 
     # Compute geotech params + calc transparency notes for wizard display
     _compute_geotech_prefills(merged, project_path, auto_result)
+
+    # Map existing extracted data (SPT, sulfate classification) to prefill keys
+    _compute_mapping_prefills(merged, auto_result, project_path)
+
+    # CTE, seismic, radon lookups from municipality + building data
+    _compute_lookup_prefills(merged, auto_result)
 
     # -- Format learning detection ---
     # Check if any mined files have unrecognized formats
