@@ -361,21 +361,71 @@ Mapa de zones de rado del CSN per municipi. Taula similar.
 
 ## 8. Bloc 6: Extraccio Format-Aware (building_type, architect_name + variants de format)
 
-**Objectiu:** Millorar extraccions adaptant-se a les variacions reals de cada document. Els planols de cada arquitecte son diferents; un prompt unic de visio no funciona per a tots.
+**Objectiu:** Millorar extraccions adaptant-se a les variacions reals de cada document.
 
-### 6.0 Analisi de variacions de documents (PREREQUISIT)
+### Resultats de l'Audit (2026-04-06)
 
-Analitzar els 7 projectes de referencia per documentar les variacions reals:
-- Quins planols tenen caixeti? On? Quin format?
-- Quins planols NO tenen caixeti (informacio dispersa al planol)?
-- Quines etiquetes utilitza cada arquitecte?
+L'audit de cobertura ha revelat que el problema principal NO es la qualitat del prompt de visio
+(que es prou bo), sino tres problemes mes fonamentals:
 
-**Resultat:** Inventari de 2-3 variants de format per a `architect_plan`.
+**Problema 1: SmartScan no arriba als planols reals.**
+Molts planols d'arquitecte estan a subcarpetes numeriques (25.0493/, 24.0807/) que SmartScan
+no escaneja. Projectes afectats: Alcoletge, Vilanova, Anciles (tots amb planols GAP).
 
-### 6.1 Format variant schemas amb discriminadors estructurals
+**Problema 2: El planol assignat no es el planol de l'arquitecte.**
+A Castellar i Rubi, SmartScan assigna `architect_plan` al planol de SITUACIO de G3 (que mostra
+la ubicacio del sondeig), no al planol de l'edifici de l'arquitecte.
 
-Afegir discriminadors als format schemas que permetin distingir variants:
+**Problema 3: Vision caches potencialment obsolets.**
+Les extraccions de visio cached poden tenir setmanes/mesos. Cal refrescar despres de cada
+millora de prompts.
 
+**Evidencia de l'audit:**
+- Bell-Lloc (unic amb planol real + cache fresc): 66.7% match+close
+- Projectes sense vision cache: 21-27% match+close
+- 5 variables depenen del planol: architect_name, building_type, num_floors, superficie_*, building_height
+- Cascada: planol falla → building_type falla → cte_edificacio falla
+
+### 6.0 FIX: SmartScan escaneja subcarpetes numeriques (PREREQUISIT)
+
+**Problema:** SmartScan ignora fitxers dins de carpetes amb noms com `25.0493/`, `24.0807/`,
+`26.0049/`. Aquests contenen planols d'arquitecte (A01_TIPOL.pdf, planol-1.pdf, 1.0.pdf),
+emails amb adjunts, i pressupostos.
+
+**Fix:** Modificar el FileScanner/SmartScan per incloure subcarpetes numeriques al scan.
+Actualment `_SKIP_DIRS` filtra certes carpetes. Cal assegurar que les carpetes numeriques
+del projecte NO es filtren.
+
+**Fitxers afectats:**
+- `automation/file_scanner.py` o `automation/smartscan/classifier.py`
+- Verificar que `_SKIP_DIRS` no exclou carpetes numeriques
+
+**Projectes que es beneficien:**
+- Castellar: 25.0493/ te PRESSUPOST, DADES, .msg amb adjunts
+- Anciles: 24.0807/ te A01_TIPOL.pdf (planol complet de l'arquitecte!)
+- Alcoletge: 26.0049/ te A.01.pdf (duplicat), planol-1/2/3.pdf, .msg
+- Linyola: 25.0616/ te Punts_Sondeig.pdf, 2_02B_DG.pdf
+
+### 6.1 Refrescar vision caches per als 7 projectes
+
+Despres del fix de SmartScan, executar la visio per a TOTS els projectes per obtenir
+`planol_extracted.json`, `sondeig_extracted.json` i `dpsh_extracted.json` actualitzats.
+
+**Accio:** Executar wizard pipeline per cada projecte, o script dedicat de refresh.
+
+### 6.2 Re-executar diagnostic i analitzar resultats
+
+Amb els nous caches, tornar a mesurar. Ara podrem veure:
+- Quants planols nous s'han trobat (SmartScan fix)
+- Quines variables ha extret la visio dels nous planols
+- On la visio encara falla → candidats per a format variants
+
+### 6.3 Format variants (SI NECESSARI despres de 6.2)
+
+Nomes si l'audit post-refresh mostra que la visio falla per a certs planols amb el
+prompt actual. En aquell cas:
+
+**Discriminadors estructurals al format schema:**
 ```yaml
 format_id: planol_vision_v2_no_caixeti
 discriminators:
@@ -385,29 +435,15 @@ document_roles: [architect_plan]
 source_type: planol_vision
 ```
 
-### 6.2 Sub-classificacio de format (Tier 2.5)
+**Sub-classificacio (Tier 2.5):** Despres que SmartScan assigni el rol, seleccionar
+el format variant basant-se en fingerprint_data.
 
-Despres que SmartScan assigni el rol (`architect_plan`), executar un pas addicional que:
-1. Consulta quins formats existeixen per a aquest rol (`FormatRegistry.formats_for_role()`)
-2. Comprova els discriminadors de cada format contra el fingerprint_data
-3. Selecciona el format mes adequat
+**Prompts adaptats:** Un prompt base + addicions per format variant.
 
-**NOTA IMPORTANT (revisar):** SmartScan Tier 3 (visio) nomes envia la pagina 1. Per a planols multi-pagina on el caixeti es a l'ultima pagina, cal revisar aquest criteri. Prioritzar resultats correctes per sobre d'optimitzacio de costos.
+**NOTA (revisar):** SmartScan Tier 3 (visio) nomes envia pagina 1. Per a planols
+multi-pagina on el caixeti es a l'ultima pagina, cal revisar aquest criteri.
 
-### 6.3 Prompts de visio adaptats per format
-
-En lloc d'un unic `PLANOL_EXTRACTION_PROMPT`, tenir un prompt base + addicions per format:
-
-```python
-PLANOL_PROMPTS = {
-    'planol_vision_v1': "Busca el caixeti (title block) a baix-dreta...",
-    'planol_vision_v2': "Aquest planol no te caixeti estandard. Busca etiquetes...",
-}
-```
-
-El vision extractor rep el `format_id` i usa el prompt adequat.
-
-### 6.4 Building type: quantitat + articles (original)
+### 6.4 Building type: quantitat + articles
 
 Eva escriu: "un habitatge unifamiliar", "3 habitatges unifamiliars adossats"
 Pipeline extreu: "habitatge unifamiliar aillat"
@@ -417,24 +453,34 @@ Pipeline extreu: "habitatge unifamiliar aillat"
 2. Vision del planol amb el prompt adaptat → tipus i quantitat
 3. Post-processament: article ("un/una/l'"), quantitat si >1, pluralitzar
 
-### 6.5 Architect name: font correcta (original)
+### 6.5 Architect name: font correcta
 
-Amb format-aware vision, el prompt sap ON buscar el nom de l'arquitecte.
+Amb SmartScan trobant els planols reals, el prompt actual ja busca architect/company.
 Groq baixa prioritat (ja fet al Bloc 1). Document ACCEPTACIO com a font alternativa.
 
-### 6.6 Municipality: normalitzacio (original)
+### 6.6 Municipality: normalitzacio
 
 - "CASTELLAR DEL VALLES" → "Castellar del Valles" (title case)
 - "RUBI" → "Rubi (Barcelona)" → strip provincia
 
-### 6.7 Futur: Format Learning v2 (DIFERIT)
+### 6.7 Lab report extraction (9 variables "never extracted")
+
+L'audit mostra 9 variables lab_* que cap projecte extreu. Font: GTL report PDF.
+
+**Variables:** lab_depth, lab_field_company, lab_field_description, lab_location,
+lab_sample_id, lab_testing_company, lab_testing_description, lab_tests_text, access_street
+
+**Accio:** Crear extractor dedicat per a informes GTL (portada + resultats).
+Possiblement 2 formats: TPS (Lleida) i altres labs.
+
+### 6.8 Futur: Format Learning v2 (DIFERIT)
 
 Millorar el sistema d'aprenentatge per a formats de visio:
 - Snapshots visuals per mostrar a Eva ("aquest planol es com aquest?")
 - Auto-deteccio de noves variants a partir d'extraccions fallides
 - Eva confirma quines pistes visuals distingeixen un format d'un altre
 
-**Accio ara:** Diferir. Primer fer funcionar les variants definides manualment.
+**Accio ara:** Diferir. Primer fer funcionar SmartScan + refresh.
 
 ### Verificacio
 
