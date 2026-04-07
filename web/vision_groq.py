@@ -427,6 +427,90 @@ def _load_env():
                 os.environ.setdefault(key.strip(), value.strip())
 
 
+def _call_openai_vision(
+    extraction_prompt: str,
+    images: list[str],
+    system_prompt: str,
+    max_retries: int = 2,
+) -> dict | None:
+    """Call OpenAI Vision API (gpt-4.1-mini) with images and extraction prompt.
+
+    Uses the same OpenAI-compatible format as Groq. Returns parsed JSON dict or None.
+    """
+    import httpx
+
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        logger.warning("OpenAI Vision: no API key")
+        return None
+
+    model = os.environ.get("OPENAI_VISION_MODEL", "gpt-4.1-mini")
+
+    content: list[dict] = [{"type": "text", "text": extraction_prompt}]
+    for b64_img in images:
+        content.append({
+            "type": "image_url",
+            "image_url": {"url": f"data:image/jpeg;base64,{b64_img}"},
+        })
+
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": content},
+        ],
+        "temperature": 0.0,
+        "max_tokens": 4096,
+        "response_format": {"type": "json_object"},
+    }
+
+    for attempt in range(1, max_retries + 1):
+        t0 = time.monotonic()
+        try:
+            with httpx.Client(timeout=90.0) as client:
+                resp = client.post(
+                    "https://api.openai.com/v1/chat/completions",
+                    json=payload,
+                    headers={
+                        "Authorization": f"Bearer {api_key}",
+                        "Content-Type": "application/json",
+                    },
+                )
+            elapsed_ms = int((time.monotonic() - t0) * 1000)
+
+            if resp.status_code == 429:
+                logger.warning("OpenAI Vision: rate limited (attempt %d/%d)", attempt, max_retries)
+                if attempt < max_retries:
+                    time.sleep(5)
+                    continue
+                return None
+
+            if resp.status_code != 200:
+                logger.warning("OpenAI Vision: HTTP %d %s", resp.status_code, resp.text[:200])
+                return None
+
+            data = resp.json()
+            content_str = data["choices"][0]["message"]["content"]
+            result = json.loads(content_str)
+
+            usage = data.get("usage", {})
+            logger.info(
+                "OpenAI Vision: ok in %dms (%d in + %d out tokens, model=%s)",
+                elapsed_ms,
+                usage.get("prompt_tokens", 0),
+                usage.get("completion_tokens", 0),
+                model,
+            )
+            return result
+
+        except (httpx.HTTPError, json.JSONDecodeError, KeyError, IndexError) as exc:
+            logger.warning("OpenAI Vision: %s (attempt %d/%d)", exc, attempt, max_retries)
+            if attempt < max_retries:
+                time.sleep(2)
+                continue
+            return None
+
+
 def _call_anthropic_vision(
     extraction_prompt: str,
     images: list[str],
@@ -501,9 +585,9 @@ def _call_anthropic_vision(
 
 
 def groq_available() -> bool:
-    """Check if any vision API key is configured (Claude preferred, Groq fallback)."""
+    """Check if any vision API key is configured (Claude preferred, OpenAI/Groq fallback)."""
     _load_env()
-    return bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("GROQ_API_KEY"))
+    return bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("OPENAI_API_KEY") or os.environ.get("GROQ_API_KEY"))
 
 
 def _supplement_from_concept_map(
@@ -712,12 +796,24 @@ def run_vision_groq_sync(
                 vtype, len(images), file_path.name,
             )
 
+            # Vision backend chain: preferred → fallbacks
+            result = None
             if vision_backend == "claude":
                 result = _call_anthropic_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
-            else:
+                if result is None:
+                    result = _call_openai_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+                if result is None:
+                    result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+            elif vision_backend == "openai":
+                result = _call_openai_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+                if result is None:
+                    result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+            else:  # groq
                 result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+                if result is None:
+                    result = _call_openai_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
             if result is None:
-                _emit(vtype, "error", message=f"API call failed ({vision_backend})")
+                _emit(vtype, "error", message=f"API call failed (all backends)")
                 results[vtype] = {"success": False, "message": f"API call failed ({vision_backend})"}
                 continue
 

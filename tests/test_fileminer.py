@@ -277,7 +277,7 @@ class TestLabelMap:
         assert get_priority("dades_camp_excel") == 35
         # content_pdf global min lowered to 35 by client_name per-concept priority
         assert get_priority("content_pdf") <= 45
-        assert get_priority("folder_name") == 60
+        assert get_priority("folder_name") == 15  # expedient: folder_name is most reliable
         assert get_priority("coordenades_txt") == 25
 
     def test_get_priority_unknown_returns_50(self):
@@ -288,7 +288,8 @@ class TestLabelMap:
         """User edits should always beat automated sources."""
         assert SOURCE_PRIORITY["user"] < SOURCE_PRIORITY["dades_camp_excel"]
         assert SOURCE_PRIORITY["dades_camp_excel"] <= SOURCE_PRIORITY["content_pdf"]
-        assert SOURCE_PRIORITY["content_pdf"] < SOURCE_PRIORITY["folder_name"]
+        # folder_name global min is 15 (expedient uses it as primary source)
+        assert SOURCE_PRIORITY["user"] <= SOURCE_PRIORITY["folder_name"]
 
 
 # ============================================================

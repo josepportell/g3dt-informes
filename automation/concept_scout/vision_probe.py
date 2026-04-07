@@ -112,7 +112,9 @@ def _save_cache(cache_dir: Path, key: str, result: dict) -> None:
 def _run_probe(file_path: Path) -> dict | None:
     """Run a single vision probe. Tries Groq first (cheaper), Claude as fallback."""
     try:
-        from web.vision_groq import _file_to_images, _call_groq_vision, _call_anthropic_vision
+        from web.vision_groq import (
+            _file_to_images, _call_groq_vision, _call_openai_vision, _call_anthropic_vision,
+        )
     except ImportError:
         logger.warning("Vision probe: web.vision_groq not available")
         return None
@@ -126,7 +128,7 @@ def _run_probe(file_path: Path) -> dict | None:
     if not images:
         return None
 
-    # Try Groq first (sufficient for document classification, ~3x cheaper)
+    # Fallback chain: Groq (cheapest) → OpenAI (mid) → Claude (best)
     import os
     result = None
     if os.environ.get("GROQ_API_KEY"):
@@ -135,7 +137,12 @@ def _run_probe(file_path: Path) -> dict | None:
         except Exception as e:
             logger.debug("Vision probe Groq failed for %s: %s", file_path.name, e)
 
-    # Fallback to Claude if Groq unavailable or failed
+    if result is None and os.environ.get("OPENAI_API_KEY"):
+        try:
+            result = _call_openai_vision(_PROBE_PROMPT, images, _PROBE_SYSTEM)
+        except Exception as e:
+            logger.debug("Vision probe OpenAI failed for %s: %s", file_path.name, e)
+
     if result is None and os.environ.get("ANTHROPIC_API_KEY"):
         try:
             result = _call_anthropic_vision(_PROBE_PROMPT, images, _PROBE_SYSTEM)
