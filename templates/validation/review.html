@@ -3424,6 +3424,26 @@
             if (accessDesc) wizardUserData._sources.access_description = 'user';
             wizardUserData._prequestions_answered = true;
 
+            // If wizard form already rendered (pipeline finished while modal open),
+            // push answers directly into the DOM inputs
+            if (wizardDataLoaded) {
+                const wizAnthro = document.getElementById('wiz-is_anthropized');
+                if (wizAnthro) {
+                    if (isAnthro) { wizAnthro.classList.add('active'); } else { wizAnthro.classList.remove('active'); }
+                    document.getElementById('wiz-is_anthropized-label').textContent = isAnthro ? 'Si' : 'No';
+                    setSourceBadge('is_anthropized', 'user');
+                }
+                if (siteDesc) {
+                    const el = document.getElementById('wiz-site_description');
+                    if (el) { el.value = siteDesc; setSourceBadge('site_description', 'user'); }
+                }
+                if (accessDesc) {
+                    const el = document.getElementById('wiz-access_description');
+                    if (el) { el.value = accessDesc; setSourceBadge('access_description', 'user'); }
+                }
+                markWizardDirty('prequestions');
+            }
+
             closePreQuestions();
         }
 
