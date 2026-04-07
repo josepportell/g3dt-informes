@@ -192,9 +192,16 @@ def probe_unreadable_files(
     Returns {concept_id: [ConceptSource, ...]} to merge into concept_sources.
     Also updates FileEntry.concepts_detected and .notes in place.
     """
+    # Skip FOTOGRAFIES dirs (site photos, never contain report concepts)
+    # and inline email images (image001.jpg, image005.png etc.)
+    _SKIP_PHOTO_DIRS = {'FOTOGRAFIES', 'FOTOS DE CAMP', 'FOTOS DE CAMP + PLANOL PUNTS'}
+    _INLINE_IMAGE_RE = __import__('re').compile(r'^image\d+\.\w+$', __import__('re').IGNORECASE)
+
     to_probe = [
         fe for fe in file_entries
         if not fe.text_extractable and fe.type in ('image', 'pdf_scanned')
+        and not any(part in _SKIP_PHOTO_DIRS for part in Path(fe.path).parts[:-1])
+        and not _INLINE_IMAGE_RE.match(Path(fe.path).name)
     ]
 
     if not to_probe:

@@ -240,23 +240,38 @@ def _file_to_images(
 
 
 def _read_image_as_b64(image_path: Path) -> list[str]:
-    """Read an image file and return as single-element base64 list."""
+    """Read an image file and return as single-element base64 JPEG list.
+
+    Always converts to JPEG to match the hardcoded 'image/jpeg' media type
+    in API calls. Handles .png files masquerading as .jpg and oversized images.
+    """
     try:
         img_bytes = image_path.read_bytes()
 
-        # Check 4MB limit for Groq — resize if needed
-        if len(img_bytes) > 4 * 1024 * 1024:
+        # Detect actual format and convert to JPEG if needed
+        # (some .jpg files are actually PNGs — Anthropic API rejects mismatched media types)
+        is_png = img_bytes[:4] == b'\x89PNG'
+        is_too_large = len(img_bytes) > 4 * 1024 * 1024
+
+        if is_png or is_too_large:
             try:
                 from PIL import Image
                 import io
                 img = Image.open(io.BytesIO(img_bytes))
-                img.thumbnail((2000, 2000))
+                if img.mode in ('RGBA', 'P', 'LA'):
+                    img = img.convert('RGB')
+                if is_too_large:
+                    img.thumbnail((2000, 2000))
                 buf = io.BytesIO()
-                img.save(buf, format='JPEG', quality=80)
+                img.save(buf, format='JPEG', quality=85)
                 img_bytes = buf.getvalue()
                 img.close()
             except ImportError:
-                logger.warning("Image too large and Pillow not available: %s", image_path.name)
+                if is_too_large:
+                    logger.warning("Image too large and Pillow not available: %s", image_path.name)
+                    return []
+                # PNG without Pillow: can't convert, skip
+                logger.warning("PNG image needs Pillow for JPEG conversion: %s", image_path.name)
                 return []
 
         b64 = base64.b64encode(img_bytes).decode("utf-8")
