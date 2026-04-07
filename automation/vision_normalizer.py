@@ -396,3 +396,67 @@ def load_sondeig_merged(validation_dir: Path | str) -> dict:
             pass
 
     return result
+
+
+# ---------------------------------------------------------------------------
+# Planol normalization
+# ---------------------------------------------------------------------------
+
+# Canonical key mappings for planning_table_raw.projecte
+_PLANNING_KEY_VARIANTS: dict[str, list[str]] = {
+    'num_floors': ['N. plantes', 'nombre_plantes', 'plantes', 'n_plantes'],
+    'height_m': ['alçada', 'h max', 'h_max', 'h màx', 'H màx', 'alcada',
+                 'alçada_reguladora', 'alçada_maxima'],
+    'ocupacio': ['ocupació'],
+    'edificabilitat': ['EDIF'],
+    'superficie_parcela': ['superficie', 'parcela_m2'],
+}
+
+
+def _normalize_planning_projecte(projecte: dict) -> None:
+    """Normalize variant keys in planning_table_raw.projecte to canonical form.
+
+    Additive: copies values to canonical keys without deleting originals.
+    """
+    for canonical, variants in _PLANNING_KEY_VARIANTS.items():
+        if canonical in projecte:
+            continue
+        for variant in variants:
+            if variant in projecte:
+                projecte[canonical] = projecte[variant]
+                break
+
+
+def normalize_planol(data: dict) -> dict:
+    """Normalize a planol_extracted.json dict in place.
+
+    - In architect_data: renames 'architect'/'arquitecte' to 'architect_name'
+    - In planning_table_raw.projecte: normalizes floor/height/area key variants
+    """
+    arch = data.get('architect_data')
+    if isinstance(arch, dict):
+        # architect / arquitecte → architect_name (additive)
+        if 'architect_name' not in arch:
+            name = arch.get('architect') or arch.get('arquitecte')
+            if name is not None:
+                arch['architect_name'] = name
+
+    planning = data.get('planning_table_raw')
+    if isinstance(planning, dict):
+        projecte = planning.get('projecte')
+        if isinstance(projecte, dict):
+            _normalize_planning_projecte(projecte)
+
+    return data
+
+
+def load_planol_json(path: Path | str) -> dict:
+    """Load and normalize planol_extracted.json.
+
+    Returns normalized dict with canonical key names.
+    Raises FileNotFoundError if path doesn't exist.
+    """
+    path = Path(path)
+    with open(path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    return normalize_planol(data)

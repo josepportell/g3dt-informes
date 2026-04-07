@@ -251,19 +251,19 @@ class UserDataWizard:
             print(f'  [AVÍS: error carregant {path.name}: {e}]')
 
     def _load_planol(self) -> None:
+        from .vision_normalizer import load_planol_json
         path = self.project_path / 'validation' / 'planol_extracted.json'
         if not path.exists():
             return
         try:
-            with open(path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
+            data = load_planol_json(path)
             overall_conf = data.get('overall_confidence')
             arch = data.get('architect_data', {})
             source_file = arch.get('source_file', 'A.01.pdf')
             source = f"planol {source_file}"
 
             # Core wizard fields
-            self._set_prefill('architect_name', arch.get('architect'), source, overall_conf)
+            self._set_prefill('architect_name', arch.get('architect_name'), source, overall_conf)
             self._set_prefill('architect_company', arch.get('architect_company'), source, overall_conf)
             bt = arch.get('building_type')
             if bt:
@@ -407,6 +407,23 @@ class UserDataWizard:
                     self._user_data_full.setdefault('parcel_shape', shape)
                 except (ValueError, TypeError, ZeroDivisionError):
                     pass
+
+            # Planning table fallback (normalized keys from vision_normalizer)
+            planning = data.get('planning_table_raw', {})
+            projecte = planning.get('projecte', {})
+            if isinstance(projecte, dict):
+                pf = projecte.get('num_floors')
+                if pf and 'num_floors' not in self.prefills:
+                    from .formatting import format_floor_notation
+                    self._set_prefill('num_floors', format_floor_notation(str(pf)), source, overall_conf)
+
+                ph = projecte.get('height_m')
+                if ph and 'building_height_m' not in self.prefills:
+                    import re as _re2
+                    m = _re2.search(r'(\d+[.,]\d+)', str(ph))
+                    if m:
+                        self._set_prefill('building_height_m', m.group(1).replace(',', '.'), source, overall_conf)
+
         except (json.JSONDecodeError, KeyError, TypeError) as e:
             print(f'  [AVÍS: error carregant {path.name}: {e}]')
 
