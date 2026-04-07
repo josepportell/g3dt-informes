@@ -1,0 +1,1255 @@
+{
+  "VALLES": {
+    "rows": [
+      {
+        "eva_key": "client",
+        "status": "MISMATCH",
+        "eva_val": "WOOD COMFORT PROMOCIONS SLU",
+        "pipeline_val": "GRUP ALMA",
+        "source": "contingut:25.0493/DADES PER ANAR A "
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MISMATCH",
+        "eva_val": "3 habitatges unifamiliars d’estructura lleuge",
+        "pipeline_val": "habitatge unifamiliar aïllat",
+        "source": "planol plà.pdf"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Pb+1Pp",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "1.284",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "120 m2",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "municipality",
+        "status": "MATCH",
+        "eva_val": "Castellar del Vallès",
+        "pipeline_val": "CASTELLAR DEL VALLÈS",
+        "source": "fileminer:comanda laboratori_300162"
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MATCH",
+        "eva_val": "3001621",
+        "pipeline_val": "3001621",
+        "source": "groq_llm:tall.pdf"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "MATCH",
+        "eva_val": "24 de octubre de 2025",
+        "pipeline_val": "24 d'octubre de 2025",
+        "source": "DPSH/Lab PDF"
+      },
+      {
+        "eva_key": "data_signatura_text",
+        "status": "MISMATCH",
+        "eva_val": "19 de novembre de 2025.",
+        "pipeline_val": "Octubre 2025",
+        "source": "groq_llm:tall.pdf"
+      },
+      {
+        "eva_key": "sulfate_value",
+        "status": "MATCH",
+        "eva_val": "0.0",
+        "pipeline_val": "",
+        "source": "/home/josep/projects/claudecode-job"
+      },
+      {
+        "eva_key": "sulfate_classification",
+        "status": "MATCH",
+        "eva_val": "No Agressius",
+        "pipeline_val": "No Agressius",
+        "source": "RD 470/2021"
+      },
+      {
+        "eva_key": "lab_field_company",
+        "status": "CLOSE",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
+        "pipeline_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "source": "constant"
+      },
+      {
+        "eva_key": "lab_testing_company",
+        "status": "MATCH",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "source": "constant"
+      },
+      {
+        "eva_key": "lab_sample_id",
+        "status": "MATCH",
+        "eva_val": "Mostra : SPT-1",
+        "pipeline_val": "SPT-1",
+        "source": "sondeig vision"
+      },
+      {
+        "eva_key": "lab_depth",
+        "status": "MISMATCH",
+        "eva_val": "Profunditat:  -1.00  a -1.20 m",
+        "pipeline_val": "-1.00 a 1.20",
+        "source": "sondeig vision"
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "MISMATCH",
+        "eva_val": "3.0",
+        "pipeline_val": "5.00",
+        "source": "Terzaghi-Peck"
+      },
+      {
+        "eva_key": "seismic_ab_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "AB  = 0,04 g  (essent g el valor de la gravet",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "radon_zone",
+        "status": "MATCH",
+        "eva_val": "1",
+        "pipeline_val": "1",
+        "source": "CTE DB HS6 (Castellar del Vallès)"
+      },
+      {
+        "eva_key": "adjacent_east_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part est, amb una parcel·la construïda",
+        "pipeline_val": "parcel·la amb construcció",
+        "source": "Cadastre API (geocode(Carrer Arbrel"
+      },
+      {
+        "eva_key": "adjacent_west_fmt",
+        "status": "MISMATCH",
+        "eva_val": "I finalment, per la part oest, amb parcel·les",
+        "pipeline_val": "parcel·la buida",
+        "source": "Cadastre API (geocode(Carrer Arbrel"
+      },
+      {
+        "eva_key": "adjacent_north_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part nord, amb parcel·les sense constr",
+        "pipeline_val": "parcel·la amb construcció",
+        "source": "Cadastre API (geocode(Carrer Arbrel"
+      },
+      {
+        "eva_key": "adjacent_south_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part sud, amb el carrer Arbrells.",
+        "pipeline_val": "Carrer dels Arbrells",
+        "source": "Cadastre API (geocode(Carrer Arbrel"
+      },
+      {
+        "eva_key": "spt_n30",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "R",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "spt_location",
+        "status": "MATCH",
+        "eva_val": "S-1",
+        "pipeline_val": "S-1",
+        "source": "sondeig vision"
+      },
+      {
+        "eva_key": "spt_lithology",
+        "status": "MISMATCH",
+        "eva_val": "Limolites i bretxes",
+        "pipeline_val": "Roca fracturada",
+        "source": "sondeig vision"
+      }
+    ],
+    "counts": {
+      "MISMATCH": 10,
+      "NOT_EXTRACTED": 5,
+      "MATCH": 9,
+      "CLOSE": 1
+    }
+  },
+  "RUBI": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "JOANA MARTINEZ",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "client",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "SRA. JOANA MARTINEZ",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "CLOSE",
+        "eva_val": "un habitatge unifamiliar aïllat modular",
+        "pipeline_val": "habitatge unifamiliar",
+        "source": "planol IMG-20251104-WA0015.jpg"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "CLOSE",
+        "eva_val": "PB + Porxo",
+        "pipeline_val": "Pb",
+        "source": "planol IMG-20251104-WA0015.jpg"
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "951",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "MISMATCH",
+        "eva_val": "92",
+        "pipeline_val": "64",
+        "source": "planol IMG-20251104-WA0015.jpg"
+      },
+      {
+        "eva_key": "municipality",
+        "status": "MISMATCH",
+        "eva_val": "Rubí (Barcelona)",
+        "pipeline_val": "RUBI",
+        "source": "fileminer:comanda laboratori_300163"
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MATCH",
+        "eva_val": "3001631",
+        "pipeline_val": "3001631",
+        "source": "groq_llm:tall.pdf"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "MATCH",
+        "eva_val": "14 de novembre de 2025",
+        "pipeline_val": "14 de novembre de 2025",
+        "source": "DPSH/Lab PDF"
+      },
+      {
+        "eva_key": "data_signatura_text",
+        "status": "MISMATCH",
+        "eva_val": "17 de desembre de 2025",
+        "pipeline_val": "Desembre 2025",
+        "source": "groq_llm:tall.pdf"
+      },
+      {
+        "eva_key": "sulfate_value",
+        "status": "MATCH",
+        "eva_val": "632.3",
+        "pipeline_val": "632.3",
+        "source": "/home/josep/projects/claudecode-job"
+      },
+      {
+        "eva_key": "sulfate_classification",
+        "status": "MATCH",
+        "eva_val": "No Agressius",
+        "pipeline_val": "No Agressius",
+        "source": "RD 470/2021"
+      },
+      {
+        "eva_key": "lab_field_company",
+        "status": "MATCH",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "source": "constant"
+      },
+      {
+        "eva_key": "lab_testing_company",
+        "status": "MATCH",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "source": "constant"
+      },
+      {
+        "eva_key": "lab_sample_id",
+        "status": "MISMATCH",
+        "eva_val": "Mostra : SPT-1",
+        "pipeline_val": "P-1-1",
+        "source": "sondeig vision"
+      },
+      {
+        "eva_key": "lab_depth",
+        "status": "MISMATCH",
+        "eva_val": "Profunditat:  -0.60  a -1.20 m",
+        "pipeline_val": "-1.50 a 2.00",
+        "source": "sondeig vision"
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "MISMATCH",
+        "eva_val": "3.50",
+        "pipeline_val": "5.00",
+        "source": "Terzaghi-Peck"
+      },
+      {
+        "eva_key": "seismic_ab_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "AB  =0,08 g  (essent g el valor de la graveta",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "radon_zone",
+        "status": "MISMATCH",
+        "eva_val": "1",
+        "pipeline_val": "0",
+        "source": "CTE DB HS6 (Rubi)"
+      },
+      {
+        "eva_key": "adjacent_east_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Finalment, Per la part est i oest, amb constr",
+        "pipeline_val": "parcel·la amb construcció",
+        "source": "Cadastre API (geocode(CARRER MIRAND"
+      },
+      {
+        "eva_key": "adjacent_west_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Finalment, Per la part est i oest, amb constr",
+        "pipeline_val": "Avinguda Can Tapis",
+        "source": "Cadastre API (geocode(CARRER MIRAND"
+      },
+      {
+        "eva_key": "adjacent_north_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part nord, amb parcel·les sense edific",
+        "pipeline_val": "Passeig Miranda",
+        "source": "Cadastre API (geocode(CARRER MIRAND"
+      },
+      {
+        "eva_key": "adjacent_south_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part sud, amb el carrer de la Miranda",
+        "pipeline_val": "parcel·la amb construcció",
+        "source": "Cadastre API (geocode(CARRER MIRAND"
+      }
+    ],
+    "counts": {
+      "NOT_EXTRACTED": 4,
+      "CLOSE": 2,
+      "MISMATCH": 11,
+      "MATCH": 6
+    }
+  },
+  "LINYOLA": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MISMATCH",
+        "eva_val": "SÍLVIA EROLES BALAGUERÓ",
+        "pipeline_val": "JOSEP BUNYESC PALACÍN",
+        "source": "planol Punts de Sondeig_Silvia_Jaum"
+      },
+      {
+        "eva_key": "architect_company",
+        "status": "CLOSE",
+        "eva_val": "BUNYESC ARQUITECTURA EFICIENT",
+        "pipeline_val": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+        "source": "planol Punts de Sondeig_Silvia_Jaum"
+      },
+      {
+        "eva_key": "client",
+        "status": "CLOSE",
+        "eva_val": "SRA. SÍLVIA EROLES BALAGUERÓ",
+        "pipeline_val": "SÍLVIA EROLES BALAGUERÓ",
+        "source": "planol Punts de Sondeig_Silvia_Jaum"
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "CLOSE",
+        "eva_val": "un nou habitatge unifamiliar",
+        "pipeline_val": "habitatge unifamiliar aïllat",
+        "source": "planol Punts de Sondeig_Silvia_Jaum"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "MATCH",
+        "eva_val": "Pb",
+        "pipeline_val": "Pb",
+        "source": "planol Punts de Sondeig_Silvia_Jaum"
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "MATCH",
+        "eva_val": "571",
+        "pipeline_val": "569.0",
+        "source": "planol Punts de Sondeig_Silvia_Jaum"
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "250.91",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "municipality",
+        "status": "MATCH",
+        "eva_val": "Linyola",
+        "pipeline_val": "LINYOLA",
+        "source": "fileminer:comanda laboratori_400160"
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MISMATCH",
+        "eva_val": "4001607",
+        "pipeline_val": "13/52/04",
+        "source": "fileminer:25.0616/2_02B_DG_Silvia_J"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "MATCH",
+        "eva_val": "1 d ‘octubre de 2025",
+        "pipeline_val": "1 d'octubre de 2025",
+        "source": "DPSH/Lab PDF"
+      },
+      {
+        "eva_key": "data_signatura_text",
+        "status": "MISMATCH",
+        "eva_val": "29 d’octubre de 2025",
+        "pipeline_val": "Octubre 2023",
+        "source": "groq_llm:tall.pdf"
+      },
+      {
+        "eva_key": "sulfate_value",
+        "status": "MATCH",
+        "eva_val": "0.0",
+        "pipeline_val": "",
+        "source": "/home/josep/projects/claudecode-job"
+      },
+      {
+        "eva_key": "sulfate_classification",
+        "status": "MATCH",
+        "eva_val": "No agressius",
+        "pipeline_val": "No Agressius",
+        "source": "RD 470/2021"
+      },
+      {
+        "eva_key": "lab_field_company",
+        "status": "CLOSE",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
+        "pipeline_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "source": "constant"
+      },
+      {
+        "eva_key": "lab_testing_company",
+        "status": "MATCH",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "source": "constant"
+      },
+      {
+        "eva_key": "lab_sample_id",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Mostra : SPT-1",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_depth",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Profunditat:  -1.00  a -1.15 m",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "MISMATCH",
+        "eva_val": "3.0",
+        "pipeline_val": "1.30",
+        "source": "Terzaghi-Peck"
+      },
+      {
+        "eva_key": "seismic_ab_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "0,04",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "radon_zone",
+        "status": "MATCH",
+        "eva_val": "0",
+        "pipeline_val": "0",
+        "source": "CTE DB HS6 (Linyola)"
+      },
+      {
+        "eva_key": "adjacent_east_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part est i pel sud amb parcel·les buid",
+        "pipeline_val": "parcel·la buida",
+        "source": "Cadastre API (geocode(Carrer Clot d"
+      },
+      {
+        "eva_key": "adjacent_west_fmt",
+        "status": "MISMATCH",
+        "eva_val": "I finalment, per la part oest, amb el carrer ",
+        "pipeline_val": "Carrer Clot de la Llacuna",
+        "source": "Cadastre API (geocode(Carrer Clot d"
+      },
+      {
+        "eva_key": "adjacent_north_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part nord amb una parcel·la ocupada pe",
+        "pipeline_val": "parcel·la buida",
+        "source": "Cadastre API (geocode(Carrer Clot d"
+      },
+      {
+        "eva_key": "adjacent_south_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part est i pel sud amb parcel·les buid",
+        "pipeline_val": "parcel·la buida",
+        "source": "Cadastre API (geocode(Carrer Clot d"
+      }
+    ],
+    "counts": {
+      "MISMATCH": 8,
+      "CLOSE": 4,
+      "MATCH": 8,
+      "NOT_EXTRACTED": 4
+    }
+  },
+  "BELL-LLOC": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MATCH",
+        "eva_val": "JORDI BOSCH NOVELL",
+        "pipeline_val": "Jordi Bosch Novell",
+        "source": "groq_llm:25.0647/A.01.pdf"
+      },
+      {
+        "eva_key": "architect_company",
+        "status": "MATCH",
+        "eva_val": "ARQUITECTURA BOSCH NOVELL",
+        "pipeline_val": "ARQUITECTURA BOSCH NOVELL",
+        "source": "planol A.01.pdf"
+      },
+      {
+        "eva_key": "client",
+        "status": "CLOSE",
+        "eva_val": "RAMON MITJANA S.L",
+        "pipeline_val": "RAMON MITJANA S.L.",
+        "source": "fileminer:PDF V0/4001612_informe_v0"
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "CLOSE",
+        "eva_val": "un habitatge unifamiliar",
+        "pipeline_val": "habitatge unifamiliar aïllat",
+        "source": "planol A.01.pdf"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "MATCH",
+        "eva_val": "Pb+1Pp",
+        "pipeline_val": "Pb+1Pp",
+        "source": "planol A.01.pdf"
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "MATCH",
+        "eva_val": "995",
+        "pipeline_val": "995.0",
+        "source": "planol A.01.pdf"
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "MISMATCH",
+        "eva_val": "280+86",
+        "pipeline_val": "297",
+        "source": "planol A.01.pdf"
+      },
+      {
+        "eva_key": "municipality",
+        "status": "CLOSE",
+        "eva_val": "Bell-lloc d’Urgell",
+        "pipeline_val": "BELL-LLOC",
+        "source": "fileminer:comanda laboratori_400161"
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MISMATCH",
+        "eva_val": "4001612",
+        "pipeline_val": "4001612_v0",
+        "source": "fileminer:PDF V0/4001612_informe_v0"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "MISMATCH",
+        "eva_val": "1 d’octubre de 2025",
+        "pipeline_val": "1 i 6 d'octubre de 2025",
+        "source": "DPSH/Lab PDF"
+      },
+      {
+        "eva_key": "data_signatura_text",
+        "status": "MISMATCH",
+        "eva_val": "27 d’octubre de 2025",
+        "pipeline_val": "01/10/2025",
+        "source": "groq_llm:PDF V0/ANNEXES/4001612_DPS"
+      },
+      {
+        "eva_key": "sulfate_value",
+        "status": "MATCH",
+        "eva_val": "89.8",
+        "pipeline_val": "89.8",
+        "source": "/home/josep/projects/claudecode-job"
+      },
+      {
+        "eva_key": "sulfate_classification",
+        "status": "MATCH",
+        "eva_val": "No Agressius",
+        "pipeline_val": "No Agressius",
+        "source": "RD 470/2021"
+      },
+      {
+        "eva_key": "lab_field_company",
+        "status": "MATCH",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "source": "constant"
+      },
+      {
+        "eva_key": "lab_testing_company",
+        "status": "MATCH",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "source": "constant"
+      },
+      {
+        "eva_key": "lab_sample_id",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Mostra : SPT-1",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_depth",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Profunditat:  -1.0  a -1.60 m",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "MISMATCH",
+        "eva_val": "3.0",
+        "pipeline_val": "1.64",
+        "source": "Terzaghi-Peck"
+      },
+      {
+        "eva_key": "seismic_ab_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "0,04",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "radon_zone",
+        "status": "MATCH",
+        "eva_val": "1",
+        "pipeline_val": "1",
+        "source": "CTE DB HS6 (Bell-Lloc)"
+      },
+      {
+        "eva_key": "adjacent_east_fmt",
+        "status": "CLOSE",
+        "eva_val": "Per la part est amb el Carrer Mestre Ramon Or",
+        "pipeline_val": "Carrer Mestre Ramon Ortiz",
+        "source": "Cadastre API (geocode(CARRER MESTRE"
+      },
+      {
+        "eva_key": "adjacent_west_fmt",
+        "status": "MISMATCH",
+        "eva_val": "I finalment, per la part oest, amb una parcel",
+        "pipeline_val": "parcel·la amb construcció",
+        "source": "Cadastre API (geocode(CARRER MESTRE"
+      },
+      {
+        "eva_key": "adjacent_north_fmt",
+        "status": "CLOSE",
+        "eva_val": "Per la part nord amb una parcel·la buida.",
+        "pipeline_val": "parcel·la buida",
+        "source": "Cadastre API (geocode(CARRER MESTRE"
+      },
+      {
+        "eva_key": "adjacent_south_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part sud amb el Carrer Antoni Bellet.",
+        "pipeline_val": "parcel·la buida",
+        "source": "Cadastre API (geocode(CARRER MESTRE"
+      },
+      {
+        "eva_key": "spt_n30",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "54",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "spt_location",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "S-1",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "spt_lithology",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Graves en matriu sorrenca",
+        "pipeline_val": "",
+        "source": ""
+      }
+    ],
+    "counts": {
+      "MATCH": 9,
+      "CLOSE": 5,
+      "MISMATCH": 7,
+      "NOT_EXTRACTED": 6
+    }
+  },
+  "ALCOLETGE": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MISMATCH",
+        "eva_val": "ALBERT SANS BONVEHI",
+        "pipeline_val": "DAVID GRAUS ROBINAT",
+        "source": "planol A.01.pdf"
+      },
+      {
+        "eva_key": "client",
+        "status": "CLOSE",
+        "eva_val": "SR. ALBERT SANS BONVEHI",
+        "pipeline_val": "ALBERT SANS BONVEHÍ",
+        "source": "planol A.01.pdf"
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MISMATCH",
+        "eva_val": "l'ampliació d'un edifici en planta baixa",
+        "pipeline_val": "habitatge unifamiliar",
+        "source": "planol A.01.pdf"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "MATCH",
+        "eva_val": "Pb",
+        "pipeline_val": "Pb",
+        "source": "planol A.01.pdf"
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "1167",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "100",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "municipality",
+        "status": "CLOSE",
+        "eva_val": "A la zona d’estudi, en el municipi d’Alcoletg",
+        "pipeline_val": "ALCOLETGE",
+        "source": "fileminer:comanda laboratori_400167"
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MATCH",
+        "eva_val": "4001670",
+        "pipeline_val": "4001670",
+        "source": "groq_llm:tall.pdf"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "MATCH",
+        "eva_val": "16 de febrer de 2026",
+        "pipeline_val": "16 de febrer de 2026",
+        "source": "DPSH/Lab PDF"
+      },
+      {
+        "eva_key": "data_signatura_text",
+        "status": "MISMATCH",
+        "eva_val": "16 de març de 2026",
+        "pipeline_val": "Febrer 2026",
+        "source": "groq_llm:tall.pdf"
+      },
+      {
+        "eva_key": "sulfate_value",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "297.9",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "sulfate_classification",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "No Agressius",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_field_company",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_testing_company",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_sample_id",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Mostra : SPT-1",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_depth",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Profunditat:  -0.80  a -1.40 m",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "MISMATCH",
+        "eva_val": "3.50",
+        "pipeline_val": "0.51",
+        "source": "Terzaghi-Peck"
+      },
+      {
+        "eva_key": "seismic_ab_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "0,04",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "radon_zone",
+        "status": "MATCH",
+        "eva_val": "1",
+        "pipeline_val": "1",
+        "source": "CTE DB HS6 (Alcoletge)"
+      },
+      {
+        "eva_key": "adjacent_east_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part est amb tres parcel·les ocupades ",
+        "pipeline_val": "parcel·la amb construcció",
+        "source": "Cadastre API (geocode(Carrer Giraso"
+      },
+      {
+        "eva_key": "adjacent_west_fmt",
+        "status": "MISMATCH",
+        "eva_val": "I finalment, per la part oest, amb un solar b",
+        "pipeline_val": "parcel·la buida",
+        "source": "Cadastre API (geocode(Carrer Giraso"
+      },
+      {
+        "eva_key": "adjacent_north_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part nord amb el camí d’accés.",
+        "pipeline_val": "desconegut",
+        "source": "Cadastre API (geocode(Carrer Giraso"
+      },
+      {
+        "eva_key": "adjacent_south_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Per la part sud amb una parcel·la on existeix",
+        "pipeline_val": "parcel·la amb construcció",
+        "source": "Cadastre API (geocode(Carrer Giraso"
+      }
+    ],
+    "counts": {
+      "MISMATCH": 8,
+      "CLOSE": 2,
+      "MATCH": 4,
+      "NOT_EXTRACTED": 9
+    }
+  },
+  "SEGRIA": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MISMATCH",
+        "eva_val": "JUAN JOSÉ TORRES POVEDANO",
+        "pipeline_val": "Jordi Carner Rocar",
+        "source": "planol 1.0.pdf"
+      },
+      {
+        "eva_key": "client",
+        "status": "CLOSE",
+        "eva_val": "GRUPO CUENCA GUERRERO, S.L",
+        "pipeline_val": "Grupo CUENCA GUERRERO",
+        "source": "planol 1.0.pdf"
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MISMATCH",
+        "eva_val": "una vivienda unifamiliar aislada",
+        "pipeline_val": "habitatge unifamiliar aïllat",
+        "source": "planol 1.0.pdf"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "MATCH",
+        "eva_val": "Pb",
+        "pipeline_val": "Pb",
+        "source": "planol 1.0.pdf"
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "MISMATCH",
+        "eva_val": "100",
+        "pipeline_val": "430.0",
+        "source": "planol 1.0.pdf"
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "MISMATCH",
+        "eva_val": "406",
+        "pipeline_val": "137",
+        "source": "planol 1.0.pdf"
+      },
+      {
+        "eva_key": "municipality",
+        "status": "CLOSE",
+        "eva_val": "En la zona en estudio, en la población de VIL",
+        "pipeline_val": "VILANOVA DE SEGRIÀ",
+        "source": "fileminer:comanda laboratori_400167"
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MISMATCH",
+        "eva_val": "Expediente Núm.: 4001671",
+        "pipeline_val": "4001671",
+        "source": "groq_llm:pl situació.pdf"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "El día 19 de febrero de 2026, se visitó la ob",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "data_signatura_text",
+        "status": "MISMATCH",
+        "eva_val": "Els Omells de Na Gaia, 16 de marzo de 2026",
+        "pipeline_val": "24.01.2026",
+        "source": "groq_llm:26.0050/1.0.pdf"
+      },
+      {
+        "eva_key": "lab_field_company",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_testing_company",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_sample_id",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Muestra: SPT-1",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_depth",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Profundidad: -1.00 a -1.60 m",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "MISMATCH",
+        "eva_val": "2.50 Kg/cm2 con un factor de seguridad inclui",
+        "pipeline_val": "0.88",
+        "source": "Terzaghi-Peck"
+      },
+      {
+        "eva_key": "seismic_ab_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "AB < 0,04 g (siento g el valor de la gravedad",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "radon_zone",
+        "status": "MISMATCH",
+        "eva_val": "1",
+        "pipeline_val": "0",
+        "source": "CTE DB HS6 (Vilanova del Segrià)"
+      },
+      {
+        "eva_key": "adjacent_east_fmt",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Por la parte norte y este, con parcelas de si",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "adjacent_west_fmt",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Y finalmente, Por la parte oeste con la calle",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "adjacent_north_fmt",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Por la parte norte y este, con parcelas de si",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "adjacent_south_fmt",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Por la parte sur, con una parcela, sin edific",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "spt_n30",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "10",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "spt_location",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "P-1",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "spt_lithology",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Arcilla limosa y arenosa con algunas gravas",
+        "pipeline_val": "",
+        "source": ""
+      }
+    ],
+    "counts": {
+      "MISMATCH": 8,
+      "CLOSE": 2,
+      "MATCH": 1,
+      "NOT_EXTRACTED": 13
+    }
+  },
+  "ANCILES": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MISMATCH",
+        "eva_val": "ALBA MARIA BARRAU CASTÁN",
+        "pipeline_val": "ALBA BARRAU, MIRIAM CASTEL",
+        "source": "planol A01_TIPOL.pdf"
+      },
+      {
+        "eva_key": "client",
+        "status": "MISMATCH",
+        "eva_val": "SRA. ALBA MARIA BARRAU CASTÁN",
+        "pipeline_val": "ANDRÉS AMAT y ENRIQUE M. GARDETA",
+        "source": "planol A01_TIPOL.pdf"
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MATCH",
+        "eva_val": "7 viviendas unifamiliares adosadas",
+        "pipeline_val": "7 viviendas adosadas",
+        "source": "planol A01_TIPOL.pdf"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "MISMATCH",
+        "eva_val": "C-1",
+        "pipeline_val": "Ps+Pb+Pbc+1Pp",
+        "source": "planol A01_TIPOL.pdf"
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "MISMATCH",
+        "eva_val": "T-1",
+        "pipeline_val": "1655.01",
+        "source": "groq_llm:24.0807/IV_PLANOS.pdf"
+      },
+      {
+        "eva_key": "municipality",
+        "status": "CLOSE",
+        "eva_val": "En la zona en estudio, en la población de Anc",
+        "pipeline_val": "ANCILES",
+        "source": "fileminer:comanda laboratori_400167"
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MISMATCH",
+        "eva_val": "Expediente Núm.: 4001679_v0",
+        "pipeline_val": "4001679",
+        "source": "groq_llm:pl situ.pdf"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "El día 19 de febrero de 2026, se visitó la ob",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "data_signatura_text",
+        "status": "MISMATCH",
+        "eva_val": "Els Omells de Na Gaia, 16 de marzo de 2026",
+        "pipeline_val": "Febrero 2026",
+        "source": "groq_llm:pl situ.pdf"
+      },
+      {
+        "eva_key": "lab_field_company",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_testing_company",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "lab_sample_id",
+        "status": "MATCH",
+        "eva_val": "Muestra: MA-1",
+        "pipeline_val": "SPT-1",
+        "source": "sondeig vision"
+      },
+      {
+        "eva_key": "lab_depth",
+        "status": "MISMATCH",
+        "eva_val": "Profundidad: -2.80 a -3.00 m",
+        "pipeline_val": "-1.00 a 1.60",
+        "source": "sondeig vision"
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "MISMATCH",
+        "eva_val": "2.0 Kg/cm2 con un factor de seguridad incluid",
+        "pipeline_val": "1.16",
+        "source": "Terzaghi-Peck"
+      },
+      {
+        "eva_key": "seismic_ab_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "AB = 0.05 g (siento g el valor de la gravedad",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "radon_zone",
+        "status": "MATCH",
+        "eva_val": "2",
+        "pipeline_val": "2",
+        "source": "CTE DB HS6 (Anciles - Benasque)"
+      },
+      {
+        "eva_key": "adjacent_east_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Por la parte noreste con un campo de conreo h",
+        "pipeline_val": "Carretera Anciles",
+        "source": "Cadastre API (geocode(CARRER GENERA"
+      },
+      {
+        "eva_key": "adjacent_west_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Y finalmente por el sureste, con una zona yer",
+        "pipeline_val": "parcel·la buida",
+        "source": "Cadastre API (geocode(CARRER GENERA"
+      },
+      {
+        "eva_key": "adjacent_north_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Por la parte noroeste con un jardín.",
+        "pipeline_val": "Calle General Ferraz",
+        "source": "Cadastre API (geocode(CARRER GENERA"
+      },
+      {
+        "eva_key": "adjacent_south_fmt",
+        "status": "MISMATCH",
+        "eva_val": "Por la parte suroeste con un edificio de hast",
+        "pipeline_val": "parcel·la buida",
+        "source": "Cadastre API (geocode(CARRER GENERA"
+      },
+      {
+        "eva_key": "spt_n30",
+        "status": "MATCH",
+        "eva_val": "6",
+        "pipeline_val": "6",
+        "source": "sondeig vision"
+      },
+      {
+        "eva_key": "spt_location",
+        "status": "MATCH",
+        "eva_val": "S-1",
+        "pipeline_val": "S-1",
+        "source": "sondeig vision"
+      },
+      {
+        "eva_key": "spt_lithology",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Arcilla arenosa con gravitas",
+        "pipeline_val": "",
+        "source": ""
+      }
+    ],
+    "counts": {
+      "MISMATCH": 12,
+      "MATCH": 5,
+      "CLOSE": 1,
+      "NOT_EXTRACTED": 5
+    }
+  }
+}
