@@ -1,0 +1,604 @@
+{
+  "VALLES": {
+    "rows": [
+      {
+        "eva_key": "client",
+        "status": "MISMATCH",
+        "eva_val": "WOOD COMFORT PROMOCIONS SLU",
+        "pipeline_val": "GRUP ALMA",
+        "source": "contingut:25.0493/DADES PER AN"
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MATCH",
+        "eva_val": "3 habitatges unifamiliars d’estructura l",
+        "pipeline_val": "CONSTR 3 HAB UNIF",
+        "source": "fileminer:comanda laboratori_3"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Pb+1Pp",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "1.284",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "120 m2",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "municipality",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Castellar del Vallès",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MATCH",
+        "eva_val": "3001621",
+        "pipeline_val": "3001621",
+        "source": "groq_llm:tall.pdf"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "MATCH",
+        "eva_val": "24 de octubre de 2025",
+        "pipeline_val": "24 d'octubre de 2025",
+        "source": "DPSH/Lab PDF"
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "3.0",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "settlement",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Els assentaments màxims previstos per la",
+        "pipeline_val": "",
+        "source": ""
+      }
+    ],
+    "counts": {
+      "MISMATCH": 1,
+      "MATCH": 3,
+      "NOT_EXTRACTED": 6
+    }
+  },
+  "RUBI": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MISMATCH",
+        "eva_val": "JOANA MARTINEZ",
+        "pipeline_val": "SR.",
+        "source": "groq_llm:3001631_test_validati"
+      },
+      {
+        "eva_key": "client",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "SRA. JOANA MARTINEZ",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MISMATCH",
+        "eva_val": "un habitatge unifamiliar aïllat modular",
+        "pipeline_val": "CONSTR HABITATGE UNI",
+        "source": "fileminer:comanda laboratori_3"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "PB + Porxo",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "951",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "92",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "municipality",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Rubí (Barcelona)",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MATCH",
+        "eva_val": "3001631",
+        "pipeline_val": "3001631",
+        "source": "groq_llm:tall.pdf"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "MATCH",
+        "eva_val": "14 de novembre de 2025",
+        "pipeline_val": "14 de novembre de 2025",
+        "source": "DPSH/Lab PDF"
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "3.50",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "settlement",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "1.50",
+        "pipeline_val": "",
+        "source": ""
+      }
+    ],
+    "counts": {
+      "MISMATCH": 2,
+      "NOT_EXTRACTED": 7,
+      "MATCH": 2
+    }
+  },
+  "LINYOLA": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MISMATCH",
+        "eva_val": "SÍLVIA EROLES BALAGUERÓ",
+        "pipeline_val": "SR.",
+        "source": "groq_llm:4001607_test_validati"
+      },
+      {
+        "eva_key": "architect_company",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "BUNYESC ARQUITECTURA EFICIENT",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "client",
+        "status": "MISMATCH",
+        "eva_val": "SRA. SÍLVIA EROLES BALAGUERÓ",
+        "pipeline_val": "BUNYESC ARQUITECCTURA EFICIENT, SLP",
+        "source": "contingut:25.0616/DADES PER AN"
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MISMATCH",
+        "eva_val": "un nou habitatge unifamiliar",
+        "pipeline_val": "CONSTR HABITATGE",
+        "source": "fileminer:comanda laboratori_4"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Pb",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "571",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "250.91",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "municipality",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Linyola",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MISMATCH",
+        "eva_val": "4001607",
+        "pipeline_val": "13/52/04",
+        "source": "fileminer:25.0616/2_02B_DG_Sil"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "MATCH",
+        "eva_val": "1 d ‘octubre de 2025",
+        "pipeline_val": "1 d'octubre de 2025",
+        "source": "DPSH/Lab PDF"
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "3.0",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "settlement",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Els assentaments màxims previstos per la",
+        "pipeline_val": "",
+        "source": ""
+      }
+    ],
+    "counts": {
+      "MISMATCH": 4,
+      "NOT_EXTRACTED": 7,
+      "MATCH": 1
+    }
+  },
+  "BELL-LLOC": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MATCH",
+        "eva_val": "JORDI BOSCH NOVELL",
+        "pipeline_val": "Jordi Bosch Novell",
+        "source": "groq_llm:25.0647/A.01.pdf"
+      },
+      {
+        "eva_key": "architect_company",
+        "status": "MATCH",
+        "eva_val": "ARQUITECTURA BOSCH NOVELL",
+        "pipeline_val": "ARQUITECTURA BOSCH NOVELL",
+        "source": "pressupost:PRESSUPOST GEOTEC.B"
+      },
+      {
+        "eva_key": "client",
+        "status": "CLOSE",
+        "eva_val": "RAMON MITJANA S.L",
+        "pipeline_val": "RAMON MITJANA S.L.",
+        "source": "fileminer:PDF V0/4001612_infor"
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MISMATCH",
+        "eva_val": "un habitatge unifamiliar",
+        "pipeline_val": "Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+        "source": "fileminer:25.0647/Pressupost C"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "MATCH",
+        "eva_val": "Pb+1Pp",
+        "pipeline_val": "Pb+1Pp",
+        "source": "groq_llm:PDF V0/LLETRA/4001612"
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "MATCH",
+        "eva_val": "995",
+        "pipeline_val": "995",
+        "source": "groq_llm:PDF V0/LLETRA/4001612"
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "MISMATCH",
+        "eva_val": "280+86",
+        "pipeline_val": "24.72",
+        "source": "groq_llm:25.0647/A.01.pdf"
+      },
+      {
+        "eva_key": "municipality",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Bell-lloc d’Urgell",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MISMATCH",
+        "eva_val": "4001612",
+        "pipeline_val": "4001612_v0",
+        "source": "fileminer:PDF V0/4001612_infor"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "MISMATCH",
+        "eva_val": "1 d’octubre de 2025",
+        "pipeline_val": "1 i 6 d'octubre de 2025",
+        "source": "DPSH/Lab PDF"
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "3.0",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "settlement",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Els assentaments màxims previstos per la",
+        "pipeline_val": "",
+        "source": ""
+      }
+    ],
+    "counts": {
+      "MATCH": 4,
+      "CLOSE": 1,
+      "MISMATCH": 4,
+      "NOT_EXTRACTED": 3
+    }
+  },
+  "ALCOLETGE": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MISMATCH",
+        "eva_val": "ALBERT SANS BONVEHI",
+        "pipeline_val": "DAVID GRAUS ROBINAT",
+        "source": "groq_llm:4001670_generated (1)"
+      },
+      {
+        "eva_key": "client",
+        "status": "MISMATCH",
+        "eva_val": "SR. ALBERT SANS BONVEHI",
+        "pipeline_val": "ALBERT SANS BONVEHI tel. 675639431 - ete",
+        "source": "fileminer:26.0049/RE_ geotècni"
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MISMATCH",
+        "eva_val": "l'ampliació d'un edifici en planta baixa",
+        "pipeline_val": "CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSE",
+        "source": "fileminer:26.0049/RE_ geotècni"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "MATCH",
+        "eva_val": "Pb",
+        "pipeline_val": "PB",
+        "source": "groq_llm:4001670_generated_utm"
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "1167",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "100",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "municipality",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "A la zona d’estudi, en el municipi d’Alc",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MATCH",
+        "eva_val": "4001670",
+        "pipeline_val": "4001670",
+        "source": "groq_llm:tall.pdf"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "MATCH",
+        "eva_val": "16 de febrer de 2026",
+        "pipeline_val": "16 de febrer de 2026",
+        "source": "DPSH/Lab PDF"
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "3.50",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "settlement",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Els assentaments màxims previstos per la",
+        "pipeline_val": "",
+        "source": ""
+      }
+    ],
+    "counts": {
+      "MISMATCH": 3,
+      "MATCH": 3,
+      "NOT_EXTRACTED": 5
+    }
+  },
+  "SEGRIA": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MISMATCH",
+        "eva_val": "JUAN JOSÉ TORRES POVEDANO",
+        "pipeline_val": "jordi carner",
+        "source": "groq_llm:26.0050/1.0.pdf"
+      },
+      {
+        "eva_key": "client",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "GRUPO CUENCA GUERRERO, S.L",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MISMATCH",
+        "eva_val": "una vivienda unifamiliar aislada",
+        "pipeline_val": "CONSTR HAB UNIF",
+        "source": "fileminer:comanda laboratori_4"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Pb",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "100",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "superficie_construida",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "406",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "municipality",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "En la zona en estudio, en la población d",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MISMATCH",
+        "eva_val": "Expediente Núm.: 4001671",
+        "pipeline_val": "4001671",
+        "source": "groq_llm:pl situació.pdf"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "El día 19 de febrero de 2026, se visitó ",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "2.50 Kg/cm2 con un factor de seguridad i",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "settlement",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Los asientos máximos previstos para la c",
+        "pipeline_val": "",
+        "source": ""
+      }
+    ],
+    "counts": {
+      "MISMATCH": 3,
+      "NOT_EXTRACTED": 8
+    }
+  },
+  "ANCILES": {
+    "rows": [
+      {
+        "eva_key": "architect_name_upper",
+        "status": "MISMATCH",
+        "eva_val": "ALBA MARIA BARRAU CASTÁN",
+        "pipeline_val": "ANDRÉS AMAT y ENRIQUE M. GARDETA",
+        "source": "groq_llm:24.0807/A01_TIPOL.pdf"
+      },
+      {
+        "eva_key": "client",
+        "status": "CLOSE",
+        "eva_val": "SRA. ALBA MARIA BARRAU CASTÁN",
+        "pipeline_val": "MARIA ALBA BARRAU CASTÁN 616523792",
+        "source": "contingut:24.0807/DADES PER AN"
+      },
+      {
+        "eva_key": "building_type_lower",
+        "status": "MISMATCH",
+        "eva_val": "7 viviendas unifamiliares adosadas",
+        "pipeline_val": "CONSTR GRUPO DE VIVIENDAS",
+        "source": "fileminer:comanda laboratori_4"
+      },
+      {
+        "eva_key": "plantes",
+        "status": "MISMATCH",
+        "eva_val": "C-1",
+        "pipeline_val": "SÓTANO, PLANTA BAJA y PLANTA 1",
+        "source": "fileminer:24.0807/Presupuesto "
+      },
+      {
+        "eva_key": "superficie_parcela",
+        "status": "MISMATCH",
+        "eva_val": "T-1",
+        "pipeline_val": "1655.01",
+        "source": "groq_llm:24.0807/IV_PLANOS.pdf"
+      },
+      {
+        "eva_key": "municipality",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "En la zona en estudio, en la población d",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "expedient",
+        "status": "MISMATCH",
+        "eva_val": "Expediente Núm.: 4001679_v0",
+        "pipeline_val": "4001679",
+        "source": "groq_llm:pl situ.pdf"
+      },
+      {
+        "eva_key": "data_camp_text",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "El día 19 de febrero de 2026, se visitó ",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "qa_value",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "2.0 Kg/cm2 con un factor de seguridad in",
+        "pipeline_val": "",
+        "source": ""
+      },
+      {
+        "eva_key": "settlement",
+        "status": "NOT_EXTRACTED",
+        "eva_val": "Los asientos máximos previstos para la c",
+        "pipeline_val": "",
+        "source": ""
+      }
+    ],
+    "counts": {
+      "MISMATCH": 5,
+      "CLOSE": 1,
+      "NOT_EXTRACTED": 4
+    }
+  }
+}

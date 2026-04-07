@@ -1,0 +1,148 @@
+{
+  "3001621 CASTELLAR DEL VALLES": {
+    "files": 75,
+    "concepts": 11,
+    "unresolved": 55,
+    "warnings": [],
+    "concept_list": [
+      "client_name",
+      "street_address",
+      "contact_name",
+      "client_phone",
+      "access_url",
+      "client_email",
+      "client_nif",
+      "field_date",
+      "utm_coordinates",
+      "building_type",
+      "municipality"
+    ],
+    "time_s": 3.4
+  },
+  "3001631 RUBI": {
+    "files": 52,
+    "concepts": 8,
+    "unresolved": 58,
+    "warnings": [],
+    "concept_list": [
+      "client_phone",
+      "client_email",
+      "client_nif",
+      "field_date",
+      "utm_coordinates",
+      "street_address",
+      "building_type",
+      "municipality"
+    ],
+    "time_s": 1.3
+  },
+  "4001607 LINYOLA": {
+    "files": 84,
+    "concepts": 12,
+    "unresolved": 54,
+    "warnings": [],
+    "concept_list": [
+      "client_nif",
+      "client_phone",
+      "client_email",
+      "contact_name",
+      "field_date",
+      "expedient",
+      "client_name",
+      "street_address",
+      "access_url",
+      "utm_coordinates",
+      "building_type",
+      "municipality"
+    ],
+    "time_s": 5.9
+  },
+  "4001607 LINYOLA2": {
+    "files": 0,
+    "concepts": 0,
+    "unresolved": 65,
+    "warnings": [
+      "No architect plan data found — planol may be missing or unreadable",
+      "No field work data found — DPSH/sondeig files may be missing",
+      "No location data found — address source may be missing"
+    ],
+    "concept_list": [],
+    "time_s": 0.0
+  },
+  "4001612 BELL-LLOC": {
+    "files": 75,
+    "concepts": 12,
+    "unresolved": 54,
+    "warnings": [],
+    "concept_list": [
+      "client_phone",
+      "client_email",
+      "client_name",
+      "street_address",
+      "contact_name",
+      "client_nif",
+      "access_url",
+      "building_type",
+      "field_date",
+      "utm_coordinates",
+      "expedient",
+      "municipality"
+    ],
+    "time_s": 2.8
+  },
+  "4001670 ALCOLETGE": {
+    "files": 48,
+    "concepts": 10,
+    "unresolved": 56,
+    "warnings": [],
+    "concept_list": [
+      "client_phone",
+      "client_nif",
+      "client_email",
+      "access_url",
+      "building_type",
+      "client_name",
+      "utm_coordinates",
+      "street_address",
+      "municipality",
+      "field_date"
+    ],
+    "time_s": 1.9
+  },
+  "4001671 VILANOVA DE SEGRIA": {
+    "files": 46,
+    "concepts": 7,
+    "unresolved": 58,
+    "warnings": [],
+    "concept_list": [
+      "client_phone",
+      "client_nif",
+      "client_email",
+      "field_date",
+      "street_address",
+      "building_type",
+      "municipality"
+    ],
+    "time_s": 2.8
+  },
+  "4001679 ANCILES": {
+    "files": 59,
+    "concepts": 11,
+    "unresolved": 54,
+    "warnings": [],
+    "concept_list": [
+      "client_name",
+      "client_phone",
+      "street_address",
+      "contact_name",
+      "access_url",
+      "client_email",
+      "field_date",
+      "num_floors",
+      "client_nif",
+      "building_type",
+      "municipality"
+    ],
+    "time_s": 5.4
+  }
+}
