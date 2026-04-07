@@ -77,19 +77,32 @@ def scout_project(
     else:
         concept_sources = {}
 
-    # Step 3: compute unresolved concepts
+    # Step 3: vision probe for non-text files (images, scanned PDFs)
+    vision_probes_sent = 0
+    if use_vision_probe:
+        from .vision_probe import probe_unreadable_files
+        probe_sources = probe_unreadable_files(
+            file_entries, project_path, on_progress=on_progress,
+        )
+        vision_probes_sent = sum(1 for fe in file_entries if fe.notes)
+        # Merge probe results into concept_sources
+        for cid, sources in probe_sources.items():
+            concept_sources.setdefault(cid, []).extend(sources)
+
+    # Step 4: compute unresolved concepts
     unresolved = sorted(all_ids - set(concept_sources.keys()))
 
-    # Step 4: generate warnings
+    # Step 5: generate warnings
     warnings = _generate_warnings(concept_sources, all_ids)
 
-    # Step 5: build ConceptMap
+    # Step 6: build ConceptMap
     duration_ms = int((time.monotonic() - t0) * 1000)
     concept_map = ConceptMap(
         metadata={
             'project': project_path.name,
             'scanned_at': time.strftime('%Y-%m-%dT%H:%M:%S'),
             'total_files': len(file_entries),
+            'vision_probes_sent': vision_probes_sent,
             'total_concepts_found': len(concept_sources),
             'total_concepts_unresolved': len(unresolved),
             'duration_ms': duration_ms,

@@ -12,6 +12,7 @@ class ConceptSource(BaseModel):
     confidence: float            # 0.0-1.0
     signal_preview: str = ""     # e.g. "JORDI BOSCH NOVELL"
     extraction_method: str = ""  # e.g. "planol_vision", "content_pdf"
+    page: int | None = None      # 1-based page where concept found (vision probe)
 
 
 class FileEntry(BaseModel):
