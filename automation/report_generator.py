@@ -293,11 +293,11 @@ class ReportGenerator:
             return None
 
         try:
-            # Auto-fill from sondeig_extracted.json: soil levels + sondeig test data
+            # Auto-fill from sondeig data (annex preferred over field sheet)
             try:
-                sondeig_path = self.project_path / 'validation' / 'sondeig_extracted.json'
-                if sondeig_path.exists():
-                    sondeig_data = load_sondeig_json(sondeig_path)
+                from .vision_normalizer import load_sondeig_merged
+                sondeig_data = load_sondeig_merged(self.project_path / 'validation')
+                if sondeig_data:
                     sondeig_tests = sondeig_data.get('sondeig_tests', [])
                     if sondeig_tests:
                         # Store full test data for the sondeig summary table

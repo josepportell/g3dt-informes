@@ -98,7 +98,7 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
             "planol": "planol_extracted.json",
             "dpsh": "dpsh_extracted.json",
             "sondeig": "sondeig_extracted.json",
-            "sondeig_annex": "sondeig_extracted.json",
+            "sondeig_annex": "sondeig_annex_extracted.json",
         }
 
         vision_tasks = {}
@@ -543,7 +543,7 @@ def run_vision_groq_sync(
         "planol": "planol_extracted.json",
         "dpsh": "dpsh_extracted.json",
         "sondeig": "sondeig_extracted.json",
-        "sondeig_annex": "sondeig_extracted.json",
+        "sondeig_annex": "sondeig_annex_extracted.json",
     }
 
     # For planol vision_type, prefer architect_plan over architect_plan_with_points

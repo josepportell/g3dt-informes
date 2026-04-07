@@ -258,7 +258,7 @@ VISION_REGISTRY: dict[str, tuple[Any, str]] = {
     'planol':        (extract_from_planol,        'planol_extracted.json'),
     'dpsh':          (extract_from_penetros,       'dpsh_extracted.json'),
     'sondeig':       (extract_from_sondeig,        'sondeig_extracted.json'),
-    'sondeig_annex': (extract_from_sondeig_annex,  'sondeig_extracted.json'),
+    'sondeig_annex': (extract_from_sondeig_annex,  'sondeig_annex_extracted.json'),
 }
 
 

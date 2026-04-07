@@ -311,17 +311,12 @@ def _detect_spt(user_data: dict, project_path: str = '') -> bool:
     # 3. Check normalized vision JSONs
     if project_path:
         from pathlib import Path
-        from .vision_normalizer import load_sondeig_json, load_dpsh_json
+        from .vision_normalizer import load_sondeig_merged, load_dpsh_json
 
-        sondeig_path = Path(project_path) / 'validation' / 'sondeig_extracted.json'
-        if sondeig_path.exists():
-            try:
-                data = load_sondeig_json(sondeig_path)
-                for test in data.get('sondeig_tests', []):
-                    if test.get('spt_results'):
-                        return True
-            except (json.JSONDecodeError, KeyError):
-                pass
+        data = load_sondeig_merged(Path(project_path) / 'validation')
+        for test in data.get('sondeig_tests', []):
+            if test.get('spt_results'):
+                return True
         # 4. SPT recorded in DPSH field sheet (e.g. Rubí — no sondeig)
         dpsh_path = Path(project_path) / 'validation' / 'dpsh_extracted.json'
         if dpsh_path.exists():
@@ -432,14 +427,12 @@ def build_report_data(
         # build_report_data may be called independently e.g. from audit)
         if not sondeig_layers and project_path:
             try:
-                from .vision_normalizer import load_sondeig_json
-                sondeig_json = Path(project_path) / 'validation' / 'sondeig_extracted.json'
-                if sondeig_json.exists():
-                    sdata = load_sondeig_json(sondeig_json)
-                    tests = sdata.get('sondeig_tests', [])
-                    if tests and tests[0].get('layers'):
-                        sondeig_layers = tests[0]['layers']
-                        logger.info("Auto-filled sondeig_layers from sondeig_extracted.json in build_report_data")
+                from .vision_normalizer import load_sondeig_merged
+                sdata = load_sondeig_merged(Path(project_path) / 'validation')
+                tests = sdata.get('sondeig_tests', [])
+                if tests and tests[0].get('layers'):
+                    sondeig_layers = tests[0]['layers']
+                    logger.info("Auto-filled sondeig_layers from sondeig data in build_report_data")
             except Exception:
                 pass
         avg_n20 = _bearing_stratum_n20(dpsh_data, sondeig_layers)

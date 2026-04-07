@@ -194,11 +194,12 @@ class UserDataWizard:
             print(f'  [AVIS: error carregant {path.name}: {e}]')
 
     def _load_sondeig(self) -> None:
-        path = self.project_path / 'validation' / 'sondeig_extracted.json'
-        if not path.exists():
+        from .vision_normalizer import load_sondeig_merged
+        validation_dir = self.project_path / 'validation'
+        data = load_sondeig_merged(validation_dir)
+        if not data:
             return
         try:
-            data = load_sondeig_json(path)
             overall_conf = data.get('overall_confidence')
             tests = data.get('sondeig_tests', [])
             if tests:
@@ -229,7 +230,7 @@ class UserDataWizard:
                         field = f'soil_type_level_{i + 1}'
                         self._set_prefill(field, soil_type, f'sondeig descripció', overall_conf)
         except (json.JSONDecodeError, KeyError, TypeError) as e:
-            print(f'  [AVÍS: error carregant {path.name}: {e}]')
+            print(f'  [AVÍS: error carregant sondeig: {e}]')
 
     def _load_adjacents_visor(self) -> None:
         path = self.project_path / 'validation' / 'adjacents_visor.json'

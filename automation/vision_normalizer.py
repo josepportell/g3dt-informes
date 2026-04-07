@@ -347,3 +347,52 @@ def load_sondeig_json(path: Path | str) -> dict:
     with open(path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     return normalize_sondeig(data)
+
+
+def load_sondeig_merged(validation_dir: Path | str) -> dict:
+    """Load sondeig data merging annex (priority) with field sheet.
+
+    The sondeig annex (formatted PDF with 'Unitat litològica' column) is
+    authoritative for num_geological_levels.  The field sheet provides
+    layers, SPT, and other field data.  When both exist, annex-specific
+    fields override field-sheet values.
+
+    Returns normalized merged dict, or empty dict if neither file exists.
+    """
+    validation_dir = Path(validation_dir)
+    field_sheet_path = validation_dir / 'sondeig_extracted.json'
+    annex_path = validation_dir / 'sondeig_annex_extracted.json'
+
+    result: dict = {}
+
+    # Load field sheet as base (layers, SPT, elevation_z, etc.)
+    if field_sheet_path.exists():
+        try:
+            result = load_sondeig_json(field_sheet_path)
+        except Exception:
+            pass
+
+    # Overlay annex data — num_geological_levels is authoritative
+    if annex_path.exists():
+        try:
+            annex = load_sondeig_json(annex_path)
+            # If no field sheet, annex is the sole source
+            if not result:
+                return annex
+            # Merge: annex num_geological_levels into each test
+            annex_tests = annex.get('sondeig_tests', [])
+            result_tests = result.get('sondeig_tests', [])
+            for i, at in enumerate(annex_tests):
+                geo_levels = at.get('num_geological_levels')
+                if geo_levels is not None and i < len(result_tests):
+                    result_tests[i]['num_geological_levels'] = geo_levels
+                elif geo_levels is not None:
+                    result_tests.append(at)
+            # Also merge top-level keys the annex may provide
+            for key in ('num_geological_levels', 'elevation_z', 'overall_confidence'):
+                if annex.get(key) is not None:
+                    result[key] = annex[key]
+        except Exception:
+            pass
+
+    return result

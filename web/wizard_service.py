@@ -991,12 +991,11 @@ def _compute_mapping_prefills(
             return str(entry.get('value', ''))
         return str(entry)
 
-    # --- 4.1  SPT data from sondeig_extracted.json ---
-    sondeig_path = project_path / 'validation' / 'sondeig_extracted.json'
-    if sondeig_path.exists():
-        try:
-            from automation.vision_normalizer import load_sondeig_json
-            sondeig_data = load_sondeig_json(sondeig_path)
+    # --- 4.1  SPT data from sondeig (annex preferred over field sheet) ---
+    try:
+        from automation.vision_normalizer import load_sondeig_merged
+        sondeig_data = load_sondeig_merged(project_path / 'validation')
+        if sondeig_data:
             tests = sondeig_data.get('sondeig_tests', [])
             if tests:
                 test = tests[0]
@@ -1038,8 +1037,8 @@ def _compute_mapping_prefills(
 
                     # Location: sondeig test id (e.g. "S-1")
                     _set('spt_location', test.get('test_id', 'S-1'), 'sondeig vision')
-        except Exception as e:
-            logger.warning("SPT mapping from sondeig failed: %s", e)
+    except Exception as e:
+        logger.warning("SPT mapping from sondeig failed: %s", e)
 
     # --- 4.2  Sulfate classification from sulfate_mg_kg (RD 470/2021) ---
     sulfate_raw = _get_val('sulfate_mg_kg')
@@ -1165,19 +1164,17 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
     cota_entry = merged.get('cota_referencia')
     cota_source = (cota_entry.get('source', '') if isinstance(cota_entry, dict) else '') if cota_entry else ''
     if cota_source != 'user':
-        sondeig_path = project_path / 'validation' / 'sondeig_extracted.json'
-        if sondeig_path.exists():
-            try:
-                from automation.vision_normalizer import load_sondeig_json
-                sondeig_data = load_sondeig_json(sondeig_path)
-                elev_z = sondeig_data.get('elevation_z')
-                if elev_z is not None:
-                    cota_val = float(elev_z)
-                    merged['cota_referencia'] = {'value': f"+{cota_val:.2f}", 'source': 'sondeig elevation_z'}
-            except Exception:
-                pass
+        try:
+            from automation.vision_normalizer import load_sondeig_merged
+            sondeig_data = load_sondeig_merged(project_path / 'validation')
+            elev_z = sondeig_data.get('elevation_z')
+            if elev_z is not None:
+                cota_val = float(elev_z)
+                merged['cota_referencia'] = {'value': f"+{cota_val:.2f}", 'source': 'sondeig elevation_z'}
+        except Exception:
+            pass
 
-    vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json', 'docs': 'docs_extracted.json'}
+    vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json', 'sondeig_annex': 'sondeig_annex_extracted.json', 'docs': 'docs_extracted.json'}
     vision_status = {}
     for vt, filename in vision_types.items():
         vision_status[vt] = (project_path / 'validation' / filename).exists()
@@ -1377,6 +1374,7 @@ def get_vision_status(project_name: str) -> dict[str, Any]:
         'planol': 'planol_extracted.json',
         'dpsh': 'dpsh_extracted.json',
         'sondeig': 'sondeig_extracted.json',
+        'sondeig_annex': 'sondeig_annex_extracted.json',
         'docs': 'docs_extracted.json',
     }
     status = {}
@@ -1410,16 +1408,14 @@ def get_vision_status(project_name: str) -> dict[str, Any]:
                 cota_entry = cached.get('cota_referencia')
                 cota_source = (cota_entry.get('source', '') if isinstance(cota_entry, dict) else '') if cota_entry else ''
                 if cota_source != 'user':
-                    sondeig_path = project_path / 'validation' / 'sondeig_extracted.json'
-                    if sondeig_path.exists():
-                        try:
-                            from automation.vision_normalizer import load_sondeig_json
-                            sdata = load_sondeig_json(sondeig_path)
-                            ez = sdata.get('elevation_z')
-                            if ez is not None:
-                                cached['cota_referencia'] = {'value': f"+{float(ez):.2f}", 'source': 'sondeig elevation_z'}
-                        except Exception:
-                            pass
+                    try:
+                        from automation.vision_normalizer import load_sondeig_merged
+                        sdata = load_sondeig_merged(project_path / 'validation')
+                        ez = sdata.get('elevation_z')
+                        if ez is not None:
+                            cached['cota_referencia'] = {'value': f"+{float(ez):.2f}", 'source': 'sondeig elevation_z'}
+                    except Exception:
+                        pass
             except Exception as e:
                 logger.warning("Failed to refresh wizard prefills: %s", e)
 

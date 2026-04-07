@@ -434,5 +434,5 @@ def _output_filename(vision_type: str) -> str:
         "planol": "planol_extracted.json",
         "dpsh": "dpsh_extracted.json",
         "sondeig": "sondeig_extracted.json",
-        "sondeig_annex": "sondeig_extracted.json",  # same output file
+        "sondeig_annex": "sondeig_annex_extracted.json",
     }.get(vision_type, f"{vision_type}_extracted.json")
