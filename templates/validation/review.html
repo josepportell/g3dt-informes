@@ -1059,6 +1059,28 @@
             border-radius: 6px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
+        /* Pre-questions modal */
+        .eva-prequestions-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+        }
+        .eva-prequestions-card {
+            background: #fff; border-radius: 12px; padding: 28px 32px;
+            max-width: 500px; width: 90%; box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        .eva-prequestions-card h3 { margin: 0 0 4px; font-size: 1.2em; }
+        .eva-prequestions-card .pq-subtitle { color: #666; margin: 0 0 20px; font-size: 0.9em; }
+        .prequestion-field { margin-bottom: 16px; }
+        .prequestion-field label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9em; }
+        .prequestion-field textarea {
+            width: 100%; border: 1px solid #d1d5db; border-radius: 6px;
+            padding: 8px 10px; font: inherit; font-size: 0.9em; resize: vertical;
+            box-sizing: border-box;
+        }
+        .prequestion-field textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.15); }
+        .prequestion-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
         .wizard-field {
             display: flex;
             flex-direction: column;
@@ -1715,6 +1737,39 @@
                         </span>
                     </div>
                     <span class="step-label">Llest</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pre-questions modal: field observations Eva must provide -->
+        <div id="evaPreQuestions" class="eva-prequestions-overlay" style="display:none">
+            <div class="eva-prequestions-card">
+                <h3>Observacions de camp</h3>
+                <p class="pq-subtitle">Respon sobre el terreny que has visitat. Pots ometre i omplir-ho despres al wizard.</p>
+
+                <div class="prequestion-field">
+                    <label>El terreny esta antropitzat? (reblerts, alteracions)</label>
+                    <div class="toggle-switch-container">
+                        <button type="button" class="toggle-switch active" id="pq-is_anthropized" onclick="toggleSwitch(this)"></button>
+                        <span class="toggle-switch-label" id="pq-is_anthropized-label">Si</span>
+                    </div>
+                </div>
+
+                <div class="prequestion-field">
+                    <label>Descripcio del solar</label>
+                    <textarea id="pq-site_description" rows="3"
+                        placeholder="Ex: terreny pla, sense vegetacio, amb reblerts superficials"></textarea>
+                </div>
+
+                <div class="prequestion-field">
+                    <label>Com s'accedeix al solar?</label>
+                    <textarea id="pq-access_description" rows="3"
+                        placeholder="Ex: per carrer X, al sud de la parcella"></textarea>
+                </div>
+
+                <div class="prequestion-actions">
+                    <button class="btn btn-secondary" onclick="skipPreQuestions()">Ometre</button>
+                    <button class="btn btn-primary" onclick="submitPreQuestions()">Continuar</button>
                 </div>
             </div>
         </div>
@@ -3329,7 +3384,53 @@
             });
         }
 
-        function onProjectChange(projectName) {
+        // ── Pre-questions (field observations) ────────────────
+        const PRE_QUESTION_FIELDS = ['is_anthropized', 'site_description', 'access_description'];
+
+        function shouldShowPreQuestions() {
+            const sources = wizardUserData._sources || {};
+            return PRE_QUESTION_FIELDS.some(f => sources[f] !== 'user');
+        }
+
+        function showPreQuestions() {
+            // Pre-populate from existing user_data if available
+            const btn = document.getElementById('pq-is_anthropized');
+            const val = wizardUserData.is_anthropized;
+            if (val === false || val === 'false' || val === '0') {
+                btn.classList.remove('active');
+                document.getElementById('pq-is_anthropized-label').textContent = 'No';
+            } else {
+                btn.classList.add('active');
+                document.getElementById('pq-is_anthropized-label').textContent = 'Si';
+            }
+            document.getElementById('pq-site_description').value = wizardUserData.site_description || '';
+            document.getElementById('pq-access_description').value = wizardUserData.access_description || '';
+            document.getElementById('evaPreQuestions').style.display = 'flex';
+        }
+
+        function submitPreQuestions() {
+            const isAnthro = document.getElementById('pq-is_anthropized').classList.contains('active');
+            const siteDesc = document.getElementById('pq-site_description').value.trim();
+            const accessDesc = document.getElementById('pq-access_description').value.trim();
+
+            wizardUserData.is_anthropized = isAnthro;
+            if (siteDesc) wizardUserData.site_description = siteDesc;
+            if (accessDesc) wizardUserData.access_description = accessDesc;
+
+            // Mark sources as 'user' so badges show green
+            wizardUserData._sources = wizardUserData._sources || {};
+            wizardUserData._sources.is_anthropized = 'user';
+            if (siteDesc) wizardUserData._sources.site_description = 'user';
+            if (accessDesc) wizardUserData._sources.access_description = 'user';
+            wizardUserData._prequestions_answered = true;
+
+            closePreQuestions();
+        }
+
+        function skipPreQuestions() { closePreQuestions(); }
+        function closePreQuestions() { document.getElementById('evaPreQuestions').style.display = 'none'; }
+
+        async function onProjectChange(projectName) {
             selectedProject = projectName;
             wizardDataLoaded = false;
             smartscanLoaded = false;
@@ -3352,7 +3453,18 @@
                 return;
             }
 
-            // Start pipeline stepper and load data via SSE
+            // Fetch user_data FIRST to decide on pre-questions
+            // (must happen before pipeline starts, which deletes user_data.json)
+            try {
+                const r = await fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`);
+                wizardUserData = r.ok ? await r.json() : {};
+            } catch { wizardUserData = {}; }
+
+            if (shouldShowPreQuestions()) {
+                showPreQuestions();
+            }
+
+            // Start pipeline stepper and load data via SSE (runs behind modal if open)
             showStepper();
             dataContent.style.display = 'none';
             loadProjectData();
@@ -3367,11 +3479,14 @@
             // Clear step-files to avoid duplicates when called after vision
             document.querySelectorAll('.step-files').forEach(el => el.innerHTML = '');
 
-            // Load user_data in parallel (independent of SSE stream)
-            fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`)
-                .then(r => r.ok ? r.json() : {})
-                .then(d => { wizardUserData = d; })
-                .catch(() => { wizardUserData = {}; });
+            // Load user_data in parallel — skip if already loaded by pre-questions flow
+            // (pipeline deletes user_data.json, so re-fetching would lose pre-question answers)
+            if (Object.keys(wizardUserData).length === 0) {
+                fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`)
+                    .then(r => r.ok ? r.json() : {})
+                    .then(d => { wizardUserData = d; })
+                    .catch(() => { wizardUserData = {}; });
+            }
 
             // SSE stream for prefills with real-time progress
             const es = new EventSource(`/api/prefills-stream/${encodeURIComponent(selectedProject)}`);
@@ -3455,7 +3570,16 @@
                 ]);
                 if (!prefillsRes.ok) throw new Error('Error carregant prefills');
                 wizardPrefills = await prefillsRes.json();
-                wizardUserData = userDataRes.ok ? await userDataRes.json() : {};
+                // Merge server user_data without losing pre-question answers
+                const serverUd = userDataRes.ok ? await userDataRes.json() : {};
+                if (Object.keys(wizardUserData).length === 0) {
+                    wizardUserData = serverUd;
+                } else {
+                    // Keep pre-question answers, fill in anything else from server
+                    for (const [k, v] of Object.entries(serverUd)) {
+                        if (!(k in wizardUserData)) wizardUserData[k] = v;
+                    }
+                }
                 finishStepper();
                 showWizardContent();
             } catch (err) {
@@ -4245,7 +4369,15 @@
 
                 if (!prefillsRes.ok) throw new Error('Error carregant prefills');
                 wizardPrefills = await prefillsRes.json();
-                wizardUserData = userDataRes.ok ? await userDataRes.json() : {};
+                // Merge server user_data without losing pre-question answers
+                const serverUd2 = userDataRes.ok ? await userDataRes.json() : {};
+                if (Object.keys(wizardUserData).length === 0) {
+                    wizardUserData = serverUd2;
+                } else {
+                    for (const [k, v] of Object.entries(serverUd2)) {
+                        if (!(k in wizardUserData)) wizardUserData[k] = v;
+                    }
+                }
 
                 renderWizardForm();
                 renderInstructions(wizardPrefills);

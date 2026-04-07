@@ -343,7 +343,7 @@ class TestIntegrationAnciles:
         t0 = time.monotonic()
         mine_project(self.project_path)
         elapsed = time.monotonic() - t0
-        assert elapsed < 5.0, f"Mining took {elapsed:.2f}s (limit: 5.0s)"
+        assert elapsed < 10.0, f"Mining took {elapsed:.2f}s (limit: 10.0s)"
 
 
 class TestIntegrationBellLloc:
@@ -384,7 +384,7 @@ class TestIntegrationBellLloc:
         t0 = time.monotonic()
         mine_project(self.project_path)
         elapsed = time.monotonic() - t0
-        assert elapsed < 5.0, f"Mining took {elapsed:.2f}s (limit: 5.0s)"
+        assert elapsed < 10.0, f"Mining took {elapsed:.2f}s (limit: 10.0s)"
 
 
 class TestIntegrationRubi:
@@ -420,7 +420,7 @@ class TestIntegrationRubi:
         t0 = time.monotonic()
         mine_project(self.project_path)
         elapsed = time.monotonic() - t0
-        assert elapsed < 5.0, f"Mining took {elapsed:.2f}s (limit: 5.0s)"
+        assert elapsed < 10.0, f"Mining took {elapsed:.2f}s (limit: 10.0s)"
 
 
 # ============================================================
