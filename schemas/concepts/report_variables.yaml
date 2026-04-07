@@ -294,6 +294,7 @@ concepts:
     description_ca: Numero d'expedient o referencia del projecte
     source_priority:
       user: 10
+      folder_name: 15
       pressupost_pdf: 30
       dades_camp_excel: 35
       groq_llm: 42
@@ -301,7 +302,6 @@ concepts:
       content_email_attachment: 44
       content_pdf: 45
       content_docx: 45
-      folder_name: 60
 
   field_date:
     type: date
