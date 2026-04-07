@@ -579,4 +579,65 @@ Sense un catch-all, qualsevol PDF/docx/text no classificat perdria totes les coi
 
 ---
 
-*Document de referencia tecnica. Per a preguntes: `grep -r "concept_id\|format_learning\|ConceptRegistry" automation/ web/`*
+## 14. ConceptScout: descobriment concepte→fitxer
+
+**Data:** 2026-04-07
+**Branca:** `feature/concept-format-separation`
+
+### El problema
+
+SmartScan classifica fitxers per TIPUS (architect_plan, dpsh_excel, etc.) pero no sap quins fitxers contenen quins CONCEPTES. Quan SmartScan classifica malament o el fitxer esperat no existeix, el pipeline no pot extreure dades encara que estiguin en un altre fitxer.
+
+### Arquitectura de dues capes
+
+```
+ConceptScout  → concept_map.json  → "ON es cada concepte?" (routing a nivell de fitxer)
+SmartScan     → file_mapping.json → "QUIN TIPUS es aquest fitxer?" (seleccio d'extractor)
+Extractors    → vision/FileMiner  → "Extreu el valor" (schemas concepte-format)
+Normalitzador → claus canoniques   → "Estandarditza la sortida"
+```
+
+### Modul: `automation/concept_scout/`
+
+- `scanner.py`: enumera TOTS els fitxers (inclou PDF/, FOTOGRAFIES/, msg_attachments/)
+- `aggregator.py`: agrupa senyals FileMiner per concepte, ordena per prioritat
+- `vision_probe.py`: classificacio visual lleugera per fitxers no-text (Groq primer, Claude fallback)
+- `models.py`: ConceptMap, FileEntry, ConceptSource (amb camp `page` per estalviar tokens)
+
+### Sortida: `concept_map.json`
+
+Per cada concepte, llista ordenada de fitxers on es pot trobar:
+```json
+{
+  "concept_sources": {
+    "architect_name": [
+      {"file": "A.01.pdf", "confidence": 0.95, "extraction_method": "planol_vision", "page": 1},
+      {"file": "PRESSUPOST.pdf", "confidence": 0.7, "extraction_method": "content_pdf"}
+    ]
+  },
+  "file_inventory": [...],
+  "_unresolved": ["foundation_depth_m", ...],
+  "_warnings": [...]
+}
+```
+
+### Integracio al pipeline
+
+- **Fase 0.45**: `scout_project()` s'executa despres de FileMiner + Groq (consumeix senyals enriquits)
+- **Fallback visio**: `_supplement_from_concept_map()` a `vision_groq.py` — quan SmartScan no assigna fitxer a un vision_type, concept_map proporciona el millor candidat
+- **Wizard**: banner "N conceptes detectats en fitxers del projecte"
+
+### Resultats audit (2026-04-07, 7 projectes)
+
+| Concepte | Cobertura text | Necessita visio |
+|----------|:-:|:-:|
+| building_type, street_address, municipality, field_date | 7/7 | No |
+| client_name | 5/7 | Parcial |
+| architect_name, architect_company | 0/7 | Si (planol) |
+| num_floors, building_height_m | 0-1/7 | Si (planol) |
+| superficie_construida_m2, superficie_parcela_m2 | 0/7 | Si (planol) |
+| num_soil_levels, cota_referencia | 0/7 | Si (sondeig) |
+
+---
+
+*Document de referencia tecnica. Per a preguntes: `grep -r "concept_id\|format_learning\|ConceptRegistry\|concept_scout" automation/ web/`*

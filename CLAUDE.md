@@ -60,15 +60,37 @@ Skills per a desenvolupament, testing i invocació manual. En producció, la maj
 Activat quan Eva selecciona un projecte al wizard web. Tot és automàtic.
 
 ```
-Fase 0:   FileScanner         → file_mapping.json (classificació fitxers)
-Fase 0.5: auto_extract()      → prefills automàtics (DPSH, Lab, ICGC, Cadastre, geocode)
-Fase 1:   Claude vision       → planol/sondeig/dpsh_extracted.json (lectura PDFs)
-Fase 2:   Wizard (web)        → Eva revisa prefills, ajusta camps → user_data.json
-Fase 3:   ReportGenerator     → {expedient}_generated.docx
+Fase 0:    FileScanner         → file_mapping.json (classificació fitxers)
+Fase 0.3:  FileMiner           → senyals text (regex miners per PDF, Excel, txt, msg, docx)
+Fase 0.4:  Groq LLM            → senyals addicionals (gap-filling intel·ligent)
+Fase 0.45: ConceptScout        → concept_map.json (mapa concepte→fitxer + vision probes)
+Fase 0.5:  auto_extract()      → prefills automàtics (DPSH, Lab, ICGC, Cadastre, geocode)
+Fase 1:    Claude vision       → planol/sondeig/dpsh_extracted.json (lectura PDFs)
+           (amb fallback concept_map per quan SmartScan no troba el fitxer correcte)
+Fase 2:    Wizard (web)        → Eva revisa prefills, ajusta camps → user_data.json
+Fase 3:    ReportGenerator     → {expedient}_generated.docx
 ```
 
+**Fase 0.3** (`automation/fileminer/`) — Python, ~1-2s:
+- FileMiner: recorre TOTS els fitxers del projecte (incl. subcarpetes, .msg)
+- Miners per tipus: Excel, PDF text, txt, docx, msg (cos + adjunts)
+- Extreu senyals (Signal) amb label, valor, concept_id, confiança
+- Competició: resol conflictes entre senyals del mateix concepte
+
+**Fase 0.4** (`automation/fileminer/miners/groq_miner.py`) — Groq LLM:
+- Objectiu: fitxers on Python miners troben <3 senyals mapejats
+- Envia text a Groq per extracció profunda de variables que falten
+
+**Fase 0.45** (`automation/concept_scout/`) — ConceptScout:
+- Escaneig complet de fitxers (inclou carpetes que FileMiner omet: PDF/, FOTOGRAFIES/)
+- Agrega senyals de FileMiner → mapa concepte→fitxer amb ranking de prioritat
+- Vision probe (Groq primer, Claude fallback): classifica fitxers no-text (imatges, PDFs escanejats)
+- Anota tipus de document, conceptes presents, i PÀGINA on apareixen
+- Sortida: `validation/concept_map.json` (cacheada per projecte)
+- Valor clau: quan SmartScan classifica malament o el fitxer esperat no existeix,
+  concept_map proporciona rutes alternatives per a la fase de visió
+
 **Fase 0.5** (`automation/auto_extractor.py`) — Python, ~3-5s:
-- FileScanner: classifica fitxers del projecte
 - DPSH Excel: N20, refús, dates de camp
 - Lab PDF: sulfats mg/kg via PyMuPDF
 - Geocode: Nominatim + Cadastre → UTM (si no hi ha COORDENADES.txt)
@@ -76,9 +98,12 @@ Fase 3:   ReportGenerator     → {expedient}_generated.docx
 
 **Fase 1** — Claude vision (integrada al pipeline):
 - Plànol (A.01.pdf): arquitecte, promotor, dimensions, plantes, alçada
-- Sondeig (SONDEIG.pdf): capes de sòl, descripcions, SPT
+- Sondeig annex (ANNEXES/*_sondeig.pdf): nivells geològics, cota referència
 - Penetros (PENETROS.pdf): validació N20 vs Excel, discrepàncies
-- S'executa automàticament perquè Claude Code és el runtime de producció
+- **Fallback concept_map**: si SmartScan no assigna fitxer a un vision_type,
+  concept_map.json identifica el millor candidat alternatiu
+- Normalitzadors: `normalize_planol()`, `normalize_sondeig()` — canonicalitzen claus variants
+- Backend per defecte: Claude (més fiable que Groq per lectura de columnes)
 
 ## Estructura de Carpetes
 
@@ -99,10 +124,17 @@ clients/g3dt/
 │       └── learned/          # Formats apresos per Eva (auto-generats)
 ├── automation/               # Mòduls d'extracció i càlcul
 │   ├── auto_extractor.py     # Fase 0.5: pre-omple camps automàticament
+│   ├── concept_scout/        # Fase 0.45: mapa concepte→fitxer (ConceptScout)
+│   │   ├── __init__.py       # scout_project() — API pública
+│   │   ├── models.py         # ConceptMap, FileEntry, ConceptSource
+│   │   ├── scanner.py        # Enumeració completa de fitxers
+│   │   ├── aggregator.py     # Agrupació senyals per concepte
+│   │   └── vision_probe.py   # Classificació visual (Groq→Claude fallback)
+│   ├── fileminer/            # Fase 0.3: extracció senyals text
 │   ├── dpsh_extractor.py     # Extracció de dades DPSH d'Excel
 │   ├── format_learner.py     # Detecció + aprenentatge de formats nous
 │   ├── geocode_coordinates.py # Geocodificació adreça → UTM (Nominatim+Cadastre)
-│   ├── project_extractor.py  # Extracció de tot el projecte
+│   ├── vision_normalizer.py  # Normalització claus vision (planol + sondeig)
 │   ├── report_data.py        # Model de dades unificat
 │   ├── schemas/              # Carregadors Python per schemas YAML
 │   │   ├── models.py         # ConceptDefinition, FormatSchema, LabelMapping
