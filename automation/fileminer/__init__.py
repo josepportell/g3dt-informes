@@ -56,6 +56,9 @@ _OUR_OUTPUTS = {
 _SKIP_FILENAME_PATTERNS = [
     re.compile(r'^\d+_informe.*\.docx?$', re.IGNORECASE),
     re.compile(r'^\d+_portada.*\.docx?$', re.IGNORECASE),
+    re.compile(r'.*_test_.*\.docx?$', re.IGNORECASE),
+    re.compile(r'.*_generated.*\.docx?$', re.IGNORECASE),
+    re.compile(r'.*_AUDIT_VISUAL\.docx?$', re.IGNORECASE),
 ]
 
 # SmartScan role -> FileMiner source_type mapping
