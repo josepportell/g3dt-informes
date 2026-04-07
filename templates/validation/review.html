@@ -4436,11 +4436,12 @@
 
         function getWizardValue(field) {
             // Priority: user_data value > prefill value > null
-            // Source: always prefer prefill source (preserves original provenance)
+            // Source: use 'user' when _sources says so, else prefill source
             const pf = wizardPrefills[field];
             const prefillSource = pf ? (pf.source || 'auto') : null;
             if (wizardUserData[field] !== undefined && wizardUserData[field] !== null) {
-                return { value: wizardUserData[field], source: prefillSource || 'user' };
+                const userSource = (wizardUserData._sources || {})[field];
+                return { value: wizardUserData[field], source: userSource === 'user' ? 'user' : (prefillSource || 'user') };
             }
             if (pf && pf.value !== undefined && pf.value !== null) {
                 return { value: pf.value, source: prefillSource };
