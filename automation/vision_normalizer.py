@@ -404,12 +404,13 @@ def load_sondeig_merged(validation_dir: Path | str) -> dict:
 
 # Canonical key mappings for planning_table_raw.projecte
 _PLANNING_KEY_VARIANTS: dict[str, list[str]] = {
-    'num_floors': ['N. plantes', 'nombre_plantes', 'plantes', 'n_plantes'],
+    'num_floors': ['N. plantes', 'nombre_plantes', 'plantes', 'n_plantes',
+                   'floors', 'num_plants', 'plants'],
     'height_m': ['alçada', 'h max', 'h_max', 'h màx', 'H màx', 'alcada',
-                 'alçada_reguladora', 'alçada_maxima'],
-    'ocupacio': ['ocupació'],
-    'edificabilitat': ['EDIF'],
-    'superficie_parcela': ['superficie', 'parcela_m2'],
+                 'alçada_reguladora', 'alçada_maxima', 'height', 'max_height'],
+    'ocupacio': ['ocupació', 'occupancy', 'ocupacion'],
+    'edificabilitat': ['EDIF', 'buildability', 'edificabilidad'],
+    'superficie_parcela': ['superficie', 'parcela_m2', 'parcel', 'plot_area'],
 }
 
 
