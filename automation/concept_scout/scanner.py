@@ -64,9 +64,11 @@ def enumerate_project_files(project_path: Path) -> list[FileEntry]:
             continue
 
         # Skip files inside excluded directories
+        # Exception: validation/msg_attachments/ — contains .msg extracted files
         rel_parts = item.relative_to(project_path).parts
         if any(part in _SKIP_DIRS for part in rel_parts[:-1]):
-            continue
+            if not (len(rel_parts) >= 3 and rel_parts[0] == 'validation' and rel_parts[1] == 'msg_attachments'):
+                continue
 
         name = item.name
         suffix = item.suffix.lower()
