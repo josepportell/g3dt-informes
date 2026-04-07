@@ -110,9 +110,9 @@ def _save_cache(cache_dir: Path, key: str, result: dict) -> None:
 
 
 def _run_probe(file_path: Path) -> dict | None:
-    """Run a single vision probe and return raw JSON result."""
+    """Run a single vision probe. Tries Groq first (cheaper), Claude as fallback."""
     try:
-        from web.vision_groq import _file_to_images, _call_anthropic_vision
+        from web.vision_groq import _file_to_images, _call_groq_vision, _call_anthropic_vision
     except ImportError:
         logger.warning("Vision probe: web.vision_groq not available")
         return None
@@ -126,11 +126,21 @@ def _run_probe(file_path: Path) -> dict | None:
     if not images:
         return None
 
-    try:
-        result = _call_anthropic_vision(_PROBE_PROMPT, images, _PROBE_SYSTEM)
-    except Exception as e:
-        logger.warning("Vision probe API failed for %s: %s", file_path.name, e)
-        return None
+    # Try Groq first (sufficient for document classification, ~3x cheaper)
+    import os
+    result = None
+    if os.environ.get("GROQ_API_KEY"):
+        try:
+            result = _call_groq_vision(_PROBE_PROMPT, images, _PROBE_SYSTEM)
+        except Exception as e:
+            logger.debug("Vision probe Groq failed for %s: %s", file_path.name, e)
+
+    # Fallback to Claude if Groq unavailable or failed
+    if result is None and os.environ.get("ANTHROPIC_API_KEY"):
+        try:
+            result = _call_anthropic_vision(_PROBE_PROMPT, images, _PROBE_SYSTEM)
+        except Exception as e:
+            logger.warning("Vision probe Claude failed for %s: %s", file_path.name, e)
 
     if result:
         logger.info(
