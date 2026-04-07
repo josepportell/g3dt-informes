@@ -545,7 +545,7 @@ def _call_anthropic_vision(
     t0 = time.monotonic()
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-sonnet-4-6",
             max_tokens=4096,
             system=system_prompt,
             messages=[{"role": "user", "content": content}],
@@ -662,7 +662,7 @@ def run_vision_groq_sync(
 
     Args:
         vision_backend: "openai" (default, gpt-4.1-mini — best accuracy/cost),
-                        "claude" (claude-sonnet-4), or "groq" (fastest, cheapest).
+                        "claude" (claude-sonnet-4-6), or "groq" (fastest, cheapest).
 
     Same logic as _run_vision_groq() but runs inline (not threaded) and
     emits progress via on_progress callback instead of _groq_status dict.

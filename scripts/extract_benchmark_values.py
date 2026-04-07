@@ -40,7 +40,7 @@ def _load_env():
                 os.environ.setdefault(key.strip(), value.strip())
 BENCHMARKS_DIR = _PROJECT_ROOT / "docs" / "benchmarks"
 
-MODEL = "claude-sonnet-4-20250514"
+MODEL = "claude-sonnet-4-6"
 
 # Same list as extract_reference_text.py
 PROJECTS = [
