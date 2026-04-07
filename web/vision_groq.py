@@ -491,6 +491,67 @@ def groq_available() -> bool:
     return bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("GROQ_API_KEY"))
 
 
+def _supplement_from_concept_map(
+    vision_tasks: dict, seen_types: set, prompt_map: dict,
+    output_map: dict, project_path: Path, force_refresh: bool,
+) -> None:
+    """Add vision tasks from concept_map.json when SmartScan missed files."""
+    concept_map_path = project_path / 'validation' / 'concept_map.json'
+    if not concept_map_path.exists():
+        return
+
+    try:
+        concept_map = json.loads(concept_map_path.read_text(encoding='utf-8'))
+    except Exception:
+        logger.warning("Failed to load concept_map.json for vision fallback")
+        return
+
+    concept_sources = concept_map.get('concept_sources', {})
+
+    # Map vision types to the concepts they extract
+    VISION_TYPE_CONCEPTS = {
+        'planol': {'architect_name', 'architect_company', 'client_name', 'building_type',
+                   'num_floors', 'building_height_m', 'superficie_construida_m2',
+                   'superficie_parcela_m2', 'street_address', 'municipality'},
+        'sondeig_annex': {'num_soil_levels', 'cota_referencia'},
+    }
+
+    for vtype, concepts in VISION_TYPE_CONCEPTS.items():
+        if vtype in seen_types:
+            continue  # SmartScan already assigned a file for this type
+        if vtype not in prompt_map:
+            continue
+
+        # Find the best file from concept_map that contains these concepts
+        file_scores: dict[str, float] = {}
+        for cid in concepts:
+            for src in concept_sources.get(cid, []):
+                f = src.get('file', '')
+                # Only consider files that are visually processable (PDF, image)
+                if f.lower().endswith(('.pdf', '.jpg', '.jpeg', '.png')):
+                    file_scores[f] = file_scores.get(f, 0) + src.get('confidence', 0.5)
+
+        if not file_scores:
+            continue
+
+        # Pick the file with highest aggregate score
+        best_file = max(file_scores, key=file_scores.get)
+        output_path = project_path / 'validation' / output_map[vtype]
+
+        if not force_refresh and os.environ.get("G3DT_NO_CACHE") != "1" and output_path.exists():
+            logger.info("concept_map fallback cache:%s skipped (exists)", vtype)
+            continue
+
+        vision_tasks[vtype] = {
+            'role': f'concept_map_fallback:{vtype}',
+            'path': best_file,
+            'prompt': prompt_map[vtype],
+            'output': output_map[vtype],
+        }
+        seen_types.add(vtype)
+        logger.info("concept_map fallback: %s -> %s (score=%.1f)", vtype, best_file, file_scores[best_file])
+
+
 def run_vision_groq_sync(
     project_path: Path,
     *,
@@ -582,6 +643,10 @@ def run_vision_groq_sync(
             "prompt": prompt_map[vtype],
             "output": output_map[vtype],
         }
+
+    # Concept map fallback: when SmartScan has no role for a vision type,
+    # check if concept_map.json identifies a file with relevant concepts
+    _supplement_from_concept_map(vision_tasks, seen_types, prompt_map, output_map, project_path, force_refresh)
 
     logger.info("vision_groq_sync: %d tasks identified", len(vision_tasks))
 

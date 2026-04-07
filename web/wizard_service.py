@@ -1180,6 +1180,15 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
         vision_status[vt] = (project_path / 'validation' / filename).exists()
     merged['_vision_status'] = {'value': vision_status, 'source': 'system'}
 
+    # Load concept_map if available
+    concept_map_path = project_path / 'validation' / 'concept_map.json'
+    if concept_map_path.exists():
+        try:
+            cm_data = json.loads(concept_map_path.read_text(encoding='utf-8'))
+            merged['_concept_map'] = {'value': cm_data.get('concept_sources', {}), 'source': 'concept_scout'}
+        except Exception:
+            logger.warning("Failed to load concept_map.json for %s", project_name)
+
     if auto_result.file_mapping:
         fm = auto_result.file_mapping
         fm_serialized = {}

@@ -118,7 +118,7 @@ def _run_probe(file_path: Path) -> dict | None:
         return None
 
     try:
-        images = _file_to_images(file_path, dpi=200)
+        images = _file_to_images(file_path, dpi=200, max_pages=50)
     except Exception as e:
         logger.warning("Vision probe: cannot render %s: %s", file_path.name, e)
         return None
@@ -127,7 +127,7 @@ def _run_probe(file_path: Path) -> dict | None:
         return None
 
     try:
-        result = _call_anthropic_vision(_PROBE_PROMPT, images[:1], _PROBE_SYSTEM)
+        result = _call_anthropic_vision(_PROBE_PROMPT, images, _PROBE_SYSTEM)
     except Exception as e:
         logger.warning("Vision probe API failed for %s: %s", file_path.name, e)
         return None

@@ -133,6 +133,7 @@ class AutoExtractionResult:
     content_discovery: Any = None   # ContentDiscoveryResult | None
     mining_result: Any = None       # MiningResult | None (FileMiner)
     mining_alternatives: dict[str, list] = field(default_factory=dict)  # var → [Signal, ...]
+    concept_map: Any = None
     steps_completed: list[str] = field(default_factory=list)
     steps_skipped: list[tuple[str, str]] = field(default_factory=list)
     duration_seconds: float = 0.0
@@ -201,6 +202,9 @@ def auto_extract(
     emit("phase_start", {"phase": "0.4", "name": "Groq LLM"})
     _phase04_groq_deep_mine(project_path, result, emit)
     emit("step", {"step": "mine", "status": "done", "count": len(result.mining_result.signals) if result.mining_result else 0})
+
+    # --- Phase 0.45: ConceptScout (after Groq enrichment, before local extractors) ---
+    _phase045_concept_scout(project_path, result, emit)
 
     # --- Phase 1: Local files ---
     emit("step", {"step": "extract", "status": "active"})
@@ -886,6 +890,25 @@ def _phase01_historia_geologica(project_path: Path, result: AutoExtractionResult
 
     except Exception as exc:
         result.steps_skipped.append(("Historia geològica", str(exc)))
+
+
+def _phase045_concept_scout(project_path: Path, result: AutoExtractionResult, emit) -> None:
+    """Phase 0.45: Build concept-to-file map from FileMiner + Groq signals + vision probe."""
+    try:
+        from automation.concept_scout import scout_project
+        concept_map = scout_project(
+            project_path,
+            mining_result=result.mining_result,
+            use_vision_probe=bool(os.environ.get('ANTHROPIC_API_KEY')),
+            on_progress=emit,
+        )
+        result.concept_map = concept_map
+        result.steps_completed.append(
+            f"ConceptScout: {len(concept_map.concept_sources)} concepts mapped"
+        )
+    except Exception as exc:
+        logger.warning("ConceptScout failed: %s", exc)
+        result.steps_skipped.append(("ConceptScout", str(exc)))
 
 
 # ---------------------------------------------------------------------------
