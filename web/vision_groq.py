@@ -656,12 +656,13 @@ def run_vision_groq_sync(
     *,
     force_refresh: bool = False,
     on_progress: callable | None = None,
-    vision_backend: str = "claude",
+    vision_backend: str = "openai",
 ) -> dict[str, dict]:
     """Run vision extraction synchronously (blocking).
 
     Args:
-        vision_backend: "claude" (default, reliable) or "groq" (faster, cheaper).
+        vision_backend: "openai" (default, gpt-4.1-mini — best accuracy/cost),
+                        "claude" (claude-sonnet-4), or "groq" (fastest, cheapest).
 
     Same logic as _run_vision_groq() but runs inline (not threaded) and
     emits progress via on_progress callback instead of _groq_status dict.

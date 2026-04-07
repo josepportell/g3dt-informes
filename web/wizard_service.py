@@ -1534,7 +1534,7 @@ def _run_vision_phase(project_path: Path, force_refresh: bool, on_progress=None)
     try:
         from .vision_groq import groq_available, run_vision_groq_sync
         if groq_available():
-            logger.info("Vision phase: running Claude extraction for %s", project_path.name)
+            logger.info("Vision phase: running extraction for %s", project_path.name)
             run_vision_groq_sync(project_path, force_refresh=force_refresh, on_progress=on_progress)
             return
     except Exception as e:
