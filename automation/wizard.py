@@ -409,8 +409,8 @@ class UserDataWizard:
                     pass
 
             # Planning table fallback (normalized keys from vision_normalizer)
-            planning = data.get('planning_table_raw', {})
-            projecte = planning.get('projecte', {})
+            planning = data.get('planning_table_raw') or {}
+            projecte = planning.get('projecte') or {}
             if isinstance(projecte, dict):
                 pf = projecte.get('num_floors')
                 if pf and 'num_floors' not in self.prefills:
