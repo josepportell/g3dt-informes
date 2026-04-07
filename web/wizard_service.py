@@ -1521,15 +1521,15 @@ def get_vision_process_status(project_name: str) -> dict[str, Any]:
 
 
 def _run_vision_phase(project_path: Path, force_refresh: bool, on_progress=None) -> None:
-    """Run vision extraction if Groq API is available. Non-fatal on failure."""
+    """Run vision extraction (Claude preferred, Groq fallback). Non-fatal on failure."""
     try:
         from .vision_groq import groq_available, run_vision_groq_sync
         if groq_available():
-            logger.info("Vision phase: running Groq extraction for %s", project_path.name)
+            logger.info("Vision phase: running Claude extraction for %s", project_path.name)
             run_vision_groq_sync(project_path, force_refresh=force_refresh, on_progress=on_progress)
             return
     except Exception as e:
-        logger.warning("Vision extraction failed (Groq): %s", e)
+        logger.warning("Vision extraction failed: %s", e)
 
     logger.info("Vision phase: no vision API available, skipping")
 

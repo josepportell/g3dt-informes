@@ -486,9 +486,9 @@ def _call_anthropic_vision(
 
 
 def groq_available() -> bool:
-    """Check if Groq API key is configured for vision extraction."""
+    """Check if any vision API key is configured (Claude preferred, Groq fallback)."""
     _load_env()
-    return bool(os.environ.get("GROQ_API_KEY"))
+    return bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("GROQ_API_KEY"))
 
 
 def run_vision_groq_sync(
@@ -496,12 +496,12 @@ def run_vision_groq_sync(
     *,
     force_refresh: bool = False,
     on_progress: callable | None = None,
-    vision_backend: str = "groq",
+    vision_backend: str = "claude",
 ) -> dict[str, dict]:
     """Run vision extraction synchronously (blocking).
 
     Args:
-        vision_backend: "groq" (default, cheap) or "claude" (better for small text).
+        vision_backend: "claude" (default, reliable) or "groq" (faster, cheaper).
 
     Same logic as _run_vision_groq() but runs inline (not threaded) and
     emits progress via on_progress callback instead of _groq_status dict.
