@@ -58,9 +58,22 @@ def setup_logging() -> None:
     stdout_handler.setFormatter(formatter)
     root.addHandler(stdout_handler)
 
-    # Optional file handler
+    # Optional file handler with daily rotation
     if config.LOG_PATH:
-        file_handler = logging.FileHandler(config.LOG_PATH, encoding="utf-8")
+        from pathlib import Path
+        Path(config.LOG_PATH).parent.mkdir(parents=True, exist_ok=True)
+
+        if config.LOG_ROTATE_DAILY:
+            from logging.handlers import TimedRotatingFileHandler
+            file_handler = TimedRotatingFileHandler(
+                config.LOG_PATH,
+                when="midnight",
+                backupCount=config.LOG_KEEP_DAYS,
+                encoding="utf-8",
+            )
+            file_handler.suffix = "%Y-%m-%d"
+        else:
+            file_handler = logging.FileHandler(config.LOG_PATH, encoding="utf-8")
         file_handler.setFormatter(formatter)
         root.addHandler(file_handler)
 

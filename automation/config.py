@@ -108,36 +108,38 @@ GROQ_API_KEY: str = _env("GROQ_API_KEY")
 # Vision models
 # ---------------------------------------------------------------------------
 
-VISION_MODEL_OPENAI: str = _env("VISION_MODEL_OPENAI", "gpt-4.1-mini")
-VISION_MODEL_ANTHROPIC: str = _env("VISION_MODEL_ANTHROPIC", "claude-sonnet-4-6")
-VISION_MODEL_GROQ: str = _env("VISION_MODEL_GROQ", "meta-llama/llama-4-scout-17b-16e-instruct")
+VISION_MODEL_OPENAI: str = _env("OPENAI_VISION_MODEL", "gpt-4.1-mini")
+VISION_MODEL_ANTHROPIC: str = _env("ANTHROPIC_VISION_MODEL", "claude-sonnet-4-6")
+VISION_MODEL_GROQ: str = _env("GROQ_VISION_MODEL", "meta-llama/llama-4-scout-17b-16e-instruct")
 
 # ---------------------------------------------------------------------------
 # Text models
 # ---------------------------------------------------------------------------
 
-TEXT_MODEL_GROQ: str = _env("TEXT_MODEL_GROQ", "qwen/qwen3-32b")
-TEXT_MODEL_ANTHROPIC: str = _env("TEXT_MODEL_ANTHROPIC", "claude-sonnet-4-6")
+TEXT_MODEL_GROQ: str = _env("GROQ_TEXT_MODEL", "qwen/qwen3-32b")
+TEXT_MODEL_ANTHROPIC: str = _env("ANTHROPIC_TEXT_MODEL", "claude-sonnet-4-6")
 
 # ---------------------------------------------------------------------------
 # Fallback orders
 # ---------------------------------------------------------------------------
 
 VISION_FALLBACK_ORDER: list[str] = _env_list(
-    "VISION_FALLBACK_ORDER", ["openai", "anthropic", "groq"]
+    "VISION_FALLBACK", ["openai", "anthropic", "groq"]
 )
 PROBE_FALLBACK_ORDER: list[str] = _env_list(
-    "PROBE_FALLBACK_ORDER", ["groq", "openai", "anthropic"]
+    "PROBE_FALLBACK", ["groq", "openai", "anthropic"]
 )
 
 # ---------------------------------------------------------------------------
 # Logging
 # ---------------------------------------------------------------------------
 
-LOG_ENABLED: bool = _env_bool("LOG_ENABLED", True)
-LOG_PATH: str | None = _env("LOG_PATH") or None
-LOG_LEVEL: str = _env("LOG_LEVEL", "INFO")
-LOG_DEPTH: str = _env("LOG_DEPTH", "NORMAL")
+LOG_ENABLED: bool = _env_bool("G3DT_LOG_ENABLED", True)
+LOG_PATH: str | None = _env("G3DT_LOG_PATH") or None
+LOG_LEVEL: str = _env("G3DT_LOG_LEVEL", "INFO")
+LOG_DEPTH: str = _env("G3DT_LOG_DEPTH", "NORMAL")
+LOG_ROTATE_DAILY: bool = _env_bool("G3DT_LOG_ROTATE_DAILY", True)
+LOG_KEEP_DAYS: int = int(_env("G3DT_LOG_KEEP_DAYS", "30"))
 
 # ---------------------------------------------------------------------------
 # Feature flags
