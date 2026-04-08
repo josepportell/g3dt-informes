@@ -15,9 +15,10 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
+from automation.log_setup import setup_logging
 from .api import router
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+setup_logging()
 
 app = FastAPI(title="G3DT Web Wizard", version="0.7.0")
 

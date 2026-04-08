@@ -15,29 +15,13 @@ import threading
 from pathlib import Path
 from typing import Any
 
+from automation import config
+
 logger = logging.getLogger(__name__)
 
 # Base dir for reference-material/ (relative to g3dt project root)
-# Override with G3DT_PROJECTS_DIR env var or .env file
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
-
-def _load_env() -> None:
-    """Load .env from project root if it exists (no external dependencies)."""
-    env_path = _PROJECT_ROOT / '.env'
-    if not env_path.exists():
-        return
-    for line in env_path.read_text().splitlines():
-        line = line.strip()
-        if not line or line.startswith('#'):
-            continue
-        if '=' in line:
-            key, _, value = line.partition('=')
-            key = key.strip()
-            value = value.strip().strip('"').strip("'")
-            os.environ.setdefault(key, value)
-
-_load_env()
-_REF_DIR = Path(os.getenv('G3DT_PROJECTS_DIR', str(_PROJECT_ROOT / 'reference-material')))
+_REF_DIR = Path(config.G3DT_PROJECTS_DIR)
 
 # Production path where Eva keeps signed reference reports
 _INFORMES_DIR = Path('/mnt/c/claude/g3dt/4-informes')
@@ -744,8 +728,7 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
         logger.info("anthropic package not available, skipping LLM synthesis")
         return
 
-    api_key = os.environ.get('ANTHROPIC_API_KEY')
-    if not api_key:
+    if not config.ANTHROPIC_API_KEY:
         logger.info("No ANTHROPIC_API_KEY, skipping LLM synthesis")
         return
 
@@ -925,7 +908,7 @@ If you cannot determine a value with reasonable confidence, use an empty string 
 
         client = anthropic.Anthropic()
         response = client.messages.create(
-            model='claude-sonnet-4-6',
+            model=config.TEXT_MODEL_ANTHROPIC,
             max_tokens=500,
             messages=[{'role': 'user', 'content': prompt}],
         )

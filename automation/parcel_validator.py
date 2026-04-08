@@ -13,7 +13,6 @@ import base64
 import hashlib
 import json
 import logging
-import os
 import time
 import urllib.request
 import urllib.error
@@ -22,11 +21,12 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from pathlib import Path
 
+from automation import config
+
 logger = logging.getLogger(__name__)
 
 CADASTRE_WMS_URL = "https://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx"
 
-GROQ_VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 CACHE_DIR = Path.home() / ".g3dt" / "cache" / "cadastre_maps"
@@ -46,23 +46,7 @@ class ParcelValidation:
 
 
 # ---------------------------------------------------------------------------
-# Env loader (same pattern as ortho_vision.py)
-# ---------------------------------------------------------------------------
-
-
-def _load_env() -> None:
-    """Load .env file from project root if not already loaded."""
-    env_path = Path(__file__).resolve().parent.parent / ".env"
-    if env_path.exists():
-        for line in env_path.read_text().splitlines():
-            line = line.strip()
-            if line and not line.startswith("#") and "=" in line:
-                key, _, value = line.partition("=")
-                os.environ.setdefault(key.strip(), value.strip())
-
-
-# ---------------------------------------------------------------------------
-# Groq Vision call (duplicated pattern from ortho_vision.py)
+# Groq Vision call
 # ---------------------------------------------------------------------------
 
 
@@ -86,7 +70,7 @@ def _call_groq_vision(
     """
     import httpx
 
-    api_key = os.environ.get("GROQ_API_KEY")
+    api_key = config.GROQ_API_KEY
     if not api_key:
         logger.warning("parcel_validator: no GROQ_API_KEY set")
         return None
@@ -101,7 +85,7 @@ def _call_groq_vision(
         )
 
     payload = {
-        "model": GROQ_VISION_MODEL,
+        "model": config.VISION_MODEL_GROQ,
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": content},
@@ -415,8 +399,6 @@ def validate_parcel(
     ParcelValidation or None
         Validation result, or None on complete failure.
     """
-    _load_env()
-
     # --- Download Cadastre map (cached) ------------------------------------
     cache_path = _cache_path_for(utm_x, utm_y, buffer_m)
     bbox = (utm_x - buffer_m, utm_y - buffer_m, utm_x + buffer_m, utm_y + buffer_m)
@@ -446,8 +428,7 @@ def validate_parcel(
         _draw_red_dot(working_path, utm_x, utm_y, bbox)
 
     # --- Vision validation (optional) --------------------------------------
-    api_key = os.environ.get("GROQ_API_KEY")
-    has_vision = api_key and (planol_image_path or polygon_utm or rc14)
+    has_vision = config.GROQ_API_KEY and (planol_image_path or polygon_utm or rc14)
 
     if not has_vision:
         logger.info("parcel_validator: map downloaded, no vision analysis requested")

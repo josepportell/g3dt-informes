@@ -33,12 +33,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from automation import config
+
 logger = logging.getLogger(__name__)
 
 __all__ = ['run_vision_extraction', 'extract_from_planol', 'extract_from_penetros', 'extract_from_sondeig', 'extract_from_sondeig_annex']
 
-# Model: sonnet for cost/quality balance (~$0.03-0.10 per project)
-VISION_MODEL = "claude-sonnet-4-6"
 MAX_TOKENS = 4096
 # DPI for PDF rendering (150 is sufficient for text, keeps image size low)
 RENDER_DPI = 150
@@ -48,28 +48,15 @@ RENDER_DPI = 150
 # Anthropic client
 # ---------------------------------------------------------------------------
 
-def _load_env():
-    """Load .env file from project root if it exists."""
-    import os
-    env_path = Path(__file__).resolve().parent.parent / '.env'
-    if env_path.exists():
-        for line in env_path.read_text().splitlines():
-            line = line.strip()
-            if line and not line.startswith('#') and '=' in line:
-                key, _, value = line.partition('=')
-                os.environ.setdefault(key.strip(), value.strip())
-
-
 def _get_client():
-    """Get Anthropic client. Reads ANTHROPIC_API_KEY from environment or .env."""
-    _load_env()
+    """Get Anthropic client. Uses API key from centralized config."""
     try:
         import anthropic
     except ImportError:
         raise ImportError(
             "anthropic package not installed. Run: uv pip install anthropic"
         )
-    return anthropic.Anthropic()
+    return anthropic.Anthropic(api_key=config.ANTHROPIC_API_KEY or None)
 
 
 # ---------------------------------------------------------------------------
@@ -148,7 +135,7 @@ def _call_vision(
     content.append({"type": "text", "text": prompt})
 
     kwargs: dict[str, Any] = {
-        "model": VISION_MODEL,
+        "model": config.VISION_MODEL_ANTHROPIC,
         "max_tokens": MAX_TOKENS,
         "messages": [{"role": "user", "content": content}],
     }

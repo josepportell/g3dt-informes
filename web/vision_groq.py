@@ -8,15 +8,16 @@ from __future__ import annotations
 import base64
 import json
 import logging
-import os
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
+from automation import config
+from automation.log_setup import log_vision_call
+
 logger = logging.getLogger(__name__)
 
-GROQ_VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 _groq_status: dict[str, dict] = {}
@@ -108,7 +109,7 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
             if vtype and vtype in prompt_map and vtype not in seen_types:
                 seen_types.add(vtype)
                 output_path = project_path / "validation" / output_map[vtype]
-                if not force and os.environ.get("G3DT_NO_CACHE") != "1" and output_path.exists():
+                if not force and not config.G3DT_NO_CACHE and output_path.exists():
                     _log_step(project_name, f"cache:{vtype}", "skipped (exists)")
                     continue
                 vision_tasks[vtype] = {
@@ -330,7 +331,7 @@ def _call_groq_vision(
     """
     import httpx
 
-    api_key = os.environ.get("GROQ_API_KEY")
+    api_key = config.GROQ_API_KEY
     if not api_key:
         logger.warning("Groq Vision: no API key")
         return None
@@ -345,7 +346,7 @@ def _call_groq_vision(
         )
 
     payload = {
-        "model": GROQ_VISION_MODEL,
+        "model": config.VISION_MODEL_GROQ,
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": content},
@@ -416,17 +417,6 @@ def _call_groq_vision(
     return None
 
 
-def _load_env():
-    """Load .env file from project root if not already loaded."""
-    env_path = Path(__file__).resolve().parent.parent / '.env'
-    if env_path.exists():
-        for line in env_path.read_text().splitlines():
-            line = line.strip()
-            if line and not line.startswith('#') and '=' in line:
-                key, _, value = line.partition('=')
-                os.environ.setdefault(key.strip(), value.strip())
-
-
 def _call_openai_vision(
     extraction_prompt: str,
     images: list[str],
@@ -439,12 +429,12 @@ def _call_openai_vision(
     """
     import httpx
 
-    api_key = os.environ.get("OPENAI_API_KEY")
+    api_key = config.OPENAI_API_KEY
     if not api_key:
         logger.warning("OpenAI Vision: no API key")
         return None
 
-    model = os.environ.get("OPENAI_VISION_MODEL", "gpt-4.1-mini")
+    model = config.VISION_MODEL_OPENAI
 
     content: list[dict] = [{"type": "text", "text": extraction_prompt}]
     for b64_img in images:
@@ -521,8 +511,7 @@ def _call_anthropic_vision(
     More capable than Groq for small text and complex layouts (~27x more expensive).
     Returns parsed JSON dict or None on failure.
     """
-    _load_env()
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    api_key = config.ANTHROPIC_API_KEY
     if not api_key:
         logger.warning("Anthropic Vision: no API key")
         return None
@@ -545,7 +534,7 @@ def _call_anthropic_vision(
     t0 = time.monotonic()
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-6",
+            model=config.VISION_MODEL_ANTHROPIC,
             max_tokens=4096,
             system=system_prompt,
             messages=[{"role": "user", "content": content}],
@@ -585,9 +574,8 @@ def _call_anthropic_vision(
 
 
 def groq_available() -> bool:
-    """Check if any vision API key is configured (Claude preferred, OpenAI/Groq fallback)."""
-    _load_env()
-    return bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("OPENAI_API_KEY") or os.environ.get("GROQ_API_KEY"))
+    """Check if any vision API key is configured."""
+    return bool(config.available_vision_backends())
 
 
 def _supplement_from_concept_map(
@@ -637,7 +625,7 @@ def _supplement_from_concept_map(
         best_file = max(file_scores, key=file_scores.get)
         output_path = project_path / 'validation' / output_map[vtype]
 
-        if not force_refresh and os.environ.get("G3DT_NO_CACHE") != "1" and output_path.exists():
+        if not force_refresh and not config.G3DT_NO_CACHE and output_path.exists():
             logger.info("concept_map fallback cache:%s skipped (exists)", vtype)
             continue
 
@@ -734,7 +722,7 @@ def run_vision_groq_sync(
         role_name, role = cands[0]
         seen_types.add(vtype)
         output_path = project_path / "validation" / output_map[vtype]
-        if not force_refresh and os.environ.get("G3DT_NO_CACHE") != "1" and output_path.exists():
+        if not force_refresh and not config.G3DT_NO_CACHE and output_path.exists():
             logger.info("vision_groq_sync cache:%s skipped (exists)", vtype)
             continue
         vision_tasks[vtype] = {
@@ -798,23 +786,44 @@ def run_vision_groq_sync(
             )
 
             # Vision backend chain: preferred → fallbacks
+            _CALL_MAP = {
+                "openai": (_call_openai_vision, config.VISION_MODEL_OPENAI),
+                "anthropic": (_call_anthropic_vision, config.VISION_MODEL_ANTHROPIC),
+                "groq": (_call_groq_vision, config.VISION_MODEL_GROQ),
+            }
+            # "claude" is a backward-compatible synonym for "anthropic"
+            preferred = "anthropic" if vision_backend == "claude" else vision_backend
+            chain = [preferred]
+            for fb in config.VISION_FALLBACK_ORDER:
+                if fb not in chain:
+                    chain.append(fb)
+
             result = None
-            if vision_backend == "claude":
-                result = _call_anthropic_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
-                if result is None:
-                    result = _call_openai_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
-                if result is None:
-                    result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
-            elif vision_backend == "openai":
-                result = _call_openai_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
-                if result is None:
-                    result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
-            else:  # groq
-                result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
-                if result is None:
-                    result = _call_openai_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+            used_backend = None
+            for backend_name in chain:
+                if not config.has_provider(backend_name):
+                    continue
+                entry = _CALL_MAP.get(backend_name)
+                if not entry:
+                    continue
+                call_fn, model_name = entry
+                t_call = time.monotonic()
+                result = call_fn(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+                elapsed_call_ms = int((time.monotonic() - t_call) * 1000)
+                log_vision_call(
+                    provider=backend_name,
+                    model=model_name,
+                    file_name=file_path.name,
+                    vtype=vtype,
+                    success=result is not None,
+                    elapsed_ms=elapsed_call_ms,
+                )
+                if result is not None:
+                    used_backend = backend_name
+                    break
+
             if result is None:
-                _emit(vtype, "error", message=f"API call failed (all backends)")
+                _emit(vtype, "error", message="API call failed (all backends)")
                 results[vtype] = {"success": False, "message": f"API call failed ({vision_backend})"}
                 continue
 
@@ -824,7 +833,7 @@ def run_vision_groq_sync(
             )
             _emit(vtype, "done")
             results[vtype] = {"success": True, "message": "ok"}
-            logger.info("vision_groq_sync done:%s saved to %s", vtype, task_info["output"])
+            logger.info("vision_groq_sync done:%s saved to %s (backend=%s)", vtype, task_info["output"], used_backend)
 
         except Exception as e:
             _emit(vtype, "error", message=str(e))

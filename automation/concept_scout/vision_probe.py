@@ -128,26 +128,26 @@ def _run_probe(file_path: Path) -> dict | None:
     if not images:
         return None
 
-    # Fallback chain: Groq (cheapest) → OpenAI (mid) → Claude (best)
-    import os
+    # Fallback chain from config
+    from automation import config
+    _PROBE_CALL_MAP = {
+        "groq": _call_groq_vision,
+        "openai": _call_openai_vision,
+        "anthropic": _call_anthropic_vision,
+    }
+
     result = None
-    if os.environ.get("GROQ_API_KEY"):
-        try:
-            result = _call_groq_vision(_PROBE_PROMPT, images, _PROBE_SYSTEM)
-        except Exception as e:
-            logger.debug("Vision probe Groq failed for %s: %s", file_path.name, e)
-
-    if result is None and os.environ.get("OPENAI_API_KEY"):
-        try:
-            result = _call_openai_vision(_PROBE_PROMPT, images, _PROBE_SYSTEM)
-        except Exception as e:
-            logger.debug("Vision probe OpenAI failed for %s: %s", file_path.name, e)
-
-    if result is None and os.environ.get("ANTHROPIC_API_KEY"):
-        try:
-            result = _call_anthropic_vision(_PROBE_PROMPT, images, _PROBE_SYSTEM)
-        except Exception as e:
-            logger.warning("Vision probe Claude failed for %s: %s", file_path.name, e)
+    for backend in config.PROBE_FALLBACK_ORDER:
+        if not config.has_provider(backend):
+            continue
+        call_fn = _PROBE_CALL_MAP.get(backend)
+        if call_fn:
+            try:
+                result = call_fn(_PROBE_PROMPT, images, _PROBE_SYSTEM)
+                if result is not None:
+                    break
+            except Exception as e:
+                logger.debug("Vision probe %s failed for %s: %s", backend, file_path.name, e)
 
     if result:
         logger.info(

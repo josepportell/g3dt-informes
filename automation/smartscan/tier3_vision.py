@@ -15,9 +15,10 @@ from __future__ import annotations
 import base64
 import json
 import logging
-import os
 import time
 from pathlib import Path
+
+from automation import config
 
 from .confidence import TIER3_BASE, classify_category
 from .models import ClassificationTier, FileClassification
@@ -94,8 +95,8 @@ def classify_tier3(
         return results
 
     # Determine which vision backend to use
-    groq_available = bool(os.environ.get("GROQ_API_KEY"))
-    claude_available = _check_claude_available()
+    groq_available = config.has_provider("groq")
+    claude_available = config.has_provider("anthropic")
 
     if not groq_available and not claude_available:
         logger.info("No vision API available for Tier 3 (need GROQ_API_KEY or ANTHROPIC_API_KEY)")
@@ -145,7 +146,6 @@ def _make_unclassified_readable(rel_path: str) -> FileClassification:
 # Groq Vision (Llama 4 Scout)
 # ──────────────────────────────────────────────────────────────
 
-GROQ_VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 
@@ -164,12 +164,12 @@ def _classify_with_groq(
         logger.warning("httpx not available for Groq vision")
         return None
 
-    api_key = os.environ.get("GROQ_API_KEY")
+    api_key = config.GROQ_API_KEY
     if not api_key:
         return None
 
     payload = {
-        "model": GROQ_VISION_MODEL,
+        "model": config.VISION_MODEL_GROQ,
         "messages": [
             {
                 "role": "user",
@@ -248,7 +248,7 @@ def _classify_with_claude(
 
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-6",
+            model=config.VISION_MODEL_ANTHROPIC,
             max_tokens=256,
             messages=[{
                 "role": "user",
@@ -375,11 +375,3 @@ def _parse_vision_result(rel_path: str, result: dict) -> FileClassification | No
     )
 
 
-def _check_claude_available() -> bool:
-    """Check if Claude API is available."""
-    try:
-        import anthropic
-        anthropic.Anthropic()
-        return True
-    except Exception:
-        return False

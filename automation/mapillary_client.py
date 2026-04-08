@@ -31,9 +31,10 @@ import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
+from automation import config
+
 logger = logging.getLogger(__name__)
 
-GROQ_VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 MAPILLARY_API_URL = "https://graph.mapillary.com/images"
 MAPILLARY_FIELDS = "id,captured_at,computed_geometry,compass_angle,thumb_1024_url,sequence"
@@ -148,22 +149,7 @@ def _haversine_m(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
 
 
 # ---------------------------------------------------------------------------
-# Env loader (same pattern as ortho_vision.py)
-# ---------------------------------------------------------------------------
-
-def _load_env() -> None:
-    """Load .env file from project root if not already loaded."""
-    env_path = Path(__file__).resolve().parent.parent / ".env"
-    if env_path.exists():
-        for line in env_path.read_text().splitlines():
-            line = line.strip()
-            if line and not line.startswith("#") and "=" in line:
-                key, _, value = line.partition("=")
-                os.environ.setdefault(key.strip(), value.strip())
-
-
-# ---------------------------------------------------------------------------
-# Groq Vision call (duplicated pattern from ortho_vision.py)
+# Groq Vision call
 # ---------------------------------------------------------------------------
 
 def _call_groq_vision(
@@ -178,7 +164,7 @@ def _call_groq_vision(
     """
     import httpx
 
-    api_key = os.environ.get("GROQ_API_KEY")
+    api_key = config.GROQ_API_KEY
     if not api_key:
         logger.warning("Mapillary vision: no GROQ_API_KEY")
         return None
@@ -193,7 +179,7 @@ def _call_groq_vision(
         )
 
     payload = {
-        "model": GROQ_VISION_MODEL,
+        "model": config.VISION_MODEL_GROQ,
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": content},
@@ -618,8 +604,6 @@ def fetch_and_analyze_street_edges(
         Keyed by direction (north/south/east/west).
         Returns empty dict if MAPILLARY_ACCESS_TOKEN not set or no coverage.
     """
-    _load_env()
-
     if not os.environ.get("MAPILLARY_ACCESS_TOKEN"):
         logger.info("Mapillary: MAPILLARY_ACCESS_TOKEN not set, skipping")
         return {}

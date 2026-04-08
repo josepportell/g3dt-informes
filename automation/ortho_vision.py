@@ -10,14 +10,14 @@ from __future__ import annotations
 import base64
 import json
 import logging
-import os
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from automation import config
+
 logger = logging.getLogger(__name__)
 
-GROQ_VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 # ---------------------------------------------------------------------------
@@ -110,22 +110,7 @@ class SiteAnalysis:
 
 
 # ---------------------------------------------------------------------------
-# Env loader (duplicated from web/vision_groq.py — separate concern)
-# ---------------------------------------------------------------------------
-
-def _load_env() -> None:
-    """Load .env file from project root if not already loaded."""
-    env_path = Path(__file__).resolve().parent.parent / ".env"
-    if env_path.exists():
-        for line in env_path.read_text().splitlines():
-            line = line.strip()
-            if line and not line.startswith("#") and "=" in line:
-                key, _, value = line.partition("=")
-                os.environ.setdefault(key.strip(), value.strip())
-
-
-# ---------------------------------------------------------------------------
-# Groq Vision call (duplicated pattern from web/vision_groq.py:306-401)
+# Groq Vision call
 # ---------------------------------------------------------------------------
 
 def _call_groq_vision(
@@ -140,7 +125,7 @@ def _call_groq_vision(
     """
     import httpx
 
-    api_key = os.environ.get("GROQ_API_KEY")
+    api_key = config.GROQ_API_KEY
     if not api_key:
         logger.warning("Groq ortho vision: no API key")
         return None
@@ -155,7 +140,7 @@ def _call_groq_vision(
         )
 
     payload = {
-        "model": GROQ_VISION_MODEL,
+        "model": config.VISION_MODEL_GROQ,
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": content},
@@ -359,8 +344,6 @@ def analyze_site(
     SiteAnalysis | None
         Structured analysis, or None if vision is completely unavailable.
     """
-    _load_env()
-
     # -- Wide chip analysis --------------------------------------------------
     wide_result: dict | None = None
     if wide_chip_path is not None:

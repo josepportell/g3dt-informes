@@ -16,6 +16,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from automation import config
 from ..base import BaseMiner
 from ..models import Signal, SignalType
 
@@ -24,7 +25,7 @@ logger = logging.getLogger(__name__)
 # === Configuration ===
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODEL_DEFAULT = "qwen/qwen3-32b"
+GROQ_MODEL_DEFAULT = config.TEXT_MODEL_GROQ
 GROQ_MAX_TOKENS = 2048
 GROQ_TEMPERATURE = 0.0
 
