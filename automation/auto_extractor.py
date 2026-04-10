@@ -327,9 +327,18 @@ def auto_extract(
                         break
 
             # --- Validate COORDENADES.txt coords when geocode-first didn't override ---
+            # If municipality is unknown, try to extract from project folder name
+            validate_muni = muni
+            if not validate_muni:
+                # Project folder name is like "4001612 BELL-LLOC" — extract municipality part
+                folder_name = project_path.name
+                parts = folder_name.split(' ', 1)
+                if len(parts) == 2:
+                    validate_muni = parts[1].strip()
+                    logger.debug("Validation: municipality from folder name: %r", validate_muni)
             if parcel_x == utm_x and parcel_y == utm_y and street_addr:
                 parcel_x, parcel_y, _was_corrected = _validate_coords_against_address(
-                    parcel_x, parcel_y, street_addr, muni, province, result,
+                    parcel_x, parcel_y, street_addr, validate_muni, province, result,
                 )
 
             emit("api_call", {"api": "Cadastre", "action": "adjacents", "utm": f"({parcel_x:.0f}, {parcel_y:.0f})", "superficie": superficie})
@@ -1499,14 +1508,16 @@ def _validate_coords_against_address(
             addr_clean = addr_clean[len(prefix):]
             break
 
-    # Words longer than 3 chars, excluding common type words
+    # Words longer than 3 chars, excluding common type words and municipality
     _SKIP_WORDS = {'carrer', 'calle', 'avinguda', 'avenida', 'plaça', 'plaza'}
+    # Also skip municipality words (they appear in ALL LDTs of the same town)
+    muni_words = {w.lower() for w in municipality.split() if len(w) > 3}
     addr_words = [
         w for w in addr_clean.split()
-        if len(w) > 3 and w not in _SKIP_WORDS
+        if len(w) > 3 and w not in _SKIP_WORDS and w not in muni_words
     ]
 
-    if any(w in ldt_lower for w in addr_words):
+    if addr_words and any(w in ldt_lower for w in addr_words):
         logger.info("Coord validation: OK (LDT %r matches street_address)", ldt[:60])
         return utm_x, utm_y, False
 
