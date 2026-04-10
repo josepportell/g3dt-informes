@@ -273,6 +273,31 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
                 'source': 'plantilla generada',
             }
 
+    # Site condition: erosion observation sentence from slope data
+    if not _get_val('site_condition'):
+        lang = _get_project_language(merged)
+        if lang == 'es':
+            site_cond = (
+                "En la zona de estudio no se han detectado marcas de inicios "
+                "de procesos de erosión relacionados con la escorrentía "
+                "hídrica superficial."
+            )
+        else:
+            is_sloped = _get_val('is_sloped')
+            if is_sloped and str(is_sloped).lower() not in ('false', '0', ''):
+                qualifier = "Tot i no ser un solar pla"
+            else:
+                qualifier = "Com que es tracta d'un solar pla"
+            site_cond = (
+                f"{qualifier}, no s'han detectat marques i/o indicis de processos "
+                f"d'erosió relacionats amb l'escolament hídric superficial, "
+                f"ni es preveu que apareguin."
+            )
+        merged['site_condition'] = {
+            'value': site_cond,
+            'source': 'computed (ICGC slope)',
+        }
+
 
 def _clear_stale_user_data(project_path: Path) -> None:
     """Back up stale user_data.json before a fresh pipeline run.
