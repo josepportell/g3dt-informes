@@ -326,6 +326,12 @@ def auto_extract(
                             result.sources['superficie_cadastral_m2'] = 'Cadastre WFS (geocode-first)'
                         break
 
+            # --- Validate COORDENADES.txt coords when geocode-first didn't override ---
+            if parcel_x == utm_x and parcel_y == utm_y and street_addr:
+                parcel_x, parcel_y, _was_corrected = _validate_coords_against_address(
+                    parcel_x, parcel_y, street_addr, muni, province, result,
+                )
+
             emit("api_call", {"api": "Cadastre", "action": "adjacents", "utm": f"({parcel_x:.0f}, {parcel_y:.0f})", "superficie": superficie})
             resolved_x, resolved_y = _phase3_adjacents(parcel_x, parcel_y, superficie, result, project_path, existing_user_data)
             adj_found = {d: result.prefills.get(f'adjacent_{d}', '') for d in ('north', 'south', 'east', 'west') if result.prefills.get(f'adjacent_{d}')}
@@ -1441,6 +1447,100 @@ def _phase3_cadastral_area(
         logger.info(f"Cadastral reference: {rc[:14]}")
     except Exception as exc:
         logger.debug(f"Cadastral reference lookup failed: {exc}")
+
+
+# ---------------------------------------------------------------------------
+# Coordinate validation: COORDENADES.txt vs project street address
+# ---------------------------------------------------------------------------
+
+# Strip prefixes common in Catalan/Spanish addresses for fuzzy comparison
+_COORD_STRIP_PREFIXES = (
+    'carrer ', 'c/ ', 'c. ', 'cl ', 'calle ',
+    'avinguda ', 'av. ', 'av ', 'avenida ',
+    'plaça ', 'plaza ', 'pl. ',
+    'passeig ', 'paseo ',
+    'camí ', 'camino ',
+    'partida ',
+)
+
+
+def _validate_coords_against_address(
+    utm_x: float,
+    utm_y: float,
+    street_address: str,
+    municipality: str,
+    province: str,
+    result: AutoExtractionResult,
+) -> tuple[float, float, bool]:
+    """Validate that UTM coords fall on the expected parcel.
+
+    Compares the Cadastre LDT at the given coords with the project's
+    street_address.  If they match, coords are good.  If they don't
+    match, try geocoding the street_address as fallback.
+
+    Returns (validated_x, validated_y, was_corrected).
+    """
+    from .cadastre_adjacents import _query_ref_by_coords, CadastreError
+
+    try:
+        _ref, ldt = _query_ref_by_coords(utm_x, utm_y)
+    except CadastreError:
+        return utm_x, utm_y, False  # Can't validate, use as-is
+
+    if not ldt:
+        return utm_x, utm_y, False
+
+    # --- Fuzzy match: significant words from street_address vs LDT ---
+    ldt_lower = ldt.lower()
+
+    addr_clean = street_address.lower().strip()
+    for prefix in _COORD_STRIP_PREFIXES:
+        if addr_clean.startswith(prefix):
+            addr_clean = addr_clean[len(prefix):]
+            break
+
+    # Words longer than 3 chars, excluding common type words
+    _SKIP_WORDS = {'carrer', 'calle', 'avinguda', 'avenida', 'plaça', 'plaza'}
+    addr_words = [
+        w for w in addr_clean.split()
+        if len(w) > 3 and w not in _SKIP_WORDS
+    ]
+
+    if any(w in ldt_lower for w in addr_words):
+        logger.info("Coord validation: OK (LDT %r matches street_address)", ldt[:60])
+        return utm_x, utm_y, False
+
+    # --- Mismatch: coords don't point to the expected parcel ---
+    logger.warning(
+        "Coord validation: MISMATCH — coords point to %r "
+        "but project is at %r. Attempting geocode fallback...",
+        ldt[:60], street_address,
+    )
+
+    # Try geocoding the street address
+    try:
+        geo_res = _geocode_for_adjacents(street_address, municipality, province=province)
+        if geo_res and geo_res.get('utm_x') and geo_res.get('utm_y'):
+            new_x, new_y = geo_res['utm_x'], geo_res['utm_y']
+            logger.info(
+                "Coord validation: using geocoded coords (%.1f, %.1f) "
+                "instead of COORDENADES.txt (%.1f, %.1f)",
+                new_x, new_y, utm_x, utm_y,
+            )
+            result.steps_completed.append(
+                f"Coord validation: COORDENADES.txt -> wrong parcel "
+                f"({ldt[:40]}), geocoded {street_address}"
+            )
+            return new_x, new_y, True
+    except Exception as e:
+        logger.warning("Coord validation geocode fallback failed: %s", e)
+
+    # Geocode failed too — use original coords with warning
+    result.steps_completed.append(
+        f"Coord validation: WARNING — coords may be on wrong parcel "
+        f"(LDT: {ldt[:40]})"
+    )
+    return utm_x, utm_y, False
 
 
 # ---------------------------------------------------------------------------
