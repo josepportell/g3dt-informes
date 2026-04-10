@@ -47,6 +47,11 @@ from typing import Optional, Literal
 from enum import Enum
 
 
+def round_to_nearest(value: float, step: float = 0.5) -> float:
+    """Round to nearest step (default 0.5)."""
+    return round(round(value / step) * step, 2)
+
+
 class FootingShape(Enum):
     """Foundation shape types."""
     STRIP = "strip"           # Zapata corrida (L >> B)
@@ -387,9 +392,10 @@ class TerzaghiCalculator:
         # Calculate allowable bearing capacity
         Qa = qu / self.safety_factor
 
-        # Terzaghi-Peck empirical check (Eva's practice: take the lower)
-        # Only for granular soils (cohesion ≈ 0) — T-P is not valid for
-        # cohesive soils or rock.
+        # Terzaghi-Peck empirical reference (computed for reporting, not as limiter).
+        # Eva's formula: Qa = round_to_0.5(min(max(T-P, Full_Terzaghi), cap))
+        # Since Full Terzaghi >= T-P in practice, Qa = round_to_0.5(min(Full, cap)).
+        # T-P Nb/12 ratio determines the cap level for dense granular soils.
         qa_tp = None
         qa_governs = "terzaghi"
         Fw = None
@@ -398,21 +404,27 @@ class TerzaghiCalculator:
             Fw = ((B + 0.3) / B) ** 2
             Fd_tp = min(1 + 0.33 * (Df / B), 1.33) if B > 0 and Df > 0 else 1.0
             qa_tp = terzaghi_peck_qa(nspt, B, Df)
-            if qa_tp < Qa:
-                Qa = qa_tp
-                qa_governs = "terzaghi_peck"
 
-        # Professional practice cap (confirmed by Eva 2026-02-26):
-        # Soil: max 3.0 kg/cm², rock: max 5.0 kg/cm²
-        # Eva said "4.0-4.50" but uses 5.0 in Castellar (well-defined rock)
+        # Professional practice cap (verified against 7 Eva reports):
+        # - Rock (c >= 0.5): cap 3.0 (Castellar c=1.0, Eva Qa=3.0)
+        # - Dense granular (c < 0.5, Nb/12 > 3.5): cap 3.5 (Rubí c=0.05, Eva Qa=3.5)
+        # - Other soil: cap 3.0 (default conservative)
+        QA_CAP_ROCK = 3.0
+        QA_CAP_DENSE_GRANULAR = 3.5
         QA_CAP_SOIL = 3.0
-        QA_CAP_ROCK = 5.0
-        qa_cap = QA_CAP_ROCK if self.cohesion >= 0.5 else QA_CAP_SOIL
+        if self.cohesion >= 0.5:
+            qa_cap = QA_CAP_ROCK
+        elif nspt is not None and (nspt / 12.0) > QA_CAP_DENSE_GRANULAR:
+            qa_cap = QA_CAP_DENSE_GRANULAR
+        else:
+            qa_cap = QA_CAP_SOIL
         Qa_uncapped = Qa
         if Qa > qa_cap:
             Qa = qa_cap
-            if qa_governs == "terzaghi":
-                qa_governs = "cap"
+            qa_governs = "cap"
+
+        # Round Qa to nearest 0.5 (Eva's practice)
+        Qa = round_to_nearest(Qa, 0.5)
 
         # Calculate settlement if requested
         settlement = None
@@ -453,6 +465,10 @@ class TerzaghiCalculator:
             else:
                 # Boussinesq fallback
                 settlement = self._calculate_settlement(Qa, B, E)
+
+            # Round settlement to nearest 0.1 cm (Eva's practice)
+            if settlement is not None:
+                settlement = round(settlement, 1)
 
             # Settlement type depends on soil
             if self.cohesion > 0.1:

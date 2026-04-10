@@ -1357,6 +1357,8 @@ class ReportGenerator:
                     # Granular (α=2.5): K30 = E / 75
                     k30 = gp.E / 75
                     k30_formula = f"E/75 = {gp.E:.0f}/75 (granular)"
+                # Round K30 to nearest integer (Eva's practice)
+                k30 = round(k30)
                 context['k30_value'] = f"{k30:.1f}"
                 context['_calc_k30'] = k30_formula
             else:
