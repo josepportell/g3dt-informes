@@ -1,0 +1,617 @@
+{
+  "schema_version": "1.0",
+  "metadata": {
+    "timestamp": "2026-04-10T17:09:33+0200",
+    "run_id": "8ac19a",
+    "num_projects": 7
+  },
+  "global_summary": {
+    "total_vars": 281,
+    "match": 88,
+    "close": 31,
+    "mismatch": 88,
+    "not_extracted": 74,
+    "match_close_pct": 57.5
+  },
+  "global_tier_summary": {
+    "A": {
+      "total": 244,
+      "match": 86,
+      "close": 28,
+      "mismatch": 63,
+      "not_extracted": 67
+    },
+    "B": {
+      "total": 21,
+      "match": 2,
+      "close": 3,
+      "mismatch": 9,
+      "not_extracted": 7
+    },
+    "C": {
+      "total": 16,
+      "match": 0,
+      "close": 0,
+      "mismatch": 16,
+      "not_extracted": 0
+    }
+  },
+  "global_component_summary": {
+    "cadastre": {
+      "produced": 24,
+      "match": 3,
+      "close": 7,
+      "mismatch": 14,
+      "not_extracted": 0,
+      "accuracy_pct": 41.7
+    },
+    "computed": {
+      "produced": 70,
+      "match": 30,
+      "close": 2,
+      "mismatch": 38,
+      "not_extracted": 0,
+      "accuracy_pct": 45.7
+    },
+    "constant": {
+      "produced": 20,
+      "match": 17,
+      "close": 2,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "accuracy_pct": 95.0
+    },
+    "dpsh_extractor": {
+      "produced": 5,
+      "match": 4,
+      "close": 0,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "accuracy_pct": 80.0
+    },
+    "fileminer_regex": {
+      "produced": 9,
+      "match": 2,
+      "close": 6,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "accuracy_pct": 88.9
+    },
+    "lab_extractor": {
+      "produced": 14,
+      "match": 10,
+      "close": 0,
+      "mismatch": 4,
+      "not_extracted": 0,
+      "accuracy_pct": 71.4
+    },
+    "llm_synthesis": {
+      "produced": 7,
+      "match": 2,
+      "close": 3,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "accuracy_pct": 71.4
+    },
+    "template_generated": {
+      "produced": 7,
+      "match": 0,
+      "close": 0,
+      "mismatch": 7,
+      "not_extracted": 0,
+      "accuracy_pct": 0.0
+    },
+    "vision_planol": {
+      "produced": 31,
+      "match": 8,
+      "close": 9,
+      "mismatch": 14,
+      "not_extracted": 0,
+      "accuracy_pct": 54.8
+    },
+    "vision_sondeig": {
+      "produced": 13,
+      "match": 9,
+      "close": 0,
+      "mismatch": 4,
+      "not_extracted": 0,
+      "accuracy_pct": 69.2
+    },
+    "content_discovery": {
+      "produced": 1,
+      "match": 0,
+      "close": 0,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "accuracy_pct": 0.0
+    },
+    "groq_llm": {
+      "produced": 6,
+      "match": 3,
+      "close": 2,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "accuracy_pct": 83.3
+    }
+  },
+  "cross_variable_matrix": {
+    "access_street": {
+      "4001612 BELL-LLOC": "NOT_EXTRACTED",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "NOT_EXTRACTED",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "adjacent_east_fmt": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "CLOSE",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "adjacent_north_fmt": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "adjacent_south_fmt": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "CLOSE",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "adjacent_west_fmt": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "CLOSE",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "architect_company": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "4001607 LINYOLA": "CLOSE"
+    },
+    "architect_name": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "building_structure_desc": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "building_type": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "CLOSE",
+      "4001607 LINYOLA": "CLOSE",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "CLOSE"
+    },
+    "client_name": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "CLOSE",
+      "4001670 ALCOLETGE": "CLOSE",
+      "4001671 VILANOVA DE SEGRIA": "CLOSE",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "cte_edificacio": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH"
+    },
+    "cte_sol": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MATCH"
+    },
+    "field_work_dates_text": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "expedient": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "CLOSE",
+      "4001679 ANCILES": "CLOSE"
+    },
+    "lab_depth": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "lab_field_company": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "CLOSE",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "lab_field_description": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "lab_location": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "NOT_EXTRACTED",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "lab_sample_id": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "NOT_EXTRACTED",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "lab_testing_company": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "lab_testing_description": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "lab_tests_text": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "location_sentence": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "CLOSE",
+      "4001671 VILANOVA DE SEGRIA": "CLOSE",
+      "4001679 ANCILES": "MATCH"
+    },
+    "municipality": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "CLOSE",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "CLOSE",
+      "4001671 VILANOVA DE SEGRIA": "CLOSE",
+      "4001679 ANCILES": "CLOSE"
+    },
+    "num_dpsh_tests": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "CLOSE",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "num_floors": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "qa_value": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "radon_zone": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MATCH"
+    },
+    "seismic_ab_text": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "settlement": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "site_condition": {
+      "4001612 BELL-LLOC": "NOT_EXTRACTED",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "NOT_EXTRACTED",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "site_description": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "spt_depth_range": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MATCH"
+    },
+    "spt_lithology": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "spt_location": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MATCH"
+    },
+    "spt_n30": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MATCH"
+    },
+    "spt_test_id": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MATCH"
+    },
+    "sulfate_baumann": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "sulfate_classification": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED"
+    },
+    "sulfate_level_name": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "sulfate_mg_kg": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED"
+    },
+    "superficie_construida_m2": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "NOT_EXTRACTED",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH"
+    },
+    "superficie_parcela_m2": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "table_dpsh_range": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "CLOSE"
+    },
+    "k30_value": {
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH"
+    }
+  },
+  "classification_summary": {
+    "EXTRACTION": [
+      "adjacent_south_fmt(4001612)",
+      "architect_company(4001612)",
+      "building_structure_desc(4001612)",
+      "field_work_dates_text(4001612)",
+      "lab_tests_text(4001612)",
+      "location_sentence(4001612)",
+      "spt_depth_range(4001612)",
+      "spt_lithology(4001612)",
+      "spt_n30(4001612)",
+      "sulfate_baumann(4001612)",
+      "table_dpsh_range(4001612)",
+      "adjacent_north_fmt(3001621)",
+      "building_type(3001621)",
+      "client_name(3001621)",
+      "lab_tests_text(3001621)",
+      "seismic_ab_text(3001621)",
+      "spt_lithology(3001621)",
+      "adjacent_east_fmt(3001631)",
+      "adjacent_north_fmt(3001631)",
+      "adjacent_south_fmt(3001631)",
+      "adjacent_west_fmt(3001631)",
+      "cte_edificacio(3001631)",
+      "lab_tests_text(3001631)",
+      "location_sentence(3001631)",
+      "num_floors(3001631)",
+      "radon_zone(3001631)",
+      "seismic_ab_text(3001631)",
+      "sulfate_baumann(3001631)",
+      "superficie_construida_m2(3001631)",
+      "table_dpsh_range(3001631)",
+      "adjacent_north_fmt(4001607)",
+      "adjacent_south_fmt(4001607)",
+      "architect_name(4001607)",
+      "building_structure_desc(4001607)",
+      "cte_edificacio(4001607)",
+      "expedient(4001607)",
+      "lab_tests_text(4001607)",
+      "sulfate_level_name(4001607)",
+      "adjacent_east_fmt(4001670)",
+      "adjacent_north_fmt(4001670)",
+      "architect_name(4001670)",
+      "building_structure_desc(4001670)",
+      "building_type(4001670)",
+      "cte_edificacio(4001670)",
+      "table_dpsh_range(4001670)",
+      "architect_name(4001671)",
+      "building_structure_desc(4001671)",
+      "cte_edificacio(4001671)",
+      "radon_zone(4001671)",
+      "seismic_ab_text(4001671)",
+      "superficie_construida_m2(4001671)",
+      "superficie_parcela_m2(4001671)",
+      "table_dpsh_range(4001671)",
+      "adjacent_east_fmt(4001679)",
+      "adjacent_north_fmt(4001679)",
+      "adjacent_south_fmt(4001679)",
+      "adjacent_west_fmt(4001679)",
+      "architect_name(4001679)",
+      "building_structure_desc(4001679)",
+      "client_name(4001679)",
+      "num_dpsh_tests(4001679)",
+      "num_floors(4001679)",
+      "seismic_ab_text(4001679)",
+      "superficie_parcela_m2(4001679)"
+    ],
+    "CALC": [
+      "qa_value(4001612)",
+      "settlement(4001612)",
+      "k30_value(3001621)",
+      "qa_value(3001621)",
+      "settlement(3001621)",
+      "k30_value(3001631)",
+      "qa_value(3001631)",
+      "settlement(3001631)",
+      "qa_value(4001607)",
+      "settlement(4001607)",
+      "qa_value(4001670)",
+      "settlement(4001670)",
+      "qa_value(4001671)",
+      "settlement(4001671)",
+      "qa_value(4001679)",
+      "settlement(4001679)"
+    ],
+    "NARRATIVE": [
+      "site_description(4001612)",
+      "site_description(3001621)",
+      "site_description(3001631)",
+      "site_description(4001607)",
+      "site_description(4001670)",
+      "site_description(4001671)",
+      "site_description(4001679)"
+    ],
+    "PRIORITY": [
+      "superficie_construida_m2(4001612)"
+    ]
+  },
+  "projects": [
+    "4001612 BELL-LLOC",
+    "3001621 CASTELLAR DEL VALLES",
+    "3001631 RUBI",
+    "4001607 LINYOLA",
+    "4001670 ALCOLETGE",
+    "4001671 VILANOVA DE SEGRIA",
+    "4001679 ANCILES"
+  ]
+}
