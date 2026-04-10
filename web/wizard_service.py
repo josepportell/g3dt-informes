@@ -284,8 +284,15 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
             )
         else:
             is_sloped = _get_val('is_sloped')
-            if is_sloped and str(is_sloped).lower() not in ('false', '0', ''):
+            is_anthro = _get_val('is_anthropized')
+            sloped = is_sloped and str(is_sloped).lower() not in ('false', '0', '')
+            anthro = is_anthro and str(is_anthro).lower() not in ('false', '0', '')
+            if sloped and not anthro:
+                qualifier = "Es tracta d'un solar no antropitzat"
+            elif sloped:
                 qualifier = "Tot i no ser un solar pla"
+            elif anthro:
+                qualifier = "Degut a que es tracta d'un solar antropitzat"
             else:
                 qualifier = "Com que es tracta d'un solar pla"
             site_cond = (
