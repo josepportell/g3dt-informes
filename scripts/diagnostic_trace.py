@@ -165,6 +165,8 @@ def _cyan(t: str) -> str: return _color(t, "36")
 def _dim(t: str) -> str: return _color(t, "2")
 def _bold(t: str) -> str: return _color(t, "1")
 
+def _blue(t: str) -> str: return _color(t, "34")
+
 def _truncate(s: Any, maxlen: int = 55) -> str:
     s = str(s).replace("\n", " ")
     return s[:maxlen - 2] + ".." if len(s) > maxlen else s
@@ -388,6 +390,55 @@ def load_eva_reference(project_path: Path) -> dict[str, Any]:
 
 
 # ---------------------------------------------------------------------------
+# PASS detection (source data doesn't exist for project)
+# ---------------------------------------------------------------------------
+
+_LAB_PASS_VARS = {
+    'lab_location', 'lab_sample_id', 'lab_depth',
+    'lab_field_company', 'lab_field_description',
+    'lab_testing_company', 'lab_testing_description',
+    'lab_tests_text',
+}
+
+_SPT_PASS_VARS = {
+    'spt_n30', 'spt_depth_range', 'spt_lithology',
+    'spt_location', 'spt_test_id',
+}
+
+
+def _get_pass_variables(project_path: Path) -> set[str]:
+    """Determine which variables should be PASS (source data doesn't exist)."""
+    pass_vars: set[str] = set()
+
+    fm_path = project_path / 'file_mapping.json'
+    has_gtl = False
+    has_sondeig = False
+    if fm_path.exists():
+        fm = json.loads(fm_path.read_text(encoding='utf-8'))
+        roles = fm.get('roles', {})
+        gtl_path = roles.get('gtl_report', {}).get('path', '')
+        # Validate: the file must actually be a GTL (not a misclassified pressupost)
+        if gtl_path and 'gtl' in gtl_path.lower():
+            has_gtl = True
+        has_sondeig = (
+            bool(roles.get('sondeig_field_sheet', {}).get('path'))
+            or bool(roles.get('sondeig_annex', {}).get('path'))
+        )
+
+    # Fallback: check for GTL file directly
+    if not has_gtl:
+        has_gtl = bool(list(project_path.glob('*GTL*'))) or bool(list(project_path.glob('*gtl*')))
+
+    if not has_gtl:
+        pass_vars.update(_LAB_PASS_VARS)
+
+    if not has_sondeig:
+        pass_vars.update(_SPT_PASS_VARS)
+
+    return pass_vars
+
+
+# ---------------------------------------------------------------------------
 # Processing
 # ---------------------------------------------------------------------------
 
@@ -435,6 +486,9 @@ def process_project(
         'dpsh': (val_dir / 'dpsh_extracted.json').exists(),
     }
 
+    # Determine PASS variables (source data doesn't exist)
+    pass_vars = _get_pass_variables(project_path)
+
     # Build comparison
     results: dict[str, dict] = {}
 
@@ -452,7 +506,10 @@ def process_project(
         pipe_source = sources.get(prefill_key)
 
         if pipe_value is None or str(pipe_value).strip() == "":
-            status = "NOT_EXTRACTED"
+            if prefill_key in pass_vars:
+                status = "PASS"
+            else:
+                status = "NOT_EXTRACTED"
         else:
             status = _values_match(eva_value, pipe_value, eva_name, tolerance, llm_client)
 
@@ -476,15 +533,19 @@ def process_project(
         counts[r['status']] += 1
 
     n_m, n_c, n_x, n_nd = counts["MATCH"], counts["CLOSE"], counts["MISMATCH"], counts["NOT_EXTRACTED"]
+    n_p = counts["PASS"]
     n_total = len(results)
     n_compared = n_m + n_c + n_x
-    print(
-        f"  {_green(f'{n_m} match')}  "
-        f"{_yellow(f'{n_c} close')}  "
-        f"{_red(f'{n_x} mismatch')}  "
-        f"{_dim(f'{n_nd} not_extracted')}  "
-        f"/ {n_total} vars"
-    )
+    parts = [
+        f"  {_green(f'{n_m} match')}  ",
+        f"{_yellow(f'{n_c} close')}  ",
+        f"{_red(f'{n_x} mismatch')}  ",
+        f"{_dim(f'{n_nd} not_extracted')}  ",
+    ]
+    if n_p > 0:
+        parts.append(f"{_blue(f'{n_p} pass')}  ")
+    parts.append(f"/ {n_total} vars")
+    print("".join(parts))
     if n_compared > 0:
         pct_ok = round((n_m + n_c) / n_compared * 100, 1)
         print(f"  Match+Close rate: {_bold(f'{pct_ok}%')} (of {n_compared} compared)")
@@ -493,15 +554,15 @@ def process_project(
     print(f"\n  {'Variable':<28} {'Eva':<28} {'Pipeline':<28} {'Source':<25} {'Status'}")
     print(f"  {'-' * 28} {'-' * 28} {'-' * 28} {'-' * 25} {'-' * 12}")
 
-    # Sort: MISMATCH first, then CLOSE, then NOT_EXTRACTED, then MATCH
-    _STATUS_ORDER = {"MISMATCH": 0, "CLOSE": 1, "NOT_EXTRACTED": 2, "MATCH": 3}
+    # Sort: MISMATCH first, then CLOSE, then NOT_EXTRACTED, then PASS, then MATCH
+    _STATUS_ORDER = {"MISMATCH": 0, "CLOSE": 1, "NOT_EXTRACTED": 2, "PASS": 3, "MATCH": 4}
 
     for concept_id in sorted(results, key=lambda c: (_STATUS_ORDER.get(results[c]['status'], 9), c)):
         r = results[concept_id]
         status = r['status']
 
         # In default mode, only show MISMATCH and NOT_EXTRACTED
-        if not show_all and status in ("MATCH", "CLOSE"):
+        if not show_all and status in ("MATCH", "CLOSE", "PASS"):
             continue
 
         eva_str = _truncate(r['eva_value'], 28)
@@ -514,6 +575,8 @@ def process_project(
             status_str = _yellow(f"{status:<12}")
         elif status == "NOT_EXTRACTED":
             status_str = _dim(f"{status:<12}")
+        elif status == "PASS":
+            status_str = _blue(f"{status:<12}")
         else:
             status_str = _red(f"{status:<12}")
 
@@ -562,17 +625,15 @@ def process_project(
     # Aggregated summary
     print(f"\n{'─' * 60}")
     print(f"  SUMMARY ({project_name}):")
-    for status_name in ["MATCH", "CLOSE", "MISMATCH", "NOT_EXTRACTED"]:
+    _SUMMARY_COLORS = {
+        "MATCH": _green, "CLOSE": _yellow, "MISMATCH": _red,
+        "NOT_EXTRACTED": _dim, "PASS": _blue,
+    }
+    for status_name in ["MATCH", "CLOSE", "MISMATCH", "NOT_EXTRACTED", "PASS"]:
         count = counts.get(status_name, 0)
         if count > 0:
-            if status_name == "MATCH":
-                print(f"    {_green(f'{status_name:<16}')} {count:>3}")
-            elif status_name == "CLOSE":
-                print(f"    {_yellow(f'{status_name:<16}')} {count:>3}")
-            elif status_name == "MISMATCH":
-                print(f"    {_red(f'{status_name:<16}')} {count:>3}")
-            else:
-                print(f"    {_dim(f'{status_name:<16}')} {count:>3}")
+            color_fn = _SUMMARY_COLORS.get(status_name, str)
+            print(f"    {color_fn(f'{status_name:<16}')} {count:>3}")
 
     return ProjectDiagResult(
         results=results,
@@ -592,7 +653,7 @@ def process_project(
 
 def _print_component_scorecard(results: dict[str, dict]) -> dict[str, dict]:
     """Build and print per-component accuracy scorecard. Returns component_summary dict."""
-    comp_stats: dict[str, dict[str, int]] = defaultdict(lambda: {"match": 0, "close": 0, "mismatch": 0, "not_extracted": 0})
+    comp_stats: dict[str, dict[str, int]] = defaultdict(lambda: {"match": 0, "close": 0, "mismatch": 0, "not_extracted": 0, "pass": 0})
 
     for r in results.values():
         comp = r.get('component', 'unknown')
@@ -694,19 +755,21 @@ def _build_snapshot(
     for r in results.values():
         counts[r['status']] += 1
     n_m, n_c, n_x, n_nd = counts["MATCH"], counts["CLOSE"], counts["MISMATCH"], counts["NOT_EXTRACTED"]
+    n_p = counts["PASS"]
     n_total = sum(counts.values())
     n_compared = n_m + n_c + n_x
     match_close_pct = round((n_m + n_c) / n_compared * 100, 1) if n_compared > 0 else 0.0
 
     # Tier summary
+    _TIER_INIT = {"total": 0, "match": 0, "close": 0, "mismatch": 0, "not_extracted": 0, "pass": 0}
     tier_summary: dict[str, dict[str, int]] = {}
     for tier in ("A", "B", "C"):
-        tier_summary[tier] = {"total": 0, "match": 0, "close": 0, "mismatch": 0, "not_extracted": 0}
+        tier_summary[tier] = dict(_TIER_INIT)
     for concept_id, r in results.items():
         tier = VARIABLE_TIER.get(concept_id, VARIABLE_TIER.get(r.get('eva_name', ''), 'A'))
         status_key = r['status'].lower()
         if tier not in tier_summary:
-            tier_summary[tier] = {"total": 0, "match": 0, "close": 0, "mismatch": 0, "not_extracted": 0}
+            tier_summary[tier] = dict(_TIER_INIT)
         tier_summary[tier]["total"] += 1
         if status_key in tier_summary[tier]:
             tier_summary[tier][status_key] += 1
@@ -785,6 +848,7 @@ def _build_snapshot(
             "close": n_c,
             "mismatch": n_x,
             "not_extracted": n_nd,
+            "pass": n_p,
             "match_close_pct": match_close_pct,
         },
         "tier_summary": tier_summary,
@@ -809,7 +873,7 @@ def _save_snapshot(snapshot: dict, output_dir: Path) -> Path:
 
 def _build_cross_summary(snapshots: list[dict]) -> dict:
     """Build cross-project summary from individual snapshots."""
-    global_summary: dict[str, int] = {"total_vars": 0, "match": 0, "close": 0, "mismatch": 0, "not_extracted": 0}
+    global_summary: dict[str, int] = {"total_vars": 0, "match": 0, "close": 0, "mismatch": 0, "not_extracted": 0, "pass": 0}
     global_tier: dict[str, dict[str, int]] = {}
     global_comp: dict[str, dict[str, float]] = {}
     cross_vars: dict[str, dict[str, str]] = {}  # var -> {project: status}
@@ -818,21 +882,21 @@ def _build_cross_summary(snapshots: list[dict]) -> dict:
     for snap in snapshots:
         proj = snap.get("metadata", {}).get("project", "?")
         summ = snap.get("summary", {})
-        for key in ("total_vars", "match", "close", "mismatch", "not_extracted"):
+        for key in ("total_vars", "match", "close", "mismatch", "not_extracted", "pass"):
             global_summary[key] += summ.get(key, 0)
 
         # Tier aggregation
         for tier, tier_data in snap.get("tier_summary", {}).items():
             if tier not in global_tier:
-                global_tier[tier] = {"total": 0, "match": 0, "close": 0, "mismatch": 0, "not_extracted": 0}
-            for k in ("total", "match", "close", "mismatch", "not_extracted"):
+                global_tier[tier] = {"total": 0, "match": 0, "close": 0, "mismatch": 0, "not_extracted": 0, "pass": 0}
+            for k in ("total", "match", "close", "mismatch", "not_extracted", "pass"):
                 global_tier[tier][k] += tier_data.get(k, 0)
 
         # Component aggregation
         for comp, comp_data in snap.get("component_summary", {}).items():
             if comp not in global_comp:
-                global_comp[comp] = {"produced": 0, "match": 0, "close": 0, "mismatch": 0, "not_extracted": 0}
-            for k in ("produced", "match", "close", "mismatch", "not_extracted"):
+                global_comp[comp] = {"produced": 0, "match": 0, "close": 0, "mismatch": 0, "not_extracted": 0, "pass": 0}
+            for k in ("produced", "match", "close", "mismatch", "not_extracted", "pass"):
                 global_comp[comp][k] += comp_data.get(k, 0)
 
         # Cross-variable matrix
@@ -1011,6 +1075,8 @@ def _deep_trace_variable(
         print(f"     Status:   {_yellow(status)}")
     elif status == "MISMATCH":
         print(f"     Status:   {_red(status)}")
+    elif status == "PASS":
+        print(f"     Status:   {_blue(status)}")
     else:
         print(f"     Status:   {_dim(status)}")
     # Numeric deviation
@@ -1074,7 +1140,7 @@ def _diff_snapshots(path_a: Path, path_b: Path) -> None:
     regressions = 0
     unchanged = 0
 
-    _STATUS_RANK = {"MATCH": 0, "CLOSE": 1, "MISMATCH": 2, "NOT_EXTRACTED": 3}
+    _STATUS_RANK = {"MATCH": 0, "CLOSE": 1, "MISMATCH": 2, "PASS": 3, "NOT_EXTRACTED": 4}
 
     print(f"\n  {'Variable':<28} {'Run A':<16} {'Run B':<16} Change")
     print(f"  {'-' * 28} {'-' * 16} {'-' * 16} {'-' * 16}")
@@ -1155,21 +1221,26 @@ def print_cross_project_summary(
     gc = g_counts["CLOSE"]
     gx = g_counts["MISMATCH"]
     gnd = g_counts["NOT_EXTRACTED"]
-    print(
-        f"  Total: {g_total} var-comparisons  |  "
-        f"{_green(f'{gm} match')}  "
-        f"{_yellow(f'{gc} close')}  "
-        f"{_red(f'{gx} mismatch')}  "
-        f"{_dim(f'{gnd} not_extracted')}"
+    gp = g_counts["PASS"]
+    cross_parts = [
+        f"  Total: {g_total} var-comparisons  |  ",
+        f"{_green(f'{gm} match')}  ",
+        f"{_yellow(f'{gc} close')}  ",
+        f"{_red(f'{gx} mismatch')}  ",
+        f"{_dim(f'{gnd} not_extracted')}",
+    ]
+    if gp > 0:
+        cross_parts.append(f"  {_blue(f'{gp} pass')}")
+    print("".join(cross_parts)
     )
     if g_compared > 0:
         pct = round((g_counts["MATCH"] + g_counts["CLOSE"]) / g_compared * 100, 1)
         print(f"  Match+Close rate: {_bold(f'{pct}%')} (of {g_compared} compared)")
 
     # Per-variable matrix
-    header = f"\n  {'Variable':<28} | {'MATCH':^7} | {'CLOSE':^7} | {'MISMATCH':^8} | {'NO_DATA':^7} | Note"
+    header = f"\n  {'Variable':<28} | {'MATCH':^7} | {'CLOSE':^7} | {'MISMATCH':^8} | {'NO_DATA':^7} | {'PASS':^6} | Note"
     print(header)
-    print(f"  {'-' * 28}-+-{'-' * 7}-+-{'-' * 7}-+-{'-' * 8}-+-{'-' * 7}-+------")
+    print(f"  {'-' * 28}-+-{'-' * 7}-+-{'-' * 7}-+-{'-' * 8}-+-{'-' * 7}-+-{'-' * 6}-+------")
 
     # Sort by most mismatches first
     sorted_vars = sorted(
@@ -1184,15 +1255,18 @@ def print_cross_project_summary(
         c = stats.get("CLOSE", 0)
         x = stats.get("MISMATCH", 0)
         nd = stats.get("NOT_EXTRACTED", 0)
+        p = stats.get("PASS", 0)
 
         # Note: quick diagnosis
         note = ""
         if x == n_proj:
             note = "ALL wrong"
-        elif nd == n_proj:
-            note = "never extracted"
+        elif nd + p == n_proj:
+            note = "never extracted" if nd == n_proj else "no source"
         elif m + c == n_proj:
             note = _green("OK")
+        elif m + c + p == n_proj:
+            note = _green("OK (some pass)")
         elif x > 0 and nd > 0:
             note = f"{x} wrong, {nd} missing"
 
@@ -1200,8 +1274,9 @@ def print_cross_project_summary(
         c_str = _yellow(str(c)) if c else _dim("-")
         x_str = _red(str(x)) if x else _dim("-")
         nd_str = _dim(str(nd)) if nd else _dim("-")
+        p_str = _blue(str(p)) if p else _dim("-")
 
-        print(f"  {var_name:<28} | {m_str:^7} | {c_str:^7} | {x_str:^8} | {nd_str:^7} | {note}")
+        print(f"  {var_name:<28} | {m_str:^7} | {c_str:^7} | {x_str:^8} | {nd_str:^7} | {p_str:^6} | {note}")
 
     # Classification summary (only with --classify)
     if classify:
@@ -1364,7 +1439,7 @@ def main() -> None:
             comp_summary = _print_component_scorecard(diag.results)
         elif args.save:
             # Need component_summary for snapshot even without printing
-            comp_stats: dict[str, dict[str, int]] = defaultdict(lambda: {"match": 0, "close": 0, "mismatch": 0, "not_extracted": 0})
+            comp_stats: dict[str, dict[str, int]] = defaultdict(lambda: {"match": 0, "close": 0, "mismatch": 0, "not_extracted": 0, "pass": 0})
             for r in diag.results.values():
                 comp = r.get('component', 'unknown')
                 status = r['status'].lower()
@@ -1376,7 +1451,7 @@ def main() -> None:
                 comp_summary[comp] = {
                     "produced": produced, "match": s['match'], "close": s['close'],
                     "mismatch": s['mismatch'], "not_extracted": s['not_extracted'],
-                    "accuracy_pct": accuracy,
+                    "pass": s['pass'], "accuracy_pct": accuracy,
                 }
 
         # --save: build and save snapshot
