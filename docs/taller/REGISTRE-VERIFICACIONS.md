@@ -106,6 +106,15 @@ Permet confiar en els passos validats i enfocar investigacions en els que falten
 - **Test:** Implementar i comparar adjacents pre/post per Bell-Lloc
 - **Prioritat:** ALTA — afecta 22 MISMATCH
 
+### P05. Adjacents Bell-Lloc: "Carrer Antoni Bellet" no al sud geogràfic
+- **Context:** Coord validation ara funciona (geocode fallback), però adjacents
+  no canvien — el probe cardinal (dy=-1) no detecta el carrer
+- **Hipòtesis:** El carrer pot estar al sud-est/sud-oest (no directament al sud),
+  o Eva usa orientació relativa al carrer d'accés, no cardinals purs
+- **Test:** Verificar amb Google Maps l'orientació real de la parcel·la
+- **Possible fix:** LLM address cleaner (Haiku/Groq) per normalitzar adreces
+  abans del geocode — caldria testejar fiabilitat primer
+
 ### P04. Miner de noms de fitxer milloraria building_type i client_name
 - **Context:** Noms com "geotècnic Ampliació Albert Sans municipi Alcoletge"
   contenen building_type, client_name, municipality
