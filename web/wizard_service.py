@@ -273,7 +273,13 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
                 'source': 'plantilla generada',
             }
 
-    # Site condition: erosion observation sentence from slope data
+    # Site condition: erosion observation sentence
+    # Uses slope (ICGC) + adjacents (Cadastre) to determine qualifier.
+    # "Antropitzat" = the LAND itself is modified (paving, rubble, earthworks)
+    # — requires visual observation, NOT deducible from adjacents alone.
+    # "No pla" = significant slope (>10%).
+    # "Pla" = default when flat and no special condition observed.
+    # Spanish projects get a simpler fixed sentence.
     if not _get_val('site_condition'):
         lang = _get_project_language(merged)
         if lang == 'es':
@@ -282,27 +288,46 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
                 "de procesos de erosión relacionados con la escorrentía "
                 "hídrica superficial."
             )
+            source = 'computed (ES template)'
         else:
-            is_sloped = _get_val('is_sloped')
-            is_anthro = _get_val('is_anthropized')
-            sloped = is_sloped and str(is_sloped).lower() not in ('false', '0', '')
-            anthro = is_anthro and str(is_anthro).lower() not in ('false', '0', '')
-            if sloped and not anthro:
-                qualifier = "Es tracta d'un solar no antropitzat"
-            elif sloped:
-                qualifier = "Tot i no ser un solar pla"
-            elif anthro:
-                qualifier = "Degut a que es tracta d'un solar antropitzat"
+            slope_pct = _get_val('slope_percent')
+            try:
+                slope_val = float(slope_pct) if slope_pct else 0.0
+            except (ValueError, TypeError):
+                slope_val = 0.0
+
+            is_anthro_entry = merged.get('is_anthropized', {})
+            anthro_source = is_anthro_entry.get('source', '') if isinstance(is_anthro_entry, dict) else ''
+
+            # Only trust is_anthropized if it comes from a REAL source (not default)
+            if 'default' in anthro_source:
+                # Don't use default — determine from slope only
+                if slope_val > 10:
+                    qualifier = "Tot i no ser un solar pla"
+                else:
+                    qualifier = "Com que es tracta d'un solar pla"
             else:
-                qualifier = "Com que es tracta d'un solar pla"
+                # We have real anthropization data (from ortho, user, etc.)
+                is_anthro = _get_val('is_anthropized')
+                anthro = is_anthro and str(is_anthro).lower() not in ('false', '0', '')
+                if slope_val > 10 and not anthro:
+                    qualifier = "Es tracta d'un solar no antropitzat"
+                elif slope_val > 10:
+                    qualifier = "Tot i no ser un solar pla"
+                elif anthro:
+                    qualifier = "Degut a que es tracta d'un solar antropitzat"
+                else:
+                    qualifier = "Com que es tracta d'un solar pla"
+
             site_cond = (
                 f"{qualifier}, no s'han detectat marques i/o indicis de processos "
                 f"d'erosió relacionats amb l'escolament hídric superficial, "
                 f"ni es preveu que apareguin."
             )
+            source = f'computed (slope {slope_val:.0f}%)'
         merged['site_condition'] = {
             'value': site_cond,
-            'source': 'computed (ICGC slope)',
+            'source': source,
         }
 
 
