@@ -1027,13 +1027,13 @@ def _compute_mapping_prefills(
                     if n30 is not None:
                         _set('spt_n30', str(n30), 'sondeig vision')
 
-                    # Depth range: absolute values, formatted as "-1.00 a 1.60"
+                    # Depth range: absolute values, formatted as "-1.00 a -1.60"
                     depth_from = spt.get('depth_from_m')
                     depth_to = spt.get('depth_to_m')
                     if depth_from is not None and depth_to is not None:
                         df = abs(float(depth_from))
                         dt = abs(float(depth_to))
-                        _set('spt_depth_range', f"-{df:.2f} a {dt:.2f}", 'sondeig vision')
+                        _set('spt_depth_range', f"-{df:.2f} a -{dt:.2f}", 'sondeig vision')
 
                     # Lithology: find the sondeig layer at SPT depth
                     lithology = ''

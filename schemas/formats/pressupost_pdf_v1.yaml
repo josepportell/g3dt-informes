@@ -26,6 +26,6 @@ label_mappings:
     confidence: 0.85
 
   # Building type
-  - labels: ["TIPUS EDIFICACIÓ", "TIPO EDIFICACIÓN", "OBRA"]
+  - labels: ["TIPUS EDIFICACIÓ", "TIPO EDIFICACIÓN"]
     concept_id: building_type
     confidence: 0.85
