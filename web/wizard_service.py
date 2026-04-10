@@ -155,6 +155,72 @@ def _fill_missing_adjacents(merged: dict[str, Any], project_path: Path) -> None:
         logger.warning(f"Failed to fill missing adjacents: {e}")
 
 
+def _crossref_lab_from_sondeig(merged: dict[str, Any], project_path: Path) -> None:
+    """Deduce lab_location and lab_sample_id by cross-referencing sondeig SPT depths.
+
+    When the lab PDF lacks explicit location/sample info (e.g. Castellar's GTL
+    says "Tipus de mostra: Alterada" without SPT/location), we can match lab_depth
+    against sondeig SPT depth ranges to infer which test point the sample came from.
+    """
+    import re
+
+    def _get_val(key: str) -> str:
+        entry = merged.get(key)
+        if entry is None:
+            return ''
+        if isinstance(entry, dict):
+            return str(entry.get('value', '') or '')
+        return str(entry)
+
+    # Only run if lab_location is missing and we have a lab_depth to match
+    if _get_val('lab_location') or not _get_val('lab_depth'):
+        return
+
+    lab_depth_str = _get_val('lab_depth')  # e.g. "-1.00 a -1.20 m"
+
+    # Parse lab depth: extract the two numeric values
+    depth_nums = re.findall(r'(\d+[.,]\d+)', lab_depth_str)
+    if len(depth_nums) < 2:
+        return
+    lab_from = float(depth_nums[0].replace(',', '.'))
+    lab_to = float(depth_nums[1].replace(',', '.'))
+
+    # Load merged sondeig data (annex + field sheet)
+    try:
+        from automation.vision_normalizer import load_sondeig_merged
+        sondeig = load_sondeig_merged(project_path / 'validation')
+    except Exception as exc:
+        logger.debug("Lab cross-ref: could not load sondeig: %s", exc)
+        return
+
+    if not sondeig:
+        return
+
+    for test in sondeig.get('sondeig_tests', []):
+        test_id = test.get('test_id', '')  # e.g. "S-1"
+        for spt in test.get('spt_results', []):
+            spt_id = spt.get('test_id', '')  # e.g. "SPT-1"
+            spt_from = spt.get('depth_from_m')
+            spt_to = spt.get('depth_to_m')
+            if spt_from is None or spt_to is None:
+                continue
+
+            # Match if depths overlap within 0.1m tolerance
+            if abs(float(spt_from) - lab_from) <= 0.1 and abs(float(spt_to) - lab_to) <= 0.1:
+                source = f'cross-ref: sondeig {test_id} SPT depth matches lab'
+                if not _get_val('lab_location') and test_id:
+                    merged['lab_location'] = {'value': test_id, 'source': source}
+                if not _get_val('lab_sample_id') and spt_id:
+                    merged['lab_sample_id'] = {'value': spt_id, 'source': source}
+                logger.info(
+                    "Lab cross-ref: deduced location=%s sample=%s from SPT depth %.1f-%.1f",
+                    test_id, spt_id, spt_from, spt_to,
+                )
+                return  # First match wins
+
+    logger.debug("Lab cross-ref: no SPT depth match for lab_depth='%s'", lab_depth_str)
+
+
 def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
     """Generate site/access descriptions from merged prefill data.
 
@@ -1297,6 +1363,9 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
         adj_fmt = format_all_adjacents(adj_raw, municipality_for_fmt or None)
         for key, val in adj_fmt.items():
             merged[key] = {'value': val, 'source': 'formatted from Cadastre'}
+
+    # Cross-source: deduce lab_location/lab_sample_id from sondeig SPT depths
+    _crossref_lab_from_sondeig(merged, project_path)
 
     # Generate template prefills (access/site description) AFTER merge,
     # because they depend on adjacents data from auto_extract.
