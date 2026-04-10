@@ -170,9 +170,9 @@ def _extract_sample_info(text: str) -> dict[str, str]:
     """
     info: dict[str, str] = {}
 
-    # Sample ID: "SPT1 S1" anywhere in text (lab PDFs have jumbled column order)
-    # Also try "Mostra:\nSPT-1" or "Mostra: M-1"
-    spt_combo = re.search(r'\b(SPT)(\d+)\s+(S)(\d+)\b', text)
+    # Sample ID: "SPT1 S1" or "SPT1 P3" anywhere in text (lab PDFs have jumbled column order)
+    # S = sondeig location, P = penetrometer location
+    spt_combo = re.search(r'\b(SPT)(\d+)\s+([SP])(\d+)\b', text)
     if spt_combo:
         info['sample_id'] = f"{spt_combo.group(1)}-{spt_combo.group(2)}"
         info['location'] = f"{spt_combo.group(3)}-{spt_combo.group(4)}"
@@ -183,8 +183,16 @@ def _extract_sample_info(text: str) -> dict[str, str]:
         )
         if sample_match:
             info['sample_id'] = sample_match.group(1).strip()
+        # Fallback for non-SPT samples: "Tipus de mostra: Alterada" → sample type
+        if 'sample_id' not in info:
+            type_match = re.search(
+                r'(?i)Tipus\s+de\s+mostra\s*:\s*\n?\s*(SPT|Alterada|Inalt[e·]rada|Inalterada)',
+                text,
+            )
+            if type_match:
+                info['sample_type'] = type_match.group(1).strip()
 
-    # Location fallback: S-1, DPSH-1, etc. (only if not already found)
+    # Location fallback: S-1, DPSH-1, P-1, etc. (only if not already found)
     if 'location' not in info:
         loc_match = re.search(r'\b(S-\d+|DPSH-\d+|P-\d+)\b', text)
         if loc_match:
