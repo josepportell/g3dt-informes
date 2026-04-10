@@ -2,10 +2,10 @@
 SmartScan Tier 3: Vision classification (Groq Llama 4 Scout + Claude fallback).
 
 Last resort for files that escape Tier 1 (filename) and Tier 2
-(fingerprint). Sends the first page of a PDF or an image directly
-to a multimodal LLM for classification.
+(fingerprint). Sends all pages of a PDF (up to MAX_PAGES_TIER3,
+default 10) or an image directly to a multimodal LLM for classification.
 
-Supports both PDFs (rendered to image) and images (.jpg/.jpeg/.png).
+Supports both PDFs (rendered to JPEG images) and images (.jpg/.jpeg/.png).
 Uses Groq Llama 4 Scout by default (~$0.003/image), falls back to
 Claude if Groq unavailable.
 """
@@ -154,8 +154,8 @@ def _classify_with_groq(
     abs_path: Path,
 ) -> FileClassification | None:
     """Classify a file using Groq Llama 4 Scout vision."""
-    img_b64, media_type = _get_image_b64(abs_path)
-    if not img_b64:
+    images = _get_images_b64(abs_path)
+    if not images:
         return None
 
     try:
@@ -168,18 +168,21 @@ def _classify_with_groq(
     if not api_key:
         return None
 
+    content: list[dict] = [{"type": "text", "text": VISION_CLASSIFICATION_PROMPT}]
+    for img_b64, media_type in images:
+        content.append({
+            "type": "image_url",
+            "image_url": {"url": f"data:{media_type};base64,{img_b64}"},
+        })
+
+    logger.debug("Groq Tier 3: sending %d page(s) for %s", len(images), rel_path)
+
     payload = {
         "model": config.VISION_MODEL_GROQ,
         "messages": [
             {
                 "role": "user",
-                "content": [
-                    {"type": "text", "text": VISION_CLASSIFICATION_PROMPT},
-                    {
-                        "type": "image_url",
-                        "image_url": {"url": f"data:{media_type};base64,{img_b64}"},
-                    },
-                ],
+                "content": content,
             },
         ],
         "temperature": 0.0,
@@ -189,7 +192,7 @@ def _classify_with_groq(
 
     t0 = time.monotonic()
     try:
-        with httpx.Client(timeout=30.0) as client:
+        with httpx.Client(timeout=90.0) as client:
             resp = client.post(
                 GROQ_API_URL,
                 json=payload,
@@ -236,8 +239,8 @@ def _classify_with_claude(
     abs_path: Path,
 ) -> FileClassification | None:
     """Classify a file using Claude vision (fallback)."""
-    img_b64, media_type = _get_image_b64(abs_path)
-    if not img_b64:
+    images = _get_images_b64(abs_path)
+    if not images:
         return None
 
     try:
@@ -246,26 +249,30 @@ def _classify_with_claude(
     except Exception:
         return None
 
+    content: list[dict] = []
+    for img_b64, media_type in images:
+        content.append({
+            "type": "image",
+            "source": {
+                "type": "base64",
+                "media_type": media_type,
+                "data": img_b64,
+            },
+        })
+    content.append({
+        "type": "text",
+        "text": VISION_CLASSIFICATION_PROMPT,
+    })
+
+    logger.debug("Claude Tier 3: sending %d page(s) for %s", len(images), rel_path)
+
     try:
         response = client.messages.create(
             model=config.VISION_MODEL_ANTHROPIC,
             max_tokens=256,
             messages=[{
                 "role": "user",
-                "content": [
-                    {
-                        "type": "image",
-                        "source": {
-                            "type": "base64",
-                            "media_type": media_type,
-                            "data": img_b64,
-                        },
-                    },
-                    {
-                        "type": "text",
-                        "text": VISION_CLASSIFICATION_PROMPT,
-                    },
-                ],
+                "content": content,
             }],
         )
 
@@ -288,14 +295,28 @@ def _classify_with_claude(
 # Shared helpers
 # ──────────────────────────────────────────────────────────────
 
-def _get_image_b64(abs_path: Path) -> tuple[str | None, str]:
-    """Get base64-encoded image from a file (PDF or image).
+def _get_images_b64(
+    abs_path: Path,
+    max_pages: int | None = None,
+) -> list[tuple[str, str]]:
+    """Get base64-encoded images from a file (PDF or image).
 
-    For PDFs: renders first page at 150 DPI.
-    For images: reads directly.
+    For PDFs: renders all pages (up to *max_pages*) at 150 DPI as JPEG.
+              Downscales to 100 DPI / quality 75 if a page exceeds 4 MB.
+    For images: reads the file directly (single-element list).
 
-    Returns (base64_string, media_type) or (None, "") on failure.
+    Args:
+        abs_path: Absolute path to the file.
+        max_pages: Cap on PDF pages to render.  Defaults to
+                   ``config.MAX_PAGES_TIER3`` (env ``G3DT_TIER3_MAX_PAGES``).
+
+    Returns:
+        List of (base64_string, media_type) tuples.
+        Empty list on failure.
     """
+    if max_pages is None:
+        max_pages = config.MAX_PAGES_TIER3
+
     ext = abs_path.suffix.lower()
 
     if ext in _IMAGE_EXTENSIONS:
@@ -303,10 +324,10 @@ def _get_image_b64(abs_path: Path) -> tuple[str | None, str]:
             img_bytes = abs_path.read_bytes()
             img_b64 = base64.b64encode(img_bytes).decode('utf-8')
             media_type = 'image/png' if ext == '.png' else 'image/jpeg'
-            return img_b64, media_type
+            return [(img_b64, media_type)]
         except Exception as e:
             logger.warning("Cannot read image %s: %s", abs_path.name, e)
-            return None, ""
+            return []
 
     if ext == '.pdf':
         try:
@@ -314,18 +335,60 @@ def _get_image_b64(abs_path: Path) -> tuple[str | None, str]:
             doc = fitz.open(str(abs_path))
             if len(doc) == 0:
                 doc.close()
-                return None, ""
-            page = doc[0]
-            pix = page.get_pixmap(dpi=150)
-            img_bytes = pix.tobytes("png")
-            doc.close()
-            img_b64 = base64.b64encode(img_bytes).decode('utf-8')
-            return img_b64, "image/png"
+                return []
+
+            total_pages = len(doc)
+            pages_to_render = min(total_pages, max_pages)
+            images: list[tuple[str, str]] = []
+            cumulative_bytes = 0
+            try:
+                for page_num in range(pages_to_render):
+                    page = doc[page_num]
+                    zoom = 150 / 72
+                    mat = fitz.Matrix(zoom, zoom)
+                    pix = page.get_pixmap(matrix=mat)
+                    img_bytes = pix.tobytes(output="jpeg", jpg_quality=85)
+
+                    # Downscale if over 4 MB (Groq per-image limit)
+                    if len(img_bytes) > 4 * 1024 * 1024:
+                        zoom = 100 / 72
+                        mat = fitz.Matrix(zoom, zoom)
+                        pix = page.get_pixmap(matrix=mat)
+                        img_bytes = pix.tobytes(output="jpeg", jpg_quality=75)
+
+                    # Skip page if still too large after downscale
+                    if len(img_bytes) > 4 * 1024 * 1024:
+                        logger.warning(
+                            "Page %d of %s still >4MB after downscale (%d bytes), skipping",
+                            page_num + 1, abs_path.name, len(img_bytes),
+                        )
+                        continue
+
+                    # Stop if cumulative payload would exceed 18 MB
+                    b64_len = (len(img_bytes) * 4 + 2) // 3  # base64 overhead
+                    if cumulative_bytes + b64_len > 18 * 1024 * 1024:
+                        logger.warning(
+                            "Cumulative payload >18MB at page %d of %s, stopping",
+                            page_num + 1, abs_path.name,
+                        )
+                        break
+
+                    img_b64 = base64.b64encode(img_bytes).decode('utf-8')
+                    images.append((img_b64, "image/jpeg"))
+                    cumulative_bytes += len(img_b64)
+            finally:
+                doc.close()
+
+            logger.debug(
+                "Rendered %d/%d pages from %s",
+                len(images), total_pages, abs_path.name,
+            )
+            return images
         except Exception as e:
             logger.warning("Cannot render PDF %s: %s", abs_path.name, e)
-            return None, ""
+            return []
 
-    return None, ""
+    return []
 
 
 def _parse_vision_result(rel_path: str, result: dict) -> FileClassification | None:

@@ -41,6 +41,8 @@ __all__ = [
     "G3DT_USE_GROQ",
     "G3DT_NO_CACHE",
     "G3DT_PROJECTS_DIR",
+    # Tier 3 vision
+    "MAX_PAGES_TIER3",
     # Functions
     "has_provider",
     "available_vision_backends",
@@ -151,6 +153,7 @@ G3DT_NO_CACHE: bool = _env_bool("G3DT_NO_CACHE", False)
 G3DT_PROJECTS_DIR: str = _env(
     "G3DT_PROJECTS_DIR", str(_PROJECT_ROOT / "reference-material")
 )
+MAX_PAGES_TIER3: int = max(1, int(_env("G3DT_TIER3_MAX_PAGES", "10")))
 
 
 # ---------------------------------------------------------------------------
