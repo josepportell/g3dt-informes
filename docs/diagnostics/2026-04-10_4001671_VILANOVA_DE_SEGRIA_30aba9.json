@@ -1,0 +1,920 @@
+{
+  "schema_version": "1.0",
+  "metadata": {
+    "timestamp": "2026-04-10T21:26:00+0200",
+    "run_id": "30aba9",
+    "project": "4001671 VILANOVA DE SEGRIA",
+    "models": {
+      "openai_vision": "gpt-4.1-mini",
+      "anthropic_text": "claude-sonnet-4-6",
+      "groq_text": "qwen/qwen3-32b",
+      "groq_vision": "meta-llama/llama-4-scout-17b-16e-instruct"
+    },
+    "fallback_order": {
+      "vision": [
+        "openai",
+        "anthropic",
+        "groq"
+      ],
+      "probe": [
+        "groq",
+        "openai",
+        "anthropic"
+      ]
+    },
+    "phases_completed": [
+      "SmartScan: 16 rols detectats",
+      "Contingut: 3 troballes (billing, contact_info, field_prep)",
+      "Historia geològica: 'Lleida (via comarca)' (tier 3, score 1.00)",
+      "FileMiner: 58 senyals, 7 variables, 7 nous prefills",
+      "Groq Deep Mine (qwen3-32b): 22 senyals, 7 nous prefills, 0 calls, 57 cache hits, 0 tokens (~$0.0000)",
+      "ConceptScout: 7 concepts mapped",
+      "DPSH: 3 assaigs, prof. max 3.8m"
+    ],
+    "phases_skipped": [
+      {
+        "step": "Pressupost PDF",
+        "reason": "fitxer no trobat"
+      },
+      {
+        "step": "Dates camp",
+        "reason": "cap data trobada als PDFs"
+      },
+      {
+        "step": "Lab PDF",
+        "reason": "fitxer no trobat"
+      },
+      {
+        "step": "Geocodificació",
+        "reason": "sense adreça disponible"
+      },
+      {
+        "step": "Fase 3: APIs HTTP",
+        "reason": "sense coordenades UTM"
+      }
+    ],
+    "vision_status": {
+      "planol": true,
+      "sondeig": false,
+      "dpsh": true
+    },
+    "duration_seconds": 24.6,
+    "tolerance_pct": 5.0
+  },
+  "summary": {
+    "total_vars": 40,
+    "match": 3,
+    "close": 6,
+    "mismatch": 11,
+    "not_extracted": 7,
+    "pass": 13,
+    "match_close_pct": 45.0
+  },
+  "tier_summary": {
+    "A": {
+      "total": 35,
+      "match": 3,
+      "close": 4,
+      "mismatch": 8,
+      "not_extracted": 7,
+      "pass": 13
+    },
+    "B": {
+      "total": 3,
+      "match": 0,
+      "close": 2,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "pass": 0
+    },
+    "C": {
+      "total": 2,
+      "match": 0,
+      "close": 0,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "pass": 0
+    }
+  },
+  "component_summary": {
+    "computed": {
+      "produced": 9,
+      "match": 1,
+      "close": 1,
+      "mismatch": 7,
+      "not_extracted": 0,
+      "accuracy_pct": 22.2
+    },
+    "fileminer_regex": {
+      "produced": 1,
+      "match": 0,
+      "close": 1,
+      "mismatch": 0,
+      "not_extracted": 0,
+      "accuracy_pct": 100.0
+    },
+    "groq_llm": {
+      "produced": 1,
+      "match": 0,
+      "close": 1,
+      "mismatch": 0,
+      "not_extracted": 0,
+      "accuracy_pct": 100.0
+    },
+    "llm_synthesis": {
+      "produced": 1,
+      "match": 0,
+      "close": 1,
+      "mismatch": 0,
+      "not_extracted": 0,
+      "accuracy_pct": 100.0
+    },
+    "template_generated": {
+      "produced": 1,
+      "match": 0,
+      "close": 0,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "accuracy_pct": 0.0
+    },
+    "vision_planol": {
+      "produced": 6,
+      "match": 2,
+      "close": 1,
+      "mismatch": 3,
+      "not_extracted": 0,
+      "accuracy_pct": 50.0
+    }
+  },
+  "variables": {
+    "adjacent_east_fmt": {
+      "eva_name": "adjacent_east_fmt",
+      "eva_value": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio.",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "adjacent_north_fmt": {
+      "eva_name": "adjacent_north_fmt",
+      "eva_value": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio.",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "adjacent_south_fmt": {
+      "eva_name": "adjacent_south_fmt",
+      "eva_value": "Por la parte sur, con una parcela, sin edificaciones, alguna pavimentación, vegetación herbácea de pequeña altura y algún árbol.",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "adjacent_west_fmt": {
+      "eva_name": "adjacent_west_fmt",
+      "eva_value": "Y finalmente, Por la parte oeste con la calle STA. GEMMA.",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "architect_name": {
+      "eva_name": "architect_name_upper",
+      "eva_value": "JUAN JOSÉ TORRES POVEDANO",
+      "pipeline_value": "JORDI CARNER ROCAR",
+      "source": "planol 1.0.pdf",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [
+        {
+          "rank": 1,
+          "value": "jordi carner",
+          "source_file": "26.0050/1.0.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 45,
+          "confidence": 0.95,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null
+    },
+    "building_structure_desc": {
+      "eva_name": "building_structure_desc",
+      "eva_value": "sin nivel de sótano",
+      "pipeline_value": "en planta baixa",
+      "source": "computed",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "building_type": {
+      "eva_name": "building_type_lower",
+      "eva_value": "una vivienda unifamiliar aislada",
+      "pipeline_value": "un habitatge unifamiliar aïllat",
+      "source": "planol 1.0.pdf",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [
+        {
+          "rank": 1,
+          "value": "CONSTR HAB UNIF",
+          "source_file": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+          "source_type": "comanda_lab_excel",
+          "component": "fileminer_regex",
+          "extraction_method": "label_adjacent",
+          "priority": 50,
+          "confidence": 0.9,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null
+    },
+    "client_name": {
+      "eva_name": "client",
+      "eva_value": "GRUPO CUENCA GUERRERO, S.L",
+      "pipeline_value": "GRUPO CUENCA GUERRERO",
+      "source": "planol 1.0.pdf",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "cte_edificacio": {
+      "eva_name": "cte_edificacio",
+      "eva_value": "C-0",
+      "pipeline_value": "C-1",
+      "source": "CTE DB SE-C (habitatge unifamiliar aïllat)",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "cte_sol": {
+      "eva_name": "cte_sol",
+      "eva_value": "T-1",
+      "pipeline_value": "T-2",
+      "source": "CTE DB SE-C (N20=14)",
+      "component": "computed",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "field_work_dates_text": {
+      "eva_name": "data_camp_text",
+      "eva_value": "El día 19 de febrero de 2026, se visitó la obra para:",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "expedient": {
+      "eva_name": "expedient",
+      "eva_value": "Expediente Núm.: 4001671",
+      "pipeline_value": "4001671",
+      "source": "groq_llm:pl situació.pdf",
+      "component": "groq_llm",
+      "tier": "A",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": true,
+      "correct_alternative_desc": "signal #1 (pl situació.pdf, pri=42)",
+      "signals": [
+        {
+          "rank": 1,
+          "value": "4001671",
+          "source_file": "pl situació.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 1.0,
+          "matches_eva": "CLOSE"
+        },
+        {
+          "rank": 2,
+          "value": "4001671",
+          "source_file": "tall.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.98,
+          "matches_eva": "CLOSE"
+        },
+        {
+          "rank": 3,
+          "value": "E2557",
+          "source_file": "26.0050/1.0.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.95,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 4,
+          "value": "E2557",
+          "source_file": "validation/msg_attachments/PRESSUPOST LLEIDA/1.0.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.95,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 5,
+          "value": "4001679",
+          "source_file": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.8,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 6,
+          "value": "4001679",
+          "source_file": "validation/msg_attachments/RE_ PRESSUPOST LLEIDA/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.8,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null
+    },
+    "lab_depth": {
+      "eva_name": "lab_depth",
+      "eva_value": "Profundidad: -1.00 a -1.60 m",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_field_company": {
+      "eva_name": "lab_field_company",
+      "eva_value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_field_description": {
+      "eva_name": "lab_field_description",
+      "eva_value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_location": {
+      "eva_name": "lab_location",
+      "eva_value": "Punto:  P-3",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_sample_id": {
+      "eva_name": "lab_sample_id",
+      "eva_value": "Muestra: SPT-1",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_testing_company": {
+      "eva_name": "lab_testing_company",
+      "eva_value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_testing_description": {
+      "eva_name": "lab_testing_description",
+      "eva_value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_tests_text": {
+      "eva_name": "lab_tests_text",
+      "eva_value": "Determinación del contenido en ion sulfato en suelos UNE 83963 / 08",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "location_sentence": {
+      "eva_name": "location_sentence",
+      "eva_value": "en la Calle STA. GEMMA nº 4, URB. LA SERRA del municipio de VILANOVA DE SEGRIÀ",
+      "pipeline_value": "al Carrer Santa Gemma n4 de Vilanova del Segrià",
+      "source": "llm_synthesis",
+      "component": "llm_synthesis",
+      "tier": "B",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "municipality": {
+      "eva_name": "municipality",
+      "eva_value": "En la zona en estudio, en la población de VILANOVA DE SEGRIÀ, se establece una aceleración sísmica básica de:",
+      "pipeline_value": "VILANOVA DE SEGRIÀ",
+      "source": "fileminer:comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+      "component": "fileminer_regex",
+      "tier": "A",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": true,
+      "correct_alternative_desc": "signal #1 (comanda laboratori_4001671_VIL, pri=50)",
+      "signals": [
+        {
+          "rank": 1,
+          "value": "VILANOVA DE SEGRIÀ",
+          "source_file": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+          "source_type": "comanda_lab_excel",
+          "component": "fileminer_regex",
+          "extraction_method": "label_adjacent",
+          "priority": 50,
+          "confidence": 0.9,
+          "matches_eva": "CLOSE"
+        }
+      ],
+      "calc_trace": null
+    },
+    "num_dpsh_tests": {
+      "eva_name": "num_dpsh_tests",
+      "eva_value": "3 ensayos de penetración dinámica DPSH (ver registro de los ensayos mecánicos).",
+      "pipeline_value": "3 assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\").",
+      "source": "computed",
+      "component": "computed",
+      "tier": "A",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "num_floors": {
+      "eva_name": "plantes",
+      "eva_value": "Pb",
+      "pipeline_value": "Pb",
+      "source": "planol 1.0.pdf",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "qa_value": {
+      "eva_name": "qa_value",
+      "eva_value": "2.50 Kg/cm2 con un factor de seguridad incluido de F=3",
+      "pipeline_value": "1.00",
+      "source": "Terzaghi-Peck",
+      "component": "computed",
+      "tier": "C",
+      "status": "MISMATCH",
+      "classification": "CALC",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": "Nb=?, B=1.0[DEF], Df=0.8[DEF], c=?, phi=?, cap=3.0"
+    },
+    "radon_zone": {
+      "eva_name": "radon_zone",
+      "eva_value": "1",
+      "pipeline_value": "0",
+      "source": "CTE DB HS6 (Vilanova del Segrià)",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "seismic_ab_text": {
+      "eva_name": "seismic_ab_text",
+      "eva_value": "AB < 0,04 g (siento g el valor de la gravedad)",
+      "pipeline_value": "0,04",
+      "source": "NCSE-02 (Vilanova del Segrià)",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "settlement": {
+      "eva_name": "settlement",
+      "eva_value": "Los asientos máximos previstos para la carga recomendada anteriormente serán menospreciables o inferiores a 1.0 cm.",
+      "pipeline_value": "1.20",
+      "source": "Schmertmann",
+      "component": "computed",
+      "tier": "C",
+      "status": "MISMATCH",
+      "classification": "CALC",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": "Es=41, qa=1.00"
+    },
+    "site_condition": {
+      "eva_name": "site_condition",
+      "eva_value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+      "pipeline_value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+      "source": "computed (slope 0%)",
+      "component": "unknown",
+      "tier": "B",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "site_description": {
+      "eva_name": "site_description",
+      "eva_value": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la calle se encuentra sin ningún tipo de valla o muro, se encuentra expuesta directamente a la calle.\nLa zona de entrada se encuentra y el patio, se encuentran sin pavimentar y con vegetación de tamaño pequeño. A excepción, del extremo Oeste, se encuentra una franja pavimentada y con vallado.",
+      "pipeline_value": "parcel·la de forma rectangular amb superfície de 430 m2. El terreny es presenta antropitzat",
+      "source": "plantilla generada",
+      "component": "template_generated",
+      "tier": "B",
+      "status": "MISMATCH",
+      "classification": "NARRATIVE",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "spt_depth_range": {
+      "eva_name": "spt_depth_range",
+      "eva_value": "-0.80 a -1.40",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "spt_lithology": {
+      "eva_name": "spt_lithology",
+      "eva_value": "Arcilla limosa y arenosa con algunas gravas",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "spt_location": {
+      "eva_name": "spt_location",
+      "eva_value": "P-1",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "spt_n30": {
+      "eva_name": "spt_n30",
+      "eva_value": "10",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "spt_test_id": {
+      "eva_name": "spt_test_id",
+      "eva_value": "SPT-1",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "sulfate_baumann": {
+      "eva_name": "sulfate_baumann",
+      "eva_value": "---",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "sulfate_level_name": {
+      "eva_name": "sulfate_level_name",
+      "eva_value": "1er nivel",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "superficie_construida_m2": {
+      "eva_name": "superficie_construida",
+      "eva_value": "406",
+      "pipeline_value": "137",
+      "source": "planol 1.0.pdf",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "superficie_parcela_m2": {
+      "eva_name": "superficie_parcela",
+      "eva_value": "100",
+      "pipeline_value": "430.0",
+      "source": "planol 1.0.pdf",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "table_dpsh_range": {
+      "eva_name": "table_dpsh_range",
+      "eva_value": "Tabla 3 y 4. Resumen de los ensayos in situ realizados.",
+      "pipeline_value": "3, 4 i 5",
+      "source": "computed",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    }
+  },
+  "format_learning": [
+    {
+      "file_path": "4001671_DPSH.xls",
+      "role": "dpsh_excel",
+      "is_new": true,
+      "format_id": null,
+      "extraction_coverage": 0.0,
+      "expected_fields": [
+        "architect_name",
+        "client_name",
+        "expedient",
+        "field_date",
+        "municipality",
+        "street_address"
+      ],
+      "extracted_fields": [],
+      "missing_fields": [
+        "architect_name",
+        "client_name",
+        "expedient",
+        "field_date",
+        "municipality",
+        "street_address"
+      ],
+      "proposed_mappings": [],
+      "raw_extractions": []
+    },
+    {
+      "file_path": "1.0.pdf",
+      "role": "architect_plan",
+      "is_new": true,
+      "format_id": null,
+      "extraction_coverage": 0.2,
+      "expected_fields": [
+        "architect_company",
+        "architect_name",
+        "building_height_m",
+        "building_type",
+        "client_name",
+        "municipality",
+        "num_floors",
+        "street_address",
+        "superficie_construida",
+        "superficie_parcela"
+      ],
+      "extracted_fields": [
+        "architect_company",
+        "architect_name"
+      ],
+      "missing_fields": [
+        "building_height_m",
+        "building_type",
+        "client_name",
+        "municipality",
+        "num_floors",
+        "street_address",
+        "superficie_construida",
+        "superficie_parcela"
+      ],
+      "proposed_mappings": [],
+      "raw_extractions": [
+        {
+          "label": "client_address",
+          "value": "C. Santa Gemma, 4 Urb. La Serra",
+          "maps_to": "client_address",
+          "concept_id": null,
+          "confidence": 0.95
+        },
+        {
+          "label": "architect_name",
+          "value": "jordi carner",
+          "maps_to": "architect_name",
+          "concept_id": null,
+          "confidence": 0.95
+        },
+        {
+          "label": "architect_company",
+          "value": "rocar",
+          "maps_to": "architect_company",
+          "concept_id": null,
+          "confidence": 0.95
+        },
+        {
+          "label": "province",
+          "value": "Lleida",
+          "maps_to": "province",
+          "concept_id": null,
+          "confidence": 0.85
+        },
+        {
+          "label": "expedient",
+          "value": "E2557",
+          "maps_to": "expedient",
+          "concept_id": null,
+          "confidence": 0.95
+        },
+        {
+          "label": "report_date",
+          "value": "24.01.2026",
+          "maps_to": "report_date",
+          "concept_id": null,
+          "confidence": 0.95
+        }
+      ]
+    }
+  ]
+}
