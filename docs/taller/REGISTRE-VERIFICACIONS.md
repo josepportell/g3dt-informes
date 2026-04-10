@@ -112,16 +112,43 @@ Permet confiar en els passos validats i enfocar investigacions en els que falten
 - **Test:** Implementar regex miner per noms i mesurar noves senyals
 - **Prioritat:** MITJA
 
+### V13. Post-fixes: 37.7% → 57.0% (+19.3pp), 49 millores, 6 regressions
+- **Evidència:** Diagnostic 2026-04-10 amb `--llm-judge` vs baseline string matching
+- **Detall:** 87 match + 31 close + 89 mismatch + 74 NE (vs 58+20+129+74 baseline)
+- **Per projecte:** Linyola +35pp, Castellar +29pp, Alcoletge +27pp, Bell-Lloc +12pp
+- **Snapshots:** `docs/diagnostics/2026-04-10_CROSS_b4a024.json` vs `_8f0053.json`
+
+### V14. lab_* amb LLM judge: 7/8 variables al 100% accuracy (quan s'extreuen)
+- **Evidència:** lab_depth, lab_field_*, lab_testing_*, lab_location, lab_sample_id → 100%
+- **Excepció:** lab_tests_text → 0% (4 MISMATCH, 3 NE) — única lab variable que falla
+- **Problema real:** Cobertura (NE), no qualitat — 3-6 projectes no tenen GTL report
+
+### V15. vision_sondeig: metadades robustes, contingut feble
+- **Evidència:** spt_location 100%, spt_test_id 100% vs spt_lithology 0%, spt_depth_range 33%, spt_n30 50%
+- **Patró:** Vision llegeix bé identificadors (on, quin test) però falla en valors de camp
+  (material, profunditat, N30) — necessita investigació del prompt i normalitzador
+
+### V16. 6 regressions explicades: 4 correctes (judge estricte), 2 per F2
+- **Evidència:** Comparació manual Eva vs Pipeline per les 6 variables
+- **4 correctes:** sulfate_baumann "---"="---" (no informatiu), seismic_ab "0,04" vs frase sencera
+  (falta context) → judge té raó, string matching era massa lax
+- **2 per F2:** Anciles building_type falta "unifamiliares" (vision < synthesis en detall),
+  Rubí num_floors "Pb" vs "PB + Porxo" (vision no captura "Porxo")
+- **Conclusió:** Judge és més precís. F2 sacrifica detall per traçabilitat — acceptable
+
 ---
 
-## Accions en curs
+## Accions
 
 | # | Acció | Estat | Referència |
 |---|---|---|---|
-| F1 | Integrar LLM judge a diagnostic_trace.py | EN CURS | V10 |
-| F2 | _set() respecta source priority | EN CURS | V02 |
-| F3 | Probe adjacents amb geometria WFS real | EN CURS | V07 |
+| F1 | Integrar LLM judge a diagnostic_trace.py | **FET** (commit 8156319) | V10 |
+| F2 | _set() respecta source priority | **FET** (commit 8156319) | V02 |
+| F3 | Probe adjacents amb bounding box | **FET** (commit 8156319) | V07 |
 | F4 | Treure "OBRA" de pressupost_pdf_v1.yaml | PENDENT | V03 |
 | F5 | Completar format schemas (lab_*, building) | PENDENT | V04 |
 | F6 | Miner de noms de fitxer | PENDENT | V06 |
 | F7 | Coma al formatter west | PENDENT | V09 |
+| F8 | Validar COORDENADES.txt vs parcel·la | PENDENT | V12 |
+| F9 | Traçar vision_sondeig (spt_n30, lithology, depth) | PENDENT | V15 |
+| F10 | Traçar lab_tests_text | PENDENT | V14 |
