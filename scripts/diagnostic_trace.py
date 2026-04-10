@@ -30,7 +30,10 @@ from typing import Any, NamedTuple
 sys.path.insert(0, str(Path(__file__).parent))
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from compare_benchmarks import TEXT_NORMALIZERS, VARIABLE_TIER, compare_numeric, compare_text, parse_numeric
+from compare_benchmarks import (
+    TEXT_NORMALIZERS, VARIABLE_TIER, compare_numeric, compare_text, parse_numeric,
+    _load_env, _load_llm_cache, _save_llm_cache, compare_text_llm,
+)
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -304,8 +307,13 @@ def _format_calc_trace(concept_id: str, values: dict[str, Any]) -> str | None:
 # ---------------------------------------------------------------------------
 
 def _values_match(eva_value: Any, candidate_value: Any, var_name: str,
-                  tolerance: float = 5.0) -> str:
-    """Compare one value pair. Returns MATCH, CLOSE, or MISMATCH."""
+                  tolerance: float = 5.0, llm_client: Any = None) -> str:
+    """Compare one value pair. Returns MATCH, CLOSE, or MISMATCH.
+
+    When *llm_client* is provided and the variable is not numeric, uses the
+    LLM judge (``compare_text_llm``) for semantic comparison instead of plain
+    string matching.
+    """
     eva_str = str(eva_value).strip()
     cand_str = str(candidate_value).strip()
 
@@ -318,6 +326,11 @@ def _values_match(eva_value: Any, candidate_value: Any, var_name: str,
         if eva_num is not None and cand_num is not None:
             _, status = compare_numeric(eva_num, cand_num, tolerance)
             return status
+
+    # LLM judge path (semantic comparison)
+    if llm_client is not None:
+        status, _score, _explanation = compare_text_llm(var_name, eva_str, cand_str, llm_client)
+        return status
 
     normalizer = TEXT_NORMALIZERS.get(var_name)
     if normalizer:
@@ -383,6 +396,7 @@ def process_project(
     concept_filter: str | None = None,
     show_all: bool = False,
     tolerance: float = 5.0,
+    llm_client: Any = None,
 ) -> ProjectDiagResult | None:
     """Process one project. Returns ProjectDiagResult or None."""
     project_path = REFERENCE_DIR / project_name
@@ -440,7 +454,7 @@ def process_project(
         if pipe_value is None or str(pipe_value).strip() == "":
             status = "NOT_EXTRACTED"
         else:
-            status = _values_match(eva_value, pipe_value, eva_name, tolerance)
+            status = _values_match(eva_value, pipe_value, eva_name, tolerance, llm_client)
 
         results[prefill_key] = {
             'eva_name': eva_name,
@@ -874,6 +888,7 @@ def _deep_trace_variable(
     values: dict[str, Any],
     sources: dict[str, str],
     merged: dict[str, Any] | None = None,
+    llm_client: Any = None,
 ) -> None:
     """Print full 6-section deep trace for a variable."""
     r = result
@@ -1270,6 +1285,10 @@ def main() -> None:
         "--diff", nargs=2, metavar="SNAPSHOT",
         help="Compare two snapshot JSON files",
     )
+    parser.add_argument(
+        "--llm-judge", action="store_true",
+        help="Use LLM judge (Claude Haiku) for semantic text comparison",
+    )
     args = parser.parse_args()
 
     # --diff mode: compare two snapshots and exit
@@ -1290,9 +1309,19 @@ def main() -> None:
         print(f"No projects match filter '{args.project}'")
         sys.exit(1)
 
+    # LLM judge setup
+    llm_client = None
+    if args.llm_judge:
+        _load_env()
+        import anthropic
+        llm_client = anthropic.Anthropic()
+        _load_llm_cache()
+
     print(_bold("Full Pipeline Diagnostic: Eva vs Pipeline"))
     print(f"Runs: auto_extract + vision + geotech calculations")
     print(f"Tolerance: {args.tolerance}%")
+    if llm_client is not None:
+        print(f"LLM judge: ON")
     if args.concept:
         print(f"Concept filter: {args.concept}")
     print()
@@ -1308,6 +1337,7 @@ def main() -> None:
             concept_filter=args.concept,
             show_all=args.all or args.deep,
             tolerance=args.tolerance,
+            llm_client=llm_client,
         )
         if diag is None:
             continue
@@ -1323,6 +1353,7 @@ def main() -> None:
                     _deep_trace_variable(
                         cid, diag.results[cid], diag.auto_result,
                         diag.eva_vars, diag.values, diag.sources, diag.merged,
+                        llm_client,
                     )
             else:
                 print(f"\n  No variable matching '{args.concept}' found for deep trace")
@@ -1383,6 +1414,10 @@ def main() -> None:
             encoding="utf-8",
         )
         print(f"\n  Cross-project summary saved: {cross_path}")
+
+    # Persist LLM judge cache
+    if llm_client is not None:
+        _save_llm_cache()
 
 
 if __name__ == "__main__":

@@ -978,6 +978,15 @@ def _probe_from_edge(
     return "desconegut"
 
 
+def _compute_bounding_box(
+    polygon: list[tuple[float, float]],
+) -> tuple[float, float, float, float]:
+    """Return (x_min, x_max, y_min, y_max) from polygon vertices."""
+    xs = [p[0] for p in polygon]
+    ys = [p[1] for p in polygon]
+    return min(xs), max(xs), min(ys), max(ys)
+
+
 def _probe_direction(
     utm_x: float,
     utm_y: float,
@@ -987,6 +996,7 @@ def _probe_direction(
     superficie: float,
     municipality: str | None = None,
     our_ldt: str | None = None,
+    bounding_box: tuple[float, float, float, float] | None = None,
 ) -> str:
     """
     Probe in one direction to find what is adjacent to our parcel.
@@ -1009,11 +1019,22 @@ def _probe_direction(
         dy: Y direction multiplier (-1, 0, or 1)
         superficie: Parcel area in m2
         municipality: Optional municipality name for street name cleaning
+        our_ldt: Optional LDT description for street name fallback
+        bounding_box: Optional (x_min, x_max, y_min, y_max) from polygon.
+            Uses directional half-width instead of sqrt(area)/2 to avoid
+            overshooting narrow streets on rectangular parcels.
 
     Returns:
         Description of what is adjacent: street name or "parcel·la veïna"
     """
-    half_side = math.sqrt(superficie) / 2
+    if bounding_box:
+        x_min, x_max, y_min, y_max = bounding_box
+        if abs(dx) > 0:  # East or West: use half-width in X
+            half_side = (x_max - x_min) / 2
+        else:  # North or South: use half-width in Y
+            half_side = (y_max - y_min) / 2
+    else:
+        half_side = math.sqrt(superficie) / 2
     start_distance = half_side + 1  # Just outside the parcel edge
     step = 2  # 2m increments to catch narrow streets
     max_probes = 8
@@ -1165,6 +1186,7 @@ def get_adjacent_parcels(
             polygon = None
 
     result: dict[str, str] = {}
+    bbox = _compute_bounding_box(polygon) if polygon else None
 
     if polygon:
         # Geometry-based probing: use actual edge midpoints and outward normals
@@ -1188,6 +1210,7 @@ def get_adjacent_parcels(
                 result[direction] = _probe_direction(
                     utm_x, utm_y, our_ref, dx, dy, superficie,
                     municipality=municipality, our_ldt=our_ldt,
+                    bounding_box=bbox,
                 )
             logger.info(f"  {direction}: {result[direction]}")
     else:

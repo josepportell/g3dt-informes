@@ -26,6 +26,12 @@ _REF_DIR = Path(config.G3DT_PROJECTS_DIR)
 # Production path where Eva keeps signed reference reports
 _INFORMES_DIR = Path('/mnt/c/claude/g3dt/4-informes')
 
+# Sources that indicate high-priority extraction data (trusted over LLM synthesis)
+_TRUSTED_SOURCE_PATTERNS = (
+    'planol', 'sondeig', 'vision', 'ICGC', 'Cadastre', 'DPSH',
+    'contingut:', 'fileminer:', 'groq_llm:',
+)
+
 # In-memory prefill cache: project_name -> prefills dict
 _prefill_cache: dict[str, dict[str, Any]] = {}
 # Cache raw AutoExtractionResult for dev-analysis-v2 (signal trace)
@@ -716,9 +722,32 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
 
     def _set(key: str, value: str, source: str = 'llm_synthesis') -> None:
         existing = merged.get(key)
-        if isinstance(existing, dict) and existing.get('source') == 'user':
-            return  # Eva's manual edits always win
-        if value:  # Only set non-empty
+        if not isinstance(existing, dict):
+            # No existing structured value — synthesis can set freely
+            if value:
+                merged[key] = {'value': value, 'source': source}
+            return
+
+        existing_source = existing.get('source', '')
+        existing_value = str(existing.get('value', '') or '')
+
+        # User edits always win
+        if existing_source == 'user':
+            return
+
+        # If existing source is trusted and has a value, protect it
+        if existing_value and any(p in existing_source for p in _TRUSTED_SOURCE_PATTERNS):
+            # Allow refinement: synthesis adds article/prefix but core content same
+            existing_lower = existing_value.lower().strip()
+            value_lower = (value or '').lower().strip()
+            if value_lower and existing_lower in value_lower:
+                # Synthesis refines (e.g. adds article) — update value, keep source
+                merged[key] = {'value': value, 'source': existing_source}
+            # else: don't overwrite — trusted source takes precedence
+            return
+
+        # Low-priority or unknown source — synthesis can overwrite
+        if value:
             merged[key] = {'value': value, 'source': source}
 
     # Skip if no API key available
