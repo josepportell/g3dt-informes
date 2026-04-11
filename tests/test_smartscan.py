@@ -504,3 +504,120 @@ class TestSmartScanImageFingerprint:
         assert amp_results[0].category in ("suggestion", "needs_vision"), (
             f"ampliació should be suggestion or needs_vision, got {amp_results[0].category}"
         )
+
+
+class TestSmartScanRoleFiles:
+    """Test multi-file role support (role_files_map + role_files in FileMapping)."""
+
+    def test_role_files_map_contains_all_candidates(self):
+        """photo_test_point in Alcoletge must have 3 candidates (P1, P2, P3)."""
+        project_path = REF_DIR / "4001670 ALCOLETGE"
+        if not project_path.exists():
+            pytest.skip("Alcoletge not available")
+
+        result = scan_project(project_path, max_tier=2)
+        rfm = result.role_files_map
+
+        assert "photo_test_point" in rfm, "photo_test_point missing from role_files_map"
+        candidates = rfm["photo_test_point"]
+        assert len(candidates) == 3, (
+            f"Expected 3 photo_test_point candidates (P1,P2,P3), got {len(candidates)}: "
+            f"{[c.file_path for c in candidates]}"
+        )
+        for c in candidates:
+            assert c.confidence >= 0.85, (
+                f"{c.file_path} confidence {c.confidence:.2f} < 0.85"
+            )
+
+    def test_role_files_map_sorted_by_confidence(self):
+        """role_files_map entries must be sorted descending by confidence."""
+        project_path = REF_DIR / "4001670 ALCOLETGE"
+        if not project_path.exists():
+            pytest.skip("Alcoletge not available")
+
+        result = scan_project(project_path, max_tier=2)
+        rfm = result.role_files_map
+
+        for role_name, clfs in rfm.items():
+            if len(clfs) < 2:
+                continue
+            for i in range(len(clfs) - 1):
+                assert clfs[i].confidence >= clfs[i + 1].confidence, (
+                    f"role_files_map['{role_name}'] not sorted: "
+                    f"{clfs[i].file_path} ({clfs[i].confidence:.2f}) < "
+                    f"{clfs[i + 1].file_path} ({clfs[i + 1].confidence:.2f})"
+                )
+
+    def test_role_files_in_file_mapping_json(self):
+        """to_file_mapping() must include role_files with correct structure."""
+        project_path = REF_DIR / "4001670 ALCOLETGE"
+        if not project_path.exists():
+            pytest.skip("Alcoletge not available")
+
+        result = scan_project(project_path, max_tier=2)
+        fm = result.to_file_mapping()
+
+        assert "role_files" in fm, "role_files key missing from file_mapping output"
+        assert "photo_test_point" in fm["role_files"], (
+            "photo_test_point missing from role_files"
+        )
+        entries = fm["role_files"]["photo_test_point"]
+        assert len(entries) >= 3, f"Expected >=3 entries, got {len(entries)}"
+        for entry in entries:
+            assert "path" in entry, f"Missing 'path' key in entry: {entry}"
+            assert "confidence" in entry, f"Missing 'confidence' key in entry: {entry}"
+            assert "detection" in entry, f"Missing 'detection' key in entry: {entry}"
+
+    def test_role_files_removes_from_unassigned(self):
+        """P2 and P3 Alcoletge photos must NOT appear in unassigned."""
+        project_path = REF_DIR / "4001670 ALCOLETGE"
+        if not project_path.exists():
+            pytest.skip("Alcoletge not available")
+
+        result = scan_project(project_path, max_tier=2)
+        fm = result.to_file_mapping()
+
+        unassigned_set = set(fm["unassigned"])
+        for name_fragment in ("P2 - ALCOLETGE.jpeg", "P3 - ALCOLETGE.jpeg"):
+            matching = [u for u in unassigned_set if name_fragment in u]
+            assert len(matching) == 0, (
+                f"{name_fragment} found in unassigned but should be in role_files: {matching}"
+            )
+
+    def test_whatsapp_classified_as_field_photo(self):
+        """WhatsApp photos in Bell-Lloc must get field_photo role."""
+        project_path = REF_DIR / "4001612 BELL-LLOC"
+        if not project_path.exists():
+            pytest.skip("Bell-Lloc not available")
+
+        result = scan_project(project_path, max_tier=2)
+
+        field_photos = [
+            c for c in result.classifications
+            if c.role == "field_photo" and c.category == "classified"
+        ]
+        assert len(field_photos) >= 1, (
+            "Expected at least 1 field_photo with category=classified, found 0. "
+            f"All field_photo entries: {[(c.file_path, c.role, c.category) for c in result.classifications if c.role == 'field_photo']}"
+        )
+
+    def test_backward_compat_roles_unchanged(self):
+        """roles dict in to_file_mapping() must keep single-string path format."""
+        project_path = REF_DIR / "4001670 ALCOLETGE"
+        if not project_path.exists():
+            pytest.skip("Alcoletge not available")
+
+        result = scan_project(project_path, max_tier=2)
+        fm = result.to_file_mapping()
+
+        roles = fm["roles"]
+        assert "photo_test_point" in roles, "photo_test_point missing from roles"
+        ptp = roles["photo_test_point"]
+
+        # path must be a single string, not a list
+        assert isinstance(ptp["path"], str), (
+            f"roles['photo_test_point']['path'] should be str, got {type(ptp['path'])}"
+        )
+        # Must have all backward-compat keys
+        for key in ("path", "confidence", "detection", "vision_type"):
+            assert key in ptp, f"Missing key '{key}' in roles['photo_test_point']"

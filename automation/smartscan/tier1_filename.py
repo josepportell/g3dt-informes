@@ -282,11 +282,11 @@ _PHOTO_ROLE_PATTERNS: list[tuple[re.Pattern, str | None]] = [
     (re.compile(r'^S\d+', re.IGNORECASE), 'photo_sondeig_equipment'),
     (re.compile(r'^EMPL\s', re.IGNORECASE), 'photo_sondeig_equipment'),
     (re.compile(r'^DETALL\s', re.IGNORECASE), 'photo_spt_sample'),
-    # Generic photos (no specific role, just informative)
-    (re.compile(r'^Imag[eo]n?\s+de\s+WhatsApp', re.IGNORECASE), None),
-    (re.compile(r'^Imatge\s+de\s+WhatsApp', re.IGNORECASE), None),
-    (re.compile(r'^WhatsApp\s+Image', re.IGNORECASE), None),
-    (re.compile(r'^IMG-\d{8}', re.IGNORECASE), None),
+    # Generic field photos (WhatsApp/mobile camera)
+    (re.compile(r'^Imag[eo]n?\s+de\s+WhatsApp', re.IGNORECASE), 'field_photo'),
+    (re.compile(r'^Imatge\s+de\s+WhatsApp', re.IGNORECASE), 'field_photo'),
+    (re.compile(r'^WhatsApp\s+Image', re.IGNORECASE), 'field_photo'),
+    (re.compile(r'^IMG-\d{8}', re.IGNORECASE), 'field_photo'),
     (re.compile(r'^Thumbs\.db$'), None),
 ]
 

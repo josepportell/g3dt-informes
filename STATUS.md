@@ -1,102 +1,48 @@
 # G3DT - Automatització d'Informes Geotècnics — Status
-Last updated: 2026-04-05
+Last updated: 2026-04-11
 
 ## Current State
 
-**Arquitectura Concepte-Format implementada. Reference Extractor operatiu (7 projectes). Pipeline funcional. Pendent: comparacio Eva vs pipeline, instal·lacio Eva.**
+**Accuracy 60.9%. is_anthropized amb observació visual implementat. SmartScan multi-fitxer implementat (role_files). 203 tests. Pendent: instal·lació Eva, settlement, seismic_ab.**
 
-## Foto Pipeline vs Eva (2026-04-05)
+## Accuracy (diagnostic 2026-04-10, amb LLM judge)
 
-**43 variables comparades, 238 sense dades pipeline (nomes fases Python, sense vision/calculs)**
+| Mètrica | Valor |
+|---------|-------|
+| **Overall accuracy** | 60.9% |
+| **Millora sessió 2026-04-10** | +23.2pp (37.7% → 60.9%) |
 
-| Variable | M | C | X | Problema |
-|----------|---|---|---|----------|
-| building_type | 0 | 0 | 7 | comanda_lab abrevia ("CONSTR HAB UNIF") |
-| client | 0 | 0 | 5 | DADES CAMP te arquitecte, no promotor |
-| adjacents (4 dirs) | 0 | 2 | 18 | Cadastre API dona info minima vs Eva descriu |
-| municipality | 3 | 4 | 0 | Format/majuscules (CLOSE) |
-| expedient | 0 | 1 | 1 | Confon ref. interna |
-| architect_company | 1 | 0 | 0 | OK |
+## Done (2026-04-11)
 
-**238 NO_DATA**: vision (architect, superficies, plantes), calculs (Qa, settlement, CTE), lab (sulfats, SPT), templates (site_description, adjacents descriptius)
+- [x] **is_anthropized**: radio buttons buits (no switch amb default True) + descripció visual terreny des de fotos de camp (gpt-4.1-mini, ~$0.01/projecte). None propagat per backend.
+- [x] **SmartScan multi-fitxer**: `role_files` secció amb TOTS els fitxers per rol (additivament, `roles` intacte). Impacte: Alcoletge 16→10 unassigned, Bell-Lloc 21→15 unassigned + 8 WhatsApp recuperats.
+- [x] **WhatsApp photos**: nou rol `field_photo` (abans IGNORED com "photo_or_acceptance")
+- [x] **Consumers actualitzats**: image_manager (multi-photo discovery), fileminer (role_files fallback)
+- [x] 203 tests (197 + 6 nous role_files)
+
+## Done (2026-04-10)
+
+- [x] Qa variable cap + rounding 0.5 kg/cm2
+- [x] site_condition auto des de ICGC slope (4 variants)
+- [x] Cross-source lab deduction, coordinate validation
+- [x] LLM judge, SmartScan Tier 3 multi-page, LLM synthesis priority, PASS category
 
 ## Done (2026-04-05)
 
-- [x] Arquitectura Concepte-Format: 53 conceptes YAML + 8 formats + format learning UI (`docs/ARQUITECTURA-CONCEPT-FORMAT-SCHEMAS.md`)
-- [x] Reference Extractor: enginyeria inversa dels 7 informes d'Eva → `validation/eva_reference_values.json` (`docs/REFERENCE-EXTRACTOR.md`)
-- [x] Comparacio Eva vs Pipeline: `/g3dt-dev-eva-vs-pipeline` operatiu, baseline 23% match+close
-- [x] SmartScan Tier 2: suport .xlsx (openpyxl)
-- [x] 197 tests passen (snapshot regression + schema loader + format learner + fileminer + smartscan + geocode)
-- [x] Branch: `feature/concept-format-separation`
-
-## Done (2026-03-30)
-
-- [x] Merge feat/smartscan → main (62 commits, pushed to origin)
-- [x] UX: "Paràmetres Geomecànics" visibles amb recàlcul dinàmic (Qa, K30, assentament)
-- [x] SmartScan activat per defecte (era implementat però mai activat)
-- [x] Groq deep mine activat per defecte (idem)
-- [x] SmartScan Tier 3 (visió LLM) activat per classificar fitxers amb noms inesperats
-- [x] SmartScan exclou `validation/` (eliminat soroll de 49+ imatges pròpies)
-- [x] Suggestions passen a Tier 3 (no es queden com "classified" prematurament)
+- [x] Arquitectura Concepte-Format: 53 conceptes + 8 formats + format learning
+- [x] Reference Extractor: 7 informes Eva
+- [x] Comparació Eva vs Pipeline, SmartScan Tier 2 .xlsx
 
 ## Active Blockers
 
 - Instal·lació a l'ordinador d'Eva pendent
 - Preguntes a Eva: N20 criteri, Qa cap, E carbonatades
-- N20 averaging: 5/7 projectes tenen dpsh_avg_n20 MISMATCH (inclou refús en la mitjana)
 
 ## Next Milestones
 
-- [ ] Test amb projecte nou real (Eva proporciona carpeta desconeguda)
-- [ ] Instal·lació a Eva (git clone + uv sync + .env)
-- [ ] Preguntar a Eva (N20, Qa caps, E carbonatades) — aprofitar visita
-- [ ] Merge feat/delivery → main + push
-
-## Pendents menors (no bloquejants)
-
-- [ ] Stepper cosmètic: Geocode/APIs HTTP tatxats però dades arriben via merge
-- [ ] Lab PDF: `MULTICA_61.pdf` (Vilanova) no reconegut — afegir patró
-- [ ] Dates camp: `field_date` de FileMiner no es promociona a `field_work_dates`
-- [ ] `.xlsx` format: xlrd no llegeix .xlsx — migrar a openpyxl
-- [ ] Client name cleanup: strip telèfon/email del nom (Anciles, Alcoletge)
-- [ ] Selector max_tier al wizard (futur)
-- [ ] Valorar capa "LLM de síntesi" per inferir camps buits a partir de dades ja extretes
-- [ ] Millorar prompt visió plànol: extreure taula JUSTIFICACIÓ PLANEJAMENT (sup, alçada, plantes)
-- [ ] Prioritzar ACCEPTACIO/ per client name (pressupost signat té promotor clar)
-
-## Key Metrics (benchmark 2026-03-30, amb avaluació semàntica Tier B)
-
-| Mètrica | Valor | Detall |
-|---------|-------|--------|
-| **Correct** (MATCH + SEMANTIC_MATCH) | 44.8% (74/165) | Semànticament correcte |
-| **Acceptable** (+ PARTIAL) | 56.4% (93/165) | Direcció correcta, menys detall |
-| **Wrong** (MISMATCH) | 35.2% (58/165) | Factual error |
-| **Tier A** (auto-extractable) | 53% (52/98) acceptable | 37 wrong |
-| **Tier B** (manual/site) | 74% (37/50) acceptable | 13 wrong (Cadastre vs camp) |
-| **Tier C** (judici expert) | 24% (4/17) acceptable | 8 wrong (esperat: Eva ajusta) |
-
-### Camps buits al wizard (19% = 35/182)
-
-| Camp | Buits | Causa |
-|------|-------|-------|
-| superficie_construida | 7/7 | No s'extreu (taula JUSTIFICACIÓ al plànol) |
-| building_height_m | 7/7 | Idem |
-| superficie_parcela_m2 | 5/7 | Cadastre dóna valor diferent |
-| num_floors | 4/7 | Difícil extreure (varia format) |
-| cota_referencia | 2/7 | Sense sondeig o ICGC |
-
-### Tier A MISMATCH principals (37 errors)
-
-| Categoria | Count | Causa | Fix |
-|-----------|-------|-------|-----|
-| dpsh_avg_n20 / geotech_nb | 10 | Refús inclòs en mitjana | Preguntar Eva criteri N20 |
-| building_type | 4 | Terminologia parcial vs Eva | Vocabulari |
-| superficie_parcela | 3 | Cadastre vs Eva (fonts diferents) | Investigar |
-| client | 3 | Nom amb soroll (telèfon, empresa arquitecte) | Prioritzar ACCEPTACIO |
-| street_address | 3 | Format lleugerament diferent | Normalització |
-| municipality | 2 | Alcoletge→Alella, Anciles→Arciles | Geocode bug |
-| seismic_ab | 2 | Font NCSE-02 vs Eva | Investigar |
-| Altres | 10 | Varis (num_floors, cohesion, dates) | Cas per cas |
+- [ ] Settlement phrase parsing, seismic_ab, adjacents orientation
+- [ ] Test amb projecte nou real
+- [ ] Instal·lació a Eva
 
 ## Pla de Delivery
 

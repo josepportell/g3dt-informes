@@ -56,6 +56,7 @@ ROLE_DEFINITIONS = {
     'photo_sondeig_equipment': {"desc": "Foto equip sondeig"},
     'photo_spt_sample':     {"desc": "Foto mostra SPT"},
     'photo_site_overview':  {"desc": "Foto vista general de l'obra"},
+    'field_photo':          {"desc": "Foto de camp generica (WhatsApp/mobil)"},
     'project_email':        {"desc": "Correu del projecte (.msg)"},
 }
 

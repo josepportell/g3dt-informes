@@ -120,6 +120,14 @@ def _resolve_source_type(
             if role_path == rel_path and role_name in _ROLE_TO_SOURCE:
                 return _ROLE_TO_SOURCE[role_name]
 
+    # 1b. Check role_files for multi-file roles
+    if file_mapping and 'role_files' in file_mapping:
+        for role_name, role_entries in file_mapping['role_files'].items():
+            if role_name in _ROLE_TO_SOURCE:
+                for entry in role_entries:
+                    if entry.get('path', '') == rel_path:
+                        return _ROLE_TO_SOURCE[role_name]
+
     # 2. Filename pattern heuristics
     upper_name = file_path.stem.upper()
     for pattern, source_type in _FILENAME_HINTS:

@@ -54,6 +54,26 @@ class SmartScanResult(BaseModel):
                 result[c.role] = c
         return result
 
+    @property
+    def role_files_map(self) -> dict[str, list[FileClassification]]:
+        """Map role -> ALL classifications for that role, sorted by confidence.
+
+        Unlike role_map (best per role), this includes conflict losers
+        that were demoted to suggestions but originally matched a role.
+        """
+        result: dict[str, list[FileClassification]] = {}
+        for c in self.classifications:
+            if c.role:
+                result.setdefault(c.role, []).append(c)
+            # Re-include losers via their alternate_roles
+            for alt in (c.alternate_roles or []):
+                alt_role = alt.get('role')
+                if alt_role and c.role is None:  # Only losers (role=None with alternates)
+                    result.setdefault(alt_role, []).append(c)
+        for files in result.values():
+            files.sort(key=lambda x: -x.confidence)
+        return result
+
     def to_file_mapping(self) -> dict:
         """
         Bridge to FileMapping JSON format for backward compatibility.
@@ -109,6 +129,19 @@ class SmartScanResult(BaseModel):
         if "sondeig_annex" in roles and "sondeig_field_sheet" in roles:
             roles["sondeig_field_sheet"]["vision_type"] = None
 
+        # Build role_files: ALL files per role (not just best)
+        role_files: dict[str, list[dict]] = {}
+        role_files_paths: set[str] = set()  # Track paths that have a role assignment
+        for role_name, clfs in self.role_files_map.items():
+            role_files[role_name] = []
+            for clf in clfs:
+                role_files[role_name].append({
+                    "path": clf.file_path,
+                    "confidence": confidence_str(clf.confidence),
+                    "detection": tier_to_detection.get(clf.tier, "unknown"),
+                })
+                role_files_paths.add(clf.file_path)
+
         for clf in self.unclassified:
             if clf.category == "informative":
                 ignored.append({"path": clf.file_path, "reason": clf.summary or "informative"})
@@ -119,6 +152,8 @@ class SmartScanResult(BaseModel):
         for clf in self.classifications:
             if clf.file_path in classified_paths:
                 continue
+            if clf.file_path in role_files_paths:
+                continue  # Has a role in role_files, not truly unassigned
             if clf.role is None:
                 if clf.category == "informative":
                     ignored.append({"path": clf.file_path, "reason": clf.summary or "informative"})
@@ -127,6 +162,7 @@ class SmartScanResult(BaseModel):
 
         return {
             "roles": roles,
+            "role_files": role_files,
             "ignored": ignored,
             "unassigned": unassigned,
             "_metadata": {

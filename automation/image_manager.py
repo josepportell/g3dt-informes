@@ -62,6 +62,7 @@ ROLE_TO_PHOTO_CATEGORY = {
     'photo_sondeig_equipment': 'sondeig',
     'photo_spt_sample': 'materials',
     'photo_test_point': 'site',  # fallback: test point photos as site views
+    'field_photo': 'site',  # generic WhatsApp field photos as site views
 }
 
 # SmartScan role → figure context variable mapping
@@ -152,6 +153,17 @@ class ImageManager:
                     if photo_path.exists() and photo_path not in result[category]:
                         result[category].append(photo_path)
                         logger.info(f"Photo from SmartScan role: {role_name} → {category} ({photo_path.name})")
+
+        # ── Priority 1b: SmartScan role_files (ALL photos per role) ──
+        role_files = self._load_role_files()
+        if role_files:
+            for role_name, category in ROLE_TO_PHOTO_CATEGORY.items():
+                if role_name in role_files:
+                    for rf in role_files[role_name]:
+                        photo_path = self.project_path / rf['path']
+                        if photo_path.exists() and photo_path not in result[category]:
+                            result[category].append(photo_path)
+                            logger.info(f"Photo from role_files: {role_name} → {category} ({photo_path.name})")
 
         # Always continue with slug-based search to find ADDITIONAL photos.
         # The report needs multiple photos per category (e.g., 2 site photos
@@ -631,6 +643,22 @@ class ImageManager:
             return json.loads(mapping_path.read_text()).get('roles', {})
         except Exception as e:
             logger.warning(f"Could not read file_mapping.json: {e}")
+            return None
+
+    def _load_role_files(self) -> dict | None:
+        """Load role_files from file_mapping.json if available.
+
+        Returns dict mapping role_name -> list of {path, confidence, detection}.
+        Returns None if file_mapping.json doesn't exist or has no role_files.
+        """
+        mapping_path = self.project_path / 'file_mapping.json'
+        if not mapping_path.exists():
+            return None
+        try:
+            import json
+            return json.loads(mapping_path.read_text()).get('role_files')
+        except Exception as e:
+            logger.warning(f"Could not read role_files from file_mapping.json: {e}")
             return None
 
     def _render_pdf_to_image(self, pdf_path: Path, output_path: Path, dpi: int = 150) -> Path | None:
