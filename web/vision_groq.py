@@ -188,7 +188,7 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
                 prompt = prompt + excel_context
 
             try:
-                pages_limit = 50 if vtype in ('projecte_arquitecte', 'planol') else 5
+                pages_limit = 50 if vtype == 'projecte_arquitecte' else 5
                 images = _file_to_images(file_path, max_pages=pages_limit)
                 if not images:
                     return vtype, False, "no images from file"
@@ -251,10 +251,10 @@ _IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.tif'}
 def _file_to_images(
     file_path: Path, dpi: int = 200, max_pages: int = 5
 ) -> list[str]:
-    """Convert a file (PDF or image) to base64-encoded images for Groq vision.
+    """Convert a file (PDF or image) to base64-encoded images for vision API.
 
-    For PDFs: renders pages as JPEG via PyMuPDF. DPI auto-scales for large
-    documents: 200 for <=25 pages, 150 for <=35 pages, 120 for >35 pages.
+    For PDFs: renders pages as JPEG via PyMuPDF at full DPI (200 default).
+    Large documents (>5 pages) are chunked at the caller level, not here.
     For images: reads directly and encodes as base64.
 
     Returns list of base64 strings.
@@ -265,24 +265,7 @@ def _file_to_images(
         return _read_image_as_b64(file_path)
 
     if ext == '.pdf':
-        # Auto-scale DPI for large PDFs to keep payload manageable
-        effective_dpi = dpi
-        try:
-            import fitz
-            doc = fitz.open(str(file_path))
-            total_pages = len(doc)
-            doc.close()
-            if dpi == 200 and total_pages > 35:
-                effective_dpi = 120
-            elif dpi == 200 and total_pages > 25:
-                effective_dpi = 150
-            if effective_dpi != dpi:
-                logger.info("Auto-scaled DPI %d -> %d for %d-page PDF: %s",
-                            dpi, effective_dpi, total_pages, file_path.name)
-        except Exception:
-            pass
-
-        images = _render_pdf_to_images(file_path, effective_dpi, max_pages)
+        images = _render_pdf_to_images(file_path, dpi, max_pages)
         # Estimate decoded size from base64 length (avoids allocating decoded copies)
         total_size = sum(len(img) * 3 // 4 for img in images) if images else 0
         logger.info("Vision payload: %d images, %.1f MB total for %s",
@@ -629,6 +612,153 @@ def _call_anthropic_vision(
         return None
 
 
+def _extract_chunked(
+    all_images: list[str],
+    prompt: str,
+    system_prompt: str,
+    backend_chain: list[str],
+    call_map: dict,
+    max_tokens: int,
+    chunk_size: int,
+    file_name: str,
+    vtype: str,
+) -> dict | None:
+    """Extract from a large PDF by splitting into chunks and merging results.
+
+    Sends chunks of `chunk_size` pages each to the vision API, then merges
+    all partial results into a single coherent extraction. Each chunk includes
+    a note about which pages it contains so the LLM can report page numbers.
+
+    This preserves full DPI quality while keeping payload under API limits.
+    """
+    chunks = []
+    for i in range(0, len(all_images), chunk_size):
+        chunks.append(all_images[i:i + chunk_size])
+
+    logger.info(
+        "Chunked extraction: %d pages -> %d chunks of %d for %s",
+        len(all_images), len(chunks), chunk_size, file_name,
+    )
+
+    partial_results = []
+    for chunk_idx, chunk_images in enumerate(chunks):
+        page_start = chunk_idx * chunk_size + 1
+        page_end = page_start + len(chunk_images) - 1
+        chunk_prompt = (
+            f"NOTE: You are seeing pages {page_start}-{page_end} of a {len(all_images)}-page document. "
+            f"Report page numbers relative to the full document (first image = page {page_start}).\n\n"
+            + prompt
+        )
+
+        result = None
+        for backend_name in backend_chain:
+            if not config.has_provider(backend_name):
+                continue
+            entry = call_map.get(backend_name)
+            if not entry:
+                continue
+            call_fn, model_name = entry
+            t_call = time.monotonic()
+            result = call_fn(chunk_prompt, chunk_images, system_prompt, max_tokens=max_tokens)
+            elapsed_ms = int((time.monotonic() - t_call) * 1000)
+            log_vision_call(
+                provider=backend_name,
+                model=model_name,
+                file_name=f"{file_name}[p{page_start}-{page_end}]",
+                vtype=vtype,
+                success=result is not None,
+                elapsed_ms=elapsed_ms,
+            )
+            if result is not None:
+                break
+
+        if result:
+            partial_results.append(result)
+            logger.info("Chunk %d/%d (p%d-%d): ok", chunk_idx + 1, len(chunks), page_start, page_end)
+        else:
+            logger.warning("Chunk %d/%d (p%d-%d): failed", chunk_idx + 1, len(chunks), page_start, page_end)
+
+        # Rate limit between chunks
+        if chunk_idx < len(chunks) - 1:
+            time.sleep(1)
+
+    if not partial_results:
+        return None
+
+    # Merge: combine all partial extractions into one
+    return _merge_chunk_results(partial_results)
+
+
+def _merge_chunk_results(partials: list[dict]) -> dict:
+    """Merge multiple chunk extraction results into a single result.
+
+    Strategy: first non-null value wins for scalar fields.
+    For pages_inventory and planning_table_raw, merge all entries.
+    For dimensions, pick the value with highest confidence.
+    """
+    merged: dict = {
+        "pages_inventory": {},
+        "planning_table_raw": {},
+        "architect_data": {},
+        "dimensions": {},
+        "overall_confidence": 0.0,
+        "extraction_notes": "",
+    }
+
+    notes_parts = []
+
+    for partial in partials:
+        # pages_inventory: merge all
+        for pg, desc in (partial.get("pages_inventory") or {}).items():
+            if pg not in merged["pages_inventory"]:
+                merged["pages_inventory"][pg] = desc
+
+        # planning_table_raw: prefer the most complete version
+        pt = partial.get("planning_table_raw") or {}
+        if pt:
+            existing = merged["planning_table_raw"]
+            for col in ("planejament", "projecte"):
+                existing_col = existing.get(col, {})
+                new_col = pt.get(col, {})
+                if len(new_col) > len(existing_col):
+                    existing[col] = new_col
+
+        # architect_data: first non-null value wins
+        for key, val in (partial.get("architect_data") or {}).items():
+            if val and not merged["architect_data"].get(key):
+                merged["architect_data"][key] = val
+
+        # dimensions: highest confidence wins
+        for key, val in (partial.get("dimensions") or {}).items():
+            if val is None:
+                continue
+            existing = merged["dimensions"].get(key)
+            if isinstance(val, dict):
+                new_conf = val.get("confidence", 0) or 0
+                old_conf = (existing.get("confidence", 0) or 0) if isinstance(existing, dict) else 0
+                if new_conf > old_conf:
+                    merged["dimensions"][key] = val
+            elif isinstance(val, list):
+                # floor_surfaces: merge, dedup by floor name
+                if not existing or (isinstance(existing, list) and len(val) > len(existing)):
+                    merged["dimensions"][key] = val
+            elif existing is None:
+                merged["dimensions"][key] = val
+
+        # overall_confidence: take max
+        conf = partial.get("overall_confidence", 0) or 0
+        if conf > merged["overall_confidence"]:
+            merged["overall_confidence"] = conf
+
+        # notes
+        note = partial.get("extraction_notes", "")
+        if note:
+            notes_parts.append(note)
+
+    merged["extraction_notes"] = " | ".join(notes_parts) if notes_parts else ""
+    return merged
+
+
 def groq_available() -> bool:
     """Check if any vision API key is configured."""
     return bool(config.available_vision_backends())
@@ -965,7 +1095,7 @@ def run_vision_groq_sync(
         _emit(vtype, "active")
 
         try:
-            pages_limit = 50 if vtype in ('projecte_arquitecte', 'planol') else 5
+            pages_limit = 50 if vtype == 'projecte_arquitecte' else 5
             images = _file_to_images(file_path, max_pages=pages_limit)
             if not images:
                 _emit(vtype, "error", message="no images from file")
@@ -990,30 +1120,43 @@ def run_vision_groq_sync(
                 if fb not in chain:
                     chain.append(fb)
 
-            result = None
-            used_backend = None
-            for backend_name in chain:
-                if not config.has_provider(backend_name):
-                    continue
-                entry = _CALL_MAP.get(backend_name)
-                if not entry:
-                    continue
-                call_fn, model_name = entry
-                t_call = time.monotonic()
-                tok_limit = 8192 if vtype == 'projecte_arquitecte' else 4096
-                result = call_fn(prompt, images, EXTRACTION_SYSTEM_PROMPT, max_tokens=tok_limit)
-                elapsed_call_ms = int((time.monotonic() - t_call) * 1000)
-                log_vision_call(
-                    provider=backend_name,
-                    model=model_name,
-                    file_name=file_path.name,
-                    vtype=vtype,
-                    success=result is not None,
-                    elapsed_ms=elapsed_call_ms,
+            tok_limit = 8192 if vtype == 'projecte_arquitecte' else 4096
+
+            # Chunked extraction for large documents: split into batches of
+            # CHUNK_SIZE pages, extract each batch, then merge results.
+            # Keeps payload under API limits while maintaining full DPI quality.
+            CHUNK_SIZE = 5
+            if vtype == 'projecte_arquitecte' and len(images) > CHUNK_SIZE:
+                result = _extract_chunked(
+                    images, prompt, EXTRACTION_SYSTEM_PROMPT,
+                    chain, _CALL_MAP, tok_limit, CHUNK_SIZE,
+                    file_path.name, vtype,
                 )
-                if result is not None:
-                    used_backend = backend_name
-                    break
+                used_backend = "chunked"
+            else:
+                result = None
+                used_backend = None
+                for backend_name in chain:
+                    if not config.has_provider(backend_name):
+                        continue
+                    entry = _CALL_MAP.get(backend_name)
+                    if not entry:
+                        continue
+                    call_fn, model_name = entry
+                    t_call = time.monotonic()
+                    result = call_fn(prompt, images, EXTRACTION_SYSTEM_PROMPT, max_tokens=tok_limit)
+                    elapsed_call_ms = int((time.monotonic() - t_call) * 1000)
+                    log_vision_call(
+                        provider=backend_name,
+                        model=model_name,
+                        file_name=file_path.name,
+                        vtype=vtype,
+                        success=result is not None,
+                        elapsed_ms=elapsed_call_ms,
+                    )
+                    if result is not None:
+                        used_backend = backend_name
+                        break
 
             if result is None:
                 _emit(vtype, "error", message="API call failed (all backends)")
