@@ -355,6 +355,94 @@ OUTPUT FORMAT (JSON):
 Be thorough. Check every corner of every page. The planning table is CRITICAL — do not skip it.'''
 
 
+# ============================================================================
+# Projecte Arquitecte — Multi-page project document extraction
+# ============================================================================
+
+PROJECTE_ARQUITECTE_JSON_EXAMPLE = '''
+{
+  "pages_inventory": {"1": "cover + title block", "3": "normativa table + areas", "7": "sections"},
+  "planning_table_raw": {
+    "planejament": {"parcel_min": "600 m2", "occupancy": "30%", "floors": "PB+PP", "height": "6.60 m"},
+    "projecte": {"parcel": "995 m2", "occupancy": "296.88 m2", "floors": "PB+PP", "height": "6.88 m"}
+  },
+  "architect_data": {
+    "project_name": "Habitatge Unifamiliar Aïllat",
+    "building_type": "habitatge unifamiliar aïllat",
+    "client_name": "NOM CLIENT",
+    "promotor": "NOM PROMOTOR",
+    "street_address": "C/ Example nº 12",
+    "municipality": "Linyola",
+    "architect": "Nom Arquitecte",
+    "architect_company": "Nom Estudi",
+    "ref_cadastral": "1234567AB1234N0001AB"
+  },
+  "dimensions": {
+    "parcel_area_m2": {"value": 995.0, "confidence": 0.95, "source": "normativa table p3", "page": 3},
+    "building_footprint_m2": {"value": 296.88, "confidence": 0.90, "source": "area table p5", "page": 5},
+    "total_built_area_m2": {"value": 450.0, "confidence": 0.90, "source": "area table p5", "page": 5},
+    "floor_surfaces": [
+      {"floor": "PB", "area_m2": 297.0, "confidence": 0.90, "page": 5},
+      {"floor": "P1", "area_m2": 110.0, "confidence": 0.90, "page": 5}
+    ],
+    "num_floors": {"value": "PB+PP", "confidence": 1.0, "source": "normativa table p3", "page": 3},
+    "max_height_m": {"value": 6.88, "confidence": 0.95, "source": "normativa table p3", "page": 3},
+    "plot_length_m": {"value": 24.57, "confidence": 0.90, "page": 2},
+    "plot_width_m": {"value": 24.72, "confidence": 0.90, "page": 2}
+  },
+  "overall_confidence": 0.90,
+  "extraction_notes": "Multi-page project document. Normativa table on page 3."
+}
+'''
+
+PROJECTE_ARQUITECTE_EXTRACTION_PROMPT = f'''You are a senior architect reviewing a multi-page project document (projecte bàsic / projecte executiu).
+
+TASK: Scan ALL pages and extract project data. This is NOT a single-page plan — it's a complete
+project booklet with multiple sections across pages (cover, normativa tables, floor plans, sections, details).
+
+STEP 1 — QUICK PAGE SCAN:
+Scan all pages. In "pages_inventory", record ONLY pages that contain extractable data
+(normativa tables, area tables, title blocks, dimension annotations). Skip pages with only
+drawings, photos, or structural details. Keep entries brief (max 1 line each).
+
+STEP 2 — EXTRACT FROM NORMATIVA/PLANNING TABLE:
+Find the table comparing urbanistic limits ("Planejament") vs actual project values ("Projecte").
+May appear as "NORMATIVA URBANÍSTICA", "JUSTIFICACIÓ PLANEJAMENT", "PARÀMETRES URBANÍSTICS".
+Read EVERY row of BOTH columns into "planning_table_raw".
+
+STEP 3 — EXTRACT FROM TITLE BLOCK / COVER:
+- project_name, building_type (1-4 words: "habitatge unifamiliar aïllat", "nau industrial")
+- client_name, promotor
+- street_address (street + number, NO postal code/municipality)
+- municipality (town name only)
+- architect, architect_company
+- ref_cadastral (if visible)
+
+STEP 4 — EXTRACT FROM AREA TABLES / DRAWINGS:
+- parcel_area_m2: actual parcel surface
+- building_footprint_m2: "ocupació", "sup. construïda en planta"
+- total_built_area_m2: total constructed surface (all floors)
+- floor_surfaces: per-floor areas
+- num_floors: as written ("PB", "PB+PP", "Ps+PB+2Pp")
+- max_height_m: "alçada reguladora", "H. max" in meters
+- plot_length_m, plot_width_m: from drawing annotations
+
+EXTRACTION RULES:
+1. Extract text EXACTLY as written (Catalan or Spanish — do not translate)
+2. Prefer "Projecte" column values over "Planejament" limits
+3. If same data appears on multiple pages, prefer the most detailed/precise source
+4. Set null for fields not found
+5. CRITICAL: Check ALL pages — the data may be on page 5, 8, or later
+
+CONFIDENCE:
+- 1.0: Clear printed text — 0.9: Readable — 0.7-0.8: Small/interpretation needed — 0.5: Difficult
+
+OUTPUT FORMAT (JSON):
+{PROJECTE_ARQUITECTE_JSON_EXAMPLE}
+
+Be thorough. Scan EVERY page. The most valuable data is often NOT on page 1.'''
+
+
 # System prompt for general extraction context
 EXTRACTION_SYSTEM_PROMPT = '''You are a geotechnical data extraction specialist. Your task is to
 carefully extract data from field documents, architectural plans, and project files, converting

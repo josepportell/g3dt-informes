@@ -64,8 +64,12 @@ IGNORE_PATTERNS = [
 ROLE_PATTERNS: dict[str, dict] = {
     # ── Architect plans ──────────────────────────────────────
     'architect_project': {
-        'patterns': [r'(?i)^PROJECTE[_\s]*BASIC.*\.pdf$'],
-        'scopes': [''],
+        'patterns': [
+            r'(?i)^PROJECTE[_\s]*BASIC.*\.pdf$',
+            r'(?i)^.*(?:proyecto_basico|projecte_basic|projecte_executiu).*\.pdf$',
+            r'(?i)^(?:.*[_\s/])?DG[_\s.].*\.pdf$',  # DG as word boundary (not substring)
+        ],
+        'scopes': ['', '*'],
     },
     'architect_plan_with_points': {
         'patterns': [r'(?i)^A\.\d+\s*amb\s*punts.*\.pdf$'],
@@ -76,8 +80,9 @@ ROLE_PATTERNS: dict[str, dict] = {
             r'^A\.\d+\.pdf$',
             r'^A\.\d+\s.*\.pdf$',
             r'(?i)^ampliaci[oó].*\.(png|jpe?g|pdf)$',
+            r'(?i)^(?:IV_?)?PLANOS?\.pdf$',
         ],
-        'scopes': [''],
+        'scopes': ['', '*'],
         'prefer': r'^A\.\d+\.pdf$',
     },
     'field_croquis': {
@@ -449,7 +454,8 @@ def _match_role(
         if expects_dir != is_dir:
             continue
 
-        if not _in_scope(parent, scopes):
+        matched_scope = _matched_scope(parent, scopes)
+        if matched_scope is None:
             continue
 
         for pattern in config['patterns']:
@@ -462,10 +468,15 @@ def _match_role(
                         combined_roles = secondary_roles
                         break
 
+                # Wildcard scope match gets slight penalty so root wins conflicts
+                conf = tier1_confidence(exact_match=True)
+                if matched_scope == '*':
+                    conf -= 0.05
+
                 return FileClassification(
                     file_path=rel_path,
                     role=role_name,
-                    confidence=tier1_confidence(exact_match=True),
+                    confidence=conf,
                     tier=ClassificationTier.FILENAME,
                     is_directory=is_dir,
                     is_combined=bool(combined_roles),
@@ -478,11 +489,21 @@ def _match_role(
 
 def _in_scope(parent: str, scopes: list[str]) -> bool:
     """Check if the parent directory matches any of the allowed scopes."""
+    return _matched_scope(parent, scopes) is not None
+
+
+def _matched_scope(parent: str, scopes: list[str]) -> str | None:
+    """Return the matching scope string, or None if no scope matches.
+
+    Used to distinguish root matches (exact scope) from wildcard matches ('*')
+    so that wildcard matches can receive a slight confidence penalty.
+    """
     for scope in scopes:
         if scope == '*':
-            return True
-        if not scope and not parent:
-            return True
-        if scope and parent == scope:
-            return True
-    return False
+            if parent:  # '*' matches any non-root parent
+                return '*'
+        elif not scope and not parent:
+            return ''
+        elif scope and parent == scope:
+            return scope
+    return None

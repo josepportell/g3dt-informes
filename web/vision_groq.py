@@ -76,6 +76,7 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
             DPSH_EXTRACTION_PROMPT,
             EXTRACTION_SYSTEM_PROMPT,
             PLANOL_EXTRACTION_PROMPT,
+            PROJECTE_ARQUITECTE_EXTRACTION_PROMPT,
             SONDEIG_ANNEX_EXTRACTION_PROMPT,
             SONDEIG_EXTRACTION_PROMPT,
         )
@@ -94,12 +95,14 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
             "dpsh": DPSH_EXTRACTION_PROMPT,
             "sondeig": SONDEIG_EXTRACTION_PROMPT,
             "sondeig_annex": SONDEIG_ANNEX_EXTRACTION_PROMPT,
+            "projecte_arquitecte": PROJECTE_ARQUITECTE_EXTRACTION_PROMPT,
         }
         output_map = {
             "planol": "planol_extracted.json",
             "dpsh": "dpsh_extracted.json",
             "sondeig": "sondeig_extracted.json",
             "sondeig_annex": "sondeig_annex_extracted.json",
+            "projecte_arquitecte": "projecte_extracted.json",
         }
 
         vision_tasks = {}
@@ -118,6 +121,9 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
                     "prompt": prompt_map[vtype],
                     "output": output_map[vtype],
                 }
+
+        # Discover multi-page PDFs not assigned by SmartScan
+        _discover_multipage_pdfs(vision_tasks, project_path, prompt_map, output_map, force)
 
         _log_step(project_name, "identify_tasks", f"{len(vision_tasks)} tasks")
 
@@ -160,7 +166,8 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
                 prompt = prompt + excel_context
 
             try:
-                images = _file_to_images(file_path)
+                pages_limit = 50 if vtype == 'projecte_arquitecte' else 5
+                images = _file_to_images(file_path, max_pages=pages_limit)
                 if not images:
                     return vtype, False, "no images from file"
 
@@ -223,7 +230,8 @@ def _file_to_images(
 ) -> list[str]:
     """Convert a file (PDF or image) to base64-encoded images for Groq vision.
 
-    For PDFs: renders pages as JPEG via PyMuPDF.
+    For PDFs: renders pages as JPEG via PyMuPDF. DPI auto-scales for large
+    documents: 200 for <=25 pages, 150 for <=35 pages, 120 for >35 pages.
     For images: reads directly and encodes as base64.
 
     Returns list of base64 strings.
@@ -234,7 +242,29 @@ def _file_to_images(
         return _read_image_as_b64(file_path)
 
     if ext == '.pdf':
-        return _render_pdf_to_images(file_path, dpi, max_pages)
+        # Auto-scale DPI for large PDFs to keep payload manageable
+        effective_dpi = dpi
+        try:
+            import fitz
+            doc = fitz.open(str(file_path))
+            total_pages = len(doc)
+            doc.close()
+            if dpi == 200 and total_pages > 35:
+                effective_dpi = 120
+            elif dpi == 200 and total_pages > 25:
+                effective_dpi = 150
+            if effective_dpi != dpi:
+                logger.info("Auto-scaled DPI %d -> %d for %d-page PDF: %s",
+                            dpi, effective_dpi, total_pages, file_path.name)
+        except Exception:
+            pass
+
+        images = _render_pdf_to_images(file_path, effective_dpi, max_pages)
+        # Estimate decoded size from base64 length (avoids allocating decoded copies)
+        total_size = sum(len(img) * 3 // 4 for img in images) if images else 0
+        logger.info("Vision payload: %d images, %.1f MB total for %s",
+                     len(images), total_size / (1024 * 1024), file_path.name)
+        return images
 
     logger.warning("Unsupported file type for vision: %s", file_path.name)
     return []
@@ -601,6 +631,9 @@ def _supplement_from_concept_map(
                    'num_floors', 'building_height_m', 'superficie_construida_m2',
                    'superficie_parcela_m2', 'street_address', 'municipality'},
         'sondeig_annex': {'num_soil_levels', 'cota_referencia'},
+        'projecte_arquitecte': {'architect_name', 'architect_company', 'client_name', 'building_type',
+                                'num_floors', 'building_height_m', 'superficie_construida_m2',
+                                'superficie_parcela_m2', 'street_address', 'municipality'},
     }
 
     for vtype, concepts in VISION_TYPE_CONCEPTS.items():
@@ -639,6 +672,104 @@ def _supplement_from_concept_map(
         logger.info("concept_map fallback: %s -> %s (score=%.1f)", vtype, best_file, file_scores[best_file])
 
 
+def _discover_multipage_pdfs(
+    vision_tasks: dict, project_path: Path, prompt_map: dict, output_map: dict,
+    force_refresh: bool,
+) -> None:
+    """Discover multi-page PDFs that may contain architect project data.
+
+    Uses PDF metadata (creator=AutoCAD, pages>3) to find rich documents
+    that SmartScan may have missed or misclassified.
+    """
+    vtype = 'projecte_arquitecte'
+    if vtype in vision_tasks:
+        return  # already assigned
+    if vtype not in prompt_map:
+        return
+
+    output_path = project_path / 'validation' / output_map[vtype]
+    if not force_refresh and not config.G3DT_NO_CACHE and output_path.exists():
+        return
+
+    # Collect files already assigned to vision tasks
+    assigned_files = set()
+    for task_info in vision_tasks.values():
+        assigned_files.add(task_info['path'])
+
+    try:
+        import fitz
+    except ImportError:
+        logger.warning("PyMuPDF not available for multipage PDF discovery")
+        return
+
+    best_candidate = None
+    best_score = 0
+
+    # Directories containing G3DT's own generated reports — never architect projects
+    _SKIP_DIRS = {'pdf', 'pdf-v0', 'pdf_v0', 'lletra', 'letra', 'annexes',
+                  'anejos', 'fotografies', 'fotografías', 'validation'}
+
+    # Scan all PDFs in project (recursively)
+    for pdf_path in sorted(project_path.rglob('*.pdf')):
+        rel_path = str(pdf_path.relative_to(project_path))
+
+        # Skip already assigned files
+        if rel_path in assigned_files:
+            continue
+        # Skip G3DT output directories and validation
+        rel_parts = pdf_path.relative_to(project_path).parts[:-1]  # directory components
+        if any(part.lower() in _SKIP_DIRS for part in rel_parts):
+            continue
+
+        try:
+            doc = fitz.open(str(pdf_path))
+            pages = len(doc)
+            meta = doc.metadata or {}
+            creator = (meta.get('creator') or '').lower()
+            doc.close()
+        except Exception:
+            continue
+
+        # Skip small PDFs (likely single-page plans or forms)
+        if pages < 4:
+            continue
+
+        # Score based on indicators
+        score = 0
+        # CAD-exported PDFs are likely architect projects
+        if any(kw in creator for kw in ('autocad', 'revit', 'archicad', 'dwg')):
+            score += 5
+        # Word-generated PDFs are G3DT's own reports, not architect documents
+        if any(kw in creator for kw in ('word', 'writer', 'pdfmaker')):
+            score -= 5
+        # Multi-page bonus
+        score += min(pages, 20) * 0.2
+        # File size bonus (larger = more content)
+        size_mb = pdf_path.stat().st_size / (1024 * 1024)
+        if size_mb > 2:
+            score += 2
+        # Name hints
+        name_lower = pdf_path.name.lower()
+        if any(kw in name_lower for kw in ('plano', 'proyecto', 'projecte', 'dg_', 'basico', 'executiu')):
+            score += 3
+        # Negative name hints (G3DT reports, budgets)
+        if any(kw in name_lower for kw in ('informe', 'pressupost', 'presupuesto', 'acceptacio', 'aceptacion')):
+            score -= 3
+
+        if score > best_score:
+            best_score = score
+            best_candidate = rel_path
+
+    if best_candidate and best_score >= 3:
+        vision_tasks[vtype] = {
+            'role': 'discovered:projecte_arquitecte',
+            'path': best_candidate,
+            'prompt': prompt_map[vtype],
+            'output': output_map[vtype],
+        }
+        logger.info("discovered multipage PDF: %s -> %s (score=%.1f)", vtype, best_candidate, best_score)
+
+
 def run_vision_groq_sync(
     project_path: Path,
     *,
@@ -670,6 +801,7 @@ def run_vision_groq_sync(
         DPSH_EXTRACTION_PROMPT,
         EXTRACTION_SYSTEM_PROMPT,
         PLANOL_EXTRACTION_PROMPT,
+        PROJECTE_ARQUITECTE_EXTRACTION_PROMPT,
         SONDEIG_ANNEX_EXTRACTION_PROMPT,
         SONDEIG_EXTRACTION_PROMPT,
     )
@@ -687,12 +819,14 @@ def run_vision_groq_sync(
         "dpsh": DPSH_EXTRACTION_PROMPT,
         "sondeig": SONDEIG_EXTRACTION_PROMPT,
         "sondeig_annex": SONDEIG_ANNEX_EXTRACTION_PROMPT,
+        "projecte_arquitecte": PROJECTE_ARQUITECTE_EXTRACTION_PROMPT,
     }
     output_map = {
         "planol": "planol_extracted.json",
         "dpsh": "dpsh_extracted.json",
         "sondeig": "sondeig_extracted.json",
         "sondeig_annex": "sondeig_annex_extracted.json",
+        "projecte_arquitecte": "projecte_extracted.json",
     }
 
     # For planol vision_type, prefer architect_plan over architect_plan_with_points
@@ -736,6 +870,9 @@ def run_vision_groq_sync(
     # check if concept_map.json identifies a file with relevant concepts
     _supplement_from_concept_map(vision_tasks, seen_types, prompt_map, output_map, project_path, force_refresh)
 
+    # Discover multi-page PDFs not assigned by SmartScan
+    _discover_multipage_pdfs(vision_tasks, project_path, prompt_map, output_map, force_refresh)
+
     logger.info("vision_groq_sync: %d tasks identified", len(vision_tasks))
 
     if not vision_tasks:
@@ -774,7 +911,8 @@ def run_vision_groq_sync(
         _emit(vtype, "active")
 
         try:
-            images = _file_to_images(file_path)
+            pages_limit = 50 if vtype == 'projecte_arquitecte' else 5
+            images = _file_to_images(file_path, max_pages=pages_limit)
             if not images:
                 _emit(vtype, "error", message="no images from file")
                 results[vtype] = {"success": False, "message": "no images from file"}

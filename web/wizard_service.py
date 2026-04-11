@@ -1082,6 +1082,30 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
         planol_company = arch.get('architect_company', '') or ''
         planol_promotor = arch.get('promotor', '') or arch.get('client_name', '') or ''
 
+    # Projecte arquitecte data (multi-page project doc, lower priority than planol)
+    projecte_architect = ''
+    projecte_company = ''
+    projecte_promotor = ''
+    projecte_path = project_path / 'validation' / 'projecte_extracted.json'
+    if projecte_path.exists():
+        try:
+            projecte_data = json.loads(projecte_path.read_text(encoding='utf-8'))
+            parch = projecte_data.get('architect_data', {})
+            projecte_architect = parch.get('architect', '') or ''
+            projecte_company = parch.get('architect_company', '') or ''
+            projecte_promotor = parch.get('promotor', '') or parch.get('client_name', '') or ''
+            # Fill planol fields if they are empty (projecte as fallback)
+            if not planol_architect and projecte_architect:
+                planol_architect = projecte_architect
+            if not planol_company and projecte_company:
+                planol_company = projecte_company
+            if not planol_promotor and projecte_promotor:
+                planol_promotor = projecte_promotor
+            if not project_title:
+                project_title = parch.get('project_name', '') or ''
+        except Exception:
+            pass
+
     # Docs extracted data
     docs_path = project_path / 'validation' / 'docs_extracted.json'
     docs_architect = ''
@@ -1372,6 +1396,73 @@ def _compute_mapping_prefills(
             except Exception as e:
                 logger.warning("num_floors fallback mapping failed: %s", e)
 
+    # --- 4.4  Merge projecte_extracted.json (lower priority than planol) ---
+    # Multi-page architect project documents contain surfaces, height, floors
+    # that SmartScan misses on single-page plans. Only fill missing values.
+    projecte_path = project_path / 'validation' / 'projecte_extracted.json'
+    if projecte_path.exists():
+        try:
+            projecte_data = json.loads(projecte_path.read_text(encoding='utf-8'))
+            p_arch = projecte_data.get('architect_data', {})
+            p_dims = projecte_data.get('dimensions', {})
+
+            def _proj_dim_val(key: str):
+                """Extract numeric value from projecte dimensions entry."""
+                entry = p_dims.get(key, {})
+                if isinstance(entry, dict):
+                    return entry.get('value')
+                return entry
+
+            # building_type
+            if not _get_val('building_type') and p_arch.get('building_type'):
+                _set('building_type', p_arch['building_type'], 'projecte_arquitecte vision')
+
+            # client_name
+            if not _get_val('client_name'):
+                cli = p_arch.get('client_name') or p_arch.get('promotor')
+                if cli:
+                    _set('client_name', cli, 'projecte_arquitecte vision')
+
+            # architect_name
+            if not _get_val('architect_name') and p_arch.get('architect'):
+                _set('architect_name', p_arch['architect'], 'projecte_arquitecte vision')
+
+            # municipality
+            if not _get_val('site_municipality') and p_arch.get('municipality'):
+                _set('site_municipality', p_arch['municipality'], 'projecte_arquitecte vision')
+
+            # street_address
+            if not _get_val('street_address') and p_arch.get('street_address'):
+                _set('street_address', p_arch['street_address'], 'projecte_arquitecte vision')
+
+            # num_floors
+            if not _get_val('num_floors'):
+                floors_val = _proj_dim_val('num_floors')
+                if floors_val is not None:
+                    from automation.formatting import format_floor_notation
+                    _set('num_floors', format_floor_notation(str(floors_val)), 'projecte_arquitecte vision')
+
+            # building_height_m
+            if not _get_val('building_height_m'):
+                height = _proj_dim_val('max_height_m')
+                if height is not None:
+                    _set('building_height_m', str(height), 'projecte_arquitecte vision')
+
+            # superficie_construida_m2
+            if not _get_val('superficie_construida_m2'):
+                footprint = _proj_dim_val('building_footprint_m2')
+                if footprint is not None:
+                    _set('superficie_construida_m2', str(footprint), 'projecte_arquitecte vision')
+
+            # superficie_parcela_m2
+            if not _get_val('superficie_parcela_m2'):
+                parcel = _proj_dim_val('parcel_area_m2')
+                if parcel is not None:
+                    _set('superficie_parcela_m2', str(parcel), 'projecte_arquitecte vision')
+
+        except Exception as e:
+            logger.warning("projecte_extracted merge failed: %s", e)
+
 
 def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str, Any]:
     """Run auto_extract + vision + wizard prefill chain for a project.
@@ -1457,7 +1548,7 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
         except Exception:
             pass
 
-    vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json', 'sondeig_annex': 'sondeig_annex_extracted.json', 'docs': 'docs_extracted.json'}
+    vision_types = {'planol': 'planol_extracted.json', 'dpsh': 'dpsh_extracted.json', 'sondeig': 'sondeig_extracted.json', 'sondeig_annex': 'sondeig_annex_extracted.json', 'docs': 'docs_extracted.json', 'projecte_arquitecte': 'projecte_extracted.json'}
     vision_status = {}
     for vt, filename in vision_types.items():
         vision_status[vt] = (project_path / 'validation' / filename).exists()
@@ -1687,6 +1778,7 @@ def get_vision_status(project_name: str) -> dict[str, Any]:
         'sondeig': 'sondeig_extracted.json',
         'sondeig_annex': 'sondeig_annex_extracted.json',
         'docs': 'docs_extracted.json',
+        'projecte_arquitecte': 'projecte_extracted.json',
     }
     status = {}
     for key, filename in vision_files.items():

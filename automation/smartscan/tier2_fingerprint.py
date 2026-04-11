@@ -69,6 +69,16 @@ ROLE_FINGERPRINTS: dict[str, dict] = {
         'max_pages': 5,
         'typical_pages': (1, 3),
     },
+    'architect_project': {
+        'keywords': ['arquitecte', 'arquitecto', 'promotor', 'planta',
+                     'alçat', 'alzado', 'façana', 'fachada', 'parcel·la',
+                     'parcela', 'superfície', 'superficie', 'normativa',
+                     'urbanística', 'urbanistica', 'projecte', 'proyecto'],
+        'page_profile': 'vector',
+        'producer_hints': ['AutoCAD', 'Revit', 'ArchiCAD', 'DWG'],
+        'min_pages': 4,
+        'typical_pages': (5, 40),
+    },
     'correlation_section': {
         'keywords': [
             'tall', 'corte', 'correlació', 'correlación',
@@ -328,7 +338,7 @@ def _score_pdf_role(
 
     # Keyword ratio (how many of the expected keywords are present)
     kw_ratio = keyword_hits / len(keywords)
-    if kw_ratio < 0.15:
+    if kw_ratio < 0.25:
         return 0.0
 
     # Page profile match

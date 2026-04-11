@@ -20,6 +20,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       content_pdf: 35
       content_docx: 35
       groq_llm: 42
@@ -97,6 +98,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 15
+      projecte_vision: 25
       pressupost_pdf: 40
       groq_llm: 45
       content_email: 43
@@ -112,6 +114,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       pressupost_pdf: 30
       groq_llm: 42
       content_email: 43
@@ -130,6 +133,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       pressupost_pdf: 30
       dades_camp_excel: 35
       groq_llm: 42
@@ -149,6 +153,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       pressupost_pdf: 30
       dades_camp_excel: 35
       groq_llm: 42
@@ -183,6 +188,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       pressupost_pdf: 30
       groq_llm: 42
       content_email: 43
@@ -198,6 +204,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       pressupost_pdf: 30
       groq_llm: 42
       content_email: 43
@@ -205,7 +212,7 @@ concepts:
       content_docx: 45
 
   superficie_parcela:
-    type: text
+    type: numeric
     group: building
     required: true
     wizard_field: superficie_parcela_m2
@@ -213,6 +220,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       cadastre_api: 30
       pressupost_pdf: 30
       groq_llm: 42
@@ -221,7 +229,7 @@ concepts:
       content_docx: 45
 
   superficie_construida:
-    type: text
+    type: numeric
     group: building
     required: true
     wizard_field: superficie_construida_m2
@@ -229,6 +237,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       pressupost_pdf: 30
       groq_llm: 42
       content_email: 43
@@ -254,6 +263,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       pressupost_pdf: 30
       groq_llm: 42
       content_pdf: 45
@@ -267,6 +277,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       pressupost_pdf: 30
       groq_llm: 42
       content_pdf: 45
@@ -280,6 +291,7 @@ concepts:
     source_priority:
       user: 10
       planol_vision: 20
+      projecte_vision: 25
       pressupost_pdf: 30
       groq_llm: 42
       content_pdf: 45
@@ -560,6 +572,33 @@ concepts:
     source_priority:
       user: 10
 
+  qa_value:
+    type: numeric
+    group: geotechnical
+    required: false
+    description_ca: Pressio admissible del terreny (kg/cm2)
+    source_priority:
+      user: 10
+      computed: 20
+
+  k30_value:
+    type: numeric
+    group: geotechnical
+    required: false
+    description_ca: Coeficient de balast referit a placa de 30 cm (kg/cm3)
+    source_priority:
+      user: 10
+      computed: 20
+
+  settlement_cm:
+    type: numeric
+    group: geotechnical
+    required: false
+    description_ca: Assentament maxim previst en centimetres
+    source_priority:
+      user: 10
+      computed: 20
+
   historia_geologica_template:
     type: text
     group: geotechnical
@@ -725,6 +764,7 @@ concepts:
     description_ca: Referencia cadastral de 14 caracters
     source_priority:
       user: 10
+      projecte_vision: 25
       cadastre_api: 30
       geocode_nominatim: 40
 

@@ -3,7 +3,7 @@ Last updated: 2026-04-11
 
 ## Current State
 
-**Accuracy 60.9%. is_anthropized amb observació visual implementat. SmartScan multi-fitxer implementat (role_files). 203 tests. Pendent: instal·lació Eva, settlement, seismic_ab.**
+**Visió exhaustiva implementada (4 fases). Pipeline processa TOTS els PDFs visuals multi-pàgina, no només primaris SmartScan. Experiment validat: superficie_construida MATCH, parcela MATCH, plantes MATCH, zero falsos positius. 203 tests.**
 
 ## Accuracy (diagnostic 2026-04-10, amb LLM judge)
 
@@ -12,20 +12,30 @@ Last updated: 2026-04-11
 | **Overall accuracy** | 60.9% |
 | **Millora sessió 2026-04-10** | +23.2pp (37.7% → 60.9%) |
 
-## Done (2026-04-11)
+**Pendent re-diagnòstic** amb visió exhaustiva — esperat millora significativa en superficie_construida, building_height, num_floors.
 
-- [x] **is_anthropized**: radio buttons buits (no switch amb default True) + descripció visual terreny des de fotos de camp (gpt-4.1-mini, ~$0.01/projecte). None propagat per backend.
-- [x] **SmartScan multi-fitxer**: `role_files` secció amb TOTS els fitxers per rol (additivament, `roles` intacte). Impacte: Alcoletge 16→10 unassigned, Bell-Lloc 21→15 unassigned + 8 WhatsApp recuperats.
-- [x] **WhatsApp photos**: nou rol `field_photo` (abans IGNORED com "photo_or_acceptance")
-- [x] **Consumers actualitzats**: image_manager (multi-photo discovery), fileminer (role_files fallback)
-- [x] 203 tests (197 + 6 nous role_files)
+## Done (2026-04-11, sessió 2)
+
+- [x] **Experiment visió exhaustiva**: Linyola 11p ($0.013), Anciles 35p ($0.036), Castellar negatiu 0 falsos positius
+- [x] **Nou prompt `PROJECTE_ARQUITECTE`**: extracció multi-pàgina (normativa, superfícies, alçades, plantes)
+- [x] **`_discover_multipage_pdfs()`**: detecció per metadades PDF (creator=AutoCAD, pages>3, scoring)
+- [x] **Merge al wizard**: `projecte_extracted.json` amb prioritat inferior a planol (omple camps buits)
+- [x] **SmartScan fixes**: threshold 0.15→0.25, scopes subcarpetes, patrons espanyols (PLANOS, DG)
+- [x] **Conceptes**: superficie_construida/parcela → numeric, `projecte_vision` source (25), qa_value/k30_value/settlement_cm nous
+- [x] 203 tests (0 regressions)
+
+## Done (2026-04-11, sessió 1)
+
+- [x] **is_anthropized**: radio buttons buits + descripció visual terreny
+- [x] **SmartScan multi-fitxer**: `role_files` amb TOTS els fitxers per rol
+- [x] **WhatsApp photos**: nou rol `field_photo`
 
 ## Done (2026-04-10)
 
 - [x] Qa variable cap + rounding 0.5 kg/cm2
 - [x] site_condition auto des de ICGC slope (4 variants)
 - [x] Cross-source lab deduction, coordinate validation
-- [x] LLM judge, SmartScan Tier 3 multi-page, LLM synthesis priority, PASS category
+- [x] LLM judge, SmartScan Tier 3 multi-page, LLM synthesis priority
 
 ## Done (2026-04-05)
 
@@ -40,6 +50,8 @@ Last updated: 2026-04-11
 
 ## Next Milestones
 
+- [ ] Re-diagnòstic amb visió exhaustiva (esperat +10-15pp accuracy)
+- [ ] Provenance UI: badges valors competidors al wizard (quan conflictes reals)
 - [ ] Settlement phrase parsing, seismic_ab, adjacents orientation
 - [ ] Test amb projecte nou real
 - [ ] Instal·lació a Eva
