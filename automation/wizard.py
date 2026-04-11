@@ -147,7 +147,7 @@ class UserDataWizard:
         self._generate_template_prefills()
 
     def _load_defaults(self) -> None:
-        self._set_prefill('is_anthropized', True, 'default estandard')
+        # is_anthropized has no default — Eva must decide via radio buttons
         self._set_prefill('foundation_depth_m', 0.3, 'default estandard')
         self._set_prefill('num_soil_levels', 1, 'default estandard')
         self._set_prefill('has_basement', False, 'default estandard')

@@ -73,6 +73,147 @@ def list_projects() -> list[dict[str, str]]:
     return projects
 
 
+def _observe_terrain_photos(project_path: Path, file_mapping_roles: dict) -> str:
+    """Observe field photos and return a brief terrain description.
+
+    Uses OpenAI vision (gpt-4.1-mini) to describe terrain surface, vegetation,
+    slopes, and nearby structures. The text helps Eva decide is_anthropized
+    but does NOT make the decision itself.
+
+    Returns empty string on any failure (missing photos, no API key, API error).
+    """
+    import re
+
+    try:
+        import httpx
+    except ImportError:
+        return ''
+
+    api_key = config.OPENAI_API_KEY
+    if not api_key:
+        return ''
+
+    # Find photos directory
+    photos_dir = None
+    fm_photos = file_mapping_roles.get('photos_dir', {})
+    if isinstance(fm_photos, dict) and fm_photos.get('path'):
+        candidate = project_path / fm_photos['path']
+        if candidate.is_dir():
+            photos_dir = candidate
+
+    if not photos_dir:
+        for dirname in ('FOTOGRAFIES', 'FOTOS DE CAMP', 'Fotografies', 'fotos'):
+            candidate = project_path / dirname
+            if candidate.is_dir():
+                photos_dir = candidate
+                break
+
+    if not photos_dir:
+        return ''
+
+    # Collect all image files recursively
+    image_exts = {'.jpg', '.jpeg', '.png'}
+    all_images: list[Path] = []
+    for ext in image_exts:
+        all_images.extend(photos_dir.rglob(f'*{ext}'))
+        all_images.extend(photos_dir.rglob(f'*{ext.upper()}'))
+    # Deduplicate (rglob .jpg and .JPG may overlap on case-insensitive FS)
+    all_images = list({p.resolve(): p for p in all_images}.values())
+
+    # Filter out document-like images (field data sheets, croquis)
+    skip_keywords = ('penetrometre', 'full de camp', 'croquis', 'fitxa', 'acta')
+    filtered: list[Path] = []
+    for img in all_images:
+        name_lower = img.stem.lower()
+        if any(kw in name_lower for kw in skip_keywords):
+            continue
+        filtered.append(img)
+
+    if not filtered:
+        return ''
+
+    # Prioritize selection: vista/general photos first, then P1-P4, then rest
+    priority_keywords = ('vista', 'general', 'des de', 'des del', 'interior', 'zona', 'empl')
+    tier1: list[Path] = []  # panoramic/overview
+    tier2: list[Path] = []  # P1-P4 numbered photos
+    tier3: list[Path] = []  # everything else (WhatsApp, etc.)
+
+    for img in filtered:
+        name_lower = img.stem.lower()
+        if any(kw in name_lower for kw in priority_keywords):
+            tier1.append(img)
+        elif re.match(r'^p\d', name_lower):
+            tier2.append(img)
+        else:
+            tier3.append(img)
+
+    selected = (tier1 + tier2 + tier3)[:5]
+    if not selected:
+        return ''
+
+    # Encode images to base64
+    from web.vision_groq import _file_to_images
+    b64_images: list[str] = []
+    for img_path in selected:
+        try:
+            imgs = _file_to_images(img_path, dpi=150, max_pages=1)
+            if imgs:
+                b64_images.append(imgs[0])
+        except Exception:
+            continue
+
+    if not b64_images:
+        return ''
+
+    # Build vision request
+    prompt = (
+        "Descriu breument el que observes del terreny i l'entorn visible en "
+        "aquestes fotografies de camp d'un estudi geotecnic. Centra't en: "
+        "superficie del sol (natural, remogut, pavimentat, runa), vegetacio, "
+        "pendents, i presencia d'edificacions o infraestructures adjacents. "
+        "Dues o tres frases curtes."
+    )
+
+    content: list[dict] = [{"type": "text", "text": prompt}]
+    for b64_img in b64_images:
+        content.append({
+            "type": "image_url",
+            "image_url": {"url": f"data:image/jpeg;base64,{b64_img}"},
+        })
+
+    payload = {
+        "model": config.VISION_MODEL_OPENAI,
+        "messages": [
+            {"role": "system", "content": "Ets un observador de camp geotecnic. Respon en catala."},
+            {"role": "user", "content": content},
+        ],
+        "temperature": 0.0,
+        "max_tokens": 300,
+    }
+
+    try:
+        with httpx.Client(timeout=30.0) as client:
+            resp = client.post(
+                "https://api.openai.com/v1/chat/completions",
+                json=payload,
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+            )
+        if resp.status_code != 200:
+            logger.warning("Terrain observation vision call failed: HTTP %d", resp.status_code)
+            return ''
+
+        data = resp.json()
+        text = data.get('choices', [{}])[0].get('message', {}).get('content', '')
+        return text.strip()
+
+    except Exception as e:
+        logger.warning("Terrain observation failed: %s", e)
+        return ''
+
+
 def _fill_missing_adjacents(merged: dict[str, Any], project_path: Path) -> None:
     """Run adjacents detection from planol address when auto_extract skipped it.
 
@@ -375,15 +516,22 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
             else:
                 # We have real anthropization data (from ortho, user, etc.)
                 is_anthro = _get_val('is_anthropized')
-                anthro = is_anthro and str(is_anthro).lower() not in ('false', '0', '')
-                if slope_val > 10 and not anthro:
-                    qualifier = "Es tracta d'un solar no antropitzat"
-                elif slope_val > 10:
-                    qualifier = "Tot i no ser un solar pla"
-                elif anthro:
-                    qualifier = "Degut a que es tracta d'un solar antropitzat"
+                if not is_anthro or is_anthro.lower() in ('none', ''):
+                    # No decision made — use slope only
+                    if slope_val > 10:
+                        qualifier = "Tot i no ser un solar pla"
+                    else:
+                        qualifier = "Com que es tracta d'un solar pla"
                 else:
-                    qualifier = "Com que es tracta d'un solar pla"
+                    anthro = str(is_anthro).lower() not in ('false', '0')
+                    if slope_val > 10 and not anthro:
+                        qualifier = "Es tracta d'un solar no antropitzat"
+                    elif slope_val > 10:
+                        qualifier = "Tot i no ser un solar pla"
+                    elif anthro:
+                        qualifier = "Degut a que es tracta d'un solar antropitzat"
+                    else:
+                        qualifier = "Com que es tracta d'un solar pla"
 
             site_cond = (
                 f"{qualifier}, no s'han detectat marques i/o indicis de processos "
@@ -1385,6 +1533,22 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
 
     # LLM synthesis for building_type, architect/client, location_sentence
     _synthesize_with_llm(merged, project_path)
+
+    # Terrain observation from field photos (for is_anthropized decision)
+    if not merged.get('terrain_observation'):
+        fm_path = project_path / 'file_mapping.json'
+        fm_roles = {}
+        if fm_path.exists():
+            try:
+                fm_roles = json.loads(fm_path.read_text()).get('roles', {})
+            except Exception:
+                pass
+        obs = _observe_terrain_photos(project_path, fm_roles)
+        if obs:
+            merged['terrain_observation'] = {
+                'value': obs,
+                'source': 'vision (fotos camp)',
+            }
 
     # -- Format learning detection ---
     # Check if any mined files have unrecognized formats

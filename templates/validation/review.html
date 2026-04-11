@@ -1323,6 +1323,41 @@
             font-size: 14px;
             color: #333;
         }
+        .radio-decision-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .radio-decision-options {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .radio-decision-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .radio-decision-options input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #27ae60;
+            cursor: pointer;
+        }
+        .terrain-observation {
+            font-size: 12px;
+            color: #6b7280;
+            font-style: italic;
+            line-height: 1.4;
+            padding: 6px 10px;
+            background: #f9fafb;
+            border-left: 3px solid #d1d5db;
+            border-radius: 0 4px 4px 0;
+            max-width: 500px;
+        }
         .soil-levels-container {
             display: flex;
             flex-direction: column;
@@ -1765,10 +1800,17 @@
 
                 <div class="prequestion-field">
                     <label>El terreny esta antropitzat? (reblerts, alteracions)</label>
-                    <div class="toggle-switch-container">
-                        <button type="button" class="toggle-switch active" id="pq-is_anthropized" onclick="toggleSwitch(this)"></button>
-                        <span class="toggle-switch-label" id="pq-is_anthropized-label">Si</span>
+                    <div class="radio-decision-options">
+                        <label>
+                            <input type="radio" name="pq_is_anthropized" id="pq-is_anthropized-yes" value="true">
+                            Si
+                        </label>
+                        <label>
+                            <input type="radio" name="pq_is_anthropized" id="pq-is_anthropized-no" value="false">
+                            No
+                        </label>
                     </div>
+                    <div class="terrain-observation" id="pq-terrain-observation-text" style="display:none"></div>
                 </div>
 
                 <div class="prequestion-field">
@@ -1991,11 +2033,22 @@
                         <div class="wizard-group">
                             <div class="wizard-group-header">Parametres</div>
                             <div class="wizard-group-body">
-                                <div class="wizard-field">
+                                <div class="wizard-field full-width">
                                     <label>Terreny antropitzat <span class="source-badge" id="src-is_anthropized"></span></label>
-                                    <div class="toggle-switch-container">
-                                        <button type="button" class="toggle-switch active" id="wiz-is_anthropized" onclick="toggleSwitch(this); markWizardDirty('is_anthropized')"></button>
-                                        <span class="toggle-switch-label" id="wiz-is_anthropized-label">Si</span>
+                                    <div class="radio-decision-container">
+                                        <div class="radio-decision-options">
+                                            <label>
+                                                <input type="radio" name="is_anthropized" id="wiz-is_anthropized-yes" value="true"
+                                                       onchange="markWizardDirty('is_anthropized')">
+                                                Si
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="is_anthropized" id="wiz-is_anthropized-no" value="false"
+                                                       onchange="markWizardDirty('is_anthropized')">
+                                                No
+                                            </label>
+                                        </div>
+                                        <div class="terrain-observation" id="terrain-observation-text" style="display:none"></div>
                                     </div>
                                 </div>
                                 <div class="wizard-field">
@@ -3415,32 +3468,35 @@
 
         function showPreQuestions() {
             // Pre-populate from existing user_data if available
-            const btn = document.getElementById('pq-is_anthropized');
             const val = wizardUserData.is_anthropized;
-            if (val === false || val === 'false' || val === '0') {
-                btn.classList.remove('active');
-                document.getElementById('pq-is_anthropized-label').textContent = 'No';
-            } else {
-                btn.classList.add('active');
-                document.getElementById('pq-is_anthropized-label').textContent = 'Si';
+            if (val === true || val === 'true') {
+                document.getElementById('pq-is_anthropized-yes').checked = true;
+            } else if (val === false || val === 'false' || val === '0') {
+                document.getElementById('pq-is_anthropized-no').checked = true;
             }
+            // else: neither checked
             document.getElementById('pq-site_description').value = wizardUserData.site_description || '';
             document.getElementById('pq-access_description').value = wizardUserData.access_description || '';
             document.getElementById('evaPreQuestions').style.display = 'flex';
         }
 
         function submitPreQuestions() {
-            const isAnthro = document.getElementById('pq-is_anthropized').classList.contains('active');
+            const pqYes = document.getElementById('pq-is_anthropized-yes');
+            const pqNo = document.getElementById('pq-is_anthropized-no');
+            let isAnthro = null;
+            if (pqYes && pqYes.checked) isAnthro = true;
+            else if (pqNo && pqNo.checked) isAnthro = false;
+
             const siteDesc = document.getElementById('pq-site_description').value.trim();
             const accessDesc = document.getElementById('pq-access_description').value.trim();
 
-            wizardUserData.is_anthropized = isAnthro;
+            if (isAnthro !== null) wizardUserData.is_anthropized = isAnthro;
             if (siteDesc) wizardUserData.site_description = siteDesc;
             if (accessDesc) wizardUserData.access_description = accessDesc;
 
             // Mark sources as 'user' so badges show green
             wizardUserData._sources = wizardUserData._sources || {};
-            wizardUserData._sources.is_anthropized = 'user';
+            if (isAnthro !== null) wizardUserData._sources.is_anthropized = 'user';
             if (siteDesc) wizardUserData._sources.site_description = 'user';
             if (accessDesc) wizardUserData._sources.access_description = 'user';
             wizardUserData._prequestions_answered = true;
@@ -3448,10 +3504,13 @@
             // If wizard form already rendered (pipeline finished while modal open),
             // push answers directly into the DOM inputs
             if (wizardDataLoaded) {
-                const wizAnthro = document.getElementById('wiz-is_anthropized');
-                if (wizAnthro) {
-                    if (isAnthro) { wizAnthro.classList.add('active'); } else { wizAnthro.classList.remove('active'); }
-                    document.getElementById('wiz-is_anthropized-label').textContent = isAnthro ? 'Si' : 'No';
+                if (isAnthro !== null) {
+                    const wizYes = document.getElementById('wiz-is_anthropized-yes');
+                    const wizNo = document.getElementById('wiz-is_anthropized-no');
+                    if (wizYes && wizNo) {
+                        wizYes.checked = isAnthro === true;
+                        wizNo.checked = isAnthro === false;
+                    }
                     setSourceBadge('is_anthropized', 'user');
                 }
                 if (siteDesc) {
@@ -4554,8 +4613,8 @@
             }
             setSourceBadge('building_type', btVal.source);
 
-            // Boolean toggle switches
-            ['is_anthropized', 'has_basement', 'has_retaining_walls'].forEach(field => {
+            // Boolean toggle switches (has_basement, has_retaining_walls only)
+            ['has_basement', 'has_retaining_walls'].forEach(field => {
                 const { value, source } = getWizardValue(field);
                 const btn = document.getElementById(`wiz-${field}`);
                 const label = document.getElementById(`wiz-${field}-label`);
@@ -4566,6 +4625,33 @@
                 }
                 setSourceBadge(field, source);
             });
+
+            // is_anthropized radio buttons
+            {
+                const { value, source } = getWizardValue('is_anthropized');
+                if (value === true || value === 'true') {
+                    document.getElementById('wiz-is_anthropized-yes').checked = true;
+                } else if (value === false || value === 'false') {
+                    document.getElementById('wiz-is_anthropized-no').checked = true;
+                }
+                // else: neither checked (no default)
+                setSourceBadge('is_anthropized', source);
+
+                // Terrain observation tooltip
+                const obsVal = getWizardValue('terrain_observation');
+                const obsEl = document.getElementById('terrain-observation-text');
+                if (obsEl && obsVal.value) {
+                    obsEl.textContent = obsVal.value;
+                    obsEl.style.display = 'block';
+                }
+
+                // Also populate pre-questions terrain observation
+                const pqObsEl = document.getElementById('pq-terrain-observation-text');
+                if (pqObsEl && obsVal.value) {
+                    pqObsEl.textContent = obsVal.value;
+                    pqObsEl.style.display = 'block';
+                }
+            }
 
             // Num soil levels + soil type selectors
             const nslVal = getWizardValue('num_soil_levels');
@@ -5121,7 +5207,12 @@
             });
 
             // Booleans
-            fields.is_anthropized = document.getElementById('wiz-is_anthropized').classList.contains('active');
+            // terrain_observation is not saved — it's regenerated by the pipeline on each run
+            const anthroYes = document.getElementById('wiz-is_anthropized-yes');
+            const anthroNo = document.getElementById('wiz-is_anthropized-no');
+            if (anthroYes && anthroYes.checked) fields.is_anthropized = true;
+            else if (anthroNo && anthroNo.checked) fields.is_anthropized = false;
+            // If neither checked, don't set the field (Eva hasn't decided)
             fields.has_basement = document.getElementById('wiz-has_basement').classList.contains('active');
             fields.has_retaining_walls = document.getElementById('wiz-has_retaining_walls').classList.contains('active');
 

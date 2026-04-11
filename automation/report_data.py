@@ -156,7 +156,7 @@ class ReportData:
     is_sloped: bool = False
     slope_percent: float | None = None  # Pendent del terreny (%)
     slope_direction: str | None = None  # Direcció dominant del pendent
-    is_anthropized: bool = True  # Solar antropitzat (urbanitzat/modificat)
+    is_anthropized: bool | None = None  # Eva decideix via radio buttons
     slope_height_m: float | None = None  # Alçada del talús (m), per Hoek & Bray
 
     # Dades d'assaig (de dpsh_extractor)
@@ -566,7 +566,7 @@ def build_report_data(
         slope_percent=user_data.get('slope_percent'),
         slope_direction=user_data.get('slope_direction'),
         slope_height_m=user_data.get('slope_height_m'),
-        is_anthropized=user_data.get('is_anthropized', True),
+        is_anthropized=user_data.get('is_anthropized'),
         # Dades assaig
         dpsh=dpsh_data,
         sondeig_tests=user_data.get('sondeig_tests'),
@@ -837,7 +837,7 @@ def from_dict(data: dict[str, Any]) -> ReportData:
         slope_percent=site.get('slope_percent'),
         slope_direction=site.get('slope_direction'),
         slope_height_m=site.get('slope_height_m'),
-        is_anthropized=site.get('is_anthropized', True),
+        is_anthropized=site.get('is_anthropized'),
         dpsh=dpsh_data,
         has_sondeig=tests.get('has_sondeig', False),
         has_spt=tests.get('has_spt', False),

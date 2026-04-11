@@ -860,8 +860,11 @@ class ReportGenerator:
             context['access_street'] = access_match.group(1).strip() if access_match else access
 
             # Site condition
-            is_anthropized = getattr(self.report_data, 'is_anthropized', False)
-            context['site_condition'] = 'antropitzat' if is_anthropized else 'no antropitzat'
+            is_anthropized = getattr(self.report_data, 'is_anthropized', None)
+            if is_anthropized is None:
+                context['site_condition'] = 'pla'
+            else:
+                context['site_condition'] = 'antropitzat' if is_anthropized else 'no antropitzat'
 
             # Auto-fill is_sloped from ICGC MDT slope analysis
             if self.report_data.utm_x and self.report_data.utm_y:

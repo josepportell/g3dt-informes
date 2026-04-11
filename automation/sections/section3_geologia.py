@@ -1503,7 +1503,7 @@ if __name__ == '__main__':
         client: ClientData
         is_urban: bool = True
         is_sloped: bool = False
-        is_anthropized: bool = False
+        is_anthropized: bool | None = None
         dpsh: DPSHData | None = None
         soil_levels: list = dc_field(default_factory=list)
         sulfate_mg_kg: float | None = None
