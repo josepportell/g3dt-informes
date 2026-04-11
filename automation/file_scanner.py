@@ -33,7 +33,7 @@ SCANNER_VERSION = "2.2"
 ROLE_DEFINITIONS = {
     'architect_plan':       {"desc": "Planol de l'arquitecte",                   "vision_type": "planol"},
     'architect_plan_with_points': {"desc": "Planol de l'arquitecte amb punts d'assaig", "vision_type": "planol"},
-    'architect_project':    {"desc": "Projecte basic de l'arquitecte (normativa + planol)", "vision_type": "planol"},
+    'architect_project':    {"desc": "Projecte basic de l'arquitecte (normativa + planol)", "vision_type": "projecte_arquitecte"},
     'dpsh_field_sheet':     {"desc": "Full de camp DPSH (penetrometres)",         "vision_type": "dpsh"},
     'dpsh_excel':           {"desc": "Excel DPSH amb dades transcrites"},
     'sondeig_annex':        {"desc": "Annex formatat del sondeig (PDF vectorial)",   "vision_type": "sondeig_annex"},

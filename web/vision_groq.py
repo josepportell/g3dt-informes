@@ -988,7 +988,7 @@ def run_vision_groq_sync(
     # For planol vision_type, prefer architect_plan over architect_plan_with_points
     # (the "amb punts" version is Eva's annotated copy, often missing the normativa table)
     _PLANOL_ROLE_PRIORITY = [
-        'architect_plan', 'architect_project', 'architect_plan_with_points',
+        'architect_plan', 'architect_plan_with_points',
         'situation_plan', 'field_croquis',
     ]
 
