@@ -400,15 +400,24 @@ PROJECTE_ARQUITECTE_EXTRACTION_PROMPT = f'''You are a senior architect reviewing
 TASK: Scan ALL pages and extract project data. This is NOT a single-page plan — it's a complete
 project booklet with multiple sections across pages (cover, normativa tables, floor plans, sections, details).
 
-STEP 1 — QUICK PAGE SCAN:
-Scan all pages. In "pages_inventory", record ONLY pages that contain extractable data
-(normativa tables, area tables, title blocks, dimension annotations). Skip pages with only
-drawings, photos, or structural details. Keep entries brief (max 1 line each).
+STEP 1 — PAGE-BY-PAGE SCAN:
+For each page, briefly note what it contains:
+- Cover page (portada): project name, client, architect
+- Planning/normativa table: urbanistic limits vs project values
+- Floor plans (plantes): room layouts, dimensions
+- Area tables (quadre de superfícies): per-floor surface breakdowns
+- Sections/alzats: building height, floor-to-floor heights
+- Site plan (emplaçament): parcel boundaries, orientation
+- Detail pages: structural details, installations
+Record this in "pages_inventory" (page number → content type).
 
 STEP 2 — EXTRACT FROM NORMATIVA/PLANNING TABLE:
 Find the table comparing urbanistic limits ("Planejament") vs actual project values ("Projecte").
 May appear as "NORMATIVA URBANÍSTICA", "JUSTIFICACIÓ PLANEJAMENT", "PARÀMETRES URBANÍSTICS".
-Read EVERY row of BOTH columns into "planning_table_raw".
+It typically has TWO columns:
+  - Left: "Planejament" / "Ordenació" — urbanistic LIMITS (min/max from regulations)
+  - Right: "Projecte" — ACTUAL project values ← THIS is what matters
+Read EVERY row of BOTH columns into "planning_table_raw". Do NOT summarize — transcribe each row.
 
 STEP 3 — EXTRACT FROM TITLE BLOCK / COVER:
 - project_name, building_type (1-4 words: "habitatge unifamiliar aïllat", "nau industrial")
@@ -429,7 +438,11 @@ STEP 4 — EXTRACT FROM AREA TABLES / DRAWINGS:
 
 EXTRACTION RULES:
 1. Extract text EXACTLY as written (Catalan or Spanish — do not translate)
-2. Prefer "Projecte" column values over "Planejament" limits
+2. CRITICAL — Planejament vs Projecte: The planning table has TWO columns.
+   "Planejament" shows REGULATORY LIMITS (minimums/maximums from urban code).
+   "Projecte" shows ACTUAL PROJECT VALUES (what the architect designed).
+   For dimensions (parcel_area, num_floors, max_height), ALWAYS use the PROJECTE column.
+   The Planejament column may show higher/lower values — those are limits, NOT the project.
 3. If same data appears on multiple pages, prefer the most detailed/precise source
 4. Set null for fields not found
 5. CRITICAL: Check ALL pages — the data may be on page 5, 8, or later

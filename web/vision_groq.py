@@ -122,6 +122,28 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
                     "output": output_map[vtype],
                 }
 
+        # Upgrade: multi-page planol → also run as projecte_arquitecte
+        if 'planol' in vision_tasks and 'projecte_arquitecte' not in seen_types:
+            planol_file = project_path / vision_tasks['planol']['path']
+            if planol_file.exists() and planol_file.suffix.lower() == '.pdf':
+                try:
+                    import fitz
+                    doc = fitz.open(str(planol_file))
+                    page_count = len(doc)
+                    doc.close()
+                    if page_count > 5:
+                        pa_output = project_path / 'validation' / output_map['projecte_arquitecte']
+                        if force or config.G3DT_NO_CACHE or not pa_output.exists():
+                            vision_tasks['projecte_arquitecte'] = {
+                                'role': f'upgraded_planol:{vision_tasks["planol"]["role"]}',
+                                'path': vision_tasks['planol']['path'],
+                                'prompt': prompt_map['projecte_arquitecte'],
+                                'output': output_map['projecte_arquitecte'],
+                            }
+                            seen_types.add('projecte_arquitecte')
+                except ImportError:
+                    pass
+
         # Discover multi-page PDFs not assigned by SmartScan
         _discover_multipage_pdfs(vision_tasks, project_path, prompt_map, output_map, force)
 
@@ -166,7 +188,7 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
                 prompt = prompt + excel_context
 
             try:
-                pages_limit = 50 if vtype == 'projecte_arquitecte' else 5
+                pages_limit = 50 if vtype in ('projecte_arquitecte', 'planol') else 5
                 images = _file_to_images(file_path, max_pages=pages_limit)
                 if not images:
                     return vtype, False, "no images from file"
@@ -177,7 +199,8 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
                     f"{len(images)} image(s) ({file_path.name})",
                 )
 
-                result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+                tok_limit = 8192 if vtype == 'projecte_arquitecte' else 4096
+                result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT, max_tokens=tok_limit)
                 if result is None:
                     return vtype, False, "API call failed"
 
@@ -354,6 +377,7 @@ def _call_groq_vision(
     images: list[str],
     system_prompt: str,
     max_retries: int = 3,
+    max_tokens: int = 4096,
 ) -> dict | None:
     """Call Groq Vision API with images and extraction prompt.
 
@@ -382,7 +406,7 @@ def _call_groq_vision(
             {"role": "user", "content": content},
         ],
         "temperature": 0.0,
-        "max_tokens": 4096,
+        "max_tokens": max_tokens,
         "response_format": {"type": "json_object"},
     }
 
@@ -452,6 +476,7 @@ def _call_openai_vision(
     images: list[str],
     system_prompt: str,
     max_retries: int = 2,
+    max_tokens: int = 4096,
 ) -> dict | None:
     """Call OpenAI Vision API (gpt-4.1-mini) with images and extraction prompt.
 
@@ -480,7 +505,7 @@ def _call_openai_vision(
             {"role": "user", "content": content},
         ],
         "temperature": 0.0,
-        "max_tokens": 4096,
+        "max_tokens": max_tokens,
         "response_format": {"type": "json_object"},
     }
 
@@ -535,6 +560,7 @@ def _call_anthropic_vision(
     extraction_prompt: str,
     images: list[str],
     system_prompt: str,
+    max_tokens: int = 4096,
 ) -> dict | None:
     """Call Anthropic Claude API with images and extraction prompt.
 
@@ -565,7 +591,7 @@ def _call_anthropic_vision(
     try:
         response = client.messages.create(
             model=config.VISION_MODEL_ANTHROPIC,
-            max_tokens=4096,
+            max_tokens=max_tokens,
             system=system_prompt,
             messages=[{"role": "user", "content": content}],
         )
@@ -866,6 +892,34 @@ def run_vision_groq_sync(
             "output": output_map[vtype],
         }
 
+    # Upgrade: if planol candidate is a multi-page PDF (>5 pages), also run as
+    # projecte_arquitecte — the planol prompt only reads 5 pages and misses
+    # normativa tables, area breakdowns, and sections on later pages.
+    if 'planol' in vision_tasks and 'projecte_arquitecte' not in seen_types:
+        planol_file = project_path / vision_tasks['planol']['path']
+        if planol_file.exists() and planol_file.suffix.lower() == '.pdf':
+            try:
+                import fitz
+                doc = fitz.open(str(planol_file))
+                page_count = len(doc)
+                doc.close()
+                if page_count > 5:
+                    pa_output = project_path / 'validation' / output_map['projecte_arquitecte']
+                    if force_refresh or config.G3DT_NO_CACHE or not pa_output.exists():
+                        vision_tasks['projecte_arquitecte'] = {
+                            'role': f'upgraded_planol:{vision_tasks["planol"]["role"]}',
+                            'path': vision_tasks['planol']['path'],
+                            'prompt': prompt_map['projecte_arquitecte'],
+                            'output': output_map['projecte_arquitecte'],
+                        }
+                        seen_types.add('projecte_arquitecte')
+                        logger.info(
+                            "Upgraded planol to also run as projecte_arquitecte (%d pages): %s",
+                            page_count, vision_tasks['planol']['path'],
+                        )
+            except ImportError:
+                pass
+
     # Concept map fallback: when SmartScan has no role for a vision type,
     # check if concept_map.json identifies a file with relevant concepts
     _supplement_from_concept_map(vision_tasks, seen_types, prompt_map, output_map, project_path, force_refresh)
@@ -911,7 +965,7 @@ def run_vision_groq_sync(
         _emit(vtype, "active")
 
         try:
-            pages_limit = 50 if vtype == 'projecte_arquitecte' else 5
+            pages_limit = 50 if vtype in ('projecte_arquitecte', 'planol') else 5
             images = _file_to_images(file_path, max_pages=pages_limit)
             if not images:
                 _emit(vtype, "error", message="no images from file")
@@ -946,7 +1000,8 @@ def run_vision_groq_sync(
                     continue
                 call_fn, model_name = entry
                 t_call = time.monotonic()
-                result = call_fn(prompt, images, EXTRACTION_SYSTEM_PROMPT)
+                tok_limit = 8192 if vtype == 'projecte_arquitecte' else 4096
+                result = call_fn(prompt, images, EXTRACTION_SYSTEM_PROMPT, max_tokens=tok_limit)
                 elapsed_call_ms = int((time.monotonic() - t_call) * 1000)
                 log_vision_call(
                     provider=backend_name,
