@@ -718,8 +718,8 @@ def _merge_chunk_results(partials: list[dict]) -> dict:
         if pt:
             existing = merged["planning_table_raw"]
             for col in ("planejament", "projecte"):
-                existing_col = existing.get(col, {})
-                new_col = pt.get(col, {})
+                existing_col = existing.get(col) or {}
+                new_col = pt.get(col) or {}
                 if len(new_col) > len(existing_col):
                     existing[col] = new_col
 
