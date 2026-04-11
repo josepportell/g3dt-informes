@@ -3,26 +3,31 @@ Last updated: 2026-04-11
 
 ## Current State
 
-**Visió exhaustiva implementada (4 fases). Pipeline processa TOTS els PDFs visuals multi-pàgina, no només primaris SmartScan. Experiment validat: superficie_construida MATCH, parcela MATCH, plantes MATCH, zero falsos positius. 203 tests.**
+**Accuracy 61.6% (+1.1pp). Visió exhaustiva operativa: pipeline processa PDFs multi-pàgina d'arquitecte amb chunking (lots de 5p a 200 DPI). Linyola superficie_parcela MATCH, num_floors MATCH des de document que abans s'ignorava. 203 tests.**
 
-## Accuracy (diagnostic 2026-04-10, amb LLM judge)
+## Accuracy (diagnostic 2026-04-11)
 
 | Mètrica | Valor |
 |---------|-------|
-| **Overall accuracy** | 60.9% |
-| **Millora sessió 2026-04-10** | +23.2pp (37.7% → 60.9%) |
+| **Overall accuracy** | 61.6% |
+| **Millora sessió 2026-04-11** | +1.1pp (60.5% → 61.6%) |
+| **Millora acumulada** | +23.9pp (37.7% → 61.6%) |
 
-**Pendent re-diagnòstic** amb visió exhaustiva — esperat millora significativa en superficie_construida, building_height, num_floors.
+Linyola: 63.2% → 70.6% (+7.4pp). Anciles: dades riques extretes (1655m², 6.5m height) però Eva refs són codis CTE.
 
 ## Done (2026-04-11, sessió 2)
 
 - [x] **Experiment visió exhaustiva**: Linyola 11p ($0.013), Anciles 35p ($0.036), Castellar negatiu 0 falsos positius
-- [x] **Nou prompt `PROJECTE_ARQUITECTE`**: extracció multi-pàgina (normativa, superfícies, alçades, plantes)
+- [x] **Nou prompt `PROJECTE_ARQUITECTE`**: page-by-page scan + regles explícites Planejament vs Projecte
 - [x] **`_discover_multipage_pdfs()`**: detecció per metadades PDF (creator=AutoCAD, pages>3, scoring)
-- [x] **Merge al wizard**: `projecte_extracted.json` amb prioritat inferior a planol (omple camps buits)
-- [x] **SmartScan fixes**: threshold 0.15→0.25, scopes subcarpetes, patrons espanyols (PLANOS, DG)
-- [x] **Conceptes**: superficie_construida/parcela → numeric, `projecte_vision` source (25), qa_value/k30_value/settlement_cm nous
-- [x] 203 tests (0 regressions)
+- [x] **Chunking**: PDFs >5p es divideixen en lots de 5p a 200 DPI, merge per confiança
+- [x] **Auto-upgrade**: planol amb >5p genera tasca projecte_arquitecte automàticament
+- [x] **vision_type fix**: architect_project planol → projecte_arquitecte
+- [x] **max_tokens=8192** per projecte_arquitecte (vs 4096 default)
+- [x] **Merge al wizard**: projecte_extracted.json omple camps buits (prioritat < planol)
+- [x] **SmartScan fixes**: threshold 0.15→0.25, scopes subcarpetes, patrons espanyols
+- [x] **Conceptes**: superficie types → numeric, projecte_vision source, qa/k30/settlement nous
+- [x] 203 tests (0 regressions), 5 commits
 
 ## Done (2026-04-11, sessió 1)
 
@@ -50,8 +55,9 @@ Last updated: 2026-04-11
 
 ## Next Milestones
 
-- [ ] Re-diagnòstic amb visió exhaustiva (esperat +10-15pp accuracy)
-- [ ] Provenance UI: badges valors competidors al wizard (quan conflictes reals)
+- [ ] Refinar prompt projecte_arquitecte (superficie_construida confon ocupació% amb m²)
+- [ ] Investigar merge wizard per Anciles (projecte_extracted ric però no arriba al diagnòstic)
+- [ ] Provenance UI: badges valors competidors al wizard
 - [ ] Settlement phrase parsing, seismic_ab, adjacents orientation
 - [ ] Test amb projecte nou real
 - [ ] Instal·lació a Eva
