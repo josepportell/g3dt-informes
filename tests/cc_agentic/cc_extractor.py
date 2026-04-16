@@ -102,9 +102,9 @@ def _render_pdf_pages(pdf_path: Path, dpi: int = 200, max_pages: int = 10) -> li
 def _read_image_b64(image_path: Path) -> list[str]:
     """Read an image file and return as base64 JPEG list."""
     img_bytes = image_path.read_bytes()
-    is_png = img_bytes[:4] == b'\x89PNG'
+    is_jpeg = img_bytes[:2] == b'\xff\xd8'
     is_too_large = len(img_bytes) > 4 * 1024 * 1024
-    if is_png or is_too_large:
+    if not is_jpeg or is_too_large:
         try:
             from PIL import Image
             import io
@@ -214,6 +214,7 @@ def _call_vision(
         model=_MODEL,
         max_tokens=max_tokens,
         messages=[{'role': 'user', 'content': content}],
+        timeout=120.0,
     )
     elapsed = time.monotonic() - t0
 
@@ -252,7 +253,6 @@ For confidence: 1.0 = clearly legible, 0.7 = readable but uncertain, <0.5 = gues
 def _extract_via_vision(
     images_b64: list[str],
     concepts: dict[str, dict],
-    file_path: Path,
 ) -> tuple[dict[str, dict], dict]:
     """Send images to Anthropic and parse variable extractions.
 
@@ -405,7 +405,7 @@ def extract_from_files(
         elif ext == '.pdf':
             images = _render_pdf_pages(fpath, dpi=200, max_pages=10)
             if images:
-                file_results, file_usage = _extract_via_vision(images, concepts, fpath)
+                file_results, file_usage = _extract_via_vision(images, concepts)
                 total_usage['input_tokens'] += file_usage.get('input_tokens', 0)
                 total_usage['output_tokens'] += file_usage.get('output_tokens', 0)
                 total_usage['api_calls'] += 1
@@ -413,7 +413,7 @@ def extract_from_files(
         elif ext in _IMAGE_EXTENSIONS:
             images = _read_image_b64(fpath)
             if images:
-                file_results, file_usage = _extract_via_vision(images, concepts, fpath)
+                file_results, file_usage = _extract_via_vision(images, concepts)
                 total_usage['input_tokens'] += file_usage.get('input_tokens', 0)
                 total_usage['output_tokens'] += file_usage.get('output_tokens', 0)
                 total_usage['api_calls'] += 1

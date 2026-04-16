@@ -84,8 +84,14 @@ def _compare_variable(var: str, eva_val: str, cc_val: str) -> str:
 # Single-file comparison
 # ---------------------------------------------------------------------------
 
-def compare_single(result_path: Path, project: str | None) -> dict:
-    """Compare a single result JSON against Eva. Returns comparison dict."""
+def compare_single(result_path: Path, project: str | None, *, update: bool = False) -> dict:
+    """Compare a single result JSON against Eva. Returns comparison dict.
+
+    Args:
+        result_path: Path to the CC-Agentic result JSON.
+        project: Project folder name (overrides metadata).
+        update: If True, write comparison back into the result JSON file.
+    """
     result = json.loads(result_path.read_text(encoding='utf-8'))
     cc_vars = result.get('variables', {})
     meta = result.get('metadata', {})
@@ -148,10 +154,10 @@ def compare_single(result_path: Path, project: str | None) -> dict:
         'details': details,
     }
 
-    # Save comparison back into the result JSON
-    result['comparison'] = result.get('comparison', {})
-    result['comparison']['vs_eva'] = comparison
-    result_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding='utf-8')
+    if update:
+        result['comparison'] = result.get('comparison', {})
+        result['comparison']['vs_eva'] = comparison
+        result_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding='utf-8')
 
     return comparison
 
@@ -261,6 +267,7 @@ def main() -> None:
     parser.add_argument('--project', help='Project folder name (overrides metadata)')
     parser.add_argument('--cross-project', action='store_true', help='Show cross-project summary')
     parser.add_argument('--no-details', action='store_true', help='Skip per-variable table')
+    parser.add_argument('--update', action='store_true', help='Write comparison back into result JSON')
     args = parser.parse_args()
 
     # Expand globs
@@ -278,7 +285,7 @@ def main() -> None:
             print(f"File not found: {p}", file=sys.stderr)
             continue
 
-        comp = compare_single(p, args.project)
+        comp = compare_single(p, args.project, update=args.update)
         comparisons.append(comp)
 
         if not args.no_details:
