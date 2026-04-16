@@ -1,0 +1,386 @@
+{
+  "metadata": {
+    "project": "4001670 ALCOLETGE",
+    "extraction_mode": "cc_agentic_vision",
+    "extraction_date": "2026-04-16"
+  },
+  "street_address": {
+    "value": "Carrer Girasols, Nº7, Urbanització el Roser",
+    "confidence": 0.9,
+    "source_file": "A.01.pdf",
+    "note": ""
+  },
+  "municipality": {
+    "value": "Alcoletge",
+    "confidence": 0.95,
+    "source_file": "A.01.pdf + field sheets",
+    "note": ""
+  },
+  "expedient": {
+    "value": "4001670",
+    "confidence": 0.95,
+    "source_file": "folder",
+    "note": ""
+  },
+  "data_camp_text": {
+    "value": "16 de febrer de 2026",
+    "confidence": 0.9,
+    "source_file": "PENETROS.pdf",
+    "note": ""
+  },
+  "architect_name_upper": {
+    "value": "DAVID GRAUS ROBINAT",
+    "confidence": 0.9,
+    "source_file": "A.01.pdf",
+    "note": "Arquitecte tècnic col·legiat Nº 699"
+  },
+  "architect_company": {
+    "value": "2 GRAUS",
+    "confidence": 0.85,
+    "source_file": "A.01.pdf",
+    "note": ""
+  },
+  "client": {
+    "value": "ALBERT SANS BONVEHÍ",
+    "confidence": 0.9,
+    "source_file": "A.01.pdf",
+    "note": "Promotor"
+  },
+  "building_type_lower": {
+    "value": "un habitatge unifamiliar",
+    "confidence": 0.8,
+    "source_file": "A.01.pdf",
+    "note": "Projecte de tancament de porxo en habitatge unifamiliar"
+  },
+  "num_dpsh_tests": {
+    "value": "3 assaigs de penetració dinàmica tipus DPSH",
+    "confidence": 0.85,
+    "source_file": "PENETROS.pdf",
+    "note": ""
+  },
+  "dpsh_tests": {
+    "value": [
+      {
+        "test_id": "P-1",
+        "depth": "-1.60",
+        "refusal": "Si",
+        "water": "No detectat"
+      },
+      {
+        "test_id": "P-2",
+        "depth": "-2.00",
+        "refusal": "Si",
+        "water": "No detectat"
+      },
+      {
+        "test_id": "P-3",
+        "depth": "-2.00",
+        "refusal": "Si",
+        "water": "No detectat"
+      }
+    ],
+    "confidence": 0.7,
+    "source_file": "PENETROS.pdf",
+    "note": "Handwriting hard to read, circled values likely refusal"
+  },
+  "qa_value": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "settlement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "geotech_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "cte_edificacio": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "cte_sol": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "perm_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "seismic_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "seismic_ab_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "radon_zone": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "radon_zone_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "csn_radon_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "geo_p": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "site_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "site_condition": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "access_street": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "materials_intro": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "photo_site_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "building_structure_desc": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "data_signatura_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "table_dpsh_range": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "lab_field_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "lab_testing_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "conclusions_levels_detected": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "conclusions_water_statement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "conclusions_aggressivity_statement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "plantes": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "superficie_parcela": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "superficie_construida": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "cota_referencia": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "sondeig_tests": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "location_sentence": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "spt_n30": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "spt_lithology": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "spt_location": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "spt_test_id": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "spt_depth_range": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "sulfate_value": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "sulfate_classification": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "sulfate_baumann": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "sulfate_level_name": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "lab_field_company": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "lab_testing_company": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "lab_sample_id": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "lab_location": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "lab_depth": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "lab_tests_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "adjacent_north_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "adjacent_south_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "adjacent_east_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  },
+  "adjacent_west_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No lab PDF / requires computation/API/planol detail"
+  }
+}

@@ -1,0 +1,383 @@
+{
+  "metadata": {
+    "project": "4001679 ANCILES",
+    "extraction_mode": "cc_agentic_vision",
+    "extraction_date": "2026-04-16"
+  },
+  "municipality": {
+    "value": "Anciles",
+    "confidence": 0.9,
+    "source_file": "field sheets",
+    "note": ""
+  },
+  "expedient": {
+    "value": "4001679",
+    "confidence": 0.95,
+    "source_file": "folder",
+    "note": ""
+  },
+  "data_camp_text": {
+    "value": "19 de febrer de 2026",
+    "confidence": 0.9,
+    "source_file": "PENETROS+SONDEIGS.pdf",
+    "note": ""
+  },
+  "num_dpsh_tests": {
+    "value": "6 assaigs de penetració dinàmica tipus DPSH",
+    "confidence": 0.85,
+    "source_file": "PENETROS+SONDEIGS.pdf",
+    "note": ""
+  },
+  "dpsh_tests": {
+    "value": [
+      {
+        "test_id": "P-1",
+        "depth": "-3.58",
+        "refusal": "Si"
+      },
+      {
+        "test_id": "P-2",
+        "depth": "-4.59",
+        "refusal": "Si"
+      },
+      {
+        "test_id": "P-3",
+        "depth": "-3.77",
+        "refusal": "Si"
+      }
+    ],
+    "confidence": 0.7,
+    "source_file": "PENETROS+SONDEIGS.pdf",
+    "note": "Only 3 of 6 visible on page 2"
+  },
+  "qa_value": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "settlement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "geotech_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "cte_edificacio": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "cte_sol": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "perm_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "seismic_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "seismic_ab_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "radon_zone": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "radon_zone_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "csn_radon_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "geo_p": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "site_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "site_condition": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "access_street": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "materials_intro": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "photo_site_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "building_structure_desc": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "data_signatura_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "table_dpsh_range": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "lab_field_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "lab_testing_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "conclusions_levels_detected": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "conclusions_water_statement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "conclusions_aggressivity_statement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "client": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "street_address": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "architect_name_upper": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "architect_company": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "building_type_lower": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "plantes": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "superficie_parcela": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "superficie_construida": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "cota_referencia": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "sondeig_tests": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "location_sentence": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "spt_n30": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "spt_lithology": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "spt_location": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "spt_test_id": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "spt_depth_range": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "sulfate_value": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "sulfate_classification": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "sulfate_baumann": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "sulfate_level_name": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "lab_field_company": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "lab_testing_company": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "lab_sample_id": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "lab_location": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "lab_depth": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "lab_tests_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "adjacent_north_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "adjacent_south_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "adjacent_east_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  },
+  "adjacent_west_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "No planol/lab PDF/sondeig annex / requires computation/API"
+  }
+}

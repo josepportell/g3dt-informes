@@ -1,0 +1,372 @@
+{
+  "metadata": {
+    "project": "4001612 BELL-LLOC",
+    "extraction_mode": "cc_only",
+    "extraction_date": "2026-04-16",
+    "files_read": [
+      "ACCEPTACIO/DADES CLIENT.txt",
+      "ANNEXES/ALTRES/COORDENADES.txt",
+      "ANNEXES/4001612_DPSH.xls",
+      "A.01.pdf",
+      "PENETROS.pdf (pages 1-2)",
+      "SONDEIG.pdf (pages 1-3)",
+      "4677-GTL-25 Bell-Lloc d'Urgell.pdf (pages 1-5)",
+      "PDF/ANNEXES/4001612_sondeig.pdf (page 1)"
+    ],
+    "notes": "Single-pass CC-only extraction. No agentic vision (no crop/zoom). No computation, no API calls."
+  },
+
+  "access_street": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Narrative synthesis required. Raw data: south = Carrer Antoni Bellet, east = Carrer Mestre Ramon Ortiz"
+  },
+  "building_structure_desc": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Narrative synthesis. Planol says Pb+1Pp but Eva wrote 'en planta baixa' (professional judgment)"
+  },
+  "cte_edificacio": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires CTE computation from building parameters"
+  },
+  "cte_sol": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires CTE computation from soil parameters"
+  },
+  "data_camp_text": {
+    "value": "1 d'octubre de 2025",
+    "confidence": 0.90,
+    "source_file": "PENETROS.pdf",
+    "note": "Date 1-10-25 on DPSH field sheet, confirmed by sondeig annex dates"
+  },
+  "data_signatura_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Report signature date not in source files (set by Eva when signing)"
+  },
+  "dpsh_tests": {
+    "value": [
+      {"test_id": "P-1", "cota": "+199.50", "depth": "-1.35", "refusal": "Si", "water": "No detectat"},
+      {"test_id": "P-2", "cota": "+199.50", "depth": "-2.45", "refusal": "Si", "water": "No detectat"}
+    ],
+    "confidence": 0.85,
+    "source_file": "PENETROS.pdf + DPSH.xls + sondeig annex (Z=199.50)",
+    "note": "Refusal depths from handwritten annotations R 1,35 and R 2,45. Cota from sondeig annex Z."
+  },
+  "expedient": {
+    "value": "4001612",
+    "confidence": 0.95,
+    "source_file": "folder name + lab report",
+    "note": "Folder '4001612 BELL-LLOC' + lab report mentions 4001612"
+  },
+  "geotech_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires Terzaghi calculation + geomechanical correlations"
+  },
+  "lab_depth": {
+    "value": "Profunditat:  -1.0  a -1.60 m",
+    "confidence": 0.95,
+    "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "note": "Page 2: Cota d'extracció 1.0 - 1.6 m"
+  },
+  "lab_location": {
+    "value": "Punt: S-1",
+    "confidence": 0.90,
+    "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "note": "Sample SPT1 S1 → borehole S-1"
+  },
+  "lab_sample_id": {
+    "value": "Mostra : SPT-1",
+    "confidence": 0.90,
+    "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "note": "Sample reference SPT1 S1 → SPT-1"
+  },
+  "lab_tests_text": {
+    "value": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+    "confidence": 0.85,
+    "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "note": "Page 2: Determinació del contingut en ió sulfat en sòls UNE 83963/08"
+  },
+  "location_sentence": {
+    "value": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz",
+    "confidence": 0.90,
+    "source_file": "PDF/ANNEXES/4001612_sondeig.pdf",
+    "note": "From obra description: 'ENTRE EL CARRER ANTONI BELLET I EL CARRER MESTRE RAMON ORTIZ'"
+  },
+  "municipality": {
+    "value": "Bell-lloc d'Urgell",
+    "confidence": 0.95,
+    "source_file": "A.01.pdf + DADES CLIENT.txt + sondeig annex",
+    "note": "Consistent across multiple sources"
+  },
+  "num_dpsh_tests": {
+    "value": "2 assaigs de penetració dinàmica tipus DPSH (veure annex \"Resultats dels assaigs\")",
+    "confidence": 0.80,
+    "source_file": "PENETROS.pdf",
+    "note": "2 penetrometers (P-1 and P-2) visible in field sheet"
+  },
+  "perm_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation from soil type"
+  },
+  "plantes": {
+    "value": "Pb+1Pp",
+    "confidence": 0.95,
+    "source_file": "A.01.pdf",
+    "note": "Planejament table: N. plantes = Pb+1Pp"
+  },
+  "qa_value": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires Terzaghi-Peck calculation"
+  },
+  "seismic_ab_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires NCSE-02 lookup by municipality"
+  },
+  "seismic_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires seismic computation"
+  },
+  "settlement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires Schmertmann settlement calculation"
+  },
+  "site_condition": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Narrative synthesis. Could compose from 'solar antropitzat' observation but exact wording unknown"
+  },
+  "sondeig_tests": {
+    "value": [
+      {"test_id": "S-1", "cota": "+199.50", "depth": "-1.80", "spt": "Si", "water": "No detectat"}
+    ],
+    "confidence": 0.90,
+    "source_file": "PDF/ANNEXES/4001612_sondeig.pdf",
+    "note": "Formatted annex: S-1, Z=199.50, depth 1.80m, 1 SPT"
+  },
+  "spt_depth_range": {
+    "value": "-1.00 a 1.60",
+    "confidence": 0.95,
+    "source_file": "PDF/ANNEXES/4001612_sondeig.pdf",
+    "note": "SPT-1 extraction depth 1.00 to 1.60m"
+  },
+  "spt_lithology": {
+    "value": "Graves en matriu sorrenca",
+    "confidence": 0.85,
+    "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf + sondeig annex",
+    "note": "Lab report p2: 'Grava amb matriu sorrenca'. Annex: 'Graves incloses en matriu sorrenca d'aspectes carbonatats'"
+  },
+  "spt_location": {
+    "value": "S-1",
+    "confidence": 0.95,
+    "source_file": "PDF/ANNEXES/4001612_sondeig.pdf",
+    "note": "SPT-1 in borehole S-1"
+  },
+  "spt_n30": {
+    "value": "54",
+    "confidence": 0.50,
+    "source_file": "PDF/ANNEXES/4001612_sondeig.pdf",
+    "note": "SPT blows: 24, 34, 28, 30. Standard N30=34+28=62 or 28+30=58. Known ambiguity. Value 54 uncertain."
+  },
+  "spt_test_id": {
+    "value": "SPT-1",
+    "confidence": 0.95,
+    "source_file": "PDF/ANNEXES/4001612_sondeig.pdf",
+    "note": "SPT-1 clearly labeled in annex"
+  },
+  "sulfate_baumann": {
+    "value": "---",
+    "confidence": 0.90,
+    "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "note": "Page 4 results summary: Baumann-Gully row empty"
+  },
+  "sulfate_classification": {
+    "value": "No Agressius",
+    "confidence": 0.80,
+    "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "note": "89.8 mg/kg SO4 << 2000 mg/kg threshold (RD 470/2021). Classification derived."
+  },
+  "sulfate_level_name": {
+    "value": "1er nivell",
+    "confidence": 0.85,
+    "source_file": "PDF/ANNEXES/4001612_sondeig.pdf",
+    "note": "Single geological level (NIVELL 1)"
+  },
+  "sulfate_value": {
+    "value": "89.8",
+    "confidence": 0.95,
+    "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "note": "Page 3: Contingut en SO4 = 89.8 mg/kg"
+  },
+  "superficie_construida": {
+    "value": "280+86",
+    "confidence": 0.30,
+    "source_file": "A.01.pdf",
+    "note": "Planol shows ocupació=296.80 m2 and IEN=397.00 m2. Neither matches '280+86'=366. Cannot derive exact value from single-pass reading."
+  },
+  "superficie_parcela": {
+    "value": "995",
+    "confidence": 0.95,
+    "source_file": "A.01.pdf",
+    "note": "Planejament table: Parcel·la mínima projecte = 995.00 m2"
+  },
+  "table_dpsh_range": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires specific DPSH range computation for narrative table"
+  },
+  "client": {
+    "value": "RAMON MITJANA S.L",
+    "confidence": 0.95,
+    "source_file": "ACCEPTACIO/DADES CLIENT.txt + A.01.pdf",
+    "note": "DADES CLIENT: 'RAMON MITJANA SL', planol promotor: 'RAMON MITJANA SL'"
+  },
+  "architect_name_upper": {
+    "value": "JORDI BOSCH NOVELL",
+    "confidence": 0.95,
+    "source_file": "A.01.pdf",
+    "note": "Title block: Arquitecte = Jordi Bosch Novell"
+  },
+  "architect_company": {
+    "value": "ARQUITECTURA BOSCH NOVELL",
+    "confidence": 0.95,
+    "source_file": "A.01.pdf",
+    "note": "Logo and text in title block"
+  },
+  "building_type_lower": {
+    "value": "un habitatge unifamiliar",
+    "confidence": 0.85,
+    "source_file": "A.01.pdf",
+    "note": "Title block: 'HABITATGE UNIFAMILIAR AÏLLAT'. Eva uses 'un habitatge unifamiliar' (lowercase, with article)"
+  },
+  "adjacent_east_fmt": {
+    "value": "Per la part est amb el Carrer Mestre Ramon Ortiz.",
+    "confidence": 0.90,
+    "source_file": "A.01.pdf",
+    "note": "Drawing clearly shows CARRER MESTRE RAMON ORTIZ on east side"
+  },
+  "adjacent_south_fmt": {
+    "value": "Per la part sud amb el Carrer Antoni Bellet.",
+    "confidence": 0.90,
+    "source_file": "A.01.pdf",
+    "note": "Drawing clearly shows CARRER ANTONI BELLET on south side"
+  },
+  "adjacent_north_fmt": {
+    "value": "Per la part nord amb una parcel·la buida.",
+    "confidence": 0.40,
+    "source_file": "A.01.pdf",
+    "note": "Cadastre/aerial view shows parcel to north. Appears empty but hard to confirm from plan alone."
+  },
+  "adjacent_west_fmt": {
+    "value": "I finalment, per la part oest, amb una parcel·la amb una construcció.",
+    "confidence": 0.35,
+    "source_file": "A.01.pdf",
+    "note": "Aerial photo suggests building to west but very hard to confirm at this resolution"
+  },
+  "site_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Full narrative synthesis required"
+  },
+  "lab_field_company": {
+    "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "confidence": 0.85,
+    "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "note": "Left margin: 'TPS, PROSPECCIÓ DEL SUBSOL, SL'. Field work by TPS."
+  },
+  "lab_field_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Narrative description of lab field services — requires template"
+  },
+  "lab_testing_company": {
+    "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "confidence": 0.85,
+    "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "note": "Left margin: 'TPS, PROSPECCIÓ DEL SUBSOL, SL'. Lab is Soilassaig (brand of TPS)."
+  },
+  "lab_testing_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Narrative description of lab testing services — requires template"
+  },
+  "radon_zone": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires CSN radon database lookup"
+  },
+  "radon_zone_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires CSN radon database"
+  },
+  "csn_radon_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires CSN radon database"
+  },
+  "conclusions_levels_detected": {
+    "value": "Es detecta un sol nivell de materials des del punt de vista geotècnic",
+    "confidence": 0.70,
+    "source_file": "PDF/ANNEXES/4001612_sondeig.pdf",
+    "note": "Single NIVELL 1 in annex → 1 geotechnical level. Exact wording is approximate."
+  },
+  "conclusions_water_statement": {
+    "value": "En data de la realització dels treballs de camp, i fins la cota investigada, no s'ha detectat nivell freàtic",
+    "confidence": 0.65,
+    "source_file": "PENETROS.pdf + SONDEIG.pdf",
+    "note": "Both field sheets indicate no water. Exact wording is approximate."
+  },
+  "conclusions_aggressivity_statement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Narrative synthesis with specific RD 470/2021 reference required"
+  },
+  "photo_site_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires reading photographs and composing caption text"
+  },
+  "materials_intro": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Category C: requires vocabulary from multiple reports"
+  },
+  "geo_p": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires ICGC geological database"
+  }
+}

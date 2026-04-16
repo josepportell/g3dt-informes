@@ -1,0 +1,386 @@
+{
+  "metadata": {
+    "project": "3001631 RUBI",
+    "extraction_mode": "cc_agentic_vision",
+    "extraction_date": "2026-04-16"
+  },
+  "street_address": {
+    "value": "Carrer Miranda",
+    "confidence": 0.85,
+    "source_file": "PENETROS.pdf + lab report",
+    "note": "C/ de la Miranda"
+  },
+  "municipality": {
+    "value": "Rubí",
+    "confidence": 0.95,
+    "source_file": "field sheets + lab report",
+    "note": ""
+  },
+  "expedient": {
+    "value": "3001631",
+    "confidence": 0.95,
+    "source_file": "folder + lab report",
+    "note": ""
+  },
+  "data_camp_text": {
+    "value": "14 de novembre de 2025",
+    "confidence": 0.9,
+    "source_file": "PENETROS.pdf",
+    "note": ""
+  },
+  "sulfate_value": {
+    "value": "632.3",
+    "confidence": 0.95,
+    "source_file": "4703-GTL-25.pdf",
+    "note": "SO4 = 632.3 mg/kg"
+  },
+  "sulfate_classification": {
+    "value": "No Agressius",
+    "confidence": 0.8,
+    "source_file": "4703-GTL-25.pdf",
+    "note": "632.3 < 2000 mg/kg"
+  },
+  "sulfate_baumann": {
+    "value": "---",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "sulfate_level_name": {
+    "value": "1er nivell",
+    "confidence": 0.8,
+    "source_file": "assumed single level",
+    "note": ""
+  },
+  "lab_field_company": {
+    "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "lab_testing_company": {
+    "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "lab_sample_id": {
+    "value": "Mostra : SPT-1",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": "SPT1 P3"
+  },
+  "lab_location": {
+    "value": "Punt: P-3",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": "SPT done at P-3 location"
+  },
+  "lab_depth": {
+    "value": "Profunditat:  -0.6  a -1.20 m",
+    "confidence": 0.9,
+    "source_file": "lab report + SPT sheet",
+    "note": ""
+  },
+  "lab_tests_text": {
+    "value": "1 assaig granulomètric, 1 assaig de límits d'Atterberg, 1 assaig de contingut en sulfats",
+    "confidence": 0.75,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "spt_lithology": {
+    "value": "Sorres i graves",
+    "confidence": 0.9,
+    "source_file": "lab report p2",
+    "note": ""
+  },
+  "spt_location": {
+    "value": "P-3",
+    "confidence": 0.9,
+    "source_file": "SPT sheet",
+    "note": ""
+  },
+  "spt_test_id": {
+    "value": "SPT-1",
+    "confidence": 0.9,
+    "source_file": "SPT sheet",
+    "note": ""
+  },
+  "spt_depth_range": {
+    "value": "-0.60 a 1.20",
+    "confidence": 0.9,
+    "source_file": "SPT sheet",
+    "note": ""
+  },
+  "spt_n30": {
+    "value": "40",
+    "confidence": 0.9,
+    "source_file": "SPT sheet",
+    "note": "Blows: 16,20,20,24 → N30=20+20=40"
+  },
+  "num_dpsh_tests": {
+    "value": "3 assaigs de penetració dinàmica tipus DPSH",
+    "confidence": 0.85,
+    "source_file": "PENETROS.pdf",
+    "note": ""
+  },
+  "dpsh_tests": {
+    "value": [
+      {
+        "test_id": "P-1",
+        "depth": "-4.55",
+        "refusal": "Si",
+        "water": "No detectat"
+      },
+      {
+        "test_id": "P-2",
+        "depth": "-3.58",
+        "refusal": "Si",
+        "water": "No detectat"
+      },
+      {
+        "test_id": "P-3",
+        "depth": "-3.13",
+        "refusal": "Si",
+        "water": "No detectat"
+      }
+    ],
+    "confidence": 0.75,
+    "source_file": "PENETROS.pdf",
+    "note": "Handwriting hard to read, especially P-2/P-3 depths"
+  },
+  "client": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "architect_name_upper": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "architect_company": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "building_type_lower": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "plantes": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "superficie_parcela": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "superficie_construida": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "cota_referencia": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "sondeig_tests": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "location_sentence": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "qa_value": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "settlement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "geotech_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "cte_edificacio": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "cte_sol": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "perm_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "seismic_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "seismic_ab_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "radon_zone": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "radon_zone_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "csn_radon_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "geo_p": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "site_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "site_condition": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "access_street": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "materials_intro": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "photo_site_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "building_structure_desc": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "data_signatura_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "table_dpsh_range": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "lab_field_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "lab_testing_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "conclusions_levels_detected": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "conclusions_water_statement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "conclusions_aggressivity_statement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "adjacent_north_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "adjacent_south_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "adjacent_east_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  },
+  "adjacent_west_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol/sondeig_annex"
+  }
+}

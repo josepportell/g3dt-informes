@@ -1,0 +1,386 @@
+{
+  "metadata": {
+    "project": "4001607 LINYOLA",
+    "extraction_mode": "cc_agentic_vision",
+    "extraction_date": "2026-04-16"
+  },
+  "street_address": {
+    "value": "Carrer Clot de la Llacuna",
+    "confidence": 0.9,
+    "source_file": "PENETROS.pdf + lab report",
+    "note": ""
+  },
+  "municipality": {
+    "value": "Linyola",
+    "confidence": 0.95,
+    "source_file": "field sheets + lab",
+    "note": ""
+  },
+  "expedient": {
+    "value": "4001607",
+    "confidence": 0.95,
+    "source_file": "folder + lab",
+    "note": ""
+  },
+  "data_camp_text": {
+    "value": "1 d'octubre de 2025",
+    "confidence": 0.9,
+    "source_file": "PENETROS.pdf",
+    "note": ""
+  },
+  "num_dpsh_tests": {
+    "value": "3 assaigs de penetració dinàmica tipus DPSH",
+    "confidence": 0.85,
+    "source_file": "PENETROS.pdf",
+    "note": ""
+  },
+  "dpsh_tests": {
+    "value": [
+      {
+        "test_id": "P-1",
+        "depth": "-3.00",
+        "refusal": "Si",
+        "water": "No detectat"
+      },
+      {
+        "test_id": "P-2",
+        "depth": "-2.15",
+        "refusal": "Si",
+        "water": "No detectat"
+      },
+      {
+        "test_id": "P-3",
+        "depth": "-1.75",
+        "refusal": "Si",
+        "water": "No detectat"
+      }
+    ],
+    "confidence": 0.75,
+    "source_file": "PENETROS.pdf",
+    "note": ""
+  },
+  "spt_lithology": {
+    "value": "Lutita gresosa",
+    "confidence": 0.9,
+    "source_file": "4672-GTL-25.pdf p2",
+    "note": ""
+  },
+  "spt_location": {
+    "value": "P-3",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "spt_test_id": {
+    "value": "SPT-1",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "spt_depth_range": {
+    "value": "-1.0 a 1.15",
+    "confidence": 0.9,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "lab_field_company": {
+    "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "lab_testing_company": {
+    "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "lab_sample_id": {
+    "value": "Mostra : SPT-1",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "lab_location": {
+    "value": "Punt: P-3",
+    "confidence": 0.85,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "lab_depth": {
+    "value": "Profunditat:  -1.0  a -1.15 m",
+    "confidence": 0.9,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "lab_tests_text": {
+    "value": "1 assaig de límits d'Atterberg, 1 assaig de contingut en sulfats, 1 assaig Lambe",
+    "confidence": 0.75,
+    "source_file": "lab report",
+    "note": ""
+  },
+  "qa_value": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "settlement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "geotech_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "cte_edificacio": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "cte_sol": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "perm_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "seismic_rows": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "seismic_ab_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "radon_zone": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "radon_zone_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "csn_radon_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "geo_p": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "site_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "site_condition": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "access_street": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "materials_intro": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "photo_site_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "building_structure_desc": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "data_signatura_text": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "table_dpsh_range": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "lab_field_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "lab_testing_description": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "conclusions_levels_detected": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "conclusions_water_statement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "conclusions_aggressivity_statement": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "client": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "architect_name_upper": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "architect_company": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "building_type_lower": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "plantes": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "superficie_parcela": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "superficie_construida": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "cota_referencia": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "sondeig_tests": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "location_sentence": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "spt_n30": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "sulfate_value": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "sulfate_classification": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "sulfate_baumann": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "sulfate_level_name": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "adjacent_north_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "adjacent_south_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "adjacent_east_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  },
+  "adjacent_west_fmt": {
+    "value": null,
+    "confidence": 0.0,
+    "source_file": null,
+    "note": "Requires computation/API/narrative/planol or not yet read"
+  }
+}
