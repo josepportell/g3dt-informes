@@ -109,6 +109,8 @@ def _read_image_b64(image_path: Path) -> list[str]:
             from PIL import Image
             import io
             img = Image.open(io.BytesIO(img_bytes))
+            if img.mode in ('RGBA', 'P', 'LA'):
+                img = img.convert('RGB')
             if is_too_large:
                 img.thumbnail((2000, 2000))
             buf = io.BytesIO()
@@ -127,22 +129,39 @@ def _read_image_b64(image_path: Path) -> list[str]:
 
 def _extract_excel(path: Path, target_vars: dict[str, dict]) -> dict[str, dict]:
     """Parse Excel file locally and extract signals. Returns {var: {value, confidence}}."""
-    import xlrd
-
     results: dict[str, dict] = {}
-    try:
-        wb = xlrd.open_workbook(str(path))
-    except Exception as exc:
-        logger.warning("Cannot open Excel %s: %s", path.name, exc)
-        return results
+    ext = path.suffix.lower()
 
     all_text_lines: list[str] = []
-    for sheet in wb.sheets():
-        for row_idx in range(sheet.nrows):
-            cells = [str(sheet.cell_value(row_idx, c)).strip() for c in range(sheet.ncols)]
-            line = ' | '.join(c for c in cells if c)
-            if line:
-                all_text_lines.append(line)
+
+    if ext == '.xlsx':
+        try:
+            import openpyxl
+            wb = openpyxl.load_workbook(str(path), data_only=True)
+        except Exception as exc:
+            logger.warning("Cannot open Excel %s: %s", path.name, exc)
+            return results
+        for sheet in wb.sheetnames:
+            ws = wb[sheet]
+            for row in ws.iter_rows(values_only=True):
+                cells = [str(c).strip() for c in row if c is not None]
+                line = ' | '.join(c for c in cells if c)
+                if line:
+                    all_text_lines.append(line)
+        wb.close()
+    else:
+        try:
+            import xlrd
+            wb = xlrd.open_workbook(str(path))
+        except Exception as exc:
+            logger.warning("Cannot open Excel %s: %s", path.name, exc)
+            return results
+        for sheet in wb.sheets():
+            for row_idx in range(sheet.nrows):
+                cells = [str(sheet.cell_value(row_idx, c)).strip() for c in range(sheet.ncols)]
+                line = ' | '.join(c for c in cells if c)
+                if line:
+                    all_text_lines.append(line)
 
     text_blob = '\n'.join(all_text_lines)
 
@@ -184,10 +203,152 @@ def _extract_text(path: Path, target_vars: dict[str, dict]) -> dict[str, dict]:
 
 
 # ---------------------------------------------------------------------------
+# Text-based LLM extraction (shared by .msg, .docx, .doc)
+# ---------------------------------------------------------------------------
+
+def _extract_from_text_via_llm(text: str, concepts: dict[str, dict]) -> tuple[dict[str, dict], dict]:
+    """Send plain text to Anthropic for variable extraction. Returns (vars, usage)."""
+    if not text.strip() or len(text) < 20:
+        return {}, {}
+
+    if len(text) > 15000:
+        text = text[:15000] + '\n...[truncated]...'
+
+    import anthropic
+
+    variable_list = _build_variable_prompt(concepts)
+    prompt = f"{_EXTRACTION_PROMPT.format(variable_list=variable_list)}\n\nDocument text:\n{text}"
+
+    t0 = time.monotonic()
+    try:
+        client = anthropic.Anthropic()
+        response = client.messages.create(
+            model=_MODEL,
+            max_tokens=4096,
+            messages=[{'role': 'user', 'content': prompt}],
+            timeout=120.0,
+        )
+    except Exception as exc:
+        logger.warning("LLM text extraction failed: %s", exc)
+        return {}, {}
+    elapsed = time.monotonic() - t0
+
+    raw_text = response.content[0].text.strip()
+    if raw_text.startswith('```'):
+        raw_text = re.sub(r'^```(?:json)?\s*', '', raw_text)
+        raw_text = re.sub(r'\s*```$', '', raw_text)
+
+    usage = {
+        'input_tokens': response.usage.input_tokens,
+        'output_tokens': response.usage.output_tokens,
+        'elapsed_s': round(elapsed, 2),
+    }
+
+    try:
+        parsed = json.loads(raw_text)
+    except json.JSONDecodeError:
+        logger.warning("Failed to parse JSON from text LLM response: %.200s", raw_text)
+        return {}, usage
+
+    results: dict[str, dict] = {}
+    for var_name, entry in parsed.items():
+        if var_name not in concepts:
+            continue
+        if entry is None:
+            continue
+        if isinstance(entry, dict):
+            val = entry.get('value')
+            conf = entry.get('confidence', 0.5)
+        else:
+            val = entry
+            conf = 0.5
+        if val is not None:
+            results[var_name] = {'value': val, 'confidence': float(conf)}
+
+    return results, usage
+
+
+# ---------------------------------------------------------------------------
+# .msg extraction (email body via extract_msg)
+# ---------------------------------------------------------------------------
+
+def _extract_msg(path: Path, concepts: dict[str, dict]) -> tuple[dict[str, dict], dict]:
+    """Extract variables from .msg email file. Returns (vars, usage)."""
+    try:
+        import extract_msg
+        msg = extract_msg.Message(str(path))
+        body = msg.body or ''
+        subject = msg.subject or ''
+        sender = msg.sender or ''
+        msg.close()
+    except Exception as exc:
+        logger.warning("Cannot read .msg file %s: %s", path.name, exc)
+        return {}, {}
+
+    text = f"Email subject: {subject}\nFrom: {sender}\n\nBody:\n{body}"
+    return _extract_from_text_via_llm(text, concepts)
+
+
+# ---------------------------------------------------------------------------
+# .docx extraction (python-docx)
+# ---------------------------------------------------------------------------
+
+def _extract_docx(path: Path, concepts: dict[str, dict]) -> tuple[dict[str, dict], dict]:
+    """Extract variables from .docx file. Returns (vars, usage)."""
+    try:
+        import docx
+        doc = docx.Document(str(path))
+        parts: list[str] = []
+        for p in doc.paragraphs:
+            if p.text.strip():
+                parts.append(p.text)
+        for table in doc.tables:
+            for row in table.rows:
+                parts.append(' | '.join(cell.text.strip() for cell in row.cells))
+    except Exception as exc:
+        logger.warning("Cannot read .docx file %s: %s", path.name, exc)
+        return {}, {}
+
+    text = '\n'.join(parts)
+    return _extract_from_text_via_llm(text, concepts)
+
+
+# ---------------------------------------------------------------------------
+# .doc extraction (libreoffice conversion)
+# ---------------------------------------------------------------------------
+
+def _extract_doc(path: Path, concepts: dict[str, dict]) -> tuple[dict[str, dict], dict]:
+    """Extract variables from .doc file via libreoffice text conversion. Returns (vars, usage)."""
+    import subprocess
+    import tempfile
+
+    try:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            subprocess.run(
+                ['libreoffice', '--headless', '--convert-to', 'txt:Text',
+                 '--outdir', tmpdir, str(path)],
+                capture_output=True, timeout=30,
+            )
+            txt_file = Path(tmpdir) / (path.stem + '.txt')
+            if not txt_file.exists():
+                logger.warning("libreoffice conversion produced no output for %s", path.name)
+                return {}, {}
+            text = txt_file.read_text(errors='replace')
+    except FileNotFoundError:
+        logger.warning("libreoffice not found, cannot convert .doc: %s", path.name)
+        return {}, {}
+    except subprocess.TimeoutExpired:
+        logger.warning("libreoffice conversion timed out for %s", path.name)
+        return {}, {}
+
+    return _extract_from_text_via_llm(text, concepts)
+
+
+# ---------------------------------------------------------------------------
 # Anthropic vision API
 # ---------------------------------------------------------------------------
 
-_MODEL = 'claude-sonnet-4-5-20250514'
+_MODEL = os.environ.get('CC_AGENTIC_MODEL', 'claude-sonnet-4-6')
 
 
 def _call_vision(
@@ -239,15 +400,14 @@ def _call_vision(
 
 
 _EXTRACTION_PROMPT = """\
-You are extracting data from a geotechnical project document.
-Extract all values you can identify for these variables:
+Extract geotechnical project data from this document. Target variables:
 
 {variable_list}
 
-Return JSON: {{"variable_name": {{"value": <extracted>, "confidence": 0.0-1.0}}, ...}}
-Set null for variables not present in this document.
-Only include variables you can actually find evidence for -- omit others entirely.
-For confidence: 1.0 = clearly legible, 0.7 = readable but uncertain, <0.5 = guessing."""
+IMPORTANT: Return ONLY a JSON object. No preamble, no markdown fences, no explanation.
+Format: {{"variable_name": {{"value": <extracted>, "confidence": 0.0-1.0}}, ...}}
+Omit variables not found. confidence: 1.0=clear, 0.7=uncertain, <0.5=guessing.
+If the image contains no relevant document data (logos, legends, backgrounds), return: {{}}"""
 
 
 def _extract_via_vision(
@@ -376,6 +536,11 @@ def extract_from_files(
     trace: list[dict] = []
     total_usage = {'input_tokens': 0, 'output_tokens': 0, 'api_calls': 0}
 
+    # Junk file patterns to skip (logos, inline images, backgrounds)
+    _SKIP_PATTERNS = {'image001', 'image005', 'image006', 'image008', 'image009',
+                      'image011', 'image012', 'pie egt', 'Thumbs'}
+    _MIN_IMAGE_SIZE = 15_000  # Skip images < 15KB (logos, icons)
+
     for finfo in files:
         fpath = Path(finfo['path'])
         role = finfo.get('role', 'unknown')
@@ -391,6 +556,16 @@ def extract_from_files(
             })
             continue
 
+        # Skip junk files
+        if any(pat in fpath.stem for pat in _SKIP_PATTERNS):
+            trace.append({'action_id': f'skip_{fpath.name}', 'type': 'file_skip',
+                          'file': str(fpath.name), 'reason': 'junk_pattern'})
+            continue
+        if fpath.suffix.lower() in _IMAGE_EXTENSIONS and fpath.stat().st_size < _MIN_IMAGE_SIZE:
+            trace.append({'action_id': f'skip_{fpath.name}', 'type': 'file_skip',
+                          'file': str(fpath.name), 'reason': 'too_small'})
+            continue
+
         ext = fpath.suffix.lower()
         t0 = time.monotonic()
         file_results: dict[str, dict] = {}
@@ -402,6 +577,24 @@ def extract_from_files(
         elif ext == '.txt':
             file_results = _extract_text(fpath, concepts)
             method = 'text_parse'
+        elif ext == '.msg':
+            file_results, file_usage = _extract_msg(fpath, concepts)
+            total_usage['input_tokens'] += file_usage.get('input_tokens', 0)
+            total_usage['output_tokens'] += file_usage.get('output_tokens', 0)
+            total_usage['api_calls'] += 1
+            method = 'msg_parse'
+        elif ext == '.docx':
+            file_results, file_usage = _extract_docx(fpath, concepts)
+            total_usage['input_tokens'] += file_usage.get('input_tokens', 0)
+            total_usage['output_tokens'] += file_usage.get('output_tokens', 0)
+            total_usage['api_calls'] += 1
+            method = 'docx_parse'
+        elif ext == '.doc':
+            file_results, file_usage = _extract_doc(fpath, concepts)
+            total_usage['input_tokens'] += file_usage.get('input_tokens', 0)
+            total_usage['output_tokens'] += file_usage.get('output_tokens', 0)
+            total_usage['api_calls'] += 1
+            method = 'doc_convert'
         elif ext == '.pdf':
             images = _render_pdf_pages(fpath, dpi=200, max_pages=10)
             if images:
