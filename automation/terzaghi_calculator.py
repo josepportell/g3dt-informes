@@ -406,17 +406,21 @@ class TerzaghiCalculator:
             qa_tp = terzaghi_peck_qa(nspt, B, Df)
 
         # Professional practice cap (verified against 7 Eva reports):
-        # Classification from DPSH data (Nb value + cohesion):
+        # Classification from DPSH data (Nb value + cohesion + soil_type):
         # - Rock (c >= 0.5): cap 3.0 (Castellar c=1.0, Linyola L2 c=1.0)
-        # - Dense granular (c < 0.5, Nb >= 25): cap 3.5 (Rubí Nb=47, Alcoletge Nb=30)
-        # - Soft soil (Nb < 25): cap 3.0 (default)
+        # - Dense granular (soil_type='granular', c < 0.5, Nb >= 25): cap 3.5
+        #   (Rubí Nb=47, Alcoletge Nb=30). Explicitly requires soil_type=granular
+        #   so a cohesive with low c (e.g. Linyola llims: c=0.05, Nb>25) does
+        #   NOT get the dense-granular ceiling — cohesives stay on cap 3.0.
+        # - Soft soil / cohesive / unknown type: cap 3.0 (default)
         QA_CAP_ROCK = 3.0
         QA_CAP_DENSE_GRANULAR = 3.5
         QA_CAP_SOIL = 3.0
         NB_DENSE_THRESHOLD = 25  # Nb >= 25 → dense gravel (refusal zone)
         if self.cohesion >= 0.5:
             qa_cap = QA_CAP_ROCK
-        elif nspt is not None and nspt >= NB_DENSE_THRESHOLD:
+        elif (nspt is not None and nspt >= NB_DENSE_THRESHOLD
+              and (soil_type or '').lower() == 'granular'):
             qa_cap = QA_CAP_DENSE_GRANULAR
         else:
             qa_cap = QA_CAP_SOIL

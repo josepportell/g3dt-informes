@@ -393,12 +393,23 @@ class ReportGenerator:
                     )
                     B = self.user_data.get('footing_width_m', 1.0)
                     Df = self.user_data.get('foundation_depth_m', 0.8)
-                    # Nb for Terzaghi-Peck
-                    avg_n20 = self.report_data.dpsh.overall_average_n20 if self.report_data.dpsh else None
+                    # Nb for Terzaghi-Peck — use bearing-stratum N20
+                    # (Eva's skip-soft-top rule; consistent with build_report_data)
+                    from .report_data import _bearing_stratum_n20
+                    sondeig_layers = self.user_data.get('sondeig_layers') or []
+                    soil_types_list = self.user_data.get('soil_types') or []
+                    if self.report_data.dpsh and sondeig_layers:
+                        avg_n20 = _bearing_stratum_n20(
+                            self.report_data.dpsh, sondeig_layers, soil_types_list,
+                        )
+                    else:
+                        avg_n20 = self.report_data.dpsh.overall_average_n20 if self.report_data.dpsh else None
                     nb_for_tp = avg_n20 / 0.83 if avg_n20 else None
                     # Granular if cohesion < 0.5 (consistent with rock cap logic)
                     is_granular = gp.cohesion < 0.5
-                    # Soil type from bearing stratum (deepest level)
+                    # Soil type from bearing stratum (last soil_level is bearing material;
+                    # _generate_soil_levels merges to keep deepest description when
+                    # num_levels < len(sondeig_layers))
                     soil_type = self.report_data.soil_levels[-1].soil_type if self.report_data.soil_levels else 'granular'
                     # Es_settlement from wizard/user_data (overrides auto 2.5×Nb)
                     Es_override = self.user_data.get('Es_settlement')

@@ -435,7 +435,8 @@ def build_report_data(
                     logger.info("Auto-filled sondeig_layers from sondeig data in build_report_data")
             except Exception:
                 pass
-        avg_n20 = _bearing_stratum_n20(dpsh_data, sondeig_layers)
+        soil_types_list = user_data.get('soil_types', [])
+        avg_n20 = _bearing_stratum_n20(dpsh_data, sondeig_layers, soil_types_list)
         # Convert N20 → Nb (Borrows) for all correlations.
         # DPSH has more energy than Borrows; dividing by 0.83 corrects
         # for the energy difference.  Eva confirmed this is essential.
@@ -447,22 +448,28 @@ def build_report_data(
                 nspt_to_phi, nspt_to_E_kg_cm2, nspt_to_gamma_g_cm3,
                 is_rock, rock_params_default, soil_type_to_cohesion,
             )
-            # Build description for rock detection — use deepest layer (bearing stratum)
+            # Bearing-layer picked by Eva's skip-soft-top rule
+            # (automation.bicapa.select_bearing_layer).  For profiles where
+            # deepest ≡ competent (most G3DT projects), this matches the
+            # legacy "always last" behaviour; for fill-over-competent
+            # profiles (Alcoletge), it correctly skips the fill.
+            bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types_list) if sondeig_layers else 0
+            # Build description for rock detection — use bearing stratum.
             # IMPORTANT: Only use sondeig layer descriptions (field observations),
             # NOT icgc_unit_description (regional geology). ICGC describes the
             # formation-level geology which always contains rock terms
             # ("bretxes", "lutites", "conglomerat") even for granular sites.
             rock_description = ""
             if sondeig_layers:
-                deepest = sondeig_layers[-1]
-                rock_description = deepest.get('description', '')
+                rock_description = sondeig_layers[bearing_idx].get('description', '')
 
-            # Determine soil type: use deepest level for bearing stratum
+            # Determine soil type: align with bearing layer index
             from .cte_geomech import detect_soil_type
-            soil_types_list = user_data.get('soil_types', [])
             if soil_types_list:
-                # Use last soil type (bearing stratum) for multi-level
-                soil_type = soil_types_list[-1] if len(soil_types_list) > 1 else soil_types_list[0]
+                if len(soil_types_list) > bearing_idx:
+                    soil_type = soil_types_list[bearing_idx]
+                else:
+                    soil_type = soil_types_list[-1] if len(soil_types_list) > 1 else soil_types_list[0]
             elif rock_description:
                 soil_type = detect_soil_type(rock_description)
             else:
@@ -944,30 +951,146 @@ def _reconstruct_terzaghi_from_dict(data: dict) -> BearingCapacityResult:
     )
 
 
-def _bearing_stratum_n20(dpsh_data: DPSHData, sondeig_layers: list[dict]) -> float:
-    """Get average N20 for the bearing stratum (deepest sondeig layer).
+def _select_bearing_layer_idx(
+    sondeig_layers: list[dict],
+    soil_types: list[str] | None = None,
+    foundation_depth: float = 0.8,
+) -> int:
+    """Pick the bearing-layer index using Eva's skip-soft-top rule.
 
-    For multi-level projects, the bearing stratum is the deepest layer from
-    the sondeig. DPSH readings in shallower fill layers should not influence
-    the geotechnical parameters used for foundation design.
+    Wraps `automation.bicapa.select_bearing_layer` so callers can keep
+    working with the sondeig_layer dicts they already have, without
+    constructing SoilLayer objects. Returns the index of the first
+    competent layer. Falls back to len-1 (deepest) on any failure — this
+    preserves the pre-existing behaviour for legacy profiles.
+
+    Ref: `docs/METODOLOGIA-EVA.md` §5.9, Alcoletge informe.
+    """
+    if not sondeig_layers:
+        return 0
+    if len(sondeig_layers) == 1:
+        return 0
+
+    try:
+        from .bicapa import SoilLayer, select_bearing_layer
+        from .cte_geomech import (
+            detect_soil_type, nspt_to_phi, soil_type_to_cohesion,
+        )
+    except ImportError as e:
+        logger.warning(
+            "bicapa module unavailable (%s); falling back to deepest-layer "
+            "bearing. Eva's skip-soft-top rule is DISABLED.", e,
+        )
+        return len(sondeig_layers) - 1
+
+    def _safe_float(v, default):
+        try:
+            return float(v) if v is not None else default
+        except (TypeError, ValueError):
+            return default
+
+    try:
+        built: list[SoilLayer] = []
+        for idx, d in enumerate(sondeig_layers):
+            desc = d.get('description', '') or ''
+            st = (soil_types[idx] if soil_types and idx < len(soil_types) else None) or detect_soil_type(desc)
+            nspt = d.get('n20_average') or d.get('nspt')
+            try:
+                nspt = float(nspt) if nspt is not None else None
+            except (TypeError, ValueError):
+                nspt = None
+            phi = nspt_to_phi(nspt, st) if nspt is not None else 30.0
+            cohesion = soil_type_to_cohesion(st)
+            depth_top = _safe_float(d.get('depth_from_m'), 0.0)
+            depth_bottom = _safe_float(d.get('depth_to_m'), depth_top + 1.0)
+            built.append(SoilLayer(
+                depth_top=depth_top,
+                depth_bottom=depth_bottom,
+                soil_type=st,
+                nspt=nspt,
+                phi=phi,
+                cohesion=cohesion,
+                description=desc,
+            ))
+
+        # Iterate from DEEPEST to shallowest so we pick the deepest competent
+        # layer (bearing stratum under the footing), not the shallowest. For
+        # all-competent multi-layer profiles (Bell-Lloc, Castellar, Rubí,
+        # Linyola) this yields idx=len-1 — matching Eva's convention. For
+        # soft-top profiles (Alcoletge: rebliment + lutites) bicapa still
+        # correctly skips the weak top and picks the competent layer below.
+        try:
+            _, reversed_idx = select_bearing_layer(
+                built[::-1], foundation_depth=foundation_depth,
+            )
+        except ValueError:
+            # All layers weak — fall back to deepest (safest single-layer proxy)
+            logger.warning(
+                "_select_bearing_layer_idx: no competent layer found; "
+                "falling back to deepest.",
+            )
+            return len(sondeig_layers) - 1
+
+        idx = len(built) - 1 - reversed_idx
+        if idx != len(sondeig_layers) - 1:
+            logger.info(
+                "Bearing-layer pick differs from deepest: idx=%d (deepest=%d). "
+                "Applying Eva's skip-soft-top rule per bicapa.select_bearing_layer.",
+                idx, len(sondeig_layers) - 1,
+            )
+        return idx
+    except (TypeError, KeyError) as exc:
+        # Construction failed — fall back to deepest (safest single-layer proxy)
+        logger.warning(
+            "_select_bearing_layer_idx falling back to deepest layer: %s", exc,
+        )
+        return len(sondeig_layers) - 1
+
+
+def _bearing_stratum_n20(
+    dpsh_data: DPSHData,
+    sondeig_layers: list[dict],
+    soil_types: list[str] | None = None,
+) -> float:
+    """Get average N20 for the bearing stratum per Eva's skip-soft-top rule.
+
+    For multi-level projects, the bearing stratum is the first competent
+    layer (skipping fill / rebliment / very weak top layers). DPSH readings
+    in shallower fill layers should not influence the geotechnical
+    parameters used for foundation design.
 
     Falls back to global average when:
     - No sondeig layers exist (single-level project)
     - Only one sondeig layer
-    - No DPSH readings fall in the deepest layer's depth range
+    - No DPSH readings fall in the bearing stratum's depth range
     """
     if not sondeig_layers or len(sondeig_layers) < 2:
         return dpsh_data.overall_average_n20
 
-    deepest = sondeig_layers[-1]
-    depth_from = deepest.get('depth_from_m', 0.0)
+    bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types)
+    bearing = sondeig_layers[bearing_idx]
+    depth_from = bearing.get('depth_from_m', 0.0)
+    depth_to = bearing.get('depth_to_m')
 
-    # Collect all DPSH readings in the bearing stratum depth range
-    bearing_n20 = []
+    # Only apply the depth_to upper bound when the bearing layer is NOT the
+    # deepest (i.e. bicapa picked a middle layer because the deepest is weak).
+    # When bearing == deepest (the common G3DT case), integrate everything
+    # from depth_from downward to preserve legacy behaviour — DPSH typically
+    # continues deeper than sondeig layer boundaries.
+    apply_upper = bearing_idx != len(sondeig_layers) - 1
+
+    # Collect DPSH readings inside the bearing stratum depth range
+    bearing_n20: list[float] = []
     for test in dpsh_data.tests:
         for r in test.readings:
-            if abs(r.depth_m) >= depth_from and r.n20 < 100:
-                bearing_n20.append(r.n20)
+            d = abs(r.depth_m)
+            if d < depth_from:
+                continue
+            if apply_upper and depth_to is not None and d > depth_to:
+                continue
+            if r.n20 >= 100:
+                continue
+            bearing_n20.append(r.n20)
 
     if not bearing_n20:
         return dpsh_data.overall_average_n20
@@ -1009,7 +1132,7 @@ def _generate_soil_levels(
             desc = deepest.get('description', 'Nivell principal')
             st = soil_types[-1] if soil_types else detect_soil_type(desc)
             # Filter N20 to bearing stratum (deepest layer) depth range
-            bearing_avg = _bearing_stratum_n20(dpsh_data, sondeig_layers)
+            bearing_avg = _bearing_stratum_n20(dpsh_data, sondeig_layers, soil_types)
             depth_from = deepest.get('depth_from_m', 0.0)
             bearing_n20 = [
                 r.n20 for r in all_readings

@@ -578,13 +578,22 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     dpsh = auto_result.dpsh_data if hasattr(auto_result, 'dpsh_data') else None
     if not dpsh:
         return
-    avg_n20 = getattr(dpsh, 'overall_average_n20', None)
-    if not avg_n20 or avg_n20 <= 0:
-        return
 
-    nb = avg_n20 / 0.83
+    # Pull bearing-stratum N20 from sondeig_extracted (Eva's skip-soft-top rule).
+    # Falls back to overall_average_n20 for single-layer profiles.
+    sondeig_layers: list[dict] = []
+    soil_types_list: list[str] = []
+    try:
+        from automation.vision_normalizer import load_sondeig_merged
+        sdata = load_sondeig_merged(project_path / 'validation')
+        tests = sdata.get('sondeig_tests', [])
+        if tests and tests[0].get('layers'):
+            sondeig_layers = tests[0]['layers']
+    except Exception:
+        pass
 
-    # Determine deepest-level soil type from merged prefills
+    # Determine bearing-level soil type from merged prefills.
+    # num_levels reflects the highest-indexed level key; soil_type/desc use it.
     num_levels = 1
     nle = merged.get('num_geological_levels') or merged.get('num_soil_levels')
     if nle:
@@ -594,15 +603,54 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
         except (ValueError, TypeError):
             pass
 
-    soil_type_key = f'soil_type_level_{num_levels}'
+    # Build per-level soil types from merged prefills (needed by bicapa).
+    n_types = max(num_levels, len(sondeig_layers))
+    for i in range(1, n_types + 1):
+        _e = merged.get(f'soil_type_level_{i}')
+        _v = (_e['value'] if isinstance(_e, dict) else _e) or ''
+        soil_types_list.append(str(_v).lower())
+
+    try:
+        from automation.report_data import _bearing_stratum_n20
+        if sondeig_layers:
+            avg_n20 = _bearing_stratum_n20(dpsh, sondeig_layers, soil_types_list)
+        else:
+            avg_n20 = getattr(dpsh, 'overall_average_n20', None)
+    except Exception:
+        avg_n20 = getattr(dpsh, 'overall_average_n20', None)
+    if not avg_n20 or avg_n20 <= 0:
+        return
+
+    nb = avg_n20 / 0.83
+
+    # Pick bearing layer index (skip-soft-top rule) and use it to resolve
+    # the soil_type/description keys that belong to the bearing stratum.
+    # This keeps avg_n20 and soil_type/description aligned even when the
+    # bicapa picks a middle layer or num_levels was user-merged.
+    try:
+        from automation.report_data import _select_bearing_layer_idx
+        bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types_list) if sondeig_layers else 0
+    except Exception:
+        bearing_idx = max(0, len(sondeig_layers) - 1) if sondeig_layers else 0
+
+    if sondeig_layers and (num_levels - 1) != bearing_idx:
+        logger.warning(
+            "Bearing stratum divergence: num_levels=%d (1-based %d) but bearing_idx=%d. "
+            "Using bearing_idx for soil_type/description lookups.",
+            num_levels, num_levels, bearing_idx,
+        )
+
+    bearing_level_1based = bearing_idx + 1 if sondeig_layers else num_levels
+
+    soil_type_key = f'soil_type_level_{bearing_level_1based}'
     st_entry = merged.get(soil_type_key) or merged.get('soil_type_level_1')
     soil_type = (st_entry['value'] if isinstance(st_entry, dict) else st_entry) if st_entry else 'granular'
     if not soil_type:
         soil_type = 'granular'
     soil_type = soil_type.lower()
 
-    # Get deepest-level description for rock detection
-    desc_key = f'sondeig_layer_desc_{num_levels}'
+    # Get bearing-level description for rock detection
+    desc_key = f'sondeig_layer_desc_{bearing_level_1based}'
     desc_entry = merged.get(desc_key, merged.get('sondeig_layer_desc_1'))
     description = (desc_entry['value'] if isinstance(desc_entry, dict) else (desc_entry or '')) if desc_entry else ''
 
@@ -665,7 +713,7 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
         calc = TerzaghiCalculator(phi=phi, cohesion=cohesion, gamma=gamma)
         tr = calc.calculate_qa(
             B=B, Df=Df, shape=FootingShape.SQUARE,
-            nspt=nb, is_granular=is_granular,
+            nspt=nb, is_granular=is_granular, soil_type=soil_type,
             E=E, Es_override=Es_override,
         )
 
@@ -1226,13 +1274,14 @@ Return ONLY a JSON object with exactly these 4 keys:
 
 If you cannot determine a value with reasonable confidence, use an empty string ""."""
 
-    # --- Call Claude API ---
+    # --- Call Claude API (routed via llm_client factory, supports OpenRouter) ---
     try:
         import re as _re
 
-        client = anthropic.Anthropic()
+        from automation.llm_client import get_anthropic_client, get_cc_model
+        client = get_anthropic_client()
         response = client.messages.create(
-            model=config.TEXT_MODEL_ANTHROPIC,
+            model=get_cc_model(),
             max_tokens=500,
             messages=[{'role': 'user', 'content': prompt}],
         )
@@ -1681,9 +1730,91 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
                 "source": "system",
             }
 
+    # Enrich with per-field confidence/missing_reason/expected_source_label
+    # and build the top-level _missing_summary used by the HITL wizard drawer.
+    _enrich_prefills_with_missing_summary(merged)
+
     _prefill_cache[project_name] = merged
     _auto_result_cache[project_name] = auto_result
     return merged
+
+
+def _enrich_prefills_with_missing_summary(merged: dict[str, Any]) -> None:
+    """Mutate `merged` in place:
+
+    - For each concept entry: attach `confidence`, `missing_reason`,
+      `expected_source_label` alongside the existing `value` and `source`.
+    - Add a top-level `_missing_summary` key with fields grouped by expected
+      source, used by the "Missing info" drawer in the wizard.
+
+    Keys starting with `_` are system metadata and are skipped.
+    """
+    from web.expected_sources import CONFIDENCE_THRESHOLD, expected_source_for
+
+    concept_map_entry = merged.get('_concept_map')
+    concept_sources: dict[str, list[dict]] = {}
+    if isinstance(concept_map_entry, dict):
+        cm_val = concept_map_entry.get('value')
+        if isinstance(cm_val, dict):
+            concept_sources = cm_val
+
+    groups: dict[str, dict[str, Any]] = {}
+
+    for concept_id, entry in list(merged.items()):
+        if concept_id.startswith('_'):
+            continue
+        if not isinstance(entry, dict):
+            continue
+
+        value = entry.get('value')
+        has_value = value not in (None, '', [], {})
+
+        # Confidence: max across concept_map sources for this concept (if any).
+        cm_entries = concept_sources.get(concept_id) or []
+        max_conf: float | None = None
+        for src in cm_entries:
+            if isinstance(src, dict):
+                c = src.get('confidence')
+                if isinstance(c, (int, float)):
+                    c = max(0.0, min(1.0, float(c)))
+                    if max_conf is None or c > max_conf:
+                        max_conf = c
+        entry['confidence'] = max_conf
+
+        # Missing-reason classification.
+        missing_reason: str | None = None
+        if not has_value:
+            missing_reason = 'file_had_no_match' if cm_entries else 'no_source_file'
+        elif max_conf is not None and max_conf < CONFIDENCE_THRESHOLD:
+            missing_reason = 'extracted_low_confidence'
+        entry['missing_reason'] = missing_reason
+
+        # Expected-source label (None if concept not in our curated map).
+        hint = expected_source_for(concept_id)
+        entry['expected_source_label'] = hint[0] if hint else None
+
+        # Aggregate into groups if this is an incomplete/low-confidence field.
+        if missing_reason is None:
+            continue
+        group_label = hint[0] if hint else 'Altres'
+        role_hints = hint[1] if hint else []
+        g = groups.setdefault(group_label, {
+            'label': group_label,
+            'role_hints': list(role_hints),
+            'concept_ids': [],
+            'reasons': {},
+        })
+        g['concept_ids'].append(concept_id)
+        g['reasons'][concept_id] = missing_reason
+
+    merged['_missing_summary'] = {
+        'value': {
+            'groups': list(groups.values()),
+            'total_missing': sum(len(g['concept_ids']) for g in groups.values()),
+            'total_groups': len(groups),
+        },
+        'source': 'system',
+    }
 
 
 def get_prefills_streaming(project_name: str):
