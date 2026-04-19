@@ -235,6 +235,12 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
                 if result is None:
                     return vtype, False, "API call failed"
 
+                from automation.vision_extractor import attach_source_metadata
+                attach_source_metadata(
+                    result, file_path, project_path=project_path,
+                    extraction_method='groq_vision',
+                )
+
                 output_path.write_text(
                     json.dumps(result, indent=2, ensure_ascii=False),
                     encoding="utf-8",
@@ -1201,6 +1207,12 @@ def run_vision_groq_sync(
                 _emit(vtype, "error", message="API call failed (all backends)")
                 results[vtype] = {"success": False, "message": f"API call failed ({vision_backend})"}
                 continue
+
+            from automation.vision_extractor import attach_source_metadata
+            attach_source_metadata(
+                result, file_path, project_path=project_path,
+                extraction_method=f'vision_{used_backend}' if used_backend else 'vision',
+            )
 
             output_path.write_text(
                 json.dumps(result, indent=2, ensure_ascii=False),
