@@ -170,6 +170,44 @@ def _strip_accents(s: str) -> str:
     return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
 
 
+# Catalan/Spanish contracted preposition variants that should compare equal.
+# Each key is a multi-word pattern; value is the canonical replacement.
+# Applied after accent-stripping + upper-casing, with word boundaries.
+_PREPOSITION_CANONICAL: list[tuple[re.Pattern[str], str]] = [
+    (re.compile(r"\bDELS\b"), "DE"),
+    (re.compile(r"\bDEL\b"), "DE"),
+    (re.compile(r"\bDE LAS\b"), "DE"),
+    (re.compile(r"\bDE LES\b"), "DE"),
+    (re.compile(r"\bDE LOS\b"), "DE"),
+    (re.compile(r"\bDE LA\b"), "DE"),
+    (re.compile(r"\bD'"), "DE "),
+    (re.compile(r"\bDA\b"), "DE"),
+    (re.compile(r"\bDAS\b"), "DE"),
+    (re.compile(r"\bDO\b"), "DE"),
+    (re.compile(r"\bDOS\b"), "DE"),
+]
+
+
+def _normalize_muni_name(s: str) -> str:
+    """Normalize a municipality name for tolerant matching.
+
+    Steps:
+    1. Strip accents (accent-insensitive).
+    2. Upper-case and collapse whitespace.
+    3. Collapse Catalan/Spanish contracted prepositions (del, dels, de la,
+       de les, de los, d') to a single canonical ``DE`` token. This makes
+       "Vilanova del Segrià" compare equal to "Vilanova de Segrià".
+
+    Used as a fallback when exact (accent-stripped) matching fails.
+    """
+    out = _strip_accents(s).upper().strip()
+    for pattern, replacement in _PREPOSITION_CANONICAL:
+        out = pattern.sub(replacement, out)
+    # Collapse any extra whitespace introduced by the substitutions
+    out = re.sub(r"\s+", " ", out).strip()
+    return out
+
+
 # === WGS84 to UTM Zone 31N Conversion ===
 
 def _wgs84_to_utm(lat: float, lon: float) -> tuple[float, float, int]:
@@ -306,13 +344,46 @@ def _parse_address(address: str) -> tuple[str, str, str]:
 
 # === Progressive Cadastre Resolution (fuzzy municipality + street) ===
 
-def _consulta_municipio(province: str, municipality_hint: str) -> tuple[str, str, str] | None:
+def _retry_with_normalized_hint(
+    province: str,
+    municipality_hint: str,
+    retry_allowed: bool,
+) -> tuple[str, str, str] | None:
+    """Retry ConsultaMunicipio once with a preposition-normalized hint.
+
+    Converts Catalan/Spanish contracted prepositions to canonical form
+    (``del`` → ``de``, ``d'`` → ``de``, etc.) and re-queries. Only runs
+    when the normalized hint actually differs from the original and the
+    caller hasn't already retried.
+    """
+    if not retry_allowed:
+        return None
+    normalized = _normalize_muni_name(municipality_hint)
+    original = _strip_accents(municipality_hint).upper().strip()
+    original = re.sub(r"\s+", " ", original)
+    if normalized == original or not normalized:
+        return None
+    logger.info(
+        f"ConsultaMunicipio: exact hint '{municipality_hint}' failed; "
+        f"retrying with preposition-normalized hint '{normalized}'"
+    )
+    return _consulta_municipio(province, normalized, _retry_normalized=False)
+
+
+def _consulta_municipio(
+    province: str,
+    municipality_hint: str,
+    _retry_normalized: bool = True,
+) -> tuple[str, str, str] | None:
     """
     Fuzzy-resolve a municipality name via Cadastre ConsultaMunicipio.
 
     Args:
         province: Province name (e.g., "LLEIDA", "HUESCA")
         municipality_hint: Partial or approximate municipality name
+        _retry_normalized: Internal flag. When True (default) and the first
+            lookup fails, retry once with a preposition-normalized hint
+            (e.g., "Vilanova del Segrià" → "Vilanova de Segrià").
 
     Returns:
         Tuple of (official_name, cp, cm) or None if not found.
@@ -346,11 +417,13 @@ def _consulta_municipio(province: str, municipality_hint: str) -> tuple[str, str
     muni_elems = _find_all_elements(root, "muni")
     if not muni_elems:
         logger.debug(f"ConsultaMunicipio: no muni elements for '{municipality_hint}' in '{province}'")
-        return None
+        return _retry_with_normalized_hint(province, municipality_hint, _retry_normalized)
 
     hint_norm = _strip_accents(municipality_hint.upper().strip())
     hint_words = set(hint_norm.split())
+    hint_tolerant = _normalize_muni_name(municipality_hint)
     candidates: list[tuple[int, int, str, str, str]] = []
+    tolerant_match: tuple[str, str, str, str] | None = None  # (official, cp, cm, name_tolerant)
 
     for muni_elem in muni_elems:
         nm_elem = _find_element(muni_elem, "nm")
@@ -378,14 +451,28 @@ def _consulta_municipio(province: str, municipality_hint: str) -> tuple[str, str
             elif hint_words & candidate_words:
                 score = 40
             else:
+                # Remember a preposition-normalized exact match as a last-resort
+                # fallback (e.g. "Vilanova del Segrià" ~ "Vilanova de Segrià").
+                if tolerant_match is None:
+                    name_tolerant = _normalize_muni_name(official_name)
+                    if name_tolerant == hint_tolerant:
+                        tolerant_match = (official_name, cp, cm, name_tolerant)
                 continue
 
         # Store: (-score for desc sort, len for asc tiebreak, name, cp, cm)
         candidates.append((-score, len(official_name), official_name, cp, cm))
 
     if not candidates:
+        if tolerant_match is not None:
+            official_name, cp, cm, name_tolerant = tolerant_match
+            logger.info(
+                f"ConsultaMunicipio: exact match failed, matched after name "
+                f"normalization: '{municipality_hint}' ~ '{official_name}' "
+                f"(normalized: '{name_tolerant}')"
+            )
+            return official_name, cp, cm
         logger.debug(f"ConsultaMunicipio: no match for '{municipality_hint}' in '{province}'")
-        return None
+        return _retry_with_normalized_hint(province, municipality_hint, _retry_normalized)
 
     candidates.sort()
     best = candidates[0]
