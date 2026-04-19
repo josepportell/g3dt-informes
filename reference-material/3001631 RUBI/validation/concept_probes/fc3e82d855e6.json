@@ -1,29 +1,35 @@
 {
   "document_type": "field_sheet",
-  "document_description": "Geotechnical field investigation forms with penetrometer and SPT test data",
+  "document_description": "Geotechnical field test report",
   "concepts_found": [
     {
       "concept_id": "street_address",
-      "confidence": 0.95,
-      "signal_preview": "C/de la Moranda",
+      "confidence": 1.0,
+      "signal_preview": "C/de la Miranda",
       "page": 1
     },
     {
       "concept_id": "municipality",
-      "confidence": 0.9,
+      "confidence": 1.0,
       "signal_preview": "Rubí",
       "page": 1
     },
     {
       "concept_id": "field_date",
-      "confidence": 0.95,
+      "confidence": 1.0,
       "signal_preview": "14-11-2025",
       "page": 1
     },
     {
       "concept_id": "contact_name",
-      "confidence": 0.85,
-      "signal_preview": "Daniel Fernandez",
+      "confidence": 1.0,
+      "signal_preview": "Eva",
+      "page": 1
+    },
+    {
+      "concept_id": "operari",
+      "confidence": 1.0,
+      "signal_preview": "Daniel Fernández",
       "page": 1
     }
   ]

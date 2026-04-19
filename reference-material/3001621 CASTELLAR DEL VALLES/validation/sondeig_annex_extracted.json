@@ -8,10 +8,10 @@
         {
           "depth_from_m": 0.0,
           "depth_to_m": 0.5,
-          "description": "Terreny Vegetal. Llims argilosos de color marro fosc amb graves i algunes arrels.",
+          "description": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
           "geological_level": 1,
           "uscs_classification": null,
-          "color": "marro fosc",
+          "color": "marró fosc",
           "moisture": null,
           "consistency": null,
           "density": null,
@@ -24,22 +24,33 @@
           "description": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
           "geological_level": 1,
           "uscs_classification": null,
-          "color": null,
+          "color": "vermell",
           "moisture": null,
           "consistency": null,
           "density": null,
           "confidence": 1.0,
-          "note": null
+          "note": "Both sub-layers (0.00–0.50 and 0.50–1.20) are grouped under a single 'NIVELL 1' in the Unitat litològica column."
         }
       ],
-      "spt_results": null,
+      "spt_results": [
+        {
+          "test_id": "SPT-1",
+          "depth_from_m": 1.0,
+          "depth_to_m": 1.2,
+          "blows": null,
+          "n_spt": null,
+          "register": "R",
+          "confidence": 0.9,
+          "note": "Register value is 'R' (Refusal/Rock). No blow counts visible in the document. Depth range 1.00–1.20 m as indicated in the 'Prof. de extracció' column."
+        }
+      ],
       "elevation_z": 570.9,
       "water_level_m": null,
       "rock_detected": true,
-      "rock_depth_m": 1.2,
-      "extraction_notes": "Only two layers present from 0.0 to 1.20 m depth. Geological level column shows only NIVELL 1 for entire depth. Rock refusal noted at 1.20 m."
+      "rock_depth_m": 0.5,
+      "extraction_notes": "Borehole is shallow (1.20 m total depth). Rock substrate (Bretxes) encountered at 0.50 m. SPT-1 registered refusal ('R') at 1.00–1.20 m. No laboratory test results visible. No groundwater level (N.F.) indicated. 'Unitat litològica' column shows a single 'NIVELL 1' spanning the entire borehole, hence num_geological_levels = 1."
     }
   ],
-  "overall_confidence": 1.0,
-  "extraction_notes": "Document is a clear formatted borehole log with high confidence in extracted data."
+  "overall_confidence": 0.97,
+  "extraction_notes": "Formatted vectorial PDF document in excellent condition. All key fields clearly readable. Client: WOOD COMFORT PROM. Machine: ML76A. Company: TPS. Driller: Sr. DANIEL FERNÁNDEZ. Technician: Eva Vázquez Marcet, Geòloga col 4302. UTM: 423182.0 E(x) / 4609623.0 N(y). Cota Z: 570.90 msnm (per el plànol ICGC). Drilling dates: 24/10/25 (start and end). Borehole diameter: BW101. Document is in Catalan. Photo 2 confirms rocky core material retrieved between 0.00–1.20 m depth."
 }

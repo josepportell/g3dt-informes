@@ -1,16 +1,16 @@
 {
   "pages_inventory": {
-    "1": "cover + normativa urbanística + site plan overview",
-    "2": "site plan + parcel boundaries + dimensions",
-    "3": "floor plan planta baixa + area tables",
-    "4": "floor plan planta baixa + architectural definition",
-    "5": "floor plan planta baixa + detailed area tables",
-    "6": "roof plan (planta coberta) with annotations on roof materials and solar panels",
-    "7": "building sections (seccions) showing interior spaces, heights, materials",
+    "1": "cover + normativa urbanística + site plan",
+    "2": "parcel plan with boundaries and dimensions",
+    "3": "floor plan planta baixa + area table summary",
+    "4": "floor plan planta baixa detailed",
+    "5": "floor plan planta baixa detailed + area tables",
+    "6": "roof plan (planta coberta) with annotations on materials and solar panels",
+    "7": "building sections (seccions) showing floor heights, materials, and interior spaces",
     "8": "building sections (seccions) with detailed notes on materials and finishes",
-    "9": "building elevations (alçats) with facade materials and window details",
-    "10": "building elevations (alçats) with facade materials and exterior finishes",
-    "11": "sections + architectural elevations and cross-sections"
+    "9": "building sections (seccions) with facade details and materials",
+    "10": "building sections (seccions) with facade and elevation details",
+    "11": "sections + elevations + architectural details"
   },
   "planning_table_raw": {
     "planejament": {
@@ -38,15 +38,15 @@
     }
   },
   "architect_data": {
-    "project_name": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+    "project_name": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
     "building_type": "habitatge unifamiliar aïllat",
-    "promotor": "SÍLVIA EROLES BALAGUERÓ, JAUME NADAL ANDREU",
+    "promotor": "SÍLVIA EROLES BALAGUERÓ, JAUME NADAL ANDREU",
     "street_address": "C/ Clot de la Llacuna, 16",
     "municipality": "Linyola",
-    "architect": "JOSEP BUNYESC PALACÍN",
+    "architect": "JOSEP BUNYESC PALACÍN",
     "architect_company": "BUNYESC ARQUITECTURA EFICIENT, S.L.P.",
     "ref_cadastral": "5098344CG2159N0000US",
-    "client_name": "JOSEP BUNYESC PALACIN - Dr. Arquitecte"
+    "client_name": "JOSEP BUNYESC PALACIN"
   },
   "dimensions": {
     "parcel_area_m2": {
@@ -56,15 +56,15 @@
       "page": 1
     },
     "building_footprint_m2": {
-      "value": 250.91,
-      "confidence": 0.95,
-      "source": "superficie construïda total PB planta baixa p3 and p5",
-      "page": 3
+      "value": 41.33,
+      "confidence": 0.9,
+      "source": "normativa urbanística projecte column p1 (as % occupancy)",
+      "page": 1
     },
     "total_built_area_m2": {
       "value": 250.91,
       "confidence": 0.95,
-      "source": "superficie construïda total PB planta baixa p3 and p5",
+      "source": "area table planta baixa p3 and p5",
       "page": 3
     },
     "floor_surfaces": [
@@ -90,16 +90,16 @@
     "plot_length_m": {
       "value": 34.04,
       "confidence": 1.0,
-      "source": "site plan dimensions p2 and floor plan p3",
+      "source": "parcel plan p2",
       "page": 2
     },
     "plot_width_m": {
       "value": 16.83,
       "confidence": 1.0,
-      "source": "site plan dimensions p2 and floor plan p3",
+      "source": "parcel plan p2",
       "page": 2
     }
   },
   "overall_confidence": 0.95,
-  "extraction_notes": "The project is a basic project for a detached single-family house in Linyola. Normativa urbanística table is on page 1 with clear Planejament vs Projecte columns. Parcel area and max height come from the Projecte column. Floor plans and area tables on pages 3 and 5 provide detailed surface areas. Number of floors is PB only. Some client name is not visible. Reference cadastral is visible on site plan page 2. | Pages 6-10 contain detailed architectural drawings: roof plan, sections, and elevations with extensive notes on materials and construction. No normativa/planning table or area tables visible on these pages. Title block on all pages confirms project name, architect, promoter, and address. No cadastral reference or explicit dimensional data found on these pages. | Page 11 contains architectural elevations and cross-sections with detailed construction notes. No normativa/planning table or area tables visible on this page. Architect and project data extracted from title block at bottom of page. No dimensional or planning table data found on this page."
+  "extraction_notes": "Document pages 1-5 scanned. Normativa urbanística table with Planejament vs Projecte on page 1. Parcel plan with dimensions on page 2. Floor plans and detailed area tables on pages 3-5. Project is a single-family detached house (habitatge unifamiliar aïllat) with one floor (PB). Parcel area 571 m2, max height 3.48 m, occupancy 41.33%. Total built area approx. 251 m2. Some area tables show total useful floor area 515.62 m2, likely including exterior spaces. No client name explicitly found. Promotors and architect clearly identified. Ref cadastral found on page 2. | Pages 6-10 contain roof plan and multiple building sections with detailed material notes. No normativa/planning table or area tables found on these pages. Architect and project data extracted from title block on all pages' footers. No explicit numeric dimensions or planning table data visible on these pages. | Only page 11 of 11 provided, containing building sections, elevations, and architectural details. No normativa/planning table or area tables visible on this page. Architect and project data extracted from title block at bottom. Dimensions and planning table data not visible on this page."
 }

@@ -1,5 +1,42 @@
 {
   "document_type": "site_photo",
-  "document_description": "Street view photograph showing residential area with houses, vegetation, and concrete retaining wall",
-  "concepts_found": []
+  "document_description": "Site photo showing a vacant lot with a short wall, trees, and nearby buildings",
+  "concepts_found": [
+    {
+      "concept_id": "site_vegetation_visual",
+      "confidence": 0.9,
+      "signal_preview": "matollar dispers",
+      "page": 1
+    },
+    {
+      "concept_id": "site_slope_visual",
+      "confidence": 0.8,
+      "signal_preview": "pendent suau",
+      "page": 1
+    },
+    {
+      "concept_id": "is_anthropized_visual",
+      "confidence": 0.8,
+      "signal_preview": "si",
+      "page": 1
+    },
+    {
+      "concept_id": "building_to_demolish_visual",
+      "confidence": 0.5,
+      "signal_preview": "sense estructura",
+      "page": 1
+    },
+    {
+      "concept_id": "access_road_visual",
+      "confidence": 0.8,
+      "signal_preview": "carrer pavimentat",
+      "page": 1
+    },
+    {
+      "concept_id": "surrounding_context_visual",
+      "confidence": 0.8,
+      "signal_preview": "zona residencial dispersa",
+      "page": 1
+    }
+  ]
 }

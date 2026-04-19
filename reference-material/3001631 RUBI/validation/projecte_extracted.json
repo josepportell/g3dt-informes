@@ -1,11 +1,8 @@
 {
   "pages_inventory": {
-    "1": "floor plan - planta baja"
+    "1": "structural detail - foundation plan"
   },
-  "planning_table_raw": {
-    "planejament": {},
-    "projecte": {}
-  },
+  "planning_table_raw": null,
   "architect_data": {
     "project_name": null,
     "building_type": null,
@@ -21,37 +18,25 @@
     "parcel_area_m2": null,
     "building_footprint_m2": {
       "value": 72.0,
-      "confidence": 0.95,
-      "source": "floor plan p1",
+      "confidence": 0.9,
+      "source": "foundation plan text",
       "page": 1
     },
-    "total_built_area_m2": {
-      "value": 92.0,
-      "confidence": 0.95,
-      "source": "floor plan p1",
-      "page": 1
-    },
-    "floor_surfaces": [
-      {
-        "floor": "PB",
-        "area_m2": 72.0,
-        "confidence": 0.95,
-        "page": 1
-      }
-    ],
+    "total_built_area_m2": null,
+    "floor_surfaces": null,
     "num_floors": null,
     "max_height_m": null,
     "plot_length_m": {
-      "value": 8.0,
-      "confidence": 1.0,
+      "value": 8.96,
+      "confidence": 0.9,
       "page": 1
     },
     "plot_width_m": {
-      "value": 9.0,
-      "confidence": 1.0,
+      "value": 7.96,
+      "confidence": 0.9,
       "page": 1
     }
   },
-  "overall_confidence": 0.85,
-  "extraction_notes": "Only one page provided: floor plan of a single floor house model 'Mediterraneo'. No normativa/planning table or cover data visible. Dimensions and areas extracted from plan annotations."
+  "overall_confidence": 0.6,
+  "extraction_notes": "Only one page provided: foundation plan with dimensions and footprint area (72 m2 + 20 m2 porch). No normativa/planning table or cover data visible. Architect company name partially visible as 'VIVIENDAS MODULARES'."
 }

@@ -8,20 +8,7 @@
         {
           "depth_from_m": 0.0,
           "depth_to_m": 0.5,
-          "description": "Roca / formigó (material superficial dur)",
-          "geological_level": 1,
-          "uscs_classification": null,
-          "color": null,
-          "moisture": null,
-          "consistency": "dura",
-          "density": null,
-          "confidence": 0.65,
-          "note": "Document rotated 90°, handwriting partially legible. Albarà confirms 0.50m in soils (0-20m category) and 0.70m in roca dura/formigó (0-20m). Layer boundary at ~0.50m inferred from Albarà billing entries."
-        },
-        {
-          "depth_from_m": 0.5,
-          "depth_to_m": 1.2,
-          "description": "Limos argilosos amb graves / Roca dura o formigó",
+          "description": "Terra argilosa amb llims sense graves",
           "geological_level": 1,
           "uscs_classification": null,
           "color": null,
@@ -29,7 +16,20 @@
           "consistency": null,
           "density": null,
           "confidence": 0.55,
-          "note": "Second interval per Albarà: 0.70m in roca dura/formigó 0-20m. Exact description from rotated sheet partially illegible — reads approximately 'limos argilosos' or 'roca formigonada'. Final depth ~1.20m estimated from 'fca 1,20' notation visible in sheet."
+          "note": "Description partially legible from rotated/angled handwritten sheet. Depth 0 to 0.50m inferred from 'Cota 0' and '0.50' entries in depth column."
+        },
+        {
+          "depth_from_m": 0.5,
+          "depth_to_m": 1.2,
+          "description": "Roca / material dur (roca pochimada / fora pochimada)",
+          "geological_level": 1,
+          "uscs_classification": null,
+          "color": null,
+          "moisture": null,
+          "consistency": "dura",
+          "density": null,
+          "confidence": 0.45,
+          "note": "Description very difficult to read due to sheet rotation and handwriting quality. Text appears to read 'fora pochimada' or similar — possibly 'roca pochimada' indicating encountered rock/hard material. Depth 0.50 to 1.20m inferred from '0.12' visible in depth column (interpreted as 1.20m total). Corroborated by Albarà page 4 noting 0.50m in soils and 0.70m in rock/concrete (0.50+0.70=1.20m total)."
         }
       ],
       "spt_results": [],
@@ -37,241 +37,9 @@
       "water_level_m": null,
       "rock_detected": true,
       "rock_depth_m": 0.5,
-      "extraction_notes": "Full de camp sondeig a rotació sheet is photographed at 90° rotation making reading difficult. Total depth 1.20m derived from sum of Albarà billing quantities (0.50 + 0.70 = 1.20m). No SPT performed (marked 'No' on Albarà). Corona type noted as 'HV WG' (hard/diamond crown type). Operator: Daniel Fernandez. Equipment: ML76A."
+      "extraction_notes": "Sheet photographed at an angle/rotated making reading difficult. Total depth of 1.20m corroborated by Albarà delivery note (page 4): 0.50m in soils + 0.70m in rock/concrete = 1.20m. No 'Unitat litològica' column visible; num_geological_levels set to 1 by default. Entruba column appears to show 'Hd W.6'. Mostres column references 'C/Arbrells -4m'. No SPT tests recorded (Albarà page 4 confirms 'No' Assaigs SPT). Operator: Daniel Fernandez. Equipment: ML76A."
     }
   ],
-  "project_metadata": {
-    "document_type": "Albarà + Full de Camp Sondeig a Rotació + Full de Camp Penetròmetre Dinàmic",
-    "company": "TPS (Prospecció del Subsòl)",
-    "project_address": "C/ Arbrells, Castellar del Vallès",
-    "client_company": "G3",
-    "client_responsible": "Eva",
-    "date": "24-10-2025",
-    "equipment": "ML76A",
-    "operator": "Daniel Fernandez",
-    "penetrometer_albarà": {
-      "num_penetrometers": 4,
-      "total_ml_penetrometer": 20.0,
-      "displacement_checked": true,
-      "assaigs_SPT_o_MI": "No"
-    },
-    "sondeig_albarà": {
-      "equipment": "ML76A",
-      "sondista": "Daniel Fernandez",
-      "ml_perforacio_sols_0_20m": 0.5,
-      "ml_perforacio_roca_dura_formigo_0_20m": 0.7,
-      "assaigs_SPT": "No",
-      "data_inici": "24-10-2025",
-      "data_final": "24-10-2025"
-    }
-  },
-  "penetrometer_tests": [
-    {
-      "test_id": "P1",
-      "cota_inici_m": -4.0,
-      "carencia_colpeig_mesura1": 15,
-      "carencia_colpeig_mesura2": null,
-      "refusal_depth_m": -1.4,
-      "refusal_value": "R=1.08",
-      "data": [
-        {
-          "depth_m": -0.2,
-          "N_par": null,
-          "col": null,
-          "confidence": 0.7,
-          "note": "No value recorded at -0.2"
-        },
-        {
-          "depth_m": -0.4,
-          "N_par": null,
-          "col": 6,
-          "confidence": 0.85
-        },
-        {
-          "depth_m": -0.6,
-          "N_par": null,
-          "col": 10,
-          "confidence": 0.9
-        },
-        {
-          "depth_m": -0.8,
-          "N_par": null,
-          "col": 13,
-          "confidence": 0.9
-        },
-        {
-          "depth_m": -1.0,
-          "N_par": null,
-          "col": 38,
-          "confidence": 0.9
-        },
-        {
-          "depth_m": -1.2,
-          "N_par": null,
-          "col": 100,
-          "confidence": 0.9
-        },
-        {
-          "depth_m": -1.4,
-          "N_par": null,
-          "col": null,
-          "refusal": "R=1.08",
-          "confidence": 0.85
-        }
-      ],
-      "confidence": 0.85,
-      "note": "P1 starts at cota -4.0m (below ground reference). Refusal R=1.08 at -1.4m depth interval."
-    },
-    {
-      "test_id": "P2",
-      "cota_inici_m": -4.2,
-      "carencia_colpeig_mesura1": 15,
-      "carencia_colpeig_mesura2": null,
-      "refusal_depth_m": -0.8,
-      "refusal_value": "R=0.48",
-      "data": [
-        {
-          "depth_m": -0.2,
-          "N_par": null,
-          "col": null,
-          "confidence": 0.7
-        },
-        {
-          "depth_m": -0.4,
-          "N_par": null,
-          "col": 15,
-          "confidence": 0.85
-        },
-        {
-          "depth_m": -0.6,
-          "N_par": null,
-          "col": 100,
-          "confidence": 0.9
-        },
-        {
-          "depth_m": -0.8,
-          "N_par": null,
-          "col": null,
-          "refusal": "R=0.48",
-          "confidence": 0.85
-        }
-      ],
-      "confidence": 0.85,
-      "note": "P2 starts at cota -4.2m. Early refusal R=0.48 at -0.8m interval."
-    },
-    {
-      "test_id": "P3",
-      "cota_inici_m": -4.0,
-      "carencia_colpeig_mesura1": 15,
-      "carencia_colpeig_mesura2": null,
-      "refusal_depth_m": -0.8,
-      "refusal_value": "R=0.76",
-      "data": [
-        {
-          "depth_m": -0.2,
-          "N_par": null,
-          "col": null,
-          "confidence": 0.7
-        },
-        {
-          "depth_m": -0.4,
-          "N_par": null,
-          "col": 16,
-          "confidence": 0.85
-        },
-        {
-          "depth_m": -0.6,
-          "N_par": null,
-          "col": 46,
-          "confidence": 0.85
-        },
-        {
-          "depth_m": -0.8,
-          "N_par": null,
-          "col": 100,
-          "confidence": 0.9
-        },
-        {
-          "depth_m": -0.8,
-          "N_par": null,
-          "col": null,
-          "refusal": "R=0.76",
-          "confidence": 0.85
-        }
-      ],
-      "confidence": 0.8,
-      "note": "P3 starts at cota -4.0m. Refusal R=0.76 at -0.8m depth."
-    },
-    {
-      "test_id": "P4",
-      "cota_inici_m": -4.0,
-      "carencia_colpeig_mesura1": 15,
-      "carencia_colpeig_mesura2": null,
-      "refusal_depth_m": -1.6,
-      "refusal_value": "R=1.55",
-      "data": [
-        {
-          "depth_m": -0.2,
-          "N_par": null,
-          "col": 1,
-          "confidence": 0.8
-        },
-        {
-          "depth_m": -0.4,
-          "N_par": null,
-          "col": 8,
-          "confidence": 0.85
-        },
-        {
-          "depth_m": -0.6,
-          "N_par": null,
-          "col": 8,
-          "confidence": 0.85
-        },
-        {
-          "depth_m": -0.8,
-          "N_par": null,
-          "col": 12,
-          "confidence": 0.85
-        },
-        {
-          "depth_m": -1.0,
-          "N_par": null,
-          "col": 27,
-          "confidence": 0.85
-        },
-        {
-          "depth_m": -1.2,
-          "N_par": null,
-          "col": 91,
-          "confidence": 0.8,
-          "note": "Value may be 91 or 94, handwriting unclear"
-        },
-        {
-          "depth_m": -1.4,
-          "N_par": null,
-          "col": 28,
-          "confidence": 0.8,
-          "note": "Value reads 28, could be 2B"
-        },
-        {
-          "depth_m": -1.6,
-          "N_par": null,
-          "col": 100,
-          "confidence": 0.9
-        },
-        {
-          "depth_m": -1.8,
-          "N_par": null,
-          "col": null,
-          "refusal": "R=1.55",
-          "confidence": 0.85
-        }
-      ],
-      "confidence": 0.8,
-      "note": "P4 on separate sheet (Fitxa 01, page 2). Starts at cota -4.0m. Some intermediate values slightly uncertain."
-    }
-  ],
-  "overall_confidence": 0.75,
-  "extraction_notes": "Four documents analyzed: (1) Penetrometer Albarà delivery note, (2) Dynamic penetrometer field sheet with P1/P2/P3, (3) Dynamic penetrometer field sheet with P4, (4) Rotary drilling Albarà, (5) Rotary drilling field sheet (photographed at 90° rotation). The sondeig rotació field sheet (Image 5) is the most difficult to read due to rotation and handwriting. Penetrometer data is relatively clear. All tests dated 24-10-2025. Site: C/Arbrells, Castellar del Vallès. Client: G3/Eva. All penetrometers start from approximately -4.0 to -4.2m cota (below a reference level, likely from an excavation floor). Penetrometer blows column (col.) records hits per 20cm interval; values of 100 typically indicate refusal or >100 blows limit. R values indicate resistance in MPa at refusal."
+  "overall_confidence": 0.5,
+  "extraction_notes": "Five documents provided: (1) Penetrometer Albarà delivery note — 4 DPH tests, 20m total, C/Arbrells Castellar del Vallès, 24-10-2025, client G3/Eva, operator Daniel Fernandez, equipment ML76A; (2) DPH field sheet P1/P2/P3 — Cota Inici -4m, carència colpeig mesura 1=15, P1 data: -0.4→6, -0.6→10, -0.8→13, -1.0→38, -1.2→100, -1.4→R:1.08; P2 data: -0.4→6, -0.6→100 R:0.48, at -0.8→15, -1.0→100; P3 data: -0.4→16, -0.6→46, -0.8→100, R:0.76; (3) DPH field sheet P4 — Cota Inici -4m, mesura 1=15, data: -0.2→1, -0.4→8, -0.6→8, -0.8→12, -1.0→27, -1.2→31, -1.4→28, -1.6→100, R:1.55; (4) Rotary drilling Albarà — 0.50m in soils 0-20m, 0.70m in rock/concrete 0-20m, equipment ML76A, sondista Daniel Fernandez, no SPT; (5) S-1 rotary borehole field log — difficult to read due to photo angle. The primary extraction above covers the S-1 borehole. DPH test data (P1-P4) not included in sondeig_tests JSON as they are dynamic penetrometer tests, not boreholes, but noted here for completeness."
 }

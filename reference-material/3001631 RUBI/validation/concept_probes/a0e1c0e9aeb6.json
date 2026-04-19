@@ -1,11 +1,23 @@
 {
   "document_type": "architect_plan",
-  "document_description": "Foundation plan showing concrete footings and structural layout with dimensions",
+  "document_description": "Building layout plan",
   "concepts_found": [
     {
-      "concept_id": "has_basement",
+      "concept_id": "superficie_construida_m2",
+      "confidence": 1.0,
+      "signal_preview": "110 m2",
+      "page": 1
+    },
+    {
+      "concept_id": "num_floors",
       "confidence": 0.8,
-      "signal_preview": "NO POUS BLINDATS",
+      "signal_preview": "2 plantas",
+      "page": 1
+    },
+    {
+      "concept_id": "building_type",
+      "confidence": 0.8,
+      "signal_preview": "Viviendas",
       "page": 1
     }
   ]

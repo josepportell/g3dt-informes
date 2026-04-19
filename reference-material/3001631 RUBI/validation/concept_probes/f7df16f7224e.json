@@ -1,35 +1,11 @@
 {
   "document_type": "architect_plan",
-  "document_description": "Floor plan showing Mediterranean model house layout with dimensions and room distribution",
+  "document_description": "Floor plan of a Mediterranean-style house",
   "concepts_found": [
     {
       "concept_id": "building_type",
-      "confidence": 0.9,
-      "signal_preview": "MODELO MEDITERRANEO",
-      "page": 1
-    },
-    {
-      "concept_id": "superficie_construida_m2",
-      "confidence": 0.95,
-      "signal_preview": "72 m2",
-      "page": 1
-    },
-    {
-      "concept_id": "num_floors",
       "confidence": 0.8,
-      "signal_preview": "PLANTA",
-      "page": 1
-    },
-    {
-      "concept_id": "expedient",
-      "confidence": 0.8,
-      "signal_preview": "Rf - Mga70",
-      "page": 1
-    },
-    {
-      "concept_id": "architect_company",
-      "confidence": 0.7,
-      "signal_preview": "VIVIENDAS MODULARES",
+      "signal_preview": "Modelo Mediterraneo",
       "page": 1
     }
   ]

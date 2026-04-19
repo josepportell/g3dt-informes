@@ -1,17 +1,23 @@
 {
   "document_type": "architect_plan",
-  "document_description": "Foundation plan showing Mediterranean model layout with scale and dimensions",
+  "document_description": "Building layout plan",
   "concepts_found": [
     {
       "concept_id": "superficie_construida_m2",
-      "confidence": 0.9,
-      "signal_preview": "72 m2",
+      "confidence": 1.0,
+      "signal_preview": "100 m2 + 20 de Porchada",
+      "page": 1
+    },
+    {
+      "concept_id": "num_floors",
+      "confidence": 0.8,
+      "signal_preview": " appears to be 2-3 levels",
       "page": 1
     },
     {
       "concept_id": "building_type",
       "confidence": 0.8,
-      "signal_preview": "MODELO MEDITERRANEO",
+      "signal_preview": "Viviendas",
       "page": 1
     }
   ]

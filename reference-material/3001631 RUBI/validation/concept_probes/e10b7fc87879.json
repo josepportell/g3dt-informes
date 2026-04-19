@@ -1,11 +1,35 @@
 {
   "document_type": "map",
-  "document_description": "Site plan/aerial view showing project area with penetration test locations and study zone",
+  "document_description": "Aerial view of a plot of land with marked boundaries and nearby buildings",
   "concepts_found": [
     {
       "concept_id": "street_address",
-      "confidence": 0.8,
+      "confidence": 0.9,
       "signal_preview": "Carrer de la Miranda",
+      "page": 1
+    },
+    {
+      "concept_id": "site_vegetation_visual",
+      "confidence": 0.9,
+      "signal_preview": "arbres aïllats",
+      "page": 1
+    },
+    {
+      "concept_id": "is_anthropized_visual",
+      "confidence": 0.9,
+      "signal_preview": "si",
+      "page": 1
+    },
+    {
+      "concept_id": "access_road_visual",
+      "confidence": 0.9,
+      "signal_preview": "carrer pavimentat",
+      "page": 1
+    },
+    {
+      "concept_id": "surrounding_context_visual",
+      "confidence": 0.9,
+      "signal_preview": "parcel·les buides al voltant",
       "page": 1
     }
   ]

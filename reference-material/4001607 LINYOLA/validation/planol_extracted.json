@@ -20,18 +20,10 @@
       "floor_surfaces": null,
       "num_floors": null,
       "max_height_m": null,
-      "plot_length_m": {
-        "pdf_value": 34.04,
-        "confidence": 1.0,
-        "source": "drawing annotation"
-      },
-      "plot_width_m": {
-        "pdf_value": 16.83,
-        "confidence": 1.0,
-        "source": "drawing annotation"
-      }
+      "plot_length_m": 34.04,
+      "plot_width_m": 16.83
     }
   },
   "overall_confidence": 0.85,
-  "extraction_notes": "No planning/normativa table found on the page. Title block (caixeti) is clear and located at bottom. Project name, building type, location, municipality, promotor, architect, and architect company extracted from caixeti. Dimensions for plot length and width extracted from drawing annotations. No floor surfaces, parcel area, building footprint, number of floors, or max height found on this page."
+  "extraction_notes": "No planning/normativa table found on the page. Title block (caixetí) is clear and contains project metadata. Site plan drawing includes parcel dimensions (length and width) clearly annotated. No floor surface tables or height/floor count data visible."
 }

@@ -1,9 +1,10 @@
 {
   "pages_inventory": {
-    "1": "geotechnical report cover + data sheet",
-    "2": "dynamic penetrometer test data + sketch + measurements",
-    "3": "dynamic penetrometer test data + measurements",
-    "4": "rotary drilling report data + tables + notes"
+    "1": "site data + client data + project data form",
+    "2": "dynamic penetrometer test data + point location sketch + test results",
+    "3": "dynamic penetrometer test data + test results",
+    "4": "rotary drilling test data + client data + test parameters",
+    "5": "rotary drilling test results + observations"
   },
   "planning_table_raw": null,
   "architect_data": {
@@ -27,6 +28,6 @@
     "plot_length_m": null,
     "plot_width_m": null
   },
-  "overall_confidence": 0.8,
-  "extraction_notes": "Document is a geotechnical report with penetrometer and drilling data for site at C/ Arbrell, Castellar del Vallès. No architectural project data, planning tables, or building dimensions found in these pages."
+  "overall_confidence": 0.7,
+  "extraction_notes": "Document is a geotechnical report with penetrometer and drilling test data for site at C/ Arbrell, Castellar del Vallès. No architectural project data, planning tables, or building dimensions found in these pages. Client company is G3, responsible person named Eva. Dates are 24-10-2025. No normativa or project planning data present."
 }

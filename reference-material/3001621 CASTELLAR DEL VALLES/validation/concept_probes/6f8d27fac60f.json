@@ -1,11 +1,11 @@
 {
   "document_type": "field_sheet",
-  "document_description": "Hand-drawn sketch of point locations",
+  "document_description": "Hand-drawn scheme of points with measurements",
   "concepts_found": [
     {
       "concept_id": "street_address",
       "confidence": 0.8,
-      "signal_preview": "c/ arbat ll",
+      "signal_preview": "C/ Arb...b",
       "page": 1
     }
   ]

@@ -1,18 +1,5 @@
 {
   "document_type": "map",
-  "document_description": "Topographic map showing the area around Rubí, Castellbisbal and surrounding municipalities",
-  "concepts_found": [
-    {
-      "concept_id": "municipality",
-      "confidence": 0.95,
-      "signal_preview": "Rubí",
-      "page": 1
-    },
-    {
-      "concept_id": "municipality",
-      "confidence": 0.95,
-      "signal_preview": "Castellbisbal",
-      "page": 1
-    }
-  ]
+  "document_description": "aerial view map of Rubí area",
+  "concepts_found": []
 }

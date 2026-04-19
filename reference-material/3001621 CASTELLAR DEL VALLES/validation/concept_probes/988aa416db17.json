@@ -1,11 +1,41 @@
 {
   "document_type": "map",
-  "document_description": "Aerial view of a plot with marked zones and measurements",
+  "document_description": "Aerial view of a plot with marked testing points",
   "concepts_found": [
     {
       "concept_id": "superficie_parcela_m2",
       "confidence": 0.8,
       "signal_preview": "32980",
+      "page": 1
+    },
+    {
+      "concept_id": "site_vegetation_visual",
+      "confidence": 1.0,
+      "signal_preview": "vegetació arbòria",
+      "page": 1
+    },
+    {
+      "concept_id": "site_slope_visual",
+      "confidence": 1.0,
+      "signal_preview": "pla",
+      "page": 1
+    },
+    {
+      "concept_id": "is_anthropized_visual",
+      "confidence": 0.0,
+      "signal_preview": "no",
+      "page": 1
+    },
+    {
+      "concept_id": "access_road_visual",
+      "confidence": 1.0,
+      "signal_preview": "carrer pavimentat",
+      "page": 1
+    },
+    {
+      "concept_id": "surrounding_context_visual",
+      "confidence": 1.0,
+      "signal_preview": "parcel·les amb vegetació al voltant",
       "page": 1
     }
   ]

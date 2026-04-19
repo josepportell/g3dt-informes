@@ -1,5 +1,30 @@
 {
   "document_type": "site_photo",
-  "document_description": "Site photo with houses and solar panels",
-  "concepts_found": []
+  "document_description": "Site photo with vegetation and nearby buildings",
+  "concepts_found": [
+    {
+      "concept_id": "site_vegetation_visual",
+      "confidence": 0.9,
+      "signal_preview": "vegetació rasa",
+      "page": 1
+    },
+    {
+      "concept_id": "site_slope_visual",
+      "confidence": 0.8,
+      "signal_preview": "pendent suau",
+      "page": 1
+    },
+    {
+      "concept_id": "is_anthropized_visual",
+      "confidence": 0.7,
+      "signal_preview": "si",
+      "page": 1
+    },
+    {
+      "concept_id": "surrounding_context_visual",
+      "confidence": 0.8,
+      "signal_preview": "zona residencial consolidada",
+      "page": 1
+    }
+  ]
 }

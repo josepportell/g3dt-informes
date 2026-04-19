@@ -96,7 +96,7 @@
       "confidence": "high",
       "detection": "filename_pattern",
       "is_combined": true,
-      "vision_type": "sondeig"
+      "vision_type": null
     },
     "lab_order": {
       "path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
@@ -264,76 +264,555 @@
     "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
     "_user_data_prev.json"
   ],
-  "email_attachments": {
-    "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/PLAN_COST_CATELLAR DEL VALLÈS.xlsx": {
-      "source_msg": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+  "deep_folder_files": {
+    "25.0493/DADES PER ANAR A CAMP_v1.xlsx": {
+      "source_origin": "deep_folder:25.0493/DADES PER ANAR A CAMP_v1.xlsx",
       "classifier_used": "unclassified",
       "role_assigned": null,
       "role_candidate": null,
       "probe_status": "skipped",
       "probe_detail": "not_vision_eligible(.xlsx)",
       "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx": {
+      "source_origin": "deep_folder:25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.xlsx)",
+      "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf": {
+      "source_origin": "deep_folder:25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.pdf)",
+      "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf": {
+      "source_origin": "deep_folder:25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.pdf)",
+      "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg": {
+      "source_origin": "deep_folder:25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+      "classifier_used": "probe_cache",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "doc_type=site_photo",
+      "confidence": 0.85,
+      "doc_type": "site_photo",
+      "concepts_extracted": [
+        "site_vegetation_visual",
+        "is_anthropized_visual",
+        "site_slope_visual",
+        "surrounding_context_visual",
+        "access_road_visual",
+        "building_to_demolish_visual"
+      ],
+      "signals_emitted": 0
+    },
+    "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg": {
+      "source_origin": "deep_folder:25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg",
+      "classifier_used": "probe_cache",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "doc_type=site_photo",
+      "confidence": 0.85,
+      "doc_type": "site_photo",
+      "concepts_extracted": [
+        "site_vegetation_visual",
+        "site_slope_visual",
+        "is_anthropized_visual",
+        "surrounding_context_visual"
+      ],
+      "signals_emitted": 0
+    },
+    "3001621_test_fase2.docx": {
+      "source_origin": "deep_folder:3001621_test_fase2.docx",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.docx)",
+      "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "3001621_test_run003.docx": {
+      "source_origin": "deep_folder:3001621_test_run003.docx",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.docx)",
+      "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "3001621_test_run004.docx": {
+      "source_origin": "deep_folder:3001621_test_run004.docx",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.docx)",
+      "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "3001621_test_run005.docx": {
+      "source_origin": "deep_folder:3001621_test_run005.docx",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.docx)",
+      "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/COORDENADES.txt": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.txt)",
+      "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/M10.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "probe_cache",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "doc_type=map",
+      "confidence": 0.85,
+      "doc_type": "map",
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/M11.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "filename",
+      "role_assigned": null,
+      "role_candidate": "figure_geological_map",
+      "probe_status": "skipped",
+      "probe_detail": "",
+      "confidence": 0.9,
+      "doc_type": "map",
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/M2.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "probe_cache",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "doc_type=site_photo",
+      "confidence": 0.85,
+      "doc_type": "site_photo",
+      "concepts_extracted": [
+        "surrounding_context_visual",
+        "site_vegetation_visual",
+        "access_road_visual",
+        "is_anthropized_visual"
+      ],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/M3.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "probe_cache",
+      "role_assigned": null,
+      "role_candidate": "figure_geological_map",
+      "probe_status": "ok",
+      "probe_detail": "doc_type=map",
+      "confidence": 0.85,
+      "doc_type": "map",
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/M4.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "probe_cache",
+      "role_assigned": null,
+      "role_candidate": "figure_geological_map",
+      "probe_status": "ok",
+      "probe_detail": "doc_type=map",
+      "confidence": 0.85,
+      "doc_type": "map",
+      "concepts_extracted": [
+        "municipality",
+        "surrounding_context_visual",
+        "site_slope_visual"
+      ],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/m12 mgeol.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "probe_cache",
+      "role_assigned": null,
+      "role_candidate": "figure_geological_map",
+      "probe_status": "ok",
+      "probe_detail": "doc_type=map",
+      "confidence": 0.85,
+      "doc_type": "map",
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/m5.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "filename",
+      "role_assigned": null,
+      "role_candidate": "figure_geological_map",
+      "probe_status": "skipped",
+      "probe_detail": "",
+      "confidence": 0.9,
+      "doc_type": "field_sheet",
+      "concepts_extracted": [
+        "street_address"
+      ],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/m6.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "probe_cache",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "doc_type=site_photo",
+      "confidence": 0.85,
+      "doc_type": "site_photo",
+      "concepts_extracted": [
+        "site_vegetation_visual",
+        "is_anthropized_visual",
+        "surrounding_context_visual",
+        "access_road_visual"
+      ],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/m7.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "probe_cache",
+      "role_assigned": null,
+      "role_candidate": "figure_geological_map",
+      "probe_status": "ok",
+      "probe_detail": "doc_type=map",
+      "confidence": 0.85,
+      "doc_type": "map",
+      "concepts_extracted": [
+        "municipality",
+        "province"
+      ],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/m8.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "probe_cache",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "doc_type=map",
+      "confidence": 0.85,
+      "doc_type": "map",
+      "concepts_extracted": [
+        "superficie_parcela_m2",
+        "site_vegetation_visual",
+        "site_slope_visual",
+        "is_anthropized_visual",
+        "access_road_visual",
+        "surrounding_context_visual"
+      ],
+      "signals_emitted": 0
+    },
+    "ANNEXES/ALTRES/m9.png": {
+      "source_origin": "deep_folder:ANNEXES/ALTRES",
+      "classifier_used": "filename",
+      "role_assigned": null,
+      "role_candidate": "figure_geological_map",
+      "probe_status": "skipped",
+      "probe_detail": "",
+      "confidence": 0.9,
+      "doc_type": "field_sheet",
+      "concepts_extracted": [
+        "num_soil_levels",
+        "cota_referencia"
+      ],
+      "signals_emitted": 0
+    },
+    "DTE.txt": {
+      "source_origin": "deep_folder:DTE.txt",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.txt)",
+      "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "FOTOGRAFIES/DPSH/maquina_dpsh_2.jpg": {
+      "source_origin": "deep_folder:FOTOGRAFIES/DPSH",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "FOTOGRAFIES/DPSH/maquina_dpsh_3.jpg": {
+      "source_origin": "deep_folder:FOTOGRAFIES/DPSH",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 10.02.53_404bc72b.jpg": {
+      "source_origin": "deep_folder:FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 10.02.53_404bc72b.jpg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "dpsh_field_sheet",
+      "probe_status": "ok",
+      "probe_detail": "dpsh_sheet",
+      "confidence": 0.7,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "FOTOGRAFIES/P2.jpg": {
+      "source_origin": "deep_folder:FOTOGRAFIES/P2.jpg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "FOTOGRAFIES/P3.jpg": {
+      "source_origin": "deep_folder:FOTOGRAFIES/P3.jpg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "FOTOGRAFIES/P4.jpg": {
+      "source_origin": "deep_folder:FOTOGRAFIES/P4.jpg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg": {
+      "source_origin": "deep_folder:FOTOGRAFIES/S1",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.14_4f05eb48.jpg": {
+      "source_origin": "deep_folder:FOTOGRAFIES/S1",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg": {
+      "source_origin": "deep_folder:FOTOGRAFIES/S1",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "FOTOGRAFIES/detall_materials_2.jpg": {
+      "source_origin": "deep_folder:FOTOGRAFIES/detall_materials_2.jpg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg": {
+      "source_origin": "deep_folder:Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+      "classifier_used": "filename",
+      "role_assigned": null,
+      "role_candidate": "project_email",
+      "probe_status": "skipped",
+      "probe_detail": "",
+      "confidence": 0.9,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "_user_data_prev.json": {
+      "source_origin": "deep_folder:_user_data_prev.json",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.json)",
+      "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/PLAN_COST_CATELLAR DEL VALLÈS.xlsx": {
+      "source_origin": "msg:25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.xlsx)",
+      "confidence": 0.0,
+      "doc_type": null,
       "concepts_extracted": [],
       "signals_emitted": 0
     },
     "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image001.jpg": {
-      "source_msg": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "source_origin": "msg:25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
       "classifier_used": "vision",
       "role_assigned": null,
       "role_candidate": null,
       "probe_status": "ok",
       "probe_detail": "signature_image",
       "confidence": 0.0,
+      "doc_type": null,
       "concepts_extracted": [],
       "signals_emitted": 0
     },
     "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image005.png": {
-      "source_msg": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "source_origin": "msg:25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
       "classifier_used": "vision",
       "role_assigned": null,
       "role_candidate": null,
       "probe_status": "ok",
       "probe_detail": "signature_image",
       "confidence": 0.0,
+      "doc_type": null,
       "concepts_extracted": [],
       "signals_emitted": 0
     },
     "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image009.jpg": {
-      "source_msg": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "source_origin": "msg:25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
       "classifier_used": "vision",
       "role_assigned": null,
       "role_candidate": null,
       "probe_status": "ok",
       "probe_detail": "signature_image",
       "confidence": 0.0,
+      "doc_type": null,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/validation/mined_images/PLAN_COST_CATELLAR DEL VALLÈS_img0.png": {
+      "source_origin": "msg:25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "doc_type=other unmapped",
+      "confidence": 0.0,
+      "doc_type": "other",
       "concepts_extracted": [],
       "signals_emitted": 0
     },
     "validation/msg_attachments/Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES/image001.jpg": {
-      "source_msg": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+      "source_origin": "msg:Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
       "classifier_used": "vision",
       "role_assigned": null,
       "role_candidate": null,
       "probe_status": "ok",
       "probe_detail": "signature_image",
       "confidence": 0.0,
+      "doc_type": null,
       "concepts_extracted": [],
       "signals_emitted": 0
     },
     "validation/msg_attachments/Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES/image008.jpg": {
-      "source_msg": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+      "source_origin": "msg:Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
       "classifier_used": "vision",
       "role_assigned": null,
       "role_candidate": null,
       "probe_status": "ok",
       "probe_detail": "signature_image",
       "confidence": 0.0,
+      "doc_type": null,
       "concepts_extracted": [],
       "signals_emitted": 0
     }
   },
   "_metadata": {
-    "scanned_at": "2026-04-18T20:25:53.605974+00:00",
+    "scanned_at": "2026-04-19T11:36:45.157595+00:00",
     "confirmed_by_user": false,
     "scanner_version": "2.2"
   }

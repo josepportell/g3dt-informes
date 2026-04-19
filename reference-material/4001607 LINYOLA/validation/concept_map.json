@@ -1,12 +1,12 @@
 {
   "metadata": {
     "project": "4001607 LINYOLA",
-    "scanned_at": "2026-04-11T23:06:22",
+    "scanned_at": "2026-04-19T13:44:45",
     "total_files": 84,
     "vision_probes_sent": 31,
-    "total_concepts_found": 16,
-    "total_concepts_unresolved": 55,
-    "duration_ms": 30990
+    "total_concepts_found": 15,
+    "total_concepts_unresolved": 62,
+    "duration_ms": 41402
   },
   "file_inventory": [
     {
@@ -403,20 +403,18 @@
         "municipality",
         "field_date",
         "contact_name",
-        "street_address",
-        "municipality",
-        "field_date",
-        "cota_referencia",
-        "contact_name"
+        "client_name",
+        "cota_referencia"
       ],
       "concept_confidence": {
         "street_address": 1.0,
         "municipality": 1.0,
         "field_date": 1.0,
-        "contact_name": 1.0,
-        "cota_referencia": 1.0
+        "contact_name": 0.8,
+        "client_name": 0.8,
+        "cota_referencia": 0.9
       },
-      "notes": "field_sheet: Geotechnical field test sheet"
+      "notes": "field_sheet: Geotechnical field sheet with penetration test data"
     },
     {
       "path": "Punts de Sondeig_Silvia_Jaume (1).pdf",
@@ -500,16 +498,14 @@
       "concepts_detected": [
         "expedient",
         "street_address",
-        "municipality",
-        "building_type"
+        "municipality"
       ],
       "concept_confidence": {
         "expedient": 1.0,
         "street_address": 0.8,
-        "municipality": 0.8,
-        "building_type": 0.6
+        "municipality": 0.8
       },
-      "notes": "architect_plan: Floor plan for construction project"
+      "notes": "architect_plan: Floor plan with site location map"
     },
     {
       "path": "tall.pdf",
@@ -585,7 +581,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: Company logo"
+      "notes": "other: Logo image"
     },
     {
       "path": "validation/msg_attachments/RV_ Realització geotècnic/G3DT_Silvia_Jaume signat.pdf",
@@ -641,7 +637,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: No text or data found"
+      "notes": "other: No text or relevant content found"
     },
     {
       "path": "validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img1.jpeg",
@@ -650,7 +646,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: Logo and anniversary message"
+      "notes": "other: Company logo and anniversary message"
     },
     {
       "path": "validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img2.jpeg",
@@ -686,7 +682,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: Hand-drawn scribbles, no readable text"
+      "notes": "other: No readable text or recognizable content"
     },
     {
       "path": "validation/msg_attachments/RV_ pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
@@ -739,9 +735,9 @@
         "architect_company"
       ],
       "concept_confidence": {
-        "architect_company": 1.0
+        "architect_company": 0.9
       },
-      "notes": "architect_plan: Architect logo and company name"
+      "notes": "architect_plan: Architect's logo and name"
     },
     {
       "path": "validation/msg_attachments/RV_ pressupost geotècnic/image001.jpg",
@@ -777,7 +773,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "map: Geographic map with roads and locations"
+      "notes": "map: A topographic map showing roads, rivers, and locations in a region"
     },
     {
       "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img1.png",
@@ -786,7 +782,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: Blank document"
+      "notes": "other: No content visible"
     },
     {
       "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img2.jpeg",
@@ -795,7 +791,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "map: Aerial view of a town and surrounding agricultural fields"
+      "notes": "map: aerial view of a town and surrounding agricultural land"
     },
     {
       "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img3.png",
@@ -804,7 +800,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: Blank page"
+      "notes": "other: No content found"
     },
     {
       "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
@@ -831,7 +827,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: No text or data found"
+      "notes": "other: Blank document or image with no text"
     },
     {
       "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img7.jpeg",
@@ -840,7 +836,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: Image with geometric shapes, no readable text"
+      "notes": "other: No text or content visible"
     },
     {
       "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img8.jpeg",
@@ -849,7 +845,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "site_photo: Blank or empty document"
+      "notes": "site_photo: Aerial view of a site with a black rectangle overlay"
     },
     {
       "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img9.jpeg",
@@ -858,7 +854,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: No text or content found"
+      "notes": "other: Image with no text or recognizable content"
     },
     {
       "path": "validation/msg_attachments/pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
@@ -911,7 +907,7 @@
         "architect_company"
       ],
       "concept_confidence": {
-        "architect_company": 0.9
+        "architect_company": 1.0
       },
       "notes": "architect_plan: Architect logo and name"
     },
@@ -931,7 +927,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: Blank or empty document"
+      "notes": "other: No text or content visible"
     },
     {
       "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img2.jpeg",
@@ -940,7 +936,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "map: Aerial view of a town and surrounding farmland"
+      "notes": "map: Aerial view of a town and surrounding agricultural fields"
     },
     {
       "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img3.png",
@@ -949,7 +945,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: Blank page"
+      "notes": "other: Empty document"
     },
     {
       "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
@@ -959,16 +955,14 @@
       "concepts_detected": [
         "street_address",
         "municipality",
-        "superficie_parcela_m2",
-        "superficie_construida_m2"
+        "superficie_parcela_m2"
       ],
       "concept_confidence": {
         "street_address": 0.8,
-        "municipality": 0.6,
-        "superficie_parcela_m2": 0.9,
-        "superficie_construida_m2": 0.8
+        "municipality": 0.2,
+        "superficie_parcela_m2": 0.9
       },
-      "notes": "map: Site plan with plot layouts"
+      "notes": "map: Site plan with parcel boundaries and dimensions"
     },
     {
       "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img5.jpeg",
@@ -977,7 +971,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: No text or content visible"
+      "notes": "site_photo: Site photo with no text"
     },
     {
       "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img6.jpeg",
@@ -986,7 +980,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: Image with no readable text"
+      "notes": "site_photo: Site photo with no text"
     },
     {
       "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img7.jpeg",
@@ -995,7 +989,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "other: no text or content visible"
+      "notes": "other: Blank or incomplete document"
     },
     {
       "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img8.jpeg",
@@ -1004,7 +998,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "site_photo: Empty image with black shapes"
+      "notes": "site_photo: Blank page with black shapes"
     },
     {
       "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img9.jpeg",
@@ -1013,7 +1007,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "site_photo: Site photo with no text"
+      "notes": "other: Blank or incomplete document"
     }
   ],
   "concept_sources": {
@@ -1376,10 +1370,10 @@
       },
       {
         "file": "PENETROS.pdf",
-        "confidence": 1.0,
-        "signal_preview": "Siny",
+        "confidence": 0.8,
+        "signal_preview": "Eva",
         "extraction_method": "vision_probe:field_sheet",
-        "page": 3
+        "page": 1
       }
     ],
     "field_date": [
@@ -1465,7 +1459,7 @@
         "confidence": 1.0,
         "signal_preview": "01-10-25",
         "extraction_method": "vision_probe:field_sheet",
-        "page": 2
+        "page": 1
       }
     ],
     "expedient": [
@@ -1568,6 +1562,13 @@
         "signal_preview": "BUNYESC ARQUITECCTURA EFICIENT, SLP",
         "extraction_method": "label_adjacent",
         "page": null
+      },
+      {
+        "file": "PENETROS.pdf",
+        "confidence": 0.8,
+        "signal_preview": "G3",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
       }
     ],
     "street_address": [
@@ -1588,21 +1589,21 @@
       {
         "file": "PENETROS.pdf",
         "confidence": 1.0,
-        "signal_preview": "Carrer clot de la llacuna",
+        "signal_preview": "Carrer Clot de la Llaçuna",
         "extraction_method": "vision_probe:field_sheet",
-        "page": 2
+        "page": 1
       },
       {
         "file": "pl situ.pdf",
         "confidence": 0.8,
-        "signal_preview": "Carrer Clot de la Liacuna",
+        "signal_preview": "Carrer Clot de la Llaguna",
         "extraction_method": "vision_probe:architect_plan",
         "page": 1
       },
       {
         "file": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
         "confidence": 0.8,
-        "signal_preview": "Carrer Roquetes",
+        "signal_preview": "Carrer Llacuna",
         "extraction_method": "vision_probe:map",
         "page": 1
       }
@@ -1632,13 +1633,6 @@
         "signal_preview": "CONSTR HABITATGE",
         "extraction_method": "label_adjacent",
         "page": null
-      },
-      {
-        "file": "pl situ.pdf",
-        "confidence": 0.6,
-        "signal_preview": "habitatge",
-        "extraction_method": "vision_probe:architect_plan",
-        "page": 1
       }
     ],
     "municipality": [
@@ -1654,7 +1648,7 @@
         "confidence": 1.0,
         "signal_preview": "Linyola",
         "extraction_method": "vision_probe:field_sheet",
-        "page": 2
+        "page": 1
       },
       {
         "file": "pl situ.pdf",
@@ -1665,8 +1659,8 @@
       },
       {
         "file": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
-        "confidence": 0.6,
-        "signal_preview": "not clear",
+        "confidence": 0.2,
+        "signal_preview": "",
         "extraction_method": "vision_probe:map",
         "page": 1
       }
@@ -1674,8 +1668,8 @@
     "cota_referencia": [
       {
         "file": "PENETROS.pdf",
-        "confidence": 1.0,
-        "signal_preview": "-0,15",
+        "confidence": 0.9,
+        "signal_preview": "-0.15",
         "extraction_method": "vision_probe:field_sheet",
         "page": 2
       }
@@ -1683,14 +1677,14 @@
     "architect_company": [
       {
         "file": "validation/msg_attachments/RV_ pressupost geotècnic/image.png",
-        "confidence": 1.0,
+        "confidence": 0.9,
         "signal_preview": "BUNYESC ARQUITECTES",
         "extraction_method": "vision_probe:architect_plan",
         "page": 1
       },
       {
         "file": "validation/msg_attachments/pressupost geotècnic/image.png",
-        "confidence": 0.9,
+        "confidence": 1.0,
         "signal_preview": "BUNYESC ARQUITECTES",
         "extraction_method": "vision_probe:architect_plan",
         "page": 1
@@ -1700,16 +1694,7 @@
       {
         "file": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
         "confidence": 0.9,
-        "signal_preview": "266.18 m²",
-        "extraction_method": "vision_probe:map",
-        "page": 1
-      }
-    ],
-    "superficie_construida_m2": [
-      {
-        "file": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
-        "confidence": 0.8,
-        "signal_preview": "not clear",
+        "signal_preview": "2668.14",
         "extraction_method": "vision_probe:map",
         "page": 1
       }
@@ -1718,6 +1703,7 @@
   "unresolved": [
     "Es_settlement",
     "access_description",
+    "access_road_visual",
     "adjacent_east",
     "adjacent_north",
     "adjacent_south",
@@ -1725,6 +1711,7 @@
     "architect_name",
     "building_height_m",
     "building_structure_desc",
+    "building_to_demolish_visual",
     "field_work_dates",
     "field_work_dates_text",
     "foundation_depth_m",
@@ -1739,6 +1726,7 @@
     "icgc_unit_description",
     "icgc_unit_epoch",
     "is_anthropized",
+    "is_anthropized_visual",
     "is_sloped",
     "is_urban",
     "k30_value",
@@ -1760,14 +1748,18 @@
     "qa_value",
     "referencia_catastral",
     "settlement_cm",
+    "site_condition",
     "site_description",
     "site_position",
+    "site_slope_visual",
+    "site_vegetation_visual",
     "slope_direction",
     "slope_percent",
     "sulfate_mg_kg",
     "superficie_cadastral",
     "superficie_construida",
     "superficie_parcela",
+    "surrounding_context_visual",
     "table_dpsh_range",
     "utm_x",
     "utm_y"

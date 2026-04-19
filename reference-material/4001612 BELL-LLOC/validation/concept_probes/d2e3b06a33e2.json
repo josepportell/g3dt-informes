@@ -1,11 +1,36 @@
 {
   "document_type": "field_sheet",
-  "document_description": "Geotechnical field work form with penetrometer equipment details and test parameters",
+  "document_description": "geotechnical field sheet with penetrometer test data",
   "concepts_found": [
     {
+      "concept_id": "municipality",
+      "confidence": 1.0,
+      "signal_preview": "BELL- LLOCH",
+      "page": 1
+    },
+    {
+      "concept_id": "street_address",
+      "confidence": 1.0,
+      "signal_preview": "Carrer Antoni Bellet",
+      "page": 2
+    },
+    {
       "concept_id": "field_date",
-      "confidence": 0.95,
-      "signal_preview": "7-10-25"
+      "confidence": 1.0,
+      "signal_preview": "1-10-25",
+      "page": 1
+    },
+    {
+      "concept_id": "contact_name",
+      "confidence": 1.0,
+      "signal_preview": "Siny",
+      "page": 1
+    },
+    {
+      "concept_id": "cota_referencia",
+      "confidence": 1.0,
+      "signal_preview": "-0.175",
+      "page": 2
     }
   ]
 }

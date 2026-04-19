@@ -1,5 +1,30 @@
 {
-  "document_type": "map",
-  "document_description": "Aerial view of a plot with buildings and roads",
-  "concepts_found": []
+  "document_type": "site_photo",
+  "document_description": "aerial view of a site with buildings and vegetation",
+  "concepts_found": [
+    {
+      "concept_id": "surrounding_context_visual",
+      "confidence": 1.0,
+      "signal_preview": "zona residencial amb vegetació",
+      "page": 1
+    },
+    {
+      "concept_id": "site_vegetation_visual",
+      "confidence": 1.0,
+      "signal_preview": "arbres i matollar",
+      "page": 1
+    },
+    {
+      "concept_id": "access_road_visual",
+      "confidence": 1.0,
+      "signal_preview": "carrer pavimentat",
+      "page": 1
+    },
+    {
+      "concept_id": "is_anthropized_visual",
+      "confidence": 1.0,
+      "signal_preview": "si",
+      "page": 1
+    }
+  ]
 }

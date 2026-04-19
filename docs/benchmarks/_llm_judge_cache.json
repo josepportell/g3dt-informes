@@ -818,5 +818,130 @@
     "score": 5,
     "status": "MATCH",
     "explanation": "Same address: 'nº20' vs 'n20' is a wording difference only (nº vs n notation), substance is identical."
+  },
+  "6a73832b311b0793e0db09b1fb557ae6": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Benchmark says only ground floor ('en planta baixa' = PB), while pipeline says ground floor plus one upper floor (PB+1Pp). These describe different building structures — one storey vs two storeys."
+  },
+  "3dbf0bb774ca1ff56ae6856a058759ff": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states maximum settlements will be less than 1.20 cm, while the pipeline states 1.70 (presumably cm). These are different numbers representing different facts — a direct contradiction on a key quantitative value."
+  },
+  "f15705f44e36edea9e6abc0aed6e5d81": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both describe gravels with a sandy matrix, but the pipeline adds 'carbonatada' (carbonated/calcareous), which is a substantive mineralogical qualifier absent from the benchmark. Same basic lithology but a meaningful descriptive difference."
+  },
+  "54b72430715bef206e4a71f07edbb217": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Different N30 values: benchmark states 54, pipeline states 31. These are different numerical facts."
+  },
+  "2701acd58fccdbd83039e70b1573baeb": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark specifies a detailed recommendation for a slab foundation with a ballast coefficient K30=8.00 kg/cm³, while the pipeline output is just '1.9' — a completely different number with no context. Entirely different substance."
+  },
+  "6ba67b7b96f125878ed19c4abe32bef0": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states that despite the site not being flat, no signs of erosion related to surface water runoff have been detected and none are expected. The pipeline only says 'gentle slope' (pendent suau), which partially overlaps (implies the site is not flat) but loses the key substantive content about absence of erosion indicators and no expected erosion processes."
+  },
+  "d2000f0065fb8bfe1e861c0e3af453c1": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe the site on the day of fieldwork, but the substance diverges significantly. The benchmark states access was via an adjacent street to the south, the plot had no constructions or paving, clearing/grubbing had been done, there is a notable slope with a working platform ~4.0 m below street level, nearby buildings showed no apparent pathologies, and subsurface materials were not visible. The pipeline states access was via 'Carrer dels Arbrells' specifically, describes gentle-to-moderate slope, sparse scrub vegetation and trees, and a consolidated residential area. Key substantive elements differ or are missing: the specific access street vs generic 'adjacent street to the south'; the 4.0 m platform detail is absent in pipeline; the pipeline adds vegetation description not in benchmark; the benchmark's observations about nearby buildings and lack of outcropping are absent in pipeline. The two descriptions overlap only in the general idea of a sloped vacant plot accessed on the day of fieldwork, but diverge on most substantive details."
+  },
+  "8364839a2bfe36b1a51e24317cf776e9": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both refer to site conditions, but the benchmark describes a non-anthropized plot with no detected signs of erosion or surface water runoff processes, while the pipeline only states 'gentle slope' (pendent suau). These are partially overlapping at best — the pipeline captures one physical characteristic but misses the key substance about anthropization status and absence of erosion indicators."
+  },
+  "5a55b0e292dc265220cbbed052300c63": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe the same site visit day and access street (Miranda), but diverge substantially on site conditions. Eva's text describes the plot as having no constructions or pavements, with a specific topographic drop of ~13.20m (from 212.20 to 199.00 m.s.n.m.) from SW to NE, a flat working area, mentions nearby buildings with no apparent pathologies, and notes no outcropping materials. The pipeline version instead describes vegetation (isolated trees and scattered scrub) and gently undulating terrain with a slight slope — conditions not mentioned in Eva's text. These are materially different site descriptions that could reflect different sites or different observations, with only the access street in common."
+  },
+  "dfd0b9e493899ba394f9fcecfb74ab37": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states 'no basement level' (sense nivell de soterrani), while the pipeline describes 'enclosure of a porch on the ground floor' (tancament de porxo en planta baixa). These are completely different structural descriptions with no overlapping substance."
+  },
+  "8f107d7a96f2fa14994d91c60df35866": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same street and number, same municipality (Alcoletge), but the pipeline omits the urbanización name 'El Roser', which is a substantive locating detail."
+  },
+  "2cba6758bc3ad5408906c3b7fe8ada9a": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both refer to the site's surface condition, but they describe very different things. The benchmark states that because the site is a flat plot, no signs of erosion related to surface water runoff have been detected and none are expected. The pipeline simply says 'antropitzat' (anthropized/disturbed), which is a different characterization of the site condition and omits all the erosion-related substance of the benchmark text."
+  },
+  "5cd355304932c0ad27ab12f385e478e4": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe site conditions on the day of fieldwork, but the substance differs significantly. The benchmark describes: access via the street to the north, a graded/levelled plot with a ground-floor building in the north half, a planned rear extension, nearby buildings with similar characteristics showing no apparent pathologies, and no visible outcrops of subsoil materials. The pipeline describes: access via 'Carrer dels Gira-sols', a flat plot with green vegetation, and existing constructions on adjacent parcels to the east and south. The specific street name, the presence of the existing building on the plot, the planned extension area, the pathology observations, and the outcrop note are all absent or contradicted in the pipeline. These are substantive differences in site description content."
+  },
+  "2bc563de33cb32d1b2c285640b8e0334": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both describe a single detached dwelling ('vivienda unifamiliar aislada' in Spanish = 'habitatge unifamiliar aïllat' in Catalan). Same substance, just different languages."
+  },
+  "60a843a9cc4fb0ed9111d3e68bdcf37b": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical client name in both fields."
+  },
+  "8febe3f565ed820d3ef151f804dad240": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same street, number, urbanization, and municipality. 'nº' vs 'n' is a wording difference. However, 'VILANOVA DE SEGRIÀ' vs 'Vilanova del Segrià' is a minor name variant (preposition 'de' vs 'del') that could be a substantive geographic difference in the official municipality name, warranting a CLOSE rather than full MATCH."
+  },
+  "94e3dc9031f73caacf5b61014a80a3b9": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both state 3 DPSH dynamic penetration tests with a reference to the test records annex. The differences are language (Spanish vs Catalan) and minor phrasing variations ('ver registro de los ensayos mecánicos' vs 'veure annex Registre assaigs mecànics'). Substance is identical."
+  },
+  "5bafd8fa25e0472abbb22ec342c8acb1": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both agree on the bearing capacity value of 2.50 Kg/cm2, but the pipeline omits the substantive detail that this value already includes a safety factor of F=3, which is an important qualification for a geotechnical parameter."
+  },
+  "82ea4a4fa85b637e8fb66db31598b8c3": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Radon zone 1 vs radon zone 0 are different factual values — different substance entirely."
+  },
+  "688b6527cb48678b42153e4116ac35af": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark describes predicted maximum settlements (negligible or less than 1.0 cm) while the pipeline output is just a number '3.10' with no context about settlements at all. Completely different substance."
+  },
+  "3ce4b2cc608f3b3e0a08adf9c06a4551": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different substance. The benchmark states that no signs of erosion processes related to surface water runoff were detected in the study area. The pipeline output says 'flat, sparse vegetation' — an entirely different observation about terrain and vegetation, with no mention of erosion or runoff."
+  },
+  "ee019a786e6712e1215e0e64086b375f": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe a field visit to the same parcel, but the substance diverges significantly. The benchmark describes: access from the west street, parcel bounded by walls of adjacent parcels, access without fence/wall directly exposed to the street, unpaved entrance/patio area with small vegetation, and a paved strip with fencing on the west end. The pipeline describes: access via Carrer Santa Gemma, sparse low vegetation, context of empty residential parcels, and nearly flat terrain. The pipeline introduces details not in the benchmark (street name, surrounding empty lots, flat terrain) and omits the key descriptive elements of the benchmark (boundary walls, access conditions, paving/fencing details). The overlap is minimal — both mention a parcel visit and vegetation — but the substantive descriptions are largely different."
+  },
+  "c5ddb0ab16f98d3309a39977010970ec": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same test identifier, just a formatting difference (hyphen omitted). Substance is identical."
+  },
+  "77872cd15a61c4901b724c3c2a8113dd": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The benchmark refers to Tables 3 and 4 as a summary of in-situ tests. The pipeline lists '3, 4 i 5', which includes an extra table (Table 5) not mentioned in the benchmark. This is a substantive difference in which tables are referenced, not merely a wording difference."
+  },
+  "47032c98945dde25f06b4eb44eff01c9": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both refer to a residential building with basement/semi-basement elements, but the details differ substantially. The benchmark specifies a semi-basement (semisótano) in only 2 of the 7 planned dwellings, while the pipeline describes a ground floor + 1 upper floor with a full basement (sótano) for the whole building. The floor configuration (PB+1) is not mentioned in the benchmark, and the partial nature of the semi-basement (2 out of 7 units) is lost in the pipeline description. These are materially different structural descriptions."
   }
 }

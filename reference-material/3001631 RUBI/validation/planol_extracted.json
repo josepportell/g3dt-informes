@@ -18,19 +18,19 @@
       "parcel_area_m2": null,
       "building_footprint_m2": {
         "pdf_value": 72,
-        "confidence": 1.0,
+        "confidence": 0.95,
         "source": "drawing annotation"
       },
       "floor_surfaces": [
         {
           "floor": "PB",
           "area_m2": 72,
-          "confidence": 1.0
+          "confidence": 0.95
         },
         {
           "floor": "Porchada",
           "area_m2": 20,
-          "confidence": 1.0
+          "confidence": 0.95
         }
       ],
       "num_floors": null,
@@ -48,5 +48,5 @@
     }
   },
   "overall_confidence": 0.85,
-  "extraction_notes": "No planning table or normativa found on the page. Title block limited to project name and company logo. Dimensions clearly annotated on drawing. Floor surfaces extracted from text below plan: 72 m2 plus 20 m2 porch. No address, client, or architect info visible."
+  "extraction_notes": "No planning table or title block with metadata found. Only site plan drawing and partial title block with project name and company. Floor surface and plot dimensions extracted from drawing annotations. Number of floors and height not specified."
 }

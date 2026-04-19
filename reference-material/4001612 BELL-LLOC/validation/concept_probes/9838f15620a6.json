@@ -1,21 +1,36 @@
 {
   "document_type": "field_sheet",
-  "document_description": "Geotechnical drilling work order form from TPS company for rotary drilling operations",
+  "document_description": "geotechnical field sheet with handwritten notes and diagrams",
   "concepts_found": [
     {
-      "concept_id": "client_name",
-      "confidence": 0.9,
-      "signal_preview": "C-3"
+      "concept_id": "street_address",
+      "confidence": 1.0,
+      "signal_preview": "C/ Antoni Ballet",
+      "page": 1
+    },
+    {
+      "concept_id": "municipality",
+      "confidence": 1.0,
+      "signal_preview": "Bigues",
+      "page": 1
     },
     {
       "concept_id": "contact_name",
-      "confidence": 0.8,
-      "signal_preview": "Eva"
+      "confidence": 1.0,
+      "signal_preview": "Daniel Fernandez",
+      "page": 1
     },
     {
-      "concept_id": "field_date",
-      "confidence": 0.9,
-      "signal_preview": "6.10.2025"
+      "concept_id": "client_name",
+      "confidence": 0.8,
+      "signal_preview": "G3",
+      "page": 1
+    },
+    {
+      "concept_id": "expedient",
+      "confidence": 0.8,
+      "signal_preview": "not found",
+      "page": 1
     }
   ]
 }

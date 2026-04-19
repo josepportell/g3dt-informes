@@ -1,12 +1,12 @@
 {
   "metadata": {
     "project": "3001621 CASTELLAR DEL VALLES",
-    "scanned_at": "2026-04-12T19:39:20",
+    "scanned_at": "2026-04-19T13:36:17",
     "total_files": 75,
     "vision_probes_sent": 16,
-    "total_concepts_found": 15,
-    "total_concepts_unresolved": 55,
-    "duration_ms": 786
+    "total_concepts_found": 21,
+    "total_concepts_unresolved": 56,
+    "duration_ms": 27083
   },
   "file_inventory": [
     {
@@ -93,18 +93,42 @@
       "type": "image",
       "size_kb": 368,
       "text_extractable": false,
-      "concepts_detected": [],
-      "concept_confidence": {},
-      "notes": "site_photo: Site photo of a cleared area with cut trees and logs"
+      "concepts_detected": [
+        "site_vegetation_visual",
+        "is_anthropized_visual",
+        "site_slope_visual",
+        "surrounding_context_visual",
+        "access_road_visual",
+        "building_to_demolish_visual"
+      ],
+      "concept_confidence": {
+        "site_vegetation_visual": 1.0,
+        "is_anthropized_visual": 1.0,
+        "site_slope_visual": 0.8,
+        "surrounding_context_visual": 1.0,
+        "access_road_visual": 0.0,
+        "building_to_demolish_visual": 0.0
+      },
+      "notes": "site_photo: Site photo showing a cleared area with cut trees and vegetation"
     },
     {
       "path": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg",
       "type": "image",
       "size_kb": 219,
       "text_extractable": false,
-      "concepts_detected": [],
-      "concept_confidence": {},
-      "notes": "site_photo: Site photo with houses and solar panels"
+      "concepts_detected": [
+        "site_vegetation_visual",
+        "site_slope_visual",
+        "is_anthropized_visual",
+        "surrounding_context_visual"
+      ],
+      "concept_confidence": {
+        "site_vegetation_visual": 0.9,
+        "site_slope_visual": 0.8,
+        "is_anthropized_visual": 0.7,
+        "surrounding_context_visual": 0.8
+      },
+      "notes": "site_photo: Site photo with vegetation and nearby buildings"
     },
     {
       "path": "3001621_PORTADA_25.doc",
@@ -229,7 +253,7 @@
         "municipality": 1.0,
         "province": 0.0
       },
-      "notes": "map: Geographic map showing Castellar del Vallès area"
+      "notes": "map: Location map showing Castellar del Vallès"
     },
     {
       "path": "ANNEXES/ALTRES/M10.png",
@@ -238,7 +262,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "map: Aerial view map with plot boundaries"
+      "notes": "map: aerial view map with plot boundaries"
     },
     {
       "path": "ANNEXES/ALTRES/M11.png",
@@ -247,16 +271,26 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "map: Geological map or cross-section"
+      "notes": "map: geotechnical map with contour lines"
     },
     {
       "path": "ANNEXES/ALTRES/M2.png",
       "type": "image",
       "size_kb": 506,
       "text_extractable": false,
-      "concepts_detected": [],
-      "concept_confidence": {},
-      "notes": "map: Aerial view of a plot with buildings and roads"
+      "concepts_detected": [
+        "surrounding_context_visual",
+        "site_vegetation_visual",
+        "access_road_visual",
+        "is_anthropized_visual"
+      ],
+      "concept_confidence": {
+        "surrounding_context_visual": 1.0,
+        "site_vegetation_visual": 1.0,
+        "access_road_visual": 1.0,
+        "is_anthropized_visual": 1.0
+      },
+      "notes": "site_photo: aerial view of a site with buildings and vegetation"
     },
     {
       "path": "ANNEXES/ALTRES/M3.png",
@@ -265,7 +299,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "map: Topographic map with contour lines and location labels"
+      "notes": "map: topographic map with contour lines"
     },
     {
       "path": "ANNEXES/ALTRES/M4.png",
@@ -274,11 +308,13 @@
       "text_extractable": false,
       "concepts_detected": [
         "municipality",
-        "street_address"
+        "surrounding_context_visual",
+        "site_slope_visual"
       ],
       "concept_confidence": {
         "municipality": 0.8,
-        "street_address": 0.5
+        "surrounding_context_visual": 0.9,
+        "site_slope_visual": 0.8
       },
       "notes": "map: Topographic map with contour lines and location marked"
     },
@@ -289,7 +325,7 @@
       "text_extractable": false,
       "concepts_detected": [],
       "concept_confidence": {},
-      "notes": "map: geological map with legend"
+      "notes": "map: Geological map with legend"
     },
     {
       "path": "ANNEXES/ALTRES/m5.png",
@@ -302,7 +338,7 @@
       "concept_confidence": {
         "street_address": 0.8
       },
-      "notes": "field_sheet: Hand-drawn sketch of point locations"
+      "notes": "field_sheet: Hand-drawn scheme of points with measurements"
     },
     {
       "path": "ANNEXES/ALTRES/m6.png",
@@ -310,12 +346,18 @@
       "size_kb": 963,
       "text_extractable": false,
       "concepts_detected": [
-        "superficie_parcela_m2"
+        "site_vegetation_visual",
+        "is_anthropized_visual",
+        "surrounding_context_visual",
+        "access_road_visual"
       ],
       "concept_confidence": {
-        "superficie_parcela_m2": 0.8
+        "site_vegetation_visual": 1.0,
+        "is_anthropized_visual": 0.8,
+        "surrounding_context_visual": 1.0,
+        "access_road_visual": 1.0
       },
-      "notes": "map: Aerial view of a plot with measurements"
+      "notes": "site_photo: Aerial view of a plot with vegetation and surrounding buildings"
     },
     {
       "path": "ANNEXES/ALTRES/m7.png",
@@ -327,10 +369,10 @@
         "province"
       ],
       "concept_confidence": {
-        "municipality": 0.9,
-        "province": 0.8
+        "municipality": 1.0,
+        "province": 0.0
       },
-      "notes": "map: Topographic map with study area marked"
+      "notes": "map: Topographic map showing study area in Castellar del Vallès"
     },
     {
       "path": "ANNEXES/ALTRES/m8.png",
@@ -338,12 +380,22 @@
       "size_kb": 862,
       "text_extractable": false,
       "concepts_detected": [
-        "superficie_parcela_m2"
+        "superficie_parcela_m2",
+        "site_vegetation_visual",
+        "site_slope_visual",
+        "is_anthropized_visual",
+        "access_road_visual",
+        "surrounding_context_visual"
       ],
       "concept_confidence": {
-        "superficie_parcela_m2": 0.8
+        "superficie_parcela_m2": 0.8,
+        "site_vegetation_visual": 1.0,
+        "site_slope_visual": 1.0,
+        "is_anthropized_visual": 0.0,
+        "access_road_visual": 1.0,
+        "surrounding_context_visual": 1.0
       },
-      "notes": "map: Aerial view of a plot with marked zones and measurements"
+      "notes": "map: Aerial view of a plot with marked testing points"
     },
     {
       "path": "ANNEXES/ALTRES/m9.png",
@@ -356,7 +408,7 @@
       ],
       "concept_confidence": {
         "num_soil_levels": 1.0,
-        "cota_referencia": 0.8
+        "cota_referencia": 0.9
       },
       "notes": "field_sheet: Geological cross-section with soil levels"
     },
@@ -674,16 +726,18 @@
       "concepts_detected": [
         "street_address",
         "municipality",
+        "client_name",
+        "contact_name",
         "field_date",
-        "cota_referencia",
-        "num_soil_levels"
+        "cota_referencia"
       ],
       "concept_confidence": {
         "street_address": 1.0,
         "municipality": 1.0,
+        "client_name": 1.0,
+        "contact_name": 1.0,
         "field_date": 1.0,
-        "cota_referencia": 1.0,
-        "num_soil_levels": 0.8
+        "cota_referencia": 1.0
       },
       "notes": "field_sheet: Geotechnical field report"
     },
@@ -703,7 +757,7 @@
     {
       "path": "_user_data_prev.json",
       "type": "other",
-      "size_kb": 5,
+      "size_kb": 4,
       "text_extractable": true,
       "concepts_detected": [],
       "concept_confidence": {},
@@ -818,6 +872,13 @@
         "signal_preview": "GRUP ALMA",
         "extraction_method": "label_adjacent",
         "page": null
+      },
+      {
+        "file": "PENETROS + SONDEIG.pdf",
+        "confidence": 1.0,
+        "signal_preview": "G3",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
       }
     ],
     "street_address": [
@@ -836,23 +897,16 @@
         "page": null
       },
       {
-        "file": "ANNEXES/ALTRES/M4.png",
-        "confidence": 0.5,
-        "signal_preview": "Turo de les Jeles",
-        "extraction_method": "vision_probe:map",
-        "page": 1
-      },
-      {
         "file": "ANNEXES/ALTRES/m5.png",
         "confidence": 0.8,
-        "signal_preview": "c/ arbat ll",
+        "signal_preview": "C/ Arb...b",
         "extraction_method": "vision_probe:field_sheet",
         "page": 1
       },
       {
         "file": "PENETROS + SONDEIG.pdf",
         "confidence": 1.0,
-        "signal_preview": "C/ Arbells",
+        "signal_preview": "C/ Arbellets",
         "extraction_method": "vision_probe:field_sheet",
         "page": 1
       }
@@ -864,6 +918,13 @@
         "signal_preview": "ROC",
         "extraction_method": "label_adjacent",
         "page": null
+      },
+      {
+        "file": "PENETROS + SONDEIG.pdf",
+        "confidence": 1.0,
+        "signal_preview": "Eva",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
       }
     ],
     "client_phone": [
@@ -1044,7 +1105,7 @@
       },
       {
         "file": "ANNEXES/ALTRES/m7.png",
-        "confidence": 0.9,
+        "confidence": 1.0,
         "signal_preview": "Castellar del Vallès",
         "extraction_method": "vision_probe:map",
         "page": 1
@@ -1052,8 +1113,195 @@
       {
         "file": "PENETROS + SONDEIG.pdf",
         "confidence": 1.0,
-        "signal_preview": "Castellar del Valles",
+        "signal_preview": "Castellar del Vallès",
         "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      }
+    ],
+    "site_vegetation_visual": [
+      {
+        "file": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+        "confidence": 1.0,
+        "signal_preview": "matollar dispers",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg",
+        "confidence": 0.9,
+        "signal_preview": "vegetació rasa",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/M2.png",
+        "confidence": 1.0,
+        "signal_preview": "arbres i matollar",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m6.png",
+        "confidence": 1.0,
+        "signal_preview": "vegetació arbòria",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m8.png",
+        "confidence": 1.0,
+        "signal_preview": "vegetació arbòria",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "is_anthropized_visual": [
+      {
+        "file": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+        "confidence": 1.0,
+        "signal_preview": "si",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg",
+        "confidence": 0.7,
+        "signal_preview": "si",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/M2.png",
+        "confidence": 1.0,
+        "signal_preview": "si",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m6.png",
+        "confidence": 0.8,
+        "signal_preview": "no",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m8.png",
+        "confidence": 0.0,
+        "signal_preview": "no",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "site_slope_visual": [
+      {
+        "file": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+        "confidence": 0.8,
+        "signal_preview": "pendent suau",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg",
+        "confidence": 0.8,
+        "signal_preview": "pendent suau",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/M4.png",
+        "confidence": 0.8,
+        "signal_preview": "pendent moderada",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m8.png",
+        "confidence": 1.0,
+        "signal_preview": "pla",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "surrounding_context_visual": [
+      {
+        "file": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+        "confidence": 1.0,
+        "signal_preview": "zona boscosa",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg",
+        "confidence": 0.8,
+        "signal_preview": "zona residencial consolidada",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/M2.png",
+        "confidence": 1.0,
+        "signal_preview": "zona residencial amb vegetació",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/M4.png",
+        "confidence": 0.9,
+        "signal_preview": "zona residencial consolidada",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m6.png",
+        "confidence": 1.0,
+        "signal_preview": "zona residencial",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m8.png",
+        "confidence": 1.0,
+        "signal_preview": "parcel·les amb vegetació al voltant",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "access_road_visual": [
+      {
+        "file": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+        "confidence": 0.0,
+        "signal_preview": "",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/M2.png",
+        "confidence": 1.0,
+        "signal_preview": "carrer pavimentat",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m6.png",
+        "confidence": 1.0,
+        "signal_preview": "carrer pavimentat",
+        "extraction_method": "vision_probe:site_photo",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m8.png",
+        "confidence": 1.0,
+        "signal_preview": "carrer pavimentat",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "building_to_demolish_visual": [
+      {
+        "file": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+        "confidence": 0.0,
+        "signal_preview": "",
+        "extraction_method": "vision_probe:site_photo",
         "page": 1
       }
     ],
@@ -1067,20 +1315,13 @@
       },
       {
         "file": "ANNEXES/ALTRES/m7.png",
-        "confidence": 0.8,
-        "signal_preview": "Vallès",
+        "confidence": 0.0,
+        "signal_preview": "",
         "extraction_method": "vision_probe:map",
         "page": 1
       }
     ],
     "superficie_parcela_m2": [
-      {
-        "file": "ANNEXES/ALTRES/m6.png",
-        "confidence": 0.8,
-        "signal_preview": "32980",
-        "extraction_method": "vision_probe:map",
-        "page": 1
-      },
       {
         "file": "ANNEXES/ALTRES/m8.png",
         "confidence": 0.8,
@@ -1096,19 +1337,12 @@
         "signal_preview": "2",
         "extraction_method": "vision_probe:field_sheet",
         "page": 1
-      },
-      {
-        "file": "PENETROS + SONDEIG.pdf",
-        "confidence": 0.8,
-        "signal_preview": "No clear indication",
-        "extraction_method": "vision_probe:field_sheet",
-        "page": 2
       }
     ],
     "cota_referencia": [
       {
         "file": "ANNEXES/ALTRES/m9.png",
-        "confidence": 0.8,
+        "confidence": 0.9,
         "signal_preview": "+571,50 m",
         "extraction_method": "vision_probe:field_sheet",
         "page": 1
@@ -1116,7 +1350,7 @@
       {
         "file": "PENETROS + SONDEIG.pdf",
         "confidence": 1.0,
-        "signal_preview": "-4 m",
+        "signal_preview": "-4,2 m",
         "extraction_method": "vision_probe:field_sheet",
         "page": 2
       }
@@ -1167,6 +1401,7 @@
     "qa_value",
     "referencia_catastral",
     "settlement_cm",
+    "site_condition",
     "site_description",
     "site_position",
     "slope_direction",

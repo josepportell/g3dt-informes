@@ -1,11 +1,11 @@
 {
   "document_type": "field_sheet",
-  "document_description": "Geotechnical field test sheet",
+  "document_description": "Geotechnical field sheet with penetration test data",
   "concepts_found": [
     {
       "concept_id": "street_address",
       "confidence": 1.0,
-      "signal_preview": "Carrer clot de la llacuna",
+      "signal_preview": "Carrer Clot de la Llaçuna",
       "page": 1
     },
     {
@@ -22,39 +22,21 @@
     },
     {
       "concept_id": "contact_name",
-      "confidence": 1.0,
-      "signal_preview": "Siny",
+      "confidence": 0.8,
+      "signal_preview": "Eva",
       "page": 1
     },
     {
-      "concept_id": "street_address",
-      "confidence": 1.0,
-      "signal_preview": "Carrer clot de la llacuna",
-      "page": 2
-    },
-    {
-      "concept_id": "municipality",
-      "confidence": 1.0,
-      "signal_preview": "Linyola",
-      "page": 2
-    },
-    {
-      "concept_id": "field_date",
-      "confidence": 1.0,
-      "signal_preview": "01-10-25",
-      "page": 2
+      "concept_id": "client_name",
+      "confidence": 0.8,
+      "signal_preview": "G3",
+      "page": 1
     },
     {
       "concept_id": "cota_referencia",
-      "confidence": 1.0,
-      "signal_preview": "-0,15",
+      "confidence": 0.9,
+      "signal_preview": "-0.15",
       "page": 2
-    },
-    {
-      "concept_id": "contact_name",
-      "confidence": 1.0,
-      "signal_preview": "Siny",
-      "page": 3
     }
   ]
 }

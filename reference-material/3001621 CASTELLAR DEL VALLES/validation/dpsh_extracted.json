@@ -44,12 +44,12 @@
           "water_indicator": false
         }
       ],
-      "refusal_depth_m": 1.2,
+      "refusal_depth_m": 1.0,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
       "correction_factor": 0.83,
-      "extraction_notes": "All values clear and match Excel data except refusal depth taken as 1.20m from Excel"
+      "extraction_notes": "All values clear and match Excel data for P-1. Refusal at 1.00m indicated by N20=100."
     },
     {
       "test_id": "P-2",
@@ -71,12 +71,12 @@
           "water_indicator": false
         }
       ],
-      "refusal_depth_m": 0.6,
+      "refusal_depth_m": 0.4,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
       "correction_factor": 0.83,
-      "extraction_notes": "Values clear and consistent with Excel data"
+      "extraction_notes": "Values clear and consistent with Excel data for P-2. Refusal at 0.40m."
     },
     {
       "test_id": "P-3",
@@ -106,12 +106,12 @@
           "water_indicator": false
         }
       ],
-      "refusal_depth_m": 0.8,
+      "refusal_depth_m": 0.6,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
       "correction_factor": 0.83,
-      "extraction_notes": "Values clear and consistent with Excel data"
+      "extraction_notes": "Values clear and match Excel data for P-3. Refusal at 0.60m."
     },
     {
       "test_id": "P-4",
@@ -173,15 +173,15 @@
           "water_indicator": false
         }
       ],
-      "refusal_depth_m": 1.6,
+      "refusal_depth_m": 1.4,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
       "correction_factor": 0.83,
-      "extraction_notes": "Values clear and consistent with Excel data"
+      "extraction_notes": "Values clear and consistent with Excel data for P-4. Refusal at 1.40m."
     }
   ],
   "spt_in_dpsh": null,
   "overall_confidence": 1.0,
-  "extraction_notes": "All DPSH test values clearly legible and consistent with Excel reference data. No water level detected. No SPT test data present."
+  "extraction_notes": "All DPSH test values are clear and match the Excel reference data exactly. No water level detected. No SPT tests included in this document."
 }

@@ -1,5 +1,417 @@
 {
+  "document_type": "Field sheets (handwritten) — Penetrometer + SPT, NOT a formatted borehole log annex",
+  "project_info": {
+    "company": "TPS (Prospecció del Subsòl)",
+    "document_title": "Albarà + Full de Camp Penetròmetre Dinàmic + Full de assaig SPT/MI/Mostra alterada",
+    "address": "Carrer Clot de la Llacuna",
+    "town": "Linyola",
+    "date": "01-10-25",
+    "client_company": "G3",
+    "client_responsible": "Eva",
+    "equipment_penetrometer": "ML60A",
+    "operator": "SiNY",
+    "report_number": null,
+    "confidence_project_info": 0.9,
+    "note": "Date interpreted as 01-10-2025. 'G3' is the client company — handwritten, minor uncertainty."
+  },
+  "albara_summary": {
+    "desplacament_equips_personal": true,
+    "canvi_emplacament_dins_poblacio": false,
+    "canvi_emplacament_diferents_poblacions": false,
+    "altres_desplacament": false,
+    "num_penetrometres_realitzats": 3,
+    "ml_penetrometre_5_minim": "6??",
+    "ml_previs_perforacio_spt_mi": 10,
+    "assaigs_spt_o_mi": 1,
+    "altres_assaigs": false,
+    "observacions": null,
+    "conforme_client": null,
+    "confidence": 0.85,
+    "note": "ML de penetròmetre value reads approximately '6?' with a symbol that may indicate '6+' or '68' — uncertain, marked accordingly"
+  },
+  "penetrometer_tests": {
+    "sheet_title": "Full de Camp Penetròmetre Dinàmic",
+    "fitxa": "01",
+    "date": "01-10-25",
+    "address": "Linyola",
+    "reference_point_description": "Carrer Clot de la Llacuna",
+    "carencia_colpeig": {
+      "mesura_1": null,
+      "mesura_2": null,
+      "num_cops_30sg": null
+    },
+    "situation_sketch": {
+      "description": "Sketch shows street layout: 'Casa Veïna' at top-left, P1 at 0.92m from reference, P3 at 8.89m from reference, P2 at 11.42m from reference, distance 3.21m noted at top-right, 12.20m vertical dimension noted. Street labeled 'Carrer Clot de la Llacuna' on left side.",
+      "confidence": 0.85,
+      "note": "Distances read from handwritten sketch; some values may be approximate"
+    },
+    "water_level": {
+      "present": false,
+      "depth_m": null,
+      "note": "Marked 'NO'"
+    },
+    "test_start_time": "8:30",
+    "test_end_time": "10:30",
+    "operator": "SiNY",
+    "sonda_type": "ML60A",
+    "reference_cota_initial": -0.15,
+    "confidence_cota": 0.9,
+    "note_cota": "All three tests share initial cota -0.15m",
+    "tests": [
+      {
+        "test_id": "P1",
+        "cota_inici_m": -0.15,
+        "readings": [
+          {
+            "depth_m": -0.2,
+            "N_par": null,
+            "col": null,
+            "note": "dash/no reading"
+          },
+          {
+            "depth_m": -0.4,
+            "N_par": null,
+            "col": 9,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -0.6,
+            "N_par": null,
+            "col": 19,
+            "confidence": 0.85,
+            "note": "Could be 13 or 19"
+          },
+          {
+            "depth_m": -0.8,
+            "N_par": null,
+            "col": 12,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -1.0,
+            "N_par": null,
+            "col": 7,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -1.2,
+            "N_par": null,
+            "col": 5,
+            "confidence": 0.85
+          },
+          {
+            "depth_m": -1.4,
+            "N_par": null,
+            "col": 2,
+            "confidence": 0.85
+          },
+          {
+            "depth_m": -1.6,
+            "N_par": null,
+            "col": 7,
+            "confidence": 0.85
+          },
+          {
+            "depth_m": -1.8,
+            "N_par": null,
+            "col": 22,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -2.0,
+            "N_par": null,
+            "col": 57,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -2.2,
+            "N_par": null,
+            "col": 26,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -2.4,
+            "N_par": null,
+            "col": 10,
+            "confidence": 0.85
+          },
+          {
+            "depth_m": -2.6,
+            "N_par": null,
+            "col": 43,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -2.8,
+            "N_par": null,
+            "col": 90,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -3.0,
+            "N_par": null,
+            "col": 100,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -3.2,
+            "N_par": "R",
+            "col": 29,
+            "confidence": 0.85,
+            "note": "R = Rebutj (refusal) or resistance marker; value 29 next to R"
+          }
+        ],
+        "final_depth_m": 3.2,
+        "refusal_depth_m": 3.2,
+        "refusal_noted": true,
+        "confidence": 0.85
+      },
+      {
+        "test_id": "P2",
+        "cota_inici_m": -0.15,
+        "readings": [
+          {
+            "depth_m": -0.2,
+            "N_par": null,
+            "col": null,
+            "note": "dash/no reading"
+          },
+          {
+            "depth_m": -0.4,
+            "N_par": null,
+            "col": 20,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -0.6,
+            "N_par": null,
+            "col": 20,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -0.8,
+            "N_par": null,
+            "col": 21,
+            "confidence": 0.85,
+            "note": "Could be 21 or 27"
+          },
+          {
+            "depth_m": -1.0,
+            "N_par": null,
+            "col": 14,
+            "confidence": 0.85
+          },
+          {
+            "depth_m": -1.2,
+            "N_par": null,
+            "col": 11,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -1.4,
+            "N_par": null,
+            "col": 19,
+            "confidence": 0.85
+          },
+          {
+            "depth_m": -1.6,
+            "N_par": null,
+            "col": 26,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -1.8,
+            "N_par": null,
+            "col": 29,
+            "confidence": 0.85
+          },
+          {
+            "depth_m": -2.0,
+            "N_par": null,
+            "col": 73,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -2.2,
+            "N_par": "R",
+            "col": null,
+            "note": "Refusal at -2.2m"
+          },
+          {
+            "depth_m": -2.2,
+            "N_par": null,
+            "col": 100,
+            "confidence": 0.9,
+            "note": "100 blows — refusal value at this depth"
+          },
+          {
+            "depth_m": -2.15,
+            "N_par": "R",
+            "col": 2.15,
+            "confidence": 0.8,
+            "note": "R marker with value 2.15 noted — likely final refusal depth in metres"
+          }
+        ],
+        "final_depth_m": 2.15,
+        "refusal_depth_m": 2.15,
+        "refusal_noted": true,
+        "confidence": 0.85,
+        "note": "Refusal (R) noted at approximately -2.15m to -2.2m depth"
+      },
+      {
+        "test_id": "P3",
+        "cota_inici_m": -0.15,
+        "readings": [
+          {
+            "depth_m": -0.2,
+            "N_par": null,
+            "col": null,
+            "note": "dash/no reading"
+          },
+          {
+            "depth_m": -0.4,
+            "N_par": null,
+            "col": 8,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -0.6,
+            "N_par": null,
+            "col": 13,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -0.8,
+            "N_par": null,
+            "col": 3,
+            "confidence": 0.85,
+            "note": "Could be 3 or 13"
+          },
+          {
+            "depth_m": -1.0,
+            "N_par": null,
+            "col": 3,
+            "confidence": 0.85
+          },
+          {
+            "depth_m": -1.2,
+            "N_par": null,
+            "col": 10,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -1.4,
+            "N_par": null,
+            "col": 16,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -1.6,
+            "N_par": null,
+            "col": 17,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -1.8,
+            "N_par": null,
+            "col": 100,
+            "confidence": 0.9
+          },
+          {
+            "depth_m": -1.75,
+            "N_par": "R",
+            "col": 1.75,
+            "confidence": 0.8,
+            "note": "R marker with value 1.75 — likely refusal depth in metres"
+          }
+        ],
+        "final_depth_m": 1.75,
+        "refusal_depth_m": 1.75,
+        "refusal_noted": true,
+        "confidence": 0.85,
+        "note": "Refusal (R) noted at approximately -1.75m to -1.8m depth"
+      }
+    ]
+  },
+  "spt_mi_tests": {
+    "sheet_title": "Full de assaig SPT/MI/Mostra alterada",
+    "form_reference": "IT001GTC. Rev. 2. F2",
+    "date": "01-10-25",
+    "address": "Linyola",
+    "test_start_time": "11:30",
+    "test_end_time": "12:30",
+    "operator": "SiNY",
+    "carencia_colpeig": {
+      "mesura_1": null,
+      "mesura_2": null,
+      "num_cops_30sg": null
+    },
+    "incidencies": null,
+    "assaigs": [
+      {
+        "assaig_num": 1,
+        "assaig_tipus": {
+          "SPT": false,
+          "MI": false,
+          "MA": false,
+          "note": "None of the checkboxes appear clearly ticked in the scanned image; however context and reference suggest MA (Mostra Alterada) or SPT",
+          "confidence": 0.6
+        },
+        "num_referencia": null,
+        "assaig_referencia": "SPT P3",
+        "confidence_referencia": 0.85,
+        "note_referencia": "Read as 'SPT P3' — handwritten, slightly unclear",
+        "cota_extraccio": {
+          "de_la_cota_m": 1.0,
+          "fins_la_cota_m": 1.75,
+          "confidence": 0.9,
+          "note": "Values read as 1.0 and 1.75"
+        },
+        "colpeig_15_30_45_60": {
+          "blow_1_15cm": 50,
+          "blow_2_15cm": null,
+          "blow_3_15cm": null,
+          "blow_4_15cm": null,
+          "n_spt": null,
+          "confidence": 0.85,
+          "note": "Only one value '50' visible in the colpeig row; remaining boxes blank. N_SPT not calculable from single interval."
+        },
+        "descripcio_materials": "WYM MARRO I TRAM PARCIAL AMB GRANS",
+        "confidence_description": 0.7,
+        "note_description": "Handwritten text partially unclear. Best reading: 'WYM MARRO I TRAM PARCIAL AMB GRANS' — 'WYM' may be 'LLIM' or similar material description in Catalan. 'MARRO' likely 'MARRÓ' (brown). Full reading uncertain."
+      },
+      {
+        "assaig_num": 2,
+        "assaig_tipus": {
+          "SPT": false,
+          "MI": false,
+          "MA": false,
+          "note": "Second test block is completely blank — no data entered"
+        },
+        "num_referencia": null,
+        "assaig_referencia": null,
+        "cota_extraccio": {
+          "de_la_cota_m": null,
+          "fins_la_cota_m": null
+        },
+        "colpeig_15_30_45_60": null,
+        "descripcio_materials": null,
+        "confidence": 1.0,
+        "note": "Second assaig block entirely blank"
+      }
+    ]
+  },
   "sondeig_tests": [],
-  "overall_confidence": 0.0,
-  "extraction_notes": "The provided document pages do not contain any borehole log or soil layer data. They include client information, project address, geotechnical study budget, conditions, and contact details but no geological levels, soil layers, or borehole test data. No 'Unitat litològica' column or soil descriptions are present."
+  "overall_confidence": 0.82,
+  "extraction_notes": [
+    "These documents are HANDWRITTEN FIELD SHEETS, not a formatted vectorial borehole log annex. No 'Unitat litològica' column exists.",
+    "No borehole log (sondeig annex) is present — sondeig_tests array is empty.",
+    "Data extracted: project delivery note (albarà), dynamic penetrometer field sheet (3 tests: P1, P2, P3), and SPT/sample test sheet (1 test with data).",
+    "Penetrometer readings extracted from depth table; 'col' column interpreted as blow counts per 20cm interval.",
+    "Refusal (R) noted at: P1 ~3.2m, P2 ~2.15m, P3 ~1.75m.",
+    "SPT material description on page 3 is partially illegible — 'WYM MARRO I TRAM PARCIAL AMB GRANS' is best interpretation.",
+    "Operator name 'SiNY' appears consistently across all sheets.",
+    "Date 01-10-25 interpreted as 1 October 2025.",
+    "ML60A penetrometer/sonda equipment used throughout."
+  ]
 }

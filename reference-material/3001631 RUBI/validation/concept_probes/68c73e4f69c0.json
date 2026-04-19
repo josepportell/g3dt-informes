@@ -1,5 +1,24 @@
 {
   "document_type": "architect_plan",
-  "document_description": "Hand-drawn architectural sketch showing building layout with measurements and reference points",
-  "concepts_found": []
+  "document_description": "Hand-drawn site plan with measurements",
+  "concepts_found": [
+    {
+      "concept_id": "street_address",
+      "confidence": 0.8,
+      "signal_preview": "C/ de la Miranda",
+      "page": 1
+    },
+    {
+      "concept_id": "num_floors",
+      "confidence": 0.7,
+      "signal_preview": "P2, P3",
+      "page": 1
+    },
+    {
+      "concept_id": "building_height_m",
+      "confidence": 0.6,
+      "signal_preview": "7m, 6m, 9,5m",
+      "page": 1
+    }
+  ]
 }

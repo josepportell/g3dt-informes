@@ -1,5 +1,30 @@
 {
   "document_type": "site_photo",
-  "document_description": "Aerial/satellite view of a residential area showing buildings, roads, and property boundaries",
-  "concepts_found": []
+  "document_description": "Aerial view of a plot with buildings and vegetation",
+  "concepts_found": [
+    {
+      "concept_id": "surrounding_context_visual",
+      "confidence": 1.0,
+      "signal_preview": "zona residencial consolidada",
+      "page": 1
+    },
+    {
+      "concept_id": "site_vegetation_visual",
+      "confidence": 1.0,
+      "signal_preview": "arbres i matollar",
+      "page": 1
+    },
+    {
+      "concept_id": "is_anthropized_visual",
+      "confidence": 1.0,
+      "signal_preview": "si",
+      "page": 1
+    },
+    {
+      "concept_id": "access_road_visual",
+      "confidence": 1.0,
+      "signal_preview": "carrer pavimentat",
+      "page": 1
+    }
+  ]
 }

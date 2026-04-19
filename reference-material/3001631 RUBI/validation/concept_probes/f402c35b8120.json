@@ -1,5 +1,30 @@
 {
-  "document_type": "site_photo",
-  "document_description": "Aerial photograph showing residential buildings and surrounding area with scale bar",
-  "concepts_found": []
+  "document_type": "map",
+  "document_description": "Aerial view map with outlined area",
+  "concepts_found": [
+    {
+      "concept_id": "surrounding_context_visual",
+      "confidence": 1.0,
+      "signal_preview": "zona residencial consolidada",
+      "page": 1
+    },
+    {
+      "concept_id": "site_vegetation_visual",
+      "confidence": 1.0,
+      "signal_preview": "vegetació verda densa",
+      "page": 1
+    },
+    {
+      "concept_id": "site_slope_visual",
+      "confidence": 0.8,
+      "signal_preview": "lleugerament ondulat",
+      "page": 1
+    },
+    {
+      "concept_id": "is_anthropized_visual",
+      "confidence": 1.0,
+      "signal_preview": "si",
+      "page": 1
+    }
+  ]
 }

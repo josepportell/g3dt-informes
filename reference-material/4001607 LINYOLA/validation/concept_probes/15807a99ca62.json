@@ -1,10 +1,10 @@
 {
   "document_type": "architect_plan",
-  "document_description": "Architect logo and company name",
+  "document_description": "Architect's logo and name",
   "concepts_found": [
     {
       "concept_id": "architect_company",
-      "confidence": 1.0,
+      "confidence": 0.9,
       "signal_preview": "BUNYESC ARQUITECTES",
       "page": 1
     }

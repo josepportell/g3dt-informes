@@ -1,6 +1,6 @@
 {
   "document_type": "architect_plan",
-  "document_description": "Floor plan for construction project",
+  "document_description": "Floor plan with site location map",
   "concepts_found": [
     {
       "concept_id": "expedient",
@@ -11,19 +11,13 @@
     {
       "concept_id": "street_address",
       "confidence": 0.8,
-      "signal_preview": "Carrer Clot de la Liacuna",
+      "signal_preview": "Carrer Clot de la Llaguna",
       "page": 1
     },
     {
       "concept_id": "municipality",
       "confidence": 0.8,
       "signal_preview": "Linyola",
-      "page": 1
-    },
-    {
-      "concept_id": "building_type",
-      "confidence": 0.6,
-      "signal_preview": "habitatge",
       "page": 1
     }
   ]

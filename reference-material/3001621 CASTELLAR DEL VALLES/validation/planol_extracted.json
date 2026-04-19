@@ -1,8 +1,12 @@
 {
   "data_sources_found": [
-    "Title block (caixetí)"
+    "Title block (caixetí)",
+    "Planning/normativa table"
   ],
-  "planning_table_raw": null,
+  "planning_table_raw": {
+    "planejament": {},
+    "projecte": {}
+  },
   "architect_data": {
     "source_file": null,
     "project_name": null,
@@ -10,13 +14,13 @@
     "client_name": "G3",
     "street_address": "C/ Arbrell",
     "municipality": "Castellar del Vallès",
-    "promotor": null,
+    "promotor": "G3",
     "architect": null,
     "architect_company": null,
     "dimensions": {
       "parcel_area_m2": null,
       "building_footprint_m2": null,
-      "floor_surfaces": null,
+      "floor_surfaces": [],
       "num_floors": null,
       "max_height_m": null,
       "plot_length_m": null,
@@ -24,5 +28,5 @@
     }
   },
   "overall_confidence": 0.6,
-  "extraction_notes": "Only title block (caixetí) data found on the pages. No planning/normativa table, site plan drawing, area tables, or section/alzat present. The title block provides client company (G3), street address (C/ Arbrell), and municipality (Castellar del Vallès). No project name, building type, promotor, architect, or architect company information visible. No dimensional or planning data available."
+  "extraction_notes": "The images show forms related to soil penetration tests and site investigation (ALBARÀ, Full de Camp Penetròmetre Dinàmic, Full de camp sondeig a rotació). No architectural planning/normativa table or building project data found. Title block data limited to client and site address only. No project name, building type, architect, or dimensional data present. Confidence low for architectural data extraction."
 }

@@ -11,18 +11,14 @@
     "planejament": {
       "parcel_min": "600.00 m2",
       "occupancy": "30% (296.88 m2 max)",
-      "facades front-side-lateral": "6-3-3",
-      "height": "6.05 m max",
       "floors": "PB+PP",
-      "fence": "1.0 m max (0.60 m massís + resta vegetació)"
+      "height": "6.05 m max"
     },
     "projecte": {
       "parcel": "905.00 m2",
       "occupancy": "297.03 m2",
-      "facades front-side-lateral": "6-3-3",
-      "height": "6.00 m",
       "floors": "PB+PP",
-      "fence": "Complex"
+      "height": "6.88 m"
     }
   },
   "architect_data": {
@@ -53,22 +49,22 @@
         "source": "Projecte column"
       },
       "max_height_m": {
-        "pdf_value": 6.0,
+        "pdf_value": 6.88,
         "confidence": 1.0,
         "source": "Projecte column"
       },
       "plot_length_m": {
         "pdf_value": 24.57,
-        "confidence": 1.0,
+        "confidence": 0.9,
         "source": "drawing annotation"
       },
       "plot_width_m": {
         "pdf_value": 24.72,
-        "confidence": 1.0,
+        "confidence": 0.9,
         "source": "drawing annotation"
       }
     }
   },
-  "overall_confidence": 1.0,
-  "extraction_notes": "Title block (caixeti) clear and complete. Planning table found under 'JUSTIFICACIO PLANEJAMENT' with clear two columns. Projecte column used for all dimension values. Site plan drawing provides plot dimensions. No explicit per-floor surface areas found in area tables or elsewhere."
+  "overall_confidence": 0.95,
+  "extraction_notes": "Title block (caixeti) clear and complete. Planning table found under 'JUSTIFICACIO PLANEJAMENT' with clear two columns: Planejament and Projecte. Projecte column used for all dimension values. Site plan drawing provides plot length and width. No explicit per-floor surface areas found in area tables on this page. Floor count and max height clearly stated in Projecte column."
 }

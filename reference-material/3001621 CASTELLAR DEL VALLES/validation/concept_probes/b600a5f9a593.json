@@ -5,13 +5,25 @@
     {
       "concept_id": "street_address",
       "confidence": 1.0,
-      "signal_preview": "C/ Arbells",
+      "signal_preview": "C/ Arbellets",
       "page": 1
     },
     {
       "concept_id": "municipality",
       "confidence": 1.0,
-      "signal_preview": "Castellar del Valles",
+      "signal_preview": "Castellar del Vallès",
+      "page": 1
+    },
+    {
+      "concept_id": "client_name",
+      "confidence": 1.0,
+      "signal_preview": "G3",
+      "page": 1
+    },
+    {
+      "concept_id": "contact_name",
+      "confidence": 1.0,
+      "signal_preview": "Eva",
       "page": 1
     },
     {
@@ -23,13 +35,7 @@
     {
       "concept_id": "cota_referencia",
       "confidence": 1.0,
-      "signal_preview": "-4 m",
-      "page": 2
-    },
-    {
-      "concept_id": "num_soil_levels",
-      "confidence": 0.8,
-      "signal_preview": "No clear indication",
+      "signal_preview": "-4,2 m",
       "page": 2
     }
   ]

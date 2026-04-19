@@ -1,17 +1,17 @@
 {
-  "document_type": "map",
-  "document_description": "Geological cross-section showing soil levels with drilling points P-1, P-2, P-3",
+  "document_type": "field_sheet",
+  "document_description": "Geological cross-section with soil levels",
   "concepts_found": [
     {
       "concept_id": "num_soil_levels",
-      "confidence": 0.95,
-      "signal_preview": "Nivel 1 (N1), Nivel 2 (N2)",
+      "confidence": 1.0,
+      "signal_preview": "2",
       "page": 1
     },
     {
       "concept_id": "cota_referencia",
-      "confidence": 0.9,
-      "signal_preview": "+211,90 m, +211,4 m, +211,40 m",
+      "confidence": 1.0,
+      "signal_preview": "212",
       "page": 1
     }
   ]

@@ -2,17 +2,17 @@
   "dpsh_tests": [
     {
       "test_id": "P-1",
-      "initial_cota_m": -0.175,
+      "initial_elevation_m": -0.175,
       "readings": [
         {
           "depth_m": 0.2,
           "n20": null,
           "confidence": 1.0,
-          "note": "No value recorded for this row (dash visible)",
+          "note": "Dash recorded — no blow count at this interval, likely surface/loose fill layer",
           "torque": null,
           "water_indicator": false,
           "excel_n20": null,
-          "excel_match": "N/A"
+          "excel_match": true
         },
         {
           "depth_m": 0.4,
@@ -22,7 +22,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 20,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 0.6,
@@ -32,7 +32,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 27,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 0.8,
@@ -42,7 +42,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 16,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 1.0,
@@ -52,7 +52,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 19,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 1.2,
@@ -62,39 +62,45 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 32,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 1.4,
           "n20": 100,
-          "confidence": 0.9,
-          "note": "Value reads '100' with R marker at 1.35m annotated as 'R 1,35'; refusal row. Handwritten 'R 1,35' used as precise refusal depth.",
+          "confidence": 1.0,
+          "note": "Refusal row. Handwritten 'R 1,35' annotation indicates exact refusal depth = 1.35m, more precise than the 0.20m grid row at 1.40m",
           "torque": 1.35,
           "water_indicator": false,
           "excel_n20": 100,
-          "excel_match": "MATCH"
+          "excel_match": true
         }
       ],
-      "refusal_depth_m": 1.35,
       "refusal_detected": true,
+      "refusal_depth_m": 1.35,
+      "refusal_depth_note": "Handwritten 'R 1,35' annotation on field sheet. Excel stores grid-rounded value of 1.40m.",
       "water_detected": false,
       "water_depth_m": null,
       "correction_factor": 0.83,
-      "extraction_notes": "Refusal annotated explicitly as 'R 1,35' on the field sheet at the -1.6m row depth entry, which corresponds to 1.35m penetration from surface (cota -0.175 + 1.35 = -1.525 absolute). The N20=100 appears at the 1.40m depth row. Excel refusal_depth_m=1.4 rounds to grid; field annotation R 1,35 is more precise. All N20 values match Excel perfectly."
+      "equipment": "ML 60A",
+      "operator": "Siny",
+      "date": "2025-10-01",
+      "location": "Bell-Lloch",
+      "start_time": "12:50",
+      "extraction_notes": "All 6 blow-count readings match Excel reference data exactly. Refusal annotation 'R 1,35' is clearly handwritten next to the 1.40m row. Initial elevation -0.175m noted at top of column."
     },
     {
       "test_id": "P-2",
-      "initial_cota_m": 0.195,
+      "initial_elevation_m": 0.195,
       "readings": [
         {
           "depth_m": 0.2,
           "n20": null,
           "confidence": 1.0,
-          "note": "No value recorded for this row (dash visible)",
+          "note": "Dash recorded — no blow count at this interval, likely surface/loose fill layer",
           "torque": null,
           "water_indicator": false,
           "excel_n20": null,
-          "excel_match": "N/A"
+          "excel_match": true
         },
         {
           "depth_m": 0.4,
@@ -104,7 +110,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 17,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 0.6,
@@ -114,7 +120,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 21,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 0.8,
@@ -124,7 +130,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 17,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 1.0,
@@ -134,7 +140,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 13,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 1.2,
@@ -144,7 +150,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 10,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 1.4,
@@ -154,7 +160,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 20,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 1.6,
@@ -164,7 +170,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 30,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 1.8,
@@ -174,17 +180,17 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 52,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 2.0,
           "n20": 55,
           "confidence": 0.9,
-          "note": "Value reads '55' or possibly 'P5' — interpreted as 55 based on context and Excel confirmation",
+          "note": "Value reads as '55' or possibly 'b5' — handwriting ambiguous but 55 matches Excel",
           "torque": null,
           "water_indicator": false,
           "excel_n20": 55,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 2.2,
@@ -194,7 +200,7 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 32,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 2.4,
@@ -204,46 +210,80 @@
           "torque": null,
           "water_indicator": false,
           "excel_n20": 80,
-          "excel_match": "MATCH"
+          "excel_match": true
         },
         {
           "depth_m": 2.6,
           "n20": 100,
-          "confidence": 0.9,
-          "note": "Value reads '100' with R marker annotated as 'R 2,45'; refusal row. Handwritten 'R 2,45' used as precise refusal depth.",
+          "confidence": 1.0,
+          "note": "Refusal row. Handwritten 'R 2,45' annotation indicates exact refusal depth = 2.45m, more precise than the 0.20m grid row at 2.60m",
           "torque": 2.45,
           "water_indicator": false,
           "excel_n20": 100,
-          "excel_match": "MATCH"
+          "excel_match": true
         }
       ],
-      "refusal_depth_m": 2.45,
       "refusal_detected": true,
+      "refusal_depth_m": 2.45,
+      "refusal_depth_note": "Handwritten 'R 2,45' annotation on field sheet. Excel stores grid-rounded value of 2.60m.",
       "water_detected": false,
       "water_depth_m": null,
       "correction_factor": 0.83,
-      "extraction_notes": "Refusal annotated explicitly as 'R 2,45' on field sheet. Excel refusal_depth_m=2.6 rounds to grid; field annotation R 2,45 is more precise. All N20 values match Excel perfectly."
+      "equipment": "ML 60A",
+      "operator": "Siny",
+      "date": "2025-10-01",
+      "location": "Bell-Lloch",
+      "start_time": "12:50",
+      "extraction_notes": "All 12 blow-count readings match Excel reference data exactly. Refusal annotation 'R 2,45' is clearly handwritten next to the 2.60m row. Initial elevation noted as 0,195 at column top (positive, slightly different sign from P-1)."
     }
   ],
   "spt_in_dpsh": null,
-  "document_metadata": {
-    "document_type": "Albarà + Full de Camp Penetròmetre Dinàmic",
-    "form_number": "Fitxa 01",
-    "date": "1-10-25",
-    "location": "BELL-LLOCH",
+  "project_metadata": {
+    "document_type": "Full de Camp Penetròmetre Dinàmic",
+    "fitxa": "01",
+    "date": "2025-10-01",
+    "location": "Bell-Lloch",
     "address": "Carrer Antoni Bellet",
     "client_company": "G3",
-    "client_responsible": "EVA",
+    "client_contact": "Eva",
     "equipment": "ML 60A",
-    "operator": "SINY",
+    "operator": "Siny",
     "num_penetrometers": 2,
     "total_ml_drilled": 3.8,
-    "spt_assays": "NC (No/None)",
-    "water_table_detected": false,
-    "start_time": "12:50",
-    "end_time": null,
-    "displacement_type": "Desplaçament d'equips i personal a obra (1 unit checked)"
+    "water_table_present": false,
+    "assay_start_time": "12:50",
+    "assay_end_time": null,
+    "sketch_description": "Plan sketch shows two test points: P-1 at ~9m from Carrer Antoni Bellet and ~22m from corner; P-2 at ~12m offset and ~8.5m, with ~10m spacing indicated. Street 'Carrer Mestre Ramonortia' shown at bottom."
+  },
+  "excel_comparison_summary": {
+    "expedient": "4001612",
+    "total_tests_expected": 2,
+    "total_tests_extracted": 2,
+    "all_n20_values_match": true,
+    "discrepancies": [
+      {
+        "test_id": "P-1",
+        "field": "refusal_depth_m",
+        "field_sheet_value": 1.35,
+        "excel_value": 1.4,
+        "explanation": "Field sheet handwritten annotation 'R 1,35' is more precise; Excel uses the 0.20m grid row value"
+      },
+      {
+        "test_id": "P-2",
+        "field": "initial_elevation_m",
+        "field_sheet_value": 0.195,
+        "excel_value": null,
+        "explanation": "P-2 cota inici appears to read '0,195' (positive) vs P-1 '-0,175' (negative) — slight ambiguity in sign, but the absolute value matches the -0.175 pattern suggesting possible misread; flagged for review"
+      },
+      {
+        "test_id": "P-2",
+        "field": "refusal_depth_m",
+        "field_sheet_value": 2.45,
+        "excel_value": 2.6,
+        "explanation": "Field sheet handwritten annotation 'R 2,45' is more precise; Excel uses the 0.20m grid row value"
+      }
+    ]
   },
   "overall_confidence": 0.97,
-  "extraction_notes": "All N20 values extracted from the field sheet match the Excel reference data perfectly. Two key annotations: P-1 has handwritten 'R 1,35' indicating precise refusal at 1.35m (more accurate than Excel grid value of 1.4m); P-2 has handwritten 'R 2,45' indicating precise refusal at 2.45m (more accurate than Excel grid value of 2.6m). The torque column in the field sheet header is labelled 'N.F. Par col.' — the 'R x,xx' values appear in the PAR (torque) column at the refusal rows and represent the exact refusal depth annotation. No water table detected. Correction factor 0.83 applies to both tests."
+  "extraction_notes": "High confidence extraction. All N20 blow counts match the Excel reference perfectly across both test points (18 readings total). Two refusal depth annotations provide sub-grid precision (R 1,35 and R 2,45) that are more accurate than Excel grid values. Minor uncertainty at P-2 depth 2.00m where handwriting could read '55' or 'b5', but Excel confirms 55. P-2 initial elevation sign requires field verification."
 }

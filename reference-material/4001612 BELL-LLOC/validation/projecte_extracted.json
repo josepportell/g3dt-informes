@@ -1,6 +1,8 @@
 {
   "pages_inventory": {
-    "1": "site plan (emplaçament) with parcel boundaries and street names"
+    "1": "site plan sketch + street names",
+    "2": "field data sheet - sondatge a rotació",
+    "3": "field data sheet - sondatge a rotació continuation"
   },
   "planning_table_raw": {
     "planejament": {},
@@ -11,8 +13,8 @@
     "building_type": null,
     "client_name": null,
     "promotor": null,
-    "street_address": null,
-    "municipality": null,
+    "street_address": "C/ Antoni Bellet",
+    "municipality": "Bell-lloc",
     "architect": null,
     "architect_company": null,
     "ref_cadastral": null
@@ -27,6 +29,6 @@
     "plot_length_m": null,
     "plot_width_m": null
   },
-  "overall_confidence": 0.3,
-  "extraction_notes": "Only one page provided: a site plan showing parcel boundaries and street names (Ramón Ortiz, Mestre). No normativa table, no cover page, no area tables, no title block or project data visible. Unable to extract planning or project data from this single page."
+  "overall_confidence": 0.7,
+  "extraction_notes": "Document consists of geotechnical field data sheets and a hand-drawn site plan sketch. No architectural project data, normativa tables, or area tables found. Street address and municipality extracted from field data sheets and sketch. No planning or project values available."
 }

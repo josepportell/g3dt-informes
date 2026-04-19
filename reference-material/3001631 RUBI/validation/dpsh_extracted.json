@@ -186,22 +186,14 @@
           "note": "refusal indicated by 100 blows",
           "torque": null,
           "water_indicator": false
-        },
-        {
-          "depth_m": 4.8,
-          "n20": null,
-          "confidence": 0.0,
-          "note": "no value recorded",
-          "torque": null,
-          "water_indicator": false
         }
       ],
-      "refusal_depth_m": 4.55,
+      "refusal_depth_m": 4.6,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
       "correction_factor": 0.83,
-      "extraction_notes": "All values clear and match Excel data; refusal depth taken from handwritten R 4,55 annotation"
+      "extraction_notes": "All N20 values clearly legible and match Excel data exactly."
     },
     {
       "test_id": "P-2",
@@ -351,12 +343,12 @@
           "water_indicator": false
         }
       ],
-      "refusal_depth_m": 3.58,
+      "refusal_depth_m": 3.6,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
       "correction_factor": 0.83,
-      "extraction_notes": "All values clear and match Excel data; refusal depth taken from handwritten R 3,58 annotation"
+      "extraction_notes": "All N20 values clearly legible and match Excel data exactly."
     },
     {
       "test_id": "P-3",
@@ -477,7 +469,7 @@
           "depth_m": 3.0,
           "n20": 80,
           "confidence": 1.0,
-          "note": "high blow count, near refusal",
+          "note": null,
           "torque": null,
           "water_indicator": false
         },
@@ -490,12 +482,12 @@
           "water_indicator": false
         }
       ],
-      "refusal_depth_m": 3.13,
+      "refusal_depth_m": 3.2,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
       "correction_factor": 0.83,
-      "extraction_notes": "All values clear and match Excel data; refusal depth taken from handwritten R 3,13 annotation"
+      "extraction_notes": "All N20 values clearly legible and match Excel data exactly."
     }
   ],
   "spt_in_dpsh": {
@@ -513,5 +505,5 @@
     "confidence": 1.0
   },
   "overall_confidence": 1.0,
-  "extraction_notes": "All DPSH and SPT values clearly legible and consistent with Excel reference data. Refusal depths taken from handwritten annotations where available."
+  "extraction_notes": "All DPSH and SPT values are clearly legible and match the provided Excel reference data exactly. No water level detected in any test."
 }
