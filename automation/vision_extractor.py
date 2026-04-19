@@ -37,7 +37,47 @@ from automation import config
 
 logger = logging.getLogger(__name__)
 
-__all__ = ['run_vision_extraction', 'extract_from_planol', 'extract_from_penetros', 'extract_from_sondeig', 'extract_from_sondeig_annex']
+__all__ = ['run_vision_extraction', 'extract_from_planol', 'extract_from_penetros', 'extract_from_sondeig', 'extract_from_sondeig_annex', 'attach_source_metadata']
+
+
+def attach_source_metadata(
+    data: dict,
+    source_path: Path,
+    project_path: Path | None = None,
+    extraction_method: str | None = None,
+) -> dict:
+    """Stamp a `_metadata` block on an extracted JSON dict.
+
+    Records which input artifact produced this extraction so inspection
+    tools can trace vision fields back to the PDF (or image) they came from.
+
+    - `source_file` is project-relative when `project_path` is supplied and
+      `source_path` lives inside it; otherwise falls back to the basename.
+    - `extracted_at` is an ISO-8601 timestamp in local time.
+    - `extraction_method` is optional (e.g. 'claude_vision', 'groq_vision',
+      'python_regex'); stamped when provided.
+
+    The block is additive only — existing keys on `data` are preserved. If
+    a `_metadata` dict already exists, missing keys are filled in.
+    """
+    meta = data.setdefault('_metadata', {})
+
+    if 'source_file' not in meta:
+        if project_path is not None:
+            try:
+                meta['source_file'] = str(Path(source_path).resolve().relative_to(Path(project_path).resolve()))
+            except ValueError:
+                meta['source_file'] = Path(source_path).name
+        else:
+            meta['source_file'] = Path(source_path).name
+
+    meta.setdefault('extracted_at', datetime.now().isoformat())
+
+    if extraction_method:
+        meta.setdefault('extraction_method', extraction_method)
+
+    return data
+
 
 MAX_TOKENS = 4096
 # DPI for PDF rendering (150 is sufficient for text, keeps image size low)
@@ -185,6 +225,7 @@ def extract_from_planol(pdf_path: Path) -> dict:
     data.setdefault('extraction_date', datetime.now().isoformat())
     data.setdefault('extraction_method', 'claude_vision')
     data.setdefault('status', 'pending_review')
+    attach_source_metadata(data, pdf_path, extraction_method='claude_vision')
 
     return data
 
@@ -202,6 +243,7 @@ def extract_from_penetros(pdf_path: Path) -> dict:
     data.setdefault('extraction_date', datetime.now().isoformat())
     data.setdefault('extraction_method', 'claude_vision')
     data.setdefault('status', 'pending_review')
+    attach_source_metadata(data, pdf_path, extraction_method='claude_vision')
 
     return data
 
@@ -219,6 +261,7 @@ def extract_from_sondeig(pdf_path: Path) -> dict:
     data.setdefault('extraction_date', datetime.now().isoformat())
     data.setdefault('extraction_method', 'claude_vision')
     data.setdefault('status', 'pending_review')
+    attach_source_metadata(data, pdf_path, extraction_method='claude_vision')
 
     return data
 
@@ -236,6 +279,7 @@ def extract_from_sondeig_annex(pdf_path: Path) -> dict:
     data.setdefault('extraction_date', datetime.now().isoformat())
     data.setdefault('extraction_method', 'claude_vision')
     data.setdefault('status', 'pending_review')
+    attach_source_metadata(data, pdf_path, extraction_method='claude_vision')
 
     return data
 
@@ -298,6 +342,7 @@ def run_vision_extraction(
 
         results[vt] = _extract_or_cache(
             vt, role_name, pdf_path, cache_path, extract_fn, force_refresh,
+            project_path=project_path,
         )
 
     # Mark missing vision types
@@ -321,6 +366,7 @@ def _extract_or_cache(
     cache_path: Path,
     extract_fn,
     force_refresh: bool,
+    project_path: Path | None = None,
 ) -> dict | None:
     """Extract from PDF or use cached JSON."""
     label = f"{vision_type} ({role_name})"
@@ -350,6 +396,10 @@ def _extract_or_cache(
     try:
         logger.info("%s: extracting from %s", label, pdf_path.name)
         data = extract_fn(pdf_path)
+        attach_source_metadata(
+            data, pdf_path, project_path=project_path,
+            extraction_method='claude_vision',
+        )
         cache_path.write_text(
             json.dumps(data, indent=2, ensure_ascii=False),
             encoding='utf-8',

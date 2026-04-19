@@ -404,6 +404,17 @@ def _extract_docs_python(
         ),
     }
 
+    # Backlink: _metadata.source_file records the primary input artifact so
+    # inspection tooling can trace extracted fields back to their origin.
+    # docs_extracted.json aggregates multiple sources; the list is preserved
+    # in `source_files`, and `_metadata.source_file` points at the first one
+    # (or an empty string if no files were read).
+    result["_metadata"] = {
+        "source_file": source_files[0] if source_files else "",
+        "extracted_at": datetime.now(timezone.utc).isoformat(),
+        "extraction_method": "python_regex",
+    }
+
     output_path.parent.mkdir(exist_ok=True)
     output_path.write_text(
         json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8",
