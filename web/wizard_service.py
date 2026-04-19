@@ -1040,6 +1040,87 @@ def _extract_comanda_building_info(project_path: Path) -> str:
         return ''
 
 
+_VISUAL_CONCEPT_IDS = (
+    'site_vegetation_visual',
+    'site_slope_visual',
+    'is_anthropized_visual',
+    'building_to_demolish_visual',
+    'access_road_visual',
+    'surrounding_context_visual',
+)
+
+
+def _gather_visual_observations(project_path: Path) -> dict[str, list[dict]]:
+    """Return {concept_id: [{file, preview, confidence}, ...]} from concept_map.
+
+    Reads `validation/concept_map.json` (written by ConceptScout) and
+    extracts every entry under `concept_sources` whose concept_id is one
+    of the 6 visual observation concepts. Used as input to narrative
+    synthesis (site_description, site_condition, is_anthropized).
+
+    Returns an empty dict if the file is missing, unreadable, or has no
+    visual observations.
+    """
+    cm_path = project_path / 'validation' / 'concept_map.json'
+    if not cm_path.is_file():
+        return {}
+    try:
+        cm = json.loads(cm_path.read_text(encoding='utf-8'))
+    except Exception:
+        return {}
+
+    sources_map = cm.get('concept_sources') or {}
+    if not isinstance(sources_map, dict):
+        return {}
+
+    out: dict[str, list[dict]] = {}
+    for cid in _VISUAL_CONCEPT_IDS:
+        sources = sources_map.get(cid) or []
+        if not sources:
+            continue
+        clean: list[dict] = []
+        for src in sources:
+            if not isinstance(src, dict):
+                continue
+            preview = (src.get('signal_preview') or '').strip()
+            if not preview:
+                continue
+            clean.append({
+                'file': src.get('file', ''),
+                'preview': preview,
+                'confidence': float(src.get('confidence', 0.5)),
+            })
+        if clean:
+            out[cid] = clean
+    return out
+
+
+def _format_visual_observations_for_prompt(
+    observations: dict[str, list[dict]],
+) -> str:
+    """Render visual observations as a compact bulleted block for the prompt."""
+    if not observations:
+        return "(no visual observations found — leave narrative fields empty if no other grounding)"
+    lines: list[str] = []
+    for cid in _VISUAL_CONCEPT_IDS:
+        entries = observations.get(cid) or []
+        if not entries:
+            continue
+        # Deduplicate previews (same tag often appears on multiple photos)
+        seen: set[str] = set()
+        previews: list[str] = []
+        for e in entries:
+            pv = e['preview']
+            norm = pv.lower().strip()
+            if norm not in seen:
+                seen.add(norm)
+                previews.append(pv)
+        short_cid = cid.replace('_visual', '')
+        joined = '; '.join(previews[:5])
+        lines.append(f"- {short_cid}: {joined}")
+    return '\n'.join(lines) if lines else "(no visual observations found)"
+
+
 def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
     """Use Claude API to synthesize building_type, architect/client, location_sentence
     from all pre-extracted sources. One API call per project."""
@@ -1099,12 +1180,16 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
         logger.info("No ANTHROPIC_API_KEY, skipping LLM synthesis")
         return
 
-    # Check if ALL fields already have user edits -- skip synthesis if so
-    user_fields = [
-        k for k in ('building_type', 'architect_name', 'client_name', 'location_sentence')
-        if _get_source(k) == 'user'
-    ]
-    if len(user_fields) == 4:
+    # Check if ALL synthesis fields already have user edits — skip the API call.
+    # Expanded Phase B (2026-04-19): now 8 fields, including 4 narrative outputs
+    # (site_description, site_condition, is_anthropized, building_structure_desc).
+    _SYNTHESIS_FIELDS = (
+        'building_type', 'architect_name', 'client_name', 'location_sentence',
+        'site_description', 'site_condition', 'is_anthropized',
+        'building_structure_desc',
+    )
+    user_fields = [k for k in _SYNTHESIS_FIELDS if _get_source(k) == 'user']
+    if len(user_fields) == len(_SYNTHESIS_FIELDS):
         logger.info("All synthesis fields have user edits, skipping LLM synthesis")
         return
 
@@ -1201,13 +1286,23 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
     adjacent_east = _get_val('adjacent_east_formatted') or _get_val('adjacent_east')
     adjacent_west = _get_val('adjacent_west_formatted') or _get_val('adjacent_west')
 
+    # Narrative-input data (for site_description + site_condition synthesis)
+    icgc_slope_class = _get_val('site_slope_class')
+    is_anthropized_current = _get_val('is_anthropized')
+    building_height_current = _get_val('building_height_m')
+    num_floors_current = _get_val('num_floors')
+    has_basement_current = _get_val('has_basement')
+
+    # Visual observations from ConceptScout's probe cache (Phase B)
+    visual_observations = _gather_visual_observations(project_path)
+
     # Language
     lang = _get_project_language(merged)
     lang_name = 'Spanish' if lang == 'es' else 'Catalan'
 
     # --- Build prompt ---
 
-    prompt = f"""You are a geotechnical report assistant. Given data extracted from multiple sources about a construction project, synthesize the final values for 4 fields.
+    prompt = f"""You are a geotechnical report assistant. Given data extracted from multiple sources about a construction project, synthesize the final values for 8 fields.
 
 ## Rules
 
@@ -1242,7 +1337,33 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
   - "en la calle X nY en el municipio de Z" (Spanish)
 - If you don't have enough data for a specific part, omit it rather than guessing
 
-## Eva's Reference Examples
+### site_description (narrative paragraph)
+- Compose Eva's opening paragraph for the "Descripció del solar" section, in {lang_name}
+- Typical opening: "El dia dels treballs de camp es realitza l'entrada a la parcel·la pel Carrer X. La parcel·la es presenta [terreny/vegetació/construccions], presentant un terreny [pendent/pla]..."
+- Weave in the visual observations below. Only state facts grounded in the observations OR in the location/adjacents data. DO NOT invent details.
+- If fewer than 2 visual observations exist AND no strong grounding, return an empty string "" rather than fabricating.
+- Keep it to 1-3 sentences. Match Eva's register (factual, technical, first person plural implicit).
+
+### site_condition (short qualifier)
+- One short phrase describing the state of the plot, in {lang_name}
+- Patterns: "pla", "antropitzat", "no antropitzat", "pendent moderat cap a sud", etc.
+- Inputs: slope class ({icgc_slope_class}), anthropization ({is_anthropized_current}), visual observations
+- Output format: lowercase, no article, 1-4 words
+
+### is_anthropized (boolean as "si" or "no")
+- TRUE if visual observations show human modification (existing construction, fill, leveling, retaining walls)
+- FALSE if site looks natural/undisturbed
+- Use is_anthropized_visual observations as primary signal; site_slope_visual ("pla") is a weak secondary signal
+- Return "si" or "no" (lowercase)
+- If there is no evidence either way, use "no"
+
+### building_structure_desc (short structural phrase)
+- Short phrase describing the planned structure for geotechnical context, in {lang_name}
+- Examples: "en planta baixa", "amb soterrani", "sense soterrani", "2 plantes sobre rasant amb soterrani", "PB+1Pp"
+- Inputs: num_floors ({num_floors_current}), has_basement ({has_basement_current}), building_height_m ({building_height_current})
+- Keep it concise (2-6 words)
+
+## Eva's Reference Examples — identity + location
 
 1. Bell-Lloc (CA): building_type="un habitatge unifamiliar", architect="JORDI BOSCH NOVELL", client="RAMON MITJANA S.L", location="entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell"
 2. Castellar (CA): building_type="3 habitatges unifamiliars d'estructura lleugera, fusta", client="WOOD COMFORT PROMOCIONS SLU", location="en el Carrer dels Arbrells, 18 de Castellar del Valles"
@@ -1251,6 +1372,26 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
 5. Alcoletge (CA): building_type="l'ampliacio d'un edifici en planta baixa", architect="ALBERT SANS BONVEHI", client="SR. ALBERT SANS BONVEHI", location="a una parcella ubicada al Carrer Girasols n7, Urbanitzacio El Roser d'Alcoletge"
 6. Vilanova (ES): building_type="una vivienda unifamiliar aislada", architect="JUAN JOSE TORRES POVEDANO", client="GRUPO CUENCA GUERRERO, S.L", location="en la Calle STA. GEMMA n 4, URB. LA SERRA del municipio de VILANOVA DE SEGRIA"
 7. Anciles (ES): building_type="7 viviendas unifamiliares adosadas", architect="ALBA MARIA BARRAU CASTAN", client="SRA. ALBA MARIA BARRAU CASTAN", location="en la calle Gral Ferraz n20 en el municipio de Anciles, Benasque"
+
+## Eva's Reference Examples — narrative fields
+
+1. Bell-Lloc (CA):
+   site_description="El dia dels treballs de camp es realitza l'entrada a la parcel·la pel Carrer Antoni Bellet. La parcel·la es presenta totalment buida, lliure de construccions i vegetació, presentant un terreny lleugerament inclinat cap al sud."
+   site_condition="pla"
+   is_anthropized="no"
+   building_structure_desc="en planta baixa"
+
+2. Castellar (CA):
+   site_description="La parcel·la es troba al Carrer dels Arbrells. Es tracta d'un solar antropitzat amb vegetació rasa i presenta un pendent moderat cap al sud."
+   site_condition="antropitzat"
+   is_anthropized="si"
+   building_structure_desc="en planta baixa"
+
+3. Alcoletge (CA):
+   site_description="El dia dels treballs de camp s'accedeix a la parcel·la pel Carrer Girasols. Existeix una edificació de planta baixa que es manté, i l'ampliació ocupa la zona est del solar."
+   site_condition="antropitzat"
+   is_anthropized="si"
+   building_structure_desc="ampliació en planta baixa"
 
 ## Current Project Data
 
@@ -1279,19 +1420,34 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
 - Adjacent east: "{adjacent_east}"
 - Adjacent west: "{adjacent_west}"
 
+**Site observations (visual, from ConceptScout probes):**
+{_format_visual_observations_for_prompt(visual_observations)}
+
+**Structural sources:**
+- num_floors: "{num_floors_current}"
+- has_basement: "{has_basement_current}"
+- building_height_m: "{building_height_current}"
+- is_anthropized (current): "{is_anthropized_current}"
+- ICGC slope class: "{icgc_slope_class}"
+
 ## Output
 
-Return ONLY a JSON object with exactly these 4 keys:
+Return ONLY a JSON object with exactly these 8 keys:
 ```json
 {{
   "building_type": "...",
   "architect_name": "...",
   "client_name": "...",
-  "location_sentence": "..."
+  "location_sentence": "...",
+  "site_description": "...",
+  "site_condition": "...",
+  "is_anthropized": "...",
+  "building_structure_desc": "..."
 }}
 ```
 
-If you cannot determine a value with reasonable confidence, use an empty string ""."""
+If you cannot determine a value with reasonable confidence, use an empty string "".
+For `site_description` specifically: prefer empty over fabricating prose from thin air."""
 
     # --- Call Claude API (routed via llm_client factory, supports OpenRouter) ---
     try:
@@ -1321,18 +1477,50 @@ If you cannot determine a value with reasonable confidence, use an empty string 
                 logger.warning("LLM synthesis: no JSON in response")
                 return
 
-        # Apply synthesized values
-        for field in ('building_type', 'architect_name', 'client_name', 'location_sentence'):
+        # Apply synthesized values.
+        # The 4 narrative fields (site_description, site_condition,
+        # is_anthropized, building_structure_desc) are tagged with a distinct
+        # source so the diagnostic can attribute them to visual_synthesis.
+        _IDENTITY_FIELDS = (
+            'building_type', 'architect_name', 'client_name', 'location_sentence',
+        )
+        _NARRATIVE_FIELDS = (
+            'site_description', 'site_condition', 'is_anthropized',
+            'building_structure_desc',
+        )
+        for field in _IDENTITY_FIELDS:
             value = result.get(field, '')
+            if not isinstance(value, str):
+                value = str(value)
             if value and _get_source(field) != 'user':
                 _set(field, value)
+        for field in _NARRATIVE_FIELDS:
+            raw = result.get(field, '')
+            if isinstance(raw, bool):
+                value = 'si' if raw else 'no'
+            elif raw is None:
+                value = ''
+            else:
+                value = str(raw).strip()
+            # Normalize is_anthropized to canonical "si"/"no"
+            if field == 'is_anthropized':
+                low = value.lower()
+                if low in ('true', 'yes', 'sí', 'si', '1'):
+                    value = 'si'
+                elif low in ('false', 'no', '0'):
+                    value = 'no'
+                elif not low:
+                    value = ''
+                else:
+                    value = low  # leave as-is, _set will check
+            if value and value.lower() not in ('null', 'none', 'unknown', ''):
+                if _get_source(field) != 'user':
+                    _set(field, value, source='llm_synthesis_with_observations')
 
         logger.info(
-            "LLM synthesis: %d fields updated for %s",
-            sum(
-                1 for f in ('building_type', 'architect_name', 'client_name', 'location_sentence')
-                if result.get(f)
-            ),
+            "LLM synthesis: %d identity + %d narrative fields updated for %s",
+            sum(1 for f in _IDENTITY_FIELDS if result.get(f)),
+            sum(1 for f in _NARRATIVE_FIELDS if result.get(f)),
             project_path.name,
         )
 

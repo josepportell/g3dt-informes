@@ -370,6 +370,7 @@ concepts:
     description_ca: Descripcio del solar (anivellament, vegetacio, estat)
     source_priority:
       user: 10
+      llm_synthesis: 20
 
   access_description:
     type: text
@@ -509,6 +510,7 @@ concepts:
     description_ca: Si el solar mostra reblerts o alteracions antropiques
     source_priority:
       user: 10
+      llm_synthesis: 20
 
   # ---------------------------------------------------------------------------
   # GEOTECHNICAL - Parametres geomecanics (overrides experts, nomes user)
@@ -797,6 +799,7 @@ concepts:
     source_priority:
       user: 10
       computed: 20
+      llm_synthesis: 30
 
   location_sentence:
     type: text
@@ -806,3 +809,74 @@ concepts:
     source_priority:
       user: 10
       llm_synthesis: 20
+
+  site_condition:
+    type: text
+    group: narrative
+    required: false
+    description_ca: Estat del solar (pla, antropitzat, pendent moderat, etc.)
+    source_priority:
+      user: 10
+      computed: 20
+      llm_synthesis: 30
+
+  # ---------------------------------------------------------------------------
+  # VISUAL OBSERVATIONS — site characteristics extracted from photos / maps
+  # Populated by ConceptScout's vision probe (source: llm_synthesis when the
+  # synthesis step aggregates them into narrative text; vision_probe:* when
+  # raw). Used as inputs for site_description, site_condition, is_anthropized,
+  # building_structure_desc synthesis (Phase B, 2026-04-19).
+  # ---------------------------------------------------------------------------
+  site_vegetation_visual:
+    type: text
+    group: site_observations
+    required: false
+    description_ca: Vegetacio observada en fotos del solar (matollar, arbres, rasa, sense)
+    source_priority:
+      user: 10
+      vision_probe: 50
+
+  site_slope_visual:
+    type: text
+    group: site_observations
+    required: false
+    description_ca: Pendent del terreny observada en fotos (pla, suau, moderada sud, etc.)
+    source_priority:
+      user: 10
+      vision_probe: 50
+
+  is_anthropized_visual:
+    type: boolean
+    group: site_observations
+    required: false
+    description_ca: Signes d'antropitzacio visibles en fotos (construccions, replans, reblerts)
+    source_priority:
+      user: 10
+      vision_probe: 50
+
+  building_to_demolish_visual:
+    type: text
+    group: site_observations
+    required: false
+    description_ca: Construccions existents al solar visibles a fotos (alcada, us, estat)
+    source_priority:
+      user: 10
+      vision_probe: 50
+
+  access_road_visual:
+    type: text
+    group: site_observations
+    required: false
+    description_ca: Acces visible a fotos (cami, carrer pavimentat, pista)
+    source_priority:
+      user: 10
+      vision_probe: 50
+
+  surrounding_context_visual:
+    type: text
+    group: site_observations
+    required: false
+    description_ca: Context dels entorns (parcelles buides, edificacions properes, vista aeria)
+    source_priority:
+      user: 10
+      vision_probe: 50

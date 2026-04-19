@@ -29,6 +29,15 @@ _VISION_DETECTABLE_CONCEPTS = {
     'expedient',
     'num_soil_levels', 'cota_referencia', 'field_date',
     'sulfate_mg_kg',
+    # Visual observations from site photos / aerial views — inputs to
+    # site_description + site_condition + is_anthropized synthesis
+    # (Phase B, 2026-04-19).
+    'site_vegetation_visual',
+    'site_slope_visual',
+    'is_anthropized_visual',
+    'building_to_demolish_visual',
+    'access_road_visual',
+    'surrounding_context_visual',
 }
 
 _PROBE_PROMPT = """Look at this document image and identify which of these report data concepts are present.
@@ -60,6 +69,25 @@ CONCEPTS TO LOOK FOR:
 - cota_referencia: Reference elevation
 - field_date: Date of field work
 - sulfate_mg_kg: Sulfate content
+
+VISUAL OBSERVATIONS (site photos, aerial views, field imagery — MULTI-LABEL,
+multiple may apply to a single image):
+- site_vegetation_visual: vegetation visible on the site. Write a brief
+  Catalan phrase — e.g. "vegetació rasa", "matollar dispers",
+  "arbres aïllats", "sense vegetació".
+- site_slope_visual: terrain slope visible. Write a brief Catalan phrase —
+  e.g. "pla", "pendent suau", "pendent moderada cap a sud".
+- is_anthropized_visual: bool-like signal. Write "si" if the photo shows
+  human modification (existing construction, fill, leveling, retaining
+  walls, terraces); "no" if the site looks natural/undisturbed.
+- building_to_demolish_visual: existing structure on the parcel — describe
+  height/use/state in a brief Catalan phrase (e.g. "edifici PB+1 buit",
+  "caseta agrícola en ruïna").
+- access_road_visual: visible access — e.g. "carrer pavimentat",
+  "pista sense pavimentar", "camí de terra".
+- surrounding_context_visual: context of the surroundings — e.g.
+  "parcel·les buides al voltant", "zona residencial consolidada",
+  "vista aèria del barri".
 
 Also classify the document type:
 - document_type: one of "architect_plan", "field_sheet", "site_photo", "catalog", "budget", "lab_report", "map", "email", "other"

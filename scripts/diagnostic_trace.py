@@ -335,6 +335,10 @@ _SOURCE_TO_COMPONENT: list[tuple[re.Pattern, str]] = [
     (re.compile(r'^discovered:|concept_map_fallback', re.IGNORECASE), 'vision_concept_fallback'),
     (re.compile(r'^constant$|^default'), 'constant'),
     (re.compile(r'plantilla generada'), 'template_generated'),
+    # Phase B narrative synthesis (visual observations) → its own bucket so
+    # the diagnostic can isolate the visual-synthesis pathway from plain
+    # identity-synthesis.
+    (re.compile(r'^llm_synthesis_with_observations|^vision_probe:'), 'visual_synthesis'),
     (re.compile(r'llm_synthesis|^llm'), 'llm_synthesis'),
     (re.compile(r'^system$|concept_scout|Eva template', re.IGNORECASE), 'system'),
 ]
