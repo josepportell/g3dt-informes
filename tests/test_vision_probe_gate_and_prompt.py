@@ -57,40 +57,8 @@ def test_probe_prompt_contains_map_subject_scoping():
 
 
 # ---------------------------------------------------------------------------
-# Layout-heavy / short-text heuristic.
+# Widened-gate helper: `_should_probe_text_pdf`.
 # ---------------------------------------------------------------------------
-
-def test_layout_heavy_detects_cad_style_token_dump():
-    """CAD-style token dumps (short tokens, punctuation-heavy) fire the heuristic."""
-    from automation.concept_scout.vision_probe import _is_layout_heavy_text
-
-    cad_like = (
-        "1.0 1/200 A 4m 2.5 12.7 5m X1 Y1 N S E W 0.3 0.15 1m 6 "
-        "x y z A1 A2 A3 B1 B2 C1 C2 D1 D2 E1 E2 F1 F2"
-    )
-    assert _is_layout_heavy_text(cad_like) is True
-
-
-def test_layout_heavy_rejects_prose():
-    """Normal prose paragraphs do NOT fire the layout-heavy heuristic."""
-    from automation.concept_scout.vision_probe import _is_layout_heavy_text
-
-    prose = (
-        "El present informe geotècnic recull els resultats de les proves "
-        "realitzades al solar situat al carrer Major número dotze, "
-        "corresponent al municipi de Bell-Lloc d'Urgell. L'estudi inclou "
-        "les proves DPSH i el sondeig manual amb recuperació de testimoni."
-    )
-    assert _is_layout_heavy_text(prose) is False
-
-
-def test_layout_heavy_rejects_long_documents():
-    """Very long page-1 text (real reports, articles) is not flagged."""
-    from automation.concept_scout.vision_probe import _is_layout_heavy_text
-
-    long_text = "The cat sat on the mat. " * 200  # >2000 chars, pure prose
-    assert _is_layout_heavy_text(long_text) is False
-
 
 def test_should_probe_text_pdf_skips_when_concepts_already_detected(tmp_path):
     """If text miners already mapped concepts, don't waste a probe."""
@@ -292,3 +260,75 @@ def test_probe_gate_keeps_classic_behavior_for_images(tmp_path, monkeypatch):
 
     assert any("F1 SIT.png" in c for c in calls), \
         f"classic gate for images broke; probe calls: {calls}"
+
+
+def test_probe_gate_legacy_dir_match_is_case_insensitive(tmp_path, monkeypatch):
+    """`PDF/`, `pdf/`, `Pdf-V0/` all count as legacy-output dirs.
+
+    Mirrors the case-insensitive regex matching in
+    `automation/file_scanner.py` so a lower-case folder spelling on a
+    client's disk doesn't silently re-enable probes on our own outputs.
+    """
+    from automation.concept_scout import vision_probe
+    from automation.concept_scout.models import FileEntry
+
+    for legacy_dir in ("pdf", "Pdf-V0", "PDF v0"):
+        (tmp_path / legacy_dir).mkdir(exist_ok=True)
+        (tmp_path / legacy_dir / "informe.pdf").write_bytes(b"%PDF-1.4\n%%EOF\n")
+
+    entries = [
+        FileEntry(
+            path=f"{d}/informe.pdf",
+            type="pdf_vector",
+            size_kb=100,
+            text_extractable=True,
+            concepts_detected=[],
+        )
+        for d in ("pdf", "Pdf-V0", "PDF v0")
+    ]
+
+    monkeypatch.setattr(vision_probe, "_extract_page1_text", lambda p: "tiny")
+    calls: list[str] = []
+    monkeypatch.setattr(
+        vision_probe, "_run_probe", lambda fp: calls.append(str(fp)) or None,
+    )
+
+    vision_probe.probe_unreadable_files(entries, tmp_path)
+
+    assert calls == [], (
+        f"case-insensitive legacy match failed; unexpected probes: {calls}"
+    )
+
+
+def test_should_probe_text_pdf_truth_table(tmp_path, monkeypatch):
+    """Regression sweep: `_should_probe_text_pdf` reflects the documented
+    gate (replaces the three dead-heuristic unit tests).
+
+    Gate fires iff `concepts_detected == []` AND page-1 text length <=
+    `_LAYOUT_MAX_TEXT_LEN`. Legacy-dir exclusion lives in the caller
+    (`probe_unreadable_files`), so it is exercised in the separate
+    `test_probe_gate_skips_legacy_pdf_output_dir` test, not here.
+    """
+    from automation.concept_scout import vision_probe
+
+    fake_pdf = tmp_path / "x.pdf"
+    fake_pdf.write_bytes(b"%PDF-1.4\n%%EOF\n")
+
+    short_text = "titleblock 1/200 Pb+1Pp 7.5m"
+    long_text = "El present document descriu en detall el procediment. " * 50
+    assert len(long_text) > vision_probe._LAYOUT_MAX_TEXT_LEN
+
+    # (concepts_detected, page1_text, expected)
+    cases = [
+        ([], short_text, True),                  # fires
+        (["architect_name"], short_text, False),  # concepts already found → skip
+        ([], long_text, False),                  # prose-heavy → skip
+        (["architect_name"], long_text, False),   # both blockers → skip
+    ]
+    for concepts, text, expected in cases:
+        monkeypatch.setattr(vision_probe, "_extract_page1_text", lambda p, _t=text: _t)
+        actual = vision_probe._should_probe_text_pdf(fake_pdf, concepts)
+        assert actual is expected, (
+            f"gate truth-table violation: concepts={concepts!r}, "
+            f"text_len={len(text)}, expected={expected}, got={actual}"
+        )
