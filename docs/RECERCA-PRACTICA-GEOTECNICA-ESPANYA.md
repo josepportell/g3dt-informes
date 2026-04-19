@@ -217,3 +217,67 @@ Per cohesius, **NO existeix correlació fiable SPT→phi**. Eva usa Crespo Villa
 
 *Document de treball intern — base per correu a Eva, febrer 2026*
 *Actualitzat amb troballes dels informes de referència i converses Eva ↔ Josep*
+
+---
+
+## 9. Apèndix — Taules Crespo Villalaz (recercat 2026-04-17)
+
+Font del llibre: Carlos Crespo Villalaz, *"Mecánica de suelos y cimentaciones"*, Limusa (5ª-6ª ed., ~2004). Les taules següents es troben al **Cap. 20 — Capacidad de carga** (Tabla ~20.3) i/o **Cap. 33 — Tablas generales** (Tabla 33.2), pp. 280-295 de la 5ª edició. Reproduïdes a diversos informes geotècnics colombians/equatorians i espanyols.
+
+### 9.1 Taula principal φ — sòls cohesius (arcilles i llims)
+
+Etiquetes: primer l'espanyola (font original Crespo), després la catalana
+(ús professional d'Eva, acord femení amb "consistència").
+
+| Consistència (es / ca)         | N (SPT) | qu (kg/cm²) | c = qu/2 (kg/cm²) | φ (°) |
+|--------------------------------|---------|-------------|-------------------|-------|
+| muy blanda / molt tova         | < 2     | < 0.25      | < 0.125           | 0     |
+| blanda / tova                  | 2-4     | 0.25-0.50   | 0.125-0.25        | 0-5   |
+| media / mitjana                | 4-8     | 0.50-1.00   | 0.25-0.50         | 5-10  |
+| firme / ferma                  | 8-15    | 1.00-2.00   | 0.50-1.00         | 10-15 |
+| muy firme / molt ferma         | 15-30   | 2.00-4.00   | 1.00-2.00         | 15-20 |
+| dura / dura                    | > 30    | > 4.00      | > 2.00            | 20-25 |
+
+**Notes de la font:**
+- φ són valors efectius (φ'), drained conditions.
+- c' és estimació de cohesió no drenada.
+- **Per argila limosa / llim pur, restar 2-5° del valor de φ respecte a argila pura.**
+- Rangs reflecteixen variabilitat per plasticitat (IP).
+
+### 9.2 Taula Hunt (via Crespo) — consistència → qu → c → φ
+
+Taula alternativa/reproduïda al mateix capítol, variant amb límits de φ lleugerament diferents:
+
+| Consistència (es / ca)         | qu (kg/cm²) | c (kg/cm²) | φ (°) |
+|--------------------------------|-------------|------------|-------|
+| muy blanda / molt tova         | < 0.25      | < 0.125    | 0     |
+| blanda / tova                  | 0.25-0.50   | 0.125-0.25 | 0-4   |
+| plástico / plàstica            | 0.50-1.00   | 0.25-0.50  | 4-8   |
+| firme / ferma                  | 1.00-2.00   | 0.50-1.00  | 8-12  |
+| muy firme / molt ferma         | 2.00-4.00   | 1.00-2.00  | 12-18 |
+| dura / dura                    | > 4.00      | > 2.00     | 18-25 |
+
+### 9.3 Cross-check amb altres fonts espanyoles
+
+- **González de Vallejo** (*"Geología aplicada"*, Cap. 5): taula similar, φ 0° (blanda) a 22° (dura) per argiles. Concordança ±2° amb Crespo.
+- **Jiménez Salas** (*"Geotecnia"*, Vol. 5, Tabla 14.2): φ per cohesius des N, ex. N=4-8 → φ=6-12°.
+- **Calavera** (*"Cimentaciones"*): referència directa a Crespo/Hunt per φ en llims/argiles.
+
+### 9.4 Impacte sobre la pipeline G3DT
+
+- **CTE DB-SE-C 4.1** (la nostra correlació actual per cohesius) **sobreestima φ ~20-28%** respecte a Crespo per N baixos. Exemple: N=4 → CTE ~25° vs Crespo ~5°. Això explica la desviació de Linyola (+28% vs Eva).
+- **Però** per Linyola (Nb=22.6, llim argilós, Eva φ=28°), Crespo pur donaria φ=15-20° (rang "muy firme"), massa baix. Amb ajust de -3° per llim argilós, seria encara més baix. **Eva sembla usar Schmertmann (1970) amb factor n de gra**, no Crespo pur. Veure `Spt-correlacions.doc`: n=1.25 per sandy silts, n=2 per silty sands, n=2.5 per slightly silty sands.
+
+**Conclusió per a implementació:**
+1. **Per cohesius purs (argiles)**: Crespo/Hunt → φ = f(N) per consistència.
+2. **Per llims i llim-argiles (materials intermedis)**: Schmertmann-(n), amb n=1.25-2 segons % de fins. **Aquesta és probablement la metodologia d'Eva per Linyola.**
+3. **Per granulars**: manté CTE 4.1 o Schmertmann-(n) amb n=2.5.
+4. **Per cohesió c (tots els sòls cohesius)**: Hunt table → c = f(N).
+
+### 9.5 Fonts citades
+
+- `libreriaingeniero.com/2018/07/mecanica-de-suelos-y-cimentaciones.html` — índex del llibre i PDF 5ª ed.
+- `espacacias.com/.../06.-ESTUDIO-GEOTECNICO-1.pdf` — reprodueix la taula principal
+- `repositorio.puce.edu.ec/.../` — tesi equatoriana que cita Crespo directament
+- `cdnfomento.blob.core.windows.net/.../18100_a12_gcim.pdf` — document Fomento (Espanya) amb referència a Crespo
+- `estudiosgeotecnicos.info/index.php/spt-suelos-cohesivos/` — article online amb les mateixes correlacions

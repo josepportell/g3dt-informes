@@ -189,14 +189,14 @@ SmartScan's `_enumerate_files()` skips: `validation/`, `.git`, `__pycache__`, `.
 When Eva selects a project, the wizard computes geomech parameters automatically:
 
 ```
-DPSH Excel → avg_n20 → Nb (= N20/0.83)
+DPSH Excel → avg_n20 (bearing stratum only, see §8.1) → Nb (= N20/0.83)
     ↓
 Sondeig description → soil_type (rock/cohesive/granular)
     ↓
 CTE D.27: gamma (by soil_type)
-Schmertmann: phi (from Nb, grain size factor)
+Schmertmann / Crespo Tabla 11.2: phi (see §8.2)
 CTE D.23: E (from N20, bracket lookup)
-Hunt: cohesion (by soil_type)
+Crespo / Hunt: cohesion (by soil_type and N)
     ↓
 Terzaghi (1943): qu = c·Nc·sc + γ·Df·Nq·sq + 0.5·γ·B·Nγ·sγ → Qa = qu/3
 Terzaghi-Peck: qa_tp = Nb/12 / Fw × Fd (granular only)
@@ -209,6 +209,24 @@ Schmertmann settlement: C1 × Qa × Iz_integral / Es
 **Live recalculation (since 2026-03-30):** The wizard recomputes Qa, K30, settlement in JavaScript on every keystroke. Shape factors match Python (SQUARE: sc=1.3, sq=1.0, sg=0.8). Flash animation highlights changed values.
 
 **Key dependency:** If DPSH Excel extraction fails (`dpsh_data` is None), ALL geomech params stay empty. The `_compute_geotech_prefills()` function returns early at line 318-322.
+
+### 8.1. Bearing-layer selection (G.5-wire, 2026-04-17)
+
+Eva's convention: compute Qa on the **deepest competent layer** (the bearing stratum under the footing). If the top is fill / rebliment / very weak, skip it and use the next competent layer down. This is formalized in `automation/bicapa.py::select_bearing_layer` and wired into the pipeline via `automation/report_data.py::_select_bearing_layer_idx`. `_bearing_stratum_n20` then averages DPSH readings inside the chosen layer's depth range (with the `depth_to_m` cap gated off when bearing == deepest so the bearing zone below isn't truncated).
+
+Reference: Rodríguez Ortiz §6.1 ("Curso aplicado de cimentaciones", book archived at `docs/research/books/`). Alcoletge is the calibration case: rebliment top (skipped) + lutites bottom (bearing). Bell-Lloc, Castellar, Rubí, Linyola all have "deepest == competent".
+
+### 8.2. Friction angle φ helpers — Eva's authoritative tables
+
+| Helper | Source | When used |
+|--------|--------|-----------|
+| `nspt_to_phi(Nb, soil_type)` | CTE Table 4.1 + Schmertmann n-factor | Default path for sands/gravels |
+| `crespo_phi_cohesive(N)` | Crespo Villalaz §9.1 | Clays (arcilles); midpoint of consistency band |
+| `crespo_phi_granular(N, fine_fraction)` | **Crespo Tabla 11.2 (p.175)** | Sands, with `"transitional"` clamp at 28° for llim argilós / sorres argiloses (Finding #10 anchor) |
+| `hunt_cohesion_from_nspt(N)` | Hunt's consistency table | Cohesion midpoint by N |
+| Meyerhof / Schmertmann qc chain | Schmertmann (1975) p.175 | qc = n·N → φ via Meyerhof curves; E = 2.5·qc (isolated) or 3.5·qc (strip) for Schmertmann settlement |
+
+All tables tested with anchor-point fixtures against Eva's informes (Alcoletge, Bell-Lloc, Linyola, Rubí). Books archived at `docs/research/books/`: Rodríguez Ortiz, Crespo Villalaz, Schmertmann (1975), Hoek & Bray summary.
 
 ## 9. Wizard Tabs
 
