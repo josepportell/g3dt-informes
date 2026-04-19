@@ -683,3 +683,19 @@ class TestExpedientShapeGuard:
         signals = detect_label_values(text, "other.pdf")
         exp = [s for s in signals if s.maps_to == "expedient"]
         assert exp == []
+
+    def test_accepts_value_with_preamble(self):
+        """Real ANCILES-style value with 'Expediente Núm.' prefix should pass.
+
+        The value reaching the shape guard contains preamble text before the
+        7-digit expedient (e.g. `"Expediente Núm 4001679_v0"`). The guard must
+        anchor on a non-digit boundary, not at string start.
+        """
+        from automation.fileminer.miners._detection import detect_label_values
+        text = "REF: Expediente Núm 4001679_v0\n"
+        signals = detect_label_values(text, "anciles.pdf")
+        exp = [s for s in signals if s.maps_to == "expedient"]
+        assert len(exp) == 1, (
+            f"Preamble rejected; got: {[(s.label, s.value) for s in exp]}"
+        )
+        assert "4001679_v0" in exp[0].value

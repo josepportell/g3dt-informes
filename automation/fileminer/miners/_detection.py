@@ -76,10 +76,12 @@ _KNOWN_INTERNAL_NIFS = {'B25364589'}  # G3 Desenvolupament Territorial SL
 _LABEL_VALUE_COLON_RE = re.compile(r'^([^:]{2,40}):\s*(.+)$')
 _LABEL_VALUE_TAB_RE = re.compile(r'^([^\t]{2,40})\t+(.+)$')
 
-# G3DT expedient shape: starts with 7 consecutive digits (e.g. "4001607",
-# "4001612_v0"). Used to reject architect-project codes like "13/52/04" that
-# happen to sit next to a "REF:" label in a title block.
-_EXPEDIENT_VALUE_SHAPE_RE = re.compile(r'^\d{7}(?:\D|$)')
+# G3DT expedient shape: contains a run of exactly 7 consecutive digits
+# (e.g. "4001607", "4001612_v0", "Expediente Núm.: 4001679_v0"). Used to
+# reject architect-project codes like "13/52/04" that happen to sit next to
+# a "REF:" label in a title block. Anchored at a non-digit boundary so
+# preambles ("Expediente Núm.: ...") are accepted but 8+ digit runs are not.
+_EXPEDIENT_VALUE_SHAPE_RE = re.compile(r'(?:^|\D)\d{7}(?:\D|$)')
 
 
 # ---------------------------------------------------------------------------
@@ -374,8 +376,9 @@ def detect_label_values(
 
         # Shape guard for expedient: generic labels like "REF" match many
         # slash-number codes (visa numbers, architect project codes). Require
-        # the value to start with 7 consecutive digits — the G3DT convention.
-        if variable == 'expedient' and not _EXPEDIENT_VALUE_SHAPE_RE.match(value):
+        # the value to contain a run of exactly 7 consecutive digits — the
+        # G3DT convention. Allow preambles ("Expediente Núm.: 4001679_v0").
+        if variable == 'expedient' and not _EXPEDIENT_VALUE_SHAPE_RE.search(value):
             continue
 
         # Only keep first match per variable (highest in file = most prominent)
