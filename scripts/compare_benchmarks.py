@@ -306,7 +306,15 @@ def compare_text(benchmark: str, pipeline: str) -> str:
 logger = logging.getLogger(__name__)
 
 _LLM_JUDGE_CACHE_PATH = BENCHMARKS_DIR / "_llm_judge_cache.json"
-_LLM_JUDGE_MODEL = "claude-haiku-4-5-20251001"
+
+
+def _judge_model() -> str:
+    """Resolve the judge model id via automation.llm_client (env-var aware)."""
+    try:
+        from automation.llm_client import get_judge_model
+        return get_judge_model()
+    except Exception:
+        return "claude-haiku-4-5-20251001"
 
 _LLM_JUDGE_CACHE: dict[str, dict] = {}
 
@@ -362,20 +370,60 @@ def compare_text_llm(
         return cached["status"], cached["score"], cached["explanation"]
 
     system_msg = (
-        "You compare geotechnical report fields written in Catalan or Spanish. "
-        "Rate semantic similarity 1-5. Respond JSON only.\n\n"
-        "Domain vocabulary (treat as synonyms):\n"
+        "You are a senior geotechnical engineer reviewing whether two report "
+        "fields written in Catalan or Spanish say the same thing IN SUBSTANCE. "
+        "You are NOT a spelling checker, NOT a wording checker, and NOT a "
+        "punctuation checker. Be intelligent, not strict.\n\n"
+        "## Core rule (Eva's instruction)\n"
+        "- Different wording, same substance         => MATCH\n"
+        "- Different wording, missing/different detail that may matter => CLOSE\n"
+        "- Different wording, different substance     => MISMATCH\n\n"
+        "## What is NEVER a mismatch on its own\n"
+        "Wording differences are IRRELEVANT when substance is identical. The "
+        "following are ALWAYS MATCH if the underlying meaning is the same:\n"
+        "- Apostrophe / dot variants ('S.L' vs 'SL' vs 'S.L.')\n"
+        "- 'nº' vs 'n' vs 'núm.' vs 'no.' vs 'nro.'\n"
+        "- Accent differences ('Rubí' vs 'Rubi', 'parcel·la' vs 'parcela')\n"
+        "- Catalan 'l·l' vs 'll', 'Bell-lloc' vs 'Bell-Lloc'\n"
+        "- Missing/extra articles ('al Carrer X' vs 'Carrer X')\n"
+        "- Capitalization, punctuation, extra spaces\n"
+        "- Paraphrasing in either Catalan or Spanish\n"
+        "- Adding/removing a generic qualifier that does not change identity\n\n"
+        "## Domain vocabulary (treat as synonyms)\n"
         "- 'solar buit' = 'parcel·la buida' = 'parcela vacía' (empty building lot)\n"
         "- 'parcel·la amb construcció' = 'parcel·la construïda' (built parcel)\n"
         "- 'carrer' = 'calle' = 'C/' (street)\n"
-        "- 'Pb+1Pp' = ground floor + 1 upper floor = 2 floors\n\n"
-        "Scale:\n"
-        "5 = Identical or trivially different (article, capitalization, language variant)\n"
-        "4 = Same meaning, minor wording differences or singular/plural\n"
-        "3 = Mostly correct, captures the key information but misses some details\n"
-        "2 = Partially correct, gets some elements right but significant differences\n"
-        "1 = Wrong or completely different content\n\n"
-        'Response format: {"score": <int 1-5>, "explanation": "<brief reason>"}'
+        "- 'Pb+1Pp' = ground floor + 1 upper floor = 2 floors\n"
+        "- 'unifamiliar aïllat' = 'unifamiliar aislada' = single detached dwelling\n\n"
+        "## 5-point scale (re-anchored on substance)\n"
+        "5 = Same substance. Any wording, any language, any phrasing.\n"
+        "4 = Same substance, missing a MINOR detail (a small qualifier, a measurement, plural vs singular).\n"
+        "3 = Same substance, but missing or different on a SUBSTANTIVE detail "
+        "(e.g. one mentions 'with swimming pool' the other does not).\n"
+        "2 = Partially overlapping substance. Gets some elements right but "
+        "loses or contradicts on key points.\n"
+        "1 = Different substance entirely (different entity, wrong number, contradicting fact).\n\n"
+        "Mapping: 5 -> MATCH, 4-3 -> CLOSE (any detail loss), 2-1 -> MISMATCH.\n"
+        "(The classification is computed from your score; just give the score truthfully.)\n\n"
+        "## Worked examples\n"
+        "MATCH (5): 'RAMON MITJANA SL' vs 'RAMON MITJANA S.L'\n"
+        "  -> Same legal entity, dot diff is wording.\n"
+        "MATCH (5): 'al Carrer Clot de la Llacuna nº16 de Linyola' "
+        "vs 'al Carrer Clot de la Llacuna n16 de Linyola'\n"
+        "  -> Same address, 'nº' vs 'n' is wording.\n"
+        "MATCH (5): 'Bell-Lloc d'Urgell' vs 'BELL-LLOC D URGELL'\n"
+        "  -> Same municipality, just casing/punctuation.\n"
+        "CLOSE (4): 'DPSH al solar' vs 'DPSH-1 al solar'\n"
+        "  -> Same substance (a DPSH test was done at the site), "
+        "pipeline missed the test identifier suffix.\n"
+        "CLOSE (3): 'un habitatge unifamiliar amb piscina' "
+        "vs 'un habitatge unifamiliar'\n"
+        "  -> Same building type, but pool is a substantive detail missing.\n"
+        "MISMATCH (1): 'SRA. JOANA MARTINEZ' vs 'VIM VIVIENDAS MODULARES'\n"
+        "  -> Different entity entirely.\n"
+        "MISMATCH (1): '450 m2' vs '120 m2'\n"
+        "  -> Different number, different fact.\n\n"
+        'Respond with JSON only: {"score": <int 1-5>, "explanation": "<brief reason>"}'
     )
     user_msg = (
         f"Variable: {variable_name}\n"
@@ -385,7 +433,7 @@ def compare_text_llm(
 
     try:
         response = client.messages.create(
-            model=_LLM_JUDGE_MODEL,
+            model=_judge_model(),
             max_tokens=256,
             system=system_msg,
             messages=[{"role": "user", "content": user_msg}],
@@ -704,9 +752,9 @@ def main() -> None:
     )
     parser.add_argument(
         "--llm-judge",
-        action="store_true",
-        default=False,
-        help="Use Claude LLM-as-judge for Tier B text variables (requires API key)",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="LLM-as-judge for Tier B text variables (default: ON; --no-llm-judge to disable)",
     )
     args = parser.parse_args()
 
@@ -736,14 +784,16 @@ def main() -> None:
     if args.llm_judge:
         _load_env()
         try:
-            from anthropic import Anthropic
-            llm_client = Anthropic()
+            from automation.llm_client import get_anthropic_client
+            llm_client = get_anthropic_client()
             _load_llm_cache()
             print("LLM judge enabled (Tier B text variables)")
         except Exception as exc:
             print(f"Warning: Could not initialize Anthropic client: {exc}")
             print("Falling back to substring matching for Tier B.")
             args.llm_judge = False
+    else:
+        print("LLM judge OFF (Tier B uses substring matching)")
 
     print(f"=== Benchmark Comparison ===")
     print()

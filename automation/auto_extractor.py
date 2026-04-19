@@ -137,6 +137,9 @@ class AutoExtractionResult:
     steps_completed: list[str] = field(default_factory=list)
     steps_skipped: list[tuple[str, str]] = field(default_factory=list)
     duration_seconds: float = 0.0
+    # Diagnostic-only: per-call usage from automation.targeted_extraction
+    # (HITL drawer). Empty for runs that don't invoke targeted extraction.
+    targeted_extraction_traces: list[dict] = field(default_factory=list)
 
     def summary(self) -> str:
         """Human-readable summary for the skill to display."""
@@ -202,6 +205,9 @@ def auto_extract(
     emit("phase_start", {"phase": "0.4", "name": "Groq LLM"})
     _phase04_groq_deep_mine(project_path, result, emit)
     emit("step", {"step": "mine", "status": "done", "count": len(result.mining_result.signals) if result.mining_result else 0})
+
+    # --- Phase 0.42: Classify email attachments extracted by MsgMiner ---
+    _phase042_email_attachments(project_path, result, emit)
 
     # --- Phase 0.45: ConceptScout (after Groq enrichment, before local extractors) ---
     _phase045_concept_scout(project_path, result, emit)
@@ -905,6 +911,69 @@ def _phase01_historia_geologica(project_path: Path, result: AutoExtractionResult
 
     except Exception as exc:
         result.steps_skipped.append(("Historia geològica", str(exc)))
+
+
+def _phase042_email_attachments(
+    project_path: Path, result: AutoExtractionResult, emit=None,
+) -> None:
+    """Phase 0.42: Classify email attachments extracted by MsgMiner.
+
+    Runs a 3-layer classifier (filename → vision → provenance) over every
+    file under `validation/msg_attachments/`. Updates `result.file_mapping`
+    in place, persists the mapping, and reports counts in steps_completed.
+    """
+    if not emit:
+        emit = lambda *a, **kw: None
+    try:
+        from .email_attachment_classifier import classify_email_attachments
+        from .file_scanner import FileScanner
+
+        mapping = result.file_mapping
+        if mapping is None or not hasattr(mapping, 'email_attachments'):
+            result.steps_skipped.append(
+                ("Email attachments", "no file_mapping")
+            )
+            return
+
+        att_root = project_path / 'validation' / 'msg_attachments'
+        if not att_root.is_dir():
+            # No attachments saved — MsgMiner had nothing to extract
+            return
+
+        # Use OpenAI vision when available; otherwise filename-only
+        vision_client = "auto" if os.environ.get('OPENAI_API_KEY') else None
+
+        prov = classify_email_attachments(project_path, mapping, vision_client)
+
+        # Persist the updated mapping (roles may have gained attachments;
+        # email_attachments dict always gets written)
+        try:
+            scanner = FileScanner(project_path)
+            scanner.save(mapping)
+        except Exception as exc:
+            logger.warning("Email attachments: save failed: %s", exc)
+
+        # Count outcomes for the step summary
+        n_total = len(prov)
+        n_filename = sum(1 for v in prov.values() if v['classifier_used'] == 'filename')
+        n_vision = sum(1 for v in prov.values() if v['classifier_used'] == 'vision')
+        n_unclass = sum(1 for v in prov.values() if v['classifier_used'] == 'unclassified')
+        n_promoted = sum(1 for v in prov.values() if v.get('role_assigned'))
+
+        result.steps_completed.append(
+            f"Email attachments: {n_total} classificats "
+            f"(filename={n_filename}, vision={n_vision}, unclassified={n_unclass}, "
+            f"promoted={n_promoted})"
+        )
+        emit("phase_complete", {
+            "phase": "0.42", "name": "Email attachments",
+            "total": n_total, "filename": n_filename, "vision": n_vision,
+            "unclassified": n_unclass, "promoted": n_promoted,
+        })
+
+    except Exception as exc:
+        logger.warning("Email attachments classification failed: %s", exc)
+        result.steps_skipped.append(("Email attachments", str(exc)))
 
 
 def _phase045_concept_scout(project_path: Path, result: AutoExtractionResult, emit) -> None:

@@ -31,6 +31,7 @@ __all__ = [
     # Fallback orders
     "VISION_FALLBACK_ORDER",
     "PROBE_FALLBACK_ORDER",
+    "VISION_BACKEND_BY_TYPE",
     # Logging
     "LOG_ENABLED",
     "LOG_PATH",
@@ -131,6 +132,17 @@ VISION_FALLBACK_ORDER: list[str] = _env_list(
 PROBE_FALLBACK_ORDER: list[str] = _env_list(
     "PROBE_FALLBACK", ["groq", "openai", "anthropic"]
 )
+
+# Per-vision-type backend override. None = use the run's default vision_backend.
+# Handwritten field sheets need Claude precision (sondeig depth columns,
+# DPSH handwritten N20). Printed PDFs (planol, projecte) work fine on OpenAI.
+VISION_BACKEND_BY_TYPE: dict[str, str] = {
+    "sondeig":             os.environ.get("G3DT_VISION_BACKEND_SONDEIG",  "anthropic"),
+    "sondeig_annex":       os.environ.get("G3DT_VISION_BACKEND_SONDEIG_ANNEX", "anthropic"),
+    "dpsh":                os.environ.get("G3DT_VISION_BACKEND_DPSH",     "anthropic"),
+    "planol":              os.environ.get("G3DT_VISION_BACKEND_PLANOL",   "openai"),
+    "projecte_arquitecte": os.environ.get("G3DT_VISION_BACKEND_PROJECTE", "openai"),
+}
 
 # ---------------------------------------------------------------------------
 # Logging

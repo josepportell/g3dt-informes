@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
@@ -27,6 +27,14 @@ router = APIRouter(prefix="/api")
 class WizardSaveRequest(BaseModel):
     wizard_fields: dict[str, Any]
     expert_overrides: dict[str, Any] | None = None
+
+
+class TargetedExtractRequest(BaseModel):
+    """Request body for /wizard/{project}/extract-targeted."""
+
+    concept_ids: list[str]
+    upload_id: str | None = None
+    file_path: str | None = None  # Relative to project root; path traversal rejected.
 
 
 class GenerateResponse(BaseModel):
@@ -1482,3 +1490,138 @@ def clear_groq_cache():
         count = len(list(cache_dir.glob("*.json")))
         shutil.rmtree(cache_dir)
     return {"cleared": count, "message": f"Cleared {count} cached extractions"}
+
+
+# --- Human-in-the-loop: targeted evidence upload + extraction ---
+
+_UPLOAD_EXT_ALLOWLIST: frozenset[str] = frozenset({
+    '.pdf', '.xls', '.xlsx', '.docx', '.doc', '.msg', '.txt',
+    '.jpg', '.jpeg', '.png',
+})
+_UPLOAD_MAX_BYTES: int = 25 * 1024 * 1024  # 25 MB
+
+
+def _safe_upload_filename(raw_name: str) -> str:
+    """Sanitize an uploaded filename: strip path separators, NFKD-normalize,
+    keep only a conservative set of characters. Never returns an empty string."""
+    import re
+    import unicodedata
+
+    base = Path(raw_name).name  # strip any directory parts
+    # NFKD normalize then drop non-ASCII; if that nukes everything, fall back.
+    norm = unicodedata.normalize('NFKD', base).encode('ascii', 'ignore').decode('ascii')
+    # Allow letters, digits, dot, dash, underscore; collapse everything else to '_'.
+    clean = re.sub(r'[^A-Za-z0-9._-]+', '_', norm).strip('._-')
+    return clean or 'upload'
+
+
+@router.post("/upload-evidence/{project_name:path}")
+async def upload_evidence(project_name: str, file: UploadFile = File(...)):
+    """Accept a file Eva uploads as evidence for missing wizard fields.
+
+    Stores under `{project}/validation/uploads/<YYYYMMDD-HHMMSS>_<rand>_<safe>`.
+    Returns an `upload_id` the frontend passes to `/extract-targeted`.
+    """
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    raw_name = file.filename or 'upload'
+    suffix = Path(raw_name).suffix.lower()
+    if suffix not in _UPLOAD_EXT_ALLOWLIST:
+        raise HTTPException(
+            status_code=415,
+            detail=f"Extensió no permesa: {suffix or '(cap)'}. "
+                   f"Acceptades: {sorted(_UPLOAD_EXT_ALLOWLIST)}",
+        )
+
+    # Stream-read with a size cap to avoid buffering untrusted data in memory.
+    import datetime
+    import secrets
+    data = await file.read(_UPLOAD_MAX_BYTES + 1)
+    if len(data) > _UPLOAD_MAX_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=f"Fitxer massa gran ({len(data) / 1024 / 1024:.1f} MB). "
+                   f"Màxim: {_UPLOAD_MAX_BYTES / 1024 / 1024:.0f} MB.",
+        )
+
+    uploads_dir = project_path / 'validation' / 'uploads'
+    uploads_dir.mkdir(parents=True, exist_ok=True)
+
+    ts = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+    rand = secrets.token_hex(3)
+    safe = _safe_upload_filename(raw_name)
+    upload_id = f"{ts}_{rand}_{safe}"
+    stored_path = uploads_dir / upload_id
+
+    stored_path.write_bytes(data)
+
+    rel_path = stored_path.relative_to(project_path).as_posix()
+    logger.info("evidence upload: %s -> %s (%d bytes)", project_name, rel_path, len(data))
+    return {
+        "upload_id": upload_id,
+        "stored_path": rel_path,
+        "size_bytes": len(data),
+        "mime": file.content_type or 'application/octet-stream',
+    }
+
+
+@router.post("/extract-targeted/{project_name:path}")
+def extract_targeted_endpoint(project_name: str, body: TargetedExtractRequest):
+    """Run the hybrid targeted extractor (regex → cc_extractor) on one file.
+
+    The file is identified by either `upload_id` (previously posted to
+    /upload-evidence) or `file_path` (relative path inside the project folder;
+    path traversal rejected). Returns extracted values with confidence; does
+    NOT persist — the frontend must POST to /wizard/{project} to save.
+    """
+    from web.expected_sources import CONFIDENCE_THRESHOLD
+
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    if not body.concept_ids:
+        raise HTTPException(status_code=400, detail="concept_ids must not be empty")
+    if not body.upload_id and not body.file_path:
+        raise HTTPException(status_code=400, detail="Provide either upload_id or file_path")
+
+    # Resolve target file, reject path traversal.
+    if body.upload_id:
+        candidate = project_path / 'validation' / 'uploads' / body.upload_id
+    else:
+        candidate = project_path / body.file_path  # type: ignore[arg-type]
+
+    try:
+        resolved = candidate.resolve(strict=True)
+    except (FileNotFoundError, OSError):
+        raise HTTPException(status_code=404, detail="file not found")
+
+    try:
+        resolved.relative_to(project_path.resolve())
+    except ValueError:
+        raise HTTPException(status_code=400, detail="file must live inside the project directory")
+
+    import time
+    from automation.targeted_extraction import extract_targeted
+
+    t0 = time.monotonic()
+    results = extract_targeted(resolved, body.concept_ids, project_path)
+    elapsed_ms = int((time.monotonic() - t0) * 1000)
+
+    # Annotate low-confidence entries for the UI confirmation step.
+    for cid, entry in results.items():
+        conf = entry.get("confidence")
+        value = entry.get("value")
+        entry["needs_confirmation"] = bool(
+            value not in (None, "") and (conf is None or conf < CONFIDENCE_THRESHOLD)
+        )
+
+    return {
+        "source_file": resolved.relative_to(project_path.resolve()).as_posix(),
+        "results": results,
+        "elapsed_ms": elapsed_ms,
+    }

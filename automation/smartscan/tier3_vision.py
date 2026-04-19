@@ -244,8 +244,8 @@ def _classify_with_claude(
         return None
 
     try:
-        import anthropic
-        client = anthropic.Anthropic()
+        from automation.llm_client import get_anthropic_client
+        client = get_anthropic_client()
     except Exception:
         return None
 

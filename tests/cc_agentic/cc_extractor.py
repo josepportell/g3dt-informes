@@ -56,14 +56,112 @@ def load_concept_schema(schema_path: str | Path) -> dict[str, dict]:
     return data.get('concepts', {})
 
 
-def _build_variable_prompt(concepts: dict[str, dict]) -> str:
-    """Build the variable list section for the extraction prompt."""
+def _build_variable_prompt(
+    concepts: dict[str, dict],
+    template_patterns: dict[str, str] | None = None,
+) -> str:
+    """Build the variable list section for the extraction prompt.
+
+    If `template_patterns` is provided, each matching concept line is followed
+    by a TEMPLATE hint so the model adapts facts into Eva's expected phrasing.
+    """
+    tp = template_patterns or {}
     lines = []
     for cid, cdef in concepts.items():
         desc = cdef.get('description_ca', cid)
         ctype = cdef.get('type', 'text')
         lines.append(f"- {cid} ({ctype}): {desc}")
+        if cid in tp:
+            lines.append(f"    TEMPLATE: {tp[cid]}")
     return '\n'.join(lines)
+
+# ---------------------------------------------------------------------------
+# LLM JSON response parsing
+# ---------------------------------------------------------------------------
+
+def _extract_balanced_json_object(text: str) -> str | None:
+    """Return the first balanced {...} block in text, respecting string literals.
+
+    Walks the string once tracking brace depth, but ignoring braces that appear
+    inside JSON string literals (so braces inside "value" strings don't throw
+    off the count). Returns None if no balanced object is found.
+    """
+    start = text.find('{')
+    if start == -1:
+        return None
+    depth = 0
+    in_string = False
+    escape = False
+    for i in range(start, len(text)):
+        ch = text[i]
+        if in_string:
+            if escape:
+                escape = False
+            elif ch == '\\':
+                escape = True
+            elif ch == '"':
+                in_string = False
+            continue
+        if ch == '"':
+            in_string = True
+        elif ch == '{':
+            depth += 1
+        elif ch == '}':
+            depth -= 1
+            if depth == 0:
+                return text[start:i + 1]
+    return None
+
+
+def _parse_llm_json(raw_text: str) -> dict:
+    """Parse an LLM response that *should* be JSON, tolerating common deviations.
+
+    Tries (in order): plain json.loads, markdown fence extraction anywhere in
+    the string, balanced brace-matching. Returns {} on total failure after
+    logging a WARNING with the first 400 chars of the raw response.
+
+    Callers expect a dict (possibly empty) -- this function never raises.
+    """
+    if not raw_text:
+        return {}
+
+    text = raw_text.strip()
+
+    # (a) Fast path: plain JSON.
+    try:
+        parsed = json.loads(text)
+        if isinstance(parsed, dict):
+            return parsed
+    except json.JSONDecodeError:
+        pass
+
+    # (b) Markdown fence anywhere (not just leading). Handles:
+    #     "Here is the JSON:\n```json\n{...}\n```\nLet me know if..."
+    fence_match = re.search(r'```(?:json)?\s*(.+?)\s*```', text, re.DOTALL)
+    if fence_match:
+        try:
+            parsed = json.loads(fence_match.group(1).strip())
+            if isinstance(parsed, dict):
+                return parsed
+        except json.JSONDecodeError:
+            pass
+
+    # (c) Balanced {...} via bracket matching (respects string literals).
+    #     Handles preamble ("Here is the JSON you requested:\n{...}") and
+    #     trailing commentary ("{...}\nLet me know if you need more.").
+    candidate = _extract_balanced_json_object(text)
+    if candidate is not None:
+        try:
+            parsed = json.loads(candidate)
+            if isinstance(parsed, dict):
+                return parsed
+        except json.JSONDecodeError:
+            pass
+
+    # (d) Give up. Log a generous snippet to aid diagnosis.
+    logger.warning("Failed to parse JSON from LLM response: %.400s", raw_text)
+    return {}
+
 
 # ---------------------------------------------------------------------------
 # PDF / image rendering
@@ -76,6 +174,9 @@ def _render_pdf_pages(pdf_path: Path, dpi: int = 200, max_pages: int = 10) -> li
     """Render PDF pages to base64 JPEG strings via PyMuPDF."""
     import fitz
 
+    # Anthropic vision API rejects images with any dimension > 8000px.
+    _MAX_PIXEL_DIM = 8000
+
     images: list[str] = []
     doc = fitz.open(str(pdf_path))
     try:
@@ -84,6 +185,20 @@ def _render_pdf_pages(pdf_path: Path, dpi: int = 200, max_pages: int = 10) -> li
             zoom = dpi / 72
             mat = fitz.Matrix(zoom, zoom)
             pix = page.get_pixmap(matrix=mat)
+
+            # Downscale if over 8000px on any dimension (API limit)
+            max_dim = max(pix.width, pix.height)
+            if max_dim > _MAX_PIXEL_DIM:
+                scale = _MAX_PIXEL_DIM / max_dim
+                zoom = (dpi / 72) * scale
+                logger.info(
+                    "Downscaling %s page %d: %dx%d -> target max %dpx (scale %.3f)",
+                    pdf_path.name, page_num + 1, pix.width, pix.height,
+                    _MAX_PIXEL_DIM, scale,
+                )
+                mat = fitz.Matrix(zoom, zoom)
+                pix = page.get_pixmap(matrix=mat)
+
             img_bytes = pix.tobytes(output='jpeg', jpg_quality=85)
 
             # Downscale if over 4 MB
@@ -91,6 +206,11 @@ def _render_pdf_pages(pdf_path: Path, dpi: int = 200, max_pages: int = 10) -> li
                 zoom = 150 / 72
                 mat = fitz.Matrix(zoom, zoom)
                 pix = page.get_pixmap(matrix=mat)
+                if max(pix.width, pix.height) > _MAX_PIXEL_DIM:
+                    scale = _MAX_PIXEL_DIM / max(pix.width, pix.height)
+                    zoom = (150 / 72) * scale
+                    mat = fitz.Matrix(zoom, zoom)
+                    pix = page.get_pixmap(matrix=mat)
                 img_bytes = pix.tobytes(output='jpeg', jpg_quality=75)
 
             images.append(base64.b64encode(img_bytes).decode('utf-8'))
@@ -206,7 +326,11 @@ def _extract_text(path: Path, target_vars: dict[str, dict]) -> dict[str, dict]:
 # Text-based LLM extraction (shared by .msg, .docx, .doc)
 # ---------------------------------------------------------------------------
 
-def _extract_from_text_via_llm(text: str, concepts: dict[str, dict]) -> tuple[dict[str, dict], dict]:
+def _extract_from_text_via_llm(
+    text: str,
+    concepts: dict[str, dict],
+    template_patterns: dict[str, str] | None = None,
+) -> tuple[dict[str, dict], dict]:
     """Send plain text to Anthropic for variable extraction. Returns (vars, usage)."""
     if not text.strip() or len(text) < 20:
         return {}, {}
@@ -216,14 +340,15 @@ def _extract_from_text_via_llm(text: str, concepts: dict[str, dict]) -> tuple[di
 
     import anthropic
 
-    variable_list = _build_variable_prompt(concepts)
+    variable_list = _build_variable_prompt(concepts, template_patterns)
     prompt = f"{_EXTRACTION_PROMPT.format(variable_list=variable_list)}\n\nDocument text:\n{text}"
 
     t0 = time.monotonic()
     try:
-        client = anthropic.Anthropic()
+        from automation.llm_client import get_anthropic_client
+        client = get_anthropic_client()
         response = client.messages.create(
-            model=_MODEL,
+            model=_active_model(),
             max_tokens=4096,
             messages=[{'role': 'user', 'content': prompt}],
             timeout=120.0,
@@ -233,10 +358,7 @@ def _extract_from_text_via_llm(text: str, concepts: dict[str, dict]) -> tuple[di
         return {}, {}
     elapsed = time.monotonic() - t0
 
-    raw_text = response.content[0].text.strip()
-    if raw_text.startswith('```'):
-        raw_text = re.sub(r'^```(?:json)?\s*', '', raw_text)
-        raw_text = re.sub(r'\s*```$', '', raw_text)
+    raw_text = response.content[0].text
 
     usage = {
         'input_tokens': response.usage.input_tokens,
@@ -244,10 +366,8 @@ def _extract_from_text_via_llm(text: str, concepts: dict[str, dict]) -> tuple[di
         'elapsed_s': round(elapsed, 2),
     }
 
-    try:
-        parsed = json.loads(raw_text)
-    except json.JSONDecodeError:
-        logger.warning("Failed to parse JSON from text LLM response: %.200s", raw_text)
+    parsed = _parse_llm_json(raw_text)
+    if not parsed:
         return {}, usage
 
     results: dict[str, dict] = {}
@@ -272,7 +392,10 @@ def _extract_from_text_via_llm(text: str, concepts: dict[str, dict]) -> tuple[di
 # .msg extraction (email body via extract_msg)
 # ---------------------------------------------------------------------------
 
-def _extract_msg(path: Path, concepts: dict[str, dict]) -> tuple[dict[str, dict], dict]:
+def _extract_msg(
+    path: Path, concepts: dict[str, dict],
+    template_patterns: dict[str, str] | None = None,
+) -> tuple[dict[str, dict], dict]:
     """Extract variables from .msg email file. Returns (vars, usage)."""
     try:
         import extract_msg
@@ -286,14 +409,17 @@ def _extract_msg(path: Path, concepts: dict[str, dict]) -> tuple[dict[str, dict]
         return {}, {}
 
     text = f"Email subject: {subject}\nFrom: {sender}\n\nBody:\n{body}"
-    return _extract_from_text_via_llm(text, concepts)
+    return _extract_from_text_via_llm(text, concepts, template_patterns)
 
 
 # ---------------------------------------------------------------------------
 # .docx extraction (python-docx)
 # ---------------------------------------------------------------------------
 
-def _extract_docx(path: Path, concepts: dict[str, dict]) -> tuple[dict[str, dict], dict]:
+def _extract_docx(
+    path: Path, concepts: dict[str, dict],
+    template_patterns: dict[str, str] | None = None,
+) -> tuple[dict[str, dict], dict]:
     """Extract variables from .docx file. Returns (vars, usage)."""
     try:
         import docx
@@ -310,14 +436,17 @@ def _extract_docx(path: Path, concepts: dict[str, dict]) -> tuple[dict[str, dict
         return {}, {}
 
     text = '\n'.join(parts)
-    return _extract_from_text_via_llm(text, concepts)
+    return _extract_from_text_via_llm(text, concepts, template_patterns)
 
 
 # ---------------------------------------------------------------------------
 # .doc extraction (libreoffice conversion)
 # ---------------------------------------------------------------------------
 
-def _extract_doc(path: Path, concepts: dict[str, dict]) -> tuple[dict[str, dict], dict]:
+def _extract_doc(
+    path: Path, concepts: dict[str, dict],
+    template_patterns: dict[str, str] | None = None,
+) -> tuple[dict[str, dict], dict]:
     """Extract variables from .doc file via libreoffice text conversion. Returns (vars, usage)."""
     import subprocess
     import tempfile
@@ -341,13 +470,25 @@ def _extract_doc(path: Path, concepts: dict[str, dict]) -> tuple[dict[str, dict]
         logger.warning("libreoffice conversion timed out for %s", path.name)
         return {}, {}
 
-    return _extract_from_text_via_llm(text, concepts)
+    return _extract_from_text_via_llm(text, concepts, template_patterns)
 
 
 # ---------------------------------------------------------------------------
 # Anthropic vision API
 # ---------------------------------------------------------------------------
 
+def _active_model() -> str:
+    """Resolve model id. Precedence: CC_AGENTIC_MODEL env > llm_client default."""
+    explicit = os.environ.get('CC_AGENTIC_MODEL')
+    if explicit:
+        return explicit
+    from automation.llm_client import get_cc_model
+    return get_cc_model()
+
+
+# Legacy module constant — kept for any callers that import it directly.
+# Do NOT rely on this at import time if you want env-var overrides to stick;
+# call _active_model() instead (it reads env each call).
 _MODEL = os.environ.get('CC_AGENTIC_MODEL', 'claude-sonnet-4-6')
 
 
@@ -358,9 +499,9 @@ def _call_vision(
     max_tokens: int = 4096,
 ) -> tuple[dict, dict]:
     """Call Anthropic vision API. Returns (parsed_json, usage_dict)."""
-    import anthropic
+    from automation.llm_client import get_anthropic_client
 
-    client = anthropic.Anthropic()
+    client = get_anthropic_client()
 
     content: list[dict] = []
     for img in images_b64:
@@ -379,10 +520,7 @@ def _call_vision(
     )
     elapsed = time.monotonic() - t0
 
-    raw_text = response.content[0].text.strip()
-    if raw_text.startswith('```'):
-        raw_text = re.sub(r'^```(?:json)?\s*', '', raw_text)
-        raw_text = re.sub(r'\s*```$', '', raw_text)
+    raw_text = response.content[0].text
 
     usage = {
         'input_tokens': response.usage.input_tokens,
@@ -390,12 +528,7 @@ def _call_vision(
         'elapsed_s': round(elapsed, 2),
     }
 
-    try:
-        parsed = json.loads(raw_text)
-    except json.JSONDecodeError:
-        logger.warning("Failed to parse JSON from vision response: %.200s", raw_text)
-        parsed = {}
-
+    parsed = _parse_llm_json(raw_text)
     return parsed, usage
 
 
@@ -413,12 +546,13 @@ If the image contains no relevant document data (logos, legends, backgrounds), r
 def _extract_via_vision(
     images_b64: list[str],
     concepts: dict[str, dict],
+    template_patterns: dict[str, str] | None = None,
 ) -> tuple[dict[str, dict], dict]:
     """Send images to Anthropic and parse variable extractions.
 
     Returns (variables_dict, usage).
     """
-    variable_list = _build_variable_prompt(concepts)
+    variable_list = _build_variable_prompt(concepts, template_patterns)
     prompt = _EXTRACTION_PROMPT.format(variable_list=variable_list)
 
     parsed, usage = _call_vision(images_b64, prompt)
@@ -516,6 +650,8 @@ def extract_from_files(
     agentic_crops: bool = True,
     max_crops_per_file: int = 3,
     crop_confidence_threshold: float = 0.7,
+    concepts_override: dict[str, dict] | None = None,
+    template_patterns: dict[str, str] | None = None,
 ) -> tuple[dict, list[dict]]:
     """Extract report variables from a list of project files via Anthropic API.
 
@@ -525,13 +661,22 @@ def extract_from_files(
         agentic_crops: If True, re-read low-confidence variables at 300 DPI.
         max_crops_per_file: Max crop re-reads per file.
         crop_confidence_threshold: Variables below this trigger a crop re-read.
+        concepts_override: If provided, use this concepts dict directly instead
+            of loading from schema path. Used by targeted extraction to restrict
+            the prompt to a subset of concepts (cheaper, more accurate).
+        template_patterns: Optional {concept_id: pattern_hint} map. When a
+            concept has a pattern, the model is told how Eva's template wraps
+            the value so it can adapt the extracted facts into matching prose.
+            Used for narrative concepts (location_sentence, adjacent_*_fmt,
+            site_description, building_structure_desc). See
+            `automation/concept_templates.py` for the curated registry.
 
     Returns:
         (variables_dict, actions_trace)
         variables_dict: {var_name: {value, confidence, source_file, source_origin, extraction_method}}
         actions_trace: [{action_id, type, file, ...}]
     """
-    concepts = load_concept_schema(concept_schema_path)
+    concepts = concepts_override if concepts_override is not None else load_concept_schema(concept_schema_path)
     merged: dict[str, dict] = {}
     trace: list[dict] = []
     total_usage = {'input_tokens': 0, 'output_tokens': 0, 'api_calls': 0}
@@ -578,19 +723,19 @@ def extract_from_files(
             file_results = _extract_text(fpath, concepts)
             method = 'text_parse'
         elif ext == '.msg':
-            file_results, file_usage = _extract_msg(fpath, concepts)
+            file_results, file_usage = _extract_msg(fpath, concepts, template_patterns)
             total_usage['input_tokens'] += file_usage.get('input_tokens', 0)
             total_usage['output_tokens'] += file_usage.get('output_tokens', 0)
             total_usage['api_calls'] += 1
             method = 'msg_parse'
         elif ext == '.docx':
-            file_results, file_usage = _extract_docx(fpath, concepts)
+            file_results, file_usage = _extract_docx(fpath, concepts, template_patterns)
             total_usage['input_tokens'] += file_usage.get('input_tokens', 0)
             total_usage['output_tokens'] += file_usage.get('output_tokens', 0)
             total_usage['api_calls'] += 1
             method = 'docx_parse'
         elif ext == '.doc':
-            file_results, file_usage = _extract_doc(fpath, concepts)
+            file_results, file_usage = _extract_doc(fpath, concepts, template_patterns)
             total_usage['input_tokens'] += file_usage.get('input_tokens', 0)
             total_usage['output_tokens'] += file_usage.get('output_tokens', 0)
             total_usage['api_calls'] += 1
@@ -598,7 +743,7 @@ def extract_from_files(
         elif ext == '.pdf':
             images = _render_pdf_pages(fpath, dpi=200, max_pages=10)
             if images:
-                file_results, file_usage = _extract_via_vision(images, concepts)
+                file_results, file_usage = _extract_via_vision(images, concepts, template_patterns)
                 total_usage['input_tokens'] += file_usage.get('input_tokens', 0)
                 total_usage['output_tokens'] += file_usage.get('output_tokens', 0)
                 total_usage['api_calls'] += 1
@@ -606,7 +751,7 @@ def extract_from_files(
         elif ext in _IMAGE_EXTENSIONS:
             images = _read_image_b64(fpath)
             if images:
-                file_results, file_usage = _extract_via_vision(images, concepts)
+                file_results, file_usage = _extract_via_vision(images, concepts, template_patterns)
                 total_usage['input_tokens'] += file_usage.get('input_tokens', 0)
                 total_usage['output_tokens'] += file_usage.get('output_tokens', 0)
                 total_usage['api_calls'] += 1

@@ -179,6 +179,20 @@ EXTRACTION RULES:
 11. If SPT tests are recorded, extract each to `spt_results` array with: test_id, depth_from_m, depth_to_m, blows (array of 15cm blow counts), n_spt (blows[1]+blows[2]), confidence. Use empty array `[]` if no SPT.
 12. Extract `elevation_z` (cota z in meters) from the borehole header if present (e.g., "Cota z=199.50m" or "z=199.50"). Set to null if not found.
 
+DEPTH PRECISION (CRITICAL — handwritten field sheets):
+SPT depths are usually written as round values (e.g. -1.00, -2.00, -3.50).
+Be especially careful distinguishing handwritten "1" from "9":
+- "-1.00" is a round whole metre, very common as an SPT start depth.
+- "-0.90" would be unusual (depths almost always end in ".00" or ".50").
+- A digit that LOOKS like "9" with a leading "-0." prefix is almost
+  certainly a "1" being read as "9" -- prefer "-1.00" unless you can
+  see a clear closed loop on top with a descending tail.
+
+Worked example: a handwritten "−1,00 a −1,60" can look like "−0,90 a −1,60"
+when the leading "1" is poorly formed. Default to the round value (−1.00)
+unless the digit unambiguously shows the loop+tail of a "9". When in doubt,
+lower the confidence rather than guess.
+
 CONFIDENCE SCORING:
 - 1.0: Clear, unambiguous description
 - 0.7-0.9: Readable but some uncertainty

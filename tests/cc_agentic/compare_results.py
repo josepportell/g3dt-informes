@@ -65,8 +65,17 @@ _CONCEPT_TO_EVA = {
     'architect_name': 'architect_name_upper',
     'building_type': 'building_type_lower',
     'num_floors': 'plantes',
+
+    'adjacent_north': 'adjacent_north_fmt',
+    'adjacent_south': 'adjacent_south_fmt',
+    'adjacent_east': 'adjacent_east_fmt',
+    'adjacent_west': 'adjacent_west_fmt',
+
     'field_work_dates_text': 'data_camp_text',
+
     'sulfate_mg_kg': 'sulfate_value',
+
+    'settlement_cm': 'settlement',
 }
 _EVA_TO_CONCEPT = {v: k for k, v in _CONCEPT_TO_EVA.items()}
 
@@ -127,10 +136,10 @@ def _fill_template(var_name: str, raw_value: str, template_text: str) -> str:
         return _TEMPLATE_CACHE[ck].get('filled', raw_value)
 
     try:
-        import anthropic
-        client = anthropic.Anthropic()
+        from automation.llm_client import get_anthropic_client, get_judge_model
+        client = get_anthropic_client()
         response = client.messages.create(
-            model='claude-haiku-4-5-20251001',
+            model=get_judge_model(),
             max_tokens=256,
             messages=[{'role': 'user', 'content':
                 f"Given this report template: \"{template_text}\"\n"

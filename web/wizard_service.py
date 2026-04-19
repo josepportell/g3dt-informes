@@ -688,6 +688,23 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     _set('_calc_E', f"CTE D.23 {n20_src} | Rang Eva: {ranges['E']}", 'system')
     _set('_calc_cohesion', f"Rang Eva: {ranges['c']}", 'system')
 
+    # Diagnostic-only stamps (underscore prefix => filtered out of variable
+    # comparison loop in scripts/diagnostic_trace.py:363). Used by
+    # _format_calc_trace to surface the bicapa pick + Crespo fines branch
+    # that drove the qa_value computation.
+    _set('_calc_bearing_idx', bearing_idx, 'system')
+    # Map soil_type -> Crespo fine_fraction label that crespo_phi_granular
+    # would receive if invoked. "transitional" matches Eva's anchor at 28°
+    # for llim argilós / sorres argiloses (Finding #10).
+    # diagnostic-display only; never pass directly to crespo_phi_granular (which accepts only clean/normal/transitional)
+    _FINE_FRACTION_BY_SOIL = {
+        'granular': 'normal', 'grava': 'normal', 'arena': 'normal',
+        'arena_limosa': 'transitional', 'limo': 'transitional',
+        'cohesive': 'transitional', 'arcilla': 'transitional',
+        'rock': 'n/a',
+    }
+    _set('_calc_fine_fraction', _FINE_FRACTION_BY_SOIL.get(soil_type, 'normal'), 'system')
+
     # Run Terzaghi for Qa + settlement
     try:
         B_entry = merged.get('footing_width_m')
@@ -718,6 +735,8 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
         )
 
         _set('qa_value', f"{tr.Qa:.2f}", 'Terzaghi-Peck')
+        if tr.qa_cap_reason is not None:
+            _set('qa_cap_reason', tr.qa_cap_reason, 'Terzaghi-Peck')
         if tr.settlement_cm is not None:
             _set('settlement', f"{tr.settlement_cm:.2f}", 'Schmertmann')
 
@@ -1466,14 +1485,33 @@ def _compute_mapping_prefills(
             if not _get_val('building_type') and p_arch.get('building_type'):
                 _set('building_type', p_arch['building_type'], 'projecte_arquitecte vision')
 
+            # Eva's convention: when promotor and architect are different non-empty
+            # entities, the architect_name in the report is often the promotor (who
+            # acts as project director), NOT the document's literal "architect"
+            # field. See _synthesize_with_llm few-shot example #4 (Linyola: SILVIA
+            # EROLES = promotor, JOSEP BUNYESC = literal architect; Eva uses Sílvia).
+            # Skip writing architect_name and client_name here; let the LLM
+            # synthesis make the call using its few-shot rule. Bell-Lloc-style
+            # cases (single architect, no separate promotor) still write through.
+            promotor_val = (p_arch.get('promotor') or '').strip()
+            architect_val = (p_arch.get('architect') or '').strip()
+            distinct_promotor_architect = (
+                promotor_val and architect_val
+                and promotor_val.lower() != architect_val.lower()
+            )
+
             # client_name
-            if not _get_val('client_name'):
+            if not _get_val('client_name') and not distinct_promotor_architect:
                 cli = p_arch.get('client_name') or p_arch.get('promotor')
                 if cli:
                     _set('client_name', cli, 'projecte_arquitecte vision')
 
             # architect_name
-            if not _get_val('architect_name') and p_arch.get('architect'):
+            if (
+                not _get_val('architect_name')
+                and p_arch.get('architect')
+                and not distinct_promotor_architect
+            ):
                 _set('architect_name', p_arch['architect'], 'projecte_arquitecte vision')
 
             # municipality

@@ -21,6 +21,8 @@ Date: 2026-02-04
 from __future__ import annotations
 
 import json
+import re
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
@@ -46,13 +48,38 @@ def _get_data() -> dict:
     return _MUNICIPAL_DATA
 
 
+# Lazy accent-normalized index: stripped_key -> original_key
+# Built once on first lookup, lets us match 'vilanova de segria' (no accent)
+# to 'vilanova de segrià' (with accent) in the JSON.
+_NORMALIZED_INDEX: dict[str, str] | None = None
+
+
+def _get_normalized_index() -> dict[str, str]:
+    """Build/return mapping of accent-stripped keys to original JSON keys."""
+    global _NORMALIZED_INDEX
+    if _NORMALIZED_INDEX is None:
+        data = _get_data()
+        _NORMALIZED_INDEX = {
+            _normalize_key(k): k for k in data["municipalities"].keys()
+        }
+    return _NORMALIZED_INDEX
+
+
 def _normalize_key(municipality: str) -> str:
     """
     Normalize municipality name for lookup.
 
-    The JSON uses lowercase keys like "bell-lloc d'urgell".
+    The JSON uses lowercase keys like "bell-lloc d'urgell" with accents.
+    To make 'Vilanova de Segria' (no accent) match 'vilanova de segrià'
+    (with accent), we strip combining diacritics, lowercase, and collapse
+    whitespace.
     """
-    return municipality.lower().strip()
+    if not municipality:
+        return ""
+    decomposed = unicodedata.normalize('NFD', municipality)
+    no_accents = ''.join(c for c in decomposed if unicodedata.category(c) != 'Mn')
+    collapsed = re.sub(r'\s+', ' ', no_accents)
+    return collapsed.lower().strip()
 
 
 # === Source Information ===
@@ -131,16 +158,17 @@ def get_seismic_ab_with_status(municipality: str) -> SeismicLookupResult:
     data = _get_data()
     municipalities = data["municipalities"]
     key = _normalize_key(municipality)
+    norm_index = _get_normalized_index()
 
-    # Try exact match
-    if key in municipalities:
-        muni_data = municipalities[key]
+    # Try exact match (accent-insensitive via normalized index)
+    if key in norm_index:
+        muni_data = municipalities[norm_index[key]]
         return SeismicLookupResult(ab=muni_data["seismic_ab"], found=True)
 
     # Try partial match (municipality name contained in key or vice versa)
-    for muni_key, muni_data in municipalities.items():
-        if muni_key in key or key in muni_key:
-            return SeismicLookupResult(ab=muni_data["seismic_ab"], found=True)
+    for stripped_key, original_key in norm_index.items():
+        if stripped_key in key or key in stripped_key:
+            return SeismicLookupResult(ab=municipalities[original_key]["seismic_ab"], found=True)
 
     return SeismicLookupResult(ab=SEISMIC_AB_DEFAULT, found=False)
 
@@ -259,16 +287,17 @@ def get_radon_zone_with_status(municipality: str) -> RadonLookupResult:
     data = _get_data()
     municipalities = data["municipalities"]
     key = _normalize_key(municipality)
+    norm_index = _get_normalized_index()
 
-    # Try exact match
-    if key in municipalities:
-        muni_data = municipalities[key]
+    # Try exact match (accent-insensitive via normalized index)
+    if key in norm_index:
+        muni_data = municipalities[norm_index[key]]
         return RadonLookupResult(zone=muni_data["radon_zone"], found=True)
 
     # Try partial match
-    for muni_key, muni_data in municipalities.items():
-        if muni_key in key or key in muni_key:
-            return RadonLookupResult(zone=muni_data["radon_zone"], found=True)
+    for stripped_key, original_key in norm_index.items():
+        if stripped_key in key or key in stripped_key:
+            return RadonLookupResult(zone=municipalities[original_key]["radon_zone"], found=True)
 
     return RadonLookupResult(zone=RADON_ZONE_DEFAULT, found=False)
 

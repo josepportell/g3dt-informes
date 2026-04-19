@@ -23,6 +23,37 @@ GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 _groq_status: dict[str, dict] = {}
 _groq_lock = threading.Lock()
 
+# OpenAI vision usage accumulator (drained per diagnostic run).
+# Tracks calls, tokens, and the model used so cost summaries can include
+# OpenAI alongside Groq + Anthropic.
+_OPENAI_USAGE: dict = {
+    "api_calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "model": "",
+}
+_openai_usage_lock = threading.Lock()
+
+
+def pop_openai_usage() -> dict:
+    """Drain and return accumulated OpenAI vision usage since the last call."""
+    with _openai_usage_lock:
+        snapshot = dict(_OPENAI_USAGE)
+        _OPENAI_USAGE["api_calls"] = 0
+        _OPENAI_USAGE["input_tokens"] = 0
+        _OPENAI_USAGE["output_tokens"] = 0
+        _OPENAI_USAGE["model"] = ""
+    return snapshot
+
+
+def _record_openai_usage(model: str, prompt_tokens: int, completion_tokens: int) -> None:
+    with _openai_usage_lock:
+        _OPENAI_USAGE["api_calls"] += 1
+        _OPENAI_USAGE["input_tokens"] += int(prompt_tokens or 0)
+        _OPENAI_USAGE["output_tokens"] += int(completion_tokens or 0)
+        if model:
+            _OPENAI_USAGE["model"] = model
+
 
 def start_vision_groq(
     project_name: str,
@@ -522,6 +553,11 @@ def _call_openai_vision(
             result = json.loads(content_str)
 
             usage = data.get("usage", {})
+            _record_openai_usage(
+                model,
+                usage.get("prompt_tokens", 0),
+                usage.get("completion_tokens", 0),
+            )
             logger.info(
                 "OpenAI Vision: ok in %dms (%d in + %d out tokens, model=%s)",
                 elapsed_ms,
@@ -550,15 +586,10 @@ def _call_anthropic_vision(
     More capable than Groq for small text and complex layouts (~27x more expensive).
     Returns parsed JSON dict or None on failure.
     """
-    api_key = config.ANTHROPIC_API_KEY
-    if not api_key:
-        logger.warning("Anthropic Vision: no API key")
-        return None
-
     try:
-        import anthropic
+        from automation.llm_client import get_anthropic_client, get_cc_model
     except ImportError:
-        logger.warning("Anthropic Vision: anthropic package not installed")
+        logger.warning("Anthropic Vision: llm_client not importable")
         return None
 
     content: list[dict] = []
@@ -569,11 +600,15 @@ def _call_anthropic_vision(
         })
     content.append({"type": "text", "text": extraction_prompt})
 
-    client = anthropic.Anthropic(api_key=api_key)
+    try:
+        client = get_anthropic_client()
+    except RuntimeError as exc:
+        logger.warning("Anthropic Vision: %s", exc)
+        return None
     t0 = time.monotonic()
     try:
         response = client.messages.create(
-            model=config.VISION_MODEL_ANTHROPIC,
+            model=get_cc_model(),
             max_tokens=max_tokens,
             system=system_prompt,
             messages=[{"role": "user", "content": content}],
@@ -1113,12 +1148,16 @@ def run_vision_groq_sync(
                 "anthropic": (_call_anthropic_vision, config.VISION_MODEL_ANTHROPIC),
                 "groq": (_call_groq_vision, config.VISION_MODEL_GROQ),
             }
+            # Per-vision-type backend override. Falls back to run-level vision_backend if no map entry.
+            type_pref = config.VISION_BACKEND_BY_TYPE.get(vtype, vision_backend)
             # "claude" is a backward-compatible synonym for "anthropic"
-            preferred = "anthropic" if vision_backend == "claude" else vision_backend
+            preferred = "anthropic" if type_pref == "claude" else type_pref
             chain = [preferred]
             for fb in config.VISION_FALLBACK_ORDER:
                 if fb not in chain:
                     chain.append(fb)
+            if type_pref != vision_backend:
+                logger.info("vision_groq_sync per-type:%s using %s (run default: %s)", vtype, type_pref, vision_backend)
 
             tok_limit = 8192 if vtype == 'projecte_arquitecte' else 4096
 

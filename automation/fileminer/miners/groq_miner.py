@@ -35,6 +35,16 @@ CACHE_TTL_DAYS = 90
 MAX_RETRIES = 3
 RETRY_BASE_DELAY = 1.0  # seconds, doubles each retry
 
+# === Pricing ($/Mtok in,out) ===
+# Module-level so it can be re-exported via automation.llm_pricing without
+# duplication. Source: groq.com/pricing observed 2026-04-18.
+GROQ_PRICING: dict[str, tuple[float, float]] = {
+    "llama-3.1-8b-instant": (0.05, 0.08),
+    "qwen/qwen3-32b": (0.29, 0.59),
+    "llama-3.3-70b-versatile": (0.59, 0.79),
+    "meta-llama/llama-4-scout-17b-16e-instruct": (0.11, 0.34),
+}
+
 # G3 internal data to exclude from results
 _G3_EXCLUSIONS = {
     "client_nif": {"B25364589"},
@@ -133,13 +143,7 @@ class GroqMiner(BaseMiner):
     def get_usage_summary(cls) -> dict:
         """Return usage stats and estimated costs for the current session."""
         model = os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT)
-        pricing = {
-            "llama-3.1-8b-instant": (0.05, 0.08),
-            "qwen/qwen3-32b": (0.29, 0.59),
-            "llama-3.3-70b-versatile": (0.59, 0.79),
-            "meta-llama/llama-4-scout-17b-16e-instruct": (0.11, 0.34),
-        }
-        in_price, out_price = pricing.get(model, (0.59, 0.79))
+        in_price, out_price = GROQ_PRICING.get(model, (0.59, 0.79))
         cost_usd = (
             cls._total_input_tokens * in_price
             + cls._total_output_tokens * out_price

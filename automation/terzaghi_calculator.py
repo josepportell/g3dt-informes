@@ -110,6 +110,7 @@ class BearingCapacityResult:
     Fw: Optional[float] = None  # T-P width correction ((B+0.3)/B)²
     Fd_tp: Optional[float] = None  # T-P depth factor min(1+0.33*Df/B, 1.33)
     qa_governs: str = "terzaghi"  # Which method governs: "terzaghi" or "terzaghi_peck"
+    qa_cap_reason: Optional[str] = None  # Diagnostic only: "rock" | "dense_granular" | "soil"
 
     def to_dict(self) -> dict:
         return {
@@ -419,11 +420,14 @@ class TerzaghiCalculator:
         NB_DENSE_THRESHOLD = 25  # Nb >= 25 → dense gravel (refusal zone)
         if self.cohesion >= 0.5:
             qa_cap = QA_CAP_ROCK
+            qa_cap_reason = "rock"
         elif (nspt is not None and nspt >= NB_DENSE_THRESHOLD
               and (soil_type or '').lower() == 'granular'):
             qa_cap = QA_CAP_DENSE_GRANULAR
+            qa_cap_reason = "dense_granular"
         else:
             qa_cap = QA_CAP_SOIL
+            qa_cap_reason = "soil"
         Qa_uncapped = Qa
         if Qa > qa_cap:
             Qa = qa_cap
@@ -507,6 +511,7 @@ class TerzaghiCalculator:
             Fw=Fw,
             Fd_tp=Fd_tp,
             qa_governs=qa_governs,
+            qa_cap_reason=qa_cap_reason,
         )
 
     def _calculate_settlement(

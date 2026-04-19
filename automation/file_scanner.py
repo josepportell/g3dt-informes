@@ -213,6 +213,9 @@ class FileMapping:
     roles: dict[str, FileRole] = field(default_factory=dict)
     ignored: list[IgnoredFile] = field(default_factory=list)
     unassigned: list[str] = field(default_factory=list)
+    # Provenance for attachments extracted from .msg files
+    # (populated by email_attachment_classifier, persisted in file_mapping.json)
+    email_attachments: dict[str, dict] = field(default_factory=dict)
 
     @property
     def needs_confirmation(self) -> bool:
@@ -294,16 +297,12 @@ class FileScanner:
                 mapping.unassigned.append(rel_path)
                 classified_paths.add(rel_path)
 
-        # If sondeig_annex detected, remove vision_type from sondeig_field_sheet
-        # (annex has priority — field sheet not needed for vision)
-        if 'sondeig_annex' in mapping.roles and 'sondeig_field_sheet' in mapping.roles:
-            mapping.roles['sondeig_field_sheet'] = FileRole(
-                path=mapping.roles['sondeig_field_sheet'].path,
-                confidence=mapping.roles['sondeig_field_sheet'].confidence,
-                detection=mapping.roles['sondeig_field_sheet'].detection,
-                is_combined=mapping.roles['sondeig_field_sheet'].is_combined,
-                vision_type=None,  # annex takes priority
-            )
+        # Both sondeig_field_sheet and sondeig_annex run vision when present.
+        # They produce different outputs (field-sheet -> sondeig_extracted.json
+        # for layers/SPT/depths; annex -> sondeig_annex_extracted.json for the
+        # authoritative `num_geological_levels` from "Unitat litològica").
+        # `vision_normalizer.load_sondeig_merged()` merges both, with the
+        # annex's geological_levels overriding when present.
 
         # Phase 4: handle roles with 'prefer' -- demote non-preferred candidates
         self._apply_preferences(mapping)
@@ -333,6 +332,7 @@ class FileScanner:
                 for ig in mapping.ignored
             ],
             'unassigned': mapping.unassigned,
+            'email_attachments': mapping.email_attachments,
             '_metadata': {
                 'scanned_at': datetime.now(timezone.utc).isoformat(),
                 'confirmed_by_user': False,
@@ -359,6 +359,11 @@ class FileScanner:
                 # vision_type: use JSON value if key present (even if None = suppressed),
                 # only fall back to ROLE_DEFINITIONS for legacy files without the key
                 vt = role_data.get('vision_type') if 'vision_type' in role_data else get_vision_type(name)
+                # Migration: legacy mappings suppressed sondeig_field_sheet's
+                # vision_type when sondeig_annex coexisted. Restore the default
+                # so both extractions run (annex + field sheet are merged later).
+                if name == 'sondeig_field_sheet' and vt is None:
+                    vt = get_vision_type(name)
                 mapping.roles[name] = FileRole(
                     path=role_data['path'],
                     confidence=role_data['confidence'],
@@ -372,6 +377,7 @@ class FileScanner:
                     reason=ig_data['reason'],
                 ))
             mapping.unassigned = list(data.get('unassigned', []))
+            mapping.email_attachments = dict(data.get('email_attachments', {}))
             return mapping
         except (json.JSONDecodeError, KeyError, TypeError) as exc:
             logger.warning(f"Could not load file_mapping.json: {exc}")

@@ -49,14 +49,14 @@ RENDER_DPI = 150
 # ---------------------------------------------------------------------------
 
 def _get_client():
-    """Get Anthropic client. Uses API key from centralized config."""
+    """Get Anthropic-format client via the LLM factory (supports OpenRouter)."""
     try:
-        import anthropic
+        from automation.llm_client import get_anthropic_client
     except ImportError:
         raise ImportError(
             "anthropic package not installed. Run: uv pip install anthropic"
         )
-    return anthropic.Anthropic(api_key=config.ANTHROPIC_API_KEY or None)
+    return get_anthropic_client()
 
 
 # ---------------------------------------------------------------------------
@@ -134,8 +134,11 @@ def _call_vision(
         })
     content.append({"type": "text", "text": prompt})
 
+    # Route model id through llm_client factory so OpenRouter gets the
+    # namespaced model slug (anthropic/claude-sonnet-4.6) automatically.
+    from automation.llm_client import get_cc_model
     kwargs: dict[str, Any] = {
-        "model": config.VISION_MODEL_ANTHROPIC,
+        "model": get_cc_model(),
         "max_tokens": MAX_TOKENS,
         "messages": [{"role": "user", "content": content}],
     }

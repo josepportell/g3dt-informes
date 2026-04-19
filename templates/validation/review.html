@@ -1230,6 +1230,202 @@
         .format-toast.show {
             opacity: 1;
         }
+        /* Human-in-the-loop: missing fields + evidence drawer */
+        .wizard-field.is-missing input,
+        .wizard-field.is-missing textarea,
+        .wizard-field.is-missing select {
+            border: 1px dashed #d69e2e;
+            background-color: #fffbea;
+        }
+        #missing-sources-banner {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 12px 18px;
+            margin-bottom: 18px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        #missing-sources-banner.active { display: flex; }
+        #missing-sources-banner .ms-text {
+            color: #78350f;
+            font-size: 13px;
+            line-height: 1.35;
+        }
+        #missing-sources-banner .ms-text strong {
+            color: #92400e;
+            font-size: 14px;
+        }
+        #missing-sources-banner .ms-resolve-btn {
+            padding: 7px 14px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid #d97706;
+            background: white;
+            color: #92400e;
+            white-space: nowrap;
+        }
+        #missing-sources-banner .ms-resolve-btn:hover { background: #fef3c7; }
+        #missing-sources-drawer {
+            position: fixed;
+            right: 0; top: 0; bottom: 0;
+            width: 460px;
+            max-width: 90vw;
+            background: white;
+            box-shadow: -6px 0 20px rgba(0,0,0,0.10);
+            transform: translateX(100%);
+            transition: transform 0.22s ease-out;
+            overflow-y: auto;
+            z-index: 40;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #missing-sources-drawer.open { transform: translateX(0); }
+        #missing-sources-drawer .ms-drawer-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 14px; padding-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        #missing-sources-drawer .ms-drawer-header h3 {
+            margin: 0; font-size: 16px; color: #1f2937;
+        }
+        #missing-sources-drawer .ms-close-btn {
+            background: none; border: none; font-size: 22px; cursor: pointer; color: #6b7280;
+            padding: 0 6px; line-height: 1;
+        }
+        #missing-sources-drawer .ms-group {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 14px;
+        }
+        #missing-sources-drawer .ms-group h4 {
+            margin: 0 0 8px 0; font-size: 14px; color: #111827;
+        }
+        #missing-sources-drawer .ms-group .ms-concepts {
+            font-size: 12px; color: #6b7280; margin-bottom: 10px;
+            display: flex; flex-wrap: wrap; gap: 4px;
+        }
+        #missing-sources-drawer .ms-group .ms-chip {
+            background: #e5e7eb; padding: 2px 8px; border-radius: 10px;
+            font-size: 11px; color: #374151;
+        }
+        #missing-sources-drawer .ms-drop-zone {
+            border: 2px dashed #9ca3af;
+            border-radius: 6px;
+            padding: 18px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        #missing-sources-drawer .ms-drop-zone:hover,
+        #missing-sources-drawer .ms-drop-zone.dragging {
+            border-color: #2563eb;
+            background: #eff6ff;
+            color: #1e40af;
+        }
+        #missing-sources-drawer .ms-status {
+            font-size: 12px; color: #4b5563;
+            margin-top: 8px; min-height: 16px;
+        }
+        #missing-sources-drawer .ms-status.error { color: #b91c1c; }
+        #missing-sources-drawer .ms-results { margin-top: 10px; }
+        #missing-sources-drawer .ms-result-row {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 8px;
+        }
+        #missing-sources-drawer .ms-result-row.needs-confirmation {
+            border-color: #f59e0b; background: #fffbeb;
+        }
+        #missing-sources-drawer .ms-result-row.failed {
+            border-color: #e5e7eb; background: #f9fafb; color: #6b7280;
+        }
+        #missing-sources-drawer .ms-result-row .ms-concept {
+            font-size: 12px; color: #6b7280; margin-bottom: 3px;
+        }
+        #missing-sources-drawer .ms-result-row .ms-value {
+            font-size: 14px; font-weight: 600; color: #111827;
+            word-break: break-word;
+        }
+        #missing-sources-drawer .ms-result-row .ms-conf-bar {
+            height: 4px; background: #e5e7eb; border-radius: 2px;
+            margin: 6px 0 8px 0; overflow: hidden;
+        }
+        #missing-sources-drawer .ms-result-row .ms-conf-fill {
+            height: 100%; background: #10b981; transition: width 0.2s;
+        }
+        #missing-sources-drawer .ms-result-row.needs-confirmation .ms-conf-fill {
+            background: #f59e0b;
+        }
+        #missing-sources-drawer .ms-result-row .ms-snippet {
+            font-size: 11px; color: #6b7280; font-style: italic;
+            margin: 4px 0 6px 0; padding: 4px 6px;
+            background: #f3f4f6; border-radius: 3px;
+        }
+        #missing-sources-drawer .ms-result-row .ms-actions {
+            display: flex; gap: 6px; margin-top: 6px;
+        }
+        #missing-sources-drawer .ms-btn-accept,
+        #missing-sources-drawer .ms-btn-type {
+            padding: 5px 10px; border-radius: 4px;
+            font-size: 12px; cursor: pointer; border: 1px solid;
+        }
+        #missing-sources-drawer .ms-btn-accept {
+            background: #059669; color: white; border-color: #047857;
+        }
+        #missing-sources-drawer .ms-btn-accept:hover { background: #047857; }
+        #missing-sources-drawer .ms-btn-type {
+            background: white; color: #374151; border-color: #d1d5db;
+        }
+        #missing-sources-drawer .ms-btn-type:hover { background: #f9fafb; }
+        #missing-sources-backdrop {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.28);
+            display: none; z-index: 39;
+        }
+        #missing-sources-backdrop.open { display: block; }
+        #missing-sources-drawer .ms-section {
+            margin-bottom: 22px; padding-bottom: 14px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        #missing-sources-drawer .ms-section:last-child { border-bottom: none; }
+        #missing-sources-drawer .ms-section-title {
+            margin: 0 0 4px 0; font-size: 14px; color: #111827;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        #missing-sources-drawer .ms-section-intro {
+            margin: 0 0 12px 0; font-size: 12px; color: #6b7280; line-height: 1.4;
+        }
+        #missing-sources-drawer .ms-lowconf-row {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+        }
+        #missing-sources-drawer .ms-btn-reupload {
+            padding: 5px 10px; border-radius: 4px;
+            font-size: 12px; cursor: pointer; border: 1px solid #d97706;
+            background: white; color: #92400e;
+        }
+        #missing-sources-drawer .ms-btn-reupload:hover { background: #fef3c7; }
+        #missing-sources-drawer .ms-lowconf-status {
+            font-size: 11px; color: #4b5563; margin-top: 8px;
+        }
+        #missing-sources-drawer .ms-lowconf-status.error { color: #b91c1c; }
+        #missing-sources-drawer .ms-lowconf-candidate {
+            margin-top: 10px; padding-top: 10px;
+            border-top: 1px dashed #fde68a;
+        }
         /* ConceptScout Coverage */
         .concept-coverage {
             display: flex;
@@ -1905,6 +2101,14 @@
                         <div id="conceptCoverageBanner" class="concept-coverage" style="display:none">
                             <span class="coverage-label">ConceptScout</span>
                             <span id="conceptCoverageValue"></span>
+                        </div>
+                        <!-- Human-in-the-loop: missing sources banner -->
+                        <div id="missing-sources-banner">
+                            <div class="ms-text">
+                                <strong id="ms-banner-title">Falten fonts</strong>
+                                <div id="ms-banner-subtitle"></div>
+                            </div>
+                            <button class="ms-resolve-btn" type="button" onclick="openMissingSourcesDrawer()">Resoldre ▾</button>
                         </div>
                         <!-- Group 1: Dades del Projecte -->
                         <div class="wizard-group">
@@ -4764,6 +4968,576 @@
 
             // -- Format Learning UI --
             renderFormatLearning();
+
+            // -- Human-in-the-loop: missing-source cues + banner --
+            renderMissingCues();
+            renderMissingBanner();
+        }
+
+        // ============================================================
+        // Human-in-the-loop: missing-source cues + drawer
+        // ============================================================
+
+        function _missingSummary() {
+            const ms = wizardPrefills && wizardPrefills._missing_summary;
+            if (!ms || !ms.value) return null;
+            return ms.value;
+        }
+
+        function renderMissingCues() {
+            // Clear any existing cues first so stale fields recover after accept.
+            document.querySelectorAll('.wizard-field.is-missing').forEach(el => {
+                el.classList.remove('is-missing');
+            });
+            const summary = _missingSummary();
+            if (!summary || !summary.groups) return;
+
+            summary.groups.forEach(g => {
+                (g.concept_ids || []).forEach(cid => {
+                    // Support both wiz-{cid} and cid-without-prefix inputs.
+                    const input = document.getElementById(`wiz-${cid}`);
+                    if (!input) return;
+                    const wrapper = input.closest('.wizard-field');
+                    if (wrapper) wrapper.classList.add('is-missing');
+                });
+            });
+        }
+
+        function renderMissingBanner() {
+            const banner = document.getElementById('missing-sources-banner');
+            if (!banner) return;
+            const summary = _missingSummary();
+            if (!summary || !summary.total_missing) {
+                banner.classList.remove('active');
+                return;
+            }
+            const title = document.getElementById('ms-banner-title');
+            const subtitle = document.getElementById('ms-banner-subtitle');
+            if (title) {
+                title.textContent = `${summary.total_missing} camps sense font fiable`;
+            }
+            if (subtitle) {
+                const g = summary.total_groups || 0;
+                const gLabel = g === 1 ? 'grup' : 'grups';
+                subtitle.textContent = `Agrupats en ${g} ${gLabel}. Pots pujar el document que els conté o deixar-los en blanc i teclejar els valors manualment.`;
+            }
+            banner.classList.add('active');
+        }
+
+        // -- Drawer state --
+        let _hitlDrawerOpen = false;
+        let _hitlAutoSaveSuspended = false;
+
+        const _HITL_CONCEPT_LABELS = {
+            architect_name: 'Arquitecte', architect_company: 'Empresa arquitecte',
+            client_name: 'Client', contact_name: 'Contacte', client_email: 'Email client',
+            client_phone: 'Telèfon client', client_nif: 'NIF client',
+            num_floors: 'Plantes', building_height_m: 'Alçada edifici (m)',
+            building_type: 'Tipus edifici', has_basement: 'Soterrani',
+            has_retaining_walls: 'Murs contenció',
+            superficie_parcela: 'Sup. parcel·la', superficie_construida: 'Sup. construïda',
+            parcel_shape: 'Forma parcel·la',
+            street_address: 'Adreça', adjacent_north: 'Adjacent nord',
+            adjacent_south: 'Adjacent sud', adjacent_east: 'Adjacent est',
+            adjacent_west: 'Adjacent oest',
+        };
+
+        function _hitlConceptLabel(cid) {
+            return _HITL_CONCEPT_LABELS[cid] || cid;
+        }
+
+        function _hitlCurrentProjectName() {
+            const sel = document.getElementById('projectSelect');
+            return sel ? sel.value : '';
+        }
+
+        function openMissingSourcesDrawer() {
+            const summary = _missingSummary();
+            if (!summary || !summary.groups || !summary.groups.length) return;
+
+            let drawer = document.getElementById('missing-sources-drawer');
+            let backdrop = document.getElementById('missing-sources-backdrop');
+            if (!drawer) {
+                drawer = document.createElement('div');
+                drawer.id = 'missing-sources-drawer';
+                document.body.appendChild(drawer);
+            }
+            if (!backdrop) {
+                backdrop = document.createElement('div');
+                backdrop.id = 'missing-sources-backdrop';
+                backdrop.addEventListener('click', closeMissingSourcesDrawer);
+                document.body.appendChild(backdrop);
+            }
+
+            drawer.innerHTML = _renderDrawerHtml(summary);
+            _wireDrawerEvents(drawer);
+
+            requestAnimationFrame(() => {
+                drawer.classList.add('open');
+                backdrop.classList.add('open');
+            });
+            _hitlDrawerOpen = true;
+            _suspendAutoSave();
+        }
+
+        function closeMissingSourcesDrawer() {
+            const drawer = document.getElementById('missing-sources-drawer');
+            const backdrop = document.getElementById('missing-sources-backdrop');
+            if (drawer) drawer.classList.remove('open');
+            if (backdrop) backdrop.classList.remove('open');
+            _hitlDrawerOpen = false;
+            _resumeAutoSave();
+        }
+
+        function _suspendAutoSave() {
+            if (_hitlAutoSaveSuspended) return;
+            if (typeof _autoSaveTimer !== 'undefined' && _autoSaveTimer) {
+                clearTimeout(_autoSaveTimer);
+                _autoSaveTimer = null;
+            }
+            _hitlAutoSaveSuspended = true;
+        }
+
+        function _resumeAutoSave() {
+            _hitlAutoSaveSuspended = false;
+            // If there are pending dirty changes, flush them now.
+            if (typeof wizardDirty !== 'undefined' && wizardDirty && typeof saveWizard === 'function') {
+                saveWizard();
+            }
+        }
+
+        // Split summary groups by missing_reason: concepts with no value need
+        // an upload+extract flow, while low-confidence concepts already have a
+        // pipeline value and just need Eva's confirm/correct.
+        function _splitSummaryByReason(summary) {
+            const EMPTY_REASONS = new Set(['no_source_file', 'file_had_no_match']);
+            const LOW_CONF_REASONS = new Set(['extracted_low_confidence']);
+
+            // Empty side keeps the grouping by expected source (one upload fills many).
+            const emptyGroups = (summary.groups || []).map(g => {
+                const concepts = (g.concept_ids || []).filter(
+                    cid => EMPTY_REASONS.has((g.reasons || {})[cid])
+                );
+                return concepts.length ? { ...g, concept_ids: concepts } : null;
+            }).filter(Boolean);
+
+            // Low-confidence side is flat, ordered by ascending confidence
+            // (most-suspicious first) so Eva handles the riskiest values first.
+            const lowConf = [];
+            (summary.groups || []).forEach(g => {
+                (g.concept_ids || []).forEach(cid => {
+                    if (!LOW_CONF_REASONS.has((g.reasons || {})[cid])) return;
+                    const entry = wizardPrefills[cid] || {};
+                    lowConf.push({
+                        concept_id: cid,
+                        value: entry.value ?? '',
+                        confidence: typeof entry.confidence === 'number' ? entry.confidence : null,
+                        source: entry.source || '',
+                        group_label: g.label,
+                    });
+                });
+            });
+            lowConf.sort((a, b) => (a.confidence ?? 1) - (b.confidence ?? 1));
+
+            return { emptyGroups, lowConf };
+        }
+
+        function _renderDrawerHtml(summary) {
+            const { emptyGroups, lowConf } = _splitSummaryByReason(summary);
+
+            // --- Section 1: Empty fields (upload → extract) ---
+            let emptyHtml = '';
+            if (emptyGroups.length) {
+                const groupsHtml = emptyGroups.map((g, idx) => {
+                    const concepts = (g.concept_ids || []).map(cid =>
+                        `<span class="ms-chip" data-cid="${cid}">${_hitlConceptLabel(cid)}</span>`
+                    ).join('');
+                    const safeLabel = g.label.replace(/"/g, '&quot;');
+                    return `
+                        <div class="ms-group" data-group-idx="${idx}">
+                            <h4>${g.label} <span style="color:#6b7280;font-weight:400">(${(g.concept_ids||[]).length} camps)</span></h4>
+                            <div class="ms-concepts">${concepts}</div>
+                            <div class="ms-drop-zone" data-group-idx="${idx}" data-label="${safeLabel}">
+                                Arrossega el document aquí<br>
+                                <small>o fes clic per seleccionar-lo</small>
+                            </div>
+                            <div class="ms-status" data-group-idx="${idx}"></div>
+                            <div class="ms-results" data-group-idx="${idx}"></div>
+                        </div>
+                    `;
+                }).join('');
+                const total = emptyGroups.reduce((n, g) => n + g.concept_ids.length, 0);
+                emptyHtml = `
+                    <section class="ms-section" data-section="empty">
+                        <h3 class="ms-section-title">Camps buits (${total})</h3>
+                        <p class="ms-section-intro">
+                            El pipeline no ha trobat cap font per aquests camps. Puja el document
+                            que els contingui i els extraurem junts.
+                        </p>
+                        ${groupsHtml}
+                    </section>
+                `;
+            }
+
+            // --- Section 2: Low-confidence fields (confirm / correct) ---
+            let lowConfHtml = '';
+            if (lowConf.length) {
+                const rows = lowConf.map((f, idx) => {
+                    const pct = f.confidence != null ? Math.round(f.confidence * 100) : 50;
+                    const safeVal = _hitlEscapeHtml(String(f.value || ''));
+                    const safeSrc = _hitlEscapeHtml(String(f.source || ''));
+                    const safeValAttr = _hitlEscapeAttr(String(f.value || ''));
+                    return `
+                        <div class="ms-lowconf-row" data-cid="${f.concept_id}" data-idx="${idx}">
+                            <div class="ms-concept">${_hitlConceptLabel(f.concept_id)}
+                                <span style="color:#9ca3af;font-weight:400;font-size:11px;">· ${safeSrc || 'pipeline'}</span>
+                            </div>
+                            <div class="ms-value">${safeVal || '<em style="color:#9ca3af;">(buit)</em>'}</div>
+                            <div class="ms-conf-bar"><div class="ms-conf-fill" style="width:${pct}%"></div></div>
+                            <div class="ms-actions">
+                                <button class="ms-btn-accept" type="button"
+                                        data-cid="${f.concept_id}" data-value="${safeValAttr}">Confirmar</button>
+                                <button class="ms-btn-type" type="button"
+                                        data-cid="${f.concept_id}">Corregir</button>
+                                <button class="ms-btn-reupload" type="button"
+                                        data-cid="${f.concept_id}">Pujar una altra font</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                lowConfHtml = `
+                    <section class="ms-section" data-section="lowconf">
+                        <h3 class="ms-section-title">Revisar baixa confiança (${lowConf.length})</h3>
+                        <p class="ms-section-intro">
+                            El pipeline ha extret aquests valors, però amb poca confiança.
+                            Confirma si són correctes, corregeix-los o puja una altra font.
+                        </p>
+                        ${rows}
+                    </section>
+                `;
+            }
+
+            if (!emptyHtml && !lowConfHtml) {
+                emptyHtml = `<p style="color:#6b7280;padding:20px;text-align:center;">
+                    Cap camp pendent de resoldre.
+                </p>`;
+            }
+
+            return `
+                <div class="ms-drawer-header">
+                    <h3>Resoldre camps pendents</h3>
+                    <button class="ms-close-btn" type="button" aria-label="Tancar">×</button>
+                </div>
+                ${emptyHtml}
+                ${lowConfHtml}
+            `;
+        }
+
+        function _wireDrawerEvents(drawer) {
+            const closeBtn = drawer.querySelector('.ms-close-btn');
+            if (closeBtn) closeBtn.addEventListener('click', closeMissingSourcesDrawer);
+
+            // Empty-section drop zones
+            drawer.querySelectorAll('.ms-drop-zone').forEach(zone => {
+                const idx = parseInt(zone.dataset.groupIdx, 10);
+                zone.addEventListener('click', () => _hitlPickFile(idx));
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('dragging');
+                });
+                zone.addEventListener('dragleave', () => zone.classList.remove('dragging'));
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('dragging');
+                    const file = e.dataTransfer?.files?.[0];
+                    if (file) _hitlUploadAndExtract(idx, file);
+                });
+            });
+
+            // Low-confidence section actions
+            drawer.querySelectorAll('.ms-lowconf-row .ms-btn-accept').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    _hitlAcceptValue(btn.dataset.cid, btn.dataset.value, btn.closest('.ms-lowconf-row'));
+                });
+            });
+            drawer.querySelectorAll('.ms-lowconf-row .ms-btn-type').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    _hitlFocusWizardInput(btn.dataset.cid);
+                    closeMissingSourcesDrawer();
+                });
+            });
+            drawer.querySelectorAll('.ms-lowconf-row .ms-btn-reupload').forEach(btn => {
+                btn.addEventListener('click', () => _hitlReuploadForConcept(btn.dataset.cid));
+            });
+        }
+
+        // Low-confidence "Pujar una altra font" — per-concept single-file upload.
+        function _hitlReuploadForConcept(conceptId) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.pdf,.xls,.xlsx,.docx,.doc,.msg,.txt,.jpg,.jpeg,.png';
+            input.onchange = async () => {
+                const file = input.files && input.files[0];
+                if (!file) return;
+                const project = _hitlCurrentProjectName();
+                if (!project) return;
+
+                const row = document.querySelector(`.ms-lowconf-row[data-cid="${conceptId}"]`);
+                if (row) _hitlSetLowconfStatus(row, `Pujant ${file.name}...`);
+
+                try {
+                    const form = new FormData();
+                    form.append('file', file);
+                    const uResp = await fetch(`/api/upload-evidence/${encodeURIComponent(project)}`, {
+                        method: 'POST', body: form,
+                    });
+                    const uBody = await uResp.json();
+                    if (!uResp.ok) throw new Error(uBody.detail || `HTTP ${uResp.status}`);
+
+                    if (row) _hitlSetLowconfStatus(row, `Analitzant ${file.name}...`);
+                    const xResp = await fetch(`/api/extract-targeted/${encodeURIComponent(project)}`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            upload_id: uBody.upload_id,
+                            concept_ids: [conceptId],
+                        }),
+                    });
+                    const xBody = await xResp.json();
+                    if (!xResp.ok) throw new Error(xBody.detail || `HTTP ${xResp.status}`);
+                    const result = (xBody.results || {})[conceptId];
+                    if (!result || result.extraction_method === 'failed'
+                            || result.value === null || result.value === '') {
+                        if (row) _hitlSetLowconfStatus(row, "No hem trobat el valor en aquest document.", true);
+                        return;
+                    }
+                    if (row) _hitlRenderLowconfCandidate(row, conceptId, result);
+                } catch (err) {
+                    if (row) _hitlSetLowconfStatus(row, `Error: ${err.message}`, true);
+                }
+            };
+            input.click();
+        }
+
+        function _hitlSetLowconfStatus(rowEl, text, isError = false) {
+            let el = rowEl.querySelector('.ms-lowconf-status');
+            if (!el) {
+                el = document.createElement('div');
+                el.className = 'ms-lowconf-status';
+                rowEl.appendChild(el);
+            }
+            el.textContent = text;
+            el.classList.toggle('error', isError);
+        }
+
+        function _hitlRenderLowconfCandidate(rowEl, conceptId, result) {
+            // Render a secondary "candidate" block with the newly-extracted value.
+            let el = rowEl.querySelector('.ms-lowconf-candidate');
+            if (!el) {
+                el = document.createElement('div');
+                el.className = 'ms-lowconf-candidate';
+                rowEl.appendChild(el);
+            }
+            const pct = Math.round((result.confidence ?? 0.5) * 100);
+            const pageTxt = result.page ? ` (pàg. ${result.page})` : '';
+            const safeVal = _hitlEscapeHtml(String(result.value));
+            const safeValAttr = _hitlEscapeAttr(String(result.value));
+            const snippet = result.snippet
+                ? `<div class="ms-snippet">${_hitlEscapeHtml(String(result.snippet)).slice(0, 180)}</div>` : '';
+            el.innerHTML = `
+                <div class="ms-concept" style="margin-top:6px;">Candidat nou${pageTxt}</div>
+                <div class="ms-value">${safeVal}</div>
+                <div class="ms-conf-bar"><div class="ms-conf-fill" style="width:${pct}%"></div></div>
+                ${snippet}
+                <div class="ms-actions">
+                    <button class="ms-btn-accept" type="button" data-cid="${conceptId}" data-value="${safeValAttr}">Acceptar el nou</button>
+                </div>
+            `;
+            el.querySelectorAll('.ms-btn-accept').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    _hitlAcceptValue(btn.dataset.cid, btn.dataset.value, rowEl);
+                });
+            });
+        }
+
+        function _hitlPickFile(groupIdx) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.pdf,.xls,.xlsx,.docx,.doc,.msg,.txt,.jpg,.jpeg,.png';
+            input.onchange = () => {
+                const file = input.files && input.files[0];
+                if (file) _hitlUploadAndExtract(groupIdx, file);
+            };
+            input.click();
+        }
+
+        async function _hitlUploadAndExtract(groupIdx, file) {
+            const summary = _missingSummary();
+            if (!summary) return;
+            const group = summary.groups[groupIdx];
+            if (!group) return;
+
+            const project = _hitlCurrentProjectName();
+            if (!project) {
+                _hitlSetStatus(groupIdx, "No hi ha cap projecte seleccionat.", true);
+                return;
+            }
+
+            _hitlSetStatus(groupIdx, `Pujant ${file.name} (${(file.size/1024/1024).toFixed(1)} MB)...`);
+            _hitlClearResults(groupIdx);
+
+            let uploadBody;
+            try {
+                const form = new FormData();
+                form.append('file', file);
+                const uResp = await fetch(`/api/upload-evidence/${encodeURIComponent(project)}`, {
+                    method: 'POST', body: form,
+                });
+                uploadBody = await uResp.json();
+                if (!uResp.ok) throw new Error(uploadBody.detail || `HTTP ${uResp.status}`);
+            } catch (err) {
+                _hitlSetStatus(groupIdx, `Error pujant: ${err.message}`, true);
+                return;
+            }
+
+            _hitlSetStatus(groupIdx, `Analitzant ${file.name}... (això pot trigar ~10-20s)`);
+
+            try {
+                const xResp = await fetch(`/api/extract-targeted/${encodeURIComponent(project)}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        upload_id: uploadBody.upload_id,
+                        concept_ids: group.concept_ids,
+                    }),
+                });
+                const xBody = await xResp.json();
+                if (!xResp.ok) throw new Error(xBody.detail || `HTTP ${xResp.status}`);
+                _hitlRenderResults(groupIdx, xBody.results || {});
+                const filled = Object.values(xBody.results || {})
+                    .filter(r => r.value !== null && r.value !== '').length;
+                _hitlSetStatus(groupIdx, `${filled} de ${group.concept_ids.length} camps trobats. Revisa i accepta els que vulguis.`);
+            } catch (err) {
+                _hitlSetStatus(groupIdx, `Error extraient: ${err.message}`, true);
+            }
+        }
+
+        function _hitlSetStatus(groupIdx, text, isError = false) {
+            const el = document.querySelector(`.ms-status[data-group-idx="${groupIdx}"]`);
+            if (!el) return;
+            el.textContent = text;
+            el.classList.toggle('error', isError);
+        }
+
+        function _hitlClearResults(groupIdx) {
+            const el = document.querySelector(`.ms-results[data-group-idx="${groupIdx}"]`);
+            if (el) el.innerHTML = '';
+        }
+
+        function _hitlRenderResults(groupIdx, results) {
+            const container = document.querySelector(`.ms-results[data-group-idx="${groupIdx}"]`);
+            if (!container) return;
+            const rows = Object.entries(results).map(([cid, r]) => {
+                if (r.extraction_method === 'failed' || r.value === null || r.value === '') {
+                    return `
+                        <div class="ms-result-row failed">
+                            <div class="ms-concept">${_hitlConceptLabel(cid)}</div>
+                            <div class="ms-value" style="font-weight:400;font-size:13px;color:#6b7280;">
+                                — No trobat en aquest document —
+                            </div>
+                        </div>
+                    `;
+                }
+                const conf = typeof r.confidence === 'number' ? r.confidence : 0.5;
+                const needs = !!r.needs_confirmation;
+                const pct = Math.round(conf * 100);
+                const snippet = r.snippet ? `<div class="ms-snippet">${_hitlEscapeHtml(r.snippet).slice(0, 160)}</div>` : '';
+                const pageTxt = r.page ? ` (pàg. ${r.page})` : '';
+                const safeVal = _hitlEscapeHtml(String(r.value));
+                return `
+                    <div class="ms-result-row ${needs ? 'needs-confirmation' : ''}" data-cid="${cid}">
+                        <div class="ms-concept">${_hitlConceptLabel(cid)}${pageTxt}</div>
+                        <div class="ms-value">${safeVal}</div>
+                        <div class="ms-conf-bar"><div class="ms-conf-fill" style="width:${pct}%"></div></div>
+                        ${needs ? snippet : ''}
+                        <div class="ms-actions">
+                            <button class="ms-btn-accept" type="button" data-cid="${cid}" data-value="${_hitlEscapeAttr(String(r.value))}">Acceptar</button>
+                            <button class="ms-btn-type" type="button" data-cid="${cid}">Teclejar manualment</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            container.innerHTML = rows;
+
+            container.querySelectorAll('.ms-btn-accept').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const cid = btn.dataset.cid;
+                    const value = btn.dataset.value;
+                    _hitlAcceptValue(cid, value, btn.closest('.ms-result-row'));
+                });
+            });
+            container.querySelectorAll('.ms-btn-type').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const cid = btn.dataset.cid;
+                    _hitlFocusWizardInput(cid);
+                    closeMissingSourcesDrawer();
+                });
+            });
+        }
+
+        function _hitlAcceptValue(cid, value, rowEl) {
+            const input = document.getElementById(`wiz-${cid}`);
+            if (input) {
+                input.value = value;
+                // Trigger existing dirty-tracking + source-badge update.
+                if (typeof markWizardDirty === 'function') {
+                    markWizardDirty(cid);
+                }
+                // Also dispatch change in case custom handlers are wired.
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+                const wrapper = input.closest('.wizard-field');
+                if (wrapper) wrapper.classList.remove('is-missing');
+            }
+            if (rowEl) {
+                rowEl.style.opacity = '0.55';
+                const actions = rowEl.querySelector('.ms-actions');
+                if (actions) actions.innerHTML = '<span style="color:#059669;font-size:12px;">✓ Acceptat</span>';
+            }
+            _hitlUpdateSummaryAfterAccept(cid);
+        }
+
+        function _hitlFocusWizardInput(cid) {
+            const input = document.getElementById(`wiz-${cid}`);
+            if (input) {
+                input.focus();
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function _hitlUpdateSummaryAfterAccept(cid) {
+            const summary = _missingSummary();
+            if (!summary) return;
+            let remaining = 0;
+            (summary.groups || []).forEach(g => {
+                g.concept_ids = (g.concept_ids || []).filter(c => c !== cid);
+                remaining += g.concept_ids.length;
+            });
+            summary.groups = (summary.groups || []).filter(g => g.concept_ids.length > 0);
+            summary.total_missing = remaining;
+            summary.total_groups = summary.groups.length;
+            // Refresh banner + amber cues with the new counts.
+            renderMissingBanner();
+            if (remaining === 0) {
+                closeMissingSourcesDrawer();
+            }
+        }
+
+        function _hitlEscapeHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+        function _hitlEscapeAttr(s) {
+            return _hitlEscapeHtml(s);
         }
 
         // ============================================================

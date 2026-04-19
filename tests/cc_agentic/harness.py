@@ -36,8 +36,11 @@ logger = logging.getLogger(__name__)
 _PROJECTS_WITH_EVA = [
     '3001621 CASTELLAR DEL VALLES',
     '3001631 RUBI',
-    '4001607 LINYOLA',
+    '4001607 LINYOLA',  # NOTE: not LINYOLA2 sibling
     '4001612 BELL-LLOC',
+    '4001670 ALCOLETGE',
+    '4001671 VILANOVA DE SEGRIA',
+    '4001679 ANCILES',
 ]
 
 
@@ -344,17 +347,20 @@ def run_t4(project: str) -> dict:
 
     files = _discover_project_files(project_path)
 
-    # Filter to planol-related roles
-    planol_roles = {'planol', 'projecte_arquitecte', 'planol_combined'}
+    # Filter to architect-planol roles (real FileScanner role names)
+    planol_roles = {'architect_plan', 'architect_plan_with_points',
+                    'planol', 'projecte_arquitecte', 'planol_combined'}
     planol_files = [f for f in files if f.get('role') in planol_roles]
 
     if not planol_files:
-        # Fallback: look for A.01.pdf or similar
-        planol_files = [
-            f for f in files
-            if Path(f['path']).name.upper().startswith('A.01')
-            or 'planol' in Path(f['path']).name.lower()
-        ]
+        # Fallback: filename heuristics. A01/A.01 prefix, or "planol"/"plànol"/"tipol" anywhere.
+        def _is_planol_name(path: str) -> bool:
+            n = Path(path).name.upper()
+            if n.startswith('A.01') or n.startswith('A01'):
+                return True
+            low = n.lower()
+            return 'planol' in low or 'plànol' in low or 'tipol' in low
+        planol_files = [f for f in files if _is_planol_name(f['path'])]
 
     cc_vars, trace = extract_from_files(planol_files, _SCHEMA_PATH, agentic_crops=True)
 

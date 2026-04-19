@@ -440,6 +440,12 @@ class UserDataWizard:
             for field_name, field_data in fields.items():
                 if not isinstance(field_data, dict):
                     continue
+                # Skip expedient: pressupost documents reference the budget
+                # number (e.g. "25·0647" = year/sequential), not the project
+                # expedient ("4001612"). The folder name and fileminer signals
+                # provide the correct project expedient.
+                if field_name == 'expedient':
+                    continue
                 value = field_data.get('value')
                 confidence = field_data.get('confidence')
                 field_source = field_data.get('source')
