@@ -153,6 +153,54 @@ _LAYOUT_MIN_TEXT_LEN = 20  # below this we already consider it "no text" → pro
 _LEGACY_OUTPUT_DIRS = {'PDF', 'PDF-V0', 'PDF_V0', 'PDF V0'}
 _LEGACY_OUTPUT_DIRS_CF = {d.casefold() for d in _LEGACY_OUTPUT_DIRS}
 
+# Photo roles whose files we DO want to probe even inside _SKIP_PHOTO_DIRS —
+# these photos are the primary source for the visual-observation concepts
+# (site_vegetation_visual, surrounding_context_visual, etc.).
+_PROBE_ALLOWED_PHOTO_ROLES = frozenset({
+    'photo_site_overview',
+    'photo_test_point',
+    'photo_spt_sample',
+    'field_photo',
+})
+
+
+def _load_allowed_photo_paths(project_path: Path) -> set[str]:
+    """Read file_mapping.json and return forward-slash-normalized paths of
+    files whose role is in `_PROBE_ALLOWED_PHOTO_ROLES`.
+
+    These paths bypass the `_SKIP_PHOTO_DIRS` filter inside
+    `probe_unreadable_files`, so role-tagged site photos can feed the
+    visual-observation concepts even when they live under FOTOGRAFIES/.
+
+    Returns an empty set if `file_mapping.json` is missing, unreadable,
+    or malformed — never raises.
+    """
+    mapping_path = project_path / 'file_mapping.json'
+    try:
+        raw = json.loads(mapping_path.read_text(encoding='utf-8'))
+    except Exception:
+        return set()
+
+    roles = raw.get('roles') if isinstance(raw, dict) else None
+    if not isinstance(roles, dict):
+        return set()
+
+    allowed: set[str] = set()
+    for role_name, entry in roles.items():
+        if role_name not in _PROBE_ALLOWED_PHOTO_ROLES:
+            continue
+        # FileScanner writes dict-with-path entries, but tolerate a bare
+        # string path too so malformed fixtures don't crash the probe.
+        if isinstance(entry, dict):
+            path = entry.get('path')
+        elif isinstance(entry, str):
+            path = entry
+        else:
+            path = None
+        if isinstance(path, str) and path:
+            allowed.add(path.replace('\\', '/'))
+    return allowed
+
 
 def _extract_page1_text(file_path: Path) -> str | None:
     """Return page-1 text for a PDF, or None on failure."""
@@ -328,8 +376,10 @@ def probe_unreadable_files(
     Returns {concept_id: [ConceptSource, ...]} to merge into concept_sources.
     Also updates FileEntry.concepts_detected and .notes in place.
     """
-    # Skip FOTOGRAFIES dirs (site photos, never contain report concepts)
-    # and inline email images (image001.jpg, image005.png etc.)
+    # Skip FOTOGRAFIES dirs (bulk site photos) EXCEPT those with roles in
+    # _PROBE_ALLOWED_PHOTO_ROLES — those files ARE useful for the 6
+    # visual-observation concepts (site_vegetation_visual, etc.).
+    # Also skip inline email images (image001.jpg, image005.png etc.).
     _SKIP_PHOTO_DIRS = {'FOTOGRAFIES', 'FOTOS DE CAMP', 'FOTOS DE CAMP + PLANOL PUNTS'}
     _INLINE_IMAGE_RE = __import__('re').compile(r'^image\d+\.\w+$', __import__('re').IGNORECASE)
 
@@ -349,14 +399,29 @@ def probe_unreadable_files(
     def _is_inline_email_image(rel_path: str) -> bool:
         return bool(_INLINE_IMAGE_RE.match(Path(rel_path).name))
 
+    # Read once per call — build set of file paths whose role bypasses the
+    # photo-dir skip (visual-observation concepts need these).
+    allowed_photo_paths = _load_allowed_photo_paths(project_path)
+
     to_probe: list = []
     for fe in file_entries:
-        if _in_photo_dir(fe.path) or _is_inline_email_image(fe.path):
+        rel_normalized = fe.path.replace('\\', '/')
+
+        # Legacy Eva-produced outputs are skipped regardless of role — we
+        # never want to probe our own historical reports. The role allow-list
+        # is independent of this check.
+        if _in_legacy_output(fe.path):
             continue
 
-        # Skip legacy Eva-produced outputs regardless of gate path — we never
-        # want to probe our own historical reports (classic or widened gate).
-        if _in_legacy_output(fe.path):
+        # Role allow-list: role-tagged site photos bypass the photo-dir skip
+        # and the email-image filter AND the classic/widened text-gate chain
+        # below — they go straight to the probe queue because they are the
+        # primary source for the 6 visual-observation concepts.
+        if rel_normalized in allowed_photo_paths:
+            to_probe.append(fe)
+            continue
+
+        if _in_photo_dir(fe.path) or _is_inline_email_image(fe.path):
             continue
 
         # Classic gate: images + scanned PDFs always probed.
