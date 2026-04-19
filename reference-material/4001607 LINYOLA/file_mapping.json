@@ -1,5 +1,17 @@
 {
   "roles": {
+    "architect_project": {
+      "path": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": "projecte_arquitecte"
+    },
+    "project_email": {
+      "path": "25.0616/RE_ pressupost geotècnic.msg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
     "reference_report": {
       "path": "4001607_informe.doc",
       "confidence": "high",
@@ -12,10 +24,34 @@
       "detection": "filename_pattern",
       "vision_type": null
     },
+    "dpsh_excel": {
+      "path": "ANNEXES/4001607_DPSH.xls",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
     "photos_dir": {
       "path": "FOTOGRAFIES",
       "confidence": "high",
-      "detection": "directory_name",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "field_photo": {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 11.11.17_3f18c893.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_test_point": {
+      "path": "FOTOGRAFIES/P1.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "lab_results_pdf": {
+      "path": "PDF/ANNEXES/lab-sig.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
       "vision_type": null
     },
     "dpsh_field_sheet": {
@@ -42,17 +78,11 @@
       "detection": "filename_pattern",
       "vision_type": null
     },
-    "dpsh_excel": {
-      "path": "ANNEXES/4001607_DPSH.xls",
+    "architect_plan": {
+      "path": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
       "confidence": "high",
-      "detection": "filename_pattern",
-      "vision_type": null
-    },
-    "lab_results_pdf": {
-      "path": "PDF/ANNEXES/lab-sig.pdf",
-      "confidence": "high",
-      "detection": "filename_pattern",
-      "vision_type": null
+      "detection": "fingerprint",
+      "vision_type": "planol"
     }
   },
   "ignored": [
@@ -61,36 +91,8 @@
       "reason": "cover_doc"
     },
     {
-      "path": "4001607_test_validation.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "ACCEPTACIO/",
+      "path": "ACCEPTACIO",
       "reason": "acceptance_dir"
-    },
-    {
-      "path": "CONTACTE.txt",
-      "reason": "text_file"
-    },
-    {
-      "path": "DTE.txt",
-      "reason": "text_file"
-    },
-    {
-      "path": "PDF/",
-      "reason": "exported_pdf_dir"
-    },
-    {
-      "path": "RV_ Realització geotècnic.msg",
-      "reason": "email_file"
-    },
-    {
-      "path": "Thumbs.db",
-      "reason": "temp_file"
-    },
-    {
-      "path": "validation/",
-      "reason": "output_dir"
     },
     {
       "path": "ANNEXES/4001607_fotografies.FH11",
@@ -105,30 +107,269 @@
       "reason": "freehand_file"
     },
     {
-      "path": "ANNEXES/ALTRES/",
-      "reason": "misc_subdir"
+      "path": "FOTOGRAFIES/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "PDF",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "PDF/4001607_informe.pdf",
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/4001607_DPSH.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/4001607_fotografies.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/ANNEXES/4001607_plànol de situació.pdf",
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/4001607_tall de correlació.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/LLETRA",
+      "reason": "letter_dir"
+    },
+    {
+      "path": "PDF/LLETRA/4001607_PORTADA_25.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/LLETRA/4001607_informe.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "file_mapping.json",
+      "reason": "our_output"
     }
   ],
   "unassigned": [
     "25.0616",
-    "Punts de Sondeig_Silvia_Jaume (1).pdf",
-    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
-    "PDF/ANNEXES/4001607_plànol de situació.pdf"
+    "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+    "4001607_test_validation.docx",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES",
+    "ANNEXES/ALTRES",
+    "ANNEXES/ALTRES/COORDENADES.txt",
+    "CONTACTE.txt",
+    "DTE.txt",
+    "PDF/ANNEXES",
+    "RV_ Realització geotècnic.msg"
   ],
+  "email_attachments": {
+    "validation/msg_attachments/RE_ pressupost geotècnic/PLAN_COST_LINYOLA.xlsx": {
+      "source_msg": "25.0616/RE_ pressupost geotècnic.msg",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.xlsx)",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ pressupost geotècnic/image001.jpg": {
+      "source_msg": "25.0616/RE_ pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ pressupost geotècnic/image005.jpg": {
+      "source_msg": "25.0616/RE_ pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ pressupost geotècnic/image006.jpg": {
+      "source_msg": "25.0616/RE_ pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ pressupost geotècnic/image008.png": {
+      "source_msg": "25.0616/RE_ pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ pressupost geotècnic/image011.png": {
+      "source_msg": "25.0616/RE_ pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RV_ Realització geotècnic/G3DT_Silvia_Jaume signat.pdf": {
+      "source_msg": "RV_ Realització geotècnic.msg",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.pdf)",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RV_ Realització geotècnic/Punts de Sondeig_Silvia_Jaume (1).pdf": {
+      "source_msg": "RV_ Realització geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "architect_plan",
+      "probe_status": "ok",
+      "probe_detail": "architect_plan",
+      "confidence": 0.7,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RV_ Realització geotècnic/image001.jpg": {
+      "source_msg": "RV_ Realització geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RV_ pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf": {
+      "source_msg": "25.0616/RV_ pressupost geotècnic.msg",
+      "classifier_used": "filename",
+      "role_assigned": null,
+      "role_candidate": "architect_project",
+      "probe_status": "skipped",
+      "probe_detail": "",
+      "confidence": 0.9,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RV_ pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf": {
+      "source_msg": "25.0616/RV_ pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "architect_plan",
+      "probe_status": "ok",
+      "probe_detail": "architect_plan",
+      "confidence": 0.7,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RV_ pressupost geotècnic/image.png": {
+      "source_msg": "25.0616/RV_ pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RV_ pressupost geotècnic/image001.jpg": {
+      "source_msg": "25.0616/RV_ pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RV_ pressupost geotècnic/image005.png": {
+      "source_msg": "25.0616/RV_ pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RV_ pressupost geotècnic/image006.jpg": {
+      "source_msg": "25.0616/RV_ pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf": {
+      "source_msg": "25.0616/pressupost geotècnic.msg",
+      "classifier_used": "filename",
+      "role_assigned": null,
+      "role_candidate": "architect_project",
+      "probe_status": "skipped",
+      "probe_detail": "",
+      "confidence": 0.9,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf": {
+      "source_msg": "25.0616/pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "architect_plan",
+      "probe_status": "ok",
+      "probe_detail": "architect_plan",
+      "confidence": 0.7,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/pressupost geotècnic/image.png": {
+      "source_msg": "25.0616/pressupost geotècnic.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    }
+  },
   "_metadata": {
-    "scanned_at": "2026-03-29T16:34:02.500620+00:00",
+    "scanned_at": "2026-04-18T20:26:30.179149+00:00",
     "confirmed_by_user": false,
     "scanner_version": "2.2"
   }

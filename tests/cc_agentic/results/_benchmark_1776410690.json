@@ -1,0 +1,556 @@
+{
+  "fixture": "reference-material/4001612 BELL-LLOC/A.01.pdf",
+  "concepts": [
+    "architect_name",
+    "architect_company",
+    "client_name",
+    "num_floors",
+    "building_height_m",
+    "building_type",
+    "superficie_parcela",
+    "superficie_construida",
+    "municipality",
+    "street_address",
+    "adjacent_north",
+    "adjacent_south",
+    "adjacent_east",
+    "adjacent_west"
+  ],
+  "provider": "openrouter",
+  "rows": [
+    {
+      "model": "anthropic/claude-opus-4.7",
+      "elapsed_s": 15.5,
+      "input_tokens": 5292,
+      "output_tokens": 402,
+      "cost_usd": 0.0365,
+      "results": {
+        "architect_name": {
+          "value": "Jordi Bosch Novell",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "architect_company": {
+          "value": "ABN Arquitectura Bosch Novell",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "client_name": {
+          "value": "Ramon Mitjana SL",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "num_floors": {
+          "value": "PB+PP",
+          "confidence": 0.97,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "building_height_m": {
+          "value": 6.5,
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "building_type": {
+          "value": "Habitatge unifamiliar aïllat",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "superficie_parcela": {
+          "value": 995.0,
+          "confidence": 0.97,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "superficie_construida": {
+          "value": 296.8,
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "municipality": {
+          "value": "Bell-lloc d'Urgell",
+          "confidence": 0.97,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "street_address": {
+          "value": "Carrer Mestre Ramon Ortiz, 25220 Bell-lloc d'Urgell (Lleida)",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "adjacent_east": {
+          "value": "Carrer Mestre Ramon Ortiz",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "adjacent_south": {
+          "value": "Carrer Antoni Bellet",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        }
+      },
+      "error": null,
+      "scored": {
+        "counts": {
+          "MATCH": 1,
+          "CLOSE": 4,
+          "MISMATCH": 5,
+          "NOT_EXTRACTED": 2
+        },
+        "accuracy": 0.4166666666666667,
+        "total_scored": 12,
+        "details": [
+          {
+            "concept": "architect_name",
+            "eva": "JORDI BOSCH NOVELL",
+            "cc": "Jordi Bosch Novell",
+            "status": "MATCH"
+          },
+          {
+            "concept": "architect_company",
+            "eva": "ARQUITECTURA BOSCH NOVELL",
+            "cc": "ABN Arquitectura Bosch Novell",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "client_name",
+            "eva": "RAMON MITJANA S.L",
+            "cc": "Ramon Mitjana SL",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "num_floors",
+            "eva": "Pb+1Pp",
+            "cc": "PB+PP",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "building_type",
+            "eva": "un habitatge unifamiliar",
+            "cc": "Habitatge unifamiliar aïllat",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "superficie_parcela",
+            "eva": "995",
+            "cc": "995.0",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "superficie_construida",
+            "eva": "280+86",
+            "cc": "296.8",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "municipality",
+            "eva": "Bell-lloc d’Urgell",
+            "cc": "Bell-lloc d'Urgell",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "adjacent_north",
+            "eva": "Per la part nord amb una parcel·la buida.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_south",
+            "eva": "Per la part sud amb el Carrer Antoni Bellet.",
+            "cc": "Carrer Antoni Bellet",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "adjacent_east",
+            "eva": "Per la part est amb el Carrer Mestre Ramon Ortiz.",
+            "cc": "Carrer Mestre Ramon Ortiz",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "adjacent_west",
+            "eva": "I finalment, per la part oest, amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          }
+        ]
+      }
+    },
+    {
+      "model": "anthropic/claude-sonnet-4.5",
+      "elapsed_s": 15.1,
+      "input_tokens": 5292,
+      "output_tokens": 402,
+      "cost_usd": 0.0219,
+      "results": {
+        "architect_name": {
+          "value": "Jordi Bosch Novell",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "architect_company": {
+          "value": "ABN Arquitectura Bosch Novell",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "client_name": {
+          "value": "RAMON MITJANA SL",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "num_floors": {
+          "value": "PB+PP",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "building_height_m": {
+          "value": 6.5,
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "building_type": {
+          "value": "Habitatge unifamiliar aïllat",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "superficie_parcela": {
+          "value": 995.0,
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "superficie_construida": {
+          "value": 296.8,
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "municipality": {
+          "value": "Bell-lloc d'Urgell",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "street_address": {
+          "value": "Carrer Mestre Ramon Ortiz, 25220 Bell-lloc d'Urgell (Lleida)",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "adjacent_east": {
+          "value": "Carrer Mestre Ramon Ortiz",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "adjacent_south": {
+          "value": "Carrer Antoni Bellet",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        }
+      },
+      "error": null,
+      "scored": {
+        "counts": {
+          "MATCH": 1,
+          "CLOSE": 4,
+          "MISMATCH": 5,
+          "NOT_EXTRACTED": 2
+        },
+        "accuracy": 0.4166666666666667,
+        "total_scored": 12,
+        "details": [
+          {
+            "concept": "architect_name",
+            "eva": "JORDI BOSCH NOVELL",
+            "cc": "Jordi Bosch Novell",
+            "status": "MATCH"
+          },
+          {
+            "concept": "architect_company",
+            "eva": "ARQUITECTURA BOSCH NOVELL",
+            "cc": "ABN Arquitectura Bosch Novell",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "client_name",
+            "eva": "RAMON MITJANA S.L",
+            "cc": "RAMON MITJANA SL",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "num_floors",
+            "eva": "Pb+1Pp",
+            "cc": "PB+PP",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "building_type",
+            "eva": "un habitatge unifamiliar",
+            "cc": "Habitatge unifamiliar aïllat",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "superficie_parcela",
+            "eva": "995",
+            "cc": "995.0",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "superficie_construida",
+            "eva": "280+86",
+            "cc": "296.8",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "municipality",
+            "eva": "Bell-lloc d’Urgell",
+            "cc": "Bell-lloc d'Urgell",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "adjacent_north",
+            "eva": "Per la part nord amb una parcel·la buida.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_south",
+            "eva": "Per la part sud amb el Carrer Antoni Bellet.",
+            "cc": "Carrer Antoni Bellet",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "adjacent_east",
+            "eva": "Per la part est amb el Carrer Mestre Ramon Ortiz.",
+            "cc": "Carrer Mestre Ramon Ortiz",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "adjacent_west",
+            "eva": "I finalment, per la part oest, amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          }
+        ]
+      }
+    },
+    {
+      "model": "anthropic/claude-haiku-4.5",
+      "elapsed_s": 14.2,
+      "input_tokens": 5292,
+      "output_tokens": 437,
+      "cost_usd": 0.0075,
+      "results": {
+        "architect_name": {
+          "value": "Jordi Bosch Novell",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "architect_company": {
+          "value": "ABN Arquitectura Bosch Novell",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "client_name": {
+          "value": "RAMON MITJANA SL",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "num_floors": {
+          "value": "PB+PP",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "building_height_m": {
+          "value": 6.5,
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "building_type": {
+          "value": "Habitatge unifamiliar aïllat",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "superficie_parcela": {
+          "value": 995.0,
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "superficie_construida": {
+          "value": 397.0,
+          "confidence": 0.85,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "municipality": {
+          "value": "Bell-lloc d'Urgell",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "street_address": {
+          "value": "Carrer Mestre Ramon Ortiz, 25220 Bell-lloc d'Urgell (Lleida)",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "adjacent_east": {
+          "value": "Carrer Mestre Ramon Ortiz",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "adjacent_south": {
+          "value": "Carrer Antoni Bellet",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        }
+      },
+      "error": null,
+      "scored": {
+        "counts": {
+          "MATCH": 1,
+          "CLOSE": 4,
+          "MISMATCH": 5,
+          "NOT_EXTRACTED": 2
+        },
+        "accuracy": 0.4166666666666667,
+        "total_scored": 12,
+        "details": [
+          {
+            "concept": "architect_name",
+            "eva": "JORDI BOSCH NOVELL",
+            "cc": "Jordi Bosch Novell",
+            "status": "MATCH"
+          },
+          {
+            "concept": "architect_company",
+            "eva": "ARQUITECTURA BOSCH NOVELL",
+            "cc": "ABN Arquitectura Bosch Novell",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "client_name",
+            "eva": "RAMON MITJANA S.L",
+            "cc": "RAMON MITJANA SL",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "num_floors",
+            "eva": "Pb+1Pp",
+            "cc": "PB+PP",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "building_type",
+            "eva": "un habitatge unifamiliar",
+            "cc": "Habitatge unifamiliar aïllat",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "superficie_parcela",
+            "eva": "995",
+            "cc": "995.0",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "superficie_construida",
+            "eva": "280+86",
+            "cc": "397.0",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "municipality",
+            "eva": "Bell-lloc d’Urgell",
+            "cc": "Bell-lloc d'Urgell",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "adjacent_north",
+            "eva": "Per la part nord amb una parcel·la buida.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_south",
+            "eva": "Per la part sud amb el Carrer Antoni Bellet.",
+            "cc": "Carrer Antoni Bellet",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "adjacent_east",
+            "eva": "Per la part est amb el Carrer Mestre Ramon Ortiz.",
+            "cc": "Carrer Mestre Ramon Ortiz",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "adjacent_west",
+            "eva": "I finalment, per la part oest, amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          }
+        ]
+      }
+    }
+  ]
+}

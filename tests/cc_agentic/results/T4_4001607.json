@@ -1,0 +1,579 @@
+{
+  "metadata": {
+    "test_id": "T4",
+    "project": "4001607 LINYOLA",
+    "timestamp": "2026-04-16T18:19:37.759050+00:00",
+    "files_available": 0,
+    "files_read": 0,
+    "files_from_email": 0,
+    "duration_s": 5.5,
+    "api_calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "planol_vars_targeted": 29
+  },
+  "files_inventory": [],
+  "variables": {},
+  "comparison": {
+    "vs_eva": {
+      "project": "4001607 LINYOLA",
+      "test_id": "T4",
+      "total_eva_vars": 52,
+      "counts": {
+        "MATCH": 0,
+        "CLOSE": 0,
+        "MISMATCH": 0,
+        "NOT_EXTRACTED": 52
+      },
+      "accuracy_pct": 0.0,
+      "tier_breakdown": {
+        "-": {
+          "NOT_EXTRACTED": 37
+        },
+        "A": {
+          "NOT_EXTRACTED": 10
+        },
+        "B": {
+          "NOT_EXTRACTED": 3
+        },
+        "C": {
+          "NOT_EXTRACTED": 2
+        }
+      },
+      "origin_breakdown": {},
+      "details": [
+        {
+          "variable": "access_street",
+          "tier": "-",
+          "eva": "El dia 1 d ‘octubre de 2025, es va visitar l’obra per tal de:",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "adjacent_east_fmt",
+          "tier": "-",
+          "eva": "Per la part est i pel sud amb parcel·les buides.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "adjacent_north_fmt",
+          "tier": "-",
+          "eva": "Per la part nord amb una parcel·la ocupada per una habitatge unifamiliar.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "adjacent_south_fmt",
+          "tier": "-",
+          "eva": "Per la part est i pel sud amb parcel·les buides.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "adjacent_west_fmt",
+          "tier": "-",
+          "eva": "I finalment, per la part oest, amb el carrer per on es realitza l’entrada.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "architect_company",
+          "tier": "A",
+          "eva": "BUNYESC ARQUITECTURA EFICIENT",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "architect_name_upper",
+          "tier": "-",
+          "eva": "SÍLVIA EROLES BALAGUERÓ",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "building_structure_desc",
+          "tier": "-",
+          "eva": "sense nivell de soterrani",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "building_type_lower",
+          "tier": "-",
+          "eva": "un nou habitatge unifamiliar",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "client",
+          "tier": "A",
+          "eva": "SRA. SÍLVIA EROLES BALAGUERÓ",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "conclusions_aggressivity_statement",
+          "tier": "-",
+          "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "conclusions_levels_detected",
+          "tier": "-",
+          "eva": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "conclusions_water_statement",
+          "tier": "-",
+          "eva": "En data de la realització dels treballs de camp, i fins la cota assajada no es va detectar presència de nivell freàtic en tots els assaigs realitzats.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "csn_radon_text",
+          "tier": "-",
+          "eva": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "cte_edificacio",
+          "tier": "-",
+          "eva": "C-0",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "cte_sol",
+          "tier": "-",
+          "eva": "T-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "data_camp_text",
+          "tier": "A",
+          "eva": "1 d ‘octubre de 2025",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "data_signatura_text",
+          "tier": "-",
+          "eva": "29 d’octubre de 2025",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "dpsh_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'P-1', 'cota': '+245.0', 'depth': '-2.90', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-2', 'cota': '+245.0', 'depth': '-2.15', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-3', 'cota': '+245.0', 'depth': '-1.75', 'refusal': 'Si', 'water': 'No detectat'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "expedient",
+          "tier": "-",
+          "eva": "4001607",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "geo_p",
+          "tier": "-",
+          "eva": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "geotech_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell: Llims argilosos i sorrencs', 'nb': '13', 'n': '--', 'density': '1.90', 'cohesion': '0.05', 'phi': '28', 'E': '100'}, {'name': '2on nivell: Lutites i sorrenques', 'nb': '31-R', 'n': 'R', 'density': '2.20', 'cohesion': '1.0', 'phi': '30', 'E': '>800'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_depth",
+          "tier": "-",
+          "eva": "Profunditat:  -1.00  a -1.15 m",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_field_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_field_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_location",
+          "tier": "-",
+          "eva": "Punt: P-3",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_sample_id",
+          "tier": "-",
+          "eva": "Mostra : SPT-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_testing_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_testing_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_tests_text",
+          "tier": "-",
+          "eva": "Assaig de Límits d’Atterberg UNE 103103/94 – 104/93\nAssaig d’expansivitat Lambe UNE 103500/94\nAssaig de contingut en sulfats UNE 83963 : 2008",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "location_sentence",
+          "tier": "B",
+          "eva": "al Carrer Clot de la Llacuna nº16 de Linyola",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "materials_intro",
+          "tier": "-",
+          "eva": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "municipality",
+          "tier": "A",
+          "eva": "Linyola",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "num_dpsh_tests",
+          "tier": "A",
+          "eva": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "perm_rows",
+          "tier": "-",
+          "eva": "[{'name': '2on nivell', 'k_value': '10-6 – 10-8', 'material': 'Lutites i sorrenques'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "plantes",
+          "tier": "-",
+          "eva": "Pb",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "qa_value",
+          "tier": "C",
+          "eva": "3.0",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "radon_zone",
+          "tier": "A",
+          "eva": "0",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "radon_zone_description",
+          "tier": "-",
+          "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l’apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas radó en edificis tancats.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "seismic_ab_text",
+          "tier": "A",
+          "eva": "0,04",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "seismic_rows",
+          "tier": "-",
+          "eva": "[{'num': '1', 'terrain_type': 'Tipus IV', 'thickness': '1.60', 'c_coeff': '2.0'}, {'num': '2', 'terrain_type': 'Tipus II', 'thickness': '1.30*', 'c_coeff': '1.3'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "settlement",
+          "tier": "C",
+          "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "site_condition",
+          "tier": "B",
+          "eva": "Com que es tracta d’un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "site_description",
+          "tier": "B",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al oest. La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sondeig_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'Nº assaig', 'cota': 'Punt', 'depth': 'Prof. Extracció (m)', 'spt_ma': 'N30', 'water': 'Litologia'}, {'test_id': 'SPT-1', 'cota': 'P-3', 'depth': '-1.00 a -1.15', 'spt_ma': 'R', 'water': 'Lutites'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_baumann",
+          "tier": "-",
+          "eva": "--",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_classification",
+          "tier": "-",
+          "eva": "No agressius",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_level_name",
+          "tier": "-",
+          "eva": "2on nivell",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_value",
+          "tier": "A",
+          "eva": "0.0",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "superficie_construida",
+          "tier": "A",
+          "eva": "250.91",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "superficie_parcela",
+          "tier": "A",
+          "eva": "571",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "table_dpsh_range",
+          "tier": "-",
+          "eva": "3, 4 i 5",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        }
+      ]
+    }
+  },
+  "trace": [
+    {
+      "action_id": "usage_summary",
+      "type": "summary",
+      "total_usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "api_calls": 0
+      }
+    }
+  ]
+}

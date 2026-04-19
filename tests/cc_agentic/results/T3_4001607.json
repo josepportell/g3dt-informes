@@ -1,0 +1,1875 @@
+{
+  "metadata": {
+    "test_id": "T3",
+    "project": "4001607 LINYOLA",
+    "timestamp": "2026-04-17T09:47:34.388216+00:00",
+    "files_available": 58,
+    "files_read": 39,
+    "files_from_email": 45,
+    "duration_s": 567.2,
+    "api_calls": 35,
+    "input_tokens": 156130,
+    "output_tokens": 7859
+  },
+  "files_inventory": [
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/4001607_informe.doc",
+      "role": "reference_report",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/4672-GTL-25 Linyola.pdf",
+      "role": "gtl_report",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/FOTOGRAFIES",
+      "role": "photos_dir",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/PENETROS.pdf",
+      "role": "dpsh_field_sheet",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/comanda laboratori_4001607_LINYOLA.xls",
+      "role": "lab_order",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/pl situ.pdf",
+      "role": "situation_plan",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/tall.pdf",
+      "role": "correlation_section",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/ANNEXES/4001607_DPSH.xls",
+      "role": "dpsh_excel",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/PDF/ANNEXES/lab-sig.pdf",
+      "role": "lab_results_pdf",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/25.0616",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/Punts de Sondeig_Silvia_Jaume (1).pdf",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/PDF/ANNEXES/4001607_plànol de situació.pdf",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RE_ pressupost geotècnic/PLAN_COST_LINYOLA.xlsx",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RE_ pressupost geotècnic/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RE_ pressupost geotècnic/image005.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RE_ pressupost geotècnic/image006.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RE_ pressupost geotècnic/image008.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RE_ pressupost geotècnic/image011.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RE_ pressupost geotècnic/validation/mined_images/PLAN_COST_LINYOLA_img0.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ Realització geotècnic/G3DT_Silvia_Jaume signat.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ Realització geotècnic/Punts de Sondeig_Silvia_Jaume (1).pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ Realització geotècnic/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img0.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img1.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img2.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img3.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img4.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img5.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/image.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/image005.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/image006.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img0.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img1.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img2.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img3.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img5.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img6.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img7.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img8.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img9.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/image.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img0.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img1.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img2.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img3.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img5.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img6.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img7.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img8.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001607 LINYOLA/validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img9.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    }
+  ],
+  "variables": {
+    "client_name": {
+      "value": "Sra. Sílvia Eroles Balagueró",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "architect_company": {
+      "value": "Bunyesc Arquitectura Eficient",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "street_address": {
+      "value": "Carrer Clot de la Llacuna nº16, Linyola",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "municipality": {
+      "value": "Linyola",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "building_type": {
+      "value": "Habitatge unifamiliar",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "num_floors": {
+      "value": "PB",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_parcela": {
+      "value": 571,
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_construida": {
+      "value": 250.91,
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "field_date": {
+      "value": "2025-10-01",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "field_work_dates": {
+      "value": [
+        "2025-10-01"
+      ],
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "field_work_dates_text": {
+      "value": "1 d'octubre de 2025",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "site_description": {
+      "value": "La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "access_description": {
+      "value": "L'entrada a la zona d'estudi es realitza a través del carrer adjacent situat al oest.",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "cota_referencia": {
+      "value": "+245.0 msnm, referenciada respecte la superfície actual del solar segons el plànol topogràfic existent a l'ICGC (MDT ICGC)",
+      "confidence": 0.9,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_north": {
+      "value": "Parcel·la ocupada per una habitatge unifamiliar",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_south": {
+      "value": "Parcel·les buides",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_east": {
+      "value": "Parcel·les buides",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_west": {
+      "value": "Carrer (accés)",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "parcel_shape": {
+      "value": "Bastant rectangular",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "is_urban": {
+      "value": true,
+      "confidence": 1.0,
+      "source_file": "2_02B_DG_Silvia_Jaume.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "is_sloped": {
+      "value": false,
+      "confidence": 0.8,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "is_anthropized": {
+      "value": false,
+      "confidence": 0.7,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "num_soil_levels": {
+      "value": 2,
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_field_company": {
+      "value": "TPS Prospecció del Subsòl, S.L.",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_testing_company": {
+      "value": "TPS Prospecció del Subsòl SL (Soil Assaig)",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_field_description": {
+      "value": "Realització d'assaigs de penetració dinàmica tipus DPSH i assaig SPT amb recuperació de mostra",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_testing_description": {
+      "value": "Assaig de Límits d'Atterberg UNE 103103/94-104/93, Assaig d'expansivitat Lambe UNE 103500/94, Assaig de contingut en sulfats UNE 83963:2008",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_location": {
+      "value": "Punt P-3",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_sample_id": {
+      "value": "SPT-1",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_depth": {
+      "value": "-1.00 a -1.15 m",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_tests_text": {
+      "value": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93; Assaig d'expansivitat Lambe UNE 103500/94; Assaig de contingut en sulfats UNE 83963:2008",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_code": {
+      "value": "POmgc3",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_description": {
+      "value": "Argiles, llims i gresos de gra fi amb intercalacions de conglomerats, gresos i calcàries",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_epoch": {
+      "value": "Rupelià (Oligocè)",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "num_dpsh_tests": {
+      "value": "3 assaigs de penetració dinàmica tipus DPSH",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "table_dpsh_range": {
+      "value": "3, 4 i 5",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "location_sentence": {
+      "value": "El solar on s'emplaçarà el nou habitatge unifamiliar es situa al Carrer Clot de la Llacuna nº16 de Linyola.",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "site_position": {
+      "value": "Al oest del municipi de Linyola",
+      "confidence": 0.8,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "client_nif": {
+      "value": "B25364589",
+      "confidence": 1.0,
+      "source_file": "4672-GTL-25 Linyola.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "province": {
+      "value": "Lleida",
+      "confidence": 1.0,
+      "source_file": "lab-sig.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "expedient": {
+      "value": "4001607",
+      "confidence": 1.0,
+      "source_file": "pl situ.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "sulfate_mg_kg": {
+      "value": 0.0,
+      "confidence": 1.0,
+      "source_file": "4672-GTL-25 Linyola.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "lab_tests": {
+      "value": [
+        {
+          "test": "Límit líquid",
+          "norm": "UNE 103103:94",
+          "result": 41.7
+        },
+        {
+          "test": "Límit plàstic",
+          "norm": "UNE 103104:93",
+          "result": 22.0
+        },
+        {
+          "test": "Índex de plasticitat",
+          "norm": "UNE 103103:94 / UNE 103104:93",
+          "result": 19.7
+        },
+        {
+          "test": "Contingut en ió sulfat",
+          "norm": "UNE 83963:2008",
+          "result": "0,0 mg/kg"
+        },
+        {
+          "test": "Expansivitat Lambe",
+          "norm": "UNE 103600:1996",
+          "result": "Índex d'inflament 0,01 MPa, Canvi de volum potencial: marginal"
+        }
+      ],
+      "confidence": 1.0,
+      "source_file": "4672-GTL-25 Linyola.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "geomech_gamma": {
+      "value": 1.96,
+      "confidence": 0.9,
+      "source_file": "4672-GTL-25 Linyola.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "contact_name": {
+      "value": "SÍLVIA EROLES BALAGUERÓ",
+      "confidence": 1.0,
+      "source_file": "G3DT_Silvia_Jaume signat.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "foundation_depth_m": {
+      "value": 1.75,
+      "confidence": 0.8,
+      "source_file": "PENETROS.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "architect_name": {
+      "value": "Josep Bunyesc Palacín",
+      "confidence": 0.95,
+      "source_file": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "client_phone": {
+      "value": "618108612",
+      "confidence": 1.0,
+      "source_file": "G3DT_Silvia_Jaume signat.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "client_email": {
+      "value": "serolesba@gmail.com",
+      "confidence": 1.0,
+      "source_file": "G3DT_Silvia_Jaume signat.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "referencia_catastral": {
+      "value": "5098344CG2159N0000US",
+      "confidence": 1.0,
+      "source_file": "2_02B_DG_Silvia_Jaume.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "building_height_m": {
+      "value": 4.35,
+      "confidence": 0.9,
+      "source_file": "2_02B_DG_Silvia_Jaume.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "has_basement": {
+      "value": false,
+      "confidence": 0.9,
+      "source_file": "2_02B_DG_Silvia_Jaume.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "has_retaining_walls": {
+      "value": true,
+      "confidence": 0.8,
+      "source_file": "2_02B_DG_Silvia_Jaume.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "building_structure_desc": {
+      "value": "Habitatge unifamiliar aïllat de planta baixa amb coberta inclinada de teula ceràmica al 30% i coberta plana de grava, estructura entramada de fusta, façana amb revestiment SATE i revestiment de pedra, amb porxo exterior.",
+      "confidence": 0.85,
+      "source_file": "2_02B_DG_Silvia_Jaume.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    }
+  },
+  "comparison": {
+    "vs_eva": {
+      "total_eva_vars": 52,
+      "counts": {
+        "MATCH": 6,
+        "CLOSE": 6,
+        "MISMATCH": 6,
+        "NOT_EXTRACTED": 34
+      },
+      "accuracy_pct": 23.1,
+      "details": [
+        {
+          "variable": "access_street",
+          "tier": "-",
+          "eva": "El dia 1 d ‘octubre de 2025, es va visitar l’obra per tal de:",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_east_fmt",
+          "tier": "-",
+          "eva": "Per la part est i pel sud amb parcel·les buides.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_north_fmt",
+          "tier": "-",
+          "eva": "Per la part nord amb una parcel·la ocupada per una habitatge unifamiliar.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_south_fmt",
+          "tier": "-",
+          "eva": "Per la part est i pel sud amb parcel·les buides.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_west_fmt",
+          "tier": "-",
+          "eva": "I finalment, per la part oest, amb el carrer per on es realitza l’entrada.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "architect_company",
+          "tier": "A",
+          "eva": "BUNYESC ARQUITECTURA EFICIENT",
+          "cc": "Bunyesc Arquitectura Eficient",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "architect_name_upper",
+          "tier": "-",
+          "eva": "SÍLVIA EROLES BALAGUERÓ",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "building_structure_desc",
+          "tier": "-",
+          "eva": "sense nivell de soterrani",
+          "cc": "Habitatge unifamiliar aïllat de planta baixa amb coberta inclinada de teula ceràmica al 30% i coberta plana de grava, estructura entramada de fusta, façana amb revestiment SATE i revestiment de pedra, amb porxo exterior.",
+          "confidence": 0.85,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "building_type_lower",
+          "tier": "-",
+          "eva": "un nou habitatge unifamiliar",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "client",
+          "tier": "A",
+          "eva": "SRA. SÍLVIA EROLES BALAGUERÓ",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_aggressivity_statement",
+          "tier": "-",
+          "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_levels_detected",
+          "tier": "-",
+          "eva": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_water_statement",
+          "tier": "-",
+          "eva": "En data de la realització dels treballs de camp, i fins la cota assajada no es va detectar presència de nivell freàtic en tots els assaigs realitzats.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "csn_radon_text",
+          "tier": "-",
+          "eva": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "cte_edificacio",
+          "tier": "-",
+          "eva": "C-0",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "cte_sol",
+          "tier": "-",
+          "eva": "T-1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "data_camp_text",
+          "tier": "A",
+          "eva": "1 d ‘octubre de 2025",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "data_signatura_text",
+          "tier": "-",
+          "eva": "29 d’octubre de 2025",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "dpsh_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'P-1', 'cota': '+245.0', 'depth': '-2.90', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-2', 'cota': '+245.0', 'depth': '-2.15', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-3', 'cota': '+245.0', 'depth': '-1.75', 'refusal': 'Si', 'water': 'No detectat'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "expedient",
+          "tier": "-",
+          "eva": "4001607",
+          "cc": "4001607",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "geo_p",
+          "tier": "-",
+          "eva": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "geotech_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell: Llims argilosos i sorrencs', 'nb': '13', 'n': '--', 'density': '1.90', 'cohesion': '0.05', 'phi': '28', 'E': '100'}, {'name': '2on nivell: Lutites i sorrenques', 'nb': '31-R', 'n': 'R', 'density': '2.20', 'cohesion': '1.0', 'phi': '30', 'E': '>800'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "lab_depth",
+          "tier": "-",
+          "eva": "Profunditat:  -1.00  a -1.15 m",
+          "cc": "-1.00 a -1.15 m",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_field_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
+          "cc": "TPS Prospecció del Subsòl, S.L.",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "lab_field_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "Realització d'assaigs de penetració dinàmica tipus DPSH i assaig SPT amb recuperació de mostra",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_location",
+          "tier": "-",
+          "eva": "Punt: P-3",
+          "cc": "Punt P-3",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_sample_id",
+          "tier": "-",
+          "eva": "Mostra : SPT-1",
+          "cc": "SPT-1",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "lab_testing_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "cc": "TPS Prospecció del Subsòl SL (Soil Assaig)",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "lab_testing_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "Assaig de Límits d'Atterberg UNE 103103/94-104/93, Assaig d'expansivitat Lambe UNE 103500/94, Assaig de contingut en sulfats UNE 83963:2008",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_tests_text",
+          "tier": "-",
+          "eva": "Assaig de Límits d’Atterberg UNE 103103/94 – 104/93\nAssaig d’expansivitat Lambe UNE 103500/94\nAssaig de contingut en sulfats UNE 83963 : 2008",
+          "cc": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93; Assaig d'expansivitat Lambe UNE 103500/94; Assaig de contingut en sulfats UNE 83963:2008",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "location_sentence",
+          "tier": "B",
+          "eva": "al Carrer Clot de la Llacuna nº16 de Linyola",
+          "cc": "El solar on s'emplaçarà el nou habitatge unifamiliar es situa al Carrer Clot de la Llacuna nº16 de Linyola.",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "materials_intro",
+          "tier": "-",
+          "eva": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "municipality",
+          "tier": "A",
+          "eva": "Linyola",
+          "cc": "Linyola",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "num_dpsh_tests",
+          "tier": "A",
+          "eva": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+          "cc": "3 assaigs de penetració dinàmica tipus DPSH",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "perm_rows",
+          "tier": "-",
+          "eva": "[{'name': '2on nivell', 'k_value': '10-6 – 10-8', 'material': 'Lutites i sorrenques'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "plantes",
+          "tier": "-",
+          "eva": "Pb",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "qa_value",
+          "tier": "C",
+          "eva": "3.0",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "radon_zone",
+          "tier": "A",
+          "eva": "0",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "radon_zone_description",
+          "tier": "-",
+          "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l’apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas radó en edificis tancats.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "seismic_ab_text",
+          "tier": "A",
+          "eva": "0,04",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "seismic_rows",
+          "tier": "-",
+          "eva": "[{'num': '1', 'terrain_type': 'Tipus IV', 'thickness': '1.60', 'c_coeff': '2.0'}, {'num': '2', 'terrain_type': 'Tipus II', 'thickness': '1.30*', 'c_coeff': '1.3'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "settlement",
+          "tier": "C",
+          "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "site_condition",
+          "tier": "B",
+          "eva": "Com que es tracta d’un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "site_description",
+          "tier": "B",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al oest. La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
+          "cc": "La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "sondeig_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'Nº assaig', 'cota': 'Punt', 'depth': 'Prof. Extracció (m)', 'spt_ma': 'N30', 'water': 'Litologia'}, {'test_id': 'SPT-1', 'cota': 'P-3', 'depth': '-1.00 a -1.15', 'spt_ma': 'R', 'water': 'Lutites'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_baumann",
+          "tier": "-",
+          "eva": "--",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_classification",
+          "tier": "-",
+          "eva": "No agressius",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_level_name",
+          "tier": "-",
+          "eva": "2on nivell",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_value",
+          "tier": "A",
+          "eva": "0.0",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "superficie_construida",
+          "tier": "A",
+          "eva": "250.91",
+          "cc": "250.91",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "superficie_parcela",
+          "tier": "A",
+          "eva": "571",
+          "cc": "571",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "table_dpsh_range",
+          "tier": "-",
+          "eva": "3, 4 i 5",
+          "cc": "3, 4 i 5",
+          "confidence": 1.0,
+          "status": "MATCH"
+        }
+      ]
+    },
+    "vs_pipeline": {
+      "pipeline_accuracy": 7.7,
+      "cc_accuracy": 23.1,
+      "disagreements": [
+        {
+          "variable": "expedient",
+          "cc_value": "4001607",
+          "pipeline_value": "13/52/04",
+          "eva_value": "4001607"
+        },
+        {
+          "variable": "lab_depth",
+          "cc_value": "-1.00 a -1.15 m",
+          "pipeline_value": "-1.0 a -1.15 m",
+          "eva_value": "Profunditat:  -1.00  a -1.15 m"
+        },
+        {
+          "variable": "lab_location",
+          "cc_value": "Punt P-3",
+          "pipeline_value": "P-3",
+          "eva_value": "Punt: P-3"
+        },
+        {
+          "variable": "lab_tests_text",
+          "cc_value": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93; Assaig d'expansivitat Lambe UNE 103500/94; Assaig de contingut en sulfats UNE 83963:2008",
+          "pipeline_value": "Data obertura:\nDADES INICIALS:\nLinyola. Carrer Clot de la Llacuna. 4001607\nDeterminació del límit líquid d'un sòl       UNE 103103 / 94\nDeterminació del límit plàstic d'un sòl       UNE 103104 / 93",
+          "eva_value": "Assaig de Límits d’Atterberg UNE 103103/94 – 104/93\nAssaig d’expansivitat Lambe UNE 103500/94\nAssaig de contingut en sulfats UNE 83963 : 2008"
+        },
+        {
+          "variable": "municipality",
+          "cc_value": "Linyola",
+          "pipeline_value": "LINYOLA",
+          "eva_value": "Linyola"
+        },
+        {
+          "variable": "lab_field_company",
+          "cc_value": "TPS Prospecció del Subsòl, S.L.",
+          "pipeline_value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "eva_value": "TPS PROSPECCIÓ DEL SUBSÒL, S.L"
+        },
+        {
+          "variable": "lab_field_description",
+          "cc_value": "Realització d'assaigs de penetració dinàmica tipus DPSH i assaig SPT amb recuperació de mostra",
+          "pipeline_value": "laboratori d'assaigs per al control de qualitat de l'edificació",
+          "eva_value": "laboratori d’assaigs per al control de qualitat de l’edificació"
+        },
+        {
+          "variable": "lab_testing_company",
+          "cc_value": "TPS Prospecció del Subsòl SL (Soil Assaig)",
+          "pipeline_value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "eva_value": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+        },
+        {
+          "variable": "lab_testing_description",
+          "cc_value": "Assaig de Límits d'Atterberg UNE 103103/94-104/93, Assaig d'expansivitat Lambe UNE 103500/94, Assaig de contingut en sulfats UNE 83963:2008",
+          "pipeline_value": "laboratori d'assaigs per al control de qualitat de l'edificació",
+          "eva_value": "laboratori d’assaigs per al control de qualitat de l’edificació"
+        }
+      ],
+      "disagreement_count": 9
+    }
+  },
+  "trace": [
+    {
+      "action_id": "extract_4001607_informe.doc",
+      "type": "file_extraction",
+      "file": "4001607_informe.doc",
+      "role": "reference_report",
+      "origin": "project",
+      "method": "doc_convert",
+      "vars_extracted": 38,
+      "elapsed_s": 25.11,
+      "usage": {
+        "input_tokens": 6796,
+        "output_tokens": 1386,
+        "elapsed_s": 21.68
+      }
+    },
+    {
+      "action_id": "extract_4672-GTL-25 Linyola.pdf",
+      "type": "file_extraction",
+      "file": "4672-GTL-25 Linyola.pdf",
+      "role": "gtl_report",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 18,
+      "elapsed_s": 33.38,
+      "usage": {
+        "input_tokens": 12456,
+        "output_tokens": 817,
+        "elapsed_s": 32.24
+      }
+    },
+    {
+      "action_id": "extract_FOTOGRAFIES",
+      "type": "file_extraction",
+      "file": "FOTOGRAFIES",
+      "role": "photos_dir",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_PENETROS.pdf",
+      "type": "file_extraction",
+      "file": "PENETROS.pdf",
+      "role": "dpsh_field_sheet",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 20,
+      "elapsed_s": 23.56,
+      "usage": {
+        "input_tokens": 6240,
+        "output_tokens": 567,
+        "elapsed_s": 22.77
+      }
+    },
+    {
+      "action_id": "crop_reread_PENETROS.pdf",
+      "type": "agentic_crop",
+      "file": "PENETROS.pdf",
+      "target_vars": [
+        "num_soil_levels"
+      ],
+      "improved_vars": [],
+      "usage": {
+        "input_tokens": 4759,
+        "output_tokens": 277,
+        "elapsed_s": 29.76
+      }
+    },
+    {
+      "action_id": "extract_comanda laboratori_4001607_LINYOLA.xls",
+      "type": "file_extraction",
+      "file": "comanda laboratori_4001607_LINYOLA.xls",
+      "role": "lab_order",
+      "origin": "project",
+      "method": "excel_parse",
+      "vars_extracted": 3,
+      "elapsed_s": 0.01,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_pl situ.pdf",
+      "type": "file_extraction",
+      "file": "pl situ.pdf",
+      "role": "situation_plan",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 7,
+      "elapsed_s": 10.84,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 248,
+        "elapsed_s": 10.04
+      }
+    },
+    {
+      "action_id": "extract_tall.pdf",
+      "type": "file_extraction",
+      "file": "tall.pdf",
+      "role": "correlation_section",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 11,
+      "elapsed_s": 11.45,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 365,
+        "elapsed_s": 11.27
+      }
+    },
+    {
+      "action_id": "extract_4001607_DPSH.xls",
+      "type": "file_extraction",
+      "file": "4001607_DPSH.xls",
+      "role": "dpsh_excel",
+      "origin": "project",
+      "method": "excel_parse",
+      "vars_extracted": 0,
+      "elapsed_s": 0.01,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_lab-sig.pdf",
+      "type": "file_extraction",
+      "file": "lab-sig.pdf",
+      "role": "lab_results_pdf",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 15,
+      "elapsed_s": 26.46,
+      "usage": {
+        "input_tokens": 12456,
+        "output_tokens": 671,
+        "elapsed_s": 25.47
+      }
+    },
+    {
+      "action_id": "extract_25.0616",
+      "type": "file_extraction",
+      "file": "25.0616",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_Punts de Sondeig_Silvia_Jaume (1).pdf",
+      "type": "file_extraction",
+      "file": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 10.79,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 252,
+        "elapsed_s": 10.36
+      }
+    },
+    {
+      "action_id": "extract_Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+      "type": "file_extraction",
+      "file": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 10.33,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 253,
+        "elapsed_s": 9.91
+      }
+    },
+    {
+      "action_id": "extract_4001607_plànol de situació.pdf",
+      "type": "file_extraction",
+      "file": "4001607_plànol de situació.pdf",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 7,
+      "elapsed_s": 10.18,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 259,
+        "elapsed_s": 9.92
+      }
+    },
+    {
+      "action_id": "extract_PLAN_COST_LINYOLA.xlsx",
+      "type": "file_extraction",
+      "file": "PLAN_COST_LINYOLA.xlsx",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "excel_parse",
+      "vars_extracted": 2,
+      "elapsed_s": 0.48,
+      "usage": {}
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image005.jpg",
+      "type": "file_skip",
+      "file": "image005.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image006.jpg",
+      "type": "file_skip",
+      "file": "image006.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image008.png",
+      "type": "file_skip",
+      "file": "image008.png",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image011.png",
+      "type": "file_skip",
+      "file": "image011.png",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_PLAN_COST_LINYOLA_img0.png",
+      "type": "file_skip",
+      "file": "PLAN_COST_LINYOLA_img0.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_G3DT_Silvia_Jaume signat.pdf",
+      "type": "file_extraction",
+      "file": "G3DT_Silvia_Jaume signat.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 15,
+      "elapsed_s": 16.82,
+      "usage": {
+        "input_tokens": 6240,
+        "output_tokens": 502,
+        "elapsed_s": 16.07
+      }
+    },
+    {
+      "action_id": "extract_Punts de Sondeig_Silvia_Jaume (1).pdf",
+      "type": "file_extraction",
+      "file": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 9.97,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 252,
+        "elapsed_s": 9.53
+      }
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "extract_G3DT_Silvia_Jaume signat_img0.jpeg",
+      "type": "file_extraction",
+      "file": "G3DT_Silvia_Jaume signat_img0.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 5.07,
+      "usage": {
+        "input_tokens": 3141,
+        "output_tokens": 4,
+        "elapsed_s": 5.05
+      }
+    },
+    {
+      "action_id": "extract_G3DT_Silvia_Jaume signat_img1.jpeg",
+      "type": "file_extraction",
+      "file": "G3DT_Silvia_Jaume signat_img1.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 3.19,
+      "usage": {
+        "input_tokens": 1701,
+        "output_tokens": 4,
+        "elapsed_s": 3.17
+      }
+    },
+    {
+      "action_id": "extract_G3DT_Silvia_Jaume signat_img2.jpeg",
+      "type": "file_extraction",
+      "file": "G3DT_Silvia_Jaume signat_img2.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 2.31,
+      "usage": {
+        "input_tokens": 1681,
+        "output_tokens": 4,
+        "elapsed_s": 2.28
+      }
+    },
+    {
+      "action_id": "extract_G3DT_Silvia_Jaume signat_img3.jpeg",
+      "type": "file_extraction",
+      "file": "G3DT_Silvia_Jaume signat_img3.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 6.7,
+      "usage": {
+        "input_tokens": 1681,
+        "output_tokens": 4,
+        "elapsed_s": 6.68
+      }
+    },
+    {
+      "action_id": "skip_G3DT_Silvia_Jaume signat_img4.png",
+      "type": "file_skip",
+      "file": "G3DT_Silvia_Jaume signat_img4.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_G3DT_Silvia_Jaume signat_img5.png",
+      "type": "file_extraction",
+      "file": "G3DT_Silvia_Jaume signat_img5.png",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 2.91,
+      "usage": {
+        "input_tokens": 1713,
+        "output_tokens": 4,
+        "elapsed_s": 2.88
+      }
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume.pdf",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 23,
+      "elapsed_s": 93.87,
+      "usage": {
+        "input_tokens": 17118,
+        "output_tokens": 761,
+        "elapsed_s": 88.6
+      }
+    },
+    {
+      "action_id": "extract_Punts de Sondeig_Silvia_Jaume.pdf",
+      "type": "file_extraction",
+      "file": "Punts de Sondeig_Silvia_Jaume.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 9,
+      "elapsed_s": 9.76,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 273,
+        "elapsed_s": 9.33
+      }
+    },
+    {
+      "action_id": "extract_image.png",
+      "type": "file_extraction",
+      "file": "image.png",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 7.61,
+      "usage": {
+        "input_tokens": 1611,
+        "output_tokens": 4,
+        "elapsed_s": 7.58
+      }
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image005.png",
+      "type": "file_skip",
+      "file": "image005.png",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image006.jpg",
+      "type": "file_skip",
+      "file": "image006.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img0.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img0.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 4.13,
+      "usage": {
+        "input_tokens": 3135,
+        "output_tokens": 4,
+        "elapsed_s": 4.08
+      }
+    },
+    {
+      "action_id": "skip_2_02B_DG_Silvia_Jaume_img1.png",
+      "type": "file_skip",
+      "file": "2_02B_DG_Silvia_Jaume_img1.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img2.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img2.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 8.46,
+      "usage": {
+        "input_tokens": 3147,
+        "output_tokens": 4,
+        "elapsed_s": 8.43
+      }
+    },
+    {
+      "action_id": "skip_2_02B_DG_Silvia_Jaume_img3.png",
+      "type": "file_skip",
+      "file": "2_02B_DG_Silvia_Jaume_img3.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img4.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img4.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 8.92,
+      "usage": {
+        "input_tokens": 3037,
+        "output_tokens": 4,
+        "elapsed_s": 8.89
+      }
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img5.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img5.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 2.22,
+      "usage": {
+        "input_tokens": 3121,
+        "output_tokens": 4,
+        "elapsed_s": 2.19
+      }
+    },
+    {
+      "action_id": "skip_2_02B_DG_Silvia_Jaume_img6.jpeg",
+      "type": "file_skip",
+      "file": "2_02B_DG_Silvia_Jaume_img6.jpeg",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img7.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img7.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 6.79,
+      "usage": {
+        "input_tokens": 2538,
+        "output_tokens": 4,
+        "elapsed_s": 6.76
+      }
+    },
+    {
+      "action_id": "skip_2_02B_DG_Silvia_Jaume_img8.jpeg",
+      "type": "file_skip",
+      "file": "2_02B_DG_Silvia_Jaume_img8.jpeg",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img9.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img9.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 2.34,
+      "usage": {
+        "input_tokens": 2398,
+        "output_tokens": 4,
+        "elapsed_s": 2.31
+      }
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume.pdf",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 22,
+      "elapsed_s": 102.46,
+      "usage": {
+        "input_tokens": 17118,
+        "output_tokens": 647,
+        "elapsed_s": 97.18
+      }
+    },
+    {
+      "action_id": "extract_Punts de Sondeig_Silvia_Jaume.pdf",
+      "type": "file_extraction",
+      "file": "Punts de Sondeig_Silvia_Jaume.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 18.04,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 253,
+        "elapsed_s": 17.67
+      }
+    },
+    {
+      "action_id": "extract_image.png",
+      "type": "file_extraction",
+      "file": "image.png",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 6.87,
+      "usage": {
+        "input_tokens": 1611,
+        "output_tokens": 4,
+        "elapsed_s": 6.83
+      }
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img0.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img0.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 6.23,
+      "usage": {
+        "input_tokens": 3135,
+        "output_tokens": 4,
+        "elapsed_s": 6.21
+      }
+    },
+    {
+      "action_id": "skip_2_02B_DG_Silvia_Jaume_img1.png",
+      "type": "file_skip",
+      "file": "2_02B_DG_Silvia_Jaume_img1.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img2.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img2.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 16.97,
+      "usage": {
+        "input_tokens": 3147,
+        "output_tokens": 4,
+        "elapsed_s": 16.94
+      }
+    },
+    {
+      "action_id": "skip_2_02B_DG_Silvia_Jaume_img3.png",
+      "type": "file_skip",
+      "file": "2_02B_DG_Silvia_Jaume_img3.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img4.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img4.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 4.27,
+      "usage": {
+        "input_tokens": 3037,
+        "output_tokens": 4,
+        "elapsed_s": 4.24
+      }
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img5.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img5.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 2.2,
+      "usage": {
+        "input_tokens": 3121,
+        "output_tokens": 4,
+        "elapsed_s": 2.17
+      }
+    },
+    {
+      "action_id": "skip_2_02B_DG_Silvia_Jaume_img6.jpeg",
+      "type": "file_skip",
+      "file": "2_02B_DG_Silvia_Jaume_img6.jpeg",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img7.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img7.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 3.25,
+      "usage": {
+        "input_tokens": 2538,
+        "output_tokens": 4,
+        "elapsed_s": 3.23
+      }
+    },
+    {
+      "action_id": "skip_2_02B_DG_Silvia_Jaume_img8.jpeg",
+      "type": "file_skip",
+      "file": "2_02B_DG_Silvia_Jaume_img8.jpeg",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_2_02B_DG_Silvia_Jaume_img9.jpeg",
+      "type": "file_extraction",
+      "file": "2_02B_DG_Silvia_Jaume_img9.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 2.91,
+      "usage": {
+        "input_tokens": 2398,
+        "output_tokens": 4,
+        "elapsed_s": 2.88
+      }
+    },
+    {
+      "action_id": "usage_summary",
+      "type": "summary",
+      "total_usage": {
+        "input_tokens": 156130,
+        "output_tokens": 7859,
+        "api_calls": 35
+      }
+    }
+  ]
+}

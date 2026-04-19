@@ -1,0 +1,24 @@
+{
+  "document_type": "map",
+  "document_description": "Site plan with plot areas and dimensions",
+  "concepts_found": [
+    {
+      "concept_id": "superficie_parcela_m2",
+      "confidence": 0.8,
+      "signal_preview": "244.00 m²",
+      "page": 1
+    },
+    {
+      "concept_id": "street_address",
+      "confidence": 0.7,
+      "signal_preview": "Carrer LLacura",
+      "page": 1
+    },
+    {
+      "concept_id": "municipality",
+      "confidence": 0.6,
+      "signal_preview": "Roquetes",
+      "page": 1
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "document_type": "map",
+  "document_description": "Aerial view of a plot with marked zones and measurements",
+  "concepts_found": [
+    {
+      "concept_id": "superficie_parcela_m2",
+      "confidence": 0.8,
+      "signal_preview": "32980",
+      "page": 1
+    }
+  ]
+}

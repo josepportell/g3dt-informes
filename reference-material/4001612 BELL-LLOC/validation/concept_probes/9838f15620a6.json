@@ -1,0 +1,21 @@
+{
+  "document_type": "field_sheet",
+  "document_description": "Geotechnical drilling work order form from TPS company for rotary drilling operations",
+  "concepts_found": [
+    {
+      "concept_id": "client_name",
+      "confidence": 0.9,
+      "signal_preview": "C-3"
+    },
+    {
+      "concept_id": "contact_name",
+      "confidence": 0.8,
+      "signal_preview": "Eva"
+    },
+    {
+      "concept_id": "field_date",
+      "confidence": 0.9,
+      "signal_preview": "6.10.2025"
+    }
+  ]
+}

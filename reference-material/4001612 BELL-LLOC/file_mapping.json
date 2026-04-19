@@ -1,5 +1,17 @@
 {
   "roles": {
+    "architect_plan": {
+      "path": "A.01.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": "planol"
+    },
+    "project_email": {
+      "path": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
     "reference_report": {
       "path": "4001612_informe.doc",
       "confidence": "high",
@@ -18,16 +30,40 @@
       "detection": "filename_pattern",
       "vision_type": "planol"
     },
-    "architect_plan": {
-      "path": "A.01.pdf",
+    "dpsh_excel": {
+      "path": "ANNEXES/4001612_DPSH.xls",
       "confidence": "high",
       "detection": "filename_pattern",
-      "vision_type": "planol"
+      "vision_type": null
     },
     "photos_dir": {
       "path": "FOTOGRAFIES",
       "confidence": "high",
-      "detection": "directory_name",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "field_photo": {
+      "path": "FOTOGRAFIES/DPSH/Imagen de WhatsApp 2025-10-01 a las 14.16.23_e62682b9.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_test_point": {
+      "path": "FOTOGRAFIES/DPSH/P1.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "sondeig_annex": {
+      "path": "PDF/ANNEXES/4001612_sondeig.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": "sondeig_annex"
+    },
+    "lab_results_pdf": {
+      "path": "PDF/ANNEXES/LAB-SIG.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
       "vision_type": null
     },
     "dpsh_field_sheet": {
@@ -40,7 +76,7 @@
       "path": "SONDEIG.pdf",
       "confidence": "high",
       "detection": "filename_pattern",
-      "vision_type": null
+      "vision_type": "sondeig"
     },
     "lab_order": {
       "path": "comanda laboratori_4001612_BELL-LLOC.xls",
@@ -59,30 +95,12 @@
       "confidence": "high",
       "detection": "filename_pattern",
       "vision_type": null
-    },
-    "dpsh_excel": {
-      "path": "ANNEXES/4001612_DPSH.xls",
-      "confidence": "high",
-      "detection": "filename_pattern",
-      "vision_type": null
-    },
-    "sondeig_annex": {
-      "path": "PDF/ANNEXES/4001612_sondeig.pdf",
-      "confidence": "high",
-      "detection": "filename_pattern",
-      "vision_type": "sondeig_annex"
-    },
-    "lab_results_pdf": {
-      "path": "PDF/ANNEXES/LAB-SIG.pdf",
-      "confidence": "high",
-      "detection": "filename_pattern",
-      "vision_type": null
     }
   },
   "ignored": [
     {
-      "path": "4001612_AUDIT_VISUAL.docx",
-      "reason": "legacy_word"
+      "path": "25.0647/Thumbs.db",
+      "reason": "Windows thumbnail cache"
     },
     {
       "path": "4001612_PORTADA_25.doc",
@@ -101,40 +119,8 @@
       "reason": "detailed_doc"
     },
     {
-      "path": "4001612_test_fase2.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "ACCEPTACIO/",
+      "path": "ACCEPTACIO",
       "reason": "acceptance_dir"
-    },
-    {
-      "path": "EXPLICACIÓ DETALLS.docx",
-      "reason": "explanation_doc"
-    },
-    {
-      "path": "PDF/",
-      "reason": "exported_pdf_dir"
-    },
-    {
-      "path": "PDF V0/",
-      "reason": "exported_pdf_dir"
-    },
-    {
-      "path": "Thumbs.db",
-      "reason": "temp_file"
-    },
-    {
-      "path": "validation/",
-      "reason": "output_dir"
-    },
-    {
-      "path": "~$01612_informe_DETALLAT.doc",
-      "reason": "detailed_doc"
-    },
-    {
-      "path": "~$01612_informe_v0.doc",
-      "reason": "temp_file"
     },
     {
       "path": "ANNEXES/4001612_fotografies.FH11",
@@ -153,28 +139,286 @@
       "reason": "freehand_file"
     },
     {
-      "path": "ANNEXES/ALTRES/",
-      "reason": "misc_subdir"
+      "path": "EXPLICACIÓ DETALLS.docx",
+      "reason": "explanation_doc"
+    },
+    {
+      "path": "FOTOGRAFIES/DPSH/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "FOTOGRAFIES/SONDEIG/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "FOTOGRAFIES/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "PDF",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "PDF/4001612_informe.pdf",
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/4001612_DPSH.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/4001612_fotografies.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_plànol de situació.pdf",
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/4001612_tall de correlació.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/LLETRA",
+      "reason": "letter_dir"
+    },
+    {
+      "path": "PDF/LLETRA/4001612_PORTADA_25.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/LLETRA/4001612_informe.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/LLETRA/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "PDF/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "PDF V0",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "PDF V0/4001612_informe_v0.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF V0/ANNEXES/4001612_DPSH.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF V0/ANNEXES/4001612_fotografies.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF V0/ANNEXES/4001612_plànol de situació.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF V0/ANNEXES/4001612_sondeig.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF V0/ANNEXES/4001612_tall de correlació.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF V0/LLETRA",
+      "reason": "letter_dir"
+    },
+    {
+      "path": "PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF V0/LLETRA/4001612_informe_v0.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "file_mapping.json",
+      "reason": "our_output"
+    },
+    {
+      "path": "~$01612_informe_DETALLAT.doc",
+      "reason": "Word temp file"
+    },
+    {
+      "path": "~$01612_informe_v0.doc",
+      "reason": "Word temp file"
     }
   ],
   "unassigned": [
     "25.0647",
-    "PDF/ANNEXES/4001612_plànol de situació.pdf"
+    "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "4001612_AUDIT_VISUAL.docx",
+    "4001612_test_fase2.docx",
+    "ACCEPTACIO/DADES CLIENT.txt",
+    "ANNEXES",
+    "ANNEXES/ALTRES",
+    "ANNEXES/ALTRES/COORDENADES.txt",
+    "FOTOGRAFIES/DPSH",
+    "FOTOGRAFIES/SONDEIG",
+    "PDF/ANNEXES",
+    "PDF V0/ANNEXES",
+    "_user_data_prev.json",
+    "25.0647/4613172CG1141S0001SU-15.pdf",
+    "25.0647/4613173CG1141S0001ZU-13.pdf"
   ],
+  "email_attachments": {
+    "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/4613172CG1141S0001SU.pdf": {
+      "source_msg": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "situation_plan",
+      "probe_status": "ok",
+      "probe_detail": "situation_plan",
+      "confidence": 0.7,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/4613173CG1141S0001ZU.pdf": {
+      "source_msg": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "situation_plan",
+      "probe_status": "ok",
+      "probe_detail": "situation_plan",
+      "confidence": 0.7,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image001.jpg": {
+      "source_msg": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image005.png": {
+      "source_msg": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image008.jpg": {
+      "source_msg": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image009.jpg": {
+      "source_msg": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/PLAN_COST_BELL-LLOC.xlsx": {
+      "source_msg": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.xlsx)",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image001.jpg": {
+      "source_msg": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image005.jpg": {
+      "source_msg": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image008.jpg": {
+      "source_msg": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image010.png": {
+      "source_msg": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image013.jpg": {
+      "source_msg": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image014.jpg": {
+      "source_msg": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": "field_photo",
+      "probe_status": "ok",
+      "probe_detail": "field_photo",
+      "confidence": 0.7,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    }
+  },
   "_metadata": {
-    "scanned_at": "2026-03-29T16:34:59.118192+00:00",
+    "scanned_at": "2026-04-18T20:26:51.213482+00:00",
     "confirmed_by_user": false,
     "scanner_version": "2.2"
   }

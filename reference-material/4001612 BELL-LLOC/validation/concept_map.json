@@ -1,0 +1,1340 @@
+{
+  "metadata": {
+    "project": "4001612 BELL-LLOC",
+    "scanned_at": "2026-04-11T22:34:03",
+    "total_files": 75,
+    "vision_probes_sent": 9,
+    "total_concepts_found": 13,
+    "total_concepts_unresolved": 57,
+    "duration_ms": 5027
+  },
+  "file_inventory": [
+    {
+      "path": "25.0647/4613172CG1141S0001SU-15.pdf",
+      "type": "pdf_vector",
+      "size_kb": 227,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "25.0647/4613173CG1141S0001ZU-13.pdf",
+      "type": "pdf_vector",
+      "size_kb": 227,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "25.0647/A.01.pdf",
+      "type": "pdf_vector",
+      "size_kb": 1278,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+      "type": "excel",
+      "size_kb": 3223,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_name",
+        "street_address",
+        "contact_name"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.85,
+        "client_name": 0.9,
+        "street_address": 0.9,
+        "contact_name": 0.9
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+      "type": "excel",
+      "size_kb": 109,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+      "type": "pdf_vector",
+      "size_kb": 358,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "client_nif"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.7999999999999999,
+        "client_email": 0.75,
+        "client_nif": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "type": "email",
+      "size_kb": 1202,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "client_name",
+        "access_url",
+        "building_type"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "client_name": 0.7999999999999999,
+        "access_url": 0.75,
+        "building_type": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+      "type": "email",
+      "size_kb": 875,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "client_name",
+        "access_url",
+        "building_type"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "client_name": 0.7999999999999999,
+        "access_url": 0.75,
+        "building_type": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "4001612_AUDIT_VISUAL.docx",
+      "type": "docx",
+      "size_kb": 11232,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4001612_PORTADA_25.doc",
+      "type": "docx",
+      "size_kb": 194,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4001612_informe.doc",
+      "type": "docx",
+      "size_kb": 4101,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4001612_informe_DETALLAT (Reparado).doc",
+      "type": "docx",
+      "size_kb": 4107,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4001612_informe_DETALLAT.doc",
+      "type": "docx",
+      "size_kb": 4106,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4001612_test_fase2.docx",
+      "type": "docx",
+      "size_kb": 9858,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+      "type": "pdf_vector",
+      "size_kb": 362,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_email",
+        "client_nif",
+        "field_date"
+      ],
+      "concept_confidence": {
+        "client_email": 0.75,
+        "client_nif": 0.7999999999999999,
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "A.01 amb punts.pdf",
+      "type": "pdf_vector",
+      "size_kb": 1427,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "A.01.pdf",
+      "type": "pdf_vector",
+      "size_kb": 1278,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "ACCEPTACIO/DADES CLIENT.txt",
+      "type": "text",
+      "size_kb": 0,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "client_nif"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.8,
+        "client_email": 0.8,
+        "client_nif": 0.85
+      },
+      "notes": ""
+    },
+    {
+      "path": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+      "type": "pdf_vector",
+      "size_kb": 363,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "client_nif",
+        "field_date"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.7999999999999999,
+        "client_email": 0.75,
+        "client_nif": 0.7999999999999999,
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "ANNEXES/4001612_DPSH.xls",
+      "type": "excel",
+      "size_kb": 90,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "ANNEXES/ALTRES/COORDENADES.txt",
+      "type": "text",
+      "size_kb": 0,
+      "text_extractable": true,
+      "concepts_detected": [
+        "utm_coordinates"
+      ],
+      "concept_confidence": {
+        "utm_coordinates": 0.95
+      },
+      "notes": ""
+    },
+    {
+      "path": "EXPLICACIÓ DETALLS.docx",
+      "type": "docx",
+      "size_kb": 7244,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/DPSH/Imagen de WhatsApp 2025-10-01 a las 14.16.23_e62682b9.jpg",
+      "type": "image",
+      "size_kb": 249,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/DPSH/P1.jpg",
+      "type": "image",
+      "size_kb": 437,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/DPSH/P2.jpg",
+      "type": "image",
+      "size_kb": 482,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.54.41_ccbf024a.jpg",
+      "type": "image",
+      "size_kb": 479,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
+      "type": "image",
+      "size_kb": 562,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.55.21_2f75bf2a.jpg",
+      "type": "image",
+      "size_kb": 294,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
+      "type": "image",
+      "size_kb": 522,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.03.25_47ce45a0.jpg",
+      "type": "image",
+      "size_kb": 438,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.03.36_f091c815.jpg",
+      "type": "image",
+      "size_kb": 348,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.53.10_6b9bc5f4.jpg",
+      "type": "image",
+      "size_kb": 484,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/4001612_informe.pdf",
+      "type": "pdf_vector",
+      "size_kb": 1972,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_DPSH.pdf",
+      "type": "pdf_vector",
+      "size_kb": 105,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_fotografies.pdf",
+      "type": "pdf_vector",
+      "size_kb": 273,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_plànol de situació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 231,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_sondeig.pdf",
+      "type": "pdf_vector",
+      "size_kb": 223,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/4001612_tall de correlació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 50,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/LAB-SIG.pdf",
+      "type": "pdf_vector",
+      "size_kb": 157,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/LLETRA/4001612_PORTADA_25.pdf",
+      "type": "pdf_vector",
+      "size_kb": 58,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/LLETRA/4001612_informe.pdf",
+      "type": "pdf_vector",
+      "size_kb": 849,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF V0/4001612_informe_v0.pdf",
+      "type": "pdf_vector",
+      "size_kb": 1827,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_email",
+        "client_name",
+        "building_type",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_email": 0.75,
+        "client_name": 0.7999999999999999,
+        "building_type": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "PDF V0/ANNEXES/4001612_DPSH.pdf",
+      "type": "pdf_vector",
+      "size_kb": 105,
+      "text_extractable": true,
+      "concepts_detected": [
+        "building_type",
+        "field_date"
+      ],
+      "concept_confidence": {
+        "building_type": 0.7999999999999999,
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "PDF V0/ANNEXES/4001612_fotografies.pdf",
+      "type": "pdf_vector",
+      "size_kb": 273,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF V0/ANNEXES/4001612_plànol de situació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 231,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF V0/ANNEXES/4001612_sondeig.pdf",
+      "type": "pdf_vector",
+      "size_kb": 223,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF V0/ANNEXES/4001612_tall de correlació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 50,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf",
+      "type": "pdf_vector",
+      "size_kb": 59,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_name",
+        "building_type",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_name": 0.7999999999999999,
+        "building_type": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "PDF V0/LLETRA/4001612_informe_v0.pdf",
+      "type": "pdf_vector",
+      "size_kb": 849,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "PENETROS.pdf",
+      "type": "pdf_scanned",
+      "size_kb": 223,
+      "text_extractable": false,
+      "concepts_detected": [
+        "field_date"
+      ],
+      "concept_confidence": {
+        "field_date": 0.95
+      },
+      "notes": "field_sheet: Geotechnical field work form with penetrometer equipment details and test parameters"
+    },
+    {
+      "path": "SONDEIG.pdf",
+      "type": "pdf_scanned",
+      "size_kb": 861,
+      "text_extractable": false,
+      "concepts_detected": [
+        "client_name",
+        "contact_name",
+        "field_date"
+      ],
+      "concept_confidence": {
+        "client_name": 0.9,
+        "contact_name": 0.8,
+        "field_date": 0.9
+      },
+      "notes": "field_sheet: Geotechnical drilling work order form from TPS company for rotary drilling operations"
+    },
+    {
+      "path": "_user_data_prev.json",
+      "type": "other",
+      "size_kb": 4,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "comanda laboratori_4001612_BELL-LLOC.xls",
+      "type": "excel",
+      "size_kb": 459,
+      "text_extractable": true,
+      "concepts_detected": [
+        "street_address",
+        "building_type",
+        "municipality"
+      ],
+      "concept_confidence": {
+        "street_address": 0.9,
+        "building_type": 0.9,
+        "municipality": 0.9
+      },
+      "notes": ""
+    },
+    {
+      "path": "pl. situaci.pdf",
+      "type": "pdf_vector",
+      "size_kb": 3367,
+      "text_extractable": true,
+      "concepts_detected": [
+        "field_date"
+      ],
+      "concept_confidence": {
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "tall.pdf",
+      "type": "pdf_vector",
+      "size_kb": 694,
+      "text_extractable": true,
+      "concepts_detected": [
+        "field_date"
+      ],
+      "concept_confidence": {
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/4613172CG1141S0001SU.pdf",
+      "type": "pdf_vector",
+      "size_kb": 227,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/4613173CG1141S0001ZU.pdf",
+      "type": "pdf_vector",
+      "size_kb": 227,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image001.jpg",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image005.png",
+      "type": "image",
+      "size_kb": 23,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image008.jpg",
+      "type": "image",
+      "size_kb": 161,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image009.jpg",
+      "type": "image",
+      "size_kb": 301,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613172CG1141S0001SU_img0.png",
+      "type": "image",
+      "size_kb": 49,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Government logo and department names"
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613172CG1141S0001SU_img1.png",
+      "type": "image",
+      "size_kb": 13,
+      "text_extractable": false,
+      "concepts_detected": [
+        "street_address",
+        "municipality",
+        "superficie_parcela_m2"
+      ],
+      "concept_confidence": {
+        "street_address": 0.8,
+        "municipality": 0.2,
+        "superficie_parcela_m2": 0.9
+      },
+      "notes": "map: Site plan with plot boundaries and coordinates"
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613172CG1141S0001SU_img2.jpeg",
+      "type": "image",
+      "size_kb": 24,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "site_photo: No text or data visible"
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613173CG1141S0001ZU_img0.png",
+      "type": "image",
+      "size_kb": 49,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Government logo and department names"
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613173CG1141S0001ZU_img1.png",
+      "type": "image",
+      "size_kb": 13,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Urban planning map with plot 73 highlighted"
+    },
+    {
+      "path": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613173CG1141S0001ZU_img2.jpeg",
+      "type": "image",
+      "size_kb": 24,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "site_photo: No text or data visible"
+    },
+    {
+      "path": "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/PLAN_COST_BELL-LLOC.xlsx",
+      "type": "excel",
+      "size_kb": 109,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image001.jpg",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image005.jpg",
+      "type": "image",
+      "size_kb": 4,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image008.jpg",
+      "type": "image",
+      "size_kb": 4,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image010.png",
+      "type": "image",
+      "size_kb": 23,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image013.jpg",
+      "type": "image",
+      "size_kb": 161,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image014.jpg",
+      "type": "image",
+      "size_kb": 301,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/PLAN_COST_BELL-LLOC_img0.png",
+      "type": "image",
+      "size_kb": 9,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Logo image"
+    }
+  ],
+  "concept_sources": {
+    "client_phone": [
+      {
+        "file": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "620199571",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+        "confidence": 0.75,
+        "signal_preview": "620199571",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+        "confidence": 0.75,
+        "signal_preview": "620199571",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "620199571",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0647/A.01.pdf",
+        "confidence": 0.75,
+        "signal_preview": "620199571",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.85,
+        "signal_preview": "620199571",
+        "extraction_method": "regex_phone",
+        "page": null
+      },
+      {
+        "file": "A.01 amb punts.pdf",
+        "confidence": 0.75,
+        "signal_preview": "620199571",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "A.01.pdf",
+        "confidence": 0.75,
+        "signal_preview": "620199571",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/DADES CLIENT.txt",
+        "confidence": 0.8,
+        "signal_preview": "696990400",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "client_email": [
+      {
+        "file": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+        "confidence": 0.75,
+        "signal_preview": "e.arquitectura@boschnovell.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+        "confidence": 0.75,
+        "signal_preview": "administracion@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0647/A.01.pdf",
+        "confidence": 0.75,
+        "signal_preview": "arquitectura@boschnovell.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+        "confidence": 0.75,
+        "signal_preview": "laboratorio@tps-perforaciones.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "A.01 amb punts.pdf",
+        "confidence": 0.75,
+        "signal_preview": "arquitectura@boschnovell.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "A.01.pdf",
+        "confidence": 0.75,
+        "signal_preview": "arquitectura@boschnovell.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/DADES CLIENT.txt",
+        "confidence": 0.8,
+        "signal_preview": "mangelspenella@gmail.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "PDF V0/4001612_informe_v0.pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "PDF V0/LLETRA/4001612_informe_v0.pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "client_name": [
+      {
+        "file": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@bosch",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@bosch",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "ARQUITECCTURA BOSCH NOVELL",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "PDF V0/4001612_informe_v0.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "RAMON MITJANA S.L.",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "RAMON MITJANA S.L.",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "SONDEIG.pdf",
+        "confidence": 0.9,
+        "signal_preview": "C-3",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": null
+      }
+    ],
+    "street_address": [
+      {
+        "file": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "comanda laboratori_4001612_BELL-LLOC.xls",
+        "confidence": 0.9,
+        "signal_preview": "C/ Vallbona, 22",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613172CG1141S0001SU_img1.png",
+        "confidence": 0.8,
+        "signal_preview": "Carrer Mestre, Ortiz, Ramon",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "contact_name": [
+      {
+        "file": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "JORDI",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "SONDEIG.pdf",
+        "confidence": 0.8,
+        "signal_preview": "Eva",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": null
+      }
+    ],
+    "client_nif": [
+      {
+        "file": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B25461443",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B25461443",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B64803075",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/DADES CLIENT.txt",
+        "confidence": 0.85,
+        "signal_preview": "78058457E",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "access_url": [
+      {
+        "file": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+        "confidence": 0.75,
+        "signal_preview": "https://www.google.com/maps/place/41%C2%B037",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+        "confidence": 0.75,
+        "signal_preview": "https://www.google.com/maps/place/41%C2%B037",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "building_type": [
+      {
+        "file": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PDF V0/4001612_informe_v0.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Estudi geològic/ geotècnic per la CONSTRUCCIÓ D’UN",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PDF V0/ANNEXES/4001612_DPSH.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "C7 MESTRE RAMON ORTIZ 15                                   POBLACIÓ: BELL-LLOC",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Estudi geològic/ geotècnic per la CONSTRUCCIÓ D’UN",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "comanda laboratori_4001612_BELL-LLOC.xls",
+        "confidence": 0.9,
+        "signal_preview": "CONSTR HABITATGE",
+        "extraction_method": "label_adjacent",
+        "page": null
+      }
+    ],
+    "field_date": [
+      {
+        "file": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "2025.09.30",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "2025.11.26",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PDF V0/4001612_informe_v0.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "27/10/25",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PDF V0/ANNEXES/4001612_DPSH.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "01/10/2025                                                              NÚMERO D",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "27/10/25",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "pl. situaci.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Octubre 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "tall.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Octubre 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PENETROS.pdf",
+        "confidence": 0.95,
+        "signal_preview": "7-10-25",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": null
+      },
+      {
+        "file": "SONDEIG.pdf",
+        "confidence": 0.9,
+        "signal_preview": "6.10.2025",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": null
+      }
+    ],
+    "utm_coordinates": [
+      {
+        "file": "ANNEXES/ALTRES/COORDENADES.txt",
+        "confidence": 0.95,
+        "signal_preview": "{'point_id': 'P-1', 'x': 314418.9, 'y': 4611117.6, 'z': 198.9}",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "expedient": [
+      {
+        "file": "PDF V0/4001612_informe_v0.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "4001612_v0",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "4001612_v0",
+        "extraction_method": "label_value",
+        "page": null
+      }
+    ],
+    "municipality": [
+      {
+        "file": "comanda laboratori_4001612_BELL-LLOC.xls",
+        "confidence": 0.9,
+        "signal_preview": "BELL-LLOC",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613172CG1141S0001SU_img1.png",
+        "confidence": 0.2,
+        "signal_preview": "",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "superficie_parcela_m2": [
+      {
+        "file": "validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613172CG1141S0001SU_img1.png",
+        "confidence": 0.9,
+        "signal_preview": "46131",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ]
+  },
+  "unresolved": [
+    "Es_settlement",
+    "access_description",
+    "adjacent_east",
+    "adjacent_north",
+    "adjacent_south",
+    "adjacent_west",
+    "architect_company",
+    "architect_name",
+    "building_height_m",
+    "building_structure_desc",
+    "cota_referencia",
+    "field_work_dates",
+    "field_work_dates_text",
+    "foundation_depth_m",
+    "geomech_E",
+    "geomech_cohesion",
+    "geomech_gamma",
+    "geomech_phi",
+    "has_basement",
+    "has_retaining_walls",
+    "historia_geologica_template",
+    "icgc_unit_code",
+    "icgc_unit_description",
+    "icgc_unit_epoch",
+    "is_anthropized",
+    "is_sloped",
+    "is_urban",
+    "k30_value",
+    "lab_depth",
+    "lab_field_company",
+    "lab_field_description",
+    "lab_location",
+    "lab_sample_id",
+    "lab_testing_company",
+    "lab_testing_description",
+    "lab_tests",
+    "lab_tests_text",
+    "location_sentence",
+    "num_dpsh_tests",
+    "num_floors",
+    "num_soil_levels",
+    "parcel_shape",
+    "province",
+    "qa_value",
+    "referencia_catastral",
+    "settlement_cm",
+    "site_description",
+    "site_position",
+    "slope_direction",
+    "slope_percent",
+    "sulfate_mg_kg",
+    "superficie_cadastral",
+    "superficie_construida",
+    "superficie_parcela",
+    "table_dpsh_range",
+    "utm_x",
+    "utm_y"
+  ],
+  "warnings": []
+}

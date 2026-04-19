@@ -1,0 +1,30 @@
+{
+  "document_type": "map",
+  "document_description": "Site plan with plot layouts",
+  "concepts_found": [
+    {
+      "concept_id": "street_address",
+      "confidence": 0.8,
+      "signal_preview": "Carrer Roquetes",
+      "page": 1
+    },
+    {
+      "concept_id": "municipality",
+      "confidence": 0.6,
+      "signal_preview": "not clear",
+      "page": 1
+    },
+    {
+      "concept_id": "superficie_parcela_m2",
+      "confidence": 0.9,
+      "signal_preview": "266.18 m²",
+      "page": 1
+    },
+    {
+      "concept_id": "superficie_construida_m2",
+      "confidence": 0.8,
+      "signal_preview": "not clear",
+      "page": 1
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "document_type": "map",
+  "document_description": "Site plan/aerial view showing project area with penetration test locations and study zone",
+  "concepts_found": [
+    {
+      "concept_id": "street_address",
+      "confidence": 0.8,
+      "signal_preview": "Carrer de la Miranda",
+      "page": 1
+    }
+  ]
+}

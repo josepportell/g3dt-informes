@@ -1,0 +1,45 @@
+{
+  "sondeig_tests": [
+    {
+      "test_id": "S-1",
+      "total_depth_m": 1.2,
+      "num_geological_levels": 1,
+      "layers": [
+        {
+          "depth_from_m": 0.0,
+          "depth_to_m": 0.5,
+          "description": "Terreny Vegetal. Llims argilosos de color marro fosc amb graves i algunes arrels.",
+          "geological_level": 1,
+          "uscs_classification": null,
+          "color": "marro fosc",
+          "moisture": null,
+          "consistency": null,
+          "density": null,
+          "confidence": 1.0,
+          "note": null
+        },
+        {
+          "depth_from_m": 0.5,
+          "depth_to_m": 1.2,
+          "description": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+          "geological_level": 1,
+          "uscs_classification": null,
+          "color": null,
+          "moisture": null,
+          "consistency": null,
+          "density": null,
+          "confidence": 1.0,
+          "note": null
+        }
+      ],
+      "spt_results": null,
+      "elevation_z": 570.9,
+      "water_level_m": null,
+      "rock_detected": true,
+      "rock_depth_m": 1.2,
+      "extraction_notes": "Only two layers present from 0.0 to 1.20 m depth. Geological level column shows only NIVELL 1 for entire depth. Rock refusal noted at 1.20 m."
+    }
+  ],
+  "overall_confidence": 1.0,
+  "extraction_notes": "Document is a clear formatted borehole log with high confidence in extracted data."
+}

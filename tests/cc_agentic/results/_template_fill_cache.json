@@ -1,0 +1,212 @@
+{
+  "96ea7ace3c39d57a8989cf4f19007e4f": {
+    "filled": "19 de febrer de 2026",
+    "raw": "19 de febrer de 2026",
+    "template": "El dia {{ data_camp_text }}, es va visitar l’obra per tal de:"
+  },
+  "8287e80bbb4e1e91b62aefb26b31a99a": {
+    "filled": "Determinació del contingut en ió sulfat en sòls UNE 83963/08",
+    "raw": "Determinació del contingut en ió sulfat en sòls UNE 83963/08",
+    "template": "{{ lab_tests_text }}"
+  },
+  "e3feaf1ee61cf126f966c46efe1f4b65": {
+    "filled": "6",
+    "raw": "6 assaigs de penetració dinàmica DPSH (P-1 a P-6)",
+    "template": "{{ num_dpsh_tests }} assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\")."
+  },
+  "67c6e8ee0712634cb2ea10890386059b": {
+    "filled": "5 viviendas con Pb+1Pp+Bc; 2 viviendas con Ss+Pb+1Pp+Bc",
+    "raw": "5 viviendas con Pb+1Pp+Bc; 2 viviendas con Ss+Pb+1Pp+Bc",
+    "template": "{{ plantes }}"
+  },
+  "6975f7d79671dcf262c31829bb1a5c2e": {
+    "filled": "1655.01",
+    "raw": "1655.01",
+    "template": "{{ superficie_parcela }}"
+  },
+  "f1381f6c727156750beba044124e0417": {
+    "filled": "núm. 3, 4 i 5",
+    "raw": "3, 4 i 5",
+    "template": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar."
+  },
+  "1a56f95911df83c763817625014f6a7e": {
+    "filled": "24 d'octubre de 2025",
+    "raw": "24 d'octubre de 2025",
+    "template": "El dia {{ data_camp_text }}, es va visitar l’obra per tal de:"
+  },
+  "e0eca1b74d75b158fd933ab22772eaa3": {
+    "filled": "4687-GTL-25",
+    "raw": "4687-GTL-25",
+    "template": "Expedient Núm.:  {{ expedient }}"
+  },
+  "5e3f1dc5788748b3ccb0087727bb757e": {
+    "filled": "-1.00 a -1.20 m",
+    "raw": "-1.00 a -1.20 m",
+    "template": "Profunditat: {{ lab_depth }}"
+  },
+  "a710ca7ad7333b148921564db66bf900": {
+    "filled": "S-1",
+    "raw": "Punt S-1",
+    "template": "Punt: {{ lab_location }}"
+  },
+  "e5bc4fb8b4b9fb3c96066975db36882a": {
+    "filled": "1 assaig de contingut en sulfats UNE 83963:2008",
+    "raw": "1 assaig de contingut en sulfats UNE 83963:2008",
+    "template": "{{ lab_tests_text }}"
+  },
+  "cf8a895ffca72dc882e4dbf207fbcc0b": {
+    "filled": "1.08",
+    "raw": "1.08",
+    "template": "Qa= {{ qa_value }} Kg/cm2  amb un factor de seguretat inclòs de F=3"
+  },
+  "85a2c28cb0d7d71912f23cc575087f02": {
+    "filled": "1284",
+    "raw": "1284",
+    "template": "{{ superficie_parcela }}"
+  },
+  "4a689e2df513b02fbaef76d45dcff18d": {
+    "filled": "-0.60 a -1.20 m",
+    "raw": "-0.60 a -1.20 m",
+    "template": "Profunditat: {{ lab_depth }}"
+  },
+  "bbb48712366cef9e43ad5dd6a7716e6b": {
+    "filled": "P-3",
+    "raw": "Punt P-3",
+    "template": "Punt: {{ lab_location }}"
+  },
+  "e6f23f6853e5c5907b2aa3c2e5e30c39": {
+    "filled": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95; Determinació de Límits d'Atterberg d'un sòl UNE 103103/94-104/93; Assaig de contingut en sulfats UNE 83963:2008",
+    "raw": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95; Determinació de Límits d'Atterberg d'un sòl UNE 103103/94-104/93; Assaig de contingut en sulfats UNE 83963:2008",
+    "template": "{{ lab_tests_text }}"
+  },
+  "9edfc9ab2ee57dfe015166cc6559c20e": {
+    "filled": "de penetració dinàmica realitzats als punts P1, P2 i P3",
+    "raw": "P1, P2 i P3",
+    "template": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar."
+  },
+  "82356b4255574426b43802f319f85a56": {
+    "filled": "1 d'octubre de 2025",
+    "raw": "1 d'octubre de 2025",
+    "template": "El dia {{ data_camp_text }}, es va visitar l’obra per tal de:"
+  },
+  "6a075c462ffdf5ac7a37a1d48525d786": {
+    "filled": "4672-GTL-25",
+    "raw": "4672-GTL-25",
+    "template": "Expedient Núm.:  {{ expedient }}"
+  },
+  "47e187b730c07efb8926b460fce8c43b": {
+    "filled": "-1.00 a -1.15 m",
+    "raw": "-1.00 a -1.15 m",
+    "template": "Profunditat: {{ lab_depth }}"
+  },
+  "339ccc046e15238aec37b8b21e7d4d2a": {
+    "filled": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93; Assaig d'expansivitat Lambe UNE 103500/94; Assaig de contingut en sulfats UNE 83963:2008",
+    "raw": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93; Assaig d'expansivitat Lambe UNE 103500/94; Assaig de contingut en sulfats UNE 83963:2008",
+    "template": "{{ lab_tests_text }}"
+  },
+  "569867ec792e9d51abfcb678a23566a9": {
+    "filled": "1 i 6 d'octubre de 2025",
+    "raw": "1 i 6 d'octubre de 2025",
+    "template": "El dia {{ data_camp_text }}, es va visitar l’obra per tal de:"
+  },
+  "d2539e6701e6746d316f9c27fd191880": {
+    "filled": "4677-GTL-25",
+    "raw": "4677-GTL-25",
+    "template": "Expedient Núm.:  {{ expedient }}"
+  },
+  "d7ef1626c69e57833f7dc668ac5bd18d": {
+    "filled": "-1.0 a -1.60 m",
+    "raw": "-1.0 a -1.60 m",
+    "template": "Profunditat: {{ lab_depth }}"
+  },
+  "65c2d98f70169ce2570733ef3416b48a": {
+    "filled": "Bell-Lloc d'Urgell",
+    "raw": "Bell-Lloc d'Urgell",
+    "template": "A la zona d’estudi, en el municipi de {{ municipality }}, s’estableix una acceleració sísmica bàsica de:"
+  },
+  "b937a93e5f543515e8c8def8e6fc1d66": {
+    "filled": "296.0",
+    "raw": "296.0",
+    "template": "{{ superficie_construida }}"
+  },
+  "2ce5cc25c0062c8b403a5d01c0949277": {
+    "filled": "-0.80 a -1.40 m",
+    "raw": "-0.80 a -1.40 m",
+    "template": "Profunditat: {{ lab_depth }}"
+  },
+  "2ad6e855b713e29f1d0219202d66fa87": {
+    "filled": "Assaig de plasticitat de Límits d'Atterberg UNE 103103/94-104/93; Contingut en sulfats solubles dels sòl UNE 83963/08",
+    "raw": "Assaig de plasticitat de Límits d'Atterberg UNE 103103/94-104/93; Contingut en sulfats solubles dels sòl UNE 83963/08",
+    "template": "{{ lab_tests_text }}"
+  },
+  "dc361166b91a95aec00bcf1a6379a19b": {
+    "filled": "19 de juliol de 1976",
+    "raw": "19 de juliol de 1976",
+    "template": "El dia {{ data_camp_text }}, es va visitar l’obra per tal de:"
+  },
+  "a113e11153f9a6961fd2dd872b197463": {
+    "filled": "de -0.8 a -1.4 m (SPT1 P3); de -0.8 a -1.4 m (SPT1 P1)",
+    "raw": "de -0.8 a -1.4 m (SPT1 P3); de -0.8 a -1.4 m (SPT1 P1)",
+    "template": "Profunditat: {{ lab_depth }}"
+  },
+  "57dd805a7c06be6d57829dd9193e47e6": {
+    "filled": "SPT1 P3",
+    "raw": "SPT1 P3",
+    "template": "Punt: {{ lab_location }}"
+  },
+  "2c40c4c14f66e3c19c3ff4e06b383e93": {
+    "filled": "SPT1 P3",
+    "raw": "SPT1 P3",
+    "template": "Mostra : {{ lab_sample_id }}"
+  },
+  "a44bf6f67d33ad176307eb174af89114": {
+    "filled": "Tres",
+    "raw": "Tres assaigs de penetració dinàmica DPSH (P-1, P-2, P-3)",
+    "template": "{{ num_dpsh_tests }} assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\")."
+  },
+  "7386463d7133e813f28ef9712013da43": {
+    "filled": "1, 2 i 3",
+    "raw": "1, 2 i 3",
+    "template": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar."
+  },
+  "c608009f4bdf815f42dbafbfb717a9b4": {
+    "filled": "Determinación del contenido en ión sulfato en suelos UNE 83963/08",
+    "raw": "Determinación del contenido en ión sulfato en suelos UNE 83963/08",
+    "template": "{{ lab_tests_text }}"
+  },
+  "6925945884491c72edfcc196e82ae10d": {
+    "filled": "6",
+    "raw": "6 ensayos de penetración dinámica DPSH (P-1 a P-6)",
+    "template": "{{ num_dpsh_tests }} assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\")."
+  },
+  "40bb757ee5d7ceaf3b2955317ba3830d": {
+    "filled": "B/P25-003017.25",
+    "raw": "B/P25-003017.25",
+    "template": "Expedient Núm.:  {{ expedient }}"
+  },
+  "f08cadb0f63d98601ebb0f5d0e074369": {
+    "filled": "Bell-lloc d'Urgell",
+    "raw": "Bell-lloc d'Urgell",
+    "template": "A la zona d’estudi, en el municipi de {{ municipality }}, s’estableix una acceleració sísmica bàsica de:"
+  },
+  "04d4e1d728c3d95fcaf31c3f441b5ee7": {
+    "filled": "PB+PP",
+    "raw": "PB+PP",
+    "template": "{{ plantes }}"
+  },
+  "598227e50fc15e15aeac7049975de612": {
+    "filled": "I cannot generate an appropriate replacement for the {{ expedient }} placeholder based on the provided extracted value. The extracted value appears to be a project description (a portico closure project for a single-family dwelling in Catalan), not an expedient number. \n\nAn expedient number would typically be a code or identifier (e.g., \"2024-001234\" or similar), not a descriptive text.\n\nPlease provide the actual expedient number value.",
+    "raw": "PROJECTE DE TANCAMENT DE PORXO EN HABITATGE UNIFAMILIAR",
+    "template": "Expedient Núm.:  {{ expedient }}"
+  },
+  "970a9001dcb2bd1e6cb2a59fc3bc58db": {
+    "filled": "aO1",
+    "raw": "aO1",
+    "template": "Expedient Núm.:  {{ expedient }}"
+  },
+  "4e1234b4e0baf769d1e9a116d825d3df": {
+    "filled": "Ps+Pb+1Pp+Pbc",
+    "raw": "Ps+Pb+1Pp+Pbc",
+    "template": "{{ plantes }}"
+  }
+}

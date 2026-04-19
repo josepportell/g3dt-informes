@@ -1,0 +1,639 @@
+{
+  "metadata": {
+    "test_id": "T4",
+    "project": "3001621 CASTELLAR DEL VALLES",
+    "timestamp": "2026-04-16T18:19:29.928313+00:00",
+    "files_available": 0,
+    "files_read": 0,
+    "files_from_email": 0,
+    "duration_s": 2.1,
+    "api_calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "planol_vars_targeted": 29
+  },
+  "files_inventory": [],
+  "variables": {},
+  "comparison": {
+    "vs_eva": {
+      "project": "3001621 CASTELLAR DEL VALLES",
+      "test_id": "T4",
+      "total_eva_vars": 58,
+      "counts": {
+        "MATCH": 0,
+        "CLOSE": 0,
+        "MISMATCH": 0,
+        "NOT_EXTRACTED": 58
+      },
+      "accuracy_pct": 0.0,
+      "tier_breakdown": {
+        "-": {
+          "NOT_EXTRACTED": 43
+        },
+        "A": {
+          "NOT_EXTRACTED": 9
+        },
+        "C": {
+          "NOT_EXTRACTED": 3
+        },
+        "B": {
+          "NOT_EXTRACTED": 3
+        }
+      },
+      "origin_breakdown": {},
+      "details": [
+        {
+          "variable": "access_street",
+          "tier": "-",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "adjacent_east_fmt",
+          "tier": "-",
+          "eva": "Per la part est, amb una parcel·la construïda amb piscina.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "adjacent_north_fmt",
+          "tier": "-",
+          "eva": "Per la part nord, amb parcel·les sense construir, amb herbes altes i arbres, així com una parcel·la amb planta baixa i una planta pis, paral·lela al carrer Turó Roig.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "adjacent_south_fmt",
+          "tier": "-",
+          "eva": "Per la part sud, amb el carrer Arbrells.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "adjacent_west_fmt",
+          "tier": "-",
+          "eva": "I finalment, per la part oest, amb parcel·les sense construir amb herbes altes i arbres.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "building_structure_desc",
+          "tier": "-",
+          "eva": "sense nivell de soterrani",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "building_type_lower",
+          "tier": "-",
+          "eva": "3 habitatges unifamiliars d’estructura lleugera, fusta",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "client",
+          "tier": "A",
+          "eva": "WOOD COMFORT PROMOCIONS SLU",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "conclusions_aggressivity_statement",
+          "tier": "-",
+          "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten No Agressius al formigó.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "conclusions_levels_detected",
+          "tier": "-",
+          "eva": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "conclusions_water_statement",
+          "tier": "-",
+          "eva": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin. Tampoc s’ha localitzat cap curs d’aigua i/o torrent proper que pugui afectar a la zona en estudi.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "csn_radon_text",
+          "tier": "-",
+          "eva": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "cte_edificacio",
+          "tier": "-",
+          "eva": "C-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "cte_sol",
+          "tier": "-",
+          "eva": "T-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "data_camp_text",
+          "tier": "A",
+          "eva": "24 de octubre de 2025",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "data_signatura_text",
+          "tier": "-",
+          "eva": "19 de novembre de 2025.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "dpsh_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'P-1', 'cota': '-4.0', 'depth': '-1.08', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-2', 'cota': '-4.20', 'depth': '-0.48', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-3', 'cota': '-4.0', 'depth': '-0.76', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-4', 'cota': '-4.0', 'depth': '-1.55', 'refusal': 'Si', 'water': 'No detectat'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "empentes_paragraph",
+          "tier": "-",
+          "eva": "Pel dimensionament del murs que es projectin i pel càlcul de les empentes de terres caldrà tenir en compte els paràmetres geomecànics dels materials del 1er nivell que es considera el més desfavorables.\nCal tenir en compte que en el trasdors del mur, caldrà instal·lar un correcte drenatge per a evitar que s’acumuli aigua i es produeixi un sobrecàrrega en el seu trasdors.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "estabilitat_paragraph",
+          "tier": "-",
+          "eva": "Per a la realització de les recomanacions d’estabilitat de talussos s’han tingut en compte les següents premisses:\nActualment el solar presenta un pendent d’entre 20-25º.\nTalussos sense presència de nivell freàtic.\nFactor de seguretat F=1.8, factor de seguretat del vessant actual.\nS’ha considerat la columna de materials, dominat pel primer nivell, amb els paràmetres geomecànics obtinguts.\nEl mètode ràpid de càlcul utilitzat per les recomanacions de talussos és el proposat per Hoek & Bray (1977), utilitzant els valors numèrics de cohesió, angle de fregament i densitat exposat anteriors.\nFigura 6 i Figura 7. Líneas de saturació possibles, es marca la que s’ha escollit. En la segona figura detall de l’àbac nº1 escollit.\nAixí per a tots aquests paràmetres exposant el vessant actual presenta factors de seguretat superiors a 3.5. Si els habitatges projectats es recolzen damunt dels materials del primer nivell de substrat, no suposaran una sobrecàrrega important damunt del vessant, i per tant, no modificarà substancialment els factors de seguretat del propi vessant, per tant amb valors sempre superior a 1.8, per tant cumplint les premisses marcades per part del CTE.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "expedient",
+          "tier": "-",
+          "eva": "3001621",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "geo_p",
+          "tier": "-",
+          "eva": "En concret, i segons l’ICGC, l’estudi s’ha dut a terme damunt una zona on afloren materials de la unitat ECbc, corresponent a bretxes amb intercalacions de lutites i gresos vermells del Eocè- Ipresià.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "geotech_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell: Bretxes amb intercalacions de lutites i gresos', 'nb': '17-R', 'n': 'R', 'density': '2.20', 'cohesion': '1.0', 'phi': '35º', 'E': '>500'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "k30_value",
+          "tier": "C",
+          "eva": "Si s’optés per una fonamentació amb llosa, el valor de coeficient de balast, referit a la placa de 30x30, es podrà adoptar un valor de K30=8.00 kg/cm3.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_depth",
+          "tier": "-",
+          "eva": "Profunditat:  -1.00  a -1.20 m",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_field_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_field_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_location",
+          "tier": "-",
+          "eva": "Punt: S-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_sample_id",
+          "tier": "-",
+          "eva": "Mostra : SPT-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_testing_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_testing_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_tests_text",
+          "tier": "-",
+          "eva": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "location_sentence",
+          "tier": "B",
+          "eva": "en el Carrer dels Arbrells, 18 de Castellar del Vallès",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "materials_intro",
+          "tier": "-",
+          "eva": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "municipality",
+          "tier": "A",
+          "eva": "Castellar del Vallès",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "num_dpsh_tests",
+          "tier": "A",
+          "eva": "4 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "perm_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell', 'k_value': '10⁻5 – 10⁻7', 'material': 'Bretxes amb intercalacions de lutites i gresos vermells.'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "plantes",
+          "tier": "-",
+          "eva": "Pb+1Pp",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "qa_value",
+          "tier": "C",
+          "eva": "3.0",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "radon_zone",
+          "tier": "A",
+          "eva": "1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "radon_zone_description",
+          "tier": "-",
+          "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "seismic_ab_text",
+          "tier": "A",
+          "eva": "AB  = 0,04 g  (essent g el valor de la gravetat)",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "seismic_rows",
+          "tier": "-",
+          "eva": "[{'num': '1', 'terrain_type': 'Tipus II', 'thickness': '1.15*', 'c_coeff': '1.3'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "settlement",
+          "tier": "C",
+          "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "site_condition",
+          "tier": "B",
+          "eva": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "site_description",
+          "tier": "B",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.\nEl solar es localitza sense construccions ni pavimentacions, s’ha realitzat un desbroç de la zona de treball i s’ha adequat un accés a la zona de treball.\nTopogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina, situada aproximadament 4.0 metres respecte el carrer.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sondeig_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'S-1', 'cota': '-4.20', 'depth': '-1.20', 'spt_ma': '1/0', 'water': 'No detectat'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "spt_depth_range",
+          "tier": "-",
+          "eva": "-1.00 a -1.20",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "spt_lithology",
+          "tier": "-",
+          "eva": "Limolites i bretxes",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "spt_location",
+          "tier": "-",
+          "eva": "S-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "spt_n30",
+          "tier": "-",
+          "eva": "R",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "spt_test_id",
+          "tier": "-",
+          "eva": "SPT-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_baumann",
+          "tier": "-",
+          "eva": "--",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_classification",
+          "tier": "-",
+          "eva": "No Agressius",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_level_name",
+          "tier": "-",
+          "eva": "1er nivell",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_value",
+          "tier": "A",
+          "eva": "0.0",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "superficie_construida",
+          "tier": "A",
+          "eva": "120 m2",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "superficie_parcela",
+          "tier": "A",
+          "eva": "1.284",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "table_dpsh_range",
+          "tier": "-",
+          "eva": "3, 4 i 5",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        }
+      ]
+    }
+  },
+  "trace": [
+    {
+      "action_id": "usage_summary",
+      "type": "summary",
+      "total_usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "api_calls": 0
+      }
+    }
+  ]
+}

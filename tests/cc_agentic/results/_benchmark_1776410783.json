@@ -1,0 +1,412 @@
+{
+  "fixture": "reference-material/4001670 ALCOLETGE/A.01.pdf",
+  "concepts": [
+    "architect_name",
+    "architect_company",
+    "client_name",
+    "num_floors",
+    "building_height_m",
+    "building_type",
+    "superficie_parcela",
+    "superficie_construida",
+    "municipality",
+    "street_address",
+    "adjacent_north",
+    "adjacent_south",
+    "adjacent_east",
+    "adjacent_west"
+  ],
+  "provider": "openrouter",
+  "rows": [
+    {
+      "model": "anthropic/claude-opus-4.7",
+      "elapsed_s": 8.3,
+      "input_tokens": 5292,
+      "output_tokens": 194,
+      "cost_usd": 0.0313,
+      "results": {
+        "architect_name": {
+          "value": "David Graus Robinat",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "architect_company": {
+          "value": "2 GRAUS",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "client_name": {
+          "value": "Albert Sans Bonvehi",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "building_type": {
+          "value": "unifamiliar",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "municipality": {
+          "value": "Alcoletge",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "street_address": {
+          "value": "Carrer Girasols, nº7, Urbanització el Roser, 25660 Alcoletge",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        }
+      },
+      "error": null,
+      "scored": {
+        "counts": {
+          "MATCH": 0,
+          "CLOSE": 2,
+          "MISMATCH": 2,
+          "NOT_EXTRACTED": 7
+        },
+        "accuracy": 0.18181818181818182,
+        "total_scored": 11,
+        "details": [
+          {
+            "concept": "architect_name",
+            "eva": "ALBERT SANS BONVEHI",
+            "cc": "David Graus Robinat",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "client_name",
+            "eva": "SR. ALBERT SANS BONVEHI",
+            "cc": "Albert Sans Bonvehi",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "num_floors",
+            "eva": "Pb",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "building_type",
+            "eva": "l'ampliació d'un edifici en planta baixa",
+            "cc": "unifamiliar",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "superficie_parcela",
+            "eva": "1167",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "superficie_construida",
+            "eva": "100",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "municipality",
+            "eva": "A la zona d’estudi, en el municipi d’Alcoletge, s’estableix una acceleració sísmica bàsica de:",
+            "cc": "Alcoletge",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "adjacent_north",
+            "eva": "Per la part nord amb el camí d’accés.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_south",
+            "eva": "Per la part sud amb una parcel·la on existeix un edifici aïllat en planta baixa.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_east",
+            "eva": "Per la part est amb tres parcel·les ocupades per edificis aïllats de fins a dos plantes sobre rasant i una amb soterrani i piscina.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_west",
+            "eva": "I finalment, per la part oest, amb un solar buit.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          }
+        ]
+      }
+    },
+    {
+      "model": "anthropic/claude-sonnet-4.5",
+      "elapsed_s": 6.7,
+      "input_tokens": 5292,
+      "output_tokens": 194,
+      "cost_usd": 0.0188,
+      "results": {
+        "architect_name": {
+          "value": "David Graus Robinat",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "architect_company": {
+          "value": "2 GRAUS",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "client_name": {
+          "value": "Albert Sans Bonvehi",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "building_type": {
+          "value": "unifamiliar",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "municipality": {
+          "value": "Alcoletge",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "street_address": {
+          "value": "Carrer Girasols, nº7, Urbanització el Roser, 25660 Alcoletge",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        }
+      },
+      "error": null,
+      "scored": {
+        "counts": {
+          "MATCH": 0,
+          "CLOSE": 2,
+          "MISMATCH": 2,
+          "NOT_EXTRACTED": 7
+        },
+        "accuracy": 0.18181818181818182,
+        "total_scored": 11,
+        "details": [
+          {
+            "concept": "architect_name",
+            "eva": "ALBERT SANS BONVEHI",
+            "cc": "David Graus Robinat",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "client_name",
+            "eva": "SR. ALBERT SANS BONVEHI",
+            "cc": "Albert Sans Bonvehi",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "num_floors",
+            "eva": "Pb",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "building_type",
+            "eva": "l'ampliació d'un edifici en planta baixa",
+            "cc": "unifamiliar",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "superficie_parcela",
+            "eva": "1167",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "superficie_construida",
+            "eva": "100",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "municipality",
+            "eva": "A la zona d’estudi, en el municipi d’Alcoletge, s’estableix una acceleració sísmica bàsica de:",
+            "cc": "Alcoletge",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "adjacent_north",
+            "eva": "Per la part nord amb el camí d’accés.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_south",
+            "eva": "Per la part sud amb una parcel·la on existeix un edifici aïllat en planta baixa.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_east",
+            "eva": "Per la part est amb tres parcel·les ocupades per edificis aïllats de fins a dos plantes sobre rasant i una amb soterrani i piscina.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_west",
+            "eva": "I finalment, per la part oest, amb un solar buit.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          }
+        ]
+      }
+    },
+    {
+      "model": "anthropic/claude-haiku-4.5",
+      "elapsed_s": 7.0,
+      "input_tokens": 5292,
+      "output_tokens": 194,
+      "cost_usd": 0.0063,
+      "results": {
+        "architect_name": {
+          "value": "David Graus Robinat",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "architect_company": {
+          "value": "2 GRAUS",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "client_name": {
+          "value": "Albert Sans Bonvehi",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "building_type": {
+          "value": "unifamiliar",
+          "confidence": 0.9,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "municipality": {
+          "value": "Alcoletge",
+          "confidence": 0.98,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        },
+        "street_address": {
+          "value": "Carrer Girasols, nº7, Urbanització el Roser, 25660 Alcoletge",
+          "confidence": 0.95,
+          "source_file": "A.01.pdf",
+          "source_origin": "benchmark",
+          "extraction_method": "vision_pdf"
+        }
+      },
+      "error": null,
+      "scored": {
+        "counts": {
+          "MATCH": 0,
+          "CLOSE": 2,
+          "MISMATCH": 2,
+          "NOT_EXTRACTED": 7
+        },
+        "accuracy": 0.18181818181818182,
+        "total_scored": 11,
+        "details": [
+          {
+            "concept": "architect_name",
+            "eva": "ALBERT SANS BONVEHI",
+            "cc": "David Graus Robinat",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "client_name",
+            "eva": "SR. ALBERT SANS BONVEHI",
+            "cc": "Albert Sans Bonvehi",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "num_floors",
+            "eva": "Pb",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "building_type",
+            "eva": "l'ampliació d'un edifici en planta baixa",
+            "cc": "unifamiliar",
+            "status": "MISMATCH"
+          },
+          {
+            "concept": "superficie_parcela",
+            "eva": "1167",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "superficie_construida",
+            "eva": "100",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "municipality",
+            "eva": "A la zona d’estudi, en el municipi d’Alcoletge, s’estableix una acceleració sísmica bàsica de:",
+            "cc": "Alcoletge",
+            "status": "CLOSE"
+          },
+          {
+            "concept": "adjacent_north",
+            "eva": "Per la part nord amb el camí d’accés.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_south",
+            "eva": "Per la part sud amb una parcel·la on existeix un edifici aïllat en planta baixa.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_east",
+            "eva": "Per la part est amb tres parcel·les ocupades per edificis aïllats de fins a dos plantes sobre rasant i una amb soterrani i piscina.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          },
+          {
+            "concept": "adjacent_west",
+            "eva": "I finalment, per la part oest, amb un solar buit.",
+            "cc": "",
+            "status": "NOT_EXTRACTED"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,903 @@
+{
+  "schema_version": "1.0",
+  "metadata": {
+    "timestamp": "2026-04-11T16:00:24+0200",
+    "run_id": "127162",
+    "project": "4001670 ALCOLETGE",
+    "models": {
+      "openai_vision": "gpt-4.1-mini",
+      "anthropic_text": "claude-sonnet-4-6",
+      "groq_text": "qwen/qwen3-32b",
+      "groq_vision": "meta-llama/llama-4-scout-17b-16e-instruct"
+    },
+    "fallback_order": {
+      "vision": [
+        "openai",
+        "anthropic",
+        "groq"
+      ],
+      "probe": [
+        "groq",
+        "openai",
+        "anthropic"
+      ]
+    },
+    "phases_completed": [
+      "SmartScan: 13 rols detectats",
+      "Contingut: 3 troballes (billing, field_prep, utm_coordinates)",
+      "Historia geològica: 'Lleida (via comarca)' (tier 3, score 1.00)",
+      "FileMiner: 70 senyals, 10 variables, 9 nous prefills",
+      "Groq Deep Mine (qwen3-32b): 22 senyals, 8 nous prefills, 0 calls, 47 cache hits, 0 tokens (~$0.0000)",
+      "ConceptScout: 10 concepts mapped",
+      "DPSH: 3 assaigs, prof. max 1.8m",
+      "Dates camp: 2026-02-16",
+      "ICGC: unitat POmgc4 (Oligocè)",
+      "Elevació: +188.50 m",
+      "Pendent: 5% W → pla",
+      "Coord validation: COORDENADES.txt -> wrong parcel (CR DELS GIRASOLS 7 ALCOLETGE (LLEIDA)), geocoded C/ Vallbona, 22",
+      "Cadastre: 4 adjacents detectats"
+    ],
+    "phases_skipped": [
+      {
+        "step": "Pressupost PDF",
+        "reason": "pàgina 1 sense text"
+      },
+      {
+        "step": "Lab PDF",
+        "reason": "fitxer no trobat"
+      }
+    ],
+    "vision_status": {
+      "planol": true,
+      "sondeig": false,
+      "dpsh": true
+    },
+    "duration_seconds": 22.4,
+    "tolerance_pct": 5.0
+  },
+  "summary": {
+    "total_vars": 38,
+    "match": 9,
+    "close": 4,
+    "mismatch": 10,
+    "not_extracted": 7,
+    "pass": 8,
+    "match_close_pct": 56.5
+  },
+  "tier_summary": {
+    "A": {
+      "total": 33,
+      "match": 8,
+      "close": 3,
+      "mismatch": 7,
+      "not_extracted": 7,
+      "pass": 8
+    },
+    "B": {
+      "total": 3,
+      "match": 1,
+      "close": 1,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "pass": 0
+    },
+    "C": {
+      "total": 2,
+      "match": 0,
+      "close": 0,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "pass": 0
+    }
+  },
+  "component_summary": {
+    "cadastre": {
+      "produced": 4,
+      "match": 1,
+      "close": 1,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "accuracy_pct": 50.0
+    },
+    "computed": {
+      "produced": 9,
+      "match": 4,
+      "close": 0,
+      "mismatch": 5,
+      "not_extracted": 0,
+      "accuracy_pct": 44.4
+    },
+    "dpsh_extractor": {
+      "produced": 1,
+      "match": 1,
+      "close": 0,
+      "mismatch": 0,
+      "not_extracted": 0,
+      "accuracy_pct": 100.0
+    },
+    "fileminer_regex": {
+      "produced": 1,
+      "match": 0,
+      "close": 1,
+      "mismatch": 0,
+      "not_extracted": 0,
+      "accuracy_pct": 100.0
+    },
+    "groq_llm": {
+      "produced": 1,
+      "match": 1,
+      "close": 0,
+      "mismatch": 0,
+      "not_extracted": 0,
+      "accuracy_pct": 100.0
+    },
+    "llm_synthesis": {
+      "produced": 1,
+      "match": 0,
+      "close": 1,
+      "mismatch": 0,
+      "not_extracted": 0,
+      "accuracy_pct": 100.0
+    },
+    "template_generated": {
+      "produced": 1,
+      "match": 0,
+      "close": 0,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "accuracy_pct": 0.0
+    },
+    "vision_planol": {
+      "produced": 4,
+      "match": 1,
+      "close": 1,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "accuracy_pct": 50.0
+    }
+  },
+  "variables": {
+    "access_street": {
+      "eva_name": "access_street",
+      "eva_value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer existent al nord.",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "adjacent_east_fmt": {
+      "eva_name": "adjacent_east_fmt",
+      "eva_value": "Per la part est amb tres parcel·les ocupades per edificis aïllats de fins a dos plantes sobre rasant i una amb soterrani i piscina.",
+      "pipeline_value": "Per la part est amb una parcel·la amb construcció.",
+      "source": "formatted from Cadastre",
+      "component": "cadastre",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "adjacent_north_fmt": {
+      "eva_name": "adjacent_north_fmt",
+      "eva_value": "Per la part nord amb el camí d’accés.",
+      "pipeline_value": "Per la part nord amb el Carrer dels Gira-sols.",
+      "source": "formatted from Cadastre",
+      "component": "cadastre",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "adjacent_south_fmt": {
+      "eva_name": "adjacent_south_fmt",
+      "eva_value": "Per la part sud amb una parcel·la on existeix un edifici aïllat en planta baixa.",
+      "pipeline_value": "Per la part sud amb una parcel·la amb construcció.",
+      "source": "formatted from Cadastre",
+      "component": "cadastre",
+      "tier": "A",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "adjacent_west_fmt": {
+      "eva_name": "adjacent_west_fmt",
+      "eva_value": "I finalment, per la part oest, amb un solar buit.",
+      "pipeline_value": "I finalment, per la part oest amb una parcel·la buida.",
+      "source": "formatted from Cadastre",
+      "component": "cadastre",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "architect_name": {
+      "eva_name": "architect_name_upper",
+      "eva_value": "ALBERT SANS BONVEHI",
+      "pipeline_value": "DAVID GRAUS ROBINAT",
+      "source": "planol A.01.pdf",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [
+        {
+          "rank": 1,
+          "value": "David Graus Robinat",
+          "source_file": "26.0049/planol-1.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 45,
+          "confidence": 0.95,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 2,
+          "value": "David Graus Robinat",
+          "source_file": "validation/msg_attachments/geotècnic Ampliació Albert Sans municipi d'Alcoletge/planol-1.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 45,
+          "confidence": 0.95,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null
+    },
+    "building_structure_desc": {
+      "eva_name": "building_structure_desc",
+      "eva_value": "sense nivell de soterrani",
+      "pipeline_value": "en planta baixa",
+      "source": "computed",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "building_type": {
+      "eva_name": "building_type_lower",
+      "eva_value": "l'ampliació d'un edifici en planta baixa",
+      "pipeline_value": "el tancament d'un porxo en habitatge unifamiliar",
+      "source": "planol A.01.pdf",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [
+        {
+          "rank": 1,
+          "value": "CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660) bon accés",
+          "source_file": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+          "source_type": "content_email",
+          "component": "fileminer_regex",
+          "extraction_method": "label_value",
+          "priority": 43,
+          "confidence": 0.7999999999999999,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 2,
+          "value": "CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660) bon accés",
+          "source_file": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+          "source_type": "content_email",
+          "component": "fileminer_regex",
+          "extraction_method": "label_value",
+          "priority": 43,
+          "confidence": 0.7999999999999999,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 3,
+          "value": "CONSTR HAB UNIF",
+          "source_file": "comanda laboratori_4001670_ALCOLETGE.xls",
+          "source_type": "comanda_lab_excel",
+          "component": "fileminer_regex",
+          "extraction_method": "label_adjacent",
+          "priority": 50,
+          "confidence": 0.9,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null
+    },
+    "client_name": {
+      "eva_name": "client",
+      "eva_value": "SR. ALBERT SANS BONVEHI",
+      "pipeline_value": "SR. ALBERT SANS BONVEHÍ",
+      "source": "planol A.01.pdf",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [
+        {
+          "rank": 1,
+          "value": "ALBERT SANS BONVEHI tel. 675639431 - etesnob91@gmail.com <mailto:etesnob91@gmail.com>",
+          "source_file": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+          "source_type": "content_email",
+          "component": "fileminer_regex",
+          "extraction_method": "label_value",
+          "priority": 43,
+          "confidence": 0.7999999999999999,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 2,
+          "value": "ALBERT SANS BONVEHI tel. 675639431 - etesnob91@gmail.com <mailto:etesnob91@gmail.com>",
+          "source_file": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+          "source_type": "content_email",
+          "component": "fileminer_regex",
+          "extraction_method": "label_value",
+          "priority": 43,
+          "confidence": 0.7999999999999999,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null
+    },
+    "cte_edificacio": {
+      "eva_name": "cte_edificacio",
+      "eva_value": "C-0",
+      "pipeline_value": "C-1",
+      "source": "CTE DB SE-C (habitatge unifamiliar)",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "cte_sol": {
+      "eva_name": "cte_sol",
+      "eva_value": "T-1",
+      "pipeline_value": "T-2",
+      "source": "CTE DB SE-C (N20=8)",
+      "component": "computed",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "field_work_dates_text": {
+      "eva_name": "data_camp_text",
+      "eva_value": "16 de febrer de 2026",
+      "pipeline_value": "16 de febrer de 2026",
+      "source": "DPSH/Lab PDF",
+      "component": "dpsh_extractor",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "expedient": {
+      "eva_name": "expedient",
+      "eva_value": "4001670",
+      "pipeline_value": "4001670",
+      "source": "groq_llm:tall.pdf",
+      "component": "groq_llm",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": true,
+      "correct_alternative_desc": "signal #1 (tall.pdf, pri=42)",
+      "signals": [
+        {
+          "rank": 1,
+          "value": "4001670",
+          "source_file": "tall.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.98,
+          "matches_eva": "MATCH"
+        },
+        {
+          "rank": 2,
+          "value": "26.0049",
+          "source_file": "26.0049/planol-1.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.9,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 3,
+          "value": "26.0049",
+          "source_file": "validation/msg_attachments/geotècnic Ampliació Albert Sans municipi d'Alcoletge/planol-1.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.9,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 4,
+          "value": "4001679",
+          "source_file": "26.0049/PLAN_COST_ALCOLETGE.xlsx",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.8,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 5,
+          "value": "4001679",
+          "source_file": "validation/msg_attachments/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge/PLAN_COST_ALCOLETGE.xlsx",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.8,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null
+    },
+    "lab_depth": {
+      "eva_name": "lab_depth",
+      "eva_value": "Profunditat:  -0.80  a -1.40 m",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_field_company": {
+      "eva_name": "lab_field_company",
+      "eva_value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_field_description": {
+      "eva_name": "lab_field_description",
+      "eva_value": "laboratori d’assaigs per al control de qualitat de l’edificació",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_location": {
+      "eva_name": "lab_location",
+      "eva_value": "Punt: P-3",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_sample_id": {
+      "eva_name": "lab_sample_id",
+      "eva_value": "Mostra : SPT-1",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_testing_company": {
+      "eva_name": "lab_testing_company",
+      "eva_value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_testing_description": {
+      "eva_name": "lab_testing_description",
+      "eva_value": "laboratori d’assaigs per al control de qualitat de l’edificació",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "lab_tests_text": {
+      "eva_name": "lab_tests_text",
+      "eva_value": "Assaig de plasticitat de Límits d’Atterberg UNE 103103/94-104/93\nContingut en sulfats solubles dels sòl UNE 83963/08",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "location_sentence": {
+      "eva_name": "location_sentence",
+      "eva_value": "a una parcel·la ubicada al Carrer Girasols nº7, Urbanització El Roser d'Alcoletge",
+      "pipeline_value": "a una parcella ubicada al Carrer Girasols n7 d'Alcoletge",
+      "source": "llm_synthesis",
+      "component": "llm_synthesis",
+      "tier": "B",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "municipality": {
+      "eva_name": "municipality",
+      "eva_value": "A la zona d’estudi, en el municipi d’Alcoletge, s’estableix una acceleració sísmica bàsica de:",
+      "pipeline_value": "ALCOLETGE",
+      "source": "fileminer:comanda laboratori_4001670_ALCOLETGE.xls",
+      "component": "fileminer_regex",
+      "tier": "A",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": true,
+      "correct_alternative_desc": "signal #1 (comanda laboratori_4001670_ALC, pri=50)",
+      "signals": [
+        {
+          "rank": 1,
+          "value": "ALCOLETGE",
+          "source_file": "comanda laboratori_4001670_ALCOLETGE.xls",
+          "source_type": "comanda_lab_excel",
+          "component": "fileminer_regex",
+          "extraction_method": "label_adjacent",
+          "priority": 50,
+          "confidence": 0.9,
+          "matches_eva": "CLOSE"
+        }
+      ],
+      "calc_trace": null
+    },
+    "num_dpsh_tests": {
+      "eva_name": "num_dpsh_tests",
+      "eva_value": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+      "pipeline_value": "3 assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\").",
+      "source": "computed",
+      "component": "computed",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "num_floors": {
+      "eva_name": "plantes",
+      "eva_value": "Pb",
+      "pipeline_value": "Pb",
+      "source": "planol A.01.pdf",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "qa_value": {
+      "eva_name": "qa_value",
+      "eva_value": "3.50",
+      "pipeline_value": "1.00",
+      "source": "Terzaghi-Peck",
+      "component": "computed",
+      "tier": "C",
+      "status": "MISMATCH",
+      "classification": "CALC",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": "Nb=?, B=1.0[DEF], Df=0.8[DEF], c=?, phi=?, cap=3.0"
+    },
+    "radon_zone": {
+      "eva_name": "radon_zone",
+      "eva_value": "1",
+      "pipeline_value": "1",
+      "source": "CTE DB HS6 (Alcoletge)",
+      "component": "computed",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "seismic_ab_text": {
+      "eva_name": "seismic_ab_text",
+      "eva_value": "0,04",
+      "pipeline_value": "0,04",
+      "source": "NCSE-02 (Alcoletge)",
+      "component": "computed",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "settlement": {
+      "eva_name": "settlement",
+      "eva_value": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreable o bé menors a 1.0 cm.",
+      "pipeline_value": "2.20",
+      "source": "Schmertmann",
+      "component": "computed",
+      "tier": "C",
+      "status": "MISMATCH",
+      "classification": "CALC",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": "Es=23, qa=1.00"
+    },
+    "site_condition": {
+      "eva_name": "site_condition",
+      "eva_value": "Com que es tracta d’un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+      "pipeline_value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+      "source": "computed (slope 4%)",
+      "component": "unknown",
+      "tier": "B",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "site_description": {
+      "eva_name": "site_description",
+      "eva_value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer existent al nord.\nEl solar està actualment ocupat per una zona explanada i un edifici en planta baixa a la meitat nord.\nL’ampliació d’aquest edifici es preveu realitzar a la part posterior, zona on es pot accedir sense problemes amb la maquinaria prevista.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+      "pipeline_value": "parcel·la de forma rectangular amb superfície de 1167 m2",
+      "source": "plantilla generada",
+      "component": "template_generated",
+      "tier": "B",
+      "status": "MISMATCH",
+      "classification": "NARRATIVE",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "sulfate_baumann": {
+      "eva_name": "sulfate_baumann",
+      "eva_value": "---",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "sulfate_classification": {
+      "eva_name": "sulfate_classification",
+      "eva_value": "No Agressius",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "sulfate_level_name": {
+      "eva_name": "sulfate_level_name",
+      "eva_value": "2on nivell",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "sulfate_mg_kg": {
+      "eva_name": "sulfate_value",
+      "eva_value": "297.9",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "superficie_construida_m2": {
+      "eva_name": "superficie_construida",
+      "eva_value": "100",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "superficie_parcela_m2": {
+      "eva_name": "superficie_parcela",
+      "eva_value": "1167",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    },
+    "table_dpsh_range": {
+      "eva_name": "table_dpsh_range",
+      "eva_value": "3 i 4",
+      "pipeline_value": "3, 4 i 5",
+      "source": "computed",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null
+    }
+  },
+  "format_learning": [
+    {
+      "file_path": "A.01.pdf",
+      "role": "architect_plan",
+      "is_new": true,
+      "format_id": null,
+      "extraction_coverage": 0.0,
+      "expected_fields": [
+        "architect_company",
+        "architect_name",
+        "building_height_m",
+        "building_type",
+        "client_name",
+        "municipality",
+        "num_floors",
+        "street_address",
+        "superficie_construida",
+        "superficie_parcela"
+      ],
+      "extracted_fields": [],
+      "missing_fields": [
+        "architect_company",
+        "architect_name",
+        "building_height_m",
+        "building_type",
+        "client_name",
+        "municipality",
+        "num_floors",
+        "street_address",
+        "superficie_construida",
+        "superficie_parcela"
+      ],
+      "proposed_mappings": [],
+      "raw_extractions": []
+    },
+    {
+      "file_path": "4001670_DPSH.xls",
+      "role": "dpsh_excel",
+      "is_new": true,
+      "format_id": null,
+      "extraction_coverage": 0.0,
+      "expected_fields": [
+        "architect_name",
+        "client_name",
+        "expedient",
+        "field_date",
+        "municipality",
+        "street_address"
+      ],
+      "extracted_fields": [],
+      "missing_fields": [
+        "architect_name",
+        "client_name",
+        "expedient",
+        "field_date",
+        "municipality",
+        "street_address"
+      ],
+      "proposed_mappings": [],
+      "raw_extractions": []
+    }
+  ]
+}

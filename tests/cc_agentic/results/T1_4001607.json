@@ -2,14 +2,14 @@
   "metadata": {
     "test_id": "T1",
     "project": "4001607 LINYOLA",
-    "timestamp": "2026-04-16T16:41:18.829847+00:00",
+    "timestamp": "2026-04-16T18:03:47.461485+00:00",
     "files_available": 58,
     "files_read": 39,
     "files_from_email": 45,
-    "duration_s": 351.2,
-    "api_calls": 34,
-    "input_tokens": 151371,
-    "output_tokens": 7458
+    "duration_s": 495.4,
+    "api_calls": 37,
+    "input_tokens": 165647,
+    "output_tokens": 8330
   },
   "files_inventory": [
     {
@@ -305,7 +305,7 @@
   ],
   "variables": {
     "client_name": {
-      "value": "Sra. Sílvia Eroles Balagueró",
+      "value": "Sílvia Eroles Balagueró",
       "confidence": 1.0,
       "source_file": "4001607_informe.doc",
       "source_origin": "project",
@@ -440,15 +440,8 @@
       "extraction_method": "doc_convert"
     },
     "adjacent_west": {
-      "value": "Carrer (accés)",
+      "value": "Carrer (entrada)",
       "confidence": 1.0,
-      "source_file": "4001607_informe.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
-    "site_position": {
-      "value": "Al oest del municipi de Linyola",
-      "confidence": 0.8,
       "source_file": "4001607_informe.doc",
       "source_origin": "project",
       "extraction_method": "doc_convert"
@@ -469,10 +462,10 @@
     },
     "is_sloped": {
       "value": false,
-      "confidence": 0.8,
-      "source_file": "4001607_informe.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
+      "confidence": 0.88,
+      "source_file": "2_02B_DG_Silvia_Jaume.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
     },
     "is_anthropized": {
       "value": false,
@@ -488,6 +481,27 @@
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
+    "icgc_unit_code": {
+      "value": "POmgc3",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_description": {
+      "value": "Argiles, llims i gresos de gra fi amb intercalacions de conglomerats, gresos i calcàries del Rupelià (Oligocè)",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_epoch": {
+      "value": "Rupelià (Oligocè)",
+      "confidence": 1.0,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
     "num_dpsh_tests": {
       "value": "3 assaigs de penetració dinàmica tipus DPSH",
       "confidence": 1.0,
@@ -497,27 +511,6 @@
     },
     "table_dpsh_range": {
       "value": "3, 4 i 5",
-      "confidence": 1.0,
-      "source_file": "4001607_informe.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
-    "icgc_unit_code": {
-      "value": "POmgc3",
-      "confidence": 1.0,
-      "source_file": "4001607_informe.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
-    "icgc_unit_description": {
-      "value": "Argiles, llims i gresos de gra fi amb intercalacions de conglomerats, gresos i calcàries",
-      "confidence": 1.0,
-      "source_file": "4001607_informe.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
-    "icgc_unit_epoch": {
-      "value": "Rupelià (Oligocè)",
       "confidence": 1.0,
       "source_file": "4001607_informe.doc",
       "source_origin": "project",
@@ -538,7 +531,7 @@
       "extraction_method": "doc_convert"
     },
     "lab_field_description": {
-      "value": "Organització i supervisió dels treballs de camp",
+      "value": "Assaigs DPSH, ML. previ a l'assaig SPT, Assaig SPT",
       "confidence": 1.0,
       "source_file": "G3DT_Silvia_Jaume signat.pdf",
       "source_origin": "email",
@@ -590,6 +583,13 @@
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
+    "site_position": {
+      "value": "Al oest del municipi de Linyola",
+      "confidence": 0.8,
+      "source_file": "4001607_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
     "location_sentence": {
       "value": "El solar on s'emplaçarà el nou habitatge unifamiliar es situa al Carrer Clot de la Llacuna nº16 de Linyola.",
       "confidence": 1.0,
@@ -632,17 +632,10 @@
       "source_origin": "email",
       "extraction_method": "vision_pdf"
     },
-    "foundation_depth_m": {
-      "value": 1.75,
-      "confidence": 0.7,
-      "source_file": "PENETROS.pdf",
-      "source_origin": "project",
-      "extraction_method": "vision_pdf"
-    },
     "architect_name": {
       "value": "Josep Bunyesc Palacín",
       "confidence": 1.0,
-      "source_file": "2_02B_DG_Silvia_Jaume.pdf",
+      "source_file": "Punts de Sondeig_Silvia_Jaume.pdf",
       "source_origin": "email",
       "extraction_method": "vision_pdf"
     },
@@ -667,13 +660,6 @@
       "source_origin": "email",
       "extraction_method": "vision_pdf"
     },
-    "building_height_m": {
-      "value": 3.48,
-      "confidence": 0.9,
-      "source_file": "2_02B_DG_Silvia_Jaume.pdf",
-      "source_origin": "email",
-      "extraction_method": "vision_pdf"
-    },
     "referencia_catastral": {
       "value": "5098344CG2159N0000US",
       "confidence": 1.0,
@@ -681,8 +667,8 @@
       "source_origin": "email",
       "extraction_method": "vision_pdf"
     },
-    "building_structure_desc": {
-      "value": "Habitatge unifamiliar aïllat de planta baixa amb coberta inclinada de teula ceràmica al 30% i coberta plana, estructura d'entramat de fusta, façana revestiment SATE, mur de gavions i porxo exterior.",
+    "building_height_m": {
+      "value": 3.48,
       "confidence": 0.85,
       "source_file": "2_02B_DG_Silvia_Jaume.pdf",
       "source_origin": "email",
@@ -691,49 +677,100 @@
   },
   "comparison": {
     "vs_eva": {
+      "project": "4001607 LINYOLA",
+      "test_id": "T1",
       "total_eva_vars": 52,
       "counts": {
-        "MATCH": 5,
-        "CLOSE": 6,
-        "MISMATCH": 7,
-        "NOT_EXTRACTED": 34
+        "MATCH": 11,
+        "CLOSE": 12,
+        "MISMATCH": 4,
+        "NOT_EXTRACTED": 25
       },
-      "accuracy_pct": 21.2,
+      "accuracy_pct": 44.2,
+      "tier_breakdown": {
+        "-": {
+          "NOT_EXTRACTED": 20,
+          "CLOSE": 8,
+          "MISMATCH": 4,
+          "MATCH": 5
+        },
+        "A": {
+          "MATCH": 6,
+          "CLOSE": 2,
+          "NOT_EXTRACTED": 2
+        },
+        "B": {
+          "CLOSE": 2,
+          "NOT_EXTRACTED": 1
+        },
+        "C": {
+          "NOT_EXTRACTED": 2
+        }
+      },
+      "origin_breakdown": {
+        "project": {
+          "CLOSE": 12,
+          "MATCH": 11,
+          "MISMATCH": 2
+        },
+        "email": {
+          "MISMATCH": 2
+        }
+      },
       "details": [
         {
           "variable": "access_street",
           "tier": "-",
           "eva": "El dia 1 d ‘octubre de 2025, es va visitar l’obra per tal de:",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "adjacent_east_fmt",
           "tier": "-",
           "eva": "Per la part est i pel sud amb parcel·les buides.",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Parcel·les buides",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "adjacent_north_fmt",
           "tier": "-",
           "eva": "Per la part nord amb una parcel·la ocupada per una habitatge unifamiliar.",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Parcel·la ocupada per una habitatge unifamiliar",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "adjacent_south_fmt",
           "tier": "-",
           "eva": "Per la part est i pel sud amb parcel·les buides.",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Parcel·les buides",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "adjacent_west_fmt",
           "tier": "-",
           "eva": "I finalment, per la part oest, amb el carrer per on es realitza l’entrada.",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Carrer (entrada)",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 3,
+            "llm_explanation": "Both texts refer to a street (carrer) associated with the entrance (entrada), capturing the key information. However, Eva's text provides more context and detail about the western part ('part oest') and the entrance function, while the pipeline version is a condensed label format. The semantic content is mostly aligned but Eva's version is more descriptive."
+          }
         },
         {
           "variable": "architect_company",
@@ -741,99 +778,148 @@
           "eva": "BUNYESC ARQUITECTURA EFICIENT",
           "cc": "Bunyesc Arquitectura Eficient",
           "confidence": 1.0,
-          "status": "MATCH"
+          "status": "MATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "architect_name_upper",
           "tier": "-",
           "eva": "SÍLVIA EROLES BALAGUERÓ",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Josep Bunyesc Palacín",
+          "confidence": 1.0,
+          "status": "MISMATCH",
+          "source_file": "Punts de Sondeig_Silvia_Jaume.pdf",
+          "origin": "email",
+          "llm_judge": {
+            "llm_score": 1,
+            "llm_explanation": "Completely different architect names. 'SÍLVIA EROLES BALAGUERÓ' and 'Josep Bunyesc Palacín' are entirely distinct individuals with no semantic relationship."
+          }
         },
         {
           "variable": "building_structure_desc",
           "tier": "-",
           "eva": "sense nivell de soterrani",
-          "cc": "Habitatge unifamiliar aïllat de planta baixa amb coberta inclinada de teula ceràmica al 30% i coberta plana, estructura d'entramat de fusta, façana revestiment SATE, mur de gavions i porxo exterior.",
-          "confidence": 0.85,
-          "status": "MISMATCH"
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "building_type_lower",
           "tier": "-",
           "eva": "un nou habitatge unifamiliar",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Habitatge unifamiliar",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "client",
           "tier": "A",
           "eva": "SRA. SÍLVIA EROLES BALAGUERÓ",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Sílvia Eroles Balagueró",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "conclusions_aggressivity_statement",
           "tier": "-",
           "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "conclusions_levels_detected",
           "tier": "-",
           "eva": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "conclusions_water_statement",
           "tier": "-",
           "eva": "En data de la realització dels treballs de camp, i fins la cota assajada no es va detectar presència de nivell freàtic en tots els assaigs realitzats.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "csn_radon_text",
           "tier": "-",
           "eva": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "cte_edificacio",
           "tier": "-",
           "eva": "C-0",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "cte_sol",
           "tier": "-",
           "eva": "T-1",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "data_camp_text",
           "tier": "A",
           "eva": "1 d ‘octubre de 2025",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "1 d'octubre de 2025",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "1 d'octubre de 2025",
+            "llm_score": 5,
+            "llm_explanation": "Identical content with only a trivial spacing difference in the Catalan preposition ('d ' vs 'd''). Both represent the same date in the same language. The difference is orthographic style, not semantic."
+          }
         },
         {
           "variable": "data_signatura_text",
           "tier": "-",
           "eva": "29 d’octubre de 2025",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "dpsh_tests",
           "tier": "-",
           "eva": "[{'test_id': 'P-1', 'cota': '+245.0', 'depth': '-2.90', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-2', 'cota': '+245.0', 'depth': '-2.15', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-3', 'cota': '+245.0', 'depth': '-1.75', 'refusal': 'Si', 'water': 'No detectat'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "expedient",
@@ -841,21 +927,34 @@
           "eva": "4001607",
           "cc": "4672-GTL-25",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MISMATCH",
+          "source_file": "4672-GTL-25 Linyola.pdf",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "4672-GTL-25",
+            "llm_score": 1,
+            "llm_explanation": "Completely different expedient numbers with no overlap. Benchmark shows '4001607' while pipeline shows '4672-GTL-25'. These appear to be unrelated reference numbers from different classification systems."
+          }
         },
         {
           "variable": "geo_p",
           "tier": "-",
           "eva": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "geotech_rows",
           "tier": "-",
           "eva": "[{'name': '1er nivell: Llims argilosos i sorrencs', 'nb': '13', 'n': '--', 'density': '1.90', 'cohesion': '0.05', 'phi': '28', 'E': '100'}, {'name': '2on nivell: Lutites i sorrenques', 'nb': '31-R', 'n': 'R', 'density': '2.20', 'cohesion': '1.0', 'phi': '30', 'E': '>800'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "lab_depth",
@@ -863,7 +962,14 @@
           "eva": "Profunditat:  -1.00  a -1.15 m",
           "cc": "-1.00 a -1.15 m",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "-1.00 a -1.15 m",
+            "llm_score": 5,
+            "llm_explanation": "Identical content. The only difference is the omission of the label 'Profunditat:' in the pipeline version, which is a trivial formatting difference. The actual depth values (-1.00 a -1.15 m) are exactly the same."
+          }
         },
         {
           "variable": "lab_field_company",
@@ -871,15 +977,23 @@
           "eva": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
           "cc": "TPS Prospecció del Subsòl, S.L.",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_field_description",
           "tier": "-",
           "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
-          "cc": "Organització i supervisió dels treballs de camp",
+          "cc": "Assaigs DPSH, ML. previ a l'assaig SPT, Assaig SPT",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MISMATCH",
+          "source_file": "G3DT_Silvia_Jaume signat.pdf",
+          "origin": "email",
+          "llm_judge": {
+            "llm_score": 2,
+            "llm_explanation": "Partially correct but significant differences. The benchmark describes a quality control testing laboratory for construction (general purpose facility), while the pipeline lists specific testing methods (DPSH, ML preliminary test, SPT). These capture different aspects: benchmark = facility type/purpose; pipeline = specific test procedures performed. Some overlap in that both relate to construction testing, but they're fundamentally describing different things."
+          }
         },
         {
           "variable": "lab_location",
@@ -887,7 +1001,14 @@
           "eva": "Punt: P-3",
           "cc": "Punt P-3",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "P-3",
+            "llm_score": 5,
+            "llm_explanation": "Identical values. Both reference the same laboratory location point (P-3) with trivial formatting difference (abbreviation 'Punt:' vs direct designation)."
+          }
         },
         {
           "variable": "lab_sample_id",
@@ -895,7 +1016,9 @@
           "eva": "Mostra : SPT-1",
           "cc": "SPT-1",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_testing_company",
@@ -903,7 +1026,9 @@
           "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
           "cc": "TPS Prospecció del Subsòl SL (Soil Assaig)",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_testing_description",
@@ -911,7 +1036,13 @@
           "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
           "cc": "Assaigs de Límits d'Atterberg, expansivitat Lambe i contingut en sulfats",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MISMATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 2,
+            "llm_explanation": "Both texts relate to laboratory testing in geotechnical contexts, but they describe different aspects. The benchmark describes a general quality control testing laboratory for construction, while the pipeline specifies particular laboratory tests (Atterberg limits, Lambe expansivity, sulfate content). There is partial overlap in domain but significant difference in scope and specificity."
+          }
         },
         {
           "variable": "lab_tests_text",
@@ -919,7 +1050,14 @@
           "eva": "Assaig de Límits d’Atterberg UNE 103103/94 – 104/93\nAssaig d’expansivitat Lambe UNE 103500/94\nAssaig de contingut en sulfats UNE 83963 : 2008",
           "cc": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93; Assaig d'expansivitat Lambe UNE 103500/94; Assaig de contingut en sulfats UNE 83963:2008",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93; Assaig d'expansivitat Lambe UNE 103500/94; Assaig de contingut en sulfats UNE 83963:2008",
+            "llm_score": 5,
+            "llm_explanation": "Identical content and meaning. The only differences are formatting: benchmark uses line breaks between tests while pipeline uses semicolons as separators, and a minor spacing variation around the colon in the last standard (UNE 83963 : 2008 vs UNE 83963:2008). These are trivial presentational differences that don't affect the semantic content."
+          }
         },
         {
           "variable": "location_sentence",
@@ -927,14 +1065,19 @@
           "eva": "al Carrer Clot de la Llacuna nº16 de Linyola",
           "cc": "El solar on s'emplaçarà el nou habitatge unifamiliar es situa al Carrer Clot de la Llacuna nº16 de Linyola.",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "materials_intro",
           "tier": "-",
           "eva": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "municipality",
@@ -942,7 +1085,9 @@
           "eva": "Linyola",
           "cc": "Linyola",
           "confidence": 1.0,
-          "status": "MATCH"
+          "status": "MATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "num_dpsh_tests",
@@ -950,70 +1095,99 @@
           "eva": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
           "cc": "3 assaigs de penetració dinàmica tipus DPSH",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "perm_rows",
           "tier": "-",
           "eva": "[{'name': '2on nivell', 'k_value': '10-6 – 10-8', 'material': 'Lutites i sorrenques'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "plantes",
           "tier": "-",
           "eva": "Pb",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Pb",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "qa_value",
           "tier": "C",
           "eva": "3.0",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "radon_zone",
           "tier": "A",
           "eva": "0",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "radon_zone_description",
           "tier": "-",
           "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l’apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas radó en edificis tancats.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "seismic_ab_text",
           "tier": "A",
           "eva": "0,04",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "seismic_rows",
           "tier": "-",
           "eva": "[{'num': '1', 'terrain_type': 'Tipus IV', 'thickness': '1.60', 'c_coeff': '2.0'}, {'num': '2', 'terrain_type': 'Tipus II', 'thickness': '1.30*', 'c_coeff': '1.3'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "settlement",
           "tier": "C",
           "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "site_condition",
           "tier": "B",
           "eva": "Com que es tracta d’un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "site_description",
@@ -1021,42 +1195,59 @@
           "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al oest. La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
           "cc": "La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "sondeig_tests",
           "tier": "-",
           "eva": "[{'test_id': 'Nº assaig', 'cota': 'Punt', 'depth': 'Prof. Extracció (m)', 'spt_ma': 'N30', 'water': 'Litologia'}, {'test_id': 'SPT-1', 'cota': 'P-3', 'depth': '-1.00 a -1.15', 'spt_ma': 'R', 'water': 'Lutites'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "sulfate_baumann",
           "tier": "-",
           "eva": "--",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "sulfate_classification",
           "tier": "-",
           "eva": "No agressius",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "sulfate_level_name",
           "tier": "-",
           "eva": "2on nivell",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "sulfate_value",
           "tier": "A",
           "eva": "0.0",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "0.0",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4672-GTL-25 Linyola.pdf",
+          "origin": "project"
         },
         {
           "variable": "superficie_construida",
@@ -1064,7 +1255,9 @@
           "eva": "250.91",
           "cc": "250.91",
           "confidence": 1.0,
-          "status": "MATCH"
+          "status": "MATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "superficie_parcela",
@@ -1072,7 +1265,9 @@
           "eva": "571",
           "cc": "571",
           "confidence": 1.0,
-          "status": "MATCH"
+          "status": "MATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "table_dpsh_range",
@@ -1080,7 +1275,9 @@
           "eva": "3, 4 i 5",
           "cc": "3, 4 i 5",
           "confidence": 1.0,
-          "status": "MATCH"
+          "status": "MATCH",
+          "source_file": "4001607_informe.doc",
+          "origin": "project"
         }
       ]
     }
@@ -1094,11 +1291,11 @@
       "origin": "project",
       "method": "doc_convert",
       "vars_extracted": 41,
-      "elapsed_s": 20.76,
+      "elapsed_s": 24.99,
       "usage": {
         "input_tokens": 6796,
-        "output_tokens": 1449,
-        "elapsed_s": 18.4
+        "output_tokens": 1455,
+        "elapsed_s": 22.59
       }
     },
     {
@@ -1108,12 +1305,26 @@
       "role": "gtl_report",
       "origin": "project",
       "method": "vision_pdf",
-      "vars_extracted": 17,
-      "elapsed_s": 23.35,
+      "vars_extracted": 16,
+      "elapsed_s": 25.46,
       "usage": {
         "input_tokens": 12456,
-        "output_tokens": 784,
-        "elapsed_s": 22.26
+        "output_tokens": 708,
+        "elapsed_s": 24.36
+      }
+    },
+    {
+      "action_id": "crop_reread_4672-GTL-25 Linyola.pdf",
+      "type": "agentic_crop",
+      "file": "4672-GTL-25 Linyola.pdf",
+      "target_vars": [
+        "num_soil_levels"
+      ],
+      "improved_vars": [],
+      "usage": {
+        "input_tokens": 4759,
+        "output_tokens": 322,
+        "elapsed_s": 17.25
       }
     },
     {
@@ -1134,12 +1345,26 @@
       "role": "dpsh_field_sheet",
       "origin": "project",
       "method": "vision_pdf",
-      "vars_extracted": 16,
-      "elapsed_s": 13.61,
+      "vars_extracted": 20,
+      "elapsed_s": 15.23,
       "usage": {
         "input_tokens": 6240,
-        "output_tokens": 466,
-        "elapsed_s": 12.95
+        "output_tokens": 613,
+        "elapsed_s": 14.58
+      }
+    },
+    {
+      "action_id": "crop_reread_PENETROS.pdf",
+      "type": "agentic_crop",
+      "file": "PENETROS.pdf",
+      "target_vars": [
+        "num_soil_levels"
+      ],
+      "improved_vars": [],
+      "usage": {
+        "input_tokens": 4759,
+        "output_tokens": 318,
+        "elapsed_s": 19.09
       }
     },
     {
@@ -1161,11 +1386,11 @@
       "origin": "project",
       "method": "vision_pdf",
       "vars_extracted": 7,
-      "elapsed_s": 8.07,
+      "elapsed_s": 7.87,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 248,
-        "elapsed_s": 7.45
+        "output_tokens": 257,
+        "elapsed_s": 7.23
       }
     },
     {
@@ -1175,12 +1400,12 @@
       "role": "correlation_section",
       "origin": "project",
       "method": "vision_pdf",
-      "vars_extracted": 9,
-      "elapsed_s": 7.42,
+      "vars_extracted": 7,
+      "elapsed_s": 7.23,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 297,
-        "elapsed_s": 7.23
+        "output_tokens": 227,
+        "elapsed_s": 7.03
       }
     },
     {
@@ -1201,12 +1426,12 @@
       "role": "lab_results_pdf",
       "origin": "project",
       "method": "vision_pdf",
-      "vars_extracted": 16,
-      "elapsed_s": 22.05,
+      "vars_extracted": 15,
+      "elapsed_s": 25.53,
       "usage": {
         "input_tokens": 12456,
-        "output_tokens": 665,
-        "elapsed_s": 20.96
+        "output_tokens": 675,
+        "elapsed_s": 24.57
       }
     },
     {
@@ -1228,11 +1453,11 @@
       "origin": "project",
       "method": "vision_pdf",
       "vars_extracted": 8,
-      "elapsed_s": 8.46,
+      "elapsed_s": 8.92,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 252,
-        "elapsed_s": 8.04
+        "output_tokens": 253,
+        "elapsed_s": 8.3
       }
     },
     {
@@ -1243,11 +1468,11 @@
       "origin": "project",
       "method": "vision_pdf",
       "vars_extracted": 8,
-      "elapsed_s": 8.25,
+      "elapsed_s": 9.1,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 252,
-        "elapsed_s": 7.78
+        "output_tokens": 253,
+        "elapsed_s": 8.65
       }
     },
     {
@@ -1258,11 +1483,11 @@
       "origin": "project",
       "method": "vision_pdf",
       "vars_extracted": 7,
-      "elapsed_s": 7.98,
+      "elapsed_s": 7.14,
       "usage": {
         "input_tokens": 3132,
         "output_tokens": 259,
-        "elapsed_s": 7.72
+        "elapsed_s": 6.91
       }
     },
     {
@@ -1320,11 +1545,11 @@
       "origin": "email",
       "method": "vision_pdf",
       "vars_extracted": 15,
-      "elapsed_s": 11.83,
+      "elapsed_s": 13.74,
       "usage": {
         "input_tokens": 6240,
-        "output_tokens": 461,
-        "elapsed_s": 11.14
+        "output_tokens": 477,
+        "elapsed_s": 13.13
       }
     },
     {
@@ -1335,11 +1560,11 @@
       "origin": "email",
       "method": "vision_pdf",
       "vars_extracted": 8,
-      "elapsed_s": 23.45,
+      "elapsed_s": 9.05,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 253,
-        "elapsed_s": 23.05
+        "output_tokens": 252,
+        "elapsed_s": 8.6
       }
     },
     {
@@ -1356,11 +1581,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 10.91,
+      "elapsed_s": 2.51,
       "usage": {
         "input_tokens": 3141,
         "output_tokens": 4,
-        "elapsed_s": 10.88
+        "elapsed_s": 2.49
       }
     },
     {
@@ -1371,11 +1596,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.6,
+      "elapsed_s": 2.19,
       "usage": {
         "input_tokens": 1701,
         "output_tokens": 4,
-        "elapsed_s": 1.57
+        "elapsed_s": 2.17
       }
     },
     {
@@ -1386,11 +1611,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.94,
+      "elapsed_s": 2.06,
       "usage": {
         "input_tokens": 1681,
         "output_tokens": 4,
-        "elapsed_s": 1.92
+        "elapsed_s": 2.04
       }
     },
     {
@@ -1401,11 +1626,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.68,
+      "elapsed_s": 2.34,
       "usage": {
         "input_tokens": 1681,
         "output_tokens": 4,
-        "elapsed_s": 1.66
+        "elapsed_s": 2.32
       }
     },
     {
@@ -1422,11 +1647,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.63,
+      "elapsed_s": 1.45,
       "usage": {
         "input_tokens": 1713,
         "output_tokens": 4,
-        "elapsed_s": 1.61
+        "elapsed_s": 1.43
       }
     },
     {
@@ -1436,12 +1661,12 @@
       "role": "email_attachment",
       "origin": "email",
       "method": "vision_pdf",
-      "vars_extracted": 24,
-      "elapsed_s": 53.13,
+      "vars_extracted": 22,
+      "elapsed_s": 66.34,
       "usage": {
         "input_tokens": 17118,
-        "output_tokens": 679,
-        "elapsed_s": 48.22
+        "output_tokens": 660,
+        "elapsed_s": 61.29
       }
     },
     {
@@ -1452,11 +1677,11 @@
       "origin": "email",
       "method": "vision_pdf",
       "vars_extracted": 8,
-      "elapsed_s": 8.63,
+      "elapsed_s": 8.26,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 252,
-        "elapsed_s": 8.2
+        "output_tokens": 228,
+        "elapsed_s": 7.84
       }
     },
     {
@@ -1467,11 +1692,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.81,
+      "elapsed_s": 1.4,
       "usage": {
         "input_tokens": 1611,
         "output_tokens": 4,
-        "elapsed_s": 1.79
+        "elapsed_s": 1.38
       }
     },
     {
@@ -1500,11 +1725,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 2.92,
+      "elapsed_s": 3.21,
       "usage": {
         "input_tokens": 3135,
         "output_tokens": 4,
-        "elapsed_s": 2.9
+        "elapsed_s": 3.18
       }
     },
     {
@@ -1521,11 +1746,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 4.11,
+      "elapsed_s": 6.01,
       "usage": {
         "input_tokens": 3147,
         "output_tokens": 4,
-        "elapsed_s": 4.09
+        "elapsed_s": 5.99
       }
     },
     {
@@ -1542,11 +1767,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 3.55,
+      "elapsed_s": 4.55,
       "usage": {
         "input_tokens": 3037,
         "output_tokens": 4,
-        "elapsed_s": 3.53
+        "elapsed_s": 4.52
       }
     },
     {
@@ -1557,11 +1782,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.76,
+      "elapsed_s": 2.09,
       "usage": {
         "input_tokens": 3121,
         "output_tokens": 4,
-        "elapsed_s": 1.74
+        "elapsed_s": 2.07
       }
     },
     {
@@ -1578,11 +1803,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 2.62,
+      "elapsed_s": 2.61,
       "usage": {
         "input_tokens": 2538,
         "output_tokens": 4,
-        "elapsed_s": 2.58
+        "elapsed_s": 2.59
       }
     },
     {
@@ -1599,11 +1824,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.71,
+      "elapsed_s": 2.34,
       "usage": {
         "input_tokens": 2398,
         "output_tokens": 4,
-        "elapsed_s": 1.69
+        "elapsed_s": 2.32
       }
     },
     {
@@ -1613,12 +1838,28 @@
       "role": "email_attachment",
       "origin": "email",
       "method": "vision_pdf",
-      "vars_extracted": 25,
-      "elapsed_s": 54.84,
+      "vars_extracted": 24,
+      "elapsed_s": 110.61,
       "usage": {
         "input_tokens": 17118,
-        "output_tokens": 837,
-        "elapsed_s": 49.95
+        "output_tokens": 708,
+        "elapsed_s": 105.63
+      }
+    },
+    {
+      "action_id": "crop_reread_2_02B_DG_Silvia_Jaume.pdf",
+      "type": "agentic_crop",
+      "file": "2_02B_DG_Silvia_Jaume.pdf",
+      "target_vars": [
+        "is_sloped"
+      ],
+      "improved_vars": [
+        "is_sloped"
+      ],
+      "usage": {
+        "input_tokens": 4758,
+        "output_tokens": 336,
+        "elapsed_s": 44.06
       }
     },
     {
@@ -1629,11 +1870,11 @@
       "origin": "email",
       "method": "vision_pdf",
       "vars_extracted": 8,
-      "elapsed_s": 20.19,
+      "elapsed_s": 9.63,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 228,
-        "elapsed_s": 19.78
+        "output_tokens": 253,
+        "elapsed_s": 9.24
       }
     },
     {
@@ -1644,11 +1885,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.45,
+      "elapsed_s": 1.96,
       "usage": {
         "input_tokens": 1611,
         "output_tokens": 4,
-        "elapsed_s": 1.43
+        "elapsed_s": 1.94
       }
     },
     {
@@ -1659,11 +1900,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 2.66,
+      "elapsed_s": 2.77,
       "usage": {
         "input_tokens": 3135,
         "output_tokens": 4,
-        "elapsed_s": 2.64
+        "elapsed_s": 2.75
       }
     },
     {
@@ -1680,11 +1921,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 4.23,
+      "elapsed_s": 5.26,
       "usage": {
         "input_tokens": 3147,
         "output_tokens": 4,
-        "elapsed_s": 4.2
+        "elapsed_s": 5.23
       }
     },
     {
@@ -1701,11 +1942,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 3.55,
+      "elapsed_s": 3.98,
       "usage": {
         "input_tokens": 3037,
         "output_tokens": 4,
-        "elapsed_s": 3.53
+        "elapsed_s": 3.95
       }
     },
     {
@@ -1716,11 +1957,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 2.04,
+      "elapsed_s": 3.16,
       "usage": {
         "input_tokens": 3121,
         "output_tokens": 4,
-        "elapsed_s": 2.01
+        "elapsed_s": 3.13
       }
     },
     {
@@ -1737,11 +1978,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.65,
+      "elapsed_s": 1.97,
       "usage": {
         "input_tokens": 2538,
         "output_tokens": 4,
-        "elapsed_s": 1.63
+        "elapsed_s": 1.95
       }
     },
     {
@@ -1758,20 +1999,20 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.63,
+      "elapsed_s": 1.45,
       "usage": {
         "input_tokens": 2398,
         "output_tokens": 4,
-        "elapsed_s": 1.61
+        "elapsed_s": 1.42
       }
     },
     {
       "action_id": "usage_summary",
       "type": "summary",
       "total_usage": {
-        "input_tokens": 151371,
-        "output_tokens": 7458,
-        "api_calls": 34
+        "input_tokens": 165647,
+        "output_tokens": 8330,
+        "api_calls": 37
       }
     }
   ]

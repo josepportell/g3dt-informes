@@ -1,0 +1,57 @@
+{
+  "pages_inventory": {
+    "1": "floor plan - planta baja"
+  },
+  "planning_table_raw": {
+    "planejament": {},
+    "projecte": {}
+  },
+  "architect_data": {
+    "project_name": null,
+    "building_type": null,
+    "client_name": null,
+    "promotor": null,
+    "street_address": null,
+    "municipality": null,
+    "architect": null,
+    "architect_company": "VIVIENDAS MODULARES",
+    "ref_cadastral": null
+  },
+  "dimensions": {
+    "parcel_area_m2": null,
+    "building_footprint_m2": {
+      "value": 72.0,
+      "confidence": 0.95,
+      "source": "floor plan p1",
+      "page": 1
+    },
+    "total_built_area_m2": {
+      "value": 92.0,
+      "confidence": 0.95,
+      "source": "floor plan p1",
+      "page": 1
+    },
+    "floor_surfaces": [
+      {
+        "floor": "PB",
+        "area_m2": 72.0,
+        "confidence": 0.95,
+        "page": 1
+      }
+    ],
+    "num_floors": null,
+    "max_height_m": null,
+    "plot_length_m": {
+      "value": 8.0,
+      "confidence": 1.0,
+      "page": 1
+    },
+    "plot_width_m": {
+      "value": 9.0,
+      "confidence": 1.0,
+      "page": 1
+    }
+  },
+  "overall_confidence": 0.85,
+  "extraction_notes": "Only one page provided: floor plan of a single floor house model 'Mediterraneo'. No normativa/planning table or cover data visible. Dimensions and areas extracted from plan annotations."
+}

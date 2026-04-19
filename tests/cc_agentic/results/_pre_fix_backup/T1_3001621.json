@@ -1,0 +1,1139 @@
+{
+  "metadata": {
+    "test_id": "T1",
+    "project": "3001621 CASTELLAR DEL VALLES",
+    "timestamp": "2026-04-16T16:31:41.380226+00:00",
+    "files_available": 20,
+    "files_read": 14,
+    "files_from_email": 7,
+    "duration_s": 129.5,
+    "api_calls": 8,
+    "input_tokens": 50608,
+    "output_tokens": 4832
+  },
+  "files_inventory": [
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/3001621_informe_v0.doc",
+      "role": "reference_report",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/4687-GTL-25 Castellar del Vallés.pdf",
+      "role": "gtl_report",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/FOTOGRAFIES",
+      "role": "photos_dir",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/PENETROS + SONDEIG.pdf",
+      "role": "dpsh_field_sheet",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+      "role": "lab_order",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/tall.pdf",
+      "role": "correlation_section",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/ANNEXES/3001621_DPSH.xls",
+      "role": "dpsh_excel",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/PDF/ANNEXES/3001621_plànol de situació.pdf",
+      "role": "situation_plan",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/PDF/ANNEXES/3001621_sondeig.pdf",
+      "role": "sondeig_annex",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/PDF/ANNEXES/LAB-SIG.pdf",
+      "role": "lab_results_pdf",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/25.0493",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/_user_data_prev.json",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/PDF-V0/ANNEXES/3001621_sondeig.pdf",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image005.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image009.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/validation/mined_images/PLAN_COST_CATELLAR DEL VALLÈS_img0.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/validation/msg_attachments/Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/validation/msg_attachments/Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES/image008.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    }
+  ],
+  "variables": {
+    "client_name": {
+      "value": "WOOD COMFORT PROMOCIONS SLU",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "building_type": {
+      "value": "Habitatges unifamiliars d'estructura lleugera (fusta)",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "num_floors": {
+      "value": "Pb+1Pp",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_parcela": {
+      "value": 1284,
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_construida": {
+      "value": 120,
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "street_address": {
+      "value": "Carrer dels Arbrells, 18, Castellar del Vallès",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "municipality": {
+      "value": "Castellar del Vallès",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "has_basement": {
+      "value": false,
+      "confidence": 0.7,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "has_retaining_walls": {
+      "value": false,
+      "confidence": 0.6,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "field_date": {
+      "value": "2025-10-24",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "field_work_dates": {
+      "value": [
+        "2025-10-24"
+      ],
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "field_work_dates_text": {
+      "value": "24 d'octubre de 2025",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_north": {
+      "value": "Parcel·les sense construir amb herbes altes i arbres, i una parcel·la amb planta baixa i una planta pis paral·lela al carrer Turó Roig",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_south": {
+      "value": "Carrer Arbrells",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_east": {
+      "value": "Parcel·la construïda amb piscina",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_west": {
+      "value": "Parcel·les sense construir amb herbes altes i arbres",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "parcel_shape": {
+      "value": "Quasi rectangular",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "is_urban": {
+      "value": true,
+      "confidence": 0.8,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "is_sloped": {
+      "value": true,
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "site_description": {
+      "value": "Solar sense construccions ni pavimentacions, s'ha realitzat un desbroç de la zona de treball i s'ha adequat un accés. Topogràficament presenta pendent, amb una plataforma de treball situada aproximadament 4.0 metres respecte el carrer.",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "access_description": {
+      "value": "Entrada a la zona d'estudi a través del carrer adjacent situat al sud (carrer Arbrells).",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "cota_referencia": {
+      "value": "570.90 msnm (segons el plànol ICGC)",
+      "confidence": 1.0,
+      "source_file": "3001621_sondeig.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "site_position": {
+      "value": "Al nord del municipi de Castellar del Vallès",
+      "confidence": 0.8,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "is_anthropized": {
+      "value": true,
+      "confidence": 0.8,
+      "source_file": "3001621_sondeig.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "num_soil_levels": {
+      "value": 2,
+      "confidence": 1.0,
+      "source_file": "tall.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "num_dpsh_tests": {
+      "value": "4 assaigs de penetració dinàmica tipus DPSH",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "table_dpsh_range": {
+      "value": "3, 4 i 5",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_code": {
+      "value": "ECbc",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_description": {
+      "value": "Bretxes amb intercalacions de lutites i gresos vermells",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_epoch": {
+      "value": "Eocè-Ipresià",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL, S.L.",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_field_description": {
+      "value": "Realització d'assaigs in situ: 4 DPSH, 1 sondeig a rotació amb bateria contínua, 1 assaig SPT amb recuperació de mostra",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_testing_description": {
+      "value": "Assaig de contingut en sulfats UNE 83963:2008",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_location": {
+      "value": "Punt S-1",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_sample_id": {
+      "value": "SPT-1",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_depth": {
+      "value": "-1.00 a -1.20 m",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_tests_text": {
+      "value": "1 assaig de contingut en sulfats UNE 83963:2008",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "building_structure_desc": {
+      "value": "3 habitatges unifamiliars d'estructura lleugera de fusta, Pb+1Pp",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "location_sentence": {
+      "value": "El solar on s'emplaçarà els nous habitatges unifamiliars es situa en el Carrer dels Arbrells, 18 de Castellar del Vallès.",
+      "confidence": 1.0,
+      "source_file": "3001621_informe_v0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "client_nif": {
+      "value": "B25364589",
+      "confidence": 1.0,
+      "source_file": "4687-GTL-25 Castellar del Vallés.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "expedient": {
+      "value": "4687-GTL-25",
+      "confidence": 1.0,
+      "source_file": "4687-GTL-25 Castellar del Vallés.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "sulfate_mg_kg": {
+      "value": 0.0,
+      "confidence": 1.0,
+      "source_file": "4687-GTL-25 Castellar del Vallés.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "lab_tests": {
+      "value": [
+        {
+          "test": "Determinació del contingut en ió sulfat en sòls",
+          "standard": "UNE 83963:2008",
+          "result": "0.0 mg/kg SO4"
+        }
+      ],
+      "confidence": 1.0,
+      "source_file": "4687-GTL-25 Castellar del Vallés.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "contact_name": {
+      "value": "Eva",
+      "confidence": 0.8,
+      "source_file": "PENETROS + SONDEIG.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "foundation_depth_m": {
+      "value": 4.0,
+      "confidence": 0.8,
+      "source_file": "PENETROS + SONDEIG.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "province": {
+      "value": "Barcelona",
+      "confidence": 1.0,
+      "source_file": "tall.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "utm_x": {
+      "value": 423182.0,
+      "confidence": 1.0,
+      "source_file": "3001621_sondeig.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "utm_y": {
+      "value": 4609623.0,
+      "confidence": 1.0,
+      "source_file": "3001621_sondeig.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    }
+  },
+  "comparison": {
+    "vs_eva": {
+      "total_eva_vars": 58,
+      "counts": {
+        "MATCH": 3,
+        "CLOSE": 5,
+        "MISMATCH": 9,
+        "NOT_EXTRACTED": 41
+      },
+      "accuracy_pct": 13.8,
+      "details": [
+        {
+          "variable": "access_street",
+          "tier": "-",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_east_fmt",
+          "tier": "-",
+          "eva": "Per la part est, amb una parcel·la construïda amb piscina.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_north_fmt",
+          "tier": "-",
+          "eva": "Per la part nord, amb parcel·les sense construir, amb herbes altes i arbres, així com una parcel·la amb planta baixa i una planta pis, paral·lela al carrer Turó Roig.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_south_fmt",
+          "tier": "-",
+          "eva": "Per la part sud, amb el carrer Arbrells.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_west_fmt",
+          "tier": "-",
+          "eva": "I finalment, per la part oest, amb parcel·les sense construir amb herbes altes i arbres.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "building_structure_desc",
+          "tier": "-",
+          "eva": "sense nivell de soterrani",
+          "cc": "3 habitatges unifamiliars d'estructura lleugera de fusta, Pb+1Pp",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "building_type_lower",
+          "tier": "-",
+          "eva": "3 habitatges unifamiliars d’estructura lleugera, fusta",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "client",
+          "tier": "A",
+          "eva": "WOOD COMFORT PROMOCIONS SLU",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_aggressivity_statement",
+          "tier": "-",
+          "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten No Agressius al formigó.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_levels_detected",
+          "tier": "-",
+          "eva": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_water_statement",
+          "tier": "-",
+          "eva": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin. Tampoc s’ha localitzat cap curs d’aigua i/o torrent proper que pugui afectar a la zona en estudi.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "csn_radon_text",
+          "tier": "-",
+          "eva": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "cte_edificacio",
+          "tier": "-",
+          "eva": "C-1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "cte_sol",
+          "tier": "-",
+          "eva": "T-1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "data_camp_text",
+          "tier": "A",
+          "eva": "24 de octubre de 2025",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "data_signatura_text",
+          "tier": "-",
+          "eva": "19 de novembre de 2025.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "dpsh_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'P-1', 'cota': '-4.0', 'depth': '-1.08', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-2', 'cota': '-4.20', 'depth': '-0.48', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-3', 'cota': '-4.0', 'depth': '-0.76', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-4', 'cota': '-4.0', 'depth': '-1.55', 'refusal': 'Si', 'water': 'No detectat'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "empentes_paragraph",
+          "tier": "-",
+          "eva": "Pel dimensionament del murs que es projectin i pel càlcul de les empentes de terres caldrà tenir en compte els paràmetres geomecànics dels materials del 1er nivell que es considera el més desfavorables.\nCal tenir en compte que en el trasdors del mur, caldrà instal·lar un correcte drenatge per a evitar que s’acumuli aigua i es produeixi un sobrecàrrega en el seu trasdors.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "estabilitat_paragraph",
+          "tier": "-",
+          "eva": "Per a la realització de les recomanacions d’estabilitat de talussos s’han tingut en compte les següents premisses:\nActualment el solar presenta un pendent d’entre 20-25º.\nTalussos sense presència de nivell freàtic.\nFactor de seguretat F=1.8, factor de seguretat del vessant actual.\nS’ha considerat la columna de materials, dominat pel primer nivell, amb els paràmetres geomecànics obtinguts.\nEl mètode ràpid de càlcul utilitzat per les recomanacions de talussos és el proposat per Hoek & Bray (1977), utilitzant els valors numèrics de cohesió, angle de fregament i densitat exposat anteriors.\nFigura 6 i Figura 7. Líneas de saturació possibles, es marca la que s’ha escollit. En la segona figura detall de l’àbac nº1 escollit.\nAixí per a tots aquests paràmetres exposant el vessant actual presenta factors de seguretat superiors a 3.5. Si els habitatges projectats es recolzen damunt dels materials del primer nivell de substrat, no suposaran una sobrecàrrega important damunt del vessant, i per tant, no modificarà substancialment els factors de seguretat del propi vessant, per tant amb valors sempre superior a 1.8, per tant cumplint les premisses marcades per part del CTE.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "expedient",
+          "tier": "-",
+          "eva": "3001621",
+          "cc": "4687-GTL-25",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "geo_p",
+          "tier": "-",
+          "eva": "En concret, i segons l’ICGC, l’estudi s’ha dut a terme damunt una zona on afloren materials de la unitat ECbc, corresponent a bretxes amb intercalacions de lutites i gresos vermells del Eocè- Ipresià.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "geotech_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell: Bretxes amb intercalacions de lutites i gresos', 'nb': '17-R', 'n': 'R', 'density': '2.20', 'cohesion': '1.0', 'phi': '35º', 'E': '>500'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "k30_value",
+          "tier": "C",
+          "eva": "Si s’optés per una fonamentació amb llosa, el valor de coeficient de balast, referit a la placa de 30x30, es podrà adoptar un valor de K30=8.00 kg/cm3.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "lab_depth",
+          "tier": "-",
+          "eva": "Profunditat:  -1.00  a -1.20 m",
+          "cc": "-1.00 a -1.20 m",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_field_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
+          "cc": "TPS PROSPECCIÓ DEL SUBSÒL, S.L.",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "lab_field_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "Realització d'assaigs in situ: 4 DPSH, 1 sondeig a rotació amb bateria contínua, 1 assaig SPT amb recuperació de mostra",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_location",
+          "tier": "-",
+          "eva": "Punt: S-1",
+          "cc": "Punt S-1",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_sample_id",
+          "tier": "-",
+          "eva": "Mostra : SPT-1",
+          "cc": "SPT-1",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "lab_testing_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "lab_testing_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "Assaig de contingut en sulfats UNE 83963:2008",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_tests_text",
+          "tier": "-",
+          "eva": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+          "cc": "1 assaig de contingut en sulfats UNE 83963:2008",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "location_sentence",
+          "tier": "B",
+          "eva": "en el Carrer dels Arbrells, 18 de Castellar del Vallès",
+          "cc": "El solar on s'emplaçarà els nous habitatges unifamiliars es situa en el Carrer dels Arbrells, 18 de Castellar del Vallès.",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "materials_intro",
+          "tier": "-",
+          "eva": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "municipality",
+          "tier": "A",
+          "eva": "Castellar del Vallès",
+          "cc": "Castellar del Vallès",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "num_dpsh_tests",
+          "tier": "A",
+          "eva": "4 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+          "cc": "4 assaigs de penetració dinàmica tipus DPSH",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "perm_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell', 'k_value': '10⁻5 – 10⁻7', 'material': 'Bretxes amb intercalacions de lutites i gresos vermells.'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "plantes",
+          "tier": "-",
+          "eva": "Pb+1Pp",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "qa_value",
+          "tier": "C",
+          "eva": "3.0",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "radon_zone",
+          "tier": "A",
+          "eva": "1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "radon_zone_description",
+          "tier": "-",
+          "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "seismic_ab_text",
+          "tier": "A",
+          "eva": "AB  = 0,04 g  (essent g el valor de la gravetat)",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "seismic_rows",
+          "tier": "-",
+          "eva": "[{'num': '1', 'terrain_type': 'Tipus II', 'thickness': '1.15*', 'c_coeff': '1.3'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "settlement",
+          "tier": "C",
+          "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "site_condition",
+          "tier": "B",
+          "eva": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "site_description",
+          "tier": "B",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.\nEl solar es localitza sense construccions ni pavimentacions, s’ha realitzat un desbroç de la zona de treball i s’ha adequat un accés a la zona de treball.\nTopogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina, situada aproximadament 4.0 metres respecte el carrer.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
+          "cc": "Solar sense construccions ni pavimentacions, s'ha realitzat un desbroç de la zona de treball i s'ha adequat un accés. Topogràficament presenta pendent, amb una plataforma de treball situada aproximadament 4.0 metres respecte el carrer.",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "sondeig_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'S-1', 'cota': '-4.20', 'depth': '-1.20', 'spt_ma': '1/0', 'water': 'No detectat'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "spt_depth_range",
+          "tier": "-",
+          "eva": "-1.00 a -1.20",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "spt_lithology",
+          "tier": "-",
+          "eva": "Limolites i bretxes",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "spt_location",
+          "tier": "-",
+          "eva": "S-1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "spt_n30",
+          "tier": "-",
+          "eva": "R",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "spt_test_id",
+          "tier": "-",
+          "eva": "SPT-1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_baumann",
+          "tier": "-",
+          "eva": "--",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_classification",
+          "tier": "-",
+          "eva": "No Agressius",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_level_name",
+          "tier": "-",
+          "eva": "1er nivell",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_value",
+          "tier": "A",
+          "eva": "0.0",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "superficie_construida",
+          "tier": "A",
+          "eva": "120 m2",
+          "cc": "120",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "superficie_parcela",
+          "tier": "A",
+          "eva": "1.284",
+          "cc": "1284",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "table_dpsh_range",
+          "tier": "-",
+          "eva": "3, 4 i 5",
+          "cc": "3, 4 i 5",
+          "confidence": 1.0,
+          "status": "MATCH"
+        }
+      ]
+    }
+  },
+  "trace": [
+    {
+      "action_id": "extract_3001621_informe_v0.doc",
+      "type": "file_extraction",
+      "file": "3001621_informe_v0.doc",
+      "role": "reference_report",
+      "origin": "project",
+      "method": "doc_convert",
+      "vars_extracted": 40,
+      "elapsed_s": 22.23,
+      "usage": {
+        "input_tokens": 6928,
+        "output_tokens": 1485,
+        "elapsed_s": 19.76
+      }
+    },
+    {
+      "action_id": "extract_4687-GTL-25 Castellar del Vallés.pdf",
+      "type": "file_extraction",
+      "file": "4687-GTL-25 Castellar del Vallés.pdf",
+      "role": "gtl_report",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 18,
+      "elapsed_s": 15.55,
+      "usage": {
+        "input_tokens": 9348,
+        "output_tokens": 611,
+        "elapsed_s": 14.73
+      }
+    },
+    {
+      "action_id": "extract_FOTOGRAFIES",
+      "type": "file_extraction",
+      "file": "FOTOGRAFIES",
+      "role": "photos_dir",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_PENETROS + SONDEIG.pdf",
+      "type": "file_extraction",
+      "file": "PENETROS + SONDEIG.pdf",
+      "role": "dpsh_field_sheet",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 13,
+      "elapsed_s": 18.4,
+      "usage": {
+        "input_tokens": 9348,
+        "output_tokens": 403,
+        "elapsed_s": 17.18
+      }
+    },
+    {
+      "action_id": "extract_comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+      "type": "file_extraction",
+      "file": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+      "role": "lab_order",
+      "origin": "project",
+      "method": "excel_parse",
+      "vars_extracted": 3,
+      "elapsed_s": 0.01,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_tall.pdf",
+      "type": "file_extraction",
+      "file": "tall.pdf",
+      "role": "correlation_section",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 7.31,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 226,
+        "elapsed_s": 6.82
+      }
+    },
+    {
+      "action_id": "extract_3001621_DPSH.xls",
+      "type": "file_extraction",
+      "file": "3001621_DPSH.xls",
+      "role": "dpsh_excel",
+      "origin": "project",
+      "method": "excel_parse",
+      "vars_extracted": 0,
+      "elapsed_s": 0.01,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_3001621_plànol de situació.pdf",
+      "type": "file_extraction",
+      "file": "3001621_plànol de situació.pdf",
+      "role": "situation_plan",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 12.1,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 275,
+        "elapsed_s": 11.6
+      }
+    },
+    {
+      "action_id": "extract_3001621_sondeig.pdf",
+      "type": "file_extraction",
+      "file": "3001621_sondeig.pdf",
+      "role": "sondeig_annex",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 19,
+      "elapsed_s": 16.33,
+      "usage": {
+        "input_tokens": 4686,
+        "output_tokens": 623,
+        "elapsed_s": 15.62
+      }
+    },
+    {
+      "action_id": "extract_LAB-SIG.pdf",
+      "type": "file_extraction",
+      "file": "LAB-SIG.pdf",
+      "role": "lab_results_pdf",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 16,
+      "elapsed_s": 19.06,
+      "usage": {
+        "input_tokens": 9348,
+        "output_tokens": 560,
+        "elapsed_s": 18.34
+      }
+    },
+    {
+      "action_id": "extract_25.0493",
+      "type": "file_extraction",
+      "file": "25.0493",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract__user_data_prev.json",
+      "type": "file_extraction",
+      "file": "_user_data_prev.json",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_3001621_sondeig.pdf",
+      "type": "file_extraction",
+      "file": "3001621_sondeig.pdf",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 20,
+      "elapsed_s": 16.48,
+      "usage": {
+        "input_tokens": 4686,
+        "output_tokens": 649,
+        "elapsed_s": 15.79
+      }
+    },
+    {
+      "action_id": "extract_PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+      "type": "file_extraction",
+      "file": "PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "excel_parse",
+      "vars_extracted": 2,
+      "elapsed_s": 0.3,
+      "usage": {}
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image005.png",
+      "type": "file_skip",
+      "file": "image005.png",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image009.jpg",
+      "type": "file_skip",
+      "file": "image009.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_PLAN_COST_CATELLAR DEL VALLÈS_img0.png",
+      "type": "file_skip",
+      "file": "PLAN_COST_CATELLAR DEL VALLÈS_img0.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image008.jpg",
+      "type": "file_skip",
+      "file": "image008.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "usage_summary",
+      "type": "summary",
+      "total_usage": {
+        "input_tokens": 50608,
+        "output_tokens": 4832,
+        "api_calls": 8
+      }
+    }
+  ]
+}

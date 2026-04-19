@@ -1,0 +1,60 @@
+{
+  "document_type": "field_sheet",
+  "document_description": "Geotechnical field test sheet",
+  "concepts_found": [
+    {
+      "concept_id": "street_address",
+      "confidence": 1.0,
+      "signal_preview": "Carrer clot de la llacuna",
+      "page": 1
+    },
+    {
+      "concept_id": "municipality",
+      "confidence": 1.0,
+      "signal_preview": "Linyola",
+      "page": 1
+    },
+    {
+      "concept_id": "field_date",
+      "confidence": 1.0,
+      "signal_preview": "01-10-25",
+      "page": 1
+    },
+    {
+      "concept_id": "contact_name",
+      "confidence": 1.0,
+      "signal_preview": "Siny",
+      "page": 1
+    },
+    {
+      "concept_id": "street_address",
+      "confidence": 1.0,
+      "signal_preview": "Carrer clot de la llacuna",
+      "page": 2
+    },
+    {
+      "concept_id": "municipality",
+      "confidence": 1.0,
+      "signal_preview": "Linyola",
+      "page": 2
+    },
+    {
+      "concept_id": "field_date",
+      "confidence": 1.0,
+      "signal_preview": "01-10-25",
+      "page": 2
+    },
+    {
+      "concept_id": "cota_referencia",
+      "confidence": 1.0,
+      "signal_preview": "-0,15",
+      "page": 2
+    },
+    {
+      "concept_id": "contact_name",
+      "confidence": 1.0,
+      "signal_preview": "Siny",
+      "page": 3
+    }
+  ]
+}

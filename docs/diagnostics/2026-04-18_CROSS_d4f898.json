@@ -1,0 +1,1451 @@
+{
+  "schema_version": "1.2",
+  "metadata": {
+    "timestamp": "2026-04-18T21:37:02+0200",
+    "run_id": "d4f898",
+    "num_projects": 7
+  },
+  "global_summary": {
+    "total_vars": 281,
+    "match": 111,
+    "close": 32,
+    "mismatch": 75,
+    "not_extracted": 39,
+    "pass": 24,
+    "match_close_pct": 65.6
+  },
+  "global_tier_summary": {
+    "A": {
+      "total": 244,
+      "match": 101,
+      "close": 24,
+      "mismatch": 56,
+      "not_extracted": 39,
+      "pass": 24
+    },
+    "B": {
+      "total": 21,
+      "match": 7,
+      "close": 6,
+      "mismatch": 8,
+      "not_extracted": 0,
+      "pass": 0
+    },
+    "C": {
+      "total": 16,
+      "match": 3,
+      "close": 2,
+      "mismatch": 11,
+      "not_extracted": 0,
+      "pass": 0
+    }
+  },
+  "global_component_summary": {
+    "unknown": {
+      "produced": 0,
+      "match": 0,
+      "close": 0,
+      "mismatch": 0,
+      "not_extracted": 39,
+      "pass": 24,
+      "accuracy_pct": 0.0
+    },
+    "cadastre": {
+      "produced": 28,
+      "match": 5,
+      "close": 9,
+      "mismatch": 14,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 50.0
+    },
+    "vision_planol": {
+      "produced": 21,
+      "match": 6,
+      "close": 5,
+      "mismatch": 10,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 52.4
+    },
+    "computed": {
+      "produced": 74,
+      "match": 38,
+      "close": 8,
+      "mismatch": 28,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 62.2
+    },
+    "dpsh_extractor": {
+      "produced": 5,
+      "match": 4,
+      "close": 0,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 80.0
+    },
+    "fileminer_regex": {
+      "produced": 12,
+      "match": 6,
+      "close": 3,
+      "mismatch": 3,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 75.0
+    },
+    "lab_extractor": {
+      "produced": 18,
+      "match": 14,
+      "close": 2,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 88.9
+    },
+    "constant": {
+      "produced": 20,
+      "match": 19,
+      "close": 0,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 95.0
+    },
+    "llm_synthesis": {
+      "produced": 8,
+      "match": 2,
+      "close": 4,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 75.0
+    },
+    "template_generated": {
+      "produced": 7,
+      "match": 0,
+      "close": 0,
+      "mismatch": 7,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 0.0
+    },
+    "vision_sondeig": {
+      "produced": 15,
+      "match": 9,
+      "close": 1,
+      "mismatch": 5,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 66.7
+    },
+    "groq_llm": {
+      "produced": 6,
+      "match": 5,
+      "close": 0,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 83.3
+    },
+    "vision_projecte": {
+      "produced": 4,
+      "match": 3,
+      "close": 0,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "pass": 0,
+      "accuracy_pct": 75.0
+    }
+  },
+  "cross_variable_matrix": {
+    "access_street": {
+      "4001612 BELL-LLOC": "NOT_EXTRACTED",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "NOT_EXTRACTED",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "adjacent_east_fmt": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "CLOSE",
+      "4001607 LINYOLA": "CLOSE",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "adjacent_north_fmt": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "adjacent_south_fmt": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "CLOSE",
+      "4001670 ALCOLETGE": "CLOSE",
+      "4001671 VILANOVA DE SEGRIA": "CLOSE",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "adjacent_west_fmt": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "CLOSE",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "architect_company": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "4001607 LINYOLA": "MATCH"
+    },
+    "architect_name": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "building_structure_desc": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "building_type": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "CLOSE",
+      "4001607 LINYOLA": "CLOSE",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "CLOSE",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "client_name": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "cte_edificacio": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH"
+    },
+    "cte_sol": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH"
+    },
+    "field_work_dates_text": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "expedient": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "MATCH"
+    },
+    "lab_depth": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "PASS",
+      "4001671 VILANOVA DE SEGRIA": "PASS",
+      "4001679 ANCILES": "PASS"
+    },
+    "lab_field_company": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "PASS",
+      "4001671 VILANOVA DE SEGRIA": "PASS",
+      "4001679 ANCILES": "PASS"
+    },
+    "lab_field_description": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "PASS",
+      "4001671 VILANOVA DE SEGRIA": "PASS",
+      "4001679 ANCILES": "PASS"
+    },
+    "lab_location": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "PASS",
+      "4001671 VILANOVA DE SEGRIA": "PASS",
+      "4001679 ANCILES": "PASS"
+    },
+    "lab_sample_id": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "PASS",
+      "4001671 VILANOVA DE SEGRIA": "PASS",
+      "4001679 ANCILES": "PASS"
+    },
+    "lab_testing_company": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "PASS",
+      "4001671 VILANOVA DE SEGRIA": "PASS",
+      "4001679 ANCILES": "PASS"
+    },
+    "lab_testing_description": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "PASS",
+      "4001671 VILANOVA DE SEGRIA": "PASS",
+      "4001679 ANCILES": "PASS"
+    },
+    "lab_tests_text": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "PASS",
+      "4001671 VILANOVA DE SEGRIA": "PASS",
+      "4001679 ANCILES": "PASS"
+    },
+    "location_sentence": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "CLOSE",
+      "4001671 VILANOVA DE SEGRIA": "CLOSE",
+      "4001679 ANCILES": "MATCH"
+    },
+    "municipality": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "MATCH"
+    },
+    "num_dpsh_tests": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "num_floors": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "qa_value": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "CLOSE",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "CLOSE"
+    },
+    "radon_zone": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "MATCH"
+    },
+    "seismic_ab_text": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "CLOSE",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "CLOSE",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "settlement": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "site_condition": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "CLOSE",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MATCH",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "MATCH"
+    },
+    "site_description": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "spt_depth_range": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MATCH"
+    },
+    "spt_lithology": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "spt_location": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "MATCH"
+    },
+    "spt_n30": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "MATCH"
+    },
+    "spt_test_id": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "MATCH",
+      "4001679 ANCILES": "MATCH"
+    },
+    "sulfate_baumann": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "sulfate_classification": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED"
+    },
+    "sulfate_level_name": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MISMATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "NOT_EXTRACTED"
+    },
+    "sulfate_mg_kg": {
+      "4001612 BELL-LLOC": "MATCH",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED"
+    },
+    "superficie_construida_m2": {
+      "4001612 BELL-LLOC": "MISMATCH",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "MATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED"
+    },
+    "superficie_parcela_m2": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "NOT_EXTRACTED",
+      "3001631 RUBI": "NOT_EXTRACTED",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "NOT_EXTRACTED",
+      "4001671 VILANOVA DE SEGRIA": "NOT_EXTRACTED",
+      "4001679 ANCILES": "MISMATCH"
+    },
+    "table_dpsh_range": {
+      "4001612 BELL-LLOC": "CLOSE",
+      "3001621 CASTELLAR DEL VALLES": "MATCH",
+      "3001631 RUBI": "MISMATCH",
+      "4001607 LINYOLA": "MATCH",
+      "4001670 ALCOLETGE": "MISMATCH",
+      "4001671 VILANOVA DE SEGRIA": "MISMATCH",
+      "4001679 ANCILES": "CLOSE"
+    },
+    "k30_value": {
+      "3001621 CASTELLAR DEL VALLES": "MISMATCH",
+      "3001631 RUBI": "MISMATCH"
+    }
+  },
+  "classification_summary": {
+    "EXTRACTION": [
+      "adjacent_south_fmt(4001612)",
+      "architect_company(4001612)",
+      "building_structure_desc(4001612)",
+      "field_work_dates_text(4001612)",
+      "spt_depth_range(4001612)",
+      "spt_n30(4001612)",
+      "adjacent_north_fmt(3001621)",
+      "client_name(3001621)",
+      "cte_sol(3001621)",
+      "adjacent_north_fmt(3001631)",
+      "adjacent_south_fmt(3001631)",
+      "adjacent_west_fmt(3001631)",
+      "client_name(3001631)",
+      "cte_edificacio(3001631)",
+      "lab_tests_text(3001631)",
+      "location_sentence(3001631)",
+      "seismic_ab_text(3001631)",
+      "table_dpsh_range(3001631)",
+      "adjacent_north_fmt(4001607)",
+      "architect_name(4001607)",
+      "building_structure_desc(4001607)",
+      "client_name(4001607)",
+      "cte_edificacio(4001607)",
+      "cte_sol(4001607)",
+      "expedient(4001607)",
+      "lab_tests_text(4001607)",
+      "sulfate_level_name(4001607)",
+      "adjacent_east_fmt(4001670)",
+      "adjacent_north_fmt(4001670)",
+      "architect_name(4001670)",
+      "building_type(4001670)",
+      "cte_edificacio(4001670)",
+      "cte_sol(4001670)",
+      "table_dpsh_range(4001670)",
+      "adjacent_east_fmt(4001671)",
+      "adjacent_north_fmt(4001671)",
+      "architect_name(4001671)",
+      "client_name(4001671)",
+      "cte_edificacio(4001671)",
+      "cte_sol(4001671)",
+      "spt_depth_range(4001671)",
+      "spt_location(4001671)",
+      "table_dpsh_range(4001671)",
+      "adjacent_east_fmt(4001679)",
+      "adjacent_north_fmt(4001679)",
+      "adjacent_south_fmt(4001679)",
+      "adjacent_west_fmt(4001679)",
+      "architect_name(4001679)",
+      "building_structure_desc(4001679)",
+      "building_type(4001679)",
+      "client_name(4001679)",
+      "num_dpsh_tests(4001679)",
+      "num_floors(4001679)",
+      "seismic_ab_text(4001679)",
+      "spt_lithology(4001679)",
+      "superficie_parcela_m2(4001679)"
+    ],
+    "CALC": [
+      "settlement(4001612)",
+      "k30_value(3001621)",
+      "settlement(3001621)",
+      "k30_value(3001631)",
+      "qa_value(4001607)",
+      "settlement(4001607)",
+      "qa_value(4001670)",
+      "settlement(4001670)",
+      "qa_value(4001671)",
+      "settlement(4001671)",
+      "settlement(4001679)"
+    ],
+    "NARRATIVE": [
+      "site_description(4001612)",
+      "site_description(3001621)",
+      "site_description(3001631)",
+      "site_description(4001607)",
+      "site_description(4001670)",
+      "site_description(4001671)",
+      "site_description(4001679)"
+    ],
+    "PRIORITY": [
+      "superficie_construida_m2(4001612)"
+    ]
+  },
+  "global_cost_summary": {
+    "groq": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "api_calls": 0,
+      "usd": 0.0
+    },
+    "anthropic": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "api_calls": 0,
+      "usd": 0.0
+    },
+    "total_usd": 0.0
+  },
+  "global_concept_scout": {
+    "total_files": 84,
+    "vision_probes_sent": 106,
+    "total_concepts_found": 100,
+    "total_concepts_unresolved": 386,
+    "duration_ms": 87614
+  },
+  "projects": [
+    "4001612 BELL-LLOC",
+    "3001621 CASTELLAR DEL VALLES",
+    "3001631 RUBI",
+    "4001607 LINYOLA",
+    "4001670 ALCOLETGE",
+    "4001671 VILANOVA DE SEGRIA",
+    "4001679 ANCILES"
+  ],
+  "global_ne_trace": [
+    {
+      "var": "access_street",
+      "concept_id": "access_street",
+      "in_schema": false,
+      "tier": "A",
+      "eva_value_sample": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del Carrer existent al sud.",
+      "projects": [
+        "4001612 BELL-LLOC",
+        "3001621 CASTELLAR DEL VALLES",
+        "3001631 RUBI",
+        "4001607 LINYOLA",
+        "4001670 ALCOLETGE",
+        "4001679 ANCILES"
+      ],
+      "expected_sources": {
+        "schema_priority": [],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "4001612 BELL-LLOC",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        },
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        },
+        {
+          "project": "3001631 RUBI",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        },
+        {
+          "project": "4001607 LINYOLA",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        },
+        {
+          "project": "4001670 ALCOLETGE",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        },
+        {
+          "project": "4001679 ANCILES",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        }
+      ],
+      "missing_reason": "schema_missing",
+      "suggested_fix": "Add concept to schemas/concepts/report_variables.yaml with an appropriate source_priority chain"
+    },
+    {
+      "var": "spt_depth_range",
+      "concept_id": "spt_depth_range",
+      "in_schema": false,
+      "tier": "A",
+      "eva_value_sample": "-1.00 a -1.20",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES"
+      ],
+      "expected_sources": {
+        "schema_priority": [],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        }
+      ],
+      "missing_reason": "schema_missing",
+      "suggested_fix": "Add concept to schemas/concepts/report_variables.yaml with an appropriate source_priority chain"
+    },
+    {
+      "var": "spt_lithology",
+      "concept_id": "spt_lithology",
+      "in_schema": false,
+      "tier": "A",
+      "eva_value_sample": "Limolites i bretxes",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES"
+      ],
+      "expected_sources": {
+        "schema_priority": [],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        }
+      ],
+      "missing_reason": "schema_missing",
+      "suggested_fix": "Add concept to schemas/concepts/report_variables.yaml with an appropriate source_priority chain"
+    },
+    {
+      "var": "spt_location",
+      "concept_id": "spt_location",
+      "in_schema": false,
+      "tier": "A",
+      "eva_value_sample": "S-1",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES"
+      ],
+      "expected_sources": {
+        "schema_priority": [],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        }
+      ],
+      "missing_reason": "schema_missing",
+      "suggested_fix": "Add concept to schemas/concepts/report_variables.yaml with an appropriate source_priority chain"
+    },
+    {
+      "var": "spt_n30",
+      "concept_id": "spt_n30",
+      "in_schema": false,
+      "tier": "A",
+      "eva_value_sample": "R",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES"
+      ],
+      "expected_sources": {
+        "schema_priority": [],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        }
+      ],
+      "missing_reason": "schema_missing",
+      "suggested_fix": "Add concept to schemas/concepts/report_variables.yaml with an appropriate source_priority chain"
+    },
+    {
+      "var": "spt_test_id",
+      "concept_id": "spt_test_id",
+      "in_schema": false,
+      "tier": "A",
+      "eva_value_sample": "SPT-1",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES"
+      ],
+      "expected_sources": {
+        "schema_priority": [],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        }
+      ],
+      "missing_reason": "schema_missing",
+      "suggested_fix": "Add concept to schemas/concepts/report_variables.yaml with an appropriate source_priority chain"
+    },
+    {
+      "var": "sulfate_baumann",
+      "concept_id": "sulfate_baumann",
+      "in_schema": false,
+      "tier": "A",
+      "eva_value_sample": "---",
+      "projects": [
+        "4001670 ALCOLETGE",
+        "4001671 VILANOVA DE SEGRIA",
+        "4001679 ANCILES"
+      ],
+      "expected_sources": {
+        "schema_priority": [],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "4001670 ALCOLETGE",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        },
+        {
+          "project": "4001671 VILANOVA DE SEGRIA",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        },
+        {
+          "project": "4001679 ANCILES",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        }
+      ],
+      "missing_reason": "schema_missing",
+      "suggested_fix": "Add concept to schemas/concepts/report_variables.yaml with an appropriate source_priority chain"
+    },
+    {
+      "var": "sulfate_classification",
+      "concept_id": "sulfate_classification",
+      "in_schema": false,
+      "tier": "A",
+      "eva_value_sample": "No Agressius",
+      "projects": [
+        "4001670 ALCOLETGE"
+      ],
+      "expected_sources": {
+        "schema_priority": [],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "4001670 ALCOLETGE",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        }
+      ],
+      "missing_reason": "schema_missing",
+      "suggested_fix": "Add concept to schemas/concepts/report_variables.yaml with an appropriate source_priority chain"
+    },
+    {
+      "var": "sulfate_level_name",
+      "concept_id": "sulfate_level_name",
+      "in_schema": false,
+      "tier": "A",
+      "eva_value_sample": "2on nivell",
+      "projects": [
+        "4001670 ALCOLETGE",
+        "4001671 VILANOVA DE SEGRIA",
+        "4001679 ANCILES"
+      ],
+      "expected_sources": {
+        "schema_priority": [],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "4001670 ALCOLETGE",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        },
+        {
+          "project": "4001671 VILANOVA DE SEGRIA",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        },
+        {
+          "project": "4001679 ANCILES",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "schema_missing"
+        }
+      ],
+      "missing_reason": "schema_missing",
+      "suggested_fix": "Add concept to schemas/concepts/report_variables.yaml with an appropriate source_priority chain"
+    },
+    {
+      "var": "building_structure_desc",
+      "concept_id": "building_structure_desc",
+      "in_schema": true,
+      "tier": "A",
+      "eva_value_sample": "sense nivell de soterrani",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES",
+        "3001631 RUBI",
+        "4001670 ALCOLETGE",
+        "4001671 VILANOVA DE SEGRIA"
+      ],
+      "expected_sources": {
+        "schema_priority": [
+          "user",
+          "computed"
+        ],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "no_extractor"
+        },
+        {
+          "project": "3001631 RUBI",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "no_extractor"
+        },
+        {
+          "project": "4001670 ALCOLETGE",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "no_extractor"
+        },
+        {
+          "project": "4001671 VILANOVA DE SEGRIA",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "no_extractor"
+        }
+      ],
+      "missing_reason": "no_extractor",
+      "suggested_fix": "Add a fileminer/vision/extractor source for this concept; today only user input or computed values populate it"
+    },
+    {
+      "var": "num_floors",
+      "concept_id": "num_floors",
+      "in_schema": true,
+      "tier": "A",
+      "eva_value_sample": "Pb+1Pp",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES",
+        "3001631 RUBI",
+        "4001670 ALCOLETGE",
+        "4001671 VILANOVA DE SEGRIA"
+      ],
+      "expected_sources": {
+        "schema_priority": [
+          "user",
+          "planol_vision",
+          "projecte_vision",
+          "pressupost_pdf",
+          "groq_llm",
+          "content_email",
+          "content_pdf",
+          "content_docx"
+        ],
+        "hitl_hint": {
+          "group_label": "Plànol arquitecte",
+          "role_hints": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ]
+        }
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": false,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "no_source_file"
+        },
+        {
+          "project": "3001631 RUBI",
+          "expected_files_present": true,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 1,
+          "signals_produced": 0,
+          "missing_reason": "file_had_no_match"
+        },
+        {
+          "project": "4001670 ALCOLETGE",
+          "expected_files_present": true,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 1,
+          "signals_produced": 0,
+          "missing_reason": "extracted_low_confidence"
+        },
+        {
+          "project": "4001671 VILANOVA DE SEGRIA",
+          "expected_files_present": false,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "no_source_file"
+        }
+      ],
+      "missing_reason": "no_source_file",
+      "suggested_fix": "Project lacks a file with role=['architect_plan', 'architect_plan_with_points', 'projecte_arquitecte']. If this is expected (e.g. project has no GTL lab report), confirm — otherwise the source file is missing."
+    },
+    {
+      "var": "superficie_construida_m2",
+      "concept_id": "superficie_construida",
+      "in_schema": true,
+      "tier": "A",
+      "eva_value_sample": "120 m2",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES",
+        "4001670 ALCOLETGE",
+        "4001671 VILANOVA DE SEGRIA"
+      ],
+      "expected_sources": {
+        "schema_priority": [
+          "user",
+          "planol_vision",
+          "projecte_vision",
+          "pressupost_pdf",
+          "groq_llm",
+          "content_email",
+          "content_pdf",
+          "content_docx"
+        ],
+        "hitl_hint": {
+          "group_label": "Plànol arquitecte",
+          "role_hints": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ]
+        }
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": false,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "no_source_file"
+        },
+        {
+          "project": "4001670 ALCOLETGE",
+          "expected_files_present": true,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "file_had_no_match"
+        },
+        {
+          "project": "4001671 VILANOVA DE SEGRIA",
+          "expected_files_present": false,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "no_source_file"
+        }
+      ],
+      "missing_reason": "no_source_file",
+      "suggested_fix": "Project lacks a file with role=['architect_plan', 'architect_plan_with_points', 'projecte_arquitecte']. If this is expected (e.g. project has no GTL lab report), confirm — otherwise the source file is missing."
+    },
+    {
+      "var": "superficie_parcela_m2",
+      "concept_id": "superficie_parcela",
+      "in_schema": true,
+      "tier": "A",
+      "eva_value_sample": "1.284",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES",
+        "3001631 RUBI",
+        "4001670 ALCOLETGE",
+        "4001671 VILANOVA DE SEGRIA"
+      ],
+      "expected_sources": {
+        "schema_priority": [
+          "user",
+          "planol_vision",
+          "projecte_vision",
+          "cadastre_api",
+          "pressupost_pdf",
+          "groq_llm",
+          "content_email",
+          "content_pdf",
+          "content_docx"
+        ],
+        "hitl_hint": {
+          "group_label": "Plànol arquitecte",
+          "role_hints": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ]
+        }
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": false,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "no_source_file"
+        },
+        {
+          "project": "3001631 RUBI",
+          "expected_files_present": true,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "file_had_no_match"
+        },
+        {
+          "project": "4001670 ALCOLETGE",
+          "expected_files_present": true,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "file_had_no_match"
+        },
+        {
+          "project": "4001671 VILANOVA DE SEGRIA",
+          "expected_files_present": false,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "no_source_file"
+        }
+      ],
+      "missing_reason": "no_source_file",
+      "suggested_fix": "Project lacks a file with role=['architect_plan', 'architect_plan_with_points', 'projecte_arquitecte']. If this is expected (e.g. project has no GTL lab report), confirm — otherwise the source file is missing."
+    },
+    {
+      "var": "architect_name",
+      "concept_id": "architect_name",
+      "in_schema": true,
+      "tier": "A",
+      "eva_value_sample": "JOANA MARTINEZ",
+      "projects": [
+        "3001631 RUBI"
+      ],
+      "expected_sources": {
+        "schema_priority": [
+          "user",
+          "planol_vision",
+          "projecte_vision",
+          "pressupost_pdf",
+          "groq_llm",
+          "content_email",
+          "content_email_attachment",
+          "content_pdf",
+          "content_docx"
+        ],
+        "hitl_hint": {
+          "group_label": "Plànol arquitecte",
+          "role_hints": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ]
+        }
+      },
+      "per_project": [
+        {
+          "project": "3001631 RUBI",
+          "expected_files_present": true,
+          "expected_role": [
+            "architect_plan",
+            "architect_plan_with_points",
+            "projecte_arquitecte"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "file_had_no_match"
+        }
+      ],
+      "missing_reason": "file_had_no_match",
+      "suggested_fix": "Source file is present but no extractor matched the value. Tighten the extraction prompt or miner regex for this concept."
+    },
+    {
+      "var": "field_work_dates_text",
+      "concept_id": "field_work_dates_text",
+      "in_schema": true,
+      "tier": "A",
+      "eva_value_sample": "El día 19 de febrero de 2026, se visitó la obra para:",
+      "projects": [
+        "4001671 VILANOVA DE SEGRIA",
+        "4001679 ANCILES"
+      ],
+      "expected_sources": {
+        "schema_priority": [
+          "user",
+          "dades_camp_excel",
+          "dpsh_vision"
+        ],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "4001671 VILANOVA DE SEGRIA",
+          "expected_files_present": true,
+          "expected_role": [
+            "dades_camp_excel",
+            "dpsh_field_sheet"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "file_had_no_match"
+        },
+        {
+          "project": "4001679 ANCILES",
+          "expected_files_present": true,
+          "expected_role": [
+            "dades_camp_excel",
+            "dpsh_field_sheet"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "file_had_no_match"
+        }
+      ],
+      "missing_reason": "file_had_no_match",
+      "suggested_fix": "Source file is present but no extractor matched the value. Tighten the extraction prompt or miner regex for this concept."
+    },
+    {
+      "var": "lab_location",
+      "concept_id": "lab_location",
+      "in_schema": true,
+      "tier": "A",
+      "eva_value_sample": "Punt: S-1",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES"
+      ],
+      "expected_sources": {
+        "schema_priority": [
+          "user",
+          "gtl_report"
+        ],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": true,
+          "expected_role": [
+            "gtl_report"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "file_had_no_match"
+        }
+      ],
+      "missing_reason": "file_had_no_match",
+      "suggested_fix": "Source file is present but no extractor matched the value. Tighten the extraction prompt or miner regex for this concept."
+    },
+    {
+      "var": "lab_sample_id",
+      "concept_id": "lab_sample_id",
+      "in_schema": true,
+      "tier": "A",
+      "eva_value_sample": "Mostra : SPT-1",
+      "projects": [
+        "3001621 CASTELLAR DEL VALLES"
+      ],
+      "expected_sources": {
+        "schema_priority": [
+          "user",
+          "gtl_report"
+        ],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "3001621 CASTELLAR DEL VALLES",
+          "expected_files_present": true,
+          "expected_role": [
+            "gtl_report"
+          ],
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "file_had_no_match"
+        }
+      ],
+      "missing_reason": "file_had_no_match",
+      "suggested_fix": "Source file is present but no extractor matched the value. Tighten the extraction prompt or miner regex for this concept."
+    },
+    {
+      "var": "sulfate_mg_kg",
+      "concept_id": "sulfate_mg_kg",
+      "in_schema": true,
+      "tier": "A",
+      "eva_value_sample": "297.9",
+      "projects": [
+        "4001670 ALCOLETGE"
+      ],
+      "expected_sources": {
+        "schema_priority": [
+          "user",
+          "comanda_lab_excel",
+          "content_pdf"
+        ],
+        "hitl_hint": null
+      },
+      "per_project": [
+        {
+          "project": "4001670 ALCOLETGE",
+          "expected_files_present": null,
+          "expected_role": null,
+          "concept_scout_found": 0,
+          "signals_produced": 0,
+          "missing_reason": "file_had_no_match"
+        }
+      ],
+      "missing_reason": "file_had_no_match",
+      "suggested_fix": "Source file is present but no extractor matched the value. Tighten the extraction prompt or miner regex for this concept."
+    }
+  ]
+}

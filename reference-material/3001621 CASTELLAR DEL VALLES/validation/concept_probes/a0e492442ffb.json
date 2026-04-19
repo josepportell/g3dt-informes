@@ -1,0 +1,18 @@
+{
+  "document_type": "field_sheet",
+  "document_description": "Geological cross-section with soil levels",
+  "concepts_found": [
+    {
+      "concept_id": "num_soil_levels",
+      "confidence": 1.0,
+      "signal_preview": "2",
+      "page": 1
+    },
+    {
+      "concept_id": "cota_referencia",
+      "confidence": 0.8,
+      "signal_preview": "+571,50 m",
+      "page": 1
+    }
+  ]
+}

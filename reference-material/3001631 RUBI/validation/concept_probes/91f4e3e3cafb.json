@@ -1,0 +1,42 @@
+{
+  "document_type": "budget",
+  "document_description": "Geotechnical services budget/quotation document from Pressupost Geotecnic",
+  "concepts_found": [
+    {
+      "concept_id": "client_name",
+      "confidence": 0.9,
+      "signal_preview": "Joan Martinez",
+      "page": 1
+    },
+    {
+      "concept_id": "client_nif",
+      "confidence": 0.9,
+      "signal_preview": "38540702Q",
+      "page": 1
+    },
+    {
+      "concept_id": "street_address",
+      "confidence": 0.9,
+      "signal_preview": "Carlle Joan Carles Ferran 41A",
+      "page": 1
+    },
+    {
+      "concept_id": "municipality",
+      "confidence": 0.9,
+      "signal_preview": "Redovan",
+      "page": 1
+    },
+    {
+      "concept_id": "province",
+      "confidence": 0.8,
+      "signal_preview": "Alicante",
+      "page": 1
+    },
+    {
+      "concept_id": "contact_name",
+      "confidence": 0.9,
+      "signal_preview": "ALBERT COLL",
+      "page": 1
+    }
+  ]
+}

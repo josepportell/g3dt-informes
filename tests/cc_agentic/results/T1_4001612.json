@@ -1,0 +1,1712 @@
+{
+  "metadata": {
+    "test_id": "T1",
+    "project": "4001612 BELL-LLOC",
+    "timestamp": "2026-04-16T17:36:09.467998+00:00",
+    "files_available": 36,
+    "files_read": 26,
+    "files_from_email": 20,
+    "duration_s": 324.9,
+    "api_calls": 22,
+    "input_tokens": 84268,
+    "output_tokens": 6864
+  },
+  "files_inventory": [
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/4001612_informe.doc",
+      "role": "reference_report",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+      "role": "gtl_report",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/A.01 amb punts.pdf",
+      "role": "architect_plan_with_points",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/A.01.pdf",
+      "role": "architect_plan",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/FOTOGRAFIES",
+      "role": "photos_dir",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/PENETROS.pdf",
+      "role": "dpsh_field_sheet",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/SONDEIG.pdf",
+      "role": "sondeig_field_sheet",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/comanda laboratori_4001612_BELL-LLOC.xls",
+      "role": "lab_order",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/pl. situaci.pdf",
+      "role": "situation_plan",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/tall.pdf",
+      "role": "correlation_section",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/ANNEXES/4001612_DPSH.xls",
+      "role": "dpsh_excel",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/PDF/ANNEXES/4001612_sondeig.pdf",
+      "role": "sondeig_annex",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/PDF/ANNEXES/LAB-SIG.pdf",
+      "role": "lab_results_pdf",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/25.0647",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/_user_data_prev.json",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/PDF/ANNEXES/4001612_plànol de situació.pdf",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/4613172CG1141S0001SU.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/4613173CG1141S0001ZU.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image005.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image008.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image009.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613172CG1141S0001SU_img0.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613172CG1141S0001SU_img1.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613172CG1141S0001SU_img2.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613173CG1141S0001ZU_img0.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613173CG1141S0001ZU_img1.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/4613173CG1141S0001ZU_img2.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/PLAN_COST_BELL-LLOC.xlsx",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image005.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image008.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image010.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image013.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/image014.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/validation/msg_attachments/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch/validation/mined_images/PLAN_COST_BELL-LLOC_img0.png",
+      "role": "email_attachment",
+      "origin": "email"
+    }
+  ],
+  "variables": {
+    "client_name": {
+      "value": "RAMON MITJANA S.L.",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "contact_name": {
+      "value": "SR. JORDI BOSCH NOVELL",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "architect_name": {
+      "value": "JORDI BOSCH NOVELL",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "architect_company": {
+      "value": "ARQUITECTURA BOSCH NOVELL",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "street_address": {
+      "value": "Entre el Carrer Antoni Bellet i Carrer Mestre Ramon Ortiz",
+      "confidence": 1.0,
+      "source_file": "pl. situaci.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "municipality": {
+      "value": "Bell-Lloc d'Urgell",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "building_type": {
+      "value": "habitatge unifamiliar",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "num_floors": {
+      "value": "Pb+1Pp",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_parcela": {
+      "value": 995,
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_construida": {
+      "value": 296.0,
+      "confidence": 0.9,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "field_date": {
+      "value": "2025-10-01",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "field_work_dates": {
+      "value": [
+        "2025-10-01",
+        "2025-10-06"
+      ],
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "field_work_dates_text": {
+      "value": "1 i 6 d'octubre de 2025",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "site_description": {
+      "value": "La parcel·la està anivellada a la rasant del carrer, només uns 15 cm per sota, sense pavimentar i amb vegetació de petita alçada. Es troba delimitada per tanques de parcel·les veïnes.",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "access_description": {
+      "value": "L'entrada a la zona d'estudi es realitza a través del Carrer existent al sud.",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "cota_referencia": {
+      "value": "199.50m",
+      "confidence": 1.0,
+      "source_file": "4001612_sondeig.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "adjacent_north": {
+      "value": "parcel·la buida",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_south": {
+      "value": "Carrer Antoni Bellet",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_east": {
+      "value": "Carrer Mestre Ramon Ortiz",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "adjacent_west": {
+      "value": "parcel·la amb construcció aïllada de fins a dos plantes sobre rasant",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "parcel_shape": {
+      "value": "rectangular",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "is_urban": {
+      "value": true,
+      "confidence": 1.0,
+      "source_file": "4613172CG1141S0001SU.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "is_sloped": {
+      "value": false,
+      "confidence": 0.8,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "is_anthropized": {
+      "value": false,
+      "confidence": 0.75,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "num_soil_levels": {
+      "value": 1,
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_code": {
+      "value": "Qvpu",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_description": {
+      "value": "graves en matriu lutítica i llantions sorrencs",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_epoch": {
+      "value": "Plistocè",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "num_dpsh_tests": {
+      "value": "2 assaigs de penetració dinàmica tipus DPSH",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "table_dpsh_range": {
+      "value": "3, 4 i 5",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_field_description": {
+      "value": "Realització d'assaigs in situ: 2 DPSH, 1 sondeig a rotació amb bateria continua i 1 assaig SPT amb recuperació de mostra",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_testing_description": {
+      "value": "Assaig de contingut en sulfats UNE 83963:2008",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_location": {
+      "value": "Punt S-1",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_sample_id": {
+      "value": "SPT-1",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_depth": {
+      "value": "-1.0 a -1.60 m",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_tests_text": {
+      "value": "1 assaig de contingut en sulfats UNE 83963:2008",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "location_sentence": {
+      "value": "L'edificació es situarà entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell.",
+      "confidence": 1.0,
+      "source_file": "4001612_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "client_nif": {
+      "value": "B25364589",
+      "confidence": 1.0,
+      "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "province": {
+      "value": "LLEIDA",
+      "confidence": 1.0,
+      "source_file": "4613173CG1141S0001ZU.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "expedient": {
+      "value": "4677-GTL-25",
+      "confidence": 1.0,
+      "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "sulfate_mg_kg": {
+      "value": 89.8,
+      "confidence": 1.0,
+      "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "lab_tests": {
+      "value": [
+        {
+          "test": "Determinació del contingut en ió sulfat en sòls",
+          "standard": "UNE 83963:2008",
+          "result": "89.8 mg/kg SO4",
+          "sample_mass_g": 25.0,
+          "date": "2025-11-25",
+          "operator": "PC"
+        }
+      ],
+      "confidence": 1.0,
+      "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "building_height_m": {
+      "value": 6.5,
+      "confidence": 0.85,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "has_basement": {
+      "value": false,
+      "confidence": 0.7,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "foundation_depth_m": {
+      "value": 1.8,
+      "confidence": 0.85,
+      "source_file": "SONDEIG.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "superficie_cadastral": {
+      "value": "518",
+      "confidence": 1.0,
+      "source_file": "4613172CG1141S0001SU.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "referencia_catastral": {
+      "value": "4613172CG1141S0001SU",
+      "confidence": 1.0,
+      "source_file": "4613172CG1141S0001SU.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "utm_x": {
+      "value": 314500,
+      "confidence": 0.7,
+      "source_file": "4613172CG1141S0001SU.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "utm_y": {
+      "value": 4611200,
+      "confidence": 0.7,
+      "source_file": "4613172CG1141S0001SU.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    }
+  },
+  "comparison": {
+    "vs_eva": {
+      "project": "4001612 BELL-LLOC",
+      "test_id": "T1",
+      "total_eva_vars": 58,
+      "counts": {
+        "MATCH": 11,
+        "CLOSE": 11,
+        "MISMATCH": 5,
+        "NOT_EXTRACTED": 31
+      },
+      "accuracy_pct": 37.9,
+      "tier_breakdown": {
+        "-": {
+          "NOT_EXTRACTED": 26,
+          "CLOSE": 7,
+          "MATCH": 7,
+          "MISMATCH": 3
+        },
+        "A": {
+          "MATCH": 4,
+          "CLOSE": 2,
+          "MISMATCH": 2,
+          "NOT_EXTRACTED": 2
+        },
+        "B": {
+          "CLOSE": 2,
+          "NOT_EXTRACTED": 1
+        },
+        "C": {
+          "NOT_EXTRACTED": 2
+        }
+      },
+      "origin_breakdown": {
+        "project": {
+          "CLOSE": 11,
+          "MATCH": 11,
+          "MISMATCH": 5
+        }
+      },
+      "details": [
+        {
+          "variable": "access_street",
+          "tier": "-",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del Carrer existent al sud.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "adjacent_east_fmt",
+          "tier": "-",
+          "eva": "Per la part est amb el Carrer Mestre Ramon Ortiz.",
+          "cc": "Carrer Mestre Ramon Ortiz",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "adjacent_north_fmt",
+          "tier": "-",
+          "eva": "Per la part nord amb una parcel·la buida.",
+          "cc": "parcel·la buida",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "adjacent_south_fmt",
+          "tier": "-",
+          "eva": "Per la part sud amb el Carrer Antoni Bellet.",
+          "cc": "Carrer Antoni Bellet",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "adjacent_west_fmt",
+          "tier": "-",
+          "eva": "I finalment, per la part oest, amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant.",
+          "cc": "parcel·la amb construcció aïllada de fins a dos plantes sobre rasant",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 4,
+            "llm_explanation": "Both texts convey the same core information: a parcel with isolated construction up to two floors above ground level. The benchmark includes contextual framing ('I finalment, per la part oest' = 'And finally, for the west part') which provides location context, while the pipeline version is a direct description. The substantive geotechnical content is identical; the difference is purely in completeness of locational context rather than semantic accuracy of the field itself."
+          }
+        },
+        {
+          "variable": "architect_company",
+          "tier": "A",
+          "eva": "ARQUITECTURA BOSCH NOVELL",
+          "cc": "ARQUITECTURA BOSCH NOVELL",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "architect_name_upper",
+          "tier": "-",
+          "eva": "JORDI BOSCH NOVELL",
+          "cc": "JORDI BOSCH NOVELL",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "building_structure_desc",
+          "tier": "-",
+          "eva": "en planta baixa",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "building_type_lower",
+          "tier": "-",
+          "eva": "un habitatge unifamiliar",
+          "cc": "habitatge unifamiliar",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "client",
+          "tier": "A",
+          "eva": "RAMON MITJANA S.L",
+          "cc": "RAMON MITJANA S.L.",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "conclusions_aggressivity_statement",
+          "tier": "-",
+          "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, es presenten xxxx al formigó.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "conclusions_levels_detected",
+          "tier": "-",
+          "eva": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "conclusions_water_statement",
+          "tier": "-",
+          "eva": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "csn_radon_text",
+          "tier": "-",
+          "eva": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "cte_edificacio",
+          "tier": "-",
+          "eva": "C-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "cte_sol",
+          "tier": "-",
+          "eva": "T-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "data_camp_text",
+          "tier": "A",
+          "eva": "1 d’octubre de 2025",
+          "cc": "1 i 6 d'octubre de 2025",
+          "confidence": 1.0,
+          "status": "MISMATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "1 i 6 d'octubre de 2025",
+            "llm_score": 2,
+            "llm_explanation": "Both texts reference October 2025, but the dates differ significantly. Benchmark specifies a single date (October 1st), while pipeline specifies two dates (October 1st and 6th). This is a material difference in the temporal information, not a minor wording variation."
+          }
+        },
+        {
+          "variable": "data_signatura_text",
+          "tier": "-",
+          "eva": "27 d’octubre de 2025",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "dpsh_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'P-1', 'cota': '+199.50', 'depth': '-1.35', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-2', 'cota': '+199.50', 'depth': '-2.45', 'refusal': 'Si', 'water': 'No detectat'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "expedient",
+          "tier": "-",
+          "eva": "4001612",
+          "cc": "4677-GTL-25",
+          "confidence": 1.0,
+          "status": "MISMATCH",
+          "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "4677-GTL-25",
+            "llm_score": 1,
+            "llm_explanation": "The expedient numbers are completely different. Benchmark shows '4001612' while pipeline shows '4677-GTL-25'. These are distinct reference numbers with no semantic overlap or shared information."
+          }
+        },
+        {
+          "variable": "geo_p",
+          "tier": "-",
+          "eva": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "geotech_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell. Graves en matriu sorrenca', 'nb': '25-R', 'n': '54', 'density': '2.0', 'cohesion': '0.0', 'phi': '38º', 'E': '650'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "lab_depth",
+          "tier": "-",
+          "eva": "Profunditat:  -1.0  a -1.60 m",
+          "cc": "-1.0 a -1.60 m",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "-1.0 a -1.60 m",
+            "llm_score": 5,
+            "llm_explanation": "Identical content. The only difference is the removal of the label 'Profunditat:' in the pipeline version, which is a trivial formatting difference. Both convey the exact same depth range information (-1.0 to -1.60 m)."
+          }
+        },
+        {
+          "variable": "lab_field_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "lab_field_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "Realització d'assaigs in situ: 2 DPSH, 1 sondeig a rotació amb bateria continua i 1 assaig SPT amb recuperació de mostra",
+          "confidence": 1.0,
+          "status": "MISMATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 1,
+            "llm_explanation": "Completely different content. Benchmark describes a laboratory facility for quality control testing of buildings. Pipeline describes field testing procedures (in situ tests: DPSH, rotary drilling, SPT). These are distinct concepts - one is about lab infrastructure, the other about specific fieldwork methods performed."
+          }
+        },
+        {
+          "variable": "lab_location",
+          "tier": "-",
+          "eva": "Punt: S-1",
+          "cc": "Punt S-1",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "S-1",
+            "llm_score": 5,
+            "llm_explanation": "Identical values. Both refer to the same sampling point location 'S-1' with no differences in content, language, or formatting."
+          }
+        },
+        {
+          "variable": "lab_sample_id",
+          "tier": "-",
+          "eva": "Mostra : SPT-1",
+          "cc": "SPT-1",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "lab_testing_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "lab_testing_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "Assaig de contingut en sulfats UNE 83963:2008",
+          "confidence": 1.0,
+          "status": "MISMATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 1,
+            "llm_explanation": "These describe completely different aspects of laboratory testing. The benchmark text refers to a general testing laboratory for building quality control, while the pipeline text specifies a particular sulfate content test according to a specific UNE standard. They are not semantically equivalent—one is a facility description, the other is a specific test procedure."
+          }
+        },
+        {
+          "variable": "lab_tests_text",
+          "tier": "-",
+          "eva": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+          "cc": "1 assaig de contingut en sulfats UNE 83963:2008",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "1 assaig de contingut en sulfats UNE 83963:2008",
+            "llm_score": 5,
+            "llm_explanation": "Identical content. The only difference is the spacing before the colon in the standard reference (UNE 83963 : 2008 vs UNE 83963:2008), which is a trivial formatting variation that does not affect semantic meaning."
+          }
+        },
+        {
+          "variable": "location_sentence",
+          "tier": "B",
+          "eva": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d’Urgell",
+          "cc": "L'edificació es situarà entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell.",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 4,
+            "llm_explanation": "Both texts convey identical location information (same two streets). The pipeline version adds context ('L'edificació es situarà' = the building will be located) but the core geographic reference is the same. Minor difference in completeness/phrasing rather than semantic content."
+          }
+        },
+        {
+          "variable": "materials_intro",
+          "tier": "-",
+          "eva": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "municipality",
+          "tier": "A",
+          "eva": "Bell-lloc d’Urgell",
+          "cc": "Bell-Lloc d'Urgell",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "Bell-Lloc d'Urgell",
+            "llm_score": 5,
+            "llm_explanation": "Identical municipality name with only trivial capitalization difference in 'lloc' vs 'Lloc'. Both refer to the same Catalan municipality; the variation is orthographically insignificant."
+          }
+        },
+        {
+          "variable": "num_dpsh_tests",
+          "tier": "A",
+          "eva": "2 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+          "cc": "2 assaigs de penetració dinàmica tipus DPSH",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "perm_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell', 'k_value': '10 – 10-2', 'material': 'Graves en matriu sorrenca carbonatades'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "photo_site_text",
+          "tier": "-",
+          "eva": "Fotografia 1 i Fotografia 2. Vistes generals de la zona d’estudi.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "plantes",
+          "tier": "-",
+          "eva": "Pb+1Pp",
+          "cc": "Pb+1Pp",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "qa_value",
+          "tier": "C",
+          "eva": "3.0",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "radon_zone",
+          "tier": "A",
+          "eva": "1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "radon_zone_description",
+          "tier": "-",
+          "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de BELL-LLOC D’URGELL i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "seismic_ab_text",
+          "tier": "A",
+          "eva": "0,04",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "seismic_rows",
+          "tier": "-",
+          "eva": "[{'num': '1', 'terrain_type': 'Tipus II', 'thickness': '2.45', 'c_coeff': '1.30'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "settlement",
+          "tier": "C",
+          "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran inferiors a 1.20 cm, immediats en el temps donat el comportament granular dels materials.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "site_condition",
+          "tier": "B",
+          "eva": "Degut a que es tracta d’un solar antropitzat, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "site_description",
+          "tier": "B",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del Carrer existent al sud.\nLa parcel·la, que es troba delimitada tanques de parcel·les veïnes, està anivellada a la rasant del carrer, només uns 15 cm per sota, sense pavimentar, i amb vegetació de petita alçada.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+          "cc": "La parcel·la està anivellada a la rasant del carrer, només uns 15 cm per sota, sense pavimentar i amb vegetació de petita alçada. Es troba delimitada per tanques de parcel·les veïnes.",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "4001612_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 3,
+            "llm_explanation": "Both texts describe the same parcel characteristics (level alignment with street, 15cm below, unpaved, low vegetation, bounded by neighboring fences). However, the pipeline version omits several important contextual details: the field work entry point via the southern street, the observation about nearby constructions without apparent pathologies, and the crucial note about subsurface materials not being visible. The pipeline captures the key physical description but misses contextual and geological observations present in the benchmark."
+          }
+        },
+        {
+          "variable": "sondeig_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'S-1', 'cota': '+199.50', 'depth': '-1.80', 'spt_ma': '1/--', 'water': 'No detectat'}]",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "spt_depth_range",
+          "tier": "-",
+          "eva": "-1.00 a 1.60",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "spt_lithology",
+          "tier": "-",
+          "eva": "Graves en matriu sorrenca",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "spt_location",
+          "tier": "-",
+          "eva": "S-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "spt_n30",
+          "tier": "-",
+          "eva": "54",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "spt_test_id",
+          "tier": "-",
+          "eva": "SPT-1",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_baumann",
+          "tier": "-",
+          "eva": "---",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_classification",
+          "tier": "-",
+          "eva": "No Agressius",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_level_name",
+          "tier": "-",
+          "eva": "1er nivell",
+          "cc": "",
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
+        },
+        {
+          "variable": "sulfate_value",
+          "tier": "A",
+          "eva": "89.8",
+          "cc": "89.8",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+          "origin": "project"
+        },
+        {
+          "variable": "superficie_construida",
+          "tier": "A",
+          "eva": "280+86",
+          "cc": "296.0",
+          "confidence": 0.9,
+          "status": "MISMATCH",
+          "source_file": "A.01.pdf",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "296.0",
+            "llm_score": 2,
+            "llm_explanation": "Both values represent built surface area but differ numerically. Benchmark shows 280+86 (sum = 366), while pipeline shows 296.0. The values are incompatible (296 ≠ 366), indicating either different calculation methods, different building sections measured, or a data processing error. Partially correct in domain but significant numerical discrepancy."
+          }
+        },
+        {
+          "variable": "superficie_parcela",
+          "tier": "A",
+          "eva": "995",
+          "cc": "995",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        },
+        {
+          "variable": "table_dpsh_range",
+          "tier": "-",
+          "eva": "3, 4 i 5",
+          "cc": "3, 4 i 5",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001612_informe.doc",
+          "origin": "project"
+        }
+      ]
+    }
+  },
+  "trace": [
+    {
+      "action_id": "extract_4001612_informe.doc",
+      "type": "file_extraction",
+      "file": "4001612_informe.doc",
+      "role": "reference_report",
+      "origin": "project",
+      "method": "doc_convert",
+      "vars_extracted": 39,
+      "elapsed_s": 23.3,
+      "usage": {
+        "input_tokens": 6797,
+        "output_tokens": 1311,
+        "elapsed_s": 20.42
+      }
+    },
+    {
+      "action_id": "extract_4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+      "type": "file_extraction",
+      "file": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+      "role": "gtl_report",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 18,
+      "elapsed_s": 19.43,
+      "usage": {
+        "input_tokens": 9348,
+        "output_tokens": 576,
+        "elapsed_s": 18.62
+      }
+    },
+    {
+      "action_id": "extract_A.01 amb punts.pdf",
+      "type": "file_extraction",
+      "file": "A.01 amb punts.pdf",
+      "role": "architect_plan_with_points",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 16,
+      "elapsed_s": 26.8,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 441,
+        "elapsed_s": 24.95
+      }
+    },
+    {
+      "action_id": "extract_A.01.pdf",
+      "type": "file_extraction",
+      "file": "A.01.pdf",
+      "role": "architect_plan",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 15,
+      "elapsed_s": 21.51,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 445,
+        "elapsed_s": 19.59
+      }
+    },
+    {
+      "action_id": "extract_FOTOGRAFIES",
+      "type": "file_extraction",
+      "file": "FOTOGRAFIES",
+      "role": "photos_dir",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_PENETROS.pdf",
+      "type": "file_extraction",
+      "file": "PENETROS.pdf",
+      "role": "dpsh_field_sheet",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 12,
+      "elapsed_s": 15.0,
+      "usage": {
+        "input_tokens": 4686,
+        "output_tokens": 358,
+        "elapsed_s": 14.53
+      }
+    },
+    {
+      "action_id": "extract_SONDEIG.pdf",
+      "type": "file_extraction",
+      "file": "SONDEIG.pdf",
+      "role": "sondeig_field_sheet",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 14,
+      "elapsed_s": 26.95,
+      "usage": {
+        "input_tokens": 6240,
+        "output_tokens": 382,
+        "elapsed_s": 26.19
+      }
+    },
+    {
+      "action_id": "extract_comanda laboratori_4001612_BELL-LLOC.xls",
+      "type": "file_extraction",
+      "file": "comanda laboratori_4001612_BELL-LLOC.xls",
+      "role": "lab_order",
+      "origin": "project",
+      "method": "excel_parse",
+      "vars_extracted": 3,
+      "elapsed_s": 0.01,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_pl. situaci.pdf",
+      "type": "file_extraction",
+      "file": "pl. situaci.pdf",
+      "role": "situation_plan",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 10,
+      "elapsed_s": 12.63,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 359,
+        "elapsed_s": 11.97
+      }
+    },
+    {
+      "action_id": "crop_reread_pl. situaci.pdf",
+      "type": "agentic_crop",
+      "file": "pl. situaci.pdf",
+      "target_vars": [
+        "superficie_parcela"
+      ],
+      "improved_vars": [],
+      "usage": {
+        "input_tokens": 1649,
+        "output_tokens": 375,
+        "elapsed_s": 17.84
+      }
+    },
+    {
+      "action_id": "extract_tall.pdf",
+      "type": "file_extraction",
+      "file": "tall.pdf",
+      "role": "correlation_section",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 10.39,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 253,
+        "elapsed_s": 9.94
+      }
+    },
+    {
+      "action_id": "extract_4001612_DPSH.xls",
+      "type": "file_extraction",
+      "file": "4001612_DPSH.xls",
+      "role": "dpsh_excel",
+      "origin": "project",
+      "method": "excel_parse",
+      "vars_extracted": 0,
+      "elapsed_s": 0.01,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_4001612_sondeig.pdf",
+      "type": "file_extraction",
+      "file": "4001612_sondeig.pdf",
+      "role": "sondeig_annex",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 15,
+      "elapsed_s": 18.01,
+      "usage": {
+        "input_tokens": 4686,
+        "output_tokens": 493,
+        "elapsed_s": 17.26
+      }
+    },
+    {
+      "action_id": "extract_LAB-SIG.pdf",
+      "type": "file_extraction",
+      "file": "LAB-SIG.pdf",
+      "role": "lab_results_pdf",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 16,
+      "elapsed_s": 17.09,
+      "usage": {
+        "input_tokens": 9348,
+        "output_tokens": 492,
+        "elapsed_s": 16.33
+      }
+    },
+    {
+      "action_id": "extract_25.0647",
+      "type": "file_extraction",
+      "file": "25.0647",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract__user_data_prev.json",
+      "type": "file_extraction",
+      "file": "_user_data_prev.json",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_4001612_plànol de situació.pdf",
+      "type": "file_extraction",
+      "file": "4001612_plànol de situació.pdf",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 11,
+      "elapsed_s": 12.4,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 394,
+        "elapsed_s": 11.98
+      }
+    },
+    {
+      "action_id": "crop_reread_4001612_plànol de situació.pdf",
+      "type": "agentic_crop",
+      "file": "4001612_plànol de situació.pdf",
+      "target_vars": [
+        "superficie_parcela",
+        "icgc_unit_epoch"
+      ],
+      "improved_vars": [],
+      "usage": {
+        "input_tokens": 1673,
+        "output_tokens": 403,
+        "elapsed_s": 17.49
+      }
+    },
+    {
+      "action_id": "extract_4613172CG1141S0001SU.pdf",
+      "type": "file_extraction",
+      "file": "4613172CG1141S0001SU.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 10,
+      "elapsed_s": 29.0,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 274,
+        "elapsed_s": 28.69
+      }
+    },
+    {
+      "action_id": "extract_4613173CG1141S0001ZU.pdf",
+      "type": "file_extraction",
+      "file": "4613173CG1141S0001ZU.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 10,
+      "elapsed_s": 22.28,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 280,
+        "elapsed_s": 21.97
+      }
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image005.png",
+      "type": "file_skip",
+      "file": "image005.png",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image008.jpg",
+      "type": "file_skip",
+      "file": "image008.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image009.jpg",
+      "type": "file_skip",
+      "file": "image009.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "extract_4613172CG1141S0001SU_img0.png",
+      "type": "file_extraction",
+      "file": "4613172CG1141S0001SU_img0.png",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 17.76,
+      "usage": {
+        "input_tokens": 1932,
+        "output_tokens": 4,
+        "elapsed_s": 17.73
+      }
+    },
+    {
+      "action_id": "skip_4613172CG1141S0001SU_img1.png",
+      "type": "file_skip",
+      "file": "4613172CG1141S0001SU_img1.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_4613172CG1141S0001SU_img2.jpeg",
+      "type": "file_extraction",
+      "file": "4613172CG1141S0001SU_img2.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 1.76,
+      "usage": {
+        "input_tokens": 3139,
+        "output_tokens": 4,
+        "elapsed_s": 1.73
+      }
+    },
+    {
+      "action_id": "extract_4613173CG1141S0001ZU_img0.png",
+      "type": "file_extraction",
+      "file": "4613173CG1141S0001ZU_img0.png",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 1.46,
+      "usage": {
+        "input_tokens": 1932,
+        "output_tokens": 4,
+        "elapsed_s": 1.44
+      }
+    },
+    {
+      "action_id": "skip_4613173CG1141S0001ZU_img1.png",
+      "type": "file_skip",
+      "file": "4613173CG1141S0001ZU_img1.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_4613173CG1141S0001ZU_img2.jpeg",
+      "type": "file_extraction",
+      "file": "4613173CG1141S0001ZU_img2.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 1.39,
+      "usage": {
+        "input_tokens": 3139,
+        "output_tokens": 4,
+        "elapsed_s": 1.37
+      }
+    },
+    {
+      "action_id": "extract_PLAN_COST_BELL-LLOC.xlsx",
+      "type": "file_extraction",
+      "file": "PLAN_COST_BELL-LLOC.xlsx",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "excel_parse",
+      "vars_extracted": 2,
+      "elapsed_s": 0.31,
+      "usage": {}
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image005.jpg",
+      "type": "file_skip",
+      "file": "image005.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image008.jpg",
+      "type": "file_skip",
+      "file": "image008.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "extract_image010.png",
+      "type": "file_extraction",
+      "file": "image010.png",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 1.52,
+      "usage": {
+        "input_tokens": 1701,
+        "output_tokens": 4,
+        "elapsed_s": 1.5
+      }
+    },
+    {
+      "action_id": "extract_image013.jpg",
+      "type": "file_extraction",
+      "file": "image013.jpg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 2.2,
+      "usage": {
+        "input_tokens": 3037,
+        "output_tokens": 4,
+        "elapsed_s": 2.18
+      }
+    },
+    {
+      "action_id": "extract_image014.jpg",
+      "type": "file_extraction",
+      "file": "image014.jpg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 2.49,
+      "usage": {
+        "input_tokens": 3037,
+        "output_tokens": 4,
+        "elapsed_s": 2.46
+      }
+    },
+    {
+      "action_id": "skip_PLAN_COST_BELL-LLOC_img0.png",
+      "type": "file_skip",
+      "file": "PLAN_COST_BELL-LLOC_img0.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "usage_summary",
+      "type": "summary",
+      "total_usage": {
+        "input_tokens": 84268,
+        "output_tokens": 6864,
+        "api_calls": 22
+      }
+    }
+  ]
+}

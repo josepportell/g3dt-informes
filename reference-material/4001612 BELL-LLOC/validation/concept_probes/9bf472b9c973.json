@@ -1,0 +1,24 @@
+{
+  "document_type": "map",
+  "document_description": "Site plan with plot 73 highlighted",
+  "concepts_found": [
+    {
+      "concept_id": "street_address",
+      "confidence": 0.8,
+      "signal_preview": "Carrer Mestre, Ramon, Ortiz",
+      "page": 1
+    },
+    {
+      "concept_id": "municipality",
+      "confidence": 0.2,
+      "signal_preview": "not clear",
+      "page": 1
+    },
+    {
+      "concept_id": "superficie_parcela_m2",
+      "confidence": 0.9,
+      "signal_preview": "46131",
+      "page": 1
+    }
+  ]
+}

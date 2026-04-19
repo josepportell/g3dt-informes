@@ -1,0 +1,32 @@
+{
+  "pages_inventory": {
+    "1": "geotechnical report cover + data sheet",
+    "2": "dynamic penetrometer test data + sketch + measurements",
+    "3": "dynamic penetrometer test data + measurements",
+    "4": "rotary drilling report data + tables + notes"
+  },
+  "planning_table_raw": null,
+  "architect_data": {
+    "project_name": null,
+    "building_type": null,
+    "client_name": "G3",
+    "promotor": null,
+    "street_address": "C/ Arbrell",
+    "municipality": "Castellar del Vallès",
+    "architect": null,
+    "architect_company": null,
+    "ref_cadastral": null
+  },
+  "dimensions": {
+    "parcel_area_m2": null,
+    "building_footprint_m2": null,
+    "total_built_area_m2": null,
+    "floor_surfaces": null,
+    "num_floors": null,
+    "max_height_m": null,
+    "plot_length_m": null,
+    "plot_width_m": null
+  },
+  "overall_confidence": 0.8,
+  "extraction_notes": "Document is a geotechnical report with penetrometer and drilling data for site at C/ Arbrell, Castellar del Vallès. No architectural project data, planning tables, or building dimensions found in these pages."
+}

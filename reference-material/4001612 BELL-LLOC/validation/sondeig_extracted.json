@@ -1,74 +1,60 @@
 {
-  "source_file": "SONDEIG.pdf",
-  "extraction_date": "2026-04-06T19:20:00",
-  "extraction_method": "claude_vision",
-  "overall_confidence": 0.92,
-  "status": "pending_review",
-  "metadata": {
-    "date": "6-10-2025",
-    "date_end": "6-10-2025",
-    "location": "Bell-Lloc",
-    "address": "C/Antoni Bellet",
-    "operator": "Daniel Fernandez",
-    "equipment": "ML76A",
-    "client": "G3",
-    "responsible": "Eva",
-    "water_level_note": "Est\u00e0tic Bellet +/-0"
-  },
   "sondeig_tests": [
     {
       "test_id": "S-1",
-      "total_depth_m": 1.80,
+      "total_depth_m": 1.8,
+      "num_geological_levels": 1,
       "layers": [
         {
           "depth_from_m": 0.0,
-          "depth_to_m": 1.60,
-          "description": "Grava con arena",
+          "depth_to_m": 1.8,
+          "description": "Graves (gravia)",
+          "geological_level": 1,
           "uscs_classification": null,
           "color": null,
           "moisture": null,
           "consistency": null,
           "density": null,
-          "confidence": 0.90,
-          "note": "Handwritten on rotated field sheet. Coronas: 101 W.B"
+          "confidence": 0.75,
+          "note": "First layer described as 'Gravia' (graves). Depth 0.00–1.80 m read from field log profunditat column. Consistent with Albarà entry: 1.80 ml de perf. en graves entre 0-20m."
         },
         {
-          "depth_from_m": 1.60,
-          "depth_to_m": 1.80,
-          "description": "Grava carbonatada",
+          "depth_from_m": 1.8,
+          "depth_to_m": 4.0,
+          "description": "Graves carbonatades (Gravia Carbonatada)",
+          "geological_level": 1,
           "uscs_classification": null,
           "color": null,
           "moisture": null,
           "consistency": null,
           "density": null,
-          "confidence": 0.85,
-          "note": "Handwritten. Short layer at bottom of borehole. Coronas: 101 W.B"
+          "confidence": 0.65,
+          "note": "Second layer described as 'Gravia Carbonatada'. Depth_to_m of 4.00 m is uncertain — the lower boundary is not clearly legible; could be 4.00 m. No 'Unitat litològica' column visible; both layers treated as geological level 1 per fallback rule."
         }
       ],
       "spt_results": [
         {
           "test_id": "SPT-1",
-          "depth_from_m": 1.00,
-          "depth_to_m": 1.60,
-          "blows": [24, 34, 28, 30],
+          "depth_from_m": 1.0,
+          "depth_to_m": 1.6,
+          "blows": [
+            24,
+            34,
+            28,
+            30
+          ],
           "n_spt": 62,
-          "confidence": 0.95,
-          "note": "Blows per 15cm interval. N30 = blows[1]+blows[2] = 34+28 = 62. Visible on both albar\u00e0 (p1) and field sheet (p2)."
+          "confidence": 0.55,
+          "note": "SPT blow counts read from 'Colpeig' column: values appear to be approximately 24, 3x (34?), 28, 30. The second value is particularly unclear — could be 34 or 3¼ notation. n_spt calculated as sum of blows[1]+blows[2] = 34+28 = 62. Depth 1.00–1.60 m inferred from 'Mostres' column entry '1ca-1.60, S.P.T-1'. Depth_from_m preferred as 1.00 (round value) per depth precision rules, though handwriting is ambiguous."
         }
       ],
+      "elevation_z": null,
       "water_level_m": null,
       "rock_detected": false,
       "rock_depth_m": null,
-      "extraction_notes": "2 layers detected from field sheet (page 2, rotated 90\u00b0). SPT-1 at 1.00-1.60m with 4 blow counts. Croquis (page 3) shows S1 position: 4.2m and 11m from parcel edges, corner of C/Antoni Bellet and C/Mestre Ramon Ortiz."
+      "extraction_notes": "Three document pages analyzed: (1) Albarà delivery note, (2) Field log sheet (Full de camp sondeig a rotació), (3) Hand-drawn site sketch. Borehole S-1 drilled 06-10-2025. Total drilled depth from Albarà confirmed as 1.80 m in gravels (0-20m category). Field log suggests drilling continued into carbonated gravels below 1.80 m but exact final depth is unclear — possibly 4.00 m. No 'Unitat litològica' column present; num_geological_levels set to 1 per fallback rule. SPT blow counts are partially legible. Water level noted on field sheet as 'Anbes/Ambés B.llec +/o' — likely a location reference rather than a numeric water level depth; set to null. Driller: Daniel Fernandez/Farrandes. Equipment: ML76A. Client: G3. Site: C/Antoni Bellet, Bell-lloc."
     }
   ],
-  "croquis": {
-    "has_sketch": true,
-    "page": 3,
-    "s1_position": "4.2m from one edge, 11m from another",
-    "streets": ["C/Antoni Bellet", "C/Mestre Ramon Ortiz"]
-  },
-  "reviewer_notes": "",
-  "approved_by": "",
-  "approval_date": null
+  "overall_confidence": 0.62,
+  "extraction_notes": "Document is a handwritten field log photographed at an angle with some distortion, making several values difficult to read with certainty. The Albarà (page 1) provides useful cross-validation. Key uncertainties: (1) exact final borehole depth, (2) SPT blow counts — second value particularly unclear, (3) lower boundary of second soil layer, (4) driller surname spelling. Site sketch (page 3) confirms single borehole S-1 at the C/Antoni Bellet / C/Mestre Ramon Ortez plot. Language of document: Catalan."
 }

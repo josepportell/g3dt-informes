@@ -1,0 +1,105 @@
+{
+  "pages_inventory": {
+    "1": "cover + normativa urbanística + site plan overview",
+    "2": "site plan + parcel boundaries + dimensions",
+    "3": "floor plan planta baixa + area tables",
+    "4": "floor plan planta baixa + architectural definition",
+    "5": "floor plan planta baixa + detailed area tables",
+    "6": "roof plan (planta coberta) with annotations on roof materials and solar panels",
+    "7": "building sections (seccions) showing interior spaces, heights, materials",
+    "8": "building sections (seccions) with detailed notes on materials and finishes",
+    "9": "building elevations (alçats) with facade materials and window details",
+    "10": "building elevations (alçats) with facade materials and exterior finishes",
+    "11": "sections + architectural elevations and cross-sections"
+  },
+  "planning_table_raw": {
+    "planejament": {
+      "PARCEL.LA MINIMA": "150 m2",
+      "OCUPACIÓ PB": "100%",
+      "PROFUNDITAT EDIFICABLE": "dist. entre vials menor 30m 100%",
+      "FRONT MIN. PARCEL.LA": "4,50m",
+      "FONDÀRIA MIN. PARCEL.LA": "10,00m",
+      "NOMBRE MÀXIM PLANTES": "PB+2PP",
+      "ALÇADA REGULADORA MAX.": "11,00m",
+      "COBERTA": "inclinada",
+      "PENDENT COBERTA": "màxim 30%"
+    },
+    "projecte": {
+      "FORMA ORDENACIÓ": "alineació a vial o carrer",
+      "PARCEL.LA MINIMA": "571 m2",
+      "OCUPACIÓ": "41,33%",
+      "PROFUNDITAT EDIFICABLE": "25,00m",
+      "FRONT MÍN. PARCEL.LA": "16,83m",
+      "FONDÀRIA MIN. PARCEL.LA": "34,00m",
+      "NOMBRE MÀXIM PLANTES": "PB",
+      "ALÇADA REGULADORA MAX.": "3,48m",
+      "COBERTA": "inclinada i plana",
+      "PENDENT COBERTA": "30%"
+    }
+  },
+  "architect_data": {
+    "project_name": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+    "building_type": "habitatge unifamiliar aïllat",
+    "promotor": "SÍLVIA EROLES BALAGUERÓ, JAUME NADAL ANDREU",
+    "street_address": "C/ Clot de la Llacuna, 16",
+    "municipality": "Linyola",
+    "architect": "JOSEP BUNYESC PALACÍN",
+    "architect_company": "BUNYESC ARQUITECTURA EFICIENT, S.L.P.",
+    "ref_cadastral": "5098344CG2159N0000US",
+    "client_name": "JOSEP BUNYESC PALACIN - Dr. Arquitecte"
+  },
+  "dimensions": {
+    "parcel_area_m2": {
+      "value": 571.0,
+      "confidence": 1.0,
+      "source": "normativa urbanística projecte column p1",
+      "page": 1
+    },
+    "building_footprint_m2": {
+      "value": 250.91,
+      "confidence": 0.95,
+      "source": "superficie construïda total PB planta baixa p3 and p5",
+      "page": 3
+    },
+    "total_built_area_m2": {
+      "value": 250.91,
+      "confidence": 0.95,
+      "source": "superficie construïda total PB planta baixa p3 and p5",
+      "page": 3
+    },
+    "floor_surfaces": [
+      {
+        "floor": "PB",
+        "area_m2": 515.62,
+        "confidence": 0.95,
+        "page": 5
+      }
+    ],
+    "num_floors": {
+      "value": "PB",
+      "confidence": 1.0,
+      "source": "normativa urbanística projecte column p1",
+      "page": 1
+    },
+    "max_height_m": {
+      "value": 3.48,
+      "confidence": 1.0,
+      "source": "normativa urbanística projecte column p1",
+      "page": 1
+    },
+    "plot_length_m": {
+      "value": 34.04,
+      "confidence": 1.0,
+      "source": "site plan dimensions p2 and floor plan p3",
+      "page": 2
+    },
+    "plot_width_m": {
+      "value": 16.83,
+      "confidence": 1.0,
+      "source": "site plan dimensions p2 and floor plan p3",
+      "page": 2
+    }
+  },
+  "overall_confidence": 0.95,
+  "extraction_notes": "The project is a basic project for a detached single-family house in Linyola. Normativa urbanística table is on page 1 with clear Planejament vs Projecte columns. Parcel area and max height come from the Projecte column. Floor plans and area tables on pages 3 and 5 provide detailed surface areas. Number of floors is PB only. Some client name is not visible. Reference cadastral is visible on site plan page 2. | Pages 6-10 contain detailed architectural drawings: roof plan, sections, and elevations with extensive notes on materials and construction. No normativa/planning table or area tables visible on these pages. Title block on all pages confirms project name, architect, promoter, and address. No cadastral reference or explicit dimensional data found on these pages. | Page 11 contains architectural elevations and cross-sections with detailed construction notes. No normativa/planning table or area tables visible on this page. Architect and project data extracted from title block at bottom of page. No dimensional or planning table data found on this page."
+}

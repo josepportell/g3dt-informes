@@ -1,0 +1,12 @@
+{
+  "document_type": "architect_plan",
+  "document_description": "Foundation plan showing concrete footings and structural layout with dimensions",
+  "concepts_found": [
+    {
+      "concept_id": "has_basement",
+      "confidence": 0.8,
+      "signal_preview": "NO POUS BLINDATS",
+      "page": 1
+    }
+  ]
+}

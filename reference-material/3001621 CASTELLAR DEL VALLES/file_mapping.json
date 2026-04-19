@@ -1,5 +1,11 @@
 {
   "roles": {
+    "project_email": {
+      "path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
     "reference_report": {
       "path": "3001621_informe_v0.doc",
       "confidence": "high",
@@ -12,48 +18,59 @@
       "detection": "filename_pattern",
       "vision_type": null
     },
-    "photos_dir": {
-      "path": "FOTOGRAFIES",
-      "confidence": "high",
-      "detection": "directory_name",
-      "vision_type": null
-    },
-    "dpsh_field_sheet": {
-      "path": "PENETROS + SONDEIG.pdf",
-      "confidence": "high",
-      "detection": "filename_pattern",
-      "vision_type": "dpsh"
-    },
-    "sondeig_field_sheet": {
-      "path": "PENETROS + SONDEIG.pdf",
-      "confidence": "high",
-      "detection": "combined_file",
-      "is_combined": true,
-      "vision_type": null
-    },
-    "lab_order": {
-      "path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
-      "confidence": "high",
-      "detection": "filename_pattern",
-      "vision_type": null
-    },
-    "correlation_section": {
-      "path": "tall.pdf",
-      "confidence": "high",
-      "detection": "filename_pattern",
-      "vision_type": null
-    },
     "dpsh_excel": {
       "path": "ANNEXES/3001621_DPSH.xls",
       "confidence": "high",
       "detection": "filename_pattern",
       "vision_type": null
     },
-    "situation_plan": {
-      "path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+    "figure_geological_map": {
+      "path": "ANNEXES/ALTRES/M1.png",
       "confidence": "high",
       "detection": "filename_pattern",
-      "vision_type": "planol"
+      "vision_type": null
+    },
+    "photos_dir": {
+      "path": "FOTOGRAFIES",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_dpsh_equipment": {
+      "path": "FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "field_photo": {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 09.37.01_63bb48b8.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_test_point": {
+      "path": "FOTOGRAFIES/P1.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_sondeig_equipment": {
+      "path": "FOTOGRAFIES/SONDEIG/maquina_sondeig.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_spt_sample": {
+      "path": "FOTOGRAFIES/detall_materials.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "photo_site_overview": {
+      "path": "FOTOGRAFIES/vista_general_1.jpg",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
     },
     "sondeig_annex": {
       "path": "PDF/ANNEXES/3001621_sondeig.pdf",
@@ -66,9 +83,39 @@
       "confidence": "high",
       "detection": "filename_pattern",
       "vision_type": null
+    },
+    "dpsh_field_sheet": {
+      "path": "PENETROS + SONDEIG.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "is_combined": true,
+      "vision_type": "dpsh"
+    },
+    "sondeig_field_sheet": {
+      "path": "PENETROS + SONDEIG.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "is_combined": true,
+      "vision_type": "sondeig"
+    },
+    "lab_order": {
+      "path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
+    },
+    "correlation_section": {
+      "path": "tall.pdf",
+      "confidence": "high",
+      "detection": "filename_pattern",
+      "vision_type": null
     }
   },
   "ignored": [
+    {
+      "path": "25.0493/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
     {
       "path": "3001621_PORTADA_25.doc",
       "reason": "cover_doc"
@@ -78,44 +125,12 @@
       "reason": "our_output"
     },
     {
-      "path": "3001621_test_fase2.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "3001621_test_run003.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "3001621_test_run004.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "3001621_test_run005.docx",
-      "reason": "legacy_word"
-    },
-    {
-      "path": "ACCEPTACIO/",
+      "path": "ACCEPTACIO",
       "reason": "acceptance_dir"
     },
     {
-      "path": "DTE.txt",
-      "reason": "text_file"
-    },
-    {
-      "path": "PDF/",
-      "reason": "exported_pdf_dir"
-    },
-    {
-      "path": "PDF-V0/",
-      "reason": "exported_pdf_dir"
-    },
-    {
-      "path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
-      "reason": "email_file"
-    },
-    {
-      "path": "validation/",
-      "reason": "output_dir"
+      "path": "ACCEPTACIO/Thumbs.db",
+      "reason": "Windows thumbnail cache"
     },
     {
       "path": "ANNEXES/3001621_fotografies.FH11",
@@ -134,48 +149,191 @@
       "reason": "freehand_file"
     },
     {
-      "path": "ANNEXES/ALTRES/",
-      "reason": "misc_subdir"
+      "path": "ANNEXES/ALTRES/6_mapa Geologic_CAT_VS.FH11",
+      "reason": "freehand_file"
+    },
+    {
+      "path": "ANNEXES/ALTRES/Thumbs.db",
+      "reason": "Windows thumbnail cache"
     },
     {
       "path": "ANNEXES/EF7DB361.tmp",
-      "reason": "temp_file"
+      "reason": "Temporary file"
+    },
+    {
+      "path": "FOTOGRAFIES/S1/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "FOTOGRAFIES/Thumbs.db",
+      "reason": "Windows thumbnail cache"
+    },
+    {
+      "path": "PDF",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "PDF/3001621_informe.pdf",
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/3001621_DPSH.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/3001621_fotografies.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/LLETRA",
+      "reason": "letter_dir"
+    },
+    {
+      "path": "PDF/LLETRA/3001621_PORTADA_25.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF/LLETRA/3001621_informe_v0.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF-V0",
+      "reason": "exported_pdf_dir"
+    },
+    {
+      "path": "PDF-V0/3001621_informe_v0.pdf",
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF-V0/ANNEXES/3001621_DPSH.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF-V0/ANNEXES/3001621_fotografies.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF-V0/ANNEXES/3001621_plànol de situació.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
     },
     {
       "path": "PDF-V0/ANNEXES/3001621_tall de correlació.pdf",
-      "reason": "exported_annex_pdf"
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF-V0/LLETRA",
+      "reason": "letter_dir"
+    },
+    {
+      "path": "PDF-V0/LLETRA/3001621_PORTADA_25_v0.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "PDF-V0/LLETRA/3001621_informe_v0.pdf",
+      "reason": "exported_pdf_copy"
+    },
+    {
+      "path": "file_mapping.json",
+      "reason": "our_output"
     }
   ],
   "unassigned": [
     "25.0493",
-    "PDF-V0/ANNEXES/3001621_sondeig.pdf"
+    "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "3001621_test_fase2.docx",
+    "3001621_test_run003.docx",
+    "3001621_test_run004.docx",
+    "3001621_test_run005.docx",
+    "ANNEXES",
+    "ANNEXES/ALTRES",
+    "ANNEXES/ALTRES/COORDENADES.txt",
+    "DTE.txt",
+    "FOTOGRAFIES/DPSH",
+    "FOTOGRAFIES/S1",
+    "FOTOGRAFIES/SONDEIG",
+    "PDF/ANNEXES",
+    "PDF-V0/ANNEXES",
+    "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+    "_user_data_prev.json"
   ],
+  "email_attachments": {
+    "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/PLAN_COST_CATELLAR DEL VALLÈS.xlsx": {
+      "source_msg": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "classifier_used": "unclassified",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "skipped",
+      "probe_detail": "not_vision_eligible(.xlsx)",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image001.jpg": {
+      "source_msg": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image005.png": {
+      "source_msg": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image009.jpg": {
+      "source_msg": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES/image001.jpg": {
+      "source_msg": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    },
+    "validation/msg_attachments/Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES/image008.jpg": {
+      "source_msg": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+      "classifier_used": "vision",
+      "role_assigned": null,
+      "role_candidate": null,
+      "probe_status": "ok",
+      "probe_detail": "signature_image",
+      "confidence": 0.0,
+      "concepts_extracted": [],
+      "signals_emitted": 0
+    }
+  },
   "_metadata": {
-    "scanned_at": "2026-03-29T16:31:33.548984+00:00",
+    "scanned_at": "2026-04-18T20:25:53.605974+00:00",
     "confirmed_by_user": false,
     "scanner_version": "2.2"
   }

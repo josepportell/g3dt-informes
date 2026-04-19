@@ -2,14 +2,14 @@
   "metadata": {
     "test_id": "T1",
     "project": "4001679 ANCILES",
-    "timestamp": "2026-04-16T16:25:25.946119+00:00",
+    "timestamp": "2026-04-16T18:12:39.143837+00:00",
     "files_available": 25,
     "files_read": 22,
     "files_from_email": 16,
-    "duration_s": 194.8,
-    "api_calls": 17,
-    "input_tokens": 73772,
-    "output_tokens": 4230
+    "duration_s": 265.8,
+    "api_calls": 19,
+    "input_tokens": 77086,
+    "output_tokens": 4733
   },
   "files_inventory": [
     {
@@ -147,7 +147,7 @@
       "extraction_method": "doc_convert"
     },
     "architect_name": {
-      "value": "Alba Barrau y Miriam Castel",
+      "value": "ALBA BARRAU y MIRIAM CASTEL",
       "confidence": 0.95,
       "source_file": "SITE_prop A.pdf",
       "source_origin": "email",
@@ -226,7 +226,7 @@
       "extraction_method": "doc_convert"
     },
     "site_description": {
-      "value": "El interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual.",
+      "value": "Interior de la parcela bastante explanada, sin pavimentaciones, con vegetación de pequeña envergadura y algún árbol puntual. No se observan afloramientos de materiales.",
       "confidence": 1.0,
       "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
@@ -240,36 +240,22 @@
       "extraction_method": "doc_convert"
     },
     "cota_referencia": {
-      "value": "Cota absoluta en msnm (metros sobre nivel del mar), referencia ~1107 msnm",
-      "confidence": 0.85,
-      "source_file": "tall.pdf",
+      "value": "Cotas referidas a partir del plano topográfico proporcionado, en metros sobre el nivel del mar (msnm). S-1: +1106.65 msnm, S-2: +1106.42 msnm.",
+      "confidence": 1.0,
+      "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
-      "extraction_method": "vision_pdf"
+      "extraction_method": "doc_convert"
     },
     "adjacent_north": {
-      "value": "Camp de conreu herbaci (noreste) i jardí (noroeste)",
+      "value": "Noreste: campo de conreo herbáceo; Noroeste: jardín",
       "confidence": 0.9,
       "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
     "adjacent_south": {
-      "value": "Edifici de fins a 4 plantes sobre rasant (suroeste) i zona erma amb vegetació (sureste)",
+      "value": "Suroeste: edificio de hasta 4 plantas sobre rasante; Sureste: zona yerma con vegetación",
       "confidence": 0.9,
-      "source_file": "4001679_informe_V0.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
-    "adjacent_east": {
-      "value": "Zona yerma con vegetación (sureste)",
-      "confidence": 0.7,
-      "source_file": "4001679_informe_V0.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
-    "adjacent_west": {
-      "value": "Jardín (noroeste)",
-      "confidence": 0.7,
       "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
       "extraction_method": "doc_convert"
@@ -283,21 +269,14 @@
     },
     "is_urban": {
       "value": true,
-      "confidence": 0.85,
-      "source_file": "SITE_prop A.pdf",
-      "source_origin": "email",
-      "extraction_method": "vision_pdf"
-    },
-    "is_sloped": {
-      "value": false,
-      "confidence": 0.8,
+      "confidence": 0.7,
       "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
     "is_anthropized": {
       "value": false,
-      "confidence": 0.7,
+      "confidence": 0.6,
       "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
       "extraction_method": "doc_convert"
@@ -324,14 +303,14 @@
       "extraction_method": "doc_convert"
     },
     "lab_field_description": {
-      "value": "Realització de 2 sondeos a rotació amb bateria contínua, 6 assaigs de penetració dinàmica DPSH i 2 assaigs SPT amb recuperació de mostra.",
+      "value": "2 sondeos a rotación con batería continua, 6 ensayos de penetración dinámica DPSH, 2 ensayos SPT con recuperación de muestra, observaciones de campo y reportaje fotográfico.",
       "confidence": 1.0,
       "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
     "lab_testing_description": {
-      "value": "Determinació del contingut en ió sulfat en sòls UNE 83963/08",
+      "value": "Determinación del contenido en ión sulfato en suelos UNE 83963/08",
       "confidence": 1.0,
       "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
@@ -359,28 +338,7 @@
       "extraction_method": "doc_convert"
     },
     "lab_tests_text": {
-      "value": "Determinació del contingut en ió sulfat en sòls UNE 83963/08",
-      "confidence": 1.0,
-      "source_file": "4001679_informe_V0.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
-    "num_dpsh_tests": {
-      "value": "6 assaigs de penetració dinàmica DPSH (P-1 a P-6)",
-      "confidence": 1.0,
-      "source_file": "4001679_informe_V0.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
-    "table_dpsh_range": {
-      "value": "3, 4 i 5",
-      "confidence": 1.0,
-      "source_file": "4001679_informe_V0.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
-    "location_sentence": {
-      "value": "La nova edificació projectada se situa al carrer Gral Ferraz nº20 al municipi d'Anciles, Benasque.",
+      "value": "Determinación del contenido en ión sulfato en suelos UNE 83963/08",
       "confidence": 1.0,
       "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
@@ -394,14 +352,35 @@
       "extraction_method": "doc_convert"
     },
     "icgc_unit_description": {
-      "value": "Conglomerats, arenisques, graves, sorres, llims i argiles del Quaternari, Holocè",
-      "confidence": 0.9,
+      "value": "Conglomerados, areniscas, gravas, arenas, limos y arcillas",
+      "confidence": 1.0,
       "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
     "icgc_unit_epoch": {
-      "value": "Quaternari, Holocè",
+      "value": "Cuaternario, Holoceno",
+      "confidence": 1.0,
+      "source_file": "4001679_informe_V0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "num_dpsh_tests": {
+      "value": "6 ensayos de penetración dinámica DPSH (P-1 a P-6)",
+      "confidence": 1.0,
+      "source_file": "4001679_informe_V0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "table_dpsh_range": {
+      "value": "3, 4 i 5",
+      "confidence": 0.9,
+      "source_file": "4001679_informe_V0.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "location_sentence": {
+      "value": "La nova edificació projectada se situa al carrer Gral Ferraz nº20 al municipi d'Anciles, Benasque.",
       "confidence": 1.0,
       "source_file": "4001679_informe_V0.doc",
       "source_origin": "project",
@@ -416,8 +395,15 @@
     },
     "foundation_depth_m": {
       "value": 3.0,
-      "confidence": 0.9,
+      "confidence": 1.0,
       "source_file": "tall.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "has_retaining_walls": {
+      "value": false,
+      "confidence": 0.4,
+      "source_file": "PENETROS + SONDEIGS.pdf",
       "source_origin": "project",
       "extraction_method": "vision_pdf"
     },
@@ -439,6 +425,13 @@
       "value": "HUESCA",
       "confidence": 1.0,
       "source_file": "PRESUPUESTO G3.ANCILES.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "referencia_catastral": {
+      "value": "HUERTO CASA SORT",
+      "confidence": 0.4,
+      "source_file": "SITE_prop A.pdf",
       "source_origin": "email",
       "extraction_method": "vision_pdf"
     },
@@ -466,133 +459,234 @@
   },
   "comparison": {
     "vs_eva": {
+      "project": "4001679 ANCILES",
+      "test_id": "T1",
       "total_eva_vars": 52,
       "counts": {
-        "MATCH": 1,
-        "CLOSE": 7,
-        "MISMATCH": 7,
-        "NOT_EXTRACTED": 37
+        "MATCH": 4,
+        "CLOSE": 9,
+        "MISMATCH": 9,
+        "NOT_EXTRACTED": 30
       },
-      "accuracy_pct": 15.4,
+      "accuracy_pct": 25.0,
+      "tier_breakdown": {
+        "-": {
+          "NOT_EXTRACTED": 25,
+          "CLOSE": 6,
+          "MISMATCH": 6,
+          "MATCH": 3
+        },
+        "A": {
+          "MATCH": 1,
+          "MISMATCH": 3,
+          "CLOSE": 1,
+          "NOT_EXTRACTED": 2
+        },
+        "B": {
+          "CLOSE": 2,
+          "NOT_EXTRACTED": 1
+        },
+        "C": {
+          "NOT_EXTRACTED": 2
+        }
+      },
+      "origin_breakdown": {
+        "project": {
+          "CLOSE": 9,
+          "MISMATCH": 8,
+          "MATCH": 4
+        },
+        "email": {
+          "MISMATCH": 1
+        }
+      },
       "details": [
         {
           "variable": "access_street",
           "tier": "-",
           "eva": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "adjacent_east_fmt",
           "tier": "-",
           "eva": "Por la parte noreste con un campo de conreo herbáceo.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "adjacent_north_fmt",
           "tier": "-",
           "eva": "Por la parte noroeste con un jardín.",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Noreste: campo de conreo herbáceo; Noroeste: jardín",
+          "confidence": 0.9,
+          "status": "CLOSE",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 3,
+            "llm_explanation": "Both texts identify a garden ('jardín') to the northwest ('noroeste'), which is the key information. However, the pipeline output is more detailed by adding additional direction information (northeast with herbaceous crop field) that wasn't in the benchmark. The benchmark is more concise, focusing only on the northwest garden. The core match is present but the pipeline provides extra details not originally stated."
+          }
         },
         {
           "variable": "adjacent_south_fmt",
           "tier": "-",
           "eva": "Por la parte suroeste con un edificio de hasta 4 plantas sobre rasante.",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Suroeste: edificio de hasta 4 plantas sobre rasante; Sureste: zona yerma con vegetación",
+          "confidence": 0.9,
+          "status": "MISMATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 2,
+            "llm_explanation": "Both texts describe the southwest direction with a 4-story building above ground level (matching). However, the pipeline text adds extra information about the southeast direction (barren zone with vegetation) that wasn't in the benchmark. The benchmark focuses only on the southwest ('suroeste'), while the pipeline describes both southwest and southeast orientations. This represents a significant structural difference - the pipeline provides more comprehensive directional coverage than the benchmark's single southwestern reference."
+          }
         },
         {
           "variable": "adjacent_west_fmt",
           "tier": "-",
           "eva": "Y finalmente por el sureste, con una zona yerma con vegetación.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "architect_name_upper",
           "tier": "-",
           "eva": "ALBA MARIA BARRAU CASTÁN",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "ALBA BARRAU y MIRIAM CASTEL",
+          "confidence": 0.95,
+          "status": "MISMATCH",
+          "source_file": "SITE_prop A.pdf",
+          "origin": "email",
+          "llm_judge": {
+            "llm_score": 1,
+            "llm_explanation": "The names are substantially different. The benchmark lists 'ALBA MARIA BARRAU CASTÁN' (single person with middle name), while the pipeline output shows 'ALBA BARRAU y MIRIAM CASTEL' (two different people with different surnames). These are not the same architect names."
+          }
         },
         {
           "variable": "building_structure_desc",
           "tier": "-",
           "eva": "un semisótano en dos de las siete viviendas previstas",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "building_type_lower",
           "tier": "-",
           "eva": "7 viviendas unifamiliares adosadas",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "7 viviendas unifamiliares adosadas",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project"
         },
         {
           "variable": "client",
           "tier": "A",
           "eva": "SRA. ALBA MARIA BARRAU CASTÁN",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "SRA. ALBA MARIA BARRAU CASTÁN",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project"
         },
         {
           "variable": "conclusions_aggressivity_statement",
           "tier": "-",
           "eva": "A partir de los ensayos realizados se determina que los materiales del 2do nivel descrito se presentan, a priori xxxxxxx al hormigón.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "conclusions_levels_detected",
           "tier": "-",
           "eva": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "conclusions_water_statement",
           "tier": "-",
           "eva": "Con fecha de la realización de los trabajos de campo, y hasta la cota ensayada, no se detectó presencia de nivel freático en ninguno de los ensayos realizados.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "csn_radon_text",
           "tier": "-",
           "eva": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de que los edificios construidos en la zona sin soluciones específicas de protección frente al radón presenten concentraciones de radón superiores al nivel de referencia.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "data_camp_text",
           "tier": "A",
           "eva": "El día 19 de febrero de 2026, se visitó la obra para:",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "19 de febrer de 2026",
+          "confidence": 1.0,
+          "status": "MISMATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "19 de febrer de 2026",
+            "llm_score": 2,
+            "llm_explanation": "Both refer to the same date (19 February 2026) but the benchmark provides complete context ('se visitó la obra para' - work site visit purpose) while the pipeline only provides the bare date. Significant information loss in the pipeline version."
+          }
         },
         {
           "variable": "data_signatura_text",
           "tier": "-",
           "eva": "Els Omells de Na Gaia, 16 de marzo de 2026",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "dpsh_tests",
           "tier": "-",
           "eva": "[{'test_id': 'P-1', 'cota': '+1106.40', 'depth': '-3.58', 'refusal': 'Si', 'water': 'No detectado'}, {'test_id': 'P-2', 'cota': '+1106.30', 'depth': '-4.59', 'refusal': 'Si', 'water': 'No detectado'}, {'test_id': 'P-3', 'cota': '+1106.40', 'depth': '-3.77', 'refusal': 'Si', 'water': 'No detectado'}, {'test_id': 'P-4', 'cota': '+1106.30', 'depth': '-5.92', 'refusal': 'Si', 'water': 'No detectado'}, {'test_id': 'P-5', 'cota': '+1106.42 -', 'depth': '-4.18', 'refusal': 'Si', 'water': 'No detectado'}, {'test_id': 'P-6', 'cota': '+1106.65 -', 'depth': '-5.70', 'refusal': 'Si', 'water': 'No detectado'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "empentes_paragraph",
           "tier": "-",
           "eva": "Para el dimensionado de los muros del sótano y para el cálculo del empuje de tierras habrá que tener en cuenta los parámetros geomecánicos de los materiales del primer nivel que se considera el más desfavorable.\nHabrá que tener en cuenta que en el trasdós del muro se tendrá que instalar un correcto drenaje para evitar que se acumule el agua y se produzca una sobrecarga en su trasdós.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "expedient",
@@ -600,21 +694,29 @@
           "eva": "Expediente Núm.: 4001679_v0",
           "cc": "4001679",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "pl situ.pdf",
+          "origin": "project"
         },
         {
           "variable": "geo_p",
           "tier": "-",
           "eva": "Desde finales del Oligoceno hasta la actualidad la depresión del Ebro ha dejado de actuar como una cuenca sedimentaria y ha pasado a ser una cubeta donde el agente predominante principal ha sido la erosión. Localmente, en algunos puntos de la cuenca, hay depósitos del Terciario superior y principalmente del Cuaternario. Estos corresponden a los materiales no consolidados que aparecen entre las rocas sedimentarias y la superficie, formados por arenas, limos y arcillas, donde abundan los caliches.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "geotech_rows",
           "tier": "-",
           "eva": "[{'name': '2do nivel. Bolos y gravas en matriz areno-arcillosa', 'nb': '15-R', 'n': '--', 'density': '2.00', 'cohesion': '0.00', 'phi': '38º', 'E': '>350'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "lab_depth",
@@ -622,7 +724,9 @@
           "eva": "Profundidad: -2.80 a -3.00 m",
           "cc": "-2.80 a -3.00 m",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_field_company",
@@ -630,15 +734,23 @@
           "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
           "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL",
           "confidence": 1.0,
-          "status": "MATCH"
+          "status": "MATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_field_description",
           "tier": "-",
           "eva": "laboratorio de ensayos para el control de calidad de la edificación",
-          "cc": "Realització de 2 sondeos a rotació amb bateria contínua, 6 assaigs de penetració dinàmica DPSH i 2 assaigs SPT amb recuperació de mostra.",
+          "cc": "2 sondeos a rotación con batería continua, 6 ensayos de penetración dinámica DPSH, 2 ensayos SPT con recuperación de muestra, observaciones de campo y reportaje fotográfico.",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MISMATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 1,
+            "llm_explanation": "Completely different content. Benchmark describes a quality control testing laboratory for construction. Pipeline describes specific field investigation methods (rotary boreholes, dynamic penetration tests, SPT tests, field observations, photography). These are unrelated concepts - one is a facility type, the other is a list of geotechnical testing procedures."
+          }
         },
         {
           "variable": "lab_location",
@@ -646,7 +758,9 @@
           "eva": "Punto:  S-2",
           "cc": "S-2",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_sample_id",
@@ -654,7 +768,9 @@
           "eva": "Muestra: MA-1",
           "cc": "MA-1",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_testing_company",
@@ -662,23 +778,38 @@
           "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
           "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_testing_description",
           "tier": "-",
           "eva": "laboratorio de ensayos para el control de calidad de la edificación",
-          "cc": "Determinació del contingut en ió sulfat en sòls UNE 83963/08",
+          "cc": "Determinación del contenido en ión sulfato en suelos UNE 83963/08",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MISMATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 1,
+            "llm_explanation": "These describe completely different aspects of laboratory testing. The benchmark describes a general quality control testing laboratory for construction, while the pipeline text specifies a single, specific soil sulfate ion content test according to UNE 83963/08 standard. No semantic overlap in scope or meaning."
+          }
         },
         {
           "variable": "lab_tests_text",
           "tier": "-",
           "eva": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08",
-          "cc": "Determinació del contingut en ió sulfat en sòls UNE 83963/08",
+          "cc": "Determinación del contenido en ión sulfato en suelos UNE 83963/08",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "Determinación del contenido en ión sulfato en suelos UNE 83963/08",
+            "llm_score": 5,
+            "llm_explanation": "Identical content. The only difference is spacing around the forward slash (UNE 83963 / 08 vs UNE 83963/08), which is a trivial formatting variation that does not affect semantic meaning."
+          }
         },
         {
           "variable": "location_sentence",
@@ -686,14 +817,23 @@
           "eva": "en la calle Gral Ferraz nº20 en el municipio de Anciles, Benasque",
           "cc": "La nova edificació projectada se situa al carrer Gral Ferraz nº20 al municipi d'Anciles, Benasque.",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "CLOSE",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 4,
+            "llm_explanation": "Both texts convey identical location information (street name, number, municipality). Minor differences: benchmark uses Spanish 'calle/municipio' while pipeline uses Catalan 'carrer/municipi' (expected language variation); benchmark is concise while pipeline adds context about 'nova edificació projectada' (new planned building). Core location data is the same."
+          }
         },
         {
           "variable": "materials_intro",
           "tier": "-",
           "eva": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "municipality",
@@ -701,142 +841,213 @@
           "eva": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:",
           "cc": "Anciles (Benasque)",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project"
         },
         {
           "variable": "num_dpsh_tests",
           "tier": "A",
           "eva": "2 ensayos SPT con recuperación de muestra (ver registro de los ensayos mecánicos).",
-          "cc": "6 assaigs de penetració dinàmica DPSH (P-1 a P-6)",
+          "cc": "6 ensayos de penetración dinámica DPSH (P-1 a P-6)",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MISMATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "6",
+            "llm_score": 1,
+            "llm_explanation": "Complete disagreement on the number of SPT tests. Benchmark states 2 SPT tests with sample recovery, while pipeline reports 6. These are factually different values with no semantic overlap."
+          }
         },
         {
           "variable": "perm_rows",
           "tier": "-",
           "eva": "[{'name': '2do nivel', 'k_value': '10 – 10-1', 'material': 'Bolos y gravas con arenas arcillosas'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "plantes",
           "tier": "-",
           "eva": "C-1",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "5 viviendas con Pb+1Pp+Bc; 2 viviendas con Ss+Pb+1Pp+Bc",
+          "confidence": 1.0,
+          "status": "MISMATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "5 viviendas con Pb+1Pp+Bc; 2 viviendas con Ss+Pb+1Pp+Bc",
+            "llm_score": 1,
+            "llm_explanation": "Completely different content. Benchmark states 'C-1' (a single classification code), while pipeline provides detailed floor composition descriptions ('5 viviendas con Pb+1Pp+Bc; 2 viviendas con Ss+Pb+1Pp+Bc'). These are fundamentally different information types - one is a categorical label, the other is structural specifications."
+          }
         },
         {
           "variable": "qa_value",
           "tier": "C",
           "eva": "2.0 Kg/cm2 con un factor de seguridad incluido de F=3",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "radon_zone",
           "tier": "A",
           "eva": "2",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "radon_zone_description",
           "tier": "-",
           "eva": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "seismic_ab_text",
           "tier": "A",
           "eva": "AB = 0.05 g (siento g el valor de la gravedad)",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "seismic_rows",
           "tier": "-",
           "eva": "[{'num': '1', 'terrain_type': 'Tipo IV', 'thickness': '4.00', 'c_coeff': '2.00'}, {'num': '2', 'terrain_type': 'Tipo IV', 'thickness': '3.92*', 'c_coeff': '2.00'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "settlement",
           "tier": "C",
           "eva": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "site_condition",
           "tier": "B",
           "eva": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "site_description",
           "tier": "B",
           "eva": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual.\nEn solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles.\nDada la geomorfología de la zona y su urbanización no se pueden observar en la zona ningún tipo de afloramiento de los materiales que serán atravesados por los ensayos previstos.",
-          "cc": "El interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual.",
+          "cc": "Interior de la parcela bastante explanada, sin pavimentaciones, con vegetación de pequeña envergadura y algún árbol puntual. No se observan afloramientos de materiales.",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 4,
+            "llm_explanation": "Both texts convey the same core site description: flat interior parcel without paving, small vegetation and scattered trees, no material outcrops visible. The pipeline version is a condensed summary that captures the key information accurately. Minor differences: the benchmark includes details about access route from the north and neighboring constructions without pathologies, which the pipeline omits. However, these omissions don't represent semantic errors—just selective summarization. The essential site conditions are identically described."
+          }
         },
         {
           "variable": "sondeig_tests",
           "tier": "-",
           "eva": "[{'test_id': 'S-1', 'cota': '+1106.65', 'depth': '-2.40', 'spt_ma': '1/0/0', 'water': 'No detectado'}, {'test_id': 'S-2', 'cota': '+1106.42', 'depth': '-3.00', 'spt_ma': '1/0/1', 'water': 'No detectado'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "spt_depth_range",
           "tier": "-",
           "eva": "-1.00 a -1.60",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "spt_lithology",
           "tier": "-",
           "eva": "Arcilla arenosa con gravitas",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "spt_location",
           "tier": "-",
           "eva": "S-1",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "spt_n30",
           "tier": "-",
           "eva": "6",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "spt_test_id",
           "tier": "-",
           "eva": "SPT-1",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "sulfate_baumann",
           "tier": "-",
           "eva": "---",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "sulfate_level_name",
           "tier": "-",
           "eva": "2do nivel",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "superficie_parcela",
@@ -844,15 +1055,29 @@
           "eva": "T-1",
           "cc": "1655.01",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MISMATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "1655.01",
+            "llm_score": 1,
+            "llm_explanation": "Completely different content. Benchmark shows a reference code 'T-1', while pipeline output shows a numerical value '1655.01' (likely square meters for parcel area). These represent different data types and meanings - one is an identifier, the other is a measurement."
+          }
         },
         {
           "variable": "table_dpsh_range",
           "tier": "-",
           "eva": "Tabla 3, 4 y 5. Resumen de los ensayos in situ realizados.",
           "cc": "3, 4 i 5",
-          "confidence": 1.0,
-          "status": "MISMATCH"
+          "confidence": 0.9,
+          "status": "MISMATCH",
+          "source_file": "4001679_informe_V0.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "núm. 3, 4 i 5",
+            "llm_score": 2,
+            "llm_explanation": "Both refer to tables 3, 4, and 5, but the benchmark includes a descriptive subtitle ('Resumen de los ensayos in situ realizados' - Summary of in-situ tests performed) that is completely absent in the pipeline version. The pipeline only provides the table numbers in abbreviated form ('núm.' instead of 'Tabla'). While they reference the same tables, the pipeline omits significant contextual information about what those tables contain."
+          }
         }
       ]
     }
@@ -865,12 +1090,12 @@
       "role": "reference_report",
       "origin": "project",
       "method": "doc_convert",
-      "vars_extracted": 38,
-      "elapsed_s": 23.41,
+      "vars_extracted": 35,
+      "elapsed_s": 19.47,
       "usage": {
         "input_tokens": 6603,
-        "output_tokens": 1384,
-        "elapsed_s": 19.53
+        "output_tokens": 1308,
+        "elapsed_s": 16.81
       }
     },
     {
@@ -891,12 +1116,12 @@
       "role": "dpsh_field_sheet",
       "origin": "project",
       "method": "vision_pdf",
-      "vars_extracted": 20,
-      "elapsed_s": 22.79,
+      "vars_extracted": 18,
+      "elapsed_s": 32.89,
       "usage": {
         "input_tokens": 12456,
-        "output_tokens": 595,
-        "elapsed_s": 21.14
+        "output_tokens": 533,
+        "elapsed_s": 31.18
       }
     },
     {
@@ -904,15 +1129,15 @@
       "type": "agentic_crop",
       "file": "PENETROS + SONDEIGS.pdf",
       "target_vars": [
-        "is_urban",
-        "is_sloped",
+        "has_basement",
+        "has_retaining_walls",
         "is_anthropized"
       ],
       "improved_vars": [],
       "usage": {
-        "input_tokens": 4796,
-        "output_tokens": 347,
-        "elapsed_s": 20.1
+        "input_tokens": 4803,
+        "output_tokens": 501,
+        "elapsed_s": 23.12
       }
     },
     {
@@ -933,12 +1158,26 @@
       "role": "situation_plan",
       "origin": "project",
       "method": "vision_pdf",
-      "vars_extracted": 8,
-      "elapsed_s": 11.73,
+      "vars_extracted": 9,
+      "elapsed_s": 13.21,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 304,
-        "elapsed_s": 11.14
+        "output_tokens": 323,
+        "elapsed_s": 12.54
+      }
+    },
+    {
+      "action_id": "crop_reread_pl situ.pdf",
+      "type": "agentic_crop",
+      "file": "pl situ.pdf",
+      "target_vars": [
+        "num_floors"
+      ],
+      "improved_vars": [],
+      "usage": {
+        "input_tokens": 1654,
+        "output_tokens": 282,
+        "elapsed_s": 17.14
       }
     },
     {
@@ -948,12 +1187,12 @@
       "role": "correlation_section",
       "origin": "project",
       "method": "vision_pdf",
-      "vars_extracted": 12,
-      "elapsed_s": 9.54,
+      "vars_extracted": 9,
+      "elapsed_s": 9.97,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 443,
-        "elapsed_s": 9.16
+        "output_tokens": 296,
+        "elapsed_s": 9.54
       }
     },
     {
@@ -1003,11 +1242,11 @@
       "origin": "email",
       "method": "vision_pdf",
       "vars_extracted": 11,
-      "elapsed_s": 9.33,
+      "elapsed_s": 12.58,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 318,
-        "elapsed_s": 8.9
+        "output_tokens": 312,
+        "elapsed_s": 12.16
       }
     },
     {
@@ -1018,11 +1257,25 @@
       "origin": "email",
       "method": "vision_pdf",
       "vars_extracted": 10,
-      "elapsed_s": 13.7,
+      "elapsed_s": 14.64,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 311,
-        "elapsed_s": 12.27
+        "output_tokens": 336,
+        "elapsed_s": 13.29
+      }
+    },
+    {
+      "action_id": "crop_reread_SITE_prop A.pdf",
+      "type": "agentic_crop",
+      "file": "SITE_prop A.pdf",
+      "target_vars": [
+        "referencia_catastral"
+      ],
+      "improved_vars": [],
+      "usage": {
+        "input_tokens": 1653,
+        "output_tokens": 305,
+        "elapsed_s": 19.03
       }
     },
     {
@@ -1033,11 +1286,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 2.9,
+      "elapsed_s": 3.52,
       "usage": {
         "input_tokens": 3141,
         "output_tokens": 4,
-        "elapsed_s": 2.87
+        "elapsed_s": 3.49
       }
     },
     {
@@ -1048,11 +1301,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 2.61,
+      "elapsed_s": 3.24,
       "usage": {
         "input_tokens": 3141,
         "output_tokens": 4,
-        "elapsed_s": 2.59
+        "elapsed_s": 3.21
       }
     },
     {
@@ -1063,11 +1316,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 15.85,
+      "elapsed_s": 14.86,
       "usage": {
         "input_tokens": 3093,
         "output_tokens": 4,
-        "elapsed_s": 15.77
+        "elapsed_s": 14.78
       }
     },
     {
@@ -1078,11 +1331,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 10.93,
+      "elapsed_s": 19.23,
       "usage": {
         "input_tokens": 3093,
         "output_tokens": 4,
-        "elapsed_s": 10.91
+        "elapsed_s": 19.2
       }
     },
     {
@@ -1093,11 +1346,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 9.2,
+      "elapsed_s": 11.79,
       "usage": {
         "input_tokens": 2981,
         "output_tokens": 4,
-        "elapsed_s": 9.14
+        "elapsed_s": 11.72
       }
     },
     {
@@ -1108,11 +1361,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 7.73,
+      "elapsed_s": 12.56,
       "usage": {
         "input_tokens": 2981,
         "output_tokens": 4,
-        "elapsed_s": 7.71
+        "elapsed_s": 12.54
       }
     },
     {
@@ -1123,7 +1376,7 @@
       "origin": "email",
       "method": "excel_parse",
       "vars_extracted": 2,
-      "elapsed_s": 0.29,
+      "elapsed_s": 0.28,
       "usage": {}
     },
     {
@@ -1140,11 +1393,11 @@
       "origin": "email",
       "method": "vision_pdf",
       "vars_extracted": 15,
-      "elapsed_s": 20.89,
+      "elapsed_s": 20.77,
       "usage": {
         "input_tokens": 12456,
-        "output_tokens": 492,
-        "elapsed_s": 19.9
+        "output_tokens": 501,
+        "elapsed_s": 19.77
       }
     },
     {
@@ -1161,11 +1414,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 2.91,
+      "elapsed_s": 2.67,
       "usage": {
         "input_tokens": 3141,
         "output_tokens": 4,
-        "elapsed_s": 2.88
+        "elapsed_s": 2.64
       }
     },
     {
@@ -1176,11 +1429,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 1.79,
+      "elapsed_s": 1.84,
       "usage": {
         "input_tokens": 1681,
         "output_tokens": 4,
-        "elapsed_s": 1.76
+        "elapsed_s": 1.82
       }
     },
     {
@@ -1191,20 +1444,20 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 0,
-      "elapsed_s": 2.57,
+      "elapsed_s": 1.59,
       "usage": {
         "input_tokens": 1681,
         "output_tokens": 4,
-        "elapsed_s": 2.55
+        "elapsed_s": 1.56
       }
     },
     {
       "action_id": "usage_summary",
       "type": "summary",
       "total_usage": {
-        "input_tokens": 73772,
-        "output_tokens": 4230,
-        "api_calls": 17
+        "input_tokens": 77086,
+        "output_tokens": 4733,
+        "api_calls": 19
       }
     }
   ]

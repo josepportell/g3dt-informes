@@ -1,98 +1,32 @@
 {
   "source_files": [
-    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
-    "ACCEPTACIO/DADES CLIENT.txt",
-    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
-    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg"
+    "PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "DADES CLIENT.txt"
   ],
-  "extraction_date": "2026-04-06T19:25:00",
-  "extraction_method": "claude_docs_intel",
+  "extraction_date": "2026-04-18T15:04:56.446319+00:00",
+  "extraction_method": "python_regex",
   "fields": {
     "architect_company": {
       "value": "ARQUITECTURA BOSCH NOVELL",
       "source": "PRESSUPOST p.1 OBRA field",
-      "confidence": 1.0
-    },
-    "building_category": {
-      "value": "C1",
-      "source": "PRESSUPOST p.2 'Tipus d'edifici: C1'",
-      "confidence": 1.0
-    },
-    "terrain_category": {
-      "value": "T1",
-      "source": "PRESSUPOST p.2 'Tipus de Terreny: T1'",
-      "confidence": 1.0
+      "confidence": 0.9
     },
     "num_planned_dpsh": {
       "value": 2,
-      "source": "PRESSUPOST p.4 '2,00 UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH'",
+      "source": "PRESSUPOST text",
       "confidence": 1.0
     },
     "num_planned_sondeig": {
-      "value": 1,
-      "source": "PRESSUPOST p.4 '1,00 SONDEIG A ROTACIO AMB BATERIA CONTINUA'",
+      "value": 3,
+      "source": "PRESSUPOST text",
       "confidence": 1.0
     },
-    "num_planned_spt": {
-      "value": 1,
-      "source": "PRESSUPOST p.4 'INCLOU DESPLAÇAMENT I ASSAIG SPT'",
-      "confidence": 0.90
-    },
-    "client_name": {
-      "value": "RAMON MITJANA SL",
-      "source": "DADES CLIENT.txt line 4",
-      "confidence": 1.0
-    },
-    "client_nif": {
-      "value": "B25771726",
-      "source": "DADES CLIENT.txt line 4",
-      "confidence": 1.0
-    },
-    "client_representative": {
-      "value": "RAMON MITJANA GR\u00cdFOL",
-      "source": "DADES CLIENT.txt line 6",
-      "confidence": 1.0
-    },
-    "client_representative_nif": {
-      "value": "78058457E",
-      "source": "DADES CLIENT.txt line 6",
-      "confidence": 1.0
-    },
-    "client_address": {
-      "value": "Carrer Doctor Torrebadella 8, 25220 BELL.LLOC D'URGELL (Lleida)",
-      "source": "DADES CLIENT.txt lines 7-8",
-      "confidence": 1.0
-    },
-    "client_phone": {
-      "value": "696 990 400",
-      "source": "DADES CLIENT.txt line 9",
-      "confidence": 1.0
-    },
-    "client_email": {
-      "value": "mangelspenella@gmail.com",
-      "source": "DADES CLIENT.txt line 10",
-      "confidence": 1.0
-    },
-    "street_address": {
-      "value": "C/MESTRE RAMON ORTIZ 15",
-      "source": "PRESSUPOST p.1",
-      "confidence": 1.0
-    },
-    "municipality": {
-      "value": "BELL-LLOC",
-      "source": "PRESSUPOST p.1",
-      "confidence": 1.0
-    },
-    "expedient": {
-      "value": "25\u00b70647",
-      "source": "PRESSUPOST p.1 and p.4",
-      "confidence": 1.0
-    },
-    "msg_architect_hint": {
-      "value": "Jordi Bosch",
-      "source": "Email filename: 'Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz - Jordi Bosch.msg'",
-      "confidence": 0.80
+    "site_address": {
+      "value": "CP I POBLACIÓ:",
+      "source": "PRESSUPOST text",
+      "confidence": 0.85
     }
   },
-  "extraction_notes": "Pressupost PDF had clear text layer (7 pages). DADES CLIENT.txt had complete client data. Two .msg files in 25.0647/ subfolder — filenames suggest architect is Jordi Bosch and address is C/ Mestre Ramon Ortiz."
+  "extraction_notes": "Python regex extraction from 3 files"
 }

@@ -1,0 +1,21 @@
+{
+  "document_type": "field_sheet",
+  "document_description": "Dynamic penetrometer test field sheet with borehole data and measurements",
+  "concepts_found": [
+    {
+      "concept_id": "street_address",
+      "confidence": 0.9,
+      "signal_preview": "BELL-LLOCH"
+    },
+    {
+      "concept_id": "field_date",
+      "confidence": 0.9,
+      "signal_preview": "1-10-25"
+    },
+    {
+      "concept_id": "cota_referencia",
+      "confidence": 0.8,
+      "signal_preview": "Cota Inici: -0,2"
+    }
+  ]
+}

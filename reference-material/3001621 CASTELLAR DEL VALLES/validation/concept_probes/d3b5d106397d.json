@@ -1,0 +1,18 @@
+{
+  "document_type": "map",
+  "document_description": "Geographic map showing Castellar del Vallès area",
+  "concepts_found": [
+    {
+      "concept_id": "municipality",
+      "confidence": 1.0,
+      "signal_preview": "Castellar del Vallès",
+      "page": 1
+    },
+    {
+      "concept_id": "province",
+      "confidence": 0.0,
+      "signal_preview": "",
+      "page": 1
+    }
+  ]
+}

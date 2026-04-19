@@ -1,0 +1,32 @@
+{
+  "pages_inventory": {
+    "1": "site plan (emplaçament) with parcel boundaries and street names"
+  },
+  "planning_table_raw": {
+    "planejament": {},
+    "projecte": {}
+  },
+  "architect_data": {
+    "project_name": null,
+    "building_type": null,
+    "client_name": null,
+    "promotor": null,
+    "street_address": null,
+    "municipality": null,
+    "architect": null,
+    "architect_company": null,
+    "ref_cadastral": null
+  },
+  "dimensions": {
+    "parcel_area_m2": null,
+    "building_footprint_m2": null,
+    "total_built_area_m2": null,
+    "floor_surfaces": [],
+    "num_floors": null,
+    "max_height_m": null,
+    "plot_length_m": null,
+    "plot_width_m": null
+  },
+  "overall_confidence": 0.3,
+  "extraction_notes": "Only one page provided: a site plan showing parcel boundaries and street names (Ramón Ortiz, Mestre). No normativa table, no cover page, no area tables, no title block or project data visible. Unable to extract planning or project data from this single page."
+}

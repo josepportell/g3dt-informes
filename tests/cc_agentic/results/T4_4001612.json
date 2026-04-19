@@ -1,0 +1,242 @@
+{
+  "metadata": {
+    "test_id": "T4",
+    "project": "4001612 BELL-LLOC",
+    "timestamp": "2026-04-16T18:27:44.342897+00:00",
+    "files_available": 2,
+    "files_read": 2,
+    "files_from_email": 0,
+    "duration_s": 37.9,
+    "api_calls": 2,
+    "input_tokens": 6264,
+    "output_tokens": 1002,
+    "planol_vars_targeted": 29
+  },
+  "files_inventory": [
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/A.01 amb punts.pdf",
+      "role": "architect_plan_with_points",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/A.01.pdf",
+      "role": "architect_plan",
+      "origin": "project"
+    }
+  ],
+  "variables": {
+    "client_name": {
+      "value": "RAMON MJ JANA SL",
+      "confidence": 0.95,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "architect_name": {
+      "value": "Jordi Bosch Novell",
+      "confidence": 0.95,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "architect_company": {
+      "value": "ARQUITECTURA BOSCH NOVELL",
+      "confidence": 0.95,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "street_address": {
+      "value": "CARRER MESTRE RAMON ORTIZ",
+      "confidence": 0.95,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "municipality": {
+      "value": "BELL-LLOC D'URGELL",
+      "confidence": 0.9,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "province": {
+      "value": "Lleida",
+      "confidence": 0.9,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "building_type": {
+      "value": "Habitatge unifamiliar aïllat",
+      "confidence": 1.0,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "num_floors": {
+      "value": "PB+PP",
+      "confidence": 0.85,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "superficie_parcela": {
+      "value": 995.0,
+      "confidence": 0.95,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "superficie_construida": {
+      "value": 296.0,
+      "confidence": 0.9,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "building_height_m": {
+      "value": 6.5,
+      "confidence": 0.85,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "has_basement": {
+      "value": false,
+      "confidence": 0.7,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "is_urban": {
+      "value": true,
+      "confidence": 0.95,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "expedient": {
+      "value": "B/PTO-36387.25",
+      "confidence": 0.85,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "adjacent_south": {
+      "value": "CARRER ANTONI BELLET",
+      "confidence": 0.95,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "adjacent_east": {
+      "value": "CARRER MESTRE RAMON ORTIZ",
+      "confidence": 0.95,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "icgc_unit_code": {
+      "value": "PMU9",
+      "confidence": 0.9,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "location_sentence": {
+      "value": "Habitatge unifamiliar aïllat situat al Carrer Mestre Ramon Ortiz, 25230 Bell-lloc d'Urgell (Lleida)",
+      "confidence": 0.9,
+      "source_file": "A.01 amb punts.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    }
+  },
+  "comparison": {
+    "vs_eva": {
+      "total_eva_vars": 4,
+      "counts": {
+        "MATCH": 2,
+        "CLOSE": 0,
+        "MISMATCH": 2,
+        "NOT_EXTRACTED": 0
+      },
+      "accuracy_pct": 50.0,
+      "details": [
+        {
+          "variable": "architect_company",
+          "tier": "A",
+          "eva": "ARQUITECTURA BOSCH NOVELL",
+          "cc": "ARQUITECTURA BOSCH NOVELL",
+          "confidence": 0.95,
+          "status": "MATCH"
+        },
+        {
+          "variable": "municipality",
+          "tier": "A",
+          "eva": "Bell-lloc d’Urgell",
+          "cc": "BELL-LLOC D'URGELL",
+          "confidence": 0.9,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "superficie_construida",
+          "tier": "A",
+          "eva": "280+86",
+          "cc": "296.0",
+          "confidence": 0.9,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "superficie_parcela",
+          "tier": "A",
+          "eva": "995",
+          "cc": "995.0",
+          "confidence": 0.95,
+          "status": "MATCH"
+        }
+      ]
+    }
+  },
+  "trace": [
+    {
+      "action_id": "extract_A.01 amb punts.pdf",
+      "type": "file_extraction",
+      "file": "A.01 amb punts.pdf",
+      "role": "architect_plan_with_points",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 18,
+      "elapsed_s": 17.29,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 517,
+        "elapsed_s": 14.84
+      }
+    },
+    {
+      "action_id": "extract_A.01.pdf",
+      "type": "file_extraction",
+      "file": "A.01.pdf",
+      "role": "architect_plan",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 17,
+      "elapsed_s": 17.54,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 485,
+        "elapsed_s": 14.95
+      }
+    },
+    {
+      "action_id": "usage_summary",
+      "type": "summary",
+      "total_usage": {
+        "input_tokens": 6264,
+        "output_tokens": 1002,
+        "api_calls": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,1200 @@
+{
+  "metadata": {
+    "test_id": "T2",
+    "project": "3001631 RUBI",
+    "timestamp": "2026-04-17T07:56:34.029804+00:00",
+    "files_available": 21,
+    "files_read": 14,
+    "files_from_email": 10,
+    "duration_s": 231.1,
+    "api_calls": 10,
+    "input_tokens": 63147,
+    "output_tokens": 5034,
+    "gaps_found": 30,
+    "gaps_filled_by_cc": 18
+  },
+  "files_inventory": [
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/3001631 - PENETROS.pdf",
+      "role": "dpsh_field_sheet",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/3001631_informe.doc",
+      "role": "reference_report",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/4703-GTL-25 Rubí.pdf",
+      "role": "gtl_report",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/FOTOGRAFIES",
+      "role": "photos_dir",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/comanda laboratori_3001631_RUBI.xls",
+      "role": "lab_order",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/tall.pdf",
+      "role": "correlation_section",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/ANNEXES/3001631_DPSH.xls",
+      "role": "dpsh_excel",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/PDF/ANNEXES/3001631_plànol de situació.pdf",
+      "role": "situation_plan",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/PDF/ANNEXES/LAB-SIG.pdf",
+      "role": "lab_results_pdf",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/25.0794",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/_user_data_prev.json",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/validation/msg_attachments/PRESSU/IMG-20251104-WA0015.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/validation/msg_attachments/PRESSU/IMG-20251104-WA0016.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/validation/msg_attachments/PRESSU/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/validation/msg_attachments/PRESSU/image005.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/validation/msg_attachments/RE_ PRESSU/PLAN_COST_RUBI.xlsx",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/validation/msg_attachments/RE_ PRESSU/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/validation/msg_attachments/RE_ PRESSU/image005.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/validation/msg_attachments/RE_ PRESSU/image006.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/validation/msg_attachments/RE_ PRESSU/image008.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001631 RUBI/validation/msg_attachments/RE_ PRESSU/validation/mined_images/PLAN_COST_RUBI_img0.png",
+      "role": "email_attachment",
+      "origin": "email"
+    }
+  ],
+  "variables": {
+    "client_name": {
+      "value": "SRA. JOANA MARTINEZ",
+      "confidence": 1.0,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "contact_name": {
+      "value": "TEL.",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "client_nif": {
+      "value": "B25461443",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "client_phone": {
+      "value": "696040077",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "client_email": {
+      "value": "g3@g3dt.com",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "architect_company": {
+      "value": "JOANA MARTINEZ",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "street_address": {
+      "value": "C/ MIRANDA",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "municipality": {
+      "value": "RUBI",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "province": {
+      "value": "Barcelona",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "building_type": {
+      "value": "CONSTR HABITATGE UNI",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "num_floors": {
+      "value": "PB + Porxo",
+      "confidence": 1.0,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_parcela": {
+      "value": 951,
+      "confidence": 1.0,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_construida": {
+      "value": 92,
+      "confidence": 1.0,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "has_basement": {
+      "value": false,
+      "confidence": 0.7,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "has_retaining_walls": {
+      "value": false,
+      "confidence": 0.5,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "expedient": {
+      "value": "3001631",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "field_date": {
+      "value": "2025.12.17",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "field_work_dates": {
+      "value": [
+        "2025-11-14"
+      ],
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "field_work_dates_text": {
+      "value": "14 de novembre de 2025",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "site_description": {
+      "value": "Solar sense construccions ni pavimentacions. Topogràficament fa una lleugera baixada de sudoest a nord-est, amb una diferència de cota d'uns 13.20 metres (des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m.). La zona de treball es mostra totalment plana. La pendent comença a la zona posterior (a la meitat del fons). No s'observen afloraments de materials del subsòl.",
+      "confidence": 1.0,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "access_description": {
+      "value": "Entrada a la zona d'estudi a través del carrer de la Miranda",
+      "confidence": 1.0,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "cota_referencia": {
+      "value": "+209.50",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "adjacent_north": {
+      "value": "Passeig Miranda",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "adjacent_south": {
+      "value": "parcel·la amb construcció",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "adjacent_east": {
+      "value": "parcel·la amb construcció",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "adjacent_west": {
+      "value": "Avinguda Can Tapis",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "site_position": {
+      "value": "Sud-oest del municipi de Rubí",
+      "confidence": 0.8,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "parcel_shape": {
+      "value": "Rectangular",
+      "confidence": 1.0,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "is_urban": {
+      "value": true,
+      "confidence": 0.8,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "is_sloped": {
+      "value": true,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "slope_percent": {
+      "value": 25.6,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "slope_direction": {
+      "value": "NE",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "is_anthropized": {
+      "value": false,
+      "confidence": 0.7,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "num_soil_levels": {
+      "value": 1,
+      "confidence": 1.0,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "foundation_depth_m": {
+      "value": 0.6,
+      "confidence": 0.8,
+      "source_file": "3001631 - PENETROS.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "Es_settlement": {
+      "value": 104,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "historia_geologica_template": {
+      "value": "/home/josep/projects/claudecode-job/clients/g3dt/templates/historia-geologica/HISTORIA GEOLÒGICA/+Situacions/Rubí.docx",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "sulfate_mg_kg": {
+      "value": 632.3,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "lab_tests": {
+      "value": [
+        {
+          "type": "Contingut en sulfats solubles UNE 83963:2008",
+          "sample_id": "SPT-1",
+          "location": "P-3",
+          "depth": "-0.6 a -1.2",
+          "value": 632.3,
+          "unit": "mg/kg",
+          "standard": ""
+        }
+      ],
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "lab_field_description": {
+      "value": "laboratori d'assaigs per al control de qualitat de l'edificació",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "lab_testing_description": {
+      "value": "laboratori d'assaigs per al control de qualitat de l'edificació",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "lab_location": {
+      "value": "P-3",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "lab_sample_id": {
+      "value": "SPT-1",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "lab_depth": {
+      "value": "-0.6 a -1.2 m",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "lab_tests_text": {
+      "value": "Data obertura:\nDADES INICIALS:\nRubí. Carrer Miranda. 3001631\nAnàlisi granulomètrica d'un sòl per tamissat       UNE 103101 / 95\nDeterminació del límit líquid d'un sòl       UNE 103103 / 94",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "icgc_unit_code": {
+      "value": "NMcg",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "icgc_unit_description": {
+      "value": "Conglomerats amb matriu sorrenca sense cimentar",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "icgc_unit_epoch": {
+      "value": "Miocè",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "utm_x": {
+      "value": 418215.0,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "utm_y": {
+      "value": 4595658.0,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "num_dpsh_tests": {
+      "value": "3 assaigs de penetració dinàmica tipus DPSH",
+      "confidence": 1.0,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "table_dpsh_range": {
+      "value": "P1, P2 i P3",
+      "confidence": 0.95,
+      "source_file": "3001631 - PENETROS.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "building_structure_desc": {
+      "value": "Plano de cimentación modelo Mediterráneo, escala 1:50, 72 m2 + 20 de porchada",
+      "confidence": 0.95,
+      "source_file": "IMG-20251104-WA0016.jpg",
+      "source_origin": "email",
+      "extraction_method": "vision_image"
+    },
+    "location_sentence": {
+      "value": "L'obra es situa al carrer de la Miranda nº 39 (PARC. 6-105), al sud-oest del municipi de Rubí, Barcelona.",
+      "confidence": 1.0,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    }
+  },
+  "comparison": {
+    "vs_eva": {
+      "total_eva_vars": 53,
+      "counts": {
+        "MATCH": 5,
+        "CLOSE": 3,
+        "MISMATCH": 9,
+        "NOT_EXTRACTED": 36
+      },
+      "accuracy_pct": 15.1,
+      "details": [
+        {
+          "variable": "access_street",
+          "tier": "-",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_east_fmt",
+          "tier": "-",
+          "eva": "Finalment, Per la part est i oest, amb construccions de característiques similars.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_north_fmt",
+          "tier": "-",
+          "eva": "Per la part nord, amb parcel·les sense edificacions i amb vegetació de petita alçada i arbres.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_south_fmt",
+          "tier": "-",
+          "eva": "Per la part sud, amb el carrer de la Miranda",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_west_fmt",
+          "tier": "-",
+          "eva": "Finalment, Per la part est i oest, amb construccions de característiques similars.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "architect_name_upper",
+          "tier": "-",
+          "eva": "JOANA MARTINEZ",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "building_structure_desc",
+          "tier": "-",
+          "eva": "en planta baixa",
+          "cc": "Plano de cimentación modelo Mediterráneo, escala 1:50, 72 m2 + 20 de porchada",
+          "confidence": 0.95,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "building_type_lower",
+          "tier": "-",
+          "eva": "un habitatge unifamiliar aïllat modular",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "client",
+          "tier": "A",
+          "eva": "SRA. JOANA MARTINEZ",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_aggressivity_statement",
+          "tier": "-",
+          "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, es presenten no agressius al formigó.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_levels_detected",
+          "tier": "-",
+          "eva": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_water_statement",
+          "tier": "-",
+          "eva": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "csn_radon_text",
+          "tier": "-",
+          "eva": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "cte_edificacio",
+          "tier": "-",
+          "eva": "C-0",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "cte_sol",
+          "tier": "-",
+          "eva": "T-1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "data_camp_text",
+          "tier": "A",
+          "eva": "14 de novembre de 2025",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "data_signatura_text",
+          "tier": "-",
+          "eva": "17 de desembre de 2025",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "dpsh_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'P-1', 'cota': '+212.50', 'depth': '-4.55', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-2', 'cota': '+212.50', 'depth': '-3.58', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-3', 'cota': '+212.50', 'depth': '-3.13', 'refusal': 'Si', 'water': 'No detectat'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "expedient",
+          "tier": "-",
+          "eva": "3001631",
+          "cc": "3001631",
+          "confidence": 0.8,
+          "status": "MATCH"
+        },
+        {
+          "variable": "geo_p",
+          "tier": "-",
+          "eva": "Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo, corresponents a gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics d’edat Miocè.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "geotech_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell. Graves i sorres.', 'nb': '47-R', 'n': '40', 'density': '2.0', 'cohesion': '0.05', 'phi': '39º', 'E': '450'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "k30_value",
+          "tier": "C",
+          "eva": "6.0",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "lab_depth",
+          "tier": "-",
+          "eva": "Profunditat:  -0.60  a -1.20 m",
+          "cc": "-0.6 a -1.2 m",
+          "confidence": 0.8,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_field_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "confidence": 0.8,
+          "status": "MATCH"
+        },
+        {
+          "variable": "lab_field_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "laboratori d'assaigs per al control de qualitat de l'edificació",
+          "confidence": 0.8,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_location",
+          "tier": "-",
+          "eva": "Punt: P-3",
+          "cc": "P-3",
+          "confidence": 0.8,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "lab_sample_id",
+          "tier": "-",
+          "eva": "Mostra : SPT-1",
+          "cc": "SPT-1",
+          "confidence": 0.8,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "lab_testing_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "confidence": 0.8,
+          "status": "MATCH"
+        },
+        {
+          "variable": "lab_testing_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "laboratori d'assaigs per al control de qualitat de l'edificació",
+          "confidence": 0.8,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_tests_text",
+          "tier": "-",
+          "eva": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nDeterminació de Límits d’Atterberg d'un sòl UNE 103103/94-104/93\nAssaig de contingut en sulfats UNE 83963 : 2008",
+          "cc": "Data obertura:\nDADES INICIALS:\nRubí. Carrer Miranda. 3001631\nAnàlisi granulomètrica d'un sòl per tamissat       UNE 103101 / 95\nDeterminació del límit líquid d'un sòl       UNE 103103 / 94",
+          "confidence": 0.8,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "location_sentence",
+          "tier": "B",
+          "eva": "a una parcel·la ubicada al carrer de la Miranda nº 39, (PARC. 6-105) Rubí, Barcelona",
+          "cc": "L'obra es situa al carrer de la Miranda nº 39 (PARC. 6-105), al sud-oest del municipi de Rubí, Barcelona.",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "materials_intro",
+          "tier": "-",
+          "eva": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "municipality",
+          "tier": "A",
+          "eva": "Rubí (Barcelona)",
+          "cc": "RUBI",
+          "confidence": 0.8,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "num_dpsh_tests",
+          "tier": "A",
+          "eva": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+          "cc": "3 assaigs de penetració dinàmica tipus DPSH",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "perm_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell', 'k_value': '10-10-1', 'material': 'Graves i sorres, carbonatades'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "photo_site_text",
+          "tier": "-",
+          "eva": "Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "plantes",
+          "tier": "-",
+          "eva": "PB + Porxo",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "qa_value",
+          "tier": "C",
+          "eva": "3.50",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "radon_zone",
+          "tier": "A",
+          "eva": "1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "radon_zone_description",
+          "tier": "-",
+          "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas radó en edificis tancats.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "seismic_ab_text",
+          "tier": "A",
+          "eva": "AB  =0,08 g  (essent g el valor de la gravetat)",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "seismic_rows",
+          "tier": "-",
+          "eva": "[{'num': '1', 'terrain_type': 'Tipus II', 'thickness': '4.55', 'c_coeff': '1.3'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "settlement",
+          "tier": "C",
+          "eva": "1.50",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "site_condition",
+          "tier": "B",
+          "eva": "Es tracta d’un solar no antropitzat, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "site_description",
+          "tier": "B",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.\nEl solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera baixada, de sudoest a nord-est, es troba una diferència de cota d'uns 13.20 metres, des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m. respectivament, tot i que la zona de treball es mostra totalment plana. La pendent comença la zona posterior (a la meitat del fons ).\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+          "cc": "Solar sense construccions ni pavimentacions. Topogràficament fa una lleugera baixada de sudoest a nord-est, amb una diferència de cota d'uns 13.20 metres (des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m.). La zona de treball es mostra totalment plana. La pendent comença a la zona posterior (a la meitat del fons). No s'observen afloraments de materials del subsòl.",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "sondeig_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'Nº assaig', 'cota': 'Punt', 'depth': 'Prof. Extracció (m)', 'spt_ma': 'N30', 'water': 'Litologia'}, {'test_id': 'SPT-1', 'cota': 'P-3', 'depth': '-0.60 a -1.20', 'spt_ma': '40', 'water': 'Graves i sorres'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_baumann",
+          "tier": "-",
+          "eva": "---",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_classification",
+          "tier": "-",
+          "eva": "No Agressius",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_level_name",
+          "tier": "-",
+          "eva": "1er nivell",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_value",
+          "tier": "A",
+          "eva": "632.3",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "superficie_construida",
+          "tier": "A",
+          "eva": "92",
+          "cc": "92",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "superficie_parcela",
+          "tier": "A",
+          "eva": "951",
+          "cc": "951",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "table_dpsh_range",
+          "tier": "-",
+          "eva": "3 i 4",
+          "cc": "P1, P2 i P3",
+          "confidence": 0.95,
+          "status": "MISMATCH"
+        }
+      ]
+    }
+  },
+  "trace": [
+    {
+      "action_id": "extract_3001631 - PENETROS.pdf",
+      "type": "file_extraction",
+      "file": "3001631 - PENETROS.pdf",
+      "role": "dpsh_field_sheet",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 15,
+      "elapsed_s": 12.78,
+      "usage": {
+        "input_tokens": 6240,
+        "output_tokens": 440,
+        "elapsed_s": 11.3
+      }
+    },
+    {
+      "action_id": "extract_3001631_informe.doc",
+      "type": "file_extraction",
+      "file": "3001631_informe.doc",
+      "role": "reference_report",
+      "origin": "project",
+      "method": "doc_convert",
+      "vars_extracted": 41,
+      "elapsed_s": 26.6,
+      "usage": {
+        "input_tokens": 6815,
+        "output_tokens": 1480,
+        "elapsed_s": 22.72
+      }
+    },
+    {
+      "action_id": "extract_4703-GTL-25 Rubí.pdf",
+      "type": "file_extraction",
+      "file": "4703-GTL-25 Rubí.pdf",
+      "role": "gtl_report",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 16,
+      "elapsed_s": 27.1,
+      "usage": {
+        "input_tokens": 14010,
+        "output_tokens": 808,
+        "elapsed_s": 24.62
+      }
+    },
+    {
+      "action_id": "crop_reread_4703-GTL-25 Rubí.pdf",
+      "type": "agentic_crop",
+      "file": "4703-GTL-25 Rubí.pdf",
+      "target_vars": [
+        "num_soil_levels"
+      ],
+      "improved_vars": [
+        "num_soil_levels"
+      ],
+      "usage": {
+        "input_tokens": 4759,
+        "output_tokens": 261,
+        "elapsed_s": 36.44
+      }
+    },
+    {
+      "action_id": "extract_FOTOGRAFIES",
+      "type": "file_extraction",
+      "file": "FOTOGRAFIES",
+      "role": "photos_dir",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_comanda laboratori_3001631_RUBI.xls",
+      "type": "file_extraction",
+      "file": "comanda laboratori_3001631_RUBI.xls",
+      "role": "lab_order",
+      "origin": "project",
+      "method": "excel_parse",
+      "vars_extracted": 3,
+      "elapsed_s": 0.31,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_tall.pdf",
+      "type": "file_extraction",
+      "file": "tall.pdf",
+      "role": "correlation_section",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 9,
+      "elapsed_s": 7.07,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 253,
+        "elapsed_s": 6.66
+      }
+    },
+    {
+      "action_id": "extract_3001631_DPSH.xls",
+      "type": "file_extraction",
+      "file": "3001631_DPSH.xls",
+      "role": "dpsh_excel",
+      "origin": "project",
+      "method": "excel_parse",
+      "vars_extracted": 0,
+      "elapsed_s": 0.01,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_3001631_plànol de situació.pdf",
+      "type": "file_extraction",
+      "file": "3001631_plànol de situació.pdf",
+      "role": "situation_plan",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 21.28,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 293,
+        "elapsed_s": 20.22
+      }
+    },
+    {
+      "action_id": "extract_LAB-SIG.pdf",
+      "type": "file_extraction",
+      "file": "LAB-SIG.pdf",
+      "role": "lab_results_pdf",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 15,
+      "elapsed_s": 19.92,
+      "usage": {
+        "input_tokens": 14010,
+        "output_tokens": 681,
+        "elapsed_s": 17.79
+      }
+    },
+    {
+      "action_id": "crop_reread_LAB-SIG.pdf",
+      "type": "agentic_crop",
+      "file": "LAB-SIG.pdf",
+      "target_vars": [
+        "num_soil_levels"
+      ],
+      "improved_vars": [],
+      "usage": {
+        "input_tokens": 4759,
+        "output_tokens": 323,
+        "elapsed_s": 12.68
+      }
+    },
+    {
+      "action_id": "extract_25.0794",
+      "type": "file_extraction",
+      "file": "25.0794",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract__user_data_prev.json",
+      "type": "file_extraction",
+      "file": "_user_data_prev.json",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_IMG-20251104-WA0015.jpg",
+      "type": "file_extraction",
+      "file": "IMG-20251104-WA0015.jpg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 9,
+      "elapsed_s": 28.02,
+      "usage": {
+        "input_tokens": 3145,
+        "output_tokens": 328,
+        "elapsed_s": 27.93
+      }
+    },
+    {
+      "action_id": "extract_IMG-20251104-WA0016.jpg",
+      "type": "file_extraction",
+      "file": "IMG-20251104-WA0016.jpg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 5,
+      "elapsed_s": 13.83,
+      "usage": {
+        "input_tokens": 3145,
+        "output_tokens": 167,
+        "elapsed_s": 13.76
+      }
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image005.png",
+      "type": "file_skip",
+      "file": "image005.png",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "extract_PLAN_COST_RUBI.xlsx",
+      "type": "file_extraction",
+      "file": "PLAN_COST_RUBI.xlsx",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "excel_parse",
+      "vars_extracted": 2,
+      "elapsed_s": 0.63,
+      "usage": {}
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image005.jpg",
+      "type": "file_skip",
+      "file": "image005.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image006.jpg",
+      "type": "file_skip",
+      "file": "image006.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image008.png",
+      "type": "file_skip",
+      "file": "image008.png",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_PLAN_COST_RUBI_img0.png",
+      "type": "file_skip",
+      "file": "PLAN_COST_RUBI_img0.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "usage_summary",
+      "type": "summary",
+      "total_usage": {
+        "input_tokens": 63147,
+        "output_tokens": 5034,
+        "api_calls": 10
+      }
+    }
+  ]
+}

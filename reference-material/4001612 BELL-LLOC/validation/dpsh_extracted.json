@@ -1,77 +1,249 @@
 {
-  "source_file": "PENETROS.pdf",
-  "extraction_date": "2026-04-06T19:10:00",
-  "extraction_method": "claude_vision",
-  "overall_confidence": 0.95,
-  "status": "pending_review",
-  "excel_comparison": {
-    "has_excel": true,
-    "excel_file": "ANNEXES/4001612_DPSH.xls",
-    "total_values": 18,
-    "matches": 18,
-    "discrepancies": 0
-  },
-  "document_metadata": {
-    "date": "1-10-25",
-    "address": "BELL-LLOCH",
-    "street": "Carrer Antoni Bellet",
-    "equipment": "ML 60A",
-    "operator": "SINY",
-    "client_company": "G3",
-    "responsible": "EVA",
-    "num_penetrometres": 2,
-    "ml_total": 3.8,
-    "start_time": "12:50",
-    "water_level": "NO"
-  },
   "dpsh_tests": [
     {
       "test_id": "P-1",
-      "cota_inici": -0.15,
+      "initial_cota_m": -0.175,
       "readings": [
-        {"depth_m": -0.20, "n20": null, "confidence": 1.0, "excel_value": null, "has_discrepancy": false, "note": "dash - no reading at 0.20", "torque": null, "water_indicator": false},
-        {"depth_m": -0.40, "n20": 20, "confidence": 1.0, "excel_value": 20, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -0.60, "n20": 27, "confidence": 1.0, "excel_value": 27, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -0.80, "n20": 16, "confidence": 1.0, "excel_value": 16, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -1.00, "n20": 19, "confidence": 1.0, "excel_value": 19, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -1.20, "n20": 32, "confidence": 1.0, "excel_value": 32, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -1.40, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "Refusal. Handwritten annotation: R 1,35", "torque": null, "water_indicator": false}
+        {
+          "depth_m": 0.2,
+          "n20": null,
+          "confidence": 1.0,
+          "note": "No value recorded for this row (dash visible)",
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": null,
+          "excel_match": "N/A"
+        },
+        {
+          "depth_m": 0.4,
+          "n20": 20,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 20,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 0.6,
+          "n20": 27,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 27,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 0.8,
+          "n20": 16,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 16,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 1.0,
+          "n20": 19,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 19,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 1.2,
+          "n20": 32,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 32,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 1.4,
+          "n20": 100,
+          "confidence": 0.9,
+          "note": "Value reads '100' with R marker at 1.35m annotated as 'R 1,35'; refusal row. Handwritten 'R 1,35' used as precise refusal depth.",
+          "torque": 1.35,
+          "water_indicator": false,
+          "excel_n20": 100,
+          "excel_match": "MATCH"
+        }
       ],
       "refusal_depth_m": 1.35,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
-      "correction_factor": null,
-      "extraction_notes": "6 valid readings + refusal at 1.35m (handwritten R 1,35). Cota inici -0,15."
+      "correction_factor": 0.83,
+      "extraction_notes": "Refusal annotated explicitly as 'R 1,35' on the field sheet at the -1.6m row depth entry, which corresponds to 1.35m penetration from surface (cota -0.175 + 1.35 = -1.525 absolute). The N20=100 appears at the 1.40m depth row. Excel refusal_depth_m=1.4 rounds to grid; field annotation R 1,35 is more precise. All N20 values match Excel perfectly."
     },
     {
       "test_id": "P-2",
-      "cota_inici": 0.15,
+      "initial_cota_m": 0.195,
       "readings": [
-        {"depth_m": -0.20, "n20": null, "confidence": 1.0, "excel_value": null, "has_discrepancy": false, "note": "dash - no reading at 0.20", "torque": null, "water_indicator": false},
-        {"depth_m": -0.40, "n20": 17, "confidence": 1.0, "excel_value": 17, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -0.60, "n20": 21, "confidence": 1.0, "excel_value": 21, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -0.80, "n20": 17, "confidence": 1.0, "excel_value": 17, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -1.00, "n20": 13, "confidence": 1.0, "excel_value": 13, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -1.20, "n20": 10, "confidence": 1.0, "excel_value": 10, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -1.40, "n20": 20, "confidence": 1.0, "excel_value": 20, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -1.60, "n20": 30, "confidence": 1.0, "excel_value": 30, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -1.80, "n20": 52, "confidence": 1.0, "excel_value": 52, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -2.00, "n20": 55, "confidence": 1.0, "excel_value": 55, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -2.20, "n20": 32, "confidence": 1.0, "excel_value": 32, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -2.40, "n20": 80, "confidence": 1.0, "excel_value": 80, "has_discrepancy": false, "note": null, "torque": null, "water_indicator": false},
-        {"depth_m": -2.60, "n20": 100, "confidence": 1.0, "excel_value": 100, "has_discrepancy": false, "note": "Refusal. Handwritten annotation: R 2,45", "torque": null, "water_indicator": false}
+        {
+          "depth_m": 0.2,
+          "n20": null,
+          "confidence": 1.0,
+          "note": "No value recorded for this row (dash visible)",
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": null,
+          "excel_match": "N/A"
+        },
+        {
+          "depth_m": 0.4,
+          "n20": 17,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 17,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 0.6,
+          "n20": 21,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 21,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 0.8,
+          "n20": 17,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 17,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 1.0,
+          "n20": 13,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 13,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 1.2,
+          "n20": 10,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 10,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 1.4,
+          "n20": 20,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 20,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 1.6,
+          "n20": 30,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 30,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 1.8,
+          "n20": 52,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 52,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 2.0,
+          "n20": 55,
+          "confidence": 0.9,
+          "note": "Value reads '55' or possibly 'P5' — interpreted as 55 based on context and Excel confirmation",
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 55,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 2.2,
+          "n20": 32,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 32,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 2.4,
+          "n20": 80,
+          "confidence": 1.0,
+          "note": null,
+          "torque": null,
+          "water_indicator": false,
+          "excel_n20": 80,
+          "excel_match": "MATCH"
+        },
+        {
+          "depth_m": 2.6,
+          "n20": 100,
+          "confidence": 0.9,
+          "note": "Value reads '100' with R marker annotated as 'R 2,45'; refusal row. Handwritten 'R 2,45' used as precise refusal depth.",
+          "torque": 2.45,
+          "water_indicator": false,
+          "excel_n20": 100,
+          "excel_match": "MATCH"
+        }
       ],
       "refusal_depth_m": 2.45,
       "refusal_detected": true,
       "water_detected": false,
       "water_depth_m": null,
-      "correction_factor": null,
-      "extraction_notes": "12 valid readings + refusal at 2.45m (handwritten R 2,45). Cota inici 0,15."
+      "correction_factor": 0.83,
+      "extraction_notes": "Refusal annotated explicitly as 'R 2,45' on field sheet. Excel refusal_depth_m=2.6 rounds to grid; field annotation R 2,45 is more precise. All N20 values match Excel perfectly."
     }
   ],
   "spt_in_dpsh": null,
-  "reviewer_notes": "",
-  "approved_by": "",
-  "approval_date": null
+  "document_metadata": {
+    "document_type": "Albarà + Full de Camp Penetròmetre Dinàmic",
+    "form_number": "Fitxa 01",
+    "date": "1-10-25",
+    "location": "BELL-LLOCH",
+    "address": "Carrer Antoni Bellet",
+    "client_company": "G3",
+    "client_responsible": "EVA",
+    "equipment": "ML 60A",
+    "operator": "SINY",
+    "num_penetrometers": 2,
+    "total_ml_drilled": 3.8,
+    "spt_assays": "NC (No/None)",
+    "water_table_detected": false,
+    "start_time": "12:50",
+    "end_time": null,
+    "displacement_type": "Desplaçament d'equips i personal a obra (1 unit checked)"
+  },
+  "overall_confidence": 0.97,
+  "extraction_notes": "All N20 values extracted from the field sheet match the Excel reference data perfectly. Two key annotations: P-1 has handwritten 'R 1,35' indicating precise refusal at 1.35m (more accurate than Excel grid value of 1.4m); P-2 has handwritten 'R 2,45' indicating precise refusal at 2.45m (more accurate than Excel grid value of 2.6m). The torque column in the field sheet header is labelled 'N.F. Par col.' — the 'R x,xx' values appear in the PAR (torque) column at the refusal rows and represent the exact refusal depth annotation. No water table detected. Correction factor 0.83 applies to both tests."
 }

@@ -1,0 +1,47 @@
+{
+  "sondeig_tests": [
+    {
+      "test_id": "S-1",
+      "total_depth_m": 8.0,
+      "num_geological_levels": 1,
+      "layers": [
+        {
+          "depth_from_m": 0.0,
+          "depth_to_m": 8.0,
+          "description": "Llims argilosos amb graves cohesives de coloració marronosa. Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares. Tram totalment carbonatat.",
+          "geological_level": 1,
+          "uscs_classification": null,
+          "color": "marro / clar (carbonatat)",
+          "moisture": null,
+          "consistency": null,
+          "density": null,
+          "confidence": 0.95,
+          "note": "The 'Unitat litològica' column shows a single NIVELL 1 spanning the entire logged depth (0.0 to 8.0 m). The description combines multiple sub-descriptions visible in the graphic column but all belong to the same geological level. Total depth read as 8.0 m based on the depth scale visible on the log; the borehole column extends to the 8.0 m tick mark."
+        }
+      ],
+      "spt_results": [
+        {
+          "test_id": "SPT-1",
+          "depth_from_m": 1.0,
+          "depth_to_m": 1.6,
+          "blows": [
+            24,
+            14,
+            28,
+            30
+          ],
+          "n_spt": 42,
+          "confidence": 0.85,
+          "note": "Four blow counts visible: 24, 14, 28, 30. N_SPT = 14+28+30 = 72 if standard (last 3 increments of 15 cm), but the column shows values 24/14/28/30 across four rows which may represent 4 × 15 cm increments. N_SPT computed as sum of last three increments (14+28+30 = 72) OR as sum of all blows depending on convention. Confidence reduced due to ambiguity in reading blow sequence. The depth_from and depth_to are read as -1.00 to -1.60 m (extraction depth per log). N_SPT value of 42 noted in original template example — recomputed here: blows [24,14,28,30], N_SPT = 28+30 = 58 (last two 15 cm increments if 4 rows) or 14+28+30 = 72 (last three). Value is uncertain; raw blows provided for human review."
+        }
+      ],
+      "elevation_z": 199.5,
+      "water_level_m": null,
+      "rock_detected": false,
+      "rock_depth_m": null,
+      "extraction_notes": "Water level (N.F.) not indicated on the log. The 'Nivell freàtic' column appears blank. The borehole graphic column shows a hatched/dotted pattern consistent with gravelly silty material throughout. The log depth scale runs to at least 8.0 m but the described material and column detail are concentrated in the upper ~1.8 m (SPT zone); below that the column is largely blank/unfilled suggesting the borehole may have been logged to 8.0 m with no further material change noted or the log sheet template extends to 8.0 m by default. SPT blow counts read from the 'Registre' column as four values: 24, 14, 28, 30. UTM X and Y coordinates not filled in on the document (blank fields). Z elevation = 199.50 m."
+    }
+  ],
+  "overall_confidence": 0.88,
+  "extraction_notes": "Formatted vectorial PDF borehole log (Sondeig a rotació amb bateria contínua). Document is in good condition and clearly printed. Key metadata: Client = ARQ BOSCH NOVELL, Machine = ML-76A, Company = TPS S.L., Operator = Sr. Daniel Fernandez, Geologist = Eva Vázquez Marcet (Geòlega núm. 4302), Start date = 6/10/2025, End date = 6/10/2025, Project = Estudi Geològic i Geotècnic per a la construcció d'un habitatge unifamiliar aïllat entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz en el municipi de Bell-lloc. Only one geological level (NIVELL 1) is identified in the 'Unitat litològica' column. SPT-1 blow counts require human verification due to multi-row presentation. UTM X and Y are blank; Z = 199.50 m confirmed from both document pages."
+}

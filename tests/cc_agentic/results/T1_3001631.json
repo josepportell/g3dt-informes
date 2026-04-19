@@ -2,14 +2,14 @@
   "metadata": {
     "test_id": "T1",
     "project": "3001631 RUBI",
-    "timestamp": "2026-04-16T16:34:54.924564+00:00",
+    "timestamp": "2026-04-16T17:54:47.385756+00:00",
     "files_available": 21,
     "files_read": 14,
     "files_from_email": 10,
-    "duration_s": 175.7,
-    "api_calls": 9,
-    "input_tokens": 58381,
-    "output_tokens": 4500
+    "duration_s": 202.0,
+    "api_calls": 11,
+    "input_tokens": 67943,
+    "output_tokens": 5450
   },
   "files_inventory": [
     {
@@ -127,8 +127,8 @@
       "extraction_method": "doc_convert"
     },
     "contact_name": {
-      "value": "Enric",
-      "confidence": 0.5,
+      "value": "Enor",
+      "confidence": 0.6,
       "source_file": "3001631 - PENETROS.pdf",
       "source_origin": "project",
       "extraction_method": "vision_pdf"
@@ -219,13 +219,6 @@
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
-    "lab_tests_text": {
-      "value": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95; Determinació de Límits d'Atterberg d'un sòl UNE 103103/94-104/93; Assaig de contingut en sulfats UNE 83963:2008",
-      "confidence": 1.0,
-      "source_file": "3001631_informe.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
     "foundation_depth_m": {
       "value": 1.0,
       "confidence": 0.8,
@@ -233,8 +226,15 @@
       "source_origin": "project",
       "extraction_method": "vision_pdf"
     },
+    "cota_referencia": {
+      "value": "Cota absoluta referida a la superfície actual del solar segons coordenades del plànol topogràfic de l'ICGC. Cota d'inici dels assaigs: +212.50 m.s.n.m.",
+      "confidence": 0.9,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
     "building_type": {
-      "value": "habitatge unifamiliar aïllat modular",
+      "value": "Habitatge unifamiliar aïllat modular",
       "confidence": 1.0,
       "source_file": "3001631_informe.doc",
       "source_origin": "project",
@@ -268,8 +268,22 @@
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
+    "has_basement": {
+      "value": false,
+      "confidence": 0.7,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "has_retaining_walls": {
+      "value": false,
+      "confidence": 0.5,
+      "source_file": "3001631_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
     "site_description": {
-      "value": "Solar sense construccions ni pavimentacions. Topogràficament fa una lleugera baixada de sudoest a nord-est, amb una diferència de cota d'uns 13.20 metres, des d'uns 212.20 m.s.n.m. fins a 199.00 m.s.n.m. La zona de treball es mostra totalment plana. La pendent comença a la zona posterior (a la meitat del fons).",
+      "value": "Solar sense construccions ni pavimentacions. Topogràficament fa una lleugera baixada de sudoest a nord-est, amb una diferència de cota d'uns 13.20 metres (des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m.). La zona de treball es mostra totalment plana. La pendent comença a la zona posterior (a la meitat del fons).",
       "confidence": 1.0,
       "source_file": "3001631_informe.doc",
       "source_origin": "project",
@@ -311,7 +325,7 @@
       "extraction_method": "doc_convert"
     },
     "parcel_shape": {
-      "value": "rectangular",
+      "value": "Rectangular",
       "confidence": 1.0,
       "source_file": "3001631_informe.doc",
       "source_origin": "project",
@@ -332,7 +346,7 @@
       "extraction_method": "doc_convert"
     },
     "slope_direction": {
-      "value": "de sudoest a nord-est",
+      "value": "De sud-oest a nord-est",
       "confidence": 1.0,
       "source_file": "3001631_informe.doc",
       "source_origin": "project",
@@ -340,20 +354,13 @@
     },
     "is_anthropized": {
       "value": false,
-      "confidence": 0.7,
-      "source_file": "3001631_informe.doc",
+      "confidence": 0.78,
+      "source_file": "LAB-SIG.pdf",
       "source_origin": "project",
-      "extraction_method": "doc_convert"
+      "extraction_method": "vision_pdf"
     },
     "num_soil_levels": {
       "value": 1,
-      "confidence": 1.0,
-      "source_file": "3001631_informe.doc",
-      "source_origin": "project",
-      "extraction_method": "doc_convert"
-    },
-    "lab_testing_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)",
       "confidence": 1.0,
       "source_file": "3001631_informe.doc",
       "source_origin": "project",
@@ -380,23 +387,27 @@
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
-    "cota_referencia": {
-      "value": "+212.50 m.s.n.m. (cota superfície solar, referenciada al plànol topogràfic ICGC)",
-      "confidence": 0.9,
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)",
+      "confidence": 1.0,
       "source_file": "3001631_informe.doc",
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
-    "has_basement": {
-      "value": false,
-      "confidence": 0.8,
+    "lab_tests_text": {
+      "value": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95; Determinació de Límits d'Atterberg d'un sòl UNE 103103/94-104/93; Assaig de contingut en sulfats UNE 83963:2008",
+      "confidence": 1.0,
       "source_file": "3001631_informe.doc",
       "source_origin": "project",
       "extraction_method": "doc_convert"
     },
-    "has_retaining_walls": {
-      "value": false,
-      "confidence": 0.7,
+    "lab_tests": {
+      "value": [
+        "Anàlisi granulomètrica UNE 103101/95",
+        "Límits d'Atterberg UNE 103103/94-104/93",
+        "Contingut en sulfats UNE 83963:2008"
+      ],
+      "confidence": 1.0,
       "source_file": "3001631_informe.doc",
       "source_origin": "project",
       "extraction_method": "doc_convert"
@@ -422,55 +433,16 @@
       "source_origin": "project",
       "extraction_method": "vision_pdf"
     },
-    "lab_tests": {
-      "value": [
-        {
-          "test": "Anàlisi granulomètrica per tamissat",
-          "norm": "UNE 103101/95",
-          "result": {
-            "passa_5mm": 64.39,
-            "passa_2mm": 49.68,
-            "passa_0.4mm": 28.54,
-            "passa_0.08mm": 18.23,
-            "grava_pct": 50.3,
-            "sorra_pct": 31.5,
-            "fins_pct": 18.2,
-            "classificacio_SUCS": "SM",
-            "descripcio": "Sorres llimoses amb graves"
-          }
-        },
-        {
-          "test": "Límits d'Atterberg",
-          "norm": "UNE 103103/94 i UNE 103104/93",
-          "result": {
-            "limit_liquid": null,
-            "limit_plastic": null,
-            "index_plasticitat": "NO PLÀSTIC"
-          }
-        },
-        {
-          "test": "Contingut en ió sulfat",
-          "norm": "UNE 83963:2008",
-          "result": {
-            "SO4_mg_kg": 632.3
-          }
-        }
-      ],
-      "confidence": 1.0,
-      "source_file": "4703-GTL-25 Rubí.pdf",
-      "source_origin": "project",
-      "extraction_method": "vision_pdf"
-    },
     "architect_company": {
       "value": "Viviendas Modulares",
-      "confidence": 1.0,
+      "confidence": 0.9,
       "source_file": "IMG-20251104-WA0015.jpg",
       "source_origin": "email",
       "extraction_method": "vision_image"
     },
     "building_structure_desc": {
-      "value": "Plano de cimentación modelo Mediterráneo, escala 1:50, 72 m2 + 20 de porchada",
-      "confidence": 0.9,
+      "value": "Plano de cimentación modelo Mediterráneo, escala 1:50, 72 m2 + 20 de Porchada",
+      "confidence": 0.95,
       "source_file": "IMG-20251104-WA0016.jpg",
       "source_origin": "email",
       "extraction_method": "vision_image"
@@ -478,141 +450,230 @@
   },
   "comparison": {
     "vs_eva": {
+      "project": "3001631 RUBI",
+      "test_id": "T1",
       "total_eva_vars": 53,
       "counts": {
-        "MATCH": 4,
-        "CLOSE": 5,
-        "MISMATCH": 6,
-        "NOT_EXTRACTED": 38
+        "MATCH": 11,
+        "CLOSE": 11,
+        "MISMATCH": 2,
+        "NOT_EXTRACTED": 29
       },
-      "accuracy_pct": 17.0,
+      "accuracy_pct": 41.5,
+      "tier_breakdown": {
+        "-": {
+          "NOT_EXTRACTED": 23,
+          "CLOSE": 7,
+          "MISMATCH": 2,
+          "MATCH": 6
+        },
+        "A": {
+          "MATCH": 5,
+          "CLOSE": 2,
+          "NOT_EXTRACTED": 2
+        },
+        "C": {
+          "NOT_EXTRACTED": 3
+        },
+        "B": {
+          "CLOSE": 2,
+          "NOT_EXTRACTED": 1
+        }
+      },
+      "origin_breakdown": {
+        "project": {
+          "CLOSE": 11,
+          "MATCH": 11,
+          "MISMATCH": 1
+        },
+        "email": {
+          "MISMATCH": 1
+        }
+      },
       "details": [
         {
           "variable": "access_street",
           "tier": "-",
           "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "adjacent_east_fmt",
           "tier": "-",
           "eva": "Finalment, Per la part est i oest, amb construccions de característiques similars.",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Construccions de característiques similars",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "adjacent_north_fmt",
           "tier": "-",
           "eva": "Per la part nord, amb parcel·les sense edificacions i amb vegetació de petita alçada i arbres.",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Parcel·les sense edificacions i amb vegetació de petita alçada i arbres",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "adjacent_south_fmt",
           "tier": "-",
           "eva": "Per la part sud, amb el carrer de la Miranda",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Carrer de la Miranda",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "adjacent_west_fmt",
           "tier": "-",
           "eva": "Finalment, Per la part est i oest, amb construccions de característiques similars.",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Construccions de característiques similars",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "architect_name_upper",
           "tier": "-",
           "eva": "JOANA MARTINEZ",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "building_structure_desc",
           "tier": "-",
           "eva": "en planta baixa",
-          "cc": "Plano de cimentación modelo Mediterráneo, escala 1:50, 72 m2 + 20 de porchada",
-          "confidence": 0.9,
-          "status": "MISMATCH"
+          "cc": "Plano de cimentación modelo Mediterráneo, escala 1:50, 72 m2 + 20 de Porchada",
+          "confidence": 0.95,
+          "status": "MISMATCH",
+          "source_file": "IMG-20251104-WA0016.jpg",
+          "origin": "email",
+          "llm_judge": {
+            "llm_score": 1,
+            "llm_explanation": "These texts describe completely different information. The benchmark ('en planta baixa' = ground floor level) is a simple floor designation, while the pipeline text describes a Mediterranean-style foundation plan with scale, area measurements (72 m² + 20 m² portico). No semantic overlap in building_structure_desc context."
+          }
         },
         {
           "variable": "building_type_lower",
           "tier": "-",
           "eva": "un habitatge unifamiliar aïllat modular",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "Habitatge unifamiliar aïllat modular",
+          "confidence": 1.0,
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "client",
           "tier": "A",
           "eva": "SRA. JOANA MARTINEZ",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "SRA. JOANA MARTINEZ",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "conclusions_aggressivity_statement",
           "tier": "-",
           "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, es presenten no agressius al formigó.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "conclusions_levels_detected",
           "tier": "-",
           "eva": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "conclusions_water_statement",
           "tier": "-",
           "eva": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "csn_radon_text",
           "tier": "-",
           "eva": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "cte_edificacio",
           "tier": "-",
           "eva": "C-0",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "cte_sol",
           "tier": "-",
           "eva": "T-1",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "data_camp_text",
           "tier": "A",
           "eva": "14 de novembre de 2025",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "14 de novembre de 2025",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "data_signatura_text",
           "tier": "-",
           "eva": "17 de desembre de 2025",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "dpsh_tests",
           "tier": "-",
           "eva": "[{'test_id': 'P-1', 'cota': '+212.50', 'depth': '-4.55', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-2', 'cota': '+212.50', 'depth': '-3.58', 'refusal': 'Si', 'water': 'No detectat'}, {'test_id': 'P-3', 'cota': '+212.50', 'depth': '-3.13', 'refusal': 'Si', 'water': 'No detectat'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "expedient",
@@ -620,28 +681,39 @@
           "eva": "3001631",
           "cc": "3001631",
           "confidence": 1.0,
-          "status": "MATCH"
+          "status": "MATCH",
+          "source_file": "tall.pdf",
+          "origin": "project"
         },
         {
           "variable": "geo_p",
           "tier": "-",
           "eva": "Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo, corresponents a gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics d’edat Miocè.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "geotech_rows",
           "tier": "-",
           "eva": "[{'name': '1er nivell. Graves i sorres.', 'nb': '47-R', 'n': '40', 'density': '2.0', 'cohesion': '0.05', 'phi': '39º', 'E': '450'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "k30_value",
           "tier": "C",
           "eva": "6.0",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "lab_depth",
@@ -649,7 +721,14 @@
           "eva": "Profunditat:  -0.60  a -1.20 m",
           "cc": "-0.60 a -1.20 m",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MATCH",
+          "source_file": "3001631_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "-0.60 a -1.20 m",
+            "llm_score": 5,
+            "llm_explanation": "Identical content. Both express the same depth range (-0.60 to -1.20 m). The only difference is the omission of the label 'Profunditat:' in the pipeline version, which is a trivial formatting difference, not a semantic one. The actual data values are identical."
+          }
         },
         {
           "variable": "lab_field_company",
@@ -657,14 +736,19 @@
           "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
           "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL",
           "confidence": 1.0,
-          "status": "MATCH"
+          "status": "MATCH",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_field_description",
           "tier": "-",
           "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "lab_location",
@@ -672,7 +756,14 @@
           "eva": "Punt: P-3",
           "cc": "Punt P-3",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MATCH",
+          "source_file": "3001631_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "P-3",
+            "llm_score": 5,
+            "llm_explanation": "Identical values. Both reference the same laboratory location point (P-3) with trivial formatting difference (abbreviation 'Punt:' vs direct designation)."
+          }
         },
         {
           "variable": "lab_sample_id",
@@ -680,7 +771,9 @@
           "eva": "Mostra : SPT-1",
           "cc": "SPT-1",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_testing_company",
@@ -688,14 +781,19 @@
           "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
           "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "lab_testing_description",
           "tier": "-",
           "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "lab_tests_text",
@@ -703,7 +801,14 @@
           "eva": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nDeterminació de Límits d’Atterberg d'un sòl UNE 103103/94-104/93\nAssaig de contingut en sulfats UNE 83963 : 2008",
           "cc": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95; Determinació de Límits d'Atterberg d'un sòl UNE 103103/94-104/93; Assaig de contingut en sulfats UNE 83963:2008",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "MATCH",
+          "source_file": "3001631_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95; Determinació de Límits d'Atterberg d'un sòl UNE 103103/94-104/93; Assaig de contingut en sulfats UNE 83963:2008",
+            "llm_score": 5,
+            "llm_explanation": "Identical content with only trivial formatting differences: semicolons vs. line breaks as separators, and spacing around the colon in the last standard reference (UNE 83963 : 2008 vs. UNE 83963:2008). All three laboratory tests are listed in the same order with identical test names and standard codes."
+          }
         },
         {
           "variable": "location_sentence",
@@ -711,14 +816,19 @@
           "eva": "a una parcel·la ubicada al carrer de la Miranda nº 39, (PARC. 6-105) Rubí, Barcelona",
           "cc": "L'habitatge que es preveu construir es situarà a una parcel·la ubicada al carrer de la Miranda nº 39, (PARC. 6-105) Rubí, Barcelona.",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "materials_intro",
           "tier": "-",
           "eva": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "municipality",
@@ -726,7 +836,9 @@
           "eva": "Rubí (Barcelona)",
           "cc": "Rubí",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "num_dpsh_tests",
@@ -734,120 +846,173 @@
           "eva": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
           "cc": "3 assaigs de penetració dinàmica tipus DPSH",
           "confidence": 1.0,
-          "status": "CLOSE"
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "perm_rows",
           "tier": "-",
           "eva": "[{'name': '1er nivell', 'k_value': '10-10-1', 'material': 'Graves i sorres, carbonatades'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "photo_site_text",
           "tier": "-",
           "eva": "Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "plantes",
           "tier": "-",
           "eva": "PB + Porxo",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "PB + Porxo",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "qa_value",
           "tier": "C",
           "eva": "3.50",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "radon_zone",
           "tier": "A",
           "eva": "1",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "radon_zone_description",
           "tier": "-",
           "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas radó en edificis tancats.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "seismic_ab_text",
           "tier": "A",
           "eva": "AB  =0,08 g  (essent g el valor de la gravetat)",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "seismic_rows",
           "tier": "-",
           "eva": "[{'num': '1', 'terrain_type': 'Tipus II', 'thickness': '4.55', 'c_coeff': '1.3'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "settlement",
           "tier": "C",
           "eva": "1.50",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "site_condition",
           "tier": "B",
           "eva": "Es tracta d’un solar no antropitzat, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "site_description",
           "tier": "B",
           "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.\nEl solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera baixada, de sudoest a nord-est, es troba una diferència de cota d'uns 13.20 metres, des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m. respectivament, tot i que la zona de treball es mostra totalment plana. La pendent comença la zona posterior (a la meitat del fons ).\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
-          "cc": "Solar sense construccions ni pavimentacions. Topogràficament fa una lleugera baixada de sudoest a nord-est, amb una diferència de cota d'uns 13.20 metres, des d'uns 212.20 m.s.n.m. fins a 199.00 m.s.n.m. La zona de treball es mostra totalment plana. La pendent comença a la zona posterior (a la meitat del fons).",
+          "cc": "Solar sense construccions ni pavimentacions. Topogràficament fa una lleugera baixada de sudoest a nord-est, amb una diferència de cota d'uns 13.20 metres (des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m.). La zona de treball es mostra totalment plana. La pendent comença a la zona posterior (a la meitat del fons).",
           "confidence": 1.0,
-          "status": "MISMATCH"
+          "status": "CLOSE",
+          "source_file": "3001631_informe.doc",
+          "origin": "project",
+          "llm_judge": {
+            "llm_score": 4,
+            "llm_explanation": "Both texts convey the same core information about the site: an empty lot without constructions/pavements, topographic descent from SW to NE with 13.20m elevation difference (212.20 to 199.00 m.s.n.m.), flat work zone, and slope beginning at the rear. The pipeline version omits details about site access (Miranda street), nearby building observations, and subsurface material visibility, but these are secondary contextual elements. The primary site description is equivalent with only minor wording condensation."
+          }
         },
         {
           "variable": "sondeig_tests",
           "tier": "-",
           "eva": "[{'test_id': 'Nº assaig', 'cota': 'Punt', 'depth': 'Prof. Extracció (m)', 'spt_ma': 'N30', 'water': 'Litologia'}, {'test_id': 'SPT-1', 'cota': 'P-3', 'depth': '-0.60 a -1.20', 'spt_ma': '40', 'water': 'Graves i sorres'}]",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "sulfate_baumann",
           "tier": "-",
           "eva": "---",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "sulfate_classification",
           "tier": "-",
           "eva": "No Agressius",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "sulfate_level_name",
           "tier": "-",
           "eva": "1er nivell",
           "cc": "",
-          "status": "NOT_EXTRACTED"
+          "confidence": null,
+          "status": "NOT_EXTRACTED",
+          "source_file": "",
+          "origin": ""
         },
         {
           "variable": "sulfate_value",
           "tier": "A",
           "eva": "632.3",
-          "cc": "",
-          "status": "NOT_EXTRACTED"
+          "cc": "632.3",
+          "confidence": 1.0,
+          "status": "MATCH",
+          "source_file": "4703-GTL-25 Rubí.pdf",
+          "origin": "project"
         },
         {
           "variable": "superficie_construida",
@@ -855,7 +1020,9 @@
           "eva": "92",
           "cc": "92",
           "confidence": 1.0,
-          "status": "MATCH"
+          "status": "MATCH",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "superficie_parcela",
@@ -863,7 +1030,9 @@
           "eva": "951",
           "cc": "951",
           "confidence": 1.0,
-          "status": "MATCH"
+          "status": "MATCH",
+          "source_file": "3001631_informe.doc",
+          "origin": "project"
         },
         {
           "variable": "table_dpsh_range",
@@ -871,7 +1040,14 @@
           "eva": "3 i 4",
           "cc": "P1, P2 i P3",
           "confidence": 0.95,
-          "status": "MISMATCH"
+          "status": "MISMATCH",
+          "source_file": "3001631 - PENETROS.pdf",
+          "origin": "project",
+          "llm_judge": {
+            "llm_filled": "de penetració dinàmica realitzats als punts P1, P2 i P3",
+            "llm_score": 1,
+            "llm_explanation": "These are completely different content. Benchmark describes a range of DPSH values (3 and 4), while pipeline describes location points where DPSH testing was performed (P1, P2, P3). They address different aspects: one is a numerical range, the other is spatial location information."
+          }
         }
       ]
     }
@@ -885,11 +1061,11 @@
       "origin": "project",
       "method": "vision_pdf",
       "vars_extracted": 16,
-      "elapsed_s": 13.44,
+      "elapsed_s": 24.28,
       "usage": {
         "input_tokens": 6240,
-        "output_tokens": 486,
-        "elapsed_s": 12.34
+        "output_tokens": 473,
+        "elapsed_s": 23.02
       }
     },
     {
@@ -902,8 +1078,8 @@
       "improved_vars": [],
       "usage": {
         "input_tokens": 4752,
-        "output_tokens": 176,
-        "elapsed_s": 17.33
+        "output_tokens": 200,
+        "elapsed_s": 14.87
       }
     },
     {
@@ -913,12 +1089,12 @@
       "role": "reference_report",
       "origin": "project",
       "method": "doc_convert",
-      "vars_extracted": 39,
-      "elapsed_s": 25.25,
+      "vars_extracted": 40,
+      "elapsed_s": 27.31,
       "usage": {
         "input_tokens": 6815,
-        "output_tokens": 1457,
-        "elapsed_s": 23.14
+        "output_tokens": 1565,
+        "elapsed_s": 25.25
       }
     },
     {
@@ -928,12 +1104,27 @@
       "role": "gtl_report",
       "origin": "project",
       "method": "vision_pdf",
-      "vars_extracted": 14,
-      "elapsed_s": 27.88,
+      "vars_extracted": 16,
+      "elapsed_s": 27.34,
       "usage": {
         "input_tokens": 14010,
-        "output_tokens": 719,
-        "elapsed_s": 26.74
+        "output_tokens": 721,
+        "elapsed_s": 26.23
+      }
+    },
+    {
+      "action_id": "crop_reread_4703-GTL-25 Rubí.pdf",
+      "type": "agentic_crop",
+      "file": "4703-GTL-25 Rubí.pdf",
+      "target_vars": [
+        "is_anthropized",
+        "num_soil_levels"
+      ],
+      "improved_vars": [],
+      "usage": {
+        "input_tokens": 4781,
+        "output_tokens": 377,
+        "elapsed_s": 18.15
       }
     },
     {
@@ -955,7 +1146,7 @@
       "origin": "project",
       "method": "excel_parse",
       "vars_extracted": 3,
-      "elapsed_s": 0.01,
+      "elapsed_s": 0.03,
       "usage": {}
     },
     {
@@ -965,12 +1156,12 @@
       "role": "correlation_section",
       "origin": "project",
       "method": "vision_pdf",
-      "vars_extracted": 10,
-      "elapsed_s": 8.53,
+      "vars_extracted": 12,
+      "elapsed_s": 8.14,
       "usage": {
         "input_tokens": 3132,
-        "output_tokens": 329,
-        "elapsed_s": 8.33
+        "output_tokens": 407,
+        "elapsed_s": 7.92
       }
     },
     {
@@ -992,11 +1183,11 @@
       "origin": "project",
       "method": "vision_pdf",
       "vars_extracted": 8,
-      "elapsed_s": 15.39,
+      "elapsed_s": 15.3,
       "usage": {
         "input_tokens": 3132,
         "output_tokens": 293,
-        "elapsed_s": 14.9
+        "elapsed_s": 14.78
       }
     },
     {
@@ -1006,12 +1197,30 @@
       "role": "lab_results_pdf",
       "origin": "project",
       "method": "vision_pdf",
-      "vars_extracted": 14,
-      "elapsed_s": 54.34,
+      "vars_extracted": 17,
+      "elapsed_s": 29.19,
       "usage": {
         "input_tokens": 14010,
-        "output_tokens": 694,
-        "elapsed_s": 53.18
+        "output_tokens": 731,
+        "elapsed_s": 27.94
+      }
+    },
+    {
+      "action_id": "crop_reread_LAB-SIG.pdf",
+      "type": "agentic_crop",
+      "file": "LAB-SIG.pdf",
+      "target_vars": [
+        "num_soil_levels",
+        "is_anthropized"
+      ],
+      "improved_vars": [
+        "num_soil_levels",
+        "is_anthropized"
+      ],
+      "usage": {
+        "input_tokens": 4781,
+        "output_tokens": 339,
+        "elapsed_s": 18.84
       }
     },
     {
@@ -1044,11 +1253,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 7,
-      "elapsed_s": 4.81,
+      "elapsed_s": 6.2,
       "usage": {
         "input_tokens": 3145,
-        "output_tokens": 179,
-        "elapsed_s": 4.79
+        "output_tokens": 181,
+        "elapsed_s": 6.17
       }
     },
     {
@@ -1059,11 +1268,11 @@
       "origin": "email",
       "method": "vision_image",
       "vars_extracted": 5,
-      "elapsed_s": 5.25,
+      "elapsed_s": 6.01,
       "usage": {
         "input_tokens": 3145,
-        "output_tokens": 167,
-        "elapsed_s": 5.22
+        "output_tokens": 163,
+        "elapsed_s": 5.98
       }
     },
     {
@@ -1086,7 +1295,7 @@
       "origin": "email",
       "method": "excel_parse",
       "vars_extracted": 2,
-      "elapsed_s": 0.32,
+      "elapsed_s": 0.4,
       "usage": {}
     },
     {
@@ -1123,9 +1332,9 @@
       "action_id": "usage_summary",
       "type": "summary",
       "total_usage": {
-        "input_tokens": 58381,
-        "output_tokens": 4500,
-        "api_calls": 9
+        "input_tokens": 67943,
+        "output_tokens": 5450,
+        "api_calls": 11
       }
     }
   ]

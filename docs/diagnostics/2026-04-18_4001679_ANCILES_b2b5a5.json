@@ -1,0 +1,1313 @@
+{
+  "schema_version": "1.1",
+  "metadata": {
+    "timestamp": "2026-04-18T13:02:22+0200",
+    "run_id": "b2b5a5",
+    "project": "4001679 ANCILES",
+    "models": {
+      "openai_vision": "gpt-4.1-mini",
+      "anthropic_text": "claude-sonnet-4-6",
+      "groq_text": "qwen/qwen3-32b",
+      "groq_vision": "meta-llama/llama-4-scout-17b-16e-instruct"
+    },
+    "fallback_order": {
+      "vision": [
+        "openai",
+        "anthropic",
+        "groq"
+      ],
+      "probe": [
+        "groq",
+        "openai",
+        "anthropic"
+      ]
+    },
+    "phases_completed": [
+      "SmartScan: 15 rols detectats",
+      "Contingut: 3 troballes (billing, contact_info, field_prep)",
+      "FileMiner: 121 senyals, 11 variables, 9 nous prefills",
+      "Groq Deep Mine (qwen3-32b): 37 senyals, 10 nous prefills, 0 calls, 68 cache hits, 0 tokens (~$0.0000)",
+      "ConceptScout: 13 concepts mapped",
+      "DPSH: 6 assaigs, prof. max 6.0m",
+      "Geocodificació: UTM (295755, 4718476) [Callejero (HUESCA)]",
+      "ICGC: unitat Qve (Holocè)",
+      "Cadastre: 4 adjacents detectats"
+    ],
+    "phases_skipped": [
+      {
+        "step": "Pressupost PDF",
+        "reason": "fitxer no trobat"
+      },
+      {
+        "step": "Historia geològica",
+        "reason": "cap match per 'Anciles'"
+      },
+      {
+        "step": "Dates camp",
+        "reason": "cap data trobada als PDFs"
+      },
+      {
+        "step": "Lab PDF",
+        "reason": "fitxer no trobat"
+      },
+      {
+        "step": "ICGC elevació",
+        "reason": "Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; "
+      },
+      {
+        "step": "ICGC pendent",
+        "reason": "Could not parse elevation from ICGC MDT response: @MET2m Stretch.Pixel Value; NoData; "
+      }
+    ],
+    "vision_status": {
+      "planol": true,
+      "sondeig": false,
+      "dpsh": true
+    },
+    "duration_seconds": 439.3,
+    "tolerance_pct": 5.0
+  },
+  "summary": {
+    "total_vars": 38,
+    "match": 5,
+    "close": 3,
+    "mismatch": 18,
+    "not_extracted": 4,
+    "pass": 8,
+    "match_close_pct": 30.8
+  },
+  "tier_summary": {
+    "A": {
+      "total": 33,
+      "match": 4,
+      "close": 3,
+      "mismatch": 14,
+      "not_extracted": 4,
+      "pass": 8
+    },
+    "B": {
+      "total": 3,
+      "match": 1,
+      "close": 0,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "pass": 0
+    },
+    "C": {
+      "total": 2,
+      "match": 0,
+      "close": 0,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "pass": 0
+    }
+  },
+  "component_summary": {
+    "cadastre": {
+      "produced": 4,
+      "match": 0,
+      "close": 0,
+      "mismatch": 4,
+      "not_extracted": 0,
+      "accuracy_pct": 0.0
+    },
+    "computed": {
+      "produced": 8,
+      "match": 2,
+      "close": 1,
+      "mismatch": 5,
+      "not_extracted": 0,
+      "accuracy_pct": 37.5
+    },
+    "fileminer_regex": {
+      "produced": 3,
+      "match": 0,
+      "close": 1,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "accuracy_pct": 33.3
+    },
+    "groq_llm": {
+      "produced": 1,
+      "match": 0,
+      "close": 1,
+      "mismatch": 0,
+      "not_extracted": 0,
+      "accuracy_pct": 100.0
+    },
+    "llm_synthesis": {
+      "produced": 1,
+      "match": 0,
+      "close": 0,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "accuracy_pct": 0.0
+    },
+    "template_generated": {
+      "produced": 1,
+      "match": 0,
+      "close": 0,
+      "mismatch": 1,
+      "not_extracted": 0,
+      "accuracy_pct": 0.0
+    },
+    "vision_planol": {
+      "produced": 3,
+      "match": 0,
+      "close": 0,
+      "mismatch": 3,
+      "not_extracted": 0,
+      "accuracy_pct": 0.0
+    },
+    "vision_sondeig": {
+      "produced": 5,
+      "match": 3,
+      "close": 0,
+      "mismatch": 2,
+      "not_extracted": 0,
+      "accuracy_pct": 60.0
+    }
+  },
+  "variables": {
+    "access_street": {
+      "eva_name": "access_street",
+      "eva_value": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "adjacent_east_fmt": {
+      "eva_name": "adjacent_east_fmt",
+      "eva_value": "Por la parte noreste con un campo de conreo herbáceo.",
+      "pipeline_value": "Por la parte este con Carretera Anciles.",
+      "source": "formatted from Cadastre",
+      "component": "cadastre",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "adjacent_north_fmt": {
+      "eva_name": "adjacent_north_fmt",
+      "eva_value": "Por la parte noroeste con un jardín.",
+      "pipeline_value": "Por la parte norte con el Calle General Ferraz.",
+      "source": "formatted from Cadastre",
+      "component": "cadastre",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "adjacent_south_fmt": {
+      "eva_name": "adjacent_south_fmt",
+      "eva_value": "Por la parte suroeste con un edificio de hasta 4 plantas sobre rasante.",
+      "pipeline_value": "Por la parte sur con parcel·la buida.",
+      "source": "formatted from Cadastre",
+      "component": "cadastre",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "adjacent_west_fmt": {
+      "eva_name": "adjacent_west_fmt",
+      "eva_value": "Y finalmente por el sureste, con una zona yerma con vegetación.",
+      "pipeline_value": "Y finalmente por la parte oeste con parcel·la buida.",
+      "source": "formatted from Cadastre",
+      "component": "cadastre",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "architect_name": {
+      "eva_name": "architect_name_upper",
+      "eva_value": "ALBA MARIA BARRAU CASTÁN",
+      "pipeline_value": "ALBA BARRUETA, nºCol. 6.408; MIRIAM CASTEL, nºCol. 6.703",
+      "source": "planol None",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [
+        {
+          "rank": 1,
+          "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA",
+          "source_file": "24.0807/A01_TIPOL.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 45,
+          "confidence": 0.98,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 2,
+          "value": "MIRIAM CASTEL, ALBA BARRAU",
+          "source_file": "24.0807/IV_PLANOS.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 45,
+          "confidence": 0.98,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 3,
+          "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA",
+          "source_file": "validation/msg_attachments/Presupuesto Parcela Anciles/A01_TIPOL.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 45,
+          "confidence": 0.98,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 4,
+          "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA",
+          "source_file": "24.0807/SITE_prop A.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 45,
+          "confidence": 0.95,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 5,
+          "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA",
+          "source_file": "validation/msg_attachments/Presupuesto Parcela Anciles/SITE_prop A.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 45,
+          "confidence": 0.95,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null,
+      "extraction_method": "groq_llm",
+      "missing_reason": null,
+      "confidence": 0.98
+    },
+    "building_structure_desc": {
+      "eva_name": "building_structure_desc",
+      "eva_value": "un semisótano en dos de las siete viviendas previstas",
+      "pipeline_value": "con nivel de sótano",
+      "source": "computed",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "building_type": {
+      "eva_name": "building_type_lower",
+      "eva_value": "7 viviendas unifamiliares adosadas",
+      "pipeline_value": "CONSTR GRUPO DE VIVIENDAS",
+      "source": "fileminer:comanda laboratori_4001679_ANCILES.xls",
+      "component": "fileminer_regex",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [
+        {
+          "rank": 1,
+          "value": "CONSTR GRUPO DE VIVIENDAS",
+          "source_file": "comanda laboratori_4001679_ANCILES.xls",
+          "source_type": "comanda_lab_excel",
+          "component": "fileminer_regex",
+          "extraction_method": "label_adjacent",
+          "priority": 50,
+          "confidence": 0.9,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null,
+      "extraction_method": "label_adjacent",
+      "missing_reason": null,
+      "confidence": 0.9
+    },
+    "client_name": {
+      "eva_name": "client",
+      "eva_value": "SRA. ALBA MARIA BARRAU CASTÁN",
+      "pipeline_value": "PICO DE OLA ARQUITECTURA Y PROMOCION S.L.",
+      "source": "planol None",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [
+        {
+          "rank": 1,
+          "value": "MARIA ALBA BARRAU CASTÁN",
+          "source_file": "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+          "source_type": "dades_camp_excel",
+          "component": "fileminer_regex",
+          "extraction_method": "label_adjacent",
+          "priority": 50,
+          "confidence": 0.9,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null,
+      "extraction_method": "label_adjacent",
+      "missing_reason": null,
+      "confidence": 0.9
+    },
+    "field_work_dates_text": {
+      "eva_name": "data_camp_text",
+      "eva_value": "El día 19 de febrero de 2026, se visitó la obra para:",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "expedient": {
+      "eva_name": "expedient",
+      "eva_value": "Expediente Núm.: 4001679_v0",
+      "pipeline_value": "4001679",
+      "source": "groq_llm:pl situ.pdf",
+      "component": "groq_llm",
+      "tier": "A",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": true,
+      "correct_alternative_desc": "signal #1 (pl situ.pdf, pri=42)",
+      "signals": [
+        {
+          "rank": 1,
+          "value": "4001679",
+          "source_file": "pl situ.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 1.0,
+          "matches_eva": "CLOSE"
+        },
+        {
+          "rank": 2,
+          "value": "4001679",
+          "source_file": "tall.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 1.0,
+          "matches_eva": "CLOSE"
+        },
+        {
+          "rank": 3,
+          "value": "4001679",
+          "source_file": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.8,
+          "matches_eva": "CLOSE"
+        },
+        {
+          "rank": 4,
+          "value": "4001679",
+          "source_file": "validation/msg_attachments/RE_ Presupuesto Parcela Anciles/PLAN_COST_V03. ReV_ANCILES.xlsx",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 42,
+          "confidence": 0.8,
+          "matches_eva": "CLOSE"
+        }
+      ],
+      "calc_trace": null,
+      "extraction_method": "groq_llm",
+      "missing_reason": null,
+      "confidence": 1.0
+    },
+    "lab_depth": {
+      "eva_name": "lab_depth",
+      "eva_value": "Profundidad: -2.80 a -3.00 m",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "lab_field_company": {
+      "eva_name": "lab_field_company",
+      "eva_value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "lab_field_description": {
+      "eva_name": "lab_field_description",
+      "eva_value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "lab_location": {
+      "eva_name": "lab_location",
+      "eva_value": "Punto:  S-2",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "lab_sample_id": {
+      "eva_name": "lab_sample_id",
+      "eva_value": "Muestra: MA-1",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "lab_testing_company": {
+      "eva_name": "lab_testing_company",
+      "eva_value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "lab_testing_description": {
+      "eva_name": "lab_testing_description",
+      "eva_value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "lab_tests_text": {
+      "eva_name": "lab_tests_text",
+      "eva_value": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "PASS",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "location_sentence": {
+      "eva_name": "location_sentence",
+      "eva_value": "en la calle Gral Ferraz nº20 en el municipio de Anciles, Benasque",
+      "pipeline_value": "en la calle Gral Ferraz n20 en el municipio de Anciles, Benasque",
+      "source": "llm_synthesis",
+      "component": "llm_synthesis",
+      "tier": "B",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "municipality": {
+      "eva_name": "municipality",
+      "eva_value": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:",
+      "pipeline_value": "ANCILES",
+      "source": "fileminer:comanda laboratori_4001679_ANCILES.xls",
+      "component": "fileminer_regex",
+      "tier": "A",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": true,
+      "correct_alternative_desc": "signal #1 (comanda laboratori_4001679_ANC, pri=50)",
+      "signals": [
+        {
+          "rank": 1,
+          "value": "ANCILES",
+          "source_file": "comanda laboratori_4001679_ANCILES.xls",
+          "source_type": "comanda_lab_excel",
+          "component": "fileminer_regex",
+          "extraction_method": "label_adjacent",
+          "priority": 50,
+          "confidence": 0.9,
+          "matches_eva": "CLOSE"
+        }
+      ],
+      "calc_trace": null,
+      "extraction_method": "label_adjacent",
+      "missing_reason": null,
+      "confidence": 0.9
+    },
+    "num_dpsh_tests": {
+      "eva_name": "num_dpsh_tests",
+      "eva_value": "2 ensayos SPT con recuperación de muestra (ver registro de los ensayos mecánicos).",
+      "pipeline_value": "6 ensayos de penetración dinámica DPSH (ver registro de los ensayos mecánicos).",
+      "source": "computed",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "num_floors": {
+      "eva_name": "plantes",
+      "eva_value": "C-1",
+      "pipeline_value": "SÓTANO, PLANTA BAJA y PLANTA 1",
+      "source": "fileminer:24.0807/Presupuesto Parcela Anciles.msg",
+      "component": "fileminer_regex",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [
+        {
+          "rank": 1,
+          "value": "SÓTANO, PLANTA BAJA y PLANTA 1",
+          "source_file": "24.0807/Presupuesto Parcela Anciles.msg",
+          "source_type": "content_email",
+          "component": "fileminer_regex",
+          "extraction_method": "label_value",
+          "priority": 43,
+          "confidence": 0.7999999999999999,
+          "matches_eva": "MISMATCH"
+        },
+        {
+          "rank": 2,
+          "value": "SÓTANO, PLANTA BAJA y PLANTA 1",
+          "source_file": "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+          "source_type": "content_email",
+          "component": "fileminer_regex",
+          "extraction_method": "label_value",
+          "priority": 43,
+          "confidence": 0.7999999999999999,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null,
+      "extraction_method": "label_value",
+      "missing_reason": null,
+      "confidence": 0.7999999999999999
+    },
+    "qa_value": {
+      "eva_name": "qa_value",
+      "eva_value": "2.0 Kg/cm2 con un factor de seguridad incluido de F=3",
+      "pipeline_value": "1.00",
+      "source": "Terzaghi-Peck",
+      "component": "computed",
+      "tier": "C",
+      "status": "MISMATCH",
+      "classification": "CALC",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": "Nb=?, B=1.0[DEF], Df=0.8[DEF], c=?, phi=?, cap=3.0, bearing_idx=0, fine_fraction=normal, cap_reason=soil",
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "radon_zone": {
+      "eva_name": "radon_zone",
+      "eva_value": "2",
+      "pipeline_value": "2",
+      "source": "CTE DB HS6 (Anciles)",
+      "component": "computed",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "seismic_ab_text": {
+      "eva_name": "seismic_ab_text",
+      "eva_value": "AB = 0.05 g (siento g el valor de la gravedad)",
+      "pipeline_value": "0,04",
+      "source": "NCSE-02 (Anciles)",
+      "component": "computed",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "settlement": {
+      "eva_name": "settlement",
+      "eva_value": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm.",
+      "pipeline_value": "1.20",
+      "source": "Schmertmann",
+      "component": "computed",
+      "tier": "C",
+      "status": "MISMATCH",
+      "classification": "CALC",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": "Es=44, qa=1.00",
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "site_condition": {
+      "eva_name": "site_condition",
+      "eva_value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+      "pipeline_value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+      "source": "computed (ES template)",
+      "component": "computed",
+      "tier": "B",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "site_description": {
+      "eva_name": "site_description",
+      "eva_value": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual.\nEn solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles.\nDada la geomorfología de la zona y su urbanización no se pueden observar en la zona ningún tipo de afloramiento de los materiales que serán atravesados por los ensayos previstos.",
+      "pipeline_value": "parcel·la amb superfície de 1655 m2",
+      "source": "plantilla generada",
+      "component": "template_generated",
+      "tier": "B",
+      "status": "MISMATCH",
+      "classification": "NARRATIVE",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "spt_depth_range": {
+      "eva_name": "spt_depth_range",
+      "eva_value": "-1.00 a -1.60",
+      "pipeline_value": "-0.90 a -1.60",
+      "source": "sondeig vision",
+      "component": "vision_sondeig",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "spt_lithology": {
+      "eva_name": "spt_lithology",
+      "eva_value": "Arcilla arenosa con gravitas",
+      "pipeline_value": "Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito.",
+      "source": "sondeig vision",
+      "component": "vision_sondeig",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "spt_location": {
+      "eva_name": "spt_location",
+      "eva_value": "S-1",
+      "pipeline_value": "S-1",
+      "source": "sondeig vision",
+      "component": "vision_sondeig",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "spt_n30": {
+      "eva_name": "spt_n30",
+      "eva_value": "6",
+      "pipeline_value": "6",
+      "source": "sondeig vision",
+      "component": "vision_sondeig",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "spt_test_id": {
+      "eva_name": "spt_test_id",
+      "eva_value": "SPT-1",
+      "pipeline_value": "SPT-1",
+      "source": "sondeig vision",
+      "component": "vision_sondeig",
+      "tier": "A",
+      "status": "MATCH",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "sulfate_baumann": {
+      "eva_name": "sulfate_baumann",
+      "eva_value": "---",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "sulfate_level_name": {
+      "eva_name": "sulfate_level_name",
+      "eva_value": "2do nivel",
+      "pipeline_value": null,
+      "source": null,
+      "component": "unknown",
+      "tier": "A",
+      "status": "NOT_EXTRACTED",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    },
+    "superficie_parcela_m2": {
+      "eva_name": "superficie_parcela",
+      "eva_value": "T-1",
+      "pipeline_value": "1655.01",
+      "source": "planol None",
+      "component": "vision_planol",
+      "tier": "A",
+      "status": "MISMATCH",
+      "classification": "EXTRACTION",
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [
+        {
+          "rank": 1,
+          "value": "1655.01",
+          "source_file": "24.0807/IV_PLANOS.pdf",
+          "source_type": "groq_llm",
+          "component": "groq_llm",
+          "extraction_method": "groq_llm",
+          "priority": 50,
+          "confidence": 0.98,
+          "matches_eva": "MISMATCH"
+        }
+      ],
+      "calc_trace": null,
+      "extraction_method": "groq_llm",
+      "missing_reason": null,
+      "confidence": 0.98
+    },
+    "table_dpsh_range": {
+      "eva_name": "table_dpsh_range",
+      "eva_value": "Tabla 3, 4 y 5. Resumen de los ensayos in situ realizados.",
+      "pipeline_value": "3, 4 y 5",
+      "source": "computed",
+      "component": "computed",
+      "tier": "A",
+      "status": "CLOSE",
+      "classification": null,
+      "correct_exists": false,
+      "correct_alternative_desc": null,
+      "signals": [],
+      "calc_trace": null,
+      "extraction_method": null,
+      "missing_reason": null,
+      "confidence": null
+    }
+  },
+  "format_learning": [
+    {
+      "file_path": "IV_PLANOS.pdf",
+      "role": "architect_plan",
+      "is_new": true,
+      "format_id": null,
+      "extraction_coverage": 0.2,
+      "expected_fields": [
+        "architect_company",
+        "architect_name",
+        "building_height_m",
+        "building_type",
+        "client_name",
+        "municipality",
+        "num_floors",
+        "street_address",
+        "superficie_construida",
+        "superficie_parcela"
+      ],
+      "extracted_fields": [
+        "architect_company",
+        "architect_name"
+      ],
+      "missing_fields": [
+        "building_height_m",
+        "building_type",
+        "client_name",
+        "municipality",
+        "num_floors",
+        "street_address",
+        "superficie_construida",
+        "superficie_parcela"
+      ],
+      "proposed_mappings": [
+        {
+          "label": "embedded_image_0",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img0.jpeg",
+          "proposed_concept_id": null,
+          "confidence": 0.3,
+          "source_file": "IV_PLANOS.pdf",
+          "confirmed": false,
+          "corrected_concept_id": null
+        },
+        {
+          "label": "embedded_image_1",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img1.jpeg",
+          "proposed_concept_id": null,
+          "confidence": 0.3,
+          "source_file": "IV_PLANOS.pdf",
+          "confirmed": false,
+          "corrected_concept_id": null
+        },
+        {
+          "label": "embedded_image_2",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img2.jpeg",
+          "proposed_concept_id": null,
+          "confidence": 0.3,
+          "source_file": "IV_PLANOS.pdf",
+          "confirmed": false,
+          "corrected_concept_id": null
+        },
+        {
+          "label": "embedded_image_3",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img3.jpeg",
+          "proposed_concept_id": null,
+          "confidence": 0.3,
+          "source_file": "IV_PLANOS.pdf",
+          "confirmed": false,
+          "corrected_concept_id": null
+        },
+        {
+          "label": "embedded_image_4",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img4.jpeg",
+          "proposed_concept_id": null,
+          "confidence": 0.3,
+          "source_file": "IV_PLANOS.pdf",
+          "confirmed": false,
+          "corrected_concept_id": null
+        },
+        {
+          "label": "embedded_image_5",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img5.jpeg",
+          "proposed_concept_id": null,
+          "confidence": 0.3,
+          "source_file": "IV_PLANOS.pdf",
+          "confirmed": false,
+          "corrected_concept_id": null
+        },
+        {
+          "label": "embedded_image_6",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img6.jpeg",
+          "proposed_concept_id": null,
+          "confidence": 0.3,
+          "source_file": "IV_PLANOS.pdf",
+          "confirmed": false,
+          "corrected_concept_id": null
+        },
+        {
+          "label": "embedded_image_7",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img7.jpeg",
+          "proposed_concept_id": null,
+          "confidence": 0.3,
+          "source_file": "IV_PLANOS.pdf",
+          "confirmed": false,
+          "corrected_concept_id": null
+        },
+        {
+          "label": "embedded_image_8",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img8.jpeg",
+          "proposed_concept_id": null,
+          "confidence": 0.3,
+          "source_file": "IV_PLANOS.pdf",
+          "confirmed": false,
+          "corrected_concept_id": null
+        },
+        {
+          "label": "embedded_image_9",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img9.jpeg",
+          "proposed_concept_id": null,
+          "confidence": 0.3,
+          "source_file": "IV_PLANOS.pdf",
+          "confirmed": false,
+          "corrected_concept_id": null
+        }
+      ],
+      "raw_extractions": [
+        {
+          "label": "embedded_image_0",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img0.jpeg",
+          "maps_to": null,
+          "concept_id": null,
+          "confidence": 0.3
+        },
+        {
+          "label": "embedded_image_1",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img1.jpeg",
+          "maps_to": null,
+          "concept_id": null,
+          "confidence": 0.3
+        },
+        {
+          "label": "embedded_image_2",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img2.jpeg",
+          "maps_to": null,
+          "concept_id": null,
+          "confidence": 0.3
+        },
+        {
+          "label": "embedded_image_3",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img3.jpeg",
+          "maps_to": null,
+          "concept_id": null,
+          "confidence": 0.3
+        },
+        {
+          "label": "embedded_image_4",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img4.jpeg",
+          "maps_to": null,
+          "concept_id": null,
+          "confidence": 0.3
+        },
+        {
+          "label": "embedded_image_5",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img5.jpeg",
+          "maps_to": null,
+          "concept_id": null,
+          "confidence": 0.3
+        },
+        {
+          "label": "embedded_image_6",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img6.jpeg",
+          "maps_to": null,
+          "concept_id": null,
+          "confidence": 0.3
+        },
+        {
+          "label": "embedded_image_7",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img7.jpeg",
+          "maps_to": null,
+          "concept_id": null,
+          "confidence": 0.3
+        },
+        {
+          "label": "embedded_image_8",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img8.jpeg",
+          "maps_to": null,
+          "concept_id": null,
+          "confidence": 0.3
+        },
+        {
+          "label": "embedded_image_9",
+          "value": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/24.0807/validation/mined_images/IV_PLANOS_img9.jpeg",
+          "maps_to": null,
+          "concept_id": null,
+          "confidence": 0.3
+        },
+        {
+          "label": "client_address",
+          "value": "C/ General Ferraz 20. ANCILES - BENASQUE",
+          "maps_to": "client_address",
+          "concept_id": null,
+          "confidence": 0.95
+        },
+        {
+          "label": "architect_name",
+          "value": "MIRIAM CASTEL, ALBA BARRAU",
+          "maps_to": "architect_name",
+          "concept_id": null,
+          "confidence": 0.98
+        },
+        {
+          "label": "architect_company",
+          "value": "PICO DE OLA ARQUITECTURA Y PROMOCION S.L.",
+          "maps_to": "architect_company",
+          "concept_id": null,
+          "confidence": 0.99
+        },
+        {
+          "label": "province",
+          "value": "HUESCA",
+          "maps_to": "province",
+          "concept_id": null,
+          "confidence": 0.99
+        },
+        {
+          "label": "superficie_parcela",
+          "value": "1655.01",
+          "maps_to": "superficie_parcela_m2",
+          "concept_id": null,
+          "confidence": 0.98
+        },
+        {
+          "label": "superficie_construida",
+          "value": "1265.86",
+          "maps_to": "superficie_construida_m2",
+          "concept_id": null,
+          "confidence": 0.95
+        },
+        {
+          "label": "has_basement",
+          "value": "true",
+          "maps_to": "has_basement",
+          "concept_id": null,
+          "confidence": 0.95
+        },
+        {
+          "label": "report_date",
+          "value": "Octubre 2025",
+          "maps_to": "report_date",
+          "concept_id": null,
+          "confidence": 0.99
+        }
+      ]
+    },
+    {
+      "file_path": "4001679_DPSH.xls",
+      "role": "dpsh_excel",
+      "is_new": true,
+      "format_id": null,
+      "extraction_coverage": 0.0,
+      "expected_fields": [
+        "architect_name",
+        "client_name",
+        "expedient",
+        "field_date",
+        "municipality",
+        "street_address"
+      ],
+      "extracted_fields": [],
+      "missing_fields": [
+        "architect_name",
+        "client_name",
+        "expedient",
+        "field_date",
+        "municipality",
+        "street_address"
+      ],
+      "proposed_mappings": [],
+      "raw_extractions": []
+    }
+  ],
+  "cost_summary": {
+    "groq": {
+      "model": "qwen/qwen3-32b",
+      "api_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0.0
+    },
+    "anthropic": {
+      "model": "",
+      "api_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0.0
+    },
+    "total_usd": 0.0
+  },
+  "concept_scout": {
+    "total_files": 59,
+    "vision_probes_sent": 12,
+    "total_concepts_found": 13,
+    "total_concepts_unresolved": 55,
+    "duration_ms": 47256
+  },
+  "missing_summary": {
+    "total_missing": 0,
+    "total_groups": 0,
+    "by_reason": {
+      "no_source_file": 0,
+      "file_had_no_match": 0,
+      "extracted_low_confidence": 0
+    }
+  },
+  "targeted_extraction_summary": {
+    "calls": 0,
+    "files_processed": 0,
+    "vision_calls": 0,
+    "total_input_tokens": 0,
+    "total_output_tokens": 0,
+    "usd": 0.0
+  }
+}

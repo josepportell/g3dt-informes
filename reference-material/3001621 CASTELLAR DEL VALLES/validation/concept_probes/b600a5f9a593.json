@@ -1,0 +1,36 @@
+{
+  "document_type": "field_sheet",
+  "document_description": "Geotechnical field report",
+  "concepts_found": [
+    {
+      "concept_id": "street_address",
+      "confidence": 1.0,
+      "signal_preview": "C/ Arbells",
+      "page": 1
+    },
+    {
+      "concept_id": "municipality",
+      "confidence": 1.0,
+      "signal_preview": "Castellar del Valles",
+      "page": 1
+    },
+    {
+      "concept_id": "field_date",
+      "confidence": 1.0,
+      "signal_preview": "24-10-2025",
+      "page": 1
+    },
+    {
+      "concept_id": "cota_referencia",
+      "confidence": 1.0,
+      "signal_preview": "-4 m",
+      "page": 2
+    },
+    {
+      "concept_id": "num_soil_levels",
+      "confidence": 0.8,
+      "signal_preview": "No clear indication",
+      "page": 2
+    }
+  ]
+}

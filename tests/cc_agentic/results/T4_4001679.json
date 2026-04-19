@@ -1,0 +1,156 @@
+{
+  "metadata": {
+    "test_id": "T4",
+    "project": "4001679 ANCILES",
+    "timestamp": "2026-04-16T18:28:15.004787+00:00",
+    "files_available": 1,
+    "files_read": 1,
+    "files_from_email": 1,
+    "duration_s": 15.6,
+    "api_calls": 1,
+    "input_tokens": 3132,
+    "output_tokens": 312,
+    "planol_vars_targeted": 29
+  },
+  "files_inventory": [
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001679 ANCILES/validation/msg_attachments/Presupuesto Parcela Anciles/A01_TIPOL.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    }
+  ],
+  "variables": {
+    "client_name": {
+      "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA",
+      "confidence": 0.95,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "architect_name": {
+      "value": "ALBA BARRAU y MIRIAM CASTEL",
+      "confidence": 0.9,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "architect_company": {
+      "value": "A+M ARQUITECTURA",
+      "confidence": 0.85,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "street_address": {
+      "value": "C/ General Ferraz 20, Anciles",
+      "confidence": 0.95,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "municipality": {
+      "value": "Benasque",
+      "confidence": 0.95,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "province": {
+      "value": "Huesca",
+      "confidence": 0.95,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "building_type": {
+      "value": "Plurifamiliar",
+      "confidence": 0.9,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "num_floors": {
+      "value": "Ps+Pb+1Pp+Pbc",
+      "confidence": 0.9,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "has_basement": {
+      "value": true,
+      "confidence": 0.95,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "expedient": {
+      "value": "ESTUDIO DE DETALLE - AVANCE",
+      "confidence": 0.8,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    },
+    "field_date": {
+      "value": "2024-03",
+      "confidence": 0.9,
+      "source_file": "A01_TIPOL.pdf",
+      "source_origin": "email",
+      "extraction_method": "vision_pdf"
+    }
+  },
+  "comparison": {
+    "vs_eva": {
+      "total_eva_vars": 2,
+      "counts": {
+        "MATCH": 0,
+        "CLOSE": 1,
+        "MISMATCH": 0,
+        "NOT_EXTRACTED": 1
+      },
+      "accuracy_pct": 50.0,
+      "details": [
+        {
+          "variable": "municipality",
+          "tier": "A",
+          "eva": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:",
+          "cc": "Benasque",
+          "confidence": 0.95,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "superficie_parcela",
+          "tier": "A",
+          "eva": "T-1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        }
+      ]
+    }
+  },
+  "trace": [
+    {
+      "action_id": "extract_A01_TIPOL.pdf",
+      "type": "file_extraction",
+      "file": "A01_TIPOL.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 11,
+      "elapsed_s": 10.34,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 312,
+        "elapsed_s": 9.46
+      }
+    },
+    {
+      "action_id": "usage_summary",
+      "type": "summary",
+      "total_usage": {
+        "input_tokens": 3132,
+        "output_tokens": 312,
+        "api_calls": 1
+      }
+    }
+  ]
+}

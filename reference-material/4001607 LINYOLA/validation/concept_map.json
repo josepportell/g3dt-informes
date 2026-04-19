@@ -1,0 +1,1776 @@
+{
+  "metadata": {
+    "project": "4001607 LINYOLA",
+    "scanned_at": "2026-04-11T23:06:22",
+    "total_files": 84,
+    "vision_probes_sent": 31,
+    "total_concepts_found": 16,
+    "total_concepts_unresolved": 55,
+    "duration_ms": 30990
+  },
+  "file_inventory": [
+    {
+      "path": "25.0616/25·0616.pdf",
+      "type": "pdf_vector",
+      "size_kb": 441,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_nif",
+        "client_phone",
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_nif": 0.7999999999999999,
+        "client_phone": 0.7999999999999999,
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+      "type": "pdf_vector",
+      "size_kb": 6642,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "contact_name",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "contact_name": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+      "type": "excel",
+      "size_kb": 160,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "contact_name",
+        "client_name",
+        "street_address",
+        "access_url"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.85,
+        "contact_name": 0.9,
+        "client_name": 0.9,
+        "street_address": 0.9,
+        "access_url": 0.9
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0616/PLAN_COST_LINYOLA.xlsx",
+      "type": "excel",
+      "size_kb": 109,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+      "type": "pdf_vector",
+      "size_kb": 145,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "contact_name",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "contact_name": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0616/RE_ pressupost geotècnic.msg",
+      "type": "email",
+      "size_kb": 341,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_nif",
+        "client_email",
+        "client_name"
+      ],
+      "concept_confidence": {
+        "client_nif": 0.7999999999999999,
+        "client_email": 0.75,
+        "client_name": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0616/RV_ pressupost geotècnic.msg",
+      "type": "email",
+      "size_kb": 7042,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_nif",
+        "client_email",
+        "client_name"
+      ],
+      "concept_confidence": {
+        "client_nif": 0.7999999999999999,
+        "client_email": 0.75,
+        "client_name": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0616/pressupost geotècnic.msg",
+      "type": "email",
+      "size_kb": 6986,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_nif",
+        "client_email",
+        "client_name"
+      ],
+      "concept_confidence": {
+        "client_nif": 0.7999999999999999,
+        "client_email": 0.7999999999999999,
+        "client_name": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "4001607_PORTADA_25.doc",
+      "type": "docx",
+      "size_kb": 192,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4001607_informe.doc",
+      "type": "docx",
+      "size_kb": 4110,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4001607_test_validation.docx",
+      "type": "docx",
+      "size_kb": 7572,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4672-GTL-25 Linyola.pdf",
+      "type": "pdf_vector",
+      "size_kb": 429,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_nif",
+        "client_email",
+        "field_date"
+      ],
+      "concept_confidence": {
+        "client_nif": 0.7999999999999999,
+        "client_email": 0.75,
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+      "type": "pdf_vector",
+      "size_kb": 492,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_nif",
+        "client_phone",
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_nif": 0.7999999999999999,
+        "client_phone": 0.7999999999999999,
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "ACCEPTACIO/RV_ Realització geotècnic.msg",
+      "type": "email",
+      "size_kb": 605,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "ANNEXES/4001607_DPSH.xls",
+      "type": "excel",
+      "size_kb": 118,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "ANNEXES/ALTRES/COORDENADES.txt",
+      "type": "text",
+      "size_kb": 0,
+      "text_extractable": true,
+      "concepts_detected": [
+        "utm_coordinates"
+      ],
+      "concept_confidence": {
+        "utm_coordinates": 0.95
+      },
+      "notes": ""
+    },
+    {
+      "path": "CONTACTE.txt",
+      "type": "text",
+      "size_kb": 0,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.8
+      },
+      "notes": ""
+    },
+    {
+      "path": "DTE.txt",
+      "type": "text",
+      "size_kb": 0,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 11.11.17_3f18c893.jpg",
+      "type": "image",
+      "size_kb": 235,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.04.53_99ada7ae.jpg",
+      "type": "image",
+      "size_kb": 185,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.05.09_8fc7585f.jpg",
+      "type": "image",
+      "size_kb": 641,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/P1.jpg",
+      "type": "image",
+      "size_kb": 562,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/P2.jpg",
+      "type": "image",
+      "size_kb": 569,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/P3.jpg",
+      "type": "image",
+      "size_kb": 614,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/4001607_informe.pdf",
+      "type": "pdf_vector",
+      "size_kb": 1948,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/4001607_DPSH.pdf",
+      "type": "pdf_vector",
+      "size_kb": 290,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/4001607_fotografies.pdf",
+      "type": "pdf_vector",
+      "size_kb": 351,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/4001607_plànol de situació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 128,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/4001607_tall de correlació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 48,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/lab-sig.pdf",
+      "type": "pdf_vector",
+      "size_kb": 206,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/LLETRA/4001607_PORTADA_25.pdf",
+      "type": "pdf_vector",
+      "size_kb": 58,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/LLETRA/4001607_informe.pdf",
+      "type": "pdf_vector",
+      "size_kb": 968,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PENETROS.pdf",
+      "type": "pdf_scanned",
+      "size_kb": 341,
+      "text_extractable": false,
+      "concepts_detected": [
+        "street_address",
+        "municipality",
+        "field_date",
+        "contact_name",
+        "street_address",
+        "municipality",
+        "field_date",
+        "cota_referencia",
+        "contact_name"
+      ],
+      "concept_confidence": {
+        "street_address": 1.0,
+        "municipality": 1.0,
+        "field_date": 1.0,
+        "contact_name": 1.0,
+        "cota_referencia": 1.0
+      },
+      "notes": "field_sheet: Geotechnical field test sheet"
+    },
+    {
+      "path": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+      "type": "pdf_vector",
+      "size_kb": 145,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "contact_name",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "contact_name": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+      "type": "pdf_vector",
+      "size_kb": 329,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "contact_name",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "contact_name": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "RV_ Realització geotècnic.msg",
+      "type": "email",
+      "size_kb": 282,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "comanda laboratori_4001607_LINYOLA.xls",
+      "type": "excel",
+      "size_kb": 459,
+      "text_extractable": true,
+      "concepts_detected": [
+        "street_address",
+        "building_type",
+        "municipality"
+      ],
+      "concept_confidence": {
+        "street_address": 0.9,
+        "building_type": 0.9,
+        "municipality": 0.9
+      },
+      "notes": ""
+    },
+    {
+      "path": "pl situ.pdf",
+      "type": "pdf_scanned",
+      "size_kb": 3787,
+      "text_extractable": false,
+      "concepts_detected": [
+        "expedient",
+        "street_address",
+        "municipality",
+        "building_type"
+      ],
+      "concept_confidence": {
+        "expedient": 1.0,
+        "street_address": 0.8,
+        "municipality": 0.8,
+        "building_type": 0.6
+      },
+      "notes": "architect_plan: Floor plan for construction project"
+    },
+    {
+      "path": "tall.pdf",
+      "type": "pdf_vector",
+      "size_kb": 589,
+      "text_extractable": true,
+      "concepts_detected": [
+        "field_date"
+      ],
+      "concept_confidence": {
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ pressupost geotècnic/PLAN_COST_LINYOLA.xlsx",
+      "type": "excel",
+      "size_kb": 109,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ pressupost geotècnic/image001.jpg",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ pressupost geotècnic/image005.jpg",
+      "type": "image",
+      "size_kb": 6,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ pressupost geotècnic/image006.jpg",
+      "type": "image",
+      "size_kb": 6,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ pressupost geotècnic/image008.png",
+      "type": "image",
+      "size_kb": 23,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ pressupost geotècnic/image011.png",
+      "type": "image",
+      "size_kb": 30,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ pressupost geotècnic/validation/mined_images/PLAN_COST_LINYOLA_img0.png",
+      "type": "image",
+      "size_kb": 9,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Company logo"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ Realització geotècnic/G3DT_Silvia_Jaume signat.pdf",
+      "type": "pdf_vector",
+      "size_kb": 492,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_nif",
+        "client_phone",
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_nif": 0.7999999999999999,
+        "client_phone": 0.7999999999999999,
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RV_ Realització geotècnic/Punts de Sondeig_Silvia_Jaume (1).pdf",
+      "type": "pdf_vector",
+      "size_kb": 145,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "contact_name",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "contact_name": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RV_ Realització geotècnic/image001.jpg",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img0.jpeg",
+      "type": "image",
+      "size_kb": 177,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: No text or data found"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img1.jpeg",
+      "type": "image",
+      "size_kb": 33,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Logo and anniversary message"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img2.jpeg",
+      "type": "image",
+      "size_kb": 32,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Logo image"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img3.jpeg",
+      "type": "image",
+      "size_kb": 32,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Logo image"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img4.png",
+      "type": "image",
+      "size_kb": 10,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Signature"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ Realització geotècnic/validation/mined_images/G3DT_Silvia_Jaume signat_img5.png",
+      "type": "image",
+      "size_kb": 16,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Hand-drawn scribbles, no readable text"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+      "type": "pdf_vector",
+      "size_kb": 6642,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "contact_name",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "contact_name": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+      "type": "pdf_vector",
+      "size_kb": 145,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "contact_name",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "contact_name": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/image.png",
+      "type": "image",
+      "size_kb": 30,
+      "text_extractable": false,
+      "concepts_detected": [
+        "architect_company"
+      ],
+      "concept_confidence": {
+        "architect_company": 1.0
+      },
+      "notes": "architect_plan: Architect logo and company name"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/image001.jpg",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/image005.png",
+      "type": "image",
+      "size_kb": 23,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/image006.jpg",
+      "type": "image",
+      "size_kb": 6,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img0.jpeg",
+      "type": "image",
+      "size_kb": 249,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Geographic map with roads and locations"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img1.png",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Blank document"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img2.jpeg",
+      "type": "image",
+      "size_kb": 655,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Aerial view of a town and surrounding agricultural fields"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img3.png",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Blank page"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
+      "type": "image",
+      "size_kb": 280,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Site plan with plot layouts and dimensions"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img5.jpeg",
+      "type": "image",
+      "size_kb": 30,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: No text or content visible"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img6.jpeg",
+      "type": "image",
+      "size_kb": 11,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: No text or data found"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img7.jpeg",
+      "type": "image",
+      "size_kb": 17,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Image with geometric shapes, no readable text"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img8.jpeg",
+      "type": "image",
+      "size_kb": 10,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "site_photo: Blank or empty document"
+    },
+    {
+      "path": "validation/msg_attachments/RV_ pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img9.jpeg",
+      "type": "image",
+      "size_kb": 16,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: No text or content found"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+      "type": "pdf_vector",
+      "size_kb": 6642,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "contact_name",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "contact_name": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+      "type": "pdf_vector",
+      "size_kb": 145,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "contact_name",
+        "field_date",
+        "expedient"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "contact_name": 0.7999999999999999,
+        "field_date": 0.7999999999999999,
+        "expedient": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/image.png",
+      "type": "image",
+      "size_kb": 30,
+      "text_extractable": false,
+      "concepts_detected": [
+        "architect_company"
+      ],
+      "concept_confidence": {
+        "architect_company": 0.9
+      },
+      "notes": "architect_plan: Architect logo and name"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img0.jpeg",
+      "type": "image",
+      "size_kb": 249,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Geographic map of an area in Catalonia, Spain"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img1.png",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Blank or empty document"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img2.jpeg",
+      "type": "image",
+      "size_kb": 655,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Aerial view of a town and surrounding farmland"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img3.png",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Blank page"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
+      "type": "image",
+      "size_kb": 280,
+      "text_extractable": false,
+      "concepts_detected": [
+        "street_address",
+        "municipality",
+        "superficie_parcela_m2",
+        "superficie_construida_m2"
+      ],
+      "concept_confidence": {
+        "street_address": 0.8,
+        "municipality": 0.6,
+        "superficie_parcela_m2": 0.9,
+        "superficie_construida_m2": 0.8
+      },
+      "notes": "map: Site plan with plot layouts"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img5.jpeg",
+      "type": "image",
+      "size_kb": 30,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: No text or content visible"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img6.jpeg",
+      "type": "image",
+      "size_kb": 11,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Image with no readable text"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img7.jpeg",
+      "type": "image",
+      "size_kb": 17,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: no text or content visible"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img8.jpeg",
+      "type": "image",
+      "size_kb": 10,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "site_photo: Empty image with black shapes"
+    },
+    {
+      "path": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img9.jpeg",
+      "type": "image",
+      "size_kb": 16,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "site_photo: Site photo with no text"
+    }
+  ],
+  "concept_sources": {
+    "client_nif": [
+      {
+        "file": "25.0616/RE_ pressupost geotècnic.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "47697437Z",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/RV_ pressupost geotècnic.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "47697437Z",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/pressupost geotècnic.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "47697437Z",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/25·0616.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B25461443",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "4672-GTL-25 Linyola.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B64803075",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "47697437Z",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ Realització geotècnic/G3DT_Silvia_Jaume signat.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "47697437Z",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "client_phone": [
+      {
+        "file": "25.0616/25·0616.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "973157519",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "973157519",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.85,
+        "signal_preview": "618108612",
+        "extraction_method": "regex_phone",
+        "page": null
+      },
+      {
+        "file": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "973157519",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "973157519",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+        "confidence": 0.75,
+        "signal_preview": "973157519",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+        "confidence": 0.75,
+        "signal_preview": "973157519",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "973157519",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "973157519",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "973157519",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "973157519",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ Realització geotècnic/G3DT_Silvia_Jaume signat.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "973157519",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ Realització geotècnic/Punts de Sondeig_Silvia_Jaume (1).pdf",
+        "confidence": 0.75,
+        "signal_preview": "973157519",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "RV_ Realització geotècnic.msg",
+        "confidence": 0.75,
+        "signal_preview": "628577224",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "CONTACTE.txt",
+        "confidence": 0.8,
+        "signal_preview": "628577224",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "client_email": [
+      {
+        "file": "25.0616/RE_ pressupost geotècnic.msg",
+        "confidence": 0.75,
+        "signal_preview": "administracion@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/RV_ pressupost geotècnic.msg",
+        "confidence": 0.75,
+        "signal_preview": "administracion@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/pressupost geotècnic.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "serolesba@gmail.com",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0616/25·0616.pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "info@bunyesc.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "info@bunyesc.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "4672-GTL-25 Linyola.pdf",
+        "confidence": 0.75,
+        "signal_preview": "laboratorio@tps-perforaciones.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+        "confidence": 0.75,
+        "signal_preview": "info@bunyesc.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+        "confidence": 0.75,
+        "signal_preview": "info@bunyesc.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "info@bunyesc.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "info@bunyesc.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "info@bunyesc.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.75,
+        "signal_preview": "info@bunyesc.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ Realització geotècnic/G3DT_Silvia_Jaume signat.pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ Realització geotècnic/Punts de Sondeig_Silvia_Jaume (1).pdf",
+        "confidence": 0.75,
+        "signal_preview": "info@bunyesc.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/RV_ Realització geotècnic.msg",
+        "confidence": 0.75,
+        "signal_preview": "serolesba@gmail.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "RV_ Realització geotècnic.msg",
+        "confidence": 0.75,
+        "signal_preview": "serolesba@gmail.com",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "contact_name": [
+      {
+        "file": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "info@bunyesc.com - www.bunyesc.com",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "SILVIA EROLES BALAGUERO",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "info@bunyesc.com - www.bunyesc.com",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "info@bunyesc.com - www.bunyesc.com",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "info@bunyesc.com - www.bunyesc.com",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "info@bunyesc.com - www.bunyesc.com",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "info@bunyesc.com - www.bunyesc.com",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "info@bunyesc.com - www.bunyesc.com",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "info@bunyesc.com - www.bunyesc.com",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ Realització geotècnic/Punts de Sondeig_Silvia_Jaume (1).pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "info@bunyesc.com - www.bunyesc.com",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PENETROS.pdf",
+        "confidence": 1.0,
+        "signal_preview": "Siny",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 3
+      }
+    ],
+    "field_date": [
+      {
+        "file": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "AGOST 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "AGOST 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "4672-GTL-25 Linyola.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "2025.10.30",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "AGOST 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "AGOST 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "tall.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Octubre 2023",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "AGOST 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "AGOST 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "AGOST 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "AGOST 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ Realització geotècnic/Punts de Sondeig_Silvia_Jaume (1).pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "AGOST 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PENETROS.pdf",
+        "confidence": 1.0,
+        "signal_preview": "01-10-25",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 2
+      }
+    ],
+    "expedient": [
+      {
+        "file": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "13/52/04",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "13/52/04",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "13/52/04",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "13/52/04",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "13/52/04",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "13/52/04",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/Punts de Sondeig_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "13/52/04",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/2_02B_DG_Silvia_Jaume.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "13/52/04",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "validation/msg_attachments/RV_ Realització geotècnic/Punts de Sondeig_Silvia_Jaume (1).pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "13/52/04",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "pl situ.pdf",
+        "confidence": 1.0,
+        "signal_preview": "4001607",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      }
+    ],
+    "client_name": [
+      {
+        "file": "25.0616/RE_ pressupost geotècnic.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Dades Clienta:",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/RV_ pressupost geotècnic.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Dades Clienta:",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/pressupost geotècnic.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Dades Clienta:",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "BUNYESC ARQUITECCTURA EFICIENT, SLP",
+        "extraction_method": "label_adjacent",
+        "page": null
+      }
+    ],
+    "street_address": [
+      {
+        "file": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "Carrer Clot de la Llacuna, 16, 25240 Linyola, Lleida",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "comanda laboratori_4001607_LINYOLA.xls",
+        "confidence": 0.9,
+        "signal_preview": "C/ Vallbona, 22",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "PENETROS.pdf",
+        "confidence": 1.0,
+        "signal_preview": "Carrer clot de la llacuna",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 2
+      },
+      {
+        "file": "pl situ.pdf",
+        "confidence": 0.8,
+        "signal_preview": "Carrer Clot de la Liacuna",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
+        "confidence": 0.8,
+        "signal_preview": "Carrer Roquetes",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "access_url": [
+      {
+        "file": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "https://maps.app.goo.gl/2bfFiHQVibDjzzDQ7",
+        "extraction_method": "label_adjacent",
+        "page": null
+      }
+    ],
+    "utm_coordinates": [
+      {
+        "file": "ANNEXES/ALTRES/COORDENADES.txt",
+        "confidence": 0.95,
+        "signal_preview": "{'point_id': 'P-1', 'x': 324935.0, 'y': 4619561.0, 'z': 244.9}",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "building_type": [
+      {
+        "file": "comanda laboratori_4001607_LINYOLA.xls",
+        "confidence": 0.9,
+        "signal_preview": "CONSTR HABITATGE",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "pl situ.pdf",
+        "confidence": 0.6,
+        "signal_preview": "habitatge",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      }
+    ],
+    "municipality": [
+      {
+        "file": "comanda laboratori_4001607_LINYOLA.xls",
+        "confidence": 0.9,
+        "signal_preview": "LINYOLA",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "PENETROS.pdf",
+        "confidence": 1.0,
+        "signal_preview": "Linyola",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 2
+      },
+      {
+        "file": "pl situ.pdf",
+        "confidence": 0.8,
+        "signal_preview": "Linyola",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
+        "confidence": 0.6,
+        "signal_preview": "not clear",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "cota_referencia": [
+      {
+        "file": "PENETROS.pdf",
+        "confidence": 1.0,
+        "signal_preview": "-0,15",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 2
+      }
+    ],
+    "architect_company": [
+      {
+        "file": "validation/msg_attachments/RV_ pressupost geotècnic/image.png",
+        "confidence": 1.0,
+        "signal_preview": "BUNYESC ARQUITECTES",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      },
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/image.png",
+        "confidence": 0.9,
+        "signal_preview": "BUNYESC ARQUITECTES",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      }
+    ],
+    "superficie_parcela_m2": [
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
+        "confidence": 0.9,
+        "signal_preview": "266.18 m²",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "superficie_construida_m2": [
+      {
+        "file": "validation/msg_attachments/pressupost geotècnic/validation/mined_images/2_02B_DG_Silvia_Jaume_img4.jpeg",
+        "confidence": 0.8,
+        "signal_preview": "not clear",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ]
+  },
+  "unresolved": [
+    "Es_settlement",
+    "access_description",
+    "adjacent_east",
+    "adjacent_north",
+    "adjacent_south",
+    "adjacent_west",
+    "architect_name",
+    "building_height_m",
+    "building_structure_desc",
+    "field_work_dates",
+    "field_work_dates_text",
+    "foundation_depth_m",
+    "geomech_E",
+    "geomech_cohesion",
+    "geomech_gamma",
+    "geomech_phi",
+    "has_basement",
+    "has_retaining_walls",
+    "historia_geologica_template",
+    "icgc_unit_code",
+    "icgc_unit_description",
+    "icgc_unit_epoch",
+    "is_anthropized",
+    "is_sloped",
+    "is_urban",
+    "k30_value",
+    "lab_depth",
+    "lab_field_company",
+    "lab_field_description",
+    "lab_location",
+    "lab_sample_id",
+    "lab_testing_company",
+    "lab_testing_description",
+    "lab_tests",
+    "lab_tests_text",
+    "location_sentence",
+    "num_dpsh_tests",
+    "num_floors",
+    "num_soil_levels",
+    "parcel_shape",
+    "province",
+    "qa_value",
+    "referencia_catastral",
+    "settlement_cm",
+    "site_description",
+    "site_position",
+    "slope_direction",
+    "slope_percent",
+    "sulfate_mg_kg",
+    "superficie_cadastral",
+    "superficie_construida",
+    "superficie_parcela",
+    "table_dpsh_range",
+    "utm_x",
+    "utm_y"
+  ],
+  "warnings": []
+}

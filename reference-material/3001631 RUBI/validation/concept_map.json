@@ -1,0 +1,973 @@
+{
+  "metadata": {
+    "project": "3001631 RUBI",
+    "scanned_at": "2026-04-11T22:36:17",
+    "total_files": 52,
+    "vision_probes_sent": 17,
+    "total_concepts_found": 18,
+    "total_concepts_unresolved": 52,
+    "duration_ms": 425
+  },
+  "file_inventory": [
+    {
+      "path": "25.0794/DADES PER ANAR A CAMP_v1.xlsx",
+      "type": "excel",
+      "size_kb": 16,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.9
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0794/IMG-20251104-WA0015.jpg",
+      "type": "image",
+      "size_kb": 253,
+      "text_extractable": false,
+      "concepts_detected": [
+        "building_type",
+        "superficie_construida_m2",
+        "num_floors",
+        "expedient",
+        "architect_company"
+      ],
+      "concept_confidence": {
+        "building_type": 0.9,
+        "superficie_construida_m2": 0.95,
+        "num_floors": 0.8,
+        "expedient": 0.8,
+        "architect_company": 0.7
+      },
+      "notes": "architect_plan: Floor plan showing Mediterranean model house layout with dimensions and room distribution"
+    },
+    {
+      "path": "25.0794/IMG-20251104-WA0016.jpg",
+      "type": "image",
+      "size_kb": 249,
+      "text_extractable": false,
+      "concepts_detected": [
+        "superficie_construida_m2",
+        "building_type"
+      ],
+      "concept_confidence": {
+        "superficie_construida_m2": 0.9,
+        "building_type": 0.8
+      },
+      "notes": "architect_plan: Foundation plan showing Mediterranean model layout with scale and dimensions"
+    },
+    {
+      "path": "25.0794/PLAN_COST_RUBI.xlsx",
+      "type": "excel",
+      "size_kb": 109,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "25.0794/PRESSU.msg",
+      "type": "email",
+      "size_kb": 699,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+      "type": "pdf_vector",
+      "size_kb": 370,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "client_nif"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.7999999999999999,
+        "client_email": 0.75,
+        "client_nif": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0794/RE_ PRESSU.msg",
+      "type": "email",
+      "size_kb": 294,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "3001631 - PENETROS.pdf",
+      "type": "pdf_scanned",
+      "size_kb": 755,
+      "text_extractable": false,
+      "concepts_detected": [
+        "street_address",
+        "municipality",
+        "field_date",
+        "contact_name"
+      ],
+      "concept_confidence": {
+        "street_address": 0.95,
+        "municipality": 0.9,
+        "field_date": 0.95,
+        "contact_name": 0.85
+      },
+      "notes": "field_sheet: Geotechnical field investigation forms with penetrometer and SPT test data"
+    },
+    {
+      "path": "3001631_PORTADA_25.doc",
+      "type": "docx",
+      "size_kb": 192,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "3001631_informe.doc",
+      "type": "docx",
+      "size_kb": 7650,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "3001631_test_validation.docx",
+      "type": "docx",
+      "size_kb": 7572,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4703-GTL-25 Rubí.pdf",
+      "type": "pdf_vector",
+      "size_kb": 463,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_email",
+        "client_nif",
+        "field_date"
+      ],
+      "concept_confidence": {
+        "client_email": 0.75,
+        "client_nif": 0.7999999999999999,
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+      "type": "image",
+      "size_kb": 308,
+      "text_extractable": false,
+      "concepts_detected": [
+        "client_name",
+        "client_nif",
+        "street_address",
+        "municipality",
+        "province",
+        "contact_name"
+      ],
+      "concept_confidence": {
+        "client_name": 0.9,
+        "client_nif": 0.9,
+        "street_address": 0.9,
+        "municipality": 0.9,
+        "province": 0.8,
+        "contact_name": 0.9
+      },
+      "notes": "budget: Geotechnical services budget/quotation document from Pressupost Geotecnic"
+    },
+    {
+      "path": "ANNEXES/3001631_DPSH.xls",
+      "type": "excel",
+      "size_kb": 111,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "ANNEXES/ALTRES/COORDENADES.txt",
+      "type": "text",
+      "size_kb": 0,
+      "text_extractable": true,
+      "concepts_detected": [
+        "utm_coordinates"
+      ],
+      "concept_confidence": {
+        "utm_coordinates": 0.95
+      },
+      "notes": ""
+    },
+    {
+      "path": "ANNEXES/Altres/F1 UBI.png",
+      "type": "image",
+      "size_kb": 1674,
+      "text_extractable": false,
+      "concepts_detected": [
+        "municipality"
+      ],
+      "concept_confidence": {
+        "municipality": 1.0
+      },
+      "notes": "map: Site location maps showing study area in Rubí with topographic and aerial views"
+    },
+    {
+      "path": "ANNEXES/Altres/F2 UBI PUNTS.png",
+      "type": "image",
+      "size_kb": 846,
+      "text_extractable": false,
+      "concepts_detected": [
+        "street_address"
+      ],
+      "concept_confidence": {
+        "street_address": 0.8
+      },
+      "notes": "map: Site plan/aerial view showing project area with penetration test locations and study zone"
+    },
+    {
+      "path": "ANNEXES/Altres/F3 VG.png",
+      "type": "image",
+      "size_kb": 2639,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "site_photo: Street view photograph showing residential area with houses, vegetation, and concrete retaining wall"
+    },
+    {
+      "path": "ANNEXES/Altres/F4 MGEOL.png",
+      "type": "image",
+      "size_kb": 983,
+      "text_extractable": false,
+      "concepts_detected": [
+        "num_soil_levels"
+      ],
+      "concept_confidence": {
+        "num_soil_levels": 0.8
+      },
+      "notes": "map: Geological map showing lithologies, with legend identifying rock formations and symbols"
+    },
+    {
+      "path": "ANNEXES/Altres/F5 TALL.png",
+      "type": "image",
+      "size_kb": 50,
+      "text_extractable": false,
+      "concepts_detected": [
+        "num_soil_levels",
+        "cota_referencia"
+      ],
+      "concept_confidence": {
+        "num_soil_levels": 0.95,
+        "cota_referencia": 0.9
+      },
+      "notes": "map: Geological cross-section showing soil levels with drilling points P-1, P-2, P-3"
+    },
+    {
+      "path": "ANNEXES/Altres/m1.png",
+      "type": "image",
+      "size_kb": 646,
+      "text_extractable": false,
+      "concepts_detected": [
+        "municipality",
+        "municipality"
+      ],
+      "concept_confidence": {
+        "municipality": 0.95
+      },
+      "notes": "map: Topographic map showing the area around Rubí, Castellbisbal and surrounding municipalities"
+    },
+    {
+      "path": "ANNEXES/Altres/m2.png",
+      "type": "image",
+      "size_kb": 784,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Aerial/satellite view map showing buildings, roads, and plot boundaries with measurement scale"
+    },
+    {
+      "path": "ANNEXES/Altres/m3.png",
+      "type": "image",
+      "size_kb": 749,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "site_photo: Aerial/satellite view of a residential area showing buildings, roads, and property boundaries"
+    },
+    {
+      "path": "ANNEXES/Altres/m4.png",
+      "type": "image",
+      "size_kb": 46,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "architect_plan: Hand-drawn architectural sketch showing building layout with measurements and reference points"
+    },
+    {
+      "path": "ANNEXES/Altres/m5.png",
+      "type": "image",
+      "size_kb": 939,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "site_photo: Aerial photograph showing residential buildings and surrounding area with scale bar"
+    },
+    {
+      "path": "FOTOGRAFIES/Imatge de WhatsApp 2025-11-14 a les 11.17.54_936f3908.jpg",
+      "type": "image",
+      "size_kb": 354,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/Imatge de WhatsApp 2025-11-14 a les 11.49.21_a3e04224.jpg",
+      "type": "image",
+      "size_kb": 449,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/P1.jpg",
+      "type": "image",
+      "size_kb": 542,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/P2.jpg",
+      "type": "image",
+      "size_kb": 549,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/P3.jpg",
+      "type": "image",
+      "size_kb": 520,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/SPT1.jpg",
+      "type": "image",
+      "size_kb": 531,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/3001631_informe.pdf",
+      "type": "pdf_vector",
+      "size_kb": 1873,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/3001631_DPSH.pdf",
+      "type": "pdf_vector",
+      "size_kb": 103,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/3001631_fotografies.pdf",
+      "type": "pdf_vector",
+      "size_kb": 395,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/3001631_plànol de situació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 224,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/3001631_tall de correlació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 98,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/LAB-SIG.pdf",
+      "type": "pdf_vector",
+      "size_kb": 231,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/LLETRA/3001631_PORTADA_25.pdf",
+      "type": "pdf_vector",
+      "size_kb": 59,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/LLETRA/3001631_informe.pdf",
+      "type": "pdf_vector",
+      "size_kb": 811,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "_user_data_prev.json",
+      "type": "other",
+      "size_kb": 5,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "comanda laboratori_3001631_RUBI.xls",
+      "type": "excel",
+      "size_kb": 459,
+      "text_extractable": true,
+      "concepts_detected": [
+        "street_address",
+        "building_type",
+        "municipality"
+      ],
+      "concept_confidence": {
+        "street_address": 0.9,
+        "building_type": 0.9,
+        "municipality": 0.9
+      },
+      "notes": ""
+    },
+    {
+      "path": "tall.pdf",
+      "type": "pdf_vector",
+      "size_kb": 960,
+      "text_extractable": true,
+      "concepts_detected": [
+        "field_date"
+      ],
+      "concept_confidence": {
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/PRESSU/IMG-20251104-WA0015.jpg",
+      "type": "image",
+      "size_kb": 253,
+      "text_extractable": false,
+      "concepts_detected": [
+        "building_type",
+        "superficie_construida_m2"
+      ],
+      "concept_confidence": {
+        "building_type": 0.9,
+        "superficie_construida_m2": 0.95
+      },
+      "notes": "architect_plan: Mediterranean model house floor plan showing room layout with dimensions"
+    },
+    {
+      "path": "validation/msg_attachments/PRESSU/IMG-20251104-WA0016.jpg",
+      "type": "image",
+      "size_kb": 245,
+      "text_extractable": false,
+      "concepts_detected": [
+        "has_basement"
+      ],
+      "concept_confidence": {
+        "has_basement": 0.8
+      },
+      "notes": "architect_plan: Foundation plan showing concrete footings and structural layout with dimensions"
+    },
+    {
+      "path": "validation/msg_attachments/PRESSU/image001.jpg",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/PRESSU/image005.png",
+      "type": "image",
+      "size_kb": 23,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ PRESSU/PLAN_COST_RUBI.xlsx",
+      "type": "excel",
+      "size_kb": 109,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ PRESSU/image001.jpg",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ PRESSU/image005.jpg",
+      "type": "image",
+      "size_kb": 6,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ PRESSU/image006.jpg",
+      "type": "image",
+      "size_kb": 6,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ PRESSU/image008.png",
+      "type": "image",
+      "size_kb": 23,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/RE_ PRESSU/validation/mined_images/PLAN_COST_RUBI_img0.png",
+      "type": "image",
+      "size_kb": 9,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Logo image"
+    }
+  ],
+  "concept_sources": {
+    "client_phone": [
+      {
+        "file": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "696040077",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0794/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "A OBRA",
+        "extraction_method": "label_adjacent",
+        "page": null
+      }
+    ],
+    "client_email": [
+      {
+        "file": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "4703-GTL-25 Rubí.pdf",
+        "confidence": 0.75,
+        "signal_preview": "laboratorio@tps-perforaciones.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0794/PRESSU.msg",
+        "confidence": 0.75,
+        "signal_preview": "administracion@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0794/RE_ PRESSU.msg",
+        "confidence": 0.75,
+        "signal_preview": "administracion@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "client_nif": [
+      {
+        "file": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B25461443",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "4703-GTL-25 Rubí.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B64803075",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+        "confidence": 0.9,
+        "signal_preview": "38540702Q",
+        "extraction_method": "vision_probe:budget",
+        "page": 1
+      }
+    ],
+    "field_date": [
+      {
+        "file": "4703-GTL-25 Rubí.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "2025.12.17",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "tall.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Desembre 2025 Exp: 3001631",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "3001631 - PENETROS.pdf",
+        "confidence": 0.95,
+        "signal_preview": "14-11-2025",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      }
+    ],
+    "utm_coordinates": [
+      {
+        "file": "ANNEXES/ALTRES/COORDENADES.txt",
+        "confidence": 0.95,
+        "signal_preview": "{'point_id': 'P-1', 'x': 418215.0, 'y': 4595648.0, 'z': 212.2}",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "street_address": [
+      {
+        "file": "comanda laboratori_3001631_RUBI.xls",
+        "confidence": 0.9,
+        "signal_preview": "C/ Vallbona, 22",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "3001631 - PENETROS.pdf",
+        "confidence": 0.95,
+        "signal_preview": "C/de la Moranda",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      },
+      {
+        "file": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+        "confidence": 0.9,
+        "signal_preview": "Carlle Joan Carles Ferran 41A",
+        "extraction_method": "vision_probe:budget",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/Altres/F2 UBI PUNTS.png",
+        "confidence": 0.8,
+        "signal_preview": "Carrer de la Miranda",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "building_type": [
+      {
+        "file": "comanda laboratori_3001631_RUBI.xls",
+        "confidence": 0.9,
+        "signal_preview": "CONSTR HABITATGE UNI",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "25.0794/IMG-20251104-WA0015.jpg",
+        "confidence": 0.9,
+        "signal_preview": "MODELO MEDITERRANEO",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      },
+      {
+        "file": "25.0794/IMG-20251104-WA0016.jpg",
+        "confidence": 0.8,
+        "signal_preview": "MODELO MEDITERRANEO",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      },
+      {
+        "file": "validation/msg_attachments/PRESSU/IMG-20251104-WA0015.jpg",
+        "confidence": 0.9,
+        "signal_preview": "MODELO MEDITERRANEO",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      }
+    ],
+    "municipality": [
+      {
+        "file": "comanda laboratori_3001631_RUBI.xls",
+        "confidence": 0.9,
+        "signal_preview": "RUBI",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "3001631 - PENETROS.pdf",
+        "confidence": 0.9,
+        "signal_preview": "Rubí",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      },
+      {
+        "file": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+        "confidence": 0.9,
+        "signal_preview": "Redovan",
+        "extraction_method": "vision_probe:budget",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/Altres/F1 UBI.png",
+        "confidence": 1.0,
+        "signal_preview": "Rubí",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/Altres/m1.png",
+        "confidence": 0.95,
+        "signal_preview": "Castellbisbal",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "superficie_construida_m2": [
+      {
+        "file": "25.0794/IMG-20251104-WA0015.jpg",
+        "confidence": 0.95,
+        "signal_preview": "72 m2",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      },
+      {
+        "file": "25.0794/IMG-20251104-WA0016.jpg",
+        "confidence": 0.9,
+        "signal_preview": "72 m2",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      },
+      {
+        "file": "validation/msg_attachments/PRESSU/IMG-20251104-WA0015.jpg",
+        "confidence": 0.95,
+        "signal_preview": "72 m2",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      }
+    ],
+    "num_floors": [
+      {
+        "file": "25.0794/IMG-20251104-WA0015.jpg",
+        "confidence": 0.8,
+        "signal_preview": "PLANTA",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      }
+    ],
+    "expedient": [
+      {
+        "file": "25.0794/IMG-20251104-WA0015.jpg",
+        "confidence": 0.8,
+        "signal_preview": "Rf - Mga70",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      }
+    ],
+    "architect_company": [
+      {
+        "file": "25.0794/IMG-20251104-WA0015.jpg",
+        "confidence": 0.7,
+        "signal_preview": "VIVIENDAS MODULARES",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      }
+    ],
+    "contact_name": [
+      {
+        "file": "3001631 - PENETROS.pdf",
+        "confidence": 0.85,
+        "signal_preview": "Daniel Fernandez",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      },
+      {
+        "file": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+        "confidence": 0.9,
+        "signal_preview": "ALBERT COLL",
+        "extraction_method": "vision_probe:budget",
+        "page": 1
+      }
+    ],
+    "client_name": [
+      {
+        "file": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+        "confidence": 0.9,
+        "signal_preview": "Joan Martinez",
+        "extraction_method": "vision_probe:budget",
+        "page": 1
+      }
+    ],
+    "province": [
+      {
+        "file": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+        "confidence": 0.8,
+        "signal_preview": "Alicante",
+        "extraction_method": "vision_probe:budget",
+        "page": 1
+      }
+    ],
+    "num_soil_levels": [
+      {
+        "file": "ANNEXES/Altres/F4 MGEOL.png",
+        "confidence": 0.8,
+        "signal_preview": "2 geological units (NMgo, Qac3)",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/Altres/F5 TALL.png",
+        "confidence": 0.95,
+        "signal_preview": "Nivel 1 (N1), Nivel 2 (N2)",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "cota_referencia": [
+      {
+        "file": "ANNEXES/Altres/F5 TALL.png",
+        "confidence": 0.9,
+        "signal_preview": "+211,90 m, +211,4 m, +211,40 m",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "has_basement": [
+      {
+        "file": "validation/msg_attachments/PRESSU/IMG-20251104-WA0016.jpg",
+        "confidence": 0.8,
+        "signal_preview": "NO POUS BLINDATS",
+        "extraction_method": "vision_probe:architect_plan",
+        "page": 1
+      }
+    ]
+  },
+  "unresolved": [
+    "Es_settlement",
+    "access_description",
+    "access_url",
+    "adjacent_east",
+    "adjacent_north",
+    "adjacent_south",
+    "adjacent_west",
+    "architect_name",
+    "building_height_m",
+    "building_structure_desc",
+    "field_work_dates",
+    "field_work_dates_text",
+    "foundation_depth_m",
+    "geomech_E",
+    "geomech_cohesion",
+    "geomech_gamma",
+    "geomech_phi",
+    "has_retaining_walls",
+    "historia_geologica_template",
+    "icgc_unit_code",
+    "icgc_unit_description",
+    "icgc_unit_epoch",
+    "is_anthropized",
+    "is_sloped",
+    "is_urban",
+    "k30_value",
+    "lab_depth",
+    "lab_field_company",
+    "lab_field_description",
+    "lab_location",
+    "lab_sample_id",
+    "lab_testing_company",
+    "lab_testing_description",
+    "lab_tests",
+    "lab_tests_text",
+    "location_sentence",
+    "num_dpsh_tests",
+    "parcel_shape",
+    "qa_value",
+    "referencia_catastral",
+    "settlement_cm",
+    "site_description",
+    "site_position",
+    "slope_direction",
+    "slope_percent",
+    "sulfate_mg_kg",
+    "superficie_cadastral",
+    "superficie_construida",
+    "superficie_parcela",
+    "table_dpsh_range",
+    "utm_x",
+    "utm_y"
+  ],
+  "warnings": []
+}

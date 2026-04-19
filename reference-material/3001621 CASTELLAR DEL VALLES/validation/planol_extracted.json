@@ -1,37 +1,28 @@
 {
+  "data_sources_found": [
+    "Title block (caixetí)"
+  ],
+  "planning_table_raw": null,
   "architect_data": {
-    "source_file": "plà.pdf",
-    "project_name": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
-    "building_type": "habitatge unifamiliar aïllat",
-    "client_name": null,
-    "street_address": "Carrer Arbrells nº 18A-18B-20",
+    "source_file": null,
+    "project_name": null,
+    "building_type": null,
+    "client_name": "G3",
+    "street_address": "C/ Arbrell",
     "municipality": "Castellar del Vallès",
     "promotor": null,
     "architect": null,
-    "architect_company": "G3",
+    "architect_company": null,
     "dimensions": {
       "parcel_area_m2": null,
       "building_footprint_m2": null,
-      "floor_surfaces": [],
+      "floor_surfaces": null,
       "num_floors": null,
       "max_height_m": null,
-      "plot_length_m": {
-        "pdf_value": 40.0,
-        "confidence": 0.9
-      },
-      "plot_width_m": {
-        "pdf_value": 20.0,
-        "confidence": 0.9
-      }
+      "plot_length_m": null,
+      "plot_width_m": null
     }
   },
-  "floor_plan_bbox": {
-    "top_pct": 0.0,
-    "left_pct": 0.0,
-    "bottom_pct": 100.0,
-    "right_pct": 50.0,
-    "confidence": 1.0
-  },
-  "overall_confidence": 0.9,
-  "extraction_notes": "Title block found, dimensions from site plan"
+  "overall_confidence": 0.6,
+  "extraction_notes": "Only title block (caixetí) data found on the pages. No planning/normativa table, site plan drawing, area tables, or section/alzat present. The title block provides client company (G3), street address (C/ Arbrell), and municipality (Castellar del Vallès). No project name, building type, promotor, architect, or architect company information visible. No dimensional or planning data available."
 }

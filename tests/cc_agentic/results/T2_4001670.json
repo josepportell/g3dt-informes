@@ -1,0 +1,1223 @@
+{
+  "metadata": {
+    "test_id": "T2",
+    "project": "4001670 ALCOLETGE",
+    "timestamp": "2026-04-17T08:13:37.814898+00:00",
+    "files_available": 23,
+    "files_read": 14,
+    "files_from_email": 14,
+    "duration_s": 154.0,
+    "api_calls": 12,
+    "input_tokens": 42750,
+    "output_tokens": 4187,
+    "gaps_found": 37,
+    "gaps_filled_by_cc": 25
+  },
+  "files_inventory": [
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/4001670_informe.doc",
+      "role": "reference_report",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/A.01.pdf",
+      "role": "architect_plan",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/PENETROS.pdf",
+      "role": "dpsh_field_sheet",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/comanda laboratori_4001670_ALCOLETGE.xls",
+      "role": "lab_order",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/tall.pdf",
+      "role": "correlation_section",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/ANNEXES/4001670_DPSH.xls",
+      "role": "dpsh_excel",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/PDF/ANNEXES/4001670_plànol de situació.pdf",
+      "role": "situation_plan",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/26.0049",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/FOTOS DE CAMP + PLANOL PUNTS",
+      "role": "unassigned",
+      "origin": "project"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge/PLAN_COST_ALCOLETGE.xlsx",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge/image008.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge/image011.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge/image012.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge/validation/mined_images/PLAN_COST_ALCOLETGE_img0.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/geotècnic Ampliació Albert Sans municipi d'Alcoletge/PLANO 2.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/geotècnic Ampliació Albert Sans municipi d'Alcoletge/image001.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/geotècnic Ampliació Albert Sans municipi d'Alcoletge/image005.png",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/geotècnic Ampliació Albert Sans municipi d'Alcoletge/image008.jpg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/geotècnic Ampliació Albert Sans municipi d'Alcoletge/planol 3.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/geotècnic Ampliació Albert Sans municipi d'Alcoletge/planol-1.pdf",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/geotècnic Ampliació Albert Sans municipi d'Alcoletge/validation/mined_images/planol-1_img0.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    },
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/validation/msg_attachments/geotècnic Ampliació Albert Sans municipi d'Alcoletge/validation/mined_images/planol-1_img1.jpeg",
+      "role": "email_attachment",
+      "origin": "email"
+    }
+  ],
+  "variables": {
+    "client_name": {
+      "value": "ALBERT SANS BONVEHI tel. 675639431 - etesnob91@gmail.com <mailto:etesnob91@gmail.com>",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "contact_name": {
+      "value": "TEL.",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "client_nif": {
+      "value": "B25461443",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "client_phone": {
+      "value": "675639431",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "client_email": {
+      "value": "g3@g3dt.com",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "architect_name": {
+      "value": "David Graus Robinat",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "architect_company": {
+      "value": "David Graus",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "street_address": {
+      "value": "C/ Vallbona, 22",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "municipality": {
+      "value": "ALCOLETGE",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "province": {
+      "value": "Lleida",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "building_type": {
+      "value": "CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660) bon accés",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "num_floors": {
+      "value": "Pb",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_parcela": {
+      "value": 1167,
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_construida": {
+      "value": 100,
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "superficie_cadastral": {
+      "value": "1167",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "has_basement": {
+      "value": false,
+      "confidence": 0.85,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "has_retaining_walls": {
+      "value": false,
+      "confidence": 0.88,
+      "source_file": "tall.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "expedient": {
+      "value": "4001670",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "field_date": {
+      "value": "Febrer 2026",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "access_url": {
+      "value": "https://www.google.com/maps/place/41%C2%B039",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "field_work_dates": {
+      "value": [
+        "2026-02-16"
+      ],
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "field_work_dates_text": {
+      "value": "16 de febrer de 2026",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "site_description": {
+      "value": "Solar explanat amb un edifici en planta baixa a la meitat nord. La zona d'ampliació es troba a la part posterior. No s'observen afloraments dels materials del subsòl ni patologies aparents en construccions properes.",
+      "confidence": 0.95,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "access_description": {
+      "value": "L'entrada a la zona d'estudi es realitza a través del carrer existent al nord. Es pot accedir sense problemes amb la maquinària prevista a la part posterior.",
+      "confidence": 0.95,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "cota_referencia": {
+      "value": "+188.50",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "adjacent_north": {
+      "value": "Carrer dels Gira-sols",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "adjacent_south": {
+      "value": "parcel·la amb construcció",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "adjacent_east": {
+      "value": "parcel·la amb construcció",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "adjacent_west": {
+      "value": "parcel·la buida",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "site_position": {
+      "value": "L'ampliació es preveu a la part posterior (sud) de l'edifici existent, situat a la meitat nord de la parcel·la",
+      "confidence": 0.9,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "parcel_shape": {
+      "value": "Rectangular",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "is_urban": {
+      "value": true,
+      "confidence": 0.9,
+      "source_file": "4001670_plànol de situació.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "is_sloped": {
+      "value": false,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "slope_percent": {
+      "value": 4.5,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "slope_direction": {
+      "value": "W",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "is_anthropized": {
+      "value": true,
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "num_soil_levels": {
+      "value": 2,
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "foundation_depth_m": {
+      "value": 1.4,
+      "confidence": 0.8,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "Es_settlement": {
+      "value": 23,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "historia_geologica_template": {
+      "value": "/home/josep/projects/claudecode-job/clients/g3dt/templates/historia-geologica/HISTORIA GEOLÒGICA/Historia geologica Lleida.docx",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "lab_tests": {
+      "value": [
+        "Límits d'Atterberg UNE 103103/94-104/93",
+        "Contingut en sulfats solubles UNE 83963/08"
+      ],
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_location": {
+      "value": "Punt P-3",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_sample_id": {
+      "value": "SPT-1",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_depth": {
+      "value": "-0.80 a -1.40 m",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "lab_tests_text": {
+      "value": "Assaig de plasticitat de Límits d'Atterberg UNE 103103/94-104/93; Contingut en sulfats solubles del sòl UNE 83963/08",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "icgc_unit_code": {
+      "value": "POmgc4",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "icgc_unit_description": {
+      "value": "Lutites amb intercalacions de gresos",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "icgc_unit_epoch": {
+      "value": "Oligocè",
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "utm_x": {
+      "value": 308781.86,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "utm_y": {
+      "value": 4613950.63,
+      "confidence": 0.8,
+      "source_file": "pipeline",
+      "source_origin": "pipeline",
+      "extraction_method": "auto_extract"
+    },
+    "num_dpsh_tests": {
+      "value": "3 assaigs de penetració dinàmica tipus DPSH",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "table_dpsh_range": {
+      "value": "P-1, P-2 i P-3",
+      "confidence": 1.0,
+      "source_file": "4001670_plànol de situació.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "building_structure_desc": {
+      "value": "Ampliació d'edifici en planta baixa (C-0 segons CTE DB SE-C)",
+      "confidence": 0.85,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    },
+    "location_sentence": {
+      "value": "La parcel·la objecte d'estudi es situa al nord-est del municipi de l'Alcoletge, concretament a la Urbanització El Roser, al Carrer Girasols nº7.",
+      "confidence": 1.0,
+      "source_file": "4001670_informe.doc",
+      "source_origin": "project",
+      "extraction_method": "doc_convert"
+    }
+  },
+  "comparison": {
+    "vs_eva": {
+      "total_eva_vars": 51,
+      "counts": {
+        "MATCH": 4,
+        "CLOSE": 4,
+        "MISMATCH": 7,
+        "NOT_EXTRACTED": 36
+      },
+      "accuracy_pct": 15.7,
+      "details": [
+        {
+          "variable": "access_street",
+          "tier": "-",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer existent al nord.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_east_fmt",
+          "tier": "-",
+          "eva": "Per la part est amb tres parcel·les ocupades per edificis aïllats de fins a dos plantes sobre rasant i una amb soterrani i piscina.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_north_fmt",
+          "tier": "-",
+          "eva": "Per la part nord amb el camí d’accés.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_south_fmt",
+          "tier": "-",
+          "eva": "Per la part sud amb una parcel·la on existeix un edifici aïllat en planta baixa.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "adjacent_west_fmt",
+          "tier": "-",
+          "eva": "I finalment, per la part oest, amb un solar buit.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "architect_name_upper",
+          "tier": "-",
+          "eva": "ALBERT SANS BONVEHI",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "building_structure_desc",
+          "tier": "-",
+          "eva": "sense nivell de soterrani",
+          "cc": "Ampliació d'edifici en planta baixa (C-0 segons CTE DB SE-C)",
+          "confidence": 0.85,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "building_type_lower",
+          "tier": "-",
+          "eva": "l'ampliació d'un edifici en planta baixa",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "client",
+          "tier": "A",
+          "eva": "SR. ALBERT SANS BONVEHI",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_aggressivity_statement",
+          "tier": "-",
+          "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_levels_detected",
+          "tier": "-",
+          "eva": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "conclusions_water_statement",
+          "tier": "-",
+          "eva": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats. Cal destacar però, que es detecta humitat en els materials del subsòl a partir de la cota de -1.00 m de profunditat, respecte la boca dels assaigs.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "csn_radon_text",
+          "tier": "-",
+          "eva": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "cte_edificacio",
+          "tier": "-",
+          "eva": "C-0",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "cte_sol",
+          "tier": "-",
+          "eva": "T-1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "data_camp_text",
+          "tier": "A",
+          "eva": "16 de febrer de 2026",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "data_signatura_text",
+          "tier": "-",
+          "eva": "16 de març de 2026",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "dpsh_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'P-1', 'cota': '+188.20', 'depth': '-1.60', 'refusal': 'Si', 'water': '-1.00'}, {'test_id': 'P-2', 'cota': '+188.20', 'depth': '-1.30', 'refusal': 'Si', 'water': '-1.00'}, {'test_id': 'P-3', 'cota': '+188.20', 'depth': '-1.69', 'refusal': 'Si', 'water': '-1.00'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "expedient",
+          "tier": "-",
+          "eva": "4001670",
+          "cc": "4001670",
+          "confidence": 0.8,
+          "status": "MATCH"
+        },
+        {
+          "variable": "geo_p",
+          "tier": "-",
+          "eva": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "geotech_rows",
+          "tier": "-",
+          "eva": "[{'name': '1er nivell. Sorres argiloses de rebliment', 'nb': '5-0', 'n': '--', 'density': '1.80', 'cohesion': '0.00', 'phi': '28º', 'E': '50'}, {'name': '2on nivell. Lutites i sorrenques alterades', 'nb': 'R', 'n': '20', 'density': '2.00', 'cohesion': '1.00', 'phi': '30º', 'E': '>400'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "lab_depth",
+          "tier": "-",
+          "eva": "Profunditat:  -0.80  a -1.40 m",
+          "cc": "-0.80 a -1.40 m",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_field_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "lab_field_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "lab_location",
+          "tier": "-",
+          "eva": "Punt: P-3",
+          "cc": "Punt P-3",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "lab_sample_id",
+          "tier": "-",
+          "eva": "Mostra : SPT-1",
+          "cc": "SPT-1",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "lab_testing_company",
+          "tier": "-",
+          "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+          "cc": "TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "lab_testing_description",
+          "tier": "-",
+          "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "lab_tests_text",
+          "tier": "-",
+          "eva": "Assaig de plasticitat de Límits d’Atterberg UNE 103103/94-104/93\nContingut en sulfats solubles dels sòl UNE 83963/08",
+          "cc": "Assaig de plasticitat de Límits d'Atterberg UNE 103103/94-104/93; Contingut en sulfats solubles del sòl UNE 83963/08",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "location_sentence",
+          "tier": "B",
+          "eva": "a una parcel·la ubicada al Carrer Girasols nº7, Urbanització El Roser d'Alcoletge",
+          "cc": "La parcel·la objecte d'estudi es situa al nord-est del municipi de l'Alcoletge, concretament a la Urbanització El Roser, al Carrer Girasols nº7.",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "materials_intro",
+          "tier": "-",
+          "eva": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "municipality",
+          "tier": "A",
+          "eva": "A la zona d’estudi, en el municipi d’Alcoletge, s’estableix una acceleració sísmica bàsica de:",
+          "cc": "ALCOLETGE",
+          "confidence": 0.8,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "num_dpsh_tests",
+          "tier": "A",
+          "eva": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+          "cc": "3 assaigs de penetració dinàmica tipus DPSH",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "perm_rows",
+          "tier": "-",
+          "eva": "[{'name': '2on nivell', 'k_value': '10-5 – 10-7', 'material': 'Lutites i sorrenques del substrat Oligocè'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "plantes",
+          "tier": "-",
+          "eva": "Pb",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "qa_value",
+          "tier": "C",
+          "eva": "3.50",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "radon_zone",
+          "tier": "A",
+          "eva": "1",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "radon_zone_description",
+          "tier": "-",
+          "eva": "La parcel·la concreta d’estudi es localitza al terme municipal d’ALCOLETGE i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "seismic_ab_text",
+          "tier": "A",
+          "eva": "0,04",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "seismic_rows",
+          "tier": "-",
+          "eva": "[{'num': '1', 'terrain_type': 'Tipus IV', 'thickness': '1.40', 'c_coeff': '2.0'}, {'num': '2', 'terrain_type': 'Tipus I', 'thickness': '0.29*', 'c_coeff': '1.0'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "settlement",
+          "tier": "C",
+          "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreable o bé menors a 1.0 cm.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "site_condition",
+          "tier": "B",
+          "eva": "Com que es tracta d’un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "site_description",
+          "tier": "B",
+          "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer existent al nord.\nEl solar està actualment ocupat per una zona explanada i un edifici en planta baixa a la meitat nord.\nL’ampliació d’aquest edifici es preveu realitzar a la part posterior, zona on es pot accedir sense problemes amb la maquinaria prevista.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+          "cc": "Solar explanat amb un edifici en planta baixa a la meitat nord. La zona d'ampliació es troba a la part posterior. No s'observen afloraments dels materials del subsòl ni patologies aparents en construccions properes.",
+          "confidence": 0.95,
+          "status": "MISMATCH"
+        },
+        {
+          "variable": "sondeig_tests",
+          "tier": "-",
+          "eva": "[{'test_id': 'Nº assaig', 'cota': 'Punt', 'depth': 'Prof. Extracció (m)', 'spt_ma': 'N30', 'water': 'Litologia'}, {'test_id': 'SPT-1', 'cota': 'P-3', 'depth': '-0.80 a -1.40', 'spt_ma': '20', 'water': 'Llims compactes, lutites alterades'}]",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_baumann",
+          "tier": "-",
+          "eva": "---",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_classification",
+          "tier": "-",
+          "eva": "No Agressius",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_level_name",
+          "tier": "-",
+          "eva": "2on nivell",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "sulfate_value",
+          "tier": "A",
+          "eva": "297.9",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "superficie_construida",
+          "tier": "A",
+          "eva": "100",
+          "cc": "100",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "superficie_parcela",
+          "tier": "A",
+          "eva": "1167",
+          "cc": "1167",
+          "confidence": 1.0,
+          "status": "MATCH"
+        },
+        {
+          "variable": "table_dpsh_range",
+          "tier": "-",
+          "eva": "3 i 4",
+          "cc": "P-1, P-2 i P-3",
+          "confidence": 1.0,
+          "status": "MISMATCH"
+        }
+      ]
+    }
+  },
+  "trace": [
+    {
+      "action_id": "extract_4001670_informe.doc",
+      "type": "file_extraction",
+      "file": "4001670_informe.doc",
+      "role": "reference_report",
+      "origin": "project",
+      "method": "doc_convert",
+      "vars_extracted": 41,
+      "elapsed_s": 26.88,
+      "usage": {
+        "input_tokens": 6804,
+        "output_tokens": 1458,
+        "elapsed_s": 23.77
+      }
+    },
+    {
+      "action_id": "extract_A.01.pdf",
+      "type": "file_extraction",
+      "file": "A.01.pdf",
+      "role": "architect_plan",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 10.28,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 252,
+        "elapsed_s": 9.58
+      }
+    },
+    {
+      "action_id": "extract_PENETROS.pdf",
+      "type": "file_extraction",
+      "file": "PENETROS.pdf",
+      "role": "dpsh_field_sheet",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 13,
+      "elapsed_s": 10.69,
+      "usage": {
+        "input_tokens": 6240,
+        "output_tokens": 371,
+        "elapsed_s": 9.34
+      }
+    },
+    {
+      "action_id": "crop_reread_PENETROS.pdf",
+      "type": "agentic_crop",
+      "file": "PENETROS.pdf",
+      "target_vars": [
+        "num_soil_levels"
+      ],
+      "improved_vars": [
+        "num_soil_levels"
+      ],
+      "usage": {
+        "input_tokens": 4759,
+        "output_tokens": 317,
+        "elapsed_s": 13.85
+      }
+    },
+    {
+      "action_id": "extract_comanda laboratori_4001670_ALCOLETGE.xls",
+      "type": "file_extraction",
+      "file": "comanda laboratori_4001670_ALCOLETGE.xls",
+      "role": "lab_order",
+      "origin": "project",
+      "method": "excel_parse",
+      "vars_extracted": 3,
+      "elapsed_s": 0.17,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_tall.pdf",
+      "type": "file_extraction",
+      "file": "tall.pdf",
+      "role": "correlation_section",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 12,
+      "elapsed_s": 8.69,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 356,
+        "elapsed_s": 8.26
+      }
+    },
+    {
+      "action_id": "crop_reread_tall.pdf",
+      "type": "agentic_crop",
+      "file": "tall.pdf",
+      "target_vars": [
+        "has_basement",
+        "has_retaining_walls",
+        "is_sloped"
+      ],
+      "improved_vars": [
+        "has_basement",
+        "has_retaining_walls",
+        "is_sloped"
+      ],
+      "usage": {
+        "input_tokens": 1692,
+        "output_tokens": 385,
+        "elapsed_s": 10.77
+      }
+    },
+    {
+      "action_id": "extract_4001670_DPSH.xls",
+      "type": "file_extraction",
+      "file": "4001670_DPSH.xls",
+      "role": "dpsh_excel",
+      "origin": "project",
+      "method": "excel_parse",
+      "vars_extracted": 0,
+      "elapsed_s": 0.02,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_4001670_plànol de situació.pdf",
+      "type": "file_extraction",
+      "file": "4001670_plànol de situació.pdf",
+      "role": "situation_plan",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 10,
+      "elapsed_s": 9.75,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 328,
+        "elapsed_s": 8.82
+      }
+    },
+    {
+      "action_id": "extract_26.0049",
+      "type": "file_extraction",
+      "file": "26.0049",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_FOTOS DE CAMP + PLANOL PUNTS",
+      "type": "file_extraction",
+      "file": "FOTOS DE CAMP + PLANOL PUNTS",
+      "role": "unassigned",
+      "origin": "project",
+      "method": "unsupported",
+      "vars_extracted": 0,
+      "elapsed_s": 0.0,
+      "usage": {}
+    },
+    {
+      "action_id": "extract_PLAN_COST_ALCOLETGE.xlsx",
+      "type": "file_extraction",
+      "file": "PLAN_COST_ALCOLETGE.xlsx",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "excel_parse",
+      "vars_extracted": 2,
+      "elapsed_s": 0.66,
+      "usage": {}
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image008.jpg",
+      "type": "file_skip",
+      "file": "image008.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image011.jpg",
+      "type": "file_skip",
+      "file": "image011.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image012.png",
+      "type": "file_skip",
+      "file": "image012.png",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_PLAN_COST_ALCOLETGE_img0.png",
+      "type": "file_skip",
+      "file": "PLAN_COST_ALCOLETGE_img0.png",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "extract_PLANO 2.pdf",
+      "type": "file_extraction",
+      "file": "PLANO 2.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 8.65,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 231,
+        "elapsed_s": 8.01
+      }
+    },
+    {
+      "action_id": "skip_image001.jpg",
+      "type": "file_skip",
+      "file": "image001.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image005.png",
+      "type": "file_skip",
+      "file": "image005.png",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "skip_image008.jpg",
+      "type": "file_skip",
+      "file": "image008.jpg",
+      "reason": "junk_pattern"
+    },
+    {
+      "action_id": "extract_planol 3.pdf",
+      "type": "file_extraction",
+      "file": "planol 3.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 0,
+      "elapsed_s": 5.34,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 4,
+        "elapsed_s": 4.7
+      }
+    },
+    {
+      "action_id": "extract_planol-1.pdf",
+      "type": "file_extraction",
+      "file": "planol-1.pdf",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_pdf",
+      "vars_extracted": 9,
+      "elapsed_s": 6.52,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 235,
+        "elapsed_s": 6.06
+      }
+    },
+    {
+      "action_id": "crop_reread_planol-1.pdf",
+      "type": "agentic_crop",
+      "file": "planol-1.pdf",
+      "target_vars": [
+        "expedient"
+      ],
+      "improved_vars": [],
+      "usage": {
+        "input_tokens": 1650,
+        "output_tokens": 246,
+        "elapsed_s": 11.15
+      }
+    },
+    {
+      "action_id": "extract_planol-1_img0.jpeg",
+      "type": "file_extraction",
+      "file": "planol-1_img0.jpeg",
+      "role": "email_attachment",
+      "origin": "email",
+      "method": "vision_image",
+      "vars_extracted": 0,
+      "elapsed_s": 2.31,
+      "usage": {
+        "input_tokens": 2813,
+        "output_tokens": 4,
+        "elapsed_s": 2.26
+      }
+    },
+    {
+      "action_id": "skip_planol-1_img1.jpeg",
+      "type": "file_skip",
+      "file": "planol-1_img1.jpeg",
+      "reason": "too_small"
+    },
+    {
+      "action_id": "usage_summary",
+      "type": "summary",
+      "total_usage": {
+        "input_tokens": 42750,
+        "output_tokens": 4187,
+        "api_calls": 12
+      }
+    }
+  ]
+}

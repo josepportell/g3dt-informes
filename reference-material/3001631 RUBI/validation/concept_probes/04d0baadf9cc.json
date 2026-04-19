@@ -1,0 +1,18 @@
+{
+  "document_type": "architect_plan",
+  "document_description": "Mediterranean model house floor plan showing room layout with dimensions",
+  "concepts_found": [
+    {
+      "concept_id": "building_type",
+      "confidence": 0.9,
+      "signal_preview": "MODELO MEDITERRANEO",
+      "page": 1
+    },
+    {
+      "concept_id": "superficie_construida_m2",
+      "confidence": 0.95,
+      "signal_preview": "72 m2",
+      "page": 1
+    }
+  ]
+}

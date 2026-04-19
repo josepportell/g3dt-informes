@@ -1,0 +1,307 @@
+{
+  "945e2d9a9d309552a4df5f5855f50fab": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both texts reference the same location (Castellar del Vallès) and street (Carrer dels Arbrells), but differ significantly in content. The benchmark specifies a precise address (number 18) and describes it as an empty lot (solar) for single-family homes. The pipeline output omits the address number, adds Barcelona (which may be incorrect or redundant), and ambiguously suggests the location is 'between' two street references (potentially listing the same street twice with different articles). The core location is partially preserved but key details are lost or altered."
+  },
+  "2290c8301d84e199cf992cf0e10c02f2": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text only captures one element (built parcel) of the benchmark's description. The benchmark provides comprehensive details: multiple empty parcels with vegetation, trees, AND one built parcel (Pb+1Pp) parallel to Turó street. The pipeline misses the empty parcels, vegetation, structural details, and street reference—significant omissions for a geotechnical context where adjacent site conditions are important."
+  },
+  "f4cfbd86c79c0d3b357d95240cef8f81": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both refer to the same street (Arbrells/dels Arbrells). The difference is minor: capitalization of 'Carrer' and the addition of the preposition 'dels' (of the). These are trivial variations in how the street name is formatted. The semantic content is identical - both identify the same adjacent southern street."
+  },
+  "65ec298f6b8585ba527e43f6b6827710": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe a built parcel, but the benchmark specifies 'amb piscina' (with swimming pool), which is a significant detail absent in the pipeline version. The pipeline captures the basic meaning of 'built parcel' but misses the key feature of the pool."
+  },
+  "2331a708d184a550868dbe61054af506": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both texts describe an empty/unbuilt parcel to the west. The benchmark provides more specific descriptive details (tall grass and trees), while the pipeline uses the domain synonym 'parcel·la buida' which correctly identifies the vacant status. The core information (empty lot) is captured, but the pipeline omits the vegetation details present in the benchmark."
+  },
+  "165c1fab40a0fb9bb81471eb552f4781": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "These descriptions are contradictory. 'Sense construccions ni pavimentacions, desbroçat' (without constructions or pavements, cleared/brushed) describes a natural or semi-natural state. 'Antropitzat' (anthropized/human-modified) indicates human influence and alteration. They represent opposite conditions of site modification."
+  },
+  "2c3a0f22f7e95495ef51755b8c4a6d21": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "The pipeline text is incomplete (cuts off at 'El solar es p'), but up to that point it captures the key information with minor wording differences: 'carrer adjacent' vs 'carrer existent' are semantically equivalent in this context. However, since the pipeline response is truncated and missing most of the benchmark text (the topographical details, the platform at 4.0m, the nearby constructions assessment, and the subsurface material observations), it only partially captures the content. The start is accurate but the significant missing portion prevents a higher score."
+  },
+  "77cf4461d605eb214991515fc58f96d7": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both texts describe the same access method and location (entry through a southern adjacent street). The pipeline version adds the specific street name ('Carrer dels Arbrells') and uses 'existent' instead of 'adjacent', which are minor wording differences that don't change the core meaning. The capitalization of 'Carrer' is a stylistic choice. Both convey identical geotechnical information about site access."
+  },
+  "13b0949201fffd8f2a65b94ed3c063ed": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both texts describe a location in Rubí, Barcelona near Carrer de la Miranda nº 39, but with significant differences. The benchmark provides a specific property parcel (PARC. 6-105) and states it will be located AT that address. The pipeline describes a location BETWEEN two streets (Carrer de la Miranda nº 39 AND Avinguda Can Tapis), which is a different geographic specification. The pipeline omits the parcel number and Barcelona reference, and uses 'entre' (between) rather than identifying a specific parcel location. These represent partially overlapping but distinct location descriptions."
+  },
+  "7979c9f50272b579f152c0c03afff488": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different content. Benchmark describes the physical characteristics of adjacent parcels (empty lots with low vegetation and trees). Pipeline provides only a street name (Passeig Miranda). These do not convey the same information at all."
+  },
+  "b5ce63d3ca35f0fdefea6c62afd5f0db": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different content. Benchmark describes a street (carrer de la Miranda), while pipeline describes a building lot type (parcel·la amb construcció). These are unrelated concepts - one is a location identifier, the other is a property classification."
+  },
+  "4a2473cdd9cbf8846975072110a2f100": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The benchmark describes 'constructions with similar characteristics' (a qualitative assessment of adjacent buildings), while the pipeline only states 'built parcel' (a categorical classification). Both relate to adjacent easterly properties with construction, but the benchmark provides descriptive detail about similarity of characteristics, whereas the pipeline merely categorizes the property type. Partially correct but significant difference in specificity and information content."
+  },
+  "250aeb412b38c0bcf83b7b3cd1fbf47c": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "These fields describe completely different information. The benchmark describes the characteristics of adjacent constructions (similar construction types), while the pipeline output names a specific street/avenue. They are not semantically related and address different aspects of the geotechnical report."
+  },
+  "9956a7d8ed10a8f81d7f3f8d662c7d28": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Opposite meanings. Benchmark describes absence of constructions and paving ('without constructions and pavements'), while pipeline describes human-modified/urbanized condition ('anthropized'). These are contradictory characterizations of site condition."
+  },
+  "b16cc2772c60bfceba83932ffb8295da": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text is incomplete (cuts off mid-sentence at 'La parcel·la'), making full comparison impossible. However, the beginning already shows significant differences: the benchmark specifies 'carrer de la Miranda' (specific street name) while the pipeline says 'carrer existent al nord' (generic directional reference). The benchmark provides detailed topographic information, construction status, slope measurements, and subsurface observations that are entirely absent from the incomplete pipeline text. Only the initial framing about field work entry is partially aligned."
+  },
+  "f6708a0e8f974e8ec3e8353b2fe3cc62": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both texts describe field work access to the study zone, but differ significantly in the street identifier. Benchmark specifies 'carrer de la Miranda' (Miranda Street) while pipeline states 'Passeig Miranda' (Miranda Promenade/Boulevard) with additional location detail 'al nord' (to the north). These are potentially different thoroughfares or different names for the same location - the semantic difference is material and not trivial."
+  },
+  "d01f675500b7c83c60aa44ce1bf46593": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both texts describe the same location (Carrer Clot de la Llacuna nº16 in Linyola), but with significant structural differences. The benchmark provides a clear, direct statement of where the single-family home will be located. The pipeline text introduces ambiguity by using 'entre' (between), suggesting a location between two streets rather than a specific address, and contains a spelling inconsistency ('Liacuna' vs 'Llacuna'). The pipeline also omits the house number reference in the second part, making the location specification incomplete and less precise."
+  },
+  "5ab3f0e7310150349e1f2e2619425281": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely opposite meanings. Benchmark describes an occupied parcel with a single-family dwelling ('parcel·la ocupada per un habitatge unifamiliar'), while pipeline describes an empty building lot ('parcel·la buida'). These are fundamentally different conditions."
+  },
+  "b12a2f6cdfcf57d1e83443b53fc3f36a": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same meaning and concept (empty building lots), minor difference in number: benchmark uses plural 'parcel·les' while pipeline uses singular 'parcel·la'. Both refer to the same domain concept with only grammatical variation."
+  },
+  "1c6bc158068757aff221525f680c9891": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same meaning and semantic content (empty building lots), with only a number difference: plural 'parcel·les buides' vs singular 'parcel·la buida'. Both refer to the same concept of vacant parcels to the east."
+  },
+  "7f997891cec8faa02e362f235f8b72e5": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both reference a street to the west, but the benchmark describes the functional purpose ('street where the entrance is made'), while the pipeline provides a specific street name ('Clot de la Llacuna'). The pipeline is more concrete but doesn't capture the functional detail about the entrance. Partial overlap in addressing the adjacent west variable."
+  },
+  "7f9fbe6b11cc7142ec1cfff3cee27733": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different content. Benchmark describes specific site conditions: an unpaved esplanade with scattered low vegetation. Pipeline uses 'antropitzat' (anthropized/human-modified), which is a generic land use classification that doesn't capture the detailed descriptive information about the actual surface conditions, pavement status, or vegetation present."
+  },
+  "f9755162d5dcf0a2642c70d057479c58": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "The pipeline text starts identically to the benchmark but is incomplete (cuts off at 'La parcel·la'). The visible portion shows the same meaning with only a minor wording difference ('adjacent' vs 'existent' for the street descriptor), which are near-synonymous in this context. However, the pipeline text is truncated and missing approximately 75% of the benchmark content, including critical details about elevation differences, ground conditions, vegetation, nearby construction characteristics, and subsurface material visibility. This represents a significant loss of information despite correct initial phrasing."
+  },
+  "4e0efe3795dea91d8d86d7ecb768bf1a": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both texts describe field work access through a western street, capturing the key information. However, the pipeline version is incomplete (cuts off mid-sentence with 'existent al'), and specifies a particular street name ('Carrer Clot de la Llacuna') while the benchmark uses the generic term 'carrer adjacent situat al oest'. The pipeline provides more concrete detail but is truncated, preventing full evaluation of semantic equivalence."
+  },
+  "9fade41c77c421497cf6cda24256716f": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both texts convey the same location information (between two streets with identical names). The pipeline version omits the introductory clause 'L'edificació que es preveu construir es situarà' (the building to be constructed will be located), which is descriptive context rather than core location data. The street names are identical and complete. This is a minor structural difference rather than semantic divergence."
+  },
+  "569b8072da3abbbcf6e706487bf4ce04": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text - both entries are exactly the same ('parcel·la buida' in Catalan)."
+  },
+  "51e2128c0d9f58452fa28b451cb11f22": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different content. Benchmark describes a street name (Carrer Antoni Bellet), while pipeline describes a property type (empty building lot). These are unrelated geotechnical elements - one identifies an adjacent location, the other describes the subject property itself."
+  },
+  "e5c455f54d5876a79fff3b5c4ca9db0a": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text. Both references name the same street with identical spelling and formatting."
+  },
+  "d2355173bbf28a6ed7259c77ac00f4d5": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different content. Benchmark describes a parcel with an isolated building up to two floors above ground level. Pipeline describes an empty building lot. These are contradictory descriptions of the western adjacent parcel."
+  },
+  "ae1583801a74df97a45b2e864a531f42": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different content. Benchmark describes specific site conditions (fenced boundaries, level with street grade, unpaved, low vegetation). Pipeline provides only a generic descriptor ('anthropized/human-modified') without the detailed characterization of the actual site state. No semantic overlap in the descriptive elements."
+  },
+  "edb7d53aad13f2b239a92f8580aa91b9": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text begins identically to the benchmark ('El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del'), but contains a critical directional error: 'carrer existent al est' (east) contradicts the benchmark's 'Carrer existent al sud' (south). Additionally, the pipeline text is incomplete—it cuts off after 'La parcel·la' without providing the detailed description of topography, vegetation, neighboring constructions, or subsurface materials that constitute the bulk of the benchmark text. Only the opening phrase is correct."
+  },
+  "c63bbb6f118e30a04212227ccf7a98a1": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both texts describe the same access method (entry to study zone via an existing street on the south side during fieldwork). The pipeline version provides additional specific detail (street name 'Mestre Ramon Ortiz') and appears truncated, but the core semantic meaning is identical. The difference is essentially additional information rather than contradictory content."
+  },
+  "e586111665def5d1e746320891a9adac": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both texts identify the same location (Carrer Girasols in Alcoletge), but the pipeline version omits key details: the street number (nº7) and the urbanization name (Urbanització El Roser d'Alcoletge). The core location is captured correctly, but significant address details are missing."
+  },
+  "8e338662cc1d16b6c2a109c2c2fc7327": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "These are completely different. 'Camí d'accés' (access road) is a specific feature, while 'desconegut' (unknown) indicates lack of information. They are opposite in meaning - one identifies something concrete, the other acknowledges absence of data."
+  },
+  "57715eee587abb9f131cbc92ed6cedad": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both texts describe a parcel with construction (parcel·la amb construcció is a synonym match). However, the benchmark provides specific detail about the building type ('edifici aïllat en planta baixa' = isolated building at ground floor level), while the pipeline text is more generic. The core meaning is captured but architectural specificity is lost."
+  },
+  "f6b70efbc5b115e7d23a428350214cf4": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text is too generic and lacks critical details. The benchmark specifies: three parcels, isolated buildings, up to two above-ground floors, and one with basement and pool. The pipeline only states 'parcel·la amb construcció' (built parcel), which captures the basic concept but omits the quantity (tres), building type (aïllats), floor count (fins a dos plantes), and distinctive features (soterrani i piscina). Significant information loss."
+  },
+  "f0df1dd3fccf0957b4307723e1f97e27": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both expressions are exact synonyms for an empty building lot. 'Solar buit' and 'parcel·la buida' are interchangeable terms in Catalan with identical meaning. The difference is purely lexical variation, not semantic."
+  },
+  "42d90ea14e39697bf820011a96893a9f": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe human modification of the site, but differ significantly in specificity. The benchmark provides concrete details (explanada/leveled area + ground floor building on north half), while 'antropitzat' (anthropized) is a generic term indicating human activity without describing what structures or modifications exist. The benchmark conveys actionable site information; the pipeline result is overly vague."
+  },
+  "ee3d1f251a2bbbdcb82ee0a73d461b06": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both texts describe the site, but they focus on different aspects with significant differences. The benchmark provides comprehensive field work observations including access routes (Carrer del nord), existing structures (edifici planta baixa), planned expansion areas, nearby comparable buildings, and subsurface visibility. The pipeline text only describes boundary features (kerbing, metal fencing) and surface conditions (unpaved, vegetation). While both are site descriptions, they capture substantially different information with minimal overlap in content."
+  },
+  "19fbe8131cecb0920837933b9d933ccb": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both texts identify the same location (Calle/Carrer Santa Gemma nº4 in Vilanova de Segrià), but there are notable differences: (1) Eva's text includes the urbanization name 'URB. LA SERRA' which is omitted in the pipeline version; (2) Pipeline uses 'entre el Calle Santa Gemma nº4 i el Carrer Santa Gemma' (between two streets) suggesting a corner location, while Eva's text specifies a single address; (3) Language mixing in pipeline ('entre...i' in Catalan with 'Calle' in Spanish); (4) Eva's text uses formal abbreviations (STA., nº). The core address information is present in both, but the pipeline version loses context and changes the locational interpretation."
+  },
+  "131d3de89f9629c1c1e7efd27fe79d92": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different content. Benchmark describes 'parcels with similar characteristics to those projected in the study' (a comparative analysis), while pipeline states 'built parcel' (a property classification). These convey entirely different information about the northern adjacent property."
+  },
+  "5874c99a3f9e427cdba31f6aa3c3a212": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both refer to an empty/unbuilt parcel (synonymous terms), but the benchmark provides substantial descriptive details (paving, herbaceous vegetation, small trees) while the pipeline response gives only the basic classification. The pipeline captures the core concept but omits significant site-specific information."
+  },
+  "cd225950b9ebbbcc68da2c0e74da124a": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "These are completely different semantic meanings. The benchmark describes 'parcels with similar characteristics to those projected in the study' (a comparative description of parcel properties), while the pipeline output simply states 'built parcel' (a basic land use classification). They capture entirely different information about the eastern adjacent property."
+  },
+  "ae430cfd6bab3e67e030d0ef8210613f": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical semantic content. 'calle' (Spanish) and 'Carrer' (Catalan) are synonymous terms for street. 'STA. GEMMA' and 'Santa Gemma' refer to the same street, with the pipeline using the full form instead of abbreviation. Language variant and formatting difference only."
+  },
+  "29e76df86c6d239dd460ed99959c5a94": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different content. Benchmark describes specific site characteristics (delimited by adjacent walls, unpaved, small vegetation). Pipeline uses only 'antropitzat' (anthropized/human-modified), which is a general classification that doesn't capture the detailed descriptive information about boundaries, paving, or vegetation provided in the benchmark text."
+  },
+  "9d8ffca4ec40de0021e2f303ac33d832": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark text provides detailed site description including access point (west street), boundary conditions (adjoining walls), entrance conditions (no fence/wall, exposed), surface conditions (unpaved entrance and patio with small vegetation), paved strip on west end, nearby similar constructions, and subsurface visibility. The pipeline text 'El terreny es presenta antropitzat' (The terrain presents as anthropized/human-modified) is extremely vague, captures almost none of the specific descriptive details, and represents a fundamentally different level of site characterization. They address completely different aspects of the site."
+  },
+  "f386c9f61be4e6ff6584579f9bad05a2": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both texts describe the same essential information: field work access occurs from a street located to the west. Minor differences include: (1) language variant (Spanish vs Catalan), (2) pipeline specifies the actual street name ('Carrer Santa Gemma') while benchmark is generic ('la calle'), (3) pipeline says 'entrada a la zona d'estudi' (study area) vs benchmark's 'entrada en la parcela' (parcel entry) - both convey access but with slight scope differences. The core meaning is preserved; differences are wording choices rather than semantic divergence."
+  },
+  "2ba3e16c9ee2a4e70a65c099bee02ced": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text is incomplete (cuts off at 'La parcel·la'), making proper comparison impossible. What is present shows minor differences: 'carrer existent' vs 'carrer adjacent' (slightly different descriptors), and switches from 'solar' to 'parcel·la' (synonymous terms). However, the text is truncated and missing ~80% of the benchmark content, including critical details about topography, slope, work platform elevation, nearby constructions, and subsurface conditions. Cannot assess full semantic equivalence due to incompleteness."
+  },
+  "2067c81ba2fbbcf97eea3a13d9b086c3": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both texts identify the same general location (Carrer dels Arbrells in Castellar del Vallès), but differ significantly in specificity and format. Eva's text refers to a single address (Nº 18) while the pipeline output specifies a range (18A-18B-20) and mentions 'entre' (between), suggesting multiple street segments. The pipeline also adds house numbers that weren't in the original, changing the location definition. Key elements are partially aligned but the semantic meaning differs regarding which specific parcel is being referenced."
+  },
+  "f4b1efc08a57a246de598188520c5a6c": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both texts refer to the same location (Carrer Clot de la Llacuna in Linyola), but the pipeline version omits the street number (nº16) and the contextual information about it being a plot for a single-family dwelling. The core location is captured correctly, but significant details are missing."
+  },
+  "6be7017659462e62c042da278bd06769": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text captures one street name correctly (Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell), but it omits the crucial locational information about the building being situated BETWEEN two streets. The benchmark specifies both boundary streets ('entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell'), while the pipeline only mentions one street. This represents a significant loss of spatial information despite partial accuracy."
+  },
+  "f3833ed7d50fc42a7e866ee2c8933da3": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different locations. Benchmark specifies Carrer Girasols nº7 in Urbanització El Roser d'Alcoletge, while pipeline states Carrer Girassols nº7 in Alella. Different street names (Girasols vs Girassols spelling), different municipalities (Alcoletge vs Alella), and missing urbanization context. Only the street number matches."
+  },
+  "4d90134d103bd80a6f2db1478b9e3949": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text is drastically different from the benchmark. The benchmark provides a detailed site description including access route (north street), current occupation (leveled area + ground floor building on north half), planned expansion location, accessibility for machinery, similar neighboring constructions without visible pathologies, and absence of visible subsurface materials. The pipeline text only provides a generic statement that the terrain is anthropized (human-modified), missing virtually all specific site information."
+  },
+  "4c82c9f2b67047c6339bbb2adc4555e1": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both texts identify the same location (Santa Gemma street, number 4, Vilanova de Segrià), but with notable differences: (1) Benchmark specifies 'Calle' + full abbreviation 'STA.' while pipeline uses 'Calle Santa Gemma' (expanded form); (2) Benchmark includes 'URB. LA SERRA' (urbanization name) which pipeline omits; (3) Pipeline adds 'i el Carrer' (and the street) suggesting location between two points, which isn't in benchmark; (4) Language mix in pipeline ('Calle' Spanish + 'Carrer' Catalan) vs consistent Spanish in benchmark. Core location is correct but structural and completeness differences are significant."
+  },
+  "3fa810922eac5f96b085ded7314077fd": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both texts reference the same street (Gral Ferraz nº20), but significant differences exist: (1) Municipality name differs: 'Anciles, Benasque' vs 'Arciles' - appears to be a spelling error or different reference in the pipeline; (2) Pipeline omits the municipality context entirely; (3) Benchmark provides complete location hierarchy (street + municipality + region), while pipeline is incomplete; (4) 'al Calle' in pipeline is grammatically awkward (should be 'en la Calle'). The core address element is partially correct but critical location information is missing or incorrect."
+  },
+  "ea823c9092e6cc026ac0a27cd17707a1": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "These refer to completely different land uses. 'Campo de conreo herbáceo' (herbaceous crop field) describes active agricultural land with vegetation, while 'parcel·la buida' (empty building lot) describes an undeveloped urban/suburban parcel. Despite both being unbuilt land, they represent fundamentally different contexts and purposes."
+  },
+  "85f0a82389911feef7b58f48a272b1c5": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different content. Benchmark describes a building with up to 4 above-ground floors (edificio de hasta 4 plantas sobre rasante), while pipeline describes an empty building lot (parcel·la buida). These are opposite concepts - one is an existing structure, the other is vacant land."
+  },
+  "0855cd1be1a2654f49af24bf992c0b8b": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both describe an empty/vacant area to the east, but with different emphasis. 'Zona yerma con vegetación' (barren zone with vegetation) focuses on the uncultivated nature and vegetation present, while 'parcel·la buida' (empty building lot) refers to a vacant parcel without specifying vegetation. They capture the same general concept of an unbuilt area, but 'zona yerma' includes environmental detail that 'parcel·la buida' omits. Semantically related but not equivalent descriptions of the same adjacent property."
+  },
+  "42a59b48fe005496da6e3897bd919cc6": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Partially correct but significant difference. 'Jardín' (garden) and 'parcel·la buida' (empty building lot) are different features. A garden is a landscaped/cultivated space, while an empty parcel is vacant land. These are related but distinct adjacent features."
+  },
+  "b6eb36bb6ad1db4a686b6b7bc921cebf": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different semantic content. Benchmark describes a detailed site condition: fairly leveled/cleared ground, unpaved, with small vegetation and occasional trees. Pipeline only states 'antropitzat' (anthropized/human-modified), which is a generic classification without descriptive detail. These represent fundamentally different approaches to documenting site condition."
+  },
+  "02f5714de8a40ccff5f0b3866ebfabcb": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text (in Catalan) captures some key elements from the benchmark (in Spanish) - both mention unpaved/unleveled ground, sparse vegetation, and nearby constructions. However, the pipeline text is incomplete (cuts off mid-sentence at 'car'), missing significant details present in the benchmark: the access route from the north, the explanada condition, the absence of visible pathologies in nearby buildings, the geomorphological context, and the observation about lack of material outcrops. The incomplete sentence and missing contextual information constitute a significant omission."
+  }
+}

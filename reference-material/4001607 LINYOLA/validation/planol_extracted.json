@@ -1,46 +1,37 @@
 {
-  "source_file": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
-  "extraction_date": "2026-04-06T20:10:00",
-  "extraction_method": "claude_vision",
-  "overall_confidence": 0.92,
-  "status": "pending_review",
+  "data_sources_found": [
+    "Title block (caixeti)",
+    "Site plan drawing"
+  ],
+  "planning_table_raw": null,
   "architect_data": {
-    "source_file": "Punts de Sondeig_Silvia_Jaume.pdf",
-    "project_name": "PROJECTE B\u00c0SIC D'UN HABITATGE UNIFAMILIAR A\u00cfLLAT",
-    "building_type": "habitatge unifamiliar a\u00efllat",
+    "source_file": null,
+    "project_name": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+    "building_type": "habitatge unifamiliar aïllat",
+    "client_name": null,
     "street_address": "C. Clot de la Llacuna, 16",
     "municipality": "Linyola",
-    "promotor": "S\u00cdLVIA EROLES BALAGUER\u00d3, JAUME NADAL ANDREU",
-    "client_name": "S\u00cdLVIA EROLES BALAGUER\u00d3",
-    "architect": "JOSEP BUNYESC PALAC\u00cdN",
+    "promotor": "SÍLVIA EROLES BALAGUERÓ JAUME NADAL ANDREU",
+    "architect": "JOSEP BUNYESC PALACIN",
     "architect_company": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
     "dimensions": {
-      "parcel_area_m2": {"pdf_value": 569.0, "confidence": 0.80, "source": "Estimated from 34.0 x 16.75 = 569m2 (parcel outline dimensions)"},
-      "parcela_projecte_m2": null,
+      "parcel_area_m2": null,
       "building_footprint_m2": null,
-      "num_floors": {"pdf_value": "Pb", "confidence": 0.85, "source": "Title says PLANTA GENERAL, single floor plan visible, no upper floors shown"},
+      "floor_surfaces": null,
+      "num_floors": null,
       "max_height_m": null,
-      "plot_length_m": {"pdf_value": 34.04, "confidence": 0.95, "source": "drawing annotation bottom"},
-      "plot_width_m": {"pdf_value": 16.74, "confidence": 0.95, "source": "drawing annotation right side"},
-      "floor_surfaces": []
+      "plot_length_m": {
+        "pdf_value": 34.04,
+        "confidence": 1.0,
+        "source": "drawing annotation"
+      },
+      "plot_width_m": {
+        "pdf_value": 16.83,
+        "confidence": 1.0,
+        "source": "drawing annotation"
+      }
     }
   },
-  "planning_table_raw": null,
-  "data_sources_found": [
-    "Caixet\u00ed at bottom with full project info (BUNYESC logo, redactors, emplacament, promotors, data, expedient)",
-    "Floor plan drawing at 1:100 with dimension annotations",
-    "Test point locations marked in red (2n PUNT SONDEIG, 3r PUNT SONDEIG)",
-    "No JUSTIFICACIO PLANEJAMENT table on this sheet"
-  ],
-  "extraction_notes": "Full architect plan (sheet 03 PLANTA GENERAL - PARCEL\u00b7LA) with clear caixet\u00ed. Architect: Josep Bunyesc Palac\u00edn (BUNYESC ARQUITECTURA EFICIENT SLP). Promotors are two people: S\u00edlvia Eroles Balaguer\u00f3 + Jaume Nadal Andreu. Single floor (Pb) visible. No planning table on this sheet. Parcel ~34x17m. G3 test points marked in red overlay.",
-  "floor_plan_bbox": {
-    "top_pct": 5.0,
-    "left_pct": 0.0,
-    "bottom_pct": 85.0,
-    "right_pct": 100.0,
-    "confidence": 0.9
-  },
-  "reviewer_notes": "",
-  "approved_by": "",
-  "approval_date": null
+  "overall_confidence": 0.85,
+  "extraction_notes": "No planning/normativa table found on the page. Title block (caixeti) is clear and located at bottom. Project name, building type, location, municipality, promotor, architect, and architect company extracted from caixeti. Dimensions for plot length and width extracted from drawing annotations. No floor surfaces, parcel area, building footprint, number of floors, or max height found on this page."
 }

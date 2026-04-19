@@ -1,0 +1,142 @@
+{
+  "metadata": {
+    "test_id": "T4",
+    "project": "4001670 ALCOLETGE",
+    "timestamp": "2026-04-16T18:27:59.032152+00:00",
+    "files_available": 1,
+    "files_read": 1,
+    "files_from_email": 0,
+    "duration_s": 11.4,
+    "api_calls": 1,
+    "input_tokens": 3132,
+    "output_tokens": 272,
+    "planol_vars_targeted": 29
+  },
+  "files_inventory": [
+    {
+      "path": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001670 ALCOLETGE/A.01.pdf",
+      "role": "architect_plan",
+      "origin": "project"
+    }
+  ],
+  "variables": {
+    "client_name": {
+      "value": "ALBERT SANS BONVEHI",
+      "confidence": 1.0,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "architect_name": {
+      "value": "DAVID GRAUS ROBINAT",
+      "confidence": 1.0,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "architect_company": {
+      "value": "2 GRAUS",
+      "confidence": 1.0,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "street_address": {
+      "value": "CARRER GIRASOLS, Nº7, Urbanització el Roser",
+      "confidence": 1.0,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "municipality": {
+      "value": "ALCOLETGE",
+      "confidence": 1.0,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "building_type": {
+      "value": "Habitatge unifamiliar",
+      "confidence": 1.0,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "expedient": {
+      "value": "PROJECTE DE TANCAMENT DE PORXO EN HABITATGE UNIFAMILIAR",
+      "confidence": 0.8,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    },
+    "location_sentence": {
+      "value": "CARRER GIRASOLS, Nº7, Urbanització el Roser, 25660 ALCOLETGE",
+      "confidence": 1.0,
+      "source_file": "A.01.pdf",
+      "source_origin": "project",
+      "extraction_method": "vision_pdf"
+    }
+  },
+  "comparison": {
+    "vs_eva": {
+      "total_eva_vars": 3,
+      "counts": {
+        "MATCH": 0,
+        "CLOSE": 1,
+        "MISMATCH": 0,
+        "NOT_EXTRACTED": 2
+      },
+      "accuracy_pct": 33.3,
+      "details": [
+        {
+          "variable": "municipality",
+          "tier": "A",
+          "eva": "A la zona d’estudi, en el municipi d’Alcoletge, s’estableix una acceleració sísmica bàsica de:",
+          "cc": "ALCOLETGE",
+          "confidence": 1.0,
+          "status": "CLOSE"
+        },
+        {
+          "variable": "superficie_construida",
+          "tier": "A",
+          "eva": "100",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        },
+        {
+          "variable": "superficie_parcela",
+          "tier": "A",
+          "eva": "1167",
+          "cc": "",
+          "status": "NOT_EXTRACTED"
+        }
+      ]
+    }
+  },
+  "trace": [
+    {
+      "action_id": "extract_A.01.pdf",
+      "type": "file_extraction",
+      "file": "A.01.pdf",
+      "role": "architect_plan",
+      "origin": "project",
+      "method": "vision_pdf",
+      "vars_extracted": 8,
+      "elapsed_s": 9.66,
+      "usage": {
+        "input_tokens": 3132,
+        "output_tokens": 272,
+        "elapsed_s": 8.68
+      }
+    },
+    {
+      "action_id": "usage_summary",
+      "type": "summary",
+      "total_usage": {
+        "input_tokens": 3132,
+        "output_tokens": 272,
+        "api_calls": 1
+      }
+    }
+  ]
+}

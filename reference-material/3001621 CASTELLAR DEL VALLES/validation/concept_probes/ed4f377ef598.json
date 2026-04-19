@@ -1,0 +1,18 @@
+{
+  "document_type": "map",
+  "document_description": "Topographic map with contour lines and location marked",
+  "concepts_found": [
+    {
+      "concept_id": "municipality",
+      "confidence": 0.8,
+      "signal_preview": "el Balcó de Sant Llorenç",
+      "page": 1
+    },
+    {
+      "concept_id": "street_address",
+      "confidence": 0.5,
+      "signal_preview": "Turo de les Jeles",
+      "page": 1
+    }
+  ]
+}

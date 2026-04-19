@@ -1,307 +1,822 @@
 {
-  "945e2d9a9d309552a4df5f5855f50fab": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both texts reference the same location (Castellar del Vallès) and street (Carrer dels Arbrells), but differ significantly in content. The benchmark specifies a precise address (number 18) and describes it as an empty lot (solar) for single-family homes. The pipeline output omits the address number, adds Barcelona (which may be incorrect or redundant), and ambiguously suggests the location is 'between' two street references (potentially listing the same street twice with different articles). The core location is partially preserved but key details are lost or altered."
-  },
-  "2290c8301d84e199cf992cf0e10c02f2": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "The pipeline text only captures one element (built parcel) of the benchmark's description. The benchmark provides comprehensive details: multiple empty parcels with vegetation, trees, AND one built parcel (Pb+1Pp) parallel to Turó street. The pipeline misses the empty parcels, vegetation, structural details, and street reference—significant omissions for a geotechnical context where adjacent site conditions are important."
-  },
-  "f4cfbd86c79c0d3b357d95240cef8f81": {
-    "score": 4,
-    "status": "CLOSE",
-    "explanation": "Both refer to the same street (Arbrells/dels Arbrells). The difference is minor: capitalization of 'Carrer' and the addition of the preposition 'dels' (of the). These are trivial variations in how the street name is formatted. The semantic content is identical - both identify the same adjacent southern street."
-  },
-  "65ec298f6b8585ba527e43f6b6827710": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both describe a built parcel, but the benchmark specifies 'amb piscina' (with swimming pool), which is a significant detail absent in the pipeline version. The pipeline captures the basic meaning of 'built parcel' but misses the key feature of the pool."
-  },
-  "2331a708d184a550868dbe61054af506": {
-    "score": 3,
-    "status": "CLOSE",
-    "explanation": "Both texts describe an empty/unbuilt parcel to the west. The benchmark provides more specific descriptive details (tall grass and trees), while the pipeline uses the domain synonym 'parcel·la buida' which correctly identifies the vacant status. The core information (empty lot) is captured, but the pipeline omits the vegetation details present in the benchmark."
-  },
-  "165c1fab40a0fb9bb81471eb552f4781": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "These descriptions are contradictory. 'Sense construccions ni pavimentacions, desbroçat' (without constructions or pavements, cleared/brushed) describes a natural or semi-natural state. 'Antropitzat' (anthropized/human-modified) indicates human influence and alteration. They represent opposite conditions of site modification."
-  },
-  "2c3a0f22f7e95495ef51755b8c4a6d21": {
-    "score": 3,
-    "status": "CLOSE",
-    "explanation": "The pipeline text is incomplete (cuts off at 'El solar es p'), but up to that point it captures the key information with minor wording differences: 'carrer adjacent' vs 'carrer existent' are semantically equivalent in this context. However, since the pipeline response is truncated and missing most of the benchmark text (the topographical details, the platform at 4.0m, the nearby constructions assessment, and the subsurface material observations), it only partially captures the content. The start is accurate but the significant missing portion prevents a higher score."
-  },
-  "77cf4461d605eb214991515fc58f96d7": {
-    "score": 4,
-    "status": "CLOSE",
-    "explanation": "Both texts describe the same access method and location (entry through a southern adjacent street). The pipeline version adds the specific street name ('Carrer dels Arbrells') and uses 'existent' instead of 'adjacent', which are minor wording differences that don't change the core meaning. The capitalization of 'Carrer' is a stylistic choice. Both convey identical geotechnical information about site access."
-  },
-  "13b0949201fffd8f2a65b94ed3c063ed": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both texts describe a location in Rubí, Barcelona near Carrer de la Miranda nº 39, but with significant differences. The benchmark provides a specific property parcel (PARC. 6-105) and states it will be located AT that address. The pipeline describes a location BETWEEN two streets (Carrer de la Miranda nº 39 AND Avinguda Can Tapis), which is a different geographic specification. The pipeline omits the parcel number and Barcelona reference, and uses 'entre' (between) rather than identifying a specific parcel location. These represent partially overlapping but distinct location descriptions."
-  },
-  "7979c9f50272b579f152c0c03afff488": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "Completely different content. Benchmark describes the physical characteristics of adjacent parcels (empty lots with low vegetation and trees). Pipeline provides only a street name (Passeig Miranda). These do not convey the same information at all."
-  },
-  "b5ce63d3ca35f0fdefea6c62afd5f0db": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "Completely different content. Benchmark describes a street (carrer de la Miranda), while pipeline describes a building lot type (parcel·la amb construcció). These are unrelated concepts - one is a location identifier, the other is a property classification."
-  },
-  "4a2473cdd9cbf8846975072110a2f100": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "The benchmark describes 'constructions with similar characteristics' (a qualitative assessment of adjacent buildings), while the pipeline only states 'built parcel' (a categorical classification). Both relate to adjacent easterly properties with construction, but the benchmark provides descriptive detail about similarity of characteristics, whereas the pipeline merely categorizes the property type. Partially correct but significant difference in specificity and information content."
-  },
-  "250aeb412b38c0bcf83b7b3cd1fbf47c": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "These fields describe completely different information. The benchmark describes the characteristics of adjacent constructions (similar construction types), while the pipeline output names a specific street/avenue. They are not semantically related and address different aspects of the geotechnical report."
-  },
-  "9956a7d8ed10a8f81d7f3f8d662c7d28": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "Opposite meanings. Benchmark describes absence of constructions and paving ('without constructions and pavements'), while pipeline describes human-modified/urbanized condition ('anthropized'). These are contradictory characterizations of site condition."
-  },
-  "b16cc2772c60bfceba83932ffb8295da": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "The pipeline text is incomplete (cuts off mid-sentence at 'La parcel·la'), making full comparison impossible. However, the beginning already shows significant differences: the benchmark specifies 'carrer de la Miranda' (specific street name) while the pipeline says 'carrer existent al nord' (generic directional reference). The benchmark provides detailed topographic information, construction status, slope measurements, and subsurface observations that are entirely absent from the incomplete pipeline text. Only the initial framing about field work entry is partially aligned."
-  },
-  "f6708a0e8f974e8ec3e8353b2fe3cc62": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both texts describe field work access to the study zone, but differ significantly in the street identifier. Benchmark specifies 'carrer de la Miranda' (Miranda Street) while pipeline states 'Passeig Miranda' (Miranda Promenade/Boulevard) with additional location detail 'al nord' (to the north). These are potentially different thoroughfares or different names for the same location - the semantic difference is material and not trivial."
-  },
-  "d01f675500b7c83c60aa44ce1bf46593": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both texts describe the same location (Carrer Clot de la Llacuna nº16 in Linyola), but with significant structural differences. The benchmark provides a clear, direct statement of where the single-family home will be located. The pipeline text introduces ambiguity by using 'entre' (between), suggesting a location between two streets rather than a specific address, and contains a spelling inconsistency ('Liacuna' vs 'Llacuna'). The pipeline also omits the house number reference in the second part, making the location specification incomplete and less precise."
-  },
-  "5ab3f0e7310150349e1f2e2619425281": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "Completely opposite meanings. Benchmark describes an occupied parcel with a single-family dwelling ('parcel·la ocupada per un habitatge unifamiliar'), while pipeline describes an empty building lot ('parcel·la buida'). These are fundamentally different conditions."
-  },
-  "b12a2f6cdfcf57d1e83443b53fc3f36a": {
-    "score": 4,
-    "status": "CLOSE",
-    "explanation": "Same meaning and concept (empty building lots), minor difference in number: benchmark uses plural 'parcel·les' while pipeline uses singular 'parcel·la'. Both refer to the same domain concept with only grammatical variation."
-  },
-  "1c6bc158068757aff221525f680c9891": {
-    "score": 4,
-    "status": "CLOSE",
-    "explanation": "Same meaning and semantic content (empty building lots), with only a number difference: plural 'parcel·les buides' vs singular 'parcel·la buida'. Both refer to the same concept of vacant parcels to the east."
-  },
-  "7f997891cec8faa02e362f235f8b72e5": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both reference a street to the west, but the benchmark describes the functional purpose ('street where the entrance is made'), while the pipeline provides a specific street name ('Clot de la Llacuna'). The pipeline is more concrete but doesn't capture the functional detail about the entrance. Partial overlap in addressing the adjacent west variable."
-  },
-  "7f9fbe6b11cc7142ec1cfff3cee27733": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "Completely different content. Benchmark describes specific site conditions: an unpaved esplanade with scattered low vegetation. Pipeline uses 'antropitzat' (anthropized/human-modified), which is a generic land use classification that doesn't capture the detailed descriptive information about the actual surface conditions, pavement status, or vegetation present."
-  },
-  "f9755162d5dcf0a2642c70d057479c58": {
-    "score": 3,
-    "status": "CLOSE",
-    "explanation": "The pipeline text starts identically to the benchmark but is incomplete (cuts off at 'La parcel·la'). The visible portion shows the same meaning with only a minor wording difference ('adjacent' vs 'existent' for the street descriptor), which are near-synonymous in this context. However, the pipeline text is truncated and missing approximately 75% of the benchmark content, including critical details about elevation differences, ground conditions, vegetation, nearby construction characteristics, and subsurface material visibility. This represents a significant loss of information despite correct initial phrasing."
-  },
-  "4e0efe3795dea91d8d86d7ecb768bf1a": {
-    "score": 3,
-    "status": "CLOSE",
-    "explanation": "Both texts describe field work access through a western street, capturing the key information. However, the pipeline version is incomplete (cuts off mid-sentence with 'existent al'), and specifies a particular street name ('Carrer Clot de la Llacuna') while the benchmark uses the generic term 'carrer adjacent situat al oest'. The pipeline provides more concrete detail but is truncated, preventing full evaluation of semantic equivalence."
-  },
-  "9fade41c77c421497cf6cda24256716f": {
-    "score": 4,
-    "status": "CLOSE",
-    "explanation": "Both texts convey the same location information (between two streets with identical names). The pipeline version omits the introductory clause 'L'edificació que es preveu construir es situarà' (the building to be constructed will be located), which is descriptive context rather than core location data. The street names are identical and complete. This is a minor structural difference rather than semantic divergence."
-  },
-  "569b8072da3abbbcf6e706487bf4ce04": {
+  "6bc55258836b43edd6644d7901f4af06": {
     "score": 5,
     "status": "MATCH",
-    "explanation": "Identical text - both entries are exactly the same ('parcel·la buida' in Catalan)."
+    "explanation": "Identical text."
   },
-  "51e2128c0d9f58452fa28b451cb11f22": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "Completely different content. Benchmark describes a street name (Carrer Antoni Bellet), while pipeline describes a property type (empty building lot). These are unrelated geotechnical elements - one identifies an adjacent location, the other describes the subject property itself."
-  },
-  "e5c455f54d5876a79fff3b5c4ca9db0a": {
+  "d3fb1954b8efe76c16545ba91e5ca465": {
     "score": 5,
     "status": "MATCH",
-    "explanation": "Identical text. Both references name the same street with identical spelling and formatting."
+    "explanation": "Identical text in both fields."
   },
-  "d2355173bbf28a6ed7259c77ac00f4d5": {
+  "09198fb0cefcdccc89999ee70aff7282": {
     "score": 1,
     "status": "MISMATCH",
-    "explanation": "Completely different content. Benchmark describes a parcel with an isolated building up to two floors above ground level. Pipeline describes an empty building lot. These are contradictory descriptions of the western adjacent parcel."
+    "explanation": "The benchmark says the southern boundary is 'Carrer Antoni Bellet' (a street), while the pipeline says it is 'una parcel·la buida' (an empty plot). These are entirely different adjacent elements — a street vs. a vacant parcel."
   },
-  "ae1583801a74df97a45b2e864a531f42": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "Completely different content. Benchmark describes specific site conditions (fenced boundaries, level with street grade, unpaved, low vegetation). Pipeline provides only a generic descriptor ('anthropized/human-modified') without the detailed characterization of the actual site state. No semantic overlap in the descriptive elements."
+  "2faed4fd2fa5bbf9fcf16dd54d060461": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both describe the western boundary as a parcel with construction. However, the benchmark specifies 'construcció aïllada de fins a dos plantes sobre rasant' (isolated construction of up to two floors above grade), while the pipeline omits both the isolated nature and the height detail — substantive details that are missing."
   },
-  "edb7d53aad13f2b239a92f8580aa91b9": {
+  "bcec342a47a23fb858f3b5d41059ef3f": {
     "score": 2,
     "status": "MISMATCH",
-    "explanation": "The pipeline text begins identically to the benchmark ('El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del'), but contains a critical directional error: 'carrer existent al est' (east) contradicts the benchmark's 'Carrer existent al sud' (south). Additionally, the pipeline text is incomplete—it cuts off after 'La parcel·la' without providing the detailed description of topography, vegetation, neighboring constructions, or subsurface materials that constitute the bulk of the benchmark text. Only the opening phrase is correct."
+    "explanation": "Both mention 'Bosch' and relate to architecture, but 'ARQUITECTURA BOSCH NOVELL' is a three-word name including 'NOVELL', while 'Bosch Arquitectura' omits 'NOVELL' entirely and reverses the word order. The missing 'NOVELL' is a substantive part of the company name, not a minor wording difference, so these likely refer to different entities or at least one is materially incomplete."
   },
-  "c63bbb6f118e30a04212227ccf7a98a1": {
+  "e767d68532b483bf024e6ee524fe95e1": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical architect name in both fields."
+  },
+  "8f0dea0e58fcb35a79a13638f4656e76": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe aspects of the building's vertical structure, but 'en planta baixa' (ground floor only) and 'sense nivell de soterrani' (no basement level) convey different information. While both could be consistent with the same building, they are not saying the same thing: one describes the floor level present, the other describes the absence of a basement. These are substantively different descriptions."
+  },
+  "73d27ea980481e08dc798ca9b353a7de": {
     "score": 4,
     "status": "CLOSE",
-    "explanation": "Both texts describe the same access method (entry to study zone via an existing street on the south side during fieldwork). The pipeline version provides additional specific detail (street name 'Mestre Ramon Ortiz') and appears truncated, but the core semantic meaning is identical. The difference is essentially additional information rather than contradictory content."
+    "explanation": "Both describe a single-family dwelling ('habitatge unifamiliar'). The pipeline adds 'aïllat' (detached/isolated), which is a minor additional qualifier not present in the benchmark. Same core substance, minor detail difference."
   },
-  "e586111665def5d1e746320891a9adac": {
-    "score": 3,
-    "status": "CLOSE",
-    "explanation": "Both texts identify the same location (Carrer Girasols in Alcoletge), but the pipeline version omits key details: the street number (nº7) and the urbanization name (Urbanització El Roser d'Alcoletge). The core location is captured correctly, but significant address details are missing."
-  },
-  "8e338662cc1d16b6c2a109c2c2fc7327": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "These are completely different. 'Camí d'accés' (access road) is a specific feature, while 'desconegut' (unknown) indicates lack of information. They are opposite in meaning - one identifies something concrete, the other acknowledges absence of data."
-  },
-  "57715eee587abb9f131cbc92ed6cedad": {
-    "score": 3,
-    "status": "CLOSE",
-    "explanation": "Both texts describe a parcel with construction (parcel·la amb construcció is a synonym match). However, the benchmark provides specific detail about the building type ('edifici aïllat en planta baixa' = isolated building at ground floor level), while the pipeline text is more generic. The core meaning is captured but architectural specificity is lost."
-  },
-  "f6b70efbc5b115e7d23a428350214cf4": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "The pipeline text is too generic and lacks critical details. The benchmark specifies: three parcels, isolated buildings, up to two above-ground floors, and one with basement and pool. The pipeline only states 'parcel·la amb construcció' (built parcel), which captures the basic concept but omits the quantity (tres), building type (aïllats), floor count (fins a dos plantes), and distinctive features (soterrani i piscina). Significant information loss."
-  },
-  "f0df1dd3fccf0957b4307723e1f97e27": {
+  "0f9a55a5f9e038e0e1ee281b1061e3f7": {
     "score": 5,
     "status": "MATCH",
-    "explanation": "Both expressions are exact synonyms for an empty building lot. 'Solar buit' and 'parcel·la buida' are interchangeable terms in Catalan with identical meaning. The difference is purely lexical variation, not semantic."
+    "explanation": "Same legal entity name; only difference is punctuation in 'S.L' vs 'SL', which is irrelevant per the rules."
   },
-  "42d90ea14e39697bf820011a96893a9f": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both describe human modification of the site, but differ significantly in specificity. The benchmark provides concrete details (explanada/leveled area + ground floor building on north half), while 'antropitzat' (anthropized) is a generic term indicating human activity without describing what structures or modifications exist. The benchmark conveys actionable site information; the pipeline result is overly vague."
-  },
-  "ee3d1f251a2bbbdcb82ee0a73d461b06": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both texts describe the site, but they focus on different aspects with significant differences. The benchmark provides comprehensive field work observations including access routes (Carrer del nord), existing structures (edifici planta baixa), planned expansion areas, nearby comparable buildings, and subsurface visibility. The pipeline text only describes boundary features (kerbing, metal fencing) and surface conditions (unpaved, vegetation). While both are site descriptions, they capture substantially different information with minimal overlap in content."
-  },
-  "19fbe8131cecb0920837933b9d933ccb": {
-    "score": 3,
-    "status": "CLOSE",
-    "explanation": "Both texts identify the same location (Calle/Carrer Santa Gemma nº4 in Vilanova de Segrià), but there are notable differences: (1) Eva's text includes the urbanization name 'URB. LA SERRA' which is omitted in the pipeline version; (2) Pipeline uses 'entre el Calle Santa Gemma nº4 i el Carrer Santa Gemma' (between two streets) suggesting a corner location, while Eva's text specifies a single address; (3) Language mixing in pipeline ('entre...i' in Catalan with 'Calle' in Spanish); (4) Eva's text uses formal abbreviations (STA., nº). The core address information is present in both, but the pipeline version loses context and changes the locational interpretation."
-  },
-  "131d3de89f9629c1c1e7efd27fe79d92": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "Completely different content. Benchmark describes 'parcels with similar characteristics to those projected in the study' (a comparative analysis), while pipeline states 'built parcel' (a property classification). These convey entirely different information about the northern adjacent property."
-  },
-  "5874c99a3f9e427cdba31f6aa3c3a212": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both refer to an empty/unbuilt parcel (synonymous terms), but the benchmark provides substantial descriptive details (paving, herbaceous vegetation, small trees) while the pipeline response gives only the basic classification. The pipeline captures the core concept but omits significant site-specific information."
-  },
-  "cd225950b9ebbbcc68da2c0e74da124a": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "These are completely different semantic meanings. The benchmark describes 'parcels with similar characteristics to those projected in the study' (a comparative description of parcel properties), while the pipeline output simply states 'built parcel' (a basic land use classification). They capture entirely different information about the eastern adjacent property."
-  },
-  "ae430cfd6bab3e67e030d0ef8210613f": {
+  "719a414c7283e7b52dd31a0cc0b56120": {
     "score": 5,
     "status": "MATCH",
-    "explanation": "Identical semantic content. 'calle' (Spanish) and 'Carrer' (Catalan) are synonymous terms for street. 'STA. GEMMA' and 'Santa Gemma' refer to the same street, with the pipeline using the full form instead of abbreviation. Language variant and formatting difference only."
+    "explanation": "Identical value 'C-1' in both fields."
   },
-  "29e76df86c6d239dd460ed99959c5a94": {
-    "score": 1,
+  "8e2582e360f4994dfea089da174afa9a": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both texts are identical: 'T-1'."
+  },
+  "ba1eb1fee05c57e469c048b9ddaa08bd": {
+    "score": 2,
     "status": "MISMATCH",
-    "explanation": "Completely different content. Benchmark describes specific site characteristics (delimited by adjacent walls, unpaved, small vegetation). Pipeline uses only 'antropitzat' (anthropized/human-modified), which is a general classification that doesn't capture the detailed descriptive information about boundaries, paving, or vegetation provided in the benchmark text."
+    "explanation": "The benchmark states a single date (1 October 2025), while the pipeline states two dates (1 and 6 October 2025). This is a substantive difference in the field data recorded."
   },
-  "9d8ffca4ec40de0021e2f303ac33d832": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "The benchmark text provides detailed site description including access point (west street), boundary conditions (adjoining walls), entrance conditions (no fence/wall, exposed), surface conditions (unpaved entrance and patio with small vegetation), paved strip on west end, nearby similar constructions, and subsurface visibility. The pipeline text 'El terreny es presenta antropitzat' (The terrain presents as anthropized/human-modified) is extremely vague, captures almost none of the specific descriptive details, and represents a fundamentally different level of site characterization. They address completely different aspects of the site."
-  },
-  "f386c9f61be4e6ff6584579f9bad05a2": {
+  "3422e5f54e1f32c40ab312b008c63540": {
     "score": 4,
     "status": "CLOSE",
-    "explanation": "Both texts describe the same essential information: field work access occurs from a street located to the west. Minor differences include: (1) language variant (Spanish vs Catalan), (2) pipeline specifies the actual street name ('Carrer Santa Gemma') while benchmark is generic ('la calle'), (3) pipeline says 'entrada a la zona d'estudi' (study area) vs benchmark's 'entrada en la parcela' (parcel entry) - both convey access but with slight scope differences. The core meaning is preserved; differences are wording choices rather than semantic divergence."
+    "explanation": "Same expedient number (4001612), but the pipeline adds a version suffix '_v0' which is a minor extra detail not present in the benchmark."
   },
-  "2ba3e16c9ee2a4e70a65c099bee02ced": {
-    "score": 2,
+  "e65a6e11783e095154bf93ee8b241c40": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same depth range (-1.0 to -1.60 m vs -1.0 to -1.6 m); trailing zero difference is purely cosmetic."
+  },
+  "8019e3ccb7b77f4704b81d3db0530a1c": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical company name in both fields."
+  },
+  "eb08d3d93a78d868a8925ed99707316c": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text in both fields."
+  },
+  "19f0992a9e09270ec476920716f73f58": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both refer to the same sample/test point identifier 'S-1'. The word 'Punt:' (Point:) in the benchmark is just a label prefix; the substance is identical."
+  },
+  "09e57ba8f2ebc67103fd0ba3b59376a7": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both refer to the same sample identifier SPT-1; 'Mostra : SPT-1' vs 'SPT-1' is purely a wording/label difference with identical substance."
+  },
+  "c1de87dbebaef51ebe06176561208433": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text in both fields."
+  },
+  "d88a7f48280e038334f958cc9db28086": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text in both fields."
+  },
+  "cc77f519bc6cf73c677e0665558c2ce5": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both refer to 1 sulfate content test per UNE 83963:2008. The pipeline output includes extra header/context data (date, location, reference number) and slightly different formatting, but the core lab test substance is the same. Minor detail: the pipeline does not explicitly state the count ('1 assaig') but implies a single test. Close match rather than perfect due to the extra irrelevant data and implicit vs explicit count."
+  },
+  "6a62f3374aa47a2d8c0f740c7bfd2bf6": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both refer to the same location in Bell-Lloc d'Urgell on Carrer Mestre Ramon Ortiz, but the benchmark specifies the parcel is between two streets (Carrer Antoni Bellet AND Carrer Mestre Ramon Ortiz), while the pipeline only mentions one street. The missing street reference is a minor but substantive locational detail."
+  },
+  "9a7d13994729663bcbe7d8eb24216b98": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same municipality (Bell-lloc d'Urgell), but the pipeline output is missing the 'd'Urgell' qualifier. While the capitalization difference is irrelevant, the omission of 'd'Urgell' is a minor but substantive detail loss since it disambiguates the municipality."
+  },
+  "77fba53794c7b1bd652b7e3f45bb7301": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text, same substance."
+  },
+  "535403508557b8d6fa4b628bf637288d": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text: ground floor plus one upper floor."
+  },
+  "668043328b3ea1ee9f5615607d90d5e9": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both texts indicate the same radon zone value: 1."
+  },
+  "cba1254d44e355a8ea42fc62e47b9e7e": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both values are identical: 0,04."
+  },
+  "cbee3a588b4eb27821024e1a58a9be82": {
+    "score": 1,
     "status": "MISMATCH",
-    "explanation": "The pipeline text is incomplete (cuts off at 'La parcel·la'), making proper comparison impossible. What is present shows minor differences: 'carrer existent' vs 'carrer adjacent' (slightly different descriptors), and switches from 'solar' to 'parcel·la' (synonymous terms). However, the text is truncated and missing ~80% of the benchmark content, including critical details about topography, slope, work platform elevation, nearby constructions, and subsurface conditions. Cannot assess full semantic equivalence due to incompleteness."
+    "explanation": "The benchmark states maximum predicted settlements will be less than 1.20 cm, while the pipeline outputs 2.10 (presumably cm), which is a different number and contradicts the benchmark value entirely."
   },
-  "2067c81ba2fbbcf97eea3a13d9b086c3": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both texts identify the same general location (Carrer dels Arbrells in Castellar del Vallès), but differ significantly in specificity and format. Eva's text refers to a single address (Nº 18) while the pipeline output specifies a range (18A-18B-20) and mentions 'entre' (between), suggesting multiple street segments. The pipeline also adds house numbers that weren't in the original, changing the location definition. Key elements are partially aligned but the semantic meaning differs regarding which specific parcel is being referenced."
-  },
-  "f4b1efc08a57a246de598188520c5a6c": {
+  "a8b5bdc6bc745f844f42fcb9d5b3ef3a": {
     "score": 3,
     "status": "CLOSE",
-    "explanation": "Both texts refer to the same location (Carrer Clot de la Llacuna in Linyola), but the pipeline version omits the street number (nº16) and the contextual information about it being a plot for a single-family dwelling. The core location is captured correctly, but significant details are missing."
+    "explanation": "Both texts say no erosion marks have been detected and none are expected, related to surface water runoff. However, the reason given differs substantively: Eva's text attributes this to the site being 'antropitzat' (anthropized/disturbed), while the pipeline attributes it to the site being 'pla' (flat). These are different factual characterizations of the site condition."
   },
-  "6be7017659462e62c042da278bd06769": {
+  "9fa36ba666a1825653f81f8694511ee9": {
     "score": 2,
     "status": "MISMATCH",
-    "explanation": "The pipeline text captures one street name correctly (Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell), but it omits the crucial locational information about the building being situated BETWEEN two streets. The benchmark specifies both boundary streets ('entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell'), while the pipeline only mentions one street. This represents a significant loss of spatial information despite partial accuracy."
+    "explanation": "Both refer to the same parcel/site, but the substances are very different. The benchmark provides a detailed site description (access route, fencing, ground level relative to street, vegetation, nearby constructions, no visible subsoil outcrops), while the pipeline only states the parcel is square-shaped with an area of 905 m². The pipeline introduces a specific geometric shape and area measurement not present in the benchmark, while omitting virtually all the descriptive content. Partial overlap (same site), but key substance is lost or contradicted."
   },
-  "f3833ed7d50fc42a7e866ee2c8933da3": {
-    "score": 1,
+  "ec68608b6bb176be903941462759d1f8": {
+    "score": 2,
     "status": "MISMATCH",
-    "explanation": "Completely different locations. Benchmark specifies Carrer Girasols nº7 in Urbanització El Roser d'Alcoletge, while pipeline states Carrer Girassols nº7 in Alella. Different street names (Girasols vs Girassols spelling), different municipalities (Alcoletge vs Alella), and missing urbanization context. Only the street number matches."
+    "explanation": "The start depth -1.00 matches, but the end depth differs in substance: the benchmark shows a positive value 1.60 (likely a depth of 1.60 m), while the pipeline shows -1.60 (a negative depth). This is a factual/numerical contradiction on a key geotechnical parameter, not a mere wording difference."
   },
-  "4d90134d103bd80a6f2db1478b9e3949": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "The pipeline text is drastically different from the benchmark. The benchmark provides a detailed site description including access route (north street), current occupation (leveled area + ground floor building on north half), planned expansion location, accessibility for machinery, similar neighboring constructions without visible pathologies, and absence of visible subsurface materials. The pipeline text only provides a generic statement that the terrain is anthropized (human-modified), missing virtually all specific site information."
-  },
-  "4c82c9f2b67047c6339bbb2adc4555e1": {
+  "5e67b01782183c47812e30e5dbbed455": {
     "score": 3,
     "status": "CLOSE",
-    "explanation": "Both texts identify the same location (Santa Gemma street, number 4, Vilanova de Segrià), but with notable differences: (1) Benchmark specifies 'Calle' + full abbreviation 'STA.' while pipeline uses 'Calle Santa Gemma' (expanded form); (2) Benchmark includes 'URB. LA SERRA' (urbanization name) which pipeline omits; (3) Pipeline adds 'i el Carrer' (and the street) suggesting location between two points, which isn't in benchmark; (4) Language mix in pipeline ('Calle' Spanish + 'Carrer' Catalan) vs consistent Spanish in benchmark. Core location is correct but structural and completeness differences are significant."
+    "explanation": "Both refer to gravel material, but the benchmark specifies 'in a sandy matrix' (matriu sorrenca), which is a substantive lithological detail missing from the pipeline output."
   },
-  "3fa810922eac5f96b085ded7314077fd": {
-    "score": 2,
-    "status": "MISMATCH",
-    "explanation": "Both texts reference the same street (Gral Ferraz nº20), but significant differences exist: (1) Municipality name differs: 'Anciles, Benasque' vs 'Arciles' - appears to be a spelling error or different reference in the pipeline; (2) Pipeline omits the municipality context entirely; (3) Benchmark provides complete location hierarchy (street + municipality + region), while pipeline is incomplete; (4) 'al Calle' in pipeline is grammatically awkward (should be 'en la Calle'). The core address element is partially correct but critical location information is missing or incorrect."
+  "8427af7841fce998da056bc864059c91": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text in both fields."
   },
-  "ea823c9092e6cc026ac0a27cd17707a1": {
+  "fb1533ff1062982bd15d0f4236dbbeaf": {
     "score": 1,
     "status": "MISMATCH",
-    "explanation": "These refer to completely different land uses. 'Campo de conreo herbáceo' (herbaceous crop field) describes active agricultural land with vegetation, while 'parcel·la buida' (empty building lot) describes an undeveloped urban/suburban parcel. Despite both being unbuilt land, they represent fundamentally different contexts and purposes."
+    "explanation": "Different numerical values: benchmark states N30=54, pipeline states N30=62. These are different SPT blow counts, representing different facts."
   },
-  "85f0a82389911feef7b58f48a272b1c5": {
-    "score": 1,
-    "status": "MISMATCH",
-    "explanation": "Completely different content. Benchmark describes a building with up to 4 above-ground floors (edificio de hasta 4 plantas sobre rasante), while pipeline describes an empty building lot (parcel·la buida). These are opposite concepts - one is an existing structure, the other is vacant land."
+  "b6797597af1fde4cb9278ba72e53e5a0": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical test identifiers."
   },
-  "0855cd1be1a2654f49af24bf992c0b8b": {
+  "34770defe54222f1369737971ea96d73": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both fields are empty (---), so they match exactly."
+  },
+  "586a378daf910b301d015e2ea520e77e": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text in both fields."
+  },
+  "c510494448098b425864ccf98958a752": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text in both fields."
+  },
+  "7c083926f5513405e338bf62619571d6": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both indicate a range of DPSH tests, but the pipeline omits test number 5, which is a minor but real detail difference."
+  },
+  "02b92dfff1bf0eaa4b1de848ba5c4ee9": {
     "score": 3,
     "status": "CLOSE",
-    "explanation": "Both describe an empty/vacant area to the east, but with different emphasis. 'Zona yerma con vegetación' (barren zone with vegetation) focuses on the uncultivated nature and vegetation present, while 'parcel·la buida' (empty building lot) refers to a vacant parcel without specifying vegetation. They capture the same general concept of an unbuilt area, but 'zona yerma' includes environmental detail that 'parcel·la buida' omits. Semantically related but not equivalent descriptions of the same adjacent property."
+    "explanation": "Both describe the eastern boundary as a built parcel, but the pipeline omits the swimming pool, which is a substantive detail present in the benchmark."
   },
-  "42a59b48fe005496da6e3897bd919cc6": {
+  "ba0b55e3158116870914fa7766a26044": {
     "score": 2,
     "status": "MISMATCH",
-    "explanation": "Partially correct but significant difference. 'Jardín' (garden) and 'parcel·la buida' (empty building lot) are different features. A garden is a landscaped/cultivated space, while an empty parcel is vacant land. These are related but distinct adjacent features."
+    "explanation": "Both mention the north side having a parcel with construction, but the pipeline loses substantial detail: the benchmark specifies undeveloped parcels with tall grass and trees, a ground floor + one upper floor building, and its orientation parallel to Carrer Turó Roig. The pipeline only captures one element (parcel with construction) and omits all the other neighboring parcels and descriptive details."
   },
-  "b6eb36bb6ad1db4a686b6b7bc921cebf": {
+  "1c02f8673094b900d24fd2a88d9cb8ef": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same substance: the south side borders the street 'Arbrells'/'dels Arbrells'. Minor wording differences (missing comma, article 'dels', capitalisation) are irrelevant."
+  },
+  "0d2e89270c8b490db291499f5664c84d": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both describe the western boundary as undeveloped/empty parcels. The benchmark adds details about tall grass and trees, which are minor qualifiers about the vegetation state. The substance (undeveloped parcels to the west) is the same, but the pipeline omits the descriptive detail about tall grass and trees — a minor but present detail loss."
+  },
+  "76fcb63176895025f01e3c47deb40a92": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both refer to 3 single-family dwellings (habitatges unifamiliars), which is the core substance. However, the pipeline output omits the substantive detail that these are light wood-frame structures ('estructura lleugera, fusta'), which is a meaningful construction characteristic."
+  },
+  "deec73127dfca9e0eedf6be8d1996690": {
     "score": 1,
     "status": "MISMATCH",
-    "explanation": "Completely different semantic content. Benchmark describes a detailed site condition: fairly leveled/cleared ground, unpaved, with small vegetation and occasional trees. Pipeline only states 'antropitzat' (anthropized/human-modified), which is a generic classification without descriptive detail. These represent fundamentally different approaches to documenting site condition."
+    "explanation": "Completely different entities: 'WOOD COMFORT PROMOCIONS SLU' is a company name, while 'G3' appears to be an unrelated code or identifier. Different substance entirely."
   },
-  "02f5714de8a40ccff5f0b3866ebfabcb": {
+  "f6437aec420790177e6991d4b21aa211": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same date (24 October 2025) expressed in Spanish vs Catalan. Pure language/wording difference, identical substance."
+  },
+  "27a0099b40410f96026002b76e721d2d": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical expedient number in both fields."
+  },
+  "d0e08f90909af17cc6f5a63d039e60a3": {
     "score": 2,
     "status": "MISMATCH",
-    "explanation": "The pipeline text (in Catalan) captures some key elements from the benchmark (in Spanish) - both mention unpaved/unleveled ground, sparse vegetation, and nearby constructions. However, the pipeline text is incomplete (cuts off mid-sentence at 'car'), missing significant details present in the benchmark: the access route from the north, the explanada condition, the absence of visible pathologies in nearby buildings, the geomorphological context, and the observation about lack of material outcrops. The incomplete sentence and missing contextual information constitute a significant omission."
+    "explanation": "The benchmark states K30=8.00 kg/cm³ while the pipeline gives 8.3, which is a different numerical value for the same parameter. The numbers differ (8.00 vs 8.3), making this a factual discrepancy on a key engineering parameter."
+  },
+  "0497e7c2489970560e6b84dd1585931e": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same depth range (-1.00 to -1.20 m), just minor formatting differences (trailing zeros, missing 'Profunditat:' label which is context not substance)."
+  },
+  "795bba3d92f2bc605e0826e838ebfd26": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same company name; 'S.L' vs 'SL' is a punctuation/formatting difference only."
+  },
+  "8a859c51fca21ed732ef1e96440fd51f": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both mention 1 sulfate content test per UNE 83963:2008, so the core substance matches. However, the pipeline output includes substantial extraneous content (date, initial data header, location/project reference) that is not part of the lab tests field, and does not explicitly state the quantity (1 assaig). The test type and standard are the same, but the field contains misplaced data making it a substantive formatting/content issue beyond mere wording."
+  },
+  "fc965f19f0946a07067febfd3125c408": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same street and municipality, but the pipeline is missing the house number '18', which is a minor but substantive locating detail."
+  },
+  "d41c796f1b28082d4a11320955a43108": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same municipality, only casing differs."
+  },
+  "4430726226bf115cbb9d39651829b5b9": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text, same substance."
+  },
+  "cb110a68854e1770bb89391c2eac22ba": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same numerical value (0,04) but the pipeline omits the unit 'g' and the explanatory note about gravity. The core seismic acceleration value is identical, but the missing unit qualifier is a minor substantive detail."
+  },
+  "e354a925896fd0cfd42b352f7296ee28": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark describes qualitative/quantitative settlement predictions (negligible or less than 1.0 cm), while the pipeline output is just a number '2.80' with no context — a completely different value and format. Different substance entirely."
+  },
+  "93e0156554da43e56a14e21e26f3932f": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text."
+  },
+  "becec3a8e61022ac7db05604218c8c66": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different substance. The benchmark provides a detailed site description covering access route, surface conditions, topography, slope, work platform elevation (~4m above street), nearby constructions, and subsurface visibility. The pipeline output only states the parcel is rectangular with a 440 m² surface area — a different and minimal fact not mentioned in the benchmark at all."
+  },
+  "f8dce351f02efd1d1d2754a77e25de42": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both values are effectively empty/null (-- vs ---). No substantive difference."
+  },
+  "c5bb0edc17e6b17eb2488a120c4ece71": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical content: same DPSH range values 3, 4 i 5."
+  },
+  "7085d56390da3d2becd98199081dac73": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both mention the east side has a built parcel/construction, which matches. However, the benchmark also includes the west side ('est i oest') with similar constructions, while the pipeline only mentions the east side — omitting the west side is a substantive detail loss."
+  },
+  "8b865d10db1854ea56acac7a49895f52": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The two descriptions give completely different information about what lies to the north. The benchmark describes undeveloped parcels with low vegetation and trees, while the pipeline states the northern boundary is Passeig Miranda (a promenade/road). These are contradictory facts about the northern adjacency."
+  },
+  "af42e487c19e69d38fc37d864395dc74": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states the south boundary is 'carrer de la Miranda' (a street), while the pipeline states it borders 'a parcel·la amb construcció' (a built parcel). These are entirely different boundary elements — a street vs. a neighbouring built plot. Different substance entirely."
+  },
+  "163d8ee913e0cad9715e7925c5895959": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states that both the east and west sides border constructions of similar characteristics. The pipeline only mentions the west side, and describes it as bordering 'Avinguda Can Tapis' (a road), which is a different substance from 'constructions of similar characteristics'. The pipeline misses the east side entirely and gives a different boundary description for the west."
+  },
+  "1356eb85c91d653fda145f7ea4eac94d": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both refer to a modular dwelling, but the pipeline text omits 'unifamiliar aïllat' (single detached), which is a substantive qualifier missing from the pipeline output."
+  },
+  "0aaa0ddbb089a5111df885f1f986b6e7": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different entities: a person (SRA. JOANA MARTINEZ) vs a company (VIM VIVIENDAS MODULARES)."
+  },
+  "b0f925471f1e267f4c38145a2340da76": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "C-0 and C-1 are different fire resistance / building classification codes — different substance entirely."
+  },
+  "7e8dd2f701df9a8633795f4d061eec68": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical date in both fields."
+  },
+  "ca74534f32bcc48d8677d1a657f9cbcf": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical expedient number."
+  },
+  "16af659ca7ac495960e51ee8b764100e": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same depth range (-0.60 to -1.20 m vs -0.6 to -1.2 m); trailing zeros and the label 'Profunditat' are wording/formatting differences only."
+  },
+  "73a24e81eb28db89a6627cd51bae79e6": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both refer to the same sampling point P-3. Identical substance."
+  },
+  "635e1982ee5d7c5865aee1903c95087d": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline text includes irrelevant header/address data mixed in. More critically, it only captures 2 of the 3 lab tests: granulometric analysis (present) and liquid limit (partial match for Atterberg limits, but only liquid limit is mentioned, not plastic limit UNE 103104/93). The sulfate content test (UNE 83963:2008) is entirely missing. Partial overlap but missing a full test and incomplete on another."
+  },
+  "0aac1a1ce956fc6c2704ed3ee3860b6e": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both refer to Rubí, Barcelona and mention Carrer Miranda, but the benchmark specifies a precise address (nº 39, parcel 6-105) while the pipeline gives a different description (between Carrer Miranda and Avinguda Can Tapis) with no street number or parcel ID. The pipeline introduces a second street (Avinguda Can Tapis) not mentioned in the benchmark, and omits the specific address number and parcel reference. Substance is partially overlapping but differs on key locating details."
+  },
+  "50f09606d6103eddf8f19f1885b0a603": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same municipality. 'Rubí' vs 'RUBI' is a casing/accent difference only; '(Barcelona)' is an optional provincial qualifier whose absence does not change the identity of the municipality."
+  },
+  "04c34ca28fb1f563463bf429cfc2d51d": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same substance: 3 DPSH dynamic penetration tests, with reference to the mechanical test records annex. Language difference (Catalan vs Spanish) and minor wording variation ('assaigs' vs 'ensayos', 'veure annex' vs 'ver registro') are irrelevant."
+  },
+  "f0fcadd095830ab4fe38beb57a78820f": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states AB = 0.08g while the pipeline states 0.04. These are different numerical values representing different seismic acceleration parameters — a clear factual mismatch."
+  },
+  "4f7bd3fe0ba2ccccb2c2bf67ce57a74b": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both texts state that no marks/signs of erosion processes related to surface water runoff have been detected. The benchmark adds two extra details: (1) the site is 'non-anthropized' (no antropitzat), and (2) it is not expected that such processes will appear in the future. The pipeline omits both of these qualifiers, particularly the forward-looking statement about future expectations, which is a minor but notable detail loss. Substance is largely the same but not fully captured."
+  },
+  "bde1fc632551abc289d5a6a0e31b9156": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The benchmark provides a detailed site description including access route, absence of constructions/pavements, topography with elevation data (212.20 to 199.00 m.s.n.m., ~13.20m difference), surrounding buildings, and subsurface visibility. The pipeline only states the parcel is rectangular with a surface area of 1414 m². While both describe the same site, the pipeline captures almost none of the substantive content of the benchmark and adds a shape/area detail not present in the benchmark. Significant mismatch in substance."
+  },
+  "0c954db617d4621943a68f1140f1776d": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Eva's text lists DPSH tests 3 and 4, while the pipeline lists tests 3, 4, and 5. The pipeline adds an extra test (5) that is not present in the benchmark, which is a substantive difference in the range of tests reported."
+  },
+  "3aaa7aa51611194f79c2881ac132be61": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both say the east side borders empty parcels/a parcel. The pipeline omits the southern boundary (also empty parcels), which is a substantive missing detail — hence CLOSE rather than MATCH."
+  },
+  "ff9bd4546ce12a2d08e4846dc9d85af4": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark says the northern parcel is occupied by a single-family dwelling ('parcel·la ocupada per una habitatge unifamiliar'), while the pipeline says it is an empty plot ('parcel·la buida'). These are opposite facts about the same parcel — one built, one vacant."
+  },
+  "3cf5cac8209be3e37bc73f983cf4e1f5": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both describe the south boundary as adjoining empty parcels/lots. However, the benchmark also includes the east boundary ('per la part est') which is missing from the pipeline output. The south substance is the same, but the east adjacency detail is lost."
+  },
+  "6c83a9ee85e3a197895f30fe90dcf7f5": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both describe the western boundary as a street, but the benchmark says it's the street where the entrance is made (without naming it), while the pipeline names the street ('Carrer Clot de la Llacuna') but omits the detail about it being the entrance street. The street name is a substantive detail present in one but not the other, and the entrance detail is missing from the pipeline version."
+  },
+  "9b3e631c3b2fcb49459eefd66192afd7": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same company name; the pipeline adds the legal form suffix 'S.L.P' which is a wording/punctuation detail, not a substantive difference."
+  },
+  "ef21200c6e818ed6ce66becfdea82b6b": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different person names — different substance entirely."
+  },
+  "77dc83154aaedf82cce07b6b7b9c93b1": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe ground-level/no-basement construction, but 'sense nivell de soterrani' (no basement level) and 'en planta baixa' (at ground floor) are not the same statement. One explicitly says there is no basement; the other says the structure is at ground floor level. These are related but distinct descriptions — one negates a basement, the other simply locates the structure. Key substantive difference."
+  },
+  "4f6fbb6e2e05834ad74acd7b108b4194": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both describe a single-family dwelling. 'nou' (new) is a substantive qualifier present in the benchmark but missing in the pipeline. 'aïllat' (detached/isolated) is an additional qualifier in the pipeline not in the benchmark. Minor detail differences but same core building type."
+  },
+  "d927c87fb14caf200fdb62918b1ca223": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline lists two clients (SÍLVIA EROLES BALAGUERÓ and JAUME NADAL ANDREU) while the benchmark lists only one (SRA. SÍLVIA EROLES BALAGUERÓ). The first person matches, but the pipeline adds a second person not present in the benchmark, making the substance partially overlapping but not the same."
+  },
+  "c35852bfa0912ec8648b550e02e65582": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same date '1 d'octubre de 2025'; the only difference is a space before the apostrophe, which is purely a punctuation/formatting variant."
+  },
+  "3e261613d545cdc89dfeae844b2ee12c": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different values: '4001607' vs '13/52/04' are different identifiers with no overlap in substance."
+  },
+  "4c6083be90d15121cdd600b93eacb739": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same depth range (-1.00 to -1.15 m). 'Profunditat:' label is just a field header, and '-1.0' vs '-1.00' is a trivial formatting difference with identical numeric value."
+  },
+  "761c48fa5668b36042e0aa229161397c": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline output contains header/metadata noise (date, initial data, location reference) and only partially covers the lab tests: it lists the two Atterberg limit standards (UNE 103103/94 and UNE 103104/93) matching the benchmark's first line, but omits entirely the expansivity test (Lambe UNE 103500/94) and the sulfate content test (UNE 83963:2008). Partial overlap on substance with key tests missing."
+  },
+  "4666bd4d230597d8c6b5adaf223cc9f1": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same address; 'nº' vs 'n' is a wording difference only."
+  },
+  "81cddf2ea2a795d98415f98d0ad5a1b9": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same municipality, only casing difference."
+  },
+  "086341e7c24c5a9e0197d8d2f2dfcefa": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text in both fields."
+  },
+  "095c3fc88a20594fd357db14dc10e61e": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both fields are identical: 'Pb' (ground floor only)."
+  },
+  "418d9c7b7bfcb31509d0a3f3624d42ad": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both values are identical: radon zone 0."
+  },
+  "45d5ac9620e58c7f9a315539f0c07919": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states that maximum settlements will be negligible or less than 1.0 cm, while the pipeline gives a value of 1.80 (presumably cm), which is a different and contradicting number/fact."
+  },
+  "a7eca3b3ac33136b0e27bf0cbd4d430e": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "The two texts are identical word for word."
+  },
+  "21b1dc38077dbbc7a4c8e70dc1f610f7": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark provides a detailed site description covering access, topography (15 cm below street level), surface conditions (unpaved, sparse low vegetation), nearby constructions, and absence of subsurface outcrops. The pipeline output merely states the parcel is rectangular with a surface area of 571 m². Completely different substance."
+  },
+  "f64c906a4dddffe032b7ac849410b898": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same substance: 'No agressius' vs 'No Agressius' differ only in capitalization, which is irrelevant."
+  },
+  "6e202a79f485ce9d5b3dc42dd7452514": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Different sulfate levels: benchmark states '2on nivell' (2nd level) while pipeline states '1er nivell' (1st level). These are different facts, not a wording difference."
+  },
+  "72d47325507ebfcd814c57ed61370d48": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both refer to the east side having parcel(s) with construction, but the benchmark specifies three parcels with isolated buildings of up to two floors above grade, one with a basement and pool. The pipeline only mentions one parcel with construction, losing the count (3 vs 1), the building characteristics (floors, basement), and the pool — all substantive details."
+  },
+  "96d3f63bce39136f69fedf7ade49b6a2": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states the northern boundary is a 'camí d'accés' (access path/road), while the pipeline states it is 'Carrer dels Gira-sols' (a named street). These are different boundaries — one is a generic access road, the other is a specific named street. Different substance."
+  },
+  "d184332092aad6013de71b8db170c445": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both describe the southern boundary as a parcel with a building/construction. The benchmark adds the detail that it is an isolated building on ground floor ('edifici aïllat en planta baixa'), which is a substantive detail missing from the pipeline output, but the core substance (southern boundary: parcel with construction) is the same."
+  },
+  "8299560a262758bc7d87d40859c1c5a5": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same substance: both say the western side borders an empty lot. 'solar buit' and 'parcel·la buida' are domain synonyms. Missing comma after 'oest' is punctuation only."
+  },
+  "19d70503a0e2f48a7f820a8315235e09": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different person names — different substance entirely."
+  },
+  "6aee4f5129661abad94974e78563c7ce": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both involve some kind of construction work on a residential building, but the substance differs: the benchmark describes an extension/enlargement of a building at ground floor level, while the pipeline describes the enclosure of a porch in a single-family dwelling. These are different types of works on potentially different structures."
+  },
+  "bc24dede3a325fd1e3b698c8cbfbf94c": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text in both fields."
+  },
+  "f3983f151a01af09ec031c2a915e68a6": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical date in both fields."
+  },
+  "6a6b9fa8576acd2d766f2d6b24b0131c": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical expedient numbers."
+  },
+  "0979da3b1b8b13e57c4ecf88086a66b7": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same street and number (Carrer Girasols nº7, Alcoletge), but the pipeline omits the urbanization name 'Urbanització El Roser', which is a substantive detail of the location."
+  },
+  "8a53501da4dd4afb525347efcbaee3df": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both refer to the same municipality: Alcoletge. The pipeline gives just the name while the benchmark includes it in a sentence, but the substance (municipality = Alcoletge) is identical."
+  },
+  "c63c5f6b209a12c8ce67f51cece8875b": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states that maximum settlements will be negligible or less than 1.0 cm (a qualitative/quantitative assessment), while the pipeline output is just a number '2.20' with no units or context — a completely different substance."
+  },
+  "5312a4c04d4ff37bfe22bb613f58cdad": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different substance. The benchmark text describes site access, current occupation (graded area + ground-floor building on the north half), planned extension location, neighbouring constructions, and absence of exposed subsoil materials. The pipeline text simply states the parcel is rectangular with a surface area of 1167 m2 — a different fact not mentioned in the benchmark at all."
+  },
+  "bb17e73689aa4969523ec5d8893083ba": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states the range covers tests 3 and 4, while the pipeline states tests 3, 4, and 5. These are different sets of DPSH tests — the pipeline includes an additional test (5) not present in the benchmark. This is a substantive factual difference, not a wording issue."
+  },
+  "3481d96e5d803f13da7aaf687cf5c677": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both mention the east side having a parcel, but the benchmark also includes the north side and describes the adjacent parcels as having 'similar characteristics to those projected in the study', while the pipeline says the east parcel has a construction on it. These are partially overlapping but the details differ substantively: different sides mentioned (north omitted) and different descriptions of the adjacent parcels."
+  },
+  "ab2d017fd7310a5597bac0862f93a8c2": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both mention the north boundary with a parcel, but the benchmark also includes the east boundary and describes the adjacent parcels as having 'similar characteristics to those projected in the study,' while the pipeline only mentions the north side with a built parcel. The east boundary is missing entirely, and the characterization differs substantively."
+  },
+  "bff678493530385bf20baf3d4014f938": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both describe the southern boundary as an empty/unbuilt parcel, which is the same core substance. However, the benchmark provides substantive additional details — some paving, low herbaceous vegetation, and a few trees — that are entirely absent from the pipeline output. These are meaningful descriptive details about the parcel's characteristics, not mere wording differences."
+  },
+  "aa486a7b389c157e7f455b344f641bce": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same substance: both state the western boundary is Calle/Carrer Santa Gemma (STA. GEMMA is an abbreviation of Santa Gemma). Language difference (Spanish vs Catalan) and abbreviation vs full name are irrelevant wording differences."
+  },
+  "0c67c9219701c94cf6fb04184b1bb99b": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different names — different persons entirely."
+  },
+  "ad1378548650ce7783fa9a5967cc08ed": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both describe a single-family dwelling (vivienda unifamiliar), but the pipeline omits the 'aislada' (detached/isolated) qualifier, which is a minor but substantive detail about the building type."
+  },
+  "cd3ac8b839bcbc7997221c8f14024406": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different entities: 'GRUPO CUENCA GUERRERO, S.L' vs 'GS' – these do not refer to the same client."
+  },
+  "2fb59038903cada519d50a1379b03070": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both refer to the same expedient number 4001671; the label 'Expediente Núm.:' is just a field header, not substantive content."
+  },
+  "c0d2d8afbb5b73b5db611c8c435a5e19": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same street, number, and municipality. The pipeline omits 'URB. LA SERRA' (the urbanization name), which is a minor but substantive locating detail. Everything else matches."
+  },
+  "88e9e377f6510d4c30f0526050ea39e9": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both refer to the same municipality: VILANOVA DE SEGRIÀ. The pipeline simply names the municipality without the surrounding sentence, but the substance is identical."
+  },
+  "9408cfe982ea948fd5f45492947dda9d": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text, same substance."
+  },
+  "b0f475de6ce91da5b69dbd2ad5815c7b": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both mention a bearing capacity value, but the pipeline states 2.00 Kg/cm2 while the benchmark states 2.50 Kg/cm2 — a different number, which is a factual contradiction. Additionally, the pipeline omits the safety factor (F=3) entirely. These are substantive differences on key geotechnical values."
+  },
+  "bf343be4bf2ed334ffe7ae6e567a1246": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both state the value 0.04g, but the pipeline output only gives the number '0,04' without the parameter name 'AB', the inequality symbol '<', or the unit 'g', all of which are substantive parts of the seismic acceleration specification."
+  },
+  "fc818d2e3b0176d3cea663c3d2b2daeb": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states maximum settlements will be negligible or less than 1.0 cm, while the pipeline output is just a number '2.50' with no units or context — a completely different value and different substance."
+  },
+  "7128d9bb35ebd7682492dec2a9f1bc4c": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical text, exact same substance."
+  },
+  "0c56adb02137ad89026087693de76086": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark provides a detailed description of site access, boundaries, paving, vegetation, and fencing observed during fieldwork. The pipeline output only states the parcel is rectangular with a surface area of 406 m2 — completely different substance with no overlap in the descriptive content."
+  },
+  "053d12218ca9dfd3db81aa33560aa925": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both share the same end depth (-1.40) but the start depth differs substantially: -0.80 vs -0.18. These are different numerical values representing different depth ranges, not a wording variation."
+  },
+  "a1d617b56f2d2ecd421b255acfade84e": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same substance: both describe silty and sandy clay with some gravels. The pipeline text is Catalan, the benchmark is Spanish, but the meaning is identical."
+  },
+  "cf175b1799b2af1a713d0ecbda203d37": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "P-1 (likely a pit/calicata) and S-1 (likely a borehole/sondage) are different test point identifiers referring to different investigation methods or locations entirely."
+  },
+  "c1e06fa1a4c4ca4220e79ded27ef2ce2": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both values are identical: N30 = 10."
+  },
+  "9da041c70d4f6d2ee4c5e5b32a92e09d": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The benchmark refers to Tables 3 and 4 as a summary of in-situ tests. The pipeline output '3, 4 y 5' suggests three tables (3, 4, and 5), which contradicts the benchmark by including an additional table (Table 5). The table numbers partially overlap but the pipeline adds a substantive different element."
+  },
+  "bcfae9c5d81aca509ef4a8596441c35f": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different substance: the benchmark describes the northeast boundary as an herbaceous cultivation field, while the pipeline describes the east boundary as a road (Carretera Anciles). Different direction, different adjacent element."
+  },
+  "26851edff9f64bdeb9c9b4132e5f78a7": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark says the northwest boundary is a garden, while the pipeline says the north boundary is Calle General Ferraz. Different direction, different adjacent element — entirely different substance."
+  },
+  "923eb402dc41893e28c1721ac7ff3e60": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states the southwest boundary is an existing building of up to 4 storeys above grade, while the pipeline states the south boundary is an empty plot. These are contradictory in both direction (southwest vs south) and substance (built multi-storey building vs empty lot)."
+  },
+  "995d8edff727234db9f40744ee89d7e3": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe an adjacent boundary, but they differ on two key points: the direction (sureste/southeast vs oeste/west) and the nature of the adjacent land (zona yerma con vegetación vs parcel·la buida/empty lot). These are substantive differences in both orientation and land description."
+  },
+  "439a572db2d95f004cccbcb3dad4798b": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different entities. The benchmark names a single architect 'ALBA MARIA BARRAU CASTÁN', while the pipeline lists two different architects 'ALBA BARRUETA' and 'MIRIAM CASTEL' with collegiate numbers. Different people entirely."
+  },
+  "4b699e3d7c904defd26b8ea44a8a4929": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both mention a basement/semi-basement level, but the benchmark specifies it is a semi-basement (semisótano) in only two of the seven planned dwellings, while the pipeline text simply says 'with a basement level' — losing the semi-basement distinction, the count (2 of 7), and the context of planned dwellings."
+  },
+  "54011e3e20db127348767ee561d6f662": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both refer to residential construction, but the benchmark specifies '7 viviendas unifamiliares adosadas' (7 attached single-family homes) while the pipeline only says 'CONSTR GRUPO DE VIVIENDAS' (group of dwellings construction) — missing the count (7), the building subtype (unifamiliar adosada), and is a much vaguer description. Partially overlapping but key details are lost."
+  },
+  "cabecfcc96bac8e16e2db0ee9a0ffe6f": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different entities: the benchmark identifies an individual person (SRA. ALBA MARIA BARRAU CASTÁN) while the pipeline identifies a company (PICO DE OLA ARQUITECTURA Y PROMOCION S.L.)."
+  },
+  "0cdd769629d2f23a5e336993e7babf3f": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same expedition number 4001679; 'Expediente Núm.:' and '_v0' suffix are formatting/labeling differences that don't affect the substance of the identifier."
+  },
+  "6772b86de9f8848f7bb115443b713955": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same street and address (nº vs n is wording only), but pipeline omits 'Benasque' which is a substantive location detail (the broader municipality or comarca)."
+  },
+  "a7f3b675601e0e11f203be0e123a1168": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both refer to the same municipality: Anciles (Benasque). The benchmark provides full context while the pipeline gives just the place name, but the substance is identical."
+  },
+  "4faf7f5a9ca05c4fa63b7b0da59a61d1": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "Completely different tests: the benchmark states 2 SPT tests with sample recovery, while the pipeline states 6 DPSH dynamic penetration tests. Different test type, different count — different substance entirely."
+  },
+  "43fd47475a8c0830b74ea9433d768146": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The benchmark says 'C-1' which indicates a single basement/underground floor level, while the pipeline says 'SÓTANO, PLANTA BAJA y PLANTA 1' which describes three floors (basement, ground floor, and first upper floor). These are substantially different descriptions of the building's floor configuration."
+  },
+  "1a642b12fad8a9e96c669669edacad72": {
+    "score": 3,
+    "status": "CLOSE",
+    "explanation": "Both state the same bearing capacity value (2.0 kg/cm²), but the pipeline omits the substantive detail about the included safety factor (F=3), which is a meaningful geotechnical parameter."
+  },
+  "23b141126a7e177fbf1c8a43dd3cd105": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both fields state the same radon zone value: 2."
+  },
+  "466b30b07faa7ef31444ef6881e4ad13": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states AB = 0.05 g, while the pipeline states 0.04. These are different numerical values for the seismic acceleration parameter, which is a substantive factual difference."
+  },
+  "1516b91f02038745da8f2591c8b47ce9": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark states maximum settlements will be less than 1.5 cm, while the pipeline output is '2.40' — a different number with no context, but clearly a different value and different substance entirely."
+  },
+  "b8ecddffd0a4521a2e22bbf43721c5eb": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark provides a detailed site description covering access route, interior condition (flat, unpaved, with small vegetation), observations of nearby constructions, and geomorphological notes. The pipeline output only states the parcel surface area (1655 m2), which is an entirely different piece of information not mentioned in the benchmark at all. Completely different substance."
+  },
+  "8b4e0b4e89416172cfa9a60d7cd92a1d": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Identical depth range values in both fields."
+  },
+  "f5e5378dc74df18231b2cf1b1ebe634a": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe fine-grained soil, but 'Arcilla arenosa con gravitas' (sandy clay with gravel) and 'Llims' (silts) are different soil classifications — different grain size, different composition, different engineering properties. Overlapping only in being fine-grained, but the specific lithology is contradicted."
+  },
+  "4e3efb831f76485929a7a53d9f569659": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same borehole/test identifier 'S-1' vs 'S1'; the hyphen is a formatting difference only, substance is identical."
+  },
+  "350c8416ba1167eb829776c273ee5570": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Both values are identical: N30 = 6."
+  },
+  "44bad9a3ee2434e84f9b895c5a59377a": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "The benchmark says 'T-1' (a parcel classification/type) while the pipeline says '1655.01' (a numeric area measurement). These are entirely different types of information — one is a category label, the other is a surface area figure. Different substance entirely."
+  },
+  "b4e75de850f4f52b04bc236d67277db1": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Same substance (tables 3, 4 and 5), but the pipeline omits the word 'Tabla' and the descriptive subtitle 'Resumen de los ensayos in situ realizados.' Minor detail loss on the label/description."
+  },
+  "431a01722ea4aab380891a84712b6061": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "The pipeline includes an additional person 'JAUME NADAL ANDREU' not present in the benchmark. This is a substantive difference — the client field identifies different/additional entities, not just a wording variation."
+  },
+  "bc409dcfcc6b15fc38e68eaf8aacfe0a": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe construction work on a residential building, but the substance differs: the benchmark describes an extension/enlargement of a building at ground floor level ('ampliació d'un edifici en planta baixa'), while the pipeline describes the enclosure of a porch of a single-family dwelling ('tancament de porxo d'un habitatge unifamiliar'). These are different types of interventions with different scopes and implications."
+  },
+  "829ad776597277bfa69896dfcd6bde72": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same address: 'nº20' vs 'n20' is a wording difference only (nº vs n notation), substance is identical."
   }
 }

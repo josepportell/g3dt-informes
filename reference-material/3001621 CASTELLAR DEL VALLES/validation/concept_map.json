@@ -1,0 +1,1183 @@
+{
+  "metadata": {
+    "project": "3001621 CASTELLAR DEL VALLES",
+    "scanned_at": "2026-04-12T19:39:20",
+    "total_files": 75,
+    "vision_probes_sent": 16,
+    "total_concepts_found": 15,
+    "total_concepts_unresolved": 55,
+    "duration_ms": 786
+  },
+  "file_inventory": [
+    {
+      "path": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+      "type": "excel",
+      "size_kb": 16,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_name",
+        "street_address",
+        "contact_name",
+        "client_phone",
+        "access_url"
+      ],
+      "concept_confidence": {
+        "client_name": 0.9,
+        "street_address": 0.9,
+        "contact_name": 0.9,
+        "client_phone": 0.85,
+        "access_url": 0.9
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+      "type": "excel",
+      "size_kb": 109,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+      "type": "email",
+      "size_kb": 266,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_name",
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_name": 0.7999999999999999,
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+      "type": "pdf_vector",
+      "size_kb": 415,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "client_nif"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "client_nif": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+      "type": "pdf_vector",
+      "size_kb": 353,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "client_nif"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "client_nif": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+      "type": "image",
+      "size_kb": 368,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "site_photo: Site photo of a cleared area with cut trees and logs"
+    },
+    {
+      "path": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg",
+      "type": "image",
+      "size_kb": 219,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "site_photo: Site photo with houses and solar panels"
+    },
+    {
+      "path": "3001621_PORTADA_25.doc",
+      "type": "docx",
+      "size_kb": 194,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "3001621_informe_v0.doc",
+      "type": "docx",
+      "size_kb": 5742,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "3001621_test_fase2.docx",
+      "type": "docx",
+      "size_kb": 9218,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "3001621_test_run003.docx",
+      "type": "docx",
+      "size_kb": 7584,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "3001621_test_run004.docx",
+      "type": "docx",
+      "size_kb": 7584,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "3001621_test_run005.docx",
+      "type": "docx",
+      "size_kb": 7584,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "4687-GTL-25 Castellar del Vallés.pdf",
+      "type": "pdf_vector",
+      "size_kb": 362,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_email",
+        "client_nif",
+        "field_date"
+      ],
+      "concept_confidence": {
+        "client_email": 0.75,
+        "client_nif": 0.7999999999999999,
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+      "type": "pdf_vector",
+      "size_kb": 538,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_phone",
+        "client_email",
+        "client_nif"
+      ],
+      "concept_confidence": {
+        "client_phone": 0.75,
+        "client_email": 0.75,
+        "client_nif": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "ANNEXES/3001621_DPSH.xls",
+      "type": "excel",
+      "size_kb": 127,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "ANNEXES/ALTRES/COORDENADES.txt",
+      "type": "text",
+      "size_kb": 0,
+      "text_extractable": true,
+      "concepts_detected": [
+        "utm_coordinates"
+      ],
+      "concept_confidence": {
+        "utm_coordinates": 0.95
+      },
+      "notes": ""
+    },
+    {
+      "path": "ANNEXES/ALTRES/M1.png",
+      "type": "image",
+      "size_kb": 633,
+      "text_extractable": false,
+      "concepts_detected": [
+        "municipality",
+        "province"
+      ],
+      "concept_confidence": {
+        "municipality": 1.0,
+        "province": 0.0
+      },
+      "notes": "map: Geographic map showing Castellar del Vallès area"
+    },
+    {
+      "path": "ANNEXES/ALTRES/M10.png",
+      "type": "image",
+      "size_kb": 1508,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Aerial view map with plot boundaries"
+    },
+    {
+      "path": "ANNEXES/ALTRES/M11.png",
+      "type": "image",
+      "size_kb": 176,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Geological map or cross-section"
+    },
+    {
+      "path": "ANNEXES/ALTRES/M2.png",
+      "type": "image",
+      "size_kb": 506,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Aerial view of a plot with buildings and roads"
+    },
+    {
+      "path": "ANNEXES/ALTRES/M3.png",
+      "type": "image",
+      "size_kb": 617,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: Topographic map with contour lines and location labels"
+    },
+    {
+      "path": "ANNEXES/ALTRES/M4.png",
+      "type": "image",
+      "size_kb": 612,
+      "text_extractable": false,
+      "concepts_detected": [
+        "municipality",
+        "street_address"
+      ],
+      "concept_confidence": {
+        "municipality": 0.8,
+        "street_address": 0.5
+      },
+      "notes": "map: Topographic map with contour lines and location marked"
+    },
+    {
+      "path": "ANNEXES/ALTRES/m12 mgeol.png",
+      "type": "image",
+      "size_kb": 1600,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "map: geological map with legend"
+    },
+    {
+      "path": "ANNEXES/ALTRES/m5.png",
+      "type": "image",
+      "size_kb": 377,
+      "text_extractable": false,
+      "concepts_detected": [
+        "street_address"
+      ],
+      "concept_confidence": {
+        "street_address": 0.8
+      },
+      "notes": "field_sheet: Hand-drawn sketch of point locations"
+    },
+    {
+      "path": "ANNEXES/ALTRES/m6.png",
+      "type": "image",
+      "size_kb": 963,
+      "text_extractable": false,
+      "concepts_detected": [
+        "superficie_parcela_m2"
+      ],
+      "concept_confidence": {
+        "superficie_parcela_m2": 0.8
+      },
+      "notes": "map: Aerial view of a plot with measurements"
+    },
+    {
+      "path": "ANNEXES/ALTRES/m7.png",
+      "type": "image",
+      "size_kb": 1339,
+      "text_extractable": false,
+      "concepts_detected": [
+        "municipality",
+        "province"
+      ],
+      "concept_confidence": {
+        "municipality": 0.9,
+        "province": 0.8
+      },
+      "notes": "map: Topographic map with study area marked"
+    },
+    {
+      "path": "ANNEXES/ALTRES/m8.png",
+      "type": "image",
+      "size_kb": 862,
+      "text_extractable": false,
+      "concepts_detected": [
+        "superficie_parcela_m2"
+      ],
+      "concept_confidence": {
+        "superficie_parcela_m2": 0.8
+      },
+      "notes": "map: Aerial view of a plot with marked zones and measurements"
+    },
+    {
+      "path": "ANNEXES/ALTRES/m9.png",
+      "type": "image",
+      "size_kb": 71,
+      "text_extractable": false,
+      "concepts_detected": [
+        "num_soil_levels",
+        "cota_referencia"
+      ],
+      "concept_confidence": {
+        "num_soil_levels": 1.0,
+        "cota_referencia": 0.8
+      },
+      "notes": "field_sheet: Geological cross-section with soil levels"
+    },
+    {
+      "path": "DTE.txt",
+      "type": "text",
+      "size_kb": 0,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
+      "type": "image",
+      "size_kb": 352,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/DPSH/maquina_dpsh_2.jpg",
+      "type": "image",
+      "size_kb": 470,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/DPSH/maquina_dpsh_3.jpg",
+      "type": "image",
+      "size_kb": 422,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 09.37.01_63bb48b8.jpg",
+      "type": "image",
+      "size_kb": 356,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 10.02.53_404bc72b.jpg",
+      "type": "image",
+      "size_kb": 339,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/P1.jpg",
+      "type": "image",
+      "size_kb": 352,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/P2.jpg",
+      "type": "image",
+      "size_kb": 430,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/P3.jpg",
+      "type": "image",
+      "size_kb": 470,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/P4.jpg",
+      "type": "image",
+      "size_kb": 422,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg",
+      "type": "image",
+      "size_kb": 326,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.14_4f05eb48.jpg",
+      "type": "image",
+      "size_kb": 347,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
+      "type": "image",
+      "size_kb": 526,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/SONDEIG/maquina_sondeig.jpg",
+      "type": "image",
+      "size_kb": 526,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/detall_materials.jpg",
+      "type": "image",
+      "size_kb": 326,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/detall_materials_2.jpg",
+      "type": "image",
+      "size_kb": 347,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "FOTOGRAFIES/vista_general_1.jpg",
+      "type": "image",
+      "size_kb": 430,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/3001621_informe.pdf",
+      "type": "pdf_vector",
+      "size_kb": 2001,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_DPSH.pdf",
+      "type": "pdf_vector",
+      "size_kb": 106,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_fotografies.pdf",
+      "type": "pdf_vector",
+      "size_kb": 368,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 193,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_sondeig.pdf",
+      "type": "pdf_vector",
+      "size_kb": 145,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 113,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/ANNEXES/LAB-SIG.pdf",
+      "type": "pdf_vector",
+      "size_kb": 158,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/LLETRA/3001621_PORTADA_25.pdf",
+      "type": "pdf_vector",
+      "size_kb": 64,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF/LLETRA/3001621_informe_v0.pdf",
+      "type": "pdf_vector",
+      "size_kb": 932,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF-V0/3001621_informe_v0.pdf",
+      "type": "pdf_vector",
+      "size_kb": 1884,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF-V0/ANNEXES/3001621_DPSH.pdf",
+      "type": "pdf_vector",
+      "size_kb": 106,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF-V0/ANNEXES/3001621_fotografies.pdf",
+      "type": "pdf_vector",
+      "size_kb": 368,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF-V0/ANNEXES/3001621_plànol de situació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 193,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF-V0/ANNEXES/3001621_sondeig.pdf",
+      "type": "pdf_vector",
+      "size_kb": 145,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF-V0/ANNEXES/3001621_tall de correlació.pdf",
+      "type": "pdf_vector",
+      "size_kb": 113,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF-V0/LLETRA/3001621_PORTADA_25_v0.pdf",
+      "type": "pdf_vector",
+      "size_kb": 58,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PDF-V0/LLETRA/3001621_informe_v0.pdf",
+      "type": "pdf_vector",
+      "size_kb": 932,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "PENETROS + SONDEIG.pdf",
+      "type": "pdf_scanned",
+      "size_kb": 1614,
+      "text_extractable": false,
+      "concepts_detected": [
+        "street_address",
+        "municipality",
+        "field_date",
+        "cota_referencia",
+        "num_soil_levels"
+      ],
+      "concept_confidence": {
+        "street_address": 1.0,
+        "municipality": 1.0,
+        "field_date": 1.0,
+        "cota_referencia": 1.0,
+        "num_soil_levels": 0.8
+      },
+      "notes": "field_sheet: Geotechnical field report"
+    },
+    {
+      "path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+      "type": "email",
+      "size_kb": 132,
+      "text_extractable": true,
+      "concepts_detected": [
+        "client_email"
+      ],
+      "concept_confidence": {
+        "client_email": 0.75
+      },
+      "notes": ""
+    },
+    {
+      "path": "_user_data_prev.json",
+      "type": "other",
+      "size_kb": 5,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+      "type": "excel",
+      "size_kb": 459,
+      "text_extractable": true,
+      "concepts_detected": [
+        "street_address",
+        "building_type",
+        "municipality"
+      ],
+      "concept_confidence": {
+        "street_address": 0.9,
+        "building_type": 0.9,
+        "municipality": 0.9
+      },
+      "notes": ""
+    },
+    {
+      "path": "tall.pdf",
+      "type": "pdf_vector",
+      "size_kb": 947,
+      "text_extractable": true,
+      "concepts_detected": [
+        "field_date"
+      ],
+      "concept_confidence": {
+        "field_date": 0.7999999999999999
+      },
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+      "type": "excel",
+      "size_kb": 109,
+      "text_extractable": true,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image001.jpg",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image005.png",
+      "type": "image",
+      "size_kb": 23,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image009.jpg",
+      "type": "image",
+      "size_kb": 4,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/validation/mined_images/PLAN_COST_CATELLAR DEL VALLÈS_img0.png",
+      "type": "image",
+      "size_kb": 9,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": "other: Logo image"
+    },
+    {
+      "path": "validation/msg_attachments/Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES/image001.jpg",
+      "type": "image",
+      "size_kb": 8,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    },
+    {
+      "path": "validation/msg_attachments/Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES/image008.jpg",
+      "type": "image",
+      "size_kb": 6,
+      "text_extractable": false,
+      "concepts_detected": [],
+      "concept_confidence": {},
+      "notes": ""
+    }
+  ],
+  "concept_sources": {
+    "client_name": [
+      {
+        "file": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "GRUP ALMA",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "GRUP ALMA",
+        "extraction_method": "label_adjacent",
+        "page": null
+      }
+    ],
+    "street_address": [
+      {
+        "file": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+        "confidence": 0.9,
+        "signal_preview": "C/ Vallbona, 22",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "ANNEXES/ALTRES/M4.png",
+        "confidence": 0.5,
+        "signal_preview": "Turo de les Jeles",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m5.png",
+        "confidence": 0.8,
+        "signal_preview": "c/ arbat ll",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      },
+      {
+        "file": "PENETROS + SONDEIG.pdf",
+        "confidence": 1.0,
+        "signal_preview": "C/ Arbells",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      }
+    ],
+    "contact_name": [
+      {
+        "file": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "ROC",
+        "extraction_method": "label_adjacent",
+        "page": null
+      }
+    ],
+    "client_phone": [
+      {
+        "file": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+        "confidence": 0.75,
+        "signal_preview": "902333833",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+        "confidence": 0.75,
+        "signal_preview": "902333833",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+        "confidence": 0.75,
+        "signal_preview": "902333833",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.85,
+        "signal_preview": "615557450",
+        "extraction_method": "regex_phone",
+        "page": null
+      }
+    ],
+    "access_url": [
+      {
+        "file": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+        "confidence": 0.9,
+        "signal_preview": "https://maps.app.goo.gl/jqhyCq9kfT2ofFK7A",
+        "extraction_method": "label_adjacent",
+        "page": null
+      }
+    ],
+    "client_email": [
+      {
+        "file": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+        "confidence": 0.75,
+        "signal_preview": "administracion@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+        "confidence": 0.75,
+        "signal_preview": "g3@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "4687-GTL-25 Castellar del Vallés.pdf",
+        "confidence": 0.75,
+        "signal_preview": "laboratorio@tps-perforaciones.com",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+        "confidence": 0.75,
+        "signal_preview": "dolors@g3dt.com",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "client_nif": [
+      {
+        "file": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B25461443",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B25461443",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B25461443",
+        "extraction_method": "regex",
+        "page": null
+      },
+      {
+        "file": "4687-GTL-25 Castellar del Vallés.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "B64803075",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "field_date": [
+      {
+        "file": "4687-GTL-25 Castellar del Vallés.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "2025.11.19",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "tall.pdf",
+        "confidence": 0.7999999999999999,
+        "signal_preview": "Octubre 2025",
+        "extraction_method": "label_value",
+        "page": null
+      },
+      {
+        "file": "PENETROS + SONDEIG.pdf",
+        "confidence": 1.0,
+        "signal_preview": "24-10-2025",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      }
+    ],
+    "utm_coordinates": [
+      {
+        "file": "ANNEXES/ALTRES/COORDENADES.txt",
+        "confidence": 0.95,
+        "signal_preview": "{'point_id': 'P-1', 'x': 423167.0, 'y': 4609608.0, 'z': 571.5}",
+        "extraction_method": "regex",
+        "page": null
+      }
+    ],
+    "building_type": [
+      {
+        "file": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+        "confidence": 0.9,
+        "signal_preview": "CONSTR 3 HAB UNIF",
+        "extraction_method": "label_adjacent",
+        "page": null
+      }
+    ],
+    "municipality": [
+      {
+        "file": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+        "confidence": 0.9,
+        "signal_preview": "CASTELLAR DEL VALLÈS",
+        "extraction_method": "label_adjacent",
+        "page": null
+      },
+      {
+        "file": "ANNEXES/ALTRES/M1.png",
+        "confidence": 1.0,
+        "signal_preview": "Castellar del Vallès",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/M4.png",
+        "confidence": 0.8,
+        "signal_preview": "el Balcó de Sant Llorenç",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m7.png",
+        "confidence": 0.9,
+        "signal_preview": "Castellar del Vallès",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      },
+      {
+        "file": "PENETROS + SONDEIG.pdf",
+        "confidence": 1.0,
+        "signal_preview": "Castellar del Valles",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      }
+    ],
+    "province": [
+      {
+        "file": "ANNEXES/ALTRES/M1.png",
+        "confidence": 0.0,
+        "signal_preview": "",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m7.png",
+        "confidence": 0.8,
+        "signal_preview": "Vallès",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "superficie_parcela_m2": [
+      {
+        "file": "ANNEXES/ALTRES/m6.png",
+        "confidence": 0.8,
+        "signal_preview": "32980",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      },
+      {
+        "file": "ANNEXES/ALTRES/m8.png",
+        "confidence": 0.8,
+        "signal_preview": "32980",
+        "extraction_method": "vision_probe:map",
+        "page": 1
+      }
+    ],
+    "num_soil_levels": [
+      {
+        "file": "ANNEXES/ALTRES/m9.png",
+        "confidence": 1.0,
+        "signal_preview": "2",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      },
+      {
+        "file": "PENETROS + SONDEIG.pdf",
+        "confidence": 0.8,
+        "signal_preview": "No clear indication",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 2
+      }
+    ],
+    "cota_referencia": [
+      {
+        "file": "ANNEXES/ALTRES/m9.png",
+        "confidence": 0.8,
+        "signal_preview": "+571,50 m",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 1
+      },
+      {
+        "file": "PENETROS + SONDEIG.pdf",
+        "confidence": 1.0,
+        "signal_preview": "-4 m",
+        "extraction_method": "vision_probe:field_sheet",
+        "page": 2
+      }
+    ]
+  },
+  "unresolved": [
+    "Es_settlement",
+    "access_description",
+    "adjacent_east",
+    "adjacent_north",
+    "adjacent_south",
+    "adjacent_west",
+    "architect_company",
+    "architect_name",
+    "building_height_m",
+    "building_structure_desc",
+    "expedient",
+    "field_work_dates",
+    "field_work_dates_text",
+    "foundation_depth_m",
+    "geomech_E",
+    "geomech_cohesion",
+    "geomech_gamma",
+    "geomech_phi",
+    "has_basement",
+    "has_retaining_walls",
+    "historia_geologica_template",
+    "icgc_unit_code",
+    "icgc_unit_description",
+    "icgc_unit_epoch",
+    "is_anthropized",
+    "is_sloped",
+    "is_urban",
+    "k30_value",
+    "lab_depth",
+    "lab_field_company",
+    "lab_field_description",
+    "lab_location",
+    "lab_sample_id",
+    "lab_testing_company",
+    "lab_testing_description",
+    "lab_tests",
+    "lab_tests_text",
+    "location_sentence",
+    "num_dpsh_tests",
+    "num_floors",
+    "parcel_shape",
+    "qa_value",
+    "referencia_catastral",
+    "settlement_cm",
+    "site_description",
+    "site_position",
+    "slope_direction",
+    "slope_percent",
+    "sulfate_mg_kg",
+    "superficie_cadastral",
+    "superficie_construida",
+    "superficie_parcela",
+    "table_dpsh_range",
+    "utm_x",
+    "utm_y"
+  ],
+  "warnings": []
+}
