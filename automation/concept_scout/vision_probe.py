@@ -42,6 +42,20 @@ _VISION_DETECTABLE_CONCEPTS = {
 
 _PROBE_PROMPT = """Look at this document image and identify which of these report data concepts are present.
 
+ABSTENTION RULE (applies to every concept below):
+If you cannot distinguish the document's subject from incidental content
+(text visible at frame edges, footer metadata, legends, neighbor town
+labels on maps, watermarks), OMIT that concept from concepts_found.
+Abstain rather than guess. High confidence requires clear evidence, not
+plausibility — return concepts_found = [] if the document is ambiguous.
+
+MAP-SUBJECT SCOPING (applies when document_type = "map"):
+Identify the municipality and province that are the SUBJECT of the map —
+the area highlighted by a polygon outline, marker, title block, or a
+label near the image center. Do NOT return names of neighbouring towns
+visible at the frame edges; those are context, not subject. If the
+subject is not clearly indicated, omit municipality/province entirely.
+
 For each concept found, provide:
 - concept_id: the exact ID from the list below
 - confidence: 0.0-1.0 (how certain you are)
@@ -106,6 +120,106 @@ Return ONLY valid JSON:
 If no report concepts are found (e.g., it's just a site photo), return an empty concepts_found list."""
 
 _PROBE_SYSTEM = "You are a document classifier for geotechnical engineering reports. Identify data concepts present in the document. Be precise — only report concepts you can actually see, not infer."
+
+
+# --- Layout-heavy PDF heuristic ------------------------------------------
+# Some architect-plan / CAD-exported PDFs classify as "text-extractable"
+# (PyMuPDF returns >50 chars of text on page 1) but the text is only
+# coordinate strings, dimension labels, and isolated tokens — nothing the
+# regex / Groq miners can label. Probe these anyway.
+#
+# A page is considered layout-heavy when ALL of the following hold for the
+# extracted text:
+#   - total length is modest (<2000 chars) — huge pages are almost always
+#     real prose and we should NOT probe them;
+#   - alphabetic ratio is low (<0.55) OR average token length is short
+#     (<3.5) OR a large fraction of tokens are 1-2 chars (>0.45).
+# Thresholds are conservative; the goal is to catch obvious CAD-style
+# layout dumps, not revert the text-first default.
+
+_LAYOUT_MAX_TEXT_LEN = 2000
+_LAYOUT_MIN_TEXT_LEN = 20  # below this we already consider it "no text" → probe
+_LAYOUT_ALPHA_RATIO_MAX = 0.55
+_LAYOUT_AVG_TOKEN_LEN_MAX = 3.5
+_LAYOUT_SHORT_TOKEN_RATIO_MIN = 0.45
+
+
+def _extract_page1_text(file_path: Path) -> str | None:
+    """Return page-1 text for a PDF, or None on failure."""
+    try:
+        import fitz
+        doc = fitz.open(str(file_path))
+        try:
+            if doc.page_count == 0:
+                return ""
+            return doc[0].get_text() or ""
+        finally:
+            doc.close()
+    except Exception:
+        return None
+
+
+def _is_layout_heavy_text(text: str) -> bool:
+    """Heuristic: does this page-1 text look like CAD/layout dump rather than prose?
+
+    Cheap (no LLM, no tokenizer). Returns True only when the text is clearly
+    not semantic prose — coordinate strings, dimension labels, isolated
+    tokens. Returns False on short text too (caller handles short as a
+    separate "probe anyway" case).
+    """
+    if not text:
+        return False
+    n = len(text)
+    if n <= _LAYOUT_MIN_TEXT_LEN or n > _LAYOUT_MAX_TEXT_LEN:
+        return False
+
+    alpha = sum(1 for c in text if c.isalpha())
+    alpha_ratio = alpha / n
+
+    tokens = text.split()
+    if not tokens:
+        return False
+    avg_token_len = sum(len(t) for t in tokens) / len(tokens)
+    short_tokens = sum(1 for t in tokens if len(t) <= 2)
+    short_token_ratio = short_tokens / len(tokens)
+
+    return (
+        alpha_ratio < _LAYOUT_ALPHA_RATIO_MAX
+        or avg_token_len < _LAYOUT_AVG_TOKEN_LEN_MAX
+        or short_token_ratio > _LAYOUT_SHORT_TOKEN_RATIO_MIN
+    )
+
+
+def _should_probe_text_pdf(file_path: Path, concepts_detected: list[str]) -> bool:
+    """Decide whether a text-extractable PDF still merits a vision probe.
+
+    Triggered when:
+      - text miners produced zero mapped concepts for this file (Option B
+        safety net — if no labels were extracted, vision may still classify
+        the document), AND
+      - page-1 text is either very short (layout-only) or layout-heavy
+        under the heuristic (Option A — CAD-style dumps: low alphabetic
+        ratio, short avg token length, many 1-2-char tokens), OR is modest
+        in size (<=`_LAYOUT_MAX_TEXT_LEN` chars). The size bound filters
+        prose-heavy PDFs (reports, budgets, articles) where probing would
+        be wasteful.
+
+    Both conditions must hold; this keeps the extra probe budget tight.
+    """
+    if concepts_detected:
+        return False
+    text = _extract_page1_text(file_path)
+    if text is None:
+        return False
+    n = len(text)
+    if n <= _LAYOUT_MIN_TEXT_LEN:
+        return True
+    if n > _LAYOUT_MAX_TEXT_LEN:
+        return False
+    # Page-1 text is modest-length (<=2000 chars) AND no concepts detected —
+    # this matches architect plans (thin title blocks), cadastre extracts,
+    # situation-plan PDFs, CAD exports. Probe them.
+    return True
 
 
 def _cache_key(file_path: Path) -> str:
@@ -240,14 +354,48 @@ def probe_unreadable_files(
     # Skip FOTOGRAFIES dirs (site photos, never contain report concepts)
     # and inline email images (image001.jpg, image005.png etc.)
     _SKIP_PHOTO_DIRS = {'FOTOGRAFIES', 'FOTOS DE CAMP', 'FOTOS DE CAMP + PLANOL PUNTS'}
+    # Legacy Eva-output directories (we emit these ourselves on prior runs).
+    # FileMiner already skips them; the widened gate honours the same list
+    # to avoid wasting probes on our own historical outputs.
+    _LEGACY_OUTPUT_DIRS = {'PDF', 'PDF-V0', 'PDF_V0', 'PDF V0'}
     _INLINE_IMAGE_RE = __import__('re').compile(r'^image\d+\.\w+$', __import__('re').IGNORECASE)
 
-    to_probe = [
-        fe for fe in file_entries
-        if not fe.text_extractable and fe.type in ('image', 'pdf_scanned')
-        and not any(part in _SKIP_PHOTO_DIRS for part in Path(fe.path).parts[:-1])
-        and not _INLINE_IMAGE_RE.match(Path(fe.path).name)
-    ]
+    def _in_photo_dir(rel_path: str) -> bool:
+        return any(part in _SKIP_PHOTO_DIRS for part in Path(rel_path).parts[:-1])
+
+    def _in_legacy_output(rel_path: str) -> bool:
+        return any(part in _LEGACY_OUTPUT_DIRS for part in Path(rel_path).parts[:-1])
+
+    def _is_inline_email_image(rel_path: str) -> bool:
+        return bool(_INLINE_IMAGE_RE.match(Path(rel_path).name))
+
+    to_probe: list = []
+    for fe in file_entries:
+        if _in_photo_dir(fe.path) or _is_inline_email_image(fe.path):
+            continue
+
+        # Classic gate: images + scanned PDFs always probed.
+        if not fe.text_extractable and fe.type in ('image', 'pdf_scanned'):
+            to_probe.append(fe)
+            continue
+
+        # Widened gate (knob #2): text-extractable vector PDFs with no
+        # mapped concepts and only modest page-1 text. Catches architect
+        # plans, cadastre extracts, situation-plan PDFs — files whose text
+        # is CAD labels / coordinates that regex miners cannot parse.
+        # Skips legacy Eva-output directories (we produced those ourselves).
+        if fe.text_extractable and fe.type == 'pdf_vector':
+            if _in_legacy_output(fe.path):
+                continue
+            abs_path = project_path / fe.path
+            if abs_path.exists() and _should_probe_text_pdf(
+                abs_path, fe.concepts_detected,
+            ):
+                to_probe.append(fe)
+                logger.info(
+                    "Vision probe: gating text-extractable vector PDF %s", fe.path,
+                )
+                continue
 
     if not to_probe:
         return {}
