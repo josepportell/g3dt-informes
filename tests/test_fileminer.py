@@ -563,3 +563,123 @@ class TestMineProjectEdgeCases:
         assert result.errors == []
         assert result.files_mined == 0
         assert len(result.signals) == 0
+
+
+# ============================================================
+# 6. Folder-name miner (knob #1: deterministic expedient)
+# ============================================================
+
+class TestFolderNameMiner:
+    """Unit tests for the folder-name-derived expedient signal."""
+
+    def test_seven_digit_prefix_emits_signal(self, tmp_path):
+        from automation.fileminer.miners.folder_name_miner import emit_folder_name_signals
+        folder = tmp_path / "4001607 LINYOLA"
+        folder.mkdir()
+        signals = emit_folder_name_signals(folder)
+        assert len(signals) == 1
+        sig = signals[0]
+        assert sig.value == "4001607"
+        assert sig.maps_to == "expedient"
+        assert sig.concept_id == "expedient"
+        assert sig.extraction_method == "folder_name"
+        assert sig.confidence == 1.0
+
+    def test_non_matching_folder_emits_nothing(self, tmp_path):
+        from automation.fileminer.miners.folder_name_miner import emit_folder_name_signals
+        folder = tmp_path / "LINYOLA SOMEPROJECT"
+        folder.mkdir()
+        assert emit_folder_name_signals(folder) == []
+
+    def test_short_digit_prefix_emits_nothing(self, tmp_path):
+        """Four-digit prefixes don't match the 7-digit G3DT convention."""
+        from automation.fileminer.miners.folder_name_miner import emit_folder_name_signals
+        folder = tmp_path / "1234 TEST"
+        folder.mkdir()
+        assert emit_folder_name_signals(folder) == []
+
+    def test_signal_wins_competition_over_regex(self, tmp_path):
+        """Folder-name signal (priority 15) beats regex-mined expedient (priority 45)."""
+        folder = tmp_path / "4001607 LINYOLA"
+        folder.mkdir()
+
+        from automation.fileminer.miners.folder_name_miner import emit_folder_name_signals
+        folder_signals = emit_folder_name_signals(folder)
+        for s in folder_signals:
+            s.source_type = "folder_name"
+            s.priority = get_priority("folder_name")
+
+        regex_signal = Signal(
+            type=SignalType.TEXT,
+            label="REF",
+            value="13/52/04",
+            source_file="architect.pdf",
+            maps_to="expedient",
+            concept_id="expedient",
+            extraction_method="label_value",
+            confidence=0.80,
+            source_type="content_pdf",
+            priority=get_priority("content_pdf"),
+        )
+
+        resolved = resolve_competition(folder_signals + [regex_signal])
+        assert "expedient" in resolved
+        assert resolved["expedient"].value == "4001607"
+        assert resolved["expedient"].signal.extraction_method == "folder_name"
+
+    def test_mine_project_integrates_folder_signal(self, tmp_path):
+        """mine_project() on a G3DT-named empty folder emits the folder signal."""
+        folder = tmp_path / "4001607 LINYOLA"
+        folder.mkdir()
+        result = mine_project(folder)
+        folder_signals = [
+            s for s in result.signals
+            if s.extraction_method == "folder_name"
+        ]
+        assert len(folder_signals) == 1
+        assert folder_signals[0].value == "4001607"
+        assert folder_signals[0].maps_to == "expedient"
+
+
+# ============================================================
+# 7. Expedient shape guard (knob #3: tighter regex)
+# ============================================================
+
+class TestExpedientShapeGuard:
+    """detect_label_values() must reject non-G3DT expedient values."""
+
+    def test_rejects_slash_number_value(self):
+        """`REF: 13/52/04` (architect project code) must not become an expedient signal."""
+        from automation.fileminer.miners._detection import detect_label_values
+        text = "REF: 13/52/04\n"
+        signals = detect_label_values(text, "architect.pdf")
+        exp = [s for s in signals if s.maps_to == "expedient"]
+        assert exp == [], (
+            f"Shape guard failed; got: {[(s.label, s.value) for s in exp]}"
+        )
+
+    def test_accepts_seven_digit_value(self):
+        """`EXPEDIENT: 4001607` must still produce a signal."""
+        from automation.fileminer.miners._detection import detect_label_values
+        text = "EXPEDIENT: 4001607\n"
+        signals = detect_label_values(text, "dades.pdf")
+        exp = [s for s in signals if s.maps_to == "expedient"]
+        assert len(exp) == 1
+        assert exp[0].value == "4001607"
+
+    def test_accepts_seven_digit_value_with_suffix(self):
+        """Bell-Lloc emits `4001612_v0` — must still be accepted."""
+        from automation.fileminer.miners._detection import detect_label_values
+        text = "EXPEDIENT: 4001612_v0\n"
+        signals = detect_label_values(text, "informe.pdf")
+        exp = [s for s in signals if s.maps_to == "expedient"]
+        assert len(exp) == 1
+        assert exp[0].value == "4001612_v0"
+
+    def test_rejects_six_digit_bare_value(self):
+        """Six-digit codes are rejected (not G3DT convention)."""
+        from automation.fileminer.miners._detection import detect_label_values
+        text = "REF: 123456\n"
+        signals = detect_label_values(text, "other.pdf")
+        exp = [s for s in signals if s.maps_to == "expedient"]
+        assert exp == []
