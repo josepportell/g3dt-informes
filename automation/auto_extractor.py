@@ -140,6 +140,10 @@ class AutoExtractionResult:
     # Diagnostic-only: per-call usage from automation.targeted_extraction
     # (HITL drawer). Empty for runs that don't invoke targeted extraction.
     targeted_extraction_traces: list[dict] = field(default_factory=list)
+    # Files promoted to roles by phase 0.46 (deep folder classify). Used by
+    # phase 0.47 (re-mine) to target FileMiner at just the new files.
+    # Each entry: (role_name, rel_path).
+    deep_folder_promoted: list[tuple[str, str]] = field(default_factory=list)
 
     def summary(self) -> str:
         """Human-readable summary for the skill to display."""
@@ -206,11 +210,14 @@ def auto_extract(
     _phase04_groq_deep_mine(project_path, result, emit)
     emit("step", {"step": "mine", "status": "done", "count": len(result.mining_result.signals) if result.mining_result else 0})
 
-    # --- Phase 0.42: Classify email attachments extracted by MsgMiner ---
-    _phase042_email_attachments(project_path, result, emit)
-
     # --- Phase 0.45: ConceptScout (after Groq enrichment, before local extractors) ---
     _phase045_concept_scout(project_path, result, emit)
+
+    # --- Phase 0.46: Deep folder classify (uses ConceptScout probes + vision) ---
+    _phase046_deep_folder_classify(project_path, result, emit)
+
+    # --- Phase 0.47: Re-mine files newly promoted to roles ---
+    _phase047_remine_promoted(project_path, result, emit)
 
     # --- Phase 1: Local files ---
     emit("step", {"step": "extract", "status": "active"})
@@ -913,67 +920,128 @@ def _phase01_historia_geologica(project_path: Path, result: AutoExtractionResult
         result.steps_skipped.append(("Historia geològica", str(exc)))
 
 
-def _phase042_email_attachments(
+def _phase046_deep_folder_classify(
     project_path: Path, result: AutoExtractionResult, emit=None,
 ) -> None:
-    """Phase 0.42: Classify email attachments extracted by MsgMiner.
+    """Phase 0.46: Classify every file ConceptScout discovered but
+    FileScanner/SmartScan didn't role-assign.
 
-    Runs a 3-layer classifier (filename → vision → provenance) over every
-    file under `validation/msg_attachments/`. Updates `result.file_mapping`
-    in place, persists the mapping, and reports counts in steps_completed.
+    Runs AFTER ConceptScout so probe caches are hot. Covers email
+    attachments + deep subdirectories (ANNEXES/ALTRES, FOTOGRAFIES/S1,
+    ANEXOS/OTROS, etc.). Promotes only empty roles; always records
+    provenance in `file_mapping.deep_folder_files`.
     """
     if not emit:
         emit = lambda *a, **kw: None
     try:
-        from .email_attachment_classifier import classify_email_attachments
+        from .deep_folder_classifier import classify_unclassified_files
         from .file_scanner import FileScanner
 
         mapping = result.file_mapping
-        if mapping is None or not hasattr(mapping, 'email_attachments'):
+        if mapping is None or not hasattr(mapping, 'deep_folder_files'):
             result.steps_skipped.append(
-                ("Email attachments", "no file_mapping")
+                ("Deep folder classify", "no file_mapping")
             )
             return
 
-        att_root = project_path / 'validation' / 'msg_attachments'
-        if not att_root.is_dir():
-            # No attachments saved — MsgMiner had nothing to extract
-            return
-
-        # Use OpenAI vision when available; otherwise filename-only
+        # Use OpenAI vision when available; otherwise filename/probe-cache only
         vision_client = "auto" if os.environ.get('OPENAI_API_KEY') else None
 
-        prov = classify_email_attachments(project_path, mapping, vision_client)
+        before_roles = set(mapping.roles.keys())
+        prov = classify_unclassified_files(
+            project_path, mapping, vision_client=vision_client,
+        )
+        new_role_files: list[tuple[str, str]] = [
+            (v['role_assigned'], rel_path)
+            for rel_path, v in prov.items()
+            if v.get('role_assigned') and v['role_assigned'] not in before_roles
+        ]
+        # Track on the result so phase 0.47 can re-mine without re-checking
+        result.deep_folder_promoted = new_role_files
 
-        # Persist the updated mapping (roles may have gained attachments;
-        # email_attachments dict always gets written)
         try:
             scanner = FileScanner(project_path)
             scanner.save(mapping)
         except Exception as exc:
-            logger.warning("Email attachments: save failed: %s", exc)
+            logger.warning("Deep folder classify: save failed: %s", exc)
 
-        # Count outcomes for the step summary
         n_total = len(prov)
+        n_cache = sum(1 for v in prov.values() if v['classifier_used'] == 'probe_cache')
         n_filename = sum(1 for v in prov.values() if v['classifier_used'] == 'filename')
         n_vision = sum(1 for v in prov.values() if v['classifier_used'] == 'vision')
         n_unclass = sum(1 for v in prov.values() if v['classifier_used'] == 'unclassified')
-        n_promoted = sum(1 for v in prov.values() if v.get('role_assigned'))
 
         result.steps_completed.append(
-            f"Email attachments: {n_total} classificats "
-            f"(filename={n_filename}, vision={n_vision}, unclassified={n_unclass}, "
-            f"promoted={n_promoted})"
+            f"Deep folder classify: {n_total} files "
+            f"(probe_cache={n_cache}, filename={n_filename}, vision={n_vision}, "
+            f"unclassified={n_unclass}); promoted={len(new_role_files)}"
         )
         emit("phase_complete", {
-            "phase": "0.42", "name": "Email attachments",
-            "total": n_total, "filename": n_filename, "vision": n_vision,
-            "unclassified": n_unclass, "promoted": n_promoted,
+            "phase": "0.46", "name": "Deep folder classify",
+            "total": n_total, "probe_cache": n_cache, "filename": n_filename,
+            "vision": n_vision, "unclassified": n_unclass,
+            "promoted": len(new_role_files),
         })
 
     except Exception as exc:
-        logger.warning("Email attachments classification failed: %s", exc)
-        result.steps_skipped.append(("Email attachments", str(exc)))
+        logger.warning("Deep folder classify failed: %s", exc)
+        result.steps_skipped.append(("Deep folder classify", str(exc)))
+
+
+def _phase047_remine_promoted(
+    project_path: Path, result: AutoExtractionResult, emit=None,
+) -> None:
+    """Phase 0.47: Re-mine newly-promoted files so their signals reach
+    downstream extractors.
+
+    FileMiner phase 0.3 walked the project before deep folder classify
+    promoted new roles. Files in deep subfolders that FileMiner skipped
+    (e.g. FOTOGRAFIES/, msg_attachments/ non-text) get their FileMiner
+    signals mined here. Text-extractable files already covered by phase
+    0.3 remain untouched (FileMiner is idempotent per file).
+    """
+    if not emit:
+        emit = lambda *a, **kw: None
+    promoted = getattr(result, 'deep_folder_promoted', None) or []
+    if not promoted:
+        return
+    try:
+        from .fileminer import mine_project
+        from .fileminer.models import Signal
+
+        # FileMiner's mine_project mines the full tree; we run it and
+        # keep only signals for the newly-promoted files (scoped by rel_path).
+        promoted_paths = {rel_path for _, rel_path in promoted}
+        new_mining = mine_project(project_path)
+        existing_sigs: list[Signal] = (
+            result.mining_result.signals if result.mining_result else []
+        )
+        existing_keys: set[tuple] = {
+            (s.concept_id or '', s.source_file, str(s.value), s.extraction_method)
+            for s in existing_sigs
+        }
+        added = 0
+        for sig in new_mining.signals:
+            if sig.source_file not in promoted_paths:
+                continue
+            key = (sig.concept_id or '', sig.source_file, str(sig.value), sig.extraction_method)
+            if key in existing_keys:
+                continue
+            existing_sigs.append(sig)
+            existing_keys.add(key)
+            added += 1
+
+        result.steps_completed.append(
+            f"Re-mine promoted: {len(promoted)} files, {added} new signals"
+        )
+        emit("phase_complete", {
+            "phase": "0.47", "name": "Re-mine promoted",
+            "files": len(promoted), "new_signals": added,
+        })
+
+    except Exception as exc:
+        logger.warning("Re-mine promoted failed: %s", exc)
+        result.steps_skipped.append(("Re-mine promoted", str(exc)))
 
 
 def _phase045_concept_scout(project_path: Path, result: AutoExtractionResult, emit) -> None:

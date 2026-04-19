@@ -213,9 +213,13 @@ class FileMapping:
     roles: dict[str, FileRole] = field(default_factory=dict)
     ignored: list[IgnoredFile] = field(default_factory=list)
     unassigned: list[str] = field(default_factory=list)
-    # Provenance for attachments extracted from .msg files
-    # (populated by email_attachment_classifier, persisted in file_mapping.json)
-    email_attachments: dict[str, dict] = field(default_factory=dict)
+    # Provenance for files classified after FileScanner: email attachments +
+    # deep subdirectories (ANNEXES/ALTRES, FOTOGRAFIES/S1, etc.) that
+    # ConceptScout sees but FileScanner/SmartScan don't role-assign.
+    # Populated by automation.deep_folder_classifier, persisted in
+    # file_mapping.json. Read with backward-compat for the old
+    # "email_attachments" key.
+    deep_folder_files: dict[str, dict] = field(default_factory=dict)
 
     @property
     def needs_confirmation(self) -> bool:
@@ -332,7 +336,7 @@ class FileScanner:
                 for ig in mapping.ignored
             ],
             'unassigned': mapping.unassigned,
-            'email_attachments': mapping.email_attachments,
+            'deep_folder_files': mapping.deep_folder_files,
             '_metadata': {
                 'scanned_at': datetime.now(timezone.utc).isoformat(),
                 'confirmed_by_user': False,
@@ -377,7 +381,11 @@ class FileScanner:
                     reason=ig_data['reason'],
                 ))
             mapping.unassigned = list(data.get('unassigned', []))
-            mapping.email_attachments = dict(data.get('email_attachments', {}))
+            # Backward-compat: prefer the new key, fall back to the legacy key
+            deep = data.get('deep_folder_files')
+            if deep is None:
+                deep = data.get('email_attachments', {})
+            mapping.deep_folder_files = dict(deep or {})
             return mapping
         except (json.JSONDecodeError, KeyError, TypeError) as exc:
             logger.warning(f"Could not load file_mapping.json: {exc}")

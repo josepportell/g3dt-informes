@@ -195,8 +195,12 @@ def _load_concept_sources(project_path: Path) -> dict[str, list[dict]]:
     return cs if isinstance(cs, dict) else {}
 
 
-def _load_email_attachments(project_path: Path) -> dict[str, dict]:
-    """Return file_mapping.json's email_attachments dict, or {} if missing."""
+def _load_deep_folder_files(project_path: Path) -> dict[str, dict]:
+    """Return file_mapping.json's deep_folder_files dict, or {} if missing.
+
+    Backward-compat: falls back to the legacy `email_attachments` key when
+    the new key is absent (e.g. for older file_mapping.json snapshots).
+    """
     fm_path = project_path / 'file_mapping.json'
     if not fm_path.exists():
         return {}
@@ -204,15 +208,23 @@ def _load_email_attachments(project_path: Path) -> dict[str, dict]:
         data = json.loads(fm_path.read_text(encoding='utf-8'))
     except Exception:
         return {}
-    ea = data.get('email_attachments') or {}
-    return ea if isinstance(ea, dict) else {}
+    dff = data.get('deep_folder_files')
+    if dff is None:
+        dff = data.get('email_attachments') or {}
+    return dff if isinstance(dff, dict) else {}
 
 
-def _count_unclassified_attachments(email_attachments: dict[str, dict]) -> int:
-    """Count attachments with no role (unclassified OR classified but not promoted)."""
+def _count_unclassified_deep_files(deep_folder_files: dict[str, dict]) -> int:
+    """Count genuine unclassified entries.
+
+    W3 fix (2026-04-19): predicate previously also counted vision-classified
+    entries where the role was already filled (`role_candidate` set but not
+    `role_assigned`). Those are NOT unclassified — they're candidates that
+    lost to an earlier assignment. Count only explicit `unclassified`.
+    """
     return sum(
-        1 for v in email_attachments.values()
-        if v.get('classifier_used') == 'unclassified' or not v.get('role_assigned')
+        1 for v in deep_folder_files.values()
+        if v.get('classifier_used') == 'unclassified'
     )
 
 
@@ -402,8 +414,9 @@ _PHASE_LABELS = [
     ("SmartScan", "scan"),
     ("FileScanner", "scan"),
     ("FileMiner", "mine"),
-    ("Email attachments", "email"),
     ("ConceptScout", "scout"),
+    ("Deep folder classify", "deep"),
+    ("Re-mine promoted", "remine"),
     ("Groq Deep Mine", "groq"),
     ("Contingut", "content"),
     ("Pressupost PDF", "budget"),
@@ -1997,7 +2010,7 @@ def _build_ne_trace(
             'fm_roles': _load_file_mapping_roles(diag.project_path),
             'concept_sources': _load_concept_sources(diag.project_path),
             'signals_by_concept': signals_by_concept,
-            'email_attachments': _load_email_attachments(diag.project_path),
+            'deep_folder_files': _load_deep_folder_files(diag.project_path),
         }
         for prefill_key, r in diag.results.items():
             if r.get('status') != 'NOT_EXTRACTED':
@@ -2087,22 +2100,39 @@ def _build_ne_trace(
             # Fallback (shouldn't happen)
             suggested_fix = _NE_REASON_TITLE.get(aggregate_reason, '')
 
-        # Annotate no_source_file rows with unclassified-attachment hint
+        # Annotate no_source_file rows with deep-folder hints.
+        # Prefer specific role_candidate pointers when available; otherwise
+        # fall back to the count of genuinely unclassified deep files.
         if aggregate_reason == 'no_source_file':
+            expected_roles: list[str] = []
+            if occurrences:
+                first_pp = per_project[0] if per_project else {}
+                expected_roles = list(first_pp.get('expected_role') or [])
+
+            candidate_hits: list[tuple[str, str, str]] = []  # (project, path, role)
             total_unclass = 0
             for pname, _r in occurrences:
-                ea = project_ctx.get(pname, {}).get('email_attachments', {}) or {}
-                total_unclass += _count_unclassified_attachments(ea)
-            if total_unclass > 0:
-                role_hint = ''
-                if occurrences:
-                    first_pp = per_project[0] if per_project else {}
-                    expected = first_pp.get('expected_role') or []
-                    if expected:
-                        role_hint = f" [{expected[0]}]"
+                dff = project_ctx.get(pname, {}).get('deep_folder_files', {}) or {}
+                total_unclass += _count_unclassified_deep_files(dff)
+                if expected_roles:
+                    for rel_path, entry in dff.items():
+                        cand = entry.get('role_candidate')
+                        if cand and cand in expected_roles:
+                            candidate_hits.append((pname, rel_path, cand))
+
+            if candidate_hits:
+                short_proj = candidate_hits[0][0].split()[0]
+                short_path = Path(candidate_hits[0][1]).name
+                extra = f" (+{len(candidate_hits) - 1} more)" if len(candidate_hits) > 1 else ""
+                suggested_fix = (
+                    f"{suggested_fix} — role_candidate found in deep folder: "
+                    f"{short_proj}:{short_path}{extra}"
+                )
+            elif total_unclass > 0:
+                role_hint = f" [{expected_roles[0]}]" if expected_roles else ''
                 suggested_fix = (
                     f"{suggested_fix} — "
-                    f"{total_unclass} unclassified email attachment(s){role_hint} "
+                    f"{total_unclass} unclassified deep-folder file(s){role_hint} "
                     f"might contain the missing source"
                 )
 
@@ -2174,20 +2204,20 @@ def _print_ne_trace(rows: list[dict]) -> None:
             print(f"    {_cyan('suggested fix:')} {row['suggested_fix']}")
 
 
-def _print_unclassified_attachments_report(
+def _print_unclassified_deep_files_report(
     diag_results: list[ProjectDiagResult],
 ) -> None:
-    """Print a project-by-project report of email attachments never role-classified."""
+    """Print a project-by-project report of deep-folder files never role-classified."""
     per_project: list[tuple[str, int, list[str]]] = []
     total_files = 0
     for diag in diag_results:
         pname = diag.project_path.name
-        ea = _load_email_attachments(diag.project_path)
-        if not ea:
+        dff = _load_deep_folder_files(diag.project_path)
+        if not dff:
             continue
         unclassified: list[str] = []
-        for rel_path, info in ea.items():
-            if info.get('classifier_used') == 'unclassified' or not info.get('role_assigned'):
+        for rel_path, info in dff.items():
+            if info.get('classifier_used') == 'unclassified':
                 suffix = Path(rel_path).suffix.lower() or '(no-ext)'
                 unclassified.append(suffix)
         if unclassified:
@@ -2198,15 +2228,15 @@ def _print_unclassified_attachments_report(
         return
 
     n_projects = len(per_project)
-    print(f"\n[ {_bold('unclassified_attachments_report')} ] — "
-          f"attachments saved but never role-classified "
+    print(f"\n[ {_bold('unclassified_deep_files_report')} ] — "
+          f"deep-folder files saved but never role-classified "
           f"({total_files} files across {n_projects} projects)")
     for pname, count, exts in per_project:
         short_name = pname.split()[0] if ' ' in pname else pname
         ext_summary = ', '.join(sorted(set(exts))[:5])
         print(
             f"  Project {short_name:<12} {count} unclassified ({ext_summary}) — "
-            f"possible architect_plan / field_sheet / lab_cover candidates"
+            f"possible architect_plan / dpsh_sheet / sondeig_sheet / lab_cover candidates"
         )
 
 
@@ -2398,7 +2428,7 @@ def main() -> None:
         ne_rows = _build_ne_trace(all_diag_results)
     if args.ne_trace:
         _print_ne_trace(ne_rows)
-        _print_unclassified_attachments_report(all_diag_results)
+        _print_unclassified_deep_files_report(all_diag_results)
 
     # Inject per-project ne_trace rows into already-built snapshots
     if args.save and ne_rows:
