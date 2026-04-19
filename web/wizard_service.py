@@ -26,10 +26,19 @@ _REF_DIR = Path(config.G3DT_PROJECTS_DIR)
 # Production path where Eva keeps signed reference reports
 _INFORMES_DIR = Path('/mnt/c/claude/g3dt/4-informes')
 
-# Sources that indicate high-priority extraction data (trusted over LLM synthesis)
+# Sources that indicate high-priority extraction data (trusted over LLM synthesis).
+# Phase B update (2026-04-19): added `computed` so narrative fields that
+# report_generator populates via template rendering (site_condition with
+# "computed (slope X%)" / "computed (ES template)" sources) aren't clobbered
+# by `llm_synthesis_with_observations`. Before this, the sweep regressed 4.7pp
+# because Phase B's synthesis overrode correctly-rendered computed values.
+# NOTE: `plantilla generada` is intentionally NOT trusted — it's a generic
+# filler (e.g. "parcel·la de forma rectangular amb superfície de 571 m2")
+# that synthesis can legitimately improve for site_description prose.
 _TRUSTED_SOURCE_PATTERNS = (
     'planol', 'sondeig', 'vision', 'ICGC', 'Cadastre', 'DPSH',
     'contingut:', 'fileminer:', 'groq_llm:',
+    'computed',
 )
 
 # In-memory prefill cache: project_name -> prefills dict

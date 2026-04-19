@@ -215,6 +215,45 @@ def test_synthesize_extracts_narrative_fields(tmp_path, monkeypatch):
     # cannot overwrite it (trusted source).
 
 
+def test_synthesis_doesnt_override_computed_narrative(tmp_path, monkeypatch):
+    """Computed-source narrative values (e.g. site_condition from slope data)
+    must not be replaced by synthesis — trust pattern added 2026-04-19
+    after sweep showed Phase B regressing site_condition on 3+ projects."""
+    from web import wizard_service
+
+    monkeypatch.setattr(wizard_service.config, "ANTHROPIC_API_KEY", "sk-test-key")
+
+    mock_response = mock.MagicMock()
+    mock_response.content = [mock.MagicMock(
+        text=json.dumps({
+            "building_type": "", "architect_name": "", "client_name": "",
+            "location_sentence": "",
+            "site_description": "",
+            "site_condition": "pendent suau",   # synthesis wants to overwrite
+            "is_anthropized": "",
+            "building_structure_desc": "",
+        }),
+    )]
+    mock_client = mock.MagicMock()
+    mock_client.messages.create.return_value = mock_response
+
+    merged = _minimal_merged()
+    # Computed pathway already produced the correctly-rendered paragraph
+    merged["site_condition"] = {
+        "value": "Com que es tracta d'un solar pla, no s'han detectat marques.",
+        "source": "computed (slope 1%)",
+    }
+
+    with mock.patch(
+        "automation.llm_client.get_anthropic_client", return_value=mock_client,
+    ):
+        wizard_service._synthesize_with_llm(merged, tmp_path)
+
+    # Computed value preserved
+    assert merged["site_condition"]["value"].startswith("Com que es tracta")
+    assert "computed" in merged["site_condition"]["source"]
+
+
 def test_synthesis_doesnt_override_user_narrative(tmp_path, monkeypatch):
     """User-edited site_description must not be replaced by synthesis."""
     from web import wizard_service
