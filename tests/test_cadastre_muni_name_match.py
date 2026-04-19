@@ -44,6 +44,20 @@ def test_normalize_preserves_distinct_names():
     assert _normalize_muni_name("Alpicat") != _normalize_muni_name("Vilanova de Segrià")
 
 
+def test_normalize_preserves_dos_in_municipality_name():
+    # "Dos Hermanas" is a real Spanish municipality (Sevilla, ~130k pop).
+    # The "DOS" token is a name root, not a Portuguese/Galician preposition,
+    # so it must NOT be collapsed to "DE". A previous version of the
+    # normalizer incorrectly included da/das/do/dos, which broke this case.
+    normalized = _normalize_muni_name("Dos Hermanas")
+    assert "DOS" in normalized.split()
+    assert "HERMANAS" in normalized.split()
+    # Must not equal the (incorrect) collapsed form.
+    assert normalized != _normalize_muni_name("De Hermanas")
+    # And must not match a bare "Hermanas" query.
+    assert normalized != _normalize_muni_name("Hermanas")
+
+
 # === _consulta_municipio integration tests (mocked HTTP) ===
 
 def _muni_xml(names: list[str]) -> str:

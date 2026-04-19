@@ -173,6 +173,9 @@ def _strip_accents(s: str) -> str:
 # Catalan/Spanish contracted preposition variants that should compare equal.
 # Each key is a multi-word pattern; value is the canonical replacement.
 # Applied after accent-stripping + upper-casing, with word boundaries.
+# Scope is deliberately Catalan/Spanish only: Portuguese/Galician tokens
+# (da, das, do, dos) collide with legitimate Spanish municipality name
+# roots (e.g. "Dos Hermanas") and must not be normalized here.
 _PREPOSITION_CANONICAL: list[tuple[re.Pattern[str], str]] = [
     (re.compile(r"\bDELS\b"), "DE"),
     (re.compile(r"\bDEL\b"), "DE"),
@@ -181,10 +184,6 @@ _PREPOSITION_CANONICAL: list[tuple[re.Pattern[str], str]] = [
     (re.compile(r"\bDE LOS\b"), "DE"),
     (re.compile(r"\bDE LA\b"), "DE"),
     (re.compile(r"\bD'"), "DE "),
-    (re.compile(r"\bDA\b"), "DE"),
-    (re.compile(r"\bDAS\b"), "DE"),
-    (re.compile(r"\bDO\b"), "DE"),
-    (re.compile(r"\bDOS\b"), "DE"),
 ]
 
 
