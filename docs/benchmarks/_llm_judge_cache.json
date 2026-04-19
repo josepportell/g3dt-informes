@@ -943,5 +943,45 @@
     "score": 2,
     "status": "MISMATCH",
     "explanation": "Both refer to a residential building with basement/semi-basement elements, but the details differ substantially. The benchmark specifies a semi-basement (semisótano) in only 2 of the 7 planned dwellings, while the pipeline describes a ground floor + 1 upper floor with a full basement (sótano) for the whole building. The floor configuration (PB+1) is not mentioned in the benchmark, and the partial nature of the semi-basement (2 out of 7 units) is lost in the pipeline description. These are materially different structural descriptions."
+  },
+  "bc53934dac6d39468c6e0f412fa08b64": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe site conditions on the day of fieldwork, but the substance diverges significantly. The benchmark describes: access from an adjacent street to the south, no constructions or paving, cleared/prepared work area, a working platform ~4.0 m above street level due to slope, nearby buildings with no apparent pathologies, and no visible subsoil outcrops. The pipeline describes: access via Carrer dels Arbrells, sparse low vegetation with scattered shrubs and trees, consolidated residential surroundings, and gentle slope. The two texts share only the general idea of a vacant sloped plot visited on fieldwork day; key details differ (specific street name vs. 'southern adjacent street', gentle slope vs. 4 m platform, vegetation description vs. cleared/prepared site, mention of nearby buildings and no outcrops vs. none of that). The pipeline is not simply a paraphrase — it omits or contradicts multiple substantive details."
+  },
+  "a6d95314bf590d77e41c7895eea8af99": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe field day observations of the same site, but the substance differs significantly. The benchmark describes: access via 'carrer de la Miranda', no constructions or paving, a topographic drop of ~13.20m (from 212.20 to 199.00 m.a.s.l.) SW to NE but flat work zone, slope starting at the rear half, nearby similar constructions with no visible pathologies, and no outcropping materials. The pipeline describes: access via 'Carrer Miranda' (same), but then mentions isolated trees and scattered shrubs, gently undulating terrain with a soft slope, in a dispersed residential setting. These are partially overlapping (same access street, same general 'no major constructions' feel) but the pipeline omits the specific elevation data, the 13.20m drop, the flat work zone, the nearby buildings with no pathologies, and the absence of outcrops — and instead adds vegetation details (trees, shrubs) and a residential setting description not present in the benchmark. Key factual details differ or are missing on both sides."
+  },
+  "12f26fbe19e63946c5ae9066f9779f68": {
+    "score": 1,
+    "status": "MISMATCH",
+    "explanation": "T-1 and T-2 are different values for this variable — they denote different soil type classifications, which is a factual difference in substance."
+  },
+  "4d8a30d4bd1686153fa5b4ac83df7428": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe site access and general conditions on the day of fieldwork, but the substance diverges significantly. The benchmark describes: access from the north street, a levelled area with a ground-floor building on the north half, a planned extension at the rear, nearby buildings with no apparent pathologies, and no outcropping materials. The pipeline describes: access via 'Carrer dels Gira-sols', green vegetation, flat terrain, and existing constructions on adjacent east and south parcels. These are largely different site descriptions — different access street name, different site occupancy (levelled+building vs. vegetation+flat terrain), different surrounding context details. The only overlap is the general concept of 'site description on fieldwork day with nearby constructions'."
+  },
+  "cc1207b9495143b1458ed791e888a941": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same legal entity; 'S.L' suffix omission is a wording/formatting difference, not a substantive one."
+  },
+  "4a31a0bf6a2a7cbe81ffd6020aebabcb": {
+    "score": 5,
+    "status": "MATCH",
+    "explanation": "Same address: 'Calle STA. GEMMA nº 4' = 'Carrer Santa Gemma n4' (same street, full vs abbreviated name, nº vs n is wording). 'URB. LA SERRA' = 'Urb. La Serra' (same urbanization). 'municipio de VILANOVA DE SEGRIÀ' = 'Vilanova del Segria' (same municipality, accent/article difference is wording). Substance is identical."
+  },
+  "a51a7573d66e4170c57c75dfd830d014": {
+    "score": 4,
+    "status": "CLOSE",
+    "explanation": "Both state that no signs of erosion related to surface water runoff have been detected at the site. The pipeline adds two minor details not in the benchmark: (1) the justification that the site is flat ('solar pla'), and (2) that such processes are not expected to appear in the future. The core substance (no erosion marks detected) is the same, but the pipeline includes a forward-looking statement and a site description qualifier absent from the benchmark, making it CLOSE rather than a full MATCH."
+  },
+  "4374b0f270a8a4778c4de08f71a035d0": {
+    "score": 2,
+    "status": "MISMATCH",
+    "explanation": "Both describe the same parcel on the day of fieldwork, but the substance diverges significantly. The benchmark describes access from the west street, boundary walls from adjacent parcels, no fence/wall at street access, unpaved entry zone and patio with small vegetation, and a paved+fenced strip at the west end. The pipeline describes access via 'Carrer Santa Gemma' (specific street name not in benchmark), sparse/scattered low vegetation, flat terrain, and surroundings of empty parcels in a residential zone — none of which match the benchmark's key details about pavements, fencing, patio, and adjacent boundary walls. The two texts share only the general idea of a parcel with some vegetation; the substantive descriptive content is largely different or missing on both sides."
   }
 }
