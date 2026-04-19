@@ -165,6 +165,13 @@ def mine_project(
         result.duration_ms = int((time.monotonic() - t0) * 1000)
         return result
 
+    # Deterministic folder-name-derived signals (e.g. expedient from "4001607 LINYOLA")
+    from .miners.folder_name_miner import emit_folder_name_signals
+    for sig in emit_folder_name_signals(project_path):
+        sig.source_type = "folder_name"
+        sig.priority = get_priority("folder_name")
+        all_signals.append(sig)
+
     # Collect files to mine
     files_to_mine: list[Path] = []
     for item in sorted(project_path.rglob('*')):
