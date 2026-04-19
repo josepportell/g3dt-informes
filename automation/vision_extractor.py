@@ -29,7 +29,7 @@ import logging
 import re
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -53,7 +53,7 @@ def attach_source_metadata(
 
     - `source_file` is project-relative when `project_path` is supplied and
       `source_path` lives inside it; otherwise falls back to the basename.
-    - `extracted_at` is an ISO-8601 timestamp in local time.
+    - `extracted_at` is an ISO-8601 timestamp in UTC (timezone-aware).
     - `extraction_method` is optional (e.g. 'claude_vision', 'groq_vision',
       'python_regex'); stamped when provided.
 
@@ -71,7 +71,7 @@ def attach_source_metadata(
         else:
             meta['source_file'] = Path(source_path).name
 
-    meta.setdefault('extracted_at', datetime.now().isoformat())
+    meta.setdefault('extracted_at', datetime.now(timezone.utc).isoformat())
 
     if extraction_method:
         meta.setdefault('extraction_method', extraction_method)
@@ -222,7 +222,7 @@ def extract_from_planol(pdf_path: Path) -> dict:
 
     # Ensure required metadata
     data.setdefault('source_file', pdf_path.name)
-    data.setdefault('extraction_date', datetime.now().isoformat())
+    data.setdefault('extraction_date', datetime.now(timezone.utc).isoformat())
     data.setdefault('extraction_method', 'claude_vision')
     data.setdefault('status', 'pending_review')
     attach_source_metadata(data, pdf_path, extraction_method='claude_vision')
@@ -240,7 +240,7 @@ def extract_from_penetros(pdf_path: Path) -> dict:
     data = _extract_json(text)
 
     data.setdefault('source_file', pdf_path.name)
-    data.setdefault('extraction_date', datetime.now().isoformat())
+    data.setdefault('extraction_date', datetime.now(timezone.utc).isoformat())
     data.setdefault('extraction_method', 'claude_vision')
     data.setdefault('status', 'pending_review')
     attach_source_metadata(data, pdf_path, extraction_method='claude_vision')
@@ -258,7 +258,7 @@ def extract_from_sondeig(pdf_path: Path) -> dict:
     data = _extract_json(text)
 
     data.setdefault('source_file', pdf_path.name)
-    data.setdefault('extraction_date', datetime.now().isoformat())
+    data.setdefault('extraction_date', datetime.now(timezone.utc).isoformat())
     data.setdefault('extraction_method', 'claude_vision')
     data.setdefault('status', 'pending_review')
     attach_source_metadata(data, pdf_path, extraction_method='claude_vision')
@@ -276,7 +276,7 @@ def extract_from_sondeig_annex(pdf_path: Path) -> dict:
     data = _extract_json(text)
 
     data.setdefault('source_file', pdf_path.name)
-    data.setdefault('extraction_date', datetime.now().isoformat())
+    data.setdefault('extraction_date', datetime.now(timezone.utc).isoformat())
     data.setdefault('extraction_method', 'claude_vision')
     data.setdefault('status', 'pending_review')
     attach_source_metadata(data, pdf_path, extraction_method='claude_vision')

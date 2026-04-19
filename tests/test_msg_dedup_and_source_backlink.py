@@ -169,6 +169,48 @@ class TestMsgAttachmentDedup:
         saved = miner._save_attachments(_FakeMsg(attachments=[att]), msg)
         assert saved == []
 
+    def test_dedup_via_seed_registry_preserves_existing_on_disk_duplicate(self, tmp_path):
+        """Simulates production case: server restarts, finds a previously-saved
+        attachment in validation/msg_attachments/, seeds the registry, then
+        mines a new .msg whose attachment has identical content. The second
+        save should alias to the pre-existing path (no new file written).
+        """
+        from automation.fileminer.miners.msg_miner import reset_attachment_registry
+
+        # 1. Pre-populate a saved attachment under a prior msg stem on disk.
+        content = b"%PDF-1.4\n" + b"S" * 30_000
+        prior_stem_dir = tmp_path / "validation" / "msg_attachments" / "older_email"
+        prior_stem_dir.mkdir(parents=True)
+        prior_path = prior_stem_dir / "foo.pdf"
+        prior_path.write_bytes(content)
+
+        # 2. Fresh process → clear in-memory registry so the seed step runs
+        #    over the disk contents we just created.
+        reset_attachment_registry(tmp_path)
+        miner = _make_miner(tmp_path)
+
+        # 3. A new .msg arrives carrying an attachment with identical bytes.
+        att = _FakeAttachment("foo.pdf", content)
+        new_msg = tmp_path / "newer_email.msg"
+        new_msg.touch()
+
+        saved = miner._save_attachments(_FakeMsg(attachments=[att]), new_msg)
+
+        # 4. No new file under newer_email/ — the save must alias to the
+        #    pre-existing path discovered via the seed.
+        new_stem_dir = tmp_path / "validation" / "msg_attachments" / "newer_email"
+        new_stem_pdf = new_stem_dir / "foo.pdf"
+        assert not new_stem_pdf.exists(), (
+            "duplicate content must not be re-written under the new msg stem"
+        )
+
+        # 5. saved list references the pre-existing path.
+        assert len(saved) == 1
+        assert saved[0] == prior_path, (
+            f"expected alias to {prior_path}, got {saved[0]}"
+        )
+        assert saved[0].read_bytes() == content
+
 
 # ---------------------------------------------------------------------------
 # Change 2: vision extractor source_file backlink
