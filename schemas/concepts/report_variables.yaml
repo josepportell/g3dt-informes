@@ -445,6 +445,50 @@ concepts:
       content_email: 43
       content_pdf: 45
 
+  # Formatted adjacent sentences (Eva-voice), one per direction.
+  # Produced by automation/adjacent_formatter.py (cadastre template) and
+  # optionally refined by LLM synthesis that combines cadastre facts with
+  # visual site observations (Phase B, 2026-04-19).
+  adjacent_north_fmt:
+    type: text
+    group: parcel
+    required: false
+    description_ca: Frase formatada del confrontant nord (veu d'Eva)
+    source_priority:
+      user: 10
+      llm_synthesis: 20
+      formatted_cadastre: 30
+
+  adjacent_south_fmt:
+    type: text
+    group: parcel
+    required: false
+    description_ca: Frase formatada del confrontant sud (veu d'Eva)
+    source_priority:
+      user: 10
+      llm_synthesis: 20
+      formatted_cadastre: 30
+
+  adjacent_east_fmt:
+    type: text
+    group: parcel
+    required: false
+    description_ca: Frase formatada del confrontant est (veu d'Eva)
+    source_priority:
+      user: 10
+      llm_synthesis: 20
+      formatted_cadastre: 30
+
+  adjacent_west_fmt:
+    type: text
+    group: parcel
+    required: false
+    description_ca: Frase formatada del confrontant oest (veu d'Eva)
+    source_priority:
+      user: 10
+      llm_synthesis: 20
+      formatted_cadastre: 30
+
   site_position:
     type: text
     group: parcel

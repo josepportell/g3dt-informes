@@ -1192,6 +1192,8 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
     # Check if ALL synthesis fields already have user edits — skip the API call.
     # Expanded Phase B (2026-04-19): now 8 fields, including 4 narrative outputs
     # (site_description, site_condition, is_anthropized, building_structure_desc).
+    # Extended (2026-04-19, adjacents): 4 adjacent_*_fmt fields conditionally
+    # added to the request when ≥2 visual observations are available.
     _SYNTHESIS_FIELDS = (
         'building_type', 'architect_name', 'client_name', 'location_sentence',
         'site_description', 'site_condition', 'is_anthropized',
@@ -1309,9 +1311,56 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
     lang = _get_project_language(merged)
     lang_name = 'Spanish' if lang == 'es' else 'Catalan'
 
+    # Adjacent synthesis gate (Phase B, 2026-04-19): only ask the LLM to
+    # rewrite the 4 adjacent_*_fmt sentences when there is enough visual
+    # grounding (≥2 observations). Below that, the existing cadastre-template
+    # fallback at `format_all_adjacents` keeps producing the output.
+    synthesize_adjacents = len(visual_observations) >= 2
+    adjacent_current_fmt = {
+        d: _get_val(f'adjacent_{d}_fmt')
+        for d in ('north', 'south', 'east', 'west')
+    }
+
     # --- Build prompt ---
 
-    prompt = f"""You are a geotechnical report assistant. Given data extracted from multiple sources about a construction project, synthesize the final values for 8 fields.
+    # Adjacent synthesis block — only appended when the ≥2 visuals gate passes.
+    # Direction labels and the JSON output keys match the language cue.
+    if synthesize_adjacents:
+        if lang == 'es':
+            adj_dir_labels = 'norte/sur/este/oeste'
+        else:
+            adj_dir_labels = 'nord/sud/est/oest'
+        adjacent_rules_block = f"""
+
+### adjacent_north_fmt / adjacent_south_fmt / adjacent_east_fmt / adjacent_west_fmt
+- For each adjacent direction ({adj_dir_labels}), rewrite the cadastre-given facts in Eva's voice.
+- You MAY add visual context that clarifies what's on that side (e.g., 'parcel·la buida' → 'parcel·la buida amb vegetació rasa' only if the visual observation confirms it).
+- You MUST NOT invent adjacent characteristics not present in the cadastre data or visual observations.
+- Keep each description to one short sentence.
+- Match the project's reference language ({lang_name}).
+- If the cadastre data for a direction is empty and no visual grounding exists, return an empty string "" for that direction."""
+        adjacent_sources_block = f"""
+
+**Adjacent (formatted by cadastre template) — starting point you can refine:**
+- adjacent_north_fmt (current): "{adjacent_current_fmt['north']}"
+- adjacent_south_fmt (current): "{adjacent_current_fmt['south']}"
+- adjacent_east_fmt (current): "{adjacent_current_fmt['east']}"
+- adjacent_west_fmt (current): "{adjacent_current_fmt['west']}"
+"""
+        adjacent_output_keys = (
+            ',\n  "adjacent_north_fmt": "..."'
+            ',\n  "adjacent_south_fmt": "..."'
+            ',\n  "adjacent_east_fmt": "..."'
+            ',\n  "adjacent_west_fmt": "..."'
+        )
+        field_count_label = '12 fields'
+    else:
+        adjacent_rules_block = ''
+        adjacent_sources_block = ''
+        adjacent_output_keys = ''
+        field_count_label = '8 fields'
+
+    prompt = f"""You are a geotechnical report assistant. Given data extracted from multiple sources about a construction project, synthesize the final values for {field_count_label}.
 
 ## Rules
 
@@ -1370,7 +1419,7 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
 - Short phrase describing the planned structure for geotechnical context, in {lang_name}
 - Examples: "en planta baixa", "amb soterrani", "sense soterrani", "2 plantes sobre rasant amb soterrani", "PB+1Pp"
 - Inputs: num_floors ({num_floors_current}), has_basement ({has_basement_current}), building_height_m ({building_height_current})
-- Keep it concise (2-6 words)
+- Keep it concise (2-6 words){adjacent_rules_block}
 
 ## Eva's Reference Examples — identity + location
 
@@ -1428,7 +1477,7 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
 - Adjacent south: "{adjacent_south}"
 - Adjacent east: "{adjacent_east}"
 - Adjacent west: "{adjacent_west}"
-
+{adjacent_sources_block}
 **Site observations (visual, from ConceptScout probes):**
 {_format_visual_observations_for_prompt(visual_observations)}
 
@@ -1441,7 +1490,7 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
 
 ## Output
 
-Return ONLY a JSON object with exactly these 8 keys:
+Return ONLY a JSON object with exactly these keys:
 ```json
 {{
   "building_type": "...",
@@ -1451,7 +1500,7 @@ Return ONLY a JSON object with exactly these 8 keys:
   "site_description": "...",
   "site_condition": "...",
   "is_anthropized": "...",
-  "building_structure_desc": "..."
+  "building_structure_desc": "..."{adjacent_output_keys}
 }}
 ```
 
@@ -1526,10 +1575,40 @@ For `site_description` specifically: prefer empty over fabricating prose from th
                 if _get_source(field) != 'user':
                     _set(field, value, source='llm_synthesis_with_observations')
 
+        # Adjacent_*_fmt — only when the gate opened the request. We bypass
+        # _set() here because the existing cadastre source tag ("formatted
+        # from Cadastre") matches the trusted "Cadastre" pattern; for these
+        # four fields we WANT LLM synthesis to win over the template. User
+        # edits are still preserved.
+        _ADJACENT_FMT_FIELDS = (
+            'adjacent_north_fmt', 'adjacent_south_fmt',
+            'adjacent_east_fmt', 'adjacent_west_fmt',
+        )
+        adjacents_updated = 0
+        if synthesize_adjacents:
+            for field in _ADJACENT_FMT_FIELDS:
+                raw = result.get(field, '')
+                if raw is None:
+                    value = ''
+                else:
+                    value = str(raw).strip()
+                if not value or value.lower() in ('null', 'none', 'unknown'):
+                    # LLM produced no value for this direction: leave cadastre
+                    # template output untouched (fallback remains the winner).
+                    continue
+                if _get_source(field) == 'user':
+                    continue
+                merged[field] = {
+                    'value': value,
+                    'source': 'llm_synthesis_with_observations',
+                }
+                adjacents_updated += 1
+
         logger.info(
-            "LLM synthesis: %d identity + %d narrative fields updated for %s",
+            "LLM synthesis: %d identity + %d narrative + %d adjacent fields updated for %s",
             sum(1 for f in _IDENTITY_FIELDS if result.get(f)),
             sum(1 for f in _NARRATIVE_FIELDS if result.get(f)),
+            adjacents_updated,
             project_path.name,
         )
 
