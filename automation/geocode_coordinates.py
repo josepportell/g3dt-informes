@@ -42,9 +42,12 @@ __all__ = ['geocode_project', 'GeocodeError', 'cadastre_address_lookup', 'cadast
 # === Configuration ===
 
 CACHE_DIR = Path.home() / ".g3dt" / "cache" / "geocode"
+CARTOCIUDAD_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "cartociudad"
 CACHE_TTL_DAYS = 90
+CARTOCIUDAD_CACHE_TTL_DAYS = 365  # addresses don't change often
 REQUEST_TIMEOUT_SECONDS = 15
 USER_AGENT = "G3DT-Automation/1.0 (Eficients.cat; geotechnical report generation)"
+CARTOCIUDAD_USER_AGENT = "g3dt/1.0"  # CartoCiudad rejects requests without UA
 
 # Catalunya UTM coordinate bounds (EPSG:25831)
 CATALUNYA_UTM_X_MIN = 260000
@@ -1699,6 +1702,261 @@ def nominatim_geocode_structured(
     return lat, lon
 
 
+# === CartoCiudad (IGN Spain) Geocoding ===
+
+CARTOCIUDAD_URL = (
+    "https://www.cartociudad.es/geocoder/api/geocoder/candidatesJsonp"
+)
+
+
+def _cartociudad_cache_key(address: str, municipality: str, province: str) -> str:
+    """Hash key for CartoCiudad cache."""
+    key_str = (
+        f"cartociudad_{address.lower().strip()}_"
+        f"{municipality.lower().strip()}_{province.lower().strip()}"
+    )
+    return hashlib.sha256(key_str.encode()).hexdigest()[:12]
+
+
+def _cartociudad_cache_load(
+    address: str, municipality: str, province: str
+) -> tuple[float, float] | None | str:
+    """Load cached CartoCiudad result.
+
+    Returns:
+        (lat, lng) tuple if cached coords; the sentinel string "__MISS__" if
+        a prior lookup cached a negative result; None if not cached / expired.
+    """
+    if os.environ.get("G3DT_NO_CACHE") == "1":
+        return None
+    key = _cartociudad_cache_key(address, municipality, province)
+    path = CARTOCIUDAD_CACHE_DIR / f"{key}.json"
+    if not path.exists():
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        cached_at = datetime.fromisoformat(data.get("cached_at", "2000-01-01"))
+        if datetime.now() - cached_at > timedelta(days=CARTOCIUDAD_CACHE_TTL_DAYS):
+            path.unlink()
+            return None
+        result = data.get("result")
+        if result is None:
+            return "__MISS__"
+        return float(result["lat"]), float(result["lng"])
+    except (json.JSONDecodeError, KeyError, ValueError, OSError) as e:
+        logger.warning(f"Invalid CartoCiudad cache file {path}: {e}")
+        try:
+            path.unlink()
+        except OSError:
+            pass
+        return None
+
+
+def _cartociudad_cache_save(
+    address: str,
+    municipality: str,
+    province: str,
+    result: tuple[float, float] | None,
+) -> None:
+    """Persist CartoCiudad result (or a negative-result marker) atomically."""
+    try:
+        CARTOCIUDAD_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    except OSError as e:
+        logger.warning(f"Cannot create CartoCiudad cache dir: {e}")
+        return
+    key = _cartociudad_cache_key(address, municipality, province)
+    path = CARTOCIUDAD_CACHE_DIR / f"{key}.json"
+    payload: dict[str, Any] = {
+        "cached_at": datetime.now().isoformat(),
+        "query": {
+            "address": address,
+            "municipality": municipality,
+            "province": province,
+        },
+        "result": (
+            None if result is None
+            else {"lat": result[0], "lng": result[1]}
+        ),
+    }
+    try:
+        fd, temp_path = tempfile.mkstemp(dir=CARTOCIUDAD_CACHE_DIR, suffix=".tmp")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=2)
+            Path(temp_path).rename(path)
+        except Exception:
+            Path(temp_path).unlink(missing_ok=True)
+            raise
+    except OSError as e:
+        logger.warning(f"Failed to cache CartoCiudad result: {e}")
+
+
+def _parse_cartociudad_body(body: str) -> list[dict] | None:
+    """Parse CartoCiudad response body.
+
+    The endpoint is JSONP-ish: sometimes wrapped as `callback(...)` or
+    similar, sometimes a raw JSON array. Return the parsed list, or None
+    if the body can't be decoded.
+    """
+    if not body:
+        return None
+    text = body.strip()
+    # Strip JSONP wrapper if present: `name(...);?`
+    # Accept any identifier followed by `(`, ending with `)` or `);`.
+    m = re.match(r"^[A-Za-z_$][\w$]*\s*\((.*)\)\s*;?\s*$", text, flags=re.DOTALL)
+    if m:
+        text = m.group(1).strip()
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError as e:
+        logger.warning(f"CartoCiudad JSON parse error: {e}")
+        return None
+    if data is None:
+        return []
+    if isinstance(data, dict):
+        # Defensive: some JSONP-like endpoints wrap in {"results": [...]}
+        for key in ("results", "candidates", "data"):
+            if key in data and isinstance(data[key], list):
+                return data[key]
+        return []
+    if isinstance(data, list):
+        return data
+    return []
+
+
+def _cartociudad_muni_matches(candidate_muni: str, query_muni: str) -> bool:
+    """Accent/case-insensitive municipality match.
+
+    Allows trailing suffixes in the candidate (e.g. "Benasque (Benás)").
+    Returns True if either name is contained in the other after
+    accent-stripping and upper-casing.
+    """
+    if not candidate_muni or not query_muni:
+        return False
+    c = _strip_accents(candidate_muni).upper().strip()
+    q = _strip_accents(query_muni).upper().strip()
+    if not c or not q:
+        return False
+    # Remove any parenthetical suffix from candidate: "Benasque (Benás)" → "BENASQUE"
+    c_base = re.sub(r"\s*\(.*?\)\s*$", "", c).strip()
+    return q in c_base or c_base in q or q in c or c in q
+
+
+def cartociudad_geocode(
+    address: str, municipality: str, province: str = ""
+) -> tuple[float, float] | None:
+    """Geocode using CartoCiudad (IGN Spain) — entrance-level precision.
+
+    Tends to outperform Nominatim for Catalan small towns, returning
+    `portal` (entrance) coordinates rather than street-centerline.
+
+    Args:
+        address: Street address (e.g. "Santa Gemma 4").
+        municipality: Municipality name (e.g. "Vilanova de Segrià").
+        province: Province name (optional; passed through to the query).
+
+    Returns:
+        (lat, lng) tuple or None if no acceptable candidate.
+    """
+    if not address or not municipality:
+        return None
+
+    cached = _cartociudad_cache_load(address, municipality, province)
+    if cached == "__MISS__":
+        logger.debug(
+            f"CartoCiudad cache negative-hit for '{address}, {municipality}'"
+        )
+        return None
+    if cached is not None:
+        lat, lng = cached  # type: ignore[misc]
+        logger.debug(
+            f"CartoCiudad cache hit for '{address}, {municipality}' "
+            f"-> ({lat:.6f}, {lng:.6f})"
+        )
+        return lat, lng
+
+    parts = [address, municipality]
+    if province:
+        parts.append(province)
+    query = ", ".join(p for p in parts if p)
+    url = f"{CARTOCIUDAD_URL}?q={urllib.parse.quote(query)}"
+
+    logger.debug(f"CartoCiudad query: {query}")
+
+    headers = {
+        "User-Agent": CARTOCIUDAD_USER_AGENT,
+        "Accept": "application/json, text/javascript, */*",
+    }
+    request = urllib.request.Request(url, headers=headers)
+    body: str | None = None
+    max_attempts = 3
+    for attempt in range(max_attempts):
+        try:
+            with urllib.request.urlopen(
+                request, timeout=REQUEST_TIMEOUT_SECONDS
+            ) as response:
+                body = response.read().decode("utf-8")
+            break
+        except urllib.error.HTTPError as e:
+            logger.warning(f"CartoCiudad HTTP error {e.code}: {e}")
+            return None
+        except (urllib.error.URLError, TimeoutError, socket.timeout) as e:
+            if attempt < max_attempts - 1:
+                time.sleep(2 ** attempt)
+                continue
+            logger.warning(f"CartoCiudad connection failed: {e}")
+            return None
+
+    candidates = _parse_cartociudad_body(body or "")
+    if not candidates:
+        logger.info(f"CartoCiudad returned no candidates for: {query}")
+        _cartociudad_cache_save(address, municipality, province, None)
+        return None
+
+    # Filter by municipality + non-zero coords, then prefer `portal` over
+    # `callejero`. Reject unknown/other types (poblacion, ref_catastral, …).
+    portals: list[dict] = []
+    callejeros: list[dict] = []
+    for c in candidates:
+        if not isinstance(c, dict):
+            continue
+        try:
+            lat = float(c.get("lat") or 0.0)
+            lng = float(c.get("lng") or 0.0)
+        except (TypeError, ValueError):
+            continue
+        if lat == 0.0 and lng == 0.0:
+            continue
+        muni = str(c.get("muni") or "")
+        if not _cartociudad_muni_matches(muni, municipality):
+            continue
+        ctype = str(c.get("type") or "").lower()
+        if ctype == "portal":
+            portals.append(c)
+        elif ctype == "callejero":
+            callejeros.append(c)
+
+    picked: dict | None = portals[0] if portals else (callejeros[0] if callejeros else None)
+    if picked is None:
+        logger.info(
+            f"CartoCiudad: no acceptable candidate for '{query}' "
+            f"(had {len(candidates)} raw results)"
+        )
+        _cartociudad_cache_save(address, municipality, province, None)
+        return None
+
+    lat = float(picked["lat"])
+    lng = float(picked["lng"])
+    result_tag = str(picked.get("type") or "").lower()
+    logger.info(
+        f"CartoCiudad geocoded '{query}' -> ({lat:.6f}, {lng:.6f}) "
+        f"[type={result_tag}, muni={picked.get('muni')!r}]"
+    )
+    _cartociudad_cache_save(address, municipality, province, (lat, lng))
+    return lat, lng
+
+
 # === Cadastre Parcel Finder ===
 
 def cadastre_find_parcel(
@@ -2145,6 +2403,9 @@ def _run_cadastre_and_nominatim_parallel(
     Returns (cadastre_result, nominatim_latlon). Either or both may be None.
     The two calls are independent HTTP requests — running them in parallel
     halves wall time without changing behavior.
+
+    CartoCiudad is fired separately from the orchestrator so tests that
+    monkeypatch this function keep working unchanged.
     """
     import concurrent.futures as _cf
 
@@ -2179,6 +2440,46 @@ def _run_cadastre_and_nominatim_parallel(
         fut_cad = ex.submit(_cadastre)
         fut_nom = ex.submit(_nominatim)
         return fut_cad.result(), fut_nom.result()
+
+
+def _run_cadastre_and_alternates_parallel(
+    address: str,
+    municipality: str,
+    province: str,
+    parsed_street: str,
+    parsed_number: str,
+) -> tuple[dict | None, tuple[float, float] | None, tuple[float, float] | None]:
+    """Run Cadastre + Nominatim + CartoCiudad concurrently.
+
+    Wraps `_run_cadastre_and_nominatim_parallel` (kept as a stable
+    monkeypatch surface for existing tests) and adds CartoCiudad on its own
+    worker.
+
+    Returns (cadastre_result, nominatim_latlon, cartociudad_latlng).
+    """
+    import concurrent.futures as _cf
+
+    def _cartociudad() -> tuple[float, float] | None:
+        try:
+            return cartociudad_geocode(address, municipality, province=province)
+        except Exception as e:
+            logger.debug(f"Parallel cartociudad branch failed: {e}")
+            return None
+
+    with _cf.ThreadPoolExecutor(max_workers=2) as ex:
+        fut_cc = ex.submit(_cartociudad)
+        # Cadastre + Nominatim share their own internal 2-worker pool; we
+        # kick them off in the main thread so test monkeypatches on
+        # `_run_cadastre_and_nominatim_parallel` remain effective.
+        cad, nom = _run_cadastre_and_nominatim_parallel(
+            address=address,
+            municipality=municipality,
+            province=province,
+            parsed_street=parsed_street,
+            parsed_number=parsed_number,
+        )
+        cc = fut_cc.result()
+    return cad, nom, cc
 
 
 # === Main Orchestrator ===
@@ -2234,12 +2535,14 @@ def geocode_project(
     # Extract components from address for progressive lookup
     sigla, parsed_street, parsed_number = _parse_address(address)
 
-    cadastre_result, nominatim_coords = _run_cadastre_and_nominatim_parallel(
-        address=address,
-        municipality=municipality,
-        province=province,
-        parsed_street=parsed_street,
-        parsed_number=parsed_number,
+    cadastre_result, nominatim_coords, cartociudad_coords = (
+        _run_cadastre_and_alternates_parallel(
+            address=address,
+            municipality=municipality,
+            province=province,
+            parsed_street=parsed_street,
+            parsed_number=parsed_number,
+        )
     )
 
     if not cadastre_result:
@@ -2283,26 +2586,36 @@ def geocode_project(
             utm_y=centroid_y,
             municipality=municipality,
         )
-        if not matches and nominatim_coords is not None:
-            lat, lon = nominatim_coords
-            nx, ny, nz = _wgs84_to_utm(lat, lon)
+        if not matches and (
+            cartociudad_coords is not None or nominatim_coords is not None
+        ):
+            # Prefer CartoCiudad (portal-level, IGN Spain) over Nominatim —
+            # empirically higher precision for Catalan small towns.
+            if cartociudad_coords is not None:
+                alt_source_tag = "cartociudad"
+                alt_lat, alt_lon = cartociudad_coords
+            else:
+                alt_source_tag = "nominatim"
+                assert nominatim_coords is not None  # for type checker
+                alt_lat, alt_lon = nominatim_coords
+            nx, ny, nz = _wgs84_to_utm(alt_lat, alt_lon)
             logger.warning(
                 f"Cadastre parcel {rc[:14]} does not border project street "
-                f"'{parsed_street}'. Falling back to Nominatim UTM "
+                f"'{parsed_street}'. Falling back to {alt_source_tag} UTM "
                 f"({nx:.0f}, {ny:.0f}) and re-querying Cadastre by coord."
             )
             # Re-query Cadastre by coord for the correct RC
             new_rc: str | None = None
             try:
                 from .cadastre_adjacents import get_cadastral_reference
-                nominatim_rc, _ = get_cadastral_reference(nx, ny)
-                if nominatim_rc:
-                    new_rc = nominatim_rc
+                alt_rc, _ = get_cadastral_reference(nx, ny)
+                if alt_rc:
+                    new_rc = alt_rc
             except Exception as e:
                 logger.debug(f"Reconciliation: RCCOOR re-query failed: {e}")
             centroid_x, centroid_y, utm_zone = nx, ny, nz
             rc = new_rc  # may be None — downstream handles that gracefully
-            source = "geocode:nominatim+cadastre(reconciled)"
+            source = f"geocode:{alt_source_tag}+cadastre(reconciled)"
 
     # 3. FALLBACK: Nominatim + grid search (only if primary failed)
     if centroid_x is None:
