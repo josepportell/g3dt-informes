@@ -295,6 +295,65 @@ _STREET_TYPE_MAP = {
 _STREET_TYPE_PREFIXES = sorted(_STREET_TYPE_MAP.keys(), key=len, reverse=True)
 
 
+# Full-word street-type tokens that must be stripped from a hint before
+# querying Cadastre ConsultaVia. The short-prefix list above (_STREET_TYPE_MAP)
+# only covers abbreviations ("C.", "AV.", etc.); Cadastre's fuzzy matcher
+# treats the full word "Carrer" as part of the street name, returning the
+# wrong street (e.g. "Carrer Santa Gemma" → CARRERADA PD, instead of
+# SANTA GEMMA CL). These are stripped case-insensitively from the start
+# of the hint. Longer variants first so "Carrer de la" matches before "Carrer".
+_STREET_TYPE_WORDS = [
+    # Catalan
+    "carrer", "camí", "cami", "passeig", "avinguda", "plaça", "placa",
+    "rambla", "travessia", "travessera", "passatge",
+    # Spanish
+    "calle", "camino", "paseo", "avenida", "avda", "plaza", "travesía",
+    "travesia", "carretera", "ronda",
+]
+
+# Prepositions/articles that may follow a street-type word and should also
+# be stripped (case-insensitive, accent-insensitive).
+_STREET_TYPE_CONNECTORS = [
+    "de la", "de les", "de las", "de los", "dels", "del", "de",
+]
+
+_STREET_TYPE_WORD_RE = re.compile(
+    r"^\s*(?:" + "|".join(sorted(_STREET_TYPE_WORDS, key=len, reverse=True)) + r")\b"
+    r"(?:\s+(?:" + "|".join(_STREET_TYPE_CONNECTORS) + r"))*"
+    r"\s+",
+    re.IGNORECASE,
+)
+
+
+def _strip_street_type_word(hint: str) -> str:
+    """Strip leading street-type words (Carrer, Calle, Plaça, etc.) + any
+    following connector prepositions (de, del, de la, dels, ...) from a
+    street-name hint.
+
+    Examples:
+        "Carrer Santa Gemma"    -> "Santa Gemma"
+        "Calle Mayor"           -> "Mayor"
+        "Carrer de la Pau"      -> "Pau"
+        "Plaça de l'Església"   -> "l'Església"    (d' is not in connectors)
+        "Santa Gemma"           -> "Santa Gemma"   (no prefix, unchanged)
+        "C. Santa Gemma"        -> "C. Santa Gemma" (short abbreviation
+                                    handled elsewhere, by ``_parse_address``)
+
+    The regex anchors at the start and requires a word boundary, so street
+    names that legitimately begin with these tokens as a substring (e.g.
+    "Rambla dels Parcers" → would strip "Rambla dels ", leaving "Parcers")
+    are acceptable: Cadastre's fuzzy matcher handles partial name lookup.
+    """
+    if not hint:
+        return hint
+    stripped = _STREET_TYPE_WORD_RE.sub("", hint, count=1)
+    # Only return the stripped version if something was actually removed AND
+    # a non-empty remainder exists. Never return an empty string.
+    if stripped and stripped != hint:
+        return stripped.strip()
+    return hint
+
+
 def _parse_address(address: str) -> tuple[str, str, str]:
     """
     Parse a street address into components for the Cadastre Callejero API.
@@ -502,6 +561,17 @@ def _consulta_via(
         Tuple of (official_street_name, tipo_via, cv) or None.
         tipo_via = street type code (CL, AV, etc.), cv = street code.
     """
+    # Strip full-word street-type prefixes (Carrer, Calle, Plaça, ...) BEFORE
+    # anything else. Cadastre's fuzzy matcher will otherwise treat these as
+    # part of the street name and return a wildly wrong match (e.g.
+    # "Carrer Santa Gemma" → CARRERADA PD instead of SANTA GEMMA CL).
+    cleaned_hint = _strip_street_type_word(street_hint.strip())
+    if cleaned_hint != street_hint.strip():
+        logger.debug(
+            f"ConsultaVia: stripped street-type prefix from hint "
+            f"'{street_hint}' -> '{cleaned_hint}'"
+        )
+
     # Expand common Spanish abbreviations before searching
     _ABBREVIATIONS = {
         "sta.": "Santa", "sta": "Santa", "sto.": "Santo", "sto": "Santo",
@@ -512,15 +582,19 @@ def _consulta_via(
         "mn.": "Mossen", "mn": "Mossen",
     }
     expanded_words = []
-    for w in street_hint.strip().split():
+    for w in cleaned_hint.split():
         expanded_words.append(_ABBREVIATIONS.get(w.lower(), w))
     expanded_hint = " ".join(expanded_words)
 
     # Try progressively shorter hints if no results
     hint_words = expanded_hint.split()
     attempts = [expanded_hint]
-    if expanded_hint != street_hint.strip():
-        attempts.insert(0, street_hint.strip())  # try original first
+    # Only prepend the original hint if abbreviation expansion changed it —
+    # NOT if only the street-type-word stripping changed it. Trying the
+    # original with "Carrer"/"Calle" prefix would re-introduce the exact
+    # Cadastre fuzzy-match bug this fix is for.
+    if expanded_hint != cleaned_hint:
+        attempts.insert(0, cleaned_hint)  # try pre-abbreviation form first
     for i in range(len(hint_words) - 1, 0, -1):
         attempts.append(" ".join(hint_words[:i]))
 
@@ -538,7 +612,7 @@ def _consulta_via(
     # Only for manageable municipality sizes (skip large cities)
     all_streets = _consulta_via_all_streets(province, municipality)
     if all_streets and len(all_streets) <= 500:
-        hint_clean = _strip_accents(street_hint.strip().upper())
+        hint_clean = _strip_accents(cleaned_hint.upper())
         if len(hint_clean) < 4:
             return None  # Too short for reliable fuzzy matching
         street_names_upper = [_strip_accents(s[0].upper()) for s in all_streets]
@@ -1992,6 +2066,121 @@ def _save_to_cache(address: str, municipality: str, result: dict) -> None:
         logger.warning(f"Failed to cache geocode result: {e}")
 
 
+# === Cadastre/Nominatim Reconciliation ===
+
+def _project_street_matches_cadastre(
+    project_street_hint: str,
+    rc: str,
+    utm_x: float,
+    utm_y: float,
+    municipality: str | None = None,
+    parcel_area: float | None = None,
+) -> bool:
+    """Check whether a Cadastre-resolved parcel actually lies on the expected
+    project street.
+
+    Uses the parcel's adjacents (from the Cadastre adjacents module) and
+    checks whether any of the 4 adjacents contains the project's street
+    name (accent-insensitive substring match, after prefix stripping).
+
+    Returns True if at least one adjacent matches. Returns False on any
+    error (conservative: if we can't verify, treat as wrong-parcel so the
+    Nominatim fallback takes over).
+
+    This is a best-effort guard; false negatives just trigger an extra
+    Nominatim-based re-query which is still correct.
+    """
+    if not project_street_hint or not rc or not utm_x or not utm_y:
+        return False
+
+    # Strip street-type prefix from project hint for matching
+    hint = _strip_street_type_word(project_street_hint.strip())
+    hint_norm = _strip_accents(hint.upper()).strip()
+    if not hint_norm:
+        return False
+
+    try:
+        from .cadastre_adjacents import get_adjacent_parcels
+    except ImportError:
+        logger.debug("cadastre_adjacents not available; skipping street-match check")
+        return False
+
+    try:
+        adjacents = get_adjacent_parcels(
+            utm_x, utm_y,
+            superficie=float(parcel_area) if parcel_area else 500.0,
+            municipality=municipality,
+            rc14=rc[:14] if len(rc) >= 14 else None,
+        )
+    except Exception as e:
+        logger.debug(f"Street-match check: get_adjacent_parcels failed: {e}")
+        return False
+
+    for direction in ("north", "south", "east", "west"):
+        adj = adjacents.get(direction) or ""
+        adj_norm = _strip_accents(adj.upper())
+        if hint_norm and hint_norm in adj_norm:
+            logger.info(
+                f"Street-match OK: project street '{hint}' found in "
+                f"{direction} adjacent '{adj}'"
+            )
+            return True
+
+    logger.warning(
+        f"Street-match FAIL: project street '{hint}' not found in any adjacent "
+        f"of RC {rc[:14]} ({list(adjacents.values())})"
+    )
+    return False
+
+
+def _run_cadastre_and_nominatim_parallel(
+    address: str,
+    municipality: str,
+    province: str,
+    parsed_street: str,
+    parsed_number: str,
+) -> tuple[dict | None, tuple[float, float] | None]:
+    """Run Cadastre progressive lookup and Nominatim geocoding concurrently.
+
+    Returns (cadastre_result, nominatim_latlon). Either or both may be None.
+    The two calls are independent HTTP requests — running them in parallel
+    halves wall time without changing behavior.
+    """
+    import concurrent.futures as _cf
+
+    def _cadastre() -> dict | None:
+        try:
+            return cadastre_progressive_lookup(
+                street_name=parsed_street,
+                house_number=parsed_number,
+                municipality_hint=municipality,
+                province=province,
+                full_address=address,
+            )
+        except Exception as e:
+            logger.debug(f"Parallel cadastre branch failed: {e}")
+            return None
+
+    def _nominatim() -> tuple[float, float] | None:
+        try:
+            coords = nominatim_geocode_structured(
+                address, municipality, province=province,
+            )
+            if coords is None:
+                coords = nominatim_geocode(
+                    address, municipality, province=province,
+                )
+            return coords
+        except Exception as e:
+            logger.debug(f"Parallel nominatim branch failed: {e}")
+            return None
+
+    with _cf.ThreadPoolExecutor(max_workers=2) as ex:
+        fut_cad = ex.submit(_cadastre)
+        fut_nom = ex.submit(_nominatim)
+        return fut_cad.result(), fut_nom.result()
+
+
 # === Main Orchestrator ===
 
 def geocode_project(
@@ -2032,7 +2221,10 @@ def geocode_project(
         logger.debug(f"Cache hit for geocode '{address}, {municipality}'")
         return cached
 
-    # 2. PRIMARY PATH: Progressive Cadastre resolution (fuzzy municipality + street)
+    # 2. PRIMARY PATH: Run Cadastre progressive lookup + Nominatim IN PARALLEL,
+    #    then reconcile. Cadastre is the preferred source (gives exact RC),
+    #    but its street fuzzy-matcher can return a wrong-parcel result on
+    #    ambiguous street names. We verify by checking adjacents.
     rc: str | None = None
     centroid_x: float | None = None
     centroid_y: float | None = None
@@ -2042,12 +2234,12 @@ def geocode_project(
     # Extract components from address for progressive lookup
     sigla, parsed_street, parsed_number = _parse_address(address)
 
-    cadastre_result = cadastre_progressive_lookup(
-        street_name=parsed_street,
-        house_number=parsed_number,
-        municipality_hint=municipality,
+    cadastre_result, nominatim_coords = _run_cadastre_and_nominatim_parallel(
+        address=address,
+        municipality=municipality,
         province=province,
-        full_address=address,
+        parsed_street=parsed_street,
+        parsed_number=parsed_number,
     )
 
     if not cadastre_result:
@@ -2074,16 +2266,57 @@ def geocode_project(
                 centroid_x, centroid_y = xcen, ycen
                 source = "geocode:cadastre_address(dnploc_utm)"
 
+    # 2a. RECONCILIATION: verify Cadastre's parcel actually lies on the
+    #     expected street. If not, prefer Nominatim and re-query Cadastre
+    #     by coordinate (RCCOOR) for the right parcel + adjacents.
+    if (
+        cadastre_result
+        and rc is not None
+        and centroid_x is not None
+        and centroid_y is not None
+        and parsed_street
+    ):
+        matches = _project_street_matches_cadastre(
+            project_street_hint=parsed_street,
+            rc=rc,
+            utm_x=centroid_x,
+            utm_y=centroid_y,
+            municipality=municipality,
+        )
+        if not matches and nominatim_coords is not None:
+            lat, lon = nominatim_coords
+            nx, ny, nz = _wgs84_to_utm(lat, lon)
+            logger.warning(
+                f"Cadastre parcel {rc[:14]} does not border project street "
+                f"'{parsed_street}'. Falling back to Nominatim UTM "
+                f"({nx:.0f}, {ny:.0f}) and re-querying Cadastre by coord."
+            )
+            # Re-query Cadastre by coord for the correct RC
+            new_rc: str | None = None
+            try:
+                from .cadastre_adjacents import get_cadastral_reference
+                nominatim_rc, _ = get_cadastral_reference(nx, ny)
+                if nominatim_rc:
+                    new_rc = nominatim_rc
+            except Exception as e:
+                logger.debug(f"Reconciliation: RCCOOR re-query failed: {e}")
+            centroid_x, centroid_y, utm_zone = nx, ny, nz
+            rc = new_rc  # may be None — downstream handles that gracefully
+            source = "geocode:nominatim+cadastre(reconciled)"
+
     # 3. FALLBACK: Nominatim + grid search (only if primary failed)
     if centroid_x is None:
         source = "geocode:nominatim_structured+cadastre"
         logger.info("Primary cadastre address lookup failed, falling back to Nominatim")
-        # Try structured query first (better for small towns)
-        coords = nominatim_geocode_structured(address, municipality, province=province)
+        # Reuse the parallel-fetched Nominatim result if available
+        coords = nominatim_coords
         if coords is None:
-            # Fall back to free-text query
-            source = "geocode:nominatim+cadastre"
-            coords = nominatim_geocode(address, municipality, province=province)
+            # Parallel branch didn't get anything — try once more sequentially
+            # (belt-and-suspenders; network may have been flaky on the parallel run)
+            coords = nominatim_geocode_structured(address, municipality, province=province)
+            if coords is None:
+                source = "geocode:nominatim+cadastre"
+                coords = nominatim_geocode(address, municipality, province=province)
         if coords is None:
             logger.warning(f"Geocoding failed for '{address}, {municipality}'")
             return None
