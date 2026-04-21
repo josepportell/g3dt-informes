@@ -154,8 +154,18 @@ Two linked fixes motivated by Vilanova cadastre wrong-parcel regression (uncover
 
 **Vilanova impact**: targeted re-run still produces wrong UTM `(298740.96, 4620349.32)`. Fix #1 didn't apply because the pipeline's wrong-UTM derivation goes through a different code path (probably `cadastre_search_address` / Callejero, not `_consulta_via`). Fix #2 didn't trigger because Nominatim doesn't geocode Vilanova at all (empty result for the address). Step 5 merged for completeness but didn't fix Vilanova.
 
-### Step 6 — CartoCiudad (IGN) integration (IN FLIGHT — background branch)
-**Branch:** `feature/cartociudad-geocoder` (NOT merged yet). **Status:** implementer agent still running at session pause (2026-04-21 ~18:45). Resume in fresh session: review + merge + test.
+### Step 6 — CartoCiudad (IGN) integration (COMMIT LANDED — pending review + merge)
+**Branch:** `feature/cartociudad-geocoder` at `da77cf2` (NOT merged yet). **Status:** implementer completed 2026-04-21 ~18:49. Resume in fresh session: review → merge → targeted Vilanova re-sweep.
+
+Implementation summary (per handoff):
+- `cartociudad_geocode(address, muni, province)` at `automation/geocode_coordinates.py:1861-1950`, supporting helpers `_cartociudad_cache_key`, `_cartociudad_cache_load/save`, `_parse_cartociudad_body`, `_cartociudad_muni_matches` at lines 1710-1859.
+- Municipality match: accent-insensitive + case-insensitive substring both directions, parenthetical suffixes stripped.
+- Cache: `~/.g3dt/cache/cartociudad/{sha256-12}.json`, 365-day TTL, negative caching for `__MISS__`, honors `G3DT_NO_CACHE=1`, atomic writes.
+- Reconciliation: preserved the old `_run_cadastre_and_nominatim_parallel` name so Step 5 tests keep passing; new `_run_cadastre_and_alternates_parallel` wraps it + adds CartoCiudad branch. CartoCiudad > Nominatim > cadastre-as-is.
+- HTTPError → no retry (won't heal), URLError → exponential backoff 3 tries, transient failures not cached.
+- Nominatim path preserved as tertiary safety net.
+- 27 new tests including `test_vilanova_cartociudad_wins_over_nominatim` (end-to-end reconciled flow).
+- Full suite: +27 passing, 0 regressions, identical pre-existing-failure set.
 
 Motivation from live empirical testing:
 - Nominatim (OSM) has sparse coverage of Catalan small towns — geocoded 2 of 7 projects, both as street centerlines (not usable for parcel lookup).
@@ -178,11 +188,11 @@ Scope dispatched:
 ## Session end state — 2026-04-21 (for fresh session continuation)
 
 **Current HEAD of `experiment/cc-only-extraction`**: `81bebee` (Step 5 merged).
-**Outstanding branch awaiting review**: `feature/cartociudad-geocoder` (Step 6). Review, merge if clean, then run targeted Vilanova re-sweep to confirm expected +1 MATCH.
+**Outstanding branch awaiting review**: `feature/cartociudad-geocoder` at `da77cf2` (Step 6 implementer commit landed). Two commits sit there: `9055e4b` (this STATUS doc) + `da77cf2` (Step 6 code). Review → merge → targeted Vilanova re-sweep to confirm expected +1 MATCH.
 
 **Active tasks (carry forward into new session):**
 - #21 Step 4 — PNOA/IGN all-Spain ortho coverage roadmap (pending, not started).
-- #25 Step 6 — CartoCiudad integration (in_progress; implementer commit pending).
+- #25 Step 6 — CartoCiudad integration (implementer done; awaiting review + merge).
 
 **Completed since Phase 1 merges:**
 - #18 Step 1, #19 Step 2, #20 Step 3, #22 Step 2b, #23 Step 3b, #24 Step 5.
