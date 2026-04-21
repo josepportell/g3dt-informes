@@ -230,6 +230,110 @@ class TestCartociudadGeocode:
             assert gc.cartociudad_geocode("Nada", "Nada") is None
         assert mock_urlopen.call_count == 1
 
+    def test_vilanova_muni_match_via_muni_field_not_address(self):
+        """Bug #1 regression: when CartoCiudad's `address` field contains a
+        parenthetical urbanization prefix (e.g. 'La Serra (Vilanova de Segrià)')
+        but the `muni` field holds the canonical municipality, the match must
+        succeed and the coordinates must be returned."""
+        body = json.dumps([{
+            "type": "portal",
+            "muni": "Vilanova de Segrià",
+            "address": "CALLE SANTA GEMMA 4, La Serra (Vilanova de Segrià)",
+            "portalNumber": 4,
+            "lat": 41.70978,
+            "lng": 0.57897,
+        }])
+        with self._patch_urlopen(body):
+            result = gc.cartociudad_geocode(
+                "Santa Gemma 4", "Vilanova de Segrià", "Lleida"
+            )
+        assert result == (41.70978, 0.57897)
+
+    def test_province_retry_when_first_attempt_empty(self):
+        """Bug #1 root cause: adding the province as a third query segment
+        makes CartoCiudad return zero candidates for some small-town addresses.
+        The function must retry without the province and succeed."""
+        payload_with_number = json.dumps([{
+            "type": "portal",
+            "muni": "Vilanova de Segrià",
+            "address": "CALLE SANTA GEMMA 4, La Serra (Vilanova de Segrià)",
+            "portalNumber": 4,
+            "lat": 41.70978,
+            "lng": 0.57897,
+        }])
+        calls = {"n": 0, "queries": []}
+
+        def _fake(req, timeout=None):  # noqa: ARG001
+            calls["n"] += 1
+            calls["queries"].append(req.full_url)
+            # First call (with province) returns empty; second (without) succeeds.
+            body = "[]" if calls["n"] == 1 else payload_with_number
+            return _fake_http_response(body)
+
+        with patch.object(gc.urllib.request, "urlopen", side_effect=_fake):
+            result = gc.cartociudad_geocode(
+                "Santa Gemma 4", "Vilanova de Segrià", "Lleida"
+            )
+        assert result == (41.70978, 0.57897)
+        assert calls["n"] == 2, f"Expected 2 HTTP calls (retry), got {calls['n']}"
+        assert "Lleida" in calls["queries"][0]
+        assert "Lleida" not in calls["queries"][1]
+
+    def test_candidate_selection_prefers_matching_portal_number(self):
+        """Bug #2 regression: given multiple portal candidates for the same
+        street, pick the one whose `portalNumber` matches the house number
+        parsed from the input address."""
+        body = json.dumps([
+            {
+                "type": "portal", "muni": "Linyola",
+                "address": "CALLE CLOT DE LLACUNA 17, Linyola",
+                "portalNumber": 17,
+                "lat": 41.70925, "lng": 0.89592,
+            },
+            {
+                "type": "portal", "muni": "Linyola",
+                "address": "CALLE CLOT DE LLACUNA 16, Linyola",
+                "portalNumber": 16,
+                "lat": 41.70860, "lng": 0.89561,
+            },
+            {
+                "type": "portal", "muni": "Linyola",
+                "address": "CALLE CLOT DE LLACUNA 18, Linyola",
+                "portalNumber": 18,
+                "lat": 41.70873, "lng": 0.89565,
+            },
+        ])
+        with self._patch_urlopen(body):
+            result = gc.cartociudad_geocode(
+                "Clot de la Llacuna 16", "Linyola", "Lleida"
+            )
+        # Must pick #16 even though #17 is listed first.
+        assert result == (41.70860, 0.89561)
+
+    def test_candidate_selection_no_house_number_in_query_falls_back_to_first(self):
+        """Existing behaviour preserved: when the input has no house number,
+        we fall back to the first portal candidate."""
+        body = json.dumps([
+            {
+                "type": "portal", "muni": "Linyola",
+                "address": "CALLE MESTRE RAMON 17, Linyola",
+                "portalNumber": 17,
+                "lat": 41.70001, "lng": 0.90001,
+            },
+            {
+                "type": "portal", "muni": "Linyola",
+                "address": "CALLE MESTRE RAMON 16, Linyola",
+                "portalNumber": 16,
+                "lat": 41.70002, "lng": 0.90002,
+            },
+        ])
+        with self._patch_urlopen(body):
+            result = gc.cartociudad_geocode(
+                "Mestre Ramon Ortiz", "Linyola", "Lleida"
+            )
+        # No number in input → first portal wins.
+        assert result == (41.70001, 0.90001)
+
 
 # ────────────────────────────────────────────────────────────────────────────
 # Reconciliation integration — CartoCiudad wins over Nominatim

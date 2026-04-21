@@ -1843,45 +1843,86 @@ def _cartociudad_muni_matches(candidate_muni: str, query_muni: str) -> bool:
     return q in c_base or c_base in q or q in c or c in q
 
 
-def cartociudad_geocode(
-    address: str, municipality: str, province: str = ""
-) -> tuple[float, float] | None:
-    """Geocode using CartoCiudad (IGN Spain) — entrance-level precision.
+def _extract_house_number(address: str) -> int | None:
+    """Parse the house number from an address string.
 
-    Tends to outperform Nominatim for Catalan small towns, returning
-    `portal` (entrance) coordinates rather than street-centerline.
+    Looks for the last standalone integer in the address (ignoring fractional
+    suffixes like "4B" or "2 BIS"). Returns None if no number is found.
 
-    Args:
-        address: Street address (e.g. "Santa Gemma 4").
-        municipality: Municipality name (e.g. "Vilanova de Segrià").
-        province: Province name (optional; passed through to the query).
-
-    Returns:
-        (lat, lng) tuple or None if no acceptable candidate.
+    Examples:
+        "Santa Gemma 4" -> 4
+        "Clot de la Llacuna 16" -> 16
+        "Mestre Ramon Ortiz" -> None
+        "Carrer X, 2" -> 2
     """
-    if not address or not municipality:
+    if not address:
+        return None
+    # Find all integer runs; take the last one (house numbers trail street name).
+    matches = re.findall(r"\b(\d+)\b", address)
+    if not matches:
+        return None
+    try:
+        return int(matches[-1])
+    except ValueError:
         return None
 
-    cached = _cartociudad_cache_load(address, municipality, province)
-    if cached == "__MISS__":
-        logger.debug(
-            f"CartoCiudad cache negative-hit for '{address}, {municipality}'"
-        )
-        return None
-    if cached is not None:
-        lat, lng = cached  # type: ignore[misc]
-        logger.debug(
-            f"CartoCiudad cache hit for '{address}, {municipality}' "
-            f"-> ({lat:.6f}, {lng:.6f})"
-        )
-        return lat, lng
 
-    parts = [address, municipality]
-    if province:
-        parts.append(province)
-    query = ", ".join(p for p in parts if p)
+def _pick_cartociudad_candidate(
+    candidates: list[dict],
+    municipality: str,
+    wanted_number: int | None,
+) -> dict | None:
+    """Filter + rank CartoCiudad candidates and return the best match.
+
+    Rules:
+      - Drop candidates with (0,0) coords or mismatched municipality.
+      - Prefer `portal` candidates over `callejero`.
+      - When `wanted_number` is set, prefer a portal whose `portalNumber`
+        matches exactly; otherwise fall back to the first portal.
+    """
+    portals: list[dict] = []
+    callejeros: list[dict] = []
+    for c in candidates:
+        if not isinstance(c, dict):
+            continue
+        try:
+            lat = float(c.get("lat") or 0.0)
+            lng = float(c.get("lng") or 0.0)
+        except (TypeError, ValueError):
+            continue
+        if lat == 0.0 and lng == 0.0:
+            continue
+        muni = str(c.get("muni") or "")
+        if not _cartociudad_muni_matches(muni, municipality):
+            continue
+        ctype = str(c.get("type") or "").lower()
+        if ctype == "portal":
+            portals.append(c)
+        elif ctype == "callejero":
+            callejeros.append(c)
+
+    if portals:
+        if wanted_number is not None:
+            for c in portals:
+                pn = c.get("portalNumber")
+                try:
+                    if pn is not None and int(pn) == wanted_number:
+                        return c
+                except (TypeError, ValueError):
+                    continue
+        return portals[0]
+    if callejeros:
+        return callejeros[0]
+    return None
+
+
+def _cartociudad_fetch_candidates(query: str) -> list[dict] | None:
+    """Fetch + parse CartoCiudad candidates for a query string.
+
+    Returns the parsed candidate list (possibly empty) or None on HTTP/parse
+    failure that should be treated as a hard error (not a negative result).
+    """
     url = f"{CARTOCIUDAD_URL}?q={urllib.parse.quote(query)}"
-
     logger.debug(f"CartoCiudad query: {query}")
 
     headers = {
@@ -1908,40 +1949,117 @@ def cartociudad_geocode(
             logger.warning(f"CartoCiudad connection failed: {e}")
             return None
 
-    candidates = _parse_cartociudad_body(body or "")
-    if not candidates:
-        logger.info(f"CartoCiudad returned no candidates for: {query}")
-        _cartociudad_cache_save(address, municipality, province, None)
+    return _parse_cartociudad_body(body or "")
+
+
+def cartociudad_geocode(
+    address: str, municipality: str, province: str = ""
+) -> tuple[float, float] | None:
+    """Geocode using CartoCiudad (IGN Spain) — entrance-level precision.
+
+    Tends to outperform Nominatim for Catalan small towns, returning
+    `portal` (entrance) coordinates rather than street-centerline.
+
+    Robustness notes:
+      - CartoCiudad is sensitive to extra trailing tokens in the query
+        (e.g. a province name as a third comma-separated segment makes
+        some small-town addresses return zero candidates). If the first
+        attempt produces nothing usable, we retry without the province.
+      - When the input address contains a house number, we prefer the
+        candidate whose ``portalNumber`` matches exactly rather than
+        trusting the server's default order.
+
+    Args:
+        address: Street address (e.g. "Santa Gemma 4").
+        municipality: Municipality name (e.g. "Vilanova de Segrià").
+        province: Province name (optional; passed through to the query).
+
+    Returns:
+        (lat, lng) tuple or None if no acceptable candidate.
+    """
+    if not address or not municipality:
         return None
 
-    # Filter by municipality + non-zero coords, then prefer `portal` over
-    # `callejero`. Reject unknown/other types (poblacion, ref_catastral, …).
-    portals: list[dict] = []
-    callejeros: list[dict] = []
-    for c in candidates:
-        if not isinstance(c, dict):
-            continue
-        try:
-            lat = float(c.get("lat") or 0.0)
-            lng = float(c.get("lng") or 0.0)
-        except (TypeError, ValueError):
-            continue
-        if lat == 0.0 and lng == 0.0:
-            continue
-        muni = str(c.get("muni") or "")
-        if not _cartociudad_muni_matches(muni, municipality):
-            continue
-        ctype = str(c.get("type") or "").lower()
-        if ctype == "portal":
-            portals.append(c)
-        elif ctype == "callejero":
-            callejeros.append(c)
+    cached = _cartociudad_cache_load(address, municipality, province)
+    if cached == "__MISS__":
+        logger.debug(
+            f"CartoCiudad cache negative-hit for '{address}, {municipality}'"
+        )
+        return None
+    if cached is not None:
+        lat, lng = cached  # type: ignore[misc]
+        logger.debug(
+            f"CartoCiudad cache hit for '{address}, {municipality}' "
+            f"-> ({lat:.6f}, {lng:.6f})"
+        )
+        return lat, lng
 
-    picked: dict | None = portals[0] if portals else (callejeros[0] if callejeros else None)
+    wanted_number = _extract_house_number(address)
+
+    # Build queries in order of specificity. Retry without the province if
+    # the first attempt yields zero candidates — CartoCiudad sometimes
+    # rejects the extra segment (e.g. Vilanova de Segrià).
+    queries: list[str] = []
+    if province:
+        queries.append(", ".join([address, municipality, province]))
+    queries.append(", ".join([address, municipality]))
+
+    picked: dict | None = None
+    used_query: str = queries[0]
+    total_raw = 0
+    # Walk queries from most-specific to least. We retry a less-specific
+    # query when the current one either:
+    #   (a) returns zero candidates (province-segment rejection — Bug #1), or
+    #   (b) returns candidates but none with an exact portalNumber match
+    #       and we have a house number to pin — CartoCiudad's default order
+    #       ranks by street-name similarity, not by street-number closeness,
+    #       so a looser query sometimes surfaces the exact # (Bug #2).
+    fallback: dict | None = None
+    fallback_query: str = queries[0]
+    for idx, query in enumerate(queries):
+        candidates = _cartociudad_fetch_candidates(query)
+        if candidates is None:
+            # Hard HTTP/parse error: bail out (do not cache).
+            return None
+        total_raw += len(candidates)
+        if not candidates:
+            continue
+        cand = _pick_cartociudad_candidate(candidates, municipality, wanted_number)
+        if cand is None:
+            continue
+        # Exact-number match → done.
+        if wanted_number is not None:
+            pn_raw = cand.get("portalNumber")
+            pn_int: int | None
+            try:
+                pn_int = int(pn_raw) if pn_raw is not None else None
+            except (TypeError, ValueError):
+                pn_int = None
+            if pn_int == wanted_number:
+                picked = cand
+                used_query = query
+                break
+            # Only keep probing if this candidate exposes a (wrong) numeric
+            # portalNumber AND a broader query remains to try. If the
+            # candidate has no portalNumber field we can't do better by
+            # retrying, so accept it.
+            if pn_int is not None and idx < len(queries) - 1:
+                if fallback is None:
+                    fallback = cand
+                    fallback_query = query
+                continue
+        # No house number to pin, or we've exhausted queries — accept.
+        picked = cand
+        used_query = query
+        break
+    if picked is None and fallback is not None:
+        picked = fallback
+        used_query = fallback_query
+
     if picked is None:
         logger.info(
-            f"CartoCiudad: no acceptable candidate for '{query}' "
-            f"(had {len(candidates)} raw results)"
+            f"CartoCiudad: no acceptable candidate for '{queries[0]}' "
+            f"(had {total_raw} raw results across {len(queries)} attempts)"
         )
         _cartociudad_cache_save(address, municipality, province, None)
         return None
@@ -1950,8 +2068,9 @@ def cartociudad_geocode(
     lng = float(picked["lng"])
     result_tag = str(picked.get("type") or "").lower()
     logger.info(
-        f"CartoCiudad geocoded '{query}' -> ({lat:.6f}, {lng:.6f}) "
-        f"[type={result_tag}, muni={picked.get('muni')!r}]"
+        f"CartoCiudad geocoded '{used_query}' -> ({lat:.6f}, {lng:.6f}) "
+        f"[type={result_tag}, muni={picked.get('muni')!r}, "
+        f"portal={picked.get('portalNumber')!r}]"
     )
     _cartociudad_cache_save(address, municipality, province, (lat, lng))
     return lat, lng
