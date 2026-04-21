@@ -154,8 +154,20 @@ Two linked fixes motivated by Vilanova cadastre wrong-parcel regression (uncover
 
 **Vilanova impact**: targeted re-run still produces wrong UTM `(298740.96, 4620349.32)`. Fix #1 didn't apply because the pipeline's wrong-UTM derivation goes through a different code path (probably `cadastre_search_address` / Callejero, not `_consulta_via`). Fix #2 didn't trigger because Nominatim doesn't geocode Vilanova at all (empty result for the address). Step 5 merged for completeness but didn't fix Vilanova.
 
-### Step 6 — CartoCiudad (IGN) integration (COMMIT LANDED — pending review + merge)
-**Branch:** `feature/cartociudad-geocoder` at `da77cf2` (NOT merged yet). **Status:** implementer completed 2026-04-21 ~18:49. Resume in fresh session: review → merge → targeted Vilanova re-sweep.
+### Step 6 — CartoCiudad (IGN) integration (MERGED)
+**Branch:** `feature/cartociudad-geocoder` → merged into `experiment/cc-only-extraction`. **Commits:** `da77cf2` (initial impl) + `486d876` (bug fix-up). **Status:** live-verified; next session should run Vilanova diagnostic to confirm west-adjacent flips to MATCH.
+
+**Bug fix-up (`486d876`):** live integration test caught two bugs in `da77cf2`:
+1. Vilanova returned `None` because appending province as a third comma-segment (`"Santa Gemma 4, Vilanova de Segrià, Lleida"`) makes CartoCiudad return zero candidates. Fix: retry without province after a zero-result first attempt.
+2. Multi-portal streets picked wrong candidate (Linyola returned #17 not #16; Anciles returned #10 not #20). Fix: parse trailing digits from input address, prefer candidates with matching `portalNumber` field, optional broader-query retry.
+
+Post-fix live verification (all 4 cases correct):
+```
+Vilanova:  (41.70978, 0.57897)  ✓
+Linyola:   (41.70860, 0.89561)  ✓ house #16
+Anciles:   (42.59199, 0.51050)  ✓ house #20
+Bell-Lloc: None                 ✓ expected miss
+```
 
 Implementation summary (per handoff):
 - `cartociudad_geocode(address, muni, province)` at `automation/geocode_coordinates.py:1861-1950`, supporting helpers `_cartociudad_cache_key`, `_cartociudad_cache_load/save`, `_parse_cartociudad_body`, `_cartociudad_muni_matches` at lines 1710-1859.
@@ -187,12 +199,12 @@ Scope dispatched:
 
 ## Session end state — 2026-04-21 (for fresh session continuation)
 
-**Current HEAD of `experiment/cc-only-extraction`**: `81bebee` (Step 5 merged).
-**Outstanding branch awaiting review**: `feature/cartociudad-geocoder` at `da77cf2` (Step 6 implementer commit landed). Two commits sit there: `9055e4b` (this STATUS doc) + `da77cf2` (Step 6 code). Review → merge → targeted Vilanova re-sweep to confirm expected +1 MATCH.
+**Current HEAD of `experiment/cc-only-extraction`**: Step 6 merged (commits `da77cf2` + `486d876`). Nothing awaiting merge.
 
 **Active tasks (carry forward into new session):**
 - #21 Step 4 — PNOA/IGN all-Spain ortho coverage roadmap (pending, not started).
-- #25 Step 6 — CartoCiudad integration (implementer done; awaiting review + merge).
+
+**First thing to do in next session:** targeted Vilanova diagnostic. Clear cache (`rm ~/.g3dt/cache/cadastre_adjacents/fe4d8e63cbea.json`, `rm "reference-material/4001671 VILANOVA DE SEGRIA/validation/concept_map.json"`) and run `.venv/bin/python scripts/diagnostic_trace.py --save --project 4001671 --components`. Expected: west-adjacent flips `Carrer Santa Marta` → `Carrer Santa Gemma` → MATCH.
 
 **Completed since Phase 1 merges:**
 - #18 Step 1, #19 Step 2, #20 Step 3, #22 Step 2b, #23 Step 3b, #24 Step 5.
