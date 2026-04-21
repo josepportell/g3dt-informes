@@ -203,8 +203,60 @@ Scope dispatched:
 
 **Active tasks (carry forward into new session):**
 - #21 Step 4 — PNOA/IGN all-Spain ortho coverage roadmap (pending, not started).
+- #26 Step 7 — Simplify geocoding pipeline per official-manuals findings (new, details below).
 
 **First thing to do in next session:** targeted Vilanova diagnostic. Clear cache (`rm ~/.g3dt/cache/cadastre_adjacents/fe4d8e63cbea.json`, `rm "reference-material/4001671 VILANOVA DE SEGRIA/validation/concept_map.json"`) and run `.venv/bin/python scripts/diagnostic_trace.py --save --project 4001671 --components`. Expected: west-adjacent flips `Carrer Santa Marta` → `Carrer Santa Gemma` → MATCH.
+
+---
+
+## Step 7 — Simplify geocoding pipeline per official-manuals findings (pending)
+
+**Task:** review G3DT's current 3-hop geocoding flow (CartoCiudad → Cadastre RCCOOR → Cadastre geometry probing) and adopt simplifications authorized by the three official manuals archived under `docs/cadastre/manuals/`. Live-validated 2026-04-21; cross-references INDEX.md in that folder.
+
+**Motivation:** during Step 6's investigation we discovered our current flow makes avoidable HTTP hops and ignores response fields that carry authoritative data directly. Official docs + empirical validation show a much cleaner pipeline is available.
+
+### Six concrete opportunities (ranked by impact × effort)
+
+1. **Use CartoCiudad's native `refCatastral`** — `candidates`/`find`/`reverseGeocode` all return the 14-char Spanish RC on portal matches. For Vilanova's portal: `refCatastral='8606709CG9280N'` comes back in the same response as lat/lng. **Eliminates the RCCOOR hop entirely** for the happy path. Verified live.
+
+2. **Use CartoCiudad filters we currently ignore** — `municipio_filter=<muni-name>` (by name, not muniCode) + `no_process=toponimo,municipio,comunidad autonoma,poblacion` + `limit=5`. Live test: reduced a 13-candidate noisy query for `"Santa Gemma"` down to **1 exact portal**. Would have prevented the multi-portal disambiguation bug we hit in Step 6 (Linyola #17 instead of #16).
+
+3. **Wire ICGC API Territorial for Catalan projects** — `GET https://api.icgc.cat/territorial/elements/cadastre,municipis,sigpac,qualificacions-muc/{lng},{lat}` returns 4 GeoJSON features in one call: parcel polygon (`refcadp` field = same 14-char RC), municipality + comarca + província, SIGPAC agricultural codes, urban zoning. Replaces multiple WMS GetFeatureInfo queries. Catalonia-only; Anciles still via Catastro. **Caveat: coord order is `{lng},{lat}` (or UTM `{x},{y}`), NOT `{lat},{lng}` — wrong order silently returns 0 features.** Verified live.
+
+4. **Upgrade Cadastre calls from ASMX to REST/JSON** — `COVCCoordenadas.svc/json/Consulta_RCCOOR?SRS=EPSG:25831&...` instead of the legacy `OVCCoordenadas.asmx`. Takes `EPSG:25831` natively (no reprojection). Better ergonomics for the non-Catalan fallback path.
+
+5. **Distinguish error code 16 from transport failures** — Cadastre returns code 16 = "PARA ESAS COORDENADAS NO HAY REFERENCIA DISPONIBLE" when the coord is on a road/unbuilt area. Our current code conflates this with network errors and returns `None` indiscriminately. Handling code 16 explicitly + calling `Consulta_RCCOOR_Distancia` for nearest RCs would recover the Linyola/Anciles street-centerline cases we currently give up on.
+
+6. **Replace ASMX adjacents geometry probing with INSPIRE WFS-CP** (optional) — `wfsCP.aspx` `GetFeature` by RC returns the parcel polygon in a standards-compliant format. Current code uses bespoke ASMX geometry logic; WFS-CP would be cleaner and more stable. Lower priority than #1-#5.
+
+### Bonus — cross-verification for high-stakes cases
+
+CartoCiudad's `refCatastral` and ICGC's `refcadp` are byte-identical for the same address (verified for Vilanova: both returned `8606709CG9280N`). Comparing them gives a free sanity check — if they disagree for a Catalan project, one of the data sources is wrong and we should flag the case rather than proceed silently.
+
+### Target pipeline after adoption
+
+```
+project address + municipality
+    │
+    ▼
+CartoCiudad candidates  [q + municipio_filter=<name> + no_process + limit=5]
+    │
+    ├─ hit? portal with refCatastral  ← RC acquired, skip RCCOOR
+    │      ├─ Catalonia?  → ICGC API Territorial /elements/cadastre,municipis,qualificacions-muc/{lng},{lat}
+    │      └─ elsewhere?  → Cadastre WFS-CP GetFeature by RC → buffer + RCCOOR probe ring
+    │
+    └─ miss? → Cadastre RCCOOR REST/JSON (coord → RC as authoritative tiebreaker)
+```
+
+**Happy-path cost**: current 3 hops → **1 HTTP call to CartoCiudad + 1 to ICGC** for Catalan portal-matched addresses. Authoritative RC direct from response. No fuzzy matching. Nominatim + current ASMX fallback stays as a tertiary safety net for when CartoCiudad misses.
+
+### References
+
+- `docs/cadastre/manuals/INDEX.md` — full research + live validation log.
+- `docs/cadastre/manuals/CartoCiudad_ServiciosWeb.pdf` — REST geocoder spec + `refCatastral`, filter semantics.
+- `docs/cadastre/manuals/Catastro_Webservices_Libres.pdf` — WCF REST/JSON endpoints + error code table.
+- `docs/cadastre/manuals/ICGC_API_Territorial_docs.html` — API Territorial overview (canonical URL `https://api.icgc.cat/territorial/documentacio/`).
+- `docs/cadastre/manuals/Catastro_INSPIRE_CP_WFS.pdf` — INSPIRE WFS-CP parcel geometry service.
 
 **Completed since Phase 1 merges:**
 - #18 Step 1, #19 Step 2, #20 Step 3, #22 Step 2b, #23 Step 3b, #24 Step 5.
