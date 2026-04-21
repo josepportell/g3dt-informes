@@ -2201,6 +2201,29 @@
                             </div>
                         </div>
 
+                        <!-- Group 2b: Adjacents — frases redactades (veu d'Eva) -->
+                        <div class="wizard-group">
+                            <div class="wizard-group-header">Adjacents - frases redactades</div>
+                            <div class="wizard-group-body">
+                                <div class="wizard-field full-width">
+                                    <label>Nord (frase) <span class="source-badge" id="src-adjacent_north_fmt"></span></label>
+                                    <textarea id="wiz-adjacent_north_fmt" data-field="adjacent_north_fmt" rows="2" onchange="markWizardDirty(event)"></textarea>
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Sud (frase) <span class="source-badge" id="src-adjacent_south_fmt"></span></label>
+                                    <textarea id="wiz-adjacent_south_fmt" data-field="adjacent_south_fmt" rows="2" onchange="markWizardDirty(event)"></textarea>
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Est (frase) <span class="source-badge" id="src-adjacent_east_fmt"></span></label>
+                                    <textarea id="wiz-adjacent_east_fmt" data-field="adjacent_east_fmt" rows="2" onchange="markWizardDirty(event)"></textarea>
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Oest (frase) <span class="source-badge" id="src-adjacent_west_fmt"></span></label>
+                                    <textarea id="wiz-adjacent_west_fmt" data-field="adjacent_west_fmt" rows="2" onchange="markWizardDirty(event)"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Evidence panel (ortho chips, shown only when data available) -->
                         <div class="evidence-panel" id="evidence-panel" style="display:none;">
                             <div class="evidence-header" onclick="toggleEvidence()">
@@ -4796,6 +4819,7 @@
                 'superficie_construida_m2', 'superficie_parcela_m2', 'superficie_cadastral_m2', 'building_height_m',
                 'site_description', 'access_description',
                 'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
+                'adjacent_north_fmt', 'adjacent_south_fmt', 'adjacent_east_fmt', 'adjacent_west_fmt',
                 'foundation_depth_m', 'cota_referencia',
                 'utm_x', 'utm_y',
             ];
@@ -5968,6 +5992,7 @@
              'superficie_construida_m2', 'superficie_parcela_m2', 'superficie_cadastral_m2', 'building_height_m',
              'site_description', 'access_description',
              'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
+             'adjacent_north_fmt', 'adjacent_south_fmt', 'adjacent_east_fmt', 'adjacent_west_fmt',
              'cota_referencia',
             ].forEach(field => {
                 const el = document.getElementById(`wiz-${field}`);
