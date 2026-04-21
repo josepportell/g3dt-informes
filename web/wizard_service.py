@@ -41,6 +41,11 @@ _TRUSTED_SOURCE_PATTERNS = (
     'computed',
 )
 
+# Minimum ConceptScout visual observations required to enable LLM-driven
+# per-direction adjacent_*_fmt synthesis. Below this threshold, the cadastre
+# template (format_all_adjacents) output is used as-is.
+_MIN_VISUALS_FOR_ADJACENT_SYNTHESIS = 2
+
 # In-memory prefill cache: project_name -> prefills dict
 _prefill_cache: dict[str, dict[str, Any]] = {}
 # Cache raw AutoExtractionResult for dev-analysis-v2 (signal trace)
@@ -1131,8 +1136,22 @@ def _format_visual_observations_for_prompt(
 
 
 def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
-    """Use Claude API to synthesize building_type, architect/client, location_sentence
-    from all pre-extracted sources. One API call per project."""
+    """Use Claude API to synthesize narrative fields from all pre-extracted sources.
+
+    One API call per project. Covers three field families:
+
+    - Identity: building_type, architect_name, client_name, location_sentence.
+    - Narrative: site_description, site_condition, is_anthropized,
+      building_structure_desc (grounded in ConceptScout visual observations
+      when available).
+    - Adjacents (conditional): adjacent_north_fmt / south / east / west,
+      refining the cadastre-template sentences with visual context. Only
+      requested when ≥`_MIN_VISUALS_FOR_ADJACENT_SYNTHESIS` visual
+      observations are present AND at least one cadastre-fmt sentence is
+      non-empty — see the gate below.
+
+    User edits (source='user') are never overwritten for any field.
+    """
 
     def _get_val(key: str) -> str:
         entry = merged.get(key)
@@ -1192,8 +1211,13 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
     # Check if ALL synthesis fields already have user edits — skip the API call.
     # Expanded Phase B (2026-04-19): now 8 fields, including 4 narrative outputs
     # (site_description, site_condition, is_anthropized, building_structure_desc).
-    # Extended (2026-04-19, adjacents): 4 adjacent_*_fmt fields conditionally
-    # added to the request when ≥2 visual observations are available.
+    # NOTE: adjacent_*_fmt fields are intentionally EXCLUDED from this check.
+    # They are conditionally added to the request (gated on ≥2 visual
+    # observations AND at least one non-empty cadastre-fmt sentence). The
+    # per-field `_get_source(field) == 'user'` guard in the adjacent apply
+    # loop still prevents overwriting Eva's edits; treating them as part of
+    # the always-requested set would suppress legitimate synthesis of the
+    # 8 narrative/identity fields when only the 4 adjacents are user-edited.
     _SYNTHESIS_FIELDS = (
         'building_type', 'architect_name', 'client_name', 'location_sentence',
         'site_description', 'site_condition', 'is_anthropized',
@@ -1315,11 +1339,23 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
     # rewrite the 4 adjacent_*_fmt sentences when there is enough visual
     # grounding (≥2 observations). Below that, the existing cadastre-template
     # fallback at `format_all_adjacents` keeps producing the output.
-    synthesize_adjacents = len(visual_observations) >= 2
+    synthesize_adjacents = len(visual_observations) >= _MIN_VISUALS_FOR_ADJACENT_SYNTHESIS
     adjacent_current_fmt = {
         d: _get_val(f'adjacent_{d}_fmt')
         for d in ('north', 'south', 'east', 'west')
     }
+    # Edge case: gate fires but ALL cadastre-template fmt values are empty
+    # (e.g. cadastre probe returned nothing). Asking the LLM to "refine"
+    # four empty strings produces hallucinated prose. Skip the adjacent
+    # block in that case — the cadastre template will produce the same
+    # empty output either way, so no regression.
+    if synthesize_adjacents and not any(
+        (v or '').strip() for v in adjacent_current_fmt.values()
+    ):
+        logger.info(
+            "Adjacent synthesis skipped: all cadastre fmt values are empty",
+        )
+        synthesize_adjacents = False
 
     # --- Build prompt ---
 
@@ -1353,12 +1389,13 @@ def _synthesize_with_llm(merged: dict[str, Any], project_path: Path) -> None:
             ',\n  "adjacent_east_fmt": "..."'
             ',\n  "adjacent_west_fmt": "..."'
         )
-        field_count_label = '12 fields'
+        _adj_count = 4
     else:
         adjacent_rules_block = ''
         adjacent_sources_block = ''
         adjacent_output_keys = ''
-        field_count_label = '8 fields'
+        _adj_count = 0
+    field_count_label = f'{len(_SYNTHESIS_FIELDS) + _adj_count} fields'
 
     prompt = f"""You are a geotechnical report assistant. Given data extracted from multiple sources about a construction project, synthesize the final values for {field_count_label}.
 

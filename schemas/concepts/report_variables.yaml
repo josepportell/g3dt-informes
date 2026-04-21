@@ -449,6 +449,15 @@ concepts:
   # Produced by automation/adjacent_formatter.py (cadastre template) and
   # optionally refined by LLM synthesis that combines cadastre facts with
   # visual site observations (Phase B, 2026-04-19).
+  #
+  # NOTE on source_priority: runtime resolution for these 4 concepts is NOT
+  # driven by ConceptRegistry.get_priority() (which does exact-string lookup
+  # on keys like 'formatted_cadastre'/'llm_synthesis'). Actual resolution is
+  # write-last-wins inside web/wizard_service._synthesize_with_llm, which
+  # tags values with 'formatted from Cadastre' / 'llm_synthesis_with_observations'
+  # / 'user'. The entries below are kept for schema documentation /
+  # diagnostic tooling consistency with site_description; they do not
+  # currently participate in priority arbitration for these fields.
   adjacent_north_fmt:
     type: text
     group: parcel

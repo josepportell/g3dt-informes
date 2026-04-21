@@ -850,11 +850,18 @@ class ReportGenerator:
             else:
                 context['location_sentence'] = "en una ubicació no especificada"
 
-            # Adjacent formatting with bilingual support (Catalan/Spanish)
-            from automation.adjacent_formatter import format_all_adjacents
+            # Adjacent formatting with bilingual support (Catalan/Spanish).
+            # Priority per direction (see resolve_adjacent_fmt):
+            #   1. Eva's user edit (user_data source='user')
+            #   2. LLM synthesis with visual observations
+            #      (user_data source='llm_synthesis_with_observations')
+            #   3. Cadastre-template fallback (format_all_adjacents)
+            # Without this precedence, synthesized/edited values are silently
+            # overwritten by the raw cadastre template when the report is built.
+            from automation.adjacent_formatter import resolve_adjacent_fmt
             municipality = self.report_data.municipality or None
-            adj_formatted = format_all_adjacents(adj, municipality)
-            context.update(adj_formatted)
+            adj_resolved = resolve_adjacent_fmt(adj, self.user_data, municipality)
+            context.update(adj_resolved)
 
             # Access street extraction — strip sentence prefix + preposition + suffix
             # to get just the street name (e.g. "El dia dels treballs ... a través del Carrer X existent al sud." → "Carrer X")

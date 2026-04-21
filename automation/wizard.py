@@ -44,6 +44,7 @@ WIZARD_FIELDS = [
     'superficie_parcela_m2', 'superficie_cadastral_m2', 'building_height_m',
     'site_description', 'access_description',
     'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
+    'adjacent_north_fmt', 'adjacent_south_fmt', 'adjacent_east_fmt', 'adjacent_west_fmt',
     'is_anthropized', 'num_soil_levels', 'soil_types', 'foundation_depth_m',
     'cota_referencia', 'has_basement', 'has_retaining_walls',
     'utm_x', 'utm_y',

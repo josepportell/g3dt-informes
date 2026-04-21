@@ -85,6 +85,39 @@ def _format_adjacent_es(direction: str, value: str) -> str:
     return f'Por la parte {dir_name} con {v}.'
 
 
+# Sources in user_data._sources[key] that override format_all_adjacents output.
+# Ordered most-trusted first for documentation purposes only (string match).
+_TRUSTED_FMT_SOURCES = ('user', 'llm_synthesis_with_observations')
+
+
+def resolve_adjacent_fmt(
+    adjacents: dict[str, str],
+    user_data: dict,
+    municipality: str | None = None,
+) -> dict[str, str]:
+    """Resolve the 4 `adjacent_*_fmt` sentences with trusted-source precedence.
+
+    Precedence per direction:
+      1. `user_data['adjacent_{dir}_fmt']` when its source in
+         `user_data['_sources']` is 'user' or 'llm_synthesis_with_observations'.
+      2. `format_all_adjacents(adjacents, municipality)` (cadastre template).
+
+    Returns a dict with all 4 `adjacent_{dir}_fmt` keys populated.
+    """
+    adj_formatted = format_all_adjacents(adjacents, municipality)
+    ud_sources = (user_data.get('_sources') or {}) if isinstance(user_data, dict) else {}
+    resolved: dict[str, str] = {}
+    for direction in ('north', 'south', 'east', 'west'):
+        key = f'adjacent_{direction}_fmt'
+        ud_val = user_data.get(key) if isinstance(user_data, dict) else None
+        ud_src = ud_sources.get(key, '') if isinstance(ud_sources, dict) else ''
+        if ud_val and ud_src in _TRUSTED_FMT_SOURCES:
+            resolved[key] = str(ud_val)
+        else:
+            resolved[key] = adj_formatted.get(key, '')
+    return resolved
+
+
 def format_all_adjacents(
     adjacents: dict[str, str],
     municipality: str | None = None,
