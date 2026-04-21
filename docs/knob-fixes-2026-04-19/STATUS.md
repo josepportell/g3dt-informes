@@ -94,3 +94,101 @@ Next:
 ## Phase 3 — Tooling follow-up (new plan, later)
 
 Only after Phase 2 template stabilizes. Scope TBD based on what methodology revisions change. The `automation/inspect/` library + slash commands sketched in `/home/josep/.claude/plans/we-need-to-dig-jaunty-ocean.md` "Tooling sketch" section is the starting point, not the commitment.
+
+---
+
+## 2026-04-19 post-merge re-sweep (Phase 1 results)
+
+**Headline: 64.3% → 65.2% match+close (+0.9pp)** — below predicted +1.5-4pp range but with one clear Stream A win. Log: `docs/diagnostics/2026-04-19_post-knob-fixes-sweep.log`.
+
+| Project | Baseline | Post-knob-fixes | Δ |
+|---|---|---|---|
+| Bell-Lloc | 76.7% | 76.7% | 0.0 |
+| Castellar | 77.4% | 77.4% | 0.0 |
+| Rubí | 67.6% | 67.6% | 0.0 |
+| **Linyola** | 65.8% | **71.1%** | **+5.3** ✓ Stream A win |
+| Alcoletge | 50.0% | 50.0% | 0.0 |
+| Vilanova | 57.1% | 57.1% | 0.0 |
+| Anciles | 33.3% | 33.3% | 0.0 |
+
+**Confirmed**: Linyola `expedient` flipped MISMATCH → MATCH (`13/52/04` → `4001607`). Stream A's deterministic folder-name signal worked as designed.
+
+**Unmeasured gains**: Stream B (probe gate widening) is working structurally — `1.0.pdf` now gets probed and classified as `architect_plan` → vision extractor runs → extracts architect/client/dimensions. But the metric didn't move because the architect on the plan ("jordi carner") doesn't match Eva's reference ("JUAN JOSÉ TORRES POVEDANO") — likely a different role/naming convention. Stream C (dedup) invisible to MATCH/MISMATCH metric by design.
+
+---
+
+## 2026-04-21 follow-ups (Steps 2b, 3, 3b, 5, 6)
+
+After the re-sweep we pivoted into a focused sub-investigation on adjacents (four N/S/W/E description fields, underperforming at ~43% match+close). This produced five additional merged streams (some flagged separately below):
+
+### Step 2b — Role-aware filter in vision_probe (merged `2d892cc`)
+**Branch:** `fix/role-aware-probe-filter` → **Commit:** `67bb32c` + merge.
+
+`automation/concept_scout/vision_probe.py`: allow files with roles in `{photo_site_overview, photo_test_point, photo_spt_sample, field_photo}` through the `_SKIP_PHOTO_DIRS` filter. Previously all `FOTOGRAFIES/` files were skipped unconditionally — that was fine before the 6 visual-observation concepts were added, then became a regression. Linyola + Bell-Lloc went from 0/6 to 5/6 visual concepts populated (confirmed by targeted diagnostic re-run).
+
+### Step 3 — LLM adjacent synthesis with end-to-end wiring (merged `8dab93b`)
+**Branch:** `feature/llm-synth-adjacents` → **Commits:** `8ac5e5b` (synth logic), `3faed25` (wiring fix-up).
+
+Extended `web/wizard_service.py:_synthesize_with_llm` to produce `adjacent_{north,south,east,west}_fmt` from cadastre facts + visual observations. Gated to projects with ≥2 visual observations. Wired end-to-end:
+- `automation/report_generator.py` now delegates adjacent resolution to new `automation/adjacent_formatter.py:resolve_adjacent_fmt` helper with per-direction precedence `user > llm_synthesis_with_observations > cadastre template`.
+- `automation/wizard.py:WIZARD_FIELDS` gains the 4 `*_fmt` names for persistence.
+- `templates/validation/review.html` renders a new "Adjacents - frases redactades" group with 4 textareas + source badges.
+- Schema priorities (`user: 10`, `llm_synthesis: 20`, `formatted_cadastre: 30`) are documentation-only; runtime resolution is via write-last-wins in `_synthesize_with_llm`. YAML has a NOTE documenting this.
+
+**Targeted sweep result (6 projects with visuals):** adjacent MATCH+CLOSE unchanged at 11/24 = 45.8%. Wiring works (all 24 directions now sourced `llm_synthesis_with_observations`), but the LLM rephrasing doesn't move the needle meaningfully — either matches cadastre template verbatim (Vilanova, when visuals add nothing) or drifts slightly (Bell-Lloc west: CLOSE → MISMATCH).
+
+### Step 3b — Judge prompt: cross-language + preposition tolerance (merged `f1b3c61`)
+**Branch:** `fix/judge-cross-language-tolerance` → **Commit:** `174a9c9` + merge.
+
+`scripts/compare_benchmarks.py`: additive edits to `compare_text_llm`'s system prompt — explicit Catalan↔Spanish cross-language MATCH rule, preposition-variant MATCH (Vilanova `de Segrià` vs `del Segrià`), 2 worked examples, a new "## Strict on measurements" section locking strictness on numeric fields. Refactored the prompt string into module-level `_JUDGE_SYSTEM_PROMPT` constant (exposed via `get_judge_system_prompt()`) for hermetic tests.
+
+Judge cache was cleared and re-run on all 7 projects. Cache now contains multiple explicit MATCH verdicts citing `"Language difference (Catalan vs Spanish) irrelevant"` — prompt change IS being applied. However, Vilanova's 4 adjacent MISMATCHes did NOT flip because the underlying mismatch is factual, not language (Eva's "parcelas de similares características" vs pipeline's "Carrer Santa Anna" — different content entirely).
+
+### Step 5 — Geocoding robustness (merged `81bebee`)
+**Branch:** `fix/geocoding-robustness` → **Commit:** `de36566` + merge.
+
+Two linked fixes motivated by Vilanova cadastre wrong-parcel regression (uncovered during Step 3b audit):
+
+- **Fix 1** — `_consulta_via` now strips full-word street-type prefixes (`Carrer`, `Calle`, `Plaça`, etc., + connectors `de`/`del`/`d'`) before hitting Cadastre. Before: `"Carrer Santa Gemma"` wrongly matched to `CARRERADA PD 83` (a different *partida*). After: resolves correctly to `SANTA GEMMA CL 109`. Live-test confirmed.
+- **Fix 2** — Run Cadastre + Nominatim in parallel; if Cadastre's resolved parcel's adjacents don't contain the project street, switch to Nominatim's UTM and re-query Cadastre by RCCOOR. Helper `_project_street_matches_cadastre` introduced.
+
+**Vilanova impact**: targeted re-run still produces wrong UTM `(298740.96, 4620349.32)`. Fix #1 didn't apply because the pipeline's wrong-UTM derivation goes through a different code path (probably `cadastre_search_address` / Callejero, not `_consulta_via`). Fix #2 didn't trigger because Nominatim doesn't geocode Vilanova at all (empty result for the address). Step 5 merged for completeness but didn't fix Vilanova.
+
+### Step 6 — CartoCiudad (IGN) integration (IN FLIGHT — background branch)
+**Branch:** `feature/cartociudad-geocoder` (NOT merged yet). **Status:** implementer agent still running at session pause (2026-04-21 ~18:45). Resume in fresh session: review + merge + test.
+
+Motivation from live empirical testing:
+- Nominatim (OSM) has sparse coverage of Catalan small towns — geocoded 2 of 7 projects, both as street centerlines (not usable for parcel lookup).
+- CartoCiudad (IGN Spain-wide) geocoded 5 of 7 as `type=portal` entrance-level. Specifically resolves `"Santa Gemma 4, Vilanova de Segrià"` → lat/lng `(41.70978, 0.57897)` → UTM `(298580.9, 4620387.1)` → Cadastre RCCOOR valid RC `8606709CG9280N` → adjacents include `"Carrer Santa Gemma"` west. End-to-end.
+
+Expected impact on Vilanova: +1 MATCH (west adjacent flips to match Eva's `"calle STA. GEMMA"`). Other 3 directions stay MISMATCH — those are an Eva-vs-cadastre narrative-vs-taxonomy philosophy gap, unrelated to geocoding.
+
+Scope dispatched:
+- New `cartociudad_geocode(address, muni, province)` in `automation/geocode_coordinates.py`.
+- Candidates endpoint + portal-preference + muni-match filter + `callback(...)` stripping + 24h disk cache.
+- Extends Step 5's parallel branch to Cadastre + Nominatim + CartoCiudad. Reconciliation order: CartoCiudad > Nominatim > stick with Cadastre.
+- 11 hermetic tests + end-to-end Vilanova flow.
+
+### Deprioritized
+
+- **Step 4 (PNOA/IGN all-Spain ortho coverage)** — task #21, still pending. Anciles is the test case (no visual observations because it's in Aragón, outside ICGC ortho coverage). Discussed in passing; no concrete plan file yet. Revisit once CartoCiudad merges and we have a clean baseline.
+
+---
+
+## Session end state — 2026-04-21 (for fresh session continuation)
+
+**Current HEAD of `experiment/cc-only-extraction`**: `81bebee` (Step 5 merged).
+**Outstanding branch awaiting review**: `feature/cartociudad-geocoder` (Step 6). Review, merge if clean, then run targeted Vilanova re-sweep to confirm expected +1 MATCH.
+
+**Active tasks (carry forward into new session):**
+- #21 Step 4 — PNOA/IGN all-Spain ortho coverage roadmap (pending, not started).
+- #25 Step 6 — CartoCiudad integration (in_progress; implementer commit pending).
+
+**Completed since Phase 1 merges:**
+- #18 Step 1, #19 Step 2, #20 Step 3, #22 Step 2b, #23 Step 3b, #24 Step 5.
+
+**Open questions when resuming:**
+1. After Step 6 lands: does Vilanova's west-adjacent actually flip to MATCH in a full diagnostic? Measure.
+2. The Vilanova wrong-UTM originally came from some non-`_consulta_via` path. If Step 6 works via reconciliation, root cause doesn't matter. If not, trace `cadastre_search_address` / Callejero.
+3. Eva's adjacent-narrative philosophy (field observations vs cadastre taxonomy) is a design decision, not a pipeline bug. Raise with user before attempting to close the 9 cadastre-vs-Eva MISMATCHes across projects.
+4. The 2 non-adjacent Alcoletge flips (`location_sentence`, `site_condition`) came from pipeline-output drift after Step 2b added visual observations. Acceptable collateral or worth revisiting.
