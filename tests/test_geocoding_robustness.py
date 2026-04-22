@@ -334,6 +334,9 @@ def test_cadastre_adjacents_missing_project_street_fallback(_stub_common, monkey
         gc, "_run_cadastre_and_nominatim_parallel",
         lambda **kw: (fake_cadastre, fake_nominatim),
     )
+    # Stub CartoCiudad to None — this test validates the Nominatim fallback
+    # path, where CartoCiudad did not return a usable candidate.
+    monkeypatch.setattr(gc, "cartociudad_geocode", lambda *a, **kw: None)
     monkeypatch.setattr(gc, "cadastre_rc_to_utm", lambda rc: (300000.0, 4570000.0))
     monkeypatch.setattr(
         "automation.cadastre_adjacents.get_adjacent_parcels",
