@@ -11,11 +11,14 @@ from __future__ import annotations
 
 import io
 import json
+from datetime import datetime
+from pathlib import Path
 from unittest.mock import patch, MagicMock
 
 import pytest
 
 from automation import geocode_coordinates as gc
+from automation.geocode_coordinates import CartoCiudadResult
 
 
 # ────────────────────────────────────────────────────────────────────────────
@@ -112,7 +115,7 @@ class TestCartociudadGeocode:
 
     def test_portal_candidate_returned(self):
         """Mock CartoCiudad returning a portal candidate → function returns
-        the correct (lat, lng)."""
+        a CartoCiudadResult with the correct coords + RC."""
         body = json.dumps([{
             "address": "Santa Gemma 4",
             "muni": "Vilanova de Segrià",
@@ -121,12 +124,17 @@ class TestCartociudadGeocode:
             "lat": 41.70978,
             "lng": 0.57897,
             "portalNumber": 4,
+            "refCatastral": "8606709CG9280N",
         }])
         with self._patch_urlopen(body):
             result = gc.cartociudad_geocode(
                 "Santa Gemma 4", "Vilanova de Segrià", "Lleida"
             )
-        assert result == (41.70978, 0.57897)
+        assert isinstance(result, CartoCiudadResult)
+        assert (result.lat, result.lng) == (41.70978, 0.57897)
+        assert result.rc == "8606709CG9280N"
+        assert result.type == "portal"
+        assert result.portal_number == 4
 
     def test_portal_preferred_over_callejero(self):
         """When both types present, portal wins."""
@@ -136,7 +144,8 @@ class TestCartociudadGeocode:
         ])
         with self._patch_urlopen(body):
             result = gc.cartociudad_geocode("Santa Gemma 4", "Vilanova")
-        assert result == (41.70978, 0.57897)
+        assert result is not None
+        assert (result.lat, result.lng) == (41.70978, 0.57897)
 
     def test_zero_coords_rejected_only_portal_wins(self):
         """Callejero with (0,0) coords is skipped; real portal picked."""
@@ -146,7 +155,8 @@ class TestCartociudadGeocode:
         ])
         with self._patch_urlopen(body):
             result = gc.cartociudad_geocode("X", "Vilanova")
-        assert result == (41.70978, 0.57897)
+        assert result is not None
+        assert (result.lat, result.lng) == (41.70978, 0.57897)
 
     def test_all_zero_coords_returns_none(self):
         """If every candidate has (0,0) → None."""
@@ -172,7 +182,8 @@ class TestCartociudadGeocode:
         body = f"callback({json.dumps(payload)});"
         with self._patch_urlopen(body):
             result = gc.cartociudad_geocode("X", "V")
-        assert result == (41.70978, 0.57897)
+        assert result is not None
+        assert (result.lat, result.lng) == (41.70978, 0.57897)
 
     def test_plain_json_response(self):
         """Raw JSON list (no JSONP wrapper) is parsed correctly."""
@@ -181,7 +192,8 @@ class TestCartociudadGeocode:
         ])
         with self._patch_urlopen(body):
             result = gc.cartociudad_geocode("X", "V")
-        assert result == (41.70978, 0.57897)
+        assert result is not None
+        assert (result.lat, result.lng) == (41.70978, 0.57897)
 
     def test_empty_candidates_returns_none(self):
         with self._patch_urlopen("[]"):
@@ -217,7 +229,9 @@ class TestCartociudadGeocode:
         with patch.object(gc.urllib.request, "urlopen", mock_urlopen):
             r1 = gc.cartociudad_geocode("Santa Gemma 4", "V", "Lleida")
             r2 = gc.cartociudad_geocode("Santa Gemma 4", "V", "Lleida")
-        assert r1 == r2 == (41.70978, 0.57897)
+        assert r1 is not None and r2 is not None
+        assert (r1.lat, r1.lng) == (41.70978, 0.57897)
+        assert (r2.lat, r2.lng) == (41.70978, 0.57897)
         assert mock_urlopen.call_count == 1, (
             f"Expected 1 HTTP call (cache hit on 2nd), got {mock_urlopen.call_count}"
         )
@@ -247,7 +261,8 @@ class TestCartociudadGeocode:
             result = gc.cartociudad_geocode(
                 "Santa Gemma 4", "Vilanova de Segrià", "Lleida"
             )
-        assert result == (41.70978, 0.57897)
+        assert result is not None
+        assert (result.lat, result.lng) == (41.70978, 0.57897)
 
     def test_province_retry_when_first_attempt_empty(self):
         """Bug #1 root cause: adding the province as a third query segment
@@ -274,7 +289,8 @@ class TestCartociudadGeocode:
             result = gc.cartociudad_geocode(
                 "Santa Gemma 4", "Vilanova de Segrià", "Lleida"
             )
-        assert result == (41.70978, 0.57897)
+        assert result is not None
+        assert (result.lat, result.lng) == (41.70978, 0.57897)
         assert calls["n"] == 2, f"Expected 2 HTTP calls (retry), got {calls['n']}"
         assert "Lleida" in calls["queries"][0]
         assert "Lleida" not in calls["queries"][1]
@@ -308,7 +324,8 @@ class TestCartociudadGeocode:
                 "Clot de la Llacuna 16", "Linyola", "Lleida"
             )
         # Must pick #16 even though #17 is listed first.
-        assert result == (41.70860, 0.89561)
+        assert result is not None
+        assert (result.lat, result.lng) == (41.70860, 0.89561)
 
     def test_candidate_selection_no_house_number_in_query_falls_back_to_first(self):
         """Existing behaviour preserved: when the input has no house number,
@@ -332,7 +349,8 @@ class TestCartociudadGeocode:
                 "Mestre Ramon Ortiz", "Linyola", "Lleida"
             )
         # No number in input → first portal wins.
-        assert result == (41.70001, 0.90001)
+        assert result is not None
+        assert (result.lat, result.lng) == (41.70001, 0.90001)
 
 
 # ────────────────────────────────────────────────────────────────────────────
@@ -357,11 +375,15 @@ def _stub_common(tmp_path, monkeypatch):
 
 def test_vilanova_cartociudad_wins_over_nominatim(_stub_common, monkeypatch):
     """End-to-end: Cadastre picks a wrong parcel; both CartoCiudad and
-    Nominatim succeeded; reconciliation picks CartoCiudad (higher precision)
-    and re-queries Cadastre by coord."""
+    Nominatim succeeded; reconciliation picks CartoCiudad (higher precision).
+    When CartoCiudad has no RC (callejero), we still re-query Cadastre by coord."""
     fake_cadastre = {"rc": "WRONG0000000000000XX", "xcen": None, "ycen": None}
-    # CartoCiudad portal coord → this is the Vilanova fix case
-    fake_cc = (41.70978, 0.57897)
+    # CartoCiudad portal coord → this is the Vilanova fix case.
+    # Simulate a candidate with no refCatastral (e.g. callejero match) so the
+    # reconciliation path still exercises the RCCOOR re-query fallback.
+    fake_cc = CartoCiudadResult(
+        lat=41.70978, lng=0.57897, rc=None, type="callejero", portal_number=None,
+    )
     fake_nom = (41.71500, 0.58500)  # different, less-precise coord
     wrong_adj = {
         "north": "Partida Carrerada",
@@ -403,7 +425,7 @@ def test_vilanova_cartociudad_wins_over_nominatim(_stub_common, monkeypatch):
     assert "cartociudad" in result["source"], result["source"]
     assert "reconciled" in result["source"], result["source"]
     # RCCOOR was invoked with the CartoCiudad-derived UTM (not Nominatim)
-    nx, ny, _ = gc._wgs84_to_utm(*fake_cc)
+    nx, ny, _ = gc._wgs84_to_utm(fake_cc.lat, fake_cc.lng)
     assert rccoor_called["args"] is not None
     rx, ry = rccoor_called["args"]
     assert abs(rx - nx) < 1.0 and abs(ry - ny) < 1.0, (
@@ -446,7 +468,9 @@ def test_cadastre_street_match_skips_alternates(_stub_common, monkeypatch):
     """When Cadastre's adjacents include the project street, neither
     CartoCiudad nor Nominatim is used to override."""
     fake_cadastre = {"rc": "0836603CF8603N0001XK", "xcen": None, "ycen": None}
-    fake_cc = (41.70978, 0.57897)
+    fake_cc = CartoCiudadResult(
+        lat=41.70978, lng=0.57897, rc=None, type="portal", portal_number=4,
+    )
     fake_nom = (41.2237, 1.7245)
     good_adj = {
         "north": "Carrer Santa Gemma",
@@ -484,3 +508,251 @@ def test_cadastre_street_match_skips_alternates(_stub_common, monkeypatch):
     assert result["utm_y"] == 4569456.0
     assert "reconciled" not in result["source"]
     assert rccoor_called["flag"] is False
+
+
+# ────────────────────────────────────────────────────────────────────────────
+# Step 7 — refCatastral capture + query filters
+# ────────────────────────────────────────────────────────────────────────────
+
+class TestRefCatastralCapture:
+    def _patch_urlopen(self, body: str):
+        return patch.object(
+            gc.urllib.request,
+            "urlopen",
+            return_value=_fake_http_response(body),
+        )
+
+    def test_refcatastral_flows_through(self):
+        """Portal candidate exposes `refCatastral` → result.rc captures it."""
+        body = json.dumps([{
+            "type": "portal",
+            "muni": "Vilanova de Segrià",
+            "address": "CALLE SANTA GEMMA 4",
+            "portalNumber": 4,
+            "lat": 41.70978,
+            "lng": 0.57897,
+            "refCatastral": "8606709CG9280N",
+        }])
+        with self._patch_urlopen(body):
+            result = gc.cartociudad_geocode(
+                "Santa Gemma 4", "Vilanova de Segrià", "Lleida"
+            )
+        assert result is not None
+        assert result.rc == "8606709CG9280N"
+
+    def test_refcatastral_absent_leaves_rc_none(self):
+        """Candidate without `refCatastral` → result.rc is None."""
+        body = json.dumps([{
+            "type": "portal",
+            "muni": "Vilanova",
+            "lat": 41.70978,
+            "lng": 0.57897,
+        }])
+        with self._patch_urlopen(body):
+            result = gc.cartociudad_geocode("Santa Gemma 4", "Vilanova")
+        assert result is not None
+        assert result.rc is None
+
+    def test_refcatastral_empty_string_coerced_to_none(self):
+        """Empty/whitespace refCatastral must be normalized to None."""
+        body = json.dumps([{
+            "type": "portal",
+            "muni": "V",
+            "lat": 41.7,
+            "lng": 0.5,
+            "refCatastral": "   ",
+        }])
+        with self._patch_urlopen(body):
+            result = gc.cartociudad_geocode("X 1", "V")
+        assert result is not None
+        assert result.rc is None
+
+
+class TestQueryFilters:
+    def test_fetch_candidates_url_contains_filters(self):
+        """Calling the fetch helper with a municipality must add
+        `municipio_filter`, `no_process`, and `limit` to the URL."""
+        captured = {"url": None}
+
+        def _fake(req, timeout=None):  # noqa: ARG001
+            captured["url"] = req.full_url
+            return _fake_http_response("[]")
+
+        with patch.object(gc.urllib.request, "urlopen", side_effect=_fake):
+            gc._cartociudad_fetch_candidates(
+                "Santa Gemma 4, Vilanova de Segrià",
+                municipality="Vilanova de Segrià",
+                limit=5,
+            )
+
+        url = captured["url"]
+        assert url is not None
+        # q=... must be present
+        assert "q=" in url
+        # Filters must be present (urlencoded)
+        assert "municipio_filter=" in url
+        assert "Vilanova" in url  # municipality name urlencoded
+        assert "no_process=" in url
+        # Core no_process types (urlencoded commas are %2C)
+        assert "toponimo" in url
+        assert "municipio" in url
+        assert "limit=5" in url
+
+    def test_fetch_candidates_no_municipality_omits_filter(self):
+        """Without a municipality, `municipio_filter` must NOT be in the URL."""
+        captured = {"url": None}
+
+        def _fake(req, timeout=None):  # noqa: ARG001
+            captured["url"] = req.full_url
+            return _fake_http_response("[]")
+
+        with patch.object(gc.urllib.request, "urlopen", side_effect=_fake):
+            gc._cartociudad_fetch_candidates("Santa Gemma 4")
+
+        url = captured["url"]
+        assert url is not None
+        assert "municipio_filter=" not in url
+        # no_process and limit still present
+        assert "no_process=" in url
+        assert "limit=" in url
+
+    def test_geocode_passes_municipality_filter_on_both_queries(self):
+        """Both the province-included and province-stripped retries must
+        include `municipio_filter`."""
+        calls: list[str] = []
+
+        def _fake(req, timeout=None):  # noqa: ARG001
+            calls.append(req.full_url)
+            return _fake_http_response("[]")
+
+        with patch.object(gc.urllib.request, "urlopen", side_effect=_fake):
+            gc.cartociudad_geocode(
+                "Santa Gemma 4", "Vilanova de Segrià", "Lleida"
+            )
+        assert len(calls) == 2
+        for url in calls:
+            assert "municipio_filter=" in url, url
+
+
+# ────────────────────────────────────────────────────────────────────────────
+# Cache backwards-compat
+# ────────────────────────────────────────────────────────────────────────────
+
+class TestCacheBackwardsCompat:
+    def test_old_format_cache_loads_cleanly(self, tmp_path, monkeypatch):
+        """An existing cache file written by the pre-Step-7 code (no `rc`
+        field) must still load successfully, with rc=None."""
+        # The autouse fixture already points CARTOCIUDAD_CACHE_DIR at tmp.
+        cache_dir: Path = gc.CARTOCIUDAD_CACHE_DIR
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        key = gc._cartociudad_cache_key("Old Addr 1", "OldTown", "")
+        path = cache_dir / f"{key}.json"
+        legacy_payload = {
+            "cached_at": datetime.now().isoformat(),
+            "query": {
+                "address": "Old Addr 1",
+                "municipality": "OldTown",
+                "province": "",
+            },
+            # Legacy schema: only lat + lng, no rc/type/portal_number
+            "result": {"lat": 41.0, "lng": 0.5},
+        }
+        path.write_text(json.dumps(legacy_payload), encoding="utf-8")
+
+        loaded = gc._cartociudad_cache_load("Old Addr 1", "OldTown", "")
+        assert isinstance(loaded, CartoCiudadResult)
+        assert (loaded.lat, loaded.lng) == (41.0, 0.5)
+        assert loaded.rc is None
+        assert loaded.portal_number is None
+
+
+# ────────────────────────────────────────────────────────────────────────────
+# Reconciliation uses CartoCiudad RC directly (skips RCCOOR)
+# ────────────────────────────────────────────────────────────────────────────
+
+def test_reconciliation_uses_cartociudad_rc_directly(_stub_common, monkeypatch):
+    """When CartoCiudad returns a 14-char `refCatastral`, reconciliation
+    must adopt that RC directly and NOT call RCCOOR."""
+    fake_cadastre = {"rc": "WRONG0000000000000XX", "xcen": None, "ycen": None}
+    fake_cc = CartoCiudadResult(
+        lat=41.70978, lng=0.57897, rc="8606709CG9280N",
+        type="portal", portal_number=4,
+    )
+    wrong_adj = {
+        "north": "Partida Carrerada", "south": "Camí del Fondo",
+        "east": "parcel·la veïna",   "west":  "parcel·la veïna",
+    }
+
+    monkeypatch.setattr(
+        gc, "_run_cadastre_and_alternates_parallel",
+        lambda **kw: (fake_cadastre, None, fake_cc),
+    )
+    monkeypatch.setattr(gc, "cadastre_rc_to_utm", lambda rc: (300000.0, 4570000.0))
+    monkeypatch.setattr(
+        "automation.cadastre_adjacents.get_adjacent_parcels",
+        lambda *a, **kw: wrong_adj,
+    )
+
+    rccoor_called = {"flag": False}
+
+    def _rccoor(x, y):
+        rccoor_called["flag"] = True
+        return ("FALLBACKRC0000000000", None)
+
+    monkeypatch.setattr(
+        "automation.cadastre_adjacents.get_cadastral_reference", _rccoor
+    )
+
+    result = gc.geocode_project(
+        "Santa Gemma, 4", "Vilanova de Segrià", ["P-1"], province="Lleida",
+    )
+    assert result is not None
+    # Must adopt CartoCiudad's RC directly (not the RCCOOR fallback value)
+    assert result["rc"] == "8606709CG9280N"
+    assert "cartociudad" in result["source"]
+    assert "reconciled" in result["source"]
+    # RCCOOR must NOT have been called
+    assert rccoor_called["flag"] is False
+
+
+def test_reconciliation_rccoor_still_used_when_cartociudad_has_no_rc(
+    _stub_common, monkeypatch,
+):
+    """If CartoCiudad returned a candidate but without `refCatastral`
+    (e.g. callejero match), reconciliation must fall back to RCCOOR."""
+    fake_cadastre = {"rc": "WRONG0000000000000XX", "xcen": None, "ycen": None}
+    fake_cc = CartoCiudadResult(
+        lat=41.70978, lng=0.57897, rc=None,
+        type="callejero", portal_number=None,
+    )
+    wrong_adj = {
+        "north": "Partida Carrerada", "south": "Camí del Fondo",
+        "east": "parcel·la veïna",   "west":  "parcel·la veïna",
+    }
+
+    monkeypatch.setattr(
+        gc, "_run_cadastre_and_alternates_parallel",
+        lambda **kw: (fake_cadastre, None, fake_cc),
+    )
+    monkeypatch.setattr(gc, "cadastre_rc_to_utm", lambda rc: (300000.0, 4570000.0))
+    monkeypatch.setattr(
+        "automation.cadastre_adjacents.get_adjacent_parcels",
+        lambda *a, **kw: wrong_adj,
+    )
+
+    rccoor_called = {"flag": False}
+
+    def _rccoor(x, y):
+        rccoor_called["flag"] = True
+        return ("RCCOORRC0000000000XX", None)
+
+    monkeypatch.setattr(
+        "automation.cadastre_adjacents.get_cadastral_reference", _rccoor
+    )
+
+    result = gc.geocode_project(
+        "Some Addr, 1", "Town", ["P-1"], province="Prov",
+    )
+    assert result is not None
+    assert rccoor_called["flag"] is True
+    assert result["rc"] == "RCCOORRC0000000000XX"
