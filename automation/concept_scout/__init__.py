@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 from collections.abc import Callable
 from pathlib import Path
@@ -53,6 +54,35 @@ _ADDRESS_CONCEPTS = {'street_address', 'site_address'}
 # projecte PDFs do not hit this class of error.
 _HANDWRITTEN_DOC_TYPES = {'field_sheet'}
 
+# Hedged vision previews are prose, not values — e.g. Rubí's num_floors
+# returned "appears to be 2-3 levels" at confidence 0.8 which then won
+# competition since no text signal existed. The prompt asks for a VALUE;
+# when the model hedges, we drop the signal so a lower-priority concrete
+# source (or the NOT_EXTRACTED pathway) takes over. Matches any of these
+# markers at a word boundary, case-insensitive, anywhere in the preview.
+_HEDGED_PREVIEW_MARKERS = (
+    'appears to',
+    'seems to',
+    'probably',
+    'likely',
+    'unclear',
+    'unknown',
+    'not legible',
+    'not visible',
+    'could be',
+    'might be',
+    'possibly',
+)
+_HEDGED_PREVIEW_RE = re.compile(
+    r'(^|\W)(?:' + '|'.join(re.escape(m) for m in _HEDGED_PREVIEW_MARKERS) + r')(\W|$)',
+    re.IGNORECASE,
+)
+
+
+def _is_hedged_preview(preview: str) -> bool:
+    """Return True if the vision preview is prose/hedge rather than a value."""
+    return bool(_HEDGED_PREVIEW_RE.search(preview))
+
 
 def concept_sources_to_signals(
     concept_sources: dict[str, list[ConceptSource]],
@@ -77,6 +107,12 @@ def concept_sources_to_signals(
                 continue
             preview = (source.signal_preview or '').strip()
             if not preview:
+                continue
+            if _is_hedged_preview(preview):
+                logger.debug(
+                    "Dropping hedged vision preview "
+                    f"({concept_id} from {source.file}, preview={preview!r})"
+                )
                 continue
             doc_type = method.split(':', 1)[1] if ':' in method else ''
             source_type = _VISION_DOC_TYPE_TO_SOURCE_TYPE.get(

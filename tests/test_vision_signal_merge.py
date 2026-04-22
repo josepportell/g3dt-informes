@@ -164,6 +164,76 @@ class TestConceptSourcesToSignals:
         assert len(signals) == 1
         assert signals[0].value == "Vilanova de Segrià"
 
+    # Hedged-preview policy: reject vision previews that look like prose
+    # rather than values (e.g. "appears to be 2-3 levels"). Rubí's num_floors
+    # shipped with exactly that shape and won competition because no text
+    # signal existed for the concept.
+
+    def test_hedged_preview_appears_to_dropped(self):
+        sources = {
+            "num_floors": [
+                ConceptSource(
+                    file="IMG-20251104-WA0016.jpg",
+                    confidence=0.85,
+                    signal_preview="appears to be 2-3 levels",
+                    extraction_method="vision_probe:architect_plan",
+                ),
+            ],
+        }
+        assert concept_sources_to_signals(sources) == []
+
+    def test_hedged_preview_probably_dropped(self):
+        sources = {
+            "building_type": [
+                ConceptSource(
+                    file="x.pdf", confidence=0.9, signal_preview="probably a dwelling",
+                    extraction_method="vision_probe:architect_plan",
+                ),
+            ],
+        }
+        assert concept_sources_to_signals(sources) == []
+
+    def test_hedged_marker_as_substring_not_triggered(self):
+        # "likely" as a substring of "weekly" should not trigger; check that
+        # the word-boundary regex doesn't over-match.
+        sources = {
+            "building_type": [
+                ConceptSource(
+                    file="x.pdf", confidence=1.0, signal_preview="weekly habitatge",
+                    extraction_method="vision_probe:architect_plan",
+                ),
+            ],
+        }
+        signals = concept_sources_to_signals(sources)
+        assert len(signals) == 1
+        assert signals[0].value == "weekly habitatge"
+
+    def test_hedged_case_insensitive(self):
+        sources = {
+            "num_floors": [
+                ConceptSource(
+                    file="x.pdf", confidence=0.9, signal_preview="UNCLEAR",
+                    extraction_method="vision_probe:architect_plan",
+                ),
+            ],
+        }
+        assert concept_sources_to_signals(sources) == []
+
+    def test_clean_preview_with_similar_words_passes(self):
+        # "could" alone ≠ "could be"; "may" alone ≠ "might be". A value like
+        # "3 habitatges" must come through even if it happens to contain
+        # letters that appear in hedge words.
+        sources = {
+            "num_floors": [
+                ConceptSource(
+                    file="x.pdf", confidence=0.95, signal_preview="Pb+1",
+                    extraction_method="vision_probe:architect_plan",
+                ),
+            ],
+        }
+        signals = concept_sources_to_signals(sources)
+        assert len(signals) == 1
+
 
 class TestReCompetitionMerge:
     def test_vision_wins_over_excel_for_street_address(self, tmp_path):
