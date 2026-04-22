@@ -24,7 +24,7 @@ _VISION_DETECTABLE_CONCEPTS = {
     'client_name', 'contact_name', 'client_nif',
     'street_address', 'municipality', 'province',
     'building_type', 'num_floors', 'building_height_m',
-    'superficie_construida_m2', 'superficie_parcela_m2',
+    'superficie_construida', 'superficie_parcela',
     'has_basement', 'has_retaining_walls',
     'expedient',
     'num_soil_levels', 'cota_referencia', 'field_date',
@@ -74,8 +74,8 @@ CONCEPTS TO LOOK FOR:
 - building_type: Type of building (habitatge, nau, etc.)
 - num_floors: Number of floors (Pb+1Pp, etc.)
 - building_height_m: Building height in meters
-- superficie_construida_m2: Built area in m²
-- superficie_parcela_m2: Plot area in m²
+- superficie_construida: Built area in m²
+- superficie_parcela: Plot area in m²
 - has_basement: Whether building has basement
 - has_retaining_walls: Whether it has retaining walls
 - expedient: Project reference number

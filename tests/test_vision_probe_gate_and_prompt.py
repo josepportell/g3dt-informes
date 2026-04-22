@@ -332,3 +332,26 @@ def test_should_probe_text_pdf_truth_table(tmp_path, monkeypatch):
             f"gate truth-table violation: concepts={concepts!r}, "
             f"text_len={len(text)}, expected={expected}, got={actual}"
         )
+
+
+# ---------------------------------------------------------------------------
+# Regression guard: every vision-detectable concept must exist in the
+# concept registry, so signals promoted via `concept_sources_to_signals`
+# compete against text signals under a real `source_priority` chain rather
+# than landing in phantom groups with the default priority of 50.
+# Pre-existing drift (2026-04-22) had vision emit `superficie_*_m2` while
+# the YAML defined `superficie_*` — the signals never met their text peers.
+# ---------------------------------------------------------------------------
+
+def test_all_vision_detectable_concepts_exist_in_registry():
+    from automation.concept_scout.vision_probe import _VISION_DETECTABLE_CONCEPTS
+    from automation.schemas.loader import ConceptRegistry
+
+    registry_ids = set(ConceptRegistry().all_concept_ids())
+    missing = _VISION_DETECTABLE_CONCEPTS - registry_ids
+    assert not missing, (
+        f"vision probe emits concept_ids not defined in the registry: "
+        f"{sorted(missing)}. Either add them to "
+        f"schemas/concepts/report_variables.yaml or rename the vision "
+        f"concept_id to match."
+    )
