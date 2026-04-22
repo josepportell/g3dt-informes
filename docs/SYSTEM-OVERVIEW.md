@@ -1,7 +1,13 @@
 # G3DT System Overview
 
 Development reference for the geotechnical report automation pipeline.
-Last updated: 2026-03-30.
+Last updated: 2026-04-22.
+
+**Related docs** (where details live that this overview only summarizes):
+- `docs/GUIA-DIAGNOSTICS.md` — how to interpret the benchmark + re-sweep procedure.
+- `docs/PLA-PROXIMES-ACCIONS-POST-SWEEP-2026-04-22.md` — live action plan: 5 ranked fixes based on the Apr 22 sweep.
+- `docs/_FOR-NEW-YOU-*.md` — handoff doc for fresh sessions (load-bearing assumptions, don'ts, opening sequence).
+- `docs/ARQUITECTURA-CONCEPT-FORMAT-SCHEMAS.md` — concept/format schema design.
 
 ## 1. What G3DT Does
 
@@ -12,24 +18,47 @@ G3DT generates geotechnical reports (.docx) from project files. Eva (geologist a
 ```
 Project folder (PDFs, Excel, .doc, .jpg, .msg)
     │
-Phase 0:   SmartScan (Tier 1→2→3) → file_mapping.json (classify ALL files by role)
-    │         Tier 1: Filename regex (30+ roles, CA/ES variants)
-    │         Tier 2: Content fingerprint (PDF keywords, Excel depth, image EXIF)
-    │         Tier 3: Groq Vision classification (Llama 4 Scout, ~$0.003/file)
+Phase 0:    SmartScan (Tier 1→2→3) → file_mapping.json (classify ALL files by role)
+    │          Tier 1: Filename regex (30+ roles, CA/ES variants)
+    │          Tier 2: Content fingerprint (PDF keywords, Excel depth, image EXIF)
+    │          Tier 3: Groq Vision classification (Llama 4 Scout, ~$0.003/file)
     │
-Phase 0.3: FileMiner ──────────→ signals (Python regex from all files, incl .msg)
-    │         MsgMiner: extracts email body + saves attachments → re-mines them
+Phase 0.3:  FileMiner ──────────→ text signals (Python regex from all files, incl .msg)
+    │          MsgMiner: extracts email body + saves attachments → re-mines them
+    │          First resolve_competition() runs here.
     │
-Phase 0.4: Groq LLM Miner ────→ signals (LLM for files where regex underperformed)
+Phase 0.4:  Groq LLM Miner ────→ more text signals (gap-fill for files regex missed)
+    │          Second resolve_competition() merges Groq signals with Phase 0.3 pool.
     │
-Phase 1:   auto_extract ──────→ prefills (DPSH Excel, Lab PDF, field dates)
-    │         DPSH: file_mapping role → glob fallback → N20, refusal, Es_settlement
+Phase 0.45: ConceptScout ──────→ vision probe + concept_map.json (added 2026-04)
+    │          scout_project() builds file→concept map + probes non-text-extractable
+    │          files with Groq vision (fallback to Claude). After the probe:
+    │          concept_sources_to_signals() converts vision probes into FileMiner
+    │          Signals (planol_vision → prio 20, projecte_vision → prio 25). A THIRD
+    │          resolve_competition() merges them with the Phase 0.3+0.4 pool so
+    │          vision signals compete under schema-defined priorities.
+    │          See: automation/concept_scout/__init__.py, _phase045_concept_scout.
+    │          Applies these competition filters BEFORE ranking:
+    │            - G3 internal address drop (any signal where the value looks like
+    │              C/ Vallbona 22, G3's office) — see automation/internal_addresses.py
+    │            - Hedged-preview drop ("appears to", "probably", "unclear", etc.)
+    │            - Address-concept reliability floor: confidence≥0.9 AND NOT from
+    │              handwritten field sheets (applies only to street/site_address)
     │
-Phase 1.5: Vision (Groq) ─────→ planol/sondeig/dpsh_extracted.json
-    │         Determined by file_mapping roles with vision_type
-    │         Supports PDFs AND images (.jpg/.png) natively
+Phase 1:    auto_extract ──────→ prefills (DPSH Excel, Lab PDF, field dates)
+    │          DPSH: file_mapping role → glob fallback → N20, refusal, Es_settlement
     │
-Phase 2:   HTTP APIs ──────────→ prefills (ICGC geology/elevation, Cadastre, geocode)
+Phase 1.5:  Vision (Groq) ─────→ planol/sondeig/dpsh_extracted.json
+    │          Determined by file_mapping roles with vision_type.
+    │          Supports PDFs AND images (.jpg/.png) natively.
+    │          Auto_extractor also exposes _best_vision_address() so geocode
+    │          phases can prefer a high-confidence architect-plan address over
+    │          a raw prefill (defensive layer from #8).
+    │
+Phase 2:    HTTP APIs ──────────→ prefills (ICGC geology/elevation, Cadastre, geocode)
+    │          geocode_project() is the sole entry point (Callejero fast-path
+    │          removed #10). CartoCiudad is primary, ICGC Territorial is the
+    │          Catalan fast path, Cadastre WFS-CP is fallback. See §10.
     │
 Phase 2.5: Merge + Compute ───→ geomech params (gamma, phi, E, c → Qa, K30, settlement)
     │         _merge_prefills(): auto_extract + vision + user_data
@@ -52,37 +81,45 @@ Miners (Phase 0.3-0.4) produce `Signal` objects with five attributes:
 - **confidence**: 0.0-1.0 extraction confidence
 - **priority**: integer from source type (lower = more trusted)
 
-`resolve_competition()` picks one winner per label:
-1. Lowest priority number wins (user > vision > geocode > content)
+`resolve_competition()` picks one winner per label (grouped by `concept_id`):
+1. Per-concept priority from `schemas/concepts/report_variables.yaml::source_priority` (lower = better, default 50 if source_type is unknown)
 2. On equal priority, highest confidence wins
 3. Special case: `report_date` — among same-priority signals, the most recent date wins
 
-Winners become wizard prefills. Losers become alternatives, shown as "+N" badges in the wizard UI. Eva can click an alternative to swap it in as the active value.
+Before ranking, the resolver applies **structural filters** (shipped 2026-04):
+- **G3 internal address drop** — signals for `{street,site,client}_address` whose value matches `automation/internal_addresses.py::is_g3_internal_address` are removed. Currently matches `C/ Vallbona, 22` (G3's Rubí office). The same filter ALSO runs as a belt-and-suspenders check inside `auto_extractor._phase25_geocode` + `_phase3_cadastre_adjacents` — deliberate double-layer because this class of bug bit us before.
+- **Hedged-preview drop** — signals whose preview matches markers like "appears to", "probably", "unclear", "seems to" are dropped (prose, not value).
+- **Address reliability floor** — `street_address` / `site_address` signals from vision probes require confidence ≥ 0.9 AND non-handwritten source (`doc_type != field_sheet`). The ConceptSource still appears in `concept_map.json` for audit; only the Signal is suppressed.
 
-Groq miner applies source-context exclusions before signals enter competition:
-- G3 internal data (NIF, phone, email matching G3's own) is excluded
-- Cost/budget documents (`PLAN_COST`, `PRESSUPOST`, `COMANDA`) are excluded for `province`, `municipality`, and `architect_name` (these refer to G3's office, not the project)
+Groq miner additionally applies **source-context exclusions** before signals enter competition:
+- G3 internal data (NIF, phone, email matching G3's own) is excluded.
+- Cost/budget documents (`PLAN_COST`, `PRESSUPOST`, `COMANDA`) are excluded for `province`, `municipality`, and `architect_name` (these refer to G3's office, not the project).
+
+Winners become wizard prefills. Losers become alternatives, shown as "+N" badges in the wizard UI. Eva can click an alternative to swap it in as the active value.
 
 ## 4. Source Priority Table
 
 ```
-Priority | Source Type       | Description
----------|-------------------|-------------------------------------------
-10       | user              | Eva's manual edit -- always wins
-20       | *_vision          | Claude/Groq reads PDFs (planol, sondeig, dpsh)
-25       | coordenades_txt   | GPS field-measured coordinates
-30       | pressupost_pdf    | G3's own structured quote
-30       | icgc_api          | ICGC geology, elevation, slope
-30       | cadastre_api      | Cadastre adjacents, parcel geometry
-35       | dades_camp_excel  | Client-provided prep sheet
-35       | comanda_lab_excel | Lab order sheet
-40       | geocode_nominatim | Nominatim-derived address/coords
-42       | groq_llm          | LLM extraction (Groq API)
-45       | content_*         | Generic file text extraction (PDF, docx, Excel)
-60       | folder_name       | Last resort: parse folder name
+Priority | Source Type        | Description
+---------|--------------------|-------------------------------------------
+10       | user               | Eva's manual edit -- always wins
+20       | planol_vision      | Vision-probe on architect plans (architect_plan doc_type)
+20       | *_vision           | Vision-extracted JSONs (planol/sondeig/dpsh)
+25       | coordenades_txt    | GPS field-measured coordinates
+25       | projecte_vision    | Vision-probe on projecte PDFs (projecte doc_type)
+30       | pressupost_pdf     | G3's own structured quote
+30       | icgc_api           | ICGC geology, elevation, slope
+30       | cadastre_api       | Cadastre adjacents, parcel geometry
+35       | dades_camp_excel   | Client-provided prep sheet
+35       | comanda_lab_excel  | Lab order sheet
+40       | geocode_nominatim  | Nominatim-derived address/coords (Step 7 demoted it to tertiary fallback; CartoCiudad is primary inside geocode_project)
+42       | groq_llm           | LLM extraction (Groq API)
+45       | content_*          | Generic file text extraction (PDF, docx, Excel)
+50       | vision_probe_other | Default for vision probe on unrecognized doc types
+60       | folder_name        | Last resort: parse folder name
 ```
 
-Unknown source types default to priority 50.
+Unknown source types default to priority 50. Priority values live in `schemas/concepts/report_variables.yaml` per-concept (not in code), so a concept can override the default chain if it needs to.
 
 ## 5. Key Files
 
@@ -94,7 +131,11 @@ Unknown source types default to priority 50.
 | `automation/fileminer/label_map.py` | Label aliases, source priorities |
 | `automation/fileminer/miners/groq_miner.py` | Phase 0.4: Groq LLM extraction with source-context exclusions |
 | `automation/fileminer/miners/docx_miner.py` | Word extraction (.docx via python-docx, .doc via antiword/libreoffice) |
+| `automation/internal_addresses.py` | Shared G3-office-address detector used by both `resolve_competition` and auto_extractor geocode phases (#8, 2026-04-22) |
 | `automation/smartscan/` | Phase 0: file classification by role |
+| `automation/concept_scout/__init__.py` | Phase 0.45: `scout_project()` + `concept_sources_to_signals()` converter that folds vision probes into the FileMiner Signal pool; applies reliability filters (address floor, hedged-preview drop, handwritten-source drop) |
+| `automation/concept_scout/vision_probe.py` | Vision probe (Groq primary, Claude fallback) for non-text-extractable files; outputs ConceptSource entries into concept_map.json |
+| `automation/icgc_territorial.py` | Catalan fast-path geocoder (Step 7 #3): single HTTPS call returns 4 GeoJSON layers (cadastre/municipis/sigpac/qualificacions-muc); `extract_refcadp()` cross-verifies vs CartoCiudad's RC |
 | `automation/validation/prompts.py` | Vision extraction prompts (planol, sondeig, DPSH) |
 | `automation/report_generator.py` | Phase 4: builds .docx from Jinja template |
 | `automation/terzaghi_calculator.py` | Bearing capacity, settlement, K30 calculations |
@@ -239,23 +280,56 @@ All tables tested with anchor-point fixtures against Eva's informes (Alcoletge, 
 
 ## 10. Geocoding
 
-Geocoding supports all Spanish provinces (not just Catalunya). The pipeline uses a **progressive resolution chain**:
+**Single entry point:** `automation/geocode_coordinates.py::geocode_project`. The Callejero fast-path that used to live in `auto_extractor` was removed (#10, 2026-04-22) — it silently picked wrong parcels on noisy addresses.
 
-1. **ConsultaMunicipio** — fuzzy-match municipality from hint (e.g., "Bell-Lloc" → "BELL-LLOC D'URGELL")
-2. **ConsultaVia** — fuzzy-match street from hint (e.g., "Ferraz" → "GRAL. FERRAZ AG ANCILES")
-3. **Consulta_DNPLOC** — lookup with resolved names → cadastral reference (RC)
-4. **Consulta_CPMRC** — RC → UTM coordinates
-5. **Nominatim** fallback — if progressive chain fails, geocodes via OpenStreetMap
-6. **UTM conversion** — auto-detects zone 30 (lon < 0) vs zone 31 (lon >= 0)
-7. **ICGC elevation** — Catalunya only; gracefully skipped for other provinces
+### Resolution chain (current, post-Step 7 + #8-#12)
 
-Matching features:
+```
+project address + municipality (from planol vision @ conf≥0.9, preferred over any text signal)
+    │
+    ▼
+CartoCiudad (IGN) candidates endpoint  [Step 7 #1+#2+#11]
+    ├─ no municipio_filter (accent-strict bug server-side; client-side filter handles muni)
+    ├─ no_process=toponimo,municipio,comunidad autonoma,poblacion
+    ├─ limit=5
+    ├─ strips "Urb. …" / "Edifici …" / "Bloc …" trailing suffixes before query
+    │
+    ├─ portal match → authoritative refCatastral returned inline (skip RCCOOR)
+    │     │
+    │     ├─ Catalan project?  → ICGC API Territorial /elements/cadastre,municipis,sigpac,qualificacions-muc/{lng},{lat}  [Step 7 #3]
+    │     │     └─ returns parcel polygon + refcadp (byte-identical to CartoCiudad RC — free cross-verification)
+    │     │
+    │     └─ non-Catalan → Cadastre WFS-CP GetFeature by RC → parcel polygon
+    │
+    └─ miss? → Cadastre progressive lookup (ConsultaMunicipio → ConsultaVia → Consulta_DNPLOC → Consulta_CPMRC)
+          ├─ On Consulta_RCCOOR err-code 16 ("PARA ESAS COORDENADAS NO HAY REFERENCIA")  [Step 7 #5]
+          │    → fall back to Consulta_RCCOOR_Distancia (nearest parcel within 50m)
+          └─ On complete miss → Nominatim (tertiary safety net; weak for Catalan small towns)
+
+UTM conversion: auto-detect zone 30 (lon < 0) vs zone 31 (lon >= 0)
+ICGC elevation: Catalunya only; gracefully skipped elsewhere.
+```
+
+### Key flags and gotchas
+
+- **`automation/icgc_territorial.py`** takes coordinates as `(lat, lng)` caller-friendly order and internally builds the URL with `{lng},{lat}` — wrong order silently returns 0 features.
+- **CartoCiudad `municipio_filter` is deliberately NOT sent.** Server-side is accent-strict: `Vilanova+de+Segria` (no accent) returns 0 candidates, `Vilanova+de+Segrià` returns 4. G3DT derives muni names from folder names which typically lose diacritics. `_cartociudad_muni_matches` handles muni filtering client-side (accent- and case-insensitive).
+- **Step 7 #4 (Catastro REST/JSON migration) is server-blocked** — their `COVCCoordenadas.svc/json` endpoint returns `cod=76 "LA COORDENADA X OBLIGATORIA"` regardless of param casing. Code scaffolded for drop-in flip (`_CADASTRE_REST_URL_BROKEN_SERVER_SIDE` constant with `TODO(step7-4)` pointer). Kept ASMX XML as the transport.
+- **Step 7 #6 (INSPIRE WFS-CP for adjacents)** — optional, deferred. The ASMX adjacents probing still works.
+- **Cache locations:** `~/.g3dt/cache/cartociudad/`, `~/.g3dt/cache/geocode/`, `~/.g3dt/cache/cadastre_adjacents/`, `~/.g3dt/cache/icgc_territorial/`. All bypassed with `G3DT_NO_CACHE=1`.
+
+### Matching features (unchanged)
+
 - Accent-insensitive comparison (Rubí = RUBI, Segrià = SEGRIA)
 - Abbreviation expansion (Sta. → Santa, Gral. → General, Mn. → Mossen)
 - Progressive hint shortening ("Clot de la Llacuna" → "Clot de la" → "Clot")
 - Nearest-number recovery (if number 20 doesn't exist, picks nearest available)
 
-Tested: 7/7 projects resolve to valid cadastral references via progressive lookup.
+### Coverage (live-verified 2026-04-22)
+
+- CartoCiudad portal match: 5/7 reference projects (Bell-Lloc coverage gap is a known CartoCiudad data hole, not a bug — falls through to Cadastre).
+- ICGC Territorial: Catalunya 6/7; Anciles (Aragón) correctly skipped.
+- Cross-verification (CartoCiudad RC == ICGC refcadp): byte-identical for Vilanova; no false-positive disagreements recorded.
 
 ## 11. File Exclusions
 
@@ -301,64 +375,84 @@ G3DT_NO_CACHE=1 G3DT_USE_GROQ=1 .venv/bin/python -m web
 .venv/bin/python scripts/compare_benchmarks.py
 ```
 
-## 15. Correctness (as of 2026-03-30)
+## 15. Correctness (as of 2026-04-22)
 
-Benchmark compares pipeline output (no user_data.json, clean auto-extraction) against Eva's signed reference reports for 7 projects.
+The canonical benchmark is `scripts/diagnostic_trace.py` (full-pipeline diagnostic with LLM judge). See `docs/GUIA-DIAGNOSTICS.md` for how to run, interpret, and compare sweeps.
 
-### Variable Tiers
+### Variable Tiers (unchanged since 2026-03-30)
 
-- **Tier A (auto-extractable):** Values the pipeline SHOULD get right automatically (client, address, N20, phi, E, Qa, dates, surfaces)
-- **Tier B (manual/on-site):** Values requiring human observation or external sources (adjacents descriptions, site condition, access description)
-- **Tier C (professional judgment):** Values Eva adjusts based on experience (E override, Qa cap override, Es settlement)
+- **Tier A (auto-extractable):** Values the pipeline SHOULD get right automatically (client, address, N20, phi, E, Qa, dates, surfaces).
+- **Tier B (manual/on-site):** Values requiring human observation or external sources (adjacents descriptions, site condition, access description).
+- **Tier C (professional judgment):** Values Eva adjusts based on experience (E override, Qa cap override, Es settlement).
 
-### Global Metrics
+### Global Metrics (sweep 2026-04-22, CROSS_351d13.json)
 
 | Metric | Value | Note |
 |--------|-------|------|
-| Overall match | 35.2% (58/165) | Clean baseline, no user_data |
-| Match+Close | 43.6% (72/165) | Close = within 5% tolerance |
-| Tier A | 53.1% (52/98) | Auto-extractable |
-| Tier B | 4.0% (2/50) | Requires human/vision |
-| Tier C | 23.5% (4/17) | Professional judgment |
+| Match+Close | **64.1%** (139/217 compared) | Apr 19 judge-noise band: 62.4%-65.2% across three identical re-runs |
+| MATCH | 105/217 | |
+| CLOSE | 34/217 | |
+| MISMATCH | 78/217 | Cluster into 4 structural modes + schema gaps — see Pla d'accions doc |
+| NOT_EXTRACTED | 40/217 | Was 47 pre-#8; -7 var-comparisons extraction-frontier gain |
+| PASS (not benchmarked for this project) | 24 | |
 
-### Per-Project
+### Per-project
 
-| Project | Match | Close | Mismatch | % |
-|---------|-------|-------|----------|---|
-| Castellar del Vallès | 11/28 | 0 | 17 | 39% |
-| Rubí | 12/28 | 4 | 12 | 43% |
-| Linyola | 8/27 | 2 | 17 | 30% |
-| Bell-Lloc | 15/32 | 4 | 13 | 47% |
-| Alcoletge | 4/20 | 2 | 14 | 20% |
-| Vilanova de Segria | 5/15 | 2 | 8 | 33% |
-| Anciles | 3/15 | 0 | 12 | 20% |
+| Project | Rate | Δ vs Apr 21 |
+|---|---:|---:|
+| Bell-Lloc | 72.1% | flat |
+| Castellar del Vallès | 77.4% | flat |
+| Rubí | 63.9% | -3.7pp (precision cost of wider net, not quality regression) |
+| Linyola | 73.7% | flat |
+| Alcoletge | 47.8% | +2.3pp |
+| **Vilanova de Segria** | **56.0%** | **+8.0pp** (Step 7 + #8-#12 chain end-to-end) |
+| Anciles | 38.1% | DNS-contaminated this run (13 network errors) |
 
-### Main Tier A Error Categories
+### Top failure modes (see `docs/PLA-PROXIMES-ACCIONS-POST-SWEEP-2026-04-22.md`)
 
-| Category | Count | Root cause | Fix needed |
-|----------|-------|-----------|------------|
-| dpsh_avg_n20 / geotech_nb | 10 | Refusal values (N20≥100) included in averaging | Ask Eva: N20 averaging criteria |
-| building_type | 4 | Partial terminology match | Vocabulary normalization |
-| superficie_parcela | 3 | Cadastre source vs Eva's source differ | Investigate which is authoritative |
-| client name | 3 | Phone/email noise in name | Client name cleanup regex |
-| street_address | 3 | Minor format differences | Address normalization |
-| municipality | 2 | Geocode errors (Alcoletge→Alella, Anciles→Arciles) | Geocode bug investigation |
-| seismic_ab | 2 | NCSE-02 source mismatch | Verify seismic data source |
+| # | Mode | Vars | Est. recovery | Effort |
+|---|---|---:|---:|---|
+| A | Schema gaps (NOT_EXTRACTED) — 9 concepts missing from YAML | ~20 | +3-5pp | S |
+| B | CTE classification threshold — single wrong-answer pattern across `cte_sol`/`cte_edificacio`/`qa_value` | 12 | +4pp | S |
+| C | Settlement format — values correct, Eva's narrative wrapper missing | 6 | +6pp | S |
+| D | Identity disambiguation — vendor-not-buyer, co-author-not-lead | 8 | +2-4pp | M |
+| E | Adjacent/location narrative — Eva voice vs cadastre taxonomy | 12+ | +2-5pp | L |
 
-### What the metrics DON'T capture
+Projected ceiling after A+B+C: ~77-80%.
 
-- **Photo/figure placement:** SmartScan now assigns 15-20 photo+figure roles per project vs 0 with FileScanner. Not in benchmark.
-- **Email data extraction:** MsgMiner extracts client_email, NIF, num_floors from .msg files. Not all map to benchmark variables.
-- **Completeness improvement:** SmartScan finds DPSH Excel in ANEXOS/ANEJOS folders that FileScanner missed entirely (Vilanova, Anciles).
-
-### Benchmark scripts
+### How to re-sweep (quick reference)
 
 ```bash
-# Extract reference values from Eva's reports
-.venv/bin/python scripts/extract_benchmark_values.py
+# Clear caches (prevents stale concept_map.json from masking changes)
+for p in "4001612 BELL-LLOC" "3001621 CASTELLAR DEL VALLES" "3001631 RUBI" \
+         "4001607 LINYOLA" "4001670 ALCOLETGE" "4001671 VILANOVA DE SEGRIA" \
+         "4001679 ANCILES"; do
+  rm -f "reference-material/$p/validation/concept_map.json"
+done
+rm -f ~/.g3dt/cache/cartociudad/*.json ~/.g3dt/cache/geocode/*.json
 
-# Compare pipeline output against benchmarks
+# Full sweep (~15 min wall-clock)
+.venv/bin/python scripts/diagnostic_trace.py --save --components --ne-trace
+
+# Grep the log for DNS failures BEFORE trusting per-project numbers
+grep -c "name resolution\|Connection error" /tmp/claude-*/tasks/*.output
+
+# Saved to docs/diagnostics/YYYY-MM-DD_CROSS_<runid>.json + per-project snapshots
+```
+
+**Don't over-interpret single-sweep deltas under 2.8pp** — that's the judge-noise band. For real signal, compare per-variable MISMATCH→MATCH flips across re-runs, not headline rates. Full interpretive rules in `docs/GUIA-DIAGNOSTICS.md` → "Com interpretar els resultats".
+
+### Legacy benchmark scripts (still usable, lower fidelity)
+
+```bash
+# Tier-aware benchmark compare (LLM-as-judge for Tier B, deterministic for A/C)
 .venv/bin/python scripts/compare_benchmarks.py
 
-# Results saved to docs/benchmarks/_comparison.json
+# Simple Eva vs pipeline dump (no signal trace)
+.venv/bin/python scripts/compare_eva_vs_pipeline.py
+
+# Extract reference values from Eva's signed .docx reports (run once, cached)
+.venv/bin/python scripts/extract_benchmark_values.py
 ```
+
+`diagnostic_trace.py` is the canonical modern entry point; the legacy scripts are useful for narrow investigations.
