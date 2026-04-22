@@ -64,7 +64,10 @@ CADASTRE_WFS_URL = "https://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx"
 # param-casing variant, so we still transport over the working ASMX XML surface.
 # We parse XML into a JSON-shaped dict and expose err_code to callers so the
 # Step 7 #5 code-16 fallback path can run on the real data the service returns.
-CADASTRE_REST_URL = "https://ovc.catastro.meh.es/OVCServWeb/OVCWcfCallejero/COVCCoordenadas.svc/json"
+# TODO(step7-4): revisit when Catastro fixes the server-side REST bug. The
+# leading underscore + _BROKEN_SERVER_SIDE suffix is a deliberate signal to
+# future readers that this URL should NOT be wired in until that happens.
+_CADASTRE_REST_URL_BROKEN_SERVER_SIDE = "https://ovc.catastro.meh.es/OVCServWeb/OVCWcfCallejero/COVCCoordenadas.svc/json"
 
 # Max distance to accept a parcel from RCCOOR_Distancia fallback. Beyond this
 # the nearest parcel is too far away to be trusted as "this coordinate's
@@ -379,19 +382,26 @@ def _query_nearest_refs(
     except ET.ParseError as e:
         raise CadastreParseError(f"Invalid XML from Cadastre RCCOOR_Distancia: {e}")
 
-    # Error check (transport errors in this envelope, not per-candidate)
+    # Error check (transport errors in this envelope, not per-candidate).
+    # Always bail on cuerr != 0 — do NOT fall through to parse <pcd>, even if
+    # <err> is missing or malformed. Log at INFO so fallback failures are
+    # visible in production logs.
     err_elem = _find_element(root, "control/cuerr")
     if err_elem is not None and err_elem.text and err_elem.text.strip() not in ("0", ""):
         err_list = _find_all_elements(root, "err")
+        cod_txt = "?"
+        des_txt = "?"
         if err_list:
             cod = _find_element(err_list[0], "cod")
             des = _find_element(err_list[0], "des")
-            logger.debug(
-                f"RCCOOR_Distancia error at ({utm_x},{utm_y}): "
-                f"[{cod.text if cod is not None else '?'}] "
-                f"{des.text if des is not None else ''}"
-            )
-            return None, None
+            if cod is not None and cod.text:
+                cod_txt = cod.text
+            if des is not None and des.text:
+                des_txt = des.text
+        logger.info(
+            f"RCCOOR_Distancia error at ({utm_x},{utm_y}): [{cod_txt}] {des_txt}"
+        )
+        return None, None
 
     candidates = _find_all_elements(root, "pcd")
     best_ref: str | None = None
@@ -408,7 +418,7 @@ def _query_nearest_refs(
             continue
         if dist > max_distance_m:
             continue
-        if dist >= best_dist:
+        if dist > best_dist:
             continue
 
         pc1_elem = _find_element(pcd, "pc/pc1")
@@ -1436,6 +1446,10 @@ def get_cadastral_reference(utm_x: float, utm_y: float) -> tuple[str | None, str
 
     Returns:
         Tuple of (cadastral_reference, ldt_address).
+        cadastral_reference is None if (a) a non-16 error occurred, or
+        (b) err 16 fired and no parcel was found within
+        NEAREST_PARCEL_MAX_DISTANCE_M. ldt may still be populated in some
+        street-level responses.
     """
     ref, ldt, err_code = _query_ref_by_coords_raw(utm_x, utm_y)
     if ref is not None:
