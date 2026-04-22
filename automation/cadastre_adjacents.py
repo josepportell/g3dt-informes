@@ -58,6 +58,24 @@ __all__ = [
 CADASTRE_URL = "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCoordenadas.asmx"
 CADASTRE_DATA_URL = "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx"
 CADASTRE_WFS_URL = "https://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx"
+
+# REST/JSON endpoint for RCCOOR family. Observed 2026-04-22: the server rejects
+# REST Consulta_RCCOOR with cod=76 ("LA COORDENADA X OBLIGATORIA") for every
+# param-casing variant, so we still transport over the working ASMX XML surface.
+# We parse XML into a JSON-shaped dict and expose err_code to callers so the
+# Step 7 #5 code-16 fallback path can run on the real data the service returns.
+CADASTRE_REST_URL = "https://ovc.catastro.meh.es/OVCServWeb/OVCWcfCallejero/COVCCoordenadas.svc/json"
+
+# Max distance to accept a parcel from RCCOOR_Distancia fallback. Beyond this
+# the nearest parcel is too far away to be trusted as "this coordinate's
+# parcel" (e.g. street-centerline coords should snap to the parcel a few
+# metres away, not to one on the far side of the block).
+NEAREST_PARCEL_MAX_DISTANCE_M = 50.0
+
+# Cadastre error code: "PARA ESAS COORDENADAS NO HAY REFERENCIA DISPONIBLE"
+# (coord lands on road / unbuilt area). Distinguished from other error codes
+# because it is the only one that should trigger the nearest-parcel fallback.
+CADASTRE_ERR_NO_REFERENCE = 16
 SRS = "EPSG:25831"  # UTM zone 31N (same as ICGC)
 CACHE_DIR = Path.home() / ".g3dt" / "cache" / "cadastre_adjacents"
 NOMINATIM_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "nominatim_streets"
@@ -219,18 +237,16 @@ def _find_all_elements(root: ET.Element, local_name: str) -> list[ET.Element]:
 
 # === Core Query Functions ===
 
-def _query_ref_by_coords(utm_x: float, utm_y: float) -> tuple[str | None, str | None]:
+def _query_ref_by_coords_raw(
+    utm_x: float, utm_y: float
+) -> tuple[str | None, str | None, int | None]:
     """
-    Query cadastral reference at given UTM coordinates via Consulta_RCCOOR.
-
-    Args:
-        utm_x: UTM X coordinate (EPSG:25831)
-        utm_y: UTM Y coordinate (EPSG:25831)
+    Query cadastral reference at given UTM coords via Consulta_RCCOOR.
 
     Returns:
-        Tuple of (cadastral_reference, ldt_address).
-        cadastral_reference is None if the point falls on a street or error.
-        ldt_address is the raw LDT string (may be available even for streets).
+        Tuple of (cadastral_reference, ldt_address, err_code).
+        err_code is the Cadastre error code (int) if the service returned an
+        error element (e.g. 16 = no reference at those coords), else None.
 
     Raises:
         CadastreConnectionError: If connection fails
@@ -249,7 +265,6 @@ def _query_ref_by_coords(utm_x: float, utm_y: float) -> tuple[str | None, str | 
     except ET.ParseError as e:
         raise CadastreParseError(f"Invalid XML from Cadastre RCCOOR: {e}")
 
-    # Check for error response
     err_elem = _find_element(root, "coordenadas/coord/err")
     if err_elem is None:
         err_elems = _find_all_elements(root, "err")
@@ -257,21 +272,25 @@ def _query_ref_by_coords(utm_x: float, utm_y: float) -> tuple[str | None, str | 
             err_elem = err_elems[0]
 
     if err_elem is not None:
-        err_msg = ""
+        err_code: int | None = None
         cod_elem = _find_element(err_elem, "cod")
         des_elem = _find_element(err_elem, "des")
+        if cod_elem is not None and cod_elem.text:
+            try:
+                err_code = int(cod_elem.text.strip())
+            except ValueError:
+                err_code = None
+        err_msg = ""
         if cod_elem is not None and cod_elem.text:
             err_msg += f"[{cod_elem.text}] "
         if des_elem is not None and des_elem.text:
             err_msg += des_elem.text
         logger.debug(f"Cadastre error at ({utm_x}, {utm_y}): {err_msg}")
-        return None, None
+        return None, None, err_code
 
-    # Extract cadastral reference (pc1 + pc2)
     pc1_elem = _find_element(root, "coordenadas/coord/pc/pc1")
     pc2_elem = _find_element(root, "coordenadas/coord/pc/pc2")
 
-    # Fallback: search anywhere in the tree
     if pc1_elem is None:
         pc1_elems = _find_all_elements(root, "pc1")
         pc1_elem = pc1_elems[0] if pc1_elems else None
@@ -279,7 +298,6 @@ def _query_ref_by_coords(utm_x: float, utm_y: float) -> tuple[str | None, str | 
         pc2_elems = _find_all_elements(root, "pc2")
         pc2_elem = pc2_elems[0] if pc2_elems else None
 
-    # Extract LDT (address description)
     ldt_elem = _find_element(root, "coordenadas/coord/ldt")
     if ldt_elem is None:
         ldt_elems = _find_all_elements(root, "ldt")
@@ -288,14 +306,135 @@ def _query_ref_by_coords(utm_x: float, utm_y: float) -> tuple[str | None, str | 
     ldt = ldt_elem.text.strip() if ldt_elem is not None and ldt_elem.text else None
 
     if pc1_elem is None or not pc1_elem.text:
-        return None, ldt
+        return None, ldt, None
 
     pc1 = pc1_elem.text.strip()
     pc2 = pc2_elem.text.strip() if pc2_elem is not None and pc2_elem.text else ""
 
     ref = pc1 + pc2
     logger.debug(f"Cadastre ref at ({utm_x}, {utm_y}): {ref}, ldt: {ldt}")
+    return ref, ldt, None
+
+
+def _query_ref_by_coords(utm_x: float, utm_y: float) -> tuple[str | None, str | None]:
+    """
+    Query cadastral reference at given UTM coordinates via Consulta_RCCOOR.
+
+    Thin 2-tuple shim over _query_ref_by_coords_raw: external callers only
+    need (ref, ldt). Use _query_ref_by_coords_raw if you need err_code.
+
+    Args:
+        utm_x: UTM X coordinate (EPSG:25831)
+        utm_y: UTM Y coordinate (EPSG:25831)
+
+    Returns:
+        Tuple of (cadastral_reference, ldt_address).
+        cadastral_reference is None if the point falls on a street or error.
+        ldt_address is the raw LDT string (may be available even for streets).
+
+    Raises:
+        CadastreConnectionError: If connection fails
+        CadastreParseError: If XML cannot be parsed
+    """
+    ref, ldt, _err = _query_ref_by_coords_raw(utm_x, utm_y)
     return ref, ldt
+
+
+def _query_nearest_refs(
+    utm_x: float,
+    utm_y: float,
+    max_distance_m: float = NEAREST_PARCEL_MAX_DISTANCE_M,
+) -> tuple[str | None, str | None]:
+    """
+    Query nearest cadastral parcels via Consulta_RCCOOR_Distancia.
+
+    Used as a fallback when Consulta_RCCOOR returns error code 16
+    (coord lands on street/unbuilt). Picks the closest parcel within
+    max_distance_m.
+
+    Args:
+        utm_x: UTM X coordinate (EPSG:25831)
+        utm_y: UTM Y coordinate (EPSG:25831)
+        max_distance_m: Reject candidates farther than this (metres)
+
+    Returns:
+        Tuple of (cadastral_reference, ldt_address) of the closest parcel
+        within range. (None, None) if no candidates exist or all exceed
+        max_distance_m.
+
+    Raises:
+        CadastreConnectionError: If connection fails
+        CadastreParseError: If XML cannot be parsed
+    """
+    url = (
+        f"{CADASTRE_URL}/Consulta_RCCOOR_Distancia"
+        f"?SRS={SRS}&Coordenada_X={utm_x}&Coordenada_Y={utm_y}"
+    )
+    logger.debug(f"Querying Cadastre RCCOOR_Distancia: {url}")
+
+    response_text = _fetch_xml(url)
+
+    try:
+        root = ET.fromstring(response_text)
+    except ET.ParseError as e:
+        raise CadastreParseError(f"Invalid XML from Cadastre RCCOOR_Distancia: {e}")
+
+    # Error check (transport errors in this envelope, not per-candidate)
+    err_elem = _find_element(root, "control/cuerr")
+    if err_elem is not None and err_elem.text and err_elem.text.strip() not in ("0", ""):
+        err_list = _find_all_elements(root, "err")
+        if err_list:
+            cod = _find_element(err_list[0], "cod")
+            des = _find_element(err_list[0], "des")
+            logger.debug(
+                f"RCCOOR_Distancia error at ({utm_x},{utm_y}): "
+                f"[{cod.text if cod is not None else '?'}] "
+                f"{des.text if des is not None else ''}"
+            )
+            return None, None
+
+    candidates = _find_all_elements(root, "pcd")
+    best_ref: str | None = None
+    best_ldt: str | None = None
+    best_dist: float = float("inf")
+
+    for pcd in candidates:
+        dis_elem = _find_element(pcd, "dis")
+        if dis_elem is None or not dis_elem.text:
+            continue
+        try:
+            dist = float(dis_elem.text.strip())
+        except ValueError:
+            continue
+        if dist > max_distance_m:
+            continue
+        if dist >= best_dist:
+            continue
+
+        pc1_elem = _find_element(pcd, "pc/pc1")
+        pc2_elem = _find_element(pcd, "pc/pc2")
+        if pc1_elem is None or not pc1_elem.text:
+            continue
+        pc1 = pc1_elem.text.strip()
+        pc2 = pc2_elem.text.strip() if pc2_elem is not None and pc2_elem.text else ""
+
+        ldt_elem = _find_element(pcd, "ldt")
+        ldt = ldt_elem.text.strip() if ldt_elem is not None and ldt_elem.text else None
+
+        best_ref = pc1 + pc2
+        best_ldt = ldt
+        best_dist = dist
+
+    if best_ref is not None:
+        logger.info(
+            f"Nearest parcel at ({utm_x},{utm_y}): {best_ref} "
+            f"(distance {best_dist:.2f}m, ldt={best_ldt})"
+        )
+    else:
+        logger.debug(
+            f"No parcel within {max_distance_m}m of ({utm_x},{utm_y})"
+        )
+    return best_ref, best_ldt
 
 
 def _query_address_by_ref(ref: str) -> str:
@@ -1282,15 +1421,32 @@ def get_cadastral_reference(utm_x: float, utm_y: float) -> tuple[str | None, str
     """
     Get cadastral reference at given UTM coordinates.
 
+    When the coord lands on a road or unbuilt area, Cadastre returns error
+    code 16 (CADASTRE_ERR_NO_REFERENCE). In that case we transparently fall
+    back to Consulta_RCCOOR_Distancia and return the nearest parcel within
+    NEAREST_PARCEL_MAX_DISTANCE_M. This recovers street-centerline coords
+    that previously returned (None, None).
+
+    Other error codes (e.g. 3, 8, 11) continue to return (None, None)
+    without a fallback — they indicate bad input, not a missing parcel.
+
     Args:
         utm_x: UTM X coordinate (EPSG:25831)
         utm_y: UTM Y coordinate (EPSG:25831)
 
     Returns:
         Tuple of (cadastral_reference, ldt_address).
-        cadastral_reference is None if the point falls on a street or error.
     """
-    return _query_ref_by_coords(utm_x, utm_y)
+    ref, ldt, err_code = _query_ref_by_coords_raw(utm_x, utm_y)
+    if ref is not None:
+        return ref, ldt
+    if err_code == CADASTRE_ERR_NO_REFERENCE:
+        logger.info(
+            f"RCCOOR err 16 at ({utm_x},{utm_y}); falling back to "
+            f"nearest-parcel lookup"
+        )
+        return _query_nearest_refs(utm_x, utm_y)
+    return ref, ldt
 
 
 # === Parcel Geometry via INSPIRE WFS ===
