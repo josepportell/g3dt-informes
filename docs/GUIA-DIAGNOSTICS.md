@@ -195,6 +195,56 @@ Quan `--classify` es actiu, els mismatches es classifiquen en:
 | **B** | Manual/observacio (adjacents, descripcio solar, acces) | Millora amb Street View, ortho |
 | **C** | Judici professional (E, Qa, assentament, K30) | Correcte si formules i entrades son correctes |
 
+## Com interpretar els resultats
+
+### Judge noise band — 2.8pp
+
+El judge LLM te no-determinisme. Tres re-execucions **del mateix codi** el mateix dia (2026-04-19) van donar 62.4% / 64.3% / 65.2% -- una dispersio de **2.8pp** sense cap canvi.
+
+**Regla d'interpretacio:**
+- Un headline que puja +1pp no es proba de millora -- es soroll.
+- Un headline que baixa -1pp no es proba de regressio -- tambe es soroll.
+- Per detectar canvis reals: compara el **conjunt de MISMATCHes per variable**, no el total. Si `adjacent_west_fmt` passa de MISMATCH a MATCH a Vilanova, aixo es durable. Si el total puja +1pp, aixo es soroll.
+- Per evidencia quantitativa decisiva: executa el sweep 2-3 vegades despres del canvi i mira el midpoint de la nova banda.
+
+Referencia guardada a memory: `project_judge_noise_band.md`.
+
+### Risc de contaminacio per fallades DNS
+
+El sweep fa crides HTTP a CartoCiudad, Nominatim, ICGC, Catastro, OpenAI/Anthropic/Groq. Una fallada DNS transitoria no fa que el sweep falli amb error — el snapshot es desa amb numeros poc fiables per al projecte afectat.
+
+**Checklist abans de citar un numero:**
+
+```bash
+grep -c "name resolution\|Connection error" <log_file>
+```
+
+Si hi ha hits, identifica el projecte afectat (les fallades solen clusteritzar-se a un projecte concret per finestra de temps) i torna a executar-lo:
+
+```bash
+.venv/bin/python scripts/diagnostic_trace.py --save --project <expedient>
+```
+
+Exemple (2026-04-22): sweep amb 13 fallades DNS totes a Anciles. El seu 38.1% era poc fiable. La comparacio per-projecte (altres 6 flat/up; Anciles -4.2pp) era artefacte, no regressio real.
+
+Referencia guardada a memory: `feedback_sweep_dns_contamination.md`.
+
+### Frontier vs headline
+
+El headline match+close pot quedar flat mentre el pipeline millora qualitativament. Exemple 2026-04-22: headline 64.1% (dins de la banda Apr 19), pero:
+
+- **NOT_EXTRACTED va baixar 47 -> 40** (-7 var-comparisons). Xarxa d'extraccio mes amplia.
+- **Vilanova +8pp per-projecte** (cadena Step 7 + #8-#11 demostrada end-to-end).
+- 7 variables que abans eren NE ara produeixen valor (algunes MATCH, algunes MISMATCH).
+
+**Quan un canvi afegeix extractors nous, el tradeoff precisio/recall pot baixar el headline 1-2pp mentre la frontera s'expandeix.** Els NEs recuperats no son tots MATCH -- alguns son MISMATCH perque l'extractor nou funciona pero no perfectament. Aixo es progres, no regressio.
+
+## Pla d'accions post-sweep (viu)
+
+El pla que hauria de guiar les propers sessions de feina esta a `docs/PLA-PROXIMES-ACCIONS-POST-SWEEP-2026-04-22.md` -- 5 accions classificades per alavanca, amb scope/effort/impact/fix approach per cadascuna. Executar en l'ordre suggerit (1 -> 2 -> 3, llavors 4 i 5 independents).
+
+El document `docs/_FOR-NEW-YOU-YYYYMMDD.md` (actualitzat al final de cada sessio via `/for-new-you`) conté el bootstrap operacional per a la sessio seguent: les assumpcions estructurals load-bearing, checklist de re-sweep, i altres context no evident nomes llegint el codi.
+
 ## Relacio amb Slash Commands existents
 
 | Comanda | Script | Us |
