@@ -198,3 +198,124 @@ class TestGeocodePrefersVision:
         assert tried, "geocode helper should have been called at least once"
         # Vision address must be attempted first.
         assert "Santa Gemma" in tried[0]
+
+
+class TestCallejeroFastpathRemoved:
+    """Callejero direct fast-path has been removed from auto_extractor; both
+    call sites route through geocode_project exclusively (Callejero is still
+    exercised internally inside geocode_project's pipeline)."""
+
+    def test_phase25_geocode_uses_geocode_project_not_callejero_fastpath(
+        self, tmp_path, monkeypatch,
+    ):
+        from automation import auto_extractor, geocode_coordinates
+
+        r = AutoExtractionResult()
+        r.prefills["site_address"] = "C. Santa Gemma, 4 Urb. La Serra"
+
+        proj = tmp_path / "4001671 VILANOVA DE SEGRIA"
+        proj.mkdir()
+
+        gp_calls: list[tuple] = []
+        cj_calls: list[tuple] = []
+
+        def fake_geocode_project(*args, **kwargs):
+            gp_calls.append((args, kwargs))
+            return {
+                "utm_x": 298594.78,
+                "utm_y": 4620391.33,
+                "rc": "8606709CG9280N",
+                "source": "geocode:cartociudad",
+            }
+
+        def fake_callejero(*args, **kwargs):
+            cj_calls.append((args, kwargs))
+            return {"utm_x": 1.0, "utm_y": 2.0, "rc": "WRONG"}
+
+        monkeypatch.setattr(
+            auto_extractor, "geocode_project", fake_geocode_project, raising=False,
+        )
+        monkeypatch.setattr(
+            geocode_coordinates, "geocode_project", fake_geocode_project,
+            raising=False,
+        )
+        monkeypatch.setattr(
+            geocode_coordinates, "callejero_address_to_rc", fake_callejero,
+            raising=False,
+        )
+
+        utm_x, utm_y = auto_extractor._phase25_geocode({}, r, proj)
+
+        assert gp_calls, "geocode_project must be called"
+        assert not cj_calls, (
+            f"callejero_address_to_rc must NOT be called from _phase25_geocode; "
+            f"got {len(cj_calls)} call(s)"
+        )
+        assert utm_x == 298594.78 and utm_y == 4620391.33
+
+    def test_geocode_for_adjacents_uses_geocode_project_not_callejero_fastpath(
+        self, monkeypatch,
+    ):
+        from automation import auto_extractor, geocode_coordinates
+
+        gp_calls: list[tuple] = []
+        cj_calls: list[tuple] = []
+
+        def fake_geocode_project(*args, **kwargs):
+            gp_calls.append((args, kwargs))
+            return {
+                "utm_x": 298594.78,
+                "utm_y": 4620391.33,
+                "rc": "8606709CG9280N",
+            }
+
+        def fake_callejero(*args, **kwargs):
+            cj_calls.append((args, kwargs))
+            return {"utm_x": 1.0, "utm_y": 2.0, "rc": "WRONG"}
+
+        monkeypatch.setattr(
+            geocode_coordinates, "geocode_project", fake_geocode_project,
+            raising=False,
+        )
+        monkeypatch.setattr(
+            geocode_coordinates, "callejero_address_to_rc", fake_callejero,
+            raising=False,
+        )
+
+        out = auto_extractor._geocode_for_adjacents(
+            "C. Santa Gemma, 4 Urb. La Serra", "Vilanova de Segrià",
+        )
+
+        assert gp_calls, "geocode_project must be called"
+        assert not cj_calls, (
+            f"callejero_address_to_rc must NOT be called from "
+            f"_geocode_for_adjacents; got {len(cj_calls)} call(s)"
+        )
+        assert out is not None
+        assert out["rc"] == "8606709CG9280N"
+
+    def test_phase25_geocode_handles_geocode_project_none(
+        self, tmp_path, monkeypatch,
+    ):
+        from automation import auto_extractor, geocode_coordinates
+
+        r = AutoExtractionResult()
+        r.prefills["site_address"] = "Carrer Inexistent 999"
+
+        proj = tmp_path / "9999999 NOWHERE"
+        proj.mkdir()
+
+        def fake_geocode_project(*args, **kwargs):
+            return None
+
+        monkeypatch.setattr(
+            auto_extractor, "geocode_project", fake_geocode_project, raising=False,
+        )
+        monkeypatch.setattr(
+            geocode_coordinates, "geocode_project", fake_geocode_project,
+            raising=False,
+        )
+
+        utm_x, utm_y = auto_extractor._phase25_geocode({}, r, proj)
+
+        assert utm_x is None and utm_y is None

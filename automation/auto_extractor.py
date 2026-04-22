@@ -1380,29 +1380,18 @@ def _phase25_geocode(
 
     province = result.prefills.get('province', '')
 
-    # Try direct Callejero first (exact RC from address database)
-    geo_result = None
+    # Always route through geocode_project: Callejero's fuzzy matcher on raw
+    # addresses can silently pick neighbouring parcels (e.g. Vilanova "Urb. La
+    # Serra" suffix). geocode_project runs CartoCiudad first, then reconciles
+    # with Cadastre, yielding the authoritative RC. Callejero is still used
+    # internally inside geocode_project's own pipeline.
     try:
-        from .geocode_coordinates import callejero_address_to_rc
-        callejero_result = callejero_address_to_rc(address, municipality, province=province)
-        if callejero_result and callejero_result.get('utm_x'):
-            logger.info(
-                f"Callejero direct: RC {callejero_result.get('rc','?')[:14]} "
-                f"({callejero_result['utm_x']:.0f}, {callejero_result['utm_y']:.0f})"
-            )
-            geo_result = callejero_result
-    except Exception as e:
-        logger.debug(f"Callejero direct failed: {e}")
-
-    # Fallback to geocode_project() if Callejero didn't work
-    if geo_result is None:
-        try:
-            geo_result = geocode_project(
-                address, municipality, point_ids, output_dir=None, province=province,
-            )
-        except Exception as exc:
-            result.steps_skipped.append(("Geocodificació", str(exc)))
-            return None, None
+        geo_result = geocode_project(
+            address, municipality, point_ids, output_dir=None, province=province,
+        )
+    except Exception as exc:
+        result.steps_skipped.append(("Geocodificació", str(exc)))
+        return None, None
 
     if geo_result is None:
         result.steps_skipped.append(
@@ -1642,26 +1631,13 @@ def _geocode_for_adjacents(
 ) -> dict | None:
     """Geocode a street address to UTM for adjacents probing.
 
-    Strategy:
-    1. Direct Callejero lookup (fast, precise — gives exact RC from address database)
-    2. Fallback: geocode_project() with progressive address stripping
+    Routes through geocode_project with progressive address variants.
+    Callejero is exercised inside geocode_project's own pipeline, but not as
+    a pre-empt here — its fuzzy matcher on raw addresses can silently pick
+    a neighbouring parcel (e.g. Vilanova "Urb. La Serra" suffix).
 
     Returns full geo_result dict (utm_x, utm_y, parcel_area, rc, ...) or None.
     """
-    # ── 1. Try direct Callejero (address → RC → polygon → UTM centroid)
-    try:
-        from .geocode_coordinates import callejero_address_to_rc
-        result = callejero_address_to_rc(street_address, municipality, province=province)
-        if result and result.get('utm_x') and result.get('utm_y'):
-            logger.info(
-                f"Callejero direct OK: '{street_address}' → RC {result.get('rc','?')[:14]} "
-                f"({result['utm_x']:.0f}, {result['utm_y']:.0f})"
-            )
-            return result
-    except Exception as e:
-        logger.debug(f"Callejero direct failed for '{street_address}': {e}")
-
-    # ── 2. Fallback: geocode_project() with address variants
     try:
         from .geocode_coordinates import geocode_project
     except ImportError as e:
