@@ -44,15 +44,43 @@ Full Step 7 tracker: `docs/knob-fixes-2026-04-19/STATUS.md`.
 
 CROSS snapshot: `docs/diagnostics/2026-04-22_CROSS_351d13.json`.
 
-## Highest-leverage remaining work
+## Last Diagnostic Status (2026-04-22)
 
-Ranked by impact from the sweep analysis:
+**Sweep:** `docs/diagnostics/2026-04-22_CROSS_351d13.json` — 64.1% match+close, 217 compared. Apr 19 judge-noise band: 62.4%-65.2% (three re-runs, same code). Today is inside the band.
 
-1. **Schema gaps** — 9 concepts `access_street` / `sulfate_*` / `spt_*` family account for ~20 NE var-comparisons across 7 projects. Add to `schemas/concepts/report_variables.yaml` with proper priority chains. Est. **+3-5pp** accuracy.
-2. **CTE classification threshold** — `cte_sol` 4/7, `cte_edificacio` 4/7, `qa_value` 4/7 all show the SAME wrong-answer pattern (Eva: `C-0`/`T-1`/`qa=3.0`; pipeline: `C-1`/`T-2`/`qa=2.0`). Single bug, 12 var-comparisons affected. Est. **+4pp**.
-3. **Settlement format** — 6/7 projects MISMATCH because pipeline returns `1.70` numeric, Eva writes narrative prose. Format-change only; values are correct. Est. **+6pp** if we wrap the number in Eva's standard sentence.
-4. **Identity narrative synthesis** — `client_name` 4/7, `architect_name` 4/7. Vision picks vendor-not-person or co-author-not-lead. Multi-source disambiguation.
-5. **Adjacent narrative** — `adjacent_*_fmt` 3-6/7. Eva's descriptions (visual observation) don't align with cadastre taxonomy. Hard problem; partial fix via visual-observations feed (already in Step 3 from prior session).
+**Failure-mode classification** — of 78 total MISMATCHes, 4 structural modes + 1 schema-gap class:
+
+| Mode | Vars | Recoverable | Effort |
+|---|---:|---:|---|
+| A. Schema gaps (NE) | ~20 | +3-5pp | S |
+| B. CTE threshold bug (1 cause, 12 vars) | 12 | +4pp | S |
+| C. Settlement format wrap (values correct, narrative missing) | 6 | +6pp | S |
+| D. Identity disambiguation (client/architect from multi-name docs) | 8 | +2-4pp | M |
+| E. Adjacent/location narrative (Eva voice vs cadastre taxonomy) | 12+ | +2-5pp | L |
+
+**Projected ceiling after A+B+C: ~77-80%.**
+
+**Per-project rates today:**
+
+| Project | Rate | vs Apr 21 |
+|---|---:|---:|
+| Bell-Lloc | 72.1% | flat |
+| Castellar | 77.4% | flat |
+| Rubí | 63.9% | -3.7pp (precision cost of wider extraction) |
+| Linyola | 73.7% | flat |
+| Alcoletge | 47.8% | +2.3pp |
+| **Vilanova** | **56.0%** | **+8.0pp** ✓ |
+| Anciles | 38.1% | DNS-contaminated (13 network errors mid-sweep) |
+
+**Full action plan + fix approach for each mode:** `docs/PLA-PROXIMES-ACCIONS-POST-SWEEP-2026-04-22.md`.
+
+## Suggested sequencing (next session)
+
+1. Action 1 (schema gaps) — biggest NE recovery, lowest risk. Pure YAML edit.
+2. Action 2 (CTE threshold) — single cause, bulk unlock. Verify against Eva's methodology first.
+3. Action 3 (settlement wrap) — biggest single pp gain, format-only, low risk.
+4. Re-sweep after 1-3 to measure real ceiling.
+5. Actions 4-5 (identity + narrative) once the structural fixes land.
 
 ## Active Blockers
 
