@@ -8,14 +8,22 @@ Designed to be replaceable with an LLM-based resolver in Phase G.
 
 from __future__ import annotations
 
+import logging
 import re
 from datetime import datetime
 
+from automation.internal_addresses import is_g3_internal_address
 from automation.schemas.loader import ConceptRegistry
 
 from .models import Signal, ResolvedValue
 
+logger = logging.getLogger(__name__)
+
 _concept_registry = ConceptRegistry()
+
+# Concepts that represent a project site address — G3 internal addresses
+# must never win the competition for these.
+_ADDRESS_CONCEPTS = {"street_address", "site_address", "client_address"}
 
 
 # Month name → number mapping (Spanish/Catalan)
@@ -89,6 +97,29 @@ def resolve_competition(
         key = (s.concept_id or s.maps_to) if use_concept_id else s.maps_to
         if key is not None:
             grouped.setdefault(key, []).append(s)
+
+    # Pre-filter: drop G3 internal-office addresses from address-concept pools
+    # BEFORE ranking. A G3 address should never be considered a candidate for
+    # the project's street/site/client address; downstream stages that still
+    # run their own guards remain as defensive fallbacks.
+    for variable in list(grouped.keys()):
+        if variable not in _ADDRESS_CONCEPTS:
+            continue
+        candidates = grouped[variable]
+        kept: list[Signal] = []
+        for sig in candidates:
+            if isinstance(sig.value, str) and is_g3_internal_address(sig.value):
+                logger.info(
+                    "Dropping G3 internal address signal for %s: %r from %s",
+                    variable, sig.value, sig.source_file,
+                )
+                continue
+            kept.append(sig)
+        if kept:
+            grouped[variable] = kept
+        else:
+            # All candidates were G3 addresses — drop the variable entirely.
+            del grouped[variable]
 
     resolved: dict[str, ResolvedValue] = {}
     for variable, candidates in grouped.items():

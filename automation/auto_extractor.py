@@ -46,18 +46,45 @@ logger = logging.getLogger(__name__)
 __all__ = ['auto_extract', 'AutoExtractionResult']
 
 # ── G3 internal address patterns (must NOT become project street_address) ──
-# G3 Desenvolupament Territorial SL office: C/ Vallbona, 22 — Rubí
-# Each tuple is (street_fragment, house_number) — BOTH must match to avoid
-# false positives on legitimate "Vallbona" addresses in other municipalities.
-_G3_ADDRESS_PATTERNS: list[tuple[str, str]] = [
-    ('VALLBONA', '22'),  # G3 office: C/ Vallbona, 22 — Rubí
-]
+# Canonical definition lives in automation.internal_addresses so every
+# pipeline stage (FileMiner competition, geocode, adjacents) uses the same
+# patterns. Re-exported here under the legacy private names for backward
+# compatibility with existing call sites below.
+from .internal_addresses import (
+    G3_ADDRESS_PATTERNS as _G3_ADDRESS_PATTERNS,
+    is_g3_internal_address as _is_g3_internal_address,
+)
 
 
-def _is_g3_internal_address(value: str) -> bool:
-    """Return True if value looks like G3's own office address, not a project site."""
-    upper = value.upper().strip()
-    return any(street in upper and number in upper for street, number in _G3_ADDRESS_PATTERNS)
+def _best_vision_address(
+    result: "AutoExtractionResult",
+    min_confidence: float = 0.9,
+) -> str | None:
+    """Return the highest-confidence architect-plan street_address from vision.
+
+    Projecte vision is intentionally excluded — it is OCR-noisy on scanned
+    project memoria PDFs; architect_plan vision is the trustworthy source.
+    Returns None if no qualifying source exists.
+    """
+    cmap = getattr(result, 'concept_map', None)
+    if cmap is None:
+        return None
+    sources = getattr(cmap, 'concept_sources', {}) or {}
+    candidates = sources.get('street_address', []) or []
+    best: tuple[float, str] | None = None
+    for src in candidates:
+        method = getattr(src, 'extraction_method', '') or ''
+        if not method.startswith('vision_probe:architect_plan'):
+            continue
+        conf = float(getattr(src, 'confidence', 0.0) or 0.0)
+        if conf < min_confidence:
+            continue
+        preview = (getattr(src, 'signal_preview', '') or '').strip()
+        if not preview:
+            continue
+        if best is None or conf > best[0]:
+            best = (conf, preview)
+    return best[1] if best else None
 
 
 _ADDR_ABBREVIATIONS = [
@@ -1061,6 +1088,83 @@ def _phase045_concept_scout(project_path: Path, result: AutoExtractionResult, em
     except Exception as exc:
         logger.warning("ConceptScout failed: %s", exc)
         result.steps_skipped.append(("ConceptScout", str(exc)))
+        return
+
+    # Merge vision-probe signals into the competition pool and re-resolve.
+    # Without this, vision extractions (e.g. planol street_address) never
+    # compete against text-extracted signals (e.g. G3 lab order Excel with
+    # G3's own office address), and the wrong value wins.
+    _merge_vision_signals_into_competition(result)
+
+
+def _merge_vision_signals_into_competition(result: AutoExtractionResult) -> None:
+    """Re-run FileMiner competition including ConceptScout vision-probe signals.
+
+    Only updates prefills/sources for concepts whose winner changed. Concepts
+    where no vision signal exists are untouched (the re-competition returns
+    the same winner the initial competition produced).
+    """
+    if result.concept_map is None:
+        return
+    if result.mining_result is None or not result.mining_result.signals:
+        return
+
+    try:
+        from .concept_scout import concept_sources_to_signals
+        from .fileminer import resolve_competition
+    except Exception as exc:
+        logger.warning("Vision-signal merge: import failed: %s", exc)
+        return
+
+    vision_signals = concept_sources_to_signals(result.concept_map.concept_sources)
+    if not vision_signals:
+        return
+
+    combined = list(result.mining_result.signals) + vision_signals
+    try:
+        resolved = resolve_competition(combined)
+    except Exception as exc:
+        logger.warning("Vision-signal merge: re-competition failed: %s", exc)
+        return
+
+    _ADDRESS_VARS = {'street_address', 'site_address', 'client_address'}
+    promoted: list[str] = []
+    for variable, rv in resolved.items():
+        # Only consider concepts where a vision signal actually competed.
+        if not any(
+            s.extraction_method.startswith('vision_probe:')
+            and (s.concept_id == variable or s.maps_to == variable)
+            for s in vision_signals
+        ):
+            continue
+        # Only promote when the winning signal is a vision-probe one (this is
+        # the "vision actually won" signal — skip if text still beat vision).
+        winning_sig = rv.signal
+        if not (winning_sig.extraction_method or '').startswith('vision_probe:'):
+            continue
+        value = rv.value
+        if not isinstance(value, str) or not value.strip():
+            continue
+        # Defensive: never promote a G3 internal address, even from vision.
+        if variable in _ADDRESS_VARS and _is_g3_internal_address(value):
+            continue
+
+        existing = result.prefills.get(variable)
+        if existing == value:
+            continue
+        logger.info(
+            "Vision-signal merge: promoting %s winner to vision (%s): %r -> %r",
+            variable, winning_sig.source_type, str(existing)[:60], str(value)[:60],
+        )
+        result.prefills[variable] = value
+        result.sources[variable] = f"vision_probe:{winning_sig.source_file}"
+        promoted.append(variable)
+
+    if promoted:
+        result.steps_completed.append(
+            f"Vision-signal merge: {len(promoted)} winner(s) promoted "
+            f"({', '.join(promoted[:8])})"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -1227,6 +1331,19 @@ def _phase25_geocode(
         or existing_user_data.get('site_address')
         or result.prefills.get('site_address')
     )
+
+    # Defensive preference: if ConceptScout extracted a high-confidence
+    # architect-plan street_address, use it instead of whatever propagated
+    # into prefills. This shields geocode from misrouted text signals.
+    vision_addr = _best_vision_address(result)
+    if vision_addr and not _is_g3_internal_address(vision_addr):
+        if address and address != vision_addr:
+            logger.info(
+                "Geocode: using vision-extracted architect-plan address %r over prefill %r",
+                vision_addr, address,
+            )
+        address = vision_addr
+
     if not address:
         result.steps_skipped.append(
             ("Geocodificació", "sense adreça disponible")
@@ -1453,6 +1570,14 @@ def _phase3_adjacents(
         adj_source = "DPSH coords"
         # Try planol street_address first, then site_address from docs/pressupost
         address_candidates = []
+        # Defensive preference: vision-extracted architect-plan address wins
+        # even if the winning prefill is already something else (e.g. Groq
+        # picked up a municipality center instead).
+        vision_addr = _best_vision_address(result)
+        if vision_addr and not _is_g3_internal_address(vision_addr):
+            cleaned = _clean_street_address(vision_addr, municipality) if municipality else vision_addr
+            if cleaned and cleaned not in address_candidates:
+                address_candidates.append(cleaned)
         for key in ('street_address', 'site_address'):
             val = result.prefills.get(key) or (existing_user_data or {}).get(key)
             if val and isinstance(val, str) and len(val) > 3:

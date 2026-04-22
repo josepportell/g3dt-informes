@@ -13,7 +13,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-from automation.fileminer.models import MiningResult
+from automation.fileminer.models import MiningResult, Signal, SignalType
 from automation.schemas.loader import concept_registry
 
 from .aggregator import aggregate_signals
@@ -22,12 +22,67 @@ from .scanner import enumerate_project_files
 
 __all__ = [
     'scout_project',
+    'concept_sources_to_signals',
     'ConceptMap',
     'ConceptSource',
     'FileEntry',
 ]
 
 logger = logging.getLogger(__name__)
+
+# Map vision-probe doc_type suffixes to the canonical source_type keys used
+# in schemas/concepts/report_variables.yaml source_priority tables.
+# Any vision_probe:* doc_type not listed here falls back to "vision_probe_other"
+# so it still participates in competition (at a low-but-defined priority).
+_VISION_DOC_TYPE_TO_SOURCE_TYPE: dict[str, str] = {
+    'architect_plan': 'planol_vision',
+    'projecte': 'projecte_vision',
+}
+_VISION_PROBE_FALLBACK_SOURCE_TYPE = 'vision_probe_other'
+
+
+def concept_sources_to_signals(
+    concept_sources: dict[str, list[ConceptSource]],
+) -> list[Signal]:
+    """Convert ConceptScout vision-probe sources into FileMiner Signals.
+
+    Vision probe results live in concept_sources and are not part of the
+    FileMiner signal pool by default. This converter bridges them so they
+    participate in resolve_competition() with a source_type that the
+    ConceptRegistry knows how to prioritize (e.g. planol_vision=20 beats
+    dades_camp_excel=35 for street_address).
+
+    Only sources whose extraction_method starts with "vision_probe:" are
+    converted. Text-aggregated sources are skipped because they derive from
+    Signals that are already in the pool.
+    """
+    signals: list[Signal] = []
+    for concept_id, sources in concept_sources.items():
+        for source in sources:
+            method = source.extraction_method or ''
+            if not method.startswith('vision_probe:'):
+                continue
+            preview = (source.signal_preview or '').strip()
+            if not preview:
+                continue
+            doc_type = method.split(':', 1)[1] if ':' in method else ''
+            source_type = _VISION_DOC_TYPE_TO_SOURCE_TYPE.get(
+                doc_type, _VISION_PROBE_FALLBACK_SOURCE_TYPE,
+            )
+            signals.append(Signal(
+                type=SignalType.TEXT,
+                label=f"vision probe ({doc_type or 'other'})",
+                value=preview,
+                raw_value=source.signal_preview or '',
+                maps_to=concept_id,
+                concept_id=concept_id,
+                source_file=source.file,
+                source_location=f"page {source.page}" if source.page else "",
+                extraction_method=method,
+                confidence=source.confidence,
+                source_type=source_type,
+            ))
+    return signals
 
 def scout_project(
     project_path: Path | str,
