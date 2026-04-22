@@ -2728,6 +2728,10 @@ def geocode_project(
     centroid_y: float | None = None
     utm_zone: int = 31  # default; overwritten by _wgs84_to_utm if conversion happens
     source = "geocode:cadastre_progressive"
+    # Lat/lng of the reconciled candidate (if any), used to query ICGC API
+    # Territorial as a one-call fast path for the parcel polygon + municipis
+    # metadata on Catalan projects. See step 4 below.
+    reconciled_latlng: tuple[float, float] | None = None
 
     # Extract components from address for progressive lookup
     sigla, parsed_street, parsed_number = _parse_address(address)
@@ -2825,6 +2829,7 @@ def geocode_project(
                     logger.debug(f"Reconciliation: RCCOOR re-query failed: {e}")
             centroid_x, centroid_y, utm_zone = nx, ny, nz
             rc = new_rc  # may be None — downstream handles that gracefully
+            reconciled_latlng = (alt_lat, alt_lon)
             source = f"geocode:{alt_source_tag}+cadastre(reconciled)"
 
     # 3. FALLBACK: Nominatim + grid search (only if primary failed)
@@ -2853,9 +2858,60 @@ def geocode_project(
         # Convert to UTM (auto-detect zone from longitude)
         centroid_x, centroid_y, utm_zone = _wgs84_to_utm(lat, lon)
 
-    # 4. Get parcel geometry (for point distribution) — try if we have RC
+    # 4. Get parcel geometry (for point distribution).
+    #    Fast path: on Catalan projects where we have a CartoCiudad lat/lng,
+    #    call the ICGC API Territorial (one HTTP call returns the parcel
+    #    polygon + municipis + sigpac + qualificacions-muc). Cross-verify
+    #    its ``refcadp`` against CartoCiudad's RC and log a WARNING on
+    #    disagreement. Fall back to the Cadastre WFS path on any failure.
     polygon: list[tuple[float, float]] | None = None
-    if rc and len(rc) >= 14:
+    _catalan_provs_for_icgc = {p.upper() for p in _CATALAN_PROVINCES}
+    is_catalan_for_icgc = (
+        province.upper() in _catalan_provs_for_icgc if province else True
+    )
+    # Only fire ICGC on the reconciliation branch — i.e., when the pipeline
+    # has adopted CartoCiudad (or Nominatim) over Cadastre's parcel. On the
+    # vanilla Cadastre happy path we trust the Cadastre WFS polygon to stay
+    # consistent with the RC it just returned.
+    icgc_latlng: tuple[float, float] | None = reconciled_latlng
+
+    used_icgc_territorial = False
+    if is_catalan_for_icgc and icgc_latlng is not None:
+        try:
+            from . import icgc_territorial as _icgc_t
+            icgc_response = _icgc_t.query_territorial(
+                icgc_latlng[0], icgc_latlng[1]
+            )
+        except Exception as e:
+            logger.debug(f"ICGC Territorial unavailable, will fall back: {e}")
+            icgc_response = None
+
+        if icgc_response:
+            rc_icgc = _icgc_t.extract_refcadp(icgc_response)
+            # Cross-verify against CartoCiudad's RC (not against the final
+            # ``rc`` variable, which may have been overwritten by Cadastre).
+            rc_cc = cartociudad_result.rc if cartociudad_result else None
+            if rc_cc and rc_icgc and rc_cc[:14] != rc_icgc[:14]:
+                logger.warning(
+                    f"RC disagreement at ({icgc_latlng[0]:.5f},"
+                    f"{icgc_latlng[1]:.5f}): CartoCiudad={rc_cc}, "
+                    f"ICGC={rc_icgc}. Proceeding with CartoCiudad."
+                )
+            icgc_polygon = _icgc_t.extract_parcel_polygon_utm(icgc_response)
+            if icgc_polygon and len(icgc_polygon) >= 3:
+                polygon = icgc_polygon
+                used_icgc_territorial = True
+                # Annotate the source tag so downstream diagnostics can tell
+                # which path produced the polygon.
+                if "icgc_territorial" not in source:
+                    source = f"{source}+icgc_territorial"
+            else:
+                logger.debug(
+                    "ICGC Territorial returned no parcel polygon; "
+                    "falling back to Cadastre WFS."
+                )
+
+    if polygon is None and rc and len(rc) >= 14:
         try:
             polygon = get_parcel_geometry_utm(rc[:14])
         except GeocodeError as e:
