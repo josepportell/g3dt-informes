@@ -355,3 +355,24 @@ def test_all_vision_detectable_concepts_exist_in_registry():
         f"schemas/concepts/report_variables.yaml or rename the vision "
         f"concept_id to match."
     )
+
+
+def test_probe_prompt_requires_house_number_for_street_address():
+    """The street_address definition must require a house number and
+    instruct the model to abstain on partial reads. Rubí shipped with
+    "C/de la Miranda" (no number) and Castellar with "C/ Arb...b"
+    (truncated handwriting read) — both are symptoms of prompt silence
+    on these requirements.
+    """
+    from automation.concept_scout.vision_probe import _PROBE_PROMPT
+
+    lower = _PROBE_PROMPT.lower()
+    # Explicit number requirement.
+    assert "house" in lower or "portal" in lower or "number" in lower, (
+        "prompt missing explicit house/portal number requirement for street_address"
+    )
+    # Abstain-on-partial instruction (either via 'omit', 'abstain', or
+    # 'not legible' phrasing near the street_address bullet).
+    assert any(kw in lower for kw in ("omit", "abstain", "not legible", "not clearly")), (
+        "prompt missing abstain-on-partial instruction for street_address"
+    )

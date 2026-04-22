@@ -40,6 +40,19 @@ _VISION_DOC_TYPE_TO_SOURCE_TYPE: dict[str, str] = {
 }
 _VISION_PROBE_FALLBACK_SOURCE_TYPE = 'vision_probe_other'
 
+# Concepts where vision reliability is poor on handwritten sources and a
+# low-confidence partial read does real damage downstream (e.g. a truncated
+# street_address mis-geocodes to a neighbouring parcel). The policy below
+# keeps these signals OUT of the FileMiner competition pool; the original
+# ConceptSource still appears in concept_map.json for audit/wizard display.
+_ADDRESS_VISION_CONFIDENCE_FLOOR = 0.9
+_ADDRESS_CONCEPTS = {'street_address', 'site_address'}
+# Document types where the address is written by hand (field-sheet caixetí)
+# — Castellar's m5.png returned "C/ Arb...b" at confidence 0.8, which is a
+# model OCR failure on cursive text. Machine-rendered architect plans and
+# projecte PDFs do not hit this class of error.
+_HANDWRITTEN_DOC_TYPES = {'field_sheet'}
+
 
 def concept_sources_to_signals(
     concept_sources: dict[str, list[ConceptSource]],
@@ -69,6 +82,23 @@ def concept_sources_to_signals(
             source_type = _VISION_DOC_TYPE_TO_SOURCE_TYPE.get(
                 doc_type, _VISION_PROBE_FALLBACK_SOURCE_TYPE,
             )
+            if concept_id in _ADDRESS_CONCEPTS:
+                if doc_type in _HANDWRITTEN_DOC_TYPES:
+                    logger.debug(
+                        "Dropping handwritten-source address signal "
+                        f"({concept_id} from {source.file}, "
+                        f"doc_type={doc_type!r}, preview={preview!r})"
+                    )
+                    continue
+                if source.confidence < _ADDRESS_VISION_CONFIDENCE_FLOOR:
+                    logger.debug(
+                        "Dropping low-confidence address signal "
+                        f"({concept_id} from {source.file}, "
+                        f"conf={source.confidence:.2f} < "
+                        f"{_ADDRESS_VISION_CONFIDENCE_FLOOR}, "
+                        f"preview={preview!r})"
+                    )
+                    continue
             signals.append(Signal(
                 type=SignalType.TEXT,
                 label=f"vision probe ({doc_type or 'other'})",

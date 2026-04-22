@@ -68,7 +68,7 @@ CONCEPTS TO LOOK FOR:
 - client_name: Client/promotor name
 - contact_name: Contact person name
 - client_nif: Tax ID (NIF/CIF)
-- street_address: Project site address
+- street_address: Project site address — MUST include both street name AND house/portal number. Omit entirely if the number is not clearly legible (street-only is worse than abstaining, because downstream geocoders need the number). For handwritten caixetís where letters are unclear, abstain rather than returning a partial read.
 - municipality: Town/city name
 - province: Province name
 - building_type: Type of building (habitatge, nau, etc.)

@@ -50,12 +50,14 @@ class TestConceptSourcesToSignals:
         assert signals[0].source_type == "projecte_vision"
 
     def test_unknown_doc_type_falls_back(self):
+        # Use a non-address concept: the mystery-doc fallback is orthogonal
+        # to the address-specific reliability floor enforced for street_address.
         sources = {
-            "street_address": [
+            "municipality": [
                 ConceptSource(
                     file="x.pdf",
                     confidence=0.7,
-                    signal_preview="Some address",
+                    signal_preview="Vilanova de Segrià",
                     extraction_method="vision_probe:mystery_doc",
                 ),
             ],
@@ -94,6 +96,73 @@ class TestConceptSourcesToSignals:
 
     def test_empty_input_no_op(self):
         assert concept_sources_to_signals({}) == []
+
+    # Address-specific reliability floor: vision street/site addresses must
+    # clear confidence 0.9 and must not come from handwritten doc types
+    # (field_sheet), otherwise they're dropped from competition. The original
+    # ConceptSource stays in concept_map.json for audit visibility.
+
+    def test_street_address_below_confidence_floor_dropped(self):
+        # Castellar-shape failure: vision returns "C/ Arb...b" @ 0.8 on m5.png.
+        sources = {
+            "street_address": [
+                ConceptSource(
+                    file="m5.png",
+                    confidence=0.8,
+                    signal_preview="C/ Arb...b",
+                    extraction_method="vision_probe:architect_plan",
+                ),
+            ],
+        }
+        assert concept_sources_to_signals(sources) == []
+
+    def test_street_address_from_field_sheet_dropped_even_at_full_confidence(self):
+        # Field sheets are handwritten; model can return confident-but-wrong
+        # reads on cursive text.
+        sources = {
+            "street_address": [
+                ConceptSource(
+                    file="PENETROS.pdf",
+                    confidence=1.0,
+                    signal_preview="C/ de la Miranda",
+                    extraction_method="vision_probe:field_sheet",
+                ),
+            ],
+        }
+        assert concept_sources_to_signals(sources) == []
+
+    def test_street_address_architect_plan_at_floor_accepted(self):
+        sources = {
+            "street_address": [
+                ConceptSource(
+                    file="1.0.pdf",
+                    confidence=0.9,
+                    signal_preview="C. Santa Gemma, 4",
+                    extraction_method="vision_probe:architect_plan",
+                ),
+            ],
+        }
+        signals = concept_sources_to_signals(sources)
+        assert len(signals) == 1
+        assert signals[0].value == "C. Santa Gemma, 4"
+        assert signals[0].source_type == "planol_vision"
+
+    def test_non_address_concepts_not_affected_by_floor(self):
+        # Municipality etc. can still come through at lower confidence —
+        # the floor applies only to address concepts.
+        sources = {
+            "municipality": [
+                ConceptSource(
+                    file="PENETROS.pdf",
+                    confidence=0.7,
+                    signal_preview="Vilanova de Segrià",
+                    extraction_method="vision_probe:field_sheet",
+                ),
+            ],
+        }
+        signals = concept_sources_to_signals(sources)
+        assert len(signals) == 1
+        assert signals[0].value == "Vilanova de Segrià"
 
 
 class TestReCompetitionMerge:
