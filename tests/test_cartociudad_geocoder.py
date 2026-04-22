@@ -570,8 +570,9 @@ class TestRefCatastralCapture:
 
 class TestQueryFilters:
     def test_fetch_candidates_url_contains_filters(self):
-        """Calling the fetch helper with a municipality must add
-        `municipio_filter`, `no_process`, and `limit` to the URL."""
+        """The fetch helper must add `no_process` and `limit` to the URL,
+        and MUST NOT send `municipio_filter` (accent-sensitive server-side —
+        see _cartociudad_fetch_candidates docstring). Regression guard."""
         captured = {"url": None}
 
         def _fake(req, timeout=None):  # noqa: ARG001
@@ -581,7 +582,6 @@ class TestQueryFilters:
         with patch.object(gc.urllib.request, "urlopen", side_effect=_fake):
             gc._cartociudad_fetch_candidates(
                 "Santa Gemma 4, Vilanova de Segrià",
-                municipality="Vilanova de Segrià",
                 limit=5,
             )
 
@@ -589,9 +589,8 @@ class TestQueryFilters:
         assert url is not None
         # q=... must be present
         assert "q=" in url
-        # Filters must be present (urlencoded)
-        assert "municipio_filter=" in url
-        assert "Vilanova" in url  # municipality name urlencoded
+        # municipio_filter must NOT be present (regression guard)
+        assert "municipio_filter=" not in url
         assert "no_process=" in url
         # Core no_process types (urlencoded commas are %2C)
         assert "toponimo" in url
@@ -599,7 +598,7 @@ class TestQueryFilters:
         assert "limit=5" in url
 
     def test_fetch_candidates_no_municipality_omits_filter(self):
-        """Without a municipality, `municipio_filter` must NOT be in the URL."""
+        """`municipio_filter` must NOT appear in the URL regardless of caller."""
         captured = {"url": None}
 
         def _fake(req, timeout=None):  # noqa: ARG001
@@ -618,7 +617,7 @@ class TestQueryFilters:
 
     def test_geocode_passes_municipality_filter_on_both_queries(self):
         """Both the province-included and province-stripped retries must
-        include `municipio_filter`."""
+        OMIT `municipio_filter` (accent-sensitive footgun). Regression guard."""
         calls: list[str] = []
 
         def _fake(req, timeout=None):  # noqa: ARG001
@@ -631,7 +630,66 @@ class TestQueryFilters:
             )
         assert len(calls) == 2
         for url in calls:
-            assert "municipio_filter=" in url, url
+            assert "municipio_filter=" not in url, url
+
+    def test_cartociudad_unaccented_muni_still_finds_candidate(self):
+        """Unaccented caller muni ("Vilanova de Segria") must still resolve
+        when CartoCiudad returns candidates tagged with the accented form
+        ("Vilanova de Segrià"). Protects against re-adding server-side
+        `municipio_filter` (which is accent-strict)."""
+        # Mock candidates as they'd come back from CartoCiudad with accented muni.
+        candidates = [
+            {
+                "id": "OTHER1",
+                "type": "portal",
+                "muni": "Alfarràs",
+                "portalNumber": 4,
+                "lat": 41.8,
+                "lng": 0.6,
+                "refCatastral": "WRONG_RC_1",
+            },
+            {
+                "id": "CORRECT",
+                "type": "portal",
+                "muni": "Vilanova de Segrià",
+                "portalNumber": 4,
+                "lat": 41.72,
+                "lng": 0.55,
+                "refCatastral": "CORRECT_RC_14",
+            },
+            {
+                "id": "OTHER2",
+                "type": "portal",
+                "muni": "Vilanova de Segrià",
+                "portalNumber": 6,
+                "lat": 41.72,
+                "lng": 0.55,
+                "refCatastral": "WRONG_RC_2",
+            },
+            {
+                "id": "OTHER3",
+                "type": "callejero",
+                "muni": "Torrefarrera",
+                "lat": 41.7,
+                "lng": 0.5,
+                "refCatastral": "",
+            },
+        ]
+
+        with patch.object(
+            gc,
+            "_cartociudad_fetch_candidates",
+            return_value=candidates,
+        ):
+            # Caller passes unaccented muni — exactly what the G3DT pipeline
+            # does when it derives muni from a folder name without diacritics.
+            result = gc.cartociudad_geocode(
+                "Santa Gemma 4", "Vilanova de Segria"
+            )
+
+        assert result is not None
+        assert result.rc == "CORRECT_RC_14"
+        assert result.portal_number == 4
 
 
 # ────────────────────────────────────────────────────────────────────────────
