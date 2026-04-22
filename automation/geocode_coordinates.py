@@ -2875,7 +2875,6 @@ def geocode_project(
     # consistent with the RC it just returned.
     icgc_latlng: tuple[float, float] | None = reconciled_latlng
 
-    used_icgc_territorial = False
     if is_catalan_for_icgc and icgc_latlng is not None:
         try:
             from . import icgc_territorial as _icgc_t
@@ -2900,7 +2899,6 @@ def geocode_project(
             icgc_polygon = _icgc_t.extract_parcel_polygon_utm(icgc_response)
             if icgc_polygon and len(icgc_polygon) >= 3:
                 polygon = icgc_polygon
-                used_icgc_territorial = True
                 # Annotate the source tag so downstream diagnostics can tell
                 # which path produced the polygon.
                 if "icgc_territorial" not in source:

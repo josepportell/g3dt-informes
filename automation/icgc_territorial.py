@@ -169,6 +169,9 @@ def query_territorial(
     try:
         payload = json.loads(body)
     except ValueError as exc:
+        logger.warning(
+            "ICGC Territorial returned unparseable JSON (schema drift?): %s", exc
+        )
         raise ICGCTerritorialParseError(
             f"Invalid JSON from ICGC Territorial: {exc}"
         ) from exc
@@ -488,6 +491,7 @@ def _cache_save(
         "layers": list(layers),
         "data": data,
     }
+    tmp = None
     try:
         tmp = tempfile.NamedTemporaryFile(
             mode="w",
@@ -502,7 +506,8 @@ def _cache_save(
     except OSError as exc:
         logger.warning("Failed to cache ICGC Territorial response: %s", exc)
         # Best-effort cleanup
-        try:
-            Path(tmp.name).unlink(missing_ok=True)  # type: ignore[attr-defined]
-        except Exception:
-            pass
+        if tmp is not None:
+            try:
+                Path(tmp.name).unlink(missing_ok=True)
+            except OSError:
+                pass
