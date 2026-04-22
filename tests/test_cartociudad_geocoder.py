@@ -570,8 +570,9 @@ class TestRefCatastralCapture:
 
 class TestQueryFilters:
     def test_fetch_candidates_url_contains_filters(self):
-        """Calling the fetch helper with a municipality must add
-        `municipio_filter`, `no_process`, and `limit` to the URL."""
+        """The fetch helper must add `no_process` and `limit` to the URL,
+        and MUST NOT send `municipio_filter` (accent-sensitive server-side —
+        see _cartociudad_fetch_candidates docstring). Regression guard."""
         captured = {"url": None}
 
         def _fake(req, timeout=None):  # noqa: ARG001
@@ -581,7 +582,6 @@ class TestQueryFilters:
         with patch.object(gc.urllib.request, "urlopen", side_effect=_fake):
             gc._cartociudad_fetch_candidates(
                 "Santa Gemma 4, Vilanova de Segrià",
-                municipality="Vilanova de Segrià",
                 limit=5,
             )
 
@@ -589,9 +589,8 @@ class TestQueryFilters:
         assert url is not None
         # q=... must be present
         assert "q=" in url
-        # Filters must be present (urlencoded)
-        assert "municipio_filter=" in url
-        assert "Vilanova" in url  # municipality name urlencoded
+        # municipio_filter must NOT be present (regression guard)
+        assert "municipio_filter=" not in url
         assert "no_process=" in url
         # Core no_process types (urlencoded commas are %2C)
         assert "toponimo" in url
@@ -599,7 +598,7 @@ class TestQueryFilters:
         assert "limit=5" in url
 
     def test_fetch_candidates_no_municipality_omits_filter(self):
-        """Without a municipality, `municipio_filter` must NOT be in the URL."""
+        """`municipio_filter` must NOT appear in the URL regardless of caller."""
         captured = {"url": None}
 
         def _fake(req, timeout=None):  # noqa: ARG001
@@ -618,7 +617,7 @@ class TestQueryFilters:
 
     def test_geocode_passes_municipality_filter_on_both_queries(self):
         """Both the province-included and province-stripped retries must
-        include `municipio_filter`."""
+        OMIT `municipio_filter` (accent-sensitive footgun). Regression guard."""
         calls: list[str] = []
 
         def _fake(req, timeout=None):  # noqa: ARG001
@@ -631,7 +630,66 @@ class TestQueryFilters:
             )
         assert len(calls) == 2
         for url in calls:
-            assert "municipio_filter=" in url, url
+            assert "municipio_filter=" not in url, url
+
+    def test_cartociudad_unaccented_muni_still_finds_candidate(self):
+        """Unaccented caller muni ("Vilanova de Segria") must still resolve
+        when CartoCiudad returns candidates tagged with the accented form
+        ("Vilanova de Segrià"). Protects against re-adding server-side
+        `municipio_filter` (which is accent-strict)."""
+        # Mock candidates as they'd come back from CartoCiudad with accented muni.
+        candidates = [
+            {
+                "id": "OTHER1",
+                "type": "portal",
+                "muni": "Alfarràs",
+                "portalNumber": 4,
+                "lat": 41.8,
+                "lng": 0.6,
+                "refCatastral": "WRONG_RC_1",
+            },
+            {
+                "id": "CORRECT",
+                "type": "portal",
+                "muni": "Vilanova de Segrià",
+                "portalNumber": 4,
+                "lat": 41.72,
+                "lng": 0.55,
+                "refCatastral": "CORRECT_RC_14",
+            },
+            {
+                "id": "OTHER2",
+                "type": "portal",
+                "muni": "Vilanova de Segrià",
+                "portalNumber": 6,
+                "lat": 41.72,
+                "lng": 0.55,
+                "refCatastral": "WRONG_RC_2",
+            },
+            {
+                "id": "OTHER3",
+                "type": "callejero",
+                "muni": "Torrefarrera",
+                "lat": 41.7,
+                "lng": 0.5,
+                "refCatastral": "",
+            },
+        ]
+
+        with patch.object(
+            gc,
+            "_cartociudad_fetch_candidates",
+            return_value=candidates,
+        ):
+            # Caller passes unaccented muni — exactly what the G3DT pipeline
+            # does when it derives muni from a folder name without diacritics.
+            result = gc.cartociudad_geocode(
+                "Santa Gemma 4", "Vilanova de Segria"
+            )
+
+        assert result is not None
+        assert result.rc == "CORRECT_RC_14"
+        assert result.portal_number == 4
 
 
 # ────────────────────────────────────────────────────────────────────────────
@@ -756,3 +814,121 @@ def test_reconciliation_rccoor_still_used_when_cartociudad_has_no_rc(
     assert result is not None
     assert rccoor_called["flag"] is True
     assert result["rc"] == "RCCOORRC0000000000XX"
+
+
+# ────────────────────────────────────────────────────────────────────────────
+# Address-suffix preprocessing (Urb./Edifici/Bloc/etc.)
+# ────────────────────────────────────────────────────────────────────────────
+
+class TestStripAddressSuffixTokens:
+    def test_strip_suffix_removes_urb(self):
+        assert gc._strip_address_suffix_tokens(
+            "C. Santa Gemma, 4 Urb. La Serra"
+        ) == "C. Santa Gemma, 4"
+
+    def test_strip_suffix_case_insensitive(self):
+        expected = "C. Santa Gemma, 4"
+        assert gc._strip_address_suffix_tokens("C. Santa Gemma, 4 URB. LA SERRA") == expected
+        assert gc._strip_address_suffix_tokens("C. Santa Gemma, 4 Urb. La Serra") == expected
+        assert gc._strip_address_suffix_tokens("C. Santa Gemma, 4 urb. la serra") == expected
+
+    def test_strip_suffix_handles_comma_prefix(self):
+        assert gc._strip_address_suffix_tokens("10, Urb. X") == "10"
+
+    def test_strip_suffix_idempotent(self):
+        once = gc._strip_address_suffix_tokens("C. Santa Gemma, 4 Urb. La Serra")
+        twice = gc._strip_address_suffix_tokens(once)
+        assert once == twice == "C. Santa Gemma, 4"
+
+    def test_strip_suffix_edifici_bloc_pis(self):
+        assert gc._strip_address_suffix_tokens(
+            "Carrer Major 10 Edifici Roure, Pis 2"
+        ) == "Carrer Major 10"
+        assert gc._strip_address_suffix_tokens(
+            "Av Catalunya 5 Bloc B"
+        ) == "Av Catalunya 5"
+        assert gc._strip_address_suffix_tokens(
+            "Carrer Llarg 7 Piso 3"
+        ) == "Carrer Llarg 7"
+
+    def test_strip_suffix_preserves_clean_address(self):
+        assert gc._strip_address_suffix_tokens("Carrer Major 10") == "Carrer Major 10"
+
+
+class TestCartociudadSuffixPreprocessing:
+    def _portal_payload(self, number: int = 4) -> str:
+        return json.dumps([{
+            "type": "portal",
+            "muni": "Vilanova de Segrià",
+            "address": "CALLE SANTA GEMMA 4, La Serra (Vilanova de Segrià)",
+            "portalNumber": number,
+            "lat": 41.70978,
+            "lng": 0.57897,
+            "refCatastral": "8606709CG9280N",
+        }])
+
+    def test_cartociudad_uses_stripped_retry_when_first_fails(self):
+        """Unstripped query returns zero candidates; stripped retry hits."""
+        payload = self._portal_payload()
+        calls = {"n": 0, "queries": []}
+
+        def _fake(req, timeout=None):  # noqa: ARG001
+            calls["n"] += 1
+            calls["queries"].append(req.full_url)
+            # Any query containing 'Urb' returns empty; stripped ones hit.
+            body = "[]" if "Urb" in req.full_url else payload
+            return _fake_http_response(body)
+
+        with patch.object(gc.urllib.request, "urlopen", side_effect=_fake):
+            result = gc.cartociudad_geocode(
+                "C. Santa Gemma, 4 Urb. La Serra",
+                "Vilanova de Segrià",
+                "Lleida",
+            )
+        assert result is not None
+        assert result.rc == "8606709CG9280N"
+        assert calls["n"] >= 2, f"Expected retry after strip, got {calls['n']} calls"
+        # Last successful query must be the stripped form.
+        last_url = calls["queries"][-1]
+        assert "Urb" not in last_url
+        assert "Santa+Gemma" in last_url or "Santa%20Gemma" in last_url
+
+    def test_cartociudad_skips_duplicate_queries_when_nothing_stripped(self):
+        """Already-clean address should not re-issue identical queries."""
+        body = self._portal_payload()
+        calls = {"n": 0, "queries": []}
+
+        def _fake(req, timeout=None):  # noqa: ARG001
+            calls["n"] += 1
+            calls["queries"].append(req.full_url)
+            return _fake_http_response(body)
+
+        with patch.object(gc.urllib.request, "urlopen", side_effect=_fake):
+            result = gc.cartociudad_geocode(
+                "Santa Gemma 4", "Vilanova de Segrià", "Lleida"
+            )
+        assert result is not None
+        # First query (with province) hits → no retry needed.
+        assert calls["n"] == 1
+        # No duplicate URLs issued across the full ladder even under failure:
+        assert len(calls["queries"]) == len(set(calls["queries"]))
+
+    def test_cartociudad_vilanova_urb_suffix_integration(self):
+        """End-to-end: Vilanova input with Urb. suffix → portal + RC returned."""
+        payload = self._portal_payload(number=4)
+
+        def _fake(req, timeout=None):  # noqa: ARG001
+            # CartoCiudad chokes on the suffix; only stripped queries succeed.
+            body = "[]" if "Urb" in req.full_url else payload
+            return _fake_http_response(body)
+
+        with patch.object(gc.urllib.request, "urlopen", side_effect=_fake):
+            result = gc.cartociudad_geocode(
+                "C. Santa Gemma, 4 Urb. La Serra",
+                "Vilanova de Segrià",
+                "Lleida",
+            )
+        assert result is not None
+        assert (result.lat, result.lng) == (41.70978, 0.57897)
+        assert result.rc == "8606709CG9280N"
+        assert result.portal_number == 4

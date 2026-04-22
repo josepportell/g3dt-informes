@@ -1715,6 +1715,59 @@ CARTOCIUDAD_URL = (
 # (street entrance).
 _CARTOCIUDAD_NO_PROCESS = "toponimo,municipio,comunidad autonoma,poblacion"
 
+# Trailing apartment / complex / urbanization suffix tokens that CartoCiudad
+# cannot parse as part of a street segment. When present, the geocoder
+# returns zero candidates even though the street + number alone resolve
+# cleanly (e.g. "C. Santa Gemma, 4 Urb. La Serra" → fails; stripped → OK).
+# Matched case-insensitively; consumes from the token to end of string
+# (suffixes commonly contain their own inner commas, e.g. "Urb. X, Casa 2").
+_CARTOCIUDAD_SUFFIX_TOKENS = (
+    "Urbanització",
+    "Urbanizacion",
+    "Urbanización",
+    "Urb.",
+    "Urb",
+    "Apartament",
+    "Apartamento",
+    "Apt.",
+    "Edifici",
+    "Edificio",
+    "Ed.",
+    "Bloque",
+    "Bloc",
+    "Bq.",
+    "Escala",
+    "Esc.",
+    "Esc",
+    "Piso",
+    "Pis",
+    "Porta",
+    "Puerta",
+    "Pta.",
+    "Pta",
+)
+
+# Build once. Longest tokens first so "Urb." wins over bare "Urb", etc.
+_CARTOCIUDAD_SUFFIX_RE = re.compile(
+    r"[\s,]+(?:" + "|".join(
+        re.escape(t) for t in sorted(_CARTOCIUDAD_SUFFIX_TOKENS, key=len, reverse=True)
+    ) + r")\b.*$",
+    re.IGNORECASE,
+)
+
+
+def _strip_address_suffix_tokens(street: str) -> str:
+    """Strip trailing apartment/complex/urbanization suffixes from a street.
+
+    Returns the street with any match of `_CARTOCIUDAD_SUFFIX_RE` removed.
+    Preserves the street name and house number untouched. Safe to call
+    repeatedly (idempotent).
+    """
+    if not street:
+        return street
+    cleaned = _CARTOCIUDAD_SUFFIX_RE.sub("", street)
+    return cleaned.rstrip(" ,").strip()
+
 
 @dataclass(frozen=True)
 class CartoCiudadResult:
@@ -1960,24 +2013,26 @@ def _pick_cartociudad_candidate(
 
 def _cartociudad_fetch_candidates(
     query: str,
-    municipality: str | None = None,
     limit: int = 5,
 ) -> list[dict] | None:
     """Fetch + parse CartoCiudad candidates for a query string.
 
     Applies server-side filters when available:
-      - `municipio_filter=<name>` restricts candidates to a given municipality
-        (human-readable name, not muniCode). Collapses noisy multi-town
-        responses down to the target town's portals.
       - `no_process=<types>` skips lower-precision candidate types.
       - `limit=<N>` caps the candidate count.
+
+    Note: we deliberately do NOT send `municipio_filter`. That parameter is
+    accent-sensitive server-side (e.g. "Vilanova de Segria" vs
+    "Vilanova de Segrià" return different candidate sets), which makes it a
+    footgun when the caller's municipality was derived from a folder name
+    without diacritics. Municipality filtering is done client-side in
+    `_pick_cartociudad_candidate` via `_cartociudad_muni_matches`, which is
+    both accent- and case-insensitive.
 
     Returns the parsed candidate list (possibly empty) or None on HTTP/parse
     failure that should be treated as a hard error (not a negative result).
     """
     params = [("q", query)]
-    if municipality:
-        params.append(("municipio_filter", municipality))
     params.append(("no_process", _CARTOCIUDAD_NO_PROCESS))
     params.append(("limit", str(limit)))
     url = f"{CARTOCIUDAD_URL}?{urllib.parse.urlencode(params)}"
@@ -2056,13 +2111,36 @@ def cartociudad_geocode(
 
     wanted_number = _extract_house_number(address)
 
-    # Build queries in order of specificity. Retry without the province if
-    # the first attempt yields zero candidates — CartoCiudad sometimes
-    # rejects the extra segment (e.g. Vilanova de Segrià).
+    # Some inputs carry trailing apartment/complex/urbanization suffixes
+    # (e.g. "C. Santa Gemma, 4 Urb. La Serra") that CartoCiudad cannot
+    # parse — the query returns zero candidates even though the street +
+    # number alone would resolve. We retry with the suffix stripped.
+    stripped_address = _strip_address_suffix_tokens(address)
+    if stripped_address != address:
+        logger.debug(
+            f"CartoCiudad suffix-strip: {address!r} -> {stripped_address!r}"
+        )
+
+    # Build queries most-specific → least. De-dupe so an already-clean
+    # input doesn't cause identical retries.
     queries: list[str] = []
+    seen: set[str] = set()
+
+    def _enqueue(q: str) -> None:
+        if q and q not in seen:
+            queries.append(q)
+            seen.add(q)
+
     if province:
-        queries.append(", ".join([address, municipality, province]))
-    queries.append(", ".join([address, municipality]))
+        _enqueue(", ".join([address, municipality, province]))
+    _enqueue(", ".join([address, municipality]))
+    if stripped_address and stripped_address != address:
+        if province:
+            _enqueue(", ".join([stripped_address, municipality, province]))
+        _enqueue(", ".join([stripped_address, municipality]))
+
+    if not queries:
+        return None
 
     picked: dict | None = None
     used_query: str = queries[0]
@@ -2077,7 +2155,7 @@ def cartociudad_geocode(
     fallback: dict | None = None
     fallback_query: str = queries[0]
     for idx, query in enumerate(queries):
-        candidates = _cartociudad_fetch_candidates(query, municipality=municipality)
+        candidates = _cartociudad_fetch_candidates(query)
         if candidates is None:
             # Hard HTTP/parse error: bail out (do not cache).
             return None
