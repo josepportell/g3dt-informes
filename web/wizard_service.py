@@ -606,6 +606,23 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     except Exception:
         pass
 
+    # Fallback: no sondeig file or empty extraction → synthesize layers from
+    # DPSH N20 step-change (mirrors build_report_data's Fix α fallback so the
+    # wizard prefill path and the report-generation path stay aligned).
+    if not sondeig_layers and getattr(dpsh, 'tests', None):
+        try:
+            from automation.dpsh_segmenter import segment_by_n20_step
+            sondeig_layers = segment_by_n20_step(dpsh)
+            if sondeig_layers and len(sondeig_layers) > 1:
+                logger.info(
+                    "dpsh_segmenter synthesized %d sondeig_layers from DPSH "
+                    "in wizard_service prefill (no sondeig file or empty).",
+                    len(sondeig_layers),
+                )
+        except Exception as exc:
+            logger.warning("dpsh_segmenter fallback failed: %s", exc)
+            sondeig_layers = []
+
     # Determine bearing-level soil type from merged prefills.
     # num_levels reflects the highest-indexed level key; soil_type/desc use it.
     num_levels = 1
@@ -707,6 +724,10 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     # _format_calc_trace to surface the bicapa pick + Crespo fines branch
     # that drove the qa_value computation.
     _set('_calc_bearing_idx', bearing_idx, 'system')
+    # Stash bearing-filtered N20 so _compute_lookup_prefills (cte_sol) can
+    # consume it without re-deriving. Underscore prefix keeps it out of the
+    # diagnostic variable comparison loop.
+    _set('_bearing_avg_n20', avg_n20, 'system')
     # Map soil_type -> Crespo fine_fraction label that crespo_phi_granular
     # would receive if invoked. "transitional" matches Eva's anchor at 28°
     # for llim argilós / sorres argiloses (Finding #10).
@@ -962,9 +983,22 @@ def _compute_lookup_prefills(merged: dict[str, Any], auto_result: Any) -> None:
         cte_edif = lookup_cte_edificacio(building_type or 'habitatge', num_floors or '1')
         _set('cte_edificacio', cte_edif, f'CTE DB SE-C ({building_type or "default"})')
 
-    # CTE soil classification
+    # CTE soil classification — prefer the bearing-stratum-filtered N20 that
+    # _compute_geotech_prefills stashed in merged['_bearing_avg_n20']. That
+    # value reflects the competent bearing layer (skip-soft-top rule) rather
+    # than the whole-profile mean, which can be polluted by shallow fill.
+    # Falls back to overall_average_n20 when the stash is absent (e.g. no
+    # DPSH, or geotech prefills short-circuited earlier).
     dpsh = auto_result.dpsh_data if hasattr(auto_result, 'dpsh_data') else None
-    avg_n20 = getattr(dpsh, 'overall_average_n20', None) if dpsh else None
+    bearing_entry = merged.get('_bearing_avg_n20')
+    avg_n20 = None
+    if isinstance(bearing_entry, dict):
+        try:
+            avg_n20 = float(bearing_entry.get('value')) if bearing_entry.get('value') is not None else None
+        except (TypeError, ValueError):
+            avg_n20 = None
+    if avg_n20 is None:
+        avg_n20 = getattr(dpsh, 'overall_average_n20', None) if dpsh else None
     cte_sol = lookup_cte_sol(average_n20=avg_n20)
     _set('cte_sol', cte_sol, 'CTE DB SE-C' + (f' (N20={avg_n20:.0f})' if avg_n20 else ''))
 
