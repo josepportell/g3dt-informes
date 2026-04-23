@@ -61,10 +61,8 @@ def lookup_cte_edificacio(building_type: str, num_floors: int | str) -> str:
         "C-0", "C-1", or "C-2"
     """
     floor_count = parse_floor_count(num_floors)
-    # classify_building needs area_m2; use 200 as typical (>= 100 -> C-1)
-    # The area threshold only matters for C-0 vs C-1 on single-floor buildings.
-    # For > 1 floor, area is irrelevant. For 1-floor, Eva's projects are always > 100m2.
-    return classify_building(area_m2=200, floors=floor_count)
+    # area ignored by classify_building (kept for signature compatibility)
+    return classify_building(area_m2=0, floors=floor_count)
 
 
 def lookup_cte_sol(average_n20: Optional[float] = None) -> str:

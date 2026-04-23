@@ -147,13 +147,15 @@ def classify_building(
     """
     Classify building per CTE DB SE-C Table 3.1.
 
-    Classification criteria:
-    - C-0: Minor importance (1 floor, < 100 m2, temporary/auxiliary)
-    - C-1: Standard constructions (default for most residential)
-    - C-2: Special constructions (>= 11 floors, or critical infrastructure)
+    Classification criteria (floor count is the sole C-0/C-1 discriminator
+    per CTE DB SE-C; parcel/building area is NOT a discriminator):
+    - C-0: 1 floor (minor importance, temporary/auxiliary)
+    - C-1: 2-10 floors (standard constructions, default for most residential)
+    - C-2: >= 11 floors (special constructions, critical infrastructure)
 
     Args:
-        area_m2: Building footprint area in square meters
+        area_m2: Building footprint area in square meters (retained for API
+            stability and notes; not used in classification).
         floors: Number of floors (int) or floor string (e.g., "Pb + 2Pp")
         has_basement: Whether building has basement(s) not counted in floors
 
@@ -174,6 +176,7 @@ def classify_building(
     # Validate area
     if area_m2 < 0:
         raise ValueError(f"area_m2 cannot be negative: {area_m2}")
+    _ = area_m2  # kept for API stability; not a classification input
 
     # Parse floor count
     floor_count = parse_floor_count(floors)
@@ -181,10 +184,10 @@ def classify_building(
     # Add basement if not already counted
     total_floors = floor_count + (1 if has_basement else 0)
 
-    # Apply classification rules per CTE DB SE-C
+    # Apply classification rules per CTE DB SE-C (floor count only)
     if total_floors >= 11:
         return "C-2"
-    elif total_floors >= 2 or area_m2 >= 100:
+    elif total_floors >= 2:
         return "C-1"
     else:
         return "C-0"
