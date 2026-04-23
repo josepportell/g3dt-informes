@@ -380,6 +380,19 @@ concepts:
     source_priority:
       user: 10
 
+  access_street:
+    type: text
+    group: field_work
+    required: false
+    description_ca: Carrer o via d'acces al solar el dia del treball de camp
+    source_priority:
+      user: 10
+      projecte_vision: 20
+      planol_vision: 25
+      groq_llm: 42
+      content_email: 43
+      content_pdf: 45
+
   cota_referencia:
     type: text
     group: field_work
@@ -389,6 +402,66 @@ concepts:
       user: 10
       sondeig_vision: 20
       icgc_api: 30
+
+  spt_test_id:
+    type: text
+    group: field_work
+    required: false
+    description_ca: "Identificador de l'assaig SPT (ex: SPT-1)"
+    source_priority:
+      user: 10
+      sondeig_vision: 20
+      pressupost_pdf: 30
+      dades_camp_excel: 35
+      content_pdf: 45
+
+  spt_location:
+    type: text
+    group: field_work
+    required: false
+    description_ca: "Punt on es realitza l'SPT (ex: S-1)"
+    source_priority:
+      user: 10
+      sondeig_vision: 20
+      pressupost_pdf: 30
+      dades_camp_excel: 35
+      content_pdf: 45
+
+  spt_depth_range:
+    type: text
+    group: field_work
+    required: false
+    description_ca: "Rang de profunditat de l'SPT en metres (ex: -1.00 a -1.20)"
+    source_priority:
+      user: 10
+      sondeig_vision: 20
+      pressupost_pdf: 30
+      dades_camp_excel: 35
+      content_pdf: 45
+
+  spt_lithology:
+    type: text
+    group: field_work
+    required: false
+    description_ca: Litologia del tram assajat amb SPT
+    source_priority:
+      user: 10
+      sondeig_vision: 20
+      pressupost_pdf: 30
+      dades_camp_excel: 35
+      content_pdf: 45
+
+  spt_n30:
+    type: text
+    group: field_work
+    required: false
+    description_ca: "Valor N30 de l'SPT (nombre de cops o R per refus)"
+    source_priority:
+      user: 10
+      sondeig_vision: 20
+      pressupost_pdf: 30
+      dades_camp_excel: 35
+      content_pdf: 45
 
   # ---------------------------------------------------------------------------
   # PARCEL - Adjacents i caracteristiques del solar
@@ -673,6 +746,42 @@ concepts:
     source_priority:
       user: 10
       comanda_lab_excel: 35
+      content_pdf: 45
+
+  sulfate_baumann:
+    type: text
+    group: lab
+    required: false
+    description_ca: Resultat del test Baumann-Gully per sulfats
+    source_priority:
+      user: 10
+      comanda_lab_excel: 35
+      pressupost_pdf: 40
+      content_email: 43
+      content_pdf: 45
+
+  sulfate_classification:
+    type: text
+    group: lab
+    required: false
+    description_ca: "Classificacio d'agressivitat per sulfats (ex: No Agressius)"
+    source_priority:
+      user: 10
+      comanda_lab_excel: 35
+      pressupost_pdf: 40
+      content_email: 43
+      content_pdf: 45
+
+  sulfate_level_name:
+    type: text
+    group: lab
+    required: false
+    description_ca: "Nivell on s'ha pres la mostra de sulfats (ex: 2on nivell)"
+    source_priority:
+      user: 10
+      comanda_lab_excel: 35
+      pressupost_pdf: 40
+      content_email: 43
       content_pdf: 45
 
   lab_tests:

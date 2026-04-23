@@ -30,7 +30,7 @@ def schema() -> dict:
 def test_classify_schema_missing(schema: dict) -> None:
     """Concept not in YAML schema → schema_missing."""
     reason, fix, roles = _classify_ne_reason(
-        concept_id="access_street",
+        concept_id="concept_that_does_not_exist_in_schema",
         schema=schema,
         fm_roles=set(),
         concept_sources={},
