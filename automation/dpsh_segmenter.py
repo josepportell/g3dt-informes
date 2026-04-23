@@ -11,7 +11,11 @@ Ref: docs/PLA-ACCIO-2-BIFURCACIO-2026-04-23.md §2.1.
 """
 from __future__ import annotations
 
+import logging
+
 from .dpsh_extractor import DPSHData
+
+logger = logging.getLogger(__name__)
 
 
 _REFUSAL_N20 = 100
@@ -139,11 +143,16 @@ def segment_by_n20_step(dpsh_data: DPSHData) -> list[dict]:
 
     if len(dpsh_data.tests) < 2 or len(readings_nr) < 4:
         overall = _layer_avg_n20(readings_all, 0.0, None)
+        logger.info(
+            "dpsh_segmenter: insufficient data (tests=%d, readings=%d) "
+            "→ single-layer wrap.",
+            len(dpsh_data.tests), len(readings_nr),
+        )
         return [{
             'depth_from_m': 0.0,
             'depth_to_m': None,
             'n20_average': overall,
-            'description': 'auto-segmented from DPSH (insufficient data, single layer)',
+            'description': '',
             'soil_type': None,
         }]
 
@@ -152,25 +161,31 @@ def segment_by_n20_step(dpsh_data: DPSHData) -> list[dict]:
 
     if not depths:
         overall = _layer_avg_n20(readings_all, 0.0, None)
+        logger.info(
+            "dpsh_segmenter: no N20 step detected → single-layer wrap."
+        )
         return [{
             'depth_from_m': 0.0,
             'depth_to_m': None,
             'n20_average': overall,
-            'description': 'auto-segmented from DPSH (no step detected, single layer)',
+            'description': '',
             'soil_type': None,
         }]
 
+    logger.info(
+        "dpsh_segmenter: detected N20 step boundaries at %s m.",
+        ", ".join(f"{d:.2f}" for d in depths),
+    )
     layers: list[dict] = []
     bounds = [0.0, *depths]
     for i, start in enumerate(bounds):
         end: float | None = bounds[i + 1] if i + 1 < len(bounds) else None
         avg = _layer_avg_n20(readings_all, start, end)
-        first_boundary = depths[0]
         layers.append({
             'depth_from_m': float(start),
             'depth_to_m': float(end) if end is not None else None,
             'n20_average': avg,
-            'description': f'auto-segmented from DPSH (N20 step detected at {first_boundary:.2f} m)',
+            'description': '',
             'soil_type': None,
         })
     return layers

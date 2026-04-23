@@ -35,7 +35,8 @@ def test_single_test_returns_single_wrap():
     assert len(layers) == 1
     assert layers[0]['depth_from_m'] == 0.0
     assert layers[0]['depth_to_m'] is None
-    assert 'single layer' in layers[0]['description'].lower()
+    # description stays empty so diagnostic strings don't leak into Eva's .docx.
+    assert layers[0]['description'] == ''
 
 
 def test_too_few_readings_returns_single_wrap():
@@ -51,7 +52,8 @@ def test_uniform_high_n20_no_step():
     ])
     layers = segment_by_n20_step(dpsh)
     assert len(layers) == 1
-    assert 'no step' in layers[0]['description'].lower()
+    # description stays empty so diagnostic strings don't leak into Eva's .docx.
+    assert layers[0]['description'] == ''
 
 
 def test_alcoletge_clear_step():
@@ -95,7 +97,7 @@ def test_single_test_step_not_corroborated():
 
 
 def test_two_close_boundaries_pick_more_pronounced():
-    """Candidates at 1.0m (delta 5) and 1.2m (delta 12) within 0.5m → pick 1.2."""
+    """Two candidate boundaries within 0.5m → keep the one with the larger N20 delta."""
     dpsh = _make_dpsh([
         [(0.2, 2), (0.4, 3), (0.6, 3), (0.8, 4), (1.0, 8), (1.2, 20), (1.4, 22)],
         [(0.2, 3), (0.4, 2), (0.6, 4), (0.8, 3), (1.0, 7), (1.2, 19), (1.4, 21)],

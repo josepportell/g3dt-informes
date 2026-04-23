@@ -231,3 +231,79 @@ def test_build_report_data_synthesized_layers_drive_bearing_n20():
     # ~12 and polluted global ~7.5, phi should be meaningfully higher
     # than the 28° floor for very-weak soils.
     assert gp.phi >= 28.0
+
+
+def test_segmenter_does_not_fire_when_user_data_has_sondeig_layers():
+    """Regression guard: segmenter must NOT override user-provided layers.
+
+    Synthetic DPSH has an Alcoletge-like N20 step that WOULD trigger the
+    segmenter. But user_data already supplies its own sondeig_layers, so
+    the segmenter must be skipped and the user descriptions must pass
+    through unchanged (specifically NOT replaced by the old segmenter
+    diagnostic string 'auto-segmented from DPSH…'). We use two layers to
+    take the description-preserving branch of _generate_soil_levels."""
+    from automation.report_data import build_report_data
+
+    dpsh = DPSHData(
+        expedient='TEST',
+        tests=[
+            DPSHTest(
+                test_id='P-1',
+                readings=[
+                    DPSHReading(depth_m=-d, n20=n, nb=n / 0.83)
+                    for d, n in [
+                        (0.2, 5), (0.4, 2), (0.6, 4), (0.8, 9),
+                        (1.0, 9), (1.2, 12), (1.4, 14),
+                    ]
+                ],
+            ),
+            DPSHTest(
+                test_id='P-2',
+                readings=[
+                    DPSHReading(depth_m=-d, n20=n, nb=n / 0.83)
+                    for d, n in [
+                        (0.2, 5), (0.4, 5), (0.6, 2), (0.8, 4),
+                        (1.0, 9), (1.2, 14), (1.4, 13),
+                    ]
+                ],
+            ),
+        ],
+    )
+    project_data = {
+        'project': {'expedient': 'TEST', 'municipality': 'TEST'},
+        'building': {},
+        'client': {},
+        'architect': {},
+        'location': {},
+        'descriptions': {},
+    }
+    user_data = {
+        'num_soil_levels': 2,
+        'sondeig_layers': [
+            {
+                'depth_from_m': 0.0,
+                'depth_to_m': 1.2,
+                'description': 'User top layer',
+                'soil_type': 'cohesive',
+            },
+            {
+                'depth_from_m': 1.2,
+                'depth_to_m': 5.0,
+                'description': 'User bottom layer',
+                'soil_type': 'granular',
+            },
+        ],
+    }
+
+    report = build_report_data(
+        project_data=project_data,
+        user_data=user_data,
+        dpsh_data=dpsh,
+    )
+    # The user-supplied layers must survive intact: segmenter did not run.
+    assert len(report.soil_levels) == 2
+    descriptions = [lvl.description for lvl in report.soil_levels]
+    assert descriptions == ['User top layer', 'User bottom layer']
+    # Explicitly guard against the old segmenter debug string leaking through.
+    for d in descriptions:
+        assert 'auto-segmented' not in d.lower()

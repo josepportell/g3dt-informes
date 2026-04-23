@@ -435,7 +435,7 @@ def build_report_data(
                     logger.info("Auto-filled sondeig_layers from sondeig data in build_report_data")
             except Exception:
                 pass
-        if not sondeig_layers and dpsh_data is not None and dpsh_data.tests:
+        if not sondeig_layers:
             from .dpsh_segmenter import segment_by_n20_step
             sondeig_layers = segment_by_n20_step(dpsh_data)
             if sondeig_layers and len(sondeig_layers) > 1:
