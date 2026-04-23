@@ -203,6 +203,10 @@ Extreu ~30-37 variables amb posició exacta dels informes reals d'Eva (`.doc`/`.
 
 **Doc complet:** `docs/REFERENCE-EXTRACTOR.md`
 
+## Metodologia d'Eva (source-of-truth de càlculs)
+
+`docs/METODOLOGIA-EVA.md` (2026-04-17) — síntesi dels 7 informes signats amb cites textuals: Crespo Villalaz (c/φ), Rodríguez Ortiz "Curso aplicado de cimentaciones" Cap. 2 (bicapa, Fig. 2.9), Schmertmann 1970 (E/assentaments, 2B/4B), Terzaghi-Peck (Qa granular). PDF d'Ortiz Cap. 2 arxivat a `docs/research/books/`. **Abans de modificar qualsevol càlcul geotècnic, consulta aquest document.**
+
 ## Documents de Camp
 
 ### PENETROS.pdf (DPSH)

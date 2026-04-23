@@ -97,3 +97,7 @@ CROSS snapshot: `docs/diagnostics/2026-04-22_CROSS_351d13.json`.
 ## Pla de Delivery
 
 Detalls complets: `docs/PLA-DELIVERY-ACCIONS.md`.
+
+## Metodologia d'Eva (source-of-truth)
+
+`docs/METODOLOGIA-EVA.md` — síntesi dels 7 informes signats d'Eva amb les cites textuals dels mètodes (Crespo Villalaz per c/φ, Rodríguez Ortiz "Curso aplicado de cimentaciones" Cap. 2 per bicapa, Schmertmann per E/assentaments, Terzaghi-Peck per Qa granular). PDF d'Ortiz Cap. 2 arxivat a `docs/research/books/`. Aquest doc és la referència primària per qualsevol canvi en càlculs geotècnics.
