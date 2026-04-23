@@ -420,8 +420,8 @@ def build_report_data(
     # not global average which mixes shallow fill with bearing material.
     geotechnical_params = None
     geomech = user_data.get('geomech_params', {})
+    sondeig_layers: list[dict] = user_data.get('sondeig_layers') or []
     if dpsh_data and dpsh_data.tests:
-        sondeig_layers = user_data.get('sondeig_layers', [])
         # Auto-fill from sondeig_extracted.json when user_data has no layers
         # (defense-in-depth: report_generator also does this, but
         # build_report_data may be called independently e.g. from audit)
@@ -435,6 +435,15 @@ def build_report_data(
                     logger.info("Auto-filled sondeig_layers from sondeig data in build_report_data")
             except Exception:
                 pass
+        if not sondeig_layers and dpsh_data is not None and dpsh_data.tests:
+            from .dpsh_segmenter import segment_by_n20_step
+            sondeig_layers = segment_by_n20_step(dpsh_data)
+            if sondeig_layers and len(sondeig_layers) > 1:
+                logger.info(
+                    "dpsh_segmenter synthesized %d sondeig_layers from DPSH "
+                    "(no sondeig file or empty sondeig extraction).",
+                    len(sondeig_layers),
+                )
         soil_types_list = user_data.get('soil_types', [])
         avg_n20 = _bearing_stratum_n20(dpsh_data, sondeig_layers, soil_types_list)
         # Convert N20 → Nb (Borrows) for all correlations.
@@ -498,11 +507,13 @@ def build_report_data(
             gamma=gamma, cohesion=cohesion, phi=phi, E=E,
         )
 
-    # Genera nivells de sol basics
+    # Genera nivells de sol basics. Pass the possibly-synthesized
+    # sondeig_layers so _generate_soil_levels sees the same structure
+    # as _bearing_stratum_n20 did.
     soil_levels = _generate_soil_levels(
         dpsh_data,
         user_data.get('num_soil_levels', 1),
-        user_data.get('sondeig_layers'),
+        sondeig_layers or None,
         user_data.get('soil_types'),
     )
 
