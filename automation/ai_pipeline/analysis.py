@@ -35,9 +35,11 @@ _ANALYSIS_MANIFEST = Path("validation") / "ai_analysis.json"
 
 _DEFAULT_MODEL = "claude-sonnet-4-6"
 _MAX_TOKENS = 8_000
-# 1.1 — static context (concept YAML + glossary) is now a separate cache_control'd
-# block for Anthropic prompt caching (D16). Block layout change invalidates v1.0 caches.
-_SCHEMA_VERSION = "1.1"
+# 1.1 — static context (concept YAML + glossary) became a separate cache_control'd
+# block for Anthropic prompt caching (D16).
+# 1.2 — extracted-image passthroughs now inherit the parent's source_path, so
+# Stage 4 groups them with the parent document (D1#2). Grouping change → cache invalidates.
+_SCHEMA_VERSION = "1.2"
 
 # Per-source caps so a pathological source doesn't blow the context window
 _MAX_ARTIFACTS_PER_SOURCE = 30
@@ -199,9 +201,11 @@ def _group_artifacts_by_source(conv: ProjectConversion) -> dict[str, list[Conver
         if a.skipped or not a.path:
             continue
         groups[a.source_path].append(a)
-    # Deterministic order per source
+    # Within each source: text artifacts (paginated/sheet-scoped) first, then
+    # passthrough images so the LLM reads the document's text before seeing its
+    # embedded visuals.
     for arts in groups.values():
-        arts.sort(key=lambda a: (a.page or 0, a.sheet or "", a.path))
+        arts.sort(key=lambda a: (a.format == "passthrough", a.page or 0, a.sheet or "", a.path))
     return groups
 
 

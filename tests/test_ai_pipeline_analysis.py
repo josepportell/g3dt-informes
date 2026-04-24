@@ -25,10 +25,12 @@ from automation.ai_pipeline.analysis import (
     _build_user_content,
     _cache_path,
     _classify_error,
+    _group_artifacts_by_source,
     analyze_project,
     load_analysis,
     save_analysis,
 )
+from automation.ai_pipeline.conversion import ConvertedArtifact, ProjectConversion
 
 
 # ---------------------------------------------------------------------------
@@ -650,8 +652,8 @@ def test_analysis_aggregates_cache_token_stats(tmp_path):
 
 
 def test_schema_version_bumped_invalidates_local_cache(tmp_path):
-    # Schema bumped to 1.1 to mark the block-layout change.
-    assert _SCHEMA_VERSION == "1.1"
+    # Schema bumped to 1.2 — D16 (block layout) then D1#2 (grouping).
+    assert _SCHEMA_VERSION == "1.2"
 
     project = _make_project(tmp_path)
     client = _MockClient(_happy_behavior)
@@ -667,3 +669,96 @@ def test_schema_version_bumped_invalidates_local_cache(tmp_path):
 
 
 # SENTINEL_D16_END
+
+
+# ---------------------------------------------------------------------------
+# D1#2 tests — extracted images group with their parent source
+# ---------------------------------------------------------------------------
+
+
+def _fake_conversion(artifacts: list[ConvertedArtifact]) -> ProjectConversion:
+    return ProjectConversion(
+        project_path="/tmp/fake",
+        converted_at="2026-04-25T00:00:00+00:00",
+        artifacts=artifacts,
+    )
+
+
+def test_group_puts_text_before_passthrough_images():
+    """Sort within a source: text pages/sheets come before passthrough images."""
+    conv = _fake_conversion([
+        ConvertedArtifact(
+            path="validation/ai_pipeline/extracted/A.01/img_000.png",
+            format="passthrough", source_path="A.01.pdf",
+            strategy_used="image_passthrough",
+        ),
+        ConvertedArtifact(
+            path="validation/ai_pipeline/converted/A.01/page_002.md",
+            format="md", source_path="A.01.pdf", page=2,
+            strategy_used="pdf_to_markdown_plus_images",
+        ),
+        ConvertedArtifact(
+            path="validation/ai_pipeline/converted/A.01/page_001.md",
+            format="md", source_path="A.01.pdf", page=1,
+            strategy_used="pdf_to_markdown_plus_images",
+        ),
+    ])
+    groups = _group_artifacts_by_source(conv)
+    arts = groups["A.01.pdf"]
+    assert [a.page for a in arts[:2]] == [1, 2]  # text in page order first
+    assert arts[-1].format == "passthrough"      # image last
+
+
+def test_group_merges_extracted_images_with_parent():
+    """An extracted-image artifact carrying the parent's source_path lands in one group."""
+    conv = _fake_conversion([
+        ConvertedArtifact(
+            path="validation/ai_pipeline/converted/A.01/page_001.md",
+            format="md", source_path="A.01.pdf", page=1,
+            strategy_used="pdf_to_markdown_plus_images",
+        ),
+        ConvertedArtifact(
+            path="validation/ai_pipeline/extracted/A.01/img_000.png",
+            format="passthrough", source_path="A.01.pdf",
+            strategy_used="image_passthrough",
+        ),
+        ConvertedArtifact(
+            path="validation/ai_pipeline/extracted/A.01/img_001.png",
+            format="passthrough", source_path="A.01.pdf",
+            strategy_used="image_passthrough",
+        ),
+    ])
+    groups = _group_artifacts_by_source(conv)
+    assert list(groups.keys()) == ["A.01.pdf"]
+    assert len(groups["A.01.pdf"]) == 3
+
+
+def test_extracted_image_does_not_trigger_extra_llm_call(tmp_path):
+    """A PDF with an embedded image should produce ONE Stage 4 call, not two."""
+    project = tmp_path / "demo_grouping"
+    project.mkdir()
+    # PDF with text + embedded image — Stage 2 will extract the image as its own FileClass.
+    # We need a small PDF that both has text AND an image.
+    import fitz
+    from PIL import Image
+    doc = fitz.open()
+    page = doc.new_page()
+    page.insert_text((72, 72), "Plan with an embedded image. " * 8)
+    # Insert an image rectangle; use a random-noise PNG big enough to pass the 5 KB filter.
+    img_buf = BytesIO()
+    random_img = Image.new("RGB", (256, 256))
+    import random
+    random.seed(7)
+    random_img.putdata([(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+                        for _ in range(256 * 256)])
+    random_img.save(img_buf, format="PNG")
+    page.insert_image(fitz.Rect(100, 200, 300, 400), stream=img_buf.getvalue())
+    (project / "PLAN.pdf").write_bytes(doc.tobytes())
+    doc.close()
+
+    client = _MockClient(_happy_behavior)
+    analysis = analyze_project(project, client=client, model="claude-sonnet-4-6")
+    # Exactly one source group (the PDF), not one-per-embedded-image.
+    assert len(analysis.sources) == 1
+    assert analysis.sources[0].source_path == "PLAN.pdf"
+    assert client.messages.calls == 1

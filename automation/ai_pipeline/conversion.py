@@ -490,13 +490,21 @@ def _convert_msg(pp: Path, fc: FileClass, typ: ProjectTypology) -> list[Converte
 
 
 def _passthrough(pp: Path, fc: FileClass, typ: ProjectTypology) -> list[ConvertedArtifact]:
-    """For image/text passthrough: reference the original file, no conversion."""
+    """For image/text passthrough: reference the original file, no conversion.
+
+    Extracted images (`parent_path` set) inherit the parent's `source_path` so
+    Stage 4 groups them with the parent document rather than issuing a separate
+    LLM call per image (D1#2).
+    """
     abs_path = pp / fc.path
     size = abs_path.stat().st_size if abs_path.is_file() else 0
+    source_path = fc.path
+    if fc.parent_path and any(other.path == fc.parent_path for other in typ.files):
+        source_path = fc.parent_path
     return [ConvertedArtifact(
         path=fc.path,                    # points at the original file
         format="passthrough",
-        source_path=fc.path,
+        source_path=source_path,
         source_chain=list(fc.source_chain),
         strategy_used=fc.conversion_strategy,
         bytes_written=size,

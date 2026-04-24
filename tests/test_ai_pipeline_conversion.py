@@ -230,6 +230,43 @@ def test_image_passthrough_references_original(tmp_path):
     assert a.path == "foto.png"
 
 
+def test_extracted_image_inherits_parent_source_path(tmp_path):
+    """D1#2 — images extracted from a PDF group under the parent's source_path."""
+    project = _make_project(tmp_path)
+    conv = convert_project(project)
+    # PLAN_with_image.pdf has an embedded image that Stage 2 extracts
+    extracted = [
+        a for a in conv.artifacts
+        if a.format == "passthrough" and a.path.startswith("validation/ai_pipeline/extracted/PLAN_with_image/")
+    ]
+    assert extracted, "expected at least one extracted image artifact"
+    for a in extracted:
+        assert a.source_path == "PLAN_with_image.pdf", (
+            f"extracted image {a.path} should regroup under parent, got {a.source_path}"
+        )
+        # The artifact still points at its own file so Stage 4 can load the image bytes
+        assert a.path.endswith(".png") or a.path.endswith(".jpg") or a.path.endswith(".jpeg")
+
+
+def test_eva_root_image_keeps_its_own_source_path(tmp_path):
+    """Eva-provided images at project root have no parent — source_path stays the file itself."""
+    project = _make_project(tmp_path)
+    conv = convert_project(project)
+    arts = conv.artifacts_of("foto.png")
+    assert len(arts) == 1
+    assert arts[0].source_path == "foto.png"
+
+
+def test_parent_artifact_group_includes_extracted_images(tmp_path):
+    """After D1#2, artifacts_of(parent) returns both text pages AND extracted images."""
+    project = _make_project(tmp_path)
+    conv = convert_project(project)
+    arts = conv.artifacts_of("PLAN_with_image.pdf")
+    formats = {a.format for a in arts}
+    assert "md" in formats, "expected text artifacts for the parent PDF"
+    assert "passthrough" in formats, "expected extracted-image artifacts re-grouped under the parent"
+
+
 # ---------------------------------------------------------------------------
 # Dedup + re-run
 # ---------------------------------------------------------------------------
