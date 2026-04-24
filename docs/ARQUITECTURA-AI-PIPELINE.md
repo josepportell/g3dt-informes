@@ -3,7 +3,7 @@
 **Data:** 2026-04-24
 **Branca:** `experiment/ai-pipeline`
 **Autor:** Josep Portell + Claude Code
-**Estat:** Fases 1, 2 i 3 implementades. Fases 4–7 pendents de disseny.
+**Estat:** Fases 1, 2 i 3 implementades. Fase 4 dissenyada (pendent d'implementació). Fases 5–7 pendents de disseny.
 
 ---
 
@@ -27,7 +27,7 @@ La motivació és una línia de progressió natural:
 | 1 | **Inventari**             | Enumerar tots els fitxers del projecte (incloent adjunts de .msg).          |
 | 2 | **Tipologia**             | Classificar cada fitxer pel seu **tipus tècnic** (PDF text, PDF scanned, Excel amb imatges, etc.), marcar els inútils, i extreure imatges embegudes com a fitxers propis. |
 | 3 | **Conversió**             | Produir artefactes LLM-ready per cada fitxer útil: markdown per pàgina de PDF, CSV per full d'Excel, PNG per pàgina escanejada, markdown per cos .msg/DOCX. |
-| 4 | **Anàlisi**               | Extreure informació de cada fitxer (LLM + OCR + vision).                    |
+| 4 | **Anàlisi**               | Per cada font, l'LLM llegeix els artefactes i emet (a) un `SourceInsight` (què és el document) i (b) `Candidate` values per les 53 variables de l'informe. |
 | 5 | **Source of truth**       | Resoldre conflictes entre fonts — triar valor autoritatiu per cada concepte. |
 | 6 | **Assignació a variables**| Mapejar valors a les ~53 variables de l'informe. Marcar els buits per Eva. |
 | 7 | **Generació de l'informe**| Produir el .docx final (reutilitzant `ReportGenerator` o substituint-lo).   |
@@ -485,57 +485,272 @@ Artefactes a disc: `{projecte}/validation/ai_pipeline/converted/{source_stem}/*`
 
 ---
 
-## 7. Arquitectura tècnica
+## 7. Fase 4: Anàlisi (dissenyada)
+
+### 7.1 Què fa i què NO fa
+
+**Fa:**
+- Agrupa els artefactes de Fase 3 per `source_path` (p.ex. totes les pàgines d'un PDF + els seus artefactes embeguts són una unitat).
+- Per cada font, fa **una** crida multimodal a l'LLM amb prompt estructurat que demana dues coses: (a) un `SourceInsight` (què és aquest document), (b) tots els `Candidate`s de valors per les 53 variables de l'informe que siguin extreïbles d'aquest document.
+- Recull i desa els resultats a `validation/ai_analysis.json` més artefactes per-font a `validation/ai_pipeline/analysis/{source_stem}/insight.json` + `candidates.json`.
+- Produeix un resum per Eva de què s'ha entès del projecte.
+
+**NO fa:**
+- No resol conflictes entre candidats (Fase 5).
+- No pica valors finals per cada variable (Fase 6).
+- No tradueix signals a unitats, no fa càlculs geotècnics, no interpreta — només extreu amb justificació.
+
+### 7.2 Filosofia: "què entén l'LLM d'aquest document"
+
+Alfonso: *no estem construint un enginyer geotècnic, estem construint un assistent de redacció intel·ligent*. Fase 4 encarna això:
+
+- Cada font es llegeix **en context complet** (totes les seves pàgines/fulls junts, més imatges), no pàgina per pàgina. Així l'LLM pot concloure "això és un plànol v2 amb el caixetí a la pàgina 1 i les cotes repartides a les pàgines 2-3" en comptes d'emetre 3 opinions inconsistents.
+- Abans d'extreure cap valor, l'LLM descriu la font. El `SourceInsight` recull: tipus de document, propòsit, autor, data, versió, enllaços a altres fonts, suggeriments d'autoritat. Aquesta és la matèria primera de Fase 5.
+- Cada valor extret ve amb `quote` verbatim (ancorant el senyal al text de l'artefacte) i `reasoning` (una frase que justifica la inferència). Auditable per construcció.
+
+### 7.3 Models de dades
+
+```python
+class SourceInsight(BaseModel):
+    """LLM's understanding of what a source document IS, independent of values extracted."""
+    source_path: str               # file (or virtual email+attachments group) described
+    document_type: str             # "architect_plan" | "dpsh_field_sheet" | "client_email" | "budget_excel" | …
+    purpose: str                   # one-sentence plain-language description
+    author: str = ""               # "Joan Vidal" if inferable
+    date_info: str = ""            # "sent 2025-04-15", "signed 2025-05-20", "undated"
+    version_info: str = ""         # "v2; modifies v1"
+    related_sources: list[str] = []  # other source_paths this document references
+    authority_hints: list[str] = []  # e.g. "best source for parcel dimensions"
+    confidence: float              # 0-1 on the insight overall
+    notes: str = ""
+
+class Candidate(BaseModel):
+    """One candidate value for one concept, extracted from one source."""
+    concept_id: str                # e.g., "architect_name", "utm_x", "num_floors"
+    value: Any                     # string, number, list, dict — type determined by the concept
+    confidence: float              # 0-1
+    quote: str                     # verbatim snippet from the artifact
+    artifact_path: str             # which specific Stage 3 artifact carried this value
+    source_path: str               # the FileClass origin (same as SourceInsight.source_path)
+    source_chain: list[str]        # inherited provenance
+    extractor: str                 # model id used
+    reasoning: str                 # one-sentence justification
+
+class SourceAnalysis(BaseModel):
+    """Everything Stage 4 emits for one source."""
+    source_path: str
+    insight: SourceInsight
+    candidates: list[Candidate]
+    attempts: int                  # how many LLM attempts before success
+    elapsed_ms: int
+    model: str
+    input_tokens: int = 0
+    output_tokens: int = 0
+
+class SourceFailure(BaseModel):
+    """A source Stage 4 could not analyze."""
+    source_path: str
+    error_type: str                # "schema_validation" | "api_error" | "timeout" | "empty_response"
+    attempts: int
+    last_error: str
+    raw_response: str = ""         # stashed for debugging, capped at 8 KB
+
+class ProjectAnalysis(BaseModel):
+    project_path: str
+    analyzed_at: str
+    sources: list[SourceAnalysis] = Field(default_factory=list)
+    failures: list[SourceFailure] = Field(default_factory=list)
+    candidates_by_concept: dict[str, list[str]] = Field(default_factory=dict)
+        # concept_id → list of source_paths that produced candidates; pre-computed index
+    eva_summary: list[str] = Field(default_factory=list)
+    total_input_tokens: int = 0
+    total_output_tokens: int = 0
+    estimated_cost_usd: float = 0.0
+```
+
+### 7.4 Call shape per source
+
+**Input to the LLM** (per-source call):
+- System prompt: overall role + output contract + concept glossary (hand-tuned per tricky concept)
+- User content blocks, in order:
+  1. YAML: ALL 53 concepts from `schemas/concepts/report_variables.yaml` (id, type, group, description) — so the LLM sees the full target space
+  2. For each artifact of this source (in deterministic order):
+     - Text (markdown/CSV): inline as a text block
+     - Image (PNG/JPG): attached as an image block
+  3. An imperative footer: *"Return a single tool call `SourceAnalysis` with (insight, candidates)."*
+- Anthropic `tools` with a strict JSON schema matching `{insight: SourceInsight, candidates: list[Candidate]}`.
+
+**Output:** one tool_use block conforming to the schema. Parsed into `SourceAnalysis`.
+
+### 7.5 Model selection
+
+**Default:** `claude-sonnet-4-6` for **all** sources, both text and multimodal. Highest practical quality-cost in our workload class.
+
+**Env-var upgrade paths (no code change):**
+- `G3DT_AI_MODEL_GEOTECH=claude-opus-4-7` → route sources whose `SourceInsight.document_type` ∈ {`sondeig_annex`, `dpsh_field_sheet`, `laboratory_report`} to Opus on a *second* analysis pass. Disabled by default.
+- `G3DT_AI_MODEL_VISION=gpt-4.1-mini` → route sources with 0 text artifacts (only PNG/JPG) through OpenAI. Disabled by default.
+
+MVP path: Sonnet for everything. We turn the knobs only when we observe Sonnet misjudging on a concrete concept.
+
+### 7.6 Error handling: systemic vs per-source
+
+Errors split in two classes, handled very differently:
+
+**Systemic errors** (fail-fast, project-wide):
+- HTTP 401 (invalid API key), 402 / `insufficient_credits`, 403 (blocked account)
+- `model_not_found` (bad env-var override)
+- Missing `ANTHROPIC_API_KEY` in environment
+
+When the first source call returns any of these, Stage 4 **aborts the entire project analysis** with one clear error in `ProjectAnalysis.failures` like:
+
+```
+{
+  "error_type": "insufficient_credits",
+  "message": "Anthropic API returned 402 insufficient_credits. All 96 sources skipped.
+  Action: add credits, or set G3DT_AI_MODEL_VISION=gpt-4.1-mini for image-only sources.",
+  "sources_skipped": 96
+}
+```
+
+No point listing the same error per source — the wizard shows one banner, Eva acts once.
+
+**Per-source errors** (isolated, continue with others):
+- Schema validation (rare) → one automatic retry with trimmed prompt; if still fails, source recorded in `failures`, remaining sources continue.
+- Transient API errors (429, 5xx, network timeout) → exponential backoff up to 3 attempts per source; if still fails, source recorded in `failures`, remaining sources continue.
+- Oversized input (context window exceeded) → source recorded in `failures` with hint to trim the Stage 3 output (rare edge case).
+
+**Circuit breaker:** even for per-source errors, if 3 consecutive non-systemic failures occur, abort the project analysis (likely a new systemic issue we haven't classified). Saves runaway cost when something is genuinely wrong.
+
+**Top-level reporting:** `ProjectAnalysis.failures` surfaces everything. On a healthy run it's empty. On any systemic abort it has one entry with the action to take. On per-source failures it lists them for retry.
+
+**Never silent fallback:** we do NOT auto-switch models on failure (e.g., Sonnet → Haiku). Quality would change without Eva knowing. The env-var upgrade paths (§7.5) are opt-in; degradation fallbacks are off.
+
+### 7.7 Caching
+
+Cache key per source = SHA256 of:
+- The full per-source prompt (concept YAML + glossary + each artifact's bytes read from disk)
+- Model id
+- Schema version (bumped when we change `SourceInsight` / `Candidate` shape)
+
+Cache lives at `{project}/validation/ai_pipeline/analysis/{source_stem}/_cache.json`. Hit → return cached `SourceAnalysis` instantly (0 cost). Miss → LLM call, persist. `refresh=true` forces re-analysis.
+
+Per-source granularity means: if Eva edits one file and re-runs, only that source pays the LLM; the rest are free.
+
+### 7.8 Context packed into the prompt
+
+1. **Full concept schema** (`schemas/concepts/report_variables.yaml`): identity + type + group + short description. ~53 concepts × ~40 tokens = ~2.1 k tokens. Sent once per call.
+2. **Eva's glossary** (hand-curated, new file `schemas/ai_pipeline/concept_glossary.yaml`): notes on ambiguous cases. Examples:
+   - `num_floors`: *Planta baixa + 1 pis = 2 floors (CTE counting). Basement doesn't count unless it's a habitable ground floor. Distinct from 'building_height_m'.*
+   - `Nb` vs `N20`: *Nb = dynamic penetration, Eva's primary correlation variable. N20 = SPT/DPSH blows per 20 cm. When Eva says "N = 45", she usually means Nb unless the source is a field sheet.*
+   - `cota_referencia`: *Absolute elevation (m.s.n.m.) of the reference point — usually the plànol's top-of-slab. NOT depth from surface.*
+- ~15 of the 53 concepts warrant an explicit glossary entry; the rest the YAML describes sufficiently.
+
+### 7.9 Resum per Eva (`eva_summary`)
+
+```
+Hem analitzat 18 fonts i n'hem extret 247 candidats de valor:
+• 6 fonts classificades com a plànols arquitectònics (2 versions d'A.01).
+• 4 fonts són fitxes de camp (DPSH + sondeig).
+• 3 fonts són emails amb adjunts del client i de l'arquitecte.
+• 43 variables de l'informe tenen candidats; 10 no s'han pogut trobar en cap font.
+• 2 fonts no s'han pogut analitzar — fes "Refresh" per tornar-ho a intentar.
+```
+
+Aquesta és la segona línia de transparència: *"això és el que hem entès del que has aportat"*.
+
+### 7.10 Dependències
+
+- **`anthropic`** (ja present) — API per Claude
+- **`openai`** (opcional, només si `G3DT_AI_MODEL_VISION=gpt-4.1-mini`) — ja present
+- Cap binari nou
+
+### 7.11 Com s'utilitzarà
+
+- **CLI:** `scripts/ai_pipeline_analysis.py --project {id} [--save] [--json] [--source {substring}]`
+- **API:** `GET /api/ai-pipeline/analysis/{project}?refresh=true`
+- **Wizard:** secció "Stage 4: Anàlisi" sota Stage 3 amb SourceInsights col·lapsables + candidats per concepte + banner de fallides + cost estimat
+- **Python:** `from automation.ai_pipeline.analysis import analyze_project`
+
+### 7.12 Sortida canònica
+
+Manifest: `{projecte}/validation/ai_analysis.json`
+Cache + artefactes per font: `{projecte}/validation/ai_pipeline/analysis/{source_stem}/*`
+
+### 7.13 V1.1 candidats (fora de MVP)
+
+- Routing Opus/4.1-mini per concept-class o source-type (avui només per env var).
+- Second-pass self-consistency: re-analitzar els concepts on Sonnet ha donat `confidence < 0.5` amb Opus, comparar, marcar disagreement.
+- Token-usage caps per project amb stop-and-report si es sobrepassen.
+- Tool calls de visió auxiliars (zoom-in en parts específiques d'un plànol).
+
+---
+
+## 8. Arquitectura tècnica
 
 ```
 automation/ai_pipeline/
 ├── __init__.py           # buit (import directe des de submòduls)
 ├── inventory.py          # Fase 1 (implementada)
 ├── typology.py           # Fase 2 (implementada)
-└── conversion.py         # Fase 3 (implementada)
+├── conversion.py         # Fase 3 (implementada)
+└── analysis.py           # Fase 4 (pendent)
 
 scripts/
 ├── ai_pipeline_inventory.py     # CLI Fase 1
 ├── ai_pipeline_typology.py      # CLI Fase 2
-└── ai_pipeline_conversion.py    # CLI Fase 3
+├── ai_pipeline_conversion.py    # CLI Fase 3
+└── ai_pipeline_analysis.py      # CLI Fase 4 (pendent)
+
+schemas/ai_pipeline/
+└── concept_glossary.yaml        # hand-tuned notes per ambiguous concept (pendent)
 
 web/
-└── api.py                 # endpoints /api/ai-pipeline/{inventory,typology,conversion,artifact}/{project}
+└── api.py                 # endpoints /api/ai-pipeline/{inventory,typology,conversion,analysis,artifact}/{project}
 
 templates/validation/
-└── review.html            # pestanya "AI Pipeline" (Stage 1 + 2 + 3 + preview modals)
+└── review.html            # pestanya "AI Pipeline" (Stage 1 + 2 + 3 + preview modals; Stage 4 pendent)
 
 tests/
 ├── test_ai_pipeline_inventory.py   # 14 tests
 ├── test_ai_pipeline_typology.py    # 30 tests
-└── test_ai_pipeline_conversion.py  # 21 tests
+├── test_ai_pipeline_conversion.py  # 21 tests
+└── test_ai_pipeline_analysis.py    # (pendent)
 ```
 
 Dependències externes:
-- **Ja presents al projecte:** `pydantic`, `extract_msg`, `PyMuPDF`, `openpyxl`, `python-docx`
+- **Ja presents al projecte:** `pydantic`, `extract_msg`, `PyMuPDF`, `openpyxl`, `python-docx`, `anthropic`, `openai`
 - **Afegides per Fase 3:** `pymupdf4llm`, `pypandoc` (wrapper sobre `pandoc` binari), `LibreOffice` (binari de sistema, usat per `.doc` legacy)
+- **Afegides per Fase 4:** cap dep nova — s'usa `anthropic` (ja present). `openai` només s'usa si `G3DT_AI_MODEL_VISION=gpt-4.1-mini` està activat.
 
 ---
 
-## 8. Roadmap de fases 4–7
+## 9. Roadmap de fases 5–7
 
 Cada fase es dissenyarà abans d'implementar. No es comprometen detalls aquí; aquest llistat és la intenció.
 
-### Fase 4 — Anàlisi
-Per cada fitxer convertit, extreure senyals: valors numèrics, noms, dates, adreces, unitats geotècniques, capes de sòl, etc. Diferent de la Fase 2 (classificació): aquí es llegeix el contingut, no només la forma.
+### Fase 5 — Authority ranking (font autoritativa per concepte)
+Per cada variable de l'informe (dels 53 conceptes), produir una llista **ordenada** de candidats (del més fiable al menys) segons:
+- Els `SourceInsight` de Fase 4 (tipus de document, autor, data, enllaços).
+- Regles d'autoritat d'Eva codificades (p.ex. *"per plot dimensions, el plànol arquitectònic guanya sempre sobre l'email"*).
+- Pistes de `authority_hints` que l'LLM hagi emès.
 
-### Fase 5 — Source of truth
-Resoldre conflictes entre senyals competidors. Exemple: l'adreça pot aparèixer al plànol, al email del client, i a l'Excel — quina és la bona? Aquí es decideix, amb regles de prioritat i/o raonament LLM.
+**No** resol a un valor final; només ordena. Fase 6 agafa el top-1, mostra el top-N com a alternatives.
 
-### Fase 6 — Assignació a variables
-Mapejar els valors resolts a les ~53 variables de `schemas/concepts/report_variables.yaml`. Marcar les que no s'han pogut omplir — aquestes passen al wizard perquè Eva les aprovi, editi, o ompli manualment.
+### Fase 6 — Proposta + validació per Eva
+Per cada concepte, pren el candidat top-1 de Fase 5 com a valor proposat. El wizard mostra:
+- Valor proposat
+- Quote verbatim de l'origen
+- Alternatives ordenades per Fase 5
+- Botons: *confirmar* / *editar* / *usar alternativa N* / *marcar no trobat*
+
+Eva revisa, edita, omple buits. La seva decisió s'afegeix als artefactes persistits (p.ex. `user_data.json`). Concepts sense cap candidat passen directament a "pendent d'omplir per Eva".
 
 ### Fase 7 — Generació de l'informe
 Produir el .docx final. Opcions: reutilitzar `ReportGenerator` amb les noves dades, o construir una cadena de raonament que compongui les seccions una a una.
 
 ---
 
-## 9. Relació amb el pipeline existent
+## 10. Relació amb el pipeline existent
 
 | Aspecte                 | Pipeline existent                          | AI Pipeline                                 |
 |-------------------------|--------------------------------------------|---------------------------------------------|
@@ -543,14 +758,14 @@ Produir el .docx final. Opcions: reutilitzar `ReportGenerator` amb les noves dad
 | Punt d'entrada          | `auto_extractor.auto_extract()`            | `automation/ai_pipeline/` stage-by-stage    |
 | Branca                  | `feature/action-2-deterministic`           | `experiment/ai-pipeline`                    |
 | Wizard                  | Pestanyes SmartScan, Wizard, Dev, Pipeline | Pestanya AI Pipeline (nova)                 |
-| Artefactes              | `file_mapping.json`, `concept_map.json`, etc. | `validation/ai_inventory.json`, `ai_typology.json`, `ai_conversion.json` i futurs |
-| Estat                   | Producció                                  | Experimental — Fases 1, 2 i 3 funcionals (verificades al wizard live) |
+| Artefactes              | `file_mapping.json`, `concept_map.json`, etc. | `validation/ai_inventory.json`, `ai_typology.json`, `ai_conversion.json`, `ai_analysis.json` i futurs |
+| Estat                   | Producció                                  | Experimental — Fases 1, 2 i 3 funcionals; Fase 4 dissenyada |
 
 **Decisió d'adopció:** quan l'AI Pipeline complet demostri millor qualitat i/o menor intervenció manual que el pipeline existent sobre els 7 projectes de referència, es considerarà fusió a `main`. No abans.
 
 ---
 
-## 10. Com estendre
+## 11. Com estendre
 
 Per afegir una nova fase:
 
@@ -565,7 +780,7 @@ Per afegir una nova fase:
 
 ---
 
-## 11. Referències
+## 12. Referències
 
 - `automation/fileminer/miners/msg_miner.py` — extracció adjunts .msg
 - `automation/concept_scout/scanner.py` — walk + skip rules
