@@ -3,7 +3,7 @@
 **Data:** 2026-04-24
 **Branca:** `experiment/ai-pipeline`
 **Autor:** Josep Portell + Claude Code
-**Estat:** Fases 1 i 2 implementades. Fase 3 dissenyada (pendent d'implementació). Fases 4–7 pendents de disseny.
+**Estat:** Fases 1, 2 i 3 implementades. Fases 4–7 pendents de disseny.
 
 ---
 
@@ -332,7 +332,7 @@ Fitxer: `{projecte}/validation/ai_typology.json`
 
 ---
 
-## 6. Fase 3: Conversió (dissenyada)
+## 6. Fase 3: Conversió (implementada)
 
 ### 6.1 Què fa i què NO fa
 
@@ -492,23 +492,23 @@ automation/ai_pipeline/
 ├── __init__.py           # buit (import directe des de submòduls)
 ├── inventory.py          # Fase 1 (implementada)
 ├── typology.py           # Fase 2 (implementada)
-└── conversion.py         # Fase 3 (pendent)
+└── conversion.py         # Fase 3 (implementada)
 
 scripts/
 ├── ai_pipeline_inventory.py     # CLI Fase 1
 ├── ai_pipeline_typology.py      # CLI Fase 2
-└── ai_pipeline_conversion.py    # CLI Fase 3 (pendent)
+└── ai_pipeline_conversion.py    # CLI Fase 3
 
 web/
-└── api.py                 # endpoints /api/ai-pipeline/{inventory,typology,conversion}/{project}
+└── api.py                 # endpoints /api/ai-pipeline/{inventory,typology,conversion,artifact}/{project}
 
 templates/validation/
-└── review.html            # pestanya "AI Pipeline" (Stage 1 + 2; Stage 3 pendent)
+└── review.html            # pestanya "AI Pipeline" (Stage 1 + 2 + 3 + preview modals)
 
 tests/
 ├── test_ai_pipeline_inventory.py   # 14 tests
 ├── test_ai_pipeline_typology.py    # 30 tests
-└── test_ai_pipeline_conversion.py  # (pendent)
+└── test_ai_pipeline_conversion.py  # 21 tests
 ```
 
 Dependències externes:
@@ -544,7 +544,7 @@ Produir el .docx final. Opcions: reutilitzar `ReportGenerator` amb les noves dad
 | Branca                  | `feature/action-2-deterministic`           | `experiment/ai-pipeline`                    |
 | Wizard                  | Pestanyes SmartScan, Wizard, Dev, Pipeline | Pestanya AI Pipeline (nova)                 |
 | Artefactes              | `file_mapping.json`, `concept_map.json`, etc. | `validation/ai_inventory.json`, `ai_typology.json`, `ai_conversion.json` i futurs |
-| Estat                   | Producció                                  | Experimental — Fases 1 i 2 funcionals, Fase 3 dissenyada |
+| Estat                   | Producció                                  | Experimental — Fases 1, 2 i 3 funcionals (verificades al wizard live) |
 
 **Decisió d'adopció:** quan l'AI Pipeline complet demostri millor qualitat i/o menor intervenció manual que el pipeline existent sobre els 7 projectes de referència, es considerarà fusió a `main`. No abans.
 
