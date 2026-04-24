@@ -21,6 +21,7 @@ from automation.ai_pipeline.analysis import (
     SourceFailure,
     SourceInsight,
     SystemicFailure,
+    _PER_CALL_TIMEOUT_S,
     _SCHEMA_VERSION,
     _build_user_content,
     _cache_path,
@@ -946,3 +947,58 @@ def test_transient_retry_keeps_full_prompt(tmp_path):
     second_text = _user_text(client.messages.kwargs_history[1])
     assert _GLOSSARY_MARKER in first_text
     assert _GLOSSARY_MARKER in second_text
+
+
+# ---------------------------------------------------------------------------
+# D7 tests — per-call wall-clock timeout
+# ---------------------------------------------------------------------------
+
+
+def test_timeout_passed_to_sdk(tmp_path):
+    """The per-call timeout constant must reach the SDK as a kwarg."""
+    project = _make_project(tmp_path)
+    client = _MockClient(_happy_behavior)
+    analyze_project(project, client=client, model="claude-sonnet-4-6")
+
+    assert client.messages.kwargs_history, "At least one SDK call expected"
+    first_kwargs = client.messages.kwargs_history[0]
+    assert first_kwargs.get("timeout") == _PER_CALL_TIMEOUT_S
+
+
+def test_timeout_constant_is_sane():
+    """Guardrail: timeout must be positive and below a silly ceiling."""
+    assert _PER_CALL_TIMEOUT_S > 0
+    assert _PER_CALL_TIMEOUT_S < 300
+
+
+def _timeout_then_good_behavior(call_num, kwargs):
+    """Call 1: timeout-shaped exception. Call 2+: valid response."""
+    if call_num == 1:
+        raise RuntimeError("Request timed out after 60s")
+    return _happy_behavior(call_num, kwargs)
+
+
+def test_timeout_exception_classified_as_transient(tmp_path):
+    """A timeout error is transient, so the source should retry and succeed."""
+    project = _make_project(tmp_path)
+    import automation.ai_pipeline.analysis as ai
+    original_backoff = ai._BACKOFF_INITIAL_S
+    ai._BACKOFF_INITIAL_S = 0.0
+    try:
+        client = _MockClient(_timeout_then_good_behavior)
+        # Limit to one source so call-count assertion is unambiguous.
+        analysis = analyze_project(
+            project,
+            client=client,
+            model="claude-sonnet-4-6",
+            source_exact="PENETROS.pdf",
+        )
+    finally:
+        ai._BACKOFF_INITIAL_S = original_backoff
+
+    assert analysis.systemic_failure is None
+    # Call 1 raises a timeout (classified as transient) → retry.
+    # Call 2 succeeds. Successful analysis is cached.
+    assert client.messages.calls == 2
+    assert len(analysis.sources) == 1
+    assert analysis.sources[0].attempts == 2

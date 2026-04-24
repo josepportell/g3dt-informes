@@ -51,6 +51,12 @@ _MAX_IMAGES_PER_SOURCE = 16  # Sonnet accepts up to 100 but cost stays reasonabl
 _MAX_RETRIES_PER_SOURCE = 3
 _BACKOFF_INITIAL_S = 2.0
 
+# Per-call wall-clock timeout (D7). SDK default is ~10 min; a pathological
+# source would hang the project for that long per attempt. 60 s is generous
+# for a Sonnet call with ~16 images (observed elapsed_ms ≤ 30s in practice).
+# Timeouts are classified as transient, so the existing retry path handles them.
+_PER_CALL_TIMEOUT_S = 60.0
+
 # Circuit breaker: abort project if N consecutive non-systemic failures
 _CIRCUIT_BREAKER_THRESHOLD = 3
 
@@ -549,6 +555,7 @@ def _analyze_one_source(
                 tools=[tool_schema],
                 tool_choice={"type": "tool", "name": "emit_analysis"},
                 messages=[{"role": "user", "content": content}],
+                timeout=_PER_CALL_TIMEOUT_S,
             )
         except Exception as e:
             err_type, systemic = _classify_error(e)
