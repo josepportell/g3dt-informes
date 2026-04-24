@@ -3,7 +3,7 @@
 **Data:** 2026-04-24
 **Branca:** `experiment/ai-pipeline`
 **Autor:** Josep Portell + Claude Code
-**Estat:** Fase 1 implementada. Fases 2–7 pendents de disseny i implementació.
+**Estat:** Fase 1 implementada. Fase 2 dissenyada (pendent d'implementació). Fases 3–7 pendents de disseny.
 
 ---
 
@@ -25,7 +25,7 @@ La motivació és una línia de progressió natural:
 | # | Fase                      | Responsabilitat                                                            |
 |---|---------------------------|-----------------------------------------------------------------------------|
 | 1 | **Inventari**             | Enumerar tots els fitxers del projecte (incloent adjunts de .msg).          |
-| 2 | **Classificació**         | Determinar què és cada fitxer (plànol? PENETROS? SONDEIG? email? factura?). |
+| 2 | **Tipologia**             | Classificar cada fitxer pel seu **tipus tècnic** (PDF text, PDF scanned, Excel amb imatges, etc.), marcar els inútils, i extreure imatges embegudes com a fitxers propis. |
 | 3 | **Conversió**             | Passar cada fitxer a un format que l'LLM pugui llegir (markdown, CSV, imatge). |
 | 4 | **Anàlisi**               | Extreure informació de cada fitxer (LLM + OCR + vision).                    |
 | 5 | **Source of truth**       | Resoldre conflictes entre fonts — triar valor autoritatiu per cada concepte. |
@@ -141,47 +141,246 @@ L'inventari **no re-implementa** el walk, ni la tipificació de PDFs vectorials 
 
 ---
 
-## 5. Arquitectura tècnica
+## 5. Fase 2: Tipologia (dissenyada)
+
+### 5.1 Què fa i què NO fa
+
+**Fa:**
+- Classifica cada fitxer de l'inventari pel seu **tipus tècnic** (no pel seu rol semàntic).
+- Decideix si és útil per generar l'informe o no (`useful: bool`), amb motiu explícit.
+- Introspecciona l'estructura: pàgines de PDF, fulls d'Excel, nombre d'imatges embegudes, text extraïble.
+- Extreu totes les imatges embegudes de PDFs, Excels i DOCXs a fitxers propis al disc.
+- Proposa una estratègia de conversió per a la Fase 3 (`conversion_strategy`).
+- Produeix un resum per Eva: "això és el que has aportat".
+
+**NO fa:**
+- No decideix què representa el fitxer (plànol arquitectònic? fitxa DPSH? email de pressupost?). Això és contingut, s'aborda a Fase 4+.
+- No reutilitza `SmartScan`. `SmartScan` classifica per **rol semàntic** (25 rols com `architect_plan`, `dpsh_excel`); Fase 2 classifica per **tipus tècnic** (com `pdf_text`, `pdf_mixed`, `spreadsheet_mixed`). Són capes diferents.
+- No interpreta imatges (logo? foto? plànol?). Això és Fase 4 (vision).
+
+### 5.2 Filosofia: transparència davant d'Eva
+
+Citació d'Alfonso: *"No estem construint un enginyer geotècnic AI. Estem construint un assistent intel·ligent de redacció d'informes a partir del contingut que ens proporcionen."*
+
+Fase 2 materialitza aquest principi. Eva ha de poder veure, en ordre:
+1. **"Això és el que has aportat"** (Fase 2 — tipologia).
+2. *"Això és el que hem entès del que has aportat"* (Fases 3–5).
+3. *"Aquest és l'informe que podem escriure a partir d'això"* (Fases 6–7).
+
+Si la qualitat d'un informe és baixa, Eva ha de poder recórrer la cadena cap enrere i veure que a Fase 2 hi havia poc input útil, no que la màquina ha fet magia negra. La traçabilitat per `source_chain` (vegeu 5.5) permet això.
+
+### 5.3 Models de dades
+
+```python
+class FileClass(BaseModel):
+    path: str                       # ID primari, ruta relativa POSIX
+    format: str                     # extensió normalitzada: pdf, xlsx, docx, msg, jpg, …
+    category: str                   # bucket tipològic (vegeu 5.4)
+
+    # Introspecció estructural (tot determinista, Python)
+    has_text: bool
+    has_images: bool
+    image_count: int = 0            # imatges extretes a disc
+    page_count: int = 0             # pàgines de PDF
+    sheet_count: int = 0            # tabs d'Excel
+    sheet_names: list[str] = []     # noms de tabs en ordre
+
+    # Procedència — la cadena de fonts, per traçabilitat
+    source_chain: list[str] = []    # p.ex. ["email-abc.msg", "attachment:budget.xlsx", "sheet:Costs"]
+    is_attachment: bool = False     # si ve d'un .msg
+    parent_path: str | None = None  # si l'hem extret d'un altre fitxer
+
+    # Guia per Fase 3
+    useful: bool
+    reason: str = ""                # si s'ignora, per què
+    conversion_strategy: str        # hint de dispatch per Fase 3
+
+    # Artefactes creats per Fase 2
+    extracted_images_dir: str | None = None  # on hem desat les imatges filles
+
+class FolderClass(BaseModel):
+    path: str                       # "" = arrel
+    parent: str | None              # None per l'arrel; camí immediat en cas contrari
+    file_count: int                 # total de fitxers directes (sense recursió)
+    useful_count: int               # fitxers útils directes
+    category_counts: dict[str, int] # recompte per categoria
+    is_dev_only: bool = False       # si és dins d'un dir top-level dev-only
+
+class ProjectTypology(BaseModel):
+    project_path: str
+    classified_at: str
+    files: list[FileClass]          # plana — inclou fills extrets
+    folders: list[FolderClass]      # roll-up amb estructura arbre via `parent`
+    counts_by_category: dict[str, int]
+    useful_count: int
+    skipped_count: int
+    eva_summary: list[str]          # línies llegibles per Eva
+    warnings: list[str] = []        # p.ex. "extensió desconeguda: .abc"
+
+    # Query helpers
+    def children_of(self, parent_path: str) -> list[FileClass]: ...  # fills extrets
+    def subfolders_of(self, parent_path: str) -> list[FolderClass]: ...
+    def folder_tree(self) -> dict[str, list[str]]: ...  # adjacency list per UI
+    def lineage_of(self, path: str) -> list[str]: ...  # retorna source_chain
+```
+
+### 5.4 Taxonomia de categories (tipus tècnic, no rol semàntic)
+
+| category             | Coincidència                                               | útil? | conversion_strategy (Fase 3)         |
+|----------------------|------------------------------------------------------------|-------|--------------------------------------|
+| `pdf_text`           | PDF vectorial, text extraïble, 0 imatges embegudes         | ✓     | `pdf_to_markdown`                    |
+| `pdf_mixed`          | PDF vectorial + ≥1 imatge embeguda                         | ✓     | `pdf_to_markdown_plus_images`        |
+| `pdf_scanned`        | PDF sense text extraïble (pàgines imatge)                  | ✓     | `pdf_pages_to_images`                |
+| `docx` / `doc`       | Word (`.doc` via LibreOffice)                              | ✓     | `docx_to_markdown_plus_media`        |
+| `spreadsheet`        | `.xls` / `.xlsx`, sense imatges embegudes                  | ✓     | `excel_per_sheet_to_csv`             |
+| `spreadsheet_mixed`  | `.xls` / `.xlsx` amb imatges embegudes                     | ✓     | `excel_per_sheet_to_csv_plus_images` |
+| `email_msg`          | cos del `.msg` (els adjunts ja són fitxers separats a F1)  | ✓     | `msg_body_to_markdown`               |
+| `text`               | `.txt`, `.csv`                                             | ✓     | `text_passthrough`                   |
+| `image`              | `.jpg`, `.png`, `.bmp`, `.tiff` (tant Eva com extretes)    | ✓     | `image_passthrough`                  |
+| `reference_output`   | Dins de `PDF/`, `PDF V0/`, `PDF-V0/` (només)               | ✗     | `skip` — dev-only, absent en prod    |
+| `pipeline_artifact`  | Els nostres JSONs (`ai_inventory.json`, etc.)              | ✗     | `skip`                               |
+| `binary_unreadable`  | `.fh11`, `.psd`                                            | ✗     | `skip`                               |
+| `system_file`        | `Thumbs.db`, `~$*`, `*.tmp`                                | ✗     | `skip`                               |
+| `unknown`            | extensió no gestionada                                     | ✗     | `skip` amb avís                      |
+
+**Nota:** `ACCEPTACIO/` NO és dev-only. És la carpeta on el client signa la factura del projecte — conté inputs potencialment útils (correus, signatures).
+
+### 5.5 Provenance: `source_chain`
+
+Cada `FileClass` porta una llista ordenada que reconstrueix la seva història completa:
+
+```
+"email-abc.msg"
+  → "attachment:budget.xlsx"
+    → "sheet:Costs"
+      → "img:2"          # imatge extreta de la fulla "Costs"
+```
+
+Per qualsevol fitxer — Eva-provided o extret per nosaltres — un Stage posterior pot respondre "d'on ha vingut això?" sense haver de recuperar metadata de múltiples llocs. Stage 4 (vision sobre una imatge) rebrà al prompt la cadena completa: *"aquesta imatge ve d'un Excel anomenat 'budget.xlsx', adjunt a un email amb subject 'Pressupost' enviat per client@..."*.
+
+### 5.6 Extracció d'imatges embegudes
+
+**On es desen:** `{projecte}/validation/ai_pipeline/extracted/{source_file_stem}/img_001.png` (mateixa convenció que `msg_attachments/{stem}/` de Fase 1).
+
+**Cada imatge extreta esdevé un `FileClass` propi** amb:
+- `category = image`, `useful = True`
+- `parent_path` apuntant al fitxer origen
+- `source_chain` amb el rastre complet
+
+**Llibreries d'extracció:**
+- PDF: `PyMuPDF` via `page.get_images()` + `doc.extract_image()`
+- DOCX: descomprimir com a ZIP i copiar `word/media/*`
+- Excel: `openpyxl` via `sheet._images`
+- `.msg`: ja gestionat per Fase 1 (adjunts = fitxers propis del projecte)
+
+**Filtre de mida mínima:** s'ignoren imatges amb dimensió < 32×32 px o mida < 5 KB. Alineat amb la convenció de `MsgMiner._MIN_ATTACHMENT_BYTES`; evita soroll de logos/icones petites.
+
+**Política de re-execució (fase de desenvolupament):** la re-execució sempre re-extreu amb dedupe per hash SHA256 de contingut (com fa `msg_miner._save_attachments`). Quan confiem en les extraccions prèvies, es podrà canviar a "skip if exists". Registrat al CHANGELOG.
+
+**TODO v1.1 — detecció de logos per descartar:** pendent de construir una biblioteca de referència de logos G3DT. Llavors s'afegirà filtre per similitud (perceptual hash o ImageMagick compare) per marcar imatges logo amb `useful = False`, `reason = "matches G3DT logo"`.
+
+### 5.7 Detecció dev-only
+
+**Hard-codeat** (promoció a config YAML quan tinguem un segon client):
+
+```python
+DEV_ONLY_TOPLEVEL_DIRS = {"PDF", "PDF V0", "PDF-V0"}
+```
+
+Qualsevol fitxer amb un primer component de la ruta relativa dins d'aquest conjunt → `category = reference_output`, `useful = False`, `reason = "dins de {dir} — output de runs anteriors d'Eva, absent en producció"`.
+
+### 5.8 Estructura interna: pàgines i fulls com a **metadades**, no entrades
+
+Pàgines de PDF i fulls d'Excel **NO esdevenen `FileClass` propis.** Queden com a metadades del pare (`page_count`, `sheet_names`). Raons:
+- No són fitxers al disc — són estructura interna.
+- Fase 3 paginarà internament quan produeixi el CSV per full o la imatge per pàgina escanejada.
+- Bloatar la tipologia amb una entrada per pàgina faria els resums per a Eva il·legibles.
+
+Excepció: **imatges extretes SÍ esdevenen `FileClass` propis** perquè són fitxers a disc que Fases 4+ processaran com a fitxers (vision).
+
+### 5.9 Resum per Eva (`eva_summary`)
+
+`ProjectTypology.eva_summary` és una llista de línies en català, dissenyada per mostrar a Eva al wizard:
+
+```
+Heu aportat 68 fitxers en 16 carpetes.
+• 48 fitxers són inputs útils (32 documents, 11 imatges, 5 emails amb 13 adjunts extrets).
+• 13 fitxers són deliverables de runs anteriors (es salten — no existiran en producció).
+• 7 fitxers són soroll del sistema (es salten).
+```
+
+Aquest text és el bridge cap a la pregunta pràctica d'Eva: *"si vull millor qualitat d'informe, què puc aportar millor?"*. El `source_chain` i els comptes per categoria li donen la resposta.
+
+### 5.10 Dependències noves
+
+- `PyMuPDF` (ja present) — extracció d'imatges PDF
+- `openpyxl` (ja present) — introspecció Excel + extracció d'imatges
+- `python-docx` (a verificar disponibilitat) — introspecció DOCX
+
+### 5.11 Com s'utilitzarà
+
+Seguint el patró de Fase 1:
+
+- **CLI:** `scripts/ai_pipeline_typology.py --project {id} [--save] [--json]`
+- **API:** `GET /api/ai-pipeline/typology/{project}?refresh=true`
+- **Wizard:** la pestanya "AI Pipeline" mostrarà Fase 1 + Fase 2 com a seccions apilades (no una pestanya nova per fase — la relació Fase 1 → Fase 2 és seqüencial).
+- **Python:** `from automation.ai_pipeline.typology import classify_project`
+
+### 5.12 Sortida canònica
+
+Fitxer: `{projecte}/validation/ai_typology.json`
+
+---
+
+## 6. Arquitectura tècnica
 
 ```
 automation/ai_pipeline/
 ├── __init__.py           # exporta API pública
-└── inventory.py          # Fase 1
+├── inventory.py          # Fase 1
+└── typology.py           # Fase 2 (pendent)
 
 scripts/
-└── ai_pipeline_inventory.py    # CLI per Fase 1
+├── ai_pipeline_inventory.py    # CLI per Fase 1
+└── ai_pipeline_typology.py     # CLI per Fase 2 (pendent)
 
 web/
-└── api.py                 # endpoint GET /api/ai-pipeline/inventory/{project}
+└── api.py                 # endpoints GET /api/ai-pipeline/{inventory,typology}/{project}
 
 templates/validation/
 └── review.html            # pestanya "AI Pipeline"
 
 tests/
-└── test_ai_pipeline_inventory.py   # 14 tests
+├── test_ai_pipeline_inventory.py   # 14 tests
+└── test_ai_pipeline_typology.py    # (pendent)
 ```
 
 Dependències externes (ja presents al projecte):
 - `pydantic` (models de dades)
 - `extract_msg` (lectura .msg)
-- `PyMuPDF` (classificació PDF vectorial vs escanejat, via concept_scout)
+- `PyMuPDF` (classificació PDF vectorial vs escanejat + extracció d'imatges)
+- `openpyxl` (introspecció Excel + extracció d'imatges)
+- `python-docx` (introspecció DOCX — a verificar)
 
 ---
 
-## 6. Roadmap de fases 2–7
+## 7. Roadmap de fases 3–7
 
 Cada fase es dissenyarà abans d'implementar. No es comprometen detalls aquí; aquest llistat és la intenció.
 
-### Fase 2 — Classificació
-Donat l'inventari de la Fase 1, decidir què és cada fitxer: plànol arquitectònic, fitxa DPSH escrita a mà, Excel transcrit, email de pressupost, factura, certificat, etc. Probable ús: LLM amb mostreig del contingut (primera pàgina de PDF, primeres cel·les d'Excel) + vision per fitxers escanejats. Candidat a reutilitzar `SmartScan` si la seva sortida ja es pot interpretar com una classificació.
-
 ### Fase 3 — Conversió
-Normalitzar cada fitxer a un format que l'LLM pot consumir eficientment:
-- PDFs vectorials → markdown (via pdfplumber o similar)
-- PDFs escanejats → imatges paginades
-- Excel → CSV (amb metadades de full)
-- .msg → markdown (cos + metadades)
-- .docx → markdown
+Per cada `FileClass` amb `useful=True`, produir un artefacte LLM-ready segons el `conversion_strategy` proposat per Fase 2:
+- `pdf_to_markdown` → pdfplumber/PyMuPDF → markdown per pàgina
+- `pdf_to_markdown_plus_images` → markdown + fitxers d'imatge ja extrets per Fase 2
+- `pdf_pages_to_images` → una imatge PNG per pàgina (per Fase 4 vision)
+- `excel_per_sheet_to_csv` → un CSV per full (iterant `sheet_names`)
+- `excel_per_sheet_to_csv_plus_images` → CSV + imatges (ja extretes)
+- `docx_to_markdown_plus_media` → markdown + media extreta
+- `msg_body_to_markdown` → cos del missatge amb metadades
+- `image_passthrough`, `text_passthrough` → directament
+- `skip` → nop
+
+La Fase 3 consumeix `ai_typology.json` i produeix artefactes a `{projecte}/validation/ai_pipeline/converted/`.
 
 ### Fase 4 — Anàlisi
 Per cada fitxer convertit, extreure senyals: valors numèrics, noms, dates, adreces, unitats geotècniques, capes de sòl, etc. Diferent de la Fase 2 (classificació): aquí es llegeix el contingut, no només la forma.
@@ -197,7 +396,7 @@ Produir el .docx final. Opcions: reutilitzar `ReportGenerator` amb les noves dad
 
 ---
 
-## 7. Relació amb el pipeline existent
+## 8. Relació amb el pipeline existent
 
 | Aspecte                 | Pipeline existent                          | AI Pipeline                                 |
 |-------------------------|--------------------------------------------|---------------------------------------------|
@@ -205,14 +404,14 @@ Produir el .docx final. Opcions: reutilitzar `ReportGenerator` amb les noves dad
 | Punt d'entrada          | `auto_extractor.auto_extract()`            | `automation/ai_pipeline/` stage-by-stage    |
 | Branca                  | `feature/action-2-deterministic`           | `experiment/ai-pipeline`                    |
 | Wizard                  | Pestanyes SmartScan, Wizard, Dev, Pipeline | Pestanya AI Pipeline (nova)                 |
-| Artefactes              | `file_mapping.json`, `concept_map.json`, etc. | `validation/ai_inventory.json` i futurs     |
-| Estat                   | Producció                                  | Experimental — Fase 1 funcional             |
+| Artefactes              | `file_mapping.json`, `concept_map.json`, etc. | `validation/ai_inventory.json`, `ai_typology.json`, i futurs |
+| Estat                   | Producció                                  | Experimental — Fase 1 funcional, Fase 2 dissenyada |
 
 **Decisió d'adopció:** quan l'AI Pipeline complet demostri millor qualitat i/o menor intervenció manual que el pipeline existent sobre els 7 projectes de referència, es considerarà fusió a `main`. No abans.
 
 ---
 
-## 8. Com estendre
+## 9. Com estendre
 
 Per afegir una nova fase:
 
@@ -227,7 +426,7 @@ Per afegir una nova fase:
 
 ---
 
-## 9. Referències
+## 10. Referències
 
 - `automation/fileminer/miners/msg_miner.py` — extracció adjunts .msg
 - `automation/concept_scout/scanner.py` — walk + skip rules
