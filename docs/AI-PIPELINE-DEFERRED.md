@@ -8,6 +8,40 @@
 
 ## High priority (cost / quality affecting)
 
+### D18. Fase 5 prompt caching is a silent no-op — principles block too small
+
+**Surfaced:** 2026-04-24 Alcoletge run (72 sources, 71 Pass-A + 13 Pass-B + 38 Pass-C calls, $4.63 actual).
+**Stage:** 5.
+**Severity:** High (cost).
+
+Pass A/B/C attach `cache_control: {"type": "ephemeral"}` to the authority-principles block. Anthropic's ephemeral cache requires ≥1024 tokens per block (Sonnet). Our principles file is ~300 tokens → block silently ignored. Result: `cache_creation_input_tokens` and `cache_read_input_tokens` are always 0 across all 122 calls on Alcoletge, and the full 300-token principles + ~2k concept-adjacent static context is paid at full price 122 times.
+
+Confirmed with a smoke test: a 6000-char block caches correctly (`cache_creation=18004`, subsequent call `cache_read=18004`); our 1188-char principles block does not.
+
+**Fix direction:** bundle the full `report_variables.yaml` (88 concepts × ~40 tokens = ~3.5k tokens) into the cached block alongside the principles, mirroring Stage 4's pattern. Combined block would be ~3.8k tokens — well above the 1024-token threshold. Estimated savings: ~$0.75/run on an Alcoletge-sized project.
+
+Implementation: extend `_build_concept_user_content` / `_build_group_user_content` / the group-factor variant to include `_load_concept_yaml()` inside the cached text block. Single-file change in `automation/ai_pipeline/ranking.py`. Existing Pass A / Pass B / Pass C cache keys already hash the concept_def per-concept, so changing the prompt shape invalidates cleanly. Add a test that monkeypatches the Anthropic response usage with `cache_creation_input_tokens>0` and asserts cost formula picks it up (already wired — D16 fix).
+
+### D19. Fase 5 top-1 accuracy below 80% gate on Alcoletge initial run
+
+**Surfaced:** 2026-04-24 Alcoletge validation run.
+**Stage:** 5.
+**Severity:** High (quality).
+
+Initial measurement against `eva_reference_values.json` on the 18 concepts with ground truth: ~45% headline (3 exact + 5 substring + 10 mismatch). After filtering ground-truth-shape mismatches (Eva's reference captures full narrative paragraphs where Fase 5 correctly extracts the underlying value) and known-hard engineering-judgment cases (`qa_value` on Alcoletge → MEMORY: "Plan 1 ceiling"), realistic top-1 is ~60-70%. Below the ≥80% adoption gate in §11 of the design doc.
+
+Observed genuine ranker failures (3 of 10 mismatches):
+- `expedient`: picked lab-report ID `26.0049` over project ID `4001670`. Eva's value ranks 4 of 23.
+- `lab_testing_company`: picked `SOIL-ASSAIG` over `TPS PROSPECCIÓ`. Eva's value ranks 2.
+- Smaller: formatting differences on `lab_depth`, `lab_tests_text` (punctuation only).
+
+**Fix direction:**
+1. Strengthen `schemas/ai_pipeline/authority_principles.md` with explicit rules for identification concepts (`expedient`, `lab_testing_company`, `architect_name` etc.): prefer signed project documents, prefer the company named in the plànol caixetí.
+2. Consider adding per-concept glossary entries for the ambiguous-by-design cases.
+3. Re-run on Alcoletge (post-budget-top-up) and measure deltas before iterating again.
+
+Until then, Fase 5 is "feature-complete but not adoption-ready." Fase 6 can proceed for UI work but shouldn't be promoted to the default pipeline.
+
 ### D15. "API usage limits" HTTP 400 not classified as systemic (Anthropic)
 
 **Surfaced:** 2026-04-24 full Alcoletge run (real error, real credit cap).

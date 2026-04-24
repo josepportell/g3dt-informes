@@ -776,23 +776,32 @@ Dependències externes:
 
 ## 9. Roadmap de fases 5–7
 
-Cada fase es dissenyarà abans d'implementar. No es comprometen detalls aquí; aquest llistat és la intenció.
+### Fase 5 — Authority ranking per concepte — **implementada (LLM-based)**
 
-### Fase 5 — Authority ranking (font autoritativa per concepte) — **següent pas**
-Per cada variable de l'informe (dels 53 conceptes), produir una llista **ordenada** de candidats (del més fiable al menys) segons:
-- Els `SourceInsight` de Fase 4 (tipus de document, autor, data, enllaços).
-- Regles d'autoritat d'Eva codificades (p.ex. *"per plot dimensions, el plànol arquitectònic guanya sempre sobre l'email"*).
-- Pistes de `authority_hints` que l'LLM hagi emès.
+Enfoc LLM en 3 passades, no deterministic:
+- **Passada A** per-concepte: per a cada `concept_id` amb ≥2 candidats, el LLM rep la definició del concepte + glossari opcional + `authority_principles.md` (text en prosa editable per Eva) + tots els candidats amb el seu `SourceInsight`. Emet una tool call `emit_ranking` amb l'ordenació + `has_conflict`/`conflict_note`.
+- **Passada B** per-grup: per a cada grup amb ≥2 conceptes rankejats, el LLM revisa les ordenacions + les fonts comunes i identifica factors cross-concept que puguin canviar algunes ordenacions individuals. No re-ordena — només senyala quins conceptes mereixen ser revisats.
+- **Passada C** targeted: per a cada concepte que Passada B va marcar, re-executa Passada A amb el factor del grup injectat com a context addicional. Guardaril de no-canvi: si la nova ordenació és idèntica a la original, es descarta la revisada i es conserva l'original (amb `group_factor_considered` anotat, `revised_by_group_pass=False`).
 
-**No** resol a un valor final; només ordena. Fase 6 agafa el top-1, mostra el top-N com a alternatives.
+Passthrough (sense crides LLM) per a conceptes amb 0 candidats (`status="no_candidates"`) o 1 candidat (`status="single"`). Conceptes afectats per error sistèmic (401, credits, circuit-breaker) queden `status="pending_fase5"`.
 
-**Dades de disseny disponibles (sense noves crides LLM):** `reference-material/4001670 ALCOLETGE/validation/ai_analysis.json` té 620 candidats reals + 72 SourceInsights completes. Qualsevol disseny de Fase 5 pot iterar-se contra aquest manifest com a test suite.
+**Principis d'Eva en prosa**: `schemas/ai_pipeline/authority_principles.md` — Markdown carregat *verbatim* a cada crida. Eva edita directament, invalida caches per hash. No DSL.
 
-**Decisions de disseny encara obertes:**
-1. **DSL d'autoritat** (D11) — YAML per regla explícita (`authority_rules.yaml`), o regles hard-coded en Python? YAML escala millor amb clients futurs i és auditable per Eva.
-2. **Desempat** — quan dues fonts del mateix `document_type` donen candidats idèntics amb la mateixa confiança, què trencari l'empat? (recency, `version_info`, `source_chain` length?).
-3. **Conflict signal** — si el plànol diu "4 plantes" i un email diu "3 plantes", Fase 5 ordena però a més deixa un flag visible perquè Fase 6 mostri a Eva l'desacord.
-4. **Benchmarking** (D13) — contra els `eva_reference_values.json` dels 7 projectes per mesurar recall/precisió abans d'adoptar.
+**Caching**: cache_control ephemeral mirat sobre el bloc de principis, però el nostre bloc (~300 tokens) està per sota del llindar mínim de 1024 tokens d'Anthropic → cache silenciosament ignorat. Fix pendent (vegeu `AI-PIPELINE-DEFERRED.md`): incloure el YAML complet de conceptes al bloc cached per superar el llindar.
+
+**Flags de CLI/API**: `--concept`/`concept_filter` per restringir a un concepte, `--group`/`group_filter` per un subgrup, `--no-group-pass`/`no_group_pass=true` per saltar Passades B+C.
+
+**Resultats Alcoletge (2026-04-24, validació inicial):**
+- 72 fonts Stage 4 → 88 conceptes (71 rankejats via LLM, 6 single, 11 sense candidats, 0 pendents).
+- 13 grups processats, 39 factors cross-concept detectats, 38 revisions aplicades (24 re-ordenades, 14 no-change guardrails).
+- 48 conflictes detectats entre fonts.
+- Cost real: **$4.63** (≈2-3× l'estimació inicial — Pass C volume + cache silenciosament no aplicada per mida de bloc).
+- Top-1 accuracy contra `eva_reference_values.json`: 18 conceptes comparables, ~45% headline, ~60-70% després de filtrar mismatches de qualitat de ground-truth. Encara per sota del 80% gate.
+
+**Issues conegudes pendents** (tracked a `AI-PIPELINE-DEFERRED.md`):
+- **D18**: cache_control ephemeral no s'activa per mida de bloc massa petita. Fix: bundle concept YAML al bloc cached. Estalvi estimat: ~$0.75/run.
+- **D19**: Top-1 accuracy 45-70% — per sota del 80% gate. Iterar `authority_principles.md` (p.ex. per `expedient` → preferir project ID signat sobre IDs de laboratori) abans de la propera passada.
+- **D13**: Benchmark script (step 11 del pla) pendent. Necessita crèdits addicionals per executar els 7 projectes.
 
 ### Fase 6 — Proposta + validació per Eva
 Per cada concepte, pren el candidat top-1 de Fase 5 com a valor proposat. El wizard mostra:
@@ -817,7 +826,7 @@ Produir el .docx final. Opcions: reutilitzar `ReportGenerator` amb les noves dad
 | Branca                  | `feature/action-2-deterministic`           | `experiment/ai-pipeline`                    |
 | Wizard                  | Pestanyes SmartScan, Wizard, Dev, Pipeline | Pestanya AI Pipeline (nova)                 |
 | Artefactes              | `file_mapping.json`, `concept_map.json`, etc. | `validation/ai_inventory.json`, `ai_typology.json`, `ai_conversion.json`, `ai_analysis.json` i futurs |
-| Estat                   | Producció                                  | Experimental — Fases 1–4 funcionals + ronda de fixes (D1/D3/D5/D7/D9/D10/D14–D17); Fase 5 pendent de disseny |
+| Estat                   | Producció                                  | Experimental — Fases 1–5 funcionals; Fase 5 validada inicialment sobre Alcoletge (2026-04-24) amb 71/71 conceptes rankejats però top-1 accuracy per sota del 80% gate; iteracions de `authority_principles.md` + fix de cache pendents |
 
 **Decisió d'adopció:** quan l'AI Pipeline complet demostri millor qualitat i/o menor intervenció manual que el pipeline existent sobre els 7 projectes de referència, es considerarà fusió a `main`. No abans.
 
