@@ -432,8 +432,14 @@ def _cache_key(user_content: list[dict], model: str) -> str:
 
 def _cache_path(pp: Path, source_path: str) -> Path:
     from .conversion import _slugify  # same slug convention
-    stem = _slugify(Path(source_path).stem) or "unnamed"
-    return pp / _ANALYSIS_ROOT / stem / "_cache.json"
+    src = Path(source_path)
+    stem = _slugify(src.stem) or "unnamed"
+    parent = src.parent
+    if str(parent) in ("", "."):
+        folder = stem
+    else:
+        folder = f"{_slugify(parent.name)}_{stem}"
+    return pp / _ANALYSIS_ROOT / folder / "_cache.json"
 
 
 def _cache_read(pp: Path, source_path: str, key: str) -> SourceAnalysis | None:

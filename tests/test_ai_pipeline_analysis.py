@@ -21,6 +21,7 @@ from automation.ai_pipeline.analysis import (
     SourceFailure,
     SourceInsight,
     SystemicFailure,
+    _cache_path,
     _classify_error,
     analyze_project,
     load_analysis,
@@ -523,3 +524,29 @@ def test_eva_summary_mentions_systemic_failure(tmp_path):
     analysis = analyze_project(project, client=client, model="claude-sonnet-4-6")
     joined = "\n".join(analysis.eva_summary).lower()
     assert "insufficient_credits" in joined or "systemic" in joined or "⚠" in "".join(analysis.eva_summary)
+
+
+# ---------------------------------------------------------------------------
+# D14 tests — cache folder slug collision
+# ---------------------------------------------------------------------------
+def test_cache_path_includes_parent_for_extracted_images(tmp_path):
+    path_a = _cache_path(
+        tmp_path,
+        "validation/ai_pipeline/extracted/PLAN_COST_ALCOLETGE/img_000.png",
+    )
+    path_b = _cache_path(
+        tmp_path,
+        "validation/ai_pipeline/extracted/A.01/img_000.png",
+    )
+    assert path_a != path_b
+    assert path_a.parent.name != path_b.parent.name
+
+
+def test_cache_path_for_root_source_unchanged(tmp_path):
+    cache_path = _cache_path(tmp_path, "PENETROS.pdf")
+    assert cache_path.parent.name == "PENETROS"
+
+
+def test_cache_path_slugifies_parent_with_dots(tmp_path):
+    cache_path = _cache_path(tmp_path, "26.0049/A.01.pdf")
+    assert cache_path.parent.name == "26.0049_A.01"
