@@ -3,7 +3,7 @@
 **Data:** 2026-04-24
 **Branca:** `experiment/ai-pipeline`
 **Autor:** Josep Portell + Claude Code
-**Estat:** Fase 1 implementada. Fase 2 dissenyada (pendent d'implementació). Fases 3–7 pendents de disseny.
+**Estat:** Fases 1 i 2 implementades. Fase 3 dissenyada (pendent d'implementació). Fases 4–7 pendents de disseny.
 
 ---
 
@@ -26,7 +26,7 @@ La motivació és una línia de progressió natural:
 |---|---------------------------|-----------------------------------------------------------------------------|
 | 1 | **Inventari**             | Enumerar tots els fitxers del projecte (incloent adjunts de .msg).          |
 | 2 | **Tipologia**             | Classificar cada fitxer pel seu **tipus tècnic** (PDF text, PDF scanned, Excel amb imatges, etc.), marcar els inútils, i extreure imatges embegudes com a fitxers propis. |
-| 3 | **Conversió**             | Passar cada fitxer a un format que l'LLM pugui llegir (markdown, CSV, imatge). |
+| 3 | **Conversió**             | Produir artefactes LLM-ready per cada fitxer útil: markdown per pàgina de PDF, CSV per full d'Excel, PNG per pàgina escanejada, markdown per cos .msg/DOCX. |
 | 4 | **Anàlisi**               | Extreure informació de cada fitxer (LLM + OCR + vision).                    |
 | 5 | **Source of truth**       | Resoldre conflictes entre fonts — triar valor autoritatiu per cada concepte. |
 | 6 | **Assignació a variables**| Mapejar valors a les ~53 variables de l'informe. Marcar els buits per Eva. |
@@ -141,7 +141,7 @@ L'inventari **no re-implementa** el walk, ni la tipificació de PDFs vectorials 
 
 ---
 
-## 5. Fase 2: Tipologia (dissenyada)
+## 5. Fase 2: Tipologia (implementada)
 
 ### 5.1 Què fa i què NO fa
 
@@ -332,55 +332,194 @@ Fitxer: `{projecte}/validation/ai_typology.json`
 
 ---
 
-## 6. Arquitectura tècnica
+## 6. Fase 3: Conversió (dissenyada)
+
+### 6.1 Què fa i què NO fa
+
+**Fa:**
+- Consumeix el `ProjectTypology` de Fase 2 i processa només fitxers amb `useful=True`.
+- Per cada fitxer útil, executa el convertidor indicat per `conversion_strategy` i produeix un o més artefactes LLM-ready al directori `{projecte}/validation/ai_pipeline/converted/{source_stem}/`.
+- Manté el rastre de provenance: cada artefacte porta `source_path` i `source_chain` heretats del FileClass original.
+- Embedeix referències `![](ruta)` a les imatges ja extretes per Fase 2 dins del markdown, a la posició aproximada on apareixen.
+- Produeix un manifest (`ai_conversion.json`) amb la llista completa d'artefactes, agrupats per font.
+
+**NO fa:**
+- No interpreta contingut. No classifica. No respon preguntes sobre el que hi ha dins dels fitxers — això és Fase 4.
+- No fa OCR sobre PDFs escanejats. Els converteix a imatges per pàgina i les passa a Fase 4 perquè usi visió. OCR és un candidat per v1.1.
+- No re-extreu imatges embegudes — Fase 2 ja ho ha fet; Fase 3 només les referencia.
+- No genera cap `conversion` per fitxers amb `useful=False` o `conversion_strategy=skip` (incloent `reference_output`, `binary_unreadable`, `pipeline_artifact`, `system_file`, `unknown`).
+
+### 6.2 Filosofia: alimentació per Fase 4
+
+Fase 3 és un **pipeline de normalització**: agafa inputs heterogenis (PDF vectorial, PDF escanejat, DOCX, Excel multi-full, .msg, text, imatge) i en treu artefactes uniformes que Fase 4 pot consumir amb la mateixa lògica. El valor és:
+
+1. **Fase 4 no ha de saber d'on ve la dada.** Un markdown és un markdown, tant si ve d'un Excel com d'un PDF. Un PNG per pàgina funciona igual per un plànol escanejat que per una fotografia.
+2. **Re-processabilitat granular.** Si una pàgina concreta d'un PDF té mal format, Fase 3 pot re-processar aquella pàgina sense tornar-ho a fer tot.
+3. **Debuggable per humans.** Eva pot obrir qualsevol `.md` o `.csv` del directori `converted/` i veure exactament què llegirà l'LLM. Zero caixa negra.
+
+### 6.3 Convertidors per estratègia
+
+| `conversion_strategy` (de Fase 2)      | Convertidor Fase 3                                             | Sortides                                                     |
+|----------------------------------------|----------------------------------------------------------------|--------------------------------------------------------------|
+| `pdf_to_markdown`                      | `pymupdf4llm.to_markdown()` per pàgina                         | `page_001.md`, `page_002.md`, …                              |
+| `pdf_to_markdown_plus_images`          | `pymupdf4llm` per pàgina + `![]()` refs a `extracted/{stem}/…` | `page_NNN.md` amb imatges embegudes                          |
+| `pdf_pages_to_images`                  | `PyMuPDF page.get_pixmap(dpi=200)`                             | `page_001.png`, `page_002.png`, …                            |
+| `docx_to_markdown_plus_media`          | `pypandoc.convert_file(..., to='gfm')`                         | `body.md` + refs a `extracted/{stem}/…`                      |
+| `excel_per_sheet_to_csv`               | `openpyxl` → CSV per `sheet_name`                              | `sheet_<sanitized_name>.csv` per full                        |
+| `excel_per_sheet_to_csv_plus_images`   | igual + referències a imatges de Fase 2                        | CSVs + un `images.md` amb refs                               |
+| `msg_body_to_markdown`                 | `extract_msg` → markdown amb frontmatter (from/to/date/subject)| `body.md`                                                    |
+| `image_passthrough`                    | cap — es referencia el fitxer original                         | (artefacte virtual al manifest)                              |
+| `text_passthrough`                     | còpia literal com a `.md` o `.csv`                             | `content.md` o `content.csv`                                 |
+| `skip`                                 | cap                                                            | (no apareix al manifest)                                     |
+
+**Llibreria PDF:** `pymupdf4llm` (purpose-built per LLM, gestiona taules i headings amb ordre de lectura correcte). Ja present a les deps.
+
+**Llibreria DOCX:** `pypandoc` → pandoc (binari ja present al sistema). Sortida en `gfm` (GitHub-flavored markdown) per millor suport de taules.
+
+**`.doc` legacy:** Fase 3 invoca `libreoffice --headless --convert-to docx` per produir un `.docx` temporal, després l'alimenta al convertidor pypandoc. Si `libreoffice` no està disponible, marca l'artefacte amb `reason="legacy .doc, LibreOffice absent"` i salta. LibreOffice ja està present al sistema de desenvolupament (`/usr/bin/libreoffice`).
+
+### 6.4 Models de dades
+
+```python
+class ConvertedArtifact(BaseModel):
+    path: str                       # ruta relativa POSIX de l'artefacte (dins validation/ai_pipeline/converted/)
+    format: str                     # "md", "csv", "png", "jpg"
+    source_path: str                # ruta del FileClass origen
+    source_chain: list[str]         # heretat del FileClass origen
+    strategy_used: str              # el conversion_strategy aplicat
+    page: int | None = None         # 1-based si s'aplica (PDFs)
+    sheet: str | None = None        # nom del full si s'aplica (Excel)
+    bytes_written: int = 0          # mida de l'artefacte
+    skipped: bool = False           # si no s'ha pogut convertir
+    skip_reason: str = ""           # motiu del skip (dep absent, error de format…)
+
+class ProjectConversion(BaseModel):
+    project_path: str
+    converted_at: str
+    artifacts: list[ConvertedArtifact] = Field(default_factory=list)
+    per_source: dict[str, list[str]] = Field(default_factory=dict)
+        # source_path → llista d'artefactes produïts per aquell fitxer
+    total_bytes: int = 0
+    warnings: list[str] = Field(default_factory=list)
+    eva_summary: list[str] = Field(default_factory=list)
+
+    # Query helpers
+    def artifacts_of(self, source_path: str) -> list[ConvertedArtifact]: ...
+    def artifacts_by_format(self, fmt: str) -> list[ConvertedArtifact]: ...
+```
+
+### 6.5 Granularitat: per-pàgina per defecte
+
+**PDFs** produeixen un fitxer per pàgina (`page_001.md`, `page_002.md`, …). Raons:
+- Fase 4 sovint pregunta "què hi ha a la pàgina X?" — accés directe sense parsear delimiters.
+- Si una pàgina falla (layout estrany, encriptada), no contamina les altres.
+- Els fitxers grans són cars de passar a un prompt; unitats petites donen flexibilitat.
+
+**Excel** produeix un CSV per full. Mateixa raó: Fase 4 pot apuntar al full concret.
+
+**DOCX** produeix un sol `body.md` perquè la divisió per pàgina no és robusta a DOCX (pàgines depenen de renderitzat). Els headings dins del markdown ja serveixen de divisors lògics.
+
+**.msg** produeix un sol `body.md` amb frontmatter YAML (from, to, date, subject, attachments).
+
+### 6.6 Imatges embegudes inline al markdown
+
+Per PDFs i DOCXs amb imatges, Fase 3 embedeix referències al markdown:
+
+```markdown
+# Plànol de situació
+
+El projecte es localitza a Alcoletge...
+
+![](../extracted/A.01/img_000.png)
+
+Superfície: 518 m²
+```
+
+**Resolució d'ubicació:**
+- **PDF:** `pymupdf4llm` pot retornar la posició (bounding box) de cada imatge detectada; les assignem a la pàgina corresponent.
+- **DOCX:** `pypandoc` amb `--extract-media` extreu les imatges, però ja les tenim extretes per Fase 2. Post-processem el markdown per fer apuntar les refs a `extracted/{stem}/`.
+
+Els MLMs multimodals actuals (Claude Sonnet 4.6, GPT-4o) accepten markdown amb image refs. Provarem casos amb 16+ imatges (plànols grans) per validar els límits de context — si cal, Fase 4 decidirà pàgina-a-pàgina.
+
+### 6.7 Política de re-execució
+
+Igual que Fase 2: **re-conversió sempre amb dedupe per SHA256 de contingut**. Si un artefacte ja existeix amb el mateix hash que el nou contingut, no reescrivim. Cost afegit mínim. Quan confiem en conversions prèvies, canviarem a "skip-if-exists". Registrat al CHANGELOG.
+
+### 6.8 Resum per Eva (`eva_summary`)
 
 ```
-automation/ai_pipeline/
-├── __init__.py           # exporta API pública
-├── inventory.py          # Fase 1
-└── typology.py           # Fase 2 (pendent)
-
-scripts/
-├── ai_pipeline_inventory.py    # CLI per Fase 1
-└── ai_pipeline_typology.py     # CLI per Fase 2 (pendent)
-
-web/
-└── api.py                 # endpoints GET /api/ai-pipeline/{inventory,typology}/{project}
-
-templates/validation/
-└── review.html            # pestanya "AI Pipeline"
-
-tests/
-├── test_ai_pipeline_inventory.py   # 14 tests
-└── test_ai_pipeline_typology.py    # (pendent)
+Hem convertit 48 fitxers útils a 247 artefactes llegibles per la IA:
+• 134 pàgines de PDF convertides a markdown (24 documents).
+• 45 pàgines de PDFs escanejats desades com a imatges.
+• 15 fulls d'Excel exportats a CSV.
+• 2 cossos d'email desats com a markdown.
+• 17 imatges estan referenciades com estan (no cal conversió).
 ```
 
-Dependències externes (ja presents al projecte):
-- `pydantic` (models de dades)
-- `extract_msg` (lectura .msg)
-- `PyMuPDF` (classificació PDF vectorial vs escanejat + extracció d'imatges)
-- `openpyxl` (introspecció Excel + extracció d'imatges)
-- `python-docx` (introspecció DOCX — a verificar)
+Aquest resum tanca la primera línia de transparència d'Alfonso: *"això és el que has aportat" → "i això és el que hem pogut llegir d'això"*.
+
+### 6.9 Dependències noves
+
+- **`pymupdf4llm`** (Python, PyPI — ja instal·lat) — PDF → markdown LLM-ready
+- **`pypandoc`** (Python, PyPI — ja instal·lat) — wrapper sobre pandoc
+- **pandoc** (binari — ja present a `/home/josep/.local/bin/pandoc`)
+- **LibreOffice** (binari — ja present a `/usr/bin/libreoffice`) — `.doc` → `.docx` headless
+
+### 6.10 Com s'utilitzarà
+
+- **CLI:** `scripts/ai_pipeline_conversion.py --project {id} [--save] [--json] [--strategy pdf_to_markdown]` (el flag `--strategy` per filtrar un subset durant diagnòstic)
+- **API:** `GET /api/ai-pipeline/conversion/{project}?refresh=true`
+- **Wizard:** secció "Stage 3: Conversió" sota Stage 2 a la pestanya AI Pipeline, amb llista d'artefactes agrupats per font i botó de preview per cada `.md`/`.csv`
+- **Python:** `from automation.ai_pipeline.conversion import convert_project`
+
+### 6.11 Sortida canònica
+
+Fitxer: `{projecte}/validation/ai_conversion.json`
+Artefactes a disc: `{projecte}/validation/ai_pipeline/converted/{source_stem}/*`
+
+### 6.12 V1.1 candidats (fora de MVP)
+
+- **OCR per PDFs escanejats** (Tesseract). Avui Fase 3 només els passa a imatges i delega a Fase 4 vision. OCR afegiria un canal deterministic addicional.
+- **Previsualització de l'artefacte al wizard** — renderitzar el markdown/CSV in-place per verificació ràpida.
+- **Conversion caching per-pàgina en disc** — saltar pàgines ja convertides fins i tot quan re-corrents el projecte sencer.
 
 ---
 
-## 7. Roadmap de fases 3–7
+## 7. Arquitectura tècnica
+
+```
+automation/ai_pipeline/
+├── __init__.py           # buit (import directe des de submòduls)
+├── inventory.py          # Fase 1 (implementada)
+├── typology.py           # Fase 2 (implementada)
+└── conversion.py         # Fase 3 (pendent)
+
+scripts/
+├── ai_pipeline_inventory.py     # CLI Fase 1
+├── ai_pipeline_typology.py      # CLI Fase 2
+└── ai_pipeline_conversion.py    # CLI Fase 3 (pendent)
+
+web/
+└── api.py                 # endpoints /api/ai-pipeline/{inventory,typology,conversion}/{project}
+
+templates/validation/
+└── review.html            # pestanya "AI Pipeline" (Stage 1 + 2; Stage 3 pendent)
+
+tests/
+├── test_ai_pipeline_inventory.py   # 14 tests
+├── test_ai_pipeline_typology.py    # 30 tests
+└── test_ai_pipeline_conversion.py  # (pendent)
+```
+
+Dependències externes:
+- **Ja presents al projecte:** `pydantic`, `extract_msg`, `PyMuPDF`, `openpyxl`, `python-docx`
+- **Afegides per Fase 3:** `pymupdf4llm`, `pypandoc` (wrapper sobre `pandoc` binari), `LibreOffice` (binari de sistema, usat per `.doc` legacy)
+
+---
+
+## 8. Roadmap de fases 4–7
 
 Cada fase es dissenyarà abans d'implementar. No es comprometen detalls aquí; aquest llistat és la intenció.
-
-### Fase 3 — Conversió
-Per cada `FileClass` amb `useful=True`, produir un artefacte LLM-ready segons el `conversion_strategy` proposat per Fase 2:
-- `pdf_to_markdown` → pdfplumber/PyMuPDF → markdown per pàgina
-- `pdf_to_markdown_plus_images` → markdown + fitxers d'imatge ja extrets per Fase 2
-- `pdf_pages_to_images` → una imatge PNG per pàgina (per Fase 4 vision)
-- `excel_per_sheet_to_csv` → un CSV per full (iterant `sheet_names`)
-- `excel_per_sheet_to_csv_plus_images` → CSV + imatges (ja extretes)
-- `docx_to_markdown_plus_media` → markdown + media extreta
-- `msg_body_to_markdown` → cos del missatge amb metadades
-- `image_passthrough`, `text_passthrough` → directament
-- `skip` → nop
-
-La Fase 3 consumeix `ai_typology.json` i produeix artefactes a `{projecte}/validation/ai_pipeline/converted/`.
 
 ### Fase 4 — Anàlisi
 Per cada fitxer convertit, extreure senyals: valors numèrics, noms, dates, adreces, unitats geotècniques, capes de sòl, etc. Diferent de la Fase 2 (classificació): aquí es llegeix el contingut, no només la forma.
@@ -396,7 +535,7 @@ Produir el .docx final. Opcions: reutilitzar `ReportGenerator` amb les noves dad
 
 ---
 
-## 8. Relació amb el pipeline existent
+## 9. Relació amb el pipeline existent
 
 | Aspecte                 | Pipeline existent                          | AI Pipeline                                 |
 |-------------------------|--------------------------------------------|---------------------------------------------|
@@ -404,14 +543,14 @@ Produir el .docx final. Opcions: reutilitzar `ReportGenerator` amb les noves dad
 | Punt d'entrada          | `auto_extractor.auto_extract()`            | `automation/ai_pipeline/` stage-by-stage    |
 | Branca                  | `feature/action-2-deterministic`           | `experiment/ai-pipeline`                    |
 | Wizard                  | Pestanyes SmartScan, Wizard, Dev, Pipeline | Pestanya AI Pipeline (nova)                 |
-| Artefactes              | `file_mapping.json`, `concept_map.json`, etc. | `validation/ai_inventory.json`, `ai_typology.json`, i futurs |
-| Estat                   | Producció                                  | Experimental — Fase 1 funcional, Fase 2 dissenyada |
+| Artefactes              | `file_mapping.json`, `concept_map.json`, etc. | `validation/ai_inventory.json`, `ai_typology.json`, `ai_conversion.json` i futurs |
+| Estat                   | Producció                                  | Experimental — Fases 1 i 2 funcionals, Fase 3 dissenyada |
 
 **Decisió d'adopció:** quan l'AI Pipeline complet demostri millor qualitat i/o menor intervenció manual que el pipeline existent sobre els 7 projectes de referència, es considerarà fusió a `main`. No abans.
 
 ---
 
-## 9. Com estendre
+## 10. Com estendre
 
 Per afegir una nova fase:
 
@@ -426,7 +565,7 @@ Per afegir una nova fase:
 
 ---
 
-## 10. Referències
+## 11. Referències
 
 - `automation/fileminer/miners/msg_miner.py` — extracció adjunts .msg
 - `automation/concept_scout/scanner.py` — walk + skip rules
