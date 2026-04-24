@@ -1,21 +1,13 @@
-"""AI pipeline — LLM-first project processing (inventory → classification → conversion → analysis → values → report).
+"""AI pipeline — LLM-first project processing.
 
-Coexists with the existing deterministic pipeline (FileScanner, FileMiner, ConceptScout).
-Stage 1: inventory (this module).
+Stage 1 (inventory) and Stage 2 (typology) coexist with the existing
+deterministic stack (FileScanner, FileMiner, ConceptScout, auto_extractor).
+
+Import symbols directly from their submodules to avoid load-order races
+under concurrent requests (e.g. FastAPI threadpool):
+
+    from automation.ai_pipeline.inventory import build_inventory, Inventory
+    from automation.ai_pipeline.typology import classify_project, ProjectTypology
+
+See docs/ARQUITECTURA-AI-PIPELINE.md.
 """
-
-from .inventory import Inventory, InventoryFile, FolderSummary, build_inventory
-from .typology import (
-    FileClass,
-    FolderClass,
-    ProjectTypology,
-    classify_project,
-    load_typology,
-    save_typology,
-)
-
-__all__ = [
-    "Inventory", "InventoryFile", "FolderSummary", "build_inventory",
-    "FileClass", "FolderClass", "ProjectTypology",
-    "classify_project", "load_typology", "save_typology",
-]
