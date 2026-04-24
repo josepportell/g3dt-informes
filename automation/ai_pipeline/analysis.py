@@ -270,10 +270,17 @@ def _build_user_content(
     pp: Path,
     source_path: str,
     artifacts: list[ConvertedArtifact],
+    *,
+    include_glossary: bool = True,
 ) -> list[dict]:
-    """Build the Anthropic `content` blocks for one per-source call."""
+    """Build the Anthropic `content` blocks for one per-source call.
+
+    When `include_glossary=False`, the glossary block is dropped — used by the
+    schema-validation retry path (arch §7.6) to give the model a cleaner, shorter
+    target on the second attempt. The concept YAML (authoritative schema) stays.
+    """
     concept_yaml = _load_concept_yaml()
-    glossary = _load_glossary()
+    glossary = _load_glossary() if include_glossary else ""
 
     header = (
         f"# Source under analysis\n\n"
@@ -507,9 +514,10 @@ def _analyze_one_source(
     At most one of (analysis, failure) is non-None. `is_systemic=True` signals
     the caller to abort the whole project.
     """
-    content = _build_user_content(pp, source_path, artifacts)
     tool_schema = _build_tool_schema()
-    key = _cache_key(content, model)
+    # Initial cache lookup uses the full-prompt key (that's the shape we cache under).
+    full_content = _build_user_content(pp, source_path, artifacts)
+    key = _cache_key(full_content, model)
 
     cached = _cache_read(pp, source_path, key)
     if cached is not None:
@@ -518,9 +526,19 @@ def _analyze_one_source(
     last_error: Exception | None = None
     raw_response: str = ""
     attempts = 0
+    # On schema-validation failure, the next attempt drops the glossary block
+    # (arch §7.6: retry with a trimmed prompt). Transient retries keep the
+    # full prompt — the error was network/rate, not schema noise.
+    trimmed_retry = False
 
     for attempt in range(1, _MAX_RETRIES_PER_SOURCE + 1):
         attempts = attempt
+        if trimmed_retry:
+            content = _build_user_content(
+                pp, source_path, artifacts, include_glossary=False,
+            )
+        else:
+            content = full_content
         started = time.monotonic()
         try:
             resp = client.messages.create(
@@ -614,11 +632,18 @@ def _analyze_one_source(
                 cache_creation_input_tokens=cache_creation_tokens or 0,
                 cache_read_input_tokens=cache_read_tokens or 0,
             )
-            _cache_write(pp, source_path, key, analysis)
+            # Cache under the key for the content actually sent. On a trimmed
+            # retry this differs from the initial full-prompt key — acceptable:
+            # the next run will re-call with the full prompt and cache then.
+            write_key = key if not trimmed_retry else _cache_key(content, model)
+            _cache_write(pp, source_path, write_key, analysis)
             return (analysis, None, False, False)
         except ValidationError as ve:
             last_error = ve
             if attempt < _MAX_RETRIES_PER_SOURCE:
+                # Retry with a trimmed prompt (drop glossary) — gives the model
+                # a cleaner target on the next attempt.
+                trimmed_retry = True
                 continue
             return (None, SourceFailure(
                 source_path=source_path,

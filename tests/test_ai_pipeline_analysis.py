@@ -118,9 +118,11 @@ class _MockMessages:
         """behavior: callable that returns a response OR raises."""
         self.behavior = behavior
         self.calls = 0
+        self.kwargs_history: list[dict] = []
 
     def create(self, **kwargs):
         self.calls += 1
+        self.kwargs_history.append(kwargs)
         return self.behavior(self.calls, kwargs)
 
 
@@ -762,3 +764,102 @@ def test_extracted_image_does_not_trigger_extra_llm_call(tmp_path):
     assert len(analysis.sources) == 1
     assert analysis.sources[0].source_path == "PLAN.pdf"
     assert client.messages.calls == 1
+
+
+# ---------------------------------------------------------------------------
+# D5 tests — schema-validation retry uses a trimmed prompt (arch §7.6)
+# ---------------------------------------------------------------------------
+
+# Distinctive substring that appears only in the glossary block header. Used to
+# detect glossary presence/absence in a user_content list of blocks.
+_GLOSSARY_MARKER = "Glossary — Eva's rules"
+
+
+def _user_text(kwargs: dict) -> str:
+    """Join every text block of the user message for substring assertions."""
+    messages = kwargs.get("messages") or []
+    parts: list[str] = []
+    for msg in messages:
+        for block in msg.get("content", []) or []:
+            if isinstance(block, dict) and block.get("type") == "text":
+                parts.append(block.get("text", ""))
+    return "\n".join(parts)
+
+
+def test_build_user_content_respects_include_glossary_flag(tmp_path):
+    project = _make_project(tmp_path)
+
+    with_gloss = _build_user_content(project, "PENETROS.pdf", [])
+    without_gloss = _build_user_content(
+        project, "PENETROS.pdf", [], include_glossary=False,
+    )
+
+    with_text = "\n".join(b.get("text", "") for b in with_gloss if isinstance(b, dict))
+    without_text = "\n".join(b.get("text", "") for b in without_gloss if isinstance(b, dict))
+
+    assert _GLOSSARY_MARKER in with_text
+    assert _GLOSSARY_MARKER not in without_text
+    # The trimmed version must be meaningfully shorter.
+    assert len(without_text) < len(with_text)
+    # Concept schema (authoritative target) stays in both shapes.
+    assert "architect_name" in with_text
+    assert "architect_name" in without_text
+
+
+def _bad_then_good_behavior(call_num, kwargs):
+    """Call 1: schema violation (empty insight). Call 2+: valid."""
+    if call_num == 1:
+        return _MockResponse({"insight": {}, "candidates": []})
+    return _happy_behavior(call_num, kwargs)
+
+
+def test_schema_validation_retry_uses_trimmed_prompt(tmp_path):
+    project = _make_project(tmp_path)
+    import automation.ai_pipeline.analysis as ai
+    original_backoff = ai._BACKOFF_INITIAL_S
+    ai._BACKOFF_INITIAL_S = 0.0
+    try:
+        client = _MockClient(_bad_then_good_behavior)
+        analysis = analyze_project(project, client=client, model="claude-sonnet-4-6")
+    finally:
+        ai._BACKOFF_INITIAL_S = original_backoff
+
+    assert analysis.systemic_failure is None
+    # We need at least one source that went through a schema-retry cycle.
+    assert client.messages.calls >= 2
+    # Call 1 (schema-violating response) was sent with the full prompt INCLUDING
+    # the glossary. Call 2 (trimmed retry) must NOT contain the glossary block.
+    first_text = _user_text(client.messages.kwargs_history[0])
+    second_text = _user_text(client.messages.kwargs_history[1])
+    assert _GLOSSARY_MARKER in first_text
+    assert _GLOSSARY_MARKER not in second_text
+    # Concept schema stays on the retry — that's the authoritative target.
+    assert "architect_name" in second_text
+
+
+def _rate_limit_then_good_behavior(call_num, kwargs):
+    """Call 1: transient 429. Call 2+: valid."""
+    if call_num == 1:
+        raise RuntimeError("RateLimitError: 429 too many requests")
+    return _happy_behavior(call_num, kwargs)
+
+
+def test_transient_retry_keeps_full_prompt(tmp_path):
+    project = _make_project(tmp_path)
+    import automation.ai_pipeline.analysis as ai
+    original_backoff = ai._BACKOFF_INITIAL_S
+    ai._BACKOFF_INITIAL_S = 0.0
+    try:
+        client = _MockClient(_rate_limit_then_good_behavior)
+        analysis = analyze_project(project, client=client, model="claude-sonnet-4-6")
+    finally:
+        ai._BACKOFF_INITIAL_S = original_backoff
+
+    assert analysis.systemic_failure is None
+    assert client.messages.calls >= 2
+    # Both attempts (the transient failure AND the successful retry) must keep
+    # the full prompt — transient errors have nothing to do with schema noise.
+    first_text = _user_text(client.messages.kwargs_history[0])
+    second_text = _user_text(client.messages.kwargs_history[1])
+    assert _GLOSSARY_MARKER in first_text
+    assert _GLOSSARY_MARKER in second_text
