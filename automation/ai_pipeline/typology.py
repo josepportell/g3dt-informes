@@ -50,6 +50,12 @@ MIN_IMAGE_DIM: int = 32  # pixels, each side
 # Sidecar directory where Stage 2 writes extracted images.
 _EXTRACTED_ROOT = Path("validation") / "ai_pipeline" / "extracted"
 
+# Logo filter (D1#1) — extracted images within Hamming distance ≤ threshold of
+# any reference in the library are marked `category="logo_image"` and skipped
+# by Stage 3/4. Validation: docs/PLA-D1-LOGO-FILTER.md.
+LOGO_PHASH_THRESHOLD: int = 6
+_LOGO_REFERENCES_DIR = Path(__file__).parent.parent.parent / "schemas" / "ai_pipeline" / "logo_references"
+
 
 # ─── Models ────────────────────────────────────────────────────────────
 
@@ -197,6 +203,86 @@ def _is_dev_only(rel_path: str) -> bool:
         _top_level_dir(rel_path) in DEV_ONLY_TOPLEVEL_DIRS
         or _matches_dev_only_filename(rel_path)
     )
+
+
+# ─── Logo filter (D1#1) ────────────────────────────────────────────────
+
+_logo_reference_cache: dict[str, object] | None = None
+
+
+def _load_logo_references() -> dict[str, object]:
+    """Return name → phash dict for every image in the logo references dir.
+
+    Cached at module level; re-call `_reset_logo_reference_cache()` in tests
+    to pick up library changes mid-session. If imagehash isn't installed or
+    the references directory is empty/missing, returns an empty dict and the
+    filter silently becomes a no-op.
+    """
+    global _logo_reference_cache
+    if _logo_reference_cache is not None:
+        return _logo_reference_cache
+
+    cache: dict[str, object] = {}
+    try:
+        import imagehash
+        from PIL import Image
+    except ImportError:
+        logger.info("imagehash/PIL not available — logo filter disabled")
+        _logo_reference_cache = cache
+        return cache
+
+    if not _LOGO_REFERENCES_DIR.is_dir():
+        _logo_reference_cache = cache
+        return cache
+
+    for p in sorted(_LOGO_REFERENCES_DIR.iterdir()):
+        if p.suffix.lower() not in {".png", ".jpg", ".jpeg"}:
+            continue
+        try:
+            with Image.open(p) as img:
+                cache[p.stem] = imagehash.phash(img.convert("RGB"))
+        except Exception as e:
+            logger.warning("logo reference %s unreadable: %s", p.name, e)
+
+    _logo_reference_cache = cache
+    return cache
+
+
+def _reset_logo_reference_cache() -> None:
+    """Test hook — drop the module-level cache so the next call reloads."""
+    global _logo_reference_cache
+    _logo_reference_cache = None
+
+
+def _classify_as_logo(img_path: Path) -> tuple[str, int] | None:
+    """Return (best_reference_name, hamming_distance) if the image is a logo.
+
+    Returns None when the image is content OR when the filter is disabled
+    (library empty or imagehash missing). Callers should treat None as
+    "keep as-is, not a logo".
+    """
+    refs = _load_logo_references()
+    if not refs:
+        return None
+    try:
+        import imagehash
+        from PIL import Image
+        with Image.open(img_path) as img:
+            h = imagehash.phash(img.convert("RGB"))
+    except Exception as e:
+        logger.debug("logo filter hash failed for %s: %s", img_path, e)
+        return None
+
+    best_name: str | None = None
+    best_dist = 1 << 30
+    for name, ref_h in refs.items():
+        d = h - ref_h
+        if d < best_dist:
+            best_dist = d
+            best_name = name
+    if best_name is not None and best_dist <= LOGO_PHASH_THRESHOLD:
+        return (best_name, best_dist)
+    return None
 
 
 # ─── PDF introspection + image extraction ──────────────────────────────
@@ -714,22 +800,43 @@ def classify_project(
                 rel = img_path.relative_to(pp).as_posix()
                 img_fmt = _normalize_format(rel)
                 chain = _build_extracted_chain(source_chain, inv_file.path, img_path.name)
-                files.append(
-                    FileClass(
-                        path=rel,
-                        format=img_fmt,
-                        category="image",
-                        has_text=False,
-                        has_images=True,
-                        image_count=1,
-                        source_chain=chain,
-                        is_attachment=inv_file.kind == "email_attachment",
-                        parent_path=inv_file.path,
-                        useful=True,
-                        reason="",
-                        conversion_strategy="image_passthrough",
+                # Logo filter (D1#1) — perceptual-hash match against reference library.
+                logo_match = _classify_as_logo(img_path)
+                if logo_match is not None:
+                    ref_name, dist = logo_match
+                    files.append(
+                        FileClass(
+                            path=rel,
+                            format=img_fmt,
+                            category="logo_image",
+                            has_text=False,
+                            has_images=True,
+                            image_count=1,
+                            source_chain=chain,
+                            is_attachment=inv_file.kind == "email_attachment",
+                            parent_path=inv_file.path,
+                            useful=False,
+                            reason=f"matches G3DT logo reference '{ref_name}' (Hamming {dist})",
+                            conversion_strategy="skip",
+                        )
                     )
-                )
+                else:
+                    files.append(
+                        FileClass(
+                            path=rel,
+                            format=img_fmt,
+                            category="image",
+                            has_text=False,
+                            has_images=True,
+                            image_count=1,
+                            source_chain=chain,
+                            is_attachment=inv_file.kind == "email_attachment",
+                            parent_path=inv_file.path,
+                            useful=True,
+                            reason="",
+                            conversion_strategy="image_passthrough",
+                        )
+                    )
 
         if category == "unknown":
             warnings.append(f"unknown format: {inv_file.path}")

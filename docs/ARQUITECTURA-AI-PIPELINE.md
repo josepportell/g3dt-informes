@@ -277,7 +277,12 @@ Per qualsevol fitxer — Eva-provided o extret per nosaltres — un Stage poster
 
 **Política de re-execució (fase de desenvolupament):** la re-execució sempre re-extreu amb dedupe per hash SHA256 de contingut (com fa `msg_miner._save_attachments`). Quan confiem en les extraccions prèvies, es podrà canviar a "skip if exists". Registrat al CHANGELOG.
 
-**TODO v1.1 — detecció de logos per descartar:** pendent de construir una biblioteca de referència de logos G3DT. Llavors s'afegirà filtre per similitud (perceptual hash o ImageMagick compare) per marcar imatges logo amb `useful = False`, `reason = "matches G3DT logo"`.
+**Filtre de logos (D1#1, 2026-04-25):** cada imatge extreta passa per un
+comparador pHash vs la biblioteca `schemas/ai_pipeline/logo_references/`. Si
+la distància Hamming mínima és ≤ `LOGO_PHASH_THRESHOLD` (6), el FileClass rep
+`category="logo_image"`, `useful=False`, `conversion_strategy="skip"`. Motiu
+al `reason`. Si la biblioteca està buida o `imagehash` no està disponible, el
+filtre és un no-op. Disseny i dades de validació: `docs/PLA-D1-LOGO-FILTER.md`.
 
 ### 5.7 Detecció dev-only
 

@@ -13,9 +13,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from automation.ai_pipeline.typology import (
     DEV_ONLY_TOPLEVEL_DIRS,
+    LOGO_PHASH_THRESHOLD,
     FileClass,
     FolderClass,
     ProjectTypology,
+    _load_logo_references,
+    _reset_logo_reference_cache,
     classify_project,
     load_typology,
     save_typology,
@@ -527,3 +530,149 @@ def test_load_returns_none_when_absent(tmp_path):
 def test_rejects_nonexistent_path(tmp_path):
     with pytest.raises(ValueError):
         classify_project(tmp_path / "does-not-exist")
+
+
+# ---------------------------------------------------------------------------
+# D1#1 tests — pre-Stage 4 logo filter via pHash
+# ---------------------------------------------------------------------------
+
+
+def _logo_refs_dir() -> Path:
+    # Same path the production code uses; resolved relative to this test file.
+    return Path(__file__).resolve().parent.parent / "schemas" / "ai_pipeline" / "logo_references"
+
+
+def test_logo_reference_library_exists_and_loads():
+    """The committed reference library must load cleanly and be non-empty."""
+    _reset_logo_reference_cache()
+    try:
+        refs = _load_logo_references()
+    finally:
+        _reset_logo_reference_cache()
+    assert refs, "logo reference library should be non-empty at default path"
+    # Names come from the filename stems — sanity on at least one known one
+    assert any("g3" in name.lower() for name in refs)
+
+
+def test_reference_library_self_matches():
+    """Each reference image must hash to itself at Hamming 0 — guards against
+    accidental file corruption or mis-naming in the committed library."""
+    import imagehash
+    from PIL import Image
+
+    _reset_logo_reference_cache()
+    try:
+        refs = _load_logo_references()
+    finally:
+        _reset_logo_reference_cache()
+
+    refs_dir = _logo_refs_dir()
+    for p in sorted(refs_dir.iterdir()):
+        if p.suffix.lower() not in {".png", ".jpg", ".jpeg"}:
+            continue
+        with Image.open(p) as img:
+            h = imagehash.phash(img.convert("RGB"))
+        assert h - refs[p.stem] == 0, f"reference {p.name} doesn't self-match"
+
+
+def test_logo_filter_flags_identical_reference(tmp_path):
+    """Embed one of the committed reference logos into a PDF; the extraction
+    should produce a `logo_image` FileClass, not a plain `image`."""
+    import fitz
+
+    refs_dir = _logo_refs_dir()
+    ref_path = refs_dir / "g3_tight.png"
+    assert ref_path.is_file(), "expected committed reference"
+
+    project = tmp_path / "proj"
+    project.mkdir()
+    # Build a PDF that embeds the G3 logo
+    doc = fitz.open()
+    page = doc.new_page()
+    page.insert_text((72, 72), "Document with a G3 logo embedded below. " * 5)
+    page.insert_image(fitz.Rect(100, 200, 356, 456), filename=str(ref_path))
+    (project / "has_logo.pdf").write_bytes(doc.tobytes())
+    doc.close()
+
+    _reset_logo_reference_cache()
+    try:
+        typ = classify_project(project, extract_images=True)
+    finally:
+        _reset_logo_reference_cache()
+
+    extracted = [f for f in typ.files if f.parent_path == "has_logo.pdf"]
+    assert extracted, "expected at least one extracted image"
+    # Every extracted image should be flagged as a logo
+    for f in extracted:
+        assert f.category == "logo_image", f"expected logo_image, got {f.category} for {f.path}"
+        assert f.useful is False
+        assert f.conversion_strategy == "skip"
+        assert "matches G3DT logo reference" in f.reason
+
+
+def test_logo_filter_ignores_random_noise(tmp_path):
+    """A PDF embedding a random-noise PNG must be classified as content, not logo."""
+    import fitz
+
+    project = tmp_path / "proj"
+    project.mkdir()
+    doc = fitz.open()
+    page = doc.new_page()
+    page.insert_text((72, 72), "Document with random-noise image. " * 5)
+    page.insert_image(fitz.Rect(100, 100, 356, 356), stream=_noisy_png_bytes(256))
+    (project / "has_noise.pdf").write_bytes(doc.tobytes())
+    doc.close()
+
+    _reset_logo_reference_cache()
+    try:
+        typ = classify_project(project, extract_images=True)
+    finally:
+        _reset_logo_reference_cache()
+
+    extracted = [f for f in typ.files if f.parent_path == "has_noise.pdf"]
+    assert extracted, "expected at least one extracted image"
+    for f in extracted:
+        assert f.category == "image"
+        assert f.useful is True
+
+
+def test_logo_filter_degrades_gracefully_without_references(tmp_path, monkeypatch):
+    """With an empty reference directory, the filter becomes a no-op:
+    extracted images keep `category="image"`, `useful=True`."""
+    import automation.ai_pipeline.typology as typology_mod
+
+    empty_dir = tmp_path / "_empty_refs"
+    empty_dir.mkdir()
+    monkeypatch.setattr(typology_mod, "_LOGO_REFERENCES_DIR", empty_dir)
+
+    # Build a project with the SAME PDF that embeds a real G3 logo
+    refs_dir = _logo_refs_dir()
+    ref_path = refs_dir / "g3_tight.png"
+    project = tmp_path / "proj"
+    project.mkdir()
+    import fitz
+    doc = fitz.open()
+    page = doc.new_page()
+    page.insert_text((72, 72), "Doc. " * 5)
+    page.insert_image(fitz.Rect(100, 200, 356, 456), filename=str(ref_path))
+    (project / "has_logo.pdf").write_bytes(doc.tobytes())
+    doc.close()
+
+    _reset_logo_reference_cache()
+    try:
+        typ = classify_project(project, extract_images=True)
+    finally:
+        _reset_logo_reference_cache()
+
+    extracted = [f for f in typ.files if f.parent_path == "has_logo.pdf"]
+    assert extracted
+    # Without references, the logo is NOT recognized — falls back to plain image.
+    for f in extracted:
+        assert f.category == "image"
+        assert f.useful is True
+
+
+def test_logo_threshold_constant_is_conservative():
+    """Guardrail against someone accidentally relaxing the threshold to a value
+    that admits real content (validated empty band is Hamming 7–21)."""
+    assert 0 < LOGO_PHASH_THRESHOLD <= 10

@@ -62,21 +62,15 @@ Stage 2 extracts images from PDF/Excel/DOCX into `validation/ai_pipeline/extract
 On Alcoletge: 54 extracted images → 54 additional analysis calls (most are G3DT logos). Approx cost: $0.20–0.30 of logo-only calls, which produce 0 useful candidates.
 
 **Fix directions:**
-1. **v1.1 logo filter** (already parked in §5.6 of arch doc). Discard `.png`/`.jpg` whose perceptual hash matches a reference G3DT logo library. Eliminates ~60% of the wasted calls.
+1. ~~**v1.1 logo filter** (already parked in §5.6 of arch doc). Discard `.png`/`.jpg` whose perceptual hash matches a reference G3DT logo library.~~ **Shipped (2026-04-25)** — 4 reference logos seeded at `schemas/ai_pipeline/logo_references/`, threshold Hamming ≤ 6, `category="logo_image"` on match. Validated on Alcoletge: 11/11 logos caught, 0 false positives, Hamming 7–21 band empty (clean decision boundary). Design + experiment data: `docs/PLA-D1-LOGO-FILTER.md`.
 2. ~~**Stage 4 source grouping change**: group extracted images *with their parent source* so one call sees the parent document + its embedded images together.~~ **Shipped (2026-04-25)** — extracted-image passthroughs now inherit the parent's `source_path` in Stage 3, so Stage 4 groups them alongside the parent's text artifacts. Stage 4 sort order puts text before images. `_SCHEMA_VERSION` bumped to `1.2`.
 3. ~~**Stage 2 exclusion flag**: skip extraction from documents whose `document_type` is clearly admin (budgets, invoices) where images are almost always signatures/logos.~~ **Rejected (2026-04-25, Josep)** — Stage 2 is technical-typology only; `document_type` is Stage 4's responsibility. Leaking that decision upstream would couple the two stages and violate the arch-doc separation (§5.1). Admin documents occasionally do carry useful visual content (signed floor plans, stamped lab photos) — a blanket Stage 2 exclusion would lose those.
 
-Remaining work for D1: option #1 (perceptual-hash logo filter) — still relevant for images whose parent is itself a logo-heavy admin doc (e.g. a budget Excel with only signature/logo embeds). Now less urgent thanks to #2.
+D1 is fully resolved. D2 (skip-before-calling logos) is now automatically handled: logos are filtered in Stage 2 so they never reach Stage 4 at all.
 
-### D2. Logos identified by Stage 4 still cost full LLM calls before being recognized
+### D2. ~~Logos identified by Stage 4 still cost full LLM calls before being recognized~~ — Shipped (2026-04-25) via D1#1 logo filter
 
-**Surfaced:** 2026-04-24.
-**Stage:** 4 (downstream of D1).
-**Severity:** Medium (cost).
-
-When Stage 4 runs on a source that the LLM classifies as `logo_image`, the call happens anyway — classification IS the output. No way to skip-before-calling.
-
-**Fix direction:** only relevant once D1 is addressed. If we keep extracted images as separate sources (rejecting D1 fix #2), we need a cheap pre-filter (perceptual hash / small-image heuristic) BEFORE the LLM. Stage 2 could emit `category="likely_logo"` as a v1.1 refinement and Stage 4 could skip those entirely.
+Resolved by D1#1: Stage 2 now detects logos via perceptual hash against the reference library and sets `useful=False, category="logo_image", conversion_strategy="skip"`. Those images never reach Stage 3 or Stage 4. Design: `docs/PLA-D1-LOGO-FILTER.md`.
 
 ---
 
