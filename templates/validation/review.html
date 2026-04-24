@@ -2487,6 +2487,7 @@
 
             <!-- AI Pipeline Tab Content (experimental) -->
             <div class="tab-content" id="ai-pipeline-content">
+                <!-- Stage 1: Inventari -->
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                     <div>
                         <h2 style="margin:0;">AI Pipeline — Stage 1: Inventari</h2>
@@ -2534,6 +2535,61 @@
                                 <tbody id="aiInventoryFilesBody"></tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Stage 2: Tipologia -->
+                <div style="border-top:1px solid #e0e0e0; margin-top:28px; padding-top:24px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <div>
+                            <h2 style="margin:0;">AI Pipeline — Stage 2: Tipologia</h2>
+                            <p style="margin:4px 0 0; color:#7f8c8d; font-size:13px;">
+                                Classificació per tipus tècnic, filtratge de fitxers dev-only, extracció d'imatges embegudes.
+                            </p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="loadAiTypology(true)" style="padding:8px 16px;">Refresh</button>
+                    </div>
+                    <div id="aiTypologyLoading" style="display:none; text-align:center; padding:40px;">
+                        <div class="spinner"></div>
+                        <span>Classificant fitxers i extraient imatges...</span>
+                    </div>
+                    <div id="aiTypologyError" style="display:none; background:#fee; border:1px solid #fbb; border-radius:6px; padding:12px; color:#922;"></div>
+                    <div id="aiTypologyResults" style="display:none;">
+                        <!-- Eva summary -->
+                        <div id="aiTypologyEvaSummary" style="background:#f0f7ff; border-left:4px solid #4a90e2; padding:12px 16px; margin-bottom:16px; font-size:14px; line-height:1.6;"></div>
+
+                        <!-- Category counts -->
+                        <div id="aiTypologyCategories" style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:20px;"></div>
+
+                        <!-- Files table -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin:0 0 8px;">
+                            <h3 style="font-size:15px; margin:0;">Fitxers classificats</h3>
+                            <div>
+                                <select id="aiTypologyCatFilter" onchange="renderAiTypologyFiles()"
+                                        style="padding:4px 8px; font-size:13px; border:1px solid #ccc; border-radius:4px; margin-right:8px;">
+                                    <option value="">totes categories</option>
+                                </select>
+                                <label style="font-size:13px; margin-right:8px;">
+                                    <input type="checkbox" id="aiTypologyUsefulOnly" onchange="renderAiTypologyFiles()">
+                                    només útils
+                                </label>
+                                <input type="text" id="aiTypologyFilter" placeholder="filtra per nom..." oninput="renderAiTypologyFiles()"
+                                       style="padding:4px 8px; font-size:13px; border:1px solid #ccc; border-radius:4px; width:180px;">
+                            </div>
+                        </div>
+                        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                            <thead>
+                                <tr style="background:#f8f9fa; border-bottom:2px solid #dee2e6;">
+                                    <th style="padding:6px 8px; text-align:left;">Ruta</th>
+                                    <th style="padding:6px 8px; text-align:center; width:130px;">Categoria</th>
+                                    <th style="padding:6px 8px; text-align:center; width:55px;">Útil</th>
+                                    <th style="padding:6px 8px; text-align:center; width:60px;">Pags/Tabs</th>
+                                    <th style="padding:6px 8px; text-align:center; width:65px;">Imatges</th>
+                                    <th style="padding:6px 8px; text-align:left;">Motiu / estratègia</th>
+                                </tr>
+                            </thead>
+                            <tbody id="aiTypologyFilesBody"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -2707,8 +2763,9 @@
             if (tabName === 'dev' && !devLoaded && selectedProject) {
                 loadDevAnalysis();
             }
-            if (tabName === 'ai-pipeline' && !aiInventoryLoaded && selectedProject) {
-                loadAiInventory(false);
+            if (tabName === 'ai-pipeline' && selectedProject) {
+                if (!aiInventoryLoaded) loadAiInventory(false);
+                if (!aiTypologyLoaded) loadAiTypology(false);
             }
         }
 
@@ -3823,6 +3880,8 @@
             photosLoaded = false;
             aiInventoryLoaded = false;
             aiInventoryData = null;
+            aiTypologyLoaded = false;
+            aiTypologyData = null;
             wizardDirty = false;
             document.getElementById('wizardUnsaved').style.display = 'none';
 
@@ -7070,6 +7129,117 @@
             return String(s).replace(/[&<>"']/g, c => ({
                 '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
             })[c]);
+        }
+
+        // --- AI Pipeline Stage 2: Typology ---
+        let aiTypologyLoaded = false;
+        let aiTypologyData = null;
+
+        async function loadAiTypology(refresh) {
+            if (!selectedProject) return;
+            const loading = document.getElementById('aiTypologyLoading');
+            const results = document.getElementById('aiTypologyResults');
+            const errBox = document.getElementById('aiTypologyError');
+            loading.style.display = 'block';
+            results.style.display = 'none';
+            errBox.style.display = 'none';
+
+            try {
+                const url = `/api/ai-pipeline/typology/${encodeURIComponent(selectedProject)}${refresh ? '?refresh=true' : ''}`;
+                const resp = await fetch(url);
+                if (!resp.ok) {
+                    const detail = await resp.json().catch(() => ({}));
+                    throw new Error(detail.detail || `HTTP ${resp.status}`);
+                }
+                const payload = await resp.json();
+                aiTypologyData = payload.typology;
+                aiTypologyLoaded = true;
+                renderAiTypology(payload.cached);
+            } catch (err) {
+                errBox.textContent = 'Error: ' + err.message;
+                errBox.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderAiTypology(wasCached) {
+            const typ = aiTypologyData;
+            if (!typ) return;
+
+            // Eva summary
+            const eva = document.getElementById('aiTypologyEvaSummary');
+            const cacheBadge = wasCached
+                ? '<span style="float:right; font-size:11px; background:#e8f4f8; color:#0c7489; padding:2px 6px; border-radius:3px;">cache</span>'
+                : '<span style="float:right; font-size:11px; background:#e8f8ec; color:#1b7a3a; padding:2px 6px; border-radius:3px;">fresh</span>';
+            eva.innerHTML = cacheBadge + typ.eva_summary.map(l => escapeHtml(l)).join('<br>');
+
+            // Category cards
+            const catsBox = document.getElementById('aiTypologyCategories');
+            const cats = Object.entries(typ.counts_by_category).sort((a, b) => b[1] - a[1]);
+            catsBox.innerHTML = cats.map(([name, count]) => {
+                const isSkip = ['reference_output', 'pipeline_artifact', 'binary_unreadable', 'system_file', 'unknown'].includes(name);
+                const bg = isSkip ? '#fef6f6' : '#f8f9fa';
+                const fg = isSkip ? '#8a5050' : '#2c3e50';
+                return `
+                    <div style="background:${bg}; border-radius:4px; padding:8px 10px;">
+                        <div style="font-size:10px; color:#7f8c8d; text-transform:uppercase; letter-spacing:0.4px;">${escapeHtml(name)}</div>
+                        <div style="font-size:18px; font-weight:600; color:${fg};">${count}</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Populate category filter
+            const filter = document.getElementById('aiTypologyCatFilter');
+            const currentVal = filter.value;
+            filter.innerHTML = '<option value="">totes categories</option>' +
+                cats.map(([name]) => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join('');
+            filter.value = currentVal;
+
+            renderAiTypologyFiles();
+            document.getElementById('aiTypologyResults').style.display = 'block';
+        }
+
+        function renderAiTypologyFiles() {
+            if (!aiTypologyData) return;
+            const nameFilter = document.getElementById('aiTypologyFilter').value.toLowerCase().trim();
+            const catFilter = document.getElementById('aiTypologyCatFilter').value;
+            const usefulOnly = document.getElementById('aiTypologyUsefulOnly').checked;
+            const body = document.getElementById('aiTypologyFilesBody');
+
+            const files = aiTypologyData.files.filter(f =>
+                (!nameFilter || f.path.toLowerCase().includes(nameFilter)) &&
+                (!catFilter || f.category === catFilter) &&
+                (!usefulOnly || f.useful)
+            );
+
+            body.innerHTML = files.map(f => {
+                const usefulMark = f.useful
+                    ? '<span style="color:#1b7a3a;">✓</span>'
+                    : '<span style="color:#b33;">✗</span>';
+
+                let struct = '';
+                if (f.page_count) struct = `${f.page_count}p`;
+                else if (f.sheet_count) struct = `${f.sheet_count}t`;
+
+                const imgCount = f.image_count ? f.image_count : '';
+                const detail = f.useful ? escapeHtml(f.conversion_strategy) : escapeHtml(f.reason);
+                const rowStyle = f.useful ? '' : 'color:#888;';
+                const parent = f.parent_path
+                    ? `<span title="extret de ${escapeHtml(f.parent_path)}" style="font-size:10px; color:#0c7489; margin-left:4px;">[img extreta]</span>`
+                    : '';
+
+                return `
+                    <tr style="border-bottom:1px solid #eee; ${rowStyle}">
+                        <td style="padding:4px 8px; font-family:monospace; font-size:12px;">${escapeHtml(f.path)}${parent}</td>
+                        <td style="padding:4px 8px; text-align:center; font-size:12px;">${escapeHtml(f.category)}</td>
+                        <td style="padding:4px 8px; text-align:center;">${usefulMark}</td>
+                        <td style="padding:4px 8px; text-align:center; font-size:12px;">${struct}</td>
+                        <td style="padding:4px 8px; text-align:center; font-size:12px;">${imgCount}</td>
+                        <td style="padding:4px 8px; font-size:12px;">${detail}</td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         // --- Pipeline Log Tab ---

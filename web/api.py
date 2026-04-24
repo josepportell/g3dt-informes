@@ -91,6 +91,35 @@ def ai_pipeline_inventory(project_name: str, refresh: bool = False):
     return {"inventory": inv.model_dump(), "cached": False}
 
 
+@router.get("/ai-pipeline/typology/{project_name:path}")
+def ai_pipeline_typology(project_name: str, refresh: bool = False):
+    """AI pipeline Stage 2: file typology + embedded-image extraction.
+
+    Returns cached `validation/ai_typology.json` unless `refresh=true`, in which
+    case files are re-introspected, images are re-extracted (with SHA256 dedup),
+    and the cache is overwritten.
+    """
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    from automation.ai_pipeline.typology import (
+        classify_project,
+        load_typology,
+        save_typology,
+    )
+
+    if not refresh:
+        cached = load_typology(project_path)
+        if cached is not None:
+            return {"typology": cached.model_dump(), "cached": True}
+
+    typ = classify_project(project_path)
+    save_typology(typ, project_path)
+    return {"typology": typ.model_dump(), "cached": False}
+
+
 @router.get("/prefills/{project_name:path}")
 def get_prefills(project_name: str, refresh: bool = False):
     """Get auto-extracted + wizard prefills for a project."""
