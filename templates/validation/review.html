@@ -2045,6 +2045,7 @@
                 <button class="tab disabled" id="tab-explicacio" data-tab="explicacio" onclick="switchTab('explicacio')">Explicacio</button>
                 <button class="tab" id="tab-dev" data-tab="dev" onclick="switchTab('dev')">Dev</button>
                 <button class="tab" id="tab-pipeline" data-tab="pipeline" onclick="switchTab('pipeline')">Pipeline</button>
+                <button class="tab" id="tab-ai-pipeline" data-tab="ai-pipeline" onclick="switchTab('ai-pipeline')">AI Pipeline</button>
             </div>
 
             <!-- SmartScan Tab Content -->
@@ -2484,6 +2485,59 @@
                 <div id="pipelineLog" style="background:#1e1e1e; color:#d4d4d4; border-radius:8px; padding:16px; font-family:'Fira Code',monospace; font-size:12px; line-height:1.7; max-height:600px; overflow-y:auto; white-space:pre-wrap;"></div>
             </div>
 
+            <!-- AI Pipeline Tab Content (experimental) -->
+            <div class="tab-content" id="ai-pipeline-content">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <div>
+                        <h2 style="margin:0;">AI Pipeline — Stage 1: Inventari</h2>
+                        <p style="margin:4px 0 0; color:#7f8c8d; font-size:13px;">
+                            Llistat complet de fitxers del projecte, incloent adjunts extrets dels missatges .msg.
+                        </p>
+                    </div>
+                    <button class="btn btn-secondary" onclick="loadAiInventory(true)" style="padding:8px 16px;">Refresh</button>
+                </div>
+                <div id="aiInventoryLoading" style="display:none; text-align:center; padding:40px;">
+                    <div class="spinner"></div>
+                    <span>Escanejant fitxers...</span>
+                </div>
+                <div id="aiInventoryError" style="display:none; background:#fee; border:1px solid #fbb; border-radius:6px; padding:12px; color:#922;"></div>
+                <div id="aiInventoryResults" style="display:none;">
+                    <div id="aiInventorySummary" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-bottom:20px;"></div>
+                    <div style="display:grid; grid-template-columns: 1fr 2fr; gap:20px;">
+                        <div>
+                            <h3 style="font-size:15px; margin:0 0 8px;">Carpetes</h3>
+                            <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                                <thead>
+                                    <tr style="background:#f8f9fa; border-bottom:2px solid #dee2e6;">
+                                        <th style="padding:6px 8px; text-align:left;">Carpeta</th>
+                                        <th style="padding:6px 8px; text-align:right; width:70px;">Fitxers</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="aiInventoryFoldersBody"></tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin:0 0 8px;">
+                                <h3 style="font-size:15px; margin:0;">Fitxers</h3>
+                                <input type="text" id="aiInventoryFilter" placeholder="filtra per nom..." oninput="renderAiInventoryFiles()"
+                                       style="padding:4px 8px; font-size:13px; border:1px solid #ccc; border-radius:4px; width:220px;">
+                            </div>
+                            <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                                <thead>
+                                    <tr style="background:#f8f9fa; border-bottom:2px solid #dee2e6;">
+                                        <th style="padding:6px 8px; text-align:left;">Ruta</th>
+                                        <th style="padding:6px 8px; text-align:center; width:80px;">Tipus</th>
+                                        <th style="padding:6px 8px; text-align:right; width:70px;">KB</th>
+                                        <th style="padding:6px 8px; text-align:center; width:90px;">Origen</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="aiInventoryFilesBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Explicacio Tab Content -->
             <div class="tab-content" id="explicacio-content">
                 <div style="padding: 40px; text-align: center; color: #7f8c8d;">
@@ -2653,6 +2707,9 @@
             if (tabName === 'dev' && !devLoaded && selectedProject) {
                 loadDevAnalysis();
             }
+            if (tabName === 'ai-pipeline' && !aiInventoryLoaded && selectedProject) {
+                loadAiInventory(false);
+            }
         }
 
         function detectAvailableTabs() {
@@ -2660,6 +2717,7 @@
             if (selectedProject) {
                 availableTabs.push('photos');
                 availableTabs.push('explicacio');
+                availableTabs.push('ai-pipeline');
                 if (DEV_MODE) {
                     availableTabs.push('dev');
                     availableTabs.push('pipeline');
@@ -2669,7 +2727,7 @@
         }
 
         function updateTabVisibility() {
-            const tabs = ['smartscan', 'wizard', 'photos', 'explicacio', 'dev', 'pipeline'];
+            const tabs = ['smartscan', 'wizard', 'photos', 'explicacio', 'dev', 'pipeline', 'ai-pipeline'];
             tabs.forEach(tab => {
                 const tabBtn = document.getElementById(`tab-${tab}`);
                 if (!tabBtn) return;
@@ -3763,6 +3821,8 @@
             smartscanLoaded = false;
             devLoaded = false;
             photosLoaded = false;
+            aiInventoryLoaded = false;
+            aiInventoryData = null;
             wizardDirty = false;
             document.getElementById('wizardUnsaved').style.display = 'none';
 
@@ -6910,6 +6970,106 @@
 
             results.innerHTML = html;
             results.style.display = 'block';
+        }
+
+        // --- AI Pipeline Tab (experimental: Stage 1 = inventory) ---
+        let aiInventoryLoaded = false;
+        let aiInventoryData = null;
+
+        async function loadAiInventory(refresh) {
+            if (!selectedProject) return;
+            const loading = document.getElementById('aiInventoryLoading');
+            const results = document.getElementById('aiInventoryResults');
+            const errBox = document.getElementById('aiInventoryError');
+            loading.style.display = 'block';
+            results.style.display = 'none';
+            errBox.style.display = 'none';
+
+            try {
+                const url = `/api/ai-pipeline/inventory/${encodeURIComponent(selectedProject)}${refresh ? '?refresh=true' : ''}`;
+                const resp = await fetch(url);
+                if (!resp.ok) {
+                    const detail = await resp.json().catch(() => ({}));
+                    throw new Error(detail.detail || `HTTP ${resp.status}`);
+                }
+                const payload = await resp.json();
+                aiInventoryData = payload.inventory;
+                aiInventoryLoaded = true;
+                renderAiInventory(payload.cached);
+            } catch (err) {
+                errBox.textContent = 'Error: ' + err.message;
+                errBox.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderAiInventory(wasCached) {
+            const inv = aiInventoryData;
+            if (!inv) return;
+
+            const summary = document.getElementById('aiInventorySummary');
+            const cacheBadge = wasCached
+                ? '<span style="font-size:11px; background:#e8f4f8; color:#0c7489; padding:2px 6px; border-radius:3px;">cache</span>'
+                : '<span style="font-size:11px; background:#e8f8ec; color:#1b7a3a; padding:2px 6px; border-radius:3px;">fresh</span>';
+            summary.innerHTML = `
+                <div style="background:#f8f9fa; border-radius:6px; padding:12px;">
+                    <div style="font-size:11px; color:#7f8c8d; text-transform:uppercase; letter-spacing:0.5px;">Total</div>
+                    <div style="font-size:22px; font-weight:600;">${inv.total_files}</div>
+                </div>
+                <div style="background:#f8f9fa; border-radius:6px; padding:12px;">
+                    <div style="font-size:11px; color:#7f8c8d; text-transform:uppercase; letter-spacing:0.5px;">Arrel</div>
+                    <div style="font-size:22px; font-weight:600;">${inv.root_file_count}</div>
+                </div>
+                <div style="background:#f8f9fa; border-radius:6px; padding:12px;">
+                    <div style="font-size:11px; color:#7f8c8d; text-transform:uppercase; letter-spacing:0.5px;">Emails .msg</div>
+                    <div style="font-size:22px; font-weight:600;">${inv.msg_count}</div>
+                </div>
+                <div style="background:#f8f9fa; border-radius:6px; padding:12px;">
+                    <div style="font-size:11px; color:#7f8c8d; text-transform:uppercase; letter-spacing:0.5px;">Adjunts extrets ${cacheBadge}</div>
+                    <div style="font-size:22px; font-weight:600;">${inv.extracted_attachments}</div>
+                </div>
+            `;
+
+            const foldersBody = document.getElementById('aiInventoryFoldersBody');
+            foldersBody.innerHTML = inv.folders.map(f => `
+                <tr style="border-bottom:1px solid #eee;">
+                    <td style="padding:4px 8px; font-family:monospace; font-size:12px;">${f.path === '' ? '<em>[arrel]</em>' : escapeHtml(f.path)}</td>
+                    <td style="padding:4px 8px; text-align:right;">${f.file_count}</td>
+                </tr>
+            `).join('');
+
+            renderAiInventoryFiles();
+
+            document.getElementById('aiInventoryResults').style.display = 'block';
+        }
+
+        function renderAiInventoryFiles() {
+            if (!aiInventoryData) return;
+            const filter = document.getElementById('aiInventoryFilter').value.toLowerCase().trim();
+            const body = document.getElementById('aiInventoryFilesBody');
+            const files = aiInventoryData.files.filter(f =>
+                !filter || f.path.toLowerCase().includes(filter)
+            );
+            body.innerHTML = files.map(f => {
+                const originBadge = f.kind === 'email_attachment'
+                    ? `<span title="adjunt de ${escapeHtml(f.parent_msg || '')}" style="font-size:11px; background:#fff3cd; color:#856404; padding:2px 6px; border-radius:3px;">email</span>`
+                    : '<span style="font-size:11px; color:#7f8c8d;">—</span>';
+                return `
+                    <tr style="border-bottom:1px solid #eee;">
+                        <td style="padding:4px 8px; font-family:monospace; font-size:12px;">${escapeHtml(f.path)}</td>
+                        <td style="padding:4px 8px; text-align:center; font-size:12px;">${escapeHtml(f.type)}</td>
+                        <td style="padding:4px 8px; text-align:right;">${f.size_kb}</td>
+                        <td style="padding:4px 8px; text-align:center;">${originBadge}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+            })[c]);
         }
 
         // --- Pipeline Log Tab ---

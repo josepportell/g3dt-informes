@@ -62,6 +62,35 @@ def list_projects():
     return wizard_service.list_projects()
 
 
+@router.get("/ai-pipeline/inventory/{project_name:path}")
+def ai_pipeline_inventory(project_name: str, refresh: bool = False):
+    """AI pipeline Stage 1: folder inventory.
+
+    Returns cached `validation/ai_inventory.json` unless `refresh=true`, in which case
+    .msg attachments are re-materialized, the tree is re-walked, and the cache is
+    overwritten.
+    """
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    from automation.ai_pipeline.inventory import (
+        build_inventory,
+        load_inventory,
+        save_inventory,
+    )
+
+    if not refresh:
+        cached = load_inventory(project_path)
+        if cached is not None:
+            return {"inventory": cached.model_dump(), "cached": True}
+
+    inv = build_inventory(project_path)
+    save_inventory(inv, project_path)
+    return {"inventory": inv.model_dump(), "cached": False}
+
+
 @router.get("/prefills/{project_name:path}")
 def get_prefills(project_name: str, refresh: bool = False):
     """Get auto-extracted + wizard prefills for a project."""
