@@ -400,3 +400,140 @@ def test_load_returns_none_when_absent(tmp_path):
 def test_rejects_nonexistent_project(tmp_path):
     with pytest.raises(ValueError):
         convert_project(tmp_path / "no-such-dir")
+
+
+# ---------------------------------------------------------------------------
+# .msg YAML frontmatter (D10)
+# ---------------------------------------------------------------------------
+
+
+def _run_convert_msg(tmp_path: Path, *, sender="a@b.com", to="c@d.com",
+                     subject="Hello", date="2026-04-20 10:00:00", body="Body text"):
+    """Stub extract_msg.Message and run _convert_msg on a fake .msg file.
+
+    Returns the rendered body.md content as a string.
+    """
+    from unittest.mock import MagicMock, patch
+
+    from automation.ai_pipeline.conversion import _convert_msg
+    from automation.ai_pipeline.typology import FileClass, ProjectTypology
+
+    project = tmp_path / "proj"
+    project.mkdir()
+    msg_path = project / "email.msg"
+    msg_path.write_bytes(b"fake msg bytes")  # contents don't matter; extract_msg is stubbed
+
+    fc = FileClass(
+        path="email.msg",
+        format="msg",
+        category="email_msg",
+        conversion_strategy="msg_body_to_markdown",
+    )
+    typ = ProjectTypology(
+        project_path=str(project),
+        classified_at="2026-04-24T00:00:00+00:00",
+        files=[fc],
+    )
+
+    fake_msg = MagicMock()
+    fake_msg.sender = sender
+    fake_msg.to = to
+    fake_msg.subject = subject
+    fake_msg.date = date
+    fake_msg.body = body
+    fake_msg.close = MagicMock()
+
+    with patch("extract_msg.Message", return_value=fake_msg):
+        artifacts = _convert_msg(project, fc, typ)
+
+    assert len(artifacts) == 1
+    a = artifacts[0]
+    assert not a.skipped, f"conversion was skipped: {a.skip_reason}"
+    return (project / a.path).read_text(encoding="utf-8")
+
+
+def _extract_frontmatter(content: str) -> str:
+    """Extract the YAML block between the first two --- lines."""
+    lines = content.splitlines()
+    assert lines[0] == "---", f"expected leading ---, got {lines[0]!r}"
+    end = None
+    for i, line in enumerate(lines[1:], start=1):
+        if line == "---":
+            end = i
+            break
+    assert end is not None, "closing --- not found"
+    return "\n".join(lines[1:end])
+
+
+def test_msg_frontmatter_is_valid_yaml(tmp_path):
+    import yaml
+    content = _run_convert_msg(
+        tmp_path,
+        sender="alice@example.com",
+        to="bob@example.com",
+        subject="Hello",
+        date="2026-04-20 10:00:00",
+        body="Hi there",
+    )
+    fm_text = _extract_frontmatter(content)
+    data = yaml.safe_load(fm_text)
+    assert isinstance(data, dict)
+    assert data == {
+        "from": "alice@example.com",
+        "to": "bob@example.com",
+        "subject": "Hello",
+        "date": "2026-04-20 10:00:00",
+    }
+
+
+def test_msg_frontmatter_handles_colons_in_subject(tmp_path):
+    import yaml
+    content = _run_convert_msg(
+        tmp_path,
+        subject="Re: Urgent: review needed",
+    )
+    fm_text = _extract_frontmatter(content)
+    data = yaml.safe_load(fm_text)
+    assert data["subject"] == "Re: Urgent: review needed"
+
+
+def test_msg_frontmatter_handles_unicode(tmp_path):
+    import yaml
+    content = _run_convert_msg(
+        tmp_path,
+        subject="Dubtes sobre l'informe geotècnic",
+        sender="pere@exàmple.cat",
+    )
+    fm_text = _extract_frontmatter(content)
+    data = yaml.safe_load(fm_text)
+    assert data["subject"] == "Dubtes sobre l'informe geotècnic"
+    assert data["from"] == "pere@exàmple.cat"
+    # Ensure accents are NOT escaped (allow_unicode=True)
+    assert "geotècnic" in fm_text
+    assert "exàmple" in fm_text
+
+
+def test_msg_frontmatter_preserves_key_order(tmp_path):
+    content = _run_convert_msg(tmp_path)
+    fm_text = _extract_frontmatter(content)
+    keys_in_order = [
+        line.split(":", 1)[0].strip()
+        for line in fm_text.splitlines()
+        if line and not line.startswith(" ") and ":" in line
+    ]
+    assert keys_in_order == ["from", "to", "subject", "date"]
+
+
+def test_msg_frontmatter_escapes_newlines_in_sender(tmp_path):
+    """A multi-line sender should not break the frontmatter — _yaml_value strips newlines."""
+    import yaml
+    content = _run_convert_msg(
+        tmp_path,
+        sender="John Doe\n<john@example.com>",
+    )
+    fm_text = _extract_frontmatter(content)
+    # Must parse cleanly as YAML
+    data = yaml.safe_load(fm_text)
+    assert "john@example.com" in data["from"]
+    # No embedded raw newline in the value (normalized by _yaml_value)
+    assert "\n" not in data["from"]

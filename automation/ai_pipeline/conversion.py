@@ -21,6 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 
+import yaml
 from pydantic import BaseModel, Field
 
 from .typology import FileClass, ProjectTypology, classify_project
@@ -454,22 +455,26 @@ def _convert_msg(pp: Path, fc: FileClass, typ: ProjectTypology) -> list[Converte
 
     try:
         body = m.body or ""
-        # YAML frontmatter with email metadata
+        # YAML frontmatter with email metadata — use yaml.safe_dump so values
+        # with colons, newlines, or unicode accents are properly escaped.
         def _yaml_value(v) -> str:
             if v is None:
                 return ""
             return str(v).replace("\n", " ").strip()
 
-        frontmatter = [
-            "---",
-            f"from: {_yaml_value(m.sender)}",
-            f"to: {_yaml_value(m.to)}",
-            f"subject: {_yaml_value(m.subject)}",
-            f"date: {_yaml_value(m.date)}",
-            "---",
-            "",
-        ]
-        content = "\n".join(frontmatter) + body
+        frontmatter = {
+            "from": _yaml_value(m.sender),
+            "to": _yaml_value(m.to),
+            "subject": _yaml_value(m.subject),
+            "date": _yaml_value(m.date),
+        }
+        yaml_block = yaml.safe_dump(
+            frontmatter,
+            default_flow_style=False,
+            allow_unicode=True,
+            sort_keys=False,
+        )
+        content = f"---\n{yaml_block}---\n{body}"
     finally:
         try:
             m.close()
