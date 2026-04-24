@@ -120,6 +120,75 @@ def ai_pipeline_typology(project_name: str, refresh: bool = False):
     return {"typology": typ.model_dump(), "cached": False}
 
 
+@router.get("/ai-pipeline/conversion/{project_name:path}")
+def ai_pipeline_conversion(project_name: str, refresh: bool = False):
+    """AI pipeline Stage 3: convert every useful file to LLM-ready artifacts.
+
+    Returns cached `validation/ai_conversion.json` unless `refresh=true`, in
+    which case PDFs, DOCXs, Excels and .msg files are re-converted (with SHA256
+    dedup), and the cache is overwritten.
+    """
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    from automation.ai_pipeline.conversion import (
+        convert_project,
+        load_conversion,
+        save_conversion,
+    )
+
+    if not refresh:
+        cached = load_conversion(project_path)
+        if cached is not None:
+            return {"conversion": cached.model_dump(), "cached": True}
+
+    conv = convert_project(project_path)
+    save_conversion(conv, project_path)
+    return {"conversion": conv.model_dump(), "cached": False}
+
+
+@router.get("/ai-pipeline/artifact/{project_name:path}")
+def ai_pipeline_artifact(project_name: str, file: str):
+    """Serve raw text (md/csv) Stage 3 artifacts for preview in the wizard.
+
+    Only serves artifacts that live inside the converted/ sidecar — not
+    arbitrary project files. Large files are truncated at 200 KB.
+    """
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    # Path safety — must be inside validation/ai_pipeline/converted/
+    resolved = (project_path / file).resolve()
+    try:
+        rel = resolved.relative_to(project_path.resolve())
+    except ValueError:
+        raise HTTPException(status_code=403, detail="Path traversal not allowed")
+    parts = rel.parts
+    if not (len(parts) >= 3 and parts[0] == "validation" and parts[1] == "ai_pipeline" and parts[2] == "converted"):
+        raise HTTPException(status_code=403, detail="Only Stage 3 artifacts under converted/ may be previewed")
+    if not resolved.is_file():
+        raise HTTPException(status_code=404, detail="Artifact not found")
+
+    suffix = resolved.suffix.lower()
+    if suffix not in (".md", ".csv"):
+        raise HTTPException(status_code=415, detail=f"Preview not supported for {suffix}")
+
+    MAX_BYTES = 200 * 1024
+    data = resolved.read_bytes()
+    truncated = len(data) > MAX_BYTES
+    text = data[:MAX_BYTES].decode("utf-8", errors="replace")
+    return {
+        "path": rel.as_posix(),
+        "size_bytes": len(data),
+        "truncated": truncated,
+        "content": text,
+    }
+
+
 @router.get("/prefills/{project_name:path}")
 def get_prefills(project_name: str, refresh: bool = False):
     """Get auto-extracted + wizard prefills for a project."""

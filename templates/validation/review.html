@@ -2592,6 +2592,39 @@
                         </table>
                     </div>
                 </div>
+
+                <!-- Stage 3: Conversió -->
+                <div style="border-top:1px solid #e0e0e0; margin-top:28px; padding-top:24px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <div>
+                            <h2 style="margin:0;">AI Pipeline — Stage 3: Conversió</h2>
+                            <p style="margin:4px 0 0; color:#7f8c8d; font-size:13px;">
+                                Cada fitxer útil es converteix a un format llegible per la IA: markdown per pàgina de PDF, CSV per full d'Excel, imatge per pàgina escanejada, markdown amb frontmatter per emails.
+                            </p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="loadAiConversion(true)" style="padding:8px 16px;">Refresh</button>
+                    </div>
+                    <div id="aiConversionLoading" style="display:none; text-align:center; padding:40px;">
+                        <div class="spinner"></div>
+                        <span>Convertint documents a artefactes LLM-ready...</span>
+                    </div>
+                    <div id="aiConversionError" style="display:none; background:#fee; border:1px solid #fbb; border-radius:6px; padding:12px; color:#922;"></div>
+                    <div id="aiConversionResults" style="display:none;">
+                        <!-- Eva summary -->
+                        <div id="aiConversionEvaSummary" style="background:#f0f7ff; border-left:4px solid #4a90e2; padding:12px 16px; margin-bottom:16px; font-size:14px; line-height:1.6;"></div>
+
+                        <!-- Format counts -->
+                        <div id="aiConversionFormats" style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:20px;"></div>
+
+                        <!-- Artifacts grouped by source -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin:0 0 8px;">
+                            <h3 style="font-size:15px; margin:0;">Artefactes per fitxer origen</h3>
+                            <input type="text" id="aiConversionFilter" placeholder="filtra per nom origen..." oninput="renderAiConversionArtifacts()"
+                                   style="padding:4px 8px; font-size:13px; border:1px solid #ccc; border-radius:4px; width:240px;">
+                        </div>
+                        <div id="aiConversionGroupsBody" style="font-size:13px;"></div>
+                    </div>
+                </div>
             </div>
 
             <!-- Explicacio Tab Content -->
@@ -2766,6 +2799,7 @@
             if (tabName === 'ai-pipeline' && selectedProject) {
                 if (!aiInventoryLoaded) loadAiInventory(false);
                 if (!aiTypologyLoaded) loadAiTypology(false);
+                if (!aiConversionLoaded) loadAiConversion(false);
             }
         }
 
@@ -3882,6 +3916,8 @@
             aiInventoryData = null;
             aiTypologyLoaded = false;
             aiTypologyData = null;
+            aiConversionLoaded = false;
+            aiConversionData = null;
             wizardDirty = false;
             document.getElementById('wizardUnsaved').style.display = 'none';
 
@@ -7296,6 +7332,172 @@
                 }
             };
             document.addEventListener('keydown', escHandler);
+        }
+
+        // --- AI Pipeline Stage 3: Conversion ---
+        let aiConversionLoaded = false;
+        let aiConversionData = null;
+
+        async function loadAiConversion(refresh) {
+            if (!selectedProject) return;
+            const loading = document.getElementById('aiConversionLoading');
+            const results = document.getElementById('aiConversionResults');
+            const errBox = document.getElementById('aiConversionError');
+            loading.style.display = 'block';
+            results.style.display = 'none';
+            errBox.style.display = 'none';
+
+            try {
+                const url = `/api/ai-pipeline/conversion/${encodeURIComponent(selectedProject)}${refresh ? '?refresh=true' : ''}`;
+                const resp = await fetch(url);
+                if (!resp.ok) {
+                    const detail = await resp.json().catch(() => ({}));
+                    throw new Error(detail.detail || `HTTP ${resp.status}`);
+                }
+                const payload = await resp.json();
+                aiConversionData = payload.conversion;
+                aiConversionLoaded = true;
+                renderAiConversion(payload.cached);
+            } catch (err) {
+                errBox.textContent = 'Error: ' + err.message;
+                errBox.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderAiConversion(wasCached) {
+            const conv = aiConversionData;
+            if (!conv) return;
+
+            // Eva summary
+            const eva = document.getElementById('aiConversionEvaSummary');
+            const cacheBadge = wasCached
+                ? '<span style="float:right; font-size:11px; background:#e8f4f8; color:#0c7489; padding:2px 6px; border-radius:3px;">cache</span>'
+                : '<span style="float:right; font-size:11px; background:#e8f8ec; color:#1b7a3a; padding:2px 6px; border-radius:3px;">fresh</span>';
+            eva.innerHTML = cacheBadge + conv.eva_summary.map(l => escapeHtml(l)).join('<br>');
+
+            // Format counts
+            const formatCounts = {};
+            for (const a of conv.artifacts) {
+                if (a.skipped) continue;
+                formatCounts[a.format] = (formatCounts[a.format] || 0) + 1;
+            }
+            const formatsBox = document.getElementById('aiConversionFormats');
+            const fmts = Object.entries(formatCounts).sort((a, b) => b[1] - a[1]);
+            formatsBox.innerHTML = fmts.map(([name, count]) => `
+                <div style="background:#f8f9fa; border-radius:4px; padding:8px 10px;">
+                    <div style="font-size:10px; color:#7f8c8d; text-transform:uppercase; letter-spacing:0.4px;">${escapeHtml(name)}</div>
+                    <div style="font-size:18px; font-weight:600;">${count}</div>
+                </div>
+            `).join('');
+
+            renderAiConversionArtifacts();
+            document.getElementById('aiConversionResults').style.display = 'block';
+        }
+
+        function renderAiConversionArtifacts() {
+            if (!aiConversionData) return;
+            const filter = document.getElementById('aiConversionFilter').value.toLowerCase().trim();
+            const body = document.getElementById('aiConversionGroupsBody');
+
+            // Group by source_path
+            const groups = {};
+            for (const a of aiConversionData.artifacts) {
+                if (!groups[a.source_path]) groups[a.source_path] = [];
+                groups[a.source_path].push(a);
+            }
+
+            const sources = Object.keys(groups).filter(s =>
+                !filter || s.toLowerCase().includes(filter)
+            ).sort();
+
+            body.innerHTML = sources.map(source => {
+                const arts = groups[source];
+                const visible = arts.filter(a => !a.skipped);
+                const skipped = arts.filter(a => a.skipped);
+                const artList = visible.map(a => {
+                    const canPreview = a.format === 'md' || a.format === 'csv';
+                    const label = a.page ? `page ${a.page}` : (a.sheet ? `sheet: ${a.sheet}` : (a.format === 'passthrough' ? 'passthrough' : Path_basename(a.path)));
+                    const fmtBadge = `<span style="font-size:10px; background:#e8eef4; color:#2a4a6b; padding:1px 5px; border-radius:2px; margin-left:4px;">${escapeHtml(a.format)}</span>`;
+                    const sizeKb = a.bytes_written ? ` <span style="color:#888; font-size:11px;">(${Math.round(a.bytes_written/1024)} KB)</span>` : '';
+                    const pathStr = escapeHtml(a.path);
+                    if (canPreview) {
+                        return `<li style="padding:2px 0;">
+                            <span onclick="openAiArtifactPreview('${pathStr.replace(/'/g, "\\'")}')"
+                                  style="cursor:pointer; text-decoration:underline; text-decoration-style:dotted; font-family:monospace; font-size:12px;"
+                                  title="Clica per previsualitzar">${escapeHtml(label)}</span>${fmtBadge}${sizeKb}
+                        </li>`;
+                    }
+                    return `<li style="padding:2px 0; font-family:monospace; font-size:12px;">${escapeHtml(label)}${fmtBadge}${sizeKb}</li>`;
+                }).join('');
+
+                const skippedList = skipped.map(a => `
+                    <li style="padding:2px 0; color:#b33; font-size:12px;">
+                        [${escapeHtml(a.strategy_used)}] ${escapeHtml(a.skip_reason || 'skipped')}
+                    </li>
+                `).join('');
+
+                return `
+                    <details style="margin-bottom:6px; border:1px solid #eee; border-radius:4px; padding:8px 12px;">
+                        <summary style="cursor:pointer; font-family:monospace; font-size:12px;">
+                            ${escapeHtml(source)}
+                            <span style="color:#888; font-weight:normal;"> — ${visible.length} artefactes${skipped.length ? `, ${skipped.length} saltats` : ''}</span>
+                        </summary>
+                        <ul style="margin:8px 0 0 20px; padding:0;">${artList}${skippedList}</ul>
+                    </details>
+                `;
+            }).join('');
+        }
+
+        function Path_basename(p) {
+            const parts = String(p).split('/');
+            return parts[parts.length - 1];
+        }
+
+        async function openAiArtifactPreview(relPath) {
+            if (!selectedProject) return;
+            try {
+                const resp = await fetch(`/api/ai-pipeline/artifact/${encodeURIComponent(selectedProject)}?file=${encodeURIComponent(relPath)}`);
+                if (!resp.ok) {
+                    const detail = await resp.json().catch(() => ({}));
+                    throw new Error(detail.detail || `HTTP ${resp.status}`);
+                }
+                const data = await resp.json();
+
+                const overlay = document.createElement('div');
+                overlay.className = 'evidence-expanded-overlay';
+                overlay.onclick = function(e) {
+                    if (e.target === overlay) document.body.removeChild(overlay);
+                };
+
+                const panel = document.createElement('div');
+                panel.style.cssText = 'background:#fff; border-radius:8px; width:80vw; max-width:1100px; max-height:88vh; display:flex; flex-direction:column; overflow:hidden;';
+
+                const header = document.createElement('div');
+                header.style.cssText = 'padding:10px 14px; background:#f8f9fa; border-bottom:1px solid #e0e0e0; font-family:monospace; font-size:12px; display:flex; justify-content:space-between; align-items:center;';
+                const sizeStr = `${data.size_bytes.toLocaleString()} bytes${data.truncated ? ' (truncat a 200 KB)' : ''}`;
+                header.innerHTML = `<span>${escapeHtml(data.path)}</span><span style="color:#888;">${sizeStr}</span>`;
+
+                const content = document.createElement('pre');
+                content.style.cssText = 'margin:0; padding:14px; overflow:auto; flex:1; font-family:"Fira Code",monospace; font-size:12px; line-height:1.5; white-space:pre-wrap; background:#fbfbfb;';
+                content.textContent = data.content;
+
+                panel.appendChild(header);
+                panel.appendChild(content);
+                overlay.appendChild(panel);
+                document.body.appendChild(overlay);
+
+                const escHandler = function(e) {
+                    if (e.key === 'Escape' && document.body.contains(overlay)) {
+                        document.body.removeChild(overlay);
+                        document.removeEventListener('keydown', escHandler);
+                    }
+                };
+                document.addEventListener('keydown', escHandler);
+            } catch (err) {
+                alert('Error carregant preview: ' + err.message);
+            }
         }
 
         // --- Pipeline Log Tab ---
