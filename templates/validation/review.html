@@ -2663,6 +2663,62 @@
                         <div id="aiAnalysisSourcesBody" style="font-size:13px;"></div>
                     </div>
                 </div>
+
+                <!-- Stage 5: Rànquing -->
+                <div style="border-top:1px solid #e0e0e0; margin-top:28px; padding-top:24px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <div>
+                            <h2 style="margin:0;">AI Pipeline — Stage 5: Rànquing (Authority)</h2>
+                            <p style="margin:4px 0 0; color:#7f8c8d; font-size:13px;">
+                                Per cada variable, ordenem els candidats de Stage 4 segons els principis d'autoritat d'Eva. 3 passades: per concepte → auditor de grup → revisió dirigida.
+                            </p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="loadAiRanking(true)" style="padding:8px 16px;">Refresh</button>
+                    </div>
+                    <div id="aiRankingLoading" style="display:none; text-align:center; padding:40px;">
+                        <div class="spinner"></div>
+                        <span>Rankejant candidats amb l'LLM — pot trigar uns minuts la primera vegada...</span>
+                    </div>
+                    <div id="aiRankingError" style="display:none; background:#fee; border:1px solid #fbb; border-radius:6px; padding:12px; color:#922;"></div>
+                    <div id="aiRankingSystemic" style="display:none; background:#fff3cd; border:1px solid #f0ad4e; border-radius:6px; padding:12px 16px; margin-bottom:16px;"></div>
+                    <div id="aiRankingResults" style="display:none;">
+                        <!-- Eva summary -->
+                        <div id="aiRankingEvaSummary" style="background:#f0f7ff; border-left:4px solid #4a90e2; padding:12px 16px; margin-bottom:16px; font-size:14px; line-height:1.6;"></div>
+
+                        <!-- Stat pills -->
+                        <div id="aiRankingStats" style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:20px;"></div>
+
+                        <!-- Filter row -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin:0 0 8px; gap:8px; flex-wrap:wrap;">
+                            <h3 style="font-size:15px; margin:0;">Conceptes</h3>
+                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                <input type="text" id="aiRankingConceptFilter" placeholder="filtra per concepte..." oninput="renderAiRankingConcepts()"
+                                       style="padding:4px 8px; font-size:13px; border:1px solid #ccc; border-radius:4px; width:200px;">
+                                <select id="aiRankingStatusFilter" onchange="renderAiRankingConcepts()"
+                                        style="padding:4px 8px; font-size:13px; border:1px solid #ccc; border-radius:4px;">
+                                    <option value="">Tots</option>
+                                    <option value="ranked">Ranked</option>
+                                    <option value="conflict">Amb conflicte</option>
+                                    <option value="revised">Revisat per grup</option>
+                                    <option value="single">Single</option>
+                                    <option value="no_candidates">Sense candidats</option>
+                                    <option value="pending_fase5">Pendent</option>
+                                </select>
+                                <select id="aiRankingGroupFilter" onchange="renderAiRankingConcepts()"
+                                        style="padding:4px 8px; font-size:13px; border:1px solid #ccc; border-radius:4px;">
+                                    <option value="">tots grups</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="aiRankingConceptsBody" style="font-size:13px;"></div>
+
+                        <!-- Group audit panel -->
+                        <div style="margin-top:24px;">
+                            <h3 style="font-size:15px; margin:0 0 8px;">Auditor de grup (Passada B)</h3>
+                            <div id="aiRankingGroupsBody" style="font-size:13px;"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Explicacio Tab Content -->
@@ -2839,6 +2895,7 @@
                 if (!aiTypologyLoaded) loadAiTypology(false);
                 if (!aiConversionLoaded) loadAiConversion(false);
                 if (!aiAnalysisLoaded) loadAiAnalysis(false);
+                if (!aiRankingLoaded) loadAiRanking(false);
             }
         }
 
@@ -3959,6 +4016,16 @@
             aiConversionData = null;
             aiAnalysisLoaded = false;
             aiAnalysisData = null;
+            aiRankingLoaded = false;
+            currentAiRanking = null;
+            aiRankingConceptToGroup = {};
+            // Hide stale Stage 5 panels so project B doesn't flash project A's data
+            const _rkRes = document.getElementById('aiRankingResults');
+            const _rkErr = document.getElementById('aiRankingError');
+            const _rkSys = document.getElementById('aiRankingSystemic');
+            if (_rkRes) _rkRes.style.display = 'none';
+            if (_rkErr) _rkErr.style.display = 'none';
+            if (_rkSys) _rkSys.style.display = 'none';
             wizardDirty = false;
             document.getElementById('wizardUnsaved').style.display = 'none';
 
@@ -7695,6 +7762,417 @@
             if (!sources.length) {
                 body.innerHTML = '<div style="color:#888; padding:20px; text-align:center;">Cap font coincideix amb els filtres.</div>';
             }
+        }
+
+        // --- AI Pipeline Stage 5: Ranking ---
+        let aiRankingLoaded = false;
+        let currentAiRanking = null;
+        let aiRankingConceptToGroup = {};
+
+        async function loadAiRanking(refresh) {
+            if (!selectedProject) return;
+            const loading = document.getElementById('aiRankingLoading');
+            const results = document.getElementById('aiRankingResults');
+            const errBox = document.getElementById('aiRankingError');
+            const sysBox = document.getElementById('aiRankingSystemic');
+            loading.style.display = 'block';
+            results.style.display = 'none';
+            errBox.style.display = 'none';
+            sysBox.style.display = 'none';
+
+            try {
+                const url = '/api/ai-pipeline/ranking/' + encodeURIComponent(selectedProject) + (refresh ? '?refresh=true' : '');
+                const resp = await fetch(url);
+                if (!resp.ok) {
+                    const detail = await resp.json().catch(() => ({}));
+                    throw new Error(detail.detail || ('HTTP ' + resp.status));
+                }
+                const payload = await resp.json();
+                currentAiRanking = payload.ranking;
+                aiRankingLoaded = true;
+                renderAiRanking(payload.cached);
+            } catch (err) {
+                currentAiRanking = null;
+                aiRankingConceptToGroup = {};
+                document.getElementById('aiRankingConceptsBody').innerHTML = '';
+                document.getElementById('aiRankingGroupsBody').innerHTML = '';
+                errBox.textContent = 'Error: ' + err.message;
+                errBox.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderAiRanking(wasCached) {
+            const r = currentAiRanking;
+            if (!r) return;
+
+            // Systemic failure = an entry in failures with concept_id === '*'
+            const systemic = (r.failures || []).find(f => f.concept_id === '*');
+            const sysBox = document.getElementById('aiRankingSystemic');
+            if (systemic) {
+                sysBox.innerHTML =
+                    '<strong>⚠ Rànquing aturat: ' + escapeHtml(systemic.error_type || 'error') + '</strong>' +
+                    '<div style="margin-top:6px; font-size:13px;">' + escapeHtml(systemic.message || systemic.last_error || '') + '</div>';
+                sysBox.style.display = 'block';
+                document.getElementById('aiRankingResults').style.display = 'none';
+                return;
+            }
+
+            // Build concept → group map from groups.revisions[].concept_id
+            aiRankingConceptToGroup = {};
+            const groups = r.groups || {};
+            Object.keys(groups).forEach(gname => {
+                const g = groups[gname] || {};
+                (g.revisions || []).forEach(rev => {
+                    if (rev && rev.concept_id) {
+                        aiRankingConceptToGroup[rev.concept_id] = gname;
+                    }
+                });
+                (g.factors || []).forEach(fac => {
+                    (fac.affects || []).forEach(cid => {
+                        if (cid && !aiRankingConceptToGroup[cid]) {
+                            aiRankingConceptToGroup[cid] = gname;
+                        }
+                    });
+                });
+            });
+
+            // Eva summary
+            const eva = document.getElementById('aiRankingEvaSummary');
+            const cacheBadge = wasCached
+                ? '<span style="float:right; font-size:11px; background:#e8f4f8; color:#0c7489; padding:2px 6px; border-radius:3px;">cache</span>'
+                : '<span style="float:right; font-size:11px; background:#e8f8ec; color:#1b7a3a; padding:2px 6px; border-radius:3px;">fresh</span>';
+            const summaryLines = (r.eva_summary || []).map(line => {
+                const s = String(line || '');
+                // Keep existing bullet markers; don't inject new ones
+                return '<div>' + escapeHtml(s) + '</div>';
+            }).join('');
+            eva.innerHTML = cacheBadge + summaryLines;
+
+            // Stats
+            const concepts = r.concepts || {};
+            const conceptsArr = Object.values(concepts);
+            const nRanked = conceptsArr.filter(c => c.status === 'ranked').length;
+            const nSingle = conceptsArr.filter(c => c.status === 'single').length;
+            const nNoCand = conceptsArr.filter(c => c.status === 'no_candidates').length;
+            const nPending = conceptsArr.filter(c => c.status === 'pending_fase5').length;
+            const nConflict = conceptsArr.filter(c => c.has_conflict === true).length;
+            const nRevised = conceptsArr.filter(c => c.revised_by_group_pass === true).length;
+
+            const pill = (label, value, bg, fg) =>
+                '<div style="background:' + bg + '; color:' + fg + '; padding:6px 12px; border-radius:4px; font-size:13px;">' +
+                '<span style="font-weight:600;">' + escapeHtml(label) + ':</span> ' + escapeHtml(String(value)) +
+                '</div>';
+
+            const statsEl = document.getElementById('aiRankingStats');
+            const parts = [
+                pill('Ranked', nRanked, '#e8f8ec', '#1b7a3a'),
+                pill('Single', nSingle, '#f0f0f0', '#333'),
+                pill('Sense candidats', nNoCand, '#f4f4f4', '#777'),
+            ];
+            if (nPending > 0) parts.push(pill('Pendent', nPending, '#fff3cd', '#856404'));
+            parts.push(pill('Conflictes', nConflict, '#ffeacc', '#a85a00'));
+            parts.push(pill('Revisats per grup', nRevised, '#e0ecfa', '#1a4a7a'));
+            const cost = typeof r.estimated_cost_usd === 'number' ? r.estimated_cost_usd.toFixed(4) : '0.0000';
+            parts.push(pill('Cost', '$' + cost, '#f0f0f0', '#333'));
+            statsEl.innerHTML = parts.join('');
+
+            // Populate group filter
+            const groupFilter = document.getElementById('aiRankingGroupFilter');
+            const existing = groupFilter.value;
+            const uniqueGroups = new Set();
+            Object.keys(groups).forEach(g => {
+                // Only offer groups that actually have concepts wired to them in this payload.
+                // Skipped groups have empty revisions/factors → no concepts point at them in aiRankingConceptToGroup,
+                // so filtering by them yields zero rows. Hide them from the dropdown instead.
+                if (!groups[g] || !groups[g].skipped_reason) uniqueGroups.add(g);
+            });
+            Object.values(aiRankingConceptToGroup).forEach(g => uniqueGroups.add(g));
+            const sortedGroups = Array.from(uniqueGroups).sort();
+            groupFilter.innerHTML = '<option value="">tots grups</option>' +
+                sortedGroups.map(g => '<option value="' + escapeHtml(g) + '">' + escapeHtml(g) + '</option>').join('');
+            // Preserve selection if still valid
+            if (existing && sortedGroups.indexOf(existing) !== -1) {
+                groupFilter.value = existing;
+            }
+
+            renderAiRankingConcepts();
+            renderAiRankingGroups();
+            document.getElementById('aiRankingResults').style.display = 'block';
+        }
+
+        function _aiRankingStatusBadge(c) {
+            // Returns HTML string for a small colored dot + label
+            let color = '#aaa';
+            let label = c.status || '';
+            if (c.status === 'ranked') {
+                color = c.has_conflict ? '#e67e22' : '#27ae60';
+                label = c.has_conflict ? 'ranked (conflicte)' : 'ranked';
+            } else if (c.status === 'single') {
+                color = '#888';
+            } else if (c.status === 'no_candidates') {
+                color = '#ccc';
+                label = 'sense candidats';
+            } else if (c.status === 'pending_fase5') {
+                color = '#f0ad4e';
+                label = 'pendent';
+            }
+            return '<span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:' + color + '; margin-right:6px; vertical-align:middle;"></span>' +
+                   '<span style="font-size:11px; color:#555; text-transform:uppercase; letter-spacing:0.3px;">' + escapeHtml(label) + '</span>';
+        }
+
+        function _aiRankingStatusOrder(status) {
+            switch (status) {
+                case 'ranked': return 0;
+                case 'single': return 1;
+                case 'no_candidates': return 2;
+                case 'pending_fase5': return 3;
+                default: return 4;
+            }
+        }
+
+        function renderAiRankingConcepts() {
+            if (!currentAiRanking) return;
+            const concepts = currentAiRanking.concepts || {};
+            const txtFilter = (document.getElementById('aiRankingConceptFilter').value || '').toLowerCase().trim();
+            const statusFilter = document.getElementById('aiRankingStatusFilter').value || '';
+            const groupFilter = document.getElementById('aiRankingGroupFilter').value || '';
+
+            let items = Object.values(concepts).filter(c => {
+                if (txtFilter && !(c.concept_id || '').toLowerCase().includes(txtFilter)) return false;
+                if (statusFilter === 'conflict') {
+                    if (!c.has_conflict) return false;
+                } else if (statusFilter === 'revised') {
+                    if (!c.revised_by_group_pass) return false;
+                } else if (statusFilter) {
+                    if (c.status !== statusFilter) return false;
+                }
+                if (groupFilter) {
+                    const g = aiRankingConceptToGroup[c.concept_id] || '';
+                    if (g !== groupFilter) return false;
+                }
+                return true;
+            });
+
+            items.sort((a, b) => {
+                const so = _aiRankingStatusOrder(a.status) - _aiRankingStatusOrder(b.status);
+                if (so !== 0) return so;
+                const ga = aiRankingConceptToGroup[a.concept_id] || 'zzz';
+                const gb = aiRankingConceptToGroup[b.concept_id] || 'zzz';
+                if (ga !== gb) return ga.localeCompare(gb);
+                return (a.concept_id || '').localeCompare(b.concept_id || '');
+            });
+
+            const body = document.getElementById('aiRankingConceptsBody');
+            if (!items.length) {
+                body.innerHTML = '<div style="color:#888; padding:20px; text-align:center;">Cap concepte coincideix amb els filtres.</div>';
+                return;
+            }
+
+            body.innerHTML = items.map(c => _aiRankingConceptRow(c)).join('');
+        }
+
+        function _aiRankingConceptRow(c) {
+            const cid = c.concept_id || '';
+            const group = aiRankingConceptToGroup[cid] || '';
+            const ranked = Array.isArray(c.ranked) ? c.ranked : [];
+            const nCand = ranked.length;
+
+            let topPreview = '—';
+            if (c.status === 'ranked' || c.status === 'single') {
+                const top = ranked[0];
+                if (top) {
+                    const val = top.value;
+                    let s = (val === null || val === undefined)
+                        ? ''
+                        : (typeof val === 'object' ? JSON.stringify(val) : String(val));
+                    if (s.length > 80) s = s.slice(0, 80) + '…';
+                    topPreview = escapeHtml(s);
+                }
+            }
+
+            const badges = [];
+            if (c.status === 'ranked' || c.status === 'single') {
+                badges.push('<span style="font-size:11px; color:#555; background:#f4f4f4; padding:2px 6px; border-radius:3px;">' +
+                    escapeHtml(String(nCand)) + ' ' + (nCand === 1 ? 'font' : 'fonts') + '</span>');
+            }
+            if (c.has_conflict) {
+                badges.push('<span style="font-size:11px; color:#a85a00; background:#ffeacc; padding:2px 6px; border-radius:3px;">⚠ conflicte</span>');
+            }
+            if (c.revised_by_group_pass) {
+                badges.push('<span style="font-size:11px; color:#1a4a7a; background:#e0ecfa; padding:2px 6px; border-radius:3px;">↻ revisat</span>');
+            }
+
+            const safeId = (cid || '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+            const drawerId = 'aiRankingDrawer_' + safeId;
+
+            const statusDot = _aiRankingStatusBadge(c);
+            const groupChip = group
+                ? '<span style="font-size:11px; color:#666; background:#fafafa; border:1px solid #eee; padding:1px 6px; border-radius:3px; margin-left:8px;">' + escapeHtml(group) + '</span>'
+                : '';
+
+            const header =
+                '<div onclick="toggleAiRankingConceptDrawer(\'' + escapeHtml(drawerId) + '\')" ' +
+                    'style="cursor:pointer; padding:8px 12px; border:1px solid #eee; border-radius:4px; background:#fff; ' +
+                    'display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:4px;">' +
+                    '<div style="min-width:0; flex:1;">' +
+                        statusDot +
+                        '<span style="font-family:monospace; font-size:12px; margin-left:6px; font-weight:600;">' + escapeHtml(cid) + '</span>' +
+                        groupChip +
+                        '<div style="margin-top:4px; font-size:12px; color:#444; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' +
+                            topPreview +
+                        '</div>' +
+                    '</div>' +
+                    '<div style="display:flex; gap:4px; flex-shrink:0;">' + badges.join('') + '</div>' +
+                '</div>';
+
+            const drawer = '<div id="' + drawerId + '" style="display:none; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px; padding:12px; margin-top:-5px; margin-bottom:8px; background:#fafcfe;">' +
+                _aiRankingConceptDrawerBody(c) + '</div>';
+
+            return '<div style="margin-bottom:6px;">' + header + drawer + '</div>';
+        }
+
+        function _aiRankingConceptDrawerBody(c) {
+            const parts = [];
+
+            if (c.conflict_note) {
+                parts.push('<div style="background:#fff3e4; border-left:3px solid #e67e22; padding:8px 12px; margin-bottom:10px; font-size:12px; color:#8a4a00;">' +
+                    '<strong>⚠ Conflicte:</strong> ' + escapeHtml(c.conflict_note) + '</div>');
+            }
+            if (c.group_factor_considered) {
+                parts.push('<div style="background:#eef5fd; border-left:3px solid #4a90e2; padding:8px 12px; margin-bottom:10px; font-size:12px; color:#1a4a7a;">' +
+                    '<strong>Factor del grup considerat:</strong> ' + escapeHtml(c.group_factor_considered) + '</div>');
+            }
+
+            const ranked = Array.isArray(c.ranked) ? c.ranked : [];
+            if (!ranked.length) {
+                parts.push('<div style="color:#888; font-style:italic;">Sense candidats a rankejar.</div>');
+            } else {
+                const cards = ranked.map((cand, idx) => {
+                    const val = cand.value;
+                    const valStr = (val === null || val === undefined)
+                        ? '<em>null</em>'
+                        : escapeHtml(typeof val === 'object' ? JSON.stringify(val) : String(val));
+                    const confPct = Math.round((cand.confidence || 0) * 100);
+                    const confColor = cand.confidence >= 0.8 ? '#1b7a3a' : (cand.confidence >= 0.5 ? '#aa6400' : '#b33');
+                    return '<li style="margin-bottom:10px; padding:8px 10px; background:#fff; border:1px solid #eef0f3; border-radius:4px;">' +
+                        '<div style="display:flex; gap:8px; align-items:baseline;">' +
+                            '<span style="font-size:11px; color:#666; background:#f4f4f4; padding:1px 6px; border-radius:3px;">#' + (idx + 1) + '</span>' +
+                            '<span style="font-weight:600; font-size:13px;">' + valStr + '</span>' +
+                            '<span style="font-size:11px; color:' + confColor + '; margin-left:auto;">' + confPct + '%</span>' +
+                        '</div>' +
+                        (cand.rationale
+                            ? '<div style="margin-top:4px; font-size:12px; color:#444; font-style:italic;">' + escapeHtml(cand.rationale) + '</div>'
+                            : '') +
+                        '<div style="margin-top:4px; font-family:monospace; font-size:11px; color:#777;">' + escapeHtml(cand.source_path || '') + '</div>' +
+                    '</li>';
+                }).join('');
+                parts.push('<ol style="padding-left:20px; margin:0 0 10px;">' + cards + '</ol>');
+            }
+
+            parts.push(
+                '<button class="btn" disabled title="Disponible a la Fase 6" ' +
+                    'style="background:#f0ad4e; color:#fff; border:none; opacity:0.55; cursor:not-allowed; padding:6px 14px; font-size:13px; border-radius:4px;">' +
+                    'Acceptar top-1' +
+                '</button>'
+            );
+
+            return parts.join('');
+        }
+
+        function toggleAiRankingConceptDrawer(drawerId) {
+            const el = document.getElementById(drawerId);
+            if (!el) return;
+            el.style.display = (el.style.display === 'none' || !el.style.display) ? 'block' : 'none';
+        }
+
+        function renderAiRankingGroups() {
+            if (!currentAiRanking) return;
+            const groups = currentAiRanking.groups || {};
+            const body = document.getElementById('aiRankingGroupsBody');
+            const names = Object.keys(groups).sort();
+            if (!names.length) {
+                body.innerHTML = '<div style="color:#888; padding:12px;">Cap auditor de grup executat.</div>';
+                return;
+            }
+            body.innerHTML = names.map(name => _aiRankingGroupRow(name, groups[name])).join('');
+        }
+
+        function _aiRankingGroupRow(name, g) {
+            const factors = Array.isArray(g.factors) ? g.factors : [];
+            const revisions = Array.isArray(g.revisions) ? g.revisions : [];
+            const skipped = g.skipped_reason || '';
+
+            const safeId = (name || '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+            const drawerId = 'aiRankingGroupDrawer_' + safeId;
+
+            let rightSide;
+            if (skipped) {
+                rightSide = '<span style="font-size:11px; color:#888;">' + escapeHtml(skipped) + '</span>';
+            } else {
+                const nRev = revisions.filter(r => r.revise === true).length;
+                rightSide =
+                    '<span style="font-size:11px; color:#555; background:#f4f4f4; padding:2px 6px; border-radius:3px; margin-right:4px;">' +
+                        factors.length + ' factors</span>' +
+                    '<span style="font-size:11px; color:#1a4a7a; background:#e0ecfa; padding:2px 6px; border-radius:3px;">' +
+                        nRev + ' revisions</span>';
+            }
+
+            const header =
+                '<div onclick="toggleAiRankingConceptDrawer(\'' + escapeHtml(drawerId) + '\')" ' +
+                    'style="cursor:pointer; padding:8px 12px; border:1px solid #eee; border-radius:4px; background:#fff; ' +
+                    'display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:4px;">' +
+                    '<span style="font-weight:600; font-size:13px;">' + escapeHtml(name) + '</span>' +
+                    '<span>' + rightSide + '</span>' +
+                '</div>';
+
+            const drawer = '<div id="' + drawerId + '" style="display:none; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px; padding:12px; margin-top:-5px; margin-bottom:8px; background:#fafcfe;">' +
+                _aiRankingGroupDrawerBody(factors, revisions, skipped) +
+                '</div>';
+
+            return '<div style="margin-bottom:6px;">' + header + drawer + '</div>';
+        }
+
+        function _aiRankingGroupDrawerBody(factors, revisions, skipped) {
+            if (skipped && !factors.length && !revisions.length) {
+                return '<div style="color:#888; font-style:italic;">Saltat: ' + escapeHtml(skipped) + '</div>';
+            }
+
+            const parts = [];
+            if (factors.length) {
+                parts.push('<div style="font-size:12px; font-weight:600; color:#333; margin-bottom:6px;">Factors detectats</div>');
+                parts.push('<ul style="padding-left:20px; margin:0 0 12px;">' +
+                    factors.map(f => {
+                        const affects = (f.affects || []).map(a =>
+                            '<span style="font-size:11px; font-family:monospace; background:#e0ecfa; color:#1a4a7a; padding:1px 6px; border-radius:3px; margin-right:4px;">' +
+                            escapeHtml(a) + '</span>'
+                        ).join('');
+                        return '<li style="margin-bottom:8px; font-size:12px;">' +
+                            '<div>' + escapeHtml(f.description || '') + '</div>' +
+                            (affects ? '<div style="margin-top:4px;">' + affects + '</div>' : '') +
+                        '</li>';
+                    }).join('') +
+                '</ul>');
+            }
+            if (revisions.length) {
+                parts.push('<div style="font-size:12px; font-weight:600; color:#333; margin-bottom:6px;">Revisions</div>');
+                parts.push('<ul style="padding-left:20px; margin:0;">' +
+                    revisions.map(r => {
+                        const flag = r.revise
+                            ? '<span style="font-size:11px; color:#1a4a7a; background:#e0ecfa; padding:1px 6px; border-radius:3px;">revisar</span>'
+                            : '<span style="font-size:11px; color:#666; background:#f4f4f4; padding:1px 6px; border-radius:3px;">no</span>';
+                        return '<li style="margin-bottom:6px; font-size:12px;">' +
+                            '<span style="font-family:monospace;">' + escapeHtml(r.concept_id || '') + '</span> ' + flag +
+                            (r.reason ? '<div style="color:#555; margin-top:2px;">' + escapeHtml(r.reason) + '</div>' : '') +
+                        '</li>';
+                    }).join('') +
+                '</ul>');
+            }
+            if (!parts.length) {
+                return '<div style="color:#888; font-style:italic;">Cap factor o revisió.</div>';
+            }
+            return parts.join('');
         }
 
         // --- Pipeline Log Tab ---
