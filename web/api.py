@@ -182,32 +182,95 @@ def ai_pipeline_analysis(project_name: str, refresh: bool = False):
     return {"analysis": analysis.model_dump(), "cached": False}
 
 
-@router.get("/ai-pipeline/artifact/{project_name:path}")
-def ai_pipeline_artifact(project_name: str, file: str):
-    """Serve raw text (md/csv) Stage 3 artifacts for preview in the wizard.
+@router.get("/ai-pipeline/ranking/{project_name:path}")
+def ai_pipeline_ranking(
+    project_name: str,
+    refresh: bool = False,
+    group_filter: str | None = None,
+    no_group_pass: bool = False,
+):
+    """AI pipeline Stage 5: authority ranking per concept.
 
-    Only serves artifacts that live inside the converted/ sidecar — not
-    arbitrary project files. Large files are truncated at 200 KB.
+    Three-pass LLM pipeline (per-concept rank → per-group audit → targeted
+    revision) producing an ordered candidate list per concept. Cached per-
+    concept / per-group / per-revision; repeat requests hit cache at zero
+    cost unless `refresh=true` or upstream inputs (principles text, glossary,
+    concept definitions, Stage 4 candidates) changed.
+
+    Returns systemic failure with 200 OK when the API key is missing,
+    credits are exhausted, or the model is not found.
     """
     try:
         project_path = wizard_service._resolve_project(project_name)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-    # Path safety — must be inside validation/ai_pipeline/converted/
+    from automation.ai_pipeline.ranking import (
+        rank_project,
+        load_ranking,
+        save_ranking,
+    )
+
+    if not refresh:
+        cached = load_ranking(project_path)
+        if cached is not None:
+            return {"ranking": cached.model_dump(), "cached": True}
+
+    gf: set[str] | None = None
+    if group_filter:
+        # allow comma-separated values for multi-group filter via single query param
+        gf = {g.strip() for g in group_filter.split(",") if g.strip()}
+
+    ranking = rank_project(
+        project_path,
+        group_filter=gf,
+        no_group_pass=no_group_pass,
+        force=refresh,  # refresh=true also bypasses the LLM per-call caches
+    )
+    save_ranking(ranking, project_path)
+    return {"ranking": ranking.model_dump(), "cached": False}
+
+
+@router.get("/ai-pipeline/artifact/{project_name:path}")
+def ai_pipeline_artifact(project_name: str, file: str):
+    """Serve raw text (md/csv/json) AI pipeline artifacts for preview in the wizard.
+
+    Only serves artifacts that live inside validation/ai_pipeline/ — under
+    converted/ (Stage 3), analysis/ (Stage 4 cache) or ranking/ (Stage 5
+    cache). Arbitrary project files are rejected. Large files are truncated
+    at 200 KB.
+    """
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    # Path safety — must be inside validation/ai_pipeline/{converted,analysis,ranking}/
     resolved = (project_path / file).resolve()
     try:
         rel = resolved.relative_to(project_path.resolve())
     except ValueError:
         raise HTTPException(status_code=403, detail="Path traversal not allowed")
     parts = rel.parts
-    if not (len(parts) >= 3 and parts[0] == "validation" and parts[1] == "ai_pipeline" and parts[2] == "converted"):
-        raise HTTPException(status_code=403, detail="Only Stage 3 artifacts under converted/ may be previewed")
+    _allowed_subdirs = ("converted", "analysis", "ranking")
+    if not (
+        len(parts) >= 3
+        and parts[0] == "validation"
+        and parts[1] == "ai_pipeline"
+        and parts[2] in _allowed_subdirs
+    ):
+        raise HTTPException(
+            status_code=403,
+            detail=(
+                "Only AI pipeline artifacts under "
+                f"validation/ai_pipeline/{{{','.join(_allowed_subdirs)}}}/ may be previewed"
+            ),
+        )
     if not resolved.is_file():
         raise HTTPException(status_code=404, detail="Artifact not found")
 
     suffix = resolved.suffix.lower()
-    if suffix not in (".md", ".csv"):
+    if suffix not in (".md", ".csv", ".json"):
         raise HTTPException(status_code=415, detail=f"Preview not supported for {suffix}")
 
     MAX_BYTES = 200 * 1024
