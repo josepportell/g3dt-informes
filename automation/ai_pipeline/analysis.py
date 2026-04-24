@@ -35,7 +35,9 @@ _ANALYSIS_MANIFEST = Path("validation") / "ai_analysis.json"
 
 _DEFAULT_MODEL = "claude-sonnet-4-6"
 _MAX_TOKENS = 8_000
-_SCHEMA_VERSION = "1.0"
+# 1.1 — static context (concept YAML + glossary) is now a separate cache_control'd
+# block for Anthropic prompt caching (D16). Block layout change invalidates v1.0 caches.
+_SCHEMA_VERSION = "1.1"
 
 # Per-source caps so a pathological source doesn't blow the context window
 _MAX_ARTIFACTS_PER_SOURCE = 30
@@ -115,6 +117,8 @@ class SourceAnalysis(BaseModel):
     model: str = ""
     input_tokens: int = 0
     output_tokens: int = 0
+    cache_creation_input_tokens: int = 0
+    cache_read_input_tokens: int = 0
 
 
 class SourceFailure(BaseModel):
@@ -145,6 +149,8 @@ class ProjectAnalysis(BaseModel):
     eva_summary: list[str] = Field(default_factory=list)
     total_input_tokens: int = 0
     total_output_tokens: int = 0
+    total_cache_creation_tokens: int = 0
+    total_cache_read_tokens: int = 0
     estimated_cost_usd: float = 0.0
     cache_hits: int = 0
     schema_version: str = _SCHEMA_VERSION
@@ -285,7 +291,19 @@ def _build_user_content(
             f"```yaml\n{glossary}\n```\n"
         )
 
-    blocks: list[dict] = [{"type": "text", "text": header + concept_block + glossary_block}]
+    blocks: list[dict] = []
+
+    # Per-source header — changes every call, not cached.
+    blocks.append({"type": "text", "text": header})
+
+    # Static concept schema + glossary — identical across all calls in a run. CACHED.
+    static_text = concept_block + glossary_block
+    if static_text:
+        blocks.append({
+            "type": "text",
+            "text": static_text,
+            "cache_control": {"type": "ephemeral"},
+        })
 
     # Interleave artifacts in deterministic order, capped
     remaining_text_bytes = _MAX_TEXT_BYTES_PER_SOURCE
@@ -547,13 +565,28 @@ def _analyze_one_source(
 
         # Validate against our pydantic shapes
         try:
-            insight_data = tool_input.get("insight", {})
+            insight_data = tool_input.get("insight")
+            if not isinstance(insight_data, dict):
+                raise ValidationError.from_exception_data(
+                    title="SourceInsight",
+                    line_errors=[{
+                        "type": "dict_type",
+                        "loc": ("insight",),
+                        "input": insight_data,
+                    }],
+                )
+            insight_data = dict(insight_data)  # copy, don't mutate tool_input
             insight_data["source_path"] = source_path
             insight = SourceInsight.model_validate(insight_data)
 
             candidates_raw = tool_input.get("candidates", []) or []
+            if not isinstance(candidates_raw, list):
+                candidates_raw = []
             candidates: list[Candidate] = []
             for c_raw in candidates_raw:
+                if not isinstance(c_raw, dict):
+                    continue
+                c_raw = dict(c_raw)  # copy
                 c_raw["source_path"] = source_path
                 c_raw["extractor"] = model
                 # source_chain inherited later by caller
@@ -562,6 +595,8 @@ def _analyze_one_source(
             usage = getattr(resp, "usage", None)
             input_tokens = getattr(usage, "input_tokens", 0) if usage else 0
             output_tokens = getattr(usage, "output_tokens", 0) if usage else 0
+            cache_creation_tokens = getattr(usage, "cache_creation_input_tokens", 0) if usage else 0
+            cache_read_tokens = getattr(usage, "cache_read_input_tokens", 0) if usage else 0
 
             analysis = SourceAnalysis(
                 source_path=source_path,
@@ -572,6 +607,8 @@ def _analyze_one_source(
                 model=model,
                 input_tokens=input_tokens,
                 output_tokens=output_tokens,
+                cache_creation_input_tokens=cache_creation_tokens or 0,
+                cache_read_input_tokens=cache_read_tokens or 0,
             )
             _cache_write(pp, source_path, key, analysis)
             return (analysis, None, False, False)
@@ -785,10 +822,14 @@ def analyze_project(
     candidates_by_concept: dict[str, list[str]] = defaultdict(list)
     total_input = 0
     total_output = 0
+    total_cache_creation = 0
+    total_cache_read = 0
     for s in sources:
         if s.source_path in fresh_source_paths:
             total_input += s.input_tokens
             total_output += s.output_tokens
+            total_cache_creation += s.cache_creation_input_tokens
+            total_cache_read += s.cache_read_input_tokens
         for c in s.candidates:
             if c.source_path not in candidates_by_concept[c.concept_id]:
                 candidates_by_concept[c.concept_id].append(c.source_path)
@@ -805,6 +846,8 @@ def analyze_project(
         candidates_by_concept=dict(candidates_by_concept),
         total_input_tokens=total_input,
         total_output_tokens=total_output,
+        total_cache_creation_tokens=total_cache_creation,
+        total_cache_read_tokens=total_cache_read,
         estimated_cost_usd=round(estimated_cost, 6),
         cache_hits=cache_hits,
         schema_version=_SCHEMA_VERSION,

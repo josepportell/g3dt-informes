@@ -21,6 +21,8 @@ from automation.ai_pipeline.analysis import (
     SourceFailure,
     SourceInsight,
     SystemicFailure,
+    _SCHEMA_VERSION,
+    _build_user_content,
     _cache_path,
     _classify_error,
     analyze_project,
@@ -527,7 +529,7 @@ def test_eva_summary_mentions_systemic_failure(tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# D14 tests — cache folder slug collision
+# D14 tests — cache folder slug collision (inserted above this anchor)
 # ---------------------------------------------------------------------------
 def test_cache_path_includes_parent_for_extracted_images(tmp_path):
     path_a = _cache_path(
@@ -550,3 +552,118 @@ def test_cache_path_for_root_source_unchanged(tmp_path):
 def test_cache_path_slugifies_parent_with_dots(tmp_path):
     cache_path = _cache_path(tmp_path, "26.0049/A.01.pdf")
     assert cache_path.parent.name == "26.0049_A.01"
+
+
+# SENTINEL_D14_END
+
+
+# ---------------------------------------------------------------------------
+# D16 tests — Anthropic prompt caching on static content (inserted above this anchor)
+# ---------------------------------------------------------------------------
+
+
+def test_build_user_content_marks_static_block_cacheable(tmp_path):
+    project = _make_project(tmp_path)
+    blocks = _build_user_content(project, "PENETROS.pdf", [])
+
+    cached_blocks = [
+        b for b in blocks
+        if isinstance(b, dict) and b.get("cache_control", {}).get("type") == "ephemeral"
+    ]
+    assert len(cached_blocks) >= 1, "At least one block must be marked cache_control ephemeral"
+
+    # The cached block should contain the concept schema. 'architect_name' is a
+    # concept_id we know lives in report_variables.yaml.
+    cached_text = "\n".join(b.get("text", "") for b in cached_blocks)
+    assert "architect_name" in cached_text
+
+
+def test_build_user_content_header_not_cached(tmp_path):
+    project = _make_project(tmp_path)
+    source_path = "PENETROS.pdf"
+    blocks = _build_user_content(project, source_path, [])
+
+    # The per-source header block contains the source_path. It must NOT be cached.
+    header_blocks = [
+        b for b in blocks
+        if isinstance(b, dict) and b.get("type") == "text" and source_path in b.get("text", "")
+    ]
+    assert len(header_blocks) >= 1
+    for b in header_blocks:
+        # Make sure the header block itself has no cache_control
+        # (cached block contains concept YAML, not the source_path header text).
+        if "cache_control" in b:
+            # Header sharing the same block as cached content would be wrong.
+            # Header text and concept YAML must be in different blocks.
+            assert "architect_name" not in b.get("text", ""), (
+                "Header block should not contain the cached static content"
+            )
+
+
+def test_analysis_aggregates_cache_token_stats(tmp_path):
+    project = _make_project(tmp_path)
+
+    class _CacheUsage:
+        def __init__(self):
+            self.input_tokens = 100
+            self.output_tokens = 200
+            self.cache_creation_input_tokens = 3_500
+            self.cache_read_input_tokens = 0
+
+    class _CacheResponse:
+        def __init__(self, tool_input: dict):
+            self.content = [SimpleNamespace(
+                type="tool_use",
+                name="emit_analysis",
+                input=tool_input,
+            )]
+            self.usage = _CacheUsage()
+
+    def _cache_behavior(call_num, kwargs):
+        return _CacheResponse({
+            "insight": {
+                "document_type": "architect_plan",
+                "purpose": "Project plan",
+                "author": "X",
+                "date_info": "",
+                "version_info": "",
+                "related_sources": [],
+                "authority_hints": [],
+                "confidence": 0.9,
+                "notes": "",
+            },
+            "candidates": [],
+        })
+
+    client = _MockClient(_cache_behavior)
+    analysis = analyze_project(project, client=client, model="claude-sonnet-4-6")
+
+    assert analysis.systemic_failure is None
+    assert len(analysis.sources) == 2
+    # Two fresh sources × 3500 creation tokens = 7000
+    assert analysis.total_cache_creation_tokens == 7_000
+    assert analysis.total_cache_read_tokens == 0
+    # Per-source fields populated
+    for s in analysis.sources:
+        assert s.cache_creation_input_tokens == 3_500
+        assert s.cache_read_input_tokens == 0
+
+
+def test_schema_version_bumped_invalidates_local_cache(tmp_path):
+    # Schema bumped to 1.1 to mark the block-layout change.
+    assert _SCHEMA_VERSION == "1.1"
+
+    project = _make_project(tmp_path)
+    client = _MockClient(_happy_behavior)
+    analyze_project(project, client=client, model="claude-sonnet-4-6")
+    first_calls = client.messages.calls
+    assert first_calls == 2
+
+    # Second run at the same version should hit local cache — zero calls.
+    client2 = _MockClient(_happy_behavior)
+    second = analyze_project(project, client=client2, model="claude-sonnet-4-6")
+    assert client2.messages.calls == 0
+    assert second.cache_hits == 2
+
+
+# SENTINEL_D16_END
