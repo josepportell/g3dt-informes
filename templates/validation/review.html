@@ -2625,6 +2625,44 @@
                         <div id="aiConversionGroupsBody" style="font-size:13px;"></div>
                     </div>
                 </div>
+
+                <!-- Stage 4: Anàlisi -->
+                <div style="border-top:1px solid #e0e0e0; margin-top:28px; padding-top:24px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <div>
+                            <h2 style="margin:0;">AI Pipeline — Stage 4: Anàlisi</h2>
+                            <p style="margin:4px 0 0; color:#7f8c8d; font-size:13px;">
+                                Per cada font, una crida multimodal a l'LLM extreu què és el document (<em>SourceInsight</em>) i els valors candidats per les variables de l'informe.
+                            </p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="loadAiAnalysis(true)" style="padding:8px 16px;">Refresh</button>
+                    </div>
+                    <div id="aiAnalysisLoading" style="display:none; text-align:center; padding:40px;">
+                        <div class="spinner"></div>
+                        <span>Analitzant fonts amb l'LLM — pot trigar uns minuts la primera vegada...</span>
+                    </div>
+                    <div id="aiAnalysisError" style="display:none; background:#fee; border:1px solid #fbb; border-radius:6px; padding:12px; color:#922;"></div>
+                    <div id="aiAnalysisSystemic" style="display:none; background:#fff3cd; border:1px solid #f0ad4e; border-radius:6px; padding:12px 16px; margin-bottom:16px;"></div>
+                    <div id="aiAnalysisResults" style="display:none;">
+                        <!-- Eva summary -->
+                        <div id="aiAnalysisEvaSummary" style="background:#f0f7ff; border-left:4px solid #4a90e2; padding:12px 16px; margin-bottom:16px; font-size:14px; line-height:1.6;"></div>
+
+                        <!-- Failures banner -->
+                        <div id="aiAnalysisFailures" style="display:none; background:#fff3cd; border:1px solid #f0ad4e; border-radius:6px; padding:10px 14px; margin-bottom:16px; font-size:13px;"></div>
+
+                        <!-- Sources list -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin:0 0 8px;">
+                            <h3 style="font-size:15px; margin:0;">Fonts analitzades</h3>
+                            <div>
+                                <input type="text" id="aiAnalysisSourceFilter" placeholder="filtra per font..." oninput="renderAiAnalysisSources()"
+                                       style="padding:4px 8px; font-size:13px; border:1px solid #ccc; border-radius:4px; width:200px; margin-right:8px;">
+                                <input type="text" id="aiAnalysisConceptFilter" placeholder="filtra per concepte..." oninput="renderAiAnalysisSources()"
+                                       style="padding:4px 8px; font-size:13px; border:1px solid #ccc; border-radius:4px; width:200px;">
+                            </div>
+                        </div>
+                        <div id="aiAnalysisSourcesBody" style="font-size:13px;"></div>
+                    </div>
+                </div>
             </div>
 
             <!-- Explicacio Tab Content -->
@@ -2800,6 +2838,7 @@
                 if (!aiInventoryLoaded) loadAiInventory(false);
                 if (!aiTypologyLoaded) loadAiTypology(false);
                 if (!aiConversionLoaded) loadAiConversion(false);
+                if (!aiAnalysisLoaded) loadAiAnalysis(false);
             }
         }
 
@@ -3918,6 +3957,8 @@
             aiTypologyData = null;
             aiConversionLoaded = false;
             aiConversionData = null;
+            aiAnalysisLoaded = false;
+            aiAnalysisData = null;
             wizardDirty = false;
             document.getElementById('wizardUnsaved').style.display = 'none';
 
@@ -7497,6 +7538,162 @@
                 document.addEventListener('keydown', escHandler);
             } catch (err) {
                 alert('Error carregant preview: ' + err.message);
+            }
+        }
+
+        // --- AI Pipeline Stage 4: Analysis ---
+        let aiAnalysisLoaded = false;
+        let aiAnalysisData = null;
+
+        async function loadAiAnalysis(refresh) {
+            if (!selectedProject) return;
+            const loading = document.getElementById('aiAnalysisLoading');
+            const results = document.getElementById('aiAnalysisResults');
+            const errBox = document.getElementById('aiAnalysisError');
+            const sysBox = document.getElementById('aiAnalysisSystemic');
+            loading.style.display = 'block';
+            results.style.display = 'none';
+            errBox.style.display = 'none';
+            sysBox.style.display = 'none';
+
+            try {
+                const url = `/api/ai-pipeline/analysis/${encodeURIComponent(selectedProject)}${refresh ? '?refresh=true' : ''}`;
+                const resp = await fetch(url);
+                if (!resp.ok) {
+                    const detail = await resp.json().catch(() => ({}));
+                    throw new Error(detail.detail || `HTTP ${resp.status}`);
+                }
+                const payload = await resp.json();
+                aiAnalysisData = payload.analysis;
+                aiAnalysisLoaded = true;
+                renderAiAnalysis(payload.cached);
+            } catch (err) {
+                errBox.textContent = 'Error: ' + err.message;
+                errBox.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderAiAnalysis(wasCached) {
+            const a = aiAnalysisData;
+            if (!a) return;
+
+            const sysBox = document.getElementById('aiAnalysisSystemic');
+            if (a.systemic_failure) {
+                sysBox.innerHTML = `
+                    <strong>⚠ Anàlisi aturada: ${escapeHtml(a.systemic_failure.error_type)}</strong>
+                    <div style="margin-top:6px; font-size:13px;">${escapeHtml(a.systemic_failure.message)}</div>
+                    <div style="margin-top:6px; font-size:12px; color:#856404;">Fonts saltades: ${a.systemic_failure.sources_skipped}</div>
+                `;
+                sysBox.style.display = 'block';
+                document.getElementById('aiAnalysisResults').style.display = 'none';
+                return;
+            }
+
+            const eva = document.getElementById('aiAnalysisEvaSummary');
+            const cacheBadge = wasCached
+                ? '<span style="float:right; font-size:11px; background:#e8f4f8; color:#0c7489; padding:2px 6px; border-radius:3px;">cache</span>'
+                : '<span style="float:right; font-size:11px; background:#e8f8ec; color:#1b7a3a; padding:2px 6px; border-radius:3px;">fresh</span>';
+            eva.innerHTML = cacheBadge + a.eva_summary.map(l => escapeHtml(l)).join('<br>');
+
+            // Failures banner
+            const failBox = document.getElementById('aiAnalysisFailures');
+            if (a.failures && a.failures.length) {
+                failBox.innerHTML = `
+                    <strong>${a.failures.length} fonts amb error</strong>
+                    <ul style="margin:6px 0 0 20px; padding:0;">
+                        ${a.failures.map(f => `<li><code>${escapeHtml(f.source_path)}</code> — ${escapeHtml(f.error_type)}: ${escapeHtml((f.last_error || '').slice(0, 160))}</li>`).join('')}
+                    </ul>
+                `;
+                failBox.style.display = 'block';
+            } else {
+                failBox.style.display = 'none';
+            }
+
+            renderAiAnalysisSources();
+            document.getElementById('aiAnalysisResults').style.display = 'block';
+        }
+
+        function renderAiAnalysisSources() {
+            if (!aiAnalysisData) return;
+            const srcFilter = document.getElementById('aiAnalysisSourceFilter').value.toLowerCase().trim();
+            const conceptFilter = document.getElementById('aiAnalysisConceptFilter').value.toLowerCase().trim();
+            const body = document.getElementById('aiAnalysisSourcesBody');
+
+            const sources = aiAnalysisData.sources.filter(s => {
+                if (srcFilter && !s.source_path.toLowerCase().includes(srcFilter)) return false;
+                if (conceptFilter) {
+                    const hits = s.candidates.some(c => c.concept_id.toLowerCase().includes(conceptFilter));
+                    if (!hits) return false;
+                }
+                return true;
+            });
+
+            body.innerHTML = sources.map(s => {
+                const ins = s.insight;
+                const candRows = s.candidates
+                    .filter(c => !conceptFilter || c.concept_id.toLowerCase().includes(conceptFilter))
+                    .map(c => {
+                        const val = (c.value === null || c.value === undefined)
+                            ? '<em>null</em>'
+                            : escapeHtml(typeof c.value === 'object' ? JSON.stringify(c.value) : String(c.value));
+                        const confPct = Math.round((c.confidence || 0) * 100);
+                        const confColor = c.confidence >= 0.8 ? '#1b7a3a' : (c.confidence >= 0.5 ? '#aa6400' : '#b33');
+                        return `
+                            <tr style="border-bottom:1px solid #f4f4f4;">
+                                <td style="padding:3px 6px; font-family:monospace; font-size:11px;">${escapeHtml(c.concept_id)}</td>
+                                <td style="padding:3px 6px; font-size:12px;">${val}</td>
+                                <td style="padding:3px 6px; text-align:right; font-size:11px; color:${confColor};">${confPct}%</td>
+                                <td style="padding:3px 6px; font-size:11px; color:#666; font-style:italic;">"${escapeHtml((c.quote || '').slice(0, 80))}${(c.quote || '').length > 80 ? '…' : ''}"</td>
+                            </tr>
+                        `;
+                    }).join('');
+
+                const insightLine = [
+                    `<strong>${escapeHtml(ins.document_type)}</strong>`,
+                    ins.author ? `autor: ${escapeHtml(ins.author)}` : '',
+                    ins.date_info ? `data: ${escapeHtml(ins.date_info)}` : '',
+                    ins.version_info ? `versió: ${escapeHtml(ins.version_info)}` : '',
+                ].filter(x => x).join(' · ');
+
+                const hints = (ins.authority_hints || []).length
+                    ? `<div style="font-size:11px; color:#0c7489; margin-top:4px;">Autoritat: ${ins.authority_hints.map(h => escapeHtml(h)).join('; ')}</div>`
+                    : '';
+
+                const tokens = s.input_tokens || s.output_tokens
+                    ? `<span style="font-size:11px; color:#888;">${s.input_tokens}in/${s.output_tokens}out tok</span>`
+                    : '<span style="font-size:11px; color:#0c7489;">(from cache)</span>';
+
+                return `
+                    <details style="margin-bottom:6px; border:1px solid #eee; border-radius:4px; padding:8px 12px;">
+                        <summary style="cursor:pointer; font-family:monospace; font-size:12px;">
+                            ${escapeHtml(s.source_path)}
+                            <span style="color:#888; font-weight:normal;"> — ${s.candidates.length} candidats</span>
+                            <span style="float:right;">${tokens}</span>
+                        </summary>
+                        <div style="margin:8px 0 6px; padding:8px 10px; background:#f8f9fa; border-radius:4px; font-size:12px;">
+                            ${insightLine}<br>
+                            <span style="color:#555;">${escapeHtml(ins.purpose)}</span>
+                            ${hints}
+                        </div>
+                        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                            <thead>
+                                <tr style="background:#fafafa; border-bottom:1px solid #ddd;">
+                                    <th style="padding:4px 6px; text-align:left; width:160px;">Concepte</th>
+                                    <th style="padding:4px 6px; text-align:left;">Valor</th>
+                                    <th style="padding:4px 6px; text-align:right; width:55px;">Conf.</th>
+                                    <th style="padding:4px 6px; text-align:left;">Quote</th>
+                                </tr>
+                            </thead>
+                            <tbody>${candRows}</tbody>
+                        </table>
+                    </details>
+                `;
+            }).join('');
+
+            if (!sources.length) {
+                body.innerHTML = '<div style="color:#888; padding:20px; text-align:center;">Cap font coincideix amb els filtres.</div>';
             }
         }
 

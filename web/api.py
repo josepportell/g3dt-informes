@@ -149,6 +149,39 @@ def ai_pipeline_conversion(project_name: str, refresh: bool = False):
     return {"conversion": conv.model_dump(), "cached": False}
 
 
+@router.get("/ai-pipeline/analysis/{project_name:path}")
+def ai_pipeline_analysis(project_name: str, refresh: bool = False):
+    """AI pipeline Stage 4: per-source LLM analysis.
+
+    One multimodal call per source produces a SourceInsight + Candidate values.
+    Per-source cache at validation/ai_pipeline/analysis/{stem}/_cache.json means
+    unchanged sources return instantly at zero cost; `refresh=true` invalidates
+    the top-level manifest but cache entries still short-circuit where inputs match.
+
+    Returns systemic_failure set (and 200 OK with failure payload) when the API
+    key is missing, credits are exhausted, or the model is not found.
+    """
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    from automation.ai_pipeline.analysis import (
+        analyze_project,
+        load_analysis,
+        save_analysis,
+    )
+
+    if not refresh:
+        cached = load_analysis(project_path)
+        if cached is not None:
+            return {"analysis": cached.model_dump(), "cached": True}
+
+    analysis = analyze_project(project_path)
+    save_analysis(analysis, project_path)
+    return {"analysis": analysis.model_dump(), "cached": False}
+
+
 @router.get("/ai-pipeline/artifact/{project_name:path}")
 def ai_pipeline_artifact(project_name: str, file: str):
     """Serve raw text (md/csv) Stage 3 artifacts for preview in the wizard.

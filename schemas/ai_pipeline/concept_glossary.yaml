@@ -1,0 +1,119 @@
+# Concept glossary — Eva's judgment on ambiguous concepts
+#
+# Used by Stage 4 (analysis) prompts in addition to report_variables.yaml.
+# Only ~15 entries for concepts where Eva's rules are not obvious from the
+# short description. Everything else the base schema describes fine.
+#
+# Each entry produces a one-line "why this is tricky" hint in the LLM prompt
+# so the model doesn't have to guess G3DT-specific conventions.
+
+version: "1.0"
+
+entries:
+
+  num_floors:
+    hint: |
+      Count floors per CTE DB SE-C convention: ground floor (planta baixa) + N pisos = N+1.
+      Basement (soterrani) does NOT count unless it is a habitable ground floor.
+      When the plan says "PB + 1Pp", num_floors = 2.
+      Do NOT confuse with building_height_m (which is in metres).
+
+  has_basement:
+    hint: |
+      True only if there is an actual sub-grade level (soterrani / planta soterrània).
+      Semi-basements with ground-level access on one side still count as basement
+      when they go below the reference elevation. Half-cellars for garages count.
+
+  building_type:
+    hint: |
+      Terms Eva uses: "Habitatge unifamiliar aïllat" (detached single-family),
+      "Habitatge unifamiliar entre mitgeres" (row house), "Nau industrial",
+      "Edifici plurifamiliar". Prefer Eva's exact wording when present in any
+      source; avoid translating to English.
+
+  cota_referencia:
+    hint: |
+      Absolute elevation in metres above sea level (m.s.n.m.) of the reference
+      point — typically the top of the ground-floor slab or the plànol's "cota 0"
+      reference. This is NOT a depth from surface. Values are typically 3-digit
+      (e.g. +199.50). If the source expresses relative cota ("0.00 m"), do not
+      emit a candidate — that's not the absolute elevation Eva needs.
+
+  num_soil_levels:
+    hint: |
+      Count LITHOLOGICAL units, not material descriptions. Look for a column
+      named "Unitat litològica" / "Unidad litológica" on formatted sondeig
+      annexes (PDF vectorial, NOT the handwritten field sheet). If only the
+      handwritten field sheet exists, default to 1. Multiple material
+      descriptions within one lithological unit still = 1 level.
+
+  "Nb":
+    hint: |
+      Nb = dynamic penetration count used in Eva's bearing-capacity correlations.
+      Computed as Nb = N20 / 0.83 (per Dapena, Lacasa & García 2000). When Eva
+      writes "N=45" in a table she usually means Nb, unless the row clearly
+      identifies it as N20 (DPSH blows per 20 cm). If you see both, prefer Nb.
+
+  "N20":
+    hint: |
+      DPSH blows per 20 cm of penetration, raw field value. If a source says
+      "N = 40" or "N20 = 40", that's N20. Do NOT convert to Nb here — emit as N20
+      and let Stage 5/6 handle derived fields. Refusal is marked "R".
+
+  qa_value:
+    hint: |
+      Admissible bearing capacity (kg/cm² or MPa — preserve original unit in the
+      quote). Eva's cap is 3.0 kg/cm² for soil, 3.5 for dense granular (Nb≥25),
+      4.0-4.5 for rock. For unsigned drafts or field sheets it may be absent;
+      don't invent a value.
+
+  superficie_parcela:
+    hint: |
+      Plot surface area in m². Source priority is normally: cadastre > plànol
+      caixetí > email. If multiple sources disagree within 5%, prefer the plànol.
+
+  superficie_construida:
+    hint: |
+      Built surface (construction footprint, typically in m²). NOT the same as
+      superficie_parcela. The plànol caixetí usually lists both separately.
+
+  adjacent_north:
+    hint: |
+      What borders the plot on the north side. Typical values: street name
+      ("C/ Mestre Ramon Ortiz"), "parcel·la veïna", "zona verda", "camí". Use
+      the wording the source provides. If the source gives cardinal limits in
+      Spanish ("linda al norte con..."), translate the LIMIT but keep the
+      proper names as-is. Same logic for _south, _east, _west.
+
+  expedient:
+    hint: |
+      G3DT internal project ID in format YY.NNNN (e.g., "25.0647") or full
+      form "25/0647". This is NOT the report title — it's a short numeric code
+      Eva uses to file the project. Usually in the top-right of the plànol
+      caixetí and in the filename of the client email.
+
+  field_date:
+    hint: |
+      Date Eva's team visited the site for field work (DPSH, sondeig). Distinct
+      from report_date (signature date) and any email dates. If you see
+      "dates de camp" or "visita de camp" in the source, that's this.
+
+  architect_name:
+    hint: |
+      The architect responsible for the project, shown in the plànol caixetí.
+      NOT Eva or anyone from G3DT. NOT the client/promotor unless explicitly
+      stated to be both.
+
+  lab_company:
+    hint: |
+      External laboratory that ran soil tests (sulfates, granulometry). Common
+      names: "Lab. Valdemoro", "Applus", "Geoceres". Distinct from G3DT itself.
+
+  municipality:
+    hint: |
+      Town/municipi where the plot is, not necessarily where the client lives.
+      Use the project's physical location. Common Ponent towns: Bell-lloc
+      d'Urgell, Alcoletge, Linyola, Castellar del Vallès, Rubí, Anciles,
+      Vilanova de Segrià. If the source writes "BELL-LLOC" and Eva's convention
+      is "Bell-lloc d'Urgell", preserve the source's wording in `quote` but you
+      may emit the canonical form in `value` with lower confidence.
