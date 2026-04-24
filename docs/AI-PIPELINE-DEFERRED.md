@@ -44,7 +44,7 @@ Anthropic supports `cache_control: {"type": "ephemeral"}` on content blocks; cac
 Alcoletge has `4001670_informe.doc`, `4001670_portada.doc`, `4001670_generated (1).docx`, `4001670_generated_utms.docx` at project root. Today's dev-only detection flags only the `PDF/`, `PDF V0/`, `PDF-V0/` top-level folders. These loose `.doc`/`.docx` slip through and become Stage 4 sources — each an LLM call.
 
 **Fix direction:** extend `DEV_ONLY_FILENAME_PATTERNS` in `typology.py` to include:
-- `*_informe.doc` / `*_informe.pdf` (Eva's signed reports by convention)
+- `*_informe*.doc` / `*_informe*.pdf` (Eva's signed reports by convention; `*` after `informe` to cover versioned outputs like `_informe_v1.doc`, `_informe v2.doc`)
 - `*_generated*.docx` (our own output, already excluded by concept_scout but not by typology)
 - `*_portada*.doc` (cover-page drafts)
 - `*AUDIT_VISUAL*.docx` (our audit output)

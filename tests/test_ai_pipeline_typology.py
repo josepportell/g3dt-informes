@@ -259,6 +259,96 @@ def test_dev_only_dirs_constant():
     assert "ACCEPTACIO" not in DEV_ONLY_TOPLEVEL_DIRS
 
 
+def _make_project_with_eva_outputs(tmp_path: Path) -> Path:
+    """Minimal project with Eva's prior-output filenames at root (D17)."""
+    project = tmp_path / "demo_eva_outputs"
+    project.mkdir()
+    # Loose dev-only files Eva leaves at project root across projects
+    (project / "4001670_informe.doc").write_bytes(_make_min_pdf_bytes(with_text=True))
+    (project / "4001670_informe_v2.doc").write_bytes(_make_min_pdf_bytes(with_text=True))
+    (project / "4001670_informe.pdf").write_bytes(_make_min_pdf_bytes(with_text=True))
+    (project / "4001670_generated (1).docx").write_bytes(_make_docx_with_media(with_media=False))
+    (project / "4001670_generated_utms.docx").write_bytes(_make_docx_with_media(with_media=False))
+    (project / "4001670_portada.doc").write_bytes(_make_min_pdf_bytes(with_text=True))
+    (project / "4001670_AUDIT_VISUAL.docx").write_bytes(_make_docx_with_media(with_media=False))
+    # One legitimate input that must NOT be flagged
+    (project / "PENETROS.pdf").write_bytes(_make_min_pdf_bytes(with_text=True))
+    return project
+
+
+def test_loose_informe_doc_is_dev_only(tmp_path):
+    """*_informe*.doc at root should be dev-only, not treated as input."""
+    project = _make_project_with_eva_outputs(tmp_path)
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "4001670_informe.doc")
+    assert f.category == "reference_output"
+    assert not f.useful
+    assert f.conversion_strategy == "skip"
+    assert "prior-output pattern" in f.reason
+
+
+def test_versioned_informe_doc_is_dev_only(tmp_path):
+    """Covers the `*` after `informe` for versioned reports (D17 refinement)."""
+    project = _make_project_with_eva_outputs(tmp_path)
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "4001670_informe_v2.doc")
+    assert f.category == "reference_output"
+    assert not f.useful
+
+
+def test_loose_informe_pdf_is_dev_only(tmp_path):
+    project = _make_project_with_eva_outputs(tmp_path)
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "4001670_informe.pdf")
+    assert f.category == "reference_output"
+    assert not f.useful
+
+
+def test_generated_docx_is_dev_only(tmp_path):
+    """Covers both `_generated (1).docx` and `_generated_utms.docx` shapes."""
+    project = _make_project_with_eva_outputs(tmp_path)
+    typ = classify_project(project, extract_images=False)
+    for name in ("4001670_generated (1).docx", "4001670_generated_utms.docx"):
+        f = _find(typ, name)
+        assert f.category == "reference_output", name
+        assert not f.useful, name
+
+
+def test_portada_doc_is_dev_only(tmp_path):
+    project = _make_project_with_eva_outputs(tmp_path)
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "4001670_portada.doc")
+    assert f.category == "reference_output"
+    assert not f.useful
+
+
+def test_audit_visual_docx_is_dev_only(tmp_path):
+    project = _make_project_with_eva_outputs(tmp_path)
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "4001670_AUDIT_VISUAL.docx")
+    assert f.category == "reference_output"
+    assert not f.useful
+
+
+def test_legitimate_input_alongside_eva_outputs_is_useful(tmp_path):
+    """Make sure filename-pattern matching doesn't over-reach onto real inputs."""
+    project = _make_project_with_eva_outputs(tmp_path)
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "PENETROS.pdf")
+    assert f.category == "pdf_text"
+    assert f.useful
+
+
+def test_filename_dev_only_is_case_insensitive(tmp_path):
+    """Eva's real files use `AUDIT_VISUAL` in caps but we match either casing."""
+    project = tmp_path / "demo_case"
+    project.mkdir()
+    (project / "foo_audit_visual_bar.docx").write_bytes(_make_docx_with_media(with_media=False))
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "foo_audit_visual_bar.docx")
+    assert f.category == "reference_output"
+
+
 # ---------------------------------------------------------------------------
 # Image extraction + source chain
 # ---------------------------------------------------------------------------

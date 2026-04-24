@@ -10,6 +10,7 @@ Design doc: docs/ARQUITECTURA-AI-PIPELINE.md §5
 
 from __future__ import annotations
 
+import fnmatch
 import hashlib
 import logging
 import re
@@ -30,6 +31,17 @@ logger = logging.getLogger(__name__)
 # in a new production project. Hard-coded for now (single-client scope).
 # ACCEPTACIO is NOT included — it's the invoice-signing folder (client inputs).
 DEV_ONLY_TOPLEVEL_DIRS: frozenset[str] = frozenset({"PDF", "PDF V0", "PDF-V0"})
+
+# Filename patterns (case-insensitive fnmatch) for Eva's prior outputs that live at
+# the project root — .doc/.docx/.pdf names we shouldn't feed to Stage 4. Distinct
+# from DEV_ONLY_TOPLEVEL_DIRS (folder-based) because Eva also drops loose files at
+# root across projects (Alcoletge: 4001670_informe.doc, 4001670_generated_utms.docx, …).
+DEV_ONLY_FILENAME_PATTERNS: frozenset[str] = frozenset({
+    "*_informe*.doc", "*_informe*.docx", "*_informe*.pdf",
+    "*_generated*.doc", "*_generated*.docx",
+    "*_portada*.doc", "*_portada*.docx",
+    "*audit_visual*.doc", "*audit_visual*.docx",
+})
 
 # Image extraction thresholds — aligned with msg_miner._MIN_ATTACHMENT_BYTES.
 MIN_IMAGE_BYTES: int = 5_000
@@ -175,8 +187,16 @@ def _top_level_dir(rel_path: str) -> str:
     return parts[0] if parts else ""
 
 
+def _matches_dev_only_filename(rel_path: str) -> bool:
+    name = Path(rel_path).name.lower()
+    return any(fnmatch.fnmatchcase(name, pat) for pat in DEV_ONLY_FILENAME_PATTERNS)
+
+
 def _is_dev_only(rel_path: str) -> bool:
-    return _top_level_dir(rel_path) in DEV_ONLY_TOPLEVEL_DIRS
+    return (
+        _top_level_dir(rel_path) in DEV_ONLY_TOPLEVEL_DIRS
+        or _matches_dev_only_filename(rel_path)
+    )
 
 
 # ─── PDF introspection + image extraction ──────────────────────────────
@@ -428,12 +448,14 @@ def _classify_file(
     # Dev-only gate first — overrides format-based category
     if _is_dev_only(path):
         top = _top_level_dir(path)
-        return (
-            "reference_output",
-            False,
-            f"inside {top}/ — prior-run deliverables, absent in production",
-            "skip",
-        )
+        if top in DEV_ONLY_TOPLEVEL_DIRS:
+            reason = f"inside {top}/ — prior-run deliverables, absent in production"
+        else:
+            reason = (
+                f"filename '{Path(path).name}' matches Eva's prior-output pattern — "
+                f"absent in a new production project"
+            )
+        return ("reference_output", False, reason, "skip")
 
     # System noise
     if _is_system_file(path):
@@ -584,8 +606,8 @@ def _build_eva_summary(
 
     if dev_only_count:
         lines.append(
-            f"• {dev_only_count} fitxers dins de carpetes d'outputs anteriors ({', '.join(sorted(DEV_ONLY_TOPLEVEL_DIRS))}) — "
-            f"es salten perquè no existiran a un projecte nou."
+            f"• {dev_only_count} fitxers són outputs anteriors d'Eva (carpetes {', '.join(sorted(DEV_ONLY_TOPLEVEL_DIRS))} "
+            f"o noms com *_informe, *_generated, *_portada, *AUDIT_VISUAL) — es salten perquè no existiran a un projecte nou."
         )
 
     system_count = counts.get("system_file", 0) + counts.get("binary_unreadable", 0) + counts.get("unknown", 0)
