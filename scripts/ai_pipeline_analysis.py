@@ -17,10 +17,25 @@ Notes:
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+
+def _load_dotenv() -> None:
+    """Load .env from project root if it exists (matches compare_benchmarks pattern)."""
+    env_path = Path(__file__).parent.parent / ".env"
+    if env_path.exists():
+        for line in env_path.read_text().splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                key, _, value = line.partition("=")
+                os.environ.setdefault(key.strip(), value.strip())
+
+
+_load_dotenv()
 
 from automation.ai_pipeline.analysis import analyze_project, save_analysis
 
@@ -84,7 +99,13 @@ def main() -> int:
                     help="Write manifest to {project}/validation/ai_analysis.json")
     ap.add_argument("--json", action="store_true",
                     help="Print full analysis as JSON")
-    ap.add_argument("--source", help="Only analyze sources whose path contains this substring")
+    sg = ap.add_mutually_exclusive_group()
+    sg.add_argument("--source",
+                    help="Only analyze sources whose path contains this substring (case-insensitive)")
+    sg.add_argument("--source-exact",
+                    help="Only analyze the source whose path equals this value exactly (case-sensitive)")
+    sg.add_argument("--source-regex",
+                    help="Only analyze sources whose path matches this Python regex (case-sensitive re.search)")
     ap.add_argument("--model", help="Override default model (e.g. claude-opus-4-7)")
     args = ap.parse_args()
 
@@ -93,6 +114,8 @@ def main() -> int:
         project_root,
         model=args.model,
         source_filter=args.source,
+        source_exact=args.source_exact,
+        source_regex=args.source_regex,
     )
 
     if args.json:

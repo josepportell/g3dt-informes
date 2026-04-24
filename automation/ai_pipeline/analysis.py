@@ -14,6 +14,7 @@ import hashlib
 import json
 import logging
 import os
+import re
 import time
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -728,6 +729,8 @@ def analyze_project(
     typology: ProjectTypology | None = None,
     model: str | None = None,
     source_filter: str | None = None,
+    source_exact: str | None = None,
+    source_regex: str | None = None,
     client=None,  # for tests: inject a mock
 ) -> ProjectAnalysis:
     """Analyze every useful source in a project via per-source LLM calls.
@@ -737,12 +740,26 @@ def analyze_project(
         conversion: Optionally reuse an existing Stage 3 conversion. If None, built fresh.
         typology: Optionally reuse the Stage 2 typology (passed through to conversion).
         model: Override the default model.
-        source_filter: Only analyze sources whose path contains this substring (dev).
+        source_filter: Only analyze sources whose path contains this substring
+            (case-insensitive, dev). Mutually exclusive with source_exact and source_regex.
+        source_exact: Only analyze the source whose path equals this value exactly
+            (case-sensitive). Mutually exclusive with source_filter and source_regex.
+        source_regex: Only analyze sources whose path matches this Python regex
+            (case-sensitive `re.search`). Mutually exclusive with source_filter and source_exact.
         client: Optionally inject an Anthropic client (used by tests with mocks).
 
     Returns:
         ProjectAnalysis with one SourceAnalysis per successful source, plus any failures.
     """
+    provided_filters = sum(
+        1 for f in (source_filter, source_exact, source_regex) if f
+    )
+    if provided_filters > 1:
+        raise ValueError(
+            "source_filter, source_exact, and source_regex are mutually exclusive; "
+            "pass at most one."
+        )
+
     pp = Path(project_path).resolve()
     if not pp.is_dir():
         raise ValueError(f"Not a directory: {pp}")
@@ -759,7 +776,12 @@ def analyze_project(
             chain_by_source[a.source_path] = list(a.source_chain)
 
     items = sorted(groups.items())
-    if source_filter:
+    if source_exact is not None:
+        items = [(sp, arts) for sp, arts in items if sp == source_exact]
+    elif source_regex is not None:
+        pattern = re.compile(source_regex)
+        items = [(sp, arts) for sp, arts in items if pattern.search(sp)]
+    elif source_filter:
         items = [(sp, arts) for sp, arts in items if source_filter.lower() in sp.lower()]
 
     # Resolve client — fail fast if anthropic itself is unusable

@@ -767,6 +767,89 @@ def test_extracted_image_does_not_trigger_extra_llm_call(tmp_path):
 
 
 # ---------------------------------------------------------------------------
+# D3 tests — precise source filters (--source-exact / --source-regex)
+# ---------------------------------------------------------------------------
+
+
+def _make_three_pdf_project(tmp_path: Path) -> Path:
+    """Project with three PDFs for regex-matching tests."""
+    p = tmp_path / "demo3pdf"
+    p.mkdir()
+    (p / "PENETROS.pdf").write_bytes(_tiny_pdf_with_text("Field sheet PENETROS. " * 10))
+    (p / "SONDEIG.pdf").write_bytes(_tiny_pdf_with_text("Sondeig text. " * 10))
+    (p / "PLANOL.pdf").write_bytes(_tiny_pdf_with_text("Planol text. " * 10))
+    return p
+
+
+def test_source_exact_matches_only_that_path(tmp_path):
+    project = _make_project(tmp_path)
+    client = _MockClient(_happy_behavior)
+    analysis = analyze_project(
+        project,
+        client=client,
+        model="claude-sonnet-4-6",
+        source_exact="PENETROS.pdf",
+    )
+    assert len(analysis.sources) == 1
+    assert analysis.sources[0].source_path == "PENETROS.pdf"
+    assert client.messages.calls == 1
+
+
+def test_source_exact_no_match_produces_empty_analysis(tmp_path):
+    project = _make_project(tmp_path)
+    client = _MockClient(_happy_behavior)
+    analysis = analyze_project(
+        project,
+        client=client,
+        model="claude-sonnet-4-6",
+        source_exact="NONEXISTENT.pdf",
+    )
+    assert len(analysis.sources) == 0
+    assert len(analysis.failures) == 0
+    assert analysis.systemic_failure is None
+    assert client.messages.calls == 0
+
+
+def test_source_regex_matches_multiple(tmp_path):
+    project = _make_three_pdf_project(tmp_path)
+    client = _MockClient(_happy_behavior)
+    analysis = analyze_project(
+        project,
+        client=client,
+        model="claude-sonnet-4-6",
+        source_regex=r"\.(pdf|PDF)$",
+    )
+    assert len(analysis.sources) == 3
+    assert client.messages.calls == 3
+
+
+def test_source_regex_single_match_via_anchor(tmp_path):
+    project = _make_three_pdf_project(tmp_path)
+    client = _MockClient(_happy_behavior)
+    analysis = analyze_project(
+        project,
+        client=client,
+        model="claude-sonnet-4-6",
+        source_regex=r"^PENETROS\.pdf$",
+    )
+    assert len(analysis.sources) == 1
+    assert analysis.sources[0].source_path == "PENETROS.pdf"
+
+
+def test_mutually_exclusive_filters_raise_type_error(tmp_path):
+    project = _make_project(tmp_path)
+    client = _MockClient(_happy_behavior)
+    with pytest.raises(ValueError):
+        analyze_project(
+            project,
+            client=client,
+            model="claude-sonnet-4-6",
+            source_filter="x",
+            source_exact="y",
+        )
+
+
+# ---------------------------------------------------------------------------
 # D5 tests — schema-validation retry uses a trimmed prompt (arch §7.6)
 # ---------------------------------------------------------------------------
 
