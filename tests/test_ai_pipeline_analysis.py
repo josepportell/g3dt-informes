@@ -950,7 +950,7 @@ def test_transient_retry_keeps_full_prompt(tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# D7 tests — per-call wall-clock timeout
+# D7 tests — per-call wall-clock timeout (inserted above this anchor)
 # ---------------------------------------------------------------------------
 
 
@@ -1002,3 +1002,82 @@ def test_timeout_exception_classified_as_transient(tmp_path):
     assert client.messages.calls == 2
     assert len(analysis.sources) == 1
     assert analysis.sources[0].attempts == 2
+
+
+# SENTINEL_D7_END
+
+
+def test_glossary_entries_are_known_concept_ids():
+    """Every key under glossary `entries:` must be a real concept_id.
+
+    Prevents silent drift between the glossary and the canonical concept schema.
+    Jargon-reference terms (Nb, N20) live under `aliases:`, not `entries:`.
+    """
+    import yaml
+
+    repo_root = Path(__file__).resolve().parent.parent
+    glossary = yaml.safe_load(
+        (repo_root / "schemas" / "ai_pipeline" / "concept_glossary.yaml").read_text(encoding="utf-8")
+    )
+    concepts_doc = yaml.safe_load(
+        (repo_root / "schemas" / "concepts" / "report_variables.yaml").read_text(encoding="utf-8")
+    )
+
+    concept_ids = set((concepts_doc or {}).get("concepts", {}).keys())
+    entry_keys = set((glossary or {}).get("entries", {}).keys())
+
+    orphans = sorted(entry_keys - concept_ids)
+    assert not orphans, (
+        f"Glossary `entries:` contains keys that are not concept_ids in "
+        f"report_variables.yaml: {orphans}. Either rename them to a real "
+        f"concept_id or move them under `aliases:` (see D9)."
+    )
+
+
+def test_glossary_aliases_are_not_concept_ids():
+    """Keys under `aliases:` must NOT collide with concept_ids.
+
+    Aliases are reserved for jargon-reference terms that don't map 1:1 to a
+    single concept (e.g. "Nb", "N20"). Anything that IS a concept_id belongs
+    under `entries:`.
+    """
+    import yaml
+
+    repo_root = Path(__file__).resolve().parent.parent
+    glossary = yaml.safe_load(
+        (repo_root / "schemas" / "ai_pipeline" / "concept_glossary.yaml").read_text(encoding="utf-8")
+    )
+    concepts_doc = yaml.safe_load(
+        (repo_root / "schemas" / "concepts" / "report_variables.yaml").read_text(encoding="utf-8")
+    )
+
+    concept_ids = set((concepts_doc or {}).get("concepts", {}).keys())
+    alias_keys = set((glossary or {}).get("aliases", {}).keys())
+
+    overlap = sorted(alias_keys & concept_ids)
+    assert not overlap, (
+        f"Glossary `aliases:` overlaps with concept_ids: {overlap}. Move these "
+        f"under `entries:` instead."
+    )
+
+
+def test_glossary_still_loads_as_prompt_text():
+    """_load_glossary must still ship both entries AND aliases to the LLM.
+
+    The function is a pass-through text read; adding a top-level `aliases:`
+    section should NOT hide jargon terms from the prompt.
+    """
+    from automation.ai_pipeline.analysis import _load_glossary
+
+    text = _load_glossary()
+    assert text, "_load_glossary returned empty text"
+    assert "num_floors" in text, "expected entry key missing from glossary text"
+    assert ("Nb" in text) or ("N20" in text), (
+        "expected alias term (Nb or N20) missing from glossary text"
+    )
+
+
+# ---------------------------------------------------------------------------
+# D9 tests — glossary concept_id alignment (inserted above this anchor)
+# ---------------------------------------------------------------------------
+# SENTINEL_D9_END

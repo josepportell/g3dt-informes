@@ -7,7 +7,14 @@
 # Each entry produces a one-line "why this is tricky" hint in the LLM prompt
 # so the model doesn't have to guess G3DT-specific conventions.
 
-version: "1.0"
+version: "1.1"
+
+# Top-level sections:
+# - entries:  keyed by concept_id from schemas/concepts/report_variables.yaml.
+#             One hint per ambiguous concept.
+# - aliases:  keyed by geotech jargon terms (Nb, N20, ...) that are NOT
+#             concept_ids but appear in sources. The LLM needs to know what
+#             they mean even though they don't map 1:1 to a single concept.
 
 entries:
 
@@ -46,19 +53,6 @@ entries:
       annexes (PDF vectorial, NOT the handwritten field sheet). If only the
       handwritten field sheet exists, default to 1. Multiple material
       descriptions within one lithological unit still = 1 level.
-
-  "Nb":
-    hint: |
-      Nb = dynamic penetration count used in Eva's bearing-capacity correlations.
-      Computed as Nb = N20 / 0.83 (per Dapena, Lacasa & García 2000). When Eva
-      writes "N=45" in a table she usually means Nb, unless the row clearly
-      identifies it as N20 (DPSH blows per 20 cm). If you see both, prefer Nb.
-
-  "N20":
-    hint: |
-      DPSH blows per 20 cm of penetration, raw field value. If a source says
-      "N = 40" or "N20 = 40", that's N20. Do NOT convert to Nb here — emit as N20
-      and let Stage 5/6 handle derived fields. Refusal is marked "R".
 
   qa_value:
     hint: |
@@ -104,10 +98,12 @@ entries:
       NOT Eva or anyone from G3DT. NOT the client/promotor unless explicitly
       stated to be both.
 
-  lab_company:
+  lab_testing_company:
     hint: |
       External laboratory that ran soil tests (sulfates, granulometry). Common
       names: "Lab. Valdemoro", "Applus", "Geoceres". Distinct from G3DT itself.
+      Use `lab_field_company` instead if the document is attributing the
+      field-sampling work rather than the lab-bench testing.
 
   municipality:
     hint: |
@@ -117,3 +113,27 @@ entries:
       Vilanova de Segrià. If the source writes "BELL-LLOC" and Eva's convention
       is "Bell-lloc d'Urgell", preserve the source's wording in `quote` but you
       may emit the canonical form in `value` with lower confidence.
+
+# ---------------------------------------------------------------------------
+# Aliases — jargon-reference terms (NOT concept_ids)
+#
+# These are geotech field-reference terms that the LLM encounters in sources
+# and needs to interpret correctly, but which don't map 1:1 to a single
+# concept_id in report_variables.yaml. Kept here (not under `entries:`) so the
+# set of glossary entries stays aligned with the canonical concept schema.
+# ---------------------------------------------------------------------------
+
+aliases:
+
+  "Nb":
+    hint: |
+      Nb = dynamic penetration count used in Eva's bearing-capacity correlations.
+      Computed as Nb = N20 / 0.83 (per Dapena, Lacasa & García 2000). When Eva
+      writes "N=45" in a table she usually means Nb, unless the row clearly
+      identifies it as N20 (DPSH blows per 20 cm). If you see both, prefer Nb.
+
+  "N20":
+    hint: |
+      DPSH blows per 20 cm of penetration, raw field value. If a source says
+      "N = 40" or "N20 = 40", that's N20. Do NOT convert to Nb here — emit as N20
+      and let Stage 5/6 handle derived fields. Refusal is marked "R".
