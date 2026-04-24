@@ -1051,3 +1051,1003 @@ def test_empty_response_retry_keeps_full_prompt(tmp_path, monkeypatch):
     cr = ranking.ranking_of(cid)
     assert cr is not None
     assert cr.status == "ranked"
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Chunk 3 — Pass B (group auditor) + Pass C (targeted revision) tests
+# ═══════════════════════════════════════════════════════════════════════
+
+
+def _build_group_audit_tool_input(
+    factors: list[dict],
+    revisions: list[dict],
+) -> dict:
+    return {"factors": factors, "revisions": revisions}
+
+
+class _FakeGroupResponse:
+    """Simulates an Anthropic response containing an `emit_group_audit` call."""
+
+    def __init__(self, tool_input: dict):
+        self.content = [
+            SimpleNamespace(
+                type="tool_use", name="emit_group_audit", input=tool_input
+            )
+        ]
+        self.usage = _FakeUsage()
+
+
+def _pick_group_with_two_concepts() -> tuple[str, list[str]]:
+    """Return (group_name, [concept_id, concept_id]) for a group with ≥2
+    simple (text) concepts in the real schema.
+    """
+    defs = load_concept_definitions()
+    from collections import defaultdict
+    by_group: dict[str, list[str]] = defaultdict(list)
+    for cid, meta in defs.items():
+        by_group[meta["group"]].append(cid)
+    # Prefer `location` (has street_address + municipality + province).
+    for preferred in ("location", "client", "building", "architect"):
+        if len(by_group.get(preferred, [])) >= 2:
+            return preferred, sorted(by_group[preferred])[:3]
+    # Fallback: any group with ≥2 concepts.
+    for g, items in sorted(by_group.items()):
+        if len(items) >= 2:
+            return g, sorted(items)[:3]
+    raise RuntimeError("no group with ≥2 concepts in schema")
+
+
+def _multi_analysis_for_concepts(
+    concept_values: dict[str, list[tuple[str, str, float]]],
+) -> ProjectAnalysis:
+    """Build an analysis given `{concept_id: [(source_path, value, conf), ...]}`."""
+    sources_map: dict[str, list[tuple[str, object, float]]] = {}
+    for cid, vals in concept_values.items():
+        for sp, v, c in vals:
+            sources_map.setdefault(sp, []).append((cid, v, c))
+    sources_list = list(sources_map.items())
+    return _make_analysis(sources_list)
+
+
+# ─── Pass B — auditor tests ────────────────────────────────────────────
+
+
+def test_audit_group_happy_path(tmp_path):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:3]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", f"val_a_{cid}", 0.9), ("b.pdf", f"val_b_{cid}", 0.7)]
+         for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+
+    pass_a_expected = {
+        cid: _expected_candidate_ids(analysis, cid) for cid in cids
+    }
+
+    call_log = []
+
+    def behavior(call_num, kwargs):
+        call_log.append(("tool" if kwargs.get("tools", [{}])[0].get("name") == "emit_group_audit" else "rank", kwargs))
+        system = kwargs.get("system", "")
+        if "emit_group_audit" in str(kwargs.get("tools", "")) or "grup" in system.lower():
+            # Group audit call
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[{"description": "v2 supersedes v1 across group",
+                              "affects": [cids[0]]}],
+                    revisions=[
+                        {"concept_id": cid,
+                         "revise": (cid == cids[0]),
+                         "reason": "sample"}
+                        for cid in cids
+                    ],
+                )
+            )
+        # Per-concept Pass A (or Pass C) call — return plain Pass-A ranking.
+        cid = _extract_cid_from_kwargs(kwargs)
+        ordered = pass_a_expected[cid]
+        # Pass C: if Group-level signal block is present, reorder (swap).
+        if _has_group_signal_block(kwargs) and cid == cids[0]:
+            ordered = list(reversed(ordered))
+        return _FakeResponse(_build_ranked_tool_input(ordered))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project,
+        analysis=analysis,
+        client=client,
+        concept_filter=set(cids),
+    )
+
+    assert group_name in ranking.groups
+    result = ranking.groups[group_name]
+    assert result.skipped_reason == ""
+    assert len(result.factors) == 1
+    assert len(result.revisions) == len(cids)
+    # Pass C applied: cids[0] was revised.
+    revised = ranking.concepts[cids[0]]
+    assert revised.revised_by_group_pass is True
+    assert revised.group_factor_considered
+    # cids[1] not revised.
+    assert ranking.concepts[cids[1]].revised_by_group_pass is False
+
+
+def _extract_cid_from_kwargs(kwargs: dict) -> str:
+    # Extract concept_id from the user content's `**concept_id**:` marker.
+    import re as _re
+    for msg in kwargs.get("messages", []) or []:
+        for block in msg.get("content", []) or []:
+            if not isinstance(block, dict):
+                continue
+            m = _re.search(r"\*\*concept_id\*\*:\s*`([^`]+)`", block.get("text", ""))
+            if m:
+                return m.group(1)
+    return ""
+
+
+def _has_group_signal_block(kwargs: dict) -> bool:
+    for msg in kwargs.get("messages", []) or []:
+        for block in msg.get("content", []) or []:
+            if not isinstance(block, dict):
+                continue
+            if "# Group-level signal" in block.get("text", ""):
+                return True
+    return False
+
+
+def test_audit_group_skipped_when_too_few_ranked_concepts(tmp_path):
+    """Only 1 ranked concept in a group → Pass B skipped with reason."""
+    group_name, cids = _pick_group_with_two_concepts()
+    cid_ranked = cids[0]
+    # Single concept with multiple candidates; rest of group not in analysis.
+    analysis = _multi_analysis_for_concepts(
+        {cid_ranked: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)]}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    ordered = _expected_candidate_ids(analysis, cid_ranked)
+
+    group_audit_calls = 0
+
+    def behavior(call_num, kwargs):
+        nonlocal group_audit_calls
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            group_audit_calls += 1
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input([], [])
+            )
+        return _FakeResponse(_build_ranked_tool_input(ordered))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project,
+        analysis=analysis,
+        client=client,
+        concept_filter=cid_ranked,
+    )
+
+    # No group audit happened for this group.
+    assert group_audit_calls == 0
+    # Either the group is absent from `ranking.groups`, or present with
+    # skipped_reason set. Our orchestrator only processes groups that have
+    # at least one ranked concept — which this one does — so we expect it
+    # to appear marked-skipped.
+    g = ranking.groups.get(group_name)
+    assert g is not None
+    assert g.skipped_reason
+    assert "need" in g.skipped_reason or "ranked" in g.skipped_reason
+
+
+def test_audit_group_skips_non_ranked_concepts_in_group_size_count(tmp_path):
+    """2 single + 1 ranked in group → still only 1 rankable → skip."""
+    group_name, cids = _pick_group_with_two_concepts()
+    if len(cids) < 3:
+        pytest.skip("need a group with 3+ concepts for this test")
+    ranked_cid = cids[0]
+    single_a = cids[1]
+    single_b = cids[2]
+
+    # ranked_cid: 2 candidates (ranked); single_a/b: 1 candidate each (single).
+    sources_map: dict[str, list] = {
+        "a.pdf": [(ranked_cid, "X", 0.9), (single_a, "Va", 0.9)],
+        "b.pdf": [(ranked_cid, "Y", 0.7), (single_b, "Vb", 0.9)],
+    }
+    analysis = _make_analysis(list(sources_map.items()))
+    project = _make_project_with_analysis(tmp_path, analysis)
+    ordered = _expected_candidate_ids(analysis, ranked_cid)
+
+    group_audit_calls = 0
+
+    def behavior(call_num, kwargs):
+        nonlocal group_audit_calls
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            group_audit_calls += 1
+            return _FakeGroupResponse(_build_group_audit_tool_input([], []))
+        return _FakeResponse(_build_ranked_tool_input(ordered))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project,
+        analysis=analysis,
+        client=client,
+        concept_filter={ranked_cid, single_a, single_b},
+    )
+
+    assert group_audit_calls == 0
+    # The group in question should be recorded as skipped.
+    g = ranking.groups.get(group_name)
+    assert g is not None
+    assert g.skipped_reason
+
+
+def test_audit_group_filters_out_alien_concept_ids_from_affects(tmp_path):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            # Two factors: one with a real + alien, one with only aliens.
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[
+                        {"description": "mixed factor",
+                         "affects": [cids[0], "nonexistent_id"]},
+                        {"description": "all-alien factor",
+                         "affects": ["foo", "bar"]},
+                    ],
+                    revisions=[
+                        {"concept_id": cid, "revise": False, "reason": ""}
+                        for cid in cids
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project, analysis=analysis, client=client, concept_filter=set(cids),
+    )
+
+    g = ranking.groups[group_name]
+    # All-alien factor dropped; mixed factor kept with only real id.
+    assert len(g.factors) == 1
+    assert g.factors[0]["affects"] == [cids[0]]
+
+
+def test_audit_group_rejects_revisions_referring_unknown_concept(tmp_path, monkeypatch):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    import automation.ai_pipeline.ranking as ranking_mod
+    monkeypatch.setattr(ranking_mod, "_BACKOFF_INITIAL_S", 0.0)
+
+    call_num_holder = {"n": 0}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            call_num_holder["n"] += 1
+            if call_num_holder["n"] == 1:
+                # Bad: alien revision concept_id.
+                return _FakeGroupResponse(
+                    _build_group_audit_tool_input(
+                        factors=[],
+                        revisions=[
+                            {"concept_id": "not_a_real_concept",
+                             "revise": False, "reason": ""},
+                        ],
+                    )
+                )
+            # Good: proper revisions.
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[],
+                    revisions=[
+                        {"concept_id": cid, "revise": False, "reason": ""}
+                        for cid in cids
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project, analysis=analysis, client=client, concept_filter=set(cids),
+    )
+    # Group passed on retry.
+    g = ranking.groups[group_name]
+    assert g.skipped_reason == ""
+    assert call_num_holder["n"] == 2
+
+
+def test_audit_group_cache_miss_then_hit(tmp_path):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[],
+                    revisions=[
+                        {"concept_id": cid, "revise": False, "reason": ""}
+                        for cid in cids
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    rank_project(project, analysis=analysis, client=client, concept_filter=set(cids))
+    first_calls = client.messages.calls
+    group_calls_first = sum(
+        1 for kw in client.messages.kwargs_history
+        if "emit_group_audit" in str(kw.get("tools", ""))
+    )
+    assert group_calls_first == 1
+
+    # Second run: Pass A concept calls are also cached — so no calls at all.
+    client2 = _FakeAnthropicClient(behavior)
+    rank_project(project, analysis=analysis, client=client2, concept_filter=set(cids))
+    group_calls_second = sum(
+        1 for kw in client2.messages.kwargs_history
+        if "emit_group_audit" in str(kw.get("tools", ""))
+    )
+    assert group_calls_second == 0
+
+
+def test_audit_group_cache_invalidated_by_principles_change(tmp_path, monkeypatch):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[],
+                    revisions=[
+                        {"concept_id": cid, "revise": False, "reason": ""}
+                        for cid in cids
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    import automation.ai_pipeline.ranking as ranking_mod
+    monkeypatch.setattr(ranking_mod, "load_authority_principles", lambda: "P1")
+    client = _FakeAnthropicClient(behavior)
+    rank_project(project, analysis=analysis, client=client, concept_filter=set(cids))
+    assert any(
+        "emit_group_audit" in str(kw.get("tools", ""))
+        for kw in client.messages.kwargs_history
+    )
+
+    monkeypatch.setattr(
+        ranking_mod, "load_authority_principles", lambda: "P2 — DIFFERENT"
+    )
+    client2 = _FakeAnthropicClient(behavior)
+    rank_project(project, analysis=analysis, client=client2, concept_filter=set(cids))
+    # Principles changed → group cache must re-run.
+    assert any(
+        "emit_group_audit" in str(kw.get("tools", ""))
+        for kw in client2.messages.kwargs_history
+    )
+
+
+def test_audit_group_systemic_error_skips_remaining_groups(tmp_path):
+    """First Pass B call raises 401 → remaining groups marked skipped."""
+    # Two groups each with ≥2 ranked concepts.
+    defs = load_concept_definitions()
+    from collections import defaultdict
+    by_group = defaultdict(list)
+    for cid, m in defs.items():
+        by_group[m["group"]].append(cid)
+
+    groups_with_two = sorted(
+        g for g, items in by_group.items() if len(items) >= 2
+    )
+    if len(groups_with_two) < 2:
+        pytest.skip("need at least 2 groups with ≥2 concepts")
+    g1 = groups_with_two[0]
+    g2 = groups_with_two[1]
+    cids_g1 = sorted(by_group[g1])[:2]
+    cids_g2 = sorted(by_group[g2])[:2]
+    all_cids = cids_g1 + cids_g2
+
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in all_cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in all_cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            raise RuntimeError("AuthenticationError: invalid API key (401)")
+        cid = _extract_cid_from_kwargs(kwargs)
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project, analysis=analysis, client=client, concept_filter=set(all_cids),
+    )
+
+    # First failure logged in `failures`.
+    assert any(f.get("error_type") == "authentication_error" for f in ranking.failures)
+    # Other group marked skipped.
+    g2_result = ranking.groups.get(g2)
+    assert g2_result is not None
+    assert "systemic" in g2_result.skipped_reason
+
+
+# ─── Pass C — revision tests ───────────────────────────────────────────
+
+
+def test_revise_concept_applies_group_factor_to_prompt(tmp_path):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    factor_text = "THE ONE SPECIFIC FACTOR for cids[0]"
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[{"description": factor_text,
+                              "affects": [cids[0]]}],
+                    revisions=[
+                        {"concept_id": cids[0], "revise": True, "reason": "go"},
+                        {"concept_id": cids[1], "revise": False, "reason": ""},
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        ordered = pass_a[cid]
+        if _has_group_signal_block(kwargs):
+            ordered = list(reversed(ordered))
+        return _FakeResponse(_build_ranked_tool_input(ordered))
+
+    client = _FakeAnthropicClient(behavior)
+    rank_project(project, analysis=analysis, client=client, concept_filter=set(cids))
+
+    # Find the Pass C call for cids[0] — must include the factor text.
+    found = False
+    for kw in client.messages.kwargs_history:
+        if _has_group_signal_block(kw) and _extract_cid_from_kwargs(kw) == cids[0]:
+            text_joined = _user_text(kw)
+            assert factor_text in text_joined
+            found = True
+    assert found
+
+
+def test_revise_concept_happy_path_reorders(tmp_path):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[{"description": "v2 supersedes v1",
+                              "affects": [cids[0]]}],
+                    revisions=[
+                        {"concept_id": cids[0], "revise": True, "reason": "go"},
+                        {"concept_id": cids[1], "revise": False, "reason": ""},
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        if _has_group_signal_block(kwargs) and cid == cids[0]:
+            return _FakeResponse(
+                _build_ranked_tool_input(list(reversed(pass_a[cid])))
+            )
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project, analysis=analysis, client=client, concept_filter=set(cids),
+    )
+
+    revised = ranking.concepts[cids[0]]
+    # First in the new order is the last of the original (reversed).
+    assert revised.ranked[0].candidate_id == pass_a[cids[0]][-1]
+    assert revised.revised_by_group_pass is True
+    assert "v2 supersedes v1" in revised.group_factor_considered
+
+
+def test_revise_concept_no_change_guardrail_keeps_original(tmp_path):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[{"description": "nothing-changing factor",
+                              "affects": [cids[0]]}],
+                    revisions=[
+                        {"concept_id": cids[0], "revise": True, "reason": "go"},
+                        {"concept_id": cids[1], "revise": False, "reason": ""},
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        # Both Pass A and Pass C return same order.
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project, analysis=analysis, client=client, concept_filter=set(cids),
+    )
+
+    revised = ranking.concepts[cids[0]]
+    assert revised.revised_by_group_pass is False
+    assert revised.group_factor_considered
+    # Order unchanged.
+    assert [r.candidate_id for r in revised.ranked] == pass_a[cids[0]]
+
+
+def test_revise_concept_cache_separate_from_pass_a(tmp_path):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[{"description": "factor",
+                              "affects": [cids[0]]}],
+                    revisions=[
+                        {"concept_id": cids[0], "revise": True, "reason": ""},
+                        {"concept_id": cids[1], "revise": False, "reason": ""},
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        ordered = pass_a[cid]
+        if _has_group_signal_block(kwargs) and cid == cids[0]:
+            ordered = list(reversed(ordered))
+        return _FakeResponse(_build_ranked_tool_input(ordered))
+
+    client = _FakeAnthropicClient(behavior)
+    rank_project(project, analysis=analysis, client=client, concept_filter=set(cids))
+
+    import automation.ai_pipeline.ranking as ranking_mod
+
+    pp = project.resolve()
+    pass_a_cache = ranking_mod._concept_cache_path(pp, cids[0])
+    pass_c_cache = ranking_mod._revised_cache_path(pp, cids[0])
+    assert pass_a_cache.is_file()
+    assert pass_c_cache.is_file()
+    assert pass_a_cache != pass_c_cache
+
+
+def test_revise_concept_cache_invalidated_by_group_factor_change(tmp_path):
+    """Pass C cache key mixes in `group_factor`: changing the factor text
+    between runs (with identical concept_def / candidates / principles) must
+    cause a cache MISS and a fresh LLM call. Guard for ranking.py:1426-1428.
+    """
+    cid = _pick_multi_candidate_concept()
+    analysis = _make_multi_analysis(
+        cid, [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)]
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pp = project.resolve()
+    (pp / "validation" / "ai_pipeline" / "ranking").mkdir(parents=True, exist_ok=True)
+    cids_list = _expected_candidate_ids(analysis, cid)
+
+    import automation.ai_pipeline.ranking as ranking_mod
+
+    concept_def = ranking_mod.load_concept_definitions()[cid]
+    by_concept = ranking_mod._extract_candidates_by_concept(analysis)
+    entries = by_concept[cid]
+    principles = "P-test"
+    model = ranking_mod._DEFAULT_MODEL
+
+    original = ConceptRanking(
+        concept_id=cid,
+        status="ranked",
+        ranked=[
+            RankedCandidate(
+                candidate_id=c_id,
+                source_path=c_id.split("::")[0],
+                value="X",
+                confidence=0.9,
+                rationale="pass-A",
+            )
+            for c_id in cids_list
+        ],
+    )
+
+    def behavior(call_num, kwargs):
+        # Pass C always returns a reversed order so the no-change guardrail
+        # does not fire — we want a genuine write to the revise cache.
+        return _FakeResponse(_build_ranked_tool_input(list(reversed(cids_list))))
+
+    # ─── Run 1: factor "A" ──
+    client1 = _FakeAnthropicClient(behavior)
+    revised1, failure1, systemic1, _ = ranking_mod._revise_one_concept(
+        client1,
+        pp,
+        concept_def,
+        entries,
+        model,
+        principles,
+        "factor-A",
+        original,
+    )
+    assert failure1 is None and not systemic1
+    assert revised1 is not None
+    assert client1.messages.calls == 1
+    assert ranking_mod._revised_cache_path(pp, cid).is_file()
+
+    # ─── Run 2: same factor "A" → must HIT cache, no new call ──
+    client2 = _FakeAnthropicClient(behavior)
+    revised2, failure2, systemic2, _ = ranking_mod._revise_one_concept(
+        client2,
+        pp,
+        concept_def,
+        entries,
+        model,
+        principles,
+        "factor-A",
+        original,
+    )
+    assert failure2 is None and not systemic2
+    assert revised2 is not None
+    assert client2.messages.calls == 0  # cache hit
+
+    # ─── Run 3: factor "B" (different text) → must MISS cache ──
+    client3 = _FakeAnthropicClient(behavior)
+    revised3, failure3, systemic3, _ = ranking_mod._revise_one_concept(
+        client3,
+        pp,
+        concept_def,
+        entries,
+        model,
+        principles,
+        "factor-B",
+        original,
+    )
+    assert failure3 is None and not systemic3
+    assert revised3 is not None
+    assert client3.messages.calls == 1  # cache miss → fresh call
+
+
+def test_revise_concept_cap_max_revisions_per_group(tmp_path, monkeypatch):
+    """7 revisions flagged → only _MAX_REVISIONS_PER_GROUP=5 actually revised."""
+    # Need a group with ≥7 concepts. Use `parcel` if available; else skip.
+    defs = load_concept_definitions()
+    from collections import defaultdict
+    by_group = defaultdict(list)
+    for cid, m in defs.items():
+        by_group[m["group"]].append(cid)
+
+    big_groups = [g for g, items in by_group.items() if len(items) >= 7]
+    if not big_groups:
+        pytest.skip("no group with ≥7 concepts in schema")
+    group_name = sorted(big_groups)[0]
+    cids = sorted(by_group[group_name])[:7]
+
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[{"description": "all", "affects": cids}],
+                    revisions=[
+                        {"concept_id": cid, "revise": True, "reason": ""}
+                        for cid in cids
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        ordered = pass_a[cid]
+        if _has_group_signal_block(kwargs):
+            ordered = list(reversed(ordered))
+        return _FakeResponse(_build_ranked_tool_input(ordered))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project, analysis=analysis, client=client, concept_filter=set(cids),
+    )
+
+    n_revised = sum(1 for c in cids if ranking.concepts[c].revised_by_group_pass)
+    import automation.ai_pipeline.ranking as ranking_mod
+    assert n_revised == ranking_mod._MAX_REVISIONS_PER_GROUP
+
+
+def test_revise_trimmed_retry_drops_group_factor_block(tmp_path, monkeypatch):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    import automation.ai_pipeline.ranking as ranking_mod
+    monkeypatch.setattr(ranking_mod, "_BACKOFF_INITIAL_S", 0.0)
+
+    # Track per-concept call counts so the FIRST Pass C call for cids[0] fails
+    # validation, and the retry succeeds without the group-signal block.
+    pass_c_calls_for_target: dict[str, int] = {cids[0]: 0}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[{"description": "x", "affects": [cids[0]]}],
+                    revisions=[
+                        {"concept_id": cids[0], "revise": True, "reason": ""},
+                        {"concept_id": cids[1], "revise": False, "reason": ""},
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        # Only the Pass C call for cids[0] is driven here; Pass A calls return
+        # valid rankings normally.
+        if _has_group_signal_block(kwargs) and cid == cids[0]:
+            pass_c_calls_for_target[cid] += 1
+            if pass_c_calls_for_target[cid] == 1:
+                return _FakeResponse(
+                    _build_ranked_tool_input(["invented_id"])
+                )
+            return _FakeResponse(_build_ranked_tool_input(list(reversed(pass_a[cid]))))
+        # Pass C trimmed retry: no group-signal block — return valid ranking.
+        if cid == cids[0] and pass_c_calls_for_target[cid] >= 1:
+            return _FakeResponse(_build_ranked_tool_input(list(reversed(pass_a[cid]))))
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project, analysis=analysis, client=client, concept_filter=set(cids),
+    )
+
+    # Look at the Pass C calls for cids[0].
+    pass_c_kwargs = [
+        kw for kw in client.messages.kwargs_history
+        if _extract_cid_from_kwargs(kw) == cids[0]
+        and "emit_group_audit" not in str(kw.get("tools", ""))
+    ]
+    # Split those into the ones with vs without the group-signal block. The
+    # retry must be the call WITHOUT the signal block.
+    without_signal = [kw for kw in pass_c_kwargs if not _has_group_signal_block(kw)]
+    # There should be at least one Pass C call without the signal block (retry).
+    assert without_signal
+    # The final result is the revised (reversed) ranking.
+    assert ranking.concepts[cids[0]].revised_by_group_pass is True
+
+
+# ─── Orchestrator integration tests ────────────────────────────────────
+
+
+def test_no_group_pass_flag_skips_b_and_c(tmp_path):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            pytest.fail("Pass B must not be called when no_group_pass=True")
+        cid = _extract_cid_from_kwargs(kwargs)
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project,
+        analysis=analysis,
+        client=client,
+        concept_filter=set(cids),
+        no_group_pass=True,
+    )
+
+    assert ranking.groups == {}
+
+
+def test_group_filter_restricts_audits(tmp_path):
+    # Same construction as systemic test: two groups with ≥2 ranked concepts.
+    defs = load_concept_definitions()
+    from collections import defaultdict
+    by_group = defaultdict(list)
+    for cid, m in defs.items():
+        by_group[m["group"]].append(cid)
+
+    groups_with_two = sorted(g for g, items in by_group.items() if len(items) >= 2)
+    if len(groups_with_two) < 2:
+        pytest.skip("need at least 2 groups with ≥2 concepts")
+    g1, g2 = groups_with_two[:2]
+    cids_g1 = sorted(by_group[g1])[:2]
+    cids_g2 = sorted(by_group[g2])[:2]
+    all_cids = cids_g1 + cids_g2
+
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in all_cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in all_cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            # Determine which group this is for by reading the `group:` marker.
+            text = _user_text(kwargs)
+            assert f"`{g1}`" in text, "group_filter should restrict to g1 only"
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[],
+                    revisions=[
+                        {"concept_id": cid, "revise": False, "reason": ""}
+                        for cid in cids_g1
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project,
+        analysis=analysis,
+        client=client,
+        concept_filter=set(all_cids),
+        group_filter=g1,
+    )
+
+    assert g1 in ranking.groups
+    assert g2 not in ranking.groups
+
+
+def test_tokens_and_cost_aggregate_pass_b_and_c(tmp_path):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    class _FixedUsage:
+        def __init__(self):
+            self.input_tokens = 100
+            self.output_tokens = 50
+            self.cache_creation_input_tokens = 0
+            self.cache_read_input_tokens = 0
+
+    class _RankResp:
+        def __init__(self, tool_input):
+            self.content = [SimpleNamespace(
+                type="tool_use", name="emit_ranking", input=tool_input
+            )]
+            self.usage = _FixedUsage()
+
+    class _GroupResp:
+        def __init__(self, tool_input):
+            self.content = [SimpleNamespace(
+                type="tool_use", name="emit_group_audit", input=tool_input
+            )]
+            self.usage = _FixedUsage()
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            return _GroupResp(
+                _build_group_audit_tool_input(
+                    factors=[{"description": "x", "affects": [cids[0]]}],
+                    revisions=[
+                        {"concept_id": cids[0], "revise": True, "reason": ""},
+                        {"concept_id": cids[1], "revise": False, "reason": ""},
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        ordered = pass_a[cid]
+        if _has_group_signal_block(kwargs) and cid == cids[0]:
+            ordered = list(reversed(ordered))
+        return _RankResp(_build_ranked_tool_input(ordered))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project,
+        analysis=analysis,
+        client=client,
+        concept_filter=set(cids),
+        model="claude-sonnet-4-6",
+    )
+
+    # Count calls: 2 Pass A + 1 Pass B + 1 Pass C = 4 calls × 100 input tokens.
+    n_calls = client.messages.calls
+    assert n_calls == 4
+    assert ranking.total_input_tokens == 100 * n_calls
+    assert ranking.total_output_tokens == 50 * n_calls
+    # Cost formula: (input * 3 + output * 15) / 1e6.
+    expected_cost = (
+        (100 * n_calls * 3.0) + (50 * n_calls * 15.0)
+    ) / 1_000_000.0
+    assert abs(ranking.estimated_cost_usd - expected_cost) < 1e-6
+
+
+def test_eva_summary_includes_group_audit_line(tmp_path):
+    group_name, cids = _pick_group_with_two_concepts()
+    cids = cids[:2]
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in cids}
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[{"description": "x", "affects": [cids[0]]}],
+                    revisions=[
+                        {"concept_id": cids[0], "revise": True, "reason": ""},
+                        {"concept_id": cids[1], "revise": False, "reason": ""},
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        ordered = pass_a[cid]
+        if _has_group_signal_block(kwargs) and cid == cids[0]:
+            ordered = list(reversed(ordered))
+        return _FakeResponse(_build_ranked_tool_input(ordered))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project, analysis=analysis, client=client, concept_filter=set(cids),
+    )
+
+    summary_joined = "\n".join(ranking.eva_summary)
+    assert "Auditors de grup" in summary_joined
+    assert "factors cross-concept" in summary_joined
+    assert "rànquings revisats" in summary_joined
