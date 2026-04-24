@@ -395,6 +395,10 @@ def _classify_error(exc: Exception) -> tuple[str, bool]:
         return ("insufficient_credits", True)
     if "402" in msg:
         return ("insufficient_credits", True)
+    # Anthropic account-level usage cap — surfaces as HTTP 400 invalid_request_error
+    # with "specified API usage limits" / "regain access" phrasing.
+    if "400" in msg and ("usage limit" in msg or "regain access" in msg):
+        return ("usage_limit", True)
 
     # Transient
     if "ratelimit" in err_type.lower() or "429" in msg:
@@ -730,6 +734,8 @@ def analyze_project(
                 action_hint = " Action: check ANTHROPIC_API_KEY."
             elif failure.error_type == "model_not_found":
                 action_hint = f" Action: unset G3DT_AI_MODEL or use a valid model id (tried '{model}')."
+            elif failure.error_type == "usage_limit":
+                action_hint = " Action: raise the Anthropic API usage limit on this key, or wait until the regain-access time reported by Anthropic."
             systemic = SystemicFailure(
                 error_type=failure.error_type,
                 message=msg + action_hint,

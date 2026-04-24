@@ -407,6 +407,49 @@ def test_classify_error_identifies_transient():
     assert et == "rate_limit"
 
 
+def test_classify_error_identifies_usage_limit():
+    # Exact shape Anthropic returns when a per-key usage cap is hit (see D15).
+    err = RuntimeError(
+        "Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', "
+        "'message': 'You have reached your specified API usage limits. You will regain "
+        "access on 2026-05-01 at 00:00 UTC.'}, 'request_id': 'req_abc123'}"
+    )
+    et, sys_ = _classify_error(err)
+    assert sys_ is True
+    assert et == "usage_limit"
+
+
+def _usage_limit_behavior(call_num, kwargs):
+    raise RuntimeError(
+        "Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', "
+        "'message': 'You have reached your specified API usage limits. You will regain "
+        "access on 2026-05-01 at 00:00 UTC.'}, 'request_id': 'req_abc123'}"
+    )
+
+
+def test_usage_limit_aborts_project_wide(tmp_path):
+    project = _make_project(tmp_path)
+    client = _MockClient(_usage_limit_behavior)
+    analysis = analyze_project(project, client=client, model="claude-sonnet-4-6")
+
+    assert analysis.systemic_failure is not None
+    assert analysis.systemic_failure.error_type == "usage_limit"
+    # Fail-fast on first call — no circuit-breaker waste.
+    assert client.messages.calls == 1
+    assert len(analysis.failures) == 0
+    assert analysis.systemic_failure.sources_skipped >= 1
+
+
+def test_usage_limit_message_has_action_hint(tmp_path):
+    project = _make_project(tmp_path)
+    client = _MockClient(_usage_limit_behavior)
+    analysis = analyze_project(project, client=client, model="claude-sonnet-4-6")
+    msg = analysis.systemic_failure.message
+    assert "Action:" in msg
+    # Preserve Anthropic's regain-access timestamp in the surfaced message
+    assert "regain access" in msg.lower() or "regain-access" in msg.lower()
+
+
 # ---------------------------------------------------------------------------
 # Source filter
 # ---------------------------------------------------------------------------
