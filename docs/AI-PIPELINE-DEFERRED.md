@@ -64,9 +64,9 @@ On Alcoletge: 54 extracted images → 54 additional analysis calls (most are G3D
 **Fix directions:**
 1. **v1.1 logo filter** (already parked in §5.6 of arch doc). Discard `.png`/`.jpg` whose perceptual hash matches a reference G3DT logo library. Eliminates ~60% of the wasted calls.
 2. **Stage 4 source grouping change**: group extracted images *with their parent source* so one call sees the parent document + its embedded images together. Cleaner provenance + half the LLM calls for Excel/DOCX/PDF-mixed sources. Would reduce `source_path` groupings by ~30-50.
-3. **Stage 2 exclusion flag**: skip extraction from documents whose `document_type` is clearly admin (budgets, invoices) where images are almost always signatures/logos. Needs Stage 2 to understand document type, which today is deferred to Stage 4.
+3. ~~**Stage 2 exclusion flag**: skip extraction from documents whose `document_type` is clearly admin (budgets, invoices) where images are almost always signatures/logos.~~ **Rejected (2026-04-25, Josep)** — Stage 2 is technical-typology only; `document_type` is Stage 4's responsibility. Leaking that decision upstream would couple the two stages and violate the arch-doc separation (§5.1). Admin documents occasionally do carry useful visual content (signed floor plans, stamped lab photos) — a blanket Stage 2 exclusion would lose those.
 
-Recommended: #2 first (biggest cost win, no new moving parts), #1 second, #3 last.
+Recommended: #2 first (biggest cost win, no new moving parts), #1 second.
 
 ### D2. Logos identified by Stage 4 still cost full LLM calls before being recognized
 
