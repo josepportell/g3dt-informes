@@ -7229,9 +7229,17 @@
                     ? `<span title="extret de ${escapeHtml(f.parent_path)}" style="font-size:10px; color:#0c7489; margin-left:4px;">[img extreta]</span>`
                     : '';
 
+                // Images: make the path cell clickable to open a preview modal
+                const isImage = f.category === 'image';
+                const pathCell = isImage
+                    ? `<span onclick="openAiImageModal('${escapeHtml(f.path).replace(/'/g, "\\'")}')"
+                           style="cursor:pointer; text-decoration:underline; text-decoration-style:dotted;"
+                           title="Clica per veure la imatge">${escapeHtml(f.path)}</span>`
+                    : escapeHtml(f.path);
+
                 return `
                     <tr style="border-bottom:1px solid #eee; ${rowStyle}">
-                        <td style="padding:4px 8px; font-family:monospace; font-size:12px;">${escapeHtml(f.path)}${parent}</td>
+                        <td style="padding:4px 8px; font-family:monospace; font-size:12px;">${pathCell}${parent}</td>
                         <td style="padding:4px 8px; text-align:center; font-size:12px;">${escapeHtml(f.category)}</td>
                         <td style="padding:4px 8px; text-align:center;">${usefulMark}</td>
                         <td style="padding:4px 8px; text-align:center; font-size:12px;">${struct}</td>
@@ -7240,6 +7248,54 @@
                     </tr>
                 `;
             }).join('');
+        }
+
+        function openAiImageModal(relPath) {
+            if (!aiTypologyData || !selectedProject) return;
+            const fc = aiTypologyData.files.find(f => f.path === relPath);
+            if (!fc) return;
+
+            const overlay = document.createElement('div');
+            overlay.className = 'evidence-expanded-overlay';
+            overlay.onclick = function(e) {
+                if (e.target === overlay) document.body.removeChild(overlay);
+            };
+
+            // Image container with a caption showing source_chain
+            const box = document.createElement('div');
+            box.style.cssText = 'display:flex; flex-direction:column; align-items:center; max-width:92%; max-height:92%; gap:8px;';
+
+            const img = document.createElement('img');
+            img.style.cssText = 'max-width:100%; max-height:78vh; border-radius:6px; box-shadow:0 4px 20px rgba(0,0,0,0.5); background:#fff;';
+            // /api/thumbnail supports size=... and only scales DOWN; 1600 is our preview cap.
+            img.src = `/api/thumbnail/${encodeURIComponent(selectedProject)}?file=${encodeURIComponent(relPath)}&size=1600`;
+            img.alt = relPath;
+
+            const caption = document.createElement('div');
+            caption.style.cssText = 'color:#eee; background:rgba(0,0,0,0.55); padding:8px 12px; border-radius:4px; font-size:12px; font-family:monospace; max-width:100%; text-align:center;';
+            const chainStr = fc.source_chain && fc.source_chain.length
+                ? fc.source_chain.join(' → ')
+                : (fc.parent_path ? `extret de ${fc.parent_path}` : 'fitxer original');
+            caption.textContent = `${fc.path}   |   ${chainStr}`;
+
+            const hint = document.createElement('div');
+            hint.style.cssText = 'color:#aaa; font-size:11px; margin-top:-4px;';
+            hint.textContent = 'Clica fora de la imatge per tancar';
+
+            box.appendChild(img);
+            box.appendChild(caption);
+            box.appendChild(hint);
+            overlay.appendChild(box);
+            document.body.appendChild(overlay);
+
+            // Also close on Escape
+            const escHandler = function(e) {
+                if (e.key === 'Escape' && document.body.contains(overlay)) {
+                    document.body.removeChild(overlay);
+                    document.removeEventListener('keydown', escHandler);
+                }
+            };
+            document.addEventListener('keydown', escHandler);
         }
 
         // --- Pipeline Log Tab ---
