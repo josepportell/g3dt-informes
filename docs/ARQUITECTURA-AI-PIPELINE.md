@@ -1,9 +1,10 @@
 # Arquitectura: AI Pipeline
 
-**Data:** 2026-04-24
+**Data:** 2026-04-25
 **Branca:** `experiment/ai-pipeline`
 **Autor:** Josep Portell + Claude Code
-**Estat:** Fases 1, 2 i 3 implementades. Fase 4 dissenyada (pendent d'implementació). Fases 5–7 pendents de disseny.
+**Estat:** Fases 1–4 implementades, endurides per una primera ronda de 12 fixes
+(D14/D15/D16/D17, D1#1–#2, D3, D5, D7, D9, D10). Fase 5 pendent de disseny.
 
 ---
 
@@ -16,7 +17,12 @@ La motivació és una línia de progressió natural:
 - L'AI Pipeline inverteix el ordre: llegeix primer, raona després. Cada fase assumeix que la següent tindrà més context, no menys.
 - Stage per stage, l'LLM passa de ser "consumidor d'inputs estructurats" a ser "intèrpret del projecte sencer".
 
-**Estat actual:** Fase 1 (Inventari) funcionant end-to-end (CLI + API + pestanya del wizard).
+**Estat actual:** Fases 1–4 funcionen end-to-end (CLI + API + pestanya del
+wizard) amb cache per-font. Un run complet d'Alcoletge (72 fonts, 620
+candidats, 77 de 88 conceptes coberts a ≥0.8 confiança, cost $4.06) va validar
+Fase 4 i va motivar la primera ronda de fixes. Fase 5 pendent de disseny; pot
+testar-se contra `reference-material/4001670 ALCOLETGE/validation/ai_analysis.json`
+sense cap crida LLM addicional.
 
 ---
 
@@ -237,7 +243,8 @@ class ProjectTypology(BaseModel):
 | `email_msg`          | cos del `.msg` (els adjunts ja són fitxers separats a F1)  | ✓     | `msg_body_to_markdown`               |
 | `text`               | `.txt`, `.csv`                                             | ✓     | `text_passthrough`                   |
 | `image`              | `.jpg`, `.png`, `.bmp`, `.tiff` (tant Eva com extretes)    | ✓     | `image_passthrough`                  |
-| `reference_output`   | Dins de `PDF/`, `PDF V0/`, `PDF-V0/` (només)               | ✗     | `skip` — dev-only, absent en prod    |
+| `logo_image`         | Imatge extreta amb pHash ≤ 6 vs reference library (D1#1)   | ✗     | `skip` — logos G3DT / banners corp.  |
+| `reference_output`   | Dins de `PDF/`, `PDF V0/`, `PDF-V0/`, o nom de fitxer dev-only (D17) | ✗ | `skip` — dev-only, absent en prod    |
 | `pipeline_artifact`  | Els nostres JSONs (`ai_inventory.json`, etc.)              | ✗     | `skip`                               |
 | `binary_unreadable`  | `.fh11`, `.psd`                                            | ✗     | `skip`                               |
 | `system_file`        | `Thumbs.db`, `~$*`, `*.tmp`                                | ✗     | `skip`                               |
@@ -286,13 +293,29 @@ filtre és un no-op. Disseny i dades de validació: `docs/PLA-D1-LOGO-FILTER.md`
 
 ### 5.7 Detecció dev-only
 
-**Hard-codeat** (promoció a config YAML quan tinguem un segon client):
+**Hard-codeat** (promoció a config YAML quan tinguem un segon client). Dos
+eixos complementaris:
 
+**(a) Per carpeta de primer nivell:**
 ```python
 DEV_ONLY_TOPLEVEL_DIRS = {"PDF", "PDF V0", "PDF-V0"}
 ```
 
-Qualsevol fitxer amb un primer component de la ruta relativa dins d'aquest conjunt → `category = reference_output`, `useful = False`, `reason = "dins de {dir} — output de runs anteriors d'Eva, absent en producció"`.
+**(b) Per patró de fitxer (D17)** — quan Eva deixa deliverables anteriors a
+l'arrel del projecte (molt freqüent: `4001670_informe.doc`, `_generated*.docx`,
+`_portada*.doc`, `*AUDIT_VISUAL*.docx`):
+```python
+DEV_ONLY_FILENAME_PATTERNS = frozenset({
+    "*_informe*.doc", "*_informe*.docx", "*_informe*.pdf",
+    "*_generated*.doc", "*_generated*.docx",
+    "*_portada*.doc", "*_portada*.docx",
+    "*audit_visual*.doc", "*audit_visual*.docx",
+})
+```
+
+Qualsevol fitxer que coincideixi amb (a) o (b) → `category = reference_output`,
+`useful = False`, `reason` explicit sobre la regla aplicada. Match insensible a
+majúscules via `fnmatch.fnmatchcase` sobre noms lowercased.
 
 ### 5.8 Estructura interna: pàgines i fulls com a **metadades**, no entrades
 
@@ -490,12 +513,26 @@ Artefactes a disc: `{projecte}/validation/ai_pipeline/converted/{source_stem}/*`
 
 ---
 
-## 7. Fase 4: Anàlisi (dissenyada)
+## 7. Fase 4: Anàlisi (implementada)
+
+**Hardening shipped post-MVP (2026-04-25):**
+- **D1#1** — logo filter pre-Stage 2 (vegeu §5.6) impedeix que imatges de logo arribin a Fase 4.
+- **D1#2** — extracted-image artefactes hereten el `source_path` del pare, així Fase 4 processa el document + les seves imatges embegudes en una sola crida.
+- **D3** — `--source-exact` + `--source-regex` a CLI i `analyze_project()`, mutuament exclusius.
+- **D5** — retry per ValidationError amb prompt retallat (sense glossari); transients mantenen prompt complet.
+- **D7** — `timeout=60s` a tot `messages.create()`. Classificat com a transient, entra al retry loop existent.
+- **D9** — glossari divideix `entries:` (concept_ids reals) vs `aliases:` (jargon com "Nb", "N20").
+- **D14** — slug de cache inclou el parent dir, evita col·lisions entre imatges amb stems genèrics (`img_000`).
+- **D15** — classificador reconeix HTTP 400 + "usage limit" / "regain access" com a systemic (no malgasta 3 crides al circuit breaker).
+- **D16** — concept YAML + glossari en bloc separat amb `cache_control: {"type": "ephemeral"}` per a Anthropic prompt caching. Usage comptat via `cache_creation_input_tokens` / `cache_read_input_tokens`.
+- **D17** — Eva's prior outputs a l'arrel (`*_informe*.doc`, `*_generated*.docx`, etc.) són detectats a Fase 2 i no arriben a Fase 4.
+
+`_SCHEMA_VERSION = "1.2"` (bumped per D16 i D1#2; block layout + grouping canvis invaliden caches v1.0/v1.1).
 
 ### 7.1 Què fa i què NO fa
 
 **Fa:**
-- Agrupa els artefactes de Fase 3 per `source_path` (p.ex. totes les pàgines d'un PDF + els seus artefactes embeguts són una unitat).
+- Agrupa els artefactes de Fase 3 per `source_path` (p.ex. totes les pàgines d'un PDF + les imatges embegudes extretes d'aquell PDF són una unitat — D1#2).
 - Per cada font, fa **una** crida multimodal a l'LLM amb prompt estructurat que demana dues coses: (a) un `SourceInsight` (què és aquest document), (b) tots els `Candidate`s de valors per les 53 variables de l'informe que siguin extreïbles d'aquest document.
 - Recull i desa els resultats a `validation/ai_analysis.json` més artefactes per-font a `validation/ai_pipeline/analysis/{source_stem}/insight.json` + `candidates.json`.
 - Produeix un resum per Eva de què s'ha entès del projecte.
@@ -694,38 +731,46 @@ Cache + artefactes per font: `{projecte}/validation/ai_pipeline/analysis/{source
 
 ```
 automation/ai_pipeline/
-├── __init__.py           # buit (import directe des de submòduls)
-├── inventory.py          # Fase 1 (implementada)
-├── typology.py           # Fase 2 (implementada)
-├── conversion.py         # Fase 3 (implementada)
-└── analysis.py           # Fase 4 (pendent)
+├── __init__.py           # buit (concurrent-load race; no re-exports)
+├── inventory.py          # Fase 1
+├── typology.py           # Fase 2 (+ D1#1 logo filter, D17 dev-only filename patterns)
+├── conversion.py         # Fase 3 (+ D10 yaml.safe_dump frontmatter, D1#2 passthrough source_path)
+└── analysis.py           # Fase 4 (+ D14 cache slug, D15 usage_limit, D16 cache_control,
+                          #         D5 trimmed retry, D7 timeout, D3 source filters)
 
 scripts/
 ├── ai_pipeline_inventory.py     # CLI Fase 1
 ├── ai_pipeline_typology.py      # CLI Fase 2
 ├── ai_pipeline_conversion.py    # CLI Fase 3
-└── ai_pipeline_analysis.py      # CLI Fase 4 (pendent)
+└── ai_pipeline_analysis.py      # CLI Fase 4 (+ --source-exact, --source-regex per D3)
 
 schemas/ai_pipeline/
-└── concept_glossary.yaml        # hand-tuned notes per ambiguous concept (pendent)
+├── concept_glossary.yaml             # entries (concept_ids reals) + aliases (D9)
+└── logo_references/                  # reference library per filtre D1#1
+    ├── README.md
+    ├── g3_tight.png
+    ├── g3_large_circle.jpg
+    ├── g3_watermark.jpg
+    └── 25anys_banner.jpg
 
 web/
 └── api.py                 # endpoints /api/ai-pipeline/{inventory,typology,conversion,analysis,artifact}/{project}
 
 templates/validation/
-└── review.html            # pestanya "AI Pipeline" (Stage 1 + 2 + 3 + preview modals; Stage 4 pendent)
+└── review.html            # pestanya "AI Pipeline" (Stages 1–4 + preview modals)
 
 tests/
 ├── test_ai_pipeline_inventory.py   # 14 tests
-├── test_ai_pipeline_typology.py    # 30 tests
-├── test_ai_pipeline_conversion.py  # 21 tests
-└── test_ai_pipeline_analysis.py    # (pendent)
+├── test_ai_pipeline_typology.py    # 44 tests (+D17, D1#1)
+├── test_ai_pipeline_conversion.py  # 29 tests (+D1#2, D10)
+└── test_ai_pipeline_analysis.py    # 50 tests (Fase 4 + D3, D5, D7, D14, D15, D16, D1#2, D9)
 ```
 
 Dependències externes:
-- **Ja presents al projecte:** `pydantic`, `extract_msg`, `PyMuPDF`, `openpyxl`, `python-docx`, `anthropic`, `openai`
+- **Ja presents al projecte:** `pydantic`, `extract_msg`, `PyMuPDF`, `openpyxl`, `python-docx`, `anthropic`, `openai`, `yaml`
 - **Afegides per Fase 3:** `pymupdf4llm`, `pypandoc` (wrapper sobre `pandoc` binari), `LibreOffice` (binari de sistema, usat per `.doc` legacy)
 - **Afegides per Fase 4:** cap dep nova — s'usa `anthropic` (ja present). `openai` només s'usa si `G3DT_AI_MODEL_VISION=gpt-4.1-mini` està activat.
+- **Afegides per D1#1 (logo filter):** `imagehash>=4.3` (amb dep transitiva `scipy` per operacions DCT del pHash).
 
 ---
 
@@ -733,13 +778,21 @@ Dependències externes:
 
 Cada fase es dissenyarà abans d'implementar. No es comprometen detalls aquí; aquest llistat és la intenció.
 
-### Fase 5 — Authority ranking (font autoritativa per concepte)
+### Fase 5 — Authority ranking (font autoritativa per concepte) — **següent pas**
 Per cada variable de l'informe (dels 53 conceptes), produir una llista **ordenada** de candidats (del més fiable al menys) segons:
 - Els `SourceInsight` de Fase 4 (tipus de document, autor, data, enllaços).
 - Regles d'autoritat d'Eva codificades (p.ex. *"per plot dimensions, el plànol arquitectònic guanya sempre sobre l'email"*).
 - Pistes de `authority_hints` que l'LLM hagi emès.
 
 **No** resol a un valor final; només ordena. Fase 6 agafa el top-1, mostra el top-N com a alternatives.
+
+**Dades de disseny disponibles (sense noves crides LLM):** `reference-material/4001670 ALCOLETGE/validation/ai_analysis.json` té 620 candidats reals + 72 SourceInsights completes. Qualsevol disseny de Fase 5 pot iterar-se contra aquest manifest com a test suite.
+
+**Decisions de disseny encara obertes:**
+1. **DSL d'autoritat** (D11) — YAML per regla explícita (`authority_rules.yaml`), o regles hard-coded en Python? YAML escala millor amb clients futurs i és auditable per Eva.
+2. **Desempat** — quan dues fonts del mateix `document_type` donen candidats idèntics amb la mateixa confiança, què trencari l'empat? (recency, `version_info`, `source_chain` length?).
+3. **Conflict signal** — si el plànol diu "4 plantes" i un email diu "3 plantes", Fase 5 ordena però a més deixa un flag visible perquè Fase 6 mostri a Eva l'desacord.
+4. **Benchmarking** (D13) — contra els `eva_reference_values.json` dels 7 projectes per mesurar recall/precisió abans d'adoptar.
 
 ### Fase 6 — Proposta + validació per Eva
 Per cada concepte, pren el candidat top-1 de Fase 5 com a valor proposat. El wizard mostra:
@@ -764,7 +817,7 @@ Produir el .docx final. Opcions: reutilitzar `ReportGenerator` amb les noves dad
 | Branca                  | `feature/action-2-deterministic`           | `experiment/ai-pipeline`                    |
 | Wizard                  | Pestanyes SmartScan, Wizard, Dev, Pipeline | Pestanya AI Pipeline (nova)                 |
 | Artefactes              | `file_mapping.json`, `concept_map.json`, etc. | `validation/ai_inventory.json`, `ai_typology.json`, `ai_conversion.json`, `ai_analysis.json` i futurs |
-| Estat                   | Producció                                  | Experimental — Fases 1, 2 i 3 funcionals; Fase 4 dissenyada |
+| Estat                   | Producció                                  | Experimental — Fases 1–4 funcionals + ronda de fixes (D1/D3/D5/D7/D9/D10/D14–D17); Fase 5 pendent de disseny |
 
 **Decisió d'adopció:** quan l'AI Pipeline complet demostri millor qualitat i/o menor intervenció manual que el pipeline existent sobre els 7 projectes de referència, es considerarà fusió a `main`. No abans.
 
