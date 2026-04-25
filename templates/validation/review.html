@@ -2717,6 +2717,25 @@
                             <h3 style="font-size:15px; margin:0 0 8px;">Auditor de grup (Passada B)</h3>
                             <div id="aiRankingGroupsBody" style="font-size:13px;"></div>
                         </div>
+
+                        <!-- Diagnostic trace panel -->
+                        <div style="margin-top:24px; border-top:1px solid #e0e0e0; padding-top:16px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin:0 0 8px; gap:8px;">
+                                <div>
+                                    <h3 style="font-size:15px; margin:0;">Diagnòstic — Trajectòria del pipeline</h3>
+                                    <p style="margin:4px 0 0; color:#7f8c8d; font-size:12px;">
+                                        Anàlisi read-only sobre els manifests Stage 1-5. Sense crides LLM.
+                                    </p>
+                                </div>
+                                <button class="btn btn-secondary" onclick="loadAiTrace(true)" style="padding:6px 12px; font-size:13px;">Generar informe</button>
+                            </div>
+                            <div id="aiTraceLoading" style="display:none; text-align:center; padding:20px;">
+                                <div class="spinner"></div>
+                                <span>Construint trace...</span>
+                            </div>
+                            <div id="aiTraceError" style="display:none; background:#fee; border:1px solid #fbb; border-radius:6px; padding:12px; color:#922;"></div>
+                            <div id="aiTraceTopIssues" style="font-size:13px;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -8353,6 +8372,91 @@
                 e.returnValue = '';
             }
         });
+
+        // --- AI Pipeline Diagnostic Trace ---
+        async function loadAiTrace(refresh) {
+            if (!selectedProject) return;
+            const loading = document.getElementById('aiTraceLoading');
+            const errBox = document.getElementById('aiTraceError');
+            const body = document.getElementById('aiTraceTopIssues');
+            loading.style.display = 'block';
+            errBox.style.display = 'none';
+            body.innerHTML = '';
+
+            try {
+                const url = '/api/ai-pipeline/trace/' + encodeURIComponent(selectedProject) + (refresh ? '?refresh=true' : '');
+                const resp = await fetch(url);
+                if (!resp.ok) {
+                    const detail = await resp.json().catch(() => ({}));
+                    throw new Error(detail.detail || ('HTTP ' + resp.status));
+                }
+                const payload = await resp.json();
+                renderAiTrace(payload.trace, payload.cached);
+            } catch (err) {
+                errBox.textContent = 'Error: ' + err.message;
+                errBox.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderAiTrace(trace, cached) {
+            const body = document.getElementById('aiTraceTopIssues');
+            const issues = trace.top_issues || [];
+            const eva = trace.eva_summary || {};
+            const escapeHtml = (s) => String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            const evaLine = eva.compared
+                ? `<div style="background:#f0f7ff; border-left:4px solid #4a90e2; padding:8px 12px; margin-bottom:12px; font-size:13px;">
+                    Eva ground truth: ${eva.compared} comparats — ${eva.exact} exact, ${eva.substring} substring, ${eva.mismatch} mismatch.
+                    Top-1 accuracy: <b>${(eva.top1_accuracy * 100).toFixed(1)}%</b>
+                   </div>`
+                : '';
+
+            if (issues.length === 0) {
+                body.innerHTML = evaLine + '<p style="color:#7f8c8d;">No s\'han detectat issues destacats.</p>';
+                return;
+            }
+
+            const rows = issues.map((it, idx) => {
+                const target = it.concept_id || it.source_path || '?';
+                const sig = (it.signal_strength || 0).toFixed(2);
+                const also = Array.isArray(it.also_flagged) ? it.also_flagged : [];
+                const alsoChips = also.length
+                    ? ' ' + also.map(k => `<span class="pill" style="display:inline-block; background:#eef; color:#335; border-radius:10px; padding:1px 8px; font-size:11px; margin-left:4px;">also: ${escapeHtml(k)}</span>`).join('')
+                    : '';
+                return `<tr>
+                    <td style="padding:4px 8px; text-align:right;">${idx + 1}</td>
+                    <td style="padding:4px 8px;"><b>${sig}</b></td>
+                    <td style="padding:4px 8px;"><code>${escapeHtml(it.kind)}</code>${alsoChips}</td>
+                    <td style="padding:4px 8px;"><code>${escapeHtml(target)}</code></td>
+                    <td style="padding:4px 8px;">${escapeHtml(it.description)}</td>
+                    <td style="padding:4px 8px; color:#666;">${escapeHtml(it.suggested_action)}</td>
+                </tr>`;
+            }).join('');
+
+            body.innerHTML = evaLine + `
+                <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                    <thead>
+                        <tr style="background:#f5f5f5; text-align:left;">
+                            <th style="padding:6px 8px;">#</th>
+                            <th style="padding:6px 8px;">Senyal</th>
+                            <th style="padding:6px 8px;">Tipus</th>
+                            <th style="padding:6px 8px;">Concepte / Font</th>
+                            <th style="padding:6px 8px;">Descripció</th>
+                            <th style="padding:6px 8px;">Acció suggerida</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+                </div>
+                <p style="color:#7f8c8d; font-size:12px; margin-top:8px;">
+                    ${cached ? '(des de cache)' : '(generat ara)'} — ${issues.length} issues mostrats.
+                </p>
+            `;
+        }
     </script>
 <div id="formatToast" class="format-toast"></div>
 </body>

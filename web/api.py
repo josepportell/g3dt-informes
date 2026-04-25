@@ -231,6 +231,38 @@ def ai_pipeline_ranking(
     return {"ranking": ranking.model_dump(), "cached": False}
 
 
+@router.get("/ai-pipeline/trace/{project_name:path}")
+def ai_pipeline_trace(project_name: str, refresh: bool = False):
+    """AI pipeline diagnostic trace — read-only join over Stages 1-5.
+
+    No LLM calls. Joins ai_inventory.json, ai_typology.json, ai_conversion.json,
+    ai_analysis.json and ai_ranking.json into a unified PipelineTrace exposing
+    per-concept journeys, per-source journeys, decision audits, cross-stage
+    analyses, and a ranked top_issues list.
+
+    Returns cached `validation/ai_pipeline_trace.json` unless `refresh=true`.
+    """
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    from automation.ai_pipeline.trace import (
+        build_trace,
+        load_trace,
+        save_trace,
+    )
+
+    if not refresh:
+        cached = load_trace(project_path)
+        if cached is not None:
+            return {"trace": cached.model_dump(), "cached": True}
+
+    trace = build_trace(project_path)
+    save_trace(trace, project_path)
+    return {"trace": trace.model_dump(), "cached": False}
+
+
 @router.get("/ai-pipeline/artifact/{project_name:path}")
 def ai_pipeline_artifact(project_name: str, file: str):
     """Serve raw text (md/csv/json) AI pipeline artifacts for preview in the wizard.
