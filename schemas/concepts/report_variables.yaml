@@ -16,7 +16,14 @@ concepts:
     type: text
     group: client
     required: true
-    description_ca: Nom del client o promotor
+    description_ca: |
+      Nom del client / promotor / sol·licitant del projecte. Apareix als
+      correus, contractes, i pressupostos signats. Sovint anomenat
+      'sol·licitant' al cos de l'informe ('Segons ens indica el sol·licitant,
+      el SR. X...'). **NO és necessàriament l'arquitecte** (vegeu
+      `architect_name`). Si client i arquitecte són la mateixa persona
+      (auto-promoció), tots dos camps porten el mateix valor però la font
+      autoritativa de cada concepte és diferent.
     source_priority:
       user: 10
       planol_vision: 20
@@ -94,7 +101,14 @@ concepts:
     type: text
     group: architect
     required: true
-    description_ca: Nom de l'arquitecte
+    description_ca: |
+      Nom complet de l'arquitecte / arquitecte tècnic / enginyer que ha
+      dissenyat el projecte. Apareix al **caixetí del plànol** (block
+      bottom-right del PDF) i a la signatura tècnica. **NO és el promotor /
+      client / propietari**. En projectes auto-promoguts (l'arquitecte
+      construeix per a si mateix), el nom pot coincidir amb `client_name`
+      però la font autoritativa segueix sent el caixetí del plànol, NO la
+      frase 'Sr. X en nom propi' del cos de l'informe.
     source_priority:
       user: 10
       planol_vision: 15
@@ -110,7 +124,10 @@ concepts:
     type: text
     group: architect
     required: false
-    description_ca: Despatx o estudi d'arquitectura
+    description_ca: |
+      Empresa / despatx d'arquitectura del SR. arquitecte. Apareix al
+      caixetí del plànol al costat del nom de l'arquitecte. NO és l'empresa
+      del client.
     source_priority:
       user: 10
       planol_vision: 20
@@ -303,7 +320,13 @@ concepts:
     type: text
     group: project
     required: false
-    description_ca: Numero d'expedient o referencia del projecte
+    description_ca: |
+      Número d'expedient intern G3DT del projecte (format numèric llarg,
+      p.ex. 4001670, 3001631). Apareix al caixetí de l'informe, a la
+      portada, i a les annexes generades. **NO és el codi comercial** (vegeu
+      `commercial_code`, format YY.NNNN com 26.0049 que apareix al
+      pressupost signat). Si veus els dos formats al projecte, l'expedient
+      és sempre el numèric llarg.
     source_priority:
       user: 10
       folder_name: 15
@@ -314,6 +337,27 @@ concepts:
       content_email_attachment: 44
       content_pdf: 45
       content_docx: 45
+
+  commercial_code:
+    type: text
+    group: project
+    required: false
+    description_ca: |
+      Codi comercial intern G3DT (format YY.NNNN, p.ex. 26.0049). Apareix
+      als pressupostos signats i correus inicials. **NO és el mateix que
+      `expedient`** — l'expedient és el número numèric llarg (4001670,
+      3001631...) usat al caixetí de l'informe i a la portada.
+    source_priority:
+      user: 10
+      pressupost_pdf: 30
+      content_email: 40
+      folder_name: 50
+      dades_camp_excel: 55
+      groq_llm: 60
+      content_email_attachment: 65
+      content_pdf: 70
+      content_docx: 70
+      planol_vision: 90
 
   field_date:
     type: date

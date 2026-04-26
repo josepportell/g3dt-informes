@@ -2051,3 +2051,216 @@ def test_eva_summary_includes_group_audit_line(tmp_path):
     assert "Auditors de grup" in summary_joined
     assert "factors cross-concept" in summary_joined
     assert "rànquings revisats" in summary_joined
+
+
+# ─── D18: cached block bundles concept YAML ───────────────────────────
+
+
+def test_cached_block_includes_concept_yaml():
+    """D18 fix: the ephemeral-cached block must contain BOTH the concept
+    schema and the authority principles, so the combined block clears
+    Anthropic's 1024-token cache minimum.
+    """
+    from automation.ai_pipeline.ranking import (
+        _build_concept_user_content,
+        _build_group_user_content,
+        load_authority_principles,
+        load_concept_definitions,
+    )
+
+    defs = load_concept_definitions()
+    cid = _pick_multi_candidate_concept()
+    concept_def = defs[cid]
+    principles = load_authority_principles() or "non-empty principles"
+
+    analysis = _make_multi_analysis(
+        cid, [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)]
+    )
+    candidates_with_insights: list = []
+    for s in analysis.sources:
+        for idx, c in enumerate(s.candidates):
+            if c.concept_id == cid:
+                candidates_with_insights.append(
+                    (f"{s.source_path}::{cid}::{idx}", s.insight, c)
+                )
+
+    blocks = _build_concept_user_content(
+        concept_def,
+        glossary_entry="",
+        principles=principles,
+        candidates_with_insights=candidates_with_insights,
+        include_principles=True,
+    )
+
+    cached_blocks = [
+        b for b in blocks
+        if isinstance(b, dict) and b.get("cache_control", {}).get("type") == "ephemeral"
+    ]
+    assert len(cached_blocks) == 1, "expected exactly one ephemeral-cached block"
+    cached_text = cached_blocks[0].get("text", "")
+    assert "# Concept schema" in cached_text
+    assert "# Authority principles" in cached_text
+    # Sanity check: bundling should push the block well above the 1024-token
+    # threshold. ~4 chars/token → ≥4500 chars is comfortably over.
+    assert len(cached_text) > 4500, (
+        f"cached block too small ({len(cached_text)} chars); "
+        "would silently miss Anthropic's 1024-token cache minimum"
+    )
+
+    # Same expectation for the Pass B (group) prompt builder.
+    pass_a = ConceptRanking(
+        concept_id=cid,
+        status="ranked",
+        ranked=[
+            RankedCandidate(
+                candidate_id=candidates_with_insights[0][0],
+                source_path="a.pdf",
+                value="X",
+                confidence=0.9,
+                rationale="r",
+            )
+        ],
+    )
+    group_blocks = _build_group_user_content(
+        group_name=concept_def.get("group", "test"),
+        concepts_in_group=[concept_def],
+        pass_a_rankings={cid: pass_a},
+        analysis=analysis,
+        principles=principles,
+        include_principles=True,
+    )
+    cached_group = [
+        b for b in group_blocks
+        if isinstance(b, dict) and b.get("cache_control", {}).get("type") == "ephemeral"
+    ]
+    assert len(cached_group) == 1
+    cached_group_text = cached_group[0].get("text", "")
+    assert "# Concept schema" in cached_group_text
+    assert "# Authority principles" in cached_group_text
+    assert len(cached_group_text) > 4500
+
+
+def test_cached_block_present_even_when_principles_empty(monkeypatch):
+    """D18 follow-up: empty principles must not disable cache; the YAML alone
+    clears Anthropic's 1024-token ephemeral-cache minimum."""
+    import automation.ai_pipeline.ranking as rk
+    from automation.ai_pipeline.ranking import (
+        _build_concept_user_content,
+        _build_group_user_content,
+        load_concept_definitions,
+    )
+
+    defs = load_concept_definitions()
+    cid = _pick_multi_candidate_concept()
+    concept_def = defs[cid]
+
+    analysis = _make_multi_analysis(
+        cid, [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)]
+    )
+    candidates_with_insights: list = []
+    for s in analysis.sources:
+        for idx, c in enumerate(s.candidates):
+            if c.concept_id == cid:
+                candidates_with_insights.append(
+                    (f"{s.source_path}::{cid}::{idx}", s.insight, c)
+                )
+
+    # Pass A with empty principles.
+    blocks = _build_concept_user_content(
+        concept_def,
+        glossary_entry="",
+        principles="",
+        candidates_with_insights=candidates_with_insights,
+        include_principles=True,
+    )
+    cached = [
+        b for b in blocks
+        if isinstance(b, dict)
+        and b.get("cache_control", {}).get("type") == "ephemeral"
+    ]
+    assert len(cached) == 1, "expected exactly one cached block"
+    cached_text = cached[0].get("text", "")
+    assert "# Concept schema" in cached_text
+    assert "# Authority principles" not in cached_text, (
+        "no principles section when principles empty"
+    )
+    assert len(cached_text) > 4500, (
+        f"cached block should clear 1024-token min ({len(cached_text)} chars)"
+    )
+
+    # Pass B (group): same expectation when principles is empty.
+    pass_a = ConceptRanking(
+        concept_id=cid,
+        status="ranked",
+        ranked=[
+            RankedCandidate(
+                candidate_id=candidates_with_insights[0][0],
+                source_path="a.pdf",
+                value="X",
+                confidence=0.9,
+                rationale="r",
+            )
+        ],
+    )
+    group_blocks = _build_group_user_content(
+        group_name=concept_def.get("group", "test"),
+        concepts_in_group=[concept_def],
+        pass_a_rankings={cid: pass_a},
+        analysis=analysis,
+        principles="",
+        include_principles=True,
+    )
+    cached_group = [
+        b for b in group_blocks
+        if isinstance(b, dict)
+        and b.get("cache_control", {}).get("type") == "ephemeral"
+    ]
+    assert len(cached_group) == 1
+    cached_group_text = cached_group[0].get("text", "")
+    assert "# Concept schema" in cached_group_text
+    assert "# Authority principles" not in cached_group_text
+    assert len(cached_group_text) > 4500
+
+
+def test_glossary_aliases_resolve_to_target_notes(tmp_path, monkeypatch):
+    """W3: alias keys in concept_glossary.yaml must resolve to the target's
+    note via load_glossary_entry — ranker must see synonyms, not blanks."""
+    import automation.ai_pipeline.ranking as rk
+
+    fake = tmp_path / "concept_glossary.yaml"
+    fake.write_text(
+        "version: '1.1'\n"
+        "entries:\n"
+        "  client_name:\n"
+        "    note: |\n"
+        "      The promoter / project owner.\n"
+        "aliases:\n"
+        "  promotor: client_name\n"
+        "  sol·licitant: client_name\n"
+        "  Nb:\n"
+        "    hint: |\n"
+        "      Nb = N20 / 0.83.\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(rk, "_GLOSSARY_PATH", fake)
+    monkeypatch.setattr(rk, "_GLOSSARY_CACHE", None)
+
+    # Direct entry still works.
+    direct = rk.load_glossary_entry("client_name")
+    assert "promoter / project owner" in direct.lower()
+
+    # String alias points at the target's note.
+    aliased = rk.load_glossary_entry("promotor")
+    assert "synonym of `client_name`" in aliased
+    assert "promoter / project owner" in aliased.lower()
+
+    # Dict-form alias is rendered as its own entry.
+    nb = rk.load_glossary_entry("Nb")
+    assert "Nb" in nb
+    assert "0.83" in nb
+
+    # Unknown id returns empty string (no crash).
+    assert rk.load_glossary_entry("does_not_exist") == ""
+
+    # Reset cache so other tests pick up the real file.
+    monkeypatch.setattr(rk, "_GLOSSARY_CACHE", None)

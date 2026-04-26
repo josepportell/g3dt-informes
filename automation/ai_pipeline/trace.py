@@ -239,7 +239,12 @@ def _load_concept_definitions() -> dict[str, dict]:
 
 
 def _load_glossary_entries() -> dict[str, str]:
-    """Map concept_id -> YAML-formatted glossary entry text. Empty if missing."""
+    """Map concept_id -> YAML-formatted glossary entry text. Empty if missing.
+
+    Also resolves the top-level `aliases:` section: each alias key is added to
+    the returned mapping with a synthesised entry that points the LLM at the
+    target's note (e.g. ``promotor`` → "(synonym of `client_name`) ...").
+    """
     if not _GLOSSARY_PATH.is_file():
         return {}
     try:
@@ -264,6 +269,16 @@ def _load_glossary_entries() -> dict[str, str]:
             ).strip()
         except Exception:
             out[cid] = ""
+
+    # Wire aliases — each alias gets a synonym note pointing at the target's
+    # entry so the ranker actually sees the alias when looking up a concept.
+    aliases_raw = data.get("aliases", {}) if isinstance(data, dict) else {}
+    if isinstance(aliases_raw, dict):
+        for alias, target in aliases_raw.items():
+            if not isinstance(target, str):
+                continue
+            target_note = out.get(target, "")
+            out[alias] = f"(synonym of `{target}`) {target_note}".strip()
     return out
 
 

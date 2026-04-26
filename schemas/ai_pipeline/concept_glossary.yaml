@@ -80,11 +80,18 @@ entries:
       proper names as-is. Same logic for _south, _east, _west.
 
   expedient:
-    hint: |
-      G3DT internal project ID in format YY.NNNN (e.g., "25.0647") or full
-      form "25/0647". This is NOT the report title — it's a short numeric code
-      Eva uses to file the project. Usually in the top-right of the plànol
-      caixetí and in the filename of the client email.
+    note: |
+      G3DT internal project number. Long numeric format (e.g. 4001670, 3001631).
+      Appears at the report cover (`*_portada.doc`), report header, and Jinja-generated docs.
+      DO NOT confuse with `commercial_code` (format YY.NNNN like 26.0049).
+      If both numeric IDs appear in the project, expedient is the LONG one.
+
+  commercial_code:
+    note: |
+      G3DT commercial / offer code (format YY.NNNN, e.g. 26.0049).
+      Appears on the signed pressupost (offer / quote document) and initial emails.
+      NOT the same as `expedient`. Stage 5 should rank candidates of this concept
+      independently from `expedient` candidates even when both appear in the same source.
 
   field_date:
     hint: |
@@ -93,10 +100,23 @@ entries:
       "dates de camp" or "visita de camp" in the source, that's this.
 
   architect_name:
-    hint: |
-      The architect responsible for the project, shown in the plànol caixetí.
-      NOT Eva or anyone from G3DT. NOT the client/promotor unless explicitly
-      stated to be both.
+    note: |
+      The technical professional (architect / arquitecte tècnic / engineer) who
+      DESIGNED the building or extension. AUTHORITATIVE source: caixetí (title
+      block) of the architect's plànol PDF, typically bottom-right of the page.
+      NEVER the "Sr. X" name from the body sentence "Segons ens indica el
+      sol·licitant, el SR. X, en nom propi..." — that's the client/sol·licitant
+      written in the architect's slot for owner-built projects.
+      In owner-built projects: client_name and architect_name MAY be the same
+      person, but the source proving each must be different (caixetí for
+      architect; email/contract for client).
+
+  client_name:
+    note: |
+      The promoter / project owner / commissioning party. AUTHORITATIVE sources:
+      signed pressupost, signed contract, initial client emails. May appear in
+      report body as "sol·licitant" or "promotor". For owner-built projects this
+      may equal `architect_name` but the authoritative source is different.
 
   lab_testing_company:
     hint: |
@@ -137,3 +157,7 @@ aliases:
       DPSH blows per 20 cm of penetration, raw field value. If a source says
       "N = 40" or "N20 = 40", that's N20. Do NOT convert to Nb here — emit as N20
       and let Stage 5/6 handle derived fields. Refusal is marked "R".
+
+  promotor: client_name
+  sol·licitant: client_name
+  promoter: client_name

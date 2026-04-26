@@ -814,7 +814,74 @@ def extract_reference_values(
             result.statistics["by_method"].get(method, 0) + 1
         )
 
+    # 9. Architect-vs-client conflation guard (post-processing)
+    _guard_architect_client_conflation(result)
+
     return result
+
+
+# ---------------------------------------------------------------------------
+# Post-processing guards
+# ---------------------------------------------------------------------------
+
+# Pattern matching the body sentence "Sr. X en nom propi..." that the report
+# template tucks into the architect slot when the project is owner-built. The
+# real architect_name lives on the plànol caixetí, NOT in this body sentence.
+_BODY_SR_PATTERN = re.compile(r"^(?:Sr|Sra|D|Dna)\.\s+\S+", re.IGNORECASE)
+
+
+def _guard_architect_client_conflation(result: ExtractionResult) -> None:
+    """Flag suspicious architect_name values that look like client/sol·licitant.
+
+    Two heuristics:
+    1. architect_name == client_name (case-insensitive, trimmed): likely an
+       owner-built project. We keep the value but emit a warning so a reviewer
+       verifies against the plànol caixetí.
+    2. architect_name matches the body-sentence pattern ("Sr. X ...") or
+       contains "en nom propi": the extractor picked up the sol·licitant
+       sentence rather than the caixetí. Set confidence to 0 to signal low
+       trust, but keep the raw value for inspection.
+    """
+    def _norm(v: Any) -> str:
+        return str(v).strip().lower() if v is not None else ""
+
+    client_val = _norm(
+        result.variables["client_name"].value
+        if "client_name" in result.variables else ""
+    )
+
+    for arch_key in ("architect_name", "architect_name_upper"):
+        if arch_key not in result.variables:
+            continue
+        ev = result.variables[arch_key]
+        arch_val = _norm(ev.value)
+        if not arch_val:
+            continue
+
+        # Heuristic 1: equality with client.
+        if client_val and arch_val == client_val:
+            warning = (
+                f"{arch_key} == client_name; likely owner-built project — "
+                "verify caixetí of plànol manually"
+            )
+            if warning not in result.warnings:
+                result.warnings.append(warning)
+
+        # Heuristic 2: body-sentence pattern.
+        raw_val = str(ev.value or "").strip()
+        looks_like_body_sentence = (
+            bool(_BODY_SR_PATTERN.match(raw_val))
+            or "en nom propi" in arch_val
+        )
+        if looks_like_body_sentence:
+            warning = (
+                f"{arch_key} matches body-sentence pattern ('Sr. X' / 'en nom "
+                "propi'); likely sol·licitant, not architect — confidence "
+                "lowered, verify caixetí of plànol"
+            )
+            if warning not in result.warnings:
+                result.warnings.append(warning)
+            ev.confidence = 0.0
 
 
 # ---------------------------------------------------------------------------

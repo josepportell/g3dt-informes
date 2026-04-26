@@ -36,7 +36,10 @@ _RANKING_ROOT = Path("validation") / "ai_pipeline" / "ranking"
 _RANKING_MANIFEST = Path("validation") / "ai_ranking.json"
 
 _DEFAULT_MODEL = "claude-sonnet-4-6"
-_SCHEMA_VERSION = "1.0"
+# 1.1 (2026-04-25): D18 — cached block now bundles the full report_variables.yaml
+# alongside the principles, pushing it above Anthropic's 1024-token cache
+# minimum. Prompt shape changed; old per-concept caches must not be reused.
+_SCHEMA_VERSION = "1.1"
 
 _MAX_TOKENS = 4_000
 _PER_CALL_TIMEOUT_S = 60.0
@@ -235,6 +238,28 @@ def load_authority_principles() -> str:
     return _AUTHORITY_PRINCIPLES_PATH.read_text(encoding="utf-8")
 
 
+_FULL_CONCEPT_YAML_CACHE: str | None = None
+
+
+def _load_full_concept_yaml() -> str:
+    """Return the raw text of `schemas/concepts/report_variables.yaml`.
+
+    Bundled into the cached principles block so the combined ephemeral block
+    clears Anthropic's 1024-token cache minimum (D18 fix). Result is memoised
+    in-process; tests that mutate the YAML on disk should clear
+    `_FULL_CONCEPT_YAML_CACHE` between runs if they need a re-read.
+    """
+    global _FULL_CONCEPT_YAML_CACHE
+    if _FULL_CONCEPT_YAML_CACHE is not None:
+        return _FULL_CONCEPT_YAML_CACHE
+    path = _PROJECT_ROOT / "schemas" / "concepts" / "report_variables.yaml"
+    if not path.is_file():
+        _FULL_CONCEPT_YAML_CACHE = ""
+        return _FULL_CONCEPT_YAML_CACHE
+    _FULL_CONCEPT_YAML_CACHE = path.read_text(encoding="utf-8")
+    return _FULL_CONCEPT_YAML_CACHE
+
+
 # ─── Passthrough orchestrator (chunk 1) ────────────────────────────────
 
 
@@ -359,17 +384,43 @@ def _get_glossary() -> dict:
 def load_glossary_entry(concept_id: str) -> str:
     """Return the glossary entry for a concept_id as YAML-formatted text, or ''.
 
-    Looks under the top-level `entries:` key. Callers embed the result in the
-    Pass A user content.
+    Looks under the top-level `entries:` key first. If `concept_id` matches a
+    key under `aliases:` instead, the loader resolves the alias to its target
+    entry so the ranker sees the same hint when the LLM happens to use a
+    synonym (e.g. "promotor" → "client_name").
     """
     data = _get_glossary()
     entries = data.get("entries", {}) if isinstance(data, dict) else {}
     entry = entries.get(concept_id)
-    if not entry:
+    if entry:
+        return yaml.safe_dump(
+            {concept_id: entry}, allow_unicode=True, sort_keys=False
+        ).strip()
+
+    # Fallback: alias resolution.
+    aliases = data.get("aliases", {}) if isinstance(data, dict) else {}
+    if not isinstance(aliases, dict):
         return ""
-    return yaml.safe_dump(
-        {concept_id: entry}, allow_unicode=True, sort_keys=False
-    ).strip()
+    alias_target = aliases.get(concept_id)
+    if isinstance(alias_target, str):
+        target_entry = entries.get(alias_target) if isinstance(entries, dict) else None
+        if target_entry:
+            try:
+                target_text = yaml.safe_dump(
+                    {alias_target: target_entry},
+                    allow_unicode=True,
+                    sort_keys=False,
+                ).strip()
+            except Exception:
+                target_text = ""
+            return f"(synonym of `{alias_target}`)\n{target_text}".strip()
+        return f"(synonym of `{alias_target}`)"
+    if isinstance(alias_target, dict):
+        # Dict-form alias is a self-contained jargon entry (e.g. `Nb`, `N20`).
+        return yaml.safe_dump(
+            {concept_id: alias_target}, allow_unicode=True, sort_keys=False
+        ).strip()
+    return ""
 
 
 # ─── Tool schema ───────────────────────────────────────────────────────
@@ -460,16 +511,29 @@ def _build_concept_user_content(
 
     blocks.append({"type": "text", "text": header})
 
-    if include_principles and principles:
-        blocks.append(
-            {
-                "type": "text",
-                "text": (
-                    f"\n# Authority principles (Eva)\n\n{principles}\n"
-                ),
-                "cache_control": {"type": "ephemeral"},
-            }
-        )
+    if include_principles:
+        # D18: bundle the full concept YAML into the same cached block so the
+        # combined block clears Anthropic's 1024-token ephemeral-cache minimum.
+        # Emit even when `principles` is empty — the YAML alone is well above
+        # the threshold and we don't want to silently disable caching just
+        # because Eva's principles file is empty.
+        concept_yaml = _load_full_concept_yaml()
+        if concept_yaml or principles:
+            principles_part = (
+                f"\n# Authority principles (Eva)\n\n{principles}\n"
+                if principles else ""
+            )
+            blocks.append(
+                {
+                    "type": "text",
+                    "text": (
+                        f"\n# Concept schema (all target variables)\n\n"
+                        f"```yaml\n{concept_yaml}\n```\n"
+                        + principles_part
+                    ),
+                    "cache_control": {"type": "ephemeral"},
+                }
+            )
 
     # Deterministic candidate order by candidate_id.
     sorted_candidates = sorted(candidates_with_insights, key=lambda t: t[0])
@@ -542,6 +606,11 @@ def _concept_cache_key(
     )
     h.update(b"|principles:")
     h.update(principles.encode("utf-8"))
+    # D18: full concept YAML now ships in the cached block — hash it so any
+    # edit to schemas/concepts/report_variables.yaml invalidates per-concept
+    # caches.
+    h.update(b"|concept_yaml:")
+    h.update(_load_full_concept_yaml().encode("utf-8"))
     h.update(b"|concept_def:")
     h.update(
         json.dumps(
@@ -964,14 +1033,29 @@ def _build_group_user_content(
     )
     blocks: list[dict] = [{"type": "text", "text": header}]
 
-    if include_principles and principles:
-        blocks.append(
-            {
-                "type": "text",
-                "text": f"\n# Authority principles (Eva)\n\n{principles}\n",
-                "cache_control": {"type": "ephemeral"},
-            }
-        )
+    if include_principles:
+        # D18: bundle the full concept YAML into the same cached block so the
+        # combined block clears Anthropic's 1024-token ephemeral-cache minimum.
+        # Emit even when `principles` is empty — the YAML alone is well above
+        # the threshold and we don't want to silently disable caching just
+        # because Eva's principles file is empty.
+        concept_yaml = _load_full_concept_yaml()
+        if concept_yaml or principles:
+            principles_part = (
+                f"\n# Authority principles (Eva)\n\n{principles}\n"
+                if principles else ""
+            )
+            blocks.append(
+                {
+                    "type": "text",
+                    "text": (
+                        f"\n# Concept schema (all target variables)\n\n"
+                        f"```yaml\n{concept_yaml}\n```\n"
+                        + principles_part
+                    ),
+                    "cache_control": {"type": "ephemeral"},
+                }
+            )
 
     # Current rankings block.
     rankings_payload = []
@@ -1063,6 +1147,9 @@ def _group_cache_key(
     )
     h.update(b"|principles:")
     h.update(principles.encode("utf-8"))
+    # D18: full concept YAML ships in the cached block too.
+    h.update(b"|concept_yaml:")
+    h.update(_load_full_concept_yaml().encode("utf-8"))
 
     rankings_canon = []
     for cid in sorted(pass_a_rankings_in_group.keys()):
