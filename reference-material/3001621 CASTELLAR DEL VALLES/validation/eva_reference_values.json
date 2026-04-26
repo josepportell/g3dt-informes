@@ -1,19 +1,19 @@
 {
   "project": "3001621 CASTELLAR DEL VALLES",
   "source_file": "3001621_informe_v0.doc",
-  "extraction_date": "2026-04-26T08:37:03.994030",
+  "extraction_date": "2026-04-26T10:11:09.452959",
   "template_file": "g3dt-jinja-template.docx",
   "extractor_version": "1.0",
   "statistics": {
     "total_template_variables": 56,
-    "total_extracted": 63,
-    "extraction_rate": 112.5,
+    "total_extracted": 65,
+    "extraction_rate": 116.1,
     "by_method": {
       "paragraph_single": 14,
       "table_cell": 18,
       "loop_table": 5,
       "table_flatten": 5,
-      "intelligent_analysis": 21
+      "intelligent_analysis": 23
     },
     "body_paragraphs": {
       "template": 489,
@@ -256,7 +256,7 @@
     "geomech_E": {
       "value": ">500",
       "position": "t12.row0.E",
-      "position_description": "Flattened from geotech_rows[0].E",
+      "position_description": "Flattened from geotech_rows[0] (bearing stratum).E",
       "confidence": 0.95,
       "extraction_method": "table_flatten",
       "template_text": "",
@@ -265,7 +265,7 @@
     "geomech_cohesion": {
       "value": "1.0",
       "position": "t12.row0.cohesion",
-      "position_description": "Flattened from geotech_rows[0].cohesion",
+      "position_description": "Flattened from geotech_rows[0] (bearing stratum).cohesion",
       "confidence": 0.95,
       "extraction_method": "table_flatten",
       "template_text": "",
@@ -274,7 +274,7 @@
     "geomech_gamma": {
       "value": "2.20",
       "position": "t12.row0.density",
-      "position_description": "Flattened from geotech_rows[0].density",
+      "position_description": "Flattened from geotech_rows[0] (bearing stratum).density",
       "confidence": 0.95,
       "extraction_method": "table_flatten",
       "template_text": "",
@@ -283,7 +283,7 @@
     "geomech_phi": {
       "value": "35",
       "position": "t12.row0.phi",
-      "position_description": "Flattened from geotech_rows[0].phi",
+      "position_description": "Flattened from geotech_rows[0] (bearing stratum).phi",
       "confidence": 0.95,
       "extraction_method": "table_flatten",
       "template_text": "",
@@ -652,6 +652,24 @@
       "extraction_method": "paragraph_single",
       "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
       "reference_text": "Taula 3, 4 i 5. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar."
+    },
+    "utm_x": {
+      "value": "423167",
+      "position": "ANNEXES/COORDENADES.txt — DPSH P-1 line",
+      "position_description": "Manually extracted from ANNEXES/ALTRES/COORDENADES.txt (DPSH P-1, EPSG:25831). Eva's signed informe contains only msnm elevation (Z) in DPSH tables; X/Y exist only in the field-recorded COORDENADES.txt — Eva's own data, treated here as ground truth (P-1 as project representative point). EPSG:25831 (ETRS89 UTM Fus 31N).",
+      "confidence": 1.0,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "P-1\n423167.0 ; 4609608.0 ; 571.5"
+    },
+    "utm_y": {
+      "value": "4609608",
+      "position": "ANNEXES/COORDENADES.txt — DPSH P-1 line",
+      "position_description": "Manually extracted from ANNEXES/ALTRES/COORDENADES.txt (DPSH P-1, EPSG:25831). Eva's signed informe contains only msnm elevation (Z) in DPSH tables; X/Y exist only in the field-recorded COORDENADES.txt — Eva's own data, treated here as ground truth (P-1 as project representative point). EPSG:25831 (ETRS89 UTM Fus 31N).",
+      "confidence": 1.0,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "P-1\n423167.0 ; 4609608.0 ; 571.5"
     }
   },
   "warnings": [
@@ -675,6 +693,6 @@
     "p465: Variable 'empentes_paragraph' has no static context for matching",
     "p469: Variable 'estabilitat_paragraph' has no static context for matching",
     "Loop table t8 (soil_level_rows): no matching reference table",
-    "Merged 21 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, building_type_lower, client, conclusions_aggressivity_statement, conclusions_levels_detected..."
+    "Merged 23 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, building_type_lower, client, conclusions_aggressivity_statement, conclusions_levels_detected..."
   ]
 }

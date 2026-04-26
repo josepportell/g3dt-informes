@@ -235,6 +235,91 @@ def test_flatten_skips_when_first_row_is_header_contamination():
     assert "geomech_phi" not in res.variables
 
 
+def test_flatten_picks_bearing_stratum_for_multi_layer():
+    """For multi-layer tables, flatten must pick the LAST row (bearing
+    stratum), not the first. See docs/INVESTIGACIO-GEOMECH-STRATUM.md.
+    """
+    res = _make_result()
+    # Alcoletge-like profile: top = weak fill, bearing = competent lutites.
+    res.variables["geotech_rows"] = _ev_list([
+        {
+            "name": "1er nivell. Sorres argiloses de rebliment",
+            "nb": "5-0",
+            "n": "--",
+            "density": "1.80",
+            "cohesion": "0.00",
+            "phi": "28º",
+            "E": "50",
+        },
+        {
+            "name": "2n nivell. Lutites alterades",
+            "nb": "R",
+            "n": "20",
+            "density": "2.00",
+            "cohesion": "1.00",
+            "phi": "30º",
+            "E": "400",
+        },
+    ])
+
+    _flatten_loop_table_concepts(res)
+
+    # Bearing stratum (row 1) wins, NOT row 0.
+    assert res.variables["geomech_E"].value == "400"
+    assert res.variables["geomech_phi"].value == "30"
+    assert res.variables["geomech_cohesion"].value == "1.00"
+    assert res.variables["geomech_gamma"].value == "2.00"
+
+
+def test_flatten_unchanged_for_single_layer():
+    """For single-layer tables, flatten still picks row 0 (which is also
+    the bearing stratum). Confirms the bearing-row change doesn't regress
+    single-layer projects (Bell-Lloc, Castellar, Rubí, Anciles).
+    """
+    res = _make_result()
+    res.variables["geotech_rows"] = _ev_list([
+        {
+            "name": "1er nivell. Graves",
+            "nb": "25-R",
+            "n": "54",
+            "density": "2.0",
+            "cohesion": "0.0",
+            "phi": "38º",
+            "E": "650",
+        },
+    ])
+
+    _flatten_loop_table_concepts(res)
+
+    assert res.variables["geomech_E"].value == "650"
+    assert res.variables["geomech_phi"].value == "38"
+    assert res.variables["geomech_cohesion"].value == "0.0"
+    assert res.variables["geomech_gamma"].value == "2.0"
+
+
+def test_flatten_position_records_bearing_idx():
+    """The `position` and `position_description` fields must record which
+    row was picked, so downstream tools can trace bearing-stratum selection.
+    """
+    res = _make_result()
+    res.variables["geotech_rows"] = _ev_list([
+        {"name": "top", "density": "1.80", "cohesion": "0.0",
+         "phi": "28", "E": "50"},
+        {"name": "mid", "density": "1.95", "cohesion": "0.5",
+         "phi": "29", "E": "200"},
+        {"name": "bearing", "density": "2.20", "cohesion": "1.0",
+         "phi": "35", "E": "500"},
+    ])
+
+    _flatten_loop_table_concepts(res)
+
+    # Bearing index = 2 (last of 3 rows).
+    assert res.variables["geomech_E"].value == "500"
+    assert "row2" in res.variables["geomech_E"].position
+    assert "row2" in res.variables["geomech_phi"].position
+    assert "bearing stratum" in res.variables["geomech_E"].position_description
+
+
 def test_guard_catches_sra_and_d_variants():
     """S1: the body-sentence guard fires on `Sra. X`, `D. X`, `Dna. X` —
     not just `Sr. X`. All four are honorifics used in Eva's body sentences."""

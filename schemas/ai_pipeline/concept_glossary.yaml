@@ -118,6 +118,73 @@ entries:
       report body as "sol·licitant" or "promotor". For owner-built projects this
       may equal `architect_name` but the authoritative source is different.
 
+  geomech_E:
+    term: "Modul de deformacio del bearing stratum"
+    definition: |
+      Capacitat del sol del nivell de recolzament per deformar-se sota
+      carrega. Utilitzat a les formules de Schmertmann per calcular
+      assentaments. Eva l'extreu de taules Crespo o de penetrometre
+      estatic (CPT qc).
+    unit: "kg/cm²"
+    references:
+      - "Crespo Villalaz, Mecánica de suelos"
+      - "Schmertmann (1970), assentament limit 2B (aïllades) o 4B (corregudes)"
+    stratum_semantics: "always_bearing_layer"
+    note: |
+      Modul de deformacio E del nivell de RECOLZAMENT (bearing stratum), NO
+      del nivell superficial. En perfils multi-capa, es el nivell mes
+      competent i profund on Eva recolza la fonamentacio, no el rebliment
+      o sol tou superior. Per Alcoletge: E del 2n nivell (lutites
+      alterades, >400 kg/cm²), no del 1r (rebliment feble, 50 kg/cm²).
+
+  geomech_phi:
+    term: "Angle de friccio interna del bearing stratum"
+    definition: |
+      Angle de friccio efectiu (drenat) del sol del nivell de recolzament.
+      Utilitzat a les formules de Terzaghi per calcular capacitat portant.
+      Eva l'extreu de taules Crespo correlacionades amb N-SPT o Nb-DPSH.
+    unit: "graus (°)"
+    references:
+      - "Crespo Villalaz"
+      - "Terzaghi (1943), factors Nc/Nq/Nγ"
+    stratum_semantics: "always_bearing_layer"
+    note: |
+      Angle de friccio φ del nivell de RECOLZAMENT (bearing stratum), NO
+      del nivell superficial. En perfils multi-capa, agafa el de la
+      darrera fila de la taula geomecanica (la mes profunda i competent).
+
+  geomech_cohesion:
+    term: "Cohesio del bearing stratum"
+    definition: |
+      Resistencia al cisallament sense tensio normal del sol del nivell de
+      recolzament. En sols granulars purs = 0.0. En sols cohesius o
+      sorrenca argilosa = 0.05–1.0 kg/cm² depenent de Crespo.
+    unit: "kg/cm²"
+    references:
+      - "Crespo Villalaz"
+      - "Terzaghi formula Qd = c·Nc·sc + ..."
+    stratum_semantics: "always_bearing_layer"
+    note: |
+      Cohesio c del nivell de RECOLZAMENT (bearing stratum), NO del nivell
+      superficial. Per Alcoletge: c del 2n nivell (lutites alterades,
+      1.0 kg/cm²), no del 1r (rebliment, 0.0 kg/cm²).
+
+  geomech_gamma:
+    term: "Densitat (pes volumetric) del bearing stratum"
+    definition: |
+      Pes per unitat de volum del sol del nivell de recolzament. Eva la
+      porta directament de CTE taula D.27 per litologia, o d'assaigs de
+      laboratori (densitat).
+    unit: "g/cm³"
+    references:
+      - "CTE DB-SE taula D.27"
+      - "Terzaghi formula increment γ·Df·Nq"
+    stratum_semantics: "always_bearing_layer"
+    note: |
+      Densitat γ del nivell de RECOLZAMENT (bearing stratum), NO del
+      nivell superficial. En perfils multi-capa, agafa la de la darrera
+      fila de la taula geomecanica.
+
   lab_testing_company:
     hint: |
       External laboratory that ran soil tests (sulfates, granulometry). Common

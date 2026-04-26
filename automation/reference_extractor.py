@@ -959,11 +959,12 @@ def _clean_phi_value(val: Any) -> Any:
 
 
 def _flatten_loop_table_concepts(result: ExtractionResult) -> None:
-    """Derive flat concept_ids from the first row of nested loop tables.
+    """Derive flat concept_ids from the bearing row of nested loop tables.
 
     Adds (when not already present):
     - geomech_E, geomech_phi, geomech_cohesion, geomech_gamma
-      from `geotech_rows[0]` (top stratum)
+      from `geotech_rows[-1]` (bearing stratum — last row in Eva's tables;
+      see docs/INVESTIGACIO-GEOMECH-STRATUM.md)
     - cota_referencia from `dpsh_tests[0].cota` (project reference cota)
 
     Existing flat keys are preserved (positional extraction wins; this is
@@ -971,15 +972,19 @@ def _flatten_loop_table_concepts(result: ExtractionResult) -> None:
     """
     variables = result.variables
 
-    # 1. Flatten geotech_rows[0] (top stratum).
+    # 1. Flatten geotech_rows[-1] (bearing stratum). Eva always reports
+    #    geomech_* parameters from the bearing layer (the level the
+    #    foundation rests on), which by her shallowest-to-deepest convention
+    #    is the LAST row. For single-layer profiles row[-1] == row[0].
     geotech_ev = variables.get("geotech_rows")
     if geotech_ev is not None and isinstance(geotech_ev.value, list) and geotech_ev.value:
-        first_row = geotech_ev.value[0]
-        if isinstance(first_row, dict) and not _is_table_header_row(first_row):
+        bearing_idx = len(geotech_ev.value) - 1
+        bearing_row = geotech_ev.value[bearing_idx]
+        if isinstance(bearing_row, dict) and not _is_table_header_row(bearing_row):
             for flat_concept, src_col in _GEOTECH_FLATTEN:
                 if flat_concept in variables:
                     continue
-                raw = first_row.get(src_col)
+                raw = bearing_row.get(src_col)
                 if raw is None:
                     continue
                 if isinstance(raw, str) and (
@@ -991,9 +996,10 @@ def _flatten_loop_table_concepts(result: ExtractionResult) -> None:
                 cleaned = _clean_phi_value(raw) if flat_concept == "geomech_phi" else raw
                 variables[flat_concept] = ExtractedVariable(
                     value=cleaned,
-                    position=f"{geotech_ev.position}.row0.{src_col}",
+                    position=f"{geotech_ev.position}.row{bearing_idx}.{src_col}",
                     position_description=(
-                        f"Flattened from geotech_rows[0].{src_col}"
+                        f"Flattened from geotech_rows[{bearing_idx}] "
+                        f"(bearing stratum).{src_col}"
                     ),
                     confidence=0.95,
                     extraction_method="table_flatten",

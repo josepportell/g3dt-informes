@@ -1,19 +1,19 @@
 {
   "project": "4001612 BELL-LLOC",
   "source_file": "4001612_informe.doc",
-  "extraction_date": "2026-04-26T08:37:19.408838",
+  "extraction_date": "2026-04-26T10:11:25.048555",
   "template_file": "g3dt-jinja-template.docx",
   "extractor_version": "1.0",
   "statistics": {
     "total_template_variables": 56,
-    "total_extracted": 63,
-    "extraction_rate": 112.5,
+    "total_extracted": 65,
+    "extraction_rate": 116.1,
     "by_method": {
       "paragraph_single": 13,
       "table_cell": 18,
       "loop_table": 5,
       "table_flatten": 5,
-      "intelligent_analysis": 22
+      "intelligent_analysis": 24
     },
     "body_paragraphs": {
       "template": 489,
@@ -242,7 +242,7 @@
     "geomech_E": {
       "value": "650",
       "position": "t12.row0.E",
-      "position_description": "Flattened from geotech_rows[0].E",
+      "position_description": "Flattened from geotech_rows[0] (bearing stratum).E",
       "confidence": 0.95,
       "extraction_method": "table_flatten",
       "template_text": "",
@@ -251,7 +251,7 @@
     "geomech_cohesion": {
       "value": "0.0",
       "position": "t12.row0.cohesion",
-      "position_description": "Flattened from geotech_rows[0].cohesion",
+      "position_description": "Flattened from geotech_rows[0] (bearing stratum).cohesion",
       "confidence": 0.95,
       "extraction_method": "table_flatten",
       "template_text": "",
@@ -260,7 +260,7 @@
     "geomech_gamma": {
       "value": "2.0",
       "position": "t12.row0.density",
-      "position_description": "Flattened from geotech_rows[0].density",
+      "position_description": "Flattened from geotech_rows[0] (bearing stratum).density",
       "confidence": 0.95,
       "extraction_method": "table_flatten",
       "template_text": "",
@@ -269,7 +269,7 @@
     "geomech_phi": {
       "value": "38",
       "position": "t12.row0.phi",
-      "position_description": "Flattened from geotech_rows[0].phi",
+      "position_description": "Flattened from geotech_rows[0] (bearing stratum).phi",
       "confidence": 0.95,
       "extraction_method": "table_flatten",
       "template_text": "",
@@ -638,6 +638,24 @@
       "extraction_method": "paragraph_single",
       "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
       "reference_text": "Taula 3, 4 i 5. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar."
+    },
+    "utm_x": {
+      "value": "314419",
+      "position": "ANNEXES/COORDENADES.txt — DPSH P-1 line",
+      "position_description": "Manually extracted from ANNEXES/ALTRES/COORDENADES.txt (DPSH P-1, EPSG:25831). Eva's signed informe contains only msnm elevation (Z) in DPSH tables; X/Y exist only in the field-recorded COORDENADES.txt — Eva's own data, treated here as ground truth (P-1 as project representative point). EPSG:25831 (ETRS89 UTM Fus 31N).",
+      "confidence": 1.0,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "P-1\n314418.9 ; 4611117.6 ; 198.9"
+    },
+    "utm_y": {
+      "value": "4611118",
+      "position": "ANNEXES/COORDENADES.txt — DPSH P-1 line",
+      "position_description": "Manually extracted from ANNEXES/ALTRES/COORDENADES.txt (DPSH P-1, EPSG:25831). Eva's signed informe contains only msnm elevation (Z) in DPSH tables; X/Y exist only in the field-recorded COORDENADES.txt — Eva's own data, treated here as ground truth (P-1 as project representative point). EPSG:25831 (ETRS89 UTM Fus 31N).",
+      "confidence": 1.0,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "P-1\n314418.9 ; 4611117.6 ; 198.9"
     }
   },
   "warnings": [
@@ -662,6 +680,6 @@
     "p465: Variable 'empentes_paragraph' has no static context for matching",
     "p469: Variable 'estabilitat_paragraph' has no static context for matching",
     "Loop table t8 (soil_level_rows): no matching reference table",
-    "Merged 22 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, architect_company, architect_name_upper, building_type_lower, client..."
+    "Merged 24 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, architect_company, architect_name_upper, building_type_lower, client..."
   ]
 }

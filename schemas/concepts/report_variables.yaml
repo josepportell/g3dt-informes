@@ -708,7 +708,10 @@ concepts:
     type: numeric
     group: geotechnical
     required: false
-    description_ca: Densitat del sol (g/cm3)
+    description_ca: |
+      Densitat (pes volumetric) del sol (g/cm3). Es referencia sempre el
+      nivell de recolzament (bearing stratum). Vegeu `geomech_E` per a
+      detalls.
     source_priority:
       user: 10
 
@@ -716,7 +719,9 @@ concepts:
     type: numeric
     group: geotechnical
     required: false
-    description_ca: Cohesio del sol (kg/cm2)
+    description_ca: |
+      Cohesio del sol (kg/cm2). Es referencia sempre el nivell de
+      recolzament (bearing stratum). Vegeu `geomech_E` per a detalls.
     source_priority:
       user: 10
 
@@ -724,7 +729,10 @@ concepts:
     type: numeric
     group: geotechnical
     required: false
-    description_ca: Angle de friccio interna (graus)
+    description_ca: |
+      Angle de friccio interna del sol (graus). Es referencia sempre el
+      nivell de recolzament (bearing stratum). Vegeu `geomech_E` per a
+      detalls.
     source_priority:
       user: 10
 
@@ -732,7 +740,16 @@ concepts:
     type: numeric
     group: geotechnical
     required: false
-    description_ca: Modul de deformacio (kg/cm2)
+    description_ca: |
+      Modul de deformacio del sol (kg/cm2). Es referencia sempre el nivell
+      de recolzament (bearing stratum) — el nivell on es recolza la
+      fonamentacio segons Eva. En perfils homogenis (1 nivell), es aquest
+      nivell. En perfils heterogenis (2+ nivells), es el nivell mes
+      competent on es descarrega la carrega fonamental, NO el nivell
+      superficial.
+
+      Per Alcoletge (2 nivells): E = parametres del 2n nivell (lutites
+      alterades, E>400), NO del 1r (rebliment feble, E=50).
     source_priority:
       user: 10
 

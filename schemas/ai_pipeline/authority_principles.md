@@ -53,6 +53,38 @@
   - El cos de l'informe el cita habitualment com *"sol·licitant"* o
     *"promotor"*.
 
+## Semàntica del Bearing Stratum per a Paràmetres Geomecànics
+
+Eva sempre reporta paràmetres geomecànics (`geomech_E`, `geomech_phi`,
+`geomech_cohesion`, `geomech_gamma`) del **nivell de recolzament (bearing
+stratum)** — el nivell sobre el qual es recolza la fonamentació —, NO del
+nivell superficial.
+
+Cita textual de l'informe Alcoletge (pàgina 361):
+
+> "Un cop realitzada l'excavació afloraran superficalment els materials
+> del primer nivell descrit, que degut a les seves propietats geomecàniques
+> **es descarta totalment per a recolzar-hi qualsevol element de
+> fonamentació**. La fonamentació haurà de quedar recolzada en els materials
+> del segon nivell..."
+
+Conseqüència operativa per a la fase d'extracció:
+
+- En la taula "Resum de paràmetres geomecànics" Eva descriu els nivells de
+  shallowest a deepest. La **darrera fila** és sempre el bearing stratum
+  (excepte en perfils homogenis on només hi ha una fila).
+- El `reference_extractor.py` flatteja `geotech_rows[-1]` (no `[0]`) cap
+  als conceptes plats `geomech_E/phi/cohesion/gamma`.
+- En perfils mono-capa, `[-1] == [0]` i el comportament és idèntic al
+  legacy.
+- Els paràmetres del bearing layer són els que s'usen per calcular `Qa`
+  via Terzaghi-Peck, no els del nivell superficial.
+
+Exemple Alcoletge: el 2n nivell (E>400, φ=30°, c=1.0, γ=2.0) és el bearing
+layer que justifica `Qa = 3.50 kg/cm²`. El 1r nivell (rebliment feble:
+E=50, φ=28°, c=0.0, γ=1.80) és descartat per Eva i no s'ha de propagar
+als conceptes geomecànics finals.
+
 ## Documents prioritaris vs prior outputs
 
 - **Demote outputs intermedis del nostre propi pipeline**:
