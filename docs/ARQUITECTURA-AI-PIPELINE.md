@@ -1,10 +1,16 @@
 # Arquitectura: AI Pipeline
 
-**Data:** 2026-04-25
+**Data:** 2026-04-26
 **Branca:** `experiment/ai-pipeline`
 **Autor:** Josep Portell + Claude Code
-**Estat:** Fases 1–4 implementades, endurides per una primera ronda de 12 fixes
-(D14/D15/D16/D17, D1#1–#2, D3, D5, D7, D9, D10). Fase 5 pendent de disseny.
+**Estat:** Fases 1–5 implementades. Iteracions offline (2026-04-25 → 2026-04-26)
+han endurit la qualitat de la Fase 5 sense gastar API: bug crític
+bearing-stratum corregit, principis d'autoritat reorganitzats en 10 seccions
+amb regles noves (UTM, bearing stratum, firm-led patterns), Phase 1 calculator
+delegation introduïda darrere de feature flag, eines de diagnòstic shipping
+(trace tool, Pass C diff). Top-1 accuracy d'Alcoletge (mesura honesta) ha
+pujat de **14.7% → 27.66%**. Fase 5 encara per sota del 80% gate; pròxima
+acció: re-run live amb les millores per mesurar impacte real.
 
 ---
 
@@ -17,12 +23,16 @@ La motivació és una línia de progressió natural:
 - L'AI Pipeline inverteix el ordre: llegeix primer, raona després. Cada fase assumeix que la següent tindrà més context, no menys.
 - Stage per stage, l'LLM passa de ser "consumidor d'inputs estructurats" a ser "intèrpret del projecte sencer".
 
-**Estat actual:** Fases 1–4 funcionen end-to-end (CLI + API + pestanya del
-wizard) amb cache per-font. Un run complet d'Alcoletge (72 fonts, 620
-candidats, 77 de 88 conceptes coberts a ≥0.8 confiança, cost $4.06) va validar
-Fase 4 i va motivar la primera ronda de fixes. Fase 5 pendent de disseny; pot
-testar-se contra `reference-material/4001670 ALCOLETGE/validation/ai_analysis.json`
-sense cap crida LLM addicional.
+**Estat actual:** Fases 1–5 funcionen end-to-end (CLI + API + pestanya del
+wizard) amb cache per-font. El run complet d'Alcoletge (2026-04-24, 72 fonts,
+620 candidats, $4.06 Stage 4 + $4.63 Stage 5) va validar el pipeline
+end-to-end i va motivar dues rondes de fixes (in-session + offline). Fase 5
+shipped en 5 chunks (commits `a70d3f8` → `30b764b`, 2026-04-25), després
+endurida per 5 iteracions offline (2026-04-25 → 2026-04-26) amb correccions
+crítiques (bearing-stratum bug, principis reorganitzats, manual ground-truth
+per UTM + architect, Phase 1 calculator delegation darrere de feature flag).
+Estem al $5 budget per al pròxim live re-run; Fase 6 + 7 pendents de disseny
+i implementació.
 
 ---
 
@@ -787,21 +797,131 @@ Passthrough (sense crides LLM) per a conceptes amb 0 candidats (`status="no_cand
 
 **Principis d'Eva en prosa**: `schemas/ai_pipeline/authority_principles.md` — Markdown carregat *verbatim* a cada crida. Eva edita directament, invalida caches per hash. No DSL.
 
-**Caching**: cache_control ephemeral mirat sobre el bloc de principis, però el nostre bloc (~300 tokens) està per sota del llindar mínim de 1024 tokens d'Anthropic → cache silenciosament ignorat. Fix pendent (vegeu `AI-PIPELINE-DEFERRED.md`): incloure el YAML complet de conceptes al bloc cached per superar el llindar.
+**Caching** (resolt 2026-04-26): el bloc cached inclou ara el YAML complet de
+conceptes (~3.5k tokens) bundled amb les principles, superant el llindar mínim
+de 1024 tokens d'Anthropic. Estalvi estimat: ~30% d'input cost al pròxim run.
+Bumped `_SCHEMA_VERSION = "1.1"` per invalidar caches anteriors. Vegeu commit
+`47b657e` (D18 fix).
 
-**Flags de CLI/API**: `--concept`/`concept_filter` per restringir a un concepte, `--group`/`group_filter` per un subgrup, `--no-group-pass`/`no_group_pass=true` per saltar Passades B+C.
+**Flags de CLI/API i env vars**:
+- `--concept`/`concept_filter`: restringir a un concepte.
+- `--group`/`group_filter`: positive include-list de grups.
+- `--no-group-pass`/`no_group_pass=true`: saltar Passades B+C completament.
+- `G3DT_AI_SKIP_GROUPS=<comma-list>` (env var): saltar Pass B per a grups
+  específics. Per al re-run del 2026-04-27 s'usarà `coordinates` per evitar
+  la corrupció UTM detectada al run anterior.
+- `G3DT_ENABLE_CALCULATOR_DELEGATION=true|false` (env var, default false):
+  activa la Phase 1 calculator pass (vegeu §9.bis).
 
-**Resultats Alcoletge (2026-04-24, validació inicial):**
+**Resultats Alcoletge (2026-04-24, validació inicial — pre-iteració):**
 - 72 fonts Stage 4 → 88 conceptes (71 rankejats via LLM, 6 single, 11 sense candidats, 0 pendents).
 - 13 grups processats, 39 factors cross-concept detectats, 38 revisions aplicades (24 re-ordenades, 14 no-change guardrails).
 - 48 conflictes detectats entre fonts.
 - Cost real: **$4.63** (≈2-3× l'estimació inicial — Pass C volume + cache silenciosament no aplicada per mida de bloc).
 - Top-1 accuracy contra `eva_reference_values.json`: 18 conceptes comparables, ~45% headline, ~60-70% després de filtrar mismatches de qualitat de ground-truth. Encara per sota del 80% gate.
 
-**Issues conegudes pendents** (tracked a `AI-PIPELINE-DEFERRED.md`):
-- **D18**: cache_control ephemeral no s'activa per mida de bloc massa petita. Fix: bundle concept YAML al bloc cached. Estalvi estimat: ~$0.75/run.
-- **D19**: Top-1 accuracy 45-70% — per sota del 80% gate. Iterar `authority_principles.md` (p.ex. per `expedient` → preferir project ID signat sobre IDs de laboratori) abans de la propera passada.
-- **D13**: Benchmark script (step 11 del pla) pendent. Necessita crèdits addicionals per executar els 7 projectes.
+**Resultats Alcoletge post-iteracions offline (2026-04-26, mesura honesta):**
+Sense crides API addicionals, només millores del codi i ground-truth
+corregida (vegeu §9.iter):
+- Eva refs visibles al trace tool: **47** (vs 34 inicial, +13 keys).
+- Exact matches: **13** (vs 5 inicial).
+- Top-1 accuracy: **27.66%** (vs 14.7% inicial — base 30% més gran, doncs no
+  és comparable directament: la mesura inicial era inflada cap avall per
+  naming mismatches i ground truth incompleta).
+- Pass C verdicts: **5 better / 3 worse / 1 neutral / 5 no_eva_ref** (vs
+  3/1/1/9 inicials). Els "3 worse" inclouen utm_x/utm_y i lab_testing_company
+  — totes adreçades per noves regles a `authority_principles.md`.
+
+**Issues conegudes — estat a 2026-04-26**:
+- **D18 — RESOLT** (commit `47b657e`): YAML complet bundled al bloc cached.
+- **D19 — En progrés**: top-1 accuracy honest a 27.66%, encara per sota del
+  80% gate. Múltiples millores landed (bearing-stratum fix, principis
+  reorganitzats, manual ground truth, calculator delegation MVP). Cal re-run
+  live per mesurar impacte real.
+- **D13 — Pendent**: benchmark script encara per crear. Re-utilitzarà els
+  7 projectes de referència; podem mesurar les iteracions offline immediatament,
+  però el live re-run necessita crèdits.
+
+### 9.iter Iteracions offline (2026-04-25 → 2026-04-26)
+
+Cinc rondes d'iteració sense gastar API, totes a la branca `experiment/ai-pipeline`:
+
+1. **Trace tool** (`b1e0080`): diagnòstic complet read-only sobre tots els
+   manifests de Stages 1–5 + `eva_reference_values.json`. Concept journey,
+   source journey, decision audit, top-30 issues. És la base de tota la
+   mesura offline.
+2. **Iteració 1 — disambiguation + D18 + extractor guards** (`47b657e`):
+   - Nou concepte `commercial_code` (format YY.NNNN) per desambiguar de
+     `expedient`.
+   - Descripcions de `architect_name` / `client_name` enduridissimes.
+   - D18 cache fix: concept YAML bundled al cached block.
+   - `_guard_architect_client_conflation` a `reference_extractor.py`.
+   - Nou script `scripts/ai_pipeline_pass_c_diff.py`.
+3. **Iteració 2 — alias map** (`15c2263`): nou
+   `schemas/concepts/concept_template_aliases.yaml` mapeja `concept_id` ↔
+   placeholder name del template Jinja, perquè el trace tool pugui veure
+   ~17 referències legítimes d'Eva que abans eren invisibles per
+   strict-name match.
+4. **Iteració 3 — merge IA + flatten** (`a3bbfc7`): la lògica
+   `_merge_with_prior` preserva entrades amb `extraction_method` no produït
+   pel codi actual (rescata ~125 entrades `intelligent_analysis` per als 7
+   projectes que un re-extract anterior havia destruït silenciosament).
+   Nova flatten de `geotech_rows[0]` cap a `geomech_E/phi/cohesion/gamma`
+   plus `dpsh_tests[0].cota` cap a `cota_referencia`.
+5. **Bearing-stratum fix** (`e0579be`): bug crític — `_flatten_loop_table_concepts`
+   llegia `geotech_rows[0]` (estrat superficial) en lloc de `geotech_rows[-1]`
+   (bearing stratum). Per projectes multi-capa això produïa valors radicalment
+   equivocats. Investigació completa: `docs/INVESTIGACIO-GEOMECH-STRATUM.md`.
+
+Plus 4 documents d'investigació (offline, $0):
+- `INVESTIGACIO-SILENT-SOURCES.md` (A3)
+- `INVESTIGACIO-ARCHITECT-NAME.md` (B2)
+- `INVESTIGACIO-PASS-BC-EFFECTIVENESS.md` (B1)
+- `INVESTIGACIO-ENGINEERING-DELEGATION.md` (B3)
+
+I 3 commits més landaint findings:
+6. **B1 + UTM/full-name principles** (`6d706f2`): noves seccions
+   `authority_principles.md` per format UTM estricte i preferència de noms
+   complets registrats sobre alies comercials.
+7. **A3 silent-source rules + Phase 1 calculator delegation** (`f32eadc`): vegeu §9.bis.
+8. **C1 polish + skip-groups env var** (`82b45c8`): TOC + 10 seccions
+   numerades a `authority_principles.md`; nou `G3DT_AI_SKIP_GROUPS`.
+
+### 9.bis Phase 1 — Stage 4.5 Engineering Calculator Pass
+
+Nova passada **opcional** entre Stage 4 i Stage 5 (commit `f32eadc`). Per a
+conceptes marcats `delegate_to_calculator: true` a `report_variables.yaml`
+(Phase 1 scope: `qa_value` i `settlement_cm`), invoca els calculadors legacy
+deterministes (`automation/terzaghi_calculator.py`) amb els outputs de
+Stage 4 com a inputs (Nb del bearing layer, geometria de la fonamentació
+de `user_data.json`). Emet candidats sintètics amb
+`source_path = "calculator:legacy_geotech"` i `confidence = 1.0`.
+
+Stage 5 ranking i el trace tool consumeixen aquests candidats sintètics
+**només quan `G3DT_ENABLE_CALCULATOR_DELEGATION=true`** (default OFF).
+Manifest sibling: `validation/ai_calculations.json`.
+
+**Estat actual** (Alcoletge, sense API): el calculador produeix `qa_value=3.0`
+i `settlement_cm=1.7` (vs Eva `3.50` i `1.0`). Dos gaps coneguts:
+1. **`QA_CAP_ROCK = 3.0`** al codi legacy vs 4.0–4.5 segons MEMORY (Eva-
+   clarification pendent).
+2. **Naive max-confidence top-1 input picker** — agafa phi/cohesion del
+   `_generated.docx` (output) en lloc del `_informe.doc` signat. Phase 2
+   ha de reusar `_select_bearing_layer_idx` del legacy `report_data.py`.
+
+Investigació + recomendacions: `docs/INVESTIGACIO-ENGINEERING-DELEGATION.md`.
+
+### 9.tools Eines noves de diagnòstic
+
+- **`scripts/ai_pipeline_trace.py`** — anàlisi read-only complet per projecte:
+  3 vistes (concept journey, source journey, decision audit), top-30 issues
+  ranked per signal_strength, cross-stage analyses, comparació Eva. Tot
+  offline, zero API. Documentat extensament al codi.
+- **`scripts/ai_pipeline_pass_c_diff.py`** — verdicts better / worse /
+  neutral / no_eva_ref per cada concepte que Pass C va re-ordenar.
+  Compara original Pass A (cache) vs revisat (current ranking) vs Eva.
+- **`scripts/ai_pipeline_calculator_pass.py`** — CLI per a la Phase 1
+  calculator delegation.
 
 **Eva reference alias map**: `schemas/concepts/concept_template_aliases.yaml` mapeja
 els canonical `concept_id`s de `report_variables.yaml` als noms de placeholder del
@@ -836,7 +956,7 @@ Produir el .docx final. Opcions: reutilitzar `ReportGenerator` amb les noves dad
 | Branca                  | `feature/action-2-deterministic`           | `experiment/ai-pipeline`                    |
 | Wizard                  | Pestanyes SmartScan, Wizard, Dev, Pipeline | Pestanya AI Pipeline (nova)                 |
 | Artefactes              | `file_mapping.json`, `concept_map.json`, etc. | `validation/ai_inventory.json`, `ai_typology.json`, `ai_conversion.json`, `ai_analysis.json` i futurs |
-| Estat                   | Producció                                  | Experimental — Fases 1–5 funcionals; Fase 5 validada inicialment sobre Alcoletge (2026-04-24) amb 71/71 conceptes rankejats però top-1 accuracy per sota del 80% gate; iteracions de `authority_principles.md` + fix de cache pendents |
+| Estat                   | Producció                                  | Experimental — Fases 1–5 funcionals; Fase 5 endurida per 5 iteracions offline (2026-04-26) amb top-1 accuracy 14.7% → 27.66% (mesura honesta sobre 30% més refs); D18 cache fix + Phase 1 calculator delegation darrere de feature flag shipped; pendent re-run live amb les millores per validar adopció |
 
 **Decisió d'adopció:** quan l'AI Pipeline complet demostri millor qualitat i/o menor intervenció manual que el pipeline existent sobre els 7 projectes de referència, es considerarà fusió a `main`. No abans.
 
