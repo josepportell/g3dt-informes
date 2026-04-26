@@ -56,6 +56,14 @@ _EXTRACTED_ROOT = Path("validation") / "ai_pipeline" / "extracted"
 LOGO_PHASH_THRESHOLD: int = 6
 _LOGO_REFERENCES_DIR = Path(__file__).parent.parent.parent / "schemas" / "ai_pipeline" / "logo_references"
 
+# Files smaller than this with no coord/depth pattern are treated as text_stub
+# (notes, pasted snippets). Calibrated against Eva's reference projects:
+# real coord files are ~70-300B but always trip the pattern guard;
+# real notes are <150B and don't.
+_TEXT_STUB_MAX_BYTES: int = 150
+# First N images of a pressupost PDF are cover/terms boilerplate.
+_PRESSUPOST_BOILERPLATE_IMG_COUNT: int = 6
+
 
 # ─── Models ────────────────────────────────────────────────────────────
 
@@ -528,6 +536,7 @@ def _classify_file(
     has_text: bool,
     has_images: bool,
     path: str,
+    abs_path: Path,
 ) -> tuple[str, bool, str, str]:
     """Return (category, useful, reason, conversion_strategy)."""
 
@@ -550,6 +559,55 @@ def _classify_file(
     # Our own pipeline outputs
     if _is_pipeline_artifact(path):
         return ("pipeline_artifact", False, "AI pipeline output", "skip")
+
+    # Silent-source rules for .txt files ─────────────────────────────────
+    # Order matters: accounting-memo skip → coordinates_text → small-text guard.
+    if fmt == "txt":
+        path_name = Path(path).name
+        name_upper = path_name.upper()
+
+        # Rule B: known accounting-memo filename
+        if name_upper == "DTE.TXT":
+            return (
+                "accounting_memo",
+                False,
+                "invoice/accounting stub (DTE.txt convention)",
+                "skip",
+            )
+
+        # Rule A: structured UTM coordinates — parse deterministically, skip LLM
+        if "COORDENADES" in name_upper:
+            return (
+                "coordinates_text",
+                True,
+                "structured UTM coordinates",
+                "parse_deterministically",
+            )
+
+        # Rule B (generic): small text file with no coord/depth pattern.
+        # Use byte-level stat (inv_file.size_kb is int-truncated → useless <1KB).
+        try:
+            size_bytes = abs_path.stat().st_size
+        except OSError as e:
+            logger.debug("typology: cannot stat %s: %s", abs_path, e)
+            size_bytes = 0
+        if size_bytes < _TEXT_STUB_MAX_BYTES:
+            try:
+                preview = abs_path.read_text(encoding="utf-8", errors="replace")[:200]
+            except OSError as e:
+                logger.debug("typology: cannot read %s: %s", abs_path, e)
+                preview = ""
+            has_coord_pattern = bool(
+                re.search(r"\d{6,7}[.,]?\d*\s*[;,]\s*\d{6,7}", preview)
+            )
+            has_depth_pattern = bool(re.search(r"-\s*\d+[.,]\d+\s*m", preview))
+            if not has_coord_pattern and not has_depth_pattern:
+                return (
+                    "text_stub",
+                    False,
+                    "small text file with no coord/depth pattern",
+                    "skip",
+                )
 
     # Format-driven buckets
     if fmt == "pdf":
@@ -769,7 +827,7 @@ def classify_project(
         has_images = bool(meta.get("image_count", 0) > 0) or bool(meta.get("has_images", False))
 
         category, useful, reason, conv = _classify_file(
-            inv_file, fmt, has_text, has_images, inv_file.path
+            inv_file, fmt, has_text, has_images, inv_file.path, abs_path
         )
 
         fc = FileClass(
@@ -796,10 +854,45 @@ def classify_project(
 
         # Materialize extracted images as FileClass entries of their own
         if extracted and extract_dir is not None:
+            parent_stem_upper = Path(inv_file.path).stem.upper()
             for img_path in extracted:
                 rel = img_path.relative_to(pp).as_posix()
                 img_fmt = _normalize_format(rel)
                 chain = _build_extracted_chain(source_chain, inv_file.path, img_path.name)
+
+                # Pressupost boilerplate: cover/terms pages from PRESSUPOST_*
+                # documents have no project data; skip the early indices.
+                img_match = re.match(r"img_0*(\d+)\.", img_path.name)
+                if img_match:
+                    img_index = int(img_match.group(1))
+                else:
+                    logger.debug(
+                        "typology: unrecognized extracted image name: %s — pressupost rule skipped",
+                        img_path.name,
+                    )
+                    img_index = 999
+                if parent_stem_upper.startswith("PRESSUPOST") and img_index < _PRESSUPOST_BOILERPLATE_IMG_COUNT:
+                    files.append(
+                        FileClass(
+                            path=rel,
+                            format=img_fmt,
+                            category="pressupost_boilerplate",
+                            has_text=False,
+                            has_images=True,
+                            image_count=1,
+                            source_chain=chain,
+                            is_attachment=inv_file.kind == "email_attachment",
+                            parent_path=inv_file.path,
+                            useful=False,
+                            reason=(
+                                f"pressupost page {img_index} (cover/terms), "
+                                f"no project data"
+                            ),
+                            conversion_strategy="skip",
+                        )
+                    )
+                    continue
+
                 # Logo filter (D1#1) — perceptual-hash match against reference library.
                 logo_match = _classify_as_logo(img_path)
                 if logo_match is not None:

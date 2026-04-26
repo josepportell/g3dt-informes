@@ -98,7 +98,8 @@ def _make_project(tmp_path: Path) -> Path:
         "Summary": [["total"], [1500]],
     }))
     (project / "letter.docx").write_bytes(_make_docx("Dear Client, please find enclosed…"))
-    (project / "notes.txt").write_text("Field notes: soil is granular.")
+    # Long enough (>150 bytes) to escape Stage 2's text_stub silent-source guard
+    (project / "notes.txt").write_text("Field notes: soil is granular. " * 8)
     # Image at root (treated as image passthrough)
     (project / "foto.png").write_bytes(_noisy_png_bytes(200))
     # Dev-only (skipped, won't get converted)
@@ -537,3 +538,33 @@ def test_msg_frontmatter_escapes_newlines_in_sender(tmp_path):
     assert "john@example.com" in data["from"]
     # No embedded raw newline in the value (normalized by _yaml_value)
     assert "\n" not in data["from"]
+
+
+# ---------------------------------------------------------------------------
+# parse_deterministically — silent skip in Stage 3
+# ---------------------------------------------------------------------------
+
+
+def test_parse_deterministically_strategy_does_not_emit_warning(tmp_path):
+    """coordinates_text files should pass through Stage 3 silently — no
+    Eva-facing warning, no skipped artifact."""
+    from automation.ai_pipeline.typology import classify_project
+
+    project = tmp_path / "demo"
+    project.mkdir()
+    annexes = project / "ANNEXES"
+    annexes.mkdir()
+    (annexes / "COORDENADES.txt").write_text(
+        "Coordenades UTM (X);(Y);(Z);\nP-1\n308781,86 ; 4613950.63 ; 198.9\n",
+        encoding="utf-8",
+    )
+    typ = classify_project(project, extract_images=False)
+    conv = convert_project(project, typology=typ)
+    # No warning should mention parse_deterministically.
+    assert not any("parse_deterministically" in w for w in conv.warnings)
+    # No COORDENADES.txt artifact (skipped or otherwise) should be emitted.
+    coord_artifacts = [
+        a for a in conv.artifacts if "COORDENADES" in a.source_path
+    ]
+    assert coord_artifacts == []
+

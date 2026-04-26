@@ -38,3 +38,15 @@ the directory each cache-miss.
 If Eficients ever installs G3DT onto a second client's environment,
 we'll move to `logo_references/<client_id>/` and select the subdir
 per project. Today single-client, single folder.
+
+## Known gaps
+
+- **Alcoletge `PLAN_COST_ALCOLETGE/img_000.png` escape (2026-04-26)** —
+  trace tool flagged this as a silent Stage 4 source even though
+  `g3_tight.png` IS the same file (md5 match). The bytes-identical
+  match should hash to itself at Hamming 0, so the escape happened
+  upstream (different render/extract path on the run that produced
+  the trace). No new reference helps here; if it recurs, investigate
+  whether Stage 2 was hashing a re-encoded copy or a different
+  PyMuPDF extraction. Cost saved by Tasks 1–3 is the bulk of the
+  silent-source value (~$0.15/project); this last $0.05 is deferred.

@@ -766,6 +766,7 @@ concepts:
     group: geotechnical
     required: false
     description_ca: Pressio admissible del terreny (kg/cm2)
+    delegate_to_calculator: true   # Phase 1: delegated to terzaghi_calculator.calculate_qa
     source_priority:
       user: 10
       computed: 20
@@ -784,6 +785,7 @@ concepts:
     group: geotechnical
     required: false
     description_ca: Assentament maxim previst en centimetres
+    delegate_to_calculator: true   # Phase 1: delegated to terzaghi_calculator.schmertmann_settlement
     source_priority:
       user: 10
       computed: 20

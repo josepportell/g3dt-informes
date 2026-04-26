@@ -21,6 +21,7 @@ from __future__ import annotations
 import json
 import logging
 import math
+import os
 import re
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
@@ -1539,6 +1540,17 @@ def build_trace(project_path: Path | str) -> PipelineTrace:
     typ = load_typology(pp)
     conv = load_conversion(pp)
     analysis = load_analysis(pp)
+    # Stage 4.5: when the calculator-delegation feature flag is on, merge the
+    # synthetic "calculator" source into the analysis so its candidates show
+    # up in concept journeys and source views. Off by default.
+    if (
+        analysis is not None
+        and os.environ.get("G3DT_ENABLE_CALCULATOR_DELEGATION", "false").lower() == "true"
+    ):
+        from .calculator_pass import load_calculations as _load_calculations
+        _calc = _load_calculations(pp)
+        if _calc is not None and _calc.sources:
+            analysis.sources = list(analysis.sources) + list(_calc.sources)
     ranking = load_ranking(pp)
     eva_values = _load_eva_reference(pp)
 

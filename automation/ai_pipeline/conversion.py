@@ -613,6 +613,12 @@ def convert_project(
     for fc in typ.files:
         if not fc.useful or fc.conversion_strategy == "skip":
             continue
+        # `parse_deterministically` is consumed directly by Stage 4 callers
+        # (see automation/ai_pipeline/coordinates_parser.py). Stage 3 produces
+        # no artifact for these files, but they are NOT a conversion failure —
+        # skip silently rather than emitting an Eva-facing warning.
+        if fc.conversion_strategy == "parse_deterministically":
+            continue
         if strategies and fc.conversion_strategy not in strategies:
             continue
 

@@ -169,6 +169,45 @@ def _candidate_id(source_path: str, concept_id: str, idx: int) -> str:
     return f"{source_path}::{concept_id}::{idx}"
 
 
+# Stage 4.5 calculator-pass feature flag.
+# When `G3DT_ENABLE_CALCULATOR_DELEGATION=true`, the calculator manifest at
+# validation/ai_calculations.json is merged into the analysis loaded here.
+# Default OFF — pipeline behaves as before.
+_CALCULATOR_DELEGATION_ENV = "G3DT_ENABLE_CALCULATOR_DELEGATION"
+
+
+def _calculator_delegation_enabled() -> bool:
+    return os.environ.get(_CALCULATOR_DELEGATION_ENV, "false").lower() == "true"
+
+
+def _load_combined_candidates(project_path: Path) -> ProjectAnalysis:
+    """Load Stage 4 analysis, optionally merging Stage 4.5 calculator candidates.
+
+    Behaviour is gated by `G3DT_ENABLE_CALCULATOR_DELEGATION`. When the env
+    var is unset or "false", returns the pure Stage 4 analysis. When "true",
+    the synthetic calculator source (if `validation/ai_calculations.json`
+    exists) is appended to `analysis.sources`, so its candidates flow
+    through `_extract_candidates_by_concept` like any other source.
+    """
+    analysis = load_analysis(project_path)
+    if analysis is None:
+        raise FileNotFoundError(
+            f"ai_analysis.json not found under {project_path / 'validation'}; "
+            "run Stage 4 first or pass `analysis=...` explicitly."
+        )
+    if _calculator_delegation_enabled():
+        # Local import to avoid circular dependency at module load time.
+        from .calculator_pass import load_calculations
+
+        calc = load_calculations(project_path)
+        if calc is not None and calc.sources:
+            # Merge: append calculator's synthetic source so its candidates
+            # are visible to Pass A's _extract_candidates_by_concept.
+            analysis.sources = list(analysis.sources) + list(calc.sources)
+            # No token aggregation — calculator costs nothing.
+    return analysis
+
+
 def _extract_candidates_by_concept(
     analysis: ProjectAnalysis,
 ) -> dict[str, list[tuple[str, SourceInsight, Candidate]]]:
@@ -282,12 +321,7 @@ def rank_project_passthrough_only(
     pp = Path(project_path).resolve()
 
     if analysis is None:
-        analysis = load_analysis(pp)
-        if analysis is None:
-            raise FileNotFoundError(
-                f"ai_analysis.json not found under {pp / 'validation'}; "
-                "run Stage 4 first or pass `analysis=...` explicitly."
-            )
+        analysis = _load_combined_candidates(pp)
 
     concept_defs = load_concept_definitions()
     by_concept = _extract_candidates_by_concept(analysis)
@@ -1894,11 +1928,10 @@ def rank_project(
     pp = Path(project_path).resolve()
 
     if analysis is None:
-        analysis = load_analysis(pp)
-        if analysis is None:
-            raise ValueError(
-                f"No ai_analysis.json at {pp}; run Stage 4 first"
-            )
+        try:
+            analysis = _load_combined_candidates(pp)
+        except FileNotFoundError as exc:
+            raise ValueError(str(exc)) from exc
 
     model = model or os.environ.get("G3DT_AI_MODEL_RANKER", _DEFAULT_MODEL)
 

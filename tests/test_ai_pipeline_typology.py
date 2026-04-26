@@ -124,7 +124,8 @@ def _make_project(tmp_path: Path) -> Path:
     (project / "PLAN_with_image.pdf").write_bytes(_make_min_pdf_bytes(with_text=True, with_image=True))
     (project / "DPSH.xlsx").write_bytes(_make_xlsx_bytes(with_image=False))
     (project / "BUDGET.xlsx").write_bytes(_make_xlsx_bytes(with_image=True))
-    (project / "notes.txt").write_text("some notes")
+    # Larger text body (>150 bytes) so it doesn't trip Rule B's text_stub guard
+    (project / "notes.txt").write_text("some notes — " + ("padding " * 30))
     (project / "ANNEXES" / "sondeig.pdf").write_bytes(_make_min_pdf_bytes(with_text=True))
     (project / "FOTOGRAFIES" / "foto1.jpg").write_bytes(b"\xff\xd8\xff" + b"d" * 6000)
     (project / "ACCEPTACIO" / "signed.pdf").write_bytes(_make_min_pdf_bytes(with_text=True))
@@ -676,3 +677,174 @@ def test_logo_threshold_constant_is_conservative():
     """Guardrail against someone accidentally relaxing the threshold to a value
     that admits real content (validated empty band is Hamming 7–21)."""
     assert 0 < LOGO_PHASH_THRESHOLD <= 10
+
+
+# ---------------------------------------------------------------------------
+# Silent-source rules — coordinates_text / accounting_memo / text_stub
+# ---------------------------------------------------------------------------
+
+
+def test_coordenades_txt_is_coordinates_text(tmp_path):
+    """`*COORDENADES*.txt` should be classified as coordinates_text, useful=True,
+    with the deterministic-parse conversion strategy."""
+    project = tmp_path / "demo_coords"
+    (project / "ANNEXES").mkdir(parents=True)
+    (project / "ANNEXES" / "COORDENADES.txt").write_text(
+        "Coordenades UTM (X);(Y);(Z);\n"
+        "P-1\n"
+        "308781,86 ; 4613950.63 ; 198.9\n",
+        encoding="utf-8",
+    )
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "ANNEXES/COORDENADES.txt")
+    assert f.category == "coordinates_text"
+    assert f.useful is True
+    assert f.conversion_strategy == "parse_deterministically"
+
+
+def test_coordenades_txt_wins_over_text_stub_even_when_small_and_patternless(tmp_path):
+    """Rule A (COORDENADES filename) must beat Rule B's small-text-stub guard.
+    File is <150 bytes AND has no coord/depth pattern in the preview window."""
+    project = tmp_path / "demo_coords_tiny"
+    project.mkdir()
+    (project / "COORDENADES.txt").write_text(
+        "Coordenades UTM (X);(Y);(Z);\n", encoding="utf-8"
+    )
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "COORDENADES.txt")
+    assert f.category == "coordinates_text"
+    assert f.useful is True
+    assert f.conversion_strategy == "parse_deterministically"
+
+
+def test_classify_dte_txt_marks_skip(tmp_path):
+    """DTE.txt accounting memo at root → category=accounting_memo, useful=False."""
+    project = tmp_path / "demo_dte"
+    project.mkdir()
+    (project / "DTE.txt").write_text(
+        "EN DATA 02/03 DTO AQUEST INFORME PER UN IMPORT DE 1016,40€ - VCT: 30/03/26",
+        encoding="utf-8",
+    )
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "DTE.txt")
+    assert f.category == "accounting_memo"
+    assert f.useful is False
+    assert f.conversion_strategy == "skip"
+
+
+def test_classify_small_text_with_no_pattern_skips(tmp_path):
+    """Small generic .txt (<150B) with no coord/depth pattern → text_stub, skipped."""
+    project = tmp_path / "demo_stub"
+    project.mkdir()
+    (project / "note.txt").write_text("just a tiny note from Eva", encoding="utf-8")
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "note.txt")
+    assert f.category == "text_stub"
+    assert f.useful is False
+    assert f.conversion_strategy == "skip"
+
+
+def test_classify_small_coord_text_kept_useful(tmp_path):
+    """Small .txt that DOES contain a coord pattern must NOT be classified as text_stub."""
+    project = tmp_path / "demo_coord_small"
+    project.mkdir()
+    (project / "coords.txt").write_text(
+        "308781;4613950;198.9\n", encoding="utf-8"
+    )
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "coords.txt")
+    assert f.category == "text"
+    assert f.useful is True
+
+
+def test_classify_small_depth_text_kept_useful(tmp_path):
+    """Small .txt with a depth pattern (e.g. '-3.5 m') must NOT be skipped."""
+    project = tmp_path / "demo_depth_small"
+    project.mkdir()
+    (project / "depths.txt").write_text("Refus a -3.5 m\n", encoding="utf-8")
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "depths.txt")
+    assert f.category == "text"
+    assert f.useful is True
+
+
+def test_classify_larger_text_not_subjected_to_pattern_guard(tmp_path):
+    """A .txt file >=150B with no patterns is still kept (rule only fires <150B)."""
+    project = tmp_path / "demo_larger"
+    project.mkdir()
+    (project / "long.txt").write_text("padding " * 50, encoding="utf-8")
+    typ = classify_project(project, extract_images=False)
+    f = _find(typ, "long.txt")
+    assert f.category == "text"
+    assert f.useful is True
+
+
+# ---------------------------------------------------------------------------
+# Pressupost boilerplate skip (Rule C)
+# ---------------------------------------------------------------------------
+
+
+def _build_pdf_with_n_images(out: Path, n: int) -> None:
+    """Build a PDF embedding `n` distinct noisy images (one per page).
+
+    Each image is large enough to pass MIN_IMAGE_BYTES; using random noise
+    avoids any logo-filter false-positives.
+    """
+    import fitz
+
+    doc = fitz.open()
+    for i in range(n):
+        page = doc.new_page()
+        page.insert_text((72, 72), f"Page {i}")
+        # Vary the seed by injecting a per-image stream
+        page.insert_image(
+            fitz.Rect(100, 100, 356, 356), stream=_noisy_png_bytes(64 + i)
+        )
+    out.write_bytes(doc.tobytes())
+    doc.close()
+
+
+def test_pressupost_early_image_skipped(tmp_path):
+    """Extracted images with index <6 from a PRESSUPOST_* parent are
+    classified `pressupost_boilerplate, useful=False, skip`."""
+    project = tmp_path / "demo_press"
+    project.mkdir()
+    pdf = project / "PRESSUPOST_GEOTEC.pdf"
+    _build_pdf_with_n_images(pdf, n=3)
+    typ = classify_project(project, extract_images=True)
+    children = typ.children_of("PRESSUPOST_GEOTEC.pdf")
+    assert children, "expected extracted images from the pressupost PDF"
+    for c in children:
+        assert c.category == "pressupost_boilerplate"
+        assert c.useful is False
+        assert c.conversion_strategy == "skip"
+
+
+def test_pressupost_late_image_kept(tmp_path):
+    """Extracted images with index >=6 are NOT skipped by Rule C."""
+    project = tmp_path / "demo_press_late"
+    project.mkdir()
+    pdf = project / "PRESSUPOST_GEOTEC.pdf"
+    _build_pdf_with_n_images(pdf, n=8)
+    typ = classify_project(project, extract_images=True)
+    children = typ.children_of("PRESSUPOST_GEOTEC.pdf")
+    indexed = {Path(c.path).name: c for c in children}
+    # img_006 and img_007 should NOT be pressupost_boilerplate
+    late = [c for name, c in indexed.items() if name.startswith("img_006") or name.startswith("img_007")]
+    assert late, "expected at least one late-index extracted image"
+    for c in late:
+        assert c.category != "pressupost_boilerplate"
+        assert c.useful is True
+
+
+def test_pressupost_skip_only_for_pressupost_parent(tmp_path):
+    """Rule C must NOT fire for non-pressupost parents."""
+    project = tmp_path / "demo_other_parent"
+    project.mkdir()
+    pdf = project / "PLAN_COST_X.pdf"
+    _build_pdf_with_n_images(pdf, n=2)
+    typ = classify_project(project, extract_images=True)
+    children = typ.children_of("PLAN_COST_X.pdf")
+    assert children
+    for c in children:
+        assert c.category != "pressupost_boilerplate"
