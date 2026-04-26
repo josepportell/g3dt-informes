@@ -25,6 +25,42 @@
 
 <!-- Editat per Eva amb Josep. Canvis aquí invaliden tota la cache de Fase 5. -->
 
+## Coordenades UTM (`utm_x`, `utm_y`, opcionalment `utm_z`)
+
+Format autoritari: **EPSG:25831 / ETRS89 UTM Fus 31N** per a tota
+Catalunya i Aragó (Pirineu inclòs). Les unitats són **metres**, no graus.
+
+**Forma esperada del valor**:
+- `utm_x`: enter de **6 dígits**, en el rang ~280.000–460.000 per
+  Catalunya (Anciles al Pirineu pot arribar a ~330.000).
+- `utm_y`: enter de **7 dígits**, en el rang ~4.500.000–4.750.000.
+- `utm_z` (cota referència, msnm): número de 1–4 dígits + decimals
+  opcionals, en el rang ~0–2500 (l'Anciles a +1106).
+
+**MAI acceptar com a UTM**:
+- Decimals petits (p.ex. `0.70348`, `41.654531`) — això és lat/lon
+  WGS84, no UTM. Si veus un candidat amb aquesta forma a `utm_x`/
+  `utm_y`, és un error del LLM o un canvi de sistema de coordenades.
+  **Demota'l a l'última posició** i marca `has_conflict=true`.
+- Strings amb `°` / `º` o que contenen "lat", "lon", "longitud",
+  "latitud" — sistemes geogràfics, no projectats.
+
+**Font autoritativa**:
+1. `ANNEXES/COORDENADES.txt` (GPS de camp d'Eva, 1 línia per DPSH amb
+   format `X ; Y ; Z`).
+2. Plànol arquitectònic — caixetí o annex de coordenades.
+3. Geocodificació automàtica (Cadastre WFS, ICGC) — només com a
+   fallback quan no hi ha font primària.
+
+**Avís per a Pass B/C (auditor de grup)**: el grup `coordinates` ha
+estat històricament destructiu (Pass C va corrompre `utm_x`/`utm_y`
+substituint UTM per lat/lon decimals a Alcoletge). **Si com a auditor
+de grup detectes un factor que afectaria `utm_x` o `utm_y`, el factor
+ha de ser explícitament sobre la font (no sobre el valor), i la
+revisió només pot promoure candidats que respectin el format
+esperat (6/7 dígits enters).** En cas de dubte, deixa l'ordenació de
+Passada A intacta.
+
 ## Identificació del projecte
 
 - `expedient` (número numèric llarg, p.ex. 4001670): la font autoritativa
@@ -113,6 +149,32 @@ Exemple Alcoletge: el 2n nivell (E>400, φ=30°, c=1.0, γ=2.0) és el bearing
 layer que justifica `Qa = 3.50 kg/cm²`. El 1r nivell (rebliment feble:
 E=50, φ=28°, c=0.0, γ=1.80) és descartat per Eva i no s'ha de propagar
 als conceptes geomecànics finals.
+
+## Noms d'empreses, persones, productes — preferir forma completa
+
+Quan dos candidats ofereixen el mateix concepte amb formes diferents
+(p.ex. *"TPS PROSPECCIÓ DEL SUBSÒL SL"* vs *"TPS"* o *"SOIL-ASSAIG"* vs
+*"TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)"*), **prefereix la forma
+completa registrada**. Criteris d'autoritat:
+
+1. **Forma signada/registrada > forma curta**: el nom legal complet
+   (amb `S.L.` / `S.A.` / `S.L.U.` / nom de persona col·legiat) és
+   l'autoritatiu. Les formes curtes (acrònims, marques) són alies.
+2. **Pressupost signat / contracte / albarà signat > correu informal**:
+   els documents signats porten el nom registrat; els correus i marques
+   tendeixen a la forma curta.
+3. **Nom oficial > "trading as" / "comercialitzat com"**: si veus
+   `"X SL (comercialitzat com Y)"`, el camp ha de contenir `X SL`, no
+   `Y`.
+4. **Persones**: nom + cognoms complets > inicials + cognom > només
+   cognom.
+
+Exemple del Alcoletge Pass C (2026-04-26): `lab_testing_company` va
+ser revisat de `"TPS PROSPECCIÓ DEL SUBSÒL SL (SOIL ASSAIG)"` (forma
+completa, correcte) cap a `"SOIL-ASSAIG"` (alies comercial). Aquest
+canvi va ser **incorrecte** — la forma autoritativa és `TPS
+PROSPECCIÓ DEL SUBSÒL SL`. Pass B no hauria de generar factors que
+prefereixin alies sobre noms registrats.
 
 ## Documents prioritaris vs prior outputs
 
