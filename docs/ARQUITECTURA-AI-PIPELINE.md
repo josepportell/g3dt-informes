@@ -74,7 +74,69 @@ Cada fase ha de ser consultable de tres maneres:
 - **(b) Programàtica:** funcions Python exposen l'objecte pydantic amb mètodes de consulta.
 - **(c) Estàtica:** JSON persistit al disc que qualsevol eina pot llegir (jq, grep, frontend).
 
-### 3.4 Cache explícit, refresh opcional
+### 3.4 Per què Anthropic API i no Claude Code subscription
+
+El pipeline crida l'API d'Anthropic directament (via `anthropic.Anthropic()`)
+en lloc d'executar-se via Claude Code (l'eina de subscripció). Aquesta és
+una decisió arquitectural, no una preferència. Els motius es divideixen en
+dos blocs:
+
+#### 3.4.a Producció — el pipeline ha de córrer sense humà al loop
+
+L'arquitectura de producció és: Eva obre `localhost:8765`, selecciona
+projecte al wizard, clica "Generar Informe", i la FastAPI executa
+Stages 0–7 autònomament. Eva NO té Claude Code obert mentre el pipeline
+corre. Claude Code és una eina d'orquestació/desenvolupament; el pipeline
+és un sistema autònom amb la seva pròpia API key configurada.
+
+#### 3.4.b Desenvolupament — fins i tot debuggant, l'API és necessària
+
+Aquí és on la decisió genera dubtes raonables. Per què no debuggar via
+Claude Code i estalviar tokens? Tres restriccions tècniques ho impedeixen:
+
+1. **Escala / context window**. Un Stage 4 + Stage 5 run són ~120 crides
+   LLM en sèrie sobre 70+ fonts. Cada crida llegeix múltiples artefactes
+   (markdown, CSVs, imatges base64), formata un prompt amb tool_use
+   schema, valida JSON output, gestiona retries. Una sessió de Claude
+   Code es quedaria sense context window abans d'acabar 1 de cada 5
+   projectes. L'SDK gestiona cada crida aïllada en segons.
+
+2. **Cache per-source determinista**. La cache key és
+   `SHA256(prompt + model + schema_version)`. Re-córrer un projecte amb
+   un fitxer nou paga **$0** per als 71 no-canviats. El SDK escriu/llegeix
+   automàticament aquests caches per font i per concepte. Una sessió
+   conversacional NO té aquest mecanisme — cada cop es llegirien tots
+   els fitxers fresc, i el cost de re-iterar seria prohibitiu.
+
+3. **Reproducibilitat / cost accounting / tool-use enforcement**. L'SDK:
+   - Retorna `usage.input_tokens` per crida → alimenta el
+     `estimated_cost_usd` que Eva veu al wizard.
+   - Permet `tool_choice={"type": "tool", "name": "emit_X"}` que
+     **força** el LLM a retornar JSON conformant amb el schema.
+   - Implementa retries amb backoff i timeout per crida (60s).
+   - Bumps de `_SCHEMA_VERSION` invaliden caches automàticament.
+   
+   Tot això és invisible des d'una sessió Claude Code.
+
+#### 3.4.c On Claude Code SÍ aporta valor (gratis)
+
+Tasques **one-off, no-recurrents, fora del production path**:
+- Lectura de PDFs/docx d'Eva per extreure ground truth manual
+  (UTM coords, architect_name corrections).
+- Inspecció de fonts silencioses (`COORDENADES.txt`, `DTE.txt`).
+- Investigacions ad-hoc (debug, cas concret, una sola pregunta).
+- Anàlisi offline de manifests (trace tool, Pass C diff — tot contra
+  fitxers ja-existents al disc).
+- Orquestració del propi desenvolupament: spawnejar code-implementer /
+  code-reviewer / code-tester subagents per a feines paral·leles dins
+  la mateixa sessió.
+
+**Regla pràctica**: si una tasca corre N vegades sobre M projectes amb
+inputs canviants i necessita reproducibilitat → API. Si és una pregunta
+puntual sobre un fitxer concret o una feina de codi puntual → Claude
+Code.
+
+### 3.5 Cache explícit, refresh opcional
 Tots els artefactes són cacheats per defecte. Eva veu dades instantànies al wizard. Un botó "Refresh" força re-execució. El CLI té `--save` (escriu cache) i bandera per saltar sub-fases costoses.
 
 ---
