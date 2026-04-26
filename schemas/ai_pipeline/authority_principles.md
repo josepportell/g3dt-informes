@@ -1,31 +1,70 @@
 # Principis d'autoritat — Eva G3 Geotècnia
 
-## Principis generals
+> Aquest fitxer és l'única font d'autoritat que el ranker LLM rep com a
+> instrucció. L'ordre de seccions reflecteix la prioritat: **regles
+> generals primer**; **regles per concepte** quan diferences amb les
+> generals; **patrons específics** com a guies operatives. Si dues
+> seccions semblen contradir-se, la més específica guanya per al seu
+> domini concret.
+
+## Índex de seccions
+
+1. Principis generals
+2. Per concepte (regles ràpides; vegeu seccions específiques per a detalls)
+3. Resolució de conflictes (regla unificada)
+4. Coordenades UTM (`utm_x`, `utm_y`, `utm_z`)
+5. Identificació del projecte (`expedient` vs `commercial_code`)
+6. Identificació de persones (architect / client / promotor / firma)
+7. Bearing stratum per a paràmetres geomecànics
+8. Noms d'empreses, persones, productes — preferir forma completa
+9. Documents prioritaris vs prior outputs
+10. Candidats provinents de calculadors deterministes
+
+## 1. Principis generals
 - Font signada per l'arquitecte (plànol, memòria) > correu informal.
 - Plànol caixetí (secció de dades) > cotes interiors del dibuix per
   identificació de projecte, client, arquitecte.
 - Dada manuscrita de camp > dada transcrita (Excel) en cas de discrepància
   numèrica: la manuscrita és primària.
 - Informe previ d'Eva (`prior_report`) NO és autoritatiu — és un output, no
-  una font.
+  una font (vegeu §9 per a la regla matisada).
+- Quan dubtis: **deixa l'ordenació de Pass A intacta**. Pass B/C només
+  hauria de re-ordenar quan té un senyal CLAR i específic; soroll genèric
+  no justifica revisió.
 
-## Per concepte
-- `architect_name`: caixetí del plànol > domini del remitent de l'email > nom
-  de fitxer.
+## 2. Per concepte (regles ràpides)
+- `architect_name`: caixetí del plànol > domini del remitent de l'email
+  > nom de fitxer. **Detall complet a §6**.
 - `num_floors`: plànol > memòria escrita > email.
 - `utm_x`, `utm_y`: COORDENADES.txt de camp > plànol > geocodificació.
+  **Detall complet a §4** (incloent format estricte 6/7 dígits).
 - `sulfates_mg_kg`: informe de laboratori > fitxa de camp > estimació.
 - `municipality`: plànol caixetí > cadastre > adreça textual.
+- `geomech_*` (E, phi, cohesion, gamma): valor del **bearing stratum**,
+  no del nivell superficial. **Detall complet a §7**.
+- `expedient` vs `commercial_code`: identificadors diferents, mai
+  intercanviables. **Detall complet a §5**.
 
-## Resolució de conflictes
-- Entre dues versions de plànol, la més recent (`version_info` posterior o
-  `date_info` més gran) guanya.
-- Si un correu posterior contradiu un plànol anterior, pregunta: el correu
-  anuncia un canvi? Si sí, correu guanya. Si no (és comentari), plànol guanya.
+## 3. Resolució de conflictes (regla unificada)
+
+Aquesta regla aplica a TOTS els conceptes. Les seccions específiques (§4–§9)
+poden afegir matisos per al seu domini, però mai contradir aquesta regla:
+
+1. **Document signat > document no signat** per al mateix camp.
+2. **Versió més recent** quan hi ha `version_info` o `date_info` posterior.
+3. **Font primària > resum o transcripció**.
+4. **Correu posterior que ANUNCIA un canvi** sobreescriu el plànol; un
+   correu que només COMENTA es queda darrere del plànol.
+5. Si dues fonts del mateix nivell d'autoritat donen valors idèntics i
+   una tercera divergeix → marca `has_conflict=true`, posa la divergent
+   al final, i explica-ho breument a `conflict_note`.
+6. Si la regla específica del concepte (§4–§10) entra en conflicte amb
+   aquesta regla general, **la regla específica del concepte guanya**
+   per al seu domini.
 
 <!-- Editat per Eva amb Josep. Canvis aquí invaliden tota la cache de Fase 5. -->
 
-## Coordenades UTM (`utm_x`, `utm_y`, opcionalment `utm_z`)
+## 4. Coordenades UTM (`utm_x`, `utm_y`, opcionalment `utm_z`)
 
 Format autoritari: **EPSG:25831 / ETRS89 UTM Fus 31N** per a tota
 Catalunya i Aragó (Pirineu inclòs). Les unitats són **metres**, no graus.
@@ -61,7 +100,7 @@ revisió només pot promoure candidats que respectin el format
 esperat (6/7 dígits enters).** En cas de dubte, deixa l'ordenació de
 Passada A intacta.
 
-## Identificació del projecte
+## 5. Identificació del projecte
 
 - `expedient` (número numèric llarg, p.ex. 4001670): la font autoritativa
   és el caixetí de l'informe (`*_informe.doc/.docx/.pdf`), la portada
@@ -73,7 +112,7 @@ Passada A intacta.
 - Els dos identificadors poden aparèixer junts; cadascun té la seva
   pròpia variable. NO confondre.
 
-## Identificació de persones
+## 6. Identificació de persones
 
 - `architect_name` (arquitecte / arquitecte tècnic / enginyer / despatx):
   - **Font autoritativa**: caixetí del plànol arquitectònic (zona
@@ -118,7 +157,7 @@ del cos de l'informe (no del caixetí), demota'ls quan vegis qualsevol
 patró truncat o firm-led, perquè l'extractor posicional és susceptible a
 mis-alinear la frase amb la plantilla.
 
-## Semàntica del Bearing Stratum per a Paràmetres Geomecànics
+## 7. Semàntica del Bearing Stratum per a Paràmetres Geomecànics
 
 Eva sempre reporta paràmetres geomecànics (`geomech_E`, `geomech_phi`,
 `geomech_cohesion`, `geomech_gamma`) del **nivell de recolzament (bearing
@@ -150,7 +189,7 @@ layer que justifica `Qa = 3.50 kg/cm²`. El 1r nivell (rebliment feble:
 E=50, φ=28°, c=0.0, γ=1.80) és descartat per Eva i no s'ha de propagar
 als conceptes geomecànics finals.
 
-## Noms d'empreses, persones, productes — preferir forma completa
+## 8. Noms d'empreses, persones, productes — preferir forma completa
 
 Quan dos candidats ofereixen el mateix concepte amb formes diferents
 (p.ex. *"TPS PROSPECCIÓ DEL SUBSÒL SL"* vs *"TPS"* o *"SOIL-ASSAIG"* vs
@@ -176,7 +215,7 @@ canvi va ser **incorrecte** — la forma autoritativa és `TPS
 PROSPECCIÓ DEL SUBSÒL SL`. Pass B no hauria de generar factors que
 prefereixin alies sobre noms registrats.
 
-## Documents prioritaris vs prior outputs
+## 9. Documents prioritaris vs prior outputs
 
 - **Demote outputs intermedis del nostre propi pipeline**:
   `*_generated*.docx` (sortida de `ReportGenerator` no signada),
@@ -197,13 +236,33 @@ prefereixin alies sobre noms registrats.
 - **Els plànols arquitectònics** són autoritatius (caixetí + cotes
   internes) per a tot el que apareix al plànol.
 
-## Conflicts entre fonts
+## 10. Candidats provinents de calculadors deterministes
 
-- Per a la mateixa variable, **prefereix el document signat** sobre el
-  no-signat.
-- **Prefereix la versió més recent** quan hi ha `version_info` o dates
-  explícites.
-- **Prefereix la font primària** sobre el resum o la transcripció.
-- Si dues fonts del mateix nivell d'autoritat donen valors idèntics i una
-  tercera divergeix, marca `has_conflict=true` i posa la divergent al
-  final, però explica-ho a `conflict_note`.
+Quan vegis una font amb `source_path` que comença amb `calculator:`
+(p.ex. `calculator:legacy_geotech`, document_type
+`deterministic_calculator`), aquests candidats provenen d'un càlcul
+determinista que codifica la metodologia d'Eva — Terzaghi-Peck per `qa_value`,
+Schmertmann per `settlement_cm`, Crespo/CTE D.23/D.27 per `geomech_*`, etc.
+
+Regles d'autoritat per a aquests candidats:
+
+1. **Per als conceptes que el calculador computa** (qa_value,
+   settlement_cm, eventualment els geomech_*), el candidat del
+   calculador és **autoritatiu sobre extraccions textuals** quan els
+   inputs del calculador són correctes (Nb del bearing stratum,
+   geometria de la fonamentació de l'usuari, soil_type).
+2. **Excepció**: si una font primària documenta un valor explícit
+   d'Eva (p.ex. el plànol caixetí indica "Qa = 3.50 kg/cm²" o l'informe
+   signat porta el valor com a output final), aquest valor d'Eva guanya
+   sobre el calculador. Eva pot aplicar professional judgement (caps,
+   bicapa, factors empírics) que el calculador no captura encara.
+3. Si el valor del calculador divergeix significativament d'altres
+   candidats d'alta confiança, **marca `has_conflict=true`** i posa el
+   calculador al davant; el `conflict_note` ha d'esmentar la divergència
+   per a revisió d'Eva.
+4. **No suprimir** candidats LLM tot i tenir un calculador disponible
+   — l'usuari (Eva) ha de poder veure les alternatives al wizard.
+
+> Nota tècnica: els candidats del calculador apareixen al ranking
+> només quan `G3DT_ENABLE_CALCULATOR_DELEGATION=true` (feature flag,
+> Phase 1 MVP). Quan està OFF, no s'emeten i aquesta secció no aplica.

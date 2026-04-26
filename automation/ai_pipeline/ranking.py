@@ -180,6 +180,23 @@ def _calculator_delegation_enabled() -> bool:
     return os.environ.get(_CALCULATOR_DELEGATION_ENV, "false").lower() == "true"
 
 
+def _skip_groups_from_env() -> set[str]:
+    """Comma-separated list of group names to skip in Pass B.
+
+    Reads `G3DT_AI_SKIP_GROUPS` env var. Empty/unset → empty set.
+    Whitespace-tolerant. Group names are case-sensitive (matching the
+    `group` field in `report_variables.yaml`).
+
+    Examples:
+        G3DT_AI_SKIP_GROUPS="coordinates"
+        G3DT_AI_SKIP_GROUPS="coordinates,narrative,site_observations"
+    """
+    raw = os.environ.get("G3DT_AI_SKIP_GROUPS", "").strip()
+    if not raw:
+        return set()
+    return {part.strip() for part in raw.split(",") if part.strip()}
+
+
 def _load_combined_candidates(project_path: Path) -> ProjectAnalysis:
     """Load Stage 4 analysis, optionally merging Stage 4.5 calculator candidates.
 
@@ -1922,8 +1939,15 @@ def rank_project(
     raise ValueError.
 
     Args:
-        group_filter: if provided, only these group names get Pass B/C.
+        group_filter: optional include-list of group names; if set, groups
+            not in it are skipped silently.
         no_group_pass: if True, skip Pass B and Pass C entirely.
+
+    Environment:
+        G3DT_AI_SKIP_GROUPS: comma-separated group names. Pass B is skipped
+            for these (with explicit skipped_reason). Default: empty (no skip).
+            Useful for groups that produce destructive Pass C reorderings
+            (e.g., coordinates on Alcoletge corrupted utm_x/utm_y).
     """
     pp = Path(project_path).resolve()
 
@@ -2117,9 +2141,19 @@ def rank_project(
             group_to_concepts.setdefault(gname, []).append(cdef)
 
         ordered_groups = sorted(group_to_concepts.keys())
+        env_skip_groups = _skip_groups_from_env()
         group_systemic_aborted = False
         for gi, gname in enumerate(ordered_groups):
             if group_filter_set is not None and gname not in group_filter_set:
+                continue
+            if gname in env_skip_groups:
+                groups[gname] = GroupAuditResult(
+                    group=gname,
+                    skipped_reason=(
+                        "saltat via G3DT_AI_SKIP_GROUPS "
+                        "(cas de corrupció de coordinates a l'auditoria B1)"
+                    ),
+                )
                 continue
             if group_systemic_aborted:
                 groups[gname] = GroupAuditResult(

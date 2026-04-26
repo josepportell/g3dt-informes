@@ -1948,6 +1948,164 @@ def test_group_filter_restricts_audits(tmp_path):
     assert g2 not in ranking.groups
 
 
+# ─── G3DT_AI_SKIP_GROUPS env var (opt-in Pass B skip) ─────────────────
+
+
+def _two_groups_with_two_concepts() -> tuple[str, list[str], str, list[str]]:
+    """Return (g1, [cids_g1[:2]], g2, [cids_g2[:2]]) for two groups each with ≥2 concepts."""
+    defs = load_concept_definitions()
+    from collections import defaultdict
+    by_group: dict[str, list[str]] = defaultdict(list)
+    for cid, m in defs.items():
+        by_group[m["group"]].append(cid)
+    groups_with_two = sorted(g for g, items in by_group.items() if len(items) >= 2)
+    if len(groups_with_two) < 2:
+        pytest.skip("need at least 2 groups with ≥2 concepts")
+    g1, g2 = groups_with_two[:2]
+    return g1, sorted(by_group[g1])[:2], g2, sorted(by_group[g2])[:2]
+
+
+def test_skip_groups_env_var_skips_named_groups(monkeypatch, tmp_path):
+    """G3DT_AI_SKIP_GROUPS skips Pass B for the listed groups; the
+    GroupAuditResult is recorded with skipped_reason citing the env var."""
+    g1, cids_g1, g2, cids_g2 = _two_groups_with_two_concepts()
+    monkeypatch.setenv("G3DT_AI_SKIP_GROUPS", g1)
+
+    all_cids = cids_g1 + cids_g2
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in all_cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in all_cids}
+
+    audited_groups: list[str] = []
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            text = _user_text(kwargs)
+            # Record which group is being audited
+            for candidate in (g1, g2):
+                if f"`{candidate}`" in text:
+                    audited_groups.append(candidate)
+                    break
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[],
+                    revisions=[
+                        {"concept_id": cid, "revise": False, "reason": ""}
+                        for cid in (cids_g1 if g1 in text else cids_g2)
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project,
+        analysis=analysis,
+        client=client,
+        concept_filter=set(all_cids),
+    )
+
+    # Pass B was NOT invoked for g1.
+    assert g1 not in audited_groups
+    # g1 is recorded as skipped via env var.
+    assert g1 in ranking.groups
+    assert "G3DT_AI_SKIP_GROUPS" in ranking.groups[g1].skipped_reason
+    # g2 proceeded normally.
+    assert g2 in audited_groups
+    assert g2 in ranking.groups
+    assert ranking.groups[g2].skipped_reason == ""
+
+
+def test_skip_groups_env_var_unset_processes_all_groups(monkeypatch, tmp_path):
+    """Default (env var unset) preserves the existing behavior: all eligible
+    groups are audited."""
+    monkeypatch.delenv("G3DT_AI_SKIP_GROUPS", raising=False)
+
+    g1, cids_g1, g2, cids_g2 = _two_groups_with_two_concepts()
+    all_cids = cids_g1 + cids_g2
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in all_cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in all_cids}
+
+    audited_groups: list[str] = []
+
+    def behavior(call_num, kwargs):
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            text = _user_text(kwargs)
+            for candidate in (g1, g2):
+                if f"`{candidate}`" in text:
+                    audited_groups.append(candidate)
+                    break
+            return _FakeGroupResponse(
+                _build_group_audit_tool_input(
+                    factors=[],
+                    revisions=[
+                        {"concept_id": cid, "revise": False, "reason": ""}
+                        for cid in (cids_g1 if g1 in text else cids_g2)
+                    ],
+                )
+            )
+        cid = _extract_cid_from_kwargs(kwargs)
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project,
+        analysis=analysis,
+        client=client,
+        concept_filter=set(all_cids),
+    )
+
+    # Both groups audited.
+    assert g1 in audited_groups
+    assert g2 in audited_groups
+    assert ranking.groups[g1].skipped_reason == ""
+    assert ranking.groups[g2].skipped_reason == ""
+
+
+def test_skip_groups_env_var_handles_multiple_groups(monkeypatch, tmp_path):
+    """Comma-separated list with whitespace: 'g1, g2' skips both."""
+    g1, cids_g1, g2, cids_g2 = _two_groups_with_two_concepts()
+    monkeypatch.setenv("G3DT_AI_SKIP_GROUPS", f"{g1}, {g2}")  # whitespace tolerated
+
+    all_cids = cids_g1 + cids_g2
+    analysis = _multi_analysis_for_concepts(
+        {cid: [("a.pdf", "X", 0.9), ("b.pdf", "Y", 0.7)] for cid in all_cids}
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    pass_a = {cid: _expected_candidate_ids(analysis, cid) for cid in all_cids}
+
+    group_audit_calls = 0
+
+    def behavior(call_num, kwargs):
+        nonlocal group_audit_calls
+        if "emit_group_audit" in str(kwargs.get("tools", "")):
+            group_audit_calls += 1
+            return _FakeGroupResponse(_build_group_audit_tool_input([], []))
+        cid = _extract_cid_from_kwargs(kwargs)
+        return _FakeResponse(_build_ranked_tool_input(pass_a[cid]))
+
+    client = _FakeAnthropicClient(behavior)
+    ranking = rank_project(
+        project,
+        analysis=analysis,
+        client=client,
+        concept_filter=set(all_cids),
+    )
+
+    # No group-audit calls were made for the two skipped groups.
+    assert group_audit_calls == 0
+    # Both groups recorded as skipped via env var.
+    for gname in (g1, g2):
+        assert gname in ranking.groups
+        assert "G3DT_AI_SKIP_GROUPS" in ranking.groups[gname].skipped_reason
+
+
 def test_tokens_and_cost_aggregate_pass_b_and_c(tmp_path):
     group_name, cids = _pick_group_with_two_concepts()
     cids = cids[:2]
