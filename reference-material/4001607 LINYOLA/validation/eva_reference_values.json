@@ -1,17 +1,18 @@
 {
   "project": "4001607 LINYOLA",
   "source_file": "4001607_informe.doc",
-  "extraction_date": "2026-04-05T22:16:53.778448",
+  "extraction_date": "2026-04-26T08:37:14.441753",
   "template_file": "g3dt-jinja-template.docx",
   "extractor_version": "1.0",
   "statistics": {
     "total_template_variables": 56,
-    "total_extracted": 52,
-    "extraction_rate": 92.9,
+    "total_extracted": 57,
+    "extraction_rate": 101.8,
     "by_method": {
       "paragraph_single": 13,
       "table_cell": 13,
       "loop_table": 5,
+      "table_flatten": 5,
       "intelligent_analysis": 21
     },
     "body_paragraphs": {
@@ -34,13 +35,131 @@
       "template_text": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del {{ access_street }}.",
       "reference_text": "El dia 1 d ‘octubre de 2025, es va visitar l’obra per tal de:"
     },
+    "adjacent_east_fmt": {
+      "value": "Per la part est i pel sud amb parcel·les buides.",
+      "position": "p083",
+      "position_description": "Body paragraph 83",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Per la part est i pel sud amb parcel·les buides."
+    },
+    "adjacent_north_fmt": {
+      "value": "Per la part nord amb una parcel·la ocupada per una habitatge unifamiliar.",
+      "position": "p082",
+      "position_description": "Body paragraph 82",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Per la part nord amb una parcel·la ocupada per una habitatge unifamiliar."
+    },
+    "adjacent_south_fmt": {
+      "value": "Per la part est i pel sud amb parcel·les buides.",
+      "position": "p083",
+      "position_description": "Body paragraph 83",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Per la part est i pel sud amb parcel·les buides."
+    },
+    "adjacent_west_fmt": {
+      "value": "I finalment, per la part oest, amb el carrer per on es realitza l’entrada.",
+      "position": "p084",
+      "position_description": "Body paragraph 84",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "I finalment, per la part oest, amb el carrer per on es realitza l’entrada."
+    },
+    "architect_company": {
+      "value": "BUNYESC ARQUITECTURA EFICIENT",
+      "position": "p030",
+      "position_description": "Body paragraph 30",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "BUNYESC ARQUITECTURA EFICIENT"
+    },
+    "architect_name_upper": {
+      "value": "SÍLVIA EROLES BALAGUERÓ",
+      "position": "p030",
+      "position_description": "Body paragraph 30",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "SÍLVIA EROLES BALAGUERÓ"
+    },
     "building_structure_desc": {
-      "value": "sense nivell de soterrani",
+      "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
       "position": "p327",
       "position_description": "Body paragraph 327",
+      "confidence": 0.66,
+      "extraction_method": "paragraph_single",
+      "template_text": "Segons el projecte executiu es preveu la construcció d’una estructura {{ building_structure_desc }}, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació",
+      "reference_text": "Segons el projecte executiu es preveu la construcció d’una estructura sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentaci"
+    },
+    "building_type_lower": {
+      "value": "un nou habitatge unifamiliar",
+      "position": "p030",
+      "position_description": "Body paragraph 30",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "un nou habitatge unifamiliar"
+    },
+    "client": {
+      "value": "SRA. SÍLVIA EROLES BALAGUERÓ",
+      "position": "p023",
+      "position_description": "Body paragraph 23",
       "confidence": 0.95,
       "extraction_method": "intelligent_analysis",
-      "reference_text": "...estructura sense nivell de soterrani, i per tant, únicament es preveu el sanejament..."
+      "template_text": "",
+      "reference_text": "SRA. SÍLVIA EROLES BALAGUERÓ"
+    },
+    "conclusions_aggressivity_statement": {
+      "value": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+      "position": "p409",
+      "position_description": "Body paragraph 409",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó."
+    },
+    "conclusions_levels_detected": {
+      "value": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+      "position": "p383",
+      "position_description": "Body paragraph 383",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
+    },
+    "conclusions_water_statement": {
+      "value": "En data de la realització dels treballs de camp, i fins la cota assajada no es va detectar presència de nivell freàtic en tots els assaigs realitzats.",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "En data de la realització dels treballs de camp, i fins la cota assajada no es va detectar presència de nivell freàtic en tots els assaigs realitzats."
+    },
+    "cota_referencia": {
+      "value": "+245.0",
+      "position": "t4.row0.cota",
+      "position_description": "Flattened from first DPSH test elevation",
+      "confidence": 0.9,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "+245.0"
+    },
+    "csn_radon_text": {
+      "value": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
+      "position": "p353",
+      "position_description": "Body paragraph 353",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edi..."
     },
     "cte_edificacio": {
       "value": "C-0",
@@ -118,6 +237,51 @@
       "template_text": "Expedient Núm.:  {{ expedient }}",
       "reference_text": "Expedient Núm.: 4001607"
     },
+    "geo_p": {
+      "value": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
+      "position": "p181",
+      "position_description": "Body paragraph 181",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localme..."
+    },
+    "geomech_E": {
+      "value": "100",
+      "position": "t12.row0.E",
+      "position_description": "Flattened from geotech_rows[0].E",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "100"
+    },
+    "geomech_cohesion": {
+      "value": "0.05",
+      "position": "t12.row0.cohesion",
+      "position_description": "Flattened from geotech_rows[0].cohesion",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "0.05"
+    },
+    "geomech_gamma": {
+      "value": "1.90",
+      "position": "t12.row0.density",
+      "position_description": "Flattened from geotech_rows[0].density",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "1.90"
+    },
+    "geomech_phi": {
+      "value": "28",
+      "position": "t12.row0.phi",
+      "position_description": "Flattened from geotech_rows[0].phi",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "28"
+    },
     "geotech_rows": {
       "value": [
         {
@@ -155,6 +319,24 @@
       "template_text": "Profunditat: {{ lab_depth }}",
       "reference_text": "Profunditat:  -1.00  a -1.15 m"
     },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
+      "position": "p106",
+      "position_description": "Body paragraph 106",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL, S.L"
+    },
+    "lab_field_description": {
+      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
+      "position": "p106",
+      "position_description": "Body paragraph 106",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
+    },
     "lab_location": {
       "value": "Punt: P-3",
       "position": "t7_r0_c1",
@@ -173,6 +355,24 @@
       "template_text": "Mostra : {{ lab_sample_id }}",
       "reference_text": "Mostra : SPT-1"
     },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p157",
+      "position_description": "Body paragraph 157",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_testing_description": {
+      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
+      "position": "p157",
+      "position_description": "Body paragraph 157",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
+    },
     "lab_tests_text": {
       "value": "Assaig de Límits d’Atterberg UNE 103103/94 – 104/93\nAssaig d’expansivitat Lambe UNE 103500/94\nAssaig de contingut en sulfats UNE 83963 : 2008",
       "position": "t7_r1_c1",
@@ -183,12 +383,22 @@
       "reference_text": "Assaig de Límits d’Atterberg UNE 103103/94 – 104/93\nAssaig d’expansivitat Lambe UNE 103500/94\nAssaig de contingut en sulfats UNE 83963 : 2008"
     },
     "location_sentence": {
-      "value": "al Carrer Clot de la Llacuna nº16 de Linyola",
-      "position": "p036",
-      "position_description": "Body paragraph 36",
-      "confidence": 0.95,
+      "value": "L’edificació que es preveu construir presentarà les següents característiques:",
+      "position": "p066",
+      "position_description": "Body paragraph 66",
+      "confidence": 0.208,
+      "extraction_method": "paragraph_single",
+      "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
+      "reference_text": "L’edificació que es preveu construir presentarà les següents característiques:"
+    },
+    "materials_intro": {
+      "value": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+      "position": "p191",
+      "position_description": "Body paragraph 191",
+      "confidence": 0.9,
       "extraction_method": "intelligent_analysis",
-      "reference_text": "El solar on s'emplaçarà el nou habitatge unifamiliar es situa al Carrer Clot de la Llacuna nº16 de Linyola."
+      "template_text": "",
+      "reference_text": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):"
     },
     "municipality": {
       "value": "Linyola",
@@ -241,6 +451,24 @@
       "template_text": "Qa= {{ qa_value }} Kg/cm2  amb un factor de seguretat inclòs de F=3",
       "reference_text": "Qa= 3.0 Kg/cm2  amb un factor de seguretat inclòs de F=3"
     },
+    "radon_zone": {
+      "value": "0",
+      "position": "p375",
+      "position_description": "Body paragraph 375",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "0"
+    },
+    "radon_zone_description": {
+      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l’apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas radó en edificis tancats.",
+      "position": "p375",
+      "position_description": "Body paragraph 375",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l’apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas rad..."
+    },
     "seismic_ab_text": {
       "value": "0,04",
       "position": "p342",
@@ -290,15 +518,17 @@
       "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
       "reference_text": "Com que es tracta d’un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin."
     },
+    "site_description": {
+      "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al oest. La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
+      "position": "p088",
+      "position_description": "Body paragraph 88",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al oest. La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanad..."
+    },
     "sondeig_tests": {
       "value": [
-        {
-          "test_id": "Nº assaig",
-          "cota": "Punt",
-          "depth": "Prof. Extracció (m)",
-          "spt_ma": "N30",
-          "water": "Litologia"
-        },
         {
           "test_id": "SPT-1",
           "cota": "P-3",
@@ -312,7 +542,7 @@
       "confidence": 0.85,
       "extraction_method": "loop_table",
       "template_text": "Loop: ['test_id', 'cota', 'depth', 'spt_ma', 'water']",
-      "reference_text": "2 data rows"
+      "reference_text": "1 data rows"
     },
     "sulfate_baumann": {
       "value": "--",
@@ -376,174 +606,6 @@
       "extraction_method": "paragraph_single",
       "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
       "reference_text": "Taula 3, 4 i 5. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar."
-    },
-    "client": {
-      "value": "SRA. SÍLVIA EROLES BALAGUERÓ",
-      "position": "p023",
-      "position_description": "Body paragraph 23",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "SRA. SÍLVIA EROLES BALAGUERÓ"
-    },
-    "architect_name_upper": {
-      "value": "SÍLVIA EROLES BALAGUERÓ",
-      "position": "p030",
-      "position_description": "Body paragraph 30",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "SÍLVIA EROLES BALAGUERÓ"
-    },
-    "architect_company": {
-      "value": "BUNYESC ARQUITECTURA EFICIENT",
-      "position": "p030",
-      "position_description": "Body paragraph 30",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "BUNYESC ARQUITECTURA EFICIENT"
-    },
-    "building_type_lower": {
-      "value": "un nou habitatge unifamiliar",
-      "position": "p030",
-      "position_description": "Body paragraph 30",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "un nou habitatge unifamiliar"
-    },
-    "adjacent_east_fmt": {
-      "value": "Per la part est i pel sud amb parcel·les buides.",
-      "position": "p083",
-      "position_description": "Body paragraph 83",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Per la part est i pel sud amb parcel·les buides."
-    },
-    "adjacent_south_fmt": {
-      "value": "Per la part est i pel sud amb parcel·les buides.",
-      "position": "p083",
-      "position_description": "Body paragraph 83",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Per la part est i pel sud amb parcel·les buides."
-    },
-    "adjacent_north_fmt": {
-      "value": "Per la part nord amb una parcel·la ocupada per una habitatge unifamiliar.",
-      "position": "p082",
-      "position_description": "Body paragraph 82",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Per la part nord amb una parcel·la ocupada per una habitatge unifamiliar."
-    },
-    "adjacent_west_fmt": {
-      "value": "I finalment, per la part oest, amb el carrer per on es realitza l’entrada.",
-      "position": "p084",
-      "position_description": "Body paragraph 84",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "I finalment, per la part oest, amb el carrer per on es realitza l’entrada."
-    },
-    "site_description": {
-      "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al oest. La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
-      "position": "p088",
-      "position_description": "Body paragraph 88",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al oest. La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanad..."
-    },
-    "lab_field_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
-      "position": "p106",
-      "position_description": "Body paragraph 106",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL, S.L"
-    },
-    "lab_field_description": {
-      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
-      "position": "p106",
-      "position_description": "Body paragraph 106",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
-    },
-    "lab_testing_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
-      "position": "p157",
-      "position_description": "Body paragraph 157",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
-    },
-    "lab_testing_description": {
-      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
-      "position": "p157",
-      "position_description": "Body paragraph 157",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
-    },
-    "radon_zone": {
-      "value": "0",
-      "position": "p375",
-      "position_description": "Body paragraph 375",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "0"
-    },
-    "radon_zone_description": {
-      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l’apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas radó en edificis tancats.",
-      "position": "p375",
-      "position_description": "Body paragraph 375",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l’apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas rad..."
-    },
-    "csn_radon_text": {
-      "value": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
-      "position": "p353",
-      "position_description": "Body paragraph 353",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edi..."
-    },
-    "conclusions_levels_detected": {
-      "value": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
-      "position": "p383",
-      "position_description": "Body paragraph 383",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
-    },
-    "conclusions_water_statement": {
-      "value": "En data de la realització dels treballs de camp, i fins la cota assajada no es va detectar presència de nivell freàtic en tots els assaigs realitzats.",
-      "position": "p407",
-      "position_description": "Body paragraph 407",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "En data de la realització dels treballs de camp, i fins la cota assajada no es va detectar presència de nivell freàtic en tots els assaigs realitzats."
-    },
-    "conclusions_aggressivity_statement": {
-      "value": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
-      "position": "p409",
-      "position_description": "Body paragraph 409",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó."
-    },
-    "materials_intro": {
-      "value": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
-      "position": "p191",
-      "position_description": "Body paragraph 191",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):"
-    },
-    "geo_p": {
-      "value": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
-      "position": "p181",
-      "position_description": "Body paragraph 181",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localme..."
     }
   },
   "warnings": [
@@ -572,6 +634,7 @@
     "t6_r2_c2: No matching ref table for 'spt_depth_range'",
     "t6_r2_c3: No matching ref table for 'spt_n30'",
     "t6_r2_c4: No matching ref table for 'spt_lithology'",
-    "Loop table t8 (soil_level_rows): no matching reference table"
+    "Loop table t8 (soil_level_rows): no matching reference table",
+    "Merged 21 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, architect_company, architect_name_upper, building_type_lower, client..."
   ]
 }

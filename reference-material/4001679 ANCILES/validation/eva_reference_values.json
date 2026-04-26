@@ -1,17 +1,18 @@
 {
   "project": "4001679 ANCILES",
   "source_file": "4001679_informe_V0.doc",
-  "extraction_date": "2026-04-05T22:17:08.112101",
+  "extraction_date": "2026-04-26T08:37:33.750307",
   "template_file": "g3dt-jinja-template.docx",
   "extractor_version": "1.0",
   "statistics": {
     "total_template_variables": 56,
-    "total_extracted": 52,
-    "extraction_rate": 92.9,
+    "total_extracted": 57,
+    "extraction_rate": 101.8,
     "by_method": {
       "paragraph_single": 12,
-      "loop_table": 5,
       "table_cell": 13,
+      "loop_table": 5,
+      "table_flatten": 5,
       "intelligent_analysis": 22
     },
     "body_paragraphs": {
@@ -33,6 +34,123 @@
       "extraction_method": "paragraph_single",
       "template_text": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del {{ access_street }}.",
       "reference_text": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte."
+    },
+    "adjacent_east_fmt": {
+      "value": "Por la parte noreste con un campo de conreo herbáceo.",
+      "position": "p122",
+      "position_description": "Body paragraph 122",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Por la parte noreste con un campo de conreo herbáceo."
+    },
+    "adjacent_north_fmt": {
+      "value": "Por la parte noroeste con un jardín.",
+      "position": "p123",
+      "position_description": "Body paragraph 123",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Por la parte noroeste con un jardín."
+    },
+    "adjacent_south_fmt": {
+      "value": "Por la parte suroeste con un edificio de hasta 4 plantas sobre rasante.",
+      "position": "p124",
+      "position_description": "Body paragraph 124",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Por la parte suroeste con un edificio de hasta 4 plantas sobre rasante."
+    },
+    "adjacent_west_fmt": {
+      "value": "Y finalmente por el sureste, con una zona yerma con vegetación.",
+      "position": "p125",
+      "position_description": "Body paragraph 125",
+      "confidence": 0.8,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Y finalmente por el sureste, con una zona yerma con vegetación."
+    },
+    "architect_name_upper": {
+      "value": "ALBA MARIA BARRAU CASTÁN",
+      "position": "p066",
+      "position_description": "Body paragraph 66",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "ALBA MARIA BARRAU CASTÁN"
+    },
+    "building_structure_desc": {
+      "value": "un semisótano en dos de las siete viviendas previstas",
+      "position": "p333",
+      "position_description": "Body paragraph 333",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "...se prevé la construcción de un semisótano en dos de las siete viviendas previstas..."
+    },
+    "building_type_lower": {
+      "value": "7 viviendas unifamiliares adosadas",
+      "position": "p066",
+      "position_description": "Body paragraph 66",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "7 viviendas unifamiliares adosadas"
+    },
+    "client": {
+      "value": "SRA. ALBA MARIA BARRAU CASTÁN",
+      "position": "p059",
+      "position_description": "Body paragraph 59",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "SRA. ALBA MARIA BARRAU CASTÁN"
+    },
+    "conclusions_aggressivity_statement": {
+      "value": "A partir de los ensayos realizados se determina que los materiales del 2do nivel descrito se presentan, a priori xxxxxxx al hormigón.",
+      "position": "p443",
+      "position_description": "Body paragraph 443",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "A partir de los ensayos realizados se determina que los materiales del 2do nivel descrito se presentan, a priori xxxxxxx al hormigón."
+    },
+    "conclusions_levels_detected": {
+      "value": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
+      "position": "p416",
+      "position_description": "Body paragraph 416",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo."
+    },
+    "conclusions_water_statement": {
+      "value": "Con fecha de la realización de los trabajos de campo, y hasta la cota ensayada, no se detectó presencia de nivel freático en ninguno de los ensayos realizados.",
+      "position": "p441",
+      "position_description": "Body paragraph 441",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Con fecha de la realización de los trabajos de campo, y hasta la cota ensayada, no se detectó presencia de nivel freático en ninguno de los ensayos realizados."
+    },
+    "cota_referencia": {
+      "value": "+1106.40",
+      "position": "t4.row0.cota",
+      "position_description": "Flattened from first DPSH test elevation",
+      "confidence": 0.9,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "+1106.40"
+    },
+    "csn_radon_text": {
+      "value": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de que los edificios construidos en la zona sin soluciones específicas de protección frente al radón presenten concentraciones de radón superiores al nivel de referencia.",
+      "position": "p385",
+      "position_description": "Body paragraph 385",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de..."
     },
     "data_camp_text": {
       "value": "El día 19 de febrero de 2026, se visitó la obra para:",
@@ -104,6 +222,15 @@
       "template_text": "Loop: ['test_id', 'cota', 'depth', 'refusal', 'water']",
       "reference_text": "6 data rows"
     },
+    "empentes_paragraph": {
+      "value": "Para el dimensionado de los muros del sótano y para el cálculo del empuje de tierras habrá que tener en cuenta los parámetros geomecánicos de los materiales del primer nivel que se considera el más desfavorable.\nHabrá que tener en cuenta que en el trasdós del muro se tendrá que instalar un correcto drenaje para evitar que se acumule el agua y se produzca una sobrecarga en su trasdós.",
+      "position": "p463",
+      "position_description": "Body paragraph 463",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Para el dimensionado de los muros del sótano y para el cálculo del empuje de tierras habrá que tener en cuenta los parámetros geomecánicos de los materiales del primer nivel que se considera el más de..."
+    },
     "expedient": {
       "value": "Expediente Núm.: 4001679_v0",
       "position": "p474",
@@ -112,6 +239,51 @@
       "extraction_method": "paragraph_single",
       "template_text": "Expedient Núm.:  {{ expedient }}",
       "reference_text": "Expediente Núm.: 4001679_v0"
+    },
+    "geo_p": {
+      "value": "Desde finales del Oligoceno hasta la actualidad la depresión del Ebro ha dejado de actuar como una cuenca sedimentaria y ha pasado a ser una cubeta donde el agente predominante principal ha sido la erosión. Localmente, en algunos puntos de la cuenca, hay depósitos del Terciario superior y principalmente del Cuaternario. Estos corresponden a los materiales no consolidados que aparecen entre las rocas sedimentarias y la superficie, formados por arenas, limos y arcillas, donde abundan los caliches.",
+      "position": "p238",
+      "position_description": "Body paragraph 238",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Desde finales del Oligoceno hasta la actualidad la depresión del Ebro ha dejado de actuar como una cuenca sedimentaria y ha pasado a ser una cubeta donde el agente predominante principal ha sido la er..."
+    },
+    "geomech_E": {
+      "value": ">350",
+      "position": "t12.row0.E",
+      "position_description": "Flattened from geotech_rows[0].E",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": ">350"
+    },
+    "geomech_cohesion": {
+      "value": "0.00",
+      "position": "t12.row0.cohesion",
+      "position_description": "Flattened from geotech_rows[0].cohesion",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "0.00"
+    },
+    "geomech_gamma": {
+      "value": "2.00",
+      "position": "t12.row0.density",
+      "position_description": "Flattened from geotech_rows[0].density",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "2.00"
+    },
+    "geomech_phi": {
+      "value": "38",
+      "position": "t12.row0.phi",
+      "position_description": "Flattened from geotech_rows[0].phi",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "38º"
     },
     "geotech_rows": {
       "value": [
@@ -141,6 +313,24 @@
       "template_text": "Profunditat: {{ lab_depth }}",
       "reference_text": "Profundidad: -2.80 a -3.00 m"
     },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p149",
+      "position_description": "Body paragraph 149",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_field_description": {
+      "value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "position": "p149",
+      "position_description": "Body paragraph 149",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
+    },
     "lab_location": {
       "value": "Punto:  S-2",
       "position": "t7_r0_c1",
@@ -159,6 +349,24 @@
       "template_text": "Mostra : {{ lab_sample_id }}",
       "reference_text": "Muestra: MA-1"
     },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p217",
+      "position_description": "Body paragraph 217",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_testing_description": {
+      "value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "position": "p217",
+      "position_description": "Body paragraph 217",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
+    },
     "lab_tests_text": {
       "value": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08",
       "position": "t7_r1_c1",
@@ -169,12 +377,22 @@
       "reference_text": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08"
     },
     "location_sentence": {
-      "value": "en la calle Gral Ferraz nº20 en el municipio de Anciles, Benasque",
-      "position": "p072",
-      "position_description": "Body paragraph 72",
-      "confidence": 0.95,
+      "value": "La edificación que se prevé construir presentará las siguientes características:",
+      "position": "p066",
+      "position_description": "Body paragraph 66",
+      "confidence": 0.191,
+      "extraction_method": "paragraph_single",
+      "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
+      "reference_text": "La edificación que se prevé construir presentará las siguientes características:"
+    },
+    "materials_intro": {
+      "value": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
+      "position": "p248",
+      "position_description": "Body paragraph 248",
+      "confidence": 0.9,
       "extraction_method": "intelligent_analysis",
-      "reference_text": "La nueva edificación proyectada se sitúa en la calle Gral Ferraz nº20 en el municipio de Anciles, Benasque."
+      "template_text": "",
+      "reference_text": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos me..."
     },
     "municipality": {
       "value": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:",
@@ -227,6 +445,24 @@
       "template_text": "Qa= {{ qa_value }} Kg/cm2  amb un factor de seguretat inclòs de F=3",
       "reference_text": "Qa= 2.0 Kg/cm2 con un factor de seguridad incluido de F=3"
     },
+    "radon_zone": {
+      "value": "2",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "2"
+    },
+    "radon_zone_description": {
+      "value": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2."
+    },
     "seismic_ab_text": {
       "value": "AB = 0.05 g (siento g el valor de la gravedad)",
       "position": "p342",
@@ -275,6 +511,15 @@
       "extraction_method": "paragraph_single",
       "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
       "reference_text": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial."
+    },
+    "site_description": {
+      "value": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual.\nEn solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles.\nDada la geomorfología de la zona y su urbanización no se pueden observar en la zona ningún tipo de afloramiento de los materiales que serán atravesados por los ensayos previstos.",
+      "position": "p129",
+      "position_description": "Body paragraph 129",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaci..."
     },
     "sondeig_tests": {
       "value": [
@@ -380,182 +625,6 @@
       "extraction_method": "paragraph_single",
       "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
       "reference_text": "Tabla 3, 4 y 5. Resumen de los ensayos in situ realizados."
-    },
-    "client": {
-      "value": "SRA. ALBA MARIA BARRAU CASTÁN",
-      "position": "p059",
-      "position_description": "Body paragraph 59",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "SRA. ALBA MARIA BARRAU CASTÁN"
-    },
-    "architect_name_upper": {
-      "value": "ALBA MARIA BARRAU CASTÁN",
-      "position": "p066",
-      "position_description": "Body paragraph 66",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "ALBA MARIA BARRAU CASTÁN"
-    },
-    "building_type_lower": {
-      "value": "7 viviendas unifamiliares adosadas",
-      "position": "p066",
-      "position_description": "Body paragraph 66",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "7 viviendas unifamiliares adosadas"
-    },
-    "adjacent_east_fmt": {
-      "value": "Por la parte noreste con un campo de conreo herbáceo.",
-      "position": "p122",
-      "position_description": "Body paragraph 122",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Por la parte noreste con un campo de conreo herbáceo."
-    },
-    "adjacent_south_fmt": {
-      "value": "Por la parte suroeste con un edificio de hasta 4 plantas sobre rasante.",
-      "position": "p124",
-      "position_description": "Body paragraph 124",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Por la parte suroeste con un edificio de hasta 4 plantas sobre rasante."
-    },
-    "adjacent_north_fmt": {
-      "value": "Por la parte noroeste con un jardín.",
-      "position": "p123",
-      "position_description": "Body paragraph 123",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Por la parte noroeste con un jardín."
-    },
-    "adjacent_west_fmt": {
-      "value": "Y finalmente por el sureste, con una zona yerma con vegetación.",
-      "position": "p125",
-      "position_description": "Body paragraph 125",
-      "confidence": 0.8,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Y finalmente por el sureste, con una zona yerma con vegetación."
-    },
-    "site_description": {
-      "value": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual.\nEn solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles.\nDada la geomorfología de la zona y su urbanización no se pueden observar en la zona ningún tipo de afloramiento de los materiales que serán atravesados por los ensayos previstos.",
-      "position": "p129",
-      "position_description": "Body paragraph 129",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaci..."
-    },
-    "lab_field_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
-      "position": "p149",
-      "position_description": "Body paragraph 149",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
-    },
-    "lab_field_description": {
-      "value": "laboratorio de ensayos para el control de calidad de la edificación",
-      "position": "p149",
-      "position_description": "Body paragraph 149",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
-    },
-    "lab_testing_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
-      "position": "p217",
-      "position_description": "Body paragraph 217",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
-    },
-    "lab_testing_description": {
-      "value": "laboratorio de ensayos para el control de calidad de la edificación",
-      "position": "p217",
-      "position_description": "Body paragraph 217",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
-    },
-    "radon_zone": {
-      "value": "2",
-      "position": "p407",
-      "position_description": "Body paragraph 407",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "2"
-    },
-    "radon_zone_description": {
-      "value": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
-      "position": "p407",
-      "position_description": "Body paragraph 407",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2."
-    },
-    "csn_radon_text": {
-      "value": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de que los edificios construidos en la zona sin soluciones específicas de protección frente al radón presenten concentraciones de radón superiores al nivel de referencia.",
-      "position": "p385",
-      "position_description": "Body paragraph 385",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de..."
-    },
-    "conclusions_levels_detected": {
-      "value": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
-      "position": "p416",
-      "position_description": "Body paragraph 416",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo."
-    },
-    "conclusions_water_statement": {
-      "value": "Con fecha de la realización de los trabajos de campo, y hasta la cota ensayada, no se detectó presencia de nivel freático en ninguno de los ensayos realizados.",
-      "position": "p441",
-      "position_description": "Body paragraph 441",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Con fecha de la realización de los trabajos de campo, y hasta la cota ensayada, no se detectó presencia de nivel freático en ninguno de los ensayos realizados."
-    },
-    "conclusions_aggressivity_statement": {
-      "value": "A partir de los ensayos realizados se determina que los materiales del 2do nivel descrito se presentan, a priori xxxxxxx al hormigón.",
-      "position": "p443",
-      "position_description": "Body paragraph 443",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir de los ensayos realizados se determina que los materiales del 2do nivel descrito se presentan, a priori xxxxxxx al hormigón."
-    },
-    "materials_intro": {
-      "value": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
-      "position": "p248",
-      "position_description": "Body paragraph 248",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos me..."
-    },
-    "geo_p": {
-      "value": "Desde finales del Oligoceno hasta la actualidad la depresión del Ebro ha dejado de actuar como una cuenca sedimentaria y ha pasado a ser una cubeta donde el agente predominante principal ha sido la erosión. Localmente, en algunos puntos de la cuenca, hay depósitos del Terciario superior y principalmente del Cuaternario. Estos corresponden a los materiales no consolidados que aparecen entre las rocas sedimentarias y la superficie, formados por arenas, limos y arcillas, donde abundan los caliches.",
-      "position": "p238",
-      "position_description": "Body paragraph 238",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Desde finales del Oligoceno hasta la actualidad la depresión del Ebro ha dejado de actuar como una cuenca sedimentaria y ha pasado a ser una cubeta donde el agente predominante principal ha sido la er..."
-    },
-    "building_structure_desc": {
-      "value": "un semisótano en dos de las siete viviendas previstas",
-      "position": "p333",
-      "position_description": "Body paragraph 333",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "...se prevé la construcción de un semisótano en dos de las siete viviendas previstas..."
-    },
-    "empentes_paragraph": {
-      "value": "Para el dimensionado de los muros del sótano y para el cálculo del empuje de tierras habrá que tener en cuenta los parámetros geomecánicos de los materiales del primer nivel que se considera el más desfavorable.\nHabrá que tener en cuenta que en el trasdós del muro se tendrá que instalar un correcto drenaje para evitar que se acumule el agua y se produzca una sobrecarga en su trasdós.",
-      "position": "p463",
-      "position_description": "Body paragraph 463",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Para el dimensionado de los muros del sótano y para el cálculo del empuje de tierras habrá que tener en cuenta los parámetros geomecánicos de los materiales del primer nivel que se considera el más de..."
     }
   },
   "warnings": [
@@ -584,6 +653,7 @@
     "t0_r2_c1: Cell out of range in ref table for 'superficie_construida'",
     "t2_r0_c1: No matching ref table for 'cte_edificacio'",
     "t2_r1_c1: No matching ref table for 'cte_sol'",
-    "Loop table t8 (soil_level_rows): no matching reference table"
+    "Loop table t8 (soil_level_rows): no matching reference table",
+    "Merged 22 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, architect_name_upper, building_structure_desc, building_type_lower, client..."
   ]
 }

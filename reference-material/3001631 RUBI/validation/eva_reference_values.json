@@ -1,17 +1,18 @@
 {
   "project": "3001631 RUBI",
   "source_file": "3001631_informe.doc",
-  "extraction_date": "2026-04-05T22:16:49.913132",
+  "extraction_date": "2026-04-26T08:37:09.824471",
   "template_file": "g3dt-jinja-template.docx",
   "extractor_version": "1.0",
   "statistics": {
     "total_template_variables": 56,
-    "total_extracted": 53,
-    "extraction_rate": 94.6,
+    "total_extracted": 58,
+    "extraction_rate": 103.6,
     "by_method": {
       "paragraph_single": 14,
       "table_cell": 13,
       "loop_table": 5,
+      "table_flatten": 5,
       "intelligent_analysis": 21
     },
     "body_paragraphs": {
@@ -34,13 +35,122 @@
       "template_text": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del {{ access_street }}.",
       "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda."
     },
-    "building_structure_desc": {
-      "value": "en planta baixa",
-      "position": "p260",
-      "position_description": "Body paragraph 260",
+    "adjacent_east_fmt": {
+      "value": "Finalment, Per la part est i oest, amb construccions de característiques similars.",
+      "position": "p072",
+      "position_description": "Body paragraph 72",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Finalment, Per la part est i oest, amb construccions de característiques similars."
+    },
+    "adjacent_north_fmt": {
+      "value": "Per la part nord, amb parcel·les sense edificacions i amb vegetació de petita alçada i arbres.",
+      "position": "p070",
+      "position_description": "Body paragraph 70",
       "confidence": 0.9,
       "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Per la part nord, amb parcel·les sense edificacions i amb vegetació de petita alçada i arbres."
+    },
+    "adjacent_south_fmt": {
+      "value": "Per la part sud, amb el carrer de la Miranda",
+      "position": "p071",
+      "position_description": "Body paragraph 71",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Per la part sud, amb el carrer de la Miranda"
+    },
+    "adjacent_west_fmt": {
+      "value": "Finalment, Per la part est i oest, amb construccions de característiques similars.",
+      "position": "p072",
+      "position_description": "Body paragraph 72",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Finalment, Per la part est i oest, amb construccions de característiques similars."
+    },
+    "architect_name_upper": {
+      "value": "JOANA MARTINEZ",
+      "position": "p023",
+      "position_description": "Body paragraph 23",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "JOANA MARTINEZ"
+    },
+    "building_structure_desc": {
+      "value": "en planta baixa i porxo, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+      "position": "p327",
+      "position_description": "Body paragraph 327",
+      "confidence": 0.83,
+      "extraction_method": "paragraph_single",
+      "template_text": "Segons el projecte executiu es preveu la construcció d’una estructura {{ building_structure_desc }}, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació",
       "reference_text": "Segons el projecte executiu es preveu la construcció d’una estructura en planta baixa i porxo, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació, i pe"
+    },
+    "building_type_lower": {
+      "value": "un habitatge unifamiliar aïllat modular",
+      "position": "p023",
+      "position_description": "Body paragraph 23",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "un habitatge unifamiliar aïllat modular"
+    },
+    "client": {
+      "value": "SRA. JOANA MARTINEZ",
+      "position": "p016",
+      "position_description": "Body paragraph 16",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "SRA. JOANA MARTINEZ"
+    },
+    "conclusions_aggressivity_statement": {
+      "value": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, es presenten no agressius al formigó.",
+      "position": "p380",
+      "position_description": "Body paragraph 380",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, es presenten no agressius al formigó."
+    },
+    "conclusions_levels_detected": {
+      "value": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+      "position": "p349",
+      "position_description": "Body paragraph 349",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
+    },
+    "conclusions_water_statement": {
+      "value": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+      "position": "p378",
+      "position_description": "Body paragraph 378",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats."
+    },
+    "cota_referencia": {
+      "value": "+212.50",
+      "position": "t4.row0.cota",
+      "position_description": "Flattened from first DPSH test elevation",
+      "confidence": 0.9,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "+212.50"
+    },
+    "csn_radon_text": {
+      "value": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
+      "position": "p316",
+      "position_description": "Body paragraph 316",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edi..."
     },
     "cte_edificacio": {
       "value": "C-0",
@@ -118,6 +228,51 @@
       "template_text": "Expedient Núm.:  {{ expedient }}",
       "reference_text": "Expedient Núm.:  3001631"
     },
+    "geo_p": {
+      "value": "Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo, corresponents a gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics d’edat Miocè.",
+      "position": "p179",
+      "position_description": "Body paragraph 179",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo, corresponents a gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimí..."
+    },
+    "geomech_E": {
+      "value": "450",
+      "position": "t12.row0.E",
+      "position_description": "Flattened from geotech_rows[0].E",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "450"
+    },
+    "geomech_cohesion": {
+      "value": "0.05",
+      "position": "t12.row0.cohesion",
+      "position_description": "Flattened from geotech_rows[0].cohesion",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "0.05"
+    },
+    "geomech_gamma": {
+      "value": "2.0",
+      "position": "t12.row0.density",
+      "position_description": "Flattened from geotech_rows[0].density",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "2.0"
+    },
+    "geomech_phi": {
+      "value": "39",
+      "position": "t12.row0.phi",
+      "position_description": "Flattened from geotech_rows[0].phi",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "39º"
+    },
     "geotech_rows": {
       "value": [
         {
@@ -155,6 +310,24 @@
       "template_text": "Profunditat: {{ lab_depth }}",
       "reference_text": "Profunditat:  -0.60  a -1.20 m"
     },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p097",
+      "position_description": "Body paragraph 97",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_field_description": {
+      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
+      "position": "p097",
+      "position_description": "Body paragraph 97",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
+    },
     "lab_location": {
       "value": "Punt: P-3",
       "position": "t7_r0_c1",
@@ -173,6 +346,24 @@
       "template_text": "Mostra : {{ lab_sample_id }}",
       "reference_text": "Mostra : SPT-1"
     },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p149",
+      "position_description": "Body paragraph 149",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_testing_description": {
+      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
+      "position": "p149",
+      "position_description": "Body paragraph 149",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
+    },
     "lab_tests_text": {
       "value": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nDeterminació de Límits d’Atterberg d'un sòl UNE 103103/94-104/93\nAssaig de contingut en sulfats UNE 83963 : 2008",
       "position": "t7_r1_c1",
@@ -183,12 +374,22 @@
       "reference_text": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nDeterminació de Límits d’Atterberg d'un sòl UNE 103103/94-104/93\nAssaig de contingut en sulfats UNE 83963 : 2008"
     },
     "location_sentence": {
-      "value": "a una parcel·la ubicada al carrer de la Miranda nº 39, (PARC. 6-105) Rubí, Barcelona",
-      "position": "p029",
-      "position_description": "Body paragraph 29",
-      "confidence": 0.95,
+      "value": "L’edificació que es preveu construir presentarà les següents característiques:",
+      "position": "p066",
+      "position_description": "Body paragraph 66",
+      "confidence": 0.208,
+      "extraction_method": "paragraph_single",
+      "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
+      "reference_text": "L’edificació que es preveu construir presentarà les següents característiques:"
+    },
+    "materials_intro": {
+      "value": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+      "position": "p187",
+      "position_description": "Body paragraph 187",
+      "confidence": 0.9,
       "extraction_method": "intelligent_analysis",
-      "reference_text": "L'habitatge que es preveu construir es situarà a una parcel·la ubicada al carrer de la Miranda nº 39, (PARC. 6-105) Rubí, Barcelona."
+      "template_text": "",
+      "reference_text": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):"
     },
     "municipality": {
       "value": "Rubí (Barcelona)",
@@ -223,6 +424,15 @@
       "template_text": "Loop: ['name', 'k_value', 'material']",
       "reference_text": "1 data rows"
     },
+    "photo_site_text": {
+      "value": "Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).",
+      "position": "p085",
+      "position_description": "Body paragraph 85",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024)."
+    },
     "plantes": {
       "value": "PB + Porxo",
       "position": "t0_r0_c1",
@@ -240,6 +450,24 @@
       "extraction_method": "paragraph_single",
       "template_text": "Qa= {{ qa_value }} Kg/cm2  amb un factor de seguretat inclòs de F=3",
       "reference_text": "Qa= 3.50 Kg/cm2  amb un factor de seguretat inclòs de F=3"
+    },
+    "radon_zone": {
+      "value": "1",
+      "position": "p340",
+      "position_description": "Body paragraph 340",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "1"
+    },
+    "radon_zone_description": {
+      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas radó en edificis tancats.",
+      "position": "p340",
+      "position_description": "Body paragraph 340",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas ra..."
     },
     "seismic_ab_text": {
       "value": "AB  =0,08 g  (essent g el valor de la gravetat)",
@@ -284,15 +512,17 @@
       "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
       "reference_text": "Es tracta d’un solar no antropitzat, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin."
     },
+    "site_description": {
+      "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.\nEl solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera baixada, de sudoest a nord-est, es troba una diferència de cota d'uns 13.20 metres, des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m. respectivament, tot i que la zona de treball es mostra totalment plana. La pendent comença la zona posterior (a la meitat del fons ).\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+      "position": "p076",
+      "position_description": "Body paragraph 76",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.\nEl solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera ba..."
+    },
     "sondeig_tests": {
       "value": [
-        {
-          "test_id": "Nº assaig",
-          "cota": "Punt",
-          "depth": "Prof. Extracció (m)",
-          "spt_ma": "N30",
-          "water": "Litologia"
-        },
         {
           "test_id": "SPT-1",
           "cota": "P-3",
@@ -306,7 +536,7 @@
       "confidence": 0.85,
       "extraction_method": "loop_table",
       "template_text": "Loop: ['test_id', 'cota', 'depth', 'spt_ma', 'water']",
-      "reference_text": "2 data rows"
+      "reference_text": "1 data rows"
     },
     "sulfate_baumann": {
       "value": "---",
@@ -370,174 +600,6 @@
       "extraction_method": "paragraph_single",
       "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
       "reference_text": "Taula 3 i 4. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar."
-    },
-    "client": {
-      "value": "SRA. JOANA MARTINEZ",
-      "position": "p016",
-      "position_description": "Body paragraph 16",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "SRA. JOANA MARTINEZ"
-    },
-    "architect_name_upper": {
-      "value": "JOANA MARTINEZ",
-      "position": "p023",
-      "position_description": "Body paragraph 23",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "JOANA MARTINEZ"
-    },
-    "building_type_lower": {
-      "value": "un habitatge unifamiliar aïllat modular",
-      "position": "p023",
-      "position_description": "Body paragraph 23",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "un habitatge unifamiliar aïllat modular"
-    },
-    "adjacent_east_fmt": {
-      "value": "Finalment, Per la part est i oest, amb construccions de característiques similars.",
-      "position": "p072",
-      "position_description": "Body paragraph 72",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Finalment, Per la part est i oest, amb construccions de característiques similars."
-    },
-    "adjacent_south_fmt": {
-      "value": "Per la part sud, amb el carrer de la Miranda",
-      "position": "p071",
-      "position_description": "Body paragraph 71",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Per la part sud, amb el carrer de la Miranda"
-    },
-    "adjacent_north_fmt": {
-      "value": "Per la part nord, amb parcel·les sense edificacions i amb vegetació de petita alçada i arbres.",
-      "position": "p070",
-      "position_description": "Body paragraph 70",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Per la part nord, amb parcel·les sense edificacions i amb vegetació de petita alçada i arbres."
-    },
-    "adjacent_west_fmt": {
-      "value": "Finalment, Per la part est i oest, amb construccions de característiques similars.",
-      "position": "p072",
-      "position_description": "Body paragraph 72",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Finalment, Per la part est i oest, amb construccions de característiques similars."
-    },
-    "site_description": {
-      "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.\nEl solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera baixada, de sudoest a nord-est, es troba una diferència de cota d'uns 13.20 metres, des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m. respectivament, tot i que la zona de treball es mostra totalment plana. La pendent comença la zona posterior (a la meitat del fons ).\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
-      "position": "p076",
-      "position_description": "Body paragraph 76",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.\nEl solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera ba..."
-    },
-    "lab_field_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
-      "position": "p097",
-      "position_description": "Body paragraph 97",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
-    },
-    "lab_field_description": {
-      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
-      "position": "p097",
-      "position_description": "Body paragraph 97",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
-    },
-    "lab_testing_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
-      "position": "p149",
-      "position_description": "Body paragraph 149",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
-    },
-    "lab_testing_description": {
-      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
-      "position": "p149",
-      "position_description": "Body paragraph 149",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
-    },
-    "radon_zone": {
-      "value": "1",
-      "position": "p340",
-      "position_description": "Body paragraph 340",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "1"
-    },
-    "radon_zone_description": {
-      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas radó en edificis tancats.",
-      "position": "p340",
-      "position_description": "Body paragraph 340",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas ra..."
-    },
-    "csn_radon_text": {
-      "value": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
-      "position": "p316",
-      "position_description": "Body paragraph 316",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edi..."
-    },
-    "conclusions_levels_detected": {
-      "value": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
-      "position": "p349",
-      "position_description": "Body paragraph 349",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
-    },
-    "conclusions_water_statement": {
-      "value": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
-      "position": "p378",
-      "position_description": "Body paragraph 378",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats."
-    },
-    "conclusions_aggressivity_statement": {
-      "value": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, es presenten no agressius al formigó.",
-      "position": "p380",
-      "position_description": "Body paragraph 380",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, es presenten no agressius al formigó."
-    },
-    "photo_site_text": {
-      "value": "Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).",
-      "position": "p085",
-      "position_description": "Body paragraph 85",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024)."
-    },
-    "materials_intro": {
-      "value": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
-      "position": "p187",
-      "position_description": "Body paragraph 187",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):"
-    },
-    "geo_p": {
-      "value": "Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo, corresponents a gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics d’edat Miocè.",
-      "position": "p179",
-      "position_description": "Body paragraph 179",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo, corresponents a gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimí..."
     }
   },
   "warnings": [
@@ -565,6 +627,7 @@
     "t6_r2_c2: No matching ref table for 'spt_depth_range'",
     "t6_r2_c3: No matching ref table for 'spt_n30'",
     "t6_r2_c4: No matching ref table for 'spt_lithology'",
-    "Loop table t8 (soil_level_rows): no matching reference table"
+    "Loop table t8 (soil_level_rows): no matching reference table",
+    "Merged 21 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, architect_name_upper, building_type_lower, client, conclusions_aggressivity_statement..."
   ]
 }

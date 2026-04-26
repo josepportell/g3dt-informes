@@ -1,17 +1,18 @@
 {
   "project": "3001621 CASTELLAR DEL VALLES",
   "source_file": "3001621_informe_v0.doc",
-  "extraction_date": "2026-04-05T22:16:45.740195",
+  "extraction_date": "2026-04-26T08:37:03.994030",
   "template_file": "g3dt-jinja-template.docx",
   "extractor_version": "1.0",
   "statistics": {
     "total_template_variables": 56,
-    "total_extracted": 58,
-    "extraction_rate": 103.6,
+    "total_extracted": 63,
+    "extraction_rate": 112.5,
     "by_method": {
       "paragraph_single": 14,
       "table_cell": 18,
       "loop_table": 5,
+      "table_flatten": 5,
       "intelligent_analysis": 21
     },
     "body_paragraphs": {
@@ -34,13 +35,113 @@
       "template_text": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del {{ access_street }}.",
       "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud."
     },
+    "adjacent_east_fmt": {
+      "value": "Per la part est, amb una parcel·la construïda amb piscina.",
+      "position": "p077",
+      "position_description": "Body paragraph 77",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Per la part est, amb una parcel·la construïda amb piscina."
+    },
+    "adjacent_north_fmt": {
+      "value": "Per la part nord, amb parcel·les sense construir, amb herbes altes i arbres, així com una parcel·la amb planta baixa i una planta pis, paral·lela al carrer Turó Roig.",
+      "position": "p075",
+      "position_description": "Body paragraph 75",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Per la part nord, amb parcel·les sense construir, amb herbes altes i arbres, així com una parcel·la amb planta baixa i una planta pis, paral·lela al carrer Turó Roig."
+    },
+    "adjacent_south_fmt": {
+      "value": "Per la part sud, amb el carrer Arbrells.",
+      "position": "p076",
+      "position_description": "Body paragraph 76",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Per la part sud, amb el carrer Arbrells."
+    },
+    "adjacent_west_fmt": {
+      "value": "I finalment, per la part oest, amb parcel·les sense construir amb herbes altes i arbres.",
+      "position": "p078",
+      "position_description": "Body paragraph 78",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "I finalment, per la part oest, amb parcel·les sense construir amb herbes altes i arbres."
+    },
     "building_structure_desc": {
-      "value": "sense nivell de soterrani",
+      "value": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
       "position": "p327",
       "position_description": "Body paragraph 327",
+      "confidence": 0.214,
+      "extraction_method": "paragraph_single",
+      "template_text": "Segons el projecte executiu es preveu la construcció d’una estructura {{ building_structure_desc }}, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació",
+      "reference_text": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació."
+    },
+    "building_type_lower": {
+      "value": "3 habitatges unifamiliars d’estructura lleugera, fusta",
+      "position": "p029",
+      "position_description": "Body paragraph 29",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "3 habitatges unifamiliars d’estructura lleugera, fusta"
+    },
+    "client": {
+      "value": "WOOD COMFORT PROMOCIONS SLU",
+      "position": "p022",
+      "position_description": "Body paragraph 22",
       "confidence": 0.95,
       "extraction_method": "intelligent_analysis",
-      "reference_text": "Segons el projecte executiu es preveu la construcció d'estructures sense nivell de soterrani..."
+      "template_text": "",
+      "reference_text": "WOOD COMFORT PROMOCIONS SLU"
+    },
+    "conclusions_aggressivity_statement": {
+      "value": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten No Agressius al formigó.",
+      "position": "p406",
+      "position_description": "Body paragraph 406",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten No Agressius al formigó."
+    },
+    "conclusions_levels_detected": {
+      "value": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+      "position": "p376",
+      "position_description": "Body paragraph 376",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
+    },
+    "conclusions_water_statement": {
+      "value": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin. Tampoc s’ha localitzat cap curs d’aigua i/o torrent proper que pugui afectar a la zona en estudi.",
+      "position": "p402",
+      "position_description": "Body paragraph 402",
+      "confidence": 0.8,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin. Tampoc s’ha localitzat cap curs d’ai..."
+    },
+    "cota_referencia": {
+      "value": "-4.0",
+      "position": "t4.row0.cota",
+      "position_description": "Flattened from first DPSH test elevation",
+      "confidence": 0.9,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "-4.0"
+    },
+    "csn_radon_text": {
+      "value": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
+      "position": "p342",
+      "position_description": "Body paragraph 342",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edi..."
     },
     "cte_edificacio": {
       "value": "C-1",
@@ -116,6 +217,24 @@
       "template_text": "Loop: ['test_id', 'cota', 'depth', 'refusal', 'water']",
       "reference_text": "4 data rows"
     },
+    "empentes_paragraph": {
+      "value": "Pel dimensionament del murs que es projectin i pel càlcul de les empentes de terres caldrà tenir en compte els paràmetres geomecànics dels materials del 1er nivell que es considera el més desfavorables.\nCal tenir en compte que en el trasdors del mur, caldrà instal·lar un correcte drenatge per a evitar que s’acumuli aigua i es produeixi un sobrecàrrega en el seu trasdors.",
+      "position": "p427",
+      "position_description": "Body paragraph 427",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Pel dimensionament del murs que es projectin i pel càlcul de les empentes de terres caldrà tenir en compte els paràmetres geomecànics dels materials del 1er nivell que es considera el més desfavorable..."
+    },
+    "estabilitat_paragraph": {
+      "value": "Per a la realització de les recomanacions d’estabilitat de talussos s’han tingut en compte les següents premisses:\nActualment el solar presenta un pendent d’entre 20-25º.\nTalussos sense presència de nivell freàtic.\nFactor de seguretat F=1.8, factor de seguretat del vessant actual.\nS’ha considerat la columna de materials, dominat pel primer nivell, amb els paràmetres geomecànics obtinguts.\nEl mètode ràpid de càlcul utilitzat per les recomanacions de talussos és el proposat per Hoek & Bray (1977), utilitzant els valors numèrics de cohesió, angle de fregament i densitat exposat anteriors.\nFigura 6 i Figura 7. Líneas de saturació possibles, es marca la que s’ha escollit. En la segona figura detall de l’àbac nº1 escollit.\nAixí per a tots aquests paràmetres exposant el vessant actual presenta factors de seguretat superiors a 3.5. Si els habitatges projectats es recolzen damunt dels materials del primer nivell de substrat, no suposaran una sobrecàrrega important damunt del vessant, i per tant, no modificarà substancialment els factors de seguretat del propi vessant, per tant amb valors sempre superior a 1.8, per tant cumplint les premisses marcades per part del CTE.",
+      "position": "p434",
+      "position_description": "Body paragraph 434",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Per a la realització de les recomanacions d’estabilitat de talussos s’han tingut en compte les següents premisses:\nActualment el solar presenta un pendent d’entre 20-25º.\nTalussos sense presència de n..."
+    },
     "expedient": {
       "value": "3001621",
       "position": "p474",
@@ -124,6 +243,51 @@
       "extraction_method": "paragraph_single",
       "template_text": "Expedient Núm.:  {{ expedient }}",
       "reference_text": "Expedient Núm.: 3001621"
+    },
+    "geo_p": {
+      "value": "En concret, i segons l’ICGC, l’estudi s’ha dut a terme damunt una zona on afloren materials de la unitat ECbc, corresponent a bretxes amb intercalacions de lutites i gresos vermells del Eocè- Ipresià.",
+      "position": "p215",
+      "position_description": "Body paragraph 215",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "En concret, i segons l’ICGC, l’estudi s’ha dut a terme damunt una zona on afloren materials de la unitat ECbc, corresponent a bretxes amb intercalacions de lutites i gresos vermells del Eocè- Ipresià."
+    },
+    "geomech_E": {
+      "value": ">500",
+      "position": "t12.row0.E",
+      "position_description": "Flattened from geotech_rows[0].E",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": ">500"
+    },
+    "geomech_cohesion": {
+      "value": "1.0",
+      "position": "t12.row0.cohesion",
+      "position_description": "Flattened from geotech_rows[0].cohesion",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "1.0"
+    },
+    "geomech_gamma": {
+      "value": "2.20",
+      "position": "t12.row0.density",
+      "position_description": "Flattened from geotech_rows[0].density",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "2.20"
+    },
+    "geomech_phi": {
+      "value": "35",
+      "position": "t12.row0.phi",
+      "position_description": "Flattened from geotech_rows[0].phi",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "35º"
     },
     "geotech_rows": {
       "value": [
@@ -162,6 +326,24 @@
       "template_text": "Profunditat: {{ lab_depth }}",
       "reference_text": "Profunditat:  -1.00  a -1.20 m"
     },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
+      "position": "p103",
+      "position_description": "Body paragraph 103",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL, S.L"
+    },
+    "lab_field_description": {
+      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
+      "position": "p103",
+      "position_description": "Body paragraph 103",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
+    },
     "lab_location": {
       "value": "Punt: S-1",
       "position": "t7_r0_c1",
@@ -180,6 +362,24 @@
       "template_text": "Mostra : {{ lab_sample_id }}",
       "reference_text": "Mostra : SPT-1"
     },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p172",
+      "position_description": "Body paragraph 172",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_testing_description": {
+      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
+      "position": "p172",
+      "position_description": "Body paragraph 172",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
+    },
     "lab_tests_text": {
       "value": "1 assaig de contingut en sulfats UNE 83963 : 2008",
       "position": "t7_r1_c1",
@@ -190,12 +390,22 @@
       "reference_text": "1 assaig de contingut en sulfats UNE 83963 : 2008"
     },
     "location_sentence": {
-      "value": "en el Carrer dels Arbrells, 18 de Castellar del Vallès",
-      "position": "p035",
-      "position_description": "Body paragraph 35",
-      "confidence": 0.95,
+      "value": "L’edificació que es preveu construir presentarà les següents característiques:",
+      "position": "p066",
+      "position_description": "Body paragraph 66",
+      "confidence": 0.208,
+      "extraction_method": "paragraph_single",
+      "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
+      "reference_text": "L’edificació que es preveu construir presentarà les següents característiques:"
+    },
+    "materials_intro": {
+      "value": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+      "position": "p223",
+      "position_description": "Body paragraph 223",
+      "confidence": 0.9,
       "extraction_method": "intelligent_analysis",
-      "reference_text": "El solar on s'emplaçarà els nous habitatges unifamiliars e situa en el Carrer dels Arbrells, 18 de Castellar del Vallès."
+      "template_text": "",
+      "reference_text": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):"
     },
     "municipality": {
       "value": "Castellar del Vallès",
@@ -248,6 +458,24 @@
       "template_text": "Qa= {{ qa_value }} Kg/cm2  amb un factor de seguretat inclòs de F=3",
       "reference_text": "Qa= 3.0 Kg/cm2  amb un factor de seguretat inclòs de F=3"
     },
+    "radon_zone": {
+      "value": "1",
+      "position": "p367",
+      "position_description": "Body paragraph 367",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "1"
+    },
+    "radon_zone_description": {
+      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+      "position": "p367",
+      "position_description": "Body paragraph 367",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1."
+    },
     "seismic_ab_text": {
       "value": "AB  = 0,04 g  (essent g el valor de la gravetat)",
       "position": "p342",
@@ -290,6 +518,15 @@
       "extraction_method": "paragraph_single",
       "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
       "reference_text": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin."
+    },
+    "site_description": {
+      "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.\nEl solar es localitza sense construccions ni pavimentacions, s’ha realitzat un desbroç de la zona de treball i s’ha adequat un accés a la zona de treball.\nTopogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina, situada aproximadament 4.0 metres respecte el carrer.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
+      "position": "p082",
+      "position_description": "Body paragraph 82",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.\nEl solar es localitza sense construccions ni pavimentacions, s’ha realitzat un desbroç..."
     },
     "sondeig_tests": {
       "value": [
@@ -415,174 +652,6 @@
       "extraction_method": "paragraph_single",
       "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
       "reference_text": "Taula 3, 4 i 5. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar."
-    },
-    "client": {
-      "value": "WOOD COMFORT PROMOCIONS SLU",
-      "position": "p022",
-      "position_description": "Body paragraph 22",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "WOOD COMFORT PROMOCIONS SLU"
-    },
-    "building_type_lower": {
-      "value": "3 habitatges unifamiliars d’estructura lleugera, fusta",
-      "position": "p029",
-      "position_description": "Body paragraph 29",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "3 habitatges unifamiliars d’estructura lleugera, fusta"
-    },
-    "adjacent_east_fmt": {
-      "value": "Per la part est, amb una parcel·la construïda amb piscina.",
-      "position": "p077",
-      "position_description": "Body paragraph 77",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Per la part est, amb una parcel·la construïda amb piscina."
-    },
-    "adjacent_south_fmt": {
-      "value": "Per la part sud, amb el carrer Arbrells.",
-      "position": "p076",
-      "position_description": "Body paragraph 76",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Per la part sud, amb el carrer Arbrells."
-    },
-    "adjacent_north_fmt": {
-      "value": "Per la part nord, amb parcel·les sense construir, amb herbes altes i arbres, així com una parcel·la amb planta baixa i una planta pis, paral·lela al carrer Turó Roig.",
-      "position": "p075",
-      "position_description": "Body paragraph 75",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Per la part nord, amb parcel·les sense construir, amb herbes altes i arbres, així com una parcel·la amb planta baixa i una planta pis, paral·lela al carrer Turó Roig."
-    },
-    "adjacent_west_fmt": {
-      "value": "I finalment, per la part oest, amb parcel·les sense construir amb herbes altes i arbres.",
-      "position": "p078",
-      "position_description": "Body paragraph 78",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "I finalment, per la part oest, amb parcel·les sense construir amb herbes altes i arbres."
-    },
-    "site_description": {
-      "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.\nEl solar es localitza sense construccions ni pavimentacions, s’ha realitzat un desbroç de la zona de treball i s’ha adequat un accés a la zona de treball.\nTopogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina, situada aproximadament 4.0 metres respecte el carrer.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
-      "position": "p082",
-      "position_description": "Body paragraph 82",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.\nEl solar es localitza sense construccions ni pavimentacions, s’ha realitzat un desbroç..."
-    },
-    "lab_field_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
-      "position": "p103",
-      "position_description": "Body paragraph 103",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL, S.L"
-    },
-    "lab_field_description": {
-      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
-      "position": "p103",
-      "position_description": "Body paragraph 103",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
-    },
-    "lab_testing_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
-      "position": "p172",
-      "position_description": "Body paragraph 172",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
-    },
-    "lab_testing_description": {
-      "value": "laboratori d’assaigs per al control de qualitat de l’edificació",
-      "position": "p172",
-      "position_description": "Body paragraph 172",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "laboratori d’assaigs per al control de qualitat de l’edificació"
-    },
-    "radon_zone": {
-      "value": "1",
-      "position": "p367",
-      "position_description": "Body paragraph 367",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "1"
-    },
-    "radon_zone_description": {
-      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
-      "position": "p367",
-      "position_description": "Body paragraph 367",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1."
-    },
-    "csn_radon_text": {
-      "value": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
-      "position": "p342",
-      "position_description": "Body paragraph 342",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edi..."
-    },
-    "conclusions_levels_detected": {
-      "value": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
-      "position": "p376",
-      "position_description": "Body paragraph 376",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
-    },
-    "conclusions_water_statement": {
-      "value": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin. Tampoc s’ha localitzat cap curs d’aigua i/o torrent proper que pugui afectar a la zona en estudi.",
-      "position": "p402",
-      "position_description": "Body paragraph 402",
-      "confidence": 0.8,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin. Tampoc s’ha localitzat cap curs d’ai..."
-    },
-    "conclusions_aggressivity_statement": {
-      "value": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten No Agressius al formigó.",
-      "position": "p406",
-      "position_description": "Body paragraph 406",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten No Agressius al formigó."
-    },
-    "materials_intro": {
-      "value": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
-      "position": "p223",
-      "position_description": "Body paragraph 223",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):"
-    },
-    "geo_p": {
-      "value": "En concret, i segons l’ICGC, l’estudi s’ha dut a terme damunt una zona on afloren materials de la unitat ECbc, corresponent a bretxes amb intercalacions de lutites i gresos vermells del Eocè- Ipresià.",
-      "position": "p215",
-      "position_description": "Body paragraph 215",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "En concret, i segons l’ICGC, l’estudi s’ha dut a terme damunt una zona on afloren materials de la unitat ECbc, corresponent a bretxes amb intercalacions de lutites i gresos vermells del Eocè- Ipresià."
-    },
-    "empentes_paragraph": {
-      "value": "Pel dimensionament del murs que es projectin i pel càlcul de les empentes de terres caldrà tenir en compte els paràmetres geomecànics dels materials del 1er nivell que es considera el més desfavorables.\nCal tenir en compte que en el trasdors del mur, caldrà instal·lar un correcte drenatge per a evitar que s’acumuli aigua i es produeixi un sobrecàrrega en el seu trasdors.",
-      "position": "p427",
-      "position_description": "Body paragraph 427",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Pel dimensionament del murs que es projectin i pel càlcul de les empentes de terres caldrà tenir en compte els paràmetres geomecànics dels materials del 1er nivell que es considera el més desfavorable..."
-    },
-    "estabilitat_paragraph": {
-      "value": "Per a la realització de les recomanacions d’estabilitat de talussos s’han tingut en compte les següents premisses:\nActualment el solar presenta un pendent d’entre 20-25º.\nTalussos sense presència de nivell freàtic.\nFactor de seguretat F=1.8, factor de seguretat del vessant actual.\nS’ha considerat la columna de materials, dominat pel primer nivell, amb els paràmetres geomecànics obtinguts.\nEl mètode ràpid de càlcul utilitzat per les recomanacions de talussos és el proposat per Hoek & Bray (1977), utilitzant els valors numèrics de cohesió, angle de fregament i densitat exposat anteriors.\nFigura 6 i Figura 7. Líneas de saturació possibles, es marca la que s’ha escollit. En la segona figura detall de l’àbac nº1 escollit.\nAixí per a tots aquests paràmetres exposant el vessant actual presenta factors de seguretat superiors a 3.5. Si els habitatges projectats es recolzen damunt dels materials del primer nivell de substrat, no suposaran una sobrecàrrega important damunt del vessant, i per tant, no modificarà substancialment els factors de seguretat del propi vessant, per tant amb valors sempre superior a 1.8, per tant cumplint les premisses marcades per part del CTE.",
-      "position": "p434",
-      "position_description": "Body paragraph 434",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Per a la realització de les recomanacions d’estabilitat de talussos s’han tingut en compte les següents premisses:\nActualment el solar presenta un pendent d’entre 20-25º.\nTalussos sense presència de n..."
     }
   },
   "warnings": [
@@ -605,6 +674,7 @@
     "p447: Variable 'conclusions_aggressivity_statement' has no static context for matching",
     "p465: Variable 'empentes_paragraph' has no static context for matching",
     "p469: Variable 'estabilitat_paragraph' has no static context for matching",
-    "Loop table t8 (soil_level_rows): no matching reference table"
+    "Loop table t8 (soil_level_rows): no matching reference table",
+    "Merged 21 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, building_type_lower, client, conclusions_aggressivity_statement, conclusions_levels_detected..."
   ]
 }

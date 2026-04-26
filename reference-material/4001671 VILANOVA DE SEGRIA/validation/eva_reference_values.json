@@ -1,17 +1,18 @@
 {
   "project": "4001671 VILANOVA DE SEGRIA",
   "source_file": "4001671_informe.docx",
-  "extraction_date": "2026-04-05T22:17:06.461358",
+  "extraction_date": "2026-04-26T08:37:31.613804",
   "template_file": "g3dt-jinja-template.docx",
   "extractor_version": "1.0",
   "statistics": {
     "total_template_variables": 56,
-    "total_extracted": 52,
-    "extraction_rate": 92.9,
+    "total_extracted": 57,
+    "extraction_rate": 101.8,
     "by_method": {
       "paragraph_single": 12,
       "table_cell": 16,
       "loop_table": 4,
+      "table_flatten": 5,
       "intelligent_analysis": 20
     },
     "body_paragraphs": {
@@ -25,13 +26,113 @@
     }
   },
   "variables": {
+    "adjacent_east_fmt": {
+      "value": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio.",
+      "position": "p112",
+      "position_description": "Body paragraph 112",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio."
+    },
+    "adjacent_north_fmt": {
+      "value": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio.",
+      "position": "p112",
+      "position_description": "Body paragraph 112",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio."
+    },
+    "adjacent_south_fmt": {
+      "value": "Por la parte sur, con una parcela, sin edificaciones, alguna pavimentación, vegetación herbácea de pequeña altura y algún árbol.",
+      "position": "p113",
+      "position_description": "Body paragraph 113",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Por la parte sur, con una parcela, sin edificaciones, alguna pavimentación, vegetación herbácea de pequeña altura y algún árbol."
+    },
+    "adjacent_west_fmt": {
+      "value": "Y finalmente, Por la parte oeste con la calle STA. GEMMA.",
+      "position": "p114",
+      "position_description": "Body paragraph 114",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Y finalmente, Por la parte oeste con la calle STA. GEMMA."
+    },
+    "architect_name_upper": {
+      "value": "JUAN JOSÉ TORRES POVEDANO",
+      "position": "p063",
+      "position_description": "Body paragraph 63",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "JUAN JOSÉ TORRES POVEDANO"
+    },
     "building_structure_desc": {
-      "value": "sin nivel de sótano",
+      "value": "Según el proyecto ejecutivo se prevé la construcción de una estructura de planta baja, y por tanto no se prevé ninguna excavación importante, únicamente la excavación para el saneamiento, la nivelación y para la implantación de los elementos de cimentación.",
       "position": "p327",
       "position_description": "Body paragraph 327",
+      "confidence": 0.236,
+      "extraction_method": "paragraph_single",
+      "template_text": "Segons el projecte executiu es preveu la construcció d’una estructura {{ building_structure_desc }}, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació",
+      "reference_text": "Según el proyecto ejecutivo se prevé la construcción de una estructura de planta baja, y por tanto no se prevé ninguna excavación importante, únicamente la excavación para el saneamiento, la nivelació"
+    },
+    "building_type_lower": {
+      "value": "una vivienda unifamiliar aislada",
+      "position": "p063",
+      "position_description": "Body paragraph 63",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "una vivienda unifamiliar aislada"
+    },
+    "client": {
+      "value": "GRUPO CUENCA GUERRERO, S.L",
+      "position": "p056",
+      "position_description": "Body paragraph 56",
       "confidence": 0.95,
       "extraction_method": "intelligent_analysis",
-      "reference_text": "Según el proyecto ejecutivo se prevé la construcción de una estructura sin nivel de sótano..."
+      "template_text": "",
+      "reference_text": "GRUPO CUENCA GUERRERO, S.L"
+    },
+    "conclusions_levels_detected": {
+      "value": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
+      "position": "p406",
+      "position_description": "Body paragraph 406",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo."
+    },
+    "conclusions_water_statement": {
+      "value": "En la fecha que se realizaron los trabajos de campo, y hasta la cota ensayada, se detecta un aumento importante de la humedad de los materiales en uno de los ensayos realizados, en concreto, en el P-1 a -1.00 m.",
+      "position": "p431",
+      "position_description": "Body paragraph 431",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "En la fecha que se realizaron los trabajos de campo, y hasta la cota ensayada, se detecta un aumento importante de la humedad de los materiales en uno de los ensayos realizados, en concreto, en el P-1..."
+    },
+    "cota_referencia": {
+      "value": "+321.00",
+      "position": "t4.row0.cota",
+      "position_description": "Flattened from first DPSH test elevation",
+      "confidence": 0.9,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "+321.00"
+    },
+    "csn_radon_text": {
+      "value": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de que los edificios construidos en la zona sin soluciones específicas de protección frente al radón presenten concentraciones de radón superiores al nivel de referencia.",
+      "position": "p375",
+      "position_description": "Body paragraph 375",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de..."
     },
     "cte_edificacio": {
       "value": "C-0",
@@ -109,6 +210,51 @@
       "template_text": "Expedient Núm.:  {{ expedient }}",
       "reference_text": "Expediente Núm.: 4001671"
     },
+    "geo_p": {
+      "value": "Desde finales del Oligoceno hasta la actualidad, la depresión del Ebro ha dejado de actuar como cuenca sedimentaria y se ha convertido en una cubeta donde el agente predominante ha sido la erosión. Localmente, en algunos puntos de la cuenca, existen depósitos del Terciario superior y principalmente del Cuaternario. Estos corresponden a materiales subconsolidados que aparecen entre las rocas sedimentarias y la superficie, formados por arenas, limos y arcillas, donde abundan las costras carbonatadas.",
+      "position": "p224",
+      "position_description": "Body paragraph 224",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Desde finales del Oligoceno hasta la actualidad, la depresión del Ebro ha dejado de actuar como cuenca sedimentaria y se ha convertido en una cubeta donde el agente predominante ha sido la erosión. Lo..."
+    },
+    "geomech_E": {
+      "value": "50",
+      "position": "t12.row0.E",
+      "position_description": "Flattened from geotech_rows[0].E",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "50"
+    },
+    "geomech_cohesion": {
+      "value": "0.10",
+      "position": "t12.row0.cohesion",
+      "position_description": "Flattened from geotech_rows[0].cohesion",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "0.10"
+    },
+    "geomech_gamma": {
+      "value": "1.90",
+      "position": "t12.row0.density",
+      "position_description": "Flattened from geotech_rows[0].density",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "1.90"
+    },
+    "geomech_phi": {
+      "value": "25",
+      "position": "t12.row0.phi",
+      "position_description": "Flattened from geotech_rows[0].phi",
+      "confidence": 0.95,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "25º"
+    },
     "geotech_rows": {
       "value": [
         {
@@ -146,6 +292,24 @@
       "template_text": "Profunditat: {{ lab_depth }}",
       "reference_text": "Profundidad: -1.00 a -1.60 m"
     },
+    "lab_field_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p138",
+      "position_description": "Body paragraph 138",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_field_description": {
+      "value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "position": "p138",
+      "position_description": "Body paragraph 138",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
+    },
     "lab_location": {
       "value": "Punto:  P-3",
       "position": "t7_r0_c1",
@@ -164,6 +328,24 @@
       "template_text": "Mostra : {{ lab_sample_id }}",
       "reference_text": "Muestra: SPT-1"
     },
+    "lab_testing_company": {
+      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+      "position": "p201",
+      "position_description": "Body paragraph 201",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
+    },
+    "lab_testing_description": {
+      "value": "laboratorio de ensayos para el control de calidad de la edificación",
+      "position": "p201",
+      "position_description": "Body paragraph 201",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
+    },
     "lab_tests_text": {
       "value": "Determinación del contenido en ion sulfato en suelos UNE 83963 / 08",
       "position": "t7_r1_c1",
@@ -174,12 +356,22 @@
       "reference_text": "Determinación del contenido en ion sulfato en suelos UNE 83963 / 08"
     },
     "location_sentence": {
-      "value": "en la Calle STA. GEMMA nº 4, URB. LA SERRA del municipio de VILANOVA DE SEGRIÀ",
-      "position": "p069",
-      "position_description": "Body paragraph 69",
-      "confidence": 0.95,
+      "value": "La edificación que se prevé construir presentará las siguientes características:",
+      "position": "p066",
+      "position_description": "Body paragraph 66",
+      "confidence": 0.191,
+      "extraction_method": "paragraph_single",
+      "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
+      "reference_text": "La edificación que se prevé construir presentará las siguientes características:"
+    },
+    "materials_intro": {
+      "value": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
+      "position": "p234",
+      "position_description": "Body paragraph 234",
+      "confidence": 0.9,
       "extraction_method": "intelligent_analysis",
-      "reference_text": "La nueva vivienda unifamiliar proyectada se situará en la Calle STA. GEMMA nº 4, URB. LA SERRA del municipio de VILANOVA DE SEGRIÀ."
+      "template_text": "",
+      "reference_text": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos me..."
     },
     "municipality": {
       "value": "En la zona en estudio, en la población de VILANOVA DE SEGRIÀ, se establece una aceleración sísmica básica de:",
@@ -219,6 +411,15 @@
       "template_text": "Loop: ['name', 'k_value', 'material']",
       "reference_text": "2 data rows"
     },
+    "photo_site_text": {
+      "value": "Fotografía 1. Detalle de la parcela de estudio.",
+      "position": "p122",
+      "position_description": "Body paragraph 122",
+      "confidence": 0.85,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "Fotografía 1. Detalle de la parcela de estudio."
+    },
     "plantes": {
       "value": "Pb",
       "position": "t0_r0_c1",
@@ -236,6 +437,24 @@
       "extraction_method": "paragraph_single",
       "template_text": "Qa= {{ qa_value }} Kg/cm2  amb un factor de seguretat inclòs de F=3",
       "reference_text": "Qa= 2.50 Kg/cm2 con un factor de seguridad incluido de F=3"
+    },
+    "radon_zone": {
+      "value": "1",
+      "position": "p397",
+      "position_description": "Body paragraph 397",
+      "confidence": 0.95,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "1"
+    },
+    "radon_zone_description": {
+      "value": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentraciones inadecuadas de Gas Radón procedente del terreno en el interior de los locales habitables.",
+      "position": "p397",
+      "position_description": "Body paragraph 397",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentracione..."
     },
     "seismic_ab_text": {
       "value": "AB < 0,04 g (siento g el valor de la gravedad)",
@@ -285,6 +504,15 @@
       "extraction_method": "paragraph_single",
       "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
       "reference_text": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial."
+    },
+    "site_description": {
+      "value": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la calle se encuentra sin ningún tipo de valla o muro, se encuentra expuesta directamente a la calle.\nLa zona de entrada se encuentra y el patio, se encuentran sin pavimentar y con vegetación de tamaño pequeño. A excepción, del extremo Oeste, se encuentra una franja pavimentada y con vallado.",
+      "position": "p118",
+      "position_description": "Body paragraph 118",
+      "confidence": 0.9,
+      "extraction_method": "intelligent_analysis",
+      "template_text": "",
+      "reference_text": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la cal..."
     },
     "spt_depth_range": {
       "value": "-0.80 a -1.40",
@@ -375,166 +603,6 @@
       "extraction_method": "paragraph_single",
       "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
       "reference_text": "Tabla 3 y 4. Resumen de los ensayos in situ realizados."
-    },
-    "client": {
-      "value": "GRUPO CUENCA GUERRERO, S.L",
-      "position": "p056",
-      "position_description": "Body paragraph 56",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "GRUPO CUENCA GUERRERO, S.L"
-    },
-    "architect_name_upper": {
-      "value": "JUAN JOSÉ TORRES POVEDANO",
-      "position": "p063",
-      "position_description": "Body paragraph 63",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "JUAN JOSÉ TORRES POVEDANO"
-    },
-    "building_type_lower": {
-      "value": "una vivienda unifamiliar aislada",
-      "position": "p063",
-      "position_description": "Body paragraph 63",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "una vivienda unifamiliar aislada"
-    },
-    "adjacent_east_fmt": {
-      "value": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio.",
-      "position": "p112",
-      "position_description": "Body paragraph 112",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio."
-    },
-    "adjacent_south_fmt": {
-      "value": "Por la parte sur, con una parcela, sin edificaciones, alguna pavimentación, vegetación herbácea de pequeña altura y algún árbol.",
-      "position": "p113",
-      "position_description": "Body paragraph 113",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Por la parte sur, con una parcela, sin edificaciones, alguna pavimentación, vegetación herbácea de pequeña altura y algún árbol."
-    },
-    "adjacent_north_fmt": {
-      "value": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio.",
-      "position": "p112",
-      "position_description": "Body paragraph 112",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio."
-    },
-    "adjacent_west_fmt": {
-      "value": "Y finalmente, Por la parte oeste con la calle STA. GEMMA.",
-      "position": "p114",
-      "position_description": "Body paragraph 114",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Y finalmente, Por la parte oeste con la calle STA. GEMMA."
-    },
-    "site_description": {
-      "value": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la calle se encuentra sin ningún tipo de valla o muro, se encuentra expuesta directamente a la calle.\nLa zona de entrada se encuentra y el patio, se encuentran sin pavimentar y con vegetación de tamaño pequeño. A excepción, del extremo Oeste, se encuentra una franja pavimentada y con vallado.",
-      "position": "p118",
-      "position_description": "Body paragraph 118",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la cal..."
-    },
-    "lab_field_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
-      "position": "p138",
-      "position_description": "Body paragraph 138",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
-    },
-    "lab_field_description": {
-      "value": "laboratorio de ensayos para el control de calidad de la edificación",
-      "position": "p138",
-      "position_description": "Body paragraph 138",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
-    },
-    "lab_testing_company": {
-      "value": "TPS PROSPECCIÓ DEL SUBSÒL SL",
-      "position": "p201",
-      "position_description": "Body paragraph 201",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "TPS PROSPECCIÓ DEL SUBSÒL SL"
-    },
-    "lab_testing_description": {
-      "value": "laboratorio de ensayos para el control de calidad de la edificación",
-      "position": "p201",
-      "position_description": "Body paragraph 201",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "laboratorio de ensayos para el control de calidad de la edificación"
-    },
-    "radon_zone": {
-      "value": "1",
-      "position": "p397",
-      "position_description": "Body paragraph 397",
-      "confidence": 0.95,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "1"
-    },
-    "radon_zone_description": {
-      "value": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentraciones inadecuadas de Gas Radón procedente del terreno en el interior de los locales habitables.",
-      "position": "p397",
-      "position_description": "Body paragraph 397",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentracione..."
-    },
-    "csn_radon_text": {
-      "value": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de que los edificios construidos en la zona sin soluciones específicas de protección frente al radón presenten concentraciones de radón superiores al nivel de referencia.",
-      "position": "p375",
-      "position_description": "Body paragraph 375",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de..."
-    },
-    "conclusions_levels_detected": {
-      "value": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
-      "position": "p406",
-      "position_description": "Body paragraph 406",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo."
-    },
-    "conclusions_water_statement": {
-      "value": "En la fecha que se realizaron los trabajos de campo, y hasta la cota ensayada, se detecta un aumento importante de la humedad de los materiales en uno de los ensayos realizados, en concreto, en el P-1 a -1.00 m.",
-      "position": "p431",
-      "position_description": "Body paragraph 431",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "En la fecha que se realizaron los trabajos de campo, y hasta la cota ensayada, se detecta un aumento importante de la humedad de los materiales en uno de los ensayos realizados, en concreto, en el P-1..."
-    },
-    "photo_site_text": {
-      "value": "Fotografía 1. Detalle de la parcela de estudio.",
-      "position": "p122",
-      "position_description": "Body paragraph 122",
-      "confidence": 0.85,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Fotografía 1. Detalle de la parcela de estudio."
-    },
-    "materials_intro": {
-      "value": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
-      "position": "p234",
-      "position_description": "Body paragraph 234",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos me..."
-    },
-    "geo_p": {
-      "value": "Desde finales del Oligoceno hasta la actualidad, la depresión del Ebro ha dejado de actuar como cuenca sedimentaria y se ha convertido en una cubeta donde el agente predominante ha sido la erosión. Localmente, en algunos puntos de la cuenca, existen depósitos del Terciario superior y principalmente del Cuaternario. Estos corresponden a materiales subconsolidados que aparecen entre las rocas sedimentarias y la superficie, formados por arenas, limos y arcillas, donde abundan las costras carbonatadas.",
-      "position": "p224",
-      "position_description": "Body paragraph 224",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "reference_text": "Desde finales del Oligoceno hasta la actualidad, la depresión del Ebro ha dejado de actuar como cuenca sedimentaria y se ha convertido en una cubeta donde el agente predominante ha sido la erosión. Lo..."
     }
   },
   "warnings": [
@@ -559,6 +627,7 @@
     "p465: Variable 'empentes_paragraph' has no static context for matching",
     "p469: Variable 'estabilitat_paragraph' has no static context for matching",
     "Loop table t5 (sondeig_tests): no matching reference table",
-    "Loop table t8 (soil_level_rows): no matching reference table"
+    "Loop table t8 (soil_level_rows): no matching reference table",
+    "Merged 20 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, architect_name_upper, building_type_lower, client, conclusions_levels_detected..."
   ]
 }

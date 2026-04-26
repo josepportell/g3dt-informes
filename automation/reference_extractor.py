@@ -66,6 +66,89 @@ SKIP_PREFIXES = (
     "fig_", "photo_", "section_", "taula_",
 )
 
+# Phrases that indicate a row is a column-header (used by _is_table_header_row).
+# Broad set: includes single-letter column names like "n", "e", "nb" because we
+# only flag a ROW as header when MULTIPLE cells match these phrases.
+_HEADER_ROW_PHRASES = frozenset({
+    "nº assaig", "n° assaig", "n. assaig", "nº  assaig",
+    "punt",
+    "prof. extracció (m)", "prof. extraccio (m)",
+    "prof. extracció", "prof. extraccio",
+    "n30", "n20", "n",
+    "litologia",
+    "cota", "depth", "test_id",
+    "refús", "refus", "refusal",
+    "nivell freàtic", "nivell freatic", "water", "spt_ma",
+    "nb", "phi", "e", "cohesion", "density",
+    "name", "material", "k_value",
+    "thickness", "terrain_type", "c_coeff", "num",
+})
+
+# Strict header-cell phrases (used during flatten, where one bad cell shouldn't
+# poison the whole row). Narrower; avoids matching on legitimate single-letter
+# values like "N" / "E" that may appear as data in some columns.
+_HEADER_CELL_PHRASES = frozenset({
+    "nº assaig", "n° assaig", "n. assaig", "nº  assaig",
+    "prof. extracció (m)", "prof. extraccio (m)",
+    "prof. extracció", "prof. extraccio",
+    "litologia",
+})
+
+# Backwards-compat alias retained for any external imports/tests.
+_TABLE_HEADER_VALUES = _HEADER_ROW_PHRASES
+
+
+def _is_table_header_value(s: Any) -> bool:
+    """Return True when a cell value looks like a column header phrase.
+
+    Catalan-aware (handles `Nº`, `°`, `extracció`). Uses the broad
+    `_HEADER_ROW_PHRASES` set because callers (row-level header detection)
+    need maximum recall.
+    """
+    if not isinstance(s, str):
+        return False
+    return s.strip().lower() in _HEADER_ROW_PHRASES
+
+
+def _is_strict_header_cell(s: Any) -> bool:
+    """Return True only for definitely-not-data header phrases.
+
+    Used during table flatten where a single false-positive (e.g. a cell value
+    of "N" or "E") would poison a whole row. Narrower than
+    `_is_table_header_value`.
+    """
+    if not isinstance(s, str):
+        return False
+    return s.strip().lower() in _HEADER_CELL_PHRASES
+
+
+def _is_table_header_row(row: dict) -> bool:
+    """Return True when a loop-table row looks like a header row.
+
+    Heuristics:
+    1. `test_id` matches a known header phrase (e.g. "Nº assaig").
+    2. All non-empty values look like header phrases.
+    A real test_id like "P-1", "S-2", "SPT-1" passes through (digit + dash).
+
+    Assumption (W4): all real test_ids in our reports follow the
+    `LETTERS[-]DIGITS` pattern (P-1, S2, SPT-1). If a future format uses
+    purely numeric or purely alphabetic ids, this guard needs updating.
+    """
+    if not isinstance(row, dict):
+        return False
+    test_id = row.get("test_id")
+    if isinstance(test_id, str):
+        tid = test_id.strip()
+        # Real test ids: letters + dash + digits (e.g. P-1, S-2, SPT-1).
+        if re.match(r"^[A-Za-z]+-?\d+", tid):
+            return False
+        if _is_table_header_value(tid):
+            return True
+    non_empty = [v for v in row.values() if isinstance(v, str) and v.strip()]
+    if non_empty and all(_is_table_header_value(v) for v in non_empty):
+        return True
+    return False
+
 SKIP_SUFFIXES = (
     "_image", "_num",
 )
@@ -678,8 +761,17 @@ def extract_loop_tables(
                 row_dict[col_name] = val
                 if val:
                     all_empty = False
-            if not all_empty:
-                rows_data.append(row_dict)
+            if all_empty:
+                continue
+            # Drop rows that are actually column headers (header-detection
+            # may underestimate when LibreOffice merges header rows).
+            if _is_table_header_row(row_dict):
+                logger.debug(
+                    "Dropping header-row contamination from %s row %d: %s",
+                    var_name, row_idx, row_dict,
+                )
+                continue
+            rows_data.append(row_dict)
 
         if rows_data:
             variables[var_name] = ExtractedVariable(
@@ -814,10 +906,128 @@ def extract_reference_values(
             result.statistics["by_method"].get(method, 0) + 1
         )
 
+    # 8.5. Flatten nested loop-table rows to top-level concept_ids
+    # (e.g. geotech_rows[0].E -> geomech_E). Positional extraction wins;
+    # this only fills gaps. Must run BEFORE statistics so by_method counts.
+    _flatten_loop_table_concepts(result)
+
+    # Re-tally statistics so flatten contributions are reflected.
+    extracted_count = len(result.variables)
+    result.statistics["total_extracted"] = extracted_count
+    result.statistics["extraction_rate"] = (
+        round(extracted_count / result.statistics["total_template_variables"] * 100, 1)
+        if result.statistics["total_template_variables"] else 0
+    )
+    result.statistics["by_method"] = {}
+    for ev in result.variables.values():
+        method = ev.extraction_method
+        result.statistics["by_method"][method] = (
+            result.statistics["by_method"].get(method, 0) + 1
+        )
+
     # 9. Architect-vs-client conflation guard (post-processing)
     _guard_architect_client_conflation(result)
 
     return result
+
+
+# ---------------------------------------------------------------------------
+# Flatten nested loop-table rows to flat concept_ids
+# ---------------------------------------------------------------------------
+
+# Mapping: flat concept_id -> (loop_table_var, row index, source column)
+# Eva's geotechnical column names differ from our concept names in one case:
+# the table column is "density" (densitat) but the canonical concept is
+# "geomech_gamma" (γ, peso específico). They are synonyms in geotechnics.
+_GEOTECH_FLATTEN: tuple[tuple[str, str], ...] = (
+    ("geomech_E", "E"),
+    ("geomech_phi", "phi"),
+    ("geomech_cohesion", "cohesion"),
+    ("geomech_gamma", "density"),
+)
+
+
+def _clean_phi_value(val: Any) -> Any:
+    """Strip the trailing degree symbol from a phi value (e.g. `38º` -> `38`).
+
+    Preserves the original type if non-string.
+    """
+    if not isinstance(val, str):
+        return val
+    cleaned = val.strip().rstrip("º°").strip()
+    return cleaned if cleaned else val
+
+
+def _flatten_loop_table_concepts(result: ExtractionResult) -> None:
+    """Derive flat concept_ids from the first row of nested loop tables.
+
+    Adds (when not already present):
+    - geomech_E, geomech_phi, geomech_cohesion, geomech_gamma
+      from `geotech_rows[0]` (top stratum)
+    - cota_referencia from `dpsh_tests[0].cota` (project reference cota)
+
+    Existing flat keys are preserved (positional extraction wins; this is
+    a fallback). Header-like values are skipped defensively.
+    """
+    variables = result.variables
+
+    # 1. Flatten geotech_rows[0] (top stratum).
+    geotech_ev = variables.get("geotech_rows")
+    if geotech_ev is not None and isinstance(geotech_ev.value, list) and geotech_ev.value:
+        first_row = geotech_ev.value[0]
+        if isinstance(first_row, dict) and not _is_table_header_row(first_row):
+            for flat_concept, src_col in _GEOTECH_FLATTEN:
+                if flat_concept in variables:
+                    continue
+                raw = first_row.get(src_col)
+                if raw is None:
+                    continue
+                if isinstance(raw, str) and (
+                    not raw.strip() or _is_strict_header_cell(raw)
+                ):
+                    continue
+                # Values stay as strings to round-trip prefixed sentinels like
+                # ">500" / ">350" without information loss.
+                cleaned = _clean_phi_value(raw) if flat_concept == "geomech_phi" else raw
+                variables[flat_concept] = ExtractedVariable(
+                    value=cleaned,
+                    position=f"{geotech_ev.position}.row0.{src_col}",
+                    position_description=(
+                        f"Flattened from geotech_rows[0].{src_col}"
+                    ),
+                    confidence=0.95,
+                    extraction_method="table_flatten",
+                    template_text="",
+                    reference_text=str(raw),
+                )
+
+    # 2. Flatten dpsh_tests[0].cota -> cota_referencia.
+    dpsh_ev = variables.get("dpsh_tests")
+    if (
+        dpsh_ev is not None
+        and isinstance(dpsh_ev.value, list)
+        and dpsh_ev.value
+        and "cota_referencia" not in variables
+    ):
+        first_dpsh = dpsh_ev.value[0]
+        if isinstance(first_dpsh, dict) and not _is_table_header_row(first_dpsh):
+            cota = first_dpsh.get("cota")
+            if (
+                isinstance(cota, str)
+                and cota.strip()
+                and not _is_strict_header_cell(cota)
+            ):
+                variables["cota_referencia"] = ExtractedVariable(
+                    value=cota.strip(),
+                    position=f"{dpsh_ev.position}.row0.cota",
+                    position_description=(
+                        "Flattened from first DPSH test elevation"
+                    ),
+                    confidence=0.9,
+                    extraction_method="table_flatten",
+                    template_text="",
+                    reference_text=str(cota),
+                )
 
 
 # ---------------------------------------------------------------------------
@@ -885,6 +1095,116 @@ def _guard_architect_client_conflation(result: ExtractionResult) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Merge with prior reference JSON (preserve external-method entries)
+# ---------------------------------------------------------------------------
+
+# Methods produced by THIS extractor — authoritative for their own keys. If a
+# prior entry uses one of these and the current run no longer emits the key,
+# the prior entry is dropped (we deliberately stopped emitting it).
+_OWN_EXTRACTION_METHODS = frozenset({
+    "paragraph_single", "paragraph_multi",
+    "table_cell", "table_cell_multi",
+    "loop_table", "table_flatten",
+})
+
+# Methods produced by external tools we don't control (e.g. a one-off LLM pass
+# that filled in concepts the positional extractor can't recover: free-text
+# paragraphs, formatted lists, narrative summaries). These entries MUST be
+# preserved on re-extraction — otherwise they vanish silently.
+_EXTERNAL_EXTRACTION_METHODS = frozenset({
+    "intelligent_analysis",
+})
+
+
+def _merge_with_prior(new_result: ExtractionResult, prior_path: Path) -> None:
+    """Preserve prior entries with an external extraction_method.
+
+    Re-extraction is otherwise destructive for concepts our positional
+    extractor can't recover (free-text paragraphs like `conclusions_*`,
+    `site_description`, `materials_intro`). Those entries are produced by an
+    external `intelligent_analysis` pass and must round-trip across runs.
+
+    Rules:
+    - If the new run emitted the same key, NEW WINS (fresher positional data).
+    - If the new run did NOT emit the key AND prior method is external,
+      preserve verbatim.
+    - If the new run did NOT emit the key AND prior method is one of OUR own
+      methods, drop it (the new code path is authoritative; absence is
+      deliberate).
+    - If the new run did NOT emit the key AND prior method is unknown,
+      preserve it (safe default — protect against future external sources).
+
+    The merge is IDEMPOTENT: a second call with the same prior file produces
+    the same result as the first.
+    """
+    if not prior_path.is_file():
+        return
+    try:
+        prior = json.loads(prior_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as exc:
+        logger.warning(
+            "Could not load prior reference values for merge (%s): %s",
+            prior_path, exc,
+        )
+        return
+
+    prior_vars = prior.get("variables", {})
+    if not isinstance(prior_vars, dict):
+        return
+
+    preserved_keys: list[str] = []
+    for k, entry in prior_vars.items():
+        if k in new_result.variables:
+            continue
+        if not isinstance(entry, dict):
+            continue
+        method = entry.get("extraction_method", "")
+        # Drop entries produced by our own (now-superseded) code path.
+        if method in _OWN_EXTRACTION_METHODS:
+            continue
+
+        # Preserve external entries (and unknown methods, defensively).
+        try:
+            new_result.variables[k] = ExtractedVariable(
+                value=entry.get("value"),
+                position=entry.get("position", ""),
+                position_description=entry.get("position_description", ""),
+                confidence=float(entry.get("confidence", 0.0) or 0.0),
+                extraction_method=method or "intelligent_analysis",
+                template_text=entry.get("template_text", "") or "",
+                reference_text=entry.get("reference_text", "") or "",
+            )
+            preserved_keys.append(k)
+        except (TypeError, ValueError) as exc:
+            logger.warning(
+                "Could not preserve prior entry %s (%s); skipping",
+                k, exc,
+            )
+
+    if preserved_keys:
+        new_result.warnings.append(
+            f"Merged {len(preserved_keys)} prior external-method entries: "
+            + ", ".join(sorted(preserved_keys)[:8])
+            + ("..." if len(preserved_keys) > 8 else "")
+        )
+
+
+def _recompute_statistics(result: ExtractionResult) -> None:
+    """Recompute total_extracted / extraction_rate / by_method after a merge."""
+    extracted_count = len(result.variables)
+    result.statistics["total_extracted"] = extracted_count
+    total_tmpl = result.statistics.get("total_template_variables", 0) or 0
+    result.statistics["extraction_rate"] = (
+        round(extracted_count / total_tmpl * 100, 1) if total_tmpl else 0
+    )
+    by_method: dict[str, int] = {}
+    for ev in result.variables.values():
+        m = ev.extraction_method
+        by_method[m] = by_method.get(m, 0) + 1
+    result.statistics["by_method"] = by_method
+
+
+# ---------------------------------------------------------------------------
 # Serialization
 # ---------------------------------------------------------------------------
 
@@ -934,6 +1254,13 @@ def _process_project(project_path: Path, template_path: Path | None = None) -> E
     out_dir = project_path / "validation"
     out_dir.mkdir(exist_ok=True)
     out_file = out_dir / "eva_reference_values.json"
+
+    # Merge any prior external-method entries (e.g. intelligent_analysis from
+    # one-off LLM extractions) BEFORE writing. Preserves Eva ground-truth that
+    # our positional extractor can't recover.
+    _merge_with_prior(result, out_file)
+    _recompute_statistics(result)
+
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(_result_to_dict(result), f, ensure_ascii=False, indent=2)
 
@@ -965,6 +1292,8 @@ def main():
                 out_dir = project_path / "validation"
                 out_dir.mkdir(exist_ok=True)
                 out_file = out_dir / "eva_reference_values.json"
+                _merge_with_prior(result, out_file)
+                _recompute_statistics(result)
                 with open(out_file, "w", encoding="utf-8") as f:
                     json.dump(_result_to_dict(result), f, ensure_ascii=False, indent=2)
                 logger.info(
