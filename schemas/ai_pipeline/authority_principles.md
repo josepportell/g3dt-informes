@@ -39,9 +39,11 @@
 
 ## Identificació de persones
 
-- `architect_name` (arquitecte / arquitecte tècnic / enginyer):
+- `architect_name` (arquitecte / arquitecte tècnic / enginyer / despatx):
   - **Font autoritativa**: caixetí del plànol arquitectònic (zona
-    inferior-dreta del PDF), o signatura tècnica del projecte.
+    inferior-dreta del PDF), o signatura tècnica del projecte. En
+    despatxos / firmes (no individus) el caixetí porta el nom de la
+    firma; aquest valor va a `architect_name`.
   - **NO usar** com a `architect_name` el nom que apareix al cos de
     l'informe en frases com *"Segons ens indica el sol·licitant, el SR.
     X, en nom propi..."*: aquesta posició descriu el sol·licitant, NO
@@ -52,6 +54,33 @@
   - **Font autoritativa**: pressupost signat, contracte, correus inicials.
   - El cos de l'informe el cita habitualment com *"sol·licitant"* o
     *"promotor"*.
+
+### Patrons de la frase del cos i com llegir-la
+
+La frase típica del cos de l'informe Eva és:
+
+> "Segons ens indica el sol·licitant, el SR. X, de l'Y, en nom de Z, ..."
+
+amb tres slots: SR./SRA./despatx (X = arquitecte), `de l'` (Y = empresa),
+`en nom de` (Z = client). Eva sovint trunca o reordena aquesta frase:
+
+- **Patró estàndard** (Bell-Lloc): tres slots plens. X = `architect_name`,
+  Y = `architect_company`, Z = `client_name`.
+- **Patró truncat** (Alcoletge): només "el SR. X". X probablement és el
+  client (auto-promoció) o un cas de "en nom propi" implícit. **NO
+  assumir** que X és l'arquitecte; mira el caixetí del plànol.
+- **Patró auto-promogut** (Rubí): "la SRA. X" sola, sense empresa ni
+  separació entre arquitecte i client. X és simultàniament arquitecte
+  i client. Tots dos valors són X.
+- **Patró firm-led** (Linyola): "FIRMA, en nom de SR./SRA. Y". La FIRMA
+  és l'arquitecte (`architect_name` = firma); Y és el client
+  (`client_name`). **No** facis Y = `architect_name` només perquè
+  porta el prefix "Sr./Sra.".
+
+Si Stage 4 te dóna candidats per a `architect_name` extrets exclusivament
+del cos de l'informe (no del caixetí), demota'ls quan vegis qualsevol
+patró truncat o firm-led, perquè l'extractor posicional és susceptible a
+mis-alinear la frase amb la plantilla.
 
 ## Semàntica del Bearing Stratum per a Paràmetres Geomecànics
 

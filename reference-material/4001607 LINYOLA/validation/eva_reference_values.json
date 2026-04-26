@@ -81,13 +81,12 @@
       "reference_text": "BUNYESC ARQUITECTURA EFICIENT"
     },
     "architect_name_upper": {
-      "value": "SÍLVIA EROLES BALAGUERÓ",
-      "position": "p030",
-      "position_description": "Body paragraph 30",
-      "confidence": 0.9,
+      "value": "BUNYESC ARQUITECTURA EFICIENT",
+      "position": "informe body — firm-led pattern",
+      "position_description": "Manually corrected — extractor mis-aligned to the 'en nom de Sra. X' (client) part. The firm is the architect.",
+      "confidence": 1.0,
       "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "SÍLVIA EROLES BALAGUERÓ"
+      "reference_text": "Segons ens indica el sol·licitant, BUNYESC ARQUITECTURA EFICIENT, en nom de la SRA. SÍLVIA EROLES BALAGUERÓ..."
     },
     "building_structure_desc": {
       "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
@@ -624,6 +623,22 @@
       "extraction_method": "intelligent_analysis",
       "template_text": "",
       "reference_text": "P-1\n324935.0 ; 4619561.0 ; 244.9"
+    },
+    "architect_name": {
+      "value": "Bunyesc Arquitectura Eficient",
+      "position": "informe body",
+      "position_description": "Title-case canonical from firm name",
+      "confidence": 1.0,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "BUNYESC ARQUITECTURA EFICIENT"
+    },
+    "client_name": {
+      "value": "Sílvia Eroles Balagueró",
+      "position": "informe body — 'en nom de'",
+      "position_description": "Client/owner — was previously mis-extracted as architect_name_upper",
+      "confidence": 1.0,
+      "extraction_method": "intelligent_analysis",
+      "reference_text": "en nom de la SRA. SÍLVIA EROLES BALAGUERÓ"
     }
   },
   "warnings": [
