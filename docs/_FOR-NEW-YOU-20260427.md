@@ -117,8 +117,11 @@ Baseline 984 passing.
 ```bash
 # 1. Invalidate Alcoletge AI pipeline caches
 PROJ="reference-material/4001670 ALCOLETGE"
-rm -f "$PROJ/validation/"{ai_typology,ai_conversion,ai_analysis,ai_ranking,ai_calculations}.json
-rm -rf "$PROJ/validation/ai_pipeline/"{analysis,ranking,calculations}/
+rm -f "$PROJ/validation/"{ai_typology,ai_conversion,ai_analysis,ai_ranking,ai_calculations,ai_pipeline_trace}.json
+rm -rf "$PROJ/validation/ai_pipeline/"{converted,analysis,ranking,calculations}/
+# Also remove extracted images from now-dev-only parents so a fresh Stage 2
+# walk doesn't accidentally re-classify stale extractions:
+rm -rf "$PROJ/validation/ai_pipeline/extracted/"{4001670_generated_1,4001670_generated_utms,4001670_informe,4001670_portada}/
 
 # 2. Set env vars (Option A or B — see Resum §9 for the choice matrix)
 export G3DT_AI_SKIP_GROUPS=coordinates
