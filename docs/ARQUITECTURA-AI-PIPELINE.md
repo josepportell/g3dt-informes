@@ -803,6 +803,16 @@ Passthrough (sense crides LLM) per a conceptes amb 0 candidats (`status="no_cand
 - **D19**: Top-1 accuracy 45-70% — per sota del 80% gate. Iterar `authority_principles.md` (p.ex. per `expedient` → preferir project ID signat sobre IDs de laboratori) abans de la propera passada.
 - **D13**: Benchmark script (step 11 del pla) pendent. Necessita crèdits addicionals per executar els 7 projectes.
 
+**Eva reference alias map**: `schemas/concepts/concept_template_aliases.yaml` mapeja
+els canonical `concept_id`s de `report_variables.yaml` als noms de placeholder del
+template Jinja (`g3dt-jinja-template.docx`) amb què `automation/reference_extractor.py`
+desa els valors d'Eva a `validation/eva_reference_values.json`. Sense aquest mapping
+~17 referències legítimes d'Eva queden invisibles per al comparador (p.ex.
+`architect_name` → `architect_name_upper`, `client_name` → `client`, `field_date`
+→ `data_camp_text`). El consulten tant `automation/ai_pipeline/trace.py`
+(`_eva_value_for_concept`) com `scripts/ai_pipeline_pass_c_diff.py`. Mantenir-lo
+sincronitzat quan canviïn `concept_id`s o placeholders del template.
+
 ### Fase 6 — Proposta + validació per Eva
 Per cada concepte, pren el candidat top-1 de Fase 5 com a valor proposat. El wizard mostra:
 - Valor proposat

@@ -1,0 +1,247 @@
+# Concept → Template Placeholder Aliases
+#
+# Maps canonical concept_ids (from `report_variables.yaml`) to the template
+# placeholder names that `automation/reference_extractor.py` writes into
+# `validation/eva_reference_values.json`. The reference extractor walks the
+# Jinja `templates/g3dt-jinja-template.docx` and stores Eva's reference
+# values under the *placeholder* names — which often differ from the
+# canonical concept_id (e.g. `architect_name` → `architect_name_upper`,
+# `client_name` → `client`, `field_date` → `data_camp_text`).
+#
+# Both `automation/ai_pipeline/trace.py` (`_eva_value_for_concept`) and
+# `scripts/ai_pipeline_pass_c_diff.py` consult this map after trying the
+# canonical concept_id directly. Without this mapping, ~17 legitimate Eva
+# references on a typical project are invisible to the comparator and
+# top-1 accuracy is severely under-reported.
+#
+# Conventions:
+#  - Each top-level key is a canonical concept_id (no `_upper`, `_lower`,
+#    `_text` etc. variants — those go in the alias list).
+#  - Empty list means there is genuinely no template placeholder for that
+#    concept (typically visual concepts: `*_visual`).
+#  - For table-nested concepts (rows inside `geotech_rows`, `dpsh_tests`,
+#    `sondeig_tests`, `lab_tests`, `perm_rows`, `seismic_rows`), the Eva
+#    extractor stores them as nested dicts in lists. They cannot be
+#    looked up by a flat alias and are flagged in comments below; the
+#    simple alias map skips them and the comparator returns no_eva_ref.
+#
+# Keep this file in sync when concept_ids change in
+# `report_variables.yaml` or when template placeholders are renamed in
+# `g3dt-jinja-template.docx`.
+
+# ─── Project / client ──────────────────────────────────────────────────
+client_name:
+  - client
+  - client_name
+contact_name:
+  - contact_name
+client_nif:
+  - client_nif
+client_phone:
+  - client_phone
+client_email:
+  - client_email
+architect_name:
+  - architect_name
+  - architect_name_upper
+architect_company:
+  - architect_company
+expedient:
+  - expedient
+commercial_code:
+  - commercial_code
+
+# ─── Building ──────────────────────────────────────────────────────────
+building_type:
+  - building_type
+  - building_type_lower
+  - building_type_upper
+building_height_m:
+  - building_height_m
+building_structure_desc:
+  - building_structure_desc
+num_floors:
+  - num_floors
+  - plantes
+has_basement:
+  - has_basement
+has_retaining_walls:
+  - has_retaining_walls
+foundation_depth_m:
+  - foundation_depth_m
+superficie_construida:
+  - superficie_construida
+superficie_parcela:
+  - superficie_parcela
+superficie_cadastral:
+  - superficie_cadastral
+
+# ─── Location ─────────────────────────────────────────────────────────
+street_address:
+  - street_address
+municipality:
+  - municipality
+province:
+  - province
+access_street:
+  - access_street
+access_description:
+  - access_description
+access_url:
+  - access_url
+location_sentence:
+  - location_sentence
+
+# ─── Adjacents ────────────────────────────────────────────────────────
+adjacent_north:
+  - adjacent_north
+  - adjacent_north_fmt
+adjacent_south:
+  - adjacent_south
+  - adjacent_south_fmt
+adjacent_east:
+  - adjacent_east
+  - adjacent_east_fmt
+adjacent_west:
+  - adjacent_west
+  - adjacent_west_fmt
+adjacent_north_fmt:
+  - adjacent_north_fmt
+adjacent_south_fmt:
+  - adjacent_south_fmt
+adjacent_east_fmt:
+  - adjacent_east_fmt
+adjacent_west_fmt:
+  - adjacent_west_fmt
+
+# ─── Coordinates ──────────────────────────────────────────────────────
+referencia_catastral:
+  - referencia_catastral
+# utm_x and utm_y live inside `geotech_rows[*].utm_x/utm_y` per-DPSH; not
+# extracted as flat placeholders in the template. Map empty → no_eva_ref.
+# table-nested — needs structured comparator
+utm_x: []
+utm_y: []
+
+# ─── Field work ───────────────────────────────────────────────────────
+# Note: Eva also writes `data_signatura_text` (signature date) but no
+# canonical concept_id covers it yet; intentionally unmapped here until
+# a `signature_date` concept is added to report_variables.yaml.
+field_date:
+  - field_date
+  - data_camp_text
+field_work_dates:
+  - field_work_dates
+field_work_dates_text:
+  - field_work_dates_text
+  # data_camp_text is claimed by `field_date`; this concept has no
+  # flat Eva placeholder of its own.
+cota_referencia:
+  - cota_referencia
+num_dpsh_tests:
+  - num_dpsh_tests
+table_dpsh_range:
+  - table_dpsh_range
+# spt_* concepts have their own template placeholders but Eva does not
+# extract them as flat keys (they end up inside sondeig_tests rows for
+# some reports). Keep the placeholder aliases in case future projects
+# do extract them flat.
+spt_test_id:
+  - spt_test_id
+spt_n30:
+  - spt_n30
+spt_depth_range:
+  - spt_depth_range
+spt_lithology:
+  - spt_lithology
+spt_location:
+  - spt_location
+
+# ─── Site description / visuals ───────────────────────────────────────
+site_condition:
+  - site_condition
+site_description:
+  - site_description
+site_position:
+  - site_position
+parcel_shape:
+  - parcel_shape
+is_urban:
+  - is_urban
+is_sloped:
+  - is_sloped
+is_anthropized:
+  - is_anthropized
+slope_direction:
+  - slope_direction
+slope_percent:
+  - slope_percent
+# Visual concepts have no template placeholders (no Eva ref possible).
+access_road_visual: []
+building_to_demolish_visual: []
+is_anthropized_visual: []
+site_slope_visual: []
+site_vegetation_visual: []
+surrounding_context_visual: []
+
+# ─── Geotechnical (per-level / per-row, table-nested) ─────────────────
+# These live inside `geotech_rows[*]` (one row per geological level) in
+# Eva's reference. The flat alias map cannot reach them.
+# table-nested — needs structured comparator
+geomech_E: []
+geomech_cohesion: []
+geomech_gamma: []
+geomech_phi: []
+
+# ─── Geotechnical scalars ─────────────────────────────────────────────
+qa_value:
+  - qa_value
+k30_value:
+  - k30_value
+settlement_cm:
+  - settlement_cm
+  - settlement
+Es_settlement:
+  - Es_settlement
+historia_geologica_template:
+  - historia_geologica_template
+num_soil_levels:
+  - num_soil_levels
+
+# ─── ICGC ─────────────────────────────────────────────────────────────
+icgc_unit_code:
+  - icgc_unit_code
+icgc_unit_description:
+  - icgc_unit_description
+icgc_unit_epoch:
+  - icgc_unit_epoch
+
+# ─── Lab ──────────────────────────────────────────────────────────────
+lab_sample_id:
+  - lab_sample_id
+lab_depth:
+  - lab_depth
+lab_location:
+  - lab_location
+lab_field_company:
+  - lab_field_company
+lab_field_description:
+  - lab_field_description
+lab_testing_company:
+  - lab_testing_company
+lab_testing_description:
+  - lab_testing_description
+lab_tests:
+  - lab_tests
+  - lab_tests_text
+lab_tests_text:
+  - lab_tests_text
+sulfate_mg_kg:
+  - sulfate_mg_kg
+  - sulfate_value
+sulfate_baumann:
+  - sulfate_baumann
+sulfate_classification:
+  - sulfate_classification
+sulfate_level_name:
+  - sulfate_level_name

@@ -36,6 +36,7 @@ from automation.ai_pipeline.ranking import (
     ProjectRanking,
     load_ranking,
 )
+from automation.ai_pipeline.trace import _load_template_aliases
 
 
 REFERENCE_ROOT = Path(__file__).parent.parent / "reference-material"
@@ -156,6 +157,24 @@ def verdict_for(
 # ─── Project diff ──────────────────────────────────────────────────────
 
 
+def _resolve_eva_entry(
+    eva_vars: dict[str, Any],
+    concept_id: str,
+    aliases_map: dict[str, list[str]],
+) -> dict | None:
+    """Look up Eva's reference entry for a concept, trying canonical name
+    then template-placeholder aliases."""
+    entry = eva_vars.get(concept_id)
+    if isinstance(entry, dict):
+        return entry
+    for alias in aliases_map.get(concept_id, []):
+        if alias and alias != concept_id:
+            entry = eva_vars.get(alias)
+            if isinstance(entry, dict):
+                return entry
+    return None
+
+
 def diff_project(pp: Path) -> dict:
     """Compute Pass C verdicts for one project."""
     ranking = load_ranking(pp)
@@ -166,6 +185,7 @@ def diff_project(pp: Path) -> dict:
             "rows": [],
         }
     eva_vars = load_eva_reference(pp)
+    aliases_map = _load_template_aliases()
 
     rows: list[dict] = []
     for cid, cr in sorted(ranking.concepts.items()):
@@ -182,7 +202,7 @@ def diff_project(pp: Path) -> dict:
             # Same top-1 value (Pass C reordered tail only). Skip.
             continue
 
-        eva_entry = eva_vars.get(cid)
+        eva_entry = _resolve_eva_entry(eva_vars, cid, aliases_map)
         eva_value = eva_entry.get("value") if isinstance(eva_entry, dict) else None
         v = verdict_for(original_top1, revised_top1, eva_value)
         rows.append(

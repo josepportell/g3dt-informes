@@ -1011,3 +1011,133 @@ def test_api_trace_endpoint_returns_cached_trace(tmp_path, monkeypatch):
     payload = resp.json()
     assert payload["cached"] is True
     assert payload["trace"]["project_name"] == project.name
+
+
+# ---------------------------------------------------------------------------
+# Template-alias loader + Eva lookup fallback
+# ---------------------------------------------------------------------------
+
+
+def test_template_aliases_loader(tmp_path, monkeypatch):
+    """`_load_template_aliases` parses a YAML alias map and returns
+    `{concept_id: [alias, ...]}` with empty lists for visual concepts."""
+    import yaml as _yaml
+
+    from automation.ai_pipeline import trace as trace_mod
+
+    alias_yaml = tmp_path / "concept_template_aliases.yaml"
+    alias_yaml.write_text(
+        _yaml.safe_dump(
+            {
+                "architect_name": ["architect_name", "architect_name_upper"],
+                "client_name": ["client", "client_name"],
+                "field_date": ["field_date", "data_camp_text"],
+                # Visual concept — no template placeholder.
+                "site_slope_visual": [],
+                # malformed entry — non-string aliases stripped.
+                "weird_concept": ["good_alias", 123, None],
+            },
+            allow_unicode=True,
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(trace_mod, "_TEMPLATE_ALIASES_PATH", alias_yaml)
+
+    out = trace_mod._load_template_aliases()
+    assert out["architect_name"] == ["architect_name", "architect_name_upper"]
+    assert out["client_name"] == ["client", "client_name"]
+    assert out["field_date"] == ["field_date", "data_camp_text"]
+    assert out["site_slope_visual"] == []
+    # Non-string aliases are filtered out.
+    assert out["weird_concept"] == ["good_alias"]
+
+    # Missing file returns an empty dict.
+    monkeypatch.setattr(trace_mod, "_TEMPLATE_ALIASES_PATH", tmp_path / "absent.yaml")
+    assert trace_mod._load_template_aliases() == {}
+
+
+def test_eva_lookup_falls_back_to_template_alias(tmp_path):
+    """When Eva keys her reference under a template-placeholder name and the
+    concept_id is canonical, the trace's eva lookup must resolve via the
+    alias map and populate `eva_value` + `eva_top1_match` accordingly."""
+    candidates = [
+        ("file_a.pdf", "ALBERT SANS BONVEHI", 0.95),
+        ("file_b.pdf", "ALBERT SANS BONVEHI", 0.92),
+    ]
+    project = _make_synthetic_project(
+        tmp_path,
+        candidate_values=candidates,
+    )
+    # Replace the synthetic Eva ref to simulate the real bug: Eva stores the
+    # value under `architect_name_upper` while the canonical concept_id is
+    # `architect_name`. The synthetic builder uses concept "demo_concept"; we
+    # rewrite Eva's file to also key under a template placeholder for it.
+    val_dir = project / "validation"
+    eva_payload = {
+        "project": "demo",
+        "variables": {
+            # canonical concept id used by the synthetic ranking is
+            # "demo_concept"; pretend the template placeholder is
+            # "demo_concept_upper" (mirrors architect_name_upper case).
+            "demo_concept_upper": {
+                "value": "ALBERT SANS BONVEHI",
+                "position": "p001",
+                "position_description": "test",
+                "confidence": 0.9,
+                "extraction_method": "test",
+                "reference_text": "ALBERT SANS BONVEHI",
+            }
+        },
+    }
+    (val_dir / "eva_reference_values.json").write_text(
+        json.dumps(eva_payload, ensure_ascii=False), encoding="utf-8"
+    )
+
+    # Sanity check 1: without the alias map, the existing suffix tolerance
+    # (`_upper`) actually does match — confirm it. This guards regressions in
+    # the suffix logic.
+    from automation.ai_pipeline.trace import (
+        _eva_value_for_concept,
+        _load_template_aliases,
+    )
+    eva_values = {"demo_concept_upper": "ALBERT SANS BONVEHI"}
+    assert _eva_value_for_concept(eva_values, "demo_concept", None) == \
+        "ALBERT SANS BONVEHI"
+
+    # Sanity check 2: when the suffix logic CANNOT help (alias name is
+    # unrelated), only the alias map saves the lookup. Mirrors the
+    # `client_name → client` and `field_date → data_camp_text` cases.
+    eva_values_unrelated = {"client": "SR. ALBERT"}
+    assert _eva_value_for_concept(eva_values_unrelated, "client_name", None) is None
+    aliases = {"client_name": ["client", "client_name"]}
+    assert _eva_value_for_concept(eva_values_unrelated, "client_name", aliases) == \
+        "SR. ALBERT"
+
+    # End-to-end on a real built trace: the synthetic project uses suffix
+    # `_upper` so the journey populates eva_value and matches exactly.
+    trace = build_trace(project)
+    j = trace.concepts["demo_concept"]
+    assert j.eva_value == "ALBERT SANS BONVEHI"
+    assert j.eva_top1_match == "exact"
+    assert j.eva_rank_match_kind == "exact"
+    # Loader returns the real on-disk alias map (89 entries today).
+    real_aliases = _load_template_aliases()
+    assert len(real_aliases) > 0
+    assert "client_name" in real_aliases
+
+
+def test_template_aliases_loader_handles_malformed_yaml(tmp_path, monkeypatch):
+    """Loader returns {} on YAML parse error and logs a warning."""
+    import automation.ai_pipeline.trace as trace_mod
+    bad = tmp_path / "bad_aliases.yaml"
+    bad.write_text(": not: yaml :\n  - [\n", encoding="utf-8")
+    monkeypatch.setattr(trace_mod, "_TEMPLATE_ALIASES_PATH", bad)
+    assert trace_mod._load_template_aliases() == {}
+
+
+def test_eva_lookup_returns_none_when_alias_absent():
+    """When the alias points to a placeholder not in eva_values, returns None."""
+    from automation.ai_pipeline.trace import _eva_value_for_concept
+    aliases = {"client_name": ["nonexistent_placeholder"]}
+    assert _eva_value_for_concept({"other_key": "x"}, "client_name", aliases) is None

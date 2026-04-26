@@ -56,6 +56,9 @@ logger = logging.getLogger(__name__)
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 _REPORT_VARIABLES_PATH = _PROJECT_ROOT / "schemas" / "concepts" / "report_variables.yaml"
 _GLOSSARY_PATH = _PROJECT_ROOT / "schemas" / "ai_pipeline" / "concept_glossary.yaml"
+_TEMPLATE_ALIASES_PATH = (
+    _PROJECT_ROOT / "schemas" / "concepts" / "concept_template_aliases.yaml"
+)
 
 _TRACE_FILENAME = "ai_pipeline_trace.json"
 
@@ -300,6 +303,39 @@ def _load_eva_reference(project_path: Path) -> dict[str, Any]:
     return out
 
 
+def _load_template_aliases() -> dict[str, list[str]]:
+    """Map canonical concept_id → list of template-placeholder aliases.
+
+    The reference extractor stores Eva's values keyed by template-placeholder
+    name (e.g. ``architect_name_upper``, ``client``, ``data_camp_text``),
+    which often differ from the canonical concept_id. Returns an empty map
+    if the YAML is missing or malformed.
+    """
+    if not _TEMPLATE_ALIASES_PATH.is_file():
+        return {}
+    try:
+        data = yaml.safe_load(_TEMPLATE_ALIASES_PATH.read_text(encoding="utf-8"))
+    except (yaml.YAMLError, OSError) as exc:
+        logger.warning(
+            "Failed to load template aliases at %s: %s",
+            _TEMPLATE_ALIASES_PATH,
+            exc,
+        )
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    out: dict[str, list[str]] = {}
+    for cid, aliases in data.items():
+        if not isinstance(cid, str):
+            continue
+        if aliases is None:
+            out[cid] = []
+            continue
+        if isinstance(aliases, list):
+            out[cid] = [a for a in aliases if isinstance(a, str)]
+    return out
+
+
 # ─── Utility helpers ───────────────────────────────────────────────────
 
 
@@ -378,13 +414,29 @@ def _value_as_string(value: Any) -> str:
 _EVA_NAME_SUFFIXES = ("_upper", "_lower", "_text", "_fmt", "_long", "_short")
 
 
-def _eva_lookup(eva_values: dict[str, Any], concept_id: str) -> tuple[str | None, Any]:
-    """Find Eva's value for a concept_id with simple suffix tolerance.
+def _eva_lookup(
+    eva_values: dict[str, Any],
+    concept_id: str,
+    aliases_map: dict[str, list[str]] | None = None,
+) -> tuple[str | None, Any]:
+    """Find Eva's value for a concept_id.
+
+    Resolution order:
+    1. Canonical concept_id match.
+    2. Template-placeholder aliases from `concept_template_aliases.yaml`
+       (when an alias map is provided).
+    3. Simple suffix tolerance (`_upper`, `_lower`, `_text`, `_fmt`, …) as a
+       safety net for projects whose extractor predates the alias map.
 
     Returns (eva_var_name_used, value). If no match, returns (None, None).
     """
     if concept_id in eva_values:
         return concept_id, eva_values[concept_id]
+    # Template-placeholder aliases (canonical mapping, no guessing).
+    if aliases_map:
+        for alias in aliases_map.get(concept_id, []):
+            if alias and alias != concept_id and alias in eva_values:
+                return alias, eva_values[alias]
     # Try the same name with one of the known suffixes.
     for suffix in _EVA_NAME_SUFFIXES:
         candidate = concept_id + suffix
@@ -397,6 +449,20 @@ def _eva_lookup(eva_values: dict[str, Any], concept_id: str) -> tuple[str | None
             if base in eva_values:
                 return base, eva_values[base]
     return None, None
+
+
+def _eva_value_for_concept(
+    eva_values: dict[str, Any],
+    concept_id: str,
+    aliases_map: dict[str, list[str]] | None = None,
+) -> Any:
+    """Look up Eva's reference value for a concept, trying canonical concept_id
+    first then any template-placeholder aliases (and finally suffix tolerance).
+
+    Thin wrapper over `_eva_lookup` that returns just the value (no name).
+    """
+    _name, value = _eva_lookup(eva_values, concept_id, aliases_map)
+    return value
 
 
 def _eva_match_kind(eva_value: Any, top1_value: Any) -> Literal["exact", "substring", "mismatch"]:
@@ -662,6 +728,7 @@ def _build_concept_journeys(
     candidate_views: dict[str, list[CandidateView]],
     ranking: ProjectRanking | None,
     eva_values: dict[str, Any],
+    aliases_map: dict[str, list[str]] | None = None,
 ) -> dict[str, ConceptJourney]:
     out: dict[str, ConceptJourney] = {}
     rankings_by_concept = ranking.concepts if ranking else {}
@@ -714,7 +781,7 @@ def _build_concept_journeys(
         no_change_fired = (not revised) and bool(gfac)
 
         # Eva ground truth.
-        eva_var, eva_value = _eva_lookup(eva_values, cid)
+        eva_var, eva_value = _eva_lookup(eva_values, cid, aliases_map)
         if eva_var is None:
             eva_match: Literal["exact", "substring", "mismatch", "no_ground_truth"] = "no_ground_truth"
             eva_rank = None
@@ -1477,10 +1544,12 @@ def build_trace(project_path: Path | str) -> PipelineTrace:
 
     concept_defs = _load_concept_definitions()
     glossary = _load_glossary_entries()
+    template_aliases = _load_template_aliases()
 
     candidate_views = _build_candidate_views(analysis)
     concept_journeys = _build_concept_journeys(
-        concept_defs, glossary, candidate_views, ranking, eva_values
+        concept_defs, glossary, candidate_views, ranking, eva_values,
+        aliases_map=template_aliases,
     )
     source_journeys = _build_source_journeys(inv, typ, conv, analysis, ranking)
     decisions = _build_decision_audit(typ, conv, analysis, ranking)

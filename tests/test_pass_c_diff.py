@@ -266,3 +266,80 @@ def test_diff_skips_concept_when_pass_c_kept_same_top1(tmp_path):
     assert diff["counts"] == {"better": 0, "worse": 0, "neutral": 0, "no_eva_ref": 0}
     # Still flagged as a Pass-C reordering at the project-level counter.
     assert diff["total_revised_concepts"] == 1
+
+
+def test_pass_c_diff_uses_aliases(tmp_path, monkeypatch):
+    """When Eva keys her reference under a template placeholder
+    (e.g. `client` instead of canonical `client_name`), the diff must look
+    up via the alias map rather than returning `no_eva_ref`."""
+    concept_id = "client_name"
+    pp = tmp_path / "project"
+    pp.mkdir()
+    (pp / "validation").mkdir()
+    (pp / "validation" / "ai_pipeline" / "ranking").mkdir(parents=True)
+
+    revised_cr = ConceptRanking(
+        concept_id=concept_id,
+        status="ranked",
+        ranked=[_rc("SR. ALBERT SANS BONVEHI", "revised.pdf")],
+        revised_by_group_pass=True,
+    )
+    project_ranking = ProjectRanking(
+        project_path=str(pp),
+        ranked_at="2026-04-25T00:00:00+00:00",
+        concepts={concept_id: revised_cr},
+    )
+    save_ranking(project_ranking, pp)
+
+    original_cr = ConceptRanking(
+        concept_id=concept_id,
+        status="ranked",
+        ranked=[_rc("OTHER CLIENT", "original.pdf")],
+    )
+    cache_file = (
+        pp / "validation" / "ai_pipeline" / "ranking"
+        / f"{pass_c_diff._slugify(concept_id)}_cache.json"
+    )
+    cache_file.write_text(
+        json.dumps(
+            {"key": "fake", "ranking": original_cr.model_dump()},
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    # Eva keys the value under the template placeholder `client`, NOT
+    # under the canonical concept_id `client_name`.
+    eva_payload = {
+        "variables": {
+            "client": {
+                "value": "SR. ALBERT SANS BONVEHI",
+                "position": "p023",
+                "position_description": "Body paragraph 23",
+                "confidence": 0.95,
+                "extraction_method": "intelligent_analysis",
+            }
+        }
+    }
+    (pp / "validation" / "eva_reference_values.json").write_text(
+        json.dumps(eva_payload), encoding="utf-8"
+    )
+
+    # Stub the alias loader so the test is independent of the on-disk YAML.
+    monkeypatch.setattr(
+        pass_c_diff,
+        "_load_template_aliases",
+        lambda: {"client_name": ["client", "client_name"]},
+    )
+
+    diff = pass_c_diff.diff_project(pp)
+    assert len(diff["rows"]) == 1
+    row = diff["rows"][0]
+    assert row["concept_id"] == "client_name"
+    # With the alias map active, Eva is found and verdict is "better"
+    # (revised matches Eva, original did not). Without the alias, this would
+    # have been "no_eva_ref".
+    assert row["eva"] == "SR. ALBERT SANS BONVEHI"
+    assert row["verdict"] == "better"
+    assert diff["counts"]["better"] == 1
+    assert diff["counts"]["no_eva_ref"] == 0
