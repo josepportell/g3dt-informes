@@ -547,26 +547,39 @@ def _user_text(kwargs: dict) -> str:
     return "\n".join(parts)
 
 
-def _has_principles_block(kwargs: dict) -> bool:
+def _iter_request_blocks(kwargs: dict):
+    """Yield every text block in the request — system list + user messages.
+
+    Schema 1.2 (Pass A): the cached principles block is in `system` (list
+    form). Schema 1.1 / Pass B / Pass C still emit it inside
+    `messages[].content`. Scan both so call-site assertions stay stable
+    across the migration.
+    """
+    system = kwargs.get("system")
+    if isinstance(system, list):
+        for block in system:
+            if isinstance(block, dict):
+                yield block
     for msg in kwargs.get("messages", []) or []:
         for block in msg.get("content", []) or []:
-            if not isinstance(block, dict):
-                continue
-            if (
-                block.get("cache_control", {}).get("type") == "ephemeral"
-                and "Authority principles" in block.get("text", "")
-            ):
-                return True
+            if isinstance(block, dict):
+                yield block
+
+
+def _has_principles_block(kwargs: dict) -> bool:
+    for block in _iter_request_blocks(kwargs):
+        if (
+            block.get("cache_control", {}).get("type") == "ephemeral"
+            and "Authority principles" in block.get("text", "")
+        ):
+            return True
     return False
 
 
 def _has_glossary_section(kwargs: dict) -> bool:
-    for msg in kwargs.get("messages", []) or []:
-        for block in msg.get("content", []) or []:
-            if not isinstance(block, dict):
-                continue
-            if "## Glossary entry" in block.get("text", ""):
-                return True
+    for block in _iter_request_blocks(kwargs):
+        if "## Glossary entry" in block.get("text", ""):
+            return True
     return False
 
 
@@ -608,6 +621,89 @@ def test_schema_validation_retry_drops_principles_block(tmp_path, monkeypatch):
     cr = ranking.ranking_of(cid)
     assert cr is not None
     assert cr.status == "ranked"
+
+
+def test_pass_a_system_cached_prefix_is_byte_identical_across_concepts(tmp_path):
+    """D18 fix-of-the-fix invariant (schema 1.2).
+
+    Anthropic's prompt cache hashes the cumulative prefix up to and including
+    the `cache_control` block. If that prefix differs across concepts, every
+    call creates a new cache entry and never reads one. Run 2 (2026-04-26)
+    showed this exact symptom: cache_creation=420k, cache_read=0 in Stage 5
+    telemetry, ~$1.58 wasted.
+
+    Schema 1.2 moves the cached block (concept YAML + Eva principles) into
+    the `system` arg, where its content is concept-independent by
+    construction. This test pins the byte-identical-prefix invariant so a
+    future edit can't silently re-introduce the regression.
+    """
+    cid_a = "architect_name"
+    cid_b = "client_name"
+    defs = load_concept_definitions()
+    for c in (cid_a, cid_b):
+        assert c in defs, f"required concept {c} missing from schema"
+
+    analysis = _make_analysis(
+        sources=[
+            ("plans/A.01.pdf", [(cid_a, "Joan", 0.9), (cid_b, "ACME", 0.9)]),
+            ("emails/a.msg", [(cid_a, "Marta", 0.7), (cid_b, "BetaCo", 0.7)]),
+        ]
+    )
+    project = _make_project_with_analysis(tmp_path, analysis)
+    cids_a = _expected_candidate_ids(analysis, cid_a)
+    cids_b = _expected_candidate_ids(analysis, cid_b)
+
+    def behavior(call_num, kwargs):
+        # Glossary entries cross-reference concept_ids, so a substring search
+        # for `cid_a` matches both calls. Use the concrete header marker
+        # `**concept_id**: \`<cid>\`` to identify which concept is being ranked.
+        text = _user_text(kwargs)
+        if f"**concept_id**: `{cid_a}`" in text:
+            return _FakeResponse(_build_ranked_tool_input(cids_a))
+        if f"**concept_id**: `{cid_b}`" in text:
+            return _FakeResponse(_build_ranked_tool_input(cids_b))
+        # Pass B (group audit) — emit a no-op response with the same shape.
+        return _FakeResponse(_build_ranked_tool_input([]))
+
+    client = _FakeAnthropicClient(behavior)
+    rank_project(
+        project,
+        analysis=analysis,
+        client=client,
+        concept_filter={cid_a, cid_b},
+    )
+
+    # Pass A runs sequentially across all concepts before Pass B/C kick in,
+    # so the first two LLM calls are guaranteed to be Pass A. Filter
+    # defensively — Pass A is identifiable by the "# Concept to rank"
+    # header in user content AND the absence of the Pass C "# Group-level
+    # signal" block.
+    pass_a_kwargs = [
+        kw for kw in client.messages.kwargs_history
+        if "# Concept to rank" in _user_text(kw)
+        and "# Group-level signal" not in _user_text(kw)
+    ]
+    assert len(pass_a_kwargs) == 2, (
+        f"Expected exactly 2 Pass A calls (one per concept), got "
+        f"{len(pass_a_kwargs)}"
+    )
+
+    sys_a = pass_a_kwargs[0].get("system")
+    sys_b = pass_a_kwargs[1].get("system")
+
+    # Schema 1.2: system is a list-form with the cached block on index 1.
+    assert isinstance(sys_a, list), (
+        f"Expected system to be list (schema 1.2 cached form), got {type(sys_a)}"
+    )
+    # Byte-identical: the precondition for Anthropic prompt cache hits.
+    assert sys_a == sys_b, (
+        "Cached system prefix must be byte-identical across concepts — "
+        "this is the precondition for Anthropic prompt cache hits. "
+        "If this fails, D18 cache regression is back."
+    )
+    assert len(sys_a) == 2
+    assert sys_a[1].get("cache_control") == {"type": "ephemeral"}
+    assert "Concept schema (all target variables)" in sys_a[1].get("text", "")
 
 
 def test_transient_error_retries_and_succeeds(tmp_path, monkeypatch):
@@ -1129,8 +1225,11 @@ def test_audit_group_happy_path(tmp_path):
 
     def behavior(call_num, kwargs):
         call_log.append(("tool" if kwargs.get("tools", [{}])[0].get("name") == "emit_group_audit" else "rank", kwargs))
-        system = kwargs.get("system", "")
-        if "emit_group_audit" in str(kwargs.get("tools", "")) or "grup" in system.lower():
+        # Discriminate by tool name (unambiguous). The previous
+        # `"grup" in system.lower()` fallback broke after schema 1.2 because
+        # Pass A's `system` is now a list, not a string.
+        tool_names = [t.get("name") for t in kwargs.get("tools", [])]
+        if "emit_group_audit" in tool_names:
             # Group audit call
             return _FakeGroupResponse(
                 _build_group_audit_tool_input(

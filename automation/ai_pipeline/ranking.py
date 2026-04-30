@@ -39,7 +39,13 @@ _DEFAULT_MODEL = "claude-sonnet-4-6"
 # 1.1 (2026-04-25): D18 — cached block now bundles the full report_variables.yaml
 # alongside the principles, pushing it above Anthropic's 1024-token cache
 # minimum. Prompt shape changed; old per-concept caches must not be reused.
-_SCHEMA_VERSION = "1.1"
+# 1.2 (2026-04-30): D18 fix-of-the-fix — Pass A only. The cached block now ships
+# in the `system` arg (as a list of blocks with cache_control on the second
+# block). The previous shape kept the cached block in `messages.content` AFTER
+# the per-concept header, so Anthropic's prompt cache hashed a different prefix
+# every concept call → 100% cache miss (cache_creation=420k, cache_read=0 in the
+# 2026-04-26 live run). Pass B / Pass C untouched (still buggy, deferred).
+_SCHEMA_VERSION = "1.2"
 
 _MAX_TOKENS = 4_000
 _PER_CALL_TIMEOUT_S = 60.0
@@ -316,6 +322,50 @@ def _load_full_concept_yaml() -> str:
     return _FULL_CONCEPT_YAML_CACHE
 
 
+def _build_cached_system(
+    principles: str, *, include_principles: bool
+) -> str | list[dict]:
+    """Build the `system` argument for Pass A `client.messages.create`.
+
+    Schema 1.2 (D18 fix-of-the-fix): the cached block (concept YAML + Eva
+    principles) now ships in `system` rather than in `messages.content`.
+    Anthropic's prompt cache hashes the cumulative prefix up to and including
+    the `cache_control` block — keeping that block out of `messages.content`
+    means the cumulative cached prefix is identical for every concept call,
+    which is the precondition for cache hits.
+
+    - `include_principles=False` (trimmed-retry path) → plain string
+      `_SYSTEM_PROMPT`. Mirrors the existing trimmed-retry contract: drop
+      everything non-essential.
+    - `include_principles=True` AND yaml/principles non-empty → list of two
+      blocks: short uncached system prompt, then the large cached block with
+      `cache_control={"type": "ephemeral"}`.
+    - Otherwise (yaml AND principles both empty) → plain string fallback;
+      don't ship a useless empty cached block.
+    """
+    if not include_principles:
+        return _SYSTEM_PROMPT
+    concept_yaml = _load_full_concept_yaml()
+    if not (concept_yaml or principles):
+        return _SYSTEM_PROMPT
+    principles_part = (
+        f"\n# Authority principles (Eva)\n\n{principles}\n"
+        if principles else ""
+    )
+    return [
+        {"type": "text", "text": _SYSTEM_PROMPT},
+        {
+            "type": "text",
+            "text": (
+                f"\n# Concept schema (all target variables)\n\n"
+                f"```yaml\n{concept_yaml}\n```\n"
+                + principles_part
+            ),
+            "cache_control": {"type": "ephemeral"},
+        },
+    ]
+
+
 # ─── Passthrough orchestrator (chunk 1) ────────────────────────────────
 
 
@@ -517,6 +567,7 @@ def _build_concept_user_content(
     *,
     include_principles: bool = True,
     group_factor: str | None = None,
+    cached_block_in_user_content: bool = True,
 ) -> list[dict]:
     """Build Anthropic `content` blocks for one Pass A (or Pass C) call.
 
@@ -529,6 +580,14 @@ def _build_concept_user_content(
     When `group_factor` is non-empty AND `include_principles=True`, a
     non-cached header block is prepended announcing the Pass B signal — this
     is the Pass C extension over Pass A.
+
+    `cached_block_in_user_content=False` (Pass A, schema 1.2): the YAML +
+    principles block has been moved to the `system` arg via
+    `_build_cached_system`. Don't emit it in user content; doing so would
+    duplicate ~7.5k tokens AND defeat the cache (because the user-content
+    copy still sits after the per-concept header, which was the original D18
+    bug). Default `True` preserves the legacy shape for Pass B / Pass C call
+    sites that haven't been migrated yet.
     """
     cid = concept_def.get("id", "")
     ctype = concept_def.get("type", "")
@@ -562,12 +621,15 @@ def _build_concept_user_content(
 
     blocks.append({"type": "text", "text": header})
 
-    if include_principles:
+    if include_principles and cached_block_in_user_content:
         # D18: bundle the full concept YAML into the same cached block so the
         # combined block clears Anthropic's 1024-token ephemeral-cache minimum.
         # Emit even when `principles` is empty — the YAML alone is well above
         # the threshold and we don't want to silently disable caching just
         # because Eva's principles file is empty.
+        # Schema 1.2 (Pass A): this block is now shipped via `system` instead;
+        # callers pass `cached_block_in_user_content=False`. Pass B / Pass C
+        # still emit it here pending their own migration.
         concept_yaml = _load_full_concept_yaml()
         if concept_yaml or principles:
             principles_part = (
@@ -806,18 +868,24 @@ def _rank_one_concept(
     started = time.monotonic()
     for attempt in range(1, _MAX_RETRIES_PER_CONCEPT + 1):
         attempts = attempt
+        # Schema 1.2: cached block (YAML + principles) ships in `system` so the
+        # cumulative cached prefix is concept-independent → cache hits.
+        system_arg = _build_cached_system(
+            principles, include_principles=not trimmed_retry
+        )
         content = _build_concept_user_content(
             concept_def,
             glossary_entry,
             principles,
             candidates_with_insights,
             include_principles=not trimmed_retry,
+            cached_block_in_user_content=False,
         )
         try:
             resp = client.messages.create(
                 model=model,
                 max_tokens=_MAX_TOKENS,
-                system=_SYSTEM_PROMPT,
+                system=system_arg,
                 tools=[tool_schema],
                 tool_choice={"type": "tool", "name": "emit_ranking"},
                 messages=[{"role": "user", "content": content}],
