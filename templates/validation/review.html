@@ -2759,6 +2759,19 @@
         const urlParams = new URLSearchParams(window.location.search);
         const DEV_MODE = urlParams.get('dev') === '1';
 
+        // Production v1 (2026-05-04): Claude Code vision (subprocess) gating.
+        // Default false. Activated via:
+        //   - Backend flag G3DT_PROD_USE_CLAUDECODE_VISION=true (read via /api/api-capabilities)
+        //   - URL ?claude=1 for ad-hoc testing
+        // The wizard polls /api/api-capabilities at boot and updates this flag.
+        let CLAUDECODE_VISION_ENABLED = urlParams.get('claude') === '1';
+        fetch('/api/api-capabilities')
+            .then(r => r.ok ? r.json() : null)
+            .then(caps => {
+                if (caps && caps.claudecode_vision_enabled) CLAUDECODE_VISION_ENABLED = true;
+            })
+            .catch(() => { /* keep default */ });
+
         // State
         let currentData = null;
         let originalFilename = '';
@@ -4250,10 +4263,11 @@
                             ${VISION_EYE_SVG}
                             Visio Groq
                         </button>
+                        ${(DEV_MODE || CLAUDECODE_VISION_ENABLED) ? `
                         <button class="btn-vision-groq" id="btnStartVisionClaude" onclick="startVisionClaude(false)" style="background:#7c3aed;">
                             ${VISION_EYE_SVG}
                             Visio Claude
-                        </button>
+                        </button>` : ''}
                         ${DEV_MODE ? `
                         <button class="btn-vision" id="btnStartVision" onclick="startVisionExtraction(false)">
                             ${VISION_EYE_SVG}

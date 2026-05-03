@@ -14,12 +14,43 @@ from fastapi import APIRouter, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
+from automation import config
+
 from . import wizard_service
 from . import vision_fast
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api")
+
+
+# --- Production v1 (2026-05-04) feature-flag guards ---------------------------
+
+def _require_ai_pipeline_enabled() -> None:
+    """Block /api/ai-pipeline/* endpoints when AI pipeline is not enabled.
+
+    Returns 404 (not 403) so the existence of these experimental endpoints
+    is not advertised in production.
+    """
+    if not config.G3DT_ENABLE_AI_PIPELINE:
+        raise HTTPException(status_code=404, detail="Not Found")
+
+
+def _require_claudecode_vision_enabled() -> None:
+    """Block subprocess-based Claude CLI vision when not explicitly enabled.
+
+    Default: false (Eva's machine has no Claude Code installed). Activated by
+    setting `G3DT_PROD_USE_CLAUDECODE_VISION=true` in .env (independent of
+    DEV_MODE). When in DEV_MODE we also allow it for local development.
+    """
+    if not (config.G3DT_PROD_USE_CLAUDECODE_VISION or config.G3DT_DEV_MODE):
+        raise HTTPException(
+            status_code=403,
+            detail=(
+                "Vision via Claude Code subprocess is disabled in this deployment. "
+                "Set G3DT_PROD_USE_CLAUDECODE_VISION=true to enable."
+            ),
+        )
 
 
 # --- Request/response models ---
@@ -70,6 +101,7 @@ def ai_pipeline_inventory(project_name: str, refresh: bool = False):
     .msg attachments are re-materialized, the tree is re-walked, and the cache is
     overwritten.
     """
+    _require_ai_pipeline_enabled()
     try:
         project_path = wizard_service._resolve_project(project_name)
     except ValueError as e:
@@ -99,6 +131,7 @@ def ai_pipeline_typology(project_name: str, refresh: bool = False):
     case files are re-introspected, images are re-extracted (with SHA256 dedup),
     and the cache is overwritten.
     """
+    _require_ai_pipeline_enabled()
     try:
         project_path = wizard_service._resolve_project(project_name)
     except ValueError as e:
@@ -128,6 +161,7 @@ def ai_pipeline_conversion(project_name: str, refresh: bool = False):
     which case PDFs, DOCXs, Excels and .msg files are re-converted (with SHA256
     dedup), and the cache is overwritten.
     """
+    _require_ai_pipeline_enabled()
     try:
         project_path = wizard_service._resolve_project(project_name)
     except ValueError as e:
@@ -161,6 +195,7 @@ def ai_pipeline_analysis(project_name: str, refresh: bool = False):
     Returns systemic_failure set (and 200 OK with failure payload) when the API
     key is missing, credits are exhausted, or the model is not found.
     """
+    _require_ai_pipeline_enabled()
     try:
         project_path = wizard_service._resolve_project(project_name)
     except ValueError as e:
@@ -200,6 +235,7 @@ def ai_pipeline_ranking(
     Returns systemic failure with 200 OK when the API key is missing,
     credits are exhausted, or the model is not found.
     """
+    _require_ai_pipeline_enabled()
     try:
         project_path = wizard_service._resolve_project(project_name)
     except ValueError as e:
@@ -242,6 +278,7 @@ def ai_pipeline_trace(project_name: str, refresh: bool = False):
 
     Returns cached `validation/ai_pipeline_trace.json` unless `refresh=true`.
     """
+    _require_ai_pipeline_enabled()
     try:
         project_path = wizard_service._resolve_project(project_name)
     except ValueError as e:
@@ -272,6 +309,7 @@ def ai_pipeline_artifact(project_name: str, file: str):
     cache). Arbitrary project files are rejected. Large files are truncated
     at 200 KB.
     """
+    _require_ai_pipeline_enabled()
     try:
         project_path = wizard_service._resolve_project(project_name)
     except ValueError as e:
@@ -319,7 +357,18 @@ def ai_pipeline_artifact(project_name: str, file: str):
 
 @router.get("/prefills/{project_name:path}")
 def get_prefills(project_name: str, refresh: bool = False):
-    """Get auto-extracted + wizard prefills for a project."""
+    """Get auto-extracted + wizard prefills for a project.
+
+    Production v1: if `G3DT_NETWORK_PROJECTS` is configured, syncs the
+    project from the network share to `G3DT_LOCAL_WORKSPACE` before running
+    the pipeline (idempotent — re-runs hit the local copy).
+    """
+    from automation import sync_workspace
+    if sync_workspace.is_network_workflow_enabled():
+        sync_result = sync_workspace.sync_to_workspace(project_name, force=refresh)
+        if sync_result["status"] == "error":
+            raise HTTPException(status_code=404, detail=sync_result.get("error", "sync failed"))
+
     try:
         return wizard_service.get_prefills(project_name, force_refresh=refresh)
     except ValueError as e:
@@ -340,7 +389,17 @@ def get_user_data(project_name: str):
 
 @router.get("/prefills-stream/{project_name:path}")
 def prefills_stream(project_name: str):
-    """SSE endpoint: streams progress events during extraction, then final prefills."""
+    """SSE endpoint: streams progress events during extraction, then final prefills.
+
+    Production v1: syncs from network share to local workspace first if
+    `G3DT_NETWORK_PROJECTS` is configured (idempotent).
+    """
+    from automation import sync_workspace
+    if sync_workspace.is_network_workflow_enabled():
+        sync_result = sync_workspace.sync_to_workspace(project_name, force=False)
+        if sync_result["status"] == "error":
+            raise HTTPException(status_code=404, detail=sync_result.get("error", "sync failed"))
+
     try:
         wizard_service._resolve_project(project_name)  # Validate project exists
     except ValueError as e:
@@ -412,7 +471,12 @@ class VisionStartRequest(BaseModel):
 
 @router.post("/vision/{project_name:path}")
 def start_vision(project_name: str, req: VisionStartRequest | None = None):
-    """Start Claude CLI vision extraction for a project (non-blocking)."""
+    """Start Claude CLI vision extraction for a project (non-blocking).
+
+    Subprocess-based path that requires Claude Code installed locally.
+    Disabled by default in production (G3DT_PROD_USE_CLAUDECODE_VISION=false).
+    """
+    _require_claudecode_vision_enabled()
     force = req.force if req else False
     try:
         result = wizard_service.start_vision_cli(project_name, force=force)
@@ -482,15 +546,40 @@ def save_wizard(project_name: str, req: WizardSaveRequest):
 
 @router.post("/generate/{project_name:path}", response_model=GenerateResponse)
 def generate_report(project_name: str):
-    """Generate the geotechnical report .docx."""
+    """Generate the geotechnical report .docx.
+
+    Production v1: if `G3DT_NETWORK_PROJECTS` is configured, copies the
+    generated .docx back to the project's network folder. Failures in the
+    copy-back are logged as warnings but do not block the response — Eva
+    can still download the .docx from the wizard.
+    """
+    from automation import sync_workspace
     try:
         result = wizard_service.generate_report(project_name)
-        return GenerateResponse(**result)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         logger.exception("Error generating report for %s", project_name)
         raise HTTPException(status_code=500, detail=str(e))
+
+    if result.get("success") and result.get("output_path"):
+        if sync_workspace.is_network_workflow_enabled():
+            cb = sync_workspace.copyback_report(project_name, result["output_path"])
+            if cb["status"] == "error":
+                logger.warning(
+                    "Copy-back to network failed for %s: %s",
+                    project_name, cb.get("error"),
+                )
+                result.setdefault("warnings", []).append(
+                    f"Informe generat localment, però la còpia a la xarxa ha fallat: "
+                    f"{cb.get('error')}"
+                )
+            elif cb["status"] == "copied":
+                logger.info("Copied report to network: %s", cb.get("destination"))
+
+    return GenerateResponse(**{k: v for k, v in result.items() if k in {
+        "success", "output_name", "errors", "warnings"
+    }})
 
 
 class PhotoSelectionRequest(BaseModel):
@@ -1484,13 +1573,20 @@ def dev_analysis_v2(project_name: str):
 
 @router.get("/api-capabilities")
 def api_capabilities():
-    """Report which API keys are configured."""
+    """Report which API keys + feature flags are configured.
+
+    Frontend uses this to render conditional UI (e.g. show/hide Claude Code
+    vision button when G3DT_PROD_USE_CLAUDECODE_VISION is true).
+    """
     import shutil
     return {
         "groq": bool(os.environ.get("GROQ_API_KEY")),
         "anthropic": bool(os.environ.get("ANTHROPIC_API_KEY")),
         "claude_cli": bool(shutil.which(os.environ.get("G3DT_CLAUDE_PATH", "claude"))),
         "vision_auto": bool(os.environ.get("GROQ_API_KEY")),
+        "ai_pipeline_enabled": config.G3DT_ENABLE_AI_PIPELINE,
+        "dev_mode": config.G3DT_DEV_MODE,
+        "claudecode_vision_enabled": config.G3DT_PROD_USE_CLAUDECODE_VISION,
     }
 
 

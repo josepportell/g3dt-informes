@@ -23,8 +23,11 @@ logger = logging.getLogger(__name__)
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 _REF_DIR = Path(config.G3DT_PROJECTS_DIR)
 
-# Production path where Eva keeps signed reference reports
-_INFORMES_DIR = Path('/mnt/c/claude/g3dt/4-informes')
+# Path where Josep keeps Eva's signed reference reports for back-engineering.
+# Optional and dev-only — the audit feature gracefully degrades when the dir
+# doesn't exist (production at Eva's machine: it never will). Override via
+# `G3DT_INFORMES_DIR` env var if needed.
+_INFORMES_DIR = Path(os.environ.get('G3DT_INFORMES_DIR', '/mnt/c/claude/g3dt/4-informes'))
 
 # Sources that indicate high-priority extraction data (trusted over LLM synthesis).
 # Phase B update (2026-04-19): added `computed` so narrative fields that
@@ -71,19 +74,33 @@ def _resolve_project(project_name: str) -> Path:
 
 
 def list_projects() -> list[dict[str, str]]:
-    """List available projects from reference-material/."""
-    if not _REF_DIR.is_dir():
+    """List available projects.
+
+    Production v1: if `G3DT_NETWORK_PROJECTS` is configured, list folder
+    names from the network share (read-only enumeration, no sync).
+    Otherwise fallback to listing `G3DT_PROJECTS_DIR` (legacy/dev mode).
+    """
+    from automation import sync_workspace
+    from automation.folder_utils import parse_folder_name
+
+    if sync_workspace.is_network_workflow_enabled():
+        names = sync_workspace.list_network_projects()
+    elif _REF_DIR.is_dir():
+        names = sorted(
+            d.name for d in _REF_DIR.iterdir()
+            if d.is_dir() and not d.name.startswith('.')
+        )
+    else:
         return []
+
     projects = []
-    for d in sorted(_REF_DIR.iterdir()):
-        if d.is_dir() and not d.name.startswith('.'):
-            from automation.folder_utils import parse_folder_name
-            expedient, municipality = parse_folder_name(d.name)
-            projects.append({
-                'folder': d.name,
-                'expedient': expedient,
-                'municipality': municipality,
-            })
+    for name in names:
+        expedient, municipality = parse_folder_name(name)
+        projects.append({
+            'folder': name,
+            'expedient': expedient,
+            'municipality': municipality,
+        })
     return projects
 
 
@@ -2347,7 +2364,20 @@ def start_vision_cli(project_name: str, force: bool = False) -> dict[str, Any]:
     Returns immediately with status: 'started', 'already_running', or 'error'.
     The subprocess creates validation/*_extracted.json files that the frontend
     detects via polling /api/vision-status/.
+
+    Production v1 (2026-05-04): blocked by default. Requires either
+    G3DT_PROD_USE_CLAUDECODE_VISION=true or G3DT_DEV_MODE=true to run.
     """
+    from automation import config
+    if not (config.G3DT_PROD_USE_CLAUDECODE_VISION or config.G3DT_DEV_MODE):
+        return {
+            "status": "error",
+            "message": (
+                "Claude Code vision subprocess is disabled in this deployment. "
+                "Set G3DT_PROD_USE_CLAUDECODE_VISION=true to enable."
+            ),
+        }
+
     project_path = _resolve_project(project_name)
     claude_path = os.getenv('G3DT_CLAUDE_PATH', 'claude')
 

@@ -42,6 +42,13 @@ __all__ = [
     "G3DT_USE_GROQ",
     "G3DT_NO_CACHE",
     "G3DT_PROJECTS_DIR",
+    "G3DT_ENABLE_AI_PIPELINE",
+    "G3DT_DEV_MODE",
+    "G3DT_PROD_USE_CLAUDECODE_VISION",
+    # Production paths (workflow xarxa + workspace local + copy-back)
+    "G3DT_NETWORK_PROJECTS",
+    "G3DT_LOCAL_WORKSPACE",
+    "G3DT_REPORTS_DIR",
     # Tier 3 vision
     "MAX_PAGES_TIER3",
     # Functions
@@ -162,9 +169,41 @@ LOG_KEEP_DAYS: int = int(_env("G3DT_LOG_KEEP_DAYS", "30"))
 G3DT_USE_SMARTSCAN: bool = _env_bool("G3DT_USE_SMARTSCAN", True)
 G3DT_USE_GROQ: bool = _env_bool("G3DT_USE_GROQ", False)
 G3DT_NO_CACHE: bool = _env_bool("G3DT_NO_CACHE", False)
-G3DT_PROJECTS_DIR: str = _env(
-    "G3DT_PROJECTS_DIR", str(_PROJECT_ROOT / "reference-material")
-)
+# Production v1 (2026-05-04): workflow còpia local + copy-back.
+# Si G3DT_NETWORK_PROJECTS està configurat, el wizard llista projectes des
+# d'aquí (xarxa de G3DT, F:\projectes), copia el projecte a G3DT_LOCAL_WORKSPACE
+# abans de fer res, i al final copia el .docx a la carpeta original.
+# Si no està configurat, fallback legacy: tot dins G3DT_PROJECTS_DIR.
+G3DT_NETWORK_PROJECTS: str = _env("G3DT_NETWORK_PROJECTS", "")
+G3DT_LOCAL_WORKSPACE: str = _env("G3DT_LOCAL_WORKSPACE", "")
+G3DT_REPORTS_DIR: str = _env("G3DT_REPORTS_DIR", "")
+
+# G3DT_PROJECTS_DIR és el path on opera el pipeline. Default històric:
+# `reference-material/` (mode dev). En producció v1 amb workflow network,
+# apunta automàticament al G3DT_LOCAL_WORKSPACE perquè tot el codi avall
+# (wizard_service._resolve_project, file_scanner, etc.) trobi els projectes
+# al workspace local sense més canvis. Override explícit via env-var també
+# té prioritat (per backwards-compat dev).
+_explicit_projects_dir = _env("G3DT_PROJECTS_DIR", "")
+if _explicit_projects_dir:
+    G3DT_PROJECTS_DIR: str = _explicit_projects_dir
+elif G3DT_LOCAL_WORKSPACE:
+    G3DT_PROJECTS_DIR: str = G3DT_LOCAL_WORKSPACE
+else:
+    G3DT_PROJECTS_DIR: str = str(_PROJECT_ROOT / "reference-material")
+
+# AI pipeline experimental (Stages 2-5, Pass A/B/C): NO activar a producció v1.
+# Quan és False, els endpoints /api/ai-pipeline/* no es registren.
+G3DT_ENABLE_AI_PIPELINE: bool = _env_bool("G3DT_ENABLE_AI_PIPELINE", False)
+
+# DEV mode: activa eines de desenvolupament/diagnòstic al wizard.
+G3DT_DEV_MODE: bool = _env_bool("G3DT_DEV_MODE", False)
+
+# Vision via Claude Code subprocess: activar només si Claude Code està
+# instal·lat a l'ordinador del usuari final. Independent de G3DT_DEV_MODE
+# perquè volem poder activar-lo a producció sense passar a dev mode.
+G3DT_PROD_USE_CLAUDECODE_VISION: bool = _env_bool("G3DT_PROD_USE_CLAUDECODE_VISION", False)
+
 MAX_PAGES_TIER3: int = max(1, int(_env("G3DT_TIER3_MAX_PAGES", "10")))
 
 
