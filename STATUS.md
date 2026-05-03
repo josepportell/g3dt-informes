@@ -1,99 +1,70 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-04-26 (end of session)
+Last updated: 2026-04-30
 
 ## Current State
 
-**AI Pipeline Phase 5 hardened over 5 offline iterations — zero API spend.** Branch `experiment/ai-pipeline` now carries the full LLM-based authority ranker (Stages 1–5) plus diagnostic infrastructure, calculator delegation MVP (Phase 1), strengthened authority principles, and ground-truth corrections across 7 reference projects. **Full suite: 984 passing** (+100 vs the 884 baseline pre-session).
+**Live re-run #3 (Alcoletge, 2026-04-30) completed end-to-end.** All 3 Stage-5 passes ran; D18 prompt-cache fix validated in production: `cache_creation=536,381` / `cache_read=595,484` (vs 420k / 0 last run). Total reported $5.10; Anthropic platform Stage 4 alone $3.30 → telemetry undercount worsened from 1.58× to **3.1×**. Total run actual ~$7.60.
 
-The legacy deterministic pipeline (FileMiner + ConceptScout + auto_extractor on `feature/action-2-deterministic`) is unchanged from 2026-04-22.
+**Coverage**: 49 ranked / 12 single / 28 no-candidates / 0 pending_fase5. Pass B audited 10 groups (30 factors). Pass C: 15 reorderings + 10 no-change guardrails.
 
-## Today's frontier movement
+**Eva ground truth**: 7/47 hit (3 exact + 4 substring). 40 misses cluster in known buckets — calculator phi-input plumbing (6), lab data formatting (8), adjacents source pipeline (8), descriptive-prose mismatches (~10), hard misses (~8).
 
-| Metric (Alcoletge, no API spend) | 2026-04-24 (last live run) | Today |
-|---|---:|---:|
-| Eva refs visible to trace tool | 34 | **47** |
-| Exact matches | 5 | **13** |
-| `top1_accuracy` | 14.7% | **27.66%** |
-| Pass C verdicts (better/worse/neutral/no-ref) | 3/1/1/9 | **5/3/1/5** |
+**Castellar attempted same day** — Stage 2/3 OK, Stage 4 hit circuit breaker on 3 consecutive vision-input timeouts after 7 sources. Cancelled before meeting; partial state preserved.
 
-The accuracy jump comes from honest measurement (alias map + UTM ground truth + bearing-stratum fix surface concepts that previously read as "no_eva_ref") on top of real ranker improvements. The Pass C "5 better" are all tracked on Eva-referenced concepts; the "3 worse" includes the now-visible utm_x/utm_y corruption (utm_x: 308782 → 0.70348) that motivated the new `G3DT_AI_SKIP_GROUPS` env var.
+**G3DT meeting held 2026-04-30 afternoon.**
 
-## This session's commits (8 on `experiment/ai-pipeline`)
+## D18 cache fix shipped (commit `79b44fa`)
 
-| Commit | What it does |
-|---|---|
-| `dce5912` | Session summary + handoff doc for 2026-04-27 |
-| `82b45c8` | C1 polish + `G3DT_AI_SKIP_GROUPS` env var (skip Pass B per group) |
-| `f32eadc` | Phase 1 calculator delegation (Stage 4.5) + A3 silent-source rules |
-| `15505ac` | B3 investigation doc (engineering-judgment delegation GO recommendation) |
-| `6d706f2` | B1 audit + UTM/full-name principles |
-| `93e6fe6` | A3 silent sources + B2 architect_name investigations |
-| `e0579be` | Bearing-stratum extraction bug fix (geotech_rows[0] → geotech_rows[-1]) |
-| `a3bbfc7` | reference_extractor merge logic — preserves intelligent_analysis entries |
+Pass A only; Pass B/Pass C still carry the same prefix-divergence bug (deferred — neither was on the critical path). Schema 1.2. Test `test_pass_a_system_cached_prefix_is_byte_identical_across_concepts` pins the byte-identical-prefix invariant offline.
 
-## Per-project ground-truth state
+## Highest-leverage open items
 
-| Project | UTM truth | Architect verified | Geomech (bearing) |
-|---|:-:|:-:|:-:|
-| Castellar | ✓ | (single-layer; auto OK) | ✓ unchanged |
-| Rubí | ✓ | (single-layer; auto OK) | ✓ unchanged |
-| Linyola | ✓ | manual (firm-led) | ✓ E now >800 |
-| Bell-Lloc | ✓ | (single-layer; auto OK) | ✓ unchanged |
-| Alcoletge | ✓ | manual (truncated body) | ✓ E now >400 |
-| Vilanova | — (no COORDENADES.txt) | (auto pending verify) | ✓ E now 550 |
-| Anciles | — (no COORDENADES.txt) | (auto pending verify) | ✓ unchanged |
-
-## Suggested sequencing (next session)
-
-1. **D1 — live re-run on Alcoletge**, ~$2.50–2.55 of the $5 ceiling. Procedure in `docs/_FOR-NEW-YOU-20260427.md` §4. Decide between option A (skip-coordinates only), B (also enable calculator), or C (separate-measurement) — all three cost the same.
-2. After re-run: re-trace, re-Pass-C-diff, compare verdicts.
-3. If accuracy ≥80% gate (per design doc §11): Phase 5 reaches adoption-ready threshold.
-4. If not: iterate principles or extend reference_extractor (table-flatten more concepts) — both offline.
+1. **Cost telemetry retry aggregation + hard 90% budget guard.** Undercount is now 3.1× — budget reasoning unreliable. Highest priority before the next live run.
+2. **Calculator pass input plumbing** — pass emits 0 candidates (phi missing). Blocks 6 geomech concepts on every project.
+3. **Castellar Stage 4 timeout investigation** — identify which vision input triggered the 3 consecutive timeouts; either pre-resize images, split large PDFs, or extend per-call timeout.
+4. **Cache TTL 5min → 1h** — Stage 5 runtime ~45 min; cached prefix expires repeatedly, costing ~5× more than necessary.
+5. **Pass B + Pass C cache fix** — mirror of Pass A schema 1.2 migration. Worth doing before next live run if budget remains tight.
 
 ## Active Blockers
 
-- $5 budget ceiling. Live re-run estimated $2.50–2.55. ~$2.45 buffer.
-- Eva-clarification questions pending:
-  1. `QA_CAP_ROCK = 3.0` (legacy code) vs Eva's 4.0–4.5 (per MEMORY) — affects calculator output for rock projects.
-  2. Refusal-Nb canonical rule — `R` vs numeric-prefix-R like `47-R`.
-  3. Why PyMuPDF re-encoded the PLAN_COST_ALCOLETGE logo such that pHash didn't match.
-- Installation on Eva's machine pending.
-- 1 pre-existing test failure: `test_bell_lloc_bearing_idx_and_n20` (vision non-determinism, deselected in CI).
+- Cost telemetry undercount (3.1×) — see #1 above.
+- Castellar Stage 4 vision timeouts — see #3 above.
+- Eva-clarification questions still pending: QA_CAP_ROCK constant, refusal-Nb canonical rule, PLAN_COST logo pHash mismatch.
 
-## Deferred / open tasks
+## Per-project ground-truth state (unchanged)
 
-- **Phase 2 calculator delegation** — extend `_TERZAGHI_EXTRACTORS` to `geomech_E/phi/cohesion/gamma`, `Es_settlement`, `k30_value`. Plumbing is identical; gated by validating Phase 1 first.
-- **B1 audit recommendations not yet implemented**: confidence-based no-change guardrail; per-group prompt tuning.
-- **Reference extractor table-nested concepts**: utm_x/y currently come from manually-added `intelligent_analysis` entries; extending the flatten to extract them automatically from `dpsh_tests` rows is the next coverage win.
-- **Step 7 #6** (INSPIRE WFS-CP for adjacents) — medium effort, modest gain. Pre-existing.
+| Project | UTM truth | Architect verified | Geomech (bearing) | Eva baseline acc% |
+|---|:-:|:-:|:-:|:-:|
+| Castellar | ✓ | auto OK | ✓ | 77.4 |
+| Linyola | ✓ | manual (firm-led) | ✓ E >800 | 73.7 |
+| Bell-Lloc | ✓ | auto OK | ✓ | 72.1 |
+| Rubí | ✓ | auto OK | ✓ | 63.9 |
+| Vilanova | — | (auto pending) | ✓ E 550 | 56.0 |
+| Alcoletge | ✓ | manual (truncated body) | ✓ E >400 | 47.8 |
+| Anciles | — | (auto pending) | ✓ | 38.1 |
 
-## Live re-run readiness
+(Eva-vs-pipeline tiered, source: `docs/diagnostics/2026-04-22_CROSS_351d13.json`.)
 
-| Item | Status |
-|---|:-:|
-| D17 dev-only filter shipped (filters `_informe*`, `_generated*`, `_portada*`) | ✓ |
-| D18 cache fix (concept YAML in cached block, ≥1024 tokens) | ✓ |
-| Alias map for trace-tool measurement | ✓ |
-| Authority principles strengthened (10 numbered sections, TOC) | ✓ |
-| Manual ground truth for UTM (5/7) and architect (Alcoletge, Linyola) | ✓ |
-| Phase 1 calculator delegation (qa_value + settlement_cm) | ✓ behind feature flag |
-| `G3DT_AI_SKIP_GROUPS=coordinates` to eliminate UTM corruption | ✓ |
-| Cache invalidation procedure documented | ✓ in `_FOR-NEW-YOU-20260427.md` §4 |
+## Wizard
 
-## Pla de Delivery
+Running on http://localhost:8765 pointing at `/mnt/c/claude/g3dt/projectes/` (Windows). Background PID 93007. Stop with `pkill -f "python -m web"`.
 
-Detalls complets: `docs/PLA-DELIVERY-ACCIONS.md`.
+## Reading order for next session
+
+1. `.claude/sessions/2026-04-30-session.md` — what landed in this session.
+2. `docs/diagnostics/ai_pipeline_4001670_20260430.md` — Alcoletge trace + top issues.
+3. `docs/INVESTIGACIONS-CREDIT-BLACKOUT-2026-04-27.md` — strategy + matrices (still relevant).
+4. `docs/_FOR-NEW-YOU-20260427.md` — pre-D18-fix handoff (mostly superseded).
+
+## Authoritative investigation docs (load before changing calculations or pipeline)
+
+- `docs/METODOLOGIA-EVA.md` — calculation source-of-truth (Crespo, Schmertmann, Terzaghi-Peck, CTE D.27, Rodríguez Ortiz Cap. 2). §8 indexes the five investigation docs below. Now also has YAML front matter for PDF generation.
+- `docs/INVESTIGACIO-GEOMECH-STRATUM.md` — bearing stratum semantics (geomech_*).
+- `docs/INVESTIGACIO-ENGINEERING-DELEGATION.md` — Phase 1 calculator delegation catalog.
+- `docs/INVESTIGACIO-ARCHITECT-NAME.md` — Eva's 4 architect/client writing patterns.
+- `docs/INVESTIGACIO-SILENT-SOURCES.md` — Stage 2 pre-skip rules.
+- `docs/INVESTIGACIO-PASS-BC-EFFECTIVENESS.md` — Pass B/C cost-vs-benefit per group.
 
 ## Metodologia d'Eva (source-of-truth)
 
-`docs/METODOLOGIA-EVA.md` — síntesi dels 7 informes signats amb cites textuals (Crespo / Rodríguez Ortiz / Schmertmann / Terzaghi-Peck). PDF d'Ortiz Cap. 2 arxivat a `docs/research/books/`. Referència primària per qualsevol canvi en càlculs geotècnics.
-
-## Documents clau d'aquesta sessió
-
-- `docs/_RESUM-SESSIO-20260426.md` — recap exhaustiu.
-- `docs/_FOR-NEW-YOU-20260427.md` — handoff per la propera sessió.
-- `docs/INVESTIGACIO-GEOMECH-STRATUM.md` — A1.
-- `docs/INVESTIGACIO-SILENT-SOURCES.md` — A3.
-- `docs/INVESTIGACIO-ARCHITECT-NAME.md` — B2.
-- `docs/INVESTIGACIO-PASS-BC-EFFECTIVENESS.md` — B1.
-- `docs/INVESTIGACIO-ENGINEERING-DELEGATION.md` — B3.
+`docs/METODOLOGIA-EVA.md` (+ `.pdf` + `.yaml`). Reference primària per qualsevol canvi en càlculs geotècnics.

@@ -1,0 +1,27 @@
+---
+title: "Metodologia d'Eva"
+subtitle: "síntesi dels informes reals"
+date: "30 Abril 2026"
+author: "Eficients.cat"
+lang: ca
+titlepage: true
+titlepage-color: "0066cc"
+titlepage-text-color: "ffffff"
+titlepage-rule-color: "ffffff"
+titlepage-rule-height: 2
+toc: false
+toc-own-page: false
+colorlinks: true
+linkcolor: "0066cc"
+urlcolor: "0066cc"
+header-left: "Metodologia d'Eva"
+header-center: ""
+header-right: "30 Abril 2026"
+code-block-font-size: \footnotesize
+header-includes:
+  - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{xleftmargin=2em,fontsize=\footnotesize}
+  - \clearpairofpagestyles
+  - \ihead{Metodologia d'Eva}
+  - \ohead{30 Abril 2026}
+  - \cfoot{\thepage}
+---

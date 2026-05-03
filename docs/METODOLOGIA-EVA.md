@@ -1,4 +1,30 @@
-# Metodologia d'Eva — síntesi dels informes reals
+---
+title: "Metodologia d'Eva"
+subtitle: "síntesi dels informes reals"
+date: "30 Abril 2026"
+author: "Eficients.cat"
+lang: ca
+titlepage: true
+titlepage-color: "0066cc"
+titlepage-text-color: "ffffff"
+titlepage-rule-color: "ffffff"
+titlepage-rule-height: 2
+toc: false
+toc-own-page: false
+colorlinks: true
+linkcolor: "0066cc"
+urlcolor: "0066cc"
+header-left: "Metodologia d'Eva"
+header-center: ""
+header-right: "30 Abril 2026"
+code-block-font-size: \footnotesize
+header-includes:
+  - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{xleftmargin=2em,fontsize=\footnotesize}
+  - \clearpairofpagestyles
+  - \ihead{Metodologia d'Eva}
+  - \ohead{30 Abril 2026}
+  - \cfoot{\thepage}
+---
 
 **Font**: els 7 informes signats d'Eva (format `*_informe.pdf` als
 directoris `reference-material/*/PDF/`).
@@ -601,3 +627,46 @@ On N_cq i N_γq vénen dels àbacs Fig. 2.19 i 2.20 en funció de:
   q_h. No urgent, però podem oferir tots dos com configuració.
 - **Hoek & Bray abacs** (§6.7 llibre mostra Meyerhof, no Hoek & Bray) —
   resta pendent d'aquella font.
+
+---
+
+## 8. Investigacions relacionades (referència durable)
+
+Aquests documents són **font autoritativa** per a les decisions metodològiques
+i de pipeline. S'han de consultar abans de modificar càlculs, prompts
+d'extracció o regles d'autoritat. Estan a `docs/`:
+
+### Càlculs i metodologia
+- **`INVESTIGACIO-GEOMECH-STRATUM.md`** — *Bearing stratum semantics*. Demostra
+  amb 7 projectes que Eva sempre reporta `geomech_E/phi/cohesion/gamma` del
+  nivell de recolzament (última fila de la taula), no del superficial. Inclou
+  cita textual d'Alcoletge ("es descarta totalment per a recolzar-hi...") i
+  les correccions específiques per Alcoletge / Linyola / Vilanova. **Consulta
+  obligada abans de tocar `_flatten_loop_table_concepts` o qualsevol prompt
+  d'extracció geomecànica.**
+- **`INVESTIGACIO-ENGINEERING-DELEGATION.md`** — *Phase 1 calculator delegation*.
+  Catàleg dels 8 conceptes que Eva computa (`qa_value`, `settlement_cm`,
+  `geomech_E`, `geomech_phi`, `geomech_cohesion`, `geomech_gamma`,
+  `Es_settlement`, `k30_value`), quina funció legacy els implementa, quins
+  inputs requereixen, i el risc del gap `QA_CAP_ROCK = 3.0` (codi) vs Eva
+  (4.0–4.5 per roca). **Consulta obligada abans d'estendre la calculator pass
+  o canviar qualsevol constant numèrica.**
+
+### Pipeline (extracció / ranking)
+- **`INVESTIGACIO-ARCHITECT-NAME.md`** — Quatre patrons que Eva fa servir per
+  identificar l'arquitecte al cos del informe (estàndard / truncat /
+  auto-promogut / firm-led). Pot guiar la lectura d'altres camps amb
+  alineació posicional fràgil.
+- **`INVESTIGACIO-SILENT-SOURCES.md`** — Per què 8 fonts produien 0
+  candidats a Stage 4, i les regles de pre-skip resultants
+  (`coordinates_text`, `accounting_memo`, `text_stub`, `pressupost_boilerplate`).
+- **`INVESTIGACIO-PASS-BC-EFFECTIVENESS.md`** — Auditoria cost-vs-benefici de
+  les Pass B / Pass C del ranker per grup. Origen de la regla "no fer Pass C
+  sobre el grup `coordinates`" i del flag `G3DT_AI_SKIP_GROUPS`.
+
+### Resum de sessió i handoffs
+- `_RESUM-SESSIO-20260426.md` — exhaustiu, fix-by-fix.
+- `_FOR-NEW-YOU-20260427.md` — handoff per a la propera sessió.
+- `INVESTIGACIONS-CREDIT-BLACKOUT-2026-04-27.md` — strategy + matrius +
+  backlog vigents durant el credit blackout.
+
