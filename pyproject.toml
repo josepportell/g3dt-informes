@@ -23,6 +23,13 @@ dependencies = [
 [project.optional-dependencies]
 pdf = ["pymupdf>=1.24"]
 
+# Setuptools modern (pip ≥25) requires explicit package declaration when the
+# project root has multiple top-level dirs that look like packages. Only
+# `automation/` and `web/` are real Python packages here; the rest are data
+# folders (templates/, schemas/, demo/, samples/, guides/, analysis/).
+[tool.setuptools.packages.find]
+include = ["automation*", "web*"]
+
 [tool.uv]
 dev-dependencies = [
     "pytest>=9.0",
