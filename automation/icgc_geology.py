@@ -44,6 +44,8 @@ from typing import Any
 import time
 import unicodedata
 
+from . import config
+
 logger = logging.getLogger(__name__)
 
 __all__ = [
@@ -77,7 +79,7 @@ ICGC_CRS = "EPSG:25831"  # ETRS89 / UTM zone 31N
 ICGC_INFO_FORMAT = "text/plain"
 
 # Cache settings
-CACHE_DIR = Path.home() / ".g3dt" / "cache" / "icgc_units"
+CACHE_DIR = config.cache_dir("icgc_units")
 CACHE_TTL_DAYS = 30
 CACHE_TTL_FALLBACK_DAYS = 3  # Shorter TTL for 250k fallback results
 COORDINATE_PRECISION = 100  # Round to nearest 100m for cache key
@@ -600,7 +602,7 @@ def determine_region(
 
 ICGC_MDT_WMS_URL = "https://geoserveis.icgc.cat/icgc_mdt2m/wms/service"
 ICGC_MDT_LAYER = "MET2m"
-MDT_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "icgc_elevation"
+MDT_CACHE_DIR = config.cache_dir("icgc_elevation")
 
 
 def get_elevation(

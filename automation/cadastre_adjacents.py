@@ -40,6 +40,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from . import config
+
 logger = logging.getLogger(__name__)
 
 __all__ = [
@@ -80,8 +82,8 @@ NEAREST_PARCEL_MAX_DISTANCE_M = 50.0
 # because it is the only one that should trigger the nearest-parcel fallback.
 CADASTRE_ERR_NO_REFERENCE = 16
 SRS = "EPSG:25831"  # UTM zone 31N (same as ICGC)
-CACHE_DIR = Path.home() / ".g3dt" / "cache" / "cadastre_adjacents"
-NOMINATIM_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "nominatim_streets"
+CACHE_DIR = config.cache_dir("cadastre_adjacents")
+NOMINATIM_CACHE_DIR = config.cache_dir("nominatim_streets")
 CACHE_TTL_DAYS = 90
 REQUEST_TIMEOUT_SECONDS = 15
 USER_AGENT = "G3DT-Automation/1.0 (Eficients.cat; geotechnical report generation)"

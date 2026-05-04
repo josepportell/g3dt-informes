@@ -39,7 +39,7 @@ GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 MAPILLARY_API_URL = "https://graph.mapillary.com/images"
 MAPILLARY_FIELDS = "id,captured_at,computed_geometry,compass_angle,thumb_1024_url,sequence"
 
-DEFAULT_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "mapillary"
+DEFAULT_CACHE_DIR = config.cache_dir("mapillary")
 CACHE_MAX_AGE_DAYS = 30
 
 # Scoring weights

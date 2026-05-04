@@ -729,7 +729,7 @@ def get_thumbnail(project_name: str, file: str, size: int = 80):
 
 # --- Figure preview endpoint ---
 
-_FIGURE_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "images"
+_FIGURE_CACHE_DIR = config.cache_dir("images")
 _G3DT_ROOT = Path(__file__).resolve().parent.parent
 
 # Prefix patterns in cache dir → figure slot key
@@ -1165,7 +1165,7 @@ def groq_mine(project_name: str, req: GroqMineRequest | None = None):
         raise HTTPException(status_code=400, detail="GROQ_API_KEY not set")
 
     if clear_cache:
-        cache_dir = Path.home() / ".g3dt" / "cache" / "groq"
+        cache_dir = config.cache_dir("groq")
         if cache_dir.exists():
             shutil.rmtree(cache_dir)
             logger.info("Groq cache cleared")
@@ -1835,7 +1835,7 @@ def vision_groq_status(project_name: str):
 def clear_groq_cache():
     """Clear the Groq extraction cache."""
     import shutil
-    cache_dir = Path.home() / ".g3dt" / "cache" / "groq"
+    cache_dir = config.cache_dir("groq")
     count = 0
     if cache_dir.exists():
         count = len(list(cache_dir.glob("*.json")))

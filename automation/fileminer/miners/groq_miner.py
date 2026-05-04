@@ -29,7 +29,7 @@ GROQ_MODEL_DEFAULT = config.TEXT_MODEL_GROQ
 GROQ_MAX_TOKENS = 2048
 GROQ_TEMPERATURE = 0.0
 
-CACHE_DIR = Path.home() / ".g3dt" / "cache" / "groq"
+CACHE_DIR = config.cache_dir("groq")
 CACHE_TTL_DAYS = 90
 
 MAX_RETRIES = 3

@@ -61,6 +61,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Sequence
 
+from . import config
+
 logger = logging.getLogger(__name__)
 
 __all__ = [
@@ -84,7 +86,7 @@ DEFAULT_LAYERS: tuple[str, ...] = (
     "qualificacions-muc",
 )
 
-CACHE_DIR = Path.home() / ".g3dt" / "cache" / "icgc_territorial"
+CACHE_DIR = config.cache_dir("icgc_territorial")
 CACHE_TTL_DAYS = 90
 COORDINATE_ROUND_DECIMALS = 5  # ~1 m precision at Catalan latitudes
 

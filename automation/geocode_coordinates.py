@@ -35,6 +35,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from . import config
+
 logger = logging.getLogger(__name__)
 
 __all__ = ['geocode_project', 'GeocodeError', 'cadastre_address_lookup', 'cadastre_rc_to_utm']
@@ -42,8 +44,8 @@ __all__ = ['geocode_project', 'GeocodeError', 'cadastre_address_lookup', 'cadast
 
 # === Configuration ===
 
-CACHE_DIR = Path.home() / ".g3dt" / "cache" / "geocode"
-CARTOCIUDAD_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "cartociudad"
+CACHE_DIR = config.cache_dir("geocode")
+CARTOCIUDAD_CACHE_DIR = config.cache_dir("cartociudad")
 CACHE_TTL_DAYS = 90
 CARTOCIUDAD_CACHE_TTL_DAYS = 365  # addresses don't change often
 REQUEST_TIMEOUT_SECONDS = 15

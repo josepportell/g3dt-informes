@@ -26,6 +26,7 @@ import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
+from . import config
 from .cadastre_adjacents import _classify_edges_by_direction
 from .icgc_geology import ICGCConnectionError, ICGCCoordinateError, _validate_coordinates
 
@@ -40,7 +41,7 @@ ICGC_LOCAL_LAYER = "ortofoto_color_serie_local_vigent"
 ICGC_TERRITORIAL_WMS_URL = "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms"
 ICGC_TERRITORIAL_LAYER = "ortofoto_color_vigent"
 
-DEFAULT_CACHE_DIR = Path.home() / ".g3dt" / "cache" / "ortho_enrichment"
+DEFAULT_CACHE_DIR = config.cache_dir("ortho_enrichment")
 
 TIGHT_BUFFER_M = 40.0
 WIDE_BUFFER_M = 100.0

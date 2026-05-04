@@ -49,11 +49,13 @@ __all__ = [
     "G3DT_NETWORK_PROJECTS",
     "G3DT_LOCAL_WORKSPACE",
     "G3DT_REPORTS_DIR",
+    "G3DT_CACHE_DIR",
     # Tier 3 vision
     "MAX_PAGES_TIER3",
     # Functions
     "has_provider",
     "available_vision_backends",
+    "cache_dir",
 ]
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -177,6 +179,24 @@ G3DT_NO_CACHE: bool = _env_bool("G3DT_NO_CACHE", False)
 G3DT_NETWORK_PROJECTS: str = _env("G3DT_NETWORK_PROJECTS", "")
 G3DT_LOCAL_WORKSPACE: str = _env("G3DT_LOCAL_WORKSPACE", "")
 G3DT_REPORTS_DIR: str = _env("G3DT_REPORTS_DIR", "")
+
+# Cache base — outputs de geocode, ICGC, Cadastre, ortho, mapillary, groq...
+# Default històric: `~/.g3dt/cache/` (al perfil de l'usuari Windows). A producció
+# preferim una carpeta neta dedicada (`C:\g3dt-ia\cache\`) — ajustable via
+# `G3DT_CACHE_DIR`. Tot el codi consumidor passa per `config.cache_dir(subdir)`.
+G3DT_CACHE_DIR: str = _env("G3DT_CACHE_DIR", "")
+
+
+def cache_dir(*subpath: str) -> Path:
+    """Return cache dir, joining optional subpath segments.
+
+    Reads from `G3DT_CACHE_DIR` env var when set, falls back to
+    `~/.g3dt/cache/` for backwards-compat with existing dev installs.
+    Always returns a `Path`; caller is responsible for `mkdir(parents=True,
+    exist_ok=True)` on the leaf dir.
+    """
+    base = Path(G3DT_CACHE_DIR) if G3DT_CACHE_DIR else (Path.home() / ".g3dt" / "cache")
+    return base.joinpath(*subpath)
 
 # G3DT_PROJECTS_DIR és el path on opera el pipeline. Default històric:
 # `reference-material/` (mode dev). En producció v1 amb workflow network,

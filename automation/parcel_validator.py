@@ -29,7 +29,7 @@ CADASTRE_WMS_URL = "https://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-CACHE_DIR = Path.home() / ".g3dt" / "cache" / "cadastre_maps"
+CACHE_DIR = config.cache_dir("cadastre_maps")
 CACHE_TTL_DAYS = 30
 
 # ---------------------------------------------------------------------------

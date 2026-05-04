@@ -24,6 +24,8 @@ import re
 from pathlib import Path
 from typing import Any
 
+from . import config
+
 logger = logging.getLogger(__name__)
 
 # Image widths for different types (in millimeters)
@@ -128,7 +130,7 @@ class ImageManager:
         # G3DT root is 2 levels up from automation/ (or find via templates/)
         self._g3dt_root = Path(__file__).parent.parent
         # Cache dir for downloaded ICGC images
-        self._cache_dir = Path.home() / ".g3dt" / "cache" / "images"
+        self._cache_dir = config.cache_dir("images")
 
     def discover_photos(self) -> dict[str, list[Path]]:
         """
