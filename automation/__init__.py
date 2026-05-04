@@ -16,6 +16,23 @@ Usage:
     data = project.extract_all()
 """
 
+# --- SSL bootstrap (Windows native compat) ----------------------------------
+# Python natiu Windows pot no incloure els certificats CA que usen serveis
+# públics com Cadastre OVC ICGC. Aquí forcem que urllib (i altres clients que
+# usen el context HTTPS per defecte) usin el bundle de `certifi`. Així el
+# pipeline geocodificació + Cadastre + ICGC funciona idènticament a Linux.
+#
+# Si certifi no està instal·lat (cas extremament rar — és transitive de moltes
+# deps), fem fallback silenciós al context per defecte del sistema.
+try:
+    import ssl as _ssl
+    import certifi as _certifi
+    _ssl._create_default_https_context = lambda: _ssl.create_default_context(
+        cafile=_certifi.where()
+    )
+except ImportError:
+    pass
+
 from .dpsh_extractor import (
     DPSHExtractor,
     DPSHData,
