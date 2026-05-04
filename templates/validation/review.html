@@ -1907,6 +1907,18 @@
         .vision-timing-panel .timing-line.error {
             color: #ff6b6b;
         }
+
+        /* Production v1 (2026-05-04): hide non-Wizard tabs from end users.
+           Tabs queden al DOM (perquè el JS interaccioni si cal) però no
+           es renderitzen visualment. Reactivable trient aquesta regla. */
+        #tab-smartscan,
+        #tab-photos,
+        #tab-explicacio,
+        #tab-dev,
+        #tab-pipeline,
+        #tab-ai-pipeline {
+            display: none;
+        }
     </style>
 </head>
 <body>

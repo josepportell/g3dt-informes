@@ -1146,7 +1146,7 @@ def download_audit_report(project_name: str):
 # --- Groq Deep Mine endpoints ---
 
 class GroqMineRequest(BaseModel):
-    model: str = "qwen/qwen3-32b"
+    model: str = "meta-llama/llama-4-scout-17b-16e-instruct"
     clear_cache: bool = False
 
 
@@ -1155,7 +1155,7 @@ def groq_mine(project_name: str, req: GroqMineRequest | None = None):
     """Run Groq deep mine on a project with specified model."""
     import shutil
 
-    model = req.model if req else "qwen/qwen3-32b"
+    model = req.model if req else "meta-llama/llama-4-scout-17b-16e-instruct"
     clear_cache = req.clear_cache if req else False
 
     os.environ["G3DT_USE_GROQ"] = "1"
@@ -1249,7 +1249,7 @@ def groq_models():
                 "notes": "MoE architecture. Good quality/price ratio.",
             },
         ],
-        "current_model": os.environ.get("GROQ_MODEL", "qwen/qwen3-32b"),
+        "current_model": os.environ.get("GROQ_MODEL", "meta-llama/llama-4-scout-17b-16e-instruct"),
         "api_key_set": bool(os.environ.get("GROQ_API_KEY")),
     }
 
