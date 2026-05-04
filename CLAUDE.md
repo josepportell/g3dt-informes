@@ -3,6 +3,17 @@
 Client: G3 Geotècnia i Geologia SL
 Projecte: Automatització de la generació d'informes geotècnics
 
+## ⚠ Inici de sessió: comprovació de branca git
+
+**Directiva (2026-05-04):** a l'inici de cada sessió de treball en aquest projecte, **abans de qualsevol altra acció**, executa `git branch --show-current` i comunica el resultat al Josep en una sola línia. Exemple:
+
+> Branca actual: `production/g3dt-eva-v1` (worktree prod)
+> Branca actual: `experiment/ai-pipeline` (worktree dev)
+
+**Per què:** treballem amb dos worktrees actius — `clients/g3dt/` (dev, normalment `experiment/ai-pipeline`) i `clients/g3dt-prod/` (prod, `production/g3dt-eva-v1`). Si el dia anterior vam tancar a producció, ho hem de saber per no fer canvis a la branca incorrecta. La instal·lació a l'ordinador d'Eva (2026-05-04) depèn de la integritat de `production/g3dt-eva-v1`.
+
+**Si l'estat detectat sembla incoherent** (per exemple, dins de `g3dt-prod/` però la branca no és `production/g3dt-eva-v1`, o canvis pendents inesperats), atura't i pregunta al Josep abans de continuar.
+
 ## Resum
 
 G3DT genera informes geotècnics per a projectes de construcció. Cada informe inclou:
