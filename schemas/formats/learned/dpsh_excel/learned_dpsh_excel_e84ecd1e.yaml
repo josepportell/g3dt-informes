@@ -1,0 +1,22 @@
+format_id: learned_dpsh_excel_e84ecd1e
+name: 'Learned format: dpsh_excel (4001607_DPSH.xls)'
+description: Auto-generated from Eva's confirmation on 4001607_DPSH.xls
+document_roles:
+- dpsh_excel
+source_type: dades_camp_excel
+created_by: eva
+created_at: '2026-04-30T15:25:14.512609+00:00'
+source_project_file: 4001607_DPSH.xls
+label_mappings:
+- labels:
+  - ARCHITECT NAME
+  concept_id: architect_name
+  confidence: 0.95
+- labels:
+  - CLIENT NAME
+  concept_id: client_name
+  confidence: 0.95
+- labels:
+  - STREET ADDRESS
+  concept_id: street_address
+  confidence: 0.95

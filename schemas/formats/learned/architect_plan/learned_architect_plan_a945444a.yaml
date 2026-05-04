@@ -1,0 +1,38 @@
+format_id: learned_architect_plan_a945444a
+name: 'Learned format: architect_plan (Punts de Sondeig_Silvia_Jaume.pdf)'
+description: Auto-generated from Eva's confirmation on Punts de Sondeig_Silvia_Jaume.pdf
+document_roles:
+- architect_plan
+source_type: planol_vision
+created_by: eva
+created_at: '2026-04-30T15:25:14.516098+00:00'
+source_project_file: Punts de Sondeig_Silvia_Jaume.pdf
+label_mappings:
+- labels:
+  - ARCHITECT COMPANY
+  concept_id: architect_company
+  confidence: 0.95
+- labels:
+  - ARCHITECT NAME
+  concept_id: architect_name
+  confidence: 0.95
+- labels:
+  - BUILDING HEIGHT M
+  concept_id: building_height_m
+  confidence: 0.95
+- labels:
+  - BUILDING TYPE
+  concept_id: building_type
+  confidence: 0.95
+- labels:
+  - CLIENT NAME
+  concept_id: client_name
+  confidence: 0.95
+- labels:
+  - NUM FLOORS
+  concept_id: num_floors
+  confidence: 0.95
+- labels:
+  - STREET ADDRESS
+  concept_id: street_address
+  confidence: 0.95
