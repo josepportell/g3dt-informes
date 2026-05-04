@@ -13,6 +13,17 @@ Eva té els projectes a una unitat de xarxa de G3DT (`F:\` o `G:\` — confirmar
 
 Temps estimat d'instal·lació: **~45-90 min** (depenent de la velocitat d'internet, política d'antivirus, i si Eva té permisos admin).
 
+### Validat per smoke test al Windows del Josep (2026-05-04)
+
+- **Python 3.12** (no 3.11) confirmat compatible — recomana instal·lar 3.12 a Eva.
+- Pipeline complet end-to-end OK: prefills carreguen, vision (planol+sondeig+dpsh+sondeig_annex+projecte) OK via fallback Anthropic, `.docx` generat amb 14 imatges, copy-back a la xarxa simulada (`subst F:`) OK.
+- Tres fixos descoberts i integrats al codi (no requereixen acció a Eva — ja són a `production/g3dt-eva-v1`):
+  1. `pyproject.toml`: declaració explícita de packages per a setuptools modern (pip ≥25)
+  2. `automation/__init__.py`: SSL bootstrap amb `certifi` per a Cadastre/ICGC al Windows
+  3. `web/expected_sources.py`: mòdul untracked afegit al repo
+- `G3DT_CACHE_DIR` env var: caches no van al perfil d'usuari Windows; ara configurables a `C:\g3dt-ia\cache\`.
+- 5 formats apresos del Josep enviats com a llavor (cobertura màxima dia 1).
+
 ---
 
 ## 1. Pre-requisits ordinador Eva (verificar en arribar)
@@ -24,7 +35,7 @@ Temps estimat d'instal·lació: **~45-90 min** (depenent de la velocitat d'inter
 
 ### 1.2 Permisos
 - **Admin** o, si no, capacitat per instal·lar software user-level:
-  - Si admin disponible: instal·lador oficial Python 3.11+ des de python.org
+  - Si admin disponible: instal·lador oficial Python **3.12** des de python.org (versió validada al smoke test del 2026-05-04)
   - Si NO admin: alternatives sense privilegis a §2.1 (Python Embeddable / WinPython)
 
 ### 1.3 Connexió de xarxa
@@ -39,6 +50,8 @@ Temps estimat d'instal·lació: **~45-90 min** (depenent de la velocitat d'inter
 - Decidir abans de començar:
   - **Opció A**: Eva/Silvia crea comptes nous a Anthropic + Groq amb tarjeta G3DT (recomanat — aïllament de cost)
   - **Opció B**: Usar les del Josep temporalment, migrar després (ràpid però barreja costos)
+
+- **OpenAI és OPCIONAL.** El smoke test va demostrar que el sistema funciona perfectament sense OPENAI_API_KEY: la visió (planol, sondeig, dpsh) cau a Anthropic, l'extracció text usa Groq, i el deep_folder_classifier (que només suporta OpenAI) salta sense afectar el report final. Si Eva no té compte OpenAI, **no posar OPENAI_API_KEY al `.env`** — així evitem WARNINGS cosmètics als logs.
 
 ---
 
@@ -118,15 +131,24 @@ A editar al `.env`:
 
 | Variable | Valor a posar |
 |---|---|
-| `ANTHROPIC_API_KEY` | API key real (Eva o Josep) |
-| `GROQ_API_KEY` | API key real |
-| `OPENAI_API_KEY` | (opcional, recomanat per a fallback) |
+| `ANTHROPIC_API_KEY` | API key real (Eva o Josep) — **obligatòria** |
+| `GROQ_API_KEY` | API key real — **obligatòria** |
+| `OPENAI_API_KEY` | (deixar buida o esborrar la línia — vegeu §1.5) |
 | `G3DT_NETWORK_PROJECTS` | Path real de la carpeta xarxa (ex: `F:\projectes`) |
 | `G3DT_LOCAL_WORKSPACE` | `C:\g3dt-ia\workspace` |
 | `G3DT_REPORTS_DIR` | `C:\g3dt-ia\reports` |
+| `G3DT_CACHE_DIR` | `C:\g3dt-ia\cache` (sense això, el cache va al perfil d'Eva) |
 | `G3DT_LOG_PATH` | `C:\g3dt-ia\logs\g3dt.log` |
 
 Tots els flags de feature (`G3DT_ENABLE_AI_PIPELINE`, `G3DT_DEV_MODE`, `G3DT_PROD_USE_CLAUDECODE_VISION`) **deixar a `false`** com al `.env.example`.
+
+Cal crear les carpetes abans del primer run (el sistema crea automàticament `cache` i `workspace` però `reports` i `logs` no):
+```cmd
+mkdir C:\g3dt-ia\workspace
+mkdir C:\g3dt-ia\reports
+mkdir C:\g3dt-ia\cache
+mkdir C:\g3dt-ia\logs
+```
 
 **Avís sobre paths Windows al `.env`:** posar barres simples `\` o doblades `\\`. El loader de `.env` del projecte és tolerant a ambdós formats.
 
@@ -180,7 +202,7 @@ Cada punt: **passa / no passa**. Si un falla, parar i arreglar abans de continua
 
 | # | Punt | Comprovació | Criteri d'èxit |
 |---|---|---|---|
-| 1 | Python instal·lat | `python --version` | `Python 3.11.x` o superior |
+| 1 | Python instal·lat | `python --version` | `Python 3.12.x` (validat al smoke test) |
 | 2 | venv activat | `where python` (a CMD amb venv actiu) | Path comença per `C:\g3dt-ia\app\.venv\Scripts\` |
 | 3 | Deps instal·lades | `pip list \| findstr /i "fastapi anthropic pymupdf docxtpl"` | 4 línies retornades |
 | 4 | `.env` carrega bé | `python -c "from automation import config; print(config.G3DT_NETWORK_PROJECTS)"` | Imprimeix path real (no buit) |
@@ -190,6 +212,8 @@ Cada punt: **passa / no passa**. Si un falla, parar i arreglar abans de continua
 | 8 | Sync workspace | Seleccionar 1 projecte → esperar | Carpeta `C:\g3dt-ia\workspace\{nom}\` apareix amb fitxers copiats |
 | 9 | Pipeline visió | Esperar al primer prefill (~30-60s) | Camps "Plànol", "Sondeig", "Penetros" omplerts (badges blaus = auto-extrets) |
 | 10 | Generar + copy-back | Botó "Generar Informe" | `.docx` baixat al navegador + còpia a `F:\projectes\{nom}\*_generated.docx` |
+| 11 | Cache aïllat | Inspeccionar `%USERPROFILE%\.g3dt\` | **No existeix** (cache va a `C:\g3dt-ia\cache\`) |
+| 12 | Cap 429 d'OpenAI | Buscar "429" al log | 0 ocurrències si OPENAI_API_KEY no setejat |
 
 **Si tot passa: ✅ instal·lació tècnica completa. Procedir al test funcional (§4).**
 
