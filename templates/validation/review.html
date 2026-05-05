@@ -855,6 +855,167 @@
             background: white;
             max-width: 400px;
         }
+        /* === Network Browser (nested folders, 2026-05-06) === */
+        .network-browser {
+            margin-bottom: 20px;
+            padding: 14px 18px;
+            background: #eaf2fa;
+            border-radius: 8px;
+            border: 1px solid #b8d4f0;
+        }
+        .network-browser .nb-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .network-browser .nb-header label {
+            font-weight: 600;
+            color: #2c3e50;
+            white-space: nowrap;
+        }
+        .network-browser .nb-breadcrumb {
+            flex: 1;
+            min-width: 200px;
+            padding: 6px 10px;
+            background: white;
+            border: 1px solid #b8d4f0;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #2c3e50;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .network-browser .nb-up-btn {
+            padding: 6px 12px;
+            background: #fff;
+            border: 1px solid #b8d4f0;
+            border-radius: 6px;
+            color: #2c3e50;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .network-browser .nb-up-btn:hover:not(:disabled) {
+            background: #d6e6f5;
+        }
+        .network-browser .nb-up-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .network-browser .nb-start-btn {
+            padding: 8px 16px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            min-width: 220px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .network-browser .nb-start-btn:hover:not(:disabled) {
+            background: #229952;
+        }
+        .network-browser .nb-start-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        /* Estat: pipeline running → botó "Aturar" (vermell) */
+        .network-browser.is-pipeline-running .nb-start-btn {
+            background: #c0392b;
+        }
+        .network-browser.is-pipeline-running .nb-start-btn:hover:not(:disabled) {
+            background: #a93226;
+        }
+        /* Spinner inline al botó (durant CANCELLING) */
+        .network-browser .nb-spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        .network-browser.is-cancelling .nb-spinner {
+            display: inline-block;
+        }
+        /* Mentre pipeline corre o cancela: navegació deshabilitada però botó actiu */
+        .network-browser.is-pipeline-running .nb-list,
+        .network-browser.is-pipeline-running .nb-up-btn,
+        .network-browser.is-cancelling .nb-list,
+        .network-browser.is-cancelling .nb-up-btn {
+            opacity: 0.55;
+            pointer-events: none;
+        }
+        .network-browser .nb-list {
+            max-height: 280px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #b8d4f0;
+            border-radius: 6px;
+        }
+        .network-browser .nb-item {
+            padding: 8px 14px;
+            cursor: pointer;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2c3e50;
+            font-size: 14px;
+            user-select: none;
+        }
+        .network-browser .nb-item:last-child {
+            border-bottom: none;
+        }
+        .network-browser .nb-item:hover {
+            background: #f0f7fd;
+        }
+        .network-browser .nb-item .nb-icon {
+            color: #f39c12;
+            font-size: 16px;
+        }
+        .network-browser .nb-empty {
+            padding: 20px;
+            text-align: center;
+            color: #95a5a6;
+            font-style: italic;
+        }
+        .network-browser .nb-error {
+            padding: 12px 14px;
+            background: #fde8e8;
+            border: 1px solid #f5b7b1;
+            border-radius: 6px;
+            color: #922b21;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .network-browser .nb-error .nb-error-action {
+            margin-left: 8px;
+            background: none;
+            border: 1px solid #922b21;
+            color: #922b21;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .network-browser.is-busy {
+            opacity: 0.55;
+            pointer-events: none;
+        }
+        .network-browser .nb-help {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
         .wizard-loading {
             display: flex;
             flex-direction: column;
@@ -1938,6 +2099,33 @@
                     style="margin-left:12px; font-size:0.82em; padding:2px 6px; max-width:180px; color:#666;">
             </select>
             <span class="wizard-unsaved" id="wizardUnsaved">Canvis sense guardar</span>
+        </div>
+
+        <!-- Network Browser (mode producció amb projectes anidats — 2026-05-06) -->
+        <div class="network-browser" id="networkBrowser" style="display:none;">
+            <div class="nb-header">
+                <label>Carpeta del projecte:</label>
+                <button type="button" class="nb-up-btn" id="nbUpBtn" onclick="nbGoUp()" disabled>↑ Pujar</button>
+                <span class="nb-breadcrumb" id="nbBreadcrumb">/</span>
+                <input type="hidden" id="nbSelectedPath" value="">
+                <button type="button" class="nb-start-btn" id="nbStartBtn" onclick="nbActionClick()">
+                    <span class="nb-spinner" id="nbSpinner"></span>
+                    <span id="nbBtnLabel">Començar amb aquesta carpeta</span>
+                </button>
+                <select id="groqModelSelectNB" onchange="onGroqModelChange(this.value)"
+                        title="Model Groq text miner"
+                        style="margin-left:8px; font-size:0.82em; padding:2px 6px; max-width:180px; color:#666;">
+                </select>
+                <span class="wizard-unsaved" id="wizardUnsavedNB" style="display:none;">Canvis sense guardar</span>
+            </div>
+            <div class="nb-list" id="nbList">
+                <div class="nb-empty">Carregant...</div>
+            </div>
+            <div class="nb-help">
+                Navega fins a la carpeta del projecte i prem <strong>Començar</strong>.
+                Pots baixar tants nivells com calgui.
+            </div>
+            <div id="nbError" style="display:none;"></div>
         </div>
 
         <div id="message" class="message"></div>
@@ -3914,12 +4102,18 @@
         ];
 
         // Load project list from API. Called on startup and can be re-called on refresh.
-        function loadProjects() {
-            fetch('/api/projects')
-                .then(r => r.ok ? r.json() : Promise.reject('No API'))
-                .then(projects => {
+        // Detecta si estem en mode producció (xarxa configurada amb anidació) o
+        // mode dev/legacy (dropdown plà). En mode producció, mostra el navegador
+        // de carpetes en lloc del dropdown.
+        async function loadProjects() {
+            try {
+                const r = await fetch('/api/projects');
+                if (!r.ok) throw new Error('No API');
+                const projects = await r.json();
+
+                if (projects && projects.length > 0) {
+                    // Mode dev/legacy: dropdown plà
                     const sel = document.getElementById('projectSelect');
-                    // Clear existing options (keep placeholder)
                     while (sel.options.length > 1) sel.remove(1);
                     projects.forEach(p => {
                         const opt = document.createElement('option');
@@ -3927,13 +4121,310 @@
                         opt.textContent = `${p.expedient} ${p.municipality}`;
                         sel.appendChild(opt);
                     });
-                })
-                .catch(() => {
-                    // Not running under FastAPI — hide project selector
+                    document.getElementById('projectSelector').style.display = '';
+                    document.getElementById('networkBrowser').style.display = 'none';
+                    return;
+                }
+
+                // Cap projecte al dropdown — comprova si la xarxa està habilitada
+                const nb = await fetch('/api/network/browse?path=');
+                if (nb.ok) {
                     document.getElementById('projectSelector').style.display = 'none';
-                });
+                    document.getElementById('networkBrowser').style.display = '';
+                    const data = await nb.json();
+                    nbRender(data);
+                } else {
+                    // Ni dev ni xarxa: estat buit. Amaguem tot.
+                    document.getElementById('projectSelector').style.display = 'none';
+                    document.getElementById('networkBrowser').style.display = 'none';
+                }
+            } catch (e) {
+                // Wizard servit fora de FastAPI (ex. http.server estàtic)
+                document.getElementById('projectSelector').style.display = 'none';
+                document.getElementById('networkBrowser').style.display = 'none';
+            }
         }
         loadProjects();
+
+        // ── Network Browser (nested folders) ─────────────────────────
+
+        // Mirror reactiu de #wizardUnsaved (al projectSelector legacy) cap a
+        // #wizardUnsavedNB (al navegador) — així no cal tocar els 5 llocs del
+        // codi que ja toquen el primer.
+        (function() {
+            const orig = document.getElementById('wizardUnsaved');
+            const nb = document.getElementById('wizardUnsavedNB');
+            if (!orig || !nb) return;
+            const sync = () => { nb.style.display = orig.style.display || 'none'; };
+            new MutationObserver(sync).observe(orig, {attributes: true, attributeFilter: ['style']});
+            sync();
+        })();
+
+        let nbCurrentPath = "";
+        let nbCurrentParent = null; // null si som a l'arrel
+
+        function nbRender(data) {
+            nbCurrentPath = data.current_path || "";
+            nbCurrentParent = data.parent_path; // pot ser null o ""
+
+            // Breadcrumb
+            const breadcrumb = document.getElementById('nbBreadcrumb');
+            breadcrumb.textContent = nbCurrentPath ? "/ " + nbCurrentPath : "/ (arrel)";
+
+            // Botó pujar: deshabilitat només a l'arrel
+            const upBtn = document.getElementById('nbUpBtn');
+            upBtn.disabled = (nbCurrentParent === null);
+
+            // Path seleccionat per "Començar"
+            document.getElementById('nbSelectedPath').value = nbCurrentPath;
+
+            // Llista de subcarpetes
+            const list = document.getElementById('nbList');
+            const subdirs = data.subdirs || [];
+            if (subdirs.length === 0) {
+                list.innerHTML = '<div class="nb-empty">Aquesta carpeta no té subcarpetes.</div>';
+            } else {
+                list.innerHTML = subdirs.map(name => {
+                    const safe = nbEscapeHtml(name);
+                    return `<div class="nb-item" onclick="nbEnterFolder(${JSON.stringify(name).replace(/"/g, '&quot;')})">
+                        <span class="nb-icon">📁</span>
+                        <span>${safe}</span>
+                    </div>`;
+                }).join('');
+            }
+
+            // Amaga error si n'hi havia
+            document.getElementById('nbError').style.display = 'none';
+
+            // Ressaltem el botó "Començar" si NO som a l'arrel (a l'arrel rara
+            // vegada hi ha un projecte real, però no ho impedim — Eva tria).
+            const startBtn = document.getElementById('nbStartBtn');
+            startBtn.disabled = false;
+            if (!nbCurrentPath) {
+                startBtn.title = "Estàs a l'arrel — sol haver-hi una carpeta organitzativa, no un projecte. Si saps que aquesta arrel és un projecte, prem igualment.";
+            } else {
+                startBtn.title = "Inicia el pipeline amb aquesta carpeta com a projecte.";
+            }
+        }
+
+        function nbEscapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c => (
+                {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]
+            ));
+        }
+
+        async function nbLoadPath(path) {
+            const url = '/api/network/browse?path=' + encodeURIComponent(path || "");
+            try {
+                const r = await fetch(url);
+                if (!r.ok) {
+                    const detail = await r.json().catch(() => ({detail: r.statusText}));
+                    nbShowError(r.status, detail.detail || 'Error desconegut');
+                    return;
+                }
+                const data = await r.json();
+                nbRender(data);
+            } catch (e) {
+                nbShowError(0, 'No es pot connectar amb el servidor');
+            }
+        }
+
+        function nbShowError(status, message) {
+            const err = document.getElementById('nbError');
+            let humanMsg = message;
+            if (status === 403) {
+                humanMsg = `No tens permís per llegir aquesta carpeta. Demana ajuda al teu admin de xarxa o tria una altra ruta.`;
+            } else if (status === 404) {
+                humanMsg = `Aquesta carpeta ja no existeix a la xarxa.`;
+            } else if (status === 400) {
+                humanMsg = `Ruta invàlida: ${message}`;
+            } else if (status === 0) {
+                humanMsg = `No es pot accedir a la xarxa de G3DT. Comprova la connexió.`;
+            }
+            err.innerHTML = `<div class="nb-error">
+                ${nbEscapeHtml(humanMsg)}
+                <button class="nb-error-action" onclick="nbLoadPath('')">Tornar a l'arrel</button>
+            </div>`;
+            err.style.display = '';
+        }
+
+        function nbEnterFolder(name) {
+            const next = nbCurrentPath ? (nbCurrentPath + "/" + name) : name;
+            nbLoadPath(next);
+        }
+
+        function nbGoUp() {
+            if (nbCurrentParent === null) return;
+            nbLoadPath(nbCurrentParent || "");
+        }
+
+        // ── Màquina d'estats del navegador ───────────────────────────
+        // IDLE       → botó verd "Començar amb aquesta carpeta", navegació activa
+        // SYNCING    → botó gris "Sincronitzant projecte...", navegació bloquejada
+        // RUNNING    → botó vermell "Aturar pipeline", navegació bloquejada
+        // CANCELLING → botó gris amb spinner "Aturant...", navegació bloquejada
+        let nbState = 'IDLE';
+
+        function nbSetState(state) {
+            nbState = state;
+            const browser = document.getElementById('networkBrowser');
+            const btn = document.getElementById('nbStartBtn');
+            const label = document.getElementById('nbBtnLabel');
+
+            browser.classList.remove('is-busy', 'is-pipeline-running', 'is-cancelling');
+            btn.disabled = false;
+
+            switch (state) {
+                case 'IDLE':
+                    label.textContent = 'Començar amb aquesta carpeta';
+                    break;
+                case 'SYNCING':
+                    browser.classList.add('is-busy');
+                    btn.disabled = true;
+                    label.textContent = 'Sincronitzant projecte...';
+                    break;
+                case 'RUNNING':
+                    browser.classList.add('is-pipeline-running');
+                    label.textContent = 'Aturar pipeline';
+                    break;
+                case 'CANCELLING':
+                    browser.classList.add('is-cancelling');
+                    btn.disabled = true;
+                    label.textContent = 'Aturant...';
+                    break;
+            }
+        }
+
+        // Click handler dispatch segons l'estat actual.
+        function nbActionClick() {
+            if (nbState === 'IDLE') {
+                nbStartProject(false);
+            } else if (nbState === 'RUNNING') {
+                nbCancelProject();
+            }
+            // SYNCING i CANCELLING: el botó és disabled, no s'arriba aquí
+        }
+
+        async function nbCancelProject() {
+            if (!selectedProject) return;
+            nbSetState('CANCELLING');
+            // Tanca SSE immediatament — el client deixa de rebre events
+            // encara que el backend trigui uns segons a confirmar.
+            if (activeEventSource) {
+                try { activeEventSource.close(); } catch {}
+                activeEventSource = null;
+            }
+            try {
+                await fetch(`/api/cancel/${encodeURIComponent(selectedProject)}`, {
+                    method: 'POST',
+                });
+            } catch (e) {
+                // Ignora errors de xarxa: l'spinner igualment desapareixerà
+            }
+            // Petita demora visual perquè l'spinner sigui perceptible
+            // (les crides API en vol al backend tarden uns segons a acabar
+            // — l'spinner cobreix aquesta finestra)
+            setTimeout(() => {
+                nbAfterCancel();
+            }, 800);
+        }
+
+        function nbAfterCancel() {
+            // Reset del wizard: amaguem stepper, modal pre-questions, etc.
+            try {
+                if (typeof hideStepper === 'function') hideStepper();
+                const wl = document.getElementById('wizardLoading');
+                if (wl) wl.style.display = 'none';
+                const wf = document.getElementById('wizardForm');
+                if (wf) wf.style.display = 'none';
+                const empty = document.querySelector('.empty-state');
+                if (empty) empty.style.display = 'block';
+                const dc = document.getElementById('dataContent');
+                if (dc) dc.style.display = 'none';
+            } catch {}
+            selectedProject = null;
+            wizardDataLoaded = false;
+            nbSetState('IDLE');
+            showMessage("S'ha aturat el pipeline. Pots tornar a clicar Començar o navegar a una altra carpeta.", 'info');
+        }
+
+        async function nbStartProject(allowNoMarkers = false) {
+            const path = document.getElementById('nbSelectedPath').value;
+            const errBox = document.getElementById('nbError');
+            errBox.style.display = 'none';
+
+            nbSetState('SYNCING');
+
+            const restoreIdle = () => nbSetState('IDLE');
+
+            try {
+                const r = await fetch('/api/network/select', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        path: path,
+                        refresh: false,
+                        allow_no_markers: allowNoMarkers,
+                    }),
+                });
+                if (!r.ok) {
+                    const body = await r.json().catch(() => ({}));
+                    // Codi machine-readable per a errors de validació de projecte
+                    const detail = body.detail;
+                    let code = null;
+                    let message = '';
+                    if (detail && typeof detail === 'object') {
+                        code = detail.code;
+                        message = detail.message || JSON.stringify(detail);
+                    } else if (typeof detail === 'string') {
+                        message = detail;
+                    } else {
+                        message = r.statusText || 'Error desconegut';
+                    }
+
+                    if (code === 'multi_project_container') {
+                        nbShowProjectError(message, false);
+                        restoreIdle();
+                        return;
+                    }
+                    if (code === 'not_a_project') {
+                        nbShowProjectError(message, true);
+                        restoreIdle();
+                        return;
+                    }
+                    nbShowError(r.status, message);
+                    restoreIdle();
+                    return;
+                }
+                const data = await r.json();
+                const leaf = data.leaf;
+                if (!leaf) {
+                    nbShowError(500, 'Resposta incompleta del servidor (sense leaf)');
+                    restoreIdle();
+                    return;
+                }
+                // Pipeline arrenca: passem a estat RUNNING (botó "Aturar"
+                // visible i clicable). Quan el SSE rebi prefills/error/cancelled
+                // tornarem a IDLE des de loadProjectData o nbAfterCancel.
+                nbSetState('RUNNING');
+                onProjectChange(leaf);
+            } catch (e) {
+                nbShowError(0, 'No es pot connectar amb el servidor');
+                restoreIdle();
+            }
+        }
+
+        function nbShowProjectError(message, allowOverride) {
+            const err = document.getElementById('nbError');
+            const overrideBtn = allowOverride
+                ? `<button class="nb-error-action" onclick="nbStartProject(true)" style="background:#f39c12; color:white; border-color:#f39c12;">Continuar igualment</button>`
+                : '';
+            err.innerHTML = `<div class="nb-error">
+                ${nbEscapeHtml(message)}
+                ${overrideBtn}
+            </div>`;
+            err.style.display = '';
+        }
 
         // Hide dev-only UI elements in production mode
         if (!DEV_MODE) {
@@ -3943,23 +4434,29 @@
             if (btnAudit) btnAudit.style.display = 'none';
         }
 
-        // Load Groq model selector
+        // Load Groq model selector. Pobla els dos dropdowns (legacy + network browser).
         function loadGroqModels() {
             fetch('/api/groq-models')
                 .then(r => r.ok ? r.json() : Promise.reject('No API'))
                 .then(data => {
-                    const sel = document.getElementById('groqModelSelect');
-                    sel.innerHTML = '';
-                    data.models.forEach(m => {
-                        const opt = document.createElement('option');
-                        opt.value = m.id;
-                        opt.textContent = m.name;
-                        if (m.id === data.current_model) opt.selected = true;
-                        sel.appendChild(opt);
+                    ['groqModelSelect', 'groqModelSelectNB'].forEach(id => {
+                        const sel = document.getElementById(id);
+                        if (!sel) return;
+                        sel.innerHTML = '';
+                        data.models.forEach(m => {
+                            const opt = document.createElement('option');
+                            opt.value = m.id;
+                            opt.textContent = m.name;
+                            if (m.id === data.current_model) opt.selected = true;
+                            sel.appendChild(opt);
+                        });
                     });
                 })
                 .catch(() => {
-                    document.getElementById('groqModelSelect').style.display = 'none';
+                    ['groqModelSelect', 'groqModelSelectNB'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.style.display = 'none';
+                    });
                 });
         }
         loadGroqModels();
@@ -4176,6 +4673,9 @@
                 }
                 finishStepper();
                 showWizardContent();
+                // Pipeline finalitzat: navegador torna a IDLE (per si l'usuari
+                // vol triar un altre projecte des d'aquesta mateixa pestanya).
+                if (typeof nbSetState === 'function') nbSetState('IDLE');
             });
 
             es.addEventListener('error_event', (e) => {
@@ -4186,6 +4686,19 @@
                 hideStepper();
                 emptyState.style.display = 'block';
                 showMessage('Error carregant dades: ' + data.message, 'error');
+                if (typeof nbSetState === 'function') nbSetState('IDLE');
+            });
+
+            // Cancel·lació iniciada per Eva: el backend ha confirmat l'aturada
+            // entre fases. Si l'usuari ja ha clicat "Aturar", el client ja ha
+            // tancat l'SSE; aquest handler només dispara si la cancel·lació
+            // s'ha completat abans del tancament del client.
+            es.addEventListener('cancelled', (e) => {
+                if (activeEventSource !== es) return;
+                es.close();
+                activeEventSource = null;
+                hideStepper();
+                if (typeof nbAfterCancel === 'function') nbAfterCancel();
             });
 
             es.onerror = () => {
