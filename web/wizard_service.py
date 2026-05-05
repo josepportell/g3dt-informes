@@ -60,6 +60,33 @@ _vision_processes: dict[str, subprocess.Popen] = {}
 _vision_last_rc: dict[str, int] = {}
 _vision_lock = threading.Lock()
 
+# Pipeline cancellation flags (2026-05-06): project_name -> True quan Eva ha
+# clicat "Aturar". Les fases del pipeline consulten aquesta flag entre
+# operacions per saltar la resta sense fer crides API addicionals. Les
+# operacions ja en vol acaben (no es poden avortar des de fora), però
+# ens estalviem totes les futures crides a Anthropic/Groq.
+_cancellation_flags: dict[str, bool] = {}
+_cancellation_lock = threading.Lock()
+
+
+def mark_cancelled(project_name: str) -> None:
+    """Marca un projecte com a cancel·lat. Idempotent."""
+    with _cancellation_lock:
+        _cancellation_flags[project_name] = True
+    logger.info("pipeline cancellation requested: %s", project_name)
+
+
+def is_cancelled(project_name: str) -> bool:
+    """True si Eva ha demanat aturar el pipeline d'aquest projecte."""
+    with _cancellation_lock:
+        return _cancellation_flags.get(project_name, False)
+
+
+def clear_cancellation(project_name: str) -> None:
+    """Esborra la flag de cancel·lació (al començar un nou pipeline)."""
+    with _cancellation_lock:
+        _cancellation_flags.pop(project_name, None)
+
 
 def _resolve_project(project_name: str) -> Path:
     """Resolve a project name to its folder path. Raises ValueError if not found."""
@@ -74,24 +101,29 @@ def _resolve_project(project_name: str) -> Path:
 
 
 def list_projects() -> list[dict[str, str]]:
-    """List available projects.
+    """List available projects (legacy/dev dropdown only).
 
-    Production v1: if `G3DT_NETWORK_PROJECTS` is configured, list folder
-    names from the network share (read-only enumeration, no sync).
-    Otherwise fallback to listing `G3DT_PROJECTS_DIR` (legacy/dev mode).
+    Mode dev (sense `G3DT_NETWORK_PROJECTS`): retorna les carpetes de
+    `G3DT_PROJECTS_DIR` per al dropdown clàssic.
+
+    Mode producció (xarxa configurada): retorna [] — el frontend usa
+    `/api/network/browse` per navegar per la xarxa amb anidació
+    arbitrària, no aquest endpoint.
     """
     from automation import sync_workspace
     from automation.folder_utils import parse_folder_name
 
     if sync_workspace.is_network_workflow_enabled():
-        names = sync_workspace.list_network_projects()
-    elif _REF_DIR.is_dir():
-        names = sorted(
-            d.name for d in _REF_DIR.iterdir()
-            if d.is_dir() and not d.name.startswith('.')
-        )
-    else:
+        # Producció: dropdown legacy desactivat. Frontend usa /api/network/browse.
         return []
+
+    if not _REF_DIR.is_dir():
+        return []
+
+    names = sorted(
+        d.name for d in _REF_DIR.iterdir()
+        if d.is_dir() and not d.name.startswith('.')
+    )
 
     projects = []
     for name in names:
@@ -2220,9 +2252,19 @@ def _enrich_prefills_with_missing_summary(merged: dict[str, Any]) -> None:
 
 
 def get_prefills_streaming(project_name: str):
-    """Generator yielding SSE events during auto_extract, then final prefills."""
+    """Generator yielding SSE events during auto_extract, then final prefills.
+
+    Suporta cancel·lació via `mark_cancelled(project_name)` (cridat des de
+    l'endpoint `/api/cancel/<leaf>`). Comprova la flag entre fases:
+    auto_extract → check → vision → check → merge. Si Eva ha aturat, salta
+    les fases pendents i emet un event `cancelled`. Les crides API ja en
+    vol acaben (no avortables des de fora) però ens estalviem les futures.
+    """
     project_path = _resolve_project(project_name)
     _clear_stale_user_data(project_path)
+    # Cada nou pipeline comença sense flags pendents (per si Eva va aturar
+    # un pipeline anterior d'aquest projecte i ara el reinicia).
+    clear_cancellation(project_name)
 
     event_queue: queue.Queue = queue.Queue()
     auto_result_holder: list = []
@@ -2244,15 +2286,33 @@ def get_prefills_streaming(project_name: str):
     thread = threading.Thread(target=run_extract, daemon=True)
     thread.start()
 
-    # Yield SSE events as they arrive
+    # Yield SSE events as they arrive. Comprova la flag de cancel·lació
+    # entre events: si Eva atura durant auto_extract, parem d'enviar events
+    # immediatament. El thread worker continuarà fins acabar la seva fase
+    # actual (Python no permet matar threads de manera segura), però la
+    # resta del pipeline saltarà al checkpoint #1 just després.
+    cancelled_during_extract = False
     while True:
         item = event_queue.get()
         if item is None:
+            break
+        if is_cancelled(project_name):
+            cancelled_during_extract = True
+            # Esgota la cua sense yieldar (esperem el sentinel)
+            while item is not None:
+                try:
+                    item = event_queue.get(timeout=30)
+                except queue.Empty:
+                    break
             break
         event_type, detail = item
         yield f"event: {event_type}\ndata: {json.dumps(detail, ensure_ascii=False)}\n\n"
 
     thread.join()
+
+    if cancelled_during_extract:
+        yield f"event: cancelled\ndata: {json.dumps({'phase': 'auto_extract'})}\n\n"
+        return
 
     if error_holder:
         yield f"event: error_event\ndata: {json.dumps({'message': str(error_holder[0])})}\n\n"
@@ -2260,6 +2320,13 @@ def get_prefills_streaming(project_name: str):
 
     if not auto_result_holder:
         yield f"event: error_event\ndata: {json.dumps({'message': 'Extraction ended without result'})}\n\n"
+        return
+
+    # Checkpoint #1: després d'auto_extract, abans de visió.
+    # Si Eva ha aturat, ens estalviem totes les crides Anthropic/Groq
+    # (la part més cara del pipeline).
+    if is_cancelled(project_name):
+        yield f"event: cancelled\ndata: {json.dumps({'phase': 'pre_vision'})}\n\n"
         return
 
     # --- Vision phase (after auto_extract, before merge) ---
@@ -2292,6 +2359,13 @@ def get_prefills_streaming(project_name: str):
 
             vision_thread.join()
             yield f"event: step\ndata: {json.dumps({'step': 'vision', 'status': 'done'})}\n\n"
+
+    # Checkpoint #2: després de visió, abans del merge final.
+    # La visió ja no té crides API pendents (les que estaven en vol han
+    # acabat), però evitem el treball del merge si Eva ha aturat.
+    if is_cancelled(project_name):
+        yield f"event: cancelled\ndata: {json.dumps({'phase': 'pre_merge'})}\n\n"
+        return
 
     try:
         auto_result = auto_result_holder[0]
