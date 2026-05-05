@@ -93,6 +93,124 @@ def list_projects():
     return wizard_service.list_projects()
 
 
+# --- Network browser (nested folders, 2026-05-06) ---------------------------
+#
+# Eva agrupa els projectes a la xarxa de G3DT en múltiples nivells (per any,
+# zona, oficina). El dropdown legacy només llegia el primer nivell. Aquests
+# endpoints permeten que el frontend mostri un navegador on Eva baixa per
+# l'arbre fins a la carpeta del projecte i clica "Començar".
+
+class NetworkSelectRequest(BaseModel):
+    path: str
+    refresh: bool = False
+    allow_no_markers: bool = False
+
+
+@router.get("/network/browse")
+def network_browse(path: str = ""):
+    """Llista subcarpetes d'una carpeta de la xarxa (1 nivell, no recursiu).
+
+    Query params:
+        path: Path relatiu des de `G3DT_NETWORK_PROJECTS`. Buit = arrel.
+
+    Resposta:
+        {current_path, parent_path, subdirs}
+        - parent_path = null si som a l'arrel.
+
+    Errors:
+        400 si el path és invàlid (path traversal, components `..`).
+        403 si no es pot llegir la carpeta (permisos).
+        404 si el path no existeix.
+        501 si el workflow de xarxa no està habilitat.
+    """
+    from automation import sync_workspace
+    try:
+        return sync_workspace.browse_network(path)
+    except RuntimeError:
+        raise HTTPException(
+            status_code=501,
+            detail="Network workflow not enabled. Configura G3DT_NETWORK_PROJECTS.",
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+    except PermissionError as exc:
+        raise HTTPException(
+            status_code=403,
+            detail=f"No tens permís per llegir aquesta carpeta: {exc}",
+        )
+
+
+@router.post("/network/select")
+def network_select(req: NetworkSelectRequest):
+    """Sincronitza un projecte de la xarxa al workspace local.
+
+    Body:
+        {path: "<rel_path>", refresh: bool}
+
+    Resposta:
+        {leaf, status, network_path, ...}
+        - `leaf`: identificador per usar a la resta d'endpoints
+          (`/api/prefills/<leaf>`, `/api/wizard/<leaf>`, etc.).
+
+    Errors:
+        400 si el path és invàlid.
+        404 si el projecte no es troba a la xarxa.
+        500 si la còpia falla.
+        501 si el workflow de xarxa no està habilitat.
+    """
+    from automation import sync_workspace
+    if not sync_workspace.is_network_workflow_enabled():
+        raise HTTPException(
+            status_code=501,
+            detail="Network workflow not enabled. Configura G3DT_NETWORK_PROJECTS.",
+        )
+
+    result = sync_workspace.sync_to_workspace(
+        req.path,
+        force=req.refresh,
+        allow_no_markers=req.allow_no_markers,
+    )
+    if result["status"] == "error":
+        err = result.get("error", "sync failed")
+        code = result.get("code")
+
+        # Codis machine-readable: el frontend els interpreta per decidir si
+        # pot oferir override (not_a_project) o ha de bloquejar dur
+        # (multi_project_container).
+        if code in ("multi_project_container", "not_a_project"):
+            raise HTTPException(
+                status_code=400,
+                detail={"message": err, "code": code},
+            )
+
+        # Distingim errors d'usuari (path invàlid, no existeix) d'errors interns
+        lowered = err.lower()
+        if "invalid path" in lowered or "escapes network root" in lowered:
+            raise HTTPException(status_code=400, detail=err)
+        if "does not exist" in lowered or "not a directory" in lowered:
+            raise HTTPException(status_code=404, detail=err)
+        raise HTTPException(status_code=500, detail=err)
+
+    return result
+
+
+@router.post("/cancel/{project_name:path}")
+def cancel_pipeline(project_name: str):
+    """Atura el pipeline en curs d'un projecte (cooperatiu, best-effort).
+
+    Marca el projecte com a cancel·lat. Les fases del pipeline consulten
+    aquesta flag entre operacions: les ja en vol acaben, però les futures
+    se salten. El client haurà de tancar la seva connexió SSE per veure
+    immediatament l'efecte a la UI.
+
+    Resposta immediata (no espera que el pipeline acabi).
+    """
+    wizard_service.mark_cancelled(project_name)
+    return {"status": "cancellation_requested", "project": project_name}
+
+
 @router.get("/ai-pipeline/inventory/{project_name:path}")
 def ai_pipeline_inventory(project_name: str, refresh: bool = False):
     """AI pipeline Stage 1: folder inventory.
