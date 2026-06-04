@@ -1567,7 +1567,8 @@ class ReportGenerator:
         try:
             self.render_template(context, output_path)
         except Exception as e:
-            self.errors.append(f"Template rendering failed: {e}")
+            self.errors.append(f"Template rendering failed: {type(e).__name__}: {e}")
+            logger.exception("Template rendering failed during render_template")
             return GenerationResult(
                 success=False,
                 output_path=None,
