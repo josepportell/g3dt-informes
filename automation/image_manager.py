@@ -39,6 +39,11 @@ IMAGE_WIDTH_MAIN_PLAN = 150     # Big architect plan crop (full-width)
 
 PLACEHOLDER_TEXT = "[Imatge pendent]"
 
+# Raster image extensions python-docx can embed. Used to filter role-based and
+# slug-based photo discovery so a non-image file (e.g. a 'fotografies' PDF
+# mis-classified into a photo role) never reaches InlineImage / doc.render().
+PHOTO_IMAGE_EXTS = {'.jpg', '.jpeg', '.png'}
+
 # Photo slug mapping for named discovery
 PHOTO_SLUGS = {
     'site': 'vista_general',
@@ -153,8 +158,11 @@ class ImageManager:
                 if role_name in roles:
                     photo_path = self.project_path / roles[role_name]['path']
                     if photo_path.exists() and photo_path not in result[category]:
-                        result[category].append(photo_path)
-                        logger.info(f"Photo from SmartScan role: {role_name} → {category} ({photo_path.name})")
+                        if photo_path.suffix.lower() in PHOTO_IMAGE_EXTS:
+                            result[category].append(photo_path)
+                            logger.info(f"Photo from SmartScan role: {role_name} → {category} ({photo_path.name})")
+                        else:
+                            logger.info(f"Skipping non-image for role {role_name} → {category}: {photo_path}")
 
         # ── Priority 1b: SmartScan role_files (ALL photos per role) ──
         role_files = self._load_role_files()
@@ -164,8 +172,11 @@ class ImageManager:
                     for rf in role_files[role_name]:
                         photo_path = self.project_path / rf['path']
                         if photo_path.exists() and photo_path not in result[category]:
-                            result[category].append(photo_path)
-                            logger.info(f"Photo from role_files: {role_name} → {category} ({photo_path.name})")
+                            if photo_path.suffix.lower() in PHOTO_IMAGE_EXTS:
+                                result[category].append(photo_path)
+                                logger.info(f"Photo from role_files: {role_name} → {category} ({photo_path.name})")
+                            else:
+                                logger.info(f"Skipping non-image for role {role_name} → {category}: {photo_path}")
 
         # Always continue with slug-based search to find ADDITIONAL photos.
         # The report needs multiple photos per category (e.g., 2 site photos
@@ -179,7 +190,7 @@ class ImageManager:
             logger.warning("No photos directory found")
             return result
 
-        image_exts = {'.jpg', '.jpeg', '.png'}
+        image_exts = PHOTO_IMAGE_EXTS
 
         def _glob_photos(directory: Path) -> list[Path]:
             """Glob for image files, deduplicated for case-insensitive FS."""
@@ -340,7 +351,7 @@ class ImageManager:
             return None
 
         # Gather ALL image files recursively from photos dir
-        image_exts = {'.jpg', '.jpeg', '.png'}
+        image_exts = PHOTO_IMAGE_EXTS
         candidates: list[Path] = []
         for f in sorted(foto_dir.rglob('*')):
             if f.is_file() and f.suffix.lower() in image_exts and f.name != 'Thumbs.db':
@@ -603,14 +614,17 @@ class ImageManager:
                 return candidate
 
         # Priority 2: common directory names
-        for name in ['FOTOGRAFIES', 'FOTOS DE CAMP + PLANOL PUNTS', 'FOTOGRAFÍAS']:
+        for name in ['FOTOGRAFIES', 'FOTOGRAFIA', 'FOTOS DE CAMP + PLANOL PUNTS', 'FOTOGRAFÍAS']:
             candidate = self.project_path / name
             if candidate.exists() and candidate.is_dir():
                 return candidate
 
-        # Priority 3: glob for FOTOS*
+        # Priority 3: glob for FOTOS* / FOTOGRAF* (singular/plural/accented variants)
         for d in sorted(self.project_path.iterdir()):
-            if d.is_dir() and d.name.upper().startswith('FOTOS'):
+            if d.is_dir() and (
+                d.name.upper().startswith('FOTOS')
+                or d.name.upper().startswith('FOTOGRAF')
+            ):
                 return d
 
         return None
@@ -904,6 +918,21 @@ class ImageManager:
 
         return result
 
+    def _safe_inline_image(self, path, **kwargs):
+        """Create an InlineImage only if python-docx can actually embed the file.
+        Returns the InlineImage on success, or None (after logging a warning) if the
+        file is not an embeddable raster image. This prevents a non-image file (e.g. a
+        'fotografies' PDF mis-assigned to a photo role) or a corrupt/HEIC-as-jpg image
+        from crashing doc.render() with an empty-message UnrecognizedImageError."""
+        from docxtpl import InlineImage
+        try:
+            from docx.image.image import Image as _DocxImage
+            _DocxImage.from_file(str(path))  # exact validation doc.render() performs
+        except Exception as e:
+            logger.warning(f"Skipping non-embeddable image '{path}': {type(e).__name__}")
+            return None
+        return InlineImage(self.tpl, str(path), **kwargs)
+
     def build_context(self) -> dict[str, Any]:
         """
         Build template context with InlineImage objects or placeholder strings.
@@ -925,9 +954,9 @@ class ImageManager:
         # 1. Cullera SPT (static)
         cullera_path = self._get_cullera_spt_path()
         if cullera_path:
-            context['fig_spt_cullera_image'] = InlineImage(
-                self.tpl, str(cullera_path), width=Mm(IMAGE_WIDTH_SPT_CULLERA)
-            )
+            context['fig_spt_cullera_image'] = self._safe_inline_image(
+                str(cullera_path), width=Mm(IMAGE_WIDTH_SPT_CULLERA)
+            ) or PLACEHOLDER_TEXT
         else:
             context['fig_spt_cullera_image'] = PLACEHOLDER_TEXT
 
@@ -940,44 +969,44 @@ class ImageManager:
 
         # Site photos (up to 2) — forced 4:3 landscape to match Eva's layout
         if photos['site']:
-            context['photo_site_image_1'] = InlineImage(
-                self.tpl, str(photos['site'][0]),
+            context['photo_site_image_1'] = self._safe_inline_image(
+                str(photos['site'][0]),
                 width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE),
                 height=Mm(IMAGE_HEIGHT_SIDE_BY_SIDE),
-            )
+            ) or PLACEHOLDER_TEXT
         else:
             context['photo_site_image_1'] = PLACEHOLDER_TEXT
 
         if len(photos['site']) >= 2:
-            context['photo_site_image_2'] = InlineImage(
-                self.tpl, str(photos['site'][1]),
+            context['photo_site_image_2'] = self._safe_inline_image(
+                str(photos['site'][1]),
                 width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE),
                 height=Mm(IMAGE_HEIGHT_SIDE_BY_SIDE),
-            )
+            ) or PLACEHOLDER_TEXT
         else:
             context['photo_site_image_2'] = PLACEHOLDER_TEXT
 
         # DPSH photo (first found)
         if photos['dpsh']:
-            context['photo_dpsh_image'] = InlineImage(
-                self.tpl, str(photos['dpsh'][0]), width=Mm(IMAGE_WIDTH_PHOTO)
-            )
+            context['photo_dpsh_image'] = self._safe_inline_image(
+                str(photos['dpsh'][0]), width=Mm(IMAGE_WIDTH_PHOTO)
+            ) or PLACEHOLDER_TEXT
         else:
             context['photo_dpsh_image'] = PLACEHOLDER_TEXT
 
         # Sondeig photo (first found)
         if photos['sondeig']:
-            context['photo_sondeig_image'] = InlineImage(
-                self.tpl, str(photos['sondeig'][0]), width=Mm(IMAGE_WIDTH_PHOTO)
-            )
+            context['photo_sondeig_image'] = self._safe_inline_image(
+                str(photos['sondeig'][0]), width=Mm(IMAGE_WIDTH_PHOTO)
+            ) or PLACEHOLDER_TEXT
         else:
             context['photo_sondeig_image'] = PLACEHOLDER_TEXT
 
         # Materials detail photo
         if photos.get('materials'):
-            context['photo_materials_image'] = InlineImage(
-                self.tpl, str(photos['materials'][0]), width=Mm(IMAGE_WIDTH_PHOTO)
-            )
+            context['photo_materials_image'] = self._safe_inline_image(
+                str(photos['materials'][0]), width=Mm(IMAGE_WIDTH_PHOTO)
+            ) or PLACEHOLDER_TEXT
         else:
             context['photo_materials_image'] = PLACEHOLDER_TEXT
 
@@ -1005,10 +1034,10 @@ class ImageManager:
                     if not cached.exists():
                         self._render_pdf_region(points_pdf, cached, tuple(clip_rect))
                     if cached.exists():
-                        context[var_name] = InlineImage(
-                            self.tpl, str(cached), width=Mm(width)
-                        )
-                        has_plan_crops = True
+                        img = self._safe_inline_image(str(cached), width=Mm(width))
+                        if img:
+                            context[var_name] = img
+                            has_plan_crops = True
 
         # 3a-fallback. Cadastre from situation_plan: crop left ~38% (cadastral maps)
         if 'fig_cadastre_image' not in context:
@@ -1018,10 +1047,12 @@ class ImageManager:
                 if not cached.exists():
                     self._render_situation_plan_left(sit_plan_pdf, cached)
                 if cached.exists():
-                    context['fig_cadastre_image'] = InlineImage(
-                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
+                    img = self._safe_inline_image(
+                        str(cached), width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
                     )
-                    has_plan_crops = True
+                    if img:
+                        context['fig_cadastre_image'] = img
+                        has_plan_crops = True
 
         context.setdefault('fig_cadastre_image', PLACEHOLDER_TEXT)
         context.setdefault('fig_aerea_image', PLACEHOLDER_TEXT)
@@ -1043,10 +1074,12 @@ class ImageManager:
                 if not cached.exists():
                     self._render_pdf_region(base_plan_pdf, cached, tuple(clip_rect))
                 if cached.exists():
-                    context['fig_main_plan_image'] = InlineImage(
-                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
+                    img = self._safe_inline_image(
+                        str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
                     )
-                    has_plan_crops = True
+                    if img:
+                        context['fig_main_plan_image'] = img
+                        has_plan_crops = True
         elif base_plan_pdf:
             # Priority 2: vision-detected floor_plan_bbox from planol_extracted.json
             bbox_clip = self._get_planol_bbox_clip(base_plan_pdf)
@@ -1060,19 +1093,23 @@ class ImageManager:
                 if not cached.exists():
                     self._render_pdf_region(base_plan_pdf, cached, bbox_clip)
                 if cached.exists():
-                    context['fig_main_plan_image'] = InlineImage(
-                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
+                    img = self._safe_inline_image(
+                        str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
                     )
-                    has_plan_crops = True
+                    if img:
+                        context['fig_main_plan_image'] = img
+                        has_plan_crops = True
             else:
                 # Priority 3: full page render (no bbox available)
                 cached = self._cache_dir / f"planol_{base_plan_pdf.stem}.jpg"
                 if not cached.exists():
                     self._render_pdf_to_image(base_plan_pdf, cached)
                 if cached.exists():
-                    context['fig_main_plan_image'] = InlineImage(
-                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
+                    img = self._safe_inline_image(
+                        str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
                     )
+                    if img:
+                        context['fig_main_plan_image'] = img
         else:
             # Fallback: no base plan, try "amb punts" or glob
             fallback_pdf = points_pdf or self._find_project_pdf(['A.01.pdf', 'A.*.pdf'])
@@ -1081,9 +1118,11 @@ class ImageManager:
                 if not cached.exists():
                     self._render_pdf_to_image(fallback_pdf, cached)
                 if cached.exists():
-                    context['fig_main_plan_image'] = InlineImage(
-                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
+                    img = self._safe_inline_image(
+                        str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
                     )
+                    if img:
+                        context['fig_main_plan_image'] = img
         context.setdefault('fig_main_plan_image', PLACEHOLDER_TEXT)
 
         context['has_plan_crops'] = has_plan_crops
@@ -1095,29 +1134,33 @@ class ImageManager:
         # ICGC images: geological map + orthophoto with parcel outline as aerea fallback
         icgc_images = self._download_icgc_images()
         if 'geological_map' in icgc_images:
-            context['fig_geological_image'] = InlineImage(
-                self.tpl, str(icgc_images['geological_map']), width=Mm(IMAGE_WIDTH_GEOLOGICAL)
-            )
+            context['fig_geological_image'] = self._safe_inline_image(
+                str(icgc_images['geological_map']), width=Mm(IMAGE_WIDTH_GEOLOGICAL)
+            ) or PLACEHOLDER_TEXT
         else:
             context['fig_geological_image'] = PLACEHOLDER_TEXT
 
         # Fallback: if fig_aerea_image is still a placeholder, use parcel orthophoto
         if context.get('fig_aerea_image') == PLACEHOLDER_TEXT:
             if 'orthophoto_parcel' in icgc_images:
-                context['fig_aerea_image'] = InlineImage(
-                    self.tpl, str(icgc_images['orthophoto_parcel']),
+                img = self._safe_inline_image(
+                    str(icgc_images['orthophoto_parcel']),
                     width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
                 )
-                context['fig_location_image'] = context['fig_aerea_image']
-                source = "Google satellite" if "google_sat" in str(icgc_images['orthophoto_parcel']) else "ICGC orthophoto"
-                logger.info(f"Using {source} with parcel outline as fig_aerea_image")
+                if img:
+                    context['fig_aerea_image'] = img
+                    context['fig_location_image'] = context['fig_aerea_image']
+                    source = "Google satellite" if "google_sat" in str(icgc_images['orthophoto_parcel']) else "ICGC orthophoto"
+                    logger.info(f"Using {source} with parcel outline as fig_aerea_image")
             elif 'orthophoto_parcel_plain' in icgc_images:
-                context['fig_aerea_image'] = InlineImage(
-                    self.tpl, str(icgc_images['orthophoto_parcel_plain']),
+                img = self._safe_inline_image(
+                    str(icgc_images['orthophoto_parcel_plain']),
                     width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
                 )
-                context['fig_location_image'] = context['fig_aerea_image']
-                logger.info("Using plain ICGC orthophoto as fig_aerea_image (parcel outline unavailable)")
+                if img:
+                    context['fig_aerea_image'] = img
+                    context['fig_location_image'] = context['fig_aerea_image']
+                    logger.info("Using plain ICGC orthophoto as fig_aerea_image (parcel outline unavailable)")
 
         # ── SmartScan figure roles (Phase 6) ──
         # If SmartScan classified images as figure roles, use them directly.
@@ -1127,10 +1170,12 @@ class ImageManager:
                 if role_name in roles and var_name not in context:
                     fig_path = self.project_path / roles[role_name]['path']
                     if fig_path.exists():
-                        context[var_name] = InlineImage(
-                            self.tpl, str(fig_path), width=Mm(IMAGE_WIDTH_LOCATION)
+                        img = self._safe_inline_image(
+                            str(fig_path), width=Mm(IMAGE_WIDTH_LOCATION)
                         )
-                        logger.info(f"Figure from SmartScan role: {role_name} → {var_name} ({fig_path.name})")
+                        if img:
+                            context[var_name] = img
+                            logger.info(f"Figure from SmartScan role: {role_name} → {var_name} ({fig_path.name})")
 
         # Correlation section: SmartScan role → file_mapping → fallback glob
         if 'fig_correlation_image' not in context:
@@ -1146,9 +1191,11 @@ class ImageManager:
                 if not cached.exists():
                     self._render_pdf_to_image(tall_pdf, cached)
                 if cached.exists():
-                    context['fig_correlation_image'] = InlineImage(
-                        self.tpl, str(cached), width=Mm(IMAGE_WIDTH_LOCATION)
+                    img = self._safe_inline_image(
+                        str(cached), width=Mm(IMAGE_WIDTH_LOCATION)
                     )
+                    if img:
+                        context['fig_correlation_image'] = img
         context.setdefault('fig_correlation_image', PLACEHOLDER_TEXT)
 
         # Log summary
