@@ -1,6 +1,23 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
 Last updated: 2026-06-05
 
+## Latest (2026-06-05) — Geological-levels fix (SPT refusal crash)
+
+Resolt el bug d'Eva "detecta 1 nivell geològic quan n'hi ha més" (a Tulipa
+Cerdanyola n'hi ha **3**, confirmats pel tall de correlació). Causa: un cop
+d'SPT a **rebuig** ("50R") feia petar la suma `blows[1]+blows[2]` al
+normalitzador (`TypeError: int + str`); el crash s'empassava amb
+`except Exception: pass` a `load_sondeig_merged` → l'annex del sondeig (que
+porta `num_geological_levels`) es descartava → el wizard queia al default **1**.
+Sistèmic perquè gairebé tot sondeig arriba a rebuig sobre la roca. Fix: helper
+`coerce_blow_int()` que protegeix les **3** sumes (2 normalitzadors +
+`wizard_service`), `logger.warning` enlloc de `except: pass`, 6 tests.
+Reviewer APPROVE, 0 regressions (974 passed). Verificat: Tulipa → **3 nivells**.
+Merged a `production/g3dt-eva-v1` (`7be711f`) i pujat a origin. Detall:
+`docs/DECISION-LOG.md`.
+
+**⏳ PENDENT: viatja amb el mateix `git pull` de dilluns 2026-06-08** (junt amb el render-crash fix).
+
 ## Latest (2026-06-04) — Render-crash fix (Tulipa)
 
 Resolt el bug d'Eva `Template rendering failed:` (missatge buit): un PDF d'àlbum

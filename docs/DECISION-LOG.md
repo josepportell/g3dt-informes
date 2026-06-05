@@ -86,3 +86,82 @@ diagnòstic empíric, sense suposicions.
 - (Opcional) Millorar SmartScan perquè no rotuli PDFs d'àlbum com a `field_photo`.
 
 *Fi entrada 2026-06-04. Fix render crash per fitxer no-imatge en rol de foto (Tulipa).*
+
+---
+
+## 2026-06-05 — Fix: cop d'SPT a rebuig ("50R") col·lapsa els nivells geològics a 1
+
+### Context
+Eva reporta que l'automatització detecta **menys nivells geològics** dels reals
+("1 quan n'hi ha 2/3") i que passa **a tots els projectes, sempre**. Josep aporta
+la carpeta de debug de `3001706 C.TULIPA CERDANYOLA` (2 cases) copiada de la
+màquina d'Eva. Veritat-terreny: el **tall de correlació** llista 3 nivells
+(Nivell 1 sorres llimoses; Nivell 2 llims argilosos; Nivell 3 substrat alterat).
+Criteri d'Eva (confirmat 2026-03-13): els nivells surten de la columna "Unitat
+litològica" de l'**annex formatat**, no del nombre de materials.
+
+### Decisions arquitectòniques clau
+1. **Diagnòstic empíric abans de tocar codi.** Còpia neta a `projectes-debug/`,
+   reproducció amb dades reals. Traça: `load_sondeig_merged` retornava 0 assaigs
+   → `num_soil_levels=1`; sanejant el cop "50R" es recuperaven els 3 nivells.
+   **Why:** la cache ja tenia l'annex amb `num_geological_levels:3` correcte → el
+   bloquejant era el normalitzador, no la visió. Causalitat aïllada sense dubtes.
+2. **Protegir la suma de cops contra rebuig, NO fabricar N.** Helper
+   `coerce_blow_int()`: enter si el cop és numèric net, `None` si és rebuig
+   ("50R","R",...). Si algun increment no és numèric, `n_spt` queda None.
+   **Why:** el recompte de nivells és independent de `n_spt`; protegir la suma
+   restaura els nivells sense inventar cap N a rebuig.
+   **Alternativa rebutjada:** extreure "50R"→50 i sumar — fabricaria un N de
+   rebuig, i la **regla canònica de Nb a rebuig és pregunta oberta a Eva**
+   (blocker STATUS). **Trade-off:** a rebuig la cel·la N queda buida (igual que el
+   `n_spt:null` que ja dóna la visió).
+3. **`logger.warning` enlloc de `except Exception: pass`** a `load_sondeig_merged`.
+   **Why:** el swallow silenciós és exactament per què el bug va passar
+   desapercebut. Un fitxer dolent no ha de matar el wizard, però SÍ registrar-se.
+4. **Protegir les 3 sumes, no només la del normalitzador.** El reviewer va trobar
+   un duplicat a `wizard_service._compute_mapping_prefills` que petava igual i
+   deixava caure 4 prefills SPT (`spt_n30`/`depth_range`/`lithology`/`location`)
+   en silenci. **Why:** sense això el fix no és complet end-to-end.
+
+### Implementació
+- `automation/vision_normalizer.py`: helper públic `coerce_blow_int()`; guard a
+  `_normalize_sondeig_spt_fields` i `_normalize_dpsh_spt_fields`; 2 `except: pass`
+  → `logger.warning`.
+- `web/wizard_service.py`: mateix guard al N30 duplicat (~línia 1782).
+- `tests/test_vision_normalizer.py`: 6 tests (rebuig a index 1 i 2, numèric intacte,
+  fitxer malformat → warning sense raise). ~202 ins / 12 supr.
+- Commit `7be711f` (FF damunt `acf3621`). Mateix fix a dev `experiment/ai-pipeline`
+  (`af3b2f4`; wizard_service.py divergeix → guard a línia diferent).
+
+### Validació empírica
+- BEFORE: `load_sondeig_merged(Tulipa)` → 0 assaigs → `num_soil_levels=1`.
+- AFTER (cop sanejat): S-1 `num_geological_levels=3`, 5 capes → `num_soil_levels=3`.
+
+### Tests
+- 6 tests nous. Suite sobre base prod: **974 passed**, 31 fallades **pre-existents**
+  (9 ai-pipeline 404, 18 smartscan fixtures absents, 3 fileminer, 1 bearing),
+  idèntiques amb/sense el canvi (`git stash`) → **0 regressions**.
+
+### Limitacions conegudes
+- **Regla canònica de Nb a rebuig** pendent d'Eva (blocker STATUS). El fix deixa
+  `n_spt=None` a rebuig.
+- **Misclassificació del full de sondeig de camp**: a Tulipa el classificador va
+  triar l'Albarà en lloc del full real. Important per a projectes SENSE annex
+  formatat. Separat.
+- **Merge descarta assaigs de l'annex quan `num_geological_levels` és None** (cas
+  Linyola). Gap d'extracció separat.
+
+### GO/NO-GO
+- ✅ Bug reproduït i causa exacta aïllada (crash empassat → annex descartat)
+- ✅ Fix implementat → revisat (APPROVE) → testejat (0 regressions) → re-aplicat
+   sobre la base de prod amb el seu propi loop
+- ✅ Merged a `production/g3dt-eva-v1` (`7be711f`) i pujat a origin
+- ⏳ Desplegament a Eva (`git pull` dilluns 2026-06-08, junt amb el render-fix)
+
+### Següents passos
+- El fix viatja amb el pull de dilluns 2026-06-08.
+- Reconciliar amb Eva si són 2 o 3 nivells (els documents diuen 3); no canvia el fix.
+- (Futur) Tancar els 2 gaps separats: misclassificació full de camp + annex amb
+  `num_geological_levels` None.
+
+*Fi entrada 2026-06-05. Fix: cop d'SPT a rebuig col·lapsa els nivells geològics a 1.*
