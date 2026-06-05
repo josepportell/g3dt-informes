@@ -25,6 +25,30 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 
+def coerce_blow_int(x: Any) -> int | None:
+    """Return x as int if it's a clean integer value, else None.
+
+    Refusal notation (e.g. "50R", "R", "Rebuig") is non-numeric and must
+    NOT crash the n_spt summation; it returns None so the sum is skipped.
+
+    Intentional asymmetry: a numeric float truncates (12.5 -> 12) but a
+    numeric STRING ("12.5") returns None. Both safely avoid a crash; blow
+    counts are integers, so neither path fabricates a spurious value.
+    """
+    if isinstance(x, bool):
+        return None
+    if isinstance(x, int):
+        return x
+    if isinstance(x, float):
+        return int(x)
+    if isinstance(x, str):
+        try:
+            return int(x.strip())
+        except ValueError:
+            return None
+    return None
+
+
 # ---------------------------------------------------------------------------
 # DPSH normalization
 # ---------------------------------------------------------------------------
@@ -73,10 +97,16 @@ def _normalize_dpsh_spt_fields(spt: dict) -> dict:
         or []
     )
 
-    # n_spt: compute from blows[1]+blows[2] if missing
+    # n_spt: compute from blows[1]+blows[2] if missing.
+    # Guard against refusal notation (e.g. "50R") which is non-numeric:
+    # if either increment isn't a clean integer, leave n_spt as-is (do NOT
+    # fabricate a refusal N — that's a separate methodology decision).
     n_spt = spt.get('n_spt') or spt.get('n30')
     if not n_spt and len(normalized['blows']) >= 3:
-        n_spt = normalized['blows'][1] + normalized['blows'][2]
+        b1 = coerce_blow_int(normalized['blows'][1])
+        b2 = coerce_blow_int(normalized['blows'][2])
+        if b1 is not None and b2 is not None:
+            n_spt = b1 + b2
     normalized['n_spt'] = n_spt
 
     # confidence
@@ -213,10 +243,16 @@ def _normalize_sondeig_spt_fields(spt: dict) -> dict:
         or []
     )
 
-    # n_spt: compute from blows[1]+blows[2] if missing
+    # n_spt: compute from blows[1]+blows[2] if missing.
+    # Guard against refusal notation (e.g. "50R") which is non-numeric:
+    # if either increment isn't a clean integer, leave n_spt as-is (do NOT
+    # fabricate a refusal N — that's a separate methodology decision).
     n_spt = spt.get('n_spt') or spt.get('n30')
     if not n_spt and len(normalized['blows']) >= 3:
-        n_spt = normalized['blows'][1] + normalized['blows'][2]
+        b1 = coerce_blow_int(normalized['blows'][1])
+        b2 = coerce_blow_int(normalized['blows'][2])
+        if b1 is not None and b2 is not None:
+            n_spt = b1 + b2
     normalized['n_spt'] = n_spt
 
     # confidence
@@ -369,8 +405,8 @@ def load_sondeig_merged(validation_dir: Path | str) -> dict:
     if field_sheet_path.exists():
         try:
             result = load_sondeig_json(field_sheet_path)
-        except Exception:
-            pass
+        except Exception as e:
+            logger.warning("Failed to load sondeig field sheet %s: %s", field_sheet_path, e)
 
     # Overlay annex data — num_geological_levels is authoritative
     if annex_path.exists():
@@ -392,8 +428,8 @@ def load_sondeig_merged(validation_dir: Path | str) -> dict:
             for key in ('num_geological_levels', 'elevation_z', 'overall_confidence'):
                 if annex.get(key) is not None:
                     result[key] = annex[key]
-        except Exception:
-            pass
+        except Exception as e:
+            logger.warning("Failed to load sondeig annex %s: %s", annex_path, e)
 
     return result
 

@@ -1764,7 +1764,7 @@ def _compute_mapping_prefills(
 
     # --- 4.1  SPT data from sondeig (annex preferred over field sheet) ---
     try:
-        from automation.vision_normalizer import load_sondeig_merged
+        from automation.vision_normalizer import coerce_blow_int, load_sondeig_merged
         sondeig_data = load_sondeig_merged(project_path / 'validation')
         if sondeig_data:
             tests = sondeig_data.get('sondeig_tests', [])
@@ -1775,10 +1775,14 @@ def _compute_mapping_prefills(
                     spt = spt_list[0]
                     _set('spt_test_id', spt.get('test_id', 'SPT-1'), 'sondeig vision')
 
-                    # N30: standard SPT = blows[1]+blows[2] (middle two 15cm intervals)
+                    # N30: standard SPT = blows[1]+blows[2] (middle two 15cm intervals).
+                    # Guard against refusal notation (e.g. "50R"): a non-numeric blow
+                    # must not crash the sum (see coerce_blow_int).
                     blows = spt.get('blows', [])
-                    if len(blows) >= 3:
-                        n30 = blows[1] + blows[2]
+                    b1 = coerce_blow_int(blows[1]) if len(blows) >= 3 else None
+                    b2 = coerce_blow_int(blows[2]) if len(blows) >= 3 else None
+                    if b1 is not None and b2 is not None:
+                        n30 = b1 + b2
                     elif spt.get('n_spt'):
                         n30 = spt['n_spt']
                     else:
