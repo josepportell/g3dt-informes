@@ -1,5 +1,17 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-04-30
+Last updated: 2026-06-05
+
+## Latest (2026-06-04) — Render-crash fix (Tulipa)
+
+Resolt el bug d'Eva `Template rendering failed:` (missatge buit): un PDF d'àlbum
+de fotos que SmartScan etiqueta com a `field_photo` trencava `doc.render()`
+(python-docx `UnrecognizedImageError`, str buit). Fix: filtre d'extensió a la
+descoberta de fotos per rol + `_safe_inline_image` (validació abans d'incrustar)
++ reconèixer `FOTOGRAFIA` (singular) + error diagnosticable. 6 tests, 0
+regressions, verificat end-to-end (informe 11.8 MB, fotos reals). Merged a
+`production/g3dt-eva-v1` (`aa508c2`) i pujat a origin. Detall: `docs/DECISION-LOG.md`.
+
+**⏳ PENDENT: `git pull` a l'ordinador d'Eva (`C:\g3dt-ia`) — programat dilluns 2026-06-08** (anar a G3DT, pull + reiniciar servidor wizard).
 
 ## Current State
 
