@@ -1,5 +1,22 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-06-05
+Last updated: 2026-06-06
+
+## Latest (2026-06-06) — Bug #2 RESOLT: report agrupa nivells per `geological_level`
+
+Tancat el bug #2 (el `.docx` narrava "1 nivell" tot i el prefill 1→3 del fix
+anterior). Causa: `_generate_soil_levels` (`report_data.py`) assumia "1 nivell =
+1 material" i col·lapsava a 1 quan `num_soil_levels < len(sondeig_layers)`,
+**ignorant `geological_level`** (la columna "Unitat litològica" de l'annex,
+criteri d'Eva). Tulipa: 5 materials, `geological_level=[1,1,2,3,3]` → 3 grups,
+però `3 < 5` → col·lapse. Fix (Opció A): nou `_group_layers_by_geological_level()`
++ 1 SoilLevel per grup geològic; `num_soil_levels` només override a la baixa;
+col·lapse single-sourced (`_collapse_to_single()`) → Bell-Lloc byte-idèntic.
+Implementer → reviewer (APPROVE) → tester: **981 passed, 0 regressions**. Gate
+end-to-end verd: Tulipa `.docx` → **3 nivells** (3 subseccions). Detall:
+`docs/BUG-NIVELLS-GEOLOGICS-ANALISI.md` + DECISION-LOG 2026-06-06.
+
+**⏳ PENDENT: viatja amb el `git pull` de dilluns 2026-06-08** (junt amb bug#1 + render-fix).
+**Seguiment immediat:** 2 hardenings del reviewer (guard `depth_to_m` None + comentari d'ordenació).
 
 ## Latest (2026-06-05) — Geological-levels fix (SPT refusal crash)
 
@@ -18,7 +35,7 @@ Merged a `production/g3dt-eva-v1` (`7be711f`) i pujat a origin. Detall:
 
 **⏳ PENDENT: viatja amb el mateix `git pull` de dilluns 2026-06-08** (junt amb el render-crash fix).
 
-**⚠ FOLLOW-UP OBERT (bug #2, ajornat):** el fix corregeix el **prefill del wizard** (1→3) i el crash, però en generar el `.docx` el **report encara narra "1 nivell"**. Segon bug a `_generate_soil_levels` (`automation/report_data.py:1137`): col·lapsa quan `num_soil_levels < len(sondeig_layers)`; cal **agrupar les capes per `geological_level`**. Implementació ajornada (decisió Josep). Detall: DECISION-LOG 2026-06-06.
+**✅ FOLLOW-UP (bug #2) RESOLT 2026-06-06** — vegeu la secció Latest de dalt.
 
 ## Latest (2026-06-04) — Render-crash fix (Tulipa)
 

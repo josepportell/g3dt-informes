@@ -199,3 +199,88 @@ contra els 7 de referència (Bell-Lloc ha de seguir = 1: 2 capes totes `gl=1` �
   fix de nivells; el prefill correcte no garanteix el report correcte.
 
 *Fi entrada 2026-06-06. Addendum: report-narrative encara col·lapsa nivells (bug #2, _generate_soil_levels).*
+
+---
+
+## 2026-06-06 — Resolució bug #2: agrupar `sondeig_layers` per `geological_level`
+
+### Context
+Resol el bug #2 documentat a l'addendum anterior i al dossier
+`docs/BUG-NIVELLS-GEOLOGICS-ANALISI.md`. El fix del rebuig (`7be711f`) corregia el
+**prefill** del wizard (`num_soil_levels` 1→3), però el `.docx` de Tulipa **encara
+narrava "1 nivell geotècnic"** i només descrivia el ferm. Abans de tocar codi es va
+fer arqueologia completa del *per què* (a petició del Josep).
+
+### Diagnòstic (per què el codi era així)
+`_generate_soil_levels` (`report_data.py`) va néixer amb l'assumpció heretada
+**«1 SoilLevel = 1 material del sondeig»**: tota la lògica gira sobre
+`len(sondeig_layers)` (materials) i `num_soil_levels` només és un **interruptor
+binari** (≥ → un nivell per material; < → col·lapse a EXACTAMENT 1). La branca de
+col·lapse (`num_levels < len(sondeig_layers)`) es va afegir al commit `57c9bd3`
+(2026-03-03) per arreglar Bell-Lloc (2 materials → 1 nivell). **Va "funcionar" per
+coincidència del cas degenerat** (Bell-Lloc volia 1, i col·lapsar sempre dona 1). El
+camp `geological_level` (columna "Unitat litològica", criteri canònic d'Eva) viatja
+a cada capa però la funció **mai el llegia** (`git log -S geological_level --
+report_data.py` = buit). Tulipa: 5 materials amb `geological_level=[1,1,2,3,3]` → 3
+grups, però `3 < 5` disparava el col·lapse-a-1.
+
+### Decisions arquitectòniques clau
+1. **Agrupar per `geological_level`, no per nombre de materials** (Opció A,
+   confirmada pel Josep). `geological_level` és la veritat-terreny del recompte;
+   `num_soil_levels` només override **a la baixa**.
+   **Why:** en el pipeline normal `num_soil_levels` ja s'omple de
+   `num_geological_levels` (mateixa columna de l'annex que dona els `geological_level`
+   per capa) → el recompte correcte JA hi és; l'únic error era comparar contra els
+   materials. **Alternatives rebutjades:** B (num_soil_levels com a objectiu exacte
+   amb fusió/divisió de grups arbitraris — ambigu) i C (ignorar num_soil_levels al
+   recompte — Eva perdria l'override de col·lapsar).
+2. **Single-sourcing de la lògica de col·lapse.** El cos de col·lapse antic es va
+   refactoritzar a una closure `_collapse_to_single()` cridada des de DUES branques
+   (el nou `n_groups==1`/override i el fallback llegat `num_levels < len(...)`).
+   **Why:** garanteix que el cas 1-grup (Bell-Lloc i similars) doni sortida
+   **byte-idèntica** a abans → zero regressió. Verificat per reviewer amb `git show`.
+3. **Fallback intacte quan no hi ha `geological_level`.** El helper retorna `None`
+   si qualsevol capa no té el camp (sondeig sintetitzat per `dpsh_segmenter`, o full
+   de camp sense columna) → cau a la lògica per-material actual, sense canvis.
+
+### Implementació
+- `automation/report_data.py`: nou `_group_layers_by_geological_level()` (runs
+  consecutius de `geological_level` → llistes d'índexs globals, o `None`); dins
+  `_generate_soil_levels`, branca d'agrupació (1 SoilLevel per grup; N20 al sub-rang
+  de ferm del grup, límit superior tret per a l'últim grup) + closure
+  `_collapse_to_single()`.
+- `tests/test_soil_levels_grouping.py`: NOU, 7 tests.
+- `docs/BUG-NIVELLS-GEOLOGICS-ANALISI.md`: dossier complet (anàlisi + disseny).
+
+### Validació empírica
+- **Tulipa end-to-end** (`.docx` regenerat des de la còpia de debug): narra
+  **"s'han identificat 3 nivells geotècnics"** + genera les 3 subseccions
+  (3.2.1 1er / 3.2.2 2n / 3.2.3 3r Nivell). Abans: 1.
+- Annex Tulipa: `geological_level=[1,1,2,3,3]`, `num_geological_levels=3`.
+- **Bell-Lloc**: `[1,1]` → 1 grup → ruta `_collapse_to_single()` → sortida idèntica.
+
+### Tests
+- 7 nous. Suite completa: **981 passed** (974 base + 7). Failure sets **byte-idèntics**
+  amb/sense el canvi (`git stash` + comparació) → **0 regressions**. 31 fallades +
+  13 errors pre-existents (ai-pipeline 404, smartscan fixtures absents, fileminer,
+  bell-lloc bearing, collection errors) inalterats.
+
+### GO/NO-GO
+- ✅ Diagnòstic arqueològic complet (commit d'origen + per què identificats)
+- ✅ Implementer → reviewer (APPROVE, 0 critical/0 warning) → tester (0 regressions)
+- ✅ Gate end-to-end verd (Tulipa 3 nivells; Bell-Lloc idèntic)
+- ⏳ Desplegament: viatja amb el `git pull` d'Eva de dilluns 2026-06-08 (junt amb
+  bug#1 refusal-fix + render-fix)
+
+### Limitacions conegudes
+- Misclassificació del full de sondeig de camp (Albarà vs full real) — gap separat.
+- Annex amb `num_geological_levels` None (Linyola) → `groups=None` → fallback actual.
+- Regla canònica de Nb a rebuig — blocker obert amb Eva, independent del recompte.
+
+### Següents passos
+- Pull d'Eva dilluns 2026-06-08; reiniciar el wizard.
+- Reconciliar amb Eva si Tulipa són 2 o 3 nivells (els docs diuen 3) — no canvia el fix.
+- 2 hardenings de seguretat (guard `depth_to_m` None + comentari d'ordenació) en
+  commit de seguiment.
+
+*Fi entrada 2026-06-06. Resolució bug #2: agrupació de nivells per geological_level.*

@@ -1109,6 +1109,33 @@ def _bearing_stratum_n20(
     return sum(bearing_n20) / len(bearing_n20)
 
 
+def _group_layers_by_geological_level(sondeig_layers: list[dict]) -> list[list[int]] | None:
+    """Agrupa ÍNDEXS de capa per runs consecutius de 'geological_level'.
+
+    Els nivells geològics surten de la columna "Unitat litològica" de l'annex
+    formatat (criteri d'Eva). Diversos materials poden compartir nivell.
+    Exemple: geological_level = [1,1,2,3,3] -> [[0,1],[2],[3,4]] (3 grups).
+
+    Retorna None si el camp 'geological_level' falta o és None a QUALSEVOL capa
+    (p.ex. sondeig sintetitzat per dpsh_segmenter, o full de camp sense la
+    columna). En aquest cas el caller cau a la lògica per-material actual.
+    """
+    levels: list[int] = []
+    for layer in sondeig_layers:
+        gl = layer.get('geological_level')
+        if not isinstance(gl, int):
+            return None
+        levels.append(gl)
+
+    groups: list[list[int]] = []
+    for i, gl in enumerate(levels):
+        if groups and gl == levels[i - 1]:
+            groups[-1].append(i)
+        else:
+            groups.append([i])
+    return groups
+
+
 def _generate_soil_levels(
     dpsh_data: DPSHData | None,
     num_levels: int,
@@ -1132,9 +1159,7 @@ def _generate_soil_levels(
 
     # If we have sondeig layer boundaries, split readings by depth range
     if sondeig_layers and len(sondeig_layers) > 1:
-        # When user says 1 level but sondeig has 2+ layers, use ALL readings
-        # (DPSH goes deeper than sondeig — filtering by sondeig depth loses readings)
-        if num_levels < len(sondeig_layers):
+        def _collapse_to_single() -> list[SoilLevel]:
             # Single merged level: use bearing stratum N20 + deepest layer's description
             # (the bearing stratum is the deeper layer, not necessarily the thickest)
             max_depth = max((abs(r.depth_m) for r in all_readings), default=0)
@@ -1161,6 +1186,55 @@ def _generate_soil_levels(
                 n20_max=max(all_n20) if all_n20 else None,
                 soil_type=st,
             )]
+
+        # Prefer grouping by geological_level (Eva's "Unitat litològica" criterion):
+        # diversos materials poden compartir un mateix nivell geològic.
+        groups = _group_layers_by_geological_level(sondeig_layers)
+        if groups is not None:
+            n_groups = len(groups)
+            # Override a la baixa: Eva pot forçar 1 nivell; n_groups==1 també col·lapsa.
+            if num_levels < n_groups or n_groups == 1:
+                return _collapse_to_single()
+            # un SoilLevel per grup geològic
+            levels = []
+            for gi, idxs in enumerate(groups):
+                is_last = gi == n_groups - 1
+                first = sondeig_layers[idxs[0]]
+                last = sondeig_layers[idxs[-1]]
+                depth_from = first.get('depth_from_m', 0.0)
+                depth_to = last.get('depth_to_m', 0.0)
+                bearing_from = last.get('depth_from_m', depth_from)  # ferm del grup = capa més profunda
+                # N20 al sub-rang de ferm del grup; per a l'ÚLTIM grup treure el límit
+                # superior (DPSH va més profund que el sondeig) — mateix principi que
+                # el bloc de col·lapse / _bearing_stratum_n20. Exclou rebuig (n20>=100).
+                layer_n20 = [
+                    r.n20 for r in all_readings
+                    if abs(r.depth_m) >= bearing_from
+                    and (is_last or abs(r.depth_m) <= depth_to)
+                    and r.n20 < 100
+                ]
+                avg_n20 = sum(layer_n20) / len(layer_n20) if layer_n20 else dpsh_data.overall_average_n20
+                description = last.get('description', f'Nivell {gi + 1}')  # ferm = capa més profunda
+                st = soil_types[idxs[-1]] if soil_types and idxs[-1] < len(soil_types) else detect_soil_type(description)
+                thickness = depth_to - depth_from if depth_to > depth_from else None
+                levels.append(SoilLevel(
+                    level_number=gi + 1,
+                    description=description,
+                    thickness_m=thickness,
+                    n20_average=avg_n20,
+                    depth_from_m=depth_from,
+                    depth_to_m=depth_to if depth_to > 0 else None,
+                    n20_min=min(layer_n20) if layer_n20 else None,
+                    n20_max=max(layer_n20) if layer_n20 else None,
+                    soil_type=st,
+                ))
+            return levels
+
+        # Fallback (groups is None): legacy per-material logic.
+        # When user says 1 level but sondeig has 2+ layers, use ALL readings
+        # (DPSH goes deeper than sondeig — filtering by sondeig depth loses readings)
+        if num_levels < len(sondeig_layers):
+            return _collapse_to_single()
 
         levels = []
         for i, layer in enumerate(sondeig_layers):
