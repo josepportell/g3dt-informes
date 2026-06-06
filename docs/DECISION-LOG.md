@@ -165,3 +165,37 @@ litològica" de l'**annex formatat**, no del nombre de materials.
   `num_geological_levels` None.
 
 *Fi entrada 2026-06-05. Fix: cop d'SPT a rebuig col·lapsa els nivells geològics a 1.*
+
+---
+
+## 2026-06-06 — Addendum: el report encara col·lapsa els nivells (bug #2, descobert generant el .docx)
+
+### Context
+Generant l'informe de Tulipa amb el fix de rebuig (`7be711f`) aplicat, el `.docx`
+**encara narra "1 nivell geotècnic"** i només descriu el ferm (lutites). Supera
+parcialment l'entrada 2026-06-05: aquell fix corregeix el **prefill del wizard**
+(`num_soil_levels` 1→3) i el crash, però NO el text del report.
+
+### Causa #2
+`automation/report_data.py::_generate_soil_levels` (~línia 1137):
+`if num_levels < len(sondeig_layers): → un sol nivell fusionat`. Per Tulipa
+`num_soil_levels=3 < len(capes)=5` → col·lapsa a 1. Ignora el camp `geological_level`
+de cada capa (annex: `1,1,2,3,3` → 3 grups). El comptador del report és
+`len(soil_levels)` (`section3_geologia.py:704`, `section4_conclusions.py:126`,
+`report_generator.py:1155`), NO `num_soil_levels`. El flag `merge_to_single_level`
+(`report_data.py:521`) era la via PREVISTA per fusionar a 1; la branca 1137 és el bug.
+
+### Fix proposat (NO implementat — decisió ajornada pel Josep)
+Agrupar `sondeig_layers` per `geological_level` → produir `num_geological_levels`
+SoilLevels (fusionant les capes de cada grup); fallback a la lògica actual quan no
+hi ha el camp. **Risc:** canvia `soil_levels` per a TOTS els projectes → validar
+contra els 7 de referència (Bell-Lloc ha de seguir = 1: 2 capes totes `gl=1` → 1 grup).
+
+### Estat
+- ⏳ Bug conegut, documentat. Implementació ajornada.
+- Pregunta de mètode per l'Eva: el report ha de descriure 3 nivells geològics (el
+  tall de correlació en dibuixa 3) o col·lapsar al ferm per al càlcul?
+- LLIÇÓ: generar el `.docx` (prova end-to-end real) ABANS de donar per tancat un
+  fix de nivells; el prefill correcte no garanteix el report correcte.
+
+*Fi entrada 2026-06-06. Addendum: report-narrative encara col·lapsa nivells (bug #2, _generate_soil_levels).*

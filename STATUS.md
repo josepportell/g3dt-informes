@@ -18,6 +18,8 @@ Merged a `production/g3dt-eva-v1` (`7be711f`) i pujat a origin. Detall:
 
 **⏳ PENDENT: viatja amb el mateix `git pull` de dilluns 2026-06-08** (junt amb el render-crash fix).
 
+**⚠ FOLLOW-UP OBERT (bug #2, ajornat):** el fix corregeix el **prefill del wizard** (1→3) i el crash, però en generar el `.docx` el **report encara narra "1 nivell"**. Segon bug a `_generate_soil_levels` (`automation/report_data.py:1137`): col·lapsa quan `num_soil_levels < len(sondeig_layers)`; cal **agrupar les capes per `geological_level`**. Implementació ajornada (decisió Josep). Detall: DECISION-LOG 2026-06-06.
+
 ## Latest (2026-06-04) — Render-crash fix (Tulipa)
 
 Resolt el bug d'Eva `Template rendering failed:` (missatge buit): un PDF d'àlbum
