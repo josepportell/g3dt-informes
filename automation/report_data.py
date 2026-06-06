@@ -1127,6 +1127,9 @@ def _group_layers_by_geological_level(sondeig_layers: list[dict]) -> list[list[i
             return None
         levels.append(gl)
 
+    # Agrupació per RUNS CONSECUTIUS: assumeix sondeig_layers ordenat per
+    # profunditat (sempre és així, ve de l'annex de dalt a baix). Per tant un
+    # cas no físic com [1,2,1] donaria 3 grups, per disseny.
     groups: list[list[int]] = []
     for i, gl in enumerate(levels):
         if groups and gl == levels[i - 1]:
@@ -1207,23 +1210,26 @@ def _generate_soil_levels(
                 # N20 al sub-rang de ferm del grup; per a l'ÚLTIM grup treure el límit
                 # superior (DPSH va més profund que el sondeig) — mateix principi que
                 # el bloc de col·lapse / _bearing_stratum_n20. Exclou rebuig (n20>=100).
+                # Defensa: si depth_to és None (capa sense límit inferior) tractem-la
+                # com a sense límit superior, igual que l'últim grup, per no petar.
+                apply_upper = (not is_last) and depth_to is not None and depth_to > 0
                 layer_n20 = [
                     r.n20 for r in all_readings
                     if abs(r.depth_m) >= bearing_from
-                    and (is_last or abs(r.depth_m) <= depth_to)
+                    and (not apply_upper or abs(r.depth_m) <= depth_to)
                     and r.n20 < 100
                 ]
                 avg_n20 = sum(layer_n20) / len(layer_n20) if layer_n20 else dpsh_data.overall_average_n20
                 description = last.get('description', f'Nivell {gi + 1}')  # ferm = capa més profunda
                 st = soil_types[idxs[-1]] if soil_types and idxs[-1] < len(soil_types) else detect_soil_type(description)
-                thickness = depth_to - depth_from if depth_to > depth_from else None
+                thickness = depth_to - depth_from if depth_to is not None and depth_to > depth_from else None
                 levels.append(SoilLevel(
                     level_number=gi + 1,
                     description=description,
                     thickness_m=thickness,
                     n20_average=avg_n20,
                     depth_from_m=depth_from,
-                    depth_to_m=depth_to if depth_to > 0 else None,
+                    depth_to_m=depth_to if depth_to is not None and depth_to > 0 else None,
                     n20_min=min(layer_n20) if layer_n20 else None,
                     n20_max=max(layer_n20) if layer_n20 else None,
                     soil_type=st,

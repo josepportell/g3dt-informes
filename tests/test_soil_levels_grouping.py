@@ -111,3 +111,32 @@ def test_generate_override_collapses_to_one():
     assert len(result) == 1
     assert result[0].level_number == 1
     assert result[0].description == 'substrat alterat B'  # deepest layer overall
+
+
+# ---------------------------------------------------------------------------
+# _generate_soil_levels — defensive guard: non-last group with depth_to_m=None
+# ---------------------------------------------------------------------------
+
+def test_generate_handles_none_depth_to_in_non_last_group():
+    """A non-last group whose deepest layer has depth_to_m=None must NOT crash.
+
+    Before the guard, `abs(r.depth_m) <= None` raised TypeError in the N20
+    comprehension. The upper bound is simply dropped (treated as unbounded),
+    same as the last group, and grouping still yields one level per group.
+    """
+    dpsh = _make_dpsh([(d / 10, 10 + d) for d in range(2, 62, 2)])  # 0.2..6.0m
+    layers = [
+        # group 1 (non-last): deepest layer has no lower bound -> depth_to_m=None
+        {'depth_from_m': 0.0, 'depth_to_m': 1.0, 'description': 'sorres A', 'geological_level': 1},
+        {'depth_from_m': 1.0, 'depth_to_m': None, 'description': 'sorres B', 'geological_level': 1},
+        # group 2 (last)
+        {'depth_from_m': 2.0, 'depth_to_m': 4.0, 'description': 'substrat', 'geological_level': 2},
+    ]
+    result = _generate_soil_levels(dpsh, num_levels=2, sondeig_layers=layers)
+
+    assert len(result) == 2
+    assert [lvl.level_number for lvl in result] == [1, 2]
+    # depth_to_m=None on the bearing layer -> level reports None upper bound + no thickness
+    assert result[0].depth_to_m is None
+    assert result[0].thickness_m is None
+    assert result[1].description == 'substrat'
