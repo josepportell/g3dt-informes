@@ -1,0 +1,42 @@
+{
+  "source_file": "PRESSUPOST GEOTEC.RUBI.pdf",
+  "overall_confidence": 0.95,
+  "fields": {
+    "site_address": {
+      "value": null,
+      "confidence": 1.0,
+      "note": "OBRA block contains only project type ('ESTUDI GEOTECNIC') and municipality ('RUBI'); no street address line present"
+    },
+    "municipality": {
+      "value": "RUBI",
+      "confidence": 1.0,
+      "note": null
+    },
+    "client_name": {
+      "value": "JOANA MARTINEZ",
+      "confidence": 1.0,
+      "note": "Confirmed in both CLIENT block and as first line of OBRA block"
+    },
+    "building_category": {
+      "value": "C0",
+      "confidence": 0.9,
+      "note": "Labeled as 'Tipus d'edifici: C0' on page 2 (not 'Categoria de construcció'); C0 is the standard building category code"
+    },
+    "num_planned_dpsh": {
+      "value": 3,
+      "confidence": 1.0,
+      "note": "From campaign sentence page 2 ('3 assaigs de penetració dinàmica DPSH') and confirmed by line-item table ref 001.001 (3,00)"
+    },
+    "num_planned_spt": {
+      "value": 1,
+      "confidence": 1.0,
+      "note": "From campaign sentence page 2 ('1 assaig SPT, amb recuperació de mostra') and confirmed by line-item table ref 001.002 (1,00)"
+    },
+    "num_planned_sondeig": {
+      "value": 0,
+      "confidence": 1.0,
+      "note": "Not mentioned in campaign sentence or line-item table"
+    }
+  },
+  "extraction_notes": "Vectorial PDF, 7 pages. OBRA block (page 1) contains client name + project type + municipality only — no street address. CLIENT block (page 1) confirms client as JOANA MARTINEZ. Building category found on page 2 under label 'Tipus d'edifici' (C0). Campaign sentence on page 2 clearly states 3 DPSH + 1 SPT. Line-item table (page 4, VALORACIÓ) cross-confirms both quantities. No sondeigs planned."
+}

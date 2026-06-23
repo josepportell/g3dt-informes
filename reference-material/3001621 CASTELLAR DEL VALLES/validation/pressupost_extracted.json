@@ -1,0 +1,42 @@
+{
+  "source_file": "PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+  "overall_confidence": 0.97,
+  "fields": {
+    "site_address": {
+      "value": "C/ARBRELLS 18A",
+      "confidence": 1.0,
+      "note": null
+    },
+    "municipality": {
+      "value": "CASTELLAR DEL VALLES",
+      "confidence": 1.0,
+      "note": null
+    },
+    "client_name": {
+      "value": "GRUP ALMA CONSTRUCCIONS",
+      "confidence": 1.0,
+      "note": "From CLIENT block on cover page, confirmed in visual layout"
+    },
+    "building_category": {
+      "value": null,
+      "confidence": 1.0,
+      "note": "Not mentioned anywhere in document. OBRA block notes '3HAB.' (3 habitatges) as building type but no C0-C3 category classification is present."
+    },
+    "num_planned_dpsh": {
+      "value": 4,
+      "confidence": 1.0,
+      "note": "Confirmed by campaign sentence page 2 ('4 assaigs de penetració dinàmica DPSH') and line-item table ref 002.001 (qty 4,00)"
+    },
+    "num_planned_spt": {
+      "value": null,
+      "confidence": 0.8,
+      "note": "SPT is included within the 1 sondeig a rotació (campaign sentence: 'inclou desplaçament, perforació i execució d'assaigs SPT's'; table ref 001.001: 'INCLOU DESPLAÇAMENT I ASSAIG SPT'). No standalone SPT count is given anywhere in the document."
+    },
+    "num_planned_sondeig": {
+      "value": 1,
+      "confidence": 1.0,
+      "note": "Confirmed by campaign sentence page 2 ('1Sondeig a rotació amb bateria continua') and line-item table ref 001.001 (qty 1,00)"
+    }
+  },
+  "extraction_notes": "Vectorial PDF, 7 pages. OBRA block on cover page is clear: project type 'ESTUDI GEOTECNIC 3HAB.', street 'C/ARBRELLS 18A', municipality 'CASTELLAR DEL VALLES'. CLIENT block clearly identifies 'GRUP ALMA CONSTRUCCIONS'. Campaign sentence found on page 2 specifies 4 DPSH and 1 sondeig a rotació with SPT bundled inside it. Line-item table (page 4) confirms quantities: DPSH qty=4, sondeig qty=1. No building category (C0-C3) found in any page. SPT has no standalone planned count — it is contractually bundled into the sondeig line item."
+}

@@ -4,7 +4,7 @@
     "PRESSUPOST GEOTEC.BELL-LLOC.pdf",
     "DADES CLIENT.txt"
   ],
-  "extraction_date": "2026-04-19T11:35:19.851575+00:00",
+  "extraction_date": "2026-06-23T14:02:51.359111+00:00",
   "extraction_method": "python_regex",
   "fields": {
     "architect_company": {
@@ -14,7 +14,7 @@
     },
     "num_planned_dpsh": {
       "value": 2,
-      "source": "PRESSUPOST text",
+      "source": "PRESSUPOST campaign sentence",
       "confidence": 1.0
     },
     "num_planned_sondeig": {
@@ -23,10 +23,15 @@
       "confidence": 1.0
     },
     "site_address": {
-      "value": "CP I POBLACIÓ:",
-      "source": "PRESSUPOST text",
-      "confidence": 0.85
+      "value": "C/MESTRE RAMON ORTIZ 15, BELL-LLOC",
+      "source": "PRESSUPOST OBRA block",
+      "confidence": 0.95
     }
   },
-  "extraction_notes": "Python regex extraction from 3 files"
+  "extraction_notes": "Python regex extraction from 3 files",
+  "_metadata": {
+    "source_file": "PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "extracted_at": "2026-06-23T14:02:51.359137+00:00",
+    "extraction_method": "python_regex"
+  }
 }

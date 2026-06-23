@@ -2,7 +2,7 @@
   "source_files": [
     "PRESSUPOST GEOTEC.RUBI.pdf"
   ],
-  "extraction_date": "2026-04-19T11:43:31.667830+00:00",
+  "extraction_date": "2026-06-23T14:02:51.300781+00:00",
   "extraction_method": "python_regex",
   "fields": {
     "architect_company": {
@@ -12,14 +12,14 @@
     },
     "num_planned_dpsh": {
       "value": 3,
-      "source": "PRESSUPOST text",
+      "source": "PRESSUPOST campaign sentence",
       "confidence": 1.0
-    },
-    "site_address": {
-      "value": "CP I POBLACIÓ:",
-      "source": "PRESSUPOST text",
-      "confidence": 0.85
     }
   },
-  "extraction_notes": "Python regex extraction from 1 files"
+  "extraction_notes": "Python regex extraction from 1 files",
+  "_metadata": {
+    "source_file": "PRESSUPOST GEOTEC.RUBI.pdf",
+    "extracted_at": "2026-06-23T14:02:51.300800+00:00",
+    "extraction_method": "python_regex"
+  }
 }

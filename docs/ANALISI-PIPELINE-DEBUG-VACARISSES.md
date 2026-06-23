@@ -635,3 +635,44 @@ Efecte: `architect_company` = client, `site_address` = descripció tècnica de l
 ---
 
 *Fi de l'anàlisi diagnòstica. Branca de treball per a les correccions: `fix/pipeline-routing`. Les accions proposades (§9) no estan implementades.*
+
+---
+
+### 4.5 `site_address` — diagnòstic post-fix i resultat (2026-06-23)
+
+**Causa del problema original (§6 Error 6):** la regex de `_extract_docs_python` ancorava en `EMPLAÇAMENT|SITUACIO|Adreça`. El text PyMuPDF del pressupost conté la frase "emplaçament de la màquina de penetracio" (descripció tècnica de l'assaig DPSH) → la regex capturava aquesta línia en lloc de l'adreça del projecte.
+
+**Solució implementada (commit `b11043c`, 2026-06-23):** substitució per un parser de bloc OBRA:
+
+```
+OBRA:
+  [client/promotor]
+  ESTUDI[O] GEO...       ← marcador del tipus de projecte
+  [carrer?]              ← present si hi ha adreça de carrer
+  [municipi]             ← última línia no-buida abans de CLIENT:/CP I POBLACIÓ:
+CLIENT:
+```
+
+La línia post-ESTUDI és el carrer (si n'hi ha); l'última és el municipi. Si no hi ha carrer (cas Rubí), no s'emet res — "cap valor és millor que un valor incorrecte".
+
+**Amplada del glob (mateix commit):** la funció només buscava `PRESSUPOST*.pdf` (català). Dos dels 8 projectes (Vilanova, Anciles) anomenen el pressupost `PRESUPUESTO*.pdf` (castellà). El glob s'ha ampliat per cobrir els dos.
+
+**Via B2 (commit `3c87cc6`, 2026-06-23):** visió Claude dedicada al pressupost (`vision_type=pressupost`), injectada com a Step 2b de `_run_vision_fast`. Escriu `pressupost_extracted.json` sense modificar cap consumer (champion-challenger).
+
+**Resultats (7 projectes):**
+
+| Camp | Via A OBRA parser | Via B2 (Claude vision) |
+|------|:-----------------:|:---------------------:|
+| `site_address` | 6/7 ✅ | 7/7 ✅ |
+| `municipality` | 0/7 (no emès) | 7/7 ✅ |
+| `num_planned_dpsh` | 5/7 ✅ (falla ES) | 7/7 ✅ |
+| `client_name` | 4/7 ✅ (ES falla) | 7/7 ✅ |
+| `building_category` | 0/7 (apostrofació) | 5/7 ✅ |
+
+Decisions per camp: veure `DECISION-LOG.md` entrada `2026-06-23`.
+
+**Lacunes Via A pendents:**
+- `num_planned_dpsh` per a PDFs en castellà (afegir regex `ensayos de penetración dinámica`)
+- `architect_company` label errònia — és client/promotor, no arquitecte (tasca "entity confusion")
+- `building_category` regex: apostrofació Unicode (' vs ') → parxar `[''']`
+- `num_planned_sondeig` regex laxa (espuris a Castellar/Bell-lloc)

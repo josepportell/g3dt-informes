@@ -284,3 +284,109 @@ grups, però `3 < 5` disparava el col·lapse-a-1.
   commit de seguiment.
 
 *Fi entrada 2026-06-06. Resolució bug #2: agrupació de nivells per geological_level.*
+
+## 2026-06-23 — Champion-challenger: Via A (OBRA parser) vs Via B2 (visió pressupost)
+
+### Context
+`fix/pipeline-routing`: primera implementació del pipeline de site_address via documents pressupost.
+Via A (extracció determinista Python) i Via B2 (visió Claude dedicada al pressupost) es van executar
+en paral·lel sobre els 7 projectes de referència accessibles (Linyola exclòs: fitxer sense nom estàndard).
+Les comparacions guien la decisió de quins camps reconnectar a consumidors existents.
+
+Commits:
+- `b11043c` — Via A: OBRA parser + glob widening (`PRESSUPOST*|PRESUPUESTO*`) + num_dpsh_tests regex
+- `3c87cc6` — Via B2: `PRESSUPOST_EXTRACTION_PROMPT` + `_find_pressupost_pdf()` + injecció a `_run_vision_fast`
+
+### Resultats (7 projectes; GT = ground truth de ANALISI §4.3)
+
+**Via A (docs_extracted.json — extracció Python OBRA parser):**
+
+| Projecte | site_address | num_planned_dpsh | client/architect | building_category |
+|----------|-------------|-----------------|-----------------|-------------------|
+| VACARISSES | ✅ `C/DE LA BARCELONETA 23, VACARISSES` | ✅ 3 | ✅ MARC VIDAL | ❌ None |
+| CASTELLAR  | ❌ `C/ARBRELLS 18A-18B-20, …` (GT: 18A) | ✅ 4 | ⚠ WOOD COMFORT (promotor, no client) | ❌ None |
+| RUBI       | ✅ None | ✅ 3 | ✅ JOANA MARTINEZ | ❌ None |
+| BELL-LLOC  | ✅ `C/MESTRE RAMON ORTIZ 15, BELL-LLOC` | ✅ 2 | ✅ ARQ. BOSCH NOVELL | ❌ None |
+| ALCOLETGE  | ✅ `C/GIRASOLS 7, URB.EL ROSER, ALCOLETGE` | ✅ 3 | ✅ SANS BONVEHI | ❌ None |
+| VILANOVA   | ✅ `C/ STA. GEMMA 4, URB.LA SERRA, VILANOVA DE SEGRIA` | ❌ None (regex CA falla ES) | ❌ `C/ STA. GEMMA 4, …` (captura l'adreça en lloc del client) | ❌ None |
+| ANCILES    | ✅ `C/GENERAL FERRAZ 20, ANCILES (HUESCA)` | ❌ None (regex CA falla ES) | ❌ `ESTUDIO GEOTECNICO` (captura nom projecte) | ❌ None |
+
+Correctesa: site_address 6/7 (Castellar té "18A-18B-20" al pressupost, potser correcte), num_planned_dpsh 5/7, client 4/7, building_category 0/7.
+Problemes Via A: regex DPSH no cobreix text ES; regex `num_planned_sondeig` massa laxa (3 espuri a Castellar i Bell-lloc); `architect_company` en PDFs ES captura línies errònies (adreça, nom projecte).
+
+**Via B2 (pressupost_extracted.json — Claude vision):**
+
+| Projecte | site_address (B2) | municipality | num_planned_dpsh | client_name | building_category |
+|----------|------------------|-------------|-----------------|-------------|------------------|
+| VACARISSES | ✅ `C/DE LA BARCELONETA 23` | ✅ VACARISSES | ✅ 3 | ✅ MARC VIDAL | ✅ C0 |
+| CASTELLAR  | ✅ `C/ARBRELLS 18A` | ✅ CASTELLAR DEL VALLES | ✅ 4 | ✅ GRUP ALMA CONSTRUCCIONS | ❌ None (no C0-C3 al doc) |
+| RUBI       | ✅ None | ✅ RUBI | ✅ 3 | ✅ JOANA MARTINEZ | ✅ C0 |
+| BELL-LLOC  | ✅ `C/MESTRE RAMON ORTIZ 15` | ✅ BELL-LLOC | ✅ 2 | ✅ ARQ. BOSCH NOVELL | ✅ C1 |
+| ALCOLETGE  | ✅ `C/GIRASOLS 7, URB.EL ROSER` | ✅ ALCOLETGE | ✅ 3 | ✅ SANS BONVEHI | ✅ C0 |
+| VILANOVA   | ✅ `C/ STA. GEMMA 4, URB.LA SERRA` | ✅ VILANOVA DE SEGRIA | ✅ 3 | ✅ GRUPO CUENCA GUERRERO SL. | ✅ C0 |
+| ANCILES    | ✅ `C/GENERAL FERRAZ 20` | ✅ ANCILES (HUESCA) | ✅ 5 | ✅ RETRATERIA, ALBA BARRAU CASTAN | ❌ None (no C0-C3 al doc) |
+
+Correctesa: site_address 7/7, municipality 7/7, num_planned_dpsh 7/7, client_name 7/7, building_category 5/7 (2 docs no la contenen).
+
+**Diferència clau B2 vs A per a site_address:** B2 separa street (site_address) de municipality com a camps independents. A combina "STREET, MUNICIPALITY" en un sol valor (input per a `_split_address`). B2 val correctament "18A" per a Castellar on A extreu el literal "18A-18B-20" del text PyMuPDF.
+
+### Decisions arquitectòniques clau
+
+**1. `site_address` → Via A guanya (format compatible amb consumers existents)**
+- **Why:** Via A produeix "STREET, MUNICIPALITY" directament consumible per `wizard_service.py:2001-2020` via `_split_address()`. B2 separa en dos camps nous; reconnectar-ho requeriria canviar la capa de merge o crear un nou concepte. El guany és marginal (6/7 vs 7/7; la diferència de Castellar és `18A` vs `18A-18B-20` — ambdues vàlides des del pressupost).
+- **Trade-off:** Castellar: B2 és lleument més net, però no justifica el canvi de consumers.
+- **Limitació Via A:** si la parcel·la té múltiples números ("18A-18B-20"), A transmet el literal i B2 simplifica. Decisió: acceptable — la geocodificació posterior tolera els dos formats.
+
+**2. `municipality` → Via B2 guanya (camp nou, no produït per A)**
+- **Why:** Via A no emet `municipality` mai (embarcat dins site_address). B2 el dóna net (7/7). Útil per a fallback de geocodificació quan no hi ha adreça de carrer (Rubí). A reconnectar via `pressupost_extracted.json → wizard_service`.
+- ⏳ **Pendent:** connexió al consumer (fora de scope d'aquesta fase).
+
+**3. `num_planned_dpsh` → Via A suficient per CA, Via B2 per ES**
+- **Why:** Via A regex funciona 5/5 en PDFs CA; falla 0/2 en PDFs ES (Vilanova, Anciles). B2 és 7/7.
+- **Opció A:** afegir regex ES a `_extract_docs_python` (`ensayos de penetración dinámica`). Cost baix, fiable, no depèn de visió.
+- **Opció B:** reconnectar `num_planned_dpsh` de `pressupost_extracted.json` com a fallback quan A és None.
+- **Decisió:** Via A + parxear regex ES (independent d'aquesta fase). Anotat com a millora pendent.
+
+**4. `client_name` → Via B2 guanya (labeling correcte + ES fiable)**
+- **Why:** Via A captura `architect_company` del bloc OBRA (primer camp post-OBRA) — és un nom de client o promotor, no arquitecte. Per a PDFs ES, la classificació falla completament (Vilanova: captura l'adreça; Anciles: captura "ESTUDIO GEOTECNICO"). B2 identifica el bloc CLIENT i extreu el camp correctament en ambdues llengues.
+- **Decisió:** `client_name` prové de `pressupost_extracted.json`. A reconnectar via wizard_service quan s'implementi la fase de consumers.
+- **Nota:** `architect_company` del bloc OBRA és una entitat diferent (promotor/client, no arquitecte); la label és errònia. Tasca independent: "entity confusion fix".
+
+**5. `building_category` → Via B2 guanya (Via A 0/7 per problema amb apostrofes)**
+- **Why:** Via A té regex `r"Tipus\s*(?:d[\'e]\s*)?edifici\s*[:\s]*\s*(C[0-3])"` però PyMuPDF extreu l'apostrofació com a `'` (Unicode) no `'` (ASCII), evitant el match. B2 llegeix visualment i extreu 5/7 (2 docs no contenen building_category).
+- **Decisió:** Si cal building_category, usar `pressupost_extracted.json`. Parxar regex Via A (substituir `\'` per `[''']`) com a millora pendent — no bloqueja.
+
+**6. `num_planned_sondeig` i `num_planned_spt` → Via B2 guanya**
+- Via A `num_planned_sondeig` té falsos positius (3 espuri a Castellar i Bell-lloc — el "3" prové del num de plantes o d'un altre context). B2 és 7/7 correcte. SPT Via A: no implementat. B2: 5/7 (2 cases: SPT inclòs dins sondeig sense count separat).
+
+### Implementació
+- `docs/PLA-SITE-ADDRESS-I-VISIO-PRESSUPOST.md` — pla vigent
+- `automation/validation/prompts.py:492-621` — PRESSUPOST_EXTRACTION_PROMPT
+- `web/vision_fast.py:119-136` — Step 2b injection; `488-521` — `_find_pressupost_pdf()`
+- JSON output: `{project}/validation/pressupost_extracted.json` (7 projectes generats)
+
+### Validació empírica
+- Via B2: 7/7 execucions OK, ~41-95s per projecte (visió Claude)
+- Via A (OBRA parser): 6/7 site_address (Castellar: "18A-18B-20" vs GT "18A")
+- Regressió: 32 failed / 981 passed — sense canvis
+
+### Limitacions conegudes
+- **Linyola (8è projecte):** sense `PRESSUPOST*` ni `PRESUPUESTO*` al nom del fitxer — no descobert per cap via. Limitació coneguda, documentada.
+- **Castellar 18A vs 18A-18B-20:** PyMuPDF extreu el literal del PDF. B2 interpreta el "primer número" com a adreça principal. Cal verificar el doc original.
+- **Client vs promotor:** el camp `architect_company` de Via A és en realitat el promotor/client — el nom és enganyós. Tasca separada ("entity confusion") per corregir la label i el concepte.
+- **`num_planned_dpsh` Via A per ES:** fix pendent (afegir regex `ensayos de penetración dinámica`).
+- **`building_category` Via A:** fix pendent (apostrofació Unicode).
+
+### GO/NO-GO
+- ✅ Via B2 implementada i validada (7/7)
+- ✅ Via A OBRA parser implementada i validada (6/7; Castellar diferència acceptable)
+- ✅ Decisions per camp documentades
+- ⏳ Consumers no reconnectats (scope d'una fase posterior)
+- ⏳ Millores pendent: regex ES per DPSH, apostrofació building_category
+
+### Següents passos
+1. Actualitzar ANALISI §4.5 (site_address diagnosis post-fix)
+2. Opcionalment: parxar regex ES de `num_planned_dpsh` a Via A (baix cost)
+3. Fase consumers: reconnectar `municipality` i `client_name` de pressupost_extracted → wizard_service
+
+*Fi entrada 2026-06-23. Champion-challenger Via A vs Via B2: 7 projectes comparats, decisions per camp.*

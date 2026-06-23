@@ -1,0 +1,42 @@
+{
+  "source_file": "PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+  "overall_confidence": 0.97,
+  "fields": {
+    "site_address": {
+      "value": "C/MESTRE RAMON ORTIZ 15",
+      "confidence": 0.97,
+      "note": null
+    },
+    "municipality": {
+      "value": "BELL-LLOC",
+      "confidence": 0.97,
+      "note": null
+    },
+    "client_name": {
+      "value": "ARQUITECTURA BOSCH NOVELL",
+      "confidence": 0.97,
+      "note": "From CLIENT section on page 1; also appears as first line of OBRA block (PDF text extraction scrambles column order, but visual confirms CLIENT block attribution)"
+    },
+    "building_category": {
+      "value": "C1",
+      "confidence": 1.0,
+      "note": "Explicit: 'Tipus d'edifici: C1' on page 2"
+    },
+    "num_planned_dpsh": {
+      "value": 2,
+      "confidence": 1.0,
+      "note": "From campaign sentence ('2 assaigs de penetració dinàmica DPSH') confirmed by line-item table ref 002.001 quantity 2,00"
+    },
+    "num_planned_spt": {
+      "value": null,
+      "confidence": 0.5,
+      "note": "SPT mentioned as part of the sondeig ('execució d'assaigs SPT's') but no standalone count given; not a separate line item in the table. Cannot determine integer quantity."
+    },
+    "num_planned_sondeig": {
+      "value": 1,
+      "confidence": 1.0,
+      "note": "From campaign sentence ('1Sondeig a rotació amb bateria continua') confirmed by line-item table ref 001.001 quantity 1,00"
+    }
+  },
+  "extraction_notes": "Vectorial PDF, 7 pages (incl. conditions). Page 1 OBRA block: ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC. CLIENT block: ARQUITECTURA BOSCH NOVELL, CP 25100, Tel 620199571. PDF raw text extraction scrambles CLIENT and OBRA content order; visual rendering used to disambiguate. Building category C1 explicit on page 2 ('Tipus d'edifici: C1'). Campaign sentence page 2: 2 DPSH + 1 sondeig a rotació with SPT (SPT count within sondeig not specified as a standalone number). Line-item table (page 4) confirms DPSH=2, sondeig=1. Budget total 980,00 EUR (IVA not included), dated 03/09/25, ref 25·0647."
+}
