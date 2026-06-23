@@ -492,6 +492,131 @@ When a value is unclear:
 The output will be reviewed by humans, so marking uncertainty is essential.'''
 
 
+# ============================================================================
+# Pressupost — Budget document extraction (Via B2)
+# Champion-challenger: output goes to pressupost_extracted.json.
+# No consumer reads this file yet — it exists for A-vs-B comparison only.
+# ============================================================================
+
+PRESSUPOST_JSON_EXAMPLE = '''
+{
+  "source_file": "PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+  "overall_confidence": 0.95,
+  "fields": {
+    "site_address": {
+      "value": "C/ARBRELLS 18A",
+      "confidence": 0.95,
+      "note": null
+    },
+    "municipality": {
+      "value": "CASTELLAR DEL VALLES",
+      "confidence": 0.95,
+      "note": null
+    },
+    "client_name": {
+      "value": "ARQUITECTURA BOSCH NOVELL",
+      "confidence": 0.90,
+      "note": "From CLIENT section header"
+    },
+    "building_category": {
+      "value": "C1",
+      "confidence": 0.85,
+      "note": null
+    },
+    "num_planned_dpsh": {
+      "value": 4,
+      "confidence": 1.0,
+      "note": "From campaign sentence and/or line-item table"
+    },
+    "num_planned_spt": {
+      "value": 1,
+      "confidence": 1.0,
+      "note": null
+    },
+    "num_planned_sondeig": {
+      "value": 0,
+      "confidence": 1.0,
+      "note": null
+    }
+  },
+  "extraction_notes": "Vectorial PDF. OBRA block clear. Campaign sentence found on page 2."
+}
+'''
+
+PRESSUPOST_EXTRACTION_PROMPT = f'''Analyze this geotechnical study budget document (pressupost / presupuesto geotècnic).
+
+TASK: Extract project and campaign data from the budget document into structured JSON.
+
+DOCUMENT STRUCTURE:
+The budget typically has 3-4 pages:
+- Page 1: Reference number, date, OBRA block (project site), CLIENT block (client details)
+- Page 2: Study description, site characterization, campaign description with quantities
+- Page 3-4: Line-item table with unit quantities and prices (ASSAIGS DPSH, SPT, etc.)
+
+STEP 1 — EXTRACT FROM THE OBRA BLOCK (page 1):
+The OBRA block starts with a line "OBRA:" and contains:
+  Line 1 (optional): client or firm name
+  Line 2: project type — "ESTUDI GEOTECNIC", "ESTUDIO GEOTECNICO", "ESTUDI GEOTECNIC 3HAB.", etc.
+  Line 3 (optional): street address — e.g. "C/ARBRELLS 18A", "C/ STA. GEMMA 4, URB.LA SERRA"
+  Last line: municipality — e.g. "CASTELLAR DEL VALLES", "ANCILES (HUESCA)"
+The block ends when you reach a line starting the next section (e.g. "CLIENT:", "CP I POBLACIÓ:").
+
+Rules:
+- "ESTUDI GEO" / "ESTUDIO GEO" line is the project-type marker; extract what comes AFTER it.
+- If the line AFTER the project-type looks like a street address → `site_address`
+- The LAST non-empty line before the end marker → `municipality`
+- If there is NO street line (only municipality after project-type) → `site_address` = null
+
+STEP 2 — EXTRACT FROM THE CLIENT BLOCK (page 1):
+The CLIENT block starts with "CLIENT" or "CLIENTE" and contains the client's name, address, phone.
+The line immediately after "CLIENT" (or "CLIENTE") is the client or firm name → `client_name`.
+Do NOT confuse this with the OBRA block content.
+
+STEP 3 — EXTRACT BUILDING CATEGORY (page 2, if present):
+Look for "Categoria de construcció:" / "Categoría de construcción:" followed by C0, C1, C2, or C3.
+If not found, set `building_category` = null.
+
+STEP 4 — EXTRACT CAMPAIGN QUANTITIES:
+Source A — Prose campaign sentence (page 2, most reliable):
+  "s'ha previst la realització de la següent campanya de camp:"
+  or "se ha previsto la realización de la siguiente campaña de campo:"
+  followed by lines like:
+    "N assaigs de penetració dinàmica DPSH"
+    "N assaig(s) SPT, amb recuperació de mostra"
+    "N sondeig(s) a rotació"
+  Extract the integer N for each type.
+
+Source B — Line-item table (pages 3-4, cross-check):
+  Look for section "ASSAIGS DPSH'S:" / "PENETRÓMETROS DINÁMICOS:"
+  The quantity column shows values like "3,00" (= 3 tests).
+  WARNING: PDF text extraction may scramble column order in this table — prefer Source A
+  when both are present. Use Source B only to confirm or fill gaps.
+
+Rules for campaign fields:
+- If a test type is not mentioned at all → value = 0
+- If mentioned but quantity illegible → value = null with a note
+- Integer values only (never "3,00" — strip the decimal)
+
+EXTRACTION RULES:
+1. Extract text EXACTLY as written (Catalan or Spanish — do not translate)
+2. `site_address` is the street line only (no municipality, no postal code)
+3. `municipality` is the town name only (strip postal code; keep province in parentheses if present,
+   e.g. "ANCILES (HUESCA)" is a valid municipality value)
+4. Do NOT fall back to municipality when street is absent — `site_address` = null is correct
+5. Set null for any field not found — do not fabricate values
+
+CONFIDENCE SCORING:
+- 1.0: Clear printed text, unambiguous
+- 0.9: Readable with minor uncertainty
+- 0.7-0.8: Some interpretation needed (e.g. abbreviations, unclear layout)
+- < 0.7: Uncertain — add an explanatory note
+
+OUTPUT FORMAT (JSON):
+{PRESSUPOST_JSON_EXAMPLE}
+
+Output ONLY the JSON object, no surrounding text.'''
+
+
 if __name__ == '__main__':
     print("=== G3DT Extraction Prompts ===\n")
     print("DPSH_EXTRACTION_PROMPT:")

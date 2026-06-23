@@ -26,6 +26,7 @@ from automation.validation.prompts import (
     DPSH_EXTRACTION_PROMPT,
     EXTRACTION_SYSTEM_PROMPT,
     PLANOL_EXTRACTION_PROMPT,
+    PRESSUPOST_EXTRACTION_PROMPT,
     SONDEIG_ANNEX_EXTRACTION_PROMPT,
     SONDEIG_EXTRACTION_PROMPT,
 )
@@ -117,6 +118,22 @@ def _run_vision_fast(
                     "path": role.path,
                 }
         _log_step(project_name, "identify_tasks", f"{len(vision_tasks)} tasks")
+
+        # Step 2b: inject pressupost vision task (Via B2 — champion-challenger).
+        # The output (pressupost_extracted.json) is written for A-vs-B comparison.
+        # No consumer reads it yet; wizard_service still uses docs_extracted.json.
+        if "pressupost" not in seen_types:
+            pressupost_pdf = _find_pressupost_pdf(project_path)
+            if pressupost_pdf:
+                pressupost_out = project_path / "validation" / "pressupost_extracted.json"
+                if force or not pressupost_out.exists():
+                    vision_tasks["pressupost"] = {
+                        "role": "budget",
+                        "path": str(pressupost_pdf.relative_to(project_path)),
+                    }
+                    _log_step(project_name, "pressupost_found", pressupost_pdf.name)
+                else:
+                    _log_step(project_name, "cache_hit:pressupost", "skipped")
 
         # Step 3: extract_excel (for DPSH comparison)
         excel_data = None
@@ -219,6 +236,7 @@ def _build_combined_prompt(
         "dpsh": DPSH_EXTRACTION_PROMPT,
         "sondeig": SONDEIG_EXTRACTION_PROMPT,
         "sondeig_annex": SONDEIG_ANNEX_EXTRACTION_PROMPT,
+        "pressupost": PRESSUPOST_EXTRACTION_PROMPT,
     }
 
     parts: list[str] = []
@@ -468,6 +486,35 @@ def _log_step(project_name: str, step: str, note: str = "") -> None:
     logger.info(
         "vision_fast [%s] %s: %s (%.1fs)", project_name, step, note, elapsed,
     )
+
+
+def _find_pressupost_pdf(project_path: Path) -> "Path | None":
+    """Find the primary budget PDF (PRESSUPOST*.pdf or PRESUPUESTO*.pdf).
+
+    Prefers the vectorial original in a numbered subdir over the scanned
+    acceptance copy in ACCEPTACIO/, which is lower quality for vision.
+    Mirrors the discovery logic in _extract_docs_python.
+    """
+    # Numbered subdirs first (vectorial originals, e.g. 25.0493/)
+    for child in sorted(project_path.iterdir()):
+        if child.is_dir() and re.match(r"^\d", child.name):
+            for pat in ("PRESSUPOST*.pdf", "PRESUPUESTO*.pdf"):
+                hits = sorted(child.glob(pat))
+                if hits:
+                    return hits[0]
+    # Root level
+    for pat in ("PRESSUPOST*.pdf", "PRESUPUESTO*.pdf"):
+        hits = sorted(project_path.glob(pat))
+        if hits:
+            return hits[0]
+    # ACCEPTACIO fallback (scanned signed version, lower quality)
+    acceptacio = project_path / "ACCEPTACIO"
+    if acceptacio.is_dir():
+        for pat in ("PRESSUPOST*.pdf", "PRESUPUESTO*.pdf"):
+            hits = sorted(acceptacio.glob(pat))
+            if hits:
+                return hits[0]
+    return None
 
 
 def _output_filename(vision_type: str) -> str:
