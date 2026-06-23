@@ -1950,6 +1950,20 @@ def _compute_mapping_prefills(
         except Exception as e:
             logger.warning("projecte_extracted merge failed: %s", e)
 
+    # Via B2 fallback: client_name from pressupost_extracted.json CLIENT block.
+    # Fills when planol and projecte_arquitecte vision both found nothing.
+    if not _get_val('client_name'):
+        _pres_cli = project_path / 'validation' / 'pressupost_extracted.json'
+        if _pres_cli.exists():
+            try:
+                _pcf = json.loads(_pres_cli.read_text(encoding='utf-8')).get('fields', {})
+                _pcv = _pcf.get('client_name', {})
+                _pc_val = _pcv.get('value') if isinstance(_pcv, dict) else _pcv or None
+                if _pc_val:
+                    _set('client_name', _pc_val, 'pressupost vision')
+            except Exception:
+                pass
+
 
 def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str, Any]:
     """Run auto_extract + vision + wizard prefill chain for a project.
@@ -2018,6 +2032,22 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
             cur_muni_source = (cur_muni.get('source', '') if isinstance(cur_muni, dict) else '') if cur_muni else ''
             if sa_municipality and (not cur_muni or cur_muni_source == 'nom carpeta'):
                 merged['site_municipality'] = {'value': sa_municipality, 'source': site_addr_source}
+
+    # Via B2 municipality fallback: fills when Via A site_address was None
+    # (e.g. Rubí: no street in budget → site_address = None → no municipality derived).
+    _pres_b2 = project_path / 'validation' / 'pressupost_extracted.json'
+    if _pres_b2.exists():
+        try:
+            _pf = json.loads(_pres_b2.read_text(encoding='utf-8')).get('fields', {})
+            _pm = _pf.get('municipality', {})
+            _pm_val = _pm.get('value') if isinstance(_pm, dict) else _pm or None
+            if _pm_val:
+                _cm = merged.get('site_municipality')
+                _cms = (_cm.get('source', '') if isinstance(_cm, dict) else '') if _cm else ''
+                if not _cm or _cms == 'nom carpeta':
+                    merged['site_municipality'] = {'value': _pm_val, 'source': 'pressupost vision'}
+        except Exception:
+            pass
 
     # Override cota_referencia with sondeig elevation_z (field-measured)
     # if the current value is NOT a manual Eva edit.
