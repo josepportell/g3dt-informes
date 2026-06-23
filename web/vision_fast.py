@@ -288,9 +288,11 @@ def _extract_docs_python(
     for subdir in (project_path / "ACCEPTACIO", project_path):
         if subdir.is_dir():
             candidates.extend(subdir.glob("PRESSUPOST*.pdf"))
+            candidates.extend(subdir.glob("PRESUPUESTO*.pdf"))
     for child in project_path.iterdir():
         if child.is_dir() and re.match(r"^\d", child.name):
             candidates.extend(child.glob("PRESSUPOST*.pdf"))
+            candidates.extend(child.glob("PRESUPUESTO*.pdf"))
 
     texts: list[str] = []
     source_files: list[str] = []
@@ -353,17 +355,24 @@ def _extract_docs_python(
             "confidence": 1.0,
         }
 
-    # Parse num_planned_dpsh
+    # Parse num_planned_dpsh from the canonical campaign sentence
+    # ("N assaigs de penetració dinàmica DPSH"). We deliberately do NOT
+    # read the budget's line-item table: PDF text extraction scrambles the
+    # table's column order, so the DPSH quantity ("3,00") gets separated
+    # from its label and a stray quantity from an adjacent row (the SPT /
+    # "ML previs" line, both "1,00") binds to the "ASSAIGS DPSH" header.
+    # The prose campaign sentence is a single contiguous line, so it is
+    # reliable. If it is absent we emit nothing (no value beats a wrong
+    # value). Validated 5/5: Vacarisses/Castellar/Rubí/Bell-lloc/Alcoletge.
     dpsh_match = re.search(
-        r"(\d+)[,.]?\d*\s*(?:UNITATS?\s*D[\'E]\s*ASSAI"
-        r"|assaigs?\s*DPSH|DPSH|penetr[oò]metres?)",
+        r"(\d+)\s+assaigs?\s+de\s+penetraci[oó]\s+din[aà]mica",
         combined_text,
         re.IGNORECASE,
     )
     if dpsh_match:
         fields["num_planned_dpsh"] = {
             "value": int(dpsh_match.group(1)),
-            "source": "PRESSUPOST text",
+            "source": "PRESSUPOST campaign sentence",
             "confidence": 1.0,
         }
 
@@ -379,20 +388,42 @@ def _extract_docs_python(
             "confidence": 1.0,
         }
 
-    # Parse site_address
-    addr_match = re.search(
-        r"(?:EMPLA[CÇ]AMENT|SITUACI[OÓ]|Adre[çc]a)\s*[:\s]\s*(.+)",
-        combined_text,
-        re.IGNORECASE,
-    )
-    if addr_match:
-        addr_val = addr_match.group(1).strip().rstrip(".")
-        if addr_val and len(addr_val) > 5:
-            fields["site_address"] = {
-                "value": addr_val,
-                "source": "PRESSUPOST text",
-                "confidence": 0.85,
-            }
+    # Parse site_address from the OBRA block.
+    # The EMPLAÇAMENT anchor hit "emplaçament de la màquina de penetració"
+    # boilerplate and returned garbage.  The OBRA block extracts in reading
+    # order (unlike the line-item table), so a line-based parser is reliable.
+    # Structure: OBRA: / [client?] / ESTUDI[O] GEO... / [street?] / municipality / CLIENT:
+    # Post-ESTUDI: last = municipality, penultimate = street (when present).
+    # No street (e.g. Rubí): emit nothing — "no value beats a wrong value."
+    # Linyola (no ESTUDI line, single combined line): known limitation, emits nothing.
+    obra_lines = combined_text.split("\n")
+    obra_street = None
+    obra_muni = None
+    for obra_i, obra_raw in enumerate(obra_lines):
+        if re.match(r"^OBRA\s*:?\s*$", obra_raw.strip(), re.IGNORECASE):
+            obra_block: list[str] = []
+            for obra_r in obra_lines[obra_i + 1 :]:
+                obra_s = obra_r.strip()
+                if not obra_s:
+                    continue
+                if obra_s.endswith(":") or re.match(r"^\d+[·.]\d", obra_s):
+                    break
+                obra_block.append(obra_s)
+            for obra_bi, obra_bl in enumerate(obra_block):
+                if re.match(r"^ESTUDI[O]?\s+GEO", obra_bl, re.IGNORECASE):
+                    obra_after = obra_block[obra_bi + 1 :]
+                    if len(obra_after) >= 2:
+                        obra_street, obra_muni = obra_after[-2], obra_after[-1]
+                    elif len(obra_after) == 1:
+                        obra_muni = obra_after[0]  # municipality only (e.g. Rubí)
+                    break
+            break  # process first OBRA block only
+    if obra_street and obra_muni:
+        fields["site_address"] = {
+            "value": f"{obra_street}, {obra_muni}",
+            "source": "PRESSUPOST OBRA block",
+            "confidence": 0.95,
+        }
 
     result = {
         "source_files": source_files,
