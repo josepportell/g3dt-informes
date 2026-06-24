@@ -390,3 +390,98 @@ Correctesa: site_address 7/7, municipality 7/7, num_planned_dpsh 7/7, client_nam
 3. Fase consumers: reconnectar `municipality` i `client_name` de pressupost_extracted → wizard_service
 
 *Fi entrada 2026-06-23. Champion-challenger Via A vs Via B2: 7 projectes comparats, decisions per camp.*
+
+---
+
+## 2026-06-24 — `signals_emitted: 0` desmentit + fix acotat de NIFs de proveïdor
+
+### Context
+Revisant les anotacions del Josep a `ANALISI-PIPELINE-DEBUG-VACARISSES.md` (§2.2),
+dues preguntes obertes: (1) per què `signals_emitted: 0` al concept_map si la
+carpeta `ACCEPTACIO/` conté bones dades, i (2) si A2 ("desactivar la regla
+ignorar ACCEPTACIO") les recuperaria. La hipòtesi de l'anàlisi era: *la pipeline
+perd les dades d'ACCEPTACIO, s'ignoren*.
+
+### Decisions arquitectòniques clau
+
+**1. La hipòtesi és falsa — ACCEPTACIO NO s'ignora per al flux de dades.**
+Verificat empíricament (auto_extract sobre Vacarisses):
+- `signals_emitted: 0` és un **literal hardcoded** a `deep_folder_classifier.py:325`.
+  Mai es calcula, i **cap codi el llegeix** (només apareix al JSON). No és evidència
+  de pèrdua; ens va enganyar a nosaltres llegint el fitxer.
+- `file_scanner.py` marca `^ACCEPTACIO/?$` com a `acceptance_dir`, però això **només
+  reté l'assignació d'un rol especialitzat** — NO treu la carpeta del mining ni del probing.
+- FileMiner recorre ACCEPTACIO (no és a `_SKIP_DIRS`); ConceptScout li fa vision-probe
+  (24 sources `vision_probe:budget`, conf fins 1.0); `concept_sources_to_signals` +
+  `_merge_vision_signals_into_competition` els injecten a la competició.
+- **Prova:** `street_address = 'C/DE LA BARCELONETA 23'` té font literal
+  `vision_probe:ACCEPTACIO\Presupost Geotecnic.pdf`. Les dades arriben.
+- **Conseqüència:** A2 tal com estava proposada és un **no-fix** (no canviaria el flux).
+  No s'implementa. *Why:* cap fabricació — corregir un no-bug enmascara el bug real.
+
+**2. El bug real és la competició (entity confusion), no l'exclusió.**
+`vision_probe:budget` → source_type `vision_probe_other`, absent dels mapes de
+prioritat → default 50 (`loader.py:88`). Per `client_nif`, el CIF de G3DT del PDF
+vectorial (`pressupost_pdf`=30) guanya el NIF real del client (vision=50).
+
+**3. Fix triat: blocklist de NIFs de proveïdor (NO retunejar prioritats).**
+*Why no prioritats:* el Josep ho confirma per experiència — "guanyem unes variables
+i en perdem d'altres segons quines parts del pipeline les extreguin bé; ja ho vam
+intentar, és laboriós i arriscat". Pujar `vision_probe:budget` arreglaria client_nif/
+client_name però arrossegaria `architect_company=G3DT` (incorrecte, §3.3 Error 4).
+*Alternativa rebutjada:* re-pesar prioritats per concepte → massa efectes creuats.
+*Trade-off acceptat:* el blocklist és quirúrgic però només cobreix client_nif; les
+altres confusions d'entitat (architect_company, client_name messy) queden obertes.
+
+### Implementació
+- `automation/internal_addresses.py` (+44 LOC): `NON_CLIENT_NIFS = {B25461443 (G3),
+  B64803075 (lab TPS)}` + `is_non_client_nif()`. Mirall de l'existent `is_g3_internal_address`
+  (mateix mòdul canònic, mateixa filosofia "provider data leaking into client docs").
+- `automation/fileminer/competition.py` (+24 LOC): pre-filtre a `resolve_competition`
+  que elimina candidats client_nif amb NIF de proveïdor abans del rànquing (mirall del
+  guard d'adreça de les línies 101-122). Si tots ho són → s'omet la variable.
+- 14 tests nous (`test_internal_addresses.py` +8, `test_competition_g3_filter.py` +6).
+
+### Validació empírica
+NIFs verificats a través dels 7 projectes (escaneig de concept_maps):
+`B25461443` ×16 (sempre a `PRESSUPOST GEOTEC.*.pdf` = emissor G3) i `B64803075` ×9
+(sempre a `*-GTL-*.pdf` = laboratori). Constants → mai client.
+
+Before/after (auto_extract, `client_nif`):
+| Projecte | ABANS | DESPRÉS |
+|----------|-------|---------|
+| Vacarisses | B25461443 (G3) | 38112117J (Marc Vidal) |
+| Castellar | B25461443 (G3) | B19935212 (Grup Alma) |
+| Rubí | B25461443 (G3) | 38540020 |
+| Bell-lloc | B25461443 (G3) | 78058457E |
+| Alcoletge | B25461443 (G3) | 47690689M |
+| Linyola / Vilanova / Anciles | ja correcte | sense canvi |
+
+**5/8 projectes tenien el CIF de G3DT com a NIF del client ABANS → 0/8 DESPRÉS.**
+
+### Tests
++14 nous. Suite completa: **32 failed / 995 passed** (baseline 32/981 inalterat, 0 regressions).
+
+### Limitacions conegudes (NO cobertes per aquest fix)
+- **Alcoletge**: `client_nif = "N.I.F./C.I.F.: 47690689M"` — valor correcte però la
+  preview de visió arrossega l'etiqueta. Tasca separada de neteja (label-stripping).
+  Quedava emmascarat abans perquè guanyava el CIF de G3.
+- **`architect_company = "G3 DESENVOLUPAMENT..."`** segueix incorrecte (§3.3 Error 4):
+  el concepte mapeja "empresa al pressupost" → arquitecte, però és el prestador G3.
+  Requereix mapatge d'entitats (A4), substancial — validar amb l'Eva.
+- **`client_name` messy** (Vacarisses "Marc Vidal - marc@...") segueix guanyant des
+  del .msg sobre la visió neta. Mateixa família de competició/entitat.
+- **Retuneig de prioritats**: deliberadament NO fet (vegeu decisió 3).
+
+### GO/NO-GO
+- ✅ Hipòtesi `signals_emitted:0` desmentida amb evidència
+- ✅ Fix acotat de NIF implementat, validat 7 projectes, 0 regressions
+- ⏳ Confusions d'entitat restants (architect_company, client_name) → validar amb Eva
+- ⏳ Label-stripping de previews de visió → tasca separada
+
+### Següents passos
+1. Annotar la correcció de §2.2 a `ANALISI-PIPELINE-DEBUG-VACARISSES.md` (fet en aquest commit)
+2. Preguntar a l'Eva sobre el mapatge architect_company vs client (A4) abans de tocar-ho
+3. (Opcional) label-stripping de NIF/adreça a les previews de `concept_sources_to_signals`
+
+*Fi entrada 2026-06-24. `signals_emitted:0` era un stub hardcoded (no pèrdua de dades); el bug real és competició; fix acotat de NIFs de proveïdor exclou el CIF de G3 i del laboratori de client_nif (5/8→0/8).*

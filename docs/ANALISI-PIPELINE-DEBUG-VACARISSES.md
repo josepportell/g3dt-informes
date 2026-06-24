@@ -100,6 +100,28 @@ El `3001722_PLANOL SITUACIÓ.pdf` té el títol del projecte: *"ESTUDI GEOLÒGIC
 <Josep_edit> \
 Estàs segur de què el text és vectorial? Jo l'he seleccionat i copiat; diria que és text normal, llegible per LLM. El problema és que text_mining és python i no pot llegir-lo? Hi hauria alguna manera de resoldre-ho? \
 </Josep_edit>
+
+> **⚠️ CORRECCIÓ EMPÍRICA (2026-06-24) — la premissa "Tot ignorat" és FALSA.**
+> Resposta a les tres preguntes del Josep de §2.2, verificada executant `auto_extract` sobre Vacarisses:
+>
+> 1. **Qui ignora ACCEPTACIO?** `file_scanner.py:179` la marca `acceptance_dir`, **però això
+>    només reté l'assignació d'un *rol* especialitzat** — NO la treu del mining ni del probing.
+>    FileMiner la recorre (no és a `_SKIP_DIRS`) i ConceptScout li fa vision-probe.
+> 2. **Per què `signals_emitted: 0`?** És un **literal hardcoded** a `deep_folder_classifier.py:325`.
+>    Mai es calcula i **cap codi el llegeix**. NO és evidència de pèrdua de dades — és un camp de
+>    diagnòstic sense connectar que ens va enganyar a nosaltres llegint el JSON.
+> 3. **En corregir l'exclusió obtindríem les dades?** Ja les obtenim. **Prova:** el prefill
+>    `street_address = 'C/DE LA BARCELONETA 23'` té font literal `vision_probe:ACCEPTACIO\Presupost
+>    Geotecnic.pdf`. Les 24 sources `vision_probe:budget` d'ACCEPTACIO entren a la competició via
+>    `concept_sources_to_signals` + `_merge_vision_signals_into_competition`.
+>
+> **El problema real NO és l'exclusió, és la competició** (entity confusion, §3.3): `vision_probe:budget`
+> → source_type `vision_probe_other`, absent dels mapes de prioritat → default 50 → perd contra el text.
+> Per `client_nif` això feia guanyar el CIF de G3DT. **Fix acotat aplicat 2026-06-24** (blocklist de NIFs
+> de proveïdor): 5/8 projectes tenien el CIF de G3 com a client_nif → 0/8. Detall complet i per què NO
+> retunejem prioritats: `DECISION-LOG.md` entrada 2026-06-24. La pregunta del text vectorial (FreeHand)
+> queda oberta com a tasca A6 separada.
+
 ### 2.3 Rol `sondeig_annex` no assignat
 
 No hi ha cap fitxer amb rol `sondeig_annex` en el file_mapping. Motiu: no existeix cap `SONDEIG.pdf` en aquest projecte. La secció geotècnica (correlació) viu en `ANNEXES/3001722_tall de correlació.FH11` (format FreeHand, llegit com a binari, inaccessible).
