@@ -4,7 +4,12 @@ from __future__ import annotations
 
 import pytest
 
-from automation.internal_addresses import G3_ADDRESS_PATTERNS, is_g3_internal_address
+from automation.internal_addresses import (
+    G3_ADDRESS_PATTERNS,
+    NON_CLIENT_NIFS,
+    is_g3_internal_address,
+    is_non_client_nif,
+)
 
 
 class TestIsG3InternalAddress:
@@ -46,6 +51,43 @@ class TestIsG3InternalAddress:
         assert all(
             isinstance(p, tuple) and len(p) == 2 for p in G3_ADDRESS_PATTERNS
         )
+
+
+class TestIsNonClientNif:
+    def test_g3_own_cif_matches(self):
+        # G3 Desenvolupament Territorial SL — the budget issuer.
+        assert is_non_client_nif("B25461443") is True
+
+    def test_lab_cif_matches(self):
+        # Drilling/lab subcontractor — appears on every GTL report.
+        assert is_non_client_nif("B64803075") is True
+
+    def test_labelled_provider_cif_matches(self):
+        assert is_non_client_nif("CIF: B25461443") is True
+        assert is_non_client_nif("N.I.F./C.I.F.: B25461443") is True
+
+    def test_real_client_nif_kept(self):
+        # A genuine client NIF (varies per project) must never be filtered.
+        assert is_non_client_nif("38112117J") is False        # Marc Vidal
+        assert is_non_client_nif("47697437Z") is False        # Linyola
+        assert is_non_client_nif("78058457E") is False        # Bell-lloc
+        assert is_non_client_nif("B19935212") is False        # Grup Alma (Castellar)
+
+    def test_labelled_client_nif_kept(self):
+        # The label prefix from a vision preview must not cause a false match.
+        assert is_non_client_nif("N.I.F./C.I.F.: 38112117J") is False
+
+    def test_empty_string(self):
+        assert is_non_client_nif("") is False
+
+    def test_non_string_returns_false(self):
+        assert is_non_client_nif(None) is False  # type: ignore[arg-type]
+        assert is_non_client_nif(25461443) is False  # type: ignore[arg-type]
+
+    def test_blocklist_constant_exported(self):
+        assert isinstance(NON_CLIENT_NIFS, set)
+        assert "B25461443" in NON_CLIENT_NIFS
+        assert "B64803075" in NON_CLIENT_NIFS
 
 
 class TestLegacyPrivateAlias:

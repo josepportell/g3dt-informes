@@ -1,17 +1,21 @@
 """
-G3 internal address detection.
+G3 internal address + provider-NIF detection.
 
-G3 Geotecnia (the service provider) has its own office addresses that
-leak into client-provided documents (lab order Excels, email signatures,
-pressupost PDFs). Those must NEVER be treated as the project's site
-address, because they are the *provider's* address, not the project's.
+G3 Geotecnia (the service provider) has its own office addresses and CIF
+that leak into client-provided documents (lab order Excels, email
+signatures, pressupost PDFs). The same happens with recurring service
+providers (e.g. the drilling/lab subcontractor on every GTL report).
+Those must NEVER be treated as the project's site address or the *client's*
+NIF, because they identify the *provider*, not the project's client.
 
-This module centralizes the patterns and the detection helper so every
+This module centralizes the patterns and the detection helpers so every
 pipeline stage (FileMiner competition, geocode phase, adjacents phase)
 applies the same guard.
 """
 
 from __future__ import annotations
+
+import re
 
 # ── G3 internal address patterns (must NOT become project street_address) ──
 # G3 Desenvolupament Territorial SL office: C/ Vallbona, 22 — Rubi
@@ -36,4 +40,41 @@ def is_g3_internal_address(value: str) -> bool:
     return any(
         street in upper and number in upper
         for street, number in G3_ADDRESS_PATTERNS
+    )
+
+
+# ── Provider NIF/CIF blocklist (must NOT become the client's NIF) ──────────
+# These NIFs identify the service provider, never the project's client.
+# Verified empirically across all 7 reference projects (2026-06-23): each
+# appears on the SAME document type in EVERY project — a constant that only
+# the issuer/provider could be. A real client NIF varies project to project.
+#   B25461443 — G3 Desenvolupament Territorial SL (Eva's own company, the
+#               budget issuer): appears on every "PRESSUPOST GEOTEC.*.pdf".
+#   B64803075 — drilling/lab subcontractor (TPS Perforaciones): appears on
+#               every "*-GTL-*.pdf" lab report.
+# To add a provider: append its NIF here (uppercase, no dots/spaces).
+NON_CLIENT_NIFS: set[str] = {
+    'B25461443',
+    'B64803075',
+}
+
+# NIF/CIF token: optional leading letter, 7-8 digits, optional trailing letter.
+# Anchored on word boundaries so it survives label prefixes like
+# "N.I.F./C.I.F.: 38112117J" (the dots/colon form boundaries).
+_NIF_TOKEN_RE = re.compile(r'\b[A-Z]?\d{7,8}[A-Z]?\b')
+
+
+def is_non_client_nif(value: str) -> bool:
+    """Return True if value contains a known provider NIF (G3 or a lab).
+
+    Extracts NIF-shaped tokens from value and checks exact membership in
+    NON_CLIENT_NIFS. A clean text-mined provider value ("B25461443") matches;
+    a labelled client value ("N.I.F./C.I.F.: 38112117J") yields token
+    "38112117J", which is not in the blocklist, so it is kept.
+    """
+    if not isinstance(value, str):
+        return False
+    return any(
+        tok in NON_CLIENT_NIFS
+        for tok in _NIF_TOKEN_RE.findall(value.upper())
     )

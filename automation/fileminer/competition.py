@@ -12,7 +12,7 @@ import logging
 import re
 from datetime import datetime
 
-from automation.internal_addresses import is_g3_internal_address
+from automation.internal_addresses import is_g3_internal_address, is_non_client_nif
 from automation.schemas.loader import ConceptRegistry
 
 from .models import Signal, ResolvedValue
@@ -24,6 +24,10 @@ _concept_registry = ConceptRegistry()
 # Concepts that represent a project site address — G3 internal addresses
 # must never win the competition for these.
 _ADDRESS_CONCEPTS = {"street_address", "site_address", "client_address"}
+
+# Concepts that represent the client's fiscal ID — provider NIFs (G3's own
+# CIF, the lab subcontractor's CIF) must never win the competition for these.
+_NIF_CONCEPTS = {"client_nif"}
 
 
 # Month name → number mapping (Spanish/Catalan)
@@ -119,6 +123,28 @@ def resolve_competition(
             grouped[variable] = kept
         else:
             # All candidates were G3 addresses — drop the variable entirely.
+            del grouped[variable]
+
+    # Pre-filter: drop provider NIFs (G3's own CIF, the lab subcontractor's)
+    # from client-NIF pools BEFORE ranking. These never identify the client.
+    # Mirrors the address guard above; if all candidates are provider NIFs the
+    # variable is dropped (better empty than the provider's NIF as the client).
+    for variable in list(grouped.keys()):
+        if variable not in _NIF_CONCEPTS:
+            continue
+        candidates = grouped[variable]
+        kept = []
+        for sig in candidates:
+            if isinstance(sig.value, str) and is_non_client_nif(sig.value):
+                logger.info(
+                    "Dropping provider NIF signal for %s: %r from %s",
+                    variable, sig.value, sig.source_file,
+                )
+                continue
+            kept.append(sig)
+        if kept:
+            grouped[variable] = kept
+        else:
             del grouped[variable]
 
     resolved: dict[str, ResolvedValue] = {}
