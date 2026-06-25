@@ -15,7 +15,10 @@ applies the same guard.
 
 from __future__ import annotations
 
+import logging
 import re
+
+logger = logging.getLogger(__name__)
 
 # ── G3 internal address patterns (must NOT become project street_address) ──
 # G3 Desenvolupament Territorial SL office: C/ Vallbona, 22 — Rubi
@@ -78,3 +81,56 @@ def is_non_client_nif(value: str) -> bool:
         tok in NON_CLIENT_NIFS
         for tok in _NIF_TOKEN_RE.findall(value.upper())
     )
+
+
+# ── Lab company registry (NIF → canonical name as Eva spells it) ───────────
+# Maps a known lab-provider NIF to the canonical company name exactly as it
+# must appear in Eva's signed reports. The GTL footer spells it WITH commas
+# ("TPS, PROSPECCIÓ DEL SUBSÒL, SL"); Eva writes it WITHOUT commas — so we
+# canonicalize via this registry instead of echoing the raw footer text.
+# B64803075 is the same lab NIF already declared in NON_CLIENT_NIFS above
+# (kept single-sourced conceptually — see that blocklist for provenance).
+LAB_REGISTRY: dict[str, str] = {
+    'B64803075': 'TPS PROSPECCIÓ DEL SUBSÒL SL',
+}
+
+# Lab footer band: "<name>  <NIF>  Ins. Reg. Merc. ...". Anchored on the
+# mercantile-registry marker ("Ins. Reg") so it can only match the lab footer,
+# never the DADES DEL CLIENT / SOL.LICITANT block (which carries G3's own NIF
+# B25364589 but has no such marker). MULTILINE + line-start anchor keep the
+# captured name confined to its own line (no leading label/junk from prior
+# text bleeding into an unknown lab's name).
+_LAB_FOOTER_RE = re.compile(
+    r'^[ \t]*(?P<name>[^\n]+?)\s+(?P<nif>B\d{8})\s+Ins\.?\s*Reg',
+    re.IGNORECASE | re.MULTILINE,
+)
+
+
+def resolve_lab_company(text: str) -> tuple[str | None, str | None]:
+    """Resolve the testing-lab (name, nif) from GTL/lab report text.
+
+    Finds the lab footer band (the line ending in the mercantile-registry
+    marker "Ins. Reg") so it can never mistake the client/sol·licitant block —
+    which carries G3's own NIF — for the lab. A known NIF resolves to its
+    canonical spelling via LAB_REGISTRY; an unknown one returns the parsed
+    name verbatim (whitespace-collapsed) and logs a warning so a recurring
+    lab can be registered. Returns (None, None) when no footer is present.
+
+    Assumes the GTL footer band is issued by the testing lab — it is the only
+    line carrying the "Ins. Reg" mercantile-registry marker — and that a NIF
+    present in LAB_REGISTRY is authoritative over the raw footer spelling.
+    """
+    if not isinstance(text, str):
+        return (None, None)
+    match = _LAB_FOOTER_RE.search(text)
+    if not match:
+        return (None, None)
+    nif = match.group('nif').upper()
+    if nif in LAB_REGISTRY:
+        return (LAB_REGISTRY[nif], nif)
+    name = re.sub(r'\s+', ' ', match.group('name')).strip()
+    logger.warning(
+        "Unknown lab NIF %s (%r) seen in report footer; add it to "
+        "LAB_REGISTRY if it recurs.", nif, name,
+    )
+    return (name, nif)

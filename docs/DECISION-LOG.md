@@ -569,3 +569,110 @@ Anciles absents}; sondeig {Castellar 1, Bell-lloc 1, Anciles 2; resta absent}.
 3. **A4/entity confusion** — architect_company vs client_name (consultar Eva abans).
 
 *Fi entrada 2026-06-25. Tres llacunes Via A tancades (DPSH ES 7/7, category 5/7, sondeig sense espuris); guard de sondeig per contingut, no per distància; parser refactoritzat a helper pur amb 17 tests.*
+
+---
+
+## 2026-06-25 (B) — A3: GTL com a font de primer ordre per al laboratori (early-return fix + registre NIF→lab)
+
+### Context
+A3, prioritat de la sessió (vegeu `_FOR-NEW-YOU-20260625-0900.md`). Queixa d'Eva:
+"no identifica el laboratori". L'anàlisi (§7/§9 i Error 5) i el handoff plantejaven A3
+com "no hi ha extractor de GTL; cal afegir un miner que extregui `lab_testing_company`",
+i el handoff §3 afirmava que **hi havia 2-3 laboratoris diferents** i que el hardcode
+"TPS PROSPECCIÓ DEL SUBSÒL SL" era **incorrecte** per Castellar/Rubí.
+
+### Decisions arquitectòniques clau
+
+**1. La premissa "múltiples labs" del handoff §3 és FALSA — corregida amb dades.**
+Dump real dels 5 GTL (pàg. 1) + valors signats d'Eva als 7 informes de referència:
+- El laboratori és **sempre `TPS, PROSPECCIÓ DEL SUBSÒL, SL`, NIF `B64803075`** (footer
+  de TOTES les pàgines de tots els GTL; email `laboratorio@tps-perforaciones.com`).
+- Eva escriu literalment "TPS PROSPECCIÓ DEL SUBSÒL SL" a `lab_testing_company` i
+  `lab_field_company` als **7/7** informes. **El hardcode és CORRECTE** (i casa amb
+  l'ortografia d'Eva *sense comes*, millor que el footer del GTL que en duu).
+- El §3 va confondre el NIF `B25364589` amb el lab. Aquell NIF és del bloc **DADES DEL
+  CLIENT / SOL·LICITANT del GTL = G3** (adreça "C/ Vallbona 22 - Els Omells de Na Gaia"),
+  NO el laboratori. *Why important:* construir A3 sobre la premissa errònia hauria fet
+  parsejar i "corregir" un nom que ja era correcte, i potencialment triar el NIF de G3.
+
+**2. El bug REAL és un early-return, no l'absència d'extractor.**
+`extract_lab_results()` retornava `LabResults()` BUIT quan `_find_lab_pdf()` no trobava
+`LAB*.pdf`, **abans de mirar el GTL**. Els helpers (`_extract_sulfate`,
+`_extract_sample_info`, `_extract_tests_text`) JA funcionen sobre text GTL — mai
+s'invocaven per projectes GTL-only. Confirmat executant l'extractor:
+- Castellar (té `LAB-SIG.pdf`) → OK, lab="TPS...".
+- Vacarisses (només GTL) → TOT buit (`lab_testing_company=''`) → "no identifica el lab".
+
+**3. Estratègia triada (decisió del Josep): hardcode + registre NIF→lab defensiu.**
+*Why:* el lab és constant avui, però volem robustesa si G3 canvia de lab sense
+re-introduir risc de fabricació ni trencar l'ortografia exacta d'Eva.
+- `LAB_REGISTRY = {'B64803075': 'TPS PROSPECCIÓ DEL SUBSÒL SL'}` a `internal_addresses.py`
+  (mòdul canònic d'identitat de proveïdor; `B64803075` ja hi vivia a `NON_CLIENT_NIFS`).
+- NIF conegut → ortografia canònica del registre (autoritativa). NIF desconegut → nom
+  parsejat del footer + `logger.warning` (flag lleuger; Eva ho revisa al wizard). Sense
+  footer → fallback al hardcode. **Cap fabricació en cap branca.**
+- *Alternativa rebutjada (Opció C, parse-only):* produeix "TPS, PROSPECCIÓ DEL SUBSÒL, SL"
+  amb comes ≠ ortografia d'Eva → pitjor match. El registre dona el millor de tot.
+- Desambiguació clau: `_LAB_FOOTER_RE` s'ancora al marcador `Ins. Reg` (mercantil), que
+  NOMÉS apareix a la banda del footer del lab → mai captura el bloc client (`B25364589`).
+
+**4. `lab_location` NO és l'adreça del lab (correcció de §9).** És el punt de mostreig
+("Punt: S-1"); la plantilla ja posa el prefix "Punt:". No hi ha camp d'adreça de lab.
+L'extractor dona valors nus; cap canvi de format.
+
+### Implementació
+- `automation/internal_addresses.py` (+56): logger, `LAB_REGISTRY`, `_LAB_FOOTER_RE`
+  (`^[ \t]*(?P<name>[^\n]+?)\s+(?P<nif>B\d{8})\s+Ins\.?\s*Reg`, IGNORECASE|MULTILINE),
+  i `resolve_lab_company(text) -> (name, nif)` (pura, mirall de `is_non_client_nif`).
+- `automation/lab_extractor.py` (+165/-75): split IO/lògica → `_read_pdf_text` +
+  `_build_lab_results(lab_text, gtl_text, lab_path, gtl_path)` (pura). `extract_lab_results`
+  descobreix lab PDF *i* GTL; retorna buit només si NO hi ha cap; sulfats = `lab_text or
+  gtl_text` (primacia del lab PDF → projectes amb lab PDF byte-idèntics); metadades =
+  `gtl_text or lab_text`; lab company via `resolve_lab_company` + fallback hardcode a
+  `lab_field_company` i `lab_testing_company`; descripcions CA/ES inalterades.
+- `tests/test_lab_extractor.py` (nou): 11 tests, fixtures de capçalera GTL reals com a
+  constants inline (CI-safe, sense IO de PDF).
+
+### Validació empírica
+Smoke (abans → després):
+| Projecte | lab_testing_company ABANS | DESPRÉS | sulfats |
+|----------|---------------------------|---------|---------|
+| Castellar (té LAB-SIG.pdf) | 'TPS...' | 'TPS...' (idèntic) | 0.0 (idèntic) |
+| Vacarisses (GTL-only) | **''** | **'TPS PROSPECCIÓ DEL SUBSÒL SL'** | 204.7 |
+`resolve_lab_company` sobre els 4 GTL reals → sempre `('TPS PROSPECCIÓ DEL SUBSÒL SL',
+'B64803075')`, mai `B25364589`.
+
+### Tests
++11 (`test_lab_extractor.py`) + endurits els de proveïdor. La regressió de l'early-return
+està **bloquejada al límit de routing** (`extract_lab_results` amb monkeypatch dels seams
+IO): re-review va injectar el bug → `test_extract_routes_to_gtl_when_no_lab_pdf` FALLA →
+revertit → verd. Suite completa: **32 failed / 1023 passed** (baseline 32-failed inalterat;
++11 passats; 0 regressions). Re-review focalitzada: CLEAN.
+
+### Latència / cost
+Cap. Tot és text PyMuPDF + regex deterministes; cap crida LLM nova.
+
+### Limitacions conegudes
+- Lab desconegut amb etiqueta a la MATEIXA línia abans del nom (p.ex. "NIF: B... Ins.Reg")
+  podria absorbir l'etiqueta. Cap GTL real ho exhibeix; el path TPS (NIF conegut) no
+  s'hi veu afectat (resol pel registre).
+- `sulfate_mg_kg = 0.0` a Castellar des de `LAB-SIG.pdf` és preexistent (no és regressió;
+  el path del lab PDF queda intacte). Possible neteja futura separada.
+- `lab_location`/`lab_sample_id`/`lab_tests_text` poden necessitar polit fi per casar
+  amb l'estil exacte d'Eva (la plantilla ja afegeix prefixos); fora d'abast d'A3.
+
+### GO/NO-GO
+- ✅ Premissa §3 corregida amb evidència (5 GTL + 7 referències)
+- ✅ Bug real (early-return) arreglat; GTL-only ara identifica el lab
+- ✅ Registre defensiu NIF→lab; cap fabricació; ortografia d'Eva preservada
+- ✅ Castellar byte-idèntic; 0 regressions; W1 lock provat per mutació
+- ✅ GO
+
+### Següents passos
+1. **A1** — validació de rol amb `doc_type` (plano topogràfic → `architect_plan` →
+   dimensions fabricades). Alt risc; arrossega Error 2.
+2. **A4 / entity confusion** — `architect_company` etiqueta client/promotor; consultar Eva.
+3. (Opcional) Pregunta a Eva: confirmar que TPS és l'únic lab; si n'apareixen d'altres,
+   afegir-los a `LAB_REGISTRY`.
+
+*Fi entrada 2026-06-25 (B). A3: el bug no era "falta extractor" sinó un early-return que saltava el GTL; lab sempre TPS (B64803075), hardcode correcte; GTL ara font de primer ordre + registre NIF→lab defensiu; premissa "múltiples labs" del handoff §3 desmentida.*

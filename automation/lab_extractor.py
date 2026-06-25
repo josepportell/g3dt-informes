@@ -29,6 +29,8 @@ from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Any
 
+from .internal_addresses import resolve_lab_company
+
 logger = logging.getLogger(__name__)
 
 
@@ -293,110 +295,142 @@ def _detect_language(text: str) -> str:
     return 'es' if es_count > ca_count else 'ca'
 
 
-def extract_lab_results(project_path: str | Path) -> LabResults:
-    """
-    Extract laboratory test results from project PDF.
-
-    Args:
-        project_path: Path to the project folder
-
-    Returns:
-        LabResults with extracted data. Fields may be None if not found.
-    """
-    project_path = Path(project_path)
-
-    pdf_path = _find_lab_pdf(project_path)
-    if not pdf_path:
-        logger.info(f"No lab PDF found in {project_path}")
-        return LabResults()
-
+def _read_pdf_text(pdf_path: Path) -> str:
+    """Read all text from a PDF via PyMuPDF. Returns '' on failure."""
     try:
         import fitz  # PyMuPDF
     except ImportError:
-        logger.warning("PyMuPDF (fitz) not available, cannot extract lab results")
-        return LabResults()
-
-    results = LabResults(source_file=str(pdf_path))
-
+        logger.warning("PyMuPDF (fitz) not available, cannot read %s", pdf_path)
+        return ''
     try:
         doc = fitz.open(str(pdf_path))
-        full_text = ''
+        text = ''
         for page in doc:
-            full_text += page.get_text() + '\n'
+            text += page.get_text() + '\n'
         doc.close()
-        results.raw_text = full_text
+        return text
     except Exception as e:
-        logger.warning(f"Failed to read lab PDF {pdf_path}: {e}")
+        logger.warning(f"Failed to read PDF {pdf_path}: {e}")
+        return ''
+
+
+def _build_lab_results(
+    lab_text: str,
+    gtl_text: str,
+    lab_path: str = '',
+    gtl_path: str = '',
+) -> LabResults:
+    """
+    Pure extraction logic over already-read PDF text (no file IO).
+
+    The GTL report is a first-class source: a project with only a GTL report
+    (no dedicated LAB*.pdf) still yields a fully populated LabResults — lab
+    company, sulfate, sample. The lab PDF, when present, keeps primacy for the
+    sulfate value and the per-test record, so projects that have one produce
+    identical output to before this refactor.
+
+    Args:
+        lab_text: text of the dedicated lab PDF ('' if none)
+        gtl_text: text of the GTL report ('' if none)
+        lab_path: path of the lab PDF (for source_file)
+        gtl_path: path of the GTL report (for gtl_source_file)
+    """
+    results = LabResults(
+        source_file=lab_path,
+        gtl_source_file=gtl_path,
+        raw_text=lab_text or gtl_text,
+    )
+
+    if not lab_text and not gtl_text:
         return results
 
-    # Extract sulfate value
-    sulfate = _extract_sulfate(full_text)
+    # Sulfate + per-test record: prefer the lab PDF text, fall back to GTL.
+    test_text = lab_text or gtl_text
+    sulfate = _extract_sulfate(test_text)
     if sulfate is not None:
         results.sulfate_mg_kg = sulfate
-        logger.info(f"Extracted sulfate: {sulfate} mg/kg from {pdf_path.name}")
+        logger.info(f"Extracted sulfate: {sulfate} mg/kg")
 
-    # Extract sample info
-    sample_info = _extract_sample_info(full_text)
+    sample_info = _extract_sample_info(test_text)
+    test_type = _extract_test_type(test_text)
 
-    # Extract test type
-    test_type = _extract_test_type(full_text)
-
-    # Build test result
     if sulfate is not None or sample_info:
-        test = LabTestResult(
+        results.tests.append(LabTestResult(
             type=test_type,
             sample_id=sample_info.get('sample_id', ''),
             location=sample_info.get('location', ''),
             depth=sample_info.get('depth', ''),
             value=sulfate,
             unit='mg/kg' if sulfate else '',
-        )
-        results.tests.append(test)
+        ))
 
-    # Try GTL report for full sample metadata
-    gtl_path = _find_gtl_pdf(project_path)
-    gtl_text = ''
-    if gtl_path:
-        results.gtl_source_file = str(gtl_path)
-        try:
-            doc = fitz.open(str(gtl_path))
-            for page in doc:
-                gtl_text += page.get_text() + '\n'
-            doc.close()
-        except Exception as e:
-            logger.warning(f"Failed to read GTL PDF {gtl_path}: {e}")
-
-    # Use GTL text if available, otherwise fall back to lab PDF text
-    metadata_text = gtl_text or full_text
-
-    # Detect language
+    # Sample metadata prefills: GTL preferred, lab PDF as fallback.
+    metadata_text = gtl_text or lab_text
     lang = _detect_language(metadata_text)
     results.language = lang
 
-    # Extract sample info from GTL (or lab PDF as fallback)
-    if metadata_text:
-        gtl_sample_info = _extract_sample_info(metadata_text) if gtl_text else sample_info
+    meta_info = _extract_sample_info(metadata_text) if gtl_text else sample_info
+    if meta_info.get('location'):
+        results.lab_location = meta_info['location']
+    if meta_info.get('sample_id'):
+        results.lab_sample_id = meta_info['sample_id']
+    if meta_info.get('depth'):
+        results.lab_depth = f"{meta_info['depth']} m"
+    results.lab_tests_text = _extract_tests_text(metadata_text, lang)
 
-        if gtl_sample_info.get('location'):
-            results.lab_location = gtl_sample_info['location']
-
-        if gtl_sample_info.get('sample_id'):
-            results.lab_sample_id = gtl_sample_info['sample_id']
-
-        if gtl_sample_info.get('depth'):
-            results.lab_depth = f"{gtl_sample_info['depth']} m"
-
-        results.lab_tests_text = _extract_tests_text(metadata_text, lang)
-
-    # Set constant/template fields
-    results.lab_field_company = 'TPS PROSPECCIÓ DEL SUBSÒL SL'
-    results.lab_testing_company = 'TPS PROSPECCIÓ DEL SUBSÒL SL'
+    # Lab company: resolve from the footer (GTL preferred), canonicalized via
+    # the registry; fall back to the known constant when no footer parses.
+    name, _nif = resolve_lab_company(gtl_text or lab_text)
+    company = name or 'TPS PROSPECCIÓ DEL SUBSÒL SL'
+    results.lab_field_company = company
+    results.lab_testing_company = company
 
     if lang == 'es':
-        results.lab_field_description = "laboratorio de ensayos para el control de calidad de la edificación"
-        results.lab_testing_description = "laboratorio de ensayos para el control de calidad de la edificación"
+        desc = "laboratorio de ensayos para el control de calidad de la edificación"
     else:
-        results.lab_field_description = "laboratori d'assaigs per al control de qualitat de l'edificació"
-        results.lab_testing_description = "laboratori d'assaigs per al control de qualitat de l'edificació"
+        desc = "laboratori d'assaigs per al control de qualitat de l'edificació"
+    results.lab_field_description = desc
+    results.lab_testing_description = desc
 
     return results
+
+
+def extract_lab_results(project_path: str | Path) -> LabResults:
+    """
+    Extract laboratory test results from project PDFs.
+
+    Reads both the dedicated lab PDF (LAB*.pdf) and the GTL report when each
+    exists, then delegates to the pure _build_lab_results helper. Projects that
+    have ONLY a GTL report still get a fully populated LabResults (lab company,
+    sulfate, sample) — the GTL is treated as a first-class source.
+
+    Args:
+        project_path: Path to the project folder
+
+    Returns:
+        LabResults with extracted data. Fields may be empty/None if not found.
+    """
+    project_path = Path(project_path)
+
+    lab_path = _find_lab_pdf(project_path)
+    gtl_path = _find_gtl_pdf(project_path)
+
+    if not lab_path and not gtl_path:
+        logger.info(f"No lab or GTL PDF found in {project_path}")
+        return LabResults()
+
+    try:
+        import fitz  # noqa: F401  (PyMuPDF availability guard)
+    except ImportError:
+        logger.warning("PyMuPDF (fitz) not available, cannot extract lab results")
+        return LabResults()
+
+    lab_text = _read_pdf_text(lab_path) if lab_path else ''
+    gtl_text = _read_pdf_text(gtl_path) if gtl_path else ''
+
+    return _build_lab_results(
+        lab_text=lab_text,
+        gtl_text=gtl_text,
+        lab_path=str(lab_path) if lab_path else '',
+        gtl_path=str(gtl_path) if gtl_path else '',
+    )
