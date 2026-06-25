@@ -333,9 +333,47 @@ def _extract_docs_python(
             pass
 
     combined_text = "\n".join(texts)
+    fields = _parse_docs_fields(combined_text)
+
+    result = {
+        "source_files": source_files,
+        "extraction_date": datetime.now(timezone.utc).isoformat(),
+        "extraction_method": "python_regex",
+        "fields": fields,
+        "extraction_notes": (
+            f"Python regex extraction from {len(source_files)} files"
+        ),
+    }
+
+    # Backlink: _metadata.source_file records the primary input artifact so
+    # inspection tooling can trace extracted fields back to their origin.
+    # docs_extracted.json aggregates multiple sources; the list is preserved
+    # in `source_files`, and `_metadata.source_file` points at the first one
+    # (or an empty string if no files were read).
+    result["_metadata"] = {
+        "source_file": source_files[0] if source_files else "",
+        "extracted_at": datetime.now(timezone.utc).isoformat(),
+        "extraction_method": "python_regex",
+    }
+
+    output_path.parent.mkdir(exist_ok=True)
+    output_path.write_text(
+        json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8",
+    )
+
+
+def _parse_docs_fields(combined_text: str) -> dict[str, dict]:
+    """Parse project metadata fields from concatenated pressupost text.
+
+    Pure function (no IO) so the regex logic is unit-testable. Each emitted
+    field is a dict with ``value`` / ``source`` / ``confidence``. The guiding
+    rule throughout is "no value beats a wrong value": when the canonical
+    anchor is absent we emit nothing rather than guess from the scrambled
+    budget line-item table.
+    """
     fields: dict[str, dict] = {}
 
-    # Parse architect_company (line after "OBRA:")
+    # architect_company — first non-empty line after the "OBRA:" header.
     for line in combined_text.split("\n"):
         line_stripped = line.strip()
         if re.match(r"^OBRA\s*:?\s*$", line_stripped, re.IGNORECASE):
@@ -354,36 +392,36 @@ def _extract_docs_python(
                     break
             break
 
-    # Parse building_category
-    cat_match = re.search(
-        r"[Cc]ategori[ea]\s*(?:d[\'e]\s*)?(?:construcci[oó]|edifici)"
-        r"\s*[:\s]*\s*(C[0-3])",
-        combined_text,
+    # building_category (C0–C3). Templates vary by language and punctuation:
+    #   CA "Tipus d'edifici: C1"  — apostrophe is U+2019 (not ASCII '), colon sep
+    #   ES "Tipo de Edificio. C0" — no apostrophe, period separator
+    #   "Categoria de construcció/edifici: Cx" — older template
+    # The separator class accepts ":" / "." / whitespace. Validated 5/7
+    # (Rubí/Bell-lloc/Alcoletge/Vilanova present; Castellar/Anciles absent).
+    cat_patterns = (
+        r"[Cc]ategori[ea]\s*(?:d['’‘e]\s*)?(?:construcci[oó]|edifici)"
+        r"[:.\s]+(C[0-3])",
+        r"Tip(?:us|o)\s+(?:d['’‘]\s*|de\s+)?edifici[o]?[:.\s]+(C[0-3])",
     )
-    if not cat_match:
-        cat_match = re.search(
-            r"Tipus\s*(?:d[\'e]\s*)?edifici\s*[:\s]*\s*(C[0-3])",
-            combined_text,
-            re.IGNORECASE,
-        )
-    if cat_match:
-        fields["building_category"] = {
-            "value": cat_match.group(1),
-            "source": "PRESSUPOST text",
-            "confidence": 1.0,
-        }
+    for pat in cat_patterns:
+        cat_match = re.search(pat, combined_text, re.IGNORECASE)
+        if cat_match:
+            fields["building_category"] = {
+                "value": cat_match.group(1),
+                "source": "PRESSUPOST text",
+                "confidence": 1.0,
+            }
+            break
 
-    # Parse num_planned_dpsh from the canonical campaign sentence
-    # ("N assaigs de penetració dinàmica DPSH"). We deliberately do NOT
-    # read the budget's line-item table: PDF text extraction scrambles the
-    # table's column order, so the DPSH quantity ("3,00") gets separated
-    # from its label and a stray quantity from an adjacent row (the SPT /
-    # "ML previs" line, both "1,00") binds to the "ASSAIGS DPSH" header.
-    # The prose campaign sentence is a single contiguous line, so it is
-    # reliable. If it is absent we emit nothing (no value beats a wrong
-    # value). Validated 5/5: Vacarisses/Castellar/Rubí/Bell-lloc/Alcoletge.
+    # num_planned_dpsh — the canonical campaign sentence, CA + ES:
+    #   CA "4 assaigs de penetració dinàmica DPSH"
+    #   ES "5 ensayos de penetración dinámica DPSH"
+    # We deliberately avoid the budget line-item table: PDF text extraction
+    # scrambles its columns, so a stray quantity from an adjacent row binds to
+    # the "ASSAIGS DPSH" header. The prose sentence is a single contiguous
+    # line, so it is reliable. Absent → emit nothing. Validated 7/7.
     dpsh_match = re.search(
-        r"(\d+)\s+assaigs?\s+de\s+penetraci[oó]\s+din[aà]mica",
+        r"(\d+)\s+(?:assaigs?|ensayos?)\s+de\s+penetraci[oó]n?\s+din[aàá]mica",
         combined_text,
         re.IGNORECASE,
     )
@@ -394,26 +432,59 @@ def _extract_docs_python(
             "confidence": 1.0,
         }
 
-    # Parse num_planned_sondeig
-    sond_match = re.search(
-        r"(\d+)[,.]?\d*\s*(?:SONDEIG|sondeig)",
+    # num_planned_sondeig — only from the campaign prose list, never the budget
+    # table. The table repeats "SONDEIG A ROTACIO …" as a line-item header and,
+    # with column scrambling, a stray quantity binds to it → spurious counts
+    # (the old whole-document regex did exactly this for Castellar/Bell-lloc).
+    # The inner regex CANNOT distinguish that table header from the genuine
+    # prose ("1Sondeig a rotació …" / "2 sondeo a rotación …") — both yield a
+    # count — so we must keep the table out of scope. Two guards, content-first:
+    #   1. Anchor a window right after the campaign trigger ("…s'ha previst …
+    #      campanya …" / "…se ha previsto … campaña …"); the planned-test list
+    #      sits at the top of it.
+    #   2. Hard-cut that window at the budget line-item section header
+    #      ("UNITATS D'ASSAIG …" / "UNIDADES DE ENSAYO …"), which always
+    #      precedes the table's SONDEIG row. This is the real guard: it does
+    #      not depend on the table happening to sit far enough away (in the 7
+    #      current docs it is ~900 chars down, but a shorter preamble must not
+    #      reintroduce the spurious count). The 600-char cap is only a backstop.
+    #   CA "1Sondeig a rotació …"   ES "2 sondeo a rotación …"
+    # Validated: Castellar=1, Bell-lloc=1, Anciles=2; absent elsewhere.
+    camp_match = re.search(
+        r"(?:s['’‘]ha\s+previst|se\s+ha\s+previsto)\b.{0,80}?"
+        r"(?:campanya|campaña)\b(.{0,600})",
         combined_text,
+        re.IGNORECASE | re.DOTALL,
     )
-    if sond_match:
-        fields["num_planned_sondeig"] = {
-            "value": int(sond_match.group(1)),
-            "source": "PRESSUPOST text",
-            "confidence": 1.0,
-        }
+    if camp_match:
+        window = camp_match.group(1)
+        budget_hdr = re.search(
+            r"UNITATS?\s+D['’‘]ASSAIG|UNIDADES?\s+DE\s+ENSAYO",
+            window,
+            re.IGNORECASE,
+        )
+        if budget_hdr:
+            window = window[: budget_hdr.start()]
+        sond_match = re.search(
+            r"(\d+)\s*(?:sondeigs?|sondeos?)\s+a\s+rotaci[oó]n?",
+            window,
+            re.IGNORECASE,
+        )
+        if sond_match:
+            fields["num_planned_sondeig"] = {
+                "value": int(sond_match.group(1)),
+                "source": "PRESSUPOST campaign sentence",
+                "confidence": 1.0,
+            }
 
-    # Parse site_address from the OBRA block.
-    # The EMPLAÇAMENT anchor hit "emplaçament de la màquina de penetració"
-    # boilerplate and returned garbage.  The OBRA block extracts in reading
-    # order (unlike the line-item table), so a line-based parser is reliable.
-    # Structure: OBRA: / [client?] / ESTUDI[O] GEO... / [street?] / municipality / CLIENT:
+    # site_address from the OBRA block. The EMPLAÇAMENT anchor hit the
+    # "emplaçament de la màquina de penetració" boilerplate and returned
+    # garbage. The OBRA block extracts in reading order (unlike the line-item
+    # table), so a line-based parser is reliable.
+    # Structure: OBRA: / [client?] / ESTUDI[O] GEO… / [street?] / municipality / CLIENT:
     # Post-ESTUDI: last = municipality, penultimate = street (when present).
     # No street (e.g. Rubí): emit nothing — "no value beats a wrong value."
-    # Linyola (no ESTUDI line, single combined line): known limitation, emits nothing.
+    # Linyola (no ESTUDI line, single combined line): known limitation.
     obra_lines = combined_text.split("\n")
     obra_street = None
     obra_muni = None
@@ -443,31 +514,7 @@ def _extract_docs_python(
             "confidence": 0.95,
         }
 
-    result = {
-        "source_files": source_files,
-        "extraction_date": datetime.now(timezone.utc).isoformat(),
-        "extraction_method": "python_regex",
-        "fields": fields,
-        "extraction_notes": (
-            f"Python regex extraction from {len(source_files)} files"
-        ),
-    }
-
-    # Backlink: _metadata.source_file records the primary input artifact so
-    # inspection tooling can trace extracted fields back to their origin.
-    # docs_extracted.json aggregates multiple sources; the list is preserved
-    # in `source_files`, and `_metadata.source_file` points at the first one
-    # (or an empty string if no files were read).
-    result["_metadata"] = {
-        "source_file": source_files[0] if source_files else "",
-        "extracted_at": datetime.now(timezone.utc).isoformat(),
-        "extraction_method": "python_regex",
-    }
-
-    output_path.parent.mkdir(exist_ok=True)
-    output_path.write_text(
-        json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8",
-    )
+    return fields
 
 
 # ---------------------------------------------------------------------------

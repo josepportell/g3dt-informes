@@ -485,3 +485,87 @@ Before/after (auto_extract, `client_nif`):
 3. (Opcional) label-stripping de NIF/adreça a les previews de `concept_sources_to_signals`
 
 *Fi entrada 2026-06-24. `signals_emitted:0` era un stub hardcoded (no pèrdua de dades); el bug real és competició; fix acotat de NIFs de proveïdor exclou el CIF de G3 i del laboratori de client_nif (5/8→0/8).*
+
+---
+
+## 2026-06-25 — Llacunes Via A tancades (DPSH ES, building_category, sondeig) + refactor testejable
+
+### Context
+Continuació de la sessió 2026-06-23 (champion-challenger Via A vs B2). El §4.5 de
+`ANALISI-PIPELINE-DEBUG-VACARISSES.md` deixava tres llacunes del parser Python de
+pressupostos (`_extract_docs_python`): `num_planned_dpsh` fallava en castellà (5/7),
+`building_category` no s'extreia mai (0/7) i `num_planned_sondeig` produïa falsos
+positius (Castellar/Bell-lloc). A2 ("desactivar ignorar ACCEPTACIO") es va descartar:
+la seva premissa ja havia quedat desmentida el 2026-06-24 (ACCEPTACIO no s'ignora;
+és un no-op). Mètode: ancorar cada regex en text **real** dels 7 pressupostos de
+`/mnt/c/claude/g3dt/projectes/` abans de tocar codi (no endevinar patrons).
+
+### Decisions arquitectòniques clau
+
+**1. Extreure un helper pur `_parse_docs_fields(combined_text) -> dict`.**
+Why: la lògica de regex vivia incrustada dins una funció amb IO (obre PDFs, escriu
+JSON), impossible d'unit-testar. El helper pur separa parsing de IO → 17 tests
+deterministes sense fitxers. Trade-off: una funció més; comportament idèntic
+(architect_company i site_address es mouen verbatim).
+
+**2. `num_planned_dpsh` — afegir la forma castellana a l'àncora de campanya.**
+`(\d+)\s+(?:assaigs?|ensayos?)\s+de\s+penetraci[oó]n?\s+din[aàá]mica`. Cobreix CA
+"assaigs de penetració dinàmica" i ES "ensayos de penetración dinámica". 5/7 → 7/7.
+
+**3. `building_category` — apòstrof Unicode + plantilla ES.**
+La plantilla CA escriu "Tipus d'edifici:" amb U+2019 (no l'ASCII `'` que la regex
+antiga `d[\'e]` esperava); la ES escriu "Tipo de Edificio." amb separador punt. Nou:
+classe d'apòstrof `['’‘]` + alternativa `Tip(?:us|o) … edifici[o]?` + separador
+`[:.\s]+`. 0/7 → 5/7 (Castellar/Anciles no en tenen → cap valor, correcte).
+
+**4. `num_planned_sondeig` — guard per CONTINGUT, no per distància (decisió clau).**
+El problema: la capçalera de la taula de pressupost ("SONDEIG A ROTACIO…") és
+**indistingible per regex** de la prosa de campanya ("1Sondeig a rotació…") — totes
+dues donen un comptatge. La primera temptativa acotava una finestra de N caràcters
+després del trigger de campanya, confiant que la taula queda ~900 car. avall. El
+code-review ho va marcar: això funciona **per sort de maquetació**, i aquest codi té
+historial de regressions en projectes nous (preocupació de la Sílvia). Decisió:
+després d'ancorar la finestra, **tallar-la al primer header de secció de pressupost**
+(`UNITATS D'ASSAIG…` / `UNIDADES DE ENSAYO…`), que sempre precedeix la fila SONDEIG
+de la taula. La finestra de 600 car. queda com a backstop, no com a guard primari.
+Alternativa rebutjada (finestra fixa sola): re-introdueix el fals positiu si el
+preàmbul és curt. Principi: "cap valor és millor que un de fals".
+
+### Implementació
+- `web/vision_fast.py`: nou `_parse_docs_fields()` (~110 línies, mou + corregeix);
+  `_extract_docs_python()` ara hi delega. Suggeriments del review aplicats: classe
+  d'apòstrof al trigger de campanya, simplificació `\s*[:.\s]+\s*`→`[:.\s]+`.
+- `tests/test_docs_fields_parser.py`: 17 tests nous (CA/ES DPSH, apòstrof Unicode,
+  separador ES, sondeig present/absent, **content-cut en les dues direccions**,
+  boilerplate de la clàusula d'aigua, regressions de site_address/architect_company).
+
+### Validació empírica
+7/7 contra els pressupostos reals: DPSH {Castellar 4, Rubí 3, Bell-lloc 2, Alcoletge 3,
+Vilanova 3, Anciles 5}; category {Rubí/Vilanova/Alcoletge C0, Bell-lloc C1; Castellar/
+Anciles absents}; sondeig {Castellar 1, Bell-lloc 1, Anciles 2; resta absent}.
+
+### Tests
+17 nous a `test_docs_fields_parser.py`. Suite completa: **32 failed / 1012 passed**
+(baseline 32-failed inalterat; +14 nous respecte els 14 de la sessió NIF; passats de
+995→1012 amb aquests 17 menys solapaments — tots verds). Re-review: CLEAN.
+
+### Limitacions conegudes
+- A2 descartat (no-op). El problema real d'ACCEPTACIO és la competició/entitat (§3.3),
+  no l'exclusió.
+- `architect_company` segueix etiquetant client/promotor com a arquitecte (A4/entity
+  confusion) — no tocat aquí; requereix lògica més intel·ligent que regex (§4.3).
+- Linyola: `_find_pressupost_pdf` no descobreix el PDF de nom no-estàndard.
+
+### GO/NO-GO
+✅ GO — fixes validats 7/7, tests verds, re-review net, zero regressions.
+
+### Següents passos
+1. **A1** — validació de rol amb `doc_type` del concept_map (plano topogràfic
+   classificat com a `architect_plan` → dimensions fabricades). Error 1, alt risc
+   (fabricació). Arrossega Error 2 (sondeig_annex rep el mateix fitxer).
+2. **A3** — extractor positiu de GTL: `lab_testing_company`/`lab_location` (Eva ho
+   demana: "no identifica el laboratori"). El fix de NIF de 2026-06-24 era la meitat
+   negativa; falta la positiva.
+3. **A4/entity confusion** — architect_company vs client_name (consultar Eva abans).
+
+*Fi entrada 2026-06-25. Tres llacunes Via A tancades (DPSH ES 7/7, category 5/7, sondeig sense espuris); guard de sondeig per contingut, no per distància; parser refactoritzat a helper pur amb 17 tests.*

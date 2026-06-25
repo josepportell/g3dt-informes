@@ -694,7 +694,9 @@ La línia post-ESTUDI és el carrer (si n'hi ha); l'última és el municipi. Si 
 Decisions per camp: veure `DECISION-LOG.md` entrada `2026-06-23`.
 
 **Lacunes Via A pendents:**
-- `num_planned_dpsh` per a PDFs en castellà (afegir regex `ensayos de penetración dinámica`)
-- `architect_company` label errònia — és client/promotor, no arquitecte (tasca "entity confusion")
-- `building_category` regex: apostrofació Unicode (' vs ') → parxar `[''']`
-- `num_planned_sondeig` regex laxa (espuris a Castellar/Bell-lloc)
+- ✅ `num_planned_dpsh` per a PDFs en castellà — RESOLT 2026-06-25 (afegit `ensayos de penetración dinámica`; 5/7→7/7).
+- ⏳ `architect_company` label errònia — és client/promotor, no arquitecte (tasca "entity confusion" A4; requereix lògica > regex).
+- ✅ `building_category` apostrofació Unicode — RESOLT 2026-06-25 (classe `['’‘]` + plantilla ES "Tipo de Edificio."; 0/7→5/7).
+- ✅ `num_planned_sondeig` espuris — RESOLT 2026-06-25 (guard per contingut: talla la finestra de campanya al header `UNITATS D'ASSAIG`/`UNIDADES DE ENSAYO` abans de la fila SONDEIG de la taula).
+
+*Detall: `DECISION-LOG.md` entrada 2026-06-25.*
