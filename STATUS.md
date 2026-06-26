@@ -21,19 +21,16 @@ Regressió: **32 failed / 1023 passed** (baseline 32-failed inalterat).
 
 ## Open items (per prioritat)
 
-1. **A1 — validació de rol amb `doc_type`** (alt risc, fabricació): plano topogràfic
-   classificat com a `architect_plan` → dimensions inventades (425×426m de cotes).
-   Arrossega Error 2 (sondeig_annex rep el mateix fitxer equivocat). El concept_map
-   ja té el senyal estructurat (`notes` prefix "map:"/"plan:"). Veure §9 A1 + §5.2.
-2. **A4 / entity confusion**: `architect_company` etiqueta client/promotor com a
+1. **A4 / entity confusion**: `architect_company` etiqueta client/promotor com a
    arquitecte; el client pot ser un particular. Requereix lògica > regex. **Consultar
    Eva** sobre el mapatge architect_company vs client_name abans de tocar-ho (§4.3).
-3. **StreetView adjacents** (Eva ho ha demanat): vista de carrer / Google Earth.
-4. **A7 — Wizard UX**: desbloquejar entrada manual de nivells de sòl quan no hi ha
+2. **StreetView adjacents** (Eva ho ha demanat): vista de carrer / Google Earth.
+3. **A7 — Wizard UX**: desbloquejar entrada manual de nivells de sòl quan no hi ha
    sondeig_annex (canvi de wizard, separable del pipeline).
-5. **Linyola**: pressupost `2_02B_DG_Silvia_Jaume.pdf` (nom no-estàndard); `_find_pressupost_pdf` no el descobreix.
+4. **Linyola**: pressupost `2_02B_DG_Silvia_Jaume.pdf` (nom no-estàndard); `_find_pressupost_pdf` no el descobreix.
 
 ### Resolt recentment
+- ✅ A1 (25 juny C) — SUPERAT pel codi actual, NO-FIX: `plano.pdf` ja no és `architect_plan` (8/8 projectes; unassigned). Verificat end-to-end amb `vision_fast` real (pitjor cas plano.pdf→planol): `dimensions=null`, Claude identifica el topogràfic i no fabrica. Error 2 (sondeig→plano) viu només al llegat `vision_groq`, no a producció. Premissa de l'anàlisi (§5.3/§9 A1) desmentida.
 - ✅ A3 (25 juny B): GTL ara font de primer ordre (fix early-return); lab sempre TPS `B64803075` (hardcode correcte 7/7) + registre NIF→lab defensiu; Vacarisses (GTL-only) ja identifica el lab. Premissa "múltiples labs" del handoff §3 desmentida.
 - ✅ Via A: `num_planned_dpsh` ES, `building_category` (apòstrof+ES), `num_planned_sondeig` (25 juny).
 - ✅ A2 (ACCEPTACIO) — DESCARTAT: era un no-op (ACCEPTACIO no s'ignora; premissa desmentida 24 juny).
@@ -48,5 +45,6 @@ Dev: worktree `clients/g3dt-fix/` — `fix/pipeline-routing`.
 
 ## Lectura per a la propera sessió
 1. `docs/DECISION-LOG.md` — entrada 2026-06-25 (B) (A3 GTL/lab) + 2026-06-25 (Via A) + 2026-06-24 (fix NIF).
-2. `docs/ANALISI-PIPELINE-DEBUG-VACARISSES.md §9` — accions A1, A4–A7 (A2/A3/A8 tancades).
-   ⚠ §3/§7 deien "múltiples labs / hardcode incorrecte" → DESMENTIT: lab sempre TPS `B64803075`.
+2. `docs/ANALISI-PIPELINE-DEBUG-VACARISSES.md §9` — accions A4–A7 (A1/A2/A3/A8 tancades).
+   ⚠ L'anàlisi és STALE (artefactes de codi vell): §3/§7 "múltiples labs" DESMENTIT (lab sempre TPS `B64803075`);
+   §5.3/§9 A1 "plano→architect_plan→425×426 fabricat" DESMENTIT (plano.pdf unassigned 8/8; visió retorna null). Re-executa `scan()` abans de confiar en cap artefacte.

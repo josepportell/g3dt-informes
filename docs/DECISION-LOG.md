@@ -676,3 +676,81 @@ Cap. Tot és text PyMuPDF + regex deterministes; cap crida LLM nova.
    afegir-los a `LAB_REGISTRY`.
 
 *Fi entrada 2026-06-25 (B). A3: el bug no era "falta extractor" sinó un early-return que saltava el GTL; lab sempre TPS (B64803075), hardcode correcte; GTL ara font de primer ordre + registre NIF→lab defensiu; premissa "múltiples labs" del handoff §3 desmentida.*
+
+---
+
+## 2026-06-25 (C) — A1: confusió de rol `architect_plan` → SUPERAT pel codi actual (verificat end-to-end, sense fix)
+
+### Context
+A1 (alt risc de fabricació): l'anàlisi (`ANALISI-PIPELINE-DEBUG-VACARISSES.md` §5.3, §9 A1,
+Error 1/2) deia que `plano.pdf` (mapa topogràfic) s'assignava a `architect_plan` i el model
+fabricava dimensions de parcel·la `425.4 × 426.0 m` llegint cotes topogràfiques (424/426
+m.s.n.m.). Proposta original: validar el rol contra el `doc_type` del concept_map (prefix
+`notes` "map:"/"plan:") i invalidar-lo en cas de contradicció.
+
+### Decisions arquitectòniques clau
+
+**1. La premissa d'A1 és STALE — verificat empíricament als 8 projectes (codi actual).**
+Igual que A3 §3, els artefactes que motivaven A1 (`file_mapping.json` amb
+`architect_plan=plano.pdf` i `sondeig_annex=plano.pdf`) són de **codi vell (2026-06-12)**.
+Re-executant `FileScanner.scan()` amb el codi de `fix/pipeline-routing`:
+- `plano.pdf` queda **unassigned** — els patrons d'`architect_plan` (`^A\.\d+\.pdf$`) no hi
+  casen. **Cap projecte (0/8) assigna un mapa topogràfic a `architect_plan`.**
+- El slot de visió `planol` l'omple ara el rol propi `situation_plan` (7/8 projectes);
+  només Bell-lloc/Alcoletge tenen `A.01` real.
+- **0 contradiccions rol-vs-doc_type** a tots els projectes. A més, el senyal que A1 faria
+  servir (doc_type del concept_map) és **absent on caldria**: els plànols de situació
+  (FreeHand) donen doc_type `∅`, i 5/8 projectes no tenen concept_map a temps d'scan.
+  → un guard doc_type dispararia **0 cops** i es recolzaria en un senyal sovint inexistent.
+
+**2. Verificació end-to-end (decisió del Josep): cap dimensió fabricada arriba a l'informe.**
+Execució del pipeline de visió de PRODUCCIÓ real (`web/vision_fast.py` → `claude -p`, força
+refresc, 418s) sobre Vacarisses. El run va fer servir el `file_mapping.json` STALE (perquè
+`scanner.load()` retorna el cache si existeix), de manera que va alimentar el **pitjor cas**:
+el topogràfic `plano.pdf` a l'extractor `planol`. Resultat de l'extracció (Claude actual):
+- `dimensions: null` — **zero fabricació** (el bug vell donava 425×426).
+- `extraction_notes`: *"This PDF is a topographic site survey... NOT an architectural plan...
+  contour lines with elevation labels (423.00...427.00 m)"* — reconeix les cotes com a
+  **elevacions, no dimensions**.
+- Només `street_address: "Carrer la Barceloneta"` (real, legítim).
+- `sondeig_annex_extracted.json` NO regenerat → `vision_fast` no té el fallback
+  concept_map→plano. **Error 2 viu només al llegat `vision_groq`, no a producció.**
+
+**3. Dues proteccions independents → no cal fix.**
+(a) Nivell de rol: `scan()` actual deixa `plano.pdf` sense rol. (b) Nivell de visió: encara
+que un rol stale l'alimenti, el prompt+model retorna `dimensions=null` i etiqueta el doc_type.
+Construir el guard doc_type seria un **no-op** (0/8) sobre un senyal absent → no s'implementa
+(mateix criteri que A2 descartat: no arreglar un no-bug; risc d'over-invalidation, p.ex.
+Linyola on `situation_plan` té doc_type `architect_plan`, un match positiu que un guard
+matusser podria descartar).
+
+### Implementació
+Cap canvi de codi. Només verificació + documentació.
+
+### Validació empírica
+- `FileScanner.scan()` sobre 8 projectes: `plano.pdf` unassigned; 0 contradiccions rol/doc_type.
+- `vision_fast` real sobre Vacarisses (pitjor cas, plano.pdf→planol): `dimensions=null`,
+  doc_type correctament identificat com a topogràfic.
+
+### Tests
+Cap test nou (no hi ha canvi de codi). Suite inalterada: 32 failed / 1023 passed.
+
+### Limitacions conegudes / observacions
+- **Cache de `file_mapping.json`**: `scanner.load()` reutilitza un `file_mapping.json` vell si
+  existeix. Si a la màquina d'Eva un projecte té el mapping cachejat de codi vell (rol dolent),
+  persisteix — però la protecció de visió (dimensions=null) es manté igualment. Tangencial a A1.
+- La protecció de nivell de visió és conductual (no determinista). Les dues capes juntes fan
+  improbable la fabricació; un guard determinista addicional té ROI baix avui.
+
+### GO/NO-GO
+- ✅ Premissa A1 desmentida amb evidència (8/8)
+- ✅ Verificació end-to-end: cap dimensió fabricada a l'informe (pitjor cas inclòs)
+- ✅ A1 SUPERAT pel codi actual — NO-FIX (com A2)
+- ⏳ Error 2 (sondeig→plano) only-legacy `vision_groq`; no afecta producció `vision_fast`
+
+### Següents passos
+1. **A4 / entity confusion** — `architect_company` etiqueta client/promotor; consultar Eva.
+2. **StreetView adjacents** (Eva ho ha demanat).
+3. **A7 — Wizard UX**: entrada manual de nivells de sòl sense sondeig_annex.
+
+*Fi entrada 2026-06-25 (C). A1 superat pel codi actual: plano.pdf ja no és architect_plan (8/8) i, fins i tot en el pitjor cas, el prompt+Claude actuals retornen dimensions=null sobre el topogràfic (verificat amb vision_fast real, 418s). NO-FIX.*
