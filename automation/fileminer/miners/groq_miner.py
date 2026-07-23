@@ -42,7 +42,8 @@ GROQ_PRICING: dict[str, tuple[float, float]] = {
     "llama-3.1-8b-instant": (0.05, 0.08),
     "qwen/qwen3-32b": (0.29, 0.59),
     "llama-3.3-70b-versatile": (0.59, 0.79),
-    "meta-llama/llama-4-scout-17b-16e-instruct": (0.11, 0.34),
+    "meta-llama/llama-4-scout-17b-16e-instruct": (0.11, 0.34),  # retired 2026-07-17, kept for historical cost lookups
+    "qwen/qwen3.6-27b": (0.60, 3.00),
 }
 
 # G3 internal data to exclude from results

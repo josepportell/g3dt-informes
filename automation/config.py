@@ -122,7 +122,7 @@ GROQ_API_KEY: str = _env("GROQ_API_KEY")
 
 VISION_MODEL_OPENAI: str = _env("OPENAI_VISION_MODEL", "gpt-4.1-mini")
 VISION_MODEL_ANTHROPIC: str = _env("ANTHROPIC_VISION_MODEL", "claude-sonnet-4-6")
-VISION_MODEL_GROQ: str = _env("GROQ_VISION_MODEL", "meta-llama/llama-4-scout-17b-16e-instruct")
+VISION_MODEL_GROQ: str = _env("GROQ_VISION_MODEL", "qwen/qwen3.6-27b")
 
 # ---------------------------------------------------------------------------
 # Text models

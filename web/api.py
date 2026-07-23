@@ -1264,7 +1264,7 @@ def download_audit_report(project_name: str):
 # --- Groq Deep Mine endpoints ---
 
 class GroqMineRequest(BaseModel):
-    model: str = "meta-llama/llama-4-scout-17b-16e-instruct"
+    model: str = config.TEXT_MODEL_GROQ
     clear_cache: bool = False
 
 
@@ -1273,7 +1273,7 @@ def groq_mine(project_name: str, req: GroqMineRequest | None = None):
     """Run Groq deep mine on a project with specified model."""
     import shutil
 
-    model = req.model if req else "meta-llama/llama-4-scout-17b-16e-instruct"
+    model = req.model if req else config.TEXT_MODEL_GROQ
     clear_cache = req.clear_cache if req else False
 
     os.environ["G3DT_USE_GROQ"] = "1"
@@ -1358,16 +1358,16 @@ def groq_models():
                 "notes": "Most capable. Best accuracy, slower.",
             },
             {
-                "id": "meta-llama/llama-4-scout-17b-16e-instruct",
-                "name": "Llama 4 Scout 17Bx16E",
-                "input_price_per_m": 0.11,
-                "output_price_per_m": 0.34,
-                "speed_tps": 594,
+                "id": "qwen/qwen3.6-27b",
+                "name": "Qwen3.6 27B",
+                "input_price_per_m": 0.60,
+                "output_price_per_m": 3.00,
+                "speed_tps": 500,
                 "context_window": 131072,
-                "notes": "MoE architecture. Good quality/price ratio.",
+                "notes": "Multimodal (text+vision). Replaces deprecated Llama 4 Scout (retired 2026-07-17).",
             },
         ],
-        "current_model": os.environ.get("GROQ_MODEL", "meta-llama/llama-4-scout-17b-16e-instruct"),
+        "current_model": os.environ.get("GROQ_MODEL", config.TEXT_MODEL_GROQ),
         "api_key_set": bool(os.environ.get("GROQ_API_KEY")),
     }
 
@@ -1381,7 +1381,7 @@ def set_groq_model(req: SetModelRequest):
     """Set the Groq text miner model at runtime."""
     valid_models = {
         "llama-3.1-8b-instant", "qwen/qwen3-32b",
-        "llama-3.3-70b-versatile", "meta-llama/llama-4-scout-17b-16e-instruct",
+        "llama-3.3-70b-versatile", "qwen/qwen3.6-27b",
     }
     if req.model not in valid_models:
         raise HTTPException(status_code=400, detail=f"Unknown model: {req.model}")

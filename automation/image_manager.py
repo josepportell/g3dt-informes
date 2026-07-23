@@ -519,10 +519,12 @@ class ImageManager:
         return None
 
     def _call_groq_for_photos(self, prompt: str, grid_bytes: bytes) -> dict | None:
-        """Fallback: call Groq Llama 4 Scout for photo selection."""
+        """Fallback: call Groq vision model for photo selection."""
         import base64
         import json
         import os
+
+        from automation import config
 
         api_key = os.environ.get("GROQ_API_KEY")
         if not api_key:
@@ -536,7 +538,7 @@ class ImageManager:
         img_b64 = base64.b64encode(grid_bytes).decode('utf-8')
 
         payload = {
-            "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+            "model": config.VISION_MODEL_GROQ,
             "messages": [{
                 "role": "user",
                 "content": [
