@@ -216,13 +216,17 @@ class ReportGenerator:
                 data = load_sondeig_json(sondeig_path)
                 for test in data.get('sondeig_tests', []):
                     for spt in test.get('spt_results', []):
-                        depth_from = spt.get('depth_from_m', '')
-                        depth_to = spt.get('depth_to_m', '')
-                        depth_range = f"-{depth_from:.2f} a {depth_to:.2f}" if depth_from != '' and depth_to != '' else ''
+                        depth_from = spt.get('depth_from_m')
+                        depth_to = spt.get('depth_to_m')
+                        depth_range = f"-{depth_from:.2f} a {depth_to:.2f}" if depth_from is not None and depth_to is not None else ''
                         # Get lithology from the layer at SPT depth
                         lithology = ''
                         for layer in test.get('layers', []):
-                            if layer.get('depth_from_m', 0) <= (depth_from or 0) < layer.get('depth_to_m', 99):
+                            layer_from = layer.get('depth_from_m')
+                            layer_from = 0 if layer_from is None else layer_from
+                            layer_to = layer.get('depth_to_m')
+                            layer_to = 99 if layer_to is None else layer_to
+                            if layer_from <= (depth_from or 0) < layer_to:
                                 lithology = layer.get('description', '')
                                 break
                         return {
@@ -242,9 +246,9 @@ class ReportGenerator:
                 dpsh_data = load_dpsh_json(dpsh_path)
                 spt = dpsh_data.get('spt_in_dpsh')
                 if spt:
-                    depth_from = spt.get('depth_from_m', '')
-                    depth_to = spt.get('depth_to_m', '')
-                    depth_range = f"-{depth_from:.2f} a -{depth_to:.2f}" if depth_from != '' and depth_to != '' else ''
+                    depth_from = spt.get('depth_from_m')
+                    depth_to = spt.get('depth_to_m')
+                    depth_range = f"-{depth_from:.2f} a -{depth_to:.2f}" if depth_from is not None and depth_to is not None else ''
                     # Format location as P-N (add hyphen if missing)
                     ref = spt.get('location', '')
                     if ref and '-' not in ref:
@@ -1254,9 +1258,14 @@ class ReportGenerator:
                     # Only filter by sondeig layer depth when user level count matches sondeig layer count
                     if sondeig_layers and num_user_levels == len(sondeig_layers) and level.level_number <= len(sondeig_layers):
                         sl = sondeig_layers[level.level_number - 1]
-                        d_from = sl.get('depth_from_m', 0)
-                        d_to = sl.get('depth_to_m', 999)
-                        level_readings = [r for r in all_readings if d_from <= abs(r.depth_m) <= d_to]
+                        d_from = sl.get('depth_from_m')
+                        d_from = 0 if d_from is None else d_from
+                        d_to = sl.get('depth_to_m')
+                        d_to = 999 if d_to is None else d_to
+                        level_readings = [
+                            r for r in all_readings
+                            if r.depth_m is not None and d_from <= abs(r.depth_m) <= d_to
+                        ]
 
                     # Representative Nb for this level (Eva shows average Nb as integer, e.g. "25-R")
                     if level_readings:
