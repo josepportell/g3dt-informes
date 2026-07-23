@@ -1,23 +1,26 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-06-25
+Last updated: 2026-07-23
 
 ## Estat actual
 
-**Branca dev:** `fix/pipeline-routing` (worktree `clients/g3dt-fix/`).
-**Branca production:** `production/g3dt-eva-v1` — sincronitzada amb origin fins `d964729` (23 juny).
+**Branca production:** `production/g3dt-eva-v1` — sincronitzada amb origin fins `04074c4` (26 juny).
+`fix/pipeline-routing` fusionat (fast-forward) i pujat a origin el 2026-07-23. Worktree
+`clients/g3dt-fix/` ja es pot esborrar (verificar amb Josep primer).
 
 ### Desplegat a Eva (2026-06-08 pull) ⏳ pendent confirmació
 - Render-crash fix (`aa508c2`), SPT refusal fix (`7be711f`), geological-levels fix (`cbf5763`+`242228a`).
 
-### A `fix/pipeline-routing`, NO pujat a production encara
+### Fusionat a production 2026-07-23 (pendent de pull físic a l'ordinador de l'Eva — Josep hi va avui)
 | Commit | Contingut |
 |--------|-----------|
+| `b11043c`…`d964729` (23 juny) | site_address/municipality/client_name via Via A + Via B2 (pressupost vision) |
 | `ad3a369` (24 juny) | Exclou NIFs de proveïdor (G3 + laboratori) de `client_nif` (5/8→0/8) |
 | `40c2d14` (24 juny) | Docs: correcció premissa §2.2 + DECISION-LOG fix NIF |
 | `00c7def` (25 juny) | Via A: DPSH ES 7/7, building_category 5/7, sondeig sense espuris; refactor `_parse_docs_fields` + 17 tests |
-| _(25 juny B, sense commit encara)_ | A3: GTL com a font de primer ordre (fix early-return) + registre NIF→lab defensiu; Vacarisses (GTL-only) ara identifica el lab + 11 tests |
+| `453436e` (25 juny) | A3: GTL com a font de primer ordre (fix early-return) + registre NIF→lab defensiu; Vacarisses (GTL-only) ara identifica el lab + 11 tests |
+| `04074c4` (26 juny) | Docs: A1 investigat i tancat NO-FIX (verificat end-to-end) |
 
-Regressió: **32 failed / 1023 passed** (baseline 32-failed inalterat).
+Regressió: **32 failed / 1023 passed** (baseline 32-failed inalterat — reverificat 2026-07-23 post-merge).
 
 ## Open items (per prioritat)
 
@@ -37,7 +40,8 @@ Regressió: **32 failed / 1023 passed** (baseline 32-failed inalterat).
 - ✅ A8 — superat (`num_dpsh_tests` ja ve de l'Excel, ja correcte).
 
 ## Blockers actius
-- Confirmació d'Eva del pull de 2026-06-08 (bugs 1+2+render).
+- Confirmació d'Eva del pull de 2026-06-08 (bugs 1+2+render) — encara pendent 2026-07-23.
+- Pull físic a `C:\g3dt-ia` (ordinador Eva) del contingut fusionat avui (04074c4) — Josep hi va en persona 2026-07-23.
 
 ## Wizard
 Producció: `http://localhost:8765` a `C:\g3dt-ia` (ordinador Eva).
