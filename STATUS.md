@@ -1,16 +1,16 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-07-23
+Last updated: 2026-07-23 (visita presencial a l'ordinador de l'Eva)
 
 ## Estat actual
 
-**Branca production:** `production/g3dt-eva-v1` — sincronitzada amb origin fins `04074c4` (26 juny).
-`fix/pipeline-routing` fusionat (fast-forward) i pujat a origin el 2026-07-23. Worktree
+**Branca production:** `production/g3dt-eva-v1` — sincronitzada amb origin fins `b579ef5`.
+Pull físic fet a `C:\g3dt-ia` el 2026-07-23 (Josep en persona). Worktree
 `clients/g3dt-fix/` ja es pot esborrar (verificar amb Josep primer).
 
-### Desplegat a Eva (2026-06-08 pull) ⏳ pendent confirmació
+### Desplegat a Eva (2026-06-08 pull) ⏳ pendent confirmació (~7 setmanes)
 - Render-crash fix (`aa508c2`), SPT refusal fix (`7be711f`), geological-levels fix (`cbf5763`+`242228a`).
 
-### Fusionat a production 2026-07-23 (pendent de pull físic a l'ordinador de l'Eva — Josep hi va avui)
+### Fusionat + pujat a producció 2026-07-23
 | Commit | Contingut |
 |--------|-----------|
 | `b11043c`…`d964729` (23 juny) | site_address/municipality/client_name via Via A + Via B2 (pressupost vision) |
@@ -19,8 +19,16 @@ Last updated: 2026-07-23
 | `00c7def` (25 juny) | Via A: DPSH ES 7/7, building_category 5/7, sondeig sense espuris; refactor `_parse_docs_fields` + 17 tests |
 | `453436e` (25 juny) | A3: GTL com a font de primer ordre (fix early-return) + registre NIF→lab defensiu; Vacarisses (GTL-only) ara identifica el lab + 11 tests |
 | `04074c4` (26 juny) | Docs: A1 investigat i tancat NO-FIX (verificat end-to-end) |
+| `6d3aa62` (23 juliol) | Docs: STATUS post-merge |
+| `2e2abe7` (23 juliol) | Fix: Groq `llama-4-scout` retirat (17 jul) → `qwen/qwen3.6-27b` (config.py + image_manager.py hardcode + web/api.py picker) |
+| `b579ef5` (23 juliol) | Fix: crash generació d'informe — `None` a `depth_from_m`/`depth_to_m` no protegit per `.get(key, default)`. Recurrent des de 12 juny (Bellpuig, mai havia generat informe) |
 
-Regressió: **32 failed / 1023 passed** (baseline 32-failed inalterat — reverificat 2026-07-23 post-merge).
+Regressió: **32 failed / 1023 passed** (baseline inalterat — reverificat 2 cops, 2026-07-23).
+
+### Incidents en viu resolts avui (veure `.claude/sessions/2026-07-23-session.md`)
+1. Groq model picker no trobava el model (`.env` d'Eva editat en persona, gitignored).
+2. Crash real en generar informe per **4001769 IVARS DE NOGUERA** — fixat, pendent que l'Eva ho torni a provar.
+3. **Troballa:** el mateix crash (idèntic traceback) ja bloquejava **4001713 C.MAJOR BELLPUIG** des del 12 de juny (2 intents) i 18 de juny (1 intent) — mai havia generat informe. El fix d'avui hauria de desbloquejar-lo. **Demanar a l'Eva que ho torni a provar.**
 
 ## Open items (per prioritat)
 
@@ -40,8 +48,9 @@ Regressió: **32 failed / 1023 passed** (baseline 32-failed inalterat — reveri
 - ✅ A8 — superat (`num_dpsh_tests` ja ve de l'Excel, ja correcte).
 
 ## Blockers actius
-- Confirmació d'Eva del pull de 2026-06-08 (bugs 1+2+render) — encara pendent 2026-07-23.
-- Pull físic a `C:\g3dt-ia` (ordinador Eva) del contingut fusionat avui (04074c4) — Josep hi va en persona 2026-07-23.
+- Confirmació d'Eva del pull de 2026-06-08 (bugs 1+2+render) — encara pendent 2026-07-23, ~7 setmanes.
+- Confirmació d'Eva que IVARS DE NOGUERA genera informe correctament post-fix (2026-07-23).
+- Demanar a l'Eva que reintenti BELLPUIG (bloquejat des del 12 de juny, mai generat) — hauria de funcionar ara.
 
 ## Wizard
 Producció: `http://localhost:8765` a `C:\g3dt-ia` (ordinador Eva).
