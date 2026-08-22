@@ -57,17 +57,41 @@ def http(monkeypatch):
 # image cap
 # ---------------------------------------------------------------------------
 
-def test_groq_more_than_5_images_sends_nothing(http):
-    assert vg.GROQ_MAX_IMAGES == 5
-    out = vg._call_groq_vision("p", ["img"] * 6, "sys")
+def test_groq_more_than_cap_images_sends_nothing(http):
+    # qwen/qwen3.6-27b: "This model supports up to 3 images" (Tulipa 2026-08-22)
+    assert config.GROQ_MAX_IMAGES == 3
+    out = vg._call_groq_vision("p", ["img"] * 4, "sys")
     assert out is None
     assert http.calls == []
 
 
-def test_groq_exactly_5_images_is_sent(http):
+def test_groq_exactly_cap_images_is_sent(http):
     http.queue[:] = [_Resp(200, _chat('{"ok": 1}'))]
-    assert vg._call_groq_vision("p", ["img"] * 5, "sys") == {"ok": 1}
+    assert vg._call_groq_vision("p", ["img"] * 3, "sys") == {"ok": 1}
     assert len(http.calls) == 1
+
+
+def test_groq_payload_disables_reasoning(http, monkeypatch):
+    http.queue[:] = [_Resp(200, _chat('{"ok": 1}'))]
+    vg._call_groq_vision("p", ["img"], "sys")
+    assert http.calls[0]["reasoning_effort"] == "none"
+    # kill-switch: empty string omits the parameter
+    monkeypatch.setattr(config, "GROQ_REASONING_EFFORT", "")
+    http.queue[:] = [_Resp(200, _chat('{"ok": 1}'))]
+    vg._call_groq_vision("p", ["img"], "sys")
+    assert "reasoning_effort" not in http.calls[1]
+
+
+def test_groq_http_400_not_retried(http):
+    http.queue[:] = [_Resp(400, text='{"error": {"message": "Failed to generate JSON"}}')]
+    assert vg._call_groq_vision("p", ["img"], "sys") is None
+    assert len(http.calls) == 1 and http.sleeps == []
+
+
+def test_groq_http_5xx_retried(http):
+    http.queue[:] = [_Resp(503, text="busy"), _Resp(200, _chat('{"ok": 1}'))]
+    assert vg._call_groq_vision("p", ["img"], "sys") == {"ok": 1}
+    assert len(http.calls) == 2 and http.sleeps == [2]
 
 
 # ---------------------------------------------------------------------------

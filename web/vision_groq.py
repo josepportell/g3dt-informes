@@ -38,10 +38,10 @@ PROVIDER_MAX_OUTPUT_TOKENS: dict[str, int] = {
 }
 
 
-# F4 (2026-08, AUDIT-PROD §T1/T3): Groq vision models accept at most 5 images
+# F4 (2026-08, AUDIT-PROD §T1/T3): Groq vision models accept only a few images
 # per request ("Too many images provided", 27× in Eva's logs — one wasted
-# round-trip each). Over the cap we skip Groq and let the chain move on.
-GROQ_MAX_IMAGES = 5
+# round-trip each; 5 for llama-4-scout, 3 for qwen/qwen3.6-27b). Over the cap
+# we skip Groq and let the chain move on. Value lives in config.GROQ_MAX_IMAGES.
 RETRY_AFTER_MAX_S = 60.0
 
 # Count of HTTP 429 responses seen this process (all providers). concept_scout's
@@ -533,10 +533,10 @@ def _call_groq_vision(
         logger.warning("Groq Vision: no API key")
         return None
 
-    if len(images) > GROQ_MAX_IMAGES:
+    if len(images) > config.GROQ_MAX_IMAGES:
         logger.info(
             "Groq Vision: %d images > %d supported — skipping Groq (no request sent)",
-            len(images), GROQ_MAX_IMAGES,
+            len(images), config.GROQ_MAX_IMAGES,
         )
         return None
 
@@ -559,6 +559,9 @@ def _call_groq_vision(
         "max_tokens": max_tokens,
         "response_format": {"type": "json_object"},
     }
+    if config.GROQ_REASONING_EFFORT:
+        # Reasoning models (qwen3.6) otherwise burn the output budget thinking.
+        payload["reasoning_effort"] = config.GROQ_REASONING_EFFORT
 
     for attempt in range(1, max_retries + 1):
         t0 = time.monotonic()
@@ -587,14 +590,19 @@ def _call_groq_vision(
                 return None
 
             if resp.status_code != 200:
+                # 4xx is deterministic (bad request, too many images, JSON
+                # validation failed): retrying it returns the same 4xx. Tulipa
+                # 2026-08-22: 31 × HTTP 400 each retried 3 × ~10 s. Retry 5xx only.
+                retry = resp.status_code >= 500 and attempt < max_retries
                 logger.warning(
-                    "Groq Vision: HTTP %d %s (attempt %d/%d)",
+                    "Groq Vision: HTTP %d %s (attempt %d/%d%s)",
                     resp.status_code,
                     resp.text[:200],
                     attempt,
                     max_retries,
+                    "" if retry else ", not retrying",
                 )
-                if attempt < max_retries:
+                if retry:
                     time.sleep(2)
                     continue
                 return None

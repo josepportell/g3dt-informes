@@ -25,6 +25,8 @@ __all__ = [
     "VISION_MODEL_OPENAI",
     "VISION_MODEL_ANTHROPIC",
     "VISION_MODEL_GROQ",
+    "GROQ_REASONING_EFFORT",
+    "GROQ_MAX_IMAGES",
     # Text models
     "TEXT_MODEL_GROQ",
     "TEXT_MODEL_ANTHROPIC",
@@ -123,6 +125,16 @@ GROQ_API_KEY: str = _env("GROQ_API_KEY")
 VISION_MODEL_OPENAI: str = _env("OPENAI_VISION_MODEL", "gpt-4.1-mini")
 VISION_MODEL_ANTHROPIC: str = _env("ANTHROPIC_VISION_MODEL", "claude-sonnet-4-6")
 VISION_MODEL_GROQ: str = _env("GROQ_VISION_MODEL", "qwen/qwen3.6-27b")
+# F4 (2026-08-22): qwen/qwen3.6-27b is a reasoning model. Without
+# reasoning_effort="none" it spends 1.5-4k output tokens "thinking" on a
+# 100-char classification JSON (6× slower, frequent HTTP 400 "Failed to
+# generate JSON", truncation at max_tokens). Groq docs: Qwen 3.6 27B accepts
+# "none" | "default". Set GROQ_REASONING_EFFORT="" to omit the parameter
+# (e.g. for a model that rejects it).
+GROQ_REASONING_EFFORT: str = _env("GROQ_REASONING_EFFORT", "none")
+# Max images per Groq vision request. llama-4-scout accepted 5; qwen/qwen3.6-27b
+# answers HTTP 400 "This model supports up to 3 images" (Tulipa run 2026-08-22).
+GROQ_MAX_IMAGES: int = max(1, int(_env("GROQ_MAX_IMAGES", "3")))
 
 # ---------------------------------------------------------------------------
 # Text models
