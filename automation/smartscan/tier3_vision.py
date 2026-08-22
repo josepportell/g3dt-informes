@@ -153,9 +153,17 @@ def _classify_with_groq(
     rel_path: str,
     abs_path: Path,
 ) -> FileClassification | None:
-    """Classify a file using Groq Llama 4 Scout vision."""
+    """Classify a file using the Groq vision model (config.VISION_MODEL_GROQ)."""
     images = _get_images_b64(abs_path)
     if not images:
+        return None
+    if len(images) > config.GROQ_MAX_IMAGES:
+        # F4 (2026-08): the model answers HTTP 400 "Too many images" — don't
+        # spend the round-trip; Claude Tier 3 handles the multi-page file.
+        logger.info(
+            "Groq Tier 3: %d page(s) > %d supported for %s — skipping Groq",
+            len(images), config.GROQ_MAX_IMAGES, rel_path,
+        )
         return None
 
     try:
@@ -186,9 +194,14 @@ def _classify_with_groq(
             },
         ],
         "temperature": 0.0,
-        "max_tokens": 256,
+        "max_tokens": 512,
         "response_format": {"type": "json_object"},
     }
+    if "qwen3" in config.VISION_MODEL_GROQ.lower() and config.GROQ_REASONING_EFFORT:
+        # F4c (2026-08-22): without this, qwen3.6 spends the whole budget
+        # thinking and Groq answers 400 "Failed to generate JSON" (18/18 photos
+        # in the Tulipa run) → every photo fell through to Claude (~7 s each).
+        payload["reasoning_effort"] = config.GROQ_REASONING_EFFORT
 
     t0 = time.monotonic()
     try:

@@ -391,6 +391,10 @@ class GroqMiner(BaseMiner):
             "max_tokens": GROQ_MAX_TOKENS,
             "response_format": {"type": "json_object"},
         }
+        if "qwen3" in model.lower() and config.GROQ_REASONING_EFFORT:
+            # Groq-native switch (the "/no_think" suffix above is the legacy
+            # Qwen3 convention; qwen3.6 honours reasoning_effort="none").
+            payload["reasoning_effort"] = config.GROQ_REASONING_EFFORT
 
         logger.debug(
             "Groq API call for %s: %d chars, model=%s",
@@ -423,11 +427,15 @@ class GroqMiner(BaseMiner):
                     return None
 
                 if resp.status_code != 200:
+                    # 4xx is deterministic (404 model_not_found, 400 bad JSON):
+                    # retrying returns the same answer. Retry 5xx only (F4c).
+                    retry = resp.status_code >= 500 and attempt < MAX_RETRIES
                     logger.warning(
-                        "Groq API error for %s: HTTP %d %s (attempt %d/%d)",
+                        "Groq API error for %s: HTTP %d %s (attempt %d/%d%s)",
                         rel_path, resp.status_code, resp.text[:200], attempt, MAX_RETRIES,
+                        "" if retry else ", not retrying",
                     )
-                    if attempt < MAX_RETRIES:
+                    if retry:
                         delay = RETRY_BASE_DELAY * (2 ** (attempt - 1))
                         time.sleep(delay)
                         continue

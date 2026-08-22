@@ -207,3 +207,56 @@ def test_probe_budget_disabled_with_zero(tmp_path, monkeypatch):
     monkeypatch.setattr(vision_probe, "_run_probe", fake_run)
     vision_probe.probe_unreadable_files(entries, tmp_path)
     assert len(calls) == 4
+
+
+# ---------------------------------------------------------------------------
+# F4c — the other two Groq call paths: groq_miner (text) and SmartScan Tier 3
+# ---------------------------------------------------------------------------
+
+def test_text_model_default_is_not_the_retired_one():
+    # qwen/qwen3-32b → HTTP 404 model_not_found on Groq (Tulipa run 2026-08-22)
+    assert config.TEXT_MODEL_GROQ != "qwen/qwen3-32b"
+
+
+def _miner(tmp_path, monkeypatch, model: str):
+    from automation.fileminer.miners import groq_miner as gm
+
+    monkeypatch.setenv("GROQ_API_KEY", "test-key")
+    monkeypatch.setenv("GROQ_MODEL", model)
+    monkeypatch.setattr(gm.time, "sleep", lambda s: (_ for _ in ()).throw(AssertionError("slept")))
+    return gm.GroqMiner(tmp_path)
+
+
+def test_groq_miner_404_not_retried(tmp_path, monkeypatch, http):
+    miner = _miner(tmp_path, monkeypatch, "qwen/qwen3.6-27b")
+    http.queue[:] = [_Resp(404, text='{"error":{"code":"model_not_found"}}')]
+    assert miner._call_groq("prompt", "f.pdf") is None
+    assert len(http.calls) == 1
+
+
+def test_groq_miner_reasoning_param_gated_on_qwen3(tmp_path, monkeypatch, http):
+    miner = _miner(tmp_path, monkeypatch, "qwen/qwen3.6-27b")
+    http.queue[:] = [_Resp(200, {"choices": [{"message": {"content": '{"extractions": []}'}}], "usage": {}})]
+    miner._call_groq("prompt", "f.pdf")
+    assert http.calls[0]["reasoning_effort"] == "none"
+
+    miner = _miner(tmp_path, monkeypatch, "openai/gpt-oss-20b")
+    http.queue[:] = [_Resp(200, {"choices": [{"message": {"content": '{"extractions": []}'}}], "usage": {}})]
+    miner._call_groq("prompt", "f.pdf")
+    assert "reasoning_effort" not in http.calls[1]
+
+
+def test_tier3_groq_skips_over_cap_and_disables_reasoning(tmp_path, monkeypatch, http):
+    from automation.smartscan import tier3_vision as t3
+
+    monkeypatch.setattr(config, "VISION_MODEL_GROQ", "qwen/qwen3.6-27b")
+    monkeypatch.setattr(t3, "_get_images_b64", lambda p, max_pages=None: [("aGk=", "image/jpeg")] * 4)
+    assert t3._classify_with_groq("FOTOS/x.pdf", tmp_path / "x.pdf") is None
+    assert http.calls == []
+
+    monkeypatch.setattr(t3, "_get_images_b64", lambda p, max_pages=None: [("aGk=", "image/jpeg")])
+    http.queue[:] = [_Resp(200, {"choices": [{"message": {"content": '{"role": "site_photo", "confidence": 0.9}'}}], "usage": {}})]
+    t3._classify_with_groq("FOTOS/x.jpeg", tmp_path / "x.jpeg")
+    assert len(http.calls) == 1
+    assert http.calls[0]["reasoning_effort"] == "none"
+    assert http.calls[0]["max_tokens"] >= 512

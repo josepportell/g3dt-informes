@@ -140,7 +140,11 @@ GROQ_MAX_IMAGES: int = max(1, int(_env("GROQ_MAX_IMAGES", "3")))
 # Text models
 # ---------------------------------------------------------------------------
 
-TEXT_MODEL_GROQ: str = _env("GROQ_TEXT_MODEL", "qwen/qwen3-32b")
+# F4c (2026-08-22): qwen/qwen3-32b retired on Groq (HTTP 404 model_not_found,
+# 3 retries × every mined file in Eva's openings). Live list via GET /models:
+# qwen/qwen3.6-27b is the only remaining Qwen3-family text model (the code
+# already has the qwen3 no-think handling); reasoning is disabled per request.
+TEXT_MODEL_GROQ: str = _env("GROQ_TEXT_MODEL", "qwen/qwen3.6-27b")
 TEXT_MODEL_ANTHROPIC: str = _env("ANTHROPIC_TEXT_MODEL", "claude-sonnet-4-6")
 
 # ---------------------------------------------------------------------------
