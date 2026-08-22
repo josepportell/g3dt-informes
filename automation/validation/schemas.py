@@ -12,7 +12,7 @@ Usage:
     from validation.schemas import DPSHValidationFile, SondeigValidationFile
 
     # Load extracted data
-    validation = DPSHValidationFile.model_validate_json(path.read_text())
+    validation = DPSHValidationFile.model_validate_json(path.read_text(encoding="utf-8"))
 
     # Check status
     if validation.status == ValidationStatus.APPROVED:
@@ -210,12 +210,12 @@ class DPSHValidationFile(BaseModel):
 
     def save(self, path: Path) -> None:
         """Save to file."""
-        path.write_text(self.to_json())
+        path.write_text(self.to_json(), encoding="utf-8")
 
     @classmethod
     def load(cls, path: Path) -> "DPSHValidationFile":
         """Load from file."""
-        return cls.model_validate_json(path.read_text())
+        return cls.model_validate_json(path.read_text(encoding="utf-8"))
 
 
 # ============================================================================
@@ -318,11 +318,11 @@ class SondeigValidationFile(BaseModel):
         return self.model_dump_json(indent=indent)
 
     def save(self, path: Path) -> None:
-        path.write_text(self.to_json())
+        path.write_text(self.to_json(), encoding="utf-8")
 
     @classmethod
     def load(cls, path: Path) -> "SondeigValidationFile":
-        return cls.model_validate_json(path.read_text())
+        return cls.model_validate_json(path.read_text(encoding="utf-8"))
 
 
 # ============================================================================

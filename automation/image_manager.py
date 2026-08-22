@@ -658,7 +658,7 @@ class ImageManager:
             return None
         try:
             import json
-            return json.loads(mapping_path.read_text()).get('roles', {})
+            return json.loads(mapping_path.read_text(encoding="utf-8")).get('roles', {})
         except Exception as e:
             logger.warning(f"Could not read file_mapping.json: {e}")
             return None
@@ -674,7 +674,7 @@ class ImageManager:
             return None
         try:
             import json
-            return json.loads(mapping_path.read_text()).get('role_files')
+            return json.loads(mapping_path.read_text(encoding="utf-8")).get('role_files')
         except Exception as e:
             logger.warning(f"Could not read role_files from file_mapping.json: {e}")
             return None

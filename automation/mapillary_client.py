@@ -536,7 +536,7 @@ def _load_cache(cache_dir: Path) -> dict[str, MapillaryAnalysis] | None:
         return None
 
     try:
-        data = json.loads(analysis_path.read_text())
+        data = json.loads(analysis_path.read_text(encoding="utf-8"))
         results: dict[str, MapillaryAnalysis] = {}
         for direction, entry in data.items():
             results[direction] = MapillaryAnalysis(
@@ -571,7 +571,7 @@ def _save_cache(cache_dir: Path, results: dict[str, MapillaryAnalysis]) -> None:
             "confidence": analysis.confidence,
             "images_used": analysis.images_used,
         }
-    (cache_dir / "analysis.json").write_text(json.dumps(data, indent=2))
+    (cache_dir / "analysis.json").write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------

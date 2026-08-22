@@ -1984,6 +1984,26 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
     return _merge_prefills(project_name, project_path, auto_result)
 
 
+def _read_file_mapping(project_path: Path) -> dict[str, Any] | None:
+    """Read ``file_mapping.json`` (always UTF-8) or return None if missing/unreadable.
+
+    F1 (2026-08): reading without ``encoding`` uses cp1252 on Windows,
+    but ``file_scanner`` writes UTF-8 (``ensure_ascii=False``). A file name with
+    a byte outside cp1252 (e.g. ``Í`` → 0xC3 0x8D) raised ``UnicodeDecodeError``
+    here and left the wizard empty (Can Mir Rubí, 4/4 attempts). Never crash on
+    this file: a corrupt mapping must not blank the wizard.
+    """
+    fm_path = project_path / 'file_mapping.json'
+    if not fm_path.exists():
+        return None
+    try:
+        data = json.loads(fm_path.read_text(encoding='utf-8'))
+    except Exception as exc:
+        logger.warning("file_mapping.json unreadable (%s): %s", fm_path, exc)
+        return None
+    return data if isinstance(data, dict) else None
+
+
 def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> dict[str, Any]:
     """Merge auto_extract result with vision + wizard prefills. Shared by sync and streaming paths."""
     _run_vision_phase(project_path, force_refresh=False)
@@ -2144,13 +2164,7 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
 
     # Terrain observation from field photos (for is_anthropized decision)
     if not merged.get('terrain_observation'):
-        fm_path = project_path / 'file_mapping.json'
-        fm_roles = {}
-        if fm_path.exists():
-            try:
-                fm_roles = json.loads(fm_path.read_text()).get('roles', {})
-            except Exception:
-                pass
+        fm_roles = (_read_file_mapping(project_path) or {}).get('roles', {})
         obs = _observe_terrain_photos(project_path, fm_roles)
         if obs:
             merged['terrain_observation'] = {
@@ -2166,10 +2180,7 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
         detections = []
 
         # Get file_mapping for role lookups
-        fm_path = project_path / "file_mapping.json"
-        file_mapping = None
-        if fm_path.exists():
-            file_mapping = json.loads(fm_path.read_text())
+        file_mapping = _read_file_mapping(project_path)
 
         if file_mapping and "roles" in file_mapping:
             for role_name, role_info in file_mapping["roles"].items():
