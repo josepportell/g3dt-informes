@@ -8,6 +8,7 @@ from __future__ import annotations
 import base64
 import json
 import logging
+import random
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -35,6 +36,43 @@ PROVIDER_MAX_OUTPUT_TOKENS: dict[str, int] = {
     "groq": 16384,
     "anthropic": 128000,
 }
+
+
+# F4 (2026-08, AUDIT-PROD §T1/T3): Groq vision models accept at most 5 images
+# per request ("Too many images provided", 27× in Eva's logs — one wasted
+# round-trip each). Over the cap we skip Groq and let the chain move on.
+GROQ_MAX_IMAGES = 5
+RETRY_AFTER_MAX_S = 60.0
+
+# Count of HTTP 429 responses seen this process (all providers). concept_scout's
+# vision_probe reads it to cap how many rate-limits one wizard opening may absorb
+# (320 × 5 s = 14 min of sleep in 14 days of logs).
+_rate_limit_count = 0
+_rate_limit_lock = threading.Lock()
+
+
+def _note_rate_limit() -> None:
+    global _rate_limit_count
+    with _rate_limit_lock:
+        _rate_limit_count += 1
+
+
+def rate_limit_count() -> int:
+    """Number of 429s seen so far in this process (monotonic)."""
+    with _rate_limit_lock:
+        return _rate_limit_count
+
+
+def _retry_delay(resp, attempt: int) -> float:
+    """Seconds to wait after a 429: Retry-After if present, else 2-4-8 s + jitter."""
+    headers = getattr(resp, "headers", None) or {}
+    raw = headers.get("retry-after") if hasattr(headers, "get") else None
+    if raw:
+        try:
+            return max(0.0, min(float(raw), RETRY_AFTER_MAX_S))
+        except (TypeError, ValueError):
+            pass
+    return float(2 ** attempt) + random.uniform(0.0, 1.0)
 
 
 def _max_tokens_for(vtype: str, provider: str | None = None) -> int:
@@ -495,6 +533,13 @@ def _call_groq_vision(
         logger.warning("Groq Vision: no API key")
         return None
 
+    if len(images) > GROQ_MAX_IMAGES:
+        logger.info(
+            "Groq Vision: %d images > %d supported — skipping Groq (no request sent)",
+            len(images), GROQ_MAX_IMAGES,
+        )
+        return None
+
     content: list[dict] = [{"type": "text", "text": extraction_prompt}]
     for b64_img in images:
         content.append(
@@ -530,11 +575,14 @@ def _call_groq_vision(
             elapsed_ms = int((time.monotonic() - t0) * 1000)
 
             if resp.status_code == 429:
+                _note_rate_limit()
+                delay = _retry_delay(resp, attempt)
                 logger.warning(
-                    "Groq Vision: rate limited (attempt %d/%d)", attempt, max_retries
+                    "Groq Vision: rate limited (attempt %d/%d, wait %.1fs)",
+                    attempt, max_retries, delay,
                 )
                 if attempt < max_retries:
-                    time.sleep(5)
+                    time.sleep(delay)
                     continue
                 return None
 
@@ -636,9 +684,14 @@ def _call_openai_vision(
             elapsed_ms = int((time.monotonic() - t0) * 1000)
 
             if resp.status_code == 429:
-                logger.warning("OpenAI Vision: rate limited (attempt %d/%d)", attempt, max_retries)
+                _note_rate_limit()
+                delay = _retry_delay(resp, attempt)
+                logger.warning(
+                    "OpenAI Vision: rate limited (attempt %d/%d, wait %.1fs)",
+                    attempt, max_retries, delay,
+                )
                 if attempt < max_retries:
-                    time.sleep(5)
+                    time.sleep(delay)
                     continue
                 return None
 

@@ -141,6 +141,15 @@ _PROBE_SYSTEM = "You are a document classifier for geotechnical engineering repo
 # by enumerating `concept_map.json` file inventories and counting
 # pdf_vector files with empty concepts_detected and page-1 text ≤ 2000).
 _LAYOUT_MAX_TEXT_LEN = 2000
+
+# F4 (2026-08, AUDIT-PROD §T3): max HTTP 429s one wizard opening may absorb
+# while probing images. Eva's logs: 320 rate-limits in 14 days = 14 min of
+# sleep, mostly from this serial per-image loop. Past the budget the remaining
+# uncached files are marked "unprobed" in the concept_map (the wizard already
+# copes with concepts that have no source) and one summary line is logged.
+# Set to 0 to disable the budget (never stop).
+GROQ_PROBE_429_BUDGET = 10
+_UNPROBED_NOTE = "unprobed: rate-limit budget exhausted for this opening"
 _LAYOUT_MIN_TEXT_LEN = 20  # below this we already consider it "no text" → probe
 
 # Legacy Eva-output directories (we emit these ourselves on prior runs).
@@ -451,6 +460,10 @@ def probe_unreadable_files(
     cache_dir = project_path / 'validation' / 'concept_probes'
     concept_sources: dict[str, list[ConceptSource]] = {}
 
+    rate_limits_at_start = _rate_limit_count()
+    budget_exhausted = False
+    skipped_unprobed = 0
+
     for i, fe in enumerate(to_probe):
         file_path = project_path / fe.path
         if not file_path.exists():
@@ -467,11 +480,21 @@ def probe_unreadable_files(
         key = _cache_key(file_path)
         result = _load_cached(cache_dir, key)
         if result is None:
+            if budget_exhausted:
+                fe.notes = _UNPROBED_NOTE
+                skipped_unprobed += 1
+                continue
             result = _run_probe(file_path)
             if result:
                 _save_cache(cache_dir, key, result)
+            seen_429 = _rate_limit_count() - rate_limits_at_start
+            if GROQ_PROBE_429_BUDGET and seen_429 >= GROQ_PROBE_429_BUDGET:
+                budget_exhausted = True
 
         if not result:
+            if budget_exhausted and not fe.notes:
+                fe.notes = _UNPROBED_NOTE
+                skipped_unprobed += 1
             continue
 
         rel_path = str(file_path.relative_to(project_path))
@@ -486,4 +509,21 @@ def probe_unreadable_files(
         for cid, src in sources.items():
             concept_sources.setdefault(cid, []).append(src)
 
+    if budget_exhausted:
+        logger.warning(
+            "Vision probe: rate-limit budget exhausted (%d × HTTP 429 ≥ %d) — "
+            "%d file(s) left unprobed this opening",
+            _rate_limit_count() - rate_limits_at_start, GROQ_PROBE_429_BUDGET,
+            skipped_unprobed,
+        )
+
     return concept_sources
+
+
+def _rate_limit_count() -> int:
+    """Process-wide 429 counter from web.vision_groq (0 if not importable)."""
+    try:
+        from web.vision_groq import rate_limit_count
+    except ImportError:
+        return 0
+    return rate_limit_count()
