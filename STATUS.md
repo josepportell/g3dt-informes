@@ -1,15 +1,25 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-07-23 (visita presencial a l'ordinador de l'Eva)
+Last updated: 2026-08-22 (fixes F1-F4e a `review/prod-audit-2026-08`, pendent fusió)
 
-## ⚠ Auditoria interna en curs (2026-08-22)
+## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
-Branca `review/prod-audit-2026-08` **in-place** a `g3dt-prod/` (sense worktree). Prod intacte.
-Evidència: 14 dies de logs reals de l'Eva → `docs/audit/AUDIT-PROD-2026-08.md`.
-Resum: 19 projectes reals, 14 informes OK; espera prefills mediana 7,1 min (tot LLM);
-visió DPSH trencada (Anthropic 92% FAIL per parser, OpenAI 43% per `max_tokens`); crash
-Unicode cp1252 a `wizard_service.py:2172` **no fixat**; estat post-visita 23 jul no verificat.
-**Pla d'execució per a sessió nova:** `docs/PLA-FIXES-PROD-2026-08.md` (F1-F4 + verificació
-Tulipa + documentació, ~4,5 h, guardarails inclosos). F5 (estat ordinador Eva) = Josep.
+Branca `review/prod-audit-2026-08` **in-place** a `g3dt-prod/`. `production/g3dt-eva-v1` **sense cap commit nou**.
+Auditoria: `docs/audit/AUDIT-PROD-2026-08.md` · pla: `docs/PLA-FIXES-PROD-2026-08.md` (§7 omplert) ·
+verificació: `docs/audit/VERIFICACIO-FIXES-2026-08.md` · DECISION-LOG entrada 2026-08-22.
+
+| Fix | Commit | Estat |
+|---|---|---|
+| F1 crash cp1252 (Can Mir Rubí) | `89f34b5` | ✅ + guard estàtic |
+| F2 Anthropic parser JSON (92 % FAIL DPSH) | `cac6ba6` | ✅ DPSH Anthropic 3/3 OK a V |
+| F3 `max_tokens` per tipus + truncament sense reintents | `992c13c` | ✅ (Tulipa necessita 6,6k tokens) |
+| F4 Groq imatges / backoff / pressupost 429 | `ec44b20` | ✅ |
+| F4b-e Groq `qwen3.6` raonament + models retirats (9 camins) | `c339f1f` `af1a6e0` `ed42221` `6a6f780` | ✅ trobat a V, no previst al pla |
+| V end-to-end (Tulipa, Rubí, Bell-lloc) | — | prefills 273 / 266 / 282 s · 0 tracebacks · 3 informes · **< 3 min NO** |
+| F5 ordinador Eva (pull + `.env`) | — | ⏳ Josep (amb F4d un `.env` antic ja no trenca) |
+
+Suite: **32 failed / 1079 passed** (baseline 32 / 1023, fallades idèntiques; 56 tests nous).
+**Decisions pendents del Josep:** fusionar a prod; sessió de latència estructural (paral·lelitzar visió/probes, prefills
+bàsics abans de la visió — el que queda són 145 + 52 s de models en sèrie); GPT-5.6 Luna vs gpt-4.1-mini.
 
 ## Estat actual
 

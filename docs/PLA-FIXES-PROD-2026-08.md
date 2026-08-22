@@ -251,8 +251,31 @@ Criteri global: **prefills < 3 min** en els tres, **DPSH via Anthropic OK** en a
 - Els 32 tests del baseline.
 - StreetView adjacents, A4 entity confusion, Linyola pressupost (STATUS "Open items").
 
-## 7. Notes de la sessió executora (omplir)
+## 7. Notes de la sessió executora (2026-08-22, omplert)
 
-- Desviacions del pla i per què:
-- "Ja que hi som" detectats (NO fets):
-- Dubtes per al Josep:
+**Estat:** F1-F4 fets i commitats (`89f34b5`, `cac6ba6`, `992c13c`, `ec44b20`) + F4b-F4e (`c339f1f`, `af1a6e0`,
+`ed42221`, `6a6f780`) + V + D. Resultat de V: `docs/audit/VERIFICACIO-FIXES-2026-08.md`. DECISION-LOG entrada 2026-08-22.
+
+- **Desviacions del pla i per què:**
+  - F2 sense prefill d'assistant `"{"`: retorna HTTP 400 a claude-*-4-6 (opció prevista al pla: "ometre i confiar en 1+3").
+  - F3: en truncament la cadena **s'atura** (no ×2); motiu al DECISION-LOG §3.
+  - F4 ampliat (F4b-e) perquè V ha demostrat que el model Groq del 23 jul (`qwen3.6-27b`, raonament) era la causa dominant
+    del temps: `reasoning_effort=none`, cap 3 imatges, 4xx sense reintent, model de text retirat (404), mapa de models
+    retirats, helper únic als 9 camins Groq. Cada pas té mesura al DECISION-LOG. Són fixes, no refactors de fase.
+  - `--timeout=600` de pytest no existeix (no hi ha `pytest-timeout`); s'ha usat el timeout de la crida.
+  - Anthropic verificat via OpenRouter (clau del `.env` de dev sense crèdit); mateix model.
+  - Tests de V concurrents amb la suite final a Bell-lloc run 2 (valor pessimista, anotat).
+- **"Ja que hi som" detectats (NO fets):**
+  - Centralitzar la crida httpx a Groq en un client únic (9 còpies). Ara hi ha un helper de payload + test estàtic.
+  - Paral·lelitzar els 5 tipus de visió i les 23 probes (145 + 52 s en sèrie) → Tulipa ≈ 2 min. És AUDIT §3.2.
+  - `web/api.py` picker Groq llista models retirats (UI).
+  - `vision_probe` imposa `street_address`/`municipality` llegits d'una foto WhatsApp (Rubí → narrativa en castellà).
+  - Geocode usa el nom de carpeta com a municipi (`C.Tulipa Cerdanyola`) → warnings sísmic/radó.
+  - Carpetes `_validation/` (artefactes de debug) es minen com a dades del projecte.
+  - La suite de tests deixa `docs/diagnostics/ai_pipeline_demo-project_<data>.md` sense versionar.
+- **Dubtes per al Josep:**
+  1. Fusionar `review/prod-audit-2026-08` a `production/g3dt-eva-v1` i pull a l'Eva? (8 commits, suite idèntica al baseline).
+  2. Atacar la latència estructural (paral·lel + prefills bàsics primer) en una sessió pròpia?
+  3. `gpt-4.1-mini` → GPT-5.6 Luna? Més barat i 128k de sortida, però p50 4,1 s i raonament: cal provar-lo al
+     `deep_folder_classify` (5-14 crides en sèrie) abans de canviar res.
+  4. La clau Anthropic del `.env` de dev no té crèdit — vols recarregar-la o passem dev a OpenRouter per defecte?

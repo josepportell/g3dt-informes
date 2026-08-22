@@ -754,3 +754,102 @@ Cap test nou (no hi ha canvi de codi). Suite inalterada: 32 failed / 1023 passed
 3. **A7 — Wizard UX**: entrada manual de nivells de sòl sense sondeig_annex.
 
 *Fi entrada 2026-06-25 (C). A1 superat pel codi actual: plano.pdf ja no és architect_plan (8/8) i, fins i tot en el pitjor cas, el prompt+Claude actuals retornen dimensions=null sobre el topogràfic (verificat amb vision_fast real, 418s). NO-FIX.*
+
+## 2026-08-22 — Fixes F1-F4e post-auditoria prod (branca `review/prod-audit-2026-08`)
+
+### Context
+`docs/audit/AUDIT-PROD-2026-08.md` (14 dies de logs reals de l'Eva): crash Unicode cp1252 (Can Mir Rubí 0/4),
+visió DPSH trencada (Anthropic 92 % FAIL per parser, OpenAI 43 % per `max_tokens`), espera mediana 7,1 min tota
+LLM. Pla d'execució: `docs/PLA-FIXES-PROD-2026-08.md`. Guardarails: prod intacte, in-place, sense refactors de fases,
+un commit per fix amb test, baseline 32 failed / 1023 passed inalterable.
+
+### Decisions arquitectòniques clau
+
+**1. F1 — `encoding="utf-8"` explícit + helper `_read_file_mapping()` que mai llança.**
+Why: `Path.read_text()` sense encoding = cp1252 a Windows; `file_scanner` escriu UTF-8. Alternativa rebutjada:
+`errors="replace"` a tot arreu — amaga corrupció de dades; només s'aplica als dos lectors de `.env` (un `.env`
+escrit amb Notepad pot ser cp1252 i no ha de petar l'arrencada). El helper canvia un detall de comportament: un
+`file_mapping.json` corrupte ja no deixa el wizard buit (abans, excepció no capturada a la 2a lectura).
+Guard estàtic: `test_no_bare_read_text_or_write_text_in_prod_code` (escaneja `automation/` + `web/`).
+
+**2. F2 — JSON-only al system prompt + `_parse_json_response()` compartit; SENSE prefill d'assistant.**
+Why: el pla proposava prefill `"{"`; la referència de l'API confirma que **retorna HTTP 400 a tota la família
+claude-*-4-6** (i 5). Alternativa `output_config.format` (structured outputs): és el camí correcte a llarg termini
+però exigeix un JSON Schema per tipus i canvia el contracte de les 3 crides — fora del "fix acotat". El parser
+(strip → blocs ``` → text sencer → `{…}`) llança `JSONDecodeError` amb els 200 primers caràcters: **el log per fi
+diu què ha respost el model** (3 mesos sense saber-ho).
+
+**3. F3 — pressupost per tipus + detecció de truncament + la cadena S'ATURA en truncament.**
+`MAX_TOKENS_BY_TYPE = {dpsh: 16384, projecte_arquitecte: 8192}`, clamp per proveïdor (`PROVIDER_MAX_OUTPUT_TOKENS`,
+verificat: gpt-4.1-mini 32.768 docs OpenAI; qwen3.6-27b 16.384 `GET /models`; sonnet-4-6 128k). Evidència que
+calia: Tulipa 6.651 i Rubí 4.159 tokens de sortida reals per al DPSH. Alternativa rebutjada: reintentar amb ×2 al
+mateix proveïdor — Groq ja és al seu màxim (16k), un DPSH > 16k tokens és un document fora d'escala i el DPSH és
+només validació (l'Excel ja té els N20); regla "mai 3 × 150 s pel mateix error" > rescatar un cas extrem.
+`_call_backend_chain()` extret perquè el comportament sigui testejable amb backends falsos.
+
+**4. F4 + F4b-e — Groq: el problema no era (només) el rate-limit, era el model.**
+El pla preveia ≤5 imatges + backoff + pressupost de 429 (fet: `Retry-After`, 2-4-8 s + jitter, `GROQ_PROBE_429_BUDGET=10`,
+fitxers marcats `unprobed`). V ha destapat que el canvi del 23 jul a `qwen/qwen3.6-27b` (no verificat) empitjorava
+tot: és un model de raonament que gasta el `max_tokens` pensant → HTTP 400 `json_validate_failed`, reintentat 3 ×.
+Decisions successives, cada una motivada per una mesura:
+- **F4b** `reasoning_effort="none"` (documentat per Groq per a Qwen 3.6 27B; experiment: 1.600 → 250 tokens, JSON OK),
+  `GROQ_MAX_IMAGES=3` (el model ho diu al 400), 4xx sense reintent. Desviació del pla: paràmetre nou a la crida; kill-switch
+  `GROQ_REASONING_EFFORT=""`.
+- **F4c** els camins `smartscan/tier3_vision` i `groq_miner` tenen la seva pròpia crida httpx; `TEXT_MODEL_GROQ`
+  `qwen/qwen3-32b` **retirat** (404). Successor: `qwen/qwen3.6-27b` — únic Qwen3 viu; el codi ja té la branca "qwen3".
+- **F4d** `RETIRED_GROQ_MODELS` → `live_groq_model()`. Why: el `.env` (gitignored, escrit 2026-05-04) fixa el model i té
+  prioritat sobre `config`; canviar el default no arregla l'ordinador de l'Eva. Un `.env` antic ha de degradar a "funciona".
+  Dos tests existents usaven ids retirats com a "models diferents" → actualitzats (un id retirat comparteix cache amb el
+  successor, a propòsit).
+- **F4e** inventari: **9 fitxers** amb la mateixa crida; helper únic `config.groq_payload_extras(model)` + test estàtic.
+  Alternativa rebutjada: centralitzar la crida httpx en un client Groq únic — és el refactor correcte, però 7 fitxers i
+  fora del guardarail 5; queda anotat.
+
+**5. Verificació amb OpenRouter per a la via "anthropic".** La clau del `.env` de dev no té crèdit (HTTP 400). Per no
+deixar F2 sense verificar amb Claude real: `G3DT_LLM_PROVIDER=openrouter` (mateix `claude-sonnet-4-6`, SDK Anthropic
+amb `base_url`). Els `stop_reason`/`usage` arriben igual; el parser F2 s'ha exercit sobre respostes reals (3/3 OK).
+
+### Implementació
+F1: 7 fitxers, 15 línies + helper (21 LOC). F2: `prompts.py` (+3), `vision_groq.py` (+45/−25). F3: `vision_groq.py`
+(+110/−45). F4-F4e: `vision_groq.py`, `concept_scout/vision_probe.py`, `config.py`, `groq_miner.py`, `tier3_vision.py`,
+`ortho_vision.py`, `parcel_validator.py`, `mapillary_client.py`, `image_manager.py`, `geocode_coordinates.py`. Cap
+dependència nova. 8 commits `89f34b5` … `6a6f780`.
+
+### Validació empírica
+Taula completa a `docs/audit/VERIFICACIO-FIXES-2026-08.md`. Tulipa: 708 → 504 → **273 s**; Rubí 266 s; Bell-lloc
+322 → 282 s. DPSH via Anthropic **3/3 OK** (abans 8 %). 0 tracebacks, 0 truncaments, 0 rate-limits, 0 × 404, 0 × 400
+Groq (run 1: 31). Informes generats 3/3. Criteri "< 3 min" **no assolit**: el que queda és latència seqüencial de
+models (visió 145 s + probes 52 s), no errors.
+
+### Tests
+Nous: `test_utf8_read_text.py` (6), `test_vision_json_parse.py` (17), `test_vision_truncation.py` (13),
+`test_groq_vision_limits.py` (20) = **56**. Suite: **32 failed / 1079 passed** (baseline 32 / 1023; conjunt de fallades
+idèntic, verificat per diff). `pytest-timeout` no és instal·lat: el `--timeout` del pla és el de la crida, no de pytest.
+
+### Latència / cost
+Groq amb `reasoning_effort=none`: ~6 × menys tokens de sortida per probe (1.600 → 250) i 2 × més ràpid. Anthropic DPSH:
+50-78 s per crida (4-7k tokens de sortida) — és el cost real de llegir 2-5 pàgines manuscrites; abans es pagava i es
+llençava.
+
+### Limitacions conegudes
+- Prefills encara 4,5 min en projectes reals: estructural (fases en sèrie). Següent palanca: paral·lelitzar els 5 tipus de
+  visió i les probes, i mostrar prefills bàsics abans de la visió (AUDIT §3.2). Decisió del Josep.
+- Qualitat d'extracció no és objecte d'aquest pla; Rubí mostra `vision_probe` imposant adreça/municipi erronis d'una foto
+  WhatsApp (narrativa en castellà). Preexistent.
+- `web/api.py` (picker de models Groq) encara llista `qwen/qwen3-32b` i llama-3.x com a opcions (només UI).
+- F5 (estat de l'ordinador de l'Eva) segueix sent del Josep; amb F4d, un `.env` antic ja no trenca res.
+
+### GO/NO-GO
+- ✅ F1-F4 del pla fets, amb test, un commit cada un, baseline intacte.
+- ✅ V: DPSH Anthropic 3/3, 0 tracebacks, 3 informes generats.
+- ❌ V: prefills < 3 min (4,5 min) — criteri no assolit, causa identificada i fora d'abast.
+- ⏳ Fusió a `production/g3dt-eva-v1` + pull a l'ordinador de l'Eva: **decisió del Josep**.
+
+### Següents passos
+1. Josep: revisar els 8 commits; decidir fusió a prod i pull a `C:\g3dt-ia` (F5).
+2. Decidir si s'ataca la latència estructural (paral·lelitzar visió/probes; prefills bàsics primer).
+3. Avaluar substituir `gpt-4.1-mini` (OpenRouter: GPT-5.6 Luna és més barat — $0,20/$1,20 vs $0,40/$1,60 — amb 128k de
+   sortida, però p50 4,1 s vs 0,67 s; és un model de raonament i caldria verificar `response_format` + latència al
+   `deep_folder_classify`, que fa 5-14 crides en sèrie).
+
+*Fi entrada 2026-08-22. Fixes F1-F4e post-auditoria: cp1252, parser JSON, max_tokens per tipus, Groq qwen3.6 (raonament, 3 imatges, models retirats, 9 camins).*
