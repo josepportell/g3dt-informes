@@ -14,6 +14,8 @@ Projecte: Automatització de la generació d'informes geotècnics
 
 **Si l'estat detectat sembla incoherent** (per exemple, dins de `g3dt-prod/` però la branca no és `production/g3dt-eva-v1`, o canvis pendents inesperats), atura't i pregunta al Josep abans de continuar.
 
+**Excepció (2026-08-22):** durant l'auditoria de producció treballem **in-place** a `g3dt-prod/` sobre la branca `review/prod-audit-2026-08` (sense worktree nou, per decisió del Josep). Trobar `review/*` dins de `g3dt-prod/` és l'estat esperat; `production/g3dt-eva-v1` no rep commits fins que el Josep decideixi fusionar.
+
 ## Resum
 
 G3DT genera informes geotècnics per a projectes de construcció. Cada informe inclou:

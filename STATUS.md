@@ -1,6 +1,15 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
 Last updated: 2026-07-23 (visita presencial a l'ordinador de l'Eva)
 
+## ⚠ Auditoria interna en curs (2026-08-22)
+
+Branca `review/prod-audit-2026-08` **in-place** a `g3dt-prod/` (sense worktree). Prod intacte.
+Evidència: 14 dies de logs reals de l'Eva → `docs/audit/AUDIT-PROD-2026-08.md`.
+Resum: 19 projectes reals, 14 informes OK; espera prefills mediana 7,1 min (tot LLM);
+visió DPSH trencada (Anthropic 92% FAIL per parser, OpenAI 43% per `max_tokens`); crash
+Unicode cp1252 a `wizard_service.py:2172` **no fixat**; estat post-visita 23 jul no verificat.
+Fixes proposats F1-F5 pendents de decisió del Josep.
+
 ## Estat actual
 
 **Branca production:** `production/g3dt-eva-v1` — sincronitzada amb origin fins `b579ef5`.
