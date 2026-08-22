@@ -392,6 +392,49 @@ def _render_pdf_to_images(
     return images
 
 
+
+def _parse_json_response(text: str) -> dict:
+    """Parse a vision model reply into a dict, tolerating prose and fences.
+
+    F2 (2026-08, AUDIT-PROD §T1.1): Claude often answered "Here is the extracted
+    data:\n{...}" and the old ``json.loads(text)`` failed 29/29 times with
+    ``Expecting value: line 1 column 1`` — 92 % FAIL on DPSH, ~1 min lost per
+    opening. Strategy, in order:
+      (a) strip; (b) if the text has ``` fences, try every fenced block;
+      (c) try the whole text; (d) last resort: the substring from the first
+      ``{`` to the last ``}``.
+    Raises ``json.JSONDecodeError`` whose message carries the first 200 chars of
+    the reply, so the log finally shows *what* the model answered.
+    """
+    raw = (text or "").strip()
+    candidates: list[str] = []
+    if "```" in raw:
+        parts = raw.split("```")
+        for part in parts[1::2]:  # odd-indexed parts are inside code blocks
+            cleaned = part.strip()
+            if cleaned.lower().startswith("json"):
+                cleaned = cleaned[4:].strip()
+            if cleaned:
+                candidates.append(cleaned)
+    candidates.append(raw)
+    first, last = raw.find("{"), raw.rfind("}")
+    if first != -1 and last > first:
+        candidates.append(raw[first:last + 1])
+
+    for cand in candidates:
+        try:
+            result = json.loads(cand)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(result, dict):
+            return result
+
+    preview = raw[:200].replace("\n", "\\n")
+    raise json.JSONDecodeError(
+        f"no JSON object in model reply (len={len(raw)}): {preview!r}", raw, 0,
+    )
+
+
 def _call_groq_vision(
     extraction_prompt: str,
     images: list[str],
@@ -468,7 +511,7 @@ def _call_groq_vision(
 
             data = resp.json()
             content_str = data["choices"][0]["message"]["content"]
-            result = json.loads(content_str)
+            result = _parse_json_response(content_str)
 
             usage = data.get("usage", {})
             logger.info(
@@ -556,7 +599,7 @@ def _call_openai_vision(
 
             data = resp.json()
             content_str = data["choices"][0]["message"]["content"]
-            result = json.loads(content_str)
+            result = _parse_json_response(content_str)
 
             usage = data.get("usage", {})
             _record_openai_usage(
@@ -612,7 +655,12 @@ def _call_anthropic_vision(
         logger.warning("Anthropic Vision: %s", exc)
         return None
     t0 = time.monotonic()
+    stop_reason = None
+    text = ""
     try:
+        # NOTE: no assistant prefill ("{") — rejected with HTTP 400 on the
+        # claude-*-4-6 family. JSON-only output is enforced by the system
+        # prompt (EXTRACTION_SYSTEM_PROMPT "OUTPUT:") + _parse_json_response.
         response = client.messages.create(
             model=get_cc_model(),
             max_tokens=max_tokens,
@@ -620,36 +668,28 @@ def _call_anthropic_vision(
             messages=[{"role": "user", "content": content}],
         )
         elapsed_ms = int((time.monotonic() - t0) * 1000)
-
-        text = response.content[0].text
-        # Claude returns reasoning + JSON in markdown code block — extract the JSON
-        if "```" in text:
-            parts = text.split("```")
-            for part in parts[1::2]:  # odd-indexed parts are inside code blocks
-                cleaned = part.strip()
-                if cleaned.startswith("json"):
-                    cleaned = cleaned[4:].strip()
-                try:
-                    result = json.loads(cleaned)
-                    break
-                except json.JSONDecodeError:
-                    continue
-            else:
-                result = json.loads(text)  # fallback: try the whole thing
-        else:
-            result = json.loads(text)
+        stop_reason = getattr(response, "stop_reason", None)
+        text = "".join(
+            getattr(block, "text", "") for block in response.content
+            if getattr(block, "type", "") == "text"
+        )
+        result = _parse_json_response(text)
 
         logger.info(
-            "Anthropic Vision: ok in %dms (%d in + %d out tokens)",
+            "Anthropic Vision: ok in %dms (%d in + %d out tokens, stop_reason=%s)",
             elapsed_ms,
             response.usage.input_tokens,
             response.usage.output_tokens,
+            stop_reason,
         )
         return result
 
     except Exception as exc:
         elapsed_ms = int((time.monotonic() - t0) * 1000)
-        logger.warning("Anthropic Vision: %s (%dms)", exc, elapsed_ms)
+        logger.warning(
+            "Anthropic Vision: %s (%dms, stop_reason=%s, reply[:200]=%r)",
+            exc, elapsed_ms, stop_reason, (text or "")[:200],
+        )
         return None
 
 
