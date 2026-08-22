@@ -391,10 +391,9 @@ class GroqMiner(BaseMiner):
             "max_tokens": GROQ_MAX_TOKENS,
             "response_format": {"type": "json_object"},
         }
-        if "qwen3" in model.lower() and config.GROQ_REASONING_EFFORT:
-            # Groq-native switch (the "/no_think" suffix above is the legacy
-            # Qwen3 convention; qwen3.6 honours reasoning_effort="none").
-            payload["reasoning_effort"] = config.GROQ_REASONING_EFFORT
+        # Groq-native reasoning switch (the "/no_think" suffix above is the
+        # legacy Qwen3 convention; qwen3.6 honours reasoning_effort="none").
+        payload.update(config.groq_payload_extras(model))
 
         logger.debug(
             "Groq API call for %s: %d chars, model=%s",

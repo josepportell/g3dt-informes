@@ -559,9 +559,7 @@ def _call_groq_vision(
         "max_tokens": max_tokens,
         "response_format": {"type": "json_object"},
     }
-    if config.GROQ_REASONING_EFFORT:
-        # Reasoning models (qwen3.6) otherwise burn the output budget thinking.
-        payload["reasoning_effort"] = config.GROQ_REASONING_EFFORT
+    payload.update(config.groq_payload_extras(config.VISION_MODEL_GROQ))
 
     for attempt in range(1, max_retries + 1):
         t0 = time.monotonic()

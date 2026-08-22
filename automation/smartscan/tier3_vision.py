@@ -197,11 +197,10 @@ def _classify_with_groq(
         "max_tokens": 512,
         "response_format": {"type": "json_object"},
     }
-    if "qwen3" in config.VISION_MODEL_GROQ.lower() and config.GROQ_REASONING_EFFORT:
-        # F4c (2026-08-22): without this, qwen3.6 spends the whole budget
-        # thinking and Groq answers 400 "Failed to generate JSON" (18/18 photos
-        # in the Tulipa run) → every photo fell through to Claude (~7 s each).
-        payload["reasoning_effort"] = config.GROQ_REASONING_EFFORT
+    # F4c (2026-08-22): without the reasoning switch qwen3.6 spends the whole
+    # budget thinking and Groq answers 400 "Failed to generate JSON" (18/18
+    # photos in the Tulipa run) → every photo fell through to Claude (~7 s each).
+    payload.update(config.groq_payload_extras(config.VISION_MODEL_GROQ))
 
     t0 = time.monotonic()
     try:

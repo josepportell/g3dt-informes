@@ -188,6 +188,7 @@ def _call_groq_vision(
         "max_tokens": 4096,
         "response_format": {"type": "json_object"},
     }
+    payload.update(config.groq_payload_extras(config.VISION_MODEL_GROQ))
 
     for attempt in range(1, max_retries + 1):
         t0 = time.monotonic()
@@ -222,7 +223,9 @@ def _call_groq_vision(
                     attempt,
                     max_retries,
                 )
-                if attempt < max_retries:
+                # 4xx is deterministic (json_validate_failed, too many images):
+                # retry 5xx only (F4e, 2026-08-22).
+                if resp.status_code >= 500 and attempt < max_retries:
                     time.sleep(2)
                     continue
                 return None

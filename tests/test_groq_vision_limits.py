@@ -272,3 +272,29 @@ def test_retired_groq_models_map_to_live_successor(tmp_path, monkeypatch, http):
     http.queue[:] = [_Resp(200, {"choices": [{"message": {"content": '{"extractions": []}'}}], "usage": {}})]
     miner._call_groq("prompt", "f.pdf")
     assert http.calls[0]["model"] == "qwen/qwen3.6-27b"
+
+
+# ---------------------------------------------------------------------------
+# F4e — every Groq call site must merge config.groq_payload_extras()
+# ---------------------------------------------------------------------------
+
+def test_groq_payload_extras_gated_on_model(monkeypatch):
+    assert config.groq_payload_extras("qwen/qwen3.6-27b") == {"reasoning_effort": "none"}
+    assert config.groq_payload_extras("openai/gpt-oss-20b") == {}
+    monkeypatch.setattr(config, "GROQ_REASONING_EFFORT", "")
+    assert config.groq_payload_extras("qwen/qwen3.6-27b") == {}
+
+
+def test_every_groq_call_site_uses_payload_extras():
+    """Static guard: 9 copies of the same httpx call existed on 2026-08-22 and
+    6 of them lacked the reasoning switch (→ HTTP 400 json_validate_failed,
+    retried 3×). A new call site must go through config.groq_payload_extras."""
+    offenders = []
+    for sub in ("automation", "web"):
+        for py in sorted((PROJECT_ROOT / sub).rglob("*.py")):
+            if "test" in py.name or py.name == "config.py" or "__pycache__" in py.parts:
+                continue
+            src = py.read_text(encoding="utf-8")
+            if "api.groq.com/openai/v1/chat/completions" in src and "groq_payload_extras" not in src:
+                offenders.append(str(py.relative_to(PROJECT_ROOT)))
+    assert not offenders, f"Groq call sites without config.groq_payload_extras(): {offenders}"

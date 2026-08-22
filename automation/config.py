@@ -31,6 +31,7 @@ __all__ = [
     "TEXT_MODEL_GROQ",
     "RETIRED_GROQ_MODELS",
     "live_groq_model",
+    "groq_payload_extras",
     "TEXT_MODEL_ANTHROPIC",
     # Fallback orders
     "VISION_FALLBACK_ORDER",
@@ -142,6 +143,21 @@ RETIRED_GROQ_MODELS: dict[str, str] = {
 def live_groq_model(model: str) -> str:
     """Return `model`, or its live successor if Groq retired it."""
     return RETIRED_GROQ_MODELS.get((model or "").strip(), model)
+
+
+def groq_payload_extras(model: str | None = None) -> dict:
+    """Extra chat-completions fields every Groq call must merge into its payload.
+
+    Single place for the qwen3 reasoning switch (F4, 2026-08-22): the 9 Groq
+    call sites in this repo each build their own httpx payload; without
+    ``reasoning_effort="none"`` a reasoning model burns the output budget
+    thinking and Groq answers HTTP 400 ``json_validate_failed``. Gated on the
+    model name so non-reasoning models never receive the parameter.
+    """
+    m = (model or VISION_MODEL_GROQ or "").lower()
+    if "qwen3" in m and GROQ_REASONING_EFFORT:
+        return {"reasoning_effort": GROQ_REASONING_EFFORT}
+    return {}
 
 
 VISION_MODEL_GROQ: str = live_groq_model(_env("GROQ_VISION_MODEL", "qwen/qwen3.6-27b"))

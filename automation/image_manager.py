@@ -550,6 +550,7 @@ class ImageManager:
             "max_tokens": 256,
             "response_format": {"type": "json_object"},
         }
+        payload.update(config.groq_payload_extras(config.VISION_MODEL_GROQ))
 
         try:
             with httpx.Client(timeout=30.0) as client:
