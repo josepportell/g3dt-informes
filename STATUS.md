@@ -8,7 +8,8 @@ Evidència: 14 dies de logs reals de l'Eva → `docs/audit/AUDIT-PROD-2026-08.md
 Resum: 19 projectes reals, 14 informes OK; espera prefills mediana 7,1 min (tot LLM);
 visió DPSH trencada (Anthropic 92% FAIL per parser, OpenAI 43% per `max_tokens`); crash
 Unicode cp1252 a `wizard_service.py:2172` **no fixat**; estat post-visita 23 jul no verificat.
-Fixes proposats F1-F5 pendents de decisió del Josep.
+**Pla d'execució per a sessió nova:** `docs/PLA-FIXES-PROD-2026-08.md` (F1-F4 + verificació
+Tulipa + documentació, ~4,5 h, guardarails inclosos). F5 (estat ordinador Eva) = Josep.
 
 ## Estat actual
 
