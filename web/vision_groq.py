@@ -20,6 +20,48 @@ logger = logging.getLogger(__name__)
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
+# F3 (2026-08, AUDIT-PROD §T1.2-3): output budget per vision type. The DPSH
+# schema costs ~30 tokens per reading; 4 penetros × 40 readings ≈ 4.8k > the
+# old flat 4096, so every big DPSH came back truncated ("Unterminated string")
+# and was then retried + fallen back with the same limit (13-16 min openings).
+MAX_TOKENS_BY_TYPE: dict[str, int] = {"dpsh": 16384, "projecte_arquitecte": 8192}
+DEFAULT_MAX_TOKENS = 4096
+# Hard output caps per provider (verified 2026-08-22: OpenAI docs gpt-4.1-mini
+# 32,768; Groq /models qwen/qwen3.6-27b max_completion_tokens 16,384;
+# claude-sonnet-4-6 128k). Requests are clamped so a bigger per-type budget
+# never turns into a 400.
+PROVIDER_MAX_OUTPUT_TOKENS: dict[str, int] = {
+    "openai": 32768,
+    "groq": 16384,
+    "anthropic": 128000,
+}
+
+
+def _max_tokens_for(vtype: str, provider: str | None = None) -> int:
+    """Output-token budget for a vision type, clamped to the provider's cap."""
+    limit = MAX_TOKENS_BY_TYPE.get(vtype, DEFAULT_MAX_TOKENS)
+    if provider:
+        limit = min(limit, PROVIDER_MAX_OUTPUT_TOKENS.get(provider, limit))
+    return limit
+
+
+class VisionTruncated(Exception):
+    """The model hit max_tokens before closing the JSON.
+
+    Deterministic: retrying the same request, or sending it to the next
+    provider with the same budget, yields the same truncated reply. Callers
+    must NOT retry; the backend chain stops on it.
+    """
+
+
+def _raise_truncated(provider: str, max_tokens: int, reason: str, text: str) -> None:
+    msg = (
+        f"{provider}: reply truncated at max_tokens={max_tokens} "
+        f"(finish_reason={reason}, {len(text or '')} chars)"
+    )
+    logger.warning("%s — not retrying", msg)
+    raise VisionTruncated(msg)
+
 _groq_status: dict[str, dict] = {}
 _groq_lock = threading.Lock()
 
@@ -230,7 +272,7 @@ def _run_vision_groq(project_name: str, project_path: Path, force: bool):
                     f"{len(images)} image(s) ({file_path.name})",
                 )
 
-                tok_limit = 8192 if vtype == 'projecte_arquitecte' else 4096
+                tok_limit = _max_tokens_for(vtype, provider="groq")
                 result = _call_groq_vision(prompt, images, EXTRACTION_SYSTEM_PROMPT, max_tokens=tok_limit)
                 if result is None:
                     return vtype, False, "API call failed"
@@ -510,7 +552,10 @@ def _call_groq_vision(
                 return None
 
             data = resp.json()
-            content_str = data["choices"][0]["message"]["content"]
+            choice = data["choices"][0]
+            content_str = choice["message"]["content"]
+            if choice.get("finish_reason") == "length":
+                _raise_truncated("Groq Vision", max_tokens, "length", content_str)
             result = _parse_json_response(content_str)
 
             usage = data.get("usage", {})
@@ -522,7 +567,11 @@ def _call_groq_vision(
             )
             return result
 
-        except (httpx.HTTPError, json.JSONDecodeError, KeyError, IndexError) as exc:
+        except (json.JSONDecodeError, KeyError, IndexError) as exc:
+            # Deterministic: the same request returns the same reply. Don't retry.
+            logger.warning("Groq Vision: unparseable reply, not retrying: %s", exc)
+            return None
+        except httpx.HTTPError as exc:
             logger.warning(
                 "Groq Vision: %s (attempt %d/%d)", exc, attempt, max_retries
             )
@@ -598,7 +647,10 @@ def _call_openai_vision(
                 return None
 
             data = resp.json()
-            content_str = data["choices"][0]["message"]["content"]
+            choice = data["choices"][0]
+            content_str = choice["message"]["content"]
+            if choice.get("finish_reason") == "length":
+                _raise_truncated("OpenAI Vision", max_tokens, "length", content_str)
             result = _parse_json_response(content_str)
 
             usage = data.get("usage", {})
@@ -616,7 +668,12 @@ def _call_openai_vision(
             )
             return result
 
-        except (httpx.HTTPError, json.JSONDecodeError, KeyError, IndexError) as exc:
+        except (json.JSONDecodeError, KeyError, IndexError) as exc:
+            # Deterministic: the same request returns the same reply. Don't retry
+            # (pre-F3 this burned 2-3 × ~150 s on the same truncated JSON).
+            logger.warning("OpenAI Vision: unparseable reply, not retrying: %s", exc)
+            return None
+        except httpx.HTTPError as exc:
             logger.warning("OpenAI Vision: %s (attempt %d/%d)", exc, attempt, max_retries)
             if attempt < max_retries:
                 time.sleep(2)
@@ -673,6 +730,8 @@ def _call_anthropic_vision(
             getattr(block, "text", "") for block in response.content
             if getattr(block, "type", "") == "text"
         )
+        if stop_reason == "max_tokens":
+            _raise_truncated("Anthropic Vision", max_tokens, "max_tokens", text)
         result = _parse_json_response(text)
 
         logger.info(
@@ -684,6 +743,8 @@ def _call_anthropic_vision(
         )
         return result
 
+    except VisionTruncated:
+        raise
     except Exception as exc:
         elapsed_ms = int((time.monotonic() - t0) * 1000)
         logger.warning(
@@ -691,6 +752,57 @@ def _call_anthropic_vision(
             exc, elapsed_ms, stop_reason, (text or "")[:200],
         )
         return None
+
+
+def _call_backend_chain(
+    chain: list[str],
+    call_map: dict,
+    prompt: str,
+    images: list[str],
+    system_prompt: str,
+    tok_limit: int,
+    file_name: str,
+    vtype: str,
+) -> tuple[dict | None, str | None]:
+    """Try each backend in order until one returns a result.
+
+    Returns ``(result, backend_name)`` or ``(None, None)``. Stops the chain on
+    ``VisionTruncated``: the next provider with the same budget would truncate
+    too (rule F3: "never 3 × 150 s for the same error").
+    """
+    for backend_name in chain:
+        if not config.has_provider(backend_name):
+            continue
+        entry = call_map.get(backend_name)
+        if not entry:
+            continue
+        call_fn, model_name = entry
+        max_tokens = min(tok_limit, PROVIDER_MAX_OUTPUT_TOKENS.get(backend_name, tok_limit))
+        t_call = time.monotonic()
+        truncated = False
+        try:
+            result = call_fn(prompt, images, system_prompt, max_tokens=max_tokens)
+        except VisionTruncated as exc:
+            result = None
+            truncated = True
+            logger.warning(
+                "vision chain %s/%s: %s — chain stopped (same budget would truncate again)",
+                vtype, file_name, exc,
+            )
+        elapsed_ms = int((time.monotonic() - t_call) * 1000)
+        log_vision_call(
+            provider=backend_name,
+            model=model_name,
+            file_name=file_name,
+            vtype=vtype,
+            success=result is not None,
+            elapsed_ms=elapsed_ms,
+        )
+        if result is not None:
+            return result, backend_name
+        if truncated:
+            return None, None
+    return None, None
 
 
 def _extract_chunked(
@@ -731,27 +843,10 @@ def _extract_chunked(
             + prompt
         )
 
-        result = None
-        for backend_name in backend_chain:
-            if not config.has_provider(backend_name):
-                continue
-            entry = call_map.get(backend_name)
-            if not entry:
-                continue
-            call_fn, model_name = entry
-            t_call = time.monotonic()
-            result = call_fn(chunk_prompt, chunk_images, system_prompt, max_tokens=max_tokens)
-            elapsed_ms = int((time.monotonic() - t_call) * 1000)
-            log_vision_call(
-                provider=backend_name,
-                model=model_name,
-                file_name=f"{file_name}[p{page_start}-{page_end}]",
-                vtype=vtype,
-                success=result is not None,
-                elapsed_ms=elapsed_ms,
-            )
-            if result is not None:
-                break
+        result, _ = _call_backend_chain(
+            backend_chain, call_map, chunk_prompt, chunk_images, system_prompt,
+            max_tokens, f"{file_name}[p{page_start}-{page_end}]", vtype,
+        )
 
         if result:
             partial_results.append(result)
@@ -1205,7 +1300,7 @@ def run_vision_groq_sync(
             if type_pref != vision_backend:
                 logger.info("vision_groq_sync per-type:%s using %s (run default: %s)", vtype, type_pref, vision_backend)
 
-            tok_limit = 8192 if vtype == 'projecte_arquitecte' else 4096
+            tok_limit = _max_tokens_for(vtype)
 
             # Chunked extraction for large documents: split into batches of
             # CHUNK_SIZE pages, extract each batch, then merge results.
@@ -1219,29 +1314,10 @@ def run_vision_groq_sync(
                 )
                 used_backend = "chunked"
             else:
-                result = None
-                used_backend = None
-                for backend_name in chain:
-                    if not config.has_provider(backend_name):
-                        continue
-                    entry = _CALL_MAP.get(backend_name)
-                    if not entry:
-                        continue
-                    call_fn, model_name = entry
-                    t_call = time.monotonic()
-                    result = call_fn(prompt, images, EXTRACTION_SYSTEM_PROMPT, max_tokens=tok_limit)
-                    elapsed_call_ms = int((time.monotonic() - t_call) * 1000)
-                    log_vision_call(
-                        provider=backend_name,
-                        model=model_name,
-                        file_name=file_path.name,
-                        vtype=vtype,
-                        success=result is not None,
-                        elapsed_ms=elapsed_call_ms,
-                    )
-                    if result is not None:
-                        used_backend = backend_name
-                        break
+                result, used_backend = _call_backend_chain(
+                    chain, _CALL_MAP, prompt, images, EXTRACTION_SYSTEM_PROMPT,
+                    tok_limit, file_path.name, vtype,
+                )
 
             if result is None:
                 _emit(vtype, "error", message="API call failed (all backends)")
