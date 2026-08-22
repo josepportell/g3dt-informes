@@ -29,6 +29,8 @@ __all__ = [
     "GROQ_MAX_IMAGES",
     # Text models
     "TEXT_MODEL_GROQ",
+    "RETIRED_GROQ_MODELS",
+    "live_groq_model",
     "TEXT_MODEL_ANTHROPIC",
     # Fallback orders
     "VISION_FALLBACK_ORDER",
@@ -124,7 +126,25 @@ GROQ_API_KEY: str = _env("GROQ_API_KEY")
 
 VISION_MODEL_OPENAI: str = _env("OPENAI_VISION_MODEL", "gpt-4.1-mini")
 VISION_MODEL_ANTHROPIC: str = _env("ANTHROPIC_VISION_MODEL", "claude-sonnet-4-6")
-VISION_MODEL_GROQ: str = _env("GROQ_VISION_MODEL", "qwen/qwen3.6-27b")
+# Groq retires models without notice (llama-4-scout 2026-07-17, qwen3-32b by
+# 2026-08). A stale `.env` on Eva's PC (written 2026-05-04) then yields HTTP 404
+# model_not_found on every call. Map retired ids to their live successor so an
+# old .env degrades to "works" instead of "silent 404 × N files". Verified
+# against GET https://api.groq.com/openai/v1/models on 2026-08-22.
+RETIRED_GROQ_MODELS: dict[str, str] = {
+    "meta-llama/llama-4-scout-17b-16e-instruct": "qwen/qwen3.6-27b",
+    "qwen/qwen3-32b": "qwen/qwen3.6-27b",
+    "llama-3.3-70b-versatile": "qwen/qwen3.6-27b",
+    "llama-3.1-8b-instant": "qwen/qwen3.6-27b",
+}
+
+
+def live_groq_model(model: str) -> str:
+    """Return `model`, or its live successor if Groq retired it."""
+    return RETIRED_GROQ_MODELS.get((model or "").strip(), model)
+
+
+VISION_MODEL_GROQ: str = live_groq_model(_env("GROQ_VISION_MODEL", "qwen/qwen3.6-27b"))
 # F4 (2026-08-22): qwen/qwen3.6-27b is a reasoning model. Without
 # reasoning_effort="none" it spends 1.5-4k output tokens "thinking" on a
 # 100-char classification JSON (6× slower, frequent HTTP 400 "Failed to
@@ -144,7 +164,7 @@ GROQ_MAX_IMAGES: int = max(1, int(_env("GROQ_MAX_IMAGES", "3")))
 # 3 retries × every mined file in Eva's openings). Live list via GET /models:
 # qwen/qwen3.6-27b is the only remaining Qwen3-family text model (the code
 # already has the qwen3 no-think handling); reasoning is disabled per request.
-TEXT_MODEL_GROQ: str = _env("GROQ_TEXT_MODEL", "qwen/qwen3.6-27b")
+TEXT_MODEL_GROQ: str = live_groq_model(_env("GROQ_TEXT_MODEL", "qwen/qwen3.6-27b"))
 TEXT_MODEL_ANTHROPIC: str = _env("ANTHROPIC_TEXT_MODEL", "claude-sonnet-4-6")
 
 # ---------------------------------------------------------------------------

@@ -143,7 +143,7 @@ class GroqMiner(BaseMiner):
     @classmethod
     def get_usage_summary(cls) -> dict:
         """Return usage stats and estimated costs for the current session."""
-        model = os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT)
+        model = config.live_groq_model(os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT))
         in_price, out_price = GROQ_PRICING.get(model, (0.59, 0.79))
         cost_usd = (
             cls._total_input_tokens * in_price
@@ -370,7 +370,7 @@ class GroqMiner(BaseMiner):
             logger.debug("Groq: no API key, skipping")
             return None
 
-        model = os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT)
+        model = config.live_groq_model(os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT))
 
         # Qwen3 thinking mode: disable to get clean JSON
         if "qwen3" in model.lower():
@@ -564,7 +564,7 @@ class GroqMiner(BaseMiner):
 
     @staticmethod
     def _file_hash(file_path: Path) -> str:
-        model = os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT)
+        model = config.live_groq_model(os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT))
         h = hashlib.sha256()
         h.update(file_path.read_bytes())
         h.update(model.encode())

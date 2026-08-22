@@ -260,3 +260,15 @@ def test_tier3_groq_skips_over_cap_and_disables_reasoning(tmp_path, monkeypatch,
     assert len(http.calls) == 1
     assert http.calls[0]["reasoning_effort"] == "none"
     assert http.calls[0]["max_tokens"] >= 512
+
+
+def test_retired_groq_models_map_to_live_successor(tmp_path, monkeypatch, http):
+    assert config.live_groq_model("qwen/qwen3-32b") == "qwen/qwen3.6-27b"
+    assert config.live_groq_model("meta-llama/llama-4-scout-17b-16e-instruct") == "qwen/qwen3.6-27b"
+    assert config.live_groq_model("qwen/qwen3.6-27b") == "qwen/qwen3.6-27b"
+    assert config.live_groq_model("openai/gpt-oss-20b") == "openai/gpt-oss-20b"
+    # a stale GROQ_MODEL in .env no longer reaches the API
+    miner = _miner(tmp_path, monkeypatch, "qwen/qwen3-32b")
+    http.queue[:] = [_Resp(200, {"choices": [{"message": {"content": '{"extractions": []}'}}], "usage": {}})]
+    miner._call_groq("prompt", "f.pdf")
+    assert http.calls[0]["model"] == "qwen/qwen3.6-27b"
