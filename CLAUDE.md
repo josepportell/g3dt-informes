@@ -28,7 +28,9 @@ G3DT genera informes geotècnics per a projectes de construcció. Cada informe i
 
 ## Model d'Operació
 
-**Claude Code és el runtime de producció**, no una eina de desenvolupament. S'instal·la a l'ordinador d'Eva i s'executa en segon pla. Eva interactua amb el sistema a través del wizard web (localhost).
+**Estat real (verificat 2026-08-23 amb els logs de l'Eva i `docs/INSTALL-EVA-v1.md`):** a l'ordinador de l'Eva (`C:\g3dt-ia\app`, Python 3.12 Windows natiu, instal·lat 2026-05-04) **NO hi ha Claude Code**. La visió va per API (Anthropic/OpenAI/Groq SDK). Els `.bat` de `scripts/` (WSL + `claude`, març 2026) són el disseny anterior; el `G3DT-Wizard.bat` instal·lat és una versió Windows-nativa que només arrenca `python -m web`. La via subprocess `claude -p` existeix al codi (`web/vision_fast.py`, `wizard_service.start_vision_cli`) darrere de `G3DT_PROD_USE_CLAUDECODE_VISION=false`, mai executada a casa de l'Eva.
+
+**Decisió 2026-08-23 (Josep, "via A"):** Claude Code tornarà a ser el lector de producció — instal·lat a l'ordinador de l'Eva (CLI Windows natiu, amb `ANTHROPIC_API_KEY` o subscripció) i cridat headless pel wizard amb un skill G3DT que llegeix cada document del projecte i escriu candidats del nivell A amb font i cita. Python conserva lectors deterministes de plantilles G3, Cadastre/ICGC, càlculs i informe. Vegeu `docs/ANALISI-NIVELL-A-LECTURA-HUMANA-2026-08-23.md` §10 i `docs/_FOR-NEW-YOU-20260823-1745.md`. El paràgraf següent descriu el flux *objectiu*, no l'actual.
 
 ```
 Eva obre localhost:8765 al navegador
@@ -48,7 +50,7 @@ Eva revisa i ajusta els camps que cregui convenient (~30s)
 Eva prem "Generar Informe" → .docx descarregable
 ```
 
-**Clau:** La visió de Claude (lectura de PDFs de camp i plànols) s'integra directament al pipeline perquè Claude Code és present al runtime. No cal invocar skills manualment — tot és automàtic quan Eva selecciona un projecte.
+**Clau (objectiu via A):** la lectura de documents la farà Claude Code headless (`claude -p`, cf. `web/vision_fast.py`) amb un skill, invocat automàticament pel wizard quan l'Eva selecciona un projecte. Avui (prod `1f1d7fd`) aquesta lectura la fan crides API per tipus de document (`web/vision_groq.py`).
 
 ## Skills Disponibles
 

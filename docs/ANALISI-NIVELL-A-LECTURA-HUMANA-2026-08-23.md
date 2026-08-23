@@ -55,7 +55,8 @@ Classes de font (les necessitarem a §3-§6):
 - **Proveïdor (variable):** plànols, projectes i correus de l'arquitecte/client. Format diferent a cada projecte.
 - **Derivat (API/criteri):** Cadastre, ICGC, CTE, o criteri de l'Eva. No és *a* cap document del proveïdor.
 - **Sortida de l'Eva:** annexos FreeHand exportats (`PDF/ANNEXES/*_sondeig.pdf`, `tall.pdf`, `pl situ.pdf`), informes previs.
-  **Existeixen a les 8 carpetes perquè són projectes acabats; en un projecte nou que l'Eva obre per primer cop, no hi són.**
+  **Correcció (Josep, nit): els annexos SÍ que existeixen quan l'Eva obre el wizard — els dibuixa abans.** Són fonts
+  vàlides d'autoritat A per a `cota_referencia` i `num_soil_levels` (§8). Els informes previs continuen sent sortides, no fonts.
 
 | Camp | On és de veritat (8 projectes, §3) | Classe | Prod avui |
 |---|---|---|---|
@@ -318,3 +319,20 @@ Claude Code en sessió (gratuïta, agentiva, serveix d'oracle) abans de la passa
 ---
 *Fi de l'anàlisi. Lector existent + playbook fet des de les carpetes + verificació creuada + candidats honestos. El coll
 d'ampolla mai ha estat llegir; ha estat saber on mirar i admetre quan no se sap.*
+
+## 10. Addendum (nit): Claude Code a l'ordinador de l'Eva — verificació i decisió "via A"
+
+**Pregunta del Josep:** "A l'ordinador de l'Eva no hi ha Claude Code" — qüestiona-ho; els `.bat` llancen Claude Code.
+
+**Verificat (3 fonts):**
+- `scripts/G3DT-Claude.bat` / `G3DT-Wizard.bat` (commits `146614e`, `a8253ff`, març 2026): `wsl bash -lc "cd /home/eva/projects/g3dt && claude"`. Disseny WSL + Claude Code. És el que descrivia "Model d'Operació" del `CLAUDE.md` (text corregit avui).
+- `docs/PLA-DEPLOYMENT-EVA-2026-05-04.md` §2: decisió 1 "Windows natiu primer"; decisió 5 "amagar, NO eliminar… recurs ràpid: instal·lar Claude Code i tornar a habilitar". `docs/INSTALL-EVA-v1.md` §2.6: `G3DT-Wizard.bat` reescrit "versió Windows natiu, no WSL", només `python -m web`; `ANTHROPIC_API_KEY` obligatòria; `G3DT_PROD_USE_CLAUDECODE_VISION=false`. `web/api.py:43`: "Eva's machine has no Claude Code installed".
+- Logs reals de l'Eva (9.253 línies, maig-juliol): rutes `C:\g3dt-ia\app\…`; 0 rastres de `claude -p` / `vision_fast` / WSL; 49 "Anthropic Vision" = SDK.
+
+**Conclusió:** avui no hi és; la via subprocess (`web/vision_fast.py`, `wizard_service.start_vision_cli()`, `image_manager.py:467`) és viva i a un flag de distància, per decisió explícita del 3 de maig.
+
+**Què canvia:** l'alternativa C (§6, "agent lector") deixa de ser inviable com a mecanisme de producció. Amb Claude Code instal·lat a l'Eva (CLI Windows natiu, sense WSL) i cridat headless pel wizard (`claude -p … --output-format json`, el patró de `vision_fast.py`), el lector agentiu amb el playbook com a *skill* és el mecanisme de producció, i la lectura "d'or" dels 8 projectes feta per Claude Code en sessió és el seu dry-run (mateix model, mateix skill, mateixa sortida). Els tres arguments d'abril contra Claude Code en producció (`ARQUITECTURA-AI-PIPELINE.md` §3.4: context, cache, reproductibilitat) cauen amb un run per projecte de ~50 unitats, un JSON per font a disc (cache = hash del fitxer) i `--output-format json` amb `usage`. El que queda: no determinisme (→ verificació creuada i ERR = 0 encara més necessaris), temps 5-10 min (acceptat), i robustesa del procés (`timeout`, fallback a la via Python, telemetria al `g3dt.log`, instal·lació presencial amb login).
+
+**Facturació:** `claude -p` funciona amb `ANTHROPIC_API_KEY` (1-3 €/projecte) o subscripció (cost pla). Amb ~10 projectes/mes l'API és més barata; decisió del Josep en el moment del desplegament, no ara.
+
+**Decisió del Josep (2026-08-23, nit): via A.** La lectura d'or la fa Claude Code en sessió com a dry-run del skill. Pla d'execució: `docs/_FOR-NEW-YOU-20260823-1745.md`. L'alternativa D (Fase 4 per API) queda com a fallback, codi intacte.
