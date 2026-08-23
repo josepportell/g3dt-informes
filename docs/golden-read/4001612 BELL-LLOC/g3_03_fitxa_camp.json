@@ -1,0 +1,20 @@
+{
+  "source_path": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+  "document_type": "fitxa_camp_g3",
+  "what_it_is": "Fitxa interna de G3 per preparar la sortida a camp: client, adreça d'obra, contacte, previsió de treball, accés, subcontractació, empresa de sondeigs i data de camp. Full 'fitxa' + full 'dades de referencia' (llistes desplegables). 2 fotos incrustades (les mateixes del correu de César).",
+  "issuer": "G3 (omplerta per Eva; comentari B43 en primera persona)",
+  "date": "sense data pròpia; F38 'dies de camp' = 2025-10-01",
+  "pages_or_sheets": "2 fulls; fitxa B2:J47",
+  "tier_a": [
+    {"concept_id": "client_name", "value": "ARQUITECCTURA BOSCH NOVELL", "location": "fitxa!C6 (etiqueta B6 'CLIENT ')", "quote": "ARQUITECCTURA BOSCH NOVELL", "confidence": 0.5, "note": "typo 'ARQUITECCTURA'. Mateixa ambigüitat: la fitxa anomena 'CLIENT' el sol·licitant (arquitecte). 3a aparició del despatx com a 'client' (correu, pressupost, fitxa) — totes tres del mateix origen (encàrrec de César) → NO són independents."},
+    {"concept_id": "street_address", "value": "C/ MESTRE RAMON ORTIZ 15", "location": "fitxa!C7 (etiqueta B7 'ADREÇA OBRA')", "quote": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC ", "confidence": 0.95, "note": "adreça + municipi a la mateixa cel·la, separats per espai; cal partir-ho"},
+    {"concept_id": "municipality", "value": "BELL-LLOC", "location": "fitxa!C7 (final de la cel·la)", "quote": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC ", "confidence": 0.9, "note": ""},
+    {"concept_id": "architect_name", "value": "JORDI (Bosch Novell)", "location": "fitxa!C8 'PERSONA DE CONTACTE' + F8 tel.", "quote": "JORDI | TEL. 620199571", "confidence": 0.6, "note": "només nom de pila; el telèfon 620199571 és el mateix que el del CLIENT al pressupost → Jordi = Bosch Novell"},
+    {"concept_id": "num_dpsh_tests", "value": "2", "location": "fitxa!F13 (fila 'PREVISIÓ DE TREBALL DE CAMP')", "quote": "PENETROS I MOSTRA | 2 (P)", "confidence": 0.85, "note": "'2 (P)' = 2 penetros; 'I MOSTRA' = mostra (sondeig petit). És PREVISIÓ, no execució."},
+    {"concept_id": "field_date", "value": "2025-10-01", "location": "fitxa!F38 (etiqueta E38 'dies de camp')", "quote": "datetime(2025,10,1)", "confidence": 0.9, "note": "cel·la de tipus data; etiqueta 'dies de camp' en plural però un sol valor. És la data planificada; confirmar amb noms de fotos."},
+    {"concept_id": "lab_field_company", "value": "TPS ERUGA", "location": "fitxa!C38 'EMPRESA QUE FA LA FEINA'", "quote": "TPS ERUGA", "confidence": 0.9, "note": "TPS = empresa de sondeigs (TPS Prospecció del Subsòl); 'ERUGA' = tipus de màquina (sobre erugues), no forma part del nom"},
+    {"concept_id": "building_type_hint", "value": "edificació existent: SI", "location": "fitxa!C16", "quote": "EDIFICACIÓ EXISTENT ? | SI", "confidence": 0.5, "note": "contradiu les fotos (solar buit). No és dels 15 camps."}
+  ],
+  "not_present": ["expedient", "building_type", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm_x/utm_y", "referencia_catastral", "lab_sample_id", "lab_depth", "lab_location", "cte_edificacio", "cte_sol"],
+  "reading_notes": "Plantilla fixa: etiquetes a la columna B, valors a C (o F per al segon bloc). Identificació determinista: B2 == 'DADES PER ANAR A CAMP'. Les cel·les clau: C6 client, C7 adreça obra, C8/F8 contacte, C13/F13 previsió, C38 empresa, F38 data. Openpyxl avisa 'Data Validation extension not supported' (innocu). Les 2 imatges (drawing1.xml, ancorades a I1 i I12) són fotos de la parcel·la/cadenat: cap text. El comentari B43 ('ja li he comentat al Cesar q el propieterai el deixara obert') confirma que hi ha un PROPIETARI diferent del contacte."
+}

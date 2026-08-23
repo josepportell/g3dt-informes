@@ -1,0 +1,14 @@
+{
+  "source_path": "ACCEPTACIO/DADES CLIENT.txt",
+  "document_type": "altre",
+  "what_it_is": "Nota de text de 10 línies amb les dades de facturació del client final (empresa, NIF, representant, adreça postal, telèfon, email), deixada a ACCEPTACIO/ en lloc d'omplir el formulari p.5 del pressupost.",
+  "issuer": "desconegut (probablement transcrit per G3/Eva a partir del que va enviar el sol·licitant)",
+  "date": "sense data (mtime del fitxer no és fiable a la còpia)",
+  "pages_or_sheets": 1,
+  "tier_a": [
+    {"concept_id": "client_name", "value": "RAMON MITJANA SL", "location": "línia 4", "quote": "RAMON MITJANA SL       B25771726", "confidence": 0.95, "note": "capçalera explícita 'DADES CLIENT'; acompanyat de NIF d'empresa B25771726 i representant 'RAMON MITJANA GRÀFOL 78058457E'. Aquest és el client de facturació = propietari/promotor. Diferent del destinatari del pressupost (arquitecte)."},
+    {"concept_id": "municipality", "value": "BELL.LLOC D'URGELL", "location": "línia 8", "quote": "25220 BELL.LLOC D’URGELL (Lleida)", "confidence": 0.3, "note": "ATENCIÓ: és l'adreça POSTAL DEL CLIENT (Carrer Doctor Torrebadella 8), no de l'obra. Coincideix amb el municipi de l'obra per casualitat (client local). NO usar com a font de street_address; només corrobora el municipi i dona la forma llarga 'd'Urgell' i el CP 25220."}
+  ],
+  "not_present": ["expedient", "street_address (la que hi ha és la del client, no de l'obra)", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x/utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "Codificació: UTF-8 amb CRLF i línies buides inicials; l'apòstrof és U+2019 i 'BELL.LLOC' porta punt en lloc de guió. Regla semàntica: un fitxer anomenat DADES CLIENT amb NIF és autoritat A per a client_name; la seva adreça és la del client, mai la de l'obra (regla: street_address només de blocs etiquetats OBRA/ADREÇA OBRA/emplaçament)."
+}

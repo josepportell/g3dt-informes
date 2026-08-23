@@ -1,0 +1,11 @@
+{
+  "source_path": "PDF/ANNEXES/LAB-SIG.pdf",
+  "document_type": "informe_laboratori",
+  "what_it_is": "Còpia A4 del mateix informe 4677-GTL-25 (re-distil·lada per Eva el 26/11/2025 per incloure-la com a annex).",
+  "issuer": "TPS (via Eva)",
+  "date": "2025-11-26",
+  "pages_or_sheets": 5,
+  "tier_a": [],
+  "not_present": ["duplicat de lab_07_gtl_4677.json; contingut idèntic"],
+  "reading_notes": "Mateix text que el GTL de l'arrel (producer diferent: Distiller en lloc d'Adobe PDF Library). Regla de dedup: mateix 'Número d'informe' + mateix nombre de pàgines → duplicat, no font independent."
+}

@@ -1,0 +1,139 @@
+# /g3dt-llegir-projecte
+
+Llegeix TOTS els documents d'una carpeta de projecte G3 com ho faria un geòleg que l'obre per primer cop, i escriu per a cada
+document un JSON amb els candidats del **nivell A** (15 camps d'identitat de l'informe) amb ubicació i cita literal. Al final
+escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_trobat`. **Mai un camp buit, mai falsa confiança.**
+
+<command-name>g3dt-llegir-projecte</command-name>
+
+Versió 0.1 (2026-08-23) — derivat de la lectura d'or de `4001612 BELL-LLOC` (`docs/golden-read/`). S'itera a cada projecte.
+
+## Arguments
+
+`$ARGUMENTS` = path de la carpeta del projecte (requerit) `[--out DIR]` `[--only FITXER]`
+
+- `--out DIR`: on escriure els JSON (defecte: `{projecte}/validation/lectura/`; en dry-run: `docs/golden-read/{expedient}/`).
+- `--only FITXER`: llegeix només aquest document i escriu el seu JSON (una crida per document = forma headless de producció).
+
+Exemples:
+```
+/g3dt-llegir-projecte /mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC --out "docs/golden-read/4001612 BELL-LLOC"
+/g3dt-llegir-projecte /mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC --only "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf"
+```
+
+Entorn: `.venv/bin/python` del repo té `fitz` (PyMuPDF), `openpyxl`, `xlrd`, `extract_msg`, `python-docx`, `PIL`. Sense `unzip` (usa `zipfile`).
+Mode headless: no facis cap pregunta; si dubtes, baixa d'estat (`segur` → `candidats` → `no_trobat`) i anota-ho a `note`.
+
+## Els 15 camps del nivell A
+
+`expedient`, `client_name`, `street_address`, `municipality`, `architect_name`, `building_type`, `num_floors`,
+`superficie_parcela`, `field_date`, `cota_referencia`, `num_soil_levels`, `num_dpsh_tests`, `utm_x_utm_y` + `referencia_catastral`,
+`lab` (`lab_testing_company`, `lab_sample_id`, `lab_depth`, `lab_location`), `cte` (`cte_edificacio`, `cte_sol`).
+
+Fora d'abast (es fa després): paràmetres geotècnics, Qa, assentaments, narrativa.
+
+## Pas 1 — Inventari
+
+1. Llista recursiva de tot. **Exclou** (sortides de l'Eva o nostres): `*_informe*`, `*_generated*`, `*PORTADA*`, `PDF/LLETRA/`,
+   `PDF-V0/`, `PDF V0/`, `*.FH11`, `validation/`, `_validation/`, `Thumbs.db`, `*EXPLICACI*.docx` (meta-document).
+   **Inclou** `PDF/ANNEXES/*.pdf`, `tall.pdf`, `pl. situaci*.pdf`: l'Eva dibuixa els annexos abans d'obrir el wizard; són fonts vàlides.
+2. `.msg`: extreu cos + adjunts amb `extract_msg` a un directori temporal. Dedup d'adjunts per md5 contra la carpeta (sovint ja hi són solts).
+   En cadenes `RE:`/`FW:`, només el text per sobre del primer `De:`/`From:` és nou. Imatges ≤ 25 KB o de 783×3 px = signatura, ignora.
+3. `.zip`: obre amb `zipfile`. `.dwg`: marca `no llegible: DWG` (proposa `dwg2dxf`).
+4. Classifica cada fitxer en una classe i llegeix-los **en aquest ordre**:
+   1. plantilles G3 (pressupost, fitxa de camp, comanda de laboratori, PLAN_COST, Excel DPSH) → 2. `ACCEPTACIO/` (pressupost signat,
+   `DADES CLIENT.txt`) → 3. annexos de l'Eva → 4. laboratori (GTL) → 5. documents del proveïdor (plànols, projecte, Cadastre) →
+   6. correus → 7. fulls de camp manuscrits (albarans TPS) → 8. fotos (només per a data pel nom de fitxer i per corroborar).
+
+## Pas 2 — Identificació determinista de les plantilles G3 (on mira l'Eva)
+
+| Document | Com reconèixer-lo | Cel·les / posicions del nivell A |
+|---|---|---|
+| **Pressupost** `PRESSUPOST GEOTEC.*.pdf` (7 p.) | PDF `creator == "G3 DESENVOLUPAMENT TERRITORIAL, S.L."`, `title == "m4PRO ERP · Informes del Proyecto"` | p.1 bloc `CLIENT:` (nom / [carrer] / CP / Tel) = **sol·licitant**; bloc `OBRA:` (encàrrec / adreça / municipi); p.2 `Tipus d’edifici: C1`, `Tipus de Terreny : T1`, `N assaigs de penetració dinàmica DPSH`, `N Sondeig`; codi `25·NNNN P#` = codi comercial, NO expedient. **Ordena els blocs per (y, x)**: l'ordre natural barreja CLIENT i OBRA. |
+| **Fitxa de camp** `DADES PER ANAR A CAMP*.xlsx` | `fitxa!B2 == "DADES PER ANAR A CAMP"` | C6 client (= sol·licitant), C7 `ADREÇA OBRA` (adreça + municipi a la mateixa cel·la), C8/F8 contacte + tel., C13/F13 previsió (`2 (P)`, `5P+2S`), C38 empresa (`TPS ERUGA`), **F38 data de camp** (tipus data; etiqueta E38 `dies de camp`). Pot ser buida. Imatges incrustades = fotos. |
+| **Comanda laboratori** `comanda laboratori_*.xls` | `Hoja1!C3 == "PETICIÓ D'ASSAIGS DE LABORATORI"` | Dos blocs amb les MATEIXES etiquetes: files 11-15 `DADES DEL SOL.LICITANT` = G3 (NIF B25364589) → ignora; files 18-23 `DADES DE L'OBRA`: N18 tipus obra, **N19 expedient** (float), N20 adreça, N21 municipi, N23 `DATA DE PRESA` (= dia de la mostra/sondeig, no primer dia), AH23 sol·licitud; fila 35+ mostres (C id, J/L cotes). |
+| **PLAN_COST** `PLAN_COST_*.xlsx` | `'Plan Cost'!B2 == "PLAN COST  |  G3 DT"` | E9 `DESCRIPCIÓ TITÒL` (`EG HAB UNIF {MUNICIPI}`), E21 tècnic, `OFERTA!B21` unitats DPSH, `B6` ml sondeig, `B14` SPT. **Tota la resta és plantilla** (`SOIL-ASSAIG`, `TPS`, `LLEIDA`, preus): mai senyal. |
+| **Excel DPSH** `ANNEXES/{exp}_DPSH.xls` | fulls `P-1`, `P-2`…; capçalera fila 16 | `num_dpsh_tests` = fulls amb dades a la columna C (executats). Cap metadada de projecte dins. Peu B80 cota de rebuig. |
+
+Annexos de l'Eva (FreeHand → PDF via Distiller/`PScript5.dll`): **el text és brossa** (fonts sense ToUnicode) → renderitza
+(`page.get_pixmap(dpi=100)`) i llegeix visualment. Si hi ha còpia `Microsoft: Print To PDF` del mateix (`tall.pdf`, `pl. situaci.pdf`),
+el text és net. `PDF/ANNEXES/{exp}_DPSH.pdf` (des d'Excel) sí que té text: capçalera `Cota inici: +NNN.NN msnm …`, `OBRA:`, `POBLACIÓ:`,
+`DATA:`, `NÚMERO D´INFORME:`.
+
+Altres reconeixements: GTL del laboratori = text `INFORME DE RESULTATS D'ASSAIGS DE LABORATORI` + banda `TPS, PROSPECCIÓ DEL SUBSÒL, SL B64803075`;
+Cadastre = `title` que comença per `Certificación Descriptiva y Gráfica Catastral`; albarans/fulls de camp TPS = escanejats, logo `tps`, 0 text → visió;
+plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planejament i retalls són imatges** → `clip` + 120 dpi.
+
+## Pas 3 — Regles semàntiques (les que fan que un humà no s'equivoqui)
+
+- **`client_name` = promotor/propietari de l'obra**, no qui demana el pressupost. Prioritat: caixetí del plànol amb etiqueta
+  `Promotor`/`Propietat` > `ACCEPTACIO/DADES CLIENT.txt` (nom + NIF) > formulari p.5 del pressupost signat si està omplert > correus
+  que diguin "propietari". El `CLIENT:` del pressupost, de la fitxa, del correu d'encàrrec i de l'annex de sondeig és el **sol·licitant**
+  (sovint l'arquitecte): candidat amb nota, mai segur si el nom conté `ARQUITECT`. Totes aquestes aparicions deriven de l'encàrrec:
+  **no són fonts independents** entre elles.
+- **G3 mai és client**: `G3`, `G 3`, `G3 DESENVOLUPAMENT TERRITORIAL`, NIF `B25364589`, `G3 - Eva`. Apareix com a "client" a la comanda
+  (sol·licitant), al GTL (`DADES DEL CLIENT` del laboratori) i als albarans TPS (`DADES CLIENT: Empresa G3 / Responsable Eva`). Descarta'l.
+- **`architect_name`**: caixetí `Arquitecte` > signatura digital del pressupost acceptat (`/Sig /Name`, p. ex. `JORDI BOSCH NOVELL / num:37655-8`)
+  > nom del despatx al pressupost/correu. Persona, no despatx, si és possible.
+- **`street_address`**: només de blocs etiquetats `OBRA`, `ADREÇA OBRA`, `Situació`, `Localización`, `Adreça de l'obra`. Mai l'adreça
+  del client (`DADES CLIENT.txt`) ni del sol·licitant. **Poden existir dues adreces verdaderes** (cantonada): no competeixen →
+  `candidats`. Si els annexos de l'Eva diuen "entre el carrer X i el carrer Y", aquesta frase és la redacció de l'informe → candidat 1.
+  Grafies manuscrites (`Ballet`/`Bellet`) → normalitza cap a la del document imprès.
+- **`municipality`**: comanda N21 + pressupost p.1 + PLAN_COST E9 ("sempre" 3 fonts). Forma oficial llarga (Cadastre, GTL, plànol:
+  `Bell-lloc d'Urgell`) > forma curta de G3 (`BELL-LLOC`) > manuscrits (`BELL-LLOCH`). Mai la població del sol·licitant (Els Omells de
+  Na Gaia) ni del client. Mai una foto.
+- **`expedient`**: nom de la carpeta (`NNNNNNN MUNICIPI`) = comanda N19 = annex DPSH `NÚMERO D´INFORME` = GTL `Obra / Projecte`.
+  NO són l'expedient: `25·0647` (codi comercial), `EXP25.34/SET.25` (arquitecte), `4677-GTL-25` / `GTL-8205-25` (laboratori), i els
+  caixetins dels annexos de l'Eva poden tenir typos (`4001621`).
+- **`field_date` = primer dia de camp** (normalment els DPSH): fitxa F38 > annex DPSH `DATA:` > albarà TPS > noms de fotos WhatsApp
+  (`Imagen de WhatsApp YYYY-MM-DD …`; EXIF no hi és). La comanda `DATA DE PRESA`, l'annex de sondeig i el GTL donen el dia del
+  sondeig (pot ser un altre dia): candidat 2 amb nota "sondeig". Mai la data del pressupost, de l'acceptació ni del GTL.
+- **`num_dpsh_tests`**: Excel DPSH (executats) > albarà TPS `Nº de penetròmetres realitzats` > pressupost p.2 (previstos) > fitxa `N (P)`.
+  Si previstos ≠ executats, mana l'Excel i anota-ho.
+- **`cota_referencia`**: annex DPSH `Cota inici: +NNN.NN msnm segons …` = annex sondeig `z:` (criteri de l'Eva, sovint ICGC −0,15 carrer)
+  > `COORDENADES.txt` z (GPS; l'Eva no l'usa: ~0,6 m de diferència) > ICGC. Cota relativa (p. ex. −4,0) pot ser intencionada.
+- **`num_soil_levels`**: columna `Unitat litològica` de l'annex de sondeig (`NIVELL 1`, `NIVELL 2`…) > llegenda del tall (`1er nivell`, `2n nivell`).
+  Els trams de material del full de camp NO són nivells. Sense annex → `candidats` amb el nombre de trams i nota "confirmar".
+- **`superficie_parcela`**: taula de planejament del projecte/plànol (`Parcel·la … Projecte`) > suma de les parcel·les cadastrals de la
+  carpeta > una parcel·la sola. Amb 2+ consultes cadastrals i "parcel·les contigües" al correu: `candidats` (projecte, suma, cadascuna).
+- **`num_floors`**: taula de planejament (`N. plantes PB+PP`) > correu d'encàrrec (`Pb de 280m + p1 de 86` → PB+1) > projecte. Cap plantilla G3 ho té.
+- **`building_type`**: títol del projecte/plànol > PLAN_COST `HAB UNIF` (expandir) > comanda `CONSTR HABITATGE` > correu. L'informe redacta
+  ("un habitatge unifamiliar"): comparació CLOSE.
+- **`referencia_catastral`**: consultes del Cadastre a la carpeta (`title`/nom `NNNNNNNCGNNNNS0001XX`) o als adjunts dels `.msg` (els noms
+  dels adjunts ja la porten). Dues parcel·les → `candidats` amb les dues. Mai inferir-la d'una adreça.
+- **`utm_x_utm_y`**: `ANNEXES/ALTRES/COORDENADES.txt` (`X ; Y ; Z` per punt) > caselles x/y de l'annex de sondeig > res (no geocodificar aquí).
+- **`lab`**: laboratori = emissor del GTL (banda amb registre mercantil; TPS B64803075), mai el "client" del GTL. Mostra/cota: comanda
+  fila 35 (`SPT 1 (S1)`, J/L) = GTL `Mostra:` / `Cota d'extracció` = annex sondeig. Sense GTL (arriba setmanes després): la comanda basta.
+- **`cte`**: pressupost p.2 `Tipus d’edifici: C1` / `Tipus de Terreny : T1`; el correu d'encàrrec sol dir "És un C1". Definició de l'Eva:
+  C0 < 300 m² i < 4 plantes; C1 > 300 m² i < 4 plantes; C2 ≥ 4 plantes.
+
+## Pas 4 — Sortida: un JSON per document
+
+```json
+{"source_path": "relatiu a la carpeta", "document_type": "pressupost_g3|fitxa_camp_g3|comanda_lab_g3|plan_cost_g3|dpsh_excel|annex_sondeig|annex_tall|annex_planol_situacio|annex_dpsh|annex_fotografies|informe_laboratori|consulta_cadastre|planol|projecte_arquitecte|correu|foto|full_camp_manuscrit|coordenades_gps|altre",
+ "what_it_is": "1 frase", "issuer": "qui l'ha fet", "date": "...", "pages_or_sheets": "...",
+ "tier_a": [{"concept_id": "...", "value": "...", "location": "p.1 bloc OBRA / Hoja1!N19 / caixetí / nom del fitxer", "quote": "text literal", "confidence": 0.0, "note": "ambigüitat, conflicte, duplicat, grafia"}],
+ "not_present": ["camps del nivell A buscats i absents"],
+ "reading_notes": "què ha calgut fer (ordenar blocs, renderitzar, rotar, clip, llegir /Sig)"}
+```
+
+Escriu cada JSON **immediatament** després de llegir el document (el disc és la memòria). Els duplicats (mateix md5, mateix número
+d'informe, "X amb punts") s'anoten com a tals i **no** compten com a fonts independents. Les entrades `NOT_client_name` serveixen per
+deixar constància explícita del que s'ha descartat i per què.
+
+## Pas 5 — `_decisions.json`
+
+Per a cada un dels 15 camps:
+- `segur`: ≥ 2 fonts **independents** d'autoritat A coincideixen, o 1 font A sense cap contradicció. Sempre amb `candidates[]` (valor,
+  font, cita) perquè la UI mostri d'on surt.
+- `candidats`: llista ordenada ≤ 3 amb font i cita. També quan hi ha multiplicitat real (cantonada, dues parcel·les).
+- `no_trobat`: amb `sources_checked[]` (on s'ha buscat).
+- `rule`: la regla del Pas 3 aplicada, en una frase.
+
+Criteri únic: **ERR-amb-confiança = 0**. Davant del dubte, baixa d'estat. No ompliu "perquè segur que és això".
+
+## Pas 6 (només dry-run) — Comparació amb l'informe de l'Eva
+
+Només DESPRÉS d'escriure `_decisions.json`: obre `validation/eva_reference_values.json` i `{exp}_informe.docx`, classifica cada camp
+OK / CAND / NT / ERR, afegeix `comparison_with_eva` al `_decisions.json` i cada ERR com a regla nova en aquest skill i a
+`docs/golden-read/_LESSONS.md`.

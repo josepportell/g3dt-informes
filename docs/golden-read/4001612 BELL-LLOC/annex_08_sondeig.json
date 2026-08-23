@@ -1,0 +1,21 @@
+{
+  "source_path": "PDF/ANNEXES/4001612_sondeig.pdf",
+  "document_type": "annex_sondeig",
+  "what_it_is": "Annex del sondeig S-1 dibuixat per Eva (FreeHand → PDF, 27/10/2025): capçalera amb obra, client, dates, màquina, empresa, sondista, cota z i tècnic; columna litològica 0-8 m amb 'Unitat litològica' NIVELL 1, descripció dels materials, SPT-1; p.2 tres fotos del sondeig.",
+  "issuer": "Eva Vázquez Marcet (G3), Geòloga núm. 4302",
+  "date": "2025-10-27 (PDF) / camp 06/10/2025",
+  "pages_or_sheets": 2,
+  "tier_a": [
+    {"concept_id": "cota_referencia", "value": "199.50 m", "location": "p.1 capçalera, 'Coordenades UTM: z:'", "quote": "z: 199.50m", "confidence": 0.95, "note": "x, y buits. Coincideix amb l'annex DPSH ('Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)')"},
+    {"concept_id": "num_soil_levels", "value": "1", "location": "p.1 columna 'Unitat litològica'", "quote": "NIVELL 1 (únic valor a la columna, 0,0-1,8 m)", "confidence": 0.9, "note": "2 descripcions de material (llims argilosos amb graves / graves en matriu sorrenca carbonatades) però UNA unitat litològica → 1 nivell (criteri Eva, memòria eva_geological_levels_and_photo_id)"},
+    {"concept_id": "field_date", "value": "2025-10-06", "location": "p.1 'Data d'inici' / 'Data de fi'", "quote": "6/10/2025 | 6/10/2025", "confidence": 0.6, "note": "data del SONDEIG, no dels penetros (annex DPSH: 01/10/2025). Camp en dos dies: 1 oct (DPSH) i 6 oct (sondeig)."},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "p.1 'Obra:'", "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT ENTRE EL CARRER ANTONI BELLET I EL CARRER MESTRE RAMON ORTIZ EN EL MUNICIPI DE BELL-LLOC", "confidence": 0.95, "note": "redacció d'Eva = la que anirà a l'informe"},
+    {"concept_id": "street_address", "value": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz", "location": "p.1 'Obra:'", "quote": "ENTRE EL CARRER ANTONI BELLET I EL CARRER MESTRE RAMON ORTIZ", "confidence": 0.95, "note": "RESOL el conflicte pressupost (Mestre Ramon Ortiz 15) vs comanda (Antoni Ballet): cantonada, dues adreces verdaderes; grafia 'Bellet'"},
+    {"concept_id": "municipality", "value": "BELL-LLOC", "location": "p.1 'Obra:'", "quote": "EN EL MUNICIPI DE BELL-LLOC", "confidence": 0.95, "note": ""},
+    {"concept_id": "client_name", "value": "ARQ BOSCH NOVELL", "location": "p.1 'Client:'", "quote": "ARQ BOSCH NOVELL", "confidence": 0.4, "note": "ATENCIÓ: la mateixa Eva escriu l'arquitecte com a 'Client' a l'annex. Per tant el 'client' de l'annex NO és necessàriament el client de l'informe. 5a aparició del despatx com a client, totes derivades de l'encàrrec."},
+    {"concept_id": "lab_field_company", "value": "TPS, S.L. (màquina ML-76A, sondista Sr. Daniel Fernandez)", "location": "p.1 'Empresa:' / 'Màquina:' / 'Sondista:'", "quote": "TPS, S.L. | ML-76A | Sr. Daniel Fernandez", "confidence": 0.95, "note": ""},
+    {"concept_id": "lab_sample_id", "value": "SPT-1, 1,00-1,60 m, N=24/34/28/30", "location": "p.1 columna 'Muestras y ensayos in situ'", "quote": "SPT-1 | -1.00 a -1.60 | 24 34 28 30", "confidence": 0.95, "note": "coincideix amb la comanda i el GTL"}
+  ],
+  "not_present": ["expedient (només al nom del fitxer)", "architect_name (com a tal)", "num_floors", "superficie_parcela", "num_dpsh_tests", "utm_x/utm_y (caselles x,y buides)", "referencia_catastral", "lab_testing_company", "cte_*"],
+  "reading_notes": "FreeHand exportat: la capa de text té fonts sense ToUnicode → get_text() retorna brossa ('!\"#$%'). Cal RENDERITZAR (fitz pixmap 100 dpi n'hi ha prou) i llegir visualment. Identificació: nom 'PDF/ANNEXES/{exp}_sondeig.pdf' + títol 'Sondeig a rotació amb batería contínua' + logo G3. Regla: l'annex és d'autoritat A per cota i nivells (criteri d'Eva ja aplicat), però el seu camp 'Client' hereta l'ambigüitat de l'encàrrec."
+}

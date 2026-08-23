@@ -1,0 +1,16 @@
+{
+  "source_path": "ANNEXES/4001612_DPSH.xls",
+  "document_type": "dpsh_excel",
+  "what_it_is": "Transcripció d'Eva dels penetròmetres: un full per assaig (P-1, P-2), columnes Profunditat / Colpeig DPSH / Colpeig NB / par / N.F. / Nivells, 0 a -12 m cada 0,2 m, coeficient D15=0,83, peu amb 'Nivell 1' i cota de rebuig.",
+  "issuer": "Eva (G3)",
+  "date": "sense data al fitxer",
+  "pages_or_sheets": "2 fulls (P-1, P-2), 80 files cadascun",
+  "tier_a": [
+    {"concept_id": "num_dpsh_tests", "value": "2", "location": "noms dels fulls", "quote": "sheets: ['P-1', 'P-2']", "confidence": 1.0, "note": "EXECUTATS (no previstos): cada full té dades reals. És la font d'autoritat màxima per a aquest camp."},
+    {"concept_id": "expedient", "value": "4001612", "location": "nom del fitxer", "quote": "4001612_DPSH.xls", "confidence": 0.8, "note": "només al nom, no dins del fitxer; coincideix amb el nom de la carpeta"},
+    {"concept_id": "dpsh_refusal", "value": "P-1: -1,35 m (N20=100 a -1,4) ; P-2: -2,45 m (N20=80 a -2,4)", "location": "P-1!B80, P-2!B80", "quote": "Rebuig a la cota de  -1,35 m | Rebuig a la cota de  -2,45 m", "confidence": 1.0, "note": "no és dels 15 camps (nivell B), però indica profunditat d'investigació"},
+    {"concept_id": "num_soil_levels_hint", "value": "1", "location": "P-1!C79, P-2!C79", "quote": "Nivell 1", "confidence": 0.3, "note": "el peu de plantilla diu 'Nivell 1' i la columna 'Nivells' (G) és buida; no és evidència del nombre de nivells geològics (que surt del sondeig)."}
+  ],
+  "not_present": ["client_name", "street_address", "municipality", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "utm_x/utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "xlrd; files 1-14 buides, capçalera a la fila 16, dades 17-77, peu 79-80. Cap metadada de projecte dins del fitxer (ni data, ni adreça). Regla: num_dpsh_tests = nombre de fulls amb dades a la columna C (no el nombre de fulls: podria haver-hi fulls buits)."
+}

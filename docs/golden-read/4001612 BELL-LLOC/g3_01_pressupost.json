@@ -1,0 +1,21 @@
+{
+  "source_path": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Pressupost d'estudi geotècnic de G3 (plantilla m4PRO ERP), 7 pàgines: portada amb CLIENT/OBRA, pla de treball amb tipus CTE i campanya, índex de l'informe, valoració, full d'acceptació, 2 pàgines de condicions.",
+  "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L. (PDF creator; author 'Usuario (USER2)')",
+  "date": "2025-09-03",
+  "pages_or_sheets": 7,
+  "tier_a": [
+    {"concept_id": "client_name", "value": "ARQUITECTURA BOSCH NOVELL", "location": "p.1, bloc CLIENT (y≈231)", "quote": "CLIENT: / ARQUITECTURA BOSCH NOVELL / 25100 / Tel: 620199571", "confidence": 0.5, "note": "És el DESTINATARI del pressupost (qui l'encarrega), no necessàriament el promotor. El nom conté 'ARQUITECTURA' → probablement l'arquitecte. Candidat amb nota, no segur. El CP 25100 és del client, no de l'obra."},
+    {"concept_id": "architect_name", "value": "Bosch Novell (ARQUITECTURA BOSCH NOVELL)", "location": "p.1, bloc CLIENT", "quote": "ARQUITECTURA BOSCH NOVELL", "confidence": 0.6, "note": "despatx, no nom de persona; el nom de persona surt al correu i a la signatura del pressupost acceptat"},
+    {"concept_id": "street_address", "value": "C/MESTRE RAMON ORTIZ 15", "location": "p.1, bloc OBRA (y≈421), línia 2", "quote": "OBRA: / ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC", "confidence": 0.95, "note": "bloc OBRA = emplaçament de l'estudi; línia 1 és el tipus d'encàrrec, línia 2 adreça, línia 3 municipi"},
+    {"concept_id": "municipality", "value": "BELL-LLOC", "location": "p.1, bloc OBRA, línia 3", "quote": "BELL-LLOC", "confidence": 0.95, "note": "sense 'd'Urgell'"},
+    {"concept_id": "cte_edificacio", "value": "C1", "location": "p.2, y≈211", "quote": "Tipus d’edifici: C1", "confidence": 1.0, "note": ""},
+    {"concept_id": "cte_sol", "value": "T1", "location": "p.2, y≈227", "quote": "Tipus de Terreny : T1", "confidence": 1.0, "note": ""},
+    {"concept_id": "num_dpsh_tests", "value": "2", "location": "p.2 campanya (y≈663) i p.4 valoració 002.001", "quote": "2 assaigs de penetració dinàmica DPSH | UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH 2,00", "confidence": 0.9, "note": "és el nombre PRESSUPOSTAT; el nombre executat pot diferir (verificar amb Excel DPSH / fitxa)"},
+    {"concept_id": "num_sondeigs", "value": "1", "location": "p.2 y≈678 i p.4 001.001", "quote": "1Sondeig a rotació amb bateria continua, que inclou desplaçament, perforació i execució d’assaigs SPT’s | SONDEIG A ROTACIO AMB BATERIA CONTINUA 1,00", "confidence": 0.9, "note": "no és dels 15 camps, però ajuda a validar la campanya (i la fitxa '5P+2S')"},
+    {"concept_id": "expedient_comercial", "value": "25·0647", "location": "p.1 peu, p.4-5 capçalera", "quote": "25·0647 P#", "confidence": 1.0, "note": "codi COMERCIAL del pressupost (= nom de la subcarpeta 25.0647). NO és l'expedient de l'informe (4001612). Regla: mai confondre'ls."}
+  ],
+  "not_present": ["expedient", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x/utm_y", "referencia_catastral", "lab_testing_company", "lab_sample_id", "lab_depth", "lab_location"],
+  "reading_notes": "PDF vectorial; get_text() en ordre de lectura natural barreja els blocs (a la p.1 'ARQUITECTURA BOSCH NOVELL' surt entre OBRA: i ESTUDI GEOTECNIC). Cal ordenar blocs per (y,x) o renderitzar. El bloc CLIENT té 4 línies: nom / [carrer, buit aquí] / CP / Tel. El bloc OBRA té 3 línies: encàrrec / adreça / municipi. P.5 és el formulari d'acceptació, tot buit en aquesta còpia (la signada és a ACCEPTACIO/). Identificació de plantilla: metadata creator 'G3 DESENVOLUPAMENT TERRITORIAL, S.L.' + title 'm4PRO ERP · Informes del Proyecto' + text 'PRESSUPOST GEOTECNIC' → determinista."
+}

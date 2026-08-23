@@ -1,0 +1,568 @@
+{
+ "project": "4001612 BELL-LLOC",
+ "read_on": "2026-08-23",
+ "reader": "Claude Code en sessió (dry-run del skill g3dt-llegir-projecte)",
+ "sources_read": 26,
+ "bias_disclosure": "Abans de llegir ja sabia, per l'anàlisi del 23-08 i pel skill g3dt-extreure-planol.md: client = Ramon Mitjana SL (no Bosch Novell); data de camp 01/10 vs comanda 06/10; dues adreces (cantonada); 1 nivell geològic; i els valors (erronis) de l'exemple del skill (598 m², Pb+P1, 8,38 m). No sabia: superfície 995 vs 1012, cota 199,50 i el seu origen, ref. cadastrals, PB+PP, l'albarà TPS com a origen del 'G3'.",
+ "decisions": {
+  "expedient": {
+   "status": "segur",
+   "value": "4001612",
+   "rule": "nom de carpeta = comanda N19 = annex DPSH 'NÚMERO D'INFORME' = GTL 'Obra / Projecte' (4 fonts). Descartats: 25·0647 (codi comercial), EXP25.34 (arquitecte), 4677-GTL-25 (lab), 4001621 (typo annexos).",
+   "candidates": [
+    {
+     "value": "4001612",
+     "source": "comanda laboratori Hoja1!N19",
+     "quote": "NÚM. D'EXPEDIENT | 4001612"
+    }
+   ],
+   "sources_checked": [
+    "carpeta",
+    "g3_06",
+    "annex_11",
+    "lab_07",
+    "g3_05",
+    "g3_01",
+    "planol_14",
+    "annex_10"
+   ]
+  },
+  "client_name": {
+   "status": "segur",
+   "value": "RAMON MITJANA SL",
+   "rule": "client = promotor/propietari: etiqueta 'Promotor' al caixetí de l'arquitecte + 'DADES CLIENT' amb NIF a ACCEPTACIO/ (2 fonts independents). Les 5 aparicions de 'CLIENT = ARQUITECTURA BOSCH NOVELL' (correu, pressupost, signat, fitxa, annex sondeig) són el sol·licitant i deriven totes de l'encàrrec. 'G3' (comanda, GTL, albarans TPS) és G3 mateix.",
+   "candidates": [
+    {
+     "value": "RAMON MITJANA SL",
+     "source": "A.01.pdf caixetí",
+     "quote": "Promotor / RAMON MITJANA SL"
+    },
+    {
+     "value": "RAMON MITJANA SL (B25771726)",
+     "source": "ACCEPTACIO/DADES CLIENT.txt",
+     "quote": "RAMON MITJANA SL       B25771726"
+    },
+    {
+     "value": "ARQUITECTURA BOSCH NOVELL (sol·licitant)",
+     "source": "PRESSUPOST p.1",
+     "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL"
+    }
+   ],
+   "sources_checked": [
+    "planol_14",
+    "acceptacio_03",
+    "g3_01",
+    "g3_02",
+    "g3_03",
+    "correu_01",
+    "annex_08",
+    "g3_06",
+    "lab_07",
+    "camp_19",
+    "camp_20"
+   ]
+  },
+  "street_address": {
+   "status": "candidats",
+   "value": "C/ Mestre Ramon Ortiz 15",
+   "rule": "parcel·la en cantonada: dues adreces verdaderes. Pressupost/fitxa/Cadastre diuen Mestre Ramon Ortiz 15 (i 13); comanda/GTL/fulls TPS/annexos diuen Antoni Bellet ('Ballet' als manuscrits). Els annexos d'Eva usen la frase composta. No competició.",
+   "candidates": [
+    {
+     "value": "C/ Mestre Ramon Ortiz 15",
+     "source": "PRESSUPOST p.1 bloc OBRA",
+     "quote": "C/MESTRE RAMON ORTIZ 15"
+    },
+    {
+     "value": "entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz",
+     "source": "annex sondeig / tall.pdf",
+     "quote": "ENTRE EL CARRER ANTONI BELLET I EL CARRER MESTRE RAMON ORTIZ"
+    },
+    {
+     "value": "C/ Antoni Bellet",
+     "source": "GTL p.1 'Situació'",
+     "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet."
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "g3_03",
+    "g3_06",
+    "lab_07",
+    "planol_14",
+    "cadastre_01",
+    "cadastre_02",
+    "annex_08",
+    "annex_09",
+    "annex_10",
+    "camp_19",
+    "camp_20",
+    "correu_01"
+   ]
+  },
+  "municipality": {
+   "status": "segur",
+   "value": "Bell-lloc d'Urgell",
+   "rule": "≥ 2 fonts A: comanda N21 + pressupost p.1 + PLAN_COST E9 ('BELL-LLOC'); forma oficial llarga a Cadastre, A.01, GTL, mapa ICGC. Normalització: 'BELL-LLOC' / 'BELL.LLOC' / 'BELL-LLOCH' → 'Bell-lloc d'Urgell'. Mai la població del sol·licitant (Els Omells de Na Gaia) ni la del client (Doctor Torrebadella).",
+   "candidates": [
+    {
+     "value": "Bell-lloc d'Urgell",
+     "source": "Cadastre 4613172… 'Localización'",
+     "quote": "25220 BELL-LLOC D'URGELL [LLEIDA]"
+    },
+    {
+     "value": "BELL-LLOC",
+     "source": "comanda Hoja1!N21",
+     "quote": "POBLACIÓ | BELL-LLOC"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "g3_01",
+    "g3_04",
+    "cadastre_01",
+    "planol_14",
+    "lab_07",
+    "annex_10",
+    "g3_03",
+    "correu_01"
+   ]
+  },
+  "architect_name": {
+   "status": "segur",
+   "value": "Jordi Bosch Novell",
+   "rule": "etiqueta 'Arquitecte' al caixetí A.01 + signatura digital del pressupost acceptat + correu (despatx ARQUITECTURA BOSCH NOVELL). 3 fonts.",
+   "candidates": [
+    {
+     "value": "Jordi Bosch Novell",
+     "source": "A.01.pdf caixetí",
+     "quote": "Arquitecte / Jordi Bosch Novell"
+    },
+    {
+     "value": "JORDI BOSCH NOVELL / num:37655-8",
+     "source": "ACCEPTACIO/pressupost signat, /Sig /Name",
+     "quote": "Firmado digitalmente por JORDI BOSCH NOVELL / num:37655-8"
+    }
+   ],
+   "sources_checked": [
+    "planol_14",
+    "g3_02",
+    "correu_01",
+    "g3_01",
+    "g3_03"
+   ]
+  },
+  "building_type": {
+   "status": "segur",
+   "value": "habitatge unifamiliar aïllat",
+   "rule": "A.01 títol + PLAN_COST 'HAB UNIF' + comanda 'CONSTR HABITATGE' + correu 'una sola casa' + annexos d'Eva. Comparació CLOSE amb la redacció de l'informe.",
+   "candidates": [
+    {
+     "value": "HABITATGE UNIFAMILIAR AÏLLAT",
+     "source": "A.01.pdf caixetí",
+     "quote": "Projecte Bàsic i Executiu / HABITATGE UNIFAMILIAR AÏLLAT"
+    },
+    {
+     "value": "EG HAB UNIF BELL-LLOC",
+     "source": "PLAN_COST 'Plan Cost'!E9",
+     "quote": "EG HAB UNIF BELL-LLOC"
+    }
+   ],
+   "sources_checked": [
+    "planol_14",
+    "g3_04",
+    "g3_06",
+    "correu_01",
+    "annex_08",
+    "annex_09"
+   ]
+  },
+  "num_floors": {
+   "status": "segur",
+   "value": "PB+1 (PB+PP)",
+   "rule": "taula de planejament d'A.01 (imatge) 'N. plantes: PB+PP' + correu intern 'Pb de 280m + p1 de 86'. 2 fonts. Cap plantilla G3 ho té.",
+   "candidates": [
+    {
+     "value": "PB+PP",
+     "source": "A.01.pdf JUSTIFICACIÓ PLANEJAMENT (imatge)",
+     "quote": "N. plantes | PB+PP | PB+PP"
+    },
+    {
+     "value": "Pb + p1",
+     "source": "correu César 03/09",
+     "quote": "C1 Pb de 280m + p1 de 86"
+    }
+   ],
+   "sources_checked": [
+    "planol_14",
+    "correu_01",
+    "g3_01",
+    "g3_03",
+    "g3_04",
+    "g3_06"
+   ]
+  },
+  "superficie_parcela": {
+   "status": "candidats",
+   "value": "995 m²",
+   "rule": "dues parcel·les contigües (correu) amb 2 consultes cadastrals (518 + 494 = 1012 m²) i el projecte declara 995,00 m². Tres valors legítims; el skill no ha de triar.",
+   "candidates": [
+    {
+     "value": "995,00 m²",
+     "source": "A.01.pdf taula JUSTIFICACIÓ PLANEJAMENT (imatge)",
+     "quote": "Parcel.la mínima | CLAU 6B min 600.00 m2 | 995,00m2"
+    },
+    {
+     "value": "1012 m² (518 + 494)",
+     "source": "Cadastre 4613172… + 4613173…",
+     "quote": "Superficie gráfica: 518 m2 | 494 m2"
+    },
+    {
+     "value": "518 m² (només parcel·la núm. 15)",
+     "source": "Cadastre 4613172CG1141S0001SU",
+     "quote": "518 m2"
+    }
+   ],
+   "sources_checked": [
+    "planol_14",
+    "cadastre_01",
+    "cadastre_02",
+    "correu_01",
+    "annex_10",
+    "g3_01",
+    "g3_03"
+   ]
+  },
+  "field_date": {
+   "status": "segur",
+   "value": "2025-10-01",
+   "rule": "primer dia de camp = DPSH: fitxa F38 'dies de camp' + annex DPSH 'DATA' + albarà TPS + 7 fotos del 01/10 (4 fonts). El sondeig va ser el 06/10 (annex sondeig, albarà, comanda 'DATA DE PRESA', GTL, 3 fotos). Regla d'Eva (EXPLICACIÓ DETALLS): «si la data del sondeig no és igual posar els dos dies» → l'informe pot dir '1 i 6 d'octubre'.",
+   "candidates": [
+    {
+     "value": "2025-10-01",
+     "source": "fitxa!F38",
+     "quote": "dies de camp | 2025-10-01"
+    },
+    {
+     "value": "2025-10-01",
+     "source": "annex DPSH p.1",
+     "quote": "DATA: 01/10/2025"
+    },
+    {
+     "value": "2025-10-06 (sondeig)",
+     "source": "annex sondeig p.1",
+     "quote": "Data d'inici: 6/10/2025"
+    }
+   ],
+   "sources_checked": [
+    "g3_03",
+    "annex_11",
+    "camp_19",
+    "fotos_21",
+    "annex_08",
+    "camp_20",
+    "g3_06",
+    "lab_07",
+    "g3_01",
+    "g3_02"
+   ]
+  },
+  "cota_referencia": {
+   "status": "segur",
+   "value": "199.50",
+   "rule": "annex DPSH (amb justificació: 'segons el plànol topogràfic ICGC (-0,15 carrer)') + annex sondeig z = 199.50 (2 fonts d'Eva, criteri aplicat). COORDENADES.txt z = 198.9 (GPS) és secundari: Eva no l'usa.",
+   "candidates": [
+    {
+     "value": "+199.50 msnm",
+     "source": "PDF/ANNEXES/4001612_DPSH.pdf p.1",
+     "quote": "Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)."
+    },
+    {
+     "value": "199.50 m",
+     "source": "PDF/ANNEXES/4001612_sondeig.pdf capçalera",
+     "quote": "z: 199.50m"
+    },
+    {
+     "value": "198.9 (z GPS P-1)",
+     "source": "ANNEXES/ALTRES/COORDENADES.txt",
+     "quote": "314418.9 ; 4611117.6 ; 198.9"
+    }
+   ],
+   "sources_checked": [
+    "annex_11",
+    "annex_08",
+    "annex_09",
+    "coord_17",
+    "camp_19",
+    "camp_20"
+   ]
+  },
+  "num_soil_levels": {
+   "status": "segur",
+   "value": "1",
+   "rule": "columna 'Unitat litològica' de l'annex sondeig = NIVELL 1 + llegenda del tall '1er nivell'. Els 2 trams descrits al full de camp no són nivells.",
+   "candidates": [
+    {
+     "value": "1",
+     "source": "PDF/ANNEXES/4001612_sondeig.pdf",
+     "quote": "NIVELL 1"
+    },
+    {
+     "value": "1",
+     "source": "tall.pdf llegenda",
+     "quote": "1er nivell: Graves amb sorres"
+    }
+   ],
+   "sources_checked": [
+    "annex_08",
+    "annex_09",
+    "camp_20",
+    "g3_05",
+    "annex_11"
+   ]
+  },
+  "num_dpsh_tests": {
+   "status": "segur",
+   "value": "2",
+   "rule": "Excel DPSH 2 fulls amb dades + pressupost '2 assaigs' + fitxa '2 (P)' + albarà TPS '2' + annex DPSH P-1/P-2. 5 fonts, 3 independents.",
+   "candidates": [
+    {
+     "value": "2",
+     "source": "ANNEXES/4001612_DPSH.xls",
+     "quote": "sheets: ['P-1', 'P-2']"
+    },
+    {
+     "value": "2",
+     "source": "PRESSUPOST p.2",
+     "quote": "2 assaigs de penetració dinàmica DPSH"
+    }
+   ],
+   "sources_checked": [
+    "g3_05",
+    "g3_01",
+    "g3_03",
+    "g3_04",
+    "camp_19",
+    "annex_11",
+    "annex_09",
+    "fotos_21"
+   ]
+  },
+  "utm_x_utm_y": {
+   "status": "segur",
+   "value": "X 314418.9 ; Y 4611117.6 (P-1, ETRS89 fus 31)",
+   "rule": "COORDENADES.txt (1 font A, sense contradicció; coherent amb la quadrícula 314.550 del croquis cadastral i amb el punt del correu). Només P-1: P-2 i S-1 s'haurien de derivar del plànol de situació.",
+   "candidates": [
+    {
+     "value": "314418.9 / 4611117.6",
+     "source": "ANNEXES/ALTRES/COORDENADES.txt",
+     "quote": "P-1 / 314418.9 ; 4611117.6 ; 198.9"
+    }
+   ],
+   "sources_checked": [
+    "coord_17",
+    "cadastre_01",
+    "correu_01",
+    "annex_08"
+   ]
+  },
+  "referencia_catastral": {
+   "status": "candidats",
+   "value": "4613172CG1141S0001SU",
+   "rule": "dues referències, totes dues verdaderes (obra sobre 2 parcel·les). Candidats = les dues; l'informe en pot citar una o les dues.",
+   "candidates": [
+    {
+     "value": "4613172CG1141S0001SU (núm. 15, 518 m²)",
+     "source": "25.0647/4613172CG1141S0001SU-15.pdf",
+     "quote": "Referencia catastral: 4613172CG1141S0001SU"
+    },
+    {
+     "value": "4613173CG1141S0001ZU (núm. 13, 494 m²)",
+     "source": "25.0647/4613173CG1141S0001ZU-13.pdf",
+     "quote": "Referencia catastral: 4613173CG1141S0001ZU"
+    }
+   ],
+   "sources_checked": [
+    "cadastre_01",
+    "cadastre_02",
+    "correu_01",
+    "annex_10"
+   ]
+  },
+  "lab": {
+   "status": "segur",
+   "value": {
+    "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "lab_sample_id": "SPT1 S1",
+    "lab_depth": "1,0 - 1,6 m",
+    "lab_location": "S1"
+   },
+   "rule": "comanda (C35, J35, L35) + GTL (banda TPS, 'Mostra: SPT1 S1', cota 1,0-1,6) + annex sondeig SPT-1. El laboratori és l'emissor del GTL (B64803075), mai el 'client' del GTL (G3). 'SOIL-ASSAIG' del PLAN_COST és plantilla.",
+   "candidates": [
+    {
+     "value": "TPS, PROSPECCIÓ DEL SUBSÒL, SL",
+     "source": "GTL banda de peu",
+     "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075"
+    },
+    {
+     "value": "SPT 1 (S1) 1,0-1,6",
+     "source": "comanda Hoja1!C35/J35/L35",
+     "quote": "SPT 1 (S1) | 1.0 | 1.6"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "lab_07",
+    "annex_13",
+    "annex_08",
+    "g3_04"
+   ]
+  },
+  "cte": {
+   "status": "segur",
+   "value": {
+    "cte_edificacio": "C-1",
+    "cte_sol": "T-1"
+   },
+   "rule": "pressupost p.2 'Tipus d'edifici: C1 / Tipus de Terreny : T1' + correu 'És un C1'. Coherent amb la definició d'Eva (C1 = >300 m² construïts i <4 plantes; aquí 397 m² IEN, PB+1).",
+   "candidates": [
+    {
+     "value": "C1 / T1",
+     "source": "PRESSUPOST p.2",
+     "quote": "Tipus d’edifici: C1 | Tipus de Terreny : T1"
+    },
+    {
+     "value": "C1",
+     "source": "correu César",
+     "quote": "GEO : És un C1"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "correu_01",
+    "g3_03",
+    "g3_04"
+   ]
+  }
+ },
+ "summary": {
+  "segur": 12,
+  "candidats": 3,
+  "no_trobat": 0,
+  "notes": "candidats = street_address (cantonada), superficie_parcela (2 parcel·les vs projecte), referencia_catastral (2 parcel·les). Els tres són multiplicitat real, no incertesa de lectura."
+ },
+ "comparison_with_eva": {
+  "reference": "reference-material/4001612 BELL-LLOC/validation/eva_reference_values.json + 4001612_informe.docx (grep) + docs/audit/tier-a-truth-map-2026-08-23.json",
+  "opened_after_decisions": true,
+  "per_field": {
+   "expedient": {
+    "eva": "4001612",
+    "mine": "4001612",
+    "result": "OK"
+   },
+   "client_name": {
+    "eva": "RAMON MITJANA S.L",
+    "mine": "RAMON MITJANA SL",
+    "result": "OK",
+    "note": "regla client=promotor confirmada"
+   },
+   "street_address": {
+    "eva": "es situarà entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d’Urgell (informe §1); adjacents: sud Antoni Bellet, est Mestre Ramon Ortiz",
+    "mine": "candidats [Mestre Ramon Ortiz 15 | entre Antoni Bellet i Mestre Ramon Ortiz | Antoni Bellet]",
+    "result": "CAND",
+    "note": "el correcte és el candidat 2 (frase dels annexos d'Eva). Regla nova: si els annexos d'Eva existeixen, la seva frase 'entre X i Y' és la redacció de l'informe."
+   },
+   "municipality": {
+    "eva": "Bell-lloc d’Urgell",
+    "mine": "Bell-lloc d'Urgell",
+    "result": "OK",
+    "note": "apòstrof tipogràfic vs recte"
+   },
+   "architect_name": {
+    "eva": "JORDI BOSCH NOVELL (+ architect_company ARQUITECTURA BOSCH NOVELL)",
+    "mine": "Jordi Bosch Novell",
+    "result": "OK"
+   },
+   "building_type": {
+    "eva": "un habitatge unifamiliar",
+    "mine": "habitatge unifamiliar aïllat",
+    "result": "OK (CLOSE)"
+   },
+   "num_floors": {
+    "eva": "Pb+1Pp",
+    "mine": "PB+1 (PB+PP)",
+    "result": "OK"
+   },
+   "superficie_parcela": {
+    "eva": "995",
+    "mine": "candidats [995 | 1012 | 518]",
+    "result": "CAND",
+    "note": "correcte = candidat 1. Regla nova: Eva usa la superfície declarada al projecte/plànol, no la del Cadastre. Amb aquesta regla → segur. ATENCIÓ truth-map: els seus hits de '995' a fitxa/PLAN_COST/pressupost/A.01-text són FALSOS (substring del telèfon 620199571); el 995 només és a la imatge d'A.01."
+   },
+   "field_date": {
+    "eva": "1 d’octubre de 2025",
+    "mine": "2025-10-01",
+    "result": "OK",
+    "note": "Eva NO ha posat els dos dies tot i la seva regla escrita; el primer dia (DPSH) mana"
+   },
+   "cota_referencia": {
+    "eva": "+199.50",
+    "mine": "199.50",
+    "result": "OK"
+   },
+   "num_soil_levels": {
+    "eva": "un sòl nivell",
+    "mine": "1",
+    "result": "OK"
+   },
+   "num_dpsh_tests": {
+    "eva": "2",
+    "mine": "2",
+    "result": "OK"
+   },
+   "utm_x_utm_y": {
+    "eva": "314419 / 4611118",
+    "mine": "314418.9 / 4611117.6",
+    "result": "OK (arrodoniment)"
+   },
+   "referencia_catastral": {
+    "eva": "(no apareix a l'informe)",
+    "mine": "candidats [4613172… | 4613173…]",
+    "result": "N/A",
+    "note": "no és variable de l'informe a Bell-lloc; el wizard la usa per geocodificar"
+   },
+   "lab": {
+    "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL / SPT-1 / -1.0 a -1.60 m / S-1",
+    "mine": "TPS PROSPECCIÓ DEL SUBSÒL SL / SPT1 S1 / 1,0-1,6 m / S1",
+    "result": "OK"
+   },
+   "cte": {
+    "eva": "C-1 / T-1",
+    "mine": "C1 / T1",
+    "result": "OK"
+   }
+  },
+  "totals": {
+   "OK": 12,
+   "CAND": 2,
+   "NT": 0,
+   "NA": 1,
+   "ERR": 0
+  },
+  "bonus_beyond_15": {
+   "superficie_construida": {
+    "eva": "280+86",
+    "mine": "Pb 280 + p1 86 (correu)",
+    "result": "OK"
+   },
+   "num_sondeigs": "1 (S-1)",
+   "lab_field_company": "TPS",
+   "sulfats": "89,8 mg/kg"
+  },
+  "rules_learned": [
+   "street_address: quan hi ha annexos d'Eva, la frase del caixetí ('entre el carrer X i el carrer Y') és la redacció de l'informe → candidat 1",
+   "superficie_parcela: projecte/plànol (taula de planejament) > suma Cadastre > parcel·la única → amb aquesta prioritat, 995 seria 'segur amb nota'",
+   "field_date: primer dia (DPSH) encara que Eva digui per escrit que posaria els dos dies",
+   "truth-map: cal matching per paraula sencera (\\b995\\b), no substring; recomptar abans de citar 'N docs contenen el valor'"
+  ]
+ }
+}

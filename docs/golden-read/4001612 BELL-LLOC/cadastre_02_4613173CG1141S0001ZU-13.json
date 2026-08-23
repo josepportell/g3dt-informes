@@ -1,0 +1,16 @@
+{
+  "source_path": "25.0647/4613173CG1141S0001ZU-13.pdf (= adjunt del correu 1)",
+  "document_type": "consulta_cadastre",
+  "what_it_is": "Consulta descriptiva i gràfica del Cadastre (24/04/2025) de la parcel·la contigua 4613173CG1141S0001ZU.",
+  "issuer": "Dirección General del Catastro",
+  "date": "2025-04-24",
+  "pages_or_sheets": 1,
+  "tier_a": [
+    {"concept_id": "referencia_catastral", "value": "4613173CG1141S0001ZU", "location": "capçalera", "quote": "4613173CG1141S0001ZU", "confidence": 1.0, "note": "segona parcel·la"},
+    {"concept_id": "street_address", "value": "CL MESTRE RAMON ORTIZ 13", "location": "'Localización:'", "quote": "CL MESTRE RAMON ORTIZ 13 Suelo PROVIENE DE 4613121", "confidence": 0.9, "note": "número 13 (parcel·la veïna de la 15); l'obra abasta 13 + 15"},
+    {"concept_id": "municipality", "value": "BELL-LLOC D'URGELL", "location": "'Localización:'", "quote": "25220 BELL-LLOC D'URGELL [LLEIDA]", "confidence": 1.0, "note": ""},
+    {"concept_id": "superficie_parcela", "value": "494 m²", "location": "'Superficie gráfica:'", "quote": "494 m2", "confidence": 1.0, "note": ""}
+  ],
+  "not_present": ["igual que cadastre_01"],
+  "reading_notes": "Regla: si hi ha ≥ 2 consultes cadastrals a la carpeta i el correu diu 'dues parcel·les contigües', superficie_parcela té 3 candidats legítims: cada parcel·la, la suma, i el valor del projecte. No triar sol."
+}

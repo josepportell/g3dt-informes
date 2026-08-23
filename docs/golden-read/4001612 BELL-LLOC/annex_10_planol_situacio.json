@@ -1,0 +1,18 @@
+{
+  "source_path": "PDF/ANNEXES/4001612_plànol de situació.pdf",
+  "document_type": "annex_planol_situacio",
+  "what_it_is": "Plànol de situació d'Eva: mapa ICGC de Bell-lloc d'Urgell amb punt vermell, ortofoto cadastral amb les parcel·les 72 i 73 del polígon 46131 ressaltades, i planta del plànol de l'arquitecte amb P-1, P-2, S-1 i cotes de parcel·la; caixetí.",
+  "issuer": "Eva (G3)",
+  "date": "Octubre 2025",
+  "pages_or_sheets": 1,
+  "tier_a": [
+    {"concept_id": "referencia_catastral", "value": "parcel·les 72 i 73, illa 46131 (→ 4613172… i 4613173…)", "location": "ortofoto cadastral (requadre vermell) + etiqueta d'illa", "quote": "72 | 73 | 46131", "confidence": 0.8, "note": "corrobora els 2 PDFs del Cadastre (4613172CG1141S0001SU, 4613173CG1141S0001ZU). Els números d'illa i parcel·la formen els 7 primers dígits de la referència."},
+    {"concept_id": "municipality", "value": "Bell-lloc d'Urgell", "location": "mapa ICGC (etiqueta) + caixetí", "quote": "Bell-lloc d'Urgell | DE BELL-LLOC", "confidence": 0.95, "note": "el mapa dona la forma llarga"},
+    {"concept_id": "street_address", "value": "Carrer Antoni Bellet / Carrer Mestre Ramon Ortiz (cantonada)", "location": "planta: rètols dels carrers als dos costats", "quote": "CARRER ANTONI BELLET (sud) | CARRER MESTRE RAMON ORTIZ (est)", "confidence": 0.95, "note": "confirma la cantonada"},
+    {"concept_id": "superficie_parcela_hint", "value": "24,72 × 34,61 m (aprox.)", "location": "cotes de la planta", "quote": "24.72 | 34.61 | 24.57", "confidence": 0.4, "note": "cotes exteriors de la parcel·la al plànol de l'arquitecte (copiat); no és una superfície declarada. Producte ≈ 855 m² no és fiable (parcel·la no rectangular)."},
+    {"concept_id": "expedient", "value": "4001621 [sic]", "location": "caixetí 'Exp:'", "quote": "Exp: 4001621", "confidence": 0.2, "note": "TYPO d'Eva (carpeta/annexos diuen 4001612). Regla: els caixetins dels annexos poden tenir errors de transcripció; no són font primària d'expedient."},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "caixetí", "quote": "…CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT…", "confidence": 0.95, "note": ""}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "field_date (només 'Octubre 2025')", "cota_referencia (el mapa mostra cotes 198,9-199,3 dels carrers, no de la parcel·la)", "num_soil_levels", "utm_x/utm_y", "lab_*", "cte_*"],
+  "reading_notes": "FreeHand, text brossa → visió. La planta és la del plànol de l'arquitecte (A.01) amb els punts afegits: les cotes que s'hi veuen provenen d'A.01. L'ortofoto cadastral porta els números de parcel·la llegibles a 100 dpi."
+}

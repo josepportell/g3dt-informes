@@ -1,0 +1,19 @@
+{
+  "source_path": "PENETROS.pdf",
+  "document_type": "full_camp_manuscrit",
+  "what_it_is": "Escaneig (PDFsharp, 0 text) de 2 fulls de TPS: p.1 ALBARÀ del penetròmetre (equip ML 60A, operari Siny, dades obra/client, conceptes); p.2 Full de Camp Penetròmetre Dinàmic amb N20 manuscrits de P1 i P2, croquis dels punts i nivell freàtic.",
+  "issuer": "TPS (subcontractista), operari 'Siny'",
+  "date": "2025-10-01 (manuscrit '1-10-25')",
+  "pages_or_sheets": 2,
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2025-10-01", "location": "p.1 'Data:' i p.2 'Data:'", "quote": "1-10-25", "confidence": 0.9, "note": "manuscrit; coincideix amb fitxa, annex DPSH i noms de fotos"},
+    {"concept_id": "municipality", "value": "BELL-LLOCH [sic]", "location": "p.1 'Població:' / p.2 'Adreça de l'obra:'", "quote": "BELL-LLOCH", "confidence": 0.7, "note": "grafia de l'operari; normalitzar"},
+    {"concept_id": "street_address", "value": "Carrer Antoni Bellet", "location": "p.2 'Descriure punt 0 o cota referencia'", "quote": "Carrer ANTONI BELLET", "confidence": 0.7, "note": "el croquis mostra els dos carrers: 'Carrer Antoni Bellet' (esquerra) i 'Carrer Mestre Ramon Ortiz' (sota)"},
+    {"concept_id": "num_dpsh_tests", "value": "2", "location": "p.1 'Nº de penetròmetres realitzats' + p.2 columnes P1/P2", "quote": "2 | P1 P2", "confidence": 0.95, "note": "executats"},
+    {"concept_id": "NOT_client_name", "value": "G3 / EVA", "location": "p.1 bloc 'DADES CLIENT:' (Empresa / Responsable)", "quote": "Empresa: G3 | Responsable: EVA", "confidence": 1.0, "note": "REGLA: l'albarà és del subcontractista TPS; el seu 'client' és G3. ORIGEN DOCUMENTAT de l'error 'client_name = G3' de producció. Mai candidat."},
+    {"concept_id": "cota_referencia_hint", "value": "punt 0 = carrer Antoni Bellet, cota inici -0,15", "location": "p.2 'Cota inici' '-0,15' (×3)", "quote": "Cota Inici -0,15", "confidence": 0.5, "note": "relatiu al carrer; l'annex DPSH d'Eva ho tradueix: '+199.50 msnm segons ICGC (-0,15 carrer)'"},
+    {"concept_id": "nivell_freatic", "value": "NO", "location": "p.2 'Hi ha nivell freàtic?'", "quote": "NO", "confidence": 0.9, "note": "nivell B"}
+  ],
+  "not_present": ["expedient ('Informe:' buit)", "client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "num_soil_levels", "utm_x/utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "Només visió (90 dpi suficient per a capçaleres; els N20 demanen ≥150 dpi i ja tenen Excel). Identificació: logo 'tps' + 'ALBARÀ' / 'Full de Camp Penetròmetre Dinàmic'. Regla: tot document amb capçalera TPS és del subcontractista → el bloc CLIENT és G3."
+}

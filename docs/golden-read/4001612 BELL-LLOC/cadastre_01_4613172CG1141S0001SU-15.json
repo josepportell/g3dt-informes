@@ -1,0 +1,17 @@
+{
+  "source_path": "25.0647/4613172CG1141S0001SU-15.pdf (= adjunt del correu 1)",
+  "document_type": "consulta_cadastre",
+  "what_it_is": "Consulta descriptiva i gràfica del Cadastre (Sede Electrónica, 24/04/2025) de la parcel·la 4613172CG1141S0001SU: localització, superfície gràfica, ús, croquis amb UTM.",
+  "issuer": "Dirección General del Catastro",
+  "date": "2025-04-24",
+  "pages_or_sheets": 1,
+  "tier_a": [
+    {"concept_id": "referencia_catastral", "value": "4613172CG1141S0001SU", "location": "capçalera 'Referencia catastral:' + nom del fitxer", "quote": "4613172CG1141S0001SU", "confidence": 1.0, "note": "una de DUES parcel·les (vegeu cadastre_02)"},
+    {"concept_id": "street_address", "value": "CL MESTRE RAMON ORTIZ 15", "location": "'Localización:'", "quote": "CL MESTRE RAMON ORTIZ 15 Suelo PROVIENE DE 4613121", "confidence": 0.95, "note": "confirma el número 15 del pressupost"},
+    {"concept_id": "municipality", "value": "BELL-LLOC D'URGELL", "location": "'Localización:' línia 2", "quote": "25220 BELL-LLOC D'URGELL [LLEIDA]", "confidence": 1.0, "note": "forma oficial (guió + apòstrof)"},
+    {"concept_id": "superficie_parcela", "value": "518 m²", "location": "'Superficie gráfica:'", "quote": "518 m2", "confidence": 1.0, "note": "d'aquesta parcel·la sola; l'obra ocupa 2 parcel·les (518 + 494 = 1012 m²)"},
+    {"concept_id": "utm_x/utm_y_hint", "value": "croquis amb quadrícula UTM fus 31 ETRS89 (etiqueta 314.550)", "location": "croquis", "quote": "314.550 Coordenadas U.T.M. Huso 31 ETRS89", "confidence": 0.3, "note": "només l'etiqueta d'una línia de quadrícula (X≈314.550); les coordenades de vèrtexs NO són al PDF (embfile_count=0 malgrat el text 'contiene anexos')"}
+  ],
+  "not_present": ["expedient", "client_name (no consta titular)", "architect_name", "building_type ('Suelo sin edif.')", "num_floors", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "lab_*", "cte_*"],
+  "reading_notes": "Text vectorial net. Identificació: title 'Certificación Descriptiva y Gráfica Catastral …' / author 'Sede Electrónica del Catastro'. Data 24/04/2025 = 4 mesos abans de l'encàrrec: la consulta la va fer l'arquitecte/promotor. 'PROVIENE DE 4613121' = segregació d'una parcel·la mare."
+}

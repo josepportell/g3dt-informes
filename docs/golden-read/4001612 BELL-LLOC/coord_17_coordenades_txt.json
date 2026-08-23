@@ -1,0 +1,14 @@
+{
+  "source_path": "ANNEXES/ALTRES/COORDENADES.txt",
+  "document_type": "coordenades_gps",
+  "what_it_is": "Coordenades UTM de camp (GPS) d'un sol punt, P-1, amb z.",
+  "issuer": "G3 (camp)",
+  "date": "sense data",
+  "pages_or_sheets": "3 línies",
+  "tier_a": [
+    {"concept_id": "utm_x/utm_y", "value": "X 314418.9 ; Y 4611117.6 (P-1)", "location": "línia 3", "quote": "314418.9 ; 4611117.6 ; 198.9", "confidence": 0.95, "note": "fus 31 implícit; coherent amb l'etiqueta 314.550 del croquis cadastral (≈130 m a l'oest, dins del mateix full)"},
+    {"concept_id": "cota_referencia", "value": "198.9 (z GPS de P-1)", "location": "línia 3, 3r camp", "quote": "198.9", "confidence": 0.5, "note": "CONFLICTE amb els annexos d'Eva (199.50 'segons el plànol topogràfic ICGC (-0,15 carrer)'). Eva NO usa la z del GPS. Candidat secundari."}
+  ],
+  "not_present": ["tot el resta"],
+  "reading_notes": "Format 'X;Y;Z' amb capçalera; només P-1 (no P-2 ni S-1). Regla apresa: cota_referencia = annex sondeig/DPSH > ICGC > z GPS; la z GPS és ~0,6 m per sota de la cota d'Eva."
+}

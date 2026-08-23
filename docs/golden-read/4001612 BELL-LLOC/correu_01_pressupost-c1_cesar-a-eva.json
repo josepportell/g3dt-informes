@@ -1,0 +1,28 @@
+{
+  "source_path": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+  "document_type": "correu",
+  "what_it_is": "Correu intern de G3 (César Morillas, Dept. Assessor) a Eva i Dolors encarregant el geotècnic: resum de l'obra, contacte del sol·licitant, accés, enllaç Google Maps; adjunta 2 consultes descriptives del Cadastre.",
+  "issuer": "Cesar Morillas <cesar@g3dt.com> (G3 intern)",
+  "date": "2025-09-03",
+  "pages_or_sheets": "1 cos + 10 adjunts (2 PDF Cadastre, 8 imatges)",
+  "attachments": [
+    {"name": "4613173CG1141S0001ZU.pdf", "md5_same_as": "25.0647/4613173CG1141S0001ZU-13.pdf", "read_in": "cadastre_02_4613173CG1141S0001ZU-13.json"},
+    {"name": "4613172CG1141S0001SU.pdf", "md5_same_as": "25.0647/4613172CG1141S0001SU-15.pdf", "read_in": "cadastre_01_4613172CG1141S0001SU-15.json"},
+    {"name": "image001.jpg/image005.png/image006.jpg", "what": "logo G3 i icones de signatura (≤ 24 KB)", "tier_a": "cap"},
+    {"name": "image002-004.png", "what": "línies separadores 783x3 px", "tier_a": "cap"},
+    {"name": "image008.jpg", "what": "foto de la parcel·la des del carrer: solar tancat amb reixa, senyal 30, edifici d'oficines i bloc d'habitatges al fons, sense cap rètol llegible", "tier_a": "cap"},
+    {"name": "image009.jpg", "what": "foto del cadenat de la porta de la tanca", "tier_a": "cap"}
+  ],
+  "tier_a": [
+    {"concept_id": "municipality", "value": "Bell-lloc", "location": "cos, línia OBRA", "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15", "confidence": 0.9, "note": "sense 'd'Urgell'; l'enllaç Maps diu '25220+Bell-lloc+d'Urgell,+Lérida'"},
+    {"concept_id": "street_address", "value": "CL MESTRE RAMON ORTIZ 15", "location": "cos, línia OBRA", "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15", "confidence": 0.9, "note": "també a l'assumpte: 'c/ Mestre Ramon Ortiz'"},
+    {"concept_id": "client_name", "value": "ARQUITECTURA BOSCH NOVELL (Jordi Bosch Novell)", "location": "cos, línia CLIENT", "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com", "confidence": 0.5, "note": "AMBIGU: el correu anomena 'CLIENT' qui encarrega el geotècnic (despatx d'arquitectura); pot no ser el promotor/propietari de l'obra. Candidat, no segur."},
+    {"concept_id": "architect_name", "value": "Jordi Bosch Novell", "location": "cos, línia CLIENT + assumpte", "quote": "ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell", "confidence": 0.85, "note": "el nom del despatx ('ARQUITECTURA') i el domini e.arquitectura@ indiquen que és l'arquitecte"},
+    {"concept_id": "cte_edificacio", "value": "C1", "location": "assumpte + cos, línia GEO", "quote": "GEO : És un C1 Pb de 280m + p1 de 86", "confidence": 0.8, "note": "'C1' en argot G3 = tipus d'edifici CTE C-1 (cal confirmar-ho al pressupost p.2)"},
+    {"concept_id": "num_floors", "value": "PB + P1", "location": "cos, línia GEO", "quote": "Pb de 280m + p1 de 86", "confidence": 0.8, "note": "planta baixa 280 m² + planta primera 86 m²; són superfícies construïdes, NO superfície de parcel·la"},
+    {"concept_id": "building_type", "value": "una sola casa (habitatge unifamiliar) en dues parcel·les contigües", "location": "cos, línia GEO", "quote": "son dos parcel.les contigües on hi haura una sola casa", "confidence": 0.7, "note": "redacció informal; confirma que hi ha 2 referències cadastrals per a 1 edifici"},
+    {"concept_id": "utm_x/utm_y", "value": "41°37'51.0\"N 0°46'23.3\"E (WGS84)", "location": "cos, enllaç Google Maps", "quote": "https://www.google.com/maps/place/41%C2%B037'51.0%22N+0%C2%B046'23.3%22E/", "confidence": 0.5, "note": "punt marcat per César al mapa, precisió desconeguda; només com a comprovació de COORDENADES.txt / Cadastre, no com a font d'UTM"}
+  ],
+  "not_present": ["expedient", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "referencia_catastral", "lab_testing_company", "lab_sample_id", "lab_depth", "lab_location", "cte_sol"],
+  "reading_notes": "extract_msg al venv; el cos porta artefactes '<mailto:...>' i signatura legal bilingüe (ignorar). Les 2 referències cadastrals NO són al cos: només als noms dels adjunts (4613173CG1141S0001ZU, 4613172CG1141S0001SU) — un lector que no obri els adjunts les perd. Els adjunts són idèntics (md5) als fitxers solts de 25.0647/, amb sufix -13/-15 afegit al nom. L'etiqueta 'CLIENT:' d'aquest correu és la trampa semàntica: és el sol·licitant, no el promotor."
+}

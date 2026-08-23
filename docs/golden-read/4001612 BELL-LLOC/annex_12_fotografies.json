@@ -1,0 +1,14 @@
+{
+  "source_path": "PDF/ANNEXES/4001612_fotografies.pdf",
+  "document_type": "annex_fotografies",
+  "what_it_is": "Reportatge fotogràfic d'Eva: 2 pàgines, 4 fotos (F-1..F-4) de la maquinària DPSH i del sondeig a la parcel·la, amb peus de foto.",
+  "issuer": "Eva (G3)",
+  "date": "2025-10-27 (PDF)",
+  "pages_or_sheets": 2,
+  "tier_a": [
+    {"concept_id": "expedient", "value": "4001612", "location": "capçalera 'Reportatge fotogràfic'", "quote": "4001612", "confidence": 0.9, "note": "llegit visualment"},
+    {"concept_id": "num_dpsh_tests", "value": "2 (P-1 i P-2)", "location": "peu de foto p.1", "quote": "…durant la realització dels assaigs de penetració dinàmica DPSH P-1 i P-2.", "confidence": 0.8, "note": ""}
+  ],
+  "not_present": ["la resta dels 15"],
+  "reading_notes": "FreeHand, text brossa → visió a 70 dpi n'hi ha prou per als peus. Cap dada nova; només corrobora."
+}

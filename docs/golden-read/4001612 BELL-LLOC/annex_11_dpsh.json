@@ -1,0 +1,19 @@
+{
+  "source_path": "PDF/ANNEXES/4001612_DPSH.pdf",
+  "document_type": "annex_dpsh",
+  "what_it_is": "Annex dels penetròmetres P-1 i P-2 generat des de l'Excel DPSH (text vectorial net): capçalera amb cota d'inici, obra, població, data i número d'informe; taula i gràfica N20/NB; peu amb nivell i cota de rebuig.",
+  "issuer": "Eva (G3)",
+  "date": "2025-10-27 (PDF); camp 01/10/2025",
+  "pages_or_sheets": 2,
+  "tier_a": [
+    {"concept_id": "cota_referencia", "value": "+199.50 msnm", "location": "p.1 i p.2 capçalera", "quote": "Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0,15 carrer).", "confidence": 1.0, "note": "explicita l'ORIGEN del valor (ICGC, carrer −0,15): és el criteri d'Eva per a la cota"},
+    {"concept_id": "field_date", "value": "2025-10-01", "location": "p.1 i p.2 'DATA:'", "quote": "DATA: 01/10/2025", "confidence": 0.95, "note": "data dels penetros = primer dia de camp; coincideix amb fitxa F38 i amb els noms de les fotos WhatsApp"},
+    {"concept_id": "expedient", "value": "4001612", "location": "capçalera 'NÚMERO D´INFORME'", "quote": "NÚMERO D´INFORME: 4001612", "confidence": 1.0, "note": ""},
+    {"concept_id": "street_address", "value": "C/ MESTRE RAMON ORTIZ 15", "location": "capçalera 'OBRA:'", "quote": "OBRA: C7 MESTRE RAMON ORTIZ 15", "confidence": 0.9, "note": "'C7' és un typo de 'C/'"},
+    {"concept_id": "municipality", "value": "BELL-LLOC", "location": "capçalera 'POBLACIÓ:'", "quote": "POBLACIÓ: BELL-LLOC (p.1) / BELL-LLOCH (p.2, typo)", "confidence": 0.9, "note": ""},
+    {"concept_id": "num_dpsh_tests", "value": "2", "location": "p.1 'P-1', p.2 'P-2'", "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1 | P-2", "confidence": 1.0, "note": ""},
+    {"concept_id": "num_soil_levels_hint", "value": "Nivell 1", "location": "peu", "quote": "Nivell 1 / Rebuig a la cota de -1,35 m | -2,45 m", "confidence": 0.5, "note": "etiqueta de plantilla de l'Excel"}
+  ],
+  "not_present": ["client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "utm_x/utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "Exportat des d'Excel per Distiller: text net. És l'única font on Eva escriu la cota amb la seva justificació. Aquest annex NO existeix fins que Eva l'exporta; l'Excel DPSH.xls (sempre present) no porta capçalera."
+}

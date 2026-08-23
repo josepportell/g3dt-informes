@@ -1,0 +1,18 @@
+{
+  "source_path": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+  "document_type": "correu",
+  "what_it_is": "Resposta d'Eva al correu intern de César (32 min després), sense text nou: només la signatura i el correu citat. Adjunta el PLAN_COST.",
+  "issuer": "Eva Vazquez <eva@g3dt.com> (G3 intern)",
+  "date": "2025-09-03",
+  "pages_or_sheets": "1 cos (buit) + 11 adjunts (1 xlsx, 10 imatges)",
+  "attachments": [
+    {"name": "PLAN_COST_BELL-LLOC.xlsx", "md5_same_as": "25.0647/PLAN_COST_BELL-LLOC.xlsx", "read_in": "g3_04_plan_cost.json"},
+    {"name": "image001-006, 010", "what": "logos/separadors de signatura", "tier_a": "cap"},
+    {"name": "image013.jpg, image014.jpg", "what": "les mateixes 2 fotos de parcel·la del correu 1 (mateixa mida en bytes), citades", "tier_a": "cap"}
+  ],
+  "tier_a": [
+    {"concept_id": "street_address", "value": "CL MESTRE RAMON ORTIZ 15", "location": "correu citat (no és text nou)", "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15", "confidence": 0.9, "note": "DUPLICAT del correu 1: no compta com a font independent"}
+  ],
+  "not_present": ["tots els altres (cos propi buit)"],
+  "reading_notes": "El text nou d'Eva és zero; tot el cos és la signatura + el correu citat. REGLA: en cadenes RE:/FW: només compta com a font nova el text per sobre de la primera línia 'De:'/'From:'; el que hi ha sota és duplicat. L'adjunt nou (PLAN_COST.xlsx) sí que és informació nova: Eva respon adjuntant el full de costos — això situa el PLAN_COST com a document que Eva omple el mateix dia de l'encàrrec."
+}
