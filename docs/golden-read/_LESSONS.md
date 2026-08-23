@@ -129,3 +129,11 @@ Format: una lliçó per línia o bloc, amb projecte i font. Serveix per escriure
   etiqueta de mostra) el descarta — exemple de per què cap annex sol no és 'segur'.
 - Derivacions de CTE (C0 per superfície total; T-1 per defecte) encerten. Regla GTL>Excel>camp per a lab_depth confirmada (1,15 vs 1,5 vs 1,75).
 - Projecte amb errors propis: "720 m" d'altitud (plantilla) i "ANDAL" per NADAL: el projecte tampoc no és infal·lible fora del seu àmbit.
+
+## 4001671 VILANOVA DE SEGRIA (2026-08-23) — 11 OK / 1 CAND⚠ / 2 NT / 1 N/A / 0 ERR
+- L'arquitecte de l'informe (JUAN JOSÉ TORRES POVEDANO) NO és en cap document de la carpeta (predit per l'anàlisi): el lector ha de dir
+  'no consta' + candidats (Jordi Carner/ROCAR signa l'avantprojecte) i deixar escriure. Cap lectura el pot treure.
+- El client aquí SÍ que és el sol·licitant (promotora SL que encarrega directament): la regla és 'formulari p.5 / Promotor', no 'mai el sol·licitant'.
+- lab_depth: referència (1,00-1,60) vs carpeta unànime (0,8-1,4) — pendent de verificar amb el .docx real (absent a Windows); marcat ⚠.
+- La còpia de Windows no té el .docx de l'informe → les referències d'aquest projecte s'han de llegir amb PDF (imatge) + prudència.
+- MULTICA_61.xls (13,7 MB) és el full de càlcul bicapa de l'Eva: corrobora 2 nivells; nivell B altrament.
