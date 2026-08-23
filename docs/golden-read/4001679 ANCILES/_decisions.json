@@ -502,5 +502,31 @@
    "multi-unitat pot ser UN informe (7 adossats) o DOS (Tulipa): el pressupost ho diu ('DOS INFORMES' vs res)",
    "cota 'según el topográfico proporcionado': la cota pot venir del topogràfic del CLIENT, no d'ICGC"
   ]
+ },
+ "comparison_addendum_2026-08-23": {
+  "source": "PDF_V0/4001679_informe_V0.pdf (49 p., PDF amb capa de text; l'eva_reference_values estava desalineat: plantes='C-1', superficie='T-1', dpsh=frase dels SPT)",
+  "num_floors": {
+   "old": "N/A (referència corrupta)",
+   "new": "CAND",
+   "evidence": "Tabla 1 p.4: '5 viviendas con Pb + 1Pp + Bc' + '2 viviendas con Ss + Pb + 1Pp + Bc'. El candidat 1 de la lectura d'or (PB + P1 + sotacoberta, amb semisoterrani parcial) ho descriu; multiplicitat real (2 tipologies) = candidats era l'estat correcte."
+  },
+  "superficie_parcela": {
+   "old": "N/A (referència corrupta)",
+   "new": "OK",
+   "evidence": "Tabla 1 p.4: 'Superficie de la parcela (m2) | 1655.01' = decisió 'segur 1655.01 m²' de la lectura d'or. Verificació creuada: Cadastre WFS areaValue de 6184504BH9158N = 1656 m² (±1). Bonus: 'Superficie construida total (m2) | 1273.79'."
+  },
+  "num_dpsh_tests": {
+   "old": "N/A (referència corrupta)",
+   "new": "CAND",
+   "evidence": "p.8: '6 ensayos de penetración dinámica DPSH (P-1, a P-6)… los penetrómetros P-5 y P-6 se realizan a continuación de los sondeos S-2 y S-1' = candidat 1 de la lectura d'or, literalment."
+  },
+  "utm_ref_catastral": "es manté N/A: cap UTM a la capa de text de l'informe",
+  "totals_updated": {
+   "OK": 8,
+   "CAND": 6,
+   "NT": 0,
+   "NA": 1,
+   "ERR": 0
+  }
  }
 }

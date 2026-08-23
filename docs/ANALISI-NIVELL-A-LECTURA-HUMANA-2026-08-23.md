@@ -380,3 +380,18 @@ confirmades i 20+ de noves (albarà TPS = origen del "client=G3"; formulari p.5 
 esborranys a `ANNEXES/Altres/`; pressupostos amb versions; expedients multi-informe; derivacions CTE). Amb les regles v0.4,
 els 2 ERR i el CAND− esdevenen candidats correctes: **la reexecució esperada és ERR = 0**, pendent de validar amb el hold-out
 (§7.2) quan el skill s'executi headless.
+
+### 11.1 Addendum (2026-08-23, nit) — hold-out fet i n/a resolts amb els informes PDF
+
+- **Hold-out headless executat**: ERR = 0 mesurat sobre Castellar + Linyola + Tulipa (`docs/holdout-headless/_RESULTATS.md`);
+  les 3 regles apreses verificades en re-execució cega.
+- **Els n/a de Vilanova i Anciles, tancats amb els PDF dels informes** (que SÍ tenen capa de text — la premissa "el PDF és
+  imatge" només val per als annexos): Vilanova `lab` ⚠ resolt (l'informe diu SPT-1 **0,80-1,40** → la carpeta tenia raó i la
+  referència "-1,00/-1,60" era soroll de l'extractor; la cel·la CAND es queda CAND, ara neta); Anciles `superficie` n/a→**OK**
+  (informe 1655,01 = decisió segur; Cadastre WFS 1656 ±1), `num_floors` n/a→**CAND** (5×Pb+1Pp+Bc + 2×Ss+Pb+1Pp+Bc; candidat 1
+  ho descrivia), `num_dpsh` n/a→**CAND** (6, P-5/P-6 rere S-2/S-1 = candidat 1 literal). Els n/a d'`utm+rc` es mantenen
+  (absents de referències i de la capa de text). Addenda formals als `_decisions.json` respectius.
+- **Totals actualitzats (120 cel·les): 81 OK · 19 CAND · 10 NT · 8 n/a · 2 ERR.** Sobre avaluables (102): OK 79,4 %,
+  CAND 18,6 %. L'OK% baixa de 80,8 % a 79,4 % perquè les 2 cel·les noves resoltes eren intrínsecament de candidats
+  (multiplicitat real: 2 tipologies de plantes; 6 DPSH amb matís) — coherent amb la mètrica que mana (ERR, no OK%).
+  Els 2 ERR són els històrics pre-regla; en re-execució amb v0.4+ el hold-out en mesura 0.

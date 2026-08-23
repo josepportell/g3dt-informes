@@ -450,5 +450,14 @@
    "superficie_parcela: el càlcul de cotes del plànol (≈408 vs 406 real) és bona PISTA per validar el Cadastre, mai valor final",
    "referències extretes de .docx poden intercanviar camps veïns (100/406) i arrodonir cotes: sempre contrastar amb l'informe si es pot"
   ]
+ },
+ "comparison_addendum_2026-08-23": {
+  "source": "PDF/4001671_informe.pdf (informe real de l'Eva, PDF amb capa de text — la premissa 'el PDF és imatge' era falsa per al cos; només els annexos són imatge)",
+  "lab": {
+   "old": "CAND ⚠ (referència '-1,00 a -1,60' vs carpeta 0,8-1,4, no resoluble)",
+   "new": "CAND (resolt)",
+   "evidence": "p.7 'SPT1 0,80-1,40m' i p.9 'SPT-1 0.80-1,40m': l'informe real diu 0,80-1,40. La referència eva_reference_values ('-1.00 a -1.60') era soroll de l'extractor (slot desalineat), NO un valor de l'Eva. La decisió de la lectura d'or (candidats amb 0,8-1,4 primer) era correcta."
+  },
+  "utm_ref_catastral": "es manté N/A: cap UTM/RC a la capa de text de l'informe (els annexos amb caselles x/y són imatge)"
  }
 }

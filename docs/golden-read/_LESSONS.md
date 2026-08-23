@@ -163,3 +163,21 @@ Format: una lliçó per línia o bloc, amb projecte i font. Serveix per escriure
 - **Confirmació del Pas 0 des d'una font nova**: el TOP.dwg arrossega un bloc de plantilla amb el caixetí SENCER
   d'un altre projecte (Òrrius 2023, un altre promotor i una altra RC) — llegir valors sense context hauria estat
   un ERR de manual.
+
+---
+
+## Post-lectura (2026-08-23 nit, 2) — n/a de Vilanova i Anciles tancats amb els PDF dels informes
+
+- **Els PDF dels informes (`PDF/4001671_informe.pdf`, `PDF_V0/4001679_informe_V0.pdf`) tenen capa de text** (Word→PDF):
+  la premissa "el PDF és imatge" només val per a les pàgines d'annex. Per a verificar valors de la narrativa i la Tabla 1,
+  el PDF basta — no calen els .docx.
+- **Vilanova `lab_depth` ⚠ RESOLT**: l'informe real diu "SPT1 0,80-1,40m" (p.7) i "SPT-1 0.80-1,40m" (p.9). La carpeta
+  (comanda, Excel, full TPS: 0,8-1,4) tenia raó; el "-1,00 a -1,60" d'`eva_reference_values.json` era un slot desalineat
+  de l'extractor de referències, no un valor de l'Eva. Lliçó: **davant d'un conflicte carpeta-unànime vs referència,
+  sospita primer de la referència** (2n cas després de Tulipa).
+- **Anciles**: Tabla 1 (p.4) porta "Superficie de la parcela (m2) 1655.01" (= decisió segur; Cadastre WFS 1656) i
+  "5 viviendas con Pb + 1Pp + Bc / 2 viviendas con Ss + Pb + 1Pp + Bc"; p.8: "6 ensayos DPSH (P-1 a P-6)… P-5 y P-6
+  a continuación de los sondeos S-2 y S-1" — el candidat 1 de la lectura d'or, literal. També "Superficie construida
+  total (m2) 1273.79" (útil per a CTE: > 300 → C-1).
+- **Regeneració de referències**: no es regeneren (no hi ha .docx reals accessibles; no s'escriu a les còpies de
+  Windows). El registre correcte són els `comparison_addendum_2026-08-23` dels `_decisions.json` i l'ANALISI §11.1.
