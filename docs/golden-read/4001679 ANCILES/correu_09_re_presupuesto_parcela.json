@@ -1,0 +1,22 @@
+{
+ "source_path": "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu intern G3 (18/11/2024 15:37): Eva Vázquez respon a Dolors el reenviament de l'encàrrec i hi adjunta el PLAN_COST_V03. ReV_ANCILES.xlsx (cos nou buit: només signatura).",
+ "issuer": "Eva Vázquez Marcet <eva@g3dt.com> (Responsable Dept Geologia, geòloga N. col. 4302)",
+ "date": "2024-11-18 15:37",
+ "pages_or_sheets": "1 correu + 1 adjunt xlsx",
+ "context": {
+  "who_made_it": "Eva (G3) després que Dolors li reenviés (RV: 13:55) l'encàrrec de l'Alba (13:30)",
+  "for_whom": "Dolors (administració G3), perquè munti el pressupost 24·0807 amb els costos d'Eva",
+  "why": "circuit intern encàrrec → pla de costos → pressupost",
+  "expected_fields": [],
+  "not_expected": ["tots els camps del nivell A (correu intern sense text nou)"],
+  "relation_to_others": "l'adjunt PLAN_COST_V03. ReV_ANCILES.xlsx és md5-idèntic (dd809401a5f579c01320c6351d8f1af3) al fitxer solt 24.0807/ → duplicat. La cadena citada conté el text íntegre de l'encàrrec de l'Alba (ja llegit a correu_08).",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "tecnic_responsable", "value": "Eva Vázquez Marcet (geòloga, N. col. 4302)", "location": "signatura", "quote": "Eva Vázquez Marcet ⏎ Responsable Dept Geologia. ⏎ Geològa. N. col. 4302", "confidence": 0.9, "note": "no és camp del nivell A; confirma la tècnica del PLAN_COST."}
+ ],
+ "not_present": ["client_name", "architect_name (només a la cadena citada, ja comptada a correu_08)", "street_address", "municipality (només citat)", "expedient", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral (només citat)", "lab", "cte"],
+ "reading_notes": "Text nou = res (signatura). Regla RE:/RV: aplicada: el text citat no es recompta. Adjunt deduplicat per md5. Data 18/11/2024: PLAN_COST fet el mateix dia de l'encàrrec, 2 h després."
+}

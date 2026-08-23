@@ -1,0 +1,23 @@
+{
+ "source_path": "MULTICA_61.pdf + MULTICA_61.xls",
+ "document_type": "altre",
+ "what_it_is": "Full de càlcul MULTICAPA de l'Eva (tensions admissibles i assentaments per sabates, mètode bicapa tipus Rodríguez Ortiz): l'xls (13,7 MB, 23 fulls: Hoja1 + 10 parelles CFI/DEFCAPAS + SPT + ASTO.ARENAS) és l'eina; el PDF (1 p., imprès per 'Eva' el 02/03/2026) és la impressió del cas d'aquest projecte.",
+ "issuer": "Eva (G3) — plantilla de càlcul interna reutilitzada entre projectes",
+ "date": "2026-03-02 (creationDate del PDF; author 'Eva')",
+ "pages_or_sheets": "PDF: 1 pàgina; XLS: 23 fulls",
+ "context": {
+  "who_made_it": "Eva, introduint les capes derivades dels DPSH d'aquest projecte a la seva plantilla de càlcul",
+  "for_whom": "per a ella mateixa: obtenir Qa (kp/cm²) i assentaments per a l'informe",
+  "why": "és EINA DE CÀLCUL, no document font: els únics valors 'del projecte' són les definicions de capes i N; tota la resta és plantilla/resultat",
+  "expected_fields": ["num_soil_levels (indirecte: capes modelades)", "profunditat de refús (límit inferior del model)"],
+  "not_expected": ["client_name", "street_address", "municipality", "expedient", "architect_name", "field_date", "utm", "referencia_catastral", "lab", "cte"],
+  "relation_to_others": "les capes surten dels DPSH (el límit 3,78 m = refús de P-3 a l'Excel DPSH); el resultat (Qa, assentaments) alimenta l'informe — FORA D'ABAST del nivell A (paràmetres geotècnics). El nombre de capes modelades corrobora (no determina) num_soil_levels.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "num_soil_levels", "value": "2 (indirecte: model de càlcul amb CAPA 1 = 0→2,6 m amb N=10 i CAPA 2 = 2,6→3,78 m amb N=24; CAPA 3+ buides)", "location": "XLS Hoja1!O6:R8 / DEFCAPAS!A2:C4; PDF p.1 bloc CAPA 1/CAPA 2", "quote": "CAPA 1 ⏎ 0 ⏎ 2,6 ... N=10, D.CAP=1,3 | CAPA 2 ⏎ 2,6 ⏎ 3,78 ... N=24, D.CAP=2,2 | CAPA 3 ⏎ 3,78 ⏎ 0", "confidence": 0.5, "note": "capes de CÀLCUL, no unitats litològiques de l'annex; però el fet que Eva modeli 2 capes fins al refús (3,78 = refús P-3) és un indici fort de 2 nivells. Confirmar amb l'annex de tall de correlació."},
+  {"concept_id": "qa_context", "value": "FORA D'ABAST nivell A: taula de tensions admissibles (p. ex. B=1: 0,99/0,88/0,83 kp/cm² per Df 0,5/0,8/1,0) i assentaments", "location": "PDF p.1 / XLS Hoja1", "quote": "TENSIONES ADMISIBLES (kp/cm2)", "confidence": 0.0, "note": "paràmetres geotècnics i Qa es tracten en una fase posterior; anotat només perquè quedi constància de què és el fitxer"}
+ ],
+ "not_present": ["client_name", "street_address", "municipality", "expedient", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "utm_x_utm_y", "referencia_catastral", "lab", "cte"],
+ "reading_notes": "XLS de 13,7 MB llegit amb on_demand i només capçaleres/primeres files per full (mai bolcat sencer). Fulls 'CFI (n)'/'DEFCAPAS (n)' = variants del mateix càlcul per Df 0,5/0,8/1,0... — plantilla replicada. El PDF (Excel per al Microsoft 365, author 'Eva', 02/03/2026 13:11) és la vista impresa: paràmetres ALFA=0, P.NF=100 (sense nivell freàtic al càlcul), C.SEG=3, ASTO=2,53. Data 02/03/2026 = data de gabinet (posterior al camp 19/02), NO field_date."
+}

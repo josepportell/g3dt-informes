@@ -1,0 +1,30 @@
+{
+ "source_path": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori de G3 (sol·licitud 27/02/2026) per a 1 mostra SPT1 (P3), cotes 0,8-1,4 m, presa el 19/02/2026: 'NOMÉS SULFATS' (agressivitat de sòls).",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, SL (responsable EVA VÁZQUEZ)",
+ "date": "2026-02-27 (data de sol·licitud AH23)",
+ "pages_or_sheets": "1 full 'Hoja1' (66x41)",
+ "context": {
+  "who_made_it": "G3 (Eva) omple la petició per al laboratori",
+  "for_whom": "el laboratori d'assaigs (el nom del lab NO consta a la comanda; G3 treballa habitualment amb TPS B64803075)",
+  "why": "encarregar els assaigs de la mostra SPT presa al camp; el bloc 'DADES DEL SOL.LICITANT' descriu la relació G3→laboratori (G3 hi surt com a client del lab) i NO aporta res al projecte; el bloc 'DADES DE L'OBRA' sí que és del projecte",
+  "expected_fields": ["expedient (N19)", "building_type (N18)", "street_address (N20)", "municipality (N21)", "data de presa (N23, = dia de la mostra)", "lab_sample_id / lab_depth (fila 35)"],
+  "not_expected": ["client_name", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm"],
+  "relation_to_others": "la mostra SPT1 (P3) ha de coincidir amb el full SPT del PENETROS manuscrit i amb el futur GTL (que NO és a la carpeta: arriba setmanes després). La DATA DE PRESA 19/02/2026 coincideix amb el nom de la foto 'WhatsApp Image 2026-02-19'. Les cotes de mostra de la comanda poden estar mal transcrites (situació coneguda): creuar amb el full de camp.",
+  "authority_for": ["expedient", "municipality", "lab_sample_id", "lab_depth (en absència de GTL)", "building_type (mitjana)"]
+ },
+ "tier_a": [
+  {"concept_id": "expedient", "value": "4001671", "location": "Hoja1!N19 (etiqueta G19 'NÚM. D'EXPEDIENT')", "quote": "N19=4001671.0", "confidence": 0.95, "note": "float d'Excel; coincideix amb el nom de la carpeta '4001671 VILANOVA DE SEGRIA' i amb els annexos"},
+  {"concept_id": "building_type", "value": "habitatge unifamiliar (CONSTR HAB UNIF)", "location": "Hoja1!N18 (etiqueta G18 'OBRA')", "quote": "CONSTR HAB UNIF", "confidence": 0.8, "note": "única font de text amb tipologia fins ara (PLAN_COST E9 no la porta); l'informe ho redacta ('una vivienda unifamiliar' en castellà)"},
+  {"concept_id": "street_address", "value": "C/ Sta. Gemma", "location": "Hoja1!N20 (etiqueta G20 'ADREÇA')", "quote": "C/ STA GEMMA", "confidence": 0.8, "note": "sense número ni urbanització; el pressupost (bloc OBRA) dona la forma completa 'C/ STA. GEMMA 4, URB.LA SERRA'"},
+  {"concept_id": "municipality", "value": "Vilanova de Segrià", "location": "Hoja1!N21 (etiqueta G21 'POBLACIÓ')", "quote": "VILANOVA DE SEGRIÀ", "confidence": 0.9, "note": "amb accent (a diferència del pressupost); mai la població del sol·licitant (ELS OMELLS DE NA GAIA = seu de G3)"},
+  {"concept_id": "field_date", "value": "2026-02-19", "location": "Hoja1!N23 (etiqueta G23 'DATA DE PRESA')", "quote": "N23=datetime(2026, 2, 19)", "confidence": 0.6, "note": "dia de la PRESA de la mostra SPT, no necessàriament el primer dia de camp (aquí DPSH i SPT semblen del mateix dia: coincideix amb la foto WhatsApp 2026-02-19). Candidat 2 per regla; l'albarà TPS / annex DPSH manen."},
+  {"concept_id": "lab_sample_id", "value": "SPT1 (P3)", "location": "Hoja1!C35 (bloc DADES DE LA/LES MOSTRA/ES)", "quote": "SPT1 (P3)", "confidence": 0.85, "note": "mostra SPT presa al punt P3. ATENCIÓ: la foto 'SPT 1 P-1.jpeg' de FOTOGRAFIES/ suggereix P-1 i 'SPT A P3.jpeg' suggereix P3 → creuar amb el full de camp manuscrit."},
+  {"concept_id": "lab_depth", "value": "0,8 – 1,4 m", "location": "Hoja1!J35 (INICIAL) / L35 (FINAL)", "quote": "J35=0.8  L35=1.4", "confidence": 0.7, "note": "cota de mostra segons la comanda; situació coneguda de transcripció errònia (0,6-1,2 vs 0,8-1,4): el GTL (absent) i el full de camp manen"},
+  {"concept_id": "lab_testing_company", "value": "no consta (coneixement previ: G3 treballa amb TPS, B64803075)", "location": "cap casella amb el nom del laboratori", "quote": "", "confidence": 0.3, "note": "sense GTL a la carpeta → candidats per coneixement previ, no lectura"},
+  {"concept_id": "client_name", "value": "NOT_client_name: G3 DESENVOLUPAMENT TERRITORIAL, SL (B25364589)", "location": "Hoja1!N11-N15 bloc DADES DEL SOL.LICITANT", "quote": "NOM: G3 DESENVOLUPAMENT TERRITORIAL, SL | NIF: B25364589 | POBLACIÓ: ELS OMELLS DE NA GAIA | RESPONSABLE: EVA VÁZQUEZ", "confidence": 0.0, "note": "sol·licitant del laboratori = G3; descartat per regla 'G3 mai és client'. L'adreça/població d'aquest bloc és la seu de G3."}
+ ],
+ "not_present": ["client_name (només G3, descartat)", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "cte", "nom del laboratori", "NÚM. D'INFORME del lab (O65 buit)"],
+ "reading_notes": "Reconeguda per Hoja1!C3 == 'PETICIÓ D'ASSAIGS DE LABORATORI'. Dos blocs amb etiquetes iguals (files 11-15 sol·licitant = G3, ignorat; files 18-23 obra = projecte). Assaigs marcats a la fila 35: només 'Agressivitat sòls' (AA35='X') + AD35 'NOMÉS SULFATS' — coherent amb el PLAN_COST (35 € de lab = sulfats). Litologia (AJ35) i referència mostra (AO35) buides."
+}

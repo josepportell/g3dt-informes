@@ -1,0 +1,22 @@
+{
+ "source_path": "DTE.txt",
+ "document_type": "altre",
+ "what_it_is": "Nota administrativa d'1 línia (76 bytes): l'informe s'ha descomptat/facturat ('DTO') el 23/02 per 1.016,40 € amb venciment 30/03/26.",
+ "issuer": "G3 (administració)",
+ "date": "2026-02-23 (data esmentada; sense any explícit al 'DTO', el venciment 30/03/26 fixa 2026)",
+ "pages_or_sheets": "1 línia de text",
+ "context": {
+  "who_made_it": "administració G3 (nota de facturació)",
+  "for_whom": "ús intern",
+  "why": "control de cobrament: 1.016,40 € = 840,00 € del pressupost 26·0050 + 21% IVA (840 × 1,21 = 1.016,40) → confirma que el projecte facturat és exactament el pressupostat",
+  "expected_fields": [],
+  "not_expected": ["tots els camps del nivell A"],
+  "relation_to_others": "lliga el pressupost (840 €) amb la facturació; la data 23/02 és 4 dies després del camp (19/02). ATENCIÓ: 'DTO AQUEST INFORME' el 23/02 quan els annexos es maqueten el 16/03 — la factura va anar per davant de l'entrega de l'informe.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "cap", "value": null, "location": "DTE.txt", "quote": "EN DATA 23/02 DTO AQUEST INFORME PER UN IMPORT DE 1016,40€ - VCT: 30/03/26", "confidence": 0.0, "note": "cap camp del nivell A; només corrobora l'import del pressupost (840 € + IVA)"}
+ ],
+ "not_present": ["tots els camps del nivell A"],
+ "reading_notes": "Llegit sencer (1 línia). 'DTE'/'DTO' = descompte d'efecte/facturació; VCT = venciment."
+}

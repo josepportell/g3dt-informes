@@ -1,0 +1,24 @@
+{
+ "source_path": "Confirmación visita jueves 19 y plano.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu del 17/02/2026 d'Enrique Gardeta Torrodellas (+D, masde.net) a G3 + arquitecta + 2 persones més: confirma que dijous 19 a partir de les 9:30 serà a la parcel·la d'Anciles amb el plànol per obrir i assistir el tècnic.",
+ "issuer": "Ing. D. Enrique Gardeta Torrodellas <comercial@masde.net> (+D, 'fabricamos soluciones', PCT UPM Montegancedo, Pozuelo de Alarcón; tel +34 608 333 896)",
+ "date": "2026-02-17 15:37",
+ "pages_or_sheets": "1 correu + 1 png de peu de signatura",
+ "context": {
+  "who_made_it": "el contacte de camp (l'ENRIQUE de la fitxa C8, tel. 608333896 coincident), enginyer de l'empresa +D (masde.net)",
+  "for_whom": "Dolors (G3), amb còpia a Alba Barrau (arquitecta), Miriam Castel i Andrés Amat",
+  "why": "confirmar dia/hora de la visita de camp i l'accés a la parcel·la",
+  "expected_fields": ["field_date (confirmació del dia)", "field_contact"],
+  "not_expected": ["street_address exacta", "cota_referencia", "num_soil_levels", "superficie_parcela"],
+  "relation_to_others": "confirma la data F38 de la fitxa (dijous 19/02/2026) i el 'Enrique ens estara esperan a camp amb el planol dels punts' (fitxa D41). El 'plano' que avança per correu podria ser el dels punts d'assaig (no és a la carpeta com a fitxer identificable).",
+  "authority_for": ["field_date (corroboració: cita el dia 19)"]
+ },
+ "tier_a": [
+  {"concept_id": "field_date", "value": "2026-02-19 (dijous)", "location": "assumpte + cos", "quote": "Confirmación visita jueves 19 y plano | Te confirmo que estaré a partir de las 0930 en la parcela de Anciles con plano (…) para abrir y asistir al técnico.", "confidence": 0.8, "note": "El 19/02/2026 era dijous; hora 9:30 coincideix amb la fitxa (C9 '9,30-10H.')."},
+  {"concept_id": "municipality", "value": "Anciles", "location": "cos", "quote": "en la parcela de Anciles", "confidence": 0.6, "note": "corroboració."},
+  {"concept_id": "client_name", "value": "candidats febles per context: Miriam Castel / Andrés Amat (destinataris en còpia, rol desconegut); Enrique Gardeta (+D) obre la parcel·la", "location": "capçalera TO + signatura", "quote": "TO: dolors@g3dt.com; Alba Barrau; Miriam Castel <miriamcastel.c@gmail.com>; Andrés Amat <infoamat@gmail.com> | Ing. D. Enrique Gardeta Torrodellas", "confidence": 0.2, "note": "CAP document els etiqueta com a promotor/propietat. Qui obre la parcel·la (Enrique) hi té accés → vinculat a la propietat, però és inferència, no lectura. Mai segur."}
+ ],
+ "not_present": ["client_name (cap etiqueta de promotor)", "architect_name (Alba només com a destinatària)", "street_address", "expedient", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab", "cte", "building_type"],
+ "reading_notes": "Adjunt 'pie egt con pacific instruments.png' (137 KB) llegit visualment: peu de signatura d'Enrique Gardeta Torrodellas, +D (www.masde.net), Centro de Empresas PCT UPM Campus de Montegancedo, 28223 Pozuelo de Alarcón; logos Akamina/DTS/Pacific Instruments/HI-TEC ('alacrán wireless DAS') → empresa d'instrumentació; el seu paper aquí és obrir la parcel·la i assistir. Signat 'E.'."
+}

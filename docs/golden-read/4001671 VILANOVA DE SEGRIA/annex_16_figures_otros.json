@@ -1,0 +1,25 @@
+{
+ "source_path": "ANEXOS/OTROS/ (F1 SIT.png, F2 PUNTS.png, F4 MGEOL.png, M1.png, M2.png, M22.png, M3.png, m4.png + 6_mapa Geol_CAT_ - CAST.FH11)",
+ "document_type": "altre",
+ "what_it_is": "Figures del COS de l'informe preparades per l'Eva (F1 situació, F2 punts d'assaig sobre ortofoto amb capa cadastral, F4 mapa geològic) i les captures font de què surten (M1/M2/M22 mapes topogràfics ICGC a 3 zooms, M3 ortofoto amb cadastre, m4 mapa geològic sense llegenda).",
+ "issuer": "Eva (G3) — captures de visors (ICGC/Cadastre) + composició; el FH11 '6_mapa Geol_CAT_ - CAST' és la plantilla FreeHand de la figura geològica (no llegible sense conversor)",
+ "date": "sense data als PNG",
+ "pages_or_sheets": "8 PNG",
+ "context": {
+  "who_made_it": "Eva, muntant les figures del cos de l'informe",
+  "for_whom": "informe (figures numerades F1/F2/F4; falta F3, probablement una altra figura del cos)",
+  "why": "situar la zona d'estudi, els punts i el marc geològic; poden ser versions ANTERIORS als annexos (lliçó Rubí) → contrastar",
+  "expected_fields": ["posició zona d'estudi i punts", "unitat geològica", "topònims", "capa cadastral (indici de referència)"],
+  "not_expected": ["client_name", "architect_name", "field_date", "expedient", "lab", "cota exacta"],
+  "relation_to_others": "F2 PUNTS = mateixa disposició de punts que l'annex de situació (P-1 NO, P-2 centre, P-3 E-SE) → CAP discrepància de versions detectada (a diferència de Rubí). F1 SIT usa M1+M22; F2 usa M3; F4 usa m4 + llegenda. La capa cadastral de F2/M3 mostra el rètol de mançana '86067' al costat NE de la parcel·la i el 'cobert' dins la parcel·la.",
+  "authority_for": ["unitat geològica del cos de l'informe (F4)", "corroboració de posicions de punts"]
+ },
+ "tier_a": [
+  {"concept_id": "street_address", "value": "Carrer de Santa Gemma (retolat a la capa cadastral de F2 PUNTS)", "location": "F2 PUNTS.png, marge oest (visual)", "quote": "CARRER DE SANTA GEMMA", "confidence": 0.7, "note": "corroboració; mateix vial que el plànol 1.0 i l'annex de situació"},
+  {"concept_id": "referencia_catastral", "value": "indici parcial: mançana cadastral '86067' retolada (lila) tocant al límit NE de la parcel·la; número de parcel·la propi NO llegible", "location": "F2 PUNTS.png / M3.png capa cadastral (visual)", "quote": "86067 | 04 [parcel·la veïna] | cobert", "confidence": 0.2, "note": "NO és la referència cadastral completa (falten parcel·la i full: format NNNNNNNCGNNNN...). No inferir; caldria consulta Cadastre."},
+  {"concept_id": "geologia_cos_informe", "value": "zona d'estudi sobre unitat Qv2 (blocs, graves, sorres i argiles; ventall al·luvial terrassa Qt2, Plistocè superior), amb NQt3 i NMgax (gresos i argiles roges amb guix) a la vora", "location": "F4 MGEOL.png (llegenda + xinxeta)", "quote": "Qv2: Bloques, gravas, arenas y arcillas. Abanico aluvial correlacionado con la terraza Qt2, Pleistoceno superior-Grenlandiano. | NQt3: Cantos rodados con matriz limo-arenosa y cemento carbonatado... | NMgax: Areniscas y arcillas rojas con yeso.", "confidence": 0.6, "note": "no és camp del nivell A; és el marc geològic del cos de l'informe. Llegenda bilingüe (fitxer 'CAT_ - CAST')."},
+  {"concept_id": "cota_referencia", "value": "context: cotes puntuals del mapa M2 a la urbanització la Serra entre ~300 i ~327 msnm (sector SO ~317-327)", "location": "M2.png (corbes i cotes puntuals, visual)", "quote": "307,4 | 312,3 | 317,9 | 321,0 | 318,1 | 322,2", "confidence": 0.2, "note": "el +321,69 de l'annex DPSH és plausible al sector SO de la urbanització; el punt taronja de M2 sembla situat més al nord (~307-312) però és un marcador aproximat d'Eva — NO usar M2 contra la cota de l'annex."}
+ ],
+ "not_present": ["client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "expedient", "num_soil_levels", "utm_x_utm_y", "lab", "cte"],
+ "reading_notes": "Llegits en contact sheet (3 col) + zooms de F2 PUNTS (rètols cadastrals) i M2 (cotes). F1 SIT = 2 mapes (regional Lleida + local la Serra) amb punt taronja. F2 PUNTS = ortofoto + cadastre + P-1/P-2/P-3 + distàncies parcials en vermell (4 m, 5 m, 3 m, 1 m) — coincideixen amb l'annex de situació. Numeració F1/F2/F4 sense F3. m4.png = mateix mapa geològic que F4 sense llegenda. '6_mapa Geol_CAT_ - CAST.FH11' no llegible (FreeHand): és la plantilla de la figura. Carrers de la urbanització a M2: Av. d'Almacelles, C. de Sta. Maria, C. de Sta. Teresa, C. de l'Amistat, C. de Sta. Anna (Santa Gemma no retolat a M2, sí a la capa cadastral de F2)."
+}

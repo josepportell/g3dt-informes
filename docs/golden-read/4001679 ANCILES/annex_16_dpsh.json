@@ -1,0 +1,29 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_DPSH.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe (imprès des de 4001679_DPSH.xls el 16/03/2026, autora 'Loli'): 6 pàgines, una per assaig P-1..P-6, amb capçalera d'obra, cota d'inici per punt i gràfica de colpeig.",
+ "issuer": "G3 (Eva/Loli), a partir de l'Excel DPSH revisat",
+ "date": "2026-03-16 (creationDate del PDF); FECHA de camp: 19/02/2026",
+ "pages_or_sheets": 6,
+ "context": {
+  "who_made_it": "G3: impressió a PDF (PScript5/Distiller) de l'Excel DPSH per annexar a l'informe",
+  "for_whom": "l'informe 4001679",
+  "why": "presentar les gràfiques DPSH amb cota absoluta per punt",
+  "expected_fields": ["cota_referencia (Cota inicio per punt)", "street_address (OBRA)", "municipality (POBLACIÓN)", "field_date (FECHA)", "expedient (NÚMERO DE INFORME)", "num_dpsh_tests", "rebuigs"],
+  "not_expected": ["client_name", "architect_name", "num_floors", "superficie_parcela", "lab", "referencia_catastral"],
+  "relation_to_others": "versió d'informe de ANEJOS/4001679_DPSH.xls (mateixos valors i rebuigs); les capçaleres 'P-5 (S2)' i 'P-6 (S1)' confirmen l'aparellament del manuscrit. Les cotes venen 'del topográfico proporcionado' = G03 d'IV_PLANOS. És l'única còpia (no hi ha carpeta PDF/ANNEXES fora de PDF_V0).",
+  "authority_for": ["cota_referencia", "expedient", "street_address", "municipality", "field_date", "num_dpsh_tests"]
+ },
+ "tier_a": [
+  {"concept_id": "cota_referencia", "value": "+1106,30 a +1106,65 msnm segons punt (P-1 +1106,40; P-2 +1106,30; P-3 +1106,40; P-4 +1106,30; P-5 (S2) +1106,42; P-6 (S1) +1106,65)", "location": "capçalera de cada pàgina", "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P‐1        Cota inicio: +1106,40 msnm según el topográfico proporcionado.", "confidence": 0.85, "note": "Criteri de l'Eva: cotes del topogràfic del projecte (G03), no ICGC ni GPS. Solar gairebé pla (~35 cm de variació). Per a l'informe la cota de referència sol ser la del punt de càlcul: candidats amb el rang."},
+  {"concept_id": "expedient", "value": "4001679", "location": "capçalera (totes les pàgines)", "quote": "NÚMERO DE INFORME: 4001679", "confidence": 0.95, "note": "= carpeta = comanda N19."},
+  {"concept_id": "street_address", "value": "Calle Gral. Ferraz 20", "location": "capçalera OBRA", "quote": "OBRA: CALLE GRAL FERRAZ 20", "confidence": 0.85, "note": "grafia abreujada d'Eva ('GRAL'); el plànol diu 'C/ General Ferraz 20'. Normalitzar cap al document imprès del projecte."},
+  {"concept_id": "municipality", "value": "Anciles, Benasque", "location": "capçalera POBLACIÓN", "quote": "POBLACIÓN: ANCILES, BENASQUE", "confidence": 0.9, "note": "forma d'informe de l'Eva: nucli + municipi."},
+  {"concept_id": "field_date", "value": "2026-02-19", "location": "capçalera FECHA", "quote": "FECHA: 19/02/2026", "confidence": 0.9, "note": "coincideix amb fitxa/manuscrit/comanda."},
+  {"concept_id": "num_dpsh_tests", "value": "6 (P-1..P-6; P-5 al S2 i P-6 al S1)", "location": "6 pàgines, capçaleres", "quote": "P‐5 (S2) | P‐6 (S1)", "confidence": 0.8, "note": "L'annex de l'informe presenta 6 gràfiques DPSH. La redacció del cos pot distingir 4 penetros + 2 en sondeig."},
+  {"concept_id": "dpsh_refusals", "value": "P-1 -3,58 | P-2 -4,59 | P-3 -3,77 | P-4 -5,92 | P-5 -4,18 | P-6 -5,70 m", "location": "peu de cada gràfica", "quote": "Rechazo a la penetración: -3,58 m …", "confidence": 0.9, "note": "= Excel."},
+  {"concept_id": "num_soil_levels", "value": "llegenda 'Nivel 1 / Nivel 2' al peu", "location": "peu p.1-6", "quote": "Nivel 1 ⏎ Nivel 2", "confidence": 0.3, "note": "llegenda de la gràfica (2 nivells); l'autoritat és la columna 'Unidad litológica' de l'annex de sondeigs."}
+ ],
+ "not_present": ["client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "utm_x_utm_y", "referencia_catastral", "lab", "cte", "nivell freàtic (columna N.F. buida)"],
+ "reading_notes": "Text net (imprès des d'Excel, no FreeHand). 'P‐1' amb guió U+2010. Valor '0,83' vora la capçalera = coeficient NB (100/120,48). Colpeig idèntic a l'Excel (l'Excel mana igualment). Creat un mes després del camp (16/03/2026)."
+}

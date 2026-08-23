@@ -1,0 +1,22 @@
+{
+ "source_path": "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu de l'Alba Barrau (05/02/2026 23:54, 3 minuts després de l'acceptació): afegeix l'enllaç de Google Drive a IV_PLANOS.pdf ('planos de ubicación de parcela y de proyecto').",
+ "issuer": "Alba Barrau <abarrau@retrateria.com>",
+ "date": "2026-02-05 23:54",
+ "pages_or_sheets": "1 correu, 0 adjunts de contingut (només imatges de signatura)",
+ "context": {
+  "who_made_it": "l'arquitecta, just després de reenviar l'acceptació signada",
+  "for_whom": "G3 (Dolors)",
+  "why": "fer arribar els plànols definitius del projecte (massa grans per adjuntar: via Drive)",
+  "expected_fields": [],
+  "not_expected": ["camps del nivell A (només un enllaç)"],
+  "relation_to_others": "l'enllaç Drive (https://drive.google.com/file/d/1yDZAO8AbTghDnDKKV8sY9br0fvGkQ4bz/view) és l'origen del fitxer solt 24.0807/IV_PLANOS.pdf (43 MB). Cadena = la mateixa de ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg (23:51).",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "planos_provenance", "value": "IV_PLANOS.pdf ve del Drive de l'arquitecta (05/02/2026)", "location": "cos", "quote": "Aprovecho para adjuntar también los planos de ubicación de parcela y de proyecto: IV_PLANOS.pdf <https://drive.google.com/file/d/1yDZAO8AbTghDnDKKV8sY9br0fvGkQ4bz/…>", "confidence": 0.9, "note": "estableix que IV_PLANOS.pdf és el joc de plànols del PROJECTE (2026), més nou que A01_TIPOL/SITE_prop A (anteproyecto, 11/2024) → per a superfícies/plantes mana IV_PLANOS."}
+ ],
+ "not_present": ["client_name", "architect_name (remitent, ja comptat)", "street_address", "municipality", "expedient", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab", "cte"],
+ "reading_notes": "Text nou = 1 línia + enllaç. La resta és la cadena ja llegida (correu_03). Adjunts: només imatges de signatura (≤ 8,6 KB), ignorades."
+}

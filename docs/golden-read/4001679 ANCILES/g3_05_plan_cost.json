@@ -1,0 +1,27 @@
+{
+ "source_path": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+ "document_type": "plan_cost_g3",
+ "what_it_is": "PLAN COST intern de G3 del projecte Anciles (versió V03 revisada, segons el nom del fitxer): títol 'EG 7 VIVIENDAS ANCILES', tècnica responsable Eva Vázquez Marcet, oferta 1.585 €, subcontractació TPS 1.148,34 €.",
+ "issuer": "G3 (Eva Vázquez Marcet, tècnica responsable)",
+ "date": "sense data a les cel·les; nom del fitxer indica 3a versió revisada",
+ "pages_or_sheets": "7 fulls; senyal només a 'Plan Cost' (E9, E21) i 'OFERTA' (B6, B21…)",
+ "context": {
+  "who_made_it": "G3, per al control econòmic intern de l'oferta 24·0807",
+  "for_whom": "ús intern G3 (marge, subcontractació, hores)",
+  "why": "quantificar costos: sondeigs TPS, laboratori, hores de gabinet",
+  "expected_fields": ["building_type (E9 DESCRIPCIÓ TITÒL)", "municipality (dins E9)", "num_dpsh_tests (OFERTA!B21)", "ml sondeig (OFERTA!B6)", "tècnic"],
+  "not_expected": ["expedient", "client_name", "street_address", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "referencia_catastral"],
+  "relation_to_others": "tradueix el pressupost 24·0807 a costos; 'V03. ReV' = tercera versió (les quantitats poden diferir del pressupost inicial; aquí DPSH=5 coincideix). La resta de cel·les (SOIL-ASSAIG, TPS, preus) són plantilla: mai senyal.",
+  "authority_for": ["building_type (títol intern)", "num_dpsh_tests (previstos)"]
+ },
+ "tier_a": [
+  {"concept_id": "building_type", "value": "7 habitatges (EG 7 VIVIENDAS)", "location": "'Plan Cost'!E9 (etiqueta B9 DESCRIPCIÓ TITÒL)", "quote": "EG 7 VIVIENDAS ANCILES", "confidence": 0.7, "note": "Títol intern G3: estudi geotècnic per a 7 habitatges. Coherent amb els plànols 'CASA GRANDE HCS' (estudio de detalle amb tipologies). Expandir a la redacció de l'informe; comparació CLOSE."},
+  {"concept_id": "municipality", "value": "Anciles", "location": "'Plan Cost'!E9 + J8", "quote": "EG 7 VIVIENDAS ANCILES | PIRINEU", "confidence": 0.7, "note": "J8 'PIRINEU' = zona comercial G3, no municipi."},
+  {"concept_id": "num_dpsh_tests", "value": "5 (previstos)", "location": "OFERTA!B21", "quote": "unitat de penetració dinàmica DPSH | B21=5", "confidence": 0.6, "note": "previstos; l'Excel DPSH mana (4 executats)."},
+  {"concept_id": "sondeig_ml", "value": "10 ml de perforació en sòls (2 sondeigs)", "location": "OFERTA!B6", "quote": "ml de perforació en sòls fins a 20 m | B6=10", "confidence": 0.6, "note": "10 ml totals previstos per als 2 sondeigs (~5 m cadascun)."},
+  {"concept_id": "lab_tests_previstos", "value": "1 obertura de mostra + 1 granulomètric + 1 Atterberg + 1 sulfats; 6 mostres inalterades (B15)", "location": "OFERTA!B26:B35 + B15", "quote": "Obertura de mostra 1 | Analisi granulomètric per tamissat 1 | assaig de Limits d'Atterberg 1 | Cont en sulfats 1 | MOSTRA INALTERADA 6", "confidence": 0.5, "note": "previstos; el contracte real de mostres és a la comanda de laboratori. La fila 'Assaig SPT' (A14) té B14 buit; la fila 'spt' del bloc DPSH té B23=1."},
+  {"concept_id": "tecnic_responsable", "value": "Eva Vázquez Marcet", "location": "'Plan Cost'!E21", "quote": "Tecnic responsable | Eva Vázquez Marcet", "confidence": 0.9, "note": "autora de l'informe (G3), no cap camp del nivell A."}
+ ],
+ "not_present": ["expedient", "client_name", "architect_name", "street_address", "field_date", "cota_referencia", "num_soil_levels", "num_floors", "superficie_parcela", "utm_x_utm_y", "referencia_catastral", "lab_testing_company (SOIL-ASSAIG/TPS són plantilla)", "cte"],
+ "reading_notes": "'Plan Cost'!B2 = 'PLAN COST  |  G3 DT' (identificació). Nom de fitxer amb 'V03. ReV' → hi ha hagut revisions; no hi ha V01/V02 a la carpeta. NUM D'OFERTA (B7) i NUM INF (I7) buits. Subcontracting sondejos 1.064,10 € + laboratori 84,24 € = 1.148,34 (M19). OFERTA TPS costat G/H: H19=311,5 (35 ml DPSH a 8,9), H15=127,5 (6 MI), H24=1.064,10. La resta és plantilla de preus."
+}

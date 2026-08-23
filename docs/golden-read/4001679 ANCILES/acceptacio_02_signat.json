@@ -1,0 +1,26 @@
+{
+ "source_path": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Versió ACCEPTADA i signada digitalment del pressupost 24·0807: mateix contingut que 24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf però amb el formulari p.5 omplert i signatura digital de MARIA ALBA BARRAU CASTÁN (05/02/2026).",
+ "issuer": "G3 (document) + Maria Alba Barrau Castán (dades p.5 i signatura digital)",
+ "date": "2026-02-05 (signatura digital; pressupost original 18/11/2024)",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3 emet el pressupost (creationDate 18/11/2024); la sol·licitant omple el formulari p.5 i el signa digitalment (modDate i /Sig 05/02/2026 23:47).",
+  "for_whom": "retorn a G3 (dolors@g3dt.com) per formalitzar l'encàrrec i poder planificar l'obra",
+  "why": "acceptació contractual del pressupost; el bloc p.5 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' fixa a nom de qui va la factura I L'INFORME → autoritat A per a client_name",
+  "expected_fields": ["client_name (formulari p.5)", "NIF del client", "adreça del client (NO de l'obra)", "email"],
+  "not_expected": ["field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors"],
+  "relation_to_others": "mateix document que 24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf amb p.5 omplert; adjunt idèntic (md5 facc75f307f41e899566791f2272b75d) al correu ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg. No hi ha DADES CLIENT.txt en aquest projecte.",
+  "authority_for": ["client_name", "acceptance_date (2026-02-05, límit inferior per a field_date)"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "MARIA ALBA BARRAU CASTÁN (NIF 18037382T)", "location": "p.5 formulari 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' (y=281) + /Sig", "quote": "NOMBRE Y APELLIDO: MARIA ALBA BARRAU CASTÁN | N.I.F./C.I.F.: 18037382T | Firmado digitalmente por BARRAU CASTAN MARIA ALBA - 18037382T Fecha: 2026.02.05 23:47:17 +01'00'", "confidence": 0.75, "note": "Autoritat A (p.5 omplert + signatura digital coincident). ATENCIÓ: és la mateixa persona que la sol·licitant-ARQUITECTA del bloc CLIENTE de p.1 → la factura i l'informe van a nom de l'arquitecta, no d'un promotor. Si el caixetí dels plànols porta un 'Promotor' diferent, aquell mana; si no, aquest és el client de l'informe (pràctica Eva: client al camp arquitecte quan coincideixen)."},
+  {"concept_id": "architect_name", "value": "MARIA ALBA BARRAU CASTÁN", "location": "p.1 bloc CLIENTE + p.5 + /Sig", "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA | BARRAU CASTAN MARIA ALBA - 18037382T", "confidence": 0.85, "note": "Signatura digital dona el nom complet legal; p.1 la identifica com a ARQUITECTA (despatx Retratería)."},
+  {"concept_id": "street_address", "value": "C/ General Ferraz 20 (obra)", "location": "p.1 bloc OBRA", "quote": "ESTUDIO GEOTECNICO ⏎ C/GENERAL FERRAZ 20 ⏎ ANCILES (HUESCA)", "confidence": 0.85, "note": "Idèntic al pressupost original (no és font independent). L'adreça de p.5 (CALLE LA PAUL 3 B3, 22467 VILLANOVA (HUESCA)) és la del CLIENT, mai street_address de l'obra."},
+  {"concept_id": "municipality", "value": "Anciles (Huesca)", "location": "p.1 bloc OBRA", "quote": "ANCILES (HUESCA)", "confidence": 0.9, "note": "duplicat del pressupost original, no font independent."},
+  {"concept_id": "NOT_street_address", "value": "CALLE LA PAUL 3 B3, 22467 VILLANOVA (HUESCA)", "location": "p.5 DIRECCIÓN / CP Y POBLACIÓN", "quote": "DIRECCIÓN: CALLE LA PAUL 3 B3 | CP Y POBLACIÓN: 22467 VILLANOVA (HUESCA)", "confidence": 0.0, "note": "Adreça de la clienta (Vilanova, vall de Benasque), NO de l'obra. Descartada per regla."}
+ ],
+ "not_present": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "num_floors", "superficie_parcela", "building_type", "lab", "cte_edificacio (p.2 'Clasificación CTE' buida, com a l'original)"],
+ "reading_notes": "sigflags=3, widget Signature2 a p.5, /Sig /Name 'BARRAU CASTAN MARIA ALBA - 18037382T', data 2026-02-05 23:47:17. Formulari p.5: nom, NIF, adreça client, tel 616523792, IBAN ES18 0049 3578 1721 1409 8281, enviament de l'informe a la mateixa persona, format 'Digital por email' (X), email abarrau@amaseme.es (al correu escriu des de abarrau@retrateria.com: dos dominis de la mateixa arquitecta). modDate 2026-02-05 (signat ~2,5 mesos després del pressupost)."
+}

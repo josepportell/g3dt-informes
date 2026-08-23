@@ -112,3 +112,10 @@ Format: una lliçó per línia o bloc, amb projecte i font. Serveix per escriure
   s'equivocava ("foto d'un plànol pot ser l'única font de plantes/superfície a Castellar"). 1.284 m² no és enlloc.
 - Referència = informe v0: la redacció definitiva (títol amb 18A, 18B i 20) va venir per correu del client el 18/11 → el lector ha de
   mirar també els correus POSTERIORS a l'informe quan existeixin (nivell B: redacció del títol).
+
+## 4001670 ALCOLETGE (2026-08-23) — 10 OK / 2 CAND / 3 NT / 1 N/A / 0 ERR
+- Ampliació (no obra nova): building_type de l'encàrrec 2026 mana sobre el caixetí del projecte VELL (2022, "tancament de porxo").
+- z GPS de COORDENADES.txt anòmala (+10,7 m vs ICGC): l'annex DPSH (+188,20 ICGC) mana. Validar sempre z GPS ≈ ICGC ±2 m.
+- Ref. cadastral al COS del correu del tècnic (8841701CG0184S0001HH): els correus porten dades úniques.
+- Arquitecte tècnic (aparellador) ≠ arquitecte: l'Eva posa el client al camp arquitecte igualment → client candidat 1.
+- 'Pb' derivable d'"ampliació a la part posterior" → candidat.

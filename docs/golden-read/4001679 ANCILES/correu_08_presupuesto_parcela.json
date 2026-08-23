@@ -1,0 +1,27 @@
+{
+ "source_path": "24.0807/Presupuesto Parcela Anciles.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu d'ENCÀRREC original (18/11/2024 13:30): l'arquitecta Alba Barrau demana pressupost del geotècnic per a 7 adossats a Anciles, amb referència cadastral i plantes; adjunta A01_TIPOL.pdf i SITE_prop A.pdf.",
+ "issuer": "Alba Barrau Castán, arquitecta (RETRATERIA, Benasque) <abarrau@retrateria.com>",
+ "date": "2024-11-18 13:30",
+ "pages_or_sheets": "1 correu + 2 adjunts PDF",
+ "context": {
+  "who_made_it": "l'arquitecta del projecte, sol·licitant del geotècnic",
+  "for_whom": "G3 (Dolors Maqueda)",
+  "why": "demanar pressupost i disponibilitat per a l'estudi geotècnic d'una obra nova",
+  "expected_fields": ["building_type", "num_floors", "referencia_catastral", "municipality", "architect_name"],
+  "not_expected": ["field_date", "cota_referencia", "num_soil_levels", "lab", "expedient"],
+  "relation_to_others": "origen de tota la cadena (RE_ intern d'Eva, pressupost 24·0807, acceptació). Adjunts md5-idèntics als fitxers solts 24.0807/A01_TIPOL.pdf (681a81ff…) i 24.0807/SITE_prop A.pdf (4b5ae667…) → els solts són els mateixos documents.",
+  "authority_for": ["referencia_catastral", "num_floors (declaració de l'arquitecta)", "building_type", "architect_name"]
+ },
+ "tier_a": [
+  {"concept_id": "referencia_catastral", "value": "6184504BH9158N0000SS", "location": "cos, bloc 'Datos'", "quote": "Referencia catastral: 6184504BH9158N0000SS", "confidence": 0.9, "note": "Única referència cadastral del projecte (cap consulta Cadastre PDF a la carpeta). Escrita per l'arquitecta."},
+  {"concept_id": "building_type", "value": "7 adossats residencials", "location": "cos", "quote": "El proyecto consiste en 7 adosados de PB+1PP+BC. Habría dos semisótanos. | Tipo edificio: 7 ADOSADOS (RESIDENCIAL)", "confidence": 0.85, "note": "Coherent amb PLAN_COST 'EG 7 VIVIENDAS' i comanda 'CONSTR GRUPO DE VIVIENDAS'. L'informe ho redactarà (comparació CLOSE)."},
+  {"concept_id": "num_floors", "value": "PB+1PP+BC (+ sótano/semisótano parcial: 2 semisótanos)", "location": "cos", "quote": "7 adosados de PB+1PP+BC. Habría dos semisótanos. | Plantas: SÓTANO, PLANTA BAJA y PLANTA 1 | Sótano: SÍ", "confidence": 0.7, "note": "Dues formulacions al mateix correu: 'PB+1PP+BC' (bajo cubierta) i 'SÓTANO, PLANTA BAJA y PLANTA 1'. Els plànols A01_TIPOL (PLANTA SEMISOTANO/BAJA/PRIMERA/BAJO CUBIERTA) han de fixar la redacció. Semisótano només a 2 dels 7 adossats."},
+  {"concept_id": "municipality", "value": "Anciles", "location": "cos + assumpte", "quote": "una parcela en Anciles | Presupuesto Parcela Anciles", "confidence": 0.8, "note": "sense 'Benasque' ni 'Huesca' al cos; el pressupost hi afegeix (HUESCA)."},
+  {"concept_id": "architect_name", "value": "Alba Barrau Castán", "location": "signatura del correu", "quote": "Alba Barrau Castán, arquitecta. t 974551273 | m 616523792 | RETRATERIA · C/ San Sebastián, nº6 · 22440 BENASQUE", "confidence": 0.9, "note": "signatura professional explícita ('arquitecta'). Mateixa cadena que el pressupost (no independent d'aquell)."},
+  {"concept_id": "client_name", "value": null, "location": "cos", "quote": "[cap promotor/propietari esmentat]", "confidence": 0.0, "note": "no diu per a qui és l'obra; cap 'promotor' al correu."}
+ ],
+ "not_present": ["client_name", "street_address (cap carrer al cos: només 'parcela en Anciles')", "expedient", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "superficie_parcela", "utm_x_utm_y", "lab", "cte (el correu NO diu 'es un C1')"],
+ "reading_notes": "extract_msg; 2 adjunts PDF deduplicats per md5 amb els fitxers solts de 24.0807/. Imatges de signatura ignorades. 'BC' = bajo cubierta. La data del correu (18/11/2024) explica la data del pressupost el mateix dia."
+}

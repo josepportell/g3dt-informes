@@ -1,0 +1,25 @@
+{
+ "source_path": "ANEXOS/4001671_DPSH.xls",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Transcripció (revisada per Eva) dels 3 penetròmetres DPSH: P-1 (refús a -1,48 m), P-2 (refús a -2,18 m), P-3 (refús a -3,78 m), amb DUES anotacions d'SPT a 0,80-1,40 m: una a P-1 (colpeig 13/10/14/24) i una a P-3 (colpeig 3/4/6/5). Capçaleres en castellà.",
+ "issuer": "G3 (Eva transcriu els fulls de camp de TPS)",
+ "date": "sense data dins del fitxer",
+ "pages_or_sheets": "3 fulls: P-1, P-2, P-3 (80x7 cadascun)",
+ "context": {
+  "who_made_it": "Eva (G3), transcrivint i revisant els fulls manuscrits de TPS",
+  "for_whom": "per generar l'annex DPSH i els càlculs de l'informe",
+  "why": "versió digital REVISADA dels valors de camp → MANA sobre el manuscrit per a N20 i nombre d'assaigs",
+  "expected_fields": ["num_dpsh_tests (fulls amb dades)", "profunditats de refús", "anotacions SPT", "N.F. (columna F, buida aquí)"],
+  "not_expected": ["client_name", "street_address", "municipality", "expedient", "field_date", "cota_referencia absoluta", "architect_name"],
+  "relation_to_others": "versió digital del PENETROS.pdf manuscrit (que aporta croquis, punt 0, data). Genera PDF/ANEJOS/4001671_DPSH.pdf (que sí porta capçalera amb obra/població/data/cota). Les anotacions SPT s'han de creuar amb la comanda de laboratori (SPT1 (P3), 0,8-1,4) i el full SPT manuscrit.",
+  "authority_for": ["num_dpsh_tests (executats)", "profunditat de refús per punt", "colpeig SPT"]
+ },
+ "tier_a": [
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "fulls P-1, P-2, P-3, columna C amb dades", "quote": "sheets=['P-1','P-2','P-3']; tots tres amb colpeig fins al refús", "confidence": 0.95, "note": "executats; coincideix amb els 3 previstos del pressupost/PLAN_COST. Refús: P-1 a -1,48 m (100 cops a -1,6); P-2 a -2,18 m (100 a -2,2); P-3 a -3,78 m (100 a -3,8)."},
+  {"concept_id": "lab_sample_id", "value": "DUES anotacions SPT: 'SPT1' a P-1 (E21-E23: 0,80-1,40 m, colpeig 13/10/14/24) i 'SPT-1' a P-3 (E21-E23: 0.80-1,40 m, colpeig 3/4/6/5)", "location": "P-1!E21:E23 i P-3!E21:E23", "quote": "P-1: SPT1 | 0,80-1,40m | 13/10/14/24 — P-3: SPT-1 | 0.80-1,40m | 3/4/6/5", "confidence": 0.6, "note": "CONFLICTE APARENT: el pressupost preveia 1 SPT però l'Excel n'anota dos (coherent amb les fotos 'SPT 1 P-1.jpeg' i 'SPT A P3.jpeg'). La comanda de lab només envia la mostra 'SPT1 (P3)'. Creuar amb el full SPT manuscrit del PENETROS.pdf per saber quants SPT es van fer i d'on surt la mostra."},
+  {"concept_id": "lab_depth", "value": "0,80 – 1,40 m", "location": "P-1!E22 i P-3!E22", "quote": "0,80-1,40m | 0.80-1,40m", "confidence": 0.8, "note": "coincideix amb la comanda (J35=0,8 L35=1,4) — aquí NO hi ha la discrepància de transcripció vista en altres projectes"},
+  {"concept_id": "num_soil_levels", "value": null, "location": "C79/F79 'Nivel 1' / 'Nivel 2' (llegenda del gràfic)", "quote": "Nivel 1 | Nivel 2", "confidence": 0.2, "note": "les etiquetes de llegenda del gràfic suggereixen 2 nivells però són semi-plantilla; el nombre de nivells mana l'annex de tall/correlació ('Unitat litològica'). No usar com a font."}
+ ],
+ "not_present": ["client_name", "street_address", "municipality", "expedient", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "utm_x_utm_y", "referencia_catastral", "cte", "nivell freàtic (columna F.N.F. buida als 3 fulls)"],
+ "reading_notes": "Reconegut per fulls P-1/P-2/P-3 i capçalera a la fila 16 (en castellà: 'Profundidad de penetrómetro', 'Golpeo DPSH', 'Rechazo a la penetración' — coherent amb informe en castellà). D15=0.83 = factor NB (Golpeo NB = N20/0,83·... plantilla de conversió). N20 P-1: 6,7,8,18,24,77,100 (refús ràpid, terreny dur superficial); P-2: 4,7,8,12,10,12,13,30,46,100; P-3: 3,4,7,5,4,6,6,10,8,13,9,12,26,37,40,13,25,100. Cap valor a la columna N.F. Cap metadada de projecte a les files 0-14 (només D15)."
+}

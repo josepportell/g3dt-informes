@@ -1,0 +1,24 @@
+{
+ "source_path": "PDF/ANEJOS/4001671_fotografías.pdf",
+ "document_type": "annex_fotografies",
+ "what_it_is": "Reportatge fotogràfic de l'informe (4 pàgines, 7 fotos F-1..F-7 amb peus en castellà): vistes generals de la parcel·la (F-1/F-2), màquina DPSH a P-1/P-2/P-3 (F-3/F-4/F-5) i material recuperat dels DOS SPT (F-6: SPT-1 (P-1); F-7: SPT-1 (P-3)).",
+ "issuer": "Eva (G3); FreeHand 4001671_fotografías.FH11, imprès per 'Loli' 16/03/2026 17:02",
+ "date": "2026-03-16 (impressió); fotos del dia de camp 19/02/2026",
+ "pages_or_sheets": 4,
+ "context": {
+  "who_made_it": "Eva, seleccionant 7 de les 10 fotos de FOTOGRAFIES/",
+  "for_whom": "annex de l'informe",
+  "why": "els PEUS de foto són redacció de l'Eva → identifiquen què és cada foto amb autoritat (quins punts, quins SPT)",
+  "expected_fields": ["confirmació dels punts DPSH i dels SPT", "estat de la parcel·la (edificació existent, murs)"],
+  "not_expected": ["client_name", "architect_name", "field_date (no escrit)", "adreça", "cota", "nivells"],
+  "relation_to_others": "fotos = subconjunt de FOTOGRAFIES/ (F-1/F-2 ↔ vistes; F-3/F-4/F-5 ↔ P1/P2/P3; F-6 ↔ 'SPT 1 P-1.jpeg'; F-7 ↔ 'SPT A P3.jpeg'). Els peus CONFIRMEN que es van fer 2 SPT, tots dos anomenats SPT-1, un a P-1 i un a P-3 (com a l'Excel i al full de camp).",
+  "authority_for": ["identificació de les fotos (quina és quin punt)", "corroboració dels 2 SPT"]
+ },
+ "tier_a": [
+  {"concept_id": "num_dpsh_tests", "value": "3 (P-1, P-2, P-3 fotografiats)", "location": "peus F-3/F-4 (p.2) i F-5 (p.3)", "quote": "Fotografía 3 y 4. Vista del emplazamiento de la máquina durante la realización del ensayo de penetración dinámica DPSH P-1 y P-2, respectivamente. | Fotografía 5 y 6. ... DPSH P-3 y Detalle del material recuperado en el ensayo SPT-1 (P-1).", "confidence": 0.7, "note": "corroboració (no font primària). Màquina d'erugues a les fotos = 'TPS ERUGA' de la fitxa de camp."},
+  {"concept_id": "lab_sample_id", "value": "2 SPT documentats: SPT-1 (P-1) a F-6 i SPT-1 (P-3) a F-7", "location": "peus F-6 (p.3) i F-7 (p.4)", "quote": "Detalle del material recuperado en el ensayo SPT-1 (P-1). | Fotografía 7. Detalle del material recuperado en el ensayo SPT-1 (P-3).", "confidence": 0.7, "note": "l'Eva anomena tots dos 'SPT-1' amb el punt entre parèntesis; la mostra del lab és la del P-3 (comanda). F-7 mostra el testimoni argilós marró (argila llimosa); F-6 el material sorrenc."},
+  {"concept_id": "edificacio_existent", "value": "parcel·la amb murs de tanca, paviment parcial, arbres grans i construccions veïnes adossades; F-1 mostra mur baix de blocs dins la parcel·la", "location": "F-1/F-2 (p.1) — visual", "quote": "Fotografía 1 y 2. Vistas generales de la parcela.", "confidence": 0.5, "note": "coherent amb fitxa C16 'EDIFICACIÓ EXISTENT = SI' i amb el mur + 'zona en cota inferior' del croquis TPS"}
+ ],
+ "not_present": ["client_name", "architect_name", "street_address", "municipality", "expedient (només a la capçalera de pàgina: '4001671')", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "utm", "referencia_catastral", "lab_depth", "cte"],
+ "reading_notes": "Text del Distiller = brossa (peus llegits VISUALMENT renderitzant les 4 pàgines a 80 dpi; capçalera 'Reportaje fotográfico - Página N | 4001671' llegible). 7 fotos: F-1 (parcel·la amb arbre gran, paviment, mur de blocs, persones al fons), F-2 (vista cap al poble per sobre d'un mur, arbust), F-3 (màquina DPSH eruga vora paret amb palets de blocs), F-4 (màquina en gespa davant mur arrebossat), F-5 (màquina vora tanca amb casa de pedra veïna), F-6/F-7 (canal de mostra SPT obert amb testimoni)."
+}

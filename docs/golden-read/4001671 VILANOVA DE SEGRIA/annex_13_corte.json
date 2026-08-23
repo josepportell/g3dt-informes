@@ -1,0 +1,28 @@
+{
+ "source_path": "PDF/ANEJOS/4001671_corte de correlación.pdf + tall.pdf",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació A-A' de l'Eva (FreeHand → 2 versions PDF del mateix dibuix): 2 NIVELLS litològics sobre eix msnm 322-318, punts P-1/P-2/P-3 amb Nb, marca blava de nivell freàtic/humitat a P-3, i caixetí amb títol del projecte en castellà, Exp 4001671.",
+ "issuer": "Eva (G3); FreeHand 4001671_corte de correlación.FH11 (reaprofitat de l'exp. 4000939: title del tall.pdf = '5. 4000939_corte de correlación_VS.FH11')",
+ "date": "impressions 16/03/2026 (tall.pdf 10:45 Print To PDF; corte.pdf 17:00 Distiller); caixetí 'Fecha: Marzo 2025' = TYPO (hauria de ser Marzo 2026)",
+ "pages_or_sheets": "1 pàgina cadascun (mateix dibuix)",
+ "context": {
+  "who_made_it": "Eva dibuixa el tall a FreeHand a partir dels DPSH (abans d'obrir el wizard)",
+  "for_whom": "annex de l'informe",
+  "why": "és L'AUTORITAT per a num_soil_levels (llegenda 'Nivel 1/Nivel 2') i redacta les descripcions litològiques de l'informe",
+  "expected_fields": ["num_soil_levels", "descripcions dels nivells", "cota_referencia (eix msnm)", "expedient (caixetí)", "building_type + street_address + municipality (títol del projecte)", "nivell freàtic"],
+  "not_expected": ["client_name", "architect_name", "field_date", "superficie_parcela", "utm", "lab"],
+  "relation_to_others": "el corte.pdf (Distiller, text BROSSA per fonts sense ToUnicode) i el tall.pdf (Microsoft Print To PDF, text NET) són el MATEIX dibuix → una sola font; s'ha llegit el text del tall.pdf i el dibuix renderitzat. Les descripcions dels nivells calquen les descripcions de camp dels SPT (Nivel 1 = 'argila llimosa i sorrenca amb algunes graves' del SPT P3; Nivel 2 = 'sorra fina-mitja' del SPT P1). El límit N1/N2 baixa de ~321 (P-1) a ~319,2 (P-3), coherent amb el MULTICA (capa 1 fins a 2,6 m).",
+  "authority_for": ["num_soil_levels", "building_type (títol)", "street_address (títol)", "municipality (títol)", "expedient"]
+ },
+ "tier_a": [
+  {"concept_id": "num_soil_levels", "value": "2", "location": "tall.pdf LEYENDA (y=141-159)", "quote": "Nivel 1 : Arcilla limosa y arenosa con algunas gravas. | Nivel 2: Arenas finas-medias, carbonatadas.", "confidence": 0.9, "note": "AUTORITAT (llegenda del tall = 'Unitat litològica'). Corroborat pel MULTICA (2 capes) i per la llegenda 'Nivel 1/Nivel 2' de l'Excel DPSH."},
+  {"concept_id": "cota_referencia", "value": "superfície del tall a ~321,7 msnm (eix 322-318)", "location": "eix vertical (msnm) del tall", "quote": "(msnm) 322 / 321 / 320 / 319 / 318", "confidence": 0.6, "note": "coherent amb +321,69 de l'annex DPSH; el tall no escriu la xifra exacta"},
+  {"concept_id": "building_type", "value": "vivienda unifamiliar (habitatge unifamiliar)", "location": "caixetí TÍTULO DEL PROYECTO", "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.", "confidence": 0.85, "note": "títol EXACTE de l'informe (redacció final de l'Eva, en castellà); sense 'aislada' al títol"},
+  {"concept_id": "street_address", "value": "Calle Santa Gemma nº 4", "location": "caixetí TÍTULO DEL PROYECTO", "quote": "EN LA CALLE SANTA GEMMA Nº4", "confidence": 0.85, "note": ""},
+  {"concept_id": "municipality", "value": "Vilanova de Segrià", "location": "caixetí TÍTULO DEL PROYECTO", "quote": "DEL MUNICIPIO DE VILANOVA DE SEGRIÀ", "confidence": 0.85, "note": "amb accent"},
+  {"concept_id": "expedient", "value": "4001671", "location": "caixetí Exp", "quote": "Exp: 4001671", "confidence": 0.9, "note": "el caixetí diu 'Fecha: Marzo 2025' — TYPO evident (el projecte és de gener-març 2026): errada de còpia coneguda dels annexos FreeHand de l'Eva; la data de l'informe serà març 2026"},
+  {"concept_id": "nivell_freatic", "value": "marca blava discontínua ('Cota de nivel freático') a P-3, a ~320,9 msnm (~0,8 m de fondària)", "location": "dibuix, tram a P-3 (visual)", "quote": "Cota de nivel freático [llegenda] + tram blau discontinu vora P-3", "confidence": 0.5, "note": "coherent amb 'HUMITAT A P3' del full de camp; humitat, no NF franc (el MULTICA calcula amb P.NF=100 = sense NF)"}
+ ],
+ "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "field_date", "utm_x_utm_y", "referencia_catastral", "lab", "cte"],
+ "reading_notes": "corte.pdf: text brossa (glifs sense ToUnicode) → NO llegir-ne el text; tall.pdf (Print To PDF) té el text net i s'ha usat com a font textual; dibuix verificat renderitzant tall.pdf a 100 dpi. Nb al tall: P-1 8/25/R; P-2 (8)/11/46/R; P-3 8/28/R. Inset de situació amb la secció A-A' per P-1→P-2→P-3. DUES anomalies de còpia del FreeHand: (1) title del PDF = '5. 4000939_corte de correlación_VS.FH11' (plantilla de l'expedient 4000939); (2) 'Fecha: Marzo 2025' en lloc de 2026. El caixetí imprès (Exp 4001671, títol) és correcte."
+}

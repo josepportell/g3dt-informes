@@ -1,0 +1,22 @@
+{
+ "source_path": "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+ "document_type": "correu",
+ "what_it_is": "Resposta d'Eva a Loli (27/01/2026 13:32, ~2h després): SENSE text nou (només signatura); adjunta el PLAN_COST_VILANOVA DE SEGRIÀ.xlsx acabat de fer. El cos citat repeteix íntegre el correu d'encàrrec.",
+ "issuer": "Eva Vázquez Marcet (Responsable Dept Geologia, geòloga col. 4302)",
+ "date": "2026-01-27 13:32",
+ "pages_or_sheets": "1 correu + 8 adjunts (PLAN_COST + 7 imatges de signatura)",
+ "context": {
+  "who_made_it": "Eva, responent internament amb el pla de cost fet",
+  "for_whom": "Loli (administració), perquè emeti el pressupost (el PDF del pressupost es genera a les 15:35 del mateix dia)",
+  "why": "circuit intern encàrrec→cost→pressupost, tot el 27/01/2026",
+  "expected_fields": ["res de nou (RE: sense text nou)"],
+  "not_expected": ["tots els camps del nivell A"],
+  "relation_to_others": "en cadena RE:, només el text per sobre del primer 'De:' és nou — aquí és buit (signatura sola). L'adjunt PLAN_COST (md5 ba9f919c...) és IDÈNTIC al 26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx de la carpeta (dedup). El text citat NO és font independent del correu original.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "tecnic_responsable", "value": "Eva Vázquez Marcet, geòloga, núm. col. 4302, tel. 625 31 93 30", "location": "signatura del correu", "quote": "Eva Vázquez Marcet / Responsable Dept Geologia. / Geològa. N. col. 4302 / 625 31 93 30", "confidence": 0.9, "note": "no és camp del nivell A; confirma l'autora de l'informe i el seu número de col·legiada"}
+ ],
+ "not_present": ["tots els camps del nivell A (cap text nou; el citat ja està recollit a correu_07_pressupost_lleida.json)"],
+ "reading_notes": "Extret amb extract_msg. Text nou per sobre del primer 'De: Dolors Maqueda' = només la signatura d'Eva → cap dada nova. Adjunt PLAN_COST xlsx md5 ba9f919cdad2302de4a438e72f295bde = idèntic al de la carpeta. image001-011 = signatura corporativa (158-8.569 bytes), ignorades. Valor del correu: fixa la cronologia (encàrrec 11:37 → PLAN_COST 13:32 → pressupost PDF 15:35, tot el 27/01/2026)."
+}

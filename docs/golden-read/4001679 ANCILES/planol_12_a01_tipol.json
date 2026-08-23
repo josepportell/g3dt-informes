@@ -1,0 +1,28 @@
+{
+ "source_path": "24.0807/A01_TIPOL.pdf",
+ "document_type": "planol",
+ "what_it_is": "Plànol AO1 'TIPOLOGÍAS VIVIENDAS PROPUESTAS' de l'ESTUDIO DE DETALLE - AVANCE 'CASA GRANDE HCS - ANCILES' (març 2024): plantes (SEMISÓTANO, BAJA, PRIMERA, BAJO CUBIERTA) i superfícies de les 7 tipologies d'habitatge (V1-V7).",
+ "issuer": "A+M Arquitectura: ALBA BARRAU (nºCol. 6.408) i MIRIAM CASTEL (nºCol. 6.703)",
+ "date": "2024-03 (caixetí Fecha MARZO 2024; PDF creationDate 25/03/2024, AutoCAD 2021)",
+ "pages_or_sheets": "1 pàgina A3 apaïsada (1191x842)",
+ "context": {
+  "who_made_it": "les arquitectes del projecte (A+M Arquitectura)",
+  "for_whom": "el promotor i la tramitació urbanística (estudio de detalle - avance)",
+  "why": "definir les tipologies i superfícies dels 7 habitatges proposats",
+  "expected_fields": ["architect_name (caixetí)", "client_name (caixetí Promotor)", "street_address (caixetí Situación)", "num_floors (plantes dibuixades)", "building_type", "superficies per tipologia"],
+  "not_expected": ["superficie_parcela (no hi ha taula de planejament aquí)", "field_date", "cota_referencia", "num_soil_levels", "expedient", "lab"],
+  "relation_to_others": "adjunt del correu d'encàrrec (md5 681a81ff02e7b63db89c99e5ad30caad = fitxer solt); versió AVANCE (2024) del projecte; IV_PLANOS.pdf (2026, Drive) és el joc posterior. Miniatura incrustada a la fitxa de camp (image2.png). Mateix caixetí que SITE_prop A.pdf.",
+  "authority_for": ["client_name (Promotor)", "architect_name", "street_address", "num_floors", "building_type"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA", "location": "caixetí, etiqueta Promotor (y=715)", "quote": "Promotor | ANDRÉS AMAT y ENRIQUE M. GARDETA", "confidence": 0.85, "note": "Etiqueta 'Promotor' explícita → autoritat A per regla. Coincideixen amb els destinataris del correu de visita (Andrés Amat <infoamat@gmail.com>; Enrique Gardeta Torrodellas). CONFLICTE amb el p.5 signat del pressupost (factura+informe a nom de MARIA ALBA BARRAU CASTÁN): regla 'caixetí Promotor > formulari p.5' → aquest primer."},
+  {"concept_id": "architect_name", "value": "ALBA BARRAU (nºCol. 6.408) i MIRIAM CASTEL (nºCol. 6.703)", "location": "caixetí, etiqueta Arquitectura (y=724)", "quote": "Arquitectura | MIRIAM CASTEL, nºCol. 6.703 | ALBA BARRAU, nºCol. 6.408", "confidence": 0.9, "note": "DUES arquitectes (A+M Arquitectura). El pressupost/correus només tracten amb Alba Barrau."},
+  {"concept_id": "street_address", "value": "C/ General Ferraz 20, Anciles - Benasque (Huesca)", "location": "caixetí, etiqueta Situación (y=704)", "quote": "Situación | C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)", "confidence": 0.9, "note": "coincideix amb el bloc OBRA del pressupost; forma completa amb 'BENASQUE'."},
+  {"concept_id": "municipality", "value": "Anciles - Benasque (Huesca)", "location": "caixetí Situación", "quote": "ANCILES - BENASQUE (HUESCA)", "confidence": 0.9, "note": "forma llarga oficial: Anciles, nucli del municipi de Benasque (Osca)."},
+  {"concept_id": "building_type", "value": "7 habitatges adossats (V1-V7, tipologies T1.a/b/c, T2.a/b, T3.a/b)", "location": "peu del plànol (y=732) + títol", "quote": "V2 (T3a) | V6 (T3b) | V3 (T1a) | V4 (T1b) | V5 (T1c) | V1 (T2a) | V7 (T2b) | AO1 TIPOLOGÍAS VIVIENDAS PROPUESTAS", "confidence": 0.85, "note": "7 habitatges: 3×T1 + 2×T2 + 2×T3. Corrobora '7 adosados' del correu."},
+  {"concept_id": "num_floors", "value": "PB + P1 + bajo cubierta; semisótano només a les tipologies T2 (V1, V7)", "location": "capçaleres de columnes (y=43) + superfícies", "quote": "PLANTA SEMISÓTANO ⏎ PLANTA BAJA ⏎ PLANTA PRIMERA ⏎ PLANTA BAJO CUBIERTA | T2.a Ps 49.95 m2 | T2.b Ps 49.59 m2", "confidence": 0.75, "note": "Només T2.a i T2.b tenen Ps (semisótano) → 'dos semisótanos' del correu. T3.a/T3.b no tenen P1 pròpia gran… (T3.a Pb 38.03 + P1 89.66 + Pbc 42.00). En conjunt: PB+1PP+BC amb 2 semisoterranis."},
+  {"concept_id": "superficies_tipologies", "value": "T1: 73,07-73,67 m² per planta (Pb i P1) + Pbc 40,04; T2.a: Ps 49,95 + Pb 102,21 + Pbc 17,34; T2.b: Ps 49,59 + Pb 109,32 + Pbc 40,43; T3.a: Pb 38,03 + P1 89,66 + Pbc 42,00; T3.b: Pb 39,96 + P1 92,39 + Pbc 42,00", "location": "etiquetes sobre cada planta", "quote": "T1.a Pb 73.07 m2 | T1.a P1 73.07 m2 | T1.a Pbc 40.04 m2 | T2.a Pb 102.21 m2 …", "confidence": 0.8, "note": "superfícies construïdes per tipologia i planta, NO superficie_parcela."}
+ ],
+ "not_present": ["superficie_parcela", "expedient", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "lab", "cte"],
+ "reading_notes": "Text vectorial AutoCAD llegible (86 blocs); caixetí a x>900. Escala (A3) 1/400 - 1/300. Serie 'ESTUDIO DE DETALLE - AVANCE'. Alçades interiors 2,70-3,05 m a les seccions TIPOLOGÍA 1/2/3. No ha calgut visió."
+}

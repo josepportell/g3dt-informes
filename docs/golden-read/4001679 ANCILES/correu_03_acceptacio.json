@@ -1,0 +1,24 @@
+{
+ "source_path": "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu d'Alba Barrau (abarrau@retrateria.com) a Dolors Maqueda (G3) del 05/02/2026 23:51 reenviant l'acceptació signada del pressupost i demanant la data prevista del estudi per gestionar l'accés a la parcel·la.",
+ "issuer": "Alba Barrau <abarrau@retrateria.com>",
+ "date": "2026-02-05 23:51",
+ "pages_or_sheets": "1 correu + 6 adjunts (5 imatges de signatura + PRESUPUESTO G3.ANCILES.pdf)",
+ "context": {
+  "who_made_it": "l'arquitecta sol·licitant, responent el correu de Loli Maqueda (G3, 02/02/2026) que li demanava l'acceptació omplerta i signada",
+  "for_whom": "G3 (administració), per poder planificar l'obra",
+  "why": "tancar l'acceptació del pressupost 24·0807 i coordinar l'accés a la parcel·la",
+  "expected_fields": ["acceptance_date", "identitat del sol·licitant"],
+  "not_expected": ["field_date exacta", "cota_referencia", "num_soil_levels", "superficie_parcela"],
+  "relation_to_others": "l'adjunt PRESUPUESTO G3.ANCILES.pdf és md5-idèntic (facc75f307f41e899566791f2272b75d) al fitxer solt ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf → duplicat, no font independent. Text citat de Dolors (02/02/2026) és part de la mateixa cadena que 24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg.",
+  "authority_for": ["acceptance_date"]
+ },
+ "tier_a": [
+  {"concept_id": "acceptance_date", "value": "2026-02-05", "location": "capçalera del correu + signatura digital de l'adjunt", "quote": "DATE: 2026-02-05 23:51:01+01:00 | 'reenvío aceptación'", "confidence": 0.9, "note": "Acceptació el 05/02/2026 → el camp es fa DESPRÉS d'aquesta data (les fotos WhatsApp són del 19/02/2026)."},
+  {"concept_id": "architect_name", "value": "Alba Barrau (Retratería)", "location": "remitent", "quote": "FROM: Alba Barrau <abarrau@retrateria.com>", "confidence": 0.7, "note": "corrobora el bloc CLIENTE del pressupost; mateixa cadena d'encàrrec, no font independent."},
+  {"concept_id": "field_access_note", "value": "cal gestionar l'accés a la parcel·la", "location": "cos", "quote": "Necesitaria conocer cuando se prevé que se realice el estudio para gestionar el acceso a la parcela.", "confidence": 0.9, "note": "context operatiu, no camp del nivell A."}
+ ],
+ "not_present": ["client_name (cap promotor esmentat)", "street_address", "municipality (només al nom del PDF adjunt)", "expedient", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab", "cte"],
+ "reading_notes": "Nou = només el text per sobre del primer 'El lun, 2 feb 2026…'. Imatges adjuntes ≤ 8,6 KB = logos/signatura, ignorades. Cita de Dolors Maqueda (G3): 'necesito me reenvier la aceptación del presupuesto, rellenada y firmada, para poder planificar la obra' (02/02/2026)."
+}

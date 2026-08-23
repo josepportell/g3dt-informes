@@ -1,0 +1,30 @@
+{
+ "source_path": "comanda laboratori_4001679_ANCILES.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori de G3 per a l'expedient 4001679 (Anciles): 1 mostra 'MA (S-2)' de 2,8-3,0 m, NOMÉS SULFATS (agressivitat de sòls); presa 19/02/2026, sol·licitud 27/02/2026.",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, SL (responsable EVA VÁZQUEZ)",
+ "date": "2026-02-27 (sol·licitud); presa 2026-02-19",
+ "pages_or_sheets": "1 full (Hoja1, 66 files)",
+ "context": {
+  "who_made_it": "G3 (Eva) com a sol·licitant d'assaigs al laboratori",
+  "for_whom": "el laboratori (el nom del lab NO consta al formulari; G3 treballa amb TPS/SOIL-ASSAIG — coneixement previ, no lectura)",
+  "why": "encarregar l'anàlisi de sulfats de la mostra del sondeig S-2 per a l'apartat d'agressivitat de l'informe",
+  "expected_fields": ["expedient (N19)", "municipality (N21)", "building_type (N18)", "lab_sample_id / lab_depth (fila 35)", "data de presa (dia de la mostra)"],
+  "not_expected": ["client_name (el bloc SOL.LICITANT és G3: descartat per regla)", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels"],
+  "relation_to_others": "la mostra MA (S-2) 2,8-3,0 m ha de coincidir amb l'annex de sondeigs (S-2) i amb el futur GTL (no present a la carpeta: arriba setmanes després). DATA DE PRESA coincideix amb F38 de la fitxa (19/02/2026).",
+  "authority_for": ["expedient", "municipality", "lab_sample_id", "lab_depth", "building_type (candidat)", "field_date (candidat: dia de presa de mostra)"]
+ },
+ "tier_a": [
+  {"concept_id": "expedient", "value": "4001679", "location": "Hoja1!N19 (etiqueta G19 NÚM. D'EXPEDIENT)", "quote": "N19=4001679.0", "confidence": 0.95, "note": "float d'Excel; coincideix amb el nom de la carpeta '4001679 ANCILES' i amb els annexos."},
+  {"concept_id": "municipality", "value": "Anciles", "location": "Hoja1!N21 (bloc DADES DE L'OBRA)", "quote": "POBLACIÓ: ANCILES", "confidence": 0.85, "note": "forma curta G3; Anciles és nucli de Benasque (Osca)."},
+  {"concept_id": "building_type", "value": "grup d'habitatges (CONSTR GRUPO DE VIVIENDAS)", "location": "Hoja1!N18 (etiqueta G18 OBRA)", "quote": "CONSTR GRUPO DE VIVIENDAS", "confidence": 0.6, "note": "coherent amb PLAN_COST 'EG 7 VIVIENDAS'. Expandir en la redacció."},
+  {"concept_id": "street_address", "value": null, "location": "Hoja1!N20 (etiqueta G20 ADREÇA)", "quote": "[N20 buit]", "confidence": 0.0, "note": "L'adreça de l'obra NO està omplerta en aquesta comanda."},
+  {"concept_id": "lab_sample_id", "value": "MA (S-2)", "location": "Hoja1!C35 (bloc DADES DE LA/LES MOSTRA/ES)", "quote": "MA (S-2) | AA35='X' (Agressivitat sòls) | AD35='NOMÉS SULFATS'", "confidence": 0.85, "note": "Mostra alterada del sondeig S-2; només assaig de sulfats/agressivitat. Cap SPT enviat a lab."},
+  {"concept_id": "lab_depth", "value": "2,8-3,0 m", "location": "Hoja1!J35/L35 (COTES m, INICIAL/FINAL)", "quote": "J35=2.8 L35=3.0", "confidence": 0.85, "note": "creuar amb annex de sondeigs (S-2) quan es llegeixi; el GTL (absent) manaria."},
+  {"concept_id": "lab_testing_company", "value": null, "location": "formulari sencer", "quote": "[cap nom de laboratori]", "confidence": 0.0, "note": "Sense GTL a la carpeta el nom del lab no és lectura: candidat per coneixement previ (G3 treballa amb TPS B64803075 / SOIL-ASSAIG), mai segur."},
+  {"concept_id": "field_date", "value": "2026-02-19 (data de presa de la mostra)", "location": "Hoja1!N23 (DATA DE PRESA)", "quote": "N23=datetime(2026, 2, 19)", "confidence": 0.7, "note": "Dia de la mostra del sondeig; aquí coincideix amb el dia dels DPSH (fitxa F38). Candidat que corrobora."},
+  {"concept_id": "NOT_client_name", "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL (B25364589)", "location": "Hoja1!N11-N14 (DADES DEL SOL.LICITANT)", "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589 | C/ Vallbona, 22 | ELS OMELLS DE NA GAIA", "confidence": 0.0, "note": "sol·licitant del laboratori = G3; mai client de l'informe."}
+ ],
+ "not_present": ["client_name", "architect_name", "street_address (N20 buit)", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "cte", "lab_testing_company"],
+ "reading_notes": "xlrd sobre .xls; N19 float 4001679.0 → '4001679'. N23/AH23 dates xldate. Fila única de mostres (35). 'MA' = mostra alterada. NÚM. D'INFORME (O65) i DATA RECEPCIÓ (O66) buits: el GTL encara no existia."
+}
