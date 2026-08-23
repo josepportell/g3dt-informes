@@ -5,7 +5,6 @@ Tier-A reference value (expedient, client, architect, municipality, surfaces, fi
 Output: per project x field -> list of documents that contain it (+ JSON).  Evidence for
 docs/ANALISI-NIVELL-A-LECTURA-HUMANA-2026-08-23.md §3.  Usage: .venv/bin/python scripts/tier_a_truth_map.py OUT.json
 """
-"""
 import json, re, sys, unicodedata, datetime, io, zipfile
 from pathlib import Path
 from collections import defaultdict
@@ -212,7 +211,8 @@ def main():
                 kind = 'text'
             hits = []
             for rel, (t, info) in srcs.items():
-                which = [c for c in variants if c and norm(c) in t]
+                # word-boundary match: '995' must not hit inside '620199571' (Bell-lloc false positives, 2026-08-23)
+                which = [c for c in variants if c and re.search(r'(?<![\w.,])' + re.escape(norm(c)) + r'(?![\w])', t)]
                 if which: hits.append((rel, info, which[0]))
             res[f] = {'value': v, 'variants': variants[:4], 'hits': hits}
         report[name] = {'fields': res, 'n_sources': len(srcs), 'n_images': len(images), 'images': images}
