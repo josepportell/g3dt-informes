@@ -137,3 +137,12 @@ Format: una lliçó per línia o bloc, amb projecte i font. Serveix per escriure
 - lab_depth: referència (1,00-1,60) vs carpeta unànime (0,8-1,4) — pendent de verificar amb el .docx real (absent a Windows); marcat ⚠.
 - La còpia de Windows no té el .docx de l'informe → les referències d'aquest projecte s'han de llegir amb PDF (imatge) + prudència.
 - MULTICA_61.xls (13,7 MB) és el full de càlcul bicapa de l'Eva: corrobora 2 nivells; nivell B altrament.
+
+## 4001679 ANCILES (2026-08-23) — 7 OK / 4 CAND / 4 N/A (referència desalineada) / 0 ERR
+- Client = qui signa el p.5 (Alba Barrau, arquitecta) encara que el projecte vigent digui un ALTRE promotor (PICO DE OLA S.L.):
+  p.5 > Promotor del plànol. Tres "promotors" segons l'època del document: el més nou NO guanya; guanya el p.5.
+- 6 DPSH executats (2 dins dels sondeigs, P-5/P-6 comencen en fondària) vs 5 previstos: com es compten és decisió de l'Eva → candidats.
+- Nivells: tall (2) mana sobre columna del log (1) — invers del que semblava a Bell-lloc (allà coincidien).
+- Pressupost castellà amb casella CTE BUIDA (2n cas); derivació C-1 per superfície TOTAL + T-1 defecte encerta.
+- Cota del "topográfico proporcionado" (client), no ICGC: l'origen de la cota varia per projecte.
+- Referència V0 desalineada (plantes='C-1', superfície='T-1', dpsh=frase SPT): 4 camps N/A pendents del .doc real.
