@@ -51,6 +51,12 @@ contingut, cel·les exactes de la lectura d'or, senyals amb cita; CLIENT: emès 
 NOT_client). Validat 8/8 projectes (0 errors; expedient/data/municipi/DPSH executats 8/8) + 9 tests
 (`tests/test_g3_templates.py`). DECISION-LOG entrada 2026-08-23. Pendent: crida headless des del wizard + UI de
 candidats, validació amb projectes nous de l'Eva, desplegament (decisió Josep).
+**Taules de l'informe → skill v0.7 (23 nit, reenquadrament Josep)**: comparades les taules-llista de 5 informes signats vs
+generats (`scripts/compare_tables_vs_eva.py`, `docs/audit/taules-llista/`) per derivar regles d'or de LECTURA de taules
+(Pas 3b del skill): cota per punt (pot ser relativa, annex DPSH per pàgina), profunditat = Excel B80 "Rebuig a -X,XX m",
+N.F. de l'Excel, litologia re-redactada per l'Eva = sempre candidats, fila sulfats = nivell de la mostra, superficie_construida
++ etiqueta segons font. Verificat per mostreig (Castellar/Bell-lloc/Alcoletge exactes). Pendent: lectura d'or de taules 8/8
+amb v0.7, veritat Vilanova/Anciles (PDF), i Tier B per nivell (K, C, γ/c/φ/E — Python/override, fora del skill).
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
