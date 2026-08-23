@@ -41,8 +41,12 @@ Detall: `docs/holdout-headless/_RESULTATS.md`.
 **Conversor DWG FET (23 nit): viable.** LibreDWG 0.13.3 compilat (`~/.local/bin/dwg2dxf`) + ezdxf 1.4.4 al venv; els 4 DWG
 de Tulipa llegits (`scripts/dwg_text_dump.py`, skill v0.6). Misteri resolt: el 564 NO era al DWG — és `areaValue` del
 Cadastre (WFS INSPIRE) de la RC 3445105…GG (Tulipa 3), i la RC surt del caixetí del TOP.dwg → cadena automatitzable.
-Detall: `docs/DWG-CONVERSOR-2026-08-23.md`. Pendent: .docx reals de Vilanova/Anciles per als n/a, Fase 4a (lectors
-deterministes), crida headless des del wizard + UI de candidats, validació amb projectes nous de l'Eva.
+Detall: `docs/DWG-CONVERSOR-2026-08-23.md`.
+**n/a de Vilanova/Anciles TANCATS (23 nit)**: els PDF dels informes tenen capa de text (no calien els .docx). Vilanova
+`lab` ⚠ resolt (informe: SPT-1 0,80-1,40 → la carpeta tenia raó, la referència era soroll); Anciles superficie n/a→OK
+(1655,01 = segur; Cadastre 1656), num_floors i num_dpsh n/a→CAND (candidat 1 correcte). **Totals actualitzats: 81 OK /
+19 CAND / 10 NT / 8 n/a / 2 ERR (OK 79,4 % sobre avaluables)** — ANALISI §11.1 + addenda als `_decisions.json`.
+Pendent: Fase 4a (lectors deterministes), crida headless des del wizard + UI de candidats, validació amb projectes nous.
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
