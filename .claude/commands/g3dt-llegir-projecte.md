@@ -6,7 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 0.4 (2026-08-23) — derivat de la lectura d'or dels 8 projectes (`docs/golden-read/`; resultats: ANALISI §11 — 80 OK / 17 CAND / 10 NT / 2 ERR, tots dos convertits en regla aquí).
+Versió 0.5 (2026-08-23 nit) — clarificacions del hold-out headless (3 projectes, ERR = 0; feedback dels executors a `docs/holdout-headless/_RESULTATS.md` §6).
+v0.4: derivat de la lectura d'or dels 8 projectes (`docs/golden-read/`; resultats: ANALISI §11 — 80 OK / 17 CAND / 10 NT / 2 ERR, tots dos convertits en regla aquí).
 v0.2: Pas 0 (context del document abans de llegir-lo; reflexió del Josep) + bloc `context` al JSON + lliçons de Tulipa.
 
 ## Arguments
@@ -108,7 +109,8 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
 - **G3 mai és client**: `G3`, `G 3`, `G3 DESENVOLUPAMENT TERRITORIAL`, NIF `B25364589`, `G3 - Eva`. Apareix com a "client" a la comanda
   (sol·licitant), al GTL (`DADES DEL CLIENT` del laboratori) i als albarans TPS (`DADES CLIENT: Empresa G3 / Responsable Eva`). Descarta'l.
 - **`architect_name`**: caixetí `Arquitecte` > signatura digital del pressupost acceptat (`/Sig /Name`, p. ex. `JORDI BOSCH NOVELL / num:37655-8`)
-  > nom del despatx al pressupost/correu. Persona, no despatx, si és possible.
+  > signatura de correu amb núm. de col·legiat (`arquitecte col·legiat 74829-3`) > nom del despatx al pressupost/correu. Persona, no despatx,
+  si és possible. Si client i arquitecte són la mateixa persona (arquitecte autopromotor), no descartis el nom pel fet de ser el sol·licitant.
 - **`lab_sample_id`**: l'etiqueta de la mostra a l'informe és la de l'ANNEX de l'Eva (Castellar: annex "SPT-1", GTL "MA1" → informe SPT-1;
   Anciles: comanda/annex "MA" → informe MA-1). Annex de l'Eva > GTL > comanda per a l'etiqueta; GTL > Excel > full de camp per a la PROFUNDITAT.
   Si annex i GTL discrepen d'etiqueta → candidats (annex primer), mai segur.
@@ -121,7 +123,8 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
 - **`street_address`**: només de blocs etiquetats `OBRA`, `ADREÇA OBRA`, `Situació`, `Localización`, `Adreça de l'obra`. Mai l'adreça
   del client (`DADES CLIENT.txt`) ni del sol·licitant. **Poden existir dues adreces verdaderes** (cantonada): no competeixen →
   `candidats`. Si els annexos de l'Eva diuen "entre el carrer X i el carrer Y", aquesta frase és la redacció de l'informe → candidat 1.
-  Grafies manuscrites (`Ballet`/`Bellet`) → normalitza cap a la del document imprès.
+  Grafies manuscrites (`Ballet`/`Bellet`) → normalitza cap a la del document imprès. La regla de cantonada demana DUES adreces
+  documentades: carrers veïns visibles als dibuixos sense cap document que els doni com a adreça de l'obra → nota, no candidats.
 - **`municipality`**: comanda N21 + pressupost p.1 + PLAN_COST E9 ("sempre" 3 fonts). Forma oficial llarga (Cadastre, GTL, plànol:
   `Bell-lloc d'Urgell`) > forma curta de G3 (`BELL-LLOC`) > manuscrits (`BELL-LLOCH`). Mai la població del sol·licitant (Els Omells de
   Na Gaia) ni del client. Mai una foto.
@@ -139,14 +142,20 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
   Els trams de material del full de camp NO són nivells. Sense annex → `candidats` amb el nombre de trams i nota "confirmar".
 - **`superficie_parcela`**: taula de planejament del projecte/plànol (`Parcel·la … Projecte`) > suma de les parcel·les cadastrals de la
   carpeta > una parcel·la sola. Amb 2+ consultes cadastrals i "parcel·les contigües" al correu: `candidats` (projecte, suma, cadascuna).
+  Única font (el projecte) sense contradicció → segur admès, amb nota "única font".
 - **`num_floors`**: taula de planejament (`N. plantes PB+PP`) > correu d'encàrrec (`Pb de 280m + p1 de 86` → PB+1) > projecte. Cap plantilla G3 ho té.
+  Si la descripció només cobreix 1 de N unitats de l'obra → `candidats`, no segur. Sense taula ni correu, si TOT el programa del projecte és
+  d'una planta (plantes + alçats coherents) → segur amb confiança ≤ 0,8 i nota "derivat del programa".
 - **`building_type`**: títol del projecte/plànol > PLAN_COST `HAB UNIF` (expandir) > comanda `CONSTR HABITATGE` > correu. L'informe redacta
-  ("un habitatge unifamiliar"): comparació CLOSE.
+  ("un habitatge unifamiliar"): comparació CLOSE. Instrucció del client POSTERIOR als annexos (correu que dicta el títol de l'informe) >
+  redacció dels annexos anteriors → candidat 1 amb nota.
 - **`referencia_catastral`**: consultes del Cadastre a la carpeta (`title`/nom `NNNNNNNCGNNNNS0001XX`) o als adjunts dels `.msg` (els noms
-  dels adjunts ja la porten). Dues parcel·les → `candidats` amb les dues. Mai inferir-la d'una adreça.
+  dels adjunts ja la porten). Dues parcel·les → `candidats` amb les dues. Mai inferir-la d'una adreça. Impresa al plànol/projecte de
+  l'arquitecte = font vàlida però única → `candidats`, mai segur sense consulta del Cadastre.
 - **`utm_x_utm_y`**: `ANNEXES/ALTRES/COORDENADES.txt` (`X ; Y ; Z` per punt) > caselles x/y de l'annex de sondeig > res (no geocodificar aquí).
 - **`lab`**: laboratori = emissor del GTL (banda amb registre mercantil; TPS B64803075), mai el "client" del GTL. Mostra/cota: comanda
   fila 35 (`SPT 1 (S1)`, J/L) = GTL `Mostra:` / `Cota d'extracció` = annex sondeig. Sense GTL (arriba setmanes després): la comanda basta.
+  `lab_location` = el punt d'assaig d'on surt la mostra (S-1, P-3): el parèntesi de la comanda fila 35 (`SPT 1 (S1)`) = GTL `Mostra: SPT1 P3` = annex.
 - **`cte`**: pressupost p.2 `Tipus d’edifici: C1` / `Tipus de Terreny : T1`; el correu d'encàrrec sol dir "És un C1". Definició de l'Eva:
   C0 < 300 m² i < 4 plantes; C1 > 300 m² i < 4 plantes; C2 ≥ 4 plantes.
 
@@ -155,7 +164,9 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
 - **Un expedient, N informes**: subcarpetes `CASA 1…`, `CASA 2…` amb Excel DPSH i annexos propis; pressupost `-2CASES` amb nota "DOS
   INFORMES … UN A NOM DE CADA CLIENT"; comanda "CONSTR DOS NOUS HAB". → escriu un bloc de decisions PER CASA (`casa_1_…`, `casa_2_…`),
   `num_dpsh_tests` per casa, `street_address`/`client_name`/`architect_name` per casa (poden ser diferents: Tulipa 3 / VUA vs Tosca 16 /
-  Factoria). Un sondeig compartit → `num_soil_levels` de la casa sense sondeig = `candidats` + "confirmar".
+  Factoria). Un sondeig compartit → `num_soil_levels` de la casa sense sondeig = `candidats` + "confirmar"; el bloc `lab` de la casa
+  sense sondeig es replica en `candidats` amb nota "S-1 a la parcel·la de casa X". Línia CTE única del pressupost cobrint N cases:
+  deriva per casa amb la superfície de CADA encàrrec; per a les cases de superfície desconeguda → `candidats`.
 - **Dos pressupostos, mateix codi**: el de `modDate` posterior mana (quantitats). PLAN_COST no s'actualitza: és l'última font per a quantitats.
 - **Acceptació escanejada** (Adobe Scan): el formulari p.5 `DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME` pot estar omplert a mà
   → clip de la zona (30-62 % de l'alçada) a ≥ 170 dpi i visió. L'OCR incrustat no serveix per al manuscrit. És autoritat A per a `client_name`.
@@ -173,6 +184,8 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
 - **`num_soil_levels` quan tall i log discrepen**: el TALL (síntesi de l'Eva) mana (Anciles: tall 2, log 1 → informe 2) → candidat 1 = tall.
 - **`cota_referencia`, ordre de candidats**: annex DPSH primer (4/4: Bell-lloc, Castellar −4 relatiu, Vilanova, Anciles P-1);
   l'origen pot ser ICGC, ICGC −0,15 carrer, o el topogràfic del CLIENT ('según el topográfico proporcionado'). UTM de l'informe = P-1 de COORDENADES.txt.
+  Si l'annex dona cotes PER PUNT i cap cota única (parcel·la en pendent): `candidats` per punt + la cota d'implantació del projecte si
+  existeix; mai triar-ne una com a `segur`.
 - **Derivacions quan el pressupost no porta la línia CTE** (Castellar, Linyola, Anciles): C segons superfície construïda TOTAL de
   l'encàrrec (< 300 m² i < 4 plantes → C0; > 300 → C1) + T-1 com a candidat per defecte (valor de tots els pressupostos que la porten). Sempre candidats, mai segur.
 - **Esborranys de l'Eva a la carpeta**: `ANNEXES/Altres/*.png` (figures del cos de l'informe) poden ser versions ANTERIORS dels
@@ -181,6 +194,8 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
 - **Plànols de catàleg** (fabricant de cases modulars, foto WhatsApp): `num_floors` = PB (+ Porxo si n'hi ha), superfície = construïda
   (mai parcel·la), cap promotor/arquitecte. `superficie_parcela` i UTM poden no ser a cap fitxer (l'Eva: Cadastre / visor ICGC) → `no_trobat` + proposta.
 - **Comanda amb cota de mostra mal transcrita** (0,6-1,4 vs GTL/Excel 0,6-1,2): GTL > Excel DPSH/annex sondeig > comanda per a `lab_depth`.
+- **Albarà TPS amb "Assaigs SPT: No" però SPT documentat al GTL/annex**: el GTL/annex mana (probable criteri de facturació del
+  sondista); anota el matís, no és contradicció.
 - **Sense GTL** (arriba setmanes després): la comanda és l'única font de lab; el NOM del laboratori no hi consta → `lab_testing_company`
   és `candidats` (coneixement previ: G3 treballa amb TPS), no lectura.
 
