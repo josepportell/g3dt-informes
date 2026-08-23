@@ -6,7 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 0.7 (2026-08-23 nit) — Pas 3b: regles d'or per a les TAULES de l'informe (dades per fila/nivell), derivades de comparar les taules dels 7 informes signats amb els documents del corpus; verificades per mostreig (Castellar, Bell-lloc, Alcoletge), pendents de lectura d'or completa de taules.
+Versió 0.8 (2026-08-23 nit) — anatomia de l'ANNEX DE SONDEIG (la matriu que l'Eva usa com a font de nivells i litologies; assenyalada pel Josep, verificada a Bell-lloc) + litologia: annex sondeig «Descripció dels materials» passa PRIMER, tall segon.
+v0.7: Pas 3b: regles d'or per a les TAULES de l'informe (dades per fila/nivell), derivades de comparar les taules dels 7 informes signats amb els documents del corpus; verificades per mostreig (Castellar, Bell-lloc, Alcoletge), pendents de lectura d'or completa de taules.
 v0.6: DWG llegibles via LibreDWG `dwg2dxf` + `scripts/dwg_text_dump.py` (verificat amb els 4 DWG de Tulipa; `docs/DWG-CONVERSOR-2026-08-23.md`).
 v0.5: clarificacions del hold-out headless (3 projectes, ERR = 0; feedback dels executors a `docs/holdout-headless/_RESULTATS.md` §6).
 v0.4: derivat de la lectura d'or dels 8 projectes (`docs/golden-read/`; resultats: ANALISI §11 — 80 OK / 17 CAND / 10 NT / 2 ERR, tots dos convertits en regla aquí).
@@ -239,11 +240,29 @@ l'Eva mana per l'etiqueta). `n30`: annex de sondeig manuscrit (lectura VISUAL, x
 el GTL si hi és; discrepància de lectura (54 vs 58 al pipeline vell per manuscrit dubtós) → candidats amb les dues lectures.
 `litologia` = la del nivell d'on surt la mostra (vegeu `soil_levels`).
 
+**L'ANNEX DE SONDEIG — anatomia (la font principal de nivells i litologies quan existeix):** plantilla G3 «Sondeig a rotació
+amb batería contínua» — `PDF/ANNEXES/{exp}_sondeig.pdf` (o `ANEJOS/{exp}_sondeos.pdf` en castellà). FreeHand → **text brossa:
+SEMPRE lectura visual** (render ≥ 110 dpi). Present NOMÉS als projectes amb sondeig a rotació (4/8 al corpus: Bell-lloc,
+Castellar, Anciles, Tulipa ×2 cases); sense sondeig, nivells = tall i SPT/mostres = comanda + GTL. És una matriu, un full per
+sondeig; columnes i què alimenta cadascuna (verificat Bell-lloc):
+- capçalera: `Sondeig nº` (S-1), `Obra` (frase completa — la redacció "entre el carrer X i el carrer Y" de l'informe),
+  `Client` (= sol·licitant, p. ex. "ARQ BOSCH NOVELL"), `Data d'inici/fi` (dia del sondeig, candidat 2 de `field_date`),
+  `Coordenades UTM x/y/z` (**z = `cota_referencia`**), `Empresa` (TPS), `Tècnic` (Eva).
+- `Unitat litològica` (NIVELL 1, NIVELL 2…) → `num_soil_levels` i fondàries de transició (on canvia el NIVELL).
+- `Descripció dels materials` → **la redacció de litologia de l'informe surt d'aquí** (annex: "Graves incloses en matriu
+  sorrenca d'aspectes carbonatats" → informe: "Graves en matriu sorrenca carbonatades").
+- `Columna litològica` (gràfica) + `Nivell freàtic` (marca) → NF de la taula de sondeig.
+- Bloc `Muestras y ensayos in situ`: `Tipus de mostra` (SPT-1), `Prof. de extracció` (-1,00 a -1,60 → `lab_depth`),
+  **`Registre`** (cops per tram de 15 cm, p. ex. 24/34/28/30 → l'N30 de l'informe se'n deriva; llegeix els 4 valors i
+  proposa'ls com a candidats amb la suma dels trams centrals, no en triïs un de sol).
+- `Testimoni recuperat`, `R.Q.D.`, columnes de laboratori: no alimenten cap taula de l'informe (no les transcriguis).
+
 **Nivells del sòl (`soil_levels[]`) — alimenta 5 taules (nivells, permeabilitat, sulfats, sísmica, geotècnica):**
-- `nom` ("1er nivell", "2on nivell") i ordre: regla `num_soil_levels` existent (tall > log; el TALL mana).
-- `litologia`: llegenda del tall ("1er nivell: Graves amb sorres") + columna `Unitat litològica` de l'annex sondeig. **L'Eva
-  re-redacta a l'informe** (tall "Graves amb sorres" → informe "Graves en matriu sorrenca carbonatades"; verificat Bell-lloc,
-  Alcoletge): la redacció exacta és sempre `candidats` (tall primer, annex sondeig segon), MAI segur per a la cadena literal.
+- `nom` ("1er nivell", "2on nivell") i ordre: regla `num_soil_levels` existent (el TALL mana per al NOMBRE — Anciles: tall 2,
+  log 1 → informe 2).
+- `litologia`: **`Descripció dels materials` de l'annex de sondeig primer** (és la que l'Eva condensa a l'informe; verificat
+  Bell-lloc), llegenda del tall segon ("1er nivell: Graves amb sorres"). **L'Eva re-redacta a l'informe**: la redacció exacta
+  és sempre `candidats`, MAI segur per a la cadena literal. Sense annex de sondeig: tall únic candidat.
 - `de` / `a` (fondàries de transició): cotes del tall + marques `Nivell N` de l'Excel DPSH (columna al costat del peu, B79) +
   annex sondeig. Són el que la sísmica usa com a gruix i la geotècnica com a rang de Nb: si els documents discrepen (esborrany
   PNG vs annex PDF — regla d'esborranys existent), candidats.
