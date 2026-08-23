@@ -1,5 +1,17 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-08-22 (fixes F1-F4e a `review/prod-audit-2026-08`, pendent fusió)
+Last updated: 2026-08-23 nit (reenquadrament: nivell A; anàlisi feta; decisió Josep = alternativa D en branca nova)
+
+## ⚠ Reenquadrament 2026-08-23 (Josep): l'Eva està enfadada; criteri = "(quasi) faci la seva feina, sempre"
+
+**Prohibit proposar pull/merge a l'Eva** (memòria `feedback_no_pull_eva_success_criterion`). Millores residuals no són resposta.
+Anàlisi: `docs/ANALISI-NIVELL-A-LECTURA-HUMANA-2026-08-23.md`. Troballa central: les 3 arquitectures (clàssic 59 %, AI Pipeline
+27,7 %, CC-Agentic 34,6 %) fallen *triant*, no llegint; **9/15 camps del nivell A viuen en 5 plantilles de G3 presents a 8/8**
+(pressupost, fitxa de camp, comanda lab, PLAN_COST, Excel DPSH) i cap playbook les menciona. Mapa de veritat:
+`scripts/tier_a_truth_map.py` → `docs/audit/tier-a-truth-map-2026-08-23.json`.
+**Decisions Josep (nit):** alternativa D (lector per document existent + playbook per camp des del mapa de veritat +
+verificació creuada + candidats amb popup); **branca nova** des de `review/prod-audit-2026-08`; 15 camps nivell A confirmats;
+25 $ lectura inicial OK; l'Eva dibuixa els annexos ABANS del wizard (font vàlida per cota/nivells). Mètrica: erroni-amb-confiança
+= 0 a 8/8, OK ≥ 80 %, candidats ≤ 20 %, hold-out 5+3. F1-F4e i O1-O11 queden com a inventari.
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
@@ -22,6 +34,16 @@ Suite: **32 failed / 1079 passed** (baseline 32 / 1023, fallades idèntiques; 56
 situació en una sessió nova (punt de partida: `docs/audit/VERIFICACIO-FIXES-2026-08.md` §3 + `docs/audit/BENCH-DEEP-FOLDER-MODELS-2026-08-22.md`
 + DECISION-LOG 2026-08-22 «Limitacions conegudes»). Altres pendents: sessió de latència estructural (paral·lelitzar visió/probes, prefills
 bàsics abans de la visió — el que queda són 145 + 52 s de models en sèrie); GPT-5.6 Luna vs gpt-4.1-mini.
+
+## Diagnòstic detallat 2026-08-23 (sense fixes) — `docs/audit/DIAGNOSTIC-PROD-2026-08-23.md`
+
+8 obertures fredes reals (Tulipa + 7 ref.): **prefills mitjana 300 s (184-619)**; 47 % visió per tipus en sèrie, 26 % probes Groq;
+8 × HTTP 503 Groq "over capacity" (30 s cadascun); `sondeig` truncat a 4.096 tok (Anciles). Estimació amb visió/probes/deep_folder
+en paral·lel: **~160 s**. Qualitat vs informes d'Eva: **59 % MATCH+CLOSE de 341 variables**; 41 MISMATCH són criteri de càlcul (conegut),
+77 d'extracció amb 5 causes repetides (`client_name`="G3" 3/8, parcel·la cadastral errònia 4/8, `field_date` 7/8, `vision_probe`
+imposa adreça/municipi/idioma, fallback concept_map a fitxers equivocats 6/8). A/B Sonnet 5 vs 4.6 a `dpsh`: empat de qualitat,
+S5 35-45 % més ràpid → no canviar ara. Opcions O1-O11 amb cost/benefici al §5; decisions al §6. Eines noves només lectura:
+`scripts/prefills_timeline.py`, `scripts/compare_prefills_vs_eva.py`, `scripts/ab_vision_dpsh_sondeig.py`.
 
 ## Estat actual
 
