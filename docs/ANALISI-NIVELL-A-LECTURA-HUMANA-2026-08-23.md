@@ -336,3 +336,47 @@ d'ampolla mai ha estat llegir; ha estat saber on mirar i admetre quan no se sap.
 **Facturació:** `claude -p` funciona amb `ANTHROPIC_API_KEY` (1-3 €/projecte) o subscripció (cost pla). Amb ~10 projectes/mes l'API és més barata; decisió del Josep en el moment del desplegament, no ara.
 
 **Decisió del Josep (2026-08-23, nit): via A.** La lectura d'or la fa Claude Code en sessió com a dry-run del skill. Pla d'execució: `docs/_FOR-NEW-YOU-20260823-1745.md`. L'alternativa D (Fase 4 per API) queda com a fallback, codi intacte.
+
+## 11. Resultats de la lectura d'or (2026-08-23, nit — via A executada)
+
+Lectura dels 8 projectes amb el procediment del skill `g3dt-llegir-projecte` (v0.1→v0.4 durant la lectura), per Claude Code en
+sessió + subagents (0 $ d'API). Evidència: `docs/golden-read/{expedient}/` (163 JSON per font + 8 `_decisions.json` amb
+comparació) i `docs/golden-read/_LESSONS.md`. Tulipa = casa 1 (l'expedient té 2 informes).
+
+| Camp | BELL-LL | TULIPA | RUBI | CASTELL | LINYOLA | ALCOLET | VILANOV | ANCILES |
+|---|---|---|---|---|---|---|---|---|
+| `expedient` | OK | OK | OK | OK | OK | OK | OK | OK |
+| `client_name` | OK | OK | OK | OK | OK | OK | OK | OK |
+| `street_address` | CAND | OK | OK | OK | OK | OK | OK | OK |
+| `municipality` | OK | OK* | OK | OK | OK | OK | OK | OK |
+| `architect_name` | OK | n/a | NT* | n/a | **ERR** | CAND | NT* | CAND |
+| `building_type` | OK | OK | OK | OK | OK | OK | OK | OK |
+| `num_floors` | OK | CAND | CAND | OK | OK | NT* | OK | n/a |
+| `superficie_parcela` | CAND | NT* | NT | NT | OK | NT | NT | n/a |
+| `field_date` | OK | n/a | OK | OK | OK | OK | OK | OK |
+| `cota_referencia` | OK | CAND | CAND | CAND | OK | OK | OK | CAND |
+| `num_soil_levels` | OK | OK | CAND | OK | OK | OK | OK | CAND |
+| `num_dpsh_tests` | OK | OK | OK | OK | OK | OK | OK | n/a |
+| `utm` + `ref_catastral` | OK | NT | NT | OK | OK | n/a | n/a | n/a |
+| `lab` | OK | n/a | OK | **ERR** | OK | CAND | CAND | OK |
+| `cte` | OK | n/a | OK | CAND− | CAND | OK | OK | CAND |
+
+**Totals (120 cel·les): 80 OK · 17 CAND · 10 NT · 11 n/a · 2 ERR.** Sobre les avaluables (99 = OK+CAND+ERR): **OK 80,8 %**
+(objectiu ≥ 80 % ✓), **CAND 17,2 %** (≤ 20 % ✓), **ERR 2** (objectiu 0 ✗). NT no penalitza (§7.1): els 10 NT són valors que
+NO són a cap document de la carpeta (superfícies del Cadastre/visor, UTM del visor, arquitecte inexistent o extern) — el
+comportament correcte és el que fa el skill: "buscat a X, Y, Z; no hi és; proposo Cadastre/preguntar".
+
+- **ERR 1 (Castellar, `lab_sample_id`)**: "MA-1" (etiqueta del GTL) marcat segur; l'Eva escriu "SPT-1" (etiqueta del seu annex).
+  → regla v0.4: l'etiqueta de mostra de l'annex de l'Eva mana sobre el laboratori; si discrepen, candidats.
+- **ERR 2 (Linyola, `architect_name`)**: persona del caixetí (Josep Bunyesc Palacín) marcada segura; l'Eva escriu el despatx.
+  A Bell-lloc va fer el contrari. → regla v0.4: persona vs despatx = candidats, mai segur.
+- **CAND− (Castellar, `cte`)**: C0 derivat amb superfície per casa; l'Eva usa el TOTAL (3×120=360 → C-1). Corregit a la regla.
+- n/a = referència no comparable (Tulipa: no hi ha informe de l'Eva, la 'referència' era un informe generat nostre — descobert
+  en aquesta lectura; Anciles: eva_reference_values desalineat; Vilanova: `lab_depth` pendent del .docx real, marcat ⚠).
+
+**El que la lectura d'or ha establert** (detall a `_LESSONS.md` i al skill): les regles semàntiques de §3 del handoff
+confirmades i 20+ de noves (albarà TPS = origen del "client=G3"; formulari p.5 = autoritat del client fins per sobre del
+'Promotor' vigent; annex DPSH primer per a cota, P-1 per a UTM, tall per a nivells, GTL per a profunditat de mostra;
+esborranys a `ANNEXES/Altres/`; pressupostos amb versions; expedients multi-informe; derivacions CTE). Amb les regles v0.4,
+els 2 ERR i el CAND− esdevenen candidats correctes: **la reexecució esperada és ERR = 0**, pendent de validar amb el hold-out
+(§7.2) quan el skill s'executi headless.

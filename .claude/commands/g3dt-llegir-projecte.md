@@ -6,7 +6,7 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 0.3 (2026-08-23) — derivat de la lectura d'or de `4001612 BELL-LLOC`, `3001706 C.TULIPA CERDANYOLA` i `3001631 RUBI` (`docs/golden-read/`). S'itera a cada projecte.
+Versió 0.4 (2026-08-23) — derivat de la lectura d'or dels 8 projectes (`docs/golden-read/`; resultats: ANALISI §11 — 80 OK / 17 CAND / 10 NT / 2 ERR, tots dos convertits en regla aquí).
 v0.2: Pas 0 (context del document abans de llegir-lo; reflexió del Josep) + bloc `context` al JSON + lliçons de Tulipa.
 
 ## Arguments
@@ -109,6 +109,12 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
   (sol·licitant), al GTL (`DADES DEL CLIENT` del laboratori) i als albarans TPS (`DADES CLIENT: Empresa G3 / Responsable Eva`). Descarta'l.
 - **`architect_name`**: caixetí `Arquitecte` > signatura digital del pressupost acceptat (`/Sig /Name`, p. ex. `JORDI BOSCH NOVELL / num:37655-8`)
   > nom del despatx al pressupost/correu. Persona, no despatx, si és possible.
+- **`lab_sample_id`**: l'etiqueta de la mostra a l'informe és la de l'ANNEX de l'Eva (Castellar: annex "SPT-1", GTL "MA1" → informe SPT-1;
+  Anciles: comanda/annex "MA" → informe MA-1). Annex de l'Eva > GTL > comanda per a l'etiqueta; GTL > Excel > full de camp per a la PROFUNDITAT.
+  Si annex i GTL discrepen d'etiqueta → candidats (annex primer), mai segur.
+- **`architect_name` amb persona I despatx**: l'Eva escriu de vegades la persona (Bell-lloc: Jordi Bosch Novell) i de vegades el despatx
+  (Linyola: BUNYESC ARQUITECTURA EFICIENT) → quan existeixen totes dues formes, candidats [persona | despatx], MAI segur.
+  Pot també no ser enlloc de la carpeta (Vilanova: l'informe diu un nom que cap document conté) → candidats + "no consta a la carpeta".
 - **`architect_name` absent** (casa modular, particular que encarrega directament): l'Eva escriu el CLIENT al camp arquitecte de
   l'informe (Rubí, Alcoletge, Vilanova, Anciles). → `candidats` amb el client com a candidat etiquetat "(pràctica Eva: client)",
   mai `segur`. Un fabricant de cases modulars (segell al catàleg) NO és l'arquitecte.
@@ -160,6 +166,15 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
   → candidat feble (≤ 0,3), mai segur.
 - **Annexos d'Eva amb errors de còpia**: caixetí sense actualitzar (plànol de situació casa 2 dient "Tulipà nº3"), typo d'expedient
   (`4001621`), cota diferent entre annex DPSH (198) i annex sondeig (199,0) → mai "segur" amb una sola còpia; creuar.
+- **`client_name` amb promotors que canvien**: el formulari p.5 ('que han de constar en la factura i en l'informe') mana fins i tot
+  sobre el 'Promotor' del projecte VIGENT (Anciles: p.5 = Alba Barrau; IV_PLANOS = PICO DE OLA S.L.) i sobre versions velles del
+  pressupost (Castellar: GRUP ALMA → WOOD COMFORT al MODF). La fitxa de camp pot conservar el client vell: no és autoritat.
+  Amb 2 promotors al projecte (Linyola), l'informe va a nom de qui signa l'acceptació.
+- **`num_soil_levels` quan tall i log discrepen**: el TALL (síntesi de l'Eva) mana (Anciles: tall 2, log 1 → informe 2) → candidat 1 = tall.
+- **`cota_referencia`, ordre de candidats**: annex DPSH primer (4/4: Bell-lloc, Castellar −4 relatiu, Vilanova, Anciles P-1);
+  l'origen pot ser ICGC, ICGC −0,15 carrer, o el topogràfic del CLIENT ('según el topográfico proporcionado'). UTM de l'informe = P-1 de COORDENADES.txt.
+- **Derivacions quan el pressupost no porta la línia CTE** (Castellar, Linyola, Anciles): C segons superfície construïda TOTAL de
+  l'encàrrec (< 300 m² i < 4 plantes → C0; > 300 → C1) + T-1 com a candidat per defecte (valor de tots els pressupostos que la porten). Sempre candidats, mai segur.
 - **Esborranys de l'Eva a la carpeta**: `ANNEXES/Altres/*.png` (figures del cos de l'informe) poden ser versions ANTERIORS dels
   annexos (Rubí: F5 TALL.png amb 2 nivells i cotes 211,9 vs annex PDF amb 1 nivell i 212,5). Prioritat: `PDF/ANNEXES/*.pdf` >
   `tall.pdf`/`pl situ.pdf` (Print To PDF) > `ANNEXES/Altres/*.png`. Si discrepen, `candidats` amb el PDF primer.
