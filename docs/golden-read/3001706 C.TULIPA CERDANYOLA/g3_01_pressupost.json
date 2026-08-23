@@ -1,0 +1,112 @@
+{
+ "source_path": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost 26·0254 de G3 (26/03/2026, 7 p.) per a l'estudi geotècnic de C/ Tulipa 3: 2 DPSH + 1 sondeig; 980 €. Versió inicial (una casa).",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "2026-03-26",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3 (ERP m4PRO)",
+  "for_whom": "el sol·licitant del geotècnic (VUA, arquitecte)",
+  "why": "oferir i acotar la campanya (DPSH, sondeig, lab) i el preu",
+  "expected_fields": [
+   "client_name (com a sol·licitant)",
+   "street_address",
+   "municipality",
+   "cte",
+   "num_dpsh_tests (previst)"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota",
+   "nivells",
+   "lab_sample"
+  ],
+  "relation_to_others": "substituït per la versió -2CASES (modDate 29/04); el mateix document signat és a ACCEPTACIO/",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "cte_edificacio",
+   "cte_sol"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "VUA, VISUALIZING UNBUILT ARCHITECTURE",
+   "location": "p.1 bloc CLIENT",
+   "quote": "CLIENT: / VUA, VISUALIZING UNBUILT ARCHITECTURE / Tel:",
+   "confidence": 0.4,
+   "note": "sol·licitant = despatx d'arquitectura (VUA = Aleix Subirà Felip). Candidat, no segur."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "VUA, Visualizing Unbuilt Architecture (despatx)",
+   "location": "p.1 bloc CLIENT",
+   "quote": "VUA, VISUALIZING UNBUILT ARCHITECTURE",
+   "confidence": 0.6,
+   "note": "despatx; la persona surt al correu"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/TULIPA 3",
+   "location": "p.1 bloc OBRA línia 2",
+   "quote": "ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES",
+   "confidence": 0.95,
+   "note": "només la casa 1; la casa 2 (Tosca 16) no hi és"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CERDANYOLA DEL VALLES",
+   "location": "p.1 bloc OBRA línia 3",
+   "quote": "CERDANYOLA DEL VALLES",
+   "confidence": 0.95,
+   "note": "sense accent"
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C1",
+   "location": "p.2",
+   "quote": "Tipus d’edifici: C1",
+   "confidence": 1.0,
+   "note": ""
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": "T1",
+   "location": "p.2",
+   "quote": "Tipus de Terreny : T1",
+   "confidence": 1.0,
+   "note": ""
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "p.2 campanya",
+   "quote": "2 assaigs de penetració dinàmica DPSH",
+   "confidence": 0.6,
+   "note": "SUPERAT per la versió 2CASES (4). Previst, no executat."
+  },
+  {
+   "concept_id": "expedient_comercial",
+   "value": "26·0254",
+   "location": "p.1 peu",
+   "quote": "26·0254 P#",
+   "confidence": 1.0,
+   "note": "codi comercial, no expedient"
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*"
+ ],
+ "reading_notes": "Mateixa plantilla que Bell-lloc; identificació per metadata. REGLA NOVA: si hi ha dos pressupostos amb el mateix codi (26·0254) i un porta sufix ('-2CASES') amb modDate posterior, el posterior mana."
+}

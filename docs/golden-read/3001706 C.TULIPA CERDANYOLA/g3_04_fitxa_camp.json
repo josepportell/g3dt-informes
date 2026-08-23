@@ -1,0 +1,101 @@
+{
+ "source_path": "26.0254/DADES PER ANAR A CAMP_v1.xlsx",
+ "document_type": "fitxa_camp_g3",
+ "what_it_is": "Fitxa interna G3 de preparació de camp: client, adreça, contacte, previsió 4P+1S, empresa TPS; data de camp BUIDA; 1 imatge incrustada (llegida per subagent: g3_fitxa_imatge.json).",
+ "issuer": "G3 (Loli/Eva)",
+ "date": "sense data (F38 buit)",
+ "pages_or_sheets": "2 fulls",
+ "context": {
+  "who_made_it": "G3 (Loli/Eva)",
+  "for_whom": "l'equip de camp de G3",
+  "why": "preparar la sortida: qui obre, on, quan, quina màquina",
+  "expected_fields": [
+   "contacte",
+   "adreça obra",
+   "previsió d'assaigs",
+   "data de camp",
+   "empresa sondeigs"
+  ],
+  "not_expected": [
+   "plantes",
+   "superfície",
+   "promotor"
+  ],
+  "relation_to_others": "el 'CLIENT' és qui ha quedat amb G3 (contacte), que aquí coincideix amb el client de facturació",
+  "authority_for": [
+   "field_date (si F38 ple)",
+   "lab_field_company"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "ALEIX SUBIRA FELIP",
+   "location": "fitxa!C6 'CLIENT '",
+   "quote": "ALEIX SUBIRA FELIP",
+   "confidence": 0.6,
+   "note": "aquí el 'CLIENT' de la fitxa coincideix amb el client de facturació (és persona, no despatx) — però també és l'arquitecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/TULIPA 3",
+   "location": "fitxa!C7 'ADREÇA OBRA'",
+   "quote": "C/TULIPA 3 CERDANYOLA DEL VALLES",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CERDANYOLA DEL VALLES",
+   "location": "fitxa!C7",
+   "quote": "C/TULIPA 3 CERDANYOLA DEL VALLES",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "ALEIX SUBIRA (contacte, tel. 626056350)",
+   "location": "fitxa!C8/F8",
+   "quote": "ALEIX SUBIRA | TEL.626056350",
+   "confidence": 0.5,
+   "note": "contacte = el mateix"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4 (+1 sondeig)",
+   "location": "fitxa!E13",
+   "quote": "PENETROS I SONDEIG PETIT | 4P+1S",
+   "confidence": 0.85,
+   "note": "previsió; 4 = 2 per casa"
+  },
+  {
+   "concept_id": "lab_field_company",
+   "value": "TPS ERUGA",
+   "location": "fitxa!C38",
+   "quote": "TPS ERUGA",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "concept_id": "utm_hint",
+   "value": "https://maps.app.goo.gl/djL1w4knGm7azamc6",
+   "location": "fitxa!C15 'ACCES A LA ZONA D'ESTUDI'",
+   "quote": "https://maps.app.goo.gl/djL1w4knGm7azamc6",
+   "confidence": 0.2,
+   "note": "enllaç curt, no resoluble offline"
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date (F38 BUIT)",
+  "cota_referencia",
+  "num_soil_levels",
+  "referencia_catastral",
+  "lab_sample_*",
+  "cte_*"
+ ],
+ "reading_notes": "La fitxa NO té data aquest cop: 'dies de camp' buit. No es pot comptar amb F38 sempre. Comentari D41 'ALEIX ESTARA A L'OBRA PER OBRIR'."
+}

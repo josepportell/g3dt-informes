@@ -6,7 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 0.1 (2026-08-23) — derivat de la lectura d'or de `4001612 BELL-LLOC` (`docs/golden-read/`). S'itera a cada projecte.
+Versió 0.2 (2026-08-23) — derivat de la lectura d'or de `4001612 BELL-LLOC` i `3001706 C.TULIPA CERDANYOLA` (`docs/golden-read/`). S'itera a cada projecte.
+v0.2: Pas 0 (context del document abans de llegir-lo; reflexió del Josep) + bloc `context` al JSON + lliçons de Tulipa.
 
 ## Arguments
 
@@ -31,6 +32,39 @@ Mode headless: no facis cap pregunta; si dubtes, baixa d'estat (`segur` → `can
 `lab` (`lab_testing_company`, `lab_sample_id`, `lab_depth`, `lab_location`), `cte` (`cte_edificacio`, `cte_sol`).
 
 Fora d'abast (es fa després): paràmetres geotècnics, Qa, assentaments, narrativa.
+
+## Pas 0 — Abans de llegir cap dada: posa el document en context
+
+Un humà no extreu dades d'un document fins que sap **què és, qui l'ha fet, per a qui, per resoldre què, i quines dades hi
+espera trobar**. Fes-ho explícit per a cada fitxer, ABANS de buscar-hi res, i escriu-ho al bloc `context` del JSON:
+
+- `who_made_it` / `for_whom` / `why`: p. ex. *"TPS (subcontractista de sondeigs) fa aquest albarà per a G3, que li ha encarregat
+  els penetròmetres d'aquest projecte"*. Conseqüència: **les caselles 'client' d'aquest document es refereixen a la relació
+  TPS→G3, no al projecte**. La casella `CLIENT: G3` és correcta dins del document i irrellevant per a `client_name` de l'informe.
+  Mateix raonament: GTL (`DADES DEL CLIENT` = G3, client del laboratori), comanda (`SOL·LICITANT` = G3), pressupost G3
+  (`CLIENT` = qui demana el geotècnic, sovint l'arquitecte), plànol de l'arquitecte (`Promotor` = qui paga l'obra = el client real).
+- `expected_fields` / `not_expected`: un plànol de situació porta carrers, parcel·la, cotes, punts d'assaig — no porta la data de
+  camp; una fitxa de camp porta contacte, previsió i data — no porta plantes; un GTL porta mostra, cota i resultats — no porta
+  el promotor. Un valor trobat on **no s'espera** (municipi en una foto, client en un albarà) té confiança baixa per construcció.
+- `relation_to_others`: un full de camp manuscrit de TPS té versió digital a l'Excel DPSH **revisada per l'Eva** → l'Excel mana
+  per als valors, el manuscrit es llegeix per si porta alguna cosa que l'Excel no té (punt 0, N.F., croquis, data). Un annex
+  FreeHand i el seu `Print To PDF` són el mateix dibuix. Un pressupost `-2CASES` amb `modDate` posterior substitueix el primer.
+  Un `RE:`/`RV:` només aporta el text nou i els adjunts nous.
+- `authority_for`: per a quins camps del nivell A aquest document és autoritat (p. ex. comanda → expedient, municipi, mostra;
+  fitxa → data de camp, contacte; annex sondeig → cota i nivells; caixetí del plànol → promotor, arquitecte, plantes, superfície).
+
+Mapa "casella del document → rol al projecte" (els casos que han fet fallar les tres arquitectures anteriors):
+
+| Document | Casella | Qui hi surt de veritat | Rol al projecte |
+|---|---|---|---|
+| Albarà / full de camp TPS | `DADES CLIENT: Empresa / Responsable` | G3 / Eva | cap (client del subcontractista) |
+| GTL laboratori | `DADES DEL CLIENT` / `SOL.LICITANT` | G3 (B25364589) | cap (client del laboratori); l'emissor (banda TPS B64803075) és `lab_testing_company` |
+| Comanda laboratori | `DADES DEL SOL.LICITANT` | G3 | cap; el bloc `DADES DE L'OBRA` sí que és del projecte |
+| Pressupost G3 / fitxa / correu d'encàrrec / annex sondeig | `CLIENT:` | qui demana el geotècnic (sovint l'arquitecte) | `architect_name` si conté ARQUITECT; `client_name` només si no hi ha promotor enlloc (candidat) |
+| Pressupost signat p.5 (`DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME`) | NOM I COGNOMS + NIF | el client de l'informe | `client_name` (autoritat A) |
+| `ACCEPTACIO/DADES CLIENT.txt` | nom + NIF | el client de l'informe | `client_name` (autoritat A); la seva adreça és la del client, no de l'obra |
+| Plànol / projecte de l'arquitecte | `Promotor` / `Propietat` ; `Arquitecte` | promotor ; arquitecte | `client_name` ; `architect_name` (autoritat A) |
+| Etiqueta manuscrita de caixa de mostres | `Client:` | G3-Eva | cap |
 
 ## Pas 1 — Inventari
 
@@ -107,11 +141,32 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
 - **`cte`**: pressupost p.2 `Tipus d’edifici: C1` / `Tipus de Terreny : T1`; el correu d'encàrrec sol dir "És un C1". Definició de l'Eva:
   C0 < 300 m² i < 4 plantes; C1 > 300 m² i < 4 plantes; C2 ≥ 4 plantes.
 
+### Situacions estructurals (apreses a Tulipa)
+
+- **Un expedient, N informes**: subcarpetes `CASA 1…`, `CASA 2…` amb Excel DPSH i annexos propis; pressupost `-2CASES` amb nota "DOS
+  INFORMES … UN A NOM DE CADA CLIENT"; comanda "CONSTR DOS NOUS HAB". → escriu un bloc de decisions PER CASA (`casa_1_…`, `casa_2_…`),
+  `num_dpsh_tests` per casa, `street_address`/`client_name`/`architect_name` per casa (poden ser diferents: Tulipa 3 / VUA vs Tosca 16 /
+  Factoria). Un sondeig compartit → `num_soil_levels` de la casa sense sondeig = `candidats` + "confirmar".
+- **Dos pressupostos, mateix codi**: el de `modDate` posterior mana (quantitats). PLAN_COST no s'actualitza: és l'última font per a quantitats.
+- **Acceptació escanejada** (Adobe Scan): el formulari p.5 `DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME` pot estar omplert a mà
+  → clip de la zona (30-62 % de l'alçada) a ≥ 170 dpi i visió. L'OCR incrustat no serveix per al manuscrit. És autoritat A per a `client_name`.
+- **Fitxa sense data** (F38 buit): `field_date` des d'annex sondeig / comanda DATA DE PRESA / albarà TPS / noms de fotos / correu "demà".
+- **Plànols en DWG** (dins `.zip`): no llegibles sense conversor → `superficie_parcela`, `num_floors` depenen del correu de l'arquitecte
+  (superfícies per planta → `num_floors` segur amb nota) i queden `no_trobat` amb proposta "convertir DWG (LibreDWG `dwg2dxf`)".
+- **Metadades PDF com a indici**: el `title` d'un plànol pot portar la ruta del despatx (`…\408 REPARCEL·LACIO JORDI GENE TOSCA 16\…`)
+  → candidat feble (≤ 0,3), mai segur.
+- **Annexos d'Eva amb errors de còpia**: caixetí sense actualitzar (plànol de situació casa 2 dient "Tulipà nº3"), typo d'expedient
+  (`4001621`), cota diferent entre annex DPSH (198) i annex sondeig (199,0) → mai "segur" amb una sola còpia; creuar.
+- **Sense GTL** (arriba setmanes després): la comanda és l'única font de lab; el NOM del laboratori no hi consta → `lab_testing_company`
+  és `candidats` (coneixement previ: G3 treballa amb TPS), no lectura.
+
 ## Pas 4 — Sortida: un JSON per document
 
 ```json
 {"source_path": "relatiu a la carpeta", "document_type": "pressupost_g3|fitxa_camp_g3|comanda_lab_g3|plan_cost_g3|dpsh_excel|annex_sondeig|annex_tall|annex_planol_situacio|annex_dpsh|annex_fotografies|informe_laboratori|consulta_cadastre|planol|projecte_arquitecte|correu|foto|full_camp_manuscrit|coordenades_gps|altre",
  "what_it_is": "1 frase", "issuer": "qui l'ha fet", "date": "...", "pages_or_sheets": "...",
+ "context": {"who_made_it": "...", "for_whom": "...", "why": "...", "expected_fields": ["..."], "not_expected": ["..."],
+             "relation_to_others": "duplicat de / versió revisada de / substitueix / complementa …", "authority_for": ["concept_id", "..."]},
  "tier_a": [{"concept_id": "...", "value": "...", "location": "p.1 bloc OBRA / Hoja1!N19 / caixetí / nom del fitxer", "quote": "text literal", "confidence": 0.0, "note": "ambigüitat, conflicte, duplicat, grafia"}],
  "not_present": ["camps del nivell A buscats i absents"],
  "reading_notes": "què ha calgut fer (ordenar blocs, renderitzar, rotar, clip, llegir /Sig)"}

@@ -51,3 +51,37 @@ Format: una lliçó per línia o bloc, amb projecte i font. Serveix per escriure
 - N/A: `referencia_catastral` no apareix a l'informe.
 - Eva no ha escrit els dos dies de camp tot i la seva regla: l'informe diu «1 d'octubre de 2025» (dia dels DPSH).
 - **El truth-map té falsos positius per substring**: "995" casa amb el telèfon 620199571 a 4 documents. El §3.2 de l'anàlisi («sup. parcel·la: A.01 + fitxa + PLAN_COST + pressupost») és fals per a Bell-lloc: 995 només és a la imatge de la taula de planejament d'A.01. Corregir `scripts/tier_a_truth_map.py` amb `\b` abans de reutilitzar-lo.
+
+## Reflexió del Josep (2026-08-23, durant Tulipa) → Pas 0 del skill
+- Un humà posa el document en context abans de llegir-hi res: qui el fa, per a qui, per a què, quines dades hi espera i quines no,
+  com es relaciona amb els altres (manuscrit TPS vs Excel revisat per l'Eva). Per això no confon `client = G3`: "G3 ha demanat
+  *aquest document* a TPS, per al projecte P del client C2". El skill v0.2 ho fa explícit (bloc `context` al JSON + mapa casella→rol).
+- Això és feina del lector que raona (Claude Code amb el skill), no d'un extractor Python: Python treu cel·les, el context el posa el lector.
+- Els 26 JSON de Bell-lloc són anteriors al bloc `context` (hi és implícit a `what_it_is`/`issuer`); els de Tulipa ja el porten.
+
+## 3001706 C.TULIPA CERDANYOLA (2026-08-23) — lliçons parcials (abans de decisions)
+- **Multi-informe**: subcarpetes `CASA 1- TULIPA/` i `CASA 2_ CARRER TOSCA/` amb Excel DPSH i annexos propis; pressupost `-2CASES`
+  amb nota «DOS INFORMES GEOTÈCNICS, UN A NOM DE CADA CLIENT»; comanda «CONSTR DOS NOUS HAB AÏLLATS». Un expedient (3001706),
+  un sondeig (S-1), 4 DPSH (P-1.1, P-1.2 | P-2.1, P-2.2). El nivell A s'ha de calcular PER CASA; `num_dpsh_tests` = 2 per informe.
+- **Client = arquitecte** (casa 1): Aleix Subirà Felip és alhora VUA (arquitecte col·legiat 74829-3) i qui consta al formulari p.5
+  del pressupost acceptat (NIF 47235352-E). La regla "client ≠ sol·licitant" no és absoluta: la font d'autoritat és el formulari p.5
+  / DADES CLIENT / Promotor, sigui qui sigui.
+- **Formulari p.5 omplert a mà** en un escaneig Adobe Scan: l'OCR incrustat el destrossa; cal clip + visió. És la "5ena pàgina" que l'Eva cita.
+- **Dos pressupostos, mateix codi** (26·0254): el de `modDate` posterior mana per a quantitats (2 → 4 DPSH). PLAN_COST no s'actualitza.
+- **Fitxa sense data** (F38 buit): la data de camp surt de l'annex sondeig (07/05/2026), la comanda (DATA DE PRESA 07/05), el correu de
+  Tosca ("demà", 06/05) i els noms de fotos WhatsApp 2026-05-07. Sense fitxa, 4 fonts igualment.
+- **Capçalera de l'annex DPSH no estable**: aquí sense DATA ni NÚMERO D'INFORME; amb cota per punt (casa 2: 201,25 / 202,85).
+- **Conflicte de cota entre annexos d'Eva** (casa 1): annex DPSH 198 msnm vs annex sondeig +199,0 → candidats, mai segur.
+- **DWG dins zip** (3 fitxers, 23 MB el de planta): sense `dwg2dxf`/`ezdxf` a l'entorn → no llegible; superfície i plantes de la
+  casa 1 depenen del correu (PSOT+PB+P1, 308 m² construïts) i del que digui la referència.
+- **Sense GTL** (sol·licitud de lab 01/06, carpeta copiada abans): la comanda és l'única font de lab (com l'Eva diu que passa normalment).
+- **`_user_data_prev.json`, `.g3dt_network_path`, `DTE.txt`**: fitxers nostres/administratius; excloure els dos primers, DTE sense nivell A.
+
+### Resultat Tulipa (casa 1) vs referència: 7 OK / 2 CAND / 3 NT / 4 N/A / 0 ERR (1 ERR condicional: 564 m² dins d'un DWG)
+- **No hi ha informe de l'Eva a Tulipa**: `3001706_TULIPA_INFORME_FIX.docx` és generat (pipeline) i `eva_reference_values.json` n'està extret.
+  La referència útil és `_user_data_prev.json` (`_sources == 'user'`): client, adreça, S+Pb+Pp, 564 m², 3 nivells, UTM 423000/4594347;
+  `cota_referencia` l'Eva la va deixar BUIDA; municipi i despatx són prefills erronis acceptats. El truth-map del 23-08 per a Tulipa
+  s'ha de rellegir amb això al cap.
+- CAND: `num_floors` (correu: PSOT+PB+P1 → regla nova: segur amb nota) i `cota` (198 vs 199,0 entre annexos d'Eva; ella no va triar).
+- NT: `superficie_parcela` (564 només pot ser al DWG → conversor), `utm` (l'Eva ho treu del visor ICGC, cap document), `ref. cadastral`.
+- L'informe generat deia **1 nivell** i "Depressió de l'Ebre" a Cerdanyola: errors de producció visibles per a l'Eva (nivell A/B), no d'aquesta lectura.

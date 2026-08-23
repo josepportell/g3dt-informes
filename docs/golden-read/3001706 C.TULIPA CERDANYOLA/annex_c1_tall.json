@@ -1,0 +1,93 @@
+{
+ "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_tall de correlació.pdf",
+ "date": "Data: Maig 2026 (caixetí); PDF creat 2026-06-04 15:21",
+ "document_type": "annex_tall",
+ "what_it_is": "Annex de l'Eva 'Tall de correlació' A–A' de les dues cases (CASA 1 i CASA 2) amb planta de situació dels assaigs (P-1.1, P-1.2, S-1, P-2.1, P-2.2), llegenda de 3 nivells i caixetí G3.",
+ "issuer": "G3 — FreeHand 3001706_tall de correlació.FH11 → Acrobat Distiller 15.0 (PScript5.dll)",
+ "pages_or_sheets": "1 pàgina A4 apaïsat (rot=270 al PDF)",
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001706",
+   "location": "caixetí, casella 'Exp:'",
+   "quote": "Exp: 3001706",
+   "confidence": 0.95,
+   "note": "Coincideix amb el nom de la carpeta '3001706 C.TULIPA CERDANYOLA' i amb el prefix dels fitxers."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tulipà nº3 (CASA 1) i Carrer Tosca nº16 (CASA 2)",
+   "location": "caixetí, 'TÍTOL DEL PROJECTE'",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipà nº3 i un altre al Carrer Tosca nº16 de Cerdanyola del Vallès",
+   "confidence": 0.9,
+   "note": "Dues adreces verdaderes (dues cases), no competeixen. Grafia 'Tulipà' amb accent aquí; 'Tulipa' sense accent al sondeig i al nom de la carpeta ('C.TULIPA'); planta de situació: 'Carrer de la Tulipa'. Frase = redacció de l'informe → candidat 1."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "caixetí, 'TÍTOL DEL PROJECTE'",
+   "quote": "... de Cerdanyola del Vallès",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar (dos: un a cada carrer)",
+   "location": "caixetí, 'TÍTOL DEL PROJECTE'",
+   "quote": "per a la construcció d'un habitatge unifamiliar al Carrer Tulipà nº3 i un altre al Carrer Tosca nº16",
+   "confidence": 0.85,
+   "note": "Redacció de l'informe (CLOSE). Dues cases en dues parcel·les (CASA 1 / CASA 2 marcades a la planta i al perfil)."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Maig 2026",
+   "location": "caixetí, casella 'Data:'",
+   "quote": "Data: Maig 2026",
+   "confidence": 0.3,
+   "note": "Data del document (mes de l'informe), no data de camp. Només corrobora el mes; el dia és al sondeig (07/05/2026)."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "3",
+   "location": "LLEGENDA",
+   "quote": "Nivell 1: Sorres llimoses disgregades amb graves. | Nivell 2: Llims argilosos cohesius. | Nivell 3: Substrat alterat.",
+   "confidence": 0.95,
+   "note": "Coincideix amb els 3 'NIVELL' de l'annex de sondeig. Al perfil hi ha també 'Base Pb' (línia discontínua a ~201.2 msnm sota CASA 2) i 'Fonamentació' (línia vermella discontínua) — no són nivells."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "planta de situació + perfil A–A'",
+   "quote": "P-1.1, P-1.2, P-2.1, P-2.2 (símbol 'Assaig de penetració dinàmica DPSH'); S-1 (símbol 'Sondeig a rotació amb bateria continua')",
+   "confidence": 0.85,
+   "note": "2 DPSH per casa: P-1.x a CASA 1 (Tulipa), P-2.x a CASA 2 (Tosca). 1 sondeig S-1 dins CASA 1. Comptat visualment; l'Excel DPSH mana si difereix."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "S-1 ≈ 199 msnm; P-1.1 ≈ 198; P-1.2 ≈ 198; P-2.1 ≈ 201.3; P-2.2 ≈ 203",
+   "location": "perfil A–A', eix '(msnm)' 192–203",
+   "quote": "(msnm) 203 … 192 | Base Pb",
+   "confidence": 0.5,
+   "note": "Cotes llegides sobre l'eix gràfic (aproximades ±0.3 m). Cotes topogràfiques a la planta de situació (text petit ICGC): 195,90 / 196,19 / 197,95 / 200,59 / 202,72 / 202,89 / 203,59 / 204,19 / 201,23 / 196,74 / 196,27 / 195,22 / 200,78 / 203,83 (lectura a 220 dpi, confiança baixa). CASA 2 és uns 2–4 m més alta que CASA 1."
+  },
+  {
+   "concept_id": "superficie_parcela",
+   "value": null,
+   "location": "planta de situació (escala gràfica '10 m')",
+   "quote": "",
+   "confidence": 0.0,
+   "note": "Dues parcel·les (polígons grocs) dibuixades, cap superfície numèrica."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela (numèrica)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "Text del PDF és brossa (FreeHand/Distiller): llegit visualment des del render a 100 dpi i a 220 dpi (crop de la planta de situació i del caixetí). Perfil: Nb per tram — P-1.1: 12, 22, 39, R; P-1.2: 8, 18, R? ; S-1: N=18, N=64, Nb=R (columna 'S-1' vermella); P-2.1: 9, 21, R; P-2.2: 14, 24, 35, R. Llegenda literal: 'Assaig de penetració dinàmica DPSH' / 'Sondeig a rotació amb bateria continua' / 'X__X' Tall de correlació' / 'Fonamentació'. Caixetí literal: 'TÍTOL DEL PROJECTE | Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipà nº3 i un altre al Carrer Tosca nº16 de Cerdanyola del Vallès | Data: Maig 2026 | Exp: 3001706 | Tall de correlació | Pàgina 1/1'. Planta: 'Carrer de la Tulipa' al NW, rosa dels vents, escala '10 m', etiquetes 'CASA 1' (parcel·la nord, amb P-1.1, P-1.2, S-1) i 'CASA 2' (parcel·la sud, amb P-2.1, P-2.2), 'porxo' x2 al sud. DUPLICAT: el FH11 d'origen és idèntic (md5 bd8f0d9d…) al de CASA 2; el render PNG és pixel-idèntic al de CASA 2_ CARRER TOSCA/PDF/3001706_tall de correlació.pdf (només difereix el timestamp del Distiller: 15:21 vs 15:26). Compta com UNA sola font."
+}

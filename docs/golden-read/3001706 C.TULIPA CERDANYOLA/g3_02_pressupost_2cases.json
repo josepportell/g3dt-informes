@@ -1,0 +1,98 @@
+{
+ "source_path": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Revisió del pressupost 26·0254 (modDate 29/04/2026) ampliada a dues cases: 4 DPSH + 1 sondeig, 1.230 €, amb nota 'INCLOU EL LLIURAMENT DE DOS INFORMES GEOTÈCNICS, UN A NOM DE CADA CLIENT' i concepte addicional de visita (180 €).",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "2026-03-26 (document) / 2026-04-29 (revisió)",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3",
+  "for_whom": "VUA (i, per la nota, un segon client)",
+  "why": "ampliar la campanya a 2 cases",
+  "expected_fields": [
+   "num_dpsh_tests (previst, total)",
+   "cte",
+   "adreça de la casa 1"
+  ],
+  "not_expected": [
+   "adreça casa 2 (no hi és)",
+   "expedient"
+  ],
+  "relation_to_others": "revisió del g3_01; mana sobre quantitats",
+  "authority_for": [
+   "num_dpsh_tests (previst)",
+   "num_informes"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "VUA, VISUALIZING UNBUILT ARCHITECTURE",
+   "location": "p.1 bloc CLIENT",
+   "quote": "VUA, VISUALIZING UNBUILT ARCHITECTURE",
+   "confidence": 0.4,
+   "note": "sol·licitant; la nota p.4 diu que hi ha DOS clients (un per casa)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/TULIPA 3",
+   "location": "p.1 bloc OBRA",
+   "quote": "C/TULIPA 3 / CERDANYOLA DEL VALLES",
+   "confidence": 0.9,
+   "note": "la segona casa (Tosca 16) NO consta al pressupost"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CERDANYOLA DEL VALLES",
+   "location": "p.1 bloc OBRA",
+   "quote": "CERDANYOLA DEL VALLES",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4 (total de les 2 cases)",
+   "location": "p.2 campanya + p.4 valoració 002.001",
+   "quote": "4 assaigs de penetració dinàmica DPSH | 002.001 4,00",
+   "confidence": 0.9,
+   "note": "4 en total = 2 per casa; 1 sol sondeig per a les dues"
+  },
+  {
+   "concept_id": "num_informes",
+   "value": "2 (un per client/casa)",
+   "location": "p.4 NOTA",
+   "quote": "INCLOU EL LLIURAMENT DE DOS INFORMES GEOTÈCNICS, UN A NOM DE CADA CLIENT",
+   "confidence": 1.0,
+   "note": "no és dels 15 camps però és l'avís estructural: un expedient → dos informes, dos clients"
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C1",
+   "location": "p.2",
+   "quote": "Tipus d’edifici: C1",
+   "confidence": 1.0,
+   "note": ""
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": "T1",
+   "location": "p.2",
+   "quote": "Tipus de Terreny : T1",
+   "confidence": 1.0,
+   "note": ""
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "architect_name (persona)",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*"
+ ],
+ "reading_notes": "Diff amb la v1: p.2 '2'→'4' DPSH, p.4 quantitat 4,00 + NOTA, p.5 import 1.230 i 'CONCEPTE ADDICIONAL: VISITA CERTIFICACIÓ MATERIALS COTA FONAMENTACIÓ … 180€'. Regla: dos pressupostos del mateix codi → llegir tots dos i quedar-se amb el de modDate més recent per a quantitats."
+}

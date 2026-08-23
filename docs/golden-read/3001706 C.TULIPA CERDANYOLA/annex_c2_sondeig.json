@@ -1,0 +1,96 @@
+{
+  "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf",
+  "document_type": "annex_sondeig",
+  "what_it_is": "Annex de l'Eva (plantilla G3 'Sondeig a rotació amb bateria continua') del sondeig S-1: p.1 columna litològica + SPT, p.2 fotografies del sondeig.",
+  "issuer": "G3 (Eva Vázquez Marcet, Geòloga col 4302) — FreeHand 3001706_sondeig.FH11 → Acrobat Distiller 15.0 (PScript5.dll)",
+  "date": "Data d'inici 07/05/2026 / Data de fi 07/05/2026 (camp); PDF creat 2026-06-04 15:24",
+  "pages_or_sheets": "2 pàgines A3 apaïsat (rot=270 al PDF; el render ja surt dret)",
+  "tier_a": [
+    {
+      "concept_id": "NOT_client_name",
+      "value": "SR.ALEIX SUBIÀ FELIP",
+      "location": "p.1 i p.2 capçalera, casella 'Client:'",
+      "quote": "Client: SR.ALEIX SUBIÀ FELIP",
+      "confidence": 0.5,
+      "note": "El 'Client:' de l'annex de sondeig és el sol·licitant segons la regla del Pas 3 (deriva de l'encàrrec, no font independent). Aquí és una persona ('SR.'), no un despatx d'arquitectura, per tant podria ser el promotor: candidat, no segur. Contrast: el títol del PDF 'PLANTA I SECCIO.pdf' parla de '408 REPARCEL·LACIO JORDI GENE TOSCA 16' (vegeu planol_c2_planta_seccio.json)."
+    },
+    {
+      "concept_id": "street_address",
+      "value": "Carrer Tulipa nº3",
+      "location": "p.1 i p.2 capçalera, casella 'Obra:'",
+      "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipa nº3 de Cerdanyola del Vallès",
+      "confidence": 0.6,
+      "note": "CONFLICTE: aquest annex és a la carpeta CASA 2 (C/ Tosca 16) però l'Obra diu 'Carrer Tulipa nº3'. El sondeig S-1 és únic per a les dues cases (el tall de correlació el situa dins CASA 1, vegeu annex_c1_tall.json) i el mateix full S-1 (mateix FH11 'title', mateixes dades) també és a CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf (impressió 'Microsoft: Print To PDF', 16:03; text de la capa 2 lleugerament diferent: 'Argiles coheives' vs aquí 'Llims argilosos coheisus'). No és font independent d'adreça per a CASA 2. Grafia: 'Tulipa' sense accent (al tall: 'Tulipà')."
+    },
+    {
+      "concept_id": "municipality",
+      "value": "Cerdanyola del Vallès",
+      "location": "p.1 capçalera, casella 'Obra:'",
+      "quote": "... al Carrer Tulipa nº3 de Cerdanyola del Vallès",
+      "confidence": 0.9,
+      "note": "Forma oficial llarga. Les caixes de testimonis (p.2, Fotografia 2 i 3) porten retolat a mà 'Obra C/Tulipan - Cerdanyola' (lectura manuscrita, confiança baixa)."
+    },
+    {
+      "concept_id": "building_type",
+      "value": "habitatge unifamiliar",
+      "location": "p.1 capçalera, casella 'Obra:'",
+      "quote": "per a la construcció d'un habitatge unifamiliar",
+      "confidence": 0.8,
+      "note": "Redacció de l'informe (CLOSE). L'annex no diu que siguin dues cases; ho diu el tall."
+    },
+    {
+      "concept_id": "field_date",
+      "value": "07/05/2026",
+      "location": "p.1 capçalera 'Data d'inici:' / 'Data de fi:'; columna 'Data de perforació'",
+      "quote": "Data d'inici: 07/05/2026 | Data de fi: 07/05/2026 | 07/05/26",
+      "confidence": 0.8,
+      "note": "Dia del sondeig (candidat 2 segons regla: els DPSH poden ser un altre dia). Els annexos DPSH no s'han llegit en aquesta passada."
+    },
+    {
+      "concept_id": "cota_referencia",
+      "value": "+199.0 msnm (segons el plànol ICGC)",
+      "location": "p.1 capçalera, casella 'Cota: Z:'",
+      "quote": "Z: +199.0 msnm (segons el plànol ICGC)",
+      "confidence": 0.9,
+      "note": "Cota del sondeig S-1, que és a CASA 1 (vegeu tall: S-1 a ~199 msnm, entre P-1.2 i P-2.1). CASA 2 és més amunt (P-2.1 ~201.3, P-2.2 ~203 al tall). Com a cota de referència de CASA 2 cal confirmar."
+    },
+    {
+      "concept_id": "num_soil_levels",
+      "value": "3",
+      "location": "p.1 columna 'Unitat litològica'",
+      "quote": "NIVELL 1 | NIVELL 2 | NIVELL 3",
+      "confidence": 0.95,
+      "note": "NIVELL 1: 0.00–1.10 m (sòl vegetal 0.00–0.10 + sorres llimoses 0.10–1.10); NIVELL 2: 1.10–2.20 m (llims argilosos); NIVELL 3: 2.20–3.54 m (lutites i sorrenques molt alterades 2.20–2.80 + menys alterades 2.80–3.54). 5 trams de material, 3 nivells."
+    },
+    {
+      "concept_id": "lab_sample_id",
+      "value": "SPT-1 (-1.00 a -1.60 m); SPT-2 (-3.00 a -3.54 m)",
+      "location": "p.1 columnes 'Tipus de mostra' / 'Prof. de extracció (m)' / 'Registre'",
+      "quote": "SPT-1 | -1.00 a -1.60 | 6 9 9 9 ; SPT-2 | -3.00 a -3.54 | 19 31 33 50R",
+      "confidence": 0.85,
+      "note": "Registres SPT: SPT-1 = 6/9/9/9; SPT-2 = 19/31/33/50R (refús). Cap resultat de laboratori omplert a les columnes 'Assaigs de laboratori'. Cap 'lab_testing_company' en aquest document (l'empresa TPS, S.L. és la de sondeig, no el laboratori)."
+    },
+    {
+      "concept_id": "lab_depth",
+      "value": "SPT-1: -1.00 a -1.60; SPT-2: -3.00 a -3.54",
+      "location": "p.1 columna 'Prof. de extracció (m)'",
+      "quote": "-1.00 a -1.60 | -3.00 a -3.54",
+      "confidence": 0.85,
+      "note": "Profunditat final del sondeig 3.54 m (Fotografia 3: 'entre les cotes de 3.00 a -3.54 metres')."
+    }
+  ],
+  "not_present": [
+    "expedient (no hi ha caixetí amb Exp en aquesta plantilla; només al nom del fitxer 3001706_sondeig)",
+    "architect_name",
+    "num_floors",
+    "superficie_parcela",
+    "num_dpsh_tests",
+    "utm_x_utm_y (caselles x/y no existeixen en aquesta versió de la plantilla; només 'Cota Z')",
+    "referencia_catastral",
+    "lab_testing_company",
+    "cte_edificacio / cte_sol",
+    "nivell freàtic (columna 'Nivell freàtic' buida)",
+    "Observacions (buit)"
+  ],
+  "reading_notes": "Text del PDF és brossa (FreeHand/Distiller sense ToUnicode): llegit visualment des del render c2_sondeig_p1.png i c2_sondeig_p2.png (100 dpi, ja en orientació correcta). Capçalera literal: 'Sondeig nº: S-1 | Obra: Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipa nº3 de Cerdanyola del Vallès | Client: SR.ALEIX SUBIÀ FELIP | Data d'inici: 07/05/2026 | Data de fi: 07/05/2026 | Màquina: ML76A | Empresa: TPS, S.L. | Sondista: Sr. Daniel Fernandez | Cota: Z: +199.0 msnm (segons el plànol ICGC) | Tècnic: Eva Vázquez Marcet Geòloga col 4302'. Columnes: Ø de bateria 'BW 101' (0–1.0 m) i 'BW 86' (1.0–3.54 m); Testimoni recuperat ~100% fins 3.54; R.Q.D./fractures/grau d'alteració buits. Descripció literal: '0.00 a -0.10 m: Sòl vegetal.' / '-0.10 a -1.10 m: Sorres llimoses disgregades amb graves i restes d'arrels.' / '-1.10 a -2.20 m: Llims argilosos coheisus amb indicis de precipitat de calci.' (typo 'coheisus') / '-2.20 a -2.80 m: Lutites i sorrenques molt alterades.' / '-2.80 a -3.54 m: Lutites i sorrenques menys alterades.'. p.2: peus de foto 'Fotografia 1' (emplaçament màquina S-1), 'Fotografia 2' (material 0.00 a -3.00 m), 'Fotografia 3' (3.00 a -3.54 m), 'Fotografia 4' (SPT-1), 'Fotografia 6' (SPT-2) — salta la 5 (typo de numeració). Retolat manuscrit de les caixes: 'Sondeo Nº S-1 Obra C/Tulipan - Cerdanyola Profundidad de 0,00 Mts. A 3,00 Mts. Caja Nº 1' / '... de 3,00 Mts. A 3,54 Mts. Caja Nº 2' (lectura aproximada). Comprovat per text net a la còpia CASA 1 (Print To PDF): mateixa capçalera, mateix client, mateixa cota, mateixes dates. Duplicat funcional del sondeig de CASA 1: NO compta com a font independent."
+}

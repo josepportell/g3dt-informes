@@ -1,0 +1,40 @@
+{
+ "source_path": "CASA 1- TULIPA/260507_EVA G3_PLANOLS PER GEOTÈCNIC.zip",
+ "document_type": "altre (zip amb 3 .dwg)",
+ "what_it_is": "Zip (17 MB) enviat el 07/05/2026 ('260507') amb 3 DWG de l'arquitecte de la casa 1: '2024 07 26 Cerdanyola Carrer Tulipan 1 TOP.dwg' (topogràfic, 1 MB), 'PARAMETRES URBANISTICS.dwg' (193 KB), 'PLANTA PROPOSTA.dwg' (23 MB).",
+ "issuer": "VUA (casa 1)",
+ "date": "2026-05-07 (prefix del nom)",
+ "pages_or_sheets": "3 DWG",
+ "context": {
+  "who_made_it": "VUA (casa 1)",
+  "for_whom": "G3",
+  "why": "plànols per situar els assaigs i paràmetres urbanístics",
+  "expected_fields": [
+   "superfície parcel·la",
+   "plantes",
+   "cotes topogràfiques"
+  ],
+  "not_expected": [
+   "dates de camp"
+  ],
+  "relation_to_others": "equivalent a l'A.01 de Bell-lloc però en DWG → no llegible",
+  "authority_for": [
+   "superficie_parcela (si es converteix)",
+   "num_floors"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address_hint",
+   "value": "Carrer Tulipan 1 [sic]",
+   "location": "nom del DWG topogràfic",
+   "quote": "2024 07 26 Cerdanyola Carrer Tulipan 1 TOP.dwg",
+   "confidence": 0.2,
+   "note": "nom de fitxer del topògraf (2024): 'Tulipan 1' vs 'Tulipa 3' — no usar"
+  }
+ ],
+ "not_present": [
+  "NO LLEGIBLE: DWG. Probablement 'PARAMETRES URBANISTICS.dwg' porta superfície de parcel·la, plantes, ocupació; 'TOP' porta cotes. Cal conversor (LibreDWG dwg2dxf + ezdxf, o ODA File Converter): cap dels dos és a l'entorn."
+ ],
+ "reading_notes": "`zipfile` obre el zip sense problema. `which dwg2dxf` → res; `ezdxf` no instal·lat. Tasca oberta: conversor DWG. Mentrestant, superficie_parcela i num_floors de la casa 1 depenen del correu i del PLANTA I SECCIO de la casa 2 (no aplicable)."
+}

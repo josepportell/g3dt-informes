@@ -1,0 +1,68 @@
+{
+ "source_path": "26.0254/PLAN_COST_CERDANYOLA.xlsx (= adjunt del correu RV_, md5 03176387…) i 26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx",
+ "document_type": "plan_cost_g3",
+ "what_it_is": "Dos fulls de costos G3 (v1 i '2 CASES'); el títol i les unitats d'OFERTA són IDÈNTICS en tots dos (DPSH = 2, SPT = 3, 5 ml): la versió 2 CASES no s'ha actualitzat a OFERTA.",
+ "issuer": "G3 (Eva, E21)",
+ "date": "2026-03-26 (adjunt del correu)",
+ "pages_or_sheets": "7 fulls × 2 fitxers",
+ "context": {
+  "who_made_it": "G3 (Eva)",
+  "for_whom": "G3 administració",
+  "why": "calcular cost/marge de l'oferta",
+  "expected_fields": [
+   "títol (tipus d'edifici + municipi)",
+   "tècnic"
+  ],
+  "not_expected": [
+   "client",
+   "adreça",
+   "dates"
+  ],
+  "relation_to_others": "plantilla amb preus fixos; unitats no actualitzades a la v2",
+  "authority_for": [
+   "building_type (abreviat)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "HAB UNIF (habitatge unifamiliar)",
+   "location": "'Plan Cost'!E9",
+   "quote": "EG HAB UNIF CERDANYOLA",
+   "confidence": 0.85,
+   "note": "els dos fitxers igual"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CERDANYOLA",
+   "location": "'Plan Cost'!E9",
+   "quote": "EG HAB UNIF CERDANYOLA",
+   "confidence": 0.8,
+   "note": "J8='BCN' = centre de cost, no municipi"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "OFERTA!B21 (tots dos fitxers)",
+   "quote": "unitat de penetració dinàmica DPSH | 2",
+   "confidence": 0.3,
+   "note": "DESACTUALITZAT: el pressupost 2CASES diu 4. Regla: PLAN_COST és la font més feble per a quantitats."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "Dos fitxers quasi idèntics (113166 vs 113190 bytes). Prioritat de PLAN_COST per a num_dpsh_tests baixa a l'últim lloc."
+}

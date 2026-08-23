@@ -1,0 +1,33 @@
+{
+ "source_path": "DTE.txt i .g3dt_network_path",
+ "document_type": "altre",
+ "what_it_is": "DTE.txt: nota administrativa ('EN DATA 21/05 DTO AQUEST INFORME PER UN IMPORT DE 1185,80€ - VCT: 15/06/26'); .g3dt_network_path: ruta de xarxa 'INFORMES GEOTÈCNICS BCN/3001706 C.TULIPA CERDANYOLA' (nostre).",
+ "issuer": "G3 administració / nostre",
+ "date": "2026-05-21",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "G3 administració / nostre",
+  "for_whom": "G3",
+  "why": "nota de facturació / ruta de xarxa",
+  "expected_fields": [],
+  "not_expected": [
+   "tot el nivell A"
+  ],
+  "relation_to_others": "cap",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001706",
+   "location": ".g3dt_network_path",
+   "quote": "INFORMES GEOTÈCNICS BCN/3001706 C.TULIPA CERDANYOLA",
+   "confidence": 0.9,
+   "note": "= nom de carpeta"
+  }
+ ],
+ "not_present": [
+  "tot el resta"
+ ],
+ "reading_notes": "DTE = descompte/factura; cap dada del nivell A. `_user_data_prev.json` (nostre, wizard) exclòs."
+}

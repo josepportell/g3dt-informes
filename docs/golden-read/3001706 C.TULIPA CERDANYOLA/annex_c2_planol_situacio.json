@@ -1,0 +1,87 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_plànol de situació_CASA 2.pdf",
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Annex de l'Eva 'Plànol de situació' de CASA 2 (parcel·la vermella = parcel·la sud/interior, C/ Tosca 16) amb mapa ICGC, ortofoto i planta amb els punts d'assaig.",
+ "issuer": "G3 — FreeHand 3001706_plànol de situació_CASA 2.FH11 → Acrobat Distiller 15.0",
+ "date": "Data: Maig 2026 (caixetí); PDF creat 2026-06-04 15:23",
+ "pages_or_sheets": "1 pàgina A4 apaïsat (rot=270)",
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001706",
+   "location": "caixetí 'Exp:'",
+   "quote": "Exp: 3001706_CASA 2",
+   "confidence": 0.95,
+   "note": "Sufix '_CASA 2' = identificador de la casa."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tulipà nº3",
+   "location": "caixetí 'TÍTOL DEL PROJECTE'",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipà nº3 de Cerdanyola del Vallès",
+   "confidence": 0.3,
+   "note": "CONFLICTE: és el plànol de CASA 2 (Exp 3001706_CASA 2, parcel·la sud en vermell, carpeta 'CASA 2_ CARRER TOSCA') però el títol del caixetí repeteix 'Carrer Tulipà nº3' — molt probablement un caixetí copiat del de CASA 1 sense actualitzar. El tall de correlació diu 'un altre al Carrer Tosca nº16'. La planta no etiqueta el carrer Tosca. NO usar com a adreça de CASA 2."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "caixetí 'TÍTOL DEL PROJECTE' + mapa ICGC",
+   "quote": "de Cerdanyola del Vallès",
+   "confidence": 0.9,
+   "note": "Mapa de situació: punt entre Bellaterra, Sant Cugat del Vallès i Cerdanyola del Vallès."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "caixetí 'TÍTOL DEL PROJECTE'",
+   "quote": "per a la construcció d'un habitatge unifamiliar",
+   "confidence": 0.8,
+   "note": "Redacció de l'informe (CLOSE)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4 (2 per casa)",
+   "location": "planta",
+   "quote": "P-1.1, P-1.2 (CASA 1); P-2.1, P-2.2 (CASA 2); S-1 (CASA 1)",
+   "confidence": 0.85,
+   "note": "Comptat visualment. Per casa: 2 DPSH; el sondeig S-1 només a CASA 1."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Maig 2026",
+   "location": "caixetí 'Data:'",
+   "quote": "Data: Maig 2026",
+   "confidence": 0.3,
+   "note": "Data del document, no de camp."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "CASA 1: cotes ICGC 195,90 (carrer) – 198,19 (interior); CASA 2: 201,?2 – 204,19 (interior), 196,?4 / 196,47 al límit W",
+   "location": "planta topogràfica ICGC",
+   "quote": "195,90 | 198,19 | 202,72 | 203,59 | 204,19 | 196,47",
+   "confidence": 0.4,
+   "note": "Cotes topogràfiques ICGC llegides a 220 dpi, xifres petites (±). Coherent amb el sondeig S-1 a +199.0 msnm 'segons el plànol ICGC' (CASA 1). CASA 2 està 2–5 m més amunt."
+  },
+  {
+   "concept_id": "superficie_parcela",
+   "value": null,
+   "location": "planta (polígons vermell/groc, escala '10 m')",
+   "quote": "",
+   "confidence": 0.0,
+   "note": "Parcel·les dibuixades, cap superfície numèrica ni referència cadastral."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela (numèrica)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*",
+  "num_soil_levels",
+  "nom del carrer de CASA 2 (Tosca) — no apareix"
+ ],
+ "reading_notes": "Text del PDF és brossa (FreeHand/Distiller): llegit visualment a 100 dpi i amb crops a 220 dpi (planta i caixetí). Composició: (a) mapa ICGC de situació amb punt vermell entre 'Badia del Vallès', 'Bellaterra', 'Cerdanyola del Vallès', 'Sant Cugat del Vallès', 'Can Fatjó dels Aurons', 'Castell de Sant Marçal', 'C-58LD', 'AP-7'(?), 'Terranova'(?); (b) ortofoto amb les dues parcel·les (vermell = casa d'aquest plànol, groc = l'altra) i fletxa des del mapa; (c) planta topogràfica ICGC 1:1000 amb 'Carrer de la Tulipa' al NW, rosa dels vents, escala '10 m', etiquetes 'CASA 1' (parcel·la nord, tocant al Carrer de la Tulipa, amb P-1.1, P-1.2 i S-1) i 'CASA 2' (parcel·la sud, interior, amb P-2.1 i P-2.2), 'porxo' x2 al S, números de policia veïns '17' (casa a l'W, carrer paral·lel), '1' (casa al NE), '75' (casa al SE) i '77'(?) al SE; cotes ICGC llegibles: 195,90 / 197,98(?) / 198,19 / 202,89 / 202,72 / 201,?2 / 203,59 / 204,19 / 201,23 / 196,?4 / 196,47(?) / 195,22 / 198,78 / 200,78 / 203,83 / 202,98(?) — xifres petites, lectura ±. Llegenda: 'Assaig de penetració dinàmica DPSH' / 'Sondeig a rotació amb bateria continua'. No hi ha referència cadastral ni nom de carrer per a CASA 2 (el carrer Tosca no surt etiquetat a la planta; la parcel·la CASA 2 toca un carrer al S/SE sense nom visible). Aquest plànol destaca CASA 2 en vermell (parcel·la sud/interior, la més gran, amb P-2.1 i P-2.2) i CASA 1 en groc. Caixetí literal: 'Exp: 3001706_CASA 2 | Plànol de situació | Pàgina 1/1'. Mateixa base gràfica que el de CASA 1. El títol del caixetí NO s'ha adaptat a CASA 2 (diu Tulipà nº3)."
+}
