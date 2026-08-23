@@ -1,5 +1,5 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-08-23 nit (via A en curs: lectura d'or Bell-lloc + Tulipa, 0 ERR; skill v0.2)
+Last updated: 2026-08-23 nit (via A: lectura d'or COMPLETA 8/8; skill g3dt-llegir-projecte v0.4)
 
 ## ⚠ Reenquadrament 2026-08-23 (Josep): l'Eva està enfadada; criteri = "(quasi) faci la seva feina, sempre"
 
@@ -17,12 +17,22 @@ verificació creuada + candidats amb popup); **branca nova** des de `review/prod
 
 Branca `experiment/nivell-a-2026-08`. Claude Code en sessió llegeix cada carpeta amb el procediment del futur skill headless
 (0 $ API). Sortida: `docs/golden-read/{exp}/` (1 JSON per font + `_decisions.json` 3 estats + comparació) i `_LESSONS.md`.
-| Projecte | OK | CAND | NT | N/A | ERR | Commit |
+**COMPLETADA 8/8** (taula 15×8 a l'ANALISI §11): **80 OK / 17 CAND / 10 NT / 11 n/a / 2 ERR** sobre 120 cel·les.
+OK 80,8 % ✓ (objectiu ≥80), CAND 17,2 % ✓ (≤20), ERR 2 ✗ (objectiu 0) — tots dos (lab_sample_id MA-1/SPT-1; arquitecte
+persona/despatx) convertits en regla al skill v0.4: reexecució esperada ERR = 0, pendent de hold-out headless.
+| Projecte | OK | CAND | NT | n/a | ERR | Commit |
 |---|---|---|---|---|---|---|
-| 4001612 BELL-LLOC | 12 | 2 | 0 | 1 | **0** | `dffb82d` |
-| 3001706 C.TULIPA (casa 1) | 7 | 2 | 3 | 4 | **0** (1 cond. DWG) | `fe13aec` |
-Pendents: Rubí, Castellar, Linyola, Alcoletge, Vilanova, Anciles · conversor DWG · `tier_a_truth_map.py` amb `\b` · §11 anàlisi.
-Skill v0.2 amb Pas 0 (context del document abans de llegir-lo). Tulipa: un expedient = 2 informes (el wizard no ho contempla).
+| BELL-LLOC | 12 | 2 | 0 | 1 | 0 | `dffb82d` |
+| TULIPA (c1; 2 informes/expedient!) | 7 | 2 | 3 | 4 | 0 | `fe13aec` |
+| RUBI | 9 | 3 | 3 | 0 | 0 | `14efe3d` |
+| CASTELLAR | 10 | 2 | 1 | 1 | 1 | `6e753e4` |
+| LINYOLA | 13 | 1 | 0 | 0 | 1 | `fa8322c` |
+| ALCOLETGE | 10 | 2 | 3 | 1 | 0 | `f692b21` |
+| VILANOVA | 11 | 1 | 2 | 1 | 0 | `7199158` |
+| ANCILES | 7 | 4 | 0 | 4 | 0 | `47c2cee` |
+Troballes: Tulipa NO té informe de l'Eva (la 'referència' era generada nostra); truth-map arreglat (`095e817`: no compilava +
+falsos positius substring); albarà TPS = origen del 'client=G3'; formulari p.5 = autoritat del client. Pendent: conversor DWG
+(Tulipa 564 m²), .docx reals de Vilanova/Anciles per als n/a, execució headless del skill + hold-out, UI de candidats.
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
