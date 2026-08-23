@@ -1,0 +1,463 @@
+{
+ "tag": "ALCOLETGE",
+ "generated": "/mnt/c/claude/g3dt/projectes/4001670 ALCOLETGE/4001670_generated.docx",
+ "eva": "/tmp/claude-1000/-home-josep-projects-claudecode-job-clients-g3dt-prod/f4e779bc-2463-4626-97b2-e2e97ea1da5c/scratchpad/taules/4001670_informe.docx",
+ "tables": {
+  "plantes": {
+   "counts": {
+    "MATCH": 1,
+    "MISMATCH": 3,
+    "CLOSE": 2
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Pb"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Superfície de la parcel·la segons plànols cadastrals  (m2)",
+     "eva": "Superfície de la parcel·la segons cadastre (m2)"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "1167"
+    },
+    {
+     "row": "fila2",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Superfície construïda total (m2)",
+     "eva": "Superfície construïda ampliació  (m2)"
+    },
+    {
+     "row": "fila2",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "100"
+    }
+   ]
+  },
+  "cte_edificacio": {
+   "counts": {
+    "MATCH": 2,
+    "MISMATCH": 2
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "C-1",
+     "eva": "C-0"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "T-3",
+     "eva": "T-1"
+    }
+   ]
+  },
+  "dpsh": {
+   "counts": {
+    "MATCH": 7,
+    "MISMATCH": 8
+   },
+   "cells": [
+    {
+     "row": "p-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+188.20"
+    },
+    {
+     "row": "p-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "No detectat",
+     "eva": "-1.00"
+    },
+    {
+     "row": "p-3",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+188.20"
+    },
+    {
+     "row": "p-3",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "-1.80",
+     "eva": "-1.69"
+    },
+    {
+     "row": "p-3",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "No detectat",
+     "eva": "-1.00"
+    },
+    {
+     "row": "p-2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+188.20"
+    },
+    {
+     "row": "p-2",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "-1.40",
+     "eva": "-1.30"
+    },
+    {
+     "row": "p-2",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "No detectat",
+     "eva": "-1.00"
+    }
+   ]
+  },
+  "spt_ma": {
+   "counts": {
+    "CLOSE": 1,
+    "MATCH": 2,
+    "MISMATCH": 2
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "SPT-P3",
+     "eva": "SPT-1"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "30",
+     "eva": "20"
+    },
+    {
+     "row": "fila0",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Llims compactes, lutites alterades"
+    }
+   ]
+  },
+  "mostra_lab": {
+   "counts": {
+    "CLOSE": 3,
+    "MATCH": 1,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Mostra :",
+     "eva": "Mostra : SPT-1"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Punt:",
+     "eva": "Punt: P-3"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "Profunditat:",
+     "eva": "Profunditat:  -0.80  a -1.40 m"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Assaig de plasticitat de Límits d’Atterberg UNE 103103/94-104/93\nContingut en sulfats solubles dels sòl UNE 83963/08"
+    }
+   ]
+  },
+  "soil_levels": {
+   "counts": {
+    "MATCH": 1,
+    "MISMATCH": 1,
+    "ROW_MISSING": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Reblert superficial"
+    },
+    {
+     "row": "2n",
+     "col": "*",
+     "estat": "ROW_MISSING",
+     "eva": "2on nivell. | Lutites amb intercalacions de sorrenca."
+    }
+   ]
+  },
+  "permeabilitat": {
+   "counts": {
+    "MATCH": 1,
+    "CLOSE": 1,
+    "MISMATCH": 1,
+    "ROW_MISSING": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "10^-3 a 10^-5",
+     "eva": "10-1 – 10-3"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Sorres argiloses antròpiques"
+    },
+    {
+     "row": "2n",
+     "col": "*",
+     "estat": "ROW_MISSING",
+     "eva": "2on nivell | 10-5 – 10-7 | Lutites i sorrenques del substrat Oligocè"
+    }
+   ]
+  },
+  "sulfats": {
+   "counts": {
+    "ROW_EXTRA": 1,
+    "ROW_MISSING": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": "*",
+     "estat": "ROW_EXTRA",
+     "gen": "1er nivell |  | --- | "
+    },
+    {
+     "row": "2n",
+     "col": "*",
+     "estat": "ROW_MISSING",
+     "eva": "2on nivell | 297.9 | --- | No Agressius"
+    }
+   ]
+  },
+  "sismica": {
+   "counts": {
+    "MATCH": 1,
+    "CLOSE": 1,
+    "MISMATCH": 2,
+    "ROW_MISSING": 1
+   },
+   "cells": [
+    {
+     "row": "1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Tipus III",
+     "eva": "Tipus IV"
+    },
+    {
+     "row": "1",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "1.80",
+     "eva": "1.40"
+    },
+    {
+     "row": "1",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "1.6",
+     "eva": "2.0"
+    },
+    {
+     "row": "2",
+     "col": "*",
+     "estat": "ROW_MISSING",
+     "eva": "2 | Tipus I | 0.29* | 1.0"
+    }
+   ]
+  },
+  "geotecnica": {
+   "counts": {
+    "CLOSE": 1,
+    "MISMATCH": 5,
+    "MATCH": 1,
+    "ROW_MISSING": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell. .",
+     "eva": "1er nivell. Sorres argiloses de rebliment"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "22-R",
+     "eva": "5-0"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "17",
+     "eva": "--"
+    },
+    {
+     "row": "1r",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "2.00",
+     "eva": "1.80"
+    },
+    {
+     "row": "1r",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 5,
+     "estat": "MISMATCH",
+     "gen": "33°",
+     "eva": "28º"
+    },
+    {
+     "row": "1r",
+     "col": 6,
+     "estat": "MISMATCH",
+     "gen": "114",
+     "eva": "50"
+    },
+    {
+     "row": "2n",
+     "col": "*",
+     "estat": "ROW_MISSING",
+     "eva": "2on nivell. Lutites i sorrenques alterades | R | 20 | 2.00 | 1.00 | 30º | >400"
+    }
+   ]
+  }
+ },
+ "totals": {
+  "MATCH": 17,
+  "MISMATCH": 25,
+  "CLOSE": 9,
+  "ROW_MISSING": 5,
+  "ROW_EXTRA": 1
+ }
+}

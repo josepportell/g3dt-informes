@@ -1,0 +1,440 @@
+{
+ "tag": "RUBI",
+ "generated": "/mnt/c/claude/g3dt/projectes/3001631 RUBI/3001631_generated.docx",
+ "eva": "/mnt/c/claude/g3dt/projectes/3001631 RUBI/3001631_informe.docx",
+ "tables": {
+  "plantes": {
+   "counts": {
+    "MATCH": 2,
+    "MISMATCH": 3,
+    "CLOSE": 1
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "PB + Porxo"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Superfície de la parcel·la segons plànols cadastrals  (m2)",
+     "eva": "Superfície de la parcel·la (m2)"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "951"
+    },
+    {
+     "row": "fila2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila2",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "92"
+    }
+   ]
+  },
+  "cte_edificacio": {
+   "counts": {
+    "MATCH": 3,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "C-1",
+     "eva": "C-0"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "dpsh": {
+   "counts": {
+    "MATCH": 12,
+    "MISMATCH": 3
+   },
+   "cells": [
+    {
+     "row": "p-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "+211.90",
+     "eva": "+212.50"
+    },
+    {
+     "row": "p-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "+211.90",
+     "eva": "+212.50"
+    },
+    {
+     "row": "p-2",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "+211.90",
+     "eva": "+212.50"
+    },
+    {
+     "row": "p-3",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 4,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "spt_ma": {
+   "counts": {
+    "MATCH": 4,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "spt-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Graves i sorres"
+    }
+   ]
+  },
+  "mostra_lab": {
+   "counts": {
+    "MATCH": 3,
+    "CLOSE": 1,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "Profunditat: -0.6 a -1.2",
+     "eva": "Profunditat:  -0.60  a -1.20 m"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "Contingut en sulfats solubles UNE 83963:2008",
+     "eva": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nDeterminació de Límits d’Atterberg d'un sòl UNE 103103/94-104/93\nAssaig de contingut en sulfats UNE 83963 : 2008"
+    }
+   ]
+  },
+  "soil_levels": {
+   "counts": {
+    "MATCH": 1,
+    "CLOSE": 1,
+    "ROW_EXTRA": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Graves i sorres (Nivell 1)",
+     "eva": "Graves i sorres, carbonatades"
+    },
+    {
+     "row": "2n",
+     "col": "*",
+     "estat": "ROW_EXTRA",
+     "gen": "2n nivell. | Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2)"
+    }
+   ]
+  },
+  "permeabilitat": {
+   "counts": {
+    "MATCH": 1,
+    "CLOSE": 2,
+    "ROW_EXTRA": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "10^-2 a 10^-4",
+     "eva": "10-10-1"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "Graves i sorres (Nivell 1)",
+     "eva": "Graves i sorres, carbonatades"
+    },
+    {
+     "row": "2n",
+     "col": "*",
+     "estat": "ROW_EXTRA",
+     "gen": "2n nivell | 10^-3 a 10^-5 | Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2)"
+    }
+   ]
+  },
+  "sulfats": {
+   "counts": {
+    "MATCH": 4
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 3,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "sismica": {
+   "counts": {
+    "MATCH": 3,
+    "MISMATCH": 1,
+    "ROW_EXTRA": 1
+   },
+   "cells": [
+    {
+     "row": "1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "3.45",
+     "eva": "4.55"
+    },
+    {
+     "row": "1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "2",
+     "col": "*",
+     "estat": "ROW_EXTRA",
+     "gen": "2 | Tipus II | 1.10 | 1.3"
+    }
+   ]
+  },
+  "geotecnica": {
+   "counts": {
+    "CLOSE": 1,
+    "MISMATCH": 5,
+    "MATCH": 1,
+    "ROW_EXTRA": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell. Graves i sorres (Nivell 1).",
+     "eva": "1er nivell. Graves i sorres."
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "42-R",
+     "eva": "47-R"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "35",
+     "eva": "40"
+    },
+    {
+     "row": "1r",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "0.00",
+     "eva": "0.05"
+    },
+    {
+     "row": "1r",
+     "col": 5,
+     "estat": "MISMATCH",
+     "gen": "37°",
+     "eva": "39º"
+    },
+    {
+     "row": "1r",
+     "col": 6,
+     "estat": "MISMATCH",
+     "gen": "469",
+     "eva": "450"
+    },
+    {
+     "row": "2n",
+     "col": "*",
+     "estat": "ROW_EXTRA",
+     "gen": "2n nivell. Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2). | 51-R | 42 | 2.20 | 1.00 | 35° | 500"
+    }
+   ]
+  }
+ },
+ "totals": {
+  "MATCH": 34,
+  "MISMATCH": 15,
+  "CLOSE": 6,
+  "ROW_EXTRA": 4
+ }
+}
