@@ -1,0 +1,23 @@
+{
+  "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Pressupost MODF 25·0493 ACCEPTAT: formulari p.5 omplert a mà pel client i signat (client + Resp. Oficina Tècnica)",
+  "issuer": "G3 (document base) + client WOOD COMFORT PROMOCIONS SLU (ompliment i signatura)",
+  "date": "2025-10-08 (modDate D:20251008102518; base = MODF de 07/10/25)",
+  "pages_or_sheets": "7 pàgines (mateix PDF que el MODF amb p.5 omplerta)",
+  "context": {
+    "who_made_it": "El client (a mà, tinta vermella) sobre el PDF del pressupost MODF; NIF afegit com a text digital",
+    "for_whom": "G3 — retorn del contracte-pressupost acceptat",
+    "why": "Acceptar el pressupost i declarar les dades que HAN DE CONSTAR EN LA FACTURA I EN L'INFORME",
+    "expected_fields": ["client_name (formulari p.5 = autoritat A)", "NIF del client", "format/idioma de l'informe"],
+    "not_expected": ["street_address de l'obra (el formulari porta l'adreça del CLIENT, no de l'obra)", "field_date", "cota_referencia", "expedient"],
+    "relation_to_others": "És el MODF (creationDate idèntica 20251007102030) amb la p.5 omplerta; substitueix qualsevol lectura de client de la versió inicial (GRUP ALMA). L'email ROCFLATS@HOTMAIL.COM lliga amb el correu d'encàrrec si n'hi ha.",
+    "authority_for": ["client_name"]
+  },
+  "tier_a": [
+    {"concept_id": "client_name", "value": "WOOD COMFORT PROMOCIONS SLU (NIF B19935212)", "location": "p.5 formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME', manuscrit + NIF digital", "quote": "NOM I COGNOMS: WOOD COMFORT PROMOCIONS SLU · N.I.F./C.I.F.: B19935212 · ADREÇA: FERRAN VALLS I TABERNER 14 BIS 1-2 · CP I POBLACIÓ: 08006 BARCELONA", "confidence": 0.95, "note": "Autoritat A (regla: p.5 mana). Coincideix amb el bloc CLIENT del MODF (mateixa cadena, no font independent). Signatura del client present, sense segell llegible."},
+    {"concept_id": "NOT_architect_name", "value": "(casella ARQUITECTE buida)", "location": "p.5 'PERSONES I/O EMPRESES QUE PODEN REBRE INFORMACIÓ'", "quote": "ARQUITECTE ……… (sense omplir)", "confidence": 0.0, "note": "El client no ha designat cap arquitecte al formulari."}
+  ],
+  "not_present": ["expedient", "street_address (obra)", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests (idèntic al MODF)", "utm_x_utm_y", "referencia_catastral", "lab", "cte"],
+  "reading_notes": "Diff de text vs MODF: només '+B19935212' a p.5. Manuscrit llegit per visió (render clip 25-95% alçada p.5, 170 dpi). Marcat 'Digital per email' i 'Informe en català'; email del client ROCFLATS@HOTMAIL.COM. Sense camps /Sig digitals (signatura és tinta)."
+}

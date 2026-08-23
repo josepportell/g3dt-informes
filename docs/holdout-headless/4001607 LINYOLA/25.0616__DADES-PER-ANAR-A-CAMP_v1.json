@@ -1,0 +1,28 @@
+{
+  "source_path": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+  "document_type": "fitxa_camp_g3",
+  "what_it_is": "Fitxa interna G3 de preparació del treball de camp (fitxa!B2 = 'DADES PER ANAR A CAMP')",
+  "issuer": "G3 (oficina tècnica, per a l'equip de camp)",
+  "date": "F38 = 2025-10-01 (dia de camp)",
+  "pages_or_sheets": "fulls: fitxa, dades de referencia",
+  "context": {
+    "who_made_it": "G3 (oficina) recollint què cal per anar a camp",
+    "for_whom": "Eva / equip de camp (TPS ERUGA)",
+    "why": "coordinar l'accés, la previsió d'assaigs i el dia de camp amb el contacte de l'obra",
+    "expected_fields": ["field_date (F38)", "street_address (C7 ADREÇA OBRA)", "num_dpsh_tests previstos (F13)", "contacte"],
+    "not_expected": ["num_floors", "superficie_parcela", "cota_referencia", "client_name segur (C6 és el sol·licitant)"],
+    "relation_to_others": "C6 CLIENT = BUNYESC deriva del mateix encàrrec que el pressupost (NO font independent per al sol·licitant). B42-B45 citen instruccions de l'arquitecte (Laia, BUNYESC) sobre moure punts. B47 identifica 'silvia la propietària' — informació pròpia de la fitxa.",
+    "authority_for": ["field_date", "num_dpsh_tests (previstos)", "client_name (candidat: B47 'la propietària')"]
+  },
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2025-10-01", "location": "fitxa!F38 (etiqueta E38 'dies de camp')", "quote": "F38 = datetime(2025, 10, 1)", "confidence": 0.9, "note": "tipus data; coincideix amb els noms de fotos WhatsApp 2025-10-01"},
+    {"concept_id": "street_address", "value": "Carrer Clot de la Llacuna, 16", "location": "fitxa!C7 'ADREÇA OBRA'", "quote": "Carrer Clot de la Llacuna, 16, 25240 Linyola, Lleida", "confidence": 0.85, "note": "coincideix amb el bloc OBRA del pressupost (mateix encàrrec, no independent del tot)"},
+    {"concept_id": "municipality", "value": "Linyola", "location": "fitxa!C7", "quote": "…25240 Linyola, Lleida", "confidence": 0.85, "note": ""},
+    {"concept_id": "num_dpsh_tests", "value": 3, "location": "fitxa!F13 (previsió C13)", "quote": "PENETROS I MOSTRA / 3 ( P)", "confidence": 0.55, "note": "previstos; 'I MOSTRA' → també es preveu mostra/sondeig petit"},
+    {"concept_id": "client_name", "value": "Sílvia Eroles Balagueró", "location": "fitxa!B47 + C8", "quote": "trucar mitja hora abans silvia la propietària , vol estar precent 618108812 [sic: 618108612]; C8 = 'SILVIA EROLES BALAGUERO'", "confidence": 0.6, "note": "'la propietària' = promotora de l'obra; nom complet a C8 com a persona de contacte. Candidat fort però no és un camp etiquetat 'Promotor'"},
+    {"concept_id": "NOT_client_name", "value": "BUNYESC ARQUITECCTURA EFICIENT, SLP", "location": "fitxa!C6 'CLIENT'", "quote": "BUNYESC ARQUITECCTURA EFICIENT, SLP", "confidence": 0.0, "note": "sol·licitant (despatx d'arquitectura), typo 'ARQUITECCTURA'; mateix origen que el pressupost"},
+    {"concept_id": "architect_name", "value": "BUNYESC ARQUITECTURA EFICIENT, SLP", "location": "fitxa!C6 + B45", "quote": "C6 = 'BUNYESC ARQUITECCTURA EFICIENT, SLP'; B45 = 'si teniu algun dubte que la truqueu, Laia: 628 577 224'", "confidence": 0.5, "note": "despatx; derivat del mateix encàrrec que el pressupost, no independent"}
+  ],
+  "not_present": ["expedient", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "cte", "utm_x_utm_y", "referencia_catastral", "lab_*"],
+  "reading_notes": "openpyxl data_only. B42-B44: instrucció de desplaçar 1 m dos punts d'assaig ('el punt de més a la dreta — el de la vostra habitació — i el de baix — cantonada de la sala d'estar') → confirma habitatge (redacció de l'arquitecte al propietari, citada). 'dades de referencia' és full de plantilla (no senyal). Imatge WMF incrustada no llegible (dropped per openpyxl), probablement croquis de punts."
+}

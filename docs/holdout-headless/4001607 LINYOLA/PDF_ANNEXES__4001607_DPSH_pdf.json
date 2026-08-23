@@ -1,0 +1,30 @@
+{
+  "source_path": "PDF/ANNEXES/4001607_DPSH.pdf",
+  "document_type": "annex_dpsh",
+  "what_it_is": "Annex DPSH de l'informe (impressió de l'Excel DPSH amb capçalera de projecte), 3 pàgines P-1/P-2/P-3",
+  "issuer": "G3-Eva (des de 4001607_DPSH.xls, PScript5/Distiller, 2025-10-28)",
+  "date": "capçalera DATA: 01/10/2025; PDF creat 2025-10-28",
+  "pages_or_sheets": "3 pàgines (P-1, P-2, P-3)",
+  "context": {
+    "who_made_it": "Eva, imprimint l'Excel DPSH revisat",
+    "for_whom": "annex de l'informe",
+    "why": "documentar el colpeig i la cota d'inici de cada assaig",
+    "expected_fields": ["cota_referencia (capçalera 'Cota d'inici')", "expedient (NÚMERO D'INFORME)", "street_address/municipality (OBRA/POBLACIÓ)", "field_date (DATA)", "num_dpsh_tests", "lab_location/lab_depth (marca SPT)"],
+    "not_expected": ["client_name", "architect_name", "num_floors", "superficie_parcela"],
+    "relation_to_others": "Impressió del mateix Excel ANNEXES/4001607_DPSH.xls (valors idèntics: no font independent per al colpeig) + capçalera afegida per l'Eva (aquesta sí que és informació nova). La marca SPT-1 a P-3 lliga amb la comanda 'SPT 1 (P3)'.",
+    "authority_for": ["cota_referencia", "expedient", "field_date", "street_address (suport)", "municipality (suport)", "lab_location"]
+  },
+  "tier_a": [
+    {"concept_id": "cota_referencia", "value": "+245 msnm", "location": "capçalera de les 3 pàgines", "quote": "Cota d'inici: +245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)", "confidence": 0.9, "note": "criteri Eva ICGC −0,15 carrer; idèntic a les 3 pàgines; COORDENADES.txt GPS dóna z 244,9-245,1 (coherent)"},
+    {"concept_id": "expedient", "value": "4001607", "location": "peu de capçalera, 3 pàgines", "quote": "NÚMERO D'NFORME: 4001607 [sic]", "confidence": 0.85, "note": "typo de plantilla 'D'NFORME'; coincideix amb comanda N19 i nom de carpeta"},
+    {"concept_id": "field_date", "value": "2025-10-01", "location": "capçalera, 3 pàgines", "quote": "DATA: 01/10/2025", "confidence": 0.85, "note": "coincideix amb fitxa F38 i correu ('demà' des del 30-09)"},
+    {"concept_id": "street_address", "value": "C/ Clot de la Llacuna 16", "location": "capçalera OBRA", "quote": "OBRA : C/ CLOT DE LA LLACUNA 16", "confidence": 0.8, "note": ""},
+    {"concept_id": "municipality", "value": "Linyola", "location": "capçalera POBLACIÓ", "quote": "POBLACIÓ: LINYOLA", "confidence": 0.8, "note": ""},
+    {"concept_id": "num_dpsh_tests", "value": 3, "location": "3 pàgines P-1/P-2/P-3", "quote": "ASSSAIG DE PENETRACIÓ DINÀMICA: P-1 / P-2 / P-3", "confidence": 0.85, "note": "mateix origen que l'Excel"},
+    {"concept_id": "lab_location", "value": "P-3", "location": "p.3 columna Nivells", "quote": "SPT-1 · 1,0 a 1,5 · R", "confidence": 0.75, "note": "SPT-1 executat al punt P-3 entre 1,0 i 1,5 m amb refús (R)"},
+    {"concept_id": "lab_sample_id", "value": "SPT-1", "location": "p.3 anotació", "quote": "SPT-1", "confidence": 0.7, "note": "etiqueta de l'annex de l'Eva (mana sobre GTL/comanda per a l'etiqueta de l'informe)"},
+    {"concept_id": "lab_depth", "value": "1,0 a 1,5 m", "location": "p.3 anotació", "quote": "1,0 a 1,5", "confidence": 0.5, "note": "interval de la maniobra SPT; la comanda diu mostra 1,00-1,15 i el GTL manarà per a la profunditat"}
+  ],
+  "not_present": ["client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "num_soil_levels (la llegenda 'Nivell 1/Nivell 2' del gràfic és plantilla)", "cte", "utm_x_utm_y", "referencia_catastral", "lab_testing_company"],
+  "reading_notes": "Text net (impressió d'Excel via Distiller, amb ToUnicode). Capçalera al peu del text extret (ordre de flux). Colpeigs = idèntics a l'Excel (P-1 rebuig -2,90; P-2 -2,15; P-3 -1,75, on hi ha l'SPT amb R). Cap N.F. anotat."
+}

@@ -1,0 +1,27 @@
+{
+  "source_path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+  "document_type": "correu",
+  "what_it_is": "Correu intern (Eva → Dolors, 25/06/2025) que reenvia el WhatsApp de l'encàrrec del client i demana el pressupost",
+  "issuer": "Eva Vazquez <eva@g3dt.com> → Dolors Maqueda <dolors@g3dt.com>",
+  "date": "2025-06-25 11:14",
+  "pages_or_sheets": "cos + 8 adjunts (7 imatges de signatura + PLAN_COST xlsx)",
+  "context": {
+    "who_made_it": "Eva, reenviant el text del WhatsApp que ha rebut del contacte del client (ROC)",
+    "for_whom": "Dolors (administració G3), perquè faci el pressupost",
+    "why": "Iniciar l'oferta 25·0493: el correu d'encàrrec és la font primària de la descripció de l'obra",
+    "expected_fields": ["num_floors", "superficie construïda", "building_type", "street_address", "municipality", "client/contacte"],
+    "not_expected": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "utm", "referencia_catastral", "lab"],
+    "relation_to_others": "Origen del pressupost inicial (25/06, GRUP ALMA): la capçalera 'CLIENT: GRUP ALMA / ROC' explica que Roc era el contacte de GRUP ALMA; després el pressupost es reemet a WOOD COMFORT (MODF+acceptació, on reapareix rocflats@hotmail.com). L'adjunt PLAN_COST_CATELLAR DEL VALLÈS.xlsx és md5-idèntic al de la carpeta 25.0493/ (duplicat). Les 7 imatges són signatura corporativa (≤25 KB), ignorades.",
+    "authority_for": ["num_floors", "building_type (descripció de l'encàrrec)", "superficie construïda de l'encàrrec (base per derivar CTE)"]
+  },
+  "tier_a": [
+    {"concept_id": "num_floors", "value": "PB+1 (sense soterrani)", "location": "cos del correu (text del WhatsApp del client)", "quote": "PB + 1 - Sense soterrani - 120 m2 construits - Estructura d'entremat lleuger de fusta.", "confidence": 0.7, "note": "Únic document del projecte amb plantes; cap plantilla G3 ho porta. Regla: correu d'encàrrec → num_floors segur amb nota si res no el contradiu."},
+    {"concept_id": "building_type", "value": "3 habitatges unifamiliars d'entramat lleuger de fusta (PB+1, 120 m² c/u)", "location": "cos (WhatsApp) + assumpte", "quote": "haig de fer un geotecnic a Castellar del Vallès … 120 m2 construits … Estructura d'entremat lleuger de fusta … el preu per fer 3 estudis geotècnics a la vegada?", "confidence": 0.6, "note": "L'encàrrec final és per a les 3 parcel·les (18A-18B-20). L'assumpte: 'PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS'."},
+    {"concept_id": "street_address", "value": "Carrer Arbrells 18A (+ 'les 2 parcel·les del costat')", "location": "cos (WhatsApp)", "quote": "La direcció és : Carrer Arbrells 18A … La setmana que ve compraré les 2 parcel·les del costat", "confidence": 0.5, "note": "Explica per què l'obra acaba sent 18A-18B-20."},
+    {"concept_id": "municipality", "value": "Castellar del Vallès", "location": "cos (WhatsApp)", "quote": "haig de fer un geotecnic a Castellar del Vallès", "confidence": 0.6, "note": ""},
+    {"concept_id": "cte_edificacio", "value": "C-1 (derivat: 3 × 120 m² = 360 m² > 300 m² i < 4 plantes)", "location": "derivació de la regla del skill sobre el cos del correu", "quote": "120 m2 construits (per habitatge) × 3 habitatges", "confidence": 0.4, "note": "El pressupost NO porta la línia CTE → derivació per superfície construïda TOTAL de l'encàrrec. Sempre candidats, mai segur. Per UN sol habitatge seria C-0 (120 < 300)."},
+    {"concept_id": "NOT_client_name", "value": "GRUP ALMA (contacte ROC 615 55 74 50)", "location": "capçalera del cos", "quote": "CLIENT: GRUP ALMA / ROC - 615 55 74 50", "confidence": 0.0, "note": "Client de l'època de l'encàrrec inicial; substituït per WOOD COMFORT PROMOCIONS SLU (acceptació 10/2025). Roc es manté com a contacte."}
+  ],
+  "not_present": ["expedient", "architect_name (l'encàrrec el fa directament el contacte del promotor per WhatsApp: cap arquitecte esmentat)", "superficie_parcela (120 m² és superfície CONSTRUÏDA, mai parcel·la)", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "lab", "cte_sol"],
+  "reading_notes": "extract_msg; només text nou (correu no és cadena RE). Adjunt PLAN_COST dedup per md5 (8418e65b89) contra 25.0493/. Imatges de signatura ignorades per mida."
+}

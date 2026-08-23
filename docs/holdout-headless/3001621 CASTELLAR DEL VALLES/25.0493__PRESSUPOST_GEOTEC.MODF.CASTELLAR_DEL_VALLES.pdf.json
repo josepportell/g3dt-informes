@@ -1,0 +1,27 @@
+{
+  "source_path": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Pressupost geotècnic G3 (m4PRO ERP) MODIFICAT 07/10/25, mateix codi comercial 25·0493 — versió vigent",
+  "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+  "date": "2025-10-07 (creationDate D:20251007102030; DATA p.1 07/10/25)",
+  "pages_or_sheets": "7 pàgines",
+  "context": {
+    "who_made_it": "G3 (oficina tècnica) amb l'ERP m4PRO",
+    "for_whom": "WOOD COMFORT PROMOCIONS SLU (nou sol·licitant/promotor)",
+    "why": "Reemissió del pressupost 25·0493 amb el client canviat i l'obra ampliada a tres números de carrer (18A-18B-20)",
+    "expected_fields": ["street_address (bloc OBRA)", "municipality", "building_type", "num_dpsh_tests (previstos)", "cte"],
+    "not_expected": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "utm", "referencia_catastral", "architect_name (llevat que el CLIENT fos arquitecte — no ho és)"],
+    "relation_to_others": "Substitueix PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf (25/06/25, GRUP ALMA). És el document base de l'ACCEPTACIO/ (mateixa creationDate 20251007102030). Quantitats idèntiques a la versió inicial.",
+    "authority_for": ["street_address", "municipality", "num_dpsh_tests (previstos)", "client_name (només com a sol·licitant → candidat, no autoritat A)"]
+  },
+  "tier_a": [
+    {"concept_id": "street_address", "value": "C/ARBRELLS 18A-18B-20", "location": "p.1 bloc OBRA", "quote": "ESTUDI GEOTECNIC | C/ARBRELLS 18A-18B-20 | CASTELLAR DEL VALLES", "confidence": 0.8, "note": "Bloc OBRA (etiquetat), versió vigent del pressupost."},
+    {"concept_id": "municipality", "value": "CASTELLAR DEL VALLES", "location": "p.1 bloc OBRA", "quote": "CASTELLAR DEL VALLES", "confidence": 0.7, "note": "Forma curta G3."},
+    {"concept_id": "client_name", "value": "WOOD COMFORT PROMOCIONS SLU", "location": "p.1 bloc CLIENT", "quote": "WOOD COMFORT PROMOCIONS SLU | C/FERRAN VALLS I TABERNER 14 BIS 1-2 | 08006 BARCELONA", "confidence": 0.6, "note": "El CLIENT del pressupost és el sol·licitant, no necessàriament el promotor; aquí és una promotora (SLU 'PROMOCIONS') → candidat fort però no autoritat A per si sol. L'adreça és del client, NO de l'obra."},
+    {"concept_id": "building_type", "value": "habitatges (3 unitats: 18A-18B-20)", "location": "p.1 bloc OBRA + versió inicial '3HAB'", "quote": "C/ARBRELLS 18A-18B-20", "confidence": 0.4, "note": "El títol MODF ja no diu '3HAB'; la lectura '3 habitatges' ve de la versió inicial i dels 3 números de carrer."},
+    {"concept_id": "num_dpsh_tests", "value": 4, "location": "p.2 pla de treball / p.4 valoració 002.001", "quote": "4 assaigs de penetració dinàmica DPSH", "confidence": 0.5, "note": "Previstos. L'Excel DPSH (executats) mana."},
+    {"concept_id": "NOT_expedient", "value": "25·0493", "location": "p.1/p.4/p.5", "quote": "25·0493 P#", "confidence": 0.0, "note": "Codi comercial m4PRO, NO expedient."}
+  ],
+  "not_present": ["expedient", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab", "cte (NO porta la línia 'Tipus d'edifici'/'Tipus de Terreny' → aplicar derivació per superfície, sempre candidats)"],
+  "reading_notes": "Blocs ordenats per (y,x). Pàgines 2-7 idèntiques a la versió inicial; només canvia p.1 (client + adreça obra + data). Formulari p.5 en blanc en aquesta còpia (la signada és a ACCEPTACIO/)."
+}

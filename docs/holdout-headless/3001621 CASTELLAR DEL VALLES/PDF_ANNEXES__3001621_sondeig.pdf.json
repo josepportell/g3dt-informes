@@ -1,0 +1,31 @@
+{
+  "source_path": "PDF/ANNEXES/3001621_sondeig.pdf",
+  "document_type": "annex_sondeig",
+  "what_it_is": "Annex de l'informe amb el log del sondeig S-1 (caixetí complet + columna litològica + fotos)",
+  "issuer": "G3 (Eva Vázquez Marcet, geòloga col. 4302)",
+  "date": "2025-11-03 (creationDate); dates de camp al caixetí: inici/fi 24/10/25",
+  "pages_or_sheets": "2 pàgines (log + fotografies)",
+  "context": {
+    "who_made_it": "Eva (FreeHand → Distiller), abans d'obrir el wizard",
+    "for_whom": "L'informe final",
+    "why": "Presentar el registre del sondeig S-1 amb caixetí d'identificació complet",
+    "expected_fields": ["cota_referencia (Cota Z)", "utm_x_utm_y", "num_soil_levels (Unitat litològica)", "field_date (sondeig)", "lab_sample_id/lab_depth (SPT)", "street_address/municipality (títol Obra)"],
+    "not_expected": ["superficie_parcela", "num_floors", "referencia_catastral", "architect_name"],
+    "relation_to_others": "El títol 'Obra' és la redacció del títol de l'informe (idèntic al tall.pdf). La casella 'Client: WOOD COMFORT PROM.' deriva de l'encàrrec (no font independent del pressupost/acceptació). La mostra SPT-1 és la mateixa que la comanda anomena 'MA (S1)' i que el GTL etiquetarà: annex > GTL > comanda per a l'etiqueta. Cota Z 570,90 msnm conviu amb el '-4 m respecte el carrer' de l'annex DPSH (relativa vs absoluta).",
+    "authority_for": ["num_soil_levels", "cota_referencia (candidat 2 per regla d'ordre)", "utm_x_utm_y (per sota de COORDENADES.txt)", "lab_sample_id (etiqueta, candidat 1)", "field_date (dia del sondeig)"]
+  },
+  "tier_a": [
+    {"concept_id": "num_soil_levels", "value": 1, "location": "columna 'Unitat litològica' del log (p.1)", "quote": "NIVELL 1 (tram 0,50-1,20: 'Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells'); 0,00-0,50 'Terreny Vegetal' sense etiqueta de nivell", "confidence": 0.8, "note": "Criteri Eva: només compta la columna Unitat litològica; el terreny vegetal no és nivell. Coincideix amb la llegenda del tall ('Nivell 1: Substrat rocós')."},
+    {"concept_id": "cota_referencia", "value": "570,90 msnm (segons el plànol ICGC)", "location": "caixetí p.1-2, casella Cota (Z)", "quote": "570.90 msnm (segons el plànol ICGC)", "confidence": 0.6, "note": "Cota absoluta del sondeig; l'annex DPSH dona '-4 m respecte el carrer' (relativa). Regla d'ordre: annex DPSH primer → aquest valor és candidat 2."},
+    {"concept_id": "utm_x_utm_y", "value": "X=423182.0 E / Y=4609623.0 N", "location": "caixetí p.1-2, casella UTM", "quote": "423182.0 E(x) 4609623.0 N(y)", "confidence": 0.7, "note": "COORDENADES.txt (GPS de camp) mana si existeix; comprovar."},
+    {"concept_id": "field_date", "value": "2025-10-24", "location": "caixetí, Data d'inici / Data de fi", "quote": "24/10/25 / 24/10/25", "confidence": 0.6, "note": "Dia del sondeig = mateix dia que els DPSH (fitxa F38): un sol dia de campanya."},
+    {"concept_id": "lab_sample_id", "value": "SPT-1", "location": "log p.1, columna 'Tipus de mostra'", "quote": "SPT-1 | 1.00 a -1.20 | Registre: R", "confidence": 0.7, "note": "Etiqueta de l'annex de l'Eva = etiqueta de l'informe (annex > GTL > comanda). La comanda deia 'MA (S1)' → candidats amb SPT-1 primer."},
+    {"concept_id": "lab_depth", "value": "1,00 - 1,20 m", "location": "log p.1, columna 'Prof. de extracció'", "quote": "1.00 a -1.20", "confidence": 0.7, "note": "Coincideix amb la comanda (1,0-1,2). SPT amb refús (R)."},
+    {"concept_id": "street_address", "value": "carrer Arbrells nº 18A-18B-20", "location": "caixetí, títol Obra", "quote": "…AÏLLATAL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA)", "confidence": 0.7, "note": "Redacció de l'informe feta per l'Eva; coincideix amb el MODF."},
+    {"concept_id": "municipality", "value": "CASTELLAR DEL VALLÈS", "location": "caixetí, títol Obra", "quote": "CASTELLAR DEL VALLÈS (BARCELONA)", "confidence": 0.7, "note": "Forma amb accent."},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "caixetí, títol Obra", "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 0.6, "note": "SINGULAR ('una habitatge', sic) tot i que pressupost/comanda diuen 3 HAB UNIF → conflicte real, mantenir candidats."},
+    {"concept_id": "client_name", "value": "WOOD COMFORT PROM.", "location": "caixetí, casella Client", "quote": "Client: WOOD COMFORT PROM.", "confidence": 0.4, "note": "Casella 'CLIENT' d'annex = sol·licitant (derivada de l'encàrrec, no independent); coincideix amb l'acceptació."}
+  ],
+  "not_present": ["expedient (no consta al caixetí)", "architect_name", "num_floors", "superficie_parcela", "referencia_catastral", "lab_testing_company (l'Empresa: TPS és qui perfora, no consta com a laboratori aquí)", "cte", "nivell freàtic (columna buida)"],
+  "reading_notes": "FreeHand→Distiller: text brossa → renderitzat a 150 dpi i llegit visualment (2 pàgines). Sondeig fins ~1,2 m (refús). Màquina ML76A, empresa TPS, sondista Sr. Daniel Fernández. Foto 2: caixa de mostres 0,00-1,20 m amb etiqueta manuscrita 'S-1 Obra C/Arbrells Castellar del Vallès'."
+}

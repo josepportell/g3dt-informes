@@ -1,0 +1,20 @@
+{
+  "source_path": "DTE.txt",
+  "document_type": "altre",
+  "what_it_is": "Nota administrativa interna de facturació (descompte/factura de l'informe).",
+  "issuer": "G3 (oficina)",
+  "date": "21/05 (any no indicat; venciment VCT 15/06/26 → 2026)",
+  "pages_or_sheets": "1 línia",
+  "context": {
+    "who_made_it": "G3 administració",
+    "for_whom": "G3 intern",
+    "why": "control de facturació (1.185,80 € = 980,00 + 21% IVA → correspon al pressupost inicial signat)",
+    "expected_fields": [],
+    "not_expected": ["cap camp del nivell A"],
+    "relation_to_others": "corrobora que l'import acceptat vigent en facturació era el del pressupost inicial (980 €), no el MODF",
+    "authority_for": []
+  },
+  "tier_a": [],
+  "not_present": ["tots els camps del nivell A"],
+  "reading_notes": "Text complet: 'EN DATA 21/05 DTO AQUEST INFORME PER UN IMPORT DE 1185,80€ - VCT: 15/06/26'."
+}

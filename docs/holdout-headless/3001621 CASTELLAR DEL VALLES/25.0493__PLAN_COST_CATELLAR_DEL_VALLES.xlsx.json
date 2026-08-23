@@ -1,0 +1,24 @@
+{
+  "source_path": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+  "document_type": "plan_cost_g3",
+  "what_it_is": "Full intern G3 de planificació de costos de l'oferta 25·0493 (marges, subcontractació, unitats)",
+  "issuer": "G3 (oficina tècnica)",
+  "date": "sense data explícita a les cel·les llegides",
+  "pages_or_sheets": "fulls: Plan Cost, OFERTA, FACTURA M, Material Cost (lab), Material Cost, Cost Center, Technicians",
+  "context": {
+    "who_made_it": "G3 internament (ERP/plantilla PLAN COST)",
+    "for_whom": "Control econòmic intern de G3",
+    "why": "Quantificar cost/marge de l'oferta; les llistes de preus i proveïdors són plantilla",
+    "expected_fields": ["building_type + municipality (E9 DESCRIPCIÓ TITÒL)", "tècnic (E21)", "unitats DPSH (OFERTA!B21)", "ml sondeig (OFERTA!B6)", "SPT (OFERTA!B14)"],
+    "not_expected": ["client_name", "street_address", "field_date", "cota_referencia", "num_soil_levels", "expedient", "utm", "referencia_catastral", "cte"],
+    "relation_to_others": "Quantitats coherents amb el pressupost (4 DPSH, 1 sondeig amb SPT). Regla del skill: TOTA la resta (SOIL-ASSAIG, TPS, preus) és plantilla, mai senyal. PLAN_COST no s'actualitza: última font per a quantitats.",
+    "authority_for": ["building_type (expansió del títol)", "municipality (corroboració)"]
+  },
+  "tier_a": [
+    {"concept_id": "building_type", "value": "3 habitatges unifamiliars (EG = estudi geotècnic; HAB UNIF expandit)", "location": "'Plan Cost'!E9 (DESCRIPCIÓ TITÒL)", "quote": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS", "confidence": 0.6, "note": "Confirma '3 habitatges unifamiliars' (lliga amb '3HAB' del pressupost inicial i els 3 números de carrer 18A-18B-20)."},
+    {"concept_id": "municipality", "value": "CASTELLAR DEL VALLÈS", "location": "'Plan Cost'!E9", "quote": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS", "confidence": 0.6, "note": "3a aparició (pressupost, fitxa, PLAN_COST) — cap d'independent de l'encàrrec, però consistents."},
+    {"concept_id": "num_dpsh_tests", "value": 4, "location": "OFERTA!B21 (unitat de penetració dinàmica DPSH)", "quote": "unitat de penetració dinàmica DPSH | 4", "confidence": 0.4, "note": "Previstos. També OFERTA!B6 = 5 ml sondeig i OFERTA!B14 = 3 SPT."}
+  ],
+  "not_present": ["expedient ('NUM INF' I7 buit)", "client_name", "street_address", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab (G27 'SOIL-ASSAIG' i G3 'TPS' són plantilla per regla, mai senyal)", "cte"],
+  "reading_notes": "Tècnic responsable E21 = Eva Vázquez Marcet (G3, no és cap camp del nivell A). 'CLIENT / UBICACIÓ OBRA' J8 = 'BCN' (província, poc informatiu). Nom de fitxer amb typo 'CATELLAR'."
+}

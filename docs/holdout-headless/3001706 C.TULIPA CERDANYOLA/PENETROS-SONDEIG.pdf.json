@@ -1,0 +1,27 @@
+{
+  "source_path": "PENETROS + SONDEIG.pdf",
+  "document_type": "full_camp_manuscrit",
+  "what_it_is": "Recull (fotos WhatsApp impreses a PDF) dels 5 fulls de camp manuscrits de TPS: 2 albarans + 2 fulls DPSH (un per casa) + 1 full de sondeig.",
+  "issuer": "TPS (operari/sondista Daniel Fernández); fotos IMG-20260507-WA000x",
+  "date": "camp 7-5-2026 (albarans i fulls DPSH); PDF imprès 2026-05-07 16:06",
+  "pages_or_sheets": "5 pàgines: p1 albarà penetròmetre, p2 DPSH Casa 1, p3 DPSH Casa 2, p4 albarà sondeig, p5 full de sondeig S-1",
+  "context": {
+    "who_made_it": "TPS (subcontractista de camp) per justificar la feina feta a G3",
+    "for_whom": "G3 (Eva)",
+    "why": "albarans de feina + registres de camp en brut",
+    "expected_fields": ["num_dpsh_tests (albarà)", "field_date", "punt 0 / cota referència", "N.F.", "croquis"],
+    "not_expected": ["client_name (DADES CLIENT = G3/Eva, relació TPS→G3)", "arquitecte", "plantes", "superfícies"],
+    "relation_to_others": "versió manuscrita del que Eva transcriu als Excels DPSH (que MANEN per als valors); es llegeix pel que l'Excel no té: punt 0, N.F., croquis, refusos, dates. Adreça manuscrita 'C/ Tulipan' → normalitzar a la grafia impresa 'C/ Tulipa'.",
+    "authority_for": ["num_dpsh_tests (executats, contrast)", "field_date", "N.F. (absència)", "cota 0 del sondeig"]
+  },
+  "tier_a": [
+    {"concept_id": "num_dpsh_tests", "value": "4 (total expedient); 2+2 per casa (p2 'Casa 1' P1/P2, p3 'Casa 2' P1/P2)", "location": "p1 albarà + p2/p3 fulls DPSH", "quote": "Nº de penetròmetres realitzats: 4 / Ml de penetròmetre (5 mínims): 20,11 / Assaigs SPT o MI: 2", "confidence": 0.8, "note": "coincideix amb els Excels (2+2) i el pressupost MODF (4)"},
+    {"concept_id": "field_date", "value": "07/05/2026", "location": "p1 Data, p2/p3 Data, p4 Data inici/final", "quote": "Data: 7-5-2026 (albarà i fulls DPSH); albarà sondeig: Data inici 7-5-2026, Data final 7-5-2026", "confidence": 0.85, "note": "p5 (full sondeig) sembla dir '7-6-2025' → lapsus del sondista; 4 fulls contra 1 + fotos WhatsApp del 2026-05-07"},
+    {"concept_id": "cota_referencia", "value": "punt 0 = C/ Tulipa; sondeig a +1 m del carrer; casa 2: P1 +2,20 / P2 +2,50 sobre punt 0", "location": "p2/p3 'Descriure punt 0 o cota referencia' + p5 'cota 0 o cota referència'", "quote": "C/ Tulipan … C/Tulipan +1m … Cota Inici +/-0 (casa 1) / +2,20 i +2,50 (casa 2)", "confidence": 0.4, "note": "cotes RELATIVES de camp; les absolutes (198/199/201,25/202,85) les fixa Eva als annexos amb el topogràfic ICGC; '+1 m sobre carrer' quadra amb +199,0 del S-1"},
+    {"concept_id": "street_address", "value": "C/ Tulipa (grafia manuscrita 'Tulipan'), Cerdanyola; croquis amb 'C/ de Tosca' i 'Camí Antic'", "location": "capçaleres DADES OBRA + croquis p2/p3", "quote": "Adreça: C/ Tulipan / Població: Cerdanyola … croquis: C/Tulipan, C/ de Tosca, Camí Antic", "confidence": 0.4, "note": "manuscrit → normalitzar cap al document imprès (C/ Tulipa 3); els croquis confirmen que les dues parcel·les són entre Tulipa, Tosca i Camí Antic"},
+    {"concept_id": "lab_depth", "value": "SPT-1 1,00–1,60 (6/9/9/9); SPT-2 3,00–3,54 (19/31/33/50)", "location": "p5 taula Mostres", "quote": "1,00 a 1,60 S.P.T-1 6 9 9 9 / 3,00 a 3,54 S.P.T-2 19 31 33 50", "confidence": 0.5, "note": "coincideix amb l'annex sondeig (3,54, no 3,60 de la comanda)"},
+    {"concept_id": "NOT_client_name", "value": "G3 / Eva", "location": "p1/p4 DADES CLIENT", "quote": "Empresa: G3 / Responsable: Eva", "confidence": 0.0, "note": "client del subcontractista TPS, no del projecte (regla)"}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "num_soil_levels (els 2 trams de material del p5 NO són nivells)", "utm_x_utm_y", "referencia_catastral", "cte_*", "nivell freàtic: caselles en blanc → no detectat"],
+  "reading_notes": "Escanejat sense text → render 110 dpi i lectura visual de les 5 pàgines. Refusos manuscrits: casa 1 P1 R:2,19, P2 R:3,70; casa 2 P1 R:4,13, P2 R:5,11 (profunditats de refús, quadren amb 20,11 ml totals aprox). Sondeig: 3,60 ml perforats, corones 101/86 W.B."
+}

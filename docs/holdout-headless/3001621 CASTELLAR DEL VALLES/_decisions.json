@@ -1,0 +1,188 @@
+{
+  "project": "3001621 CASTELLAR DEL VALLES",
+  "mode": "holdout-headless (primera obertura; sense referències; Pas 6 NO executat)",
+  "skill_version": "0.4",
+  "generated": "2026-08-23",
+  "fields": {
+    "expedient": {
+      "status": "segur",
+      "value": "3001621",
+      "rule": "Nom de la carpeta = comanda N19 = annex DPSH 'NÚMERO D´INFORME' = caixetí tall/plànol 'Exp:' = GTL 'Obra/Projecte'; 25·0493 (comercial) i 4687-GTL-25/GTL-8230-25 (laboratori) descartats.",
+      "candidates": [
+        {"value": "3001621", "source": "comanda laboratori Hoja1!N19", "quote": "NÚM. D'EXPEDIENT: 3001621"},
+        {"value": "3001621", "source": "PDF/ANNEXES/3001621_DPSH.pdf capçalera p.1-3", "quote": "NÚMERO D´INFORME: 3001621"},
+        {"value": "3001621", "source": "tall.pdf / plànol de situació caixetí", "quote": "Exp: 3001621"},
+        {"value": "3001621", "source": "GTL p.2 Obra/Projecte", "quote": "Castellar del Vallés. Carrer Arbrells. 3001621"}
+      ]
+    },
+    "client_name": {
+      "status": "segur",
+      "value": "WOOD COMFORT PROMOCIONS SLU (NIF B19935212)",
+      "rule": "Formulari p.5 del pressupost acceptat ('DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME') mana, fins i tot sobre versions velles del pressupost (GRUP ALMA → WOOD COMFORT al MODF); la fitxa de camp conserva el client vell i no és autoritat; G3 mai és client.",
+      "candidates": [
+        {"value": "WOOD COMFORT PROMOCIONS SLU (B19935212)", "source": "ACCEPTACIO/ p.5 manuscrit + NIF digital", "quote": "NOM I COGNOMS: WOOD COMFORT PROMOCIONS SLU · N.I.F.: B19935212"},
+        {"value": "WOOD COMFORT PROMOCIONS SLU", "source": "PRESSUPOST MODF p.1 bloc CLIENT (mateixa cadena, corroboració)", "quote": "WOOD COMFORT PROMOCIONS SLU | 08006 BARCELONA"},
+        {"value": "GRUP ALMA CONSTRUCCIONS (OBSOLET, substituït 10/2025)", "source": "pressupost inicial p.1 + fitxa C6 + correu 25/06", "quote": "CLIENT: GRUP ALMA CONSTRUCCIONS"}
+      ],
+      "note": "Contacte operatiu: Roc Clusa (rocflats@hotmail.com, 615 55 74 50), present a l'acceptació i als correus; NO és el client de l'informe."
+    },
+    "street_address": {
+      "status": "segur",
+      "value": "carrer Arbrells, 18A-18B-20",
+      "rule": "Només blocs etiquetats OBRA/ADREÇA OBRA/títol; el client dicta la forma final ('18A, 18B i 20') al correu de 18/11; l'adreça del client (Ferran Valls i Taberner, BCN) descartada.",
+      "candidates": [
+        {"value": "C/ARBRELLS 18A-18B-20", "source": "PRESSUPOST MODF p.1 bloc OBRA", "quote": "C/ARBRELLS 18A-18B-20"},
+        {"value": "carrer Arbrells 18A, 18B i 20", "source": "correu Roc Clusa 18/11 (títol dictat)", "quote": "AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS"},
+        {"value": "C/ ARBRELLS 18 A (forma inicial, només el primer solar)", "source": "annex DPSH capçalera / fitxa C7 / comanda N20", "quote": "OBRA: C/ ARBRELLS 18 A"}
+      ],
+      "note": "CP 08211 (fitxa C7). Les aparicions '18A' són de la fase inicial de l'encàrrec (abans de comprar les 2 parcel·les del costat): no contradiuen la forma vigent."
+    },
+    "municipality": {
+      "status": "segur",
+      "value": "Castellar del Vallès",
+      "rule": "Comanda N21 + pressupost p.1 + PLAN_COST E9 (les 3 fonts G3 habituals) + fitxa + annexos; forma oficial amb accent; la grafia del laboratori ('Vallés') i la del sol·licitant mai manen.",
+      "candidates": [
+        {"value": "CASTELLAR DEL VALLÈS", "source": "comanda Hoja1!N21", "quote": "POBLACIÓ: CASTELLAR DEL VALLÈS"},
+        {"value": "CASTELLAR DEL VALLES", "source": "pressupost MODF p.1 bloc OBRA", "quote": "CASTELLAR DEL VALLES"},
+        {"value": "Castellar del Vallès", "source": "títol dels annexos de l'Eva + correu client", "quote": "CASTELLAR DEL VALLÈS (BARCELONA)"}
+      ]
+    },
+    "architect_name": {
+      "status": "candidats",
+      "rule": "Cap arquitecte enlloc de la carpeta (encàrrec directe del promotor per WhatsApp; casella ARQUITECTE de l'acceptació buida) → pràctica de l'Eva: escriu el client al camp arquitecte; mai segur.",
+      "candidates": [
+        {"value": "WOOD COMFORT PROMOCIONS SLU (pràctica Eva: client al camp arquitecte)", "source": "ACCEPTACIO p.5 (client) + absència d'arquitecte a tota la carpeta", "quote": "casella 'ARQUITECTE ………' buida al formulari p.5"}
+      ],
+      "note": "Cap projecte/plànol d'arquitecte a la carpeta; l'encàrrec el fa el contacte del promotor (Roc Clusa) per WhatsApp. Confirmar amb l'Eva."
+    },
+    "building_type": {
+      "status": "candidats",
+      "rule": "Títol del projecte > PLAN_COST 'HAB UNIF' (expandit) > comanda 'CONSTR HABITATGE' > correu; conflicte real entre la redacció singular dels annexos de l'Eva (03/11) i el títol dictat pel client (18/11, posterior).",
+      "candidates": [
+        {"value": "grup d'habitatges unifamiliars", "source": "correu Roc Clusa 18/11 (títol dictat pel client, més recent)", "quote": "CONSTRUCCIÓ D'UN GRUP D'HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20"},
+        {"value": "habitatge unifamiliar aïllat", "source": "títol dels annexos de l'Eva (sondeig/tall/plànol, 03/11)", "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT"},
+        {"value": "3 habitatges unifamiliars (PB+1, entramat lleuger de fusta, ~120 m² c/u)", "source": "PLAN_COST E9 + comanda N18 + correu d'encàrrec 25/06", "quote": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS / CONSTR 3 HAB UNIF"}
+      ],
+      "note": "La comparació amb l'informe hauria de ser CLOSE (l'informe redacta). El candidat 1 és la petició explícita del client sobre el títol."
+    },
+    "num_floors": {
+      "status": "candidats",
+      "rule": "Cap plantilla G3 ho porta; taula de planejament inexistent → correu d'encàrrec. Baixat de 'segur' perquè la descripció (PB+1, 120 m²) era del PRIMER habitatge (18A) i l'encàrrec final és de 3 habitatges: extrapolació raonable però no textual.",
+      "candidates": [
+        {"value": "PB+1 (sense soterrani)", "source": "correu d'encàrrec 25/06 (WhatsApp del client)", "quote": "PB + 1 - Sense soterrani - 120 m2 construits - Estructura d'entremat lleuger de fusta"}
+      ],
+      "note": "Cap document contradiu PB+1 per als altres dos habitatges (grup homogeni), però cap el confirma."
+    },
+    "superficie_parcela": {
+      "status": "no_trobat",
+      "rule": "Taula de planejament > suma de parcel·les cadastrals > una parcel·la; cap de les tres fonts existeix; 120 m² és superfície CONSTRUÏDA, mai parcel·la.",
+      "sources_checked": ["pressupostos (cap superfície)", "fitxa de camp", "comanda", "PLAN_COST", "annexos de l'Eva (plànol de situació sense taula)", "correus (només 120 m² construïts)", "cap plànol/projecte d'arquitecte ni consulta cadastral a la carpeta"],
+      "note": "Proposta: consulta Cadastre / visor ICGC de les 3 parcel·les (Arbrells 18A, 18B, 20)."
+    },
+    "field_date": {
+      "status": "segur",
+      "value": "2025-10-24",
+      "rule": "Fitxa F38 (primer dia de camp) > annex DPSH DATA > albarà TPS; DPSH i sondeig el MATEIX dia (comanda DATA DE PRESA i annex sondeig coincideixen); mai la data del pressupost (25/06, 07/10) ni del GTL (19/11).",
+      "candidates": [
+        {"value": "2025-10-24", "source": "fitxa de camp F38 ('dies de camp', tipus data)", "quote": "datetime(2025,10,24)"},
+        {"value": "24/10/25", "source": "annex DPSH capçalera + albarans TPS + fulls de camp", "quote": "DATA: 24/10/25 / 24-10-2025"},
+        {"value": "24/10/2025", "source": "comanda N23 (presa mostra) + GTL data extracció + noms fotos WhatsApp", "quote": "Imagen de WhatsApp 2025-10-24 a las 09.37.01"}
+      ]
+    },
+    "cota_referencia": {
+      "status": "candidats",
+      "rule": "Ordre de candidats: annex DPSH primer; cota RELATIVA intencionada (punt 0 = el carrer); l'annex sondeig porta la cota absoluta ICGC; z GPS no és el criteri de l'Eva.",
+      "candidates": [
+        {"value": "-4,0 m respecte el carrer (P-2: -4,2; punt 0 = C/ Arbrells)", "source": "annex DPSH capçaleres + fulls de camp TPS ('Descriure punt 0: C/ Arbrells')", "quote": "P-1 - 4 m (respecte el carrer)"},
+        {"value": "570,90 msnm (segons el plànol ICGC)", "source": "annex sondeig caixetí Cota (Z) (= z del S-1 a COORDENADES.txt)", "quote": "570.90 msnm (segons el plànol ICGC)"},
+        {"value": "571,5 (z GPS del P-1)", "source": "COORDENADES.txt", "quote": "P-1 423167.0 ; 4609608.0 ; 571.5"}
+      ],
+      "note": "Les dues primeres són compatibles (relativa vs absoluta): la parcel·la és ~4 m sota el carrer i el terreny és a ~570-571 msnm (eix del tall 569-572)."
+    },
+    "num_soil_levels": {
+      "status": "segur",
+      "value": 1,
+      "rule": "Columna 'Unitat litològica' de l'annex de sondeig (NIVELL 1) = llegenda del tall ('Nivell 1: Substrat rocós'); el terreny vegetal (0,00-0,50) no és nivell; els 2 trams de material del full de camp manuscrit no són nivells.",
+      "candidates": [
+        {"value": 1, "source": "annex sondeig, columna Unitat litològica", "quote": "NIVELL 1 (0,50-1,20: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells)"},
+        {"value": 1, "source": "tall.pdf llegenda", "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."}
+      ]
+    },
+    "num_dpsh_tests": {
+      "status": "segur",
+      "value": 4,
+      "rule": "Excel DPSH (executats) mana > albarà TPS 'Nº de penetròmetres realitzats' > previstos (pressupost/fitxa/PLAN_COST); aquí 4 = 4 = 4, sense discrepància.",
+      "candidates": [
+        {"value": 4, "source": "ANNEXES/3001621_DPSH.xls (P-1..P-4 tots amb dades)", "quote": "rebuigs a -1,08 / -0,48 / -0,76 / -1,55 m"},
+        {"value": 4, "source": "albarà TPS p.1", "quote": "Nº de penetròmetres realitzats: 4"},
+        {"value": 4, "source": "pressupost MODF p.2 (previstos)", "quote": "4 assaigs de penetració dinàmica DPSH"}
+      ]
+    },
+    "utm_x_utm_y": {
+      "status": "segur",
+      "value": "X=423167.0 / Y=4609608.0 (P-1)",
+      "rule": "COORDENADES.txt (X;Y;Z per punt) > caselles x/y de l'annex de sondeig; UTM de l'informe = P-1 de COORDENADES.txt; mai geocodificar aquí.",
+      "candidates": [
+        {"value": "423167.0 ; 4609608.0 (P-1)", "source": "ANNEXES/ALTRES/COORDENADES.txt", "quote": "P-1\\n423167.0 ; 4609608.0 ; 571.5"},
+        {"value": "423182.0 ; 4609623.0 (S-1)", "source": "annex sondeig caixetí UTM (coincideix amb COORDENADES.txt S-1)", "quote": "423182.0 E(x) 4609623.0 N(y)"}
+      ]
+    },
+    "referencia_catastral": {
+      "status": "no_trobat",
+      "rule": "Només consultes del Cadastre a la carpeta o noms d'adjunts .msg; mai inferir-la d'una adreça.",
+      "sources_checked": ["tota la carpeta (cap PDF de Certificación Catastral)", "adjunts dels 2 .msg (només imatges de signatura + PLAN_COST)", "plànol de situació (capa cadastral de fons amb una etiqueta parcial '32980': insuficient)"],
+      "note": "Probablement 3 parcel·les (18A, 18B, 20) → hi hauria d'haver 3 referències. Proposta: consulta Cadastre per adreça."
+    },
+    "lab_testing_company": {
+      "status": "segur",
+      "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+      "rule": "Laboratori = emissor del GTL (banda amb registre mercantil), mai el 'client' del GTL (G3).",
+      "candidates": [
+        {"value": "TPS, Prospecció del Subsòl, SL (B64803075, lab. Golmés)", "source": "GTL 4687-GTL-25, peu de totes les pàgines", "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL B64803075 Ins. Reg. Merc. de Barcelona…"}
+      ]
+    },
+    "lab_sample_id": {
+      "status": "candidats",
+      "rule": "Etiqueta de l'informe: annex de l'Eva > GTL > comanda; annex (SPT-1) i GTL (MA1 S1) discrepen → candidats, mai segur.",
+      "candidates": [
+        {"value": "SPT-1", "source": "annex sondeig, columna Tipus de mostra", "quote": "SPT-1 | 1.00 a -1.20 | R"},
+        {"value": "MA1 S1", "source": "GTL p.2/p.4 'Mostra:'", "quote": "Mostra: MA1 S1"},
+        {"value": "MA (S1)", "source": "comanda Hoja1!C35", "quote": "MA (S1)"}
+      ]
+    },
+    "lab_depth": {
+      "status": "segur",
+      "value": "1,0 - 1,2 m",
+      "rule": "GTL > Excel/annex sondeig > comanda per a la profunditat; aquí les tres fonts coincideixen.",
+      "candidates": [
+        {"value": "1,0 - 1,2", "source": "GTL 'Cota d'extracció (m)'", "quote": "Cota d'extracció (m): 1,0 - 1,2"},
+        {"value": "1,00 a 1,20", "source": "annex sondeig (Prof. de extracció) + full de camp manuscrit", "quote": "1.00 a -1.20"},
+        {"value": "1,0 / 1,2", "source": "comanda J35/L35", "quote": "INICIAL 1.0 | FINAL 1.2"}
+      ]
+    },
+    "lab_location": {
+      "status": "candidats",
+      "rule": "El skill no defineix explícitament lab_location; interpretat com el punt d'extracció de la mostra.",
+      "candidates": [
+        {"value": "S-1 (sondeig a rotació)", "source": "annex sondeig (mostra SPT-1 al log de S-1) + comanda 'MA (S1)' + GTL 'MA1 S1'", "quote": "Sondeig nº: S-1 … SPT-1 1.00 a -1.20"}
+      ],
+      "note": "Si lab_location vol dir la ubicació del laboratori: Polígon industrial Golparc, Avgda. Mediterrània 20, 25241 Golmés (Lleida) — GTL peu de pàgina. Ambigüitat de definició anotada per a l'orquestrador."
+    },
+    "cte_edificacio": {
+      "status": "candidats",
+      "rule": "El pressupost NO porta la línia 'Tipus d'edifici' → derivació per superfície construïda TOTAL de l'encàrrec (3 × 120 = 360 m² > 300 i < 4 plantes → C-1); sempre candidats, mai segur.",
+      "candidates": [
+        {"value": "C-1 (derivat: 360 m² totals, < 4 plantes)", "source": "derivació sobre el correu d'encàrrec 25/06", "quote": "120 m2 construits (per habitatge) × 3"},
+        {"value": "C-0 (si l'informe considera cada habitatge per separat: 120 m² < 300)", "source": "derivació alternativa", "quote": "PB + 1 … 120 m2 construits"}
+      ]
+    },
+    "cte_sol": {
+      "status": "candidats",
+      "rule": "Sense línia 'Tipus de Terreny' al pressupost → T-1 com a candidat per defecte (valor de tots els pressupostos G3 que la porten); sempre candidats.",
+      "candidates": [
+        {"value": "T-1", "source": "defecte G3 (cap document del projecte la porta)", "quote": "—"}
+      ]
+    }
+  },
+  "summary": {"segur": 9, "candidats": 6, "no_trobat": 2, "note": "15 camps del nivell A; lab desglossat en 4 subcamps i cte en 2, seguint la llista del skill (18 decisions en total)."}
+}

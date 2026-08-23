@@ -1,0 +1,25 @@
+{
+  "source_path": "pl situ.pdf (Print To PDF, renderitzat) + PDF/ANNEXES/4001607_plànol de situació.pdf (FreeHand/Distiller, text brossa) — MATEIX dibuix",
+  "document_type": "annex_planol_situacio",
+  "what_it_is": "Plànol de situació de l'Eva: planta de l'habitatge sobre la parcel·la amb els punts P-1/P-2/P-3, encaix cadastral i mapa de Linyola",
+  "issuer": "G3-Eva (FreeHand; Print To PDF 2025-10-27)",
+  "date": "caixetí 'Data: Octubre 2025'",
+  "pages_or_sheets": "1 pàgina (renderitzada a 130 dpi, dibuix girat 90°)",
+  "context": {
+    "who_made_it": "Eva, sobre la planta del projecte de l'arquitecte",
+    "for_whom": "annex de l'informe",
+    "why": "situar els punts d'assaig respecte de l'edifici i del municipi",
+    "expected_fields": ["expedient (caixetí)", "street/municipality (títol)", "posició punts", "carrers limítrofs"],
+    "not_expected": ["field_date (la data del caixetí és mes/any de l'informe)", "client_name", "architect_name", "superficie_parcela numèrica"],
+    "relation_to_others": "Mateix títol de projecte que el tall (redacció de l'informe). La planta prové del projecte 2_02B_DG de l'arquitecte. El caixetí aquí diu 'Octubre 2025' — confirma que el 'Octubre 2023' del tall és error de còpia.",
+    "authority_for": ["expedient (suport)", "street_address (suport)", "municipality (suport)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "4001607", "location": "caixetí", "quote": "Exp: 4001607 · Pàgina 1/1 · Plànol de situació", "confidence": 0.7, "note": ""},
+    {"concept_id": "street_address", "value": "Carrer Clot de la Llacuna nº16", "location": "caixetí TÍTOL DEL PROJECTE", "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola", "confidence": 0.7, "note": "el dibuix mostra 'CARRER FONT' com a carrer de façana inferior → possible cantonada Clot de la Llacuna / Carrer Font; el títol només anomena Clot de la Llacuna 16"},
+    {"concept_id": "municipality", "value": "Linyola", "location": "caixetí TÍTOL + mapa d'encaix", "quote": "…de Linyola; mapa amb etiqueta 'Linyola'", "confidence": 0.75, "note": ""},
+    {"concept_id": "building_type", "value": "habitatge", "location": "caixetí TÍTOL", "quote": "…construcció d'un habitatge…", "confidence": 0.5, "note": "mateixa redacció que el tall (no independent)"}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela (cap taula de planejament al plànol de situació)", "field_date", "cota_referencia", "num_soil_levels", "cte", "utm_x_utm_y", "referencia_catastral (l'encaix cadastral no mostra la referència llegible a 130 dpi)", "lab_*"],
+  "reading_notes": "Text FreeHand brossa → render 130 dpi i lectura visual (dibuix girat 90°). P-1 a la cantonada inferior esquerra (0,70/0,90 de les façanes), P-2 al mig-dreta, P-3 a dalt (3,20/8,90); amplada interior 12.2/11.4. Llegenda 'Assaig de penetració dinàmica DPSH'. Carrer de façana: CARRER FONT (el dibuix no retola el propi Clot de la Llacuna)."
+}

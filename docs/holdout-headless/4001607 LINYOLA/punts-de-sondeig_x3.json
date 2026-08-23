@@ -1,0 +1,24 @@
+{
+  "source_path": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf (= 'Punts de Sondeig_Silvia_Jaume (1).pdf', md5 idèntic) + 'Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf' (còpia anotada per l'Eva, modDate 2025-09-30)",
+  "document_type": "planol",
+  "what_it_is": "Plànol 03 del projecte amb els 3 punts de sondeig proposats per l'arquitecte; el REDIBUIX hi afegeix les cotes d'amidament de l'Eva (0.69/0.92, 12.42, 4.80, 12.20, 3.21, 7.89, 'CASA VECINA', 'CALLE')",
+  "issuer": "BUNYESC (original); G3-Eva (anotacions del REDIBUIX)",
+  "date": "original 2025-08-19; REDIBUIX 2025-09-30 (mateix dia que el correu de la Sílvia demanant desplaçar 2 punts 1 m)",
+  "pages_or_sheets": "1 pàgina cadascun",
+  "context": {
+    "who_made_it": "l'arquitecte (posicions proposades); Eva (redibuix amb mides reals)",
+    "for_whom": "G3 / equip de camp",
+    "why": "fixar on fer els 3 assaigs; el REDIBUIX incorpora el desplaçament d'1 m demanat el 30-09",
+    "expected_fields": ["num_dpsh_tests (3 punts)", "corroboració caixetí (promotors, arquitecte, emplaçament)"],
+    "not_expected": ["cota_referencia", "superficie_parcela", "field_date"],
+    "relation_to_others": "Adjunt del correu d'encàrrec i del correu del 30-09 (md5 dups). Caixetí idèntic al projecte 2_02B_DG (no font independent). El REDIBUIX és la posició executada → base del plànol de situació de l'annex.",
+    "authority_for": ["num_dpsh_tests (suport)"]
+  },
+  "tier_a": [
+    {"concept_id": "num_dpsh_tests", "value": 3, "location": "etiquetes del plànol", "quote": "1r PUNT SONDEIG / 2n PUNT SONDEIG / 3r PUNT SONDEIG", "confidence": 0.6, "note": "3 punts proposats = 3 DPSH executats"},
+    {"concept_id": "client_name", "value": "Sílvia Eroles Balagueró i Jaume Nadal Andreu", "location": "caixetí PROMOTORS", "quote": "PROMOTORS: SÍLVIA EROLES BALAGUERÓ / JAUME NADAL ANDREU", "confidence": 0.3, "note": "duplicat del caixetí del projecte (no independent)"},
+    {"concept_id": "architect_name", "value": "Josep Bunyesc Palacín (BUNYESC)", "location": "caixetí REDACTOR/S", "quote": "representat per: JOSEP BUNYESC PALACÍN - Dr. Arquitecte", "confidence": 0.3, "note": "duplicat del caixetí del projecte (no independent)"}
+  ],
+  "not_present": ["expedient G3", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela (no consta en aquest full)", "cte", "utm_x_utm_y", "referencia_catastral", "lab_*"],
+  "reading_notes": "Text vectorial net als tres fitxers. Dedup: '…(1).pdf' té md5 idèntic a l'original de 25.0616/ → una sola font. El REDIBUIX (modDate 30-09 16:00, hores després del correu de la Sílvia) conté les mides que després apareixen al plànol de situació de l'annex (0,70/0,90 ~ 0,69/0,92)."
+}

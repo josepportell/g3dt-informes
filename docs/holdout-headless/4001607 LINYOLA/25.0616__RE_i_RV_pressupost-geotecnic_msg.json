@@ -1,0 +1,20 @@
+{
+  "source_path": "25.0616/RV_ pressupost geotècnic.msg + 25.0616/RE_ pressupost geotècnic.msg",
+  "document_type": "correu",
+  "what_it_is": "Dos reenviaments interns G3 del correu d'encàrrec (RV_ de Loli Maqueda a Eva, 20-08 11:31; RE_ d'Eva Vázquez amb el PLAN_COST adjunt, 20-08 13:15). Cap text nou substantiu.",
+  "issuer": "G3 (Dolors 'Loli' Maqueda; Eva Vázquez)",
+  "date": "2025-08-20",
+  "pages_or_sheets": "cossos = signatures corporatives + cadena; adjunts deduplicats (PLAN_COST_LINYOLA.xlsx = md5 dup del solt; Punts de Sondeig + 2_02B_DG = md5 dup dels solts; imatges ≤ 32 KB = signatures)",
+  "context": {
+    "who_made_it": "administració G3 (circuit intern d'oferta)",
+    "for_whom": "Eva (geologia) i Eva Roig (administració)",
+    "why": "posar l'encàrrec en circuit i preparar el pressupost/pla de cost",
+    "expected_fields": [],
+    "not_expected": ["res de nou del nivell A: en cadenes RE_/RV_ només compta el text per sobre del primer De:/From:, i aquí és buit o boilerplate"],
+    "relation_to_others": "duplicats funcionals del correu d'encàrrec 'pressupost geotècnic.msg'; adjunts tots dedupats per md5",
+    "authority_for": []
+  },
+  "tier_a": [],
+  "not_present": ["tots els camps del nivell A (cap text nou)"],
+  "reading_notes": "extract_msg. RE_ confirma que Eva Vázquez (Resp. Dept Geologia, col. 4302) porta el projecte i que el PLAN_COST es genera el 20-08. Cap senyal nou; anotats com a duplicats, no fonts independents."
+}

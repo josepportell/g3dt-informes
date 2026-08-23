@@ -1,0 +1,23 @@
+{
+  "source_path": "ANNEXES/ALTRES/COORDENADES.txt",
+  "document_type": "coordenades_gps",
+  "what_it_is": "Coordenades UTM (X;Y;Z) dels 3 punts d'assaig preses a camp",
+  "issuer": "G3-Eva (GPS de camp)",
+  "date": "no consta (camp 2025-10-01)",
+  "pages_or_sheets": "1 fitxer txt",
+  "context": {
+    "who_made_it": "equip de camp G3/TPS amb GPS",
+    "for_whom": "l'informe (plànol de situació, capçalera)",
+    "why": "georeferenciar els punts d'assaig",
+    "expected_fields": ["utm_x_utm_y", "z per punt (contrast amb cota_referencia)"],
+    "not_expected": ["la resta del nivell A"],
+    "relation_to_others": "z GPS (244,9-245,1) vs cota annex DPSH +245 (ICGC -0,15 carrer): coherents a ±0,1-0,6 m; per regla l'Eva usa l'annex, no el GPS, per a la cota. UTM de l'informe = P-1.",
+    "authority_for": ["utm_x_utm_y"]
+  },
+  "tier_a": [
+    {"concept_id": "utm_x_utm_y", "value": "X 324935 ; Y 4619561 (P-1)", "location": "bloc P-1", "quote": "P-1\\n324935.0 ; 4619561.0  ; 244.9", "confidence": 0.9, "note": "regla: UTM de l'informe = P-1 de COORDENADES.txt. Altres punts: P-2 324943;4619564;244.9 · P-3 324950;4619561;245.1 (fus 31N implícit)"},
+    {"concept_id": "cota_referencia", "value": "244,9 (z GPS P-1)", "location": "bloc P-1, camp Z", "quote": "324935.0 ; 4619561.0 ; 244.9", "confidence": 0.3, "note": "candidat inferior: l'Eva no usa el z GPS (regla); coherent amb +245 de l'annex"}
+  ],
+  "not_present": ["tots els altres camps del nivell A"],
+  "reading_notes": "Format 'X ; Y ; Z' per punt, 3 punts. Cap capçalera de projecte."
+}

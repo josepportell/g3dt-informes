@@ -1,0 +1,23 @@
+{
+  "source_path": "ANNEXES/ALTRES/COORDENADES.txt",
+  "document_type": "coordenades_gps",
+  "what_it_is": "Coordenades UTM (X;Y;Z) de camp dels 5 punts d'assaig (P-1..P-4, S-1)",
+  "issuer": "G3 (presa a camp, GPS)",
+  "date": "sense data (campanya 24/10/25)",
+  "pages_or_sheets": "1 fitxer de text",
+  "context": {
+    "who_made_it": "Equip de camp (GPS)",
+    "for_whom": "Eva, per als annexos i el plànol de situació",
+    "why": "Ubicar cada punt d'assaig",
+    "expected_fields": ["utm_x_utm_y", "z per punt"],
+    "not_expected": ["tota la resta del nivell A"],
+    "relation_to_others": "S-1 (423182.0; 4609623.0; 570.9) coincideix exactament amb el caixetí de l'annex de sondeig (UTM i Cota Z 570,90). Regla: UTM de l'informe = P-1 d'aquest fitxer.",
+    "authority_for": ["utm_x_utm_y"]
+  },
+  "tier_a": [
+    {"concept_id": "utm_x_utm_y", "value": "X=423167.0 / Y=4609608.0 (P-1)", "location": "bloc P-1", "quote": "P-1\\n423167.0 ; 4609608.0 ; 571.5", "confidence": 0.85, "note": "Regla: UTM de l'informe = P-1 de COORDENADES.txt. Resta de punts: P-2 423174.0;4609616.0;570.5 · S-1 423182.0;4609623.0;570.9 · P-4 423189.0;4609627.9;570.5 · P-3 423195.0;4609636.0;570.9."},
+    {"concept_id": "cota_referencia", "value": "571,5 (z GPS de P-1)", "location": "bloc P-1, tercer camp", "quote": "423167.0 ; 4609608.0 ; 571.5", "confidence": 0.2, "note": "z GPS: l'Eva no l'usa com a cota de referència (regla); aquí el caixetí del sondeig usa 570,90 'segons el plànol ICGC' (= z del S-1). Candidat de cua."}
+  ],
+  "not_present": ["expedient", "client_name", "street_address", "municipality", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "num_soil_levels", "num_dpsh_tests (5 punts llistats corrobora 4P+1S)", "referencia_catastral", "lab", "cte"],
+  "reading_notes": "Format 'X ; Y ; Z' per punt, ordre P-1, P-2, S-1, P-4, P-3."
+}

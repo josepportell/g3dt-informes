@@ -1,0 +1,29 @@
+{
+  "source_path": "comanda laboratori_4001607_LINYOLA.xls",
+  "document_type": "comanda_lab_g3",
+  "what_it_is": "Petició d'assaigs de laboratori de G3 (Hoja1!C3 = \"PETICIÓ D'ASSAIGS DE LABORATORI\")",
+  "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, SL (responsable EVA VÁZQUEZ)",
+  "date": "sol·licitud 2025-10-10 (AH23); presa 2025-10-01 (N23)",
+  "pages_or_sheets": "Hoja1 (66x41)",
+  "context": {
+    "who_made_it": "G3 (Eva) com a client del laboratori",
+    "for_whom": "el laboratori d'assaigs (nom no consta a la comanda)",
+    "why": "encarregar els assaigs de la mostra SPT presa a l'obra",
+    "expected_fields": ["expedient (N19)", "street_address/municipality (bloc OBRA)", "lab_sample_id + lab_depth (fila 35)", "building_type (N18)", "field_date (N23 = dia de presa, candidat 2)"],
+    "not_expected": ["client_name (el bloc SOL.LICITANT és G3 → ignorar)", "num_floors", "superficie_parcela", "cota_referencia"],
+    "relation_to_others": "La mostra 'SPT 1 (P3)' i cotes 1,00-1,15 s'hauran de creuar amb el GTL (4672-GTL-25) i l'annex de sondeig. DATA DE PRESA = mateix dia que la fitxa F38 (2025-10-01): camp i mostra el mateix dia.",
+    "authority_for": ["expedient", "municipality", "street_address (sense número)", "building_type", "lab_sample_id", "lab_depth", "field_date (candidat, dia de presa)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "4001607", "location": "Hoja1!N19", "quote": "NÚM. D'EXPEDIENT = 4001607.0", "confidence": 0.9, "note": "float d'Excel; coincideix amb el nom de la carpeta '4001607 LINYOLA'"},
+    {"concept_id": "building_type", "value": "CONSTR HABITATGE", "location": "Hoja1!N18", "quote": "OBRA = 'CONSTR HABITATGE'", "confidence": 0.5, "note": "abreujat; l'informe ho redacta ('habitatge unifamiliar')"},
+    {"concept_id": "street_address", "value": "C/ Clot de la Llacuna", "location": "Hoja1!N20", "quote": "ADREÇA = 'C/ CLOT DE LA LLACUNA'", "confidence": 0.7, "note": "sense número (el pressupost i la fitxa diuen 16)"},
+    {"concept_id": "municipality", "value": "Linyola", "location": "Hoja1!N21", "quote": "POBLACIÓ = 'LINYOLA'", "confidence": 0.9, "note": "forma curta G3"},
+    {"concept_id": "field_date", "value": "2025-10-01", "location": "Hoja1!N23", "quote": "DATA DE PRESA = 2025-10-01", "confidence": 0.6, "note": "dia de la presa de mostra (aquí coincideix amb la fitxa F38; regla: candidat 2 amb nota 'sondeig/mostra')"},
+    {"concept_id": "lab_sample_id", "value": "SPT 1 (P3)", "location": "Hoja1!C35", "quote": "MOSTRA: 'SPT 1 (P3)'", "confidence": 0.7, "note": "SPT fet al punt P3; l'etiqueta de l'informe la mana l'annex de l'Eva > GTL > comanda"},
+    {"concept_id": "lab_depth", "value": "1,00 - 1,15 m", "location": "Hoja1!J35/L35", "quote": "COTES (m) INICIAL 1.0 / FINAL 1.15", "confidence": 0.6, "note": "GTL > Excel/annex > comanda per a la profunditat"},
+    {"concept_id": "NOT_client_name", "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL (B25364589)", "location": "Hoja1!N11-N15", "quote": "DADES DEL SOL.LICITANT: NOM G3… NIF B25364589 … RESPONSABLE EVA VÁZQUEZ", "confidence": 0.0, "note": "G3 mai és client; bloc del sol·licitant del laboratori"}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "cte", "utm_x_utm_y", "referencia_catastral", "lab_testing_company (la comanda no porta el nom del laboratori)", "num_dpsh_tests"],
+  "reading_notes": "xlrd; dos blocs amb les mateixes etiquetes (files 11-15 = G3, ignorat; files 18-23 = obra). Assaigs demanats per a SPT 1 (P3): límits d'Atterberg, agressivitat sòls 'NOMÉS SULFATS'; observació 'DEPENET DELS LIMITS, LAMBE'. lab_location implícita: punt P3."
+}

@@ -1,0 +1,23 @@
+{
+  "source_path": "PDF/ANNEXES/4001607_fotografies.pdf",
+  "document_type": "annex_fotografies",
+  "what_it_is": "Reportatge fotogràfic de l'informe: F-1..F-4 (parcel·la, màquina DPSH als punts P-1/P-2/P-3, materials de l'SPT)",
+  "issuer": "G3-Eva (FreeHand, des de les fotos de camp)",
+  "date": "fotos del dia de camp (2025-10-01 segons noms WhatsApp)",
+  "pages_or_sheets": "2 pàgines",
+  "context": {
+    "who_made_it": "Eva, maquetant les fotos de camp",
+    "for_whom": "annex de l'informe",
+    "why": "documentar visualment parcel·la i assaigs",
+    "expected_fields": ["expedient (capçalera)", "corroboració de num_dpsh_tests i SPT"],
+    "not_expected": ["adreça, municipi, client (mai d'una foto)", "cota", "nivells"],
+    "relation_to_others": "Fotos = les de FOTOGRAFIES/ (P1/P2/P3.jpg i WhatsApp 2025-10-01). Peus de foto confirmen DPSH P-1, P-2, P-3 i 'materials recuperats de l'assaig SPT realitzat'.",
+    "authority_for": ["expedient (suport)", "num_dpsh_tests (corroboració)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "4001607", "location": "capçalera 'Reportatge fotogràfic' (2 pàgines)", "quote": "Reportatge fotogràfic | 4001607", "confidence": 0.6, "note": ""},
+    {"concept_id": "num_dpsh_tests", "value": 3, "location": "peus de foto F-1..F-4", "quote": "…assaig de penetració dinàmica DPSH P-1 i P-2 … DPSH P-3. A sota, materials recuperats de l'assaig SPT realitzat.", "confidence": 0.5, "note": "corroboració; parcel·la buida amb tanca, habitatges veïns adossats"}
+  ],
+  "not_present": ["client_name", "architect_name", "street_address", "municipality", "field_date (no consta al full; ve dels noms de fitxer de les fotos)", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "cte", "utm_x_utm_y", "referencia_catastral", "lab_*"],
+  "reading_notes": "Text FreeHand brossa → render 100 dpi 2 pàgines i lectura visual. F-4 mostra bossa de mostra amb etiqueta (illegible a 100 dpi; no cal: comanda i GTL ja donen la mostra)."
+}

@@ -1,0 +1,30 @@
+{
+  "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf (còpia gairebé idèntica: CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf)",
+  "document_type": "annex_sondeig",
+  "what_it_is": "Annex del sondeig a rotació S-1 (log + fotografies), dibuixat per Eva; el sondeig és a la parcel·la de la CASA 1.",
+  "issuer": "G3 (Eva Vázquez Marcet, Geòloga col 4302)",
+  "date": "Data d'inici/fi: 07/05/2026; modDate còpia casa 1: 2026-06-04 16:03 (posterior a la còpia casa 2, 15:24)",
+  "pages_or_sheets": "2 pàgines (log + fotografies)",
+  "context": {
+    "who_made_it": "Eva (G3), a partir del sondeig executat per TPS, S.L. (sondista Sr. Daniel Fernandez, màquina ML76A)",
+    "for_whom": "l'informe (S-1 compartit entre les dues cases)",
+    "why": "log estratigràfic del sondeig amb SPTs i mostres",
+    "expected_fields": ["cota_referencia (Z:)", "num_soil_levels (columna Unitat litològica)", "lab_sample_id/lab_depth (SPT-1/SPT-2)", "field_date (dia del sondeig)", "building_type i street (caixetí Obra)"],
+    "not_expected": ["promotor (la casella Client és el sol·licitant)", "num_floors", "superficie_parcela"],
+    "relation_to_others": "UN SOL sondeig compartit: la còpia de la carpeta CASA 2 és el mateix S-1 amb el caixetí SENSE actualitzar (Obra encara 'Carrer Tulipa nº3'); única diferència textual: descripció del nivell 2 ('Argiles coheives' a la còpia casa 1, posterior, vs 'Llims argilosos coheisus' a la casa 2; el tall diu 'Llims argilosos cohesius'). Z +199.0 DISCREPA de l'annex DPSH casa 1 (198).",
+    "authority_for": ["num_soil_levels (casa 1)", "cota_referencia (casa 1, candidat)", "lab_sample_id", "lab_depth", "field_date (dia sondeig)"]
+  },
+  "tier_a": [
+    {"concept_id": "num_soil_levels", "value": "3 (NIVELL 1, NIVELL 2, NIVELL 3)", "location": "columna 'Unitat litològica' del log", "quote": "NIVELL 1 (0.00–1.10) / NIVELL 2 (1.10–2.20) / NIVELL 3 (2.20–3.54)", "confidence": 0.85, "note": "criteri Eva: columna Unitat litològica, no trams de material (5 trams, 3 nivells)"},
+    {"concept_id": "cota_referencia", "value": "+199,0 msnm (casa 1, S-1)", "location": "caixetí Cota Z:", "quote": "+199.0 msnm (segons el plànol ICGC)", "confidence": 0.6, "note": "discrepa de l'annex DPSH (198) → candidats amb annex DPSH primer per regla del skill"},
+    {"concept_id": "field_date", "value": "07/05/2026 (dia del sondeig)", "location": "caixetí Data d'inici / Data de fi", "quote": "07/05/2026 / 07/05/2026", "confidence": 0.7, "note": "mateix dia que els DPSH → un sol dia de camp"},
+    {"concept_id": "lab_sample_id", "value": "SPT-1 i SPT-2", "location": "columna Tipus de mostra", "quote": "SPT-1 (-1.00 a -1.60, registre 6/9/9/9) / SPT-2 (-3.00 a -3.54, registre 19/31/33/50R)", "confidence": 0.8, "note": "etiqueta de l'annex mana sobre la comanda ('SPT 1 (S1)') per a l'informe"},
+    {"concept_id": "lab_depth", "value": "SPT-1: 1,00–1,60 m; SPT-2: 3,00–3,54 m", "location": "columna Prof. d'extracció", "quote": "-1.00 a -1.60 / -3.00 a -3.54", "confidence": 0.7, "note": "SPT-2 acaba a 3,54 (refús 50R), la comanda diu 3,00–3,60 → discrepància menor; sense GTL, annex > comanda"},
+    {"concept_id": "lab_location", "value": "sondeig S-1 (parcel·la casa 1)", "location": "caixetí Sondeig nº", "quote": "S-1", "confidence": 0.8, "note": ""},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar", "location": "caixetí Obra", "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipa nº3 de Cerdanyola del Vallès", "confidence": 0.7, "note": "redacció de l'informe (casa 1)"},
+    {"concept_id": "street_address", "value": "Carrer Tulipa nº3 (casa 1)", "location": "caixetí Obra", "quote": "al Carrer Tulipa nº3 de Cerdanyola del Vallès", "confidence": 0.7, "note": ""},
+    {"concept_id": "NOT_client_name", "value": "SR. ALEIX SUBIÀ FELIP", "location": "caixetí Client:", "quote": "SR.ALEIX SUBIÀ FELIP", "confidence": 0.0, "note": "casella Client de l'annex = sol·licitant (regla); grafia amb typo (SUBIÀ per SUBIRÀ) — normalitzar cap al formulari signat; tot i això coincideix amb el client_name de l'acceptació → corrobora, no font independent"}
+  ],
+  "not_present": ["architect_name", "num_floors", "superficie_parcela", "utm_x_utm_y (caselles x/y no presents al caixetí)", "referencia_catastral", "cte_*", "nivell freàtic (columna buida → no detectat)"],
+  "reading_notes": "Còpia casa 1 amb text net (Print To PDF); render 150 dpi per llegir la columna Unitat litològica i el caixetí. Còpia casa 2 renderitzada (Distiller, text brossa) i comparada visualment: mateix S-1."
+}

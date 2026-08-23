@@ -1,0 +1,22 @@
+{
+  "source_path": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_DPSH_CASA 1.xls",
+  "document_type": "dpsh_excel",
+  "what_it_is": "Transcripció digital (revisada per Eva) dels penetròmetres DPSH de la CASA 1.",
+  "issuer": "G3 (Eva) a partir dels fulls de camp TPS",
+  "date": "sense data dins el fitxer",
+  "pages_or_sheets": "fulls P-1.1, P-1.2",
+  "context": {
+    "who_made_it": "Eva (G3) transcrivint els fulls de camp manuscrits de TPS",
+    "for_whom": "l'informe de la casa 1",
+    "why": "digitalitzar N20 per als gràfics i càlculs",
+    "expected_fields": ["num_dpsh_tests (fulls amb dades a col C)", "cota de rebuig B80"],
+    "not_expected": ["cap metadada de projecte (regla del skill)"],
+    "relation_to_others": "versió revisada dels fulls manuscrits de PENETROS + SONDEIG.pdf → l'Excel MANA per als valors; el PDF/ANNEXES/3001706_DPSH_CASA 1.pdf n'és la impressió",
+    "authority_for": ["num_dpsh_tests (casa 1)"]
+  },
+  "tier_a": [
+    {"concept_id": "num_dpsh_tests", "value": "2 (casa 1: P-1.1, P-1.2)", "location": "fulls amb dades a columna C (21 i 13 lectures)", "quote": "sheets ['P-1.1','P-1.2'], dataC=21/13", "confidence": 0.95, "note": "executats; nomenclatura P-1.x = casa 1"}
+  ],
+  "not_present": ["tota la resta del nivell A (cap metadada de projecte dins l'Excel; B80 buit)"],
+  "reading_notes": "xlrd; capçalera fila 16 conforme al patró del skill; B80 (cota rebuig) buit als dos fulls."
+}

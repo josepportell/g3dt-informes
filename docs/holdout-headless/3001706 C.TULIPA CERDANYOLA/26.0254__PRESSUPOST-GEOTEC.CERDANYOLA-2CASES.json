@@ -1,0 +1,29 @@
+{
+  "source_path": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Pressupost G3 modificat (MODF., '2 CASES') de l'estudi geotècnic; substitueix el pressupost inicial del mateix codi 26·0254.",
+  "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L. (creator PDF) via m4PRO ERP",
+  "date": "26/03/26 (data impresa); modDate PDF 2026-04-29 17:12",
+  "pages_or_sheets": "7 pàgines",
+  "context": {
+    "who_made_it": "G3 (oficina tècnica) amb l'ERP m4PRO",
+    "for_whom": "el sol·licitant de l'estudi: VUA, VISUALIZING UNBUILT ARCHITECTURE (bloc CLIENT: p.1)",
+    "why": "oferta econòmica per a l'estudi geotècnic de l'obra C/Tulipa 3, Cerdanyola del Vallès; versió MODF ampliada a dues cases",
+    "expected_fields": ["street_address (bloc OBRA)", "municipality (bloc OBRA)", "cte_edificacio/cte_sol (p.2)", "num_dpsh_tests previstos (p.2)", "sol·licitant (bloc CLIENT)"],
+    "not_expected": ["expedient definitiu (26·0254 és codi comercial)", "field_date", "cota_referencia", "num_soil_levels", "utm", "lab"],
+    "relation_to_others": "SUBSTITUEIX 26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf (mateixa data impresa 26/03/26, modDate 2026-03-26 < 2026-04-29; quantitats 2→4 DPSH); la còpia signada és ACCEPTACIO/Adobe Scan 9 abr 2026. El bloc CLIENT: deriva de l'encàrrec — no és font independent del correu ni de la fitxa.",
+    "authority_for": ["cte_edificacio", "cte_sol", "municipality (1 de 3 fonts)", "street_address (bloc OBRA)"]
+  },
+  "tier_a": [
+    {"concept_id": "street_address", "value": "C/ Tulipa, 3", "location": "p.1 bloc OBRA", "quote": "ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES", "confidence": 0.85, "note": "adreça de l'obra de la CASA 1; el pressupost MODF cobreix dues cases però el bloc OBRA només porta Tulipa 3"},
+    {"concept_id": "municipality", "value": "Cerdanyola del Vallès", "location": "p.1 bloc OBRA", "quote": "CERDANYOLA DEL VALLES", "confidence": 0.9, "note": "forma G3 sense accents; normalitzar a la forma oficial"},
+    {"concept_id": "cte_edificacio", "value": "C-1", "location": "p.2", "quote": "Tipus d’edifici: C1", "confidence": 0.9, "note": ""},
+    {"concept_id": "cte_sol", "value": "T-1", "location": "p.2", "quote": "Tipus de Terreny : T1", "confidence": 0.9, "note": ""},
+    {"concept_id": "num_dpsh_tests", "value": "4 (previstos, total 2 cases)", "location": "p.2 campanya", "quote": "4 assaigs de penetració dinàmica DPSH", "confidence": 0.6, "note": "previstos; l'Excel DPSH (executats) mana; repartiment per casa no especificat aquí"},
+    {"concept_id": "building_type", "value": "dos habitatges (dos informes, un per client)", "location": "p.4 nota", "quote": "INCLOU EL LLIURAMENT DE DOS INFORMES GEOTÈCNICS, UN A NOM DE CADA CLIENT", "confidence": 0.5, "note": "confirma estructura 1 expedient / 2 informes; el tipus concret d'edifici surt del plànol/correu"},
+    {"concept_id": "NOT_client_name", "value": "VUA, VISUALIZING UNBUILT ARCHITECTURE", "location": "p.1 bloc CLIENT", "quote": "CLIENT: / VUA, VISUALIZING UNBUILT ARCHITECTURE", "confidence": 0.0, "note": "sol·licitant, no promotor; conté 'ARCHITECTURE' → candidat a architect_name (despatx), mai client segur"},
+    {"concept_id": "architect_name", "value": "VUA, VISUALIZING UNBUILT ARCHITECTURE (despatx)", "location": "p.1 bloc CLIENT", "quote": "CLIENT: / VUA, VISUALIZING UNBUILT ARCHITECTURE", "confidence": 0.5, "note": "el sol·licitant és un despatx d'arquitectura; candidat despatx (regla persona|despatx)"}
+  ],
+  "not_present": ["expedient (26·0254 = codi comercial, NO expedient)", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab_*", "p.5 formulari DADES QUE HAN DE CONSTAR: en blanc (versió no signada)"],
+  "reading_notes": "Blocs p.1 ordenats per (y,x): CLIENT (y=203) i OBRA (y=394) separats correctament. p.4 amb la nota DOS INFORMES. IMPORT TOTAL 1.230,00 €. modDate comparat amb la versió sense sufix per decidir vigència."
+}

@@ -1,0 +1,23 @@
+{
+  "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_plànol de situació_CASA 2.pdf",
+  "document_type": "annex_planol_situacio",
+  "what_it_is": "Plànol de situació de l'informe de la CASA 2: mateixa base que el de la casa 1 amb la parcel·la casa 2 ressaltada en vermell.",
+  "issuer": "G3 (Eva)",
+  "date": "caixetí Data: Maig 2026; modDate 2026-06-04",
+  "pages_or_sheets": "1 pàgina",
+  "context": {
+    "who_made_it": "Eva (còpia del plànol casa 1 amb el ressaltat canviat)",
+    "for_whom": "l'informe de la casa 2",
+    "why": "situar la parcel·la casa 2 i els punts P-2.1/P-2.2",
+    "expected_fields": ["expedient (caixetí)", "títol amb l'adreça de la casa 2"],
+    "not_expected": [],
+    "relation_to_others": "ERROR DE COPIA conegut pel skill: el caixetí diu Exp: 3001706_CASA 2 però el TÍTOL encara diu 'Carrer Tulipà nº3' (sense actualitzar a Tosca 16) → el títol NO és font per a street_address de la casa 2",
+    "authority_for": ["expedient (variant _CASA 2)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "3001706 (casa 2: 3001706_CASA 2)", "location": "caixetí", "quote": "Exp: 3001706_CASA 2", "confidence": 0.8, "note": ""},
+    {"concept_id": "NOT_street_address", "value": "'Carrer Tulipà nº3' al títol del plànol de la CASA 2", "location": "caixetí TÍTOL", "quote": "…habitatge unifamiliar al Carrer Tulipà nº3 de Cerdanyola del Vallès", "confidence": 0.0, "note": "caixetí sense actualitzar (còpia del de la casa 1); l'adreça bona de la casa 2 és C/ Tosca 16 (annex DPSH casa 2, tall, correu)"}
+  ],
+  "not_present": ["client_name", "architect_name", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "Render 150 dpi; comparat costat a costat amb el de la casa 1: només canvia quin polígon és vermell."
+}

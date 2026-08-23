@@ -1,0 +1,27 @@
+{
+  "source_path": "25.0616/25·0616.pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Pressupost d'estudi geotècnic de G3 (m4PRO ERP), codi comercial 25·0616, versió NO signada de 3 pàgines",
+  "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L. (B25461443)",
+  "date": "2025-08-21 (DATA: 21/08/25; creationDate PDF 20250821)",
+  "pages_or_sheets": "3 pàgines (p.1 CLIENT/OBRA, p.2 valoració, p.3 condicions + formulari factura/informe)",
+  "context": {
+    "who_made_it": "G3 (oficina tècnica) amb el seu ERP m4PRO",
+    "for_whom": "BUNYESC ARQUITECTURA EFICIENT, SLP — el sol·licitant que demana el geotècnic",
+    "why": "Oferir el preu de l'estudi geotècnic de l'obra de Linyola perquè el sol·licitant l'accepti",
+    "expected_fields": ["street_address", "municipality", "num_dpsh_tests (previstos)", "cte (línia Tipus d'edifici/Terreny, si hi és)", "architect_name (bloc CLIENT si és despatx)"],
+    "not_expected": ["field_date", "client_name segur (el CLIENT del pressupost és el sol·licitant)", "cota_referencia", "num_soil_levels", "expedient (25·0616 és codi comercial)"],
+    "relation_to_others": "Mateixa creationDate que ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf (versió signada posterior, modDate 2025-09-23): aquest és l'esborrany; el signat mana. El CLIENT: BUNYESC deriva del mateix encàrrec que apareixerà a fitxa/correus — no són fonts independents.",
+    "authority_for": ["street_address", "municipality", "num_dpsh_tests (previstos)", "architect_name (candidat despatx)"]
+  },
+  "tier_a": [
+    {"concept_id": "street_address", "value": "Clot de la Llacuna, 16", "location": "p.1 bloc OBRA (y=394-421)", "quote": "OBRA: Clot de la Llacuna, 16 -25240- Linyola", "confidence": 0.85, "note": "bloc OBRA etiquetat; CP 25240"},
+    {"concept_id": "municipality", "value": "Linyola", "location": "p.1 bloc OBRA", "quote": "Clot de la Llacuna, 16 -25240- Linyola", "confidence": 0.9, "note": ""},
+    {"concept_id": "architect_name", "value": "BUNYESC ARQUITECTURA EFICIENT, SLP", "location": "p.1 bloc CLIENT:", "quote": "CLIENT: BUNYESC ARQUITECTURA EFICIENT, SLP / C/ ARBORETUM, 17 / 25199 LLEIDA / Tel: 973157519", "confidence": 0.6, "note": "El CLIENT del pressupost és el sol·licitant; el nom és un despatx d'ARQUITECTURA → candidat a architect_name (despatx, no persona), mai client_name"},
+    {"concept_id": "num_dpsh_tests", "value": 3, "location": "p.2 línia 001.001", "quote": "UNITATS D'ASSAIGS DE PENETRACIO DINAMICA DPSH 3,00", "confidence": 0.6, "note": "previstos, no executats; mana l'Excel DPSH"},
+    {"concept_id": "NOT_client_name", "value": "BUNYESC ARQUITECTURA EFICIENT, SLP", "location": "p.1 bloc CLIENT:", "quote": "CLIENT: BUNYESC ARQUITECTURA EFICIENT, SLP", "confidence": 0.0, "note": "descartat com a client_name: és el sol·licitant (despatx d'arquitectura), regla Pas 3"},
+    {"concept_id": "NOT_expedient", "value": "25·0616", "location": "p.1/p.3 capçalera", "quote": "25·0616 P#", "confidence": 0.0, "note": "codi comercial G3, NO és l'expedient"}
+  ],
+  "not_present": ["cte_edificacio", "cte_sol (aquest pressupost NO porta la línia 'Tipus d'edifici / Tipus de Terreny' — aplicar derivació)", "client_name", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab_*", "expedient"],
+  "reading_notes": "Text vectorial net; blocs ordenats per (y,x) per no barrejar CLIENT i OBRA. Formulari p.3 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' present però BUIT en aquesta versió no signada (només etiquetes). També hi ha 1,00 ML previ a SPT + 1,00 ASSAIG SPT → 1 sondeig/SPT previst. Import 840,00 € + IVA."
+}

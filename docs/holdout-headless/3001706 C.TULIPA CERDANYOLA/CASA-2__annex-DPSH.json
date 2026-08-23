@@ -1,0 +1,27 @@
+{
+  "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_DPSH_CASA 2.pdf",
+  "document_type": "annex_dpsh",
+  "what_it_is": "Annex DPSH de l'informe de la CASA 2 (gràfics P-2.1 i P-2.2).",
+  "issuer": "G3 (Eva)",
+  "date": "DATA: 07/05/2026; modDate 2026-06-04",
+  "pages_or_sheets": "2 pàgines (P-2.1, P-2.2)",
+  "context": {
+    "who_made_it": "Eva, imprimint l'Excel DPSH de la casa 2",
+    "for_whom": "l'informe de la casa 2",
+    "why": "annex gràfic dels penetròmetres",
+    "expected_fields": ["cota_referencia per punt", "field_date", "OBRA/POBLACIÓ", "expedient"],
+    "not_expected": ["client", "arquitecte", "plantes", "superfície"],
+    "relation_to_others": "derivat de 3001706_DPSH_CASA 2.xls; cotes per punt DIFERENTS (201,25 i 202,85) → cap cota única de referència per a la casa 2 en aquest annex",
+    "authority_for": ["cota_referencia (casa 2, per punt)", "field_date", "street_address (casa 2)", "expedient (variant _CASA 2)"]
+  },
+  "tier_a": [
+    {"concept_id": "cota_referencia", "value": "P-2.1: 201,25 msnm; P-2.2: 202,85 msnm (casa 2)", "location": "capçaleres p.1/p.2", "quote": "Cota inici: 201,25 msnm segons el plànol topogràfic ICGC / Cota inici: 202,85 msnm ...", "confidence": 0.6, "note": "dues cotes per punt, cap de 'referència' única; el tall situa la casa 2 entre ~201 i ~203"},
+    {"concept_id": "field_date", "value": "07/05/2026", "location": "peu p.1/p.2", "quote": "DATA: 07/05/2026", "confidence": 0.85, "note": "mateix dia que casa 1: un sol dia de camp"},
+    {"concept_id": "street_address", "value": "C/ Tosca, 16 (casa 2)", "location": "capçalera OBRA", "quote": "OBRA: C/TOSCA 16", "confidence": 0.8, "note": "font principal de l'adreça de la casa 2 entre els annexos (el plànol de situació casa 2 té el caixetí sense actualitzar)"},
+    {"concept_id": "municipality", "value": "Cerdanyola del Vallès", "location": "capçalera POBLACIÓ", "quote": "POBLACIÓ: CERDANYOLA DEL VALLÈS", "confidence": 0.8, "note": ""},
+    {"concept_id": "expedient", "value": "3001706 (informe casa 2: 3001706_CASA 2)", "location": "peu", "quote": "NÚMERO D´INFORME: 3001706_CASA 2", "confidence": 0.85, "note": ""},
+    {"concept_id": "num_dpsh_tests", "value": "2 (casa 2)", "location": "2 pàgines P-2.1/P-2.2", "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-2.1 / P-2.2", "confidence": 0.7, "note": "coherent amb l'Excel"}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*", "N.F."],
+  "reading_notes": "Text net; cotes per punt diferents — anotada l'absència d'una cota única per a la casa 2."
+}

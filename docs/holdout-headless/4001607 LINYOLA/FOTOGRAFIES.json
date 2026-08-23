@@ -1,0 +1,22 @@
+{
+  "source_path": "FOTOGRAFIES/ (6 jpg: 'Imagen de WhatsApp 2025-10-01 a las 11.11.17_…', '…12.04.53_…', '…12.05.09_…', P1.jpg, P2.jpg, P3.jpg)",
+  "document_type": "foto",
+  "what_it_is": "Fotos de camp (WhatsApp del dia de camp + una per punt d'assaig)",
+  "issuer": "equip de camp G3/TPS",
+  "date": "2025-10-01 (pel nom dels fitxers WhatsApp; sense EXIF fiable)",
+  "pages_or_sheets": "6 fitxers",
+  "context": {
+    "who_made_it": "operari/Eva a camp",
+    "for_whom": "arxiu del projecte i annex fotogràfic",
+    "why": "documentar la parcel·la i cada punt",
+    "expected_fields": ["field_date (només pel NOM de fitxer)"],
+    "not_expected": ["municipi/adreça/client (mai d'una foto)"],
+    "relation_to_others": "P1/P2/P3.jpg són les fotos que l'annex 4001607_fotografies.pdf maqueta (F-1..F-4); les hores 11:11-12:05 encaixen amb l'albarà (8:30-12:30)",
+    "authority_for": ["field_date (corroboració)"]
+  },
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2025-10-01", "location": "noms de fitxer WhatsApp", "quote": "Imagen de WhatsApp 2025-10-01 a las 11.11.17_3f18c893.jpg", "confidence": 0.5, "note": "corroboració del 2025-10-01"}
+  ],
+  "not_present": ["tots els altres camps del nivell A"],
+  "reading_notes": "No calia obrir-les: ja apareixen a l'annex fotogràfic (llegit) i la data surt del nom. Thumbs.db exclòs."
+}

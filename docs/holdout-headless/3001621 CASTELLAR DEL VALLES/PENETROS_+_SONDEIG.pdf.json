@@ -1,0 +1,28 @@
+{
+  "source_path": "PENETROS + SONDEIG.pdf",
+  "document_type": "full_camp_manuscrit",
+  "what_it_is": "Escaneig (fotos WhatsApp impreses a PDF) dels fulls de camp TPS: albarà penetròmetre + 2 fulls DPSH (P1-P3, P4) + albarà sondeig + full de camp sondeig S-1",
+  "issuer": "TPS (operari/sondista Daniel Fernández); escanejat/imprès per G3 el 24/10/2025",
+  "date": "2025-10-24 (data manuscrita a tots els fulls; creationDate del PDF 24/10/2025 11:57)",
+  "pages_or_sheets": "5 pàgines escanejades (0 text: llegides per visió a 150 dpi)",
+  "context": {
+    "who_made_it": "TPS (subcontractista de sondeigs/penetròmetres) fa aquests fulls i albarans per a G3",
+    "for_whom": "G3 (les caselles 'DADES CLIENT: Empresa G3 / Responsable Eva' són la relació TPS→G3: cap rol al projecte)",
+    "why": "Registrar la feina de camp del 24/10 (4 DPSH + sondeig 1,2 m) i deixar-ne constància d'albarà",
+    "expected_fields": ["field_date", "num_dpsh_tests (albarà)", "punt 0 / cota referència", "N.F.", "croquis de punts"],
+    "not_expected": ["client_name", "architect_name", "num_floors", "superficie_parcela", "expedient (casella 'Informe:' en blanc)", "referencia_catastral", "cte"],
+    "relation_to_others": "Versió manuscrita del que l'Excel DPSH (revisat per Eva) digitalitza: l'Excel mana per als valors (aquí coincideixen: P1 6/10/13/38/100 R:1,08; P2 15/100 R:0,48; P3 16/46/100 R:0,76; P4 8/8/12/27/21/28/100 R:1,55). Aporta el que l'Excel no té: punt 0 = 'C/ Arbrells' (el carrer com a cota de referència, amb cotes inici -4/-4,2 m), croquis de situació dels punts (P1-10m-P2-10m-S1-9m-P4-9m-P3, front de 22 m sobre C/Arbrells), i les capes del sondeig manuscrites.",
+    "authority_for": ["field_date (corroboració)", "num_dpsh_tests (albarà: 4 realitzats)", "cota_referencia (aclareix que el punt 0 és el carrer)"]
+  },
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2025-10-24", "location": "p.1 albarà 'Data:' + p.2-3 fulls DPSH 'Data:' + p.4-5 sondeig 'Data inici/final'", "quote": "24-10-2025", "confidence": 0.7, "note": "Tots els fulls el mateix dia: DPSH i sondeig en un sol dia de campanya."},
+    {"concept_id": "num_dpsh_tests", "value": 4, "location": "p.1 albarà 'Nº de penetròmetres realitzats'", "quote": "Nº de penetròmetres realitzats: 4 · Ml de penetròmetre (5 mínims): 20,00", "confidence": 0.7, "note": "REALITZATS (albarà) = 4 = Excel. Cap discrepància previstos/executats."},
+    {"concept_id": "cota_referencia", "value": "punt 0 = C/ Arbrells (carrer); cotes inici -4 m (P1, P3, P4) i -4,2 m (P2)", "location": "p.2-3 'Descriure punt 0 o cota referencia' + fila 'Cota Inici'; p.5 'Cota d'inici respecte cota 0: C/Arbrells -4 m'", "quote": "Descriure punt 0 o cota referencia: C/ Arbrells | Cota Inici: -4 m / -4,2 m / -4 m", "confidence": 0.6, "note": "Confirma que el '-4 m (respecte el carrer)' de l'annex DPSH és el criteri de camp: parcel·la ~4 m sota el carrer."},
+    {"concept_id": "num_soil_levels", "value": "2 trams de material al full de camp (0,00-0,50 llims argilosos amb graves; 0,50-1,20 roca fracturada)", "location": "p.5 full de camp sondeig, columna de descripció", "quote": "0,00-0,50 Limos arcillosos con gravas | 0,50-1,20 Roca fracturada", "confidence": 0.2, "note": "Els trams de material del full de camp NO són nivells (regla); l'annex de l'Eva (Unitat litològica) mana: 1 nivell."},
+    {"concept_id": "street_address", "value": "C/ Arbrells", "location": "p.1/p.4 'DADES OBRA: Adreça' + p.2-3 'Adreça de l'obra'", "quote": "C/ Arbrells - Castellar del Valles", "confidence": 0.4, "note": "Manuscrit, sense números."},
+    {"concept_id": "municipality", "value": "Castellar del Vallès", "location": "p.1/p.4 'Població'", "quote": "Castellar del Valles (manuscrit)", "confidence": 0.4, "note": "Grafia manuscrita normalitzada cap a la impresa."},
+    {"concept_id": "NOT_client_name", "value": "G3 / Eva", "location": "p.1/p.4 'DADES CLIENT: Empresa / Responsable' + p.5 'Empresa/Client: G3 - Eva'", "quote": "Empresa: G3 | Responsable: Eva", "confidence": 0.0, "note": "Client del subcontractista TPS: cap rol al projecte."}
+  ],
+  "not_present": ["expedient (casella 'Informe:' en blanc a tots els fulls)", "client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "utm_x_utm_y", "referencia_catastral", "lab (TPS hi surt com a executor de camp, no com a laboratori)", "cte", "nivell freàtic (caselles N.F. en blanc; albarà sondeig i fulls DPSH sense cap anotació d'aigua)"],
+  "reading_notes": "5 pàgines renderitzades a 150 dpi i llegides visualment (manuscrit). P.5 apaïsada (rotada). Detalls: carència de colpeig mesura 1 = 15; equip/sonda ML76A; albarà sondeig: 0,50 ml sòls + 0,70 ml roca dura/formigó; 'Assaigs SPT: No' als albarans (però l'annex/GTL documenten SPT-1 amb refús i mostra 1,00-1,20 — anotat com a possible matis de facturació, no contradicció de camp); corones 101 W.B."
+}

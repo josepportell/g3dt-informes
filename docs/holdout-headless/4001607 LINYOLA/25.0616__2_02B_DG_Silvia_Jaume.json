@@ -1,0 +1,31 @@
+{
+  "source_path": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+  "document_type": "projecte_arquitecte",
+  "what_it_is": "Projecte bàsic (definició gràfica, 11 plànols AutoCAD) d'un habitatge unifamiliar aïllat",
+  "issuer": "BUNYESC ARQUITECTURA EFICIENT, S.L.P, representat per JOSEP BUNYESC PALACÍN - Dr. Arquitecte",
+  "date": "caixetí DATA: AGOST 2025; PDF 2025-08-19",
+  "pages_or_sheets": "11 pàgines (01 situació, 02 emplaçament-parcel·la, 03 planta general, 04-05 planta baixa, 06 coberta, 07-11 façanes/seccions)",
+  "context": {
+    "who_made_it": "el despatx BUNYESC (Josep Bunyesc Palacín)",
+    "for_whom": "els promotors (Sílvia Eroles + Jaume Nadal) i l'ajuntament (llicència)",
+    "why": "definir el projecte bàsic; enviat a G3 amb l'encàrrec del geotècnic",
+    "expected_fields": ["architect_name (caixetí REDACTOR/S — autoritat A)", "client_name (caixetí PROMOTORS — autoritat A)", "building_type (títol)", "street_address/municipality (EMPLAÇAMENT)", "superficie_parcela + referencia_catastral (plànol 02)", "num_floors (plantes del projecte)"],
+    "not_expected": ["field_date", "cota_referencia fiable (l'altitud del caixetí és de plantilla)", "expedient G3", "lab_*"],
+    "relation_to_others": "Adjunt del correu d'encàrrec (md5 dup). El plànol 03 és la base dels 'Punts de Sondeig' i del plànol de situació de l'Eva. El PROMOTORS dona 2 noms; el formulari signat de l'acceptació només Sílvia → l'informe va a nom de qui signa.",
+    "authority_for": ["architect_name", "client_name (promotors)", "building_type", "num_floors", "superficie_parcela", "referencia_catastral", "street_address", "municipality"]
+  },
+  "tier_a": [
+    {"concept_id": "architect_name", "value": "Josep Bunyesc Palacín (BUNYESC ARQUITECTURA EFICIENT, S.L.P)", "location": "caixetí REDACTOR/S (11 pàgines)", "quote": "BUNYESC ARQUITECTURA EFICIENT, S.L.P representat per: JOSEP BUNYESC PALACÍN - Dr. Arquitecte", "confidence": 0.8, "note": "persona + despatx al caixetí; el correu d'encàrrec el signa Laia Alarcón 'arquitecta' → existeixen dues persones i el despatx: candidats, mai segur"},
+    {"concept_id": "client_name", "value": "Sílvia Eroles Balagueró i Jaume Nadal Andreu", "location": "caixetí PROMOTORS (11 pàgines)", "quote": "PROMOTORS: SÍLVIA EROLES BALAGUERÓ / JAUME NADAL ANDREU (p.1 typo: 'JAUME ANDAL ANDREU')", "confidence": 0.7, "note": "2 promotors al projecte; el formulari p.3 de l'acceptació (autoritat superior per regla) només porta Sílvia → l'informe va a nom de qui signa"},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "caixetí TÍTOL DEL PROJECTE", "quote": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 0.9, "note": "forma més completa de totes les fonts"},
+    {"concept_id": "street_address", "value": "C/ Clot de la Llacuna, 16", "location": "caixetí EMPLAÇAMENT", "quote": "C/ Clot de la Llacuna,16 · LINYOLA (25240)", "confidence": 0.85, "note": "p.2 mostra la parcel·la entre CARRER CLOT DE LA LLACUNA i CARRER SITJAR (cantonada), però el projecte només anomena Clot de la Llacuna 16"},
+    {"concept_id": "municipality", "value": "Linyola", "location": "caixetí EMPLAÇAMENT + p.1 (comarca PLA URGELL, província LLEIDA)", "quote": "LINYOLA (25240) · municipi: LINYOLA", "confidence": 0.9, "note": ""},
+    {"concept_id": "superficie_parcela", "value": "571 m²", "location": "plànol 02 EMPLAÇAMENT - PARCEL·LA", "quote": "PARCEL·LA ref: 5098344CG2159N0000US · 571 m²", "confidence": 0.8, "note": "única superfície de parcel·la del projecte; cap consulta cadastral solta a la carpeta per contrastar"},
+    {"concept_id": "referencia_catastral", "value": "5098344CG2159N0000US", "location": "plànol 02", "quote": "ref: 5098344CG2159N0000US", "confidence": 0.8, "note": "del plànol del projecte (no hi ha Certificación Catastral a la carpeta)"},
+    {"concept_id": "num_floors", "value": "PB (1 planta)", "location": "plànols 02-06 + seccions", "quote": "PB HABITATGE / PB GARATGE / PB PORXO … 'Superfície construïda TOTAL PBaixa: 250.91 m²' … Carener +4,35 m; cap planta pis al projecte", "confidence": 0.75, "note": "tot el programa en planta baixa; sense taula de planejament 'N. plantes' explícita → derivat del contingut del projecte"},
+    {"concept_id": "NOT_expedient", "value": "13/52/04", "location": "caixetí EXPEDIENT", "quote": "EXPEDIENT: 13/52/04", "confidence": 0.0, "note": "expedient de l'arquitecte, NO el de G3"},
+    {"concept_id": "NOT_cota_referencia", "value": "720 m (altitud caixetí p.1)", "location": "p.1 bloc comarca/municipi", "quote": "altitud: 720m", "confidence": 0.0, "note": "valor de plantilla de l'arquitecte, erroni per a Linyola (~245 m); mai usar"}
+  ],
+  "not_present": ["expedient G3", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "cte (el projecte no declara C0/C1)", "utm_x_utm_y", "lab_*"],
+  "reading_notes": "Text vectorial AutoCAD net; les imatges (ortofoto, encaixos) no calien. Superfície construïda TOTAL PB = 250,91 m² i útil 515,62 m² (inclou exteriors) → per a la derivació CTE: construïda 250,91 < 300 m² i 1 planta < 4 → candidat C-0. Coberta amb 13 panells fotovoltaics; estructura entramat de fusta (fora d'abast)."
+}

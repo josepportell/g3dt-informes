@@ -1,0 +1,24 @@
+{
+  "source_path": "RV_ Realització geotècnic.msg (root, 2025-09-30) + ACCEPTACIO/RV_ Realització geotècnic.msg (2025-09-23)",
+  "document_type": "correu",
+  "what_it_is": "Dues baules de la cadena 'Realització geotècnic' amb la clienta: (a) 23-09 la Sílvia envia l'acceptació signada; (b) 30-09 la Sílvia demana desplaçar 1 m dos punts de sondeig i avisa que l'endemà serà al pati",
+  "issuer": "Sílvia Eroles (serolesba@gmail.com), reenviat per G3 (g3@g3dt.com)",
+  "date": "2025-09-23 i 2025-09-30",
+  "pages_or_sheets": "cossos + adjunts dedupats (G3DT_Silvia_Jaume signat.pdf i Punts de Sondeig_Silvia_Jaume (1).pdf són md5 dups dels solts; imatges petites = signatures)",
+  "context": {
+    "who_made_it": "la clienta Sílvia, en diàleg amb administració G3",
+    "for_whom": "G3 (Eva, Cesar, Dolors)",
+    "why": "(a) formalitzar l'acceptació; (b) coordinar el treball de camp i la posició final dels punts",
+    "expected_fields": ["client_name (emissora)", "field_date (implícit: 'demà' respecte del 30-09 → 1 d'octubre)", "canvi de posició de punts → explica el REDIBUIX"],
+    "not_expected": ["cota", "nivells", "superfícies", "expedient"],
+    "relation_to_others": "El correu del 30-09 és l'origen literal de les notes B42-B45 de la fitxa de camp (mateix text). CC a 'jaume nadal andreu <jume_540@hotmail.com>' → segon promotor implicat (el 'Jaume' dels noms de fitxer). L'adjunt del 23-09 és el pressupost signat (autoritat A per a client_name). El desplaçament de punts explica 'Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf' (modDate 30-09 16:00).",
+    "authority_for": ["client_name (suport)", "field_date (suport: camp l'endemà del 30-09)"]
+  },
+  "tier_a": [
+    {"concept_id": "client_name", "value": "Sílvia Eroles Balagueró", "location": "capçalera De: + signatura 'Sílvia Eroles'", "quote": "De: Silvia Eroles <serolesba@gmail.com> … Adjunto l'acceptació del pressupost.", "confidence": 0.7, "note": "emissora de l'acceptació; CC al segon promotor Jaume Nadal Andreu — l'informe va a nom de qui signa l'acceptació (regla Tulipa/Linyola)"},
+    {"concept_id": "field_date", "value": "2025-10-01", "location": "cos 30-09", "quote": "Li vaig comentar a l'arquitecte que venieu demà … Jo demà seré al pati", "confidence": 0.55, "note": "'demà' respecte del 30-09 → 1 d'octubre; concorda amb fitxa F38"},
+    {"concept_id": "building_type", "value": "habitatge (habitació, sala d'estar)", "location": "cos 30-09", "quote": "El punt de més a la dreta (el de la vostra habitació) i el de baix (cantonada de la sala d'estar)", "confidence": 0.3, "note": "corroboració indirecta d'habitatge unifamiliar"}
+  ],
+  "not_present": ["expedient", "street_address", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "cte", "utm_x_utm_y", "referencia_catastral", "lab_*", "architect_name (només 'l'arquitecte…la truqueu, Laia' → Laia com a contacte del despatx)"],
+  "reading_notes": "extract_msg; text nou = per sobre del primer 'De:'. El 30-09: 'em va dir que ja us havia enviat els punts … s'hauria de fer una petita modificació: … desplaçar 1m els dos cap a l'esquerra, així caurien en punts de càrrega' → els punts EXECUTATS poden diferir del plànol original de l'arquitecte; el REDIBUIX de l'Eva n'és la versió bona. 'la truqueu, Laia: 628 577 224' referma Laia Alarcón com a arquitecta de contacte."
+}
