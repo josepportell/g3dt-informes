@@ -1,5 +1,5 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-08-23 nit (reenquadrament: nivell A; anàlisi feta; decisió Josep = alternativa D en branca nova)
+Last updated: 2026-08-23 nit (via A en curs: lectura d'or Bell-lloc + Tulipa, 0 ERR; skill v0.2)
 
 ## ⚠ Reenquadrament 2026-08-23 (Josep): l'Eva està enfadada; criteri = "(quasi) faci la seva feina, sempre"
 
@@ -12,6 +12,17 @@ Anàlisi: `docs/ANALISI-NIVELL-A-LECTURA-HUMANA-2026-08-23.md`. Troballa central
 verificació creuada + candidats amb popup); **branca nova** des de `review/prod-audit-2026-08`; 15 camps nivell A confirmats;
 25 $ lectura inicial OK; l'Eva dibuixa els annexos ABANS del wizard (font vàlida per cota/nivells). Mètrica: erroni-amb-confiança
 = 0 a 8/8, OK ≥ 80 %, candidats ≤ 20 %, hold-out 5+3. F1-F4e i O1-O11 queden com a inventari.
+
+## Via A en curs (2026-08-23 nit): lectura d'or dels 8 projectes → skill `g3dt-llegir-projecte`
+
+Branca `experiment/nivell-a-2026-08`. Claude Code en sessió llegeix cada carpeta amb el procediment del futur skill headless
+(0 $ API). Sortida: `docs/golden-read/{exp}/` (1 JSON per font + `_decisions.json` 3 estats + comparació) i `_LESSONS.md`.
+| Projecte | OK | CAND | NT | N/A | ERR | Commit |
+|---|---|---|---|---|---|---|
+| 4001612 BELL-LLOC | 12 | 2 | 0 | 1 | **0** | `dffb82d` |
+| 3001706 C.TULIPA (casa 1) | 7 | 2 | 3 | 4 | **0** (1 cond. DWG) | `fe13aec` |
+Pendents: Rubí, Castellar, Linyola, Alcoletge, Vilanova, Anciles · conversor DWG · `tier_a_truth_map.py` amb `\b` · §11 anàlisi.
+Skill v0.2 amb Pas 0 (context del document abans de llegir-lo). Tulipa: un expedient = 2 informes (el wizard no ho contempla).
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
