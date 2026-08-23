@@ -6,7 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 0.6 (2026-08-23 nit) — DWG llegibles via LibreDWG `dwg2dxf` + `scripts/dwg_text_dump.py` (verificat amb els 4 DWG de Tulipa; `docs/DWG-CONVERSOR-2026-08-23.md`).
+Versió 0.7 (2026-08-23 nit) — Pas 3b: regles d'or per a les TAULES de l'informe (dades per fila/nivell), derivades de comparar les taules dels 7 informes signats amb els documents del corpus; verificades per mostreig (Castellar, Bell-lloc, Alcoletge), pendents de lectura d'or completa de taules.
+v0.6: DWG llegibles via LibreDWG `dwg2dxf` + `scripts/dwg_text_dump.py` (verificat amb els 4 DWG de Tulipa; `docs/DWG-CONVERSOR-2026-08-23.md`).
 v0.5: clarificacions del hold-out headless (3 projectes, ERR = 0; feedback dels executors a `docs/holdout-headless/_RESULTATS.md` §6).
 v0.4: derivat de la lectura d'or dels 8 projectes (`docs/golden-read/`; resultats: ANALISI §11 — 80 OK / 17 CAND / 10 NT / 2 ERR, tots dos convertits en regla aquí).
 v0.2: Pas 0 (context del document abans de llegir-lo; reflexió del Josep) + bloc `context` al JSON + lliçons de Tulipa.
@@ -33,7 +34,13 @@ Mode headless: no facis cap pregunta; si dubtes, baixa d'estat (`segur` → `can
 `superficie_parcela`, `field_date`, `cota_referencia`, `num_soil_levels`, `num_dpsh_tests`, `utm_x_utm_y` + `referencia_catastral`,
 `lab` (`lab_testing_company`, `lab_sample_id`, `lab_depth`, `lab_location`), `cte` (`cte_edificacio`, `cte_sol`).
 
-Fora d'abast (es fa després): paràmetres geotècnics, Qa, assentaments, narrativa.
+**Nivell A ampliat — taules (v0.7):** a més dels 15 escalars, les files de les taules de l'informe que són LECTURA de documents:
+`dpsh_tests[]` (per punt), `sondeig_tests[]` (per sondeig), `spt_ma_tests[]` (per assaig), `soil_levels[]` (per nivell, amb
+litologia i fondàries de transició), `superficie_construida`. Regles al Pas 3b; sortida al bloc `tables` del Pas 4.
+
+Fora d'abast (es fa després, Python/criteri Eva amb override): paràmetres geotècnics per nivell (γ, c, φ, E — Crespo/judici),
+K de permeabilitat (taula de valors típics de l'Eva per material), Tipus de terreny NCSE + Coef. C, Qa, assentaments, narrativa.
+El skill LLEGEIX les dades que aquestes derivacions necessiten (Nb/N de l'Excel, fondàries de nivell, litologies); no deriva.
 
 ## Pas 0 — Abans de llegir cap dada: posa el document en context
 
@@ -206,6 +213,53 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
 - **Sense GTL** (arriba setmanes després): la comanda és l'única font de lab; el NOM del laboratori no hi consta → `lab_testing_company`
   és `candidats` (coneixement previ: G3 treballa amb TPS), no lectura.
 
+## Pas 3b — Regles d'or de les TAULES de l'informe (v0.7)
+
+Derivades de comparar les taules dels 7 informes signats amb els documents de les carpetes (2026-08-23; evidència a
+`docs/audit/taules-llista/`). Verificades per mostreig on s'indica; la resta són el mateix patró aplicat — davant del dubte, candidats.
+
+**Taula "Penetròmetres dinàmics DPSH" — una fila per punt P-i (`dpsh_tests[]`):**
+- `cota_inici`: capçalera de CADA pàgina de `PDF/ANNEXES/{exp}_DPSH.pdf` ("Cota inici: +NNN.NN msnm segons…" o
+  "P-2 cota inici: -4,2 m (respecte el carrer)"). **Pot ser diferent per punt i pot ser RELATIVA intencionada** (verificat
+  Castellar: -4,0 / -4,2 / -4,0 / -4,0 respecte el carrer = exactament l'informe). Si l'annex només dona una cota, val per a tots.
+- `profunditat_assolida`: peu B80 de l'Excel DPSH **"Rebuig a -X,XX m"** = fondària EXACTA del rebuig (verificat Castellar:
+  -1,08/-0,48/-0,76/-1,55 = l'informe). L'última fila amb cops de la columna C és l'interval de 20 cm, NO la fondària assolida:
+  usar-la només si B80 no hi és, i anotar-ho. Signe sempre negatiu a l'informe.
+- `rebuig` (Si/No): B80 present → Si. Sense B80 i última lectura sense R → No (aturada per potència).
+- `nivell_freatic`: columna `N.F.` de l'Excel DPSH (capçalera fila 16; una marca a la fondària on surt aigua — verificat
+  Alcoletge: -1,00 a l'informe i "No detectat" al pipeline vell que la ignorava) > manuscrit PENETROS. "No detectat" NOMÉS si
+  la columna és buida a tots els fulls.
+
+**Taula "Sondeig a rotació" — una fila per S-x (`sondeig_tests[]`):** cota (annex sondeig `z:` — mateixes regles que
+`cota_referencia`), profunditat assolida (annex sondeig), `spt_ma` en format "N_SPT/N_MA" (comptar del GTL + comanda fila 35 +
+annex; l'Eva escriu "1/0" o "1/--"), nivell freàtic (annex sondeig). L'albarà TPS "Assaigs SPT: No" no mana (regla existent).
+
+**Taula "Assaigs SPT / MA" — una fila per assaig (`spt_ma_tests[]`):** id i punt i fondària = regles `lab` existents (annex de
+l'Eva mana per l'etiqueta). `n30`: annex de sondeig manuscrit (lectura VISUAL, xifra al costat de l'assaig; R = rebuig) creuat amb
+el GTL si hi és; discrepància de lectura (54 vs 58 al pipeline vell per manuscrit dubtós) → candidats amb les dues lectures.
+`litologia` = la del nivell d'on surt la mostra (vegeu `soil_levels`).
+
+**Nivells del sòl (`soil_levels[]`) — alimenta 5 taules (nivells, permeabilitat, sulfats, sísmica, geotècnica):**
+- `nom` ("1er nivell", "2on nivell") i ordre: regla `num_soil_levels` existent (tall > log; el TALL mana).
+- `litologia`: llegenda del tall ("1er nivell: Graves amb sorres") + columna `Unitat litològica` de l'annex sondeig. **L'Eva
+  re-redacta a l'informe** (tall "Graves amb sorres" → informe "Graves en matriu sorrenca carbonatades"; verificat Bell-lloc,
+  Alcoletge): la redacció exacta és sempre `candidats` (tall primer, annex sondeig segon), MAI segur per a la cadena literal.
+- `de` / `a` (fondàries de transició): cotes del tall + marques `Nivell N` de l'Excel DPSH (columna al costat del peu, B79) +
+  annex sondeig. Són el que la sísmica usa com a gruix i la geotècnica com a rang de Nb: si els documents discrepen (esborrany
+  PNG vs annex PDF — regla d'esborranys existent), candidats.
+- `mostra_del_nivell`: el nivell que conté `lab_depth` — la fila de sulfats de l'informe porta AQUEST nivell, no sempre el 1r
+  (Linyola: mostra al 2on nivell). Lectura + interval, no judici.
+
+**Taula de plantes/superfícies:** `num_floors` i `superficie_parcela` són els escalars existents; s'hi afegeix
+`superficie_construida` (correu d'encàrrec "Pb de 280m + p1 de 86" → l'Eva escriu "280+86"; taula de planejament; pressupost).
+**L'etiqueta de la fila de parcel·la segueix la FONT del valor**: "segons plànols cadastrals" / "segons cadastre" / "segons
+informació aportada" / "segons projecte" — emet la font amb el valor perquè el generador triï l'etiqueta. Ampliacions
+(Alcoletge): l'Eva escriu "Superfície construïda ampliació" — si l'encàrrec és una ampliació, anota-ho.
+
+**Què NO llegeix el skill (Tier B, no ho intentis):** K (m/s), Tipus de terreny sísmic + Coef. C, γ/c/φ/E, qualificació
+d'agressivitat. Sí que en llegeixes els INPUTS (Nb mitjans de l'Excel per rang de fondària els pot derivar Python; tu dona
+fondàries i litologies bones).
+
 ## Pas 4 — Sortida: un JSON per document
 
 ```json
@@ -214,6 +268,9 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
  "context": {"who_made_it": "...", "for_whom": "...", "why": "...", "expected_fields": ["..."], "not_expected": ["..."],
              "relation_to_others": "duplicat de / versió revisada de / substitueix / complementa …", "authority_for": ["concept_id", "..."]},
  "tier_a": [{"concept_id": "...", "value": "...", "location": "p.1 bloc OBRA / Hoja1!N19 / caixetí / nom del fitxer", "quote": "text literal", "confidence": 0.0, "note": "ambigüitat, conflicte, duplicat, grafia"}],
+ "tables": {"dpsh_tests": [{"punt": "P-1", "cota_inici": "...", "profunditat_assolida": "...", "rebuig": "Si|No", "nivell_freatic": "...", "location": "...", "quote": "..."}],
+            "sondeig_tests": [], "spt_ma_tests": [], "soil_levels": [{"nom": "1er nivell", "litologia_candidats": ["..."], "de": "...", "a": "...", "mostra_del_nivell": false}],
+            "__nota": "només si el document aporta files de taula (Pas 3b); ometre si buit"},
  "not_present": ["camps del nivell A buscats i absents"],
  "reading_notes": "què ha calgut fer (ordenar blocs, renderitzar, rotar, clip, llegir /Sig)"}
 ```
@@ -224,7 +281,9 @@ deixar constància explícita del que s'ha descartat i per què.
 
 ## Pas 5 — `_decisions.json`
 
-Per a cada un dels 15 camps:
+Per a cada un dels 15 camps (i, des de v0.7, un bloc `tables` amb `dpsh_tests`/`sondeig_tests`/`spt_ma_tests`/`soil_levels`
+consolidats amb els mateixos 3 estats per fila — una fila amb totes les cel·les de 2+ fonts coincidents és `segur`; una
+litologia re-redactable o un N30 manuscrit dubtós és `candidats`):
 - `segur`: ≥ 2 fonts **independents** d'autoritat A coincideixen, o 1 font A sense cap contradicció. Sempre amb `candidates[]` (valor,
   font, cita) perquè la UI mostri d'on surt.
 - `candidats`: llista ordenada ≤ 3 amb font i cita. També quan hi ha multiplicitat real (cantonada, dues parcel·les).
