@@ -1,0 +1,113 @@
+{
+ "source_path": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost 25·0493 MODIFICAT de G3 (07/10/2025, 7 p.) per a un 'ESTUDI GEOTECNIC' al C/ Arbrells 18A-18B-20, Castellar del Vallès, sol·licitat per WOOD COMFORT PROMOCIONS SLU (Barcelona): 4 DPSH + 1 sondeig a rotació amb SPT + laboratori; 1.280 € (IVA no inclòs). Formulari p.5 buit, sense signatura. Versió VIGENT (modDate posterior).",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "2025-10-07",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3 (ERP m4PRO; creator 'G3 DESENVOLUPAMENT TERRITORIAL, S.L.', title 'm4PRO ERP · Informes del Proyecto', creationDate 07/10/2025 10:20, modDate 07/10/2025 10:22)",
+  "for_whom": "el sol·licitant definitiu del geotècnic: WOOD COMFORT PROMOCIONS SLU, C/ Ferran Valls i Taberner 14 bis 1-2, 08006 Barcelona (una promotora: 'PROMOCIONS' al nom)",
+  "why": "reemetre el pressupost 25·0493 amb el sol·licitant canviat (GRUP ALMA CONSTRUCCIONS → WOOD COMFORT PROMOCIONS SLU) i l'adreça de l'obra ampliada (18A → 18A-18B-20), mantenint campanya i preu",
+  "expected_fields": [
+   "client_name (com a sol·licitant; aquí el nom conté 'PROMOCIONS' → probablement el promotor real)",
+   "street_address (bloc OBRA)",
+   "municipality",
+   "cte_edificacio / cte_sol",
+   "num_dpsh_tests (previst)"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_sample",
+   "num_floors",
+   "superficie_parcela",
+   "architect_name"
+  ],
+  "relation_to_others": "SUBSTITUEIX 'PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf' (25/06/2025): mateix codi 25·0493, modDate 07/10/2025 posterior → mana. Diferències: CLIENT (GRUP ALMA CONSTRUCCIONS → WOOD COMFORT PROMOCIONS SLU amb adreça i CP), OBRA ('ESTUDI GEOTECNIC 3HAB. / C/ARBRELLS 18A' → 'ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20'), data p.1 (25/06/25 → 07/10/25). Quantitats i import IDÈNTICS (4 DPSH, 1 sondeig, 1.280 €). La p.5 conserva la data 25/06/25 (no actualitzada per l'ERP). Emès 7 dies abans del correu 'Re: ESTUDI GEOTÈCNIC VERSIÓ' i 2 setmanes abans del camp (fotos 2025-10-20/24).",
+  "authority_for": [
+   "street_address (candidat: tres números)",
+   "municipality",
+   "client_name (candidat fort: sol·licitant 'PROMOCIONS')",
+   "num_dpsh_tests (previst)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.1 bloc CLIENT (y=231-279)",
+   "quote": "CLIENT: / WOOD COMFORT PROMOCIONS SLU / C/FERRAN VALLS I TABERNER 14 BIS 1-2 / 08006    BARCELONA / Tel:",
+   "confidence": 0.7,
+   "note": "sol·licitant de la versió vigent. El nom conté 'PROMOCIONS' (promotora) i no 'ARQUITECT' → molt probablement el promotor/propietari de l'obra. Sense NIF. L'adreça (Barcelona) és del client, NO de l'obra. Confirmar amb ACCEPTACIO p.5 (NOM I COGNOMS + NIF) i/o caixetí 'Promotor'."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ARBRELLS 18A-18B-20",
+   "location": "p.1 bloc OBRA línia 2 (y=421)",
+   "quote": "ESTUDI GEOTECNIC ⏎ C/ARBRELLS 18A-18B-20 ⏎ CASTELLAR DEL VALLES",
+   "confidence": 0.8,
+   "note": "tres números (18A, 18B, 20) = tres parcel·les contigües → coherent amb '3HAB.' de la 1a versió. L'informe pot redactar-ho 'C/ Arbrells 18A-18B-20' o 'C/ Arbrells, 18A, 18B i 20'. Grafia oficial possible 'Carrer dels Arbrells' (no verificat)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1 bloc OBRA línia 3 (y=421)",
+   "quote": "CASTELLAR DEL VALLES",
+   "confidence": 0.9,
+   "note": "forma curta G3 sense accent; forma oficial 'Castellar del Vallès'"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "p.2 campanya (y=663) + p.4 valoració 002.001",
+   "quote": "4 assaigs de penetració dinàmica DPSH | UNITATS D'ASSAIG DE  PENETRACIO DINAMICA DPSH ⏎ 4,00",
+   "confidence": 0.7,
+   "note": "previstos, no executats; mana l'Excel DPSH. Idèntic a la 1a versió."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "1 sondeig a rotació amb bateria contínua amb SPT (previst)",
+   "location": "p.2 (y=678) + p.4 001.001",
+   "quote": "1Sondeig a rotació amb bateria continua, que inclou ⏎ desplaçament, perforació i execució d’assaigs SPT’s | SONDEIG A ROTACIO AMB BATERIA CONTINUA 1,00 INCLOU DESPLAÇAMENT I ASSAIG SPT",
+   "confidence": 0.7,
+   "note": "previst; la mostra de laboratori vindrà del sondeig (S1)"
+  },
+  {
+   "concept_id": "expedient_comercial",
+   "value": "25·0493",
+   "location": "p.1 peu (y=756) i p.4/p.5 capçalera",
+   "quote": "25·0493 ⏎ P#",
+   "confidence": 1.0,
+   "note": "codi comercial, NO expedient (l'expedient és 3001621 = carpeta)"
+  },
+  {
+   "concept_id": "NOT_street_address",
+   "value": "C/FERRAN VALLS I TABERNER 14 BIS 1-2, 08006 BARCELONA",
+   "location": "p.1 bloc CLIENT (y=254-279)",
+   "quote": "C/FERRAN VALLS I TABERNER 14 BIS 1-2 ⏎ 08006    BARCELONA",
+   "confidence": 1.0,
+   "note": "adreça del sol·licitant, NO de l'obra. Descartada."
+  }
+ ],
+ "not_present": [
+  "cte_edificacio",
+  "cte_sol",
+  "expedient",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth"
+ ],
+ "reading_notes": "Identificat per metadata (creator G3, title m4PRO). Blocs p.1 ordenats per (y,x). p.2 NO porta 'Tipus d’edifici' ni 'Tipus de Terreny' → cte_* absent. Diferències respecte la 1a versió verificades línia a línia: només CLIENT, OBRA i DATA p.1 canvien; p.5 manté DATA 25/06/25. Formulari p.5 buit; cap /Sig ni widgets: no és la versió acceptada (vegeu ACCEPTACIO/)."
+}

@@ -1,0 +1,133 @@
+{
+ "source_path": "comanda laboratori_3001631_RUBI.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori: obra 'CONSTR HABITATGE UNI', expedient 3001631, C/ MIRANDA, Rubí, presa 14/11/2025, sol·licitud 18/11/2025; 1 mostra SPT1 (P3) 0,6-1,4 m, Límits d'Atterberg + 'NOMÉS SULFATS' (Lambe segons límits).",
+ "issuer": "G3 (EVA VÁZQUEZ)",
+ "date": "2025-11-18",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "G3 (Eva)",
+  "for_whom": "el laboratori (nom no consta a la comanda; el GTL 4703-GTL-25 de la carpeta és de TPS)",
+  "why": "demanar assaigs sobre la mostra SPT recuperada al punt P3",
+  "expected_fields": [
+   "expedient (N19)",
+   "tipus obra (N18)",
+   "adreça/municipi obra (N20/N21)",
+   "data de presa (N23)",
+   "mostres i cotes (fila 35)"
+  ],
+  "not_expected": [
+   "client de l'informe (el sol·licitant és G3)",
+   "plantes",
+   "cota de referència",
+   "nivells"
+  ],
+  "relation_to_others": "precedeix el GTL 4703-GTL-25 (present a la carpeta); 'DATA DE PRESA' 14/11 = dia de camp (campanya d'un sol dia: penetros + SPT, sense sondeig a rotació). Bloc files 11-15 (SOL.LICITANT) = G3, ignorat.",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "field_date (candidat, dia de la mostra)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "Hoja1!N19",
+   "quote": "NÚM. D'EXPEDIENT | 3001631.0",
+   "confidence": 1.0,
+   "note": "= nom de la carpeta '3001631 RUBI' = nom del fitxer"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "Hoja1!N18",
+   "quote": "CONSTR HABITATGE UNI",
+   "confidence": 0.8,
+   "note": "'UNI' = unifamiliar; coincideix amb PLAN_COST 'HAB UNIF'"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ MIRANDA",
+   "location": "Hoja1!N20",
+   "quote": "C/ MIRANDA",
+   "confidence": 0.75,
+   "note": "sense número. ÚNICA font d'adreça entre les plantilles G3 (el pressupost i la fitxa no en porten)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "RUBI",
+   "location": "Hoja1!N21",
+   "quote": "RUBI",
+   "confidence": 0.95,
+   "note": "sense accent; forma oficial 'Rubí'"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-11-14",
+   "location": "Hoja1!N23 'DATA DE PRESA'",
+   "quote": "datetime(2025,11,14)",
+   "confidence": 0.8,
+   "note": "data de la mostra SPT1 (P3). Com que la campanya és penetros + SPT amb la mateixa màquina (TPS ERUGA), molt probablement és el mateix dia que els DPSH; coincideix amb els noms de fotos 'Imatge de WhatsApp 2025-11-14'. Confirmar amb annex DPSH DATA:."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT1 (P3)",
+   "location": "Hoja1!C35",
+   "quote": "SPT1 (P3)",
+   "confidence": 0.95,
+   "note": "UNA mostra"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,6-1,4 m",
+   "location": "Hoja1!J35/L35 (J31 'INICIAL', L31 'FINAL')",
+   "quote": "0.6 | 1.4",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P3",
+   "location": "Hoja1!C35",
+   "quote": "(P3)",
+   "confidence": 0.95,
+   "note": "la mostra SPT es va prendre al punt del penetròmetre P3 (no hi ha sondeig S1)"
+  },
+  {
+   "concept_id": "lab_tests",
+   "value": "Límits d'Atterberg (O) + Agressivitat sòls 'NOMÉS SULFATS' (AA/AD); Lambe depenent dels límits",
+   "location": "fila 35 + C58",
+   "quote": "O35='X' AA35='X' AD35='NOMÉS SULFATS' | C58='LAMBE, DEPENENT DELS LIMITS'",
+   "confidence": 0.9,
+   "note": "nivell B"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL / B25364589 / C/ Vallbona, 22 / ELS OMELLS DE NA GAIA",
+   "location": "N11-N14",
+   "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589 | C/ Vallbona, 22 | ELS OMELLS DE NA GAIA",
+   "confidence": 1.0,
+   "note": "sol·licitant = G3; la seva adreça/població NO són de l'obra"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_*"
+ ],
+ "reading_notes": "Identificada per Hoja1!C3 == \"PETICIÓ D'ASSAIGS DE LABORATORI\". Dos blocs amb etiquetes idèntiques (NOM/NIF/ADREÇA/POBLACIÓ a files 11-14 vs OBRA/EXPEDIENT/ADREÇA/POBLACIÓ a 18-21): només el segon és del projecte. O65 'NÚM. D'INFORME' i O66 'DATA RECEPCIÓ MOSTRES' buits (els omple el laboratori)."
+}

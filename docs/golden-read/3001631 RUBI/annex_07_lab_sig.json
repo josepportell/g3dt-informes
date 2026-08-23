@@ -1,0 +1,33 @@
+{
+ "source_path": "PDF/ANNEXES/LAB-SIG.pdf",
+ "document_type": "informe_laboratori",
+ "what_it_is": "DUPLICAT del GTL 4703-GTL-25 (TPS, 17/12/2025, 8 p.): còpia re-destil·lada (Acrobat Distiller 15, creationDate 17/12/2025 09:58, title '4703-GTL-25 Rubí.pdf') que l'Eva posa com a annex de laboratori de l'informe.",
+ "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075)",
+ "date": "2025-12-17",
+ "pages_or_sheets": 8,
+ "context": {
+  "who_made_it": "TPS (original); re-impressió a PDF feta a G3 per a l'annex",
+  "for_whom": "l'informe de G3 (annex de laboratori)",
+  "why": "incloure l'acta del laboratori signada dins l'informe",
+  "expected_fields": [
+   "els mateixos que el GTL"
+  ],
+  "not_expected": [
+   "res de nou"
+  ],
+  "relation_to_others": "duplicat de '4703-GTL-25 Rubí.pdf': mateix 'Número d'informe: 4703-GTL-25', mateixa mostra GTL-8270-25, text idèntic a 5 de 8 pàgines i mateix contingut (ordre de blocs diferent) a les altres 3; metadata title = nom del fitxer original. NO compta com a font independent.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "duplicate_of",
+   "value": "4703-GTL-25 Rubí.pdf",
+   "location": "metadata title + p.1 'Número d'informe'",
+   "quote": "title: '4703-GTL-25 Rubí.pdf' | Número d'informe: 4703-GTL-25 | Mostra: SPT1 P3 | Cota d'extracció 0,6 - 1,2 | Rubí. Carrer Miranda. 3001631",
+   "confidence": 1.0,
+   "note": "vegeu lab_06_gtl.json per als valors"
+  }
+ ],
+ "not_present": [],
+ "reading_notes": "Comparació pàgina a pàgina amb fitz: p.1,2,3,6,8 text idèntic; p.4,5,7 mateixa longitud amb ordre de blocs diferent (re-destil·lat). md5 diferent del fitxer original (8bc2f8d7 vs 721c81ea) perquè és una re-impressió, no una còpia."
+}

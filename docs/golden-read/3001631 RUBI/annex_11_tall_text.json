@@ -1,0 +1,112 @@
+{
+ "source_path": "tall.pdf",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació de l'Eva (FreeHand '3001631_tall de correlació.FH11' → 'Microsoft: Print To PDF', 17/12/2025, 1 p. apaïsada) amb TEXT NET: caixetí 'ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRER DE LA MIRANDA Nº 39, PARC. 6-105 B, RUBÍ (BARCELONA)', Exp 3001631, Desembre 2025; llegenda 'Nivell 1 : Graves i sorres. Carbonatat.' + 'Sòls superficials'; escala 213-208 msnm; P-1/P-2/P-3 amb Nb.",
+ "issuer": "G3 (Eva)",
+ "date": "2025-12-17 (impressió); caixetí 'Desembre 2025'",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "Eva (G3) amb FreeHand",
+  "for_whom": "l'informe (annex tall de correlació)",
+  "why": "correlacionar els 3 DPSH, definir els nivells geotècnics i la cota de fonamentació recomanada",
+  "expected_fields": [
+   "num_soil_levels (llegenda 'Nivell N')",
+   "building_type + street_address + municipality (títol del projecte al caixetí)",
+   "expedient",
+   "cotes msnm dels punts (escala)",
+   "num_dpsh_tests (punts dibuixats)"
+  ],
+  "not_expected": [
+   "client",
+   "arquitecte",
+   "data de camp",
+   "lab"
+  ],
+  "relation_to_others": "còpia 'Print To PDF' (text net) del mateix dibuix que 'PDF/ANNEXES/3001631_tall de correlació.pdf' (Distiller, text brossa; el llegeix visualment l'altre agent). El caixetí és la redacció del títol de l'informe → 'Nº 39' i 'PARC. 6-105 B' només surten aquí (i probablement al plànol de situació). La posició gràfica dels nivells/cota de fonamentació requereix visió.",
+  "authority_for": [
+   "num_soil_levels",
+   "street_address (redacció de l'informe)",
+   "building_type",
+   "municipality",
+   "expedient (corroboració)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "LLEGENDA (y=189)",
+   "quote": "Sòls superficials ⏎ Nivell 1 : Graves i sorres. Carbonatat.",
+   "confidence": 0.85,
+   "note": "una sola entrada 'Nivell N' a la llegenda; 'Sòls superficials' és la capa de terra vegetal/rebliment, no un nivell numerat (criteri de l'Eva: comptar 'NIVELL N'). Coherent amb l'Excel/annex DPSH ('Nivell 1'). Confirmar visualment que no hi ha 'Nivell 2' dibuixat sense text."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer de la Miranda, núm. 39 (parc. 6-105 B)",
+   "location": "caixetí TÍTOL DEL PROJECTE (y=543)",
+   "quote": "AL CARRERDE LA MIRANDA Nº 39,  PARC. 6-105 B, RUBÍ (BARCELONA)",
+   "confidence": 0.85,
+   "note": "ÚNICA font amb número de carrer (39) i referència de parcel·la ('PARC. 6-105 B' — no és una referència cadastral de 20 caràcters; sembla numeració de parcel·la urbanística/planejament). 'CARRERDE' = typo d'espai. Coherent amb comanda/GTL/annex DPSH 'C/ (de la) Miranda'."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí (Barcelona)",
+   "location": "caixetí",
+   "quote": "RUBÍ (BARCELONA)",
+   "confidence": 0.9,
+   "note": "forma amb accent agut correcte"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat",
+   "location": "caixetí",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.85,
+   "note": "redacció de l'informe (l'Eva); 'UNA HABITATGE' = typo de gènere. Afegeix 'aïllat' respecte a PLAN_COST/comanda ('HAB UNIF'); el correu deia 'casa modular'."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "caixetí",
+   "quote": "Data: Desembre 2025 Exp: 3001631",
+   "confidence": 0.9,
+   "note": "corrobora comanda/annex DPSH/GTL"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "eix del tall",
+   "quote": "P-1 ⏎ P-2 ⏎ P-3 ⏎ (msnm)",
+   "confidence": 0.8,
+   "note": "3 punts dibuixats; Nb anotats (40, 77, 45, R a P-1; 48, R; 47, R)"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "escala 213-208 msnm (boca dels punts ≈ 212-212,5)",
+   "location": "eix vertical (x=165)",
+   "quote": "213 ⏎ 212 ⏎ 211 ⏎ 210 ⏎ 209 ⏎ 208",
+   "confidence": 0.4,
+   "note": "només l'escala; la cota exacta de cada punt s'ha de llegir gràficament (altre agent). L'annex DPSH dona +212,50 / +212 / +212,50."
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": null,
+   "location": "caixetí",
+   "quote": "PARC. 6-105 B",
+   "confidence": 0.2,
+   "note": "NO és una referència cadastral (format NNNNNNNCGNNNNS0001XX); és una identificació de parcel·la (probablement del planejament/solar). No inferir-ne res."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "Text NET (producer 'Microsoft: Print To PDF', title = nom del .FH11): no cal visió per al caixetí ni la llegenda. El que sí requereix visió: geometria del tall (cota de fonamentació recomanada dibuixada, límit de 'Sòls superficials', cota de boca de cada punt) i les 4 imatges incrustades (probablement croquis de situació N/A-A'). Text 'Cota de fonamentació recomanada' és només l'entrada de la llegenda, sense valor numèric al text."
+}

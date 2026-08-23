@@ -1,0 +1,22 @@
+{
+ "source_path": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg | 25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+ "document_type": "foto",
+ "what_it_is": "Dues fotos de mòbil (WhatsApp, 2025-10-20 13:00) del solar abans de fer el geotècnic: NO són cap plànol ni document fotografiat. Foto 1 (824x1195): solar desbrossat amb tanca verda de malla, casa veïna amb plaques solars a sota (pendent avall), muntanyes al fons (perfil de Sant Llorenç del Munt / Montcau, lectura de paisatge, no text). Foto 2 (1080x1388): mateix solar, pins tallats i troncs apilats, tanca verda a l'esquerra, cases veïnes entre el bosc.",
+ "issuer": "Desconegut (foto enviada per WhatsApp el 2025-10-20, probablement pel sol·licitant/arquitecte a G3 durant la fase de pressupost; la carpeta 25.0493 és la del codi comercial)",
+ "date": "2025-10-20 13:00:25 (nom del fitxer; sense EXIF)",
+ "pages_or_sheets": "2 imatges JPEG (224 KB i 377 KB), orientació vertical",
+ "context": {
+  "who_made_it": "algú a peu de solar (sol·licitant, arquitecte o promotor) amb el mòbil",
+  "for_whom": "G3 (fase de pressupost: codi 25.0493, 4 dies abans del camp del 2025-10-24)",
+  "why": "mostrar l'estat del solar (desbrossat, arbres tallats, accés) per preparar el pressupost i l'accés de la màquina",
+  "expected_fields": ["res del nivell A; com a molt indicis de pendent del terreny i d'accés de maquinària"],
+  "not_expected": ["expedient", "client_name", "architect_name", "street_address", "municipality", "superficie_parcela", "num_floors", "cotes", "field_date"],
+  "relation_to_others": "Complementa les fotos de camp de FOTOGRAFIES/ (2025-10-24): mateix solar 4 dies abans, ja desbrossat i amb la tanca verda. La foto 2 i la 'vista_general_1.jpg' de FOTOGRAFIES/ mostren el mateix pendent amb pins i troncs.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "field_date", "value": "2025-10-20 (data de les fotos, NO data de camp)", "location": "nom del fitxer", "quote": "WhatsApp Image 2025-10-20 at 13.00.25", "confidence": 0.1, "note": "Només acota: el camp és posterior a aquesta data. Les fotos de camp de FOTOGRAFIES/ són del 2025-10-24. No usar com a field_date."}
+ ],
+ "not_present": ["expedient", "client_name", "street_address", "municipality", "architect_name", "building_type", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*", "cap text visible a cap de les dues fotos (ni caixetí, ni rètol, ni placa de carrer)"],
+ "reading_notes": "Obertes amb PIL (exif_transpose: sense EXIF), reduïdes a ≤1600 px i llegides visualment senceres. L'encàrrec deia 'probablement plànol/document fotografiat': NO ho és, són fotos del solar. Observacions de terreny (fora del nivell A): solar en pendent cap a les cases de sota (foto 1), superfície acabada de desbrossar amb pins tallats i troncs apilats (foto 2), tanca de malla verda al límit inferior, urbanització de cases aïllades entre pineda amb vistes a una serra (massís de Sant Llorenç del Munt, coherent amb Castellar del Vallès; interpretació de paisatge, confiança baixa)."
+}

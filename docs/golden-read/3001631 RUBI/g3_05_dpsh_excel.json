@@ -1,0 +1,108 @@
+{
+ "source_path": "ANNEXES/3001631_DPSH.xls",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Transcripció digital (revisada per l'Eva) dels 3 penetròmetres DPSH: P-1 (rebuig a -4,55 m), P-2 (-3,58 m), P-3 (-3,13 m, amb SPT-1 a 0,6-1,2 m, 16/20/20/24). Un sol 'Nivell 1' a la columna Nivells. Sense N.F.",
+ "issuer": "G3 (Eva) a partir del full de camp TPS",
+ "date": null,
+ "pages_or_sheets": "3 fulls: P-1, P-2, P-3 (80 files × 7 cols; capçalera fila 16)",
+ "context": {
+  "who_made_it": "G3 (Eva)",
+  "for_whom": "l'informe (gràfics DPSH de l'annex) i els càlculs",
+  "why": "passar a net el colpeig N20 de camp i calcular NB (factor D15 = 0,83)",
+  "expected_fields": [
+   "num_dpsh_tests (fulls amb dades)",
+   "cota de rebuig per punt (B80)",
+   "mostra SPT (columna E MOSTRA)",
+   "N.F. (columna F)",
+   "nivells (columna G / C79)"
+  ],
+  "not_expected": [
+   "expedient (només al nom del fitxer)",
+   "client",
+   "adreça",
+   "municipi",
+   "data de camp",
+   "cota de referència absoluta"
+  ],
+  "relation_to_others": "versió revisada del full de camp manuscrit '3001631 - PENETROS.pdf' (el llegeix l'altre agent): l'Excel mana per als valors. Origen de 'PDF/ANNEXES/3001631_DPSH.pdf'. El SPT-1 de P-3 és la mostra de la comanda (SPT1 (P3)) i del GTL.",
+  "authority_for": [
+   "num_dpsh_tests",
+   "lab_location",
+   "lab_depth (candidat: 0,6-1,2 vs comanda 0,6-1,4)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "fulls P-1, P-2, P-3 (columna C amb dades)",
+   "quote": "P-1: 24 lectures fins -4,6 (100) | P-2: 19 fins -3,6 (100) | P-3: 17 fins -3,2 (100)",
+   "confidence": 1.0,
+   "note": "executats = previstos (3). Rebuig (100 cops): P-1 'Rebuig  a -4,55  m', P-2 'Rebuig  a - 3,58  m', P-3 'Rebuig  a - 3,13  m' (B80)."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "nom del fitxer",
+   "quote": "3001631_DPSH.xls",
+   "confidence": 0.8,
+   "note": "només al nom; cap metadada dins del llibre"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P-3",
+   "location": "P-3!E22",
+   "quote": "SPT-1",
+   "confidence": 0.95,
+   "note": "la mostra SPT-1 és al penetròmetre P-3 (files 22-24 de la columna MOSTRA)"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,6 a 1,2 m",
+   "location": "P-3!E23",
+   "quote": "0,6 a 1,2",
+   "confidence": 0.6,
+   "note": "CONFLICTE amb la comanda (J35/L35 = 0,6-1,4). 4 trams de 15 cm (16/20/20/24 cops, E24) = 0,60 m → 0,6-1,2 és el tram SPT estàndard; 1,4 pot ser la cota final de la mostra recuperada. Comprovar al GTL."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "P-3!E22",
+   "quote": "SPT-1",
+   "confidence": 0.9,
+   "note": "= comanda 'SPT1 (P3)'"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "P-1/P-2/P-3!C79 (columna G 'Nivells' buida)",
+   "quote": "Nivell 1",
+   "confidence": 0.4,
+   "note": "una sola etiqueta 'Nivell 1' al peu de cada full; és plantilla de llegenda, no l'assignació de nivells de l'Eva. Confirmar amb el tall de correlació (altre agent)."
+  },
+  {
+   "concept_id": "nivell_freatic",
+   "value": "no detectat",
+   "location": "columna F 'N.F.' (tots els fulls)",
+   "quote": "F17:F40 buides",
+   "confidence": 0.6,
+   "note": "nivell B; absència de marca no és prova definitiva"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_*"
+ ],
+ "reading_notes": "Identificat pels fulls P-1/P-2/P-3 amb capçalera a la fila 16 ('Profunditat de penetròmetre', 'Colpeig DPSH', 'Colpeig NB', 'MOSTRA', 'N.F.', 'Nivells'). D15 = 0,83 (factor NB). Cap cel·la de capçalera de projecte (files 1-15 buides excepte D15). Profunditats negatives (relatives a la boca del penetròmetre)."
+}

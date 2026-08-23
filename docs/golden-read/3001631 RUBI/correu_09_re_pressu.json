@@ -1,0 +1,58 @@
+{
+ "source_path": "25.0794/RE_ PRESSU.msg",
+ "document_type": "correu",
+ "what_it_is": "Resposta interna d'Eva Vázquez a Eva Roig (cc Dolors Maqueda; 05/11/2025 16:23) al correu PRESSU: cos buit (només signatura), adjunta PLAN_COST_RUBI.xlsx (md5 idèntic a 25.0794/PLAN_COST_RUBI.xlsx). Sota, el correu original citat sencer.",
+ "issuer": "Eva Vázquez Marcet <eva@g3dt.com> (G3, Responsable Dept Geologia, geòloga col. 4302)",
+ "date": "2025-11-05",
+ "pages_or_sheets": "cos (signatura + cita) + 8 adjunts (1 Excel + 7 imatges de signatura)",
+ "context": {
+  "who_made_it": "Eva Vázquez (G3)",
+  "for_whom": "administració G3 (Eva Roig / Dolors)",
+  "why": "retornar el full de costos (PLAN_COST) perquè administració emeti el pressupost 25·0794",
+  "expected_fields": [
+   "res de nou al text; només l'adjunt PLAN_COST"
+  ],
+  "not_expected": [
+   "qualsevol camp del nivell A al cos"
+  ],
+  "relation_to_others": "RE: de PRESSU.msg — el text nou (per sobre del primer 'De:') és només la signatura. L'adjunt PLAN_COST_RUBI.xlsx és byte-idèntic al de la carpeta (md5 5051a4a8) → ja llegit a g3_03_plan_cost.json; no és font independent. Les fotos WA0015/16 NO es reenvien.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "duplicate_attachment",
+   "value": "PLAN_COST_RUBI.xlsx",
+   "location": "adjunt",
+   "quote": "ATT: PLAN_COST_RUBI.xlsx size=112195 md5=5051a4a85645871425c36b8c03e0fac6",
+   "confidence": 1.0,
+   "note": "= 25.0794/PLAN_COST_RUBI.xlsx (mateix md5). Vegeu g3_03_plan_cost.json."
+  },
+  {
+   "concept_id": "tecnic_responsable",
+   "value": "Eva Vázquez Marcet",
+   "location": "signatura",
+   "quote": "Eva Vázquez Marcet ⏎ Responsable Dept Geologia. ⏎ Geològa. N. col. 4302",
+   "confidence": 1.0,
+   "note": "nivell B; autora de l'informe"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "expedient",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "extract_msg: text nou = signatura només; el 'De: Eva Roig … Asunto: PRESSU' citat és idèntic al cos de PRESSU.msg (ja llegit). 7 imatges de signatura (185×182, 783×3 ×2, 1174×7, 346×173 ×2, 400×200) ignorades. Extret a scratchpad/rubi/agentA/re_pressu/."
+}

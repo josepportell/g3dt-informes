@@ -1,0 +1,35 @@
+{
+ "source_path": "PDF/ANNEXES/LAB-SIG.pdf",
+ "document_type": "informe_laboratori",
+ "what_it_is": "DUPLICAT del GTL 4687-GTL-25: reimpressió via Acrobat Distiller (19/11/2025 15:30) del PDF signat de TPS, feta per l'Eva per incloure'l com a annex de l'informe. Signatures aplanades (0 widgets). Cap dada nova.",
+ "issuer": "TPS (contingut) · G3/Eva (reimpressió)",
+ "date": "2025-11-19",
+ "pages_or_sheets": 5,
+ "context": {
+  "who_made_it": "l'Eva, imprimint a PDF el GTL rebut (title del PDF = '4687-GTL-25 Castellar del Vallés.pdf'; producer 'Acrobat Distiller 15.0'; creationDate = modDate 19/11/2025 15:30:10, 25 min després de la 2a signatura del GTL)",
+  "for_whom": "l'annex de laboratori de l'informe 3001621",
+  "why": "tenir una còpia 'plana' del GTL per muntar els annexos",
+  "expected_fields": [
+   "els mateixos que el GTL"
+  ],
+  "not_expected": [
+   "res de nou"
+  ],
+  "relation_to_others": "DUPLICAT de '4687-GTL-25 Castellar del Vallés.pdf' (md5 diferent 0527692d… vs ed8a07b6…, però text idèntic a p.1-3 i 5; p.4 només canvia el glif Ф→Ɏ per la font). NO compta com a font independent.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "duplicate_of",
+   "value": "4687-GTL-25 Castellar del Vallés.pdf",
+   "location": "metadata title + text idèntic",
+   "quote": "title: '4687-GTL-25 Castellar del Vallés.pdf' | Número d'informe: 4687-GTL-25 | Mostra: MA1 S1 | Cota d'extracció (m): 1,0 - 1,2 | Obra / Projecte: Castellar del Vallés. Carrer Arbrells. 3001621 | Data extracció: 24/10/2025",
+   "confidence": 1.0,
+   "note": "vegeu lab_08_gtl.json per a tots els valors; aquí no s'afegeix cap candidat"
+  }
+ ],
+ "not_present": [
+  "res de nou respecte al GTL"
+ ],
+ "reading_notes": "Dedup per text pàgina a pàgina amb fitz (md5 de fitxer no serveix: reimpressió). Widgets p.5: 0 (el GTL original en té 2 /Sig). Exclòs de PDF/LLETRA/ però PDF/ANNEXES/ s'inclou segons el skill."
+}

@@ -1,0 +1,133 @@
+{
+ "source_path": "4703-GTL-25 Rubí.pdf",
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori 4703-GTL-25 (TPS, 17/12/2025, 8 p.) sobre la mostra GTL-8270-25 = 'SPT1 P3' (0,6-1,2 m) de 'Rubí. Carrer Miranda. 3001631': granulometria (18,2 % fins), límits (NO PLÀSTIC), SUCS SM 'Sorres llimoses amb graves', sulfats 632,3 mg/kg.",
+ "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075), Golmés (Lleida); signat Pere Farrés i Bori (geòleg 3481) i Pere Cervós Flinch (geòleg 5326)",
+ "date": "2025-12-17",
+ "pages_or_sheets": 8,
+ "context": {
+  "who_made_it": "el laboratori TPS (Golmés)",
+  "for_whom": "G3 (el seu client: 'DADES DEL CLIENT' / 'DADES DEL SOL.LICITANT' = G3, NIF B25364589)",
+  "why": "respondre la comanda de laboratori de G3 amb els resultats de la mostra SPT1 P3",
+  "expected_fields": [
+   "lab_testing_company (emissor)",
+   "lab_sample_id / lab_depth / lab_location",
+   "expedient (Obra / Projecte)",
+   "street_address + municipality (Situació)",
+   "data d'extracció (= dia del SPT)"
+  ],
+  "not_expected": [
+   "client de l'informe (el 'client' del GTL és G3)",
+   "architect",
+   "plantes",
+   "cota de referència",
+   "nivells"
+  ],
+  "relation_to_others": "resposta a 'comanda laboratori_3001631_RUBI.xls' (sol·licitud 18/11 = data recepció 18/11). 'PDF/ANNEXES/LAB-SIG.pdf' és una còpia re-destil·lada del mateix informe (mateix número, mateix text). Cota d'extracció 0,6-1,2 coincideix amb l'Excel DPSH (P-3!E23), no amb la comanda (0,6-1,4).",
+  "authority_for": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient (corroboració)",
+   "street_address (corroboració)",
+   "municipality (forma oficial)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+   "location": "banda lateral totes les pàgines (y=298) + peu (Golmés) + p.8 signatures",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 1.0,
+   "note": "emissor del GTL; l'adreça del peu és Polígon industrial Golparc, Avgda. Mediterrània 20, 25241 Golmés (Lleida)"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT1 P3 (ref. laboratori GTL-8270-25)",
+   "location": "p.2 'Mostra:' (y=303) / p.7 'Referència del client'",
+   "quote": "Mostra: SPT1 P3 | Referència del laboratori GTL-8270-25",
+   "confidence": 1.0,
+   "note": ""
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,6-1,2 m",
+   "location": "p.2 'Cota d'extracció (m):' (y=302) i p.7 (y=237)",
+   "quote": "Cota d'extracció (m): ⏎ 0,6 - 1,2",
+   "confidence": 0.95,
+   "note": "coincideix amb Excel DPSH P-3 ('0,6 a 1,2'); la comanda deia 0,6-1,4 → el GTL i l'Excel manen"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P3",
+   "location": "p.2 'Mostra: SPT1 P3'",
+   "quote": "SPT1 P3",
+   "confidence": 1.0,
+   "note": "mostra SPT al penetròmetre P3 (no hi ha sondeig)"
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "p.2 'Obra / Projecte:' (y=340)",
+   "quote": "Rubí. Carrer Miranda. 3001631",
+   "confidence": 0.95,
+   "note": "corrobora la comanda N19; els codis 4703-GTL-25 i GTL-8270-25 són del laboratori, NO expedient"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Miranda",
+   "location": "p.1/p.8 'Situació:' (y=340) + p.2 'Obra / Projecte:'",
+   "quote": "Situació: Rubí. Carrer Miranda.",
+   "confidence": 0.8,
+   "note": "sense número; deriva de la comanda de G3 (no és font independent)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí",
+   "location": "p.1 'Situació:' (y=340)",
+   "quote": "Rubí. Carrer Miranda.",
+   "confidence": 0.9,
+   "note": "forma oficial amb accent (el laboratori l'ha escrit així); deriva de la comanda"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-11-14",
+   "location": "p.2 'Data extracció:' (y=419-420)",
+   "quote": "Data extracció: 14/11/2025 | Data recepció: 18/11/2025 | Data obertura: 18/11/2025",
+   "confidence": 0.75,
+   "note": "dia de la mostra SPT (= comanda DATA DE PRESA). Candidat 2 segons regla (dia del sondeig/SPT), però aquí la campanya és d'un sol dia (DPSH + SPT amb la mateixa màquina). Mai la data d'expedició (17/12)."
+  },
+  {
+   "concept_id": "lab_results",
+   "value": "SM 'Sorres llimoses amb graves'; fins 18,23 %; NO PLÀSTIC; SO4 632,3 mg/kg; descripció camp 'Sorres i graves'",
+   "location": "p.5 classificació, p.6 químics, p.7 resum",
+   "quote": "ASTM D 2487/06  (criteri SUCS) : SM | Descripció: Sorres llimoses amb graves | Contingut en SO4 632,3 mg/kg | Índex de plasticitat, IP : NO PLÀSTIC",
+   "confidence": 1.0,
+   "note": "nivell B (agressivitat / paràmetres)"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL / B25364589 / C/ Vallbona núm. 22 - 25268 Els Omells de Na Gaia (Lleida)",
+   "location": "p.1 'DADES DEL CLIENT' / p.2 'DADES DEL SOL.LICITANT' / p.8",
+   "quote": "Nom: G3 Desenvolupament Territorial, SL | NIF: B25364589",
+   "confidence": 1.0,
+   "note": "client del laboratori = G3; descartat"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_*"
+ ],
+ "reading_notes": "Reconegut per 'INFORME DE RESULTATS D'ASSAIGS DE LABORATORI' + banda TPS B64803075. PDF creat des d'Excel (PDFMaker), text net. p.8 amb dues signatures digitals (Pere Farrés Bori 2025-12-17 09:39; Pere Cervós Flinch 09:18). Creat 17/12/2025 09:16, modDate 09:39."
+}

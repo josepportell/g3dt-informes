@@ -1,0 +1,90 @@
+{
+ "source_path": "25.0794/PLAN_COST_RUBI.xlsx",
+ "document_type": "plan_cost_g3",
+ "what_it_is": "Full de costos intern G3 (PLAN COST | G3 DT) del pressupost de 840 €: títol 'EG HAB UNIF RUBI', tècnica Eva Vázquez Marcet, oferta 3 DPSH + 1 ml previ + 1 SPT + 1 sulfats; subcontractació TPS 325,9 € + lab 35 €.",
+ "issuer": "G3 (Eva Vázquez Marcet)",
+ "date": null,
+ "pages_or_sheets": "7 fulls: 'Plan Cost' (A1:AY217, 1 imatge logo), 'OFERTA' (A1:P94), 'FACTURA M', 'Material Cost (lab)', 'Material Cost', 'Cost Center', 'Technicians'",
+ "context": {
+  "who_made_it": "G3 (Eva) amb la plantilla corporativa de costos",
+  "for_whom": "direcció/administració de G3",
+  "why": "calcular marge i cost de l'oferta 25·0794 (no és un document per al client)",
+  "expected_fields": [
+   "building_type + municipality (E9 'DESCRIPCIÓ TITÒL')",
+   "num_dpsh_tests previst (OFERTA!B21)",
+   "ml sondeig (OFERTA!B6) / SPT (OFERTA!B14 o B23)",
+   "tècnic responsable (E21)"
+  ],
+  "not_expected": [
+   "client_name (B8 'CLIENT / UBICACIÓ OBRA' sense valor)",
+   "street_address",
+   "field_date",
+   "cota",
+   "nivells",
+   "expedient (I7 'NUM INF' buit)"
+  ],
+  "relation_to_others": "mirall del pressupost 25·0794 (OFFER AMOUNT 840 = IMPORT TOTAL del pressupost); les quantitats són previstes, no executades. Tota la resta (preus, SOIL-ASSAIG, TPS, Cataluña) és plantilla.",
+  "authority_for": [
+   "building_type (com a pista 'HAB UNIF')",
+   "municipality (3a font G3)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "'Plan Cost'!E9 (etiqueta B9 'DESCRIPCIÓ TITÒL')",
+   "quote": "EG HAB UNIF RUBI",
+   "confidence": 0.7,
+   "note": "'EG' = estudi geotècnic; 'HAB UNIF' expandit a 'habitatge unifamiliar'. Coherent amb C0 del pressupost."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "RUBI",
+   "location": "'Plan Cost'!E9",
+   "quote": "EG HAB UNIF RUBI",
+   "confidence": 0.85,
+   "note": "3a font G3 (pressupost p.1 + comanda N21 + aquí); forma curta sense accent"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "OFERTA!B21 (A21 'unitat de penetració dinàmica DPSH ')",
+   "quote": "B21 = 3 | D21 = 360",
+   "confidence": 0.7,
+   "note": "previstos; mana l'Excel DPSH. OFERTA!B6 (ml perforació sondeig) buit → cap sondeig a rotació; B22 'ml previ' = 1, B23 'spt' = 1, B35 'contingut en sulfats' = 1."
+  },
+  {
+   "concept_id": "lab_tests",
+   "value": "1 contingut en sulfats (+ obertura de mostra)",
+   "location": "OFERTA!B35, B26",
+   "quote": "A35='contingut en sulfats' B35=1 | A26='Obertura de mostra ' B26=1",
+   "confidence": 0.7,
+   "note": "nivell B; previst"
+  },
+  {
+   "concept_id": "tecnic_responsable",
+   "value": "Eva Vázquez Marcet",
+   "location": "'Plan Cost'!E21",
+   "quote": "Eva Vázquez Marcet",
+   "confidence": 1.0,
+   "note": "nivell B (autora de l'informe, no client ni arquitecte)"
+  }
+ ],
+ "not_present": [
+  "client_name (B8 'CLIENT / UBICACIÓ OBRA' buit; J8='BCN' és el centre/oficina, no el client)",
+  "street_address",
+  "expedient (I7 'NUM INF' buit)",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company (G3='TPS' i G26='SOIL-ASSAIG' són plantilla, no senyal)",
+  "cte_*"
+ ],
+ "reading_notes": "Identificat per 'Plan Cost'!B2 == 'PLAN COST  |  G3 DT'. Només E9, E21 i les columnes B/D d'OFERTA són valors del projecte; la resta és plantilla (preus unitaris, noms de subcontractistes). 'Cataluña' (E11) i 'BCN' (J8) són centre de cost/oficina, no ubicació de l'obra."
+}

@@ -1,0 +1,90 @@
+{
+ "source_path": "25.0794/DADES PER ANAR A CAMP_v1.xlsx",
+ "document_type": "fitxa_camp_g3",
+ "what_it_is": "Fitxa interna G3 'DADES PER ANAR A CAMP' pràcticament buida: només previsió 'PENETROS I MOSTRA', empresa 'TPS ERUGA', 'ENS HO INDICARÀ EL CLIENT' (plànols), edificació existent SI, ventilació SI, punts marcats SI. Sense client, adreça, contacte ni data.",
+ "issuer": "G3 (Eva)",
+ "date": null,
+ "pages_or_sheets": "2 fulls: 'fitxa' (B2:L47), 'dades de referencia' (llistes desplegables)",
+ "context": {
+  "who_made_it": "G3 (Eva) per a ús intern",
+  "for_whom": "l'equip de camp de G3 / TPS",
+  "why": "preparar la sortida de camp (qui, on, quan, màquina, accés)",
+  "expected_fields": [
+   "client_name (C6, com a sol·licitant)",
+   "street_address + municipality (C7 ADREÇA OBRA)",
+   "contacte (C8/F8)",
+   "previsió num_dpsh_tests (C13)",
+   "field_date (F38)"
+  ],
+  "not_expected": [
+   "num_floors",
+   "cota",
+   "nivells",
+   "lab",
+   "expedient"
+  ],
+  "relation_to_others": "deriva del pressupost 25·0794 (mateixa carpeta); cap dada d'identitat omplerta, per tant no aporta res que el pressupost no tingui. La data de camp caldrà treure-la de l'annex DPSH / comanda / fotos.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": null,
+   "location": "fitxa!C13",
+   "quote": "PENETROS I MOSTRA",
+   "confidence": 0.3,
+   "note": "només el tipus de campanya (penetròmetres + mostra, sense sondeig a rotació), sense nombre. Coherent amb el pressupost (3 DPSH + 1 SPT)."
+  },
+  {
+   "concept_id": "field_date",
+   "value": null,
+   "location": "fitxa!F38 (etiqueta E38 'dies de camp')",
+   "quote": "F38 = None (format mm-dd-yy)",
+   "confidence": 0.0,
+   "note": "cel·la buida: fitxa sense data"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": null,
+   "location": "fitxa!C6 ('CLIENT ')",
+   "quote": "C6 = None",
+   "confidence": 0.0,
+   "note": "buit"
+  },
+  {
+   "concept_id": "street_address",
+   "value": null,
+   "location": "fitxa!C7 ('ADREÇA OBRA')",
+   "quote": "C7 = None",
+   "confidence": 0.0,
+   "note": "buit"
+  },
+  {
+   "concept_id": "subcontractista_camp",
+   "value": "TPS ERUGA",
+   "location": "fitxa!C38 ('EMPRESA QUE FA LA FEINA')",
+   "quote": "TPS ERUGA",
+   "confidence": 0.9,
+   "note": "nivell B; indica que la campanya la fa TPS amb màquina eruga (coneixement previ: TPS = lab_testing_company habitual). Edificació existent = SI (C16), punts marcats a camp = SI (C27)."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "field_date",
+  "num_dpsh_tests (nombre)",
+  "expedient",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "Identificada per fitxa!B2 == 'DADES PER ANAR A CAMP'. Totes les cel·les de valor del nivell A (C6, C7, C8, F8, F13, F38) són None. Cap imatge incrustada (sense xl/media al zip). El full 'dades de referencia' són llistes de validació (plantilla), no senyal."
+}

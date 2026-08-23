@@ -1,0 +1,116 @@
+{
+ "source_path": "PDF/ANNEXES/3001631_DPSH.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe (3 p., impressió a PDF de 3001631_DPSH.xls feta per 'Loli' el 17/12/2025): gràfic + taula de P-1, P-2, P-3 amb capçalera 'OBRA: C/ DE LA MIRANDA · POBLACIÓ: RUBÌ · DATA: 14/11/25 · NÚMERO D´INFORME: 3001631' i cota per punt (+212,50 / +212 / +212,50 msnm segons ICGC).",
+ "issuer": "G3 (Eva / Loli) des de l'Excel DPSH",
+ "date": "2025-12-17 (impressió); camp 14/11/2025",
+ "pages_or_sheets": 3,
+ "context": {
+  "who_made_it": "G3 (impressió PScript5 → Distiller de l'Excel DPSH; author 'Loli')",
+  "for_whom": "l'informe (annex de penetròmetres)",
+  "why": "presentar els gràfics DPSH amb la cota de cada punt i la identificació de l'obra",
+  "expected_fields": [
+   "cota_referencia per punt ('+NNN,NN msnm segons … ICGC')",
+   "street_address (OBRA:)",
+   "municipality (POBLACIÓ:)",
+   "field_date (DATA:)",
+   "expedient (NÚMERO D´INFORME:)",
+   "num_dpsh_tests (pàgines)",
+   "rebuig per punt"
+  ],
+  "not_expected": [
+   "client",
+   "arquitecte",
+   "plantes",
+   "superfície",
+   "lab (només la marca SPT-1 a P-3)"
+  ],
+  "relation_to_others": "versió impresa de ANNEXES/3001631_DPSH.xls (metadata title = '3001631_DPSH.xls'); els valors N20/NB i 'Rebuig a' són idèntics. La capçalera (cota, OBRA, DATA) NO és a les cel·les de l'Excel (files 1-15 buides) → només llegible aquí. Cota 'segons ICGC' = criteri de l'Eva.",
+  "authority_for": [
+   "cota_referencia",
+   "field_date",
+   "street_address",
+   "municipality",
+   "expedient",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "+212,50 msnm (P-1 i P-3); +212 msnm (P-2)",
+   "location": "p.1/p.2/p.3 títol (y=132)",
+   "quote": "P-1   +212,50 msnm, segons el planol del ICGC. | P-2   + 212 msnm  segons el plànol del ICGC | P-3   +212,50 msnm  segons plànol en el ICGC",
+   "confidence": 0.85,
+   "note": "dos valors: 212,50 (2 punts) i 212 (P-2). Per a l'informe, cota de referència probable 212,5 (majoria i P-3 amb la mostra); P-2 mig metre més baix. Font: ICGC, no GPS. Sense annex de sondeig (no hi ha sondeig) ni COORDENADES.txt."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ de la Miranda",
+   "location": "p.1-3 capçalera 'OBRA:' (y=160)",
+   "quote": "OBRA: C/ DE LA MIRANDA",
+   "confidence": 0.85,
+   "note": "sense número aquí; el tall.pdf afegeix 'Nº 39'. Forma llarga 'de la Miranda' (comanda/GTL: 'C/ MIRANDA')."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí",
+   "location": "p.1-3 capçalera 'POBLACIÓ:'",
+   "quote": "POBLACIÓ: RUBÌ",
+   "confidence": 0.9,
+   "note": "typo d'accent (RUBÌ amb accent greu) → normalitzar a 'Rubí'"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-11-14",
+   "location": "p.1-3 capçalera 'DATA:'",
+   "quote": "DATA: 14/11/25",
+   "confidence": 0.9,
+   "note": "mateixa data a les 3 pàgines = comanda DATA DE PRESA = GTL 'Data extracció' = noms de fotos WhatsApp 2025-11-14. Primer (i únic) dia de camp."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "p.1-3 capçalera 'NÚMERO D´INFORME:'",
+   "quote": "NÚMERO D´INFORME: 3001631",
+   "confidence": 0.95,
+   "note": "= comanda N19 = GTL = carpeta"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "3 pàgines P-1, P-2, P-3",
+   "quote": "Rebuig  a -4,55  m | Rebuig  a - 3,58  m | Rebuig  a - 3,13  m",
+   "confidence": 0.95,
+   "note": "= Excel DPSH"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,6 a 1,2 m (SPT-1 a P-3, 16/20/20/24)",
+   "location": "p.3 columna MOSTRA",
+   "quote": "SPT-1 ⏎ … 0,6 a 1,2 ⏎ … 16/20/20/24",
+   "confidence": 0.8,
+   "note": "corrobora Excel i GTL (no la comanda 0,6-1,4)"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "p.1-3 peu (y=771)",
+   "quote": "Nivell 1 ⏎ Rebuig  a …",
+   "confidence": 0.5,
+   "note": "mateixa etiqueta única que a l'Excel; el tall de correlació ho confirma (llegenda 'Nivell 1' només)"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_*"
+ ],
+ "reading_notes": "Text net (PDF des d'Excel via PScript5/Distiller, fonts amb ToUnicode). La capçalera OBRA/POBLACIÓ/DATA/NÚMERO i la línia de cota són text d'Excel (shape o encapçalament d'impressió) que xlrd no retorna a les cel·les. Grafies: 'planol' sense accent a p.1, 'RUBÌ' amb accent greu."
+}

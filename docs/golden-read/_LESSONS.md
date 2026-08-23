@@ -85,3 +85,16 @@ Format: una lliçó per línia o bloc, amb projecte i font. Serveix per escriure
 - CAND: `num_floors` (correu: PSOT+PB+P1 → regla nova: segur amb nota) i `cota` (198 vs 199,0 entre annexos d'Eva; ella no va triar).
 - NT: `superficie_parcela` (564 només pot ser al DWG → conversor), `utm` (l'Eva ho treu del visor ICGC, cap document), `ref. cadastral`.
 - L'informe generat deia **1 nivell** i "Depressió de l'Ebre" a Cerdanyola: errors de producció visibles per a l'Eva (nivell A/B), no d'aquesta lectura.
+
+## 3001631 RUBI (2026-08-23) — 9 OK / 3 CAND / 3 NT / 0 ERR (lectura per 2 subagents amb el skill v0.2; decisions meves)
+- El skill és executable per algú altre: els subagents han produït 19 JSON amb `context`, cites i `NOT_client_name` sense cap ERR.
+- **Casa modular sense arquitecte**: l'Eva posa el **client** al camp arquitecte de l'informe ('JOANA MARTINEZ'). El truth-map diu
+  "arquitecte = client" també a Alcoletge, Vilanova i Anciles → regla: sense arquitecte, candidat = client (mai segur).
+- El pressupost de Rubí NO porta adreça d'obra (bloc OBRA = encàrrec + municipi); l'adreça ve de la comanda ('C/ MIRANDA') i el
+  número (39) només dels caixetins dels annexos de l'Eva. Fitxa de camp buida.
+- Acceptació = FOTO WhatsApp del full 'Pàg. 2 de 2' amb formulari manuscrit (nom + NIF) → font A del client, només amb visió.
+- `ANNEXES/Altres/F5 TALL.png` és una versió ANTERIOR del tall (2 nivells, cotes 211,9) que l'annex PDF (1 nivell, 212,5) supera:
+  prioritat PDF/ANNEXES > tall.pdf > Altres/*.png. L'Eva conserva esborranys a la carpeta.
+- 951 m² i UTM 418215/4595648 no són a cap fitxer: l'Eva els treu del Cadastre/visor → NT honest + proposta.
+- Plànols de catàleg fotografiats (fabricant de cases modulars): PB (+ porxo), 72 m² construïts: mai parcel·la.
+- Comanda amb cota de mostra mal transcrita (0,6-1,4); GTL i Excel (0,6-1,2) manen.

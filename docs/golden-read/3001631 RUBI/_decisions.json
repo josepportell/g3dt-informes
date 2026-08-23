@@ -1,0 +1,519 @@
+{
+ "project": "3001631 RUBI",
+ "read_on": "2026-08-23",
+ "reader": "2 subagents amb el skill v0.2 (text / visió); decisions i comparació: Claude Code en sessió",
+ "sources_read": 19,
+ "bias_disclosure": "En arreglar scripts/tier_a_truth_map.py (abans d'aquestes decisions) he vist la referència de Rubí: client 'SRA. JOANA MARTINEZ', superficie_parcela 951, data '14 de novembre de 2025', cota +212.50. Els subagents que han llegit els documents NO ho sabien. Del diagnòstic del 23-08 sabia que prod agafava el municipi d'una foto (Sant Quirze) i la adreça d'una foto WhatsApp.",
+ "decisions": {
+  "expedient": {
+   "status": "segur",
+   "value": "3001631",
+   "rule": "carpeta = comanda N19 = annex DPSH 'NÚMERO D´INFORME' = GTL 'Obra / Projecte' = caixetins dels annexos",
+   "candidates": [
+    {
+     "value": "3001631",
+     "source": "comanda Hoja1!N19",
+     "quote": "NÚM. D'EXPEDIENT | 3001631"
+    },
+    {
+     "value": "3001631",
+     "source": "annex DPSH capçalera",
+     "quote": "NÚMERO D´INFORME: 3001631"
+    }
+   ],
+   "sources_checked": [
+    "g3_04",
+    "annex_10",
+    "lab_06",
+    "annex_11",
+    "annex_15",
+    "g3_05"
+   ]
+  },
+  "client_name": {
+   "status": "segur",
+   "value": "Joana Martínez",
+   "rule": "formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' omplert a mà (foto de l'acceptació: nom + NIF 38540702Q) = autoritat A; coincideix amb el CLIENT del pressupost i del correu intern (particular, sense arquitecte). L'adreça del formulari (Redován, Alacant) és del client, no de l'obra.",
+   "candidates": [
+    {
+     "value": "Joana Martinez (NIF 38540702Q)",
+     "source": "ACCEPTACIO/WhatsApp Image 2025-11-13 (visió)",
+     "quote": "NOM I COGNOMS: Joana Martinez | N.I.F.: 38540702Q"
+    },
+    {
+     "value": "JOANA MARTINEZ",
+     "source": "PRESSUPOST p.1 bloc CLIENT",
+     "quote": "CLIENT: JOANA MARTINEZ"
+    },
+    {
+     "value": "ALBERT COLL (destinatari de l'informe, St. Cugat)",
+     "source": "acceptació, bloc 'ADREÇA ON S'HA D'ENVIAR L'INFORME'",
+     "quote": "ALBERT COLL … collbassas@gmail.com"
+    }
+   ],
+   "sources_checked": [
+    "acceptacio_13",
+    "g3_01",
+    "correu_08",
+    "g3_02 (buit)",
+    "foto_12",
+    "camp_14",
+    "lab_06"
+   ]
+  },
+  "street_address": {
+   "status": "segur",
+   "value": "Carrer de la Miranda, 39",
+   "rule": "comanda 'C/ MIRANDA' + annex DPSH 'C/ DE LA MIRANDA' + GTL + albarà TPS + etiqueta de mostra (5 aparicions, 2 independents: G3 i TPS). El NÚMERO (39) només és als caixetins dels annexos de l'Eva ('CARRER DE LA MIRANDA Nº 39, PARC. 6-105 B') i al mapa base de la figura F2. El pressupost NO porta adreça d'obra.",
+   "candidates": [
+    {
+     "value": "CARRER DE LA MIRANDA Nº 39, PARC. 6-105 B",
+     "source": "tall.pdf caixetí (text)",
+     "quote": "HABITATGE UNIFAMILIAR AÏLLAT AL CARRER DE LA MIRANDA Nº 39, PARC. 6-105 B, RUBÍ (BARCELONA)"
+    },
+    {
+     "value": "C/ MIRANDA",
+     "source": "comanda Hoja1!N20",
+     "quote": "C/ MIRANDA"
+    },
+    {
+     "value": "C/ DE LA MIRANDA",
+     "source": "annex DPSH capçalera",
+     "quote": "OBRA: C/ DE LA MIRANDA"
+    }
+   ],
+   "sources_checked": [
+    "g3_04",
+    "annex_10",
+    "annex_11",
+    "annex_15",
+    "lab_06",
+    "camp_14",
+    "fotos_19",
+    "annex_18",
+    "g3_01 (sense adreça)",
+    "g3_02 (buit)"
+   ]
+  },
+  "municipality": {
+   "status": "segur",
+   "value": "Rubí",
+   "rule": "pressupost OBRA + comanda N21 + PLAN_COST E9 ('RUBI') + annex DPSH + GTL + tall ('Rubí (Barcelona)'); mapa de situació de l'annex. Mai el 'Sant Quirze' d'una foto ni el 'Redován' del client.",
+   "candidates": [
+    {
+     "value": "RUBI",
+     "source": "comanda Hoja1!N21",
+     "quote": "POBLACIÓ | RUBI"
+    },
+    {
+     "value": "Rubí",
+     "source": "GTL p.1 'Situació'",
+     "quote": "Rubí. Carrer Miranda."
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "g3_04",
+    "g3_03",
+    "annex_10",
+    "lab_06",
+    "annex_11",
+    "annex_15",
+    "camp_14",
+    "acceptacio_13 (Redován = client)"
+   ]
+  },
+  "architect_name": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap document anomena cap arquitecte: el pressupost va a una particular, la casella 'ARQUITECTE' de l'acceptació és buida, el correu diu '1 casa modular' i els plànols fotografiats són de catàleg d'un fabricant ('VIVIENDAS MODULARES', Monforte del Cid). Casa modular sense arquitecte conegut.",
+   "candidates": [
+    {
+     "value": "VIVIENDAS MODULARES (fabricant, NO arquitecte)",
+     "source": "foto WA0015/WA0016 segell",
+     "quote": "(segell parcialment il·legible)"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "acceptacio_13",
+    "correu_08",
+    "foto_12",
+    "g3_02",
+    "annex_11",
+    "annex_15",
+    "lab_06"
+   ]
+  },
+  "building_type": {
+   "status": "segur",
+   "value": "habitatge unifamiliar aïllat (casa modular)",
+   "rule": "tall/plànol de situació 'HABITATGE UNIFAMILIAR AÏLLAT' + comanda 'CONSTR HABITATGE UNI' + PLAN_COST 'HAB UNIF' + correu '1 casa modular' + plànol de catàleg 'MODELO MEDITERRANEO'",
+   "candidates": [
+    {
+     "value": "HABITATGE UNIFAMILIAR AÏLLAT",
+     "source": "tall.pdf caixetí",
+     "quote": "…CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRER DE LA MIRANDA…"
+    },
+    {
+     "value": "CONSTR HABITATGE UNI",
+     "source": "comanda Hoja1!N18",
+     "quote": "CONSTR HABITATGE UNI"
+    },
+    {
+     "value": "1 casa modular",
+     "source": "correu intern 05/11",
+     "quote": "RUBÍ (1 casa modular)"
+    }
+   ],
+   "sources_checked": [
+    "annex_11",
+    "g3_04",
+    "g3_03",
+    "correu_08",
+    "foto_12"
+   ]
+  },
+  "num_floors": {
+   "status": "candidats",
+   "value": "PB (1 planta)",
+   "rule": "única evidència: plànol de catàleg del fabricant fotografiat (un sol plànol de planta + fonamentació; 72 m²); inferència, no declaració. Cap plantilla G3 ni correu ho diu.",
+   "candidates": [
+    {
+     "value": "1 (planta baixa)",
+     "source": "25.0794/IMG-20251104-WA0015.jpg (visió)",
+     "quote": "PLANO DE PLANTA, MODELO MEDITERRANEO … 72 m² + 20 m² porxo (8,00 × 9,00)"
+    }
+   ],
+   "sources_checked": [
+    "foto_12",
+    "correu_08",
+    "g3_01",
+    "g3_02",
+    "annex_11"
+   ]
+  },
+  "superficie_parcela": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap document la dona: els 72 m² del catàleg són de la casa; 'PARC. 6-105 B' és un identificador d'urbanització, no superfície ni referència cadastral; sense consulta cadastral a la carpeta. Proposta: Cadastre per 'Carrer de la Miranda 39, Rubí' (verificació estricta del número) o demanar-ho.",
+   "candidates": [],
+   "sources_checked": [
+    "foto_12",
+    "annex_11",
+    "annex_15",
+    "annex_18",
+    "g3_01",
+    "g3_02",
+    "correu_08",
+    "lab_06"
+   ]
+  },
+  "field_date": {
+   "status": "segur",
+   "value": "2025-11-14",
+   "rule": "albarà TPS + fulls de camp (14-11-25) + annex DPSH 'DATA: 14/11/25' + comanda DATA DE PRESA + GTL 'Data extracció' + 2 fotos WhatsApp 2025-11-14 (4 fonts independents). Un sol dia de camp (DPSH + SPT). Fitxa sense data.",
+   "candidates": [
+    {
+     "value": "14/11/25",
+     "source": "annex DPSH capçalera",
+     "quote": "DATA: 14/11/25"
+    },
+    {
+     "value": "2025-11-14",
+     "source": "comanda Hoja1!N23",
+     "quote": "DATA DE PRESA | 2025-11-14"
+    },
+    {
+     "value": "14-11-25",
+     "source": "albarà TPS p.1",
+     "quote": "Data: 14-11-25"
+    }
+   ],
+   "sources_checked": [
+    "camp_14",
+    "annex_10",
+    "g3_04",
+    "lab_06",
+    "fotos_19",
+    "g3_02",
+    "annex_15 ('Desembre 2025' = data de l'annex)"
+   ]
+  },
+  "cota_referencia": {
+   "status": "candidats",
+   "value": "+212,50",
+   "rule": "annex DPSH (text): P-1 i P-3 '+212,50 msnm segons el plànol del ICGC', P-2 '+212'; la figura F5 TALL.png (cos de l'informe) diu P-1 +211,90 / P-2 +211,4 / P-3 +211,40. Dues sortides de l'Eva discrepen → candidats. Sense sondeig ni COORDENADES.txt.",
+   "candidates": [
+    {
+     "value": "+212,50 msnm (P-1, P-3)",
+     "source": "PDF/ANNEXES/3001631_DPSH.pdf",
+     "quote": "Cota inici: +212,50 msnm segons el plànol del ICGC"
+    },
+    {
+     "value": "+212 msnm (P-2)",
+     "source": "PDF/ANNEXES/3001631_DPSH.pdf p.2",
+     "quote": "Cota inici: +212 msnm"
+    },
+    {
+     "value": "+211,90 (P-1) / +211,4 / +211,40",
+     "source": "ANNEXES/Altres/F5 TALL.png",
+     "quote": "(etiquetes blaves del tall)"
+    }
+   ],
+   "sources_checked": [
+    "annex_10",
+    "annex_18",
+    "annex_16",
+    "annex_11",
+    "camp_14 (relativa ±0 carrer)"
+   ]
+  },
+  "num_soil_levels": {
+   "status": "candidats",
+   "value": "1",
+   "rule": "annex tall (PDF/ANNEXES i tall.pdf): llegenda 'Nivell 1: Graves i sorres. Carbonatat.' + 'Sòls superficials' → 1; però la figura F5 TALL.png (Altres, per al cos de l'informe) té llegenda N1 graves i sorres / N2 gresos amb lutites i conglomerats → 2. Sense sondeig (no hi ha 'Unitat litològica'). Dues versions de l'Eva → candidats.",
+   "candidates": [
+    {
+     "value": "1",
+     "source": "tall.pdf llegenda",
+     "quote": "Nivell 1 : Graves i sorres. Carbonatat. | Sòls superficials"
+    },
+    {
+     "value": "2",
+     "source": "ANNEXES/Altres/F5 TALL.png llegenda",
+     "quote": "N1 graves i sorres; N2 gresos amb lutites i conglomerats polimíctics"
+    }
+   ],
+   "sources_checked": [
+    "annex_11",
+    "annex_16",
+    "annex_18",
+    "annex_10",
+    "g3_05"
+   ]
+  },
+  "num_dpsh_tests": {
+   "status": "segur",
+   "value": "3",
+   "rule": "Excel DPSH (3 fulls amb dades) + albarà TPS '3 realitzats' + pressupost/PLAN_COST (3 previstos) + annex DPSH (3 p.) + plànol de situació (P-1..P-3) + fotos P1-P3",
+   "candidates": [
+    {
+     "value": "3",
+     "source": "ANNEXES/3001631_DPSH.xls",
+     "quote": "fulls P-1, P-2, P-3"
+    },
+    {
+     "value": "3",
+     "source": "albarà TPS p.1",
+     "quote": "Nº de penetròmetres realitzats: 3"
+    }
+   ],
+   "sources_checked": [
+    "g3_05",
+    "camp_14",
+    "g3_01",
+    "g3_03",
+    "annex_10",
+    "annex_15",
+    "fotos_19"
+   ]
+  },
+  "utm_x_utm_y": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "sense COORDENADES.txt; cap annex amb x/y. Proposta: visor ICGC / geocodificació de 'Carrer de la Miranda 39, Rubí'.",
+   "candidates": [],
+   "sources_checked": [
+    "inventari",
+    "annex_15",
+    "annex_18"
+   ]
+  },
+  "referencia_catastral": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap consulta cadastral; 'PARC. 6-105 B' (caixetí) i '27' (mapa base) no són referències cadastrals",
+   "candidates": [
+    {
+     "value": "PARC. 6-105 B (identificador d'urbanització, NO ref. cadastral)",
+     "source": "tall.pdf caixetí",
+     "quote": "PARC. 6-105 B"
+    }
+   ],
+   "sources_checked": [
+    "annex_11",
+    "annex_15",
+    "foto_12",
+    "correu_08"
+   ]
+  },
+  "lab": {
+   "status": "segur",
+   "value": {
+    "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "lab_sample_id": "SPT-1 (P3)",
+    "lab_depth": "0,6 - 1,2 m",
+    "lab_location": "P-3"
+   },
+   "rule": "GTL present (emissor TPS B64803075) + Excel DPSH P-3 + annex DPSH + etiqueta de mostra: 0,6-1,2. La comanda diu 0,6-1,4 (error de transcripció de G3) → mana el GTL/Excel. La mostra és d'un SPT fet al penetròmetre P3 (no hi ha sondeig).",
+   "candidates": [
+    {
+     "value": "SPT1 P3, 0,6-1,2 m",
+     "source": "GTL 4703-GTL-25 p.2",
+     "quote": "Mostra: SPT1 P3 | Cota d'extracció (m): 0,6-1,2"
+    },
+    {
+     "value": "SPT1 (P3) 0,6-1,4 m",
+     "source": "comanda fila 35",
+     "quote": "SPT1 (P3) | 0.6 | 1.4"
+    }
+   ],
+   "sources_checked": [
+    "lab_06",
+    "g3_05",
+    "annex_10",
+    "g3_04",
+    "fotos_19",
+    "camp_14",
+    "annex_07 (dup)"
+   ]
+  },
+  "cte": {
+   "status": "segur",
+   "value": {
+    "cte_edificacio": "C-0",
+    "cte_sol": "T-1"
+   },
+   "rule": "pressupost p.2 'Tipus d’edifici: C0 / Tipus de Terreny : T1'; coherent amb la definició de l'Eva (casa modular de 72 m², 1 planta → C0). 1 font A sense contradicció.",
+   "candidates": [
+    {
+     "value": "C0 / T1",
+     "source": "PRESSUPOST p.2",
+     "quote": "Tipus d’edifici: C0 | Tipus de Terreny : T1"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "foto_12"
+   ]
+  }
+ },
+ "summary": {
+  "segur": 9,
+  "candidats": 3,
+  "no_trobat": 4,
+  "notes": "no_trobat: architect (no n'hi ha: casa modular), superficie_parcela, utm, ref. cadastral. Candidats: num_floors (catàleg), cota i nivells (dues sortides de l'Eva discrepen entre annex PDF i figura del cos)."
+ },
+ "comparison_with_eva": {
+  "reference": "reference-material/3001631 RUBI/validation/eva_reference_values.json (de 3001631_informe.doc, signat) + 3001631_informe.docx (grep)",
+  "opened_after_decisions": true,
+  "per_field": {
+   "expedient": {
+    "eva": "3001631",
+    "mine": "3001631",
+    "result": "OK"
+   },
+   "client_name": {
+    "eva": "SRA. JOANA MARTINEZ",
+    "mine": "Joana Martínez",
+    "result": "OK",
+    "note": "formulari manuscrit de l'acceptació = font"
+   },
+   "street_address": {
+    "eva": "Miranda nº 39, (PARC. 6-105) Rubí, Barcelona",
+    "mine": "Carrer de la Miranda, 39",
+    "result": "OK",
+    "note": "el número només era als annexos de l'Eva"
+   },
+   "municipality": {
+    "eva": "Rubí (Barcelona)",
+    "mine": "Rubí",
+    "result": "OK"
+   },
+   "architect_name": {
+    "eva": "JOANA MARTINEZ (= el client!)",
+    "mine": "no_trobat",
+    "result": "NT*",
+    "note": "REGLA NOVA: quan no hi ha arquitecte, l'Eva escriu el client al camp arquitecte (també Alcoletge, Vilanova, Anciles segons el truth-map). No és a cap font com a arquitecte → NT legítim, però el skill ha de proposar 'client' com a candidat per a aquest camp."
+   },
+   "building_type": {
+    "eva": "un habitatge unifamiliar aïllat modular",
+    "mine": "habitatge unifamiliar aïllat (casa modular)",
+    "result": "OK (CLOSE)"
+   },
+   "num_floors": {
+    "eva": "PB + Porxo",
+    "mine": "candidats [PB (1 planta)]",
+    "result": "CAND",
+    "note": "el porxo (20 m²) era al catàleg; regla: si el plànol de catàleg té porxo, proposar 'PB + Porxo'"
+   },
+   "superficie_parcela": {
+    "eva": "951",
+    "mine": "no_trobat",
+    "result": "NT",
+    "note": "951 no és a cap document (truth-map corregit: 0 docs); l'Eva ho treu del Cadastre/visor"
+   },
+   "field_date": {
+    "eva": "14 de novembre de 2025",
+    "mine": "2025-11-14",
+    "result": "OK"
+   },
+   "cota_referencia": {
+    "eva": "+212.50",
+    "mine": "candidats [212,50 | 212 | 211,90]",
+    "result": "CAND",
+    "note": "correcte = candidat 1 (annex DPSH); la figura F5 és una versió descartada"
+   },
+   "num_soil_levels": {
+    "eva": "un sòl nivell",
+    "mine": "candidats [1 | 2]",
+    "result": "CAND",
+    "note": "correcte = candidat 1 (annex tall PDF); F5 TALL.png (2 nivells) és una versió vella. Regla: PDF/ANNEXES > ANNEXES/Altres"
+   },
+   "num_dpsh_tests": {
+    "eva": "3",
+    "mine": "3",
+    "result": "OK"
+   },
+   "utm_ref_catastral": {
+    "eva": "418215 / 4595648 (ref. cadastral no a l'informe)",
+    "mine": "no_trobat",
+    "result": "NT",
+    "note": "no és a cap document; visor ICGC"
+   },
+   "lab": {
+    "eva": "TPS / SPT-1 / -0.60 a -1.20 / P-3",
+    "mine": "TPS / SPT-1 (P3) / 0,6-1,2 / P-3",
+    "result": "OK",
+    "note": "la comanda deia 1,4: el GTL/Excel manen"
+   },
+   "cte": {
+    "eva": "C-0 / T-1",
+    "mine": "C-0 / T-1",
+    "result": "OK"
+   }
+  },
+  "totals": {
+   "OK": 9,
+   "CAND": 3,
+   "NT": 3,
+   "NA": 0,
+   "ERR": 0
+  },
+  "bonus": {
+   "superficie_construida": {
+    "eva": "92",
+    "mine": "72 + 20 porxo (catàleg)",
+    "result": "OK"
+   }
+  },
+  "rules_learned": [
+   "architect_name absent → proposar client_name com a candidat per al camp arquitecte (pràctica de l'Eva), mai segur",
+   "figures de ANNEXES/Altres (F5 TALL.png) poden ser versions anteriors: prioritat PDF/ANNEXES > tall.pdf > Altres/*.png",
+   "plànol de catàleg (casa modular): num_floors = PB (+ Porxo si el catàleg en té); superfície del catàleg = construïda, no parcel·la",
+   "comanda pot tenir error de transcripció de cotes de mostra (0,6-1,4 vs 0,6-1,2): GTL i Excel manen",
+   "superficie_parcela i UTM poden no ser a cap document (Eva: Cadastre/visor ICGC) → NT + proposta, no ERR"
+  ]
+ }
+}
