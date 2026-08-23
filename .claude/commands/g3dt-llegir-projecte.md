@@ -6,7 +6,7 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 0.2 (2026-08-23) — derivat de la lectura d'or de `4001612 BELL-LLOC` i `3001706 C.TULIPA CERDANYOLA` (`docs/golden-read/`). S'itera a cada projecte.
+Versió 0.3 (2026-08-23) — derivat de la lectura d'or de `4001612 BELL-LLOC`, `3001706 C.TULIPA CERDANYOLA` i `3001631 RUBI` (`docs/golden-read/`). S'itera a cada projecte.
 v0.2: Pas 0 (context del document abans de llegir-lo; reflexió del Josep) + bloc `context` al JSON + lliçons de Tulipa.
 
 ## Arguments
@@ -109,6 +109,9 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
   (sol·licitant), al GTL (`DADES DEL CLIENT` del laboratori) i als albarans TPS (`DADES CLIENT: Empresa G3 / Responsable Eva`). Descarta'l.
 - **`architect_name`**: caixetí `Arquitecte` > signatura digital del pressupost acceptat (`/Sig /Name`, p. ex. `JORDI BOSCH NOVELL / num:37655-8`)
   > nom del despatx al pressupost/correu. Persona, no despatx, si és possible.
+- **`architect_name` absent** (casa modular, particular que encarrega directament): l'Eva escriu el CLIENT al camp arquitecte de
+  l'informe (Rubí, Alcoletge, Vilanova, Anciles). → `candidats` amb el client com a candidat etiquetat "(pràctica Eva: client)",
+  mai `segur`. Un fabricant de cases modulars (segell al catàleg) NO és l'arquitecte.
 - **`street_address`**: només de blocs etiquetats `OBRA`, `ADREÇA OBRA`, `Situació`, `Localización`, `Adreça de l'obra`. Mai l'adreça
   del client (`DADES CLIENT.txt`) ni del sol·licitant. **Poden existir dues adreces verdaderes** (cantonada): no competeixen →
   `candidats`. Si els annexos de l'Eva diuen "entre el carrer X i el carrer Y", aquesta frase és la redacció de l'informe → candidat 1.
@@ -157,6 +160,12 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
   → candidat feble (≤ 0,3), mai segur.
 - **Annexos d'Eva amb errors de còpia**: caixetí sense actualitzar (plànol de situació casa 2 dient "Tulipà nº3"), typo d'expedient
   (`4001621`), cota diferent entre annex DPSH (198) i annex sondeig (199,0) → mai "segur" amb una sola còpia; creuar.
+- **Esborranys de l'Eva a la carpeta**: `ANNEXES/Altres/*.png` (figures del cos de l'informe) poden ser versions ANTERIORS dels
+  annexos (Rubí: F5 TALL.png amb 2 nivells i cotes 211,9 vs annex PDF amb 1 nivell i 212,5). Prioritat: `PDF/ANNEXES/*.pdf` >
+  `tall.pdf`/`pl situ.pdf` (Print To PDF) > `ANNEXES/Altres/*.png`. Si discrepen, `candidats` amb el PDF primer.
+- **Plànols de catàleg** (fabricant de cases modulars, foto WhatsApp): `num_floors` = PB (+ Porxo si n'hi ha), superfície = construïda
+  (mai parcel·la), cap promotor/arquitecte. `superficie_parcela` i UTM poden no ser a cap fitxer (l'Eva: Cadastre / visor ICGC) → `no_trobat` + proposta.
+- **Comanda amb cota de mostra mal transcrita** (0,6-1,4 vs GTL/Excel 0,6-1,2): GTL > Excel DPSH/annex sondeig > comanda per a `lab_depth`.
 - **Sense GTL** (arriba setmanes després): la comanda és l'única font de lab; el NOM del laboratori no hi consta → `lab_testing_company`
   és `candidats` (coneixement previ: G3 treballa amb TPS), no lectura.
 
