@@ -16,6 +16,8 @@ Projecte: Automatització de la generació d'informes geotècnics
 
 **Excepció (2026-08-22):** durant l'auditoria de producció treballem **in-place** a `g3dt-prod/` sobre la branca `review/prod-audit-2026-08` (sense worktree nou, per decisió del Josep). Trobar `review/*` dins de `g3dt-prod/` és l'estat esperat; `production/g3dt-eva-v1` no rep commits fins que el Josep decideixi fusionar.
 
+**Excepció (2026-08-23):** la línia de treball "nivell A" (alternativa D de `docs/ANALISI-NIVELL-A-LECTURA-HUMANA-2026-08-23.md`) viu a la branca **`experiment/nivell-a-2026-08`**, creada des de `review/prod-audit-2026-08` (`b091f5e`), també in-place a `g3dt-prod/`. Trobar-la aquí és l'estat esperat. **Mai proposar pull/merge a l'Eva** (memòria `feedback_no_pull_eva_success_criterion`).
+
 ## Resum
 
 G3DT genera informes geotècnics per a projectes de construcció. Cada informe inclou:
