@@ -853,3 +853,61 @@ llençava.
    `deep_folder_classify`, que fa 5-14 crides en sèrie).
 
 *Fi entrada 2026-08-22. Fixes F1-F4e post-auditoria: cp1252, parser JSON, max_tokens per tipus, Groq qwen3.6 (raonament, 3 imatges, models retirats, 9 camins).*
+
+## 2026-08-23 — Fase 4a: lectors deterministes de les 5 plantilles G3 (`automation/g3_templates.py`)
+
+### Context
+
+Via A (branca `experiment/nivell-a-2026-08`): Claude Code serà el lector headless de documents, però les 5 plantilles
+G3 (pressupost m4PRO, fitxa de camp, comanda de laboratori, PLAN_COST, Excel DPSH) tenen cel·les fixes conegudes —
+gastar-hi LLM és lent, car i menys fiable. ANALISI §7.3 les defineix com a etapa "4a: 0 $, sempre". Les posicions
+exactes venen de la lectura d'or dels 8 projectes (`docs/golden-read/*/g3_0*.json`) i són al Pas 2 del skill.
+
+### Decisions arquitectòniques clau
+
+1. **Mòdul nou i independent** (`automation/g3_templates.py`, sense tocar `auto_extractor.py` ni `ai_pipeline/` —
+   prohibits en aquesta línia). **Why**: la via A necessita poder-se desplegar sense re-auditar el pipeline vell;
+   un mòdul sense dependències internes es pot cridar des del wizard futur o des del skill indistintament.
+   Alternativa rebutjada: estendre FileMiner (arrossega la seva arquitectura de Signal i el pipeline de fases).
+2. **Detecció per CONTINGUT, mai per nom de fitxer**: pressupost = PDF amb `creator` G3 (m4PRO); fitxa = `fitxa!B2`;
+   comanda = `Hoja1!C3`; PLAN_COST = `'Plan Cost'!B2`; DPSH = fulls `P-*`. **Why**: els noms varien
+   (`25·0616.pdf`, `G3DT_Silvia_Jaume signat.pdf` són pressupostos) i SmartScan ja va demostrar el cost d'encertar-ho
+   pel nom. Dedup per md5 (adjunts de .msg solts a la carpeta).
+3. **Els `CLIENT:` de pressupost/fitxa s'emeten amb confiança 0,3 i nota "sol·licitant"**; el bloc G3 de la comanda
+   s'emet com a `NOT_client_name`. **Why**: la cadena de l'error històric "client = G3" es talla a la font — el
+   consumidor rep el senyal ja etiquetat amb el seu rol, no un valor nu.
+4. **Agregació amb prioritat per concepte** (comanda N19 per expedient, fitxa F38 per data, Excel DPSH executats per
+   sobre de previstos, modDate més nou entre pressupostos MODF). Ordenació multi-pas estable.
+5. **3 formes reals del bloc OBRA del pressupost** (descobertes en validar): [encàrrec/adreça/municipi],
+   [adreça+CP+municipi en 1 línia] (Linyola), [sense adreça] (Rubí) → classificador per línia amb guard
+   "address-like"; CTE en castellà amb punt ("Tipo de Edificio. C0", Vilanova).
+
+### Validació empírica
+
+8/8 projectes (còpies Windows): 5-8 plantilles detectades per projecte, 0 errors de lector. Contrastat amb la lectura
+d'or: expedient 8/8, field_date 8/8 (fitxa o comanda), municipality 8/8, num_dpsh executats 8/8, CTE correcte on el
+pressupost porta la línia (Bell-lloc C1/T1, Rubí C0/T1, Alcoletge C0/T1, Vilanova C0/T1, Tulipa C1/T1) i
+correctament absent on no hi és (Castellar, Linyola, Anciles → derivació, feina del skill), lab_sample/depth de la
+comanda 8/8 (amb nota "el GTL mana si discrepa").
+
+### Tests
+
+`tests/test_g3_templates.py`: 9 tests (fixtures reference-material Bell-lloc) — detecció de les 5, cel·les exactes
+per plantilla, prioritats d'agregació, rebuig de fitxers aliens, exclusió de validation/generats. Suite completa:
+33→32 failed — el guard estàtic F1 (`test_no_bare_read_text`) va caçar un `write_text()` sense encoding al mòdul nou
+(exactament el bug cp1252 de Can Mir Rubí): arreglat aquí i a `scripts/dwg_text_dump.py`. Final: 32 failed (línia
+base coneguda, idèntiques) / 1088 passed / 3 skipped.
+
+### Limitacions conegudes
+
+- Camp `C7` de la fitxa porta adreça+municipi junts: s'emet cru amb nota (separar-ho és feina del skill).
+- Multi-casa (Tulipa): s'emeten els 2 Excel DPSH i els 2 pressupostos; l'atribució per casa és del nivell de decisions.
+- El PLAN_COST `E9` es parseja amb regex `EG {tipus} {municipi}` (confiança 0,6): pot fallar en títols no estàndard.
+- No escriu mai a la carpeta del projecte; CLI amb `--out`.
+
+### GO/NO-GO
+
+✅ GO — llest per ser cridat pel wizard (SSE: camps segurs < 5 s abans de la visió) i pel skill com a substitut del
+Pas 2 manual. Següent: disseny de la crida headless des del wizard + UI de candidats.
+
+*Fi entrada 2026-08-23. Fase 4a: lectors deterministes G3 amb cel·la i cita, validats contra la lectura d'or.*

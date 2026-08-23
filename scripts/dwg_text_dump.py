@@ -114,7 +114,7 @@ def main() -> None:
     exe = find_dwg2dxf()
     results = [dump_file(Path(a), exe) for a in args]
     if json_out:
-        json_out.write_text(json.dumps(results, ensure_ascii=False, indent=1))
+        json_out.write_text(json.dumps(results, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"{sum(len(r.get('texts', [])) for r in results)} textos → {json_out}")
     else:
         for r in results:
