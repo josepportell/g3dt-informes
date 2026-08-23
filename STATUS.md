@@ -46,7 +46,11 @@ Detall: `docs/DWG-CONVERSOR-2026-08-23.md`.
 `lab` ⚠ resolt (informe: SPT-1 0,80-1,40 → la carpeta tenia raó, la referència era soroll); Anciles superficie n/a→OK
 (1655,01 = segur; Cadastre 1656), num_floors i num_dpsh n/a→CAND (candidat 1 correcte). **Totals actualitzats: 81 OK /
 19 CAND / 10 NT / 8 n/a / 2 ERR (OK 79,4 % sobre avaluables)** — ANALISI §11.1 + addenda als `_decisions.json`.
-Pendent: Fase 4a (lectors deterministes), crida headless des del wizard + UI de candidats, validació amb projectes nous.
+**Fase 4a FETA (23 nit)**: `automation/g3_templates.py` — lectors deterministes de les 5 plantilles G3 (detecció per
+contingut, cel·les exactes de la lectura d'or, senyals amb cita; CLIENT: emès com a sol·licitant 0,3 i G3 com a
+NOT_client). Validat 8/8 projectes (0 errors; expedient/data/municipi/DPSH executats 8/8) + 9 tests
+(`tests/test_g3_templates.py`). DECISION-LOG entrada 2026-08-23. Pendent: crida headless des del wizard + UI de
+candidats, validació amb projectes nous de l'Eva, desplegament (decisió Josep).
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
