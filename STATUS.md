@@ -31,8 +31,14 @@ persona/despatx) convertits en regla al skill v0.4: reexecució esperada ERR = 0
 | VILANOVA | 11 | 1 | 2 | 1 | 0 | `7199158` |
 | ANCILES | 7 | 4 | 0 | 4 | 0 | `47c2cee` |
 Troballes: Tulipa NO té informe de l'Eva (la 'referència' era generada nostra); truth-map arreglat (`095e817`: no compilava +
-falsos positius substring); albarà TPS = origen del 'client=G3'; formulari p.5 = autoritat del client. Pendent: conversor DWG
-(Tulipa 564 m²), .docx reals de Vilanova/Anciles per als n/a, execució headless del skill + hold-out, UI de candidats.
+falsos positius substring); albarà TPS = origen del 'client=G3'; formulari p.5 = autoritat del client.
+**Hold-out headless FET (23 nit): ERR = 0 mesurat.** 3 agents frescos, skill v0.4 a cegues (sense referències ni golden-read)
+sobre Castellar + Linyola (els 2 ERR de la lectura d'or) + Tulipa: 46 cel·les = 29 OK / 8 CAND / 4 NT / 5 n/a / **0 ERR**;
+les 3 regles apreses verificades (lab_sample_id, arquitecte persona/despatx, CTE derivat); estructura 2-informes de Tulipa
+detectada sense ajuda; cap divergència perillosa. Caveat: el skill anomena projectes del corpus → valida executabilitat +
+re-execució, no generalització (demana carpetes noves de l'Eva). Feedback dels agents → skill v0.5 (11 clarificacions).
+Detall: `docs/holdout-headless/_RESULTATS.md`. Pendent: conversor DWG (Tulipa 564 m²), .docx reals de Vilanova/Anciles per
+als n/a, Fase 4a (lectors deterministes), crida headless des del wizard + UI de candidats, validació amb projectes nous.
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
