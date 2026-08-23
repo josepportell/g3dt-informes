@@ -37,8 +37,12 @@ sobre Castellar + Linyola (els 2 ERR de la lectura d'or) + Tulipa: 46 cel·les =
 les 3 regles apreses verificades (lab_sample_id, arquitecte persona/despatx, CTE derivat); estructura 2-informes de Tulipa
 detectada sense ajuda; cap divergència perillosa. Caveat: el skill anomena projectes del corpus → valida executabilitat +
 re-execució, no generalització (demana carpetes noves de l'Eva). Feedback dels agents → skill v0.5 (11 clarificacions).
-Detall: `docs/holdout-headless/_RESULTATS.md`. Pendent: conversor DWG (Tulipa 564 m²), .docx reals de Vilanova/Anciles per
-als n/a, Fase 4a (lectors deterministes), crida headless des del wizard + UI de candidats, validació amb projectes nous.
+Detall: `docs/holdout-headless/_RESULTATS.md`.
+**Conversor DWG FET (23 nit): viable.** LibreDWG 0.13.3 compilat (`~/.local/bin/dwg2dxf`) + ezdxf 1.4.4 al venv; els 4 DWG
+de Tulipa llegits (`scripts/dwg_text_dump.py`, skill v0.6). Misteri resolt: el 564 NO era al DWG — és `areaValue` del
+Cadastre (WFS INSPIRE) de la RC 3445105…GG (Tulipa 3), i la RC surt del caixetí del TOP.dwg → cadena automatitzable.
+Detall: `docs/DWG-CONVERSOR-2026-08-23.md`. Pendent: .docx reals de Vilanova/Anciles per als n/a, Fase 4a (lectors
+deterministes), crida headless des del wizard + UI de candidats, validació amb projectes nous de l'Eva.
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
