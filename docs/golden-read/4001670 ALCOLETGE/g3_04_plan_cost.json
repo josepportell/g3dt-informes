@@ -1,0 +1,94 @@
+{
+ "source_path": "26.0049/PLAN_COST_ALCOLETGE.xlsx",
+ "document_type": "plan_cost_g3",
+ "what_it_is": "Full intern de costos G3 (PLAN COST | G3 DT) del pressupost 26·0049: títol 'EG AMPL ALCOLETGE', tècnic Eva Vázquez Marcet, oferta 840 €, subcontractació 383,9 € (sondejos 348,9 + laboratori 35); OFERTA: 3 unitats DPSH, 1 ml previ, 1 SPT, 1 obertura de mostra + 1 contingut en sulfats.",
+ "issuer": "G3 (Eva Vázquez Marcet)",
+ "date": null,
+ "pages_or_sheets": "7 fulls: Plan Cost, OFERTA, FACTURA M, Material Cost (lab), Material Cost, Cost Center, Technicians",
+ "context": {
+  "who_made_it": "G3 (Eva, tècnic responsable) sobre la plantilla corporativa de costos",
+  "for_whom": "gestió interna G3 (marge, subcontractació)",
+  "why": "calcular cost i marge de l'oferta 26·0049 (840 €)",
+  "expected_fields": [
+   "building_type (E9 'EG AMPL {MUNICIPI}')",
+   "municipality (E9)",
+   "num_dpsh_tests previstos (OFERTA!B21)",
+   "SPT previst (OFERTA!B23)"
+  ],
+  "not_expected": [
+   "client_name (B8 'CLIENT / UBICACIÓ OBRA' buit; J8 'LLEIDA' és el centre de cost)",
+   "expedient (I7 'NUM INF' sense valor)",
+   "field_date",
+   "cota",
+   "nivells",
+   "adreça",
+   "arquitecte",
+   "plantes"
+  ],
+  "relation_to_others": "deriva del pressupost 26·0049 (quantitats idèntiques: 3 DPSH, 1 SPT, 840 €). No s'actualitza després: última font per a quantitats. 'SOIL-ASSAIG', 'TPS', 'LLEIDA', preus = plantilla, mai senyal.",
+  "authority_for": [
+   "building_type (candidat: 'AMPL' = ampliació)",
+   "municipality (corroboració, 3a font G3)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "ampliació (d'habitatge)",
+   "location": "'Plan Cost'!E9 'DESCRIPCIÓ TITÒL'",
+   "quote": "EG AMPL ALCOLETGE",
+   "confidence": 0.6,
+   "note": "'EG' = estudi geotècnic, 'AMPL' = ampliació. NO diu 'HAB UNIF' com en altres projectes: el tipus d'obra és una AMPLIACIÓ (coherent amb el títol dels correus 'Ampliació Albert Sans'). Què s'amplia (habitatge unifamiliar) cal confirmar-ho amb comanda/correus/plànols."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "ALCOLETGE",
+   "location": "'Plan Cost'!E9",
+   "quote": "EG AMPL ALCOLETGE",
+   "confidence": 0.85,
+   "note": "3a font G3 (pressupost + comanda + PLAN_COST), totes derivades del mateix encàrrec"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "OFERTA!B21",
+   "quote": "unitat d'assaig de penetració dinàmica DPSH | 3 | 120 | 360",
+   "confidence": 0.7,
+   "note": "previstos (= pressupost). Mana l'Excel DPSH."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "1 SPT (1 ml previ)",
+   "location": "OFERTA!B22/B23",
+   "quote": "ml previ | 1 ; spt | 1",
+   "confidence": 0.6,
+   "note": "previst; cap ml de sondeig a rotació (B6 buit). Laboratori previst: 1 obertura de mostra (B26) + 1 contingut en sulfats (B35)."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "LLEIDA",
+   "location": "'Plan Cost'!J8 (fila 'CLIENT / UBICACIÓ OBRA')",
+   "quote": "LLEIDA",
+   "confidence": 1.0,
+   "note": "centre de cost de la plantilla, no el client ni la ubicació de l'obra"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "expedient",
+  "street_address",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "cte_*"
+ ],
+ "reading_notes": "Identificat per 'Plan Cost'!B2 == 'PLAN COST  |  G3 DT'. E21 tècnic = Eva Vázquez Marcet. 1 imatge incrustada (xl/media/image1.png, 9,8 KB = logo de plantilla). Resum: NET VALUE 692,1 / TOTAL COST 690,9 / MARGIN 17,75 % / HOURS 5 (gabinet) / SUBCONTRACTING 383,9 / OFFER 840."
+}

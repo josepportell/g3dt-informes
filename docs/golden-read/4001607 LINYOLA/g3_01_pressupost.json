@@ -1,0 +1,28 @@
+{
+ "source_path": "25.0616/25·0616.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost 25·0616 de G3 (21/08/2025, versió curta de 3 p.: portada + valoració + condicions/formulari) per a un estudi geotècnic a 'Clot de la Llacuna, 16 -25240- Linyola': 3 DPSH + 1 ml previ + 1 SPT + laboratori + informe; 840 € (IVA no inclòs). Formulari p.3 buit, sense signatura.",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "2025-08-21",
+ "pages_or_sheets": 3,
+ "context": {
+  "who_made_it": "G3 (ERP m4PRO; PDF creator 'G3 DESENVOLUPAMENT TERRITORIAL, S.L.', title 'm4PRO ERP · Informes del Proyecto', creationDate 21/08/2025 13:28, modDate 13:29)",
+  "for_whom": "el sol·licitant del geotècnic: el despatx d'arquitectura BUNYESC ARQUITECTURA EFICIENT, SLP (Lleida)",
+  "why": "oferir i acotar la campanya (3 DPSH, 1 SPT, laboratori) i el preu abans d'acceptar l'encàrrec",
+  "expected_fields": ["client_name (només com a sol·licitant)", "street_address (bloc OBRA)", "municipality", "num_dpsh_tests (previst)", "cte_edificacio / cte_sol (en la versió de 7 p.)"],
+  "not_expected": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "lab_sample", "num_floors", "superficie_parcela"],
+  "relation_to_others": "Nom de fitxer atípic ('25·0616.pdf' en lloc de 'PRESSUPOST GEOTEC.*.pdf'); el contingut és el pressupost G3 estàndard però en format CURT de 3 pàgines (p.2 'Pág. 1 de 3' és la valoració; NO hi ha la pàgina 'Tipus d’edifici / Tipus de Terreny / campanya'). ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf és aquest mateix PDF (mateix creationDate) amb el formulari p.3 omplert i signat (modDate 23/09/2025). El CLIENT: BUNYESC deriva del correu d'encàrrec 'pressupost geotècnic.msg' (mateixa font, no independent).",
+  "authority_for": ["street_address (bloc OBRA)", "municipality", "architect_name (despatx sol·licitant, candidat)", "num_dpsh_tests (previstos)"]
+ },
+ "tier_a": [
+  {"concept_id": "architect_name", "value": "BUNYESC ARQUITECTURA EFICIENT, SLP", "location": "p.1 bloc CLIENT (y=231-302)", "quote": "CLIENT: ⏎ BUNYESC ARQUITECTURA EFICIENT, SLP ⏎ C/ ARBORETUM, 17 ⏎ 25199    LLEIDA ⏎ Tel: 973157519", "confidence": 0.7, "note": "El CLIENT del pressupost és el sol·licitant; conté 'ARQUITECTURA' → despatx d'arquitectes, NO el client de l'informe. Despatx, no persona: cal el nom de l'arquitecte (caixetí del projecte / correu)."},
+  {"concept_id": "NOT_client_name", "value": "BUNYESC ARQUITECTURA EFICIENT, SLP / C/ ARBORETUM, 17 / 25199 LLEIDA", "location": "p.1 bloc CLIENT", "quote": "BUNYESC ARQUITECTURA EFICIENT, SLP", "confidence": 1.0, "note": "Descartat com a client_name: és el despatx d'arquitectura sol·licitant. La seva adreça (Arboretum 17, Lleida) NO és de l'obra."},
+  {"concept_id": "street_address", "value": "Clot de la Llacuna, 16", "location": "p.1 bloc OBRA (y=421)", "quote": "OBRA: ⏎ Clot de la Llacuna, 16 -25240- Linyola", "confidence": 0.85, "note": "Adreça + CP + municipi a una sola línia. Sense tipus de via ('C/'): pot ser 'Carrer Clot de la Llacuna' o un paratge; comprovar amb projecte/Cadastre."},
+  {"concept_id": "municipality", "value": "Linyola", "location": "p.1 bloc OBRA (y=421)", "quote": "-25240- Linyola", "confidence": 0.95, "note": "CP 25240 = Linyola (Pla d'Urgell). Forma oficial 'Linyola'."},
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "p.2 valoració 001.001", "quote": "001.001 ⏎ UNITATS D'ASSAIGS DE PENETRACIO DINAMICA DPSH ⏎ 3,00", "confidence": 0.7, "note": "previstos, no executats; manen l'Excel DPSH / albarà TPS."},
+  {"concept_id": "lab_location", "value": "SPT (1 u.) sobre 1 ml previ", "location": "p.2 valoració 001.002-001.003", "quote": "ML. PREVI A L'ASSAIGS SPT 1,00 | ASSAIG SPT 1,00", "confidence": 0.5, "note": "Campanya: 3 DPSH + 1 SPT (sense sondeig a rotació: només 1 ml previ). Punt no indicat; ho dirà la comanda."},
+  {"concept_id": "cte_edificacio", "value": null, "location": "—", "quote": "", "confidence": 0.0, "note": "Aquesta versió curta NO porta la pàgina 'Tipus d’edifici / Tipus de Terreny'. Buscar al correu d'encàrrec ('És un C1'?) o deduir-ho de superfície/plantes del projecte."}
+ ],
+ "not_present": ["client_name (promotor)", "expedient", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "building_type", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "lab_sample_id", "lab_depth", "cte_edificacio", "cte_sol"],
+ "reading_notes": "Identificat per metadata creator/title de m4PRO malgrat el nom atípic. Blocs ordenats per (y,x): CLIENT y=203-302, OBRA y=394-421. 3 pàgines (l'orquestrador n'esperava 7): falta la pàgina de CTE i campanya. Codi '25·0616 P#' = codi comercial (= subcarpeta 25.0616), NO expedient."
+}

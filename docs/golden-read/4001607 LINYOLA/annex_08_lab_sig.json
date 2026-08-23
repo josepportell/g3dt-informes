@@ -1,0 +1,22 @@
+{
+ "source_path": "PDF/ANNEXES/lab-sig.pdf",
+ "document_type": "informe_laboratori",
+ "what_it_is": "Còpia redistil·lada (Acrobat Distiller 15, 30/10/2025 09:52) del GTL 4672-GTL-25 per a l'annex de l'informe; text idèntic a les 7 pàgines, signatures aplanades (sense widgets).",
+ "issuer": "TPS (document) / G3-Eva (còpia per a l'annex)",
+ "date": "2025-10-30",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "Eva (impressió a PDF del GTL rebut) — metadata title = '4672-GTL-25 Linyola.pdf'",
+  "for_whom": "l'annex de laboratori de l'informe 4001607",
+  "why": "incloure el GTL a l'informe",
+  "expected_fields": ["els mateixos que el GTL"],
+  "not_expected": ["res de nou"],
+  "relation_to_others": "DUPLICAT de 4672-GTL-25 Linyola.pdf (mateix text a p.1-7, només canvia l'ordre intern de blocs a p.3 i p.6 i els widgets de signatura aplanats). NO compta com a font independent.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "duplicate_of", "value": "4672-GTL-25 Linyola.pdf", "location": "metadata title + text", "quote": "title: '4672-GTL-25 Linyola.pdf' | Número d'informe: 4672-GTL-25", "confidence": 1.0, "note": "vegeu lab_07_gtl.json per als valors"}
+ ],
+ "not_present": ["(idèntic al GTL)"],
+ "reading_notes": "Comparació get_text().split() pàgina a pàgina amb l'original: p1,2,4,5,7 idèntiques; p3 i p6 mateixa longitud amb ordre de blocs diferent. 0 widgets (les signatures digitals han quedat com a text/imatge)."
+}

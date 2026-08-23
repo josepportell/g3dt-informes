@@ -1,0 +1,22 @@
+{
+ "source_path": "25.0616/RV_ pressupost geotècnic.msg",
+ "document_type": "correu",
+ "what_it_is": "Reenviament intern (Dolors Maqueda, administració → Eva Vázquez + Eva Roig; 20/08/2025 11:31) del correu d'encàrrec de Laia Alarcón, SENSE text nou (només signatura de la Loli); mateixos adjunts.",
+ "issuer": "Dolors (Loli) Maqueda <dolors@g3dt.com> (G3 administració)",
+ "date": "2025-08-20",
+ "pages_or_sheets": "cos (cadena) + 9 adjunts (2 PDF = duplicats, 7 imatges de signatura)",
+ "context": {
+  "who_made_it": "G3 administració",
+  "for_whom": "Eva Vázquez (perquè faci el pressupost) i Eva Roig",
+  "why": "traspassar la petició de l'arquitecte al departament de geologia",
+  "expected_fields": ["res de nou"],
+  "not_expected": ["tot"],
+  "relation_to_others": "RV: de correu_09 (text citat íntegre, cap paraula nova per sobre del 'De:'). Adjunts PDF md5 296c5aa7 / 7df29e1f = idèntics als de correu_09 i als solts. Imatges: image001.jpg 8,5 KB, image002/003.png 158 B, image004.png 405 B, image005.png 23,8 KB, image006.jpg 6,3 KB, image.png 31,5 KB (logo Bunyesc) = signatures.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "duplicate_of", "value": "correu_09_pressupost.json", "location": "cos citat", "quote": "De: Laia Alarcon <laia.alarcon@bunyesc.com> ⏎ Enviado el: dimarts, 19 d’agost de 2025 15:25", "confidence": 1.0, "note": "cap dada nova; no compta com a font"}
+ ],
+ "not_present": ["(cap camp nou)"],
+ "reading_notes": "Text nou per sobre del primer 'De:' = només la signatura corporativa de Loli Maqueda. Ignorat."
+}

@@ -1,0 +1,108 @@
+{
+ "source_path": "tall.pdf",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació A-A' (Print To PDF del FreeHand '3001621_tall de correlació.FH11', 03/11/2025 16:27, text net, 1 p. A3): 5 punts P-1, P-2, S-1, P-4, P-3; llegenda 'Terreny Vegetal' + 'Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells'; eix 569-572 msnm; caixetí 'Exp: 3001621', títol 'CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA)', 'Data: Octubre 2025'.",
+ "issuer": "G3 (Eva)",
+ "date": "2025-11-03 (impressió); 'Data: Octubre 2025' al caixetí",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "l'Eva (FreeHand) per a l'annex de l'informe; còpia 'Microsoft: Print To PDF' amb text llegible (l'altra còpia PDF/ANNEXES/3001621_tall de correlació.pdf via Distiller té text brossa → agent visual)",
+  "for_whom": "annex 'Tall de correlació' de l'informe 3001621",
+  "why": "correlacionar els 4 DPSH i el sondeig: dos trams (terreny vegetal + substrat rocós) i la cota de fonamentació recomanada",
+  "expected_fields": [
+   "num_soil_levels (llegenda 'Nivell N')",
+   "expedient (caixetí)",
+   "building_type + street_address + municipality (títol del caixetí = redacció de l'informe)",
+   "cota absoluta (eix msnm)",
+   "num_dpsh_tests (punts)"
+  ],
+  "not_expected": [
+   "client, arquitecte, plantes, superfície, data de camp exacta, lab, referència cadastral"
+  ],
+  "relation_to_others": "Mateix dibuix que PDF/ANNEXES/3001621_tall de correlació.pdf i ANNEXES/3001621_tall de correlació.FH11 (no independents). Fet el 03/11 (v0), ABANS del correu del client del 18/11 que demana el títol 'GRUP D'HABITATGES UNIFAMILIARS' → el caixetí 'UNA HABITATGE UNIFAMILIAR AÏLLAT' (singular, amb error de gènere) és una còpia de plantilla no actualitzada: error de còpia típic dels annexos de l'Eva. Els Nb del tall (16, 18, 10, 19, 33, R) són els 'Colpeig NB' de l'Excel arrodonits. Eix 569-572 msnm lliga amb COORDENADES.txt z 570,5-571,5.",
+  "authority_for": [
+   "num_soil_levels",
+   "expedient (corrobora)",
+   "street_address (redacció 18A-18B-20)",
+   "municipality",
+   "building_type (candidat feble: caixetí no actualitzat)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "LLEGENDA (y=198-218)",
+   "quote": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels. | Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "confidence": 0.8,
+   "note": "la llegenda només numera UN nivell ('Nivell 1'); el terreny vegetal es descriu sense número (criteri de l'Eva: no és nivell geotècnic). Coincideix amb 'Nivell 1' de l'Excel/annex DPSH. Confirmar amb la columna 'Unitat litològica' de l'annex de sondeig (visual)."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "caixetí (y=774)",
+   "quote": "Exp: 3001621",
+   "confidence": 0.95,
+   "note": "= carpeta/comanda/annex DPSH/GTL"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells nº 18A-18B-20",
+   "location": "caixetí (y=791)",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.8,
+   "note": "redacció de l'Eva a l'informe (v0). = MODF/acceptació '18A-18B-20'; el client (18/11) demana '18A, 18B i 20'."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès (Barcelona)",
+   "location": "caixetí (y=791)",
+   "quote": "CASTELLAR DEL VALLÈS  (BARCELONA)",
+   "confidence": 0.95,
+   "note": "forma oficial amb accent + comarca/província"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat (caixetí v0, singular — probablement desactualitzat)",
+   "location": "caixetí (y=774)",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.35,
+   "note": "CONFLICTE: singular 'UNA HABITATGE UNIFAMILIAR AÏLLAT' vs comanda 'CONSTR 3 HAB UNIF', PLAN_COST '3 HAB UNIF' i el títol demanat pel client el 18/11 'GRUP D'HABITATGES UNIFAMILIARS'. El tall és del 03/11 (v0): caixetí de plantilla no actualitzat. Aporta el matís 'aïllat' (no adossat) que cap altre document diu. Candidat feble."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "≈570,5-571,5 msnm (eix del tall 569-572; boca dels punts a ~571)",
+   "location": "eix vertical (y=449-622) '(msnm)' 572/571/570/569",
+   "quote": "(msnm) ⏎ 572 ⏎ 571 ⏎ 570 ⏎ 569",
+   "confidence": 0.35,
+   "note": "només dona el rang absolut; la cota exacta de cada punt requereix lectura visual del dibuix (agent visual) o COORDENADES.txt. L'annex DPSH usa cota relativa (−4 m respecte el carrer)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4 (+ S-1)",
+   "location": "etiquetes dels punts (y=408)",
+   "quote": "P-1 ⏎ P-2 ⏎ S-1 ⏎ P-4 ⏎ P-3",
+   "confidence": 0.8,
+   "note": "corrobora l'Excel; 'Sondeig a rotació amb bateria continua' = S-1; Nb=R (rebuig) a tots els P i 'N=R' al sondeig"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "octubre 2025 (mes)",
+   "location": "caixetí (y=774)",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.3,
+   "note": "només el mes; consistent amb 24/10/2025"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "Producer 'Microsoft: Print To PDF', title '3001621_tall de correlació.FH11': text net (a diferència del Distiller). 1191x842 (A3 apaïsat), 4 imatges (trames). Blocs ordenats per (y,x). 'Cota de fonamentació recomanada' a la llegenda (nivell B; el valor és gràfic → visual). La redacció 'UNA HABITATGE' és un error de gènere propi d'una plantilla (hauria de ser 'UN HABITATGE')."
+}

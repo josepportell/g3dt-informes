@@ -98,3 +98,17 @@ Format: una lliçó per línia o bloc, amb projecte i font. Serveix per escriure
 - 951 m² i UTM 418215/4595648 no són a cap fitxer: l'Eva els treu del Cadastre/visor → NT honest + proposta.
 - Plànols de catàleg fotografiats (fabricant de cases modulars): PB (+ porxo), 72 m² construïts: mai parcel·la.
 - Comanda amb cota de mostra mal transcrita (0,6-1,4); GTL i Excel (0,6-1,2) manen.
+
+## 3001621 CASTELLAR DEL VALLES (2026-08-23) — 10 OK / 1 CAND / 1 NT / 1 N/A / **1 ERR** / 1 CAND−
+- **Primer ERR-amb-confiança de la lectura d'or**: `lab_sample_id` = "MA-1" (GTL) marcat segur; l'Eva escriu "SPT-1" (etiqueta del
+  seu annex de sondeig). Lliçó: per a etiquetes que l'Eva decideix (id de mostra), el seu annex mana sobre el laboratori; si discrepen → candidats.
+- **CAND−** (candidats sense el correcte): `cte_edificacio` C0 derivat de 120 m²/casa; l'Eva posa C-1 (3 × 120 = 360 m² totals). La
+  definició és sobre el TOTAL construït de l'encàrrec. `cte_sol` T-1 és el valor de 4/4 pressupostos que porten la línia → candidat per defecte.
+- Cota: annex DPSH (−4,0 relatiu al carrer) ≠ annex sondeig (+570,90 ICGC); l'informe diu −4,0 → l'annex DPSH mana (2 de 2 casos resolts).
+- UTM de l'informe = P-1 de COORDENADES.txt (no el sondeig).
+- Client canvia de versió a versió del pressupost (GRUP ALMA juny → WOOD COMFORT PROMOCIONS SLU octubre): la versió MODF + acceptació manen;
+  la fitxa de camp conserva el client vell (C6) → la fitxa NO és autoritat per al client.
+- El pressupost de Castellar no porta la línia CTE (1/8); les 2 fotos WhatsApp de 25.0493 són del solar (no d'un plànol): el handoff
+  s'equivocava ("foto d'un plànol pot ser l'única font de plantes/superfície a Castellar"). 1.284 m² no és enlloc.
+- Referència = informe v0: la redacció definitiva (títol amb 18A, 18B i 20) va venir per correu del client el 18/11 → el lector ha de
+  mirar també els correus POSTERIORS a l'informe quan existeixin (nivell B: redacció del títol).

@@ -1,0 +1,27 @@
+{
+ "source_path": "RV_ Realització geotècnic.msg",
+ "document_type": "correu",
+ "what_it_is": "Reenviament de G3 DT (bústia general) a Eva Vázquez, Cesar Morillas i Dolors (30/09/2025 10:24) de la cadena 'Realització geotècnic' amb la clienta Sílvia Eroles: (19/09) Sílvia activa l'estudi citant '25·0616 P#'; (19/09) Eva Roig demana la 3a pàgina signada; (23/09) Sílvia adjunta l'acceptació (cc Jaume Nadal Andreu) i pregunta terminis; (23/09) Eva Roig: camp la setmana següent, informe 3-4 setmanes; (30/09) Sílvia: 'venieu demà', l'arquitecte demana desplaçar 2 punts 1 m a l'esquerra cap a punts de càrrega, contacte Laia 628 577 224; reenvia 'Punts de Sondeig_Silvia_Jaume (1).pdf'.",
+ "issuer": "G3 DT <g3@g3dt.com> reenviant Silvia Eroles <serolesba@gmail.com>",
+ "date": "2025-09-30",
+ "pages_or_sheets": "cos (cadena de 5 missatges) + 4 adjunts (1 PDF duplicat + 3 imatges signatura)",
+ "context": {
+  "who_made_it": "la clienta (Sílvia Eroles) escrivint a G3; G3 ho reenvia al geòleg i al planning",
+  "for_whom": "Eva Vázquez / Cesar Morillas (camp) / Dolors",
+  "why": "avisar del canvi de posició dels punts abans del dia de camp ('demà' = 01/10/2025) i del contacte de l'arquitecta",
+  "expected_fields": ["client_name (qui accepta i escriu: la propietària)", "field_date (indirecta: 'venieu demà' el 30/09 → 01/10)", "architect contact", "cc del 2n promotor"],
+  "not_expected": ["expedient", "adreça (no la repeteix)", "cota", "nivells", "lab", "plantes", "superfície"],
+  "relation_to_others": "Cadena completa que inclou la d'ACCEPTACIO/RV_ Realització geotècnic.msg (23/09) i hi afegeix els missatges del 23/09 16:49 (Eva Roig) i 30/09 10:16 (Sílvia). El text del 30/09 és el que l'Eva va copiar a la fitxa de camp B42-B45 (literal). Adjunt 'Punts de Sondeig_Silvia_Jaume (1).pdf' md5 296c5aa7 = mateix plànol de punts del correu_09 (no és el REDIBUIX). cc 'jaume nadal andreu <jume_540@hotmail.com>' = 2n promotor del caixetí del projecte.",
+  "authority_for": ["client_name (corroboració: qui accepta i paga)", "field_date (candidat feble per inferència 'demà')", "num_dpsh_tests (3 punts: 'el de més a la dreta', 'el de baix' + un altre)"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "Sílvia Eroles (Balagueró)", "location": "remitent i signatura dels missatges 19/09, 23/09, 30/09", "quote": "Estaria interessada en activar l'estudi geotècnic. ⏎ A continuació us passo número de pressupost que vam rebre per part vostra:  25·0616 P# | Adjunto l'acceptació del pressupost. ⏎ … Sílvia Eroles", "confidence": 0.85, "note": "qui activa, accepta i rep l'informe. Cap etiqueta 'propietària' aquí (sí a la fitxa B47). 'Li vaig comentar a l'arquitecte' → ella és la clienta de l'arquitecte."},
+  {"concept_id": "client_name", "value": "Jaume Nadal Andreu", "location": "CC dels missatges 23/09 i 30/09", "quote": "CC: jaume nadal andreu <jume_540@hotmail.com>", "confidence": 0.5, "note": "en còpia de l'acceptació; coincideix amb el 2n PROMOTOR del caixetí del projecte i amb 'Silvia_Jaume' del nom dels fitxers. Candidat a co-client; l'informe pot anar només a nom de Sílvia (formulari d'acceptació)."},
+  {"concept_id": "field_date", "value": "2025-10-01", "location": "missatge 30/09/2025 10:16", "quote": "Li vaig comentar a l'arquitecte que venieu demà", "confidence": 0.6, "note": "inferència: 'demà' respecte del 30/09 = 01/10. Coincideix amb fitxa F38 i comanda. Candidat 2."},
+  {"concept_id": "architect_name", "value": "Laia (Alarcón) — 'l'arquitecte'", "location": "missatge 30/09", "quote": "Li vaig comentar a l'arquitecte que venieu demà i em va dir que ja us havia enviat els punts de sondeig … si teniu algun dubte que la truqueu, Laia: 628 577 224.", "confidence": 0.5, "note": "la clienta anomena 'l'arquitecte' la persona de contacte Laia (Alarcón, del despatx Bunyesc). El caixetí del projecte diu Josep Bunyesc Palacín. Ambigu: candidats."},
+  {"concept_id": "num_dpsh_tests", "value": "3 (posicions modificades)", "location": "missatge 30/09", "quote": "El punt de més a la dreta (el de la vostra habitació) i el de baix (cantonada de la sala d'estar) els haurien de desplaçar 1m els dos cap a l'esquerra, així caurien en punts de càrrega.", "confidence": 0.5, "note": "confirma ≥3 punts i que les posicions finals difereixen del plànol enviat → vegeu '_REDIBUIX'"},
+  {"concept_id": "codi_pressupost", "value": "25·0616 P#", "location": "missatge 19/09", "quote": "25·0616 P#", "confidence": 1.0, "note": "codi comercial, NO expedient"}
+ ],
+ "not_present": ["expedient", "street_address", "municipality", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+ "reading_notes": "extract_msg: cos = 'De: Silvia Eroles…' (cap text nou del reenviador G3 DT). Cadena de 5 missatges llegida sencera perquè cap dels anteriors és a la carpeta excepte el del 23/09 (ACCEPTACIO). Adjunt PDF dedupat per md5 (= Punts de Sondeig_Silvia_Jaume.pdf). Imatges image001.jpg 8,5 KB, image007.png 272 B, image008.jpg 3,8 KB = signatura."
+}

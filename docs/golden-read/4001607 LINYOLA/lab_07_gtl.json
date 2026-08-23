@@ -1,0 +1,31 @@
+{
+ "source_path": "4672-GTL-25 Linyola.pdf",
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori 4672-GTL-25 de TPS (30/10/2025, 7 p.) sobre la mostra GTL-8200-25 = 'SPT1 P3', cota 1,0-1,15 m, 'Roca' / 'Lutita gresosa', obra 'Linyola. Carrer Clot de la Llacuna. 4001607': límits (wL 41,7 / wP 22,0 / IP 19,7), sulfats 0,0 mg/kg, Lambe 0,01 MPa 'marginal'; signat digitalment per Pere Cervós Flinch i Pere Farrés i Bori.",
+ "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075), laboratori GTL, Golmés (Lleida)",
+ "date": "2025-10-30",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "el laboratori de TPS (Prospecció del Subsòl), Golmés",
+  "for_whom": "G3 Desenvolupament Territorial, SL (B25364589) — el seu client; NO el client de l'informe geotècnic",
+  "why": "respondre la comanda d'assaigs de G3 (10/10/2025) sobre la mostra SPT del P3",
+  "expected_fields": ["lab_testing_company (emissor)", "lab_sample_id", "lab_depth", "lab_location", "expedient (Obra / Projecte)", "municipality + carrer (Situació)", "data d'extracció (= dia de camp, candidat)"],
+  "not_expected": ["client_name (promotor)", "architect_name", "num_floors", "superficie", "cota de referència", "nivells", "num_dpsh_tests"],
+  "relation_to_others": "Respon la comanda laboratori_4001607_LINYOLA.xls (mostra 'SPT 1 (P3)' 1,0-1,15, sulfats + límits + Lambe segons límits: IP 19,7 → Lambe fet). PDF/ANNEXES/lab-sig.pdf és una còpia redistil·lada (title = '4672-GTL-25 Linyola.pdf', creationDate 30/10/2025 09:52, sense widgets) amb text idèntic: NO és font independent. Data extracció 01/10/2025 = fitxa F38 = comanda DATA DE PRESA.",
+  "authority_for": ["lab_testing_company", "lab_sample_id", "lab_depth", "lab_location", "expedient (corroboració)", "municipality (corroboració)", "street_address (corroboració, sense número)", "field_date (candidat: dia de la mostra)"]
+ },
+ "tier_a": [
+  {"concept_id": "lab_testing_company", "value": "TPS, Prospecció del Subsòl, SL (B64803075) — laboratori GTL, Golmés", "location": "banda lateral totes les pàgines + peu", "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136 | Polígon industrial Golparc, Avgda. Mediterrània núm. 20 25241 Golmés (Lleida)", "confidence": 1.0, "note": "emissor = laboratori. El 'DADES DEL CLIENT: G3' és el client del laboratori (descartat)."},
+  {"concept_id": "NOT_client_name", "value": "G3 Desenvolupament Territorial, SL / B25364589 / Els Omells de Na Gaia", "location": "p.1 i p.7 'DADES DEL CLIENT', p.2 'DADES DEL SOL.LICITANT'", "quote": "Nom: G3 Desenvolupament Territorial, SL | NIF: B25364589", "confidence": 1.0, "note": "client del laboratori, no del projecte"},
+  {"concept_id": "lab_sample_id", "value": "SPT1 P3 (ref. lab GTL-8200-25)", "location": "p.2 'Mostra:' (y=303) + p.6 'Referència del client'", "quote": "Mostra: SPT1 P3 | Referència/es del laboratori: GTL-8200-25", "confidence": 1.0, "note": "= comanda 'SPT 1 (P3)'"},
+  {"concept_id": "lab_depth", "value": "1,0 - 1,15 m", "location": "p.2 'Cota d'extracció (m)' (y=302) + p.6", "quote": "Cota d'extracció (m): ⏎ 1,0 - 1,15", "confidence": 1.0, "note": "= comanda J35/L35; l'Excel DPSH anota '1,0 a 1,5 R' (interval previst)"},
+  {"concept_id": "lab_location", "value": "P3", "location": "p.2 'Mostra: SPT1 P3'", "quote": "SPT1 P3", "confidence": 1.0, "note": "tipus de mostra SPT; material 'Roca' / 'Lutita gresosa'"},
+  {"concept_id": "expedient", "value": "4001607", "location": "p.2 'Obra / Projecte' (y=340)", "quote": "Obra / Projecte: Linyola. Carrer Clot de la Llacuna. 4001607", "confidence": 0.95, "note": "= comanda N19 = carpeta. '4672-GTL-25' i 'GTL-8200-25' són codis del laboratori, NO l'expedient."},
+  {"concept_id": "municipality", "value": "Linyola", "location": "p.1 'Situació' (y=340)", "quote": "Situació: Linyola. Carrer Clot de la Llacuna.", "confidence": 0.9, "note": "copiat de la comanda per TPS (no independent)"},
+  {"concept_id": "street_address", "value": "Carrer Clot de la Llacuna", "location": "p.1 'Situació'", "quote": "Linyola. Carrer Clot de la Llacuna.", "confidence": 0.8, "note": "sense número; deriva de la comanda"},
+  {"concept_id": "field_date", "value": "2025-10-01", "location": "p.2 'Data extracció' (y=420)", "quote": "Data extracció: 01/10/2025 | Data recepció: 10/10/2025 | Data obertura: 10/10/2025", "confidence": 0.8, "note": "dia de la mostra SPT (P3) = dia de camp (campanya d'un sol dia). Mai la data d'expedició (30/10)."},
+  {"concept_id": "lab_results", "value": "wL 41,7 / wP 22,0 / IP 19,7; SO4 0,0 mg/kg; Lambe índex d'inflament 0,01 MPa, canvi de volum potencial 'marginal'; material 'Lutita gresosa' (Roca); humitat inicial Lambe 21,97 %, densitat aparent 1,96, seca 1,60 g/cm3", "location": "p.3, p.4, p.5, p.6", "quote": "Límit líquid, ωL : 41,7 | Límit plàstic, ωP : 22,0 | Índex de plasticitat, IP : 19,7 | Contingut en SO4 0,0 mg/kg | Índex d'inflament 0,01 MPa | Canvi de volum potencial: marginal | Lutita gresosa", "confidence": 0.95, "note": "nivell B"}
+ ],
+ "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "building_type", "cte_*"],
+ "reading_notes": "Reconegut per 'INFORME DE RESULTATS D'ASSAIGS DE LABORATORI' + banda TPS B64803075. PDFMaker Excel, text net. p.7: 2 widgets de signatura (Signature2/3) amb text d'aparença 'Firmado digitalmente por CERVOS FLINCH, PERE 2025.10.30 08:46' i 'Pere Farres Bori 2025.10.30 09:51'. Sulfats '0,0 mg/kg' literal."
+}

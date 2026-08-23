@@ -1,0 +1,89 @@
+{
+ "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Escaneig (PDFium, 28/01/2026, 7 p., 2410×3438 px/pàgina, 3 MB) del pressupost 26·0049 acceptat: formulari p.5 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' omplert TIPOGRÀFICAMENT (ALBERT SANS BONVEHÍ, NIF 47690689M) i signat a mà pel client ('Albert Sans') i per G3 (Eva Vázquez).",
+ "issuer": "G3 (pressupost) + client (acceptació signada); escaneig fet el 28/01/2026 18:00",
+ "date": "2026-01-28",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "el client (Albert Sans) omple i signa el formulari del pressupost de G3; G3 (Eva Vázquez) contrasigna i escaneja",
+  "for_whom": "G3 (per facturar i posar el nom correcte a l'informe)",
+  "why": "acceptar el contracte-pressupost 26·0049 i dir a G3 a nom de qui va la factura i l'informe",
+  "expected_fields": [
+   "client_name (NOM I COGNOMS + NIF: autoritat A)",
+   "adreça del client (no necessàriament de l'obra)",
+   "ARQUITECTE autoritzat (si n'hi ha)"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota",
+   "nivells",
+   "plantes",
+   "superfície",
+   "lab"
+  ],
+  "relation_to_others": "versió acceptada del 26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf (p.1-4, 6-7 idèntiques en contingut; p.5 omplerta i signada). Escaneig posterior (28/01) a l'emissió (27/01). El nom del formulari coincideix amb el CLIENT: del pressupost i amb 'Albert Sans' del títol dels correus, però aquí és una font d'autoritat A (el client el declara ell mateix i hi posa NIF).",
+  "authority_for": [
+   "client_name",
+   "client_nif"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "ALBERT SANS BONVEHÍ",
+   "location": "p.5 formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' (clip 30-62 % alçada, 170 dpi)",
+   "quote": "NOM I COGNOMS: ALBERT SANS BONVEHÍ    N.I.F./C.I.F.: 47690689M",
+   "confidence": 0.95,
+   "note": "AUTORITAT A: el client declara a nom de qui va l'informe. Tipografiat (no manuscrit), llegit visualment sobre el render; el NIF 47690689M s'ha llegit a 170 dpi, verificar dígits amb l'agent visual. Signatura manuscrita del client 'Albert Sans' a 'Signa l'acceptació del contracte-pressupost'; contrasignatura manuscrita 'Eva Vázquez' a 'Resp. Oficina Tècnica'."
+  },
+  {
+   "concept_id": "client_nif",
+   "value": "47690689M",
+   "location": "p.5 formulari",
+   "quote": "N.I.F./C.I.F.: 47690689M",
+   "confidence": 0.85,
+   "note": "lectura visual; nivell B (no és dels 15 camps) però confirma que el client és persona física"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ dels Gira-sols, 7 (casa)",
+   "location": "p.5 formulari ADREÇA",
+   "quote": "ADREÇA: C/DELS GIRA-SOLS, 7 (CASA)    CP I POBLACIÓ: 25.660 - ALCOLETGE",
+   "confidence": 0.5,
+   "note": "ÉS L'ADREÇA DEL CLIENT (regla: mai l'adreça del client com a adreça d'obra). Aquí coincideix amb el bloc OBRA del pressupost (C/GIRASOLS 7) perquè l'obra és una ampliació de casa seva; aporta la GRAFIA 'Gira-sols' i el '(CASA)'. Candidat de grafia, no font independent d'adreça d'obra."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "ALCOLETGE",
+   "location": "p.5 formulari CP I POBLACIÓ",
+   "quote": "CP I POBLACIÓ: 25.660 - ALCOLETGE",
+   "confidence": 0.5,
+   "note": "població del CLIENT, no de l'obra per construcció; coincideix amb l'OBRA del pressupost"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": null,
+   "location": "p.5 'PERSONES I/O EMPRESES QUE PODEN REBRE INFORMACIÓ SOBRE L'INFORME'",
+   "quote": "☐ ARQUITECTE ........    ☐ ALTRES ........",
+   "confidence": 0.0,
+   "note": "caselles ARQUITECTE i ALTRES buides, sense marcar: el client no designa cap arquitecte. Reforça la hipòtesi 'sense arquitecte' (pràctica Eva: client al camp arquitecte)."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests (p.2 és la mateixa que el pressupost original: 3 DPSH previstos)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_* (p.2 idèntica a l'original: C0 / T1, no re-llegida)"
+ ],
+ "reading_notes": "0 text, 0 fonts, 0 widgets, 0 objectes /Sig o /AcroForm, sense capa OCR: escaneig pur (creator/producer PDFium). Lectura: render p.5 clip 30-62 % a 170 dpi (formulari) i 62-90 % a 120 dpi (signatures). El formulari està omplert a màquina (tipografia neta), no a mà; només les dues signatures són manuscrites. Caselles 'Informe en català/castellà' i 'Digital per email' sense marcar; 'Email del client' buit. Dades bancàries (IBAN) presents al formulari: no transcrites (sensibles, no necessàries). L'agent visual pot confirmar el NIF i comprovar p.1-4 (se suposen idèntiques a l'original)."
+}

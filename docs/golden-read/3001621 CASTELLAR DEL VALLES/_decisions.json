@@ -1,0 +1,531 @@
+{
+ "project": "3001621 CASTELLAR DEL VALLES",
+ "read_on": "2026-08-23",
+ "reader": "2 subagents amb el skill v0.3 (text / visió); decisions i comparació: Claude Code en sessió",
+ "sources_read": 20,
+ "bias_disclosure": "Del handoff sabia: 'Castellar: cota relativa (−4,0) perquè el projecte ho demana; no és error' i que el pressupost no porta la línia 'Tipus d'edifici'. Del truth-map del 23-08: client al pressupost MODF, superfície 0 docs, data a fitxa+GTL+comanda, cota 0 docs. Els subagents no ho sabien.",
+ "decisions": {
+  "expedient": {
+   "status": "segur",
+   "value": "3001621",
+   "rule": "carpeta = comanda N19 = annex DPSH = GTL 'Obra / Projecte' = caixetins",
+   "candidates": [
+    {
+     "value": "3001621",
+     "source": "comanda Hoja1!N19",
+     "quote": "NÚM. D'EXPEDIENT | 3001621"
+    },
+    {
+     "value": "3001621",
+     "source": "annex DPSH",
+     "quote": "NÚMERO D´INFORME: 3001621"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "annex_13",
+    "lab_08",
+    "annex_14",
+    "annex_18"
+   ]
+  },
+  "client_name": {
+   "status": "segur",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "rule": "formulari p.5 de l'acceptació 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' (NIF B19935212) = autoritat A; = CLIENT del pressupost MODF (vigent, 07/10). El nom conté PROMOCIONS (promotora) → és alhora sol·licitant i promotor. GRUP ALMA (pressupost v1 de juny, fitxa C6) és el client anterior: candidat descartat per versió.",
+   "candidates": [
+    {
+     "value": "WOOD COMFORT PROMOCIONS SLU (B19935212)",
+     "source": "ACCEPTACIO p.5 formulari",
+     "quote": "NOM: WOOD COMFORT PROMOCIONS SLU | NIF B19935212 | ROCFLATS@HOTMAIL.COM"
+    },
+    {
+     "value": "WOOD COMFORT PROMOCIONS SLU",
+     "source": "PRESSUPOST MODF p.1",
+     "quote": "CLIENT: WOOD COMFORT PROMOCIONS SLU"
+    },
+    {
+     "value": "GRUP ALMA CONSTRUCCIONS (versió de juny, superada)",
+     "source": "PRESSUPOST v1 p.1 / fitxa C6",
+     "quote": "CLIENT: GRUP ALMA CONSTRUCCIONS"
+    }
+   ],
+   "sources_checked": [
+    "acceptacio_03",
+    "g3_02",
+    "g3_01",
+    "g3_04",
+    "correu_10",
+    "correu_11",
+    "annex_17",
+    "camp_16",
+    "lab_08"
+   ]
+  },
+  "street_address": {
+   "status": "segur",
+   "value": "Carrer Arbrells, 18A, 18B i 20",
+   "rule": "MODF + acceptació ('C/ARBRELLS 18A-18B-20') + annexos d'Eva + títol dictat pel client (correu 18/11) + comanda 'C ARBRELLS' + TPS. Les fonts de juny (v1, fitxa, annex DPSH) diuen només 18A: versió superada (3 parcel·les).",
+   "candidates": [
+    {
+     "value": "C/ARBRELLS 18A-18B-20",
+     "source": "PRESSUPOST MODF p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES"
+    },
+    {
+     "value": "Carrer Arbrells 18A, 18B i 20",
+     "source": "correu Roc Clusa 18/11 (títol dictat)",
+     "quote": "…AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS"
+    },
+    {
+     "value": "C/ARBRELLS 18A (juny)",
+     "source": "PRESSUPOST v1 / fitxa C7 / annex DPSH",
+     "quote": "C/ARBRELLS 18A"
+    }
+   ],
+   "sources_checked": [
+    "g3_02",
+    "acceptacio_03",
+    "g3_01",
+    "g3_04",
+    "g3_06",
+    "correu_10",
+    "correu_11",
+    "annex_13",
+    "annex_17",
+    "annex_18",
+    "camp_16",
+    "lab_08"
+   ]
+  },
+  "municipality": {
+   "status": "segur",
+   "value": "Castellar del Vallès",
+   "rule": "pressupost OBRA + comanda N21 + PLAN_COST E9 + annexos + GTL + TPS",
+   "candidates": [
+    {
+     "value": "CASTELLAR DEL VALLÈS",
+     "source": "comanda Hoja1!N21",
+     "quote": "POBLACIÓ | CASTELLAR DEL VALLÈS"
+    },
+    {
+     "value": "CASTELLAR DEL VALLES",
+     "source": "PRESSUPOST MODF p.1",
+     "quote": "CASTELLAR DEL VALLES"
+    }
+   ],
+   "sources_checked": [
+    "g3_02",
+    "g3_06",
+    "g3_05",
+    "annex_13",
+    "annex_17",
+    "lab_08",
+    "camp_16"
+   ]
+  },
+  "architect_name": {
+   "status": "candidats",
+   "value": null,
+   "rule": "cap document anomena cap arquitecte (casella ARQUITECTE buida a l'acceptació, cap signatura, cap caixetí de plànol: no hi ha plànols). Pràctica de l'Eva: posar el client → candidat etiquetat.",
+   "candidates": [
+    {
+     "value": "WOOD COMFORT PROMOCIONS SLU (pràctica Eva: client al camp arquitecte)",
+     "source": "regla del skill (Rubí)",
+     "quote": "—"
+    },
+    {
+     "value": "Roc Clusa (contacte del client, rocflats@hotmail.com)",
+     "source": "correu 18/11",
+     "quote": "From: rocflats@hotmail.com"
+    }
+   ],
+   "sources_checked": [
+    "acceptacio_03",
+    "g3_01",
+    "g3_02",
+    "g3_04",
+    "correu_10",
+    "correu_11",
+    "annex_17",
+    "annex_18",
+    "lab_08"
+   ]
+  },
+  "building_type": {
+   "status": "segur",
+   "value": "habitatges unifamiliars aïllats (grup de 3, entramat lleuger de fusta)",
+   "rule": "comanda 'CONSTR 3 HAB UNIF' + PLAN_COST 'EG 3 HAB UNIF' + correu client 18/11 ('grup d'habitatges unifamiliars') + annexos 'habitatge unifamiliar aïllat' (singular, v0) + correu juny ('entramat lleuger de fusta, 120 m²'). CLOSE amb qualsevol redacció.",
+   "candidates": [
+    {
+     "value": "CONSTRUCCIÓ D'UN GRUP D'HABITATGES UNIFAMILIARS",
+     "source": "correu Roc Clusa 18/11",
+     "quote": "CONSTRUCCIÓ D'UN GRUP D'HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20"
+    },
+    {
+     "value": "CONSTR 3 HAB UNIF",
+     "source": "comanda Hoja1!N18",
+     "quote": "CONSTR 3 HAB UNIF"
+    },
+    {
+     "value": "habitatge unifamiliar aïllat",
+     "source": "annex sondeig 'Obra:'",
+     "quote": "…D'UNA HABITATGE UNIFAMILIAR AÏLLAT…"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "g3_05",
+    "correu_11",
+    "correu_10",
+    "annex_17",
+    "annex_18",
+    "annex_19"
+   ]
+  },
+  "num_floors": {
+   "status": "segur",
+   "value": "PB+1 (sense soterrani)",
+   "rule": "descripció del client transcrita al correu intern de juny ('PB + 1, sense soterrani, 120 m² construïts'); 1 font de proveïdor sense contradicció (cap plànol a la carpeta). Segur amb nota.",
+   "candidates": [
+    {
+     "value": "PB + 1, sense soterrani",
+     "source": "correu intern 25/06 (WhatsApp del client)",
+     "quote": "PB + 1, sense soterrani, 120 m² construïts, entramat lleuger de fusta"
+    }
+   ],
+   "sources_checked": [
+    "correu_10",
+    "g3_01",
+    "g3_02",
+    "g3_04",
+    "foto_15 (fotos del solar, no plànol)"
+   ]
+  },
+  "superficie_parcela": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap plànol ni consulta cadastral a la carpeta; les 2 fotos WhatsApp de 25.0493 són del solar, no d'un plànol. Proposta: Cadastre per 'Carrer Arbrells 18A / 18B / 20, Castellar del Vallès' (3 parcel·les → 3 valors + suma).",
+   "candidates": [],
+   "sources_checked": [
+    "foto_15",
+    "annex_18 (polígon ~22 × ~45 m, no declarat)",
+    "g3_01",
+    "g3_02",
+    "g3_04",
+    "correu_10",
+    "correu_11"
+   ]
+  },
+  "field_date": {
+   "status": "segur",
+   "value": "2025-10-24",
+   "rule": "fitxa F38 + albarans TPS (DPSH i sondeig el mateix dia) + annex DPSH 'DATA: 24/10/25' + annex sondeig inici/fi + comanda DATA DE PRESA + GTL + fotos 2025-10-24 (≥ 4 independents)",
+   "candidates": [
+    {
+     "value": "2025-10-24",
+     "source": "fitxa!F38",
+     "quote": "dies de camp | 2025-10-24"
+    },
+    {
+     "value": "24/10/25",
+     "source": "annex DPSH",
+     "quote": "DATA: 24/10/25"
+    },
+    {
+     "value": "24-10-2025",
+     "source": "albarà TPS p.1",
+     "quote": "Data: 24-10-2025"
+    }
+   ],
+   "sources_checked": [
+    "g3_04",
+    "camp_16",
+    "annex_13",
+    "annex_17",
+    "g3_06",
+    "lab_08",
+    "fotos_22",
+    "foto_15"
+   ]
+  },
+  "cota_referencia": {
+   "status": "candidats",
+   "value": "+570,90",
+   "rule": "dues sortides de l'Eva amb criteris diferents: annex sondeig 'Cota (Z): +570.90 msnm (segons el plànol ICGC)' (= z GPS de S-1 a COORDENADES.txt 570,9) vs annex DPSH 'cota inici −4 m (respecte el carrer)' (relativa, com als fulls TPS). L'informe pot usar l'absoluta o la relativa → candidats.",
+   "candidates": [
+    {
+     "value": "+570.90 msnm (S-1, ICGC)",
+     "source": "annex sondeig capçalera",
+     "quote": "Cota (Z): +570.90 msnm (segons el plànol ICGC)"
+    },
+    {
+     "value": "−4,0 m respecte el carrer (P-1/P-3/P-4; P-2 −4,2)",
+     "source": "annex DPSH capçalera",
+     "quote": "Cota inici: -4 m (respecte el carrer)"
+    },
+    {
+     "value": "570.9 (z GPS S-1)",
+     "source": "ANNEXES/ALTRES/COORDENADES.txt",
+     "quote": "S-1 423182;4609623;570.9"
+    }
+   ],
+   "sources_checked": [
+    "annex_17",
+    "annex_13",
+    "coord_12",
+    "camp_16",
+    "annex_19",
+    "annex_18"
+   ]
+  },
+  "num_soil_levels": {
+   "status": "segur",
+   "value": "1",
+   "rule": "annex sondeig 'Unitat litològica' NIVELL 1 (substrat rocós sota terreny vegetal) + llegenda del tall 'Terreny Vegetal + Nivell 1'",
+   "candidates": [
+    {
+     "value": "1",
+     "source": "annex sondeig",
+     "quote": "NIVELL 1 (0,50–1,20, substrat rocós)"
+    },
+    {
+     "value": "1",
+     "source": "tall.pdf llegenda",
+     "quote": "Terreny Vegetal | Nivell 1: Substrat rocós. Bretxes…"
+    }
+   ],
+   "sources_checked": [
+    "annex_17",
+    "annex_14",
+    "annex_19",
+    "annex_13",
+    "camp_16"
+   ]
+  },
+  "num_dpsh_tests": {
+   "status": "segur",
+   "value": "4",
+   "rule": "Excel DPSH (4 fulls) + albarà TPS (4) + pressupost/PLAN_COST/fitxa (4 previstos) + annexos (P-1..P-4)",
+   "candidates": [
+    {
+     "value": "4",
+     "source": "ANNEXES/3001621_DPSH.xls",
+     "quote": "fulls P-1..P-4"
+    },
+    {
+     "value": "4",
+     "source": "albarà TPS",
+     "quote": "Nº de penetròmetres realitzats: 4"
+    }
+   ],
+   "sources_checked": [
+    "g3_07",
+    "camp_16",
+    "g3_02",
+    "g3_05",
+    "g3_04",
+    "annex_18",
+    "annex_20"
+   ]
+  },
+  "utm_x_utm_y": {
+   "status": "segur",
+   "value": "X 423182 ; Y 4609623 (S-1); P-1 423167/4609608, P-2 423174/4609616, P-4 423189/4609627.9, P-3 423195/4609636",
+   "rule": "COORDENADES.txt (5 punts amb z) + annex sondeig 'UTM: X 423182.0 / Y 4609623.0' (2 fonts coincidents)",
+   "candidates": [
+    {
+     "value": "423182 / 4609623 (S-1)",
+     "source": "ANNEXES/ALTRES/COORDENADES.txt",
+     "quote": "S-1 423182;4609623;570.9"
+    },
+    {
+     "value": "423182.0 / 4609623.0",
+     "source": "annex sondeig capçalera",
+     "quote": "UTM: X 423182.0 Y 4609623.0"
+    }
+   ],
+   "sources_checked": [
+    "coord_12",
+    "annex_17"
+   ]
+  },
+  "referencia_catastral": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap consulta cadastral ni plànol",
+   "candidates": [],
+   "sources_checked": [
+    "inventari",
+    "annex_18",
+    "correu_10",
+    "correu_11"
+   ]
+  },
+  "lab": {
+   "status": "segur",
+   "value": {
+    "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "lab_sample_id": "MA-1 (S1)",
+    "lab_depth": "1,0 - 1,2 m",
+    "lab_location": "S-1"
+   },
+   "rule": "GTL 4687-GTL-25 (emissor TPS B64803075; 'MA1 S1', 1,0-1,2, extracció 24/10) + comanda 'MA (S1) 1,0-1,2'. L'annex de sondeig l'etiqueta 'SPT-1 (R)' i els albarans TPS diuen 'No' a SPT: mostra alterada (MA) presa al sondeig; per a l'informe mana el GTL.",
+   "candidates": [
+    {
+     "value": "MA1 S1, 1,0-1,2 m",
+     "source": "GTL p.2",
+     "quote": "Mostra: MA1 S1 | Cota d'extracció: 1,0-1,2"
+    },
+    {
+     "value": "MA (S1) 1,0-1,2",
+     "source": "comanda fila 35",
+     "quote": "MA (S1) | 1.0 | 1.2"
+    },
+    {
+     "value": "SPT-1 −1,00 a −1,20 (R)",
+     "source": "annex sondeig",
+     "quote": "SPT-1 | -1.00 a -1.20 | R"
+    }
+   ],
+   "sources_checked": [
+    "lab_08",
+    "g3_06",
+    "annex_17",
+    "camp_16",
+    "annex_09 (dup)"
+   ]
+  },
+  "cte": {
+   "status": "candidats",
+   "value": {
+    "cte_edificacio": "C-0 (derivat)",
+    "cte_sol": null
+   },
+   "rule": "cap versió del pressupost porta 'Tipus d'edifici' / 'Tipus de Terreny' (única de 8 sense la línia). C0 derivat de la definició de l'Eva (120 m² construïts per habitatge, PB+1) + bloc de tarifa 'C0-C1' del PLAN_COST (feble). T: cap font.",
+   "candidates": [
+    {
+     "value": "C0 (< 300 m² i < 4 plantes: 120 m², PB+1)",
+     "source": "correu intern 25/06 + definició Eva (EXPLICACIÓ DETALLS)",
+     "quote": "120 m² construïts … PB + 1"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "g3_02",
+    "acceptacio_03",
+    "g3_05",
+    "correu_10"
+   ]
+  }
+ },
+ "summary": {
+  "segur": 11,
+  "candidats": 3,
+  "no_trobat": 2,
+  "notes": "candidats: architect (client, pràctica Eva), cota (absoluta vs relativa entre annexos), cte (pressupost sense línia). no_trobat: superfície parcel·la, ref. cadastral (cap plànol ni Cadastre a la carpeta)."
+ },
+ "comparison_with_eva": {
+  "reference": "reference-material/3001621 CASTELLAR DEL VALLES/validation/eva_reference_values.json (de 3001621_informe_v0.doc — versió 0, abans dels canvis de títol demanats pel client el 18/11) + 3001621_informe_v0.docx (grep)",
+  "opened_after_decisions": true,
+  "per_field": {
+   "expedient": {
+    "eva": "3001621",
+    "mine": "3001621",
+    "result": "OK"
+   },
+   "client_name": {
+    "eva": "WOOD COMFORT PROMOCIONS SLU",
+    "mine": "WOOD COMFORT PROMOCIONS SLU",
+    "result": "OK"
+   },
+   "street_address": {
+    "eva": "Arbrells, 18 (v0)",
+    "mine": "Carrer Arbrells, 18A, 18B i 20 (candidat 3: 18A)",
+    "result": "OK (CLOSE)",
+    "note": "la v0 diu '18'; el client va demanar '18A, 18B i 20' el 18/11"
+   },
+   "municipality": {
+    "eva": "Castellar del Vallès",
+    "mine": "Castellar del Vallès",
+    "result": "OK"
+   },
+   "architect_name": {
+    "eva": "(absent a la referència)",
+    "mine": "candidats [client (pràctica Eva)]",
+    "result": "N/A"
+   },
+   "building_type": {
+    "eva": "3 habitatges unifamiliars d’estructura lleugera, fusta",
+    "mine": "habitatges unifamiliars aïllats (grup de 3, entramat lleuger de fusta)",
+    "result": "OK (CLOSE)"
+   },
+   "num_floors": {
+    "eva": "Pb+1Pp",
+    "mine": "PB+1 (sense soterrani)",
+    "result": "OK",
+    "note": "regla 'correu del client amb plantes → segur amb nota' confirmada"
+   },
+   "superficie_parcela": {
+    "eva": "1.284",
+    "mine": "no_trobat",
+    "result": "NT",
+    "note": "1284 no és a cap document (truth-map 0 docs); Cadastre/visor"
+   },
+   "field_date": {
+    "eva": "24 de octubre de 2025",
+    "mine": "2025-10-24",
+    "result": "OK"
+   },
+   "cota_referencia": {
+    "eva": "-4.0",
+    "mine": "candidats [+570.90 | −4,0 | 570.9]",
+    "result": "CAND",
+    "note": "correcte = candidat 2. REGLA: quan l'annex DPSH i l'annex sondeig discrepen, l'informe segueix l'annex DPSH (Castellar −4,0; Bell-lloc coincidien; Tulipa Eva ho va deixar buit) → ordenar l'annex DPSH primer"
+   },
+   "num_soil_levels": {
+    "eva": "un sòl nivell",
+    "mine": "1",
+    "result": "OK"
+   },
+   "num_dpsh_tests": {
+    "eva": "4",
+    "mine": "4",
+    "result": "OK"
+   },
+   "utm_ref_catastral": {
+    "eva": "423167 / 4609608 (= P-1)",
+    "mine": "segur (S-1 primer; P-1 a la llista)",
+    "result": "OK",
+    "note": "REGLA: l'Eva posa les UTM del P-1 (primer punt de COORDENADES.txt), no del sondeig"
+   },
+   "lab": {
+    "eva": "TPS / SPT-1 / -1.00 a -1.20 / S-1",
+    "mine": "segur: TPS / MA-1 (S1) / 1,0-1,2 / S-1",
+    "result": "ERR (lab_sample_id)",
+    "note": "ERR-AMB-CONFIANÇA: he marcat 'MA-1' segur seguint el GTL; l'Eva etiqueta la mostra 'SPT-1' com al seu annex de sondeig. Profunditat i punt correctes. REGLA: lab_sample_id = etiqueta de l'annex de sondeig de l'Eva > GTL > comanda; si discrepen → candidats (annex primer), mai segur"
+   },
+   "cte": {
+    "eva": "C-1 / T-1",
+    "mine": "candidats [C0 derivat de 120 m² per casa] / T: cap",
+    "result": "CAND− (el correcte NO era a la llista)",
+    "note": "ERROR DE DERIVACIÓ: 3 habitatges × 120 m² = 360 m² totals > 300 → C1 segons la definició de l'Eva ('totals construïts'). T-1 apareix a tots els pressupostos que porten la línia (4/4) → proposar T-1 com a candidat per defecte quan falta"
+   }
+  },
+  "totals": {
+   "OK": 10,
+   "CAND": 1,
+   "NT": 1,
+   "NA": 1,
+   "ERR": 1,
+   "CAND_minus": 1
+  },
+  "rules_learned": [
+   "lab_sample_id: l'etiqueta de l'informe és la de l'annex de sondeig de l'Eva (SPT-1), no la del GTL (MA1) → annex > GTL; si discrepen, candidats",
+   "cota_referencia: si annex DPSH ≠ annex sondeig, l'informe segueix l'annex DPSH → candidat 1 = annex DPSH",
+   "utm: l'Eva escriu les coordenades del P-1 (primer punt de COORDENADES.txt)",
+   "cte_edificacio derivat: usar la superfície construïda TOTAL de l'encàrrec (3 cases × 120 = 360 → C1), no per habitatge; cte_sol: T-1 per defecte (candidat) quan el pressupost no porta la línia",
+   "street_address: la v0 de l'informe pot portar la versió curta (18); la definitiva, la del client"
+  ]
+ }
+}

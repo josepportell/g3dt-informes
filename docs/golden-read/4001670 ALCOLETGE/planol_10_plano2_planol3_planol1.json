@@ -1,0 +1,107 @@
+{
+ "source_path": "26.0049/planol-1.pdf + 26.0049/planol 3.pdf (26.0049/PLANO 2.pdf = A.01.pdf, vegeu planol_09_A01.json)",
+ "document_type": "planol",
+ "what_it_is": "Dos plànols més de David Graus adjunts al correu 07: (1) planol-1.pdf 'SITUACIÓ I EMPLAÇAMENT' (A4, juny 2022, mateix projecte 2022 de tancament de porxo): mapa cadastral amb la parcel·la 88417 marcada en blau + ortofoto (C/ dels Girasols / C/ dels Bonsais / Av. de Bellvís), caixetí amb TEXT; (2) planol 3.pdf 'ampliació habitatge' (croquis del 21/01/2026, sense caixetí): planta existent + zona ratllada vermella 'ampliació habitatge' al darrere.",
+ "issuer": "David Graus Robinat (2 GRAUS / 1 GRAUS, Mollerussa)",
+ "date": "planol-1: 2022-05-26 (PDF) / caixetí 'Juny 2022'; planol 3: 2026-01-21",
+ "pages_or_sheets": "1 + 1",
+ "context": {
+  "who_made_it": "el tècnic del client (David Graus, arquitecte tècnic)",
+  "for_whom": "planol-1: promotor (2022); planol 3: G3 (croquis fet expressament el 21/01/2026, el mateix dia del correu d'encàrrec)",
+  "why": "planol-1: situar la parcel·la al cadastre i a l'ortofoto; planol 3: indicar on va l'ampliació (zona ratllada) perquè G3 situï els punts d'assaig",
+  "expected_fields": [
+   "client_name (Promotor, planol-1)",
+   "architect_name (caixetí, planol-1)",
+   "street_address / municipality (Situació, planol-1)",
+   "referencia_catastral (parcel·la 88417 del mapa cadastral, corrobora)",
+   "posició de l'ampliació (planol 3)"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota",
+   "nivells",
+   "lab",
+   "superficie_parcela (cap taula)",
+   "num_floors"
+  ],
+  "relation_to_others": "planol-1.pdf md5 ed1aaf82 = adjunt del correu 07 (una sola font). planol 3.pdf md5 209583ad = adjunt del correu 07; mateix dibuix que A.01.pdf + ampliació ratllada; el retall image008.jpg del correu 07 n'és una captura. El caixetí de planol-1 repeteix el de A.01 (mateix projecte 2022): NO és font independent per a promotor/arquitecte. 'FOTOS DE CAMP + PLANOL PUNTS/ampliació habitatge v2.png' (agent visual) probablement és una versió del croquis amb els punts.",
+  "authority_for": [
+   "client_name (Promotor, mateix caixetí que A.01)",
+   "architect_name (mateix caixetí)",
+   "street_address / municipality",
+   "referencia_catastral (corroboració visual: parcel·la 88417)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "ALBERT SANS BONVEHI",
+   "location": "planol-1.pdf caixetí 'Promotor:' (text vectorial, y=751)",
+   "quote": "Promotor: ⏎ 1 | ALBERT SANS BONVEHI",
+   "confidence": 0.9,
+   "note": "etiqueta 'Promotor' (autoritat A). Mateix caixetí que A.01.pdf: compta com UNA font amb ell."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "DAVID GRAUS ROBINAT (arquitecte tècnic col·legiat nº 699, enginyer de l'edificació)",
+   "location": "planol-1.pdf caixetí (y=769-800)",
+   "quote": "ARQUITECTE TÈCNIC COL·LEGIAT  Nº 699 ⏎ DAVID GRAUS ROBINAT ⏎ AVINGUDA DEL CANAL, Nº 8 B, BAIXOS ⏎ ENGINYER DE LA EDIFICACIÓ ⏎ (25230) MOLLERUSSA ⏎ 649158020 - www.davidgraus.com ⏎ david@davidgraus.com",
+   "confidence": 0.75,
+   "note": "arquitecte tècnic, no arquitecte. Mateix que A.01 i que el remitent del correu."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols nº7",
+   "location": "planol-1.pdf caixetí 'Situació:' (y=734-742)",
+   "quote": "Situació: | Alcoletge (25660) | Carrer Girasols nº7",
+   "confidence": 0.9,
+   "note": "l'ortofoto etiqueta el vial com 'Carrer dels Girasols'; la parcel·la fa cantonada amb 'Carrer dels Bonsais' (vial lateral), però l'adreça oficial és Girasols 7"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "planol-1.pdf caixetí 'Situació:'",
+   "quote": "Alcoletge (25660)",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "parcel·la 88417 (corrobora 8841701CG0184S0001HH)",
+   "location": "planol-1.pdf imatge superior (mapa cadastral, parcel·la marcada en blau)",
+   "quote": "88417 (etiqueta blava al mapa cadastral, lectura visual a 70 dpi)",
+   "confidence": 0.6,
+   "note": "lectura visual aproximada; el número de parcel·la cadastral 88417 coincideix amb els 5 primers caràcters de la referència del correu. L'agent visual pot confirmar-ho a més resolució."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "ampliació d'habitatge (unifamiliar)",
+   "location": "planol 3.pdf (títol al marge inferior dret + etiqueta de la zona ratllada); planol-1.pdf caixetí 'PROJECTE DE TANCAMENT DE PORXO EN CASA UNIFAMILIAR' (2022)",
+   "quote": "ampliació habitatge | PROJECTE DE TANCAMENT DE PORXO EN ⏎ CASA UNIFAMILIAR",
+   "confidence": 0.7,
+   "note": "planol 3 (2026) és l'obra actual: ampliació a la part posterior (zona ratllada). El títol de planol-1 és del projecte 2022."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": null,
+   "location": "planol 3.pdf",
+   "quote": "(planta única dibuixada; sense secció ni taula)",
+   "confidence": 0.0,
+   "note": "no determinable"
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "planol-1.pdf: AutoCAD 2016 pdfplot, 15 blocs de text (tot el caixetí), 2 imatges (778×1229 mapa cadastral + ortofoto apilats; 748×248 logo '1 GRAUS'); llegit per text + render 70 dpi. planol 3.pdf: PScript5/Distiller, 0 text, 0 imatges, 643 traçats; metadata title '…\\TREBALLS 2024\\CROQUIS ALBERT SANS, ALCOLETGE\\planol Model (1)'; llegit per render 70 dpi: mateix dibuix que A.01 sense caixetí, amb ratllat vermell i rètol 'ampliació habitatge'. Cap cota de l'ampliació llegible a 70 dpi (l'agent visual pot provar 150 dpi, però el croquis sembla sense cotes). PLANO 2.pdf no rellegit (md5 = A.01.pdf)."
+}

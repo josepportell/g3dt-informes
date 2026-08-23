@@ -1,0 +1,86 @@
+{
+ "source_path": "ANNEXES/ALTRES/COORDENADES.txt",
+ "document_type": "coordenades_gps",
+ "what_it_is": "Coordenades UTM (X;Y;Z) dels 5 punts d'assaig: P-1, P-2, S-1, P-4, P-3 (ordre del fitxer = ordre del tall A-A'); X 423167-423195, Y 4609608-4609636, Z 570,5-571,5.",
+ "issuer": "G3 (Eva), presa GPS de camp o lectura del visor",
+ "date": "sense data (fitxer de text; el camp és del 24/10/2025)",
+ "pages_or_sheets": "14 línies (CRLF)",
+ "context": {
+  "who_made_it": "G3 (Eva) per situar els punts al plànol de situació i al tall",
+  "for_whom": "annexos de l'informe (plànol de situació, tall de correlació)",
+  "why": "coordenades dels 4 DPSH i del sondeig",
+  "expected_fields": [
+   "utm_x_utm_y per punt",
+   "cota z per punt (GPS/visor; l'Eva no la fa servir com a cota de referència: ~0,6 m de diferència)",
+   "num_dpsh_tests (4 P) i num sondeigs (1 S)"
+  ],
+  "not_expected": [
+   "adreça, client, data, nivells, lab, referència cadastral"
+  ],
+  "relation_to_others": "5 punts = 4 DPSH (Excel P-1..P-4) + S-1 (comanda/GTL). Z 570,5-571,5 msnm lliga amb l'eix vertical del tall (569-572 msnm). L'annex DPSH dona cota RELATIVA (−4 m respecte el carrer): la cota absoluta de l'informe probablement surt d'aquí o d'ICGC. Punts en línia NE (X i Y creixen junts) = traça del tall A-A'. DTE.txt (arrel) és una nota administrativa de la Dolors, no geotècnica (vegeu note).",
+  "authority_for": [
+   "utm_x_utm_y",
+   "cota_referencia (candidat 2: z GPS)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "utm_x_utm_y",
+   "value": "P-1 423167.0;4609608.0;571.5 | P-2 423174.0;4609616.0;570.5 | S-1 423182.0;4609623.0;570.9 | P-4 423189.0;4609627.9;570.5 | P-3 423195.0;4609636.0;570.9",
+   "location": "línies 2-14",
+   "quote": "Coordenades UTM (X);(Y);(Z); ⏎ P-1 ⏎ 423167.0 ; 4609608.0 ; 571.5 ⏎ P-2 ⏎ 423174.0 ; 4609616.0 ; 570.5 ⏎ S-1 ⏎ 423182.0 ; 4609623.0 ; 570.9 ⏎ P-4 ⏎ 423189.0; 4609627.9 ; 570.5 ⏎ P-3 ⏎ 423195.0 ; 4609636.0 ; 570.9",
+   "confidence": 0.95,
+   "note": "sense indicació de fus/datum (assumir ETRS89 UTM 31N, EPSG:25831, com els altres projectes). Centroide aprox. X 423181, Y 4609622. Ordre P-1, P-2, S-1, P-4, P-3 (no P-3 abans de P-4): és l'ordre espacial del tall."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "570,5-571,5 msnm (z per punt; S-1 = 570,9)",
+   "location": "3r valor de cada línia",
+   "quote": "571.5 | 570.5 | 570.9 | 570.5 | 570.9",
+   "confidence": 0.4,
+   "note": "cota GPS/visor per punt. L'annex DPSH diu 'cota inici: −4 m (respecte el carrer)' (relativa) → l'Eva referencia al carrer, no a msnm, per als DPSH; el tall usa msnm 569-572. Candidat 2 per a cota_referencia; el 'z:' de l'annex de sondeig (visual) mana."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "etiquetes P-1..P-4",
+   "quote": "P-1 / P-2 / P-4 / P-3",
+   "confidence": 0.8,
+   "note": "corrobora l'Excel DPSH"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "línia 8",
+   "quote": "S-1 ⏎ 423182.0 ; 4609623.0 ; 570.9",
+   "confidence": 0.8,
+   "note": "un sol sondeig, al mig de la traça"
+  },
+  {
+   "concept_id": "NOT_tier_a_DTE",
+   "value": "DTE.txt: 'EN DATA 27/10 TDTO AQUEST INFORME PER UN IMPORT DE 1548,80€ - VCT: 01/12/25'",
+   "location": "DTE.txt (arrel del projecte, 77 bytes)",
+   "quote": "EN DATA 27/10 TDTO AQUEST INFORME PER UN IMPORT DE 1548,80€ - VCT: 01/12/25",
+   "confidence": 1.0,
+   "note": "nota administrativa (facturació: 1.280 € + 21 % IVA = 1.548,80 €; venciment 01/12/25; 'TDTO' probablement 'tramitat/facturat'). Cap camp del nivell A. Confirma l'import acceptat."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "num_soil_levels",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "cte_*"
+ ],
+ "reading_notes": "Fitxer de text CRLF, separador ' ; ' (amb un '423189.0;' sense espai). Cap capçalera de datum. DTE.txt llegit amb cat -A: '€' en UTF-8, una sola línia."
+}

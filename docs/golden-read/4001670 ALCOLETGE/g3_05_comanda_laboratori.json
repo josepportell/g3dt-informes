@@ -1,0 +1,142 @@
+{
+ "source_path": "comanda laboratori_4001670_ALCOLETGE.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori: obra 'CONSTR HAB UNIF', expedient 4001670, Alcoletge (adreça buida), presa 16/02/2026, sol·licitud 27/02/2026; 1 mostra 'SPT -1 (P3)' 0,8-1,4 m, Límits d'Atterberg + 'NOMÉS SULFATS' (Lambe depenent dels límits).",
+ "issuer": "G3 (EVA VÁZQUEZ)",
+ "date": "2026-02-27",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "G3 (Eva)",
+  "for_whom": "el laboratori (nom no consta a la comanda; NO hi ha cap GTL a la carpeta)",
+  "why": "demanar assaigs sobre la mostra SPT recuperada al punt P3",
+  "expected_fields": [
+   "expedient (N19)",
+   "tipus obra (N18)",
+   "adreça/municipi obra (N20/N21)",
+   "data de presa (N23)",
+   "mostres i cotes (fila 35)"
+  ],
+  "not_expected": [
+   "client de l'informe (el sol·licitant és G3)",
+   "plantes",
+   "cota de referència",
+   "nivells",
+   "nom del laboratori"
+  ],
+  "relation_to_others": "SENSE GTL a la carpeta (arriba setmanes després): la comanda és l'única font de lab. 'DATA DE PRESA' 16/02/2026 = dia de la mostra SPT (campanya penetros + SPT amb la mateixa màquina, sense sondeig a rotació: molt probablement el mateix dia que els DPSH; confirmar amb annex DPSH DATA:). Bloc files 11-15 (SOL.LICITANT) = G3, ignorat. N18 'CONSTR HAB UNIF' CONTRADIU el PLAN_COST 'EG AMPL' i els correus 'Ampliació': la comanda usa la categoria genèrica.",
+  "authority_for": [
+   "expedient",
+   "municipality",
+   "building_type (candidat)",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "field_date (candidat, dia de la mostra)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001670",
+   "location": "Hoja1!N19",
+   "quote": "NÚM. D'EXPEDIENT | 4001670.0",
+   "confidence": 1.0,
+   "note": "= nom de la carpeta '4001670 ALCOLETGE' = nom del fitxer"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "Hoja1!N18",
+   "quote": "CONSTR HAB UNIF",
+   "confidence": 0.55,
+   "note": "categoria genèrica de la comanda. CONFLICTE: PLAN_COST E9 diu 'EG AMPL' (ampliació) i els correus 'Ampliació Albert Sans'; l'obra real és una AMPLIACIÓ d'un habitatge unifamiliar existent (fitxa: 'EDIFICACIÓ EXISTENT ? SI')."
+  },
+  {
+   "concept_id": "street_address",
+   "value": null,
+   "location": "Hoja1!N20",
+   "quote": "",
+   "confidence": 0.0,
+   "note": "N20 'ADREÇA' BUIDA en aquesta comanda (a Rubí sí que hi era). L'adreça d'obra ve del pressupost bloc OBRA."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "ALCOLETGE",
+   "location": "Hoja1!N21",
+   "quote": "ALCOLETGE",
+   "confidence": 0.95,
+   "note": "forma oficial 'Alcoletge'"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2026-02-16",
+   "location": "Hoja1!N23 'DATA DE PRESA'",
+   "quote": "datetime(2026,2,16)",
+   "confidence": 0.8,
+   "note": "data de la mostra SPT-1 (P3). Campanya penetros + SPT amb TPS ERUGA → probablement el mateix dia que els DPSH. Confirmar amb annex DPSH DATA:. 16/02/2026 és dilluns."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1 (P3)",
+   "location": "Hoja1!C35",
+   "quote": "SPT -1 (P3)",
+   "confidence": 0.95,
+   "note": "UNA mostra"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,8-1,4 m",
+   "location": "Hoja1!J35/L35 (J31 'INICIAL', L31 'FINAL')",
+   "quote": "0.8 | 1.4",
+   "confidence": 0.9,
+   "note": "sense GTL per contrastar; regla: la comanda pot tenir la cota mal transcrita → creuar amb Excel DPSH / annex DPSH si en porten"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P3",
+   "location": "Hoja1!C35",
+   "quote": "(P3)",
+   "confidence": 0.95,
+   "note": "la mostra SPT es va prendre al punt del penetròmetre P3 (no hi ha sondeig S1)"
+  },
+  {
+   "concept_id": "lab_tests",
+   "value": "Límits d'Atterberg (O) + Agressivitat sòls 'NOMÉS SULFATS' (AA/AD); Lambe depenent dels límits",
+   "location": "fila 35 + C58",
+   "quote": "O35='X' AA35='X' AD35='NOMÉS SULFATS' | C58='LAMBE DEPENENT DELS LIMITS'",
+   "confidence": 0.9,
+   "note": "nivell B"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": null,
+   "location": "(cap cel·la)",
+   "quote": "",
+   "confidence": 0.0,
+   "note": "el nom del laboratori NO consta; sense GTL a la carpeta. Coneixement previ (no lectura): G3 treballa amb TPS (B64803075) → candidats, mai segur."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL / B25364589 / C/ Vallbona, 22 / ELS OMELLS DE NA GAIA",
+   "location": "N11-N14",
+   "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589 | C/ Vallbona, 22 | ELS OMELLS DE NA GAIA",
+   "confidence": 1.0,
+   "note": "sol·licitant = G3; la seva adreça/població NO són de l'obra"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address (N20 buit)",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_*"
+ ],
+ "reading_notes": "Identificada per Hoja1!C3 == \"PETICIÓ D'ASSAIGS DE LABORATORI\". xlrd amb datemode. Dos blocs amb etiquetes idèntiques: només 'DADES DE L'OBRA' (files 18-23) és del projecte. O65/O66 buits (els omple el laboratori). CAP GTL a la carpeta: anotat."
+}

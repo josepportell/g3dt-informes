@@ -1,0 +1,27 @@
+{
+ "source_path": "ANNEXES/ALTRES/COORDENADES.txt + CONTACTE.txt + DTE.txt",
+ "document_type": "coordenades_gps",
+ "what_it_is": "Tres notes de text de G3: COORDENADES.txt amb UTM (X;Y;Z) dels 3 punts P-1/P-2/P-3 (z 244,9-245,1); CONTACTE.txt amb telèfons de Sílvia Eroles Balagueró i de Laia (BUNYESC); DTE.txt amb nota de facturació (07/10, 1016,40 €, venciment 10/11/25).",
+ "issuer": "G3 (Eva / administració)",
+ "date": "2025-10 (DTE 07/10/2025)",
+ "pages_or_sheets": "3 fitxers txt (130 / 79 / 76 bytes)",
+ "context": {
+  "who_made_it": "G3: coordenades preses a camp (GPS) o del visor; contacte copiat de la fitxa/correu; DTE = nota d'administració (descompte/factura)",
+  "for_whom": "l'Eva (annex de situació, capçalera de l'informe) i administració",
+  "why": "COORDENADES: situar els punts a l'informe (x/y per punt); CONTACTE: trucar abans d'anar a camp; DTE: control de cobrament",
+  "expected_fields": ["utm_x_utm_y (per punt)", "z GPS (candidat feble per a cota_referencia)", "contacte (nivell B)"],
+  "not_expected": ["client_name com a autoritat (CONTACTE només dona nom+telèfon)", "adreça", "expedient", "data de camp", "nivells", "lab"],
+  "relation_to_others": "COORDENADES z 244,9-245,1 vs annex DPSH 'Cota inici' (a llegir) — l'Eva sol usar ICGC −0,15 i no el GPS (~0,6 m de diferència). CONTACTE repeteix fitxa C8/F8/B45. DTE: 1016,40 € = 840 € + 21 % IVA; 'DTO' = descomptat/facturat 07/10/2025 (nivell B, no és cap data del nivell A).",
+  "authority_for": ["utm_x_utm_y"]
+ },
+ "tier_a": [
+  {"concept_id": "utm_x_utm_y", "value": "P-1: 324935.0 ; 4619561.0 | P-2: 324943.0 ; 4619564.0 | P-3: 324950.0 ; 4619561.0 (EPSG:25831 presumiblement)", "location": "ANNEXES/ALTRES/COORDENADES.txt", "quote": "Coordenades UTM (X);(Y);(Z); ⏎ P-1 ⏎ 324935.0 ; 4619561.0 ; 244.9 ⏎ P-2 ⏎ 324943.0 ; 4619564.0 ; 244.9 ⏎ P-3 ⏎ 324950.0 ; 4619561.0 ; 245.1", "confidence": 0.9, "note": "3 punts, coherents amb Linyola (fus 31N). Precisió d'1 m (valors enters)."},
+  {"concept_id": "cota_referencia", "value": "244,9-245,1 m (z GPS)", "location": "COORDENADES.txt columna Z", "quote": "244.9 | 244.9 | 245.1", "confidence": 0.4, "note": "z GPS dels punts; l'Eva prefereix l'annex DPSH 'Cota inici' / ICGC. Candidat 2-3. (El projecte diu 'altitud: 720m', clarament erroni.)"},
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "COORDENADES.txt (P-1, P-2, P-3)", "quote": "P-1 … P-2 … P-3", "confidence": 0.8, "note": "corrobora 3 punts executats"},
+  {"concept_id": "client_name", "value": "Sílvia Eroles Balagueró", "location": "CONTACTE.txt", "quote": "Sílvia Eroles Balagueró telf: 618 10 86 12", "confidence": 0.5, "note": "només nom de contacte (sense etiqueta propietària); corroboració feble"},
+  {"concept_id": "architect_name", "value": "Laia (BUNYESC)", "location": "CONTACTE.txt", "quote": "Laia: 628 577 224.BUNYESC", "confidence": 0.4, "note": "contacte del despatx; el redactor és Josep Bunyesc Palacín"},
+  {"concept_id": "facturacio", "value": "07/10/2025, 1016,40 €, venciment 10/11/25", "location": "DTE.txt", "quote": "EN DATA 07/10 DTO AQUEST INFORME PER UN IMPORT DE 1016,40€ - VCT: 10/11/25", "confidence": 0.9, "note": "nivell B (administració); 840 € + IVA. Mai field_date."}
+ ],
+ "not_present": ["expedient", "street_address", "municipality", "building_type", "num_floors", "superficie_parcela", "field_date", "num_soil_levels", "referencia_catastral", "lab_*", "cte_*"],
+ "reading_notes": "cat dels 3 txt. CONTACTE.txt comença amb 3 línies buides."
+}

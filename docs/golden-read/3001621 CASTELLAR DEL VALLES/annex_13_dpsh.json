@@ -1,0 +1,104 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_DPSH.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe (4 p., una per assaig P-1..P-4) generat des de 3001621_DPSH.xls el 03/11/2025: capçalera 'OBRA: C/ ARBRELLS 18 A · POBLACIÓ: CASTELLAR DEL VALLES · DATA: 24/10/25 · NÚMERO D´INFORME: 3001621'; cota d'inici RELATIVA '−4 m (respecte el carrer)' (P-2: −4,2 m); peu 'Nivell 1 / Rebuig a −N,NN m'.",
+ "issuer": "G3 (Eva; author 'Loli' = Dolors, que imprimeix)",
+ "date": "2025-11-03 (impressió); camp 2025-10-24",
+ "pages_or_sheets": 4,
+ "context": {
+  "who_made_it": "G3: l'Eva omple l'Excel DPSH i la Dolors ('Loli') l'imprimeix a PDF (PScript5 + Distiller, title '3001621_DPSH.xls')",
+  "for_whom": "annex de l'informe 3001621 (versió 0 del 03/11/2025; PDF/ANNEXES i PDF-V0/ANNEXES tenen la mateixa mida 108674 B)",
+  "why": "presentar gràficament els 4 DPSH amb la cota d'inici i la profunditat de rebuig",
+  "expected_fields": [
+   "expedient (NÚMERO D´INFORME)",
+   "street_address + municipality (OBRA / POBLACIÓ)",
+   "field_date (DATA)",
+   "cota_referencia (cota inici)",
+   "num_dpsh_tests (pàgines)",
+   "num_soil_levels (peu 'Nivell N')"
+  ],
+  "not_expected": [
+   "client, arquitecte, plantes, superfície, lab, referència cadastral"
+  ],
+  "relation_to_others": "Deriva de l'Excel DPSH (valors idèntics). La capçalera 'C/ ARBRELLS 18 A' és la redacció curta de l'Eva (no actualitzada a 18A-18B-20 com al tall). La cota és RELATIVA al carrer (−4 m): el solar està ~4 m per sota del carrer; la cota absoluta (msnm) és a COORDENADES.txt (570,5-571,5) i a l'eix del tall (569-572). 'Nivell 1' = mateix criteri que la llegenda del tall.",
+  "authority_for": [
+   "expedient",
+   "field_date",
+   "cota_referencia (relativa)",
+   "num_dpsh_tests",
+   "municipality",
+   "num_soil_levels (indici)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.1-4 capçalera (y=160)",
+   "quote": "NÚMERO D´INFORME: 3001621",
+   "confidence": 1.0,
+   "note": "= comanda N19 = carpeta = GTL"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-24",
+   "location": "p.1-4 capçalera (y=160)",
+   "quote": "DATA: 24/10/25",
+   "confidence": 0.95,
+   "note": "dia dels DPSH = fitxa F38 = comanda DATA DE PRESA = GTL data extracció. Campanya d'un sol dia."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "−4 m respecte el carrer (relativa); P-2: −4,2 m",
+   "location": "p.1-4 títol (y=132)",
+   "quote": "P-1     - 4  m  (respecte el carrer). | P-2    cota inici: -4,2 m  (respecte el carrer) | P-3    cota inici: - 4 m  (respecte el carrer). | P-4     - 4  m (respecte el carrer).",
+   "confidence": 0.7,
+   "note": "COTA RELATIVA intencionada (el solar està uns 4 m per sota del carrer; la fitxa diu 'EDIFICACIÓ EXISTENT: SI' i el correu 'rampa perquè es pugui entrar'). No és un msnm. Per a la cota absoluta: annex de sondeig 'z:' (visual) > COORDENADES.txt z (570,5-571,5) > tall (569-572). Escriure l'informe amb la redacció de l'Eva: '−4 m respecte el carrer'."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ ARBRELLS 18 A",
+   "location": "p.1-4 capçalera (y=160)",
+   "quote": "OBRA: C/ ARBRELLS 18 A",
+   "confidence": 0.5,
+   "note": "redacció curta de l'Eva (només 18 A, amb espai); el tall i la MODF diuen 18A-18B-20. No és font independent de l'encàrrec."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1-4 capçalera (y=160)",
+   "quote": "POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.9,
+   "note": "sense accent"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "4 pàgines P-1..P-4",
+   "quote": "P-1 … Rebuig  a -1,08 m | P-2 … Rebuig  a -0,48 m | P-3 … Rebuig  a -0,76 m | P-4 … Rebuig  a -1,55 m",
+   "confidence": 1.0,
+   "note": "= Excel DPSH"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "p.1-4 peu (y=771)",
+   "quote": "Nivell 1 ⏎ Rebuig  a -1,08 m",
+   "confidence": 0.5,
+   "note": "un sol nivell als DPSH (rebuig a ≤ 1,55 m). El tall ho confirma ('Nivell 1: Substrat rocós' + 'Terreny Vegetal' sense numerar). Confirmar amb la columna 'Unitat litològica' de l'annex de sondeig (visual)."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*",
+  "nivell freàtic"
+ ],
+ "reading_notes": "Text net (PScript5 des d'Excel, no FreeHand). Creator 'PScript5.dll', producer Distiller, author 'Loli', modDate 03/11/2025 17:35. Capçalera a y=160 amb OBRA/POBLACIÓ/DATA/NÚMERO D´INFORME en un sol bloc (separats per espais). Títols amb redacció no uniforme: P-1/P-4 '- 4 m (respecte el carrer)', P-2/P-3 'cota inici: -4,2 m / - 4 m'. Factor NB 0,83 (y=213)."
+}

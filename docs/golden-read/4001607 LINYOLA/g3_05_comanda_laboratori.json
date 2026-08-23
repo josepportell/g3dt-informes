@@ -1,0 +1,31 @@
+{
+ "source_path": "comanda laboratori_4001607_LINYOLA.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori: obra 'CONSTR HABITATGE', expedient 4001607, C/ CLOT DE LA LLACUNA, Linyola, presa 01/10/2025, sol·licitud 10/10/2025; 1 mostra 'SPT 1 (P3)' 1,0-1,15 m, Límits d'Atterberg + agressivitat 'NOMÉS SULFATS' (Lambe depenent dels límits).",
+ "issuer": "G3 (EVA VÁZQUEZ)",
+ "date": "2025-10-10",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "G3 (Eva)",
+  "for_whom": "el laboratori (nom no consta a la comanda; el GTL 4672-GTL-25 de la carpeta és de TPS)",
+  "why": "demanar assaigs sobre la mostra SPT recuperada al punt P3",
+  "expected_fields": ["expedient (N19)", "tipus obra (N18)", "adreça/municipi obra (N20/N21)", "data de presa (N23)", "mostres i cotes (fila 35)"],
+  "not_expected": ["client de l'informe (el sol·licitant és G3)", "arquitecte", "plantes", "cota de referència", "nivells"],
+  "relation_to_others": "Precedeix el GTL 4672-GTL-25 (present a la carpeta). 'DATA DE PRESA' 01/10 = dia de camp (= fitxa F38; campanya d'un sol dia: 3 penetros + SPT al P3, sense sondeig a rotació). Bloc files 11-15 (SOL.LICITANT) = G3, ignorat. Cota final 1,15 ≠ Excel DPSH P-3 E24 '1,0 a 1,5' (interval previst; 'R' a 1,15 → rebuig del SPT).",
+  "authority_for": ["expedient", "street_address", "municipality", "building_type", "lab_sample_id", "lab_depth", "lab_location", "field_date (candidat, dia de la mostra)"]
+ },
+ "tier_a": [
+  {"concept_id": "expedient", "value": "4001607", "location": "Hoja1!N19", "quote": "NÚM. D'EXPEDIENT | 4001607.0", "confidence": 1.0, "note": "= nom de la carpeta '4001607 LINYOLA' = nom del fitxer = ANNEXES/4001607_DPSH.xls"},
+  {"concept_id": "building_type", "value": "habitatge", "location": "Hoja1!N18", "quote": "CONSTR HABITATGE", "confidence": 0.7, "note": "sense 'UNI'; PLAN_COST 'HAB UNIF' i projecte 'HABITATGE UNIFAMILIAR AÏLLAT'"},
+  {"concept_id": "street_address", "value": "C/ CLOT DE LA LLACUNA", "location": "Hoja1!N20", "quote": "C/ CLOT DE LA LLACUNA", "confidence": 0.8, "note": "sense número (pressupost/fitxa: 16)"},
+  {"concept_id": "municipality", "value": "LINYOLA", "location": "Hoja1!N21", "quote": "LINYOLA", "confidence": 0.95, "note": "3a font G3 (pressupost, PLAN_COST, comanda)"},
+  {"concept_id": "field_date", "value": "2025-10-01", "location": "Hoja1!N23 'DATA DE PRESA'", "quote": "datetime(2025,10,1)", "confidence": 0.85, "note": "data de la mostra SPT 1 (P3); campanya d'un sol dia (penetros + SPT amb TPS ERUGA) → coincideix amb fitxa F38 i fotos WhatsApp 2025-10-01"},
+  {"concept_id": "lab_sample_id", "value": "SPT 1 (P3)", "location": "Hoja1!C35", "quote": "SPT 1 (P3)", "confidence": 0.95, "note": "UNA mostra"},
+  {"concept_id": "lab_depth", "value": "1,0-1,15 m", "location": "Hoja1!J35/L35 (J31 'INICIAL', L31 'FINAL')", "quote": "1.0 | 1.15", "confidence": 0.9, "note": "L'Excel DPSH P-3 anota 'SPT-1 / 1,0 a 1,5 / R': interval previst 1,0-1,5 amb rebuig (R) → la mostra real arriba a 1,15. Confirmar amb GTL 'Cota d'extracció'."},
+  {"concept_id": "lab_location", "value": "P3", "location": "Hoja1!C35", "quote": "(P3)", "confidence": 0.95, "note": "SPT al punt del penetròmetre P3 (no hi ha sondeig S1)"},
+  {"concept_id": "lab_tests", "value": "Límits d'Atterberg (O) + Agressivitat sòls 'NOMÉS SULFATS' (AA/AD); Lambe depenent dels límits", "location": "fila 35 + C58", "quote": "O35='X' AA35='X' AD35='NOMÉS SULFATS' | C58='DEPENET DELS LIMITS, LAMBE'", "confidence": 0.9, "note": "nivell B"},
+  {"concept_id": "NOT_client_name", "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL / B25364589 / C/ Vallbona, 22 / ELS OMELLS DE NA GAIA", "location": "N11-N14", "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589 | C/ Vallbona, 22 | ELS OMELLS DE NA GAIA", "confidence": 1.0, "note": "sol·licitant = G3; la seva adreça/població NO són de l'obra"}
+ ],
+ "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "cte_*"],
+ "reading_notes": "Identificada per Hoja1!C3 == \"PETICIÓ D'ASSAIGS DE LABORATORI\". Dos blocs amb etiquetes idèntiques (files 11-14 vs 18-21): només el segon és del projecte. O65/O66 buits (els omple el laboratori)."
+}

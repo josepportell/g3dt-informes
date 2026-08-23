@@ -1,0 +1,109 @@
+{
+ "source_path": "PDF/ANNEXES/4001670_DPSH.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex de l'informe amb les gràfiques dels 3 DPSH (P-1, P-2, P-3; 1 pàgina cadascun), generat des de l'Excel 4001670_DPSH.xls el 16/03/2026 (autor 'Loli'): capçalera 'Cota inici: +188,20 msnm segons el plànol topogràfic de l'ICGC', OBRA: CARRER GIRASOLS Nº7, POBLACIÓ: ALCOLETGE, DATA: 16/02/2026, NÚMERO D'INFORME: 4001670; rebuig a −1,60 / −1,30 / −1,69 m; SPT-1 al P-3 (0,80 a 1,40; 5/9/11/33).",
+ "issuer": "G3 (Eva/Loli) des de l'Excel DPSH",
+ "date": "2026-03-16 (PDF); dades de camp 16/02/2026",
+ "pages_or_sheets": 3,
+ "context": {
+  "who_made_it": "G3 (impressió a PDF de l'Excel DPSH revisat per l'Eva; PDF title '4001670_DPSH.xls')",
+  "for_whom": "l'informe (annex de penetròmetres)",
+  "why": "presentar les gràfiques N20/NB per punt amb la cota de referència",
+  "expected_fields": [
+   "cota_referencia ('Cota inici')",
+   "field_date ('DATA:')",
+   "expedient ('NÚMERO D´INFORME')",
+   "street_address ('OBRA:')",
+   "municipality ('POBLACIÓ:')",
+   "num_dpsh_tests (pàgines)"
+  ],
+  "not_expected": [
+   "client",
+   "arquitecte",
+   "plantes",
+   "superfície",
+   "nivells (llegenda 'Nivell 1/2' és de plantilla)",
+   "lab"
+  ],
+  "relation_to_others": "mateixes dades que ANNEXES/4001670_DPSH.xls (no font independent per als valors N20) però la CAPÇALERA (cota, data, obra, població, expedient) només és aquí. La cota 188,20 ICGC contradiu la Z GPS 198,9 de COORDENADES.txt (l'Eva usa ICGC). La data 16/02/2026 = comanda 'DATA DE PRESA' 16/02/2026 (mateix dia: DPSH + SPT). Ordre de pàgines P-1, P-2, P-3 (l'Excel té P-1, P-3, P-2).",
+  "authority_for": [
+   "cota_referencia",
+   "field_date",
+   "expedient",
+   "street_address (corroboració)",
+   "municipality (corroboració)",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "+188,20 msnm",
+   "location": "p.1-3 capçalera (y=133)",
+   "quote": "Cota inici:  +188,20 msnm segons el plànol topogràfic de l'ICGC.",
+   "confidence": 0.9,
+   "note": "criteri de l'Eva (ICGC). Mateixa cota per als 3 punts. Coherent amb l'escala del tall (186-189). Sense annex de sondeig (no hi ha sondeig a rotació) per creuar; COORDENADES.txt Z = 198,9 (GPS, descartat)."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2026-02-16",
+   "location": "p.1-3 capçalera (y=162)",
+   "quote": "DATA: 16/02/2026",
+   "confidence": 0.9,
+   "note": "= comanda DATA DE PRESA 16/02/2026 (SPT el mateix dia). La fitxa F38 és buida; el full de camp TPS (PENETROS.pdf) i les fotos P1/P2/P3 (agent visual) poden confirmar."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "4001670",
+   "location": "p.1-3 capçalera (y=162)",
+   "quote": "NÚMERO D´INFORME: 4001670",
+   "confidence": 1.0,
+   "note": "= comanda N19 = carpeta"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols nº7",
+   "location": "p.1-3 capçalera 'OBRA:'",
+   "quote": "OBRA: CARRER GIRASOLS Nº7",
+   "confidence": 0.85,
+   "note": "sense 'Urb. El Roser'. Redacció de l'Eva."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "ALCOLETGE",
+   "location": "p.1-3 capçalera 'POBLACIÓ:'",
+   "quote": "POBLACIÓ:  ALCOLETGE",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "3 pàgines: P-1, P-2, P-3",
+   "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1 | P-2 | P-3",
+   "confidence": 0.95,
+   "note": "= Excel (3 fulls). Rebuig −1,60 / −1,30 / −1,69 m."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,80-1,40 m (SPT-1 al P-3)",
+   "location": "p.3 columna 'MESURA DE PAR'",
+   "quote": "SPT-1 ⏎ … ⏎ 0,80 a 1,40 ⏎ … ⏎ 5/9/11/33",
+   "confidence": 0.85,
+   "note": "= Excel P-3!E22-E24 = comanda (0,8-1,4). Tres fonts coherents (dues derivades de l'Excel)."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "num_soil_levels (llegenda 'Nivell 1 / Nivell 2 / Humitat' és de plantilla, present a les 3 pàgines)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_*"
+ ],
+ "reading_notes": "Text net (PScript5/Distiller des d'Excel, fonts amb ToUnicode). Capçalera a y=133 i y=162 de cada pàgina. Columna de valors com un bloc únic (y=247). Cap 'N.F.' anotat. Creat un mes després del camp (16/03/2026), el mateix dia que tall.pdf."
+}

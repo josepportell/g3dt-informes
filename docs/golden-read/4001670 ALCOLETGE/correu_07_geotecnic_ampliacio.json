@@ -1,0 +1,134 @@
+{
+ "source_path": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu intern G3 (César Morillas, Dir. Dept. Assessor → Eva Vázquez + Dolors Maqueda; 26/01/2026 19:06) reenviant l'encàrrec rebut el 21/01/2026 de David Graus (david@davidgraus.com): ampliació d'uns 100 m² a la part posterior de l'edificació existent, C/ Girasols 7 (Urb. El Roser), Alcoletge; client ALBERT SANS BONVEHI (DNI 47690689-M); ref. cadastral 8841701CG0184S0001HH; 3 plànols adjunts + enllaç Google Maps.",
+ "issuer": "Cesar Morillas <cesar@g3dt.com> (G3); cadena inferior: david@davidgraus.com (21/01/2026 09:59)",
+ "date": "2026-01-26",
+ "pages_or_sheets": "cos (2 missatges: César + David Graus citat) + 10 adjunts (3 PDF de plànols + 1 retall de plànol inline + 6 imatges de signatura)",
+ "context": {
+  "who_made_it": "César Morillas (G3, comercial) reenvia a l'Eva la petició del tècnic del client (David Graus) amb les seves notes GEO/OBRA/CLIENT",
+  "for_whom": "Eva Vázquez (geòloga, farà el pressupost 26·0049 l'endemà, 27/01)",
+  "why": "traspassar l'encàrrec perquè es prepari el pressupost; David Graus 'adjunto documentació per passar pressupost al client'",
+  "expected_fields": [
+   "client_name (CLIENT: + 'passar pressupost al client')",
+   "street_address / municipality (OBRA:)",
+   "building_type ('ampliació d'un habitatge')",
+   "referencia_catastral",
+   "architect_name (remitent David Graus; confirmat pel caixetí dels plànols adjunts)",
+   "superfície de l'ampliació (~100 m², NO parcel·la)",
+   "adjunts: plànols"
+  ],
+  "not_expected": [
+   "expedient (encara no existeix)",
+   "field_date",
+   "cota",
+   "nivells",
+   "lab",
+   "num_floors (no dit)",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "ORIGEN de l'encàrrec: el pressupost 26·0049 (27/01), la fitxa, el PLAN_COST i la comanda deriven d'aquí (no independents). Els 3 PDF adjunts són IDÈNTICS (md5) a 26.0049/planol-1.pdf (ed1aaf82), 26.0049/PLANO 2.pdf (68e0df36 = 26.0049/A.01.pdf = A.01.pdf arrel) i 26.0049/planol 3.pdf (209583ad). Les dades de client (nom, DNI, adreça, tel.) coincideixen amb el formulari p.5 del pressupost signat (font independent: el client mateix). RE_ …msg és la resposta de l'Eva (només adjunta PLAN_COST).",
+  "authority_for": [
+   "client_name (candidat fort: 'CLIENT:' + 'passar pressupost al client'; no diu 'propietari' però el plànol adjunt diu 'Promotor')",
+   "street_address",
+   "municipality",
+   "building_type",
+   "referencia_catastral",
+   "architect_name (candidat: remitent; confirmat pel caixetí del plànol)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "ALBERT SANS BONVEHI",
+   "location": "cos (nota de César 'CLIENT:') + cadena David Graus (21/01)",
+   "quote": "CLIENT: ALBERT SANS BONVEHI tel. 675639431 - etesnob91@gmail.com | ALBERT SANS BONVEHI ⏎ DNI    47690689-M ⏎ CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida(25660) ⏎ TELF: 675639431",
+   "confidence": 0.8,
+   "note": "el tècnic (David Graus) demana pressupost 'per passar al client' → el client és Albert Sans, no David Graus. DNI 47690689-M = NIF del formulari p.5 signat. Els plànols adjunts el posen com a 'Promotor' (autoritat A)."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "David Graus (david@davidgraus.com)",
+   "location": "cadena: remitent del correu del 21/01/2026",
+   "quote": "De: david@davidgraus.com ⏎ Asunto: geotècnic Albert Sans municipi d'Alcoletge ⏎ Bones, Cesar ⏎ adjunto documentació per passar pressupost al client, es ampliació d'un habitatge, adjunto plànol situació, plànol estat actual i plànol ampliació.",
+   "confidence": 0.6,
+   "note": "el correu NO diu 'arquitecte'; és qui aporta els plànols i tramita l'encàrrec. El caixetí de planol-1.pdf/A.01.pdf (adjunts) diu 'DAVID GRAUS ROBINAT / ARQUITECTE TÈCNIC COL·LEGIAT Nº 699 / ENGINYER DE LA EDIFICACIÓ' (Mollerussa). És arquitecte TÈCNIC, no arquitecte: l'Eva pot posar-lo igualment al camp arquitecte o posar-hi el client (pràctica Eva quan no hi ha arquitecte). Candidat 1 per al caixetí."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols 7 (Urbanització El Roser)",
+   "location": "cos 'OBRA:' + cadena",
+   "quote": "OBRA: CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660) bon accés",
+   "confidence": 0.9,
+   "note": "bloc etiquetat OBRA. Coincideix amb el pressupost (C/GIRASOLS 7, URB.EL ROSER) i amb l'adreça del client (amplia casa seva). Grafia: 'Girasols' (correu, pressupost, caixetí) vs 'Gira-sols' (formulari p.5)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "cos 'OBRA:' + assumpte",
+   "quote": "Alcoletge, Lleida (25660) | municipi d'Alcoletge",
+   "confidence": 0.9,
+   "note": "forma oficial amb minúscules; CP 25660"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "ampliació d'un habitatge (unifamiliar) existent, ~100 m² a la part posterior",
+   "location": "cos 'GEO:' + cadena + assumpte",
+   "quote": "GEO: És un ampliació d'uns 100 m a la part posterior de l'edificació existent ( mirar plànols) | es ampliació d'un habitatge | geotècnic Ampliació Albert Sans",
+   "confidence": 0.85,
+   "note": "'100 m' = ~100 m² d'ampliació (superfície construïda de l'ampliació, NO la parcel·la). 'Unifamiliar' ho diu el caixetí dels plànols ('CASA UNIFAMILIAR'/'HABITATGE UNIFAMILIAR'). CONFLICTE amb la comanda N18 'CONSTR HAB UNIF' (categoria genèrica): l'obra és una ampliació."
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "8841701CG0184S0001HH",
+   "location": "cadena David Graus (21/01)",
+   "quote": "Referencia Catastral: 8841701CG0184S0001HH",
+   "confidence": 0.9,
+   "note": "una sola parcel·la. Coincideix amb la parcel·la '88417' marcada al plànol cadastral de planol-1.pdf. Cap consulta del Cadastre a la carpeta."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": null,
+   "location": "cos",
+   "quote": "ampliació d'uns 100 m a la part posterior de l'edificació existent",
+   "confidence": 0.0,
+   "note": "cap dada de plantes. 'Part posterior' suggereix ampliació en planta (PB), però no es diu."
+  },
+  {
+   "concept_id": "superficie_parcela",
+   "value": null,
+   "location": "cos",
+   "quote": "uns 100 m",
+   "confidence": 0.0,
+   "note": "100 m² és l'AMPLIACIÓ, no la parcel·la. Superfície de parcel·la absent (caldria Cadastre 8841701CG0184S0001HH)."
+  },
+  {
+   "concept_id": "utm_x_utm_y",
+   "value": "lat 41.654531, lon 0.70348 (WGS84) — enllaç Google Maps, NO UTM",
+   "location": "cos (enllaç)",
+   "quote": "https://www.google.com/maps/place/41°39'16.3\"N+0°42'12.5\"E/@41.654535,0.7009051,689m/…!3d41.654531!4d0.70348",
+   "confidence": 0.3,
+   "note": "punt aproximat del comercial (xinxeta sobre la casa). NO és una mesura de camp; COORDENADES.txt té els punts GPS reals. Només per corroborar (≈ UTM 31N X 308.6 km / Y 4.615 km, no calculat amb precisió aquí)."
+  },
+  {
+   "concept_id": "attachments_for_vision",
+   "value": "planol-1.pdf (situació i emplaçament, caixetí amb text; imatges: mapa cadastral + ortofoto), PLANO 2.pdf (= A.01.pdf; situació en la parcel·la, caixetí en vectors sense text), planol 3.pdf (croquis 'ampliació habitatge', 21/01/2026, vectors sense text), image008.jpg 954×744 (retall inline del plànol d'ampliació)",
+   "location": "adjunts",
+   "quote": "adjunto plànol situació, plànol estat actual i plànol ampliació",
+   "confidence": 0.95,
+   "note": "els 3 PDF ja són solts a 26.0049/ (md5 idèntics). Llegits a planol_09_A01.json i planol_10_*.json. image008.jpg (56,7 KB, > 25 KB, no és signatura) = vista del plànol d'ampliació amb la zona ratllada 'ampliació habitatge' i cotes 2,50 (existent) / 3,00."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "extract_msg. Cadena de 2 missatges: el nou (César, 26/01) és el text per sobre del primer 'De:'; el citat (David Graus, 21/01) és l'encàrrec original. 6 imatges de signatura ignorades (image001.jpg 185×182, image002/003.png 783×3, image004.png 783×5, image005.png 400×200 logo, image006.jpg 230×115). Adjunts extrets a scratchpad/alcoletge/agentA/msg1/."
+}

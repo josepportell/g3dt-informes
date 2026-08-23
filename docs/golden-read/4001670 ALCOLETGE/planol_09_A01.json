@@ -1,0 +1,99 @@
+{
+ "source_path": "26.0049/A.01.pdf (= 26.0049/PLANO 2.pdf = A.01.pdf arrel = adjunt 'PLANO 2.pdf' del correu 07; md5 68e0df36)",
+ "document_type": "planol",
+ "what_it_is": "Plànol 'SITUACIÓ EN LA PARCEL·LA' (1/200, juny 2022) del 'PROJECTE DE TANCAMENT DE PORXO EN HABITATGE UNIFAMILIAR', C/ Girasols nº7, Urb. el Roser, Alcoletge; promotor ALBERT SANS BONVEHI; David Graus Robinat, arquitecte tècnic col·legiat nº 699 (Mollerussa). Planta de la casa existent dins la parcel·la amb cotes 2,50 (existent) i 3,00 a límits.",
+ "issuer": "David Graus Robinat (2 GRAUS, Mollerussa), autor PDF 'dvd_g'",
+ "date": "2022-06 (caixetí 'JUNY 2022'; PDF creationDate 2022-06-14)",
+ "pages_or_sheets": "1 (A3 apaïsat, rotació 270)",
+ "context": {
+  "who_made_it": "el tècnic del client (David Graus, arquitecte tècnic) per a un projecte ANTERIOR (2022, tancament de porxo) de la mateixa casa",
+  "for_whom": "el promotor Albert Sans (2022) i ara G3 per situar l'obra (reutilitzat el 2026 com a 'plànol estat actual')",
+  "why": "situar l'edificació existent dins la parcel·la; el 2026 serveix de plànol de l'estat actual per a l'ampliació",
+  "expected_fields": [
+   "client_name (Promotor)",
+   "architect_name (caixetí)",
+   "street_address / municipality (Situació)",
+   "building_type (títol del projecte, però del 2022)"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota",
+   "nivells",
+   "lab",
+   "superficie_parcela (no hi ha taula de planejament)",
+   "num_floors (planta única, sense taula)"
+  ],
+  "relation_to_others": "4 còpies idèntiques (md5 68e0df36): 26.0049/A.01.pdf, 26.0049/PLANO 2.pdf, A.01.pdf (arrel; renombrat per G3 perquè el pipeline el trobi com a 'plànol'), adjunt del correu 07. UNA sola font. Mateix dibuix base que planol 3.pdf (croquis 2026 amb l'ampliació ratllada) i que el retall image008.jpg del correu. El títol del PROJECTE ('TANCAMENT DE PORXO') és del 2022 i NO és l'obra del 2026 (ampliació ~100 m²): no usar-lo com a building_type.",
+  "authority_for": [
+   "client_name (Promotor: autoritat A)",
+   "architect_name (caixetí: autoritat A, amb nota 'arquitecte tècnic')",
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "ALBERT SANS BONVEHI",
+   "location": "caixetí, casella 'Promotor:' (render clip 200 dpi; text en vectors, sense capa de text)",
+   "quote": "Promotor: ALBERT SANS BONVEHI",
+   "confidence": 0.9,
+   "note": "etiqueta 'Promotor' = client real (autoritat A). Coincideix amb el formulari p.5 signat (NIF 47690689M) i amb el correu. Del 2022: el promotor de l'ampliació 2026 és el mateix segons correu/pressupost."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "DAVID GRAUS ROBINAT (arquitecte tècnic col·legiat nº 699)",
+   "location": "caixetí, bloc del tècnic (render clip 200 dpi)",
+   "quote": "DAVID GRAUS ROBINAT ⏎ ARQUITECTE TÈCNIC COL.LEGIAT  Nº 699 ⏎ AVINGUDA DEL CANAL, Nº 8 B, BAIXOS ⏎ (25230) MOLLERUSSA ⏎ 649158020 - david@davidgraus.com",
+   "confidence": 0.75,
+   "note": "és ARQUITECTE TÈCNIC (enginyer de l'edificació segons planol-1), no arquitecte superior; és qui va fer l'encàrrec (correu 07). Candidat 1 per al camp arquitecte; alternativa segons pràctica Eva: el client. Caixetí del 2022, però el mateix tècnic tramita el 2026."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols, nº7, Urbanització el Roser",
+   "location": "caixetí 'Situació:'",
+   "quote": "Situació: CARRER GIRASOLS, Nº7 ⏎ Urbanització el Roser, (25660) ALCOLETGE",
+   "confidence": 0.9,
+   "note": "= pressupost OBRA = correu OBRA"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "caixetí 'Situació:'",
+   "quote": "(25660) ALCOLETGE",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar (existent)",
+   "location": "caixetí 'Projecte:'",
+   "quote": "PROJECTE DE TANCAMENT DE PORXO EN HABITATGE UNIFAMILIAR.",
+   "confidence": 0.5,
+   "note": "confirma que l'edificació existent és un HABITATGE UNIFAMILIAR, però el projecte del caixetí (tancament de porxo, 2022) NO és l'obra geotècnica del 2026 (ampliació). building_type de l'informe = 'ampliació d'un habitatge unifamiliar'."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": null,
+   "location": "dibuix",
+   "quote": "(planta de l'edificació existent; cotes 2,50 (existent) i 3,00)",
+   "confidence": 0.0,
+   "note": "cap taula de planejament ni secció. No es pot saber el nombre de plantes."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "0 blocs de text (PScript5/Distiller des d'AutoCAD: el caixetí són 1242 traçats vectorials); 2 imatges petites (100×219, 100×203 = logo '2 GRAUS'). Metadata title = ruta del despatx '…\\TREBALLS 2022\\PROJECTE ALCOLETGE\\girasols 7, alcoletge\\…\\planol Mode' (indici feble coherent). Llegit per render: pàgina sencera a 70 dpi + clip del caixetí (x 64-100 %, y 82-96 %) a 200 dpi. L'agent visual pot confirmar cotes i geometria; no cal rellegir el caixetí."
+}

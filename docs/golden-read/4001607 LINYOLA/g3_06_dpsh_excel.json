@@ -1,0 +1,26 @@
+{
+ "source_path": "ANNEXES/4001607_DPSH.xls",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Transcripció (revisada per l'Eva) dels 3 penetròmetres DPSH: P-1 rebuig a -2,90 m (16 lectures), P-2 a -2,15 m (12), P-3 a -1,75 m (10) amb anotació 'SPT-1 / 1,0 a 1,5 / R' a -1,2/-1,6 m. Factor NB D15=0,83. Sense N.F. ni nivells marcats.",
+ "issuer": "G3 (Eva) a partir del full de camp TPS (PENETROS.pdf)",
+ "date": null,
+ "pages_or_sheets": "3 fulls: P-1, P-2, P-3",
+ "context": {
+  "who_made_it": "G3 (Eva), plantilla Excel DPSH; dades copiades del full manuscrit de TPS",
+  "for_whom": "l'informe (gràfics de l'annex DPSH) i els càlculs",
+  "why": "digitalitzar i revisar els cops N20 de camp",
+  "expected_fields": ["num_dpsh_tests (fulls amb dades)", "cota de rebuig per punt", "posició del SPT (anotació columna E)"],
+  "not_expected": ["expedient (només al nom del fitxer)", "client", "adreça", "municipi", "data", "cota de referència", "nivells geològics (G 'Nivells' buida; C79/F79 'Nivell 1'/'Nivell 2' és la llegenda de plantilla, present també a Rubí)"],
+  "relation_to_others": "Versió digital revisada de PENETROS.pdf (full manuscrit TPS; el llegeix l'agent visual): l'Excel mana per als valors. Origen de PDF/ANNEXES/4001607_DPSH.pdf (annex amb capçalera). 'SPT-1 1,0 a 1,5 R' al P-3 = mostra 'SPT 1 (P3)' de la comanda (1,0-1,15).",
+  "authority_for": ["num_dpsh_tests", "lab_location (P3)", "lab_depth (candidat: interval previst)"]
+ },
+ "tier_a": [
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "fulls P-1, P-2, P-3 amb dades a la columna C", "quote": "P-1: 16 files C (0→100 a -3,0) | P-2: 12 (→100 a -2,2) | P-3: 10 (→100 a -1,8)", "confidence": 0.95, "note": "executats = previstos (3)"},
+  {"concept_id": "expedient", "value": "4001607", "location": "nom del fitxer", "quote": "4001607_DPSH.xls", "confidence": 0.8, "note": "només pel nom; cap metadada dins"},
+  {"concept_id": "dpsh_refusal_depths", "value": "P-1 -2,90 m; P-2 -2,15 m; P-3 -1,75 m", "location": "B80 de cada full", "quote": "'Rebuig a la cota de -2,90 m' | '-2,15 m' | '-1,75 m'", "confidence": 0.95, "note": "nivell B (profunditats relatives)"},
+  {"concept_id": "lab_location", "value": "P3", "location": "P-3!E23", "quote": "E23='SPT-1' E24='1,0 a 1,5' E25='R'", "confidence": 0.9, "note": "SPT-1 fet al P-3 entre 1,0 i 1,5 m amb rebuig (R)"},
+  {"concept_id": "lab_depth", "value": "1,0 a 1,5 m (previst; R)", "location": "P-3!E24-E25", "quote": "1,0 a 1,5 | R", "confidence": 0.5, "note": "interval de l'assaig; la comanda diu 1,0-1,15 (mostra fins al rebuig). GTL > comanda > Excel per a lab_depth."}
+ ],
+ "not_present": ["client_name", "architect_name", "street_address", "municipality", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "building_type", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "cte_*"],
+ "reading_notes": "xlrd. Capçalera fila 16 (B 'Profunditat de penetròmetre', C 'Colpeig DPSH', D 'Colpeig NB', E 'MESURA DE PAR', F 'N.F.', G 'Nivells'). Dades des de la fila 17 (B17=0,0). Columnes F/G buides a tots els fulls. Comparat C79/F79 amb 3001631_DPSH.xls: mateixa llegenda → plantilla."
+}

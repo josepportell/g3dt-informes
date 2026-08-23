@@ -1,0 +1,26 @@
+{
+ "source_path": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf (= Punts de Sondeig_Silvia_Jaume (1).pdf) + Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+ "document_type": "planol",
+ "what_it_is": "Plànol 03 'PLANTA GENERAL - PARCEL·LA' (1:100) del projecte bàsic amb 3 punts proposats per l'arquitecte ('1r/2n/3r PUNT SONDEIG'), AutoCAD 19/08/2025. El '_REDIBUIX' és el mateix PDF anotat el 30/09/2025 16:00 (després del correu de Sílvia) amb distàncies en castellà (0.69, 0.92, 12.42, 4.80, 12.20, 3.21, 7.89, 'CASA VECINA', 'CALLE') = posicions finals per replantejar a camp.",
+ "issuer": "BUNYESC ARQUITECTURA EFICIENT, S.L.P (original); anotacions G3/operari (REDIBUIX)",
+ "date": "2025-08-19 (original) / 2025-09-30 (REDIBUIX)",
+ "pages_or_sheets": "1 pàgina A3 cadascun (3 fitxers, 2 únics)",
+ "context": {
+  "who_made_it": "l'arquitecte (punts proposats sobre el plànol 03); el REDIBUIX l'anota algú de G3 (text en castellà: 'CASA VECINA', 'CALLE' → possiblement Cesar Morillas/planning) la tarda del 30/09, arran del correu 'desplaçar 1 m cap a l'esquerra'",
+  "for_whom": "G3 (on fer els 3 DPSH)",
+  "why": "situar els assaigs en punts de càrrega de l'estructura",
+  "expected_fields": ["num_dpsh_tests (3 punts)", "caixetí (promotors, arquitecte, emplaçament) = duplicat del projecte", "distàncies de replanteig (REDIBUIX)"],
+  "not_expected": ["field_date", "cota", "nivells", "lab", "UTM", "superfície de parcel·la (no hi surt al plànol 03)"],
+  "relation_to_others": "'Punts de Sondeig_Silvia_Jaume.pdf' (25.0616/) i 'Punts de Sondeig_Silvia_Jaume (1).pdf' (arrel) md5 296c5aa7 idèntics (adjunt del correu 19/08 i del 30/09). REDIBUIX = mateix creationDate + modDate 30/09/2025 16:00 + 9 textos afegits. Caixetí idèntic al projecte 2_02B (no font independent). El plànol de situació de l'Eva (ANNEXES/…plànol de situació) deriva d'aquí.",
+  "authority_for": ["num_dpsh_tests (proposats/replantejats)", "posició dels punts (per a l'agent visual)"]
+ },
+ "tier_a": [
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "text del plànol", "quote": "1r PUNT SONDEIG | 2n PUNT SONDEIG | 3r PUNT SONDEIG", "confidence": 0.75, "note": "3 punts proposats ('sondeig' en sentit genèric; són DPSH). Coincideix amb Excel DPSH (3 executats)."},
+  {"concept_id": "client_name", "value": "SÍLVIA EROLES BALAGUERÓ / JAUME NADAL ANDREU", "location": "caixetí PROMOTORS", "quote": "SÍLVIA EROLES BALAGUERÓ | JAUME NADAL ANDREU | … PROMOTORS:", "confidence": 0.9, "note": "duplicat del caixetí del projecte (no independent)"},
+  {"concept_id": "architect_name", "value": "Josep Bunyesc Palacín", "location": "caixetí REDACTOR/S", "quote": "JOSEP BUNYESC PALACÍN - Dr. Arquitecte", "confidence": 0.9, "note": "duplicat del projecte"},
+  {"concept_id": "street_address", "value": "C. Clot de la Llacuna, 16", "location": "caixetí EMPLAÇAMENT", "quote": "C. Clot de la Llacuna, 16 | Linyola  (25240)", "confidence": 0.9, "note": "duplicat del projecte"},
+  {"concept_id": "replanteig_distancies", "value": "0.69, 0.92, 12.42, 4.80, 12.20, 3.21, 7.89 m; 'CASA VECINA', 'CALLE'", "location": "REDIBUIX, textos afegits 30/09/2025", "quote": "0.69 | 0.92 | CASA VECINA | CALLE | 12.42 | 4.80 | 12.20 | 3.21 | 7.89", "confidence": 0.8, "note": "nivell B; la geometria (quin número va amb quin punt) la ha de llegir l'agent visual. Indica que els punts finals difereixen dels proposats ('desplaçar 1 m')."}
+ ],
+ "not_present": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "referencia_catastral", "utm_x_utm_y", "lab_*", "cte_*"],
+ "reading_notes": "Text vectorial net (AutoCAD). Dedup per md5: 2 fitxers idèntics + 1 anotat. El REDIBUIX només afegeix 9 cadenes de text (708 vs 653 chars); les fletxes/cotes són vectors → agent visual per a la posició dels 3 punts respecte de la casa veïna i el carrer."
+}

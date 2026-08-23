@@ -1,0 +1,118 @@
+{
+ "source_path": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost 26·0049 de G3 (27/01/2026, 7 p.) per a un estudi geotècnic a C/ Girasols 7, Urb. El Roser, Alcoletge: 3 DPSH + 1 SPT amb recuperació de mostra + laboratori; 840 € (IVA no inclòs). Formulari p.5 buit, sense signatura.",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "2026-01-27",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3 (ERP m4PRO; PDF creator 'G3 DESENVOLUPAMENT TERRITORIAL, S.L.', title 'm4PRO ERP · Informes del Proyecto', author 'Usuario (USER2)', creationDate 27/01/2026 09:12, modDate 09:15)",
+  "for_whom": "el sol·licitant del geotècnic: ALBERT SANS BONVEHI, particular d'Alcoletge",
+  "why": "oferir i acotar la campanya (3 DPSH, 1 SPT, laboratori) i el preu abans d'acceptar l'encàrrec",
+  "expected_fields": [
+   "client_name (com a sol·licitant)",
+   "street_address (bloc OBRA)",
+   "municipality",
+   "cte_edificacio / cte_sol",
+   "num_dpsh_tests (previst)"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_sample",
+   "num_floors",
+   "superficie_parcela",
+   "architect_name"
+  ],
+  "relation_to_others": "document d'encàrrec (mateix codi 26·0049 que la carpeta 26.0049/). La fitxa de camp (C6) i la comanda deriven del mateix encàrrec: NO són fonts independents. La versió signada escanejada és ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf. L'adreça del bloc CLIENT i la del bloc OBRA són LA MATEIXA (C/ Girasols 7): el sol·licitant demana el geotècnic per a casa seva (coherent amb el títol dels correus 'Ampliació Albert Sans').",
+  "authority_for": [
+   "municipality",
+   "cte_edificacio",
+   "cte_sol",
+   "street_address (bloc OBRA)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "ALBERT SANS BONVEHI",
+   "location": "p.1 bloc CLIENT (y=231)",
+   "quote": "CLIENT: / SANS BONVEHI, ALBERT / C/GIRASOLS 7, URB.EL ROSER / 25660    ALCOLETGE / Tel: 675639431",
+   "confidence": 0.7,
+   "note": "sol·licitant del pressupost. Persona particular (no conté ARQUITECT); la seva adreça coincideix amb la de l'OBRA (C/ Girasols 7) → molt probablement el propietari que amplia casa seva. Cap etiqueta 'Promotor' ni NIF en aquest document. Candidat fort, no segur per si sol."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ Girasols 7, Urb. El Roser",
+   "location": "p.1 bloc OBRA línia 2 (y=421)",
+   "quote": "OBRA: / ESTUDI GEOTECNIC ⏎ C/GIRASOLS 7, URB.EL ROSER ⏎ ALCOLETGE",
+   "confidence": 0.9,
+   "note": "bloc etiquetat OBRA. Idèntica a l'adreça del CLIENT (mateixa casa)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "ALCOLETGE",
+   "location": "p.1 bloc OBRA línia 3 (y=421)",
+   "quote": "C/GIRASOLS 7, URB.EL ROSER ⏎ ALCOLETGE",
+   "confidence": 0.95,
+   "note": "forma G3 en majúscules; forma oficial 'Alcoletge'. CP del client 25660 = Alcoletge."
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C0",
+   "location": "p.2 (y=211)",
+   "quote": "Tipus d’edifici: C0",
+   "confidence": 1.0,
+   "note": "C0 = < 300 m² i < 4 plantes (definició Eva)"
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": "T1",
+   "location": "p.2 (y=227)",
+   "quote": "Tipus de Terreny : T1",
+   "confidence": 1.0,
+   "note": ""
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "p.2 campanya (y=678) + p.4 valoració 001.001",
+   "quote": "3 assaigs de penetració dinàmica DPSH | UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH 3,00",
+   "confidence": 0.7,
+   "note": "previstos, no executats; mana l'Excel DPSH"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "1 assaig SPT amb recuperació de mostra (sense sondeig a rotació pressupostat)",
+   "location": "p.2 (y=694) + p.4 001.002/001.003",
+   "quote": "1 assaig SPT, amb recuperació de mostra | ASSAIG SPT 1,00 | ML.PREVIS A L'ASSAIG SPT 1,00",
+   "confidence": 0.7,
+   "note": "previst; cap línia 'N Sondeig' a rotació: la mostra de laboratori vindrà d'un SPT en un punt de penetròmetre"
+  },
+  {
+   "concept_id": "expedient_comercial",
+   "value": "26·0049",
+   "location": "p.1 peu (y=756) i p.4/p.5 capçalera",
+   "quote": "26·0049 ⏎ P#",
+   "confidence": 1.0,
+   "note": "codi comercial, NO expedient (l'expedient és 4001670, carpeta/comanda)"
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth"
+ ],
+ "reading_notes": "Identificat per metadata (creator G3, title m4PRO). Blocs de p.1 ordenats per (y,x). p.1 és imatge de portada amb text superposat. Formulari p.5 ('DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME') completament buit; 0 widgets, cap /Sig: NO és la versió acceptada. Cap arquitecte esmentat enlloc del document. NIF de G3 a p.4/p.5: B25461443 (difereix del B25364589 de la comanda: dues societats G3)."
+}
