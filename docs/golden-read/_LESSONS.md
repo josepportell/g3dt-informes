@@ -119,3 +119,13 @@ Format: una lliçó per línia o bloc, amb projecte i font. Serveix per escriure
 - Ref. cadastral al COS del correu del tècnic (8841701CG0184S0001HH): els correus porten dades úniques.
 - Arquitecte tècnic (aparellador) ≠ arquitecte: l'Eva posa el client al camp arquitecte igualment → client candidat 1.
 - 'Pb' derivable d'"ampliació a la part posterior" → candidat.
+
+## 4001607 LINYOLA (2026-08-23) — 13 OK / 1 CAND / **1 ERR**
+- **ERR #2**: arquitecte segur com a PERSONA (caixetí: Josep Bunyesc Palacín); l'Eva escriu el DESPATX (pressupost: BUNYESC
+  ARQUITECTURA EFICIENT). A Bell-lloc va fer el contrari (persona). → persona vs despatx: candidats, mai segur.
+- Quan hi ha projecte d'arquitecte a la carpeta, el nivell A queda gairebé complet (571 m², PB, ref. cadastral, arquitecte): 14 segurs.
+- Client amb 2 promotors al projecte: l'informe va a nom de qui accepta (Sílvia sola).
+- L'annex de situació d'Eva etiquetava el carrer com a "CARRER FONT" (heretat d'un altre projecte): el creuament (ortofoto + projecte +
+  etiqueta de mostra) el descarta — exemple de per què cap annex sol no és 'segur'.
+- Derivacions de CTE (C0 per superfície total; T-1 per defecte) encerten. Regla GTL>Excel>camp per a lab_depth confirmada (1,15 vs 1,5 vs 1,75).
+- Projecte amb errors propis: "720 m" d'altitud (plantilla) i "ANDAL" per NADAL: el projecte tampoc no és infal·lible fora del seu àmbit.

@@ -1,0 +1,28 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_plano de situación.pdf (+ duplicat Print To PDF: pl situ.pdf a l'arrel)",
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació de l'informe (FreeHand 4001679_plano de situación.FH11): cartografia cadastral + ortofoto amb la parcel·la marcada i esquema de situació dels 6 punts (S-2/P-5, P-1..P-4, S-1/P-6) sobre la planta dels 7 adossats.",
+ "issuer": "G3 (Eva)",
+ "date": "2026-03-16 (Distiller); pl situ.pdf imprès 08:06; caixetí: Febrero 2026",
+ "pages_or_sheets": "1 pàgina A3 apaïsada",
+ "context": {
+  "who_made_it": "l'Eva munta el plànol amb la base del projecte (planta dels adossats) + cadastre + ortofoto",
+  "for_whom": "l'informe 4001679 (annex 'Esquema de situación')",
+  "why": "situar l'obra i els punts d'assaig",
+  "expected_fields": ["building_type/street_address/municipality (caixetí)", "expedient", "posició dels punts", "referencia_catastral (gràfica als retalls)"],
+  "not_expected": ["field_date exacta", "client_name", "architect_name", "cota_referencia", "num_soil_levels", "lab"],
+  "relation_to_others": "mateix caixetí i typo 'ARCILES' que el tall; la miniatura del tall el reutilitza. La base de la planta és del projecte IV_PLANOS; la posició relativa dels punts coincideix amb el croquis manuscrit de TPS (S-2/P-5 al NW, S-1/P-6 al SE, P-1..P-4 al mig). Els retalls cadastrals mostren la zona del polígon 61845 (ref. cadastral del correu: 6184504…).",
+  "authority_for": ["expedient", "esquema de punts (corroboració del croquis)"]
+ },
+ "tier_a": [
+  {"concept_id": "expedient", "value": "4001679", "location": "caixetí Exp", "quote": "Exp: 4001679", "confidence": 0.9, "note": ""},
+  {"concept_id": "building_type", "value": "7 habitatges adossats", "location": "caixetí TÍTULO DEL PROYECTO", "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE 7 VIVIENDAS ADOSADAS EN LA CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE", "confidence": 0.8, "note": "mateix títol-redacció; typo ARCILES."},
+  {"concept_id": "street_address", "value": "Calle Gral. Ferraz nº 20", "location": "caixetí", "quote": "…CALLE GRAL FERRAZ Nº20…", "confidence": 0.8, "note": ""},
+  {"concept_id": "municipality", "value": "Anciles, Benasque", "location": "caixetí + retalls (topònim ANCILES als mapes)", "quote": "…DE ARCILES, BENASQUE | ANCILES (als retalls cartogràfics)", "confidence": 0.7, "note": "typo ARCILES al caixetí; els mapes diuen ANCILES."},
+  {"concept_id": "num_dpsh_tests", "value": "6 punts DPSH dibuixats (P-1..P-4 + P-5 a S-2 + P-6 a S-1); 2 sondeigs", "location": "esquema de situació + llegenda", "quote": "Ensayo de penetración dinámica DPSH | Sondeo a rotación con batería continua | S-2 P-5 … S-1 P-6", "confidence": 0.7, "note": "els símbols dobles a S-1/S-2 (sondeig + penetro) confirmen l'aparellament."},
+  {"concept_id": "referencia_catastral", "value": "zona del polígon cadastral 61845 (coherent amb 6184504BH9158N0000SS del correu)", "location": "retall cadastral superior esquerre (etiquetes 61845/61843/61848)", "quote": "[etiquetes cadastrals al retall; parcel·la remarcada en taronja]", "confidence": 0.3, "note": "lectura gràfica de suport, no una referència escrita completa."},
+  {"concept_id": "field_date", "value": "Febrer 2026 (mes)", "location": "caixetí Fecha", "quote": "Fecha: Febrero 2026", "confidence": 0.4, "note": "només mes/any; el dia exacte és el 19/02 (altres fonts)."}
+ ],
+ "not_present": ["client_name", "architect_name", "cota_referencia", "num_soil_levels", "superficie_parcela (el '719.07 m²' de l'esquema és una zona de la planta del projecte, no la parcel·la)", "utm_x_utm_y", "lab", "cte"],
+ "reading_notes": "Text llegit de pl situ.pdf (Print To PDF, net); render 120 dpi per a la disposició. Esquema 1/300 amb la parcel·la en taronja i la planta dels adossats (blocs 2B.1-2B.3, PASO, 'PB+P1+PBC'). El typo 'ARCILES' apareix als DOS annexos FreeHand (tall i situació): error de plantilla de l'Eva, no una grafia del municipi."
+}
