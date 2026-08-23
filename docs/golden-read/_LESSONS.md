@@ -146,3 +146,20 @@ Format: una lliçó per línia o bloc, amb projecte i font. Serveix per escriure
 - Pressupost castellà amb casella CTE BUIDA (2n cas); derivació C-1 per superfície TOTAL + T-1 defecte encerta.
 - Cota del "topográfico proporcionado" (client), no ICGC: l'origen de la cota varia per projecte.
 - Referència V0 desalineada (plantes='C-1', superfície='T-1', dpsh=frase SPT): 4 camps N/A pendents del .doc real.
+
+---
+
+## Post-lectura (2026-08-23 nit) — Conversor DWG: el 564 de Tulipa NO era al DWG
+
+- **LibreDWG `dwg2dxf` + ezdxf llegeixen els 4 DWG de Tulipa** (AC1032 i AC1027): `scripts/dwg_text_dump.py`,
+  detall a `docs/DWG-CONVERSOR-2026-08-23.md`.
+- **La hipòtesi "PARAMETRES URBANISTICS.dwg porta els 564 m²" era FALSA.** El DWG porta superfícies de PLANEJAMENT
+  (PARCEL·LA 1 = 358,75 / PARCEL·LA 2 = 491,24, divisió proposada). El 564 de l'Eva és la superfície gràfica del
+  Cadastre: WFS INSPIRE `areaValue` de la RC 3445105DF2934E0001GG (C/ Tulipa 3), llegida ara automàticament del
+  caixetí del TOP.dwg (que també porta la RC de Tulipa 1 = 506 m², el promotor i l'adreça). El NT* "ERR condicional"
+  de `superficie_parcela` de Tulipa queda rebaixat a NT genuí: el valor no és a cap fitxer de la carpeta.
+- **Regla nova (skill v0.6)**: DWG llegibles si hi ha `dwg2dxf`; superfícies de planejament = candidats etiquetats
+  (no competeixen amb el Cadastre); RC del caixetí del topogràfic = font de `referencia_catastral` (candidats).
+- **Confirmació del Pas 0 des d'una font nova**: el TOP.dwg arrossega un bloc de plantilla amb el caixetí SENCER
+  d'un altre projecte (Òrrius 2023, un altre promotor i una altra RC) — llegir valors sense context hauria estat
+  un ERR de manual.

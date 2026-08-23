@@ -6,7 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 0.5 (2026-08-23 nit) — clarificacions del hold-out headless (3 projectes, ERR = 0; feedback dels executors a `docs/holdout-headless/_RESULTATS.md` §6).
+Versió 0.6 (2026-08-23 nit) — DWG llegibles via LibreDWG `dwg2dxf` + `scripts/dwg_text_dump.py` (verificat amb els 4 DWG de Tulipa; `docs/DWG-CONVERSOR-2026-08-23.md`).
+v0.5: clarificacions del hold-out headless (3 projectes, ERR = 0; feedback dels executors a `docs/holdout-headless/_RESULTATS.md` §6).
 v0.4: derivat de la lectura d'or dels 8 projectes (`docs/golden-read/`; resultats: ANALISI §11 — 80 OK / 17 CAND / 10 NT / 2 ERR, tots dos convertits en regla aquí).
 v0.2: Pas 0 (context del document abans de llegir-lo; reflexió del Josep) + bloc `context` al JSON + lliçons de Tulipa.
 
@@ -74,7 +75,8 @@ Mapa "casella del document → rol al projecte" (els casos que han fet fallar le
    **Inclou** `PDF/ANNEXES/*.pdf`, `tall.pdf`, `pl. situaci*.pdf`: l'Eva dibuixa els annexos abans d'obrir el wizard; són fonts vàlides.
 2. `.msg`: extreu cos + adjunts amb `extract_msg` a un directori temporal. Dedup d'adjunts per md5 contra la carpeta (sovint ja hi són solts).
    En cadenes `RE:`/`FW:`, només el text per sobre del primer `De:`/`From:` és nou. Imatges ≤ 25 KB o de 783×3 px = signatura, ignora.
-3. `.zip`: obre amb `zipfile`. `.dwg`: marca `no llegible: DWG` (proposa `dwg2dxf`).
+3. `.zip`: obre amb `zipfile`. `.dwg`: si hi ha `dwg2dxf` (LibreDWG, `~/.local/bin` o PATH), extreu el text amb
+   `.venv/bin/python scripts/dwg_text_dump.py FITXER.dwg` i llegeix-lo com un plànol més; si no, marca `no llegible: DWG`.
 4. Classifica cada fitxer en una classe i llegeix-los **en aquest ordre**:
    1. plantilles G3 (pressupost, fitxa de camp, comanda de laboratori, PLAN_COST, Excel DPSH) → 2. `ACCEPTACIO/` (pressupost signat,
    `DADES CLIENT.txt`) → 3. annexos de l'Eva → 4. laboratori (GTL) → 5. documents del proveïdor (plànols, projecte, Cadastre) →
@@ -171,8 +173,13 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
 - **Acceptació escanejada** (Adobe Scan): el formulari p.5 `DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME` pot estar omplert a mà
   → clip de la zona (30-62 % de l'alçada) a ≥ 170 dpi i visió. L'OCR incrustat no serveix per al manuscrit. És autoritat A per a `client_name`.
 - **Fitxa sense data** (F38 buit): `field_date` des d'annex sondeig / comanda DATA DE PRESA / albarà TPS / noms de fotos / correu "demà".
-- **Plànols en DWG** (dins `.zip`): no llegibles sense conversor → `superficie_parcela`, `num_floors` depenen del correu de l'arquitecte
-  (superfícies per planta → `num_floors` segur amb nota) i queden `no_trobat` amb proposta "convertir DWG (LibreDWG `dwg2dxf`)".
+- **Plànols en DWG** (dins `.zip`): amb `dwg2dxf` disponible, llegibles (`scripts/dwg_text_dump.py`). Què hi ha de veritat (Tulipa):
+  el caixetí del TOPOGRÀFIC porta RC (sovint 2 parcel·les → `referencia_catastral` candidats), promotor i adreça; el DWG de
+  paràmetres urbanístics porta superfícies de PLANEJAMENT (divisió proposada ≠ parcel·la cadastral: candidats etiquetats, no
+  competeixen amb el Cadastre); la `superficie_parcela` cadastral (la que usa l'Eva) NO hi és — és derivació Python (RC → WFS
+  INSPIRE `areaValue`), no lectura. Camps AutoCAD surten `######` (no llegibles); els blocs poden portar restes de plantilla
+  d'ALTRES projectes (caixetí sencer inclòs) → Pas 0 abans d'usar cap text. Sense conversor: `superficie_parcela`, `num_floors`
+  depenen del correu de l'arquitecte (superfícies per planta → `num_floors` segur amb nota) i queden `no_trobat` amb proposta.
 - **Metadades PDF com a indici**: el `title` d'un plànol pot portar la ruta del despatx (`…\408 REPARCEL·LACIO JORDI GENE TOSCA 16\…`)
   → candidat feble (≤ 0,3), mai segur.
 - **Annexos d'Eva amb errors de còpia**: caixetí sense actualitzar (plànol de situació casa 2 dient "Tulipà nº3"), typo d'expedient
