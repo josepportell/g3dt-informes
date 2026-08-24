@@ -6,7 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 1.1 (2026-08-24) — el `registre` de l'SPT va DINS de la cel·la `n30` (subcel·la amb la seva pròpia font), no com a germà: el validador de contracte exigeix `n30.registre` i la UI el mostra al popup de l'n30 (creuament de l'acceptació Fase 0).
+Versió 1.2 (2026-08-24) — nom canònic del JSON per document en mode `--only` (coincideix amb `safe_doc_name` del runner, que és qui el llegeix): path RELATIU sencer, sense extensió, tota seqüència no alfanumèrica → `_`, sense `_` inicial/final, minúscules. Ex.: `25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf` → `25_0647_pressupost_geotec_bell_lloc.json`.
+v1.1: el `registre` de l'SPT va DINS de la cel·la `n30` (subcel·la amb la seva pròpia font), no com a germà: el validador de contracte exigeix `n30.registre` i la UI el mostra al popup de l'n30 (creuament de l'acceptació Fase 0).
 v1.0: contracte v1 per al wizard headless (`docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md`): dialecte únic `estat`/`font`, 22 claus planes a `fields`, arguments nous `--inventory` i `--consolida` (Pas 5b), escriptura atòmica, i capçalera `source_md5`/`skill_version`/`schema_version` a cada JSON.
 v0.9: lliçons de la lectura d'or de TAULES (8 agents cecs, 7 projectes comparats amb informes: 1 ERR → regla del sistema de cotes; B80→zona B79-B82; N.F./Nivells per COLOR de cel·la; n30 mai segur; micro-regles de format). Evidència: `docs/golden-read-taules/`.
 v0.8: anatomia de l'ANNEX DE SONDEIG (la matriu que l'Eva usa com a font de nivells i litologies; assenyalada pel Josep, verificada a Bell-lloc) + litologia: annex sondeig «Descripció dels materials» passa PRIMER, tall segon.
@@ -324,6 +325,10 @@ fondàries i litologies bones).
 ```
 
 Escriu cada JSON **immediatament** després de llegir el document (el disc és la memòria), de forma atòmica (tmp + `os.replace`).
+**Nom del fitxer en mode `--only` (canònic, el runner l'espera):** el path RELATIU sencer del document, sense extensió,
+substituint tota seqüència de caràcters no alfanumèrics per `_`, sense `_` inicial/final, en minúscules, + `.json`
+(`25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf` → `25_0647_pressupost_geotec_bell_lloc.json`). En dry-run (lectura d'or) el
+nom és lliure.
 **Tot camp que llistis a `context.authority_for` ha de tenir la seva entrada a `tier_a` amb `quote`** (o constar a
 `not_present` amb motiu): el consolidador (Pas 5b) és cec — un senyal que només viu al bloc `context` no pot pujar mai
 a `segur` (lliçó de l'acceptació Fase 0: el promotor del caixetí d'A.01 anotat a `for_whom` sense entrada tier_a). Els duplicats (mateix md5, mateix número
