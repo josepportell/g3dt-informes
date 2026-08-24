@@ -250,6 +250,26 @@ def _scan_old_dialect_keys(obj: Any, path: str) -> list[str]:
 # ---------------------------------------------------------------------------
 
 
+def _rename_catalan_keys(obj):
+    """Fixtures d'or de taules (Castellar): `candidats` per `candidates` i `valor` per `value`.
+
+    Nomes es renombra la CLAU `candidats` quan el seu valor es una llista (la
+    cadena "candidats" com a valor d'`estat` es un estat legitim i no es toca).
+    """
+    if isinstance(obj, list):
+        return [_rename_catalan_keys(x) for x in obj]
+    if not isinstance(obj, dict):
+        return obj
+    out = {}
+    for k, v in obj.items():
+        if k == "candidats" and isinstance(v, list):
+            k = "candidates"
+        elif k == "valor":
+            k = "value"
+        out[k] = _rename_catalan_keys(v)
+    return out
+
+
 def adapt_legacy(d: dict) -> dict:
     """Adapta un fixture d'or (dialecte antic) a l'estructura del schema v1.
 
@@ -273,6 +293,7 @@ def adapt_legacy(d: dict) -> dict:
     fixture (el primer candidat, el `value` existent) — mai s'inventa un
     valor nou.
     """
+    d = _rename_catalan_keys(d)
     d = _rename_dialect_keys(copy.deepcopy(d))
 
     if "decisions" in d:

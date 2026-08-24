@@ -1,6 +1,6 @@
 """Acceptació Fase 0: compara _decisions.json produïts pels agents --consolida vs l'or.
 
-Ús: python3 compare_consolida.py escalars|taules [PATH_decisions.json]
+Ús: python3 compare_consolida.py escalars|taules [PATH_decisions.json] [CARPETA_PROJECTE_OR]
 Veredictes per camp: OK (mateix estat), CAUTELA (or segur -> produït candidats amb el bo dins),
 ALERTA (produït més confiat que l'or, o valor segur != or), NOU (clau v1 sense or), ERR (valor segur discrepant).
 """
@@ -20,7 +20,7 @@ def close(a, b):
     return na == nb or (na and nb and (na in nb or nb in na))
 
 def flat_gold_scalars():
-    d = json.load(open(REPO / "docs/golden-read/4001612 BELL-LLOC/_decisions.json", encoding="utf-8"))["decisions"]
+    d = json.load(open(REPO / "docs/golden-read" / PROJ / "_decisions.json", encoding="utf-8"))["decisions"]
     out = {}
     for k, v in d.items():
         st = v.get("status") or v.get("estat")
@@ -41,6 +41,8 @@ def cand_values(f):
 def verdict(gold, prod):
     ge, pe = gold["estat"], prod.get("estat")
     gv, pv = gold.get("value"), prod.get("value")
+    if gv is None and cand_values(gold): gv = cand_values(gold)[0]  # or segur sense value explícit (dialecte taules)
+    if pv is None and cand_values(prod): pv = cand_values(prod)[0]
     if pe == ge:
         if ge == "segur" and not close(gv, pv):
             return "ERR", f"segur discrepant: or={gv!r} prod={pv!r}"
@@ -73,14 +75,16 @@ def run_escalars():
     print("TOTALS:", counts)
 
 def run_taules():
-    gold = json.load(open(REPO / "docs/golden-read-taules/4001612 BELL-LLOC/_tables_decisions.json", encoding="utf-8"))["tables"]
+    import sys as _s; _s.path.insert(0, str(REPO))
+    from automation.lectura.contract import adapt_legacy
+    gold = adapt_legacy(json.load(open(REPO / "docs/golden-read-taules" / PROJ / "_tables_decisions.json", encoding="utf-8")))["tables"]
     prod = json.load(open(sys.argv[2] if len(sys.argv) > 2 else S / "consolida-taules/_decisions.json", encoding="utf-8"))
     pt = prod["tables"]
     counts = {}
     for block in ("dpsh_tests", "sondeig_tests", "spt_ma_tests", "soil_levels"):
         g, p = gold.get(block) or {}, pt.get(block) or {}
-        grows = g.get("rows") or []
-        prows = p.get("rows") or []
+        grows = g if isinstance(g, list) else (g.get("rows") or [])
+        prows = p if isinstance(p, list) else (p.get("rows") or [])
         print(f"-- {block}: or {len(grows)} files / prod {len(prows)} files")
         for i, gr in enumerate(grows):
             pr = prows[i] if i < len(prows) else {}
@@ -101,6 +105,8 @@ def run_taules():
         if lit and lit.get("estat") == "segur":
             print(f"VIOLACIO soil_levels[{i}].litologia = segur (prohibit)"); counts["VIOLACIO"] = counts.get("VIOLACIO", 0) + 1
     print("TOTALS:", counts)
+
+PROJ = sys.argv[3] if len(sys.argv) > 3 else "4001612 BELL-LLOC"
 
 if __name__ == "__main__":
     (run_escalars if sys.argv[1] == "escalars" else run_taules)()
