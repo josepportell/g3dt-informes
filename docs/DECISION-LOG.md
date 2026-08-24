@@ -970,3 +970,51 @@ headless + UI de candidats (ara amb el bloc `tables` inclòs). ✅ mètrica ERR 
 Vegeu `docs/_FOR-NEW-YOU-20260824-1500.md`.
 
 *Fi entrada 2026-08-24. Lectura d'or de taules: 113/35/1, skill v0.9, arnès de validació permanent.*
+
+## 2026-08-24 (tarda) — Wizard headless + UI de candidats (Pendent B via A): disseny, Fases 0-8
+
+### Context
+Últim tram tècnic de la via A (handoff 24/15:00 §2B). Josep confirma D1-D3/D5 del disseny i demana construir-ho amb Sonnet 5.
+Disseny: `docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md`.
+
+### Decisions arquitectòniques clau
+- **Crida per document + consolidació separada** (D1) en lloc de la crida única validada per la lectura d'or. Why: SSE
+  incremental, timeout per document, fallada aïllada, cache per md5. Trade-off: el Pas 5b (`--consolida`) no estava
+  validat → acceptació Fase 0 amb 2 agents cecs (escalars 19/22, taules 20/21, 0 ERR) i E2E real (2 projectes, 0 ERR).
+  Mode `projecte` de reserva implementat.
+- **Contracte v1 amb validador Python** que codifica el criteri d'or (n30/litologia mai segurs, claus canòniques de fila).
+  Why: el productor cec desvia en FORMA, no en fons (5 desviacions a la Fase 0, 3 a l'E2E) → normalització suau
+  determinista (a) value:=candidates[0], (b) font/quote solts → candidates, (c) àlies de claus → canòniques; després, degradat.
+- **Claude només llegeix el que Python no llegeix** (inventari amb routes). Trade-off descobert a l'E2E: les fonts Python
+  fora de g3_templates (COORDENADES.txt, Cadastre) són invisibles al consolidador → forat 1 (pendent).
+- **Autenticació aïllada del fill** (`G3DT_LECTURA_AUTH=login`): el `.env` de la via B porta una clau sense crèdit que el
+  CLI prefereix a la sessió. Descobert en viu; hauria passat igual a casa l'Eva.
+- **Via B intacta**: 3 edicions quirúrgiques (flag, guard 404 + endpoint, `skip_vision` keyword); suite 32 failed idèntics.
+- **Sonnet 5 per a les fases de codi** (D4): 7 agents, 1 encallat (llegir 9.000 línies) → mètode grep+rangs. Judici (skill,
+  acceptacions, E2E) a la sessió principal.
+
+### Implementació
+`automation/lectura/{contract,inventory,runner,normalize}.py`, `web/lectura_service.py`, `GET /api/lectura-stream`,
+`review.html` (+999), skill v1.0→v1.3. Commits `a31c3d4` … `b8c6986`.
+
+### Validació empírica
+Fase 0 cega: 0 ERR. E2E real: Bell-lloc 17 docs 0 err (18/18 escalars i taules OK vs or), Castellar 13 docs 0 err (15/17 OK,
+resta format/prudència); wizard sencer amb badges i 0 errors de consola. Temps: mediana 264-279 s/doc, consolidació 562-585 s,
+paret 37-58 min (2 projectes solapats). Detall: `docs/wizard-headless/fase8-e2e/_RESULTATS.md`.
+
+### Tests
++70 (contracte 20, inventari 20, runner 14, servei 13 + normalize dins runner). Suite: 32 failed (línia base) / 1152 passed.
+
+### Limitacions conegudes
+Latència del primer open (35-60 min) lluny de l'estimació (5-12); Windows no provat; forat 1 (fonts Python fora de
+g3_templates); seleccions de taula de la UI sense backend (8b); leakage (corpus conegut pel skill).
+
+### GO/NO-GO
+✅ GO tècnic (funciona de cap a cua, 0 erroni-amb-confiança) · ⏳ NO-GO de latència fins a aplicar palanques (concurrència,
+prompt prim, menys documents, consolidació Python-first) i remesurar.
+
+### Següents passos
+Palanques de temps → remesura amb 1 projecte sol; forat 1; Fase 8b (seleccions → user_data/generador); prova Windows;
+projecte NOU de l'Eva (generalització).
+
+*Fi entrada 2026-08-24 tarda. Wizard headless construït i validat E2E; latència com a bloquejant.*
