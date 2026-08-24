@@ -239,6 +239,7 @@ claude -p "/g3dt-llegir-projecte {PROJECT_PATH} --only {DOC} --inventory {INV} -
 | Retry | 1 reintent si rc≠0 o JSON invàlid/absent; després `doc_failed` i es continua | un document no pot bloquejar el projecte |
 | Èxit d'una crida | el fitxer `{doc}.json` existeix + parseja + `schema_version`+`source_md5` correctes | el rc de `claude -p` no és prou senyal |
 | Windows | `subprocess` amb llista d'args (no shell string), `CREATE_NEW_PROCESS_GROUP`, kill amb `proc.kill()`; POSIX manté `start_new_session`+`killpg` | el codi actual és POSIX-only (`os.killpg`, `< /dev/null`) i a casa l'Eva és Python Windows natiu |
+| Autenticació del fill | **`G3DT_LECTURA_AUTH`** = `login` (defecte: es treu `ANTHROPIC_API_KEY`/`ANTHROPIC_AUTH_TOKEN` de l'entorn del fill perquè usi la sessió claude.ai) \| `api_key` (les passa) | trobat a l'E2E: el `.env` de la via B porta una clau sense crèdit i el CLI la prefereix al login → rc=1 «Credit balance is too low» |
 | Flag d'activació | **`G3DT_USE_LECTURA_HEADLESS`** (nou, defecte `false`) | independent de `G3DT_PROD_USE_CLAUDECODE_VISION` (semàntica vella de visió); prod actual no canvia de comportament |
 
 ---

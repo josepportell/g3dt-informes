@@ -452,3 +452,20 @@ def test_soft_normalize_does_not_repair_no_trobat():
     out = soft_normalize(d)
 
     assert out == d
+
+
+# --- Autenticacio del fill (G3DT_LECTURA_AUTH) -------------------------------
+
+def test_child_env_strips_api_key_by_default():
+    from automation.lectura.runner import _child_env
+    base = {"PATH": "/bin", "ANTHROPIC_API_KEY": "sk-x", "ANTHROPIC_AUTH_TOKEN": "t", "HOME": "/h"}
+    env = _child_env(base)
+    assert "ANTHROPIC_API_KEY" not in env and "ANTHROPIC_AUTH_TOKEN" not in env
+    assert env["PATH"] == "/bin" and env["HOME"] == "/h"
+    assert base["ANTHROPIC_API_KEY"] == "sk-x"  # no mutacio
+
+
+def test_child_env_keeps_api_key_when_requested():
+    from automation.lectura.runner import _child_env
+    base = {"ANTHROPIC_API_KEY": "sk-x", "G3DT_LECTURA_AUTH": "api_key"}
+    assert _child_env(base)["ANTHROPIC_API_KEY"] == "sk-x"

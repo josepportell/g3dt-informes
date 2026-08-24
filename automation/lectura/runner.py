@@ -186,6 +186,27 @@ def _kill_proc(proc: subprocess.Popen) -> None:
             proc.kill()
 
 
+_API_AUTH_VARS = ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN")
+
+
+def _child_env(base: dict[str, str] | None = None) -> dict[str, str]:
+    """Entorn del `claude -p` fill segons `G3DT_LECTURA_AUTH` (login | api_key).
+
+    El wizard carrega el `.env` de la via B (amb `ANTHROPIC_API_KEY` per a la
+    visió API) dins `os.environ`; el CLI `claude` prefereix aquesta clau a la
+    sessió de claude.ai i, si la clau no té crèdit, falla amb rc=1 ("Credit
+    balance is too low") — cas real vist a l'E2E de Bell-lloc (2026-08-24).
+    Per defecte (`login`) es treuen les variables d'autenticació API perquè el
+    fill faci servir la sessió de claude.ai; amb `api_key` es passen tal qual.
+    """
+    env = dict(os.environ if base is None else base)
+    mode = env.get("G3DT_LECTURA_AUTH", "login").strip().lower()
+    if mode != "api_key":
+        for var in _API_AUTH_VARS:
+            env.pop(var, None)
+    return env
+
+
 def _run_claude(
     *,
     claude_path: str,
@@ -204,6 +225,7 @@ def _run_claude(
     popen_kwargs: dict[str, Any] = {
         "stdin": subprocess.DEVNULL,
         "cwd": str(_PROJECT_ROOT),
+        "env": _child_env(),
     }
     if sys.platform == "win32":
         popen_kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
