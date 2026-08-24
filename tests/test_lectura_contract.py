@@ -115,7 +115,10 @@ def _minimal_valid_doc() -> dict:
                 "estat_bloc": "candidats",
                 "rows": [
                     {
-                        "id_assaig": "SPT-1",
+                        "id": "SPT-1",
+                        "punt": "S-1",
+                        "profunditat": {"estat": "segur", "value": "-1,00 a -1,60 m",
+                                        "candidates": [{"value": "-1,00 a -1,60 m", "font": "GTL", "quote": "Cota d'extracció"}]},
                         "estat": "candidats",
                         "n30": {
                             "estat": "candidats",
@@ -135,6 +138,9 @@ def _minimal_valid_doc() -> dict:
                     {
                         "nom": "1er nivell",
                         "estat": "candidats",
+                        "de": {"estat": "segur", "value": "0,00", "candidates": [{"value": "0,00", "font": "tall", "quote": "0,00"}]},
+                        "a": {"estat": "segur", "value": "-1,80", "candidates": [{"value": "-1,80", "font": "tall", "quote": "-1,80"}]},
+                        "mostra_del_nivell": True,
                         "litologia": {
                             "estat": "candidats",
                             "value": "Graves",
