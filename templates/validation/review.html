@@ -9804,29 +9804,32 @@
             if (!el) return;
             el.classList.add('visible');
             payload = payload || {};
+            // El formulari del wizard (on viu #lectura-progress) resta ocult fins al `prefills`:
+            // es replica el text a l'stepper visible (pas Visió) perquè l'Eva vegi el progrés.
+            const setText = (s) => { el.textContent = s; const m = document.getElementById('step-files-vision'); if (m) m.textContent = s; };
             if (evt === 'lectura_inici') {
                 _lecturaDocsTotal = payload.n_claude || (payload.docs || []).length || 0;
                 _lecturaDocsDone = 0;
-                el.textContent = `Llegint documents… 0/${_lecturaDocsTotal}`;
+                setText(`Llegint documents… 0/${_lecturaDocsTotal}`);
             } else if (evt === 'lectura_doc_inici') {
-                el.textContent = `Llegint documents… ${_lecturaDocsDone}/${_lecturaDocsTotal}${payload.doc ? ' · ' + payload.doc : ''}`;
+                setText(`Llegint documents… ${_lecturaDocsDone}/${_lecturaDocsTotal}${payload.doc ? ' · ' + payload.doc : ''}`);
             } else if (evt === 'lectura_doc') {
                 _lecturaDocsDone += 1;
-                el.textContent = `Llegint documents… ${_lecturaDocsDone}/${_lecturaDocsTotal}${payload.doc ? ' · ' + payload.doc : ''}${payload.cached ? ' (cache)' : ''}`;
+                setText(`Llegint documents… ${_lecturaDocsDone}/${_lecturaDocsTotal}${payload.doc ? ' · ' + payload.doc : ''}${payload.cached ? ' (cache)' : ''}`);
             } else if (evt === 'lectura_doc_error') {
                 _lecturaDocsDone += 1;
-                el.textContent = `Llegint documents… ${_lecturaDocsDone}/${_lecturaDocsTotal} · ${payload.doc || ''} (error)`;
+                setText(`Llegint documents… ${_lecturaDocsDone}/${_lecturaDocsTotal} · ${payload.doc || ''} (error)`);
             } else if (evt === 'consolidacio_inici') {
-                el.textContent = 'Consolidant lectura…';
+                setText('Consolidant lectura…');
             } else if (evt === 'consolidacio_fallback') {
                 lecturaState.degraded = true;
-                el.textContent = 'Consolidació degradada — candidats sense prioritzar.';
+                setText('Consolidació degradada — candidats sense prioritzar.');
             } else if (evt === 'decisions') {
-                el.textContent = 'Lectura consolidada.';
+                setText('Lectura consolidada.');
             } else if (evt === 'lectura_fallback') {
-                el.textContent = `Lectura headless no disponible (${payload.reason || 'motiu desconegut'}) — utilitzant via B.`;
+                setText(`Lectura headless no disponible (${payload.reason || 'motiu desconegut'}) — utilitzant via B.`);
             } else if (evt === 'lectura_fi') {
-                el.textContent = 'Lectura completada.';
+                setText('Lectura completada.');
                 setTimeout(() => { el.classList.remove('visible'); }, 4000);
             }
         }

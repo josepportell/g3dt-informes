@@ -233,8 +233,8 @@ claude -p "/g3dt-llegir-projecte {PROJECT_PATH} --only {DOC} --inventory {INV} -
 |---|---|---|
 | `cwd` | **arrel del repo** (com `start_vision_cli`), NO `/tmp` | el skill és un project command (`.claude/commands/`): amb cwd=/tmp no es troba. Cost: carrega CLAUDE.md (~3k tokens) — acceptable |
 | Binari | `G3DT_CLAUDE_PATH` (existent, defecte `claude`) | mateix mecanisme que la via CLI antiga |
-| Timeout per document | `G3DT_LECTURA_TIMEOUT` = 240 s | un document, no un projecte; el global de 600 s era per la crida única |
-| Timeout consolidació | `G3DT_LECTURA_CONSOLIDA_TIMEOUT` = 360 s | llegeix ~10-15 JSON petits + escriu 1 |
+| Timeout per document | `G3DT_LECTURA_TIMEOUT` = **600 s** (era 240 al disseny inicial) | mesurat a l'E2E de Bell-lloc: 118 s per un .txt (cost fix d'arrencada CLI + skill), 292 s per al pressupost signat de 7 p., annex de sondeig > 240 s → 240 matava els documents pesants |
+| Timeout consolidació | `G3DT_LECTURA_CONSOLIDA_TIMEOUT` = 600 s (era 360) | llegeix ~10-15 JSON petits + escriu 1 |
 | Concurrència | `G3DT_LECTURA_CONCURRENCY` = 2 | l'ordinador de l'Eva no és un servidor; 2 solapa lectura visual amb I/O |
 | Retry | 1 reintent si rc≠0 o JSON invàlid/absent; després `doc_failed` i es continua | un document no pot bloquejar el projecte |
 | Èxit d'una crida | el fitxer `{doc}.json` existeix + parseja + `schema_version`+`source_md5` correctes | el rc de `claude -p` no és prou senyal |

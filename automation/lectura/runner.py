@@ -114,8 +114,8 @@ def _load_config() -> dict[str, Any]:
         mode = "document"
     return {
         "claude_path": os.getenv("G3DT_CLAUDE_PATH", "claude") or "claude",
-        "timeout": _env_int("G3DT_LECTURA_TIMEOUT", 240),
-        "consolida_timeout": _env_int("G3DT_LECTURA_CONSOLIDA_TIMEOUT", 360),
+        "timeout": _env_int("G3DT_LECTURA_TIMEOUT", 600),
+        "consolida_timeout": _env_int("G3DT_LECTURA_CONSOLIDA_TIMEOUT", 600),
         "concurrency": max(1, _env_int("G3DT_LECTURA_CONCURRENCY", 2)),
         "mode": mode,
     }
