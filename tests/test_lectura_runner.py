@@ -76,6 +76,8 @@ MODE = os.environ.get("MOCK_CLAUDE_MODE", "happy")
 ONLY_TARGETS = set(filter(None, os.environ.get("MOCK_CLAUDE_ONLY_TARGETS", "").split(",")))
 SLEEP_S = float(os.environ.get("MOCK_CLAUDE_SLEEP", "3"))
 SPAWN_LOG = os.environ.get("MOCK_CLAUDE_SPAWNLOG")
+ARGVLOG = os.environ.get("MOCK_CLAUDE_ARGVLOG")
+EMIT_JSON = os.environ.get("MOCK_CLAUDE_JSON") == "1"
 
 
 def _log_spawn(kind, doc=""):
@@ -85,11 +87,32 @@ def _log_spawn(kind, doc=""):
         fh.write(kind + "\\t" + doc + "\\n")
 
 
+def _emit_happy_stdout():
+    if EMIT_JSON:
+        envelope = {
+            "type": "result", "subtype": "success", "is_error": False,
+            "duration_ms": 1234, "duration_api_ms": 1000, "num_turns": 3,
+            "result": "Document read (mock).", "total_cost_usd": 0.05,
+            "usage": {
+                "input_tokens": 2, "output_tokens": 10,
+                "cache_creation_input_tokens": 100, "cache_read_input_tokens": 200,
+            },
+            "modelUsage": {"claude-sonnet-5": {}},
+        }
+        print(json.dumps(envelope))
+    else:
+        print("mock done")
+
+
 argv = sys.argv[1:]
 
 if argv and argv[0] == "--version":
     print("2.0.0-mock")
     sys.exit(0)
+
+if ARGVLOG:
+    with open(ARGVLOG, "a", encoding="utf-8") as fh:
+        fh.write(" ".join(argv) + "\\n")
 
 prompt = argv[1] if len(argv) > 1 else ""
 tokens = prompt.split()
@@ -139,6 +162,7 @@ if is_consolida_like:
     tmp = pathlib.Path(out_dir, "_decisions.json.tmp")
     tmp.write_text(json.dumps(good, ensure_ascii=False), encoding="utf-8")
     os.replace(tmp, pathlib.Path(out_dir, "_decisions.json"))
+    _emit_happy_stdout()
     sys.exit(0)
 
 # --- mode --only: escriu {safe_doc_name(only)}.json ------------------------
@@ -171,6 +195,7 @@ doc_json = {
 tmp = pathlib.Path(out_dir, safe + ".json.tmp")
 tmp.write_text(json.dumps(doc_json, ensure_ascii=False), encoding="utf-8")
 os.replace(tmp, pathlib.Path(out_dir, safe + ".json"))
+_emit_happy_stdout()
 sys.exit(0)
 '''
 
@@ -404,6 +429,74 @@ def test_mode_projecte_happy(synth_project, base_env, monkeypatch):
     assert kinds.count("projecte") == 1
     assert kinds.count("only") == 0
     assert kinds.count("consolida") == 0
+
+
+# ---------------------------------------------------------------------------
+# Fase 9 — model pinat + `--output-format json` + metriques CLI a telemetria
+# ---------------------------------------------------------------------------
+
+
+def test_argv_pins_model_and_json_format(synth_project, base_env, monkeypatch, tmp_path):
+    argv_log = tmp_path / "argv.log"
+    monkeypatch.setenv("MOCK_CLAUDE_ARGVLOG", str(argv_log))
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    assert result.decisions is not None
+
+    lines = [l for l in argv_log.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert lines, "cap linia d'argv registrada"
+    for line in lines:
+        assert "--permission-mode bypassPermissions --model sonnet --output-format json" in line
+
+    monkeypatch.setenv("G3DT_LECTURA_MODEL", "opus")
+    result2 = lectura_runner.run_lectura(synth_project, out_dir=out_dir, force=True)
+    assert result2.decisions is not None
+
+    lines_2 = [l for l in argv_log.read_text(encoding="utf-8").splitlines() if l.strip()]
+    new_lines = lines_2[len(lines):]
+    assert new_lines, "cap linia nova d'argv al segon run"
+    for line in new_lines:
+        assert "--permission-mode bypassPermissions --model opus --output-format json" in line
+
+
+def test_telemetry_has_cli_metrics_when_json(synth_project, base_env, monkeypatch):
+    monkeypatch.setenv("MOCK_CLAUDE_JSON", "1")
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    assert result.decisions is not None
+
+    lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert lines, "cap linia de telemetria"
+    for entry in lines:
+        assert entry["cli_json_ok"] is True
+        assert entry["num_turns"] == 3
+        assert entry["duration_api_ms"] == 1000
+        assert entry["cost_usd"] == 0.05
+        assert entry["models"] == ["claude-sonnet-5"]
+        assert entry["usage"]["cache_read_input_tokens"] == 200
+        assert entry["model"] == "sonnet"
+
+        log_path = Path(entry["log_path"])
+        assert "Document read (mock)." in log_path.read_text(encoding="utf-8")
+        assert not Path(str(log_path) + ".out").exists()
+
+
+def test_telemetry_without_json_is_marked(synth_project, base_env):
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    assert result.decisions is not None
+
+    lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert lines, "cap linia de telemetria"
+    for entry in lines:
+        assert entry["cli_json_ok"] is False
+        assert "num_turns" not in entry
+
+        log_path = Path(entry["log_path"])
+        assert "mock done" in log_path.read_text(encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------

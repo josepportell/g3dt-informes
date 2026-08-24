@@ -118,6 +118,7 @@ def _load_config() -> dict[str, Any]:
         "consolida_timeout": _env_int("G3DT_LECTURA_CONSOLIDA_TIMEOUT", 900),
         "concurrency": max(1, _env_int("G3DT_LECTURA_CONCURRENCY", 2)),
         "mode": mode,
+        "model": os.getenv("G3DT_LECTURA_MODEL", "sonnet") or "sonnet",
     }
 
 
@@ -207,6 +208,48 @@ def _child_env(base: dict[str, str] | None = None) -> dict[str, str]:
     return env
 
 
+def _parse_cli_output(stdout_path: Path, log_path: Path) -> dict[str, Any]:
+    """Parseja l'envolupant JSON de `--output-format json` (fitxer sidecar de
+    stdout) i deixa `log_path` llegible per a humans (bloc `--- result ---` amb
+    el text final, o `--- stdout (no JSON) ---` amb el cru). Mai llenca; sidecar
+    absent/buit es tracta com a no-JSON. Sempre esborra el sidecar en sortir."""
+    try:
+        raw = stdout_path.read_text(encoding="utf-8", errors="replace") if stdout_path.exists() else ""
+        try:
+            d = json.loads(raw)
+        except (json.JSONDecodeError, ValueError):
+            d = None
+        if isinstance(d, dict):
+            usage = d.get("usage") or {}
+            with log_path.open("a", encoding="utf-8") as fh:
+                fh.write("\n--- result ---\n" + str(d.get("result") or "") + "\n")
+            return {
+                "cli_json_ok": True,
+                "num_turns": d.get("num_turns"),
+                "duration_ms": d.get("duration_ms"),
+                "duration_api_ms": d.get("duration_api_ms"),
+                "cost_usd": d.get("total_cost_usd"),
+                "is_error": bool(d.get("is_error", False)),
+                "subtype": d.get("subtype"),
+                "usage": {
+                    k: usage.get(k)
+                    for k in (
+                        "input_tokens", "output_tokens",
+                        "cache_creation_input_tokens", "cache_read_input_tokens",
+                    )
+                },
+                "models": sorted((d.get("modelUsage") or {}).keys()),
+            }
+        with log_path.open("a", encoding="utf-8") as fh:
+            fh.write("\n--- stdout (no JSON) ---\n" + raw + "\n")
+        return {"cli_json_ok": False}
+    except Exception:
+        return {"cli_json_ok": False}
+    finally:
+        with contextlib.suppress(OSError):
+            stdout_path.unlink()
+
+
 def _run_claude(
     *,
     claude_path: str,
@@ -214,14 +257,21 @@ def _run_claude(
     timeout: int,
     log_path: Path,
     should_cancel: Callable[[], bool] | None,
+    model: str,
 ) -> dict[str, Any]:
-    """Llanca `claude -p PROMPT --permission-mode bypassPermissions` i espera.
+    """Llanca `claude -p PROMPT --permission-mode bypassPermissions --model
+    MODEL --output-format json` i espera.
 
-    Retorna `{"rc", "timeout", "cancelled", "elapsed_s", "error"?}`. `rc is None`
-    vol dir mort per timeout o cancel·lacio (mai penjat: sempre es fa `proc.wait()`
-    despres de matar, per no deixar zombis).
+    Retorna `{"rc", "timeout", "cancelled", "elapsed_s", "cli", "error"?}`. `rc
+    is None` vol dir mort per timeout o cancel·lacio (mai penjat: sempre es fa
+    `proc.wait()` despres de matar, per no deixar zombis). `cli` es l'envolupant
+    JSON parsejat per `_parse_cli_output` (stdout va a un sidecar, mai a
+    `log_path`, que continua rebent nomes stderr).
     """
-    args = [claude_path, "-p", prompt, "--permission-mode", "bypassPermissions"]
+    args = [
+        claude_path, "-p", prompt, "--permission-mode", "bypassPermissions",
+        "--model", model, "--output-format", "json",
+    ]
     popen_kwargs: dict[str, Any] = {
         "stdin": subprocess.DEVNULL,
         "cwd": str(_PROJECT_ROOT),
@@ -233,6 +283,7 @@ def _run_claude(
         popen_kwargs["start_new_session"] = True
 
     log_path.parent.mkdir(parents=True, exist_ok=True)
+    stdout_path = Path(str(log_path) + ".out")
     start = time.monotonic()
     try:
         log_fh = log_path.open("wb")
@@ -240,8 +291,14 @@ def _run_claude(
         return {"rc": None, "timeout": False, "cancelled": False, "elapsed_s": 0.0, "error": str(exc)}
 
     try:
+        out_fh = stdout_path.open("wb")
+    except OSError as exc:
+        log_fh.close()
+        return {"rc": None, "timeout": False, "cancelled": False, "elapsed_s": 0.0, "error": str(exc)}
+
+    try:
         try:
-            proc = subprocess.Popen(args, stdout=log_fh, stderr=subprocess.STDOUT, **popen_kwargs)
+            proc = subprocess.Popen(args, stdout=out_fh, stderr=log_fh, **popen_kwargs)
         except FileNotFoundError:
             return {
                 "rc": None, "timeout": False, "cancelled": False, "elapsed_s": 0.0,
@@ -269,9 +326,11 @@ def _run_claude(
                 continue
     finally:
         log_fh.close()
+        out_fh.close()
 
     elapsed = time.monotonic() - start
-    return {"rc": rc, "timeout": timed_out, "cancelled": cancelled, "elapsed_s": elapsed}
+    cli = _parse_cli_output(stdout_path, log_path)
+    return {"rc": rc, "timeout": timed_out, "cancelled": cancelled, "elapsed_s": elapsed, "cli": cli}
 
 
 def _capture_claude_version(claude_path: str) -> str | None:
@@ -409,7 +468,7 @@ def _process_one_doc(
         log_path = Path(tempfile.gettempdir()) / f"g3dt-lectura-{project_path.name}-{name}-{attempt}.log"
         call = _run_claude(
             claude_path=cfg["claude_path"], prompt=prompt, timeout=cfg["timeout"],
-            log_path=log_path, should_cancel=should_cancel,
+            log_path=log_path, should_cancel=should_cancel, model=cfg["model"],
         )
         last_elapsed = call["elapsed_s"]
         ts_end = datetime.now().isoformat(timespec="seconds")
@@ -420,6 +479,7 @@ def _process_one_doc(
                 "rc": call["rc"], "timeout": call["timeout"], "json_valid": False,
                 "attempt": attempt, "cached": False, "elapsed_s": call["elapsed_s"],
                 "log_path": str(log_path), "claude_version": claude_version,
+                "model": cfg["model"], **call.get("cli", {"cli_json_ok": False}),
             })
             return {"doc": rel_path, "status": "cancelled", "attempts": attempt, "elapsed_s": last_elapsed}
 
@@ -432,6 +492,7 @@ def _process_one_doc(
             "rc": call["rc"], "timeout": call["timeout"], "json_valid": json_valid,
             "attempt": attempt, "cached": False, "elapsed_s": call["elapsed_s"],
             "log_path": str(log_path), "claude_version": claude_version,
+            "model": cfg["model"], **call.get("cli", {"cli_json_ok": False}),
         })
 
         if json_valid:
@@ -491,7 +552,7 @@ def _consolidate(
     ts_start = datetime.now().isoformat(timespec="seconds")
     call = _run_claude(
         claude_path=cfg["claude_path"], prompt=prompt, timeout=cfg["consolida_timeout"],
-        log_path=log_path, should_cancel=should_cancel,
+        log_path=log_path, should_cancel=should_cancel, model=cfg["model"],
     )
     ts_end = datetime.now().isoformat(timespec="seconds")
 
@@ -503,6 +564,7 @@ def _consolidate(
         "rc": call["rc"], "timeout": call["timeout"], "json_valid": json_valid,
         "attempt": 1, "cached": False, "elapsed_s": call["elapsed_s"],
         "log_path": str(log_path), "claude_version": claude_version,
+        "model": cfg["model"], **call.get("cli", {"cli_json_ok": False}),
     })
 
     if call.get("cancelled"):
@@ -547,7 +609,7 @@ def _run_mode_projecte(
     ts_start = datetime.now().isoformat(timespec="seconds")
     call = _run_claude(
         claude_path=cfg["claude_path"], prompt=prompt, timeout=cfg["consolida_timeout"],
-        log_path=log_path, should_cancel=should_cancel,
+        log_path=log_path, should_cancel=should_cancel, model=cfg["model"],
     )
     ts_end = datetime.now().isoformat(timespec="seconds")
 
@@ -559,6 +621,7 @@ def _run_mode_projecte(
         "rc": call["rc"], "timeout": call["timeout"], "json_valid": json_valid,
         "attempt": 1, "cached": False, "elapsed_s": call["elapsed_s"],
         "log_path": str(log_path), "claude_version": claude_version,
+        "model": cfg["model"], **call.get("cli", {"cli_json_ok": False}),
     })
 
     status = "cancelled" if call.get("cancelled") else ("ok" if json_valid else "failed")
