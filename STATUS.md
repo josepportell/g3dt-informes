@@ -55,8 +55,12 @@ candidats, validació amb projectes nous de l'Eva, desplegament (decisió Josep)
 generats (`scripts/compare_tables_vs_eva.py`, `docs/audit/taules-llista/`) per derivar regles d'or de LECTURA de taules
 (Pas 3b del skill): cota per punt (pot ser relativa, annex DPSH per pàgina), profunditat = Excel B80 "Rebuig a -X,XX m",
 N.F. de l'Excel, litologia re-redactada per l'Eva = sempre candidats, fila sulfats = nivell de la mostra, superficie_construida
-+ etiqueta segons font. Verificat per mostreig (Castellar/Bell-lloc/Alcoletge exactes). Pendent: lectura d'or de taules 8/8
-amb v0.7, veritat Vilanova/Anciles (PDF), i Tier B per nivell (K, C, γ/c/φ/E — Python/override, fora del skill).
++ etiqueta segons font. Verificat per mostreig (Castellar/Bell-lloc/Alcoletge exactes).
+**Lectura d'or de TAULES FETA (24)**: 8 agents cecs amb v0.8 vs 6 informes signats → **113 OK (75 %) / 35 CAND / 1 ERR
+(0,7 %) sobre 150 cel·les**; OK+CAND-encertat 98,7 %. ERR (cota sondeig absoluta vs sistema relatiu, Castellar) → regla a
+**skill v0.9** (+ B79-B82, N.F. per color, n30 mai segur, micro-regles de format). Pregunta oberta a l'Eva: criteri de suma
+N30 (Bell-lloc informe 54 ≠ tall 58). Evidència: `docs/golden-read-taules/` (+`_RESULTATS.md`). Pendent: Tier B per nivell
+(K, C, γ/c/φ/E — Python/override), wizard headless + UI de candidats.
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
