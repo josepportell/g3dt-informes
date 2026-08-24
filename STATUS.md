@@ -1,5 +1,5 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-08-23 nit (via A: lectura d'or COMPLETA 8/8; skill g3dt-llegir-projecte v0.4)
+Last updated: 2026-08-24 tarda (via A: wizard headless CONSTRUÏT i validat E2E — 0 erroni-amb-confiança; latència 35-60 min = bloquejant)
 
 ## ⚠ Reenquadrament 2026-08-23 (Josep): l'Eva està enfadada; criteri = "(quasi) faci la seva feina, sempre"
 
@@ -61,6 +61,21 @@ N.F. de l'Excel, litologia re-redactada per l'Eva = sempre candidats, fila sulfa
 **skill v0.9** (+ B79-B82, N.F. per color, n30 mai segur, micro-regles de format). Pregunta oberta a l'Eva: criteri de suma
 N30 (Bell-lloc informe 54 ≠ tall 58). Evidència: `docs/golden-read-taules/` (+`_RESULTATS.md`). Pendent: Tier B per nivell
 (K, C, γ/c/φ/E — Python/override), wizard headless + UI de candidats.
+
+## Wizard headless + UI de candidats (Pendent B) — CONSTRUÏT (2026-08-24 tarda)
+
+Disseny `docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md` (D1-D3/D5 confirmats pel Josep) → Fases 0-8 fetes el mateix dia
+(codi amb Sonnet 5, judici a la sessió principal). Skill v1.3 (`--only`+`--inventory`, `--consolida`, contracte v1, claus
+canòniques). Codi nou: `automation/lectura/` (contract, inventory, runner, normalize), `web/lectura_service.py`,
+`GET /api/lectura-stream` (flag `G3DT_USE_LECTURA_HEADLESS`, 404 si off), `review.html` +999 (3 estats, popup, taules, chips n30).
+Via B intacta (3 edicions quirúrgiques). **+70 tests; suite 32 failed (línia base idèntica) / 1152 passed.**
+**Validació:** Fase 0 cega (0 ERR) + **E2E real**: Bell-lloc 17 docs / Castellar 13 docs pel wizard sencer, 0 errors, 0 timeouts
+(a 600 s), 0 erroni-amb-confiança vs l'or, badges a la UI, 0 errors de consola. `docs/wizard-headless/fase8-e2e/_RESULTATS.md`.
+**Bloquejant: latència.** Mediana 264-279 s per document (cost fix ~110 s/crida), consolidació ~575 s, paret 37-58 min el primer
+open (cache: els següents 0 crides). Palanques: concurrència 3-4, prompt prim (sense CLAUDE.md, skill curt), menys documents
+(fotografies, LAB-SIG, còpies Print-To-PDF), consolidació Python-first. Forats: fonts Python fora de g3_templates invisibles
+al consolidador (utm/RC → no_trobat), seleccions de taula sense backend (8b), Windows no provat.
+**Següent:** palanques + remesura amb 1 projecte sol → forat 1 → 8b → Windows → projecte NOU de l'Eva.
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
