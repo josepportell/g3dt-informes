@@ -911,3 +911,62 @@ base coneguda, idèntiques) / 1088 passed / 3 skipped.
 Pas 2 manual. Següent: disseny de la crida headless des del wizard + UI de candidats.
 
 *Fi entrada 2026-08-23. Fase 4a: lectors deterministes G3 amb cel·la i cita, validats contra la lectura d'or.*
+
+## 2026-08-24 — Taules de l'informe: regles d'or de lectura (skill v0.7→v0.9) + lectura d'or de TAULES 8/8
+
+### Context
+El Josep va reenquadrar la feina a mitja sessió del 23 nit: l'objectiu no és mesurar com el pipeline determinista vell
+treia les taules, sinó que l'AGENT de la via A (skill `g3dt-llegir-projecte`) les llegeixi bé. Les taules-llista eren
+l'espai no mesurat més gros de l'informe (DIAGNOSTIC §3.4). Sessions: 23 nit (v0.7/v0.8) + 24 (lectura d'or, v0.9).
+
+### Decisions arquitectòniques clau
+1. **Separació lectura/derivació per taula** (Pas 3b del skill): l'agent llegeix `dpsh_tests[]`, `sondeig_tests[]`,
+   `spt_ma_tests[]`, `soil_levels[]`, `superficie_construida`; el Tier B (K, coef. C sísmic, γ/c/φ/E) queda EXPLÍCITAMENT
+   fora — Python/criteri Eva amb override. **Why**: els 41 MISMATCH de càlcul del diagnòstic són judici d'Eva, no lectura;
+   barrejar-ho faria segurs valors de criteri. Alternativa rebutjada: fer que l'agent derivi també — trenca la frontera
+   lectura (skill) / derivació (Python) que sosté tota la via A.
+2. **Comparador de taules com a arnès permanent** (`scripts/compare_tables_vs_eva.py` + `docs/golden-read-taules/_eva_truth/`):
+   alineació de taules per empremta de capçalera (els índexs no coincideixen: l'informe d'Eva té 11-14 taules), files per
+   clau (P-i, S-x, SPT-i, ordinals de nivell), criteris MATCH/CLOSE consistents amb el comparador escalar. **Why**: la
+   mateixa eina serveix per minerar la veritat d'Eva (regles d'or) i per validar la sortida futura del wizard.
+3. **Lectura d'or de taules amb agents cecs** (patró del hold-out): 1 agent/projecte, skill com a únic playbook,
+   prohibicions explícites (informes, generated, validation/, golden-read, memòria); comparació DESPRÉS per la sessió
+   principal. **Why**: manté la lectura cega; la comparació centralitzada aplica criteris uniformes.
+4. **El document font principal de nivells/litologies és l'ANNEX DE SONDEIG** (matriu G3 "Sondeig a rotació amb batería
+   contínua", assenyalat pel Josep): columna «Unitat litològica» (nivells), «Descripció dels materials» (la redacció que
+   l'Eva condensa a l'informe), Registre SPT (cops/15 cm), NF, z. FreeHand → text brossa → SEMPRE visual. Present 4/8.
+
+### Validació empírica (lectura d'or de taules, 2026-08-24)
+8 agents (~150-190k tokens cadascun, subscripció, 0 $ API), 6 projectes comparables amb informe signat:
+**113 OK (75 %) / 35 CAND amb el bo entre candidats / 1 ERR (0,7 %) sobre 150 cel·les; OK+CAND-encertat 98,7 %.**
+23/23 profunditats DPSH exactes (regla del peu "Rebuig a"); cotes per punt/relatives exactes (Anciles 6 cotes diferents).
+Vilanova n/a (el seu PDF d'informe no té cos de taules) i Tulipa n/a (sense informe d'Eva) — consistència 100 %.
+Detall: `docs/golden-read-taules/_RESULTATS.md` + `_comparison.json` per projecte.
+
+### L'ERR i regles noves (v0.9)
+- **ERR únic (Castellar)**: cota del sondeig marcada segura amb l'absoluta (570,90, z de l'annex) quan l'Eva escriu la
+  relativa (-4,20) coherent amb el sistema dels DPSH → regla: la cota de la taula segueix el SISTEMA de cotes del projecte;
+  sistema mixt → candidats. Re-execució esperada: ERR = 0.
+- Peu "Rebuig a -X,XX m": zona B79-B82, no cel·la fixa (B81 a Alcoletge i Tulipa).
+- N.F./Nivells de l'Excel poden ser COLORS de cel·la (llegenda files 79-80; `xlrd formatting_info=True`); una llegenda
+  idèntica a tots els fulls és plantilla, no transició (Tulipa).
+- **n30 MAI segur**: registre (segur) + candidats de la suma. Criteri d'Eva INESTABLE: Rubí/Alcoletge/Anciles = trams
+  centrals; Bell-lloc informe 54 ≠ tall 58 ≠ centrals 62 → pregunta oberta a l'Eva.
+- Micro-regles de format: emetre comptes SPT/TP/MA (format "1/--"/"1/0"/"1/0/0" inestable), components+total de
+  superficie_construida ("72+20"→"92"), capçaleres adaptatives ("Humitat (m)", "(m*)" vs "(msnm*)", etiqueta de parcel·la
+  segons font — 3a variant: "segons informació aportada").
+
+### Limitacions conegudes
+- Leakage: com als escalars, valida executabilitat i re-execució, NO generalització (el skill anomena projectes del corpus).
+- Veritat d'Anciles = V0 esborrany (placeholder "xxxxxxx", sulfats il·legibles); Vilanova sense veritat de cos.
+- Taules NO cobertes pel skill (per disseny): permeabilitat/sísmica/geotècnica/sulfats-qualificació = Tier B pendent.
+- No mesurat: fidelitat de la taula DPSH detallada per intervals (l'annex la porta; l'informe només resum).
+
+### GO/NO-GO
+GO per als dos següents trams: (1) Tier B per nivell amb `_eva_truth/` com a dataset de validació; (2) disseny crida
+headless + UI de candidats (ara amb el bloc `tables` inclòs). ✅ mètrica ERR complerta amb 1 excepció convertida en regla.
+
+### Següents passos
+Vegeu `docs/_FOR-NEW-YOU-20260824-1500.md`.
+
+*Fi entrada 2026-08-24. Lectura d'or de taules: 113/35/1, skill v0.9, arnès de validació permanent.*

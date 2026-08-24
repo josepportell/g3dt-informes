@@ -395,3 +395,12 @@ els 2 ERR i el CAND− esdevenen candidats correctes: **la reexecució esperada 
   CAND 18,6 %. L'OK% baixa de 80,8 % a 79,4 % perquè les 2 cel·les noves resoltes eren intrínsecament de candidats
   (multiplicitat real: 2 tipologies de plantes; 6 DPSH amb matís) — coherent amb la mètrica que mana (ERR, no OK%).
   Els 2 ERR són els històrics pre-regla; en re-execució amb v0.4+ el hold-out en mesura 0.
+
+### 11.2 Addendum (2026-08-24) — lectura d'or de TAULES (skill v0.7→v0.9)
+
+El nivell A es va ampliar a les taules de l'informe (Pas 3b del skill: `dpsh_tests[]`, `sondeig_tests[]`, `spt_ma_tests[]`,
+`soil_levels[]`, `superficie_construida`). Lectura d'or amb 8 agents cecs (patró hold-out) comparada amb 6 informes signats:
+**113 OK (75 %) / 35 CAND amb el bo entre candidats / 1 ERR (0,7 %) sobre 150 cel·les — OK+CAND-encertat 98,7 %.**
+L'ERR (cota de sondeig absoluta vs sistema relatiu del projecte, Castellar) és regla a v0.9; criteri de suma N30 d'Eva
+inestable (pregunta oberta). Vilanova i Tulipa n/a. Evidència i regles: `docs/golden-read-taules/_RESULTATS.md`,
+`docs/DECISION-LOG.md` entrada 2026-08-24. Els totals d'escalars del §11.1 no canvien.
