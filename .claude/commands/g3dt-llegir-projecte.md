@@ -6,7 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 1.0 (2026-08-24) — contracte v1 per al wizard headless (`docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md`): dialecte únic `estat`/`font`, 22 claus planes a `fields`, arguments nous `--inventory` i `--consolida` (Pas 5b), escriptura atòmica, i capçalera `source_md5`/`skill_version`/`schema_version` a cada JSON.
+Versió 1.1 (2026-08-24) — el `registre` de l'SPT va DINS de la cel·la `n30` (subcel·la amb la seva pròpia font), no com a germà: el validador de contracte exigeix `n30.registre` i la UI el mostra al popup de l'n30 (creuament de l'acceptació Fase 0).
+v1.0: contracte v1 per al wizard headless (`docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md`): dialecte únic `estat`/`font`, 22 claus planes a `fields`, arguments nous `--inventory` i `--consolida` (Pas 5b), escriptura atòmica, i capçalera `source_md5`/`skill_version`/`schema_version` a cada JSON.
 v0.9: lliçons de la lectura d'or de TAULES (8 agents cecs, 7 projectes comparats amb informes: 1 ERR → regla del sistema de cotes; B80→zona B79-B82; N.F./Nivells per COLOR de cel·la; n30 mai segur; micro-regles de format). Evidència: `docs/golden-read-taules/`.
 v0.8: anatomia de l'ANNEX DE SONDEIG (la matriu que l'Eva usa com a font de nivells i litologies; assenyalada pel Josep, verificada a Bell-lloc) + litologia: annex sondeig «Descripció dels materials» passa PRIMER, tall segon.
 v0.7: Pas 3b: regles d'or per a les TAULES de l'informe (dades per fila/nivell), derivades de comparar les taules dels 7 informes signats amb els documents del corpus; verificades per mostreig (Castellar, Bell-lloc, Alcoletge), pendents de lectura d'or completa de taules.
@@ -366,6 +367,8 @@ cel·les de 2+ fonts coincidents és `segur`; una litologia re-redactable o un N
 
 Restriccions dures del contracte (el validador les REBUTJA — no són estil, són el criteri d'or codificat):
 - `n30` mai `estat: segur`; la `litologia` de `soil_levels` mai `segur` per a la cadena literal (Pas 3b).
+- El `registre` (cops per tram de 15 cm) va DINS de la cel·la `n30` (`n30.registre`, subcel·la amb estat/font/quote
+  propis), mai com a cel·la germana de la fila.
 - `segur` i `candidats` porten sempre `candidates[]` no buit (≤ 3).
 - `nivell_freatic` porta `matis` ∈ {null, "humitat", "aigua"}.
 - `spt_ma` emet comptes (`n_spt`, `n_tp`, `n_ma`), mai cadena formatada; `n30` emet `registre` (segur) + candidats de la

@@ -381,6 +381,10 @@ per fase.
 ### Fase 4 — Consolidació + fallback degradat (Sonnet 5)
 - A `runner.py`: pas `--consolida` + validació amb `contract.validate_decisions`; si falla → `merge_degradat()` Python
   (per-doc JSONs + g3_templates, tot `candidats` excepte g3_templates que manté el seu estat).
+- **Normalització suau abans de declarar invàlid** (lliçó del creuament Fase 0: el productor cec desvia en forma, no en
+  fons): arreglades deterministament i re-validat — (a) `estat: candidats` amb `value != candidates[0].value` →
+  `value := candidates[0].value`; (b) cel·la amb `font`/`quote` al nivell superior i sense `candidates` → embolcallar
+  com a `candidates[0]`. Cap altra reparació: si després d'això encara falla, degradat.
 - **Tests:** mock consolidació OK / mock que escriu JSON invàlid → degradat; validador rebutja n30 segur injectat.
 
 ### Fase 5 — Servei + endpoint SSE (Sonnet 5)
