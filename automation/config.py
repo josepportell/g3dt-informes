@@ -50,6 +50,7 @@ __all__ = [
     "G3DT_ENABLE_AI_PIPELINE",
     "G3DT_DEV_MODE",
     "G3DT_PROD_USE_CLAUDECODE_VISION",
+    "G3DT_USE_LECTURA_HEADLESS",
     # Production paths (workflow xarxa + workspace local + copy-back)
     "G3DT_NETWORK_PROJECTS",
     "G3DT_LOCAL_WORKSPACE",
@@ -275,6 +276,15 @@ G3DT_DEV_MODE: bool = _env_bool("G3DT_DEV_MODE", False)
 # instal·lat a l'ordinador del usuari final. Independent de G3DT_DEV_MODE
 # perquè volem poder activar-lo a producció sense passar a dev mode.
 G3DT_PROD_USE_CLAUDECODE_VISION: bool = _env_bool("G3DT_PROD_USE_CLAUDECODE_VISION", False)
+
+# Wizard headless (via A, disseny 2026-08-24 §5): activa la lectura per
+# `claude -p` des del wizard (`web/lectura_service.py` + `automation/lectura/`).
+# Defecte False — la via B (Groq/Anthropic API, `/api/prefills-stream`) segueix
+# sent el comportament de producció mentre no s'activi explícitament. Les
+# altres variables `G3DT_LECTURA_*` (timeouts, concurrència, mode, binari
+# `claude`) es llegeixen directament de l'entorn dins `automation/lectura/runner.py`
+# — decisió presa de no duplicar-les aquí (disseny §5).
+G3DT_USE_LECTURA_HEADLESS: bool = _env_bool("G3DT_USE_LECTURA_HEADLESS", False)
 
 MAX_PAGES_TIER3: int = max(1, int(_env("G3DT_TIER3_MAX_PAGES", "10")))
 

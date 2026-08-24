@@ -36,6 +36,16 @@ def _require_ai_pipeline_enabled() -> None:
         raise HTTPException(status_code=404, detail="Not Found")
 
 
+def _require_lectura_enabled() -> None:
+    """Block `/api/lectura-stream/*` when the headless lectura pipeline is off.
+
+    Returns 404 (not 403), same reasoning as `_require_ai_pipeline_enabled`:
+    the existence of this experimental endpoint is not advertised in production.
+    """
+    if not config.G3DT_USE_LECTURA_HEADLESS:
+        raise HTTPException(status_code=404, detail="Not Found")
+
+
 def _require_claudecode_vision_enabled() -> None:
     """Block subprocess-based Claude CLI vision when not explicitly enabled.
 
@@ -525,6 +535,38 @@ def prefills_stream(project_name: str):
 
     return StreamingResponse(
         wizard_service.get_prefills_streaming(project_name),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
+
+@router.get("/lectura-stream/{project_name:path}")
+def lectura_stream(project_name: str):
+    """SSE endpoint: headless `claude -p` lectura (via A) + auto_extract in
+    parallel, then merged prefills. Gated by `G3DT_USE_LECTURA_HEADLESS`
+    (404 when off — disseny §2/§9 Fase 5). Same media type/headers/style as
+    `/api/prefills-stream` (via B, untouched).
+    """
+    _require_lectura_enabled()
+
+    from automation import sync_workspace
+    if sync_workspace.is_network_workflow_enabled():
+        sync_result = sync_workspace.sync_to_workspace(project_name, force=False)
+        if sync_result["status"] == "error":
+            raise HTTPException(status_code=404, detail=sync_result.get("error", "sync failed"))
+
+    try:
+        wizard_service._resolve_project(project_name)  # Validate project exists
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    from . import lectura_service
+
+    return StreamingResponse(
+        lectura_service.get_lectura_streaming(project_name),
         media_type="text/event-stream",
         headers={
             "Cache-Control": "no-cache",

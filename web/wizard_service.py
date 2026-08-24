@@ -2004,9 +2004,19 @@ def _read_file_mapping(project_path: Path) -> dict[str, Any] | None:
     return data if isinstance(data, dict) else None
 
 
-def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> dict[str, Any]:
-    """Merge auto_extract result with vision + wizard prefills. Shared by sync and streaming paths."""
-    _run_vision_phase(project_path, force_refresh=False)
+def _merge_prefills(
+    project_name: str, project_path: Path, auto_result: Any, *, skip_vision: bool = False,
+) -> dict[str, Any]:
+    """Merge auto_extract result with vision + wizard prefills. Shared by sync and streaming paths.
+
+    `skip_vision` (via A, wizard headless, 2026-08-24): when the headless
+    lectura pipeline (`web/lectura_service.py`) has already produced valid
+    decisions, the API-vision phase is redundant and gets skipped. Default
+    False keeps every existing caller (`get_prefills`, `get_prefills_streaming`
+    — via B) byte-for-byte unchanged.
+    """
+    if not skip_vision:
+        _run_vision_phase(project_path, force_refresh=False)
 
     from automation.wizard import UserDataWizard
     wizard = UserDataWizard(str(project_path))
