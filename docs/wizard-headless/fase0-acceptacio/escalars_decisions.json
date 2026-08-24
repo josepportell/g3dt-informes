@@ -1,0 +1,699 @@
+{
+ "schema_version": 1,
+ "project": "4001612 BELL-LLOC",
+ "generated": "2026-08-24T16:47:23",
+ "skill_version": "1.0",
+ "fields": {
+  "expedient": {
+   "estat": "segur",
+   "value": "4001612",
+   "candidates": [
+    {
+     "value": "4001612",
+     "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!N19 (NÚM. D'EXPEDIENT)",
+     "quote": "4001612.0"
+    },
+    {
+     "value": "4001612",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf capçalera",
+     "quote": "NÚMERO D´INFORME: 4001612"
+    },
+    {
+     "value": "4001612",
+     "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 'Obra / Projecte'",
+     "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet. 4001612"
+    }
+   ],
+   "rule": "expedient = nom de la carpeta = comanda N19 = annex DPSH 'NÚMERO D´INFORME' = GTL Obra/Projecte (≥2 fonts A independents coincidents); descartats: 25·0647 (codi comercial), 4677-GTL-25/GTL-8205-25 (lab), EXP25.34/SET.25 (arquitecte)",
+   "sources_checked": [
+    "comanda N19",
+    "annex DPSH",
+    "GTL p.2",
+    "tall.pdf caixetí (Exp: 4001612)",
+    "nom ANNEXES/4001612_DPSH.xls",
+    "annex fotografies",
+    "caixetí annex situació + pl. situaci.pdf (typo)"
+   ],
+   "note": "els caixetins FreeHand de l'annex de situació i pl. situaci.pdf porten el typo 'Exp: 4001621' (origen comú): descartat per regla (caixetins d'annexos no són font primària d'expedient)"
+  },
+  "client_name": {
+   "estat": "segur",
+   "value": "RAMON MITJANA SL",
+   "candidates": [
+    {
+     "value": "RAMON MITJANA SL",
+     "font": "A.01.pdf caixetí 'Promotor'",
+     "quote": "Promotor / RAMON MITJANA SL"
+    },
+    {
+     "value": "RAMON MITJANA SL",
+     "font": "ACCEPTACIO/DADES CLIENT.txt línia 4",
+     "quote": "RAMON MITJANA SL       B25771726"
+    }
+   ],
+   "rule": "client_name = promotor/propietari de l'obra: caixetí 'Promotor' del plànol de l'arquitecte + ACCEPTACIO/DADES CLIENT.txt (nom + NIF) — 2 fonts A coincidents; el 'CLIENT' de pressupost/fitxa/correu/annex sondeig és el sol·licitant (ARQUITECTURA BOSCH NOVELL, conté ARQUITECT → mai segur com a client); G3 mai és client",
+   "sources_checked": [
+    "A.01.pdf caixetí Promotor",
+    "ACCEPTACIO/DADES CLIENT.txt",
+    "pressupost p.1 bloc CLIENT (sol·licitant)",
+    "pressupost signat p.5 (formulari 'DADES QUE HAN DE CONSTAR…' BUIT)",
+    "fitxa!C6 (sol·licitant)",
+    "correu 1 línia CLIENT (sol·licitant)",
+    "annex sondeig 'Client:' (sol·licitant)",
+    "comanda/GTL/albarans TPS (G3, descartat)"
+   ],
+   "note": "NIF B25771726; representant RAMON MITJANA GRÀFOL 78058457E. El formulari p.5 del pressupost signat és buit: DADES CLIENT.txt en fa la funció. L'adreça de DADES CLIENT.txt és la del client, no de l'obra."
+  },
+  "street_address": {
+   "estat": "candidats",
+   "value": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz",
+   "candidates": [
+    {
+     "value": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf capçalera 'Obra:' (= caixetí del tall de correlació)",
+     "quote": "…HABITATGE UNIFAMILIAR AÏLLAT ENTRE EL CARRER ANTONI BELLET I EL CARRER MESTRE RAMON ORTIZ EN EL MUNICIPI DE BELL-LLOC"
+    },
+    {
+     "value": "C/ Mestre Ramon Ortiz 15",
+     "font": "pressupost p.1 bloc OBRA; fitxa!C7 (ADREÇA OBRA); Cadastre 4613172 'Localización'",
+     "quote": "C/MESTRE RAMON ORTIZ 15"
+    },
+    {
+     "value": "Carrer Antoni Bellet",
+     "font": "comanda Hoja1!N20 (bloc DADES DE L'OBRA; manuscrit 'Ballet' normalitzat a la grafia impresa del GTL)",
+     "quote": "C/ ANTONI BALLET"
+    }
+   ],
+   "rule": "cantonada amb DUES adreces documentades → candidats (no competeixen); la frase 'entre el carrer X i el carrer Y' dels annexos de l'Eva és la redacció de l'informe → candidat 1; grafia manuscrita 'Ballet' normalitzada cap a la impresa 'Bellet' (GTL)",
+   "sources_checked": [
+    "annex sondeig",
+    "tall.pdf",
+    "pressupost p.1 OBRA",
+    "fitxa C7",
+    "comanda N20",
+    "GTL 'Situació:'",
+    "Cadastre ×2 (núm. 15 i 13)",
+    "correu 1",
+    "fulls de camp TPS",
+    "A.01 caixetí 'Situació' + planta (2 carrers)",
+    "annex plànol de situació"
+   ],
+   "note": "obra sobre 2 parcel·les (Mestre Ramon Ortiz 13 i 15 segons Cadastre) en cantonada amb el C/ Antoni Bellet; l'adreça de DADES CLIENT.txt (Doctor Torrebadella 8) és del client, descartada"
+  },
+  "municipality": {
+   "estat": "segur",
+   "value": "Bell-lloc d'Urgell",
+   "candidates": [
+    {
+     "value": "BELL-LLOC D'URGELL",
+     "font": "consultes Cadastre 4613172/4613173 'Localización'",
+     "quote": "25220 BELL-LLOC D'URGELL [LLEIDA]"
+    },
+    {
+     "value": "Bell-lloc d'Urgell",
+     "font": "PDF/ANNEXES/4001612_plànol de situació.pdf (mapa ICGC)",
+     "quote": "Bell-lloc d'Urgell"
+    },
+    {
+     "value": "Bell-Lloc d'Urgell",
+     "font": "4677-GTL-25 p.1 'Situació:'",
+     "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet."
+    }
+   ],
+   "rule": "forma oficial llarga (Cadastre, GTL, mapa ICGC) > forma curta G3 (BELL-LLOC: comanda N21, pressupost p.1, PLAN_COST E9, fitxa) > manuscrits (BELL-LLOCH); mai la població del sol·licitant (Els Omells de Na Gaia) ni la del client",
+   "sources_checked": [
+    "Cadastre ×2",
+    "GTL",
+    "annex plànol de situació",
+    "comanda N21",
+    "pressupost p.1",
+    "PLAN_COST E9",
+    "fitxa C7",
+    "correu 1 (enllaç Maps)",
+    "fulls de camp TPS",
+    "A.01 caixetí",
+    "DADES CLIENT.txt (adreça del client; només corrobora)"
+   ],
+   "note": "grafies vistes i normalitzades: BELL-LLOC (curta G3), BELL.LLOC D'URGELL (arquitecte), BELL-LLOCH (manuscrits/annex DPSH p.2)"
+  },
+  "architect_name": {
+   "estat": "candidats",
+   "value": "Jordi Bosch Novell",
+   "candidates": [
+    {
+     "value": "Jordi Bosch Novell",
+     "font": "A.01.pdf caixetí 'Arquitecte'; signatura digital del pressupost acceptat (/Sig /Name); correu 1",
+     "quote": "Arquitecte / Jordi Bosch Novell — Firmado digitalmente por JORDI BOSCH NOVELL / num:37655-8"
+    },
+    {
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "font": "pressupost p.1 bloc CLIENT; correu 1 línia CLIENT; fitxa!C6",
+     "quote": "ARQUITECTURA BOSCH NOVELL"
+    }
+   ],
+   "rule": "persona > despatx (caixetí + signatura digital amb núm. col·legiat 37655-8); però quan existeixen TOTES DUES formes (persona i despatx) → candidats [persona | despatx], MAI segur (l'Eva escriu de vegades l'una i de vegades l'altra)",
+   "sources_checked": [
+    "A.01 caixetí Arquitecte",
+    "pressupost signat p.5 /Sig",
+    "correu 1",
+    "pressupost p.1",
+    "fitxa C6/C8 (contacte JORDI, tel. 620199571)"
+   ],
+   "note": "arquitecte = sol·licitant de l'encàrrec; no es descarta per ser el sol·licitant (regla autopromotor)"
+  },
+  "architect_company": {
+   "estat": "segur",
+   "value": "ARQUITECTURA BOSCH NOVELL",
+   "candidates": [
+    {
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "font": "pressupost p.1 bloc CLIENT",
+     "quote": "ARQUITECTURA BOSCH NOVELL / 25100 / Tel: 620199571"
+    },
+    {
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "font": "correu 1 línia CLIENT",
+     "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com"
+    }
+   ],
+   "rule": "nom del despatx del sol·licitant, sense cap contradicció; corroborat pel correu del caixetí de l'arquitecte (arquitectura@boschnovell.com)",
+   "sources_checked": [
+    "pressupost p.1",
+    "correu 1",
+    "fitxa C6 (typo ARQUITECCTURA, normalitzat a la forma impresa)",
+    "A.01 caixetí (email)",
+    "annex sondeig 'Client: ARQ BOSCH NOVELL'"
+   ],
+   "note": "totes les aparicions del despatx deriven del mateix encàrrec (no independents entre elles); l'email del caixetí de l'arquitecte és la corroboració externa"
+  },
+  "building_type": {
+   "estat": "segur",
+   "value": "habitatge unifamiliar aïllat",
+   "candidates": [
+    {
+     "value": "HABITATGE UNIFAMILIAR AÏLLAT",
+     "font": "A.01.pdf caixetí (títol del projecte)",
+     "quote": "Projecte Bàsic i Executiu / HABITATGE UNIFAMILIAR AÏLLAT"
+    },
+    {
+     "value": "habitatge unifamiliar aïllat",
+     "font": "annex sondeig 'Obra:' (redacció de l'Eva = la de l'informe)",
+     "quote": "…PER A LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT…"
+    },
+    {
+     "value": "HAB UNIF (expandit: habitatge unifamiliar)",
+     "font": "PLAN_COST 'Plan Cost'!E9",
+     "quote": "EG HAB UNIF BELL-LLOC"
+    }
+   ],
+   "rule": "títol del projecte/plànol > PLAN_COST 'HAB UNIF' > comanda 'CONSTR HABITATGE' > correu; fonts independents coincidents; l'informe redacta ('un habitatge unifamiliar aïllat') — comparació CLOSE",
+   "sources_checked": [
+    "A.01 caixetí",
+    "annexos Eva (sondeig, tall, situació)",
+    "PLAN_COST E9",
+    "comanda N18",
+    "correu 1 ('una sola casa')"
+   ],
+   "note": "una sola casa sobre dues parcel·les contigües (correu 1)"
+  },
+  "num_floors": {
+   "estat": "segur",
+   "value": "PB+PP",
+   "candidates": [
+    {
+     "value": "PB+PP",
+     "font": "A.01.pdf taula JUSTIFICACIÓ PLANEJAMENT (imatge), fila 'N. plantes', col. Projecte",
+     "quote": "N. plantes | PB+PP | PB+PP"
+    },
+    {
+     "value": "PB+1 (Pb 280 m² + P1 86 m²)",
+     "font": "correu 1, línia GEO",
+     "quote": "Pb de 280m + p1 de 86"
+    }
+   ],
+   "rule": "taula de planejament ('N. plantes PB+PP') > correu d'encàrrec ('Pb de 280m + p1 de 86' → PB+1); les dues fonts coincideixen (PB + 1 planta pis); cap plantilla G3 ho porta",
+   "sources_checked": [
+    "A.01 taula planejament",
+    "correu 1",
+    "pressupost/fitxa/comanda (no ho porten)"
+   ],
+   "note": "equivalent a PB+1; superfícies construïdes del correu (280+86) van al bloc tables (superficie_construida), no aquí"
+  },
+  "superficie_parcela": {
+   "estat": "candidats",
+   "value": "995,00 m²",
+   "candidates": [
+    {
+     "value": "995,00 m²",
+     "font": "A.01.pdf taula JUSTIFICACIÓ PLANEJAMENT, fila 'Parcel.la mínima', col. Projecte (imatge, visió)",
+     "quote": "Parcel.la mínima | CLAU 6B min 600.00 m2 | 995,00m2"
+    },
+    {
+     "value": "1012 m² (518 + 494)",
+     "font": "suma de les 2 consultes Cadastre (4613172: 518 m²; 4613173: 494 m²)",
+     "quote": "Superficie gráfica: 518 m2 | 494 m2"
+    },
+    {
+     "value": "518 m² / 494 m² (cadascuna)",
+     "font": "consultes Cadastre per separat",
+     "quote": "518 m2 (parcel·la 15) / 494 m2 (parcel·la 13)"
+    }
+   ],
+   "rule": "taula de planejament del projecte > suma de parcel·les cadastrals > cadascuna; amb 2+ consultes cadastrals i 'dos parcel.les contigües' al correu → candidats (projecte, suma, cadascuna), mai segur",
+   "sources_checked": [
+    "A.01 taula planejament",
+    "Cadastre ×2",
+    "correu 1",
+    "annex situació (cotes 24,72 × 34,61: dimensions, no superfície declarada)"
+   ],
+   "note": "el projecte declara 995 m²; el Cadastre suma 1012 m²; totes dues parcel·les 'PROVIENE DE 4613121' (segregació)"
+  },
+  "field_date": {
+   "estat": "segur",
+   "value": "2025-10-01",
+   "candidates": [
+    {
+     "value": "2025-10-01",
+     "font": "fitxa DADES PER ANAR A CAMP!F38 ('dies de camp')",
+     "quote": "datetime(2025,10,1)"
+    },
+    {
+     "value": "2025-10-01",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf capçalera 'DATA:'",
+     "quote": "DATA: 01/10/2025"
+    },
+    {
+     "value": "2025-10-01",
+     "font": "PENETROS.pdf (albarà TPS manuscrit) + noms de 7 fotos WhatsApp del 2025-10-01",
+     "quote": "1-10-25"
+    }
+   ],
+   "rule": "field_date = PRIMER dia de camp (DPSH): fitxa F38 > annex DPSH 'DATA:' > albarà TPS > noms de fotos — 4 fonts coincidents; el dia del sondeig (2025-10-06: comanda DATA DE PRESA, annex sondeig, SONDEIG.pdf, GTL 'Data extracció', 3 fotos) NO és el primer dia",
+   "sources_checked": [
+    "fitxa F38",
+    "annex DPSH",
+    "PENETROS.pdf",
+    "noms de fotos WhatsApp",
+    "comanda N23 (dia sondeig)",
+    "annex sondeig (dia sondeig)",
+    "SONDEIG.pdf (dia sondeig)",
+    "GTL (dia sondeig)"
+   ],
+   "note": "camp en DOS dies: 01/10/2025 (penetròmetres) i 06/10/2025 (sondeig + mostra); fita: acceptació signada el 30/09/2025"
+  },
+  "cota_referencia": {
+   "estat": "segur",
+   "value": "+199.50 msnm",
+   "candidates": [
+    {
+     "value": "+199.50 msnm",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf capçalera (p.1 i p.2)",
+     "quote": "Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)."
+    },
+    {
+     "value": "199.50 m",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf capçalera 'Coordenades UTM: z:'",
+     "quote": "z: 199.50m"
+    },
+    {
+     "value": "≈199,5 msnm",
+     "font": "tall de correlació, eix msnm (lectura gràfica)",
+     "quote": "superfície dibuixada a ~199,5 (escala 196-200)"
+    }
+   ],
+   "rule": "annex DPSH 'Cota inici' = annex sondeig 'z:' (criteri de l'Eva: ICGC −0,15 carrer) > z GPS de COORDENADES.txt > ICGC; dues còpies de l'Eva CREUADES i coincidents (regla d'errors de còpia satisfeta)",
+   "sources_checked": [
+    "annex DPSH",
+    "annex sondeig",
+    "tall de correlació",
+    "COORDENADES.txt (z=198.9)",
+    "PENETROS.pdf ('Cota inici -0,15' relatiu al carrer)"
+   ],
+   "note": "z GPS de COORDENADES.txt = 198.9 (P-1), ~0,6 m per sota: l'Eva NO la usa (regla apresa); no competeix. Origen del valor explícit a l'annex DPSH."
+  },
+  "num_soil_levels": {
+   "estat": "segur",
+   "value": "1",
+   "candidates": [
+    {
+     "value": "1",
+     "font": "annex sondeig, columna 'Unitat litològica'",
+     "quote": "NIVELL 1 (únic valor, 0,0-1,8 m)"
+    },
+    {
+     "value": "1",
+     "font": "tall de correlació, llegenda",
+     "quote": "1er nivell: Graves amb sorres"
+    }
+   ],
+   "rule": "columna 'Unitat litològica' de l'annex de sondeig > llegenda del tall; coincideixen (1 nivell); els 2 trams de material del full de camp manuscrit NO són nivells; el 'Nivell 1' del peu de l'Excel DPSH és plantilla",
+   "sources_checked": [
+    "annex sondeig",
+    "tall de correlació",
+    "SONDEIG.pdf (2 trams de material)",
+    "Excel DPSH peu (plantilla)"
+   ],
+   "note": "sòls vegetals no comptats (criteri Eva); 2 descripcions de material agrupades en una sola unitat litològica"
+  },
+  "num_dpsh_tests": {
+   "estat": "segur",
+   "value": "2",
+   "candidates": [
+    {
+     "value": "2",
+     "font": "ANNEXES/4001612_DPSH.xls (fulls P-1 i P-2 amb dades a la columna C)",
+     "quote": "sheets: ['P-1', 'P-2']"
+    },
+    {
+     "value": "2",
+     "font": "PENETROS.pdf p.1, albarà TPS 'Nº de penetròmetres realitzats'",
+     "quote": "2"
+    },
+    {
+     "value": "2",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf + tall de correlació",
+     "quote": "P-1 | P-2"
+    }
+   ],
+   "rule": "Excel DPSH (EXECUTATS) > albarà TPS > pressupost p.2 / PLAN_COST / fitxa (previstos); executats = previstos = 2, cap discrepància",
+   "sources_checked": [
+    "Excel DPSH",
+    "albarà TPS",
+    "annex DPSH",
+    "tall",
+    "annex fotografies",
+    "pressupost p.2",
+    "PLAN_COST OFERTA!B21",
+    "fitxa F13 '2 (P)'"
+   ],
+   "note": null
+  },
+  "utm_x": {
+   "estat": "segur",
+   "value": "314418.9",
+   "candidates": [
+    {
+     "value": "314418.9",
+     "font": "ANNEXES/ALTRES/COORDENADES.txt línia 3 (P-1)",
+     "quote": "314418.9 ; 4611117.6 ; 198.9"
+    }
+   ],
+   "rule": "COORDENADES.txt (GPS de camp) > caselles x/y de l'annex de sondeig (aquí BUIDES) > res; UTM de l'informe = P-1 de COORDENADES.txt; 1 font A sense contradicció (coherent amb la quadrícula 314.550 del croquis cadastral i amb l'enllaç Maps del correu)",
+   "sources_checked": [
+    "COORDENADES.txt",
+    "annex sondeig (x/y buits)",
+    "croquis Cadastre (etiqueta 314.550)",
+    "correu 1 (enllaç Maps, comprovació)"
+   ],
+   "note": "fus 31 ETRS89 implícit; només hi ha el punt P-1 (no P-2 ni S-1)"
+  },
+  "utm_y": {
+   "estat": "segur",
+   "value": "4611117.6",
+   "candidates": [
+    {
+     "value": "4611117.6",
+     "font": "ANNEXES/ALTRES/COORDENADES.txt línia 3 (P-1)",
+     "quote": "314418.9 ; 4611117.6 ; 198.9"
+    }
+   ],
+   "rule": "mateixa regla que utm_x (COORDENADES.txt, punt P-1)",
+   "sources_checked": [
+    "COORDENADES.txt",
+    "annex sondeig (x/y buits)",
+    "correu 1 (enllaç Maps, comprovació)"
+   ],
+   "note": "fus 31 ETRS89 implícit; només P-1"
+  },
+  "referencia_catastral": {
+   "estat": "candidats",
+   "value": "4613172CG1141S0001SU",
+   "candidates": [
+    {
+     "value": "4613172CG1141S0001SU",
+     "font": "25.0647/4613172CG1141S0001SU-15.pdf (consulta Cadastre; = adjunt del correu 1)",
+     "quote": "Referencia catastral: 4613172CG1141S0001SU — CL MESTRE RAMON ORTIZ 15"
+    },
+    {
+     "value": "4613173CG1141S0001ZU",
+     "font": "25.0647/4613173CG1141S0001ZU-13.pdf (consulta Cadastre; = adjunt del correu 1)",
+     "quote": "Referencia catastral: 4613173CG1141S0001ZU — CL MESTRE RAMON ORTIZ 13"
+    }
+   ],
+   "rule": "DUES parcel·les → candidats amb les dues (mai triar-ne una: 'una sola casa' sobre 2 parcel·les contigües, correu 1); consultes del Cadastre presents a la carpeta = font vàlida; corroborat per l'annex de situació (parcel·les 72 i 73, illa 46131); mai inferir d'una adreça",
+   "sources_checked": [
+    "Cadastre ×2 (solts a 25.0647/ i adjunts del correu 1, md5 idèntics)",
+    "annex plànol de situació",
+    "A.01 retall CATASTRE (gràfic)"
+   ],
+   "note": "candidat 1 = parcel·la del núm. 15 (la de l'adreça del pressupost); totes dues 'PROVIENE DE 4613121' (segregació)"
+  },
+  "lab_testing_company": {
+   "estat": "segur",
+   "value": "TPS, PROSPECCIÓ DEL SUBSÒL, SL",
+   "candidates": [
+    {
+     "value": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075)",
+     "font": "4677-GTL-25 banda de peu de totes les pàgines (EMISSOR)",
+     "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona…"
+    },
+    {
+     "value": "TPS, S.L.",
+     "font": "annex sondeig 'Empresa:'",
+     "quote": "TPS, S.L. | ML-76A | Sr. Daniel Fernandez"
+    },
+    {
+     "value": "TPS ERUGA",
+     "font": "fitxa!C38 ('ERUGA' = tipus de màquina, no forma part del nom)",
+     "quote": "TPS ERUGA"
+    }
+   ],
+   "rule": "laboratori = EMISSOR del GTL (banda amb registre mercantil), mai el 'client' del GTL (G3); 'SOIL-ASSAIG' del PLAN_COST és etiqueta de PLANTILLA, mai senyal (error històric de l'AI Pipeline)",
+   "sources_checked": [
+    "GTL banda",
+    "annex sondeig",
+    "fitxa C38",
+    "PLAN_COST OFERTA!G27 (plantilla, descartat)",
+    "albarans TPS (logo)"
+   ],
+   "note": null
+  },
+  "lab_sample_id": {
+   "estat": "segur",
+   "value": "SPT-1",
+   "candidates": [
+    {
+     "value": "SPT-1",
+     "font": "annex sondeig, bloc 'Muestras y ensayos in situ' (l'etiqueta de l'ANNEX mana)",
+     "quote": "SPT-1 | -1.00 a -1.60 | 24 34 28 30"
+    },
+    {
+     "value": "SPT1 S1",
+     "font": "4677-GTL-25 p.2 'Mostra:'",
+     "quote": "SPT1 S1 | ref. lab GTL-8205-25"
+    },
+    {
+     "value": "SPT 1 (S1)",
+     "font": "comanda Hoja1!C35",
+     "quote": "SPT 1 (S1)"
+    }
+   ],
+   "rule": "etiqueta de l'informe = la de l'annex de l'Eva (annex > GTL > comanda); les tres fonts donen la MATEIXA etiqueta (variants de grafia SPT-1/SPT1/SPT 1, no és discrepància d'etiqueta)",
+   "sources_checked": [
+    "annex sondeig",
+    "GTL",
+    "comanda C35",
+    "SONDEIG.pdf ('S.P.T-1')",
+    "etiqueta manuscrita de la caixa (foto: 'Mostra: SPT-1')"
+   ],
+   "note": "la referència interna del lab (GTL-8205-25) no és l'etiqueta de l'informe"
+  },
+  "lab_depth": {
+   "estat": "segur",
+   "value": "1,00 - 1,60 m",
+   "candidates": [
+    {
+     "value": "1,0 - 1,6",
+     "font": "4677-GTL-25 p.2 'Cota d'extracció (m)' (el GTL mana per a la profunditat)",
+     "quote": "1,0 - 1,6"
+    },
+    {
+     "value": "1.0 - 1.6",
+     "font": "comanda Hoja1!J35/L35",
+     "quote": "INICIAL 1.0 / FINAL 1.6"
+    },
+    {
+     "value": "-1.00 a -1.60",
+     "font": "annex sondeig 'Prof. de extracció'",
+     "quote": "-1.00 a -1.60"
+    }
+   ],
+   "rule": "GTL > Excel/annex sondeig > comanda per a la PROFUNDITAT; totes les fonts coincideixen (1,00-1,60 m)",
+   "sources_checked": [
+    "GTL",
+    "comanda",
+    "annex sondeig",
+    "SONDEIG.pdf",
+    "foto etiqueta caixa ('Prof. 1.00-1.60')"
+   ],
+   "note": null
+  },
+  "lab_location": {
+   "estat": "segur",
+   "value": "S-1",
+   "candidates": [
+    {
+     "value": "S1",
+     "font": "comanda Hoja1!C35 (parèntesi)",
+     "quote": "SPT 1 (S1)"
+    },
+    {
+     "value": "SPT1 S1",
+     "font": "4677-GTL-25 p.2 'Mostra:'",
+     "quote": "SPT1 S1"
+    },
+    {
+     "value": "S-1",
+     "font": "annex sondeig (capçalera 'Sondeig nº: S-1')",
+     "quote": "Sondeig nº S-1"
+    }
+   ],
+   "rule": "lab_location = punt d'assaig d'on surt la mostra: parèntesi de la comanda = GTL = annex sondeig, tots S-1; grafia de l'annex (S-1)",
+   "sources_checked": [
+    "comanda C35",
+    "GTL",
+    "annex sondeig",
+    "foto etiqueta caixa ('Punt: S1')"
+   ],
+   "note": null
+  },
+  "cte_edificacio": {
+   "estat": "segur",
+   "value": "C1",
+   "candidates": [
+    {
+     "value": "C1",
+     "font": "pressupost p.2 (i còpia signada, mateix document)",
+     "quote": "Tipus d’edifici: C1"
+    },
+    {
+     "value": "C1",
+     "font": "correu 1, línia GEO",
+     "quote": "GEO : És un C1 Pb de 280m + p1 de 86"
+    }
+   ],
+   "rule": "pressupost p.2 'Tipus d'edifici: C1'; el correu d'encàrrec ho corrobora ('És un C1'); coherent amb la definició de l'Eva (construïda 280+86=366 m² > 300 i < 4 plantes → C1)",
+   "sources_checked": [
+    "pressupost p.2",
+    "pressupost signat p.2 (duplicat)",
+    "correu 1"
+   ],
+   "note": null
+  },
+  "cte_sol": {
+   "estat": "segur",
+   "value": "T1",
+   "candidates": [
+    {
+     "value": "T1",
+     "font": "pressupost p.2 (i còpia signada, mateix document)",
+     "quote": "Tipus de Terreny : T1"
+    }
+   ],
+   "rule": "pressupost p.2 'Tipus de Terreny : T1'; 1 font A sense cap contradicció (el pressupost signat és el mateix document, no font independent)",
+   "sources_checked": [
+    "pressupost p.2",
+    "pressupost signat p.2 (duplicat)",
+    "correu 1 (no en parla)"
+   ],
+   "note": null
+  }
+ },
+ "tables": {
+  "dpsh_tests": {
+   "estat_bloc": "no_trobat",
+   "rows": [],
+   "note": "els 26 JSON per-document d'aquesta entrada (Pas 4, dialecte antic) NO porten bloc 'tables'; en mode --consolida no es poden llegir documents per reconstruir files → bloc no_trobat",
+   "sources_checked": [
+    "26 JSON per-document a --out (cap bloc tables)",
+    "_g3_templates.json (senyals escalars, no files)"
+   ]
+  },
+  "sondeig_tests": {
+   "estat_bloc": "no_trobat",
+   "rows": [],
+   "note": "els 26 JSON per-document d'aquesta entrada (Pas 4, dialecte antic) NO porten bloc 'tables'; en mode --consolida no es poden llegir documents per reconstruir files → bloc no_trobat",
+   "sources_checked": [
+    "26 JSON per-document a --out (cap bloc tables)",
+    "_g3_templates.json (senyals escalars, no files)"
+   ]
+  },
+  "spt_ma_tests": {
+   "estat_bloc": "no_trobat",
+   "rows": [],
+   "note": "els 26 JSON per-document d'aquesta entrada (Pas 4, dialecte antic) NO porten bloc 'tables'; en mode --consolida no es poden llegir documents per reconstruir files → bloc no_trobat",
+   "sources_checked": [
+    "26 JSON per-document a --out (cap bloc tables)",
+    "_g3_templates.json (senyals escalars, no files)"
+   ]
+  },
+  "soil_levels": {
+   "estat_bloc": "no_trobat",
+   "rows": [],
+   "note": "els 26 JSON per-document d'aquesta entrada (Pas 4, dialecte antic) NO porten bloc 'tables'; en mode --consolida no es poden llegir documents per reconstruir files → bloc no_trobat",
+   "sources_checked": [
+    "26 JSON per-document a --out (cap bloc tables)",
+    "_g3_templates.json (senyals escalars, no files)"
+   ]
+  },
+  "superficie_construida": {
+   "estat_bloc": "no_trobat",
+   "rows": [],
+   "note": "els 26 JSON per-document d'aquesta entrada (Pas 4, dialecte antic) NO porten bloc 'tables'; en mode --consolida no es poden llegir documents per reconstruir files → bloc no_trobat",
+   "sources_checked": [
+    "26 JSON per-document a --out (cap bloc tables)",
+    "_g3_templates.json (senyals escalars, no files)"
+   ]
+  }
+ },
+ "sources_read": [
+  "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf (via g3_01_pressupost.json)",
+  "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf (via g3_02_pressupost_signat.json; duplicat signat)",
+  "ACCEPTACIO/DADES CLIENT.txt (via acceptacio_03_dades-client.json)",
+  "25.0647/DADES PER ANAR A CAMP_v1.xlsx (via g3_03_fitxa_camp.json)",
+  "25.0647/PLAN_COST_BELL-LLOC.xlsx (via g3_04_plan_cost.json)",
+  "ANNEXES/4001612_DPSH.xls (via g3_05_dpsh_excel.json)",
+  "comanda laboratori_4001612_BELL-LLOC.xls (via g3_06_comanda_laboratori.json)",
+  "4677-GTL-25 Bell-Lloc d'Urgell.pdf (via lab_07_gtl_4677.json)",
+  "PDF/ANNEXES/4001612_sondeig.pdf (via annex_08_sondeig.json)",
+  "PDF/ANNEXES/4001612_tall de correlació.pdf + tall.pdf (via annex_09_tall_correlacio.json)",
+  "PDF/ANNEXES/4001612_plànol de situació.pdf (via annex_10_planol_situacio.json)",
+  "PDF/ANNEXES/4001612_DPSH.pdf (via annex_11_dpsh.json)",
+  "PDF/ANNEXES/4001612_fotografies.pdf (via annex_12_fotografies.json)",
+  "PDF/ANNEXES/LAB-SIG.pdf (via annex_13_lab_sig.json; duplicat del GTL)",
+  "A.01.pdf = 25.0647/A.01.pdf (via planol_14_A01.json)",
+  "A.01 amb punts.pdf (via planol_15_A01_amb_punts.json; duplicat + 4 cotes)",
+  "pl. situaci.pdf (via planol_16_pl_situaci.json; versió text de l'annex 10)",
+  "ANNEXES/ALTRES/COORDENADES.txt (via coord_17_coordenades_txt.json)",
+  "EXPLICACIÓ DETALLS.docx (via meta_18_explicacio_detalls.json; EXCLÒS: meta-document)",
+  "PENETROS.pdf (via camp_19_penetros_manuscrit.json)",
+  "SONDEIG.pdf (via camp_20_sondeig_manuscrit.json)",
+  "FOTOGRAFIES/ 10 jpg (via fotos_21_fotografies_camp.json)",
+  "25.0647/Pressupost C1 - ….msg (via correu_01_pressupost-c1_cesar-a-eva.json)",
+  "25.0647/RE_ Pressupost C1 - ….msg (via correu_02_re-pressupost-c1_eva-a-cesar.json; sense text nou)",
+  "25.0647/4613172CG1141S0001SU-15.pdf (via cadastre_01…json; = adjunt correu 1)",
+  "25.0647/4613173CG1141S0001ZU-13.pdf (via cadastre_02…json; = adjunt correu 1)",
+  "_g3_templates.json (senyals deterministes Fase 4a, autoritat A)"
+ ],
+ "notes_estructurals": [
+  "mode --consolida (Pas 5b): cap document del projecte obert; única entrada = 26 JSON per-document + _g3_templates.json del directori --out",
+  "_inventory.json ABSENT al directori --out: consolidació sense inventari — sense md5 creuats propis ni llista completa de fitxers; els dedups s'han fet amb les anotacions dels per-doc JSON; el punt 3 del Pas 5b (detectar lectures fallides) és INAPLICABLE sense inventari",
+  "cap per-doc JSON porta bloc 'tables' (lectures del Pas 4 en dialecte antic, sense taules): el bloc tables queda no_trobat; una re-lectura per document amb el skill v1.0 el pot omplir",
+  "duplicats (anotats als per-doc): pressupost signat = pressupost + signatura; LAB-SIG.pdf = GTL 4677; A.01 amb punts = A.01 + 4 cotes de replanteig; pl. situaci.pdf = annex de situació (text llegible); correu 2 sense text nou; adjunts del correu 1 = els 2 PDF del Cadastre de 25.0647/ (md5 idèntics)",
+  "EXPLICACIÓ DETALLS.docx exclòs de l'evidència (meta-document de l'Eva, regla d'inventari)",
+  "formulari p.5 del pressupost signat BUIT: client_name resolt amb el caixetí 'Promotor' del plànol + ACCEPTACIO/DADES CLIENT.txt",
+  "dialecte: cap per-doc portava claus status/source a nivell de camp; _g3_templates usa 'source' per al fitxer d'origen — normalitzat a 'font' en aquesta sortida (dialecte únic v1)",
+  "el validador automation/lectura/contract.py esmentat al Pas 5 encara NO existeix al repo (automation/lectura/ només té __init__.py buit): sortida conformada al schema textual del skill, no validada per màquina",
+  "camp en dos dies (01/10 DPSH, 06/10 sondeig): field_date=01/10 segur; el 06/10 queda documentat a la nota del camp"
+ ]
+}

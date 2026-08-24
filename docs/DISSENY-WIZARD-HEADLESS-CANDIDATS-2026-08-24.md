@@ -145,13 +145,16 @@ Els md5 permeten: detecció de duplicats abans de gastar crides, i la cache del 
 "font i cita"). El skill v1.0 emet NOMÉS aquest dialecte. Els fixtures d'or NO es reescriuen: un adapter de test
 (`tests/…/adapter`) mapeja el dialecte antic al nou per fer-los servir com a fixtures.
 
-### 4.2 Escalars — claus PLANES (20)
+### 4.2 Escalars — claus PLANES (22)
 
 `lab` i `cte` (niuats als fixtures d'or) s'aplanen, perquè el wizard és pla:
 
 `expedient, client_name, street_address, municipality, architect_name, architect_company, building_type, num_floors,
-superficie_parcela, superficie_construida, field_date, cota_referencia, num_soil_levels, num_dpsh_tests, utm_x, utm_y,
-referencia_catastral, lab_testing_company, lab_sample_id, lab_depth, lab_location, cte_edificacio, cte_sol`
+superficie_parcela, field_date, cota_referencia, num_soil_levels, num_dpsh_tests, utm_x, utm_y, referencia_catastral,
+lab_testing_company, lab_sample_id, lab_depth, lab_location, cte_edificacio, cte_sol`
+
+(`superficie_construida` NO és una clau de `fields`: viu a `tables` amb components+total, com als fixtures d'or —
+correcció Fase 0 sobre la primera redacció d'aquest document.)
 
 ### 4.3 Estructura
 

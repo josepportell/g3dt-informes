@@ -6,7 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 0.9 (2026-08-24) — lliçons de la lectura d'or de TAULES (8 agents cecs, 7 projectes comparats amb informes: 1 ERR → regla del sistema de cotes; B80→zona B79-B82; N.F./Nivells per COLOR de cel·la; n30 mai segur; micro-regles de format). Evidència: `docs/golden-read-taules/`.
+Versió 1.0 (2026-08-24) — contracte v1 per al wizard headless (`docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md`): dialecte únic `estat`/`font`, 22 claus planes a `fields`, arguments nous `--inventory` i `--consolida` (Pas 5b), escriptura atòmica, i capçalera `source_md5`/`skill_version`/`schema_version` a cada JSON.
+v0.9: lliçons de la lectura d'or de TAULES (8 agents cecs, 7 projectes comparats amb informes: 1 ERR → regla del sistema de cotes; B80→zona B79-B82; N.F./Nivells per COLOR de cel·la; n30 mai segur; micro-regles de format). Evidència: `docs/golden-read-taules/`.
 v0.8: anatomia de l'ANNEX DE SONDEIG (la matriu que l'Eva usa com a font de nivells i litologies; assenyalada pel Josep, verificada a Bell-lloc) + litologia: annex sondeig «Descripció dels materials» passa PRIMER, tall segon.
 v0.7: Pas 3b: regles d'or per a les TAULES de l'informe (dades per fila/nivell), derivades de comparar les taules dels 7 informes signats amb els documents del corpus; verificades per mostreig (Castellar, Bell-lloc, Alcoletge), pendents de lectura d'or completa de taules.
 v0.6: DWG llegibles via LibreDWG `dwg2dxf` + `scripts/dwg_text_dump.py` (verificat amb els 4 DWG de Tulipa; `docs/DWG-CONVERSOR-2026-08-23.md`).
@@ -16,19 +17,26 @@ v0.2: Pas 0 (context del document abans de llegir-lo; reflexió del Josep) + blo
 
 ## Arguments
 
-`$ARGUMENTS` = path de la carpeta del projecte (requerit) `[--out DIR]` `[--only FITXER]`
+`$ARGUMENTS` = path de la carpeta del projecte (requerit) `[--out DIR]` `[--only FITXER]` `[--inventory FILE]` `[--consolida]`
 
 - `--out DIR`: on escriure els JSON (defecte: `{projecte}/validation/lectura/`; en dry-run: `docs/golden-read/{expedient}/`).
 - `--only FITXER`: llegeix només aquest document i escriu el seu JSON (una crida per document = forma headless de producció).
+- `--inventory FILE`: JSON d'inventari escrit pel wizard (llista completa de fitxers del projecte amb md5, duplicats i route).
+  En mode `--only` és el teu context creuat: llegeix-lo ABANS del document per aplicar el Pas 0 (saber què més hi ha a la
+  carpeta, detectar duplicats i versions) sense obrir els altres fitxers. Si no es passa o no existeix, continua sense i anota-ho.
+- `--consolida`: NO llegeixis cap document del projecte. Llegeix els JSON per-document ja escrits a `--out` i aplica el
+  Pas 5 per escriure `_decisions.json`. Vegeu el Pas 5b.
 
 Exemples:
 ```
 /g3dt-llegir-projecte /mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC --out "docs/golden-read/4001612 BELL-LLOC"
-/g3dt-llegir-projecte /mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC --only "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf"
+/g3dt-llegir-projecte /mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC --only "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf" --inventory "…/validation/lectura/_inventory.json"
+/g3dt-llegir-projecte /mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC --consolida --out "…/validation/lectura"
 ```
 
 Entorn: `.venv/bin/python` del repo té `fitz` (PyMuPDF), `openpyxl`, `xlrd`, `extract_msg`, `python-docx`, `PIL`. Sense `unzip` (usa `zipfile`).
 Mode headless: no facis cap pregunta; si dubtes, baixa d'estat (`segur` → `candidats` → `no_trobat`) i anota-ho a `note`.
+Escriu SEMPRE de forma atòmica: fitxer temporal al mateix directori + `os.replace` (el wizard llegeix els JSON tan bon punt apareixen).
 
 ## Els 15 camps del nivell A
 
@@ -233,7 +241,8 @@ Derivades de comparar les taules dels 7 informes signats amb els documents de le
   cel·la, no text** (Alcoletge: llegenda de colors a les files 79-80 — Nivell 1 / Nivell 2 / Humitat; cal `xlrd`
   `formatting_info=True`). Compte: la llegenda "Nivell 1|2" de les files 79-80 pot ser NOMÉS plantilla (Tulipa: idèntica als
   4 fulls, cap marca real) — una llegenda no és una transició. "No detectat" NOMÉS si la columna és buida (text I color) a
-  tots els fulls. **"Humitat" ≠ aigua franca però SÍ que va a la taula**: l'Eva titula la columna "Humitat (m)" i hi escriu
+  tots els fulls — i anota a `reading_notes` que has comprovat els colors (`formatting_info=True`), perquè el
+  consolidador cec ho pugui verificar. **"Humitat" ≠ aigua franca però SÍ que va a la taula**: l'Eva titula la columna "Humitat (m)" i hi escriu
   la fondària (-1,00 a Alcoletge, d'humitat, no de nivell freàtic) — llegeix el valor i emet el matís (humitat|aigua).
 
 **Taula "Sondeig a rotació" — una fila per S-x (`sondeig_tests[]`):** cota, profunditat assolida (annex sondeig), `spt_ma`
@@ -300,7 +309,8 @@ fondàries i litologies bones).
 ## Pas 4 — Sortida: un JSON per document
 
 ```json
-{"source_path": "relatiu a la carpeta", "document_type": "pressupost_g3|fitxa_camp_g3|comanda_lab_g3|plan_cost_g3|dpsh_excel|annex_sondeig|annex_tall|annex_planol_situacio|annex_dpsh|annex_fotografies|informe_laboratori|consulta_cadastre|planol|projecte_arquitecte|correu|foto|full_camp_manuscrit|coordenades_gps|altre",
+{"source_path": "relatiu a la carpeta", "source_md5": "md5 del fitxer font", "skill_version": "1.0", "schema_version": 1,
+ "document_type": "pressupost_g3|fitxa_camp_g3|comanda_lab_g3|plan_cost_g3|dpsh_excel|annex_sondeig|annex_tall|annex_planol_situacio|annex_dpsh|annex_fotografies|informe_laboratori|consulta_cadastre|planol|projecte_arquitecte|correu|foto|full_camp_manuscrit|coordenades_gps|altre",
  "what_it_is": "1 frase", "issuer": "qui l'ha fet", "date": "...", "pages_or_sheets": "...",
  "context": {"who_made_it": "...", "for_whom": "...", "why": "...", "expected_fields": ["..."], "not_expected": ["..."],
              "relation_to_others": "duplicat de / versió revisada de / substitueix / complementa …", "authority_for": ["concept_id", "..."]},
@@ -312,22 +322,79 @@ fondàries i litologies bones).
  "reading_notes": "què ha calgut fer (ordenar blocs, renderitzar, rotar, clip, llegir /Sig)"}
 ```
 
-Escriu cada JSON **immediatament** després de llegir el document (el disc és la memòria). Els duplicats (mateix md5, mateix número
+Escriu cada JSON **immediatament** després de llegir el document (el disc és la memòria), de forma atòmica (tmp + `os.replace`).
+**Tot camp que llistis a `context.authority_for` ha de tenir la seva entrada a `tier_a` amb `quote`** (o constar a
+`not_present` amb motiu): el consolidador (Pas 5b) és cec — un senyal que només viu al bloc `context` no pot pujar mai
+a `segur` (lliçó de l'acceptació Fase 0: el promotor del caixetí d'A.01 anotat a `for_whom` sense entrada tier_a). Els duplicats (mateix md5, mateix número
 d'informe, "X amb punts") s'anoten com a tals i **no** compten com a fonts independents. Les entrades `NOT_client_name` serveixen per
 deixar constància explícita del que s'ha descartat i per què.
 
-## Pas 5 — `_decisions.json`
+## Pas 5 — `_decisions.json` (schema v1)
 
-Per a cada un dels 15 camps (i, des de v0.7, un bloc `tables` amb `dpsh_tests`/`sondeig_tests`/`spt_ma_tests`/`soil_levels`
-consolidats amb els mateixos 3 estats per fila — una fila amb totes les cel·les de 2+ fonts coincidents és `segur`; una
-litologia re-redactable o un N30 manuscrit dubtós és `candidats`):
-- `segur`: ≥ 2 fonts **independents** d'autoritat A coincideixen, o 1 font A sense cap contradicció. Sempre amb `candidates[]` (valor,
-  font, cita) perquè la UI mostri d'on surt.
-- `candidats`: llista ordenada ≤ 3 amb font i cita. També quan hi ha multiplicitat real (cantonada, dues parcel·les).
-- `no_trobat`: amb `sources_checked[]` (on s'ha buscat).
+Estructura de nivell alt (contracte v1 del wizard; el validador Python és `automation/lectura/contract.py`):
+
+```json
+{"schema_version": 1, "project": "…", "generated": "…", "skill_version": "1.0",
+ "fields": {"<clau plana>": {"estat": "segur|candidats|no_trobat", "value": "…|null",
+            "candidates": [{"value": "…", "font": "document + posició", "quote": "text literal"}],
+            "rule": "…", "sources_checked": ["…"], "note": null}},
+ "tables": {"dpsh_tests": {"estat_bloc": "…", "rows": []}, "sondeig_tests": {}, "spt_ma_tests": {}, "soil_levels": {},
+            "superficie_construida": {}},
+ "__forma_bloc_buit": {"estat_bloc": "no_trobat", "rows": [], "sources_checked": ["…"]},
+ "sources_read": ["…"], "notes_estructurals": ["…"]}
+```
+
+Les **22 claus planes** de `fields` (els 15 camps aplanats — `lab`/`cte`/`utm` desglossats, mai niuats):
+`expedient, client_name, street_address, municipality, architect_name, architect_company, building_type, num_floors,
+superficie_parcela, field_date, cota_referencia, num_soil_levels, num_dpsh_tests, utm_x, utm_y, referencia_catastral,
+lab_testing_company, lab_sample_id, lab_depth, lab_location, cte_edificacio, cte_sol`.
+(`superficie_construida` i la resta de dades per fila viuen a `tables`, Pas 3b.)
+Un bloc de `tables` sense cap font que l'alimenti s'emet SEMPRE amb la forma canònica del bloc buit
+(`estat_bloc: "no_trobat"`, `rows: []`, `sources_checked` amb on s'ha buscat) — mai `{}` ni absent.
+
+Dialecte ÚNIC de claus (v1.0; a les lectures d'or hi convivien `status`/`source` i `estat`/`font` — ja no):
+**`estat`** (mai `status`), **`font`** (mai `source`), `quote`, `value`, `candidates`, `rule`, `sources_checked`, `note`.
+
+Per a cada clau de `fields` (i cada cel·la de `tables`, amb els mateixos 3 estats per fila — una fila amb totes les
+cel·les de 2+ fonts coincidents és `segur`; una litologia re-redactable o un N30 manuscrit dubtós és `candidats`):
+- `segur`: ≥ 2 fonts **independents** d'autoritat A coincideixen, o 1 font A sense cap contradicció. Sempre amb `candidates[]`
+  (value, font, quote) perquè la UI mostri d'on surt.
+- `candidats`: llista ordenada ≤ 3 amb font i cita; `value` = `candidates[0].value` (el que la UI pre-omple en ambre).
+  També quan hi ha multiplicitat real (cantonada, dues parcel·les).
+- `no_trobat`: `value` = null, amb `sources_checked[]` (on s'ha buscat) no buit.
 - `rule`: la regla del Pas 3 aplicada, en una frase.
 
+Restriccions dures del contracte (el validador les REBUTJA — no són estil, són el criteri d'or codificat):
+- `n30` mai `estat: segur`; la `litologia` de `soil_levels` mai `segur` per a la cadena literal (Pas 3b).
+- `segur` i `candidats` porten sempre `candidates[]` no buit (≤ 3).
+- `nivell_freatic` porta `matis` ∈ {null, "humitat", "aigua"}.
+- `spt_ma` emet comptes (`n_spt`, `n_tp`, `n_ma`), mai cadena formatada; `n30` emet `registre` (segur) + candidats de la
+  suma; `superficie_construida` emet `components[]` + `total` + `etiqueta_font`. El lector emet dades; el generador formata.
+
 Criteri únic: **ERR-amb-confiança = 0**. Davant del dubte, baixa d'estat. No ompliu "perquè segur que és això".
+
+## Pas 5b — Mode `--consolida` (la crida final del pipeline headless)
+
+En producció la lectura és una crida per document (`--only`); la consolidació del Pas 5 es fa en una crida FINAL separada
+amb `--consolida`. En aquest mode:
+
+1. **NO obris cap document del projecte.** La teva única entrada són els JSON del directori `--out`:
+   - `{doc}.json` per document llegit (Pas 4);
+   - `_g3_templates.json` — senyals deterministes de les 5 plantilles G3 (cel·la exacta + cita): tracta'ls com una font
+     d'autoritat A més;
+   - `_inventory.json` — md5, duplicats i llista completa de fitxers (si falta, continua i anota-ho).
+2. Aplica les regles del Pas 0/3/3b/5 sobre aquests senyals: independència de fonts (les aparicions derivades del mateix
+   encàrrec NO són independents), autoritat per camp, duplicats per md5 (no compten dos cops), versions (`modDate` posterior mana).
+3. Un document previst a l'inventari sense `{doc}.json` (timeout o error de lectura): els camps que només ell podia donar
+   queden `no_trobat` amb `"lectura fallida: {doc}"` dins de `sources_checked`.
+4. Normalització d'entrada: els `{doc}.json` del Pas 4 NO parlen el dialecte de sortida — porten `tier_a[]` amb
+   `location`/`quote`/`confidence`. La conversió canònica és: cada entrada de `tier_a` esdevé un candidat
+   `{value, font: "{source_path} {location}", quote}` del seu `concept_id`; la `confidence` i el `context` del document
+   pesen en l'ORDRE i l'estat final, però no surten al `_decisions.json`. Si un JSON arriba en dialecte antic
+   (`status`/`source`), normalitza'l en llegir-lo — la sortida és sempre v1.
+5. Escriu `_decisions.json` (schema v1 del Pas 5) de forma atòmica a `--out`.
+
+És la crida barata del pipeline: cap lectura de documents, només JSONs.
 
 ## Pas 6 (només dry-run) — Comparació amb l'informe de l'Eva
 
