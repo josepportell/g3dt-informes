@@ -1,0 +1,54 @@
+{
+ "source_path": "comanda laboratori_4001607_LINYOLA.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori de G3 per a la mostra SPT 1 presa al punt P3.",
+ "issuer": "G3 (Eva Vázquez, responsable)",
+ "date": "DATA DE PRESA 2025-10-01 (N23=45931); DATA DE SOL.LICITUD 2025-10-10 (AH23=45940)",
+ "pages_or_sheets": "Hoja1",
+ "context": {
+  "who_made_it": "G3 (sol·licitant, NIF B25364589)",
+  "for_whom": "el laboratori (TPS, coneixement previ; el nom del lab no consta a la comanda)",
+  "why": "Encarregar assaigs de la mostra SPT: límits d'Atterberg + agressivitat de sòls (només sulfats), Lambe segons límits",
+  "expected_fields": [
+   "spt_ma_tests[].id/punt/profunditat (fila 35)",
+   "expedient",
+   "adreça obra",
+   "municipi",
+   "data de presa"
+  ],
+  "not_expected": [
+   "n30 (la comanda no porta colpeig)",
+   "litologia del nivell",
+   "client de l'informe (el 'sol·licitant' és G3)"
+  ],
+  "relation_to_others": "El bloc DADES DEL SOL.LICITANT (files 11-15) és G3: s'ignora. La fila 35 és la mateixa mostra que el GTL 4672-GTL-25 i que l'anotació SPT-1 de l'Excel DPSH (P-3!E23:E25).",
+  "authority_for": [
+   "spt_ma_tests[].id",
+   "spt_ma_tests[].punt",
+   "lab_depth (candidat: GTL > Excel > comanda)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT 1",
+    "punt": "P3",
+    "profunditat": "1,00 a 1,15 m",
+    "n30": null,
+    "litologia": null,
+    "location": "Hoja1!C35 (mostra), J35/L35 (cotes inicial/final)",
+    "quote": "SPT 1 (P3) | INICIAL 1.0 | FINAL 1.15 | Límits d'Atterberg X | Agressivitat sòls X | NOMÉS SULFATS",
+    "note": "Cota final 1,15 discrepa de l'anotació de l'Excel DPSH (1,0 a 1,5) -> candidats per a la profunditat; regla: GTL > Excel > comanda. Observacions C58: 'DEPENET DELS LIMITS, LAMBE'."
+   }
+  ],
+  "__nota": "Cap fila de sondeig a rotació: la comanda només porta 1 mostra (SPT del punt P3). Coherent amb absència d'annex de sondeig."
+ },
+ "not_present": [
+  "n30",
+  "litologia",
+  "files de sondeig a rotació",
+  "nivell freàtic"
+ ],
+ "reading_notes": "xlrd; dates Excel convertides (epoch 1899-12-30). Dos blocs amb les mateixes etiquetes: files 11-15 sol·licitant (G3, ignorat) vs files 18-23 obra."
+}

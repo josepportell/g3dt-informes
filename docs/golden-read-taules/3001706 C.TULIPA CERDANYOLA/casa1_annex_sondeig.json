@@ -1,0 +1,101 @@
+{
+ "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+ "document_type": "annex_sondeig",
+ "what_it_is": "Annex de sondeig S-1 (plantilla G3 'Sondeig a rotació amb bateria continua'), executat a la parcel·la de casa 1 (C/ Tulipa 3); còpia Print To PDF amb text llegible.",
+ "issuer": "G3 (Eva Vázquez Marcet, geòloga col. 4302)",
+ "date": "sondeig 07/05/2026; modDate 2026-06-04",
+ "pages_or_sheets": "2 pàgines (p.1 matriu del sondeig, p.2 fotografies)",
+ "context": {
+  "who_made_it": "Eva",
+  "for_whom": "annex dels informes (casa 1 i, replicat, casa 2)",
+  "why": "log del sondeig: nivells, litologies, mostres SPT",
+  "expected_fields": [
+   "cota z",
+   "num_soil_levels (Unitat litològica)",
+   "Descripció dels materials",
+   "SPT id/prof/registre",
+   "nivell freàtic"
+  ],
+  "not_expected": [
+   "promotor",
+   "plantes",
+   "superfícies"
+  ],
+  "relation_to_others": "mateix dibuix FreeHand que CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf (còpia Distiller) amb UNA variant de redacció al tram -1.10/-2.20 (vegeu casa2_annex_sondeig.json); el full de camp manuscrit TPS (PENETROS + SONDEIG.pdf p.5) n'és l'original de camp. El 'Client: SR.ALEIX SUBIÀ FELIP' és el sol·licitant (arquitecte VUA), no dada de taula.",
+  "authority_for": [
+   "sondeig_tests (cota, profunditat, NF)",
+   "spt_ma_tests (id, prof, registre)",
+   "soil_levels (litologia primer candidat, de/a)",
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "+199,0 msnm (segons el plànol ICGC)",
+    "profunditat": "-3,54 m",
+    "nivell_freatic": "No detectat (columna 'Nivell freàtic' sense cap marca)",
+    "location": "p.1 capçalera (Z:) i matriu (fons del log / darrer tram)",
+    "quote": "+199.0 msnm (segons el plànol ICGC) | -2.80 a -3.54 m: Lutites i sorrenques menys alterades."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1,00 a -1,60 m",
+    "registre": "6/9/9/9",
+    "location": "p.1 bloc Mostres i assaigs in-situ (Tipus de mostra / Prof. de extracció / Registre)",
+    "quote": "SPT-1 | -1.00 a -1.60 | 6 9 9 9"
+   },
+   {
+    "id": "SPT-2",
+    "punt": "S-1",
+    "profunditat": "-3,00 a -3,54 m",
+    "registre": "19/31/33/50R",
+    "location": "p.1 bloc Mostres i assaigs in-situ",
+    "quote": "SPT-2 | -3.00 a -3.54 | 19 31 33 50R"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "NIVELL 1",
+    "de": "0,00",
+    "a": "-1,10",
+    "litologia_candidats": [
+     "Sorres llimoses disgregades amb graves i restes d'arrels (amb 0,00-0,10 de sòl vegetal)"
+    ],
+    "location": "p.1 columna 'Unitat litològica' + 'Descripció dels materials'",
+    "quote": "0.00 a -0.10 m: Sòl vegetal. | -0.10 a -1.10 m: Sorres llimoses disgregades amb graves i restes d'arrels."
+   },
+   {
+    "nom": "NIVELL 2",
+    "de": "-1,10",
+    "a": "-2,20",
+    "litologia_candidats": [
+     "Argiles coheives amb indicis de precipitat de calci (redacció d'aquesta còpia)"
+    ],
+    "location": "p.1 'Unitat litològica' + 'Descripció dels materials'",
+    "quote": "-1.10 a -2.20 m: Argiles coheives amb indicis de precipitat de calci."
+   },
+   {
+    "nom": "NIVELL 3",
+    "de": "-2,20",
+    "a": "-3,54 (fi del sondeig; el nivell continua)",
+    "litologia_candidats": [
+     "Lutites i sorrenques molt alterades (-2,20/-2,80) / menys alterades (-2,80/-3,54)"
+    ],
+    "location": "p.1 'Unitat litològica' + 'Descripció dels materials'",
+    "quote": "-2.20 a -2.80 m: Lutites i sorrenques molt alterades. | -2.80 a -3.54 m: Lutites i sorrenques menys alterades."
+   }
+  ],
+  "__nota": "Capçalera: Sondeig nº S-1 | Client: SR.ALEIX SUBIÀ FELIP (sol·licitant, cap rol a taules) | Data inici/fi 07/05/2026 | Empresa TPS, S.L. | Sondista Sr. Daniel Fernandez | Màquina ML76A. p.2: fotografies (S1 0-3,00 i 3,00-3,54; materials SPT-1 i SPT-2 — 'Fotografia 5' no apareix al text)."
+ },
+ "not_present": [
+  "nivell freàtic (cap marca)",
+  "MA (cap mostra alterada: només 2 SPT)"
+ ],
+ "reading_notes": "Text llegible per ser Print To PDF; lectura VISUAL de la matriu a 150 dpi per confirmar posicions de NIVELL 1/2/3, registres SPT i absència de marca de NF. R.Q.D./testimoni no transcrits (no alimenten cap taula)."
+}

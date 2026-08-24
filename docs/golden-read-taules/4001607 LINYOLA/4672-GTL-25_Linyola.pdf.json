@@ -1,0 +1,52 @@
+{
+ "source_path": "4672-GTL-25 Linyola.pdf",
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori de TPS sobre la mostra SPT1 del punt P3 (límits, sulfats, Lambe).",
+ "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075); signat Pere Cervós Flinch i Pere Farrés i Bori, 30/10/2025",
+ "date": "expedició 30/10/2025; extracció mostra 01/10/2025; recepció 10/10/2025",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "TPS (laboratori), per encàrrec de G3 (el 'client' del GTL és G3: cap rol al projecte)",
+  "for_whom": "G3",
+  "why": "Resultats dels assaigs demanats a la comanda: límits d'Atterberg, sulfats, Lambe (segons límits)",
+  "expected_fields": [
+   "spt_ma_tests[].profunditat (Cota d'extracció)",
+   "spt_ma_tests[].id (Mostra)",
+   "litologia de la mostra (Descripció del material)",
+   "sulfats"
+  ],
+  "not_expected": [
+   "n30 (el GTL no porta colpeig)",
+   "client de l'informe",
+   "nivells del sòl"
+  ],
+  "relation_to_others": "Respon a 'comanda laboratori_4001607_LINYOLA.xls' fila 35. PDF/ANNEXES/lab-sig.pdf és el MATEIX informe 4672-GTL-25 (7 p., mateixa capçalera; md5 diferent per còpia/signatura) -> duplicat, no font independent.",
+  "authority_for": [
+   "lab_depth",
+   "spt_ma_tests[].litologia (material de la mostra)",
+   "sulfats (Tier B input)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT1",
+    "punt": "P3",
+    "profunditat": "1,0 - 1,15 m",
+    "n30": null,
+    "litologia": "Lutita gresosa (tipus de material: Roca)",
+    "location": "p.2 (Mostra: SPT1 P3; Cota d'extracció (m): 1,0 - 1,15; DESCRIPCIÓ DEL MATERIAL: Lutita gresosa; Tipus de material: Roca); p.6 resum",
+    "quote": "Mostra: SPT1 P3 | Tipus de mostra: SPT | Cota d'extracció (m): 1,0 - 1,15 | DESCRIPCIÓ DEL MATERIAL: Lutita gresosa | Tipus de material: Roca",
+    "note": "Resultats: LL 41,7 / LP 22,0 / IP 19,7; sulfats SO4 0,0 mg/kg; Lambe índex 0,01 MPa, canvi de volum potencial 'marginal'. Data extracció 01/10/2025 = dia de camp DPSH."
+   }
+  ],
+  "__nota": "Cap sondeig a rotació al GTL (sistema d'obertura 'Manual', mostra única SPT). Sulfats/Lambe són inputs Tier B: es deixen anotats a la fila, no es deriven."
+ },
+ "not_present": [
+  "n30",
+  "nivell freàtic",
+  "soil_levels"
+ ],
+ "reading_notes": "Text natiu (PDFMaker des d'Excel), ordre de blocs desordenat: reconstruït per etiquetes. Obra/Projecte p.2: 'Linyola. Carrer Clot de la Llacuna. 4001607'."
+}

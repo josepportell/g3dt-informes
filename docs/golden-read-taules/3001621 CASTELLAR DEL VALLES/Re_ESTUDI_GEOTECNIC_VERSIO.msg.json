@@ -1,0 +1,40 @@
+{
+  "source_path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+  "document_type": "correu",
+  "what_it_is": "Resposta del client (Roc Clusa) a la v0 de l'informe: reclama l'annex de laboratori i dicta el títol de l'informe.",
+  "issuer": "Roc Clusa (rocflats@hotmail.com)",
+  "date": "2025-11-18",
+  "pages_or_sheets": "cos (text nou per sobre del From: de la Dolors 03/11/25)",
+  "context": {
+    "who_made_it": "el client/promotor contacte",
+    "for_whom": "G3 (Dolors)",
+    "why": "revisió de la versió 0 de l'informe",
+    "expected_fields": [
+      "building_type (instrucció de títol POSTERIOR als annexos)"
+    ],
+    "not_expected": [
+      "taules",
+      "superfícies",
+      "cotes"
+    ],
+    "relation_to_others": "posterior als annexos (03/11) → per regla, la seva redacció del títol mana sobre la dels annexos",
+    "authority_for": [
+      "building_type (candidat 1, fora d'abast d'aquesta lectura)"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "building_type",
+      "value": "GRUP D'HABITATGES UNIFAMILIARS (instrucció de títol)",
+      "location": "cos del correu 18/11/2025",
+      "quote": "El títol hauria de ser: \"Estudi geològic / geotècnic per la CONSTRUCCIÓ D'UN GRUP D'HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS\"",
+      "confidence": 0.9,
+      "note": "no és camp de taules; registrat perquè és instrucció posterior del client"
+    }
+  ],
+  "not_present": [
+    "superficie_construida",
+    "dades de taules"
+  ],
+  "reading_notes": "extract_msg; només el text per sobre del primer From: és nou."
+}

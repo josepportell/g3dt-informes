@@ -1,0 +1,23 @@
+{
+  "source_path": "PDF/ANNEXES/LAB-SIG.pdf",
+  "document_type": "informe_laboratori",
+  "what_it_is": "Còpia annex del mateix GTL 4703-GTL-25 (duplicat)",
+  "issuer": "TPS",
+  "date": "17/12/2025",
+  "pages_or_sheets": "8 pàgines",
+  "context": {
+    "who_made_it": "TPS",
+    "for_whom": "G3",
+    "why": "còpia per a l'annex de l'informe",
+    "relation_to_others": "duplicat de '4703-GTL-25 Rubí.pdf' (mateix núm. 4703-GTL-25 / GTL-8270-25, mateixes 8 pàgines; md5 diferent però contingut idèntic) — NO compta com a font independent",
+    "expected_fields": [],
+    "not_expected": [],
+    "authority_for": []
+  },
+  "tier_a": [],
+  "tables": {
+    "__nota": "duplicat — cap dada nova"
+  },
+  "not_present": [],
+  "reading_notes": "verificat pàgina a pàgina contra el GTL original"
+}

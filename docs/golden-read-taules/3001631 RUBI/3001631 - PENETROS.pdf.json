@@ -1,0 +1,98 @@
+{
+  "source_path": "3001631 - PENETROS.pdf",
+  "document_type": "full_camp_manuscrit",
+  "what_it_is": "Escaneig TPS: albarà (p.1) + full de camp DPSH (p.2) + full d'assaig SPT (p.3), manuscrits",
+  "issuer": "TPS (operari Daniel Fernández, equip ML76A)",
+  "date": "14-11-2025",
+  "pages_or_sheets": "3 pàgines escanejades (0 text → visió)",
+  "context": {
+    "who_made_it": "TPS (subcontractista de penetròmetres) per a G3",
+    "for_whom": "G3 — les caselles DADES CLIENT (Empresa G3 / Responsable Eva) són la relació TPS→G3, cap rol al projecte",
+    "why": "registre de camp original; l'Excel DPSH n'és la transcripció revisada per Eva → l'Excel mana pels valors",
+    "expected_fields": [
+      "field_date",
+      "num_dpsh_tests",
+      "rebuigs",
+      "N.F.",
+      "punt 0",
+      "registre SPT"
+    ],
+    "not_expected": [
+      "client de l'informe",
+      "plantes",
+      "superfícies"
+    ],
+    "relation_to_others": "origen manuscrit d'ANNEXES/3001631_DPSH.xls; el full SPT (p.3) és la font independent del registre 16/20/20/24",
+    "authority_for": [
+      "field_date",
+      "num_dpsh_tests (albarà)",
+      "spt_ma_tests.registre",
+      "dpsh_tests.nivell_freatic (bloc en blanc)"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "field_date",
+      "value": "14/11/2025",
+      "location": "p.1 Data i p.2/p.3 Data",
+      "quote": "14-11-2025",
+      "confidence": 0.9,
+      "note": ""
+    },
+    {
+      "concept_id": "num_dpsh_tests",
+      "value": "3",
+      "location": "p.1 ML DE PERFORACIÓ",
+      "quote": "Nº de penetròmetres realitzats: 3 / Ml de penetròmetre (5 mínims): 15,00",
+      "confidence": 0.9,
+      "note": "+ ASSAIGS IN SITU: Assaigs SPT o MI: 1"
+    }
+  ],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P1",
+        "cota_inici": "+/- 0 (relatiu al carrer; 'Descriure punt 0 o cota referencia': 'c/ de la Miranda')",
+        "profunditat_assolida": "R: 4,55",
+        "rebuig": "Si",
+        "nivell_freatic": "bloc NIVELL FREÀTIC en blanc",
+        "location": "p.2 columna P1",
+        "quote": "R:4,55"
+      },
+      {
+        "punt": "P2",
+        "cota_inici": "+/- 0",
+        "profunditat_assolida": "R: 3,58",
+        "rebuig": "Si",
+        "nivell_freatic": "bloc en blanc",
+        "location": "p.2 columna P2",
+        "quote": "R: 3,58"
+      },
+      {
+        "punt": "P3",
+        "cota_inici": "+/- 0",
+        "profunditat_assolida": "R: 3,13",
+        "rebuig": "Si",
+        "nivell_freatic": "bloc en blanc",
+        "location": "p.2 columna P3",
+        "quote": "R:3,13"
+      }
+    ],
+    "spt_ma_tests": [
+      {
+        "id": "SPT (marcat)",
+        "punt": "P3",
+        "profunditat": "0,60 a 1,20 m",
+        "registre": "16 / 20 / 20 / 24",
+        "location": "p.3 Full de assaig SPT/MI/Mostra alterada",
+        "quote": "Assaig de referència: P3 / de la cota de: 0,60 / fins a la cota: 1,20 / Colpeig: 16 20 20 24"
+      }
+    ],
+    "__nota": "esquema de situació p.2: P1-P2 separats 7 m, P3 a 6 m / 9,5 m del front del c/ de la Miranda; carència de colpeig Mesura 1: 15"
+  },
+  "not_present": [
+    "cota msnm",
+    "nivells de sòl"
+  ],
+  "reading_notes": "render 110 dpi + lectura visual; colpeigs de p.2 coincideixen amb l'Excel (mostreig)"
+}

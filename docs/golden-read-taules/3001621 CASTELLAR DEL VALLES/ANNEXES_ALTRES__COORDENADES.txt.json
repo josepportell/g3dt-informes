@@ -1,0 +1,65 @@
+{
+  "source_path": "ANNEXES/ALTRES/COORDENADES.txt",
+  "document_type": "coordenades_gps",
+  "what_it_is": "Coordenades UTM (X;Y;Z) per punt preses al camp (GPS).",
+  "issuer": "G3 (camp)",
+  "date": "no consta",
+  "pages_or_sheets": "1 fitxer de text",
+  "context": {
+    "who_made_it": "Eva/TPS al camp",
+    "for_whom": "G3",
+    "why": "situar els punts d'assaig",
+    "expected_fields": [
+      "utm per punt",
+      "z per punt"
+    ],
+    "not_expected": [
+      "dades del projecte"
+    ],
+    "relation_to_others": "S-1 z=570.9 coincideix amb la Cota (Z) de l'annex de sondeig ('segons el plànol ICGC')",
+    "authority_for": [
+      "utm_x_utm_y",
+      "sondeig_tests.cota (2a font)"
+    ]
+  },
+  "tier_a": [],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "z_absoluta": "571.5",
+        "location": "línia P-1",
+        "quote": "423167.0 ; 4609608.0 ; 571.5"
+      },
+      {
+        "punt": "P-2",
+        "z_absoluta": "570.5",
+        "location": "línia P-2",
+        "quote": "423174.0 ; 4609616.0 ; 570.5"
+      },
+      {
+        "punt": "P-3",
+        "z_absoluta": "570.9",
+        "location": "línia P-3",
+        "quote": "423195.0 ; 4609636.0 ; 570.9"
+      },
+      {
+        "punt": "P-4",
+        "z_absoluta": "570.5",
+        "location": "línia P-4",
+        "quote": "423189.0; 4609627.9 ; 570.5"
+      }
+    ],
+    "sondeig_tests": [
+      {
+        "sondeig": "S-1",
+        "cota": "570.9",
+        "location": "línia S-1",
+        "quote": "423182.0 ; 4609623.0 ; 570.9"
+      }
+    ],
+    "__nota": "Z GPS absolutes; l'annex DPSH usa cotes relatives al carrer — no competeixen, són sistemes diferents (regla v0.7: cota relativa intencionada)."
+  },
+  "not_present": [],
+  "reading_notes": "Lectura directa; el fitxer DTE.txt del costat és una nota administrativa (facturació 27/10, 1548,80€) sense dades de taules."
+}

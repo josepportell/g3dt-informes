@@ -1,0 +1,523 @@
+{
+ "projecte": "4001671 VILANOVA DE SEGRIA",
+ "data_lectura": "2026-08-24",
+ "abast": "nomes bloc `tables` (Pas 3b) + superficie_construida; els 15 escalars del nivell A ja fets en lectura anterior",
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+321,69 msnm (segons el visor ICGC)",
+       "source": "PDF/ANEJOS/4001671_DPSH.pdf capçalera de la pàgina de P-1",
+       "quote": "Cota inicio: +321,69 msnm según el visor ICGC"
+      }
+     ],
+     "rule": "capçalera de cada pàgina de l'annex DPSH; una sola cota → val per a tots els punts",
+     "note": "el manuscrit dona punt 0 = CARRER amb inicis -0'3/-0'3/-0'2 per punt; l'Eva unifica a la cota ICGC"
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-1,48 m",
+       "source": "ANEXOS/4001671_DPSH.xls full P-1!B80",
+       "quote": "Rechazo a la penetración: -1,48 m"
+      },
+      {
+       "value": "R-1,48",
+       "source": "PENETROS.pdf p.2 columna 1",
+       "quote": "R-1'48"
+      }
+     ],
+     "rule": "peu B80 de l'Excel = fondària EXACTA del rebuig; manuscrit coincident (l'annex PDF replica l'Excel, mateixa família)"
+    },
+    "rebuig": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Si",
+       "source": "ANEXOS/4001671_DPSH.xls full P-1!B80 present",
+       "quote": "Rechazo a la penetración: -1,48 m"
+      }
+     ],
+     "rule": "B80 present → Si"
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "No detectat",
+       "source": "ANEXOS/4001671_DPSH.xls full P-1 columna N.F. buida",
+       "quote": "(columna N.F. sense cap marca)"
+      }
+     ],
+     "rule": "'No detectat' només si la columna N.F. és buida a tots els fulls — ho és; el full de camp només anota humitat a P3",
+     "note": "corroborat pel bloc NIVELL FREÀTIC del manuscrit: cap aigua a P-1"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+321,69 msnm (segons el visor ICGC)",
+       "source": "PDF/ANEJOS/4001671_DPSH.pdf capçalera de la pàgina de P-2",
+       "quote": "Cota inicio: +321,69 msnm según el visor ICGC"
+      }
+     ],
+     "rule": "capçalera de cada pàgina de l'annex DPSH; una sola cota → val per a tots els punts",
+     "note": "el manuscrit dona punt 0 = CARRER amb inicis -0'3/-0'3/-0'2 per punt; l'Eva unifica a la cota ICGC"
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-2,18 m",
+       "source": "ANEXOS/4001671_DPSH.xls full P-2!B80",
+       "quote": "Rechazo a la penetración: -2,18 m"
+      },
+      {
+       "value": "R-2,18",
+       "source": "PENETROS.pdf p.2 columna 2",
+       "quote": "R-2'18"
+      }
+     ],
+     "rule": "peu B80 de l'Excel = fondària EXACTA del rebuig; manuscrit coincident (l'annex PDF replica l'Excel, mateixa família)"
+    },
+    "rebuig": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Si",
+       "source": "ANEXOS/4001671_DPSH.xls full P-2!B80 present",
+       "quote": "Rechazo a la penetración: -2,18 m"
+      }
+     ],
+     "rule": "B80 present → Si"
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "No detectat",
+       "source": "ANEXOS/4001671_DPSH.xls full P-2 columna N.F. buida",
+       "quote": "(columna N.F. sense cap marca)"
+      }
+     ],
+     "rule": "'No detectat' només si la columna N.F. és buida a tots els fulls — ho és; el full de camp només anota humitat a P3",
+     "note": "corroborat pel bloc NIVELL FREÀTIC del manuscrit: cap aigua a P-2"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+321,69 msnm (segons el visor ICGC)",
+       "source": "PDF/ANEJOS/4001671_DPSH.pdf capçalera de la pàgina de P-3",
+       "quote": "Cota inicio: +321,69 msnm según el visor ICGC"
+      }
+     ],
+     "rule": "capçalera de cada pàgina de l'annex DPSH; una sola cota → val per a tots els punts",
+     "note": "el manuscrit dona punt 0 = CARRER amb inicis -0'3/-0'3/-0'2 per punt; l'Eva unifica a la cota ICGC"
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-3,78 m",
+       "source": "ANEXOS/4001671_DPSH.xls full P-3!B80",
+       "quote": "Rechazo a la penetración: -3,78 m"
+      },
+      {
+       "value": "R-3,78",
+       "source": "PENETROS.pdf p.2 columna 3",
+       "quote": "R-3'78"
+      }
+     ],
+     "rule": "peu B80 de l'Excel = fondària EXACTA del rebuig; manuscrit coincident (l'annex PDF replica l'Excel, mateixa família)"
+    },
+    "rebuig": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Si",
+       "source": "ANEXOS/4001671_DPSH.xls full P-3!B80 present",
+       "quote": "Rechazo a la penetración: -3,78 m"
+      }
+     ],
+     "rule": "B80 present → Si"
+    },
+    "nivell_freatic": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "nivell freàtic marcat al tall a P-3, cota ≈320,8 msnm (≈ -0,9 m); al camp: 'Humitat a P3'",
+       "source": "PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf) (línia blava discontínua, llegenda 'Cota de nivel freático') + PENETROS.pdf p.2 bloc NIVELL FREÀTIC",
+       "quote": "Hi ha nivell freàtic? HUMITAT A P3"
+      },
+      {
+       "value": "No detectat",
+       "source": "ANEXOS/4001671_DPSH.xls columna N.F. buida als 3 fulls",
+       "quote": "(columna N.F. sense cap marca)"
+      }
+     ],
+     "rule": "conflicte Excel (columna buida) vs tall (marca dibuixada): el tall és síntesi de l'Eva → candidats, tall primer",
+     "note": "probablement humitat i no aigua franca; cota de la línia mesurada gràficament (±0,1 m)"
+    }
+   }
+  ],
+  "sondeig_tests": {
+   "rows": [],
+   "estat": "no_trobat",
+   "note": "El projecte NO té sondeig a rotació: albarà TPS només factura 3 penetròmetres + 2 assaigs SPT; PLAN_COST OFERTA bloc SONDEIGS sense cap unitat; pressupost p.2 sense línia de sondeig; no existeix cap annex de sondeig (ni PDF/ANEJOS/*sondeo* ni *sondeig*).",
+   "sources_checked": [
+    "PENETROS.pdf p.1 (albarà)",
+    "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx OFERTA!B4:B17",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.2",
+    "PDF/ANEJOS/ (llistat complet)",
+    "comanda laboratori (cap mostra de sondeig)"
+   ]
+  },
+  "spt_ma_tests": [
+   {
+    "id": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "SPT-1 (P-3)",
+       "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!C35",
+       "quote": "SPT1 (P3)"
+      },
+      {
+       "value": "SPT 1 P3",
+       "source": "PENETROS.pdf p.3 bloc 1",
+       "quote": "Assaig de referència: SPT 1 P3"
+      }
+     ],
+     "rule": "etiqueta: annex Eva > GTL > comanda — sense annex de mostres ni GTL, la comanda mana però és única font → candidats",
+     "note": "TPS numera cada assaig com a 'SPT 1' dins del seu punt; l'informe l'haurà de distingir pel punt"
+    },
+    "punt": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "P-3",
+       "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls C35 + PENETROS.pdf p.3 + ANEXOS/4001671_DPSH.xls full P-3 E21",
+       "quote": "SPT1 (P3) / SPT 1 P3 / SPT-1"
+      }
+     ],
+     "rule": "3 fonts coincidents (comanda, full de camp, Excel); foto 'SPT A P3.jpeg' corrobora"
+    },
+    "profunditat": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "0,80 - 1,40 m",
+       "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls J35/L35",
+       "quote": "0.8 / 1.4"
+      },
+      {
+       "value": "de 0'8 fins a 1'4",
+       "source": "PENETROS.pdf p.3 bloc 1",
+       "quote": "de la cota de: 0'8 / fins a la cota: 1'4"
+      },
+      {
+       "value": "0.80-1,40m",
+       "source": "ANEXOS/4001671_DPSH.xls full P-3 E22",
+       "quote": "0.80-1,40m"
+      }
+     ],
+     "rule": "profunditat: GTL > Excel > full de camp; sense GTL, 3 fonts coincidents"
+    },
+    "n30": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "10 (suma dels trams centrals 4+6)",
+       "source": "derivat del registre",
+       "quote": "3/4/6/5"
+      },
+      {
+       "value": "registre complet 3/4/6/5 (15/30/45/60)",
+       "source": "PENETROS.pdf p.3 bloc 1 Colpeig + ANEXOS/4001671_DPSH.xls full P-3 E23",
+       "quote": "3 / 4 / 6 / 5"
+      }
+     ],
+     "rule": "llegeix els 4 valors del registre i proposa la suma dels trams centrals; no en triïs un de sol"
+    },
+    "litologia": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "Argila llimosa i sorrenca, amb algunes graves",
+       "source": "PENETROS.pdf p.3 bloc 1 Descripció dels materials",
+       "quote": "ARGILA LLIMOSA I SORRENCA, AMB ALGUNES GRAVES."
+      },
+      {
+       "value": "Arcilla limosa y arenosa con algunas gravas (Nivel 1)",
+       "source": "PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf) llegenda; l'interval 0,8-1,4 m cau dins el Nivel 1 a P-3 (transició ≈ -2,4 m)",
+       "quote": "Nivel 1 : Arcilla limosa y arenosa con algunas gravas."
+      }
+     ],
+     "rule": "litologia = la del nivell d'on surt la mostra; l'Eva re-redacta → mai segur per a la cadena literal"
+    },
+    "lab": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "enviada a laboratori: agressivitat sòls, 'NOMÉS SULFATS'",
+       "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls AA35/AD35",
+       "quote": "X | NOMÉS SULFATS"
+      }
+     ],
+     "rule": "la comanda és l'única font de lab (sense GTL a la carpeta)"
+    }
+   },
+   {
+    "id": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "SPT-1 (P-1)",
+       "source": "PENETROS.pdf p.3 bloc 2",
+       "quote": "Assaig de referència: SPT 1 P1"
+      },
+      {
+       "value": "SPT1",
+       "source": "ANEXOS/4001671_DPSH.xls full P-1 E21",
+       "quote": "SPT1"
+      }
+     ],
+     "rule": "assaig in situ NO enviat a laboratori: no consta a la comanda; id només del full de camp i l'Excel → candidats",
+     "note": "el bloc 2 del full d'assaig no té cap casella de tipus marcada (SPT/MI/MA); el colpeig 15/30/45/60 indica SPT; traç del manuscrit dubtós"
+    },
+    "punt": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "P-1",
+       "source": "PENETROS.pdf p.3 bloc 2 + ANEXOS/4001671_DPSH.xls full P-1 E21 + foto 'SPT 1 P-1.jpeg'",
+       "quote": "SPT 1 P1"
+      }
+     ],
+     "rule": "2 fonts + foto coincidents"
+    },
+    "profunditat": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "0,80 - 1,40 m",
+       "source": "PENETROS.pdf p.3 bloc 2 + ANEXOS/4001671_DPSH.xls full P-1 E22",
+       "quote": "de la cota de: 0'8 / fins a la cota: 1'4 | 0,80-1,40m"
+      }
+     ],
+     "rule": "2 fonts coincidents"
+    },
+    "n30": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "24 (suma dels trams centrals 10+14)",
+       "source": "derivat del registre",
+       "quote": "13/10/14/24"
+      },
+      {
+       "value": "registre complet 13/10/14/24 (15/30/45/60)",
+       "source": "PENETROS.pdf p.3 bloc 2 Colpeig + ANEXOS/4001671_DPSH.xls full P-1 E23",
+       "quote": "13 / 10 / 14 / 24"
+      }
+     ],
+     "rule": "mateixa regla del registre; nota: el 4t tram (24) coincideix numèricament amb la suma central — citar sempre el registre complet"
+    },
+    "litologia": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "Sorra fina-mitja, compacta (gres alterat?)",
+       "source": "PENETROS.pdf p.3 bloc 2 Descripció dels materials",
+       "quote": "SORRA FINA-MITJA, COMPACTA (...)"
+      },
+      {
+       "value": "Arenas finas-medias, carbonatadas (Nivel 2)",
+       "source": "PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf) llegenda; 0,8-1,4 m a P-1 cau dins el Nivel 2 (transició ≈ -0,85 m)",
+       "quote": "Nivel 2: Arenas finas-medias, carbonatadas."
+      }
+     ],
+     "rule": "litologia = la del nivell d'on surt la mostra; parèntesi del manuscrit parcialment il·legible"
+    },
+    "lab": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "NO enviada a laboratori (cap fila a la comanda)",
+       "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls files 35+ (només SPT1 (P3))",
+       "quote": "(absent)"
+      }
+     ],
+     "rule": "pressupost/PLAN_COST preveien 1 SPT; se'n van fer 2 (albarà: 'Assaigs SPT o MI: 2')"
+    }
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Nivel 1 (1er nivell)",
+       "source": "PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf) llegenda",
+       "quote": "Nivel 1 : Arcilla limosa y arenosa con algunas gravas."
+      }
+     ],
+     "rule": "columna Unitat litològica de l'annex de sondeig > llegenda del tall; sense sondeig, el tall és la font única sense contradicció"
+    },
+    "litologia_candidats": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "Arcilla limosa y arenosa con algunas gravas.",
+       "source": "PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf) llegenda",
+       "quote": "Nivel 1 : Arcilla limosa y arenosa con algunas gravas."
+      },
+      {
+       "value": "Argila llimosa i sorrenca, amb algunes graves",
+       "source": "PENETROS.pdf p.3 bloc 1 (descripció del material del SPT de P-3, dins el nivell)",
+       "quote": "ARGILA LLIMOSA I SORRENCA, AMB ALGUNES GRAVES."
+      }
+     ],
+     "rule": "v0.8: annex sondeig primer, tall segon — sense annex de sondeig, tall únic candidat 1; l'Eva re-redacta → mai segur la cadena literal"
+    },
+    "de": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "0,00 m (superfície; cota +321,69 msnm)",
+       "source": "PDF/ANEJOS/4001671_DPSH.pdf capçalera + PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf) superfície dibuixada ≈321,7",
+       "quote": "Cota inicio: +321,69 msnm según el visor ICGC"
+      }
+     ],
+     "rule": "el nivell superior comença en superfície"
+    },
+    "a": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "transició INCLINADA per punt: ≈ -0,85 m a P-1 (cota ≈320,9) / ≈ -1,6 m a P-2 (≈320,1) / ≈ -2,4 m a P-3 (≈319,3)",
+       "source": "PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf) límit marró/taronja, mesura gràfica calibrada amb l'eix msnm",
+       "quote": "(geometria del tall; sense xifres impreses)"
+      },
+      {
+       "value": "≈ -2,6 m (a la vertical del càlcul)",
+       "source": "MULTICA_61 CAPA 1: 0 a 2,6 m (eina de càlcul de l'Eva; corroboració feble, NO lectura)",
+       "quote": "CAPA 1 | 0 | 2,6"
+      }
+     ],
+     "rule": "cotes del tall + marques de l'Excel + annex sondeig; aquí només el tall (Excel columna Niveles buida, sense annex) i és mesura gràfica → candidats",
+     "note": "tolerància de la mesura ±0,1 m; les dues versions del dibuix donen valors idèntics"
+    },
+    "mostra_del_nivell": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": true,
+       "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls fila 35: SPT1 (P3) 0,8-1,4 m ⊂ Nivel 1 a P-3 (transició ≈ -2,4)",
+       "quote": "SPT1 (P3) | 0.8 | 1.4 | NOMÉS SULFATS"
+      }
+     ],
+     "rule": "el nivell que conté lab_depth porta la fila de sulfats — lectura + interval, no judici"
+    }
+   },
+   {
+    "nom": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Nivel 2 (2on nivell)",
+       "source": "PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf) llegenda",
+       "quote": "Nivel 2: Arenas finas-medias, carbonatadas."
+      }
+     ],
+     "rule": "mateixa regla que Nivel 1"
+    },
+    "litologia_candidats": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "Arenas finas-medias, carbonatadas.",
+       "source": "PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf) llegenda",
+       "quote": "Nivel 2: Arenas finas-medias, carbonatadas."
+      },
+      {
+       "value": "Sorra fina-mitja, compacta (gres alterat?)",
+       "source": "PENETROS.pdf p.3 bloc 2 (descripció del material del SPT de P-1, dins el nivell)",
+       "quote": "SORRA FINA-MITJA, COMPACTA (...)"
+      }
+     ],
+     "rule": "tall candidat 1; full de camp corrobora sorres (el parèntesi manuscrit és dubtós)"
+    },
+    "de": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "la mateixa transició inclinada (≈ -0,85 / -1,6 / -2,4 m per P-1/P-2/P-3)",
+       "source": "PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf) mesura gràfica",
+       "quote": "(geometria del tall)"
+      }
+     ],
+     "rule": "mateixa mesura gràfica que el sostre del nivell"
+    },
+    "a": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "fins a la profunditat investigada: rebuig a -3,78 m (P-3); base del tall dibuixada ≈318,0 msnm",
+       "source": "ANEXOS/4001671_DPSH.xls full P-3!B80 + PDF/ANEJOS/4001671_corte de correlación.pdf (=tall.pdf)",
+       "quote": "Rechazo a la penetración: -3,78 m"
+      }
+     ],
+     "rule": "límit inferior = fons investigat, no un contacte llegit → candidats amb nota",
+     "note": "cap punt travessa el Nivel 2"
+    },
+    "mostra_del_nivell": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": false,
+       "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls (única mostra de lab: SPT1 (P3), dins el Nivel 1)",
+       "quote": "(absent)"
+      }
+     ],
+     "rule": "cap mostra de laboratori d'aquest nivell; el registre SPT de P-1 (0,8-1,4) hi cau però NO s'envià a laboratori"
+    }
+   }
+  ],
+  "superficie_construida": {
+   "estat": "candidats",
+   "candidates": [
+    {
+     "value": "100 m² (PB)",
+     "source": "26.0050/PRESSUPOST LLEIDA.msg cos del correu (27/01/2026)",
+     "quote": "El client Toni 625298919 diu que serà pb 100m2, començen fen una pero tenen en men fer-ne 7 mès."
+    }
+   ],
+   "rule": "correu d'encàrrec és font vàlida per a la taula de plantes/superfícies; única font, redacció informal en futur → candidats",
+   "note": "coherent amb pressupost p.2 'Tipo de Edificio. C0' (<300 m²); 1 casa ara, 7 més 'en ment' (no multi-informe: un sol joc d'annexos/DPSH); l'adjunt 1.0.pdf (avantprojecte ROCAR, full EMPLAÇAMENT) no porta taula de superfícies"
+  }
+ },
+ "nb_tall_informatiu": {
+  "note": "Nb mitjans impresos al tall per punt i tram (derivats per l'Eva, NO lectura primària; Python els pot recalcular de l'Excel): P-1 8/25/R, P-2 11/46/R, P-3 8/28/R"
+ },
+ "anomalies_estructurals": [
+  "El title del tall delata plantilla FreeHand reutilitzada de l'exp. 4000939 ('5. 4000939_corte de correlación_VS.FH11'); el contingut imprès diu Exp: 4001671 — el contingut mana.",
+  "Caixetins del tall i del plànol de situació diuen 'Fecha: Marzo 2025' (error de còpia; camp 19/02/2026, encàrrec gener 2026).",
+  "Dos assaigs SPT executats amb el mateix número TPS ('SPT 1') a punts diferents (P1 i P3); només el de P3 va a laboratori.",
+  "Marca de nivell freàtic al tall a P-3 amb la columna N.F. de l'Excel buida; el full de camp diu 'Humitat a P3' → candidats, mai segur.",
+  "El 2n bloc del full d'assaig SPT no té cap casella de tipus marcada (SPT/MI/MA buides) tot i ser clarament un SPT (colpeig 15/30/45/60)."
+ ]
+}

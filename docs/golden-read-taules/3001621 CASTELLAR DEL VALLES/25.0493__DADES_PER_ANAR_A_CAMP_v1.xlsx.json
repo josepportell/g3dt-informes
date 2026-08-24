@@ -1,0 +1,53 @@
+{
+  "source_path": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+  "document_type": "fitxa_camp_g3",
+  "what_it_is": "Fitxa interna de preparació del dia de camp.",
+  "issuer": "G3",
+  "date": "F38 = 2025-10-24 (dies de camp)",
+  "pages_or_sheets": "1 full",
+  "context": {
+    "who_made_it": "G3 (admin/Eva)",
+    "for_whom": "equip de camp",
+    "why": "logística del dia de camp",
+    "expected_fields": [
+      "previsió (C13/F13)",
+      "data de camp (F38)",
+      "contacte"
+    ],
+    "not_expected": [
+      "client de l'informe (C6 conserva el client VELL: GRUP ALMA — no és autoritat)",
+      "nivells",
+      "cotes"
+    ],
+    "relation_to_others": "C6='GRUP ALMA' és anterior al canvi de promotor (MODF: WOOD COMFORT) — patró conegut 'la fitxa conserva el client vell'",
+    "authority_for": [
+      "field_date",
+      "previsió de camp"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "field_date",
+      "value": "2025-10-24",
+      "location": "F38 (etiqueta E38 'dies de camp')",
+      "quote": "F38=datetime(2025, 10, 24)",
+      "confidence": 0.95,
+      "note": "coincideix amb annex DPSH DATA: 24/10/25 i albarans"
+    }
+  ],
+  "tables": {
+    "quantitats_previstes": {
+      "previsio": {
+        "valor": "4 (P) +1 (S)",
+        "quote": "C13='PENETROS I MOSTRA' F13='4 (P) +1 (S)'"
+      }
+    },
+    "__nota": "previsió coincideix amb executat (4 DPSH + 1 sondeig)"
+  },
+  "not_present": [
+    "superficie_construida",
+    "nivells",
+    "NF"
+  ],
+  "reading_notes": "openpyxl; imatges incrustades no examinades (fotos de parcel·la)."
+}

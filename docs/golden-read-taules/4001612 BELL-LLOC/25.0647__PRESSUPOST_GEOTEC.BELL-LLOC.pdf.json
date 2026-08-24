@@ -1,0 +1,62 @@
+{
+ "source_path": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost G3 del geotècnic (m4PRO ERP); llegit només p.2 per a les quantitats de campanya (abast taules)",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "2025-09-03 (creationDate)",
+ "pages_or_sheets": "7 pàgines (llegida p.2)",
+ "context": {
+  "who_made_it": "G3 per al sol·licitant (arquitecte Bosch Novell, segons correu d'encàrrec)",
+  "for_whom": "sol·licitant de l'encàrrec",
+  "why": "oferta econòmica de la campanya",
+  "expected_fields": [
+   "quantitats previstes: N DPSH, N sondeig (context de dpsh_tests/sondeig_tests)",
+   "CTE (fora d'abast taules)"
+  ],
+  "not_expected": [
+   "valors de camp",
+   "litologies"
+  ],
+  "relation_to_others": "quantitats PREVISTES; si difereixen dels executats mana l'Excel DPSH (aquí coincideixen: 2 DPSH, 1 sondeig)",
+  "authority_for": [
+   "recompte previst (corroboració)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2 (previstos)",
+   "location": "p.2, PLA DE TREBALL",
+   "quote": "2 assaigs de penetració dinàmica DPSH",
+   "confidence": 0.7,
+   "note": "previstos = executats (Excel: 2)"
+  },
+  {
+   "concept_id": "cte",
+   "value": "C1 / T1",
+   "location": "p.2",
+   "quote": "Tipus d’edifici: C1 | Tipus de Terreny : T1",
+   "confidence": 0.9,
+   "note": "fora d'abast taules; anotat de passada"
+  }
+ ],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "(previst)",
+    "cota": null,
+    "profunditat_assolida": null,
+    "spt_ma": "sondeig amb SPT's inclosos (sense nombre)",
+    "nivell_freatic": null,
+    "location": "p.2, PLA DE TREBALL",
+    "quote": "1Sondeig a rotació amb bateria continua, que inclou desplaçament, perforació i execució d’assaigs SPT’s",
+    "rule": "Quantitat prevista: 1 sondeig -> corrobora la fila única S-1."
+   }
+  ],
+  "__nota": "Blocs ordenats per (y,x); només p.2 llegida (abast: taules)."
+ },
+ "not_present": [
+  "superficie_construida (no llegida la resta del pressupost dins l'abast taules)"
+ ],
+ "reading_notes": "PDF m4PRO (creator G3, title 'm4PRO ERP · Informes del Proyecto'); text natiu, blocs ordenats per posició."
+}

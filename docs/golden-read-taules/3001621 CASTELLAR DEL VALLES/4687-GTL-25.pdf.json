@@ -1,0 +1,56 @@
+{
+  "source_path": "4687-GTL-25 Castellar del Vallés.pdf",
+  "document_type": "informe_laboratori",
+  "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL) de TPS: sulfats de la mostra MA1 S1.",
+  "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075); signat Pere Cervós / Pere Farrés 19/11/2025",
+  "date": "Data d'expedició 19/11/2025; Data extracció 24/10/2025",
+  "pages_or_sheets": "5 pàgines; núm. informe 4687-GTL-25; ref. lab GTL-8230-25",
+  "context": {
+    "who_made_it": "TPS (laboratori)",
+    "for_whom": "G3 (client del laboratori — cap rol al projecte)",
+    "why": "resultats dels assaigs demanats a la comanda",
+    "expected_fields": [
+      "lab_sample_id",
+      "lab_depth",
+      "sulfats",
+      "descripció del material",
+      "data extracció"
+    ],
+    "not_expected": [
+      "promotor",
+      "plantes",
+      "NF",
+      "cotes DPSH"
+    ],
+    "relation_to_others": "respon a la comanda fila 35; mateixa mostra que l'SPT-1 de l'annex; PDF/ANNEXES/LAB-SIG.pdf n'és probablement la còpia annexada (no verificat: no llegit, mateix rol)",
+    "authority_for": [
+      "lab_depth",
+      "spt_ma_tests.profunditat",
+      "soil_levels (sulfats del nivell de la mostra)"
+    ]
+  },
+  "tier_a": [],
+  "tables": {
+    "spt_ma_tests": [
+      {
+        "id": "MA1 S1",
+        "punt": "S-1",
+        "profunditat": "1,0 - 1,2 m",
+        "tipus_mostra": "Alterada",
+        "resultats": {
+          "sulfats_SO4": "0,0 mg/kg (UNE 83963:2008; massa analitzada 25,0 g)",
+          "descripcio_material": "Grava amb llims"
+        },
+        "location": "p.2 (dades mostra) + p.3 (assaigs químics)",
+        "quote": "Mostra: MA1 S1 | Tipus de mostra: Alterada | Cota d'extracció (m): 1,0 - 1,2 | Contingut en SO4 0,0 mg/kg | DESCRIPCIÓ DEL MATERIAL: Grava amb llims"
+      }
+    ],
+    "__nota": "Cap N30 al GTL (només sulfats). La descripció 'Grava amb llims' és la del laboratori, no la litologia de l'informe (annex sondeig mana)."
+  },
+  "not_present": [
+    "N30",
+    "granulometria",
+    "límits d'Atterberg (no demanats)"
+  ],
+  "reading_notes": "Text net (PDFMaker des d'Excel); ordre de blocs desordenat pel layout — creuat p.2 i p.3."
+}

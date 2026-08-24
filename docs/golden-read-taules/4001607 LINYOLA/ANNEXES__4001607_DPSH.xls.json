@@ -1,0 +1,98 @@
+{
+ "source_path": "ANNEXES/4001607_DPSH.xls",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Transcripció digital (revisada per l'Eva) dels 3 assaigs DPSH de camp, un full per punt (P-1, P-2, P-3).",
+ "issuer": "G3 (Eva) a partir del full de camp TPS",
+ "date": "no consta dins del fitxer (cap metadada de projecte)",
+ "pages_or_sheets": "3 fulls: P-1, P-2, P-3",
+ "context": {
+  "who_made_it": "Eva (G3) transcrivint els fulls de camp manuscrits de TPS",
+  "for_whom": "G3, com a annex DPSH de l'informe",
+  "why": "Digitalitzar el colpeig N20 per punt i deixar constància del rebuig i del nivell freàtic",
+  "expected_fields": [
+   "num_dpsh_tests",
+   "dpsh_tests[].profunditat_assolida (peu B80)",
+   "dpsh_tests[].rebuig",
+   "dpsh_tests[].nivell_freatic (columna F 'N.F.')",
+   "marques Nivell 1/2 (llegenda fila 79)"
+  ],
+  "not_expected": [
+   "cota_inici (ve de la capçalera de PDF/ANNEXES/4001607_DPSH.pdf)",
+   "metadades de projecte (client, adreça, data)"
+  ],
+  "relation_to_others": "Versió revisada del manuscrit PENETROS.pdf: l'Excel mana per als valors. PDF/ANNEXES/4001607_DPSH.pdf n'és la impressió amb capçalera de cota.",
+  "authority_for": [
+   "num_dpsh_tests",
+   "dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "fulls P-1, P-2, P-3 amb dades a columna C",
+   "quote": "fulls: ['P-1','P-2','P-3']",
+   "confidence": 0.95,
+   "note": "3 executats; context per a les taules, no objectiu d'aquesta lectura"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-2,90 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat (columna N.F. buida)",
+    "location": "P-1!B80 (profunditat); P-1!F17:F78 (N.F. buida)",
+    "quote": "Rebuig a la cota de -2,90 m",
+    "note": "última lectura amb cops: -3,0 m amb 100 cops (C32); B80 mana. cota_inici no és en aquest fitxer."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-2,15 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat (columna N.F. buida)",
+    "location": "P-2!B80; P-2!F17:F78",
+    "quote": "Rebuig a la cota de -2,15 m",
+    "note": "última lectura amb cops: -2,2 m amb 100 cops (C28); B80 mana."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,75 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat (columna N.F. buida)",
+    "location": "P-3!B80; P-3!F17:F78",
+    "quote": "Rebuig a la cota de -1,75 m",
+    "note": "última lectura amb cops: -1,8 m amb 100 cops (C26); B80 mana."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "P-3",
+    "profunditat": "1,0 a 1,5 m",
+    "n30": {
+     "estat": "candidats",
+     "candidats": [
+      "R (rebuig)"
+     ]
+    },
+    "litologia": null,
+    "location": "P-3!E23:E25 (columna 'MESURA DE PAR', anotació vertical)",
+    "quote": "SPT-1 / 1,0 a 1,5 / R",
+    "note": "Anotació de l'Eva dins l'Excel DPSH: SPT-1 fet al punt P-3, tram 1,0-1,5 m, resultat R (rebuig). Creuar amb comanda fila 35 i GTL."
+   }
+  ],
+  "soil_levels": [],
+  "__nota": "Llegenda de nivells present (C79='Nivell 1', F79='Nivell 2') però els colors de cel·la NO marquen la transició: llegenda C79=F79=colour 47 i el canvi de color de columna B és a la fila 29 (=-2,4 m) idèntic als 3 fulls (format de plantilla). Fondàries de transició NO llegibles d'aquest fitxer; el TALL mana."
+ },
+ "not_present": [
+  "cota_inici per punt",
+  "nivell freàtic (columna buida = no detectat)",
+  "fondàries de transició de nivells (colors no concloents)"
+ ],
+ "reading_notes": "xlrd amb formatting_info=True per a colors de fons. Columna F ('N.F.') buida als 3 fulls -> 'No detectat' per la regla del Pas 3b (pendent de corroborar amb el manuscrit PENETROS.pdf). Columna E de P-3 porta l'anotació SPT-1 (no és 'mesura de par'). B80 present als 3 fulls."
+}

@@ -1,0 +1,33 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/geotecnic  carrer Tosca 16.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu de Factoria d'Arquitectura SLP (Fina) del dia abans del camp: adjunta el plànol PLANTA I SECCIO amb el topogràfic, l'edificació projectada i les cotes d'implantació de casa 2.",
+ "issuer": "factoria@factoriarquitectura.com, 06/05/2026 10:50",
+ "date": "2026-05-06",
+ "pages_or_sheets": "cos + adjunts (PLANTA I SECCIO.dwg, PLANTA I SECCIO.pdf)",
+ "context": {
+  "who_made_it": "l'arquitecte de casa 2",
+  "for_whom": "G3 (Eva)",
+  "why": "preparar la visita de camp de l'endemà ('heu d'anar a fer demà')",
+  "expected_fields": [
+   "accés a parcel·la",
+   "plànol amb cotes"
+  ],
+  "not_expected": [
+   "superfícies construïdes (no n'hi diu cap)"
+  ],
+  "relation_to_others": "els adjunts són el mateix PLANTA I SECCIO solt a la carpeta (md5 idèntic); 'la parcel·la veïna' confirma l'àmbit doble de l'encàrrec.",
+  "authority_for": [
+   "cap camp de taula directament; el plànol adjunt dona la cota d'implantació"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "__nota": "Cap superfície construïda al cos: 'adjunto planol amb superposició del topografic i la edificació projectada on surten tambñe les cotes on anirà situada.'"
+ },
+ "not_present": [
+  "superficie_construida casa 2",
+  "num_floors explícit"
+ ],
+ "reading_notes": "extract_msg; adjunts dedupats per md5 contra la carpeta."
+}

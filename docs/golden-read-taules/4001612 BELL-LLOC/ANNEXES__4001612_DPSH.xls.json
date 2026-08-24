@@ -1,0 +1,180 @@
+{
+ "source_path": "ANNEXES/4001612_DPSH.xls",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Transcripció digital (revisada per Eva) dels assaigs DPSH de camp, un full per punt",
+ "issuer": "G3 (Eva) a partir dels fulls de camp TPS",
+ "date": "camp 01/10/2025 (segons annex DPSH PDF; l'Excel no porta data)",
+ "pages_or_sheets": "fulls P-1, P-2",
+ "context": {
+  "who_made_it": "Eva (G3) transcriu els fulls manuscrits de TPS",
+  "for_whom": "G3, com a font de la taula DPSH i dels Nb de l'informe",
+  "why": "digitalitzar el colpeig N20 per punt i deixar constància de rebuig i N.F.",
+  "expected_fields": [
+   "num_dpsh_tests",
+   "dpsh: profunditat_assolida (peu B80)",
+   "dpsh: rebuig",
+   "dpsh: nivell_freatic (columna N.F.)",
+   "marques Nivell N"
+  ],
+  "not_expected": [
+   "cota_inici (és a l'annex PDF)",
+   "metadades de projecte",
+   "client",
+   "municipi"
+  ],
+  "relation_to_others": "font de PDF/ANNEXES/4001612_DPSH.pdf (imprès des d'aquest Excel); versió revisada del manuscrit PENETROS.pdf — l'Excel mana per als valors",
+  "authority_for": [
+   "num_dpsh_tests",
+   "dpsh_tests.profunditat_assolida",
+   "dpsh_tests.rebuig",
+   "dpsh_tests.nivell_freatic"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "fulls amb dades a columna C: P-1, P-2",
+   "quote": "SHEETS: P-1, P-2 (tots dos amb colpeig)",
+   "confidence": 0.95,
+   "note": "executats; cap full buit"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,35 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "full P-1: peu B80; columna N.F. (F) buida a tot el full",
+    "quote": "Rebuig a la cota de  -1,35 m",
+    "readings_n20": [
+     [
+      0.0,
+      0
+     ],
+     [
+      -0.2,
+      0
+     ],
+     [
+      -0.4,
+      20
+     ],
+     [
+      -0.6,
+      27
+     ],
+     [
+      -0.8,
+      16
+     ],
+     [
+      -1.0,
+      19
+     ],
+     [
+      -1.2,
+      32
+     ],
+     [
+      -1.4,
+      100
+     ]
+    ],
+    "rule": "Peu B80 'Rebuig a -X,XX m' = fondària exacta del rebuig; N.F. 'No detectat' només si la columna és buida a tots els fulls (ho és)."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-2,45 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "full P-2: peu B80; columna N.F. (F) buida a tot el full",
+    "quote": "Rebuig a la cota de  -2,45 m",
+    "readings_n20": [
+     [
+      0.0,
+      0
+     ],
+     [
+      -0.2,
+      0
+     ],
+     [
+      -0.4,
+      17
+     ],
+     [
+      -0.6,
+      21
+     ],
+     [
+      -0.8,
+      17
+     ],
+     [
+      -1.0,
+      13
+     ],
+     [
+      -1.2,
+      10
+     ],
+     [
+      -1.4,
+      20
+     ],
+     [
+      -1.6,
+      30
+     ],
+     [
+      -1.8,
+      52
+     ],
+     [
+      -2.0,
+      55
+     ],
+     [
+      -2.2,
+      32
+     ],
+     [
+      -2.4,
+      80
+     ],
+     [
+      -2.6,
+      100
+     ]
+    ],
+    "rule": "Peu B80 mana sobre l'última fila de lectures (-2,6 amb 100 = R); signe negatiu a l'informe."
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Nivell 1 (marca única)",
+    "litologia_candidats": [],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": null,
+    "location": "C79 de P-1 i P-2 (zona del peu)",
+    "quote": "Nivell 1",
+    "rule": "Marques 'Nivell N' de l'Excel al costat del peu: aquí només 'Nivell 1' sense fondària de transició associada (columna G 'Nivells' buida) — no aporta transicions, només corrobora que el tram penetrat és del nivell 1."
+   }
+  ],
+  "__nota": "L'Excel no porta cota d'inici; cota a l'annex DPSH PDF. Columna G 'Nivells' buida als dos fulls."
+ },
+ "not_present": [
+  "cota_inici",
+  "field_date",
+  "expedient",
+  "municipality",
+  "client_name"
+ ],
+ "reading_notes": "xlrd; capçalera fila 16; dades col C files 17+; peu B80; N.F. col F i Nivells col G escanejades senceres (buides); C79='Nivell 1' als dos fulls."
+}

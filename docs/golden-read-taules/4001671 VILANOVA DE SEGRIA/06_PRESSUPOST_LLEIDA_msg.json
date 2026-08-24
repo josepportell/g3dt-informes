@@ -1,0 +1,44 @@
+{
+ "source_path": "26.0050/PRESSUPOST LLEIDA.msg (+ RE_ del mateix dia, sense text nou rellevant)",
+ "document_type": "correu",
+ "what_it_is": "Correu d'encàrrec intern (Loli Maqueda → Eva, 27/01/2026) amb client, arquitecte, adreça d'obra i previsió del client",
+ "issuer": "Dolors (Loli) Maqueda, Dep. Administració G3",
+ "date": "2026-01-27",
+ "pages_or_sheets": "cos + adjunt 1.0.pdf (md5 idèntic al de 26.0050/) + PLAN_COST al RE_",
+ "context": {
+  "who_made_it": "administració de G3 transcrivint l'encàrrec del client",
+  "for_whom": "Eva",
+  "why": "obrir el pressupost/expedient",
+  "expected_fields": [
+   "client, arquitecte, adreça obra",
+   "previsió de l'edifici (plantes/superfície)"
+  ],
+  "not_expected": [
+   "dades de camp, nivells, cotes"
+  ],
+  "relation_to_others": "el RE_ (Eva→Loli) només afegeix el PLAN_COST adjunt; l'adjunt 1.0.pdf és el mateix fitxer que 26.0050/1.0.pdf (dedup md5 8af7e4a3)",
+  "authority_for": [
+   "superficie_construida (única font)",
+   "num_floors (PB)",
+   "client_name/architect_name (fora d'abast aquí)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "superficie_construida",
+   "value": "100 m² (PB)",
+   "location": "cos del correu",
+   "quote": "El client Toni 625298919 diu que serà pb 100m2, començen fen una pero tenen en men fer-ne 7 mès.",
+   "confidence": 0.6,
+   "note": "única font, redacció informal i en futur ('serà'); coherent amb pressupost C0 (<300 m²); obra = 1 casa ara, 7 més en ment (no és cas multi-informe: un sol joc d'annexos i DPSH)"
+  }
+ ],
+ "tables": {
+  "__nota": "aporta només l'escalar superficie_construida de la taula de plantes/superfícies"
+ },
+ "not_present": [
+  "superficie_parcela",
+  "cap dada de taules de camp"
+ ],
+ "reading_notes": "extract_msg; en cadena RE_ només el text sobre el primer 'De:' és nou (signatura de l'Eva, res de dades)"
+}

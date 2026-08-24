@@ -1,0 +1,15 @@
+{
+ "source": "/mnt/c/claude/g3dt/projectes/4001671 VILANOVA DE SEGRIA/PDF/4001671_informe.pdf",
+ "status": "n/a per a la metrica ERR",
+ "caveat": "El PDF de l'informe de Vilanova NO conte el cos amb les taules resum: p.1 caratula, p.3-5 base de calcul, p.7-9 fulls DPSH (annex), p.10-19 figures FreeHand amb text brossa (situacio p.11, tall p.13, fotografies). No existeix cap informe .doc/.docx a la carpeta. Les cel.les de sota venen dels ANNEXOS dins del PDF: son la mateixa font que llegeix l'agent, per tant NOMES serveixen per a consistencia, NO per validar (circular). Transcripcio 2026-08-24.",
+ "annex_derived": [
+  {"what": "DPSH per punt (fulls p.7-9)", "rows": [
+    ["P-1","+321,69 msnm según el visor ICGC","Rechazo a la penetración: -1,48 m","SPT1 0,80-1,40m registre 13/10/14/24"],
+    ["P-2","+321,69 msnm según el visor ICGC","Rechazo a la penetración: -2,18 m",""],
+    ["P-3","+321,69 msnm según el visor ICGC","Rechazo a la penetración: -3,78 m","SPT-1 0.80-1,40m registre 3/4/6/5"]]},
+  {"what": "Tall de correlacio (p.13, llegenda)", "rows": [
+    ["Nivel 1","Arcilla limosa y arenosa con algunas gravas"],
+    ["Nivel 2","Arenas finas-medias, carbonatadas"]],
+   "nf_note": "el tall marca 'Cota de nivel freático' (linia blava discontinua) a l'altura de P-3, ~321 msnm"}
+ ]
+}

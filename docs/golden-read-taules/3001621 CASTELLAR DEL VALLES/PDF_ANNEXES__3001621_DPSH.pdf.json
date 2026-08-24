@@ -1,0 +1,68 @@
+{
+  "source_path": "PDF/ANNEXES/3001621_DPSH.pdf",
+  "document_type": "annex_dpsh",
+  "what_it_is": "Annex DPSH de l'informe (impressió de l'Excel amb capçalera de cota per punt i gràfica).",
+  "issuer": "G3 (Eva; PDF author 'Loli', Distiller 2025-11-03)",
+  "date": "DATA: 24/10/25 (dia de camp); PDF creat 2025-11-03",
+  "pages_or_sheets": "4 pàgines (P-1..P-4)",
+  "context": {
+    "who_made_it": "Eva (G3) imprimeix l'Excel DPSH amb capçaleres editades per punt",
+    "for_whom": "annex de l'informe 3001621",
+    "why": "presentar el colpeig i la cota d'inici de cada punt",
+    "expected_fields": [
+      "cota_inici per punt",
+      "DATA de camp",
+      "OBRA/POBLACIÓ",
+      "NÚMERO D´INFORME"
+    ],
+    "not_expected": [
+      "client",
+      "arquitecte",
+      "plantes"
+    ],
+    "relation_to_others": "impressió d'ANNEXES/3001621_DPSH.xls (valors idèntics); l'Excel mana per valors, aquest PDF mana per cota_inici",
+    "authority_for": [
+      "dpsh_tests.cota_inici",
+      "field_date (candidat)",
+      "expedient",
+      "street_address",
+      "municipality"
+    ]
+  },
+  "tier_a": [],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "cota_inici": "-4,0 m (respecte el carrer)",
+        "location": "p.1 capçalera",
+        "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1     - 4  m  (respecte el carrer)."
+      },
+      {
+        "punt": "P-2",
+        "cota_inici": "-4,2 m (respecte el carrer)",
+        "location": "p.2 capçalera",
+        "quote": "P-2    cota inici: -4,2 m  (respecte el carrer)"
+      },
+      {
+        "punt": "P-3",
+        "cota_inici": "-4,0 m (respecte el carrer)",
+        "location": "p.3 capçalera",
+        "quote": "P-3    cota inici: - 4 m  (respecte el carrer)."
+      },
+      {
+        "punt": "P-4",
+        "cota_inici": "-4,0 m (respecte el carrer)",
+        "location": "p.4 capçalera",
+        "quote": "P-4     - 4  m (respecte el carrer)."
+      }
+    ],
+    "__nota": "Cotes RELATIVES al carrer, intencionades i diferents per punt (P-2 -4,2). Peus 'Rebuig a -X,XX m' i marca 'Nivell 1' idèntics a l'Excel (duplicat, no font independent). Col N.F. buida també aquí."
+  },
+  "not_present": [
+    "nivell freàtic (columna buida)",
+    "client",
+    "arquitecte"
+  ],
+  "reading_notes": "Text net (PDF des d'Excel via Distiller). Capçalera de cada pàgina amb grafies lleugerament diferents ('- 4  m' vs 'cota inici: -4,2 m'): normalitzades a -4,0/-4,2/-4,0/-4,0."
+}

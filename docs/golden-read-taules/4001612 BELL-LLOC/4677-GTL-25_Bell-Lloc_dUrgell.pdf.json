@@ -1,0 +1,61 @@
+{
+ "source_path": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL) de TPS: sulfats de la mostra SPT del S-1",
+ "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075); signat Pere Cervós / Pere Farrés 26/11/2025",
+ "date": "expedició 26/11/2025; extracció 06/10/2025; recepció 10/10/2025",
+ "pages_or_sheets": "5 pàgines",
+ "context": {
+  "who_made_it": "el laboratori TPS per al seu client G3 (DADES DEL CLIENT = G3: relació lab->G3, no del projecte)",
+  "for_whom": "G3",
+  "why": "resultats de sulfats demanats a la comanda",
+  "expected_fields": [
+   "spt_ma_tests: mostra, cota, tipus",
+   "litologia de la mostra (DESCRIPCIÓ DEL MATERIAL)",
+   "sulfats (input Tier B)"
+  ],
+  "not_expected": [
+   "N30 (el GTL no el porta)",
+   "promotor",
+   "superficie"
+  ],
+  "relation_to_others": "respon la comanda fila 35; PDF/ANNEXES/LAB-SIG.pdf és una còpia re-destil·lada del MATEIX GTL (title = nom d'aquest fitxer, md5 diferent per re-processat) -> duplicat, no font independent",
+  "authority_for": [
+   "lab_testing_company (emissor)",
+   "lab_depth (primer)",
+   "spt_ma_tests.litologia (corroboració)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075)",
+   "location": "banda inferior de totes les pàgines",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona...",
+   "confidence": 0.95,
+   "note": "emissor, mai el 'client' del GTL"
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT1 S1 (forma GTL)",
+    "punt": "S1",
+    "profunditat": "1,0 - 1,6 m",
+    "n30_candidats": [],
+    "litologia_mostra": "Grava amb matriu sorrenca",
+    "sulfats_mg_kg": "89,8",
+    "location": "p.2: Mostra 'SPT1 S1', Cota d'extracció (m) '1,0 - 1,6', Tipus de mostra 'SPT', DESCRIPCIÓ DEL MATERIAL; p.3: Contingut en SO4 89,8 mg/kg",
+    "quote": "Mostra: SPT1 S1 | Cota d'extracció (m): 1,0 - 1,6 | Grava amb matriu sorrenca | 89,8 mg/kg",
+    "rule": "GTL primer per a la PROFUNDITAT; per a l'etiqueta mana l'annex (SPT-1). El GTL no porta N30. La descripció del material corrobora la litologia del NIVELL 1."
+   }
+  ],
+  "__nota": "Obra / Projecte: 'Bell-Lloc d'Urgell. Carrer Antoni Bellet. 4001612'. Data extracció 06/10/2025 = dia del sondeig."
+ },
+ "not_present": [
+  "N30",
+  "cota_referencia",
+  "nivell freàtic"
+ ],
+ "reading_notes": "Text natiu. LAB-SIG.pdf comparat: mateix contingut pàgina a pàgina (còpia Distiller del mateix GTL) -> anotat com a duplicat, sense JSON propi."
+}

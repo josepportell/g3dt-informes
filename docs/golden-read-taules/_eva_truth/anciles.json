@@ -1,0 +1,48 @@
+{
+ "source": "/mnt/c/claude/g3dt/projectes/4001679 ANCILES/PDF_V0/4001679_informe_V0.pdf",
+ "caveat": "Informe V0 (esborrany): p.25 conté el placeholder 'a priori xxxxxxx al hormigón'; la fila de sulfats (p.19) surt sense valor llegible al flux de text (nomes '2do nivel | ---'). Taules de camp (p.12) completes. Transcripció manual de la capa de text, 2026-08-24.",
+ "tables": [
+  {"type": "dpsh", "page": 12, "grid": [
+    ["Penetrómetros dinámicos DPSH","Penetrómetros dinámicos DPSH","Penetrómetros dinámicos DPSH","Penetrómetros dinámicos DPSH","Penetrómetros dinámicos DPSH"],
+    ["Punto","Cota de inicio (msnm)","Profundidad alcanzada (m)","Rechazo","Nivel freático (m)"],
+    ["P-1","+1106.40","-3.58","Si","No detectado"],
+    ["P-2","+1106.30","-4.59","Si","No detectado"],
+    ["P-3","+1106.40","-3.77","Si","No detectado"],
+    ["P-4","+1106.30","-5.92","Si","No detectado"],
+    ["P-5","+1106.42","-4.18","Si","No detectado"],
+    ["P-6","+1106.65","-5.70","Si","No detectado"]]},
+  {"type": "sondeig", "page": 12, "note": "columna triple SPT/TP/MA — variant no vista als informes en catala", "grid": [
+    ["Sondeo a rotación con batería continua","Sondeo a rotación con batería continua","Sondeo a rotación con batería continua","Sondeo a rotación con batería continua","Sondeo a rotación con batería continua"],
+    ["Punto","Cota de inicio (msnm)","Profundidad alcanzada (m)","SPT/TP/MA","Nivel freático (m)"],
+    ["S-1","+1106.65","-2.40","1/0/0","No detectado"],
+    ["S-2","+1106.42","-3.00","1/0/1","No detectado"]]},
+  {"type": "spt_ma", "page": 12, "grid": [
+    ["Ensayos SPT/TP/MA","Ensayos SPT/TP/MA","Ensayos SPT/TP/MA","Ensayos SPT/TP/MA","Ensayos SPT/TP/MA"],
+    ["Nº ensayo","Punto","Prof. extracción (m)","N30","Litología"],
+    ["SPT-1","S-1","-1.00 a -1.60","6","Arcilla arenosa con gravitas"],
+    ["SPT-1","S-2","-1.00 a -1.60","6","Arcilla arenosa con gravitas"],
+    ["MA-1","S-2","-2.80 a -3.00","--","Bolos y gravas en matriz arenosa arcillosa"]]},
+  {"type": "mostra_lab", "page": 13, "grid": [
+    ["Muestra: MA-1","Punto:  S-2","Profundidad: -2.80 a -3.00 m"],
+    ["Ensayos realizados","Determinación del contenido en ión sulfato en suelos UNE 83963 / 08","Determinación del contenido en ión sulfato en suelos UNE 83963 / 08"]]},
+  {"type": "soil_levels", "pages": [16,17,23], "grid": [
+    ["1er nivel.","Arcillas arenosas con gravitas y puntualmente bolos de granito, de coloraciones marrones"],
+    ["2do nivel.","Bolos y gravas de granito en matriz arenosa y arcillosa, de coloraciones grisáceos"]],
+   "level_depths_note": "1er nivel fins a: P-1 -1.80, P-2 -2.60, P-3 -2.40, P-4 -2.00, S-1/P-6 -4.00, S-2/P-5 -2.50 (p.16 i p.23); 2do nivel per sota, potencia maxima detectada 3.92 m (p.17)"},
+  {"type": "permeabilitat", "page": 18, "grid": [
+    ["Nivel","K (m/s)","Tipo material"],
+    ["1er nivel","10-3 – 10-7","Arcillas arenosas"],
+    ["2do nivel","10 – 10-1","Bolos y gravas con arenas arcillosas"]]},
+  {"type": "sulfats", "page": 19, "grid": [
+    ["Nivel","Contenido en sulfatos (mg/kg SO4)","Acidez Baumann-Gully (ml/kg)","Calificación"],
+    ["2do nivel","(no llegible al flux de text del V0)","---","(no llegible)"]]},
+  {"type": "sismica", "page": 20, "grid": [
+    ["Niveles","Tipo de terreno","Potencia (metros)","Coef. C"],
+    ["1","Tipo IV","4.00","2.00"],
+    ["2","Tipo IV","3.92*","2.00"]]},
+  {"type": "geotecnica", "page": 24, "grid": [
+    ["Nivel","Nb","N","Densidad (1)","Cohesión (2)","Ángulo de fricción interna (3)","E (4)"],
+    ["1er nivel. Arcillas arenosas","5","6","1.90","0.10","28º","90"],
+    ["2do nivel. Bolos y gravas en matriz areno-arcillosa","15-R","--","2.00","0.00","38º",">350"]]}
+ ]
+}

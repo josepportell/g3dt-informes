@@ -1,0 +1,55 @@
+{
+  "source_path": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Pressupost m4PRO de G3 per a l'estudi geotècnic (7 p.)",
+  "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+  "date": "DATA: 05/11/25",
+  "pages_or_sheets": "7 pàgines",
+  "context": {
+    "who_made_it": "G3 per a la sol·licitant",
+    "for_whom": "JOANA MARTINEZ (bloc CLIENT: = sol·licitant particular, no necessàriament el client de l'informe)",
+    "why": "oferta de la campanya: quantitats PREVISTES d'assaigs",
+    "expected_fields": [
+      "quantitats previstes DPSH/SPT",
+      "cte",
+      "municipi",
+      "codi comercial"
+    ],
+    "not_expected": [
+      "superficie_construida",
+      "nivells",
+      "dates de camp"
+    ],
+    "relation_to_others": "previstos (3 DPSH + 1 SPT) = executats (Excel 3, albarà 3+1) → cap discrepància; codi 25·0794 = comercial, NO expedient",
+    "authority_for": [
+      "cte",
+      "num_dpsh_tests (previstos, prioritat 3a)"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "cte_edificacio",
+      "value": "C0",
+      "location": "p.2",
+      "quote": "Tipus d’edifici: C0",
+      "confidence": 0.9,
+      "note": "coherent amb 72+20 m² < 300 i PB"
+    },
+    {
+      "concept_id": "cte_sol",
+      "value": "T1",
+      "location": "p.2",
+      "quote": "Tipus de Terreny : T1",
+      "confidence": 0.9,
+      "note": ""
+    }
+  ],
+  "tables": {
+    "__nota": "corroboració de recompte de files: '3 assaigs de penetració dinàmica DPSH' + '1 assaig SPT, amb recuperació de mostra' (p.2, PLA DE TREBALL); cap superfície al pressupost"
+  },
+  "not_present": [
+    "superficie_construida",
+    "sondeig a rotació (cap línia 'Sondeig' — corrobora sondeig_tests buit)"
+  ],
+  "reading_notes": "blocs ordenats per (y,x); només p.1-2 llegides (la resta és condicions/plantilla)"
+}

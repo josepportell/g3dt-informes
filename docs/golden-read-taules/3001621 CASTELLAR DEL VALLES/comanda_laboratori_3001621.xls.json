@@ -1,0 +1,49 @@
+{
+  "source_path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+  "document_type": "comanda_lab_g3",
+  "what_it_is": "Petició d'assaigs de laboratori de G3 a TPS per a la mostra del sondeig.",
+  "issuer": "G3 (responsable Eva Vázquez)",
+  "date": "DATA DE PRESA = DATA DE SOL.LICITUD = 2025-10-24 (serial 45954)",
+  "pages_or_sheets": "Hoja1",
+  "context": {
+    "who_made_it": "G3 (sol·licitant, NIF B25364589)",
+    "for_whom": "laboratori TPS",
+    "why": "encarregar assaigs (només sulfats) de la mostra de S-1",
+    "expected_fields": [
+      "expedient (N19)",
+      "mostra fila 35 (id, cotes, assaigs)",
+      "DATA DE PRESA"
+    ],
+    "not_expected": [
+      "client de l'informe",
+      "N30",
+      "nivells"
+    ],
+    "relation_to_others": "el bloc SOL.LICITANT és G3 (ignorat); la mostra fila 35 correspon a l'SPT-1 de l'annex de sondeig i a la MA1 S1 del GTL",
+    "authority_for": [
+      "lab_sample_id (candidat 3)",
+      "lab_depth (candidat)",
+      "spt_ma_tests"
+    ]
+  },
+  "tier_a": [],
+  "tables": {
+    "spt_ma_tests": [
+      {
+        "id": "MA (S1)",
+        "punt": "S-1",
+        "profunditat": "1,0 a 1,2 m",
+        "assaigs": "Agressivitat sòls (X) — 'NOMÉS SULFATS'",
+        "location": "Hoja1 fila 35 (C35, J35, L35, AA35, AD35)",
+        "quote": "MA (S1) | 1.0 | 1.2 | X | NOMÉS SULFATS"
+      }
+    ],
+    "__nota": "Una sola mostra. L'etiqueta 'MA (S1)' discrepa de l'annex de sondeig ('SPT-1'): per regla, l'annex de l'Eva mana per l'etiqueta; la comanda és candidat."
+  },
+  "not_present": [
+    "N30",
+    "nivell freàtic",
+    "litologies"
+  ],
+  "reading_notes": "xlrd; dos blocs amb les mateixes etiquetes: files 11-15 SOL.LICITANT=G3 ignorades; serial 45954 = 2025-10-24."
+}

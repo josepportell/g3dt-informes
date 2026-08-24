@@ -1,0 +1,27 @@
+{
+ "compared_by": "sessió principal (agent cec)",
+ "eva_truth": "docs/golden-read-taules/_eva_truth/alcoletge.json (4001670_informe.doc convertit)",
+ "date": "2026-08-24",
+ "cells": {
+  "dpsh.P-1..P-3.cota_inici": {"read": "segur +188,20 x3", "eva": "+188.20 x3", "class": "OK x3"},
+  "dpsh.P-1..P-3.profunditat": {"read": "segur -1,60/-1,30/-1,69 (peu B81! + manuscrit)", "eva": "-1.60/-1.30/-1.69", "class": "OK x3", "note": "el peu era B81, no B80 — la regla ha de dir 'peu Rebuig a la zona B79-B82', no una cel·la fixa"},
+  "dpsh.P-1..P-3.rebuig": {"read": "segur Si x3", "eva": "Si x3", "class": "OK x3"},
+  "dpsh.P-1..P-3.nf": {"read": "candidats [-1,00 Excel | -0,80 manuscrit 'Humitat']", "eva": "-1.00 x3 (columna 'Humitat (m)')", "class": "CAND x3", "note": "candidat 1 correcte; i la capçalera de l'Eva diu HUMITAT — exactament el matís que l'agent va detectar"},
+  "sondeig.bloc": {"read": "buit amb nota (cap sondeig)", "eva": "l'informe no té taula de sondeig", "class": "OK"},
+  "spt.id": {"read": "segur SPT-1", "eva": "SPT-1", "class": "OK"},
+  "spt.punt": {"read": "segur P-3", "eva": "P-3", "class": "OK"},
+  "spt.profunditat": {"read": "segur 0,80-1,40", "eva": "-0.80 a -1.40", "class": "OK"},
+  "spt.n30": {"read": "candidats [20 = 9+11 trams centrals, corroborat pel 'N=20' del tall | registre 5/9/11/33]", "eva": "20", "class": "CAND", "note": "candidat 1 correcte — segona confirmació del criteri trams centrals"},
+  "spt.litologia": {"read": "candidats [interval→N1 | material recuperat 'LUTITA MARRÓ'→N2]", "eva": "Llims compactes, lutites alterades", "class": "CAND", "note": "l'Eva combina els dos elements; l'ambigüitat detectada era real"},
+  "soil.count": {"read": "2 nivells (tall)", "eva": "2 nivells", "class": "OK"},
+  "soil.n1.litologia": {"read": "candidats [tall 'Rebliment antròpic']", "eva": "Reblert superficial", "class": "CAND"},
+  "soil.n2.litologia": {"read": "candidats [tall 'Lutites, substrat']", "eva": "Lutites amb intercalacions de sorrenca.", "class": "CAND"},
+  "soil.n2.base": {"read": "no_trobat (rebuig sense perforar)", "eva": "(no consta)", "class": "NT", "note": "comportament correcte"},
+  "superficie_construida": {"read": "candidats 'uns 100 m²' + nota AMPLIACIÓ", "eva": "100 (fila 'Superfície construïda ampliació')", "class": "CAND", "note": "candidat 1 correcte + l'etiqueta 'ampliació' llegida — regla v0.7 validada"}
+ },
+ "totals": {"OK": 13, "CAND": 8, "ERR": 0, "NT": 1, "n/a": 0},
+ "observacions": [
+  "0 ERR. Les 2 troballes estructurals de l'agent (peu B81; N.F./Nivells per COLOR de cel·la amb llegenda files 79-80) són correccions necessàries del skill (v0.9).",
+  "L'Eva titula la columna 'Humitat (m)' i hi posa -1.00: el matís humitat-vs-aigua que l'agent va documentar és exactament la pràctica d'Eva."
+ ]
+}

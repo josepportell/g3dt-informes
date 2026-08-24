@@ -1,0 +1,28 @@
+{
+ "source_path": "25.0616/pressupost geotècnic.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu d'encàrrec de Laia Alarcón (Bunyesc) demanant pressupost de geotècnic, amb el projecte bàsic i el plànol de punts adjunts.",
+ "issuer": "Laia Alarcon <laia.alarcon@bunyesc.com>",
+ "date": "2025-08-19 15:24",
+ "pages_or_sheets": "cos + 3 adjunts (image.png, Punts de Sondeig_Silvia_Jaume.pdf, 2_02B_DG_Silvia_Jaume.pdf)",
+ "context": {
+  "who_made_it": "l'arquitecta (sol·licitant)",
+  "for_whom": "G3",
+  "why": "Encarregar l'estudi geotècnic del projecte bàsic",
+  "expected_fields": [
+   "superficie_construida (sovint al correu d'encàrrec: aquí NO hi és)",
+   "building_type",
+   "client"
+  ],
+  "not_expected": [
+   "dades de camp"
+  ],
+  "relation_to_others": "Origen de la cadena RE:/RV: de 25.0616/; els adjunts són els mateixos fitxers solts de la carpeta (duplicats).",
+  "authority_for": []
+ },
+ "tier_a": [],
+ "not_present": [
+  "superficie_construida (el correu només diu 'habitatge unifamiliar a Linyola'; cap m²)"
+ ],
+ "reading_notes": "extract_msg; només text per sobre del primer De:. RE: (Eva 20/08, adjunt PLAN_COST) i RV: (Loli 20/08) sense text nou rellevant ni superfícies; 'RV_ Realització geotècnic.msg' (30/09) parla del canvi de punts, tampoc porta superfícies."
+}

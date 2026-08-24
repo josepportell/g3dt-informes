@@ -1,0 +1,42 @@
+{
+ "source_path": "26.0254/RV_ PETICIÓ PRESSUPOST ESTUDI GEOTÈCNIC.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu d'encàrrec original de casa 1: Aleix Subirà Felip (VUA visuals, arquitecte col·legiat 74829-3) demana pressupost per al geotècnic de C. Tulipa 3 i hi detalla les superfícies construïdes.",
+ "issuer": "vua visuals <info.vuavisuals@gmail.com>, 25/03/2026 18:57 (reenviat internament Eva→Dolors 26/03/2026)",
+ "date": "2026-03-25",
+ "pages_or_sheets": "cos + adjunts (PLAN_COST_CERDANYOLA.xlsx, imatges de signatura)",
+ "context": {
+  "who_made_it": "l'arquitecte sol·licitant de casa 1",
+  "for_whom": "G3 (Eva)",
+  "why": "demanar pressupost del geotècnic",
+  "expected_fields": [
+   "superficie_construida per planta",
+   "adreça obra",
+   "programa (PSOT, PB, P1)"
+  ],
+  "not_expected": [
+   "dades de camp",
+   "nivells"
+  ],
+  "relation_to_others": "origen de la cadena de l'encàrrec de casa 1 (pressupost 26·0254); el CC 'Subirà Bertran' i el client de l'annex de sondeig ('SR.ALEIX SUBIÀ FELIP') deriven d'aquest mateix encàrrec. NOMÉS cobreix casa 1: cap dada de casa 2.",
+  "authority_for": [
+   "superficie_construida (casa 1)",
+   "num_floors (casa 1, fora d'abast aquí)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "superficie_construida": {
+   "casa": "casa_1",
+   "valor": "PB: 135,26 m² + P1: 107,66 m² + PSOT: 65 m²",
+   "location": "cos del correu original (sota el primer 'De:')",
+   "quote": "una casa que tindria PSOT, PB I PPis(tot i que encara s'esta definint): Les superfícies construides son: PB: 135.26m2 P1: 107.66m2 PSOT: 65m2",
+   "font_etiqueta": "segons informació aportada (correu de l'arquitecte)"
+  },
+  "__nota": "'tot i que encara s'esta definint' → el valor és del moment de l'encàrrec, mai segur. Adjunt PLAN_COST_CERDANYOLA.xlsx = plantilla interna G3 (duplicada a 26.0254/), no font."
+ },
+ "not_present": [
+  "superficie_construida casa 2"
+ ],
+ "reading_notes": "extract_msg; en cadena RV: només el text sota el primer 'De:' és de l'arquitecte."
+}

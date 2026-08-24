@@ -1,0 +1,106 @@
+{
+  "source_path": "PENETROS + SONDEIG.pdf",
+  "document_type": "full_camp_manuscrit",
+  "what_it_is": "Escaneig (fotos WhatsApp impreses a PDF) dels fulls de camp TPS: albarà penetròmetre, fulls DPSH P1-P4, albarà sondeig i full de camp del sondeig S-1.",
+  "issuer": "TPS (operari/sondista Daniel Fernández); fotos 24/10/2025",
+  "date": "24-10-2025 (data escrita a tots els fulls)",
+  "pages_or_sheets": "5 pàgines: p.1 albarà DPSH, p.2 full DPSH P1-P3, p.3 full DPSH P4, p.4 albarà sondeig, p.5 full de camp sondeig S-1 (apaïsat)",
+  "context": {
+    "who_made_it": "TPS (subcontractista) per a G3 — les caselles DADES CLIENT (Empresa G3 / Responsable Eva) són la relació TPS→G3, cap rol al projecte",
+    "for_whom": "G3",
+    "why": "registre de camp i albarà de facturació",
+    "expected_fields": [
+      "cotes inici relatives",
+      "colpeig",
+      "NF",
+      "data de camp",
+      "n. penetròmetres",
+      "trams del sondeig"
+    ],
+    "not_expected": [
+      "client de l'informe",
+      "plantes",
+      "superfícies"
+    ],
+    "relation_to_others": "versió manuscrita de l'Excel DPSH (l'Excel, revisat per Eva, mana per als valors); el full de sondeig p.5 és la font de camp de l'annex de sondeig",
+    "authority_for": [
+      "field_date",
+      "num_dpsh_tests (albarà: 4)",
+      "dpsh_tests.cota_inici (2a font)",
+      "sondeig_tests (2a font)"
+    ]
+  },
+  "tier_a": [],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "cota_inici": "-4 m (manuscrit 'Cota Inici - 4 m')",
+        "profunditat_assolida": "R:1,08",
+        "rebuig": "Si",
+        "nivell_freatic": "cap marca a col. N.F.",
+        "location": "p.2 col. P1",
+        "quote": "P1 | - 4 m | 6 10 13 38 100 | R:1,08"
+      },
+      {
+        "punt": "P-2",
+        "cota_inici": "-4,2 m",
+        "profunditat_assolida": "R:0,48",
+        "rebuig": "Si",
+        "nivell_freatic": "cap marca",
+        "location": "p.2 col. P2",
+        "quote": "P2 | -4,2 m | 15 100 | R:0,48"
+      },
+      {
+        "punt": "P-3",
+        "cota_inici": "-4 m",
+        "profunditat_assolida": "R:0,76",
+        "rebuig": "Si",
+        "nivell_freatic": "cap marca",
+        "location": "p.2 col. P3",
+        "quote": "P3 | -4 m | 16 46 100 | R:0,76"
+      },
+      {
+        "punt": "P-4",
+        "cota_inici": "-4 m",
+        "profunditat_assolida": "R:1,55",
+        "rebuig": "Si",
+        "nivell_freatic": "cap marca",
+        "location": "p.3 col. P4",
+        "quote": "P4 | -4 m | 8 8 12 27 21 28 100 | R:1,55"
+      }
+    ],
+    "sondeig_tests": [
+      {
+        "sondeig": "S-1",
+        "cota": "C/Arbrells -4 m (relativa; 'Decriure cota 0 o cota referència')",
+        "profunditat_assolida": "-1,20 m (trams 0,00-0,50 + 0,50-1,20; albarà p.4: 0,50 ml sòls + 0,70 ml roca dura)",
+        "spt_ma": "albarà 'Assaigs SPT: No' (criteri de facturació TPS — el GTL/annex mana; Mostres Prof '1,00 a 1,20' sí anotada al full)",
+        "nivell_freatic": "casella 'Nivell Freàtic' BUIDA (ni cota ni 'No')",
+        "location": "p.4-p.5",
+        "quote": "0,00-0,50 Limos arcillosos con gravas | 0,50-1,20 Roca fracturada | Mostres Prof: 1,00 a 1,20"
+      }
+    ],
+    "soil_levels": [
+      {
+        "nom": "(trams de material del full de camp — NO són nivells)",
+        "litologia_candidats": [
+          "0,00-0,50: Limos arcillosos con gravas",
+          "0,50-1,20: Roca fracturada"
+        ],
+        "de": "0,00 / 0,50",
+        "a": "0,50 / 1,20",
+        "mostra_del_nivell": null,
+        "location": "p.5 columna de trams",
+        "quote": "Limos arcillosos con gravas / Roca fracturada",
+        "note": "redacció del sondista en castellà; l'annex de l'Eva re-redacta — aquests trams només corroboren les fondàries 0,50 i 1,20"
+      }
+    ],
+    "__nota": "Albarà p.1: 'Nº de penetròmetres realitzats: 4', 'Ml de penetròmetre: 20,00', 'Assaigs SPT o MI: No'. Colpeigs del manuscrit idèntics a l'Excel (P1 6/10/13/38/100; P2 15/100; P3 16/46/100; P4 8/8/12/27/21/28/100)."
+  },
+  "not_present": [
+    "nivell freàtic (cap marca ni 'No' explícit)",
+    "N30 del SPT (columna Colpeig buida al full de sondeig)"
+  ],
+  "reading_notes": "0 text (fotos): lectura visual 110-220 dpi; p.5 apaïsada, rotada +90° i retallada. Croquis p.2 amb distàncies entre punts (P1-P2 10m, etc.) no transcrit."
+}

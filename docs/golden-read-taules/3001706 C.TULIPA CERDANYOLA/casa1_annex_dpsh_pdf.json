@@ -1,0 +1,52 @@
+{
+ "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_DPSH_CASA 1.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe de casa 1 (impressió de l'Excel amb capçalera d'obra i cota inici per punt).",
+ "issuer": "G3 (Eva)",
+ "date": "modDate 2026-06-04; DATA de camp 07/05/2026",
+ "pages_or_sheets": "2 pàgines (P-1.1, P-1.2)",
+ "context": {
+  "who_made_it": "Eva",
+  "for_whom": "annex de l'informe de casa 1",
+  "why": "presentar el colpeig amb cota i identificació d'obra",
+  "expected_fields": [
+   "cota_inici per punt",
+   "OBRA",
+   "POBLACIÓ",
+   "DATA",
+   "NÚMERO D'INFORME"
+  ],
+  "not_expected": [
+   "promotor",
+   "plantes"
+  ],
+  "relation_to_others": "impressió de 3001706_DPSH_CASA 1.xls; la cota inici NOMÉS és aquí. Nota: la cota 198 (punts P) no contradiu el z=+199,0 de l'annex de sondeig (S-1 és un punt diferent, ~1 m per sobre del carrer, cf. full de camp sondeig 'C/Tulipan +1 m' i el tall).",
+  "authority_for": [
+   "dpsh_tests.cota_inici (casa 1)",
+   "field_date",
+   "expedient per casa (3001706_CASA 1)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1.1",
+    "cota_inici": "198 msnm (segons el plànol topogràfic ICGC)",
+    "location": "p.1 capçalera",
+    "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1.1  Cota inici: 198 msnm segons el plànol topogràfic ICGC"
+   },
+   {
+    "punt": "P-1.2",
+    "cota_inici": "198 msnm (segons el plànol topogràfic ICGC)",
+    "location": "p.2 capçalera",
+    "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1.2  Cota inici: 198 msnm segons el plànol topogràfic ICGC"
+   }
+  ],
+  "__nota": "Capçaleres: OBRA: C/ TULIPA 3 | POBLACIÓ: CERDANYOLA DEL VALLÈS | DATA: 07/05/2026 | NÚMERO D´INFORME: 3001706_CASA 1"
+ },
+ "not_present": [
+  "nivell freàtic (cap marca)"
+ ],
+ "reading_notes": "text net (impressió des d'Excel); valors de colpeig idèntics a l'Excel."
+}

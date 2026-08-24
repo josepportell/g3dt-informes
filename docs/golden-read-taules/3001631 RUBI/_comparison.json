@@ -1,0 +1,35 @@
+{
+ "compared_by": "sessió principal (agent cec no ha vist l'informe)",
+ "eva_truth": "docs/golden-read-taules/_eva_truth/rubi.json (3001631_informe.docx)",
+ "date": "2026-08-24",
+ "cells": {
+  "dpsh.P-1.cota_inici": {"read": "candidats [+212,50 annex | +211,90 esborrany]", "eva": "+212.50", "class": "CAND", "note": "candidat 1 correcte"},
+  "dpsh.P-2.cota_inici": {"read": "candidats [+212 annex | +212,50 superfície tall]", "eva": "+212.50", "class": "CAND", "note": "correcte és el candidat 2; l'annex mateix deia +212 — prudència justificada"},
+  "dpsh.P-3.cota_inici": {"read": "candidats [+212,50 annex | +211,40 esborrany]", "eva": "+212.50", "class": "CAND", "note": "candidat 1 correcte"},
+  "dpsh.P-1.profunditat": {"read": "segur -4,55", "eva": "-4.55", "class": "OK"},
+  "dpsh.P-2.profunditat": {"read": "segur -3,58", "eva": "-3.58", "class": "OK"},
+  "dpsh.P-3.profunditat": {"read": "segur -3,13", "eva": "-3.13", "class": "OK"},
+  "dpsh.P-1.rebuig": {"read": "segur Si", "eva": "Si", "class": "OK"},
+  "dpsh.P-2.rebuig": {"read": "segur Si", "eva": "Si", "class": "OK"},
+  "dpsh.P-3.rebuig": {"read": "segur Si", "eva": "Si", "class": "OK"},
+  "dpsh.P-1.nf": {"read": "segur No detectat", "eva": "No detectat", "class": "OK"},
+  "dpsh.P-2.nf": {"read": "segur No detectat", "eva": "No detectat", "class": "OK"},
+  "dpsh.P-3.nf": {"read": "segur No detectat", "eva": "No detectat", "class": "OK"},
+  "sondeig.bloc": {"read": "buit amb nota (cap sondeig)", "eva": "l'informe NO té taula de sondeig", "class": "OK", "note": "absència correcta"},
+  "spt.SPT-1.id": {"read": "segur SPT-1", "eva": "SPT-1", "class": "OK"},
+  "spt.SPT-1.punt": {"read": "segur P-3", "eva": "P-3", "class": "OK"},
+  "spt.SPT-1.profunditat": {"read": "segur 0,6-1,2 (GTL mana sobre comanda 0,6-1,4)", "eva": "-0.60 a -1.20", "class": "OK"},
+  "spt.SPT-1.n30": {"read": "candidats [40 = 20+20 trams centrals | registre 16/20/20/24]", "eva": "40", "class": "CAND", "note": "candidat 1 correcte — CONFIRMA el criteri suma de trams centrals"},
+  "spt.SPT-1.litologia": {"read": "candidats [tall 'Graves i sorres. Carbonatat.' | GTL 'Sorres i graves']", "eva": "Graves i sorres", "class": "CAND", "note": "candidat 1 ≈ Eva (ella retalla 'carbonatades' a la taula SPT)"},
+  "soil_levels.n1.nom": {"read": "candidats [1 nivell (tall PDF) | 2 nivells (esborrany F5)]", "eva": "1 nivell únic", "class": "CAND", "note": "candidat 1 correcte; regla d'esborranys aplicada bé"},
+  "soil_levels.n1.litologia": {"read": "candidats [tall 'Graves i sorres. Carbonatat.']", "eva": "Graves i sorres, carbonatades", "class": "CAND"},
+  "superficie_construida": {"read": "segur '72 m² + 20 m² de porxada'", "eva": "92", "class": "OK", "note": "equivalent (Eva escriu la suma) — micro-regla nova: emetre també el total"}
+ },
+ "totals": {"OK": 14, "CAND": 7, "ERR": 0, "NT": 0, "n/a": 0},
+ "observacions": [
+  "0 ERR — cap valor segur contradiu l'informe.",
+  "El criteri N30 = suma dels 2 trams centrals queda CONFIRMAT a Rubí (16/20/20/24 → 40 = Eva).",
+  "La sísmica de l'informe usa gruix 4.55 = profunditat de P-1: la derivació Tier B tindrà els inputs correctes (fondàries llegides bé).",
+  "superficie_construida: Eva suma els components (72+20→92); afegir al skill que s'emeti també el total."
+ ]
+}

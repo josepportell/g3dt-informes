@@ -1,0 +1,44 @@
+{
+ "source_path": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+ "document_type": "projecte_arquitecte",
+ "what_it_is": "Projecte bàsic (plànols) d'un habitatge unifamiliar aïllat d'una planta a C. Clot de la Llacuna 16, Linyola.",
+ "issuer": "BUNYESC ARQUITECTURA EFICIENT, S.L.P (Josep Bunyesc Palacín, Dr. Arquitecte)",
+ "date": "AGOST 2025 (caixetí)",
+ "pages_or_sheets": "11 pàgines",
+ "context": {
+  "who_made_it": "Bunyesc Arquitectura (arquitecte)",
+  "for_whom": "promotors Sílvia Eroles Balagueró i Jaume Nadal Andreu",
+  "why": "Projecte bàsic de l'habitatge; adjunt al correu d'encàrrec del geotècnic",
+  "expected_fields": [
+   "superficie_construida (taula de superfícies)",
+   "superficie_parcela",
+   "num_floors",
+   "referencia_catastral (impresa)"
+  ],
+  "not_expected": [
+   "dades de camp",
+   "nivells del sòl"
+  ],
+  "relation_to_others": "Adjunt de '25.0616/pressupost geotècnic.msg' (duplicat solt a la carpeta); base de l'encàrrec del pressupost 25·0616.",
+  "authority_for": [
+   "superficie_construida",
+   "superficie_parcela",
+   "num_floors"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "superficie_construida": {
+   "valor": "250,91 m² (total Planta Baixa; edifici només PB)",
+   "desglos": "TOTAL HABITATGE 165,61 m² + TOTAL NO HABITABLE 56,75 m² (garatge) + TOTAL NO HABITABLE 28,55 m² (porxo/voladís)",
+   "font_etiqueta": "segons projecte",
+   "location": "p.3 i p.5, taula 'PLANTA BAIXA - SUP. TOTALS' / 'SUPERFÍCIES CONSTRUÏDES'",
+   "quote": "Superfície construïda TOTAL PBaixa: 250.91 m²"
+  },
+  "__nota": "També: superfície útil total PB 515,62 m² (inclou exteriors; NO és la construïda). Parcel·la 571 m², ref 5098344CG2159N0000US (p.2) = escalars, fora de l'abast d'aquesta lectura."
+ },
+ "not_present": [
+  "plantes superiors (tot el programa és PB)"
+ ],
+ "reading_notes": "Blocs ordenats per (y,x). El títol 'PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT' i els alçats són coherents amb edifici d'una sola planta."
+}

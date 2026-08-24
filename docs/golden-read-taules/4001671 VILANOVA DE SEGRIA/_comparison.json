@@ -1,0 +1,18 @@
+{
+ "compared_by": "sessió principal (agent cec)",
+ "eva_truth": "docs/golden-read-taules/_eva_truth/vilanova.json — N/A: el PDF de l'informe NO conté el cos amb les taules (només caràtula, base de càlcul i annexos FreeHand); cap .docx a la carpeta",
+ "date": "2026-08-24",
+ "status": "n/a per a la mètrica ERR — només comprovació de CONSISTÈNCIA amb els annexos dins del PDF (mateixa font que llegeix l'agent: circular, no valida)",
+ "consistency": {
+  "dpsh.cotes": {"read": "segur +321,69 x3 (ICGC)", "annex_informe": "+321,69 msnm según el visor ICGC x3", "consistent": true},
+  "dpsh.profunditats": {"read": "segur -1,48/-2,18/-3,78", "annex_informe": "Rechazo a la penetración -1,48/-2,18/-3,78", "consistent": true},
+  "spt.registres": {"read": "P-3: 3/4/6/5 (n30 cand. 10); P-1: 13/10/14/24 (n30 cand. 24)", "annex_informe": "SPT-1 0.80-1,40m 3/4/6/5 (p.9); SPT1 0,80-1,40m 13/10/14/24 (p.7)", "consistent": true},
+  "soil_levels": {"read": "2 nivells (tall), transició inclinada -0,85/-1,6/-2,4 per punt", "annex_informe": "tall p.13: Nivel 1 'Arcilla limosa y arenosa con algunas gravas', Nivel 2 'Arenas finas-medias, carbonatadas'", "consistent": true},
+  "nf.P-3": {"read": "candidats [columna Excel buida | línia freàtica del tall a P-3 ~-0,9 | camp 'HUMITAT A P3'] — conflicte documentat, no resolt", "annex_informe": "el tall marca 'Cota de nivel freático' a P-3", "consistent": true, "note": "la prudència (candidats) és exactament el comportament volgut"}
+ },
+ "totals": {"OK": 0, "CAND": 0, "ERR": 0, "NT": 0, "n/a": "tot el projecte"},
+ "observacions": [
+  "Cap validació possible sense el cos de l'informe; consistència amb annexos = 100 %.",
+  "Els ids d'SPT en candidats (TPS numera 'SPT 1' als DOS punts) és una ambigüitat real de la carpeta — no resoluble sense l'informe o l'Eva."
+ ]
+}

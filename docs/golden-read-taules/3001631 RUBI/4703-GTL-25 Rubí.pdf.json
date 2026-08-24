@@ -1,0 +1,65 @@
+{
+  "source_path": "4703-GTL-25 Rubí.pdf",
+  "document_type": "informe_laboratori",
+  "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL) de TPS sobre la mostra SPT1 P3",
+  "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075) — signat Pere Cervós / Pere Farrés 17/12/2025",
+  "date": "expedició 17/12/2025; extracció 14/11/2025; recepció 18/11/2025",
+  "pages_or_sheets": "8 pàgines",
+  "context": {
+    "who_made_it": "TPS (laboratori) per al seu client G3",
+    "for_whom": "G3 (DADES DEL CLIENT = G3 → cap rol al projecte)",
+    "why": "resultats de granulometria, límits, sulfats de la mostra SPT",
+    "expected_fields": [
+      "lab_sample_id",
+      "lab_depth",
+      "lab_location",
+      "descripció del material",
+      "sulfats"
+    ],
+    "not_expected": [
+      "client de l'informe",
+      "arquitecte",
+      "N30",
+      "nivells"
+    ],
+    "relation_to_others": "respon la comanda; corregeix la cota mal transcrita (0,6-1,2, no 0,6-1,4); PDF/ANNEXES/LAB-SIG.pdf n'és duplicat annex",
+    "authority_for": [
+      "lab_testing_company (emissor)",
+      "spt_ma_tests.profunditat",
+      "lab_depth",
+      "litologia de la mostra (descripció lab)"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "lab_testing_company",
+      "value": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075)",
+      "location": "banda inferior de totes les pàgines",
+      "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona...",
+      "confidence": 0.95,
+      "note": "emissor, mai el 'client' del GTL"
+    }
+  ],
+  "tables": {
+    "spt_ma_tests": [
+      {
+        "id": "SPT1 P3",
+        "punt": "P3",
+        "profunditat": "0,6 - 1,2 m",
+        "tipus": "SPT",
+        "descripcio_material": "Sorres i graves",
+        "sucs": "SM — Sorres llimoses amb graves",
+        "sulfats": "632,3 mg SO4/kg",
+        "location": "p.2 (obertura), p.5 (SUCS), p.6 (sulfats)",
+        "quote": "Mostra: SPT1 P3 / Cota d'extracció (m): 0,6 - 1,2 / DESCRIPCIÓ DEL MATERIAL: Sorres i graves / SM Sorres llimoses amb graves / 632,3 mg/kg"
+      }
+    ],
+    "__nota": "sense N30 (el GTL no el porta); límits: NO PLÀSTIC; humitat natural 18,23%; %grava 50,3 / %sorra 28,5(2-0,08) / fins 21,9 aprox segons p.3-5"
+  },
+  "not_present": [
+    "N30",
+    "nivells de sòl",
+    "cota msnm"
+  ],
+  "reading_notes": "text net; p.4-5 amb glifs corruptes en algunes còpies (ωL/ωP) — valors llegits del resum p.5/p.7"
+}

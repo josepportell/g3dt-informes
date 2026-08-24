@@ -1,0 +1,216 @@
+{
+ "source": "/mnt/c/claude/g3dt/projectes/4001612 BELL-LLOC/4001612_informe.docx",
+ "tables": [
+  {
+   "type": "plantes",
+   "grid": [
+    [
+     "Nº de plantes per habitatge",
+     "Pb+1Pp"
+    ],
+    [
+     "Superfície de la parcel·la segons plànols cadastrals  (m2)",
+     "995"
+    ],
+    [
+     "Superfície construïda total (m2)",
+     "280+86"
+    ]
+   ]
+  },
+  {
+   "type": "cte_edificacio",
+   "grid": [
+    [
+     "Tipus d’edificació considerada:",
+     "C-1"
+    ],
+    [
+     "Tipus de sòl considerat :",
+     "T-1"
+    ]
+   ]
+  },
+  {
+   "type": "dpsh",
+   "grid": [
+    [
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH"
+    ],
+    [
+     "Punt",
+     "Cota d’inici (msnm*)",
+     "Profunditat assolida (m)",
+     "Rebuig",
+     "Nivell freàtic aproximat (m)"
+    ],
+    [
+     "P-1",
+     "+199.50",
+     "-1.35",
+     "Si",
+     "No detectat"
+    ],
+    [
+     "P-2",
+     "+199.50",
+     "-2.45",
+     "Si",
+     "No detectat"
+    ]
+   ]
+  },
+  {
+   "type": "sondeig",
+   "grid": [
+    [
+     "Sondeig a rotació amb bateria continua",
+     "Sondeig a rotació amb bateria continua",
+     "Sondeig a rotació amb bateria continua",
+     "Sondeig a rotació amb bateria continua",
+     "Sondeig a rotació amb bateria continua"
+    ],
+    [
+     "Punt",
+     "Cota d’inici (msnm*)",
+     "Profunditat assolida (m)",
+     "SPT/MA",
+     "Nivell freàtic aproximat (m)"
+    ],
+    [
+     "S-1",
+     "+199.50",
+     "-1.80",
+     "1/--",
+     "No detectat"
+    ]
+   ]
+  },
+  {
+   "type": "spt_ma",
+   "grid": [
+    [
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA"
+    ],
+    [
+     "Nº assaig",
+     "Punt",
+     "Prof. Extracció (m)",
+     "N30",
+     "Litologia"
+    ],
+    [
+     "SPT-1",
+     "S-1",
+     "-1.00 a 1.60",
+     "54",
+     "Graves en matriu sorrenca"
+    ]
+   ]
+  },
+  {
+   "type": "mostra_lab",
+   "grid": [
+    [
+     "Mostra : SPT-1",
+     "Punt: S-1",
+     "Profunditat:  -1.0  a -1.60 m"
+    ],
+    [
+     "Assaigs realitzats",
+     "1 assaig de contingut en sulfats UNE 83963 : 2008",
+     "1 assaig de contingut en sulfats UNE 83963 : 2008"
+    ]
+   ]
+  },
+  {
+   "type": "soil_levels",
+   "grid": [
+    [
+     "1er nivell.",
+     "Graves en matriu sorrenca carbonatades"
+    ]
+   ]
+  },
+  {
+   "type": "permeabilitat",
+   "grid": [
+    [
+     "Nivell",
+     "K (m/s)",
+     "Tipus material"
+    ],
+    [
+     "1er nivell",
+     "10 – 10-2",
+     "Graves en matriu sorrenca carbonatades"
+    ]
+   ]
+  },
+  {
+   "type": "sulfats",
+   "grid": [
+    [
+     "Nivell",
+     "Contingut en sulfats \n(mg/kg SO4)",
+     "Acidesa Baumann-Gully (ml/kg)",
+     "Qualificació (*)"
+    ],
+    [
+     "1er nivell",
+     "89.8",
+     "---",
+     "No Agressius"
+    ]
+   ]
+  },
+  {
+   "type": "sismica",
+   "grid": [
+    [
+     "Nivells",
+     "Tipus de terreny",
+     "Gruix (metres)",
+     "Coef. C"
+    ],
+    [
+     "1",
+     "Tipus II",
+     "2.45",
+     "1.30"
+    ]
+   ]
+  },
+  {
+   "type": "geotecnica",
+   "grid": [
+    [
+     "Nivell",
+     "Nb",
+     "N",
+     "Densitat(1)",
+     "Cohesió(2)",
+     "Angle de fregament intern (3)",
+     "E (4)"
+    ],
+    [
+     "1er nivell. Graves en matriu sorrenca",
+     "25-R",
+     "54",
+     "2.0",
+     "0.0",
+     "38º",
+     "650"
+    ]
+   ]
+  }
+ ]
+}

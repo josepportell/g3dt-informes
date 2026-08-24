@@ -1,0 +1,33 @@
+{
+ "source_path": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx (duplicat: adjunt del RE_ PRESSUPOST LLEIDA.msg, md5 ba9f919c)",
+ "document_type": "plan_cost_g3",
+ "what_it_is": "PLAN COST G3: full intern de costos amb l'oferta desglossada",
+ "issuer": "G3 (tècnic: Eva Vázquez Marcet)",
+ "date": "gener 2026",
+ "pages_or_sheets": "fulls Plan Cost + OFERTA",
+ "context": {
+  "who_made_it": "G3",
+  "for_whom": "intern",
+  "why": "costejar l'oferta; tota la resta és plantilla (preus SOIL-ASSAIG/TPS): mai senyal",
+  "expected_fields": [
+   "OFERTA!B21 unitats DPSH",
+   "B6 ml sondeig",
+   "B14/B23 SPT"
+  ],
+  "not_expected": [
+   "dades de camp"
+  ],
+  "relation_to_others": "no s'actualitza amb l'executat: última font per a quantitats",
+  "authority_for": [
+   "num_dpsh_tests (previstos)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "__nota": "OFERTA: bloc SONDEIGS sense cap unitat (B4:B17 buits) → 0 sondeigs previstos; bloc ASSAIGS DPSH: B21=3 unitats DPSH, B23=1 spt; bloc LABORATORI: B26=1 obertura de mostra. Plan Cost E9='EG VILANOVA SEGRIÀ'"
+ },
+ "not_present": [
+  "sondeig a rotació (cap unitat)"
+ ],
+ "reading_notes": "openpyxl data_only; només cel·les amb valor del full OFERTA"
+}

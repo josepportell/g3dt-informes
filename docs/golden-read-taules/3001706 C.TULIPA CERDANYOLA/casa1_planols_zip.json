@@ -1,0 +1,32 @@
+{
+ "source_path": "CASA 1- TULIPA/260507_EVA G3_PLANOLS PER GEOTÈCNIC.zip",
+ "document_type": "planol",
+ "what_it_is": "Plànols DWG de VUA per a casa 1 (topogràfic, paràmetres urbanístics, planta proposta), enviats el dia del camp (07/05).",
+ "issuer": "VUA (arquitecte casa 1)",
+ "date": "nom de carpeta 260507",
+ "pages_or_sheets": "3 DWG",
+ "context": {
+  "who_made_it": "arquitecte de casa 1",
+  "for_whom": "G3",
+  "why": "context de projecte i topografia",
+  "expected_fields": [
+   "superfícies de planejament",
+   "possible superficie construïda"
+  ],
+  "not_expected": [
+   "dades de camp"
+  ],
+  "relation_to_others": "el correu d'encàrrec (25/03) ja dona les superfícies construïdes; aquí només hi ha superfícies de PLANEJAMENT (divisió proposada).",
+  "authority_for": [
+   "cap camp de taula: comprovat per a superficie_construida, no hi és"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "__nota": "PARAMETRES URBANISTICS.dwg (volcat de text): 'PARCEL·LA 1: 358.75' | 'PARCEL·LA 2: 491.24' (planejament, no construïda) | 'sup. ocup. max.144m2 144.00' i '139.47' (ocupació màxima, no construïda). PLANTA PROPOSTA.dwg (23 MB) no volcat: la superficie_construida de casa 1 ja té font d'encàrrec (correu VUA)."
+ },
+ "not_present": [
+  "superficie_construida (cap xifra PB/P1/PSOT als volcats)"
+ ],
+ "reading_notes": "zipfile + dwg2dxf + scripts/dwg_text_dump.py sobre PARAMETRES URBANISTICS.dwg."
+}

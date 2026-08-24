@@ -1,0 +1,66 @@
+{
+ "source_path": "25.0647/A.01.pdf",
+ "document_type": "planol",
+ "what_it_is": "Plànol A.01 'Emplaçament i situacio' de l'arquitecte, amb taula JUSTIFICACIO PLANEJAMENT (imatge) i caixetí",
+ "issuer": "ARQUITECTURA BOSCH NOVELL (Jordi Bosch Novell); AutoCAD 2021",
+ "date": "2025-09-30 (creationDate); EXP25.34/SET.25 (codi de l'arquitecte)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "l'arquitecte per al projecte bàsic i executiu",
+  "for_whom": "promotor RAMON MITJANA SL / tramitació",
+  "why": "emplaçament + justificació de planejament",
+  "expected_fields": [
+   "superficie_construida (taula planejament: fila IEN 'Projecte')",
+   "num_floors (PB+PP)",
+   "superficie_parcela (995,00 m2)"
+  ],
+  "not_expected": [
+   "field_date",
+   "valors de camp"
+  ],
+  "relation_to_others": "'A.01 amb punts.pdf' (arrel) és la còpia amb punts d'assaig marcats (mateix plànol); el correu d'encàrrec dona 280+86 que NO coincideix amb el 397,00 m2 (IEN) ni amb l'ocupació 296,80 -> multiplicitat real",
+  "authority_for": [
+   "superficie_construida (candidat 2, 'segons projecte')",
+   "num_floors",
+   "superficie_parcela",
+   "client_name (Promotor)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_floors",
+   "value": "PB+PP",
+   "location": "taula JUSTIFICACIO PLANEJAMENT, fila 'N. plantes', columna Projecte",
+   "quote": "PB+PP",
+   "confidence": 0.9,
+   "note": "fora d'abast taules; anotat de passada"
+  },
+  {
+   "concept_id": "superficie_parcela",
+   "value": "995,00 m2",
+   "location": "taula, fila 'Parcel.la mínima', columna Projecte",
+   "quote": "995,00m2",
+   "confidence": 0.8,
+   "note": "fora d'abast; etiqueta de font = 'segons projecte'"
+  }
+ ],
+ "tables": {
+  "superficie_construida_candidats": [
+   {
+    "value": "397,00 m2 (sostre, IEN)",
+    "font": "taula JUSTIFICACIO PLANEJAMENT, fila IEN, columna Projecte",
+    "quote": "CLAU 6B  0.4m2st/m2s (398,00 m2 màx) | 397,00 m2"
+   },
+   {
+    "value": "296,80 m2 (ocupació en planta)",
+    "font": "taula, fila Ocupacio, columna Projecte",
+    "quote": "CLAU 6B  30% (298,50 m2 max) | 296.80 m2"
+   }
+  ],
+  "__nota": "La taula de planejament és IMATGE dins del PDF -> clip 140 dpi + lectura visual. L'etiqueta de la fila de superfícies segueix la FONT: aquests valors serien 'segons projecte'."
+ },
+ "not_present": [
+  "dpsh/sondeig/soil rows"
+ ],
+ "reading_notes": "Text vectorial al caixetí (extret); taula de planejament rasteritzada -> localitzada amb search_for('JUSTIFICACIO PLANEJAMENT') i clip a 140 dpi."
+}

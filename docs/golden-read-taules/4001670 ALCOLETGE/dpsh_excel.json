@@ -1,0 +1,202 @@
+{
+ "source_path": "ANNEXES/4001670_DPSH.xls",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Transcripció digital dels 3 assaigs DPSH (fulls P-1, P-3, P-2), revisada per Eva; amb marques de color per nivells i humitat i anotació SPT al full P-3",
+ "issuer": "G3 (Eva), a partir del full de camp TPS",
+ "date": "camp 16/02/2026 (segons annex PDF i manuscrit; l'Excel no porta data)",
+ "pages_or_sheets": "3 fulls: P-1, P-3, P-2",
+ "context": {
+  "who_made_it": "Eva (G3) transcriu i revisa els valors del full de camp manuscrit de TPS",
+  "for_whom": "G3, com a base de la taula DPSH i la gràfica de l'informe",
+  "why": "digitalitzar N20/NB i marcar nivells i humitat per punt",
+  "expected_fields": [
+   "num_dpsh_tests",
+   "dpsh_tests[] (profunditat, rebuig, N.F.)",
+   "transicions de nivell (columna Nivells)"
+  ],
+  "not_expected": [
+   "cota_inici (la porta l'annex PDF)",
+   "metadades de projecte"
+  ],
+  "relation_to_others": "versió revisada del full de camp PENETROS.pdf p.2 (l'Excel mana per als valors); origen de PDF/ANNEXES/4001670_DPSH.pdf",
+  "authority_for": [
+   "num_dpsh_tests",
+   "dpsh_tests.profunditat_assolida",
+   "dpsh_tests.rebuig",
+   "dpsh_tests.nivell_freatic",
+   "soil_levels.de/a"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "profunditat_assolida": "-1,60 m",
+    "rebuig": "Si",
+    "nivell_freatic": "-1,00 m (humitat)",
+    "location": "full P-1: peu B81; columna F (N.F.) files 22-25",
+    "quote": "B81='Rebuig a la cota de  -1,60 m'; marques blaves (color 44 = llegenda 'Humitat') a -1,0/-1,2/-1,4/-1,6",
+    "n20_sequence": [
+     [
+      -0.2,
+      5
+     ],
+     [
+      -0.4,
+      6
+     ],
+     [
+      -0.6,
+      5
+     ],
+     [
+      -0.8,
+      3
+     ],
+     [
+      -1.0,
+      1
+     ],
+     [
+      -1.2,
+      0
+     ],
+     [
+      -1.4,
+      1
+     ],
+     [
+      -1.6,
+      100
+     ]
+    ]
+   },
+   {
+    "punt": "P-2",
+    "profunditat_assolida": "-1,30 m",
+    "rebuig": "Si",
+    "nivell_freatic": "-1,00 m (humitat)",
+    "location": "full P-2: peu B81; columna F files 22-24",
+    "quote": "B81='Rebuig a la cota de  -1,30 m'; marques blaves a -1,0/-1,2/-1,4. Última fila amb cops = -1,4: B81 mana (fondària exacta del rebuig)",
+    "n20_sequence": [
+     [
+      -0.2,
+      5
+     ],
+     [
+      -0.4,
+      2
+     ],
+     [
+      -0.6,
+      4
+     ],
+     [
+      -0.8,
+      9
+     ],
+     [
+      -1.0,
+      9
+     ],
+     [
+      -1.2,
+      12
+     ],
+     [
+      -1.4,
+      100
+     ]
+    ]
+   },
+   {
+    "punt": "P-3",
+    "profunditat_assolida": "-1,69 m",
+    "rebuig": "Si",
+    "nivell_freatic": "-1,00 m (humitat)",
+    "location": "full P-3: peu B81; columna F files 22-26",
+    "quote": "B81='Rebuig a la cota de  -1,69 m'; marques blaves a -1,0…-1,8. Última fila amb cops = -1,8: B81 mana",
+    "n20_sequence": [
+     [
+      -0.2,
+      5
+     ],
+     [
+      -0.4,
+      5
+     ],
+     [
+      -0.6,
+      2
+     ],
+     [
+      -0.8,
+      4
+     ],
+     [
+      -1.0,
+      9
+     ],
+     [
+      -1.2,
+      14
+     ],
+     [
+      -1.4,
+      13
+     ],
+     [
+      -1.6,
+      84
+     ],
+     [
+      -1.8,
+      100
+     ]
+    ]
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "P-3",
+    "profunditat": "0,80 a 1,40 m",
+    "registre": "5/9/11/33",
+    "location": "full P-3 cel·les E22='SPT-1', E23='0,80 a 1,40', E24='5/9/11/33'",
+    "quote": "E22='SPT-1' | E23='0,80 a 1,40' | E24='5/9/11/33'"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "de": "0,00",
+    "a_per_punt": {
+     "P-1": "-1,4",
+     "P-2": "-1,2",
+     "P-3": "-1,4"
+    },
+    "location": "columna G (Nivells): color 29 (llegenda 'Nivell 1' B79) fins a la fila indicada",
+    "quote": "G color 29 files 0…-1,4 (P-1), 0…-1,2 (P-2), 0…-1,4 (P-3); color 43 ('Nivell 2') a les files següents"
+   },
+   {
+    "nom": "Nivell 2",
+    "de_per_punt": {
+     "P-1": "-1,4",
+     "P-2": "-1,2",
+     "P-3": "-1,4"
+    },
+    "a": "fi de l'assaig per rebuig (-1,60/-1,30/-1,69)",
+    "location": "columna G color 43 (llegenda 'Nivell 2' E79)",
+    "quote": "G color 43 a P-1 fila -1,6; P-2 fila -1,4; P-3 files -1,6/-1,8"
+   }
+  ],
+  "__nota": "Les marques de nivell i humitat són COLORS de cel·la (llegenda files 79-80: color 29=Nivell 1, 43=Nivell 2, 44=Humitat), no valors de text. El peu de rebuig és B81, no B80 (variació respecte del patró del skill)."
+ },
+ "not_present": [
+  "cota_inici",
+  "metadades de projecte",
+  "data"
+ ],
+ "reading_notes": "Llegit amb xlrd formatting_info=True per descodificar les marques de color. Columna F ('N.F.') marcada en blau (color 44, llegenda 'Humitat') a partir de -1,0 en els 3 punts: primera fila marcada = -1,00. Full P-3 porta l'anotació SPT en text (E22:E24). Ordre físic dels fulls: P-1, P-3, P-2."
+}

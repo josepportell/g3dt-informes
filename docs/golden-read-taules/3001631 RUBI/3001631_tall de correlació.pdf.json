@@ -1,0 +1,42 @@
+{
+  "source_path": "PDF/ANNEXES/3001631_tall de correlació.pdf",
+  "document_type": "annex_tall",
+  "what_it_is": "Tall de correlació — versió Distiller (FreeHand) per a l'informe; MATEIX dibuix que tall.pdf",
+  "issuer": "G3 (Eva)",
+  "date": "Data: Desembre 2025",
+  "pages_or_sheets": "1 pàgina",
+  "context": {
+    "who_made_it": "Eva (G3), FreeHand → Acrobat Distiller",
+    "for_whom": "annex de l'informe (versió definitiva PDF/ANNEXES)",
+    "why": "és la còpia amb màxima prioritat segons la regla d'esborranys (PDF/ANNEXES > tall.pdf > Altres/*.png)",
+    "expected_fields": [
+      "soil_levels",
+      "num_soil_levels"
+    ],
+    "not_expected": [],
+    "relation_to_others": "duplicat (mateix dibuix) de tall.pdf; NO compta com a font independent; verificat visualment idèntic: 1 nivell, superfície ~212,5, mateixa llegenda",
+    "authority_for": [
+      "num_soil_levels",
+      "soil_levels"
+    ]
+  },
+  "tier_a": [],
+  "tables": {
+    "soil_levels": [
+      {
+        "nom": "Nivell 1",
+        "litologia_candidats": [
+          "Graves i sorres. Carbonatat."
+        ],
+        "de": "~-0,3 m (sota la franja de sòls superficials)",
+        "a": "base investigada",
+        "mostra_del_nivell": true,
+        "location": "LLEGENDA (render 130 dpi)",
+        "quote": "Nivell 1 : Graves i sorres. Carbonatat."
+      }
+    ],
+    "__nota": "contingut idèntic a tall.pdf — anotat com a duplicat, no font independent"
+  },
+  "not_present": [],
+  "reading_notes": "text brossa (FreeHand/Distiller) → lectura visual del render a 130 dpi"
+}

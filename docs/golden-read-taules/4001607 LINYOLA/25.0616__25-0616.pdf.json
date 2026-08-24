@@ -1,0 +1,36 @@
+{
+ "source_path": "25.0616/25·0616.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost G3 (m4PRO) de l'estudi geotècnic: 3 DPSH + 1 ml previ SPT + 1 SPT + laboratori, 840 EUR.",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "21/08/25",
+ "pages_or_sheets": "3 pàgines (versió curta)",
+ "context": {
+  "who_made_it": "G3",
+  "for_whom": "sol·licitant: BUNYESC ARQUITECTURA EFICIENT, SLP (bloc CLIENT: = qui demana, no el client de l'informe)",
+  "why": "Oferta de l'estudi geotècnic demanat per l'arquitecte",
+  "expected_fields": [
+   "quantitats previstes (DPSH, SPT, sondeig)",
+   "línia CTE (absent en aquest)"
+  ],
+  "not_expected": [
+   "superficie_construida",
+   "dades de camp"
+  ],
+  "relation_to_others": "Versió acceptada i signada a ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf; quantitats coincideixen amb PLAN_COST i albarà TPS.",
+  "authority_for": [
+   "num_dpsh_tests (previstos)",
+   "absència de sondeig a rotació"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "__nota": "Context de taules: VALORACIÓ p.2 = 'UNITATS D'ASSAIGS DE PENETRACIO DINAMICA DPSH 3,00', 'ML. PREVI A L'ASSAIGS SPT 1,00', 'ASSAIG SPT 1,00'. CAP línia de sondeig a rotació -> corrobora sondeig_tests buit. Sense línia CTE (Tipus d'edifici/terreny absent, patró Linyola del skill)."
+ },
+ "not_present": [
+  "superficie_construida",
+  "línia CTE",
+  "sondeig a rotació"
+ ],
+ "reading_notes": "Blocs ordenats per (y,x); '25·0616 P#' és codi comercial, no expedient."
+}

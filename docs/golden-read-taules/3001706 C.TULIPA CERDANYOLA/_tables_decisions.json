@@ -1,0 +1,837 @@
+{
+ "expedient": "3001706 C.TULIPA CERDANYOLA",
+ "abast": "NOMÉS bloc tables (Pas 3b del skill v0.8); els 15 escalars del nivell A ja tenen lectura d'or prèvia.",
+ "situacio_estructural": "Un expedient, DOS informes: casa 1 (C/ Tulipa 3, punts P-1.1/P-1.2 + sondeig S-1 a la seva parcel·la) i casa 2 (C/ Tosca 16, punts P-2.1/P-2.2, SENSE sondeig propi). Comanda: 'CONSTR DOS NOUS HAB AÏLLATS'; pressupost 2CASES preveu 4 DPSH + 1 sondeig per al conjunt; albarà TPS: 4 penetròmetres + 2 SPT. Tall de correlació ÚNIC que travessa les dues cases.",
+ "casa_1_tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1.1",
+    "estat": "segur",
+    "cota_inici": {
+     "estat": "segur",
+     "valor": "198 msnm (segons el plànol topogràfic ICGC)",
+     "candidates": [
+      {
+       "valor": "198 msnm",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_DPSH_CASA 1.pdf p.1 capçalera",
+       "quote": "Cota inici: 198 msnm segons el plànol topogràfic ICGC",
+       "note": "única font absoluta; el manuscrit dona '+/- 0' (relativa, no contradiu)"
+      }
+     ],
+     "rule": "cota_inici de la capçalera de CADA pàgina de l'annex DPSH; si l'annex només dona una cota, val per a tots els punts."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "valor": "-3,70 m",
+     "candidates": [
+      {
+       "valor": "-3,70 m",
+       "font": "3001706_DPSH_CASA 1.xls full P-1.1 peu B81",
+       "quote": "Rebuig a -3,70  m"
+      },
+      {
+       "valor": "-3,70 m",
+       "font": "PENETROS + SONDEIG.pdf p.2 columna P1",
+       "quote": "R: 3,70"
+      }
+     ],
+     "rule": "peu 'Rebuig a -X,XX m' de l'Excel = fondària exacta del rebuig (2 fonts coincidents; l'última fila amb cops, -3,8, és l'interval, no la fondària)."
+    },
+    "rebuig": {
+     "estat": "segur",
+     "valor": "Si",
+     "rule": "peu B81 present → Si."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "valor": "No detectat",
+     "candidates": [
+      {
+       "valor": "columna N.F. buida",
+       "font": "3001706_DPSH_CASA 1.xls fulls P-1.1 i P-1.2 col. F",
+       "quote": "(buida)"
+      },
+      {
+       "valor": "casella NIVELL FREÀTIC en blanc",
+       "font": "PENETROS + SONDEIG.pdf p.2",
+       "quote": "Hi ha nivell freàtic? (en blanc)"
+      }
+     ],
+     "rule": "'No detectat' NOMÉS si la columna N.F. és buida a tots els fulls — ho és, i el manuscrit ho corrobora."
+    }
+   },
+   {
+    "punt": "P-1.2",
+    "estat": "segur",
+    "cota_inici": {
+     "estat": "segur",
+     "valor": "198 msnm (segons el plànol topogràfic ICGC)",
+     "candidates": [
+      {
+       "valor": "198 msnm",
+       "font": "3001706_DPSH_CASA 1.pdf p.2 capçalera",
+       "quote": "Cota inici: 198 msnm segons el plànol topogràfic ICGC"
+      }
+     ],
+     "rule": "capçalera de la pàgina del punt a l'annex DPSH."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "valor": "-2,19 m",
+     "candidates": [
+      {
+       "valor": "-2,19 m",
+       "font": "3001706_DPSH_CASA 1.xls full P-1.2 peu B81",
+       "quote": "Rebuig a -2,19  m"
+      },
+      {
+       "valor": "-2,19 m",
+       "font": "PENETROS + SONDEIG.pdf p.2 columna P2",
+       "quote": "R: 2,19"
+      }
+     ],
+     "rule": "peu B81 de l'Excel + manuscrit coincidents."
+    },
+    "rebuig": {
+     "estat": "segur",
+     "valor": "Si",
+     "rule": "peu B81 present → Si."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "valor": "No detectat",
+     "rule": "columna N.F. buida a tots els fulls + manuscrit en blanc."
+    }
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "estat": "segur",
+    "nota": "executat a la parcel·la de casa 1 (croquis del manuscrit p.2 i plànol de situació del tall)",
+    "cota": {
+     "estat": "segur",
+     "valor": "+199,0 msnm (segons el plànol ICGC)",
+     "candidates": [
+      {
+       "valor": "+199,0 msnm",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf capçalera Z:",
+       "quote": "+199.0 msnm (segons el plànol ICGC)",
+       "note": "les 2 còpies de l'annex coincideixen (no independents)"
+      },
+      {
+       "valor": "carrer +1 m",
+       "font": "PENETROS + SONDEIG.pdf p.5",
+       "quote": "Descriure cota 0 o cota referència: C/Tulipan +1m",
+       "note": "coherent: 198 (carrer, annex DPSH) + 1 = 199"
+      }
+     ],
+     "rule": "annex sondeig z: = cota del sondeig; el full de camp la corrobora en relatiu."
+    },
+    "profunditat": {
+     "estat": "segur",
+     "valor": "-3,54 m",
+     "candidates": [
+      {
+       "valor": "-3,54 m",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+       "quote": "-2.80 a -3.54 m: Lutites i sorrenques menys alterades."
+      },
+      {
+       "valor": "3,00 a 3,54 (mostra final)",
+       "font": "PENETROS + SONDEIG.pdf p.5 bloc Mostres",
+       "quote": "3,00 a 3,54 | S.P.T-2"
+      },
+      {
+       "valor": "3,60 ml (facturació)",
+       "font": "PENETROS + SONDEIG.pdf p.4 albarà sondeig",
+       "quote": "Ml de perf. en sòls entre 0-20 m: 3,60",
+       "note": "arrodoniment d'albarà, no mana"
+      }
+     ],
+     "rule": "annex de sondeig mana; l'albarà TPS és criteri de facturació (regla existent); noms de fotos 'S1 3-3.54' corroboren."
+    },
+    "spt_ma": {
+     "estat": "segur",
+     "valor": "2/0",
+     "candidates": [
+      {
+       "valor": "2 SPT, 0 MA",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf bloc Mostres + comanda files 35-36 + albarà p.4 + full camp p.5",
+       "quote": "Assaigs SPT: 2 | SPT-1, SPT-2"
+      }
+     ],
+     "rule": "format 'N_SPT/N_MA' comptant del GTL + comanda + annex (sense GTL: comanda + annex + albarà coincideixen)."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "valor": "No detectat",
+     "candidates": [
+      {
+       "valor": "cap marca",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf columna Nivell freàtic",
+       "quote": "(sense marca)"
+      },
+      {
+       "valor": "casella en blanc",
+       "font": "PENETROS + SONDEIG.pdf p.5",
+       "quote": "Nivell Freàtic (indicar cota / posar No si no n'hi ha): (en blanc)"
+      }
+     ],
+     "rule": "annex sondeig sense marca + full de camp en blanc + tall sense NF."
+    }
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "estat": "segur",
+    "punt": "S-1",
+    "profunditat": {
+     "estat": "segur",
+     "valor": "-1,00 a -1,60 m",
+     "candidates": [
+      {
+       "valor": "-1.00 a -1.60",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf Prof. de extracció",
+       "quote": "SPT-1 | -1.00 a -1.60"
+      },
+      {
+       "valor": "1,00 a 1,60",
+       "font": "PENETROS + SONDEIG.pdf p.5",
+       "quote": "1,00 a 1,60 | S.P.T-1"
+      },
+      {
+       "valor": "1,0 a 1,6",
+       "font": "comanda laboratori Hoja1 fila 35",
+       "quote": "SPT 1  (S1) | 1.0 | 1.6"
+      }
+     ],
+     "rule": "annex de l'Eva mana per etiqueta; profunditat coincideix a les 3 fonts."
+    },
+    "n30": {
+     "estat": "segur",
+     "valor": "18",
+     "candidates": [
+      {
+       "valor": "18",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes) anotació al log S-1",
+       "quote": "N=18"
+      },
+      {
+       "valor": "registre 6/9/9/9 → 9+9=18",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf Registre + PENETROS + SONDEIG.pdf p.5",
+       "quote": "6 9 9 9",
+       "note": "suma dels trams centrals coincideix amb el tall"
+      }
+     ],
+     "rule": "llegeix els 4 valors del Registre i proposa la suma dels trams centrals; aquí el tall imprimeix N=18 i coincideix → segur."
+    },
+    "registre": {
+     "estat": "segur",
+     "valor": "6/9/9/9",
+     "rule": "annex + full de camp coincidents."
+    },
+    "litologia": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "Nivell 2 (Llims argilosos cohesius / Argiles coheives)",
+       "font": "interval -1,00/-1,60 vs transició N1/N2 a -1,10",
+       "quote": "SPT-1 -1.00 a -1.60 | NIVELL 2 -1.10 a -2.20",
+       "note": "l'interval creua el límit N1/N2 (-1,10): 50 cm al N2, 10 cm al N1; el tall situa N=18 dins el Nivell 2"
+      },
+      {
+       "valor": "Nivell 1 (Sorres llimoses disgregades amb graves)",
+       "font": "tram inicial de l'interval",
+       "quote": null
+      }
+     ],
+     "rule": "litologia = la del nivell d'on surt la mostra; interval a cavall de límit → candidats (lectura + interval, no judici)."
+    }
+   },
+   {
+    "id": "SPT-2",
+    "estat": "segur",
+    "punt": "S-1",
+    "profunditat": {
+     "estat": "segur",
+     "valor": "-3,00 a -3,54 m",
+     "candidates": [
+      {
+       "valor": "-3.00 a -3.54",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+       "quote": "SPT-2 | -3.00 a -3.54"
+      },
+      {
+       "valor": "3,00 a 3,54",
+       "font": "PENETROS + SONDEIG.pdf p.5",
+       "quote": "3,00 a 3,54 | S.P.T-2"
+      },
+      {
+       "valor": "3,0 a 3,6",
+       "font": "comanda laboratori fila 36",
+       "quote": "SPT2 (S1) | 3.0 | 3.6",
+       "note": "cota final de comanda mal arrodonida: annex/full de camp manen (regla de comanda mal transcrita)"
+      }
+     ],
+     "rule": "annex + full de camp > comanda per a la profunditat."
+    },
+    "n30": {
+     "estat": "segur",
+     "valor": "64",
+     "candidates": [
+      {
+       "valor": "64",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes) anotació al log S-1",
+       "quote": "N=64"
+      },
+      {
+       "valor": "registre 19/31/33/50R → 31+33=64",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf Registre + PENETROS + SONDEIG.pdf p.5",
+       "quote": "19 31 33 50R",
+       "note": "50R = rebuig al 4t tram; suma dels trams centrals coincideix amb el tall"
+      }
+     ],
+     "rule": "suma dels trams centrals proposada amb els 4 valors; el tall la imprimeix → segur."
+    },
+    "registre": {
+     "estat": "segur",
+     "valor": "19/31/33/50R",
+     "rule": "annex (50R) + full de camp (50) coincidents; la R és a l'annex."
+    },
+    "litologia": {
+     "estat": "segur",
+     "valor": "Nivell 3 (Lutites i sorrenques alterades / Substrat alterat)",
+     "candidates": [
+      {
+       "valor": "Nivell 3",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf + 3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes)",
+       "quote": "SPT-2 -3.00 a -3.54 dins NIVELL 3 (-2.20 a -3.54)"
+      }
+     ],
+     "rule": "interval íntegrament dins el nivell 3."
+    }
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "1er nivell",
+    "estat": "segur (fondàries) / candidats (redacció litologia)",
+    "litologia_candidats": [
+     {
+      "valor": "Sorres llimoses disgregades amb graves i restes d'arrels",
+      "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf Descripció dels materials",
+      "quote": "-0.10 a -1.10 m: Sorres llimoses disgregades amb graves i restes d'arrels.",
+      "note": "l'annex hi afegeix 0,00-0,10 de sòl vegetal dins el mateix NIVELL 1"
+     },
+     {
+      "valor": "Sorres llimoses disgregades amb graves.",
+      "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes) llegenda",
+      "quote": "Nivell 1: Sorres llimoses disgregades amb graves."
+     }
+    ],
+    "de": "0,00",
+    "a": "-1,10",
+    "mostra_del_nivell": false,
+    "fonts_de_a": [
+     {
+      "valor": "0,00 / -1,10",
+      "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf columna Unitat litològica",
+      "quote": "NIVELL 1 fins a -1.10"
+     }
+    ],
+    "rule": "v0.8: litologia annex sondeig 'Descripció dels materials' PRIMER, tall segon; redacció exacta sempre candidats (l'Eva re-redacta)."
+   },
+   {
+    "nom": "2on nivell",
+    "estat": "segur (fondàries) / candidats (redacció litologia)",
+    "litologia_candidats": [
+     {
+      "valor": "Argiles coheives amb indicis de precipitat de calci",
+      "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf (còpia de la carpeta casa 1)",
+      "quote": "-1.10 a -2.20 m: Argiles coheives amb indicis de precipitat de calci."
+     },
+     {
+      "valor": "Llims argilosos coheisus amb indicis de precipitat de calci",
+      "font": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf (còpia carpeta casa 2, mateix dibuix)",
+      "quote": "-1.10 a -2.20 m: Llims argilosos coheisus amb indicis de precipitat de calci.",
+      "note": "les DUES còpies del mateix annex discrepen de redacció; la llegenda del tall coincideix amb aquesta"
+     },
+     {
+      "valor": "Llims argilosos cohesius.",
+      "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes) llegenda",
+      "quote": "Nivell 2: Llims argilosos cohesius."
+     }
+    ],
+    "de": "-1,10",
+    "a": "-2,20",
+    "mostra_del_nivell": "SPT-1 (interval a cavall del límit N1/N2, vegeu spt_ma_tests)",
+    "fonts_de_a": [
+     {
+      "valor": "-1,10 / -2,20",
+      "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+      "quote": "NIVELL 2: -1.10 a -2.20"
+     }
+    ],
+    "rule": "regla d'annexos amb errors de còpia: mai segur amb una sola còpia; les còpies discrepen → candidats amb totes dues redaccions + tall."
+   },
+   {
+    "nom": "3er nivell",
+    "estat": "segur (fondàries) / candidats (redacció litologia)",
+    "litologia_candidats": [
+     {
+      "valor": "Lutites i sorrenques molt alterades (-2,20/-2,80) i menys alterades (-2,80/-3,54)",
+      "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+      "quote": "-2.20 a -2.80 m: Lutites i sorrenques molt alterades. | -2.80 a -3.54 m: Lutites i sorrenques menys alterades.",
+      "note": "dos trams de descripció dins un sol NIVELL 3"
+     },
+     {
+      "valor": "Substrat alterat.",
+      "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes) llegenda",
+      "quote": "Nivell 3: Substrat alterat."
+     }
+    ],
+    "de": "-2,20",
+    "a": "-3,54 (fi del sondeig; el nivell continua en fondària segons el tall)",
+    "mostra_del_nivell": "SPT-2",
+    "fonts_de_a": [
+     {
+      "valor": "-2,20 / fons -3,54",
+      "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+      "quote": "NIVELL 3 fins al fons (-3.54)"
+     }
+    ],
+    "rule": "num_soil_levels: columna Unitat litològica de l'annex (3) = llegenda del tall (3); els 5 trams de material NO són nivells."
+   }
+  ],
+  "superficie_construida": {
+   "estat": "candidats",
+   "candidates": [
+    {
+     "valor": "PB: 135,26 m² + P1: 107,66 m² + PSOT: 65 m² (total 307,92)",
+     "font": "26.0254/RV_ PETICIÓ PRESSUPOST ESTUDI GEOTÈCNIC.msg (correu VUA 25/03/2026)",
+     "quote": "Les superfícies construides son: PB: 135.26m2 P1: 107.66m2 PSOT: 65m2",
+     "note": "'tot i que encara s'esta definint' — valor del moment de l'encàrrec"
+    }
+   ],
+   "font_etiqueta": "segons informació aportada (correu de l'arquitecte)",
+   "rule": "superficie_construida del correu d'encàrrec ('Pb de 280m + p1 de 86' → '280+86'); única font i el mateix correu avisa que el projecte es defineix → candidats, no segur.",
+   "sources_checked_altres": [
+    "260507_EVA G3_PLANOLS PER GEOTÈCNIC.zip (PARAMETRES URBANISTICS.dwg: només planejament)",
+    "PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf p.1-2"
+   ]
+  }
+ },
+ "casa_2_tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-2.1",
+    "estat": "segur",
+    "cota_inici": {
+     "estat": "segur",
+     "valor": "201,25 msnm (segons el plànol topogràfic ICGC)",
+     "candidates": [
+      {
+       "valor": "201,25 msnm",
+       "font": "CASA 2_ CARRER TOSCA/PDF/3001706_DPSH_CASA 2.pdf p.1 capçalera",
+       "quote": "Cota inici: 201,25 msnm segons el plànol topogràfic ICGC"
+      },
+      {
+       "valor": "+2,20 (relativa)",
+       "font": "PENETROS + SONDEIG.pdf p.3",
+       "quote": "Cota Inici + 2,20",
+       "note": "sistema relatiu del sondista, no contradiu"
+      },
+      {
+       "valor": "201.25 (cota d'implantació)",
+       "font": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.pdf",
+       "quote": "201.25",
+       "note": "coincidència exacta amb el plànol de Factoria"
+      }
+     ],
+     "rule": "cota de la capçalera de CADA pàgina de l'annex DPSH: pot ser diferent per punt (parcel·la en pendent) — aquí ho és."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "valor": "-4,13 m",
+     "candidates": [
+      {
+       "valor": "-4,13 m",
+       "font": "3001706_DPSH_CASA 2.xls full P-2.1 peu B81",
+       "quote": "Rebuig a -4,13  m"
+      },
+      {
+       "valor": "-4,13 m",
+       "font": "PENETROS + SONDEIG.pdf p.3",
+       "quote": "R: 4,13"
+      }
+     ],
+     "rule": "peu B81 + manuscrit coincidents."
+    },
+    "rebuig": {
+     "estat": "segur",
+     "valor": "Si",
+     "rule": "peu B81 present."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "valor": "No detectat",
+     "rule": "columna N.F. buida a tots els fulls + manuscrit en blanc."
+    }
+   },
+   {
+    "punt": "P-2.2",
+    "estat": "segur",
+    "cota_inici": {
+     "estat": "segur",
+     "valor": "202,85 msnm (segons el plànol topogràfic ICGC)",
+     "candidates": [
+      {
+       "valor": "202,85 msnm",
+       "font": "3001706_DPSH_CASA 2.pdf p.2 capçalera",
+       "quote": "Cota inici: 202,85 msnm segons el plànol topogràfic ICGC"
+      },
+      {
+       "valor": "+2,50 (relativa)",
+       "font": "PENETROS + SONDEIG.pdf p.3",
+       "quote": "Cota Inici + 2,50",
+       "note": "no contradiu"
+      }
+     ],
+     "rule": "cota per punt de l'annex DPSH."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "valor": "-5,11 m",
+     "candidates": [
+      {
+       "valor": "-5,11 m",
+       "font": "3001706_DPSH_CASA 2.xls full P-2.2 peu B81",
+       "quote": "Rebuig a -5,11  m"
+      },
+      {
+       "valor": "-5,11 m",
+       "font": "PENETROS + SONDEIG.pdf p.3",
+       "quote": "R: 5,11"
+      }
+     ],
+     "rule": "peu B81 + manuscrit coincidents."
+    },
+    "rebuig": {
+     "estat": "segur",
+     "valor": "Si",
+     "rule": "peu B81 present."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "valor": "No detectat",
+     "rule": "columna N.F. buida + manuscrit en blanc."
+    }
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1 (REPLICAT: executat a la parcel·la de casa 1)",
+    "estat": "candidats",
+    "nota": "regla 'Un expedient, N informes': la casa sense sondeig replica el bloc en candidats. S-1 és a C/ Tulipa 3 (croquis manuscrit p.2, plànol de situació del tall); el tall el correlaciona sota casa 2.",
+    "cota": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "+199,0 msnm",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+       "quote": "+199.0 msnm (segons el plànol ICGC)",
+       "note": "cota del punt S-1 a la parcel·la de casa 1, NO de la parcel·la de casa 2 (201,25-202,85)"
+      }
+     ],
+     "rule": "replica amb nota."
+    },
+    "profunditat": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "-3,54 m",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+       "quote": "-2.80 a -3.54 m: …"
+      }
+     ],
+     "rule": "replica amb nota."
+    },
+    "spt_ma": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "2/0",
+       "font": "annex + comanda + albarà",
+       "quote": "Assaigs SPT: 2"
+      }
+     ],
+     "rule": "replica amb nota."
+    },
+    "nivell_freatic": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "No detectat",
+       "font": "annex + full de camp + Excels DPSH casa 2",
+       "quote": "(cap marca; columnes buides)",
+       "note": "els DPSH propis de casa 2 tampoc detecten aigua"
+      }
+     ],
+     "rule": "replica amb nota; corroborat pels punts propis."
+    }
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1 (del S-1 replicat)",
+    "estat": "candidats",
+    "punt": "S-1 (parcel·la casa 1)",
+    "profunditat": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "-1,00 a -1,60 m",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+       "quote": "SPT-1 | -1.00 a -1.60"
+      }
+     ]
+    },
+    "n30": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "18",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes)",
+       "quote": "N=18"
+      },
+      {
+       "valor": "6/9/9/9 → 9+9=18",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+       "quote": "6 9 9 9"
+      }
+     ]
+    },
+    "registre": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "6/9/9/9",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf + PENETROS + SONDEIG.pdf",
+       "quote": "6 9 9 9"
+      }
+     ]
+    },
+    "litologia": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "Nivell 2",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes)",
+       "quote": "N=18 dins el Nivell 2",
+       "note": "interval a cavall N1/N2 al log"
+      }
+     ]
+    },
+    "rule": "replica del sondeig compartit amb nota 'S-1 a la parcel·la de casa 1'."
+   },
+   {
+    "id": "SPT-2 (del S-1 replicat)",
+    "estat": "candidats",
+    "punt": "S-1 (parcel·la casa 1)",
+    "profunditat": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "-3,00 a -3,54 m",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+       "quote": "SPT-2 | -3.00 a -3.54"
+      }
+     ]
+    },
+    "n30": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "64",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes)",
+       "quote": "N=64"
+      },
+      {
+       "valor": "19/31/33/50R → 31+33=64",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+       "quote": "19 31 33 50R"
+      }
+     ]
+    },
+    "registre": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "19/31/33/50R",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf + PENETROS + SONDEIG.pdf",
+       "quote": "19 31 33 50R"
+      }
+     ]
+    },
+    "litologia": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "Nivell 3",
+       "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf + 3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes)",
+       "quote": "dins NIVELL 3"
+      }
+     ]
+    },
+    "rule": "replica del sondeig compartit amb nota."
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "1er nivell",
+    "estat": "candidats (confirmar: casa sense sondeig propi)",
+    "litologia_candidats": [
+     {
+      "valor": "Sorres llimoses disgregades amb graves i restes d'arrels",
+      "font": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf (còpia de la carpeta casa 2)",
+      "quote": "-0.10 a -1.10 m: Sorres llimoses disgregades amb graves i restes d'arrels."
+     },
+     {
+      "valor": "Sorres llimoses disgregades amb graves.",
+      "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes) llegenda",
+      "quote": "Nivell 1: Sorres llimoses disgregades amb graves."
+     }
+    ],
+    "de": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "0,00 (superfície)",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes)",
+       "quote": "sostre del Nivell 1 = superfície del terreny sota casa 2"
+      }
+     ]
+    },
+    "a": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "~199,8 msnm sota P-2.1 (~ -1,4 m) i ~201,4 msnm sota P-2.2 (~ -1,5 m); lectura gràfica ±0,3 m",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes)",
+       "quote": "(límit de color N1/N2 al tram de casa 2)",
+       "note": "única font per a casa 2: transicions només gràfiques — confirmar"
+      }
+     ],
+     "sources_checked": [
+      "3001706_DPSH_CASA 2.xls (columna Nivells buida)",
+      "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf (fondàries del S-1, parcel·la casa 1)"
+     ]
+    },
+    "mostra_del_nivell": false,
+    "rule": "casa sense sondeig: nivells = tall (síntesi de l'Eva que cobreix les 2 cases) → candidats + 'confirmar'."
+   },
+   {
+    "nom": "2on nivell",
+    "estat": "candidats (confirmar)",
+    "litologia_candidats": [
+     {
+      "valor": "Llims argilosos coheisus amb indicis de precipitat de calci",
+      "font": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf (còpia carpeta casa 2)",
+      "quote": "-1.10 a -2.20 m: Llims argilosos coheisus amb indicis de precipitat de calci."
+     },
+     {
+      "valor": "Argiles coheives amb indicis de precipitat de calci",
+      "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf (còpia carpeta casa 1, variant)",
+      "quote": "-1.10 a -2.20 m: Argiles coheives amb indicis de precipitat de calci."
+     },
+     {
+      "valor": "Llims argilosos cohesius.",
+      "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes) llegenda",
+      "quote": "Nivell 2: Llims argilosos cohesius."
+     }
+    ],
+    "de": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "~199,8 / ~201,4 msnm (límit N1/N2, gràfic)",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes)",
+       "quote": "(vegeu 1er nivell)"
+      }
+     ]
+    },
+    "a": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "~199,2 msnm sota P-2.1 i ~200,6 msnm sota P-2.2; lectura gràfica ±0,3 m",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes)",
+       "quote": "(límit de color N2/N3 al tram de casa 2)",
+       "note": "confirmar"
+      }
+     ]
+    },
+    "mostra_del_nivell": "SPT-1 del S-1 replicat (candidats)",
+    "rule": "idèntica regla; redacció mai segura (les còpies de l'annex discrepen)."
+   },
+   {
+    "nom": "3er nivell",
+    "estat": "candidats (confirmar)",
+    "litologia_candidats": [
+     {
+      "valor": "Lutites i sorrenques molt alterades / menys alterades",
+      "font": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf",
+      "quote": "-2.20 a -2.80 m: Lutites i sorrenques molt alterades. | -2.80 a -3.54 m: …menys alterades."
+     },
+     {
+      "valor": "Substrat alterat.",
+      "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes) llegenda",
+      "quote": "Nivell 3: Substrat alterat."
+     }
+    ],
+    "de": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "~199,2 / ~200,6 msnm (límit N2/N3, gràfic)",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes)",
+       "quote": "(vegeu 2on nivell)"
+      }
+     ]
+    },
+    "a": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "valor": "base no assolida (els 2 DPSH de casa 2 fan rebuig dins d'aquest nivell: -4,13 i -5,11)",
+       "font": "3001706_tall de correlació.pdf (còpia idèntica a les dues carpetes) + Excels DPSH casa 2",
+       "quote": "Nb=R"
+      }
+     ]
+    },
+    "mostra_del_nivell": "SPT-2 del S-1 replicat (candidats)",
+    "rule": "idèntica regla."
+   }
+  ],
+  "superficie_construida": {
+   "estat": "no_trobat",
+   "sources_checked": [
+    "CASA 2_ CARRER TOSCA/geotecnic  carrer Tosca 16.msg (cos: només accés i cotes)",
+    "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.pdf (render 150 dpi: cap xifra de superfície)",
+    "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.dwg (volcat de text dwg2dxf: només cotes de terreny i rètols)",
+    "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf p.1-2 (cap superfície)",
+    "comanda laboratori_3001706_CERDANYOLA.xls (cap superfície)"
+   ],
+   "proposta": "la secció B del PLANTA I SECCIO mostra l'edifici amb DUES plantes sobre la cota 201,25 — demanar la superfície a Factoria o al projecte definitiu",
+   "rule": "mai omplir 'perquè segur que és això': cap document de la carpeta dona superfícies construïdes de casa 2."
+  }
+ },
+ "notes_globals": [
+  "Punt-id: els Excels/annexos anomenen els punts P-1.1/P-1.2 (casa 1) i P-2.1/P-2.2 (casa 2); els fulls manuscrits els anomenen P1/P2 dins de cada full 'Casa 1'/'Casa 2'.",
+  "NF: cap indici d'aigua en cap dels 8 documents de camp (4 columnes Excel, 3 caselles manuscrites, annex sondeig, tall).",
+  "Els Nb mitjans per nivell del tall (P-1.1: 12/22/39; P-1.2: 8/18; P-2.1: 9/21; P-2.2: 14/24/35; +R) són inputs Tier B ja sintetitzats per l'Eva: transcrits al JSON del tall, no decidits aquí.",
+  "El full del sondeig manuscrit porta data '7-6-2025' (lapsus del sondista); tota la resta de fonts: 07/05/2026."
+ ]
+}

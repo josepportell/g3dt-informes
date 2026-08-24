@@ -1,0 +1,45 @@
+{
+  "source_path": "25.0794/PRESSU.msg",
+  "document_type": "correu",
+  "what_it_is": "Correu intern d'encàrrec (Eva Roig admin → Eva Vázquez): 'RUBÍ (1 casa modular)' amb el catàleg del fabricant adjunt",
+  "issuer": "Eva Roig (G3 administració)",
+  "date": "2025-11-05 09:33",
+  "pages_or_sheets": "cos + 8 adjunts (2 útils: IMG-20251104-WA0015/16.jpg, ja solts a 25.0794/)",
+  "context": {
+    "who_made_it": "administració G3 reenvia la info de la sol·licitant",
+    "for_whom": "Eva Vázquez (geòloga) per fer el pressupost",
+    "why": "encàrrec: geotècnic per a 1 casa modular; contacte JOANA MARTINEZ 696 04 00 77 (sol·licitant, sense correu)",
+    "expected_fields": [
+      "building_type",
+      "superficie_construida (via adjunts)",
+      "contacte"
+    ],
+    "not_expected": [
+      "dades de camp",
+      "nivells"
+    ],
+    "relation_to_others": "els adjunts WA0015/16 són el catàleg del fabricant (única documentació 'de projecte'); RE_ PRESSU.msg només retorna el PLAN_COST (cap text nou)",
+    "authority_for": [
+      "building_type",
+      "superficie_construida (via catàleg)"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "building_type",
+      "value": "1 casa modular (habitatge unifamiliar)",
+      "location": "cos del correu",
+      "quote": "RUBÍ / (1 casa modular)",
+      "confidence": 0.8,
+      "note": ""
+    }
+  ],
+  "tables": {
+    "__nota": "el correu no porta files de taula; la superfície és als adjunts (catàleg)"
+  },
+  "not_present": [
+    "superficie_construida al cos",
+    "num_floors explícit"
+  ],
+  "reading_notes": "extract_msg; imatges de signatura (≤25KB) ignorades; dedup: WA0015/16 ja solts a 25.0794/"
+}

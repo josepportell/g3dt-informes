@@ -1,0 +1,67 @@
+{
+ "source_path": "PDF/ANNEXES/4001670_DPSH.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe (imprès des de l'Excel, text net): 1 pàgina per punt amb gràfica, capçalera de cota i peu de rebuig",
+ "issuer": "G3 (Eva; PDF creat per 'Loli', Distiller, 16/03/2026)",
+ "date": "camp 16/02/2026 (capçalera DATA); PDF 16/03/2026",
+ "pages_or_sheets": "3 pàgines: P-1, P-2, P-3",
+ "context": {
+  "who_made_it": "Eva (G3) imprimeix l'Excel DPSH amb capçaleres d'informe",
+  "for_whom": "annex de l'informe 4001670",
+  "why": "presentar cada assaig amb la seva cota d'inici i gràfica",
+  "expected_fields": [
+   "dpsh_tests.cota_inici (capçalera per pàgina)",
+   "OBRA/POBLACIÓ/DATA/NÚMERO D'INFORME",
+   "anotació SPT"
+  ],
+  "not_expected": [
+   "client",
+   "arquitecte"
+  ],
+  "relation_to_others": "generat des d'ANNEXES/4001670_DPSH.xls (mateixos valors); NO és font independent dels valors N20, sí de la cota de capçalera",
+  "authority_for": [
+   "dpsh_tests.cota_inici",
+   "field_date (candidat)",
+   "spt_ma_tests (etiqueta i interval)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "+188,20 msnm",
+    "location": "p.1 capçalera",
+    "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1        Cota inici:  +188,20 msnm segons el plànol topogràfic de l'ICGC."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "+188,20 msnm",
+    "location": "p.2 capçalera",
+    "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-2        Cota inici:  +188,20 msnm segons el plànol topogràfic de l'ICGC."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "+188,20 msnm",
+    "location": "p.3 capçalera",
+    "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-3        Cota inici:  +188,20 msnm segons el plànol topogràfic de l'ICGC."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "P-3",
+    "profunditat": "0,80 a 1,40 m",
+    "registre": "5/9/11/33",
+    "location": "p.3, anotació al costat de les files -1,0/-1,2/-1,4",
+    "quote": "SPT-1 … 0,80 a 1,40 … 5/9/11/33"
+   }
+  ],
+  "__nota": "Una única cota (+188,20) per als 3 punts: val per a tots (regla Pas 3b). Peu 'Rebuig a la cota de -1,60/-1,30/-1,69 m' idèntic a l'Excel (mateix origen, no font independent)."
+ },
+ "not_present": [
+  "cotes diferents per punt",
+  "nivell freàtic numèric en text"
+ ],
+ "reading_notes": "Text net (imprès des d'Excel, no FreeHand). Capçaleres: OBRA: CARRER GIRASOLS Nº7 | POBLACIÓ: ALCOLETGE | DATA: 16/02/2026 | NÚMERO D'INFORME: 4001670."
+}

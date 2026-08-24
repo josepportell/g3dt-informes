@@ -1,0 +1,103 @@
+{
+ "source_path": "tall.pdf",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació de l'Eva (còpia 'Print To PDF' del FH11, text net) amb P-1, S-1, P-2 sobre eix msnm, Nb sintetitzats i llegenda de nivells",
+ "issuer": "G3 (Eva)",
+ "date": "Octubre 2025 (caixetí); PDF 2025-10-24",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "Eva sintetitza el DPSH + sondeig en un tall de correlació",
+  "for_whom": "annex/figura de l'informe; síntesi que mana per al NOMBRE de nivells",
+  "why": "correlacionar els 3 punts d'assaig i marcar cota de fonamentació",
+  "expected_fields": [
+   "soil_levels (llegenda + geometria)",
+   "num_soil_levels",
+   "Nb sintetitzats per punt",
+   "N30 triat per l'Eva (N=58)"
+  ],
+  "not_expected": [
+   "field_date",
+   "lab",
+   "superficie_construida"
+  ],
+  "relation_to_others": "mateix dibuix que ANNEXES/4001612_tall de correlació.FH11 i PDF/ANNEXES/4001612_tall de correlació.pdf (versió Distiller, text brossa); sintetitza l'annex sondeig i l'Excel DPSH",
+  "authority_for": [
+   "num_soil_levels (el tall mana per al nombre)",
+   "soil_levels.litologia (segon, després de l'annex sondeig)",
+   "spt_ma_tests.n30 (candidat: N=58)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "LLEGENDA",
+   "quote": "1er nivell: Graves amb sorres",
+   "confidence": 0.9,
+   "note": "un únic nivell numerat + 'Sòls vegetals' com a cobertura"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Sòls vegetals (cobertura)",
+    "litologia_candidats": [
+     "Sòls vegetals"
+    ],
+    "de": "0,00",
+    "a": "-0,4 m (gràfic, ~199,1 msnm)",
+    "mostra_del_nivell": false,
+    "location": "banda marró superior del tall (199,5 -> ~199,1 msnm; escala 74 px/m mesurada 196-199,5) + LLEGENDA",
+    "quote": "Sòls vegetals",
+    "rule": "Gruix llegit del gràfic (esquemàtic) -> mai segur; discrepa lleugerament del log del sondeig (~0,30) -> candidats."
+   },
+   {
+    "nom": "1er nivell",
+    "litologia_candidats": [
+     "Graves amb sorres"
+    ],
+    "de": "-0,4 m (gràfic)",
+    "a": "base del tall (196,0 msnm = -3,5 m, dibuix; cap base real documentada)",
+    "mostra_del_nivell": true,
+    "location": "cos gris del tall + LLEGENDA",
+    "quote": "1er nivell: Graves amb sorres",
+    "rule": "Llegenda del tall = segona font de litologia (v0.8: annex sondeig primer); el tall mana per al NOMBRE de nivells (1)."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1 (implícit)",
+    "punt": "S-1",
+    "profunditat": null,
+    "n30_candidats": [
+     {
+      "value": "58",
+      "font": "anotació a S-1 del tall",
+      "quote": "N=58"
+     }
+    ],
+    "location": "anotació al costat del sondeig S-1",
+    "quote": "N=58",
+    "rule": "El tall és síntesi de l'Eva: N=58 és el valor que ella tria (≠ 62 = trams centrals del Registre; 58 = 28+30, els dos últims trams) -> candidat, creuar amb el Registre de l'annex."
+   }
+  ],
+  "__nota": "Anotacions Nb del tall (síntesi Eva, inputs Tier B): P-1: Nb=27, Nb=R; P-2: Nb=22, Nb=56, Nb=R; cota de fonamentació (línia vermella discontínua) a ~199,0 msnm = -0,5 m. Cap marca de nivell freàtic al tall.",
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": null,
+    "profunditat_assolida": "~-1,9 m (gràfic: columna fins ~197,6 msnm)",
+    "spt_ma": null,
+    "nivell_freatic": "cap marca",
+    "location": "columna de S-1 al tall",
+    "quote": "(gràfic)",
+    "rule": "Corrobora el final del log (~1,8-1,9); la lectura precisa és de l'annex sondeig."
+   }
+  ]
+ },
+ "not_present": [
+  "nivell freàtic (cap marca)",
+  "cotes numèriques de transició (només gràfic)"
+ ],
+ "reading_notes": "Print To PDF -> text net (extret); geometria i colors llegits del render 150 dpi amb classificació de bandes per píxel (blanc/negre/marró/gris/vermell) en una franja vertical: superfície y=937-941, base marró y=968, línia vermella y=976-979, base tall y=1199; escala 74,3 px/m. Caixetí diu 'Plànol de situació' (error de còpia de plantilla, és el tall) i 'fonamnetació' (typo)."
+}

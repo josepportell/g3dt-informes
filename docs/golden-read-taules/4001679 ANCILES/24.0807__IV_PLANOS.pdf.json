@@ -1,0 +1,67 @@
+{
+ "source_path": "24.0807/IV_PLANOS.pdf",
+ "document_type": "projecte_arquitecte",
+ "what_it_is": "Proyecto Básico Revisado (octubre 2025) de PICO DE OLA ARQUITECTURA Y PROMOCION S.L. — 35 pàgines de plànols 'CASA GRANDE HCS - ANCILES', 7 habitatges adossats",
+ "issuer": "PICO DE OLA ARQUITECTURA Y PROMOCION S.L. (MIRIAM CASTEL nºCol. 6.703, ALBA BARRAU nºCol. 6.408)",
+ "date": "OCTUBRE 2025 (Proyecto Básico Revisado)",
+ "pages_or_sheets": "35 pàgines; taula d'edificabilitat a p.7 (plànol GO5 'JUSTIFICACIÓN ORDENACIÓN PROPUESTA')",
+ "context": {
+  "who_made_it": "l'estudi d'arquitectura promotor del projecte",
+  "for_whom": "tramitació del projecte; G3 el rep com a base de l'estudi geotècnic",
+  "why": "és el projecte VIGENT (revisat oct. 2025, posterior a l'anteproyecto A01_TIPOL de nov. 2024)",
+  "expected_fields": [
+   "superficie_construida (edificabilidad per plantes)",
+   "superficie_parcela",
+   "num_floors",
+   "building_type"
+  ],
+  "not_expected": [
+   "dades de camp",
+   "cotes DPSH"
+  ],
+  "relation_to_others": "substitueix l'anteproyecto (A01_TIPOL.pdf/SITE_prop A.pdf adjunts al correu de 2024-11-18); el correu d'encàrrec descriu '7 adosados de PB+1PP+BC. Habría dos semisótanos' sense m²",
+  "authority_for": [
+   "superficie_construida",
+   "superficie_parcela (p.5: Superfície Finca = 1655.01 m²)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "superficie_construida": {
+   "valors_per_planta": [
+    {
+     "planta": "PLANTA BAJA",
+     "valor": "522.61 m2",
+     "quote": "EDIFICABILIDAD PLANTA BAJA 522.61 m2"
+    },
+    {
+     "planta": "PLANTA PRIMERA",
+     "valor": "454.70 m2",
+     "quote": "EDIFICABILIDAD PLANTA PRIMERA 454.70 m2"
+    },
+    {
+     "planta": "PLANTA BAJO CUBIERTA",
+     "valor": "188.53 m2",
+     "quote": "EDIFICABILIDAD PLANTA BAJO CUBIERTA 188.53 m2 (solo computa altura > 1,50 m)"
+    },
+    {
+     "planta": "PLANTA SÓTANO",
+     "valor": "98.42 m2",
+     "quote": "PLANTA SÓTANO 98.42 m2 (no computa)"
+    }
+   ],
+   "sumes_derivades": {
+    "computable (PB+P1+BC)": "1165.84 m2",
+    "total amb sótano": "1264.26 m2"
+   },
+   "location": "p.7, plànol GO5 'EDIFICABILIDAD POR PLANTAS'",
+   "font_etiqueta": "segons projecte",
+   "rule": "superficie_construida: taula del projecte; emet la font amb el valor perquè el generador triï l'etiqueta ('segons projecte'). Les sumes són derivació, no lectura → candidats."
+  },
+  "__nota": "El mateix full porta Promotor 'PICO DE OLA ARQUITECTURA Y PROMOCION S.L.' i situació 'C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)' — escalars fora d'abast (i el p.5 del pressupost signat mana per a client_name, cas Anciles conegut)."
+ },
+ "not_present": [
+  "superficie construida per habitatge (només per planta al GO5; l'anteproyecto A01_TIPOL porta superfícies per tipologia, versió vella)"
+ ],
+ "reading_notes": "PyMuPDF text; p.2 índex, p.5 'Superfície Finca = 1655.01 m²', p.7 taula edificabilitat completa amb anotacions '(no computa)' / '(solo computa altura > 1,50 m)'."
+}

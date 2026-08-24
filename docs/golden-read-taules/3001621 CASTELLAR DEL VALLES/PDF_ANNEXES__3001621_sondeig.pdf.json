@@ -1,0 +1,112 @@
+{
+  "source_path": "PDF/ANNEXES/3001621_sondeig.pdf",
+  "document_type": "annex_sondeig",
+  "what_it_is": "Annex de sondeig G3 'Sondeig a rotació amb bateria contínua' (S-1) + full de fotografies.",
+  "issuer": "G3 (Eva Vázquez Marcet, geòloga col. 4302); plantilla FreeHand distil·lada 2025-11-03",
+  "date": "Data d'inici/fi: 24/10/25",
+  "pages_or_sheets": "2 pàgines: p.1 matriu S-1; p.2 fotografies AMB CAPÇALERA I FOTOS DE BELL-LLOC (còpia no actualitzada)",
+  "context": {
+    "who_made_it": "Eva (G3) sobre plantilla FreeHand",
+    "for_whom": "annex de l'informe 3001621",
+    "why": "registre del sondeig S-1: columna litològica, nivells, mostres SPT",
+    "expected_fields": [
+      "cota z (cota_referencia)",
+      "nivells litològics",
+      "descripcions de materials",
+      "SPT registre",
+      "NF",
+      "data sondeig"
+    ],
+    "not_expected": [
+      "promotor",
+      "plantes",
+      "superfícies"
+    ],
+    "relation_to_others": "font primària de soil_levels i spt_ma; el tall n'és la síntesi; el 'Client: WOOD COMFORT PROM.' és el sol·licitant, no client_name per aquesta via; p.2 és brossa de Bell-lloc (Obra 'ANTONI BELLET...BELL-LLOC', z 199.50, Client ARQ BOSCH NOVELL, fotos de caixa etiquetada Bell-lloc) — NO és font de res per Castellar",
+    "authority_for": [
+      "sondeig_tests",
+      "soil_levels",
+      "spt_ma_tests",
+      "cota_referencia",
+      "num_soil_levels"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "cota_referencia",
+      "value": "570.90 msnm (segons el plànol ICGC)",
+      "location": "p.1 capçalera, casella Cota (Z)",
+      "quote": "570.90 msnm  (segons el plànol ICGC)",
+      "confidence": 0.85,
+      "note": "coincideix amb COORDENADES.txt S-1 z=570.9; l'annex DPSH usa cotes RELATIVES al carrer — coexistencia intencionada"
+    },
+    {
+      "concept_id": "num_soil_levels",
+      "value": 1,
+      "location": "p.1 columna 'Unitat litològica'",
+      "quote": "NIVELL 1 (etiqueta al tram 0.50-1.20; el Terreny Vegetal 0.00-0.50 no porta etiqueta de nivell)",
+      "confidence": 0.9,
+      "note": "coincideix amb el tall"
+    }
+  ],
+  "tables": {
+    "sondeig_tests": [
+      {
+        "sondeig": "S-1",
+        "cota": "570.90 msnm (segons el plànol ICGC)",
+        "profunditat_assolida": "-1,20 m",
+        "spt_ma": "1/0 (1 SPT, 0 MA en aquest annex)",
+        "nivell_freatic": "No detectat (columna 'Nivell freàtic' sense marca)",
+        "location": "p.1 capçalera + matriu",
+        "quote": "Sondeig nº: S-1 | Cota (Z): 570.90 msnm (segons el plànol ICGC) | columna litològica i descripcions acaben a 1.20 | SPT-1 -1.00 a -1.20"
+      }
+    ],
+    "spt_ma_tests": [
+      {
+        "id": "SPT-1",
+        "punt": "S-1",
+        "profunditat": "-1,00 a -1,20 m",
+        "n30_candidats": [
+          {
+            "valor": "R (rebuig)",
+            "font": "p.1 bloc Mostres i assaigs in-situ, casella Registre",
+            "quote": "SPT-1 | -1.00 a -1.20 | R"
+          }
+        ],
+        "litologia_nivell": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells (la mostra surt del tram 0.50-1.20)",
+        "note": "el Registre porta només 'R', sense cops per tram de 15 cm"
+      }
+    ],
+    "soil_levels": [
+      {
+        "nom": "Terreny Vegetal (sense etiqueta de nivell)",
+        "litologia_candidats": [
+          "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels."
+        ],
+        "de": "0,00",
+        "a": "-0,50",
+        "mostra_del_nivell": false,
+        "location": "p.1 'Descripció dels materials'",
+        "quote": "0.00-0.50 -Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels."
+      },
+      {
+        "nom": "Nivell 1",
+        "litologia_candidats": [
+          "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+        ],
+        "de": "-0,50",
+        "a": "-1,20 (final del sondeig)",
+        "mostra_del_nivell": true,
+        "location": "p.1 'Descripció dels materials' + 'Unitat litològica'",
+        "quote": "0.50-1.20 - Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+      }
+    ],
+    "__nota": "p.2 descartada íntegrament (contingut Bell-lloc). NF: cap marca a la columna."
+  },
+  "not_present": [
+    "nivell freàtic (sense marca)",
+    "MA (cap mostra alterada)",
+    "RQD/testimoni transcrits (no alimenten l'informe)"
+  ],
+  "reading_notes": "FreeHand → text brossa: lectura VISUAL a 130 dpi + zoom 300-400 dpi de 'Mostres i assaigs in-situ' i 'Unitat litològica'. p.2 identificada com a còpia de Bell-lloc per capçalera i etiqueta manuscrita de la caixa a la foto."
+}

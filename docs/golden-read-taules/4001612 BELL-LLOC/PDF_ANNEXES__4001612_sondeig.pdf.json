@@ -1,0 +1,136 @@
+{
+ "source_path": "PDF/ANNEXES/4001612_sondeig.pdf",
+ "document_type": "annex_sondeig",
+ "what_it_is": "Annex de sondeig de l'Eva (plantilla G3 'Sondeig a rotació amb batería contínua'), matriu del S-1 + pàgina de fotografies",
+ "issuer": "G3 (Eva Vázquez Marcet, geóloga núm. 4302); metadades PDF: 'Loli', FreeHand->Distiller",
+ "date": "sondeig 6/10/2025 (Data d'inici = Data de fi); PDF creat 2025-10-27",
+ "pages_or_sheets": "2 pàgines (p.1 matriu S-1, p.2 fotografies)",
+ "context": {
+  "who_made_it": "Eva dibuixa l'annex a FreeHand a partir del sondeig fet per TPS (sondista Sr. Daniel Fernandez, màquina ML-76A)",
+  "for_whom": "annex de l'informe; font principal de nivells i litologies",
+  "why": "documentar el sondeig S-1: columna litològica, unitats, mostres i assaigs in situ",
+  "expected_fields": [
+   "sondeig_tests (cota z, profunditat, NF)",
+   "spt_ma_tests (id, prof, Registre)",
+   "soil_levels (Unitat litològica + Descripció dels materials)",
+   "cota_referencia",
+   "field_date candidat (dia sondeig)"
+  ],
+  "not_expected": [
+   "client de l'informe (la casella Client = sol·licitant)",
+   "superficie_construida"
+  ],
+  "relation_to_others": "mateix dibuix que ANNEXES/4001612_sondeig.FH11 (exclòs); z=199.50 coincideix amb la capçalera de l'annex DPSH; el tall en sintetitza els nivells",
+  "authority_for": [
+   "sondeig_tests",
+   "spt_ma_tests.id",
+   "spt_ma_tests.profunditat",
+   "spt_ma_tests.n30 (Registre)",
+   "soil_levels.litologia",
+   "num_soil_levels",
+   "cota_referencia"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "199.50 m",
+   "location": "p.1 capçalera, casella 'z:'",
+   "quote": "z: 199.50m",
+   "confidence": 0.9,
+   "note": "x/y buides; coincideix amb annex DPSH +199.50 msnm"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "p.1 columna 'Unitat litològica'",
+   "quote": "NIVELL 1",
+   "confidence": 0.9,
+   "note": "una única unitat; el tall tampoc no en numera cap més"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "ARQ BOSCH NOVELL",
+   "location": "p.1 capçalera 'Client:'",
+   "quote": "ARQ BOSCH NOVELL",
+   "confidence": 0.0,
+   "note": "sol·licitant (arquitecte), no client de l'informe — regla Pas 0"
+  }
+ ],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "+199,50 msnm",
+    "profunditat_assolida": "-1,80 m",
+    "spt_ma": "1/0",
+    "nivell_freatic": "No detectat",
+    "location": "p.1 capçalera (z), gràfic del log (final a 1,8, escala 124 px/m verificada 0-8 m), columna 'Nivell freàtic' sense marca; p.2 Fotografia 2",
+    "quote": "z: 199.50m | Material recuperat en el sondeig S-1 entre les cotes de 0.00 a -1.80 metres de profunditat. | (columna Nivell freàtic: buida)",
+    "rule": "Anatomia annex sondeig v0.8: z = cota_referencia; profunditat del final del log corroborada pel peu de la Fotografia 2 i l'etiqueta manuscrita de la caixa (0,00-1,80); NF de la marca de la columna (absent)."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1,00 a -1,60 m",
+    "n30_candidats": [
+     {
+      "value": "62",
+      "font": "suma dels trams centrals del Registre (34+28)",
+      "quote": "Registre: 24 / 34 / 28 / 30"
+     },
+     {
+      "value": "58",
+      "font": "tall.pdf, anotació de l'Eva a S-1",
+      "quote": "N=58"
+     }
+    ],
+    "registre_15cm": [
+     "24",
+     "34",
+     "28",
+     "30"
+    ],
+    "litologia_nivell": "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares",
+    "location": "p.1 bloc 'Muestras y ensayos in situ': Tipus de mostra SPT-1, Prof. de extracció -1.00 a -1.60, Registre 24/34/28/30",
+    "quote": "SPT-1 | -1.00 a -1.60 | 24 34 28 30",
+    "rule": "v0.8: llegeix els 4 valors del Registre i proposa'ls com a candidats amb la suma dels trams centrals, no en triïs un de sol; el tall (síntesi Eva) diu N=58 -> candidats, mai segur."
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "cobertura (no numerada)",
+    "litologia_candidats": [
+     "Llims argilosos amb graves cohesives de coloració marronosa."
+    ],
+    "de": "0,00",
+    "a": "-0,30 m (gràfic, ±0,05)",
+    "mostra_del_nivell": false,
+    "location": "p.1 columna litològica (banda superior fosca fins ~0,30 m; transició en línia discontínua) + 'Descripció dels materials'",
+    "quote": "Llims argilosos amb graves cohesives de coloració marronosa.",
+    "rule": "No porta etiqueta NIVELL a 'Unitat litològica' -> cobertura, no nivell numerat; fondària mesurada del gràfic (124 px/m) -> mai segur."
+   },
+   {
+    "nom": "NIVELL 1",
+    "litologia_candidats": [
+     "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares."
+    ],
+    "de": "-0,30 m (gràfic, ±0,05)",
+    "a": "-1,80 m (final del log S-1)",
+    "mostra_del_nivell": true,
+    "location": "p.1 columna 'Unitat litològica' (NIVELL 1) + 'Descripció dels materials'; nota en cursiva a peu del tram",
+    "quote": "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares. | Tram totalment carbonatat.",
+    "rule": "v0.8: 'Descripció dels materials' de l'annex passa PRIMER per a la litologia (l'Eva la condensa a l'informe); SPT-1 (-1,00/-1,60) cau dins del nivell -> mostra_del_nivell."
+   }
+  ],
+  "__nota": "Capçalera: Obra = redacció completa 'ESTUDI ... ENTRE EL CARRER ANTONI BELLET I EL CARRER MESTRE RAMON ORTIZ EN EL MUNICIPI DE BELL-LLOC'; Data inici=fi=6/10/2025; Empresa TPS, S.L. Testimoni recuperat/RQD no transcrits (no alimenten l'informe)."
+ },
+ "not_present": [
+  "nivell freàtic (columna buida = No detectat)",
+  "coordenades x/y",
+  "superficie_construida"
+ ],
+ "reading_notes": "FreeHand->Distiller: text brossa. Lectura 100% VISUAL: render 150 dpi pàgina sencera + clips 300-350 dpi (bloc SPT, tram superior, final del log). Escala verificada amb les línies 0.0 (y=593) i 8.0 (y=1585) -> 124 px/m; final del log a y=816 -> 1,80 m exacte, coincident amb el peu de la Fotografia 2."
+}

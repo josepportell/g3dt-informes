@@ -1,0 +1,102 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_DPSH.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe (imprès des de l'Excel via Distiller), un punt per pàgina amb capçalera de cota, obra, població i data",
+ "issuer": "G3 (Eva); PDF 'Loli' / Acrobat Distiller 16/03/2026",
+ "date": "FECHA: 19/02/2026 (camp); PDF creat 16/03/2026",
+ "pages_or_sheets": "6 pàgines (P-1..P-6)",
+ "context": {
+  "who_made_it": "Eva (G3) imprimeix l'Excel DPSH amb capçaleres per a l'annex de l'informe",
+  "for_whom": "annex de l'informe geotècnic",
+  "why": "presentar el colpeig per punt amb la cota d'inici segons el topogràfic del client",
+  "expected_fields": [
+   "dpsh: cota_inici per punt",
+   "field_date",
+   "expedient",
+   "obra",
+   "població"
+  ],
+  "not_expected": [
+   "client",
+   "promotor",
+   "superfícies"
+  ],
+  "relation_to_others": "mateixes dades que ANEJOS/4001679_DPSH.xls (que mana per als valors de colpeig); única còpia PDF (PDF_V0/ANEJOS/ permesa); text net (imprès des d'Excel, no FreeHand)",
+  "authority_for": [
+   "dpsh_tests.cota_inici",
+   "cota_referencia (candidat 1 per regla v0.8)",
+   "field_date"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "+1106,40 msnm",
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "p.1 capçalera",
+    "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P‐1        Cota inicio: +1106,40 msnm según el topográfico proporcionado.",
+    "rule": "cota_inici = capçalera de CADA pàgina de l'annex DPSH; pot ser diferent per punt (aquí ho és: 4 valors diferents)."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "+1106,30 msnm",
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "p.2 capçalera",
+    "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P‐2        Cota inicio: +1106,30 msnm según el topográfico proporcionado.",
+    "rule": "cota_inici = capçalera de CADA pàgina de l'annex DPSH; pot ser diferent per punt (aquí ho és: 4 valors diferents)."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "+1106,40 msnm",
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "p.3 capçalera",
+    "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P‐3        Cota inicio: +1106,40 msnm según el topográfico proporcionado.",
+    "rule": "cota_inici = capçalera de CADA pàgina de l'annex DPSH; pot ser diferent per punt (aquí ho és: 4 valors diferents)."
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "+1106,30 msnm",
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "p.4 capçalera",
+    "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P‐4        Cota inicio: +1106,30 msnm según el topográfico proporcionado.",
+    "rule": "cota_inici = capçalera de CADA pàgina de l'annex DPSH; pot ser diferent per punt (aquí ho és: 4 valors diferents)."
+   },
+   {
+    "punt": "P-5",
+    "cota_inici": "+1106,42 msnm",
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "p.5 capçalera",
+    "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P‐5 (S2)        Cota inicio: +1106,42 msnm según el topográfico proporcionado.",
+    "rule": "cota_inici = capçalera de CADA pàgina de l'annex DPSH; pot ser diferent per punt (aquí ho és: 4 valors diferents)."
+   },
+   {
+    "punt": "P-6",
+    "cota_inici": "+1106,65 msnm",
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "p.6 capçalera",
+    "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P‐6 (S1)        Cota inicio: +1106,65 msnm según el topográfico proporcionado.",
+    "rule": "cota_inici = capçalera de CADA pàgina de l'annex DPSH; pot ser diferent per punt (aquí ho és: 4 valors diferents)."
+   }
+  ],
+  "__nota": "Cota d'origen: 'según el topográfico proporcionado' (topogràfic del CLIENT, no ICGC). P-5 i P-6 duen '(S2)'/'(S1)' a la capçalera: coincideixen amb les z dels annexos de sondeig (+1106,42 / +1106,65)."
+ },
+ "not_present": [
+  "nivell_freatic",
+  "rebuig (el peu B80 no s'imprimeix a la capçalera; el gràfic sí que mostra el tall a 100)"
+ ],
+ "reading_notes": "PyMuPDF get_text() per pàgina (text net); capçalera amb guió U+2010 ('P‐1'); escalars del nivell A (obra, població, data, expedient) ja llegits a la lectura d'or d'escalars — aquí només taules."
+}

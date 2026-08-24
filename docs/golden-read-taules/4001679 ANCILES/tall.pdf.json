@@ -1,0 +1,65 @@
+{
+ "source_path": "tall.pdf",
+ "document_type": "annex_tall",
+ "what_it_is": "Corte de correlación A-A' amb els 6 punts DPSH i 2 sondeigs, 2 nivells amb llegenda, cota de sótano i cota recomanada de cimentació",
+ "issuer": "G3 (Eva); còpia 'Microsoft: Print To PDF' del FreeHand (text net)",
+ "date": "Fecha: Febrero 2026",
+ "pages_or_sheets": "1 pàgina (Página 1/1)",
+ "context": {
+  "who_made_it": "Eva sintetitza els logs i DPSH en un tall geològic",
+  "for_whom": "annex/figura de l'informe; síntesi de nivells",
+  "why": "correlacionar els nivells entre punts i fixar cotes de fonamentació",
+  "expected_fields": [
+   "num_soil_levels (el TALL mana per al NOMBRE)",
+   "soil_levels.litologia (llegenda, candidat 2)",
+   "transicions gràfiques de nivell",
+   "N/Nb per punt (derivats)"
+  ],
+  "not_expected": [
+   "field_date exacta",
+   "client",
+   "superfícies"
+  ],
+  "relation_to_others": "còpia neta del mateix dibuix que ANEJOS/4001679_corte de correlación.FH11 i PDF_V0/ANEJOS/4001679_corte de correlación.pdf (FreeHand, text brossa); sintetitza l'annex de sondeigs i l'Excel DPSH",
+  "authority_for": [
+   "num_soil_levels (primer per NOMBRE)",
+   "soil_levels.litologia (segon, rere annex sondeig)",
+   "soil_levels.de/a (cotes gràfiques)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "1er nivel",
+    "litologia_candidats": [
+     "Arcillas arenosas con puntualmente bolos."
+    ],
+    "de": "superfície (~+1106,4/+1106,65 msnm)",
+    "a": "sostre del 2n nivell: gràficament entre ~+1103,9 (S-2) i ~+1104,8 msnm (P-2), ≈1,7 a 2,6 m sota superfície segons punt",
+    "mostra_del_nivell": false,
+    "location": "LEYENDA + superfície marró del tall",
+    "quote": "1er nivel: Arcillas arenosas con puntualmente bolos.",
+    "rule": "llegenda del tall = candidat 2 de litologia (v0.8: annex sondeig primer); transicions llegides gràficament sobre l'escala msnm → candidats, mai segur."
+   },
+   {
+    "nom": "2do nivel",
+    "litologia_candidats": [
+     "Bolos y gravas en matriz arenosa y arcillosa."
+    ],
+    "de": "~+1103,9 a +1104,8 msnm segons punt",
+    "a": "fons reconegut (DPSH fins -5,92 m a P-4; el tall dibuixa gris fins +1100)",
+    "mostra_del_nivell": true,
+    "location": "LEYENDA + massa grisa del tall",
+    "quote": "2do nivel: Bolos y gravas en matriz arenosa y arcillosa.",
+    "rule": "el TALL mana per al NOMBRE de nivells: 2 (el log de sondeig només n'etiqueta 1)."
+   }
+  ],
+  "__nota": "També al tall: 'Cota de nivel de sótano' (vermell; '-3.0 m Sótano') i 'Cota recomendada de cimentación' (verd, ~+1103,1 a +1104,0 msnm) — derivacions de l'Eva, no lectura de camp; N=6 als dos SPT i Nb per trams (P-1: 6/33/R; P-2: 6/44/R; P-3: 4/13/R; P-4: 5/32/17/R; S-2/P-5: 38/R; S-1/P-6: 14/26/R) — mitjanes derivades, corroboren però no substitueixen l'Excel. Títol: '...7 VIVIENDAS ADOSADAS...' amb typo 'ARCILES'."
+ },
+ "not_present": [
+  "nivell freàtic (cap marca)",
+  "cota_inici per punt (només perfil topogràfic gràfic)"
+ ],
+ "reading_notes": "text net via PyMuPDF + render 150 dpi per llegir la geometria (cotes de transició sobre l'escala msnm); ordre dels punts al tall: S-2/P-5, P-1, P-2, P-3, P-4, S-1/P-6."
+}

@@ -1,0 +1,492 @@
+{
+  "project": "3001631 RUBI",
+  "skill_version": "0.8",
+  "scope": "nomes bloc tables (Pas 3b); els 15 escalars del nivell A no formen part d'aquesta lectura",
+  "read_date": "2026-08-24",
+  "tables": {
+    "dpsh_tests": {
+      "estat_bloc": "3 files (P-1, P-2, P-3); executats = previstos (pressupost p.2 '3 assaigs DPSH', albarà TPS '3')",
+      "rows": [
+        {
+          "punt": "P-1",
+          "cota_inici": {
+            "estat": "candidats",
+            "rule": "regla d'esborranys: F5 TALL.png (versió anterior) discrepa de l'annex PDF → candidats amb el PDF primer",
+            "candidates": [
+              {
+                "value": "+212,50 msnm (segons el plànol de l'ICGC)",
+                "source": "PDF/ANNEXES/3001631_DPSH.pdf p.1 capçalera",
+                "quote": "P-1   +212,50 msnm, segons el planol del ICGC."
+              },
+              {
+                "value": "+211,90 m",
+                "source": "ANNEXES/Altres/F5 TALL.png (esborrany)",
+                "quote": "P-1 +211,90 m"
+              }
+            ],
+            "note": "el tall vigent dibuixa la superfície a ~+212,5 (coherent amb el PDF); full de camp: cota inici '+/- 0' (relativa, no competeix)"
+          },
+          "profunditat_assolida": {
+            "estat": "segur",
+            "rule": "peu B80 de l'Excel DPSH = fondària exacta del rebuig; manuscrit i esborrany coincideixen",
+            "candidates": [
+              {
+                "value": "-4,55 m",
+                "source": "ANNEXES/3001631_DPSH.xls P-1!B80",
+                "quote": "Rebuig  a -4,55  m"
+              },
+              {
+                "value": "-4,55 m",
+                "source": "3001631 - PENETROS.pdf p.2 (manuscrit)",
+                "quote": "R:4,55"
+              },
+              {
+                "value": "-4,55 m",
+                "source": "ANNEXES/Altres/F5 TALL.png",
+                "quote": "P-1 ... -4,55 m"
+              }
+            ]
+          },
+          "rebuig": {
+            "estat": "segur",
+            "rule": "B80 present → Si",
+            "candidates": [
+              {
+                "value": "Si",
+                "source": "Excel P-1!B80 + última lectura 100 cops a -4,6",
+                "quote": "Rebuig  a -4,55  m"
+              }
+            ]
+          },
+          "nivell_freatic": {
+            "estat": "segur",
+            "rule": "'No detectat' NOMÉS si la columna N.F. és buida a tots els fulls — es compleix; manuscrit corrobora",
+            "candidates": [
+              {
+                "value": "No detectat",
+                "source": "Excel P-1 col F buida + PENETROS p.2 bloc NIVELL FREÀTIC en blanc",
+                "quote": "(columna N.F. buida; 'Hi ha nivell freàtic?' sense marcar)"
+              }
+            ]
+          }
+        },
+        {
+          "punt": "P-2",
+          "cota_inici": {
+            "estat": "candidats",
+            "rule": "capçalera per pàgina de l'annex DPSH mana, però discrepa internament (+212 vs +212,50 dels altres punts i superfície uniforme del tall) i amb l'esborrany → candidats",
+            "candidates": [
+              {
+                "value": "+212 msnm (segons el plànol de l'ICGC)",
+                "source": "PDF/ANNEXES/3001631_DPSH.pdf p.2 capçalera",
+                "quote": "P-2   + 212 msnm  segons el plànol del ICGC"
+              },
+              {
+                "value": "+212,50 msnm (superfície gràfica uniforme als 3 punts)",
+                "source": "tall.pdf perfil (lectura gràfica calibrada)",
+                "quote": "(superfície a ~+212,5 sota P-2)"
+              },
+              {
+                "value": "+211,4 m",
+                "source": "ANNEXES/Altres/F5 TALL.png (esborrany)",
+                "quote": "P-2 +211,4 m"
+              }
+            ],
+            "note": "possible truncament de +212,50 a l'annex; no es resol en lectura cega"
+          },
+          "profunditat_assolida": {
+            "estat": "segur",
+            "rule": "B80 exacte; manuscrit i esborrany coincideixen",
+            "candidates": [
+              {
+                "value": "-3,58 m",
+                "source": "ANNEXES/3001631_DPSH.xls P-2!B80",
+                "quote": "Rebuig  a - 3,58  m"
+              },
+              {
+                "value": "-3,58 m",
+                "source": "3001631 - PENETROS.pdf p.2",
+                "quote": "R: 3,58"
+              },
+              {
+                "value": "-3,58 m",
+                "source": "ANNEXES/Altres/F5 TALL.png",
+                "quote": "P-2 ... -3,58 m"
+              }
+            ]
+          },
+          "rebuig": {
+            "estat": "segur",
+            "rule": "B80 present → Si",
+            "candidates": [
+              {
+                "value": "Si",
+                "source": "Excel P-2!B80 + 100 cops a -3,6",
+                "quote": "Rebuig  a - 3,58  m"
+              }
+            ]
+          },
+          "nivell_freatic": {
+            "estat": "segur",
+            "rule": "columna N.F. buida a tots els fulls + manuscrit en blanc",
+            "candidates": [
+              {
+                "value": "No detectat",
+                "source": "Excel P-2 col F buida + PENETROS p.2",
+                "quote": "(buida)"
+              }
+            ]
+          }
+        },
+        {
+          "punt": "P-3",
+          "cota_inici": {
+            "estat": "candidats",
+            "rule": "regla d'esborranys: PNG anterior discrepa del PDF → candidats amb el PDF primer",
+            "candidates": [
+              {
+                "value": "+212,50 msnm (segons plànol de l'ICGC)",
+                "source": "PDF/ANNEXES/3001631_DPSH.pdf p.3 capçalera",
+                "quote": "P-3   +212,50 msnm  segons plànol en el ICGC"
+              },
+              {
+                "value": "+211,40 m",
+                "source": "ANNEXES/Altres/F5 TALL.png (esborrany)",
+                "quote": "P-3 +211,40 m"
+              }
+            ]
+          },
+          "profunditat_assolida": {
+            "estat": "segur",
+            "rule": "B80 exacte; manuscrit i esborrany coincideixen",
+            "candidates": [
+              {
+                "value": "-3,13 m",
+                "source": "ANNEXES/3001631_DPSH.xls P-3!B80",
+                "quote": "Rebuig  a - 3,13  m"
+              },
+              {
+                "value": "-3,13 m",
+                "source": "3001631 - PENETROS.pdf p.2",
+                "quote": "R:3,13"
+              },
+              {
+                "value": "-3,13 m",
+                "source": "ANNEXES/Altres/F5 TALL.png",
+                "quote": "P-3 ... -3,13 m"
+              }
+            ]
+          },
+          "rebuig": {
+            "estat": "segur",
+            "rule": "B80 present → Si",
+            "candidates": [
+              {
+                "value": "Si",
+                "source": "Excel P-3!B80 + 100 cops a -3,2",
+                "quote": "Rebuig  a - 3,13  m"
+              }
+            ]
+          },
+          "nivell_freatic": {
+            "estat": "segur",
+            "rule": "columna N.F. buida a tots els fulls + manuscrit en blanc",
+            "candidates": [
+              {
+                "value": "No detectat",
+                "source": "Excel P-3 col F buida + PENETROS p.2",
+                "quote": "(buida)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sondeig_tests": {
+      "estat_bloc": "buit — projecte SENSE sondeig a rotació",
+      "rows": [],
+      "note": "cap annex de sondeig a PDF/ANNEXES ni ANNEXES; el pressupost p.2 no preveu cap sondeig (només 3 DPSH + 1 SPT); l'albarà TPS només factura penetròmetres (15 ml) + 1 assaig SPT; l'SPT es fa DINS del punt DPSH P-3, no en sondeig",
+      "sources_checked": [
+        "PDF/ANNEXES/ (cap *_sondeig.pdf)",
+        "ANNEXES/ (cap sondeig)",
+        "25.0794/PRESSUPOST GEOTEC.RUBI.pdf p.2",
+        "3001631 - PENETROS.pdf p.1 (albarà)"
+      ]
+    },
+    "spt_ma_tests": {
+      "estat_bloc": "1 fila",
+      "rows": [
+        {
+          "id": {
+            "estat": "segur",
+            "rule": "etiqueta de l'annex/Excel de l'Eva mana; totes les fonts coincideixen (SPT-1 / SPT1)",
+            "candidates": [
+              {
+                "value": "SPT-1",
+                "source": "ANNEXES/3001631_DPSH.xls P-3!E22",
+                "quote": "SPT-1"
+              },
+              {
+                "value": "SPT1 (P3)",
+                "source": "comanda laboratori fila 35",
+                "quote": "SPT1 (P3)"
+              },
+              {
+                "value": "SPT1 P3",
+                "source": "4703-GTL-25 Rubí.pdf p.2",
+                "quote": "Mostra: SPT1 P3"
+              }
+            ]
+          },
+          "punt": {
+            "estat": "segur",
+            "rule": "4 fonts coincidents (Excel full P-3, comanda, GTL, full SPT manuscrit)",
+            "candidates": [
+              {
+                "value": "P-3",
+                "source": "Excel P-3 + comanda '(P3)' + GTL 'SPT1 P3' + PENETROS p.3 'Assaig de referència: P3'",
+                "quote": "P3"
+              }
+            ]
+          },
+          "profunditat": {
+            "estat": "segur",
+            "rule": "GTL > Excel DPSH > comanda per a la fondària; comanda 0,6-1,4 = mala transcripció (anotada, no candidata)",
+            "candidates": [
+              {
+                "value": "0,6 - 1,2 m",
+                "source": "4703-GTL-25 Rubí.pdf p.2",
+                "quote": "Cota d'extracció (m): 0,6 - 1,2"
+              },
+              {
+                "value": "0,6 a 1,2",
+                "source": "Excel P-3!E23",
+                "quote": "0,6 a 1,2"
+              },
+              {
+                "value": "0,60 a 1,20",
+                "source": "PENETROS p.3 (full SPT)",
+                "quote": "de la cota de: 0,60 / fins a la cota: 1,20"
+              }
+            ],
+            "note": "comanda J35/L35 diu 0,6-1,4: descartada per regla"
+          },
+          "n30": {
+            "estat": "candidats",
+            "rule": "registre segur (2 fonts independents); l'N30 de l'informe se'n DERIVA → proposar registre + suma de trams centrals, no triar-ne un",
+            "registre": {
+              "estat": "segur",
+              "candidates": [
+                {
+                  "value": "16/20/20/24 (cops per tram de 15 cm)",
+                  "source": "PENETROS p.3 (full SPT manuscrit)",
+                  "quote": "Colpeig: 16  20  20  24"
+                },
+                {
+                  "value": "16/20/20/24",
+                  "source": "Excel P-3!E24",
+                  "quote": "16/20/20/24"
+                }
+              ]
+            },
+            "candidates": [
+              {
+                "value": "40 (suma dels trams centrals 20+20)",
+                "source": "derivat del registre 16/20/20/24",
+                "quote": "16/20/20/24"
+              },
+              {
+                "value": "registre complet 16/20/20/24",
+                "source": "PENETROS p.3 + Excel P-3",
+                "quote": "16/20/20/24"
+              }
+            ]
+          },
+          "litologia": {
+            "estat": "candidats",
+            "rule": "litologia del nivell d'on surt la mostra; l'Eva re-redacta → mai segur per a la cadena literal",
+            "candidates": [
+              {
+                "value": "Graves i sorres. Carbonatat. (Nivell 1)",
+                "source": "tall.pdf LLEGENDA",
+                "quote": "Nivell 1 : Graves i sorres. Carbonatat."
+              },
+              {
+                "value": "Sorres i graves",
+                "source": "4703-GTL-25 Rubí.pdf p.2 (descripció del material)",
+                "quote": "DESCRIPCIÓ DEL MATERIAL: Sorres i graves"
+              },
+              {
+                "value": "Sorres llimoses amb graves (SM)",
+                "source": "4703-GTL-25 Rubí.pdf p.5 (SUCS)",
+                "quote": "SM / Sorres llimoses amb graves"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "soil_levels": {
+      "estat_bloc": "candidats — el nombre de nivells discrepa entre l'annex vigent (1) i l'esborrany (2)",
+      "num_soil_levels": {
+        "estat": "candidats",
+        "rule": "sense annex de sondeig, el TALL mana; regla d'esborranys: PDF/ANNEXES > tall.pdf > Altres/*.png → candidats amb el PDF primer (cas Rubí citat al skill v0.8)",
+        "candidates": [
+          {
+            "value": "1 (Nivell 1 + franja de sòls superficials sense numerar)",
+            "source": "PDF/ANNEXES/3001631_tall de correlació.pdf = tall.pdf LLEGENDA",
+            "quote": "Nivell 1 : Graves i sorres. Carbonatat."
+          },
+          {
+            "value": "2 (N1 Graves i sorres + N2 Gresos amb lutites i conglomerats)",
+            "source": "ANNEXES/Altres/F5 TALL.png (esborrany anterior)",
+            "quote": "Nivell 1 (N1): Graves i sorres / Nivell 2 (N2): Gresos amb intercalacions..."
+          }
+        ]
+      },
+      "rows": [
+        {
+          "nom": "1er nivell",
+          "estat": "candidats",
+          "rule": "litologia sempre candidats (l'Eva re-redacta); sense annex de sondeig, el tall és el primer candidat",
+          "litologia_candidats": [
+            {
+              "value": "Graves i sorres. Carbonatat.",
+              "source": "tall.pdf + PDF/ANNEXES/3001631_tall de correlació.pdf (mateix dibuix) LLEGENDA",
+              "quote": "Nivell 1 : Graves i sorres. Carbonatat."
+            },
+            {
+              "value": "Graves i sorres",
+              "source": "ANNEXES/Altres/F5 TALL.png (esborrany)",
+              "quote": "Nivell 1 (N1): Graves i sorres"
+            },
+            {
+              "value": "Sorres llimoses amb graves (SM) / Sorres i graves",
+              "source": "4703-GTL-25 Rubí.pdf p.5 / p.2 (mostra SPT-1 del nivell)",
+              "quote": "SM Sorres llimoses amb graves"
+            }
+          ],
+          "de": {
+            "estat": "candidats",
+            "candidates": [
+              {
+                "value": "~-0,3 m (sota la franja de sòls superficials; lectura gràfica: superfície +212,5 → base franja ~+212,25)",
+                "source": "tall.pdf perfil calibrat amb l'eix msnm",
+                "quote": "(franja fosca 'Sòls superficials' de ~0,25-0,3 m)"
+              }
+            ],
+            "note": "cap document dona la transició en xifres; l'informe sol arrencar el nivell sota els sòls superficials"
+          },
+          "a": {
+            "estat": "candidats",
+            "candidates": [
+              {
+                "value": "fins a la base investigada (rebuigs -4,55/-3,58/-3,13; el dibuix arriba a 208 msnm)",
+                "source": "tall.pdf (versió vigent, 1 nivell)",
+                "quote": "(el Nivell 1 ocupa tot el perfil fins a la base)"
+              },
+              {
+                "value": "fins ~208 msnm al SW / ~210 al NE (~-3,9 m sota P-1), on comença N2",
+                "source": "ANNEXES/Altres/F5 TALL.png (esborrany, 2 nivells)",
+                "quote": "(contacte N1/N2 dibuixat)"
+              }
+            ]
+          },
+          "mostra_del_nivell": true,
+          "mostra_nota": "SPT-1 (0,6-1,2 m) cau dins d'aquest nivell → la fila de sulfats (632,3 mg/kg) va amb el 1er nivell"
+        },
+        {
+          "nom": "2on nivell (NOMÉS a l'esborrany)",
+          "estat": "candidats",
+          "rule": "present només a F5 TALL.png (versió anterior); absent de l'annex PDF vigent → candidat subordinat a num_soil_levels=2",
+          "litologia_candidats": [
+            {
+              "value": "Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics.",
+              "source": "ANNEXES/Altres/F5 TALL.png LLEGENDA",
+              "quote": "Nivell 2 (N2): Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics."
+            }
+          ],
+          "de": {
+            "estat": "candidats",
+            "candidates": [
+              {
+                "value": "~208 msnm (SW) pujant a ~210 (NE)",
+                "source": "F5 TALL.png perfil",
+                "quote": "(contacte dibuixat)"
+              }
+            ]
+          },
+          "a": {
+            "estat": "candidats",
+            "candidates": [
+              {
+                "value": "base del dibuix (204 msnm)",
+                "source": "F5 TALL.png",
+                "quote": "(perfil)"
+              }
+            ]
+          },
+          "mostra_del_nivell": false
+        },
+        {
+          "nom": "Sòls superficials (franja sense numerar)",
+          "estat": "candidats",
+          "rule": "apareix a la llegenda del tall vigent com a franja pròpia (~0,3 m) però sense numerar com a nivell — anotada perquè l'informe la sol esmentar",
+          "litologia_candidats": [
+            {
+              "value": "Sòls superficials",
+              "source": "tall.pdf LLEGENDA",
+              "quote": "Sòls superficials"
+            }
+          ],
+          "de": {
+            "estat": "candidats",
+            "candidates": [
+              {
+                "value": "0 (superfície, ~+212,5 msnm)",
+                "source": "tall.pdf",
+                "quote": "(franja superior)"
+              }
+            ]
+          },
+          "a": {
+            "estat": "candidats",
+            "candidates": [
+              {
+                "value": "~-0,3 m (~+212,25 msnm, lectura gràfica)",
+                "source": "tall.pdf calibrat",
+                "quote": "(gruix ~0,25-0,35 m, s'aprima cap als punts)"
+              }
+            ]
+          },
+          "mostra_del_nivell": false
+        }
+      ]
+    },
+    "superficie_construida": {
+      "estat": "segur",
+      "rule": "plànols de catàleg (casa modular): superfície = construïda, mai parcel·la; 1 font A sense cap contradicció → segur admès amb nota 'única font'; etiqueta de fila: 'segons informació aportada'",
+      "candidates": [
+        {
+          "value": "72 m² + 20 m² de porxada",
+          "source": "25.0794/IMG-20251104-WA0015.jpg i ...WA0016.jpg (catàleg VIVIENDAS MODULARES, model MEDITERRANEO Rf-Mga70, adjunts de PRESSU.msg)",
+          "quote": "ESCALA 1: 0'50 - 72 m2 + 20 de Porchada"
+        }
+      ],
+      "note": "les 2 pàgines són el mateix catàleg (1 font independent); planta 9,00×8,00 m + porxada 2,50 m; correu: 'RUBÍ (1 casa modular)'; cap superfície al pressupost ni a cap altre document; coherent amb CTE C0 del pressupost (<300 m²)",
+      "sources_checked": [
+        "25.0794/PRESSUPOST GEOTEC.RUBI.pdf (no en porta)",
+        "25.0794/PRESSU.msg cos",
+        "25.0794/RE_ PRESSU.msg (cap text nou)",
+        "tall.pdf caixetí"
+      ]
+    }
+  },
+  "resum": {
+    "dpsh_tests": "3 files; per fila: cota_inici=candidats (esborrany F5 discrepa de l'annex PDF; P-2 a més +212 vs +212,50), profunditat/rebuig/NF=segur",
+    "sondeig_tests": "0 files (sense sondeig a rotació; corroborat per pressupost i albarà)",
+    "spt_ma_tests": "1 fila (SPT-1, P-3): id/punt/profunditat/registre=segur; n30=candidats (40 = suma trams centrals de 16/20/20/24); litologia=candidats",
+    "soil_levels": "1 vs 2 nivells → candidats amb el tall PDF vigent primer (1 nivell: Graves i sorres. Carbonatat.); transicions només gràfiques → candidats; + franja sòls superficials ~0,3 m anotada",
+    "superficie_construida": "72 m² + 20 m² porxada — segur (única font: catàleg del fabricant; etiqueta 'segons informació aportada')"
+  }
+}

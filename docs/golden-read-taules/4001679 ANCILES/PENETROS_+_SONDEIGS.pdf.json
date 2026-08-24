@@ -1,0 +1,117 @@
+{
+ "source_path": "PENETROS + SONDEIGS.pdf",
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Escaneig dels fulls de camp TPS: albarà penetròmetres (p.1), 2 fulls DPSH manuscrits (p.2-3), albarà sondeigs (p.4), fulls de camp S-1 i S-2 (p.5-6), croquis de situació (p.7)",
+ "issuer": "TPS (operari/sondista Daniel Fernández); escanejat per G3",
+ "date": "19-2-2026 (data inici i final a tots els fulls)",
+ "pages_or_sheets": "7 pàgines, 0 text (fotos escanejades)",
+ "context": {
+  "who_made_it": "TPS (subcontractista de sondeigs/penetròmetres) per a G3",
+  "for_whom": "G3 (les caselles DADES CLIENT: Empresa G3 / Responsable Eva són la relació TPS→G3, cap rol al projecte)",
+  "why": "registre de camp original; l'Excel DPSH n'és la transcripció revisada per Eva → l'Excel mana per als valors",
+  "expected_fields": [
+   "corroboració de rebuigs i colpeig",
+   "registres SPT",
+   "trams de material dels sondeigs",
+   "nivell freàtic",
+   "data de camp",
+   "croquis de punts"
+  ],
+  "not_expected": [
+   "client del projecte",
+   "municipi oficial",
+   "superfícies",
+   "plantes"
+  ],
+  "relation_to_others": "font de camp de l'Excel DPSH i de l'annex de sondeigs; el croquis (p.7) és la base del plano de situación",
+  "authority_for": [
+   "corroboració de dpsh_tests i spt_ma_tests",
+   "sondeig_tests.profunditat_assolida (trams)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "profunditat_assolida": "-3,58 m (R: 3,58)",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.2 col P1",
+    "quote": "R: 3,58",
+    "rule": "corrobora l'Excel (B80 -3,58); l'Excel mana."
+   },
+   {
+    "punt": "P-2",
+    "profunditat_assolida": "-4,59 m (R: 4,59)",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.2 col P2",
+    "quote": "R: 4,59",
+    "rule": "corrobora l'Excel."
+   },
+   {
+    "punt": "P-3",
+    "profunditat_assolida": "-3,77 m (R: 3,77)",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.2 col P3",
+    "quote": "R: 3,77",
+    "rule": "corrobora l'Excel."
+   },
+   {
+    "punt": "P-4",
+    "profunditat_assolida": "-5,92 m (R: 5,92)",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.3 col P4",
+    "quote": "R: 5,92",
+    "rule": "corrobora l'Excel."
+   },
+   {
+    "punt": "P-5",
+    "profunditat_assolida": "-4,18 m (R: 4,18)",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.3 col 'S-2 - P5' ('Sondeo' escrit verticalment de 0 a -3,0; colpeig des de -3,2)",
+    "quote": "R: 4,18",
+    "rule": "corrobora l'Excel i l'estructura 'punt rere sondeig'."
+   },
+   {
+    "punt": "P-6",
+    "profunditat_assolida": "-5,70 m (R: 5,70)",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.3 col 'S-1 - P6' ('Sondeo' de 0 a ~-2,4; colpeig des de -2,6)",
+    "quote": "R: 5,70",
+    "rule": "corrobora l'Excel i l'estructura 'punt rere sondeig'."
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "profunditat_assolida": "-2,40 m",
+    "spt_ma": "1/0",
+    "nivell_freatic": null,
+    "location": "p.5 full de camp S1: trams 0,00-1,00 / 1,60-2,20 / 2,20-2,30 / 2,30-2,40; casella Nivell Freàtic en blanc",
+    "quote": "0,00-1,00 Limos con un bolilla | 1,60-2,20 Limos | 2,20-2,30 Limos con grava | 2,30-2,40 Granito || Mostres: 1,00 a 1,60 S.P.T-1 Colpeig 2 3 3 3",
+    "rule": "trams de material del full de camp NO són nivells (v0.8); corroboren profunditat (2,40) i registre SPT. El buit 1,00-1,60 és el tram de l'SPT."
+   },
+   {
+    "sondeig": "S-2",
+    "profunditat_assolida": "-3,00 m",
+    "spt_ma": "1/1",
+    "nivell_freatic": null,
+    "location": "p.6 full de camp S-2: trams 0,00-1,00 Limos / 1,60-1,70 Arenas / 1,70-1,90 Arenas con bolo / 1,90-2,10 Pizarra / 2,10-2,60 Arenas con gravilla / 2,60-2,80 Granito / 2,80-3,00 Gravas; casella Nivell Freàtic en blanc",
+    "quote": "Mostres: 1,00a1,60 S.P.T-1 Colpeig 2 3 3 3 | 2,80,3,00 M.A-1 / / / /",
+    "rule": "corrobora profunditat (3,00), SPT-1 (2/3/3/3) i MA-1 (2,80-3,00); el canvi Granito/Gravas a 2,60-3,00 corrobora la transició de nivell ~-2,6."
+   }
+  ],
+  "__nota": "Albarà penetros (p.1): 6 penetròmetres, 30,92 ml, 2 assaigs SPT o MI, equip ML76A, operari Daniel Fernández. Albarà sondeigs (p.4): 4,90 ml en sòls + 0,50 ml en graves i bolos (0-20 m) = 5,40 ml (2,40+3,00), 2 assaigs SPT. Croquis p.7: parcel·la amb P1-P4 en línia (10 m entre punts), S2/P5 a l'extrem NE (5,5 m del límit), S1-P6 al SW (4 m), 'Camino' al sud."
+ },
+ "not_present": [
+  "nivell freàtic (caselles 'Hi ha nivell freàtic?' en blanc a tots els fulls; cap marca a les columnes N.F.)",
+  "cota d'inici o cota referència ('Descriure punt 0 o cota referencia' en blanc)"
+ ],
+ "reading_notes": "0 text: lectura 100% visual dels renders a 120 dpi; cal·ligrafia clara; els valors N20 manuscrits coincideixen amb l'Excel a tots els punts mostrejats."
+}

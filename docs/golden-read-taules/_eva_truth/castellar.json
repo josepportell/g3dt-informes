@@ -1,0 +1,230 @@
+{
+ "source": "/mnt/c/claude/g3dt/projectes/3001621 CASTELLAR DEL VALLES/3001621_informe_v0.docx",
+ "tables": [
+  {
+   "type": "plantes",
+   "grid": [
+    [
+     "Nº de plantes per habitatge",
+     "Pb+1Pp"
+    ],
+    [
+     "Superfície de la parcel·la (m2)",
+     "1.284"
+    ],
+    [
+     "Superfície construïda total (m2)",
+     "120 m2"
+    ]
+   ]
+  },
+  {
+   "type": "cte_edificacio",
+   "grid": [
+    [
+     "Tipus d’edificació considerada:",
+     "C-1"
+    ],
+    [
+     "Tipus de sòl considerat :",
+     "T-1"
+    ]
+   ]
+  },
+  {
+   "type": "dpsh",
+   "grid": [
+    [
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH"
+    ],
+    [
+     "Punt",
+     "Cota d’inici (m*)",
+     "Profunditat assolida (m)",
+     "Rebuig",
+     "Humitat (m)"
+    ],
+    [
+     "P-1",
+     "-4.0",
+     "-1.08",
+     "Si",
+     "No detectat"
+    ],
+    [
+     "P-2",
+     "-4.20",
+     "-0.48",
+     "Si",
+     "No detectat"
+    ],
+    [
+     "P-3",
+     "-4.0",
+     "-0.76",
+     "Si",
+     "No detectat"
+    ],
+    [
+     "P-4",
+     "-4.0",
+     "-1.55",
+     "Si",
+     "No detectat"
+    ]
+   ]
+  },
+  {
+   "type": "sondeig",
+   "grid": [
+    [
+     "Sondeig a rotació bateria continua",
+     "Sondeig a rotació bateria continua",
+     "Sondeig a rotació bateria continua",
+     "Sondeig a rotació bateria continua",
+     "Sondeig a rotació bateria continua"
+    ],
+    [
+     "Punt",
+     "Cota d’inici (msnm*)",
+     "Profunditat assolida (m)",
+     "SPT/MA",
+     "Humitat (m)"
+    ],
+    [
+     "S-1",
+     "-4.20",
+     "-1.20",
+     "1/0",
+     "No detectat"
+    ]
+   ]
+  },
+  {
+   "type": "spt_ma",
+   "grid": [
+    [
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA"
+    ],
+    [
+     "Nº assaig",
+     "Punt",
+     "Prof. Extracció (m)",
+     "N30",
+     "Litologia"
+    ],
+    [
+     "SPT-1",
+     "S-1",
+     "-1.00 a -1.20",
+     "R",
+     "Limolites i bretxes"
+    ]
+   ]
+  },
+  {
+   "type": "mostra_lab",
+   "grid": [
+    [
+     "Mostra : SPT-1",
+     "Punt: S-1",
+     "Profunditat:  -1.00  a -1.20 m"
+    ],
+    [
+     "Assaigs realitzats",
+     "1 assaig de contingut en sulfats UNE 83963 : 2008",
+     "1 assaig de contingut en sulfats UNE 83963 : 2008"
+    ]
+   ]
+  },
+  {
+   "type": "soil_levels",
+   "grid": [
+    [
+     "1er nivell",
+     "Bretxes amb intercalacions de lutites i gresos vermells. Substrat rocós."
+    ]
+   ]
+  },
+  {
+   "type": "permeabilitat",
+   "grid": [
+    [
+     "Nivell",
+     "K (m/s)",
+     "Tipus material"
+    ],
+    [
+     "1er nivell",
+     "10⁻5 – 10⁻7",
+     "Bretxes amb intercalacions de lutites i gresos vermells."
+    ]
+   ]
+  },
+  {
+   "type": "sulfats",
+   "grid": [
+    [
+     "Nivell",
+     "Contingut en sulfats \n(mg/kg SO4)",
+     "Acidesa Baumann-Gully (ml/kg)",
+     "Qualificació (*)"
+    ],
+    [
+     "1er nivell",
+     "0.0",
+     "--",
+     "No Agressius"
+    ]
+   ]
+  },
+  {
+   "type": "sismica",
+   "grid": [
+    [
+     "Nivells",
+     "Tipus de terreny",
+     "Gruix (metres)",
+     "Coeficient C"
+    ],
+    [
+     "1",
+     "Tipus II",
+     "1.15*",
+     "1.3"
+    ]
+   ]
+  },
+  {
+   "type": "geotecnica",
+   "grid": [
+    [
+     "Nivell",
+     "Nb",
+     "N",
+     "Densitat(1)",
+     "Cohesió(2)",
+     "Angle de fregament intern (3)",
+     "E (4)"
+    ],
+    [
+     "1er nivell: Bretxes amb intercalacions de lutites i gresos",
+     "17-R",
+     "R",
+     "2.20",
+     "1.0",
+     "35º",
+     ">500"
+    ]
+   ]
+  }
+ ]
+}

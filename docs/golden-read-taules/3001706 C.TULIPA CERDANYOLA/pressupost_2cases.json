@@ -1,0 +1,34 @@
+{
+ "source_path": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost G3 vigent (MODF, modDate 29/04/2026, posterior al primer PRESSUPOST GEOTEC.CERDANYOLA.pdf): campanya prevista per a l'expedient sencer.",
+ "issuer": "G3 (m4PRO ERP)",
+ "date": "26/03/26 (codi 26·0254)",
+ "pages_or_sheets": "7 pàgines (llegides p.1-2)",
+ "context": {
+  "who_made_it": "G3",
+  "for_whom": "sol·licitant (CLIENT: VUA, VISUALIZING UNBUILT ARCHITECTURE — cap rol a taules)",
+  "why": "oferta econòmica de la campanya",
+  "expected_fields": [
+   "quantitats previstes DPSH/sondeig",
+   "línia CTE"
+  ],
+  "not_expected": [
+   "valors de camp",
+   "superfícies construïdes"
+  ],
+  "relation_to_others": "substitueix el pressupost inicial pel criteri de modDate posterior; les quantitats previstes coincideixen amb les executades (4 DPSH + 1 sondeig).",
+  "authority_for": [
+   "corroboració del recompte de punts (previstos = executats)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "__nota": "p.2: '4 assaigs de penetració dinàmica DPSH' + '1Sondeig a rotació amb bateria continua, que inclou desplaçament, perforació i execució d'assaigs SPT's' + 'Tipus d'edifici: C1 | Tipus de Terreny : T1' (línia única per a les 2 cases — afecta escalars CTE, no taules)."
+ },
+ "not_present": [
+  "superficie_construida",
+  "repartiment de punts per casa"
+ ],
+ "reading_notes": "Blocs ordenats per (y,x); DTE.txt de la carpeta arrel documenta el dte. de 21/05 (facturació, cap rol)."
+}
