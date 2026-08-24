@@ -1,6 +1,6 @@
 """Acceptació Fase 0: compara _decisions.json produïts pels agents --consolida vs l'or.
 
-Ús: python3 compare_consolida.py escalars|taules
+Ús: python3 compare_consolida.py escalars|taules [PATH_decisions.json]
 Veredictes per camp: OK (mateix estat), CAUTELA (or segur -> produït candidats amb el bo dins),
 ALERTA (produït més confiat que l'or, o valor segur != or), NOU (clau v1 sense or), ERR (valor segur discrepant).
 """
@@ -56,7 +56,7 @@ def verdict(gold, prod):
 
 def run_escalars():
     gold = flat_gold_scalars()
-    prod = json.load(open(S / "consolida-escalars/_decisions.json", encoding="utf-8"))
+    prod = json.load(open(sys.argv[2] if len(sys.argv) > 2 else S / "consolida-escalars/_decisions.json", encoding="utf-8"))
     assert prod.get("schema_version") == 1, "schema_version != 1"
     pf = prod["fields"]
     bad_dialect = [k for k, v in pf.items() if "status" in v or any("source" in c for c in (v.get("candidates") or []) if isinstance(c, dict))]
@@ -74,7 +74,7 @@ def run_escalars():
 
 def run_taules():
     gold = json.load(open(REPO / "docs/golden-read-taules/4001612 BELL-LLOC/_tables_decisions.json", encoding="utf-8"))["tables"]
-    prod = json.load(open(S / "consolida-taules/_decisions.json", encoding="utf-8"))
+    prod = json.load(open(sys.argv[2] if len(sys.argv) > 2 else S / "consolida-taules/_decisions.json", encoding="utf-8"))
     pt = prod["tables"]
     counts = {}
     for block in ("dpsh_tests", "sondeig_tests", "spt_ma_tests", "soil_levels"):
