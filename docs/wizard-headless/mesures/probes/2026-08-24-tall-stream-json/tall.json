@@ -1,0 +1,213 @@
+{
+  "source_path": "tall.pdf",
+  "source_md5": "a4512806fd21fe5f6efc6b4e6dd15f69",
+  "skill_version": "1.3",
+  "schema_version": 1,
+  "document_type": "annex_tall",
+  "what_it_is": "Tall de correlació (secció geològica A-A') de l'Eva: perfil amb els 4 punts DPSH (P-1 a P-4) i el sondeig S-1 projectats sobre la línia de tall, més un plànol de situació en ortofoto amb la zona d'estudi.",
+  "issuer": "G3 (Eva) — versió 'Microsoft: Print To PDF' de l'annex FreeHand ANNEXES/3001621_tall de correlació.FH11",
+  "date": "Data: Octubre 2025 (mes/any imprès al caixetí; metadada PDF creationDate 2025-11-03, que és la data d'impressió a PDF, no la de camp)",
+  "pages_or_sheets": "1 pàgina (landscape, ~1190x842 pt)",
+  "context": {
+    "who_made_it": "Eva/G3, com a annex gràfic de sintesi del propi informe (no és un document extern d'un tercer)",
+    "for_whom": "El propi informe geotècnic — és una figura que s'hi insereix, i també serveix a l'Eva com a eina de correlació per redactar nivells i cota de fonamentació",
+    "why": "Correlacionar gràficament, al llarg de la línia de tall A-A', els nivells geològics trobats a cada punt (DPSH P-1..P-4 + sondeig S-1) amb la cota de fonamentació recomanada",
+    "expected_fields": [
+      "expedient",
+      "adreça/municipi (caixetí)",
+      "data (mes/any)",
+      "punts DPSH i sondeig (identificadors)",
+      "nombre i litologia dels nivells de sòl",
+      "cota de fonamentació recomanada (línia gràfica)",
+      "escala gràfica"
+    ],
+    "not_expected": [
+      "client_name",
+      "architect_name",
+      "num_floors",
+      "superficie_parcela",
+      "utm_x_utm_y",
+      "referencia_catastral",
+      "dades de laboratori",
+      "cte_edificacio/cte_sol",
+      "cotes numèriques exactes per punt (només escala gràfica en msnm)"
+    ],
+    "relation_to_others": "Versió 'Print To PDF' (text net) d'ANNEXES/3001621_tall de correlació.FH11. L'inventari també llista PDF/ANNEXES/3001621_tall de correlació.pdf i PDF-V0/ANNEXES/3001621_tall de correlació.pdf amb un md5 diferent del d'aquest fitxer (e77496626419bcc0e372d33f59609cd5 / 116065 bytes, vs. a4512806fd21fe5f6efc6b4e6dd15f69 / 969838 bytes d'aquest tall.pdf) — no s'ha obert cap d'aquests altres fitxers en aquesta lectura (mode --only), així que no es pot confirmar si són la mateixa versió del dibuix o una anterior; only es deixa constància de la diferència de mida/md5 per si el consolidador ho vol contrastar.",
+    "authority_for": [
+      "num_soil_levels",
+      "soil_levels.litologia",
+      "num_dpsh_tests"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "expedient",
+      "value": "3001621",
+      "location": "caixetí inferior dret, cel·la 'Exp'",
+      "quote": "Exp: 3001621",
+      "confidence": 0.95,
+      "note": null
+    },
+    {
+      "concept_id": "municipality",
+      "value": "Castellar del Vallès",
+      "location": "caixetí inferior, cel·la 'TÍTOL DEL PROJECTE'",
+      "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+      "confidence": 0.85,
+      "note": "forma llarga amb accent, també corroborada per l'etiqueta de carrer 'Arbrells' visible al plànol de situació incrustat"
+    },
+    {
+      "concept_id": "street_address",
+      "value": "Carrer Arbrells Nº 18A-18B-20",
+      "location": "caixetí inferior, cel·la 'TÍTOL DEL PROJECTE'",
+      "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+      "confidence": 0.8,
+      "note": "l'adreça cobreix 3 números (18A-18B-20): projecte multi-habitatge. No queda clar en aquest document si aquest tall concret és compartit per les 3 cases o específic d'una; confirmar amb pressupost/comanda"
+    },
+    {
+      "concept_id": "building_type",
+      "value": "habitatge unifamiliar aïllat",
+      "location": "caixetí inferior, cel·la 'TÍTOL DEL PROJECTE'",
+      "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+      "confidence": 0.55,
+      "note": "el títol parla en singular ('UNA' habitatge) però l'adreça cobreix 3 números — probablement text de plantilla reutilitzat per a les 3 cases del mateix expedient; contrastar amb pressupost/comanda abans de donar-lo per bo"
+    },
+    {
+      "concept_id": "field_date",
+      "value": "Octubre 2025",
+      "location": "caixetí inferior, cel·la 'Data'",
+      "quote": "Data: Octubre 2025",
+      "confidence": 0.45,
+      "note": "només mes/any imprès, no dia exacte; no queda clar si es refereix al dia de camp (DPSH) o al de redacció del pla — candidat feble davant la fitxa de camp o l'Excel DPSH"
+    },
+    {
+      "concept_id": "num_dpsh_tests",
+      "value": 4,
+      "location": "secció principal (etiquetes P-1..P-4) + llegenda del plànol de situació incrustat",
+      "quote": "P-1 / P-2 / P-4 / P-3 (símbol blau 'Assaig de penetració dinàmica DPSH' a la llegenda del plànol de situació)",
+      "confidence": 0.75,
+      "note": "recompte de punts P- diferents projectats a la secció; l'Excel DPSH (executats) hauria de manar per sobre d'aquest recompte gràfic"
+    },
+    {
+      "concept_id": "num_soil_levels",
+      "value": 1,
+      "location": "LLEGENDA de la secció",
+      "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+      "confidence": 0.55,
+      "note": "només 'Nivell 1' apareix etiquetat explícitament com a nivell; la capa superior 'Terreny Vegetal' es descriu per separat i NO porta l'etiqueta 'Nivell', consistent amb el criteri habitual de l'Eva d'excloure la terra vegetal del recompte de nivells — candidat, no segur; confirmar amb l'annex de sondeig (PDF/ANNEXES/3001621_sondeig.pdf) si es llegeix en una altra crida"
+    }
+  ],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "cota_inici": null,
+        "profunditat_assolida": null,
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "secció principal, columna P-1",
+        "quote": "Nb=16 … Nb=R",
+        "extra": {
+          "nb_readings_grafics": [
+            "Nb=16 (al contacte Terreny Vegetal / Nivell 1, ~571 msnm)",
+            "Nb=R (poc després, dins Nivell 1)"
+          ],
+          "nota": "profunditat exacta no impresa (només escala gràfica en metres sencers); llegir 'Rebuig a -X,XX m' de l'Excel DPSH"
+        }
+      },
+      {
+        "punt": "P-2",
+        "cota_inici": null,
+        "profunditat_assolida": null,
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "secció principal, columna P-2",
+        "quote": "Nb=18 … Nb=R",
+        "extra": {
+          "nb_readings_grafics": [
+            "Nb=18 (pràcticament al contacte Terreny Vegetal / Nivell 1)",
+            "Nb=R (rebuig molt superficial, gairebé al mateix contacte)"
+          ],
+          "nota": "rebuig visualment el més superficial dels 4 punts; confirmar profunditat exacta a l'Excel DPSH"
+        }
+      },
+      {
+        "punt": "P-3",
+        "cota_inici": null,
+        "profunditat_assolida": null,
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "secció principal, columna P-3",
+        "quote": "Nb=19 … Nb=R",
+        "extra": {
+          "nb_readings_grafics": [
+            "Nb=19 (al contacte Terreny Vegetal / Nivell 1)",
+            "Nb=R (poc després)"
+          ],
+          "nota": "profunditat exacta no impresa; llegir Excel DPSH"
+        }
+      },
+      {
+        "punt": "P-4",
+        "cota_inici": null,
+        "profunditat_assolida": null,
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "secció principal, columna P-4",
+        "quote": "Nb=10 … Nb=33 … Nb=R",
+        "extra": {
+          "nb_readings_grafics": [
+            "Nb=10 (al contacte Terreny Vegetal / Nivell 1)",
+            "Nb=33 (lectura intermèdia, resistència creixent)",
+            "Nb=R (rebuig)"
+          ],
+          "nota": "gràficament és clarament el punt amb rebuig més profund dels 4 (única columna amb 3 lectures abans del rebuig); confirmar profunditat exacta a l'Excel DPSH"
+        }
+      }
+    ],
+    "sondeig_tests": [
+      {
+        "sondeig": "S-1",
+        "cota": null,
+        "profunditat_assolida": null,
+        "spt_ma": null,
+        "nivell_freatic": null,
+        "location": "secció principal, columna S-1 (columna litològica curta)",
+        "quote": "N=R",
+        "extra": {
+          "nota": "el rebuig del sondeig a rotació (N=R) es representa poc després del contacte Terreny Vegetal / Nivell 1, a una fondària similar a la dels DPSH veïns (P-2/P-4); no hi ha assaigs SPT/MA representats en aquesta secció"
+        }
+      }
+    ],
+    "soil_levels": [
+      {
+        "nom": "Nivell 1",
+        "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+        "de": null,
+        "a": null,
+        "mostra_del_nivell": false,
+        "extra": {
+          "capa_superior_no_comptada": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
+          "nota": "litologia candidata (redacció pròpia del tall); l'annex de sondeig ('Descripció dels materials'), si es llegeix, té prioritat per a la redacció exacta. Fondàries de transició (de/a) no impreses: només escala gràfica en msnm (569 a 572), variable per punt (el contacte puja/baixa al llarg de la secció)"
+        }
+      }
+    ]
+  },
+  "not_present": [
+    "client_name",
+    "architect_name",
+    "num_floors",
+    "superficie_parcela",
+    "cota_referencia (valor numèric exacte; només escala gràfica 569-572 msnm)",
+    "utm_x_utm_y",
+    "referencia_catastral",
+    "lab_testing_company",
+    "lab_sample_id",
+    "lab_depth",
+    "lab_location",
+    "cte_edificacio",
+    "cte_sol",
+    "superficie_construida"
+  ],
+  "reading_notes": "Text net (producer 'Microsoft: Print To PDF'), llegit directament amb PyMuPDF (fitz), sense necessitat de renderitzar per al text. Per interpretar el dibuix (perfil de la secció, llegenda, plànol de situació incrustat) s'ha renderitzat la pàgina sencera a 170 dpi i, per confirmar les lectures Nb= de cada punt i la llegenda del plànol de situació, s'han retallat i renderitzat a 300-400 dpi les zones de P-1/P-2, P-3/P-4/S-1, i el requadre del plànol de situació amb la seva llegenda pròpia. Blocs de text ordenats per (y,x) per reconstruir el caixetí inferior (TÍTOL DEL PROJECTE | text | Data | Exp, seguit de G3 | Tall de correlació | Pàgina 1/1)."
+}

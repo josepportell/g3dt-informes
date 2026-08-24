@@ -75,7 +75,13 @@ Via B intacta (3 edicions quirúrgiques). **+70 tests; suite 32 failed (línia b
 open (cache: els següents 0 crides). Palanques: concurrència 3-4, prompt prim (sense CLAUDE.md, skill curt), menys documents
 (fotografies, LAB-SIG, còpies Print-To-PDF), consolidació Python-first. Forats: fonts Python fora de g3_templates invisibles
 al consolidador (utm/RC → no_trobat), seleccions de taula sense backend (8b), Windows no provat.
-**Següent:** palanques + remesura amb 1 projecte sol → forat 1 → 8b → Windows → projecte NOU de l'Eva.
+**Següent (decidit 2026-08-24 nit):** la lectura NO s'escurça (el cost fix és el protocol del skill, no el CLI: 4-14 s d'arrencada);
+surt del camí crític amb **tres botons** (des de zero / preparar «per demà» / enllestir) + registre de jobs a disc + taula d'estat
+en llenguatge Eva + notificacions (toast + SMTP Eficients, telemetria transparent). Disseny: `docs/DISSENY-ANNEX-TRES-BOTONS-JOBS-NOTIFICACIONS-2026-08-24.md`
+(Fases 9-17). **Fase 9 FETA (nit):** runner amb `--model` fixat + `--output-format json` (turns/cost a la telemetria, 73 tests); remesura Castellar sol:
+**33 min reals a conc. 3**, ≈ 21 turns/doc estables, 0 erroni-amb-confiança de fons (3 runs); llibre de mesures `docs/wizard-headless/mesures/LEDGER.md`.
+Troballa: el temps és generació (~75 % raonament) i 5/15 usos d'eina són construir-se l'eina → palanca de pre-extracció determinista (a mesurar).
+Estimacions: botó 3a ≈ 30 s, 3b 6-9 min amb consolidació Python-first. Següent: Fase 10 (jobs) → 11 (delta-sync) → experiment pre-extracció → 12.
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 

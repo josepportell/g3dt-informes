@@ -1,0 +1,158 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_DPSH.pdf",
+ "source_md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Full de resultats de l'assaig de penetracio dinamica DPSH (4 punts P-1 a P-4), generat des de l'Excel ANNEXES/3001621_DPSH.xls (Print to PDF / Distiller)",
+ "issuer": "G3 (Eva), a partir de les dades de camp de TPS",
+ "date": "24/10/25 (data de camp indicada al document); metadada PDF creationDate 2025-11-03 17:35",
+ "pages_or_sheets": "4 pagines, una per punt (P-1, P-2, P-3, P-4)",
+ "context": {
+  "who_made_it": "G3 (Eva), full amb logo G3, generat des de l'Excel DPSH intern (ANNEXES/3001621_DPSH.xls) via Print to PDF/Distiller",
+  "for_whom": "annex tecnic incorporat a l'informe geotecnic, per al client final del projecte",
+  "why": "documentar per punt l'assaig de penetracio dinamica DPSH: colpeig NB per tram de 20 cm, profunditat de rebuig, nivells de sol observats",
+  "expected_fields": [
+   "dpsh_tests[] (punt, cota_inici, profunditat_assolida, rebuig, nivell_freatic)",
+   "num_dpsh_tests (recompte de punts P-1..P-4)",
+   "expedient (NUMERO D'INFORME)",
+   "street_address (OBRA)",
+   "municipality (POBLACIO)",
+   "field_date (DATA)",
+   "num_soil_levels (candidat feble, nomes llegenda 'Nivell 1')"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "cota_referencia (valor absolut)"
+  ],
+  "relation_to_others": "generat des de 'ANNEXES/3001621_DPSH.xls' (Excel font, no llegit en aquesta crida --only); duplicat exacte per md5 (de76ad0dfa3cf9cc4cbed9479cfa634f) de 'PDF-V0/ANNEXES/3001621_DPSH.pdf', versio anterior de carpeta ja exclosa a l'inventari -- no compta com a font independent addicional",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "num_dpsh_tests",
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.1-4, capcalera dreta de cada full",
+   "quote": "NUMERO D´INFORME: 3001621",
+   "confidence": 0.8,
+   "note": "coincideix amb el nom de la carpeta del projecte ('3001621 CASTELLAR DEL VALLES'); repetit identic a les 4 pagines (mateix document, no compta com a fonts independents)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ ARBRELLS 18 A",
+   "location": "p.1-4, capcalera esquerra, bloc OBRA",
+   "quote": "OBRA: C/ ARBRELLS 18 A",
+   "confidence": 0.75,
+   "note": "etiqueta OBRA (regla street_address); repetit identic a les 4 pagines"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1-4, capcalera dreta, bloc POBLACIO",
+   "quote": "POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.8,
+   "note": "forma curta (no 'Castellar del Valles' amb accents/minuscules); repetit identic a les 4 pagines"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/25",
+   "location": "p.1-4, capcalera esquerra, sota OBRA",
+   "quote": "DATA: 24/10/25",
+   "confidence": 0.7,
+   "note": "candidat 2 segons regla field_date (annex DPSH DATA:); confirmar amb fitxa de camp F38 si existeix a la carpeta -- no llegida en aquesta crida"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "recompte de pagines/punts del document (P-1 a P-4)",
+   "quote": "P-1 / P-2 / P-3 / P-4",
+   "confidence": 0.75,
+   "note": "4 punts amb dades completes (executats); aquest PDF es la versio impresa de l'Excel DPSH, no s'ha llegit l'Excel directament en aquesta crida per confirmar-hi el mateix recompte"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "p.1-4, llegenda al peu de cada taula",
+   "quote": "Nivell 1",
+   "confidence": 0.35,
+   "note": "font secundaria i feble: nomes 'Nivell 1' apareix a la llegenda de les 4 pagines, mai 'Nivell 2'. La font primaria per num_soil_levels es la columna 'Unitat litologica' de l'annex de sondeig (document diferent, no llegit aqui) -- no pujar a segur amb nomes aquest document"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.1, capcalera 'P-1 - 4 m (respecte el carrer)' + peu de taula",
+    "quote": "P-1     - 4  m  (respecte el carrer). [...] Rebuig  a -1,08 m"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,2 m (respecte el carrer)",
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.2, capcalera 'P-2 cota inici: -4,2 m (respecte el carrer)' + peu de taula",
+    "quote": "P-2    cota inici: -4,2 m  (respecte el carrer) [...] Rebuig  a -0,48 m"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.3, capcalera 'P-3 cota inici: - 4 m (respecte el carrer)' + peu de taula",
+    "quote": "P-3    cota inici: - 4 m  (respecte el carrer). [...] Rebuig  a -0,76 m"
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.4, capcalera 'P-4 - 4 m (respecte el carrer)' + peu de taula",
+    "quote": "P-4     - 4  m (respecte el carrer). [...] Rebuig  a -1,55 m"
+   }
+  ],
+  "__nota": "cota_inici es RELATIVA (respecte el carrer) a totes 4 files, coherent en signe -- vegeu regla d'or Pas 3b (ERR Castellar): la fila de la taula de sondeig/DPSH ha de seguir aquest mateix sistema relatiu, NO l'absolut de cota_referencia."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia (valor absolut msnm)",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text brut (get_text()) nomes dona la llista de numeros de la taula sense estructura de columnes -- calia renderitzar les 4 pagines a 150dpi (PyMuPDF) i llegir visualment per separar Colpeig DPSH/Colpeig NB de MOSTRA/N.F./Nivells. Columna N.F.: buida (sense text ni ombrejat de cel·la) a les 4 pagines -- comprovat visualment pixel a pixel, no nomes text. Columna MOSTRA: buida a P-1/P-2/P-4; a P-3 hi ha una banda grisa (RGB 217,217,217) sense text a les fondaries -1,2/-1,4/-1,6 m, PER SOTA del rebuig (-0,76 m) -- sembla artefacte de plantilla (banda condicional buida), no s'ha interpretat com a dada real. Columna Nivells: un unic color de llegenda 'Nivell 1' (RGB 241,169,132); a P-1 i P-4 hi ha a mes una banda mes clara (RGB 250,225,212) a les fondaries 0/-0,6 m separada per una linia discontinua, sense entrada propia a la llegenda -- no interpretada com a 'Nivell 2' ni com a marca de N.F., anotat per si cal creuar-ho amb l'annex de sondeig al consolidat."
+}

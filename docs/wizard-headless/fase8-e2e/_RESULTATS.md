@@ -56,3 +56,77 @@ concurrència 2 i dos projectes alhora. Segona obertura: cache per md5 → 0 cri
 ✅ Pipeline sencer funciona a WSL amb claude real (runner + servei + UI). ✅ Erroni-amb-confiança = 0 (2 projectes). ✅ Cache.
 ⏳ Temps del primer open inacceptable tal qual per a l'Eva (35-60 min) — palanques a sobre. ⏳ Windows sense provar.
 ⏳ Forat 1 i Fase 8b. Veredicte: **GO tècnic, NO-GO de latència** fins a aplicar palanques i remesurar.
+
+---
+
+## Addendum 2026-08-24 (nit) — Fase 9: runner instrumentat + remesura de Castellar SOL (concurrència 2 i 3)
+
+**Què ha canviat al runner** (`automation/lectura/runner.py`, +85 LOC, 73 tests verds): `--model` fixat (`G3DT_LECTURA_MODEL`, defecte `sonnet`) i
+`--output-format json` a totes les crides; l'envolupant JSON del CLI (stdout a un sidecar) alimenta `_telemetry.jsonl` amb `num_turns`,
+`duration_api_ms`, `cost_usd`, `usage` (tokens) i `models`; el log humà conserva el text final sota `--- result ---`. Verificat amb el CLI real.
+
+**Llibre de mesures:** `docs/wizard-headless/mesures/` (`ledger.py` → `LEDGER.md`; `runs/<etiqueta>/` amb telemetria, decisions, comparador,
+per-doc, `meta.json` amb condicions i judici ERR per ERR). Tres files: E2E de la tarda (línia base), run 1 (conc. 2), run 2 (conc. 3).
+
+### Temps (Castellar sol, 13 documents a `claude`, Sonnet 5, login)
+
+| run | paret real | suma `claude` | mediana/doc | turns (docs) | tokens sortida (docs) | consolidació | cost equiv. |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| E2E tarda (conc. 2, **solapat** amb Bell-lloc) | 37 min | 64 min | 264 s | — | — | 585 s | — |
+| run 1 · conc. 2 | *invàlida* (tall de connexió 20:43-22:01; 2 docs contaminats) | 70 min | 290 s | 269 (8-36; ≈ 21/doc) | 342k | 474 s / 26 turns / 49k tok | $17,7 |
+| run 2 · conc. 3 (net) | **33 min** (22:26→23:02) | 61 min | 292 s | 268 (10-31; ≈ 21/doc) | 306k | 677 s / 24 turns / 72k tok | $15,4 |
+
+- **La paret reconstruïda per planificació de llista prediu bé** (run 2: 32 min predits vs 33 reals) → serveix per estimar sense córrer:
+  conc. 2 ≈ 43 min, conc. 3 ≈ 32, conc. 4 ≈ 26 (amb la consolidació actual).
+- **Els turns són estables (≈ 21/doc, 268-269 en total)**: el cost és el *protocol* del skill, no l'atzar. El que varia entre runs és el temps per
+  turn (tall.pdf: 34 turns/591 s al run 1 vs 29/349 s al run 2).
+- **El temps és de generació, no de context**: 306-342k tokens de sortida per 13 JSON finals de ~2k tokens cadascun (15-25× més del que s'escriu
+  al fitxer). Vegeu la sonda de turns més avall.
+- **La consolidació és el pas més variable** (474-677 s; 49-72k tokens de sortida) i és l'impost que paga *qualsevol* canvi de fitxer (annex §7.2).
+- Cost fix del CLI (arrencada + 1 volta): 4-14 s (benchmark §1 de l'annex). Les xifres d'aquí tenen els 9 MCPs del Josep carregats; a l'ordinador
+  de l'Eva no hi seran (−10 s/crida, no més).
+
+### Qualitat (comparador d'or; criteri: erroni-amb-confiança de fons)
+
+| run | escalars OK/CAUTELA/ALERTA/ERR | taules OK/CAUTELA/ALERTA/ERR/ABSENT | **erroni-amb-confiança de fons** |
+|---|---|---|--:|
+| E2E tarda | 15 / 4 / 1 / 1 | 16 / 1 / 1 / 3 / 6 | 0 |
+| run 1 | 14 / 4 / 2 / 1 | 20 / 1 / 2 / 1 / 3 | 0 |
+| run 2 | 17 / 1 / 3 / 0 | 17 / 1 / 2 / 3 / 4 | 0 |
+
+Tots els ERR són de format (`-4,0` vs `-4`; `1,0 - 1,2 m` vs `-1,00 a -1,20 m`; variants del mateix carrer). Els ALERTA de fons, un per un:
+
+1. **`cota_referencia` puja a `segur` '570.90 msnm' amb una sola font — 2/2 runs de la Fase 9** (a l'E2E de la tarda era candidats amb el relatiu
+   primer). El valor coincideix amb el preferit de l'or (`+570,90`), així que no és un valor erroni; és **excés de confiança reproduïble**: el
+   lector cec de l'annex DPSH no emet el "-4 m (respecte el carrer)" com a candidat escalar (només com a `cota_inici` de taula) i el consolidador
+   veu una font i tanca. **Guard determinista** (Fase 12, `soft_normalize`): `segur` amb 1 font i sense senyal g3_templates ≥ 0,9 → candidats.
+2. `spt_ma_tests` amb 2 files al run 2 (SPT-1 i MA1: mateix punt S-1, mateixa fondària 1,0-1,2 m) = la mateixa mostra amb dos identificadors;
+   bloc `candidats`. Regla de fusió determinista punt+fondària (Fase 12).
+3. `sondeig_tests[0].cota`: prod candidats només amb el relatiu '-4 m'; or `segur` '570,90 msnm'. **Conflicte entre el skill (Pas 3b: la cel·la és
+   relativa, l'absoluta és `cota_referencia`) i l'or** — decisió Josep/Eva, no error del model.
+4. `building_type`: CLOSE (article/adjectiu), com sempre.
+
+**Veredicte de qualitat:** 0 erroni-amb-confiança de fons als tres runs; la variació entre runs és de *format* i de *confiança*, i tots dos
+casos de confiança tenen guard determinista. No hi ha motiu de qualitat per canviar de model (Fable queda com a opció mesurable:
+`G3DT_LECTURA_MODEL=fable ~/g3dt-e2e/fase9/run.sh 3 fable-c3` → nova fila al llibre).
+
+### Sonda de turns (`--output-format stream-json`, `tall.pdf`)
+
+`tall.pdf` amb `stream-json --verbose`: **20 turns, 293 s d'API, 25,8k tokens de sortida**, dels quals només ~7k són visibles (9 Bash + 5 Read +
+1 Write + text) → ~75 % és raonament. Dels 15 usos d'eina: 5 són *construir-se l'eina* (`fitz` per comptar pàgines, extreure text,
+renderitzar pàgina sencera, meitats i localitzador), 2 redundants (`ls`/`find`, `md5sum` que l'inventari ja té), 2 de cerimònia d'escriptura
+(`os.replace` + rellegir) i 6 de lectura/escriptura real. Detall: `docs/wizard-headless/mesures/probes/2026-08-24-tall-stream-json/turns.md`.
+**Palanca resultant (no toca la cura):** pre-extracció determinista a l'inventari (text per pàgina, PNG sencer + meitats, Excel→CSV,
+.msg→cos+adjunts) + `write_doc_json.py` (payload per stdin, escriptura atòmica al nom canònic). Estimació −35-45 % per document mirant les
+mateixes imatges. A mesurar com a fila nova del llibre abans d'adoptar-la.
+
+### Palanques, revisades amb les mesures
+
+| palanca | efecte estimat | toca la cura? |
+|---|---|---|
+| concurrència 3 (mesurat) / 4 | 43 → 33 (mesurat) / ≈ 26 min | no |
+| pre-extracció Python dels documents (text per pàgina, imatges 100 dpi, Excel→CSV, .msg cos+adjunts) perquè el model llegeixi en lloc de construir-se l'eina | a decidir amb la sonda: si ≥ ⅓ dels turns són "obrir el fitxer", −30-40 % de turns i tokens | **no** (llegeix el mateix, més directe) |
+| consolidació Python-first (annex §7.2) | −8-11 min per run i per cada canvi de fitxer | només si el comparador d'or ho avala |
+| prompt prim (sense CLAUDE.md/MCPs) | −5-10 s/crida | no |
+
+*Fi addendum Fase 9. Instrumentació + remesura: 33 min reals a conc. 3, 0 erroni-amb-confiança, el cost és generació (≈ 21 turns/doc).*

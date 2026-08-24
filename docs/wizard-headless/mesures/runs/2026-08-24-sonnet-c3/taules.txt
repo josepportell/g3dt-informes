@@ -1,0 +1,15 @@
+-- dpsh_tests: or 4 files / prod 4 files
+ERR      dpsh_tests[0].cota_inici segur discrepant: or='-4,0 m (respecte el carrer)' prod='-4 m (respecte el carrer)'
+ERR      dpsh_tests[2].cota_inici segur discrepant: or='-4,0 m (respecte el carrer)' prod='-4 m (respecte el carrer)'
+ERR      dpsh_tests[3].cota_inici segur discrepant: or='-4,0 m (respecte el carrer)' prod='-4 m (respecte el carrer)'
+-- sondeig_tests: or 1 files / prod 1 files
+ALERTA   sondeig_tests[0].cota or segur '570,90 msnm (segons el plànol ICGC)' NO entre candidats ['-4 m (respecte el carrer, mateix punt 0 que els DPSH)']
+ALERTA   sondeig_tests[0].spt_ma prod puja a segur ({'n_spt': 1, 'n_tp': 0, 'n_ma': 0}); or candidats i valor fora dels candidats d'or!
+-- spt_ma_tests: or 1 files / prod 2 files
+ABSENT   spt_ma_tests[0].id (or=candidats)
+ABSENT   spt_ma_tests[0].punt (or=segur)
+CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
+-- soil_levels: or 2 files / prod 1 files
+ABSENT   soil_levels[0].de_a_estat (or=segur)
+ABSENT   soil_levels[1].de_a_estat (or=segur)
+TOTALS: {'ERR': 3, 'OK': 17, 'ALERTA': 2, 'ABSENT': 4, 'CAUTELA': 1}

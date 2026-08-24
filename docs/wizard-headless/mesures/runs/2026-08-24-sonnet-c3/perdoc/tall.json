@@ -1,0 +1,182 @@
+{
+  "source_path": "tall.pdf",
+  "source_md5": "a4512806fd21fe5f6efc6b4e6dd15f69",
+  "skill_version": "1.3",
+  "schema_version": 1,
+  "document_type": "annex_tall",
+  "what_it_is": "Tall de correlació geològica (secció A-A') amb planta d'ubicació dels punts, dibuixat per l'Eva (FreeHand) i exportat net via 'Microsoft: Print To PDF'.",
+  "issuer": "G3 (Eva), a partir del dibuix FreeHand '3001621_tall de correlació.FH11'",
+  "date": "Octubre 2025 (capçalera 'Data:'); metadada PDF creationDate/modDate 2025-11-03 16:27",
+  "pages_or_sheets": "1 pàgina (planta d'ubicació + secció + llegenda + peu de plànol)",
+  "context": {
+    "who_made_it": "Eva (G3), síntesi visual pròpia a partir dels resultats de camp (DPSH P-1/P-2/P-4/P-3 i sondeig S-1) ja processats a altres documents",
+    "for_whom": "el propi informe geotècnic, com a annex/figura interna (no un tercer)",
+    "why": "correlacionar espacialment els nivells de sòl observats als 5 punts d'assaig al llarg de la secció A-A', i mostrar la cota de fonamentació recomanada",
+    "expected_fields": [
+      "num_soil_levels (via llegenda)",
+      "soil_levels (litologia dels nivells)",
+      "num_dpsh_tests (recompte visual de punts P-1..P-4)",
+      "building_type / street_address / municipality (redacció del títol del projecte al peu de plànol)",
+      "expedient (peu de plànol)",
+      "field_date (candidat feble, només mes/any)"
+    ],
+    "not_expected": [
+      "client_name",
+      "architect_name",
+      "lab_testing_company / lab_sample_id / lab_depth / lab_location",
+      "utm_x / utm_y",
+      "referencia_catastral",
+      "superficie_parcela",
+      "num_floors",
+      "cte_edificacio / cte_sol",
+      "cota_referencia (valor numèric explícit — el dibuix només porta l'escala msnm 569-572, sense una casella 'cota inici'/'z:')"
+    ],
+    "relation_to_others": "Versió 'Microsoft: Print To PDF' (text net, confirmat amb fitz: producer='Microsoft: Print To PDF', title='3001621_tall de correlació.FH11') del MATEIX dibuix FreeHand que 'PDF/ANNEXES/3001621_tall de correlació.pdf' — però NO és un duplicat exacte: md5 diferent (a4512806... vs e77496626...) i mida molt diferent (970 KB vs 116 KB); l'altre PDF és l'exportació Distiller/PScript5.dll amb text brossa (verificat: get_text() només retorna caràcters de control), creat ~1h12min més tard el mateix dia (17:39 vs 16:27). Es tracten com dues exportacions del mateix .FH11 (marcat 'no_llegible' a l'inventari), presumiblement amb el mateix contingut gràfic; no verificat pàgina a pàgina en aquesta crida (--only tall.pdf; l'altre PDF no s'ha llegit aquí). Complementa PDF/ANNEXES/3001621_sondeig.pdf (ja llegit: cota_referencia=570.90 msnm ICGC, num_soil_levels=1 via bracket 'NIVELL 1' 0.00-1.20m) i PDF/ANNEXES/3001621_DPSH.pdf (ja llegit: 4 punts P-1..P-4, tots amb rebuig, profunditats -1.08/-0.48/-0.76/-1.55 m relatives 'respecte el carrer', llegenda feble 'Nivell 1' només): el tall corrobora visualment els mateixos 5 punts (S-1 al mig, entre P-2 i P-4) i el mateix nombre de nivells (1) que aquests dos documents germans.",
+    "authority_for": [
+      "num_soil_levels",
+      "building_type",
+      "street_address",
+      "municipality",
+      "expedient"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "expedient",
+      "value": "3001621",
+      "location": "peu de plànol, casella 'Exp:'",
+      "quote": "Exp: 3001621",
+      "confidence": 0.85,
+      "note": "Coincideix amb el nom de la carpeta del projecte i amb l'expedient llegit a l'annex DPSH i a l'annex de sondeig (documents diferents, ja llegits)."
+    },
+    {
+      "concept_id": "street_address",
+      "value": "Carrer Arbrells Nº 18A-18B-20",
+      "location": "peu de plànol, redacció del títol del projecte",
+      "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+      "confidence": 0.6,
+      "note": "No és una casella dedicada 'OBRA:'/'Adreça', sinó la redacció completa del títol de l'estudi. Porta TRES números de porta (18A-18B-20) mentre l'annex DPSH cita només 'C/ ARBRELLS 18 A' (una unitat) — possible obra amb diverses parcel·les/unitats; candidat, no segur, cal creuar amb la resta de documents. Confirmat també pel rètol 'Arbrells' al mapa d'ubicació inserit al mateix dibuix."
+    },
+    {
+      "concept_id": "municipality",
+      "value": "Castellar del Vallès (Barcelona)",
+      "location": "peu de plànol, mateixa redacció del títol",
+      "quote": "CASTELLAR DEL VALLÈS  (BARCELONA)",
+      "confidence": 0.75,
+      "note": "Coincideix amb el nom de la carpeta ('CASTELLAR DEL VALLES') i amb la municipality llegida a l'annex de sondeig i a l'annex DPSH (documents diferents)."
+    },
+    {
+      "concept_id": "building_type",
+      "value": "Habitatge unifamiliar aïllat",
+      "location": "peu de plànol, mateixa redacció del títol",
+      "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+      "confidence": 0.6,
+      "note": "Redacció idèntica a la de l'annex de sondeig (probablement copiada de la mateixa font/encàrrec, no és una font independent addicional); candidat, comparació CLOSE amb la redacció final de l'informe."
+    },
+    {
+      "concept_id": "field_date",
+      "value": "Octubre 2025",
+      "location": "peu de plànol, casella 'Data:'",
+      "quote": "Data: Octubre 2025",
+      "confidence": 0.25,
+      "note": "Només mes/any (sense dia): probablement la data de redacció/exportació del dibuix, no necessàriament el primer dia de camp. Granularitat molt inferior a l'annex DPSH ('DATA: 24/10/25') o a l'annex de sondeig ('Data d'inici: 24/10/25'), tots dos ja llegits — aquells manen si coincideixen en el mes."
+    },
+    {
+      "concept_id": "num_dpsh_tests",
+      "value": 4,
+      "location": "secció del tall i planta d'ubicació, etiquetes de punt en blau",
+      "quote": "P-1 / P-2 / P-4 / P-3",
+      "confidence": 0.55,
+      "note": "Recompte visual dels punts DPSH (icona blava 'Assaig de penetració dinàmica DPSH' a la llegenda de la planta d'ubicació) dibuixats a la secció; no és un document de recompte oficial (Excel/full de camp), és una síntesi gràfica. Coincideix amb els 4 punts (P-1..P-4) de l'annex DPSH ja llegit."
+    },
+    {
+      "concept_id": "num_soil_levels",
+      "value": 1,
+      "location": "requadre LLEGENDA de la secció",
+      "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+      "confidence": 0.55,
+      "note": "La llegenda només nomena 'Nivell 1' (mai 'Nivell 2'); la capa superior ('Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.') NO porta prefix 'Nivell' — es tracta com a cobertura, no com a nivell comptat, igual que a l'annex de sondeig i a l'annex DPSH (documents diferents, ja llegits, mateix resultat: 1). Candidat, mai segur per regla del Pas 3b."
+    }
+  ],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "cota_inici": null,
+        "profunditat_assolida": null,
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "secció, línia de perfil sota l'etiqueta 'P-1'",
+        "quote": "Nb=16 … Nb=R"
+      },
+      {
+        "punt": "P-2",
+        "cota_inici": null,
+        "profunditat_assolida": null,
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "secció, línia de perfil sota l'etiqueta 'P-2'",
+        "quote": "Nb=18 … Nb=R"
+      },
+      {
+        "punt": "P-4",
+        "cota_inici": null,
+        "profunditat_assolida": null,
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "secció, línia de perfil sota l'etiqueta 'P-4'",
+        "quote": "Nb=10 … Nb=33 … Nb=R"
+      },
+      {
+        "punt": "P-3",
+        "cota_inici": null,
+        "profunditat_assolida": null,
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "secció, línia de perfil sota l'etiqueta 'P-3'",
+        "quote": "Nb=19 … Nb=R"
+      }
+    ],
+    "sondeig_tests": [
+      {
+        "sondeig": "S-1",
+        "cota": null,
+        "profunditat_assolida": null,
+        "spt_ma": null,
+        "nivell_freatic": null,
+        "location": "secció, columna litològica sota l'etiqueta 'S-1'",
+        "quote": "N=R"
+      }
+    ],
+    "soil_levels": [
+      {
+        "nom": "Nivell 1",
+        "litologia_candidats": [
+          "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+        ],
+        "de": null,
+        "a": null,
+        "mostra_del_nivell": true
+      }
+    ],
+    "__nota": "profunditat_assolida i cota no són llegibles amb precisió numèrica en aquest dibuix: la secció només porta una escala d'elevació absoluta (msnm 569-572) sense cotes de fondària explícites per punt; els valors numèrics exactes de rebuig ja consten a l'annex DPSH (ja llegit: P-1 -1,08 / P-2 -0,48 / P-3 -0,76 / P-4 -1,55 m, relatius 'respecte el carrer'). 'de'/'a' de soil_levels tampoc són llegibles com a número aïllat: el límit vegetal/Nivell 1 és una corba variable segons el punt (gràficament entre ~571,0 i ~571,8 msnm a la banda superior de la secció), sense cap cota impresa; l'única font numèrica fiable per a 'de'/'a' és l'annex de sondeig (NIVELL 1: 0,00-1,20 m), ja llegit. mostra_del_nivell=true perquè el símbol de testimoni de sondeig (N=R) a S-1 arrenca dins la zona salmó ('Nivell 1'), tot just per sota del límit amb el terreny vegetal."
+  },
+  "not_present": [
+    "client_name",
+    "architect_name",
+    "architect_company",
+    "superficie_parcela",
+    "num_floors",
+    "cota_referencia",
+    "utm_x",
+    "utm_y",
+    "referencia_catastral",
+    "lab_testing_company",
+    "lab_sample_id",
+    "lab_depth",
+    "lab_location",
+    "cte_edificacio",
+    "cte_sol"
+  ],
+  "reading_notes": "Renderitzat amb PyMuPDF: primer pàgina sencera a 200dpi per orientar-se, després retalls (clip) a 400-600dpi centrats a P-1/P-2, S-1, P-4/P-3 i al mapa d'ubicació de la cantonada superior esquerra per llegir amb precisió les etiquetes Nb=/N=R i el traçat A-A'. get_text() ja dona text net (producer='Microsoft: Print To PDF'), però la informació geològica (nivells, corbes, cotes) és gràfica: cap valor numèric de fondària/cota surt com a text al PDF, només 'msnm 569/570/571/572' a l'escala vertical. Verificat amb md5sum que aquest fitxer és diferent de 'PDF/ANNEXES/3001621_tall de correlació.pdf' (mateix nom base, mateix .FH11 d'origen, contingut presumiblement igual, exportacions diferents). Comparat (sense re-obrir els PDFs originals, per JSON ja escrit a --out) amb pdf_annexes_3001621_sondeig.json i pdf_annexes_3001621_dpsh.json per contrastar num_soil_levels, punts i cotes — no s'han copiat els seus valors com a propis d'aquest document, només s'han usat per escriure 'relation_to_others' i per calibrar la confiança."
+}

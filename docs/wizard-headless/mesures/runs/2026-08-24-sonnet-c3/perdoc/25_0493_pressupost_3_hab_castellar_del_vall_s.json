@@ -1,0 +1,116 @@
+{
+ "source_path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+ "source_md5": "3ecd5e682c690373fd56fd0fde96bab2",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern de G3 (Eva Vázquez a Dolors Maqueda) que trasllada/transcriu una petició de pressupost rebuda per WhatsApp del client GRUP ALMA per a un estudi geotècnic a Castellar del Vallès.",
+ "issuer": "Eva Vázquez Marcet (G3, Responsable Dept Geologia) — text de fons citat literalment del client",
+ "date": "2025-06-25",
+ "pages_or_sheets": "1 missatge (cos) + 8 adjunts (7 imatges de signatura ≤25KB + 1 PLAN_COST.xlsx duplicat)",
+ "context": {
+  "who_made_it": "Eva Vázquez (G3, geòloga); el contingut de fons és una petició del client GRUP ALMA (contacte 'ROC', 615 55 74 50) rebuda per WhatsApp i citada per Eva",
+  "for_whom": "Dolors Maqueda (G3, gestió de pressupostos)",
+  "why": "Encarregar la preparació d'un pressupost per a un geotècnic a Castellar del Vallès; el client demana preu i esmenta que la setmana següent comprarà 2 parcel·les més i podria voler 3 estudis geotècnics a la vegada (coincideix amb el nom del fitxer '3 HAB')",
+  "expected_fields": [
+   "client_name (etiqueta CLIENT:, sol·licitant)",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_floors",
+   "superficie_construida"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_*",
+   "cte_*",
+   "architect_name",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "Precedeix el pressupost (PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf i la versió MODF, mateixa carpeta 25.0493). L'adjunt 'PLAN_COST_CATELLAR DEL VALLÈS.xlsx' (md5 8418e65b89940a0b1ae42104be279547) és duplicat exacte del fitxer solt 25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx (route=python, llegit determinísticament) — no el tornis a llegir aquí, no compta com a font independent. El client 'GRUP ALMA' d'aquest correu pot haver estat substituït per 'WOOD COMFORT' a la versió MODF del pressupost (a confirmar creuant amb aquell document — regla estructural coneguda de client canviant a Castellar).",
+  "authority_for": [
+   "num_floors",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "GRUP ALMA",
+   "location": "cos del missatge, etiqueta 'CLIENT:' abans del text citat de WhatsApp",
+   "quote": "CLIENT: GRUP ALMA",
+   "confidence": 0.35,
+   "note": "Sol·licitant segons correu d'encàrrec (mai autoritat per si sol, regla Pas 3). Possible versió superada: el pressupost MODF de la mateixa carpeta pot dir 'WOOD COMFORT' — creuar abans de pujar d'estat."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A",
+   "location": "cos del missatge, text citat del client",
+   "quote": "La direcció és :\n\nCarrer Arbrells 18A",
+   "confidence": 0.5,
+   "note": "Font conversacional (WhatsApp citat), no un bloc etiquetat OBRA/ADREÇA OBRA. Verificar amb pressupost/PLAN_COST/comanda."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "assumpte del correu i cos del missatge",
+   "quote": "haig de fer un geotecnic  a Castellar del Vallès.",
+   "confidence": 0.55,
+   "note": "Coincideix amb el nom de la carpeta del projecte. Confirmar amb comanda N21 / pressupost p.1 / PLAN_COST E9."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1",
+   "location": "cos del missatge, text citat del client",
+   "quote": "PB + 1\n\n- Sense soterrani",
+   "confidence": 0.55,
+   "note": "Correu d'encàrrec (font acceptada per num_floors, regla Pas 3, exemple exacte del skill: '→ PB+1')."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar (PB+1, sense soterrani, estructura d'entramat lleuger de fusta)",
+   "location": "cos del missatge, text citat del client",
+   "quote": "PB + 1 / Sense soterrani / 120 m2 construits / Estructura d'entremat lleuger de fusta.",
+   "confidence": 0.5,
+   "note": "Correu d'encàrrec és font acceptada (prioritat baixa) per building_type segons Pas 3. Redacció pròpia del client, no de plantilla G3."
+  }
+ ],
+ "tables": {
+  "superficie_construida": {
+   "components": [
+    120
+   ],
+   "total": 120,
+   "etiqueta_font": "correu d'encàrrec (client, citat per WhatsApp)",
+   "location": "cos del missatge",
+   "quote": "120 m2 construits"
+  },
+  "__nota": "Només superficie_construida; aquest document no aporta files de dpsh_tests/sondeig_tests/spt_ma_tests/soil_levels."
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "architect_company",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "superficie_parcela"
+ ],
+ "reading_notes": "Extracció amb extract_msg (cos + llista d'adjunts). 8 adjunts: image001/002/003/005/008/009/010 són gràfics de signatura d'Outlook (mides comprovades ≤25KB per als 3 ja extrets prèviament a validation/msg_attachments/ — image001.jpg 8.4K, image005.png 23.3K, image009.jpg 4.9K — ignorats per regla del Pas 1); PLAN_COST_CATELLAR DEL VALLÈS.xlsx verificat per md5 com a duplicat exacte del fitxer solt de 25.0493, no re-llegit. Cap capçalera 'De:'/'From:' de cadena RE/FW: tot el cos és missatge original d'Eva citant una conversa de WhatsApp, tractat com a text nou sencer."
+}

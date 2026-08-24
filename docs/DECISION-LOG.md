@@ -1018,3 +1018,62 @@ Palanques de temps → remesura amb 1 projecte sol; forat 1; Fase 8b (seleccions
 projecte NOU de l'Eva (generalització).
 
 *Fi entrada 2026-08-24 tarda. Wizard headless construït i validat E2E; latència com a bloquejant.*
+
+## 2026-08-24 (nit) — Fase 9: latència mesurada de veritat, tres botons dissenyats, llibre de mesures
+
+### Context
+L'E2E de la tarda (entrada anterior) deixava el wizard headless en "GO tècnic, NO-GO de latència" (37-58 min, dos projectes solapats) amb
+quatre palanques sense mesurar. Aquesta nit: diagnòstic de la latència amb dades, disseny del que fa la latència irrellevant per a l'Eva,
+instrumentació del runner i remesura amb un projecte sol. Conversa amb el Josep: qualitat primer; només subscripció; ≤ 1 projecte/dia.
+
+### Decisions arquitectòniques clau
+1. **No escurçar la lectura; treure-la del camí crític.** Micro-benchmark (`claude -p "ok" --output-format json`, 5 variants): arrencada del CLI +
+   1 volta = 4-14 s. Els ~110 s "fixos" per document són el protocol del skill amb Sonnet 5 (≈ 21 turns/doc, estable entre runs: 269 i 268).
+   Alternativa rebutjada: "prompt prim" (sense CLAUDE.md/MCPs) — val 5-10 s i higiene de cost, no latència. Alternativa rebutjada: retallar Pas 0/3
+   del skill — és d'on surt el 0 erroni-amb-confiança.
+2. **Tres botons + registre de jobs a disc + taula d'estat + notificacions** (`docs/DISSENY-ANNEX-TRES-BOTONS-JOBS-NOTIFICACIONS-2026-08-24.md`,
+   Fases 9-17). "Preparar per demà" desatès; "Enllestir" ≈ 30 s si res ha canviat (3a) o 6-9 min amb K documents canviats (3b, amb consolidació
+   Python-first). Per què: amb carpetes de xarxa que toca gent cada dia, el cas 3b és el normal; la consolidació (474-677 s) és l'impost de cada canvi.
+3. **Correu via SMTP d'Eficients (Brevo, remitent dedicat) com a canal provisional**, telemetria a Eficients **explícita (no BCC), mínima i escrita
+   al document de servei**; toast Windows + taula com a canals primaris; encàrrec de tractament art. 28 a revisar amb G3.
+4. **Runner: `--model` fixat (`G3DT_LECTURA_MODEL`, defecte `sonnet`) i `--output-format json`** → telemetria amb turns/api_ms/cost/tokens/models.
+   Per què: a l'ordinador de l'Eva el defecte del CLI pot ser un altre; i sense turns "on va el temps" era deducció. Sidecar de stdout (no PIPE)
+   per no tocar el bucle de cancel·lació.
+5. **Llibre de mesures** (`docs/wizard-headless/mesures/`, `ledger.py` → `LEDGER.md`, `runs/<etiqueta>/` amb artefactes crus i `meta.json` amb el
+   judici ERR per ERR). Per què: el Josep vol la taula abans/després per a l'Eva; cada palanca és una fila comparable.
+6. **Fable com a defecte només si la qualitat ho demana** — no ho demana (0 erroni-amb-confiança de fons a 3 runs amb Sonnet 5); queda com a fila
+   mesurable (`G3DT_LECTURA_MODEL=fable`).
+
+### Implementació
+`automation/lectura/runner.py` (+85 LOC: `_parse_cli_output`, sidecar, model a cfg), `tests/test_lectura_runner.py` (+93 LOC, 3 tests; mock amb
+`MOCK_CLAUDE_JSON`/`MOCK_CLAUDE_ARGVLOG`), `docs/wizard-headless/mesures/` (ledger + 3 runs + sonda), addendum a `fase8-e2e/_RESULTATS.md`,
+annex de disseny. Via B intacta. Nit menor: si `claude` no existeix, el sidecar `.out` buit queda a `/tmp` (handles tancats).
+
+### Validació empírica (Castellar sol, Sonnet 5, login)
+- Run 1 (conc. 2): 13/13 OK, suma 70 min, mediana 290 s, 269 turns, 342k tokens de sortida, consolidació 474 s; paret invàlida (tall de connexió).
+- Run 2 (conc. 3, net): **paret real 33 min** (reconstrucció per planificació de llista: 32 → el model prediu), suma 61 min, 268 turns, 306k tokens,
+  consolidació 677 s / 72k tokens.
+- Qualitat: **0 erroni-amb-confiança de fons als 3 runs**. Reproduïble (2/2): `cota_referencia` puja a `segur` amb 1 font (valor = preferit de l'or)
+  → guard determinista a la Fase 12. Conflicte skill vs or a `sondeig_tests[0].cota` (cel·la relativa vs absoluta) → decisió Josep/Eva.
+- Sonda `stream-json` (`tall.pdf`): 20 turns, 25,8k tokens de sortida, ~75 % raonament; 5/15 usos d'eina són construir-se l'eina (`fitz`), 2
+  redundants, 2 cerimònia d'escriptura → palanca de pre-extracció determinista (−35-45 % estimat, sense tocar què mira el model).
+
+### Tests
++3 (runner: argv, telemetria amb JSON, sense JSON). Suite de lectura 73 passed. Suite completa no re-executada aquesta nit (canvis limitats a runner + tests).
+
+### Latència / cost
+Cost equivalent per projecte $15-18 (subscripció: no facturat; és el pes). 2 projectes + sonda en una nit sense cap error de límit de la subscripció.
+
+### Limitacions conegudes
+Tot és re-execució de Castellar (leakage). Windows no provat. Conc. 4 no mesurada (reconstruïda ≈ 26 min). `fotografies.pdf` i GTL del run 1
+contaminats pel tall. El conflicte skill/or de la cel·la `cota` del sondeig pot amagar un criteri de l'Eva que no coneixem.
+
+### GO/NO-GO
+✅ Instrumentació verificada amb el CLI real. ✅ Paret a conc. 3 = 33 min, predictible. ✅ Qualitat estable (0 fons). ⏳ Latència segueix sent
+NO-GO per a "esperar a la pantalla" → els tres botons. ⏳ Guard de confiança (Fase 12). ⏳ Pre-extracció: a mesurar.
+
+### Següents passos
+Fase 10 (registre de jobs + lock + `GET /api/jobs`), Fase 11 (delta-sync). Experiment barat abans de la 12: pre-extracció determinista +
+`write_doc_json.py` en una còpia del skill, fila nova al llibre (`preext-c3`) i comparador d'or.
+
+*Fi entrada 2026-08-24 nit. Fase 9: la latència és generació (≈ 21 turns/doc), 33 min reals a conc. 3, 0 erroni-amb-confiança; tres botons dissenyats.*

@@ -1,0 +1,16 @@
+-- dpsh_tests: or 4 files / prod 4 files
+ERR      dpsh_tests[0].cota_inici segur discrepant: or='-4,0 m (respecte el carrer)' prod='-4 m (respecte el carrer)'
+ERR      dpsh_tests[2].cota_inici segur discrepant: or='-4,0 m (respecte el carrer)' prod='-4 m (respecte el carrer)'
+ERR      dpsh_tests[3].cota_inici segur discrepant: or='-4,0 m (respecte el carrer)' prod='-4 m (respecte el carrer)'
+-- sondeig_tests: or 1 files / prod 1 files
+ABSENT   sondeig_tests[0].cota (or=segur)
+ALERTA   sondeig_tests[0].spt_ma estat or=candidats prod=None (or value='1/0')
+-- spt_ma_tests: or 1 files / prod 1 files
+ABSENT   spt_ma_tests[0].id (or=candidats)
+ABSENT   spt_ma_tests[0].punt (or=segur)
+ABSENT   spt_ma_tests[0].profunditat (or=segur)
+CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
+-- soil_levels: or 2 files / prod 1 files
+ABSENT   soil_levels[0].de_a_estat (or=segur)
+ABSENT   soil_levels[1].de_a_estat (or=segur)
+TOTALS: {'ERR': 3, 'OK': 16, 'ABSENT': 6, 'ALERTA': 1, 'CAUTELA': 1}

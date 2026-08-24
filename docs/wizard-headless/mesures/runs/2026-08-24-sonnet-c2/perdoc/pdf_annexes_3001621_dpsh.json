@@ -1,0 +1,296 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_DPSH.pdf",
+ "source_md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Fulls de resultats dels 4 assaigs de penetració dinàmica DPSH (P-1 a P-4), un per pàgina, amb taula de colpeig per tram de 20cm, banda de 'Nivells' acolorida i gràfica; generat des de l'Excel DPSH (mateixes dades, no font independent).",
+ "issuer": "G3 (Eva) — export/impressió des de l'Excel de camp ANNEXES/3001621_DPSH.xls; dades de camp preses per TPS",
+ "date": "24/10/25 (igual a les 4 pàgines)",
+ "pages_or_sheets": "4 pàgines: P-1, P-2, P-3, P-4 (una per punt d'assaig)",
+ "context": {
+  "who_made_it": "G3 (Eva) genera aquest PDF a partir de l'Excel de camp ANNEXES/3001621_DPSH.xls (mateixa font de dades, renderitzada); les lectures de colpeig les pren TPS al camp.",
+  "for_whom": "Ús intern de G3 per redactar la taula 'Penetròmetres dinàmics DPSH' de l'informe (cota d'inici, profunditat de rebuig, nivell freàtic).",
+  "why": "Registrar, tram a tram (20cm), el colpeig DPSH/N30 de cada punt fins al rebuig, la banda de nivells acolorida, i la marca de nivell freàtic si n'hi ha.",
+  "expected_fields": [
+   "dpsh_tests[] (punt, cota_inici, profunditat_assolida/rebuig, nivell_freatic) — bloc tables",
+   "field_date (camp DATA:, candidat fort)",
+   "street_address / municipality (bloc OBRA:/POBLACIÓ:)",
+   "expedient (camp NÚMERO D´INFORME:)",
+   "num_dpsh_tests (candidat, no independent de l'Excel font)"
+  ],
+  "not_expected": [
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "client_name (cap camp CLIENT en aquesta plantilla)",
+   "cte_edificacio",
+   "cte_sol",
+   "utm_x",
+   "utm_y",
+   "cota_referencia absoluta (aquest document només porta cotes RELATIVES 'respecte el carrer')",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ],
+  "relation_to_others": "Mateix md5 (de76ad0dfa3cf9cc4cbed9479cfa634f) que PDF-V0/ANNEXES/3001621_DPSH.pdf (carpeta exclosa, route=skip): duplicat exacte, no compta com a font addicional. Font primària real és l'Excel ANNEXES/3001621_DPSH.xls (route=claude, no llegit en aquesta crida --only): aquest PDF és una renderització de les mateixes dades, no independent per a num_dpsh_tests. field_date (24/10/25) coincideix amb PDF/ANNEXES/3001621_sondeig.pdf (ja llegit, mateix dia) i amb street_address/municipality del mateix (mateix encàrrec, no independents entre si).",
+  "authority_for": [
+   "dpsh_tests_cota_inici",
+   "dpsh_tests_profunditat_assolida",
+   "dpsh_tests_rebuig",
+   "dpsh_tests_nivell_freatic"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "capçalera de cada pàgina, camp 'NÚMERO D´INFORME:'",
+   "quote": "NÚMERO D´INFORME: 3001621",
+   "confidence": 0.85,
+   "note": "idèntic a les 4 pàgines i al nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ ARBRELLS 18 A",
+   "location": "capçalera de cada pàgina, camp 'OBRA:'",
+   "quote": "OBRA: C/ ARBRELLS 18 A",
+   "confidence": 0.55,
+   "note": "forma ABREUJADA (només '18 A'); PDF/ANNEXES/3001621_sondeig.pdf dona la forma completa 'CARRER ARBRELLS Nº 18A-18B-20' — candidat, no independent (mateix encàrrec), la forma completa del sondeig té prioritat"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "capçalera de cada pàgina, camp 'POBLACIÓ:'",
+   "quote": "POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.7,
+   "note": "forma curta de G3 sense accent ('VALLES'); coincideix en contingut amb 'CASTELLAR DEL VALLÈS' del sondeig (forma oficial amb accent, prioritat superior) — no contradictori, mateix municipi"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-24",
+   "location": "capçalera de cada pàgina, camp 'DATA:'",
+   "quote": "DATA: 24/10/25",
+   "confidence": 0.85,
+   "note": "regla Pas 3: annex DPSH 'DATA:' és 2a autoritat per a field_date (després de fitxa F38, no llegida en aquesta crida); coincideix amb la data del sondeig (mateix dia de camp)"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "4 pàgines del document, una per punt (P-1, P-2, P-3, P-4)",
+   "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1 / P-2 / P-3 / P-4",
+   "confidence": 0.55,
+   "note": "aquest PDF és una renderització de l'Excel DPSH (mateixa font, no independent); regla Pas 3: l'Excel (executats) és l'autoritat primària per a aquest recompte, no llegit en aquesta crida --only"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": "no detectat",
+    "location": "p.1 capçalera 'P-1 - 4 m (respecte el carrer)' + peu 'Rebuig a -1,08 m'",
+    "quote": "P-1     - 4  m  (respecte el carrer). / Rebuig  a -1,08 m",
+    "extra": {
+     "registre": [
+      {
+       "profunditat": 0.0,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.2,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.4,
+       "colpeig_dpsh": 6,
+       "colpeig_nb": 7
+      },
+      {
+       "profunditat": -0.6,
+       "colpeig_dpsh": 10,
+       "colpeig_nb": 12
+      },
+      {
+       "profunditat": -0.8,
+       "colpeig_dpsh": 13,
+       "colpeig_nb": 16
+      },
+      {
+       "profunditat": -1.0,
+       "colpeig_dpsh": 38,
+       "colpeig_nb": 46
+      },
+      {
+       "profunditat": -1.2,
+       "colpeig_dpsh": 100,
+       "colpeig_nb": 120,
+       "note": "fila de rebuig (valor de tancament de l'assaig, no lectura real de tram complet); rebuig real a -1,08 m"
+      }
+     ],
+     "nivells_visual": "banda clara (sense etiqueta, 0 a -0,6m) + banda taronja 'Nivell 1' (-0,8 a -1,0m, fins rebuig -1,08m); corrobora visualment el 'Terreny Vegetal' sense etiqueta de l'annex de sondeig — no és font per a num_soil_levels (regla: mana l'annex de sondeig/tall)"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,2 m (respecte el carrer)",
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": "no detectat",
+    "location": "p.2 capçalera 'P-2 cota inici: -4,2 m (respecte el carrer)' + peu 'Rebuig a -0,48 m'",
+    "quote": "P-2    cota inici: -4,2 m  (respecte el carrer) / Rebuig  a -0,48 m",
+    "extra": {
+     "registre": [
+      {
+       "profunditat": 0.0,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.2,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.4,
+       "colpeig_dpsh": 15,
+       "colpeig_nb": 18
+      },
+      {
+       "profunditat": -0.6,
+       "colpeig_dpsh": 100,
+       "colpeig_nb": 120,
+       "note": "fila de rebuig; rebuig real a -0,48 m"
+      }
+     ],
+     "nivells_visual": "banda 'Nivell 1' (taronja) des de -0,2m fins rebuig -0,48m, sense banda clara prèvia — punt amb cota d'inici ja profunda (-4,2m respecte carrer)"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": "no detectat",
+    "location": "p.3 capçalera 'P-3 cota inici: - 4 m (respecte el carrer).' + peu 'Rebuig a -0,76 m'",
+    "quote": "P-3    cota inici: - 4 m  (respecte el carrer). / Rebuig  a -0,76 m",
+    "extra": {
+     "registre": [
+      {
+       "profunditat": 0.0,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.2,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.4,
+       "colpeig_dpsh": 16,
+       "colpeig_nb": 19
+      },
+      {
+       "profunditat": -0.6,
+       "colpeig_dpsh": 46,
+       "colpeig_nb": 55
+      },
+      {
+       "profunditat": -0.8,
+       "colpeig_dpsh": 100,
+       "colpeig_nb": 120,
+       "note": "fila de rebuig; rebuig real a -0,76 m"
+      }
+     ],
+     "nivells_visual": "banda 'Nivell 1' (taronja) des de 0m fins rebuig -0,76m; columna MOSTRA amb cel·les grisades a -1,2/-1,4 (formatació 'fora de rang', no mostra real — no hi ha valors de colpeig en aquestes files)"
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": "no detectat",
+    "location": "p.4 capçalera 'P-4 - 4 m (respecte el carrer).' + peu 'Rebuig a -1,55 m'",
+    "quote": "P-4     - 4  m (respecte el carrer). / Rebuig  a -1,55 m",
+    "extra": {
+     "registre": [
+      {
+       "profunditat": 0.0,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.2,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.4,
+       "colpeig_dpsh": 8,
+       "colpeig_nb": 10
+      },
+      {
+       "profunditat": -0.6,
+       "colpeig_dpsh": 8,
+       "colpeig_nb": 10
+      },
+      {
+       "profunditat": -0.8,
+       "colpeig_dpsh": 12,
+       "colpeig_nb": 14
+      },
+      {
+       "profunditat": -1.0,
+       "colpeig_dpsh": 27,
+       "colpeig_nb": 33
+      },
+      {
+       "profunditat": -1.2,
+       "colpeig_dpsh": 21,
+       "colpeig_nb": 25
+      },
+      {
+       "profunditat": -1.4,
+       "colpeig_dpsh": 28,
+       "colpeig_nb": 34
+      },
+      {
+       "profunditat": -1.6,
+       "colpeig_dpsh": 100,
+       "colpeig_nb": 120,
+       "note": "fila de rebuig; rebuig real a -1,55 m"
+      }
+     ],
+     "nivells_visual": "banda clara (sense etiqueta, 0 a -0,6/-0,8m) + banda taronja 'Nivell 1' (fins rebuig -1,55m)"
+    }
+   }
+  ],
+  "__nota": "4 files dpsh_tests (P-1 a P-4). Cap fila de sondeig_tests/spt_ma_tests/soil_levels: aquest document és exclusivament DPSH."
+ },
+ "not_present": [
+  "cota_referencia absoluta (aquest document només dona cotes d'inici RELATIVES 'respecte el carrer': -4,0/-4,2/-4,0/-4,0 m — l'absoluta és 570,90 msnm segons PDF/ANNEXES/3001621_sondeig.pdf; ⚠ mateix ERR de sistema de cotes ja senyalat en aquell JSON: la cota d'aquesta taula ha de seguir el sistema RELATIU, no l'absoluta)",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "client_name",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "num_soil_levels (aquest document no etiqueta explícitament nivells amb fondàries; només banda de color 'Nivell 1' per punt, corroborativa, no font — mana l'annex de sondeig/tall)"
+ ],
+ "reading_notes": "Text net (PDF generat des de l'Excel, no FreeHand): fitxer_text() prou per a totes les xifres de colpeig, cotes i capçaleres. Render visual (150dpi, 4 pàgines) fet per confirmar: (1) columna N.F. completament buida en color i text a les 4 pàgines → 'no detectat' confirmat, no només absència de text; (2) columna MOSTRA buida (cel·les grises a P-3 -1,2/-1,4m són formatació 'fora de rang', no mostra real); (3) banda 'Nivells' acolorida (taronja='Nivell 1', clar=sense etiqueta) coherent amb el 'Terreny Vegetal sense etiqueta' de l'annex de sondeig. Valors 'Rebuig a -X,XX m' coincideixen exactament amb els 4 valors ja documentats com a exemple de referència en aquest mateix skill (Pas 3b)."
+}

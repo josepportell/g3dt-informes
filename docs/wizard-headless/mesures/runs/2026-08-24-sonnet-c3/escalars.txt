@@ -1,0 +1,6 @@
+NOU      architect_company      prod=no_trobat
+ALERTA   building_type          or segur 'habitatges unifamiliars aïllats (grup de 3, entramat lleuger de fusta)' NO entre candidats ["Grup d'habitatges unifamiliars", 'Habitatge unifamiliar aïllat']
+ALERTA   cota_referencia        prod puja a segur ('570.90 msnm (segons el plànol ICGC)'); or candidats
+CAUTELA  num_floors             or segur, prod candidats (bo dins): 'PB+1 (sense soterrani)'
+ALERTA   street_address         or segur 'Carrer Arbrells, 18A, 18B i 20' NO entre candidats ['C/ARBRELLS 18A-18B-20', 'Carrer Arbrells, Nº 18A-18B-20', 'C/ ARBRELLS 18 A']
+TOTALS: {'NOU': 1, 'OK': 17, 'ALERTA': 3, 'CAUTELA': 1}

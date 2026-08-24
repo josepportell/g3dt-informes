@@ -1,0 +1,109 @@
+{
+  "source_path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+  "source_md5": "7d495516ac2896e3f236b08e7879a41d",
+  "skill_version": "1.3",
+  "schema_version": 1,
+  "document_type": "annex_planol_situacio",
+  "what_it_is": "Plànol de situació (plantilla G3, 1 pàgina A3 apaisat): ortofoto/cadastre amb la zona d'estudi (polígon taronja), la ubicació dels 4 punts DPSH (P-1 a P-4) i el sondeig S-1 amb distàncies acotades entre ells, i dos mapes de localització encartats (context comarcal + tram urbà).",
+  "issuer": "G3 (autor de les metadades del PDF: 'Loli'), a partir del dibuix FreeHand original",
+  "date": "Octubre 2025 (imprès al peu, casella 'Data:'); metadades PDF (creationDate/modDate): 03/11/2025 17:37",
+  "pages_or_sheets": "1 pàgina (A3 apaisat, 1191x842 pt)",
+  "context": {
+    "who_made_it": "G3 (tècnic Eva/despatx), com a plànol de síntesi de la implantació dels assaigs de camp (4 DPSH + 1 sondeig) sobre la parcel·la d'estudi",
+    "for_whom": "Annex gràfic de l'informe geotècnic, per situar geogràficament el projecte i mostrar la ubicació exacta dels punts d'assaig dins la parcel·la",
+    "why": "Situar l'obra (context territorial + tram urbà) i documentar la posició i les distàncies entre els punts DPSH i el sondeig realment assajats",
+    "expected_fields": [
+      "expedient",
+      "building_type (títol del projecte)",
+      "street_address (títol del projecte + etiqueta de carrer sobre el mapa)",
+      "municipality (títol del projecte + mapes de localització)",
+      "num_dpsh_tests (recompte visual P-1..P-4)"
+    ],
+    "not_expected": [
+      "client_name",
+      "architect_name",
+      "field_date",
+      "cota_referencia",
+      "num_soil_levels",
+      "soil_levels litologia",
+      "lab_testing_company",
+      "lab_sample_id",
+      "lab_depth",
+      "lab_location",
+      "cte_edificacio",
+      "cte_sol",
+      "referencia_catastral",
+      "utm_x_utm_y",
+      "superficie_parcela",
+      "num_floors"
+    ],
+    "relation_to_others": "Exportació PDF (Acrobat Distiller 15.0, PScript5.dll) del natiu FreeHand ANNEXES/3001621_plànol de situació.FH11 (md5 diferent cc6bcb8e..., marcat 'skip'/no llegible a l'inventari) — aquest PDF n'és la font llegible. Duplicat EXACTE (mateix md5 7d495516...) a PDF-V0/ANNEXES/3001621_plànol de situació.pdf, exclòs per carpeta: no compta com a font independent. A diferència de 'tall de correlació' (que té una còpia 'Print To PDF' de text net a l'arrel, tall.pdf), aquest document NO té cap variant de text net enlloc del projecte: la lectura és sempre visual. Complementa PDF/ANNEXES/3001621_DPSH.pdf i PDF/ANNEXES/3001621_sondeig.pdf (ja llegits per separat): aquest plànol és una síntesi visual de la implantació dels punts, no la font primària de cap dada numèrica exacta (cotes, profunditats).",
+    "authority_for": [
+      "expedient",
+      "building_type",
+      "street_address",
+      "municipality",
+      "num_dpsh_tests"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "expedient",
+      "value": "3001621",
+      "location": "peu de pàgina, requadre de dades, casella 'Exp:'",
+      "quote": "Exp: 3001621",
+      "confidence": 0.9,
+      "note": "Coincideix amb el nom de la carpeta del projecte. Mateix requadre de peu que la resta d'annexos G3 (tall, sondeig, DPSH): no és font independent d'aquells."
+    },
+    {
+      "concept_id": "building_type",
+      "value": "Habitatge unifamiliar aïllat",
+      "location": "peu de pàgina, casella 'TÍTOL DEL PROJECTE'",
+      "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+      "confidence": 0.7,
+      "note": "Mateixa redacció del títol de projecte que a PDF/ANNEXES/3001621_tall de correlació.pdf (ja llegit): no és font independent. Formulació singular ('D'UNA HABITATGE') tot i que l'adreça porta 3 números (18A-18B-20) — possible informe únic per a 3 unitats contigües (cf. '25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg' a l'inventari); veure nota a street_address."
+    },
+    {
+      "concept_id": "street_address",
+      "value": "Carrer Arbrells, Nº 18A-18B-20",
+      "location": "peu de pàgina, casella 'TÍTOL DEL PROJECTE'; i etiqueta 'Arbrells' impresa en diagonal sobre la via al mapa principal",
+      "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+      "confidence": 0.75,
+      "note": "El rètol 'Arbrells' sobre la via al mapa principal confirma visualment la ubicació però forma part del mateix document que el títol — no és una font independent d'aquell. 3 números consecutius (18A-18B-20): possible encàrrec de 3 habitatges (veure nota a building_type) — no verificable amb aquest sol document."
+    },
+    {
+      "concept_id": "municipality",
+      "value": "Castellar del Vallès (Barcelona)",
+      "location": "peu de pàgina, casella 'TÍTOL DEL PROJECTE'; confirmat pels dos mapes de localització encartats (nom 'Castellar del Vallès' etiquetat al mapa comarcal, amb Sant Llorenç Savall / Matadepera / Lliçà com a referències properes)",
+      "quote": "CASTELLAR DEL VALLÈS (BARCELONA).",
+      "confidence": 0.8,
+      "note": "El mapa de localització i el títol formen part del mateix document — no compten com dues fonts independents, però el mapa és una confirmació geogràfica visual (no només tipogràfica) del mateix nom de municipi."
+    },
+    {
+      "concept_id": "num_dpsh_tests",
+      "value": "4",
+      "location": "mapa principal (ortofoto + zona d'estudi): 4 icones blaves etiquetades P-1, P-2, P-3, P-4 dins del polígon taronja",
+      "quote": "P-1 / P-2 / P-3 / P-4 (etiquetes blaves sobre el mapa, amb la llegenda 'Assaig de penetració dinàmica DPSH')",
+      "confidence": 0.6,
+      "note": "Recompte visual dels punts DPSH representats a escala real dins la parcel·la, amb distàncies acotades entre ells (4m/9m/10m/9m/13m/22m/10m/10m). Font secundària respecte l'Excel DPSH (ja llegit per separat), que mana per al recompte d'executats; aquest document mostra ubicació/implantació, no confirma execució."
+    }
+  ],
+  "not_present": [
+    "client_name",
+    "architect_name",
+    "field_date",
+    "cota_referencia",
+    "num_soil_levels",
+    "lab_testing_company",
+    "lab_sample_id",
+    "lab_depth",
+    "lab_location",
+    "cte_edificacio",
+    "cte_sol",
+    "referencia_catastral",
+    "utm_x_utm_y",
+    "superficie_parcela",
+    "num_floors"
+  ],
+  "reading_notes": "Text natiu del PDF és brossa (fonts FreeHand sense ToUnicode; page.get_text() només retorna caràcters de control). Llegit visualment: render de la pàgina sencera a 150 dpi (PyMuPDF/fitz), amb retalls addicionals del requadre de peu de pàgina a 300 dpi i de les zones del mapa (superior/inferior) a 300 dpi per confirmar etiquetes i distàncies. El mapa principal mostra, a més dels 4 DPSH, 1 punt de sondeig a rotació (icona vermella, etiqueta 'S-1', llegenda 'Sondeig a rotació amb bateria contínua'), amb distàncies acotades fins als DPSH (9m fins a P-4) i fins al límit de parcel·la (22m/10m), però sense cap dada numèrica de text (cota, profunditat, N.F.): no s'ha generat cap fila de taula (dpsh_tests/sondeig_tests) perquè aquest document no aporta cotes ni profunditats en text, només la implantació geomètrica. S'ha observat una etiqueta petita en vermell/rosat repetida sobre el bosc (possible 'SUELO' d'una capa cadastral/SIGPAC de fons) i un número parcial ('32900') just a sota — resolució de la imatge de fons insuficient per llegir-los amb fiabilitat fins i tot a 500 dpi de retall (és un artefacte de la capa ràster de fons, no text vectorial G3): no s'ha inclòs com a candidat. Metadades PDF: creator 'PScript5.dll Version 5.2.2', producer 'Acrobat Distiller 15.0 (Windows)', author 'Loli', title '3001621_plànol de situació.FH11', creationDate=modDate D:20251103173751+01'00'."
+}

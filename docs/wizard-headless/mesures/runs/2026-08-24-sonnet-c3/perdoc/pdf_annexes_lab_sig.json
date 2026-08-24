@@ -1,0 +1,154 @@
+{
+ "source_path": "PDF/ANNEXES/LAB-SIG.pdf",
+ "source_md5": "0527692d91b76c17cf1eba8e50a5bf8a",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL 4687-GTL-25 / GTL-8230-25) del laboratori TPS per a la mostra alterada MA1 del sondeig S1 de Castellar del Valles: contingut en io sulfat en sols",
+ "issuer": "TPS, Prospeccio del Subsol, SL (B64803075), signat per Pere Farres i Bori (Director tecnic) i Pere Cervos Flinch (Cap d'area d'assaig GTL)",
+ "date": "19/11/2025 (Data d'expedicio)",
+ "pages_or_sheets": "5 pagines",
+ "context": {
+  "who_made_it": "TPS, Prospeccio del Subsol SL (laboratori GTL, B64803075), subcontractista de G3 per als assaigs de laboratori",
+  "for_whom": "G3 Desenvolupament Territorial SL (B25364589), el seu client -- sol·licitant/client del laboratori, NO el client del projecte",
+  "why": "reportar el resultat de l'assaig quimic de contingut en io sulfat (UNE 83963:2008) sobre la mostra alterada MA1 extreta del sondeig S1, a la cota 1,0-1,2 m",
+  "expected_fields": [
+   "lab_testing_company (emissor)",
+   "lab_sample_id (Mostra:)",
+   "lab_depth (Cota d'extraccio)",
+   "lab_location (punt d'assaig, sufix de la mostra)",
+   "expedient (dins Obra/Projecte)",
+   "street_address / municipality (dins Situacio, sense separar)",
+   "field_date (candidat 2, dia d'extraccio de la mostra = dia del sondeig S1)"
+  ],
+  "not_expected": [
+   "client_name (promotor real)",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "duplicat de contingut de '4687-GTL-25 Castellar del Valles.pdf' a l'arrel del projecte (mateix num d'informe 4687-GTL-25, mateixa ref. laboratori GTL-8230-25, mateixes firmes digitals de Pere Cervos Flinch 2025.11.19 13:12:39+01'00' i Pere Farres Bori 2025.11.19 15:05:43+01'00'; md5 diferent -- 0527692d... vs ed8a07b6... -- per metadada PDF diferent: producer 'Acrobat Distiller 15.0' aqui vs 'Adobe PDF Library 20.6.74' a l'arrel, probablement reexportat/reimprès des del mateix origen signat). NO compta com a font independent addicional de l'arxiu de l'arrel.",
+  "authority_for": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospeccio del Subsol, SL (B64803075)",
+   "location": "p.2/p.5, banda de peu de pagina (repetida a totes les pagines)",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.95,
+   "note": "emissor real del GTL (regla lab: mai el 'client' del GTL, que es G3 -- vegeu NOT_client_name)"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "MA1 S1",
+   "location": "p.2, camp 'Mostra:'",
+   "quote": "Mostra:\nMA1 S1",
+   "confidence": 0.85,
+   "note": "etiqueta del GTL per a aquesta mostra (Mostra Alterada 1, sondeig S1). Regla lab_sample_id: l'annex de l'Eva mana per a l'etiqueta si discrepa -- no llegit en aquesta crida (--only)"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 - 1,2 m",
+   "location": "p.2, camp 'Cota d'extracció (m):'",
+   "quote": "Cota d'extracció (m):\n1,0 - 1,2",
+   "confidence": 0.9,
+   "note": "regla lab_depth: GTL mana sobre comanda i annex de sondeig"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S1",
+   "location": "p.2, camp 'Mostra:' (sufix 'MA1 S1')",
+   "quote": "MA1 S1",
+   "confidence": 0.65,
+   "note": "punt d'assaig derivat del sufix 'S1' de l'etiqueta de mostra (regla lab_location: parentesi/sufix de la comanda o del GTL = punt); confirmar amb comanda de laboratori i annex de sondeig, no llegits en aquesta crida"
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.2, camp 'Obra / Projecte:'",
+   "quote": "Obra / Projecte:\nCastellar del Vallés. Carrer Arbrells. 3001621",
+   "confidence": 0.65,
+   "note": "coincideix amb el nom de la carpeta del projecte; concatenat amb l'adreça al mateix camp de text lliure, sense separador clar"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells",
+   "location": "p.1/p.5, camp 'Situació:'; tambe dins 'Obra / Projecte:' a p.2",
+   "quote": "Situació:\nCastellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.5,
+   "note": "'Situació:' es etiqueta acceptada per adreça d'obra (regla street_address), pero barreja municipi i carrer en text lliure sense numero de carrer -- candidat feble, no independent de l'entrada 'expedient' (mateix text font)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "p.1/p.5, camp 'Situació:'",
+   "quote": "Situació:\nCastellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.55,
+   "note": "mateix camp de text lliure que street_address (no independent); grafia sense accent obert al document ('Vallés' enlloc de 'Vallès')"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/2025",
+   "location": "p.2, camps 'Data recepció:' i 'Data extracció:'",
+   "quote": "24/10/2025\n24/10/2025\n-\nData recepció:\n[...]\nData extracció:",
+   "confidence": 0.45,
+   "note": "candidat 2 (regla field_date): dia d'extraccio de la mostra MA1 al sondeig S1, no necessariament el primer dia de camp (DPSH). Coherent amb el 'Data d'inici' del sondeig si es confirma amb l'annex de sondeig (no llegit en aquesta crida)"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL (B25364589)",
+   "location": "p.1/p.5 camp 'DADES DEL CLIENT:'; p.2/p.4 camp 'DADES DEL SOL.LICITANT:'",
+   "quote": "DADES DEL CLIENT:\nG3 Desenvolupament Territorial, SL\nB25364589",
+   "confidence": 0.0,
+   "note": "G3 mai es client de l'informe (regla explicita): aqui es el client/sol·licitant DEL LABORATORI, no del projecte. Descartat per a client_name."
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "MA1",
+    "punt": "S1",
+    "profunditat": "1,0 - 1,2 m",
+    "litologia": "Grava amb llims",
+    "n30": {
+     "registre": null,
+     "candidats_suma": []
+    },
+    "location": "p.2, blocs 'DADES INICIALS' i 'DESCRIPCIÓ DEL MATERIAL'",
+    "quote": "MA1 S1 [...] Cota d'extracció (m): 1,0 - 1,2 [...] DESCRIPCIÓ DEL MATERIAL:\nGrava amb llims",
+    "note": "mostra alterada (MA), sense colpeig registrat en aquest document -- n30 no_trobat (regla Pas 3b: per a MA sense colpeig, l'Eva sol escriure '--'). Litologia candidata (Pas 5: mai segur per a la cadena literal); pot correspondre a un nivell diferent de l'assajat a l'annex de sondeig (SPT-1, no llegit en aquesta crida) -- mostres MA1 i SPT-1 son de la MATEIXA cota 1,0-1,2/1,00-1,20, probablement la mateixa extraccio reportada dues vegades (MA=quimica, SPT=geotecnica); creuar en consolidacio."
+   }
+  ],
+  "__nota": "Aquest GTL nomes reporta l'assaig quimic (contingut en io sulfat) sobre la mostra MA1; els altres blocs de resultats (TALL, PROCTOR, CBR, etc.) de la p.4 son la plantilla generica del format GTL, tots buits/sense valor per a aquesta mostra concreta -- no llegits com a dades."
+ },
+ "not_present": [
+  "client_name (promotor real)",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura de text natiu (PDF amb capa de text, Acrobat PDFMaker/Distiller, 5 pagines). Etiquetes i valors intercalats sense ordre visual consistent (necessari ordenar per proximitat etiqueta->valor, no per ordre de flux del text). Creuat amb '4687-GTL-25 Castellar del Vallés.pdf' de l'arrel del projecte (mateix contingut, firmes digitals identiques, md5 diferent) per confirmar que es un duplicat i no una versio diferent. Codi client intern 'Codi client: 0001' (p.1/p.5) es un identificador G3-laboratori, sense correspondencia amb cap camp del nivell A -- no inclos a tier_a."
+}

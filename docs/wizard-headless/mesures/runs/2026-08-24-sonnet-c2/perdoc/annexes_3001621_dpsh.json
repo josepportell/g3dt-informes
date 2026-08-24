@@ -1,0 +1,121 @@
+{
+  "source_path": "ANNEXES/3001621_DPSH.xls",
+  "source_md5": "0389af31b3b165e13338709a568cf130",
+  "skill_version": "1.3",
+  "schema_version": 1,
+  "document_type": "dpsh_excel",
+  "what_it_is": "Full de càlcul Excel amb el registre de colpeig N20 dels 4 assaigs de penetròmetre dinàmic DPSH (P-1 a P-4) i la fondària de rebuig de cadascun; sense metadades de projecte.",
+  "issuer": "G3 (Eva) — transcripció dels valors de camp mesurats per TPS a la plantilla DPSH",
+  "date": null,
+  "pages_or_sheets": "4 fulls: P-1, P-2, P-3, P-4 (90 files x 15 columnes cadascun)",
+  "context": {
+    "who_made_it": "G3 (Eva) transcriu a la plantilla Excel DPSH els colpeigs de camp mesurats per TPS (subcontractista de sondeigs/penetròmetres) als 4 punts P-1 a P-4.",
+    "for_whom": "Ús intern de G3: font de dades per calcular Nb/N30 i determinar la fondària de rebuig de cada punt per a l'informe geotècnic.",
+    "why": "Registrar, cada 20 cm de fondària, el colpeig DPSH (N20) de cada punt fins al rebuig, per derivar la resistència del terreny i la fondària assolida.",
+    "expected_fields": [
+      "colpeig DPSH (N20) per fondària i punt",
+      "fondària de rebuig per punt (peu 'Rebuig a')",
+      "nombre de punts DPSH executats",
+      "nivell freàtic (columna N.F., si detectat)"
+    ],
+    "not_expected": [
+      "dades d'identitat del projecte (client, adreça, municipi, expedient)",
+      "cota de referència / cota inici",
+      "dades del laboratori",
+      "dades de l'arquitecte o promotor"
+    ],
+    "relation_to_others": "Mateixes dades numèriques que PDF/ANNEXES/3001621_DPSH.pdf (exportat des d'aquest mateix Excel), però aquell PDF porta a més una capçalera de projecte ('Cota inici', 'OBRA', 'POBLACIÓ', 'DATA', 'NÚMERO D'INFORME') que aquest .xls NO conté (no llegit en aquesta crida --only). Complementa el full de camp manuscrit 'PENETROS + SONDEIG.pdf' (mateixos punts, abans de transcriure).",
+    "authority_for": [
+      "num_dpsh_tests"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "num_dpsh_tests",
+      "value": "4",
+      "location": "fulls P-1, P-2, P-3, P-4 (columna C 'Colpeig DPSH' amb dades a cadascun)",
+      "quote": "P-1, P-2, P-3, P-4 — tots quatre amb valors de Colpeig DPSH a la columna C",
+      "confidence": 0.9,
+      "note": "4 punts executats; Excel DPSH és l'autoritat de màxima prioritat per a num_dpsh_tests (Pas 3), sense contradicció interna"
+    }
+  ],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "cota_inici": null,
+        "profunditat_assolida": "-1,08 m",
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "full 'P-1', cel·la fusionada B80:H81 (peu 'Rebuig a')",
+        "quote": "Rebuig  a -1,08 m",
+        "extra": {
+          "nivell_label": "Nivell 1 (full 'P-1', fila 79 col C)"
+        },
+        "note": "cota_inici i nivell_freatic no consten en aquest document (vegeu 'not_expected'/'reading_notes')"
+      },
+      {
+        "punt": "P-2",
+        "cota_inici": null,
+        "profunditat_assolida": "-0,48 m",
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "full 'P-2', cel·la fusionada B80:H81 (peu 'Rebuig a')",
+        "quote": "Rebuig  a -0,48 m",
+        "extra": {
+          "nivell_label": "Nivell 1 (full 'P-2', fila 79 col C)"
+        },
+        "note": "cota_inici i nivell_freatic no consten en aquest document"
+      },
+      {
+        "punt": "P-3",
+        "cota_inici": null,
+        "profunditat_assolida": "-0,76 m",
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "full 'P-3', cel·la fusionada B80:H81 (peu 'Rebuig a')",
+        "quote": "Rebuig  a -0,76 m",
+        "extra": {
+          "nivell_label": "Nivell 1 (full 'P-3', fila 79 col C)"
+        },
+        "note": "cota_inici i nivell_freatic no consten en aquest document"
+      },
+      {
+        "punt": "P-4",
+        "cota_inici": null,
+        "profunditat_assolida": "-1,55 m",
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "full 'P-4', cel·la fusionada B80:H81 (peu 'Rebuig a')",
+        "quote": "Rebuig  a -1,55 m",
+        "extra": {
+          "nivell_label": "Nivell 1 (full 'P-4', fila 79 col C)"
+        },
+        "note": "cota_inici i nivell_freatic no consten en aquest document"
+      }
+    ]
+  },
+  "not_present": [
+    "expedient (cap cel·la amb el número d'expedient; només coincideix amb el nom de fitxer '3001621_DPSH.xls', igual al nom de la carpeta del projecte — senyal feble, no cita literal dins del document)",
+    "client_name",
+    "street_address",
+    "municipality",
+    "architect_name",
+    "building_type",
+    "num_floors",
+    "superficie_parcela",
+    "field_date",
+    "cota_referencia (present a la versió PDF d'aquest mateix Excel, PDF/ANNEXES/3001621_DPSH.pdf, NO en aquest .xls)",
+    "num_soil_levels (el full mostra 'Nivell 1' a cada punt però sense columna de transicions; autoritat real = annex de sondeig)",
+    "utm_x",
+    "utm_y",
+    "referencia_catastral",
+    "lab_testing_company",
+    "lab_sample_id",
+    "lab_depth",
+    "lab_location",
+    "cte_edificacio",
+    "cte_sol"
+  ],
+  "reading_notes": "Llegit amb xlrd (formatting_info=True) per poder consultar també els colors de cel·la de les columnes 'N.F.' (F, índex 5) i 'Nivells' (G, índex 6). header_str/footer_str buits (sense capçalera/peu de pàgina Excel) i cap cel·la de les files 0-13 conté text: aquest .xls NO porta metadades de projecte (confirma Pas 2: 'Cap metadada de projecte dins'). Columna N.F.: buida de text als 4 fulls; el color de fons (índex de paleta 9, gris) només marca les files per sota de la fondària de rebuig (mateix tractament que la resta de la zona 'sense dades'), sense cap color distintiu d'aigua — es descarta com a marca de nivell freàtic. Columna 'Nivells': bandes de color (26/29) que cobreixen exactament el rang de fondàries amb dades de cada punt, coherent amb l'etiqueta 'Nivell 1' de la fila 79 (un sol nivell per punt en aquest full); no aporta cap transició de nivell addicional. Peu 'Rebuig a -X,XX m' trobat a la cel·la fusionada B80:H81 (files índex 79-80) de cada full — coincideix exactament amb els valors documentats a la 'REGLA DE L'ERR de la lectura d'or de taules' del Pas 3b (-1,08/-0,48/-0,76/-1,55). Cel·la D15 (fila índex 14, col D) = 0,83 a cada full sembla un factor de conversió DPSH→NB (Colpeig_NB = Colpeig_DPSH / 0,83, verificat numèricament a totes les files amb dades): és un input de càlcul (Tier B), no una dada de nivell A — no s'ha inclòs com a tier_a."
+}

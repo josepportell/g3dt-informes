@@ -1,0 +1,116 @@
+{
+ "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+ "source_md5": "3f3035ff2113238d74e3e22e5cffb26a",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost geotècnic G3 (25·0493) en la seva còpia ACCEPTACIO: 7 pàgines — coberta, proposta de treballs, contingut de l'estudi, taula de preus, full d'acceptació signat (p.5, amb dades del client omplertes a mà), i condicions específiques (p.6-7).",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (B25461443)",
+ "date": "2025-10-07 (metadata PDF creationDate i capçalera p.1 'DATA: 07/10/25'); la p.5 (full d'acceptació) mostra 'DATA 25/06/25', que sembla una data de plantilla no actualitzada — no s'usa com a candidat de cap camp del nivell A.",
+ "pages_or_sheets": "7 pàgines: p.1 coberta (CLIENT/OBRA), p.2-3 proposta i contingut de l'estudi, p.4 taula de preus, p.5 full d'acceptació signat, p.6-7 condicions específiques.",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. genera la plantilla de pressupost; el client (Wood Comfort Promocions SLU) la completa a mà i la signa a la p.5 en acceptar l'encàrrec.",
+  "for_whom": "El client, per acceptar formalment l'estudi geotècnic pressupostat i facilitar les dades que han de constar a la factura i a l'informe.",
+  "why": "Formalitzar l'acceptació de la campanya de camp pressupostada (4 DPSH + 1 sondeig a rotació amb SPT) i fixar la identitat/dades bancàries del client per a la facturació.",
+  "expected_fields": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "num_floors",
+   "superficie_parcela",
+   "building_type",
+   "expedient"
+  ],
+  "relation_to_others": "Còpia ACCEPTACIO (signada) del pressupost 25·0493. El projecte també conté '25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf' i '25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf' (segons _inventory.json). Coneixement previ del projecte (skill v1.3, nota Castellar) indica que el client va canviar de GRUP ALMA (pressupost antic) a WOOD COMFORT (aquesta ACCEPTACIO + la versió MODF); aquest document NO esmenta 'GRUP ALMA' enlloc (0 coincidències en cerca de text completa), consistent amb ser la versió posterior/vigent.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.5, bloc 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' → NOM I COGNOMS (manuscrit)",
+   "quote": "WOOD COMFORT PROMOCIONS SLU",
+   "confidence": 0.9,
+   "note": "Full d'acceptació signat i omplert a mà (autoritat A, Pas 3). N.I.F./C.I.F. B19935212 imprès a la mateixa casella (no manuscrit — sembla precarregat per G3). Coincideix amb el bloc CLIENT: de la p.1 del mateix pressupost, però aquesta NO és una font independent (deriva del mateix encàrrec)."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.1, bloc CLIENT: (capçalera, ordenat per y,x)",
+   "quote": "CLIENT:\nWOOD COMFORT PROMOCIONS SLU\nC/FERRAN VALLS I TABERNER 14 BIS 1-2\n08006 BARCELONA",
+   "confidence": 0.6,
+   "note": "Bloc 'CLIENT:' del pressupost = sol·licitant segons regla general del Pas 3, però en aquest cas coincideix amb el nom del full d'acceptació signat (p.5). Mateixa font que l'entrada anterior (no independent). L'adreça d'aquest bloc és la del client (Barcelona), no la de l'obra."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ARBRELLS 18A-18B-20",
+   "location": "p.1, bloc OBRA:",
+   "quote": "OBRA:\nESTUDI GEOTECNIC\nC/ARBRELLS 18A-18B-20\nCASTELLAR DEL VALLES",
+   "confidence": 0.8,
+   "note": "Un dels documents G3 que porten l'adreça de l'obra (junt amb comanda de laboratori i PLAN_COST, segons Pas 2)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1, bloc OBRA:",
+   "quote": "CASTELLAR DEL VALLES",
+   "confidence": 0.75,
+   "note": "Forma curta de G3, sense accent ('Vallès'). Un dels 3 documents G3 que porten el municipi (pressupost/comanda/PLAN_COST). Contrastar amb la forma oficial llarga del Cadastre/GTL/plànol si n'hi ha."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "p.2, Pla de treball",
+   "quote": "4 assaigs de penetració dinàmica DPSH",
+   "confidence": 0.45,
+   "note": "Quantitat PREVISTA al pressupost, no executada. Segons Pas 3, mana l'Excel DPSH (executats) si difereix."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "p.4, taula de preus, línia 002.001",
+   "quote": "UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH — 4,00",
+   "confidence": 0.45,
+   "note": "Mateixa xifra que la proposta (previstos), no és font independent addicional."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text seleccionable (no escanejat) a totes les pàgines excepte les caselles manuscrites de la p.5, que no formen part de la capa de text (només 'N.I.F./C.I.F.: B19935212' hi és, imprès). Renderitzada la p.5 a 200 dpi per llegir visualment NOM I COGNOMS / ADREÇA / CP I POBLACIÓ / DADES BANCÀRIES (manuscrites en tinta taronja), l'email (manuscrit en vermell amb fletxa), les caselles marcades (Digital per email, Informe en català) i les dues signatures (Resp. Oficina Tècnica i El client). Renderitzada també la p.1 i ordenats els blocs de text per (y, x) per separar correctament CLIENT: de OBRA: (l'ordre natural del contingut ja els donava agrupats en aquest document, però s'ha verificat visualment). Cerca de text completa (7 pàgines) per 'ARQUITECT', 'CTE', 'C0/C1/C2', 'T0/T1/T2', 'planta', 'catastr', 'UTM', 'coordenad', 'sísmic', 'GRUP ALMA': només 1 coincidència d'ARQUITECT (casella buida 'ARQUITECTE ...............' a la p.5, sense marcar ni omplir) i 1 de 'sísmic' (dins l'índex de continguts de l'estudi, 'Acceleració sísmica de referència' — no és una dada, és un títol d'apartat futur). Cap coincidència de CTE (C0/C1/C2/T0/T1/T2), catastre, UTM ni 'GRUP ALMA'. No hi ha camps de formulari AcroForm ni anotacions al PDF (verificat amb page.widgets()/page.annots() — buit a totes les pàgines)."
+}

@@ -1,0 +1,98 @@
+{
+ "source_path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+ "source_md5": "9b5696cb7a0a51e3abbd06dc815719ae",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Fil de correu Outlook (2 missatges): tramesa inicial de G3 (Dolors Maqueda) a Roc Clusa amb l'esborrany \"versió 0\" de l'estudi geotècnic (03/11/2025), i resposta de Roc Clusa (18/11/2025) demanant dues correccions.",
+ "issuer": "Roc Clusa <rocflats@hotmail.com> (missatge nou, resposta); missatge citat a sota de Dolors Maqueda <dolors@g3dt.com>, Dep. Administració G3 (original)",
+ "date": "missatge nou (resposta): 2025-11-18T18:49:25+01:00; missatge citat (original): 2025-11-03T17:47:12",
+ "pages_or_sheets": "1 fitxer .msg amb fil de 2 missatges; 3 imatges incrustades (image001.jpg 8569B, image007.png 405B, image008.jpg 6340B), totes ≤25KB = signatura/logo (Pas 1), ignorades",
+ "context": {
+  "who_made_it": "Roc Clusa, contacte del client (mateix email rocflats@hotmail.com que apareix al formulari p.5 signat de ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf, a nom de WOOD COMFORT PROMOCIONS SLU), respon a Dolors Maqueda (Dep. Administració, G3), que li havia enviat l'esborrany \"versió 0\" de l'estudi geotècnic el 03/11/2025.",
+  "for_whom": "G3 (Dolors Maqueda) — perquè corregeixi l'informe abans de la versió final.",
+  "why": "El client revisa l'esborrany rebut i demana dues coses abans de tancar l'informe: (1) adjuntar alguna prova de laboratori, (2) corregir el títol de l'estudi.",
+  "expected_fields": [
+   "building_type (instrucció explícita de títol de l'informe)",
+   "street_address",
+   "municipality"
+  ],
+  "not_expected": [
+   "expedient",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Correu RE:/FW: — només el text per sobre del primer \"From:\" (resposta de Roc Clusa, 18/11/2025) és nou (Pas 0); el missatge citat a sota (Dolors Maqueda, 03/11/2025, \"adjunto estudi geotècnic versió 0, a falta de resultats de laboratori\") no és font independent nova i no existeix com a .msg separat a l'inventari (només aquest fil el conté; l'únic altre .msg del projecte és \"25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg\", diferent). La resposta de Roc Clusa postdata l'esborrany \"versió 0\" i els annexos de sondeig/tall (que diuen \"Habitatge unifamiliar aïllat\", singular) → regla Pas 3 \"instrucció del client posterior als annexos > redacció dels annexos anteriors\": candidat 1 per a building_type, en conflicte real amb la redacció dels annexos.",
+  "authority_for": [
+   "building_type",
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "GRUP D'HABITATGES UNIFAMILIARS",
+   "location": "cos del correu, resposta de Roc Clusa (18/11/2025), punt 2 de la llista",
+   "quote": "El títol hauria de ser: \"Estudi geològic / geotècnic per la CONSTRUCCIÓ D’UN GRUP D’HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS\"",
+   "confidence": 0.55,
+   "note": "Instrucció explícita del client sobre el títol de l'informe, posterior a l'esborrany \"versió 0\" i als annexos de sondeig/tall (que diuen \"Habitatge unifamiliar aïllat\", singular). Regla Pas 3 (instrucció posterior del client > annexos anteriors): candidat 1. Conflicte real de nombre (grup/plural vs. aïllat/singular) amb els annexos → candidats, mai segur."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A, 18B i 20",
+   "location": "cos del correu, resposta de Roc Clusa (18/11/2025), mateixa frase del punt 2",
+   "quote": "AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS",
+   "confidence": 0.6,
+   "note": "Coincideix amb el bloc OBRA: del pressupost/acceptació i amb els annexos de sondeig/tall (candidats ja recollits en altres documents); aquí ho confirma el propi client per correu, font independent addicional."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "cos del correu, resposta de Roc Clusa (18/11/2025), mateixa frase del punt 2",
+   "quote": "a CASTELLAR DEL VALLÈS",
+   "confidence": 0.6,
+   "note": "Forma llarga amb accent, escrita pel propi client; coincideix amb pressupost/GTL/annexos (forma curta \"CASTELLAR DEL VALLES\" a les plantilles G3)."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "Roc Clusa",
+   "location": "capçalera del correu, remitent del missatge nou",
+   "quote": "From: Roc Clusa <rocflats@hotmail.com>",
+   "confidence": 0.0,
+   "note": "Persona de contacte del client (mateix email rocflats@hotmail.com que el formulari p.5 signat d'ACCEPTACIO/, a nom de WOOD COMFORT PROMOCIONS SLU), no el nom del client de l'informe. No usar \"Roc Clusa\" com a client_name; confirma indirectament que WOOD COMFORT PROMOCIONS SLU és el client actiu en aquesta data (18/11/2025), no GRUP ALMA (client antic al pressupost sense signar)."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Extracció amb extract_msg (subject/sender/to/date/body/attachments). El cos és un fil Outlook: text nou de Roc Clusa (18/11/2025) per sobre del separador \"From: Dolors Maqueda...\"; sota, missatge original citat (03/11/2025) llegit només per a context (Pas 0), no com a font independent. El punt 1 de la petició de Roc Clusa (\"Tinc entès que en l'estudi s'hi ha d'adjuntar alguna prova de laboratori, pot ser?\") és una pregunta/petició sobre el contingut de l'informe, no una dada de nivell A ni de taula — no genera cap candidat. Les 3 imatges incrustades (image001.jpg, image007.png, image008.jpg) són totes ≤25KB → signatura/logo per la regla del Pas 1, no processades visualment. No hi ha adjunts de document (només imatges de signatura); confirmat contra validation/msg_attachments/Re_.../  (només image008.jpg hi és, mateix criteri)."
+}
