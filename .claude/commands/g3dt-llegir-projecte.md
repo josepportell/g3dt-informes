@@ -6,7 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 0.8 (2026-08-23 nit) — anatomia de l'ANNEX DE SONDEIG (la matriu que l'Eva usa com a font de nivells i litologies; assenyalada pel Josep, verificada a Bell-lloc) + litologia: annex sondeig «Descripció dels materials» passa PRIMER, tall segon.
+Versió 0.9 (2026-08-24) — lliçons de la lectura d'or de TAULES (8 agents cecs, 7 projectes comparats amb informes: 1 ERR → regla del sistema de cotes; B80→zona B79-B82; N.F./Nivells per COLOR de cel·la; n30 mai segur; micro-regles de format). Evidència: `docs/golden-read-taules/`.
+v0.8: anatomia de l'ANNEX DE SONDEIG (la matriu que l'Eva usa com a font de nivells i litologies; assenyalada pel Josep, verificada a Bell-lloc) + litologia: annex sondeig «Descripció dels materials» passa PRIMER, tall segon.
 v0.7: Pas 3b: regles d'or per a les TAULES de l'informe (dades per fila/nivell), derivades de comparar les taules dels 7 informes signats amb els documents del corpus; verificades per mostreig (Castellar, Bell-lloc, Alcoletge), pendents de lectura d'or completa de taules.
 v0.6: DWG llegibles via LibreDWG `dwg2dxf` + `scripts/dwg_text_dump.py` (verificat amb els 4 DWG de Tulipa; `docs/DWG-CONVERSOR-2026-08-23.md`).
 v0.5: clarificacions del hold-out headless (3 projectes, ERR = 0; feedback dels executors a `docs/holdout-headless/_RESULTATS.md` §6).
@@ -223,22 +224,37 @@ Derivades de comparar les taules dels 7 informes signats amb els documents de le
 - `cota_inici`: capçalera de CADA pàgina de `PDF/ANNEXES/{exp}_DPSH.pdf` ("Cota inici: +NNN.NN msnm segons…" o
   "P-2 cota inici: -4,2 m (respecte el carrer)"). **Pot ser diferent per punt i pot ser RELATIVA intencionada** (verificat
   Castellar: -4,0 / -4,2 / -4,0 / -4,0 respecte el carrer = exactament l'informe). Si l'annex només dona una cota, val per a tots.
-- `profunditat_assolida`: peu B80 de l'Excel DPSH **"Rebuig a -X,XX m"** = fondària EXACTA del rebuig (verificat Castellar:
-  -1,08/-0,48/-0,76/-1,55 = l'informe). L'última fila amb cops de la columna C és l'interval de 20 cm, NO la fondària assolida:
-  usar-la només si B80 no hi és, i anotar-ho. Signe sempre negatiu a l'informe.
-- `rebuig` (Si/No): B80 present → Si. Sense B80 i última lectura sense R → No (aturada per potència).
-- `nivell_freatic`: columna `N.F.` de l'Excel DPSH (capçalera fila 16; una marca a la fondària on surt aigua — verificat
-  Alcoletge: -1,00 a l'informe i "No detectat" al pipeline vell que la ignorava) > manuscrit PENETROS. "No detectat" NOMÉS si
-  la columna és buida a tots els fulls.
+- `profunditat_assolida`: peu **"Rebuig a -X,XX m"** de l'Excel DPSH = fondària EXACTA del rebuig (verificat Castellar:
+  -1,08/-0,48/-0,76/-1,55 = l'informe). **La cel·la NO és fixa: cerca "Rebuig a" a la zona B79-B82** (B80 a la majoria, B81 a
+  Alcoletge i Tulipa). L'última fila amb cops de la columna C és l'interval de 20 cm, NO la fondària assolida: usar-la només
+  si el peu no hi és, i anotar-ho. Signe sempre negatiu a l'informe.
+- `rebuig` (Si/No): peu "Rebuig a" present → Si. Sense peu i última lectura sense R → No (aturada per potència).
+- `nivell_freatic`: columna `N.F.` de l'Excel DPSH (capçalera fila 16) > manuscrit PENETROS. **La marca pot ser un COLOR de
+  cel·la, no text** (Alcoletge: llegenda de colors a les files 79-80 — Nivell 1 / Nivell 2 / Humitat; cal `xlrd`
+  `formatting_info=True`). Compte: la llegenda "Nivell 1|2" de les files 79-80 pot ser NOMÉS plantilla (Tulipa: idèntica als
+  4 fulls, cap marca real) — una llegenda no és una transició. "No detectat" NOMÉS si la columna és buida (text I color) a
+  tots els fulls. **"Humitat" ≠ aigua franca però SÍ que va a la taula**: l'Eva titula la columna "Humitat (m)" i hi escriu
+  la fondària (-1,00 a Alcoletge, d'humitat, no de nivell freàtic) — llegeix el valor i emet el matís (humitat|aigua).
 
-**Taula "Sondeig a rotació" — una fila per S-x (`sondeig_tests[]`):** cota (annex sondeig `z:` — mateixes regles que
-`cota_referencia`), profunditat assolida (annex sondeig), `spt_ma` en format "N_SPT/N_MA" (comptar del GTL + comanda fila 35 +
-annex; l'Eva escriu "1/0" o "1/--"), nivell freàtic (annex sondeig). L'albarà TPS "Assaigs SPT: No" no mana (regla existent).
+**Taula "Sondeig a rotació" — una fila per S-x (`sondeig_tests[]`):** cota, profunditat assolida (annex sondeig), `spt_ma`
+(comptar del GTL + comanda fila 35 + annex), nivell freàtic (annex sondeig). L'albarà TPS "Assaigs SPT: No" no mana (regla existent).
+- **⚠ REGLA DE L'ERR de la lectura d'or de taules (Castellar): la cota del sondeig A LA TAULA segueix el SISTEMA de cotes del
+  projecte.** Si les cotes DPSH són relatives ("respecte el carrer": -4,0/-4,2), la del sondeig també és relativa (Eva: -4,20),
+  NO l'absoluta del `z:` de l'annex (570,90) encara que 2 fonts la confirmin — el z absolut és `cota_referencia`, no la cel·la
+  de la taula. Amb sistema mixt (DPSH relatiu + z absolut) → `candidats` [relativa-del-sistema primer | absoluta], MAI segur
+  l'absoluta. Amb tot el projecte en absolut (Bell-lloc, Anciles), l'absoluta és correcta i pot ser `segur`.
+- `spt_ma`: emet els COMPTES (n_spt, n_tp, n_ma), no la cadena: el format de l'Eva és inestable ("1/--" Bell-lloc, "1/0"
+  Castellar, "1/0/0" triple SPT/TP/MA a Anciles). El generador formata.
 
 **Taula "Assaigs SPT / MA" — una fila per assaig (`spt_ma_tests[]`):** id i punt i fondària = regles `lab` existents (annex de
-l'Eva mana per l'etiqueta). `n30`: annex de sondeig manuscrit (lectura VISUAL, xifra al costat de l'assaig; R = rebuig) creuat amb
-el GTL si hi és; discrepància de lectura (54 vs 58 al pipeline vell per manuscrit dubtós) → candidats amb les dues lectures.
-`litologia` = la del nivell d'on surt la mostra (vegeu `soil_levels`).
+l'Eva mana per l'etiqueta). `litologia` = la del nivell d'on surt la mostra (vegeu `soil_levels`); si l'interval cau a cavall
+d'una transició (Bell-lloc SPT a -1,00/-1,60 amb límit a -1,10; Alcoletge material recuperat del N2 amb interval al N1) →
+candidats amb els dos nivells. Per a MA (mostra alterada) sense colpeig, `n30` = no_trobat amb nota (l'Eva escriu "--").
+- **`n30` MAI segur — sempre `registre` (segur, els cops per tram de 15 cm) + candidats de la suma.** El criteri de suma de
+  l'Eva NO és estable: Rubí (16/20/20/24→40), Alcoletge (5/9/11/33→20) i Anciles (2/3/3/3→6) usen els 2 trams centrals, però
+  l'informe de Bell-lloc diu 54 amb registre 24/34/28/30 (centrals=62; el TALL de la mateixa Eva diu 58) — incoherència
+  interna d'Eva, PREGUNTA OBERTA. Candidats: [suma trams centrals | el N imprès al tall si hi és | R si rebuig]. Un R al
+  primer tram (colpeig 50) → n30 = "R" pot ser segur (Castellar, Linyola).
 
 **L'ANNEX DE SONDEIG — anatomia (la font principal de nivells i litologies quan existeix):** plantilla G3 «Sondeig a rotació
 amb batería contínua» — `PDF/ANNEXES/{exp}_sondeig.pdf` (o `ANEJOS/{exp}_sondeos.pdf` en castellà). FreeHand → **text brossa:
@@ -271,6 +287,8 @@ sondeig; columnes i què alimenta cadascuna (verificat Bell-lloc):
 
 **Taula de plantes/superfícies:** `num_floors` i `superficie_parcela` són els escalars existents; s'hi afegeix
 `superficie_construida` (correu d'encàrrec "Pb de 280m + p1 de 86" → l'Eva escriu "280+86"; taula de planejament; pressupost).
+Emet COMPONENTS i TOTAL: l'Eva de vegades escriu la suma (Rubí: "72+20 porxada" → informe "92") i de vegades els sumands
+(Bell-lloc: "280+86"). Multi-habitatge: l'Eva pot posar el valor PER CASA (Castellar: "120 m2" d'1 de 3) → candidats.
 **L'etiqueta de la fila de parcel·la segueix la FONT del valor**: "segons plànols cadastrals" / "segons cadastre" / "segons
 informació aportada" / "segons projecte" — emet la font amb el valor perquè el generador triï l'etiqueta. Ampliacions
 (Alcoletge): l'Eva escriu "Superfície construïda ampliació" — si l'encàrrec és una ampliació, anota-ho.
