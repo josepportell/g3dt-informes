@@ -96,7 +96,7 @@ _UTM_RE = re.compile(r"X\s*([\-\d.,]+)\s*;\s*Y\s*([\-\d.,]+)", re.IGNORECASE)
 # ---------------------------------------------------------------------------
 
 
-def validate_decisions(d: dict) -> list[str]:
+def _validate_decisions_base(d: dict) -> list[str]:
     """Valida un `_decisions.json` (schema v1) contra les regles del §4.3.
 
     Retorna la llista d'errors trobats (buida = vàlid). No llança excepcions
@@ -294,6 +294,8 @@ def adapt_legacy(d: dict) -> dict:
     valor nou.
     """
     d = _rename_catalan_keys(d)
+    from automation.lectura.normalize import canonicalize_row_keys
+    d = canonicalize_row_keys(d)
     d = _rename_dialect_keys(copy.deepcopy(d))
 
     if "decisions" in d:
@@ -511,3 +513,21 @@ def _canonicalize_cell(cell: Any) -> Any:
             cell["value"] = first_value
 
     return cell
+
+
+def validate_decisions(d: dict) -> list[str]:
+    """Regles a-h (base) + claus obligatories de cada fila de `tables` (skill v1.3)."""
+    errors = _validate_decisions_base(d)
+    from automation.lectura.normalize import ROW_REQUIRED_KEYS
+    tables = d.get("tables") if isinstance(d, dict) else None
+    if isinstance(tables, dict):
+        for block, required in ROW_REQUIRED_KEYS.items():
+            blk = tables.get(block)
+            rows = blk.get("rows") if isinstance(blk, dict) else (blk if isinstance(blk, list) else [])
+            for i, row in enumerate(rows or []):
+                if not isinstance(row, dict):
+                    continue
+                missing = [k for k in required if k not in row]
+                if missing:
+                    errors.append(f"tables.{block}.rows[{i}]: falten claus canoniques {missing}")
+    return errors

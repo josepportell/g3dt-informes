@@ -6,7 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
-Versió 1.2 (2026-08-24) — nom canònic del JSON per document en mode `--only` (coincideix amb `safe_doc_name` del runner, que és qui el llegeix): path RELATIU sencer, sense extensió, tota seqüència no alfanumèrica → `_`, sense `_` inicial/final, minúscules. Ex.: `25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf` → `25_0647_pressupost_geotec_bell_lloc.json`.
+Versió 1.3 (2026-08-24) — claus CANÒNIQUES de les files de `tables` (E2E Castellar: el productor va escriure `prof_extraccio`, `punt`/`cota_inici` al sondeig… i l'or `profunditat`, `sondeig`/`cota`; la UI i el generador necessiten un sol nom). Llista al Pas 5.
+v1.2: nom canònic del JSON per document en mode `--only` (coincideix amb `safe_doc_name` del runner, que és qui el llegeix): path RELATIU sencer, sense extensió, tota seqüència no alfanumèrica → `_`, sense `_` inicial/final, minúscules. Ex.: `25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf` → `25_0647_pressupost_geotec_bell_lloc.json`.
 v1.1: el `registre` de l'SPT va DINS de la cel·la `n30` (subcel·la amb la seva pròpia font), no com a germà: el validador de contracte exigeix `n30.registre` i la UI el mostra al popup de l'n30 (creuament de l'acceptació Fase 0).
 v1.0: contracte v1 per al wizard headless (`docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md`): dialecte únic `estat`/`font`, 22 claus planes a `fields`, arguments nous `--inventory` i `--consolida` (Pas 5b), escriptura atòmica, i capçalera `source_md5`/`skill_version`/`schema_version` a cada JSON.
 v0.9: lliçons de la lectura d'or de TAULES (8 agents cecs, 7 projectes comparats amb informes: 1 ERR → regla del sistema de cotes; B80→zona B79-B82; N.F./Nivells per COLOR de cel·la; n30 mai segur; micro-regles de format). Evidència: `docs/golden-read-taules/`.
@@ -372,6 +373,13 @@ cel·les de 2+ fonts coincidents és `segur`; una litologia re-redactable o un N
 
 Restriccions dures del contracte (el validador les REBUTJA — no són estil, són el criteri d'or codificat):
 - `n30` mai `estat: segur`; la `litologia` de `soil_levels` mai `segur` per a la cadena literal (Pas 3b).
+- **Claus canòniques de cada fila de `tables` (exactes, cap sinònim):**
+  `dpsh_tests`: `punt, cota_inici, profunditat_assolida, rebuig, nivell_freatic` ·
+  `sondeig_tests`: `sondeig, cota, profunditat_assolida, spt_ma, nivell_freatic` ·
+  `spt_ma_tests`: `id, punt, profunditat, litologia, n30` ·
+  `soil_levels`: `nom, litologia, de, a, mostra_del_nivell` ·
+  `superficie_construida`: `components, total, etiqueta_font`.
+  Dades extres útils (empresa, sondista, registre N20 per fondària…) van a `extra` dins la fila, mai com a cel·les noves.
 - El `registre` (cops per tram de 15 cm) va DINS de la cel·la `n30` (`n30.registre`, subcel·la amb estat/font/quote
   propis), mai com a cel·la germana de la fila.
 - `segur` i `candidats` porten sempre `candidates[]` no buit (≤ 3).

@@ -152,6 +152,12 @@ def _minimal_valid_doc() -> dict:
                     {
                         "punt": "P-1",
                         "estat": "segur",
+                        "cota_inici": {"estat": "segur", "value": "+199,50 msnm",
+                                       "candidates": [{"value": "+199,50 msnm", "font": "annex DPSH", "quote": "Cota inici"}]},
+                        "profunditat_assolida": {"estat": "segur", "value": "-1,35 m",
+                                                 "candidates": [{"value": "-1,35 m", "font": "excel B80", "quote": "Rebuig a"}]},
+                        "rebuig": {"estat": "segur", "value": "Si",
+                                   "candidates": [{"value": "Si", "font": "excel B80", "quote": "Rebuig a"}]},
                         "nivell_freatic": {
                             "estat": "segur",
                             "value": "No detectat",
