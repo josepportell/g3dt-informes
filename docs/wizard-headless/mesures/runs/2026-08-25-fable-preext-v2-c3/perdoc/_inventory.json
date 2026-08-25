@@ -1,0 +1,1426 @@
+{
+ "generated": "2026-08-25T19:24:50",
+ "project": "3001621 CASTELLAR DEL VALLES",
+ "files": [
+  {
+   "path": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+   "size": 17245,
+   "md5": "2ba1d934a03964da93d177c5aea4ecf8",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "fitxa_camp_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+   "size": 112072,
+   "md5": "8418e65b89940a0b1ae42104be279547",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "plan_cost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+   "size": 272896,
+   "md5": "3ecd5e682c690373fd56fd0fde96bab2",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/25_0493_pressupost_3_hab_castellar_del_vall_s",
+    "kind": "msg",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/25_0493_pressupost_3_hab_castellar_del_vall_s/body.txt"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/25_0493_pressupost_3_hab_castellar_del_vall_s/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+   "size": 425022,
+   "md5": "5b71a5637f8084f4c0506851ca0729ff",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "pressupost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+   "size": 361570,
+   "md5": "6bfc5258bd580854e42ea5be3a4041c6",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "pressupost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/Thumbs.db",
+   "size": 49664,
+   "md5": "622f46ec238926d3b58940cb5d4d69e2",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+   "size": 376837,
+   "md5": "5524691f1c54e9ec6ef325878934a6d6",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg",
+   "size": 224779,
+   "md5": "2ebd337ac49348d11daa5e34a6c77c7e",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PLAN_COST_CATELLAR DEL VALLÈS_img0.png",
+   "size": 9766,
+   "md5": "82b18a3e21c35923b45345419356d49b",
+   "mtime": "2026-08-24T18:09:42",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES_img0.jpeg",
+   "size": 31726,
+   "md5": "e875bae970adc89de0b870aaea246794",
+   "mtime": "2026-08-24T18:09:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES_img1.jpeg",
+   "size": 8255,
+   "md5": "ed3960092969f702f01b52a329fc403d",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES_img2.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES_img3.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES_img0.jpeg",
+   "size": 31726,
+   "md5": "e875bae970adc89de0b870aaea246794",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES_img1.jpeg",
+   "size": 8255,
+   "md5": "ed3960092969f702f01b52a329fc403d",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES_img2.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES_img3.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "3001621_PORTADA_25.doc",
+   "size": 198656,
+   "md5": "5bc1ca6a766aaaeeda44cffdbfd7c8b1",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:PORTADA",
+   "priority": 0
+  },
+  {
+   "path": "3001621_generated.docx",
+   "size": 10697163,
+   "md5": "e2290c6d1cd743c7dc6cc08a9d1de740",
+   "mtime": "2026-08-23T14:35:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:_generated",
+   "priority": 0
+  },
+  {
+   "path": "3001621_informe_v0.doc",
+   "size": 5880320,
+   "md5": "5877838a28caf0f388f0ae64a71573d8",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "3001621_informe_v0.docx",
+   "size": 5594470,
+   "md5": "1ba3b47fca8b31a64394b80a27cd0689",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "4687-GTL-25 Castellar del Vallés.pdf",
+   "size": 371355,
+   "md5": "ed8a07b662f237b3c9db0b752d54a300",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "informe_laboratori",
+   "priority": 5,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-1.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-1.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-2.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-2.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-3.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-3.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-4.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-4.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-5.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-5.png"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/meta.json",
+    "pages": 5,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+   "size": 551055,
+   "md5": "3f3035ff2113238d74e3e22e5cffb26a",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-1.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-1.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-2.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-2.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-3.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-3.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-4.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-4.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-5.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-5.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-6.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-6.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-7.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-7.png"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/Thumbs.db",
+   "size": 8704,
+   "md5": "edf3e6348fb5e81bab662a827581f3f9",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "ACCEPTACIO/validation/mined_images/PRESSUPOST GEOTEC CASTELLAR DEL...._img0.jpeg",
+   "size": 31726,
+   "md5": "e875bae970adc89de0b870aaea246794",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "ACCEPTACIO/validation/mined_images/PRESSUPOST GEOTEC CASTELLAR DEL...._img1.jpeg",
+   "size": 8255,
+   "md5": "ed3960092969f702f01b52a329fc403d",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "ACCEPTACIO/validation/mined_images/PRESSUPOST GEOTEC CASTELLAR DEL...._img2.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "ACCEPTACIO/validation/mined_images/PRESSUPOST GEOTEC CASTELLAR DEL...._img3.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/3001621_DPSH.xls",
+   "size": 130048,
+   "md5": "0389af31b3b165e13338709a568cf130",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "dpsh_excel",
+   "priority": 3,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh",
+    "kind": "excel",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-0.csv",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-0.cells.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-0.colors.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-1.csv",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-1.cells.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-1.colors.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-2.csv",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-2.cells.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-2.colors.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-3.csv",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-3.cells.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/sheet-3.colors.txt"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/annexes_3001621_dpsh/meta.json",
+    "pages": null,
+    "sheets": [
+     {
+      "index": 0,
+      "name": "P-1",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 95
+     },
+     {
+      "index": 1,
+      "name": "P-2",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 92
+     },
+     {
+      "index": 2,
+      "name": "P-3",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 96
+     },
+     {
+      "index": 3,
+      "name": "P-4",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 97
+     }
+    ],
+    "error": null
+   }
+  },
+  {
+   "path": "ANNEXES/3001621_fotografies.FH11",
+   "size": 1747068,
+   "md5": "95f6cd66dfe9f5742c1936b5382e48e1",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/3001621_plànol de situació.FH11",
+   "size": 2700738,
+   "md5": "cc6bcb8e89a0c4a8382c9c941d78ba06",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/3001621_sondeig.FH11",
+   "size": 7254285,
+   "md5": "b49731f3b6aab28ee7bfaf192fbd72bf",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/3001621_tall de correlació.FH11",
+   "size": 1082509,
+   "md5": "1a991dcd9ffde4c4fa4de2c290e2ccd5",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/6_mapa Geologic_CAT_VS.FH11",
+   "size": 1716191,
+   "md5": "bf603be29969aef9774b486919c70187",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/COORDENADES.txt",
+   "size": 210,
+   "md5": "58b0deb6f8ee074033fbd8ac7e0f85d3",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "coordenades_gps",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M1.png",
+   "size": 649112,
+   "md5": "25757e1aee82a2a246f8570f55e2b28f",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M10.png",
+   "size": 1544968,
+   "md5": "5d4160893ca77ad2a1b8581b816120ae",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M11.png",
+   "size": 180853,
+   "md5": "b8b79556d8532ff2d6abcf0be3660a82",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M2.png",
+   "size": 518256,
+   "md5": "ede33e6bfafe136d18760f1053269833",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M3.png",
+   "size": 632179,
+   "md5": "179f758d8b1c76179f261c0f08707fa5",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M4.png",
+   "size": 627024,
+   "md5": "2f7b412831096f67291c22b3a328878c",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/Thumbs.db",
+   "size": 219136,
+   "md5": "a89cd3fe5adfd63f9424a7d6eee0d04f",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m12 mgeol.png",
+   "size": 1638980,
+   "md5": "006a37326f18a7fdefcd5034ed0b52f7",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m5.png",
+   "size": 386297,
+   "md5": "07ad16906f33acdd1a6882370e95f84e",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m6.png",
+   "size": 986877,
+   "md5": "2b2a8295ccc672864b596dcf8a16a64a",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m7.png",
+   "size": 1372127,
+   "md5": "659913a315d48b95cfc6e7aa2fd6cc32",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m8.png",
+   "size": 882718,
+   "md5": "f51410232335ae3a509b2745127a5497",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m9.png",
+   "size": 73468,
+   "md5": "aa4977dd80f2e0f828afb9567c0577b2",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/EF7DB361.tmp",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "DTE.txt",
+   "size": 77,
+   "md5": "2432c38b8e2f1f07c894409b1ba8ce14",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
+   "size": 361105,
+   "md5": "ddafdfecb4ddc67ba6d246fa92f06b1a",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DPSH/maquina_dpsh_2.jpg",
+   "size": 482143,
+   "md5": "66375621d29b744b0f1f266e7b96fb0f",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DPSH/maquina_dpsh_3.jpg",
+   "size": 432498,
+   "md5": "61912151c7ebf4f08b3c85015284b549",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 09.37.01_63bb48b8.jpg",
+   "size": 365133,
+   "md5": "78a3c71bf36ce2285513b9f3be4ff181",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 10.02.53_404bc72b.jpg",
+   "size": 347552,
+   "md5": "6eb510600c13fb8ac17be6eff37b780c",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P1.jpg",
+   "size": 361105,
+   "md5": "ddafdfecb4ddc67ba6d246fa92f06b1a",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P2.jpg",
+   "size": 440685,
+   "md5": "0ada9df61caff348dd133892dd604ad8",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P3.jpg",
+   "size": 482143,
+   "md5": "66375621d29b744b0f1f266e7b96fb0f",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P4.jpg",
+   "size": 432498,
+   "md5": "61912151c7ebf4f08b3c85015284b549",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg",
+   "size": 334189,
+   "md5": "cacc0168398d6cb0e121954145259d5d",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.14_4f05eb48.jpg",
+   "size": 356255,
+   "md5": "e105b9e7cd24b02e870c34dc5d2dee54",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
+   "size": 538905,
+   "md5": "021456ea95862e2e9e9b7de4d89042f6",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S1/Thumbs.db",
+   "size": 50688,
+   "md5": "e13a2e7a76c32faef522138b3743e071",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SONDEIG/maquina_sondeig.jpg",
+   "size": 538905,
+   "md5": "021456ea95862e2e9e9b7de4d89042f6",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Thumbs.db",
+   "size": 48128,
+   "md5": "5a6497af840557c7b4e5118528835e66",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/detall_materials.jpg",
+   "size": 334189,
+   "md5": "cacc0168398d6cb0e121954145259d5d",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/detall_materials_2.jpg",
+   "size": 356255,
+   "md5": "e105b9e7cd24b02e870c34dc5d2dee54",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/vista_general_1.jpg",
+   "size": 440685,
+   "md5": "0ada9df61caff348dd133892dd604ad8",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/3001621_informe_v0.pdf",
+   "size": 1929400,
+   "md5": "83fce68e4b6945c1022ead3fce43acd8",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/ANNEXES/3001621_DPSH.pdf",
+   "size": 108674,
+   "md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/ANNEXES/3001621_fotografies.pdf",
+   "size": 376873,
+   "md5": "73cea90d5c4d74a91bd2c88a56fe1970",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/ANNEXES/3001621_plànol de situació.pdf",
+   "size": 198501,
+   "md5": "7d495516ac2896e3f236b08e7879a41d",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/ANNEXES/3001621_sondeig.pdf",
+   "size": 149175,
+   "md5": "2295eafdfbaf24a22d916a124ea308d0",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/ANNEXES/3001621_tall de correlació.pdf",
+   "size": 116065,
+   "md5": "e77496626419bcc0e372d33f59609cd5",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/LLETRA/3001621_PORTADA_25_v0.pdf",
+   "size": 60044,
+   "md5": "0b52d77fba96ed648ef682de469ef1df",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/LLETRA/3001621_informe_v0.pdf",
+   "size": 954420,
+   "md5": "0a5fae85b5fcfd04c76d90d28328bfb5",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF/3001621_informe.pdf",
+   "size": 2049849,
+   "md5": "4bcac0abcd84732f5b48bffb4416a48e",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "PDF/ANNEXES/3001621_DPSH.pdf",
+   "size": 108674,
+   "md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "annex_dpsh",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_dpsh",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-1.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-1.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-2.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-2.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-3.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-3.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-4.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-4.png"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_dpsh/meta.json",
+    "pages": 4,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001621_fotografies.pdf",
+   "size": 376873,
+   "md5": "73cea90d5c4d74a91bd2c88a56fe1970",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_fotografies",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-1.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-1.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-1-top.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-1-bottom.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-2.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-2.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-2-top.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-2-bottom.png"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_fotografies/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+   "size": 198501,
+   "md5": "7d495516ac2896e3f236b08e7879a41d",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1-left.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001621_sondeig.pdf",
+   "size": 149175,
+   "md5": "2295eafdfbaf24a22d916a124ea308d0",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "claude",
+   "doc_type_hint": "annex_sondeig",
+   "priority": 1,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_sondeig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-1.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-1.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-1-left.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-1-right.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-2.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-2.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-2-left.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-2-right.png"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_sondeig/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+   "size": 116065,
+   "md5": "e77496626419bcc0e372d33f59609cd5",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1-left.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/LAB-SIG.pdf",
+   "size": 162079,
+   "md5": "0527692d91b76c17cf1eba8e50a5bf8a",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/page-1.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/page-1.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/page-2.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/page-2.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/page-3.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/page-3.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/page-4.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/page-4.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/page-5.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/page-5.png"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/pdf_annexes_lab_sig/meta.json",
+    "pages": 5,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/LLETRA/3001621_PORTADA_25.pdf",
+   "size": 65823,
+   "md5": "06e4f0aa38cbc9f81d0e1e7b2cbc4bb8",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF/LLETRA/3001621_informe_v0.pdf",
+   "size": 954437,
+   "md5": "ed6122d7a57491f3aa923bee7cb2e550",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PENETROS + SONDEIG.pdf",
+   "size": 1652817,
+   "md5": "9c6982925cfde80fd507a53ea8241838",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "claude",
+   "doc_type_hint": "camp_penetros",
+   "priority": 7,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-1.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-1.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-1-top.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-1-bottom.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-2.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-2.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-2-top.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-2-bottom.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-3.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-3.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-3-top.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-3-bottom.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-4.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-4.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-4-top.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-4-bottom.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-5.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-5.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-5-top.png",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/page-5-bottom.png"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/penetros_sondeig/meta.json",
+    "pages": 5,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+   "size": 135680,
+   "md5": "9b5696cb7a0a51e3abbd06dc815719ae",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/re_estudi_geot_cnic_versi_castellar_del_valles",
+    "kind": "msg",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/re_estudi_geot_cnic_versi_castellar_del_valles/body.txt"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/re_estudi_geot_cnic_versi_castellar_del_valles/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+   "size": 470528,
+   "md5": "4e6c8b60d5fa1f8767cc001e153b891d",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "comanda_lab_g3",
+   "priority": 0
+  },
+  {
+   "path": "file_mapping.json",
+   "size": 22767,
+   "md5": "e2e1db0039d7e5824ac9aa452bde97a9",
+   "mtime": "2026-08-24T18:11:11",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "tall.pdf",
+   "size": 969838,
+   "md5": "a4512806fd21fe5f6efc6b4e6dd15f69",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/tall",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/tall/page-1.txt",
+     "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/tall/page-1.png"
+    ],
+    "meta": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext/tall/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "validation/concept_map.json",
+   "size": 41882,
+   "md5": "847a20f8e0ef632ab76a28ada739aeeb",
+   "mtime": "2026-08-24T18:10:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/00c58c79afc2.json",
+   "size": 623,
+   "md5": "a78f3d5d74f9225756fbf57cd9acd9e0",
+   "mtime": "2026-08-24T18:10:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/0a6169066a2a.json",
+   "size": 854,
+   "md5": "b084c8d9e7160c07456237e982c1c8b9",
+   "mtime": "2026-08-24T18:10:22",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/26afc0e1717a.json",
+   "size": 462,
+   "md5": "df778b82ffff7c0849a5a430753d6aba",
+   "mtime": "2026-08-24T18:10:20",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/28f1764ec8e9.json",
+   "size": 808,
+   "md5": "fac20000d1d4d55c6740765f3cc3b14e",
+   "mtime": "2026-08-24T18:10:04",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/2e7b1bb3bef2.json",
+   "size": 149,
+   "md5": "69ee3e339e90c8510056af540441068f",
+   "mtime": "2026-08-24T18:10:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/5785e5071fcc.json",
+   "size": 918,
+   "md5": "bf45b22d2e83a6d61267bee889a4237b",
+   "mtime": "2026-08-24T18:10:19",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/736669bee386.json",
+   "size": 232,
+   "md5": "abd3b0a3ee575fa3a196f8e14b042900",
+   "mtime": "2026-08-24T18:10:07",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/87de5e3b9b14.json",
+   "size": 331,
+   "md5": "896ab8b11d18579a9315bc588398f95b",
+   "mtime": "2026-08-24T18:10:10",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/9549ce2b0a57.json",
+   "size": 161,
+   "md5": "75d7e5e0f659e962553a2a8394de0748",
+   "mtime": "2026-08-24T18:10:08",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/9c8d9dc6e1ad.json",
+   "size": 734,
+   "md5": "fb93edca7858ba01734f639392f3326e",
+   "mtime": "2026-08-24T18:10:27",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/a4012501665b.json",
+   "size": 160,
+   "md5": "5aaf8397c766569ba438753bba32d6e6",
+   "mtime": "2026-08-24T18:10:13",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/b74a8a7ec1fb.json",
+   "size": 336,
+   "md5": "171898b9e70ca48cd5cdd9a35eca0da7",
+   "mtime": "2026-08-24T18:10:18",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/c079e4b2cd43.json",
+   "size": 962,
+   "md5": "f6c3bf543417d7de1e54a41f13a53f6a",
+   "mtime": "2026-08-24T18:10:25",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/c79e00f2420f.json",
+   "size": 1382,
+   "md5": "979c8801b2513ce1022de1394fd813ff",
+   "mtime": "2026-08-24T18:10:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/d5ee94b231f0.json",
+   "size": 328,
+   "md5": "343b5be51b6d63cc7d94bd8804717273",
+   "mtime": "2026-08-24T18:10:12",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/e758772e601f.json",
+   "size": 756,
+   "md5": "ec8e04ebca5b10b80f6f3cc6bae95466",
+   "mtime": "2026-08-24T18:10:15",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/ea73107bd4a6.json",
+   "size": 750,
+   "md5": "2c223461f4880dfd57c25e58be936bac",
+   "mtime": "2026-08-24T18:10:09",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/f791100a539d.json",
+   "size": 314,
+   "md5": "180941240d3121990565c591c33009a3",
+   "mtime": "2026-08-24T18:10:13",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/fe5966b488d0.json",
+   "size": 336,
+   "md5": "d7c5cf3023273b7613be3e4cd6bad004",
+   "mtime": "2026-08-24T18:10:06",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/4687-GTL-25 Castellar del Vallés_img0.jpeg",
+   "size": 36993,
+   "md5": "8ee18b932d5606bd5aeb52b1a86a0348",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/4687-GTL-25 Castellar del Vallés_img1.jpeg",
+   "size": 36993,
+   "md5": "8ee18b932d5606bd5aeb52b1a86a0348",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/4687-GTL-25 Castellar del Vallés_img2.jpeg",
+   "size": 36993,
+   "md5": "8ee18b932d5606bd5aeb52b1a86a0348",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/4687-GTL-25 Castellar del Vallés_img3.jpeg",
+   "size": 37263,
+   "md5": "55ea40c6bdca5b27bec501c26b3cba60",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/4687-GTL-25 Castellar del Vallés_img4.jpeg",
+   "size": 36993,
+   "md5": "8ee18b932d5606bd5aeb52b1a86a0348",
+   "mtime": "2026-08-24T18:09:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/PENETROS + SONDEIG_img0.jpeg",
+   "size": 243325,
+   "md5": "b41ecaf524d863af81a7aba955a12693",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/PENETROS + SONDEIG_img1.jpeg",
+   "size": 290751,
+   "md5": "39d5daa950153bfc3bfa83fcdb7a71ca",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/PENETROS + SONDEIG_img2.jpeg",
+   "size": 311935,
+   "md5": "59b1f59b7502595b81679492f70698e2",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/PENETROS + SONDEIG_img3.jpeg",
+   "size": 356213,
+   "md5": "bbce8fa9a2a8f7b3b4db9308ddbf6406",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/PENETROS + SONDEIG_img4.jpeg",
+   "size": 444029,
+   "md5": "8df84739491e4dd5ab3d6cce4dafa89b",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/tall_img0.jpeg",
+   "size": 22328,
+   "md5": "616b55a318c95e7acfbc3cb253a694c5",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/tall_img1.jpeg",
+   "size": 284778,
+   "md5": "99fa285fbc7e5ae9b0b74e2901571e27",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+   "size": 112072,
+   "md5": "8418e65b89940a0b1ae42104be279547",
+   "mtime": "2026-08-24T18:09:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image001.jpg",
+   "size": 8569,
+   "md5": "e8126ae1872f8e8b43ce08b8bec35f7b",
+   "mtime": "2026-08-24T18:09:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image005.png",
+   "size": 23848,
+   "md5": "40afd571ae14c62675d86c67227fd60c",
+   "mtime": "2026-08-24T18:09:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image009.jpg",
+   "size": 5021,
+   "md5": "aa80772ca61c3d8988b41547d917de05",
+   "mtime": "2026-08-24T18:09:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/validation/mined_images/PLAN_COST_CATELLAR DEL VALLÈS_img0.png",
+   "size": 9766,
+   "md5": "82b18a3e21c35923b45345419356d49b",
+   "mtime": "2026-08-24T18:09:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES/image008.jpg",
+   "size": 6340,
+   "md5": "c17aa1bd21df2abf472f1b677fe9ba0e",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  }
+ ],
+ "duplicates": [],
+ "preext": {
+  "root": "/home/josep/g3dt-e2e/projectes/3001621 CASTELLAR DEL VALLES/validation/lectura/_preext",
+  "n_docs": 13,
+  "n_errors": 0,
+  "elapsed_s": 6.791
+ }
+}

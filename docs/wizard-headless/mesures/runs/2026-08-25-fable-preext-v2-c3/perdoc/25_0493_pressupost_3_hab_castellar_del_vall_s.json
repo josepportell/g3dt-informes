@@ -1,0 +1,138 @@
+{
+ "source_path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+ "source_md5": "3ecd5e682c690373fd56fd0fde96bab2",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern G3 (Eva → Dolors, administració) que reenvia el text del WhatsApp del sol·licitant demanant preu per a un geotècnic a Castellar del Vallès (i després per a 3 estudis), amb el PLAN_COST adjunt: és l'origen de l'encàrrec, previ al pressupost.",
+ "issuer": "Eva Vázquez Marcet (G3 DESENVOLUPAMENT TERRITORIAL, S.L.), transcrivint un WhatsApp de 'ROC' (GRUP ALMA)",
+ "date": "2025-06-25 11:14 (data del correu; NO és data de camp)",
+ "pages_or_sheets": "1 cos de correu + 1 adjunt (PLAN_COST_CATELLAR DEL VALLÈS.xlsx, md5 8418e65b…, ja solt a 25.0493/ → no rellegit)",
+ "context": {
+  "who_made_it": "Eva (G3) per a Dolors (G3, administració), copiant el missatge del sol·licitant. From/To són tots dos G3: cap dels dos és el client.",
+  "for_whom": "Ús intern G3: perquè administració prepari el pressupost comercial (codi 25.0493). Els 'CLIENT: GRUP ALMA / ROC' són el sol·licitant que demana preu, no necessàriament el promotor de l'informe.",
+  "why": "Encàrrec inicial: 'haig de fer un geotecnic a Castellar del Vallès… Em pots dir quin cost tindria?' i ampliació a '3 estudis geotècnics a la vegada' en comprar 'les 2 parcel·les del costat'.",
+  "expected_fields": [
+   "client_name (sol·licitant, candidat)",
+   "street_address",
+   "municipality",
+   "num_floors",
+   "superficie_construida",
+   "building_type",
+   "cte_edificacio (derivable de superfície + plantes)"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm",
+   "referencia_catastral",
+   "lab",
+   "architect_name",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "Primer document de la cadena d'encàrrec (25/06/2025): precedeix PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf i la versió MODF (mateix codi 25.0493) i l'ACCEPTACIO. Tot el que diu (CLIENT, adreça, PB+1, 120 m²) es propaga al pressupost/fitxa: NO són fonts independents. L'adjunt PLAN_COST és el mateix fitxer que 25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx (md5 idèntic). El client anuncia 3 parcel·les/3 estudis: l'abast final (1 o 3 informes, quines parcel·les) l'han de fixar el pressupost MODF, la comanda i els annexos.",
+  "authority_for": [
+   "num_floors",
+   "superficie_construida",
+   "street_address"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "GRUP ALMA",
+   "location": "cos del correu, capçalera 'CLIENT:' (abans del text WhatsApp)",
+   "quote": "CLIENT: GRUP ALMA\n\nROC - 615 55 74 50",
+   "confidence": 0.4,
+   "note": "És el SOL·LICITANT del pressupost (qui demana preu per WhatsApp), no necessàriament el promotor. Contacte: 'ROC'. Derivat del mateix encàrrec que el pressupost/fitxa → no compta com a font independent. Autoritat A per a client_name: ACCEPTACIO p.5 / DADES CLIENT / promotor del projecte; si el pressupost MODF o l'acceptació porten un altre nom, aquest queda substituït (versió posterior mana)."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 / Eva Vázquez Marcet / Dolors Maqueda",
+   "location": "From/To i signatura",
+   "quote": "From: Eva Vazquez <eva@g3dt.com>\nTo: Dolors Maqueda <dolors@g3dt.com>",
+   "confidence": 1.0,
+   "note": "Emissor i destinatari són G3: descartats com a client per regla 'G3 mai és client'."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A",
+   "location": "cos del correu, text WhatsApp del sol·licitant",
+   "quote": "haig de fer un geotecnic  a Castellar del Vallès.\n\nLa direcció és :\n\nCarrer Arbrells 18A",
+   "confidence": 0.7,
+   "note": "Adreça de l'OBRA donada pel sol·licitant (context 'haig de fer un geotecnic a…'). Matís: el client diu que comprarà 'les 2 parcel·les del costat' per fer 3 estudis → l'obra final pot abastar 18A + 2 parcel·les veïnes (números no indicats). Grafia 'Arbrells' segons el text; normalitzar cap al document imprès (pressupost/comanda/Cadastre) si difereix."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "assumpte + cos del correu",
+   "quote": "Subject: PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS … haig de fer un geotecnic  a Castellar del Vallès.",
+   "confidence": 0.8,
+   "note": "Forma oficial llarga amb accent. Font de correu (no és cap de les 3 fonts 'sempre': comanda N21 / pressupost p.1 / PLAN_COST E9), però coherent amb el nom de la carpeta. Mai la població de la signatura G3 (Els Omells de Na Gaia)."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1",
+   "location": "cos del correu, text WhatsApp del sol·licitant",
+   "quote": "PB + 1\n\n- Sense soterrani\n\n- 120 m2 construits\n\n- Estructura d'entremat lleuger de fusta.",
+   "confidence": 0.6,
+   "note": "Correu d'encàrrec = font vàlida per a num_floors (cap plantilla G3 ho porta). Però la descripció (PB+1, 120 m²) es dona per a UN habitatge i l'encàrrec passa a ser de 3 estudis/3 parcel·les → 'descripció que només cobreix 1 de N unitats' → candidats, no segur. Sense soterrani (explícit)."
+  },
+  {
+   "concept_id": "superficie_construida",
+   "value": "120 m² (per habitatge)",
+   "location": "cos del correu, text WhatsApp del sol·licitant",
+   "quote": "- 120 m2 construits",
+   "confidence": 0.6,
+   "note": "Mateixa dada que la fila de tables.superficie_construida (components ['120'], total '120', etiqueta 'segons informació aportada'). Per habitatge, 1 de 3 anunciats → candidats en multi-habitatge; total 3×120=360 no consta literalment."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar (3 habitatges, PB+1, estructura d'entramat lleuger de fusta)",
+   "location": "assumpte '3 HAB' + cos del correu",
+   "quote": "PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS … Estructura d'entremat lleuger de fusta … et puc preguntar el preu per fer 3 estudis geotècnics a la vegada?",
+   "confidence": 0.5,
+   "note": "'HAB' = habitatge(s). El correu no diu 'unifamiliar' literalment: es dedueix de PB+1 / 120 m² per parcel·la. Redacció final: títol del projecte/plànol o PLAN_COST 'HAB UNIF' manen; el correu és candidat feble. Comparació CLOSE ('un habitatge unifamiliar')."
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C0",
+   "location": "derivat del cos del correu (PB+1, 120 m² construïts, sense soterrani)",
+   "quote": "PB + 1 … 120 m2 construits",
+   "confidence": 0.3,
+   "note": "DERIVACIÓ, no lectura: < 300 m² i < 4 plantes → C0 per habitatge. Si el criteri és la superfície TOTAL de l'encàrrec (3 × 120 = 360 m² > 300) → C1. Cap línia 'Tipus d'edifici' en aquest document. Sempre candidats, mai segur; el pressupost p.2 (si porta la línia) mana."
+  }
+ ],
+ "tables": {
+  "superficie_construida": [
+   {
+    "components": [
+     "120"
+    ],
+    "total": "120",
+    "etiqueta_font": "segons informació aportada (correu del sol·licitant)",
+    "location": "cos del correu, text WhatsApp",
+    "quote": "- 120 m2 construits",
+    "note": "Valor PER HABITATGE (1 de 3 anunciats); l'Eva pot escriure el valor per casa en multi-habitatge (Castellar: '120 m2') → candidats. Total de l'encàrrec, si són 3 iguals: 360 m² (no consta literalment)."
+   }
+  ],
+  "__nota": "Només superficie_construida: el correu no aporta files de DPSH, sondeig, SPT/MA ni nivells."
+ },
+ "not_present": [
+  "expedient (el '25.0493' de la subcarpeta és codi comercial, no expedient; cap número d'informe al correu)",
+  "architect_name (cap arquitecte ni despatx esmentat; GRUP ALMA no porta etiqueta ARQUITECT — si al final no hi ha arquitecte enlloc, pràctica Eva: client al camp arquitecte, decisió del consolidador)",
+  "field_date (la data del correu 2025-06-25 és la de la sol·licitud de preu, mai data de camp)",
+  "superficie_parcela (només 'les 2 parcel·les del costat', sense superfícies)",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests ('3 estudis geotècnics' ≠ nombre de DPSH)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company / lab_sample_id / lab_depth / lab_location",
+  "cte_sol (cap 'Tipus de Terreny'; T-1 per defecte és coneixement previ, no lectura)"
+ ],
+ "reading_notes": "Mode --only amb pre-extracció: llegit _inventory.json (128 fitxers, 0 duplicats declarats) i després només body.txt + meta.json del preext (kind=msg, error=null). Adjunt únic PLAN_COST_CATELLAR DEL VALLÈS.xlsx marcat already_in_folder (md5 8418e65b… = 25.0493/PLAN_COST…, route python) → no llegit aquí. Correu simple (no RE:/FW:), tot el text és nou; imatges de signatura (image001/005/009) ignorades. Nota estructural per al consolidador: el sol·licitant anuncia 3 parcel·les i 3 estudis → possible 'un expedient, N informes'; confirmar amb pressupost MODF / comanda / annexos quins punts i quines parcel·les han acabat a l'expedient 3001621."
+}

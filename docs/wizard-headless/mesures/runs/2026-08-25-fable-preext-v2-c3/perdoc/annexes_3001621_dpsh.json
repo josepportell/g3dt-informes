@@ -1,0 +1,224 @@
+{
+ "source_path": "ANNEXES/3001621_DPSH.xls",
+ "source_md5": "0389af31b3b165e13338709a568cf130",
+ "skill_version": "1.3-preext-v2",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Transcripció digital (plantilla G3) dels 4 assaigs DPSH executats (fulls P-1, P-2, P-3, P-4): colpeig N20 per tram de 20 cm, NB derivat (N20/0,83), columna N.F. buida, columna 'Nivells' amb marques de COLOR per fondària, peu 'Rebuig a' per punt i una marca de color a la columna MOSTRA del full P-3.",
+ "issuer": "G3 (Eva) — transcripció revisada del full de camp manuscrit de TPS",
+ "date": null,
+ "pages_or_sheets": "4 fulls: P-1, P-2, P-3, P-4 (80 files × 7 columnes cadascun; capçalera fila 16; peu files 79-80)",
+ "context": {
+  "who_made_it": "Eva (G3), a partir del full de camp manuscrit del sondista (TPS) — 'PENETROS + SONDEIG.pdf' de la mateixa carpeta.",
+  "for_whom": "G3 mateix: és la font de l'annex PDF/ANNEXES/3001621_DPSH.pdf (gràfics + capçalera) i de la taula 'Penetròmetres dinàmics DPSH' de l'informe.",
+  "why": "Digitalitzar el colpeig N20, derivar NB (coeficient ocult D15 = 0,83), marcar nivells (color a la columna G) i nivell freàtic (columna F), i registrar la fondària exacta del rebuig ('Rebuig a -X,XX m').",
+  "expected_fields": [
+   "num_dpsh_tests",
+   "profunditat_assolida per punt (peu 'Rebuig a')",
+   "rebuig Si/No",
+   "nivell_freatic (columna F, text o color)",
+   "transicions de nivell per punt (colors columna G)",
+   "registre N20 per fondària",
+   "anotació de mostra/SPT al full P-3 (columna MOSTRA)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia (és a la capçalera de l'annex PDF, no a l'Excel)",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "cte",
+   "expedient (només al nom del fitxer, no al contingut)"
+  ],
+  "relation_to_others": "Versió digital REVISADA per l'Eva del full de camp manuscrit 'PENETROS + SONDEIG.pdf' (TPS) → aquest Excel mana per als valors N20 i la fondària de rebuig; el manuscrit només aporta el que l'Excel no té (punt 0, N.F., croquis, data). És la font directa de 'PDF/ANNEXES/3001621_DPSH.pdf' (mateixes dades + capçalera amb cota inici / OBRA / POBLACIÓ / DATA / NÚMERO D'INFORME): NO són fonts independents entre elles. Pressupost p.2 / PLAN_COST OFERTA!B21 / fitxa C13 donen DPSH PREVISTOS; aquest Excel dona els EXECUTATS (mana si discrepen). Sense cota inici, data ni metadades de projecte dins del fitxer.",
+  "authority_for": [
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "fulls P-1, P-2, P-3, P-4 — columna C ('Colpeig DPSH') amb dades a tots quatre",
+   "quote": "P-1!C19:C23 = 6, 10, 13, 38, 100 | P-2!C19:C20 = 15, 100 | P-3!C19:C21 = 16, 46, 100 | P-4!C19:C25 = 8, 8, 12, 27, 21, 28, 100",
+   "confidence": 0.9,
+   "note": "Executats (autoritat A: Excel > albarà TPS > previstos del pressupost/fitxa). Els 4 fulls tenen colpeig i peu 'Rebuig a' propi; cap full buit ni de plantilla."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "nom del fitxer (ANNEXES/3001621_DPSH.xls)",
+   "quote": "3001621_DPSH.xls",
+   "confidence": 0.6,
+   "note": "Només del NOM del fitxer (convenció {exp}_DPSH.xls de G3); el contingut no porta cap metadada de projecte. Corroboració, no font independent del nom de la carpeta."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "2",
+   "location": "columna G ('Nivells') — marques de COLOR de cel·la per fondària (sheet-i.colors.txt); llegenda fila 79: B79 bg=#FF8080 + C79 'Nivell 1'",
+   "quote": "P-1!G17:G20 bg=#FFFFC0 (0 a -0,6) i G21:G23 bg=#FF8080 (-0,8 a -1,2) | P-2!G17:G20 bg=#FF8080 (0 a -0,6) | P-3!G17:G21 bg=#FF8080 (0 a -0,8) | P-4!G17:G21 bg=#FFFFC0 (0 a -0,8) i G22:G25 bg=#FF8080 (-1,0 a -1,6) | llegenda: B79 bg=#FF8080, C79 'Nivell 1'",
+   "confidence": 0.3,
+   "note": "CANDIDATS [2 | 1], mai segur: (a) 2 = dues franges de color diferents a la columna Nivells (groc #FFFFC0 a sobre, rosa #FF8080 a sota; a P-2 i P-3 només rosa des de la superfície) = dues unitats marcades per l'Eva; (b) 1 = la llegenda només etiqueta el rosa com a 'Nivell 1' (patró de plantilla: color a B79 + text a C79; E79/F79 sense 'Nivell 2') → la franja groga podria ser sòl superficial/rebliment sense número. Els trams de l'Excel NO són nivells per si sols: mana la columna 'Unitat litològica' de l'annex de sondeig i la llegenda del tall (Pas 3). Confirmar."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P-3",
+   "location": "full P-3, columna E ('MOSTRA'), cel·les E23:E25 amb fons #E3E3E3 (únic full amb color a la columna E)",
+   "quote": "P-3!E23 bg=#E3E3E3 | P-3!E24 bg=#E3E3E3 | P-3!E25 bg=#E3E3E3 (sense text)",
+   "confidence": 0.3,
+   "note": "Marca de color SENSE text a la columna MOSTRA del full P-3 (files -1,2 / -1,4 / -1,6). Patró conegut de l'Eva: anotació de l'SPT al full P-3 en E22:E25 (Linyola, Alcoletge); aquí el text no hi és (potser un quadre de text que xlrd no captura). Candidat feble: la mostra surt del punt P-3 (o del sondeig al seu costat: el DPSH P-3 rebutja a -0,76, per sobre de la marca). Manen comanda fila 35 (parèntesi), GTL 'Mostra:' i annex de sondeig."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-1,20 a -1,60 m (aprox., marca de color)",
+   "location": "full P-3, E23:E25 (files de fondària -1,2 / -1,4 / -1,6)",
+   "quote": "P-3!B23 = -1.2 | P-3!B24 = -1.4 | P-3!B25 = -1.6 (E23:E25 bg=#E3E3E3, sense valor)",
+   "confidence": 0.25,
+   "note": "Interval deduït de les files marcades en color; pot ser nominal (interval de l'assaig) i no la cota d'extracció real. GTL > Excel > comanda per a la fondària (Pas 3): tractar com a corroboració, no com a font."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,08",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "full P-1: peu B80; columna F (N.F.) sense text ni color a F17:F77; última lectura amb cops a -1,2 (100)",
+    "quote": "P-1!B80 = 'Rebuig  a -1,08 m' | P-1!C23 = 100",
+    "extra": {
+     "registre_n20": {
+      "-0,2": 0,
+      "-0,4": 6,
+      "-0,6": 10,
+      "-0,8": 13,
+      "-1,0": 38,
+      "-1,2": 100
+     },
+     "ultima_fila_amb_cops": "-1,2 (100 = R)",
+     "nivells_color": "groc #FFFFC0 de 0 a -0,6; rosa #FF8080 de -0,8 a -1,2 → canvi entre -0,6 i -0,8",
+     "nivell_freatic_matis": null,
+     "cota_inici_nota": "no consta a l'Excel; capçalera de PDF/ANNEXES/3001621_DPSH.pdf"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-0,48",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "full P-2: peu B80; columna F (N.F.) sense text ni color a F17:F77; última lectura amb cops a -0,6 (100)",
+    "quote": "P-2!B80 = 'Rebuig  a -0,48 m' | P-2!C20 = 100",
+    "extra": {
+     "registre_n20": {
+      "-0,2": 0,
+      "-0,4": 15,
+      "-0,6": 100
+     },
+     "ultima_fila_amb_cops": "-0,6 (100 = R)",
+     "nivells_color": "només rosa #FF8080 de 0 a -0,6 (cap franja groga)",
+     "nivell_freatic_matis": null,
+     "cota_inici_nota": "no consta a l'Excel; capçalera de PDF/ANNEXES/3001621_DPSH.pdf"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-0,76",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "full P-3: peu B80; columna F (N.F.) sense text ni color a F17:F77; última lectura amb cops a -0,8 (100)",
+    "quote": "P-3!B80 = 'Rebuig  a -0,76 m' | P-3!C21 = 100",
+    "extra": {
+     "registre_n20": {
+      "-0,2": 0,
+      "-0,4": 16,
+      "-0,6": 46,
+      "-0,8": 100
+     },
+     "ultima_fila_amb_cops": "-0,8 (100 = R)",
+     "nivells_color": "només rosa #FF8080 de 0 a -0,8 (cap franja groga)",
+     "mostra_color": "E23:E25 bg=#E3E3E3 sense text (files -1,2/-1,4/-1,6) — possible anotació SPT/mostra (vegeu tier_a lab_location)",
+     "nivell_freatic_matis": null,
+     "cota_inici_nota": "no consta a l'Excel; capçalera de PDF/ANNEXES/3001621_DPSH.pdf"
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,55",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "full P-4: peu B80; columna F (N.F.) sense text ni color a F17:F77; última lectura amb cops a -1,6 (100)",
+    "quote": "P-4!B80 = 'Rebuig  a -1,55 m' | P-4!C25 = 100",
+    "extra": {
+     "registre_n20": {
+      "-0,2": 0,
+      "-0,4": 8,
+      "-0,6": 8,
+      "-0,8": 12,
+      "-1,0": 27,
+      "-1,2": 21,
+      "-1,4": 28,
+      "-1,6": 100
+     },
+     "ultima_fila_amb_cops": "-1,6 (100 = R)",
+     "nivells_color": "groc #FFFFC0 de 0 a -0,8; rosa #FF8080 de -1,0 a -1,6 → canvi entre -0,8 i -1,0",
+     "nivell_freatic_matis": null,
+     "cota_inici_nota": "no consta a l'Excel; capçalera de PDF/ANNEXES/3001621_DPSH.pdf"
+    }
+   }
+  ],
+  "sondeig_tests": [],
+  "spt_ma_tests": [],
+  "soil_levels": [
+   {
+    "nom": "franja superior (groc #FFFFC0; sense etiqueta a la llegenda)",
+    "litologia": null,
+    "de": "0,00",
+    "a": "-0,60 (P-1) / -0,80 (P-4); absent a P-2 i P-3 (rosa des de la superfície)",
+    "mostra_del_nivell": false,
+    "location": "columna G ('Nivells') — bg=#FFFFC0 a P-1!G17:G20 i P-4!G17:G21",
+    "quote": "P-1!G17:G20 bg=#FFFFC0 | P-4!G17:G21 bg=#FFFFC0 | P-2, P-3: cap cel·la #FFFFC0",
+    "note": "Franja marcada per l'Eva però NO etiquetada a la llegenda (A79 és #FFFF99, un altre to → gutter de plantilla, no llegenda). Pot ser sòl superficial/rebliment sense número o el '1er nivell' real: l'annex de sondeig/tall ho decideix. Fondàries llegides al límit de fila (±0,2 m)."
+   },
+   {
+    "nom": "franja inferior (rosa #FF8080 = 'Nivell 1' segons llegenda B79/C79)",
+    "litologia": null,
+    "de": "-0,60 (P-1) / 0,00 (P-2) / 0,00 (P-3) / -0,80 (P-4)",
+    "a": "rebuig (-1,08 / -0,48 / -0,76 / -1,55)",
+    "mostra_del_nivell": null,
+    "location": "columna G ('Nivells') — bg=#FF8080 a P-1!G21:G23, P-2!G17:G20, P-3!G17:G21, P-4!G22:G25; llegenda B79 bg=#FF8080 + C79 'Nivell 1'",
+    "quote": "P-1!G21:G23 | P-2!G17:G20 | P-3!G17:G21 | P-4!G22:G25 bg=#FF8080 | B79 bg=#FF8080, C79 = 'Nivell 1'",
+    "note": "Coincideix amb el tram de colpeig alt (≥13) fins al rebuig. Contacte NO horitzontal (canvia per punt). 'mostra_del_nivell' indeterminable: la marca MOSTRA de P-3 (-1,2/-1,6) és per sota del rebuig del DPSH P-3 (-0,76), deu correspondre al sondeig del costat."
+   }
+  ],
+  "__nota": "num_soil_levels i soil_levels d'aquest fitxer són CANDIDATS febles (colors de cel·la; llegenda de plantilla amb un sol 'Nivell 1'): manen l'annex de sondeig (Unitat litològica) i el tall. A diferència de Tulipa/Linyola, aquí els colors de la columna G SÍ que varien per full i per fondària (marques reals, no plantilla). Columna F (N.F.): cap text ni cap color als 4 fulls → 'No detectat' (comprovació de colors feta via sheet-i.colors.txt = formatting_info)."
+ },
+ "not_present": [
+  "client_name (no consta: cap metadada de projecte a l'Excel)",
+  "street_address (no consta)",
+  "municipality (no consta)",
+  "architect_name (no consta)",
+  "building_type (no consta)",
+  "num_floors (no consta)",
+  "superficie_parcela (no consta)",
+  "field_date (no consta; l'Excel no porta data — la data és a l'annex PDF 'DATA:' i a la fitxa F38)",
+  "cota_referencia (no consta; 'Cota inici' és a la capçalera de PDF/ANNEXES/3001621_DPSH.pdf)",
+  "utm_x_utm_y (no consta)",
+  "referencia_catastral (no consta)",
+  "lab_testing_company (no consta)",
+  "lab_sample_id (marca de color a P-3!E23:E25 sense cap text: cap etiqueta llegible)",
+  "cte_edificacio / cte_sol (no consta)",
+  "nivell freàtic (columna F buida de text i de color als 4 fulls = No detectat)"
+ ],
+ "reading_notes": "Pre-extracció v2: llegits sheet-0..3.cells.txt i sheet-0..3.colors.txt (cap xlrd executat). Colors: comprovació equivalent a formatting_info=True ja feta pel preext — columna F (N.F.) sense text ni color a F17:F77 als 4 fulls → 'No detectat'; columna G ('Nivells') amb dues franges de color reals (groc #FFFFC0 / rosa #FF8080) que varien per full i coincideixen amb el salt de colpeig; llegenda fila 79: B79 rosa + C79 'Nivell 1' (idèntica als 4 fulls, plantilla), E79/F79 sense 'Nivell 2'; A79 #FFFF99 i A80 #CC9CCC = gutter de plantilla. Peu 'Rebuig a' a B80 als 4 fulls (dins la zona B79-B82 del Pas 3b); l'última fila amb cops (100 = R) és coherent amb cada peu (P-1 -1,2/−1,08; P-2 -0,6/−0,48; P-3 -0,8/−0,76; P-4 -1,6/−1,55). D15 = 0,83 (font blanca, ocult) = coeficient NB = N20/0,83. P-3!E23:E25 amb fons gris sense text: única marca a la columna MOSTRA de tot l'Excel (possible anotació SPT en quadre de text no capturat) — creuar amb 'PENETROS + SONDEIG.pdf', comanda fila 35 i GTL. Inventari llegit (Pas 0): el fitxer no té duplicats per md5; l'annex PDF/ANNEXES/3001621_DPSH.pdf n'és derivat (no independent)."
+}

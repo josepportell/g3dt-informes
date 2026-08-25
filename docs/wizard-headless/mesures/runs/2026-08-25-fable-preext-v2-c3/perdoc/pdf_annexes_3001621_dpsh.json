@@ -1,0 +1,283 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_DPSH.pdf",
+ "source_md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe: 4 fulls (P-1..P-4) impresos des de l'Excel DPSH de G3, cadascun amb capçalera d'obra, taula de colpeig N20/Nb per 20 cm, columnes MOSTRA/N.F./Nivells, gràfica i peu 'Rebuig a'.",
+ "issuer": "G3 (Eva) — plantilla Excel DPSH impresa a PDF (Acrobat Distiller 15 / PScript5, creationDate 2025-11-03)",
+ "date": "DATA: 24/10/25 (data de camp a la capçalera); PDF generat 2025-11-03",
+ "pages_or_sheets": "4 pàgines A4 (P-1, P-2, P-3, P-4)",
+ "context": {
+  "who_made_it": "Eva (G3) a partir de la plantilla Excel DPSH (ANNEXES/3001621_DPSH.xls); és un annex propi de l'informe, no un document de proveïdor.",
+  "for_whom": "Per a l'informe geotècnic 3001621 (annex de resultats de penetròmetres) — lector final: el client de l'informe.",
+  "why": "Presentar els 4 assaigs DPSH executats (colpeig per 20 cm, gràfica, fondària de rebuig, marques de nivell) amb el sistema de cotes del projecte.",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "num_dpsh_tests",
+   "cota_referencia (cota inici per punt, aquí RELATIVA respecte el carrer)",
+   "dpsh_tests[] (cota_inici, profunditat_assolida, rebuig, nivell_freatic, registre N20/Nb)",
+   "marques 'Nivell N' de la columna Nivells",
+   "N.F."
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "lab_*",
+   "cte_*",
+   "litologies"
+  ],
+  "relation_to_others": "Impressió de ANNEXES/3001621_DPSH.xls (route python): els valors de colpeig NO són font independent de l'Excel (l'Excel mana per als valors; la capçalera OBRA/POBLACIÓ/DATA/NÚMERO D'INFORME/cota inici és text que l'Eva hi escriu). Mateix md5 que PDF-V0/ANNEXES/3001621_DPSH.pdf (duplicat exacte, exclòs de l'inventari). Complementa el manuscrit TPS 'PENETROS + SONDEIG.pdf' (font primària de camp) i comparteix sistema de cotes relatiu ('respecte el carrer') amb l'annex de sondeig PDF/ANNEXES/3001621_sondeig.pdf (a creuar en consolidar: regla de l'ERR de Castellar — la cota del sondeig a la taula segueix el sistema relatiu). Data 24/10/25 coherent amb els noms de fotos 'Imagen de WhatsApp 2025-10-24' de FOTOGRAFIES/ (vist a l'inventari, no obert).",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "num_dpsh_tests",
+   "cota_referencia",
+   "dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "capçalera p.1-4, 'NÚMERO D´INFORME'",
+   "quote": "NÚMERO D´INFORME: 3001621",
+   "confidence": 0.95,
+   "note": "Idèntic a les 4 pàgines i al nom de la carpeta '3001621 CASTELLAR DEL VALLES'. Font derivada de l'encàrrec (no independent de la comanda/Excel)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ Arbrells 18 A",
+   "location": "capçalera p.1-4, bloc 'OBRA:'",
+   "quote": "OBRA: C/ ARBRELLS 18 A",
+   "confidence": 0.85,
+   "note": "Bloc etiquetat OBRA (adreça de l'obra, no del client). Grafia '18 A' (amb espai) tal com està imprès; pot ser '18A'. Cap segona adreça (cantonada) en aquest document."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "capçalera p.1-4, 'POBLACIÓ:'",
+   "quote": "POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.85,
+   "note": "Imprès sense accent (forma curta G3); normalitzat a la forma oficial 'Castellar del Vallès'. Idèntic a les 4 pàgines."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-24",
+   "location": "capçalera p.1-4, 'DATA:'",
+   "quote": "DATA: 24/10/25",
+   "confidence": 0.85,
+   "note": "Mateixa data a les 4 pàgines = dia dels DPSH (primer dia de camp). Prioritat 2 segons regla (fitxa F38 > annex DPSH). Corroborat pels noms de fotos WhatsApp 2025-10-24 de l'inventari (no obertes)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "4 pàgines, capçalera 'ASSAIG DE PENETRACIÓ DINÀMICA: P-1..P-4', totes amb dades i peu 'Rebuig a'",
+   "quote": "P-1 - 4 m (respecte el carrer). | P-2 cota inici: -4,2 m | P-3 cota inici: - 4 m | P-4 - 4 m (respecte el carrer).",
+   "confidence": 0.9,
+   "note": "4 punts EXECUTATS (tots amb colpeig i rebuig). Derivat de l'Excel DPSH: no compta com a font independent d'aquell; mana l'Excel si discrepa."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "-4,0 m (respecte el carrer)",
+   "location": "capçalera p.1, p.3, p.4 (P-1, P-3, P-4)",
+   "quote": "P-1     - 4  m  (respecte el carrer).",
+   "confidence": 0.6,
+   "note": "CANDIDATS, sistema RELATIU intencionat: cap cota absoluta en aquest document. P-1/P-3/P-4 = -4,0 m; P-2 = -4,2 m (cotes per punt). L'absoluta (z de l'annex de sondeig / COORDENADES.txt) és una altra font: no la substitueix. Regla Castellar: tot el sistema de cotes del projecte és relatiu."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "-4,2 m (respecte el carrer)",
+   "location": "capçalera p.2 (P-2)",
+   "quote": "P-2    cota inici: -4,2 m  (respecte el carrer)",
+   "confidence": 0.4,
+   "note": "Candidat 2: cota pròpia de P-2 (parcel·la amb petita diferència de cota entre punts)."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "columna 'Nivells' + llegenda al peu (p.1-4)",
+   "quote": "Nivell 1",
+   "confidence": 0.4,
+   "note": "CANDIDAT, confirmar amb l'annex de sondeig ('Unitat litològica') i el tall. La llegenda només anomena 'Nivell 1' (taronja), però a P-1 i P-4 la columna mostra un tram superficial PÀL·LID sense etiqueta (P-1: 0 a ≈-0,7; P-4: 0 a ≈-0,9, separat per línia discontínua) abans del Nivell 1; a P-2 i P-3 el Nivell 1 arrenca a 0. Pot ser reblert/sòl superficial no comptat com a nivell o un 2n nivell no etiquetat: no decidir aquí."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.1 capçalera + peu 'Rebuig a' + columna N.F.",
+    "quote": "P-1     - 4  m  (respecte el carrer). | Rebuig  a -1,08 m",
+    "extra": {
+     "matis_nf": null,
+     "nf_comprovacio": "columna N.F. buida de text i sense cap marca de color a la pàgina renderitzada",
+     "registre_n20_per_fondaria": {
+      "0": 0,
+      "-0,2": 0,
+      "-0,4": 6,
+      "-0,6": 10,
+      "-0,8": 13,
+      "-1": 38,
+      "-1,2": 100
+     },
+     "registre_nb_per_fondaria": {
+      "0": 0,
+      "-0,2": 0,
+      "-0,4": 7,
+      "-0,6": 12,
+      "-0,8": 16,
+      "-1": 46,
+      "-1,2": 120
+     },
+     "factor_nb": "0,83 (Nb = N20/0,83)",
+     "ultima_fila_amb_cops": "-1,2 (100 = rebuig)",
+     "nivells_columna": "tram pàl·lid sense etiqueta 0 a ≈-0,7 (línia discontínua entre -0,6 i -0,8); 'Nivell 1' (taronja) de ≈-0,7 a -1,2",
+     "mostra": "columna MOSTRA buida"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,2 m (respecte el carrer)",
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 capçalera + peu 'Rebuig a' + columna N.F.",
+    "quote": "P-2    cota inici: -4,2 m  (respecte el carrer) | Rebuig  a -0,48 m",
+    "extra": {
+     "matis_nf": null,
+     "nf_comprovacio": "columna N.F. buida de text i sense cap marca de color a la pàgina renderitzada",
+     "registre_n20_per_fondaria": {
+      "0": 0,
+      "-0,2": 0,
+      "-0,4": 15,
+      "-0,6": 100
+     },
+     "registre_nb_per_fondaria": {
+      "0": 0,
+      "-0,2": 0,
+      "-0,4": 18,
+      "-0,6": 120
+     },
+     "factor_nb": "0,83 (Nb = N20/0,83)",
+     "ultima_fila_amb_cops": "-0,6 (100 = rebuig)",
+     "nivells_columna": "'Nivell 1' (taronja) de 0 a -0,6, sense tram superficial diferenciat",
+     "mostra": "columna MOSTRA buida"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.3 capçalera + peu 'Rebuig a' + columna N.F.",
+    "quote": "P-3    cota inici: - 4 m  (respecte el carrer). | Rebuig  a -0,76 m",
+    "extra": {
+     "matis_nf": null,
+     "nf_comprovacio": "columna N.F. buida de text i sense cap marca de color a la pàgina renderitzada",
+     "registre_n20_per_fondaria": {
+      "0": 0,
+      "-0,2": 0,
+      "-0,4": 16,
+      "-0,6": 46,
+      "-0,8": 100
+     },
+     "registre_nb_per_fondaria": {
+      "0": 0,
+      "-0,2": 0,
+      "-0,4": 19,
+      "-0,6": 55,
+      "-0,8": 120
+     },
+     "factor_nb": "0,83 (Nb = N20/0,83)",
+     "ultima_fila_amb_cops": "-0,8 (100 = rebuig)",
+     "nivells_columna": "'Nivell 1' (taronja) de 0 a -0,8, sense tram superficial diferenciat",
+     "mostra": "columna MOSTRA buida; dues cel·les grises sense text a -1,2 i -1,6 (artefacte de format, per sota del rebuig: no és cap mostra)"
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.4 capçalera + peu 'Rebuig a' + columna N.F.",
+    "quote": "P-4     - 4  m (respecte el carrer). | Rebuig  a -1,55 m",
+    "extra": {
+     "matis_nf": null,
+     "nf_comprovacio": "columna N.F. buida de text i sense cap marca de color a la pàgina renderitzada",
+     "registre_n20_per_fondaria": {
+      "0": 0,
+      "-0,2": 0,
+      "-0,4": 8,
+      "-0,6": 8,
+      "-0,8": 12,
+      "-1": 27,
+      "-1,2": 21,
+      "-1,4": 28,
+      "-1,6": 100
+     },
+     "registre_nb_per_fondaria": {
+      "0": 0,
+      "-0,2": 0,
+      "-0,4": 10,
+      "-0,6": 10,
+      "-0,8": 14,
+      "-1": 33,
+      "-1,2": 25,
+      "-1,4": 34,
+      "-1,6": 120
+     },
+     "factor_nb": "0,83 (Nb = N20/0,83)",
+     "ultima_fila_amb_cops": "-1,6 (100 = rebuig)",
+     "nivells_columna": "tram pàl·lid sense etiqueta 0 a ≈-0,9 (línia discontínua entre -0,8 i -1); 'Nivell 1' (taronja) de ≈-0,9 a -1,6",
+     "mostra": "columna MOSTRA buida"
+    }
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [],
+    "de": "0 (P-2, P-3) / ≈-0,7 (P-1) / ≈-0,9 (P-4), sota un tram superficial pàl·lid sense etiqueta",
+    "a": "rebuig (-1,08 / -0,48 / -0,76 / -1,55 segons punt)",
+    "mostra_del_nivell": false,
+    "location": "columna 'Nivells' + llegenda 'Nivell 1' (p.1-4)",
+    "quote": "Nivell 1",
+    "note": "Només marques de nivell (color), cap litologia en aquest document: la litologia i el nombre de nivells s'han de prendre de l'annex de sondeig i del tall. El tram superficial pàl·lid de P-1/P-4 no té etiqueta a la llegenda."
+   }
+  ],
+  "__nota": "sondeig_tests i spt_ma_tests: no aplica (cap sondeig ni SPT en aquest document)"
+ },
+ "not_present": [
+  "client_name (cap casella de client)",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x_utm_y (cap coordenada; només cota relativa)",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location (columna MOSTRA buida a les 4 pàgines)",
+  "cte_edificacio",
+  "cte_sol",
+  "nivell freàtic (columna N.F. buida a les 4 pàgines, sense text ni color)"
+ ],
+ "reading_notes": "Pre-extracció: text_ok a les 4 pàgines (PDF des d'Excel via Distiller, text net malgrat el 'text_suspect_reason'); llegit page-1..4.txt i després les 4 page-N.png senceres a 150 dpi per verificar el que el text no porta: columnes MOSTRA/N.F. buides (cap marca de color), columna 'Nivells' (colors: pàl·lid sense etiqueta + taronja 'Nivell 1', línia discontínua a P-1 entre -0,6/-0,8 i a P-4 entre -0,8/-1), peu 'Rebuig a' present als 4 fulls. Cap clip addicional necessari. Cotes 'cota inici' relatives 'respecte el carrer' a les 4 pàgines (P-2 -4,2, resta -4,0): sistema relatiu del projecte. Duplicat exacte (md5) a PDF-V0/ANNEXES/, no comptat. No s'ha obert l'Excel font."
+}
