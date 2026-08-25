@@ -7,6 +7,7 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 <command-name>g3dt-llegir-projecte</command-name>
 
 Versió 1.3 (2026-08-24) — claus CANÒNIQUES de les files de `tables` (E2E Castellar: el productor va escriure `prof_extraccio`, `punt`/`cota_inici` al sondeig… i l'or `profunditat`, `sondeig`/`cota`; la UI i el generador necessiten un sol nom). Llista al Pas 5.
+v1.4: pre-extracció determinista (2026-08-25): en mode --only el runner deixa text/PNG per pàgina, cel·les i colors d'Excel, cos de correu a validation/lectura/_preext/ (inventari clau preext); el skill llegeix aquests fitxers, fa zoom amb scripts/render_clip.py i escriu amb scripts/write_doc_json.py. Sense pre-extracció (preext absent/error) → procediment v1.3.
 v1.2: nom canònic del JSON per document en mode `--only` (coincideix amb `safe_doc_name` del runner, que és qui el llegeix): path RELATIU sencer, sense extensió, tota seqüència no alfanumèrica → `_`, sense `_` inicial/final, minúscules. Ex.: `25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf` → `25_0647_pressupost_geotec_bell_lloc.json`.
 v1.1: el `registre` de l'SPT va DINS de la cel·la `n30` (subcel·la amb la seva pròpia font), no com a germà: el validador de contracte exigeix `n30.registre` i la UI el mostra al popup de l'n30 (creuament de l'acceptació Fase 0).
 v1.0: contracte v1 per al wizard headless (`docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md`): dialecte únic `estat`/`font`, 22 claus planes a `fields`, arguments nous `--inventory` i `--consolida` (Pas 5b), escriptura atòmica, i capçalera `source_md5`/`skill_version`/`schema_version` a cada JSON.
@@ -27,6 +28,13 @@ v0.2: Pas 0 (context del document abans de llegir-lo; reflexió del Josep) + blo
 - `--inventory FILE`: JSON d'inventari escrit pel wizard (llista completa de fitxers del projecte amb md5, duplicats i route).
   En mode `--only` és el teu context creuat: llegeix-lo ABANS del document per aplicar el Pas 0 (saber què més hi ha a la
   carpeta, detectar duplicats i versions) sense obrir els altres fitxers. Si no es passa o no existeix, continua sense i anota-ho.
+
+### Pre-extracció (mode --only)
+
+1. L'inventari porta, per a cada document amb route `claude`, una clau `preext` amb `dir`, `kind`, `files` (paths absoluts) i `meta`. **Abans d'obrir res**, llegeix `_inventory.json` (Pas 0, context creuat) i localitza l'entrada del teu `--only`.
+2. **No executis `fitz`, `xlrd`, `openpyxl`, `extract_msg`, `PIL`, `ls`, `find` ni `md5sum`.** El text de cada pàgina és a `page-N.txt` (si `meta.text_ok[N]` és false, és brossa o escaneig: no t'hi refiïs). La pàgina sencera és a `page-N.png` (150 dpi). Les meitats (`page-N-left/right.png` o `-top/bottom.png`, 220 dpi) **només existeixen per a les pàgines sense text llegible** (`meta.halves_pages`). Excel: `sheet-i.cells.txt` (`REF<TAB>valor`, per citar `Full!REF`), `sheet-i.csv`, i **`sheet-i.colors.txt`** (una línia per cel·la amb fons o font de color: `REF<TAB>bg=#RRGGBB<TAB>font=…<TAB>valor`; **fitxer buit = cap cel·la de color al full**, és la comprovació de color del Pas 3b, ja feta). Correu: `body.txt` + `attachments/` (amb `already_in_folder` al meta si l'adjunt ja és solt a la carpeta: no el llegeixis dos cops). Imatge: `image.png`. El md5 del document és `source_md5` del meta / `md5` de l'inventari.
+3. **Llegeix amb economia, com ho faries amb el document a la mà:** primer el `.txt` de les pàgines (barat); després la sencera de les pàgines que aporten dades del nivell A (caixetí, blocs CLIENT/OBRA, taules, signatures) — no de les de condicions generals. Mira les meitats només si existeixen i la sencera no es llegeix. Si necessites més resolució en una zona concreta (caixetí, etiquetes petites, manuscrit), usa `.venv/bin/python scripts/render_clip.py PDF --page N --clip x0,y0,x1,y1 --dpi 300-500 --out /tmp/clip.png` (fraccions 0-1) i `Read` del resultat. **Aquest és l'únic codi que executes per mirar.** Si `preext.error` no és null o falta `preext`, torna al procediment normal (fitz) i anota-ho a `reading_notes`.
+4. Si `kind == "unsupported"` (DWG…), aplica el Pas 1.3 (dwg_text_dump) o marca `no llegible`.
 - `--consolida`: NO llegeixis cap document del projecte. Llegeix els JSON per-document ja escrits a `--out` i aplica el
   Pas 5 per escriure `_decisions.json`. Vegeu el Pas 5b.
 
@@ -39,7 +47,7 @@ Exemples:
 
 Entorn: `.venv/bin/python` del repo té `fitz` (PyMuPDF), `openpyxl`, `xlrd`, `extract_msg`, `python-docx`, `PIL`. Sense `unzip` (usa `zipfile`).
 Mode headless: no facis cap pregunta; si dubtes, baixa d'estat (`segur` → `candidats` → `no_trobat`) i anota-ho a `note`.
-Escriu SEMPRE de forma atòmica: fitxer temporal al mateix directori + `os.replace` (el wizard llegeix els JSON tan bon punt apareixen).
+Escriu SEMPRE de forma atòmica: fitxer temporal al mateix directori + `os.replace` (el wizard llegeix els JSON tan bon punt apareixen). En aquest skill, això ho fa `scripts/write_doc_json.py`.
 
 ## Els 15 camps del nivell A
 
@@ -325,7 +333,9 @@ fondàries i litologies bones).
  "reading_notes": "què ha calgut fer (ordenar blocs, renderitzar, rotar, clip, llegir /Sig)"}
 ```
 
-Escriu cada JSON **immediatament** després de llegir el document (el disc és la memòria), de forma atòmica (tmp + `os.replace`).
+Escriu cada JSON **immediatament** després de llegir el document (el disc és la memòria) amb **una sola ordre**: `.venv/bin/python scripts/write_doc_json.py --out OUT_DIR --expect-source-path "REL" --expect-md5 MD5 <<'EOF'
+{...payload...}
+EOF`. El script valida el payload, tria el nom canònic i escriu de forma atòmica; NO facis tmp+os.replace a mà, NO rellegeixis el fitxer després (si el script diu OK, està escrit). Si diu ERROR, corregeix el payload i torna-ho a executar.
 **Nom del fitxer en mode `--only` (canònic, el runner l'espera):** el path RELATIU sencer del document, sense extensió,
 substituint tota seqüència de caràcters no alfanumèrics per `_`, sense `_` inicial/final, en minúscules, + `.json`
 (`25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf` → `25_0647_pressupost_geotec_bell_lloc.json`). En dry-run (lectura d'or) el

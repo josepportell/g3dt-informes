@@ -1,4 +1,4 @@
-"""Experiment de pre-extracció determinista (via A, lectura headless).
+"""Pre-extracció determinista (adoptada a producció 2026-08-25, skill v1.4) (via A, lectura headless).
 
 Sonda `docs/wizard-headless/mesures/probes/2026-08-24-tall-stream-json/turns.md`:
 de 15 usos d'eina d'una crida `--only` típica, 5 són el model construint-se

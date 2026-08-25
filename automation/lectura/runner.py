@@ -114,14 +114,28 @@ def _env_int(name: str, default: int) -> int:
         return default
 
 
+def _env_bool(name: str, *, default: bool) -> bool:
+    """Booleana d'entorn amb defecte configurable (v1.4: `G3DT_LECTURA_PREEXT`
+    per defecte ON — la pre-extraccio determinista ja es producio, no
+    experiment). No definida o buida -> `default`; `1`/`true`/`yes` -> True;
+    `0`/`false`/`no` -> False; qualsevol altre valor -> `default`."""
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return default
+    val = raw.strip().lower()
+    if val in ("1", "true", "yes"):
+        return True
+    if val in ("0", "false", "no"):
+        return False
+    return default
+
+
 def _load_config() -> dict[str, Any]:
     mode = os.getenv("G3DT_LECTURA_MODE", "document") or "document"
     if mode not in ("document", "projecte"):
         mode = "document"
-    preext = os.getenv("G3DT_LECTURA_PREEXT", "").strip().lower() in ("1", "true", "yes")
-    skill = os.getenv("G3DT_LECTURA_SKILL", "").strip() or (
-        "g3dt-llegir-projecte-preext" if preext else "g3dt-llegir-projecte"
-    )
+    preext = _env_bool("G3DT_LECTURA_PREEXT", default=True)
+    skill = os.getenv("G3DT_LECTURA_SKILL", "").strip() or "g3dt-llegir-projecte"
     effort = os.getenv("G3DT_LECTURA_EFFORT", "xhigh").strip().lower() or "xhigh"
     if effort not in _VALID_EFFORTS:
         logger.warning(
