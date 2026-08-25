@@ -79,7 +79,7 @@ regenerat (8 runs + `consolida2` + `fase12/out`): **0 ERR de format**; el v2 des
 (`soil_levels[1].de = 0,00` als runs `e2e-tarda-c2-solapat` i `sonnet-c3` del 24-08 → fons 0→1 al llibre, `_v1` conservat) i un forat del
 consolidador Python (fondàries de la capa vegetal `no_trobat` al joc Sonnet v2). Fixture Castellar `sondeig cota` revisat a `candidats` amb
 l'informe de l'Eva (sense −4,20: no és a cap document). Detall: DECISION-LOG «2026-08-25 (nit, 2)», `fase12-consolida/_RESULTATS.md` §7.
-Pendents nous: regla Pas 3b «`de` del nivell 1 = base de la capa vegetal» (pregunta a l'Eva), forat capa vegetal a `consolidate.py`.
+Pendents nous: regla Pas 3b «`de` del nivell 1 = base de la capa vegetal» (pregunta a l'Eva), forat capa vegetal a `consolidate.py`. **Preguntes a l'Eva: registre únic a `docs/PREGUNTES-EVA-PENDENTS.md` (6 obertes).**
 
 Disseny `docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md` (D1-D3/D5 confirmats pel Josep) → Fases 0-8 fetes el mateix dia
 (codi amb Sonnet 5, judici a la sessió principal). Skill v1.3 (`--only`+`--inventory`, `--consolida`, contracte v1, claus
