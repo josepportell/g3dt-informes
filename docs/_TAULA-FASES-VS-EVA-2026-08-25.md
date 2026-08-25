@@ -3,6 +3,61 @@
 **Orientativa, no font de veritat** (Josep, 2026-08-25 nit). Serveix per prioritzar; les xifres són les mesurades on hi ha font, i les valoracions de l'Eva són **inferències** marcades com a tals.
 Fonts: `DIAGNOSTIC-PROD-2026-08-23.md` §3 (341 variables, 59 % d'encert a prod; 118 MISMATCH per causa), `DISSENY-ANNEX-TRES-BOTONS…` §10 (Fases 9-17), `LEDGER.md`, memòries `eva_prod_logs_scoreboard_2026-08` (el que l'Eva viu: 6-10 min d'espera, 4+4 crashes en 14 dies), `feedback_no_pull_eva_success_criterion`.
 
+## Resum compacte (tal com es va presentar al Josep el 2026-08-25, 23:40 — «em diu on estem»)
+
+### Tipus de dada de l'informe (per llegir la taula)
+
+| Tipus | Què hi ha | Avui a prod (diagnòstic 23-08, 341 vars, 59 %) |
+|---|---|---|
+| **A** identitat i camp | expedient, client, adreça, municipi, arquitecte, tipus edifici, plantes, sup. parcel·la, data camp, cota ref., nivells, UTM, RC, lab, CTE | client «G3» 3/8, parcel·la equivocada 4/8, data de camp 7/8 malament |
+| **T** taules de lectura | DPSH, sondeig, SPT/MA, nivells (de/a, litologia) | no mesurat; cadena DPSH trencada a casa seva (92 % FAIL) |
+| **C** càlculs | γ, Nb, φ, c, E, Qa, assentament, K30, cte_sol, files geotècnica/perm./sísmica | 41/118 MISMATCH (E 6/8, Qa 6/8, assent. 7/8) — criteri ≠ Eva |
+| **N** narrativa | site_description, adjacents, soterrani, empentes, conclusions | 7/8 diferent; adjacents en castellà (Rubí) |
+| **B** biblioteca | textos estàndard per material/zona (radó, sísmica, sulfats, geomech) | bé si els inputs ho són (6/8) |
+| **I** imatges | cadastre, aèria, A.01, tall, geològica, fotos | 2-4 placeholders quan falla parcel·la/UTM |
+| **P** peus i numeració | fig/table/section nums | automàtics, cap queixa |
+
+### Fases i blocs pendents → què milloren → què notaria l'Eva
+
+| Bloc | Millora | Tipus | Si demà ho tingués (inferència) | Urgència |
+|---|---|---|---|---|
+| **0 Desplegament** (Fase 17 Windows + pla/model) | tot: sense això **res** li arriba | tots | Res. Avui viu la via B: petades + 6-10 min | **Condicionant** |
+| **0b Hold-out amb carpetes noves seves** | confiança real | A, T | El 0 erroni és sobre 8 projectes que el skill anomena pel nom | **Molt alta** |
+| **1 Nivell A** (fet: Fases 0-12) | encerts A: 59 % → 0 erroni de fons, ~80 % OK + candidats amb cita | A, T (+I, N per arrossegament) | Client/adreça/parcel·la/data correctes; el dubtós surt com a tria, no com a valor fals | fet |
+| **1b Fase 8b** taules UI → generador | que T **arribi al .docx** | T (i C) | Sense 8b, llegim bé però l'informe surt amb les taules velles | **Alta** (petita) |
+| **1c Fase 13** auto_result + Cadastre/ICGC al consolidador | reobertura instant; parcel·la validada | A, I | Ortofoto/cadastre de la seva parcel·la, cap imatge buida | **Alta** |
+| **1d** regla `de` nivell 1 + forat capa vegetal | T | T, B | nivell 1 com ella el posa | mitjana (depèn de pregunta 3) |
+| **2 Fase 14** tres botons | espera → segon pla | UX | «Ho preparo i faig una altra cosa» (avui mira una barra 6-16 min) | **Alta** — fa acceptables els 20-26 min |
+| **2b Fase 15** notificacions | tanca l'espera | UX | «M'arriba un correu i obro» | **Alta** amb 14 |
+| **2c Fases 11 + 16** delta-sync, E2E | re-lectures parcials ≤ 10 min; mesures | UX | només rellegeix el que ha afegit | mitjana |
+| **3 Càlculs** (correu v4 → ajustar codi) | 41 MISMATCH, el bloc més gran | C, B | Si els números no són els seus, refà la secció i no es fia de la resta | **alta en valor, bloquejada per les seves respostes** |
+| **4 Narrativa** (adjacents/Street View, site_description, soterrani) | N | N | No sabem quant reescriu; castellà/«G3» ja tancats per la via A | mitjana; mesurar primer |
+| **5 Biblioteca i peus** | derivades | B, P | només si nivell/terreny és erroni | baixa (cau sola) |
+| **6 Imatges** (fotos, A.01, Street View) | cap placeholder | I | requadres buits = «no serveix» a la vista | alta la part de 1c; mitjana la resta |
+| **7 Expedients amb 2 informes** (Tulipa) | robustesa | tots | si li passa sovint, no li serveix en aquests | desconeguda (pregunta 5) |
+
+### Lectura per prioritzar
+
+1. **Sense 0 + 0b l'Eva no nota res**: el seu judici avui es forma sobre la via B. Tot el que segueix compta només si arriba al seu ordinador i aguanta un projecte nou seu.
+2. Ordre de valor percebut inferit: **(a)** dades A i taules correctes que *arribin a l'informe* sense imatges buides (1 + 8b + 13) → **(b)** espera invisible (14 + 15) → **(c)** càlculs amb el seu criteri (3) → (d) narrativa → (e) biblioteca/peus.
+3. Els blocs 3 i 7 estan bloquejats per **respostes seves**, no per codi: enviar `PREGUNTES-EVA-PENDENTS.md` (o el correu v4, preparat des de l'abril i no consta enviat) és la tasca més barata amb més palanca.
+4. Tot el que diu «què notaria» és inferència; el que sabem del cert és el que diuen els seus logs (espera, petades) i la frase «no va bé» sense detall.
+
+## Proposta de priorització (2026-08-25, 23:50) — data de reunió desconeguda, sense respostes de l'Eva
+
+Principi: **cada tall del calendari ha de deixar un estat coherent i demostrable** (al portàtil del Josep, amb Castellar/Bell-lloc, i amb carpetes noves si arriben), i tot el que depèn de l'Eva (respostes, ordinador) es prepara però no bloqueja. Ritme de referència: Fases 0-8 en un dia, 9-12 en un dia (24-25 d'agost).
+
+| Tram | Què | Per què en aquest ordre | Tall: «si l'Eva diu…» |
+|---|---|---|---|
+| **Avui/demà, 0 codi** | Enviar-li per correu les 6 preguntes (`PREGUNTES-EVA-PENDENTS.md`) + demanar 2-3 carpetes recents de projectes seus. Decisió del Josep: pla/model (Fable @xhigh o Opus 4.8 @high) — condiciona la instal·lació. | Palanca màxima per cost zero; les respostes arriben quan torni; les carpetes permeten el hold-out (0b) abans de la reunió. | **demà**: demo al portàtil amb el que hi ha (lectura + consolidació Python, wizard headless E2E amb la pestanya oberta 20-26 min); no s'instal·la res. |
+| **Tram 1 (≈1-2 dies)** | **8b** (seleccions de taula → generador) → **13** (`auto_result` a disc + Cadastre/ICGC al consolidador + residus Groq) → **forat capa vegetal** a `consolidate.py` (sense la regla del Pas 3b, que espera la pregunta 3) → **14a** (botons *Preparar*/*Obrir* + taula d'estat + `attach`; *Actualitzar* espera l'11) → **15** (toast + correu «expedient llest»; SMTP configurable, telemetria sanejada). | Tanca la cadena **lectura → informe complet** (A + T + figures de la parcel·la correcta) i converteix l'espera en segon pla. Són les dues coses que, segons la taula, l'Eva notaria primer. 14a abans de l'11 perquè els dos primers botons no necessiten delta-sync. | **aquesta setmana**: demo «premo Preparar, tanco, m'arriba un correu, obro i l'informe surt sencer amb les meves taules». |
+| **Tram 2 (≈1-2 dies)** | **11** (delta-sync) + **14b** (*Actualitzar*) → **16** (E2E dels tres botons: xifres reals per a la taula abans/després que vol el Josep) → **17 preparat en sec**: `claude` CLI Windows natiu + login provat al Windows del Josep (`/mnt/c`), script/checklist d'instal·lació, política de neteja `_preext/` (72 MB/projecte), `--strict-mcp-config`. | La reunió amb l'Eva **és** el dia d'instal·lació (Fase 17 és presencial): tot el que es pugui provar abans al Windows del Josep treu risc d'aquell dia. | **la setmana que ve**: instal·lació el dia de la reunió amb checklist provat; taula abans/després amb mesures; hold-out fet si han arribat carpetes. |
+| **Tram 3 (quan respongui / després)** | **3 càlculs** (segons respostes v4 → `terzaghi_calculator`/`report_data`, amb comparador contra els 6 informes signats) → **1d** regla `de` nivell 1 → **7** multi-informe si diu que és freqüent → **4** narrativa (mesurar primer què reescriu; Street View per adjacents) → **6** selecció de fotos → **5** cau sol. | Tot bloquejat per ella o de valor incert fins que la vegem treballar amb la via A. | després de la reunió, amb les seves respostes i el que hàgim vist. |
+
+Riscos d'aquest ordre: (1) si la reunió és **demà**, la demo mostra 20-26 min d'espera visible — dir-ho com a decisió («ho fem en segon pla, ve al tram 1»), no amagar-ho; (2) 13 toca `wizard_service` (via B) — envoltant, no reescriptura, i suite completa abans de cada commit; (3) 17 en sec al Windows del Josep no és l'ordinador de l'Eva (Python 3.12 natiu, `C:\g3dt-ia\app`): la checklist ha de preveure diferències.
+
+---
+## Detall (versió llarga, mateixes conclusions)
 ## Tipus de dada de l'informe (114 variables de plantilla + files de taules; agrupades)
 | Tipus | Què hi ha | Avui a prod (diagnòstic 23-08) |
 |---|---|---|
