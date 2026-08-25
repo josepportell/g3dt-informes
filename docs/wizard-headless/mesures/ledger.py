@@ -83,6 +83,7 @@ def summarize(run_dir: Path) -> dict:
         "quality_notes": (meta.get("quality_judgement") or {}).get("notes", []),
         "contaminated_docs": sorted(contaminated), "contamination_note": meta.get("contamination_note"),
         "conditions": meta.get("conditions", ""),
+        "comparator_revision": meta.get("comparator_revision"),
     }
     return s
 
@@ -109,6 +110,8 @@ def render(summaries: list[dict]) -> str:
     L += ["", "*paret reconstruïda* = planificació de llista dels `elapsed_s` per document amb `conc.` slots + consolidació (model, no mesura). "
           "*cost equiv.* = `total_cost_usd` del CLI (amb subscripció no es factura; és el pes de la feina).", "",
           "## Qualitat (comparador d'or `compare_consolida.py`)", "",
+          "Comparador **v2** (2026-08-25, normalitzadors de format + files de taula alineades per clau): els `.txt` de tots els runs s'han regenerat; "
+          "els totals d'abans (v1) són a «Condicions» per a cada run (`meta.json` → `comparator_revision`).", "",
           "| run | erroni-amb-confiança (fons) | escalars OK / CAUTELA / ALERTA / ERR / NOU | taules OK / CAUTELA / ALERTA / ERR / ABSENT | lectura dels no-OK |",
           "|---|--:|---|---|---|"]
     for s in summaries:
@@ -117,7 +120,10 @@ def render(summaries: list[dict]) -> str:
                  f"| {t.get('OK',0)} / {t.get('CAUTELA',0)} / {t.get('ALERTA',0)} / {t.get('ERR',0)} / {t.get('ABSENT',0)} | " + "<br>".join(s["quality_notes"]) + " |")
     L += ["", "## Condicions i contaminacions", ""]
     for s in summaries:
-        L.append(f"- `{s['label']}` — {s['conditions']}" + (f" · **contaminats:** {', '.join(s['contaminated_docs'])} ({s['contamination_note']})" if s["contaminated_docs"] else ""))
+        cr = s.get("comparator_revision") or {}
+        before = (f" · comparador v1 (abans del {cr.get('date')}): escalars {cr.get('escalars_before')} · taules {cr.get('taules_before')}"
+                  + (f" · {cr['note']}" if cr.get("note") else "")) if cr else ""
+        L.append(f"- `{s['label']}` — {s['conditions']}" + (f" · **contaminats:** {', '.join(s['contaminated_docs'])} ({s['contamination_note']})" if s["contaminated_docs"] else "") + before)
     L += ["", "## Per a la taula «abans/després» de l'Eva", "",
           "L'*abans* de l'Eva és la via B a producció (`docs/audit/DIAGNOSTIC-PROD-2026-08-23.md`: prefills Castellar 275 s, 59 % de camps iguals als de l'Eva sobre els 8 projectes; "
           "`docs/audit/VERIFICACIO-FIXES-2026-08-22.md`). Les mètriques que li importen són *camps correctes sense tocar-los*, *camps que ha hagut de corregir*, "
