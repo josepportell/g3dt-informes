@@ -1333,13 +1333,13 @@ el joc v1.3 en té 1 (heretat de la lectura, la referència LLM el té igual); f
 al joc Sonnet v2 quan la consolidació LLM les tenia.
 
 ### Tests
-+79 (`tests/test_compare_consolida.py`). Suite de lectura + comparador: **267 passed / 2 skipped** (36 s).
++95 (`tests/test_compare_consolida.py`; 79 abans de la revisió Sonnet). Suite de lectura + comparador: **283 passed / 2 skipped**.
 
 ### Limitacions conegudes
 - Separadors de milers (`1.284` vs `1284`) no es normalitzen (cap cas als runs); `building_type` accepta subconjunt de tokens (una lectura parcial
   «habitatge unifamiliar» passa com a CLOSE d'«habitatge unifamiliar aïllat» — volgut per la memòria del Josep, però és la regla més laxa del fitxer);
   `spt_ma_tests` continua per índex; l'or només existeix per a Castellar i Bell-lloc.
-- La revisió adversària de Sonnet: resultat i correccions, si n'hi ha, a l'entrada següent o al session log.
+- **Revisió adversària Sonnet (code-reviewer, 33 usos d'eina, 11 min):** 7 troballes, totes verificades executant `close()`. Corregides 6 (`dcda24f` → commit de tancament): (1) `row_key` posava «Nivell 2 - Reblert» com a capa vegetal → aparellament silenciós erroni (ara: senyal fort «vegetal/no numerat» abans del número de nivell, «reblert/relleno/cobertura» només després); (3) `num_floors` descartava tot després de la coma (`PB+2, amb soterrani` = `PB+2 (sense soterrani)`) → nucli + indicador amb/sense soterrani llegit a tota la cadena; (4) `1.655,01 m²` (fixture real d'Anciles) es llegia com dos nombres → milers a l'espanyola normalitzats; (5) un sol guió ` - ` es tractava com a nota (col·lapsava causes diferents) → només `--`; (6) adreces: tipus de via `polígon/nau/partida/urb.` afegits, un costat amb portals i l'altre sense = no close, i sense portals als dos costats mai contenció (`Polígon X` ≠ `Polígon X, Nau 5`); (7) `_expand_de_a` només separa ` a ` entre nombres. **No corregida, decisió:** (2) `building_type` — `habitatge unifamiliar` ⊂ `… entre mitgeres` és CLOSE per la regla del Josep (memòria `feedback_building_type_close_match`); documentat com la regla més laxa. Format de sortida: confirmat idèntic pel revisor. Cap veredicte dels 9 jocs ni del harness canvia amb les correccions (0 `.txt`/`meta.json`/`LEDGER.md` modificats). Tests 79 → 95.
 - Descobert i NO fet (fora d'abast, "cap regla a ull"): (1) regla del Pas 3b per al `de` del nivell 1 (base de la capa vegetal); (2) el consolidador
   perd les fondàries de la capa vegetal al joc Sonnet v2; (3) `consolidate.value_key` pot llegir `1,5-1,75` com a data `2075-01-05` (latent: la
   comprovació `len(nums) ≤ 3` no ho evita; cap cas real als 7 jocs).
@@ -1347,7 +1347,7 @@ al joc Sonnet v2 quan la consolidació LLM les tenia.
 ### GO/NO-GO
 ✅ Cap ERR de format als 9 jocs · ✅ Diferències d'ESTAT conservades (tests d'integració: `cota_referencia` puja a segur, `spt_ma` puja a segur) ·
 ✅ Format de sortida idèntic (ledger i harness funcionen sense canvis) · ✅ Fixture revisat amb evidència (informe Eva) i sense invenció ·
-⏳ Revisió adversària Sonnet · ⏳ Pregunta a l'Eva (−4,20 de S-1; criteri de nivells).
+✅ Revisió adversària Sonnet (7 troballes: 6 corregides, 1 decisió; cap veredicte canvia) · ⏳ Pregunta a l'Eva (−4,20 de S-1; criteri de nivells).
 
 ### Següents passos
 Fase 11 (delta-sync) → 13 → 14 → 15-17 (ordre del handoff 22:00). Abans o durant: mirar el forat de la capa vegetal a `consolidate.py`

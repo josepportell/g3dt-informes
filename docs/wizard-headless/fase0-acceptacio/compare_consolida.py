@@ -7,16 +7,20 @@ ABSENT (cel·la d'or sense cel·la produïda), VIOLACIO (regla dura: n30 / litol
 
 v2 (2026-08-25, normalitzadors): `close(a, b, field)` és conscient del camp i del tipus de valor, en aquest ordre:
   1. adreces (`street_address`): `C/ARBRELLS 18A-18B-20` = `Carrer Arbrells, 18A, 18B i 20`; el conjunt de números de
-     portal ha de coincidir — una lectura parcial (`Carrer Arbrells 18A`) NO és el mateix valor. Decisiu.
+     portal ha de coincidir — una lectura parcial (`Carrer Arbrells 18A`, o `C/ Arbrells` sense portal) NO és el mateix valor.
+     Sense portals als dos costats: igualtat sense anotacions, mai contenció. Decisiu.
   2. `spt_ma` per comptes: `1/0` = `1/0/0` = `{n_spt:1, n_tp:0, n_ma:0}`; `--` = 0. Decisiu.
   3. dates senceres (ISO, D/M/A, `Octubre 2025`, `24 d'octubre de 2025`): mateix any/mes; dia igual o absent. Decisiu.
   4. nombres i intervals: `-4 m` = `-4,0 m`; `570.90 msnm` = `570,90`; fondàries en valor absolut (`ABS_FIELDS`):
      `1,0 - 1,2 m` = `-1,00 a -1,20 m`. Un guió entre dos dígits és separador d'interval, no signe. Decisiu.
-  5. `num_floors`: `PB+PP` = `PB+1` = `Pb + p1`; anotacions fora.
+  5. `num_floors`: `PB+PP` = `PB+1` = `Pb + p1`; anotacions fora; però `amb soterrani` ≠ `sense soterrani` (es llegeix a tota la cadena).
   6. `building_type`: conjunt de tokens (singular, abreviatures `hab`/`unif` esteses, articles i "construcció" fora);
-     un conjunt inclòs a l'altre = CLOSE (memòria `feedback_building_type_close_match`).
+     un conjunt inclòs a l'altre = CLOSE (memòria `feedback_building_type_close_match`: treure/afegir «aïllat» o un article és CLOSE;
+     per tant una lectura parcial `habitatge unifamiliar` també passa com a CLOSE d'`… entre mitgeres` — decisió, no descuit; la regla més laxa del fitxer).
   7. text: la regla històrica (cadena normalitzada igual o continguda) i, si no, igualtat després de treure les
-     anotacions `(...)` i ` -- nota`.
+     anotacions `(...)` i ` -- nota` (doble guió; ` - text` és contingut).
+Revisió adversària (Sonnet code-reviewer, 2026-08-25): 7 troballes → 6 corregides aquí (capa vegetal vs «Nivell N - Reblert», soterrani
+a `num_floors`, milers `1.655,01`, guió simple, adreces sense via reconeguda / sense portal, `_expand_de_a`); la del `building_type` és decisió.
 Independent del consolidador (`automation/lectura/consolidate.py`): no en comparteix codi a posta — l'instrument
 d'acceptació no ha d'heretar els errors de l'objecte que mesura. Sortida idèntica a la v1 (la llegeixen
 `mesures/ledger.py` i `fase12-consolida/harness.py`).
@@ -56,11 +60,11 @@ def norm(v) -> str:
 
 
 _ANNOT_RE = re.compile(r"\([^)]*\)")
-_NOTE_RE = re.compile(r"\s+-{1,2}\s+(?=[A-Za-z])")
+_NOTE_RE = re.compile(r"\s+--\s+(?=[A-Za-z])")
 
 
 def strip_annot(s) -> str:
-    """Treu anotacions: `(...)` i una nota final ` -- text` / ` - text` (un guió seguit de lletra)."""
+    """Treu anotacions: `(...)` i una nota final ` -- text` (doble guió; un sol guió és contingut: `Refús - trencament`)."""
     t = _ANNOT_RE.sub(" ", str(s).translate(_DASHES))
     t = _NOTE_RE.split(t, maxsplit=1)[0]
     return re.sub(r"\s+", " ", t).strip()
@@ -101,11 +105,13 @@ def dates_compatible(a: tuple, b: tuple) -> bool:
 # --- nombres i intervals ------------------------------------------------------------------------------------------
 _NUM_RE = re.compile(r"(?<![A-Za-z0-9])[-+]?\d+(?:[.,]\d+)?(?![A-Za-z0-9])")
 _RANGE_DASH_RE = re.compile(r"(?<=\d)\s*-\s*(?=\d)")
+_THOUSANDS_RE = re.compile(r"(?<![\d.,])\d{1,3}(?:\.\d{3})+,\d+(?![\d.,])")
 
 
 def parse_numbers(s, absolute: bool = False) -> tuple | None:
     """Tupla de nombres si el valor és 'numèric' (comença per un nombre i la resta són unitats/partícules)."""
     t = _ascii(strip_annot(s)).lower()
+    t = _THOUSANDS_RE.sub(lambda m: m.group(0).replace(".", ""), t)   # `1.655,01` → `1655,01`
     t = _RANGE_DASH_RE.sub(" ", t)           # `1,0-1,2` / `1,0 - 1,2` → interval, no signe
     t = re.sub(r"^[\s~<>+]+", "", t)          # ≈ ≤ ≥ ja han caigut amb l'ASCII
     if not re.match(r"-?\d", t):
@@ -123,7 +129,8 @@ def parse_numbers(s, absolute: bool = False) -> tuple | None:
 # --- adreces ------------------------------------------------------------------------------------------------------
 _STREET_RE = re.compile(
     r"^\s*(?:situat\s+(?:a|al)\s+)?(?:carrer|c/|c\.|cl\.?|calle|av\.?|avinguda|avda\.?|avenida|pl\.?|placa|plaza|"
-    r"ctra\.?|carretera|cami|passeig|pg\.?|ronda|rda\.?|travessera|trav\.?|rambla)\b\.?/?\s*(.*)$")
+    r"ctra\.?|carretera|cami|passeig|pg\.?|ronda|rda\.?|travessera|trav\.?|rambla|poligon(?:\s+industrial)?|pol\.?\s*ind\.?|"
+    r"partida|paratge|urbanitzacio|urb\.?|nau)\b\.?/?\s*(.*)$")
 _ADDR_STOP = frozenset({"de", "del", "dels", "d", "l", "la", "el", "els", "les", "i", "y", "e"})
 _NUM_PORTAL_RE = re.compile(r"\d+(?:\s?[a-z](?![a-z]))?")
 
@@ -166,10 +173,19 @@ def spt_compatible(a: tuple, b: tuple) -> bool:
 
 
 # --- num_floors, building_type ------------------------------------------------------------------------------------
-def norm_floors(s) -> str:
-    t = re.sub(r"[^a-z0-9]+", "", _ascii(strip_annot(s)).lower().split(",", 1)[0])
-    t = t.replace("pbpp", "pb1").replace("pbp1", "pb1")
-    return re.sub(r"pp$", "1", t)
+_BASEMENT_RE = re.compile(r"soterr|sotan|semisot|\bpsot\b|\bps\b|altell|entresol")
+_NO_BASEMENT_RE = re.compile(r"(sense|sin|no)\s+(soterr|sotan|semisot|altell|entresol)")
+
+
+def norm_floors(s) -> tuple[str, str | None]:
+    """(nucli de plantes, indicador de soterrani/altell: 'amb' | 'sense' | None). El nucli és el que hi ha abans de la
+    primera coma i fora d'anotacions; l'indicador es llegeix a TOTA la cadena (`PB+2, amb soterrani` ≠ `PB+2 (sense soterrani)`)."""
+    full = _ascii(s).lower()
+    core = re.sub(r"[^a-z0-9]+", "", _ascii(strip_annot(s)).lower().split(",", 1)[0])
+    core = core.replace("pbpp", "pb1").replace("pbp1", "pb1")
+    core = re.sub(r"pp$", "1", core)
+    flag = "sense" if _NO_BASEMENT_RE.search(full) else ("amb" if _BASEMENT_RE.search(full) else None)
+    return core, flag
 
 
 _BT_STOP = frozenset({"de", "del", "dels", "d", "l", "la", "el", "els", "les", "un", "una", "uns", "unes", "i", "y",
@@ -199,6 +215,10 @@ def close(a, b, field: str | None = None) -> bool:
         pa, pb = parse_address(A), parse_address(B)
         if pa and pb:
             return pa == pb
+        if pa or pb:
+            return False   # un costat amb portals i l'altre sense (`C/ Arbrells` vs `C/ Arbrells 18A-18B-20`) = lectura parcial
+        sa, sb = norm(strip_annot(A)), norm(strip_annot(B))
+        return bool(sa) and sa == sb   # cap contenció per a adreces (`Polígon X` vs `Polígon X, Nau 5`)
     if f == "spt_ma":
         pa, pb = parse_spt_ma(a), parse_spt_ma(b)
         if pa and pb:
@@ -212,8 +232,8 @@ def close(a, b, field: str | None = None) -> bool:
     if na and nb:
         return na == nb
     if f == "num_floors":
-        fa, fb = norm_floors(A), norm_floors(B)
-        return bool(fa) and fa == fb
+        (ca, ga), (cb, gb) = norm_floors(A), norm_floors(B)
+        return bool(ca) and ca == cb and (ga == gb or ga is None or gb is None)
     if f == "building_type":
         ta, tb = building_tokens(A), building_tokens(B)
         return bool(ta and tb) and (ta <= tb or tb <= ta)
@@ -250,15 +270,18 @@ def _expand_de_a(row: dict) -> dict:
     row = dict(row)
     row.pop("de_a_estat")
     de, a = row.get("de"), row.get("a")
-    if (de is None or a is None) and isinstance(cell.get("value"), str) and " a " in cell["value"]:
-        de, a = [x.strip() for x in cell["value"].split(" a ", 1)]
+    if (de is None or a is None) and isinstance(cell.get("value"), str):
+        parts = re.split(r"(?<=[\d,.])\s+a\s+(?=[-+]?\d)", cell["value"], maxsplit=1)
+        if len(parts) == 2:
+            de, a = [x.strip() for x in parts]
     for k, v in (("de", de), ("a", a)):
         if not isinstance(v, dict) and v is not None:
             row[k] = {"estat": cell["estat"], "value": v, "candidates": [{"value": v, "font": "(de_a_estat del fixture)"}]}
     return row
 
 
-_COVER_RE = re.compile(r"vegetal|cobertura|reblert|relleno|capa superior|no numerad|sense num|no numerat")
+_COVER_STRONG_RE = re.compile(r"vegetal|capa superior|no numerad|sense num|no numerat")
+_COVER_WEAK_RE = re.compile(r"cobertura|reblert|relleno")   # només si no hi ha número de nivell (`Nivell 2 - Reblert` és n2)
 _LEVEL_RE = re.compile(r"nivell\s*(\d+)|(\d+)\s*(?:er|on|r|n|e|a|o)?\s*nivell")
 
 
@@ -279,11 +302,13 @@ def row_key(block: str, row: dict) -> str | None:
         return norm(v) or None
     if block == "soil_levels":
         t = _ascii(_plain(row.get("nom")) or "").lower()
-        if _COVER_RE.search(t):
+        if _COVER_STRONG_RE.search(t):
             return "cover"
         m = _LEVEL_RE.search(t)
         if m:
             return f"n{m.group(1) or m.group(2)}"
+        if _COVER_WEAK_RE.search(t):
+            return "cover"
         return None
     return None  # spt_ma_tests: per índex (etiquetes SPT-1/MA1 massa variables; l'or té una fila)
 

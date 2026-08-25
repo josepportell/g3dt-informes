@@ -94,6 +94,19 @@ CLOSE_CASES = [
     (True, "No detectat", "No detectat", "nivell_freatic"),
     (True, None, None, "x"),
     (False, None, "1", "x"),
+    # revisió adversària Sonnet 2026-08-25 (corregits)
+    (False, "PB+2, amb soterrani", "PB+2 (sense soterrani)", "num_floors"),
+    (True, "PB+1, i porxo habitable", "PB+1", "num_floors"),
+    (True, "1.655,01 m²", "1655.01 m2", "superficie_parcela"),
+    (True, "1.655,01 m²", "1655,01 m2", "superficie_parcela"),
+    (False, "1.655,01 m²", "1.656 m²", "superficie_parcela"),
+    (False, "Refús a 3,80m - parada per impossibilitat de penetració", "Refús a 3,80m - parada per aturada de màquina", "observacions"),
+    (False, "Polígon Industrial Can Calderón", "Polígon Industrial Can Calderón, Nau 5", "street_address"),
+    (True, "Polígon Industrial Can Calderón, Nau 5", "Pol. Ind. Can Calderon nau 5", "street_address"),
+    (False, "Carrer Arbrells, 18A, 18B i 20", "C/ Arbrells", "street_address"),
+    (True, "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz", "situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz (Bell-lloc)", "street_address"),
+    # decisió documentada (memòria feedback_building_type_close_match): lectura parcial d'un qualificatiu = CLOSE
+    (True, "habitatge unifamiliar entre mitgeres", "habitatge unifamiliar", "building_type"),
 ]
 
 
@@ -131,6 +144,10 @@ def test_parsers():
     ("NIVELL 1 — Substrat rocós (0,50-1,20)", "n1"),
     ("2n nivell", "n2"),
     ("Substrat rocós", None),
+    ("Nivell 2 - Reblert de graves", "n2"),
+    ("2n nivell: reblert antròpic", "n2"),
+    ("Reblert antròpic (no numerat)", "cover"),
+    ("Cobertura", "cover"),
 ])
 def test_row_key_soil_levels(nom, key):
     assert cc.row_key("soil_levels", {"nom": nom}) == key
@@ -161,6 +178,20 @@ def test_expand_de_a():
     out = cc._expand_de_a(row)
     assert "de_a_estat" not in out and out["de"]["estat"] == "segur" and out["a"]["value"] == "-0,50"
     assert cc._expand_de_a({"nom": "x", "de": {"estat": "segur", "value": "0"}}) == {"nom": "x", "de": {"estat": "segur", "value": "0"}}
+    out = cc._expand_de_a({"nom": "x", "de_a_estat": {"estat": "segur", "value": "0,00 a -0,50"}})
+    assert out["de"]["value"] == "0,00" and out["a"]["value"] == "-0,50"
+    out = cc._expand_de_a({"nom": "x", "de_a_estat": {"estat": "segur", "value": "Terra vegetal a la superfície a -1,20m"}})
+    assert "de" not in out and "a" not in out  # separador no numèric: no s'inventen cel·les
+
+
+def test_align_rows_numbered_fill_is_not_cover():
+    gold = [{"nom": "Nivell 1"}, {"nom": "Nivell 2 - Reblert antic de graves"}]
+    prod = [{"nom": "Terra vegetal"}, {"nom": "Nivell 1"}]
+    pairs, by_key = cc.align_rows("soil_levels", gold, prod)
+    assert by_key and pairs[1][1] == {}  # Nivell 2 absent al produït, no aparellat amb la capa vegetal
+    assert cc.parse_numbers("1.655,01 m²") == (1655.01,)
+    assert cc.norm_floors("PB+2, amb soterrani") == ("pb2", "amb")
+    assert cc.norm_floors("PB+1 (sense soterrani)") == ("pb1", "sense")
 
 
 def _counts(kind, run):
