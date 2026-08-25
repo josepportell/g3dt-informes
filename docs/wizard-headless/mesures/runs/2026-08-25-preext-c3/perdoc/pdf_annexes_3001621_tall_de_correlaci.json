@@ -1,0 +1,125 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+ "source_md5": "e77496626419bcc0e372d33f59609cd5",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall (perfil) de correlació geotècnica que uneix els punts DPSH P-1 a P-4 i el sondeig S-1, amb les cotes del terreny (msnm), el nivell de substrat identificat i la cota de fonamentació recomanada.",
+ "issuer": "G3 (Eva)",
+ "date": "Octubre 2025",
+ "pages_or_sheets": "1 pàgina (apaïsat, 1191x842 pt)",
+ "context": {
+  "who_made_it": "G3 (Eva), a partir dels resultats de camp ja processats (DPSH P-1..P-4 i sondeig S-1)",
+  "for_whom": "l'informe geotècnic, com a annex gràfic de correlació",
+  "why": "correlacionar visualment els nivells del subsòl trobats a cada punt d'assaig i mostrar la cota de fonamentació recomanada",
+  "expected_fields": [
+   "num_soil_levels",
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "cota_referencia (contextual, per punt)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date de camp",
+   "dades de laboratori",
+   "referencia_catastral",
+   "utm_x_utm_y"
+  ],
+  "relation_to_others": "Mateix tema/contingut que el fitxer arrel 'tall.pdf' (md5 diferent a4512806fd21fe5f6efc6b4e6dd15f69, mida molt més gran: 969838 vs 116065 bytes — possible còpia 'Print To PDF' o versió amb més capes/imatge de fons de més resolució); no s'ha obert en aquesta crida (--only és per document). Correlaciona els punts DPSH de PDF/ANNEXES/3001621_DPSH.pdf i ANNEXES/3001621_DPSH.xls (P-1..P-4) i el sondeig de PDF/ANNEXES/3001621_sondeig.pdf (S-1).",
+  "authority_for": [
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "peu de pàgina, cel·la 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta (3001621 CASTELLAR DEL VALLES)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "peu de pàgina, TÍTOL DEL PROJECTE",
+   "quote": "CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.7,
+   "note": "redacció de l'informe, no plantilla; a corroborar amb comanda/pressupost/PLAN_COST"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells núm. 18A-18B-20",
+   "location": "peu de pàgina, TÍTOL DEL PROJECTE",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.55,
+   "note": "redacció de l'informe (no bloc OBRA: d'una plantilla); tres referències seguides (18A-18B-20) coherent amb projecte de 3 habitatges (veure PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg); també visible com a etiqueta 'Arbrells' al carrer del plànol de situació inserit"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "peu de pàgina, TÍTOL DEL PROJECTE",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.55,
+   "note": "redacció de l'informe; el projecte té 3 habitatges segons el pressupost — pot referir-se a una sola casa de les 3"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "LLEGENDA (requadre superior)",
+   "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "confidence": 0.75,
+   "note": "el 'Terreny Vegetal' (llims argilosos marró fosc amb graves i arrels) és la capa superficial, no compta com a nivell geotècnic; només hi ha un 'Nivell N' definit a la llegenda → num_soil_levels=1. El tall mana per al nombre (regla existent)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "perfil del tall + plànol de situació inserit",
+   "quote": "P-1, P-2, P-4, P-3 (punts blaus 'Assaig de penetració dinàmica DPSH')",
+   "confidence": 0.5,
+   "note": "recompte visual de punts al perfil i a la llegenda del plànol de situació; no és la font primària (Excel DPSH mana per als executats)"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2025",
+   "location": "peu de pàgina, cel·la 'Data:'",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.25,
+   "note": "probablement la data de redacció/tancament de l'annex gràfic, no la data de camp del DPSH; candidat feble, mai preferent sobre fitxa F38 o l'annex DPSH 'DATA:'"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [
+     "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+    ],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "note": "límit Terreny Vegetal/Nivell 1 visible com a línia gràfica al perfil (aprox. 571.3-571.9 msnm segons el punt, P-1 a P-3) però sense cota numèrica impresa; la 'Cota de fonamentació recomanada' (línia vermella discontínua) se situa lleugerament per sota, aprox. 570.7-571.1 msnm. No s'han llegit valors mètrics fiables d'aquest gràfic; l'annex de sondeig (3001621_sondeig.pdf) és la font primària per a fondàries de transició."
+   }
+  ],
+  "__nota": "Només s'ha poblat soil_levels (nom+litologia, sense fondàries fiables) a partir d'aquest document. Els valors Nb= del perfil (16,18,10,33,19) i N=R del sondeig S-1 són recolzament visual, no s'han bolcat a dpsh_tests/sondeig_tests perquè no hi ha prou certesa de correspondència amb 'profunditat_assolida' en metres; aquestes taules s'han d'omplir des dels seus documents font (Excel DPSH, PENETROS + SONDEIG.pdf, annex sondeig)."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "superficie_parcela",
+  "num_floors",
+  "cota_referencia (valor únic; el document només dona cotes de terreny per punt en un gràfic)"
+ ],
+ "reading_notes": "page-1.txt és brossa (Acrobat Distiller 15.0 / PScript5.dll, típic dels annexos FreeHand d'Eva) → lectura 100% visual. Vist page-1.png sencer per orientar-me i després page-1-left.png/page-1-right.png (220 dpi) per llegir el peu de pàgina, la llegenda i els valors Nb= de cada punt. No ha calgut cap clip addicional: el text ja és llegible a la meitat dreta/esquerra. Plànol de situació inserit (foto aèria) mostra la 'Zona d'estudi' (polígon taronja), el traçat del tall (línia verda A-A') i l'etiqueta de carrer 'Arbrells' en vermell."
+}

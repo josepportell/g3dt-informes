@@ -13,6 +13,15 @@ verificació creuada + candidats amb popup); **branca nova** des de `review/prod
 25 $ lectura inicial OK; l'Eva dibuixa els annexos ABANS del wizard (font vàlida per cota/nivells). Mètrica: erroni-amb-confiança
 = 0 a 8/8, OK ≥ 80 %, candidats ≤ 20 %, hold-out 5+3. F1-F4e i O1-O11 queden com a inventari.
 
+## 🎯 Objectiu real (Josep, 2026-08-25): l'informe COMPLET a la millor qualitat — les 341 variables, no "algunes parts ben fetes"
+
+El nivell A (15 escalars + taules de lectura) és el **primer pas**, no l'objectiu. Després ve el grup B (càlculs: E, Qa, assentament,
+K30, φ, cte_sol, `table_dpsh_range`… — 41/118 MISMATCH del diagnòstic) i la resta (narrativa, adjacents, lab, geocode). Criteri: **revisar
+TOTES les variables de l'informe** (`DIAGNOSTIC-PROD-2026-08-23` §3: 341 sobre 8 projectes), no només les que el wizard mostra —
+que el wizard n'ensenyi un subconjunt no ha d'enganyar-nos sobre l'abast. Anem per passos i prioritzem (A → latència → B → resta),
+però la mètrica final és la qualitat de l'informe sencer. Taula comparativa prod vs via A: ajornada (requereix unificar veritat,
+camps i semàntica; vegeu sessió 2026-08-25).
+
 ## Via A en curs (2026-08-23 nit): lectura d'or dels 8 projectes → skill `g3dt-llegir-projecte`
 
 Branca `experiment/nivell-a-2026-08`. Claude Code en sessió llegeix cada carpeta amb el procediment del futur skill headless
@@ -81,7 +90,11 @@ en llenguatge Eva + notificacions (toast + SMTP Eficients, telemetria transparen
 (Fases 9-17). **Fase 9 FETA (nit):** runner amb `--model` fixat + `--output-format json` (turns/cost a la telemetria, 73 tests); remesura Castellar sol:
 **33 min reals a conc. 3**, ≈ 21 turns/doc estables, 0 erroni-amb-confiança de fons (3 runs); llibre de mesures `docs/wizard-headless/mesures/LEDGER.md`.
 Troballa: el temps és generació (~75 % raonament) i 5/15 usos d'eina són construir-se l'eina → palanca de pre-extracció determinista (a mesurar).
-Estimacions: botó 3a ≈ 30 s, 3b 6-9 min amb consolidació Python-first. Següent: Fase 10 (jobs) → 11 (delta-sync) → experiment pre-extracció → 12.
+Estimacions: botó 3a ≈ 30 s, 3b 6-9 min amb consolidació Python-first.
+**2026-08-25 (matí):** **Fase 10 FETA** (`8d3b0ce`: `automation/lectura/jobs.py`, `_job.json` a disc, un job viu per projecte, attach amb replay, `GET/POST /api/jobs`).
+**Experiment pre-extracció v1** (`0dfff32`, flag `G3DT_LECTURA_PREEXT` off): fila `2026-08-25-preext-c3` → mediana/doc 292→221 s (−24 %), paret 33→**28 min**,
+0 erroni-amb-confiança, però 5 cel·les `nivell_freatic` baixen de `segur` a `no_trobat` (color de cel·la d'Excel no exportat) → **NO adoptat**; v2 = colors Excel +
+meitats només per a pàgines sense text + `text_ok` per producer; remesura `preext-v2-c3`. Suite lectura 123 passed. Següent: v2 → Fase 11 → Fase 12.
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
@@ -146,6 +159,8 @@ Regressió: **32 failed / 1023 passed** (baseline inalterat — reverificat 2 co
 
 ## Open items (per prioritat)
 
+0. **Objectiu global — qualitat de les 341 variables de l'informe** (Josep 2026-08-25): després del nivell A i la latència,
+   grup B (càlculs) i tota la resta fins a revisar cada variable de l'informe. Cap variable queda "més o menys".
 1. **A4 / entity confusion**: `architect_company` etiqueta client/promotor com a
    arquitecte; el client pot ser un particular. Requereix lògica > regex. **Consultar
    Eva** sobre el mapatge architect_company vs client_name abans de tocar-ho (§4.3).

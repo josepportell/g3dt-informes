@@ -1,0 +1,149 @@
+{
+ "source_path": "PDF/ANNEXES/LAB-SIG.pdf",
+ "source_md5": "0527692d91b76c17cf1eba8e50a5bf8a",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori (determinació del contingut en ió sulfat en sòls) del laboratori TPS (marca Soilassaig) sobre la mostra MA1 S1, en la seva versió signada digitalment.",
+ "issuer": "TPS, Prospecció del Subsòl, SL (marca Soilassaig) — B64803075",
+ "date": "19/11/2025 (data d'expedició)",
+ "pages_or_sheets": "5 pàgines",
+ "context": {
+  "who_made_it": "TPS, Prospecció del Subsòl, SL (marca comercial 'Soilassaig'), laboratori subcontractat per G3 per a l'assaig de la mostra",
+  "for_whom": "G3 Desenvolupament Territorial, SL, client/sol·licitant del laboratori (no el client de l'informe geotècnic)",
+  "why": "Comunicar el resultat de l'assaig de contingut en ió sulfat (UNE 83963/08) sobre la mostra alterada MA1 extreta del sondeig S1 del projecte de Castellar del Vallés, Carrer Arbrells (expedient 3001621)",
+  "expected_fields": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient",
+   "municipality (com a part de 'Obra/Projecte')"
+  ],
+  "not_expected": [
+   "client_name (promotor)",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Mateix número d'informe (4687-GTL-25) i mateixa data d'expedició (19/11/2025) que el fitxer arrel del projecte '4687-GTL-25 Castellar del Vallés.pdf' (md5 diferent: ed8a07b6... vs 0527692d...). Aquest document ('LAB-SIG' = probablement 'LAB signat') porta signatures digitals a la p.5 (Pere Cervós Flinch, Pere Farrés Bori) i sembla ser la versió FINAL signada de l'informe. No s'ha obert l'altre GTL en aquesta lectura (mode --only) per confirmar-ho camp a camp; s'anota perquè el consolidador tracti totes dues aparicions com UNA sola font independent, no dues.",
+  "authority_for": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.2, taula 'DADES INICIALS', camp 'Obra / Projecte:'",
+   "quote": "Obra / Projecte: Castellar del Vallés. Carrer Arbrells. 3001621",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte (3001621 CASTELLAR DEL VALLES)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallés",
+   "location": "p.2 camp 'Obra / Projecte:' i p.1 camp 'Situació:' (bloc MATERIAL A ASSAJAR)",
+   "quote": "Situació: Castellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.6,
+   "note": "el GTL no és font canònica de municipi (regla: comanda + pressupost + PLAN_COST); s'aporta com a senyal coincident addicional"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells",
+   "location": "p.1 camp 'Situació:' / p.2 camp 'Obra / Projecte:'",
+   "quote": "Castellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.5,
+   "note": "adreça abreujada sense número; el GTL no és font principal d'adreça d'obra (regla: blocs OBRA/ADREÇA OBRA/Situació del document de l'obra, no del laboratori)"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL (marca Soilassaig)",
+   "location": "banda lateral orange de totes les pàgines + logotip 'Soilassaig' p.1/p.2",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.95,
+   "note": null
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "MA1 S1",
+   "location": "p.2, taula 'DADES INICIALS', camp 'Mostra:'",
+   "quote": "Mostra: MA1 S1",
+   "confidence": 0.75,
+   "note": "el GTL mana per a la profunditat; l'annex de sondeig (si documenta aquesta mostra) mana per a l'etiqueta final de l'informe"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 - 1,2 m",
+   "location": "p.2, taula 'DADES INICIALS', camp 'Cota d'extracció (m):'",
+   "quote": "Cota d'extracció (m): 1,0 - 1,2",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S1",
+   "location": "p.2, taula 'DADES INICIALS', camp 'Mostra:' (MA1 S1)",
+   "quote": "Mostra: MA1 S1",
+   "confidence": 0.6,
+   "note": "el punt d'assaig s'infereix de l'etiqueta combinada MA1 S1 (mostra alterada 1, sondeig 1); no hi ha camp explícit 'punt'"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/2025",
+   "location": "p.2, taula 'Dimensions de la mostra', camp 'Data extracció:'",
+   "quote": "Data extracció: 24/10/2025",
+   "confidence": 0.4,
+   "note": "data d'extracció de la mostra (sondeig), no necessàriament el primer dia de camp (DPSH); candidat secundari (regla Pas 3: comanda/annex sondeig/GTL donen el dia del sondeig, no sempre el primer dia de camp)"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL",
+   "location": "p.1 bloc 'DADES DEL CLIENT:' / p.2 bloc 'DADES DEL SOL.LICITANT:'",
+   "quote": "DADES DEL CLIENT: Codi client: 0001 Nom: G3 Desenvolupament Territorial, SL NIF: B25364589 Adreça: C/ Vallbona núm. 22 - 25268 Els Omells de Na Gaia (Lleida)",
+   "confidence": 0.0,
+   "note": "G3 és el client DEL LABORATORI (qui encarrega l'assaig), no el client de l'informe geotècnic (regla: G3 mai és client). L'adreça d'Els Omells de Na Gaia és la seu de G3, no l'obra."
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "MA1",
+    "punt": "S1",
+    "profunditat": "1,0 - 1,2",
+    "litologia": "Grava amb llims",
+    "n30": null,
+    "location": "p.2 'DADES INICIALS' (Mostra, Cota d'extracció) + 'DESCRIPCIÓ DEL MATERIAL'",
+    "quote": "Mostra: MA1 S1 / Cota d'extracció (m): 1,0 - 1,2 / DESCRIPCIÓ DEL MATERIAL: Grava amb llims",
+    "note": "mostra alterada (Tipus de mostra: Alterada) sense colpeig associat en aquest document; n30 no consta aquí (candidat 'no_trobat' si cap altra font el dona)"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "L'extracció de text del PDF surt en ordre no visual (etiquetes i valors intercalats sense parió clara) — s'han renderitzat page-1-top/bottom.png i page-2-top/bottom.png per aparellar correctament cada etiqueta (Situació, Obra/Projecte, Mostra, Cota d'extracció, DADES DEL CLIENT/SOL.LICITANT) amb el seu valor abans d'anotar cap candidat. Pàgines 3-4 (resultats químics SO4, taula RESUM buida excepte sulfats) i p.5 (signatures digitals Pere Cervós Flinch / Pere Farrés Bori) llegides però sense senyals de nivell A addicionals (Tier B: agressivitat del sòl, fora d'abast d'aquest skill)."
+}

@@ -1,0 +1,9 @@
+NOU      architect_company      prod=no_trobat
+ALERTA   building_type          or segur 'habitatges unifamiliars aïllats (grup de 3, entramat lleuger de fusta)' NO entre candidats ["Grup d'habitatges unifamiliars", 'Habitatge unifamiliar aïllat']
+ALERTA   cota_referencia        prod puja a segur ('570.90 msnm (segons el plànol ICGC)'); or candidats
+ERR      field_date             segur discrepant: or='2025-10-24' prod='24/10/2025'
+CAUTELA  lab_sample_id          or segur, prod candidats (bo dins): 'MA-1 (S1)'
+ALERTA   num_floors             or segur 'PB+1 (sense soterrani)' NO entre candidats ['PB+1 (2 plantes)']
+CAUTELA  num_soil_levels        or segur, prod candidats (bo dins): '1'
+ALERTA   street_address         or segur 'Carrer Arbrells, 18A, 18B i 20' NO entre candidats ['Carrer Arbrells, 18A-18B-20', 'Carrer Arbrells 18A (només)']
+TOTALS: {'NOU': 1, 'OK': 14, 'ALERTA': 4, 'ERR': 1, 'CAUTELA': 2}

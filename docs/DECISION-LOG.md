@@ -1077,3 +1077,58 @@ Fase 10 (registre de jobs + lock + `GET /api/jobs`), Fase 11 (delta-sync). Exper
 `write_doc_json.py` en una còpia del skill, fila nova al llibre (`preext-c3`) i comparador d'or.
 
 *Fi entrada 2026-08-24 nit. Fase 9: la latència és generació (≈ 21 turns/doc), 33 min reals a conc. 3, 0 erroni-amb-confiança; tres botons dissenyats.*
+
+## 2026-08-25 — Experiment de pre-extracció (v1: −24 %/doc, no adoptat) + Fase 10 (registre de jobs) en paral·lel
+
+### Context
+Handoff `docs/_FOR-NEW-YOU-20260825.md` §6.3: la sonda de turns mostrava 9/15 usos d'eina que no són llegir ni escriure (fabricar-se
+`fitz`, `ls`/`md5sum`, cerimònia d'escriptura). Palanca admissible (no toca *què mira* el model). El Josep decideix: pre-extracció
+primer, Fase 10 després; i, com que l'experiment és llarg, la Fase 10 es construeix en paral·lel amb frontera de fitxers explícita.
+També fixa l'**objectiu real**: l'informe complet (341 variables), no només el nivell A (STATUS «🎯 Objectiu real»).
+
+### Decisions arquitectòniques clau
+- **Pre-extracció darrere d'un flag, com a skill-còpia, no com a canvi del skill de producció.** `G3DT_LECTURA_PREEXT` (defecte off →
+  prompt byte-idèntic) + `G3DT_LECTURA_SKILL`. Alternativa rebutjada: editar `g3dt-llegir-projecte.md` directament — hauria barrejat
+  la mesura amb el protocol validat (0 erroni-amb-confiança en 3 runs). La còpia difereix en 4 blocs (diff de 23 línies).
+- **Zoom sota demanda en lloc de pre-renderitzar-ho tot a alta resolució**: `render_clip.py` (clip fraccional, dpi, graella). Pre-renderitzar
+  a 400-600 dpi totes les zones és impossible; el model ha de poder triar on mirar, però sense escriure codi.
+- **Escriptura en una ordre** (`write_doc_json.py`: validació + nom canònic + atòmic): elimina 2 turns de cerimònia i centralitza el contracte.
+- **Fase 10: job en fil propi + subscriptor amb replay**, no "SSE que executa". `_job.json` s'escriu a disc ABANS de notificar els
+  subscriptors (decisió de l'implementador, trobada per un test que fallava). **`interrupted` = `pid ≠ os.getpid()`**, mai `os.kill(pid, 0)`
+  — a Windows `os.kill` amb un senyal arbitrari **mata** el procés; el wizard és un sol procés, qualsevol pid anterior és mort per definició.
+- **`list_jobs` escaneja només el primer nivell** de `_REF_DIR`: verificat que en mode xarxa el workspace aplana cada projecte al nom fulla
+  (`sync_workspace.workspace_project_path`) i `_REF_DIR = G3DT_LOCAL_WORKSPACE`.
+
+### Implementació
+Commit `0dfff32` (experiment): `automation/lectura/preext.py` (529 LOC), `scripts/write_doc_json.py` (169), `scripts/render_clip.py` (151),
+skill-còpia, `runner.py` +26/−7, `tests/test_lectura_preext.py` (19+1 skip) + 3 tests al runner. Commit `8d3b0ce` (Fase 10):
+`automation/lectura/jobs.py` (528), `web/lectura_service.py` +161/−38, `web/api.py` +73, `tests/test_lectura_jobs.py` (23) + 9 al servei.
+Tots dos amb Sonnet 5 (code-implementer), judici a la sessió. **Incident**: tots dos agents han usat `git stash` per comparar la línia base
+malgrat la prohibició; sense dany (untracked no afectats, `runner.py` ja importat pel run viu) — al proper brief, prohibició explícita amb el motiu.
+
+### Validació empírica
+Fila `2026-08-25-preext-c3` del llibre: mediana/doc 292 → 221 s (−24 %), turns 20,6 → 17,3, tokens sortida −22 %, paret 33 → **28 min**;
+0 erroni-amb-confiança de fons; **5 cel·les `nivell_freatic` baixen de `segur` a `no_trobat`** (color de cel·la d'Excel no exportat) →
+criteri d'adopció no complert. Detall: `fase8-e2e/_RESULTATS.md` addendum 2026-08-25.
+
+### Tests
+Suite de lectura **123 passed / 1 skipped** (73 → 123). Suite completa: **32 failed** (línia base per recompte; cap a `lectura`/`preext`/`jobs`).
+
+### Latència / cost
+Run: 55,7 min de suma `claude` + 539 s de consolidació = 28 min de paret a conc. 3; cost equiv. 13,6 $ (subscripció). Pre-extracció: 13 s, 72 MB/projecte.
+
+### Limitacions conegudes
+- v1 no exporta colors d'Excel (nivell freàtic/nivells per color) ni distingeix text brossa Distiller (`text_ok` per recompte alfanumèric).
+- Multipàgina: el model mira sencer + meitats de totes les pàgines (més turns que abans en 7 p).
+- Fase 10: `estimate_s` només es recalcula a `lectura_doc`; `claude_version`/`network_delta` null; detecció d'interromputs lazy (a `list_jobs`), no a l'arrencada.
+- 72 MB per projecte a `validation/lectura/_preext/`: cal política de neteja abans d'anar a l'ordinador de l'Eva.
+
+### GO/NO-GO
+- ✅ Fase 10 (jobs): codi, tests, API.
+- ⏳ Pre-extracció: NO adoptada; v2 (colors + meitats selectives + `text_ok` per producer) i remesura `preext-v2-c3`.
+- ✅ Objectiu 341 variables apuntat a STATUS i memòria.
+
+### Següents passos
+v2 de la pre-extracció → si adoptada, `G3DT_LECTURA_PREEXT` per defecte + skill de producció; Fase 11 (delta-sync); Fase 12 (guards + Python-first).
+
+*Fi entrada 2026-08-25. Pre-extracció v1 −24 %/doc i 28 min de paret però 5 cel·les perdudes pel color d'Excel → v2; Fase 10 feta.*

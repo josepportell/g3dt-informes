@@ -130,3 +130,50 @@ mateixes imatges. A mesurar com a fila nova del llibre abans d'adoptar-la.
 | prompt prim (sense CLAUDE.md/MCPs) | −5-10 s/crida | no |
 
 *Fi addendum Fase 9. Instrumentació + remesura: 33 min reals a conc. 3, 0 erroni-amb-confiança, el cost és generació (≈ 21 turns/doc).*
+
+## Addendum 2026-08-25 (matí) — Experiment de pre-extracció determinista (`preext-c3`): −24 % per document, 28 min de paret, NO adoptat encara
+
+Fila `2026-08-25-preext-c3` del llibre (`docs/wizard-headless/mesures/LEDGER.md`; artefactes a `runs/2026-08-25-preext-c3/`).
+Codi: `automation/lectura/preext.py`, `scripts/write_doc_json.py`, `scripts/render_clip.py`, skill-còpia
+`.claude/commands/g3dt-llegir-projecte-preext.md` (v1.3 amb 4 blocs canviats: accés al document i escriptura; Pas 0/3/3b intactes),
+flag `G3DT_LECTURA_PREEXT` al runner (defecte apagat = prompt byte-idèntic). Commit `0dfff32`.
+
+### Temps (Castellar sol, conc. 3, Sonnet 5, login; run net 11:11:16 → 11:39:18)
+
+| | `sonnet-c3` (ref.) | `preext-c3` | Δ |
+|---|--:|--:|--:|
+| pre-extracció | — | 13,2 s (13/13, 72 MB, 99 PNG, cap > 3 MB) | +13 s |
+| mediana/doc | 292 s | **221 s** | **−24 %** |
+| suma `claude` docs | 60,6 min | 55,7 min | −8 % |
+| turns/doc | 20,6 | 17,3 | −16 % |
+| tokens sortida docs | 306k | 239k | −22 % |
+| consolidació | 677 s / 24 turns | 539 s / 33 turns | — (banda 474-677) |
+| **paret real** | **33 min** | **28 min** | **−15 %** |
+
+Per document, dos règims: els annexos d'una pàgina baixen 30-45 % (`tall.pdf` 349→206 s, `3001621_DPSH.pdf` 292→191,
+`3001621_DPSH.xls` 386→212, pressupost `.msg` 196→135) i els **multipàgina pugen** (`ACCEPTACIO` 7 p: 23→28 turns, 276→342 s;
+`PENETROS + SONDEIG` 5 p: 31→39 turns; `LAB-SIG` 13→17 turns). Causa (reading_notes): amb sencer + meitats pre-renderitzats
+per a totes les pàgines, el model se les mira totes (7 txt + 7 png + 14 meitats) en lloc de renderitzar només el que necessita.
+
+### Qualitat (comparador d'or; judici a `meta.json`)
+
+- **Erroni-amb-confiança de fons = 0.** Els 5 ERR són format: `field_date` `24/10/2025` vs `2025-10-24`; `cota_inici` `-4` vs `-4,0` ×3
+  (idèntic a c3); `profunditat` signe/decimals.
+- **Regressió de candidats (criteri d'adopció NO complert):** `nivell_freatic` a 5 files (4 DPSH + sondeig) passa de `segur 'No detectat'`
+  a `no_trobat`. Causa declarada pel model (`annexes_3001621_dpsh.json` → reading_notes): el Pas 3b exigeix comprovar el **color** de
+  cel·la (`xlrd formatting_info=True`) i la pre-extracció v1 no exporta colors → correcte que no ho afirmi, però és cobertura perduda.
+  `lab_sample_id` i `num_soil_levels` baixen de `segur` a `candidats` amb el bo dins (n=1; dins la banda de soroll?).
+- **Millores:** `spt_ma_tests` ja no duplica SPT-1/MA1; `sondeig_tests[0].cota` porta el valor de l'or entre candidats (c3: no);
+  l'excés de confiança a `sondeig_tests[0].spt_ma` desapareix. `cota_referencia` puja a `segur` amb 1 font per 3a vegada → Fase 12.
+- El protocol s'aplica intacte: `render_clip.py` usat a ACCEPTACIO (manuscrit p.5 a 400 dpi), PENETROS (450-600 dpi), plànol de situació;
+  cap `fitz` escrit a mà; cap `ls`/`md5sum`; escriptura amb `write_doc_json.py` en una ordre.
+
+### Veredicte i v2
+
+**NO adoptat** (candidats empitjoren per un forat corregible). Pre-extracció v2 a mesurar (`preext-v2-c3`):
+1. Excel: `sheet-i.colors.txt` (cel·les amb fons no per defecte: `REF<TAB>color<TAB>valor`; xlrd `formatting_info=True` / openpyxl fill).
+2. PDF: meitats només per a pàgines amb `text_ok=false`; regla al skill: no mirar meitats si la sencera ja és llegible; clip sota demanda.
+3. `text_ok` per producer (Distiller/PScript5 → false encara que hi hagi ≥ 20 alfanumèrics: avui el text brossa del sondeig annex passa per bo).
+Criteri d'adopció idèntic: 0 erroni-amb-confiança de fons i cap cel·la que baixi d'estat respecte a `sonnet-c3`.
+
+*Fi addendum 2026-08-25 matí. Pre-extracció v1: −24 % per document, 28 min de paret, 0 erroni-amb-confiança, 5 cel·les de nivell freàtic perdudes pel color d'Excel → v2.*
