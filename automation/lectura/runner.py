@@ -112,6 +112,10 @@ def _load_config() -> dict[str, Any]:
     mode = os.getenv("G3DT_LECTURA_MODE", "document") or "document"
     if mode not in ("document", "projecte"):
         mode = "document"
+    preext = os.getenv("G3DT_LECTURA_PREEXT", "").strip().lower() in ("1", "true", "yes")
+    skill = os.getenv("G3DT_LECTURA_SKILL", "").strip() or (
+        "g3dt-llegir-projecte-preext" if preext else "g3dt-llegir-projecte"
+    )
     return {
         "claude_path": os.getenv("G3DT_CLAUDE_PATH", "claude") or "claude",
         "timeout": _env_int("G3DT_LECTURA_TIMEOUT", 600),
@@ -119,6 +123,8 @@ def _load_config() -> dict[str, Any]:
         "concurrency": max(1, _env_int("G3DT_LECTURA_CONCURRENCY", 2)),
         "mode": mode,
         "model": os.getenv("G3DT_LECTURA_MODEL", "sonnet") or "sonnet",
+        "preext": preext,
+        "skill": skill,
     }
 
 
@@ -462,7 +468,7 @@ def _process_one_doc(
         ts_start = datetime.now().isoformat(timespec="seconds")
 
         prompt = (
-            f"/g3dt-llegir-projecte {project_path} --only {rel_path} "
+            f"/{cfg['skill']} {project_path} --only {rel_path} "
             f"--inventory {inv_path} --out {out_dir}"
         )
         log_path = Path(tempfile.gettempdir()) / f"g3dt-lectura-{project_path.name}-{name}-{attempt}.log"
@@ -479,7 +485,8 @@ def _process_one_doc(
                 "rc": call["rc"], "timeout": call["timeout"], "json_valid": False,
                 "attempt": attempt, "cached": False, "elapsed_s": call["elapsed_s"],
                 "log_path": str(log_path), "claude_version": claude_version,
-                "model": cfg["model"], **call.get("cli", {"cli_json_ok": False}),
+                "model": cfg["model"], "skill": cfg["skill"], "preext": cfg["preext"],
+                **call.get("cli", {"cli_json_ok": False}),
             })
             return {"doc": rel_path, "status": "cancelled", "attempts": attempt, "elapsed_s": last_elapsed}
 
@@ -492,7 +499,8 @@ def _process_one_doc(
             "rc": call["rc"], "timeout": call["timeout"], "json_valid": json_valid,
             "attempt": attempt, "cached": False, "elapsed_s": call["elapsed_s"],
             "log_path": str(log_path), "claude_version": claude_version,
-            "model": cfg["model"], **call.get("cli", {"cli_json_ok": False}),
+            "model": cfg["model"], "skill": cfg["skill"], "preext": cfg["preext"],
+            **call.get("cli", {"cli_json_ok": False}),
         })
 
         if json_valid:
@@ -547,7 +555,7 @@ def _consolidate(
             _emit(on_event, "decisions", {"cached": True})
             return cached, False
 
-    prompt = f"/g3dt-llegir-projecte {project_path} --consolida --out {out_dir}"
+    prompt = f"/{cfg['skill']} {project_path} --consolida --out {out_dir}"
     log_path = Path(tempfile.gettempdir()) / f"g3dt-lectura-{project_path.name}-consolida.log"
     ts_start = datetime.now().isoformat(timespec="seconds")
     call = _run_claude(
@@ -564,7 +572,8 @@ def _consolidate(
         "rc": call["rc"], "timeout": call["timeout"], "json_valid": json_valid,
         "attempt": 1, "cached": False, "elapsed_s": call["elapsed_s"],
         "log_path": str(log_path), "claude_version": claude_version,
-        "model": cfg["model"], **call.get("cli", {"cli_json_ok": False}),
+        "model": cfg["model"], "skill": cfg["skill"], "preext": cfg["preext"],
+        **call.get("cli", {"cli_json_ok": False}),
     })
 
     if call.get("cancelled"):
@@ -604,7 +613,7 @@ def _run_mode_projecte(
     exacta de la lectura d'or. Sense cache propia (no hi ha `{doc}.json` amb
     que comparar el mtime de `_decisions.json`)."""
     decisions_path = out_dir / "_decisions.json"
-    prompt = f"/g3dt-llegir-projecte {project_path} --out {out_dir}"
+    prompt = f"/{cfg['skill']} {project_path} --out {out_dir}"
     log_path = Path(tempfile.gettempdir()) / f"g3dt-lectura-{project_path.name}-projecte.log"
     ts_start = datetime.now().isoformat(timespec="seconds")
     call = _run_claude(
@@ -621,7 +630,8 @@ def _run_mode_projecte(
         "rc": call["rc"], "timeout": call["timeout"], "json_valid": json_valid,
         "attempt": 1, "cached": False, "elapsed_s": call["elapsed_s"],
         "log_path": str(log_path), "claude_version": claude_version,
-        "model": cfg["model"], **call.get("cli", {"cli_json_ok": False}),
+        "model": cfg["model"], "skill": cfg["skill"], "preext": cfg["preext"],
+        **call.get("cli", {"cli_json_ok": False}),
     })
 
     status = "cancelled" if call.get("cancelled") else ("ok" if json_valid else "failed")
@@ -826,6 +836,15 @@ def run_lectura(
     # -- 1/2: inventari + g3_templates (disseny §2, "c" i g3_templates part de "a") --
     inv_path = write_inventory(project_path, out_dir)
     inventory = json.loads(inv_path.read_text(encoding="utf-8"))
+
+    if cfg["preext"]:
+        try:
+            from automation.lectura.preext import augment_inventory
+            inventory = augment_inventory(project_path, inv_path)
+            _emit(on_event, "lectura_preext", dict(inventory.get("preext", {})))
+        except Exception as exc:
+            _emit(on_event, "lectura_preext", {"error": str(exc)})
+
     _emit(on_event, "lectura_inventari", {"n_files": len(inventory.get("files", []))})
 
     g3_result = g3_templates.read_project(project_path)

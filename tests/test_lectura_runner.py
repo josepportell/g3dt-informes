@@ -562,3 +562,83 @@ def test_child_env_keeps_api_key_when_requested():
     from automation.lectura.runner import _child_env
     base = {"ANTHROPIC_API_KEY": "sk-x", "G3DT_LECTURA_AUTH": "api_key"}
     assert _child_env(base)["ANTHROPIC_API_KEY"] == "sk-x"
+
+
+# ---------------------------------------------------------------------------
+# Experiment de pre-extracció determinista (flag G3DT_LECTURA_PREEXT)
+# ---------------------------------------------------------------------------
+
+
+def test_preext_flag_off_default_skill_no_preext_dir(synth_project, base_env, monkeypatch, tmp_path):
+    argv_log = tmp_path / "argv_off.log"
+    monkeypatch.setenv("MOCK_CLAUDE_ARGVLOG", str(argv_log))
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    assert result.decisions is not None
+
+    lines = [l for l in argv_log.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert lines, "cap linia d'argv registrada"
+    for line in lines:
+        assert "/g3dt-llegir-projecte " in line
+        assert "-preext" not in line
+
+    assert not (out_dir / "_preext").exists()
+
+    tel_lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert tel_lines
+    for entry in tel_lines:
+        assert entry["skill"] == "g3dt-llegir-projecte"
+        assert entry["preext"] is False
+
+
+def test_preext_flag_on_uses_preext_skill_and_augments_inventory(synth_project, base_env, monkeypatch, tmp_path):
+    argv_log = tmp_path / "argv_on.log"
+    monkeypatch.setenv("MOCK_CLAUDE_ARGVLOG", str(argv_log))
+    monkeypatch.setenv("G3DT_LECTURA_PREEXT", "1")
+    out_dir = synth_project / "validation" / "lectura"
+    events, on_event = _events_collector()
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir, on_event=on_event)
+    assert result.decisions is not None
+
+    lines = [l for l in argv_log.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert lines, "cap linia d'argv registrada"
+    for line in lines:
+        assert "/g3dt-llegir-projecte-preext " in line
+
+    preext_dir = out_dir / "_preext"
+    assert preext_dir.exists()
+
+    inv = json.loads((out_dir / "_inventory.json").read_text(encoding="utf-8"))
+    assert "preext" in inv
+    claude_entries = [f for f in inv["files"] if f["route"] == "claude"]
+    assert claude_entries
+    assert all("preext" in f for f in claude_entries)
+
+    tel_lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert tel_lines
+    for entry in tel_lines:
+        assert entry["skill"] == "g3dt-llegir-projecte-preext"
+        assert entry["preext"] is True
+
+    assert "lectura_preext" in [n for n, _ in events]
+
+
+def test_preext_skill_env_overrides_default_name(synth_project, base_env, monkeypatch, tmp_path):
+    argv_log = tmp_path / "argv_override.log"
+    monkeypatch.setenv("MOCK_CLAUDE_ARGVLOG", str(argv_log))
+    monkeypatch.setenv("G3DT_LECTURA_SKILL", "xyz")
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    assert result.decisions is not None
+
+    lines = [l for l in argv_log.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert lines, "cap linia d'argv registrada"
+    for line in lines:
+        assert "/xyz " in line
+
+    tel_lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    for entry in tel_lines:
+        assert entry["skill"] == "xyz"
