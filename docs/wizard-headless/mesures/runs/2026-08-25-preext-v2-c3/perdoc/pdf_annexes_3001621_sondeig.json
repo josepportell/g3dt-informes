@@ -1,0 +1,191 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_sondeig.pdf",
+ "source_md5": "2295eafdfbaf24a22d916a124ea308d0",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_sondeig",
+ "what_it_is": "Full de camp/laboratori del sondeig a rotació amb bateria contínua S-1 (plantilla G3): capçalera tècnica, taula amb columna litològica i mostres SPT, i 2 fotografies de camp",
+ "issuer": "G3 (Eva Vázquez Marcet, geòloga col. 4302); treball de camp per TPS (Sr. Daniel Fernández, sondista, màquina ML76A)",
+ "date": "24/10/2025",
+ "pages_or_sheets": "2 pàgines (p.1 taula tècnica del sondeig S-1, p.2 fotografies)",
+ "context": {
+  "who_made_it": "Eva Vázquez Marcet (G3), geòloga, sintetitza el sondeig fet en camp per TPS (sondista Sr. Daniel Fernández, màquina ML76A)",
+  "for_whom": "G3, com a font tècnica per redactar l'informe geotècnic (litologia, SPT, cota)",
+  "why": "documentar el sondeig a rotació S-1: nivells litològics, mostra SPT, nivell freàtic, cota i UTM",
+  "expected_fields": [
+   "cota_referencia",
+   "num_soil_levels",
+   "soil litology per nivell",
+   "mostra SPT/n30",
+   "utm_x_utm_y",
+   "field_date (dia del sondeig)"
+  ],
+  "not_expected": [
+   "expedient",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "architect_name"
+  ],
+  "relation_to_others": "el bloc 'Client:' (WOOD COMFORT PROM.) i l'adreça 'Obra:' deriven del mateix encàrrec que el pressupost MODF (WOOD COMFORT PROMOCIONS SLU, ja vist a _g3_templates.json): no són font independent. La 'Cota (Z): 570.90 msnm (segons el plànol ICGC)' hauria de coincidir amb la 'Cota inici' de l'annex DPSH del mateix projecte; si el DPSH usa cotes relatives ('respecte el carrer'), la cel·la de cota de sondeig_tests ha de seguir el sistema relatiu, no aquest valor absolut (regla d'or coneguda per aquest projecte concret, Pas 3b) — pendent de creuar amb l'annex DPSH.",
+  "authority_for": [
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROM.",
+   "location": "p.1 capçalera, Client:",
+   "quote": "WOOD COMFORT PROM.",
+   "confidence": 0.3,
+   "note": "= sol·licitant (regla G3); deriva del mateix encàrrec que el pressupost MODF (WOOD COMFORT PROMOCIONS SLU); no és font independent; NO autoritat de client_name"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells Nº 18A-18B-20",
+   "location": "p.1 capçalera, bloc Obra",
+   "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.7
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "p.1 capçalera, bloc Obra",
+   "quote": "CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.75
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "p.1 capçalera, bloc Obra",
+   "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.6
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-24",
+   "location": "p.1 capçalera, Data d'inici / Data de fi",
+   "quote": "Data d'inici: 24/10/25 / Data de fi: 24/10/25",
+   "confidence": 0.6,
+   "note": "dia del sondeig (candidat 2, regla field_date); coincideix amb field_date de la fitxa F38 (autoritat A)"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "570.90 msnm",
+   "location": "p.1 capçalera, Cota (Z)",
+   "quote": "570.90 msnm  (segons el plànol ICGC)",
+   "confidence": 0.85,
+   "note": "z: de l'annex sondeig (criteri de l'Eva); creuar amb 'Cota inici' de l'annex DPSH per confirmar coincidència"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "p.1 taula, columna Unitat litològica",
+   "quote": "NIVELL 1",
+   "confidence": 0.85,
+   "note": "un sol nivell etiquetat, 0.50-1.20 m; la capa superior 0.00-0.50 (Terreny Vegetal) no porta etiqueta NIVELL i no compta"
+  },
+  {
+   "concept_id": "utm_x_utm_y",
+   "value": "423182.0 E(x) / 4609623.0 N(y)",
+   "location": "p.1 capçalera, UTM",
+   "quote": "423182.0 E(x) / 4609623.0 N(y)",
+   "confidence": 0.6,
+   "note": "prioritat després de COORDENADES.txt (no llegit en aquesta crida)"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.1 taula, Mostres i assaigs in-situ / Tipus de mostra",
+   "quote": "SPT-1",
+   "confidence": 0.75,
+   "note": "annex de l'Eva mana per a l'etiqueta (regla); la comanda dona 'MA (S1)', discrepant -> candidats"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,00 a 1,20 m",
+   "location": "p.1 taula, Prof. de extracció (m)",
+   "quote": "1,00 a -1,20",
+   "confidence": 0.7,
+   "note": "coincideix amb comanda (INICIAL 1.0 / FINAL 1.2); GTL manaria si discrepés (no llegit en aquesta crida)"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.1 capçalera, Sondeig nº",
+   "quote": "Sondeig nº: S-1",
+   "confidence": 0.6,
+   "note": "coincideix amb el parèntesi de la comanda 'MA (S1)'"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS",
+   "location": "p.1 capçalera, Empresa:",
+   "quote": "Empresa: TPS",
+   "confidence": 0.4,
+   "note": "empresa que fa el sondeig de camp; coneixement previ del projecte (TPS és sempre el laboratori), no confirmació independent del laboratori analític"
+  }
+ ],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "570.90 msnm (absolut, segons plànol ICGC)",
+    "profunditat_assolida": "1.20 m",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": null,
+    "location": "p.1 capçalera Cota (Z) + taula",
+    "quote": "Cota (Z): 570.90 msnm (segons el plànol ICGC); Sondeig nº: S-1",
+    "note": "columna 'Nivell freàtic' de la taula en blanc, cap marca; PROFUNDITAT ASSOLIDA confirmada també per la caixa de mostres de la p.2 ('Profunditat de 0.00 Mts A 1.20 Mts, Caixa nº 1'). ⚠ cota: si els DPSH d'aquest projecte són relatius ('respecte el carrer'), la cel·la ha de ser relativa, NO aquest valor absolut — creuar amb l'annex DPSH (regla d'or coneguda per aquest projecte, Pas 3b) abans de consolidar"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1,00 a -1,20 m",
+    "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells (NIVELL 1, 0.50-1.20)",
+    "n30": {
+     "registre": "R",
+     "candidats_suma": null
+    },
+    "location": "p.1 taula, Mostres i assaigs in-situ",
+    "quote": "SPT-1 / -1,00 a -1,20 / R",
+    "note": "Registre = R directament (rebuig), sense desglossament en trams de 15 cm; mai estat segur per contracte (n30)"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "NIVELL 1",
+    "litologia_candidats": [
+     "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells"
+    ],
+    "de": "0.50",
+    "a": "1.20",
+    "mostra_del_nivell": true,
+    "location": "p.1 taula, columna Unitat litològica + Descripció dels materials",
+    "quote": "0.50-1.20 - Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+   }
+  ],
+  "__nota": "capa 0.00-0.50 ('Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.') NO porta etiqueta NIVELL a la columna 'Unitat litològica' -> no compta com a nivell segons l'anotació pròpia de l'annex; només s'informa aquí per completesa, no com a fila de soil_levels"
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "num_dpsh_tests",
+  "referencia_catastral"
+ ],
+ "reading_notes": "meta.text_ok=false a les 2 pàgines (FreeHand/PScript5.dll, text brossa, tal com preveu el skill per als annexos de l'Eva) -> no s'ha llegit cap .txt. page-1.png (150dpi) ja és llegible sencer; s'ha usat scripts/render_clip.py a 400-500dpi només per confirmar amb certesa el límit de l'etiqueta 'NIVELL 1' (comença a 0.50, no a 0.00) i el contingut exacte de la cel·la Registre ('R'). page-2.png és només 2 fotografies + capçalera repetida; la caixa de mostres porta una etiqueta manuscrita que confirma 'Profunditat de 0.00 Mts A 1.20 Mts'. No s'han obert les meitats left/right (la pàgina sencera ja n'hi ha prou)."
+}

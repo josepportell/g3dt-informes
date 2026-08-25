@@ -1,0 +1,183 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_DPSH.pdf",
+ "source_md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Gràfica de resultats de 4 assaigs de penetració dinàmica DPSH (P-1 a P-4): colpeig N20 per fondària, fondària de rebuig i marca de nivell, generada a partir de l'Excel DPSH del projecte.",
+ "issuer": "G3 / Eva (a partir de les dades de camp preses per TPS)",
+ "date": "24/10/25 (data de camp indicada al peu de cada pàgina)",
+ "pages_or_sheets": "4 pàgines (una per punt: P-1, P-2, P-3, P-4)",
+ "context": {
+  "who_made_it": "Eva (G3), transcrivint i graficant els resultats de camp dels 4 assaigs DPSH executats per TPS",
+  "for_whom": "l'informe geotècnic mateix (aquest document n'és l'annex directe)",
+  "why": "documentar el colpeig N20 per fondària, la fondària de rebuig i la marca de nivell/N.F. de cada un dels 4 punts DPSH del projecte",
+  "expected_fields": [
+   "profunditat de penetròmetre",
+   "colpeig DPSH (N20)",
+   "colpeig N(B)",
+   "nivell freàtic (N.F.)",
+   "marca de nivell geològic",
+   "cota inici per punt",
+   "OBRA (adreça)",
+   "POBLACIÓ",
+   "DATA de camp",
+   "NÚMERO D'INFORME"
+  ],
+  "not_expected": [
+   "client",
+   "arquitecte",
+   "tipus d'edifici",
+   "num. plantes",
+   "superfície de parcel·la",
+   "coordenades UTM",
+   "referència cadastral",
+   "dades de laboratori"
+  ],
+  "relation_to_others": "generat a partir de l'Excel DPSH del projecte (ANNEXES/{exp}_DPSH.xls, no llegit en aquesta crida); mateixes dades de camp que el full manuscrit PENETROS.pdf (no llegit en aquesta crida) però ja transcrites i graficades per l'Eva",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "num_dpsh_tests",
+   "cota_referencia",
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.1-4, peu de pàgina, camp NÚMERO D´INFORME",
+   "quote": "NÚMERO D´INFORME: 3001621",
+   "confidence": 0.9,
+   "note": "idèntic i literal a les 4 pàgines; coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ ARBRELLS 18 A",
+   "location": "p.1-4, peu de pàgina, bloc OBRA",
+   "quote": "OBRA: C/ ARBRELLS 18 A",
+   "confidence": 0.85,
+   "note": "idèntic a les 4 pàgines; etiqueta OBRA (font vàlida per a l'adreça de l'obra)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1-4, peu de pàgina, bloc POBLACIÓ",
+   "quote": "POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.85,
+   "note": "idèntic a les 4 pàgines; forma curta en majúscules, sense accent ni diacrític"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/25",
+   "location": "p.1-4, peu de pàgina, bloc DATA",
+   "quote": "DATA: 24/10/25",
+   "confidence": 0.6,
+   "note": "idèntic a les 4 pàgines; candidat 2 per la regla (la fitxa de camp F38 és prioritària i no s'ha llegit en aquesta crida)"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "p.1-4, capçalera 'ASSAIG DE PENETRACIÓ DINÀMICA'",
+   "quote": "P-1 / P-2 / P-3 / P-4",
+   "confidence": 0.85,
+   "note": "4 punts DPSH executats i documentats en aquest annex (un per pàgina)"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "-4 m (respecte el carrer)",
+   "location": "p.1, p.3, p.4, peu, camp cota inici de P-1/P-3/P-4",
+   "quote": "P-1     - 4  m  (respecte el carrer).",
+   "confidence": 0.4,
+   "note": "cota RELATIVA per punt, no absoluta en msnm; coincideix a 3 dels 4 punts (P-1, P-3, P-4); mai segur amb un sol document — cal creuar amb l'annex de sondeig (z absoluta) i comprovar si el projecte usa sistema relatiu o mixt"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "-4,2 m (respecte el carrer)",
+   "location": "p.2, peu, camp cota inici de P-2",
+   "quote": "P-2    cota inici: -4,2 m  (respecte el carrer)",
+   "confidence": 0.25,
+   "note": "P-2 difereix dels altres 3 punts (-4,0); pot ser variació local real de la cota del punt o discrepància de transcripció; no descartable"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "p.1-4, columna 'Nivells', marca abans del peu de rebuig",
+   "quote": "Nivell 1",
+   "confidence": 0.3,
+   "note": "únic nivell marcat als 4 punts DPSH, però els rebuigs són molt somers (0,48-1,55 m): no descarta nivells més profunds no assolits pel DPSH; l'annex de sondeig (columna 'Unitat litològica', no llegit en aquesta crida) és la font primària per a aquest camp, no aquest document"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.1",
+    "quote": "P-1     - 4  m  (respecte el carrer). / Rebuig  a -1,08 m",
+    "extra": {
+     "nivell_marca": "Nivell 1"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,2 m (respecte el carrer)",
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.2",
+    "quote": "P-2    cota inici: -4,2 m  (respecte el carrer) / Rebuig  a -0,48 m",
+    "extra": {
+     "nivell_marca": "Nivell 1"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.3",
+    "quote": "P-3    cota inici: - 4 m  (respecte el carrer). / Rebuig  a -0,76 m",
+    "extra": {
+     "nivell_marca": "Nivell 1"
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.4",
+    "quote": "P-4     - 4  m (respecte el carrer). / Rebuig  a -1,55 m",
+    "extra": {
+     "nivell_marca": "Nivell 1"
+    }
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció (--only): llegit únicament text-per-pàgina (page-N.txt), sense obrir fitxa (fitz). meta.json marca text_suspect_reason='producer: Acrobat Distiller 15.0 (Windows)' (patró típic d'annexos FreeHand amb text brossa) però text_ok=true a les 4 pàgines i el text extret és net i complet (capçaleres OBRA/POBLACIÓ/DATA/NÚMERO D'INFORME llegibles literalment) — coherent amb la regla del skill que aquest document concret ('PDF/ANNEXES/{exp}_DPSH.pdf', generat des de l'Excel DPSH) sí porta text net, a diferència dels altres annexos FreeHand. No ha calgut renderitzar page-N.png ni fer clip. Valors de rebuig (-1,08/-0,48/-0,76/-1,55) i cotes (-4,0/-4,2/-4,0/-4,0 respecte el carrer) coincideixen exactament amb l'exemple d'or documentat al propi skill (Pas 3b, regla de l'ERR de Castellar) — confirma la fidelitat de l'extracció. Columna N.F. no mostra cap valor al text extret a cap dels 4 punts (camp buit); no s'ha pogut comprovar color de cel·la perquè aquest és el PDF, no l'Excel font. creationDate del PDF (2025-11-03) és posterior a la data de camp indicada al document (24/10/25): normal, és quan es va imprimir/exportar l'annex, no la data de l'assaig."
+}

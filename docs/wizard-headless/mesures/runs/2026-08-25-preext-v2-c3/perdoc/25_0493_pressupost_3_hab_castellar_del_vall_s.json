@@ -1,0 +1,116 @@
+{
+ "source_path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+ "source_md5": "3ecd5e682c690373fd56fd0fde96bab2",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern de G3 (Eva reenvia a Dolors una sol·licitud de pressupost rebuda per WhatsApp d'un client) demanant preu d'un geotècnic a Castellar del Vallès",
+ "issuer": "Eva Vazquez (G3), reenviant missatge de WhatsApp del client (contacte 'ROC', GRUP ALMA)",
+ "date": "2025-06-25 11:14:44+02:00",
+ "pages_or_sheets": "cos de correu (1 missatge, sense adjunts propis a llegir)",
+ "context": {
+  "who_made_it": "Eva Vazquez (G3), reenviant una sol·licitud de pressupost rebuda per WhatsApp d'un client",
+  "for_whom": "Dolors Maqueda (G3, gestió de pressupostos)",
+  "why": "El client (GRUP ALMA, contacte ROC) demana el preu d'un estudi geotècnic a Castellar del Vallès i anuncia que la setmana següent comprarà 2 parcel·les veïnes, amb la possibilitat d'ampliar a 3 estudis geotècnics",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "client_name",
+   "building_type",
+   "num_floors",
+   "superficie_construida"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab",
+   "cte"
+  ],
+  "relation_to_others": "Correu d'encàrrec, anterior al pressupost/comanda formals; el 'CLIENT: GRUP ALMA' d'aquest correu (2025-06-25) és una sol·licitud primerenca — segons el patró d'aquest mateix skill (Pas 3, 'promotors que canvien'), a Castellar el client acaba consignant-se com WOOD COMFORT al MODF del pressupost, document no llegit en aquesta crida",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "num_floors",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "GRUP ALMA",
+   "location": "cos del correu, línia 23 (capçalera reenviada)",
+   "quote": "CLIENT: GRUP ALMA",
+   "confidence": 0.3,
+   "note": "correu d'encàrrec = sol·licitant, no promotor confirmat en aquest document; possible superat per WOOD COMFORT en el pressupost/MODF posterior (no llegit aquí) — mai segur des d'aquesta font sola"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A",
+   "location": "cos del correu, línia 39",
+   "quote": "Carrer Arbrells 18A",
+   "confidence": 0.5,
+   "note": "adreça donada pel client per WhatsApp, sense confirmar amb plànol/cadastre en aquest document"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "cos del correu, línia 35 i assumpte",
+   "quote": "haig de fer un geotecnic  a Castellar del Vallès.",
+   "confidence": 0.55,
+   "note": "coincideix amb l'assumpte del correu"
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1",
+   "location": "cos del correu, línies 47-49",
+   "quote": "PB + 1",
+   "confidence": 0.45,
+   "note": "previsió inicial del client per WhatsApp, sense soterrani ('Sense soterrani', línia 49); pot variar respecte al projecte final"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "cos del correu, línies 35-53 (context) i assumpte ('3 HAB')",
+   "quote": "PB + 1 [...] 120 m2 construits [...] Estructura d'entremat lleuger de fusta",
+   "confidence": 0.3,
+   "note": "inferit: el correu no diu explícitament 'habitatge', però l'assumpte ('3 HAB CASTELLAR DEL VALLÈS') i el context (un sol client, una sola adreça, estructura de fusta lleugera) ho suggereixen"
+  }
+ ],
+ "tables": {
+  "superficie_construida": [
+   {
+    "components": [
+     "120 m2 construits"
+    ],
+    "total": "120",
+    "etiqueta_font": "segons informació aportada pel client (correu, previsió inicial)",
+    "location": "cos del correu, línia 51",
+    "quote": "120 m2 construits"
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "superficie_parcela",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura pre-extreta: body.txt del preext (kind=msg), sense executar extract_msg/fitz. L'únic adjunt (plan_cost_catellar_del_vall_s.xlsx) ja és solt a la carpeta (already_in_folder=25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx, preext_dir null) — no llegit dos cops en aquesta crida. El correu esmenta '3 estudis geotècnics' (compra de 2 parcel·les veïnes la setmana següent) que explica el '3 HAB' del nom de fitxer — és context estructural (possible expansió a 3 projectes), no una dada del nivell A d'aquest document. Contacte 'ROC - 615 55 74 50' anotat com a persona de contacte del client, sense concept_id de nivell A associat."
+}

@@ -1,0 +1,103 @@
+{
+ "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+ "source_md5": "3f3035ff2113238d74e3e22e5cffb26a",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost geotècnic G3 (25·0493 P#) per a l'ESTUDI GEOTÈCNIC de C/Arbrells 18A-18B-20, Castellar del Vallès — còpia ACCEPTADA i signada pel client, amb el formulari de dades de facturació omplert a mà (p.5)",
+ "issuer": "G3 Desenvolupament Territorial, S.L.",
+ "date": "Portada (p.1): 07/10/25 (coincideix amb creationDate del PDF, 2025-10-07); requadre DATA de p.5: 25/06/25 (discrepant amb la portada, veure reading_notes)",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. (consultora geotècnica) emet aquest pressupost",
+  "for_whom": "El sol·licitant/promotor WOOD COMFORT PROMOCIONS SLU, que el signa i en retorna la còpia d'acceptació",
+  "why": "Formalitzar l'encàrrec de l'estudi geotècnic (4 DPSH + 1 sondeig a rotació amb bateria contínua + assaigs de laboratori, 1.280,00€ IVA no inclòs) i recollir les dades de facturació i enviament de l'informe",
+  "expected_fields": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_sample_id",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "expedient"
+  ],
+  "relation_to_others": "Còpia ACCEPTADA/SIGNADA del pressupost 25·0493 P# (existeixen altres còpies del mateix codi comercial a 25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf i .MODF.CASTELLAR DEL VALLES.pdf, no llegides en aquesta crida --only). El formulari p.5 (omplert a mà i signat) és una font pròpia per client_name, no una simple repetició del bloc CLIENT: de la portada.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.1 portada, bloc 'CLIENT:'",
+   "quote": "CLIENT: WOOD COMFORT PROMOCIONS SLU / C/FERRAN VALLS I TABERNER 14 BIS 1-2 / 08006 BARCELONA / Tel:",
+   "confidence": 0.6,
+   "note": "Bloc CLIENT: del pressupost = sol·licitant (regla Pas 3), candidat perquè el nom NO conté 'ARQUITECTE'; coincideix amb el formulari p.5 signat (mateix pressupost, no és font independent d'aquell)."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.5, requadre 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' → NOM I COGNOMS (manuscrit, tinta vermella)",
+   "quote": "NOM I COGNOMS: WOOD COMFORT PROMOCIONS SLU / ADREÇA: FERRAN VALLS I TABERNER 14 BIS 1-2 / CP I POBLACIÓ: 08006 BARCELONA / N.I.F./C.I.F.: B19935212",
+   "confidence": 0.9,
+   "note": "Formulari p.5 del pressupost SIGNAT = autoritat A per client_name (regla Pas 2/Pas 3). Manuscrit, sense OCR fiable — llegit visualment sobre page-5.png (150dpi, prou llegible, no ha calgut render_clip.py). Adreça i NIF (B19935212) són del CLIENT, no de l'obra: no s'usen per a street_address."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ARBRELLS 18A-18B-20",
+   "location": "p.1 portada, bloc 'OBRA:'",
+   "quote": "OBRA: ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES",
+   "confidence": 0.75,
+   "note": "Únic bloc OBRA del document (autoritat A, regla Pas 3: blocs etiquetats OBRA). Sense segona font en aquesta lectura (--only, un sol document)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1 portada, bloc 'OBRA:'",
+   "quote": "CASTELLAR DEL VALLES",
+   "confidence": 0.75,
+   "note": "Forma curta en majúscules sense accent (pressupost G3 = una de les 3 fonts 'sempre' per municipality, regla Pas 3). Confirmar forma oficial (Castellar del Vallès) amb altres documents."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "p.2, paràgraf de campanya de camp",
+   "quote": "4 assaigs de penetració dinàmica DPSH",
+   "confidence": 0.65,
+   "note": "Xifra de PREVISTOS al pressupost (regla Pas 3: pressupost = previstos, per sota de l'Excel DPSH/albarà si discrepen amb l'executat). Corroborat internament a p.4, taula VALORACIÓ: 'UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH ... 4,00' (mateix pressupost, no és font independent)."
+  }
+ ],
+ "not_present": [
+  "expedient (només hi consta el codi comercial 25·0493 P#, que la regla Pas 3 exclou explícitament com a expedient)",
+  "architect_name (casella 'ARQUITECTE' a p.5 sense marcar ni omplir)",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date (només hi ha dates de pressupost/acceptació, mai vàlides per field_date segons regla Pas 3)",
+  "cota_referencia",
+  "num_soil_levels (el document només dona el nombre de sondeigs previstos, 1, no nivells geològics)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura íntegrament a partir de la pre-extracció (page-N.txt + page-N.png a 150dpi), sense fitz/altres eines. p.1: l'ordre natural del text intercala els blocs CLIENT: i OBRA: (p.ex. 'Tel:' abans de 'CLIENT:'); calia mirar page-1.png per fixar l'ordre espacial correcte (regla Pas 2: 'ordena els blocs per y,x'). p.5 (formulari 'DADES QUE HAN DE CONSTAR...'): els camps NOM I COGNOMS / ADREÇA / CP I POBLACIÓ / DADES BANCÀRIES estan omplerts a mà en tinta vermella i no surten al text extret (producer Acrobat Distiller, no és un escaneig OCR): llegits visualment sobre page-5.png, prou nítida a 150dpi, sense necessitat de render_clip.py. Discrepància interna de dates: portada (p.1) 07/10/25 vs requadre DATA de p.5 25/06/25 — no s'ha intentat resoldre (cap dels dos és field_date); anotat per si el consolidador ho necessita. pp.6-7 són 'CONDICIONS ESPECÍFIQUES' (clàusules contractuals), sense dades de nivell A. Cap taula del Pas 3b aplicable (document de pressupost, no dades per punt/nivell)."
+}

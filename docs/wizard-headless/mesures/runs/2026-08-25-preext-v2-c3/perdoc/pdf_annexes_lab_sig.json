@@ -1,0 +1,125 @@
+{
+ "source_path": "PDF/ANNEXES/LAB-SIG.pdf",
+ "source_md5": "0527692d91b76c17cf1eba8e50a5bf8a",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe GTL de resultats d'assaigs de laboratori (contingut en ió sulfat sobre mostra alterada MA1 S1) — còpia signada digitalment (nom LAB-SIG) del mateix informe 4687-GTL-25",
+ "issuer": "TPS, Prospecció del Subsòl, SL (marca comercial 'Soilassaig'), B64803075",
+ "date": "19/11/2025 (data d'expedició); mostra extreta 24/10/2025; assaig realitzat 18/11/2025",
+ "pages_or_sheets": "5 pàgines",
+ "context": {
+  "who_made_it": "TPS Prospecció del Subsòl SL (marca 'Soilassaig'), laboratori subcontractat, emet aquest informe GTL de resultats d'assaigs (sulfats) sobre la mostra alterada MA1 S1",
+  "for_whom": "G3 Desenvolupament Territorial SL, que ha encarregat l'assaig (figura com 'DADES DEL CLIENT'/'DADES DEL SOL·LICITANT' del laboratori — client del laboratori, no client del projecte)",
+  "why": "Determinar el contingut en ió sulfat de la mostra MA1 S1 per a l'estudi geotècnic de l'obra",
+  "expected_fields": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date (candidat sondeig)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "num_dpsh_tests",
+   "num_soil_levels"
+  ],
+  "relation_to_others": "Mateix número d'informe (4687-GTL-25) i mateix contingut que '4687-GTL-25 Castellar del Vallés.pdf' de l'arrel del projecte — sembla la còpia SIGNADA digitalment (pàg. 5 porta signatures Adobe de Pere Farrés i Pere Cervós) del mateix GTL; no és font independent, és un duplicat/versió del mateix informe.",
+  "authority_for": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.2 bloc DADES INICIALS, camp 'Obra / Projecte'",
+   "quote": "Castellar del Vallés. Carrer Arbrells. 3001621",
+   "confidence": 0.75,
+   "note": "el camp és una redacció d'obra amb el número final, no un camp d'expedient dedicat; coincideix amb el nom de la carpeta"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells",
+   "location": "p.1 bloc MATERIAL A ASSAJAR, camp 'Situació'; p.2 i p.5 repetit",
+   "quote": "Situació: Castellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.6,
+   "note": "adreça incompleta (sense número); etiquetada 'Situació', font vàlida segons regla del Pas 3"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "p.1 i p.5 camp 'Situació'; p.2 camp 'Obra / Projecte'",
+   "quote": "Situació: Castellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.6,
+   "note": "grafia del document sense accent obert ('Vallés'); normalitza a la forma oficial 'Vallès'"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL",
+   "location": "peu de totes les pàgines",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.9,
+   "note": "capçalera visual porta la marca comercial 'Soilassaig'; l'entitat legal amb NIF (B64803075, autoritat) és TPS — coherent amb la resta del corpus"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "MA1 S1",
+   "location": "p.2 bloc DADES INICIALS, camp 'Mostra'",
+   "quote": "Mostra: MA1 S1",
+   "confidence": 0.85
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 - 1,2",
+   "location": "p.2 bloc DADES INICIALS, camp 'Cota d'extracció (m)'",
+   "quote": "Cota d'extracció (m): 1,0 - 1,2",
+   "confidence": 0.85
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S1",
+   "location": "p.2 bloc DADES INICIALS, camp 'Mostra' (MA1 S1)",
+   "quote": "Mostra: MA1 S1",
+   "confidence": 0.7,
+   "note": "el punt d'assaig (S1) surt dins l'etiqueta de mostra, no com a camp separat"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/2025",
+   "location": "p.2 bloc DIMENSIONS DE LA MOSTRA, camp 'Data extracció'",
+   "quote": "Data extracció: 24/10/2025",
+   "confidence": 0.4,
+   "note": "candidat 2 (dia d'extracció de la mostra/sondeig, no necessàriament el primer dia de camp DPSH)"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text extret via preext en ordre no visual (etiquetes i valors intercalats, típic de PDFMaker per Excel); aparellament etiqueta-valor verificat amb page-1.png i page-2.png. Pàgines 3-4 (resultats químics/resum, contingut SO4 = 0,0 mg/kg) i pàgina 5 (signatures digitals) no aporten dades noves de nivell A més enllà de repetir Situació/Referència del laboratori. No ha calgut render_clip (text_ok=true a totes les pàgines, sense meitats)."
+}

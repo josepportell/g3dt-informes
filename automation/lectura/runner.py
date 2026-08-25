@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import contextlib
 import json
+import logging
 import os
 import re
 import signal
@@ -46,6 +47,11 @@ from automation.lectura.inventory import write_inventory
 from automation.lectura.normalize import soft_normalize
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
+logger = logging.getLogger(__name__)
+
+#: Valors valids del flag `--effort` del CLI `claude` (disseny Fase 9b).
+_VALID_EFFORTS = ("low", "medium", "high", "xhigh", "max")
 
 #: Fitxers de `out_dir` que NO son un `{doc}.json` de lectura (mai comptats
 #: com a document, mai candidats a "fallback per mtime").
@@ -116,6 +122,13 @@ def _load_config() -> dict[str, Any]:
     skill = os.getenv("G3DT_LECTURA_SKILL", "").strip() or (
         "g3dt-llegir-projecte-preext" if preext else "g3dt-llegir-projecte"
     )
+    effort = os.getenv("G3DT_LECTURA_EFFORT", "xhigh").strip().lower() or "xhigh"
+    if effort not in _VALID_EFFORTS:
+        logger.warning(
+            "G3DT_LECTURA_EFFORT=%r invalid (valors valids: %s); fent servir xhigh",
+            effort, _VALID_EFFORTS,
+        )
+        effort = "xhigh"
     return {
         "claude_path": os.getenv("G3DT_CLAUDE_PATH", "claude") or "claude",
         "timeout": _env_int("G3DT_LECTURA_TIMEOUT", 600),
@@ -123,6 +136,7 @@ def _load_config() -> dict[str, Any]:
         "concurrency": max(1, _env_int("G3DT_LECTURA_CONCURRENCY", 2)),
         "mode": mode,
         "model": os.getenv("G3DT_LECTURA_MODEL", "sonnet") or "sonnet",
+        "effort": effort,
         "preext": preext,
         "skill": skill,
     }
@@ -205,12 +219,17 @@ def _child_env(base: dict[str, str] | None = None) -> dict[str, str]:
     balance is too low") — cas real vist a l'E2E de Bell-lloc (2026-08-24).
     Per defecte (`login`) es treuen les variables d'autenticació API perquè el
     fill faci servir la sessió de claude.ai; amb `api_key` es passen tal qual.
+
+    Sempre treu `CLAUDE_EFFORT` de l'entorn del fill: l'esforç el fixa el flag
+    `--effort` (vegeu `_run_claude`), no ha de dependre de si l'entorn del pare
+    l'ha heretat (p.ex. `~/.claude/settings.json` d'un desenvolupador).
     """
     env = dict(os.environ if base is None else base)
     mode = env.get("G3DT_LECTURA_AUTH", "login").strip().lower()
     if mode != "api_key":
         for var in _API_AUTH_VARS:
             env.pop(var, None)
+    env.pop("CLAUDE_EFFORT", None)
     return env
 
 
@@ -264,9 +283,10 @@ def _run_claude(
     log_path: Path,
     should_cancel: Callable[[], bool] | None,
     model: str,
+    effort: str,
 ) -> dict[str, Any]:
     """Llanca `claude -p PROMPT --permission-mode bypassPermissions --model
-    MODEL --output-format json` i espera.
+    MODEL --effort EFFORT --output-format json` i espera.
 
     Retorna `{"rc", "timeout", "cancelled", "elapsed_s", "cli", "error"?}`. `rc
     is None` vol dir mort per timeout o cancel·lacio (mai penjat: sempre es fa
@@ -276,7 +296,7 @@ def _run_claude(
     """
     args = [
         claude_path, "-p", prompt, "--permission-mode", "bypassPermissions",
-        "--model", model, "--output-format", "json",
+        "--model", model, "--effort", effort, "--output-format", "json",
     ]
     popen_kwargs: dict[str, Any] = {
         "stdin": subprocess.DEVNULL,
@@ -474,7 +494,7 @@ def _process_one_doc(
         log_path = Path(tempfile.gettempdir()) / f"g3dt-lectura-{project_path.name}-{name}-{attempt}.log"
         call = _run_claude(
             claude_path=cfg["claude_path"], prompt=prompt, timeout=cfg["timeout"],
-            log_path=log_path, should_cancel=should_cancel, model=cfg["model"],
+            log_path=log_path, should_cancel=should_cancel, model=cfg["model"], effort=cfg["effort"],
         )
         last_elapsed = call["elapsed_s"]
         ts_end = datetime.now().isoformat(timespec="seconds")
@@ -485,7 +505,7 @@ def _process_one_doc(
                 "rc": call["rc"], "timeout": call["timeout"], "json_valid": False,
                 "attempt": attempt, "cached": False, "elapsed_s": call["elapsed_s"],
                 "log_path": str(log_path), "claude_version": claude_version,
-                "model": cfg["model"], "skill": cfg["skill"], "preext": cfg["preext"],
+                "model": cfg["model"], "effort": cfg["effort"], "skill": cfg["skill"], "preext": cfg["preext"],
                 **call.get("cli", {"cli_json_ok": False}),
             })
             return {"doc": rel_path, "status": "cancelled", "attempts": attempt, "elapsed_s": last_elapsed}
@@ -499,7 +519,7 @@ def _process_one_doc(
             "rc": call["rc"], "timeout": call["timeout"], "json_valid": json_valid,
             "attempt": attempt, "cached": False, "elapsed_s": call["elapsed_s"],
             "log_path": str(log_path), "claude_version": claude_version,
-            "model": cfg["model"], "skill": cfg["skill"], "preext": cfg["preext"],
+            "model": cfg["model"], "effort": cfg["effort"], "skill": cfg["skill"], "preext": cfg["preext"],
             **call.get("cli", {"cli_json_ok": False}),
         })
 
@@ -560,7 +580,7 @@ def _consolidate(
     ts_start = datetime.now().isoformat(timespec="seconds")
     call = _run_claude(
         claude_path=cfg["claude_path"], prompt=prompt, timeout=cfg["consolida_timeout"],
-        log_path=log_path, should_cancel=should_cancel, model=cfg["model"],
+        log_path=log_path, should_cancel=should_cancel, model=cfg["model"], effort=cfg["effort"],
     )
     ts_end = datetime.now().isoformat(timespec="seconds")
 
@@ -572,7 +592,7 @@ def _consolidate(
         "rc": call["rc"], "timeout": call["timeout"], "json_valid": json_valid,
         "attempt": 1, "cached": False, "elapsed_s": call["elapsed_s"],
         "log_path": str(log_path), "claude_version": claude_version,
-        "model": cfg["model"], "skill": cfg["skill"], "preext": cfg["preext"],
+        "model": cfg["model"], "effort": cfg["effort"], "skill": cfg["skill"], "preext": cfg["preext"],
         **call.get("cli", {"cli_json_ok": False}),
     })
 
@@ -618,7 +638,7 @@ def _run_mode_projecte(
     ts_start = datetime.now().isoformat(timespec="seconds")
     call = _run_claude(
         claude_path=cfg["claude_path"], prompt=prompt, timeout=cfg["consolida_timeout"],
-        log_path=log_path, should_cancel=should_cancel, model=cfg["model"],
+        log_path=log_path, should_cancel=should_cancel, model=cfg["model"], effort=cfg["effort"],
     )
     ts_end = datetime.now().isoformat(timespec="seconds")
 
@@ -630,7 +650,7 @@ def _run_mode_projecte(
         "rc": call["rc"], "timeout": call["timeout"], "json_valid": json_valid,
         "attempt": 1, "cached": False, "elapsed_s": call["elapsed_s"],
         "log_path": str(log_path), "claude_version": claude_version,
-        "model": cfg["model"], "skill": cfg["skill"], "preext": cfg["preext"],
+        "model": cfg["model"], "effort": cfg["effort"], "skill": cfg["skill"], "preext": cfg["preext"],
         **call.get("cli", {"cli_json_ok": False}),
     })
 

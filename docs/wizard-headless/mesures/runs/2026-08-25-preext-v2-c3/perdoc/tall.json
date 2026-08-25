@@ -1,0 +1,200 @@
+{
+ "source_path": "tall.pdf",
+ "source_md5": "a4512806fd21fe5f6efc6b4e6dd15f69",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació (secció topogràfica) amb ubicació dels punts DPSH i sondeig, llegenda de nivells de sòl i cota de fonamentació recomanada.",
+ "issuer": "G3",
+ "date": "Octubre 2025",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva), a partir de les dades de camp dels punts P-1 a P-4 (DPSH) i S-1 (sondeig a rotació)",
+  "for_whom": "part de l'expedient tècnic, per acompanyar l'informe geotècnic",
+  "why": "correlacionar els nivells de sòl detectats als diferents punts d'assaig al llarg d'una secció topogràfica, i marcar la cota de fonamentació recomanada",
+  "expected_fields": [
+   "expedient",
+   "street_address (via títol)",
+   "municipality (via títol)",
+   "building_type (via títol)",
+   "num_dpsh_tests (recompte punts P-)",
+   "num_soil_levels (llegenda)",
+   "litologia per nivell"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date exacte (dia)",
+   "cota_referencia numèrica explícita",
+   "utm",
+   "referencia_catastral",
+   "dades de laboratori"
+  ],
+  "relation_to_others": "Versió 'Microsoft: Print To PDF' (text net) del mateix dibuix que 'PDF/ANNEXES/3001621_tall de correlació.pdf' (FreeHand, text brossa probable) i de l'FH11 original — mateix contingut, no és una font independent addicional.",
+  "authority_for": [
+   "num_soil_levels",
+   "expedient",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "peu de pàgina, cel·la Exp:",
+   "quote": "Exp: 3001621",
+   "confidence": 0.95,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells Nº 18A-18B-20",
+   "location": "títol del projecte, línia 2 del peu de pàgina",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.7,
+   "note": "redacció del títol del dibuix, no bloc OBRA explícit; és l'única font d'aquest document, cal creuar amb pressupost/comanda"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "títol del projecte, línia 2 del peu de pàgina",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.7,
+   "note": "'(BARCELONA)' és la província, no el municipi; forma llarga amb accent segons el títol"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat",
+   "location": "títol del projecte, línia 1 del peu de pàgina",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.8,
+   "note": null
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2025",
+   "location": "peu de pàgina, cel·la Data:",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.25,
+   "note": "mes/any d'emissió del dibuix, no dia exacte de camp; candidat feble davant fitxa de camp / Excel DPSH / albarà"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "secció del tall, etiquetes dels punts",
+   "quote": "P-1 / P-2 / P-4 / P-3",
+   "confidence": 0.55,
+   "note": "recompte de punts DPSH (blau) dibuixats al tall; corrobora però no substitueix l'Excel DPSH (font d'autoritat per als executats)"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "requadre LLEGENDA",
+   "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "confidence": 0.4,
+   "note": "la llegenda numera només 'Nivell 1' (substrat rocós); la capa superior 'Terreny Vegetal' no porta número — ambigu si compta com a nivell propi (candidat alternatiu: 2, comptant-la)"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció del tall, sota l'etiqueta P-1",
+    "quote": "Nb=16 / Nb=R",
+    "extra": {
+     "font": "gràfic, no Excel — corroboració, no autoritat"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció del tall, sota l'etiqueta P-2",
+    "quote": "Nb=18 / Nb=R",
+    "extra": {
+     "font": "gràfic, no Excel — corroboració, no autoritat"
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció del tall, sota l'etiqueta P-4",
+    "quote": "Nb=10 / Nb=33 / Nb=R",
+    "extra": {
+     "font": "gràfic, no Excel — corroboració, no autoritat"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció del tall, sota l'etiqueta P-3",
+    "quote": "Nb=19 / Nb=R",
+    "extra": {
+     "font": "gràfic, no Excel — corroboració, no autoritat"
+    }
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": null,
+    "profunditat_assolida": null,
+    "spt_ma": null,
+    "nivell_freatic": null,
+    "location": "secció del tall, sota l'etiqueta S-1",
+    "quote": "N=R",
+    "extra": {
+     "tipus": "Sondeig a rotació amb bateria continua",
+     "font": "gràfic, no annex de sondeig — corroboració, no autoritat"
+    }
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Terreny Vegetal (sense número a la llegenda)",
+    "litologia": "Llims argilosos de color marró fosc amb graves i algunes arrels.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   },
+   {
+    "nom": "Nivell 1",
+    "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "cota_referencia (valor numèric explícit)",
+  "superficie_parcela",
+  "num_floors",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "field_date (dia exacte)"
+ ],
+ "reading_notes": "Lectura del text pre-extret (page-1.txt) + imatge sencera (page-1.png, 150dpi) del PDF 'Microsoft: Print To PDF' (meta.text_ok=true, sense meitats). Els valors 'Nb=' i 'N=R' són anotacions gràfiques dins la secció, llegides visualment i posicionades per punt; no hi ha taula de dades explícita al document. Les fondàries de transició entre nivells no porten valor numèric imprès (només l'eix msnm de referència 569-572); no s'han inferit fondàries llegint la gràfica per evitar falsa confiança. Document duplicat en contingut de 'PDF/ANNEXES/3001621_tall de correlació.pdf' (mateix dibuix, versió FreeHand) — no compta com a font independent addicional."
+}

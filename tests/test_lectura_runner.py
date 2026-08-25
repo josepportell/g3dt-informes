@@ -77,6 +77,7 @@ ONLY_TARGETS = set(filter(None, os.environ.get("MOCK_CLAUDE_ONLY_TARGETS", "").s
 SLEEP_S = float(os.environ.get("MOCK_CLAUDE_SLEEP", "3"))
 SPAWN_LOG = os.environ.get("MOCK_CLAUDE_SPAWNLOG")
 ARGVLOG = os.environ.get("MOCK_CLAUDE_ARGVLOG")
+ENVLOG = os.environ.get("MOCK_CLAUDE_ENVLOG")
 EMIT_JSON = os.environ.get("MOCK_CLAUDE_JSON") == "1"
 
 
@@ -113,6 +114,10 @@ if argv and argv[0] == "--version":
 if ARGVLOG:
     with open(ARGVLOG, "a", encoding="utf-8") as fh:
         fh.write(" ".join(argv) + "\\n")
+
+if ENVLOG:
+    with open(ENVLOG, "a", encoding="utf-8") as fh:
+        fh.write((os.environ.get("CLAUDE_EFFORT") or "") + "\\n")
 
 prompt = argv[1] if len(argv) > 1 else ""
 tokens = prompt.split()
@@ -447,7 +452,7 @@ def test_argv_pins_model_and_json_format(synth_project, base_env, monkeypatch, t
     lines = [l for l in argv_log.read_text(encoding="utf-8").splitlines() if l.strip()]
     assert lines, "cap linia d'argv registrada"
     for line in lines:
-        assert "--permission-mode bypassPermissions --model sonnet --output-format json" in line
+        assert "--permission-mode bypassPermissions --model sonnet --effort xhigh --output-format json" in line
 
     monkeypatch.setenv("G3DT_LECTURA_MODEL", "opus")
     result2 = lectura_runner.run_lectura(synth_project, out_dir=out_dir, force=True)
@@ -457,7 +462,7 @@ def test_argv_pins_model_and_json_format(synth_project, base_env, monkeypatch, t
     new_lines = lines_2[len(lines):]
     assert new_lines, "cap linia nova d'argv al segon run"
     for line in new_lines:
-        assert "--permission-mode bypassPermissions --model opus --output-format json" in line
+        assert "--permission-mode bypassPermissions --model opus --effort xhigh --output-format json" in line
 
 
 def test_telemetry_has_cli_metrics_when_json(synth_project, base_env, monkeypatch):
@@ -497,6 +502,76 @@ def test_telemetry_without_json_is_marked(synth_project, base_env):
 
         log_path = Path(entry["log_path"])
         assert "mock done" in log_path.read_text(encoding="utf-8")
+
+
+# ---------------------------------------------------------------------------
+# Fase 9b — `--effort` (fixat, mai heretat de l'entorn del pare)
+# ---------------------------------------------------------------------------
+
+
+def test_effort_default_xhigh_in_telemetry(synth_project, base_env):
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    assert result.decisions is not None
+
+    lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert lines, "cap linia de telemetria"
+    assert all(l["effort"] == "xhigh" for l in lines)
+
+
+def test_effort_env_override_applies_to_argv_and_telemetry(synth_project, base_env, monkeypatch, tmp_path):
+    argv_log = tmp_path / "argv_effort_high.log"
+    monkeypatch.setenv("MOCK_CLAUDE_ARGVLOG", str(argv_log))
+    monkeypatch.setenv("G3DT_LECTURA_EFFORT", "high")
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    assert result.decisions is not None
+
+    lines = [l for l in argv_log.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert lines, "cap linia d'argv registrada"
+    for line in lines:
+        assert "--model sonnet --effort high --output-format json" in line
+
+    tel_lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert tel_lines, "cap linia de telemetria"
+    assert all(l["effort"] == "high" for l in tel_lines)
+
+
+def test_effort_invalid_value_falls_back_to_xhigh(synth_project, base_env, monkeypatch, tmp_path):
+    argv_log = tmp_path / "argv_effort_invalid.log"
+    monkeypatch.setenv("MOCK_CLAUDE_ARGVLOG", str(argv_log))
+    monkeypatch.setenv("G3DT_LECTURA_EFFORT", "turbo")
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    assert result.decisions is not None
+
+    lines = [l for l in argv_log.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert lines, "cap linia d'argv registrada"
+    for line in lines:
+        assert "--effort xhigh" in line
+
+    tel_lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert tel_lines, "cap linia de telemetria"
+    assert all(l["effort"] == "xhigh" for l in tel_lines)
+
+
+def test_claude_effort_env_not_inherited_by_child(synth_project, base_env, monkeypatch, tmp_path):
+    """El pare pot tenir `CLAUDE_EFFORT` heretat (p.ex. `~/.claude/settings.json`
+    d'un desenvolupador): el fill NOMES ha de rebre l'esforç via `--effort`."""
+    envlog = tmp_path / "envlog.txt"
+    monkeypatch.setenv("MOCK_CLAUDE_ENVLOG", str(envlog))
+    monkeypatch.setenv("CLAUDE_EFFORT", "xhigh")
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    assert result.decisions is not None
+
+    lines = envlog.read_text(encoding="utf-8").splitlines()
+    assert lines, "cap linia d'envlog registrada"
+    assert all(line == "" for line in lines), f"CLAUDE_EFFORT ha arribat al fill: {lines}"
 
 
 # ---------------------------------------------------------------------------

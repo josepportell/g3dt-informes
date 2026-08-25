@@ -177,3 +177,39 @@ per a totes les pàgines, el model se les mira totes (7 txt + 7 png + 14 meitats
 Criteri d'adopció idèntic: 0 erroni-amb-confiança de fons i cap cel·la que baixi d'estat respecte a `sonnet-c3`.
 
 *Fi addendum 2026-08-25 matí. Pre-extracció v1: −24 % per document, 28 min de paret, 0 erroni-amb-confiança, 5 cel·les de nivell freàtic perdudes pel color d'Excel → v2.*
+
+## Addendum 2026-08-25 (vespre) — Pre-extracció v2 (`preext-v2-c3`): 26 min de paret, −37 % per document, regressió de la v1 resolta; l'effort estava heretat
+
+Fila `2026-08-25-preext-v2-c3` (commit `5fdaa97`). Canvis v1→v2: `sheet-i.colors.txt` (colors de cel·la d'Excel, fons blanc de plantilla filtrat),
+meitats de pàgina només quan `text_ok=false`, `text_ok` per ràtio de caràcters normals ≥ 0,75 (producer Distiller només informatiu: l'ACCEPTACIO
+és Distiller amb text net), skill-còpia "llegir amb economia".
+
+| | `sonnet-c3` | v1 | **v2** |
+|---|--:|--:|--:|
+| mediana/doc | 292 s | 221 s | **184 s (−37 %)** |
+| turns/doc · tokens sortida | 20,6 · 306k | 17,3 · 239k | **14,8 · 212k** |
+| suma docs | 60,6 min | 55,7 | **44,5** |
+| consolidació | 677 s | 539 s | 614 s (2a: 589 s) |
+| **paret** | **33 min** | 28 | **26,2 min (−21 %)** |
+
+Tots 13 documents més ràpids que la referència; els multipàgina redreçats (ACCEPTACIO 28→16 turns); `DPSH.xls` una mica més lent que a la v1 perquè
+ara llegeix 95 cel·les de color (volgut). Pre-extracció: 6,7 s, 55 PNG (v1: 99).
+
+**Consolidació, dues mostres amb els mateixos 13 JSON:** la 1a (dins el run) escriu les cel·les de taula en dialecte pla (`"cota_inici": "-4 m"`) i
+perd `num_floors` (que el correu emet) → comparador 23 ABSENT; la 2a (`consolida2/`, cache, 589 s) és canònica. 1 de 6 consolidacions → cop
+d'atzar, però cal l'**embolcall determinista de cel·les planes** al contracte (Fase 12). El judici de qualitat va sobre la 2a.
+
+**Qualitat (vs `sonnet-c3`):** erroni-amb-confiança de fons **0** (ERR = format: `street_address`, `cota_inici` ×3, `profunditat`). Cas límit:
+`sondeig_tests[0].nivell_freatic` `segur 'No indicat'` vs or `'No detectat'` — mateix fet, redacció → regla de vocabulari al skill.
+**Regressió v1 resolta**: `dpsh_tests[*].nivell_freatic` ×4 OK. **Millores**: `cota_referencia` OK (primer run sense excés de confiança),
+`spt_ma` sense duplicat ni excés. **Baixades `segur`→`candidats` amb el bo dins**: `lab_sample_id`, `num_soil_levels`, `utm_x`, `utm_y` (1 font →
+candidats: el guard de la Fase 12 ho imposaria igual). `merge_degradat` sobre els perdoc dels 3 runs = lectura equivalent → les baixades són soroll del
+consolidador.
+
+**Proposta:** adoptable (decisió del Josep: flipar `G3DT_LECTURA_PREEXT` per defecte i portar els 4 blocs al skill de producció).
+
+**Troballa col·lateral (pregunta del Josep):** tots els runs del llibre han corregut a **effort `xhigh`** heretat (`CLAUDE_EFFORT` + `effortLevel`
+del settings del Josep); el runner ara fixa `--effort` (`G3DT_LECTURA_EFFORT`, defecte xhigh) i treu `CLAUDE_EFFORT` de l'entorn del fill. Files
+següents: Fable@xhigh sobre v2 (decisió Josep: si comparable → Sonnet), després Sonnet@high i @medium.
+
+*Fi addendum 2026-08-25 vespre. Pre-extracció v2: 26 min, −37 %/doc, 0 erroni-amb-confiança, regressió resolta; effort heretat descobert.*
