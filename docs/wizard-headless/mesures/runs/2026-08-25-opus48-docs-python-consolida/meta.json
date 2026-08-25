@@ -1,0 +1,26 @@
+{
+  "label": "2026-08-25-opus48-docs-python-consolida",
+  "date": "2026-08-25",
+  "project": "3001621 CASTELLAR DEL VALLES",
+  "model": "docs: claude-opus-4-8 @high (cache del run opus48-high-preext-v2-c3) · consolidacio: Python (Fase 12), cap LLM",
+  "concurrency": 3,
+  "claude_version": "2.1.245",
+  "skill_version": "1.4 (docs) / consolidador python-1.0",
+  "commit_base": "Fase 12 (consolidate.py) sobre e87da6c",
+  "conditions": "Castellar SOL, WSL; 13 documents en CACHE (perdoc del run opus48-high-preext-v2-c3, cap crida de lectura); pre-extraccio 5 s; consolidacio Python-first 0,04 s; G3DT_LECTURA_CONSOLIDA=auto → 0 conflictes → 0 crides LLM. Run 21:30:43 → 21:30:48 (5,4 s de paret).",
+  "changes_since_previous": "consolidacio LLM (480 s, Opus 4.8) → consolidacio Python-first (0,04 s); mateixos perdoc",
+  "contaminated_docs": [],
+  "contamination_note": null,
+  "wall_real_s": 5,
+  "quality_judgement": {
+    "erroni_amb_confianca_fons": 0,
+    "notes": [
+      "MATEIXOS perdoc que la fila opus48-high-preext-v2-c3: l'unic canvi es el consolidador (LLM Opus 4.8 480 s → Python 0,04 s).",
+      "ESCALARS 14 OK / 5 CAUTELA / 2 ALERTA / 0 ERR (Opus LLM: 13/4/3/1): num_floors recuperat (el LLM l'havia perdut: ALERTA → CAUTELA), cte_edificacio derivat amb font (ALERTA → OK), street_address ERR-format → candidats amb totes les formes (ALERTA del comparador, gold no entre les 3 formes; contingut identic). building_type ALERTA = CLOSE (tots els runs).",
+      "TAULES 22 OK / 1 CAUTELA / 1 ALERTA / 1 ERR / 2 ABSENT (Opus LLM: 22/1/1/1/2): ERR = spt profunditat '1,0 - 1,2 m' (GTL, A) vs or '-1,00 a -1,20 m' = FORMAT. sondeig cota ALERTA = l'or (absoluta 570,90) no es 'close' a la forma literal del candidat 2 ('570.90 (absoluta, ICGC)') — regla Pas 3b aplicada (relativa primer, mai segur). Cap candidat inventat: el '-4,20 m derivat' d'Opus no hi es.",
+      "Harness sobre 5 jocs de perdoc (docs/wizard-headless/fase12-consolida/): Fable 0 cel·les per sota / 1 per sobre; Sonnet-v2 0 per sota de consolida2 / 5 per sobre; Opus 0 per sota / 2 per sobre; Bell-lloc 0 ERR; 0 erroni-amb-confianca de fons als 5.",
+      "TEMPS: consolidacio 0,04 s (objectiu < 60 s); boto 3b (re-consolidacio) passa de 8-10 min a < 6 s amb docs en cache."
+    ]
+  },
+  "effort": "docs: high (Opus 4.8) · consolidacio: n/a (Python)"
+}

@@ -1176,3 +1176,93 @@ desconegut (Fable ×3,7 de pes). 72 MB de `_preext/` per projecte sense polític
 Fase 12 (Python-first + guards) abans que Fase 11: és el que tanca les pèrdues del consolidador a qualsevol model. Després: flip v2, Fase 11, 13-15.
 
 *Fi entrada 2026-08-25 vespre. v2 adoptable (26 min), effort fixat, Fable 20,5 min / Opus 4.8 23,6 / Sonnet 26,2 amb 0 erroni de fons als tres; consolidador = punt feble comú.*
+
+## 2026-08-25 (nit) — Fase 12: consolidació Python-first amb guards; el LLM només per als conflictes reals (`--only-fields`)
+
+### Context
+Handoff `_FOR-NEW-YOU-20260825-2025.md` §3: el consolidador LLM (`--consolida`) era el punt feble comú als tres models (8 consolidacions
+en 2 dies: 1 dialecte pla → 23 ABSENT, 2 amb senyals emesos perduts — `num_floors`, `cte_edificacio` —, 1 candidat inventat `-4,20 m`
+sense font). Annex §7.2 / §10 fila 12: "Python consolida sempre; només els conflictes reals van a `--consolida --only-fields`". El Josep
+demana arrencar la Fase 12 abans que la 11. Decisió d'execució: el consolidador l'escriu la sessió principal (Fable), no un implementer
+Sonnet — la peça és semàntica (Pas 3/3b codificats) i s'itera contra l'or en segons; els implementers queden per a peces mecàniques.
+
+### Decisions arquitectòniques clau
+- **Consolidació determinista com a via principal** (`automation/lectura/consolidate.py`, ~1.000 LOC, sense LLM). **Why:** les tres
+  pèrdues observades són *estructurals* d'un productor cec (dialecte, oblit, invenció); un consolidador que enumera tots els senyals no pot
+  perdre'n cap ni inventar-ne. Alternativa rebutjada: "prompt més estricte" al skill — no elimina la classe d'error, només en baixa la
+  freqüència, i costa 8-10 min per run. Trade-off acceptat: les regles semàntiques no codificades (instrucció del client posterior,
+  redacció de l'informe) queden com a `candidats` amb totes les formes en lloc de `segur`.
+- **`segur` = 1 font d'autoritat A sense contradicció** (Pas 5 literal) **o convergència de ≥ 3 documents independents** (conf ≥ 0,6).
+  A = confiança ≥ 0,8 (claude) / ≥ 0,9 (`_g3_templates`) / font Python. **Why:** la confiança que el skill assigna ja codifica la
+  posició al document (sol·licitant 0,3, bloc OBRA 0,85…); una taula d'autoritat per tipus de document duplicaria el Pas 3 i
+  divergiria. La convergència cobreix `lab_location` (GTL + comanda + annex a 0,6-0,75) sense abaixar el llindar A.
+- **Contradicció asimètrica camps/taules:** als camps, qualsevol senyal ≥ 0,4 bloqueja (`client_name` 0,6: el formulari p.5 mana);
+  a les cel·les de taula només els documents d'autoritat A de la cel·la (Pas 3b) — el tall gràfic i el manuscrit són corroboració.
+  **Why:** amb 0,6 per defecte a les files no-A, Fable i Opus quedaven 13-16 cel·les per sota de la seva pròpia consolidació LLM.
+- **Compatibilitat de valors abans de comparar:** dates parcials, numèrics (fondàries amb `abs`), text amb prefix/sufix (lectura
+  parcial) però **mai contenció interior** ("entre el carrer X i el carrer Y" no fusiona X amb Y: cantonada de Bell-lloc → `candidats`,
+  com l'or). Formes A diferents dins un cluster → `candidats` amb totes les formes (l'adreça de Castellar: 3 formes, cap ERR).
+- **Guards codificats del Pas 3/3b** (n30/litologia/spt_ma/cte mai segur; arquitecte persona+despatx o = client; G3/ARQUITECT mai
+  client; RC sense Cadastre; nivells sense annex; parcel·la amb 2 RC; "1 de N unitats"; `a` de l'últim nivell; sistema de cotes
+  relatiu al sondeig — relativa primer, absoluta segona, mai segur). **Why:** són exactament els llocs on l'or diu `candidats`.
+- **Derivats només els que el skill sanciona, etiquetats i mai segur:** `(practica Eva: client al camp arquitecte)`, `(derivat: regla
+  Eva C0/C1)`, `(coneixement previ: T-1 / TPS)`. **Why:** el `-4,20 m` d'Opus era un derivat *sense etiqueta ni font*; el problema no
+  és derivar, és presentar-ho com a lectura. `cte_sol` T-1 i TPS sense GTL es mantenen perquè el Pas 3 els prescriu i l'Eva els escriu.
+- **Fonts Python al consolidador (forat 1, parcial):** nom de la carpeta → `expedient` (A); `COORDENADES.txt` → `utm_x/y` (A, P-1
+  segons regla; tots els punts a `extra`) i z → `cota_referencia` (0,5, "l'Eva no l'usa"). Cadastre/ICGC queden fora (Fase 13).
+- **Conflicte real = A-vs-A de documents diferents** → `conflicts[]` amb paths → crida `--consolida --only-fields a,b` (skill v1.5)
+  que escriu `_consolida_only.json`; `merge_only_fields` aplica només les cel·les demanades que passen el contracte i manté les guards.
+  Dues alternatives del mateix document (annex: 1,80 / 8,0) NO són conflicte. **Why:** el LLM ha de jutjar només on hi ha judici a fer;
+  Castellar amb els tres models: 0 conflictes → 0 crides.
+- **Runner:** `G3DT_LECTURA_CONSOLIDA=auto` (defecte) | `python` (mai LLM) | `llm` (via de les Fases 3-11, per mesurar/pla B). El runner
+  escriu `_decisions.json` (atòmic) en tots els casos, també en degradat (abans no s'escrivia). `merge_degradat` → `consolidate_python`,
+  amb `_merge_minimal` (Fase 4) d'últim recurs.
+- **Reparació (d) del contracte:** `normalize.wrap_flat_cells` embolcalla cel·les planes `{estat: estat_bloc, value, candidates:
+  [{value, font: "(adaptat)"}]}` — el forat que va deixar passar el dialecte pla (23 ABSENT) — només a la via LLM.
+- **`nivell_freatic` absent → `No detectat`** al consolidador (canonicalització) i al skill v1.5 (vocabulari).
+
+### Implementació
+`automation/lectura/consolidate.py` (nou), `runner.py` (+`_consolidate_python_first`, config), `normalize.py` (+`wrap_flat_cells`),
+skill v1.5 (Pas 5b mode `--only-fields`, Pas 3b vocabulari), `tests/test_lectura_consolidate.py` (nou, 55), `tests/test_lectura_runner.py`
+(+8, mock amb `--only-fields` i valors per document), `docs/wizard-headless/fase12-consolida/{harness.py,_RESULTATS.md,out/}`,
+`mesures/ledger.py` (modes `consolida_python`/`consolida_only`). Commit `879bf7b`.
+
+### Validació empírica (`fase12-consolida/_RESULTATS.md`)
+Harness sobre 5 jocs de perdoc ja llegits (cap crida LLM), cel·la a cel·la contra la consolidació LLM del mateix joc:
+| joc | escalars OK/CAUT/ALERTA/ERR | taules OK/CAUT/ALERTA/ERR/ABSENT | per sota de la ref. | conflictes |
+|---|---|---|--:|--:|
+| Sonnet v2 (ref `consolida2`) | 14/5/2/0 | 20/1/1/3/2 | **0** (5 per sobre) | 0 |
+| Fable v2 | 15/5/1/0 | 23/2/0/0/2 | **0** (1 per sobre) | 0 |
+| Opus 4.8 v2 | 14/5/2/0 | 22/1/1/1/2 | **0** (2 per sobre) | 0 |
+| Sonnet v1.3 (24-08) | 14/5/2/0 | 20/2/0/3/2 | 4 (CAUTELA amb el bo dins) | 2 (utm) |
+| Bell-lloc v1.2 | 12/9/0/0 | 16/3/0/0/2 | — | 1 (`street_address`) |
+**0 erroni-amb-confiança de fons als 5**; els ERR que queden són de format (`-4 m`/`-4,0 m`, `1,0 - 1,2 m`/`-1,00 a -1,20 m`).
+Runner in situ (Castellar, docs en cache): 5,4 s de paret, consolidació **0,04 s** (Opus LLM: 480 s), fila del llibre
+`2026-08-25-opus48-docs-python-consolida`. Crida real `--only-fields` a Bell-lloc (1 conflicte, `street_address` cantonada): 228 s / 18 turns / 20k tokens (Sonnet @xhigh); el skill
+v1.5 ha escrit la cel·la en dialecte v1 amb 3 candidats tots documentats (cap invenció), Python l'ha fusionada, comparador idèntic (or
+`candidats`; el LLM confirma l'ordre de Python). Funciona i és segura; n=1, no aporta qualitat en aquest cas (3,8 min).
+
+### Tests
++63 (55 consolidate + 8 runner). Suite de lectura **193 passed / 2 skipped**; completa 32 failed (línia base `test_smartscan`, cap a
+lectura) / 1275 passed.
+
+### Latència / cost
+Consolidació: 8-10 min i 20-37 turns → 0,04 s i 0 turns quan no hi ha conflictes (Castellar, 3 models). Botó 3b (re-consolidació amb
+documents en cache): < 6 s. Un run complet de Castellar passaria de 20,5-26 min a ~12-18 min segons model (documents intactes).
+
+### Limitacions conegudes
+Regles = Pas 3/3b d'avui (una regla nova demana codi). Comparador d'or per cadenes: ERR/ALERTA de format pendents dels normalitzadors
+(tasca següent) i 2 fixtures a revisar (`sondeig cota` Castellar anterior a la regla del sistema de cotes; `de_a_estat`). Cadastre/ICGC
+no són fonts del consolidador. Jocs antics (v1.2/v1.3) donen més `candidats`. n=1 per a la crida `--only-fields` real: si a 2-3 projectes
+més el LLM només confirma Python, el defecte candidat és `python` (0 crides) i la crida es reserva per a conflictes d'identitat.
+
+### GO/NO-GO
+- ✅ 0 erroni-amb-confiança de fons a Castellar (3 models) i Bell-lloc. ✅ Cap cel·la per sota de `consolida2`/Fable. ✅ < 60 s (0,04 s).
+- ✅ Contracte net a tots els jocs; cap senyal perdut (test automàtic sobre 7 jocs). ✅ Defecte `auto` al runner.
+- ⏳ Normalitzadors del comparador (dates/signes/formes) i revisió dels 2 fixtures. ⏳ Fase 11 (delta-sync).
+
+### Següents passos
+Fase 11 (delta-sync) → 13 (`auto_result` + fonts Cadastre/ICGC al consolidador) → 14-15. Files d'effort/Bell-lloc al llibre ara
+costen només la lectura. Decisions Josep: pla de subscripció; política de neteja `_preext/`.
+
+*Fi entrada 2026-08-25 nit. Fase 12: consolidació Python-first (0,04 s, 0 erroni de fons, 0 pèrdues) amb `--only-fields` només per als conflictes reals.*

@@ -1,0 +1,77 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_fotografies.pdf",
+ "source_md5": "73cea90d5c4d74a91bd2c88a56fe1970",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Annex de fotografies de G3: 2 pàgines, 4 fotos (F-1 a F-4) de la màquina DPSH als punts P-1 a P-4.",
+ "issuer": "G3 (Eva)",
+ "date": "PDF creat 2025-11-03 (data de muntatge de l'annex, NO data de camp)",
+ "pages_or_sheets": "2 pàgines",
+ "context": {
+  "who_made_it": "G3 / Eva, com a annex il·lustratiu de l'informe geotècnic",
+  "for_whom": "forma part de l'informe lliurat al client",
+  "why": "documentar visualment l'emplaçament de la maquinària DPSH a cada punt d'assaig",
+  "expected_fields": [
+   "expedient (capçalera de la plantilla G3)",
+   "corroboració del nombre de punts DPSH (peus de foto P-1..P-4)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "referencia_catastral",
+   "utm",
+   "lab",
+   "cte"
+  ],
+  "relation_to_others": "versio Print/Distiller de ANNEXES/3001621_fotografies.FH11 (mateix dibuix, route skip); les fotos corresponen a les imatges de FOTOGRAFIES/. Text del PDF brossa (FreeHand->Distiller, text_ok=false): lectura visual.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.1 i p.2, cel·la dreta de la capçalera de la plantilla (al costat de 'Fotografies - pàgina N')",
+   "quote": "3001621",
+   "confidence": 0.7,
+   "note": "capçalera de plantilla G3 que coincideix amb el nom de carpeta; annex derivat (no font independent d'autoritat); els caixetins d'annex poden dur typos (regla Pas 3), aqui es llegeix net"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "peus de foto: 'Fotografia 1-2 ... P-1 i P-2' (p.1) i 'Fotografia 3-4 ... P-3 i P-4' (p.2)",
+   "quote": "Detall de l'emplacament de la maquina realitzant l'assaig de penetracio dinamica DPSH, P-1 i P-2, respectivament. / ... P-3 i P-4, respectivament.",
+   "confidence": 0.6,
+   "note": "corroboracio visual de 4 punts DPSH executats (P-1..P-4); autoritat real = Excel DPSH; foto nomes corrobora (Pas 3)"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text del PDF il·legible (producer Acrobat Distiller/PScript5.dll, text_ok=false a les 2 pagines) -> lectura visual de page-1.png i page-2.png (150 dpi), suficients per capcalera i peus de foto. Cap data de camp visible al document (les fotos no porten data impresa; la data del PDF es de muntatge). Document de tipus 'foto/annex il.lustratiu': nomes corrobora expedient i recompte de punts DPSH."
+}

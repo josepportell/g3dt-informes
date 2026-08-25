@@ -46,7 +46,10 @@ def summarize(run_dir: Path) -> dict:
     if tp.exists():
         rows = [json.loads(l) for l in tp.read_text(encoding="utf-8").splitlines() if l.strip()]
     docs = [r for r in rows if r.get("mode") == "only" and not r.get("cached")]
-    cons = [r for r in rows if r.get("mode") == "consolida"]
+    # Consolidacio: la DARRERA (LLM sencera `consolida`, o Fase 12 `consolida_python` + opcional `consolida_only`).
+    cons_all = [r for r in rows if str(r.get("mode", "")).startswith("consolida")]
+    last_full = max((i for i, r in enumerate(cons_all) if r["mode"] in ("consolida", "consolida_python")), default=None)
+    cons = cons_all[last_full:] if last_full is not None else []
     contaminated = set(meta.get("contaminated_docs") or [])
     clean = [r for r in docs if r.get("doc") not in contaminated]
     el = [r["elapsed_s"] for r in docs]
@@ -54,7 +57,8 @@ def summarize(run_dir: Path) -> dict:
     turns = [r.get("num_turns") for r in docs if r.get("num_turns") is not None]
     out_tok = [((r.get("usage") or {}).get("output_tokens") or 0) for r in docs if r.get("cli_json_ok")]
     cost = [r.get("cost_usd") or 0 for r in rows if r.get("cost_usd") is not None]
-    cons_s = cons[0]["elapsed_s"] if cons else 0.0
+    cons_s = sum(r["elapsed_s"] for r in cons) if cons else 0.0
+    cons_llm = [r for r in cons if r["mode"] in ("consolida", "consolida_only")]
     k = int(meta.get("concurrency") or 2)
     s = {
         "label": meta["label"], "date": meta.get("date"), "model": meta.get("model"),
@@ -67,9 +71,10 @@ def summarize(run_dir: Path) -> dict:
         "turns_total": sum(turns) if turns else None,
         "turns_per_doc": round(sum(turns) / len(turns), 1) if turns else None,
         "output_tokens_docs": sum(out_tok) if out_tok else None,
-        "consolida_s": round(cons_s) if cons else None,
-        "consolida_turns": cons[0].get("num_turns") if cons else None,
-        "consolida_out_tok": ((cons[0].get("usage") or {}).get("output_tokens")) if cons else None,
+        "consolida_s": round(cons_s, 2) if cons else None,
+        "consolida_mode": "+".join(r["mode"] for r in cons) if cons else None,
+        "consolida_turns": cons_llm[0].get("num_turns") if cons_llm else (0 if cons else None),
+        "consolida_out_tok": ((cons_llm[0].get("usage") or {}).get("output_tokens")) if cons_llm else None,
         "cost_equiv_usd": round(sum(cost), 2) if cost else None,
         "wall_real_s": meta.get("wall_real_s"),
         "wall_reconstructed_s": round(_wall_reconstructed(docs, cons_s, k)) if docs else None,
@@ -100,7 +105,7 @@ def render(summaries: list[dict]) -> str:
     for s in summaries:
         L.append(f"| `{s['label']}` | {s['model']} | {s['concurrency']} | {s['changes']} | {s['n_ok']}/{s['n_docs']} "
                  f"({s['n_timeouts']} timeouts) | {_min(s['sum_s'])} | {_m(s['median_s'],' s')} ({_m(s['min_s'])}-{_m(s['max_s'])}) | {_m(s['turns_per_doc'])} "
-                 f"| {_m(s['output_tokens_docs'])} | {_m(s['consolida_s'],' s')} / {_m(s['consolida_turns'])} turns | {_min(s['wall_real_s'])} | {_min(s['wall_reconstructed_s'])} | {_m(s['cost_equiv_usd'],' $')} |")
+                 f"| {_m(s['output_tokens_docs'])} | {_m(s['consolida_s'],' s')} / {_m(s['consolida_turns'])} turns ({s['consolida_mode'] or '—'}) | {_min(s['wall_real_s'])} | {_min(s['wall_reconstructed_s'])} | {_m(s['cost_equiv_usd'],' $')} |")
     L += ["", "*paret reconstruïda* = planificació de llista dels `elapsed_s` per document amb `conc.` slots + consolidació (model, no mesura). "
           "*cost equiv.* = `total_cost_usd` del CLI (amb subscripció no es factura; és el pes de la feina).", "",
           "## Qualitat (comparador d'or `compare_consolida.py`)", "",

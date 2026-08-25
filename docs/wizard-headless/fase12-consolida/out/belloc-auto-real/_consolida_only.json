@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "fields": {
+    "street_address": {
+      "estat": "candidats",
+      "value": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz (Bell-lloc)",
+      "candidates": [
+        {
+          "value": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz (Bell-lloc)",
+          "font": "PDF/ANNEXES/4001612_plànol de situació.pdf capçalera del requadre de títol, línia 2 del títol del projecte",
+          "quote": "SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC",
+          "note": "Redacció pròpia de l'Eva, corroborada de forma independent per 3 annexos separats (plànol de situació, sondeig, tall de correlació) — Pas 3: aquesta frase és la que acaba a l'informe."
+        },
+        {
+          "value": "C/MESTRE RAMON ORTIZ 15",
+          "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc OBRA (y=420.6)",
+          "quote": "C/MESTRE RAMON ORTIZ 15",
+          "note": "Adreça amb número de portal, corroborada de forma independent per 3 fonts A etiquetades OBRA/ADREÇA OBRA: pressupost acceptat, PDF/ANNEXES/4001612_DPSH.pdf ('C7 MESTRE RAMON ORTIZ 15') i la fitxa de camp C7 ('C/ MESTRE RAMON ORTIZ 15 BELL-LLOC'). Aporta el número de portal que el candidat 1 no porta."
+        },
+        {
+          "value": "C/ ANTONI BALLET",
+          "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!N20 (bloc OBRA)",
+          "quote": "C/ ANTONI BALLET",
+          "note": "Única font per a aquesta forma (comanda de laboratori). No és una tercera adreça real: només nomena un dels dos carrers de cantonada ja recollits al candidat 1, amb grafia 'BALLET' que probablement és error de transcripció de 'Bellet' (impresa consistentment a la resta de documents). Mantingut com a candidat per transparència del conflicte, no perquè competeixi de veritat."
+        }
+      ],
+      "rule": "contradiccio Python: C/ ANTONI BALLET (1 doc, conf max 0.90); Pas 3: frase 'entre el carrer X i el carrer Y' dels 3 annexos propis de l'Eva (plànol de situació, sondeig, tall de correlació) = redacció de l'informe → candidat 1; C/MESTRE RAMON ORTIZ 15 promogut a candidat 2 per corroboració independent (pressupost acceptat + DPSH annex + fitxa de camp), més sòlid que la forma d'un sol doc de la comanda.",
+      "note": "Resolució del conflicte senyalat per Python: 'C/ ANTONI BALLET' no és una adreça independent contradictòria sinó una restatement parcial i amb probable error tipogràfic d'un dels dos carrers de cantonada ja coberts pel candidat 1 (regla cantonada: dues adreces reals, no competeixen). S'ha afegit 'C/MESTRE RAMON ORTIZ 15' com a candidat 2 perquè és la forma amb número de portal, corroborada de manera independent per 3 documents A (pressupost acceptat, DPSH annex, fitxa de camp) — més forta que la forma d'1 sol doc que Python havia deixat en 2a posició. Estat 'candidats' (mai 'segur'): multiplicitat real de cantonada."
+    }
+  },
+  "notes": [
+    "Mode --consolida --only-fields fields.street_address (v1.5, Pas 5b). Cap document del projecte obert; entrada: _decisions.json (Python), {doc}.json de plànol de situació / sondeig / tall de correlació / pressupost acceptat / DPSH annex / fitxa de camp / comanda laboratori."
+  ]
+}

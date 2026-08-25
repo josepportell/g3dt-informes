@@ -1,0 +1,146 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_DPSH.pdf",
+ "source_md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex de l'informe amb els 4 assaigs de penetració dinàmica DPSH (P-1 a P-4), generat des de l'Excel de camp; una pàgina per punt amb gràfica, cota d'inici i fondària de rebuig.",
+ "issuer": "G3 (Eva) — plantilla annex DPSH des d'Excel",
+ "date": "24/10/25 (data de camp impresa al peu de cada pàgina)",
+ "pages_or_sheets": "4 pàgines (P-1, P-2, P-3, P-4)",
+ "context": {
+  "who_made_it": "G3 (Eva) — export a PDF de l'Excel DPSH de camp (Acrobat Distiller / PScript5).",
+  "for_whom": "Forma part de l'informe geotècnic de G3 per al projecte 3001621; és annex del cos de l'informe.",
+  "why": "Documentar els 4 penetròmetres dinàmics DPSH executats a l'obra amb la seva gràfica, cota d'inici i fondària de rebuig.",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "num_dpsh_tests",
+   "cota_inici_per_punt",
+   "profunditat_rebuig"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "lab_testing_company",
+   "cte"
+  ],
+  "relation_to_others": "Render des de ANNEXES/3001621_DPSH.xls (el peu 'Rebuig a -X' i les cotes venen de l'Excel; l'Excel mana per als valors numèrics i colors N.F.). Còpia idèntica a PDF-V0/ANNEXES/3001621_DPSH.pdf (mateix md5, exclosa). Complementa la taula DPSH de l'informe.",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.1-4 peu, 'NÚMERO D´INFORME'",
+   "quote": "NÚMERO D´INFORME: 3001621",
+   "confidence": 0.97,
+   "note": "Coincideix amb el nom de carpeta (3001621 CASTELLAR DEL VALLES). Repetit idèntic a les 4 pàgines (mateix document, no fonts independents)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ ARBRELLS 18 A",
+   "location": "p.1-4 peu, bloc 'OBRA'",
+   "quote": "OBRA: C/ ARBRELLS 18 A",
+   "confidence": 0.9,
+   "note": "Bloc etiquetat OBRA (adreça de l'obra, no del client). Grafia 'ARBRELLS' segons imprès."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1-4 peu, bloc 'POBLACIÓ'",
+   "quote": "POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.9,
+   "note": "Forma curta de G3 (majúscules, sense accent 'Vallès'). La forma oficial llarga (Cadastre/plànol) pot prevaldre a la consolidació."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/25",
+   "location": "p.1-4 peu, bloc 'DATA'",
+   "quote": "DATA: 24/10/25",
+   "confidence": 0.9,
+   "note": "Data de camp dels DPSH = primer dia de camp (candidat 1 de field_date). El sondeig pot ser un altre dia."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "4 pàgines: P-1, P-2, P-3, P-4",
+   "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1 … / P-2 … / P-3 … / P-4 …",
+   "confidence": 0.85,
+   "note": "4 punts executats en aquest annex; l'Excel DPSH és l'autoritat per a executats (creuar). Coincideix amb els 4 fulls de l'Excel."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "-4,0 m (respecte el carrer)",
+   "location": "p.1-4 capçalera 'ASSAIG DE PENETRACIÓ DINÀMICA … cota inici'",
+   "quote": "P-2    cota inici: -4,2 m  (respecte el carrer)",
+   "confidence": 0.3,
+   "note": "Cota RELATIVA respecte el carrer (-4/-4,2), NO cota absoluta msnm. No és el cota_referencia absolut de l'informe (aquest ve del z: de l'annex de sondeig). Candidat feble; regla ERR Castellar: el sistema de cotes del projecte és relatiu."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-1,08",
+    "rebuig": "Si",
+    "nivell_freatic": "no consta al text (columna N.F. buida; marca possible per color a l'Excel — no verificable en aquest PDF)",
+    "location": "p.1 capçalera + peu 'Rebuig a'",
+    "quote": "P-1     - 4  m  (respecte el carrer). | Rebuig  a -1,08 m"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,2 m (respecte el carrer)",
+    "profunditat_assolida": "-0,48",
+    "rebuig": "Si",
+    "nivell_freatic": "no consta al text (columna N.F. buida; comprovar colors Excel)",
+    "location": "p.2 capçalera + peu 'Rebuig a'",
+    "quote": "P-2    cota inici: -4,2 m  (respecte el carrer) | Rebuig  a -0,48 m"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-0,76",
+    "rebuig": "Si",
+    "nivell_freatic": "no consta al text (columna N.F. buida; comprovar colors Excel)",
+    "location": "p.3 capçalera + peu 'Rebuig a'",
+    "quote": "P-3    cota inici: - 4 m  (respecte el carrer). | Rebuig  a -0,76 m"
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-1,55",
+    "rebuig": "Si",
+    "nivell_freatic": "no consta al text (columna N.F. buida; comprovar colors Excel)",
+    "location": "p.4 capçalera + peu 'Rebuig a'",
+    "quote": "P-4     - 4  m (respecte el carrer). | Rebuig  a -1,55 m"
+   }
+  ],
+  "__nota": "Cotes d'inici relatives 'respecte el carrer' (regla ERR Castellar: el sistema de cotes del projecte és relatiu). La columna 'Nivells' només marca 'Nivell 1' a les 4 pàgines (un sol tram, no és num_soil_levels). N.F. no apareix com a text; la marca, si n'hi ha, és color a l'Excel DPSH — no verificable en aquest render PDF."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció: text net a les 4 pàgines (text_ok true, des d'Excel via Distiller). Lectura només dels .txt (barat); no ha calgut render ni clip. Cotes d'inici relatives al carrer (P-1/P-3/P-4 = -4, P-2 = -4,2), coherents amb la regla del sistema de cotes de Castellar. Profunditats de rebuig llegides del peu 'Rebuig a -X' de cada pàgina."
+}

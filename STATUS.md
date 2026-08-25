@@ -99,6 +99,13 @@ meitats només per a pàgines sense text + `text_ok` per producer; remesura `pre
 tres models sobre v2: **Fable 20,5 min (taules 23/0)**, Opus 4.8 @high 23,6 min (2 senyals perduts pel consolidador), Sonnet 26,2 — 0 erroni de fons als tres. Consolidador = punt feble comú
 (8 consolidacions: 1 dialecte pla, 2 amb pèrdues, 1 candidat derivat) → **Fase 12 (Python-first + guards) passa davant de la Fase 11**. **Decisions Josep (20:25):** (1) **model = Fable @xhigh quan el pla ho permeti**; preparar-se per haver d'usar **Opus 4.8 @high** (`G3DT_LECTURA_MODEL=claude-opus-4-8 G3DT_LECTURA_EFFORT=high`) — el defecte del runner segueix `sonnet` fins que el pla de subscripció de G3 estigui decidit; (2) **pre-extracció v2 ADOPTADA**: skill de producció v1.4 amb els 4 blocs, `G3DT_LECTURA_PREEXT` ON per defecte, còpia `-preext` retirada. Handoff: `docs/_FOR-NEW-YOU-20260825-2025.md`. (`G3DT_LECTURA_MODEL=fable ~/g3dt-e2e/fase9/run.sh 3 fable-c3`, ~30-40 min:
 latència i turns/tokens de Fable vs Sonnet al skill agèntic; decidit 2026-08-25, només curiositat/dada per al llibre, no bloqueja res).
+**2026-08-25 (nit) — Fase 12 FETA (`879bf7b`):** consolidació **Python-first** (`automation/lectura/consolidate.py`) amb guards del Pas 3/3b,
+cap senyal perdut (`candidates` + `altres`), cap candidat inventat (derivats etiquetats, mai `segur`), fonts Python (carpeta, COORDENADES.txt),
+sistema de cotes al sondeig; el LLM només per als conflictes A-vs-A reals (`--consolida --only-fields`, skill v1.5). Runner
+`G3DT_LECTURA_CONSOLIDA=auto|python|llm` (defecte `auto`) i escriu `_decisions.json`. Acceptació (`docs/wizard-headless/fase12-consolida/`):
+**0 erroni-amb-confiança de fons als 5 jocs** (Sonnet/Fable/Opus 4.8 sobre Castellar + Bell-lloc), 0 cel·les per sota de Fable/`consolida2`/Opus,
+consolidació **0,04 s** (abans 480-680 s); Castellar amb els tres models: 0 conflictes → 0 crides. Suite lectura 193 passed. Següent: normalitzadors
+del comparador d'or (ERR de format), Fase 11 (delta-sync), 13-15.
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 
