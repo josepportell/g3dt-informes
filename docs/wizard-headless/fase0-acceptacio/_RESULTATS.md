@@ -32,3 +32,13 @@
 - `_inventory.json` és imprescindible per detectar documents NO llegits (Cadastre no llegit → utm/RC no_trobat) — Fase 2/3.
 - `_g3_templates.json` pot portar el mateix document per duplicat (2 carpetes): el consolidador dedupe per llinatge — vigilar a Fase 4.
 - Caveat de leakage habitual: valida executabilitat del Pas 5b, no generalització.
+
+## Addendum 2026-08-25 (nit, 2) — comparador v2: normalitzadors de format + files de taula per clau
+
+`compare_consolida.py` passa a v2 (mateixa CLI, mateix format de sortida): `close(a, b, field)` conscient del camp — dates, nombres i
+intervals (fondàries en valor absolut), adreces per conjunt de portals, `spt_ma` per comptes, `num_floors`, `building_type` per tokens,
+anotacions `(...)`/` -- nota` fora — i files de taula alineades per clau (punt / sondeig / capa vegetal / nivell N) en lloc de per índex,
+més l'expansió del dialecte `de_a_estat` del fixture de Castellar. Independent del consolidador a posta (no comparteix codi amb
+`consolidate.py`). Tests: `tests/test_compare_consolida.py` (79). Els `escalars.txt`/`taules.txt` de tots els runs del llibre i de
+`fase12-consolida/out/` s'han regenerat; els totals v1 queden a `meta.json` → `comparator_revision`. Detall i lectura dels canvis:
+`docs/DECISION-LOG.md` entrada «2026-08-25 (nit, 2)» i `fase12-consolida/_RESULTATS.md` §7.

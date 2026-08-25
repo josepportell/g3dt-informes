@@ -1266,3 +1266,92 @@ Fase 11 (delta-sync) → 13 (`auto_result` + fonts Cadastre/ICGC al consolidador
 costen només la lectura. Decisions Josep: pla de subscripció; política de neteja `_preext/`.
 
 *Fi entrada 2026-08-25 nit. Fase 12: consolidació Python-first (0,04 s, 0 erroni de fons, 0 pèrdues) amb `--only-fields` només per als conflictes reals.*
+
+## 2026-08-25 (nit, 2) — Comparador d'or v2: normalitzadors de format i files de taula per clau; l'instrument deixa de fer soroll i destapa dos errors de fons que amagava
+
+### Context
+Handoff `_FOR-NEW-YOU-20260825-2200.md` §7.1: tots els ERR/ALERTA que quedaven al llibre eren de format (dates `2025-10-24` vs `24/10/2025`,
+`-4 m` vs `-4,0 m`, `1,0 - 1,2 m` vs `-1,00 a -1,20 m`, formes de la mateixa adreça, `spt_ma` dict vs `1/0`, `PB+1 (…)`) o de fixture
+(`sondeig cota` de Castellar anterior a la regla del sistema de cotes; `de_a_estat`). El Josep: «arrenca el punt 1; decideix si Sonnet pot fer-ne
+part; no comencis les Fases 11/13-17». Decisió d'execució: els normalitzadors i les revisions de fixtures són judici sobre la veritat d'or → sessió
+principal; a Sonnet només una **revisió adversària** (code-reviewer, encàrrec: trobar parells de valors realment diferents que `close()` ara donaria
+per iguals — el risc d'aquesta tasca és afluixar l'instrument). Línia base comprovada abans de tocar res: els `.txt` desats eren idèntics al que
+produïa el comparador v1 (cap deriva prèvia; tot canvi és atribuïble a v2).
+
+### Decisions arquitectòniques clau
+- **El comparador NO reutilitza `consolidate.value_key`.** Why: l'instrument d'acceptació no pot heretar els errors de l'objecte que mesura —
+  si el consolidador fusionés malament dos valors, un comparador amb la mateixa clau ho donaria per OK. Alternativa rebutjada: importar
+  `value_key` (menys codi); trade-off acceptat: dues implementacions de la mateixa idea (~150 LOC), alineades en intenció, no en codi.
+- **`close(a, b, field)` per tipus, en ordre decisiu**: adreça (`street_address`: mateix nom de via i **mateix conjunt de portals** — una lectura
+  parcial `18A` no és el mateix valor que `18A, 18B i 20`) → `spt_ma` per comptes → data (només si TOTA la cadena és una data: evita que
+  `1,5-1,75` sigui una data) → nombres/intervals (guió entre dígits = separador d'interval; `abs` només a `ABS_FIELDS` = fondàries) →
+  `num_floors` → `building_type` (subconjunt de tokens, memòria `feedback_building_type_close_match`) → text (regla històrica de contenció
+  com a última xarxa + igualtat sense anotacions). Why: cada tipus té la seva noció d'igualtat; un sol `norm()` no pot ser alhora prou fi per
+  a `-4` vs `-4,20` i prou tolerant per a `-4` vs `-4,0`. Els normalitzadors numèrics són també **més estrictes** que v1 (`1` ja no és "dins"
+  de `12`). `No indicat` vs `No detectat` es manté ERR a posta: és vocabulari (resolt al skill v1.5), no format.
+- **Files de taula alineades per clau** (`punt`, `sondeig`, capa vegetal / `nivell N`), índex com a fallback si les claus no són úniques als
+  dos costats; `spt_ma_tests` per índex (etiquetes SPT-1/MA1 massa variables, l'or té una fila). Why: l'or de `soil_levels` té la capa vegetal
+  com a fila pròpia + nivell 1; els runs amb una sola fila es comparaven creuats i sortien "OK" cel·les que no eren la mateixa capa.
+- **Fixture Castellar `sondeig_tests[0].cota`: `segur 570,90` → `candidats` [`-4 m (respecte el carrer)` \| `570,90 msnm` \| `570,9`]**, cel·la
+  amb clau `revisio`. Why: era l'ERR documentat de la lectura d'or de taules (informe signat de l'Eva: S-1 a −4,20 relatiu; regla v0.9/3b) i
+  ningú l'havia corregit. `-4,20` **no** entra al fixture: cap document de la carpeta ho diu per a S-1 (cita real del manuscrit: `C/Arbrells -4 m`);
+  posar-hi −4,20 legitimaria la invenció anotada al run `opus48-high`. Pregunta oberta a l'Eva registrada a `golden-read-taules/_RESULTATS.md`.
+  `de_a_estat` NO es toca: el comparador l'expandeix (`_expand_de_a`), el fixture queda com es va llegir.
+- **Traçabilitat dels totals**: cada `meta.json` porta `comparator_revision` (totals v1 i v2); `ledger.py` els mostra a «Condicions». El judici
+  `erroni_amb_confianca_fons` es canvia 0 → 1 a dos runs del 24-08 (l'original queda a `erroni_amb_confianca_fons_v1`, amb nota). Why: la
+  definició del llibre és mecànica (valor `segur` ≠ or) i el v2 hi troba una cel·la que el v1 no veia; deixar el 0 amb un ERR a la mateixa fila
+  seria incoherent. Cap `.txt` ni `LEDGER.md` editat a mà.
+
+### Implementació
+`docs/wizard-headless/fase0-acceptacio/compare_consolida.py` (v1 100 LOC → v2 ~330 LOC; mateixa CLI, mateixes línies `OK|CAUTELA|ALERTA|ERR|ABSENT|NOU|VIOLACIO`
+i `TOTALS:` que llegeixen `ledger.py` i `harness.py`; `main(argv)` en lloc de `sys.argv` a nivell de mòdul perquè sigui importable);
+`tests/test_compare_consolida.py` (nou, 79 tests: 64 parells reals de `close()` + simetria + parsers + `row_key`/`align_rows`/`_expand_de_a` +
+2 integracions sobre runs versionats); `docs/wizard-headless/mesures/ledger.py` (+8 LOC); fixture `golden-read-taules/3001621…/_tables_decisions.json`
+(1 cel·la); `.txt` regenerats a 8 runs + `consolida2` + `fase12-consolida/out/` (5 jocs; `_decisions.json` idèntics, restaurats);
+`meta.json` ×8 (`comparator_revision`, notes); `LEDGER.md` regenerat; `_RESULTATS.md` de fase0, fase12 (§7) i golden-read-taules (revisions).
+
+### Validació empírica
+Totals per run, comparador v1 → v2 (font: `meta.json` → `comparator_revision`):
+
+| run | escalars OK / CAUT / ALERTA / ERR (v1 → v2) | taules OK / CAUT / ALERTA / ERR / ABSENT (v1 → v2) | fons |
+|---|---|---|--:|
+| `2026-08-24-e2e-tarda-c2-solapat` | 15 / 4 / 1 / 1 → **16 / 5 / 0 / 0** | 16 / 1 / 1 / 3 / 6 → **20 / 1 / 1 / 1 / 6** | 0 → **1** |
+| `2026-08-24-sonnet-c2` | 14 / 4 / 2 / 1 → **15 / 5 / 1 / 0** | 20 / 1 / 2 / 1 / 3 → **24 / 1 / 1 / 0 / 3** | 0 |
+| `2026-08-24-sonnet-c3` | 17 / 1 / 3 / 0 → **17 / 3 / 1 / 0** | 17 / 1 / 2 / 3 / 4 → **22 / 1 / 1 / 1 / 4** | 0 → **1** |
+| `2026-08-25-fable-preext-v2-c3` | 14 / 5 / 1 / 1 → **15 / 6 / 0 / 0** | 23 / 2 / 0 / 0 / 2 → **24 / 3 / 0 / 0 / 2** | 0 |
+| `2026-08-25-opus48-docs-python-consolida` | 14 / 5 / 2 / 0 → **14 / 7 / 0 / 0** | 22 / 1 / 1 / 1 / 2 → **27 / 2 / 0 / 0 / 0** | 0 |
+| `2026-08-25-opus48-high-preext-v2-c3` | 13 / 4 / 3 / 1 → **14 / 5 / 2 / 0** | 22 / 1 / 1 / 1 / 2 → **28 / 1 / 0 / 0 / 0** | 0 |
+| `2026-08-25-preext-c3` | 14 / 2 / 4 / 1 → **15 / 5 / 1 / 0** | 14 / 2 / 5 / 4 / 2 → **20 / 2 / 5 / 0 / 2** | 0 |
+| `2026-08-25-preext-v2-c3` | 13 / 4 / 3 / 1 → **14 / 5 / 2 / 0** | 1 / 1 / 2 / 0 / 23 → **2 / 1 / 1 / 0 / 25** | 0 |
+
+Tots els ERR de format han desaparegut. Els 3 ERR que queden són reals o de vocabulari: `soil_levels[1].de` `segur 0.00` vs or `-0,50` a
+`e2e-tarda-c2-solapat` i `sonnet-c3` (capa vegetal absorbida al nivell 1; verificat mirant l'annex renderitzat: l'etiqueta «NIVELL 1» va al
+costat de tota la columna però la descripció separa 0,00-0,50 vegetal / 0,50-1,20 substrat, i l'informe de l'Eva diu «1er nivell: Bretxes…
+Substrat rocós»), i `nivell_freatic` `No indicat` a `consolida2`. `preext-v2-c3` puja d'ABSENT 23 → 25 perquè ara també compten `de`/`a`
+(dialecte pla, ja anotat). Harness Fase 12 sota v2: taula i lectura a `fase12-consolida/_RESULTATS.md` §7 — 0 erroni de fons als 3 jocs v2;
+el joc v1.3 en té 1 (heretat de la lectura, la referència LLM el té igual); forat nou: Python deixa `no_trobat` les fondàries de la capa vegetal
+al joc Sonnet v2 quan la consolidació LLM les tenia.
+
+### Tests
++79 (`tests/test_compare_consolida.py`). Suite de lectura + comparador: **267 passed / 2 skipped** (36 s).
+
+### Limitacions conegudes
+- Separadors de milers (`1.284` vs `1284`) no es normalitzen (cap cas als runs); `building_type` accepta subconjunt de tokens (una lectura parcial
+  «habitatge unifamiliar» passa com a CLOSE d'«habitatge unifamiliar aïllat» — volgut per la memòria del Josep, però és la regla més laxa del fitxer);
+  `spt_ma_tests` continua per índex; l'or només existeix per a Castellar i Bell-lloc.
+- La revisió adversària de Sonnet: resultat i correccions, si n'hi ha, a l'entrada següent o al session log.
+- Descobert i NO fet (fora d'abast, "cap regla a ull"): (1) regla del Pas 3b per al `de` del nivell 1 (base de la capa vegetal); (2) el consolidador
+  perd les fondàries de la capa vegetal al joc Sonnet v2; (3) `consolidate.value_key` pot llegir `1,5-1,75` com a data `2075-01-05` (latent: la
+  comprovació `len(nums) ≤ 3` no ho evita; cap cas real als 7 jocs).
+
+### GO/NO-GO
+✅ Cap ERR de format als 9 jocs · ✅ Diferències d'ESTAT conservades (tests d'integració: `cota_referencia` puja a segur, `spt_ma` puja a segur) ·
+✅ Format de sortida idèntic (ledger i harness funcionen sense canvis) · ✅ Fixture revisat amb evidència (informe Eva) i sense invenció ·
+⏳ Revisió adversària Sonnet · ⏳ Pregunta a l'Eva (−4,20 de S-1; criteri de nivells).
+
+### Següents passos
+Fase 11 (delta-sync) → 13 → 14 → 15-17 (ordre del handoff 22:00). Abans o durant: mirar el forat de la capa vegetal a `consolidate.py`
+i la regla del `de` del nivell 1 al skill (amb la resposta de l'Eva). Bell-lloc complet al llibre i files d'effort ara es llegeixen amb un
+comparador que no fa soroll.
+
+*Fi entrada 2026-08-25 nit (2). Comparador d'or v2: 0 ERR de format als 9 jocs, 2 erroni de fons amagats destapats, fixture `sondeig cota` revisat amb l'informe de l'Eva.*

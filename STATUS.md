@@ -1,5 +1,5 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-08-24 tarda (via A: wizard headless CONSTRUÏT i validat E2E — 0 erroni-amb-confiança; latència 35-60 min = bloquejant)
+Last updated: 2026-08-25 nit (Fase 12 Python-first FETA; comparador d'or v2 sense soroll de format — llibre regenerat, 2 runs del 24-08 passen a fons = 1)
 
 ## ⚠ Reenquadrament 2026-08-23 (Josep): l'Eva està enfadada; criteri = "(quasi) faci la seva feina, sempre"
 
@@ -72,6 +72,14 @@ N30 (Bell-lloc informe 54 ≠ tall 58). Evidència: `docs/golden-read-taules/` (
 (K, C, γ/c/φ/E — Python/override), wizard headless + UI de candidats.
 
 ## Wizard headless + UI de candidats (Pendent B) — CONSTRUÏT (2026-08-24 tarda)
+
+**2026-08-25 nit (2) — comparador d'or v2.** `compare_consolida.py` amb normalitzadors per camp (dates, signes/decimals/intervals, adreces per
+portals, `spt_ma`, `num_floors`, `building_type`) i files de taula alineades per clau; 79 tests; independent del consolidador a posta. Llibre
+regenerat (8 runs + `consolida2` + `fase12/out`): **0 ERR de format**; el v2 destapa 2 erroni-amb-confiança reals que l'índex amagava
+(`soil_levels[1].de = 0,00` als runs `e2e-tarda-c2-solapat` i `sonnet-c3` del 24-08 → fons 0→1 al llibre, `_v1` conservat) i un forat del
+consolidador Python (fondàries de la capa vegetal `no_trobat` al joc Sonnet v2). Fixture Castellar `sondeig cota` revisat a `candidats` amb
+l'informe de l'Eva (sense −4,20: no és a cap document). Detall: DECISION-LOG «2026-08-25 (nit, 2)», `fase12-consolida/_RESULTATS.md` §7.
+Pendents nous: regla Pas 3b «`de` del nivell 1 = base de la capa vegetal» (pregunta a l'Eva), forat capa vegetal a `consolidate.py`.
 
 Disseny `docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md` (D1-D3/D5 confirmats pel Josep) → Fases 0-8 fetes el mateix dia
 (codi amb Sonnet 5, judici a la sessió principal). Skill v1.3 (`--only`+`--inventory`, `--consolida`, contracte v1, claus

@@ -108,3 +108,31 @@ antiga; degradat escriu fitxer; cache; mode invàlid → auto). Suite de lectura
 - `superficie_parcela` cadastral (RC → WFS) continua sent derivació Python fora d'aquest mòdul (forat 1 parcialment tancat:
   carpeta + COORDENADES sí; Cadastre/ICGC no).
 - Jocs de perdoc antics (v1.2/v1.3) amb dialectes variats es consoliden (Bell-lloc: contracte net) però amb més `candidats`.
+
+## 7. Comparador d'or v2 (2026-08-25, nit 2): què canvia a l'acceptació de la Fase 12
+
+`compare_consolida.py` v2 (normalitzadors de format + files de taula alineades per clau + `de_a_estat` expandit; fixture de Castellar
+`sondeig_tests[0].cota` revisat a `candidats`). Harness re-executat sobre els mateixos 5 jocs (`out/<joc>/` regenerat; `_decisions.json` idèntics):
+
+| joc de perdoc | escalars OK/CAUT/ALERTA/ERR | taules OK/CAUT/ALERTA/ERR/ABSENT | per sota de la ref. (v2) | lectura |
+|---|---|---|---|---|
+| Sonnet v2 c3 | 14 / 7 / 0 / 0 | 26 / 1 / 2 / 0 / 0 | 3: `street_address` (CAUTELA, conservadora), **`soil_levels[0].de`/`.a` → `no_trobat`** | la consolidació LLM (`consolida2`) tenia les fondàries de la capa vegetal i Python no → forat del consolidador (vegeu §7.1) |
+| Fable v2 c3 | 15 / 6 / 0 / 0 | 25 / 4 / 0 / 0 / 0 | 0 | net |
+| Opus 4.8 @high v2 c3 | 14 / 7 / 0 / 0 | 27 / 2 / 0 / 0 / 0 | 2, totes CAUTELA conservadores (`street_address`, `a` de l'últim nivell = guard) | net |
+| Sonnet v1.3 c3 (24-08) | 14 / 7 / 0 / 0 | 24 / 2 / 2 / **1** / 0 | 5, totes CAUTELA conservadores | **ERR `soil_levels[1].de` segur `0.00` vs or `-0,50`**: heretat del perdoc v1.3 (cita «NIVELL 1 \| 0.00-1.20»); la referència LLM del mateix joc té el mateix ERR (no és "per sota") |
+| Bell-lloc v1.2 (24-08) | 12 / 9 / 0 / 0 | 15 / 3 / 1 / 0 / 2 | — | ALERTA `soil_levels[1].de` puja a `segur 0.00` fora dels candidats de l'or (−0,30 / −0,4); ABSENT ×2 = fila de la capa vegetal que Python no emet |
+
+**Criteri §7.2/§11 rellegit amb v2:** 0 erroni-amb-confiança de fons als 3 jocs v2 (Sonnet/Fable/Opus 4.8) i cap cel·la per sota que no
+sigui una CAUTELA conservadora, **excepte** les fondàries de la capa vegetal al joc Sonnet v2 (`no_trobat` on la referència tenia valor).
+Al joc v1.3 hi ha **1 erroni de fons** que ve de la lectura, no de la consolidació (Python el conserva `segur` perquè el perdoc l'emet amb
+autoritat). El v1 del comparador no veia cap d'aquestes tres coses (les cel·les `de`/`a` sortien ABSENT i les files es creuaven per índex).
+
+### 7.1 Patró destapat: «nivell 1 des de 0,00» (capa vegetal absorbida)
+Castellar: annex de sondeig amb «0.00-0.50 Terreny Vegetal» + «0.50-1.20 Substrat rocós» i l'etiqueta «NIVELL 1» escrita en vertical al costat
+de tota la columna (verificat renderitzant la p.1). Or: capa vegetal sense número (fila pròpia) + nivell 1 des de −0,50; informe de l'Eva:
+«1er nivell: Bretxes… Substrat rocós». Lectors que posen `de = 0.00 segur` al nivell 1: 2 runs LLM del 24-08 (`e2e-tarda-c2-solapat`,
+`sonnet-c3`; fons 0 → 1 al llibre) i els perdoc v1.2/v1.3 que Python consolida (Castellar v1.3 ERR; Bell-lloc v1.2 ALERTA fora de candidats).
+Els perdoc v2 (Sonnet/Fable/Opus 4.8) ho llegeixen bé (0,50 o candidats). **Candidat a regla explícita del Pas 3b** (no codificada aquí:
+«el `de` del nivell 1 és la base de la capa vegetal no numerada; si l'etiqueta del nivell abasta la columna sencera → candidats»), i a
+comprovar amb la pregunta a l'Eva sobre el criteri de nivells. Forat del consolidador (Sonnet v2: capa vegetal `no_trobat`): per mirar
+en la propera iteració de `consolidate.py` — l'or i la consolidació LLM les tenen.
