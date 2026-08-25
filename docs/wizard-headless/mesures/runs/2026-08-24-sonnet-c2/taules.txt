@@ -1,12 +1,10 @@
--- dpsh_tests: or 4 files / prod 4 files
--- sondeig_tests: or 1 files / prod 1 files
-ALERTA   sondeig_tests[0].cota or segur '570,90 msnm (segons el plànol ICGC)' NO entre candidats ['-4 m (respecte el carrer C/Arbrells)', '570.90 msnm (absoluta, segons plànol ICGC)']
-ALERTA   sondeig_tests[0].spt_ma prod puja a segur ({'n_spt': 1, 'n_tp': 0, 'n_ma': 0}); or candidats i valor fora dels candidats d'or!
+-- dpsh_tests: or 4 files / prod 4 files · alineades per clau
+-- sondeig_tests: or 1 files / prod 1 files · alineades per clau
+ALERTA   sondeig_tests[0].spt_ma prod puja a segur ({'n_spt': 1, 'n_tp': 0, 'n_ma': 0}); or candidats
 -- spt_ma_tests: or 1 files / prod 1 files
 ABSENT   spt_ma_tests[0].punt (or=segur)
-ERR      spt_ma_tests[0].profunditat segur discrepant: or='-1,00 a -1,20 m' prod='1,0 - 1,2 m'
 CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
--- soil_levels: or 2 files / prod 1 files
-ABSENT   soil_levels[0].de_a_estat (or=segur)
-ABSENT   soil_levels[1].de_a_estat (or=segur)
-TOTALS: {'OK': 20, 'ALERTA': 2, 'ABSENT': 3, 'ERR': 1, 'CAUTELA': 1}
+-- soil_levels: or 2 files / prod 1 files · alineades per clau
+ABSENT   soil_levels[0].de (or=segur)
+ABSENT   soil_levels[0].a (or=segur)
+TOTALS: {'OK': 24, 'ALERTA': 1, 'ABSENT': 3, 'CAUTELA': 1}

@@ -1,10 +1,9 @@
 NOU      architect_company      prod=no_trobat
-ALERTA   building_type          or segur 'habitatges unifamiliars aïllats (grup de 3, entramat lleuger de fusta)' NO entre candidats ["Grup d'habitatges unifamiliars (3 unitats: 18A, 18B, 20)", 'Habitatge unifamiliar aïllat']
+CAUTELA  building_type          or segur, prod candidats (bo dins): 'habitatges unifamiliars aïllats (grup de 3, entramat lleuger de fusta)'
 ALERTA   cte_edificacio         estat or=candidats prod=no_trobat (or value='C-0 (derivat)')
 CAUTELA  lab_sample_id          or segur, prod candidats (bo dins): 'MA-1 (S1)'
 ALERTA   num_floors             estat or=segur prod=no_trobat (or value='PB+1 (sense soterrani)')
 CAUTELA  num_soil_levels        or segur, prod candidats (bo dins): '1'
-ERR      street_address         segur discrepant: or='Carrer Arbrells, 18A, 18B i 20' prod='Carrer Arbrells, 18A-18B-20'
 CAUTELA  utm_x                  or segur, prod candidats (bo dins): '423182'
 CAUTELA  utm_y                  or segur, prod candidats (bo dins): '4609623'
-TOTALS: {'NOU': 1, 'OK': 13, 'ALERTA': 3, 'CAUTELA': 4, 'ERR': 1}
+TOTALS: {'NOU': 1, 'OK': 14, 'CAUTELA': 5, 'ALERTA': 2}

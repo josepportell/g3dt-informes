@@ -20,8 +20,35 @@
       "ESCALARS: 14 OK; 5 CAUTELA amb el bo dins (lab_sample_id, num_floors, street_address, utm_x, utm_y): street_address passa d'ERR-format (Sonnet) a candidats amb l'or dins; utm 1 font -> candidats (correcte); building_type ALERTA = CLOSE (tots els runs); cota_referencia OK.",
       "TEMPS: mediana/doc 152 s (Sonnet v2: 184), turns/doc 10,1 (14,8), tokens sortida 164k (212k), tokens d'entrada ~la meitat; consolidacio 449 s / 20 turns (Sonnet 589-677 / 31-37); paret 20,5 min (Sonnet v2 26,2; c3 33). Fable NO es mes rapid per token (74,5 vs 82,7 tok/s) — guanya perque fa un terç menys de turns; perd en documents curts d'un sol cop d'ull (tall.pdf, msg pressupost, DPSH.xls).",
       "COST EQUIV. 39,7 $ docs (Sonnet 10,7 $) — no facturat amb subscripcio, pero es el pes sobre els limits del pla.",
-      "VEREDICTE: Fable @xhigh sobre v2 = mateixa qualitat de fons (0) amb millor perfil (0 ERR a taules) i -22 % de paret vs Sonnet v2. Criteri Josep: si comparable -> Sonnet; si mes eficaç/fiable/rapid -> Fable. Pendent: fila opus48@high (subscripcio economica) abans de decidir."
+      "VEREDICTE: Fable @xhigh sobre v2 = mateixa qualitat de fons (0) amb millor perfil (0 ERR a taules) i -22 % de paret vs Sonnet v2. Criteri Josep: si comparable -> Sonnet; si mes eficaç/fiable/rapid -> Fable. Pendent: fila opus48@high (subscripcio economica) abans de decidir.",
+      "COMPARADOR v2 (2026-08-25): totals regenerats; els ERR/ALERTA de format (dates, -4/-4,0, intervals, adreces, spt_ma, sondeig cota) ja no compten; vegeu comparator_revision."
     ]
   },
-  "effort": "xhigh (fixat pel runner)"
+  "effort": "xhigh (fixat pel runner)",
+  "comparator_revision": {
+    "date": "2026-08-25",
+    "version": "v2 normalitzadors + files alineades per clau + fixture sondeig cota revisat",
+    "escalars_before": {
+      "NOU": 1,
+      "OK": 14,
+      "ALERTA": 1,
+      "ERR": 1,
+      "CAUTELA": 5
+    },
+    "taules_before": {
+      "OK": 23,
+      "CAUTELA": 2,
+      "ABSENT": 2
+    },
+    "escalars_after": {
+      "NOU": 1,
+      "OK": 15,
+      "CAUTELA": 6
+    },
+    "taules_after": {
+      "OK": 24,
+      "CAUTELA": 3,
+      "ABSENT": 2
+    }
+  }
 }

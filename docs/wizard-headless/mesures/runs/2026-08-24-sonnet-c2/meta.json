@@ -22,8 +22,39 @@
       "spt_ma_tests[0].profunditat ERR = format signe/decimals (mateix valor)",
       "cota_referencia ALERTA = puja a segur '570.90 msnm' amb 1 font; valor = preferit de l'or (+570,90); exces de confianca, NO valor erroni; guard determinista pendent (Fase 12)",
       "sondeig_tests[0].spt_ma ALERTA = representacio en comptes (regla v1) + exces de confianca",
-      "building_type ALERTA = CLOSE (article/adjectiu)"
+      "building_type ALERTA = CLOSE (article/adjectiu)",
+      "COMPARADOR v2 (2026-08-25): totals regenerats; els ERR/ALERTA de format (dates, -4/-4,0, intervals, adreces, spt_ma, sondeig cota) ja no compten; vegeu comparator_revision."
     ]
   },
-  "effort": "xhigh (heretat)"
+  "effort": "xhigh (heretat)",
+  "comparator_revision": {
+    "date": "2026-08-25",
+    "version": "v2 normalitzadors + files alineades per clau + fixture sondeig cota revisat",
+    "escalars_before": {
+      "NOU": 1,
+      "OK": 14,
+      "ALERTA": 2,
+      "CAUTELA": 4,
+      "ERR": 1
+    },
+    "taules_before": {
+      "OK": 20,
+      "ALERTA": 2,
+      "ABSENT": 3,
+      "ERR": 1,
+      "CAUTELA": 1
+    },
+    "escalars_after": {
+      "NOU": 1,
+      "OK": 15,
+      "CAUTELA": 5,
+      "ALERTA": 1
+    },
+    "taules_after": {
+      "OK": 24,
+      "ALERTA": 1,
+      "ABSENT": 3,
+      "CAUTELA": 1
+    }
+  }
 }

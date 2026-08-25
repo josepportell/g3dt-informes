@@ -13,13 +13,46 @@
   "contamination_note": "paret afectada pel solapament amb Bell-lloc",
   "wall_real_s": 2220,
   "quality_judgement": {
-    "erroni_amb_confianca_fons": 0,
+    "erroni_amb_confianca_fons": 1,
     "notes": [
       "street_address ERR = format (majuscules)",
       "dpsh_tests cota_inici ERR x3 = format (-4,0 vs -4)",
       "6 ABSENT de taules = claus de fila no canoniques (abans del skill v1.3)",
-      "building_type ALERTA = CLOSE"
-    ]
+      "building_type ALERTA = CLOSE",
+      "COMPARADOR v2 (2026-08-25): ERR nou aflorat per l'alineació per clau: soil_levels[1].de segur '0.00' vs or '-0,50' (cita 'NIVELL 1 | 0.00-1.20' de la columna Unitat litològica de l'annex; l'etiqueta hi és al costat de tota la columna, però la descripció separa 0,00-0,50 Terreny Vegetal de 0,50-1,20 Substrat rocós i l'informe de l'Eva diu '1er nivell: Bretxes... Substrat rocós') → erroni-amb-confiança de fons 0→1 (comparador v2)"
+    ],
+    "erroni_amb_confianca_fons_v1": 0
   },
-  "effort": "xhigh (heretat)"
+  "effort": "xhigh (heretat)",
+  "comparator_revision": {
+    "date": "2026-08-25",
+    "version": "v2 normalitzadors + files alineades per clau + fixture sondeig cota revisat",
+    "escalars_before": {
+      "NOU": 1,
+      "OK": 15,
+      "ALERTA": 1,
+      "CAUTELA": 4,
+      "ERR": 1
+    },
+    "taules_before": {
+      "ERR": 3,
+      "OK": 16,
+      "ABSENT": 6,
+      "ALERTA": 1,
+      "CAUTELA": 1
+    },
+    "escalars_after": {
+      "NOU": 1,
+      "OK": 16,
+      "CAUTELA": 5
+    },
+    "taules_after": {
+      "OK": 20,
+      "ABSENT": 6,
+      "ALERTA": 1,
+      "CAUTELA": 1,
+      "ERR": 1
+    },
+    "note": "ERR nou aflorat per l'alineació per clau: soil_levels[1].de segur '0.00' vs or '-0,50' (cita 'NIVELL 1 | 0.00-1.20' de la columna Unitat litològica de l'annex; l'etiqueta hi és al costat de tota la columna, però la descripció separa 0,00-0,50 Terreny Vegetal de 0,50-1,20 Substrat rocós i l'informe de l'Eva diu '1er nivell: Bretxes... Substrat rocós') → erroni-amb-confiança de fons 0→1 (comparador v2)"
+  }
 }

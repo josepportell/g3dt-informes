@@ -20,8 +20,37 @@
       "CANDIDAT INVENTAT (no segur): sondeig_tests[0].cota candidats '-4,20 m (respecte el carrer)' amb font 'derivat' i cita 'Cota Inici -4 m' — cap document diu -4,20 per a S-1 (ve de l'exemple del skill Pas 3b 'Eva: -4,20'); ALERTA al comparador. No es erroni-amb-confianca (candidats) pero es un candidat sense font documental -> regla: candidats derivats sempre amb font real o no s'emeten.",
       "TAULES 22 OK / 1 ERR format / 1 ALERTA (cota derivada) / 1 CAUTELA; nivell_freatic x5 OK; spt_ma sense duplicat. ESCALARS 13 OK / 4 CAUTELA amb el bo dins (lab_sample_id, num_soil_levels, utm_x, utm_y) / building_type CLOSE.",
       "TEMPS: mediana/doc 171 s, turns 10,7 (com Fable) pero 186k tokens i 71 tok/s (el mes lent per token) -> suma docs 43,5 min ~ Sonnet (44,5); consolidacio 480 s / 22 turns; paret 23,6 min (Sonnet v2 26,2; Fable 20,5). Mes rapid a l'Excel DPSH (178 s) i correus (Re_ 116 s); mes lent als annexos grafics d'1 pagina (tall.pdf 340 s / 24k tokens, sondeig.pdf 318, tall de correlacio 268): hi raona molt.",
-      "VEREDICTE: qualitat de fons igual (0); pitjor que Fable en perdues del consolidador i candidat derivat; latencia entre Sonnet i Fable. Viable com a condicio de subscripcio economica SI la Fase 12 (Python-first + guards) tanca les perdues del consolidador."
+      "VEREDICTE: qualitat de fons igual (0); pitjor que Fable en perdues del consolidador i candidat derivat; latencia entre Sonnet i Fable. Viable com a condicio de subscripcio economica SI la Fase 12 (Python-first + guards) tanca les perdues del consolidador.",
+      "COMPARADOR v2 (2026-08-25): totals regenerats; els ERR/ALERTA de format (dates, -4/-4,0, intervals, adreces, spt_ma, sondeig cota) ja no compten; vegeu comparator_revision."
     ]
   },
-  "effort": "high (fixat pel runner)"
+  "effort": "high (fixat pel runner)",
+  "comparator_revision": {
+    "date": "2026-08-25",
+    "version": "v2 normalitzadors + files alineades per clau + fixture sondeig cota revisat",
+    "escalars_before": {
+      "NOU": 1,
+      "OK": 13,
+      "ALERTA": 3,
+      "CAUTELA": 4,
+      "ERR": 1
+    },
+    "taules_before": {
+      "OK": 22,
+      "ALERTA": 1,
+      "ERR": 1,
+      "CAUTELA": 1,
+      "ABSENT": 2
+    },
+    "escalars_after": {
+      "NOU": 1,
+      "OK": 14,
+      "CAUTELA": 5,
+      "ALERTA": 2
+    },
+    "taules_after": {
+      "OK": 28,
+      "CAUTELA": 1
+    }
+  }
 }

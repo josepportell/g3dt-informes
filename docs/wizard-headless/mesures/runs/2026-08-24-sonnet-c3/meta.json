@@ -13,15 +13,48 @@
   "contamination_note": null,
   "wall_real_s": 1950,
   "quality_judgement": {
-    "erroni_amb_confianca_fons": 0,
+    "erroni_amb_confianca_fons": 1,
     "notes": [
       "cota_referencia ALERTA = puja a segur '570.90 msnm' amb 1 font (2/2 runs de la Fase 9; l'E2E de la tarda era candidats) — valor = preferit de l'or; exces de confianca reproduible -> guard determinista Fase 12",
       "street_address ALERTA = candidats amb 3 formats del mateix carrer/numeros, cap identic a l'or (format; no es segur)",
       "building_type ALERTA = CLOSE",
       "dpsh_tests cota_inici ERR x3 = format (-4,0 vs -4)",
       "spt_ma_tests: 2 files (SPT-1 + MA1, mateix punt S-1 i mateixa fondaria 1,0-1,2) = mateixa mostra duplicada amb dos ids; bloc candidats (no segur) -> regla de fusio determinista (punt+fondaria) Fase 12",
-      "sondeig_tests[0].cota candidats nomes relatiu '-4 m'; or segur '570,90 msnm' -> conflicte SKILL (Pas 3b: cel·la relativa) vs OR (absoluta): decisio Josep/Eva, no error del model"
-    ]
+      "sondeig_tests[0].cota candidats nomes relatiu '-4 m'; or segur '570,90 msnm' -> conflicte SKILL (Pas 3b: cel·la relativa) vs OR (absoluta): decisio Josep/Eva, no error del model",
+      "COMPARADOR v2 (2026-08-25): ERR nou aflorat per l'alineació per clau: soil_levels[1].de segur '0.00' vs or '-0,50' (mateix cas que e2e-tarda-c2-solapat: NIVELL 1 llegit com 0.00-1.20 incloent la capa vegetal; sonnet-c2 i tots els runs v2 llegeixen 0.50-1.20) → erroni-amb-confiança de fons 0→1 (comparador v2)"
+    ],
+    "erroni_amb_confianca_fons_v1": 0
   },
-  "effort": "xhigh (heretat)"
+  "effort": "xhigh (heretat)",
+  "comparator_revision": {
+    "date": "2026-08-25",
+    "version": "v2 normalitzadors + files alineades per clau + fixture sondeig cota revisat",
+    "escalars_before": {
+      "NOU": 1,
+      "OK": 17,
+      "ALERTA": 3,
+      "CAUTELA": 1
+    },
+    "taules_before": {
+      "ERR": 3,
+      "OK": 17,
+      "ALERTA": 2,
+      "ABSENT": 4,
+      "CAUTELA": 1
+    },
+    "escalars_after": {
+      "NOU": 1,
+      "OK": 17,
+      "CAUTELA": 3,
+      "ALERTA": 1
+    },
+    "taules_after": {
+      "OK": 22,
+      "ALERTA": 1,
+      "ABSENT": 4,
+      "CAUTELA": 1,
+      "ERR": 1
+    },
+    "note": "ERR nou aflorat per l'alineació per clau: soil_levels[1].de segur '0.00' vs or '-0,50' (mateix cas que e2e-tarda-c2-solapat: NIVELL 1 llegit com 0.00-1.20 incloent la capa vegetal; sonnet-c2 i tots els runs v2 llegeixen 0.50-1.20) → erroni-amb-confiança de fons 0→1 (comparador v2)"
+  }
 }

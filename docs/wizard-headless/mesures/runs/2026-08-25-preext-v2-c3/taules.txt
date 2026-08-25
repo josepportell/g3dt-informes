@@ -1,4 +1,4 @@
--- dpsh_tests: or 4 files / prod 4 files
+-- dpsh_tests: or 4 files / prod 4 files · alineades per clau
 ABSENT   dpsh_tests[0].cota_inici (or=segur)
 ABSENT   dpsh_tests[0].profunditat_assolida (or=segur)
 ABSENT   dpsh_tests[0].rebuig (or=segur)
@@ -15,8 +15,7 @@ ABSENT   dpsh_tests[3].cota_inici (or=segur)
 ABSENT   dpsh_tests[3].profunditat_assolida (or=segur)
 ABSENT   dpsh_tests[3].rebuig (or=segur)
 ABSENT   dpsh_tests[3].nivell_freatic (or=segur)
--- sondeig_tests: or 1 files / prod 1 files
-ALERTA   sondeig_tests[0].cota or segur '570,90 msnm (segons el plànol ICGC)' NO entre candidats ['-4 m (relatiu, respecte C/Arbrells)', "570.90 msnm (absolut, segons plànol ICGC) -- NO usar a la taula segons regla d'or Pas 3b (sistema relatiu del projecte)"]
+-- sondeig_tests: or 1 files / prod 1 files · alineades per clau
 ABSENT   sondeig_tests[0].profunditat_assolida (or=segur)
 ALERTA   sondeig_tests[0].spt_ma estat or=candidats prod=None (or value='1/0')
 ABSENT   sondeig_tests[0].nivell_freatic (or=segur)
@@ -25,7 +24,9 @@ ABSENT   spt_ma_tests[0].id (or=candidats)
 ABSENT   spt_ma_tests[0].punt (or=segur)
 ABSENT   spt_ma_tests[0].profunditat (or=segur)
 CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
--- soil_levels: or 2 files / prod 1 files
-ABSENT   soil_levels[0].de_a_estat (or=segur)
-ABSENT   soil_levels[1].de_a_estat (or=segur)
-TOTALS: {'ABSENT': 23, 'ALERTA': 2, 'CAUTELA': 1, 'OK': 1}
+-- soil_levels: or 2 files / prod 1 files · alineades per clau
+ABSENT   soil_levels[0].de (or=segur)
+ABSENT   soil_levels[0].a (or=segur)
+ABSENT   soil_levels[1].de (or=segur)
+ABSENT   soil_levels[1].a (or=segur)
+TOTALS: {'ABSENT': 25, 'OK': 2, 'ALERTA': 1, 'CAUTELA': 1}

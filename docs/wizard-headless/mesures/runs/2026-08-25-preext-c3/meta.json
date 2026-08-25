@@ -24,8 +24,39 @@
       "building_type ALERTA = CLOSE; cota_referencia ALERTA = puja a segur amb 1 font (3/3 runs) -> guard Fase 12; street_address ALERTA = variants de format",
       "MILLORES vs c3: spt_ma_tests ja no duplica SPT-1/MA1 (1 fila, com l'or); sondeig_tests[0].cota CAUTELA amb el valor de l'or entre candidats (c3: ALERTA sense); excés de confiança sondeig_tests[0].spt_ma desapareix",
       "TEMPS: mediana/doc 292 -> 221 s (-24 %), turns/doc 20,6 -> 17,3, tokens sortida 306k -> 239k (-22 %), paret 33 -> 28 min (-15 %); annexos d'1 pagina baixen 30-45 % (tall 349->206, DPSH.pdf 292->191, DPSH.xls 386->212) pero els multipagina pugen (ACCEPTACIO 7 p 23->28 turns, PENETROS 5 p 31->39): el model llegeix sencer+meitats de TOTES les pagines -> v2: meitats nomes per a pagines amb text_ok=false + regla al skill",
-      "VEREDICTE: NO ADOPTAT (criteri 'candidats no empitjoren' no complert per forat corregible). Seguent: preext v2 (colors Excel + meitats selectives + heuristica text_ok per producer Distiller/PScript5) i remesura preext-v2-c3"
+      "VEREDICTE: NO ADOPTAT (criteri 'candidats no empitjoren' no complert per forat corregible). Seguent: preext v2 (colors Excel + meitats selectives + heuristica text_ok per producer Distiller/PScript5) i remesura preext-v2-c3",
+      "COMPARADOR v2 (2026-08-25): totals regenerats; els ERR/ALERTA de format (dates, -4/-4,0, intervals, adreces, spt_ma, sondeig cota) ja no compten; vegeu comparator_revision."
     ]
   },
-  "effort": "xhigh (heretat)"
+  "effort": "xhigh (heretat)",
+  "comparator_revision": {
+    "date": "2026-08-25",
+    "version": "v2 normalitzadors + files alineades per clau + fixture sondeig cota revisat",
+    "escalars_before": {
+      "NOU": 1,
+      "OK": 14,
+      "ALERTA": 4,
+      "ERR": 1,
+      "CAUTELA": 2
+    },
+    "taules_before": {
+      "ERR": 4,
+      "OK": 14,
+      "ALERTA": 5,
+      "CAUTELA": 2,
+      "ABSENT": 2
+    },
+    "escalars_after": {
+      "NOU": 1,
+      "OK": 15,
+      "CAUTELA": 5,
+      "ALERTA": 1
+    },
+    "taules_after": {
+      "OK": 20,
+      "ALERTA": 5,
+      "CAUTELA": 2,
+      "ABSENT": 2
+    }
+  }
 }

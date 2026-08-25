@@ -1,9 +1,10 @@
--- dpsh_tests: or 4 files / prod 4 files
--- sondeig_tests: or 1 files / prod 1 files
-CAUTELA  sondeig_tests[0].cota or segur, prod candidats (bo dins): '570,90 msnm (segons el plànol ICGC)'
+-- dpsh_tests: or 4 files / prod 4 files · alineades per clau
+-- sondeig_tests: or 1 files / prod 1 files · alineades per clau
 -- spt_ma_tests: or 1 files / prod 1 files
 CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
--- soil_levels: or 2 files / prod 1 files
-ABSENT   soil_levels[0].de_a_estat (or=segur)
-ABSENT   soil_levels[1].de_a_estat (or=segur)
-TOTALS: {'OK': 23, 'CAUTELA': 2, 'ABSENT': 2}
+-- soil_levels: or 2 files / prod 1 files · alineades per clau
+ABSENT   soil_levels[0].de (or=segur)
+ABSENT   soil_levels[0].a (or=segur)
+CAUTELA  soil_levels[1].de or segur, prod candidats (bo dins): '-0,50'
+CAUTELA  soil_levels[1].a or segur, prod candidats (bo dins): '≥ -1,20 (fins al final del reconeixement; el tall el dibuixa fins a la base)'
+TOTALS: {'OK': 24, 'CAUTELA': 3, 'ABSENT': 2}

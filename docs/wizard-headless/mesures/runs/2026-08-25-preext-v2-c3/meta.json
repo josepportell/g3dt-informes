@@ -23,8 +23,39 @@
       "MILLORES vs sonnet-c3: cota_referencia OK (primer run sense l'exces de confianca amb 1 font); spt_ma_tests sense duplicat SPT-1/MA1 ni exces de confianca; sondeig_tests[0].cota amb el valor de l'or entre candidats.",
       "BAIXADES segur->candidats amb el bo dins (CAUTELA): lab_sample_id, num_soil_levels, utm_x, utm_y (utm: 1 sola font -> candidats es el comportament que el guard de la Fase 12 imposaria). n=1 consolidacio: soroll del consolidador, no atribuible a la pre-extraccio (merge_degradat sobre els perdoc dels 3 runs: lectura equivalent, 3 OK / 11-13 CAUTELA).",
       "TEMPS: mediana/doc 292 -> 184 s (-37 %), turns 20,6 -> 14,8, tokens sortida 306k -> 212k (-31 %), suma docs 60,6 -> 44,5 min, paret 33 -> 26,2 min (-21 %). Multipagina redrecats (ACCEPTACIO 342 -> 266 s, 28 -> 16 turns; PENETROS 456 -> 374); DPSH.xls 212 -> 257 (llegeix 95 cel·les de color: volgut).",
-      "VEREDICTE (proposta): ADOPTABLE — 0 erroni-amb-confianca de fons, regressio v1 resolta, canvis d'estat dins el soroll del consolidador i nets positius. Decisio de flipar el defecte (G3DT_LECTURA_PREEXT=1 + skill de produccio): Josep."
+      "VEREDICTE (proposta): ADOPTABLE — 0 erroni-amb-confianca de fons, regressio v1 resolta, canvis d'estat dins el soroll del consolidador i nets positius. Decisio de flipar el defecte (G3DT_LECTURA_PREEXT=1 + skill de produccio): Josep.",
+      "COMPARADOR v2 (2026-08-25): totals regenerats; els ERR/ALERTA de format (dates, -4/-4,0, intervals, adreces, spt_ma, sondeig cota) ja no compten; vegeu comparator_revision."
     ]
   },
-  "effort": "xhigh (heretat)"
+  "effort": "xhigh (heretat)",
+  "comparator_revision": {
+    "date": "2026-08-25",
+    "version": "v2 normalitzadors + files alineades per clau + fixture sondeig cota revisat",
+    "escalars_before": {
+      "NOU": 1,
+      "OK": 13,
+      "ALERTA": 3,
+      "CAUTELA": 4,
+      "ERR": 1
+    },
+    "taules_before": {
+      "ABSENT": 23,
+      "ALERTA": 2,
+      "CAUTELA": 1,
+      "OK": 1
+    },
+    "escalars_after": {
+      "NOU": 1,
+      "OK": 14,
+      "CAUTELA": 5,
+      "ALERTA": 2
+    },
+    "taules_after": {
+      "ABSENT": 25,
+      "OK": 2,
+      "ALERTA": 1,
+      "CAUTELA": 1
+    },
+    "note": "dialecte pla de taules: ABSENT 23→25 perquè el comparador v2 compara també de/a de soil_levels (abans, de_a_estat)"
+  }
 }

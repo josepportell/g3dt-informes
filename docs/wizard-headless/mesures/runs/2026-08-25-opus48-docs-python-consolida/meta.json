@@ -19,8 +19,35 @@
       "ESCALARS 14 OK / 5 CAUTELA / 2 ALERTA / 0 ERR (Opus LLM: 13/4/3/1): num_floors recuperat (el LLM l'havia perdut: ALERTA → CAUTELA), cte_edificacio derivat amb font (ALERTA → OK), street_address ERR-format → candidats amb totes les formes (ALERTA del comparador, gold no entre les 3 formes; contingut identic). building_type ALERTA = CLOSE (tots els runs).",
       "TAULES 22 OK / 1 CAUTELA / 1 ALERTA / 1 ERR / 2 ABSENT (Opus LLM: 22/1/1/1/2): ERR = spt profunditat '1,0 - 1,2 m' (GTL, A) vs or '-1,00 a -1,20 m' = FORMAT. sondeig cota ALERTA = l'or (absoluta 570,90) no es 'close' a la forma literal del candidat 2 ('570.90 (absoluta, ICGC)') — regla Pas 3b aplicada (relativa primer, mai segur). Cap candidat inventat: el '-4,20 m derivat' d'Opus no hi es.",
       "Harness sobre 5 jocs de perdoc (docs/wizard-headless/fase12-consolida/): Fable 0 cel·les per sota / 1 per sobre; Sonnet-v2 0 per sota de consolida2 / 5 per sobre; Opus 0 per sota / 2 per sobre; Bell-lloc 0 ERR; 0 erroni-amb-confianca de fons als 5.",
-      "TEMPS: consolidacio 0,04 s (objectiu < 60 s); boto 3b (re-consolidacio) passa de 8-10 min a < 6 s amb docs en cache."
+      "TEMPS: consolidacio 0,04 s (objectiu < 60 s); boto 3b (re-consolidacio) passa de 8-10 min a < 6 s amb docs en cache.",
+      "COMPARADOR v2 (2026-08-25): totals regenerats; els ERR/ALERTA de format (dates, -4/-4,0, intervals, adreces, spt_ma, sondeig cota) ja no compten; vegeu comparator_revision."
     ]
   },
-  "effort": "docs: high (Opus 4.8) · consolidacio: n/a (Python)"
+  "effort": "docs: high (Opus 4.8) · consolidacio: n/a (Python)",
+  "comparator_revision": {
+    "date": "2026-08-25",
+    "version": "v2 normalitzadors + files alineades per clau + fixture sondeig cota revisat",
+    "escalars_before": {
+      "NOU": 1,
+      "OK": 14,
+      "ALERTA": 2,
+      "CAUTELA": 5
+    },
+    "taules_before": {
+      "OK": 22,
+      "ALERTA": 1,
+      "ERR": 1,
+      "CAUTELA": 1,
+      "ABSENT": 2
+    },
+    "escalars_after": {
+      "NOU": 1,
+      "OK": 14,
+      "CAUTELA": 7
+    },
+    "taules_after": {
+      "OK": 27,
+      "CAUTELA": 2
+    }
+  }
 }
