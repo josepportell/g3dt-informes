@@ -15,6 +15,7 @@ from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
 from automation import config
+from automation.lectura import jobs as lectura_jobs
 
 from . import wizard_service
 from . import vision_fast
@@ -544,13 +545,71 @@ def prefills_stream(project_name: str):
 
 
 @router.get("/lectura-stream/{project_name:path}")
-def lectura_stream(project_name: str):
+def lectura_stream(project_name: str, attach: bool = False):
     """SSE endpoint: headless `claude -p` lectura (via A) + auto_extract in
     parallel, then merged prefills. Gated by `G3DT_USE_LECTURA_HEADLESS`
     (404 when off — disseny §2/§9 Fase 5). Same media type/headers/style as
     `/api/prefills-stream` (via B, untouched).
+
+    Fase 10 (`docs/DISSENY-ANNEX-TRES-BOTONS-JOBS-NOTIFICACIONS-2026-08-24.md`
+    §5.2): `attach=false` (per defecte) arrenca un job nou o s'hi enganxa si
+    ja n'hi ha un de viu — comportament idèntic a abans de la Fase 10.
+    `attach=true` NOMÉS subscriu a un job JA viu (el job corre en un fil
+    propi, no cal repetir el sync de xarxa ni la validació del projecte).
     """
     _require_lectura_enabled()
+
+    if not attach:
+        from automation import sync_workspace
+        if sync_workspace.is_network_workflow_enabled():
+            sync_result = sync_workspace.sync_to_workspace(project_name, force=False)
+            if sync_result["status"] == "error":
+                raise HTTPException(status_code=404, detail=sync_result.get("error", "sync failed"))
+
+        try:
+            wizard_service._resolve_project(project_name)  # Validate project exists
+        except ValueError as e:
+            raise HTTPException(status_code=404, detail=str(e))
+
+    from . import lectura_service
+
+    return StreamingResponse(
+        lectura_service.get_lectura_streaming(project_name, attach=attach),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
+
+@router.get("/jobs")
+def list_lectura_jobs():
+    """Taula d'estat dels jobs de lectura headless (Fase 10, disseny §5.2).
+
+    Gated per `G3DT_USE_LECTURA_HEADLESS` (404 quan és off, mateix criteri
+    que la resta d'endpoints d'aquest pipeline).
+    """
+    _require_lectura_enabled()
+
+    from . import lectura_service
+
+    return {"jobs": lectura_service.list_jobs()}
+
+
+@router.post("/jobs/{project_name:path}")
+def start_lectura_job(project_name: str, button: str = "desde_zero"):
+    """Arrenca (o s'enganxa a) un job de lectura headless per a un projecte
+    (Fase 10, disseny §2/§3.4/§5.2).
+
+    202 + `{"job": ..., "attach": false}` si crea un job nou. 409 +
+    `{"job": ..., "attach": true}` si ja n'hi havia un de viu per aquest
+    projecte — mai dos `run_lectura` del mateix projecte alhora.
+    """
+    _require_lectura_enabled()
+
+    if button not in lectura_jobs.BUTTONS:
+        raise HTTPException(status_code=400, detail=f"Botó desconegut: {button!r}")
 
     from automation import sync_workspace
     if sync_workspace.is_network_workflow_enabled():
@@ -565,14 +624,10 @@ def lectura_stream(project_name: str):
 
     from . import lectura_service
 
-    return StreamingResponse(
-        lectura_service.get_lectura_streaming(project_name),
-        media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "X-Accel-Buffering": "no",
-        },
-    )
+    job, created = lectura_service.start_or_attach_job(project_name, button)
+    if created:
+        return JSONResponse(status_code=202, content={"job": job.snapshot(), "attach": False})
+    return JSONResponse(status_code=409, content={"job": job.snapshot(), "attach": True})
 
 
 @router.get("/pipeline-log/{project_name:path}")

@@ -32,6 +32,8 @@ from __future__ import annotations
 
 import json
 import sys
+import threading
+import time
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -42,6 +44,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from automation import config  # noqa: E402
+from automation.lectura.jobs import registry as lectura_registry  # noqa: E402
 from automation.lectura.runner import LecturaResult  # noqa: E402
 from web import lectura_service  # noqa: E402
 from web import wizard_service  # noqa: E402
@@ -475,3 +478,238 @@ def test_lectura_stream_endpoint_404_when_project_missing(monkeypatch, tmp_path)
     r = client.get("/api/lectura-stream/does-not-exist")
 
     assert r.status_code == 404
+
+
+# ---------------------------------------------------------------------------
+# (6) Fase 10 — registre de jobs: `start_or_attach_job`, `attach=true`,
+#     `_job.json` a disc, `GET /api/jobs`, `POST /api/jobs/{p}`.
+#
+# El `JobRegistry` singleton (`automation.lectura.jobs.registry`) és GLOBAL
+# de mòdul, no es reinicia entre tests. `fake_project` sempre fa servir el
+# mateix nom de projecte ("4001612 BELL-LLOC"), cosa que és segura per als
+# tests (1)-(5) perquè cap toca el registre de jobs. Els tests d'aquesta
+# secció SÍ el toquen — usen `_unique_project` (nom de projecte propi per
+# test) perquè un job penjat d'un test no pugui mai enganxar-se a un altre.
+# ---------------------------------------------------------------------------
+
+
+def _unique_project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, suffix: str) -> tuple[str, Path]:
+    """Com `fake_project`, però amb un nom de projecte únic per test —
+    evita que un job penjat (thread encara viu) d'un test contamini un
+    altre via el `JobRegistry` singleton (indexat només pel nom)."""
+    ref_dir = tmp_path / "refs"
+    ref_dir.mkdir()
+    project_name = f"JOBTEST {suffix}"
+    project_path = ref_dir / project_name
+    project_path.mkdir(parents=True)
+    monkeypatch.setattr(wizard_service, "_REF_DIR", ref_dir)
+    return project_name, project_path
+
+
+def _fake_run_lectura_blocking(gate: threading.Event, decisions: dict | None):
+    """Com `_make_fake_run_lectura`, però es queda bloquejat a `gate.wait()`
+    entre `lectura_inici` i la resta d'events — permet enganxar-hi un
+    subscriptor tardà (`attach=true`) MENTRE el job encara corre."""
+
+    def _fake(project_path, *, out_dir=None, on_event=None, should_cancel=None, force=False):
+        out_dir = Path(out_dir)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        (out_dir / "_g3_templates.json").write_text(
+            json.dumps(_G3_TEMPLATES_SAMPLE, ensure_ascii=False), encoding="utf-8",
+        )
+        if on_event is not None:
+            on_event("lectura_inventari", {"n_files": 3})
+            on_event("lectura_inici", {"n_claude": 1, "n_python": 0, "docs": ["annex_a.pdf"]})
+        gate.wait(timeout=5)
+        if on_event is not None:
+            on_event("lectura_doc_inici", {"doc": "annex_a.pdf"})
+            on_event("lectura_doc", {"doc": "annex_a.pdf", "cached": False})
+            on_event("decisions", {"cached": False})
+            on_event("lectura_fi", {
+                "n_docs": 1, "by_status": {"ok": 1}, "elapsed_s_total": 0.1, "degraded": False,
+            })
+        return LecturaResult(
+            decisions=decisions,
+            per_doc=[{"doc": "annex_a.pdf", "status": "ok", "attempts": 1, "elapsed_s": 0.1}],
+            degraded=False, mode="document", telemetry_path=out_dir / "_telemetry.jsonl",
+        )
+
+    return _fake
+
+
+def test_start_or_attach_job_second_call_attaches_same_job_single_run_lectura_call(tmp_path, monkeypatch):
+    project_name, _ = _unique_project(tmp_path, monkeypatch, "attach-1")
+    gate = threading.Event()
+    calls: list[int] = []
+
+    def _fake_run_lectura(project_path, *, out_dir=None, on_event=None, should_cancel=None, force=False):
+        calls.append(1)
+        gate.wait(timeout=5)
+        return LecturaResult(
+            decisions=None, per_doc=[], degraded=False, mode="document",
+            telemetry_path=Path(out_dir) / "_telemetry.jsonl",
+        )
+
+    monkeypatch.setattr(wizard_service, "_run_vision_phase", lambda *a, **k: None)
+    monkeypatch.setattr("automation.auto_extractor.auto_extract", _make_fake_auto_extract())
+    monkeypatch.setattr(lectura_service, "run_lectura", _fake_run_lectura)
+    monkeypatch.setattr(lectura_service.shutil, "which", lambda *_: "/usr/bin/claude")
+
+    job1, created1 = lectura_service.start_or_attach_job(project_name)
+    try:
+        job2, created2 = lectura_service.start_or_attach_job(project_name)
+
+        assert created1 is True
+        assert created2 is False
+        assert job1 is job2
+
+        # Espera (poll) que el fil del job hagi arribat a cridar `run_lectura`
+        # (i s'hi hagi quedat bloquejat a `gate.wait()`) — evita la carrera
+        # d'assumir que el fil ja s'ha executat just després de `start()`.
+        deadline = time.time() + 5
+        while len(calls) < 1 and time.time() < deadline:
+            time.sleep(0.01)
+        assert len(calls) == 1
+    finally:
+        gate.set()
+        job1.thread.join(timeout=5)
+
+    assert job1.state == "ready"
+
+
+def test_get_lectura_streaming_attach_true_without_live_job_emits_single_error(tmp_path, monkeypatch):
+    project_name, _ = _unique_project(tmp_path, monkeypatch, "attach-2")
+
+    events = _parse_sse(list(lectura_service.get_lectura_streaming(project_name, attach=True)))
+
+    assert len(events) == 1
+    assert events[0][0] == "error_event"
+
+
+def test_get_lectura_streaming_attach_true_replays_history_then_streams_live(tmp_path, monkeypatch):
+    project_name, _ = _unique_project(tmp_path, monkeypatch, "attach-3")
+    gate = threading.Event()
+
+    monkeypatch.setattr(wizard_service, "_run_vision_phase", lambda *a, **k: None)
+    monkeypatch.setattr("automation.auto_extractor.auto_extract", _make_fake_auto_extract())
+
+    decisions = _load_escalars_fixture()
+    monkeypatch.setattr(lectura_service, "run_lectura", _fake_run_lectura_blocking(gate, decisions))
+    monkeypatch.setattr(lectura_service.shutil, "which", lambda *_: "/usr/bin/claude")
+
+    job, created = lectura_service.start_or_attach_job(project_name)
+    assert created is True
+
+    try:
+        # Espera que `lectura_inici` ja hagi arribat a la history (el fil A,
+        # auto_extract, també hi contribueix un event "step" — l'ordre
+        # relatiu entre "step" i els events de lectura NO és determinista,
+        # per això no assumim un recompte fix d'events).
+        deadline = time.time() + 5
+        while time.time() < deadline and not any(n == "lectura_inici" for n, _ in job.history):
+            time.sleep(0.01)
+        assert any(n == "lectura_inici" for n, _ in job.history)
+        assert not any(n == "prefills" for n, _ in job.history)  # encara bloquejat a `gate`
+
+        gen = lectura_service.get_lectura_streaming(project_name, attach=True)
+        replayed: list[tuple[str, dict]] = []
+        while True:
+            parsed = _parse_sse([next(gen)])[0]
+            replayed.append(parsed)
+            if parsed[0] == "lectura_inici":
+                break
+
+        names_replayed = [n for n, _ in replayed]
+        assert "lectura_inventari" in names_replayed
+        assert names_replayed.index("lectura_inventari") < names_replayed.index("lectura_inici")
+
+        gate.set()
+        rest = _parse_sse(list(gen))
+        assert [n for n, _ in rest][-1] == "prefills"
+    finally:
+        gate.set()
+        job.thread.join(timeout=5)
+
+
+def test_job_json_written_ready_after_happy_path(tmp_path, monkeypatch):
+    project_name, project_path = _unique_project(tmp_path, monkeypatch, "job-json")
+
+    monkeypatch.setattr(wizard_service, "_run_vision_phase", lambda *a, **k: None)
+    monkeypatch.setattr("automation.auto_extractor.auto_extract", _make_fake_auto_extract())
+
+    decisions = _load_escalars_fixture()
+    monkeypatch.setattr(lectura_service, "run_lectura", _make_fake_run_lectura(decisions=decisions))
+    monkeypatch.setattr(lectura_service.shutil, "which", lambda *_: "/usr/bin/claude")
+
+    list(lectura_service.get_lectura_streaming(project_name))
+
+    job_path = project_path / "validation" / "lectura" / "_job.json"
+    assert job_path.exists()
+    data = json.loads(job_path.read_text(encoding="utf-8"))
+    assert data["state"] == "ready"
+
+
+def test_jobs_endpoint_404_when_flag_off(monkeypatch):
+    monkeypatch.setattr(config, "G3DT_USE_LECTURA_HEADLESS", False)
+
+    client = TestClient(app)
+    r = client.get("/api/jobs")
+
+    assert r.status_code == 404
+
+
+def test_jobs_endpoint_200_empty_list_when_flag_on(tmp_path, monkeypatch):
+    _unique_project(tmp_path, monkeypatch, "jobs-empty")
+    monkeypatch.setattr(config, "G3DT_USE_LECTURA_HEADLESS", True)
+
+    client = TestClient(app)
+    r = client.get("/api/jobs")
+
+    assert r.status_code == 200
+    assert r.json() == {"jobs": []}
+
+
+def test_start_job_endpoint_400_for_invalid_button(monkeypatch):
+    monkeypatch.setattr(config, "G3DT_USE_LECTURA_HEADLESS", True)
+
+    client = TestClient(app)
+    r = client.post("/api/jobs/anything", params={"button": "not_a_button"})
+
+    assert r.status_code == 400
+
+
+def test_start_job_endpoint_202_then_409_with_attach_true(tmp_path, monkeypatch):
+    project_name, _ = _unique_project(tmp_path, monkeypatch, "post-endpoint")
+    monkeypatch.setattr(config, "G3DT_USE_LECTURA_HEADLESS", True)
+    monkeypatch.setattr("automation.sync_workspace.is_network_workflow_enabled", lambda: False)
+
+    gate = threading.Event()
+
+    def _fake_run_lectura(project_path, *, out_dir=None, on_event=None, should_cancel=None, force=False):
+        gate.wait(timeout=5)
+        return LecturaResult(
+            decisions=None, per_doc=[], degraded=False, mode="document",
+            telemetry_path=Path(out_dir) / "_telemetry.jsonl",
+        )
+
+    monkeypatch.setattr(wizard_service, "_run_vision_phase", lambda *a, **k: None)
+    monkeypatch.setattr("automation.auto_extractor.auto_extract", _make_fake_auto_extract())
+    monkeypatch.setattr(lectura_service, "run_lectura", _fake_run_lectura)
+    monkeypatch.setattr(lectura_service.shutil, "which", lambda *_: "/usr/bin/claude")
+
+    client = TestClient(app)
+    try:
+        r1 = client.post(f"/api/jobs/{project_name}", params={"button": "preparar"})
+        assert r1.status_code == 202
+        body1 = r1.json()
+        assert body1["attach"] is False
+        assert body1["job"]["project"] == project_name
+
+        r2 = client.post(f"/api/jobs/{project_name}", params={"button": "enllestir"})
+        assert r2.status_code == 409
+        assert r2.json()["attach"] is True
+    finally:
+        gate.set()
+        job = lectura_registry.get(project_name)
+        if job is not None and job.thread is not None:
+            job.thread.join(timeout=5)

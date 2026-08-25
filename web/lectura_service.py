@@ -34,6 +34,18 @@ runner, els reenvia sota un nom diferent, DOCUMENTAT:
 Els events propis d'aquest servei es diuen "templates_fields" i "decisions"
 (sense el prefix "lectura_") — són els que la UI ha de consumir per al
 payload real.
+
+Fase 10 (2026-08-25, annex `docs/DISSENY-ANNEX-TRES-BOTONS-JOBS-NOTIFICACIONS-
+2026-08-24.md` §3): el cos del pipeline (fils A+B, merge Fase 6) viu ara a
+`run_lectura_job()`, que parla amb un `emit(event_type, detail)` en lloc de
+`yield` — és el `target` que `automation.lectura.jobs.JobRegistry.start()`
+corre en un fil propi, amb estat persistent a `validation/lectura/_job.json`
+(un sol job viu per projecte). `get_lectura_streaming()` ja no executa el
+pipeline directament: arrenca (o s'enganxa a) un `Job` via
+`start_or_attach_job()`/`registry.live()` i es limita a fer de subscriptor
+SSE (`Job.subscribe()`), que reemet en ordre l'historial + els events en
+viu. La seqüència d'events que rep un client que ARRENCA el job és
+IDÈNTICA a la d'abans de la Fase 10 (mateixos noms, mateix ordre).
 """
 
 from __future__ import annotations
@@ -45,9 +57,11 @@ import queue
 import shutil
 import threading
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
+from automation.lectura.jobs import Job, registry
 from automation.lectura.runner import LecturaResult, run_lectura
+from web import wizard_service
 from web.wizard_service import (
     _clear_stale_user_data,
     _merge_prefills,
@@ -239,13 +253,22 @@ def _lectura_payload(result: LecturaResult) -> dict[str, Any]:
 
 
 # ---------------------------------------------------------------------------
-# Generator principal (endpoint `GET /api/lectura-stream/{p}`, web/api.py)
+# Cos del job (Fase 10): abans era el cos del generator, ara parla amb
+# `emit(event_type, detail)` en lloc de `yield` — és el `target` que
+# `JobRegistry.start()` corre en un fil propi (`web/api.py` no en sap res).
 # ---------------------------------------------------------------------------
 
 
-def get_lectura_streaming(project_name: str):
-    """Generator SSE: TEMPS 1 (g3_templates + auto_extract, en paral·lel amb
-    TEMPS 2) + TEMPS 2 (lectura headless `claude -p`) + merge final (Fase 6).
+def run_lectura_job(
+    project_name: str,
+    project_path: Path,
+    emit: Callable[[str, dict], None],
+    should_cancel: Callable[[], bool],
+) -> None:
+    """TEMPS 1 (g3_templates + auto_extract, en paral·lel amb TEMPS 2) +
+    TEMPS 2 (lectura headless `claude -p`) + merge final (Fase 6). Idèntic al
+    pipeline d'abans de la Fase 10 (mateixos events, mateix ordre relatiu),
+    però parla amb `emit()` en lloc de `yield` SSE.
 
     Fallback de servei (disseny §7, punt 1): si `claude` no es troba al PATH
     (`shutil.which`) o `run_lectura` peta amb excepció, emet
@@ -254,11 +277,10 @@ def get_lectura_streaming(project_name: str):
     regressió). Si `run_lectura` retorna degradat (`result.degraded=True`)
     amb `decisions` vàlides, NO és fallback: continua normal (disseny §7).
 
-    Cancel·lació: mateixos checkpoints/semàntica que `get_prefills_streaming`
-    — comprova `is_cancelled(project_name)` entre events, esgota les dues
-    cues (un sentinella per fil) sense yieldar, i emet `event: cancelled`.
+    Acaba SEMPRE amb exactament un event terminal: `prefills`, `cancelled`
+    o `error_event` — el registre de jobs (`automation.lectura.jobs.Job`)
+    en depèn per marcar l'estat com a terminal.
     """
-    project_path = _resolve_project(project_name)
     _clear_stale_user_data(project_path)
     clear_cancellation(project_name)
 
@@ -313,9 +335,6 @@ def get_lectura_streaming(project_name: str):
             # `lectura_doc_inici` (complement del coordinador, punt 1).
             _try_emit_templates_fields()
 
-    def _should_cancel() -> bool:
-        return is_cancelled(project_name)
-
     def run_lectura_phase() -> None:
         try:
             claude_bin = os.getenv("G3DT_CLAUDE_PATH", "claude") or "claude"
@@ -324,7 +343,7 @@ def get_lectura_streaming(project_name: str):
                 return
             result = run_lectura(
                 project_path, out_dir=out_dir, on_event=lectura_event_cb,
-                should_cancel=_should_cancel,
+                should_cancel=should_cancel,
             )
             lectura_result_holder.append(result)
             if result.decisions is not None:
@@ -349,38 +368,32 @@ def get_lectura_streaming(project_name: str):
         if item is None:
             sentinels_seen += 1
             continue
-        if not cancelled_flag and is_cancelled(project_name):
+        if not cancelled_flag and should_cancel():
             cancelled_flag = True
         if cancelled_flag:
-            continue  # esgota la cua sense yieldar, fins als 2 sentinelles
+            continue  # esgota la cua sense emetre, fins als 2 sentinelles
         event_type, detail = item
-        yield f"event: {event_type}\ndata: {json.dumps(detail, ensure_ascii=False)}\n\n"
+        emit(event_type, detail)
 
     thread_a.join()
     thread_b.join()
 
     if cancelled_flag:
-        yield f"event: cancelled\ndata: {json.dumps({'phase': 'lectura'}, ensure_ascii=False)}\n\n"
+        emit("cancelled", {"phase": "lectura"})
         return
 
     if auto_error_holder:
-        yield (
-            "event: error_event\n"
-            f"data: {json.dumps({'message': str(auto_error_holder[0])}, ensure_ascii=False)}\n\n"
-        )
+        emit("error_event", {"message": str(auto_error_holder[0])})
         return
 
     if not auto_result_holder:
-        yield (
-            "event: error_event\n"
-            f"data: {json.dumps({'message': 'Extraction ended without result'}, ensure_ascii=False)}\n\n"
-        )
+        emit("error_event", {"message": "Extraction ended without result"})
         return
 
     # Checkpoint pre-merge (disseny §2/§7): si Eva ha aturat just entre el
     # buidat de les cues i el merge, ens estalviem el merge sencer.
-    if is_cancelled(project_name):
-        yield f"event: cancelled\ndata: {json.dumps({'phase': 'pre_merge'}, ensure_ascii=False)}\n\n"
+    if should_cancel():
+        emit("cancelled", {"phase": "pre_merge"})
         return
 
     auto_result = auto_result_holder[0]
@@ -404,7 +417,97 @@ def get_lectura_streaming(project_name: str):
         # Fallback (has_lectura=False): NO s'afegeix `_lectura` — `merged` és
         # exactament el que via B produiria avui (forma triada, disseny §7).
 
-        yield f"event: prefills\ndata: {json.dumps(merged, ensure_ascii=False)}\n\n"
+        emit("prefills", merged)
     except Exception as exc:
         logger.exception("Error merging lectura prefills for streaming")
-        yield f"event: error_event\ndata: {json.dumps({'message': str(exc)}, ensure_ascii=False)}\n\n"
+        emit("error_event", {"message": str(exc)})
+
+
+# ---------------------------------------------------------------------------
+# Wiring del job (Fase 10): resol el projecte, crea/enganxa un `Job` al
+# `JobRegistry` singleton.
+# ---------------------------------------------------------------------------
+
+
+def _env_int(name: str, default: int) -> int:
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return default
+    try:
+        return int(raw)
+    except ValueError:
+        return default
+
+
+def _jobs_root() -> Path:
+    """Arrel contra la qual `_resolve_project` resol (dev: `reference-material/`;
+    xarxa: workspace local) — coherent perquè `list_jobs()` escanegi el mateix
+    arbre on viuen els `_job.json`. NOTA: es llegeix `wizard_service._REF_DIR`
+    dinàmicament (no importat com a valor a l'inici del mòdul) perquè els
+    tests el reassignen via `monkeypatch.setattr(wizard_service, "_REF_DIR", ...)`.
+    """
+    return wizard_service._REF_DIR
+
+
+def start_or_attach_job(project_name: str, button: str = "desde_zero") -> tuple[Job, bool]:
+    """Arrenca un job de lectura per a `project_name`, o s'hi enganxa si ja
+    n'hi ha un de viu (disseny §3.4: un job viu per projecte — mai dos
+    `run_lectura` alhora)."""
+    project_path = _resolve_project(project_name)
+    concurrency = _env_int("G3DT_LECTURA_CONCURRENCY", 2)
+
+    def _telemetry_paths_fn() -> list[Path]:
+        return sorted(_jobs_root().glob("*/validation/lectura/_telemetry.jsonl"))
+
+    def _target(job: Job) -> None:
+        run_lectura_job(project_name, project_path, job.emit, lambda: is_cancelled(project_name))
+
+    return registry.start(
+        project_name, project_path, button, _target,
+        concurrency=concurrency, telemetry_paths_fn=_telemetry_paths_fn,
+    )
+
+
+def list_jobs() -> list[dict[str, Any]]:
+    """Taula d'estat dels jobs (disseny §5.2): vius primer, després
+    `updated_at` desc, últims 30 dies."""
+    return registry.list_jobs(_jobs_root())
+
+
+# ---------------------------------------------------------------------------
+# Generator SSE (endpoint `GET /api/lectura-stream/{p}`, web/api.py)
+# ---------------------------------------------------------------------------
+
+
+def get_lectura_streaming(project_name: str, *, attach: bool = False):
+    """Generator SSE: subscriptor d'un `Job` (Fase 10) — NO executa el
+    pipeline directament, es limita a reemetre l'historial + els events en
+    viu d'un `Job` (`automation.lectura.jobs.Job.subscribe()`).
+
+    `attach=False` (per defecte): arrenca un job nou o s'enganxa a un de viu
+    (`start_or_attach_job`) — la seqüència d'events per a un client que
+    ARRENCA el job és IDÈNTICA a la d'abans de la Fase 10.
+
+    `attach=True`: només subscriu a un job JA viu (§5.2, "Eva torna i clica
+    la fila"); si no n'hi ha cap, emet un únic `error_event` i acaba.
+    """
+    if attach:
+        job = registry.live(project_name)
+        if job is None:
+            yield (
+                "event: error_event\n"
+                f"data: {json.dumps({'message': 'cap job viu per a aquest projecte'}, ensure_ascii=False)}\n\n"
+            )
+            return
+    else:
+        job, _created = start_or_attach_job(project_name)
+
+    q = job.subscribe()
+    try:
+        while True:
+            event_type, detail = q.get()
+            yield f"event: {event_type}\ndata: {json.dumps(detail, ensure_ascii=False)}\n\n"
+            if event_type in ("prefills", "cancelled", "error_event"):
+                break
+    finally:
+        job.unsubscribe(q)
