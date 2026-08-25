@@ -51,6 +51,9 @@ _HALF_DPI = 220
 _CLIP_MAIN_FRACTION = 0.55  # 0-55 %
 _CLIP_OTHER_START = 0.45  # 45-100 % (10 % de solapament)
 _MIN_TEXT_ALNUM_CHARS = 20
+_MIN_TEXT_NORMAL_RATIO = 0.75  # proporció de caràcters "normals" sobre no-blancs
+_TEXT_NORMAL_PUNCTUATION = set(".,;:()-/'\"%+ºª€&")
+_TEXT_SUSPECT_PRODUCER_MARKERS = ("distiller", "pscript5", "freehand", "ghostscript")
 
 _IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png"}
 _IMAGE_MAX_LONG_SIDE = 1600
@@ -58,6 +61,27 @@ _MSG_ATTACHMENT_MIN_BYTES = 25 * 1024  # signatures ≤ 25 KB, descartades
 _MSG_ATTACHMENT_RECURSE_EXTENSIONS = {".pdf", ".xls", ".xlsx"} | _IMAGE_EXTENSIONS
 
 _ATTACH_NAME_RE = re.compile(r"[^A-Za-z0-9]+")
+
+# xlrd colour indices que no compten com a "color de font" (Excel .xls)
+_XLS_AUTOMATIC_COLOUR_INDEX = 32767
+_XLS_BLACK_COLOUR_INDEX = 8
+# RGB de fons resolt que no compta com a "color" (Excel .xls): blanc pur.
+# Descoberta empírica (Castellar, DPSH.xls): la plantilla aplica fons blanc
+# sòlid (idx 9, fill_pattern=1) a gairebé totes les cel·les de la graella
+# DPSH -> sense aquest filtre, `colored_cells` marcaria ~80 % de la fulla en
+# comptes de només els senyals reals (blau clar, gris, groc, salmó, lila).
+# Coherent amb `_XLSX_BG_DEFAULT_RGB`, que ja exclou blanc per a .xlsx.
+_XLS_BG_DEFAULT_RGB = {(255, 255, 255)}
+
+# openpyxl: valors de `Color.rgb` (ARGB) considerats "sense color" (Excel .xlsx)
+_XLSX_BG_DEFAULT_RGB = {"00000000", "FFFFFFFF"}
+_XLSX_FONT_DEFAULT_RGB = {"FF000000"}
+# theme=1 ("Text 1" del clrMap OOXML, negre) és el color de font per defecte de
+# QUALSEVOL cel·la amb estil "Normal": Excel l'escriu explícit (`<color theme="1"/>`)
+# encara que la cel·la no s'hagi tocat mai. Sense aquest filtre, `colored_cells`
+# marcaria totes les cel·les amb text (verificat empíricament: fitxa .xlsx sense
+# cap estil aplicat -> font.color.theme == 1 a cada cel·la amb valor).
+_XLSX_FONT_DEFAULT_THEME = {1}
 
 
 # ---------------------------------------------------------------------------
@@ -117,6 +141,42 @@ def _guess_kind(suffix: str) -> str:
 # ---------------------------------------------------------------------------
 
 
+def _text_suspect_reason(producer: str | None, creator: str | None) -> str | None:
+    """Detecta productors coneguts per generar SOVINT text brossa (fonts sense
+    ToUnicode): Acrobat Distiller, PScript5 (drivers PostScript), FreeHand,
+    Ghostscript. Retorna `"producer: <valor>"` / `"creator: <valor>"` o None.
+
+    NOMÉS INFORMATIU (`meta["text_suspect_reason"]`): NO decideix `text_ok`.
+    Descoberta empírica (Castellar, `ACCEPTACIO/PRESSUPOST GEOTEC...pdf`): el
+    mateix productor "Acrobat Distiller 15.0 (Windows)" / "PScript5.dll" es fa
+    servir tant en documents amb text brossa (`ANNEXES/*_sondeig.pdf`, ràtio
+    de caràcters normals 0,27) com en documents amb text perfectament net
+    (ràtio 0,99). El productor per si sol NO és fiable com a senyal negatiu;
+    `_page_text_ok` (condicions i+ii) ja discrimina correctament els dos casos.
+    """
+    for field_name, value in (("producer", producer), ("creator", creator)):
+        lowered = (value or "").lower()
+        if any(marker in lowered for marker in _TEXT_SUSPECT_PRODUCER_MARKERS):
+            return f"{field_name}: {value}"
+    return None
+
+
+def _page_text_ok(text: str) -> bool:
+    """(i) ≥ 20 alfanumèrics i (ii) ≥ 75 % de caràcters "normals" (alfanumèrics
+    + puntuació habitual) sobre els no-blancs. Verificat suficient per si sol
+    (vegeu `_text_suspect_reason`): no cal el productor per discriminar text
+    brossa de text net.
+    """
+    alnum_len = sum(1 for ch in text if ch.isalnum())
+    if alnum_len < _MIN_TEXT_ALNUM_CHARS:
+        return False
+    non_blank = [ch for ch in text if not ch.isspace()]
+    if not non_blank:
+        return False
+    normal_len = sum(1 for ch in non_blank if ch.isalnum() or ch in _TEXT_NORMAL_PUNCTUATION)
+    return (normal_len / len(non_blank)) >= _MIN_TEXT_NORMAL_RATIO
+
+
 def _extract_pdf(source_path: Path, doc_dir: Path, preext_root: Path) -> tuple[str, list[str], dict]:
     import fitz  # PyMuPDF
 
@@ -124,8 +184,13 @@ def _extract_pdf(source_path: Path, doc_dir: Path, preext_root: Path) -> tuple[s
     try:
         n_pages = doc.page_count
         meta_doc = doc.metadata or {}
+        producer = meta_doc.get("producer")
+        creator = meta_doc.get("creator")
+        suspect_reason = _text_suspect_reason(producer, creator)
+
         files: list[str] = []
         text_ok: dict[str, bool] = {}
+        halves_pages: list[int] = []
         page_sizes: list[list[float]] = []
 
         for i in range(n_pages):
@@ -135,8 +200,8 @@ def _extract_pdf(source_path: Path, doc_dir: Path, preext_root: Path) -> tuple[s
             page_sizes.append([round(rect.width, 2), round(rect.height, 2)])
 
             text = page.get_text("text") or ""
-            alnum_len = sum(1 for ch in text if ch.isalnum())
-            text_ok[str(p)] = alnum_len >= _MIN_TEXT_ALNUM_CHARS
+            page_ok = _page_text_ok(text)
+            text_ok[str(p)] = page_ok
 
             txt_path = doc_dir / f"page-{p}.txt"
             txt_path.write_text(text, encoding="utf-8")
@@ -149,6 +214,10 @@ def _extract_pdf(source_path: Path, doc_dir: Path, preext_root: Path) -> tuple[s
             page.get_pixmap(dpi=_WHOLE_PAGE_DPI).save(str(png_path))
             files.append(_rel(preext_root, png_path))
 
+            if page_ok:
+                continue  # text llegible: no calen meitats
+
+            halves_pages.append(p)
             width, height = rect.width, rect.height
             if width > height:
                 clip_a = fitz.Rect(0, 0, width * _CLIP_MAIN_FRACTION, height)
@@ -167,13 +236,16 @@ def _extract_pdf(source_path: Path, doc_dir: Path, preext_root: Path) -> tuple[s
         extra = {
             "pages": n_pages,
             "page_sizes_pt": page_sizes,
-            "producer": meta_doc.get("producer"),
-            "creator": meta_doc.get("creator"),
+            "producer": producer,
+            "creator": creator,
             "creationDate": meta_doc.get("creationDate"),
             "modDate": meta_doc.get("modDate"),
             "text_ok": text_ok,
             "pages_truncated": n_pages > _MAX_PAGES,
+            "halves_pages": halves_pages,
         }
+        if suspect_reason:
+            extra["text_suspect_reason"] = suspect_reason
         return "pdf", files, extra
     finally:
         doc.close()
@@ -246,14 +318,146 @@ def _read_xlsx_sheets(source_path: Path) -> list[tuple[str, list[list[Any]]]]:
         wb.close()
 
 
+def _format_cell_value(v: Any) -> str:
+    """Valor com a text pel `.colors.txt` (buit si `None`)."""
+    if v is None:
+        return ""
+    if isinstance(v, (datetime, date)):
+        return v.isoformat()
+    if isinstance(v, float) and v.is_integer():
+        return str(int(v))
+    return str(v)
+
+
+def _xls_bg_color(background: Any, colour_map: dict) -> str | None:
+    """Fons de la cel·la .xls, o None si és el patró per defecte (sense fons
+    o fons blanc sòlid, `_XLS_BG_DEFAULT_RGB`)."""
+    if background is None or background.fill_pattern == 0:
+        return None
+    idx = background.pattern_colour_index
+    rgb = colour_map.get(idx)
+    if rgb and rgb[:3] in _XLS_BG_DEFAULT_RGB:
+        return None
+    if rgb:
+        r, g, b = rgb[:3]
+        return f"#{r:02X}{g:02X}{b:02X}"
+    return f"idx:{idx}"
+
+
+def _xls_font_color(colour_index: int | None, colour_map: dict) -> str | None:
+    """Color de la font .xls, o None si és automàtic o negre (per defecte)."""
+    if colour_index in (None, _XLS_AUTOMATIC_COLOUR_INDEX, _XLS_BLACK_COLOUR_INDEX):
+        return None
+    rgb = colour_map.get(colour_index)
+    if rgb and rgb[:3] == (0, 0, 0):
+        return None
+    if rgb:
+        r, g, b = rgb[:3]
+        return f"#{r:02X}{g:02X}{b:02X}"
+    return f"idx:{colour_index}"
+
+
+def _read_xls_colors(source_path: Path) -> tuple[list[list[str]], str | None]:
+    """Una llista de línies `sheet-i.colors.txt` per full + error (o None).
+
+    Requereix un segon `open_workbook(formatting_info=True)`: si falla (fitxer
+    estrany), retorna llistes buides + el motiu, sense trencar la resta de
+    l'extracció (`_extract_excel` ja té els valors de l'obertura sense format).
+    """
+    import xlrd
+
+    try:
+        book = xlrd.open_workbook(str(source_path), formatting_info=True)
+    except Exception as exc:
+        return [], f"{type(exc).__name__}: {exc}"
+
+    out: list[list[str]] = []
+    for sheet in book.sheets():
+        lines: list[str] = []
+        for r in range(sheet.nrows):
+            for c in range(sheet.ncols):
+                xf = book.xf_list[sheet.cell_xf_index(r, c)]
+                bg = _xls_bg_color(xf.background, book.colour_map)
+                font_color = _xls_font_color(book.font_list[xf.font_index].colour_index, book.colour_map)
+                if bg is None and font_color is None:
+                    continue
+                value = _format_cell_value(_xls_cell_value(sheet.cell(r, c), book))
+                lines.append(f"{_col_letter(c)}{r + 1}\tbg={bg or '-'}\tfont={font_color or '-'}\t{value}")
+        out.append(lines)
+    return out, None
+
+
+def _xlsx_color_or_idx(color: Any, default_rgb: set[str], default_theme: set[int] = frozenset()) -> str | None:
+    """`Color` d'openpyxl -> `#RRGGBB` / `idx:{n}` (theme/indexed) / None (per defecte)."""
+    if color is None:
+        return None
+    rgb = getattr(color, "rgb", None)
+    if isinstance(rgb, str):
+        return None if rgb in default_rgb else f"#{rgb[-6:]}"
+    theme = getattr(color, "theme", None)
+    if theme is not None:
+        return None if theme in default_theme else f"idx:{theme}"
+    indexed = getattr(color, "indexed", None)
+    if indexed is not None:
+        return f"idx:{indexed}"
+    return None
+
+
+def _xlsx_bg_color(cell: Any) -> str | None:
+    fill = cell.fill
+    if fill is None or fill.fill_type is None:
+        return None
+    return _xlsx_color_or_idx(fill.fgColor, _XLSX_BG_DEFAULT_RGB)
+
+
+def _xlsx_font_color(cell: Any) -> str | None:
+    font = cell.font
+    if font is None:
+        return None
+    return _xlsx_color_or_idx(font.color, _XLSX_FONT_DEFAULT_RGB, _XLSX_FONT_DEFAULT_THEME)
+
+
+def _read_xlsx_colors(source_path: Path) -> list[list[str]]:
+    """Una llista de línies `sheet-i.colors.txt` per full (openpyxl, .xlsx)."""
+    import openpyxl
+
+    wb = openpyxl.load_workbook(str(source_path), data_only=True, read_only=True)
+    try:
+        out: list[list[str]] = []
+        for ws in wb.worksheets:
+            lines: list[str] = []
+            for r_idx, row in enumerate(ws.iter_rows(), start=1):
+                for c_idx, cell in enumerate(row, start=1):
+                    bg = _xlsx_bg_color(cell)
+                    font_color = _xlsx_font_color(cell)
+                    if bg is None and font_color is None:
+                        continue
+                    value = _format_cell_value(cell.value)
+                    lines.append(f"{_col_letter(c_idx - 1)}{r_idx}\tbg={bg or '-'}\tfont={font_color or '-'}\t{value}")
+            out.append(lines)
+        return out
+    finally:
+        wb.close()
+
+
 def _extract_excel(source_path: Path, doc_dir: Path, preext_root: Path, suffix: str) -> tuple[str, list[str], dict]:
-    sheets_data = _read_xls_sheets(source_path) if suffix == ".xls" else _read_xlsx_sheets(source_path)
+    colors_error: str | None = None
+    if suffix == ".xls":
+        sheets_data = _read_xls_sheets(source_path)
+        colors_by_sheet, colors_error = _read_xls_colors(source_path)
+    else:
+        sheets_data = _read_xlsx_sheets(source_path)
+        colors_by_sheet = _read_xlsx_colors(source_path)
 
     files: list[str] = []
     sheets_meta: list[dict] = []
     for i, (name, rows) in enumerate(sheets_data):
         n_cols = max((len(r) for r in rows), default=0)
-        sheets_meta.append({"index": i, "name": name, "rows": len(rows), "cols": n_cols})
+        colored_lines = colors_by_sheet[i] if i < len(colors_by_sheet) else []
+        sheets_meta.append({
+            "index": i, "name": name, "rows": len(rows), "cols": n_cols,
+            "colored_cells": len(colored_lines),
+        })
 
         csv_path = doc_dir / f"sheet-{i}.csv"
         with csv_path.open("w", encoding="utf-8", newline="") as fh:
@@ -272,7 +476,14 @@ def _extract_excel(source_path: Path, doc_dir: Path, preext_root: Path, suffix: 
         cells_path.write_text("\n".join(lines), encoding="utf-8")
         files.append(_rel(preext_root, cells_path))
 
-    return "excel", files, {"sheets": sheets_meta}
+        colors_path = doc_dir / f"sheet-{i}.colors.txt"
+        colors_path.write_text("\n".join(colored_lines), encoding="utf-8")
+        files.append(_rel(preext_root, colors_path))
+
+    extra: dict[str, Any] = {"sheets": sheets_meta, "colors": True}
+    if colors_error:
+        extra["colors_error"] = colors_error
+    return "excel", files, extra
 
 
 # ---------------------------------------------------------------------------

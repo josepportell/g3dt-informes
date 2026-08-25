@@ -94,7 +94,8 @@ Estimacions: botó 3a ≈ 30 s, 3b 6-9 min amb consolidació Python-first.
 **2026-08-25 (matí):** **Fase 10 FETA** (`8d3b0ce`: `automation/lectura/jobs.py`, `_job.json` a disc, un job viu per projecte, attach amb replay, `GET/POST /api/jobs`).
 **Experiment pre-extracció v1** (`0dfff32`, flag `G3DT_LECTURA_PREEXT` off): fila `2026-08-25-preext-c3` → mediana/doc 292→221 s (−24 %), paret 33→**28 min**,
 0 erroni-amb-confiança, però 5 cel·les `nivell_freatic` baixen de `segur` a `no_trobat` (color de cel·la d'Excel no exportat) → **NO adoptat**; v2 = colors Excel +
-meitats només per a pàgines sense text + `text_ok` per producer; remesura `preext-v2-c3`. Suite lectura 123 passed. Següent: v2 → Fase 11 → Fase 12.
+meitats només per a pàgines sense text + `text_ok` per producer; remesura `preext-v2-c3`. Suite lectura 123 passed. Següent: v2 → Fase 11 → Fase 12 → **run `fable-c3`** (`G3DT_LECTURA_MODEL=fable ~/g3dt-e2e/fase9/run.sh 3 fable-c3`, ~30-40 min:
+latència i turns/tokens de Fable vs Sonnet al skill agèntic; decidit 2026-08-25, només curiositat/dada per al llibre, no bloqueja res).
 
 ## ⚠ Auditoria prod 2026-08: fixes fets, pendent de fusió (2026-08-22)
 

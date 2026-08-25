@@ -92,7 +92,10 @@ def _write_xlsx(path: Path) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_pdf_two_pages_text_and_halves_by_orientation(tmp_path):
+def test_pdf_two_pages_clean_text_no_halves(tmp_path):
+    """Text net (producer per defecte de fitz, ≥20 alfanumèrics, proporció alta)
+    -> `text_ok` true a totes dues pàgines i CAP fitxer de meitats (v2: les
+    meitats només es generen per a pàgines amb `text_ok` false)."""
     project = tmp_path / "proj"
     project.mkdir()
     _write_two_page_pdf(project / "doc2p.pdf")
@@ -106,27 +109,120 @@ def test_pdf_two_pages_text_and_halves_by_orientation(tmp_path):
     assert meta["pages_truncated"] is False
     assert len(meta["page_sizes_pt"]) == 2
     assert "producer" in meta
+    assert meta.get("text_suspect_reason") is None
 
     doc_dir = preext_root / meta["dir"]
     assert "apaisada" in (doc_dir / "page-1.txt").read_text(encoding="utf-8")
     assert (doc_dir / "page-1.png").exists()
-    # pàgina 1 apaïsada (800x400, més ampla que alta) -> left/right
-    assert (doc_dir / "page-1-left.png").exists()
-    assert (doc_dir / "page-1-right.png").exists()
-    assert not (doc_dir / "page-1-top.png").exists()
+    assert not (doc_dir / "page-1-left.png").exists()
+    assert not (doc_dir / "page-1-right.png").exists()
 
     assert "vertical" in (doc_dir / "page-2.txt").read_text(encoding="utf-8")
     assert (doc_dir / "page-2.png").exists()
-    # pàgina 2 vertical (400x800, més alta que ampla) -> top/bottom
-    assert (doc_dir / "page-2-top.png").exists()
-    assert (doc_dir / "page-2-bottom.png").exists()
-    assert not (doc_dir / "page-2-left.png").exists()
+    assert not (doc_dir / "page-2-top.png").exists()
+    assert not (doc_dir / "page-2-bottom.png").exists()
 
     assert meta["text_ok"]["1"] is True
     assert meta["text_ok"]["2"] is True
+    assert meta["halves_pages"] == []
 
     for rel in meta["files"]:
         assert (preext_root / rel).exists()
+
+
+def test_pdf_mixed_pages_halves_only_for_garbage_text_page(tmp_path):
+    """Pàgina amb text net -> sense meitats; pàgina amb text brossa (pocs
+    alfanumèrics / proporció baixa) -> meitats, orientació segons mida."""
+    import fitz
+
+    project = tmp_path / "proj"
+    project.mkdir()
+    path = project / "mixed.pdf"
+    doc = fitz.open()
+    p1 = doc.new_page(width=400, height=600)
+    p1.insert_text((36, 300), "Pagina neta amb text llegible suficient per superar el llindar de vint caracters.")
+    p2 = doc.new_page(width=400, height=600)
+    p2.insert_text((36, 300), '\t \t !"#$%&\'()' * 10)
+    doc.save(str(path))
+    doc.close()
+    preext_root = tmp_path / "_preext"
+
+    meta = preext_document(project, _entry("mixed.pdf", project), preext_root)
+
+    assert meta.get("error") is None
+    assert meta["text_ok"]["1"] is True
+    assert meta["text_ok"]["2"] is False
+    assert meta["halves_pages"] == [2]
+
+    doc_dir = preext_root / meta["dir"]
+    assert not (doc_dir / "page-1-top.png").exists()
+    assert not (doc_dir / "page-1-bottom.png").exists()
+    assert (doc_dir / "page-2-top.png").exists()
+    assert (doc_dir / "page-2-bottom.png").exists()
+
+
+def test_pdf_distiller_producer_recorded_but_does_not_override_clean_text(tmp_path):
+    """Descoberta empírica (Castellar, `ACCEPTACIO/PRESSUPOST GEOTEC...pdf`):
+    el productor Acrobat Distiller/PScript5 NO implica per si sol text brossa
+    -- l'Eva l'usa tant en annexos amb text brossa (ràtio 0,27) com en
+    pressupostos amb text net (ràtio 0,99). `text_suspect_reason` queda
+    anotat com a informació, però `text_ok` es decideix pel contingut."""
+    import fitz
+
+    project = tmp_path / "proj"
+    project.mkdir()
+    path = project / "distiller.pdf"
+    doc = fitz.open()
+    for i in range(2):
+        page = doc.new_page(width=400, height=600)
+        page.insert_text((36, 300), f"Pagina numero {i + 1} amb text net i suficient per no ser brossa normalment.")
+    doc.set_metadata({"producer": "Acrobat Distiller 15.0 (Windows)"})
+    doc.save(str(path))
+    doc.close()
+    preext_root = tmp_path / "_preext"
+
+    meta = preext_document(project, _entry("distiller.pdf", project), preext_root)
+
+    assert meta.get("error") is None
+    assert meta["text_ok"]["1"] is True
+    assert meta["text_ok"]["2"] is True
+    assert "Distiller" in meta["text_suspect_reason"]
+    assert meta["halves_pages"] == []
+
+    doc_dir = preext_root / meta["dir"]
+    assert not (doc_dir / "page-1-top.png").exists()
+    assert not (doc_dir / "page-2-top.png").exists()
+    # el .txt s'escriu igualment
+    assert (doc_dir / "page-1.txt").exists()
+
+
+def test_pdf_distiller_producer_with_garbage_text_is_still_flagged_by_content(tmp_path):
+    """Rèplica de `ANNEXES/3001621_sondeig.pdf` (Castellar): mateix productor
+    Distiller que el test anterior, però amb text brossa real -> `text_ok`
+    false (per contingut, no pel productor) i meitats generades."""
+    import fitz
+
+    project = tmp_path / "proj"
+    project.mkdir()
+    path = project / "sondeig.pdf"
+    doc = fitz.open()
+    page = doc.new_page(width=400, height=600)
+    page.insert_text((36, 300), '\t \t !"#$%&\'()' * 10)
+    doc.set_metadata({"producer": "Acrobat Distiller 15.0 (Windows)", "creator": "PScript5.dll Version 5.2.2"})
+    doc.save(str(path))
+    doc.close()
+    preext_root = tmp_path / "_preext"
+
+    meta = preext_document(project, _entry("sondeig.pdf", project), preext_root)
+
+    assert meta.get("error") is None
+    assert meta["text_ok"]["1"] is False
+    assert "Distiller" in meta["text_suspect_reason"]
+    assert meta["halves_pages"] == [1]
+
+    doc_dir = preext_root / meta["dir"]
+    assert (doc_dir / "page-1-top.png").exists()
+    assert (doc_dir / "page-1-bottom.png").exists()
 
 
 def test_pdf_fourteen_pages_truncated_after_twelve(tmp_path):
@@ -140,6 +236,7 @@ def test_pdf_fourteen_pages_truncated_after_twelve(tmp_path):
     assert meta["pages"] == 14
     assert meta["pages_truncated"] is True
     assert len(meta["page_sizes_pt"]) == 14
+    assert meta["halves_pages"] == []  # text net a totes: cap meitat calia
 
     doc_dir = preext_root / meta["dir"]
     assert (doc_dir / "page-12.png").exists()
@@ -165,12 +262,17 @@ def test_xlsx_cells_and_csv(tmp_path):
 
     assert meta["kind"] == "excel"
     assert meta.get("error") is None
+    assert meta["colors"] is True
     doc_dir = preext_root / meta["dir"]
 
     cells = (doc_dir / "sheet-0.cells.txt").read_text(encoding="utf-8")
     assert "N19\t3001621" in cells
     assert (doc_dir / "sheet-0.csv").exists()
     assert (doc_dir / "sheet-1.cells.txt").exists()
+
+    # cap cel·la de color: sheet-i.colors.txt existeix però buit
+    assert (doc_dir / "sheet-0.colors.txt").read_text(encoding="utf-8") == ""
+    assert meta["sheets"][0]["colored_cells"] == 0
 
     names = {s["name"] for s in meta["sheets"]}
     assert names == {"fitxa", "altre"}
@@ -195,6 +297,72 @@ def test_xls_cells_and_csv(tmp_path):
     doc_dir = preext_root / meta["dir"]
     cells = (doc_dir / "sheet-0.cells.txt").read_text(encoding="utf-8")
     assert "N19\t3001621" in cells
+
+
+def test_xlsx_colors_txt_has_only_colored_cells(tmp_path):
+    """Cel·la buida amb fons vermell (senyal de nivell freàtic per color, cas
+    Alcoletge) + cel·la amb font vermella + cel·la normal -> colors.txt amb
+    exactament les dues primeres, valor buit conservat com a camp buit."""
+    import openpyxl
+    from openpyxl.styles import Font, PatternFill
+
+    project = tmp_path / "proj"
+    project.mkdir()
+    path = project / "colors.xlsx"
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "fitxa"
+    ws["A1"] = "normal"
+    ws["B2"].fill = PatternFill(fill_type="solid", fgColor="FFFF0000")  # buida, fons vermell
+    ws["C3"] = "amb font vermella"
+    ws["C3"].font = Font(color="FFFF0000")
+    wb.save(str(path))
+    preext_root = tmp_path / "_preext"
+
+    meta = preext_document(project, _entry("colors.xlsx", project), preext_root)
+
+    assert meta["kind"] == "excel"
+    assert meta.get("error") is None
+    assert meta["sheets"][0]["colored_cells"] == 2
+
+    doc_dir = preext_root / meta["dir"]
+    lines = (doc_dir / "sheet-0.colors.txt").read_text(encoding="utf-8").splitlines()
+    assert len(lines) == 2
+    by_ref = {ln.split("\t")[0]: ln for ln in lines}
+
+    assert "B2" in by_ref
+    assert "bg=#FF0000" in by_ref["B2"]
+    assert by_ref["B2"].endswith("\t")  # valor buit conservat com a camp buit
+
+    assert "C3" in by_ref
+    assert "font=#FF0000" in by_ref["C3"]
+    assert by_ref["C3"].endswith("amb font vermella")
+
+
+def test_xls_colors_txt_with_pattern_fill(tmp_path):
+    xlwt = pytest.importorskip("xlwt")
+
+    project = tmp_path / "proj"
+    project.mkdir()
+    xls_path = project / "colors.xls"
+    wb = xlwt.Workbook()
+    ws = wb.add_sheet("fitxa")
+    ws.write(0, 0, "normal")
+    red_style = xlwt.easyxf("pattern: pattern solid, fore_colour red")
+    ws.write(1, 1, "", red_style)  # B2 (0-based fila1, columna1), buida amb fons vermell
+    wb.save(str(xls_path))
+    preext_root = tmp_path / "_preext"
+
+    meta = preext_document(project, _entry("colors.xls", project), preext_root)
+
+    assert meta["kind"] == "excel"
+    assert meta.get("error") is None
+    assert meta.get("colors_error") is None
+    assert meta["sheets"][0]["colored_cells"] >= 1
+
+    doc_dir = preext_root / meta["dir"]
+    lines = (doc_dir / "sheet-0.colors.txt").read_text(encoding="utf-8").splitlines()
+    assert any(ln.startswith("B2\t") and "bg=" in ln for ln in lines)
 
 
 # ---------------------------------------------------------------------------
