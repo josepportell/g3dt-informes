@@ -42,6 +42,7 @@ from pathlib import Path, PurePosixPath
 from typing import Any, Callable
 
 from automation import g3_templates
+from automation.lectura.consolidate import conflict_paths, consolidate_python, merge_only_fields
 from automation.lectura.contract import ALLOWED_FIELD_KEYS, TABLE_ROW_GROUPS, validate_decisions
 from automation.lectura.inventory import write_inventory
 from automation.lectura.normalize import soft_normalize
@@ -55,7 +56,8 @@ _VALID_EFFORTS = ("low", "medium", "high", "xhigh", "max")
 
 #: Fitxers de `out_dir` que NO son un `{doc}.json` de lectura (mai comptats
 #: com a document, mai candidats a "fallback per mtime").
-_RESERVED_JSON_NAMES = {"_inventory.json", "_g3_templates.json", "_decisions.json"}
+_VALID_CONSOLIDA_MODES = ("auto", "python", "llm")
+_RESERVED_JSON_NAMES = {"_inventory.json", "_g3_templates.json", "_decisions.json", "_consolida_only.json"}
 
 _SAFE_NAME_RE = re.compile(r"[^A-Za-z0-9]+")
 
@@ -143,7 +145,16 @@ def _load_config() -> dict[str, Any]:
             effort, _VALID_EFFORTS,
         )
         effort = "xhigh"
+    # Fase 12: consolidacio Python-first. `auto` = Python + crida LLM `--only-fields` NOMES si hi ha
+    # conflictes A-vs-A; `python` = mai LLM (els conflictes queden `candidats`); `llm` = crida
+    # `--consolida` sencera (comportament de les Fases 3-11, per mesurar o com a pla B).
+    consolida = os.getenv("G3DT_LECTURA_CONSOLIDA", "auto").strip().lower() or "auto"
+    if consolida not in _VALID_CONSOLIDA_MODES:
+        logger.warning("G3DT_LECTURA_CONSOLIDA=%r invalid (valors valids: %s); fent servir auto",
+                       consolida, _VALID_CONSOLIDA_MODES)
+        consolida = "auto"
     return {
+        "consolida": consolida,
         "claude_path": os.getenv("G3DT_CLAUDE_PATH", "claude") or "claude",
         "timeout": _env_int("G3DT_LECTURA_TIMEOUT", 600),
         "consolida_timeout": _env_int("G3DT_LECTURA_CONSOLIDA_TIMEOUT", 900),
@@ -589,6 +600,12 @@ def _consolidate(
             _emit(on_event, "decisions", {"cached": True})
             return cached, False
 
+    if cfg.get("consolida", "auto") != "llm":
+        return _consolidate_python_first(
+            project_path=project_path, out_dir=out_dir, cfg=cfg, on_event=on_event,
+            should_cancel=should_cancel, telemetry_path=telemetry_path, claude_version=claude_version,
+        )
+
     prompt = f"/{cfg['skill']} {project_path} --consolida --out {out_dir}"
     log_path = Path(tempfile.gettempdir()) / f"g3dt-lectura-{project_path.name}-consolida.log"
     ts_start = datetime.now().isoformat(timespec="seconds")
@@ -630,7 +647,91 @@ def _consolidate(
     _emit(on_event, "consolidacio_fallback", {
         "errors": errors if json_valid else ["_decisions.json invalid o absent"],
     })
-    return merge_degradat(out_dir), True
+    degraded = merge_degradat(out_dir)
+    _write_json_atomic(decisions_path, degraded)
+    return degraded, True
+
+
+def _consolidate_python_first(
+    *,
+    project_path: Path,
+    out_dir: Path,
+    cfg: dict,
+    on_event: Callable[[str, dict], None] | None,
+    should_cancel: Callable[[], bool] | None,
+    telemetry_path: Path,
+    claude_version: str | None,
+) -> tuple[dict | None, bool]:
+    """Fase 12 (annex §7.2): Python consolida SEMPRE; nomes els conflictes reals (dues fonts A que
+    discrepen) van a una crida LLM curta `--consolida --only-fields a,b` (mode `auto`), que escriu
+    `_consolida_only.json`; Python en fusiona nomes les cel·les demanades si passen el contracte.
+    Sense conflictes → 0 crides. El runner escriu `_decisions.json` (atomic) en tots els casos."""
+    decisions_path = out_dir / "_decisions.json"
+    only_path = out_dir / "_consolida_only.json"
+    _emit(on_event, "consolidacio_inici", {"consolidator": "python"})
+    ts_start = datetime.now().isoformat(timespec="seconds")
+    t0 = time.monotonic()
+    try:
+        decisions = consolidate_python(out_dir, project_path)
+        errors = validate_decisions(decisions)
+    except Exception as exc:  # un bug del consolidador mai pot deixar la lectura sense decisions
+        logger.exception("consolidate_python ha fallat")
+        decisions, errors = None, [f"consolidate_python: {exc}"]
+    elapsed_py = time.monotonic() - t0
+    _write_telemetry(telemetry_path, {
+        "ts_start": ts_start, "ts_end": datetime.now().isoformat(timespec="seconds"), "doc": None,
+        "mode": "consolida_python", "rc": 0 if not errors else 1, "timeout": False, "json_valid": not errors,
+        "attempt": 1, "cached": False, "elapsed_s": elapsed_py, "log_path": None, "claude_version": claude_version,
+        "model": None, "effort": None, "skill": cfg["skill"], "preext": cfg["preext"], "cli_json_ok": False,
+        "n_conflicts": len(conflict_paths(decisions)) if decisions else None, "errors": errors[:5],
+    })
+    if decisions is None or errors:
+        _emit(on_event, "consolidacio_fallback", {"errors": errors})
+        minimal = _merge_minimal(out_dir)
+        _write_json_atomic(decisions_path, minimal)
+        return minimal, True
+
+    paths = conflict_paths(decisions)
+    applied: list[str] = []
+    if paths and cfg.get("consolida") == "auto" and not _cancelled(should_cancel):
+        with contextlib.suppress(OSError):
+            only_path.unlink()
+        prompt = f"/{cfg['skill']} {project_path} --consolida --only-fields {','.join(paths)} --out {out_dir}"
+        log_path = Path(tempfile.gettempdir()) / f"g3dt-lectura-{project_path.name}-consolida-only.log"
+        ts_llm = datetime.now().isoformat(timespec="seconds")
+        call = _run_claude(
+            claude_path=cfg["claude_path"], prompt=prompt, timeout=cfg["consolida_timeout"],
+            log_path=log_path, should_cancel=should_cancel, model=cfg["model"], effort=cfg["effort"],
+        )
+        raw = _try_load_json(only_path)
+        llm_valid = isinstance(raw, dict)
+        if llm_valid and not call.get("cancelled"):
+            merged, applied = merge_only_fields(decisions, soft_normalize(raw), paths)
+            if not validate_decisions(merged):
+                decisions = merged
+            else:
+                applied = []
+        decisions.setdefault("consolidation", {})["llm_only_fields"] = {
+            "requested": paths, "applied": applied, "elapsed_s": round(call["elapsed_s"], 1),
+            "rc": call["rc"], "timeout": call["timeout"], "json_valid": llm_valid,
+        }
+        _write_telemetry(telemetry_path, {
+            "ts_start": ts_llm, "ts_end": datetime.now().isoformat(timespec="seconds"), "doc": None,
+            "mode": "consolida_only", "rc": call["rc"], "timeout": call["timeout"], "json_valid": llm_valid,
+            "attempt": 1, "cached": False, "elapsed_s": call["elapsed_s"], "log_path": str(log_path),
+            "claude_version": claude_version, "model": cfg["model"], "effort": cfg["effort"],
+            "skill": cfg["skill"], "preext": cfg["preext"], "only_fields": paths, "applied": applied,
+            **call.get("cli", {"cli_json_ok": False}),
+        })
+        if call.get("cancelled"):
+            return None, False
+
+    _write_json_atomic(decisions_path, decisions)
+    _emit(on_event, "decisions", {
+        "cached": False, "consolidator": "python", "n_conflicts": len(paths), "llm_only_fields": applied,
+        "elapsed_s": round(time.monotonic() - t0, 3),
+    })
+    return decisions, False
 
 
 def _run_mode_projecte(
@@ -676,13 +777,17 @@ def _run_mode_projecte(
 
     if not json_valid:
         _emit(on_event, "consolidacio_fallback", {"errors": ["_decisions.json invalid o absent (mode projecte)"]})
-        return per_doc, merge_degradat(out_dir), True
+        degraded = merge_degradat(out_dir)
+        _write_json_atomic(decisions_path, degraded)
+        return per_doc, degraded, True
 
     normalized = soft_normalize(raw)
     errors = validate_decisions(normalized)
     if errors:
         _emit(on_event, "consolidacio_fallback", {"errors": errors})
-        return per_doc, merge_degradat(out_dir), True
+        degraded = merge_degradat(out_dir)
+        _write_json_atomic(decisions_path, degraded)
+        return per_doc, degraded, True
 
     _emit(on_event, "decisions", {"cached": False})
     return per_doc, normalized, False
@@ -694,8 +799,25 @@ def _run_mode_projecte(
 
 
 def merge_degradat(out_dir: Path) -> dict:
-    """Consolidacio Python determinista quan `--consolida` no produeix un
-    `_decisions.json` valid (despres de `soft_normalize`). Llegeix
+    """Consolidacio Python quan `--consolida` (mode `llm`) no produeix un
+    `_decisions.json` valid. Des de la Fase 12 es la consolidacio Python-first
+    completa (`consolidate_python`, amb taules i guards); si aquesta no passa el
+    contracte (bug), cau a `_merge_minimal` (Fase 4)."""
+    try:
+        decisions = consolidate_python(out_dir)
+        if not validate_decisions(decisions):
+            decisions["notes_estructurals"] = [
+                "_decisions.json generat en mode degradat (consolidacio claude invalida o absent; "
+                "consolidate_python determinista sobre els {doc}.json + _g3_templates.json)",
+            ] + list(decisions.get("notes_estructurals", []))
+            return decisions
+    except Exception:
+        logger.exception("consolidate_python ha fallat en mode degradat; caient a _merge_minimal")
+    return _merge_minimal(out_dir)
+
+
+def _merge_minimal(out_dir: Path) -> dict:
+    """Consolidacio minima de la Fase 4 (ultim recurs). Llegeix
     `_g3_templates.json` + tots els `{doc}.json` de `out_dir` (Pas 4 del
     skill: bloc `tier_a`).
 

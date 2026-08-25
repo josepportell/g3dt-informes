@@ -1,0 +1,10 @@
+-- dpsh_tests: or 2 files / prod 2 files
+-- sondeig_tests: or 1 files / prod 1 files
+CAUTELA  sondeig_tests[0].profunditat_assolida or segur, prod candidats (bo dins): '-1,80 m'
+CAUTELA  sondeig_tests[0].spt_ma or segur, prod candidats (bo dins): '1/0'
+-- spt_ma_tests: or 1 files / prod 1 files
+CAUTELA  spt_ma_tests[0].id or segur, prod candidats (bo dins): 'SPT-1'
+-- soil_levels: or 2 files / prod 1 files
+ABSENT   soil_levels[1].de (or=candidats)
+ABSENT   soil_levels[1].a (or=candidats)
+TOTALS: {'OK': 16, 'CAUTELA': 3, 'ABSENT': 2}

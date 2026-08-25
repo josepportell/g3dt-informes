@@ -111,6 +111,77 @@ def canonicalize_row_keys(d: dict) -> dict:
     return out
 
 
+#: Reparacio (d), Fase 12: cel·les de DADES d'una fila de `tables` (mai els identificadors de fila
+#: `punt`/`sondeig`/`nom`, que son text pla per contracte).
+_ROW_DATA_CELLS: dict[str, tuple[str, ...]] = {
+    "dpsh_tests": ("cota_inici", "profunditat_assolida", "rebuig", "nivell_freatic"),
+    "sondeig_tests": ("cota", "profunditat_assolida", "spt_ma", "nivell_freatic"),
+    "spt_ma_tests": ("id", "profunditat", "litologia", "n30"),
+    "soil_levels": ("litologia", "de", "a", "mostra_del_nivell"),
+}
+_NEVER_SEGUR_CELLS = frozenset({("spt_ma_tests", "n30"), ("spt_ma_tests", "litologia"), ("soil_levels", "litologia")})
+
+
+def wrap_flat_cells(d: dict) -> dict:
+    """Reparacio (d), Fase 12 (lliso de la consolidacio `preext-v2-c3`, 23 ABSENT): una cel·la de dades
+    PLANA (string/nombre/bool/null en lloc de `{estat, value, candidates}`) s'embolcalla de forma
+    determinista amb `estat` = `estat_bloc` de la fila/bloc (o `candidats`), `value` = el valor pla i
+    `candidates = [{value, font: "(adaptat)", quote: ""}]`; `null` → `no_trobat`. n30/litologia mai
+    `segur`. No s'inventa cap dada: nomes es dona forma al que ja hi era. Copia, no mutacio."""
+    out = copy.deepcopy(d)
+    tables = out.get("tables") if isinstance(out, dict) else None
+    if not isinstance(tables, dict):
+        return out
+    for block, cells in _ROW_DATA_CELLS.items():
+        blk = tables.get(block)
+        rows = blk.get("rows") if isinstance(blk, dict) else (blk if isinstance(blk, list) else None)
+        if not isinstance(rows, list):
+            continue
+        estat_bloc = blk.get("estat_bloc") if isinstance(blk, dict) else None
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            row_estat = row.get("estat") if row.get("estat") in ("segur", "candidats", "no_trobat") else None
+            base = row_estat or (estat_bloc if estat_bloc in ("segur", "candidats", "no_trobat") else "candidats")
+            for cell in cells:
+                if cell not in row:
+                    continue
+                val = row[cell]
+                if isinstance(val, dict) and "estat" in val:
+                    continue
+                if isinstance(val, dict) and cell == "n30" and ("registre" in val or "value" in val):
+                    v = val.get("value")
+                    registre = val.get("registre")
+                    if v is None and isinstance(registre, str) and registre.strip().upper().startswith("R"):
+                        v = "R"
+                    wrapped = _flat_to_cell(v, "candidats", block)
+                    if registre is not None:
+                        wrapped["registre"] = registre if isinstance(registre, dict) and "estat" in registre else \
+                            _flat_to_cell(registre, "segur", block)
+                    row[cell] = wrapped
+                    continue
+                estat = "candidats" if (block, cell) in _NEVER_SEGUR_CELLS else base
+                row[cell] = _flat_to_cell(val, estat, block)
+                if cell == "nivell_freatic" and "matis" in row and "matis" not in row[cell]:
+                    row[cell]["matis"] = row.get("matis")
+    return out
+
+
+def _flat_to_cell(val: Any, estat: str, block: str) -> dict:
+    if val is None or (isinstance(val, str) and not val.strip()):
+        return {"estat": "no_trobat", "value": None, "sources_checked": ["(adaptat: cel·la plana buida)"]}
+    if isinstance(val, list) and val and all(isinstance(x, dict) and "value" in x for x in val):
+        cands = [{"value": x.get("value"), "font": x.get("font", "(adaptat)"), "quote": x.get("quote", "")} for x in val[:3]]
+        return {"estat": "candidats", "value": cands[0]["value"], "candidates": cands, "rule": "(adaptat: llista de candidats plana)"}
+    if isinstance(val, list):
+        val = val[0] if len(val) == 1 else val
+    if estat == "no_trobat":
+        estat = "candidats"
+    return {"estat": estat, "value": val,
+            "candidates": [{"value": val, "font": "(adaptat)", "quote": val if isinstance(val, str) else ""}],
+            "rule": "(adaptat: cel·la plana embolcallada de forma determinista, Fase 12)"}
+
+
 def soft_normalize(d: dict) -> dict:
-    """Reparacions (a)+(b) i despres (c) alies de claus de fila (skill v1.3). Copia, no mutacio."""
-    return canonicalize_row_keys(_soft_normalize_ab(d))
+    """Reparacions (a)+(b), (c) alies de claus de fila (skill v1.3) i (d) cel·les planes (Fase 12). Copia, no mutacio."""
+    return wrap_flat_cells(canonicalize_row_keys(_soft_normalize_ab(d)))

@@ -6,6 +6,7 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
+Versió 1.5 (2026-08-25, Fase 12) — consolidació Python-first: en producció el runner consolida SEMPRE amb Python (`automation/lectura/consolidate.py`: cada `tier_a` esdevé candidat, `_g3_templates.json` = autoritat A, guards del contracte, sistema de cotes, cap candidat inventat) i NOMÉS crida aquest skill amb `--consolida --only-fields a,b` per als camps en conflicte real (dues fonts A que discrepen). Mode nou al Pas 5b. Vocabulari: `nivell_freatic` absent → `No detectat` (Pas 3b).
 Versió 1.3 (2026-08-24) — claus CANÒNIQUES de les files de `tables` (E2E Castellar: el productor va escriure `prof_extraccio`, `punt`/`cota_inici` al sondeig… i l'or `profunditat`, `sondeig`/`cota`; la UI i el generador necessiten un sol nom). Llista al Pas 5.
 v1.4: pre-extracció determinista (2026-08-25): en mode --only el runner deixa text/PNG per pàgina, cel·les i colors d'Excel, cos de correu a validation/lectura/_preext/ (inventari clau preext); el skill llegeix aquests fitxers, fa zoom amb scripts/render_clip.py i escriu amb scripts/write_doc_json.py. Sense pre-extracció (preext absent/error) → procediment v1.3.
 v1.2: nom canònic del JSON per document en mode `--only` (coincideix amb `safe_doc_name` del runner, que és qui el llegeix): path RELATIU sencer, sense extensió, tota seqüència no alfanumèrica → `_`, sense `_` inicial/final, minúscules. Ex.: `25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf` → `25_0647_pressupost_geotec_bell_lloc.json`.
@@ -21,7 +22,7 @@ v0.2: Pas 0 (context del document abans de llegir-lo; reflexió del Josep) + blo
 
 ## Arguments
 
-`$ARGUMENTS` = path de la carpeta del projecte (requerit) `[--out DIR]` `[--only FITXER]` `[--inventory FILE]` `[--consolida]`
+`$ARGUMENTS` = path de la carpeta del projecte (requerit) `[--out DIR]` `[--only FITXER]` `[--inventory FILE]` `[--consolida]` `[--only-fields a,b,…]`
 
 - `--out DIR`: on escriure els JSON (defecte: `{projecte}/validation/lectura/`; en dry-run: `docs/golden-read/{expedient}/`).
 - `--only FITXER`: llegeix només aquest document i escriu el seu JSON (una crida per document = forma headless de producció).
@@ -37,6 +38,8 @@ v0.2: Pas 0 (context del document abans de llegir-lo; reflexió del Josep) + blo
 4. Si `kind == "unsupported"` (DWG…), aplica el Pas 1.3 (dwg_text_dump) o marca `no llegible`.
 - `--consolida`: NO llegeixis cap document del projecte. Llegeix els JSON per-document ja escrits a `--out` i aplica el
   Pas 5 per escriure `_decisions.json`. Vegeu el Pas 5b.
+- `--consolida --only-fields a,b,…` (v1.5, la forma de PRODUCCIÓ): el runner ja ha escrit `_decisions.json` amb Python; tu
+  decideixes NOMÉS les cel·les llistades i escrius `_consolida_only.json`. Vegeu el Pas 5b, mode `--only-fields`.
 
 Exemples:
 ```
@@ -253,7 +256,9 @@ Derivades de comparar les taules dels 7 informes signats amb els documents de le
   `formatting_info=True`). Compte: la llegenda "Nivell 1|2" de les files 79-80 pot ser NOMÉS plantilla (Tulipa: idèntica als
   4 fulls, cap marca real) — una llegenda no és una transició. "No detectat" NOMÉS si la columna és buida (text I color) a
   tots els fulls — i anota a `reading_notes` que has comprovat els colors (`formatting_info=True`), perquè el
-  consolidador cec ho pugui verificar. **"Humitat" ≠ aigua franca però SÍ que va a la taula**: l'Eva titula la columna "Humitat (m)" i hi escriu
+  consolidador cec ho pugui verificar. **Vocabulari (v1.5): l'absència s'escriu sempre `No detectat`** (mai `No indicat`,
+  `no consta`, `cap marca`, `null` sense nota): és el que l'Eva escriu a la taula i el que el comparador d'or espera; el
+  consolidador Python ho canonicalitza igualment, però el valor literal ha de ser aquest. **"Humitat" ≠ aigua franca però SÍ que va a la taula**: l'Eva titula la columna "Humitat (m)" i hi escriu
   la fondària (-1,00 a Alcoletge, d'humitat, no de nivell freàtic) — llegeix el valor i emet el matís (humitat|aigua).
 
 **Taula "Sondeig a rotació" — una fila per S-x (`sondeig_tests[]`):** cota, profunditat assolida (annex sondeig), `spt_ma`
@@ -421,6 +426,35 @@ amb `--consolida`. En aquest mode:
 5. Escriu `_decisions.json` (schema v1 del Pas 5) de forma atòmica a `--out`.
 
 És la crida barata del pipeline: cap lectura de documents, només JSONs.
+
+### Mode `--only-fields` (v1.5, Fase 12 — l'única forma de `--consolida` que el runner crida en producció)
+
+El runner ha consolidat amb Python (`automation/lectura/consolidate.py`) i ha escrit `_decisions.json` (schema v1). Hi ha
+trobat **conflictes reals** — cel·les on dues fonts d'autoritat A de documents diferents discrepen — i te les passa amb
+`--only-fields`, separades per comes, com a paths: `fields.<clau>` (una de les 22 claus planes) o
+`tables.<bloc>[<id de fila>].<cel·la>` (p. ex. `tables.sondeig_tests[S-1].cota`, `tables.dpsh_tests[P-2].nivell_freatic`).
+
+1. **NO obris cap document del projecte.** Llegeix `_decisions.json` (la cel·la Python porta `candidates`, `altres` amb TOTS
+   els senyals, `conflicts` amb els clusters en conflicte i `rule`), els `{doc}.json` implicats (per `context`, `note` i
+   `reading_notes`), `_g3_templates.json` i `_inventory.json`.
+2. Per a CADA path demanat, i només per a aquests, aplica les regles del Pas 0/3/3b/5 (independència de fonts, versions
+   `modDate`, sol·licitant ≠ promotor, sistema de cotes, instrucció del client posterior…) i decideix la cel·la en dialecte
+   v1: `{estat, value, candidates[≤3] (value, font, quote), rule, note}`. **Mai un valor que no sigui a cap candidat/altres
+   de la cel·la Python ni a cap `{doc}.json`** (cap candidat inventat: el cas `-4,20 m` derivat sense font és l'error que
+   aquesta fase elimina). Si no pots resoldre el conflicte amb els documents, deixa `candidats` amb l'ordre que creguis i
+   explica-ho a `note` — el runner conserva la versió Python si la teva no passa el contracte.
+3. Escriu de forma atòmica `_consolida_only.json` a `--out` amb NOMÉS les cel·les demanades:
+   ```json
+   {"schema_version": 1, "fields": {"<clau>": {…cel·la v1…}},
+    "tables": {"<bloc>": {"rows": [{"<id de fila>": "S-1", "<cel·la>": {…cel·la v1…}}]}},
+    "notes": ["…"]}
+   ```
+   (per a `tables`, la fila porta només l'identificador — `punt`/`sondeig`/`id`+`punt`/`nom` — i la cel·la decidida).
+   No reescriguis `_decisions.json`: el runner fusiona les cel·les vàlides (`merge_only_fields`) i manté les guards
+   (`n30`/`litologia`/`cte` mai `segur`).
+
+Cost objectiu: < 3 min. Sense `--only-fields` (mode `--consolida` sencer) només s'usa amb `G3DT_LECTURA_CONSOLIDA=llm`
+(mesures, pla B).
 
 ## Pas 6 (només dry-run) — Comparació amb l'informe de l'Eva
 

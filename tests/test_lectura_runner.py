@@ -134,9 +134,34 @@ def _after(flag):
 only = _after("--only")
 out_dir = _after("--out")
 consolida = "--consolida" in tokens
+only_fields = _after("--only-fields")
 project_path = tokens[1] if len(tokens) > 1 else None
+EXPEDIENT_BY_DOC = dict(
+    kv.split("=", 1) for kv in os.environ.get("MOCK_CLAUDE_EXPEDIENT_BY_DOC", "").split(";") if "=" in kv
+)
 
 is_consolida_like = consolida or (only is None)
+
+if consolida and only_fields:
+    # Fase 12: `--consolida --only-fields a,b` → escriu NOMES les cel·les demanades a _consolida_only.json
+    _log_spawn("only_fields", only_fields)
+    if MODE == "only_fields_invalid":
+        pathlib.Path(out_dir, "_consolida_only.json").write_text("{broken", encoding="utf-8")
+        sys.exit(0)
+    fields = {}
+    for path in only_fields.split(","):
+        if path.startswith("fields."):
+            key = path[len("fields."):]
+            fields[key] = {"estat": "candidats", "value": "EXP-LLM",
+                           "candidates": [{"value": "EXP-LLM", "font": "mock only-fields", "quote": "EXP-LLM"},
+                                          {"value": "EXP1", "font": "mock", "quote": "EXP1"}],
+                           "rule": "mock only-fields"}
+    payload = {"schema_version": 1, "fields": fields, "tables": {}}
+    tmp = pathlib.Path(out_dir, "_consolida_only.json.tmp")
+    tmp.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    os.replace(tmp, pathlib.Path(out_dir, "_consolida_only.json"))
+    _emit_happy_stdout()
+    sys.exit(0)
 
 if is_consolida_like:
     _log_spawn("consolida" if consolida else "projecte")
@@ -194,7 +219,8 @@ doc_json = {
     "source_path": only, "source_md5": md5, "skill_version": "mock", "schema_version": 1,
     "document_type": "altre",
     "tier_a": [
-        {"concept_id": "expedient", "value": "EXP1", "location": "mock", "quote": "EXP1", "confidence": 0.95}
+        {"concept_id": "expedient", "value": EXPEDIENT_BY_DOC.get(only, "EXP1"), "location": "mock",
+         "quote": EXPEDIENT_BY_DOC.get(only, "EXP1"), "confidence": 0.95}
     ],
 }
 tmp = pathlib.Path(out_dir, safe + ".json.tmp")
@@ -229,8 +255,13 @@ def base_env(monkeypatch, tmp_path: Path, mock_claude: Path) -> Path:
     monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA_TIMEOUT", "5")
     monkeypatch.setenv("G3DT_LECTURA_CONCURRENCY", "2")
     monkeypatch.setenv("G3DT_LECTURA_MODE", "document")
+    # Fase 12: el defecte del runner es `auto` (Python-first); aquests tests historics proven la via
+    # LLM sencera (`--consolida`), que continua existint com a mode `llm`. Els tests de la Fase 12
+    # (mes avall) reassignen `G3DT_LECTURA_CONSOLIDA` a `auto`/`python`.
+    monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "llm")
     monkeypatch.setenv("MOCK_CLAUDE_MODE", "happy")
     monkeypatch.delenv("MOCK_CLAUDE_ONLY_TARGETS", raising=False)
+    monkeypatch.delenv("MOCK_CLAUDE_EXPEDIENT_BY_DOC", raising=False)
     spawn_log = tmp_path / "spawns.log"
     monkeypatch.setenv("MOCK_CLAUDE_SPAWNLOG", str(spawn_log))
     return spawn_log
@@ -725,3 +756,133 @@ def test_preext_skill_env_overrides_default_name(synth_project, base_env, monkey
     tel_lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
     for entry in tel_lines:
         assert entry["skill"] == "xyz"
+
+
+# ---------------------------------------------------------------------------
+# Fase 12 — consolidacio Python-first (`G3DT_LECTURA_CONSOLIDA=auto|python|llm`)
+# ---------------------------------------------------------------------------
+
+
+def _decisions_on_disk(out_dir: Path) -> dict:
+    return json.loads((out_dir / "_decisions.json").read_text(encoding="utf-8"))
+
+
+def test_auto_without_conflicts_makes_zero_consolida_calls_and_writes_decisions(synth_project, base_env, monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "auto")
+    out_dir = synth_project / "validation" / "lectura"
+    events, on_event = _events_collector()
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir, on_event=on_event)
+
+    assert result.degraded is False
+    assert validate_decisions(result.decisions) == []
+    kinds = _spawn_kinds(base_env)
+    assert kinds.count("only") == 2 and "consolida" not in kinds and "only_fields" not in kinds
+    # el runner escriu _decisions.json (abans el feia el skill)
+    on_disk = _decisions_on_disk(out_dir)
+    assert on_disk["fields"]["expedient"]["estat"] == "segur"
+    assert on_disk["fields"]["expedient"]["value"] == "EXP1"
+    assert on_disk["consolidation"]["consolidator"].startswith("python")
+    assert on_disk["conflicts"] == []
+    # telemetria: mode consolida_python, cap consolida LLM
+    lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert {l["mode"] for l in lines} == {"only", "consolida_python"}
+    names = [n for n, _ in events]
+    assert "consolidacio_inici" in names and "decisions" in names
+    payload = next(p for n, p in events if n == "decisions")
+    assert payload["consolidator"] == "python" and payload["n_conflicts"] == 0
+
+
+def test_auto_with_synthetic_conflict_calls_only_fields_and_merges(synth_project, base_env, monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "auto")
+    monkeypatch.setenv("MOCK_CLAUDE_EXPEDIENT_BY_DOC", "annex_a.pdf=EXP1;annex_b.pdf=EXP2")
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+
+    assert result.degraded is False
+    assert validate_decisions(result.decisions) == []
+    lines = _spawn_lines(base_env)
+    only_fields = [l for l in lines if l.startswith("only_fields\t")]
+    assert len(only_fields) == 1
+    assert only_fields[0].split("\t", 1)[1] == "fields.expedient"
+    assert "consolida" not in _spawn_kinds(base_env)
+    cell = result.decisions["fields"]["expedient"]
+    assert cell.get("llm_only_fields") is True
+    assert cell["value"] == "EXP-LLM"
+    assert result.decisions["consolidation"]["llm_only_fields"]["applied"] == ["fields.expedient"]
+    assert _decisions_on_disk(out_dir)["fields"]["expedient"]["value"] == "EXP-LLM"
+
+
+def test_python_mode_with_conflict_never_calls_llm_and_keeps_candidats(synth_project, base_env, monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "python")
+    monkeypatch.setenv("MOCK_CLAUDE_EXPEDIENT_BY_DOC", "annex_a.pdf=EXP1;annex_b.pdf=EXP2")
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+
+    assert "only_fields" not in _spawn_kinds(base_env) and "consolida" not in _spawn_kinds(base_env)
+    cell = result.decisions["fields"]["expedient"]
+    assert cell["estat"] == "candidats"
+    assert {c["value"] for c in cell["candidates"]} == {"EXP1", "EXP2"}
+    assert result.decisions["conflicts"][0]["path"] == "fields.expedient"
+
+
+def test_auto_only_fields_invalid_response_keeps_python_decisions(synth_project, base_env, monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "auto")
+    monkeypatch.setenv("MOCK_CLAUDE_MODE", "only_fields_invalid")
+    monkeypatch.setenv("MOCK_CLAUDE_EXPEDIENT_BY_DOC", "annex_a.pdf=EXP1;annex_b.pdf=EXP2")
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+
+    assert result.degraded is False
+    assert validate_decisions(result.decisions) == []
+    assert "only_fields" in _spawn_kinds(base_env)
+    cell = result.decisions["fields"]["expedient"]
+    assert cell["estat"] == "candidats" and "llm_only_fields" not in cell
+    assert result.decisions["consolidation"]["llm_only_fields"]["applied"] == []
+    assert result.decisions["consolidation"]["llm_only_fields"]["json_valid"] is False
+
+
+def test_llm_mode_keeps_full_consolida_call(synth_project, base_env, monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "llm")
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+
+    assert _spawn_kinds(base_env).count("consolida") == 1
+    assert result.decisions["skill_version"] == "mock"  # el _decisions.json del mock, no el de Python
+
+
+def test_llm_mode_degraded_writes_decisions_file_with_python_consolidation(synth_project, base_env, monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "llm")
+    monkeypatch.setenv("MOCK_CLAUDE_MODE", "decisions_invalid")
+    out_dir = synth_project / "validation" / "lectura"
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+
+    assert result.degraded is True
+    on_disk = _decisions_on_disk(out_dir)
+    assert validate_decisions(on_disk) == []
+    assert on_disk["fields"]["expedient"]["value"] == "EXP1"
+    assert any("degradat" in n for n in on_disk["notes_estructurals"])
+
+
+def test_auto_second_run_uses_cached_decisions(synth_project, base_env, monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "auto")
+    out_dir = synth_project / "validation" / "lectura"
+    lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    n_first = len(_spawn_lines(base_env))
+    events, on_event = _events_collector()
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir, on_event=on_event)
+
+    assert len(_spawn_lines(base_env)) == n_first
+    assert next(p for n, p in events if n == "decisions")["cached"] is True
+    assert result.decisions["fields"]["expedient"]["value"] == "EXP1"
+
+
+def test_invalid_consolida_mode_falls_back_to_auto(monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "whatever")
+    assert lectura_runner._load_config()["consolida"] == "auto"
