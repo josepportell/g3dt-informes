@@ -213,3 +213,38 @@ del settings del Josep); el runner ara fixa `--effort` (`G3DT_LECTURA_EFFORT`, d
 següents: Fable@xhigh sobre v2 (decisió Josep: si comparable → Sonnet), després Sonnet@high i @medium.
 
 *Fi addendum 2026-08-25 vespre. Pre-extracció v2: 26 min, −37 %/doc, 0 erroni-amb-confiança, regressió resolta; effort heretat descobert.*
+
+## Addendum 2026-08-25 (nit) — Tres models sobre el mateix pipeline (pre-extracció v2, conc. 3, effort fixat): Fable 20,5 min, Opus 4.8 23,6, Sonnet 26,2; 0 erroni-amb-confiança als tres
+
+Files `2026-08-25-preext-v2-c3` (Sonnet 5 @xhigh; qualitat sobre `consolida2/`), `2026-08-25-fable-preext-v2-c3` (Fable 5 @xhigh) i
+`2026-08-25-opus48-high-preext-v2-c3` (Opus 4.8 @high = condició d'una subscripció Anthropic econòmica; `--model opus` resol a Opus 5, cal `claude-opus-4-8`).
+
+| | Sonnet 5 @xhigh | **Fable 5 @xhigh** | Opus 4.8 @high |
+|---|--:|--:|--:|
+| **paret real** | 26,2 min | **20,5 min** | 23,6 min |
+| mediana/doc · turns/doc | 184 s · 14,8 | **152 s · 10,1** | 171 s · 10,7 |
+| tokens sortida docs · tok/s | 212k · 79 | **164k** · 74 | 186k · 71 |
+| consolidació | 589-614 s · 31-37 t | **449 s · 20 t** | 480 s · 22 t |
+| erroni-amb-confiança de fons | 0 | **0** | 0 |
+| taules OK / ERR (format) / ALERTA | 15 / 5 / 2 | **23 / 0 / 0** | 22 / 1 / 1 |
+| escalars OK / CAUTELA (bo dins) / ERR (format) | 14 / 5 / 1 | 14 / 5 / 1 | 13 / 4 / 1 |
+| senyals emesos perduts pel consolidador | 1 (1a consolidació: `num_floors`, dialecte pla) | 0 | 2 (`num_floors`, `cte_edificacio`) + 1 candidat derivat sense font (`sondeig cota -4,20`) |
+| cost equiv. docs (pes sobre el pla) | 10,7 $ | 39,7 $ | 22,1 $ |
+
+**Lectura per tipus de document.** Fable no és més ràpid per token (−7 % vs Sonnet): guanya perquè fa un terç menys de turns i llegeix la
+meitat de tokens d'entrada; per això domina els documents que demanen molts passos (fil `Re_` 11→6 turns, `ACCEPTACIO` 7 p 16→11,
+`PENETROS` 5 p 25→18) i perd en els d'un sol cop d'ull (`tall.pdf` 167→228 s, correu pressupost, `DPSH.xls`). Opus 4.8 fa pocs turns
+com Fable però genera més tokens i és el més lent per token → suma ≈ Sonnet; és el més ràpid a l'Excel DPSH (178 s) i als correus (`Re_`
+116 s) i el més lent als annexos gràfics d'una pàgina (`tall.pdf` 340 s amb 24k tokens; `sondeig.pdf` 318; `tall de correlació` 268),
+on raona molt sobre la secció geològica. La modalitat (visió/text) no és el factor; ho és el nombre de passos que el document demana.
+
+**El consolidador és el punt feble comú.** 8 consolidacions en 2 dies: 1 en dialecte pla (Sonnet), 2 amb senyals emesos perduts (Sonnet ×1,
+Opus ×2), 1 candidat derivat sense font (Opus). Cap model n'és immune; Fable ha estat el més net (n=1). → Fase 12 (Python-first: cap
+`tier_a` emès es perd; guards de confiança; embolcall de cel·les planes; candidats derivats només amb font real).
+
+**Veredicte (proposta, decisió del Josep):** amb el criteri fixat ("si comparable → Sonnet; si més eficaç, fiable i ràpid → Fable"), Fable
+ho és: −22 % de paret, taules netes, 0 pèrdues. Contrapès: ×3,7 de pes sobre els límits del pla (sostre desconegut). Opus 4.8 @high és
+viable com a pla econòmic (0 erroni de fons) **si** la Fase 12 tanca les pèrdues del consolidador. Totes les files són n=1: la variància del
+consolidador entre runs (13-14 OK d'escalars) és de la mida de les diferències entre models; el que és robust és la paret i la neteja de taules.
+
+*Fi addendum 2026-08-25 nit. Fable 20,5 min i taules 23/0; Opus 4.8 23,6 min viable amb Fase 12; Sonnet 26,2. Effort ara fixat; consolidador = punt feble comú.*

@@ -1132,3 +1132,47 @@ Run: 55,7 min de suma `claude` + 539 s de consolidació = 28 min de paret a conc
 v2 de la pre-extracció → si adoptada, `G3DT_LECTURA_PREEXT` per defecte + skill de producció; Fase 11 (delta-sync); Fase 12 (guards + Python-first).
 
 *Fi entrada 2026-08-25. Pre-extracció v1 −24 %/doc i 28 min de paret però 5 cel·les perdudes pel color d'Excel → v2; Fase 10 feta.*
+
+## 2026-08-25 (vespre) — Pre-extracció v2 adoptable, effort heretat descobert i fixat, tres models mesurats (Fable / Opus 4.8 / Sonnet)
+
+### Context
+Continuació de l'entrada del matí. El Josep demana la v2 de la pre-extracció, pregunta per Fable i per l'effort, i vol Opus 4.8 @high perquè
+és el que donen les subscripcions Anthropic econòmiques (decideix el pla de l'Eva). Set runs al llibre en 2 dies.
+
+### Decisions arquitectòniques clau
+- **El runner fixa `--effort`** (`G3DT_LECTURA_EFFORT`, defecte `xhigh`) i treu `CLAUDE_EFFORT` de l'entorn del fill. **Why:** els 5 runs previs
+  corrien a xhigh heretat de `CLAUDE_EFFORT`/`effortLevel` del Josep; a l'Eva correria al defecte del CLI (desconegut). Sense fixar-lo, cap mesura
+  és reproduïble ni transferible. Defecte xhigh perquè el llibre segueixi comparable; nivells inferiors = files noves amb comparador d'or.
+- **Pre-extracció v2** (colors d'Excel, meitats només per `text_ok=false`, `text_ok` per ràtio ≥ 0,75; producer Distiller només informatiu perquè
+  el mateix producer dona text net i brossa). **Why:** la v1 perdia 5 cel·les de nivell freàtic (Pas 3b exigeix el color) i feia llegir totes les
+  meitats. Resultat: regressió resolta, −37 %/doc, 26,2 min. Proposada com a adoptable; flipar el defecte és decisió del Josep.
+- **Comparar models a effort igual i sobre el mateix pipeline** (v2, conc. 3). Fable i Sonnet a xhigh; Opus 4.8 a high perquè és la condició real
+  de la subscripció econòmica (dos canvis alhora, volgut i documentat al `meta.json`).
+- **La consolidació LLM és el punt feble comú** (8 consolidacions: 1 dialecte pla, 2 amb senyals emesos perduts, 1 candidat derivat sense font).
+  Reafirma la Fase 12 Python-first: cap `tier_a` emès es pot perdre; embolcall determinista de cel·les planes; guard 1 font → candidats;
+  candidats derivats només amb font documental.
+
+### Validació empírica (Castellar sol, 13 docs, conc. 3)
+| model | paret | mediana/doc | turns | erroni fons | taules OK/ERR | pèrdues consolidador |
+|---|--:|--:|--:|--:|--:|--:|
+| Sonnet 5 @xhigh (v2) | 26,2 min | 184 s | 14,8 | 0 | 15/5 format | 1 (1a consolidació) |
+| Fable 5 @xhigh (v2) | **20,5 min** | 152 s | 10,1 | 0 | **23/0** | 0 |
+| Opus 4.8 @high (v2) | 23,6 min | 171 s | 10,7 | 0 | 22/1 format | 2 + 1 candidat derivat |
+Detall i lectura per tipus de document: `fase8-e2e/_RESULTATS.md` addendum nit; `mesures/LEDGER.md` (7 runs).
+
+### Tests
+Suite de lectura **131 passed / 2 skipped** (+4 effort, +4 v2). Completa: 32 failed (línia base, cap a les àrees tocades).
+
+### Limitacions conegudes
+n=1 per model; la variància del consolidador entre runs és de la mida de les diferències entre models als escalars. Sostre de la subscripció
+desconegut (Fable ×3,7 de pes). 72 MB de `_preext/` per projecte sense política de neteja. `text_ok` heurístic.
+
+### GO/NO-GO
+- ✅ Pre-extracció v2: adoptable (0 erroni de fons, regressió v1 resolta, −21 % paret). ⏳ Flip del defecte: Josep.
+- ✅ Effort fixat al runner. ✅ 3 files de models al llibre.
+- ⏳ Elecció de model/pla: Josep (criteri: comparable → Sonnet; més eficaç/fiable/ràpid → Fable; Opus 4.8 viable amb Fase 12).
+
+### Següents passos
+Fase 12 (Python-first + guards) abans que Fase 11: és el que tanca les pèrdues del consolidador a qualsevol model. Després: flip v2, Fase 11, 13-15.
+
+*Fi entrada 2026-08-25 vespre. v2 adoptable (26 min), effort fixat, Fable 20,5 min / Opus 4.8 23,6 / Sonnet 26,2 amb 0 erroni de fons als tres; consolidador = punt feble comú.*

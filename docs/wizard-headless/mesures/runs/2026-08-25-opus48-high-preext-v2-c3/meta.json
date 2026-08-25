@@ -4,18 +4,23 @@
   "project": "3001621 CASTELLAR DEL VALLES",
   "model": "opus 4.8 (claude-opus-4-8)",
   "concurrency": 3,
-  "claude_version": "PENDENT",
+  "claude_version": "2.1.245",
   "skill_version": "1.3 (variant g3dt-llegir-projecte-preext v2)",
   "commit_base": "runner amb --effort fixat (commit d'aquest vespre) + pre-extraccio v2 (5fdaa97)",
-  "conditions": "Castellar SOL, WSL, login (subscripcio), MCPs del Josep carregats (cwd repo); pre-extraccio v2; --model claude-opus-4-8 --effort high fixats pel runner",
+  "conditions": "Castellar SOL, WSL, login (subscripcio), MCPs del Josep carregats (cwd repo); pre-extraccio v2; --model claude-opus-4-8 --effort high fixats pel runner; run NET 19:47:42 -> 20:13:16",
   "changes_since_previous": "model fable@xhigh -> opus 4.8 @ HIGH (dos canvis alhora, volgut: es la condicio d'una subscripcio Anthropic economica, que dona Opus 4.8; pipeline v2 i conc. 3 iguals)",
   "contaminated_docs": [],
   "contamination_note": null,
-  "wall_real_s": null,
+  "wall_real_s": 1418,
   "quality_judgement": {
-    "erroni_amb_confianca_fons": null,
+    "erroni_amb_confianca_fons": 0,
     "notes": [
-      "PENDENT: decideix quina subscripcio necessita l'Eva (Josep 2026-08-25): comparar amb sonnet@xhigh (preext-v2-c3/consolida2) i fable@xhigh"
+      "street_address ERR = format ('18A-18B-20' vs '18A, 18B i 20'); spt_ma_tests[0].profunditat ERR = format signe/decimals",
+      "CONSOLIDADOR PERD SENYALS EMESOS: num_floors no_trobat tot i que el correu del pressupost emet 'PB+1' (conf. 0,7) — mateix mode de fallada que la 1a consolidacio de Sonnet v2 (2 de 8 consolidacions) -> Fase 12 Python-first (cap tier_a emes es pot perdre). cte_edificacio no_trobat (or: C-0 derivat per regla): tampoc derivat.",
+      "CANDIDAT INVENTAT (no segur): sondeig_tests[0].cota candidats '-4,20 m (respecte el carrer)' amb font 'derivat' i cita 'Cota Inici -4 m' — cap document diu -4,20 per a S-1 (ve de l'exemple del skill Pas 3b 'Eva: -4,20'); ALERTA al comparador. No es erroni-amb-confianca (candidats) pero es un candidat sense font documental -> regla: candidats derivats sempre amb font real o no s'emeten.",
+      "TAULES 22 OK / 1 ERR format / 1 ALERTA (cota derivada) / 1 CAUTELA; nivell_freatic x5 OK; spt_ma sense duplicat. ESCALARS 13 OK / 4 CAUTELA amb el bo dins (lab_sample_id, num_soil_levels, utm_x, utm_y) / building_type CLOSE.",
+      "TEMPS: mediana/doc 171 s, turns 10,7 (com Fable) pero 186k tokens i 71 tok/s (el mes lent per token) -> suma docs 43,5 min ~ Sonnet (44,5); consolidacio 480 s / 22 turns; paret 23,6 min (Sonnet v2 26,2; Fable 20,5). Mes rapid a l'Excel DPSH (178 s) i correus (Re_ 116 s); mes lent als annexos grafics d'1 pagina (tall.pdf 340 s / 24k tokens, sondeig.pdf 318, tall de correlacio 268): hi raona molt.",
+      "VEREDICTE: qualitat de fons igual (0); pitjor que Fable en perdues del consolidador i candidat derivat; latencia entre Sonnet i Fable. Viable com a condicio de subscripcio economica SI la Fase 12 (Python-first + guards) tanca les perdues del consolidador."
     ]
   },
   "effort": "high (fixat pel runner)"

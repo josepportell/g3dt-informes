@@ -1,0 +1,109 @@
+{
+ "source_path": "ANNEXES/3001621_DPSH.xls",
+ "source_md5": "0389af31b3b165e13338709a568cf130",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Excel de plantilla G3 amb la transcripció dels penetròmetres dinàmics DPSH (colpeig N20 per fondària i fondària de rebuig), un full per punt: P-1, P-2, P-3, P-4.",
+ "issuer": "G3 (Eva) — transcripció digital dels valors de camp",
+ "date": null,
+ "pages_or_sheets": "4 fulls: P-1, P-2, P-3, P-4",
+ "context": {
+  "who_made_it": "Eva (G3) transcriu a l'Excel de plantilla G3 els colpeigs DPSH mesurats al camp pel sondista (TPS).",
+  "for_whom": "Ús intern de G3; alimenta la taula 'Penetròmetres dinàmics DPSH' de l'informe.",
+  "why": "Registrar el colpeig N20 cada 20 cm i la fondària de rebuig de cada punt DPSH.",
+  "expected_fields": [
+   "num_dpsh_tests",
+   "profunditat_assolida (peu 'Rebuig a')",
+   "nivell_freatic (columna N.F.)",
+   "colpeig N20 / NB per fondària"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "field_date",
+   "cota_referencia",
+   "expedient",
+   "cota_inici (no hi és; ve de PDF/ANNEXES/3001621_DPSH.pdf)"
+  ],
+  "relation_to_others": "Versió digital revisada per l'Eva del full de camp manuscrit (PENETROS + SONDEIG.pdf); mana per als valors N20 i la fondària de rebuig. PDF/ANNEXES/3001621_DPSH.pdf es genera des d'aquest Excel i afegeix la capçalera 'Cota inici'.",
+  "authority_for": [
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "Fulls P-1, P-2, P-3, P-4 (columna C 'Colpeig DPSH' amb dades executades a cada full)",
+   "quote": "P-1 / P-2 / P-3 / P-4",
+   "confidence": 0.95,
+   "note": "4 penetròmetres executats (colpeig registrat a la columna C dels 4 fulls). L'Excel DPSH (executats) mana sobre els previstos del pressupost."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": "no detectat",
+    "location": "Full P-1!B80 (peu); colpeig C17-C23 (0/0/6/10/13/38/100)",
+    "quote": "Rebuig  a -1,08 m",
+    "note": "Rebuig (últim colpeig C23=100 a -1,2 m). cota_inici no consta a l'Excel."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": "no detectat",
+    "location": "Full P-2!B80 (peu); colpeig C17-C20 (0/0/15/100)",
+    "quote": "Rebuig  a -0,48 m",
+    "note": "Rebuig (últim colpeig C20=100 a -0,6 m). cota_inici no consta a l'Excel."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": "no detectat",
+    "location": "Full P-3!B80 (peu); colpeig C17-C21 (0/0/16/46/100)",
+    "quote": "Rebuig  a -0,76 m",
+    "note": "Rebuig (últim colpeig C21=100 a -0,8 m). cota_inici no consta a l'Excel."
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": "no detectat",
+    "location": "Full P-4!B80 (peu); colpeig C17-C25 (0/0/8/8/12/27/21/28/100)",
+    "quote": "Rebuig  a -1,55 m",
+    "note": "Rebuig (últim colpeig C25=100 a -1,6 m). cota_inici no consta a l'Excel."
+   }
+  ],
+  "__nota": "Files de la taula 'Penetròmetres dinàmics DPSH'. cota_inici deliberadament null: no és a l'Excel (ve de la capçalera de PDF/ANNEXES/3001621_DPSH.pdf; el sistema de cotes de Castellar és relatiu 'respecte el carrer'). soil_levels NO s'emet des d'aquest document: la llegenda només etiqueta 'Nivell 1' i les bandes de color de la columna G (Nivells) varien per punt (1-2 bandes) — no és autoritat de num_soil_levels (ho són l'annex de sondeig i el tall)."
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab",
+  "cte"
+ ],
+ "reading_notes": "Llegit via pre-extracció (sheet-i.cells.txt + sheet-i.colors.txt), sense obrir l'Excel. num_dpsh_tests=4 (fulls P-1..P-4, colpeig a columna C). Fondària de rebuig del peu B80 de cada full: -1,08 / -0,48 / -0,76 / -1,55 m (coincideix amb el patró conegut de Castellar). N.F.: columna F sense text NI color de cel·la als 4 fulls (comprovació de color feta amb colors.txt) -> 'no detectat'. D15=0,83 = coeficient DPSH->NB (Colpeig NB = Colpeig DPSH x 1,2048), no és cota. Columna G 'Nivells' amb bandes de color per punt (P-1 groc 0..-0,6 + vermell -0,8..-1,2; P-2 vermell; P-3 vermell; P-4 groc 0..-0,8 + vermell -1,0..-1,6) i llegenda C79='Nivell 1' idèntica als 4 fulls: evidència feble de nivells, NO transcrita com a soil_levels (autoritat = annex sondeig/tall)."
+}

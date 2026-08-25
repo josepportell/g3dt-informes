@@ -1,0 +1,10 @@
+-- dpsh_tests: or 4 files / prod 4 files
+-- sondeig_tests: or 1 files / prod 1 files
+ALERTA   sondeig_tests[0].cota or segur '570,90 msnm (segons el plànol ICGC)' NO entre candidats ['-4,20 m (respecte el carrer)', '570,90 msnm (absoluta, ICGC)']
+-- spt_ma_tests: or 1 files / prod 1 files
+ERR      spt_ma_tests[0].profunditat segur discrepant: or='-1,00 a -1,20 m' prod='1,0 - 1,2 m'
+CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
+-- soil_levels: or 2 files / prod 2 files
+ABSENT   soil_levels[0].de_a_estat (or=segur)
+ABSENT   soil_levels[1].de_a_estat (or=segur)
+TOTALS: {'OK': 22, 'ALERTA': 1, 'ERR': 1, 'CAUTELA': 1, 'ABSENT': 2}
