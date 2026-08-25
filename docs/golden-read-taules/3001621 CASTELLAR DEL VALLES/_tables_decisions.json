@@ -266,8 +266,13 @@
       {
         "sondeig": "S-1",
         "cota": {
-          "estat": "segur",
+          "estat": "candidats",
           "candidats": [
+            {
+              "valor": "-4 m (respecte el carrer)",
+              "font": "PENETROS + SONDEIG.pdf p.5 full de camp manuscrit del sondeig S-1, 'Decriure cota 0 o cota referència' (sistema relatiu del projecte: cotes DPSH de l'annex -4,0 / -4,2 respecte el carrer)",
+              "quote": "C/Arbrells   -4 m"
+            },
             {
               "valor": "570,90 msnm (segons el plànol ICGC)",
               "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1 casella Cota (Z)",
@@ -279,8 +284,9 @@
               "quote": "423182.0 ; 4609623.0 ; 570.9"
             }
           ],
-          "rule": "v0.7/3b: cota del sondeig = annex sondeig z (mateixes regles que cota_referencia); 2 fonts independents coincideixen",
-          "note": "el full de camp manuscrit dona la mateixa posició en relatiu ('C/Arbrells -4 m'), coherent amb l'annex DPSH"
+          "rule": "v0.9/3b (revisió 2026-08-25): la cota del sondeig A LA TAULA segueix el SISTEMA de cotes del projecte; amb DPSH relatius → relativa primer, absoluta segona, MAI segur l'absoluta (el z absolut és cota_referencia, no la cel·la de la taula)",
+          "note": "el full de camp manuscrit dona la mateixa posició en relatiu ('C/Arbrells -4 m'), coherent amb l'annex DPSH",
+          "revisio": "2026-08-25: era 'segur 570,90 msnm' — és l'ERR de la lectura d'or de taules (_RESULTATS.md, «L'ERR i les regles noves» §1): l'informe signat de l'Eva (_eva_truth/castellar.json, taula sondeig) posa S-1 a -4.20 (relatiu al carrer). El valor -4,20 NO és deduïble de cap document de la carpeta (el manuscrit diu -4 m per a S-1; -4,2 és la cota DPSH de P-2) → l'or queda en candidats amb la relativa documentada (-4 m) primer. Pregunta oberta a l'Eva: d'on surt -4,20 per a S-1."
         },
         "profunditat_assolida": {
           "estat": "segur",

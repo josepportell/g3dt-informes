@@ -58,3 +58,24 @@ VILANOVA: n/a (consistència amb annexos 100 %). TULIPA: n/a (estructura 2 cases
 Criteri de suma de l'N30 des del registre de camp (4 trams de 15 cm): els informes de Rubí/Alcoletge/Anciles usen els 2 trams
 centrals; el de Bell-lloc diu 54 (que no és cap suma estàndard del registre 24/34/28/30) i el seu propi tall diu 58. Quin és
 el criteri, i és 54 un error d'informe?
+
+## Revisions de fixtures (registre explícit; els fixtures NO es reescriuen per fer quadrar el comparador)
+
+### 2026-08-25 — Castellar `sondeig_tests[0].cota`: `segur 570,90 msnm` → `candidats` [relativa `-4 m` | absoluta `570,90`]
+- **Per què:** era exactament l'ERR d'aquesta lectura d'or («L'ERR i les regles noves» §1): l'informe signat de l'Eva
+  (`_eva_truth/castellar.json`, taula sondeig) posa S-1 a **-4.20** (relatiu al carrer), i la regla v0.9/3b del skill diu que la cota
+  del sondeig a la taula segueix el sistema de cotes del projecte (DPSH relatius → relativa primer, absoluta segona, mai segur l'absoluta).
+  El fixture havia quedat amb el veredicte del lector cec (absoluta, 2 fonts) i contradeia la regla que ell mateix havia generat.
+- **Què s'ha posat com a candidat 1:** `-4 m (respecte el carrer)` amb font i cita reals del full de camp manuscrit
+  (`PENETROS + SONDEIG.pdf` p.5, «Decriure cota 0 o cota referència»: `C/Arbrells   -4 m`; ja citat a `golden-read/…/camp_16_penetros_sondeig_manuscrit.json`).
+  **NO** s'hi ha posat `-4,20`: cap document de la carpeta ho diu per a S-1 (−4,2 és la cota DPSH de P-2). Que un lector emeti `-4,20` per a
+  S-1 continua sent una invenció (cas anotat al llibre, run `opus48-high-preext-v2-c3`). **Pregunta oberta a l'Eva:** d'on surt −4,20 per a S-1.
+- Cel·la amb clau `revisio` dins del fixture (grep-able). Efecte al comparador: els runs amb `candidats` [relativa | absoluta] passen d'ALERTA/CAUTELA a OK;
+  un run que posi `segur` l'absoluta surt ALERTA («prod puja a segur»).
+
+### 2026-08-25 — Castellar `soil_levels[*].de_a_estat`: dialecte del fixture, NO revisat (l'absorbeix el comparador)
+El lector cec va escriure `de`/`a` plans i una cel·la `de_a_estat` amb l'estat del parell (només en aquest fixture). El comparador v2
+(`_expand_de_a`) les converteix en cel·les `de` i `a` amb aquell estat; el fixture queda tal com es va llegir.
+Conseqüència: les cel·les `de`/`a` de `soil_levels` ara es comparen (abans sortien 2 ABSENT a tots els runs) i, amb les files alineades
+per clau (capa vegetal / nivell N, no per índex), han aflorat lectures «nivell 1 des de 0,00» (capa vegetal absorbida) que l'índex amagava —
+vegeu `docs/wizard-headless/fase12-consolida/_RESULTATS.md` §7 i `mesures/LEDGER.md`.
