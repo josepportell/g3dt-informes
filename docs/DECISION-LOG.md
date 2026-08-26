@@ -1562,3 +1562,112 @@ Suite: **1456 passed / 32 failed** (els 32 coneguts: SmartScan, ai_pipeline, fil
 Tram 1, peça 3: forat de la capa vegetal a `consolidate.py`. Després 14a (botons + taula d'estat) i 15 (notificacions).
 
 *Fi entrada 2026-08-26 (tarda). Fase 13: TEMPS 1 deixa de repetir-se, el consolidador ja veu l'ICGC i la geocodificació, i el Cadastre queda mesurat i apagat.*
+
+---
+
+## 2026-08-26 (vespre i nit) — Tram 1 tancat: capa vegetal, delta-sync, tres botons i avisos
+
+### Context
+Continuació directa de les dues entrades d'avui (Fase 8b al matí, Fase 13 a la tarda). Aquí hi caben les quatre peces
+que tanquen el tram 1: l'arranjament de la capa vegetal (`cef49ba`), les Fases 14a (`ea82efe`), 15 (`da53e17`), 11
+(`4e4146b`) i 14b (`3a4e382`). Pla: `DISSENY-ANNEX-TRES-BOTONS-JOBS-NOTIFICACIONS-2026-08-24.md` §10.
+
+### Decisions arquitectòniques clau
+
+**1. La capa vegetal recupera fondàries per posició, no per numeració.**
+La fila de la capa vegetal no té fondàries a cap font primària (el `tall.pdf` la dibuixa sense), i les reals només són
+al full de camp, que les numera amb la SEVA numeració — que `level_key()` ignora a posta. Regla nova: si la capa vegetal
+no té fondàries de ningú, l'única fila que li'n pot donar és la que arrenca a la superfície (≤ 5 cm).
+*Per què posicional:* no depèn de la regla del Pas 3b sobre el `de` del nivell 1, que espera la pregunta 3 de l'Eva.
+*Efecte mesurat:* `sonnet-v2-c3` TAULES 26 OK / 1 CAUTELA / **2 ALERTA** → 25 OK / **4 CAUTELA / 0 ALERTA**.
+*Efecte secundari que NO és una regressió:* en desaparèixer la fila espúria, NIVELL 1 passa a ser l'últim nivell i
+s'hi aplica una regla del Pas 3b que ja existia i que `sonnet-c3-v13` ja tenia. Els dos jocs de Castellar coincideixen.
+*Deixat obert amb motiu:* l'ALERTA de Bell-lloc (`de = 0.00 segur`) **no és del consolidador** — cap document d'aquella
+lectura reporta la capa vegetal; l'or la parteix llegint la transició gràfica del log. És un forat de lectura.
+
+**2. El text de la taula d'estat es redacta en Python, no en JavaScript.**
+`automation/lectura/job_text.py`; `GET /api/jobs` hi adjunta una clau `eva` **afegida**, mai substituint el snapshot.
+*Per què:* `review.html` fa 10.000 línies i no té cap test; el projecte en té 1.569 en pytest. Les regles de §3.3 són
+regles (arrodonir, dir «restants», que «Interromput» no soni a error), no decoració.
+*Trade-off acceptat:* una anada i tornada més de dades a l'API a canvi de cobertura real.
+
+**3. L'arrodoniment del disseny es matisa amb el seu propi exemple.**
+§3.3 diu «a 5 min», però l'exemple de §3.3 per al delta de xarxa és «Enllestir ≈ 8 min». Arrodonir 8 a 10 és un 25 % de
+més justament on la xifra importa. Regla: segons mai, minut exacte fins a 10 min, múltiples de 5 a partir d'allà. Els
+dos exemples del disseny surten exactes.
+
+**4. «Preparar» no obre cap SSE.**
+El disseny deia obrir l'stream «només per pintar progrés». *Per què no:* ningú espera, el refresc de 5 s de la taula ja
+ensenya el progrés real, i §6.1 ja diu que la taula és la veritat. Així tancar la pestanya no costa literalment res —
+que és el sentit del botó.
+
+**5. Sonda `GET /api/lectura/enabled` en lloc de llegir un 404.**
+La resta d'endpoints del pipeline fan 404 amb el flag apagat, i està bé per a una API. Però `fetch()` d'un 404 deixa una
+línia vermella a la consola encara que el codi el gestioni, i el criteri de la fase és **0 errors de consola també amb
+el flag apagat**, on la UI d'avui no ha de canviar en res.
+
+**6. El sanejament del log del CLI s'inverteix a llista blanca.**
+§6.4 deia substituir els noms de fitxer per `doc_{i}`. *Per què no n'hi ha prou:* el test amb un projecte sintètic ple
+de noms de persona va ensenyar que el log porta **valors de camps** («client detectat: …»); cap substitució ho pot
+cobrir, perquè el que hi surt és el que el model hagi llegit del document, i la regla del mateix §6.4 és «mai valors de
+camps ni cites». Ara només sobreviuen les línies que contenen vocabulari tècnic conegut, i de la resta se'n diu el
+recompte.
+*Excepció documentada i provada:* el missatge d'`error_event` l'escriu el nostre propi codi Python — se'n controla la
+forma — i passa per la substitució però no per la llista blanca.
+
+**7. El delta-sync compara mida+mtime i només fa md5 quan difereixen.**
+*Per què:* llegir totes les fotografies per SMB per demostrar que no han canviat costa més que la còpia sencera.
+Tolerància d'mtime de 2 s perquè FAT/SMB arrodoneixen i `copy2` hi perd precisió — sense això tot sortiria canviat
+després de cada còpia. *Trade-off acceptat i escrit al disseny:* un fitxer amb la mateixa mida i el mateix mtime que hagi
+canviat de contingut passaria per igual.
+
+**8. El que desapareix de la xarxa es MOU, mai s'esborra; i el que produeix el pipeline no es pot moure.**
+Llista explícita (`file_mapping.json`, `user_data.json`, `*_generated.docx`…). *Per què explícita:* errar aquí seria
+apartar l'informe de l'Eva a `_esborrats/` com si l'haguessin esborrat de la xarxa. I encara que s'erri, es mou.
+
+**9. `network_delta` es calcula en mode `check`, cachejat 1 minut i amb sostre de 5 projectes per crida.**
+Recórrer una carpeta compartida són centenars de `stat` per SMB (§13). Quan es retalla, es diu al log: cap sostre
+silenciós. Si la xarxa no es pot llegir, `network_delta` queda a `None` i la fila **no diu res** sobre la xarxa — millor
+que afirmar «res ha canviat» sense haver mirat.
+
+### Implementació
+- `automation/lectura/consolidate.py`: `_cover_lacks_depths()` + regla de superfície a `_group_soil_levels`.
+- `automation/lectura/job_text.py` (nou), `automation/lectura/notify.py` (nou).
+- `automation/lectura/jobs.py`: `telemetry_medians()` + `estimate_for_documents()` extrets d'`estimate_remaining`.
+- `automation/sync_workspace.py`: `sync_delta()`, `sync_delta_for_leaf()`, `network_path_for_leaf()`. `sync_to_workspace` intacte.
+- `web/lectura_service.py`: clau `eva`, `network_delta` cachejat, `_notify_finished`, `list_jobs(refresh=)`.
+- `web/api.py`: `GET /api/lectura/enabled`, delta-sync al `POST /api/jobs`, `refresh` al `GET /api/jobs`.
+- `templates/validation/review.html`: bloc autocontingut (CSS + `#jobsPanel` + JS). `nbSetState` **embolcallada**, no
+  editada. Únic canvi a codi existent: `openLecturaStream(project, {attach})`.
+- `.env.example`: 9 variables `G3DT_NOTIFY_*`.
+
+### Validació empírica
+- Comparador d'or: `sonnet-v2-c3` de 2 ALERTA a **0**; els altres 4 jocs sense moure's.
+- Navegador (Playwright, servidor real): flag ON → panell, files amb el text de §3.3, comptador en negreta, el 9/17
+  arriba sol; flag OFF → panell ocult i botó d'avui intacte; «Actualitzar» → «res no ha canviat» → «1 document nou →
+  Enllestir ≈ 15 min» → «2 documents nous», amb el workspace sense tocar. **0 errors de consola als dos casos.**
+- Fuita real destapada pel test de notificacions (valors de camps al log del CLI), i tapada.
+
+### Tests
+109 nous en total (4 capa vegetal + 42 de 14a + 34 de 15 + 29 de 11/14b).
+Suite: **1569 passed / 32 failed** (els 32 coneguts: SmartScan, ai_pipeline, fileminer Anciles).
+
+### Limitacions conegudes
+- El toast no s'ha vist mai en una màquina Windows real: dues estratègies implementades a cegues (Fase 17).
+- L'SMTP no s'ha provat contra cap servidor real, només contra un de casa (Brevo vs bústia: decisió §12.6).
+- La mesura del delta-sync és sobre arbres temporals locals, no sobre SMB: el risc de `stat` lent amb carpetes de
+  fotografies (§13) segueix sense mesurar.
+- L'ALERTA de Bell-lloc i la CAUTELA de Castellar segueixen obertes (STATUS open item 0d, pregunta 8 a l'Eva).
+
+### GO/NO-GO
+- ✅ Comparador d'or sense ALERTA a Castellar; els altres jocs sense moure's.
+- ✅ 0 errors de consola amb el flag encès i apagat; UI d'avui intacta amb el flag apagat.
+- ✅ Cap avís pot fer caure un job; cap valor de camp surt per correu.
+- ✅ `sync_to_workspace` i la via B intactes; suite a la línia base.
+- ⏳ Fase 16 (mesurar els tres botons de veritat) i Fase 17 (Windows presencial).
+
+### Següents passos
+Fase 16: E2E dels tres botons sobre Castellar sol, amb «xarxa» simulada, per omplir la taula de temps de §2 amb xifres
+reals. Fase 17: presencial a l'ordinador de l'Eva.
+
+*Fi entrada 2026-08-26 (vespre i nit). Tram 1 tancat: la lectura surt del camí crític de l'Eva i la taula li ho explica.*

@@ -270,6 +270,9 @@ Regressió: **32 failed / 1023 passed** (baseline inalterat — reverificat 2 co
    | `lab_company` | `Lab. Valdemoro` (`groq_llm` sobre PLAN_COST) | el lab sempre és TPS | **ningú** — no és a `MAPPING_DECISIONS_WIZARD` |
    Dues vies possibles (per decidir): que `no_trobat` de la lectura **esborri** el valor de la via B en comptes de
    deixar-lo, o filtrar aquests camps a l'origen.
+**Ordre de treball (Josep, 2026-08-26 vespre):** primer la **Fase 16** (E2E dels tres botons amb temps remesurats) i
+**després repassar aquests pendents (0b, 0c, 0d)** — la Fase 17 (Windows presencial) queda per més endavant.
+
 0d. **Capa vegetal: la CAUTELA i l'ALERTA que queden** (Josep 2026-08-26, "per analitzar-ho posteriorment").
    - **CAUTELA `soil_levels[1].a` (Castellar).** L'or diu `segur` `-1,20`; el consolidador diu `candidats` perquè una
      regla del Pas 3b sanciona que «la base de l'últim nivell és el final del reconeixement, no una transició». No és
