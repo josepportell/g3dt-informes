@@ -1460,3 +1460,105 @@ Tram 1, peça 2: **Fase 13** (`auto_result` a disc + Cadastre/ICGC al consolidad
 de la Fase 8 i els MISMATCH d'escalars (superfície de parcel·la, UTM, RC) que aquesta mesura deixa a la vista.
 
 *Fi entrada 2026-08-26. Fase 8b: la cadena lectura → informe queda tancada per a les taules de camp.*
+
+---
+
+## 2026-08-26 (tarda) — Fase 13: `auto_result` a disc i fonts HTTP al consolidador
+
+### Context
+Fila 13 del pla de l'annex (`DISSENY-ANNEX-TRES-BOTONS-JOBS-NOTIFICACIONS-2026-08-24.md` §10), en dues meitats:
+§7.1 (persistir `AutoExtractionResult`) i el que quedava del forat 1 de `wizard-headless/fase8-e2e/_RESULTATS.md`
+(les fonts Python — Cadastre, ICGC, geocodificació — no arribaven mai al consolidador). Continua l'entrada del matí
+(Fase 8b). Commits `65786a1` i `89b8df2`.
+
+### Decisions arquitectòniques clau
+
+**1. La cache viu fora de la via B, en un mòdul propi, i els cridadors l'envolten.**
+`automation/auto_result_cache.py` + `wizard_service._auto_extract_cached()`. `auto_extractor.py` no es toca (§9).
+*Per què:* la via B és codi de producció que l'Eva fa servir cada dia i que aquesta branca no ha de moure. Un embolcall
+també permet apagar la cache sencera amb una variable d'entorn sense tocar cap camí de dades.
+*Alternativa descartada:* cachejar dins d'`auto_extract` (prohibit per §9, i barrejaria dues responsabilitats).
+
+**2. L'empremta és el md5 del CONTINGUT, no `mida+mtime`.**
+*Per què:* el delta-sync de la Fase 11 copiarà fitxers de la xarxa al workspace local; una còpia canvia l'mtime sense
+canviar res, i amb `mtime` la cache no encertaria mai just després d'un sync — que és exactament quan interessa.
+*Trade-off acceptat:* 0,46 s per als 56 MB de Castellar, contra els 40-141 s que estalvia. Mesurades les dues opcions
+abans de triar (0,001 s vs 0,46 s).
+
+**3. Les exclusions de l'empremta es van determinar mesurant, no llegint codi.**
+Snapshot md5 de les 173 entrades de Castellar abans i després d'un `auto_extract` → l'únic fitxer que canvia fora de
+`validation/` és `file_mapping.json`. La llista queda curta a posta: **excloure de menys costa una re-execució;
+excloure de més serveix dades velles**.
+*Conseqüència no òbvia:* `file_mapping.json` i `concept_map.json` són fora de l'empremta però `_merge_prefills` els
+rellegeix del disc. Es desa quines d'aquestes sortides existien i es comprova que hi segueixin sent (barrera 4).
+
+**4. TTL de 30 dies, i no només empremta.**
+*Per què:* `inputs_md5` no veu els camps que vénen d'ICGC/Cadastre per HTTP — la parcel·la pot canviar sense que cap
+fitxer del projecte es mogui.
+
+**5. Les fonts HTTP entren al consolidador per la porta dels derivats: només forats.**
+`http_field_signals()` es crida al mateix `if` que `derived_field_signals()` (només quan CAP document de la carpeta ha
+dit res del camp).
+*Per què:* és la traducció literal de la regla del disseny — cap font Python pot *guanyar* un camp contra la lectura.
+*Alternativa descartada:* afinar la confiança perquè el senyal no bloquegi `segur` (conf < 0,4). Funciona, però depèn
+d'un número màgic per sota de dos llindars; si algú abaixa `CONTRADICTION_CONF`, les consultes HTTP comencen a bloquejar
+lectures correctes. La porta és estructural i no es pot desafinar.
+
+**6. El valor HTTP surt de `validation/_auto_result.json` llegit amb `auto_result_cache.load()`, no d'una crida nova.**
+*Per què:* manté el consolidador sense xarxa, i la validació d'empremta garanteix que no se serveixi una consulta feta
+sobre una altra versió de la carpeta. L'ordre funciona sol: TEMPS 1 acaba en minuts i la consolidació arriba al final de
+TEMPS 2, que triga desenes de minuts. **13(a) va resultar ser l'habilitador de 13(b)**, cosa que no estava prevista.
+
+**7. El Cadastre queda implementat i apagat per defecte.**
+*Per què, amb números:* a Castellar l'or de lectura diu `no_trobat` per a `referencia_catastral` i `superficie_parcela`
+(els documents no els contenen), el Cadastre respon **441 m²** i l'informe signat de l'Eva diu **1.284** (verificat a
+`eva_reference_values.json`). Encendre'l passa `compare_consolida.py` de 14 OK / 7 CAUTELA a 12 OK / 7 CAUTELA /
+**2 ALERTA** als quatre jocs de Castellar. Concorda amb el diagnòstic 2026-08-23 (parcel·la equivocada a 4/8).
+*Per què no esborrar-ho:* als projectes on el Cadastre encerta és l'única font d'aquests dos camps. Encendre'l — potser
+per projecte, lligat a la validació visual de parcel·la (P4) — és decisió del Josep, no d'aquest mòdul.
+`G3DT_LECTURA_HTTP_SOURCES` controla les tres fonts.
+
+**8. §8 (residus Groq a TEMPS 1): mantenir-los tots tres.** Decisió del Josep, presa amb l'evidència d'aquesta sessió.
+*Per què:* 13(a) elimina la palanca que els condemnava (ja no es paguen a cada obertura, sinó una vegada per projecte);
+són l'única font de ~15 camps de grup B; i els valors dolents es tapen amb **precedència**, no esborrant la font.
+
+### Implementació
+- `automation/auto_result_cache.py` (nou, ~380 línies): empremta, serialització genèrica dataclass/pydantic, quatre
+  barreres, escriptura atòmica, replay d'events de progrés.
+- `web/wizard_service.py`: `_auto_extract_cached()` + 2 punts de crida. `web/lectura_service.py`: 1 punt.
+- `automation/lectura/consolidate.py`: `http_field_signals()`, `_auto_result_prefills()` (memoritzat per mtime+mida),
+  `_http_enabled_sources()`, i la crida dins de `consolidate_python`.
+- `.gitignore`: `**/validation/_auto_result.json`.
+
+### Validació empírica
+- `get_prefills` sencer a Castellar: **40,4 s → 5,6 s**, 121/121 claus iguals. L'única diferència,
+  `terrain_observation`, varia igual entre dues execucions sense cache (comprovat) — és una crida de visió sobre fotos
+  dins de `_merge_prefills`, fora d'`auto_extract`.
+- Segona càrrega amb `auto_extract` substituït per una excepció: passa. Cap crida de xarxa ni de Groq a TEMPS 1.
+- Round-trip exacte sobre dades reals: 69 prefills, 84 signals, 18 rols, `serialize(load()) == desat`.
+- Comparador d'or amb el defecte: idèntic a la base als 5 jocs, verdicte a verdicte.
+
+### Tests
+36 nous (28 `tests/test_auto_result_cache.py`, 8 a `tests/test_lectura_consolidate.py`).
+Suite: **1456 passed / 32 failed** (els 32 coneguts: SmartScan, ai_pipeline, fileminer Anciles).
+
+### Limitacions conegudes
+- La mesura de (b) és d'**un sol projecte** (Castellar); Bell-lloc no es mou perquè allà els documents ja diuen els dos
+  camps. Els altres sis no tenen or de lectura consolidat amb què comparar.
+- Dos valors Groq erronis segueixen sense tapar: `superficie_parcela_m2=32980` (la lectura diu `no_trobat` i
+  `_apply_lectura_overlay` no escriu res amb `no_trobat`) i `lab_company='Lab. Valdemoro'` (no és a
+  `MAPPING_DECISIONS_WIZARD`; el lab sempre és TPS).
+- `ANTHROPIC_API_KEY` del `.env` sense saldo: `_synthesize_with_llm` falla en silenci a cada execució de la via B.
+- El primer open d'un projecte que no ha passat mai pel wizard segueix pagant TEMPS 1 sencer, per disseny.
+
+### GO/NO-GO
+- ✅ 2a càrrega sense xarxa ni Groq → prefills iguals (121/121, l'excepció justificada i verificada).
+- ✅ Invalidació per `inputs_md5` (i per TTL, versió i sortides acompanyants).
+- ✅ Comparador d'or sense moure's amb la configuració per defecte.
+- ✅ Via B intacta; suite a la línia base.
+- ⏳ Encendre el Cadastre: decisió del Josep, amb la mesura sobre la taula.
+
+### Següents passos
+Tram 1, peça 3: forat de la capa vegetal a `consolidate.py`. Després 14a (botons + taula d'estat) i 15 (notificacions).
+
+*Fi entrada 2026-08-26 (tarda). Fase 13: TEMPS 1 deixa de repetir-se, el consolidador ja veu l'ICGC i la geocodificació, i el Cadastre queda mesurat i apagat.*

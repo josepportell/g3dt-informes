@@ -1,5 +1,5 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-08-26 (tram 1 arrencat: Fase 8b FETA — les taules llegides arriben al .docx; Castellar 54 %→78 %, Rubí 64 %→82 % vs informe signat)
+Last updated: 2026-08-26 (tram 1: Fase 8b + Fase 13 FETES — taules llegides al .docx; TEMPS 1 40,4 s→5,6 s; ICGC/geocode al consolidador, Cadastre mesurat i apagat)
 
 ## ⚠ Reenquadrament 2026-08-23 (Josep): l'Eva està enfadada; criteri = "(quasi) faci la seva feina, sempre"
 
@@ -72,6 +72,27 @@ N30 (Bell-lloc informe 54 ≠ tall 58). Evidència: `docs/golden-read-taules/` (
 (K, C, γ/c/φ/E — Python/override), wizard headless + UI de candidats.
 
 ## Wizard headless + UI de candidats (Pendent B) — CONSTRUÏT (2026-08-24 tarda)
+
+**2026-08-26 (tarda) — Fase 13: `auto_result` a disc + fonts HTTP al consolidador** (tram 1, peça 2; commits `65786a1`, `89b8df2`).
+Detall i mesures: `docs/wizard-headless/fase13-http-cache/_RESULTATS.md`.
+
+- **(a) Latència.** TEMPS 1 es re-executava sencer a cada arrencada del servidor. Ara `AutoExtractionResult` viu a
+  `validation/_auto_result.json`. Castellar, `get_prefills` sencer: **40,4 s → 5,6 s**, 121/121 claus iguals (l'única
+  diferència, `terrain_observation`, és prosa d'una crida de visió que varia igual sense cache). Empremta = md5 del
+  **contingut** (no mida+mtime: el delta-sync de la Fase 11 recopiarà fitxers), 0,46 s per 56 MB. Quatre barreres:
+  empremta · TTL 30 dies · `CACHE_VERSION` · sortides acompanyants (`file_mapping.json`, `concept_map.json`).
+  Envoltant: `auto_extractor.py` (via B) intacte.
+- **(b) Forat 1, meitat que quedava.** `http_field_signals()` porta ICGC (cota) i geocodificació (UTM) al consolidador,
+  **només per omplir forats** (mateixa porta que `derived_field_signals`: només quan cap document diu res del camp).
+  Comparador d'or amb el defecte: **idèntic** a la base als 5 jocs.
+- **El Cadastre queda implementat i APAGAT.** Mesurat: a Castellar l'or diu `no_trobat` per a `referencia_catastral` i
+  `superficie_parcela`, el Cadastre respon 441 m² i l'informe signat de l'Eva diu **1.284**. Encendre'l passa el
+  comparador de 14 OK / 7 CAUTELA a **12 OK / 7 CAUTELA / 2 ALERTA**. `G3DT_LECTURA_HTTP_SOURCES="icgc,geocodificacio,cadastre"`
+  l'encén. **Decisió d'encendre'l: del Josep** (potser per projecte, lligada a la validació visual de parcel·la, P4).
+- **§8 decidit (Josep):** mantenir els tres residus Groq. Amb 13(a) es paguen una vegada per projecte, i són l'única font
+  de ~15 camps de grup B. Els valors dolents es tapen amb precedència. **Dos que avui NO tapa ningú:**
+  `superficie_parcela_m2=32980` (vision_probe; la lectura diu `no_trobat` i l'overlay no escriu) i
+  `lab_company='Lab. Valdemoro'` (no és a `MAPPING_DECISIONS_WIZARD`; el lab sempre és TPS).
 
 **2026-08-26 — Fase 8b: les taules llegides arriben a l'informe** (tram 1, peça 1; tanca el forat 6 de la Fase 8). Cadena nova completa:
 `_decisions.json` → `automation/lectura/tables_report.py` → `user_data.json["lectura_tables"]` → context del `.docx`; les tries de l'Eva a la UI
