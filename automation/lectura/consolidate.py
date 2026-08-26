@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import re
 import time
 import unicodedata
@@ -772,6 +773,145 @@ def _guard_for_field(key: str, decided: dict[str, dict]) -> Any:
     }.get(key)
 
 
+# ---------------------------------------------------------------------------
+# Fonts HTTP de la via B (Cadastre, ICGC, geocodificacio) — Fase 13(b)
+# ---------------------------------------------------------------------------
+#
+# Forat 1 de `docs/wizard-headless/fase8-e2e/_RESULTATS.md`: `auto_extract` ja
+# consulta el Cadastre i l'ICGC, pero el consolidador no ho veia mai, i camps
+# com `referencia_catastral` o `superficie_parcela` sortien `no_trobat` a
+# Castellar tot i tenir-ne resposta. La Fase 12 ja va tancar la meitat de
+# `COORDENADES*.txt` (`python_signals`); aixo tanca la de les consultes HTTP.
+#
+# D'on surt el valor: `validation/_auto_result.json`, la persistencia de la Fase
+# 13(a), llegida amb `auto_result_cache.load()` — o sigui NOMES si l'empremta
+# dels fitxers del projecte encara quadra i l'entrada no ha caducat. Aixi el
+# consolidador no fa cap crida de xarxa i no pot servir una consulta vella d'una
+# altra versio de la carpeta. Quan encara no hi ha entrada (primera lectura d'un
+# projecte que no ha passat mai pel wizard) simplement no hi ha senyals, com fins
+# ara. A la practica hi es: TEMPS 1 acaba en minuts i la consolidacio arriba al
+# final de TEMPS 2, que triga desenes de minuts.
+#
+# **Nomes omplen forats.** La crida viu darrere la mateixa porta que
+# `derived_field_signals` (`consolidate_python`: nomes quan CAP document de la
+# carpeta ha dit res del camp), que es la traduccio literal de la regla del
+# disseny: cap font Python pot GUANYAR un camp contra la lectura. Per aixo no cal
+# afinar la confianca perque "no bloquegi": mai coexisteix amb un senyal de
+# document. La confianca es igualment < `CONV_CONF` i sense `is_a`, de manera que
+# un senyal HTTP tot sol tampoc no pot arribar a `segur` (el diagnostic
+# 2026-08-23 va trobar el Cadastre apuntant a la parcel·la equivocada a 4 dels 8
+# projectes de referencia — a Castellar dona 441 m² i l'Eva escriu 1.284).
+
+#: camp del nivell A -> (clau de prefill d'`auto_extract`, etiqueta de font)
+_HTTP_FIELD_SOURCES: dict[str, tuple[str, str]] = {
+    "referencia_catastral": ("cadastral_ref", "cadastre"),
+    "superficie_parcela": ("superficie_cadastral_m2", "cadastre"),
+    "cota_referencia": ("cota_referencia", "ICGC"),
+    # Nomes quan no hi ha `COORDENADES*.txt` (si n'hi ha, `python_signals` ja
+    # ha omplert `utm_x`/`utm_y` amb conf 0,9 i la porta queda tancada).
+    "utm_x": ("_resolved_utm_x", "geocodificacio"),
+    "utm_y": ("_resolved_utm_y", "geocodificacio"),
+}
+
+_HTTP_NOTES = {
+    "cadastre": ("consulta HTTP al Cadastre, no lectura d'un document de la carpeta; "
+                 "el diagnostic 2026-08-23 el va trobar a la parcel·la equivocada a 4 dels 8 "
+                 "projectes de referencia: confirmar sempre"),
+    "ICGC": ("cota del model digital del terreny de l'ICGC, no llegida de cap annex: "
+             "l'Eva fa servir la de l'annex de sondeig quan n'hi ha"),
+    "geocodificacio": ("UTM derivades de l'adreca (Nominatim + Cadastre), no del GPS de camp: "
+                       "aproximades, confirmar"),
+}
+
+#: < CONV_CONF (0,6) i sense `is_a`: un senyal HTTP tot sol mai no fa `segur`.
+_HTTP_CONF = 0.5
+
+#: Fonts actives per defecte, i per que el Cadastre NO hi es (mesurat 2026-08-26).
+#:
+#: `ICGC` i `geocodificacio` nomes disparen quan cap document diu res: a Castellar
+#: no disparen mai (`cota_referencia` surt de l'annex, `utm_x/y` de
+#: `COORDENADES.txt`), i quan disparen son els ultims esglaons de cadenes que ja
+#: son les de l'Eva — la cota de l'MDT quan no hi ha annex, i les UTM
+#: geocodificades quan no hi ha GPS de camp. El comparador d'or no es mou.
+#:
+#: El Cadastre, en canvi, s'ha mesurat i EMPITJORA l'unic projecte on es pot
+#: mesurar. A Castellar l'or de lectura diu `no_trobat` per a `referencia_catastral`
+#: i `superficie_parcela` (els documents de la carpeta no els contenen) i el
+#: Cadastre respon 441 m², mentre que l'informe signat de l'Eva diu **1.284**
+#: (`reference-material/.../eva_reference_values.json`). Encendre'l canvia dos
+#: camps de `no_trobat` a `candidats` amb un valor equivocat: `compare_consolida.py`
+#: passa de 14 OK / 7 CAUTELA a 12 OK / 7 CAUTELA / **2 ALERTA** als quatre jocs
+#: de Castellar (Bell-lloc no es mou: alli els documents ja ho diuen i la porta
+#: queda tancada). Concorda amb el diagnostic 2026-08-23 (parcel·la equivocada a
+#: 4 dels 8 projectes de referencia).
+#:
+#: Es queda implementat i apagat, no esborrat: als projectes on el Cadastre encerta
+#: es l'unica font d'aquests dos camps, i la decisio d'encendre'l (potser per
+#: projecte, quan hi hagi la validacio visual de parcel·la del treball P4) es del
+#: Josep, no d'aquest modul. `G3DT_LECTURA_HTTP_SOURCES="ICGC,geocodificacio,cadastre"`
+#: l'encen; `""` ho apaga tot.
+_HTTP_SOURCES_DEFAULT = ("icgc", "geocodificacio")
+
+
+def _http_enabled_sources() -> frozenset[str]:
+    raw = os.getenv("G3DT_LECTURA_HTTP_SOURCES")
+    if raw is None:
+        return frozenset(_HTTP_SOURCES_DEFAULT)
+    return frozenset(part.strip().lower() for part in raw.split(",") if part.strip())
+
+_HTTP_DOC = "(consulta HTTP, fora de la carpeta)"
+
+#: Una sola entrada viva: es consolida un projecte cada vegada.
+_auto_result_memo: dict[tuple, tuple[dict, dict]] = {}
+
+
+def _auto_result_prefills(project_path: Path) -> tuple[dict, dict]:
+    """`(prefills, sources)` de `validation/_auto_result.json`, o dos dicts buits.
+
+    Memoritzat per (ruta, mtime, mida): `consolidate_python` recorre 22 camps i
+    cinc en demanen, i validar l'empremta costa una passada de md5 pel projecte.
+    """
+    from automation import auto_result_cache
+
+    path = auto_result_cache.cache_path(project_path)
+    try:
+        st = path.stat()
+    except OSError:
+        return {}, {}
+    memo_key = (str(path), st.st_mtime_ns, st.st_size)
+    hit = _auto_result_memo.get(memo_key)
+    if hit is not None:
+        return hit
+    cached = auto_result_cache.load(project_path)
+    out: tuple[dict, dict] = ((cached.result.prefills, cached.result.sources) if cached else ({}, {}))
+    _auto_result_memo.clear()
+    _auto_result_memo[memo_key] = out
+    return out
+
+
+def http_field_signals(key: str, project_path: Path | None) -> list[Signal]:
+    """Senyals de Cadastre/ICGC/geocodificacio per a `key`, si n'hi ha.
+
+    Nomes es crida quan el camp no te cap senyal de document (vegeu el bloc de
+    dalt). Sempre `origin="python"`, mai `is_a`.
+    """
+    if project_path is None:
+        return []
+    entry = _HTTP_FIELD_SOURCES.get(key)
+    if entry is None:
+        return []
+    prefill_key, label = entry
+    if label.lower() not in _http_enabled_sources():
+        return []
+    prefills, sources = _auto_result_prefills(Path(project_path))
+    value = prefills.get(prefill_key)
+    if value is None or (isinstance(value, str) and not value.strip()):
+        return []
+    font = sources.get(prefill_key) or label
+    return [Signal(key, value, f"({font})", "", _HTTP_CONF, _HTTP_DOC, "consulta_http", "python",
+                   _HTTP_NOTES.get(label))]
+
+
 def derived_field_signals(key: str, decided: dict[str, dict], sc_total: Any, sc_font: str | None) -> list[Signal]:
     """Derivacions que el skill sanciona explicitament (Pas 3). Sempre `origin=derivat`, mai segur."""
     out: list[Signal] = []
@@ -1446,6 +1586,9 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
     for key in order:
         sigs = list(by_key.get(key, []))
         if not sigs or all(value_key(s.value)[0] == "none" for s in sigs):
+            # Nomes forats: primer les consultes HTTP (font externa real),
+            # despres les derivacions/coneixement previ.
+            sigs += http_field_signals(key, project_path)
             sigs += derived_field_signals(key, fields, sc.get("value"), (sc.get("candidates") or [{}])[0].get("font"))
         cell = decide(
             sigs, sources_checked=sources_for(key), field_name=key, abs_numbers=key in _ABS_FIELDS,

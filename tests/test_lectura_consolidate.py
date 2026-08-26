@@ -543,3 +543,136 @@ def test_merge_only_fields_applies_only_requested_valid_cells_and_keeps_guards()
     assert merged["fields"]["client_name"]["value"] == "C"
     assert merged["fields"]["cte_sol"]["estat"] == "candidats"
     assert merged["tables"]["spt_ma_tests"]["rows"][0]["n30"]["value"] == "R"
+
+
+# ---------------------------------------------------------------------------
+# Fase 13(b): fonts HTTP (Cadastre / ICGC / geocodificacio) al consolidador
+# ---------------------------------------------------------------------------
+
+
+def _project_with_auto_result(tmp_path: Path, prefills: dict, sources: dict | None = None) -> tuple[Path, Path]:
+    """Carpeta de projecte amb `validation/_auto_result.json` valid + `out_dir` de lectura."""
+    from automation import auto_result_cache as arc
+    from automation.auto_extractor import AutoExtractionResult
+
+    proj = tmp_path / "3001621 CASTELLAR"
+    out_dir = proj / "validation" / "lectura"
+    out_dir.mkdir(parents=True)
+    (proj / "PENETROS.pdf").write_bytes(b"%PDF entrada")
+    (proj / "file_mapping.json").write_text('{"roles": {}}', encoding="utf-8")
+    arc.save(proj, AutoExtractionResult(prefills=prefills, sources=sources or {}))
+    C._auto_result_memo.clear()
+    return proj, out_dir
+
+
+def test_http_signals_fill_a_field_no_document_mentions(tmp_path: Path, monkeypatch):
+    """Forat 1: `auto_extract` ja consultava l'ICGC, pero el consolidador no ho veia."""
+    monkeypatch.setenv("G3DT_LECTURA_HTTP_SOURCES", "icgc")
+    proj, out_dir = _project_with_auto_result(
+        tmp_path, {"cota_referencia": "+569.50"}, {"cota_referencia": "ICGC MDT 2m"})
+    _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [_ta("municipality", "Castellar", 0.9)])
+
+    dec = C.consolidate_python(out_dir, project_path=proj)
+    cell = dec["fields"]["cota_referencia"]
+    assert cell["estat"] == "candidats", "una consulta HTTP tota sola mai no fa `segur`"
+    assert cell["value"] == "+569.50"
+    assert "ICGC MDT 2m" in cell["candidates"][0]["font"]
+    assert "annex" in (cell.get("note") or "")
+
+
+def test_http_signals_never_displace_a_document(tmp_path: Path, monkeypatch):
+    """La regla del disseny: cap font Python pot GUANYAR un camp contra la
+    lectura. La porta es la mateixa que la dels derivats: nomes forats."""
+    monkeypatch.setenv("G3DT_LECTURA_HTTP_SOURCES", "icgc")
+    proj, out_dir = _project_with_auto_result(
+        tmp_path, {"cota_referencia": "+569.50"}, {"cota_referencia": "ICGC MDT 2m"})
+    _doc(out_dir, "d1", "ANNEXES/x_sondeig.pdf", "annex_sondeig", [_ta("cota_referencia", "+570,90", 0.9)])
+
+    cell = C.consolidate_python(out_dir, project_path=proj)["fields"]["cota_referencia"]
+    assert cell["value"] == "+570,90"
+    fonts = " ".join(c.get("font", "") for c in cell["candidates"] + cell.get("altres", []))
+    assert "ICGC" not in fonts, "amb un document que ho diu, la consulta HTTP ni tan sols s'emet"
+
+
+def test_cadastre_is_off_by_default(tmp_path: Path, monkeypatch):
+    """Mesurat 2026-08-26: a Castellar el Cadastre respon 441 m² i l'informe
+    signat de l'Eva diu 1.284; encendre'l passa el comparador d'or de
+    14 OK / 7 CAUTELA a 12 OK / 7 CAUTELA / 2 ALERTA."""
+    monkeypatch.delenv("G3DT_LECTURA_HTTP_SOURCES", raising=False)
+    proj, out_dir = _project_with_auto_result(
+        tmp_path,
+        {"cadastral_ref": "3298012DG2039N", "superficie_cadastral_m2": 441},
+        {"cadastral_ref": "Cadastre API (ortho)", "superficie_cadastral_m2": "Cadastre WFS (geocode)"})
+    _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [_ta("municipality", "Castellar", 0.9)])
+
+    fields = C.consolidate_python(out_dir, project_path=proj)["fields"]
+    assert fields["referencia_catastral"]["estat"] == "no_trobat"
+    assert fields["superficie_parcela"]["estat"] == "no_trobat"
+
+
+def test_cadastre_can_be_switched_on(tmp_path: Path, monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_HTTP_SOURCES", "icgc,geocodificacio,cadastre")
+    proj, out_dir = _project_with_auto_result(
+        tmp_path,
+        {"cadastral_ref": "3298012DG2039N", "superficie_cadastral_m2": 441},
+        {"cadastral_ref": "Cadastre API (ortho)", "superficie_cadastral_m2": "Cadastre WFS (geocode)"})
+    _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [_ta("municipality", "Castellar", 0.9)])
+
+    fields = C.consolidate_python(out_dir, project_path=proj)["fields"]
+    assert fields["referencia_catastral"]["estat"] == "candidats"
+    assert fields["referencia_catastral"]["value"] == "3298012DG2039N"
+    assert fields["superficie_parcela"]["estat"] == "candidats"
+    assert "parcel·la equivocada" in (fields["superficie_parcela"].get("note") or "")
+
+
+def test_geocoded_utm_only_fills_in_when_there_is_no_coordenades_txt(tmp_path: Path, monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_HTTP_SOURCES", "geocodificacio")
+    proj, out_dir = _project_with_auto_result(
+        tmp_path, {"_resolved_utm_x": 423191.06, "_resolved_utm_y": 4609628.49},
+        {"_resolved_utm_x": "geocode (address resolution)", "_resolved_utm_y": "geocode (address resolution)"})
+    _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [_ta("municipality", "Castellar", 0.9)])
+
+    cell = C.consolidate_python(out_dir, project_path=proj)["fields"]["utm_x"]
+    assert cell["estat"] == "candidats" and str(cell["value"]).startswith("423191")
+
+    # Amb COORDENADES.txt, `python_signals` ja omple el camp i la porta es tanca.
+    (proj / "COORDENADES.txt").write_text("P-1\n423167 ; 4609608 ; 571.5\n", encoding="utf-8")
+    C._auto_result_memo.clear()
+    cell = C.consolidate_python(out_dir, project_path=proj)["fields"]["utm_x"]
+    assert cell["value"] == "423167"
+
+
+def test_no_auto_result_means_no_http_signals(tmp_path: Path, monkeypatch):
+    """Primera lectura d'un projecte que no ha passat mai pel wizard."""
+    monkeypatch.setenv("G3DT_LECTURA_HTTP_SOURCES", "icgc,geocodificacio,cadastre")
+    proj = tmp_path / "3001621 CASTELLAR"
+    out_dir = proj / "validation" / "lectura"
+    out_dir.mkdir(parents=True)
+    _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [_ta("municipality", "Castellar", 0.9)])
+    C._auto_result_memo.clear()
+
+    fields = C.consolidate_python(out_dir, project_path=proj)["fields"]
+    assert fields["cota_referencia"]["estat"] == "no_trobat"
+    assert fields["referencia_catastral"]["estat"] == "no_trobat"
+
+
+def test_stale_auto_result_is_not_used(tmp_path: Path, monkeypatch):
+    """Es llegeix amb `auto_result_cache.load()`: si els fitxers del projecte han
+    canviat des de la consulta, no se serveix una resposta HTTP vella."""
+    monkeypatch.setenv("G3DT_LECTURA_HTTP_SOURCES", "icgc")
+    proj, out_dir = _project_with_auto_result(
+        tmp_path, {"cota_referencia": "+569.50"}, {"cota_referencia": "ICGC MDT 2m"})
+    _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [_ta("municipality", "Castellar", 0.9)])
+    (proj / "PENETROS.pdf").write_bytes(b"%PDF una altra carpeta")
+    C._auto_result_memo.clear()
+
+    assert C.consolidate_python(out_dir, project_path=proj)["fields"]["cota_referencia"]["estat"] == "no_trobat"
+
+
+def test_http_sources_can_be_disabled_entirely(tmp_path: Path, monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_HTTP_SOURCES", "")
+    proj, out_dir = _project_with_auto_result(
+        tmp_path, {"cota_referencia": "+569.50"}, {"cota_referencia": "ICGC MDT 2m"})
+    _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [_ta("municipality", "Castellar", 0.9)])
+
+    assert C.consolidate_python(out_dir, project_path=proj)["fields"]["cota_referencia"]["estat"] == "no_trobat"
