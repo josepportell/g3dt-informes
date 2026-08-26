@@ -676,3 +676,93 @@ def test_http_sources_can_be_disabled_entirely(tmp_path: Path, monkeypatch):
     _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [_ta("municipality", "Castellar", 0.9)])
 
     assert C.consolidate_python(out_dir, project_path=proj)["fields"]["cota_referencia"]["estat"] == "no_trobat"
+
+
+# ---------------------------------------------------------------------------
+# Capa vegetal: fondaries que venien del full de camp no arribaven a la fila
+# ---------------------------------------------------------------------------
+
+
+def _castellar_soil_corpus(out_dir: Path, *, cover_depths: tuple[str, str] | None = None,
+                           cover_row: bool = True) -> None:
+    """La forma real de Castellar: el tall dibuixa la capa vegetal SENSE fondaries,
+    l'annex de sondeig numera nomes el substrat, i el full de camp te les
+    fondaries pero amb la seva propia numeracio (compta la capa vegetal com a
+    "1er nivell")."""
+    cover = {"nom": "Terreny Vegetal (sense número a la llegenda)",
+             "litologia": "Llims argilosos de color marró fosc amb graves i algunes arrels.",
+             "de": None, "a": None, "mostra_del_nivell": False}
+    if cover_depths:
+        cover["de"], cover["a"] = cover_depths
+    tall_rows = ([cover] if cover_row else []) + [
+        {"nom": "Nivell 1", "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites.",
+         "de": None, "a": None, "mostra_del_nivell": False}]
+    _doc(out_dir, "tall", "tall.pdf", "annex_tall", [], tables={"soil_levels": tall_rows})
+    _doc(out_dir, "annex", "PDF/ANNEXES/3001621_sondeig.pdf", "annex_sondeig", [], tables={"soil_levels": [
+        {"nom": "NIVELL 1", "litologia_candidats": ["Substrat rocós. Bretxes amb intercalacions de lutites."],
+         "de": "0.50", "a": "1.20", "mostra_del_nivell": True, "location": "p.1", "quote": "0.50-1.20"}]})
+    _doc(out_dir, "manuscrit", "PENETROS + SONDEIG.pdf", "full_camp_manuscrit", [], tables={"soil_levels": [
+        {"nom": "1er nivell", "litologia": "Llims argilosos amb graves", "de": "0,00", "a": "0,50",
+         "mostra_del_nivell": False, "location": "p.5", "quote": "de 0,00 a 0,50"},
+        {"nom": "2on nivell", "litologia": "Roca fracturada", "de": "0,50", "a": "1,20",
+         "mostra_del_nivell": True, "location": "p.5", "quote": "de 0,50 a 1,20"}]})
+
+
+def _soil_rows(dec: dict) -> dict[str, dict]:
+    return {str(r.get("nom")): r for r in dec["tables"]["soil_levels"]["rows"]}
+
+
+def test_cover_layer_gets_its_depths_from_the_field_sheet(tmp_path: Path):
+    """Abans: 3 files (capa vegetal amb `de`/`a` `no_trobat` + una fila espuria
+    amb 0,00-0,50). El tall no li dona fondaries i la numeracio del full de camp
+    s'ignora a posta, aixi que la fila 0,00-0,50 no trobava on anar."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _castellar_soil_corpus(out)
+
+    rows = _soil_rows(C.consolidate_python(out, project_path=None))
+    assert len(rows) == 2, "la capa vegetal i el nivell 1, no una tercera fila espuria"
+    cover = next(r for nom, r in rows.items() if "Vegetal" in nom)
+    assert cover["de"]["value"] == "0,00"
+    assert cover["a"]["value"] == "0,50"
+    assert cover["de"]["estat"] == "candidats", "el full de camp no es autoritat A per a `de`/`a`"
+
+
+def test_cover_layer_with_its_own_depths_is_not_touched(tmp_path: Path):
+    """Si un annex ja li dona fondaries, mana el solapament d'interval de sempre."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _castellar_soil_corpus(out, cover_depths=("0,00", "0,60"))
+
+    rows = _soil_rows(C.consolidate_python(out, project_path=None))
+    assert len(rows) == 2
+    cover = next(r for nom, r in rows.items() if "Vegetal" in nom)
+    assert cover["de"]["value"] == "0,00"
+
+
+def test_surface_row_keeps_its_own_row_when_there_is_no_cover_layer(tmp_path: Path):
+    """Sense capa vegetal la regla no dispara: el comportament no canvia."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _castellar_soil_corpus(out, cover_row=False)
+
+    rows = _soil_rows(C.consolidate_python(out, project_path=None))
+    assert len(rows) == 2
+    assert not any("Vegetal" in nom for nom in rows)
+    assert any(r.get("de", {}).get("value") == "0,00" for r in rows.values())
+
+
+def test_a_deep_row_never_lands_on_the_cover_layer(tmp_path: Path):
+    """Nomes la fila que arrenca a la superficie pot donar fondaries a la capa
+    vegetal: una fila fonda es una altra cosa."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "tall", "tall.pdf", "annex_tall", [], tables={"soil_levels": [
+        {"nom": "Terreny vegetal", "litologia": "Llims", "de": None, "a": None, "mostra_del_nivell": False}]})
+    _doc(out, "manuscrit", "PENETROS.pdf", "full_camp_manuscrit", [], tables={"soil_levels": [
+        {"nom": "1er nivell", "litologia": "Graves", "de": "2,00", "a": "3,50", "mostra_del_nivell": False}]})
+
+    rows = _soil_rows(C.consolidate_python(out, project_path=None))
+    cover = next(r for nom, r in rows.items() if "vegetal" in nom.lower())
+    assert cover["de"]["estat"] == "no_trobat"
+    assert len(rows) == 2

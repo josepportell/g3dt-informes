@@ -1431,6 +1431,16 @@ def _interval(row: dict) -> tuple[float, float] | None:
     return None
 
 
+#: Tolerancia (m) per considerar que una fila arrenca a la superficie.
+_SURFACE_TOL = 0.05
+
+
+def _cover_lacks_depths(groups: dict[str, list[tuple[dict, dict]]]) -> bool:
+    """Hi ha fila de capa vegetal i cap document li ha donat fondaries."""
+    rows = groups.get("cover")
+    return bool(rows) and all(_interval(r) is None for _, r in rows)
+
+
 def _group_soil_levels(corpus: Corpus) -> dict[str, list[tuple[dict, dict]]]:
     groups: dict[str, list[tuple[dict, dict]]] = {}
     docs_by_type: dict[str, list[dict]] = {}
@@ -1482,6 +1492,20 @@ def _group_soil_levels(corpus: Corpus) -> dict[str, list[tuple[dict, dict]]]:
                     k2 = level_key(d, r)
                     if k2 and k2 in groups:
                         target = k2
+                # La capa vegetal es "sense numero a la llegenda": el tall la
+                # dibuixa sense fondaries i el full de camp SI que les te, pero
+                # amb la seva propia numeracio (compta la capa vegetal com a
+                # "1er nivell"), que `level_key` ignora a posta. Resultat a
+                # Castellar: la fila 0,00-0,50 acabava en una fila propia i la
+                # capa vegetal sortia amb `de`/`a` `no_trobat` tot i tenir-les
+                # llegides. Si la capa vegetal no te fondaries de ningu, l'unica
+                # fila que li'n pot donar es la que arrenca a la superficie.
+                # Nomes posicional: no depen de la regla del Pas 3b sobre el `de`
+                # del nivell 1 (pregunta 3, pendent de l'Eva). No dispara si el
+                # solapament ja ha trobat fila, ni si un document li dona un
+                # nom de nivell explicit, ni si la capa vegetal ja te interval.
+                if target is None and iv and iv[0] <= _SURFACE_TOL and _cover_lacks_depths(groups):
+                    target = "cover"
                 if target is None and not groups and iv:
                     target = f"de{iv[0]}"
                 if target is None and iv and primary_types and d.get("document_type") in primary_types:
