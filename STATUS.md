@@ -1,5 +1,5 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-08-26 (tram 1 SENCER menys 14b: 8b + 13 + capa vegetal + 14a + 15 — taules al .docx, TEMPS 1 40,4 s→5,6 s, tres botons + taula d'estat + avisos)
+Last updated: 2026-08-26 (TRAM 1 SENCER: 8b + 13 + capa vegetal + 11 + 14a + 14b + 15 — taules al .docx, TEMPS 1 40,4 s→5,6 s, delta-sync, tres botons + taula + avisos; següent: Fase 16 i 17)
 
 ## ⚠ Reenquadrament 2026-08-23 (Josep): l'Eva està enfadada; criteri = "(quasi) faci la seva feina, sempre"
 
@@ -72,6 +72,17 @@ N30 (Bell-lloc informe 54 ≠ tall 58). Evidència: `docs/golden-read-taules/` (
 (K, C, γ/c/φ/E — Python/override), wizard headless + UI de candidats.
 
 ## Wizard headless + UI de candidats (Pendent B) — CONSTRUÏT (2026-08-24 tarda)
+
+**2026-08-26 (nit) — Fases 11 i 14b: delta-sync i «Actualitzar»** (commits `4e4146b`, `3a4e382`). **El tram 1 queda
+sencer.** `sync_to_workspace` copiava un projecte un sol cop → «Enllestir» treballava amb fitxers vells sense dir-ho.
+`sync_delta()` mira què ha canviat i porta només això: mida+mtime primer i md5 només si difereixen (llegir totes les
+fotos per SMB costa més que la còpia sencera), tolerància d'mtime de 2 s, els esborrats es **mouen** a `_esborrats/`, i
+una llista explícita del que produeix el pipeline (informe, `file_mapping.json`…) que mai es pot llegir com a «esborrat
+a la xarxa». `sync_to_workspace` intacte; via B intacta. `GET /api/jobs` omple `network_delta` als `ready` en mode
+`check` (cache 1 min, sostre de 5 projectes, i si la xarxa no es pot llegir la fila **no diu res**). 14b: «↻ Actualitzar»
+(`?refresh=true`) ho torna a mirar ara sense copiar, moure ni arrencar res. Verificat al navegador amb xarxa i workspace
+reals: «res no ha canviat» → «1 document nou → Enllestir ≈ 15 min» → «2 documents nous», workspace sense tocar,
+0 errors de consola.
 
 **2026-08-26 (vespre) — Fases 14a i 15: tres botons, taula d'estat i avisos** (tram 1, peces 4 i 5; commits `ea82efe`,
 `da53e17`). Detall: `docs/wizard-headless/fase14-15-botons-avisos/_RESULTATS.md`.

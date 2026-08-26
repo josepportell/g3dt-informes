@@ -1,9 +1,10 @@
-# Fases 14a i 15 — tres botons, taula d'estat i avisos (2026-08-26, vespre)
+# Fases 11, 14a, 14b i 15 — delta-sync, tres botons, taula d'estat i avisos (2026-08-26, vespre)
 
 **Què tanquen:** les files 14 i 15 del pla de l'annex
 (`../../DISSENY-ANNEX-TRES-BOTONS-JOBS-NOTIFICACIONS-2026-08-24.md` §10) — el que l'Eva veu del registre de jobs de la
 Fase 10, i l'avís que li arriba quan un job acaba. Commits `ea82efe` (14a) i `da53e17` (15).
-**14b** (*Actualitzar*) segueix pendent: depèn del delta-sync de la Fase 11.
+Després s'hi ha afegit la **Fase 11** (delta-sync, `4e4146b`) i la **14b** (*Actualitzar*, `3a4e382`), que en
+depenia. **El tram 1 queda sencer.**
 
 ---
 
@@ -91,14 +92,49 @@ documents per extensió, versió del CLI. Cap nom de fitxer, cap ruta, cap nom d
 
 ---
 
+## 11 — delta-sync (`4e4146b`), i el que desbloqueja
+
+`sync_to_workspace` copiava un projecte **un sol cop**: si el workspace ja existia, `skipped`. Amb carpetes compartides
+això deixava dues sortides dolentes — o «Enllestir» treballava amb fitxers vells **sense dir-ho**, o feia `force` i
+recopiava GB per SMB deixant vius al workspace els fitxers esborrats a la xarxa.
+
+`sync_delta(rel_path, check_only=False)`:
+
+| decisió | per què |
+|---|---|
+| mida + mtime primer, md5 **només** si difereixen | llegir totes les fotografies per SMB per comprovar que no han canviat costa més que la còpia sencera |
+| tolerància d'mtime de 2 s | FAT/SMB arrodoneixen i `copy2` hi perd precisió; sense això tot sortiria canviat després de cada còpia |
+| els esborrats es **mouen** a `_esborrats/` | si la detecció s'equivoca, no s'ha perdut res |
+| llista explícita del que produeix el pipeline (`file_mapping.json`, `user_data.json`, `*_generated.docx`…) | errar-hi seria apartar l'informe de l'Eva com si l'haguessin esborrat de la xarxa |
+| còpia a temporal + `os.replace` | mai un fitxer a mitges al workspace |
+| `sync_delta_for_leaf()` resol el path pel marcador `.g3dt_network_path` | amb la xarxa anidada (`2025/Lleida/…`) el nom local no diu on és el projecte, i un delta contra la carpeta equivocada és pitjor que cap |
+
+Un fitxer «tocat però igual» (obrir i desar sense canviar bytes) dona md5 idèntic → **0 re-lectures**.
+
+**Usos.** `POST /api/jobs` fa delta-sync com a pas 1/4 (i còpia sencera si el projecte encara no és al workspace);
+la via B (`/api/prefills-stream`) **no es toca**. `GET /api/jobs` omple `network_delta` als `ready` amb el mode `check`,
+cachejat 1 minut i amb sostre de 5 projectes per crida — recórrer una carpeta compartida són centenars de `stat` per
+SMB, i quan es retalla es diu al log en lloc de fer-ho en silenci.
+
+Si la xarxa no es pot llegir, `network_delta` queda a `None` i la fila **no diu res** sobre la xarxa.
+
+## 14b — «Actualitzar» (`3a4e382`)
+
+La fila `ready` ja diu què ha canviat, però el `network_delta` es cacheja un minut i l'Eva no ha d'endevinar quan
+caduca. `GET /api/jobs?refresh=true` buida la cache abans de llistar; segueix sent mode `check`: **no copia, no mou i no
+arrenca cap job**, i els tests ho comproven perquè és la promesa del botó.
+
+Verificat al navegador amb xarxa i workspace reals temporals: «res no ha canviat a la xarxa» → afegint un fitxer i
+clicant → «1 document nou o canviat des de llavors → Enllestir ≈ 15 min» → afegint-ne un altre → «2 documents nous o
+canviats». El workspace no es toca en cap moment. 0 errors de consola.
+
 ## Pendent
 
-- **14b** (*Actualitzar*) i el `network_delta` real de la fila `ready`: tots dos esperen la Fase 11 (delta-sync). El text
-  ja el sap redactar; mentre `network_delta` sigui buit, la fila `ready` **no diu res sobre la xarxa** — millor que dir
-  «res ha canviat» sense haver mirat.
+- **Fase 16** (E2E dels tres botons amb temps remesurats) i **Fase 17** (Windows presencial: `claude` CLI natiu,
+  `schtasks`, toast real, experiment Outlook COM).
 - **Toast real a Windows** i tria del canal: Fase 17, presencial.
 - **SMTP**: `.env.example` documenta les 9 variables; falta decidir Brevo vs bústia a `mail.eficients.cat` (§12.6) i
   l'encàrrec de tractament amb G3 (§12.4).
 
 ---
-*Fi Fases 14a i 15. L'Eva ja té tres botons, una taula que parla el seu idioma i un avís per projecte.*
+*Fi Fases 11, 14a, 14b i 15. L'Eva ja té els botons, una taula que parla el seu idioma, un avís per projecte i una xarxa que es mira sola.*
