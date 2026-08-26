@@ -790,3 +790,47 @@ def test_jobs_endpoint_survives_a_row_it_cannot_word(tmp_path, monkeypatch):
 
     assert r.status_code == 200
     assert r.json()["jobs"][0]["eva"]["titol"] == "Preparat"
+
+
+# ---------------------------------------------------------------------------
+# Fase 15 — el hook d'avisos: un per job, i mai en `cancelled`
+# ---------------------------------------------------------------------------
+
+
+def test_notify_hook_fires_once_when_a_job_finishes(tmp_path, monkeypatch):
+    project_name, project_path = _unique_project(tmp_path, monkeypatch, "notify-ready")
+    calls = []
+    monkeypatch.setattr(
+        "automation.lectura.notify.notify_job_finished",
+        lambda project, out_dir, job, **kw: calls.append((project, job["state"])) or {},
+    )
+
+    job = SimpleNamespace(snapshot=lambda: {"state": "ready", "project": project_name})
+    lectura_service._notify_finished(project_name, project_path, job)
+
+    assert calls == [(project_name, "ready")]
+
+
+@pytest.mark.parametrize("state", ["cancelled", "reading", "interrupted"])
+def test_notify_hook_stays_quiet_for_every_other_state(tmp_path, monkeypatch, state):
+    """`cancelled` sobretot: l'Eva acaba de prémer «Aturar», ja ho sap."""
+    project_name, project_path = _unique_project(tmp_path, monkeypatch, f"notify-{state}")
+    monkeypatch.setattr(
+        "automation.lectura.notify.notify_job_finished",
+        lambda *a, **kw: pytest.fail("no s'havia d'avisar"),
+    )
+
+    job = SimpleNamespace(snapshot=lambda: {"state": state, "project": project_name})
+    lectura_service._notify_finished(project_name, project_path, job)
+
+
+def test_a_notification_that_explodes_never_reaches_the_job(tmp_path, monkeypatch):
+    """§6.1: cap canal és bloquejant."""
+    project_name, project_path = _unique_project(tmp_path, monkeypatch, "notify-boom")
+    monkeypatch.setattr(
+        "automation.lectura.notify.notify_job_finished",
+        lambda *a, **kw: (_ for _ in ()).throw(RuntimeError("SMTP mort")),
+    )
+
+    job = SimpleNamespace(snapshot=lambda: {"state": "ready", "project": project_name})
+    lectura_service._notify_finished(project_name, project_path, job)   # no llança

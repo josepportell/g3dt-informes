@@ -449,6 +449,27 @@ def _jobs_root() -> Path:
     return wizard_service._REF_DIR
 
 
+def _notify_finished(project_name: str, project_path: Path, job: Job) -> None:
+    """Fase 15 — un avís per job, en acabar o en fallar (disseny §6.2).
+
+    Mai per `cancelled`: l'Eva acaba de prémer «Aturar», ja ho sap. Mai per pas:
+    ha de rebre UN senyal per projecte. Mai llança: la taula segueix sent la
+    veritat encara que caiguin tots els canals.
+    """
+    try:
+        from automation.lectura import notify
+
+        snapshot = job.snapshot()
+        if snapshot.get("state") not in ("ready", "error"):
+            return
+        out_dir = project_path / "validation" / "lectura"
+        log_text = notify.last_failed_log(out_dir) if snapshot.get("state") == "error" else ""
+        sent = notify.notify_job_finished(project_name, out_dir, snapshot, log_text=log_text)
+        logger.info("avisos de %s: %s", project_name, sent)
+    except Exception:  # noqa: BLE001
+        logger.warning("no s'han pogut enviar els avisos de %s", project_name, exc_info=True)
+
+
 def start_or_attach_job(project_name: str, button: str = "desde_zero") -> tuple[Job, bool]:
     """Arrenca un job de lectura per a `project_name`, o s'hi enganxa si ja
     n'hi ha un de viu (disseny §3.4: un job viu per projecte — mai dos
@@ -461,6 +482,7 @@ def start_or_attach_job(project_name: str, button: str = "desde_zero") -> tuple[
 
     def _target(job: Job) -> None:
         run_lectura_job(project_name, project_path, job.emit, lambda: is_cancelled(project_name))
+        _notify_finished(project_name, project_path, job)
 
     return registry.start(
         project_name, project_path, button, _target,
