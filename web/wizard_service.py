@@ -1965,6 +1965,46 @@ def _compute_mapping_prefills(
                 pass
 
 
+def _auto_extract_cached(
+    project_path: Path,
+    *,
+    force_refresh: bool = False,
+    on_progress: Any = None,
+) -> Any:
+    """`auto_extract()` amb la cache de disc de la Fase 13(a) al davant.
+
+    Envoltant, mai a dins (disseny de l'annex §7.1 i §9): `auto_extractor.py` és
+    via B i no es toca. En un encert, els events de progrés que va emetre
+    l'execució original es reprodueixen tal qual, perquè la UI de TEMPS 1 no es
+    quedi sense senyal només perquè la feina ja estigui feta.
+
+    `force_refresh=True` salta la lectura de la cache però igualment DESA el
+    resultat nou (l'usuari ha demanat re-executar, no desactivar la cache).
+    """
+    from automation import auto_result_cache
+
+    if not force_refresh:
+        cached = auto_result_cache.load(project_path)
+        if cached is not None:
+            if on_progress:
+                for event_type, detail in cached.events:
+                    on_progress(event_type, detail)
+            return cached.result
+
+    from automation.auto_extractor import auto_extract
+
+    recorded: list[tuple[str, dict]] = []
+
+    def _record(event_type: str, detail: dict) -> None:
+        recorded.append((event_type, detail))
+        if on_progress:
+            on_progress(event_type, detail)
+
+    result = auto_extract(project_path, on_progress=_record)
+    auto_result_cache.save(project_path, result, recorded)
+    return result
+
+
 def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str, Any]:
     """Run auto_extract + vision + wizard prefill chain for a project.
 
@@ -1977,9 +2017,9 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
     project_path = _resolve_project(project_name)
     _clear_stale_user_data(project_path)
 
-    # Phase 0-3: auto_extract (DPSH, lab, ICGC, cadastre — Python only, ~3-5s)
-    from automation.auto_extractor import auto_extract
-    auto_result = auto_extract(project_path)
+    # Phase 0-3: auto_extract (DPSH, lab, ICGC, cadastre — Python only, ~3-5s),
+    # amb la cache de disc de la Fase 13(a) al davant.
+    auto_result = _auto_extract_cached(project_path, force_refresh=force_refresh)
 
     return _merge_prefills(project_name, project_path, auto_result)
 
@@ -2330,8 +2370,7 @@ def get_prefills_streaming(project_name: str):
 
     def run_extract():
         try:
-            from automation.auto_extractor import auto_extract
-            result = auto_extract(project_path, on_progress=progress_callback)
+            result = _auto_extract_cached(project_path, on_progress=progress_callback)
             auto_result_holder.append(result)
         except Exception as e:
             error_holder.append(e)

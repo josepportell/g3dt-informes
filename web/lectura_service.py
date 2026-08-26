@@ -63,6 +63,7 @@ from automation.lectura.jobs import Job, registry
 from automation.lectura.runner import LecturaResult, run_lectura
 from web import wizard_service
 from web.wizard_service import (
+    _auto_extract_cached,
     _clear_stale_user_data,
     _merge_prefills,
     _resolve_project,
@@ -308,8 +309,7 @@ def run_lectura_job(
 
     def run_extract() -> None:
         try:
-            from automation.auto_extractor import auto_extract
-            result = auto_extract(project_path, on_progress=auto_progress_cb)
+            result = _auto_extract_cached(project_path, on_progress=auto_progress_cb)
             auto_result_holder.append(result)
         except Exception as exc:
             auto_error_holder.append(exc)

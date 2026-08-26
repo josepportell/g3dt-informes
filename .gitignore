@@ -63,3 +63,6 @@ reference-material/4001679 ANCILES/
 
 # Database files (may contain credentials)
 *.db
+
+# Fase 13(a): cache d'`AutoExtractionResult` (reconstruïble, mai versionada)
+**/validation/_auto_result.json
