@@ -113,4 +113,36 @@ Les dues últimes files són feina pendent, no d'aquesta fase.
   el Cadastre no és una font de veritat per a la superfície de parcel·la.
 
 ---
+
+## Addendum — capa vegetal (peça 3 del tram 1, `cef49ba`)
+
+Fet just després, al mateix fitxer (`consolidate.py`). Al joc `sonnet-v2-c3` de Castellar, `soil_levels[0].de` i `.a`
+sortien `no_trobat` tot i que la consolidació LLM del MATEIX joc les tenia.
+
+**Causa.** La capa vegetal és «sense número a la llegenda». El `tall.pdf` la dibuixa sense fondàries i l'annex de sondeig
+només numera el substrat → la fila primària `cover` no té interval. Les fondàries reals (0,00-0,50) són **només** al full
+de camp, que les numera amb la seva pròpia numeració («1er nivell» = la capa vegetal, «2on nivell» = NIVELL 1 de l'Eva) —
+i `level_key()` ignora a posta la numeració del full de camp. Sense interval amb què solapar, la fila 0,00-0,50 queia al
+calaix `de{iv[0]}` i creava una **tercera fila espúria** mentre la capa vegetal es quedava buida.
+
+**Regla nova, purament posicional:** si la capa vegetal no té fondàries de ningú, l'única fila que li'n pot donar és la
+que arrenca a la superfície (≤ 5 cm). No dispara si el solapament ja ha trobat fila, ni si un document dona un nom de
+nivell explícit, ni si la capa vegetal ja té interval. **No depèn de la regla del Pas 3b** sobre el `de` del nivell 1
+(pregunta 3, pendent de l'Eva).
+
+| joc | abans | després |
+|---|---|---|
+| `sonnet-v2-c3` TAULES | 26 OK · 1 CAUTELA · **2 ALERTA** | 25 OK · **4 CAUTELA · 0 ALERTA** |
+| els altres 4 jocs | — | sense canvis |
+
+La CAUTELA nova (`soil_levels[1].a`) no és un efecte secundari: en desaparèixer la fila espúria, NIVELL 1 passa a ser
+l'últim nivell i s'hi aplica una regla del Pas 3b que ja existia («la base de l'últim nivell és el final del
+reconeixement, no una transició»). El joc `sonnet-c3-v13` ja la tenia — els dos jocs de Castellar ara coincideixen.
+
+**Comprovat i deixat obert:** l'ALERTA de Bell-lloc (`soil_levels[1].de = 0.00 segur`, un erroni-amb-confiança) **no és
+del consolidador**. Cap document d'aquella lectura reporta la capa vegetal: l'annex emet una sola fila 0.00-1.80 amb la
+litologia dels dos trams i l'or la parteix llegint la transició gràfica del log (−0,30 m ±0,05) i la primera frase de la
+descripció. És un forat de **lectura**, i partir-la és exactament la regla del Pas 3b que espera la pregunta 3.
+
+---
 *Fi Fase 13. TEMPS 1 deixa de repetir-se; el consolidador ja veu l'ICGC i la geocodificació; el Cadastre queda mesurat i apagat.*
