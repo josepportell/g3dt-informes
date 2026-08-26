@@ -1,5 +1,5 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-08-26 (tram 1: 8b + 13 + capa vegetal FETES — taules al .docx; TEMPS 1 40,4 s→5,6 s; ICGC/geocode al consolidador; 0 ALERTA de taules a Castellar)
+Last updated: 2026-08-26 (tram 1 SENCER menys 14b: 8b + 13 + capa vegetal + 14a + 15 — taules al .docx, TEMPS 1 40,4 s→5,6 s, tres botons + taula d'estat + avisos)
 
 ## ⚠ Reenquadrament 2026-08-23 (Josep): l'Eva està enfadada; criteri = "(quasi) faci la seva feina, sempre"
 
@@ -72,6 +72,25 @@ N30 (Bell-lloc informe 54 ≠ tall 58). Evidència: `docs/golden-read-taules/` (
 (K, C, γ/c/φ/E — Python/override), wizard headless + UI de candidats.
 
 ## Wizard headless + UI de candidats (Pendent B) — CONSTRUÏT (2026-08-24 tarda)
+
+**2026-08-26 (vespre) — Fases 14a i 15: tres botons, taula d'estat i avisos** (tram 1, peces 4 i 5; commits `ea82efe`,
+`da53e17`). Detall: `docs/wizard-headless/fase14-15-botons-avisos/_RESULTATS.md`.
+
+- **14a.** «Començar amb aquesta carpeta» passa a tres botons (Preparar «per demà» · Enllestir · Des de zero) i, a sota,
+  una fila per projecte. **El text de cada fila el redacta el backend** (`automation/lectura/job_text.py`, 39 tests):
+  `review.html` fa 10.000 línies i no té cap test, i les regles de §3.3 (arrodonir, dir «restants», que «Interromput» no
+  soni a error) mereixen pytest. `GET /api/jobs` AFEGEIX una clau `eva` sense tocar el snapshot.
+- Bloc autocontingut; `nbSetState` s'embolcalla en lloc d'editar-la. Sonda nova `GET /api/lectura/enabled` per no fer
+  servir un 404 com a senyal (un `fetch` d'un 404 deixa una línia vermella a la consola encara que es gestioni).
+- **Verificat al navegador amb Playwright**, servidor real: flag ON → panell, 3 files amb el text de §3.3, comptador en
+  negreta, el 9/17 arriba sol sense recarregar; flag OFF → panell ocult i botó d'avui intacte. **0 errors de consola als
+  dos casos.**
+- **15.** Toast + correu a l'Eva + correu de telemetria a Eficients. Un avís per projecte, mai per pas, mai a
+  `cancelled`; destinatari buit = canal desactivat; cap canal pot fer caure un job.
+- **El test va obligar a canviar el disseny:** §6.4 deia sanejar el log del CLI *substituint* noms de fitxer. Amb un
+  projecte sintètic ple de noms es va veure que el log porta **valors de camps** («client detectat: …»), que cap
+  substitució cobreix. Criteri invertit a **llista blanca**: només sobreviuen les línies tècniques conegudes.
+- **Pendent:** 14b (*Actualitzar*) i el `network_delta` real esperen la Fase 11; toast real a Windows, Fase 17.
 
 **2026-08-26 (tarda, 2) — capa vegetal: recupera les fondàries** (tram 1, peça 3; commit `cef49ba`). La capa vegetal és
 "sense número a la llegenda": el `tall.pdf` la dibuixa sense fondàries i les reals només són al full de camp, que les
@@ -240,6 +259,19 @@ Regressió: **32 failed / 1023 passed** (baseline inalterat — reverificat 2 co
    | `lab_company` | `Lab. Valdemoro` (`groq_llm` sobre PLAN_COST) | el lab sempre és TPS | **ningú** — no és a `MAPPING_DECISIONS_WIZARD` |
    Dues vies possibles (per decidir): que `no_trobat` de la lectura **esborri** el valor de la via B en comptes de
    deixar-lo, o filtrar aquests camps a l'origen.
+0d. **Capa vegetal: la CAUTELA i l'ALERTA que queden** (Josep 2026-08-26, "per analitzar-ho posteriorment").
+   - **CAUTELA `soil_levels[1].a` (Castellar).** L'or diu `segur` `-1,20`; el consolidador diu `candidats` perquè una
+     regla del Pas 3b sanciona que «la base de l'últim nivell és el final del reconeixement, no una transició». No és
+     una regressió (ja disparava a `sonnet-c3-v13`; la fila espúria l'emmascarava a `sonnet-v2-c3`), però **la regla i
+     l'or no diuen el mateix**. A decidir: o l'or és massa confiat, o la regla és massa cauta quan el `a` de l'últim
+     nivell coincideix a dues fonts. Cal l'Eva: la base del nivell 1 de Castellar és una transició real o és on es va
+     aturar el sondeig?
+   - **ALERTA `soil_levels[1].de = 0.00 segur` (Bell-lloc).** *Erroni-amb-confiança*, la categoria que el projecte no
+     tolera. **No és del consolidador**: cap document d'aquella lectura reporta la capa vegetal — l'annex emet una sola
+     fila 0.00-1.80 amb la litologia dels dos trams i l'or la parteix llegint la transició gràfica del log (−0,30 m
+     ±0,05) i la primera frase de la descripció. És un forat de **lectura** (el skill no parteix el log), i partir-la és
+     la regla del Pas 3b que espera la **pregunta 3** de l'Eva. Fins llavors, `de` del nivell 1 pot pujar a `segur` amb
+     un valor que ve d'una fila fusionada.
 1. **A4 / entity confusion**: `architect_company` etiqueta client/promotor com a
    arquitecte; el client pot ser un particular. Requereix lògica > regex. **Consultar
    Eva** sobre el mapatge architect_company vs client_name abans de tocar-ho (§4.3).
