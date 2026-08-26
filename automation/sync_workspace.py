@@ -22,7 +22,9 @@ from __future__ import annotations
 
 import hashlib
 import logging
+import os
 import shutil
+import tempfile
 from pathlib import Path, PurePosixPath
 
 from . import config
@@ -451,6 +453,240 @@ def sync_to_workspace(rel_path: str, force: bool = False, allow_no_markers: bool
     except (OSError, shutil.Error) as exc:
         logger.exception("sync_to_workspace failed for %s", rel_str)
         return {"status": "error", "error": str(exc), "leaf": leaf}
+
+
+# ---------------------------------------------------------------------------
+# Delta-sync (Fase 11, disseny annex §4)
+# ---------------------------------------------------------------------------
+#
+# `sync_to_workspace` copia un projecte UN SOL COP: si el workspace ja existeix,
+# `skipped`. Amb carpetes compartides on hi toca gent cada dia, això deixa dues
+# sortides dolentes: o el botó «Enllestir» treballa amb fitxers vells sense
+# dir-ho, o fa `force` i recopia GB per SMB, deixant a més els fitxers esborrats
+# a la xarxa vius al workspace.
+#
+# `sync_delta` mira què ha canviat i copia només això. **Mida + mtime primer**,
+# md5 només quan difereixen: llegir totes les fotografies per SMB per comprovar
+# que no han canviat costaria més que la còpia sencera.
+#
+# Un fitxer "tocat però igual" (obert i desat sense canviar bytes) dona md5
+# idèntic -> 0 re-lectures. Un `.msg`/`.docx` re-desat sí que canvia bytes ->
+# es re-llegeix aquell document. Acceptat pel disseny.
+
+#: Tolerància d'mtime (s). FAT/SMB arrodoneixen a 2 s i `copy2` hi perd precisió;
+#: sense això, tot sortiria canviat després de cada còpia.
+_MTIME_TOL_S = 2.0
+
+#: Carpetes i noms que no viuen mai a la xarxa: no es comparen ni es copien.
+_DELTA_EXCLUDE_DIRS = {"validation", "_esborrats"}
+_DELTA_EXCLUDE_NAMES = {_NETWORK_PATH_MARKER}
+
+#: Fitxers que PRODUEIX el pipeline dins del workspace. No són a la xarxa, i per
+#: tant no es poden interpretar com «esborrats a la xarxa». Aquesta llista només
+#: afecta la detecció de `deleted`; per a `new`/`changed` és irrellevant (no
+#: existeixen a l'origen). Errar aquí seria moure l'informe de l'Eva a
+#: `_esborrats/`, i per això la llista és explícita i els esborrats es MOUEN,
+#: mai s'esborren.
+_LOCALLY_PRODUCED = {
+    "file_mapping.json", "user_data.json", "_user_data_prev.json", "photo_selection.json",
+}
+_LOCALLY_PRODUCED_SUFFIXES = ("_generated.docx", "_AUDIT_VISUAL.docx")
+
+#: On van a parar els fitxers que han desaparegut de la xarxa.
+DELETED_DIRNAME = "_esborrats"
+
+
+def _md5_of(path: Path) -> str:
+    h = hashlib.md5()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _delta_excluded(rel: PurePosixPath) -> bool:
+    parts = rel.parts
+    if any(part.lower() in _DELTA_EXCLUDE_DIRS for part in parts[:-1]):
+        return True
+    name = parts[-1]
+    return name in _DELTA_EXCLUDE_NAMES or name.startswith("~$")
+
+
+def _is_locally_produced(rel: PurePosixPath) -> bool:
+    name = rel.parts[-1]
+    return name in _LOCALLY_PRODUCED or name.endswith(_LOCALLY_PRODUCED_SUFFIXES)
+
+
+def _scan_files(root: Path) -> dict[str, tuple[int, float]]:
+    """`{path relatiu POSIX: (mida, mtime)}`. Només `stat`, mai contingut."""
+    out: dict[str, tuple[int, float]] = {}
+    if not root.is_dir():
+        return out
+    stack = [root]
+    while stack:
+        current = stack.pop()
+        try:
+            entries = list(os.scandir(current))
+        except OSError as exc:
+            logger.warning("delta-sync: no s'ha pogut llegir %s (%s)", current, exc)
+            continue
+        for entry in entries:
+            try:
+                if entry.is_dir(follow_symlinks=False):
+                    if entry.name.lower() not in _DELTA_EXCLUDE_DIRS:
+                        stack.append(Path(entry.path))
+                    continue
+                if not entry.is_file(follow_symlinks=False):
+                    continue
+                rel = PurePosixPath(Path(entry.path).relative_to(root).as_posix())
+                if _delta_excluded(rel):
+                    continue
+                st = entry.stat()
+                out[rel.as_posix()] = (st.st_size, st.st_mtime)
+            except OSError:
+                continue
+    return out
+
+
+def _same_bytes(src: Path, dst: Path, src_meta: tuple[int, float], dst_meta: tuple[int, float]) -> tuple[bool, bool]:
+    """`(iguals, s'ha hagut de fer md5)`. Mida+mtime primer; md5 només si difereixen."""
+    if src_meta[0] == dst_meta[0] and abs(src_meta[1] - dst_meta[1]) <= _MTIME_TOL_S:
+        return True, False
+    try:
+        return _md5_of(src) == _md5_of(dst), True
+    except OSError as exc:
+        logger.warning("delta-sync: md5 ha fallat (%s) — es tracta com a canviat", exc)
+        return False, True
+
+
+def _copy_atomic(src: Path, dst: Path) -> None:
+    """Còpia a temporal + `os.replace`: mai un fitxer a mitges al workspace."""
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(dir=str(dst.parent), prefix=".sync-", suffix=".tmp")
+    os.close(fd)
+    try:
+        shutil.copy2(src, tmp)
+        os.replace(tmp, dst)
+    except BaseException:
+        Path(tmp).unlink(missing_ok=True)
+        raise
+
+
+def network_path_for_leaf(leaf_name: str) -> str | None:
+    """Path relatiu a la xarxa d'un projecte que ja és al workspace.
+
+    Es llegeix del marcador `.g3dt_network_path`, com fa `copyback_report`:
+    el nom local (`leaf`) no diu on és el projecte quan la xarxa està anidada
+    (`2025/Lleida/…`), i un delta contra la carpeta equivocada seria pitjor que
+    no fer-ne cap. Compat enrere (workspaces anteriors al 2026-05-06, sense
+    marcador): s'assumeix path pla, igual que `copyback_report`.
+    """
+    if not is_network_workflow_enabled():
+        return None
+    workspace_path = workspace_project_path(leaf_name)
+    if not workspace_path.is_dir():
+        return None
+    return _read_marker(workspace_path) or leaf_name
+
+
+def sync_delta_for_leaf(leaf_name: str, *, check_only: bool = False) -> dict:
+    """`sync_delta` a partir del nom local del projecte (el que fa servir tota
+    la resta del pipeline), resolent el path de xarxa pel marcador."""
+    rel = network_path_for_leaf(leaf_name)
+    if rel is None:
+        return {"status": "skipped", "reason": "sense workspace ni marcador", "leaf": leaf_name}
+    return sync_delta(rel, check_only=check_only)
+
+
+def sync_delta(rel_path: str, *, check_only: bool = False) -> dict:
+    """Compara la carpeta de xarxa amb el workspace i (si `check_only=False`)
+    hi porta només el que ha canviat.
+
+    `check_only=True` fa els passos 1-2 (recórrer + comparar) i **no toca res**:
+    és el que fa servir la taula d'estat per dir «2 documents nous des de
+    llavors» sense copiar res.
+
+    Els fitxers que han desaparegut de la xarxa es **mouen** a
+    `<workspace>/_esborrats/`, mai s'esborren: si la detecció s'equivoca (o algú
+    ha desendollat la unitat de xarxa a mitges), no s'ha perdut res.
+
+    Retorna `{"status", "leaf", "network_path", "new", "changed", "deleted",
+    "copied", "moved", "checked", "hashed"}`. `status`:
+      - `"ok"`        — comparació feta
+      - `"absent"`    — el projecte encara no és al workspace: toca
+                        `sync_to_workspace()` sencer, no un delta
+      - `"skipped"`   — el workflow de xarxa no està actiu
+      - `"error"`     — la carpeta de xarxa no s'ha pogut llegir
+    """
+    if not is_network_workflow_enabled():
+        return {"status": "skipped", "reason": "network workflow not enabled"}
+
+    try:
+        # `ValueError` = path traversal; `OSError`/`FileNotFoundError` = no hi és.
+        src = resolve_network_path(rel_path)
+    except (ValueError, OSError) as exc:
+        return {"status": "error", "error": str(exc)}
+    if not src.is_dir():
+        return {"status": "error", "error": f"carpeta de xarxa no trobada: {rel_path}"}
+
+    norm = _normalize_rel_path(rel_path).as_posix()
+    leaf = _resolve_workspace_leaf(rel_path)
+    dst_root = workspace_root() / leaf
+    base = {"leaf": leaf, "network_path": norm}
+    if not dst_root.is_dir():
+        return {**base, "status": "absent", "reason": "encara no és al workspace"}
+
+    net = _scan_files(src)
+    local = _scan_files(dst_root)
+
+    new: list[str] = []
+    changed: list[str] = []
+    hashed = 0
+
+    for rel, meta in net.items():
+        local_meta = local.get(rel)
+        if local_meta is None:
+            new.append(rel)
+            continue
+        same, did_hash = _same_bytes(src / rel, dst_root / rel, meta, local_meta)
+        hashed += int(did_hash)
+        if not same:
+            changed.append(rel)
+
+    deleted = [
+        rel for rel in local
+        if rel not in net and not _is_locally_produced(PurePosixPath(rel))
+    ]
+
+    new.sort(); changed.sort(); deleted.sort()
+    result = {
+        **base, "status": "ok", "new": new, "changed": changed, "deleted": deleted,
+        "checked": len(net), "hashed": hashed, "copied": 0, "moved": 0,
+    }
+    if check_only:
+        return result
+
+    for rel in new + changed:
+        try:
+            _copy_atomic(src / rel, dst_root / rel)
+            result["copied"] += 1
+        except OSError as exc:
+            logger.warning("delta-sync: no s'ha pogut copiar %s (%s)", rel, exc)
+
+    for rel in deleted:
+        target = dst_root / DELETED_DIRNAME / rel
+        try:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            os.replace(dst_root / rel, target)
+            result["moved"] += 1
+        except OSError as exc:
+            logger.warning("delta-sync: no s'ha pogut apartar %s (%s)", rel, exc)
+
+    logger.info(
+        "delta-sync %s: %d nous, %d canviats, %d apartats (%d fitxers mirats, %d md5)",
+        norm, len(new), len(changed), len(deleted), result["checked"], hashed,
+    )
+    return result
 
 
 def copyback_report(leaf_name: str, docx_path: Path | str) -> dict:

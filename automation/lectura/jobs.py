@@ -327,6 +327,29 @@ def estimate_remaining(job: Job, telemetry_paths: list[Path], concurrency: int) 
     if job.state in TERMINAL:
         return {"remaining": 0, "basis": "terminal"}
 
+    median_doc, median_consolida, basis = telemetry_medians(telemetry_paths)
+
+    if job.state == CONSOLIDATING:
+        remaining = int(round(median_consolida))
+    elif job.state == MERGING:
+        remaining = 60
+    else:
+        pending = max(0, job.docs_total - job.docs_done)
+        blocks = math.ceil(pending / max(1, concurrency)) if pending else 0
+        extra_consolida = median_consolida if job.state == READING else 0.0
+        remaining = int(round(blocks * median_doc + extra_consolida + 60))
+
+    return {"remaining": remaining, "basis": basis}
+
+
+def telemetry_medians(telemetry_paths: list[Path]) -> tuple[float, float, str]:
+    """`(mediana per document, mediana de consolidació, base)` de totes les
+    `_telemetry.jsonl`.
+
+    Separat d'`estimate_remaining` a la Fase 11: el mateix calibratge serveix per
+    dir «Enllestir ≈ 8 min» a partir dels K documents que ha canviat el
+    delta-sync, sense inventar un job.
+    """
     doc_samples: list[float] = []
     consolida_samples: list[float] = []
 
@@ -367,18 +390,21 @@ def estimate_remaining(job: Job, telemetry_paths: list[Path], concurrency: int) 
         if len(consolida_samples) < _MIN_CONSOLIDA_SAMPLES
         else statistics.median(consolida_samples)
     )
+    return median_doc, median_consolida, basis
 
-    if job.state == CONSOLIDATING:
-        remaining = int(round(median_consolida))
-    elif job.state == MERGING:
-        remaining = 60
-    else:
-        pending = max(0, job.docs_total - job.docs_done)
-        blocks = math.ceil(pending / max(1, concurrency)) if pending else 0
-        extra_consolida = median_consolida if job.state == READING else 0.0
-        remaining = int(round(blocks * median_doc + extra_consolida + 60))
 
-    return {"remaining": remaining, "basis": basis}
+def estimate_for_documents(n_docs: int, telemetry_paths: list[Path], concurrency: int) -> int:
+    """Segons que costaria llegir `n_docs` documents i re-consolidar.
+
+    És el que la taula d'estat necessita per dir «2 documents nous des de
+    llavors → Enllestir ≈ 8 min». Amb 0 documents no és 0: encara hi ha el
+    delta-sync, TEMPS 1 i el merge.
+    """
+    median_doc, median_consolida, _ = telemetry_medians(telemetry_paths)
+    if n_docs <= 0:
+        return 60
+    blocks = math.ceil(n_docs / max(1, concurrency))
+    return int(round(blocks * median_doc + median_consolida + 60))
 
 
 # ---------------------------------------------------------------------------

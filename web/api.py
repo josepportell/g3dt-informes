@@ -629,17 +629,33 @@ def start_lectura_job(project_name: str, button: str = "desde_zero"):
         raise HTTPException(status_code=400, detail=f"Botó desconegut: {button!r}")
 
     from automation import sync_workspace
+    from . import lectura_service
+
     if sync_workspace.is_network_workflow_enabled():
-        sync_result = sync_workspace.sync_to_workspace(project_name, force=False)
-        if sync_result["status"] == "error":
-            raise HTTPException(status_code=404, detail=sync_result.get("error", "sync failed"))
+        # Fase 11 (disseny §4, pas 1/4 dels botons 2 i 3): delta-sync en lloc de
+        # la còpia idempotent. `sync_to_workspace(force=False)` feia `skipped`
+        # quan el workspace ja existia, i el job es posava a llegir fitxers vells
+        # sense dir-ho. Si el projecte encara no hi és, no hi ha delta possible:
+        # còpia sencera com fins ara.
+        delta = sync_workspace.sync_delta_for_leaf(project_name, check_only=False)
+        if delta.get("status") == "error":
+            raise HTTPException(status_code=404, detail=delta.get("error", "delta-sync failed"))
+        if delta.get("status") in ("absent", "skipped"):
+            sync_result = sync_workspace.sync_to_workspace(project_name, force=False)
+            if sync_result["status"] == "error":
+                raise HTTPException(status_code=404, detail=sync_result.get("error", "sync failed"))
+        else:
+            logger.info(
+                "delta-sync %s: %d nous, %d canviats, %d apartats",
+                project_name, len(delta.get("new") or []), len(delta.get("changed") or []),
+                len(delta.get("deleted") or []),
+            )
+        lectura_service.invalidate_network_delta(project_name)
 
     try:
         wizard_service._resolve_project(project_name)  # Validate project exists
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-
-    from . import lectura_service
 
     job, created = lectura_service.start_or_attach_job(project_name, button)
     if created:

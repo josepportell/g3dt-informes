@@ -56,9 +56,11 @@ import os
 import queue
 import shutil
 import threading
+import time
 from pathlib import Path
 from typing import Any, Callable
 
+from automation.lectura import jobs as jobs_module
 from automation.lectura.jobs import Job, registry
 from automation.lectura.runner import LecturaResult, run_lectura
 from web import wizard_service
@@ -490,6 +492,63 @@ def start_or_attach_job(project_name: str, button: str = "desde_zero") -> tuple[
     )
 
 
+#: Cada quan es torna a mirar la xarxa per a un projecte `ready` (disseny §5.2:
+#: «calculat com a molt un cop per minut»).
+_DELTA_TTL_S = 60
+
+#: Sostre de projectes `ready` als quals es mira la xarxa en una mateixa crida.
+#: Recórrer una carpeta compartida són centenars de `stat` per SMB (§13); amb
+#: ≤ 1 projecte/dia (§0) mai s'hi arriba, i quan s'hi arribi es diu al log en
+#: lloc de retallar en silenci.
+_DELTA_MAX_PROJECTS = 5
+
+#: project -> (monotonic, payload|None)
+_delta_cache: dict[str, tuple[float, dict[str, Any] | None]] = {}
+
+
+def invalidate_network_delta(project_name: str) -> None:
+    """Després de sincronitzar, el delta que hi havia ja no val."""
+    _delta_cache.pop(project_name, None)
+
+
+def _network_delta(project_name: str) -> dict[str, Any] | None:
+    """Delta xarxa→workspace en mode `check` (no toca res), cachejat 1 minut.
+
+    `None` quan no s'ha pogut mirar — i llavors la fila `ready` **no diu res**
+    sobre la xarxa, que és millor que dir «res ha canviat» sense haver mirat.
+    """
+    from automation import sync_workspace
+
+    if not sync_workspace.is_network_workflow_enabled():
+        return None
+
+    now = time.monotonic()
+    hit = _delta_cache.get(project_name)
+    if hit is not None and now - hit[0] < _DELTA_TTL_S:
+        return hit[1]
+
+    payload: dict[str, Any] | None = None
+    try:
+        delta = sync_workspace.sync_delta_for_leaf(project_name, check_only=True)
+        if delta.get("status") == "ok":
+            n_new, n_changed = len(delta["new"]), len(delta["changed"])
+            payload = {
+                "new": n_new,
+                "changed": n_changed,
+                "deleted": len(delta["deleted"]),
+                "estimate_s": jobs_module.estimate_for_documents(
+                    n_new + n_changed,
+                    sorted(_jobs_root().glob("*/validation/lectura/_telemetry.jsonl")),
+                    _env_int("G3DT_LECTURA_CONCURRENCY", 2),
+                ),
+            }
+    except Exception:  # noqa: BLE001 — la taula ha de sortir igualment
+        logger.warning("no s'ha pogut mirar la xarxa per a %s", project_name, exc_info=True)
+
+    _delta_cache[project_name] = (now, payload)
+    return payload
+
+
 def list_jobs() -> list[dict[str, Any]]:
     """Taula d'estat dels jobs (disseny §5.2): vius primer, després
     `updated_at` desc, últims 30 dies.
@@ -497,12 +556,27 @@ def list_jobs() -> list[dict[str, Any]]:
     Fase 14a: cada job porta a més una clau `eva` amb la fila ja redactada en el
     llenguatge del disseny §3.3 (`automation.lectura.job_text`). S'AFEGEIX al
     snapshot, no el substitueix: tot el que ja consumia `/api/jobs` segueix igual.
+
+    Fase 11: als jobs `ready` s'hi omple `network_delta` amb el mode `check` del
+    delta-sync (§4) — que no copia ni mou res — perquè la fila pugui dir «2
+    documents nous des de llavors → Enllestir ≈ 8 min».
     """
     from automation.lectura import job_text
 
     jobs = registry.list_jobs(_jobs_root())
+    checked = 0
     for job in jobs:
         try:
+            if job.get("state") == "ready" and not job.get("network_delta"):
+                if checked < _DELTA_MAX_PROJECTS:
+                    job["network_delta"] = _network_delta(job.get("project") or "")
+                    checked += 1
+                elif checked == _DELTA_MAX_PROJECTS:
+                    logger.info(
+                        "taula d'estat: només s'ha mirat la xarxa dels %d projectes `ready` més recents",
+                        _DELTA_MAX_PROJECTS,
+                    )
+                    checked += 1
             job["eva"] = job_text.row(job)
         except Exception:  # noqa: BLE001 — una fila lletja abans que una taula que no es pinta
             logger.warning("job_text ha fallat per a %s", job.get("project"), exc_info=True)

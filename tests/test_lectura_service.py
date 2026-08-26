@@ -834,3 +834,128 @@ def test_a_notification_that_explodes_never_reaches_the_job(tmp_path, monkeypatc
 
     job = SimpleNamespace(snapshot=lambda: {"state": "ready", "project": project_name})
     lectura_service._notify_finished(project_name, project_path, job)   # no llança
+
+
+# ---------------------------------------------------------------------------
+# Fase 11 — `network_delta` a la taula (mode `check`) i delta-sync al POST
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture
+def network_project(tmp_path, monkeypatch):
+    """Xarxa + workspace reals (temporals) amb un projecte ja sincronitzat."""
+    from automation import sync_workspace
+
+    net, ws = tmp_path / "net", tmp_path / "ws"
+    project = "4001612 BELL-LLOC"
+    (net / project).mkdir(parents=True)
+    (net / project / "PENETROS.pdf").write_text("camp", encoding="utf-8")
+    ws.mkdir()
+    monkeypatch.setattr(sync_workspace.config, "G3DT_NETWORK_PROJECTS", str(net))
+    monkeypatch.setattr(sync_workspace.config, "G3DT_LOCAL_WORKSPACE", str(ws))
+    monkeypatch.setattr(wizard_service, "_REF_DIR", ws)
+    monkeypatch.setattr(config, "G3DT_USE_LECTURA_HEADLESS", True)
+    sync_workspace.sync_to_workspace(project, allow_no_markers=True)
+    lectura_service._delta_cache.clear()
+    _write_job_file(ws / project, {
+        "schema_version": 1, "project": project, "button": "preparar", "state": "ready",
+        "step": {"index": 4, "total": 4},
+        "docs": {"total": 1, "done": 1, "cached": 0, "errors": 0, "current": []},
+        "started_at": "2026-08-26T17:00:00", "updated_at": "2026-08-26T18:32:00",
+        "finished_at": "2026-08-26T18:32:00",
+        "estimate_s": {"remaining": None, "basis": "t"}, "pid": 1, "network_delta": None,
+    })
+    return net / project, ws / project, project
+
+
+def test_a_ready_row_quantifies_what_changed_on_the_network(network_project):
+    net_project, _, project = network_project
+    (net_project / "A.01.pdf").write_text("plànol nou", encoding="utf-8")
+
+    job = TestClient(app).get("/api/jobs").json()["jobs"][0]
+
+    assert job["network_delta"]["new"] == 1
+    assert "1 document nou o canviat des de llavors" in job["eva"]["detall"]
+    assert "Enllestir ≈" in job["eva"]["detall"]
+
+
+def test_a_ready_row_says_the_network_is_untouched_when_it_is(network_project):
+    job = TestClient(app).get("/api/jobs").json()["jobs"][0]
+
+    assert job["network_delta"] == {"new": 0, "changed": 0, "deleted": 0, "estimate_s": 60}
+    assert job["eva"]["detall"] == "res no ha canviat a la xarxa"
+
+
+def test_the_network_is_looked_at_once_a_minute_at_most(network_project, monkeypatch):
+    """Recórrer una carpeta compartida són centenars de `stat` per SMB."""
+    from automation import sync_workspace
+
+    calls = []
+    real = sync_workspace.sync_delta_for_leaf
+    monkeypatch.setattr(sync_workspace, "sync_delta_for_leaf",
+                        lambda leaf, **kw: (calls.append(leaf), real(leaf, **kw))[1])
+
+    client = TestClient(app)
+    client.get("/api/jobs")
+    client.get("/api/jobs")
+    client.get("/api/jobs")
+
+    assert len(calls) == 1
+
+
+def test_the_check_never_copies_anything(network_project):
+    net_project, ws_project, _ = network_project
+    (net_project / "A.01.pdf").write_text("plànol nou", encoding="utf-8")
+
+    TestClient(app).get("/api/jobs")
+
+    assert not (ws_project / "A.01.pdf").exists(), "la taula mira, no toca"
+
+
+def test_starting_a_job_delta_syncs_instead_of_skipping(network_project, monkeypatch):
+    """El forat que tanca la Fase 11: abans `sync_to_workspace(force=False)`
+    feia `skipped` i el job llegia fitxers vells sense dir-ho."""
+    net_project, ws_project, project = network_project
+    (net_project / "A.01.pdf").write_text("plànol nou", encoding="utf-8")
+    monkeypatch.setattr(lectura_service, "start_or_attach_job",
+                        lambda p, b: (SimpleNamespace(snapshot=lambda: {"project": p}), True))
+
+    r = TestClient(app).post(f"/api/jobs/{project}", params={"button": "enllestir"})
+
+    assert r.status_code == 202
+    assert (ws_project / "A.01.pdf").read_text(encoding="utf-8") == "plànol nou"
+
+
+def test_starting_a_job_on_a_project_not_yet_local_still_copies_it_whole(tmp_path, monkeypatch):
+    from automation import sync_workspace
+
+    net, ws = tmp_path / "net", tmp_path / "ws"
+    project = "3001621 CASTELLAR"
+    (net / project).mkdir(parents=True)
+    (net / project / "PENETROS.pdf").write_text("camp", encoding="utf-8")
+    ws.mkdir()
+    monkeypatch.setattr(sync_workspace.config, "G3DT_NETWORK_PROJECTS", str(net))
+    monkeypatch.setattr(sync_workspace.config, "G3DT_LOCAL_WORKSPACE", str(ws))
+    monkeypatch.setattr(wizard_service, "_REF_DIR", ws)
+    monkeypatch.setattr(config, "G3DT_USE_LECTURA_HEADLESS", True)
+    monkeypatch.setattr(lectura_service, "start_or_attach_job",
+                        lambda p, b: (SimpleNamespace(snapshot=lambda: {"project": p}), True))
+
+    r = TestClient(app).post(f"/api/jobs/{project}", params={"button": "preparar"})
+
+    assert r.status_code == 202
+    assert (ws / project / "PENETROS.pdf").exists()
+
+
+def test_a_network_that_cannot_be_read_does_not_blank_the_table(network_project, monkeypatch):
+    from automation import sync_workspace
+
+    monkeypatch.setattr(sync_workspace, "sync_delta_for_leaf",
+                        lambda *a, **kw: (_ for _ in ()).throw(OSError("unitat desconnectada")))
+    lectura_service._delta_cache.clear()
+
+    job = TestClient(app).get("/api/jobs").json()["jobs"][0]
+
+    assert job["network_delta"] is None
+    assert job["eva"]["detall"] is None, "millor no dir res que dir «res ha canviat» sense mirar"
+    assert job["eva"]["titol"].startswith("Preparat (")
