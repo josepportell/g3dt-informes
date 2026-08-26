@@ -587,6 +587,19 @@ def lectura_stream(project_name: str, attach: bool = False):
     )
 
 
+@router.get("/lectura/enabled")
+def lectura_enabled():
+    """Sonda de la UI (Fase 14a): la lectura headless està engegada?
+
+    Existeix per no fer servir un 404 com a senyal. La resta d'endpoints
+    d'aquest pipeline fan 404 amb el flag apagat, i està bé per a una API —
+    però `fetch()` d'un 404 deixa una línia vermella a la consola del navegador
+    encara que el codi el gestioni, i el criteri de la fase és **0 errors de
+    consola** també amb el flag apagat, on la UI d'avui no ha de canviar en res.
+    """
+    return {"enabled": bool(config.G3DT_USE_LECTURA_HEADLESS)}
+
+
 @router.get("/jobs")
 def list_lectura_jobs():
     """Taula d'estat dels jobs de lectura headless (Fase 10, disseny §5.2).

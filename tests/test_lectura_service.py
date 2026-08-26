@@ -713,3 +713,80 @@ def test_start_job_endpoint_202_then_409_with_attach_true(tmp_path, monkeypatch)
         job = lectura_registry.get(project_name)
         if job is not None and job.thread is not None:
             job.thread.join(timeout=5)
+
+
+# ---------------------------------------------------------------------------
+# Fase 14a — `GET /api/jobs` porta la fila ja redactada (`eva`)
+# ---------------------------------------------------------------------------
+
+
+def _write_job_file(project_path: Path, payload: dict) -> None:
+    out = project_path / "validation" / "lectura"
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "_job.json").write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+
+def test_jobs_endpoint_adds_the_eva_row_without_touching_the_snapshot(tmp_path, monkeypatch):
+    """La UI pinta cadenes ja fetes; les regles de redacció (§3.3) viuen al
+    backend, on hi ha tests. El snapshot no es toca: tot el que ja consumia
+    `/api/jobs` segueix igual."""
+    project_name, project_path = _unique_project(tmp_path, monkeypatch, "eva-row")
+    monkeypatch.setattr(config, "G3DT_USE_LECTURA_HEADLESS", True)
+    _write_job_file(project_path, {
+        "schema_version": 1, "project": project_name, "button": "preparar", "state": "ready",
+        "step": {"index": 4, "total": 4},
+        "docs": {"total": 13, "done": 13, "cached": 0, "errors": 0, "current": []},
+        "started_at": "2026-08-26T17:00:00", "updated_at": "2026-08-26T18:32:00",
+        "finished_at": "2026-08-26T18:32:00",
+        "estimate_s": {"remaining": None, "basis": "test"},
+        "result": None, "error": None, "pid": 1, "claude_version": None, "network_delta": None,
+    })
+
+    r = TestClient(app).get("/api/jobs")
+
+    assert r.status_code == 200
+    job = r.json()["jobs"][0]
+    assert job["state"] == "ready" and job["docs"]["done"] == 13     # snapshot intacte
+    assert job["eva"]["pas"] == "✓"
+    assert job["eva"]["titol"].startswith("Preparat (")
+    assert job["eva"]["accio"] == "enllestir"
+    assert job["eva"]["viu"] is False
+
+
+def test_jobs_endpoint_eva_row_for_a_reading_job_leads_with_the_counter(tmp_path, monkeypatch):
+    project_name, project_path = _unique_project(tmp_path, monkeypatch, "eva-reading")
+    monkeypatch.setattr(config, "G3DT_USE_LECTURA_HEADLESS", True)
+    _write_job_file(project_path, {
+        "schema_version": 1, "project": project_name, "button": "preparar", "state": "reading",
+        "step": {"index": 2, "total": 4},
+        "docs": {"total": 17, "done": 7, "cached": 0, "errors": 0, "current": ["a.pdf"]},
+        "started_at": "2026-08-26T17:00:00", "updated_at": "2026-08-26T17:20:00", "finished_at": None,
+        "estimate_s": {"remaining": 1477, "basis": "test"},
+        "result": None, "error": None, "pid": 99999999, "claude_version": None, "network_delta": None,
+    })
+
+    job = TestClient(app).get("/api/jobs").json()["jobs"][0]
+
+    # `pid` d'un altre procés → `list_jobs` el reescriu com `interrupted` (§3.4),
+    # i la fila ho ha de dir sense que soni a error.
+    assert job["state"] == "interrupted"
+    assert job["eva"]["titol"] == "Interromput a 2/4 (7/17 llegits)"
+    assert job["eva"]["accio_text"] == "Continuar"
+    assert "error" not in job["eva"]["titol"].lower()
+
+
+def test_jobs_endpoint_survives_a_row_it_cannot_word(tmp_path, monkeypatch):
+    """Una fila lletja abans que una taula que no es pinta."""
+    project_name, project_path = _unique_project(tmp_path, monkeypatch, "eva-broken")
+    monkeypatch.setattr(config, "G3DT_USE_LECTURA_HEADLESS", True)
+    _write_job_file(project_path, {
+        "schema_version": 1, "project": project_name, "state": "ready",
+        "step": {"index": 4, "total": 4}, "docs": {"total": 1, "done": 1},
+        "updated_at": "2026-08-26T18:32:00", "finished_at": "no és una data",
+        "estimate_s": None, "pid": 1,
+    })
+
+    r = TestClient(app).get("/api/jobs")
+
+    assert r.status_code == 200
+    assert r.json()["jobs"][0]["eva"]["titol"] == "Preparat"

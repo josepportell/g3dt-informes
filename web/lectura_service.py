@@ -470,8 +470,21 @@ def start_or_attach_job(project_name: str, button: str = "desde_zero") -> tuple[
 
 def list_jobs() -> list[dict[str, Any]]:
     """Taula d'estat dels jobs (disseny §5.2): vius primer, després
-    `updated_at` desc, últims 30 dies."""
-    return registry.list_jobs(_jobs_root())
+    `updated_at` desc, últims 30 dies.
+
+    Fase 14a: cada job porta a més una clau `eva` amb la fila ja redactada en el
+    llenguatge del disseny §3.3 (`automation.lectura.job_text`). S'AFEGEIX al
+    snapshot, no el substitueix: tot el que ja consumia `/api/jobs` segueix igual.
+    """
+    from automation.lectura import job_text
+
+    jobs = registry.list_jobs(_jobs_root())
+    for job in jobs:
+        try:
+            job["eva"] = job_text.row(job)
+        except Exception:  # noqa: BLE001 — una fila lletja abans que una taula que no es pinta
+            logger.warning("job_text ha fallat per a %s", job.get("project"), exc_info=True)
+    return jobs
 
 
 # ---------------------------------------------------------------------------

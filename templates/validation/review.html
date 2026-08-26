@@ -2277,6 +2277,39 @@
         #tab-ai-pipeline {
             display: none;
         }
+        /* === TRES BOTONS + TAULA D'ESTAT (Fase 14a) === */
+        /* Bloc autocontingut: el panell nomes es mostra si `GET /api/jobs`
+           respon 200 (flag G3DT_USE_LECTURA_HEADLESS ON). Amb el flag apagat
+           l'endpoint fa 404 i aquesta UI no existeix. */
+        #jobsPanel { display: none; margin: 12px 0 18px; }
+        .jobs-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+        .jobs-btn {
+            padding: 9px 16px; border: 1px solid #cfd6dd; border-radius: 6px; background: #fff;
+            color: #2c3e50; font-size: 0.92em; cursor: pointer; line-height: 1.2;
+        }
+        .jobs-btn:hover:not(:disabled) { border-color: #7f8c8d; }
+        .jobs-btn:disabled { opacity: .5; cursor: default; }
+        .jobs-btn.primary { background: #27ae60; border-color: #27ae60; color: #fff; font-weight: 600; }
+        .jobs-btn.primary:hover:not(:disabled) { background: #229954; }
+        .jobs-btn small { display: block; font-size: 0.78em; opacity: .8; font-weight: 400; }
+        .jobs-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+        .jobs-table th {
+            text-align: left; padding: 6px 8px; border-bottom: 1px solid #e1e6ea;
+            color: #7f8c8d; font-weight: 600; font-size: 0.9em;
+        }
+        .jobs-table td { padding: 8px; border-bottom: 1px solid #f0f3f5; vertical-align: top; }
+        .jobs-table tr.is-live { background: #f4faf6; }
+        .jobs-pas { width: 42px; text-align: center; color: #7f8c8d; white-space: nowrap; }
+        .jobs-project { font-weight: 600; color: #2c3e50; }
+        .jobs-detall { color: #7f8c8d; font-size: 0.92em; }
+        .jobs-comptador { font-weight: 700; color: #2c3e50; }
+        .jobs-empty { color: #95a5a6; padding: 10px 8px; font-style: italic; }
+        .jobs-row-btn {
+            padding: 4px 10px; border: 1px solid #cfd6dd; border-radius: 4px;
+            background: #fff; color: #2c3e50; font-size: 0.9em; cursor: pointer;
+        }
+        .jobs-row-btn:hover { border-color: #7f8c8d; }
+        .jobs-error-detail { color: #c0392b; font-size: 0.9em; margin-top: 4px; white-space: pre-wrap; }
     </style>
 </head>
 <body>
@@ -2323,6 +2356,28 @@
                 Pots baixar tants nivells com calgui.
             </div>
             <div id="nbError" style="display:none;"></div>
+        </div>
+
+        <!-- Tres botons + taula d'estat dels jobs (Fase 14a, disseny §5).
+             Ocult fins que `GET /api/jobs` respon 200. -->
+        <div id="jobsPanel">
+            <div class="jobs-actions" id="jobsActions">
+                <button type="button" class="jobs-btn primary" id="jobsBtnPreparar" onclick="jobsRun('preparar')">
+                    Preparar informe «per demà»<small>Prem, tanca la pestanya i torna quan t'avisin</small>
+                </button>
+                <button type="button" class="jobs-btn" id="jobsBtnEnllestir" onclick="jobsRun('enllestir')">
+                    Enllestir informe preparat<small>Comprova què ha canviat i obre el formulari</small>
+                </button>
+                <button type="button" class="jobs-btn" id="jobsBtnZero" onclick="jobsRun('desde_zero')">
+                    Fer un informe des de zero<small>Tot seguit, amb la pestanya oberta</small>
+                </button>
+            </div>
+            <table class="jobs-table" id="jobsTable">
+                <thead>
+                    <tr><th class="jobs-pas"></th><th>Projecte</th><th>Estat</th><th style="width:110px;">Acció</th></tr>
+                </thead>
+                <tbody id="jobsTableBody"></tbody>
+            </table>
         </div>
 
         <div id="message" class="message"></div>
@@ -4835,7 +4890,9 @@
             // Lectura headless (Fase 7, disseny §2): prova primer l'stream nou;
             // si no hi es (flag G3DT_USE_LECTURA_HEADLESS off -> 404, o error
             // immediat) cau al cami existent sense cap mes canvi.
-            if (await openLecturaStream(selectedProject)) return;
+            const _attachOnce = _jobsAttachNext;
+            _jobsAttachNext = false;
+            if (await openLecturaStream(selectedProject, { attach: _attachOnce })) return;
 
             // SSE stream for prefills with real-time progress
             const es = new EventSource(`/api/prefills-stream/${encodeURIComponent(selectedProject)}`);
@@ -9853,11 +9910,15 @@
         // false si cal caure al cami existent (`/api/prefills-stream`, sense
         // cap canvi — 404 quan G3DT_USE_LECTURA_HEADLESS esta off, o error de
         // connexio abans de cap event).
-        function openLecturaStream(project) {
+        function openLecturaStream(project, opts) {
+            const attach = !!(opts && opts.attach);
             return new Promise((resolve) => {
                 let es;
                 try {
-                    es = new EventSource(`/api/lectura-stream/${encodeURIComponent(project)}`);
+                    // `attach=true` (Fase 14a, disseny §5.2): NOMES subscriu a un
+                    // job ja viu — l'Eva ha tornat i ha clicat la fila.
+                    const qs = attach ? '?attach=true' : '';
+                    es = new EventSource(`/api/lectura-stream/${encodeURIComponent(project)}${qs}`);
                 } catch (err) {
                     resolve(false);
                     return;
@@ -10006,6 +10067,276 @@
                 };
             });
         }
+        /* === TRES BOTONS + TAULA D'ESTAT (Fase 14a) === */
+        // Bloc autocontingut, com el de la Fase 7. Regla del disseny §5.1: amb
+        // `G3DT_USE_LECTURA_HEADLESS=false` la UI d'avui no canvia — i aixi es:
+        // `GET /api/jobs` fa 404 amb el flag apagat, `jobsInit()` surt i el
+        // panell es queda ocult. Cap altre cami del fitxer en depen.
+        //
+        // Repartiment deliberat: el TEXT de cada fila (§3.3) el redacta el
+        // backend (`automation/lectura/job_text.py`, cobert amb pytest) i aqui
+        // nomes es pinta. Aquest fitxer fa 10.000 linies i no te cap test:
+        // com menys regles hi visquin, millor.
+
+        let _jobsAttachNext = false;      // seguent obertura d'stream = attach
+        let _jobsTimer = null;
+        let _jobsEnabled = false;
+        let _jobsBusy = false;
+
+        function _jobsEl(id) { return document.getElementById(id); }
+
+        async function jobsInit() {
+            let data;
+            try {
+                // Sonda dedicada (200 sempre) en lloc de llegir un 404: amb el
+                // flag apagat la consola ha de quedar neta, no amb una linia
+                // vermella de `fetch` que el codi ja gestiona.
+                const probe = await fetch('/api/lectura/enabled');
+                if (!probe.ok) return;           // servit fora de FastAPI
+                const { enabled } = await probe.json();
+                if (!enabled) return;            // flag apagat: no toquem res
+                const r = await fetch('/api/jobs');
+                if (!r.ok) return;
+                data = await r.json();
+            } catch (err) {
+                return;                          // servit fora de FastAPI
+            }
+            _jobsEnabled = true;
+            _jobsEl('jobsPanel').style.display = 'block';
+            // El boto unic d'avui es queda per al seu altre paper ("Aturar
+            // pipeline" mentre corre); mentre no corre res, manen els tres.
+            _jobsSyncButtons(typeof nbState === 'string' ? nbState : 'IDLE');
+            _jobsWrapSetState();
+            _jobsRender(data.jobs || []);
+        }
+
+        // Embolcall de `nbSetState` en lloc d'editar-la: aixi el bloc segueix
+        // sent autocontingut i, si algu treu aquest bloc, no queda cap rastre.
+        function _jobsWrapSetState() {
+            if (typeof nbSetState !== 'function' || nbSetState._jobsWrapped) return;
+            const orig = nbSetState;
+            const wrapped = function(state) { orig(state); _jobsSyncButtons(state); };
+            wrapped._jobsWrapped = true;
+            window.nbSetState = wrapped;
+        }
+
+        function _jobsSyncButtons(state) {
+            if (!_jobsEnabled) return;
+            const running = (state === 'RUNNING' || state === 'CANCELLING' || state === 'SYNCING');
+            const startBtn = _jobsEl('nbStartBtn');
+            if (startBtn) startBtn.style.display = running ? '' : 'none';
+            _jobsEl('jobsActions').style.display = running ? 'none' : 'flex';
+        }
+
+        function _jobsSetBusy(busy) {
+            _jobsBusy = busy;
+            ['jobsBtnPreparar', 'jobsBtnEnllestir', 'jobsBtnZero'].forEach((id) => {
+                const b = _jobsEl(id);
+                if (b) b.disabled = busy;
+            });
+        }
+
+        // -- Taula ------------------------------------------------------------
+        function _jobsRender(jobs) {
+            const body = _jobsEl('jobsTableBody');
+            if (!body) return;
+            body.innerHTML = '';
+            if (!jobs.length) {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.colSpan = 4;
+                td.className = 'jobs-empty';
+                td.textContent = 'Encara no has preparat cap informe.';
+                tr.appendChild(td);
+                body.appendChild(tr);
+                _jobsSchedule(false);
+                return;
+            }
+            let anyLive = false;
+            jobs.forEach((job) => {
+                const eva = job.eva || {};
+                if (eva.viu) anyLive = true;
+                const tr = document.createElement('tr');
+                if (eva.viu) tr.className = 'is-live';
+
+                const tdPas = document.createElement('td');
+                tdPas.className = 'jobs-pas';
+                tdPas.textContent = eva.pas || '';
+                tr.appendChild(tdPas);
+
+                const tdProj = document.createElement('td');
+                tdProj.className = 'jobs-project';
+                tdProj.textContent = job.project || eva.project || '';
+                tr.appendChild(tdProj);
+
+                const tdEstat = document.createElement('td');
+                tdEstat.appendChild(document.createTextNode(eva.titol || ''));
+                if (eva.comptador) {
+                    tdEstat.appendChild(document.createTextNode(' · '));
+                    const strong = document.createElement('strong');
+                    strong.className = 'jobs-comptador';
+                    strong.textContent = eva.comptador;
+                    tdEstat.appendChild(strong);
+                }
+                if (eva.detall) {
+                    const div = document.createElement('div');
+                    div.className = 'jobs-detall';
+                    div.textContent = eva.detall;
+                    tdEstat.appendChild(div);
+                }
+                if (job.state === 'error' && job.error) {
+                    const div = document.createElement('div');
+                    div.className = 'jobs-error-detail';
+                    div.textContent = String(job.error).slice(0, 400);
+                    div.style.display = 'none';
+                    div.id = `jobs-err-${jobs.indexOf(job)}`;
+                    tdEstat.appendChild(div);
+                }
+                tr.appendChild(tdEstat);
+
+                const tdAccio = document.createElement('td');
+                if (eva.accio_text) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'jobs-row-btn';
+                    btn.textContent = eva.accio_text;
+                    const project = job.project || eva.project;
+                    const accio = eva.accio;
+                    btn.onclick = () => jobsRowAction(accio, project, jobs.indexOf(job));
+                    tdAccio.appendChild(btn);
+                }
+                tr.appendChild(tdAccio);
+                body.appendChild(tr);
+            });
+            _jobsSchedule(anyLive);
+        }
+
+        // Refresc cada 5 s NOMES mentre hi hagi un job viu (disseny §5.2).
+        function _jobsSchedule(anyLive) {
+            if (_jobsTimer) { clearTimeout(_jobsTimer); _jobsTimer = null; }
+            if (!anyLive) return;
+            _jobsTimer = setTimeout(jobsRefresh, 5000);
+        }
+
+        async function jobsRefresh() {
+            if (!_jobsEnabled) return;
+            try {
+                const r = await fetch('/api/jobs');
+                if (!r.ok) return;
+                const data = await r.json();
+                _jobsRender(data.jobs || []);
+            } catch (err) {
+                _jobsSchedule(true);   // xarxa intermitent: es torna a provar
+            }
+        }
+
+        // -- Accions ----------------------------------------------------------
+        // Resol la carpeta seleccionada -> nom de projecte (`leaf`). En mode
+        // xarxa passa pel mateix `/api/network/select` que el boto d'avui; en
+        // mode dev el projecte ja el dona el desplegable.
+        async function _jobsResolveProject() {
+            const browser = _jobsEl('networkBrowser');
+            const usesNetwork = browser && browser.style.display !== 'none';
+            if (!usesNetwork) return selectedProject || null;
+
+            const path = _jobsEl('nbSelectedPath').value;
+            const r = await fetch('/api/network/select', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ path: path, refresh: false, allow_no_markers: false }),
+            });
+            if (!r.ok) {
+                const body = await r.json().catch(() => ({}));
+                const detail = body.detail;
+                const message = (detail && typeof detail === 'object')
+                    ? (detail.message || JSON.stringify(detail))
+                    : (typeof detail === 'string' ? detail : (r.statusText || 'Error desconegut'));
+                if (typeof nbShowError === 'function') nbShowError(r.status, message);
+                return null;
+            }
+            const data = await r.json();
+            return data.leaf || null;
+        }
+
+        async function jobsRun(button) {
+            if (_jobsBusy) return;
+            _jobsSetBusy(true);
+            try {
+                const project = await _jobsResolveProject();
+                if (!project) return;
+
+                const r = await fetch(
+                    `/api/jobs/${encodeURIComponent(project)}?button=${encodeURIComponent(button)}`,
+                    { method: 'POST' },
+                );
+                // 202 = job nou · 409 = ja n'hi havia un de viu i ens hi
+                // enganxem (disseny §3.4: mai dos `run_lectura` alhora).
+                if (!r.ok && r.status !== 409) {
+                    const body = await r.json().catch(() => ({}));
+                    showMessage('No s\'ha pogut arrencar: ' + (body.detail || r.statusText), 'error');
+                    return;
+                }
+                const payload = await r.json().catch(() => ({}));
+
+                if (button === 'preparar') {
+                    // Ningu espera: no s'obre cap stream. La taula es la veritat
+                    // (§6.1) i el refresc de 5 s ja ensenya el progres real, aixi
+                    // que tancar la pestanya no costa res.
+                    showMessage('Preparant «' + project + '». Pots tancar la pestanya: t\'avisarem.', 'success');
+                    await jobsRefresh();
+                    _jobsSchedule(true);
+                    return;
+                }
+                // Enllestir / des de zero: el formulari s'obre al final, com avui.
+                _jobsAttachNext = !!payload.attach;
+                if (typeof nbSetState === 'function') nbSetState('RUNNING');
+                onProjectChange(project);
+                _jobsSchedule(true);
+            } catch (err) {
+                showMessage('No s\'ha pogut arrencar: ' + err, 'error');
+            } finally {
+                _jobsSetBusy(false);
+            }
+        }
+
+        // Boto de la fila: enganxar-se a un job viu, continuar-ne un
+        // d'interromput, enllestir-ne un de preparat o veure l'error.
+        async function jobsRowAction(accio, project, index) {
+            if (!project) return;
+            if (accio === 'error') {
+                const box = _jobsEl(`jobs-err-${index}`);
+                if (box) box.style.display = box.style.display === 'none' ? 'block' : 'none';
+                return;
+            }
+            if (accio === 'attach') {
+                selectedProject = project;
+                _jobsAttachNext = true;
+                if (typeof nbSetState === 'function') nbSetState('RUNNING');
+                onProjectChange(project);
+                _jobsSchedule(true);
+                return;
+            }
+            // `preparar` (Continuar) i `enllestir`: el mateix cami que els botons.
+            const r = await fetch(
+                `/api/jobs/${encodeURIComponent(project)}?button=${encodeURIComponent(accio)}`,
+                { method: 'POST' },
+            ).catch(() => null);
+            if (!r) return;
+            const payload = await r.json().catch(() => ({}));
+            if (accio === 'preparar') {
+                showMessage('Reprenent «' + project + '» — els documents ja llegits no es tornen a llegir.', 'success');
+                await jobsRefresh();
+                _jobsSchedule(true);
+                return;
+            }
+            selectedProject = project;
+            _jobsAttachNext = !!payload.attach;
+            if (typeof nbSetState === 'function') nbSetState('RUNNING');
+            onProjectChange(project);
+            _jobsSchedule(true);
+        }
+
+        jobsInit();
     </script>
 <div id="formatToast" class="format-toast"></div>
 </body>
