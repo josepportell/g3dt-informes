@@ -87,6 +87,9 @@ class SoilLevel:
     n20_min: float | None = None  # Min N20 in layer (excl. refusal)
     n20_max: float | None = None  # Max N20 in layer (100 = refusal)
     soil_type: str = "granular"     # granular/arena/grava/arena_limosa/limo/arcilla
+    # Fase 8b: la descripcio ve de la lectura (via A) i ja es la redaccio que
+    # Eva ha triat -> a les cel·les de taula hi va LITERAL, sense escurçar.
+    description_verbatim: bool = False
 
 
 @dataclass

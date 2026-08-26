@@ -40,7 +40,7 @@ concurrència 2 i dos projectes alhora. Segona obertura: cache per md5 → 0 cri
 3. **Autenticació**: el `.env` de la via B filtra `ANTHROPIC_API_KEY` sense crèdit al fill → `G3DT_LECTURA_AUTH=login` (`bb7b4f3`). FET.
 4. **Claus de fila no canòniques** (`prof_extraccio`, `punt`/`cota_inici` al sondeig) → skill v1.3 + àlies + validador (`ce01aa6`). FET.
 5. **Progrés invisible durant la lectura** (`#lectura-progress` dins del formulari ocult) → mirall a l'stepper (`f91fa0d`). FET.
-6. Seleccions de taula de la UI (`lecturaState.selections`) encara no viatgen al backend/generador. PENDENT (Fase 8b).
+6. Seleccions de taula de la UI (`lecturaState.selections`) encara no viatgen al backend/generador. **FET 2026-08-26 (Fase 8b)** — vegeu `../fase8b-taules/_RESULTATS.md`.
 
 ## Palanques de temps a decidir (Josep)
 

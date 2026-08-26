@@ -1355,3 +1355,108 @@ i la regla del `de` del nivell 1 al skill (amb la resposta de l'Eva). Bell-lloc 
 comparador que no fa soroll.
 
 *Fi entrada 2026-08-25 nit (2). Comparador d'or v2: 0 ERR de format als 9 jocs, 2 erroni de fons amagats destapats, fixture `sondeig cota` revisat amb l'informe de l'Eva.*
+
+---
+
+## 2026-08-26 — Fase 8b: les taules llegides arriben al `.docx` (tram 1, peça 1)
+
+### Context
+Últim forat obert de la Fase 8 (`docs/wizard-headless/fase8-e2e/_RESULTATS.md`, punt 6): la via A llegia
+`tables.{dpsh_tests, sondeig_tests, spt_ma_tests, soil_levels, superficie_construida}` amb candidats, font i cita,
+l'Eva hi triava a la UI (`lecturaState.selections`) — i res d'això sortia del navegador. L'informe es generava amb
+les taules de la via B (Excel + `sondeig_extracted.json`). Dit d'una altra manera: llegíem molt bé i imprimíem el
+que llegíem abans. És la primera peça del **tram 1** de la proposta de priorització
+(`docs/_TAULA-FASES-VS-EVA-2026-08-25.md`, §Proposta), triada perquè és petita i tanca la cadena lectura→informe.
+
+Baseline mesurat abans de tocar res (Castellar generat avui vs informe signat): **54 %** de cel·les de taula
+iguals o properes, amb la taula SPT/MA **buida sencera** i la cota de la taula DPSH repetida a totes les files.
+
+### Decisions arquitectòniques clau
+
+**1. Un mòdul de traducció pur, separat del consolidador i del generador** — `automation/lectura/tables_report.py`.
+*Why:* el contracte (§4.3, regles 7-8) ja diu que **el lector emet dades i el generador formata**; barrejar el
+format de l'informe dins de `consolidate.py` embrutaria l'actiu validat per la lectura d'or, i posar-lo dins de
+`report_generator.py` el faria intestable sense generar un `.docx`. *Alternatives:* (a) formatar al skill — es
+perdria la font per a la UI i caldria re-validar la lectura d'or sencera; (b) formatar a la UI en JavaScript — el
+`.docx` deixaria de ser reproduïble fora del navegador (i l'acceptació d'aquesta fase és justament generar des d'un
+`_decisions.json`). *Trade-off:* una capa més; a canvi, 49 tests sense docx ni servidor.
+
+**2. El bloc es CONGELA a `user_data.json` en desar, no es recalcula en generar.**
+*Why:* el que l'Eva ha vist i validat al wizard ha de ser el que surt a l'informe. Si es recalculés en generar, una
+re-lectura posterior (Fase 11, delta-sync) li canviaria l'informe sota els peus sense avisar. *Trade-off:* el bloc
+pot quedar desfasat respecte d'un `_decisions.json` nou; es refresca quan ella torna a desar, que és exactament el
+moment en què l'ha tornat a mirar. *Fallback deliberat:* si `user_data` no en té, el generador llegeix
+`validation/lectura/_decisions.json` directament — així un informe generat per CLI o per un arnès també surt amb
+les taules llegides, sense passar pel wizard.
+
+**3. Substitució EN BLOC, no cel·la a cel·la.** Quan la lectura porta files d'un bloc, aquell bloc de la taula es
+substitueix sencer. *Why:* barrejar files de l'Excel amb files llegides produiria taules incoherents (files amb
+sistemes de cotes diferents) i cap manera honesta d'explicar-ne l'origen a l'Eva. Els blocs que la lectura no ha
+trobat es queden com estaven.
+
+**4. Els nivells s'alineen per NÚMERO, no per índex.** `levels_by_number()` reutilitza el criteri del comparador v2
+(senyal fort de capa vegetal abans del número de nivell). *Why:* l'or pot portar una capa vegetal sense numerar que
+l'informe no té com a nivell propi; alinear per índex donaria la litologia de la capa vegetal al nivell 1 — el
+mateix error que el comparador v2 va destapar el 25 (vegeu l'entrada «2026-08-25 (nit, 2)»).
+
+**5. La litologia llegida NO s'escurça** (`SoilLevel.description_verbatim` + `_level_material`). *Why:*
+`_shorten_material_desc` talla pel primer punt, pensat per a descripcions automàtiques de sondeig; aplicat a la
+redacció que Eva ha triat entre candidats, «Substrat rocós. Bretxes amb intercalacions…» quedaria en «Substrat
+rocós». La descripció llegida també substitueix `level.description`, així que la narrativa de la secció 3 i les
+taules de permeabilitat i geotècnia parlen del mateix material amb les mateixes paraules.
+
+**6. Les fondàries `de`/`a` viatgen però NO toquen els càlculs.** *Why:* `depth_from_m`/`thickness_m` alimenten
+gruixos i taula sísmica; canviar-los és una decisió de càlcul (tram 3), no de taula. Frontera explícita al docstring
+del mòdul perquè no s'esborri per descuit.
+
+**7. La taula SPT/MA de la plantilla passa a ser un bucle** (`scripts/template_spt_ma_loop.py`, idempotent).
+*Why:* tenia una fila fixa d'escalars i Anciles en necessita 3 (2 sondeigs, 3 mostres): amb la lectura omplint
+`spt_ma_tests[]`, la fila única perdia dades reals **en silenci**. *Compatibilitat:* el generador emet sempre
+`spt_ma_tests` — una fila construïda amb els mateixos escalars d'abans quan no hi ha lectura, fins i tot si és
+buida — de manera que la sortida de la via B no canvia.
+
+### Implementació
+Nou: `automation/lectura/tables_report.py` (~390 LOC, stdlib pur excepte `load_project_tables`),
+`scripts/template_spt_ma_loop.py`, `tests/test_lectura_tables_report.py` (49 tests),
+`docs/wizard-headless/fase8b-taules/_RESULTATS.md`.
+Tocats: `report_generator.py` (`lectura_tables`, `_apply_lectura_tables`, `_apply_lectura_soil_levels`,
+`_level_material`), `report_data.py` (`SoilLevel.description_verbatim`), `wizard.py` (`save_wizard_data(extra=)`),
+`web/api.py` + `web/wizard_service.py` (`lectura_selections` → `_build_lectura_block`),
+`templates/validation/review.html`, `templates/g3dt-jinja-template.docx`.
+
+### Validació empírica
+Informe generat vs informe signat de l'Eva (`scripts/compare_tables_vs_eva.py`, 11 taules, cel·la a cel·la), mateix
+`user_data` als dos costats i com a única diferència el bloc de la lectura d'or de taules:
+
+| projecte | via B | + 8b |
+|---|---|---|
+| CASTELLAR | 54 % | **78 %** |
+| RUBÍ | 64 % | **82 %** |
+| BELL-LLOC | 76 % | 75 % |
+
+Taula DPSH de Castellar: 12 M / 8 X → **20 M / 0 X**. Taula SPT/MA: buida sencera → 5 cel·les. El −1 pp de
+Bell-lloc és **una** cel·la de format (`1/0` vs `1/--`) i ha generat la pregunta 7 a l'Eva. Via B verificada sense
+regressió: Castellar abans i després = 26 M · 9 C · 30 X idèntic.
+
+### Tests
+49 nous (`tests/test_lectura_tables_report.py`). Suite sencera: 1411 passed / 32 failed — els 32 de la línia base
+coneguda (SmartScan, ai_pipeline, fileminer Anciles), cap a lectura, wizard ni generador.
+
+### Limitacions conegudes
+- Només 3 dels 7 projectes tenen `user_data` reutilitzable a `reference-material/`: la mesura és sobre aquests tres.
+- Les anotacions que el lector enganxa dins de `litologia` («… (NIVELL 1, 0.50-1.20)») encara arriben a la cel·la.
+  Es corregeix al skill/consolidador: el generador no ha d'endevinar quin parèntesi és contingut i quin no. Sí que
+  s'escapcen les de `n30` i `superficie_construida`, on el que queda davant és verificablement una xifra.
+- El format de la columna SPT/MA no té regla derivable (4 informes, 4 formes) → pregunta 7.
+- El bloc congelat no es refresca sol si `_decisions.json` canvia sense que l'Eva torni a desar (decisió 2).
+
+### GO/NO-GO
+✅ Les taules llegides surten al `.docx`. ✅ Les tries de l'Eva hi arriben. ✅ Via B sense regressió (verificat).
+✅ Multi-fila SPT/MA provada al render. ⏳ Sense provar amb el wizard viu (Playwright) — el camí UI→backend està
+cobert per tests unitaris, no E2E. **GO** per continuar amb la Fase 13.
+
+### Següents passos
+Tram 1, peça 2: **Fase 13** (`auto_result` a disc + Cadastre/ICGC al consolidador + residus Groq) — tanca el forat 1
+de la Fase 8 i els MISMATCH d'escalars (superfície de parcel·la, UTM, RC) que aquesta mesura deixa a la vista.
+
+*Fi entrada 2026-08-26. Fase 8b: la cadena lectura → informe queda tancada per a les taules de camp.*

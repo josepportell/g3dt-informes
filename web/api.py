@@ -69,6 +69,10 @@ def _require_claudecode_vision_enabled() -> None:
 class WizardSaveRequest(BaseModel):
     wizard_fields: dict[str, Any]
     expert_overrides: dict[str, Any] | None = None
+    #: Fase 8b — tries d'Eva sobre cel·les de taula de la lectura
+    #: (`"{bloc}.{index}.{cel·la}"`) i sobre camps de lectura sense input al
+    #: wizard. Absent a la via B i als clients antics.
+    lectura_selections: dict[str, Any] | None = None
 
 
 class TargetedExtractRequest(BaseModel):
@@ -749,7 +753,8 @@ def save_wizard(project_name: str, req: WizardSaveRequest):
     """Save wizard data to user_data.json."""
     try:
         path = wizard_service.save_wizard(
-            project_name, req.wizard_fields, req.expert_overrides
+            project_name, req.wizard_fields, req.expert_overrides,
+            lectura_selections=req.lectura_selections,
         )
         return {"saved": True, "path": str(path)}
     except ValueError as e:

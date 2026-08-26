@@ -1,5 +1,5 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-08-25 nit (Fase 12 Python-first FETA; comparador d'or v2 sense soroll de format — llibre regenerat, 2 runs del 24-08 passen a fons = 1)
+Last updated: 2026-08-26 (tram 1 arrencat: Fase 8b FETA — les taules llegides arriben al .docx; Castellar 54 %→78 %, Rubí 64 %→82 % vs informe signat)
 
 ## ⚠ Reenquadrament 2026-08-23 (Josep): l'Eva està enfadada; criteri = "(quasi) faci la seva feina, sempre"
 
@@ -73,13 +73,24 @@ N30 (Bell-lloc informe 54 ≠ tall 58). Evidència: `docs/golden-read-taules/` (
 
 ## Wizard headless + UI de candidats (Pendent B) — CONSTRUÏT (2026-08-24 tarda)
 
+**2026-08-26 — Fase 8b: les taules llegides arriben a l'informe** (tram 1, peça 1; tanca el forat 6 de la Fase 8). Cadena nova completa:
+`_decisions.json` → `automation/lectura/tables_report.py` → `user_data.json["lectura_tables"]` → context del `.docx`; les tries de l'Eva a la UI
+(`lecturaState.selections`) viatgen amb el desat (`POST /api/wizard/{p}`) i manen sobre la decisió. Sense wizard, el generador llegeix
+`validation/lectura/_decisions.json` directament. **Mesura** (informe generat vs signat, `compare_tables_vs_eva.py`, 11 taules):
+CASTELLAR **54 %→78 %**, RUBÍ **64 %→82 %**, BELL-LLOC 76 %→75 % (una cel·la de format → pregunta 7). Taula DPSH de Castellar 12 M/8 X → **20 M/0 X**
+(cota per punt i relativa, fondària del peu «Rebuig a»); taula SPT/MA, **buida sencera** → 5 cel·les, i ara és un bucle a la plantilla (Anciles en té 3).
+Via B verificada sense regressió. Arreglat de camí: una llista de candidats crua podia acabar impresa al `.docx`; a la UI, la columna
+d'identificador de totes les taules sortia `—` i la de «Prof. Extracció» sempre buida; `lab_sample_id`/`location`/`depth` no arribaven mai a l'informe.
++49 tests. Detall: `docs/wizard-headless/fase8b-taules/_RESULTATS.md`, DECISION-LOG «2026-08-26».
+**Següent del tram 1: Fase 13** (`auto_result` a disc + Cadastre/ICGC al consolidador + residus Groq).
+
 **2026-08-25 nit (2) — comparador d'or v2.** `compare_consolida.py` amb normalitzadors per camp (dates, signes/decimals/intervals, adreces per
 portals, `spt_ma`, `num_floors`, `building_type`) i files de taula alineades per clau; 79 tests; independent del consolidador a posta. Llibre
 regenerat (8 runs + `consolida2` + `fase12/out`): **0 ERR de format**; el v2 destapa 2 erroni-amb-confiança reals que l'índex amagava
 (`soil_levels[1].de = 0,00` als runs `e2e-tarda-c2-solapat` i `sonnet-c3` del 24-08 → fons 0→1 al llibre, `_v1` conservat) i un forat del
 consolidador Python (fondàries de la capa vegetal `no_trobat` al joc Sonnet v2). Fixture Castellar `sondeig cota` revisat a `candidats` amb
 l'informe de l'Eva (sense −4,20: no és a cap document). Detall: DECISION-LOG «2026-08-25 (nit, 2)», `fase12-consolida/_RESULTATS.md` §7.
-Pendents nous: regla Pas 3b «`de` del nivell 1 = base de la capa vegetal» (pregunta a l'Eva), forat capa vegetal a `consolidate.py`. **Preguntes a l'Eva: registre únic a `docs/PREGUNTES-EVA-PENDENTS.md` (6 obertes).**
+Pendents nous: regla Pas 3b «`de` del nivell 1 = base de la capa vegetal» (pregunta a l'Eva), forat capa vegetal a `consolidate.py`. **Preguntes a l'Eva: registre únic a `docs/PREGUNTES-EVA-PENDENTS.md` (7 obertes; la 7 és el format de la columna SPT/MA).**
 
 Disseny `docs/DISSENY-WIZARD-HEADLESS-CANDIDATS-2026-08-24.md` (D1-D3/D5 confirmats pel Josep) → Fases 0-8 fetes el mateix dia
 (codi amb Sonnet 5, judici a la sessió principal). Skill v1.3 (`--only`+`--inventory`, `--consolida`, contracte v1, claus

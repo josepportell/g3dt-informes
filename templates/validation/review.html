@@ -7168,6 +7168,11 @@
                 const body = {
                     wizard_fields: collectWizardFields(),
                     expert_overrides: collectExpertOverrides(),
+                    // Fase 8b: les tries de l'Eva sobre cel·les de taula (i sobre
+                    // camps de lectura sense input al wizard). El backend les
+                    // resol contra `_decisions.json` i les congela a user_data,
+                    // que es d'on el generador munta les taules del .docx.
+                    lectura_selections: getLecturaSelections(),
                 };
 
                 const res = await fetch(`/api/wizard/${encodeURIComponent(selectedProject)}`, {
@@ -9298,7 +9303,10 @@
         }
 
         function _lecturaCellDisplayValue(cell) {
-            if (!cell) return '—';
+            if (cell === null || cell === undefined || cell === '') return '—';
+            // Els identificadors de fila (punt, sondeig, nom) son text pla per
+            // contracte: sense aquesta branca es veien tots com a "—".
+            if (typeof cell !== 'object') return String(cell);
             if (cell.value !== null && cell.value !== undefined && cell.value !== '') return cell.value;
             if (cell.n_spt !== undefined || cell.n_tp !== undefined || cell.n_ma !== undefined) {
                 return `${cell.n_spt || 0} SPT / ${cell.n_tp || 0} TP / ${cell.n_ma || 0} MA`;
@@ -9773,7 +9781,7 @@
                         sptRows.map((row, i) => [
                             _lecturaCellBadgeSpan(`spt_ma_tests.${i}.id`, row.id),
                             _lecturaCellBadgeSpan(`spt_ma_tests.${i}.punt`, row.punt),
-                            _lecturaCellBadgeSpan(`spt_ma_tests.${i}.fondaria`, row.fondaria),
+                            _lecturaCellBadgeSpan(`spt_ma_tests.${i}.profunditat`, row.profunditat),
                             _lecturaCellBadgeSpan(`spt_ma_tests.${i}.litologia`, row.litologia),
                             _lecturaN30Cell(`spt_ma_tests.${i}`, row),
                         ]));

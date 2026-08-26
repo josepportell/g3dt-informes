@@ -82,6 +82,19 @@ def _shorten_material_desc(desc: str) -> str:
     return desc
 
 
+def _level_material(level) -> str:
+    """Text de material d'un nivell per a una cel·la de taula.
+
+    Fase 8b: quan la descripcio ve de la lectura (via A) ja es la redaccio que
+    Eva ha triat entre els candidats — hi va LITERAL. Nomes s'escurça la
+    descripcio automatica derivada del sondeig/DPSH.
+    """
+    desc = getattr(level, 'description', '') or ''
+    if getattr(level, 'description_verbatim', False):
+        return desc
+    return _shorten_material_desc(desc)
+
+
 @dataclass
 class ContextPreviewResult:
     """Result of a dry-run context build (no template rendering)."""
@@ -427,11 +440,126 @@ class ReportGenerator:
                 except Exception as e:
                     self.warnings.append(f"Terzaghi calculation failed: {e}")
 
+            # Fase 8b: litologia llegida (i triada per Eva) -> descripcio dels
+            # nivells. Es fa DESPRES dels calculs a proposit: el tipus de sol i
+            # els parametres ja estan decidits sobre `sondeig_layers`; aqui nomes
+            # canvia el TEXT que veura Eva a les taules i a la narrativa.
+            self._apply_lectura_soil_levels()
+
             return self.report_data
 
         except Exception as e:
             self.errors.append(f"Error building report data: {e}")
             return None
+
+    # === Fase 8b: taules llegides (via A) ===
+
+    @property
+    def lectura_tables(self) -> dict:
+        """Files de taula llegides per la via A, llestes per al `.docx`.
+
+        Ordre de preferencia:
+          1. `user_data['lectura_tables']` — el que Eva va desar al wizard
+             (les seves tries ja aplicades). Congelat: un canvi posterior de
+             `_decisions.json` no li mou l'informe sota els peus.
+          2. `validation/lectura/_decisions.json` del projecte — perque un
+             informe generat sense passar pel wizard (CLI, harness) tambe
+             surti amb les taules llegides.
+
+        A la via B cap de les dues existeix i retorna `{}`: comportament
+        identic al d'avui.
+        """
+        cached = getattr(self, '_lectura_tables_cache', None)
+        if cached is not None:
+            return cached
+        tables = self.user_data.get('lectura_tables')
+        if not isinstance(tables, dict) or not tables:
+            try:
+                from .lectura.tables_report import load_project_tables
+                tables = load_project_tables(
+                    self.project_path, self.user_data.get('lectura_selections'),
+                )
+            except Exception as e:  # pragma: no cover - defensiu
+                self.warnings.append(f"Could not load lectura tables: {e}")
+                tables = {}
+        self._lectura_tables_cache = tables if isinstance(tables, dict) else {}
+        return self._lectura_tables_cache
+
+    def _apply_lectura_tables(self, context: dict) -> None:
+        """Fase 8b — bolca les taules llegides al context de la plantilla.
+
+        Cada bloc es substitueix sencer i nomes si la lectura en te files;
+        els blocs que la lectura no ha trobat es queden com estaven (via B).
+        `superficie_construida` i la capçalera de la mostra de laboratori hi
+        van tambe: son camps que el wizard NO te com a input i que, sense
+        aquest pont, no arribarien mai a l'informe.
+        """
+        tables = self.lectura_tables
+        if not tables:
+            return
+        applied = []
+        for key in ('dpsh_tests', 'sondeig_tests', 'spt_ma_tests'):
+            rows = tables.get(key)
+            if rows:
+                context[key] = rows
+                applied.append(f"{key}={len(rows)}")
+        spt_rows = tables.get('spt_ma_tests') or []
+        if spt_rows:
+            first = spt_rows[0]
+            context['spt_test_id'] = first.get('test_id', '')
+            context['spt_location'] = first.get('location', '')
+            context['spt_depth_range'] = first.get('depth_range', '')
+            context['spt_n30'] = first.get('n30', '')
+            context['spt_lithology'] = first.get('lithology', '')
+        superficie = tables.get('superficie_construida')
+        if superficie and not context.get('superficie_construida'):
+            context['superficie_construida'] = superficie
+            applied.append('superficie_construida')
+        lab = tables.get('lab') or {}
+        for ctx_key, lab_key in (
+            ('lab_sample_id', 'sample_id'),
+            ('lab_location', 'location'),
+            ('lab_depth', 'depth'),
+        ):
+            if lab.get(lab_key) and not context.get(ctx_key):
+                context[ctx_key] = lab[lab_key]
+                applied.append(ctx_key)
+        if applied:
+            logger.info("Fase 8b: taules de la lectura aplicades (%s)", ', '.join(applied))
+
+    def _apply_lectura_soil_levels(self) -> None:
+        """Aplica la litologia llegida a `report_data.soil_levels`.
+
+        Alineacio per NUMERO de nivell (`levels_by_number`), no per index: l'or
+        pot portar una capa vegetal sense numerar que l'informe no te com a
+        nivell propi. Les fondaries `de`/`a` NO es toquen (son entrada de
+        calcul: gruixos, taula sismica) — fora d'abast de la Fase 8b.
+        """
+        levels = (self.lectura_tables or {}).get('soil_levels')
+        if not levels or not self.report_data or not self.report_data.soil_levels:
+            return
+        from .lectura.tables_report import levels_by_number
+        by_number = levels_by_number(levels)
+        if not by_number:
+            return
+        applied = 0
+        for level in self.report_data.soil_levels:
+            row = by_number.get(level.level_number)
+            litologia = (row or {}).get('litologia')
+            if not litologia:
+                continue
+            level.description = litologia
+            # Text ja triat per Eva: va literal a les cel·les, sense escurçar.
+            level.description_verbatim = True
+            applied += 1
+        if applied:
+            logger.info("Fase 8b: %d nivell(s) amb litologia de la lectura", applied)
+        missing = len(self.report_data.soil_levels) - applied
+        if missing > 0:
+            self.warnings.append(
+                f"Lectura: {missing} nivell(s) de l'informe sense litologia llegida "
+                f"(llegits: {sorted(by_number)}); es manté la descripció automàtica."
+            )
 
     def generate_sections(self) -> dict[str, Any]:
         """
@@ -1015,6 +1143,22 @@ class ReportGenerator:
             context['spt_depth_range'] = spt.get('depth_range', '')
             context['spt_n30'] = str(spt.get('n30', ''))
             context['spt_lithology'] = spt.get('lithology', '')
+            # La taula SPT/MA de la plantilla es un bucle (pot tenir mes d'una
+            # fila: Anciles en te 3). Per defecte, la fila unica de sempre —
+            # tambe quan es buida, per no canviar la sortida de la via B.
+            context['spt_ma_tests'] = [{
+                'test_id': context['spt_test_id'],
+                'location': context['spt_location'],
+                'depth_range': context['spt_depth_range'],
+                'n30': context['spt_n30'],
+                'lithology': context['spt_lithology'],
+            }]
+
+            # --- Fase 8b: les taules llegides manen sobre les de la via B ----
+            # Substitucio EN BLOC (no cel·la a cel·la): les files llegides son
+            # les del full de camp/annex, amb la cota per punt i la fondaria
+            # exacta del peu "Rebuig a", que es el que Eva escriu a l'informe.
+            self._apply_lectura_tables(context)
 
             # Lab data - auto-fill from lab PDF if not provided
             if not self.report_data.lab_tests:
@@ -1146,7 +1290,7 @@ class ReportGenerator:
                     materials_text = s3_materials[i] if i < len(s3_materials) else ''
                     context['soil_levels'].append({
                         'description': level.description,
-                        'description_short': _shorten_material_desc(level.description),
+                        'description_short': _level_material(level),
                         'ordinal': _catalan_ordinal(level.level_number),
                         'materials_text': materials_text,
                         'depth_text': s3_depth_texts[i] if i < len(s3_depth_texts) else '',
@@ -1177,8 +1321,8 @@ class ReportGenerator:
             for level in soil_levels:
                 context['soil_level_rows'].append({
                     'name': f'{_catalan_ordinal(level.level_number)} nivell.',
-                    'material': _shorten_material_desc(level.description),
-                    'material_short': _shorten_material_desc(level.description),
+                    'material': _level_material(level),
+                    'material_short': _level_material(level),
                 })
             if not context['soil_level_rows']:
                 context['soil_level_rows'] = [{'name': '', 'material': '', 'material_short': ''}]
@@ -1186,13 +1330,24 @@ class ReportGenerator:
             # Table 6: Permeability rows
             context['perm_rows'] = []
             if sections.get('section3') and sections['section3'].taula7_permeability:
+                # Fase 8b: quan el nivell porta litologia llegida, el text de
+                # la fila de permeabilitat es el mateix (mateix nivell, mateix
+                # material) — si no, la taula de nivells i aquesta dirien coses
+                # diferents del mateix estrat.
+                levels_by_num = {lv.level_number: lv for lv in soil_levels}
                 for i, perm in enumerate(sections['section3'].taula7_permeability):
                     ordinal = _catalan_ordinal(i + 1)
+                    lv = levels_by_num.get(i + 1)
+                    material = (
+                        _level_material(lv)
+                        if lv is not None and getattr(lv, 'description_verbatim', False)
+                        else _shorten_material_desc(perm.material)
+                    )
                     context['perm_rows'].append({
                         'name': f'{ordinal} nivell',
                         'k_value': perm.k_m_s,
-                        'material': _shorten_material_desc(perm.material),
-                        'material_short': _shorten_material_desc(perm.material),
+                        'material': material,
+                        'material_short': material,
                     })
             # Ensure at least one row per soil level (fallback with empty k)
             if not context['perm_rows']:
@@ -1200,8 +1355,8 @@ class ReportGenerator:
                     context['perm_rows'].append({
                         'name': f'{_catalan_ordinal(level.level_number)} nivell',
                         'k_value': '',
-                        'material': _shorten_material_desc(level.description),
-                        'material_short': _shorten_material_desc(level.description),
+                        'material': _level_material(level),
+                        'material_short': _level_material(level),
                     })
             if not context['perm_rows']:
                 context['perm_rows'] = [{'name': '', 'k_value': '', 'material': '', 'material_short': ''}]
@@ -1317,8 +1472,8 @@ class ReportGenerator:
                         nb_display = geomech['Nb']
 
                     context['geotech_rows'].append({
-                        'name': f"{_catalan_ordinal(level.level_number)} nivell. {_shorten_material_desc(level.description)}.",
-                        'material_short': _shorten_material_desc(level.description),
+                        'name': f"{_catalan_ordinal(level.level_number)} nivell. {_level_material(level).rstrip('.')}.",
+                        'material_short': _level_material(level),
                         'nb': nb_display,
                         'n': str(n_display),
                         'density': f"{gamma:.2f}",

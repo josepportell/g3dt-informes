@@ -2624,10 +2624,36 @@ def load_user_data(project_name: str) -> dict[str, Any]:
         return {}
 
 
+def _build_lectura_block(
+    project_path: Path,
+    lectura_selections: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """Fase 8b — `lectura_tables` (+ les tries crues) per a `user_data.json`.
+
+    Retorna `{}` quan el projecte no té lectura de la via A: a la via B
+    `validation/lectura/_decisions.json` no existeix i `user_data.json` queda
+    exactament com abans.
+    """
+    try:
+        from automation.lectura.tables_report import load_project_tables
+        tables = load_project_tables(project_path, lectura_selections)
+    except Exception:
+        logger.exception("Fase 8b: no s'han pogut construir les taules de lectura")
+        return {}
+    if not tables:
+        return {}
+    block: dict[str, Any] = {"lectura_tables": tables}
+    if lectura_selections:
+        # Crues, per poder re-resoldre o auditar què va triar Eva.
+        block["lectura_selections"] = dict(lectura_selections)
+    return block
+
+
 def save_wizard(
     project_name: str,
     wizard_fields: dict[str, Any],
     expert_overrides: dict[str, Any] | None = None,
+    lectura_selections: dict[str, Any] | None = None,
 ) -> Path:
     """Save wizard data to user_data.json."""
     project_path = _resolve_project(project_name)
@@ -2664,8 +2690,17 @@ def save_wizard(
             elif _is_changed(field, new_val):
                 current_sources[field] = 'user'
 
+    # -- Fase 8b: taules llegides (+ tries d'Eva) -> user_data --------------
+    # Es congelen aqui, no al generador: el que Eva ha vist i validat al
+    # wizard es el que ha de sortir a l'informe, encara que una re-lectura
+    # posterior canvii `_decisions.json`.
+    lectura_block = _build_lectura_block(project_path, lectura_selections)
+
     from automation.wizard import save_wizard_data
-    result = save_wizard_data(project_path, wizard_fields, expert_overrides, sources=current_sources)
+    result = save_wizard_data(
+        project_path, wizard_fields, expert_overrides,
+        sources=current_sources, extra=lectura_block,
+    )
 
     # -- Format learning: save confirmed format if learning was active ---
     if cached.get("_format_learning"):
