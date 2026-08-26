@@ -959,3 +959,47 @@ def test_a_network_that_cannot_be_read_does_not_blank_the_table(network_project,
     assert job["network_delta"] is None
     assert job["eva"]["detall"] is None, "millor no dir res que dir «res ha canviat» sense mirar"
     assert job["eva"]["titol"].startswith("Preparat (")
+
+
+# ---------------------------------------------------------------------------
+# Fase 14b — «Actualitzar»: tornar a mirar la xarxa ara, sense tocar res
+# ---------------------------------------------------------------------------
+
+
+def test_refresh_looks_at_the_network_again_instead_of_serving_the_cache(network_project, monkeypatch):
+    from automation import sync_workspace
+
+    calls = []
+    real = sync_workspace.sync_delta_for_leaf
+    monkeypatch.setattr(sync_workspace, "sync_delta_for_leaf",
+                        lambda leaf, **kw: (calls.append(kw), real(leaf, **kw))[1])
+    client = TestClient(app)
+    client.get("/api/jobs")
+
+    client.get("/api/jobs", params={"refresh": "true"})
+
+    assert len(calls) == 2
+    assert all(kw["check_only"] is True for kw in calls), "Actualitzar mira, no toca"
+
+
+def test_refresh_sees_a_file_that_appeared_after_the_last_check(network_project):
+    net_project, _, _ = network_project
+    client = TestClient(app)
+    assert client.get("/api/jobs").json()["jobs"][0]["network_delta"]["new"] == 0
+
+    (net_project / "A.01.pdf").write_text("plànol nou", encoding="utf-8")
+
+    stale = client.get("/api/jobs").json()["jobs"][0]
+    fresh = client.get("/api/jobs", params={"refresh": "true"}).json()["jobs"][0]
+    assert stale["network_delta"]["new"] == 0      # cache d'un minut
+    assert fresh["network_delta"]["new"] == 1
+
+
+def test_refresh_starts_no_job_and_copies_nothing(network_project):
+    net_project, ws_project, _ = network_project
+    (net_project / "A.01.pdf").write_text("plànol nou", encoding="utf-8")
+
+    TestClient(app).get("/api/jobs", params={"refresh": "true"})
+
+    assert not (ws_project / "A.01.pdf").exists()
+    assert not (ws_project / "validation" / "lectura" / "_consolida_only.json").exists()

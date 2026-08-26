@@ -2290,6 +2290,7 @@
         .jobs-btn:hover:not(:disabled) { border-color: #7f8c8d; }
         .jobs-btn:disabled { opacity: .5; cursor: default; }
         .jobs-btn.primary { background: #27ae60; border-color: #27ae60; color: #fff; font-weight: 600; }
+        .jobs-btn-quiet { margin-left: auto; color: #7f8c8d; }
         .jobs-btn.primary:hover:not(:disabled) { background: #229954; }
         .jobs-btn small { display: block; font-size: 0.78em; opacity: .8; font-weight: 400; }
         .jobs-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
@@ -2370,6 +2371,10 @@
                 </button>
                 <button type="button" class="jobs-btn" id="jobsBtnZero" onclick="jobsRun('desde_zero')">
                     Fer un informe des de zero<small>Tot seguit, amb la pestanya oberta</small>
+                </button>
+                <button type="button" class="jobs-btn jobs-btn-quiet" id="jobsBtnActualitzar"
+                        onclick="jobsRefresh(true)" title="Torna a mirar la xarxa ara mateix">
+                    ↻ Actualitzar<small>Mira la xarxa ara; no copia res</small>
                 </button>
             </div>
             <table class="jobs-table" id="jobsTable">
@@ -10130,7 +10135,7 @@
 
         function _jobsSetBusy(busy) {
             _jobsBusy = busy;
-            ['jobsBtnPreparar', 'jobsBtnEnllestir', 'jobsBtnZero'].forEach((id) => {
+            ['jobsBtnPreparar', 'jobsBtnEnllestir', 'jobsBtnZero', 'jobsBtnActualitzar'].forEach((id) => {
                 const b = _jobsEl(id);
                 if (b) b.disabled = busy;
             });
@@ -10218,15 +10223,22 @@
             _jobsTimer = setTimeout(jobsRefresh, 5000);
         }
 
-        async function jobsRefresh() {
+        // `force=true` (botó Actualitzar, Fase 14b): salta la cache d'un minut
+        // del `network_delta` i torna a mirar la xarxa ara. Segueix sense copiar
+        // ni moure res, i sense arrencar cap job.
+        async function jobsRefresh(force) {
             if (!_jobsEnabled) return;
+            const btn = _jobsEl('jobsBtnActualitzar');
+            if (force && btn) btn.disabled = true;
             try {
-                const r = await fetch('/api/jobs');
+                const r = await fetch('/api/jobs' + (force ? '?refresh=true' : ''));
                 if (!r.ok) return;
                 const data = await r.json();
                 _jobsRender(data.jobs || []);
             } catch (err) {
                 _jobsSchedule(true);   // xarxa intermitent: es torna a provar
+            } finally {
+                if (force && btn) btn.disabled = false;
             }
         }
 

@@ -506,9 +506,17 @@ _DELTA_MAX_PROJECTS = 5
 _delta_cache: dict[str, tuple[float, dict[str, Any] | None]] = {}
 
 
-def invalidate_network_delta(project_name: str) -> None:
-    """Després de sincronitzar, el delta que hi havia ja no val."""
-    _delta_cache.pop(project_name, None)
+def invalidate_network_delta(project_name: str | None = None) -> None:
+    """Després de sincronitzar, el delta que hi havia ja no val.
+
+    Sense argument, buida la cache sencera: és el que fa el botó *Actualitzar*
+    de la taula (Fase 14b) quan l'Eva vol tornar a mirar la xarxa ara mateix i
+    no d'aquí a un minut.
+    """
+    if project_name is None:
+        _delta_cache.clear()
+    else:
+        _delta_cache.pop(project_name, None)
 
 
 def _network_delta(project_name: str) -> dict[str, Any] | None:
@@ -549,7 +557,7 @@ def _network_delta(project_name: str) -> dict[str, Any] | None:
     return payload
 
 
-def list_jobs() -> list[dict[str, Any]]:
+def list_jobs(*, refresh: bool = False) -> list[dict[str, Any]]:
     """Taula d'estat dels jobs (disseny §5.2): vius primer, després
     `updated_at` desc, últims 30 dies.
 
@@ -560,8 +568,15 @@ def list_jobs() -> list[dict[str, Any]]:
     Fase 11: als jobs `ready` s'hi omple `network_delta` amb el mode `check` del
     delta-sync (§4) — que no copia ni mou res — perquè la fila pugui dir «2
     documents nous des de llavors → Enllestir ≈ 8 min».
+
+    `refresh=True` (botó *Actualitzar*, Fase 14b) salta la cache d'un minut i
+    torna a mirar la xarxa ara. Segueix sent mode `check`: no copia ni mou res,
+    i no arrenca cap job.
     """
     from automation.lectura import job_text
+
+    if refresh:
+        invalidate_network_delta()
 
     jobs = registry.list_jobs(_jobs_root())
     checked = 0

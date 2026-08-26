@@ -601,8 +601,12 @@ def lectura_enabled():
 
 
 @router.get("/jobs")
-def list_lectura_jobs():
+def list_lectura_jobs(refresh: bool = False):
     """Taula d'estat dels jobs de lectura headless (Fase 10, disseny §5.2).
+
+    `refresh=true` (botó *Actualitzar*, Fase 14b) torna a mirar la xarxa ara en
+    lloc de servir el `network_delta` cachejat d'un minut. Segueix sent el mode
+    `check` del delta-sync: no copia ni mou res, i no arrenca cap job.
 
     Gated per `G3DT_USE_LECTURA_HEADLESS` (404 quan és off, mateix criteri
     que la resta d'endpoints d'aquest pipeline).
@@ -611,7 +615,7 @@ def list_lectura_jobs():
 
     from . import lectura_service
 
-    return {"jobs": lectura_service.list_jobs()}
+    return {"jobs": lectura_service.list_jobs(refresh=refresh)}
 
 
 @router.post("/jobs/{project_name:path}")
