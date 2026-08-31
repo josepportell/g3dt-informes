@@ -485,7 +485,19 @@
           }
         ],
         "de": "-0,50",
-        "a": "≥ -1,20 (fins al final del reconeixement; el tall el dibuixa fins a la base)",
+        "a": {
+          "estat": "candidats",
+          "value": "-1,20",
+          "candidates": [
+            {
+              "value": "-1,20",
+              "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1 + PENETROS + SONDEIG.pdf p.5",
+              "quote": "0.50-1.20 / 0,50-1,20 Roca fracturada",
+              "note": "final del reconeixement (S-1 s'atura a -1,20), no una transició llegida; el tall el dibuixa fins a la base"
+            }
+          ],
+          "rule": "Pas 3b: la base de l'últim nivell és el final del reconeixement (≥ -1,20), no una transició → candidats (pregunta 8 a l'Eva per a l'etiqueta)"
+        },
         "de_a_estat": {
           "estat": "segur",
           "candidats": [

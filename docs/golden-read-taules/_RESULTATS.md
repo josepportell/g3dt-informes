@@ -79,3 +79,18 @@ El lector cec va escriure `de`/`a` plans i una cel·la `de_a_estat` amb l'estat 
 Conseqüència: les cel·les `de`/`a` de `soil_levels` ara es comparen (abans sortien 2 ABSENT a tots els runs) i, amb les files alineades
 per clau (capa vegetal / nivell N, no per índex), han aflorat lectures «nivell 1 des de 0,00» (capa vegetal absorbida) que l'índex amagava —
 vegeu `docs/wizard-headless/fase12-consolida/_RESULTATS.md` §7 i `mesures/LEDGER.md`.
+
+## Fix B (2026-08-31): Castellar `soil_levels[1].a` en dialecte v2
+
+L'or deia literalment «≥ -1,20 (fins al final del reconeixement; el tall el dibuixa fins a la base)» — l'autor de l'or
+ja hedgejava exactament com la regla del Pas 3b (`consolidate.py:1291-1295`, la base de l'últim nivell sempre baixa a
+`candidats`), però la cel·la plana s'adaptava com a `segur` (`wrap_flat_cells` hereta l'`estat` de la fila). Regla i or
+ja coincidien; el comparador no ho podia saber perquè el valor era text pla, no un dict `estat`/`candidates`.
+
+Reescrit com a dict v2 (`estat: candidats`, `value: "-1,20"`, 1 candidat amb `note` explicant per què és el final del
+reconeixement i no una transició). `de` i `de_a_estat` no es toquen (la pregunta 3/8 de l'Eva sobre l'etiqueta segueix
+oberta; aquest fix només corregeix el *dialecte*, no cap valor que l'or afirmi).
+
+Harness: `sonnet-v2-c3` `TAULES {OK 25→26, CAUTELA 4→3}` — la línia `CAUTELA soil_levels[1].a` desapareix als 4 jocs
+de Castellar. Cap ALERTA nova (`consolidate.py:1291-1295` sempre baixa la base de l'últim nivell a `candidats`, mai
+`segur`, així que aquesta cel·la mai pot xocar amb l'or `candidats`).
