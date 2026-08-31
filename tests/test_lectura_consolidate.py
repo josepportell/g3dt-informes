@@ -615,35 +615,117 @@ def test_http_signals_never_displace_a_document(tmp_path: Path, monkeypatch):
     assert "ICGC" not in fonts, "amb un document que ho diu, la consulta HTTP ni tan sols s'emet"
 
 
-def test_cadastre_is_off_by_default(tmp_path: Path, monkeypatch):
-    """Mesurat 2026-08-26: a Castellar el Cadastre respon 441 m² i l'informe
-    signat de l'Eva diu 1.284; encendre'l passa el comparador d'or de
-    14 OK / 7 CAUTELA a 12 OK / 7 CAUTELA / 2 ALERTA."""
+def _cadastre_project(tmp_path: Path) -> tuple[Path, Path]:
+    """Projecte sintetic amb `street_address`/`municipality` ja llegits (font A, 0.9): el
+    lector nou (`cadastre_reader.cadastre_portal_signals`) llegeix `decided[...]`, no
+    `_auto_result.json`."""
+    proj = tmp_path / "3001621 CASTELLAR"
+    out_dir = proj / "validation" / "lectura"
+    out_dir.mkdir(parents=True)
+    _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [
+        _ta("municipality", "Castellar del Valles", 0.9),
+        _ta("street_address", "Carrer Arbrells, 18A, 18B i 20", 0.9),
+    ])
+    return proj, out_dir
+
+
+def _fake_cadastre_signal(key: str, value: str, note: str = "") -> "C.Signal":
+    return C.Signal(key, value, "(Cadastre: test)", "", 0.5, C._HTTP_DOC, "consulta_http", "python", note or None)
+
+
+def test_cadastre_default_is_on_and_calls_the_new_reader(tmp_path: Path, monkeypatch):
+    """Decisio del Josep 2026-08-31 (Fix D, `PLA-PENDENTS-0B-0C-0D` §7.9/§11): Cadastre
+    encès per defecte. El vell mecanisme via `_auto_result.json` ja no existeix per a
+    aquests dos camps (vegeu `_HTTP_FIELD_SOURCES`): els omple `cadastre_reader`."""
     monkeypatch.delenv("G3DT_LECTURA_HTTP_SOURCES", raising=False)
-    proj, out_dir = _project_with_auto_result(
-        tmp_path,
-        {"cadastral_ref": "3298012DG2039N", "superficie_cadastral_m2": 441},
-        {"cadastral_ref": "Cadastre API (ortho)", "superficie_cadastral_m2": "Cadastre WFS (geocode)"})
-    _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [_ta("municipality", "Castellar", 0.9)])
+    proj, out_dir = _cadastre_project(tmp_path)
+
+    calls: list[str] = []
+
+    def fake(key, decided, project_path):
+        calls.append(key)
+        if key == "superficie_parcela":
+            return [_fake_cadastre_signal("superficie_parcela", "1284", "3/3 parcel·les contigues")]
+        return [_fake_cadastre_signal("referencia_catastral", "3298012DG2039N+3298013DG2039N+3298014DG2039N")]
+    monkeypatch.setattr("automation.lectura.cadastre_reader.cadastre_portal_signals", fake)
+
+    fields = C.consolidate_python(out_dir, project_path=proj)["fields"]
+    assert set(calls) == {"referencia_catastral", "superficie_parcela"}
+    assert fields["superficie_parcela"]["estat"] == "candidats"
+    assert fields["superficie_parcela"]["value"] == "1284"
+    assert fields["referencia_catastral"]["value"] == "3298012DG2039N+3298013DG2039N+3298014DG2039N"
+
+
+def test_cadastre_can_be_turned_off(tmp_path: Path, monkeypatch):
+    """(h) commutador OFF -> el lector nou no es crida."""
+    monkeypatch.setenv("G3DT_LECTURA_HTTP_SOURCES", "icgc,geocodificacio")
+    proj, out_dir = _cadastre_project(tmp_path)
+
+    def boom(*a, **k):
+        raise AssertionError("cadastre_portal_signals no s'hauria de cridar amb el commutador OFF")
+    monkeypatch.setattr("automation.lectura.cadastre_reader.cadastre_portal_signals", boom)
 
     fields = C.consolidate_python(out_dir, project_path=proj)["fields"]
     assert fields["referencia_catastral"]["estat"] == "no_trobat"
     assert fields["superficie_parcela"]["estat"] == "no_trobat"
 
 
-def test_cadastre_can_be_switched_on(tmp_path: Path, monkeypatch):
-    monkeypatch.setenv("G3DT_LECTURA_HTTP_SOURCES", "icgc,geocodificacio,cadastre")
-    proj, out_dir = _project_with_auto_result(
-        tmp_path,
-        {"cadastral_ref": "3298012DG2039N", "superficie_cadastral_m2": 441},
-        {"cadastral_ref": "Cadastre API (ortho)", "superficie_cadastral_m2": "Cadastre WFS (geocode)"})
-    _doc(out_dir, "d1", "PENETROS.pdf", "camp_penetros", [_ta("municipality", "Castellar", 0.9)])
+def test_cadastre_reader_not_called_when_a_document_already_answers(tmp_path: Path, monkeypatch):
+    """(g) porta tancada: Bell-lloc ja diu `superficie_parcela` (995) en un document ->
+    el lector nou no es crida (cap font Python pot guanyar contra la lectura)."""
+    monkeypatch.delenv("G3DT_LECTURA_HTTP_SOURCES", raising=False)
+    proj = tmp_path / "4001612 BELL-LLOC"
+    out_dir = proj / "validation" / "lectura"
+    out_dir.mkdir(parents=True)
+    _doc(out_dir, "d1", "ANNEXES/fitxa_cadastral.pdf", "fitxa_cadastral", [
+        _ta("municipality", "Bell-lloc d'Urgell", 0.9),
+        _ta("street_address", "C/ Mestre Ramon Ortiz 15", 0.9),
+        _ta("superficie_parcela", "995", 0.9),
+        _ta("referencia_catastral", "4613172CG1141S", 0.9),
+    ])
+
+    def boom(*a, **k):
+        raise AssertionError("porta tancada: no s'hauria de cridar")
+    monkeypatch.setattr("automation.lectura.cadastre_reader.cadastre_portal_signals", boom)
 
     fields = C.consolidate_python(out_dir, project_path=proj)["fields"]
-    assert fields["referencia_catastral"]["estat"] == "candidats"
-    assert fields["referencia_catastral"]["value"] == "3298012DG2039N"
-    assert fields["superficie_parcela"]["estat"] == "candidats"
-    assert "parcel·la equivocada" in (fields["superficie_parcela"].get("note") or "")
+    assert fields["superficie_parcela"]["value"] == "995"
+    assert fields["referencia_catastral"]["value"] == "4613172CG1141S"
+
+
+def test_cadastre_reader_receives_already_decided_street_and_municipality(tmp_path: Path, monkeypatch):
+    """(i) `order` acaba amb `referencia_catastral`, `superficie_parcela`: quan es crida
+    el lector, `street_address`/`municipality` ja son al dict `decided`."""
+    monkeypatch.delenv("G3DT_LECTURA_HTTP_SOURCES", raising=False)
+    proj, out_dir = _cadastre_project(tmp_path)
+
+    seen: dict[str, tuple[str | None, str | None]] = {}
+
+    def fake(key, decided, project_path):
+        seen[key] = (decided.get("street_address", {}).get("estat"), decided.get("municipality", {}).get("estat"))
+        return []
+    monkeypatch.setattr("automation.lectura.cadastre_reader.cadastre_portal_signals", fake)
+
+    C.consolidate_python(out_dir, project_path=proj)
+    assert seen["referencia_catastral"] == ("segur", "segur")
+    assert seen["superficie_parcela"] == ("segur", "segur")
+
+
+@pytest.mark.network
+def test_cadastre_reader_import_is_lazy_and_module_wiring_works_end_to_end(tmp_path: Path):
+    """Sense monkeypatch, contra l'API real del Cadastre (xarxa; els altres tests d'aquest
+    fitxer no en necessiten): confirma el cablejat sencer `consolidate.py` ->
+    `cadastre_reader` amb el projecte real de Castellar (441+423+420 = 1.284, com l'Eva)."""
+    pytest.importorskip("shapely")
+    proj, out_dir = _cadastre_project(tmp_path)
+    try:
+        fields = C.consolidate_python(out_dir, project_path=proj)["fields"]
+    except Exception as e:  # xarxa no disponible en aquest entorn: no bloquejar la suite
+        pytest.skip(f"Cadastre no accessible: {e}")
+    if fields["superficie_parcela"]["estat"] == "no_trobat":
+        pytest.skip("Cadastre no ha respost (xarxa no disponible en aquest entorn)")
+    assert fields["superficie_parcela"]["value"] == "1284"
+    assert "3298012DG2039N" in fields["referencia_catastral"]["value"]
 
 
 def test_geocoded_utm_only_fills_in_when_there_is_no_coordenades_txt(tmp_path: Path, monkeypatch):

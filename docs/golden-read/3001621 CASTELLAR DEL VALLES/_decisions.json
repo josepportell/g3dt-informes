@@ -215,7 +215,12 @@
     "g3_04",
     "correu_10",
     "correu_11"
-   ]
+   ],
+   "fora_carpeta": {
+    "value": "1284",
+    "font": "Cadastre (Callejero DNPLOC + WFS INSPIRE), portals 18A+18B+20 = 3298012+3298013+3298014 DG2039N (441+423+420 m²)",
+    "note": "no és lectura de la carpeta; mesurat 2026-08-26/31; coincideix amb l'informe signat (t0_r1_c1 = 1.284)"
+   }
   },
   "field_date": {
    "status": "segur",
@@ -360,7 +365,12 @@
     "annex_18",
     "correu_10",
     "correu_11"
-   ]
+   ],
+   "fora_carpeta": {
+    "value": "3298012DG2039N + 3298013DG2039N + 3298014DG2039N",
+    "font": "Cadastre (Callejero DNPLOC + WFS INSPIRE), portals 18A+18B+20",
+    "note": "no és lectura de la carpeta; mesurat 2026-08-26/31"
+   }
   },
   "lab": {
    "status": "segur",

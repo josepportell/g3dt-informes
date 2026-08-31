@@ -806,14 +806,20 @@ def _guard_for_field(key: str, decided: dict[str, dict]) -> Any:
 # disseny: cap font Python pot GUANYAR un camp contra la lectura. Per aixo no cal
 # afinar la confianca perque "no bloquegi": mai coexisteix amb un senyal de
 # document. La confianca es igualment < `CONV_CONF` i sense `is_a`, de manera que
-# un senyal HTTP tot sol tampoc no pot arribar a `segur` (el diagnostic
-# 2026-08-23 va trobar el Cadastre apuntant a la parcel·la equivocada a 4 dels 8
-# projectes de referencia — a Castellar dona 441 m² i l'Eva escriu 1.284).
+# un senyal HTTP tot sol tampoc no pot arribar a `segur`.
+#
+# **`referencia_catastral`/`superficie_parcela` NO passen per aqui** (2026-08-31, Fix D,
+# `docs/PLA-PENDENTS-0B-0C-0D-2026-08-26.md` §7): el diagnostic 2026-08-23 ("parcel·la
+# equivocada a 4 dels 8 projectes") era el *matcher* de la via B (`geocode_coordinates`,
+# que agafa el portal MES PROPER quan hi ha lletra) acceptant un portal diferent del que
+# demanava l'adreça — no el Cadastre. Aquests dos camps ara els omple
+# `automation.lectura.cadastre_reader.cadastre_portal_signals`: suma els portals EXACTES
+# (amb lletra) de l'adreça LLEGIDA, no la de `_auto_result.json`. Vegeu aquell modul.
 
 #: camp del nivell A -> (clau de prefill d'`auto_extract`, etiqueta de font)
+#: `referencia_catastral`/`superficie_parcela` NO hi son: les omple `cadastre_reader` (vegeu
+#: el bloc de dalt), no `_auto_result.json`.
 _HTTP_FIELD_SOURCES: dict[str, tuple[str, str]] = {
-    "referencia_catastral": ("cadastral_ref", "cadastre"),
-    "superficie_parcela": ("superficie_cadastral_m2", "cadastre"),
     "cota_referencia": ("cota_referencia", "ICGC"),
     # Nomes quan no hi ha `COORDENADES*.txt` (si n'hi ha, `python_signals` ja
     # ha omplert `utm_x`/`utm_y` amb conf 0,9 i la porta queda tancada).
@@ -822,9 +828,10 @@ _HTTP_FIELD_SOURCES: dict[str, tuple[str, str]] = {
 }
 
 _HTTP_NOTES = {
-    "cadastre": ("consulta HTTP al Cadastre, no lectura d'un document de la carpeta; "
-                 "el diagnostic 2026-08-23 el va trobar a la parcel·la equivocada a 4 dels 8 "
-                 "projectes de referencia: confirmar sempre"),
+    "cadastre": ("suma de les parcel·les cadastrals dels portals de l'adreça llegida (consulta "
+                 "HTTP, no lectura d'un document de la carpeta); la fila de l'informe diu "
+                 '"segons plànols cadastrals"; confirmar si el projecte abasta més o menys '
+                 "portals dels que diu l'adreça"),
     "ICGC": ("cota del model digital del terreny de l'ICGC, no llegida de cap annex: "
              "l'Eva fa servir la de l'annex de sondeig quan n'hi ha"),
     "geocodificacio": ("UTM derivades de l'adreca (Nominatim + Cadastre), no del GPS de camp: "
@@ -834,31 +841,21 @@ _HTTP_NOTES = {
 #: < CONV_CONF (0,6) i sense `is_a`: un senyal HTTP tot sol mai no fa `segur`.
 _HTTP_CONF = 0.5
 
-#: Fonts actives per defecte, i per que el Cadastre NO hi es (mesurat 2026-08-26).
+#: Fonts actives per defecte (Fix D, 2026-08-31 — decisio del Josep, `PLA-PENDENTS-0B-0C-0D` §7.9/§11).
 #:
-#: `ICGC` i `geocodificacio` nomes disparen quan cap document diu res: a Castellar
-#: no disparen mai (`cota_referencia` surt de l'annex, `utm_x/y` de
-#: `COORDENADES.txt`), i quan disparen son els ultims esglaons de cadenes que ja
-#: son les de l'Eva — la cota de l'MDT quan no hi ha annex, i les UTM
-#: geocodificades quan no hi ha GPS de camp. El comparador d'or no es mou.
+#: `ICGC` i `geocodificacio` nomes disparen quan cap document diu res (vegeu dalt).
 #:
-#: El Cadastre, en canvi, s'ha mesurat i EMPITJORA l'unic projecte on es pot
-#: mesurar. A Castellar l'or de lectura diu `no_trobat` per a `referencia_catastral`
-#: i `superficie_parcela` (els documents de la carpeta no els contenen) i el
-#: Cadastre respon 441 m², mentre que l'informe signat de l'Eva diu **1.284**
-#: (`reference-material/.../eva_reference_values.json`). Encendre'l canvia dos
-#: camps de `no_trobat` a `candidats` amb un valor equivocat: `compare_consolida.py`
-#: passa de 14 OK / 7 CAUTELA a 12 OK / 7 CAUTELA / **2 ALERTA** als quatre jocs
-#: de Castellar (Bell-lloc no es mou: alli els documents ja ho diuen i la porta
-#: queda tancada). Concorda amb el diagnostic 2026-08-23 (parcel·la equivocada a
-#: 4 dels 8 projectes de referencia).
-#:
-#: Es queda implementat i apagat, no esborrat: als projectes on el Cadastre encerta
-#: es l'unica font d'aquests dos camps, i la decisio d'encendre'l (potser per
-#: projecte, quan hi hagi la validacio visual de parcel·la del treball P4) es del
-#: Josep, no d'aquest modul. `G3DT_LECTURA_HTTP_SOURCES="ICGC,geocodificacio,cadastre"`
-#: l'encen; `""` ho apaga tot.
-_HTTP_SOURCES_DEFAULT = ("icgc", "geocodificacio")
+#: `cadastre` (via `cadastre_reader.cadastre_portal_signals`, no aquest bloc) es va mesurar de
+#: nou el 2026-08-26 amb l'adreça LLEGIDA (no la de `_auto_result.json`, que era el forat real):
+#: suma els portals EXACTES que els documents anomenen ("18A, 18B i 20" -> 3 parcel·les, 441+423+420
+#: = 1.284, igual que l'informe signat de l'Eva) nomes si son contigus. Amb aquesta adreça, el
+#: Cadastre coincideix amb l'Eva a 6 dels 7 projectes de referencia resolubles (Rubí no resol via
+#: `ConsultaVia`: blanc honest). El "parcel·la equivocada a 4 dels 8" del diagnostic 2026-08-23 era
+#: el *matcher* de la via B (`geocode_coordinates._pick_nearest_rc_from_numerero`, agafa el portal
+#: MES PROPER quan hi ha lletra), no el Cadastre en si — per aixo aquest lector no en delega el
+#: portal. Mai `segur` (conf 0,5): nomes omple `no_trobat`. `G3DT_LECTURA_HTTP_SOURCES=""` ho apaga
+#: tot; `"icgc,geocodificacio"` apaga nomes el Cadastre.
+_HTTP_SOURCES_DEFAULT = ("icgc", "geocodificacio", "cadastre")
 
 
 def _http_enabled_sources() -> frozenset[str]:
@@ -1612,14 +1609,25 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
         return looked
 
     fields: dict[str, dict] = {}
-    # ordre: client_name abans que architect_name (guard + derivat), num_floors abans que cte
-    order = ["client_name", "num_floors"] + [k for k in sorted(ALLOWED_FIELD_KEYS) if k not in ("client_name", "num_floors")]
+    # ordre: client_name abans que architect_name (guard + derivat), num_floors abans que cte.
+    # referencia_catastral/superficie_parcela al final: `cadastre_portal_signals` llegeix
+    # `decided["street_address"]`/`["municipality"]`, que han d'estar ja decidits (Fix D).
+    _CADASTRE_KEYS = ("referencia_catastral", "superficie_parcela")
+    order = (
+        ["client_name", "num_floors"]
+        + [k for k in sorted(ALLOWED_FIELD_KEYS) if k not in ("client_name", "num_floors", *_CADASTRE_KEYS)]
+        + list(_CADASTRE_KEYS)
+    )
     sc = _superficie_construida(corpus)
     for key in order:
         sigs = list(by_key.get(key, []))
         if not sigs or all(value_key(s.value)[0] == "none" for s in sigs):
-            # Nomes forats: primer les consultes HTTP (font externa real),
-            # despres les derivacions/coneixement previ.
+            # Nomes forats: primer el Cadastre per portal (nomes referencia_catastral/superficie_parcela,
+            # font externa real de la via A), despres les altres consultes HTTP, despres les
+            # derivacions/coneixement previ.
+            if key in _CADASTRE_KEYS and "cadastre" in _http_enabled_sources():
+                from automation.lectura.cadastre_reader import cadastre_portal_signals
+                sigs += cadastre_portal_signals(key, fields, project_path)
             sigs += http_field_signals(key, project_path)
             sigs += derived_field_signals(key, fields, sc.get("value"), (sc.get("candidates") or [{}])[0].get("font"))
         cell = decide(
