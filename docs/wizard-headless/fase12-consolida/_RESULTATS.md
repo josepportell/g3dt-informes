@@ -136,3 +136,43 @@ Els perdoc v2 (Sonnet/Fable/Opus 4.8) ho llegeixen bé (0,50 o candidats). **Can
 «el `de` del nivell 1 és la base de la capa vegetal no numerada; si l'etiqueta del nivell abasta la columna sencera → candidats»), i a
 comprovar amb la pregunta a l'Eva sobre el criteri de nivells. Forat del consolidador (Sonnet v2: capa vegetal `no_trobat`): per mirar
 en la propera iteració de `consolidate.py` — l'or i la consolidació LLM les tenen.
+
+## 8. Comparador v3 (2026-08-31): línia base pre-fixos, els 5 jocs
+
+Abans de tocar res (`HEAD e359935`). Harness sencer, sense `G3DT_LECTURA_HTTP_SOURCES` (Cadastre OFF, defecte):
+
+| joc de perdoc | ESCALARS | TAULES |
+|---|---|---|
+| `sonnet-v2-c3` | NOU 1, OK 14, CAUTELA 7 | OK 25, CAUTELA 4 |
+| `fable-v2-c3` | NOU 1, OK 15, CAUTELA 6 | OK 25, CAUTELA 4 |
+| `opus48-v2-c3` | NOU 1, OK 14, CAUTELA 7 | OK 27, CAUTELA 2 |
+| `sonnet-c3-v13` | NOU 1, OK 14, CAUTELA 7 | OK 24, CAUTELA 2, ALERTA 2, ERR 1 |
+| `belloc-ws-v12` | NOU 1, CAUTELA 9, OK 12 | OK 15, CAUTELA 3, ABSENT 2, ALERTA 1 |
+
+`sonnet-v2-c3` coincideix amb la línia base apuntada al pla (§3). Les 4 CAUTELA de taules de `sonnet-v2-c3`:
+`soil_levels[0].a`, `[0].de`, `[1].a`, `spt_ma_tests[0].n30`. `sonnet-c3-v13` porta 2 ALERTA + 1 ERR coneguts
+(capa vegetal absorbida al perdoc v1.3, §7.1). `belloc-ws-v12` porta la 1 ALERTA `soil_levels[1].de` que Fix F
+ha de convertir en `BUIT`/`CAUTELA disjunts` i Fix E ha de fer desaparèixer del tot.
+
+Suite (background, en curs en paral·lel): última coneguda 1569 passed / 32 failed (2026-08-26).
+
+Aquesta és la línia base contra la qual es mesura cada fix de `docs/PLA-PENDENTS-0B-0C-0D-2026-08-26.md` (F→A→B→C→D→E).
+
+### 8.1 Fix F — comparador v3: verdictes `BUIT`/`CAUTELA candidats disjunts`/`FORA`
+
+Mesurat abans/després (2026-08-31), Cadastre OFF (defecte). **0 línies `OK`→`ALERTA` als 5 jocs** (acceptació complerta).
+Diferències, totes explicables:
+- `sonnet-v2-c3`, `fable-v2-c3`, `opus48-v2-c3`, `sonnet-c3-v13`: `cte_sol` OK→`CAUTELA candidats disjunts` (el fixture
+  d'or només documenta un candidat per a `cte_edificacio` dins del camp niuat `cte`; compartit amb `cte_sol` no hi
+  encaixa — informació que abans era invisible, no una regressió).
+- `sonnet-c3-v13`: `soil_levels[0].a`/`.de` `ALERTA`→`BUIT` (or amb valor, prod `no_trobat`: un forat honest).
+- `belloc-ws-v12`: `street_address` OK→`CAUTELA candidats disjunts` (ja portava `CONFLICTES: ['fields.street_address']`
+  al consolidador: el comparador ara ho reflecteix); `soil_levels[1].de` `ALERTA`→ es manté `ALERTA` fins al Fix E (§8.4).
+
+`flat_gold_scalars` calia una correcció no prevista al pla: no propagava `candidates` (ni el nou `fora_carpeta`) dels
+fixtures d'escalars, així que `architect_name` (que sí té 2 candidats reals a l'or) sortia `CAUTELA disjunts` fals
+(`or=[]`) fins que es va afegir la propagació — inclosa la del camp niuat `lab`/`cte` (candidats compartits per a totes
+les subclaus, mateix patró que `contract._flatten_nested_field`) i `utm_x_utm_y`.
+
+Suite: `1569 passed / 32 failed` (els 32 coneguts) abans de tocar res; `tests/test_lectura_contract.py` +
+`tests/test_compare_consolida.py` (126 tests, incl. els 14 nous de la matriu `test_verdict_matrix`) verds després.

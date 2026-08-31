@@ -115,6 +115,52 @@ def test_close(expected, gold, prod, field):
     assert cc.close(gold, prod, field) is expected
 
 
+def _cell(estat, value=None, candidates=None, fora_carpeta=None):
+    d = {"estat": estat}
+    if value is not None or estat == "no_trobat":
+        d["value"] = value
+    if candidates is not None:
+        d["candidates"] = candidates
+    if fora_carpeta is not None:
+        d["fora_carpeta"] = fora_carpeta
+    return d
+
+
+def _cand(value):
+    return [{"value": value, "font": "x", "quote": value}]
+
+
+# (gold, prod, veredicte esperat) — la matriu de 9 cel·les del Fix F (comparador v3) + variants de `fora_carpeta`
+VERDICT_CASES = [
+    (_cell("segur", "10"), _cell("segur", "10"), "OK"),
+    (_cell("segur", "10"), _cell("segur", "20"), "ERR"),
+    (_cell("segur", "10"), _cell("candidats", "10", _cand("10")), "CAUTELA"),
+    (_cell("segur", "10"), _cell("candidats", "20", _cand("20")), "ALERTA"),
+    (_cell("segur", "10"), _cell("no_trobat"), "BUIT"),
+    (_cell("candidats", "10", _cand("10")), _cell("segur", "10"), "ALERTA"),
+    (_cell("candidats", "10", _cand("10")), _cell("candidats", "10", _cand("10")), "OK"),
+    (_cell("candidats", "10", _cand("10")), _cell("candidats", "20", _cand("20")), "CAUTELA"),
+    (_cell("candidats", "10", _cand("10")), _cell("no_trobat"), "BUIT"),
+    (_cell("no_trobat"), _cell("segur", "10"), "ALERTA"),
+    (_cell("no_trobat"), _cell("candidats", "10", _cand("10")), "ALERTA"),
+    (_cell("no_trobat", fora_carpeta={"value": "10", "font": "Cadastre"}), _cell("candidats", "10", _cand("10")), "FORA"),
+    (_cell("no_trobat", fora_carpeta={"value": "10", "font": "Cadastre"}), _cell("candidats", "99", _cand("99")), "CAUTELA"),
+    (_cell("no_trobat"), _cell("no_trobat"), "OK"),
+]
+
+
+@pytest.mark.parametrize("gold,prod,expected", VERDICT_CASES, ids=[
+    "segur=segur-ok", "segur=segur-err", "segur-candidats-bo_dins", "segur-candidats-fora",
+    "segur-no_trobat-buit", "candidats-segur-alerta", "candidats-candidats-solapen-ok",
+    "candidats-candidats-disjunts", "candidats-no_trobat-buit", "no_trobat-segur-alerta",
+    "no_trobat-candidats-sense_fora_carpeta-alerta", "no_trobat-candidats-fora_carpeta_coincideix-fora",
+    "no_trobat-candidats-fora_carpeta_no_coincideix-cautela", "no_trobat-no_trobat-ok",
+])
+def test_verdict_matrix(gold, prod, expected):
+    v, _ = cc.verdict(gold, prod, "x")
+    assert v == expected
+
+
 def test_close_is_symmetric():
     for _, a, b, f in CLOSE_CASES:
         assert cc.close(a, b, f) == cc.close(b, a, f), (a, b, f)

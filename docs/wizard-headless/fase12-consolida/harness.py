@@ -41,8 +41,8 @@ SETS = [
     ("belloc-ws-v12", E2E / BELLLOC / "validation/lectura", E2E / BELLLOC, BELLLOC, None),
 ]
 
-RANK = {"OK": 0, "CAUTELA": 1, "ALERTA": 2, "ERR": 2, "ABSENT": 2, "NOU": 0, "VIOLACIO": 3}
-_LINE = re.compile(r"^(OK|CAUTELA|ALERTA|ERR|ABSENT|NOU|VIOLACIO)\s+(\S+)")
+RANK = {"OK": 0, "CAUTELA": 1, "ALERTA": 2, "ERR": 2, "ABSENT": 2, "NOU": 0, "VIOLACIO": 3, "BUIT": 1, "FORA": 0}
+_LINE = re.compile(r"^(OK|CAUTELA|ALERTA|ERR|ABSENT|NOU|VIOLACIO|BUIT|FORA)\s+(\S+)")
 
 
 def parse_verdicts(text: str) -> dict[str, tuple[str, str]]:

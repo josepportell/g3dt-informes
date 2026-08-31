@@ -1,8 +1,11 @@
 """Acceptació Fase 0/12: compara `_decisions.json` produïts (agents `--consolida` o `consolidate.py`) vs l'or.
 
 Ús: python3 compare_consolida.py escalars|taules [PATH_decisions.json] [CARPETA_PROJECTE_OR]
-Veredictes per camp: OK (mateix estat), CAUTELA (or segur -> produït candidats amb el bo dins),
-ALERTA (produït més confiat que l'or, o valor segur != or), NOU (clau v1 sense or), ERR (valor segur discrepant),
+Veredictes per camp: OK (mateix estat, o candidats que solapen), CAUTELA (or segur -> produït candidats amb el bo dins;
+o candidats -> produït candidats sense solapar, "candidats disjunts"; o no_trobat amb `fora_carpeta` que no coincideix),
+ALERTA (produït més confiat que l'or, valor segur != or, o or/prod discrepants sense cap explicació), BUIT (or amb valor,
+produït no_trobat: un forat honest, no un error), FORA (or no_trobat amb `fora_carpeta` que coincideix amb el candidat
+produït: un valor correcte mesurat fora dels documents del projecte), NOU (clau v1 sense or), ERR (valor segur discrepant),
 ABSENT (cel·la d'or sense cel·la produïda), VIOLACIO (regla dura: n30 / litologia mai segur).
 
 v2 (2026-08-25, normalitzadors): `close(a, b, field)` és conscient del camp i del tipus de valor, en aquest ordre:
@@ -21,6 +24,14 @@ v2 (2026-08-25, normalitzadors): `close(a, b, field)` és conscient del camp i d
      anotacions `(...)` i ` -- nota` (doble guió; ` - text` és contingut).
 Revisió adversària (Sonnet code-reviewer, 2026-08-25): 7 troballes → 6 corregides aquí (capa vegetal vs «Nivell N - Reblert», soterrani
 a `num_floors`, milers `1.655,01`, guió simple, adreces sense via reconeguda / sense portal, `_expand_de_a`); la del `building_type` és decisió.
+
+v3 (2026-08-31, Fix F del `PLA-PENDENTS-0B-0C-0D`): `verdict()` tenia dos forats que impedien mesurar els fixos D i E.
+(1) `candidats` vs `candidats` donava sempre OK sense mirar els valors — ara compara els conjunts de candidats i, si no
+solapen, `CAUTELA candidats disjunts`. (2) qualsevol combinació d'estats no prevista queia a `ALERTA` — un `no_trobat`
+de producció contra un or amb valor és ara `BUIT` (rang 1, "no hem trobat res" ≠ "hem trobat un valor equivocat"), i un
+`no_trobat` de l'or contra un `candidats` de producció és `FORA` (rang 0) quan l'or porta una anotació `fora_carpeta`
+(un valor mesurat fora dels documents del projecte, p. ex. una consulta HTTP) que coincideix amb el primer candidat, o
+`CAUTELA "fora, no coincideix"` si no hi coincideix; sense `fora_carpeta` es manté `ALERTA` (igual que abans).
 Independent del consolidador (`automation/lectura/consolidate.py`): no en comparteix codi a posta — l'instrument
 d'acceptació no ha d'heretar els errors de l'objecte que mesura. Sortida idèntica a la v1 (la llegeixen
 `mesures/ledger.py` i `fase12-consolida/harness.py`).
@@ -251,14 +262,24 @@ def flat_gold_scalars(proj: str) -> dict:
     for k, v in d.items():
         st = v.get("status") or v.get("estat")
         if k in ("lab", "cte") and isinstance(v.get("value"), dict):
+            # candidats no van per subclau al fixture (una sola llista per al camp niuat sencer): es comparteix
+            # tal com ja fa `contract._flatten_nested_field` (còpia de l'entrada sencera, `value` sobreescrit).
             for sk, sv in v["value"].items():
                 out[sk] = {"estat": st, "value": sv}
+                if isinstance(v.get("candidates"), list):
+                    out[sk]["candidates"] = v["candidates"]
         elif k == "utm_x_utm_y":
             m = re.search(r"X\s*([\d.]+)\s*;\s*Y\s*([\d.]+)", str(v.get("value", "")))
             out["utm_x"] = {"estat": st, "value": m.group(1) if m else v.get("value")}
             out["utm_y"] = {"estat": st, "value": m.group(2) if m else v.get("value")}
+            if isinstance(v.get("candidates"), list):
+                out["utm_x"]["candidates"] = out["utm_y"]["candidates"] = v["candidates"]
         else:
             out[k] = {"estat": st, "value": v.get("value")}
+            if isinstance(v.get("candidates"), list):
+                out[k]["candidates"] = v["candidates"]
+            if isinstance(v.get("fora_carpeta"), dict):
+                out[k]["fora_carpeta"] = v["fora_carpeta"]
     return out
 
 
@@ -337,6 +358,11 @@ def verdict(gold, prod, field: str | None = None):
     if pe == ge:
         if ge == "segur" and not close(gv, pv, field):
             return "ERR", f"segur discrepant: or={gv!r} prod={pv!r}"
+        if ge == "candidats":
+            gc = cand_values(gold) or ([gv] if gv is not None else [])
+            pc = cand_values(prod) or ([pv] if pv is not None else [])
+            if not (gc and pc and any(close(g, p, field) for g in gc for p in pc)):
+                return "CAUTELA", f"candidats disjunts: or={gc!r} prod={pc!r}"
         return "OK", ""
     if ge == "segur" and pe == "candidats":
         if any(close(gv, c, field) for c in cand_values(prod)) or close(gv, pv, field):
@@ -345,6 +371,18 @@ def verdict(gold, prod, field: str | None = None):
     if ge == "candidats" and pe == "segur":
         ok = any(close(pv, c, field) for c in cand_values(gold)) or close(gv, pv, field)
         return "ALERTA", f"prod puja a segur ({pv!r}); or candidats" + ("" if ok else " i valor fora dels candidats d'or!")
+    if pe == "no_trobat" and ge in ("segur", "candidats"):
+        return "BUIT", f"(or={ge} {gv!r}; prod no_trobat)"
+    if ge == "no_trobat" and pe == "candidats":
+        fc = gold.get("fora_carpeta")
+        if isinstance(fc, dict):
+            fcv = fc.get("value")
+            pcands = cand_values(prod)
+            pc0 = pcands[0] if pcands else pv
+            if close(fcv, pc0, field):
+                return "FORA", f"fora de la carpeta: {fcv!r} ({fc.get('font', '')})"
+            return "CAUTELA", f"fora de la carpeta, no coincideix: or={fcv!r} prod={pcands or [pv]!r}"
+        return "ALERTA", f"estat or={ge} prod={pe} (or value={gv!r})"
     return "ALERTA", f"estat or={ge} prod={pe} (or value={gv!r})"
 
 
