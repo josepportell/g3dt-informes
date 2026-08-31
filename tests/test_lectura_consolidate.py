@@ -857,7 +857,10 @@ def test_surface_row_keeps_its_own_row_when_there_is_no_cover_layer(tmp_path: Pa
 
 def test_a_deep_row_never_lands_on_the_cover_layer(tmp_path: Path):
     """Nomes la fila que arrenca a la superficie pot donar fondaries a la capa
-    vegetal: una fila fonda es una altra cosa."""
+    vegetal via solapament d'interval: una fila fonda es una altra cosa i queda en
+    fila propia (`de`/`a` de la vegetal segueixen sense la SEVA fondaria real
+    llegida; des de Fix E, `de` es "segur 0,00" per definicio geometrica, no per
+    haver-la trobat en cap document -- vegeu E2b)."""
     out = tmp_path / "lectura"
     out.mkdir()
     _doc(out, "tall", "tall.pdf", "annex_tall", [], tables={"soil_levels": [
@@ -867,5 +870,91 @@ def test_a_deep_row_never_lands_on_the_cover_layer(tmp_path: Path):
 
     rows = _soil_rows(C.consolidate_python(out, project_path=None))
     cover = next(r for nom, r in rows.items() if "vegetal" in nom.lower())
-    assert cover["de"]["estat"] == "no_trobat"
+    assert cover["de"]["estat"] == "segur"
+    assert cover["de"]["value"] == "0,00"
+    assert cover["a"]["estat"] == "no_trobat", "la BASE de la vegetal segueix sense documentar (E2b nomes decideix el `de`)"
     assert len(rows) == 2
+
+
+# ---------------------------------------------------------------------------
+# Fix E — Bell-lloc: capa de cobertura des de la llegenda del tall, sense fondaries
+# ---------------------------------------------------------------------------
+
+
+def _belloc_soil_corpus(out_dir: Path, *, cover_a: str | None = None) -> None:
+    """La forma real de Bell-lloc: el tall dibuixa "Sols vegetals" com a banda sense
+    xifres i l'annex de sondeig nomes numera el substrat des de la superficie
+    (NIVELL 1 0,00-1,80), sense fila de cobertura propia enlloc."""
+    cover = {"nom": "Sòls vegetals (cobertura, sense número)", "litologia": "Terra vegetal.",
+              "de": None, "a": cover_a, "mostra_del_nivell": False}
+    _doc(out_dir, "tall", "tall.pdf", "annex_tall", [], tables={"soil_levels": [
+        cover, {"nom": "1er nivell", "litologia": "Graves amb sorres", "de": None, "a": None,
+                "mostra_del_nivell": False}]})
+    _doc(out_dir, "annex", "PDF/ANNEXES/4001612_sondeig.pdf", "annex_sondeig", [], tables={"soil_levels": [
+        {"nom": "NIVELL 1", "litologia_candidats": ["Graves amb sorres"], "de": "0.00", "a": "1.80",
+         "mostra_del_nivell": False, "location": "p.1", "quote": "0.00-1.80"}]})
+
+
+def test_cover_layer_without_depths_starts_at_zero_by_definition(tmp_path: Path):
+    """E2b: la cobertura sense fondaries llegides arrenca a 0,00 per definicio (regla
+    geometrica, no una lectura ambigua d'un document)."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _belloc_soil_corpus(out)
+
+    rows = _soil_rows(C.consolidate_python(out, project_path=None))
+    cover = next(r for nom, r in rows.items() if "vegetal" in nom.lower())
+    assert cover["de"]["estat"] == "segur"
+    assert cover["de"]["value"] == "0,00"
+    assert cover["a"]["estat"] == "no_trobat"
+
+
+def test_first_level_depth_downgrades_to_candidats_when_cover_has_no_base(tmp_path: Path):
+    """E2: sense fondaria de la cobertura, la transicio cobertura/nivell 1 no esta
+    documentada numericament -> candidats (tanca l'ALERTA de Bell-lloc)."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _belloc_soil_corpus(out)
+
+    rows = _soil_rows(C.consolidate_python(out, project_path=None))
+    nivell1 = rows["NIVELL 1"]
+    assert nivell1["de"]["estat"] == "candidats"
+    assert "cobertura" in nivell1["de"]["rule"]
+    assert nivell1["a"]["estat"] == "candidats"  # regla existent de la base de l'ultim nivell
+
+
+def test_first_level_depth_stays_segur_when_cover_has_a_base(tmp_path: Path):
+    """Si la cobertura ja te `a`, la regla E2 no dispara (nomes falta quan la base de
+    la cobertura no esta documentada enlloc)."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _belloc_soil_corpus(out, cover_a="0.30")
+
+    rows = _soil_rows(C.consolidate_python(out, project_path=None))
+    nivell1 = rows["NIVELL 1"]
+    assert nivell1["de"]["estat"] == "segur"
+
+
+def test_castellar_soil_corpus_unaffected_by_e2_rules(tmp_path: Path):
+    """Castellar: la cobertura ja te fondaries del full de camp -> les regles E2/E2b
+    no hi disparen (regressio)."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _castellar_soil_corpus(out)
+
+    rows = _soil_rows(C.consolidate_python(out, project_path=None))
+    cover = next(r for nom, r in rows.items() if "Vegetal" in nom)
+    assert cover["de"]["estat"] == "candidats"
+    assert cover["de"].get("rule") != "Pas 3b: la capa de cobertura comença a 0,00 per definició"
+    nivell = next(r for nom, r in rows.items() if nom != cover.get("nom") and "Vegetal" not in nom)
+    assert "no està documentada numèricament" not in str(nivell.get("de", {}).get("rule", ""))
+
+
+def test_corpus_without_cover_layer_unaffected_by_e2_rules(tmp_path: Path):
+    """Sense capa de cobertura, les regles E2/E2b no tenen res a fer."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _castellar_soil_corpus(out, cover_row=False)
+
+    rows = _soil_rows(C.consolidate_python(out, project_path=None))
+    assert not any("vegetal" in nom.lower() for nom in rows)

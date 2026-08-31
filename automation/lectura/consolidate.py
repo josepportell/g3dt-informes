@@ -103,7 +103,7 @@ _RANGE_DASH_RE = re.compile(r"(?<=\d)\s*-\s*(?=\d)")
 _EXPEDIENT_FOLDER_RE = re.compile(r"^\s*(\d{7})\b")
 _POINT_RE = re.compile(r"([PS])\s*[-_. ]?\s*(\d+)", re.IGNORECASE)
 _LEVEL_RE = re.compile(r"nivell\s*(\d+)|(\d+)\s*(?:er|on|n|r|è|a|º)?\s*nivell", re.IGNORECASE)
-_COVER_RE = re.compile(r"vegetal|cobertura|reblert|relleno|terra vegetal", re.IGNORECASE)
+_COVER_RE = re.compile(r"vegetal|cobertura|reblert|relleno|terra vegetal|s[oò]ls?\s+vegetals?", re.IGNORECASE)
 _NF_ABSENT_RE = re.compile(
     r"^\s*(no\s*(detectat|detectad[oa]|indicat|indicad[oa]|consta|apareix|observat|s'ha detectat|hi ha|n'hi ha)?"
     r"|cap marca|cap|casella buida|columna buida|buit|buida|en blanc|sense marca|absent|-|—|n/?d|no)\s*\.?\s*$",
@@ -1298,6 +1298,26 @@ def consolidate_tables(corpus: Corpus, conflicts: list[dict]) -> dict[str, Any]:
                 last_a["estat"] = "candidats"
                 last_a["rule"] = "Pas 3b: la base de l'ultim nivell es el final del reconeixement, no una transicio → candidats"
                 estat_bloc = "candidats"
+            if keys and keys[0] == "cover":
+                cover_de = rows_out[0].get("de")
+                if isinstance(cover_de, dict) and cover_de.get("estat") == "no_trobat":
+                    # E2b: la cobertura comença a la superficie per definicio (regla geometrica, no una lectura).
+                    cover_de["estat"] = "segur"
+                    cover_de["value"] = "0,00"
+                    cover_de["candidates"] = [{"value": "0,00", "font": "(definició: la cobertura arrenca a la superfície)", "quote": ""}]
+                    cover_de["rule"] = "Pas 3b: la capa de cobertura comença a 0,00 per definició"
+                cover_a = rows_out[0].get("a")
+                if (isinstance(cover_a, dict) and cover_a.get("estat") == "no_trobat" and len(rows_out) > 1):
+                    first_de = rows_out[1].get("de")
+                    first_nums = _numbers(str(first_de.get("value"))) if isinstance(first_de, dict) else ()
+                    if (isinstance(first_de, dict) and first_de.get("estat") == "segur"
+                            and first_nums and first_nums[0] <= _SURFACE_TOL):
+                        # E2: sense fondaries de la cobertura, la transicio cobertura/nivell 1 no esta documentada.
+                        first_de["estat"] = "candidats"
+                        first_de["rule"] = ("Pas 3b: hi ha capa de cobertura (llegenda del tall) sense fondàries llegides i "
+                                             "el nivell 1 arrenca a 0,00 → la transició cobertura/nivell 1 no està "
+                                             "documentada numèricament: candidats (pregunta 3 a l'Eva)")
+                        estat_bloc = "candidats"
         tables[block] = {"estat_bloc": estat_bloc, "rows": rows_out, "sources_checked": srcs}
 
     tables["superficie_construida"] = _superficie_construida(corpus)

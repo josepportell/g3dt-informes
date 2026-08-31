@@ -6,6 +6,7 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
+v1.6 (2026-08-31): fila de cobertura des de la llegenda del tall / annex de sondeig, sense fondàries si no estan impreses (Pas 3b, bloc «Nivells del sòl»).
 Versió 1.5 (2026-08-25, Fase 12) — consolidació Python-first: en producció el runner consolida SEMPRE amb Python (`automation/lectura/consolidate.py`: cada `tier_a` esdevé candidat, `_g3_templates.json` = autoritat A, guards del contracte, sistema de cotes, cap candidat inventat) i NOMÉS crida aquest skill amb `--consolida --only-fields a,b` per als camps en conflicte real (dues fonts A que discrepen). Mode nou al Pas 5b. Vocabulari: `nivell_freatic` absent → `No detectat` (Pas 3b).
 Versió 1.3 (2026-08-24) — claus CANÒNIQUES de les files de `tables` (E2E Castellar: el productor va escriure `prof_extraccio`, `punt`/`cota_inici` al sondeig… i l'or `profunditat`, `sondeig`/`cota`; la UI i el generador necessiten un sol nom). Llista al Pas 5.
 v1.4: pre-extracció determinista (2026-08-25): en mode --only el runner deixa text/PNG per pàgina, cel·les i colors d'Excel, cos de correu a validation/lectura/_preext/ (inventari clau preext); el skill llegeix aquests fitxers, fa zoom amb scripts/render_clip.py i escriu amb scripts/write_doc_json.py. Sense pre-extracció (preext absent/error) → procediment v1.3.
@@ -301,6 +302,12 @@ sondeig; columnes i què alimenta cadascuna (verificat Bell-lloc):
 **Nivells del sòl (`soil_levels[]`) — alimenta 5 taules (nivells, permeabilitat, sulfats, sísmica, geotècnica):**
 - `nom` ("1er nivell", "2on nivell") i ordre: regla `num_soil_levels` existent (el TALL mana per al NOMBRE — Anciles: tall 2,
   log 1 → informe 2).
+- **Capa de cobertura sense número.** Si la llegenda del tall (`annex_tall`) o la «Descripció dels materials» de l'annex de
+  sondeig anomena una capa superficial **sense número de nivell** («Terreny vegetal», «Sòls vegetals», «Reblert», «Relleno»,
+  «Cobertura»), EMET una fila pròpia **abans** del nivell 1: `nom = "<nom de la llegenda> (cobertura, sense número)"`,
+  `litologia` = text de la llegenda, `de` = `"0,00"` només si el document ho imprimeix (si no, `null`), `a` = la xifra impresa
+  si n'hi ha, si no `null`. **No mesuris píxels ni estimis gruixos gràfics.** La cobertura NO compta a `num_soil_levels`
+  (regla existent). Castellar ja ho fa («Terreny Vegetal (sense número a la llegenda)»); Bell-lloc no ho feia.
 - `litologia`: **`Descripció dels materials` de l'annex de sondeig primer** (és la que l'Eva condensa a l'informe; verificat
   Bell-lloc), llegenda del tall segon ("1er nivell: Graves amb sorres"). **L'Eva re-redacta a l'informe**: la redacció exacta
   és sempre `candidats`, MAI segur per a la cadena literal. Sense annex de sondeig: tall únic candidat.
