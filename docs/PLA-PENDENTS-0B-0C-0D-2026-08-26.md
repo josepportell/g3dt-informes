@@ -444,10 +444,14 @@ Acceptació final (tot alhora):
 
 ## 11. Decisions per al Josep (recollides en un sol lloc)
 
-1. Encendre `cadastre` per defecte al consolidador després de §7.7 (recomanat: sí).
-2. E2b: `de` de la cobertura `segur 0,00` per definició (recomanat) o `candidats`.
-3. Autoritzar la crida LLM de §8.4 (1 document, ~3 min, subscripció) i amb quin model.
-4. Enviar a l'Eva les preguntes 3 + 8 juntes (són la mateixa) i les noves 9 i 10.
+1. ✅ **DECIDIT (2026-08-31):** encendre `cadastre` per defecte al consolidador després de §7.7.
+2. ✅ **DECIDIT (2026-08-31, en implementar Fix E):** `de` de la cobertura = `segur "0,00"` per definició (no `candidats`).
+3. ✅ **DECIDIT (2026-08-31):** crida LLM de §8.4 autoritzada; model per defecte del runner (`sonnet`), tal com diu §8.4.
+4. Enviar a l'Eva les preguntes 3 + 8 juntes (són la mateixa) i les noves 9 i 10. **Encara pendent** — vegeu
+   `docs/PREGUNTES-EVA-PENDENTS.md`.
+
+**Nota (2026-08-31, nit):** pla **implementat i tancat** aquest mateix dia — F/A/B/C/D/E + docs, commits `3694694` a
+`2486a53`. Detall complet: `docs/DECISION-LOG.md` entrada 2026-08-31.
 
 ---
 

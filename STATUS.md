@@ -1,5 +1,11 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-08-26 (TRAM 1 SENCER: 8b + 13 + capa vegetal + 11 + 14a + 14b + 15 — taules al .docx, TEMPS 1 40,4 s→5,6 s, delta-sync, tres botons + taula + avisos; següent: Fase 16 i 17)
+Last updated: 2026-08-31 (nit) — `PLA-PENDENTS-0B-0C-0D-2026-08-26.md` TANCAT: sis fixos (comparador v3, `value_key`,
+or Castellar v2, residus Groq a l'origen, Cadastre multi-portal ON per defecte, Bell-lloc via mínima) implementats,
+mesurats i commitejats (`3694694`→`2486a53`). Suite 1640 passed / 32 failed. Detall: `docs/DECISION-LOG.md`
+entrada 2026-08-31. Pendents reals: preguntes 3+8+9+10 a l'Eva (`docs/PREGUNTES-EVA-PENDENTS.md`), Fase 16 (E2E
+remesurat amb Cadastre ON).
+
+Last updated 2026-08-26 (TRAM 1 SENCER: 8b + 13 + capa vegetal + 11 + 14a + 14b + 15 — taules al .docx, TEMPS 1 40,4 s→5,6 s, delta-sync, tres botons + taula + avisos; següent: Fase 16 i 17)
 
 ## ⚠ Reenquadrament 2026-08-23 (Josep): l'Eva està enfadada; criteri = "(quasi) faci la seva feina, sempre"
 
@@ -254,38 +260,33 @@ Regressió: **32 failed / 1023 passed** (baseline inalterat — reverificat 2 co
 
 0. **Objectiu global — qualitat de les 341 variables de l'informe** (Josep 2026-08-25): després del nivell A i la latència,
    grup B (càlculs) i tota la resta fins a revisar cada variable de l'informe. Cap variable queda "més o menys".
-0b. **Cadastre: entendre per què falla i com corregir-ho** (Josep 2026-08-26, "més endavant"). Mesurat: a Castellar respon
-   **441 m²** i l'informe signat de l'Eva diu **1.284**; el diagnòstic 23/08 el va trobar a la parcel·la equivocada a
-   **4 dels 8** projectes. El codi que el porta al consolidador existeix i està **apagat**
-   (`G3DT_LECTURA_HTTP_SOURCES`, Fase 13b). Preguntes obertes: la geocodificació apunta a la parcel·la veïna? La
-   resposta del WFS és d'una subparcel·la? L'Eva suma parcel·les contigües? Probablement lligat a la validació visual
-   de parcel·la (P4). No encendre'l fins a entendre-ho.
-0c. **Residus Groq: revisar els valors erronis** (Josep 2026-08-26, "més endavant"). Decisió presa: es mantenen els tres
-   (probes ConceptScout, `groq_miner`, ortofoto) perquè amb la Fase 13a es paguen una vegada per projecte i són l'única
-   font de ~15 camps de grup B. Però tres valors surten malament a Castellar i només un el tapa la precedència:
-   | camp | valor Groq | realitat | qui el tapa |
-   |---|---|---|---|
-   | `client_name` | `G3` | la lectura el té `segur` i correcte | `_apply_lectura_overlay` ✅ |
-   | `superficie_parcela_m2` | `32980` (vision_probe sobre `ANNEXES/ALTRES/m8.png`) | l'Eva escriu 1.284 | **ningú** — la lectura diu `no_trobat` i l'overlay no escriu amb `no_trobat` |
-   | `lab_company` | `Lab. Valdemoro` (`groq_llm` sobre PLAN_COST) | el lab sempre és TPS | **ningú** — no és a `MAPPING_DECISIONS_WIZARD` |
-   Dues vies possibles (per decidir): que `no_trobat` de la lectura **esborri** el valor de la via B en comptes de
-   deixar-lo, o filtrar aquests camps a l'origen.
-**Ordre de treball (Josep, 2026-08-26 vespre):** primer la **Fase 16** (E2E dels tres botons amb temps remesurats) i
-**després repassar aquests pendents (0b, 0c, 0d)** — la Fase 17 (Windows presencial) queda per més endavant.
+0b. **Cadastre — RESOLT (2026-08-31, Fix D, commit `349ecca`).** No fallava: per «Carrer Arbrells 18A» torna la
+   parcel·la correcta (441 m²); l'Eva escriu **1.284 = 441+423+420**, la suma dels **tres portals** que els documents
+   anomenen («18A, 18B i 20»). El «4 dels 8 amb la parcel·la equivocada» del diagnòstic 23/08 era el *matcher* de la
+   via B (agafava el portal més proper quan hi ha lletra), no el Cadastre. Lector nou `automation/lectura/
+   cadastre_reader.py`: portals de l'adreça LLEGIDA → RC exacte per `(número, lletra)` → suma només si contigus →
+   `candidats`, mai `segur`. **Encès per defecte** (`_HTTP_SOURCES_DEFAULT`, decisió del Josep 2026-08-31). Detall:
+   `docs/DECISION-LOG.md` 2026-08-31 punt 5, `docs/wizard-headless/fase12-consolida/_RESULTATS.md` §8.3.
+0c. **Residus Groq — RESOLT (2026-08-31, Fix C, commit `a423f6a`).** `lab_company` fora de `TARGET_VARIABLES` de Groq
+   (el lab es resol pel NIF, `gtl_lab_identity`); cap probe de `map`/`site_photo` pot emetre `superficie_parcela`/
+   `superficie_construida` (el 32980 de Castellar és un número de **bloc** cadastral imprès en un mapa, no una àrea).
+   Decisió mantinguda: **no** fer que `no_trobat` de la lectura esborri valors de la via B (trencaria la regla 4 del
+   contracte). Detall: `docs/DECISION-LOG.md` 2026-08-31 punt 4.
 
-0d. **Capa vegetal: la CAUTELA i l'ALERTA que queden** (Josep 2026-08-26, "per analitzar-ho posteriorment").
-   - **CAUTELA `soil_levels[1].a` (Castellar).** L'or diu `segur` `-1,20`; el consolidador diu `candidats` perquè una
-     regla del Pas 3b sanciona que «la base de l'últim nivell és el final del reconeixement, no una transició». No és
-     una regressió (ja disparava a `sonnet-c3-v13`; la fila espúria l'emmascarava a `sonnet-v2-c3`), però **la regla i
-     l'or no diuen el mateix**. A decidir: o l'or és massa confiat, o la regla és massa cauta quan el `a` de l'últim
-     nivell coincideix a dues fonts. Cal l'Eva: la base del nivell 1 de Castellar és una transició real o és on es va
-     aturar el sondeig?
-   - **ALERTA `soil_levels[1].de = 0.00 segur` (Bell-lloc).** *Erroni-amb-confiança*, la categoria que el projecte no
-     tolera. **No és del consolidador**: cap document d'aquella lectura reporta la capa vegetal — l'annex emet una sola
-     fila 0.00-1.80 amb la litologia dels dos trams i l'or la parteix llegint la transició gràfica del log (−0,30 m
-     ±0,05) i la primera frase de la descripció. És un forat de **lectura** (el skill no parteix el log), i partir-la és
-     la regla del Pas 3b que espera la **pregunta 3** de l'Eva. Fins llavors, `de` del nivell 1 pot pujar a `segur` amb
-     un valor que ve d'una fila fusionada.
+0d. **Capa vegetal — RESOLT (2026-08-31, Fixos B + E, commits `e8d1cc8`/`2486a53`).**
+   - **CAUTELA `soil_levels[1].a` (Castellar): era un artefacte de dialecte de l'or, no un desacord real.** L'or ja
+     hedgejava («≥ -1,20, fins al final del reconeixement») igual que la regla del Pas 3b; només calia escriure la
+     cel·la en dict v2 perquè el comparador ho veiés (Fix B). Reescrit, cap ALERTA nova.
+   - **ALERTA `soil_levels[1].de = 0.00 segur` (Bell-lloc): tancada, via mínima de la llegenda del tall (Fix E).** El
+     skill v1.6 emet ara una fila pròpia per a la capa de cobertura sense número quan el tall o l'annex la nomenen
+     (sense mesurar píxels); el consolidador la fixa a `segur 0,00` per definició geomètrica (E2b) i baixa el nivell 1
+     a `candidats` quan la cobertura no té base documentada (E2, tanca l'ALERTA sense inventar −0,30). Verificat amb
+     una re-lectura real del tall (`source_md5` idèntic, 2m24s): l'ALERTA desapareix de l'harness. La pregunta 3/8 a
+     l'Eva (etiqueta de la transició) segueix oberta — `de` queda `candidats`, no `segur`, fins que respongui.
+**Ordre de treball ja complert:** F→A→B→C→D→E del pla, en aquest ordre, tots mesurats abans/després amb l'harness.
+**Pendent real:** enviar a l'Eva les preguntes 3+8+9+10 (`docs/PREGUNTES-EVA-PENDENTS.md`); després la **Fase 16**
+(E2E dels tres botons, remesurada amb Cadastre ON — la primera consolidació de cada projecte farà ara crides HTTP
+noves) i la Fase 17 (Windows presencial) queden per més endavant.
 1. **A4 / entity confusion**: `architect_company` etiqueta client/promotor com a
    arquitecte; el client pot ser un particular. Requereix lògica > regex. **Consultar
    Eva** sobre el mapatge architect_company vs client_name abans de tocar-ho (§4.3).

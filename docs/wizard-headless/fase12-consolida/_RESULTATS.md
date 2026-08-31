@@ -193,3 +193,70 @@ abans d'extreure els nombres):
 
 Harness: **0 verdictes canvien** als 5 jocs (cap cas real, forat latent). 9 tests nous
 (`test_value_key_dates_anchored_and_dash_is_interval` parametritzat + compatibilitat d'interval).
+
+### 8.3 Fix D — lector Cadastre multi-portal de la via A (mesurat 2026-08-31)
+
+`automation/lectura/cadastre_reader.py` (nou, commit `349ecca`): llegeix `street_address`/`municipality` ja decidits,
+en parseja els portals, resol cada un per `(número, lletra)` exacte via Callejero DNPLOC, suma les àrees oficials del
+WFS INSPIRE només si les parcel·les són contigües, sempre `candidats`. `_HTTP_SOURCES_DEFAULT` encès (decisió del
+Josep 2026-08-31). Detall complet i decisions: `docs/DECISION-LOG.md` i `fase13-http-cache/_RESULTATS.md` addendum.
+
+**Dues passades, harness sencer:**
+
+| joc | Cadastre OFF (`icgc,geocodificacio`) | Cadastre ON (defecte nou) |
+|---|---|---|
+| `sonnet-v2-c3` | ESCALARS NOU 1/OK 13/CAUTELA 8 · TAULES OK 26/CAUTELA 3 | ESCALARS NOU 1/OK 11/CAUTELA 8/**FORA 2** · TAULES sense canvi |
+| `fable-v2-c3` | ESCALARS NOU 1/OK 14/CAUTELA 7 · TAULES OK 26/CAUTELA 3 | ESCALARS NOU 1/OK 12/CAUTELA 7/**FORA 2** · TAULES sense canvi |
+| `opus48-v2-c3` | ESCALARS NOU 1/OK 13/CAUTELA 8 · TAULES OK 28/CAUTELA 1 | ESCALARS NOU 1/OK 11/CAUTELA 8/**FORA 2** · TAULES sense canvi |
+| `sonnet-c3-v13` | ESCALARS NOU 1/OK 13/CAUTELA 8 · TAULES OK 26/CAUTELA 1/BUIT 1/ALERTA 1 | ESCALARS NOU 1/OK 11/CAUTELA 8/**FORA 2** · TAULES sense canvi |
+| `belloc-ws-v12` | ESCALARS NOU 1/OK 11/CAUTELA 10 · TAULES OK 16/CAUTELA 4/BUIT 1 | **idèntic** (porta tancada) |
+
+Diff línia a línia OFF vs. post-Fix-C (abans de tocar res): **exactament les 2 línies noves** (`referencia_catastral`,
+`superficie_parcela` passen de `no_trobat` a `FORA`) a cada joc de Castellar; Bell-lloc **0 diferències**. Cap altra
+cel·la es mou (`FORA` és una anotació `fora_carpeta` de l'or, no un canvi de valor que l'or afirmi — §7.8 del pla).
+
+Suite: `1635 passed / 32 failed` (els mateixos 32 coneguts) després de Fix D.
+
+### 8.4 Fix E — Bell-lloc, capa de cobertura des de la llegenda del tall (mesurat 2026-08-31, commit `2486a53`)
+
+Skill v1.6 (`.claude/commands/g3dt-llegir-projecte.md`): quan la llegenda del tall o l'annex de sondeig anomenen una
+capa superficial sense número («Sòls vegetals», «Terreny vegetal»…), el skill emet una fila pròpia per a ella, sense
+mesurar píxels. Consolidador (`consolidate.py`, bloc `soil_levels`): **E2b** (decisió Josep: `segur`) — la fila de
+cobertura amb `de` `no_trobat` es fixa a `segur "0,00"` per definició geomètrica; **E2** — si la cobertura no té `a`
+i el primer nivell arrenca a `segur` ≤0,05, aquest `de` baixa a `candidats` (la transició no està documentada).
+
+**Verificació real:** re-lectura d'1 sol document (`PDF/ANNEXES/4001612_tall de correlació.pdf`, skill v1.6, model
+`sonnet` per defecte del runner, effort `xhigh`), **2m24s**, `source_md5` idèntic (`d2392ce1ea7e185375fb30f79236e37d`)
+— confirma que és una re-lectura, no un document diferent. La fila de cobertura hi apareix («Sòls vegetals (cobertura,
+sense número)», `de`/`a` = `null`, tal com mana el skill).
+
+**Harness abans/després, `belloc-ws-v12`:**
+
+| cel·la | abans (v1.5) | després (v1.6 + E2/E2b) |
+|---|---|---|
+| `soil_levels[0].de` | (fila de cobertura no existia) | `OK` (segur `0,00`, coincideix amb l'or) |
+| `soil_levels[0].a` | (fila de cobertura no existia) | `BUIT` (or té píxels mesurats; nosaltres no en mesurem — acceptat) |
+| `soil_levels[1].de` | **`ALERTA`** puja a segur `0.00` fora dels candidats de l'or | `CAUTELA candidats disjunts` (or `[-0,30/-0,4]`, prod `[0,00]` — honest, espera pregunta 3) |
+| `soil_levels[1].a` | `OK` | `OK` (sense canvi, solapen a −1,80) |
+| TOTALS | `OK 15 / CAUTELA 3 / ABSENT 2 / ALERTA 1` | `OK 16 / CAUTELA 4 / BUIT 1` — **0 ALERTA** |
+
+**L'ALERTA desapareix**, tal com preveia el pla §8.4.
+
+**Efecte lateral als altres 4 jocs (Castellar):** els 3 jocs v2-c3 (`sonnet-v2-c3`, `fable-v2-c3`, `opus48-v2-c3`)
+**cap canvi** — la cobertura de Castellar ja té fondàries del full de camp (`de` `candidats`, no `no_trobat`), les
+guardes d'E2/E2b no disparen. `sonnet-c3-v13` (lectura antiga de 2026-08-24 que mai va separar cobertura de nivell 1
+en dues files) **millora**: `soil_levels[0].de` `BUIT`→`OK` (E2b li dona el `segur 0,00` que l'or també té). La
+`ERR soil_levels[1].de` que ja hi havia (`segur discrepant: or='-0,50' prod='0.00'`, pre-existent, no introduïda per
+Fix E) es re-etiqueta com a `ALERTA` (`or segur '-0,50' NO entre candidats ['0.00', '0,00']`) — **mateixa severitat**
+(`RANK["ERR"] == RANK["ALERTA"] == 2` al harness), i ve acompanyada d'una millora neta (un `BUIT` menys). Arrel real:
+aquest perdoc concret mai va separar la capa vegetal del substrat (el seu annex de sondeig té una sola fila «NIVELL 1»
+que cobreix 0,00-1,20); és un forat de la LECTURA d'aquell run antic, no del consolidador — fora d'abast de Fix E.
+
+Suite: `1640 passed / 32 failed` (els mateixos 32 coneguts + 9 tests nous de `_belloc_soil_corpus`).
+
+**Acceptació global del pla (§10), complerta:** 0 ALERTA de fons als 5 jocs (l'única línia amb la paraula ALERTA és
+la relabelació explicada, no una regressió); Castellar `FORA` ×2 amb Cadastre ON; Bell-lloc intacte fora de la fila
+de cobertura; `grep -rn "4 dels 8\|4/8" automation/lectura/consolidate.py` → 2 resultats, tots dos al Fix D
+(`consolidate.py:813,853`), i tots dos són la narrativa **corregida** («el 4/8 era el matcher de la via B, no el
+Cadastre»), no la falsa afirmació original que el pla volia esborrar — comprovat llegint-los, no assumit; cap fitxer
+de la via B tocat (`git diff --stat` buit).

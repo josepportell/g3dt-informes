@@ -145,4 +145,34 @@ litologia dels dos trams i l'or la parteix llegint la transició gràfica del lo
 descripció. És un forat de **lectura**, i partir-la és exactament la regla del Pas 3b que espera la pregunta 3.
 
 ---
+
+## Addendum (2026-08-31) — «no era la parcel·la equivocada: era un portal de tres»
+
+La secció «Per què el Cadastre queda apagat» (dalt) diu que el Cadastre respon 441 m² per a Castellar mentre l'Eva
+escriu 1.284, i ho llegeix com un error del Cadastre. **Re-analitzat amb mesura en viu (`PLA-PENDENTS-0B-0C-0D-2026-08-26.md`
+§7.1, annex A):** el Cadastre no s'equivocava de parcel·la — l'adreça llegida és «Carrer Arbrells, **18A, 18B i 20**»
+(tres portals), i 441 m² és la resposta CORRECTA per al portal 18A sol. L'Eva suma les tres parcel·les dels tres
+portals que els documents anomenen: 441 + 423 + 420 = **1.284**, exacte. El «4 dels 8 projectes amb la parcel·la
+equivocada» del diagnòstic 2026-08-23 era un bug diferent, al *matcher* de la via B (`_pick_nearest_rc_from_numerero`
+traient la lletra del portal i triant el número més proper — Tulipa 3→11), no al Cadastre en si. Amb l'adreça de la
+lectura (no la de la via B), el Cadastre coincideix amb l'Eva a 6 dels 7 projectes resolubles (annex A del pla).
+
+**Fix D** (`automation/lectura/cadastre_reader.py`, commit `349ecca`) reemplaça el mecanisme vell (`_HTTP_FIELD_SOURCES`
+llegint `_auto_result.json`, l'adreça equivocada) per un lector que llegeix `decided["street_address"]` de la LECTURA,
+en parseja els portals, resol cada un per `(número, lletra)` EXACTE (mai el més proper) i suma només si les parcel·les
+són contigües (`shapely.unary_union`), sempre com a `candidats`, mai `segur`. `_HTTP_SOURCES_DEFAULT` s'ha encès
+(decisió del Josep 2026-08-31): `("icgc", "geocodificacio", "cadastre")`.
+
+**Mesurat (harness, 2 passades):**
+
+| passada | Castellar (×4 jocs) | Bell-lloc |
+|---|---|---|
+| Cadastre OFF explícit (`icgc,geocodificacio`) | idèntic al post-Fix-C: `referencia_catastral`/`superficie_parcela` absents del veredicte (cap font) | idèntic |
+| Cadastre ON (defecte nou) | `referencia_catastral`/`superficie_parcela`: `no_trobat` → **`FORA`** (2 FORA cadascun; l'or porta `fora_carpeta` amb el valor 1.284 verificat) — **0 ALERTA nova** | intacte: `superficie_parcela` ja ve d'un document (995), el lector nou no es crida (porta tancada, `consolidate.py:1611-1616`) |
+
+Detall complet, decisions arquitectòniques (per què `candidats` sempre, per què `areaValue` del WFS i no `shapely.area`,
+per què no delegar el portal amb lletra) i evidència de l'API en viu: `docs/DECISION-LOG.md` (entrada 2026-08-31, Fix D)
+i `docs/PLA-PENDENTS-0B-0C-0D-2026-08-26.md` §7 + Annex A/B.
+
+---
 *Fi Fase 13. TEMPS 1 deixa de repetir-se; el consolidador ja veu l'ICGC i la geocodificació; el Cadastre queda mesurat i apagat.*

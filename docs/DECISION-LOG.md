@@ -1671,3 +1671,183 @@ Fase 16: E2E dels tres botons sobre Castellar sol, amb «xarxa» simulada, per o
 reals. Fase 17: presencial a l'ordinador de l'Eva.
 
 *Fi entrada 2026-08-26 (vespre i nit). Tram 1 tancat: la lectura surt del camí crític de l'Eva i la taula li ho explica.*
+
+## 2026-08-31 — `PLA-PENDENTS-0B-0C-0D-2026-08-26.md` tancat: comparador v3, `value_key`, Castellar dialecte v2, residus Groq a l'origen, Cadastre multi-portal, Bell-lloc via mínima
+
+### Context
+Sessió d'anàlisi del 2026-08-31 (nit) va re-mesurar en viu els tres pendents que el 26/08 havien quedat oberts com a
+"per analitzar-ho posteriorment" (STATUS.md 0b/0c/0d) i va escriure `docs/PLA-PENDENTS-0B-0C-0D-2026-08-26.md` amb el
+resultat: **cap dels tres pendents era el que semblava**. 0b (Cadastre): no falla — l'Eva suma tres portals, no un.
+0c (Groq): els dos valors erronis venen de fonts que mai s'havien mirat de prop (una cel·la de pressupost, un número
+de bloc cadastral imprès en un mapa). 0d (Bell-lloc): l'ALERTA és un forat de lectura, no del consolidador, i té una
+via mínima sense inventar cap xifra. El pla també va destapar un forat de comparador (verdictes `OK`/`ALERTA` massa
+grollers per mesurar D i E) i un forat de `value_key` (dates que capturaven massa, guions llegits com a signe). El
+mateix dia es van implementar els 6 fixos + aquest tancament de docs, en dues sessions (F/A/B/C al vespre, D/E/docs a
+la nit), commits `3694694`→`2486a53`. Handoffs intermedis: `docs/_FOR-NEW-YOU-20260831-2018.md` (F/A/B/C),
+`docs/_FOR-NEW-YOU-20260831-2145.md` (D).
+
+### Decisions arquitectòniques clau
+
+**1. Comparador d'or: tres verdictes nous en comptes d'ampliar `ALERTA`.** (`compare_consolida.py::verdict()`, commit
+`3694694`). *Per què:* abans, `candidats` vs `candidats` sortia `OK` sense mirar valors, i qualsevol `no_trobat` de
+prod contra un or amb contingut sortia `ALERTA` — tant si era un blanc honest com un candidat correcte de fora de la
+carpeta. Sense distingir-los, D i E no es podien mesurar (el Cadastre és per definició `no_trobat`→`candidats` amb
+font externa). `BUIT` (or amb valor, prod `no_trobat`: honest, tolerat), `CAUTELA candidats disjunts` (cap candidat
+coincideix: visible, no silenciat com a `OK`), `FORA` (or `no_trobat` + `fora_carpeta` que sí coincideix amb el
+candidat de prod: font externa correcta). *Alternativa descartada:* ampliar `ALERTA` amb sub-missatges — calia que
+`BUIT`/`FORA` puntuessin diferent a `harness.RANK` (1 i 0, no 2), si no la mètrica agregada els seguiria tractant com
+un fracàs.
+*Efecte secundari trobat mesurant, no al pla:* `flat_gold_scalars` no propagava `candidates` ni `fora_carpeta` dels
+fixtures d'escalars — calia perquè `candidats` vs `candidats` ara mira valors (si no, `architect_name`, que sí té 2
+candidats reals a l'or, hauria sortit `CAUTELA disjunts` fals amb `or=[]`).
+
+**2. `value_key` ancorat amb `fullmatch`, guió entre dígits = interval.** (`consolidate.py::_parse_date`/`_numbers`,
+commit `d6aa855`). *Per què:* `_DATE_DMY_RE.search("1.5-1.75")` trobava "5-1.75" com a data (`2075-01-05`) perquè
+`search` no exigeix que TOTA la cadena sigui data; i `_numbers` llegia el guió d'un interval com a signe negatiu
+(`"0,50-1,20"` → `(0.5, -1.2)` en comptes de `(0.5, 1.2)`), fent que el mateix interval amb espais diferents
+(`"0,50 - 1,20"`) NO clusteritzés amb l'equivalent sense espais. Cap cas real als 5 jocs (forat latent, 0 verdictes
+canvien) — però la mateixa regla ("data només si TOTA la cadena ho és") ja l'aplicava el comparador v2 des del
+25/08; aquest fix l'alinea al costat que genera els valors.
+
+**3. Or de Castellar `soil_levels[1].a`: dialecte v2, no un canvi de valor.** (`docs/golden-read-taules/.../
+_tables_decisions.json`, commit `e8d1cc8`). *Per què:* l'or ja deia literalment «≥ -1,20 (fins al final del
+reconeixement; el tall el dibuixa fins a la base)» — el mateix hedge que la regla del Pas 3b (`consolidate.py:1291-
+1295`, la base de l'últim nivell sempre baixa a `candidats`) — però una cadena plana s'adaptava com a `segur`
+(`wrap_flat_cells` hereta l'`estat` de la fila). Regla i or ja coincidien; només calia escriure la cel·la com a dict
+v2 perquè el comparador ho veiés. *Per què NO era un error de mesura ni un canvi de criteri:* el valor `-1,20` no es
+toca, només l'`estat`.
+
+**4. Residus Groq: filtrats a l'origen, no esborrats per `no_trobat` de la lectura.** (`groq_miner.py`,
+`vision_probe.py`, `concept_scout/__init__.py`, commit `a423f6a`). *Per què `lab_company` fora de `TARGET_VARIABLES`:*
+el laboratori es resol determinísticament pel NIF (`gtl_lab_identity`); Groq només hi podia aportar soroll (una línia
+de cost «Lab. Valdemoro» del pressupost, mai llegida com a laboratori per cap altra font). *Per què cap probe de
+`map`/`site_photo` pot emetre `superficie_*`:* el 32980 de Castellar és el número de **bloc** cadastral imprès en un
+mapa (`ANNEXES/ALTRES/m8.png`), no una àrea — un mapa mostra identificadors, no mides. Dos punts de tall (parse de la
+probe nova + `concept_sources_to_signals` per a `concept_map.json` ja cachejat), perquè hi ha dos camins d'entrada al
+pool de senyals. *Per què NO "un `no_trobat` de la lectura esborra el valor de la via B":* trenca la regla 4 del
+contracte (`_apply_lectura_overlay`) i converteix un forat de lectura en un blanc a l'informe — decisió explícita de
+NO fer-ho (§6.3 del pla), documentada perquè no es torni a proposar.
+
+**5. Lector Cadastre a la via A (`automation/lectura/cadastre_reader.py`, nou), no arreglar la via B.** (commit
+`349ecca`). *Diagnòstic corregit primer:* el Cadastre no falla — per «Carrer Arbrells 18A» torna la parcel·la
+correcta (441 m²); l'Eva escriu **1.284 = 441+423+420**, la suma dels **tres portals** que els documents anomenen
+(«18A, 18B i 20»). El «4 dels 8 projectes amb la parcel·la equivocada» del diagnòstic 23/08 era el *matcher* de la
+via B (`geocode_coordinates._pick_nearest_rc_from_numerero`, agafa el portal MÉS PROPER quan hi ha lletra) acceptant
+un portal diferent del que demanava l'adreça (Tulipa 3→11) — un bug diferent, no del Cadastre. *Per què un mòdul nou
+i no arreglar `_pick_nearest_rc_from_numerero`:* la via B és codi de producció que l'Eva fa servir cada dia (marc
+fixat §1 del pla: es pot importar, no modificar); i el bug de "portal més proper" és un comportament volgut en un
+altre context (geocodificació aproximada), no un bug aïllable sense risc. *Per què sempre `candidats`, mai `segur`:*
+és una consulta HTTP, no una lectura d'un document de la carpeta (mateix patró que ICGC/geocodificació, `_HTTP_CONF
+= 0,5 < CONV_CONF`). *Per què `cp:areaValue` del WFS i no `shapely.Polygon.area`:* shapely arrodoneix 441→440,75…;
+l'oficial suma exacte a 1.284. *Per què filtrar `(pnp, plp)` exactes i no delegar a `callejero_address_to_rc`:*
+aquesta funció ja pateix el bug del punt 4 (18B→18A, el més proper) — delegar-hi hauria reproduït el mateix error que
+es documenta. *Per què `_HTTP_SOURCES_DEFAULT` s'encén a la MATEIXA commit:* el Josep ja ho havia autoritzat abans de
+la implementació (memòria `project_pla_0b0c0d_not_implemented_decisions_2026-08-31`); el pla original deia "deixa'l
+apagat" quan encara no hi havia decisió — ara sí que n'hi havia.
+*Verificat EN VIU, no només per lectura de fixtures:* Castellar 18A+18B+20 → 441+423+420 = 1.284, exacte amb
+l'informe signat; 6 dels 7 projectes de referència resolubles coincideixen amb l'adreça de la lectura (Rubí no
+resol via `ConsultaVia`: blanc honest, no un error).
+
+**6. Bell-lloc: via mínima de la llegenda del tall, mai mesurar píxels.** (skill v1.6 + `consolidate.py` E2/E2b,
+commit `2486a53`). *Diagnòstic:* l'ALERTA (`soil_levels[1].de` puja a `segur 0,00` fora dels candidats de l'or) no és
+del consolidador — cap document de la lectura reportava la capa de cobertura («Sòls vegetals») com a fila pròpia;
+l'annex de sondeig emet una sola fila 0,00-1,80 amb la litologia dels dos trams junts, i l'or la parteix llegint la
+transició GRÀFICA del tall (píxels, −0,30 m ±0,05). *Per què el skill no mesura píxels per igualar l'or:* trencaria
+"mai falsa confiança" amb una precisió que ni el propi skill pot citar (regla existent del Pas 3b, reforçada aquí).
+*E2b — la cobertura sense fondàries arrenca a `segur "0,00"` (decisió del Josep, no `candidats`):* és una regla
+geomètrica (tota cobertura comença a la superfície, per definició), no una lectura ambigua d'un document — diferent
+de `de`/`a` normals, que SÍ depenen del que hi hagi imprès. *E2 — el nivell 1 baixa a `candidats` només si la
+cobertura NO té base documentada I el nivell 1 arrenca a ≤0,05:* aquesta doble condició evita disparar sobre files
+que ja tenen una base coneguda (Castellar, amb el full de camp) o sobre files profundes sense relació amb la
+superfície (test `test_a_deep_row_never_lands_on_the_cover_layer`).
+*Verificat amb una re-lectura real* (no només amb un corpus sintètic): 1 crida `claude -p` sobre el tall de Bell-lloc
+amb el skill v1.6, `source_md5` idèntic (confirma que és la mateixa versió del document, no un altre fitxer), 2m24s.
+L'ALERTA desapareix de l'harness.
+
+**7. Decisions que queden per al Josep, recollides en un sol lloc (pla §11):** totes resoltes durant aquesta feina —
+(a) encendre `cadastre` per defecte: **sí** (punt 5); (b) E2b `segur` vs `candidats`: **segur** (punt 6, decidit
+2026-08-31 en aquesta sessió); (c) crida LLM de §8.4: **autoritzada**, model per defecte del runner (`sonnet`).
+Pendent real: enviar a l'Eva les preguntes 3+8 (juntes, són la mateixa) i les noves 9 (Vilanova: parcel·la/construïda
+intercanviades?) i 10 (Castellar: la suma de tres portals és el criteri habitual?) — vegeu
+`docs/PREGUNTES-EVA-PENDENTS.md`.
+
+### Implementació
+- Nou: `automation/lectura/cadastre_reader.py` (~230 línies: `portals_from_address`, `resolve_portal`,
+  `parcel_area_and_polygon`, `cadastre_portal_signals`), `tests/test_lectura_cadastre_reader.py` (29 tests, fixtures
+  reals a `tests/fixtures/cadastre_castellar/`).
+- Modificats: `docs/wizard-headless/fase0-acceptacio/compare_consolida.py` (`verdict()` + 3 verdictes),
+  `docs/wizard-headless/fase12-consolida/harness.py` (`RANK`/`_LINE` amb `BUIT`/`FORA`), `automation/lectura/
+  consolidate.py` (`_parse_date`/`_numbers` ancorats; `_COVER_RE` ampliat; bloc E2/E2b de `soil_levels`; `order`
+  amb `referencia_catastral`/`superficie_parcela` al final; `_HTTP_FIELD_SOURCES` sense les entrades `cadastre`;
+  `_HTTP_SOURCES_DEFAULT` encès), `automation/fileminer/miners/groq_miner.py` (`TARGET_VARIABLES` sense
+  `lab_company` + guarda de variables no demanades), `automation/concept_scout/vision_probe.py` +
+  `concept_scout/__init__.py` (guarda `map`/`site_photo` no emet `superficie_*`), `.claude/commands/
+  g3dt-llegir-projecte.md` (v1.6, bloc «Nivells del sòl»).
+- Or: `docs/golden-read-taules/3001621 CASTELLAR DEL VALLES/_tables_decisions.json` (dialecte v2),
+  `docs/golden-read/3001621 CASTELLAR DEL VALLES/_decisions.json` (`fora_carpeta` a `referencia_catastral`/
+  `superficie_parcela`, anotació, no canvi de veredicte).
+- Commits: `3694694` (F), `d6aa855` (A), `e8d1cc8` (B), `a423f6a` (C), `349ecca` (D), `2486a53` (E).
+
+### Validació empírica
+- **F:** 0 línies `OK`→`ALERTA` als 5 jocs (acceptació complerta); diferències explicables (`cte_sol` `CAUTELA
+  disjunts` per un buit del fixture, no una regressió).
+- **A:** 0 verdictes canvien als 5 jocs (forat latent, cap cas real al corpus mesurat).
+- **B:** `sonnet-v2-c3` TAULES `OK 25→26, CAUTELA 4→3`; la `CAUTELA soil_levels[1].a` desapareix als 4 jocs de
+  Castellar; cap ALERTA nova.
+- **C:** harness idèntic (Groq no passa per la consolidació de lectura); efecte confirmat aigües avall (`.docx` de
+  l'E2E ja deia TPS abans, la guarda evita que torni a passar).
+- **D:** dues passades (OFF/ON). OFF idèntic al post-F baseline. ON: Castellar ×4 → `referencia_catastral`/
+  `superficie_parcela` `no_trobat`→`FORA` (2 cadascun), 0 ALERTA nova; Bell-lloc 0 diferències (porta tancada).
+  Taula completa: `docs/wizard-headless/fase12-consolida/_RESULTATS.md` §8.3.
+- **E:** Bell-lloc `TAULES {OK 15→16, CAUTELA 3→4, ABSENT 2→BUIT 1, ALERTA 1→0}` — **l'ALERTA desapareix**. Efecte
+  lateral a `sonnet-c3-v13` (lectura antiga): `BUIT 2→1` (millora), `ERR 1`→`ALERTA 1` (mateixa severitat al harness,
+  `RANK["ERR"]==RANK["ALERTA"]==2`; arrel al perdoc antic, no al consolidador). Taula completa: mateix fitxer §8.4.
+- Suite completa final: **1640 passed / 32 failed** (els mateixos 32 coneguts: SmartScan, ai_pipeline, fileminer
+  Anciles, `test_groq_miner::TestCache::test_cache_hit`).
+
+### Tests
+9 nous a `tests/test_compare_consolida.py` (matriu de verdictes), ~9 a `tests/test_lectura_consolidate.py` (Fix A),
+tests de Fix B dins dels fixtures d'or (sense test nou de codi), tests a `tests/test_groq_miner.py` +
+`tests/test_vision_probe_gate_and_prompt.py` (Fix C), 29 a `tests/test_lectura_cadastre_reader.py` + 3 reescrits a
+`tests/test_lectura_consolidate.py` (Fix D), 9 a `tests/test_lectura_consolidate.py` (`_belloc_soil_corpus`, Fix E,
+incl. 1 test pre-existent (`test_a_deep_row_never_lands_on_the_cover_layer`) actualitzat perquè assumia el
+comportament pre-E2b). Total: **1640 passed / 32 failed**, de 1569 a l'inici del dia.
+
+### Latència / cost
+- Fix D: cache nova (`config.cache_dir("cadastre_portals")`, TTL 90 dies) evita repetir Callejero/WFS; sense ella,
+  cada consolidació d'un projecte nou faria 4 crides HTTP lentes (2 camps × municipi+via) a més de DNPLOC/WFS.
+  `_cached_consulta_municipio`/`_cached_consulta_via` (guany no previst al pla, trobat mentre es mesurava): la
+  consolidació baixa de ~6s (fred) a ~0,2s (calent).
+- Fix E: 1 crida `claude -p --model sonnet --effort xhigh` sobre 1 document, **2m24s** (dins l'estimat 2-4 min del
+  pla).
+
+### Limitacions conegudes
+- Fix D només mesurat amb dades reals a Castellar (l'únic amb or `fora_carpeta`); Vilanova (pregunta 9) i Rubí (blanc
+  honest) queden com a annex del pla, no com a test automatitzat.
+- Fix E resol Bell-lloc; la pregunta 3/8 a l'Eva (etiqueta de la transició cobertura/nivell 1) segueix oberta —
+  `soil_levels[1].de` de Bell-lloc queda `candidats`, no `segur`, fins que respongui.
+- `sonnet-c3-v13` (lectura de 2026-08-24) segueix tenint un `ALERTA` real (relabelat d'`ERR`): aquell perdoc concret
+  mai va separar la capa vegetal del substrat en dues files. Fora d'abast d'aquest pla (és un forat de lectura d'un
+  run antic, no reproduïble amb el skill v1.6 sense una re-lectura completa que no s'ha demanat).
+- Fase 16 (E2E dels tres botons amb temps remesurats) encara no s'ha tornat a mesurar amb Cadastre ON per defecte:
+  la primera consolidació de cada projecte farà ara crides HTTP noves (DNPLOC+WFS) que no hi eren al Fase 13.
+
+### GO/NO-GO
+- ✅ Comparador mesura D i E sense soroll (`BUIT`/`CAUTELA disjunts`/`FORA` separats d'`ALERTA`).
+- ✅ Castellar `FORA` ×2 amb Cadastre ON, 0 ALERTA nova, Bell-lloc intacte.
+- ✅ Bell-lloc: l'ALERTA de `soil_levels[1].de` desapareix, verificat amb una re-lectura real (no només un test
+  sintètic).
+- ✅ Via B intacta (`git diff --stat` buit als 7 fitxers protegits).
+- ✅ Suite: 1640 passed / 32 failed (els mateixos 32 de sempre).
+- ⏳ Docs restants d'aquesta mateixa entrada: STATUS.md, `PREGUNTES-EVA-PENDENTS.md`, session log, handoff, memòria
+  (es tanquen al mateix commit que aquesta entrada).
+- ⏳ Fase 16 (E2E remesurat amb Cadastre ON) i Fase 17 (Windows presencial): properes sessions.
+
+### Següents passos
+Enviar a l'Eva les preguntes 3+8+9+10. Fase 16 (E2E dels tres botons, ara amb Cadastre ON per defecte — anotar les
+crides HTTP noves de la primera consolidació de cada projecte). Fase 17 (Windows presencial), sense canvis.
+Objectiu de fons sense tocar en aquest pla: grup B i la resta de les 341 variables (memòria
+`feedback_full_report_341_variables_goal`).
+
+*Fi entrada 2026-08-31. Pla 0b/0c/0d tancat: sis fixos (F/A/B/C/D/E) mesurats abans/després, dues re-verificacions en
+viu (Cadastre real, re-lectura del tall de Bell-lloc), zero regressions a la suite.*
