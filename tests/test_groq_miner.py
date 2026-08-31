@@ -219,6 +219,31 @@ class TestResponseParsing:
         signals = miner._parse_extractions(response, "test.pdf")
         assert signals[0].type == SignalType.DATE
 
+    def test_lab_company_not_in_target_variables(self):
+        """Fix C (2026-08-31): el lab es resol pel NIF (gtl_lab_identity), Groq només hi aportava soroll."""
+        assert "lab_company" not in TARGET_VARIABLES
+
+    def test_lab_company_response_produces_no_signal(self, project_path):
+        miner = GroqMiner(project_path)
+        response = {
+            "extractions": [
+                {"variable": "lab_company", "value": "Lab. Valdemoro", "confidence": 0.8, "source_quote": "Lab. Valdemoro"},
+            ]
+        }
+        signals = miner._parse_extractions(response, "PLAN_COST.xlsx")
+        assert signals == []
+
+    def test_unrequested_variable_produces_no_signal(self, project_path):
+        """El model no pot tornar variables que no s'han demanat (guarda `variable not in TARGET_VARIABLES`)."""
+        miner = GroqMiner(project_path)
+        response = {
+            "extractions": [
+                {"variable": "some_variable_not_in_the_schema", "value": "x", "confidence": 0.5, "source_quote": "x"},
+            ]
+        }
+        signals = miner._parse_extractions(response, "test.pdf")
+        assert signals == []
+
 
 # ============================================================
 # 5. G3 internal data exclusion

@@ -40,6 +40,15 @@ _VISION_DETECTABLE_CONCEPTS = {
     'surrounding_context_visual',
 }
 
+# A map/site-photo shows parcel or block identifiers (Cadastre block numbers,
+# plot labels), never m² figures — a "32980" printed on Castellar's aerial-view
+# map is the cadastral block number, not the plot surface (Fix C, 2026-08-31).
+# `_m2` aliases: an older probe run stored these bare-suffixed keys directly in
+# a project's cached concept_map.json (never regenerated), so both call sites
+# that touch this rule check the alias too (see `concept_scout/__init__.py`).
+_NO_AREA_DOC_TYPES = frozenset({'map', 'site_photo'})
+_AREA_CONCEPTS = frozenset({'superficie_parcela', 'superficie_construida'})
+
 _PROBE_PROMPT = """Look at this document image and identify which of these report data concepts are present.
 
 ABSTENTION RULE (applies to every concept below):
@@ -55,6 +64,7 @@ the area highlighted by a polygon outline, marker, title block, or a
 label near the image center. Do NOT return names of neighbouring towns
 visible at the frame edges; those are context, not subject. If the
 subject is not clearly indicated, omit municipality/province entirely.
+Numbers printed on cadastral/topographic maps are parcel or block identifiers, never areas: never return superficie_parcela or superficie_construida from a map.
 
 For each concept found, provide:
 - concept_id: the exact ID from the list below
@@ -350,6 +360,12 @@ def _parse_probe_result(
     for entry in result.get('concepts_found', []):
         cid = entry.get('concept_id', '')
         if cid not in _VISION_DETECTABLE_CONCEPTS:
+            continue
+        if doc_type in _NO_AREA_DOC_TYPES and cid in _AREA_CONCEPTS:
+            logger.debug(
+                "vision_probe: dropped %s from %s document %s (map/photo numbers are identifiers, not areas)",
+                cid, doc_type, rel_path,
+            )
             continue
         confidence = min(1.0, max(0.0, float(entry.get('confidence', 0.5))))
         preview = str(entry.get('signal_preview', ''))[:60]

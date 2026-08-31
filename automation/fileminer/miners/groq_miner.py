@@ -99,7 +99,6 @@ TARGET_VARIABLES: dict[str, str] = {
     "expedient": "Project reference number (e.g. '4001679')",
     "field_date": "Date of field work (any format found)",
     "report_date": "Report issue date",
-    "lab_company": "Laboratory company name (NOT G3)",
 }
 
 EXTRACTION_SCHEMA: dict[str, Any] = {
@@ -489,6 +488,10 @@ class GroqMiner(BaseMiner):
             source_quote = str(item.get("source_quote", ""))
 
             if not variable or not value:
+                continue
+
+            if variable not in TARGET_VARIABLES:
+                logger.info("Groq: EXCLUDED unknown variable %s=%r (not requested)", variable, value)
                 continue
 
             # Check if this is G3 internal data
