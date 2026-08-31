@@ -95,7 +95,10 @@ _MONTHS = {
     "mayo": 5, "juny": 6, "junio": 6, "juliol": 7, "julio": 7, "agost": 8, "agosto": 8, "setembre": 9,
     "septiembre": 9, "octubre": 10, "novembre": 11, "noviembre": 11, "desembre": 12, "diciembre": 12,
 }
-_DATE_MONTH_RE = re.compile(r"\b([a-zç]+)\s+(?:de\s+)?(\d{4})\b", re.IGNORECASE)
+# dia opcional + mes + any, TOTA la cadena (fullmatch): "maig 2025" | "maig de 2025" | "7 de maig de 2025"
+_DATE_MONTH_RE = re.compile(r"^(?:(\d{1,2})\s+(?:de\s+)?)?([a-zç]+)\s+(?:de\s+)?(\d{4})$", re.IGNORECASE)
+# guio entre dos digits = separador d'interval ("1,5-1,75"), no signe ("-1,20", precedit d'espai o inici de cadena)
+_RANGE_DASH_RE = re.compile(r"(?<=\d)\s*-\s*(?=\d)")
 
 _EXPEDIENT_FOLDER_RE = re.compile(r"^\s*(\d{7})\b")
 _POINT_RE = re.compile(r"([PS])\s*[-_. ]?\s*(\d+)", re.IGNORECASE)
@@ -165,29 +168,34 @@ def _strip_parens(s: str) -> str:
 
 
 def _parse_date(s: str) -> tuple | None:
-    """Retorna ("date", y, m, d|None) si la cadena es una data (completa o parcial)."""
+    """Retorna ("date", y, m, d|None) si TOTA la cadena (fora de parèntesis d'observació) es una data.
+
+    `fullmatch`, no `search`: una cadena amb un nombre a més de la data ("1.5-1.75") no es data — abans
+    `_DATE_DMY_RE.search` hi trobava "5-1.75" i la llegia com a 2075-01-05 (forat `value_key`, 2026-08-31)."""
     t = _strip_parens(s).strip()
-    m = _DATE_ISO_RE.search(t)
+    m = _DATE_ISO_RE.fullmatch(t)
     if m and len(_NUM_RE.findall(t)) <= 3:
         y, mo, d = int(m.group(1)), int(m.group(2)), (int(m.group(3)) if m.group(3) else None)
         if 1 <= mo <= 12 and (d is None or 1 <= d <= 31):
             return ("date", y, mo, d)
-    m = _DATE_DMY_RE.search(t)
+    m = _DATE_DMY_RE.fullmatch(t)
     if m and len(_NUM_RE.findall(t)) <= 3:
         d, mo, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
         if y < 100:
             y += 2000
         if 1 <= mo <= 12 and 1 <= d <= 31:
             return ("date", y, mo, d)
-    m = _DATE_MONTH_RE.search(_ascii(t).lower())
-    if m and m.group(1) in {_ascii(k) for k in _MONTHS}:
-        mo = next(v for k, v in _MONTHS.items() if _ascii(k) == m.group(1))
-        return ("date", int(m.group(2)), mo, None)
+    m = _DATE_MONTH_RE.fullmatch(_ascii(t).lower())
+    if m and m.group(2) in {_ascii(k) for k in _MONTHS}:
+        mo = next(v for k, v in _MONTHS.items() if _ascii(k) == m.group(2))
+        d = int(m.group(1)) if m.group(1) else None
+        return ("date", int(m.group(3)), mo, d)
     return None
 
 
 def _numbers(s: str) -> tuple[float, ...]:
-    return tuple(round(float(x.replace(",", ".")), 3) for x in _NUM_RE.findall(_strip_parens(s)))
+    t = _RANGE_DASH_RE.sub(" ", _strip_parens(s))
+    return tuple(round(float(x.replace(",", ".")), 3) for x in _NUM_RE.findall(t))
 
 
 def _text_tokens(s: str) -> list[str]:

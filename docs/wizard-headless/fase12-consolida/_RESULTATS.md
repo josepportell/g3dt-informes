@@ -176,3 +176,20 @@ les subclaus, mateix patró que `contract._flatten_nested_field`) i `utm_x_utm_y
 
 Suite: `1569 passed / 32 failed` (els 32 coneguts) abans de tocar res; `tests/test_lectura_contract.py` +
 `tests/test_compare_consolida.py` (126 tests, incl. els 14 nous de la matriu `test_verdict_matrix`) verds després.
+
+### 8.2 Fix A — `value_key`: dates ancorades + guió entre dígits = interval
+
+Reproducció confirmada abans del fix i corregida després (`_parse_date` amb `fullmatch` en comptes de `search`;
+`_DATE_MONTH_RE` ampliat a dia opcional + `fullmatch`; `_numbers` substitueix un guió entre dígits per un espai
+abans d'extreure els nombres):
+
+| entrada | abans | després |
+|---|---|---|
+| `1.5-1.75` | `('date', 2075, 1, 5)` (MAL: `_DATE_DMY_RE.search` trobava "5-1.75") | `('num', (1.5, 1.75))` |
+| `0,50-1,20` | `('num', (0.5, -1.2))` (MAL: guió llegit com a signe) | `('num', (0.5, 1.2))` |
+| `0,50 - 1,20` | `('num', (0.5, 1.2))` | igual — ara **la mateixa clau** que `0,50-1,20` (abans no clusteritzaven) |
+| `-1,20` | `('num', (-1.2,))` | igual (guió no precedit de dígit) |
+| `2025-01-05`, `1,20 - 1,75` | ja bé | igual |
+
+Harness: **0 verdictes canvien** als 5 jocs (cap cas real, forat latent). 9 tests nous
+(`test_value_key_dates_anchored_and_dash_is_interval` parametritzat + compatibilitat d'interval).

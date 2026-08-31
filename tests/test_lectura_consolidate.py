@@ -119,6 +119,27 @@ def test_abs_numbers_makes_depth_signs_compatible():
     assert not C.keys_compatible(C.value_key("1,0 - 1,2 m"), C.value_key("-1,00 a -1,20 m"))
 
 
+# Fix A (2026-08-31): `value_key` llegia dates amb un fragment numèric ("1.5-1.75" → 2075-01-05, `_DATE_DMY_RE.search`
+# trobava "5-1.75") i no reconeixia un guió entre dígits com a separador d'interval ("0,50-1,20" es llegia amb signe).
+@pytest.mark.parametrize("s,expected", [
+    ("1.5-1.75", ("num", (1.5, 1.75))),
+    ("1,5-1,75", ("num", (1.5, 1.75))),
+    ("0,50-1,20", ("num", (0.5, 1.2))),
+    ("1,20 - 1,75", ("num", (1.2, 1.75))),
+    ("-1,20", ("num", (-1.2,))),
+    ("2025-01-05", ("date", 2025, 1, 5)),
+    ("Febrer 2026", ("date", 2026, 2, None)),
+    ("7 de maig de 2025", ("date", 2025, 5, 7)),
+    ("1.20 m (aprox.)", ("num", (1.2,))),
+])
+def test_value_key_dates_anchored_and_dash_is_interval(s, expected):
+    assert C.value_key(s) == expected
+
+
+def test_value_key_same_interval_regardless_of_spacing_around_dash():
+    assert C.keys_compatible(C.value_key("0,50-1,20"), C.value_key("0,50 - 1,20")) is True
+
+
 # ---------------------------------------------------------------------------
 # decide(): regles del Pas 5
 # ---------------------------------------------------------------------------
