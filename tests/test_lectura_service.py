@@ -1003,3 +1003,103 @@ def test_refresh_starts_no_job_and_copies_nothing(network_project):
 
     assert not (ws_project / "A.01.pdf").exists()
     assert not (ws_project / "validation" / "lectura" / "_consolida_only.json").exists()
+
+
+# ---------------------------------------------------------------------------
+# 2026-09-01 — `POST /api/jobs` porta els avisos del delta-sync a la pantalla
+#
+# `sync_delta` pot tornar `status="ok"` havent pres una decisió prudent EN
+# SILENCI: escaneig de xarxa incomplet, o desaparició en massa. En tots dos
+# casos copia el que ha vist i NO aparta res, i deixa un `warning` ja redactat
+# al resultat. Fins ara es quedava al log del servidor: l'Eva podia estar
+# llegint una còpia incompleta convençuda que tot era normal.
+# ---------------------------------------------------------------------------
+
+
+def _fake_job(created: bool):
+    return lambda p, b: (SimpleNamespace(snapshot=lambda: {"project": p}), created)
+
+
+def test_a_normal_sync_carries_no_warning(network_project, monkeypatch):
+    """El cas de cada dia: `warnings` buit i cap clau `sync`."""
+    net_project, _, project = network_project
+    (net_project / "A.01.pdf").write_text("plànol nou", encoding="utf-8")
+    monkeypatch.setattr(lectura_service, "start_or_attach_job", _fake_job(True))
+
+    r = TestClient(app).post(f"/api/jobs/{project}", params={"button": "enllestir"})
+
+    assert r.status_code == 202
+    assert r.json()["warnings"] == []
+    assert "sync" not in r.json()
+
+
+def test_a_mass_disappearance_reaches_evas_screen(network_project, monkeypatch):
+    """Tot el que havia vingut de la xarxa ja no hi és. El delta-sync no aparta
+    res (prudència) i ho diu; l'avís ha d'arribar a la resposta, no només al log."""
+    net_project, ws_project, project = network_project
+    (net_project / "PENETROS.pdf").unlink()
+    monkeypatch.setattr(lectura_service, "start_or_attach_job", _fake_job(True))
+
+    r = TestClient(app).post(f"/api/jobs/{project}", params={"button": "enllestir"})
+
+    assert r.status_code == 202
+    body = r.json()
+    assert len(body["warnings"]) == 1
+    assert "no se n'ha apartat cap" in body["warnings"][0]
+    assert body["sync"] == {"mass_disappearance": True, "vanished": 1}
+    # I, efectivament, no s'ha apartat res: la còpia local segueix sencera.
+    assert (ws_project / "PENETROS.pdf").exists()
+    assert not (ws_project / "_esborrats").exists()
+
+
+def test_an_incomplete_scan_reaches_evas_screen(network_project, monkeypatch):
+    """Cas (a) de la guarda: alguna entrada de la xarxa no s'ha pogut llegir.
+    El text el redacta `sync_workspace` — aquí es comprova que hi viatja TAL
+    QUAL (diu què ha passat i què s'ha fet, i no acusa ningú)."""
+    from automation import sync_workspace
+
+    net_project, _, project = network_project
+    warning = (
+        "La carpeta de xarxa no s'ha pogut llegir sencera (2 carpetes o fitxers "
+        "il·legibles): s'ha portat el que s'ha vist i no s'ha apartat res. "
+        "Pot faltar algun document."
+    )
+    monkeypatch.setattr(sync_workspace, "sync_delta_for_leaf", lambda leaf, **kw: {
+        "status": "ok", "leaf": leaf, "new": [], "changed": [], "deleted": [],
+        "scan_incomplete": True, "scan_errors": 2, "warning": warning,
+    })
+    monkeypatch.setattr(lectura_service, "start_or_attach_job", _fake_job(True))
+
+    r = TestClient(app).post(f"/api/jobs/{project}", params={"button": "enllestir"})
+
+    assert r.status_code == 202
+    assert r.json()["warnings"] == [warning]
+    assert r.json()["sync"] == {"scan_incomplete": True, "scan_errors": 2}
+
+
+def test_the_warning_also_travels_when_attaching_to_a_live_job(network_project, monkeypatch):
+    """409 (ja hi havia un job viu) és la mateixa pantalla i el mateix risc."""
+    net_project, _, project = network_project
+    (net_project / "PENETROS.pdf").unlink()
+    monkeypatch.setattr(lectura_service, "start_or_attach_job", _fake_job(False))
+
+    r = TestClient(app).post(f"/api/jobs/{project}", params={"button": "enllestir"})
+
+    assert r.status_code == 409
+    assert r.json()["attach"] is True
+    assert r.json()["sync"]["mass_disappearance"] is True
+    assert len(r.json()["warnings"]) == 1
+
+
+def test_a_sync_that_fails_outright_is_still_a_404(network_project, monkeypatch):
+    """Un avís no és un error: el camí d'error existent no canvia."""
+    from automation import sync_workspace
+
+    monkeypatch.setattr(sync_workspace, "sync_delta_for_leaf", lambda leaf, **kw: {
+        "status": "error", "error": "carpeta de xarxa no trobada",
+    })
+    monkeypatch.setattr(lectura_service, "start_or_attach_job", _fake_job(True))
+
+    r = TestClient(app).post(f"/api/jobs/{network_project[2]}", params={"button": "enllestir"})
+
+    assert r.status_code == 404

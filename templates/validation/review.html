@@ -3257,6 +3257,10 @@
         let selectedProject = '';
         let wizardPrefills = {};
         let wizardUserData = {};
+        // De quin projecte es `wizardUserData` (les respostes de
+        // `/api/user-data/...` arriben despres que l'Eva pugui haver canviat de
+        // projecte al desplegable).
+        let wizardUserDataProject = null;
         let wizardDataLoaded = false;
         let smartscanLoaded = false;
         let wizardDirty = false;
@@ -4818,6 +4822,9 @@
 
         async function onProjectChange(projectName) {
             selectedProject = projectName;
+            // Lectura headless: cap decisio ni cap tria del projecte anterior
+            // pot sobreviure al canvi de projecte (no hi ha recarrega de pagina).
+            _lecturaResetState();
             wizardDataLoaded = false;
             smartscanLoaded = false;
             devLoaded = false;
@@ -4859,10 +4866,21 @@
 
             // Fetch user_data FIRST to decide on pre-questions
             // (must happen before pipeline starts, which deletes user_data.json)
+            // `proj`: l'Eva pot tornar a canviar de projecte mentre la resposta
+            // viatja. Sense aquesta marca, el user_data d'A (i les seves tries
+            // de lectura) aterrava al projecte B, que ja te el seu propi flux.
+            const proj = selectedProject;
+            let userData = {};
             try {
-                const r = await fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`);
-                wizardUserData = r.ok ? await r.json() : {};
-            } catch { wizardUserData = {}; }
+                const r = await fetch(`/api/user-data/${encodeURIComponent(proj)}`);
+                userData = r.ok ? await r.json() : {};
+            } catch { userData = {}; }
+            if (proj !== selectedProject) return;
+            wizardUserData = userData;
+            wizardUserDataProject = proj;
+            // Tries congelades en desats anteriors (el pipeline reanomena
+            // user_data.json tot seguit: aquest es l'unic moment segur).
+            _lecturaRestoreSelections(wizardUserData, proj);
 
             if (shouldShowPreQuestions()) {
                 showPreQuestions();
@@ -4874,7 +4892,11 @@
             loadProjectData();
         }
 
-        async function loadProjectData() {
+        // El primer argument (el projecte) sempre es `selectedProject` i no
+        // s'usa: es conserva perque tots els punts de crida ja el passen.
+        // `opts.refresh` nomes arriba des de "Actualitzar prefills".
+        async function loadProjectData(_project, opts) {
+            const refresh = !!(opts && opts.refresh);
             // Close previous SSE connection if any
             if (activeEventSource) {
                 activeEventSource.close();
@@ -4886,10 +4908,17 @@
             // Load user_data in parallel — skip if already loaded by pre-questions flow
             // (pipeline deletes user_data.json, so re-fetching would lose pre-question answers)
             if (Object.keys(wizardUserData).length === 0) {
-                fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`)
+                // Mateixa cursa que a `onProjectChange`: la resposta pot arribar
+                // quan l'Eva ja es a un altre projecte.
+                const udProject = selectedProject;
+                fetch(`/api/user-data/${encodeURIComponent(udProject)}`)
                     .then(r => r.ok ? r.json() : {})
-                    .then(d => { wizardUserData = d; })
-                    .catch(() => { wizardUserData = {}; });
+                    .then(d => {
+                        if (udProject !== selectedProject) return;
+                        wizardUserData = d;
+                        wizardUserDataProject = udProject;
+                    })
+                    .catch(() => { if (udProject === selectedProject) wizardUserData = {}; });
             }
 
             // Lectura headless (Fase 7, disseny §2): prova primer l'stream nou;
@@ -4897,10 +4926,10 @@
             // immediat) cau al cami existent sense cap mes canvi.
             const _attachOnce = _jobsAttachNext;
             _jobsAttachNext = false;
-            if (await openLecturaStream(selectedProject, { attach: _attachOnce })) return;
+            if (await openLecturaStream(selectedProject, { attach: _attachOnce, refresh })) return;
 
             // SSE stream for prefills with real-time progress
-            const es = new EventSource(`/api/prefills-stream/${encodeURIComponent(selectedProject)}`);
+            const es = new EventSource(`/api/prefills-stream/${encodeURIComponent(selectedProject)}${refresh ? '?refresh=true' : ''}`);
             activeEventSource = es;
 
             es.addEventListener('step', (e) => {
@@ -7216,7 +7245,9 @@
             // Stop vision polling if running
             if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
 
-            loadProjectData(selectedProject);
+            // `refresh: true` — l'unic cami que salta la cache de prefills.
+            // Obrir un projecte NO el passa (hi ha d'encertar: son 43-141 s).
+            loadProjectData(selectedProject, { refresh: true });
         }
 
         async function saveWizard() {
@@ -9331,11 +9362,108 @@
             cte_sol: 'CTE — sòl',
         };
 
-        let lecturaState = { decisions: null, degraded: false, selections: {} };
+        // `selectionsProject` marca de quin projecte son les tries de
+        // `selections`. El desplegable canvia de projecte SENSE recarregar la
+        // pagina: sense aquesta marca, les tries del projecte A viatjaven al
+        // desat del projecte B i, com que les claus son generiques
+        // (`{bloc}.{index}.{cel-la}`), el backend les casava contra el
+        // `_decisions.json` de B i hi congelava valors d'A.
+        //
+        // `freeText` marca les claus el valor de les quals ha escrit l'Eva a ma
+        // ("altre..."): son les uniques que poden sobreviure sense casar amb cap
+        // candidat. Viatgen al backend sota la clau `_lliure` de `lectura_selections`.
+        let lecturaState = {
+            decisions: null, degraded: false, selections: {}, freeText: {}, selectionsProject: null,
+        };
         let _lecturaDocsTotal = 0;
         let _lecturaDocsDone = 0;
 
         // -- Helpers ------------------------------------------------------------
+
+        // Buida les tries si son d'un altre projecte. Tota lectura i tota
+        // escriptura hi passa: la fuita entre projectes queda impossible per
+        // construccio, no nomes per disciplina de reinicialitzar.
+        function _lecturaEnsureProject() {
+            if (lecturaState.selectionsProject !== selectedProject) {
+                lecturaState.selections = {};
+                lecturaState.freeText = {};
+                lecturaState.selectionsProject = selectedProject;
+            }
+        }
+
+        // `free`: el valor l'ha escrit l'Eva a ma. La marca viatja amb el valor
+        // — si torna a un candidat, deixa de ser text lliure.
+        function _lecturaSetSelection(key, value, free) {
+            _lecturaEnsureProject();
+            lecturaState.selections[key] = value;
+            if (free) lecturaState.freeText[key] = true;
+            else delete lecturaState.freeText[key];
+        }
+
+        // Tria que ja no casa amb cap candidat de la lectura d'ara: s'esborra.
+        // Deixar-la muda al mapa es el pitjor dels casos — no es marca enlloc
+        // (l'Eva no la veu) pero s'envia igual i el backend la congela.
+        function _lecturaClearSelection(key) {
+            _lecturaEnsureProject();
+            delete lecturaState.selections[key];
+            delete lecturaState.freeText[key];
+        }
+
+        function _lecturaSelectionFor(key) {
+            _lecturaEnsureProject();
+            return lecturaState.selections[key];
+        }
+
+        function _lecturaIsFreeText(key) {
+            _lecturaEnsureProject();
+            return !!lecturaState.freeText[key];
+        }
+
+        // Canvi de projecte al desplegable: res del projecte anterior sobreviu.
+        function _lecturaResetState() {
+            lecturaState = {
+                decisions: null,
+                degraded: false,
+                selections: {},
+                freeText: {},
+                selectionsProject: selectedProject,
+            };
+            const banner = document.getElementById('lectura-degraded-notice');
+            if (banner) banner.remove();
+            // Avis del delta-sync (`_jobsRenderSyncWarnings`): parla dels
+            // documents del projecte anterior. Es treu per id, sense dependre
+            // del bloc dels jobs — qui l'ha posat el torna a posar despres
+            // d'aquest reinici (vegeu `jobsRun`).
+            const syncBanner = document.getElementById('sync-warning-notice');
+            if (syncBanner) syncBanner.remove();
+        }
+
+        // Tries ja congelades en un desat anterior (`user_data.lectura_selections`).
+        // Sense aixo, despres d'una recarrega el mapa arrenca buit, el desat
+        // seguent envia `{}` i el backend torna a resoldre cada cel-la pel
+        // candidat 1 — desfent la tria validada per l'Eva.
+        //
+        // `project`: de quin projecte son aquestes dades. `wizardUserData` es una
+        // global sense marca, i una resposta tardana de `/api/user-data/A` (l'Eva
+        // ja ha triat B al desplegable) hi injectaria les tries d'A: la mateixa
+        // fuita entre projectes que tanca `_lecturaEnsureProject`, per una altra
+        // porta. Les tries no es restauren si no son del projecte que es veu.
+        function _lecturaRestoreSelections(userData, project) {
+            const from = project === undefined ? wizardUserDataProject : project;
+            if (from !== null && from !== undefined && from !== selectedProject) return;
+            const saved = userData && userData.lectura_selections;
+            if (!saved || typeof saved !== 'object') return;
+            _lecturaEnsureProject();
+            // `_lliure`: claus amb text escrit per l'Eva (vegeu `lecturaState.freeText`).
+            const free = Array.isArray(saved._lliure) ? saved._lliure : [];
+            for (const key in saved) {
+                if (key === '_lliure') continue;
+                const value = saved[key];
+                if (value === null || value === undefined || value === '') continue;
+                if (key in lecturaState.selections) continue;  // la tria viva mana
+                _lecturaSetSelection(key, value, free.indexOf(key) >= 0);
+            }
+        }
 
         function _lecturaTruncate(text, n) {
             const s = String(text === null || text === undefined ? '' : text);
@@ -9409,6 +9537,17 @@
                 const sources = cell.sources_checked || [];
                 title.appendChild(document.createTextNode(' Fonts revisades: ' + (sources.join(', ') || '—')));
                 box.appendChild(title);
+                // El MOTIU quan el sistema ha descartat un valor a posta (p. ex. el veto pels
+                // punts d'assaig del Cadastre): `decide()` recull el `note` dels senyals sense
+                // valor. Sense pintar-lo, l'Eva veu un blanc sense explicació i la conclusió
+                // que en treu és sobre el sistema, no sobre la dada.
+                if (cell.note) {
+                    const why = document.createElement('div');
+                    why.className = 'lp-why';
+                    why.style.margin = '4px 0';
+                    why.textContent = cell.note;
+                    box.appendChild(why);
+                }
                 const action = document.createElement('div');
                 action.textContent = "Afegeix el document a la carpeta o omple el camp a mà.";
                 box.appendChild(action);
@@ -9449,7 +9588,7 @@
                             el.value = cand.value;
                             el.dispatchEvent(new Event('change'));
                         } else {
-                            lecturaState.selections[key] = cand.value;
+                            _lecturaSetSelection(key, cand.value);
                         }
                         pop.remove();
                     };
@@ -9563,14 +9702,37 @@
                     freeInput.focus();
                 } else {
                     freeInput.style.display = 'none';
-                    lecturaState.selections[key] = candidates[Number(select.value)].value;
+                    _lecturaSetSelection(key, candidates[Number(select.value)].value);
                 }
             };
             freeInput.oninput = () => {
-                lecturaState.selections[key] = freeInput.value;
+                _lecturaSetSelection(key, freeInput.value, true);
             };
-            // Candidat 1 per defecte (disseny D3: mai en blanc, mai fals-segur).
-            lecturaState.selections[key] = candidates[0].value;
+            // Tria ja congelada (desat anterior o clic previ) > candidat 1 per
+            // defecte (disseny D3: mai en blanc, mai fals-segur). Sense la
+            // primera branca, tornar a pintar la taula desfeia la tria de l'Eva.
+            const previous = _lecturaSelectionFor(key);
+            const hasPrevious = previous !== null && previous !== undefined && previous !== '';
+            const matched = hasPrevious
+                ? candidates.findIndex((c) => String(c.value) === String(previous))
+                : -1;
+            if (matched >= 0) {
+                select.value = String(matched);
+                _lecturaSetSelection(key, candidates[matched].value);
+            } else if (hasPrevious && _lecturaIsFreeText(key)) {
+                // Text lliure de l'Eva (marcat): es recupera a "altre…".
+                select.value = 'altre';
+                freeInput.value = previous;
+                freeInput.style.display = 'block';
+                _lecturaSetSelection(key, previous, true);
+            } else {
+                // Sense tria, o tria d'una lectura anterior que ja no casa amb
+                // cap candidat d'aquesta fila. Les claus son POSICIONALS: quan
+                // arriba un document nou i les files es reordenen, aquell valor
+                // aterra sobre una fila que no li correspon. Es descarta i mana
+                // el candidat 1 — un candidat honest val mes que un valor mort.
+                _lecturaSetSelection(key, candidates[0].value);
+            }
 
             const badge = document.createElement('span');
             const { cls, mini, label } = _lecturaBadgeClassAndLabel(cell, lecturaState.degraded);
@@ -9603,18 +9765,32 @@
             }
             const n30 = row && row.n30;
             const candidates = (n30 && n30.candidates) || [];
+            // Chip ja triat en un desat anterior: es torna a marcar (la tria NO
+            // es torna a escriure — ja hi es — pero l'Eva ha de veure-la).
+            const n30Key = `${rowKey}.n30`;
+            const previous = _lecturaSelectionFor(n30Key);
+            const hasPrevious = previous !== null && previous !== undefined && previous !== '';
+            let matchedChip = false;
             candidates.forEach((c) => {
                 const chip = document.createElement('span');
                 chip.className = 'n30-chip';
                 chip.textContent = c.font ? `${c.value} · ${_lecturaTruncate(c.font, 22)}` : String(c.value);
                 if (c.quote) chip.title = c.quote;
+                if (hasPrevious && String(previous) === String(c.value)) {
+                    chip.className = 'n30-chip selected';
+                    matchedChip = true;
+                }
                 chip.onclick = () => {
                     wrap.querySelectorAll('.n30-chip').forEach((x) => x.classList.remove('selected'));
                     chip.classList.add('selected');
-                    lecturaState.selections[`${rowKey}.n30`] = c.value;
+                    _lecturaSetSelection(n30Key, c.value);
                 };
                 wrap.appendChild(chip);
             });
+            // Tria d'una lectura anterior que ja no casa amb cap chip: s'esborra.
+            // Si es queda, no es veu marcada enlloc pero s'envia igual, i les
+            // claus son posicionals: acabaria a la fila equivocada.
+            if (hasPrevious && !matchedChip) _lecturaClearSelection(n30Key);
             if (n30 && n30.rule) wrap.title = n30.rule;
             return wrap;
         }
@@ -9690,7 +9866,14 @@
                 const estat = cell.estat;
 
                 if (el && estat === 'segur') {
-                    if ((!el.value || el.value === '') && cell.value !== null && cell.value !== undefined) {
+                    // Mateixa guarda que la branca `candidats`: la consolidacio
+                    // (TEMPS 3) mana sobre el valor provisional que
+                    // `applyTemplatesFields` (TEMPS 1a) ja ha escrit a l'input.
+                    // Amb la guarda antiga ("nomes si el camp es buit") l'input
+                    // es quedava amb el provisional mentre el badge i el popup
+                    // deien el valor consolidat. Font 'user' = mai es trepitja.
+                    if (cell.value !== null && cell.value !== undefined && cell.value !== ''
+                        && (!el.value || !_lecturaIsUserSourced(wizardKey))) {
                         el.value = cell.value;
                     }
                 } else if (el && estat === 'candidats') {
@@ -9764,6 +9947,12 @@
 
         function renderLecturaTables(tables) {
             if (!tables || typeof tables !== 'object') return;
+            // Defensiu: si `wizardUserData` ha arribat despres del canvi de
+            // projecte (cami asincron de `loadProjectData`), aqui encara som a
+            // temps de recuperar les tries congelades abans de pintar-les.
+            // Sense projecte explicit: mana `wizardUserDataProject`, i si el
+            // user_data es d'un altre projecte no es restaura res.
+            _lecturaRestoreSelections(wizardUserData);
 
             const dpshContainer = document.getElementById('lectura-dpsh-tables');
             if (dpshContainer) {
@@ -9905,7 +10094,15 @@
         }
 
         function getLecturaSelections() {
-            return lecturaState.selections;
+            // Mai les tries d'un altre projecte (vegeu `_lecturaEnsureProject`).
+            if (lecturaState.selectionsProject !== selectedProject) return {};
+            const out = Object.assign({}, lecturaState.selections);
+            // El backend descarta tota tria que ja no casi amb cap candidat del
+            // `_decisions.json` d'ara. El text lliure de l'Eva no en casa cap per
+            // definicio: nomes sobreviu si va marcat.
+            const free = Object.keys(lecturaState.freeText || {}).filter((k) => k in out);
+            if (free.length) out._lliure = free;
+            return out;
         }
 
         // -- Stream nou (`GET /api/lectura-stream/{p}`, disseny §2) --------------
@@ -9917,12 +10114,15 @@
         // connexio abans de cap event).
         function openLecturaStream(project, opts) {
             const attach = !!(opts && opts.attach);
+            const refresh = !!(opts && opts.refresh);
             return new Promise((resolve) => {
                 let es;
                 try {
                     // `attach=true` (Fase 14a, disseny §5.2): NOMES subscriu a un
                     // job ja viu — l'Eva ha tornat i ha clicat la fila.
-                    const qs = attach ? '?attach=true' : '';
+                    // `refresh=true`: nomes des de "Actualitzar prefills" (salta
+                    // la cache); enganxar-se a un job viu no la pot rebobinar.
+                    const qs = attach ? '?attach=true' : (refresh ? '?refresh=true' : '');
                     es = new EventSource(`/api/lectura-stream/${encodeURIComponent(project)}${qs}`);
                 } catch (err) {
                     resolve(false);
@@ -10141,6 +10341,43 @@
             });
         }
 
+        // -- Avisos del delta-sync (`POST /api/jobs` -> `warnings`) -------------
+        //
+        // El sincronitzador pot prendre decisions prudents EN SILENCI: si no ha
+        // pogut llegir la carpeta de xarxa sencera, o si de cop hi han
+        // desaparegut molts documents, copia el que veu i no aparta res. Fins
+        // ara l'avis es quedava al log del servidor i l'Eva podia estar llegint
+        // una copia incompleta convencuda que tot era normal.
+        //
+        // El TEXT el redacta el backend (`automation/sync_workspace.py`), que es
+        // qui sap que ha passat i que ha fet — i que no acusa la xarxa, perque
+        // pot haver estat ella reorganitzant la carpeta. Aqui nomes s'emmarca.
+        // Es informatiu: no bloqueja res, mateix ambre que la resta d'avisos.
+        function _jobsRenderSyncWarnings(project, warnings) {
+            const list = (Array.isArray(warnings) ? warnings : []).filter(Boolean);
+            let banner = document.getElementById('sync-warning-notice');
+            if (!list.length) {
+                if (banner) banner.remove();      // el projecte d'ara no en te
+                return;
+            }
+            const panel = _jobsEl('jobsPanel');
+            if (!panel) return;
+            if (!banner) {
+                banner = document.createElement('div');
+                banner.id = 'sync-warning-notice';
+                banner.className = 'lectura-degraded-banner';
+                panel.appendChild(banner);
+            }
+            banner.textContent = '';
+            const head = document.createElement('strong');
+            head.textContent = `Documents de «${project}»: `;
+            banner.appendChild(head);
+            banner.appendChild(document.createTextNode(list.join(' ')));
+            banner.appendChild(document.createTextNode(
+                ' Pots continuar: no s\'ha esborrat res. Si et sembla que hi falta algun ' +
+                'document, mira la carpeta del projecte abans de generar l\'informe.'));
+        }
+
         // -- Taula ------------------------------------------------------------
         function _jobsRender(jobs) {
             const body = _jobsEl('jobsTableBody');
@@ -10295,6 +10532,7 @@
                     // (§6.1) i el refresc de 5 s ja ensenya el progres real, aixi
                     // que tancar la pestanya no costa res.
                     showMessage('Preparant «' + project + '». Pots tancar la pestanya: t\'avisarem.', 'success');
+                    _jobsRenderSyncWarnings(project, payload.warnings);
                     await jobsRefresh();
                     _jobsSchedule(true);
                     return;
@@ -10303,6 +10541,9 @@
                 _jobsAttachNext = !!payload.attach;
                 if (typeof nbSetState === 'function') nbSetState('RUNNING');
                 onProjectChange(project);
+                // Sempre DESPRES d'`onProjectChange`: el canvi de projecte neteja
+                // els avisos del projecte anterior (i s'enduria aquest).
+                _jobsRenderSyncWarnings(project, payload.warnings);
                 _jobsSchedule(true);
             } catch (err) {
                 showMessage('No s\'ha pogut arrencar: ' + err, 'error');
@@ -10337,6 +10578,7 @@
             const payload = await r.json().catch(() => ({}));
             if (accio === 'preparar') {
                 showMessage('Reprenent «' + project + '» — els documents ja llegits no es tornen a llegir.', 'success');
+                _jobsRenderSyncWarnings(project, payload.warnings);
                 await jobsRefresh();
                 _jobsSchedule(true);
                 return;
@@ -10345,6 +10587,8 @@
             _jobsAttachNext = !!payload.attach;
             if (typeof nbSetState === 'function') nbSetState('RUNNING');
             onProjectChange(project);
+            // Vegeu `jobsRun`: sempre despres d'`onProjectChange`.
+            _jobsRenderSyncWarnings(project, payload.warnings);
             _jobsSchedule(true);
         }
 

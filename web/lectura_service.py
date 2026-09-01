@@ -267,6 +267,8 @@ def run_lectura_job(
     project_path: Path,
     emit: Callable[[str, dict], None],
     should_cancel: Callable[[], bool],
+    *,
+    force_refresh: bool = False,
 ) -> None:
     """TEMPS 1 (g3_templates + auto_extract, en paral·lel amb TEMPS 2) +
     TEMPS 2 (lectura headless `claude -p`) + merge final (Fase 6). Idèntic al
@@ -283,6 +285,12 @@ def run_lectura_job(
     Acaba SEMPRE amb exactament un event terminal: `prefills`, `cancelled`
     o `error_event` — el registre de jobs (`automation.lectura.jobs.Job`)
     en depèn per marcar l'estat com a terminal.
+
+    `force_refresh=True` (botó «Actualitzar prefills») salta la cache de disc
+    de TEMPS 1: una caiguda transitòria d'ICGC/Cadastre podia quedar servida
+    fins a 30 dies i el botó hi tornava a encertar. Només afecta la via B
+    (`_auto_extract_cached`): la cache per document de la lectura headless és
+    del runner i es governa per empremta del fitxer.
     """
     _clear_stale_user_data(project_path)
     clear_cancellation(project_name)
@@ -311,7 +319,9 @@ def run_lectura_job(
 
     def run_extract() -> None:
         try:
-            result = _auto_extract_cached(project_path, on_progress=auto_progress_cb)
+            result = _auto_extract_cached(
+                project_path, force_refresh=force_refresh, on_progress=auto_progress_cb,
+            )
             auto_result_holder.append(result)
         except Exception as exc:
             auto_error_holder.append(exc)
@@ -472,10 +482,16 @@ def _notify_finished(project_name: str, project_path: Path, job: Job) -> None:
         logger.warning("no s'han pogut enviar els avisos de %s", project_name, exc_info=True)
 
 
-def start_or_attach_job(project_name: str, button: str = "desde_zero") -> tuple[Job, bool]:
+def start_or_attach_job(
+    project_name: str, button: str = "desde_zero", *, force_refresh: bool = False,
+) -> tuple[Job, bool]:
     """Arrenca un job de lectura per a `project_name`, o s'hi enganxa si ja
     n'hi ha un de viu (disseny §3.4: un job viu per projecte — mai dos
-    `run_lectura` alhora)."""
+    `run_lectura` alhora).
+
+    `force_refresh` només val per al job que s'ARRENCA: si ja n'hi ha un de
+    viu, s'hi enganxa i el paràmetre s'ignora (no es pot rebobinar una
+    execució en curs; el registre garanteix que no n'hi hagi dues)."""
     project_path = _resolve_project(project_name)
     concurrency = _env_int("G3DT_LECTURA_CONCURRENCY", 2)
 
@@ -483,7 +499,10 @@ def start_or_attach_job(project_name: str, button: str = "desde_zero") -> tuple[
         return sorted(_jobs_root().glob("*/validation/lectura/_telemetry.jsonl"))
 
     def _target(job: Job) -> None:
-        run_lectura_job(project_name, project_path, job.emit, lambda: is_cancelled(project_name))
+        run_lectura_job(
+            project_name, project_path, job.emit, lambda: is_cancelled(project_name),
+            force_refresh=force_refresh,
+        )
         _notify_finished(project_name, project_path, job)
 
     return registry.start(
@@ -603,7 +622,7 @@ def list_jobs(*, refresh: bool = False) -> list[dict[str, Any]]:
 # ---------------------------------------------------------------------------
 
 
-def get_lectura_streaming(project_name: str, *, attach: bool = False):
+def get_lectura_streaming(project_name: str, *, attach: bool = False, force_refresh: bool = False):
     """Generator SSE: subscriptor d'un `Job` (Fase 10) — NO executa el
     pipeline directament, es limita a reemetre l'historial + els events en
     viu d'un `Job` (`automation.lectura.jobs.Job.subscribe()`).
@@ -614,6 +633,10 @@ def get_lectura_streaming(project_name: str, *, attach: bool = False):
 
     `attach=True`: només subscriu a un job JA viu (§5.2, "Eva torna i clica
     la fila"); si no n'hi ha cap, emet un únic `error_event` i acaba.
+
+    `force_refresh=True` (botó «Actualitzar prefills») arriba fins a
+    `_auto_extract_cached` del job nou. Amb `attach=True` no hi ha job nou:
+    el paràmetre no hi pinta res.
     """
     if attach:
         job = registry.live(project_name)
@@ -624,7 +647,7 @@ def get_lectura_streaming(project_name: str, *, attach: bool = False):
             )
             return
     else:
-        job, _created = start_or_attach_job(project_name)
+        job, _created = start_or_attach_job(project_name, force_refresh=force_refresh)
 
     q = job.subscribe()
     try:

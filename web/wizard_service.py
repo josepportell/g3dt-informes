@@ -1965,6 +1965,93 @@ def _compute_mapping_prefills(
                 pass
 
 
+# -- Fase 13(a): quan una execucio NO s'ha de desar a la cache de disc -------
+#
+# `auto_result_cache.save()` desa qualsevol resultat i despres el serveix fins a
+# 30 dies. Una caiguda de deu minuts d'ICGC/Cadastre/Nominatim/Groq deixa els
+# prefills coixos i, sense aquesta comprovacio, aquella tarda dolenta es
+# repeteix durant un mes: `auto_extract` s'empassa les fallades a `steps_skipped`
+# i el resultat degradat te el mateix aspecte que un de bo.
+#
+# NOMES els passos que depenen d'un servei extern. La resta de `steps_skipped`
+# son condicions estructurals del projecte ("fitxer no trobat", "sense municipi
+# al nom de carpeta") que tornarien a saltar igual en re-executar: si tambe
+# vetessin la cache, gairebe cap projecte no la faria servir mai i tornariem als
+# 43-141 s per obertura.
+#
+# `ConceptScout` hi es perque la seva sonda visual (`concept_scout/vision_probe.py`)
+# crida Groq/OpenAI/Anthropic: una tarda de 429/503 deixa el `concept_map` coix i,
+# sense veto, aquell mapa incomplet es serviria 30 dies.
+#
+# `Deep folder classify` (Fase 0.46), pel mateix motiu: fa visio amb OpenAI
+# (`auto_extractor.py:975`) per classificar els fitxers de subcarpetes i adjunts.
+# Un 429 alli deixa rols sense assignar — fitxers que existeixen i que el sistema
+# no veu — i el resultat te el mateix aspecte que un de bo.
+#
+# `FileMiner` i `Contingut` NO hi son a posta, encara que el seu motiu tambe sigui
+# un `str(exc)`: llegeixen fitxers locals. Un error alli (PDF corrupte, permisos)
+# tornara a passar igual en re-executar, i vetar la cache per qualsevol motiu amb
+# forma d'excepcio la deixaria inservible per a projectes amb un fitxer dolent.
+_EXTERNAL_SKIP_STEPS = frozenset({
+    'ICGC geologia', 'ICGC elevació', 'ICGC pendent',
+    'Cadastre adjacents', 'Groq Deep Mine', 'Ortho enrichment',
+    'Geocodificació', 'ConceptScout', 'Deep folder classify',
+})
+
+# Motius d'aquests passos que NO son una caiguda del servei sino una condicio
+# del projecte (cadenes literals d'`automation/auto_extractor.py`).
+#
+# `Geocodificació: no s'han trobat coordenades` NO hi es, decidit a consciencia
+# (2026-09-01): un projecte rural que no geocodifica mai pagara els 43-141 s a
+# cada obertura, que es una queixa real de l'Eva. Pero sense UTM cau TOTA la
+# Fase 3 (ICGC geologia/elevacio/pendent + Cadastre), i un resultat sense
+# territori te exactament el mateix aspecte que un de bo: 30 dies de prefills
+# coixos que l'Eva no pot distingir pesen mes que 90 s d'espera que si que veu.
+# El dia que hi arribi qualsevol fitxer nou, l'empremta canvia i la cache es
+# torna a poblar igualment.
+_STRUCTURAL_SKIP_REASONS = {
+    'Ortho enrichment': ('sense ref. cadastral', 'sense polígon'),
+    'Geocodificació': ('sense adreça disponible', 'sense municipi (nom carpeta)'),
+    # La Fase 0.46 no te on escriure els rols perque la Fase 0 no ha deixat cap
+    # `file_mapping`: es tornara a repetir igual, no es una caiguda de servei.
+    'Deep folder classify': ('no file_mapping',),
+}
+_STRUCTURAL_SKIP_PREFIXES = {
+    'Geocodificació': ('adreça interna G3:', 'mòdul no disponible:'),
+}
+
+
+def _external_service_failures(result: Any) -> list[str]:
+    """Passos saltats per una fallada d'un servei extern (`_EXTERNAL_SKIP_STEPS`)."""
+    failures: list[str] = []
+    for entry in getattr(result, 'steps_skipped', None) or []:
+        if not isinstance(entry, (tuple, list)) or len(entry) < 2:
+            continue
+        step, reason = str(entry[0]), str(entry[1])
+        if step not in _EXTERNAL_SKIP_STEPS:
+            continue
+        if reason in _STRUCTURAL_SKIP_REASONS.get(step, ()):
+            continue
+        if any(reason.startswith(p) for p in _STRUCTURAL_SKIP_PREFIXES.get(step, ())):
+            continue
+        failures.append(f'{step}: {reason}')
+    return failures
+
+
+def _safe_inputs_fingerprint(project_path: Path) -> str | None:
+    """Empremta dels fitxers d'entrada, o `None` si no s'ha pogut calcular.
+
+    Mai llança: la cache es una optimitzacio i cap error seu pot deixar l'Eva
+    sense prefills (mateixa regla que `automation/auto_result_cache.py`).
+    """
+    from automation import auto_result_cache
+    try:
+        return auto_result_cache.inputs_fingerprint(project_path)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("auto_result cache: no s'ha pogut calcular l'empremta (%s)", exc)
+        return None
+
+
 def _auto_extract_cached(
     project_path: Path,
     *,
@@ -1980,6 +2067,16 @@ def _auto_extract_cached(
 
     `force_refresh=True` salta la lectura de la cache però igualment DESA el
     resultat nou (l'usuari ha demanat re-executar, no desactivar la cache).
+
+    Dues execucions NO es desen (vegeu `_EXTERNAL_SKIP_STEPS`):
+
+    1. **Degradada** — un servei extern ha fallat. Desar-la la serviria fins a
+       30 dies i «Actualitzar prefills» hi tornaria a encertar.
+    2. **Fitxers canviats a mig cami** — `auto_result_cache.save()` calcula
+       l'empremta DESPRES de l'extraccio; un `A.01.pdf` que arriba durant els
+       43-141 s que dura quedaria dins de l'empremta sense que el resultat
+       l'hagi vist mai (entrada rancia amb aspecte de valida). Per aixo aqui
+       l'empremta es calcula abans i es compara despres.
     """
     from automation import auto_result_cache
 
@@ -2000,8 +2097,30 @@ def _auto_extract_cached(
         if on_progress:
             on_progress(event_type, detail)
 
+    cache_on = auto_result_cache.is_enabled()
+    fingerprint_before = _safe_inputs_fingerprint(project_path) if cache_on else None
+
     result = auto_extract(project_path, on_progress=_record)
-    auto_result_cache.save(project_path, result, recorded)
+
+    if cache_on:
+        failures = _external_service_failures(result)
+        fingerprint_after = _safe_inputs_fingerprint(project_path)
+        if failures:
+            logger.warning(
+                "auto_result cache: execucio degradada (%s) — no es desa",
+                '; '.join(failures),
+            )
+        elif (
+            fingerprint_before is not None
+            and fingerprint_after is not None
+            and fingerprint_before != fingerprint_after
+        ):
+            logger.info(
+                "auto_result cache: els fitxers del projecte han canviat durant "
+                "l'extraccio — no es desa",
+            )
+        else:
+            auto_result_cache.save(project_path, result, recorded)
     return result
 
 
@@ -2346,7 +2465,7 @@ def _enrich_prefills_with_missing_summary(merged: dict[str, Any]) -> None:
     }
 
 
-def get_prefills_streaming(project_name: str):
+def get_prefills_streaming(project_name: str, *, force_refresh: bool = False):
     """Generator yielding SSE events during auto_extract, then final prefills.
 
     Suporta cancel·lació via `mark_cancelled(project_name)` (cridat des de
@@ -2354,6 +2473,11 @@ def get_prefills_streaming(project_name: str):
     auto_extract → check → vision → check → merge. Si Eva ha aturat, salta
     les fases pendents i emet un event `cancelled`. Les crides API ja en
     vol acaben (no avortables des de fora) però ens estalviem les futures.
+
+    `force_refresh=True` salta la cache de disc de la Fase 13(a): és el que fa
+    el botó «Actualitzar prefills», que si no torna a encertar la mateixa
+    entrada. Hi arriba des de la UI per `?refresh=true` a `/api/prefills-stream`
+    i `/api/lectura-stream` (`web/api.py`).
     """
     project_path = _resolve_project(project_name)
     _clear_stale_user_data(project_path)
@@ -2370,7 +2494,9 @@ def get_prefills_streaming(project_name: str):
 
     def run_extract():
         try:
-            result = _auto_extract_cached(project_path, on_progress=progress_callback)
+            result = _auto_extract_cached(
+                project_path, force_refresh=force_refresh, on_progress=progress_callback,
+            )
             auto_result_holder.append(result)
         except Exception as e:
             error_holder.append(e)
@@ -2652,15 +2778,193 @@ def _run_vision_phase(project_path: Path, force_refresh: bool, on_progress=None)
 
 
 def load_user_data(project_name: str) -> dict[str, Any]:
-    """Read existing user_data.json for a project, or empty dict."""
+    """Read existing user_data.json for a project, or empty dict.
+
+    Excepcio: `lectura_selections` es busca TAMBE al backup
+    `_user_data_prev.json`. Cada arrencada del pipeline reanomena
+    `user_data.json` (`_clear_stale_user_data`), de manera que la UI rebia `{}`
+    i pintava el candidat 1 mentre `save_wizard` congelava la tria recuperada
+    del backup: l'Eva veia una cosa i l'informe en portava una altra.
+
+    Vinguin del fitxer o del backup, es retornen ja validades contra el
+    `_decisions.json` d'ARA — exactament les mateixes que congelara
+    `save_wizard`. Validar NOMES el cami del backup deixava passar les tries
+    mortes que encara viuen dins de `user_data.json`: els desplegables s'auto-
+    curen (les taules ja venen validades) pero les cel·les pintades per
+    `_lecturaCellBadgeSpan` (fondaries, cota, rebuig) es quedaven mudes amb el
+    valor mort i el tornaven a enviar al desat seguent.
+
+    La resta del desat anterior NO es recupera, a posta: les pre-preguntes i
+    els camps vells han de tornar a sortir del pipeline (`_clear_stale_user_data`).
+    """
     project_path = _resolve_project(project_name)
     ud_path = project_path / 'user_data.json'
-    if not ud_path.exists():
-        return {}
+    data: dict[str, Any] = {}
+    if ud_path.exists():
+        try:
+            loaded = json.loads(ud_path.read_text(encoding='utf-8'))
+        except (json.JSONDecodeError, OSError):
+            loaded = None
+        if isinstance(loaded, dict):
+            data = loaded
+    selections = data.get('lectura_selections')
+    if not _has_selections(selections):
+        selections = _previous_lectura_selections(project_path)
+    validated = _validated_lectura_selections(project_path, selections)
+    if validated:
+        data['lectura_selections'] = validated
+    else:
+        # Cap tria viva: la clau ha de desapareixer, no quedar-se amb el
+        # contingut mort del fitxer.
+        data.pop('lectura_selections', None)
+    return data
+
+
+#: Clau reservada dins de `lectura_selections`: llista de claus el valor de les
+#: quals es text lliure escrit per l'Eva («altre…» del desplegable de litologia).
+#: Per definicio no casa amb cap candidat, i sense la marca es indistingible
+#: d'una tria morta d'una lectura anterior.
+_FREE_TEXT_MARK = '_lliure'
+
+
+def _has_selections(selections: Any) -> bool:
+    """Hi ha cap tria de debo (la marca de text lliure, sola, no en es cap)."""
+    if not isinstance(selections, dict):
+        return False
+    return any(key != _FREE_TEXT_MARK for key in selections)
+
+
+def _previous_lectura_selections(project_path: Path) -> dict[str, Any] | None:
+    """Tries de l'Eva congelades en un desat anterior, si n'hi ha.
+
+    Es miren dos fitxers: `user_data.json` i el seu backup. Cada arrencada del
+    pipeline reanomena `user_data.json` -> `_user_data_prev.json`
+    (`_clear_stale_user_data`), de manera que despres d'una recarrega de pagina
+    les tries nomes viuen al backup.
+
+    Per que cal: si la UI envia `{}` (recarrega sense restaurar-les), reconstruir
+    les taules sense tries fa que `resolve_cell` caigui al candidat 1 i la tria
+    validada per l'Eva reverteixi en silenci al `.docx`.
+
+    El que torna NO es utilitzable tal qual: ha de passar per
+    `_validated_lectura_selections()`, perque son tries d'una lectura que ja no
+    te per que ser la d'ara.
+    """
+    for name in ('user_data.json', '_user_data_prev.json'):
+        path = project_path / name
+        if not path.exists():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding='utf-8'))
+        except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+            continue
+        if not isinstance(data, dict):
+            continue
+        previous = data.get('lectura_selections')
+        if _has_selections(previous):
+            return previous
+    return None
+
+
+def _load_decisions(project_path: Path) -> dict[str, Any] | None:
+    """`validation/lectura/_decisions.json` del projecte, o `None`."""
+    path = project_path / 'validation' / 'lectura' / '_decisions.json'
     try:
-        return json.loads(ud_path.read_text(encoding='utf-8'))
-    except (json.JSONDecodeError, OSError):
+        data = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def _decision_cell(decisions: dict[str, Any], key: str) -> Any:
+    """Cel·la que ARA li correspon a una clau de tria, o `None` si ja no hi es."""
+    from automation.lectura.tables_report import SELECTION_KEY_RE
+
+    raw_tables = decisions.get('tables')
+    tables = raw_tables if isinstance(raw_tables, dict) else {}
+    match = SELECTION_KEY_RE.match(key)
+    if match:
+        block = tables.get(match.group('block'))
+        rows = block.get('rows') if isinstance(block, dict) else block
+        if not isinstance(rows, list):
+            return None
+        index = int(match.group('index'))
+        if index >= len(rows) or not isinstance(rows[index], dict):
+            return None
+        return rows[index].get(match.group('cell'))
+    # Claus escalars: camps de la lectura (`fields`) o blocs amb nom propi
+    # (`superficie_construida`).
+    fields = decisions.get('fields')
+    if isinstance(fields, dict) and key in fields:
+        return fields[key]
+    return tables.get(key)
+
+
+def _cell_values(cell: Any) -> set[str]:
+    """Valors que la lectura d'ARA admet per a una cel·la (candidats + valor)."""
+    values: set[str] = set()
+
+    def _add(value: Any) -> None:
+        if value in (None, '') or isinstance(value, (dict, list, tuple)):
+            return
+        values.add(str(value).strip())
+
+    for item in (cell if isinstance(cell, (list, tuple)) else [cell]):
+        if isinstance(item, dict):
+            for cand in item.get('candidates') or []:
+                _add(cand.get('value') if isinstance(cand, dict) else cand)
+            _add(item.get('value'))
+            _add(item.get('total'))
+        else:
+            _add(item)
+    return values
+
+
+def _validated_lectura_selections(
+    project_path: Path,
+    selections: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """Tries que segueixen casant amb el `_decisions.json` d'ARA.
+
+    Les claus son POSICIONALS (`{bloc}.{index}.{cel·la}`). Quan arriba un
+    document nou i la lectura reordena o afegeix files, la tria d'ahir aterra
+    sobre una altra fila; `tables_report._selected` la retorna crua i mana
+    sense comprovar res, de manera que sense aquest filtre l'informe surt amb
+    el valor d'una lectura morta estampat sobre una fila que no li correspon —
+    i justament quan la lectura acaba de millorar.
+
+    Regla: es conserva la tria nomes si el valor es un dels candidats (o el
+    valor) de la cel·la d'ara. El text lliure de l'Eva no casa amb cap candidat
+    per definicio i nomes sobreviu si ve MARCAT (`_lliure`) i la cel·la encara
+    existeix; sense marca es descarta. Val mes el candidat 1 honest que un
+    valor mort amb aparenca de validat.
+    """
+    if not _has_selections(selections):
         return {}
+    decisions = _load_decisions(project_path)
+    if decisions is None:
+        # Sense lectura de la via A no hi ha taules on estampar res.
+        return {}
+
+    marked = selections.get(_FREE_TEXT_MARK)
+    free_keys = {str(k) for k in marked} if isinstance(marked, list) else set()
+
+    kept: dict[str, Any] = {}
+    kept_free: list[str] = []
+    for key, value in selections.items():
+        if key == _FREE_TEXT_MARK or value in (None, ''):
+            continue
+        cell = _decision_cell(decisions, key)
+        if key in free_keys:
+            if cell is not None:
+                kept[key] = value
+                kept_free.append(key)
+            continue
+        if str(value).strip() in _cell_values(cell):
+            kept[key] = value
+    if kept_free:
+        kept[_FREE_TEXT_MARK] = kept_free
+    return kept
 
 
 def _build_lectura_block(
@@ -2681,11 +2985,16 @@ def _build_lectura_block(
         return {}
     if not tables:
         return {}
-    block: dict[str, Any] = {"lectura_tables": tables}
-    if lectura_selections:
-        # Crues, per poder re-resoldre o auditar què va triar Eva.
-        block["lectura_selections"] = dict(lectura_selections)
-    return block
+    # `lectura_selections` hi va SEMPRE, encara que buida. `save_wizard_data`
+    # fa `existing.update(extra)`, que nomes toca les claus presents: ometre-la
+    # quan la validacio les ha descartat totes deixava viva la del desat
+    # anterior, i el fitxer acabava dient dues coses contradictories (taules
+    # validades + tries mortes). Crues, per poder re-resoldre o auditar què va
+    # triar Eva.
+    return {
+        "lectura_tables": tables,
+        "lectura_selections": dict(lectura_selections or {}),
+    }
 
 
 def save_wizard(
@@ -2733,6 +3042,18 @@ def save_wizard(
     # Es congelen aqui, no al generador: el que Eva ha vist i validat al
     # wizard es el que ha de sortir a l'informe, encara que una re-lectura
     # posterior canvii `_decisions.json`.
+    #
+    # Entrada buida != "l'Eva no ha triat res": tambe es el que envia una UI que
+    # no ha pogut restaurar les tries. Abans de reconstruir les taules sense cap
+    # tria (i fer-les caure al candidat 1) es recuperen les del desat anterior.
+    #
+    # Vinguin d'on vinguin, es validen contra el `_decisions.json` d'ARA: una
+    # tria que ja no casa amb cap candidat de la seva cel·la es d'una lectura
+    # morta i, com que les claus son posicionals, s'estamparia sobre una fila
+    # que no li correspon.
+    if not _has_selections(lectura_selections):
+        lectura_selections = _previous_lectura_selections(project_path)
+    lectura_selections = _validated_lectura_selections(project_path, lectura_selections)
     lectura_block = _build_lectura_block(project_path, lectura_selections)
 
     from automation.wizard import save_wizard_data

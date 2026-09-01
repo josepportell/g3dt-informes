@@ -521,11 +521,15 @@ def get_user_data(project_name: str):
 
 
 @router.get("/prefills-stream/{project_name:path}")
-def prefills_stream(project_name: str):
+def prefills_stream(project_name: str, refresh: bool = False):
     """SSE endpoint: streams progress events during extraction, then final prefills.
 
     Production v1: syncs from network share to local workspace first if
     `G3DT_NETWORK_PROJECTS` is configured (idempotent).
+
+    `refresh=true` (botó «Actualitzar prefills») salta la cache de disc de la
+    Fase 13(a). L'obertura normal d'un projecte NO el passa: hi encerta, i és
+    el que estalvia els 43-141 s de tornar a fer l'extracció sencera.
     """
     from automation import sync_workspace
     if sync_workspace.is_network_workflow_enabled():
@@ -539,7 +543,7 @@ def prefills_stream(project_name: str):
         raise HTTPException(status_code=404, detail=str(e))
 
     return StreamingResponse(
-        wizard_service.get_prefills_streaming(project_name),
+        wizard_service.get_prefills_streaming(project_name, force_refresh=refresh),
         media_type="text/event-stream",
         headers={
             "Cache-Control": "no-cache",
@@ -549,7 +553,7 @@ def prefills_stream(project_name: str):
 
 
 @router.get("/lectura-stream/{project_name:path}")
-def lectura_stream(project_name: str, attach: bool = False):
+def lectura_stream(project_name: str, attach: bool = False, refresh: bool = False):
     """SSE endpoint: headless `claude -p` lectura (via A) + auto_extract in
     parallel, then merged prefills. Gated by `G3DT_USE_LECTURA_HEADLESS`
     (404 when off — disseny §2/§9 Fase 5). Same media type/headers/style as
@@ -560,6 +564,11 @@ def lectura_stream(project_name: str, attach: bool = False):
     ja n'hi ha un de viu — comportament idèntic a abans de la Fase 10.
     `attach=true` NOMÉS subscriu a un job JA viu (el job corre en un fil
     propi, no cal repetir el sync de xarxa ni la validació del projecte).
+
+    `refresh=true` (botó «Actualitzar prefills») fa que el job nou salti la
+    cache de disc de `_auto_extract_cached`. Només té efecte quan ARRENCA el
+    job: enganxar-se a un que ja corre (o `attach=true`) no el pot rebobinar.
+    L'obertura normal d'un projecte NO el passa — hi hem de seguir encertant.
     """
     _require_lectura_enabled()
 
@@ -578,7 +587,7 @@ def lectura_stream(project_name: str, attach: bool = False):
     from . import lectura_service
 
     return StreamingResponse(
-        lectura_service.get_lectura_streaming(project_name, attach=attach),
+        lectura_service.get_lectura_streaming(project_name, attach=attach, force_refresh=refresh),
         media_type="text/event-stream",
         headers={
             "Cache-Control": "no-cache",
@@ -626,6 +635,10 @@ def start_lectura_job(project_name: str, button: str = "desde_zero"):
     202 + `{"job": ..., "attach": false}` si crea un job nou. 409 +
     `{"job": ..., "attach": true}` si ja n'hi havia un de viu per aquest
     projecte — mai dos `run_lectura` del mateix projecte alhora.
+
+    Totes dues respostes porten `"warnings"` (llista, buida quan tot ha anat bé)
+    i, si n'hi ha, `"sync"` amb els indicadors del delta-sync
+    (`scan_incomplete`/`mass_disappearance`/`scan_errors`/`vanished`).
     """
     _require_lectura_enabled()
 
@@ -634,6 +647,12 @@ def start_lectura_job(project_name: str, button: str = "desde_zero"):
 
     from automation import sync_workspace
     from . import lectura_service
+
+    # Avisos del delta-sync cap a la pantalla de l'Eva (mateix contracte que el
+    # `warnings` de `/api/generate`: cadenes ja redactades, informatives, que no
+    # bloquegen res).
+    warnings: list[str] = []
+    sync_flags: dict = {}
 
     if sync_workspace.is_network_workflow_enabled():
         # Fase 11 (disseny §4, pas 1/4 dels botons 2 i 3): delta-sync en lloc de
@@ -654,6 +673,19 @@ def start_lectura_job(project_name: str, button: str = "desde_zero"):
                 project_name, len(delta.get("new") or []), len(delta.get("changed") or []),
                 len(delta.get("deleted") or []),
             )
+            # `status="ok"` amb `warning`: el delta-sync ha pres una decisió
+            # prudent en silenci (escaneig de xarxa incomplet, o desaparició en
+            # massa) i no ha apartat res. Si l'avís es queda al log del servidor,
+            # l'Eva llegeix una còpia que pot ser incompleta sense saber-ho. El
+            # text el redacta `sync_workspace` — diu què ha passat i què s'ha
+            # fet, i no acusa la xarxa (pot haver reorganitzat ella la carpeta).
+            if delta.get("warning"):
+                warnings.append(delta["warning"])
+                sync_flags = {
+                    key: delta[key]
+                    for key in ("scan_incomplete", "mass_disappearance", "scan_errors", "vanished")
+                    if key in delta
+                }
         lectura_service.invalidate_network_delta(project_name)
 
     try:
@@ -662,9 +694,10 @@ def start_lectura_job(project_name: str, button: str = "desde_zero"):
         raise HTTPException(status_code=404, detail=str(e))
 
     job, created = lectura_service.start_or_attach_job(project_name, button)
-    if created:
-        return JSONResponse(status_code=202, content={"job": job.snapshot(), "attach": False})
-    return JSONResponse(status_code=409, content={"job": job.snapshot(), "attach": True})
+    body = {"job": job.snapshot(), "attach": not created, "warnings": warnings}
+    if sync_flags:
+        body["sync"] = sync_flags
+    return JSONResponse(status_code=202 if created else 409, content=body)
 
 
 @router.get("/pipeline-log/{project_name:path}")
