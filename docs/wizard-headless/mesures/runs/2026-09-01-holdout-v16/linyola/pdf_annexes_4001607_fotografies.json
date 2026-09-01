@@ -1,0 +1,75 @@
+{
+ "source_path": "PDF/ANNEXES/4001607_fotografies.pdf",
+ "source_md5": "b46fe0d4f4f0977e19e5707d10dd37c5",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Reportatge fotogràfic de G3 (plantilla amb logo), 2 pàgines, 4 fotos (F-1 a F-4) del treball de camp DPSH al projecte 4001607.",
+ "issuer": "G3 (Eva) — plantilla pròpia FreeHand/Distiller, mateix patró que tall.pdf i pl. situació.pdf",
+ "date": null,
+ "pages_or_sheets": "2 pàgines",
+ "context": {
+  "who_made_it": "G3 (Eva), com a registre fotogràfic propi de la visita de camp",
+  "for_whom": "arxiu intern del projecte / possible annex de l'informe",
+  "why": "deixar constància fotogràfica de la maquinària i els punts DPSH executats, i de la mostra SPT recuperada",
+  "expected_fields": [
+   "expedient (capçalera de cada pàgina)",
+   "punts DPSH esmentats als peus de foto (P-1, P-2, P-3)",
+   "evidència visual de mostra SPT recuperada"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte"
+  ],
+  "relation_to_others": "complementa ANNEXES/4001607_DPSH.xls (3 fulls P-1/P-2/P-3) i PENETROS.pdf; corrobora visualment el nombre de punts DPSH, no és font primària per cap camp del nivell A",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001607",
+   "location": "p.1 i p.2, capçalera 'Reportatge fotogràfic'",
+   "quote": "Reportatge fotogràfic / 4001607",
+   "confidence": 0.7,
+   "note": "coincideix amb el nom de la carpeta i amb altres fonts; aquest document no és font primària per a expedient (Pas 2), és una corroboració més."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "p.1 peu de foto (F-1/F-2); p.2 peu de foto (F-3/F-4)",
+   "quote": "Fotografies 1 i 2. Vista general de la parcel·la, i vista de l'emplaçament de la maquinària durant la realització de l'assaig de penetració dinàmica DPSH P-1 i P-2. / Fotografies 3 i 4. Vista de l'emplaçament de la maquinària durant la realització de l'assaig de penetració dinàmica DPSH P-3. A sota, materials recuperats de l'assaig SPT realitzat.",
+   "confidence": 0.5,
+   "note": "corroboració fotogràfica de 3 punts DPSH (P-1, P-2, P-3); no és la font d'autoritat (Excel DPSH executats), és evidència visual coincident amb els 3 fulls P-1/P-2/P-3 de l'Excel."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF FreeHand→Distiller (text_ok=false ambdues pàgines, mateix patró que altres annexos de l'Eva): lectura visual de page-N.png (150 dpi). La foto F-4 (p.2) mostra una bossa amb una etiqueta de mostra SPT (logo TPS, camps tipus Obra/Mostra/Data/Profunditat manuscrits i mecanografiats), rellevant per a lab_sample_id/lab_depth/field_date — provat render_clip.py fins a 1000 dpi sobre l'etiqueta (3 intents, clips successivament més ajustats) i segueix il·legible: la foto font és fora de focus a la zona de l'etiqueta, no és un límit de resolució del render. No s'ha extret cap valor d'aquesta etiqueta per evitar falsa confiança (Zero Fabrication); es deixa constància que hi és per si una altra font (GTL, comanda, annex de sondeig) la corrobora. Cap data impresa al document (el creationDate del PDF, 2025-10-28, és metadada de generació del fitxer, no data de camp — no s'ha usat com a candidat de field_date)."
+}

@@ -1,0 +1,178 @@
+{
+ "source_path": "ANNEXES/4001607_DPSH.xls",
+ "source_md5": "2e751d7f7b9d453898d93408984dafb2",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Full de càlcul G3 (plantilla DPSH) amb les lectures de camp del penetròmetre dinàmic, un full per punt (P-1, P-2, P-3): colpeig N20/N30 cada 20 cm, cota de rebuig i codificació per color dels nivells de sòl travessats.",
+ "issuer": "G3 (Eva) — transcripció de les lectures de camp del penetròmetre",
+ "date": null,
+ "pages_or_sheets": "3 fulls: P-1, P-2, P-3",
+ "context": {
+  "who_made_it": "G3 (Eva), transcrivint a la plantilla Excel les lectures de camp del penetròmetre dinàmic (DPSH)",
+  "for_whom": "ús intern de G3 — és la base de càlcul de la taula 'Penetròmetres dinàmics DPSH' de l'informe",
+  "why": "registrar els cops N20 (i el N30/NB derivat) cada 20 cm a cada punt, determinar la cota de rebuig i marcar per color els nivells de sòl travessats en aquell punt",
+  "expected_fields": [
+   "profunditat",
+   "colpeig N20",
+   "colpeig N30 (NB)",
+   "N.F.",
+   "nivells (per color)",
+   "cota de rebuig"
+  ],
+  "not_expected": [
+   "expedient",
+   "nom del client",
+   "adreça de l'obra",
+   "municipi",
+   "coordenades UTM",
+   "dades del promotor o arquitecte",
+   "referència cadastral"
+  ],
+  "relation_to_others": "font primària (autoritat A) per a num_dpsh_tests i per a la taula dpsh_tests; la cota_inici de cada punt NO consta aquí (ve d'un altre document, PDF/ANNEXES/4001607_DPSH.pdf); mateixes lectures que PENETROS.pdf (full de camp manuscrit), ja transcrites aquí",
+  "authority_for": [
+   "num_dpsh_tests",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "3 fulls amb dades a la columna C: P-1, P-2, P-3",
+   "quote": "fulls 'P-1'/'P-2'/'P-3', cadascun amb colpeig a la columna C des de B17=0 fins al peu 'Rebuig a la cota de …' (B80)",
+   "confidence": 0.95,
+   "note": "Excel DPSH = font dels assaigs EXECUTATS (prioritat sobre els previstos del pressupost/fitxa de camp, no llegits en aquesta crida)"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "P-3!E23",
+   "quote": "SPT-1",
+   "confidence": 0.3,
+   "note": "assaig SPT anotat dins la columna 'MESURA DE PAR' del full P-3 (fondària -1,2 m); no és el lloc habitual d'aquesta dada — confirmar amb GTL/comanda/annex de sondeig"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 a 1,5 m",
+   "location": "P-3!E24",
+   "quote": "1,0 a 1,5",
+   "confidence": 0.3,
+   "note": "fondària d'extracció de la mostra SPT-1; confirmar amb GTL (autoritat superior per a aquest camp)"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P-3",
+   "location": "P-3!E23:E25",
+   "quote": "SPT-1 / 1,0 a 1,5 / R",
+   "confidence": 0.3,
+   "note": "punt de penetròmetre on es va prendre la mostra SPT-1"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-2,90 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "P-1!B80 (rebuig); P-1!F17:F77 (N.F., columna buida)",
+    "quote": "Rebuig a la cota de -2,90 m",
+    "extra": {
+     "n20_final": 100,
+     "n30_final": 120.48,
+     "nivells_color_transicio": "#FF8080 (Nivell 1) fins a -1,6 m; #FFFF99 (Nivell 2) des de -1,8 m fins al rebuig"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-2,15 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "P-2!B80 (rebuig); P-2!F17:F77 (N.F., columna buida)",
+    "quote": "Rebuig a la cota de -2,15 m",
+    "extra": {
+     "n20_final": 100,
+     "n30_final": 120.48,
+     "nivells_color_transicio": "#FF8080 (Nivell 1) a 0/-0,2 m; #FFFF99 (Nivell 2) des de -0,4 m fins al rebuig"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,75 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "P-3!B80 (rebuig); P-3!F17:F77 (N.F., columna buida)",
+    "quote": "Rebuig a la cota de -1,75 m",
+    "extra": {
+     "n20_final": 100,
+     "n30_final": 120.48,
+     "nivells_color_transicio": "#FF8080 (Nivell 1) fins a -1,2 m; #FFFF99 (Nivell 2) des de -1,4 m fins al rebuig",
+     "mostra_spt": "SPT-1 anotada a E23:E25 (fondària d'extracció '1,0 a 1,5')"
+    }
+   }
+  ],
+  "sondeig_tests": [],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "P-3",
+    "profunditat": "1,0 a 1,5 m",
+    "litologia": null,
+    "n30": null,
+    "location": "P-3!E23:E25",
+    "quote": "E23='SPT-1', E24='1,0 a 1,5', E25='R'",
+    "note": "assaig anotat dins la columna 'MESURA DE PAR' del full de penetròmetre P-3, fora del lloc habitual (GTL/annex de sondeig); 'R' a la fila -1,6 m podria indicar rebuig de l'assaig, no un valor de colpeig; n30 no consta en aquest full"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [],
+    "de": "0,00 m (superfície)",
+    "a": "variable per punt: P-1 entre -1,6 i -1,8 m; P-2 entre -0,2 i -0,4 m; P-3 entre -1,2 i -1,4 m",
+    "mostra_del_nivell": false,
+    "location": "P-1/P-2/P-3, columna G ('Nivells'), codi de color per fila de fondària",
+    "quote": "llegenda fila 79: B79 bg=#FF8080 → C79 'Nivell 1'",
+    "note": "aquest full no dona litologia (només el color/etiqueta 'Nivell N'); la fondària de transició varia per punt, no és una fondària de projecte única — creuar amb annex de sondeig / llegenda del tall (no llegits en aquesta crida, aquest projecte no sembla tenir annex_sondeig segons l'inventari)"
+   },
+   {
+    "nom": "Nivell 2",
+    "litologia_candidats": [],
+    "de": "mateixa fila on comença el color #FFFF99 (vegeu 'a' de Nivell 1)",
+    "a": "fins a la cota de rebuig de cada punt: P-1 -2,90 m; P-2 -2,15 m; P-3 -1,75 m",
+    "mostra_del_nivell": true,
+    "location": "P-1/P-2/P-3, columna G ('Nivells'), codi de color per fila de fondària",
+    "quote": "llegenda fila 79: E79 bg=#FFFF99 → F79 'Nivell 2'",
+    "note": "mostra_del_nivell=true perquè la mostra SPT-1 de P-3 (fondària 1,0-1,5 m) cau dins d'aquest interval a P-3; a P-1/P-2 no hi ha mostra anotada en aquest full"
+   }
+  ],
+  "superficie_construida": {}
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit via pre-extracció (sheet-N.cells.txt + sheet-N.colors.txt a _preext/annexes_4001607_dpsh/; cap .xls obert directament, cap xlrd/openpyxl executat). 3 fulls (P-1/P-2/P-3), mateixa plantilla G3 sense metadades de projecte (files 1-14 buides, D15=0,83 és el factor de conversió N20→N30, no una dada del projecte). Colors comprovats als 3 fulls (colors.txt, equivalent a formatting_info=True) per confirmar l'absència de marca de N.F. a la columna F — cap color ni text a cap dels 3 fulls, per tant 'No detectat' amb comprovació de color feta. Columna G ('Nivells') codificada per color (#FF8080=Nivell 1, #FFFF99=Nivell 2, segons llegenda fila 79) llegida i encreuada amb la cota de rebuig (peu B80) de cada full. El full P-3 conté una anotació d'assaig SPT-1 (E23:E25) dins la columna 'MESURA DE PAR', fora del lloc habitual per aquesta dada — tractada com a senyal feble."
+}

@@ -1,0 +1,40 @@
+{
+ "source_path": "25.0616/pressupost geotècnic.msg",
+ "source_md5": "e73ae749ecc3f1e63347d1e7b84b67cf",
+ "kind": "msg",
+ "generated": "2026-09-01T13:25:21",
+ "elapsed_s": 0.073,
+ "dir": "25_0616_pressupost_geot_cnic",
+ "files": [
+  "25_0616_pressupost_geot_cnic/body.txt",
+  "25_0616_pressupost_geot_cnic/attachments/image.png",
+  "25_0616_pressupost_geot_cnic/attachments/image.png.preext/image.png"
+ ],
+ "subject": "pressupost geotècnic",
+ "from": "Laia Alarcon <laia.alarcon@bunyesc.com>",
+ "to": "Dolors Maqueda <dolors@g3dt.com>",
+ "date": "2025-08-19 15:24:37+02:00",
+ "attachments": [
+  {
+   "name": "image.png",
+   "size": 31575,
+   "md5": "2ec827006a4df39987fbcd99898fad4b",
+   "already_in_folder": null,
+   "preext_dir": "25_0616_pressupost_geot_cnic/attachments/image.png.preext"
+  },
+  {
+   "name": "punts_de_sondeig_silvia_jaume.pdf",
+   "size": 149307,
+   "md5": "296c5aa75d57fe64ec2f5cbfb96fe57f",
+   "already_in_folder": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+   "preext_dir": null
+  },
+  {
+   "name": "2_02b_dg_silvia_jaume.pdf",
+   "size": 6801549,
+   "md5": "7df29e1f0995ea8b5153503f6a6e54c7",
+   "already_in_folder": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+   "preext_dir": null
+  }
+ ]
+}

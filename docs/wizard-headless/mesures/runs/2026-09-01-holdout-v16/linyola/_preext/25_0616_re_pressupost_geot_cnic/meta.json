@@ -1,0 +1,33 @@
+{
+ "source_path": "25.0616/RE_ pressupost geotècnic.msg",
+ "source_md5": "33b397d25d403c8ca0371888183a7246",
+ "kind": "msg",
+ "generated": "2026-09-01T13:25:21",
+ "elapsed_s": 0.094,
+ "dir": "25_0616_re_pressupost_geot_cnic",
+ "files": [
+  "25_0616_re_pressupost_geot_cnic/body.txt",
+  "25_0616_re_pressupost_geot_cnic/attachments/image011.png",
+  "25_0616_re_pressupost_geot_cnic/attachments/image011.png.preext/image.png"
+ ],
+ "subject": "RE: pressupost geotècnic",
+ "from": "Eva Vazquez <eva@g3dt.com>",
+ "to": "Dolors Maqueda <dolors@g3dt.com>; Eva Roig <eroig@g3dt.com>",
+ "date": "2025-08-20 13:15:28+02:00",
+ "attachments": [
+  {
+   "name": "plan_cost_linyola.xlsx",
+   "size": 112076,
+   "md5": "bdeacfeec9ed6eecfde166d32616f50f",
+   "already_in_folder": "25.0616/PLAN_COST_LINYOLA.xlsx",
+   "preext_dir": null
+  },
+  {
+   "name": "image011.png",
+   "size": 31575,
+   "md5": "2ec827006a4df39987fbcd99898fad4b",
+   "already_in_folder": null,
+   "preext_dir": "25_0616_re_pressupost_geot_cnic/attachments/image011.png.preext"
+  }
+ ]
+}

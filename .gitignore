@@ -66,3 +66,9 @@ reference-material/4001679 ANCILES/
 
 # Fase 13(a): cache d'`AutoExtractionResult` (reconstruïble, mai versionada)
 **/validation/_auto_result.json
+
+# Runs de mesura (`docs/wizard-headless/mesures/runs/`): els renders de pàgina que fa la
+# pre-extracció es regeneren sols des dels PDFs i pesen el 99% del run — al holdout-v16,
+# 97 MB dels 98. El TEXT sí que es versiona (~1,3 MB): les lectures per document, els
+# `_decisions.json` (que són el corpus de no-regressió del 0-diff), els logs i les mesures.
+docs/wizard-headless/mesures/runs/**/*.png

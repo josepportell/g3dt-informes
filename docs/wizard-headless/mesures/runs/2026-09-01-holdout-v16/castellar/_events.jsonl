@@ -1,0 +1,33 @@
+{"ts": "2026-09-01T12:57:48", "event": "lectura_preext", "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext", "n_docs": 13, "n_errors": 0, "elapsed_s": 14.405}
+{"ts": "2026-09-01T12:57:48", "event": "lectura_inventari", "n_files": 261}
+{"ts": "2026-09-01T12:57:50", "event": "templates_fields", "n_documents": 7}
+{"ts": "2026-09-01T12:57:50", "event": "lectura_inici", "n_claude": 13, "n_python": 6, "docs": ["PDF/ANNEXES/3001621_sondeig.pdf", "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf", "PDF/ANNEXES/3001621_DPSH.pdf", "ANNEXES/3001621_DPSH.xls", "PDF/ANNEXES/3001621_tall de correlació.pdf", "tall.pdf", "4687-GTL-25 Castellar del Vallés.pdf", "PDF/ANNEXES/3001621_fotografies.pdf", "PDF/ANNEXES/LAB-SIG.pdf", "PENETROS + SONDEIG.pdf", "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg", "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg", "PDF/ANNEXES/3001621_plànol de situació.pdf"]}
+{"ts": "2026-09-01T12:57:50", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/3001621_sondeig.pdf"}
+{"ts": "2026-09-01T12:57:50", "event": "lectura_doc_inici", "doc": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf"}
+{"ts": "2026-09-01T13:01:21", "event": "lectura_doc", "doc": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:01:21", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/3001621_DPSH.pdf"}
+{"ts": "2026-09-01T13:03:53", "event": "lectura_doc", "doc": "PDF/ANNEXES/3001621_sondeig.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:03:53", "event": "lectura_doc_inici", "doc": "ANNEXES/3001621_DPSH.xls"}
+{"ts": "2026-09-01T13:04:22", "event": "lectura_doc", "doc": "PDF/ANNEXES/3001621_DPSH.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:04:22", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/3001621_tall de correlació.pdf"}
+{"ts": "2026-09-01T13:07:13", "event": "lectura_doc", "doc": "ANNEXES/3001621_DPSH.xls", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:07:13", "event": "lectura_doc_inici", "doc": "tall.pdf"}
+{"ts": "2026-09-01T13:08:16", "event": "lectura_doc", "doc": "PDF/ANNEXES/3001621_tall de correlació.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:08:16", "event": "lectura_doc_inici", "doc": "4687-GTL-25 Castellar del Vallés.pdf"}
+{"ts": "2026-09-01T13:11:43", "event": "lectura_doc", "doc": "4687-GTL-25 Castellar del Vallés.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:11:43", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/3001621_fotografies.pdf"}
+{"ts": "2026-09-01T13:12:05", "event": "lectura_doc", "doc": "tall.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:12:05", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/LAB-SIG.pdf"}
+{"ts": "2026-09-01T13:14:06", "event": "lectura_doc", "doc": "PDF/ANNEXES/3001621_fotografies.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:14:06", "event": "lectura_doc_inici", "doc": "PENETROS + SONDEIG.pdf"}
+{"ts": "2026-09-01T13:15:22", "event": "lectura_doc", "doc": "PDF/ANNEXES/LAB-SIG.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:15:22", "event": "lectura_doc_inici", "doc": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg"}
+{"ts": "2026-09-01T13:18:38", "event": "lectura_doc", "doc": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:18:38", "event": "lectura_doc_inici", "doc": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg"}
+{"ts": "2026-09-01T13:22:02", "event": "lectura_doc", "doc": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:22:02", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/3001621_plànol de situació.pdf"}
+{"ts": "2026-09-01T13:22:10", "event": "lectura_doc", "doc": "PENETROS + SONDEIG.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:25:14", "event": "lectura_doc", "doc": "PDF/ANNEXES/3001621_plànol de situació.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:25:14", "event": "consolidacio_inici", "consolidator": "python"}
+{"ts": "2026-09-01T13:25:15", "event": "decisions", "cached": false, "consolidator": "python", "n_conflicts": 0, "llm_only_fields": [], "elapsed_s": 0.801}
+{"ts": "2026-09-01T13:25:15", "event": "lectura_fi", "n_docs": 13, "by_status": {"ok": 13}, "elapsed_s_total": 3102.8413036449347, "degraded": false}

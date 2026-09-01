@@ -1,0 +1,71 @@
+{
+ "source_path": "PDF/ANNEXES/lab-sig.pdf",
+ "source_md5": "2a8fe0c0ff1efbec2205dc40f3cbe815",
+ "kind": "pdf",
+ "generated": "2026-09-01T13:25:24",
+ "elapsed_s": 0.466,
+ "dir": "pdf_annexes_lab_sig",
+ "files": [
+  "pdf_annexes_lab_sig/page-1.txt",
+  "pdf_annexes_lab_sig/page-1.png",
+  "pdf_annexes_lab_sig/page-2.txt",
+  "pdf_annexes_lab_sig/page-2.png",
+  "pdf_annexes_lab_sig/page-3.txt",
+  "pdf_annexes_lab_sig/page-3.png",
+  "pdf_annexes_lab_sig/page-4.txt",
+  "pdf_annexes_lab_sig/page-4.png",
+  "pdf_annexes_lab_sig/page-5.txt",
+  "pdf_annexes_lab_sig/page-5.png",
+  "pdf_annexes_lab_sig/page-6.txt",
+  "pdf_annexes_lab_sig/page-6.png",
+  "pdf_annexes_lab_sig/page-7.txt",
+  "pdf_annexes_lab_sig/page-7.png"
+ ],
+ "pages": 7,
+ "page_sizes_pt": [
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ]
+ ],
+ "producer": "Acrobat Distiller 15.0 (Windows)",
+ "creator": "Acrobat PDFMaker 20 para Excel",
+ "creationDate": "D:20251030095214+01'00'",
+ "modDate": "D:20251030095214+01'00'",
+ "text_ok": {
+  "1": true,
+  "2": true,
+  "3": true,
+  "4": true,
+  "5": true,
+  "6": true,
+  "7": true
+ },
+ "pages_truncated": false,
+ "halves_pages": [],
+ "text_suspect_reason": "producer: Acrobat Distiller 15.0 (Windows)"
+}

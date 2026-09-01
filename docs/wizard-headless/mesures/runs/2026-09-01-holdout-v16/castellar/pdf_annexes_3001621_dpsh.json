@@ -1,0 +1,147 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_DPSH.pdf",
+ "source_md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Fitxa d'assaig de penetració dinàmica DPSH, una pàgina per punt (P-1 a P-4), exportada a PDF des de l'Excel DPSH de G3 (mateix contingut, capçalera i taula/gràfica).",
+ "issuer": "G3 (logo G3 al caixetí; genera Eva a partir de la transcripció de camp)",
+ "date": "24/10/25 (totes les 4 pàgines)",
+ "pages_or_sheets": "4 pàgines (P-1, P-2, P-3, P-4)",
+ "context": {
+  "who_made_it": "G3 (Eva), exportació PDF de l'Excel DPSH intern amb els resultats de camp de cada punt de penetròmetre",
+  "for_whom": "l'expedient/informe del projecte — no hi ha relació client/proveïdor, és documentació tècnica pròpia",
+  "why": "deixar constància, punt per punt, del colpeig DPSH, la fondària de rebuig i el nivell litològic detectat durant l'assaig, per alimentar la taula 'Penetròmetres dinàmics DPSH' de l'informe",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "num_dpsh_tests",
+   "dpsh_tests[].cota_inici",
+   "dpsh_tests[].profunditat_assolida",
+   "dpsh_tests[].rebuig",
+   "dpsh_tests[].nivell_freatic"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "lab_*",
+   "cte_*"
+  ],
+  "relation_to_others": "exportació PDF de ANNEXES/3001621_DPSH.xls (mateixes dades); les 4 pàgines comparteixen expedient/obra/població/data — no són 4 fonts independents per a aquests camps, només 1",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.1-4, capçalera 'NÚMERO D´INFORME'",
+   "quote": "NÚMERO D´INFORME: 3001621",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta '3001621 CASTELLAR DEL VALLES'"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ ARBRELLS 18 A",
+   "location": "p.1-4, capçalera 'OBRA'",
+   "quote": "OBRA: C/ ARBRELLS 18 A",
+   "confidence": 0.85,
+   "note": "camp OBRA, no del sol·licitant; idèntic a les 4 pàgines"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1-4, capçalera 'POBLACIÓ'",
+   "quote": "POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.85,
+   "note": "forma curta de G3, sense accents; idèntic a les 4 pàgines"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/25",
+   "location": "p.1-4, capçalera 'DATA'",
+   "quote": "DATA: 24/10/25",
+   "confidence": 0.8,
+   "note": "data de camp del DPSH (primer dia de camp); idèntica a les 4 pàgines"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "document sencer",
+   "quote": "P-1 / P-2 / P-3 / P-4, cadascun amb taula i gràfica de colpeig executats",
+   "confidence": 0.9,
+   "note": "4 punts amb dades executades (no previstos)"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.1, capçalera + peu de taula",
+    "quote": "P-1     - 4  m  (respecte el carrer). / Rebuig  a -1,08 m"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,2 m (respecte el carrer)",
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2, capçalera + peu de taula",
+    "quote": "P-2    cota inici: -4,2 m  (respecte el carrer) / Rebuig  a -0,48 m"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.3, capçalera + peu de taula",
+    "quote": "P-3    cota inici: - 4 m  (respecte el carrer). / Rebuig  a -0,76 m"
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.4, capçalera + peu de taula",
+    "quote": "P-4     - 4  m (respecte el carrer). / Rebuig  a -1,55 m"
+   }
+  ],
+  "__nota": "les 4 cotes d'inici són RELATIVES ('respecte el carrer'), no hi ha cap cota absoluta (msnm) enlloc del document — sistema de cotes relatiu per a aquest projecte (regla ERR Pas 3b: la taula ha de seguir aquest sistema, no barrejar-hi absolutes d'altres fonts). N.F. buit (sense text ni color) a les 4 pàgines → 'No detectat'. Totes 4 mostren una única banda 'Nivell 1' (llegenda sota la taula), sense litologia (aquest document no en dona la descripció): senyal feble per a num_soil_levels=1, no és la font principal (annex sondeig/tall)."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit via pre-extracció (page-N.txt + page-N.png, sense fitz/render_clip). Les 4 pàgines són idèntiques en estructura (plantilla G3 exportada d'Excel); capçalera i peu llegits per text, taula/gràfica de colpeig i banda de color 'Nivells' verificades visualment (page-N.png) perquè la columna N.F. i el detall de la banda 'Nivells' no queden clars només amb el text pla. La banda 'Nivells' mostra un degradat de dos tons amb línia discontínua dins de 'Nivell 1' (P-1, P-3, P-4) que sembla estil/gradient decoratiu (proximitat al rebuig), no una segona unitat litològica ni el N.F.: la llegenda de cada pàgina només declara 'Nivell 1' (una sola banda). Columna N.F. blanca (sense text ni color) a les 4 pàgines. cota_referencia (absoluta) buscada i absent: aquest document només dona cotes d'inici RELATIVES per punt ('respecte el carrer')."
+}

@@ -1,0 +1,43 @@
+{
+ "source_path": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+ "source_md5": "8aacb8da57ba22ba62076aa415ef99a6",
+ "kind": "pdf",
+ "generated": "2026-09-01T13:25:22",
+ "elapsed_s": 0.356,
+ "dir": "acceptacio_g3dt_silvia_jaume_signat",
+ "files": [
+  "acceptacio_g3dt_silvia_jaume_signat/page-1.txt",
+  "acceptacio_g3dt_silvia_jaume_signat/page-1.png",
+  "acceptacio_g3dt_silvia_jaume_signat/page-2.txt",
+  "acceptacio_g3dt_silvia_jaume_signat/page-2.png",
+  "acceptacio_g3dt_silvia_jaume_signat/page-3.txt",
+  "acceptacio_g3dt_silvia_jaume_signat/page-3.png"
+ ],
+ "pages": 3,
+ "page_sizes_pt": [
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ]
+ ],
+ "producer": "Acrobat Distiller 20.0 (Windows)",
+ "creator": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "creationDate": "D:20250821132847+02'00'",
+ "modDate": "D:20250923163201+02'00'",
+ "text_ok": {
+  "1": true,
+  "2": true,
+  "3": true
+ },
+ "pages_truncated": false,
+ "halves_pages": [],
+ "text_suspect_reason": "producer: Acrobat Distiller 20.0 (Windows)"
+}

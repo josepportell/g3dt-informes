@@ -1,0 +1,43 @@
+{
+ "source_path": "PDF/ANNEXES/4001607_DPSH.pdf",
+ "source_md5": "4f78d04a5c690f4fdb3c9296e52d8eef",
+ "kind": "pdf",
+ "generated": "2026-09-01T13:25:22",
+ "elapsed_s": 0.234,
+ "dir": "pdf_annexes_4001607_dpsh",
+ "files": [
+  "pdf_annexes_4001607_dpsh/page-1.txt",
+  "pdf_annexes_4001607_dpsh/page-1.png",
+  "pdf_annexes_4001607_dpsh/page-2.txt",
+  "pdf_annexes_4001607_dpsh/page-2.png",
+  "pdf_annexes_4001607_dpsh/page-3.txt",
+  "pdf_annexes_4001607_dpsh/page-3.png"
+ ],
+ "pages": 3,
+ "page_sizes_pt": [
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ]
+ ],
+ "producer": "Acrobat Distiller 15.0 (Windows)",
+ "creator": "PScript5.dll Version 5.2.2",
+ "creationDate": "D:20251028120509+01'00'",
+ "modDate": "D:20251028120608+01'00'",
+ "text_ok": {
+  "1": true,
+  "2": true,
+  "3": true
+ },
+ "pages_truncated": false,
+ "halves_pages": [],
+ "text_suspect_reason": "producer: Acrobat Distiller 15.0 (Windows)"
+}

@@ -1,0 +1,48 @@
+{"ts": "2026-09-01T13:25:28", "event": "lectura_preext", "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext", "n_docs": 21, "n_errors": 0, "elapsed_s": 12.875}
+{"ts": "2026-09-01T13:25:28", "event": "lectura_inventari", "n_files": 45}
+{"ts": "2026-09-01T13:25:29", "event": "templates_fields", "n_documents": 6}
+{"ts": "2026-09-01T13:25:29", "event": "lectura_doc", "doc": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf", "skipped_duplicate": true}
+{"ts": "2026-09-01T13:25:29", "event": "lectura_inici", "n_claude": 20, "n_python": 4, "docs": ["ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf", "ACCEPTACIO/RV_ Realització geotècnic.msg", "PDF/ANNEXES/4001607_DPSH.pdf", "ANNEXES/4001607_DPSH.xls", "PDF/ANNEXES/4001607_tall de correlació.pdf", "tall.pdf", "4672-GTL-25 Linyola.pdf", "25.0616/25·0616.pdf", "25.0616/2_02B_DG_Silvia_Jaume.pdf", "PDF/ANNEXES/4001607_fotografies.pdf", "PDF/ANNEXES/lab-sig.pdf", "Punts de Sondeig_Silvia_Jaume (1).pdf", "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf", "pl situ.pdf", "PENETROS.pdf", "25.0616/RE_ pressupost geotècnic.msg", "25.0616/RV_ pressupost geotècnic.msg", "25.0616/pressupost geotècnic.msg", "RV_ Realització geotècnic.msg", "PDF/ANNEXES/4001607_plànol de situació.pdf"]}
+{"ts": "2026-09-01T13:25:29", "event": "lectura_doc_inici", "doc": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf"}
+{"ts": "2026-09-01T13:25:29", "event": "lectura_doc_inici", "doc": "ACCEPTACIO/RV_ Realització geotècnic.msg"}
+{"ts": "2026-09-01T13:28:10", "event": "lectura_doc", "doc": "ACCEPTACIO/RV_ Realització geotècnic.msg", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:28:10", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001607_DPSH.pdf"}
+{"ts": "2026-09-01T13:28:51", "event": "lectura_doc", "doc": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:28:51", "event": "lectura_doc_inici", "doc": "ANNEXES/4001607_DPSH.xls"}
+{"ts": "2026-09-01T13:32:02", "event": "lectura_doc", "doc": "PDF/ANNEXES/4001607_DPSH.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:32:02", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001607_tall de correlació.pdf"}
+{"ts": "2026-09-01T13:33:07", "event": "lectura_doc", "doc": "ANNEXES/4001607_DPSH.xls", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:33:07", "event": "lectura_doc_inici", "doc": "tall.pdf"}
+{"ts": "2026-09-01T13:35:51", "event": "lectura_doc", "doc": "PDF/ANNEXES/4001607_tall de correlació.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:35:51", "event": "lectura_doc_inici", "doc": "4672-GTL-25 Linyola.pdf"}
+{"ts": "2026-09-01T13:38:12", "event": "lectura_doc", "doc": "tall.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:38:12", "event": "lectura_doc_inici", "doc": "25.0616/25·0616.pdf"}
+{"ts": "2026-09-01T13:39:03", "event": "lectura_doc", "doc": "4672-GTL-25 Linyola.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:39:03", "event": "lectura_doc_inici", "doc": "25.0616/2_02B_DG_Silvia_Jaume.pdf"}
+{"ts": "2026-09-01T13:41:59", "event": "lectura_doc", "doc": "25.0616/25·0616.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:41:59", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001607_fotografies.pdf"}
+{"ts": "2026-09-01T13:44:46", "event": "lectura_doc", "doc": "25.0616/2_02B_DG_Silvia_Jaume.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:44:46", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/lab-sig.pdf"}
+{"ts": "2026-09-01T13:45:22", "event": "lectura_doc", "doc": "PDF/ANNEXES/4001607_fotografies.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:45:22", "event": "lectura_doc_inici", "doc": "Punts de Sondeig_Silvia_Jaume (1).pdf"}
+{"ts": "2026-09-01T13:48:13", "event": "lectura_doc", "doc": "Punts de Sondeig_Silvia_Jaume (1).pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:48:13", "event": "lectura_doc_inici", "doc": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf"}
+{"ts": "2026-09-01T13:48:47", "event": "lectura_doc", "doc": "PDF/ANNEXES/lab-sig.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:48:47", "event": "lectura_doc_inici", "doc": "pl situ.pdf"}
+{"ts": "2026-09-01T13:51:23", "event": "lectura_doc", "doc": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:51:23", "event": "lectura_doc_inici", "doc": "PENETROS.pdf"}
+{"ts": "2026-09-01T13:51:39", "event": "lectura_doc", "doc": "pl situ.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:51:39", "event": "lectura_doc_inici", "doc": "25.0616/RE_ pressupost geotècnic.msg"}
+{"ts": "2026-09-01T13:55:34", "event": "lectura_doc", "doc": "25.0616/RE_ pressupost geotècnic.msg", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:55:34", "event": "lectura_doc_inici", "doc": "25.0616/RV_ pressupost geotècnic.msg"}
+{"ts": "2026-09-01T13:56:00", "event": "lectura_doc", "doc": "PENETROS.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:56:00", "event": "lectura_doc_inici", "doc": "25.0616/pressupost geotècnic.msg"}
+{"ts": "2026-09-01T13:57:58", "event": "lectura_doc", "doc": "25.0616/pressupost geotècnic.msg", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T13:57:58", "event": "lectura_doc_inici", "doc": "RV_ Realització geotècnic.msg"}
+{"ts": "2026-09-01T14:00:18", "event": "lectura_doc", "doc": "RV_ Realització geotècnic.msg", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T14:00:18", "event": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001607_plànol de situació.pdf"}
+{"ts": "2026-09-01T14:00:33", "event": "lectura_doc", "doc": "25.0616/RV_ pressupost geotècnic.msg", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T14:02:51", "event": "lectura_doc", "doc": "PDF/ANNEXES/4001607_plànol de situació.pdf", "cached": false, "attempt": 1}
+{"ts": "2026-09-01T14:02:51", "event": "consolidacio_inici", "consolidator": "python"}
+{"ts": "2026-09-01T14:07:10", "event": "decisions", "cached": false, "consolidator": "python", "n_conflicts": 1, "llm_only_fields": ["tables.spt_ma_tests[P-3@1.00-1.15].profunditat"], "elapsed_s": 259.435}
+{"ts": "2026-09-01T14:07:10", "event": "lectura_fi", "n_docs": 21, "by_status": {"skipped_duplicate": 1, "ok": 20}, "elapsed_s_total": 4343.766327189922, "degraded": false}

@@ -1,0 +1,90 @@
+{
+ "source_path": "RV_ Realització geotècnic.msg",
+ "source_md5": "5c43c5b52be9af08377bacd459b1fb4a",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Fil de correu reenviat internament a G3 (Eva/Cesar/Dolors) amb la cadena completa amb Silvia Eroles (contacte de l'obra) sobre l'activació de l'estudi geotècnic, l'acceptació del pressupost 25·0616 i l'organització dels treballs de camp de l'endemà.",
+ "issuer": "Reenviament: G3 DT <g3@g3dt.com>. Fil original: Silvia Eroles <serolesba@gmail.com> i G3 (Eva Roig, Dep. Administració)",
+ "date": "2025-09-30 10:24:08+02:00 (reenviament intern); fil original 2025-09-19 a 2025-09-30",
+ "pages_or_sheets": null,
+ "context": {
+  "who_made_it": "Fil extern iniciat per Silvia Eroles (contacte/sol·licitant de l'obra) cap a G3; G3 (Eva Roig, Administració) respon. El text visible és un reenviament intern (RV:) de g3@g3dt.com cap a Eva Vazquez, Cesar Morillas i Dolors Maqueda.",
+  "for_whom": "Personal intern de G3 que ha de planificar/executar la visita de camp",
+  "why": "Activar l'estudi geotècnic (pressupost 25·0616), confirmar l'acceptació, i coordinar la visita de camp de l'endemà (desplaçar 1m cap a l'esquerra 2 dels punts de sondeig proposats perquè caiguin en punts de càrrega)",
+  "expected_fields": [
+   "field_date (referència relativa 'demà')",
+   "nom del contacte/sol·licitant de l'obra",
+   "ajustos als punts de sondeig proposats"
+  ],
+  "not_expected": [
+   "adreça de l'obra",
+   "municipi",
+   "nom de l'arquitecte",
+   "cotes",
+   "dades de laboratori",
+   "superfícies",
+   "plantes"
+  ],
+  "relation_to_others": "Mateix fil de correspondència que 25.0616/RV_ pressupost geotècnic.msg i 25.0616/pressupost geotècnic.msg (relacionats amb el mateix pressupost 25·0616). L'adjunt 'Punts de Sondeig_Silvia_Jaume.pdf' ja és present solt a la carpeta (25.0616/Punts de Sondeig_Silvia_Jaume.pdf, mateix md5 296c5aa75d57fe64ec2f5cbfb96fe57f) — no cal rellegir-lo. ATENCIÓ: hi ha un fitxer HOMÒNIM 'ACCEPTACIO/RV_ Realització geotècnic.msg' amb md5 diferent (83e3b211af14c59d056a0a7a0cad160a); aquest JSON és el de l'ARREL, no el d'ACCEPTACIO.",
+  "authority_for": [
+   "field_date",
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-01",
+   "location": "cos del correu, missatge de Silvia Eroles del 2025-09-30 10:16",
+   "quote": "Li vaig comentar a l'arquitecte que venieu demà",
+   "confidence": 0.5,
+   "note": "Dia de camp inferit ('demà' respecte la data del missatge, 2025-09-30 → 2025-10-01); coincideix amb les fotos WhatsApp de FOTOGRAFIES/ datades 2025-10-01. El correu és font secundària (fitxa de camp/annex DPSH/albarà tenen prioritat superior segons regla field_date)."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Silvia Eroles",
+   "location": "cos del correu, remitent i signatura del fil (missatges de 2025-09-19, 2025-09-23, 2025-09-30)",
+   "quote": "Moltes gràcies, \nSílvia Eroles",
+   "confidence": 0.35,
+   "note": "Contacte/sol·licitant que activa l'encàrrec i tramita l'acceptació; no és font decisiva (regla: CLIENT: de correus d'encàrrec és el sol·licitant, candidat mai segur). Projecte amb 2 promotors possibles: Jaume Nadal Andreu (jume_540@hotmail.com) apareix en CC a tot el fil des del 2025-09-23. L'informe ha d'anar a nom de qui signa l'ACCEPTACIO (regla '2 promotors' del Pas 3)."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Jaume Nadal Andreu",
+   "location": "capçalera CC del fil (missatges de 2025-09-23 i 2025-09-30)",
+   "quote": "CC: jaume nadal andreu <jume_540@hotmail.com>",
+   "confidence": 0.25,
+   "note": "Possible co-promotor (CC constant al fil, mai remitent ni signant); no és font decisiva — verificar amb ACCEPTACIO/DADES CLIENT.txt qui signa realment."
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "25·0616 P#",
+   "location": "cos del correu, missatge de Silvia Eroles del 2025-09-19 12:49",
+   "quote": "A continuació us passo número de pressupost que vam rebre per part vostra: 25·0616 P#",
+   "confidence": 0.0,
+   "note": "Codi comercial del pressupost (coincideix amb el nom de la subcarpeta 25.0616), NO és l'expedient (regla: '25·0647 (codi comercial)' és exemple explícit de NO-expedient). Descartat conscientment."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit body.txt pre-extret (correu amb fil complet reenviat, sense adjunts nous a llegir — l'únic adjunt ja és solt a la carpeta amb el mateix md5). S'ha verificat contra _inventory.json que aquest --only correspon al fitxer de l'ARREL ('RV_ Realització geotècnic.msg', md5 5c43c5b52be9af08377bacd459b1fb4a) i no al fitxer homònim dins ACCEPTACIO/ (md5 diferent)."
+}

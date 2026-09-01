@@ -1,0 +1,120 @@
+{
+ "source_path": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+ "source_md5": "8aacb8da57ba22ba62076aa415ef99a6",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost d'estudi geotècnic G3 (codi comercial 25·0616), amb el formulari de dades de facturació/informe de la p.3 omplert a mà i signat per la clienta i per G3",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (B25461443)",
+ "date": "21/08/25 (data del pressupost; modDate PDF 23/09/25 = data de la signatura/escaneig)",
+ "pages_or_sheets": "3 pàgines",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L., que presenta el pressupost de l'estudi geotècnic a qui l'ha demanat",
+  "for_whom": "El sol·licitant és BUNYESC ARQUITECTURA EFICIENT, SLP (bloc CLIENT: p.1); qui finalment signa l'acceptació i consta com a titular de la factura/informe (p.3) és SÍLVIA EROLES BALAGUERÓ",
+  "why": "Formalitzar l'encàrrec: cal retornar el pressupost signat i amb les dades de facturació omplertes per part del client real abans de començar els treballs de camp",
+  "expected_fields": [
+   "street_address (bloc OBRA)",
+   "architect_company (bloc CLIENT = sol·licitant)",
+   "client_name (formulari p.3 omplert+signat)",
+   "num_dpsh_tests (previstos, taula de valoració)"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "lab (dades de laboratori)",
+   "utm_x/utm_y",
+   "referencia_catastral",
+   "cte_edificacio/cte_sol",
+   "l'expedient real (només hi ha el codi comercial G3)"
+  ],
+  "relation_to_others": "Versió signada/omplerta del mateix pressupost 25·0616 que hi ha a 25.0616/25·0616.pdf (mateix codi comercial, mateix import 840,00€); aquest exemplar de ACCEPTACIO/ és el que porta el formulari de facturació complet i les signatures",
+  "authority_for": [
+   "street_address",
+   "architect_company",
+   "client_name",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "Clot de la Llacuna, 16",
+   "location": "p.1 bloc OBRA",
+   "quote": "OBRA: BUNYESC ARQUITECTURA EFICIENT, SLP [ordre pdftotext incorrecte, vegeu reading_notes] Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.8,
+   "note": "bloc OBRA del pressupost, verificat visualment a la p.1 (la imatge separa clarament CLIENT i OBRA); adreça i municipi van a la mateixa línia"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "p.1 bloc OBRA, mateixa línia que l'adreça",
+   "quote": "Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.8,
+   "note": "CP 25240 + Linyola; coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+   "location": "p.1 bloc CLIENT (sol·licitant)",
+   "quote": "CLIENT: BUNYESC ARQUITECTURA EFICIENT, SLP / C/ ARBORETUM, 17 / 25199 LLEIDA / Tel: 973157519",
+   "confidence": 0.55,
+   "note": "El bloc 'CLIENT:' del pressupost és el sol·licitant, no el client de l'informe (regla Pas 3); conté 'ARQUITECTURA' → candidat a architect_company, mai segur per a client_name. Només despatx, cap persona nomenada en aquest document"
+  },
+  {
+   "concept_id": "client_name",
+   "value": "SÍLVIA EROLES BALAGUERÓ",
+   "location": "p.3 bloc 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' → NOM I COGNOMS, i bloc 'ADREÇA ON S'HA D'ENVIAR L'INFORME'; signatura 'El client' al peu",
+   "quote": "NOM I COGNOMS:  SÍLVIA EROLES BALAGUERÓ / ADREÇA:  C/LLIBERTAT 13, 1-1 / CP I POBLACIÓ:  25240 LINYOLA / N.I.F./C.I.F.:  47697437Z",
+   "confidence": 0.85,
+   "note": "formulari de facturació/informe omplert a mà i signat per la clienta (autoritat A, regla Pas 3: 'formulari p.5 del pressupost signat si està omplert'); no és el sol·licitant BUNYESC ARQUITECTURA"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "p.2 taula VALORACIÓ, línia 001.001",
+   "quote": "UNITATS D'ASSAIGS DE PENETRACIO DINAMICA DPSH ... 3,00",
+   "confidence": 0.4,
+   "note": "previstos al pressupost, no executats (regla Pas 3: pressupost p.2 és previstos, per sota de l'Excel DPSH real en prioritat); també preveu 1 ml previ a SPT + 1 assaig SPT"
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "25·0616 (P# 001)",
+   "location": "p.1 caixetí i p.2-3 capçalera 'PRESSUPOST'",
+   "quote": "25·0616  P#",
+   "confidence": 0.9,
+   "note": "codi comercial G3, explícitament exclòs com a expedient per la regla Pas 3 ('NO són l'expedient: 25·0647 codi comercial' — mateix patró); l'expedient real és el nom de carpeta 4001607"
+  },
+  {
+   "concept_id": "NOT_field_date",
+   "value": "21/08/25",
+   "location": "p.1 capçalera i p.3 taula DATA/PRESSUPOST",
+   "quote": "DATA: 21/08/25",
+   "confidence": 0.9,
+   "note": "data d'emissió del pressupost, no data de camp (regla Pas 3: mai la data del pressupost per a field_date)"
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "El text pla (pdftotext) de la p.1 barreja l'ordre dels blocs CLIENT i OBRA (regla Pas 2: cal ordenar per y,x); s'ha verificat l'ordre correcte amb page-1.png: bloc CLIENT (sol·licitant, Bunyesc Arquitectura) primer, bloc OBRA (Clot de la Llacuna 16, Linyola) després. La p.3 (numerada internament 'Pàg. 2 de 2') és el full de condicions + formulari de facturació + signatures manuscrites; llegida visualment amb page-3.png per confirmar el nom omplert a mà, el NIF i les dues signatures (G3 i clienta). No hi ha bloc 'ARQUITECTE' omplert a la secció 'PERSONES QUE PODEN REBRE INFORMACIÓ' (casella en blanc)."
+}

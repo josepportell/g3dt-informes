@@ -1,0 +1,7 @@
+- 12:57:28 INICI cua: castellar linyola tulipa (pid 603209)
+- 12:57:28 castellar: inici lectura (3001621 CASTELLAR DEL VALLES)
+- 13:25:15 castellar: FI en 27.8 min — docs {'ok': 13} — degraded=False — decisions=sí
+- 13:25:15 linyola: inici lectura (4001607 LINYOLA)
+- 14:07:10 linyola: FI en 41.9 min — docs {'skipped_duplicate': 1, 'ok': 20} — degraded=False — decisions=sí
+- 14:07:10 tulipa: inici lectura (3001706 C.TULIPA CERDANYOLA)
+- 14:07:26 CUA ATURADA a petició del Josep (fixos del code-review abans de Tulipa i la resta)

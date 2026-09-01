@@ -1,0 +1,145 @@
+{
+ "source_path": "tall.pdf",
+ "source_md5": "a4512806fd21fe5f6efc6b4e6dd15f69",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geològic-geotècnic (secció amb els punts DPSH P-1 a P-4 i el sondeig S-1), còpia neta 'Print To PDF' de l'annex FreeHand del projecte.",
+ "issuer": "G3 (Eva), a partir dels resultats de camp de TPS",
+ "date": "Octubre 2025 (capsa 'Data:' del document); metadada PDF creationDate/modDate 2025-11-03",
+ "pages_or_sheets": "1 pàgina (A3 apaïsat)",
+ "context": {
+  "who_made_it": "G3 (Eva), que redacta el tall de correlació a partir dels resultats de camp de TPS (DPSH i sondeig a rotació).",
+  "for_whom": "Per a la pròpia redacció de l'informe geotècnic (figura de correlació); no s'adreça a cap tercer extern.",
+  "why": "Correlacionar els punts d'investigació (4 DPSH + 1 sondeig) en una única secció geològica, mostrant la capa de cobertura, el substrat rocós (Nivell 1) i la cota de fonamentació recomanada.",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type (títol)",
+   "num_soil_levels (llegenda)",
+   "num_dpsh_tests (punts al tall)",
+   "litologia per nivell",
+   "cota de fonamentació recomanada"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "superficie_parcela",
+   "num_floors",
+   "utm_x",
+   "utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "cota_referencia numèrica exacta"
+  ],
+  "relation_to_others": "Còpia neta 'Print To PDF' (producer del PDF) de PDF/ANNEXES/3001621_tall de correlació.pdf (mateix annex FreeHand->PDF, text brossa a l'original); mateix contingut, aquí llegible directament sense clip. No s'ha llegit l'original FreeHand en aquesta crida (--only tall.pdf).",
+  "authority_for": [
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "peu de plànol, capsa 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte (3001621 CASTELLAR DEL VALLES)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells, Nº 18A-18B-20",
+   "location": "peu de plànol, sota el títol del projecte",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.65,
+   "note": "adreça del conjunt (3 números: 18A-18B-20, projecte '3 HAB'); no és font d'autoritat del Pas 2 per a aquest camp, aporta corroboració; pot requerir desglossar per casa amb altres documents"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "peu de plànol, sota el títol del projecte",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.8,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "peu de plànol, títol del projecte",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.45,
+   "note": "el títol diu 'UNA habitatge unifamiliar aïllat' (singular) però l'adreça del mateix peu llista 3 números (18A-18B-20) i el pressupost de la carpeta és '3 HAB': possible plantilla no actualitzada per al cas de 3 cases; candidat, no segur"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2025",
+   "location": "capsa de peu, 'Data:'",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.3,
+   "note": "només mes/any, sense dia; és la data del document (tall), no necessàriament la data de camp -- candidat secundari feble, no és font d'autoritat per a aquest camp (Pas 3: fitxa de camp / annex DPSH / albarà manen)"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "secció del tall, marcadors de punt blaus",
+   "quote": "P-1 / P-2 / P-4 / P-3",
+   "confidence": 0.5,
+   "note": "4 punts DPSH representats gràficament al tall (P-1, P-2, P-3, P-4), més el sondeig S-1 (no compta com a DPSH); no és font d'autoritat (l'Excel DPSH mana), aporta corroboració visual"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "llegenda, capsa LLEGENDA (2a fila)",
+   "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "confidence": 0.55,
+   "note": "la llegenda només numera 'Nivell 1' (a més d'una capa de cobertura sense número, 'Terreny Vegetal'); en aquesta lectura (--only tall.pdf) no s'ha llegit l'annex de sondeig (columna 'Unitat litològica'), que segons el Pas 3 té prioritat sobre la llegenda del tall -- candidat, no segur"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Terreny Vegetal (cobertura, sense número)",
+    "litologia": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "llegenda, capsa LLEGENDA (1a fila)",
+    "quote": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels."
+   },
+   {
+    "nom": "Nivell 1",
+    "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "llegenda, capsa LLEGENDA (2a fila)",
+    "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+   }
+  ],
+  "__nota": "Cap fondària de transició impresa numèricament (només gràfica, eix (msnm) 569-572): 'de'/'a' es deixen null per no estimar per píxels (regla del Pas 3b). Els valors 'Nb=' i 'N=R' vora cada punt (P-1 Nb=16->R, P-2 Nb=18->R, S-1 N=R, P-4 Nb=10->33->R, P-3 Nb=19->R) es llegeixen gràficament pero sense fondària numèrica impresa: no s'han convertit en files de dpsh_tests (l'Excel DPSH és la font d'autoritat per a cota_inici/profunditat_assolida, Pas 3b); s'anoten només com a corroboració qualitativa que els 4 punts DPSH arriben a rebuig (Nb=R) dins o al límit de la capa de cobertura, i que el sondeig S-1 arriba a refús molt superficial (N=R). Sistema de cotes del tall: absolut (eix '(msnm)' amb valors 569-572), sense cap 'Cota inici' explícita per punt en aquest document."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "superficie_parcela",
+  "num_floors",
+  "cota_referencia",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura del text pre-extret (page-1.txt, text_ok=true) + revisió visual de la imatge sencera (page-1.png, 150dpi); pàgina única A3 apaïsat, sense necessitat de clip ni meitats (preext.error=null, halves_pages=[]). Inventari (_inventory.json) revisat abans de llegir: tall.pdf és la còpia 'Print To PDF' neta de PDF/ANNEXES/3001621_tall de correlació.pdf (FreeHand, text brossa), no llegida en aquesta crida."
+}

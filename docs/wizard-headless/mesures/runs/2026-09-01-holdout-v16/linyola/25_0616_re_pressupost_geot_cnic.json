@@ -1,0 +1,136 @@
+{
+ "source_path": "25.0616/RE_ pressupost geotècnic.msg",
+ "source_md5": "33b397d25d403c8ca0371888183a7246",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Cadena de correu (RE:/RV:) que conté citat l'email original de l'arquitecta Laia Alarcón (Bunyesc) demanant pressupost d'estudi geotècnic a G3 per a un habitatge unifamiliar a Linyola, amb les dades de la clienta.",
+ "issuer": "Laia Alarcón (Bunyesc Arquitectura Eficient SLP) — email original citat; reenviat internament per Dolors Maqueda i respost per Eva Vázquez (G3)",
+ "date": "2025-08-19 15:25 (correu original de Laia Alarcón) / 2025-08-20 11:32 (RV: intern Dolors→Eva) / 2025-08-20 13:15 (RE: actual, capçalera del .msg)",
+ "pages_or_sheets": "cos de correu (cadena de 3 missatges citats) + 2 adjunts (plan_cost_linyola.xlsx ja present a la carpeta; image011.png = logo)",
+ "context": {
+  "who_made_it": "Laia Alarcón, arquitecta de Bunyesc Arquitectura Eficient SLP, escriu directament a G3 (Dolors Maqueda) demanant un pressupost d'estudi geotècnic; Dolors ho reenvia internament (RV:) a Eva Vázquez i Eva Roig del Departament de Geologia; Eva Vázquez respon (RE:) sense afegir contingut nou, només signatura.",
+  "for_whom": "G3 (equip intern: Dolors Maqueda, Eva Vázquez, Eva Roig) — per preparar el pressupost d'estudi geotècnic.",
+  "why": "Sol·licitud de pressupost d'estudi geotècnic per a un habitatge unifamiliar nou a Linyola. És el correu d'ENCÀRREC ORIGINAL, previ a l'acceptació i al treball de camp.",
+  "expected_fields": [
+   "client_name",
+   "client_nif",
+   "street_address",
+   "municipality",
+   "building_type",
+   "architect_name",
+   "architect_company"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "utm_x",
+   "utm_y",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol",
+   "num_floors",
+   "superficie_parcela",
+   "expedient"
+  ],
+  "relation_to_others": "Cadena de correu: aquest .msg (RE:) és la resposta més recent i conté citats el RV: intern (Dolors→Eva Vázquez/Eva Roig, 2025-08-20 11:32) i l'email ORIGINAL de l'arquitecta (Laia Alarcón→Dolors, 2025-08-19 15:25), que és el veritable encàrrec. Els altres dos .msg de la carpeta amb assumptes relacionats ('RV_ pressupost geotècnic.msg', 'pressupost geotècnic.msg') són probablement el mateix fil amb menys/més missatges citats — NO són fonts independents d'aquesta, és el mateix encàrrec citat en cadena.",
+  "authority_for": [
+   "client_name",
+   "client_nif",
+   "street_address",
+   "municipality",
+   "building_type",
+   "architect_name",
+   "architect_company"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles Balagueró",
+   "location": "cos del correu, bloc 'Dades Clienta:' de l'email original de Laia Alarcón (19/08/2025), citat dins la cadena",
+   "quote": "Dades Clienta:\n\nSílvia Eroles Balagueró.",
+   "confidence": 0.65,
+   "note": "Identificada directament per l'arquitecta com a clienta (amb DNI), no és el 'CLIENT:' d'una plantilla G3 — és nom+DNI d'una persona física, patró equivalent a 'correus que diguin propietari' (Pas 3). Candidat, no segur: font única en aquest document."
+  },
+  {
+   "concept_id": "client_nif",
+   "value": "47697437Z",
+   "location": "cos del correu, mateix bloc 'Dades Clienta:'",
+   "quote": "dni: 47697437Z",
+   "confidence": 0.65,
+   "note": "NIF de la clienta identificada al punt anterior; útil per creuar amb ACCEPTACIO/DADES CLIENT.txt si existeix (concordança nom+NIF)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+   "location": "cos del correu, primer bullet de l'email original de Laia Alarcón",
+   "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.7,
+   "note": "Adreça de l'obra segons l'arquitecta que encarrega el projecte. No confondre amb la 'direcció facturació' de la clienta (C/ Llibertat 13, 1r 2a, Linyola), que és l'adreça del client, no de l'obra."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "cos del correu, primer paràgraf i primer bullet de l'email original",
+   "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.",
+   "confidence": 0.75,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "primer paràgraf de l'email original de Laia Alarcón",
+   "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.",
+   "confidence": 0.7,
+   "note": "Redacció de l'arquitecta abans de l'encàrrec formal; la comparació amb la redacció de l'informe és CLOSE, no literal (Pas 3)."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Laia Alarcón",
+   "location": "signatura de l'email original, final del correu",
+   "quote": "Laia Alarcón\n\narquitecta",
+   "confidence": 0.6,
+   "note": "Persona signant, arquitecta col·legiada de Bunyesc. Per aquest projecte concret l'informe de l'Eva sol usar el nom del DESPATX (architect_company) en lloc de la persona al camp architect_name — vegeu regla 'architect_name amb persona I despatx' del skill (exemple explícit citat: Linyola → BUNYESC ARQUITECTURA EFICIENT). Candidat, mai segur amb una sola font."
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "Bunyesc Arquitectura Eficient SLP",
+   "location": "peu legal de confidencialitat de l'email original + domini de correu 'bunyesc.com'",
+   "quote": "No està permesa la seva reproducció o distribució sense l'autorització expressa de BUNYESC ARQUITECTURA EFICIENT SLP. ... Dades identificatives: Bunyesc Arquitectura Eficient Slp, B25828922, Carrer Arboretum 17,25199, Lleida.",
+   "confidence": 0.75,
+   "note": null
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "cos del correu, bullet 'adjuntem' de l'email original",
+   "quote": "plànol dels 3 punts de sondeig.",
+   "confidence": 0.3,
+   "note": "'Punts de sondeig' és ambigu (DPSH vs sondeig a rotació); aquesta carpeta no té cap annex_sondeig (rotació), només DPSH, així que probablement es refereix als 3 punts DPSH previstos — però és un correu d'encàrrec previ, per sota en autoritat de fitxa/pressupost/Excel DPSH (Pas 3). Corroboració feble, no candidat principal."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "num_floors",
+  "superficie_parcela"
+ ],
+ "reading_notes": "Lectura del body.txt pre-extret (cadena RE:/RV: amb l'email original de Laia Alarcón citat dins, sota les línies 'De:'). Adjunt image011.png comprovat visualment: logotip 'BUNYESC ARQUITECTES' (31 KB, just per sobre del llindar de 25 KB de signatura) — descartat com a signatura/logo, no aporta dades del nivell A. Adjunt plan_cost_linyola.xlsx ja present solt a la carpeta (already_in_folder), no rellegit aquí."
+}

@@ -1,0 +1,72 @@
+{
+ "source_path": "ACCEPTACIO/RV_ Realització geotècnic.msg",
+ "source_md5": "83e3b211af14c59d056a0a7a0cad160a",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern de G3 DT (reenviat a Dolors Maqueda) que confirma la recepció de l'acceptació del pressupost 25.0616 signada per la clienta, amb tot el fil de correspondència amb Sílvia Eroles des de l'encàrrec inicial.",
+ "issuer": "G3 DT (g3@g3dt.com) — reenviament intern",
+ "date": "2025-09-23 16:50:25+02:00",
+ "pages_or_sheets": "n/a (cos de correu; sense adjunts nous per llegir)",
+ "context": {
+  "who_made_it": "G3 DT (personal d'administració) reenvia a Dolors Maqueda (interna) un fil que ve originalment de la clienta Sílvia Eroles",
+  "for_whom": "Dolors Maqueda (personal intern de G3 DT); el fil original també anava en còpia a jaume nadal andreu",
+  "why": "Confirmar internament que l'acceptació del pressupost 25.0616 ja ha arribat signada i ha estat contestada, adjuntant el PDF signat",
+  "expected_fields": [
+   "client_name (identitat de qui accepta l'encàrrec)",
+   "referència al codi de pressupost",
+   "confirmació d'acceptació"
+  ],
+  "not_expected": [
+   "street_address",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "field_date exacte",
+   "dades tècniques de camp"
+  ],
+  "relation_to_others": "Transmet el mateix PDF que ja és solt a la carpeta (ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf, md5 8aacb8da57ba22ba62076aa415ef99a6 = already_in_folder, no re-llegit aquí — és el formulari p.5 signat, autoritat superior per a client_name). Existeix un altre .msg amb el mateix assumpte a l'arrel del projecte ('RV_ Realització geotècnic.msg', md5 5c43c5b52be9af08377bacd459b1fb4a, diferent d'aquest) — no llegit en aquesta crida. El fil inclou tota la cadena des de l'encàrrec inicial (correu de 2025-09-19) fins l'acceptació (2025-09-23); només la capçalera 'ACCEPTACIÓ (ja l'he contestat jo)' és text nou d'aquest missatge concret.",
+  "authority_for": [
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles",
+   "location": "cos correu, missatges de 2025-09-19 12:49 i 2025-09-23 16:36 (De: Silvia Eroles)",
+   "quote": "De: Silvia Eroles <serolesba@gmail.com>\nEnviado el: martes, 23 de septiembre de 2025 16:36\nPara: G3 DT <g3@g3dt.com>; jaume nadal andreu <jume_540@hotmail.com>\nAsunto: Re: Realització geotècnic\n\nBona tarda,\n\nAdjunto l'acceptació del pressupost.",
+   "confidence": 0.45,
+   "note": "És qui envia i signa l'acceptació i qui ha activat l'encàrrec ('Estaria interessada en activar l'estudi geotècnic'), però aquest correu NO és el formulari p.5 (autoritat superior, es llegeix en un altre document: ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf). El nom de l'adjunt ('g3dt_silvia_jaume_signat.pdf') i la còpia a jaume nadal andreu suggereixen DOS promotors al projecte — candidat, mai segur des d'aquest correu."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Jaume Nadal Andreu",
+   "location": "cos correu, capçalera 'Para:' del missatge de 2025-09-23 16:36",
+   "quote": "Para: G3 DT <g3@g3dt.com>; jaume nadal andreu <jume_540@hotmail.com>",
+   "confidence": 0.3,
+   "note": "Segon promotor possible (apareix en còpia i al nom de l'adjunt 'silvia_jaume_signat'); candidat feble només des d'aquest correu — cal el formulari p.5 signat per confirmar a nom de qui va l'informe (pràctica Eva amb 2 promotors: qui signa l'acceptació)."
+  }
+ ],
+ "not_present": [
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Cadena RE:/RV: completa preservada a body.txt; només la capçalera 'ACCEPTACIÓ (ja l'he contestat jo)' és text nou d'aquest missatge concret, la resta és quotat. Únic adjunt (g3dt_silvia_jaume_signat.pdf) ja solt a la carpeta (already_in_folder=true) — no re-llegit; es llegeix com a document independent (ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf). Sense pàgines/imatges de preext per a aquest .msg (kind=msg, només body.txt disponible)."
+}

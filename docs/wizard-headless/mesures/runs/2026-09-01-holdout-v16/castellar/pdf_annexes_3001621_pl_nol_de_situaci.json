@@ -1,0 +1,111 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+ "source_md5": "7d495516ac2896e3f236b08e7879a41d",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació del projecte: mapa de context (comarca/municipi) + plànol de detall de barri + ortofoto amb la zona d'estudi i els punts d'assaig P-1..P-4 (DPSH) i S-1 (sondeig a rotació)",
+ "issuer": "G3",
+ "date": "Octubre 2025 (data d'emissió impresa al peu del plànol)",
+ "pages_or_sheets": "1 pàgina (A3 apaïsat, 1191x842 pt)",
+ "context": {
+  "who_made_it": "G3 (Eva) — annex fet originalment a FreeHand i imprès/exportat a PDF (Acrobat Distiller); porta el logo i el peu de pàgina de la plantilla G3 d'annexos",
+  "for_whom": "s'incorpora com a annex de l'informe geotècnic del projecte",
+  "why": "localitzar geogràficament el projecte (mapes de context a diferents escales) i mostrar sobre ortofoto la zona d'estudi amb els punts d'assaig P-1..P-4 (DPSH, blau) i S-1 (sondeig a rotació amb bateria contínua, vermell), segons la llegenda",
+  "expected_fields": [
+   "expedient",
+   "municipality",
+   "street_address (dins la redacció del títol)",
+   "building_type (dins la redacció del títol)",
+   "num_dpsh_tests (recompte visual de punts P-i)",
+   "ubicació relativa dels punts d'assaig"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "cota_referencia",
+   "utm_x_utm_y",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "num_floors",
+   "superficie_parcela",
+   "num_soil_levels",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "versió impresa (Print/Distiller) del FreeHand ANNEXES/3001621_plànol de situació.FH11 (mateixa carpeta, route=skip, no llegible). Existeix una còpia anterior a PDF-V0/ANNEXES/3001621_plànol de situació.pdf (carpeta exclosa PDF-V0, versió v0 substituïda per aquesta).",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "peu de pàgina, cel·la 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.85,
+   "note": "coincideix amb el nom de la carpeta del projecte (3001621 CASTELLAR DEL VALLES)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells Nº 18A-18B-20",
+   "location": "peu de pàgina, subtítol del títol del projecte",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.7,
+   "note": "adreça dins la redacció del títol, no en una casella OBRA/ADREÇA dedicada; corroborada pel rètol de carrer 'Arbrells' visible al mapa principal, prop de la zona d'estudi"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "peu de pàgina (títol) + mapa d'ubicació superior esquerre",
+   "quote": "CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.85,
+   "note": "confirmat també pel topònim 'Castellar del Vallès' al mapa de context"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "peu de pàgina, subtítol del títol del projecte",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.8,
+   "note": null
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "mapa principal (ortofoto), marcadors blaus P-1 a P-4 + llegenda",
+   "quote": "P-1 / P-2 / P-3 / P-4; Llegenda: 'Assaig de penetració dinàmica DPSH'",
+   "confidence": 0.55,
+   "note": "recompte visual de marcadors sobre el plànol; no és la font primària (mana l'Excel DPSH amb fulls P-1..P-4 executats), és corroboració"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2025",
+   "location": "peu de pàgina, cel·la 'Data:'",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.2,
+   "note": "data d'emissió/dibuix del plànol (només mes i any), no necessàriament el primer dia de camp; candidat feble, baixa prioritat davant la fitxa de camp o l'annex DPSH"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text del PDF és brossa (FreeHand -> Acrobat Distiller 15.0, sense ToUnicode; text_ok=false a meta.json). Llegit visualment: pàgina sencera (page-1.png, prou llegible) + dos retalls amb scripts/render_clip.py a 300 dpi per confirmar el text exacte del peu de pàgina (títol/Data/Exp/Plànol de situació/Pàgina) i de la llegenda. Un rètol parcial '32900' visible sobre l'ortofoto (capa base cadastral WMS), prop del centre de la parcel·la: és un fragment d'etiqueta de polígon del mapa base, no una referència cadastral completa (format incorrecte, li falten els dígits inicials i el sufix) -- no s'ha usat com a candidat de referencia_catastral. No hi ha coordenades UTM impreses (només barra d'escala en metres)."
+}
