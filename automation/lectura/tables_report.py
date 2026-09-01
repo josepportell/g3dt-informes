@@ -20,7 +20,9 @@ dels 6 informes signats de l'Eva (`docs/golden-read-taules/_eva_truth/`).
 `depth_to_m` / `thickness_m` de `ReportData`, que alimenten la taula sísmica i
 els gruixos. Canviar-los és una decisió de càlcul, no de taula.
 
-Stdlib pur excepte `load_project_tables()`, que és l'únic punt d'I/O.
+Stdlib pur excepte `load_project_tables()`, que és l'únic punt d'I/O, i
+`automation.lectura.normalize` (també stdlib pur), d'on surt l'ÚNICA definició del
+dialecte dels sumands de `superficie_construida`.
 """
 
 from __future__ import annotations
@@ -29,6 +31,12 @@ import json
 import re
 from pathlib import Path
 from typing import Any, Mapping
+
+from automation.lectura.normalize import (
+    COMPONENT_VALUE_KEY,
+    UNIT_M2_RE,
+    canonicalize_components,
+)
 
 __all__ = [
     "build_report_tables",
@@ -134,6 +142,110 @@ def _num(value: Any) -> float | None:
         return float(match.group(0).replace(",", "."))
     except ValueError:
         return None
+
+
+#: `"(PB+1…)"`: el `+` d'un aclariment entre parentesis compta plantes, no metres.
+_PAREN_RE = re.compile(r"\([^)]*\)")
+#: Unitat enganxada al sumand (`"72 m2 + 20 m2"`): no trenca la forma de suma.
+_UNIT_TAIL_RE = re.compile(r"(?:m2|m²|m\^2|m)\.?$", re.IGNORECASE)
+_NUM_TAIL_RE = re.compile(r"\d(?:[.,]\d+)?$")
+
+
+def _sum_total(total: Any) -> float | None:
+    """Suma dels sumands quan el total ve escrit com a SUMA; `None` si no ho és.
+
+    Cal perquè el consolidador MATEIX sintetitza totals així quan el lector només dona els
+    sumands (`consolidate.py::_superficie_construida`: `total="280+86"`), i perquè hi ha el
+    dialecte `"72 m2 + 20 m2 porxada"`. Amb només el primer número, l'informe deia 280 m²
+    on l'Eva signa 366.
+
+    NO és una suma l'aclariment del lector (`"120 m² construïts (PB+1…) — PER HABITATGE;
+    l'encàrrec són 3 habitatges"`). Dos talls el separen: els parèntesis fora, i el que hi
+    ha just a l'esquerra de cada `+` ha de ser un NÚMERO (amb unitat opcional), no una
+    paraula — `"…construïts PB+1"` no és una suma de superfícies.
+
+    Límit conegut: `"20 m2 porxada + 30 m2"` (etiqueta ENTRE el número i el `+`) no es
+    reconeix com a suma i es queda amb el primer número, com abans.
+    """
+    if not isinstance(total, str) or "+" not in total:
+        return None
+    parts = _PAREN_RE.sub(" ", total).split("+")
+    if len(parts) < 2:
+        return None
+    nums: list[float] = []
+    for i, part in enumerate(parts):
+        if i < len(parts) - 1:
+            left = _UNIT_TAIL_RE.sub("", part.strip()).strip()
+            if not _NUM_TAIL_RE.search(left):
+                return None
+        n = _num(part)
+        if n is None:
+            return None
+        nums.append(n)
+    return sum(nums)
+
+
+def _component_number(item: Any) -> float | None:
+    """Xifra d'UN sumand, o `None` si no es pot llegir sense endevinar.
+
+    En un dict la xifra ja ve aillada a la CLAU CANONICA (`normalize.COMPONENT_VALUE_KEY`,
+    posada per `normalize.canonicalize_component` abans d'arribar aqui) i el primer numero
+    es el bo. En un STRING no: el sumand porta l'etiqueta enganxada (`"P1: 85 m2"`,
+    `"Planta 1a 85 m²"`, `"2 plantes x 120 m2"`) i el primer numero es el de l'etiqueta
+    (1, 1, 2) — sumar-lo donava `"121"` on abans hi havia un blanc honest. Per tant, per a
+    strings nomes val:
+      - la xifra ANCORADA A UNITAT, si n'hi ha exactament una (`"85 m2"` -> 85);
+      - si no n'hi ha cap amb unitat, el numero nomes si es l'UNIC del text (`"280"`).
+    Qualsevol altra forma (cap numero, dos numeros sense unitat, dues xifres amb unitat)
+    torna `None` perque el recurs sencer no sumi: val mes un blanc que una xifra falsa.
+
+    Aqui NO hi ha cap llista de claus de dialecte (n'hi havia una de 5, divergent de la de 2
+    de `consolidate._component_m2`): viu tota a `normalize`, en un sol lloc.
+    """
+    if isinstance(item, Mapping):
+        return _num(item.get(COMPONENT_VALUE_KEY))
+    if not isinstance(item, str):
+        return _num(item)
+    with_unit = UNIT_M2_RE.findall(item)
+    if len(with_unit) == 1:
+        return _num(with_unit[0])
+    if with_unit:
+        return None
+    nums = _nums(item)
+    return nums[0] if len(nums) == 1 else None
+
+
+def _components_sum(components: Any) -> float | None:
+    """Suma dels sumands quan el total no porta cap xifra.
+
+    A `_decisions.json`, `components` és una llista d'EMBOLCALLS per document (`{"doc",
+    "components", "total"}`, `consolidate.py::_superficie_construida`) i els sumands de dins
+    poden ser text (`"120 m2 (Arbrells 18A)"`) o dict (`{"concepte", "valor"}`) — abans
+    `_nums(dict)` tornava `[]` i el recurs no sumava res. Es fa servir el PRIMER document
+    que en dóna: sumar-los tots barrejaria lectures diferents del mateix edifici.
+
+    Un sol sumand il·legible ANUL·LA la suma: sumar-ne només els llegibles donaria una
+    superfície incompleta amb aparença de total.
+
+    Es canonicalitza el dialecte a l'entrada (idempotent: si ve del consolidador ja hi ve).
+    Cal perquè aquí també hi arriben `_decisions.json` que no hem escrit en aquesta execució
+    (memòria cau de consolidació, fitxers d'una versió anterior).
+    """
+    if not isinstance(components, (list, tuple)):
+        return None
+    components = canonicalize_components(components)
+    for item in components:
+        if isinstance(item, Mapping) and isinstance(item.get("components"), (list, tuple)):
+            inner = _components_sum(item["components"])
+            if inner is not None:
+                return inner
+    nums: list[float] = []
+    for c in components:
+        n = _component_number(c)
+        if n is None:
+            return None
+        nums.append(n)
+    return sum(nums) if nums else None
 
 
 def _nums(value: Any) -> list[float]:
@@ -412,11 +524,13 @@ def _superficie(block: Any, selections: Mapping[str, Any] | None) -> str:
     total = block.get("total")
     if total in (None, ""):
         total = resolve_cell(block)
-    number = _num(total) if total not in (None, "") else None
+    number = None
+    if total not in (None, ""):
+        number = _sum_total(total)
+        if number is None:
+            number = _num(total)
     if number is None:
-        components = block.get("components") or []
-        nums = [n for c in components for n in _nums(c)[:1]]
-        number = sum(nums) if nums else None
+        number = _components_sum(block.get("components"))
     return f"{number:g}" if number is not None else ""
 
 

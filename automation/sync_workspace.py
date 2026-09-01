@@ -271,9 +271,25 @@ def _read_marker(workspace_path: Path) -> str | None:
 
 
 def _write_marker(workspace_path: Path, rel_path: str) -> None:
-    """Desa el marcador `.g3dt_network_path` amb el path relatiu original."""
-    marker = workspace_path / _NETWORK_PATH_MARKER
-    marker.write_text(rel_path, encoding="utf-8")
+    """Desa el marcador `.g3dt_network_path` amb el path relatiu original.
+
+    Atòmic (temporal + `os.replace`) i escrit NOMÉS quan `copytree` ha acabat:
+    la presència del marcador és el senyal de «aquest workspace és una còpia
+    COMPLETA d'aquest projecte». Un marcador escrit a mitges (procés mort a mig
+    `write_text`) diria que sí sense ser-ho, i el camí de salt de
+    `sync_to_workspace` el creuria.
+    """
+    workspace_path.mkdir(parents=True, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(
+        dir=str(workspace_path), prefix=_NETWORK_PATH_MARKER + ".", suffix=".tmp"
+    )
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            fh.write(rel_path)
+        os.replace(tmp, workspace_path / _NETWORK_PATH_MARKER)
+    except BaseException:
+        Path(tmp).unlink(missing_ok=True)
+        raise
 
 
 def _resolve_workspace_leaf(rel_path: str) -> str:
@@ -420,20 +436,38 @@ def sync_to_workspace(rel_path: str, force: bool = False, allow_no_markers: bool
     dst = workspace_root() / leaf
 
     if dst.exists() and not force:
-        # Idempotent skip — però assegurem que el marker és correcte
         existing = _read_marker(dst)
-        if existing != rel_str:
-            try:
-                _write_marker(dst, rel_str)
-            except OSError as exc:
-                logger.warning("could not refresh marker for %s: %s", dst, exc)
-        return {
-            "status": "skipped",
-            "reason": "already in workspace (use force=True to re-sync)",
-            "leaf": leaf,
-            "network_path": rel_str,
-            "destination": str(dst),
-        }
+        if existing == rel_str:
+            return {
+                "status": "skipped",
+                "reason": "already in workspace (use force=True to re-sync)",
+                "leaf": leaf,
+                "network_path": rel_str,
+                "destination": str(dst),
+            }
+        if existing is not None:
+            # El destí és la còpia d'UN ALTRE projecte de la xarxa (mai hauria
+            # de passar: `_resolve_workspace_leaf` desambigua amb suffix). Mai
+            # barrejar-los ni reescriure el marcador: seria retornar l'informe
+            # a la carpeta equivocada.
+            return {
+                "status": "error",
+                "code": "workspace_mismatch",
+                "error": (
+                    f"la carpeta local {leaf!r} és la còpia de {existing!r}, "
+                    f"no de {rel_str!r}"
+                ),
+                "leaf": leaf,
+            }
+        # Sense marcador = còpia INCOMPLETA (la primera sincronització va morir
+        # a mig `copytree`; el marcador només s'escriu quan acaba) o workspace
+        # anterior al marcador. Abans es "reparava" el marcador que faltava i es
+        # feia skip: el projecte quedava permanentment mig copiat i el wizard
+        # generava informes amb els documents que hi mancaven, en silenci. Es
+        # re-sincronitza.
+        logger.warning(
+            "workspace %s sense marcador de completesa: es re-sincronitza sencer", dst,
+        )
 
     try:
         workspace_root().mkdir(parents=True, exist_ok=True)
@@ -509,7 +543,14 @@ def _delta_excluded(rel: PurePosixPath) -> bool:
     if any(part.lower() in _DELTA_EXCLUDE_DIRS for part in parts[:-1]):
         return True
     name = parts[-1]
-    return name in _DELTA_EXCLUDE_NAMES or name.startswith("~$")
+    # `_NETWORK_PATH_MARKER` i el seu temporal (`.g3dt_network_path.xxx.tmp`, si
+    # un procés mor a mig `_write_marker`): no són a la xarxa i no s'han
+    # d'apartar a `_esborrats/`.
+    return (
+        name in _DELTA_EXCLUDE_NAMES
+        or name.startswith(_NETWORK_PATH_MARKER)
+        or name.startswith("~$")
+    )
 
 
 def _is_locally_produced(rel: PurePosixPath) -> bool:
@@ -517,17 +558,40 @@ def _is_locally_produced(rel: PurePosixPath) -> bool:
     return name in _LOCALLY_PRODUCED or name.endswith(_LOCALLY_PRODUCED_SUFFIXES)
 
 
-def _scan_files(root: Path) -> dict[str, tuple[int, float]]:
-    """`{path relatiu POSIX: (mida, mtime)}`. Només `stat`, mai contingut."""
+#: Guarda (b) de `sync_delta`: quina part del que havia vingut de la xarxa pot
+#: desaparèixer d'una tacada sense que faci pudor de xarxa morta. Un projecte real
+#: perd algun fitxer (l'Eva refà un annex, l'arquitecte substitueix el plànol),
+#: mai la meitat llarga. `_MIN` perquè amb 2 fitxers una proporció no vol dir res:
+#: 1 de 2 és el cas normal, no un incident. Passar la guarda no atura la sincronia:
+#: només fa que no s'aparti res (un projecte de 5 fitxers reorganitzat a posta la
+#: dispara, i l'Eva ha de poder treballar igualment).
+_MASS_DELETE_RATIO = 0.5
+_MASS_DELETE_MIN_FILES = 3
+
+
+def _is_mass_disappearance(n_deleted: int, n_from_network: int) -> bool:
+    return n_deleted >= _MASS_DELETE_MIN_FILES and n_deleted > _MASS_DELETE_RATIO * n_from_network
+
+
+def _scan_files(root: Path) -> tuple[dict[str, tuple[int, float]], int]:
+    """`({path relatiu POSIX: (mida, mtime)}, errors)`. Només `stat`, mai contingut.
+
+    El segon element compta les carpetes i entrades que NO s'han pogut llegir.
+    Mirant només el diccionari, un escaneig incomplet és indistingible d'un de
+    buit — i per a `sync_delta` "buit a la xarxa" vol dir "tot esborrat". Per
+    això els errors es tornen en comptes d'empassar-se'ls amb un warning.
+    """
     out: dict[str, tuple[int, float]] = {}
+    errors = 0
     if not root.is_dir():
-        return out
+        return out, errors
     stack = [root]
     while stack:
         current = stack.pop()
         try:
             entries = list(os.scandir(current))
         except OSError as exc:
+            errors += 1
             logger.warning("delta-sync: no s'ha pogut llegir %s (%s)", current, exc)
             continue
         for entry in entries:
@@ -543,9 +607,11 @@ def _scan_files(root: Path) -> dict[str, tuple[int, float]]:
                     continue
                 st = entry.stat()
                 out[rel.as_posix()] = (st.st_size, st.st_mtime)
-            except OSError:
+            except OSError as exc:
+                errors += 1
+                logger.warning("delta-sync: no s'ha pogut mirar %s (%s)", entry.path, exc)
                 continue
-    return out
+    return out, errors
 
 
 def _same_bytes(src: Path, dst: Path, src_meta: tuple[int, float], dst_meta: tuple[int, float]) -> tuple[bool, bool]:
@@ -612,11 +678,17 @@ def sync_delta(rel_path: str, *, check_only: bool = False) -> dict:
 
     Retorna `{"status", "leaf", "network_path", "new", "changed", "deleted",
     "copied", "moved", "checked", "hashed"}`. `status`:
-      - `"ok"`        — comparació feta
+      - `"ok"`        — comparació feta. Amb `"scan_incomplete": True` o
+                        `"mass_disappearance": True` (+ `"warning"`) s'hi ha
+                        portat el que s'ha vist però `deleted` és buit a posta:
+                        no s'aparta res
       - `"absent"`    — el projecte encara no és al workspace: toca
                         `sync_to_workspace()` sencer, no un delta
       - `"skipped"`   — el workflow de xarxa no està actiu
-      - `"error"`     — la carpeta de xarxa no s'ha pogut llegir
+      - `"error"`     — la carpeta de xarxa no s'ha pogut llegir. Amb
+                        `check_only=True`, també quan l'escaneig ha estat
+                        incomplet o quan ha desaparegut de cop la meitat llarga
+                        del que n'havia vingut (`code="network_scan_incomplete"`)
     """
     if not is_network_workflow_enabled():
         return {"status": "skipped", "reason": "network workflow not enabled"}
@@ -636,8 +708,75 @@ def sync_delta(rel_path: str, *, check_only: bool = False) -> dict:
     if not dst_root.is_dir():
         return {**base, "status": "absent", "reason": "encara no és al workspace"}
 
-    net = _scan_files(src)
-    local = _scan_files(dst_root)
+    net, net_errors = _scan_files(src)
+    local, _local_errors = _scan_files(dst_root)
+    from_network = [rel for rel in local if not _is_locally_produced(PurePosixPath(rel))]
+    deleted = [rel for rel in from_network if rel not in net]
+
+    # Guarda (P0): un escaneig de xarxa incomplet és indistingible d'un de buit,
+    # i "buit" aquí vol dir "esborrat a la xarxa" — amb `check_only=False` el
+    # projecte sencer aniria a `_esborrats/` per `os.replace` LOCALS, que
+    # funcionen perfectament amb la unitat de xarxa morta, i la lectura
+    # arrencaria sobre una carpeta buida.
+    #
+    # Dos casos, amb resposta diferent perquè el que en sabem és diferent:
+    #
+    # (a) `net_errors` — SABEM que no ho hem vist tot: alguna carpeta o entrada ha
+    #     fet `OSError`. En un recurs SMB, una entrada bloquejada o amb el permís
+    #     denegat no té res d'extraordinari (abans d'aquesta guarda, simplement no
+    #     sortia). Convertir-ho en `status="error"` és un `HTTPException(404)` a
+    #     `web/api.py` i deixa l'Eva SENSE poder llegir el projecte per una sola
+    #     entrada il·legible. Es copia el que s'ha vist (`new`+`changed`, mai
+    #     destructiu) i només es renuncia a la QUARANTENA: amb un escaneig que
+    #     sabem coix no s'aparta res. `check_only` sí que segueix sent un error:
+    #     la taula d'estat no bloqueja ningú, i val més que no digui res que no
+    #     pas que digui "res ha canviat" sense haver-ho pogut mirar tot.
+    #
+    # (b) Cap error, però desapareix de cop la meitat llarga del que havia vingut
+    #     de la xarxa (o tot: la unitat muntada buida). Aquí no en sabem res —
+    #     un subarbre es pot llegir buit sense queixar-se. La resposta és la
+    #     MATEIXA que a (a), perquè el risc és el mateix: el que no volem és
+    #     apartar en massa, i amb `deleted` buit no s'aparta res. Amb
+    #     `status="error"` (el que es feia fins ara) un projecte de 5 fitxers que
+    #     l'Eva reorganitza a posta li tornava un 404 sense sortida, i encara amb
+    #     el consell equivocat de mirar-se la xarxa.
+    if net_errors and check_only:
+        return {
+            **base, "status": "error", "code": "network_scan_incomplete",
+            "error": (
+                f"No s'ha pogut llegir la carpeta de xarxa sencera "
+                f"({net_errors} carpetes o fitxers il·legibles): no s'ha tocat "
+                f"res. Comprova la connexió amb la unitat de xarxa i torna-ho a provar."
+            ),
+            "scan_errors": net_errors,
+        }
+    scan_incomplete = bool(net_errors)
+    mass_vanished = 0
+    if scan_incomplete:
+        logger.warning(
+            "delta-sync %s: escaneig de xarxa incomplet (%d entrades il·legibles) — "
+            "es copia el que s'ha vist, no s'aparta res",
+            norm, net_errors,
+        )
+        deleted = []
+    elif from_network and (not net or _is_mass_disappearance(len(deleted), len(from_network))):
+        if check_only:
+            return {
+                **base, "status": "error", "code": "network_scan_incomplete",
+                "error": (
+                    f"De cop han desaparegut {len(deleted)} dels {len(from_network)} fitxers "
+                    f"que la còpia local havia rebut de la xarxa: no s'ha tocat res. "
+                    f"Comprova la connexió amb la unitat de xarxa i torna-ho a provar."
+                ),
+                "scan_errors": 0,
+            }
+        mass_vanished = len(deleted)
+        logger.warning(
+            "delta-sync %s: han desaparegut de cop %d dels %d fitxers vinguts de la xarxa — "
+            "es copia el que s'ha vist, no s'aparta res",
+            norm, mass_vanished, len(from_network),
+        )
+        deleted = []
 
     new: list[str] = []
     changed: list[str] = []
@@ -653,16 +792,27 @@ def sync_delta(rel_path: str, *, check_only: bool = False) -> dict:
         if not same:
             changed.append(rel)
 
-    deleted = [
-        rel for rel in local
-        if rel not in net and not _is_locally_produced(PurePosixPath(rel))
-    ]
-
     new.sort(); changed.sort(); deleted.sort()
     result = {
         **base, "status": "ok", "new": new, "changed": changed, "deleted": deleted,
         "checked": len(net), "hashed": hashed, "copied": 0, "moved": 0,
     }
+    if scan_incomplete:
+        result["scan_incomplete"] = True
+        result["scan_errors"] = net_errors
+        result["warning"] = (
+            f"La carpeta de xarxa no s'ha pogut llegir sencera ({net_errors} carpetes o "
+            f"fitxers il·legibles): s'ha portat el que s'ha vist i no s'ha apartat res. "
+            f"Pot faltar algun document."
+        )
+    if mass_vanished:
+        result["mass_disappearance"] = True
+        result["vanished"] = mass_vanished
+        result["warning"] = (
+            f"Han desaparegut de cop {mass_vanished} dels {len(from_network)} documents que "
+            f"aquesta còpia local havia rebut de la carpeta de xarxa. Per prudència no se n'ha "
+            f"apartat cap: els tens tots on eren. S'ha portat el que hi ha de nou o de canviat."
+        )
     if check_only:
         return result
 

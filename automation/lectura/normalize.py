@@ -14,7 +14,8 @@ Aquest modul NO llegeix ni escriu cap fitxer (stdlib pur, sense I/O).
 from __future__ import annotations
 
 import copy
-from typing import Any
+import re
+from typing import Any, Mapping, MutableSet
 
 
 def _soft_normalize_ab(d: dict) -> dict:
@@ -182,6 +183,130 @@ def _flat_to_cell(val: Any, estat: str, block: str) -> dict:
             "rule": "(adaptat: cel·la plana embolcallada de forma determinista, Fase 12)"}
 
 
+# --- Reparacio (e): dialecte dels SUMANDS de `superficie_construida` ---
+#
+# El lector es un productor CEC (`claude -p`, sense descodificacio restringida ni
+# temperatura): no es pot donar per fet quin nom de camp posara a la xifra d'un sumand.
+# Abans hi havia DUES llistes ad-hoc divergents riu avall (`consolidate._component_m2`, 2
+# claus; `tables_report._component_number`, 5) i el dialecte real de Linyola (`valor`) queia
+# entre les dues: `28.55 m²` es perdia quan el document no donava `total`. Aqui es
+# canonicalitza UN cop, a l'entrada, i els consumidors llegeixen NOMES `COMPONENT_VALUE_KEY`.
+
+#: Clau CANONICA on viu la xifra d'UN sumand. Es la del dialecte unic del contracte
+#: (`value`, Pas 4/5 del skill), la mateixa a la qual `contract._rename_catalan_keys` ja
+#: reconverteix `valor` als fixtures d'or.
+COMPONENT_VALUE_KEY = "value"
+
+#: Alies OBSERVATS d'aquella xifra. Unica llista del projecte: qualsevol clau nova s'hi
+#: afegeix aqui i els dos consumidors la guanyen alhora.
+COMPONENT_VALUE_ALIASES: tuple[str, ...] = ("valor", "superficie_m2", "superficie", "m2")
+
+#: Xifra amb unitat de superficie enganxada (`"85 m2"`, `"56,75 m²"`): l'unica forma que es
+#: pot llegir com a superficie sense saber el nom del camp. La comparteixen els consumidors
+#: per als sumands en forma de TEXT (`consolidate`, `tables_report`).
+UNIT_M2_RE = re.compile(r"\d+(?:[.,]\d+)?\s*(?:m2|m²|m\^2)", re.IGNORECASE)
+
+_FIGURE_RE = re.compile(r"[-+]?\d+(?:[.,]\d+)?")
+
+
+def _has_figure(value: Any) -> bool:
+    """El valor porta una xifra llegible (numero, o text que en conte un)."""
+    if isinstance(value, bool):
+        return False
+    if isinstance(value, (int, float)):
+        return True
+    return isinstance(value, str) and bool(_FIGURE_RE.search(value))
+
+
+def _anchored_key(component: Mapping[str, Any]) -> str | None:
+    """Xarxa de seguretat per FORMA: cap clau CONEGUDA no porta la xifra, pero una sola clau
+    porta un text amb UNA sola xifra ancorada a unitat (`"28.55 m²"`) — la mateixa regla que
+    ja governa els sumands en forma de text. Si en qualifiquen dues, `None`: val mes un blanc
+    honest que triar la bona a l'atzar."""
+    hits = [k for k, v in component.items()
+            if k != COMPONENT_VALUE_KEY and isinstance(v, str) and len(UNIT_M2_RE.findall(v)) == 1]
+    return hits[0] if len(hits) == 1 else None
+
+
+def canonicalize_component(component: Any, unknown: MutableSet[str] | None = None) -> Any:
+    """UN sumand amb la xifra a `COMPONENT_VALUE_KEY`. Copia (no muta); idempotent.
+
+    Un sumand en forma de TEXT no es toca: la xifra ja hi es i la regla de forma la llegeix
+    riu avall. Un dict es resol per ordre de certesa decreixent: clau canonica amb xifra >
+    alies conegut amb xifra > xifra ancorada a unitat. Si res no resol, es torna intacte
+    (blanc honest riu avall, mai una xifra endevinada).
+
+    `unknown` recull el RASTRE de dialectes no coneguts: el nom de la clau quan ha calgut la
+    xarxa de seguretat, o totes les claus del sumand quan no s'ha pogut resoldre.
+    """
+    if not isinstance(component, Mapping):
+        return component
+    if _has_figure(component.get(COMPONENT_VALUE_KEY)):
+        return component
+    src = next((k for k in COMPONENT_VALUE_ALIASES if _has_figure(component.get(k))), None)
+    if src is None:
+        src = _anchored_key(component)
+        if src is not None and unknown is not None:
+            unknown.add(src)
+    if src is None:
+        if unknown is not None:
+            unknown.update(str(k) for k in component if k != COMPONENT_VALUE_KEY)
+        return component
+    out = dict(component)
+    out[COMPONENT_VALUE_KEY] = component[src]
+    if COMPONENT_VALUE_KEY in component:
+        # `value` hi era pero sense xifra (es una etiqueta): es queda a la clau que hem
+        # buidat. Es un intercanvi, no una perdua.
+        out[src] = component[COMPONENT_VALUE_KEY]
+    else:
+        out.pop(src, None)
+    return out
+
+
+def canonicalize_components(components: Any, unknown: MutableSet[str] | None = None) -> Any:
+    """Llista de sumands canonicalitzada, incloent els embolcalls per document
+    (`{"doc", "components", "total"}` de `consolidate._superficie_construida`)."""
+    if not isinstance(components, (list, tuple)):
+        return components
+    out: list[Any] = []
+    for item in components:
+        if isinstance(item, Mapping) and isinstance(item.get("components"), (list, tuple)):
+            wrapper = dict(item)
+            wrapper["components"] = canonicalize_components(item["components"], unknown)
+            out.append(wrapper)
+        else:
+            out.append(canonicalize_component(item, unknown))
+    return out
+
+
+def canonicalize_superficie_construida(block: Any, unknown: MutableSet[str] | None = None) -> Any:
+    """Totes les llistes `components` d'un bloc `superficie_construida`, sigui quina sigui la
+    forma de l'embolcall: dict, llista de dicts (`{doc}.json`), entrades amb `rows` niuades,
+    o embolcalls per document (`_decisions.json`). Copia, no mutacio."""
+    if isinstance(block, list):
+        return [canonicalize_superficie_construida(x, unknown) for x in block]
+    if not isinstance(block, Mapping):
+        return block
+    out = dict(block)
+    for key, val in list(out.items()):
+        if key == "components":
+            out[key] = canonicalize_components(val, unknown)
+        elif key == "rows" and isinstance(val, list):
+            out[key] = [canonicalize_superficie_construida(x, unknown) for x in val]
+    return out
+
+
+def canonicalize_superficie_dialect(d: dict, unknown: MutableSet[str] | None = None) -> dict:
+    """Reparacio (e) sobre `tables.superficie_construida` d'un `_decisions.json`. Copia."""
+    out = copy.deepcopy(d)
+    tables = out.get("tables") if isinstance(out, dict) else None
+    if isinstance(tables, dict) and "superficie_construida" in tables:
+        tables["superficie_construida"] = canonicalize_superficie_construida(
+            tables["superficie_construida"], unknown)
+    return out
+
+
 def soft_normalize(d: dict) -> dict:
-    """Reparacions (a)+(b), (c) alies de claus de fila (skill v1.3) i (d) cel·les planes (Fase 12). Copia, no mutacio."""
-    return wrap_flat_cells(canonicalize_row_keys(_soft_normalize_ab(d)))
+    """Reparacions (a)+(b), (c) alies de claus de fila (skill v1.3), (d) cel·les planes i
+    (e) dialecte dels sumands de `superficie_construida` (Fase 12). Copia, no mutacio."""
+    return canonicalize_superficie_dialect(wrap_flat_cells(canonicalize_row_keys(_soft_normalize_ab(d))))

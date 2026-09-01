@@ -23,19 +23,27 @@ Cost 0 (sense LLM), re-executable sempre (ANALISI §7.3, etapa 4a).
 
 from __future__ import annotations
 
+import difflib
 import hashlib
 import json
 import re
 import sys
+import unicodedata
 import warnings
 from datetime import datetime
 from pathlib import Path
+
+from automation import municipis
 
 warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
 
 EXCLUDE_DIRS = {
     "validation", "_validation", "mined_images", "concept_probes", "msg_attachments",
     "PDF-V0", "PDF V0", "PDF_V0", "LLETRA",
+    # Quarantena del delta-sync (`sync_workspace.DELETED_DIRNAME`): el que ha
+    # desaparegut de la xarxa s'hi MOU, no s'esborra. Llegir-ho seria fer
+    # competir el document substituït amb el nou.
+    "_esborrats",
 }
 EXCLUDE_NAME_PARTS = ("_generated", "informe", "PORTADA", "AUDIT", "~$")
 
@@ -280,7 +288,118 @@ def read_comanda(path: Path):
 
 # ---------------------------------------------------------------- 4. PLAN_COST
 
-def read_plan_cost(path: Path):
+#: Tokens de tipus de projecte que precedeixen el municipi a 'Plan Cost'!E9
+#: ("EG 3 HAB UNIF CASTELLAR DEL VALLÈS", "EG 7 VIVIENDAS ANCILES"). Es
+#: consumeixen per l'esquerra —amb els nombres— i tota la resta és el municipi:
+#: partir per l'última paraula donaria "VALLÈS" i "SEGRIÀ" (municipis de més
+#: d'una paraula), i partir mandrosament s'enduia la cua de la descripció
+#: ("UNIF RUBI").
+_PLAN_COST_TYPE_TOKENS = {
+    "EG", "HAB", "UNIF", "UNIFAMILIAR", "VIVIENDA", "VIVIENDAS",
+    "AMPL", "AMPLIACIO", "AMPLIACIÓ", "PLURI", "PLURIFAMILIAR", "REHAB",
+}
+#: Un municipi és lletres, espais i guions; res de dígits ni de barres.
+_RE_MUNICIPI_VERSEMBLANT = re.compile(r"^[A-ZÀ-ÜÑÇ][A-ZÀ-ÜÑÇ'’.\- ]*$", re.I)
+#: Corroboració del municipi (vegeu `_municipi_corroborat`): prou per absorbir una
+#: errata de teclat ("CATELLAR"/"CASTELLAR" = 0,94), no prou per acostar dos noms.
+_MUNICIPI_FUZZY_CUTOFF = 0.85
+
+
+def _norm_tokens(text) -> list[str]:
+    plain = unicodedata.normalize("NFKD", str(text or "").upper())
+    plain = "".join(c for c in plain if not unicodedata.combining(c))
+    return [t for t in re.split(r"[^0-9A-Z]+", plain) if len(t) >= 3 and not t.isdigit()]
+
+
+def _municipi_corroborat(municipi: str, context: str) -> bool:
+    """La primera paraula del residu de E9 surt al nom del fitxer o de la carpeta?
+
+    `_PLAN_COST_TYPE_TOKENS` només conté els descriptors ATESTATS al corpus; un títol amb
+    un descriptor no llistat ("EG REHAB NAU LLEIDA") se'l queda dins del municipi ("NAU
+    LLEIDA") i el residu sortiria amb la mateixa confiança que un municipi de debò. Com que
+    els tokens de tipus es consumeixen per l'esquerra, el descriptor que s'escapa sempre és
+    la PRIMERA paraula del residu: si aquesta no surt al nom del fitxer ni al de la carpeta
+    del projecte (`{expedient} {MUNICIPI}`), el candidat baixa de confiança i s'anota.
+
+    Determinista i offline (contracte del mòdul: cost 0, sense xarxa): només compara text
+    que ja tenim. NO valida el municipi — això és una guarda de confiança, no un
+    geocodificador (vegeu `docs/PROPOSTA-JOSEP-ADRECES-I-MUNICIPI-2026-09-01.md`).
+    """
+    tokens = _norm_tokens(municipi)
+    context_tokens = set(_norm_tokens(context))
+    if not tokens or not context_tokens:
+        return False
+    first = tokens[0]
+    return any(t == first or difflib.SequenceMatcher(None, first, t).ratio() >= _MUNICIPI_FUZZY_CUTOFF
+               for t in context_tokens)
+
+
+def _plan_cost_municipi_confianca(municipi: str, versemblant: bool, context: str) -> tuple[float, str | None]:
+    """Confiança i nota del municipi tret d'E9, contrastat amb el padró (§9 peça 2 del disseny).
+
+    El padró només **afegeix dubte**, mai en treu: la confiança d'un residu que ja es
+    corroborava (0,6) no puja. Motiu: `_decisions.json` dels 9 corpus és la prova de
+    no-regressió d'aquest projecte, i pujar confiances hi mouria decisions que avui són
+    correctes. El que aporta el padró és saber **quan desconfiar**:
+
+    El padró i la corroboració pel context (`_municipi_corroborat`) són guardes **independents**
+    i la del context mana: que «X» sigui un municipi de debò no vol dir que sigui el municipi
+    d'AQUEST projecte. Un PLAN_COST de Bell-lloc dins d'una carpeta de Torregrossa segueix
+    valent 0,4 encara que el padró confirmi «Bell-lloc», perquè el que crida l'atenció és la
+    contradicció, no el nom.
+
+    - context OK + padró OK -> com sempre (0,6). Si s'hi ha arribat per forma curta o per
+      preposicions, la nota diu la forma oficial —«BELL-LLOC» és `Bell-lloc d'Urgell`— que és
+      justament la que mana per la regla de municipi;
+    - context OK + fora del padró -> 0,5 i es diu clar: o és de fora de Catalunya, o no és un
+      municipi. Cas real del corpus: `EG 7 VIVIENDAS ANCILES` -> ANCILES, que és un llogaret de
+      Benasc (Osca), no un municipi;
+    - context NO -> 0,4, el dubte de sempre, i la nota diu si el padró el reconeix o no.
+    """
+    if not versemblant:
+        return 0.4, "el que queda rere el tipus de projecte no sembla un municipi: verificar"
+
+    padro = municipis.lookup(municipi)
+    if not _municipi_corroborat(municipi, context):
+        coda = (f"; «{padro.name_ine}» sí que és un municipi del padró, però podria ser el d'un altre projecte"
+                if padro is not None else "")
+        return 0.4, (f"«{municipi.split()[0]}» no surt ni al nom del fitxer ni al de la carpeta del "
+                     f"projecte: pot ser un descriptor de tipus no llistat (NAU, MAGATZEM…): verificar{coda}")
+
+    if padro is None:
+        return 0.5, (f"«{municipi}» no consta al padró de municipis de Catalunya: o és de fora de "
+                     f"Catalunya, o no és un municipi (pot ser un llogaret o una entitat): verificar")
+
+    if padro.match_layer == "exacte":
+        return 0.6, None
+    com = ("és la forma curta de" if padro.match_layer == "forma curta"
+           else "és, sense les preposicions,")
+    return 0.6, (f"«{municipi}» {com} «{padro.name_ine}» segons el padró de municipis; "
+                 f"la forma oficial llarga mana (regla municipi)")
+
+
+def _split_plan_cost_title(e9: str) -> tuple[str, str]:
+    """Parteix E9 en (tipus, municipi) consumint els tokens de tipus per l'esquerra.
+
+    "EG 3 HAB UNIF CASTELLAR DEL VALLÈS" -> ("EG 3 HAB UNIF", "CASTELLAR DEL VALLÈS")
+    "EG VILANOVA SEGRIÀ"                 -> ("EG", "VILANOVA SEGRIÀ")
+    Si no consumeix cap token (títol de forma desconeguda) torna ("", e9): el
+    cridador no emet municipi, val més cap candidat que un municipi inventat.
+    """
+    tokens = e9.split()
+    i = 0
+    while i < len(tokens):
+        tok = tokens[i].upper().strip(".,;:")
+        if tok in _PLAN_COST_TYPE_TOKENS or tok.isdigit():
+            i += 1
+            continue
+        break
+    if i == 0:
+        return "", e9
+    return " ".join(tokens[:i]), " ".join(tokens[i:])
+
+
+def read_plan_cost(path: Path, *, project_dir: Path | None = None):
     from openpyxl import load_workbook
 
     wb = load_workbook(path, data_only=True)
@@ -295,9 +414,16 @@ def read_plan_cost(path: Path):
     if e9:
         signals.append(_sig("building_type", e9, "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)", e9, 0.6,
                             "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"))
-        m = re.match(r"EG\s+(.*?)\s+([A-ZÀ-Ü' .-]+)$", e9)
-        if m:
-            signals.append(_sig("municipality", m.group(2).strip(), "'Plan Cost'!E9 (final)", e9, 0.6))
+        tipus, municipi = _split_plan_cost_title(e9)
+        if tipus and municipi:
+            versemblant = bool(_RE_MUNICIPI_VERSEMBLANT.match(municipi)) and len(municipi.split()) <= 4
+            context = f"{path.stem} {Path(project_dir).name if project_dir else ''}"
+            conf, nota = _plan_cost_municipi_confianca(municipi, versemblant, context)
+            signals.append(_sig(
+                "municipality", municipi, "'Plan Cost'!E9 (rere el tipus de projecte)", e9,
+                conf, nota))
+        else:
+            warnings.append(f"E9 sense municipi identificable rere el tipus de projecte: {e9!r}")
     if _clean(ws["E21"].value):
         signals.append(_sig("tecnic", _clean(ws["E21"].value), "'Plan Cost'!E21", _clean(ws["E21"].value), 0.6))
     of = next((n for n in wb.sheetnames if n.strip().upper() == "OFERTA"), None)
@@ -353,6 +479,9 @@ def read_dpsh_excel(path: Path):
 _READERS = {".pdf": [read_pressupost_pdf],
             ".xlsx": [read_fitxa_camp, read_plan_cost],
             ".xls": [read_comanda, read_dpsh_excel]}
+#: Lectors que a més del fitxer volen saber de quin projecte és (`read_plan_cost`
+#: corrobora el municipi amb el nom de la carpeta). La resta es criden `reader(p)`.
+_READERS_AMB_PROJECTE = {read_plan_cost}
 
 
 def read_project(project_dir: Path) -> dict:
@@ -373,7 +502,8 @@ def read_project(project_dir: Path) -> dict:
             continue
         for reader in _READERS[p.suffix.lower()]:
             try:
-                doc = reader(p)
+                doc = (reader(p, project_dir=project_dir) if reader in _READERS_AMB_PROJECTE
+                       else reader(p))
             except Exception as exc:  # un fitxer corrupte no ha d'aturar la resta
                 doc = None
                 documents.append({"source_path": str(rel), "document_type": "error",

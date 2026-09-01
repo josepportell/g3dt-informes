@@ -44,7 +44,13 @@ from pathlib import Path
 from typing import Any
 
 from automation.lectura.contract import ALLOWED_FIELD_KEYS, TABLE_ROW_GROUPS, VALID_ESTATS
-from automation.lectura.normalize import ROW_KEY_ALIASES, ROW_REQUIRED_KEYS
+from automation.lectura.normalize import (
+    COMPONENT_VALUE_KEY,
+    ROW_KEY_ALIASES,
+    ROW_REQUIRED_KEYS,
+    UNIT_M2_RE,
+    canonicalize_superficie_construida,
+)
 
 CONSOLIDATOR_VERSION = "python-1.0"
 
@@ -102,6 +108,9 @@ _RANGE_DASH_RE = re.compile(r"(?<=\d)\s*-\s*(?=\d)")
 
 _EXPEDIENT_FOLDER_RE = re.compile(r"^\s*(\d{7})\b")
 _POINT_RE = re.compile(r"([PS])\s*[-_. ]?\s*(\d+)", re.IGNORECASE)
+# identificador que es NOMES un numero ("3", "núm. 4", "nº 4"): l'unic cas on es pot
+# posar-hi la lletra del bloc sense inventar-se el punt (vegeu `_point_key`)
+_BARE_NUM_ID_RE = re.compile(r"(?:n[uú]m\.?|n[º°]\.?)?\s*(\d+)", re.IGNORECASE)
 _LEVEL_RE = re.compile(r"nivell\s*(\d+)|(\d+)\s*(?:er|on|n|r|è|a|º)?\s*nivell", re.IGNORECASE)
 _COVER_RE = re.compile(r"vegetal|cobertura|reblert|relleno|terra vegetal|s[oò]ls?\s+vegetals?", re.IGNORECASE)
 _NF_ABSENT_RE = re.compile(
@@ -533,6 +542,39 @@ class Corpus:
     docs_read: list[str] = field(default_factory=list)
     lectura_fallida: list[str] = field(default_factory=list)
     duplicates: dict[str, str] = field(default_factory=dict)  # path -> path canonic (mateix md5)
+    orfes: list[str] = field(default_factory=list)          # {doc}.json d'un fitxer que ja no hi es
+    #: Claus de sumand de `superficie_construida` que `normalize` no coneix (rastre de
+    #: dialectes nous del lector; vegeu `_superficie_construida` i les notes estructurals).
+    component_dialects: list[str] = field(default_factory=list)
+
+
+def _norm_src(path: Any) -> str:
+    """Ruta comparable entre `_inventory.json` i el `source_path` d'un `{doc}.json`
+    (separador, forma Unicode i caixa: l'inventari el pot haver escrit una altra maquina)."""
+    return unicodedata.normalize("NFC", str(path or "").replace("\\", "/")).strip().lower()
+
+
+def _inventory_paths(inv: Any, *, include_skipped: bool = False) -> set[str]:
+    """Rutes de l'inventari que poden tenir un `{doc}.json` al costat.
+
+    Les entrades `route == "skip"` en queden FORA. `build_inventory` posa a `files` TOTES
+    les entrades, tambe la quarantena `_esborrats/` (`route="skip"`,
+    `doc_type_hint="exclos_carpeta"`): comptant-les, el `{doc}.json` d'un document que
+    l'Eva ha mogut a `_esborrats/` no era orfe i tornava a competir amb la versio viva
+    (un `segur` passava a `candidats` amb el valor mort al costat).
+
+    Es el mateix criteri que `runner.py::_consolida_fingerprint`. No pot descartar cap
+    lectura legitima: `runner.py` nomes encua `route == "claude"`, o sigui que cap altre
+    `route` no genera mai un `{doc}.json`.
+
+    `include_skipped=True` torna TOTES les rutes de l'inventari (quarantena inclosa). Nomes
+    serveix per distingir "ruta desconeguda per a l'inventari" de "ruta coneguda pero en
+    quarantena": la segona es un orfe SABUT, no un indici d'inventari incomparable.
+    """
+    if not isinstance(inv, dict):
+        return set()
+    return {_norm_src(f.get("path")) for f in (inv.get("files") or [])
+            if isinstance(f, dict) and f.get("path") and (include_skipped or f.get("route") != "skip")}
 
 
 def load_corpus(out_dir: Path) -> Corpus:
@@ -545,7 +587,12 @@ def load_corpus(out_dir: Path) -> Corpus:
     inv = _load_json(out_dir / "_inventory.json")
     if isinstance(inv, dict):
         corpus.inventory = inv
-    seen_md5: dict[str, str] = {}
+    # Els `{doc}.json` d'un fitxer que ja no es a l'inventari (reanomenat, esborrat) son
+    # ORFES: sense aquest filtre segueixen competint amb els vius i, pel dedup md5 de sota,
+    # l'orfe pot guanyar com a canonic i deixar el fitxer viu marcat de duplicat.
+    inv_paths = _inventory_paths(inv)
+    inv_known = _inventory_paths(inv, include_skipped=True)
+    loaded: list[dict] = []
     for p in sorted(out_dir.glob("*.json")):
         if p.name in _RESERVED_JSON_NAMES or p.name.startswith("_"):
             continue
@@ -553,14 +600,45 @@ def load_corpus(out_dir: Path) -> Corpus:
         if not isinstance(d, dict):
             continue
         d.setdefault("source_path", p.stem)
+        loaded.append(d)
+    orfes = {d["source_path"] for d in loaded if inv_known and _norm_src(d["source_path"]) not in inv_paths}
+    if orfes and not any(_norm_src(d["source_path"]) in inv_known for d in loaded):
+        # Cap JSON casa amb CAP entrada de l'inventari (inventari d'un altre projecte, rutes
+        # amb un altre format, directori sintetic d'un test): no es comparable -> comportament
+        # de sempre. Es MANTE tot i que tapa un cas legitim ("l'Eva ho ha reanomenat tot i la
+        # re-lectura ha fallat sencera", que aqui deixaria el corpus buit): des de les rutes no
+        # es pot distingir d'un inventari incomparable, i buidar el corpus per un inventari que
+        # no toca es un dany mes gran i mes silencios. Aquell cas ja es visible per una altra
+        # via: `lectura_fallida` llista TOTS els fitxers `route == "claude"`.
+        #
+        # La comparacio va contra `inv_known` (quarantena INCLOSA), no contra `inv_paths`: si
+        # tots els `{doc}.json` son de fitxers `_esborrats/` (`route="skip"`), l'inventari SI
+        # que els coneix — son orfes SABUTS — i l'escapatoria no ha de disparar. Comparant-ho
+        # amb `inv_paths` es desactivava el filtre sencer i un document mort decidia un camp a
+        # `segur` (p. ex. `municipality` d'un projecte anterior).
+        orfes = set()
+    corpus.orfes = sorted(orfes)
+    seen_md5: dict[str, str] = {}
+    unknown_component_keys: set[str] = set()
+    for d in loaded:
+        if d["source_path"] in orfes:
+            continue
         md5 = d.get("source_md5")
         if md5 and md5 in seen_md5:
             corpus.duplicates[d["source_path"]] = seen_md5[md5]
             continue
         if md5:
             seen_md5[md5] = d["source_path"]
+        # Porta unica del dialecte dels sumands de `superficie_construida`: a partir d'aqui
+        # la xifra viu sempre a `COMPONENT_VALUE_KEY` i cap consumidor no ha d'endevinar
+        # noms de camp (`_component_m2`, `tables_report._component_number`).
+        tables = d.get("tables")
+        if isinstance(tables, dict) and "superficie_construida" in tables:
+            tables["superficie_construida"] = canonicalize_superficie_construida(
+                tables["superficie_construida"], unknown_component_keys)
         corpus.docs.append(d)
         corpus.docs_read.append(d["source_path"])
+    corpus.component_dialects = sorted(unknown_component_keys)
     if corpus.inventory:
         have = {d.get("source_path") for d in corpus.docs}
         for f in corpus.inventory.get("files", []) or []:
@@ -989,12 +1067,35 @@ _SOIL_PRIMARY_ORDER = ("annex_sondeig", "annex_tall", "full_camp_manuscrit", "dp
 
 
 def _point_key(value: Any, default_letter: str = "P") -> str | None:
+    """`"P-1"`/`"p 1"` -> `"P-1"`; `"3"` -> `"{default_letter}-3"`.
+
+    El recurs a `default_letter` no es cosmetic: els cridants li passen la lletra del bloc
+    (`"P"` per a DPSH, `"S"` per a sondeigs/SPT) justament perque un identificador com ara
+    `"3"` o `"núm. 3"` es agrupable. Sense ell, la guarda `if k:` de `consolidate_tables`
+    DESCARTAVA la fila sencera (no arribava ni al `_decisions.json`) i les files SPT queien
+    totes al cistell `"S-?"`.
+
+    Pero el recurs nomes val si el text es NOMES el numero (amb `núm.`/`nº` opcional).
+    Amb un `re.search(r"\\d+")` sobre tot el text, `"SPT-2"` (2n assaig) passava a `"S-2"`
+    (sondeig 2), `"MA1"` (mostra 1) a `"S-1"`, `"03/09/2025"` a `"P-3"` i `"1,20 m"` a
+    `"S-1"`: identificadors inventats amb aparenca de bons, i el cistell `"S-?"` dels
+    inclassificables es quedava buit. El que no es llegeix ha de tornar `None`.
+
+    Limit conegut: `"Sondeig 1"` (paraula sencera, sense la sigla) torna `None` i va al
+    cistell. Cap dels 9 corpus reals fa servir aquesta forma; ampliar-hi el recurs
+    tornaria a obrir la porta a `"Mostra 1"`.
+    """
     if value is None:
         return None
-    m = _POINT_RE.search(str(value))
-    if not m:
+    text = str(value)
+    m = _POINT_RE.search(text)
+    if m:
+        return f"{m.group(1).upper()}-{int(m.group(2))}"
+    letter = (default_letter or "").strip().upper()[:1]
+    if not letter:
         return None
-    return f"{m.group(1).upper()}-{int(m.group(2))}"
+    m_num = _BARE_NUM_ID_RE.fullmatch(text.strip())
+    return f"{letter}-{int(m_num.group(1))}" if m_num else None
 
 
 def _iter_rows(doc: dict, block: str) -> list[dict]:
@@ -1211,7 +1312,7 @@ def _row_id_value(block: str, key: str, rows: list[tuple[dict, dict]]) -> Any:
     return key
 
 
-def consolidate_tables(corpus: Corpus, conflicts: list[dict]) -> dict[str, Any]:
+def consolidate_tables(corpus: Corpus, conflicts: list[dict], superficie: dict | None = None) -> dict[str, Any]:
     tables: dict[str, Any] = {}
     grouped: dict[str, dict[str, list[tuple[dict, dict]]]] = {b: {} for b in TABLE_ROW_GROUPS}
 
@@ -1320,7 +1421,10 @@ def consolidate_tables(corpus: Corpus, conflicts: list[dict]) -> dict[str, Any]:
                         estat_bloc = "candidats"
         tables[block] = {"estat_bloc": estat_bloc, "rows": rows_out, "sources_checked": srcs}
 
-    tables["superficie_construida"] = _superficie_construida(corpus)
+    # La cel·la que mana es la que `consolidate_python` ja ha calculat (i ha fet servir per
+    # als derivats): una sola decisio per consolidacio, no dues. Si no ens l'han passada
+    # (crida directa des d'un test), es recalcula — la funcio es idempotent.
+    tables["superficie_construida"] = superficie if superficie is not None else _superficie_construida(corpus)
     return tables
 
 
@@ -1400,14 +1504,20 @@ def _group_spt_rows(corpus: Corpus) -> dict[str, list[tuple[dict, dict]]]:
     entries: list[tuple[dict, dict, str, tuple[float, float] | None]] = []
     for d in corpus.docs:
         for r in _iter_rows(d, "spt_ma_tests"):
-            punt = _point_key(r.get("punt") or r.get("id"), "S") or "S-?"
+            # NOMES `punt`: `id` es l'etiqueta de l'assaig ("SPT-2" = 2n assaig, "MA1" =
+            # mostra 1), no el sondeig. Fer-lo servir com a font de la lletra enganxava
+            # l'assaig al sondeig equivocat; sense identificador de punt va al cistell "S-?".
+            punt = _point_key(r.get("punt"), "S") or "S-?"
             entries.append((d, r, punt, _spt_interval(r)))
     entries.sort(key=lambda e: (prio.get(e[0].get("document_type"), 9), e[3] is None))
     groups: list[dict] = []  # {punt, iv, rows}
     for d, r, punt, iv in entries:
         target = None
         for g in groups:
-            if g["punt"] != punt and punt != "S-?" and g["punt"] != "S-?":
+            # `"S-?"` (cap identificador llegible) es un cistell d'inclassificables, no un
+            # comodi: fusionar-lo amb el primer grup d'interval compatible enganxava la fila
+            # al sondeig equivocat. Nomes s'agrupa amb altres inclassificables.
+            if g["punt"] != punt:
                 continue
             if iv is None or g["iv"] is None:
                 target = g
@@ -1420,8 +1530,6 @@ def _group_spt_rows(corpus: Corpus) -> dict[str, list[tuple[dict, dict]]]:
             groups.append({"punt": punt, "iv": iv, "rows": [(d, r)]})
         else:
             target["rows"].append((d, r))
-            if target["punt"] == "S-?" and punt != "S-?":
-                target["punt"] = punt
             if target["iv"] is None and iv is not None:
                 target["iv"] = iv
     out: dict[str, list[tuple[dict, dict]]] = {}
@@ -1550,7 +1658,46 @@ def _group_soil_levels(corpus: Corpus) -> dict[str, list[tuple[dict, dict]]]:
     return groups
 
 
+def _component_m2(c: Any) -> float | None:
+    """Superficie d'UN sumand de `superficie_construida`, o `None` si no es llegible.
+
+    Bessona de `tables_report._component_number` (i el total que surt d'aqui hi acaba,
+    via `_sum_total`): en un dict la xifra ja ve aillada a la CLAU CANONICA
+    (`normalize.COMPONENT_VALUE_KEY`, posada per `load_corpus`) i el primer numero es el bo;
+    en un STRING el primer numero es el de l'etiqueta (`"P1: 85 m2"` -> 1), i nomes val la
+    xifra ancorada a unitat o, si no n'hi ha cap, l'unic numero del text.
+
+    Aqui NO hi ha cap llista de claus de dialecte: viu tota a `normalize`, i corre una sola
+    vegada a l'entrada. Abans n'hi havia dues de divergents i el dialecte real de Linyola
+    (`valor`) queia entre les dues.
+    """
+    if isinstance(c, dict):
+        v = c.get(COMPONENT_VALUE_KEY)
+        n = _numbers(str(v)) if v is not None else ()
+        return n[0] if n else None
+    if c is None:
+        return None
+    text = str(c)
+    with_unit = UNIT_M2_RE.findall(text)
+    if len(with_unit) == 1:
+        n = _numbers(with_unit[0])
+        return n[0] if n else None
+    if with_unit:
+        return None
+    n = _numbers(text)
+    return n[0] if len(n) == 1 else None
+
+
 def _superficie_construida(corpus: Corpus) -> dict:
+    """Cel·la `tables.superficie_construida` a partir de tots els documents del corpus.
+
+    Funcio PURA i IDEMPOTENT sobre el corpus: `entries` es una COPIA de la llista del
+    document. Abans n'era un alies i s'estenia mentre es recorria (`entries.extend(rows)`),
+    de manera que la llista del corpus creixia a cada crida — i se'n fan dues sobre el
+    mateix corpus en memoria (`consolidate_python` per als derivats, `consolidate_tables`
+    per a la taula): la segona, la que s'envia, duplicava cada component i cada senyal, i
+    els senyals identics duplicats podien inflar el consens de `decide()`.
+    """
     srcs = _block_sources(corpus, "superficie_construida")
     sigs: list[Signal] = []
     components_all: list[Any] = []
@@ -1558,7 +1705,7 @@ def _superficie_construida(corpus: Corpus) -> dict:
     for d in corpus.docs:
         tables = d.get("tables") or {}
         raw = tables.get("superficie_construida")
-        entries = raw if isinstance(raw, list) else ([raw] if isinstance(raw, dict) else [])
+        entries = list(raw) if isinstance(raw, list) else ([raw] if isinstance(raw, dict) else [])
         for e in entries:
             if not isinstance(e, dict):
                 continue
@@ -1569,13 +1716,10 @@ def _superficie_construida(corpus: Corpus) -> dict:
             comps = e.get("components") or []
             font = f"{d.get('source_path', '?')} {e.get('location', '')}".strip()
             if total is None and comps:
-                nums = []
-                for c in comps:
-                    v = c.get("value", c.get("superficie_m2")) if isinstance(c, dict) else c
-                    n = _numbers(str(v)) if v is not None else ()
-                    if n:
-                        nums.append(n[0])
-                if nums:
+                nums = [_component_m2(c) for c in comps]
+                # un sol sumand il·legible anul·la la suma sintetica: el total sortiria
+                # incomplet i, a `tables_report._sum_total`, amb aparenca de xifra bona
+                if nums and all(n is not None for n in nums):
                     total = f"{'+'.join(str(int(n) if float(n).is_integer() else n) for n in nums)}"
             if total is not None:
                 sigs.append(Signal("superficie_construida", total, font, str(e.get("quote") or ""), 0.6,
@@ -1647,7 +1791,7 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
             # derivacions/coneixement previ.
             if key in _CADASTRE_KEYS and "cadastre" in _http_enabled_sources():
                 from automation.lectura.cadastre_reader import cadastre_portal_signals
-                sigs += cadastre_portal_signals(key, fields, project_path)
+                sigs += cadastre_portal_signals(key, fields, project_path, extra_concepts)
             sigs += http_field_signals(key, project_path)
             sigs += derived_field_signals(key, fields, sc.get("value"), (sc.get("candidates") or [{}])[0].get("font"))
         cell = decide(
@@ -1662,7 +1806,7 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
         fields[key] = cell
     fields = {k: fields[k] for k in sorted(fields)}
 
-    tables = consolidate_tables(corpus, conflicts)
+    tables = consolidate_tables(corpus, conflicts, superficie=sc)
 
     notes = [
         f"_decisions.json generat per consolidacio Python-first (Fase 12, {CONSOLIDATOR_VERSION}): "
@@ -1673,6 +1817,19 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
         notes.append("duplicats per md5 (no compten dos cops): " + ", ".join(f"{a} = {b}" for a, b in corpus.duplicates.items()))
     if corpus.lectura_fallida:
         notes.append("lectura fallida (sense {doc}.json): " + ", ".join(corpus.lectura_fallida))
+    if corpus.orfes:
+        notes.append("lectures orfes descartades (el fitxer ja no es a l'inventari): " + ", ".join(corpus.orfes))
+    if corpus.component_dialects:
+        # RASTRE de dialectes: el lector es un productor cec i pot estrenar noms de camp a
+        # qualsevol execucio. Va a `notes_estructurals` (i no a un log) perque viatja DINS del
+        # `_decisions.json` de cada projecte, que es l'artefacte que conservem i comparem
+        # execucio rere execucio: aixi, d'aqui a unes quantes, sabrem quins dialectes surten
+        # de veritat en comptes de continuar endevinant-los. Es el mateix canal que ja porta
+        # duplicats/orfes/lectures fallides.
+        notes.append(
+            "sumands de superficie_construida amb claus fora de normalize.COMPONENT_VALUE_ALIASES "
+            f"({', '.join(corpus.component_dialects)}): llegits per forma (xifra ancorada a m²) o "
+            "deixats en blanc; afegiu-les als alies si es repeteixen")
     skill_versions = sorted({str(d.get("skill_version")) for d in corpus.docs if d.get("skill_version")})
 
     return {
@@ -1762,7 +1919,12 @@ def merge_only_fields(decisions: dict, llm: dict, requested: list[str]) -> tuple
             rid = r.get(_ROW_ID_KEY.get(block, "punt"))
             if isinstance(rid, dict):
                 rid = rid.get("value")
-            if _point_key(rid) != _point_key(row_key) and str(rid) != row_key:
+            # Les claus han de coincidir I ser llegibles: amb `_point_key(rid) !=
+            # _point_key(row_key)`, dos `None` (identificador il·legible a totes dues
+            # bandes, p. ex. una fila sense `punt` i el cistell "S-?") casaven, i la
+            # cel·la de l'LLM queia a QUALSEVOL fila.
+            rid_key, want_key = _point_key(rid), _point_key(row_key)
+            if str(rid) != row_key and not (rid_key and rid_key == want_key):
                 continue
             cell = r.get(cell_name)
             if not isinstance(cell, dict) or _validate_cell(cell, path):
@@ -1771,7 +1933,8 @@ def merge_only_fields(decisions: dict, llm: dict, requested: list[str]) -> tuple
                 continue
             for tr in target_rows:
                 trid = tr.get(_ROW_ID_KEY.get(block, "punt"))
-                if _point_key(trid) == _point_key(row_key) or str(trid) == row_key:
+                trid_key = _point_key(trid)
+                if str(trid) == row_key or (trid_key and trid_key == want_key):
                     prev = tr.get(cell_name, {})
                     cell = dict(cell)
                     cell["llm_only_fields"] = True

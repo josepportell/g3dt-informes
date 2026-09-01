@@ -70,7 +70,9 @@ TTL_DAYS = 30
 _CACHE_RELPATH = PurePosixPath("validation/_auto_result.json")
 
 # Sortides del pipeline dins la carpeta del projecte — fora de l'`inputs_md5`.
-_EXCLUDED_DIRS = {"validation"}
+# `_esborrats` és la quarantena del delta-sync (`sync_workspace.DELETED_DIRNAME`):
+# cap lector la mira, i per tant no ha de moure l'empremta d'entrades.
+_EXCLUDED_DIRS = {"validation", "_esborrats"}
 _EXCLUDED_ROOT_FILES = {"file_mapping.json", "user_data.json", "_user_data_prev.json"}
 
 # Claus de `user_data.json` que `auto_extract` llegeix (Fase 3: UTM, adreça,

@@ -4,11 +4,14 @@ Fixtures: reference-material/4001612 BELL-LLOC (les cel·les esperades venen de 
 d'or, docs/golden-read/4001612 BELL-LLOC/g3_0*.json).
 """
 
+import shutil
 from pathlib import Path
 
 import pytest
 
 from automation.g3_templates import (
+    _municipi_corroborat,
+    _split_plan_cost_title,
     read_comanda,
     read_dpsh_excel,
     read_fitxa_camp,
@@ -86,6 +89,102 @@ def test_plan_cost_cel_les(bell):
     assert per_id["building_type"]["value"] == "EG HAB UNIF BELL-LLOC"
     assert per_id["num_dpsh_tests"]["value"] == 2
     assert per_id["num_dpsh_tests"]["location"] == "OFERTA!B21"
+
+
+# Les 8 formes reals d'E9 del corpus (els 10 PLAN_COST dels 8 projectes; Castellar
+# i Cerdanyola tenen dos fitxers amb el mateix títol). El municipi és tot el que
+# queda rere el tipus de projecte: ni l'última paraula ("VALLÈS", "SEGRIÀ") ni el
+# residu mandrós de la descripció ("UNIF RUBI").
+@pytest.mark.parametrize("e9, tipus, municipi", [
+    ("EG 3 HAB UNIF CASTELLAR DEL VALLÈS", "EG 3 HAB UNIF", "CASTELLAR DEL VALLÈS"),
+    ("EG HAB UNIF RUBI", "EG HAB UNIF", "RUBI"),
+    ("EG HAB UNIF CERDANYOLA", "EG HAB UNIF", "CERDANYOLA"),
+    ("EG HAB UNIF LINYOLA", "EG HAB UNIF", "LINYOLA"),
+    ("EG HAB UNIF BELL-LLOC", "EG HAB UNIF", "BELL-LLOC"),
+    ("EG AMPL ALCOLETGE", "EG AMPL", "ALCOLETGE"),
+    ("EG VILANOVA SEGRIÀ", "EG", "VILANOVA SEGRIÀ"),
+    ("EG 7 VIVIENDAS ANCILES", "EG 7 VIVIENDAS", "ANCILES"),
+])
+def test_plan_cost_titol_es_parteix_pel_tipus(e9, tipus, municipi):
+    assert _split_plan_cost_title(e9) == (tipus, municipi)
+
+
+def test_plan_cost_titol_desconegut_no_inventa_municipi():
+    # Sense cap token de tipus per consumir no s'emet municipi (val més cap
+    # candidat que un municipi inventat).
+    assert _split_plan_cost_title("ESTUDI GEOTÈCNIC PER A LA NAU") == ("", "ESTUDI GEOTÈCNIC PER A LA NAU")
+    assert _split_plan_cost_title("EG HAB UNIF") == ("EG HAB UNIF", "")
+
+
+def test_plan_cost_nomes_ell_dona_municipi_net(tmp_path):
+    """Camí PLAN_COST-only: sense comanda ni pressupost, `concepts['municipality'][0]`
+    va directe a l'input `site_municipality` del wizard."""
+    plan = BELL / "25.0647" / "PLAN_COST_BELL-LLOC.xlsx"
+    shutil.copy2(plan, tmp_path / plan.name)
+    result = read_project(tmp_path)
+    muni = result["concepts"]["municipality"][0]
+    assert muni["value"] == "BELL-LLOC"          # abans: "UNIF BELL-LLOC"
+    assert muni["document_type"] == "plan_cost_g3"
+    assert muni["confidence"] == 0.6
+    # el senyal germà de la mateixa cel·la no canvia
+    assert result["concepts"]["building_type"][0]["value"] == "EG HAB UNIF BELL-LLOC"
+
+
+# `_PLAN_COST_TYPE_TOKENS` només té els descriptors ATESTATS: un títol amb un
+# descriptor no llistat se'l queda dins del municipi ("EG REHAB NAU LLEIDA" ->
+# "NAU LLEIDA") i sortiria amb la confiança d'un municipi de debò. Com que la
+# forma "EG {MUNICIPI}" existeix (EG VILANOVA SEGRIÀ), no es pot distingir per
+# estructura: es contrasta amb el nom del fitxer i el de la carpeta.
+@pytest.mark.parametrize("municipi, context, corroborat", [
+    ("CASTELLAR DEL VALLÈS", "PLAN_COST_CATELLAR DEL VALLÈS 3001621 CASTELLAR DEL VALLES", True),
+    ("BELL-LLOC", "PLAN_COST_BELL-LLOC 4001612 BELL-LLOC", True),
+    ("VILANOVA SEGRIÀ", "PLAN_COST 4001671 VILANOVA DE SEGRIA", True),
+    ("RUBI", "PLAN_COST_RUBI 3001631 RUBI", True),
+    ("ANCILES", "PLAN_COST 4001679 ANCILES", True),
+    # el descriptor que s'escapa és sempre la PRIMERA paraula del residu
+    ("NAU LLEIDA", "PLAN_COST_LLEIDA 3001700 LLEIDA", False),
+    ("NAU INDUSTRIAL TÀRREGA", "PLAN_COST 4001700 TARREGA", False),
+    ("MAGATZEM ALCOLETGE", "PLAN_COST 4001670 ALCOLETGE", False),
+    ("BELL-LLOC", "", False),                 # sense res amb què contrastar, no es corrobora
+])
+def test_municipi_corroborat_amb_fitxer_i_carpeta(municipi, context, corroborat):
+    assert _municipi_corroborat(municipi, context) is corroborat
+
+
+def test_plan_cost_municipi_corroborat_per_la_carpeta(tmp_path):
+    """Nom de fitxer que no diu res: qui corrobora és la carpeta del projecte.
+
+    Des del cablejat del padró (peça 2, 2026-09-01) la confiança segueix sent 0,6 —el padró no
+    en puja cap— però ara hi ha nota: «BELL-LLOC» és la forma curta de `Bell-lloc d'Urgell`, i
+    la forma oficial llarga és la que mana per la regla de municipi.
+    """
+    plan = BELL / "25.0647" / "PLAN_COST_BELL-LLOC.xlsx"
+    projecte = tmp_path / "4001612 BELL-LLOC"
+    projecte.mkdir()
+    shutil.copy2(plan, projecte / "PC.xlsx")
+
+    muni = read_project(projecte)["concepts"]["municipality"][0]
+
+    assert muni["value"] == "BELL-LLOC" and muni["confidence"] == 0.6
+    assert "és la forma curta de «Bell-lloc d'Urgell»" in muni["note"]
+
+
+def test_plan_cost_municipi_sense_corroborar_baixa_de_confianca(tmp_path):
+    """Ni el fitxer ni la carpeta no diuen «BELL-LLOC»: el candidat s'emet igual
+    (mai en blanc) però a 0,4 i amb la nota, que és el que veurà l'Eva.
+
+    El padró NO ha de rescatar aquest cas: que «Bell-lloc» sigui un municipi de debò no vol dir
+    que sigui el d'aquest projecte, i el que crida l'atenció és la contradicció amb la carpeta.
+    """
+    plan = BELL / "25.0647" / "PLAN_COST_BELL-LLOC.xlsx"
+    projecte = tmp_path / "9999999 TORREGROSSA"
+    projecte.mkdir()
+    shutil.copy2(plan, projecte / "PC.xlsx")
+
+    muni = read_project(projecte)["concepts"]["municipality"][0]
+
+    assert muni["value"] == "BELL-LLOC" and muni["confidence"] == 0.4
+    assert "verificar" in muni["note"]
 
 
 def test_dpsh_excel_executats(bell):

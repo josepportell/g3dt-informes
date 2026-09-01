@@ -249,6 +249,80 @@ def test_the_technical_vocabulary_survives(line):
     assert line.split()[0][:6].lower() in N.sanitize_log(line, {}).lower()
 
 
+@pytest.mark.parametrize("path", [
+    # La forma que existeix de veritat a l'ordinador de l'Eva: UNA barra.
+    r"C:\g3dt-ia\projectes\4001612 BELL-LLOC\PENETROS DPSH.pdf",
+    # La forma escapada (literals de codi, JSON): l'única que es censurava.
+    r"C:\\g3dt-ia\\projectes\\4001612 BELL-LLOC\\PENETROS DPSH.pdf",
+    # Unitat de xarxa per UNC.
+    r"\\192.168.1.7\projectes\4001612 BELL-LLOC\PENETROS DPSH.pdf",
+])
+def test_windows_paths_are_masked_whatever_the_number_of_backslashes(path):
+    """Sense àlies (`_inventory.json` il·legible) la substitució per nom de
+    fitxer no existeix: la garantia «cap nom de fitxer» depèn només d'aquesta
+    escombrada. Amb `\\\\` a la regex exigia dues barres i no censurava mai el
+    camí real; `[^\\s]+` s'aturava al primer espai i deixava passar la carpeta
+    del client."""
+    out = N.sanitize_log(f"ENOENT: no such file {path}", {})
+
+    assert "ENOENT" in out
+    assert "(ruta)" in out
+    for leak in ("g3dt-ia", "BELL-LLOC", "PENETROS", "192.168.1.7"):
+        assert leak not in out
+
+
+def test_masking_a_path_does_not_eat_the_return_code():
+    out = N.sanitize_log(r"C:\g3dt-ia\projectes\4001612 BELL-LLOC\A.01.pdf: rc = 2", {})
+    assert "rc = 2" in out and "BELL-LLOC" not in out
+
+
+@pytest.mark.parametrize("path", [
+    # Relatiu, una sola barra: el residu que `_WIN_PATH_RE` (unitat o UNC) no veu.
+    r"PDF\ANNEXES\4001612_sondeig.pdf",
+    r"ANNEXES\PENETROS DPSH.pdf",
+    r"PDF\ANNEXES\PRESSUPOST Jordi Bosch Novell.pdf",
+    # Absolut, per no perdre la cobertura de sempre en el mateix escenari.
+    r"C:\g3dt-ia\projectes\4001612 BELL-LLOC\4001612_sondeig.pdf",
+])
+def test_relative_windows_paths_are_masked_without_aliases(path):
+    """`aliases={}` és exactament el cas on `_inventory.json` no s'ha pogut
+    llegir — i llavors un camí RELATIU porta el nom del document igual que un
+    d'absolut. Els àlies es construeixen amb separador POSIX i no hi casen."""
+    out = N.sanitize_log(f"ENOENT: no such file {path}", {})
+
+    assert "ENOENT" in out
+    assert "(ruta)" in out
+    for leak in ("sondeig", "PENETROS", "PRESSUPOST", "Jordi", "ANNEXES", "g3dt-ia"):
+        assert leak not in out
+
+
+@pytest.mark.parametrize("line", [
+    "rc=1 usage limit reached",
+    "process timed out after 240s",
+    "Traceback (most recent call last):",
+    "command not found: claude",
+    r"invalid json: el patro \d+ no casa i \n tampoc",
+])
+def test_relative_path_masking_does_not_eat_legitimate_text(line):
+    """No tot el que porta una barra invertida és un camí: sense extensió no
+    es toca res, i el missatge tècnic arriba sencer al correu."""
+    assert N.sanitize_log(line, {}) == line
+
+
+def test_relative_path_masking_keeps_the_technical_words_of_its_own_line():
+    out = N.sanitize_log(r"ENOENT: no such file PDF\ANNEXES\4001612_sondeig.pdf", {})
+    assert out == "ENOENT: no such file (ruta)"
+
+
+def test_aliases_match_whatever_the_separator():
+    """Els àlies vénen de `_inventory.json` amb `/`; el log de Windows escriu
+    el mateix camí amb `\\`. Sense la variant, l'àlies no casaria a producció."""
+    aliases = N._doc_alias_map(FITXERS)
+    out = N.sanitize_log(r"Error: ENOENT llegint PDF\ANNEXES\4001612_sondeig.pdf", aliases)
+    assert "doc_1" in out
+    assert "4001612_sondeig" not in out and "ANNEXES" not in out
+
+
 def test_sanitize_log_looks_only_at_the_tail():
     text = "\n".join(["rc=0 linia antiga"] * 50 + ["rc=1 usage limit"])
     out = N.sanitize_log(text, {}, tail=3)

@@ -52,6 +52,123 @@ def test_portals_from_address_empty() -> None:
     assert R.portals_from_address(None) == ("", [])  # type: ignore[arg-type]
 
 
+@pytest.mark.parametrize("address,expected", [
+    # La conjuncio NO es la lletra del portal: amb `[("18","I")]`, `resolve_portal` filtrava
+    # per una lletra que cap portal real no te i el 18 desapareixia EN SILENCI (nomes el 20
+    # arribava a la superficie i a l'RC).
+    ("Carrer Arbrells, 18 i 20", ("Arbrells", [("18", ""), ("20", "")])),
+    ("Calle Mayor, 5 y 7", ("Mayor", [("5", ""), ("7", "")])),
+    ("Carrer Arbrells, 18A, 18B i 20", ("Arbrells", [("18", "A"), ("18", "B"), ("20", "")])),
+    # "bis" i "núm" tampoc son lletra de portal.
+    ("Carrer Major, 12 bis", ("Major", [("12", "")])),
+    ("Carrer Major, núm 12", ("Major", [("12", "")])),
+    ("Carrer Major nº 12", ("Major", [("12", "")])),
+    # Nom de carrer amb xifres: el tall es per la coma que obre els portals, no pel primer digit.
+    ("Carrer 11 de Setembre, 5", ("11 de Setembre", [("5", "")])),
+    ("Avinguda 11 de Setembre, 5A", ("11 de Setembre", [("5", "A")])),
+])
+def test_portals_from_address_boundary_words_and_numeric_street_names(
+    address: str, expected: tuple[str, list[tuple[str, str]]]
+) -> None:
+    assert R.portals_from_address(address) == expected
+
+
+def test_portals_from_address_keeps_i_inside_street_name() -> None:
+    """La paraula-frontera nomes es frontera ENTRE portals: "Sant Pere i Sant Pau" no es parteix."""
+    assert R.portals_from_address("Carrer Sant Pere i Sant Pau, 3") == ("Sant Pere i Sant Pau", [("3", "")])
+
+
+@pytest.mark.parametrize("address,expected", [
+    # La coma del pis NO obre la llista de portals: el cap ja acaba en numero. Amb el tall
+    # per aquesta coma, el 24 —l'unic portal bo— se n'anava al nom del carrer.
+    ("Avinguda Catalunya, 24, 3r 2a", ("Catalunya", [("24", "")])),
+    ("Carrer Major 12, 2n 1a", ("Major", [("12", "")])),
+    # La primera coma SI que obre la llista (el cap no acaba en numero): el carrer no canvia,
+    # i el pis/porta ja no compta com a portal.
+    ("Carrer Major, 12, 2n 1a", ("Major", [("12", "")])),
+    ("Calle Mayor 3, 2º", ("Mayor", [("3", "")])),
+    ("C/ Nou, 5è 1a", ("Nou", [])),
+])
+def test_portals_from_address_floor_and_door_are_not_portals(
+    address: str, expected: tuple[str, list[tuple[str, str]]]
+) -> None:
+    """Pis i porta ("3r 2a") tenen forma de portal i `resolve_portal` pot trobar un 3 i un 2
+    de debo al carrer: la superficie sortiria sumada d'unes parcel·les alienes amb la
+    confiança d'una consulta oficial."""
+    assert R.portals_from_address(address) == expected
+
+
+def test_portals_from_address_keeps_the_letter_of_a_real_portal() -> None:
+    """El tall del pis no es pot menjar "18A"/"12E": la lletra del portal va sola."""
+    assert R.portals_from_address("Carrer Arbrells, 18A") == ("Arbrells", [("18", "A")])
+    assert R.portals_from_address("Carrer Arbrells, 12E") == ("Arbrells", [("12", "E")])
+    assert R.portals_from_address("Carrer Arbrells, 18 A") == ("Arbrells", [("18", "A")])
+
+
+@pytest.mark.parametrize("address,expected_street", [
+    # El cas de la regressio: `av\.?` casava DINS de "Avda" i el carrer sortia com a
+    # `'da. Catalunya'` -> cap via del Callejero -> superficie en blanc, per una llista
+    # d'abreviatures incompleta.
+    ("Avda. Catalunya 24", "Catalunya"),
+    ("Avda Catalunya 24", "Catalunya"),
+    ("Avgda. Catalunya 24", "Catalunya"),
+    ("Av. Catalunya 24", "Catalunya"),
+    ("Avinguda Catalunya, 24", "Catalunya"),
+    # Mateix patro: `cam[ií]` es menjava la "i" de "Camino" i en deixava `'no Viejo'`.
+    ("Camino Viejo 5", "Viejo"),
+    ("Camí Ral 5", "Ral"),
+])
+def test_portals_from_address_short_abbreviations_do_not_eat_the_street(
+    address: str, expected_street: str
+) -> None:
+    assert R.portals_from_address(address)[0] == expected_street
+
+
+def test_an_abbreviation_still_missing_leaves_the_address_whole() -> None:
+    """"Pge." no es a la llista (i cap llista no sera completa). El lookahead fa que en
+    quedi l'adreça sencera —que un huma reconeix i el fuzzy encara pot salvar— en comptes
+    de `'e. Mercè'`, mig nom de carrer amb tota la pinta de bo."""
+    assert R.portals_from_address("Pge. Mercè 3") == ("Pge. Mercè", [("3", "")])
+
+
+@pytest.mark.parametrize("address,expected_street", [
+    ("Carrer Arbrells, 18A, 18B i 20", "Arbrells"),
+    ("Carrer Girasols, 7", "Girasols"),
+    ("C/ Girassols, 7", "Girassols"),
+    ("Carrer Tulipa, 3", "Tulipa"),
+    ("Carrer Clot de la Llacuna, 16", "Clot de la Llacuna"),
+    ("C. Clot de la Llacuna, 16", "C. Clot de la Llacuna"),
+    ("C/ General Ferraz, 20", "General Ferraz"),
+    ("C/ Mestre Ramon Ortiz 15", "Mestre Ramon Ortiz"),
+    ("C/ Santa Gemma, 4", "Santa Gemma"),
+    ("Carrer de la Miranda, 39", "Miranda"),
+])
+def test_portals_from_address_keeps_the_real_project_streets(
+    address: str, expected_street: str
+) -> None:
+    """Les adreces dels 8 projectes (annex A de `PLA-PENDENTS-0B-0C-0D-2026-08-26.md`):
+    completar la llista d'abreviatures no en pot moure cap."""
+    assert R.portals_from_address(address)[0] == expected_street
+
+
+@pytest.mark.parametrize("hint,official,expected", [
+    ("Arbrells", "ARBRELLS DELS", True),      # el Callejero afegeix l'article
+    ("Girassols", "GIRASOLS DELS", True),     # variant ortografica (fuzzy 0,94)
+    ("Clot de la Llacuna", "CLOT DE LA LLACUNA", True),
+    ("Carrer", "CARRERADA PD", False),        # `_consulta_via` puntua 60 per "conte" (fuzzy 0,80)
+    ("Font", "FONTANELLA", False),
+    # Hint d'UNA paraula: la regla de subconjunt reproduia el "conte" de `_consulta_via` i
+    # acceptava un carrer que nomes comparteix la primera paraula (n'hi ha dos de diferents).
+    ("Major", "MAJOR DE BALAFIA", False),
+    ("Nou", "NOU DE SANT FRANCESC", False),
+    ("Major", "MAJOR", True),
+    ("Major", "MAJOR DEL", True),             # article del Callejero: no es paraula de mes
+    ("Carrerada", "CARRERADA PD", True),      # abreviatura del Callejero (partida), tampoc
+])
+def test_via_name_matches(hint: str, official: str, expected: bool) -> None:
+    assert R._via_name_matches(hint, official) is expected
+
+
 # ---------------------------------------------------------------------------
 # (b) resolve_portal — fixture JSON real de Castellar
 # ---------------------------------------------------------------------------
@@ -249,7 +366,9 @@ def _fake_via(province: str, muni: str, hint: str, full_address_context: str = "
     if "arbrells" in hint.lower():
         return ("ARBRELLS DELS", "CL", "372")
     if "carrer x" in hint.lower() or hint.lower() == "x":
-        return ("CARRER X", "CL", "1")
+        # `nv` del Callejero = NOMES el nom ("ARBRELLS DELS"); el tipus de via va a part
+        # (`tv`), no dins del nom.
+        return ("X", "CL", "1")
     return None
 
 
@@ -289,6 +408,68 @@ def test_cadastre_portal_signals_contiguous_sums(tmp_path: Path, monkeypatch) ->
     sigs_rc = R.cadastre_portal_signals("referencia_catastral", decided, tmp_path)
     assert len(sigs_rc) == 1
     assert sigs_rc[0].value == "3298012DG2039N+3298013DG2039N+3298014DG2039N"
+
+
+def test_cadastre_portal_signals_conjunction_keeps_both_portals(tmp_path: Path, monkeypatch) -> None:
+    """«18 i 20»: els DOS portals es consulten i se sumen (abans, la "i" es llegia com a
+    lletra del 18, `resolve_portal` no en trobava cap i la superficie era nomes la del 20)."""
+    monkeypatch.setattr(R, "CACHE_DIR", tmp_path / "cadastre_cache")
+    monkeypatch.setattr(R, "_consulta_municipio", _fake_muni)
+    monkeypatch.setattr(R, "_consulta_via", _fake_via)
+
+    asked: list[tuple[str, str]] = []
+
+    def fake_resolve(province, muni, via, number, letter, *, tipo_via="CL"):
+        asked.append((number, letter))
+        table = {
+            ("18", ""): [R.ParcelHit(rc="AAAA1111AA0001", pnp="18", plp="")],
+            ("20", ""): [R.ParcelHit(rc="BBBB2222BB0002", pnp="20", plp="")],
+        }
+        return table.get((number, letter), [])
+    monkeypatch.setattr(R, "resolve_portal", fake_resolve)
+
+    left = [(0.0, 0.0), (10.0, 0.0), (10.0, 10.0), (0.0, 10.0)]
+    right = [(10.0, 0.0), (20.0, 0.0), (20.0, 10.0), (10.0, 10.0)]
+    areas = {"AAAA1111AA0001": (441, left), "BBBB2222BB0002": (420, right)}
+    monkeypatch.setattr(R, "parcel_area_and_polygon", lambda rc: areas[rc])
+
+    decided = {
+        "street_address": {"estat": "segur", "value": "Carrer Arbrells, 18 i 20"},
+        "municipality": {"estat": "segur", "value": "Castellar del Valles"},
+    }
+    sigs = R.cadastre_portal_signals("superficie_parcela", decided, tmp_path)
+    assert asked == [("18", ""), ("20", "")]
+    assert [s.value for s in sigs] == ["861"]
+
+    sigs_rc = R.cadastre_portal_signals("referencia_catastral", decided, tmp_path)
+    assert sigs_rc[0].value == "AAAA1111AA0001+BBBB2222BB0002"
+
+
+def test_cadastre_portal_signals_rejects_wrong_street_name(tmp_path: Path, monkeypatch, caplog) -> None:
+    """El Callejero torna un carrer que nomes CONTE el text cercat -> cap senyal.
+    Millor un blanc honest que la parcel·la d'un altre carrer amb confiança de font oficial.
+
+    Des de la peça 1 del disseny d'adreces (`resolve_via`, 2026-09-01) el rebuig de via B ja no
+    acaba la historia: es reintenta sobre la llista sencera del municipi. La intencio del test
+    no canvia —cap parcel·la d'un altre carrer— pero ara cobreix les DUES portes: `FONTANELLA`
+    tampoc no passa la tria del conjunt tancat (`FONT` vs `FONTANELLA` = 0,57, per sota de 0,85).
+    """
+    monkeypatch.setattr(R, "CACHE_DIR", tmp_path / "cadastre_cache")
+    monkeypatch.setattr(R, "_consulta_municipio", _fake_muni)
+    monkeypatch.setattr(R, "_consulta_via", lambda *a, **k: ("FONTANELLA", "CL", "9"))
+    monkeypatch.setattr(R, "_consulta_via_all_streets", lambda p, m: [("FONTANELLA", "CL", "9")])
+
+    def boom(*a, **k):
+        raise AssertionError("no s'ha de consultar cap portal d'un carrer que no encaixa")
+    monkeypatch.setattr(R, "resolve_portal", boom)
+
+    decided = {
+        "street_address": {"estat": "segur", "value": "Carrer Font, 5"},
+        "municipality": {"estat": "segur", "value": "Muni"},
+    }
+    with caplog.at_level("WARNING"):
+        assert R.cadastre_portal_signals("superficie_parcela", decided, tmp_path) == []
+    assert any("cap carrer del Callejero correspon" in rec.message for rec in caplog.records)
 
 
 def test_cadastre_portal_signals_noncontiguous_no_sum(tmp_path: Path, monkeypatch) -> None:
@@ -443,7 +624,14 @@ def test_cadastre_portal_signals_points_note_all_inside(tmp_path: Path, monkeypa
 
 
 def test_cadastre_portal_signals_points_note_point_outside(tmp_path: Path, monkeypatch) -> None:
-    """(f) 1 punt fora -> nota '0/1 ... fora'."""
+    """(f) 1 punt fora -> el valor NO s'omple, i el motiu queda escrit.
+
+    Fins a la peça 5 del disseny d'adreces (2026-09-01) això només era una nota informativa i
+    la superfície sortia igualment. Ara la comprovació **veta**: cap punt dins i el més proper
+    a molt més de 10 m vol dir que la parcel·la no és la del projecte, i val més un blanc amb
+    el motiu que un número d'una altra parcel·la. Vegeu `tests/test_lectura_points_veto.py`
+    per als límits (algun punt dins, deriva petita, sense fitxer de coordenades).
+    """
     monkeypatch.setattr(R, "CACHE_DIR", tmp_path / "cadastre_cache")
     monkeypatch.setattr(R, "_consulta_municipio", _fake_muni)
     monkeypatch.setattr(R, "_consulta_via", _fake_via)
@@ -465,8 +653,9 @@ def test_cadastre_portal_signals_points_note_point_outside(tmp_path: Path, monke
     }
     sigs = R.cadastre_portal_signals("superficie_parcela", decided, proj)
     assert len(sigs) == 1
-    assert "0/1 punts d'assaig dins de la unio" in sigs[0].note
-    assert "fora" in sigs[0].note
+    assert sigs[0].value is None
+    assert "0/1 dins" in sigs[0].note and "FORA" in sigs[0].note
+    assert "COORDENADES.txt" in sigs[0].note
 
 
 def test_cadastre_portal_signals_max_six_portals(tmp_path: Path, monkeypatch) -> None:

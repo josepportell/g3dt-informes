@@ -274,3 +274,199 @@ def test_sync_to_workspace_is_untouched(net_and_ws):
 
     assert first["status"] == "synced"
     assert second["status"] == "skipped"
+
+
+# ---------------------------------------------------------------------------
+# Xarxa il·legible ≠ xarxa buida (P0)
+#
+# `os.scandir` peta a mitja passada (hiccup d'SMB) → l'escaneig de xarxa surt
+# buit o incomplet → tot el que hi ha al workspace es veu «esborrat a la xarxa» →
+# amb `check_only=False` el projecte SENCER se'n va a `_esborrats/` per
+# `os.replace` LOCALS, que funcionen igual de bé amb la unitat de xarxa morta, i
+# la lectura arrenca sobre una carpeta buida.
+#
+# La guarda no pot ser «error i para-ho tot»: un `status="error"` és un 404 a
+# `web/api.py` i deixa l'Eva sense poder llegir el projecte per UNA entrada
+# il·legible, cosa gens rara en un recurs SMB. Es renuncia només a la
+# quarantena — el que pot destruir feina — i es copia igualment.
+#
+# El mateix val per a la desaparició en massa amb l'escaneig net: un projecte en
+# fase inicial (3-5 fitxers) que l'Eva reorganitza dispara la guarda, i «comprova
+# la connexió amb la unitat de xarxa» hi és, a més, un consell equivocat. Amb
+# `check_only` sí que segueix sent `error`: allà no bloqueja ningú.
+# ---------------------------------------------------------------------------
+
+def _break_scandir(monkeypatch, broken_root: Path) -> None:
+    """`os.scandir` peta per a `broken_root` i tot el que hi ha a sota."""
+    real = os.scandir
+
+    def fake(path=".", *args, **kwargs):
+        p = Path(path)
+        if p == broken_root or broken_root in p.parents:
+            raise OSError(5, "Input/output error (SMB)")
+        return real(path, *args, **kwargs)
+
+    monkeypatch.setattr(SW.os, "scandir", fake)
+
+
+def test_an_unreadable_network_does_not_quarantine_anything(net_and_ws, monkeypatch):
+    net_project, ws_project = net_and_ws
+    _seed(net_project)
+    _sync_first_time()
+    _break_scandir(monkeypatch, net_project)
+
+    d = SW.sync_delta("4001612 BELL-LLOC")
+
+    assert d["status"] == "ok", "un 'error' aquí és un 404: l'Eva no pot ni començar"
+    assert d["scan_incomplete"] is True and d["scan_errors"] == 1
+    assert d["deleted"] == [] and d["moved"] == 0
+    assert (ws_project / "PENETROS.pdf").exists()
+    assert (ws_project / "ANNEXES" / "4001612_DPSH.xls").exists()
+    assert not (ws_project / SW.DELETED_DIRNAME).exists()
+
+
+def test_a_half_read_network_copies_what_it_saw_but_quarantines_nothing(net_and_ws, monkeypatch):
+    """Una sola subcarpeta il·legible ja fa `deleted` mentida: 3 fitxers a la
+    xarxa, 2 vistos, i el DPSH cap a `_esborrats/`. Però el plànol nou que SÍ
+    s'ha vist s'ha de portar igualment: bloquejar-ho tot per una carpeta amb el
+    permís denegat deixa l'Eva sense poder llegir res."""
+    net_project, ws_project = net_and_ws
+    _seed(net_project)
+    _sync_first_time()
+    _write(net_project / "A.01.pdf", "plànol nou")
+    _break_scandir(monkeypatch, net_project / "ANNEXES")
+
+    d = SW.sync_delta("4001612 BELL-LLOC")
+
+    assert d["status"] == "ok" and d["scan_errors"] == 1
+    assert d["new"] == ["A.01.pdf"] and d["copied"] == 1
+    assert (ws_project / "A.01.pdf").read_text(encoding="utf-8") == "plànol nou"
+    assert "no s'ha pogut llegir" in d["warning"].lower()
+    assert d["deleted"] == []
+    assert (ws_project / "ANNEXES" / "4001612_DPSH.xls").exists()
+    assert not (ws_project / SW.DELETED_DIRNAME).exists()
+
+
+def test_an_ordinary_deletion_still_goes_to_the_drawer_when_the_scan_is_clean(net_and_ws):
+    """La guarda proporcional no ha de tapar el cas normal: 1 fitxer de 3."""
+    net_project, ws_project = net_and_ws
+    _seed(net_project)
+    _sync_first_time()
+    (net_project / "COORDENADES.txt").unlink()
+
+    d = SW.sync_delta("4001612 BELL-LLOC")
+
+    assert d["status"] == "ok" and d["deleted"] == ["COORDENADES.txt"] and d["moved"] == 1
+    assert "scan_incomplete" not in d
+
+
+def test_half_the_network_vanishing_without_errors_quarantines_nothing(net_and_ws):
+    """Cap `OSError`, però `ANNEXES/` es llegeix buida: sense la guarda
+    proporcional, tot el subarbre se'n va a `_esborrats/`. Ningú no esborra mig
+    projecte d'una tacada — però tampoc no es pot deixar l'Eva sense poder llegir:
+    es renuncia a la quarantena i prou, com amb l'escaneig incomplet."""
+    net_project, ws_project = net_and_ws
+    _seed(net_project)
+    for i in range(4):
+        _write(net_project / "ANNEXES" / f"annex{i}.pdf", "annex", 1_700_000_000)
+    _sync_first_time()
+    for p in (net_project / "ANNEXES").iterdir():
+        p.unlink()
+
+    d = SW.sync_delta("4001612 BELL-LLOC")
+
+    assert d["status"] == "ok", "un 'error' aquí és un 404: l'Eva no pot ni començar"
+    assert d["mass_disappearance"] is True and d["vanished"] == 5  # 4 annexos + el DPSH
+    assert d["deleted"] == [] and d["moved"] == 0
+    assert (ws_project / "ANNEXES" / "annex0.pdf").exists()
+    assert not (ws_project / SW.DELETED_DIRNAME).exists()
+
+
+def test_the_eva_reorganizing_a_small_project_is_not_blocked(net_and_ws):
+    """El cas que la guarda no havia de tocar: projecte en fase inicial (5
+    fitxers), l'Eva n'esborra 3 a posta i n'hi deixa un de nou. Escaneig net, cap
+    indici de xarxa morta — i abans això era un 404 amb el consell equivocat de
+    mirar-se la connexió. S'ha de portar el que hi ha, no apartar res, i avisar."""
+    net_project, ws_project = net_and_ws
+    _seed(net_project)
+    for i in range(2):
+        _write(net_project / f"esborrany{i}.pdf", "esborrany", 1_700_000_000)
+    _sync_first_time()
+    for name in ("esborrany0.pdf", "esborrany1.pdf", "COORDENADES.txt"):
+        (net_project / name).unlink()
+    _write(net_project / "A.01.pdf", "plànol bo")
+
+    d = SW.sync_delta("4001612 BELL-LLOC")
+
+    assert d["status"] == "ok" and d.get("code") is None
+    assert d["new"] == ["A.01.pdf"] and d["copied"] == 1
+    assert (ws_project / "A.01.pdf").read_text(encoding="utf-8") == "plànol bo"
+    assert d["deleted"] == [] and d["moved"] == 0
+    assert not (ws_project / SW.DELETED_DIRNAME).exists()
+    for name in ("esborrany0.pdf", "esborrany1.pdf", "COORDENADES.txt"):
+        assert (ws_project / name).exists(), "no s'aparta res: els documents es queden on eren"
+    assert d["mass_disappearance"] is True and d["vanished"] == 3
+    assert "desaparegut" in d["warning"].lower()
+    assert "connexió" not in d["warning"].lower(), "no acusis la xarxa: pot haver estat ella"
+
+
+def test_a_mass_disappearance_is_still_an_error_in_check_only(net_and_ws):
+    """`check_only` és la fila de la taula d'estat: no bloqueja ningú, i val més
+    que no digui res que no pas «res ha canviat» després d'un escaneig sospitós."""
+    net_project, ws_project = net_and_ws
+    _seed(net_project)
+    for i in range(4):
+        _write(net_project / "ANNEXES" / f"annex{i}.pdf", "annex", 1_700_000_000)
+    _sync_first_time()
+    for p in (net_project / "ANNEXES").iterdir():
+        p.unlink()
+
+    d = SW.sync_delta("4001612 BELL-LLOC", check_only=True)
+
+    assert d["status"] == "error" and d["code"] == "network_scan_incomplete"
+    assert (ws_project / "ANNEXES" / "annex0.pdf").exists()
+
+
+def test_a_network_folder_seen_empty_with_a_full_workspace_quarantines_nothing(net_and_ws):
+    """Sense cap `OSError`: la unitat es munta buida. No s'aparta res (i amb la
+    xarxa buida tampoc no hi ha res a copiar), però no es bloqueja la lectura."""
+    net_project, ws_project = net_and_ws
+    _seed(net_project)
+    _sync_first_time()
+    for p in net_project.rglob("*"):
+        if p.is_file():
+            p.unlink()
+
+    d = SW.sync_delta("4001612 BELL-LLOC")
+
+    assert d["status"] == "ok" and d["mass_disappearance"] is True
+    assert d["deleted"] == [] and d["moved"] == 0 and d["copied"] == 0
+    assert (ws_project / "PENETROS.pdf").exists()
+    assert not (ws_project / SW.DELETED_DIRNAME).exists()
+    assert SW.sync_delta("4001612 BELL-LLOC", check_only=True)["status"] == "error"
+
+
+def test_check_only_also_refuses_to_report_an_unreadable_network(net_and_ws, monkeypatch):
+    """La taula d'estat prefereix no dir res a dir «res ha canviat»."""
+    net_project, _ = net_and_ws
+    _seed(net_project)
+    _sync_first_time()
+    _break_scandir(monkeypatch, net_project)
+
+    assert SW.sync_delta("4001612 BELL-LLOC", check_only=True)["status"] == "error"
+
+
+def test_an_empty_network_with_only_local_outputs_is_still_ok(net_and_ws):
+    """La guarda mira els fitxers VINGUTS de la xarxa: un workspace amb només
+    sortides del pipeline no és cap indici de xarxa morta."""
+    net_project, ws_project = net_and_ws
+    net_project.joinpath("PENETROS.pdf").parent.mkdir(parents=True, exist_ok=True)
+    _write(net_project / "PENETROS.pdf", "camp", 1_700_000_000)
+    _sync_first_time()
+    (ws_project / "PENETROS.pdf").unlink()
+    (net_project / "PENETROS.pdf").unlink()
+    _write(ws_project / "user_data.json", "{}")
+
+    d = SW.sync_delta("4001612 BELL-LLOC")
+
+    assert d["status"] == "ok" and d["deleted"] == []

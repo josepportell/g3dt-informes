@@ -220,6 +220,86 @@ def test_sync_nonexistent_returns_error(configured: Path):
     assert result["status"] == "error"
 
 
+# --- Marcador = còpia completa (P0) -----------------------------------------
+#
+# El marcador només s'escriu quan `copytree` ha acabat. Si la primera
+# sincronització d'un projecte de diversos GB mor al 40% (procés mort, SMB
+# caigut), el destí existeix SENSE marcador. El camí de salt comprovava només
+# `dst.exists()` i tot seguit «reparava» el marcador que faltava: el salt
+# passava a ser permanent i el wizard generava informes amb PENETROS/SONDEIG
+# absents, en silenci.
+
+
+def test_an_interrupted_first_sync_is_redone_not_skipped(configured: Path, fake_network: Path):
+    rel = "4001612 BELL-LLOC"
+    net_project = fake_network / rel
+    (net_project / "SONDEIG.pdf").write_text("el que faltava")
+
+    # Primera sincronització morta al 40%: hi ha carpeta i un fitxer, cap marcador.
+    dst = configured / rel
+    dst.mkdir(parents=True)
+    (dst / "PENETROS.pdf").write_text("flat")
+
+    result = sync_workspace.sync_to_workspace(rel)
+
+    assert result["status"] == "synced"
+    assert (dst / "SONDEIG.pdf").read_text() == "el que faltava"
+    assert (dst / sync_workspace._NETWORK_PATH_MARKER).read_text() == rel
+
+
+def test_the_skip_path_never_invents_the_missing_marker(configured: Path, fake_network: Path):
+    """Si el marcador falta, el destí és incomplet. Escriure'l sense copiar era
+    convertir una còpia a mitges en 'ja el tens'."""
+    rel = "4001612 BELL-LLOC"
+    dst = configured / rel
+    dst.mkdir(parents=True)
+
+    calls: list[str] = []
+    real_copytree = sync_workspace.shutil.copytree
+
+    def spy(src, dest, **kw):
+        calls.append(str(dest))
+        return real_copytree(src, dest, **kw)
+
+    sync_workspace.shutil.copytree = spy
+    try:
+        result = sync_workspace.sync_to_workspace(rel)
+    finally:
+        sync_workspace.shutil.copytree = real_copytree
+
+    assert result["status"] == "synced"
+    assert calls == [str(dst)], "el marcador no es pot escriure sense haver copiat"
+
+
+def test_the_marker_is_written_atomically(configured: Path):
+    rel = "grup-L1-01/grup-L2-01/3001621 CASTELLAR"
+    sync_workspace.sync_to_workspace(rel)
+
+    dst = configured / "3001621 CASTELLAR"
+    leftovers = [p.name for p in dst.glob(f"{sync_workspace._NETWORK_PATH_MARKER}.*")]
+    assert leftovers == []
+    assert (dst / sync_workspace._NETWORK_PATH_MARKER).read_text() == rel
+
+
+def test_a_workspace_belonging_to_another_project_is_an_error_not_a_merge(
+    configured: Path, monkeypatch
+):
+    """Defensa: avui `_resolve_workspace_leaf` desambigua amb suffix i aquí no
+    s'hi arriba mai. Si algun dia deixés de fer-ho, el destí NO es pot barrejar
+    ni el marcador reescriure — l'informe tornaria a la carpeta equivocada."""
+    nested = "grup-L1-02/grup-L2-04/4001612 BELL-LLOC"
+    dst = configured / "4001612 BELL-LLOC"
+    dst.mkdir(parents=True)
+    (dst / sync_workspace._NETWORK_PATH_MARKER).write_text("4001612 BELL-LLOC")
+    monkeypatch.setattr(sync_workspace, "_resolve_workspace_leaf", lambda rel: "4001612 BELL-LLOC")
+
+    result = sync_workspace.sync_to_workspace(nested)
+
+    assert result["status"] == "error"
+    assert result["code"] == "workspace_mismatch"
+    assert (dst / sync_workspace._NETWORK_PATH_MARKER).read_text() == "4001612 BELL-LLOC"
+
+
 # --- copyback_report --------------------------------------------------------
 
 

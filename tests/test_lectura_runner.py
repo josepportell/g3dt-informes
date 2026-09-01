@@ -17,6 +17,7 @@ sanejada, no una duplicada (evita divergencia mock/runner).
 from __future__ import annotations
 
 import json
+import os
 import sys
 import threading
 import time
@@ -886,3 +887,95 @@ def test_auto_second_run_uses_cached_decisions(synth_project, base_env, monkeypa
 def test_invalid_consolida_mode_falls_back_to_auto(monkeypatch):
     monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "whatever")
     assert lectura_runner._load_config()["consolida"] == "auto"
+
+
+# ---------------------------------------------------------------------------
+# El CLI que s'executa es el que `shutil.which` ha trobat
+#
+# A l'ordinador de l'Eva (`npm install -g @anthropic-ai/claude-code`) nomes hi ha
+# `claude.cmd`: `which` el troba (honora PATHEXT) pero `CreateProcess` no sap
+# executar el nom pelat "claude". La porta de `web/lectura_service.py` fa servir
+# aquest mateix `which` i passa -> cap `lectura_fallback`, tots els documents
+# `failed`, i la visio de la via B tambe saltada. Ni lectura ni visio.
+# ---------------------------------------------------------------------------
+
+
+def test_claude_path_is_resolved_before_spawning(tmp_path, monkeypatch):
+    bindir = tmp_path / "bin"
+    bindir.mkdir()
+    fake = bindir / "claude"
+    fake.write_text("#!/bin/sh\nexit 0\n")
+    fake.chmod(0o755)
+    monkeypatch.setenv("PATH", str(bindir) + os.pathsep + os.environ.get("PATH", ""))
+    monkeypatch.delenv("G3DT_CLAUDE_PATH", raising=False)
+
+    assert lectura_runner._load_config()["claude_path"] == str(fake)
+
+
+def test_an_unresolvable_claude_keeps_the_raw_name(monkeypatch):
+    """Sense CLI, el comportament d'abans: `_run_claude` retorna l'error
+    «claude CLI no trobat», no un path inventat."""
+    monkeypatch.setenv("G3DT_CLAUDE_PATH", "claude-que-segur-que-no-hi-es")
+    assert lectura_runner._load_config()["claude_path"] == "claude-que-segur-que-no-hi-es"
+
+
+# ---------------------------------------------------------------------------
+# Cache de consolidacio: ni `_job.json` la trenca, ni les fonts `route: python`
+# la poden fer encertar quan han canviat (van acoblats)
+# ---------------------------------------------------------------------------
+
+
+def test_a_live_job_file_does_not_invalidate_the_consolidation_cache(synth_project, base_env):
+    """`JobRegistry` escriu `_job.json` al mateix `out_dir` a cada event: sempre
+    mes nou que `_decisions.json`. Sense reservar-lo, re-executar un projecte
+    sense cap canvi tornava a pagar la consolidacio sencera."""
+    out_dir = synth_project / "validation" / "lectura"
+    lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    n_first = len(_spawn_lines(base_env))
+    (out_dir / "_job.json").write_text(
+        json.dumps({"project": "SYNTH", "state": "running"}), encoding="utf-8")
+
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+
+    assert result.decisions is not None
+    new_kinds = _spawn_kinds(base_env)[n_first:]
+    assert new_kinds == [], f"esperava 0 crides noves, hi ha: {new_kinds}"
+
+
+def test_merge_minimal_never_counts_the_job_file_as_a_document(tmp_path):
+    """`sources_read` es el sentinella de «cap document llegit»: `_job.json` no
+    hi pot sortir."""
+    out_dir = tmp_path / "lectura"
+    out_dir.mkdir()
+    (out_dir / "_job.json").write_text(
+        json.dumps({"project": "SYNTH", "state": "running"}), encoding="utf-8")
+
+    minimal = lectura_runner._merge_minimal(out_dir)
+
+    assert minimal["sources_read"] == []
+
+
+def test_editing_a_python_route_source_invalidates_the_cache(synth_project, base_env):
+    """Les fonts `route: python` (PLAN_COST, COORDENADES, pressupost) no generen
+    cap `{doc}.json`: la cache per mtime no les veia canviar i servia decisions
+    rancies precisament al boto que existeix per recollir els canvis."""
+    out_dir = synth_project / "validation" / "lectura"
+    lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    n_first = len(_spawn_lines(base_env))
+    (synth_project / "PRESSUPOST GEOTEC.X.pdf").write_bytes(
+        b"%PDF-1.4 pressupost REVISAT, xifres diferents")
+
+    lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+
+    assert _spawn_kinds(base_env)[n_first:] == ["consolida"]
+
+
+def test_a_new_python_route_source_invalidates_the_cache(synth_project, base_env):
+    out_dir = synth_project / "validation" / "lectura"
+    lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+    n_first = len(_spawn_lines(base_env))
+    (synth_project / "COORDENADES.txt").write_text("P-1;1;2;3\n", encoding="utf-8")
+
+    lectura_runner.run_lectura(synth_project, out_dir=out_dir)
+
+    assert _spawn_kinds(base_env)[n_first:] == ["consolida"]

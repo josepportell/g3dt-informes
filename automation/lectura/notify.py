@@ -110,6 +110,42 @@ _LOG_KEEP = re.compile(
     re.IGNORECASE,
 )
 
+#: Camins de Windows: unitat (`C:\…`) o UNC (`\\servidor\…`). Dos detalls que
+#: feien que l'escombrada anterior (`[A-Za-z]:\\\\[^\s'\"]+`) no censurés mai res
+#: real:
+#:   1. `\\\\` en una cadena crua són DUES barres invertides literals a la regex;
+#:      exigia `C:\\g3dt-ia\\…`, que només existeix dins de literals de codi. La
+#:      plataforma de producció escriu `C:\g3dt-ia\…`, amb una sola barra.
+#:   2. `[^\s'\"]+` s'atura al primer espai: `C:\g3dt-ia\projectes\4001612
+#:      BELL-LLOC\PENETROS DPSH.pdf` hauria deixat passar la carpeta del client i
+#:      el nom del document, que és exactament el que no pot sortir d'aquí. Per
+#:      això la cua s'engoleix fins al final de línia, a la primera cometa o al
+#:      primer `:` (il·legal dins d'un camí de Windows: així `…\x.pdf: rc = 2`
+#:      conserva el `rc`).
+_WIN_PATH_RE = re.compile(r"(?:[A-Za-z]:|\\)\\+[^:'\"\r\n]*")
+
+#: Camins de Windows RELATIUS (`PDF\ANNEXES\4001612_sondeig.pdf`): no comencen
+#: per unitat ni per UNC, així que `_WIN_PATH_RE` no els veu — i són justament
+#: la forma que surt del log quan `_inventory.json` no es pot llegir i
+#: `aliases` queda buit, o sigui l'escenari on la substitució per àlies tampoc
+#: no hi arriba. Un camí relatiu porta el nom del document igual que un
+#: d'absolut, i el disseny (§6.4) promet «cap nom de fitxer».
+#:
+#: Es demana **extensió** (`.pdf`, `.msg`…) i almenys una barra invertida: no
+#: tot el que porta `\` és un camí (`\d+`, `\n`, escapades JSON) i censurar-ho
+#: tot deixaria el correu sense diagnòstic. El primer segment no pot dur
+#: espais, els següents sí (`…\PENETROS DPSH.pdf`): sense aquesta restricció el
+#: match començaria a l'inici de la frase i s'engoliria el missatge tècnic
+#: («no such file PDF\x.pdf» → «(ruta)»). El preu és que d'un camí relatiu amb
+#: espai al primer directori (`4001612 BELL-LLOC\x.pdf`) en sobreviu el tros
+#: anterior a l'espai; la forma absoluta, que és la que escriu producció, queda
+#: coberta sencera per `_WIN_PATH_RE`.
+_WIN_REL_PATH_RE = re.compile(
+    r"[^\s\\/:*?\"<>|\r\n]+"              # primer segment (sense espais)
+    r"(?:\\[^\\/:*?\"<>|\r\n]+)*"          # segments intermedis (poden dur espais)
+    r"\\[^\\/:*?\"<>|\r\n]*\.[A-Za-z0-9]{1,8}"  # …\nom.ext
+)
+
 
 def sanitize_log(text: str, aliases: dict[str, str], *, project: str = "",
                  tail: int = _LOG_TAIL_LINES, technical_only: bool = True) -> str:
@@ -148,8 +184,15 @@ def sanitize_log(text: str, aliases: dict[str, str], *, project: str = "",
     out = "\n".join(kept)
     # Primer els camins complets, després els basenames: si es fes al revés,
     # una ruta quedaria mig substituïda («PDF/ANNEXES/doc_2»).
+    #
+    # Els àlies vénen de `_inventory.json` amb separador POSIX, i el log del CLI
+    # a l'ordinador de l'Eva escriu el mateix camí amb barra invertida: sense la
+    # variant, l'àlies no casaria mai a producció.
     for doc, alias in sorted(aliases.items(), key=lambda kv: len(kv[0]), reverse=True):
         out = out.replace(doc, alias)
+        win = doc.replace("/", "\\")
+        if win != doc:
+            out = out.replace(win, alias)
     for doc, alias in sorted(aliases.items(), key=lambda kv: len(Path(kv[0]).name), reverse=True):
         name = Path(doc).name
         if name:
@@ -161,7 +204,10 @@ def sanitize_log(text: str, aliases: dict[str, str], *, project: str = "",
         out = out.replace(project, "(projecte)")
     # Rutes absolutes que hagin sobreviscut (temporals, home de l'usuari).
     out = re.sub(r"(/[^\s:'\"]+){2,}", "(ruta)", out)
-    out = re.sub(r"[A-Za-z]:\\\\[^\s'\"]+", "(ruta)", out)
+    out = _WIN_PATH_RE.sub("(ruta)", out)
+    # Després dels absoluts: el que en queda («(ruta)») ja no porta cap barra,
+    # així que els relatius no re-censuren res que ja estigui censurat.
+    out = _WIN_REL_PATH_RE.sub("(ruta)", out)
 
     if dropped:
         note = f"({dropped} línies omeses: no són missatges tècnics coneguts)"

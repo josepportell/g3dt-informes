@@ -301,11 +301,19 @@ def synth(tmp_path: Path) -> tuple[Path, Path]:
         "spt_ma_tests": [{"id": None, "punt": "S-1", "profunditat": "≈0,8 a 1,3 m (gràfic)", "litologia": None, "n30": None, "n30_candidat_tall": 58, "location": "tall", "quote": "N=58"}],
     })
     _doc(out, "comanda_dup", "comanda copia.xls", "comanda_lab_g3", [_ta("expedient", "3009999", 0.9)], md5="md5-annex_dpsh")  # duplicat md5
+    # Inventari COMPLET, com el que escriu el runner: hi ha d'haver una entrada per cada
+    # `{doc}.json` (un JSON sense entrada es una lectura orfe i `load_corpus` la descarta).
     (out / "_inventory.json").write_text(json.dumps({"generated": "now", "project": proj.name, "files": [
         {"path": "A.01.pdf", "md5": "md5-planol", "route": "claude"},
         {"path": "PDF/ANNEXES/3009999_DPSH.pdf", "md5": "md5-annex_dpsh", "route": "claude"},
         {"path": "PDF/ANNEXES/3009999_fotografies.pdf", "md5": "md5-fotos", "route": "claude"},  # sense JSON: lectura fallida
         {"path": "comanda.xls", "md5": "md5-comanda", "route": "python"},
+        {"path": "ANNEXES/DPSH.xls", "md5": "md5-excel", "route": "python"},
+        {"path": "PENETROS.pdf", "md5": "md5-manuscrit", "route": "claude"},
+        {"path": "PDF/ANNEXES/3009999_sondeig.pdf", "md5": "md5-sondeig", "route": "claude"},
+        {"path": "4699-GTL-25.pdf", "md5": "md5-gtl", "route": "claude"},
+        {"path": "tall.pdf", "md5": "md5-tall", "route": "claude"},
+        {"path": "comanda copia.xls", "md5": "md5-annex_dpsh", "route": "claude"},
     ], "duplicates": {}}, ensure_ascii=False), encoding="utf-8")
     return proj, out
 
@@ -566,6 +574,29 @@ def test_merge_only_fields_applies_only_requested_valid_cells_and_keeps_guards()
     assert merged["tables"]["spt_ma_tests"]["rows"][0]["n30"]["value"] == "R"
 
 
+def test_merge_only_fields_needs_two_readable_ids_to_match_a_row():
+    """Dos identificadors il·legibles donen `_point_key(...) is None` a totes dues bandes:
+    si nomes es compara `!=`, `None == None` fa que la cel·la de l'LLM caigui a QUALSEVOL
+    fila. Ha de casar per igualtat literal o per clau de punt LLEGIBLE."""
+    def _c(v):
+        return {"estat": "candidats", "value": v, "candidates": [{"value": v, "font": "f", "quote": "q"}]}
+
+    base = {"fields": {}, "tables": {"spt_ma_tests": {"estat_bloc": "candidats", "rows": [
+        {"id": "MA1", "punt": "S-1", "profunditat": _c("-1,00 a -1,20")}]}}}
+    llm = {"fields": {}, "tables": {"spt_ma_tests": {"rows": [
+        {"id": "MA9", "profunditat": _c("-9,00 a -9,20")}]}}}
+
+    merged, applied = C.merge_only_fields(base, llm, ["tables.spt_ma_tests[MA9].profunditat"])
+    assert applied == []
+    assert merged["tables"]["spt_ma_tests"]["rows"][0]["profunditat"]["value"] == "-1,00 a -1,20"
+
+    # amb el mateix identificador literal si que hi ha d'entrar
+    llm["tables"]["spt_ma_tests"]["rows"][0]["id"] = "MA1"
+    merged, applied = C.merge_only_fields(base, llm, ["tables.spt_ma_tests[MA1].profunditat"])
+    assert applied == ["tables.spt_ma_tests[MA1].profunditat"]
+    assert merged["tables"]["spt_ma_tests"]["rows"][0]["profunditat"]["value"] == "-9,00 a -9,20"
+
+
 # ---------------------------------------------------------------------------
 # Fase 13(b): fonts HTTP (Cadastre / ICGC / geocodificacio) al consolidador
 # ---------------------------------------------------------------------------
@@ -642,7 +673,7 @@ def test_cadastre_default_is_on_and_calls_the_new_reader(tmp_path: Path, monkeyp
 
     calls: list[str] = []
 
-    def fake(key, decided, project_path):
+    def fake(key, decided, project_path, extra_concepts=None):
         calls.append(key)
         if key == "superficie_parcela":
             return [_fake_cadastre_signal("superficie_parcela", "1284", "3/3 parcel·les contigues")]
@@ -700,15 +731,20 @@ def test_cadastre_reader_receives_already_decided_street_and_municipality(tmp_pa
     proj, out_dir = _cadastre_project(tmp_path)
 
     seen: dict[str, tuple[str | None, str | None]] = {}
+    seen_extra: dict[str, bool] = {}
 
-    def fake(key, decided, project_path):
+    def fake(key, decided, project_path, extra_concepts=None):
         seen[key] = (decided.get("street_address", {}).get("estat"), decided.get("municipality", {}).get("estat"))
+        seen_extra["vist"] = extra_concepts is not None
         return []
     monkeypatch.setattr("automation.lectura.cadastre_reader.cadastre_portal_signals", fake)
 
     C.consolidate_python(out_dir, project_path=proj)
     assert seen["referencia_catastral"] == ("segur", "segur")
     assert seen["superficie_parcela"] == ("segur", "segur")
+    # peces 3+4: el lector rep també `extra_concepts`, d'on treu `street_address_struct`
+    # (grafies alternatives). Vegeu `automation/lectura/address_struct.py`.
+    assert seen_extra["vist"] is True
 
 
 @pytest.mark.network
@@ -958,3 +994,403 @@ def test_corpus_without_cover_layer_unaffected_by_e2_rules(tmp_path: Path):
 
     rows = _soil_rows(C.consolidate_python(out, project_path=None))
     assert not any("vegetal" in nom.lower() for nom in rows)
+
+
+# ---------------------------------------------------------------------------
+# `_point_key`: el recurs a `default_letter` (files que es perdien pel cami)
+# ---------------------------------------------------------------------------
+
+
+def test_point_key_falls_back_to_the_block_letter():
+    assert C._point_key("P-1") == "P-1"
+    assert C._point_key("s 2") == "S-2"
+    # Sense lletra a l'identificador mana la del bloc: `"3"` es el punt 3 del bloc, no res.
+    assert C._point_key("3", "P") == "P-3"
+    assert C._point_key("3", "S") == "S-3"
+    assert C._point_key("núm. 4", "S") == "S-4"
+    assert C._point_key("sense numero", "S") is None
+    assert C._point_key(None, "S") is None
+
+
+@pytest.mark.parametrize("value", ["SPT-2", "MA1", "03/09/2025", "1,20 m", "Mostra 2 (bossa)"])
+def test_point_key_does_not_invent_a_point_out_of_any_number(value: str):
+    """El recurs a la lletra del bloc nomes val si el text es NOMES el numero: `"SPT-2"` es
+    el 2n assaig i `"MA1"` la mostra 1, no els sondeigs 2 i 1. Un identificador inventat es
+    pitjor que cap: el que no es llegeix ha d'anar al cistell `"S-?"`."""
+    assert C._point_key(value, "S") is None
+    assert C._point_key(value, "P") is None
+
+
+def test_spt_rows_without_a_point_do_not_borrow_the_number_of_the_test(tmp_path: Path):
+    """`id` es l'etiqueta de l'assaig, no el sondeig: una fila amb `id="SPT-2"` i sense
+    `punt` NO es del sondeig S-2 — va al cistell dels inclassificables."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "annex", "PDF/ANNEXES/3009999_sondeig.pdf", "annex_sondeig", [], tables={
+        "spt_ma_tests": [{"id": "SPT-1", "punt": "S-2", "profunditat": "-3,00 a -3,20 m",
+                          "litologia": "Graves", "n30": "R", "location": "p.1", "quote": "SPT-1"}]})
+    _doc(out, "gtl", "4700-GTL-25.pdf", "informe_laboratori", [], tables={
+        "spt_ma_tests": [{"id": "SPT-2", "punt": None, "profunditat": "3,0 - 3,2 m",
+                          "litologia": None, "n30": None, "location": "p.1", "quote": "SPT-2"}]})
+
+    groups = C._group_spt_rows(C.load_corpus(out))
+    assert sorted(k.split("@")[0] for k in groups) == ["S-2", "S-?"]
+
+
+def test_rows_identified_only_by_a_number_are_not_dropped(tmp_path: Path):
+    """Abans, `_point_key("3","P")` tornava `None` i la guarda `if k:` descartava la fila
+    sencera: no arribava ni al `_decisions.json`."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "annex", "PDF/ANNEXES/3009999_DPSH.pdf", "annex_dpsh", [], tables={
+        "dpsh_tests": [{"punt": "3", "cota_inici": "+250,00 msnm", "profunditat_assolida": "-1,35 m",
+                        "rebuig": "Si", "nivell_freatic": None, "location": "p.1", "quote": "3"}],
+        "sondeig_tests": [{"sondeig": "2", "cota": "+250,00 msnm", "profunditat_assolida": "1,80 m",
+                           "spt_ma": {"n_spt": 1, "n_tp": 0, "n_ma": 0}, "nivell_freatic": None,
+                           "location": "p.2", "quote": "2"}]})
+
+    dec = C.consolidate_python(out, project_path=None)
+    assert [r["punt"] for r in dec["tables"]["dpsh_tests"]["rows"]] == ["3"]
+    assert [r["sondeig"] for r in dec["tables"]["sondeig_tests"]["rows"]] == ["2"]
+
+
+def test_unidentifiable_spt_rows_do_not_merge_into_a_real_sounding(tmp_path: Path):
+    """El cistell `S-?` (cap identificador llegible) no es un comodi: fusionar-lo amb el
+    primer grup d'interval compatible enganxava la fila al sondeig equivocat."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "annex", "PDF/ANNEXES/3009999_sondeig.pdf", "annex_sondeig", [], tables={
+        "spt_ma_tests": [{"id": "SPT-1", "punt": "S-1", "profunditat": "-1,00 a -1,20 m",
+                          "litologia": "Graves", "n30": None, "location": "p.1", "quote": "SPT-1"}]})
+    _doc(out, "tall", "tall.pdf", "annex_tall", [], tables={
+        "spt_ma_tests": [{"id": None, "punt": "assaig sense identificar", "profunditat": "≈1,0 a 1,2 m (gràfic)",
+                          "litologia": None, "n30": None, "location": "tall", "quote": "N=58"}]})
+
+    groups = C._group_spt_rows(C.load_corpus(out))
+    assert sorted(k.split("@")[0] for k in groups) == ["S-1", "S-?"]
+
+
+# ---------------------------------------------------------------------------
+# `_superficie_construida`: pura i idempotent sobre el corpus
+# ---------------------------------------------------------------------------
+
+
+def _superficie_corpus(out_dir: Path) -> None:
+    _doc(out_dir, "projecte", "25.0493/projecte.pdf", "projecte_arquitecte", [], tables={
+        "superficie_construida": [{"rows": [
+            {"total": "280+86", "components": ["280 m2 (habitatge)", "86 m2 (garatge)"],
+             "location": "p.3", "quote": "280 + 86"}]}]})
+
+
+def _superficie_components(out_dir: Path, components: list) -> dict:
+    _doc(out_dir, "projecte", "projecte.pdf", "projecte_arquitecte", [], tables={
+        "superficie_construida": [{"components": components, "location": "p.3", "quote": "quadre de superficies"}]})
+    return C._superficie_construida(C.load_corpus(out_dir))
+
+
+def test_synthesised_total_reads_the_summand_with_the_unit_not_the_label(tmp_path: Path):
+    """El total sintetic (`"85+120"`) arriba a l'informe per `tables_report._sum_total`.
+    Amb el PRIMER numero del sumand agafava el de l'etiqueta (`"P1: 85 m2"` -> 1) i el
+    .docx deia `121`."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    assert _superficie_components(out, ["P1: 85 m2", "PB: 120 m2"])["value"] == "85+120"
+
+
+def test_no_total_is_synthesised_when_a_summand_is_unreadable(tmp_path: Path):
+    """Sumar nomes els sumands llegibles dona una superficie incompleta amb aparenca de
+    total: sense total sintetic, la cel·la queda en blanc (i el matis viatja a la font)."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    cell = _superficie_components(out, ["120 m2", "planta baixa"])
+    assert cell["estat"] == "no_trobat" and cell["value"] in (None, "")
+
+
+# --- Reparacio (e) de `normalize.py`: dialecte dels sumands (una sola llista de claus) ---
+
+
+@pytest.mark.parametrize("component,expected_figure", [
+    # alies observats: la xifra passa a la clau canonica
+    ({"concepte": "HABITATGE", "valor": "56.75 m²"}, "56.75 m²"),
+    ({"concepte": "GARATGE", "superficie_m2": 85}, 85),
+    ({"superficie": "120 m2"}, "120 m2"),
+    # la clau canonica ja hi es amb xifra: no es toca res
+    ({"concepte": "PB", "value": "280 m2", "valor": "no consta"}, "280 m2"),
+    # clau DESCONEGUDA amb xifra ancorada a unitat: xarxa de seguretat per FORMA
+    ({"concepte": "PORXO", "sup_construida_planta": "28,55 m²"}, "28,55 m²"),
+])
+def test_a_summand_ends_with_its_figure_in_the_canonical_key(component, expected_figure):
+    from automation.lectura.normalize import COMPONENT_VALUE_KEY, canonicalize_component
+    out = canonicalize_component(component)
+    assert out[COMPONENT_VALUE_KEY] == expected_figure
+    assert canonicalize_component(out) == out, "idempotent"
+    assert component == dict(component), "no muta l'entrada"
+
+
+@pytest.mark.parametrize("component", [
+    # cap xifra enlloc
+    {"concepte": "planta baixa", "observacions": "no consta"},
+    # xifra sense unitat a una clau desconeguda: no es pot distingir d'un numero d'etiqueta
+    {"concepte": "PB", "sup_construida_planta": "280"},
+    # dues claus desconegudes amb xifra ancorada: triar-ne una seria endevinar
+    {"a": "85 m2", "b": "120 m2"},
+])
+def test_an_unreadable_summand_is_left_alone_instead_of_guessed(component):
+    from automation.lectura.normalize import COMPONENT_VALUE_KEY, canonicalize_component
+    out = canonicalize_component(component)
+    assert out == component
+    assert COMPONENT_VALUE_KEY not in out
+
+
+def test_a_text_summand_keeps_its_shape():
+    from automation.lectura.normalize import canonicalize_component
+    assert canonicalize_component("120 m2 (Arbrells 18A)") == "120 m2 (Arbrells 18A)"
+
+
+def test_the_label_is_not_lost_when_the_canonical_key_held_it():
+    """`value` sense xifra es una etiqueta: es queda a la clau que hem buidat (intercanvi)."""
+    from automation.lectura.normalize import canonicalize_component
+    assert canonicalize_component({"value": "HABITATGE", "valor": "85 m2"}) == \
+        {"value": "85 m2", "valor": "HABITATGE"}
+
+
+def test_the_dialect_valor_reaches_the_synthesised_total(tmp_path: Path):
+    """Dialecte real de Linyola (`{"concepte", "valor"}`) SENSE total al document: abans
+    `_component_m2` nomes mirava `value`/`superficie_m2`, la suma no es sintetitzava i la
+    cel·la de l'informe quedava en blanc."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    cell = _superficie_components(out, [{"concepte": "GARATGE", "valor": "56.75 m²"},
+                                        {"concepte": "HABITATGE", "valor": "165.61 m²"}])
+    assert cell["value"] == "56.75+165.61"
+
+
+def test_an_unknown_summand_key_is_read_by_shape_and_traced_in_the_notes(tmp_path: Path):
+    """El lector es un productor cec: pot estrenar un nom de camp a qualsevol execucio. Es
+    llegeix per FORMA (xifra ancorada a m²) i el nom queda al rastre de `notes_estructurals`
+    per poder-lo afegir als alies quan es repeteixi."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "projecte", "projecte.pdf", "projecte_arquitecte", [], tables={
+        "superficie_construida": [{"components": [{"concepte": "PB", "sup_planta": "280 m2"},
+                                                  {"concepte": "P1", "sup_planta": "86 m2"}],
+                                   "location": "p.3", "quote": "quadre de superficies"}]})
+    dec = C.consolidate_python(out, project_path=None)
+    assert dec["tables"]["superficie_construida"]["value"] == "280+86"
+    assert any("sup_planta" in n and "COMPONENT_VALUE_ALIASES" in n for n in dec["notes_estructurals"])
+
+
+def test_an_unresolvable_summand_traces_its_keys_and_leaves_a_blank(tmp_path: Path):
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "projecte", "projecte.pdf", "projecte_arquitecte", [], tables={
+        "superficie_construida": [{"components": [{"concepte": "PB", "sup_planta": "sense xifra"}],
+                                   "location": "p.3", "quote": "quadre de superficies"}]})
+    dec = C.consolidate_python(out, project_path=None)
+    assert dec["tables"]["superficie_construida"]["estat"] == "no_trobat"
+    assert any("sup_planta" in n and "concepte" in n for n in dec["notes_estructurals"])
+
+
+def test_no_dialect_note_when_every_summand_key_is_known(tmp_path: Path):
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "projecte", "projecte.pdf", "projecte_arquitecte", [], tables={
+        "superficie_construida": [{"components": [{"concepte": "PB", "valor": "280 m2"}],
+                                   "location": "p.3", "quote": "q"}]})
+    dec = C.consolidate_python(out, project_path=None)
+    assert not any("COMPONENT_VALUE_ALIASES" in n for n in dec["notes_estructurals"])
+
+
+def test_superficie_construida_does_not_mutate_the_corpus_and_is_idempotent(tmp_path: Path):
+    """Abans `entries` era un ALIES de la llista del document i s'estenia mentre es
+    recorria: la llista del corpus creixia a cada crida i la segona crida (la que
+    s'envia) duplicava components i senyals."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _superficie_corpus(out)
+    corpus = C.load_corpus(out)
+    raw = corpus.docs[0]["tables"]["superficie_construida"]
+
+    first = C._superficie_construida(corpus)
+    second = C._superficie_construida(corpus)
+    assert len(raw) == 1, "el corpus no es toca"
+    assert len(first["components"]) == 1
+    assert first == second
+
+
+def test_superficie_construida_is_decided_once_per_consolidation(tmp_path: Path):
+    """`consolidate_python` (derivats) i `consolidate_tables` (taula) han de compartir la
+    MATEIXA decisio: una sola per consolidacio, sense components duplicats."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _superficie_corpus(out)
+
+    calls = {"n": 0}
+    original = C._superficie_construida
+
+    def counting(corpus):
+        calls["n"] += 1
+        return original(corpus)
+    C._superficie_construida = counting
+    try:
+        dec = C.consolidate_python(out, project_path=None)
+    finally:
+        C._superficie_construida = original
+
+    assert calls["n"] == 1
+    assert len(dec["tables"]["superficie_construida"]["components"]) == 1
+
+
+# ---------------------------------------------------------------------------
+# `load_corpus`: JSON orfes (el fitxer font ja no es a l'inventari)
+# ---------------------------------------------------------------------------
+
+
+def _inventory(out_dir: Path, files: list[tuple[str, str]], skip: tuple[str, ...] = ()) -> None:
+    (out_dir / "_inventory.json").write_text(json.dumps({
+        "generated": "now", "project": "X", "duplicates": {},
+        "files": [{"path": p, "md5": m, "route": "skip" if p in skip else "claude"} for p, m in files]},
+        ensure_ascii=False), encoding="utf-8")
+
+
+def test_orphan_json_does_not_win_over_the_live_file(tmp_path: Path):
+    """El document es va reanomenar: el `{doc}.json` vell segueix a `out_dir` amb el mateix
+    md5. Sense filtre, el dedup md5 el feia canonic (guanya el primer per ordre alfabetic)
+    i deixava el fitxer VIU marcat de duplicat."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "a_orfe", "tall VELL.pdf", "annex_tall", [_ta("num_soil_levels", "1", 0.6)], md5="md5-tall")
+    _doc(out, "z_viu", "tall.pdf", "annex_tall", [_ta("num_soil_levels", "1", 0.6)], md5="md5-tall")
+    _inventory(out, [("tall.pdf", "md5-tall")])
+
+    corpus = C.load_corpus(out)
+    assert [d["source_path"] for d in corpus.docs] == ["tall.pdf"]
+    assert corpus.orfes == ["tall VELL.pdf"]
+    assert "tall.pdf" not in corpus.duplicates
+    assert "tall VELL.pdf" not in corpus.lectura_fallida
+
+
+def test_orphan_json_is_reported_in_the_structural_notes(tmp_path: Path):
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "viu", "tall.pdf", "annex_tall", [], md5="md5-viu")
+    _doc(out, "orfe", "PENETROS VELL.pdf", "full_camp_manuscrit", [_ta("field_date", "01/10/2025", 0.8)], md5="md5-orfe")
+    _inventory(out, [("tall.pdf", "md5-viu")])
+
+    dec = C.consolidate_python(out, project_path=None)
+    assert any("orfes" in n and "PENETROS VELL.pdf" in n for n in dec["notes_estructurals"])
+    assert dec["fields"]["field_date"]["estat"] == "no_trobat", "l'orfe no aporta senyals"
+
+
+def test_load_corpus_without_inventory_keeps_every_json(tmp_path: Path):
+    """Directoris sintetics sense `_inventory.json`: comportament de sempre."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "a", "tall.pdf", "annex_tall", [])
+    _doc(out, "b", "PENETROS.pdf", "full_camp_manuscrit", [])
+
+    corpus = C.load_corpus(out)
+    assert sorted(d["source_path"] for d in corpus.docs) == ["PENETROS.pdf", "tall.pdf"]
+    assert corpus.orfes == []
+
+
+def test_incomparable_inventory_does_not_drop_everything(tmp_path: Path):
+    """Inventari d'un altre projecte (o amb un altre format de ruta): si NO casa amb cap
+    JSON no es pot fer servir com a filtre — millor no filtrar que buidar el corpus."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "a", "tall.pdf", "annex_tall", [])
+    _doc(out, "b", "PENETROS.pdf", "full_camp_manuscrit", [])
+    _inventory(out, [("un/altre/projecte.pdf", "md5-x")])
+
+    corpus = C.load_corpus(out)
+    assert sorted(d["source_path"] for d in corpus.docs) == ["PENETROS.pdf", "tall.pdf"]
+    assert corpus.orfes == []
+
+
+def test_quarantined_file_is_an_orphan_and_stops_competing(tmp_path: Path):
+    """L'Eva mou la versio vella del plànol a `_esborrats/`: `build_inventory` la deixa a
+    `files` amb `route="skip"`. Comptant-la com a ruta viva, el `{doc}.json` mort NO era
+    orfe, tornava a competir amb el viu i convertia un `segur` en `candidats` amb el
+    promotor caducat al costat."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "old", "_esborrats/A.01 v1.pdf", "projecte_arquitecte",
+         [_ta("client_name", "PROMOTOR VELL SL", 0.9)], md5="md5-old")
+    _doc(out, "new", "A.01 v2.pdf", "projecte_arquitecte",
+         [_ta("client_name", "PROMOTOR NOU SL", 0.9)], md5="md5-new")
+    _inventory(out, [("_esborrats/A.01 v1.pdf", "md5-old"), ("A.01 v2.pdf", "md5-new")],
+               skip=("_esborrats/A.01 v1.pdf",))
+
+    corpus = C.load_corpus(out)
+    assert corpus.orfes == ["_esborrats/A.01 v1.pdf"]
+    assert [d["source_path"] for d in corpus.docs] == ["A.01 v2.pdf"]
+    assert "_esborrats/A.01 v1.pdf" not in corpus.lectura_fallida, "route skip no es una lectura fallida"
+    cell = C.consolidate_python(out, project_path=None)["fields"]["client_name"]
+    assert cell["value"] == "PROMOTOR NOU SL"
+    assert "PROMOTOR VELL SL" not in json.dumps(cell, ensure_ascii=False)
+
+
+def test_a_skip_route_never_rescues_a_json_of_a_deleted_file(tmp_path: Path):
+    """Mateix criteri que `runner.py::_consolida_fingerprint`: `route == "skip"` no compta.
+    Cap lectura legitima se'n va: el runner nomes encua `route == "claude"`."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "viu", "tall.pdf", "annex_tall", [], md5="md5-viu")
+    _doc(out, "foto", "FOTOGRAFIES/obra.jpg", "fotografia", [], md5="md5-foto")
+    _inventory(out, [("tall.pdf", "md5-viu"), ("FOTOGRAFIES/obra.jpg", "md5-foto")],
+               skip=("FOTOGRAFIES/obra.jpg",))
+
+    assert C.load_corpus(out).orfes == ["FOTOGRAFIES/obra.jpg"]
+
+
+def test_every_json_from_the_quarantine_stays_an_orphan(tmp_path: Path):
+    """L'escapatoria "tots orfes" (inventari incomparable) NO pot disparar quan l'inventari
+    SI que coneix les rutes pero les te en quarantena: son orfes SABUTS. Amb la comparacio
+    contra les rutes VIVES, "tots els documents llegits son a `_esborrats/`" desactivava el
+    filtre sencer i un document mort decidia un camp a `segur`."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "a", "_esborrats/A.01.pdf", "projecte_arquitecte",
+         [_ta("municipality", "MUNICIPI MORT", 0.95)], md5="md5-a")
+    _doc(out, "b", "_esborrats/PENETROS.pdf", "full_camp_manuscrit",
+         [_ta("municipality", "MUNICIPI MORT", 0.95)], md5="md5-b")
+    _inventory(out, [("_esborrats/A.01.pdf", "md5-a"), ("_esborrats/PENETROS.pdf", "md5-b")],
+               skip=("_esborrats/A.01.pdf", "_esborrats/PENETROS.pdf"))
+    # una entrada VIVA que no pot tenir `{doc}.json` (route python): l'inventari no es "buit"
+    inv = json.loads((out / "_inventory.json").read_text(encoding="utf-8"))
+    inv["files"].append({"path": "COORDENADES.txt", "md5": "md5-c", "route": "python"})
+    (out / "_inventory.json").write_text(json.dumps(inv, ensure_ascii=False), encoding="utf-8")
+
+    corpus = C.load_corpus(out)
+    assert corpus.docs == []
+    assert corpus.orfes == ["_esborrats/A.01.pdf", "_esborrats/PENETROS.pdf"]
+    cell = C.consolidate_python(out, project_path=None)["fields"]["municipality"]
+    assert cell["estat"] == "no_trobat"
+    assert "MUNICIPI MORT" not in json.dumps(cell, ensure_ascii=False)
+
+
+def test_an_inventory_of_only_skipped_routes_still_makes_orphans(tmp_path: Path):
+    """Mateix criteri sense cap entrada viva: l'inventari existeix i coneix les rutes, o
+    sigui que es comparable. Cap `{doc}.json` en quarantena no pot decidir res."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "a", "_esborrats/A.01.pdf", "projecte_arquitecte",
+         [_ta("client_name", "PROMOTOR MORT SL", 0.95)], md5="md5-a")
+    _inventory(out, [("_esborrats/A.01.pdf", "md5-a")], skip=("_esborrats/A.01.pdf",))
+
+    corpus = C.load_corpus(out)
+    assert corpus.docs == [] and corpus.orfes == ["_esborrats/A.01.pdf"]
+
+
+def test_inventory_path_separator_and_case_do_not_make_an_orphan(tmp_path: Path):
+    """L'inventari el pot haver escrit una altra maquina (Windows): `\\` vs `/` i la caixa
+    no poden convertir un document viu en orfe."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "a", "PDF/ANNEXES/3009999_sondeig.pdf", "annex_sondeig", [])
+    _inventory(out, [("PDF\\Annexes\\3009999_SONDEIG.pdf", "md5-a")])
+
+    corpus = C.load_corpus(out)
+    assert [d["source_path"] for d in corpus.docs] == ["PDF/ANNEXES/3009999_sondeig.pdf"]
+    assert corpus.orfes == []

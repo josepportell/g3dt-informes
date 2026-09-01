@@ -25,10 +25,12 @@ Si el skill n'escriu un altre nom, `_check_doc_output` cau al fallback per mtime
 from __future__ import annotations
 
 import contextlib
+import hashlib
 import json
 import logging
 import os
 import re
+import shutil
 import signal
 import subprocess
 import sys
@@ -57,7 +59,18 @@ _VALID_EFFORTS = ("low", "medium", "high", "xhigh", "max")
 #: Fitxers de `out_dir` que NO son un `{doc}.json` de lectura (mai comptats
 #: com a document, mai candidats a "fallback per mtime").
 _VALID_CONSOLIDA_MODES = ("auto", "python", "llm")
-_RESERVED_JSON_NAMES = {"_inventory.json", "_g3_templates.json", "_decisions.json", "_consolida_only.json"}
+#: `_job.json` (registre de jobs, `jobs.py`) i `_consolida_cache.json` (empremta
+#: de fonts, mes avall) hi son PERQUE viuen al mateix `out_dir` i es reescriuen
+#: mentre la lectura corre: sense reservar-los, `_consolida_cache_valid` els
+#: veuria sempre mes nous que `_decisions.json` (cache mai valida) i
+#: `_merge_minimal` els comptaria com a documents llegits.
+_RESERVED_JSON_NAMES = {
+    "_inventory.json", "_g3_templates.json", "_decisions.json", "_consolida_only.json",
+    "_job.json", "_consolida_cache.json",
+}
+
+#: Sidecar amb l'empremta de les fonts amb que s'ha construit `_decisions.json`.
+_CONSOLIDA_CACHE_NAME = "_consolida_cache.json"
 
 _SAFE_NAME_RE = re.compile(r"[^A-Za-z0-9]+")
 
@@ -153,9 +166,17 @@ def _load_config() -> dict[str, Any]:
         logger.warning("G3DT_LECTURA_CONSOLIDA=%r invalid (valors valids: %s); fent servir auto",
                        consolida, _VALID_CONSOLIDA_MODES)
         consolida = "auto"
+    # `shutil.which` honora PATHEXT: a Windows amb `npm install -g
+    # @anthropic-ai/claude-code` nomes hi ha `claude.cmd`, i `CreateProcess` no
+    # sap executar el nom pelat "claude" (`FileNotFoundError` a cada document,
+    # sense cap `lectura_fallback` perque la porta de `lectura_service.py` fa
+    # servir aquest mateix `which` i passa). Guardem el cami RESOLT; si no es
+    # troba, es deixa el valor cru i `_run_claude` retorna l'error de sempre.
+    claude_path = os.getenv("G3DT_CLAUDE_PATH", "claude") or "claude"
+    claude_path = shutil.which(claude_path) or claude_path
     return {
         "consolida": consolida,
-        "claude_path": os.getenv("G3DT_CLAUDE_PATH", "claude") or "claude",
+        "claude_path": claude_path,
         "timeout": _env_int("G3DT_LECTURA_TIMEOUT", 600),
         "consolida_timeout": _env_int("G3DT_LECTURA_CONSOLIDA_TIMEOUT", 900),
         "concurrency": max(1, _env_int("G3DT_LECTURA_CONCURRENCY", 2)),
@@ -564,10 +585,50 @@ def _process_one_doc(
 # ---------------------------------------------------------------------------
 
 
-def _consolida_cache_valid(out_dir: Path, decisions_path: Path) -> bool:
-    """`_decisions.json` es reutilitzable si existeix i cap `{doc}.json` es
-    mes nou que ell (disseny §6)."""
+def _consolida_fingerprint(out_dir: Path) -> str:
+    """Empremta de tot el que alimenta la consolidacio i NO es un `{doc}.json`.
+
+    La cache del disseny §6 nomes mirava els `{doc}.json`. Les fonts `route ==
+    "python"` (`PLAN_COST.xlsx`, `COORDENADES.txt`, pressupost, cadastre...) no
+    en generen cap: editar-les i tornar a llegir el projecte servia decisions
+    rancies precisament al boto que existeix per recollir els canvis. L'empremta
+    cobreix els md5 de l'inventari (fitxers amb `route` != "skip" — els de
+    `validation/` en queden fora, altrament canviaria a cada execucio) i el
+    contingut de `_g3_templates.json` sense `read_on`, l'unic camp que hi canvia
+    sense que hagi canviat res.
+    """
+    h = hashlib.sha1()
+    inv = _try_load_json(out_dir / "_inventory.json")
+    files = inv.get("files") if isinstance(inv, dict) else None
+    for f in sorted(files or [], key=lambda e: str(e.get("path", "")) if isinstance(e, dict) else ""):
+        if not isinstance(f, dict) or f.get("route") == "skip":
+            continue
+        h.update(f"{f.get('path')}|{f.get('md5')}|{f.get('route')}\n".encode("utf-8"))
+    g3 = _try_load_json(out_dir / "_g3_templates.json")
+    if isinstance(g3, dict):
+        g3 = {k: v for k, v in g3.items() if k != "read_on"}
+    h.update(json.dumps(g3, sort_keys=True, ensure_ascii=False, default=str).encode("utf-8"))
+    return h.hexdigest()
+
+
+def _write_consolida_cache(out_dir: Path, fingerprint: str) -> None:
+    with contextlib.suppress(Exception):
+        _write_json_atomic(out_dir / _CONSOLIDA_CACHE_NAME, {
+            "fingerprint": fingerprint,
+            "written": datetime.now().isoformat(timespec="seconds"),
+        })
+
+
+def _consolida_cache_valid(out_dir: Path, decisions_path: Path, fingerprint: str) -> bool:
+    """`_decisions.json` es reutilitzable si existeix, cap `{doc}.json` es mes
+    nou que ell (disseny §6) I les fonts no-`{doc}.json` son les mateixes amb
+    que es va construir (`_consolida_fingerprint`). Sense l'empremta, reservar
+    `_job.json` desbloquejaria un bug pitjor: la cache passaria a encertar
+    sempre, tambe quan l'Eva acaba de canviar un document."""
     if not decisions_path.exists():
+        return False
+    stored = _try_load_json(out_dir / _CONSOLIDA_CACHE_NAME)
+    if not isinstance(stored, dict) or stored.get("fingerprint") != fingerprint:
         return False
     decisions_mtime = decisions_path.stat().st_mtime
     for p in out_dir.glob("*.json"):
@@ -592,13 +653,38 @@ def _consolidate(
     telemetry_path: Path,
     claude_version: str | None,
 ) -> tuple[dict | None, bool]:
+    """Cache (empremta de fonts + mtime dels `{doc}.json`) al voltant de
+    `_consolidate_uncached`. L'empremta es desa NOMES quan hi ha decisions: una
+    consolidacio cancel·lada no ha de deixar cache."""
     decisions_path = out_dir / "_decisions.json"
+    fingerprint = _consolida_fingerprint(out_dir)
 
-    if not force and _consolida_cache_valid(out_dir, decisions_path):
+    if not force and _consolida_cache_valid(out_dir, decisions_path, fingerprint):
         cached = _try_load_json(decisions_path)
         if isinstance(cached, dict) and not validate_decisions(cached):
             _emit(on_event, "decisions", {"cached": True})
             return cached, False
+
+    decisions, degraded = _consolidate_uncached(
+        project_path=project_path, out_dir=out_dir, cfg=cfg, on_event=on_event,
+        should_cancel=should_cancel, telemetry_path=telemetry_path, claude_version=claude_version,
+    )
+    if decisions is not None:
+        _write_consolida_cache(out_dir, fingerprint)
+    return decisions, degraded
+
+
+def _consolidate_uncached(
+    *,
+    project_path: Path,
+    out_dir: Path,
+    cfg: dict,
+    on_event: Callable[[str, dict], None] | None,
+    should_cancel: Callable[[], bool] | None,
+    telemetry_path: Path,
+    claude_version: str | None,
+) -> tuple[dict | None, bool]:
+    decisions_path = out_dir / "_decisions.json"
 
     if cfg.get("consolida", "auto") != "llm":
         return _consolidate_python_first(

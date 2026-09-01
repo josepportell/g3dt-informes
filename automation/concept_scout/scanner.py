@@ -10,7 +10,9 @@ from .models import FileEntry
 logger = logging.getLogger(__name__)
 
 # Directories to skip
-_SKIP_DIRS = {'.git', '__pycache__', 'validation', 'node_modules', '.venv'}
+# '_esborrats' = delta-sync quarantine (sync_workspace.DELETED_DIRNAME): files
+# that vanished from the network share, moved aside instead of deleted.
+_SKIP_DIRS = {'.git', '__pycache__', 'validation', 'node_modules', '.venv', '_esborrats'}
 
 # Our generated outputs — never scan these
 _OUR_OUTPUTS = {'file_mapping.json', 'user_data.json'}

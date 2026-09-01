@@ -34,8 +34,10 @@ logger = logging.getLogger(__name__)
 # Directories to skip when walking the project tree
 # Note: FOTOGRAFIES removed — FileMiner walks it but naturally skips images
 # (image extensions are in _SKIP_EXTENSIONS). Text files there get mined.
+# '_esborrats' = quarantena del delta-sync (sync_workspace.DELETED_DIRNAME):
+# fitxers desapareguts de la xarxa, no els ha de llegir ningú.
 _SKIP_DIRS = {
-    'PDF', 'PDF-V0', 'PDF_V0', 'validation',
+    'PDF', 'PDF-V0', 'PDF_V0', 'validation', '_esborrats',
     '.git', '__pycache__', '.venv', 'node_modules',
 }
 

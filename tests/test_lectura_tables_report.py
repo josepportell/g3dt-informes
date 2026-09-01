@@ -150,6 +150,80 @@ def test_build_report_tables_on_a_real_run():
     assert tables["superficie_construida"] == "120"
 
 
+def _sc(block: dict, selections: dict | None = None) -> str:
+    return build_report_tables({"tables": {"superficie_construida": block}}, selections).get(
+        "superficie_construida", "")
+
+
+@pytest.mark.parametrize("total,expected", [
+    # El consolidador mateix escriu el total com a suma quan el lector nomes dona sumands
+    # (`consolidate.py::_superficie_construida`): amb el primer numero, l'informe deia 280.
+    ("280+86", "366"),
+    ("72 m2 + 20 m2 porxada", "92"),
+    ("120 m² + 80 m² + 40 m²", "240"),
+    # L'aclariment del lector NO es una suma: "PB+1" son plantes, no metres.
+    ("120 m² construïts (PB+1…) — PER HABITATGE; l'encàrrec són 3 habitatges", "120"),
+    ("120 m² construïts PB+1", "120"),
+    ("250.91 m²", "250.91"),
+])
+def test_superficie_construida_sums_the_summands_but_not_the_clarification(total: str, expected: str):
+    assert _sc({"total": total}) == expected
+
+
+def test_superficie_construida_falls_back_to_dict_components():
+    """El recurs de `components` ha de funcionar amb els embolcalls per document i amb
+    sumands en forma de dict (`{"concepte", "valor"}`, dialecte real de Linyola)."""
+    block = {"total": "sense xifra", "components": [{
+        "doc": "projecte.pdf",
+        "components": [{"concepte": "NO HABITABLE", "valor": "28.55 m²"},
+                       {"concepte": "HABITATGE", "valor": "56.75 m²"}],
+        "total": None,
+    }]}
+    assert _sc(block) == "85.3"
+
+
+@pytest.mark.parametrize("components,expected", [
+    # L'etiqueta va enganxada al sumand: el primer numero es de l'etiqueta (1, 1, 2), no
+    # metres. Amb el primer numero l'informe deia "121" alla on abans hi havia un blanc.
+    (["P1: 85 m2", "PB: 120 m2"], "205"),
+    (["Planta 1a 85 m²", "2 plantes x 120 m2"], "205"),
+    # Cap unitat i mes d'un numero: no es pot llegir sense endevinar -> blanc.
+    (["P1: 85", "PB: 120"], ""),
+    # Un sol sumand il·legible anul·la la suma: una superficie incompleta amb aparenca de
+    # total es pitjor que un blanc.
+    (["120 m2", "planta baixa"], ""),
+    (["planta baixa"], ""),
+    # Un unic numero sense unitat segueix sent llegible (dialecte "280"/"86").
+    (["280", "86"], "366"),
+    (["120 m2 (Arbrells 18A)"], "120"),
+])
+def test_superficie_construida_never_sums_the_label_of_a_component(components, expected):
+    assert _sc({"total": None, "components": [{"doc": "d.pdf", "components": components, "total": None}]}) == expected
+
+
+@pytest.mark.parametrize("components,expected", [
+    # dialectes coneguts: la llista viu NOMES a `normalize.COMPONENT_VALUE_ALIASES`
+    ([{"concepte": "PB", "valor": "280 m2"}, {"concepte": "P1", "valor": "86 m2"}], "366"),
+    ([{"concepte": "PB", "superficie_m2": 280}, {"concepte": "P1", "superficie_m2": 86}], "366"),
+    ([{"concepte": "PB", "value": "280 m2"}, {"concepte": "P1", "value": "86 m2"}], "366"),
+    # clau NOVA (el lector es un productor cec): es llegeix per FORMA, xifra ancorada a m²
+    ([{"concepte": "PB", "sup_planta": "280 m²"}, {"concepte": "P1", "sup_planta": "86 m²"}], "366"),
+    # clau nova SENSE unitat: no es pot distingir del numero d'una etiqueta -> blanc honest
+    ([{"concepte": "PB", "sup_planta": "280"}, {"concepte": "P1", "sup_planta": "86"}], ""),
+    # un sol sumand il·legible anul·la la suma
+    ([{"concepte": "PB", "valor": "280 m2"}, {"concepte": "P1", "observacions": "no consta"}], ""),
+])
+def test_superficie_construida_reads_any_summand_dialect(components, expected):
+    """`_decisions.json` que no hem escrit en aquesta execucio (memoria cau de consolidacio,
+    fitxers d'una versio anterior) arriben aqui sense canonicalitzar: la canonicalitzacio de
+    l'entrada de `_components_sum` els cobreix igual."""
+    assert _sc({"total": None, "components": [{"doc": "d.pdf", "components": components, "total": None}]}) == expected
+
+
+def test_superficie_construida_selection_still_wins():
+    assert _sc({"total": "280+86"}, {"superficie_construida": "400"}) == "400"
+
+
 def test_build_report_tables_empty_without_tables():
     assert build_report_tables({}) == {}
     assert build_report_tables(None) == {}
