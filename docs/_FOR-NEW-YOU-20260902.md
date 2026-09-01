@@ -49,11 +49,17 @@ Els 7 commits de la sessió (`git log --oneline 12328ae..HEAD`):
 ## 3. Regles interpretatives (no evidents llegint el codi)
 
 - **La suite dona `2000 passed / 32 failed`** amb `.venv/bin/python -m pytest tests/ -q`. Les 32 són el baseline
-  **preexistent** i tenen una explicació concreta: són d'**Anciles, Vilanova i Alcoletge** (+ ai_pipeline i
-  groq_miner), els projectes el material dels quals **no està versionat** — fallen perquè els fitxers no són al
-  disc, no pel codi. Famílies: `test_ai_pipeline_ranking_api` (7), `test_smartscan` (18),
-  `test_fileminer` (3), `test_ai_pipeline_trace` (2), `test_bearing_stratum_n20_regression` (1),
-  `test_groq_miner` (1).
+  preexistent, però **NO totes tenen la mateixa causa**, i tractar-les com un bloc amaga coses:
+  - **19 anomenen Anciles, Vilanova o Alcoletge** — els projectes el material dels quals no és a
+    `reference-material/` (només hi ha `eva_reference_values.json`). Fallen per falta de fitxers.
+  - **13 tenen causa pròpia.** Comprovades el 2026-09-01: `test_ai_pipeline_ranking_api` (7) i
+    `test_ai_pipeline_trace` (1) donen **HTTP 404 «Not Found»** (la ruta no està registrada, res a veure amb
+    fitxers); `test_bearing_stratum_n20_regression::test_bell_lloc_bearing_idx_and_n20` dona **N20=34,3 quan
+    n'espera 49,8 en un projecte amb el material complet** — això és una discrepància de CÀLCUL i mereix
+    mirada pròpia; `test_groq_miner::TestCache::test_cache_hit` és un miss de cache; i les tres
+    `TestSmartScanRoleFiles` són genèriques.
+  - **No diguis «les 32 preexistents» com si fossin inofensives.** Almenys una és un número geotècnic que no
+    quadra i una altra és una ruta d'API trencada, tapades per anys d'agregar-les al mateix sac.
 - **Corre pytest des de `tests/`, mai des de l'arrel** (13 errors de recol·lecció que no són tests reals).
 - **`test_lectura_runner.py::test_telemetry_*` són inestables sota càrrega** (subprocessos amb timeout 2 s).
   Poden pujar el recompte a 34. No són regressió.
@@ -145,6 +151,22 @@ git status --porcelain | wc -l   # ha de donar 0
      Linyola **41,9 min**, amb la config de producció.
    - Els artefactes del hold-out d'ahir són a `docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/`
      (text versionat; els PNG no).
+   - **NO cal copiar cap material del Windows del Josep.** Comprovat el 2026-09-01:
+     `~/g3dt-e2e/projectes/` ja té els **8 projectes complets** (Anciles 47 fitxers, Vilanova 47,
+     Alcoletge 37), i la veritat d'Eva per al comparador ja és **versionada** a
+     `docs/golden-read-taules/_eva_truth/` (7 JSON transcrits a mà, amb taules i files reals:
+     alcoletge 10 taules/28 files, anciles 9/32, castellar 11/28, bell-lloc 11/26, linyola 10/28,
+     rubi 10/24). `reference-material/` és una altra cosa: hi llegeixen els TESTS, no la mesura
+     (`feedback_windows_folders`).
+   - **Dos forats reals de veritat d'Eva, que copiar fitxers NO arregla:**
+     - **Vilanova**: `_eva_truth/vilanova.json` és un stub amb `status: "n/a per a la metrica ERR"`. El PDF
+       signat **no conté el cos amb les taules resum** (només caràtula, base de càlcul, fulls DPSH d'annex i
+       figures FreeHand) i **no existeix cap `.doc`/`.docx`**. Les cel·les que hi ha vénen dels annexos, que
+       és la mateixa font que llegeix l'agent: **circular, serveix per a consistència, no per validar**. Si
+       l'Eva té el `.doc` d'aquest informe, això canvia — és una pregunta per a ella, no una còpia.
+     - **Tulipa/Cerdanyola**: no té cap fitxer a `_eva_truth/` (7 JSON per a 8 projectes).
+   - Per tant la mesura sortirà comparable per a **6 projectes**, amb Vilanova com a consistència i Tulipa
+     sense veritat. **Digues-ho al capdavant dels resultats**, no com a nota al peu.
 2. **Decisions obertes del disseny** (§8 del disseny), totes petites i totes del Josep:
    - afegir **Osca** al padró? Anciles és de Benasc (Osca) i avui cau al bucle en línia, que funciona.
    - emetre la **forma oficial llarga** del municipi com a candidat competidor, no només com a nota.
