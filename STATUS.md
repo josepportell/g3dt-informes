@@ -287,6 +287,14 @@ Regressió: **32 failed / 1023 passed** (baseline inalterat — reverificat 2 co
 **Pendent real:** enviar a l'Eva les preguntes 3+8+9+10 (`docs/PREGUNTES-EVA-PENDENTS.md`); després la **Fase 16**
 (E2E dels tres botons, remesurada amb Cadastre ON — la primera consolidació de cada projecte farà ara crides HTTP
 noves) i la Fase 17 (Windows presencial) queden per més endavant.
+0e. **Adreça i municipi amb intel·ligència, no amb regex — proposta del Josep (2026-09-01), ANOTADA, PENDENT
+   D'ANALITZAR EN SESSIÓ NOVA.** Interpretar l'adreça amb Claude Code (Fable/Opus) cap a un JSON normalitzat
+   (tipus de via, nom de via, portals, municipi curt/llarg/alternatius) vàlid per construcció per a Cadastre/ICGC/
+   Nominatim, amb **reintent amb grafies alternatives** quan la consulta torni zero resultats o resultats
+   sospitosos («11 de Setembre» → «ONZE DE SETEMBRE»). Motiu: l'adreça és el camp de més conseqüència — una
+   parcel·la equivocada fa concloure a l'Eva que el sistema no serveix. Comentari literal, context, preguntes
+   obertes i restriccions: `docs/PROPOSTA-JOSEP-ADRECES-I-MUNICIPI-2026-09-01.md`. **No implementar-ho abans
+   d'aquella anàlisi.**
 1. **A4 / entity confusion**: `architect_company` etiqueta client/promotor com a
    arquitecte; el client pot ser un particular. Requereix lògica > regex. **Consultar
    Eva** sobre el mapatge architect_company vs client_name abans de tocar-ho (§4.3).
