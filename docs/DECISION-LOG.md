@@ -1851,3 +1851,124 @@ Objectiu de fons sense tocar en aquest pla: grup B i la resta de les 341 variabl
 
 *Fi entrada 2026-08-31. Pla 0b/0c/0d tancat: sis fixos (F/A/B/C/D/E) mesurats abans/després, dues re-verificacions en
 viu (Cadastre real, re-lectura del tall de Bell-lloc), zero regressions a la suite.*
+
+## 2026-09-01 (nit) — Adreça i municipi: de regex a padró + conjunt tancat + veto geomètric
+
+### Context
+
+La sessió es va obrir expressament per **analitzar** la proposta del Josep del matí
+(`docs/PROPOSTA-JOSEP-ADRECES-I-MUNICIPI-2026-09-01.md`, anotada literalment i deixada sense analitzar a posta):
+interpretar l'adreça amb intel·ligència en comptes de regex, amb un JSON normalitzat i reintents amb grafies
+alternatives. L'anàlisi va acabar en vuit decisions i cinc peces implementades el mateix vespre. Disseny complet:
+`docs/DISSENY-ADRECES-I-MUNICIPI-2026-09-01.md`.
+
+El punt de partida mesurat: la guarda de 0,85 que havíem estrenat el mateix dia descartava
+`11 de Setembre` → `ONZE DE SETEMBRE` (ràtio 0,750) i deixava el camp en blanc. És a dir, el cas que el Josep
+posava d'exemple el resolíem **renunciant**.
+
+### Decisions arquitectòniques clau
+
+**1. Qui interpreta: el skill de lectura, no una capa nova.** És l'únic lloc que veu totes les grafies de la
+mateixa adreça dins d'un projecte (comanda N20, pressupost bloc OBRA, fitxa C7, plànol, correus) i ja té el
+municipi de tres fonts. *Alternativa rebutjada:* una capa dedicada que rellegís text — rellegiria sense el
+context que el skill ja té, i pagaríem dues passades.
+
+**2. Alternatives sí a l'eix via/municipi, mai a l'eix portal.** És la resposta a l'objecció que el propi
+document de la proposta plantejava (§2: com evitar ressuscitar el bug 18B→18A). Les variants de via i municipi
+són **ortogràfiques** i designen el mateix objecte del món; les de portal són **edificis diferents amb
+propietaris diferents**. `resolve_portal` segueix filtrant `(pnp, plp)` exactes. *Trade-off acceptat:* els
+portals que el model llegeix no s'usen mai per consultar, ni quan són correctes.
+
+**3. Conjunt tancat en comptes de generació lliure.** El model (o les capes deterministes) tria d'una llista
+**real** de carrers del municipi i Python verifica la pertinença. Així una al·lucinació és estructuralment
+impossible: un carrer inventat no és a la llista. *Alternativa rebutjada:* que el model proposi variants a
+cegues i les provem — no dona el `tipus_via`, i a Bell-lloc «Onze de Setembre» és una **plaça**, no un carrer.
+
+**4. Padró local per al municipi.** Un fitxer de dades al repo compleix el contracte de `g3_templates.py`
+(«determinista, cost 0, sense xarxa»): el contracte prohibeix **xarxa**, no **dades**. *Descoberta:* el padró
+INE ja hi era des del febrer i el seu `ine_code` **és** la parella `(cp, cm)` del Cadastre — l'aparellament va
+sortir 947/947 sense un sol orfe.
+
+**5. El padró només afegeix dubte, mai en treu.** Cap confiança puja. *Per què:* `_decisions.json` dels 9 corpus
+és la prova de no-regressió del projecte i pujar confiances hi mouria decisions que avui són correctes.
+
+**6. El padró i la corroboració pel context són guardes independents, i mana la del context.** Que «X» sigui un
+municipi de debò no vol dir que sigui el d'aquest projecte. *Aquesta decisió va néixer d'un error:* el primer
+cablejat posava el padró primer i un PLAN_COST de Bell-lloc dins d'una carpeta de Torregrossa tornava a pujar a
+0,6, tapant la contradicció. Ho va enxampar un test existent.
+
+**7. Sense bucle de re-pregunta per a l'objecte estructurat.** `claude -p` no dona sortida estructurada (per
+això A1: esquema + exemples al prompt, validació a Python). Un objecte invàlid es **descarta sencer** i la
+cadena continua amb el text lliure: es perd la millora, mai s'hi guanya un error. Una degradació ja segura no
+justifica una segona crida. *Alternativa rebutjada:* anar per API per tenir sortida estructurada — desfaria la
+decisió de la via A del 2026-08-23.
+
+**8. Veto geomètric pels punts de camp, i que es vegi.** La comprovació més forta disponible ja es calculava i
+només s'escrivia com a nota. Formulació: cap punt dins **i** el més proper a > 10 m → el valor no s'omple.
+*Trade-off:* la regla només pot **vetar**, mai **exigir** — 4 dels 8 projectes no tenen fitxer de coordenades.
+*Requisit explícit del Josep:* el motiu ha de ser visible amb la distància, perquè l'Eva ja ha dit que no
+considera les UTM del tot fiables i un blanc sense explicació el llegiria com un error del sistema.
+
+### Implementació
+
+| Fitxer | Novetat |
+|---|---|
+| `automation/data/municipis_padro_cadastre.json` | **nou** — 947 municipis, INE + Cadastre + `(cp, cm)` |
+| `automation/municipis.py` | **nou** — `lookup()` en 3 capes, un sol guanyador, sense capa difusa |
+| `automation/lectura/address_struct.py` | **nou** — validació de `street_address_struct`, `FLOOR_ORDINAL_RE` |
+| `automation/lectura/cadastre_reader.py` | `resolve_via`, `_numeral_canon`, `_cached_street_list`, `_resolve_municipality`, `_resolve_street`, `PointsCheck`, `_veto_signal` |
+| `automation/g3_templates.py` | `_plan_cost_municipi_confianca` |
+| `automation/lectura/consolidate.py` | passa `extra_concepts` al lector del Cadastre |
+| `templates/validation/review.html` | el popup `no_trobat` pinta `cell.note` |
+| `.claude/commands/g3dt-llegir-projecte.md` | esquema + 3 exemples del corpus per a `street_address_struct` |
+
+### Validació empírica
+
+- **Tria de via, 9 casos reals: 7/9 → 9/9.** Els dos guanyats són «11 de Setembre» a Rubí (que el llindar de 500
+  deixava sense recuperació) i a Castellar (on la recuperació de via B tornava `POL 011 FABRICA NOVA`).
+- **Bateria negativa 10/10**: cap carrer inventat, cap empat resolt a l'atzar.
+- **Padró: 947/947** aparellats, 0 orfes als dos costats. 4 crides, 2,1 s.
+- **PLAN_COST, 10 fitxers reals**: `ANCILES` 0,6 → 0,5 amb el motiu escrit (Anciles és un llogaret de Benasc,
+  Osca — **confirmat pel Josep**, no és un municipi); `BELL-LLOC`/`CERDANYOLA`/`VILANOVA SEGRIÀ` guanyen nota amb
+  la forma oficial. La resta, igual que abans.
+- **Veto**: Castellar real 5/5 dins → 1.284 m²; amb les coordenades desplaçades 500 m → blanc + motiu amb «0/5
+  dins, el més llunyà a 703 m».
+- **Cadena sencera sense regressió**: 1.284 m², 3/3 contigües, i sense una sola crida `ConsultaMunicipio`.
+
+### Tests
+
++102 tests nous en 4 fitxers (`test_lectura_via_resolver.py` 25, `test_municipis_padro.py` 33,
+`test_lectura_address_struct.py` 30, `test_lectura_points_veto.py` 14). Suite: **1897 → 1999 passed**, amb les
+**mateixes 32 fallades** preexistents de sempre.
+
+Cinc tests existents van canviar d'expectativa, tots per canvis volguts i tots documentats al lloc:
+`test_cadastre_portal_signals_rejects_wrong_street_name` (missatge nou + havia començat a sortir a la xarxa en
+un fitxer «0 xarxa»), els dos de `test_g3_templates.py` sobre el municipi de PLAN_COST (nota nova; l'altre va
+ser qui va destapar la decisió 6), els dos stubs de `test_lectura_consolidate.py` (signatura de 3 arguments) i
+`test_cadastre_portal_signals_points_note_point_outside` (la nota informativa passa a ser veto).
+
+### Limitacions conegudes
+
+- El padró **només cobreix Catalunya**, i el corpus ja té un projecte de fora (Anciles). Avui cau al bucle en
+  línia i funciona; afegir-hi Osca seria una crida més i ~200 municipis. Decisió pendent del Josep.
+- La forma oficial llarga del municipi va **a la nota**, no com a candidat competidor. És un canvi de valor i
+  mereix mesura pròpia sobre els corpus.
+- El llindar de 10 m del veto és un criteri de judici; cal revisar-lo amb dades de més projectes.
+- Quants exemples calen al prompt perquè el skill emeti `street_address_struct` de forma estable **no s'ha
+  mesurat**: avui n'hi ha tres.
+- El veto no s'ha decidit si ha d'aplicar-se també a altres camps derivats de la parcel·la.
+
+### GO/NO-GO
+
+✅ Suite sense regressions (32 fallades, les de sempre) · ✅ mesures abans/després a cada peça · ✅ ERR = 0
+preservat (cap valor nou pot venir de fora d'una llista real) · ✅ documentació al dia (disseny, STATUS,
+CLAUDE.md, skill) · ⏳ mesura de qualitat dels 8 projectes, que és el següent pas.
+
+### Següents passos
+
+Desbloqueja la **mesura de qualitat** dels 8 projectes sobre codi ja reparat: % camps bé / % popup / % blanc /
+erronis-amb-confiança (objectiu 0) / minuts per projecte, i `compare_tables_vs_eva` contra els informes signats.
+Llindars pactats: OK ≥ 80 %, candidats ≤ 20 %, ERR = 0.
+
+*Fi entrada 2026-09-01. Adreces i municipi: anàlisi, vuit decisions i cinc peces — padró offline, tria per
+conjunt tancat sense llindar, objecte estructurat validat a Python i veto geomètric amb el motiu visible.*

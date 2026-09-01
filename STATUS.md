@@ -287,14 +287,53 @@ Regressió: **32 failed / 1023 passed** (baseline inalterat — reverificat 2 co
 **Pendent real:** enviar a l'Eva les preguntes 3+8+9+10 (`docs/PREGUNTES-EVA-PENDENTS.md`); després la **Fase 16**
 (E2E dels tres botons, remesurada amb Cadastre ON — la primera consolidació de cada projecte farà ara crides HTTP
 noves) i la Fase 17 (Windows presencial) queden per més endavant.
-0e. **Adreça i municipi amb intel·ligència, no amb regex — proposta del Josep (2026-09-01), ANOTADA, PENDENT
-   D'ANALITZAR EN SESSIÓ NOVA.** Interpretar l'adreça amb Claude Code (Fable/Opus) cap a un JSON normalitzat
-   (tipus de via, nom de via, portals, municipi curt/llarg/alternatius) vàlid per construcció per a Cadastre/ICGC/
-   Nominatim, amb **reintent amb grafies alternatives** quan la consulta torni zero resultats o resultats
-   sospitosos («11 de Setembre» → «ONZE DE SETEMBRE»). Motiu: l'adreça és el camp de més conseqüència — una
-   parcel·la equivocada fa concloure a l'Eva que el sistema no serveix. Comentari literal, context, preguntes
-   obertes i restriccions: `docs/PROPOSTA-JOSEP-ADRECES-I-MUNICIPI-2026-09-01.md`. **No implementar-ho abans
-   d'aquella anàlisi.**
+0e. **Adreça i municipi amb intel·ligència, no amb regex — ANALITZAT I DECIDIT (2026-09-01, sessió d'anàlisi).**
+   Disseny complet: `docs/DISSENY-ADRECES-I-MUNICIPI-2026-09-01.md` (la proposta original, amb el comentari
+   literal del Josep, és `docs/PROPOSTA-JOSEP-ADRECES-I-MUNICIPI-2026-09-01.md`). Vuit decisions: el skill de
+   lectura interpreta i n'emet un objecte estructurat; municipi per **padró local**; via per **conjunt tancat**
+   (el model tria de la llista real del municipi, Python verifica que hi és); alternatius **només a l'eix
+   via/municipi, mai a l'eix portal** (això és el que evita ressuscitar el bug 18B→18A); verificació
+   determinista, no del model; **veto per punts de camp** amb el motiu visible a l'Eva.
+   **Peça 2 FETA** (§4.1 del disseny): `automation/data/municipis_padro_cadastre.json` (947 municipis, grafia
+   INE + grafia i codis del Cadastre, aparellats 947/947 per `ine_code`) + `automation/municipis.py` amb
+   `lookup()` en 3 capes (exacte / forma curta / preposicions), sempre amb un sol guanyador i **sense capa
+   difusa**. Dos consumidors: (a) `cadastre_reader` resol província i nom oficial **sense xarxa** — treu fins a
+   5 crides `ConsultaMunicipio` per projecte, amb el bucle en línia com a sortida per a fora de Catalunya
+   (Anciles és de Benasc, Osca); (b) `g3_templates` valida el residu d'E9 de PLAN_COST contra 947 noms reals.
+   Regla: **el padró només afegeix dubte, mai en treu** (no puja cap confiança, per no moure els 9 corpus).
+   Mesurat sobre els 10 PLAN_COST reals: `ANCILES` 0,6 → 0,5 amb el motiu escrit (no és un municipi);
+   `BELL-LLOC`/`CERDANYOLA`/`VILANOVA SEGRIÀ` guanyen nota amb la forma oficial. Tests:
+   `tests/test_municipis_padro.py` (33). **Obert a posta:** emetre la forma oficial llarga com a candidat
+   competidor, no només com a nota.
+   **Peces 3+4 FETES** (§5.5 del disseny): el skill emet `street_address_struct` (tipus de via, nom, grafies
+   alternatives, portals, municipi + alternatives) com a entrada de `tier_a`; com que no és cap de les
+   `ALLOWED_FIELD_KEYS` cau a `extra_concepts`, que **el validador del contracte ignora** — no toca cap variable
+   de l'informe. `automation/lectura/address_struct.py` el valida (A1: esquema + exemples al prompt del skill,
+   validació a Python) i **descarta l'objecte sencer si no encaixa**, tornant al text lliure: per això NO hi ha
+   bucle de re-pregunta. Les alternatives són **només intents de consulta** — el nom acceptat surt sempre de la
+   llista real (`resolve_via`) o del padró. **L'eix portal segueix tancat:** els portals manen des de
+   `portals_from_address`, amb test que ho fixa. `FLOOR_ORDINAL_RE` unificada (era duplicable).
+   Tests: `tests/test_lectura_address_struct.py` (30).
+   **Peça 5 FETA** (§6.5 del disseny): veto geomètric pels punts de camp. `PointsCheck.vetoes` = cap punt dins
+   **i** el més proper a > 10 m → el senyal surt amb `value=None` i el motiu escrit; `decide()` ja recull el
+   `note` dels senyals sense valor a la cel·la `no_trobat`, i `review.html` ara el **pinta** (branca
+   `no_trobat`) — no calia cap camp nou. El text diu d'on ve la sospita (les coordenades), quant de lluny i on
+   mirar, perquè l'Eva no consideri un blanc com un error del sistema. Només pot **vetar**, mai exigir: 4 dels
+   8 projectes no tenen `COORDENADES.txt`. Verificat amb Castellar real (5/5 dins → 1.284 m²) i amb les seves
+   coordenades desplaçades 500 m (blanc + «0/5 dins, el més llunyà a 703 m»). Tests:
+   `tests/test_lectura_points_veto.py` (14).
+   **Documentació:** `docs/DISSENY-ADRECES-I-MUNICIPI-2026-09-01.md` (disseny complet + mesures),
+   `docs/DECISION-LOG.md` (entrada 2026-09-01 nit), `.claude/sessions/2026-09-01-session.md`, `CLAUDE.md`
+   (secció «Interpretació d'adreces i municipi (via A)»), `.claude/commands/g3dt-llegir-projecte.md`.
+   **Següent:** la mesura de qualitat dels 8 projectes.
+   **Peça 1 FETA** (§5.3 del disseny): el llindar de 500 carrers de `geocode_coordinates._consulta_via` (via B,
+   intocable) deixava Rubí (835) i Cerdanyola/Tulipa (577) sense **recuperació** quan l'exacte falla — i la
+   recuperació que amagava tornava `POL 011 FABRICA NOVA` per «11 de Setembre» a Castellar. Nou `resolve_via()`
+   a `automation/lectura/cadastre_reader.py`: tria sobre la llista sencera del municipi, sense llindar, 4 capes
+   amb un sol guanyador (empat = blanc) i nombres canonicalitzats (`ONZE` == `11`, resol el cas sense LLM i
+   dona el `tipo_via` correcte — és una plaça). Cablejat **additiu**: via B primer, `resolve_via` només si falla
+   o retorna un carrer que no és el llegit. **Mesurat 7/9 → 9/9**, negatius 10/10, Castellar sense regressió
+   (1.284 m²). Tests: `tests/test_lectura_via_resolver.py` (25).
 1. **A4 / entity confusion**: `architect_company` etiqueta client/promotor com a
    arquitecte; el client pot ser un particular. Requereix lògica > regex. **Consultar
    Eva** sobre el mapatge architect_company vs client_name abans de tocar-ho (§4.3).

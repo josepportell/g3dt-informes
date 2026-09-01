@@ -150,7 +150,9 @@ clients/g3dt/
 │   ├── fileminer/            # Fase 0.3: extracció senyals text
 │   ├── dpsh_extractor.py     # Extracció de dades DPSH d'Excel
 │   ├── format_learner.py     # Detecció + aprenentatge de formats nous
-│   ├── geocode_coordinates.py # Geocodificació adreça → UTM (Nominatim+Cadastre)
+│   ├── geocode_coordinates.py # Geocodificació adreça → UTM (Nominatim+Cadastre) — VIA B, no tocar
+│   ├── municipis.py          # Padró de municipis de Catalunya (offline, sense xarxa)
+│   ├── data/municipis_padro_cadastre.json  # 947 municipis: grafia INE + Cadastre + codis
 │   ├── vision_normalizer.py  # Normalització claus vision (planol + sondeig)
 │   ├── report_data.py        # Model de dades unificat
 │   ├── schemas/              # Carregadors Python per schemas YAML
@@ -306,6 +308,39 @@ Quan un projecte no té COORDENADES.txt (GPS de camp), el sistema deriva coorden
 - Cache: 90 dies a `~/.g3dt/cache/geocode/`
 
 **Fonts d'adreça** (prioritat): `street_address` > `site_address` > `adjacent_south`
+
+## Interpretació d'adreces i municipi (via A)
+
+Camí **independent** del de dalt: `geocode_coordinates.py` és **via B de producció** (es pot llegir, mai
+modificar mentre l'Eva hi treballi). La via A resol l'adreça llegida cap a parcel·les cadastrals.
+
+```
+skill de lectura  →  street_address (text) + street_address_struct (objecte, a extra_concepts)
+        ↓
+portals_from_address()      regex determinista → (nom de via, [(núm, lletra)])
+        ↓
+municipis.lookup()          padró local, 947 municipis, SENSE xarxa; bucle en línia si no hi és
+        ↓
+resolve_via()               tria sobre la llista REAL de carrers del municipi, sense llindar de mida
+        ↓
+resolve_portal() (pnp, plp) EXACTES  →  WFS: àrea + polígon  →  contigüitat  →  senyals
+```
+
+**Les tres regles que no es toquen:**
+
+1. **Alternatives sí a l'eix via/municipi, mai a l'eix portal.** Les variants de via i municipi són
+   ortogràfiques (`11`↔`ONZE`, `GIRASSOLS`↔`GIRASOLS`, ca/es); 18A i 18B són **edificis diferents**.
+2. **Cap nom acceptat surt del model.** Sempre de la llista real del municipi o del padró.
+3. **Empat = blanc.** Val més cap parcel·la que la d'un altre carrer (ERR = 0 mana sobre la cobertura).
+
+| Fitxer | Què |
+|---|---|
+| `automation/municipis.py` | padró (exacte / forma curta / preposicions), un sol guanyador |
+| `automation/data/municipis_padro_cadastre.json` | 947 municipis: grafia INE + grafia i codis del Cadastre |
+| `automation/lectura/address_struct.py` | valida `street_address_struct`; vocabulari d'adreces (`FLOOR_ORDINAL_RE`) |
+| `automation/lectura/cadastre_reader.py` | `portals_from_address`, `resolve_via`, `resolve_portal`, senyals |
+
+**Doc complet:** `docs/DISSENY-ADRECES-I-MUNICIPI-2026-09-01.md` (8 decisions, mesures, i el que queda obert).
 
 ## Comandaments Útils
 

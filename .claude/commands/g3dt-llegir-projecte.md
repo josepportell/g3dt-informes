@@ -162,6 +162,36 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
 - **`municipality`**: comanda N21 + pressupost p.1 + PLAN_COST E9 ("sempre" 3 fonts). Forma oficial llarga (Cadastre, GTL, plànol:
   `Bell-lloc d'Urgell`) > forma curta de G3 (`BELL-LLOC`) > manuscrits (`BELL-LLOCH`). Mai la població del sol·licitant (Els Omells de
   Na Gaia) ni del client. Mai una foto.
+- **`street_address_struct`** (concepte EXTRA, no és cap dels 15 camps): quan un document et doni l'adreça de l'obra,
+  emet TAMBÉ una entrada `tier_a` amb `concept_id: "street_address_struct"` i com a `value` aquest objecte. Serveix
+  perquè el Cadastre és estrictíssim amb com s'escriu una adreça i la mateixa obra apareix escrita de maneres
+  diferents dins d'un mateix projecte. **Va a `extra_concepts`; no toca cap variable de l'informe.**
+  ```json
+  {"tipus_via": "carrer|plaça|avinguda|carretera|passeig|camí|travessia|rambla",
+   "nom_via": "el nom SENSE el tipus de via, tal com el diu aquest document",
+   "nom_via_alternatives": ["altres grafies del MATEIX carrer"],
+   "portals": ["18A", "18B", "20"],
+   "municipi": "forma oficial llarga si la saps",
+   "municipi_alternatives": ["formes curtes o variants que surtin als documents"]}
+  ```
+  **Les alternatives són grafies del mateix lloc, mai llocs diferents.** Hi van: xifres ↔ lletres
+  (`11 de Setembre` ↔ `Onze de Setembre`), català ↔ castellà (`Telègrafs` ↔ `Telégrafos`), accents i dobles lletres
+  (`Girassols` ↔ `Girasols`), abreviatures (`Mn.` ↔ `Mossèn`), articles (`Arbrells` ↔ `Arbrells, dels`). **NO** hi va
+  un carrer veí, ni el carrer de l'altra cantonada, ni una endevinalla.
+  Exemples reals del corpus:
+  ```json
+  {"tipus_via": "carrer", "nom_via": "Arbrells", "nom_via_alternatives": ["Arbrells dels"],
+   "portals": ["18A", "18B", "20"], "municipi": "Castellar del Vallès", "municipi_alternatives": ["CASTELLAR DEL VALLES"]}
+  {"tipus_via": "carrer", "nom_via": "Clot de la Llacuna", "nom_via_alternatives": ["Clot de Llacuna"],
+   "portals": ["16"], "municipi": "Linyola", "municipi_alternatives": []}
+  {"tipus_via": "plaça", "nom_via": "Onze de Setembre", "nom_via_alternatives": ["11 de Setembre"],
+   "portals": ["5"], "municipi": "Bell-lloc d'Urgell", "municipi_alternatives": ["BELL-LLOC"]}
+  ```
+  Regles dures: **`nom_via` i `municipi` són obligatoris** (sense un dels dos, val més no emetre l'objecte); màxim 8
+  alternatives per llista i 6 portals; els portals són `\d{1,4}` amb una lletra opcional (`18A`), mai pisos ni portes.
+  Python ho valida (`automation/lectura/address_struct.py`) i **descarta l'objecte sencer si no encaixa**, tornant al
+  text lliure: un objecte mal format no fa cap mal, però tampoc no ajuda.
+
 - **`expedient`**: nom de la carpeta (`NNNNNNN MUNICIPI`) = comanda N19 = annex DPSH `NÚMERO D´INFORME` = GTL `Obra / Projecte`.
   NO són l'expedient: `25·0647` (codi comercial), `EXP25.34/SET.25` (arquitecte), `4677-GTL-25` / `GTL-8205-25` (laboratori), i els
   caixetins dels annexos de l'Eva poden tenir typos (`4001621`).
