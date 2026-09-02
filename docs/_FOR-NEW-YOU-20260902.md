@@ -123,9 +123,12 @@ git status --porcelain | wc -l   # ha de donar 0
 3. Suite completa → confirma `2000 passed / 32 failed` i que els **noms** són els de §3.
 4. Llegeix `docs/DISSENY-ADRECES-I-MUNICIPI-2026-09-01.md`, com a mínim §5.3, §4.1, §5.5 i §6.5 (les 5 peces) i
    §8 (el que queda obert).
-5. **Mesura la línia base abans de canviar res** (`feedback_measure_baseline_before_coding`): la mesura de
-   qualitat ÉS la feina, però abans decideix i escriu els criteris, perquè els números caduquen de seguida.
-6. Executa la mesura (§8, tasca 1).
+5. **El N20 de Bell-lloc** (§8, tasca 0). És la primera feina per decisió del Josep, i abans de la mesura per
+   un motiu pràctic: si el càlcul de la capacitat portant s'ha mogut, els números de la mesura naixerien
+   caducats.
+6. **Escriu els criteris de la mesura abans d'executar-la** (`feedback_measure_baseline_before_coding`): què
+   compta com a OK, com a candidat i com a erroni-amb-confiança, i com es tracten Vilanova i Tulipa (§8).
+7. Executa la mesura (§8, tasca 1).
 
 ## 7. Què NO fer
 
@@ -142,8 +145,34 @@ git status --porcelain | wc -l   # ha de donar 0
 
 ## 8. Tasques obertes, per ordre
 
-1. **LA MESURA DE QUALITAT DELS 8 PROJECTES** — la feina de demà, i el motiu pel qual s'ha ajornat dues
-   vegades. Hold-out headless sobre codi ja reparat:
+0. **PRIMER DE TOT: el N20 de Bell-lloc.** Decisió del Josep en tancar la sessió del 2026-09-01.
+
+   ```
+   tests/test_bearing_stratum_n20_regression.py::test_bell_lloc_bearing_idx_and_n20
+   → N20 = 34,3  quan n'espera ≈ 49,8   (−31 %, tolerància 1,0)
+   ```
+
+   **Per què no és «una de les 32 preexistents»:**
+   - `_select_bearing_layer_idx(layers) == 1` **passa**. La divergència és dins de
+     `automation/report_data.py::_bearing_stratum_n20` (l. 1064), no en la tria de capa (l. 968).
+   - El test **no fa `skip`**: fa `pytest.skip` quan falten els fixtures, i Bell-lloc els té (93 fitxers al
+     disc). O sigui que **s'executa de debò** i el número no quadra. No és un problema d'entorn.
+   - El seu germà `test_alcoletge_bearing_idx_and_n20` **sí que fa skip** (falta el DPSH). Per tant Bell-lloc
+     és **l'única cobertura viva d'aquest fitxer**, i és la que està vermella.
+   - La seva pròpia capçalera explica per què existeix: *«the G.5-wire rollout almost shipped a −60 % N20
+     regression on Bell-Lloc because the unit tests used synthetic profiles… so future refactors can't
+     silently shift calibrated values that Eva's deviation matrix depends on.»* És a dir: **la guarda escrita
+     per impedir exactament aquesta deriva és la que està fallant.**
+   - N20 alimenta la capacitat portant, que és un número que **l'Eva signa**.
+
+   **Per on començar:** `git log -L 1064,1120:automation/report_data.py` per veure quan es va moure;
+   `docs/METODOLOGIA-EVA.md` és el source-of-truth dels càlculs (**consulta'l abans de tocar res**); la
+   memòria `implementation_status_calcs` té la matriu de desviacions contra els informes de l'Eva.
+
+   **No el reparis a corre-cuita.** Primer esbrina si el que ha canviat és el càlcul o el valor esperat, i
+   compara contra l'informe signat de Bell-lloc, no contra el test.
+
+1. **LA MESURA DE QUALITAT DELS 8 PROJECTES** — Hold-out headless sobre codi ja reparat:
    - per projecte: **% camps bé / % popup (candidats) / % blanc / erronis-amb-confiança / minuts**;
    - `scripts/compare_tables_vs_eva.py` contra els informes signats de l'Eva;
    - **llindars pactats: OK ≥ 80 %, candidats ≤ 20 %, ERR = 0.**
