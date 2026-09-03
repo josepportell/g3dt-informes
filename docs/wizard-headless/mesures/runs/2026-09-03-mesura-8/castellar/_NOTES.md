@@ -11,3 +11,7 @@
   (docs/golden-read/3001621…/_decisions.json) abans d'agregar els 8.
 - Els 2 FORA són el Cadastre multi-portal fent la seva feina (RC 3 parcel·les + superfície 1284).
 - **Veredicte Castellar: ERR de sistema = 0 ✓** (l'objectiu que mana), pendent de recomptar OK/CAND amb l'or corregit.
+- **Or corregit (2026-09-03, sessió 2):** `utm_x_utm_y` de l'or passa a P-1 (`X 423167.0 ; Y 4609608.0`), com ja
+  feien els ors de Linyola/Bell-lloc/Alcoletge («Regla Castellar: l'informe usa P-1»). Recompte definitiu
+  (`_compare_escalars.txt` regenerat): **14 OK / 5 CAUTELA / 2 FORA / 1 NOU / 0 ERR** (22 camps). Sobre els
+  21 amb or: OK 67 % (14/21), CAND 24 % (5/21), FORA 10 % (2/21, correctes fora de carpeta), ERR 0.

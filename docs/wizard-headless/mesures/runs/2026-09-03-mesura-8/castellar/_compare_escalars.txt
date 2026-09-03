@@ -6,6 +6,4 @@ CAUTELA  num_floors             or segur, prod candidats (bo dins): 'PB+1 (sense
 FORA     referencia_catastral   fora de la carpeta: '3298012DG2039N + 3298013DG2039N + 3298014DG2039N' (Cadastre (Callejero DNPLOC + WFS INSPIRE), portals 18A+18B+20)
 CAUTELA  street_address         or segur, prod candidats (bo dins): 'Carrer Arbrells, 18A, 18B i 20'
 FORA     superficie_parcela     fora de la carpeta: '1284' (Cadastre (Callejero DNPLOC + WFS INSPIRE), portals 18A+18B+20 = 3298012+3298013+3298014 DG2039N (441+423+420 m²))
-ERR      utm_x                  segur discrepant: or='423182' prod='423167.0'
-ERR      utm_y                  segur discrepant: or='4609623' prod='4609608.0'
-TOTALS: {'NOU': 1, 'OK': 12, 'CAUTELA': 5, 'FORA': 2, 'ERR': 2}
+TOTALS: {'NOU': 1, 'OK': 14, 'CAUTELA': 5, 'FORA': 2}

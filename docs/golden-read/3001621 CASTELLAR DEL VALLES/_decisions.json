@@ -336,9 +336,14 @@
   },
   "utm_x_utm_y": {
    "status": "segur",
-   "value": "X 423182 ; Y 4609623 (S-1); P-1 423167/4609608, P-2 423174/4609616, P-4 423189/4609627.9, P-3 423195/4609636",
-   "rule": "COORDENADES.txt (5 punts amb z) + annex sondeig 'UTM: X 423182.0 / Y 4609623.0' (2 fonts coincidents)",
+   "value": "X 423167.0 ; Y 4609608.0 (P-1); S-1 423182/4609623, P-2 423174/4609616, P-4 423189/4609627.9, P-3 423195/4609636",
+   "rule": "COORDENADES.txt (5 punts amb z). Regla: l'informe usa P-1 (primer punt de COORDENADES.txt), no l'S-1 del caixetí del sondeig — vegeu comparison_with_eva.utm_ref_catastral i eva_reference_values utm_x/utm_y = 423167/4609608. CORRECCIÓ 2026-09-03: la lectura del 08-23 posava l'S-1 al davant i el comparador (regex 'X n ; Y n') el prenia com a valor de l'or → 2 falsos ERR a la mesura dels 8 (runs/2026-09-03-mesura-8/castellar/_NOTES.md).",
    "candidates": [
+    {
+     "value": "423167.0 / 4609608.0 (P-1)",
+     "source": "ANNEXES/ALTRES/COORDENADES.txt",
+     "quote": "P-1 423167.0 ; 4609608.0 ; 571.5"
+    },
     {
      "value": "423182 / 4609623 (S-1)",
      "source": "ANNEXES/ALTRES/COORDENADES.txt",
