@@ -4,7 +4,7 @@ no regressió de càlcul** (mateix codi: fixture antic→49,8, actual→34,3; ge
 Es queda vermell (decisió Josep) fins a P4. Marc «criteris, no fórmules» persistit (CLAUDE.md, METODOLOGIA-EVA §0,
 memòria, DECISION-LOG 2026-09-03); anàlisi N20+E: `docs/ANALISI-CALCUL-N20-E-2026-09-02.md`; retocs planificats
 P0–P4 (columna N, cel·la Nb, estrat-on-recolza/Rubí-roca, E per criteris, regla N20): `docs/PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md`
-— tots DESPRÉS de la mesura. **Següent: LA MESURA dels 8 projectes** (criteris escrits: `docs/wizard-headless/mesures/CRITERIS-MESURA-2026-09-03.md`; Castellar llançat 2026-09-03, driver versionat `run_mesura.py`).
+— tots DESPRÉS de la mesura. **Castellar 1/8 FET (33,4 min, ERR sistema=0; or utm per corregir) i repàs R FET (P1 descartada, P3 cal Eva, Anciles capgirat). Següent: els 7 projectes restants** (criteris escrits: `docs/wizard-headless/mesures/CRITERIS-MESURA-2026-09-03.md`; Castellar llançat 2026-09-03, driver versionat `run_mesura.py`).
 **Seqüència pactada (Josep 2026-09-03):** mesura dels 8 → **R** (repàs dels informes signats buscant els criteris
 que l'Eva HI DESCRIU a la narrativa — pot resoldre P1/P3/P4 sense preguntar-li; ABANS de tots els P0–P4) →
 P0/P1/P2a → **M341** (mesura completa de les 341 variables — «l'estat de tot»; l'últim global és el 59 % del
