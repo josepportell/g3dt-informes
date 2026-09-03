@@ -226,6 +226,20 @@ Extreu ~30-37 variables amb posició exacta dels informes reals d'Eva (`.doc`/`.
 
 `docs/METODOLOGIA-EVA.md` (2026-04-17) — síntesi dels 7 informes signats amb cites textuals: Crespo Villalaz (c/φ), Rodríguez Ortiz "Curso aplicado de cimentaciones" Cap. 2 (bicapa, Fig. 2.9), Schmertmann 1970 (E/assentaments, 2B/4B), Terzaghi-Peck (Qa granular). PDF d'Ortiz Cap. 2 arxivat a `docs/research/books/`. **Abans de modificar qualsevol càlcul geotècnic, consulta aquest document.**
 
+**Regla d'or (2026-09-02): els geotècnics divergeixen de les fórmules amb criteris pactats — modela CRITERIS,
+no fórmules.** Arrodoniment professional (Qa a 0,5; E a 10/50; φ enter), topalls Qa per règim (3,0 sòl / 3,5
+granular dens / 3,0 roca mixta), ajust litològic (carbonatació→E↑), l'estrat que mana és **on recolza la
+fonamentació** (ni el primer ni el més profund — cas Anciles), assentament = verificació de servei (±50 %).
+La cadena Qa que ho implementa està validada **6/7 MATCH exacte**. Família de documents (tots a `docs/`):
+
+| Document | Què hi ha |
+|---|---|
+| `CRITERIS-CALCUL-EVA.md` | cadena Qa reverse-engineered 6/7 exacte; topalls; arrodoniment confirmat amb 4 fonts externes; taula 9 nivells signats |
+| `RECERCA-PRACTICA-GEOTECNICA-ESPANYA.md` | pràctica espanyola; cap correlació sola reprodueix l'E d'Eva; taules Crespo (apèndix) |
+| `ANALISI-SETTLEMENT-BACK-ENGINEERING.md` §5 | procés de decisió del geotècnic; per què E=650 a Bell-lloc (carbonatades) |
+| `CALCUL-E-MODUL-DEFORMACIO.md`, `CALCUL-K30-BALAST.md` | racional E v1 + proposta v2; K30=E/75 (E/60 roca) validat 2/2 |
+| `ANALISI-CALCUL-N20-E-2026-09-02.md` | estat actual N20+E vs signats; forats coneguts (columna N, cel·la Nb, ferm, E per règims); pla: `PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md` |
+
 ## Documents de Camp
 
 ### PENETROS.pdf (DPSH)

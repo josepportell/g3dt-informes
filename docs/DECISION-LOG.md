@@ -1972,3 +1972,75 @@ Llindars pactats: OK ≥ 80 %, candidats ≤ 20 %, ERR = 0.
 
 *Fi entrada 2026-09-01. Adreces i municipi: anàlisi, vuit decisions i cinc peces — padró offline, tria per
 conjunt tancat sense llindar, objecte estructurat validat a Python i veto geomètric amb el motiu visible.*
+
+---
+
+## 2026-09-03 — N20 i E: el test vermell és deriva de fixture, el marc «criteris, no fórmules» es persisteix, i els retocs queden planificats (P0–P4)
+
+### Context
+
+Tasca 0 del handoff (`_FOR-NEW-YOU-20260902.md` §8): el test
+`test_bell_lloc_bearing_idx_and_n20` (N20=34,3 vs ≈49,8), posat per davant de la mesura perquè si el càlcul
+s'havia mogut, la mesura naixeria caducada. El Josep va ampliar-ho a una anàlisi completa de N20 i E
+(sessió 2026-09-02 tarda → 09-03), i després va fer rellegir la família de documents de pràctica geotècnica
+que la primera versió de l'anàlisi no havia trobat.
+
+### Decisions clau
+
+1. **El test es queda VERMELL** (Josep, 2026-09-02). **Why:** la fallada no és cap regressió de càlcul —
+   és el fixture (`validation/sondeig_extracted.json`, regenerable per visió) que va moure el límit de capa
+   d'1,6 a 1,0 m entre lectures de confiança 0,6. Re-fixar 49,8→34,3 re-ancoraria una segona lectura
+   igualment infundada; ancorar-lo bé depèn de la regla N20 global/ferm (P4), que necessita Eva o decisió.
+   Alternativa rebutjada: congelar geometria ara — prematura mentre P4 sigui obert.
+2. **El forat de l'E només s'apunta** (Josep): l'apunt és `ANALISI-CALCUL-N20-E-2026-09-02.md` §5. La mesura
+   dels 8 el destaparà a tots els projectes alhora — millor base per decidir que un cas.
+3. **Regla d'or persistida a 4 capes** (Josep: «com podem fer per no oblidar aquests criteris?»): CLAUDE.md
+   (punter — la capa que va fallar: la v1 de l'anàlisi es va escriure sense trobar els documents, que eren
+   a la branca des de sempre), `METODOLOGIA-EVA.md` §0 (el marc sencer, al doc que la instrucció existent
+   ja mana consultar), memòria `project_geotech_criteria_not_formulas` (sobreviu worktrees), i aquesta
+   entrada. **Why 4 capes:** el que va fallar era la descobribilitat, no l'emmagatzematge.
+4. **Retocs de codi: planificats, cap d'implementat, i DESPRÉS de la mesura**
+   (`PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md`): P0 columna N=SPT N30; P1 cel·la Nb sense /0,83 (OK Josep
+   pendent); P2 estrat = on recolza la sabata (arregla Rubí-vestit-de-roca; P2b necessita fondària real);
+   P3 E per criteris i candidats; P4 regla N20 + re-ancorar test. **Why després:** el diagnòstic confirma
+   que el càlcul no s'ha mogut → la línia base és vàlida; P0–P2 canvien cel·les que el comparador puntua
+   (`feedback_measure_baseline_before_coding`).
+
+### Validació empírica
+
+- Mateix codi, fixture antic (d70030c) → **49,8**; fixture actual → **34,3**: la fórmula no s'ha mogut.
+- Geometria real (1 capa 0–1,8 m, annex + informe signats) → codi retorna **25,1** ≈ Nb signat «25-R».
+- φ vs signat 38°: 34,3→37,0° (−1,0°); 49,8→40,6° (+2,6°, costat insegur). Qa: 3,00 als dos (topall).
+- Nb signat vs N20: Castellar 17≈18,7 global; Bell-lloc 25≈25,1 global (exacte); Rubí 47≈43,3 ferm — cap
+  regla única (judici), però el N20 CRU guanya el N20/0,83 del display als 3 casos.
+- E vs 9 nivells signats: fluixos −84/−91 % (Eva 50–90, fins per sobre del rang CTE; nosaltres 8); mitjos
+  +4/+14 %; carbonatades −28 %; roca fixa 500 vs «>350…>800». La cadena Qa: 6/7 MATCH (ja se sabia; ara re-lligat).
+- Rubí amb col·lapse a 1 nivell: roca (φ35/E500/γ2,2/c1,0) vs signat granular (39/450/2,0/0,05) — 6 cel·les
+  d'un sol cop d'origen (descripció de la capa més profunda).
+
+### Implementació (només documentació)
+
+`ANALISI-CALCUL-N20-E-2026-09-02.md` (v2, reescrit amb el marc), `PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md`
+(nou), `METODOLOGIA-EVA.md` §0 (nou), CLAUDE.md § Metodologia (taula de família), memòria nova + MEMORY.md,
+STATUS.md. Cap línia de codi de càlcul ni de test tocada.
+
+### Limitacions conegudes
+
+- La lectura «Nb d'Eva = N20 cru» té 3/3 d'evidència però cap confirmació d'Eva; P1 no s'executa sense OK.
+- La fila «Alcoletge 1: graves carbonatades» de `CRITERIS-CALCUL-EVA.md` §5 no quadra amb `_eva_truth`
+  (lapsus probable d'aquell doc); mana `_eva_truth`.
+- Anciles/Alcoletge/Linyola/Vilanova sense fixtures locals: les seves files d'E són a nivell de fórmula
+  (input = Nb signat reconvertit), no de pipeline sencer.
+
+### GO/NO-GO
+
+✅ diagnòstic tasca 0 tancat (càlcul intacte → la mesura no neix caducada) · ✅ marc persistit a 4 capes ·
+✅ pla P0–P4 escrit i seqüenciat · ⏳ mesura dels 8 (següent) · ⏳ OK Josep a P1 · ⏳ preguntes E + N20 a Eva.
+
+### Següents passos
+
+La MESURA dels 8 projectes (tasca 1 del handoff, criteris primer), llegida amb l'anàlisi al costat: les
+cel·les Nb, N, E (i γ/c/φ a Rubí) tenen causes de MISMATCH conegudes. Després, P0 → P1 → P2a per ordre.
+
+*Fi entrada 2026-09-03. N20: càlcul sa, entrada fràgil; E: criteri per modelar; el marc «criteris, no
+fórmules» ja no depèn de la memòria de ningú.*

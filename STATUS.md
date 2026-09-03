@@ -1,4 +1,15 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
+Last updated: 2026-09-03 — Tasca 0 TANCADA: el test vermell de N20 (Bell-lloc) és **deriva de fixture de visió,
+no regressió de càlcul** (mateix codi: fixture antic→49,8, actual→34,3; geometria real→25,1 ≈ «25-R» signat).
+Es queda vermell (decisió Josep) fins a P4. Marc «criteris, no fórmules» persistit (CLAUDE.md, METODOLOGIA-EVA §0,
+memòria, DECISION-LOG 2026-09-03); anàlisi N20+E: `docs/ANALISI-CALCUL-N20-E-2026-09-02.md`; retocs planificats
+P0–P4 (columna N, cel·la Nb, estrat-on-recolza/Rubí-roca, E per criteris, regla N20): `docs/PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md`
+— tots DESPRÉS de la mesura. **Següent: LA MESURA dels 8 projectes** (criteris escrits: `docs/wizard-headless/mesures/CRITERIS-MESURA-2026-09-03.md`; Castellar llançat 2026-09-03, driver versionat `run_mesura.py`).
+**Seqüència pactada (Josep 2026-09-03):** mesura dels 8 → **R** (repàs dels informes signats buscant els criteris
+que l'Eva HI DESCRIU a la narrativa — pot resoldre P1/P3/P4 sense preguntar-li; ABANS de tots els P0–P4) →
+P0/P1/P2a → **M341** (mesura completa de les 341 variables — «l'estat de tot»; l'últim global és el 59 % del
+23-ago, pre-correccions) → P2b/P3/P4. Detall: `docs/PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md` §Ordre.
+
 Last updated: 2026-08-31 (nit) — `PLA-PENDENTS-0B-0C-0D-2026-08-26.md` TANCAT: sis fixos (comparador v3, `value_key`,
 or Castellar v2, residus Groq a l'origen, Cadastre multi-portal ON per defecte, Bell-lloc via mínima) implementats,
 mesurats i commitejats (`3694694`→`2486a53`). Suite 1640 passed / 32 failed. Detall: `docs/DECISION-LOG.md`
