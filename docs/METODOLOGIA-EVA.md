@@ -51,8 +51,13 @@ sector (i Eva) se n'aparta:
    (4,0–4,5 només roca massissa sana). Ja implementat i validat (`terzaghi_calculator.py:417`, 6/7 exacte).
 3. **Ajust per litologia, no per fórmula**: carbonatació/cimentació → E amunt (Bell-lloc 650 vs Rubí 450 amb
    el mateix rang d'N).
-4. **L'estrat que mana és on RECOLZA la fonamentació** — ni el primer ni el més profund. Anciles: L1 (argiles
-   febles), no L2 (bolos competents), perquè la sabata no hi arriba.
+4. **L'estrat que mana és on RECOLZA la fonamentació** — ni el primer ni el més profund per sistema.
+   *(Corregit 2026-09-03 pel repàs R:)* la millor font és que **la frase del Qa de l'informe signat DECLARA
+   el nivell portant** — «encastament/empotrado un mínim de 20-40 cm» al nivell que anomena, sistemàtic a
+   5 projectes. Anciles fonamenta a **L2 via pous** («empotrados un mínimo de 20-40 cm de los materiales del
+   segundo nivel saneado», Qa=2,0) — la lectura anterior («usa L1 perquè no hi arriba», `CRITERIS-CALCUL-EVA.md`
+   §1) era errònia. Rubí sosté el principi per l'altra banda: la taula parametritza les graves on treballa la
+   sabata, no el substrat rocós de sota.
 5. **L'assentament és verificació de servei** («està ben per sota de 2,54 cm?»), no predicció: precisió
    millor que ±50 % és il·lusòria.
 6. **Simplicitat deliberada**: «es basa tant com pot en les taules del CTE i no es busca complicacions»

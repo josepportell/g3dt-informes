@@ -232,5 +232,22 @@ del col·lapse/ferm-on-recolza (petit-mitjà) → E per criteris i candidats (di
 (§4, necessita Eva o decisió del Josep).
 
 ---
-*Fi anàlisi 2026-09-02 (v2). El sistema ja modela la majoria de criteris professionals d'Eva; els forats són
-l'entrada del N20 (geometria de visió), dos conceptes de display (N, Nb) i el criteri de l'E.*
+
+## Postil·la 2026-09-03 — correccions del repàs R (`RECERCA-CRITERIS-DESCRITS-ALS-INFORMES-2026-09-03.md`)
+
+1. **§2.5 QUEDA REFUTAT.** La cel·la Nb SÍ que és N20/0,83: el factor «0,83» està **imprès** als fulls DPSH
+   dels annexos, l'aritmètica quadra fila a fila i la narrativa en diu «Nb mig». El codi és correcte en
+   concepte; la discrepància de valors és de **quines lectures entren a la mitjana** → tota la qüestió viu a §4
+   (P4). P1 descartada del pla.
+2. **§2.4 confirmat i ampliat:** N = SPT sempre («--»/«R»), i Bell-lloc p10 porta la regla textual del N30.
+3. **§5/P3:** cap informe justifica cap E (llegenda «(4)» = unitats; Crespo declarat només per c i φ) — la
+   pregunta a Eva és imprescindible, no opcional.
+4. **El cas Anciles de §0.4 estava mal llegit** (venia de `CRITERIS-CALCUL-EVA.md` §1): el signat fonamenta a
+   **L2 via pous encastats 20-40 cm**. El principi «on recolza» es manté (Rubí), i guanya una font nova: la
+   frase del Qa del signat **declara** el nivell portant (encastament 20-40 cm, 5 projectes).
+5. **Tolerància obligatòria:** Eva té 4 discrepàncies internes narrativa↔taula als seus propis informes
+   (N 54/58, Nb 48/47, 11/13, 44/17) — cap test de MATCH pot exigir igualtat exacta amb el signat.
+
+*Fi anàlisi 2026-09-02 (v2) + postil·la R. El sistema ja modela la majoria de criteris professionals d'Eva;
+els forats reals: l'entrada del N20 (geometria de visió i tram de la mitjana), la columna N, i el criteri de
+l'E — que només l'Eva pot donar.*

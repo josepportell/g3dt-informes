@@ -229,7 +229,8 @@ Extreu ~30-37 variables amb posició exacta dels informes reals d'Eva (`.doc`/`.
 **Regla d'or (2026-09-02): els geotècnics divergeixen de les fórmules amb criteris pactats — modela CRITERIS,
 no fórmules.** Arrodoniment professional (Qa a 0,5; E a 10/50; φ enter), topalls Qa per règim (3,0 sòl / 3,5
 granular dens / 3,0 roca mixta), ajust litològic (carbonatació→E↑), l'estrat que mana és **on recolza la
-fonamentació** (ni el primer ni el més profund — cas Anciles), assentament = verificació de servei (±50 %).
+fonamentació** (la frase del Qa del signat el DECLARA: encastament 20-40 cm — repàs R 2026-09-03),
+assentament = verificació de servei (±50 %).
 La cadena Qa que ho implementa està validada **6/7 MATCH exacte**. Família de documents (tots a `docs/`):
 
 | Document | Què hi ha |
@@ -238,7 +239,8 @@ La cadena Qa que ho implementa està validada **6/7 MATCH exacte**. Família de 
 | `RECERCA-PRACTICA-GEOTECNICA-ESPANYA.md` | pràctica espanyola; cap correlació sola reprodueix l'E d'Eva; taules Crespo (apèndix) |
 | `ANALISI-SETTLEMENT-BACK-ENGINEERING.md` §5 | procés de decisió del geotècnic; per què E=650 a Bell-lloc (carbonatades) |
 | `CALCUL-E-MODUL-DEFORMACIO.md`, `CALCUL-K30-BALAST.md` | racional E v1 + proposta v2; K30=E/75 (E/60 roca) validat 2/2 |
-| `ANALISI-CALCUL-N20-E-2026-09-02.md` | estat actual N20+E vs signats; forats coneguts (columna N, cel·la Nb, ferm, E per règims); pla: `PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md` |
+| `RECERCA-CRITERIS-DESCRITS-ALS-INFORMES-2026-09-03.md` | tasca R: els criteris que Eva DESCRIU als informes (7/7, cites amb pàgina); resol P1, tanca P3 en negatiu, capgira Anciles |
+| `ANALISI-CALCUL-N20-E-2026-09-02.md` | estat actual N20+E vs signats; forats coneguts (columna N, ferm, E per règims); pla: `PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md` |
 
 ## Documents de Camp
 

@@ -32,20 +32,24 @@ Després de cada peça: re-run dirigit del comparador i **delta per cel·la**, n
 - **Validació:** test unitari amb els 5 casos signats; delta al comparador (cel·la N passa de MISMATCH a OK
   on hi ha SPT).
 
-### P1 — Cel·la «Nb» sense inflar per 0,83 *(petit, ~1 h; cal OK del Josep — canvia un número visible)*
+### P1 — Cel·la «Nb» sense inflar per 0,83 — **RESOLTA 2026-09-03 pel repàs R: DESCARTADA, cap canvi de codi**
 
-- **Què:** `report_generator.py:1434-1436` mostra `N20/0,83`; l'Nb signat d'Eva segueix el **N20 cru** del
-  full de camp (els Excel ja porten la columna Nb; la relació ×0,83 va d'Nb→N). Evidència 3/3: Bell-lloc
-  «25» vs 25,1 cru (clavat) contra el nostre «41-R»; Castellar «17» vs 18,7 contra «27-R»; Rubí «47» vs 43,3
-  contra «52-R».
-- **Com:** display only — `nb_display` a partir del N20 del nivell, sufix «-R» com ara. **La conversió /0,83
-  del càlcul de φ no es toca.**
-- **Risc:** si Eva llegís el canvi com a «número diferent del meu» — però l'evidència diu justament que ara
-  ens hi acostem. Validar la interpretació amb el Josep abans (i si cal, pregunta a Eva).
+- El repàs R ho contradiu amb evidència forta: els fulls DPSH dels annexos imprimeixen el factor **«0,83»**
+  entre les columnes «Colpeig DPSH» i «Colpeig NB» (verificat també al preext de Castellar), l'aritmètica
+  NB=N20/0,83 quadra fila a fila, i la narrativa en diu «**Nb mig**». La cel·la Nb del codi
+  (`report_generator.py:1434`) és **correcta en concepte**.
+- La discrepància de valors (nostre «41-R» vs «25-R» signat a Bell-lloc) NO és el factor: és **quines lectures
+  entren a la mitjana** — s'ha mogut sencera a P4. Vegeu `RECERCA-CRITERIS-DESCRITS-ALS-INFORMES-2026-09-03.md`
+  §P1 i la postil·la de l'anàlisi.
 
 ### P2 — L'estrat que mana és on RECOLZA la fonamentació *(mitjà, ~½ dia + decisió d'input)*
 
-Dues sub-peces amb el mateix criteri (`CRITERIS-CALCUL-EVA.md` §1, cas Anciles):
+Dues sub-peces amb el mateix criteri. **Correcció del repàs R (2026-09-03):** el cas Anciles que fonamentava
+part d'aquest raonament estava mal llegit a `CRITERIS-CALCUL-EVA.md` §1 — el signat diu pous «empotrados un
+mínimo de 20-40 cm de los materiales del **segundo nivel** saneado» (fonamenta a L2, no a L1). El principi
+«on recolza» es MANTÉ (Rubí el sosté: la taula parametritza les graves, no el substrat), i surt reforçat per
+una troballa nova: **la frase del Qa de l'informe signat DECLARA el nivell portant** (encastament 20-40 cm,
+sistemàtic a 5 projectes) — font de veritat directa per a la tria d'estrat.
 
 - **P2a — col·lapse a 1 nivell** (`report_data.py:1168-1194`): avui pren descripció i paràmetres de
   `sondeig_layers[-1]` (la més profunda) → **Rubí queda vestit de roca** (φ35/E500/γ2,2/c1,0 vs signat
@@ -72,12 +76,20 @@ Dues sub-peces amb el mateix criteri (`CRITERIS-CALCUL-EVA.md` §1, cas Anciles)
   la variable que Eva mateixa declara de judici («agafa la taula, ja ho ajustarem»).
 - **Dependència:** les 4 preguntes d'E ja redactades (`CALCUL-E-MODUL-DEFORMACIO.md` §8) — sumar-les al
   paquet de preguntes pendents a Eva (`PREGUNTES-EVA-PENDENTS.md`) quan toqui.
+- **Resultat del repàs R (2026-09-03): negatiu amb valor** — als 6 informes amb lletra, cap frase justifica
+  cap E (la llegenda «(4)» de la taula només dona unitats; la font declarada, Crespo, cobreix NOMÉS c i φ).
+  **La pregunta a Eva és imprescindible**: els informes no ho descriuen.
 - **La proposta v2 del febrer (escalar dins del rang) NO és el camí**: empitjora el règim fluix (N=5 → 4).
 
 ### P4 — Regla N20 global/ferm + re-ancorar el test vermell *(bloquejat per decisió)*
 
 - **Què:** amb perfil d'un sol nivell real, ¿N20 de tot el perfil o del tram on recolza? Evidència signada
   2-de-3 vs 1-de-3 — no es pot decidir des del corpus. Pregunta per a Eva redactada a l'anàlisi §4.
+- **Aportació del repàs R (2026-09-03), parcial:** patró compatible amb «la cel·la Nb representa el tram on
+  treballarà la fonamentació; quan tot el perfil és aquest tram, mitjana global» (Bell-lloc 25 i Castellar 17
+  només s'expliquen amb els trams superficials pre-rebuig; Rubí 47 només amb tot el perfil). I una dada que
+  acota l'ambició: **la mateixa Eva té 4 discrepàncies internes narrativa↔taula** (N 54/58, Nb 48/47, 11/13,
+  44/17) — el test re-ancorat necessita **banda de tolerància**, no igualtat exacta.
 - **En resoldre's:** fixar el valor esperat del test de Bell-lloc i **congelar la geometria de capes dins
   del test** (literal, no `validation/`) perquè torni a ser una guarda de càlcul. Fins llavors, el test es
   queda vermell (decisió Josep 2026-09-02) i el seu significat està documentat a l'anàlisi §1.
@@ -94,6 +106,9 @@ Dues sub-peces amb el mateix criteri (`CRITERIS-CALCUL-EVA.md` §1, cas Anciles)
 - **Valor:** pot resoldre **P3 (E) i P4 (regla N20) sense preguntar a l'Eva** — si ho va deixar escrit, la
   resposta és als informes. Fer-lo ABANS d'enviar-li el paquet de preguntes.
 - **Esforç:** ~½ dia. **Bloquejada per:** res (només lectura; pot fer-se en paral·lel a la mesura).
+- **FETA 2026-09-03** (agent en paral·lel amb la mesura de Castellar): 7/7 informes, resultat a
+  `RECERCA-CRITERIS-DESCRITS-ALS-INFORMES-2026-09-03.md`. P1 resolta (descartada), P3 negativa (cal Eva),
+  P4 parcial, cas Anciles capgirat, 2 contradiccions a `CRITERIS-CALCUL-EVA.md` documentades.
 
 ### M341 — MESURA COMPLETA de l'informe (les 341 variables) *(programada: després de la mesura dels 8 + fixos no bloquejats)*
 
@@ -115,17 +130,17 @@ Dues sub-peces amb el mateix criteri (`CRITERIS-CALCUL-EVA.md` §1, cas Anciles)
 informes pot revisar els fixos mateixos (la interpretació de la cel·la Nb de P1, el criteri d'E de P3, la
 regla N20 de P4), i val més llegir-ho abans de tocar res.
 
-| Ordre | Peça | Esforç | Bloquejada per |
+| Ordre | Peça | Esforç | Estat / bloquejada per |
 |---|---|---|---|
-| 0 | **Mesura dels 8** (tasca 1 handoff) | — | en curs (Castellar 2026-09-03) |
-| 1 | **R** repàs criteris als informes | ~½ dia | res (paral·lelitzable amb la mesura) |
-| 2 | P0 columna N | ~1 h | mesura + R |
-| 3 | P1 cel·la Nb | ~1 h | R + OK Josep |
-| 4 | P2a col·lapse (Rubí) | ~2 h | mesura + R |
-| 5 | **M341** mesura completa (341 vars) | ~1-2 dies | mesura dels 8 + P0/P1/P2a |
-| 6 | P2b fondària sabata | ~½ dia | R + decisió input (G.1) |
-| 7 | P3 E per criteris | ~1 dia | R; si no en surt, pregunta a Eva |
-| 8 | P4 regla N20 + test | ~2 h | R; si no en surt, Eva o decisió Josep |
+| 0 | **Mesura dels 8** (tasca 1 handoff) | — | en curs — Castellar FET (33,4 min, ERR sistema=0); queden 7 |
+| 1 | **R** repàs criteris als informes | ~½ dia | **FETA 2026-09-03** |
+| 2 | P0 columna N | ~1 h | mesura feta (R la confirma: N=SPT, «--»/«R»; regla N30 textual a Bell-lloc p10) |
+| 3 | ~~P1 cel·la Nb~~ | — | **DESCARTADA per R** (el /0,83 és correcte; la qüestió viva és P4) |
+| 4 | P2a col·lapse (Rubí) | ~2 h | mesura feta |
+| 5 | **M341** mesura completa (341 vars) | ~1-2 dies | mesura dels 8 + P0/P2a |
+| 6 | P2b fondària sabata | ~½ dia | decisió input (G.1); nova font: la frase del Qa del signat declara el nivell |
+| 7 | P3 E per criteris | ~1 dia | **pregunta a Eva imprescindible** (R negatiu) |
+| 8 | P4 regla N20 + test | ~2 h | pregunta a Eva o decisió Josep (R dona patró parcial + exigeix tolerància) |
 
 Després de cada peça: suite dirigida + delta de `compare_tables_vs_eva` **per cel·la i per nom**, mai
 recomptes (`feedback_compare_test_names_not_counts`).
