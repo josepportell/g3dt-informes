@@ -1,0 +1,136 @@
+{
+ "source_path": "25.0647/A.01.pdf",
+ "source_md5": "ef0272ce32cc3e0a5f65c6995be59200",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol d'emplaçament i situació (A.01) del Projecte Bàsic i Executiu de l'habitatge unifamiliar aïllat, redactat per ABN Arquitectura Bosch Novell.",
+ "issuer": "ABN Arquitectura Bosch Novell (arquitecte Jordi Bosch Novell)",
+ "date": "2025-09-30 (creationDate/modDate PDF; consistent amb EXP25.34/SET.25)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "L'estudi d'arquitectura ABN (Jordi Bosch Novell), autor del Projecte Bàsic i Executiu de l'habitatge.",
+  "for_whom": "El promotor de l'obra (RAMON MITJANA SL) i per a tramitació de llicència; base tècnica que G3 fa servir per situar el projecte geotècnic.",
+  "why": "Definir l'emplaçament de la parcel·la, el planejament urbanístic aplicable i les dades bàsiques del projecte d'edificació (promotor, arquitecte, tipus d'edifici, plantes, superfície).",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "client_name (promotor)",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "lab_*",
+   "cte_*"
+  ],
+  "relation_to_others": "Existeix una variant amb el mateix contingut base però amb els punts d'assaig dibuixats a sobre ('A.01 amb punts.pdf', md5 diferent fde90fcb...) — no llegida en aquesta crida (--only A.01.pdf). És la font primària (caixetí) per als camps d'identitat del projecte.",
+  "authority_for": [
+   "client_name",
+   "architect_name",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_floors",
+   "superficie_parcela"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "RAMON MITJANA SL",
+   "location": "caixetí inferior dret, bloc 'Promotor'",
+   "quote": "Promotor / RAMON MITJANA SL",
+   "confidence": 0.9,
+   "note": "Caixetí del plànol amb etiqueta 'Promotor' — font de màxima prioritat per client_name segons Pas 3."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Jordi Bosch Novell",
+   "location": "caixetí inferior dret, bloc 'Arquitecte'",
+   "quote": "Arquitecte / Jordi Bosch Novell",
+   "confidence": 0.9,
+   "note": "Persona (no despatx); despatx associat visible al logo 'ABN ARQUITECTURA BOSCH NOVELL'."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "CARRER MESTRE RAMON ORTIZ",
+   "location": "caixetí inferior dret, bloc 'Situació'",
+   "quote": "Situació / CARRER MESTRE RAMON ORTIZ",
+   "confidence": 0.9,
+   "note": "Sense número de portal imprès en aquest bloc. Coherent amb el rètol del plànol de planta (CARRER MESTRE RAMON ORTIZ / CARRER ANTONI BELLET com a carrers de façana i testera de la parcel·la)."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Mestre Ramon Ortiz",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Bell-lloc d'Urgell",
+    "municipi_alternatives": [
+     "BELL.LLOC D'URGELL"
+    ]
+   },
+   "location": "caixetí inferior dret, bloc 'Situació'",
+   "quote": "CARRER MESTRE RAMON ORTIZ / 25220 BELL.LLOC D'URGELL (Lleida)",
+   "confidence": 0.85,
+   "note": "Concepte extra (address_struct), no és cap dels 15 camps."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "BELL.LLOC D'URGELL (Lleida)",
+   "location": "caixetí inferior dret, bloc 'Situació'",
+   "quote": "25220 BELL.LLOC D'URGELL (Lleida)",
+   "confidence": 0.9,
+   "note": "Grafia amb punt ('BELL.LLOC') en lloc del guionet oficial ('Bell-lloc d'Urgell'); mateix municipi."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "HABITATGE UNIFAMILIAR AÏLLAT",
+   "location": "caixetí inferior dret, títol del projecte",
+   "quote": "HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.85
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+PP",
+   "location": "taula 'JUSTIFICACIO PLANEJAMENT', fila 'N. plantes', columna 'Projecte'",
+   "quote": "N. plantes | PB+PP | PB+PP",
+   "confidence": 0.85,
+   "note": "PB+PP = Planta Baixa + Planta Pis = 2 plantes. Valor idèntic a planejament i projecte."
+  },
+  {
+   "concept_id": "superficie_parcela",
+   "value": "995,00 m2",
+   "location": "taula 'JUSTIFICACIO PLANEJAMENT', fila 'Parcel.la mínima', columna 'Projecte'",
+   "quote": "Parcel.la mínima | CLAU 6B min 600.00 m2 | 995,00m2",
+   "confidence": 0.85,
+   "note": "Única font d'aquest document (taula de planejament del projecte); regla Pas 3 'única font sense contradicció' -> pot pujar a segur si cap altre document la contradiu."
+  }
+ ],
+ "tables": {},
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció OK (page-1.txt + page-1.png, 150 dpi). L'ordre del text pla no reflecteix el layout del caixetí; verificat visualment amb page-1.png i 3 clips a 300-400 dpi (scripts/render_clip.py): caixetí (0.74,0.80,1.0,0.97), taula JUSTIFICACIO PLANEJAMENT (0.50,0.80,0.74,0.99) i inset CATASTRE (0.60,0.02,1.0,0.33). L'inset CATASTRE mostra la parcel·la del projecte a cavall de les parcel·les cadastrals 72 i 73 (SUELO) — sense codi de referència cadastral complet imprès al plànol; coherent amb els 2 fitxers 'consulta_cadastre' separats de la carpeta (461317-2... / 461317-3...), no llegits en aquesta crida. 'EXP25.34/SET.25' és el codi d'expedient de l'arquitecte, no l'expedient de G3 (regla Pas 3) -> a not_present."
+}

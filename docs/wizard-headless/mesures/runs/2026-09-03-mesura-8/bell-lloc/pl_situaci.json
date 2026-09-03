@@ -1,0 +1,108 @@
+{
+ "source_path": "pl. situaci.pdf",
+ "source_md5": "1c37ee19f93c14f8e8420ce8210f6870",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació de l'annex de l'Eva (còpia 'Microsoft: Print To PDF' de l'original FreeHand): emplaçament al municipi + parcel·la cadastral + planta amb dimensions i ubicació dels punts d'assaig (P-1, P-2 DPSH; S-1 sondeig).",
+ "issuer": "G3 (logo G3 al peu; plantilla pròpia de l'Eva)",
+ "date": "Octubre 2025 (data del plànol, caixetí)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "Eva/G3, com a annex propi de l'informe (mateix disseny que els altres annexos FreeHand de l'Eva)",
+  "for_whom": "El propi informe geotècnic (annex il·lustratiu per al lector de l'informe)",
+  "why": "Situar el projecte al municipi i mostrar sobre la planta on s'han fet els assaigs (P-1, P-2 DPSH i S-1 sondeig) i les dimensions de l'edificació",
+  "expected_fields": [
+   "street_address (redacció de cantonada)",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests (punts al dibuix)",
+   "referència a sondeig (S-1)",
+   "expedient (caixetí, pot portar typo)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "cota_referencia",
+   "lab_*",
+   "cte_*",
+   "UTM",
+   "field_date fiable (és la data del plànol, no de camp)"
+  ],
+  "relation_to_others": "Còpia 'Print To PDF' de l'annex FreeHand 'ANNEXES/4001612_plànol de situació.FH11' (text brossa a l'original); n'hi ha també una còpia a 'PDF/ANNEXES/4001612_plànol de situació.pdf' amb un altre md5 (516920bb...) que caldria comparar si es llegeix per separat — no verificat aquí.",
+  "authority_for": [
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "Situat entre el carrer Antoni Bellet i carrer Mestre Ramon Ortiz, Bell-lloc",
+   "location": "caixetí, bloc TÍTOL DEL PROJECTE",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC",
+   "confidence": 0.6,
+   "note": "Redacció de cantonada (dues adreces reals, no competeixen — regla de cantonada). Sense número de portal enlloc del document; el mapa cadastral de l'esquerra mostra la parcel·la 72 (Polígon Industrial Senpa) marcada en vermell però no dona referència cadastral completa ni portal."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc d'Urgell",
+   "location": "mapa d'emplaçament (requadre superior esquerre)",
+   "quote": "Bell-lloc d'Urgell",
+   "confidence": 0.75,
+   "note": "Forma oficial llarga al mapa d'emplaçament; el caixetí i el títol usen la forma curta 'BELL-LLOC' / 'DE BELL-LLOC'."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, bloc TÍTOL DEL PROJECTE",
+   "quote": "CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.55,
+   "note": "Redacció del propi annex (comparació CLOSE amb altres fonts, no cita textual d'una plantilla G3)."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "4001621",
+   "location": "caixetí, cel·la Exp:",
+   "quote": "Exp: 4001621",
+   "confidence": 0.15,
+   "note": "TYPO conegut d'aquest tipus d'annex (caixetins FreeHand de l'Eva): contradiu el nom de la carpeta del projecte ('4001612 BELL-LLOC') i l'ordre de xifres. No fer servir com a candidat principal — es dona només per registre."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "planta, marcadors verds P-1 i P-2 + llegenda 'Assaig de penetració dinàmica DPSH'",
+   "quote": "P-1 / P-2 (marcador verd) — llegenda: Assaig de penetració dinàmica DPSH",
+   "confidence": 0.4,
+   "note": "Recompte visual dels punts dibuixats a la planta; no és font d'autoritat A per aquest camp (mana l'Excel DPSH), es dona com a corroboració."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": null,
+   "location": "n/a",
+   "quote": "",
+   "confidence": 0.0,
+   "note": "Aquest plànol només marca la ubicació del punt S-1 (sondeig a rotació), no dona litologies ni nivells."
+  }
+ ],
+ "tables": {
+  "__nota": "Aquest document no aporta files de dpsh_tests/sondeig_tests/spt_ma_tests/soil_levels (no porta cotes ni litologies, només ubicació en planta dels punts P-1, P-2, S-1 i dimensions constructives)."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF net (producer 'Microsoft: Print To PDF', text_ok=true), llegit del page-1.txt + inspecció visual del page-1.png (no calen halves ni render_clip). Data del caixetí (Octubre 2025) NO s'ha emès com a candidat de field_date perquè és la data de redacció del plànol, no confirmada com a data de camp; es deixa nota aquí per si el consolidador la vol com a candidat feble addicional. El mapa cadastral inserit (parcel·la 72, Polígon Industrial Senpa, àrea 46131) no dona una referència cadastral completa ni portal — no s'ha emès com a candidat de referencia_catastral."
+}

@@ -1,0 +1,109 @@
+{
+ "source_path": "PDF/ANNEXES/4001612_tall de correlació.pdf",
+ "source_md5": "d2392ce1ea7e185375fb30f79236e37d",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació (secció transversal, format apaïsat) que relaciona els punts DPSH P-1 i P-2 amb el sondeig S-1, amb llegenda de nivells del sòl i la línia de cota de fonamentació",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (Eva) — dibuix FreeHand, exportat via Acrobat Distiller",
+ "date": "Octubre 2025 (data del quadre de rètol; no és necessàriament el dia exacte de camp)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "Eva (G3), com a annex intern de correlació entre els punts d'assaig (P-1, P-2 DPSH; S-1 sondeig)",
+  "for_whom": "Per a l'informe geotècnic mateix — és material de treball de l'Eva, no un document extern",
+  "why": "Correlacionar visualment les cotes de rebuig/refús (Nb) dels DPSH i l'assaig SPT del sondeig amb els nivells litològics, i fixar la cota de fonamentació de disseny",
+  "expected_fields": [
+   "num_soil_levels",
+   "litologia dels nivells",
+   "expedient",
+   "confirmació dels punts P-1/P-2/S-1",
+   "carrers de l'obra (cantonada)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date (dia exacte)",
+   "dades de laboratori",
+   "UTM",
+   "referencia_catastral",
+   "cte"
+  ],
+  "relation_to_others": "Export 'Print/Distiller' del dibuix FreeHand original (ANNEXES/4001612_tall de correlació.FH11, no llegible, exclòs). Existeix una còpia més antiga a PDF V0/ANNEXES/4001612_tall de correlació.pdf (carpeta exclosa per Pas 1); no s'ha comparat perquè està fora d'abast d'aquesta lectura.",
+  "authority_for": [
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001612",
+   "location": "quadre de rètol, cel·la 'Exp:'",
+   "quote": "Exp: 4001612",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz",
+   "location": "quadre de rètol, sota TÍTOL DEL PROJECTE",
+   "quote": "SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC",
+   "confidence": 0.7,
+   "note": "cantonada (dues vies) — redacció pròpia de l'informe (regla existent); els mateixos noms de carrer surten rotulats a l'esquema de situació encastat (inset) a dalt a l'esquerra"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc",
+   "location": "quadre de rètol, sota TÍTOL DEL PROJECTE",
+   "quote": "DE BELL-LLOC",
+   "confidence": 0.6,
+   "note": "forma curta; aquest document sol no basta per segur (regla: calen 3 fonts habituals — comanda, pressupost, PLAN_COST)"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "requadre LLEGENDA",
+   "quote": "1er nivell: Graves amb sorres",
+   "confidence": 0.7,
+   "note": "la capa 'Sòls vegetals' de la llegenda NO porta número (cobertura); només hi ha un nivell numerat en aquest tall. El TALL mana pel nombre quan discrepa amb l'annex de sondeig (regla existent), però aquí només s'ha llegit aquest document"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Sòls vegetals (cobertura, sense número)",
+    "litologia": "Sòls vegetals",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   },
+   {
+    "nom": "1er nivell",
+    "litologia": "Graves amb sorres",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   }
+  ]
+ },
+ "not_present": [
+  "cota_referencia (no hi ha text explícit 'Cota inici' o 'z:'; l'escala (msnm) és relativa i la 'Cota de fonamentació' dibuixada és un concepte de disseny diferent, no la cota de referència de l'aixecament)",
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text del PDF no fiable (text_ok=false; producer 'Acrobat Distiller 15.0 (Windows)', creator PScript5.dll — FreeHand exportat). Llegit visualment: page-1.png (150dpi) i les meitats esquerra/dreta (220dpi, halves_pages inclou pàg.1). Zoom addicional amb scripts/render_clip.py (400dpi, clip 0.08,0.55,0.35,0.78) per confirmar que la línia vermella discontínua 'Cota de fonamentació' coincideix visualment amb el tick de 199 msnm de l'escala — no s'ha pres com a valor de cota_referencia perquè és un concepte diferent (nivell de disseny de fonamentació) i no porta xifra impresa. Les anotacions 'Nb=27', 'Nb=R', 'Nb=22', 'Nb=56', 'N=58' són colpejos/rebuigs dels DPSH i de l'SPT del sondeig dibuixats sobre l'eix (msnm) per correlacionar-los gràficament; no s'han transcrit a taules perquè no mapegen net a les claus canòniques de dpsh_tests/sondeig_tests (aquestes surten de l'Excel DPSH i de l'annex de sondeig, no d'aquest tall) — evitat inventar candidats. No s'han mesurat píxels per derivar fondàries de transició 'de'/'a' del nivell 1: no hi ha cap xifra impresa de fondària en aquest document, només la posició gràfica sobre l'escala. L'esquema de situació encastat (inset, part superior esquerra) mostra el mateix layout de punts (P-1, P-2 verds; S-1 vermell) que altres annexos, amb els rètols 'CARRER MESTRE RAMON ORTIZ' i 'CARRER ANTONI BELLET' llegibles. La data del quadre de rètol ('Octubre 2025') només té precisió de mes; coincideix amb el mes de les fotos WhatsApp de l'inventari (2025-10-01, 2025-10-06) però no s'ha emès com a candidat de field_date perquè li falta el dia i no encaixa amb cap de les fonts prioritzades per aquest camp (fitxa F38 / annex DPSH DATA: / albarà TPS / noms de fotos)."
+}

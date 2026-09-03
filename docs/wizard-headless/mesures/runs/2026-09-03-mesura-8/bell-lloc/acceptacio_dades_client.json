@@ -1,0 +1,42 @@
+{
+ "source_path": "ACCEPTACIO/DADES CLIENT.txt",
+ "source_md5": "c9d7478ed63db174e5fba64d6a4d08b9",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "altre",
+ "what_it_is": "Fitxa mecanografiada amb la identitat fiscal del client (empresa + representant, NIF, adreça, contacte) per a l'acceptació del pressupost",
+ "issuer": "no signat; probablement transcrit pel client o per G3 a partir de les dades que el client va facilitar",
+ "date": null,
+ "pages_or_sheets": "1 fitxer de text, 10 línies",
+ "context": {
+  "who_made_it": "El client (o G3 en nom seu) omple aquesta fitxa dins la carpeta ACCEPTACIO/ per deixar constància exacta de la identitat fiscal a facturar",
+  "for_whom": "G3, per emetre la factura i redactar l'informe amb el nom i NIF correctes",
+  "why": "Correspon al mateix propòsit que el formulari p.5 del pressupost signat (\"DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME\"): fixar sense ambigüitat qui és el client",
+  "expected_fields": [
+   "client_name"
+  ],
+  "not_expected": [
+   "street_address (obra)",
+   "municipality (obra)",
+   "architect_name",
+   "building_type",
+   "field_date"
+  ],
+  "relation_to_others": "Document d'acceptació, mateixa autoritat que el formulari p.5 del pressupost signat (ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf); no és una font independent de l'obra en si, és font primària per a la identitat del client",
+  "authority_for": [
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "RAMON MITJANA SL",
+   "location": "línia 4, sota l'encapçalament \"DADES CLIENT\"",
+   "quote": "DADES CLIENT\nRAMON MITJANA SL       B25771726",
+   "confidence": 0.9,
+   "note": "Empresa client amb NIF B25771726. El document afegeix un representant individual (línia 6: RAMON MITJANA GRÍFOL, NIF 78058457E) sota l'etiqueta \"Representant:\" — mateixa persona/família, no un client diferent; no és una ambigüitat de fonts, és estructura empresa+representant."
+  }
+ ],
+ "not_present": [],
+ "reading_notes": "Fitxer .txt sense pre-extracció (kind=unsupported); llegit directament amb Read. L'adreça (Carrer Doctor Torrebadella 8, 25220 Bell-lloc d'Urgell) és l'adreça FISCAL del client, no la de l'obra — no s'ha emès com a candidat de street_address per no barrejar-la amb l'adreça de l'obra (regla del Pas 3)."
+}

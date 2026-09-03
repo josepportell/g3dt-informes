@@ -1,0 +1,163 @@
+{
+ "source_path": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+ "source_md5": "6cd3bef1288e984b22e6bd660b26dc8c",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern de G3 (César Morillas, Dept. Assessor) a l'Eva Vázquez i la Dolors Maqueda, encarregant el geotècnic C1 de Bell-lloc amb les dades bàsiques de l'obra: tipus d'edifici, superfícies per planta, adreça i sol·licitant.",
+ "issuer": "César Morillas (G3 - Dept. Assessor) <cesar@g3dt.com>",
+ "date": "2025-09-03 11:26:08+02:00",
+ "pages_or_sheets": "body.txt (1 missatge; 2 adjunts PDF de Cadastre i 2 imatges no oberts en aquesta lectura, vegeu reading_notes)",
+ "context": {
+  "who_made_it": "César Morillas, Dir. Dept. Assessor de G3 (personal comercial/intern, no el geotècnic ni el client)",
+  "for_whom": "Eva Vázquez (destinatària, qui redactarà l'informe) i Dolors Maqueda, totes dues internes de G3",
+  "why": "Encarregar internament a l'Eva l'obra de Bell-lloc abans de començar el treball de camp: li dona el tipus CTE, el programa de superfícies i les dades del sol·licitant/obra que té fins ara",
+  "expected_fields": [
+   "cte_edificacio",
+   "num_floors",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "architect_company",
+   "referencia_catastral (via noms d'adjunt)"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "dades de laboratori"
+  ],
+  "relation_to_others": "Hi ha un correu 'RE: Pressupost C1 - Bell-lloc...' amb el mateix assumpte a la mateixa carpeta (md5 diferent, e697618a53d214d51049213bd8169fbe) — probablement resposta amb informació complementària (p.ex. el plànol d'ubicació que el Jordi havia d'enviar, esmentat a la línia 25); no s'obre en aquesta crida --only. Els dos adjunts PDF de Cadastre ja són solts a la carpeta ('4613173CG1141S0001ZU-13.pdf', '4613172CG1141S0001SU-15.pdf'); les dues imatges (image008.jpg, image009.jpg) ja estan extretes a validation/lectura/_preext/ d'una lectura anterior.",
+  "authority_for": [
+   "cte_edificacio",
+   "num_floors",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "architect_company",
+   "referencia_catastral"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C1",
+   "location": "body.txt:25",
+   "quote": "GEO : És un C1 Pb de 280m + p1 de 86 - son dos parcel.les contigües on hi haura una sola casa.",
+   "confidence": 0.9,
+   "note": "correu d'encàrrec; coherent amb el 'Tipus d'edifici' del pressupost"
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1 (planta baixa + pis 1)",
+   "location": "body.txt:25",
+   "quote": "Pb de 280m + p1 de 86",
+   "confidence": 0.85,
+   "note": "derivat directe de l'exemple del skill (Pas 3, regla num_floors)"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "casa / habitatge unifamiliar",
+   "location": "body.txt:25",
+   "quote": "son dos parcel.les contigües on hi haura una sola casa",
+   "confidence": 0.4,
+   "note": "redacció informal ('casa'), no és el títol formal del projecte; candidat feble"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Mestre Ramon Ortiz, 15",
+   "location": "body.txt:29",
+   "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+   "confidence": 0.9,
+   "note": "bloc etiquetat OBRA, autoritat A per a l'adreça"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc",
+   "location": "body.txt:29",
+   "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+   "confidence": 0.85,
+   "note": "forma curta; bloc OBRA"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc d'Urgell",
+   "location": "body.txt:39 (URL Google Maps)",
+   "quote": "25220+Bell-lloc+d'Urgell,+L%C3%A9rida (dins la URL de Google Maps)",
+   "confidence": 0.3,
+   "note": "forma llarga oficial, però extreta d'un paràmetre de cerca de Google Maps, no redactada per l'autor del correu"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Jordi Bosch Novell",
+   "location": "body.txt:35",
+   "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com",
+   "confidence": 0.6,
+   "note": "etiquetat 'CLIENT:' però el nom conté ARQUITECTURA -> és el sol·licitant/arquitecte (regla Pas 3), mai client_name; forma persona"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "Arquitectura Bosch Novell",
+   "location": "body.txt:35",
+   "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com",
+   "confidence": 0.6,
+   "note": "forma despatx, mateixa línia que la persona"
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "4613173CG1141S0001ZU",
+   "location": "adjunt del correu (nom de fitxer)",
+   "quote": "4613173cg1141s0001zu.pdf (attachment name, meta.json)",
+   "confidence": 0.6,
+   "note": "nom de l'adjunt PDF de consulta cadastral, ja no obert en aquesta lectura (already_in_folder: 25.0647/4613173CG1141S0001ZU-13.pdf); una de les dues parcel·les contigües esmentades a la línia 25"
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "4613172CG1141S0001SU",
+   "location": "adjunt del correu (nom de fitxer)",
+   "quote": "4613172cg1141s0001su.pdf (attachment name, meta.json)",
+   "confidence": 0.6,
+   "note": "nom de l'adjunt PDF de consulta cadastral, ja no obert en aquesta lectura (already_in_folder: 25.0647/4613172CG1141S0001SU-15.pdf); segona de les dues parcel·les contigües"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "ARQUITECTURA BOSCH NOVELL / Jordi Bosch Novell descartat com a client_name",
+   "location": "body.txt:35",
+   "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell",
+   "confidence": 0.1,
+   "note": "el nom conté ARQUITECT -> és el sol·licitant, no el promotor/client de l'obra (regla Pas 3); reclassificat com architect_name/architect_company"
+  }
+ ],
+ "tables": {
+  "superficie_construida": [
+   {
+    "components": [
+     "280 (PB)",
+     "86 (P1)"
+    ],
+    "total": null,
+    "etiqueta_font": null,
+    "location": "body.txt:25",
+    "quote": "Pb de 280m + p1 de 86",
+    "note": "total no explicitat al document; suma (366) a càrrec del consolidador, no inventada aquí"
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "superficie_parcela",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura directa de body.txt (pre-extracció), sense fitz/xlrd/extract_msg. Els 2 adjunts PDF de Cadastre ja són solts a la carpeta del projecte (already_in_folder al meta.json): s'han usat els NOMS dels adjunts com a candidats de referencia_catastral sense obrir-los (regla 'no el llegeixis dos cops'). Les 2 imatges (image008.jpg 165KB, image009.jpg 308KB) ocupen la posició típica de capçalera/peu de signatura corporativa (línies 8-19 abans de 'Hola Eva' i línies 73-92 després de 'www.g3dt.com'); tot i superar el llindar de 25KB de la regla de signatures, pel context (banner + peu de correu G3) es classifiquen com a grafisme corporatiu sense dades i no s'obren. El correu conté una URL de Google Maps amb coordenades GPS aproximades (body.txt:39); no s'usen per a utm_x/utm_y perquè la regla del skill restringeix aquest camp a COORDENADES.txt/annex sondeig ('no geocodificar aquí'). La data del capçalera (2025-09-03) precedeix l'mtime del fitxer (2026-03-04): s'informa tal qual, sense interpretar la discrepància. Existeix un correu 'RE:' amb el mateix assumpte a la carpeta, no obert en aquesta crida."
+}

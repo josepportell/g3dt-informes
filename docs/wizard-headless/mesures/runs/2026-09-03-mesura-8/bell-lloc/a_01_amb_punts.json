@@ -1,0 +1,179 @@
+{
+ "source_path": "A.01 amb punts.pdf",
+ "source_md5": "fde90fcbe90dc9129e4f6641861d76b1",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol d'arquitectura A.01 (Emplaçament i situació) del projecte bàsic i executiu de l'habitatge, variant amb dos punts de referència geomètrica afegits en vermell sobre el plànol base",
+ "issuer": "ABN Arquitectura Bosch Novell (arquitecte: Jordi Bosch Novell)",
+ "date": "Sense data impresa al caixetí. Metadades PDF: creationDate 2025-09-30, modDate 2025-10-01. Codi de l'arquitecte: EXP25.34/SET.25 (no és l'expedient de G3)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "L'arquitecte Jordi Bosch Novell (despatx ABN Arquitectura Bosch Novell) ha fet aquest plànol per al projecte bàsic i executiu de l'habitatge",
+  "for_whom": "El promotor de l'obra (Ramon Mitjana SL), per a la tramitació del projecte/llicència; G3 el rep com a document del client per situar el geotècnic",
+  "why": "Definir l'emplaçament i la situació de l'edifici dins la parcel·la (dimensions, carrers, catastre, justificació urbanística) i, en aquesta variant 'amb punts', dues marques vermelles amb distàncies (8.5 / 22.0 / 10.0 m) que semblen punts de referència geomètrica per a replanteig o geolocalització, no punts d'assaig DPSH/sondeig (no porten cap etiqueta P-i/S-i)",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "client_name (Promotor)",
+   "architect_name",
+   "architect_company",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral (indirecta, sense codi imprès)"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "dades de laboratori",
+   "cte_edificacio/cte_sol"
+  ],
+  "relation_to_others": "Variant d'A.01.pdf (mateix plànol base: mateix caixetí, mateixa taula de planejament) amb dos punts vermells de referència afegits; md5 diferent d'A.01.pdf i mida lleugerament superior (1.461.309 vs 1.308.892 bytes) — no és un duplicat exacte, és una versió amb anotacions afegides",
+  "authority_for": [
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "RAMON MITJANA SL",
+   "location": "caixetí, bloc 'Promotor'",
+   "quote": "Promotor / RAMON MITJANA SL",
+   "confidence": 0.9,
+   "note": "Etiqueta explícita 'Promotor' al caixetí del plànol — autoritat màxima per client_name (Pas 3)"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Jordi Bosch Novell",
+   "location": "caixetí, bloc 'Arquitecte'",
+   "quote": "Arquitecte / Jordi Bosch Novell",
+   "confidence": 0.9,
+   "note": "Persona (no despatx) — etiqueta explícita al caixetí"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "ABN Arquitectura Bosch Novell",
+   "location": "caixetí, capçalera/logotip",
+   "quote": "abn ARQUITECTURA BOSCH NOVELL",
+   "confidence": 0.85,
+   "note": "Despatx; el nom de persona (Jordi Bosch Novell) és el candidat preferent per architect_name"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, títol del projecte",
+   "quote": "HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.9,
+   "note": "Coincideix amb la classificació urbanística (Edificació aïllada unifamiliar) de la mateixa taula"
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+PP",
+   "location": "taula 'JUSTIFICACIO PLANEJAMENT', fila 'N. plantes', columna 'Projecte'",
+   "quote": "N. plantes / PB+PP (Planejament) / PB+PP (Projecte)",
+   "confidence": 0.9,
+   "note": "Planta Baixa + Planta Pis = 2 plantes; el projecte coincideix amb el màxim de planejament"
+  },
+  {
+   "concept_id": "superficie_parcela",
+   "value": "995,00 m2",
+   "location": "taula 'JUSTIFICACIO PLANEJAMENT', fila 'Parcel·la mínima', columna 'Projecte'",
+   "quote": "Parcel.la mínima / CLAU 6B min 600.00 m2 / 995,00m2",
+   "confidence": 0.8,
+   "note": "Única font dins d'aquest document; creuar amb Cadastre. La parcel·la vermella del requadre CATASTRE sembla resultar de la unió de dues parcel·les cadastrals (72 i 73) — hi ha dues consultes cadastrals separades a la carpeta (sufixos -15 i -13), no llegides en aquesta crida"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Mestre Ramon Ortiz, 25220 Bell-lloc d'Urgell (Lleida)",
+   "location": "caixetí, bloc 'Situació'",
+   "quote": "Situació / CARRER MESTRE RAMON ORTIZ / 25220 BELL.LLOC D'URGELL (Lleida)",
+   "confidence": 0.9,
+   "note": "Adreça oficial del bloc Situació del caixetí"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Antoni Bellet",
+   "location": "vora sud de la parcel·la, planta general del plànol",
+   "quote": "CARRER ANTONI BELLET",
+   "confidence": 0.55,
+   "note": "La parcel·la fa cantonada entre Carrer Mestre Ramon Ortiz i Carrer Antoni Bellet (regla de cantonada, Pas 3): dues adreces vertaderes, no competeixen. Només 'Mestre Ramon Ortiz' consta al bloc Situació del caixetí"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc d'Urgell",
+   "location": "caixetí bloc 'Situació' + taula 'JUSTIFICACIO PLANEJAMENT' fila 'Ordenació urbanística'",
+   "quote": "25220 BELL.LLOC D'URGELL (Lleida) / POUM Bell-lloc d'Urgell",
+   "confidence": 0.9,
+   "note": "Forma oficial llarga 'Bell-lloc d'Urgell' (taula planejament) coincideix amb la forma del caixetí (amb punt ortogràfic diferent)"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Mestre Ramon Ortiz",
+    "nom_via_alternatives": [
+     "Ortiz"
+    ],
+    "portals": [
+     "15",
+     "13"
+    ],
+    "municipi": "Bell-lloc d'Urgell",
+    "municipi_alternatives": [
+     "BELL.LLOC D'URGELL"
+    ]
+   },
+   "location": "caixetí 'Situació' + requadre CATASTRE (E. 1/750)",
+   "quote": "CARRER MESTRE RAMON ORTIZ; requadre CATASTRE: parcel·les 72/15 i 73/13 acolorides en vermell",
+   "confidence": 0.6,
+   "note": "Portals 15 i 13 llegits visualment de les etiquetes blaves del requadre CATASTRE al costat de les parcel·les 72 i 73 ressaltades en vermell (mateixa parcel·la del projecte); coincideix amb els sufixos -15 i -13 dels noms dels dos fitxers de consulta cadastral de la carpeta (no llegits en aquesta crida) — corroboració indirecta, no confirmació directa d'un document de Cadastre"
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "EXP25.34/SET.25",
+   "location": "caixetí, peu inferior esquerre",
+   "quote": "EXP25.34/SET.25",
+   "confidence": 0.0,
+   "note": "Codi d'expedient intern de l'ARQUITECTE, no de G3 — descartat com a expedient (regla Pas 3: 'NO són l'expedient... EXP25.34/SET.25 (arquitecte)')"
+  }
+ ],
+ "tables": {
+  "superficie_construida": [
+   {
+    "components": [],
+    "total": "397,00 m2",
+    "etiqueta_font": "IEN (Índex d'Edificabilitat Net) segons projecte, taula JUSTIFICACIO PLANEJAMENT",
+    "confidence": 0.35,
+    "note": "Sostre màxim edificable segons el projecte (fila IEN, columna Projecte) — proxy feble de superfície construïda: no és una etiqueta explícita 'superfície construïda' ni dona components per planta; 'Ocupacio 296.80 m2' (fila Ocupació) és la petjada en planta baixa, no el total construït. Candidata de baixa confiança, a contrastar amb correu d'encàrrec / taula de planejament d'altres documents"
+   }
+  ],
+  "__nota": "única fila aportada; sense desglossament per planta en aquest document"
+ },
+ "not_present": [
+  "expedient (G3)",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "referencia_catastral (codi complet)",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text de page-1.txt llegible (text_ok=true, PDF vectorial AutoCAD) però sense posicions — s'ha ordenat el contingut amb 3 retalls a 300-400dpi via scripts/render_clip.py: caixetí (0.72,0.72,1.0,1.0 @350dpi, primer intent 0.85,0.80,1.0,1.0 va sortir en blanc perquè el requadre és més ample del que semblava a la vista general), taula JUSTIFICACIO PLANEJAMENT (0.50,0.86,0.73,1.0 @400dpi) i requadre CATASTRE (0.60,0.02,1.0,0.30 @300dpi). També s'ha retallat la zona dels dos punts vermells (0.20,0.10,0.55,0.55 @300dpi) per confirmar que són punts de referència geomètrica amb cotes de distància (8.5/22.0/10.0m), no punts d'assaig DPSH — no porten cap etiqueta P-i/S-i."
+}

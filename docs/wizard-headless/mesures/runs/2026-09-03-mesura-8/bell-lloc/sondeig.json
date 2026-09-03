@@ -1,0 +1,217 @@
+{
+ "source_path": "SONDEIG.pdf",
+ "source_md5": "40a9c27260c74eb5a0b5d521a217ea67",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Full manuscrit de TPS del sondeig a rotació S-1 (3 pàgines: p.1 ALBARÀ genèric de treballs executats, p.2 Full de camp sondeig a rotació amb litologia/mostra/cotes, p.3 croquis d'emplaçament)",
+ "issuer": "TPS, prospecció del subsòl (sondista Daniel Fernández, equip ML76A)",
+ "date": "2025-10-06",
+ "pages_or_sheets": "3 pàgines: p.1 ALBARÀ, p.2 Full de camp sondeig a rotació (S-1), p.3 croquis d'emplaçament",
+ "context": {
+  "who_made_it": "TPS (Daniel Fernández, sondista), subcontractista de sondeigs que fa aquest albarà i full de camp per a G3",
+  "for_whom": "G3 (Eva), que ha encarregat el sondeig a rotació d'aquest projecte a TPS",
+  "why": "Documentar el treball de camp executat (albarà per a facturació de TPS a G3) i el registre tècnic del sondeig S-1 (litologia per trams, mostra SPT-1 amb colpeig, cota de referència) que alimenta l'informe geotècnic",
+  "expected_fields": [
+   "field_date (dia del sondeig)",
+   "cota_referencia (relativa, respecte carrer)",
+   "street_address (adreça de l'obra, croquis de cantonada)",
+   "lab_sample_id / lab_depth / lab_location (mostra SPT-1)",
+   "litologia i fondàries del sondeig S-1 (taula, no compten com a 'nivells' numerats)"
+  ],
+  "not_expected": [
+   "client_name (promotor)",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y (només distàncies relatives al croquis, no UTM)",
+   "lab_testing_company (identitat del laboratori extern que processarà la mostra)",
+   "cte_edificacio / cte_sol"
+  ],
+  "relation_to_others": "Complementa PDF/ANNEXES/4001612_sondeig.pdf (l'annex tipogràfic de l'Eva, no llegit en aquesta crida --only): aquest full manuscrit és la font primària de camp, l'annex és la redacció que passa a l'informe. El bloc 'DADES CLIENT: Empresa G3 / Responsable Eva' de la p.1 és la relació TPS→G3 (subcontractista), no el client del projecte — descartat (vegeu NOT_client_name). El croquis de la p.3 (cantonada C/Antoni Bellet - C/Mestre Ramon Ortiz) es corrobora amb el nom de fitxer d'altres documents de l'inventari ('Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz - Jordi Bosch.msg').",
+  "authority_for": [
+   "field_date",
+   "cota_referencia",
+   "street_address",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "C/Antoni Bellet - Bell-lloc",
+   "location": "p.2, camp 'Adreça de l'obra'",
+   "quote": "Adreça de l'obra: C/antoni Bellet - Bell-lloc",
+   "confidence": 0.55,
+   "note": "Manuscrit; grafia 'Bellet' (p.2) vs 'Ballet' (p.1) del mateix carrer — normalitzar cap a la grafia del document imprès (annex/plànol)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/Antoni Ballet",
+   "location": "p.1, bloc 'DADES OBRA: Adreça'",
+   "quote": "DADES OBRA: Adreça: C/antoni Ballet",
+   "confidence": 0.5,
+   "note": "Mateix carrer que street_address candidat 1, grafia alternativa manuscrita"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/Mestre Ramon Ortiz",
+   "location": "p.3, croquis d'emplaçament (carrer de la cantonada)",
+   "quote": "C/Mestre Ramon Ortiz",
+   "confidence": 0.4,
+   "note": "Segona adreça vàlida: el croquis dibuixa la parcel·la fent cantonada entre C/Antoni Bellet i C/Mestre Ramon Ortiz — no competeix amb l'altra, corroborat pel nom d'un correu de l'inventari ('...Mestre Ramon Ortiz - Jordi Bosch.msg')"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Antoni Bellet",
+    "nom_via_alternatives": [
+     "Antoni Ballet"
+    ],
+    "portals": [],
+    "municipi": "Bell-lloc",
+    "municipi_alternatives": []
+   },
+   "location": "p.2 camp 'Adreça de l'obra' + p.1 bloc 'DADES OBRA'",
+   "quote": "C/antoni Bellet - Bell-lloc / C/antoni Ballet",
+   "confidence": 0.5,
+   "note": "Concepte extra (no és cap dels 15 camps); veure candidats street_address per a la cantonada amb C/Mestre Ramon Ortiz"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc",
+   "location": "p.1 camp 'Població' + p.2 camp 'Adreça de l'obra'",
+   "quote": "Població: Bell-lloc",
+   "confidence": 0.5,
+   "note": "Forma curta manuscrita, mateix document (p.1 i p.2 no són fonts independents); forma oficial llarga (Bell-lloc d'Urgell) cal confirmar-la a comanda/pressupost/PLAN_COST"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-06",
+   "location": "p.1 'Data inici'/'Data final' + p.2 'Data inici'",
+   "quote": "Data inici: 6-10-2025 Data final: 6-10-2025",
+   "confidence": 0.55,
+   "note": "Dia del sondeig a rotació S-1 (regla: candidat 2 de field_date, pot no ser el primer dia de camp — comparar amb la data del DPSH)"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+/-0,00 respecte C/Antoni Bellet (cota relativa al carrer)",
+   "location": "p.2, camp 'Decriure cota 0 o cota referència'",
+   "quote": "Decriure cota 0 o cota referència: C/antoni Bellet +/-0",
+   "confidence": 0.6,
+   "note": "Cota relativa (0,00 = nivell del carrer), coherent amb el criteri habitual de l'Eva d'usar el carrer com a referència"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.2, taula 'Mostres', columna 'tipus'",
+   "quote": "tipus: S.P.T-1",
+   "confidence": 0.65,
+   "note": "Font primària de camp (full manuscrit), abans de l'annex/GTL"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,00 - 1,60 m",
+   "location": "p.2, taula 'Mostres', columna 'Prof'",
+   "quote": "Prof: 100 a 1.60",
+   "confidence": 0.65,
+   "note": "Interval de fondària de la mostra SPT-1"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.2, capçalera 'Sondeig'",
+   "quote": "Sondeig: S-1",
+   "confidence": 0.6,
+   "note": "La mostra SPT-1 surt del sondeig S-1 (únic sondeig d'aquest full)"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 / Eva",
+   "location": "p.1, bloc 'DADES CLIENT'",
+   "quote": "DADES CLIENT: Empresa: G3, Responsable: Eva",
+   "confidence": 0.0,
+   "note": "Descartat: és la relació TPS (sondista) → G3 (encarregant del sondeig), no el promotor/client de l'obra"
+  }
+ ],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "+/-0,00 (relatiu, referència C/Antoni Bellet)",
+    "profunditat_assolida": "1,80",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": "No detectat",
+    "location": "p.1 'ML de perf. en graves entre 0-20m' + p.2 taula, fila 2 columna 'a'",
+    "quote": "1,80 Ml de perf. en graves entre 0-20 m (p.1); de 1,60 a 1,80 (p.2)"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "1,00-1,60",
+    "litologia": "Graves con arena / Graves carbonatades (mostra a cavall de la transició, veure nota)",
+    "n30": {
+     "registre": [
+      24,
+      34,
+      28,
+      30
+     ],
+     "candidates": [
+      "62 (suma dels 2 trams centrals 34+28, criteri habitual)",
+      "116 (suma dels 4 trams)"
+     ],
+     "note": "Registre segur; n30 mai segur. Cas conegut de Bell-lloc (docs/CRITERIS-CALCUL-EVA.md): el mateix registre 24/34/28/30 dona informe=54 i tall=58, cap dels dos coincideix amb la suma dels trams centrals (62) — incoherència interna d'Eva, pregunta oberta"
+    },
+    "location": "p.2, taula 'Mostres', fila 1",
+    "quote": "Prof 1,00-1,60 S.P.T-1 Colpeig 24 34 28 30"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Tram 1 (full de camp S-1, 0,00-1,00 m — NO és 'nivell' numerat)",
+    "litologia": "Graves con arena",
+    "de": "0,00",
+    "a": "1,00",
+    "mostra_del_nivell": true,
+    "note": "El full de camp no numera 'NIVELL 1/2'; regla del skill: els trams del full de camp NO compten per a num_soil_levels. La mostra SPT-1 (1,00-1,60) comença just al final d'aquest tram"
+   },
+   {
+    "nom": "Tram 2 (full de camp S-1, 1,60-1,80 m — NO és 'nivell' numerat)",
+    "litologia": "Graves carbonatades",
+    "de": "1,60",
+    "a": "1,80",
+    "mostra_del_nivell": false,
+    "note": "Gap sense descripció explícita entre 1,00 i 1,60 m; la mostra SPT-1 hi acaba (fins a 1,60), a cavall de la transició cap a aquest tram"
+   }
+  ],
+  "__nota": "Sondeig únic S-1 d'aquest projecte; dades brutes del full de camp, a contrastar amb PDF/ANNEXES/4001612_sondeig.pdf (no llegit en aquesta crida)"
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "num_dpsh_tests",
+  "num_soil_levels (els trams d'aquest full de camp NO són 'nivells' numerats — regla explícita del skill; consultar annex de sondeig/tall)",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Document escanejat/fotografiat (Producer 'Microsoft: Print To PDF', text_ok=false a les 3 pàgines): lectura 100% visual. Fotografia en orientació apaïsada (calia rotar 90° per llegir còmodament les pàgines 2 i 3; render_clip.py es va usar amb fraccions de pàgina, coherents amb el PNG sencer). Zooms fets amb render_clip.py a 400-600 dpi per confirmar l'adreça manuscrita (p.1: 'C/antoni Ballet'; p.2: 'C/antoni Bellet'), el bloc DADES CLIENT (G3/Eva), el camp Nivell Freàtic (comprovat en blanc, no 'No' escrit — es normalitza a 'No detectat'), i la taula de mostres/colpeig. La p.3 és un croquis a mà que mostra la parcel·la en cantonada (C/Antoni Bellet i C/Mestre Ramon Ortiz) amb el punt S1 i un punt '1' de referència (11 m / 4,2 m de distàncies), probablement el punt DPSH P-1 — no s'ha llegit cap document DPSH en aquesta crida per confirmar-ho."
+}

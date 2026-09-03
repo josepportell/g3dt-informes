@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "fields": {
+    "street_address": {
+      "estat": "candidats",
+      "value": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz, Bell-lloc",
+      "candidates": [
+        {
+          "value": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz, Bell-lloc",
+          "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí (redacció idèntica a 4001612_tall de correlació.pdf i pl. situaci.pdf, 3 documents propis de l'Eva)",
+          "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC"
+        },
+        {
+          "value": "Carrer Mestre Ramon Ortiz, 15",
+          "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc OBRA (= 25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf, mateix valor i mateixa font G3_templates; = fitxa de camp DADES PER ANAR A CAMP_v1.xlsx C7)",
+          "quote": "C/MESTRE RAMON ORTIZ 15 / BELL-LLOC"
+        },
+        {
+          "value": "Carrer Antoni Bellet",
+          "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.1 bloc Situació (= PDF/ANNEXES/LAB-SIG.pdf); comanda laboratori_4001612_BELL-LLOC.xls Hoja1!N20 (grafia 'Antoni Ballet')",
+          "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet."
+        }
+      ],
+      "rule": "Parcel·la de cantonada (Pas 3, regla street_address): dues adreces vertaderes no competeixen -> candidats, mai segur. La redacció pròpia de l'Eva als seus annexos ('situat entre el carrer X i el carrer Y'), idèntica en 3 documents propis (sondeig, tall de correlació, pl. de situació), és candidat 1 (regla Pas 3: aquesta frase és la redacció de l'informe). El carrer amb número de portal imprès (OBRA dels documents comercials G3: pressupost x2, fitxa de camp) és candidat 2. El segon carrer de la cantonada, sense portal enlloc del corpus (GTL, LAB-SIG, comanda laboratori), és candidat 3.",
+      "note": "Grafia normalitzada a 'Bellet' (forma dels documents impresos: annex sondeig, tall, pl.situació, GTL, LAB-SIG) davant de 'Ballet' (comanda laboratori Excel i SONDEIG.pdf manuscrit p.1; el mateix SONDEIG.pdf p.2 ja recomana normalitzar cap al document imprès). Portal 15 confirmat per 3 fonts A independents (pressupost, fitxa de camp, annex DPSH); un candidat feble a '13' només surt d'una lectura del requadre CATASTRE d'A.01 amb punts (confiança 0.6, font única) i no s'ha elevat a candidat perquè no té cap altra font que el corrobori. _decisions.json encara no existeix en aquest directori (el runner el desa NOMÉS després de rebre aquesta resposta --only-fields, Fase 12): les 3 fonts anteriors s'han pres directament dels JSON per document i de _g3_templates.json, no de _decisions.json."
+    }
+  },
+  "notes": []
+}
