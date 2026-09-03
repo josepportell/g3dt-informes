@@ -1,4 +1,4 @@
-# FOR NEW YOU — 2026-09-03 — Castellar 1/8 fet, repàs R fet i P1 descartada; queden 7 projectes de mesura
+# FOR NEW YOU — 2026-09-03 — Castellar 1/8 i Bell-lloc 2/8 fets, or Castellar corregit; queden 6 projectes de mesura
 
 **Escrit:** 2026-09-03, tancament abrupte (tall de connexió del Josep). Arbre net, tot committejat, branca
 `experiment/nivell-a-2026-08` **ahead 8 d'origin — SENSE push** (el Josep no el va demanar; pregunta-li).
@@ -25,20 +25,31 @@
   **Anciles capgirat** (fonamenta a L2 via pous encastats 20-40 cm — CRITERIS-CALCUL-EVA §1 ho llegia al revés);
   troballa d'or: **la frase del Qa del signat DECLARA el nivell portant** (5 projectes).
 
+## Sessió 2 (2026-09-03 vespre, tallada per bateria)
+
+- **Or de Castellar corregit** (utm = P-1) i recompte definitiu **14/5/2/1, ERR 0** (`ad4912d`). Punt 2 de sota FET.
+- **Bell-lloc 2/8 FET** (`d4dd1fa`): ERR 0; escalars **11 OK / 10 CAUTELA** (l'or segur, prod candidats amb el bo
+  dins — `municipality`, `field_date`, `lab_testing_company`… = **infraconfiança**, pendent de diagnosticar);
+  taules 17/3/1/0. **Temps compost 34,9 + 13,1 = 48 min, NO comparable**: el run 1 va morir als 34,9 min per causa
+  externa (tall). Vegeu `runs/2026-09-03-mesura-8/bell-lloc/_NOTES.md`.
+- **Lliçó:** llança el driver **desacoblat** de la sessió (`setsid nohup … &` + Monitor sobre el log), no com a
+  Bash en segon pla del harness: un tall de connexió mata la tasca del harness, no el procés `setsid`.
+- Branca ahead **11** d'origin, sense push (pregunta-li).
+
 ## La feina següent, per ordre
 
-1. **Continuar la mesura (7 projectes)** — seqüencial, mai dos alhora:
+1. **Continuar la mesura (6 projectes: Rubí primer)** — seqüencial, mai dos alhora:
    ```bash
    cd ~/projects/claudecode-job/clients/g3dt-prod
    PYTHONPATH=$PWD G3DT_CACHE_DIR=/home/josep/g3dt-prod-cache \
-     .venv/bin/python docs/wizard-headless/mesures/run_mesura.py "4001612 BELL-LLOC" bell-lloc
-   # després: "3001631 RUBI" rubi · "4001607 LINYOLA" linyola · "4001670 ALCOLETGE" alcoletge ·
+     setsid nohup .venv/bin/python docs/wizard-headless/mesures/run_mesura.py "3001631 RUBI" rubi > $SCRATCH/rubi.log 2>&1 < /dev/null &
+   # després: "4001607 LINYOLA" linyola · "4001670 ALCOLETGE" alcoletge ·
    # "4001671 VILANOVA DE SEGRIA" vilanova · "4001679 ANCILES" anciles · "3001706 C.TULIPA CERDANYOLA" tulipa
    ```
    Després de cada projecte: `compare_consolida.py escalars|taules "<run>/_decisions.json" "<CARPETA OR>"`
    (la carpeta or és el NOM sota `docs/golden-read/`), desar `_compare_*.txt` + `_NOTES.md`, grep DNS, commit.
-2. **Corregir l'or de Castellar** (utm_x/utm_y → 423167.0/4609608.0, P-1; evidència a `_NOTES.md`) abans
-   d'agregar els 8.
+2. ~~Corregir l'or de Castellar~~ FET (sessió 2). Nou: **diagnosticar la infraconfiança de Bell-lloc** (10 CAUTELA)
+   abans d'agregar els 8 — pot ser el mateix mecanisme a altres projectes.
 3. **P0** (columna N = SPT N30) i **P2a** (col·lapse Rubí) — després que la mesura estigui completa.
 4. **M341** (mesura de les 341 variables) — vegeu pla.
 5. **Paquet de preguntes a Eva**: criteri de l'E (R ho fa imprescindible), regla N20 mono-nivell, `.doc` de
