@@ -1,0 +1,341 @@
+{
+ "source_path": "PENETROS + SONDEIG.pdf",
+ "source_md5": "9c6982925cfde80fd507a53ea8241838",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Full de camp manuscrit combinat (fotografiat, no escanejat): 2 albarans TPS (DPSH i sondeig a rotació) + fitxa de camp del penetròmetre dinàmic (P1-P4) + full de camp del sondeig a rotació (S-1), tot del mateix dia de camp.",
+ "issuer": "TPS Prospecció del Subsòl SL (Daniel Fernández, operari/sondista)",
+ "date": "2025-10-24",
+ "pages_or_sheets": "5 pàgines: p.1 albarà DPSH, p.2-3 fitxa de camp DPSH (P1-P3 a p.2, P4 en full duplicat a p.3), p.4 albarà sondeig, p.5 full de camp sondeig a rotació (S-1)",
+ "context": {
+  "who_made_it": "TPS (subcontractista de sondeigs i penetròmetres) — Daniel Fernández, operari en camp",
+  "for_whom": "G3 (Eva), que ha encarregat a TPS els 4 DPSH i el sondeig S-1 d'aquest projecte",
+  "why": "Documentar l'execució de camp (albarans per a facturació + fulls de lectura de dades) dels 4 assaigs de penetració dinàmica (P1-P4) i del sondeig a rotació (S-1) a C/Arbrells, Castellar del Vallès, el 24-10-2025",
+  "expected_fields": [
+   "field_date",
+   "street_address (obra)",
+   "num_dpsh_tests",
+   "cota_inici per punt (relativa, respecte carrer)",
+   "N20/rebuig per punt DPSH",
+   "profunditat i litologia del sondeig S-1",
+   "mostres i profunditat d'extracció",
+   "nivell freàtic"
+  ],
+  "not_expected": [
+   "client_name (promotor)",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "expedient",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "cota_referencia absoluta (msnm)",
+   "lab_testing_company",
+   "lab_sample_id",
+   "cte"
+  ],
+  "relation_to_others": "Les caselles 'DADES CLIENT: Empresa G3 / Responsable Eva' als dos albarans (p.1, p.4) són el client de TPS (subcontractista), no el client_name de l'informe — regla estàndard, descartat explícitament (NOT_client_name). Les cotes relatives per punt ('-4 m', '-4,2 m', respecte al carrer) que dona aquest full són, molt probablement, la font primària de les mateixes cotes relatives que apareixen a l'annex DPSH i a l'annex de sondeig (PDF/ANNEXES/3001621_DPSH.pdf, PDF/ANNEXES/3001621_sondeig.pdf) — cap dels dos s'ha obert en aquesta crida (--only), així que no es pot confirmar la cota_referencia absoluta (msnm) aquí; només les relatives 'respecte cota 0'. Els nivells de sòl (litologia/fondàries) d'aquest full de camp (p.5) són la lectura EN BRUT de l'operari sobre el terreny; l'annex de sondeig (no llegit en aquesta crida) és qui redacta i numera oficialment els nivells (regla Pas 3: 'els trams de material del full de camp NO són nivells') — per això les files de soil_levels d'aquest document es marquen com a candidates de baixa prioritat, mai com a font del recompte oficial.",
+  "authority_for": [
+   "field_date",
+   "street_address",
+   "street_address_struct",
+   "municipality",
+   "num_dpsh_tests",
+   "NOT_client_name",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-24",
+   "location": "p.1 ALBARÀ DADES OBRA 'Data' (coincideix p.2/3 'Full de Camp Penetròmetre Dinàmic Data', p.4 ALBARÀ 'Data inici/final', p.5 'Full de camp sondeig a rotació Data inici')",
+   "quote": "Data: 24-10-2025",
+   "confidence": 0.75,
+   "note": "Full de camp/albarà TPS: prioritat inferior a la fitxa 'DADES PER ANAR A CAMP' (F38) i a la data de l'annex DPSH (cap dels dos llegit en aquesta crida). Coincideix internament als 5 fulls d'aquest mateix document (DPSH i sondeig, mateix dia)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ Arbrells",
+   "location": "p.2 'Adreça de l'obra' (Full de Camp Penetròmetre Dinàmic); coincideix p.1/p.4 'DADES OBRA: Adreça' i p.5 'Adreça de l'obra'",
+   "quote": "Adreça de l'obra: C/Arbrells - Castellar del Valles",
+   "confidence": 0.55,
+   "note": "Cap número de portal enlloc d'aquest document. Coincideix als 4 fulls (2 albarans + 2 fitxes de camp)."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Arbrells",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Castellar del Vallès",
+    "municipi_alternatives": [
+     "Castellar del Valles"
+    ]
+   },
+   "location": "p.2 'Adreça de l'obra'",
+   "quote": "C/Arbrells - Castellar del Valles",
+   "confidence": 0.55,
+   "note": "Extra concept — cap portal documentat aquí."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "p.1 'DADES OBRA: Població' (coincideix p.2/4/5)",
+   "quote": "Població: Castellar del Valles",
+   "confidence": 0.55,
+   "note": "Grafia manuscrita sense accent ('Castellar del Valles'); forma oficial llarga pendent de confirmar amb comanda/pressupost/PLAN_COST (no llegits en aquesta crida)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "p.1 ALBARÀ 'Nº de penetròmetres realitzats'",
+   "quote": "4   Nº de penetròmetres realitzats",
+   "confidence": 0.8,
+   "note": "Confirmat internament: 4 punts (P1, P2, P3, P4) amb lectures completes de N20 i rebuig a p.2-3 d'aquest mateix document."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3",
+   "location": "p.1 i p.4 'DADES CLIENT: Empresa / Responsable'",
+   "quote": "Empresa: G3   Responsable: Eva",
+   "confidence": 0.0,
+   "note": "G3/Eva és el client de TPS (subcontractista de camp), no el client_name de l'informe — descartat per regla Pas 3 (mapa 'Albarà / full de camp TPS')."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,00 a 1,20 m",
+   "location": "p.5 'Full de camp sondeig a rotació', taula, columna Mostres/Prof",
+   "quote": "Mostres Prof: 100 a1,20",
+   "confidence": 0.5,
+   "note": "Ambigüitat de fila: el valor està escrit a l'alçada de la fila 1 (Profunditat 0,00-0,50) però l'interval 1,00-1,20 m cau dins la fila 2 (0,50-1,20, 'Roca fracturada') — vegeu tables.soil_levels. Cap identificador de mostra (columna 'tipus' buida)."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.5 'Full de camp sondeig a rotació', capçalera 'Sondeig'",
+   "quote": "Sondeig: S-1",
+   "confidence": 0.5,
+   "note": "Únic punt de sondeig documentat en aquest full; la mostra de 'lab_depth' en surt."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4 m",
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 taula DPSH, columna P1",
+    "quote": "Cota Inici -4 m; 1/6/10/13/38/100; R:1,08",
+    "extra": {
+     "registre_n20_m_cops": [
+      [
+       "-0,2",
+       1
+      ],
+      [
+       "-0,4",
+       6
+      ],
+      [
+       "-0,6",
+       10
+      ],
+      [
+       "-0,8",
+       13
+      ],
+      [
+       "-1",
+       38
+      ],
+      [
+       "-1,2",
+       100
+      ]
+     ],
+     "sonda": "ML76A",
+     "operari": "Daniel Fernández"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,2 m",
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 taula DPSH, columna P2",
+    "quote": "Cota Inici -4,2 m; 1/15/100; R:0,48",
+    "extra": {
+     "registre_n20_m_cops": [
+      [
+       "-0,2",
+       1
+      ],
+      [
+       "-0,4",
+       15
+      ],
+      [
+       "-0,6",
+       100
+      ]
+     ],
+     "sonda": "ML76A",
+     "operari": "Daniel Fernández"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4 m",
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 taula DPSH, columna P3",
+    "quote": "Cota Inici -4 m; 1/16/46/100; R:0,76",
+    "extra": {
+     "registre_n20_m_cops": [
+      [
+       "-0,2",
+       1
+      ],
+      [
+       "-0,4",
+       16
+      ],
+      [
+       "-0,6",
+       46
+      ],
+      [
+       "-0,8",
+       100
+      ]
+     ],
+     "sonda": "ML76A",
+     "operari": "Daniel Fernández"
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4 m",
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.3 taula DPSH, columna P4 (full duplicat de la mateixa Fitxa 01)",
+    "quote": "Cota Inici -4 m; 1/8/8/12/27/21/28/100; R:1,55",
+    "extra": {
+     "registre_n20_m_cops": [
+      [
+       "-0,2",
+       1
+      ],
+      [
+       "-0,4",
+       8
+      ],
+      [
+       "-0,6",
+       8
+      ],
+      [
+       "-0,8",
+       12
+      ],
+      [
+       "-1",
+       27
+      ],
+      [
+       "-1,2",
+       21
+      ],
+      [
+       "-1,4",
+       28
+      ],
+      [
+       "-1,6",
+       100
+      ]
+     ],
+     "sonda": "ML76A",
+     "operari": "Daniel Fernández"
+    }
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "-4 m",
+    "profunditat_assolida": "-1,20 m",
+    "spt_ma": {
+     "n_spt": 0,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": "No detectat",
+    "location": "p.5 'Full de camp sondeig a rotació'",
+    "quote": "Descriure cota 0 o cota referència: C/Arbrells -4m; taula profunditat 0,00 a 1,20; Nivell Freàtic: (en blanc)",
+    "extra": {
+     "tipus_sonda": "ML76A",
+     "sondista": "Daniel Fernández",
+     "assaigs_spt_albara": "No (p.4 ALBARÀ, casella 'Assaigs SPT': No)",
+     "ml_perforacio_albara": "0,50 m sòls 0-20m + 0,70 m roca dura/formigó 0-20m = 1,20 m total (p.4), coincideix amb la profunditat assolida del full de camp"
+    }
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "nivell 1 (candidat, full de camp — sense número imprès; a confirmar amb l'annex de sondeig, no llegit en aquesta crida)",
+    "litologia_candidats": [
+     "Limos arcillosos con gravas"
+    ],
+    "de": "0,00",
+    "a": "0,50",
+    "mostra_del_nivell": false,
+    "location": "p.5 taula sondeig, fila 1",
+    "quote": "0,00 | 0,50 | Limos arcillosos con gravas"
+   },
+   {
+    "nom": "nivell 2 (candidat, full de camp — sense número imprès; a confirmar amb l'annex de sondeig, no llegit en aquesta crida)",
+    "litologia_candidats": [
+     "Roca fracturada"
+    ],
+    "de": "0,50",
+    "a": "1,20",
+    "mostra_del_nivell": true,
+    "location": "p.5 taula sondeig, fila 2",
+    "quote": "0,50 | 1,20 | Roca fracturada",
+    "extra": {
+     "note": "La mostra 'Prof: 100 a1,20' (1,00-1,20 m) està escrita a l'alçada de la fila 1 al full original, però el seu interval de fondària cau dins d'aquesta fila 2 (0,50-1,20 m) — per això se li assigna aquí, amb candidatura marcada."
+    }
+   }
+  ],
+  "__nota": "Files RAW del full de camp (Pas 3b): litologia i fondàries pendents de contrastar amb PDF/ANNEXES/3001621_sondeig.pdf (annex de sondeig oficial), no llegit en aquesta crida --only."
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia (absoluta, msnm — només relatives disponibles aquí, vegeu tables)",
+  "num_soil_levels (recompte oficial — aquest full és el registre en brut, no l'annex de sondeig)",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF de 5 pàgines, totes fotografies (no escaneig; peu de foto d'un cotxe visible als 5 fulls), sense text OCR (text_ok=false a totes) — llegit visualment amb les PNG senceres a 150dpi de _preext/, prou llegibles sense necessitat de clip ni de les meitats top/bottom disponibles. La p.5 ('Full de camp sondeig a rotació') està impresa en orientació apaïsada dins d'un PDF vertical: rotada 90° amb PIL (script ad-hoc, no render_clip.py) per llegir-la correctament; s'ha hagut de fer un retall+zoom addicional de la taula per confirmar la fila exacta de la mostra 'Prof: 100 a1,20' (ambigüitat de fila descrita a soil_levels). Les xifres de rebuig P1-P4 (1,08/0,48/0,76/1,55 m) i les cotes relatives per punt (-4/-4,2/-4/-4 m) llegides aquí formen una progressió interna coherent (increments de colpeig creixents fins a 100, sense salts) que dona alta confiança a la transcripció tot i ser manuscrita."
+}

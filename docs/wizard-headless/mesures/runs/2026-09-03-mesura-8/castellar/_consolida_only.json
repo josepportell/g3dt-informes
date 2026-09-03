@@ -1,0 +1,111 @@
+{
+ "schema_version": 1,
+ "fields": {
+  "lab_sample_id": {
+   "estat": "candidats",
+   "value": "SPT-1",
+   "candidates": [
+    {
+     "value": "SPT-1",
+     "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1 taula, bloc 'Mostres i assaigs in-situ', columna 'Tipus de mostra'",
+     "quote": "SPT-1"
+    },
+    {
+     "value": "MA1 S1",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.2, bloc DADES INICIALS, camp Mostra",
+     "quote": "Mostra: MA1 S1",
+     "note": "Coincideix amb 4687-GTL-25 Castellar del Vallés.pdf (mateix informe/mostra, mateixa referència de laboratori GTL-8230-25); no compta com a font independent addicional d'aquell fitxer."
+    },
+    {
+     "value": "MA (S1)",
+     "font": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls Hoja1!C35",
+     "quote": "MA (S1)"
+    }
+   ],
+   "rule": "Pas 3: l'etiqueta de la mostra a l'informe segueix l'annex de sondeig de l'Eva quan discrepa amb el GTL (regla amb precedent verificat en aquest mateix projecte: Castellar informe = SPT-1); annex > GTL > comanda. Discrepen entre si → candidats, mai segur.",
+   "note": "El GTL i la comanda descriuen la mateixa mostra (mateixa fondària 1,0-1,2 m) com a 'Alterada' (MA) amb litologia 'Grava amb llims'; l'annex de sondeig la descriu com a SPT amb rebuig ('R') dins de substrat rocós. És una discrepància de criteri de redacció entre documents (sondista/Eva), no un error de lectura d'un dels dos.",
+   "sources_checked": [
+    "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+    "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+    "ANNEXES/3001621_DPSH.xls",
+    "PDF/ANNEXES/3001621_DPSH.pdf",
+    "PDF/ANNEXES/3001621_fotografies.pdf",
+    "PDF/ANNEXES/3001621_plànol de situació.pdf",
+    "PDF/ANNEXES/3001621_tall de correlació.pdf",
+    "PENETROS + SONDEIG.pdf",
+    "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+    "tall.pdf",
+    "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "4687-GTL-25 Castellar del Vallés.pdf",
+    "PDF/ANNEXES/3001621_sondeig.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf"
+   ]
+  },
+  "utm_x": {
+   "estat": "segur",
+   "value": "423167.0",
+   "candidates": [
+    {
+     "value": "423167.0",
+     "font": "ANNEXES/ALTRES/COORDENADES.txt (P-1)",
+     "quote": "P-1: 423167.0 ; 4609608.0 ; 571.5"
+    }
+   ],
+   "rule": "Pas 3: UTM de l'informe = P-1 de COORDENADES.txt (patró verificat en altres projectes del corpus). El valor de l'annex de sondeig (423182.0) és la coordenada pròpia del punt de sondeig S-1, no la de P-1 que reporta l'informe: coincideix EXACTAMENT amb l'entrada S-1 de COORDENADES.txt (423182.0/4609623.0) — corroboració creuada, no contradicció real sobre el mateix punt.",
+   "note": "L'annex de sondeig dona la UTM del seu propi emplaçament (S-1), idèntica a l'entrada S-1 de COORDENADES.txt; no compet amb la UTM de P-1 que fixa l'informe.",
+   "altres": [
+    {
+     "value": "423182.0",
+     "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1 caixetí, cel·la 'UTM:' 1a línia",
+     "quote": "423182.0 E(x)",
+     "note": "Coordenada del punt de sondeig S-1 (no de P-1); coincideix amb l'entrada S-1 de COORDENADES.txt."
+    }
+   ],
+   "sources_checked": [
+    "4687-GTL-25 Castellar del Vallés.pdf",
+    "ANNEXES/3001621_DPSH.xls",
+    "PDF/ANNEXES/3001621_DPSH.pdf",
+    "PDF/ANNEXES/3001621_tall de correlació.pdf",
+    "PENETROS + SONDEIG.pdf",
+    "tall.pdf",
+    "PDF/ANNEXES/3001621_sondeig.pdf",
+    "ANNEXES/ALTRES/COORDENADES.txt"
+   ]
+  },
+  "utm_y": {
+   "estat": "segur",
+   "value": "4609608.0",
+   "candidates": [
+    {
+     "value": "4609608.0",
+     "font": "ANNEXES/ALTRES/COORDENADES.txt (P-1)",
+     "quote": "P-1: 423167.0 ; 4609608.0 ; 571.5"
+    }
+   ],
+   "rule": "Pas 3: UTM de l'informe = P-1 de COORDENADES.txt (patró verificat en altres projectes del corpus). El valor de l'annex de sondeig (4609623.0) és la coordenada pròpia del punt de sondeig S-1, no la de P-1 que reporta l'informe: coincideix EXACTAMENT amb l'entrada S-1 de COORDENADES.txt (423182.0/4609623.0) — corroboració creuada, no contradicció real sobre el mateix punt.",
+   "note": "L'annex de sondeig dona la UTM del seu propi emplaçament (S-1), idèntica a l'entrada S-1 de COORDENADES.txt; no compet amb la UTM de P-1 que fixa l'informe.",
+   "altres": [
+    {
+     "value": "4609623.0",
+     "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1 caixetí, cel·la 'UTM:' 2a línia",
+     "quote": "4609623.0 N(y)",
+     "note": "Coordenada del punt de sondeig S-1 (no de P-1); coincideix amb l'entrada S-1 de COORDENADES.txt."
+    }
+   ],
+   "sources_checked": [
+    "4687-GTL-25 Castellar del Vallés.pdf",
+    "ANNEXES/3001621_DPSH.xls",
+    "PDF/ANNEXES/3001621_DPSH.pdf",
+    "PDF/ANNEXES/3001621_tall de correlació.pdf",
+    "PENETROS + SONDEIG.pdf",
+    "tall.pdf",
+    "PDF/ANNEXES/3001621_sondeig.pdf",
+    "ANNEXES/ALTRES/COORDENADES.txt"
+   ]
+  }
+ },
+ "notes": [
+  "lab_sample_id: discrepancia real entre annex de sondeig (SPT-1, substrat rocos amb rebuig) i GTL/comanda (MA1 S1 / MA (S1), Grava amb llims) — mateixa fondaria (1,0-1,2 m), descripcio de mostra diferent; regla del skill (annex > GTL > comanda) aplicada, candidats mai segur.",
+  "utm_x/utm_y: no eren contradiccions reals — l'annex de sondeig reporta la UTM del seu propi punt S-1, que coincideix exactament amb l'entrada S-1 de COORDENADES.txt; l'informe reporta sempre P-1 (regla verificada en altres projectes)."
+ ]
+}

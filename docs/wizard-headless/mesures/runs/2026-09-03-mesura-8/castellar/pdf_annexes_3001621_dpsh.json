@@ -1,0 +1,192 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_DPSH.pdf",
+ "source_md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "PDF (text net, exportat des de l'Excel de camp) amb els 4 assaigs de penetració dinàmica DPSH (P-1 a P-4): colpeig per fondària, fondària de rebuig, nivell freàtic i marca de nivell per punt.",
+ "issuer": "G3 (transcripció de les dades de camp de TPS a la plantilla Excel DPSH; aquest PDF n'és l'exportació)",
+ "date": "24/10/25 (repetida idèntica a les 4 pàgines)",
+ "pages_or_sheets": "4 pàgines: P-1, P-2, P-3, P-4",
+ "context": {
+  "who_made_it": "G3 (Eva), a partir dels valors de camp preses per TPS; el contingut és el mateix que ANNEXES/3001621_DPSH.xls (aquest PDF n'és l'exportació amb text net, no llegit en aquesta crida)",
+  "for_whom": "Ús intern de G3 per redactar l'informe geotècnic; no és un document d'un tercer extern",
+  "why": "Documentar, per als 4 punts DPSH de l'obra, el colpeig N20/N B, la fondària de rebuig i el nivell freàtic",
+  "expected_fields": [
+   "dpsh_tests (cota_inici, profunditat_assolida/rebuig, nivell_freatic per punt)",
+   "street_address (bloc OBRA:, repetit a cada pàgina)",
+   "municipality (bloc POBLACIÓ:, repetit a cada pàgina)",
+   "field_date (DATA:, repetit a cada pàgina)",
+   "expedient (NÚMERO D´INFORME:, repetit a cada pàgina)",
+   "num_dpsh_tests (nombre de pàgines/punts)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x",
+   "utm_y",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Versió PDF amb text net del mateix contingut que ANNEXES/3001621_DPSH.xls (no llegit en aquesta crida --only); les 4 pàgines corresponen als 4 fulls P-1..P-4 de l'Excel. La capçalera OBRA/POBLACIÓ/DATA/NÚMERO D'INFORME és idèntica a les 4 pàgines: és UNA sola font repetida 4 cops, no 4 fonts independents.",
+  "authority_for": [
+   "dpsh_tests",
+   "num_dpsh_tests",
+   "street_address",
+   "municipality",
+   "field_date",
+   "expedient",
+   "street_address_struct"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "C/ ARBRELLS 18 A",
+   "location": "p.1-4, capçalera, bloc OBRA:",
+   "quote": "OBRA: C/ ARBRELLS 18 A",
+   "confidence": 0.6,
+   "note": "Idèntica a les 4 pàgines (una sola font repetida, no 4 d'independents). Etiqueta OBRA: = adreça de l'obra (autoritat per regla del Pas 3), però és l'única font llegida en aquesta crida --only -> candidat, no segur."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Arbrells",
+    "nom_via_alternatives": [],
+    "portals": [
+     "18A"
+    ],
+    "municipi": "Castellar del Vallès",
+    "municipi_alternatives": [
+     "CASTELLAR DEL VALLES"
+    ]
+   },
+   "location": "p.1-4, capçalera, blocs OBRA: / POBLACIÓ:",
+   "quote": "OBRA: C/ ARBRELLS 18 A ... POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.6,
+   "note": "Només el portal 18A surt en aquest document; no inventar 18B/20 (poden sortir d'altres fonts no llegides en aquesta crida)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1-4, capçalera, bloc POBLACIÓ:",
+   "quote": "POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.6,
+   "note": "Forma curta de G3 (sense accent ni apòstrof); repetida idèntica a les 4 pàgines, mateixa font."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/25",
+   "location": "p.1-4, capçalera, DATA:",
+   "quote": "DATA: 24/10/25",
+   "confidence": 0.7,
+   "note": "DATA de l'annex DPSH = candidat prioritari per field_date (regla Pas 3: darrere la fitxa de camp F38, que no es llegeix en aquesta crida). Idèntica a les 4 pàgines."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.1-4, capçalera, NÚMERO D´INFORME:",
+   "quote": "NÚMERO D´INFORME: 3001621",
+   "confidence": 0.85,
+   "note": "Coincideix amb el nom de la carpeta del projecte ('3001621 CASTELLAR DEL VALLES', vist a l'inventari, Pas 0). Idèntic a les 4 pàgines."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "document sencer: 4 pàgines = 4 punts",
+   "quote": "P-1 / P-2 / P-3 / P-4 (una pàgina per punt, assaig de penetració dinàmica)",
+   "confidence": 0.75,
+   "note": "Equivalent a l'Excel DPSH (executats); aquest PDF n'és l'exportació directa amb els mateixos 4 fulls P-1..P-4."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.1",
+    "quote": "P-1     - 4  m  (respecte el carrer). [...] Rebuig  a -1,08 m",
+    "extra": {
+     "colpeig_darrer_tram": "38/46 a -1,0 m; 100/120 a -1,2 m (rebuig)",
+     "nota_color_nivells": "Columna 'Nivells': color clar sense llegenda de 0 a -0,6 m, línia discontínua, i color taronja (llegendat 'Nivell 1') de -0,8 m fins al rebuig (-1,08 m). Només 'Nivell 1' consta a la llegenda; el color clar superior no té nom -> no s'interpreta com a nivell propi (Pas 3b: 'una llegenda no és una transició')."
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,2 m (respecte el carrer)",
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.2",
+    "quote": "P-2    cota inici: -4,2 m  (respecte el carrer) [...] Rebuig  a -0,48 m",
+    "extra": {
+     "colpeig_darrer_tram": "15/18 a -0,4 m; 100/120 a -0,6 m (rebuig)",
+     "nota_color_nivells": "Columna 'Nivells': color taronja uniforme (Nivell 1) de 0 a -0,6 m (rebuig a -0,48 m dins d'aquest tram); sense color clar previ."
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.3",
+    "quote": "P-3    cota inici: - 4 m  (respecte el carrer). [...] Rebuig  a -0,76 m",
+    "extra": {
+     "colpeig_darrer_tram": "46/55 a -0,6 m; 100/120 a -0,8 m (rebuig)",
+     "nota_color_nivells": "Columna 'Nivells': color taronja uniforme (Nivell 1) de 0 a -0,8 m (rebuig a -0,76 m dins d'aquest tram); sense color clar previ."
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4,0 m (respecte el carrer)",
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.4",
+    "quote": "P-4     - 4  m (respecte el carrer). [...] Rebuig  a -1,55 m",
+    "extra": {
+     "colpeig_darrer_tram": "28/34 a -1,4 m; 100/120 a -1,6 m (rebuig)",
+     "nota_color_nivells": "Columna 'Nivells': color clar sense llegenda de 0 a -0,8 m, línia discontínua, i color taronja (llegendat 'Nivell 1') d'-1,0 m fins al rebuig (-1,55 m). Mateix patró que P-1: només 'Nivell 1' llegendat."
+    }
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia (absoluta; aquest document només dona cotes relatives 'respecte el carrer')",
+  "num_soil_levels (escalar de projecte; aquest document només marca 'Nivell 1' per tram de fondària dins de cada assaig, no el nombre total de nivells)",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció OK (text_ok=true a les 4 pàgines, halves_pages buit): llegit page-N.txt de les 4 pàgines (barat) i confirmat amb page-N.png. Zoom amb scripts/render_clip.py (400dpi) sobre la columna 'Nivells' i la llegenda a p.1 per distingir els dos tons de color (clar sense llegenda vs taronja llegendat 'Nivell 1'); mateix zoom aplicat a p.2, p.3 i p.4 per contrastar el patró. Sistema de cotes: els 4 punts són RELATIUS ('respecte el carrer': -4,0/-4,2/-4,0/-4,0), mai absoluts (msnm) -> per a la cel·la 'cota' del sondeig i altres taules del projecte cal seguir aquest mateix sistema relatiu (Pas 3b, regla de l'ERR), no un valor absolut d'altres fonts. Columna N.F. buida a les 4 pàgines -> 'No detectat' (comprovat text i imatge, no només text). No s'ha obert cap altre document (ANNEXES/3001621_DPSH.xls no llegit en aquesta crida --only)."
+}

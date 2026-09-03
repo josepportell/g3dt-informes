@@ -1,0 +1,161 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+ "source_md5": "e77496626419bcc0e372d33f59609cd5",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geotècnic (perfil A-A') de G3 amb la ubicació dels 4 punts DPSH i el sondeig S-1, llegenda amb 2 unitats (terreny vegetal + Nivell 1) i la cota de fonamentació recomanada",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (Eva)",
+ "date": "Octubre 2025 (caixetí); metadada PDF creationDate 2025-11-03",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva), com a síntesi pròpia del tall geotècnic a partir dels 4 DPSH i el sondeig S-1 del projecte",
+  "for_whom": "el mateix informe geotècnic (annex intern, no un document de tercers)",
+  "why": "mostrar gràficament la correlació litològica entre els punts d'assaig i marcar la cota de fonamentació recomanada",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_soil_levels",
+   "num_dpsh_tests (corroboració)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date real de camp",
+   "superficie_parcela",
+   "cota_referencia numèrica per punt",
+   "referencia_catastral",
+   "lab",
+   "cte",
+   "num_floors"
+  ],
+  "relation_to_others": "Complementa l'annex de sondeig (ANNEXES/3001621_sondeig.FH11, no llegit en aquesta crida --only) i l'Excel DPSH (ANNEXES/3001621_DPSH.xls); el bessó FreeHand del mateix tall (ANNEXES/3001621_tall de correlació.FH11, md5 diferent) és el 'no llegible' (text brossa sense render); aquest PDF és la còpia Distiller/Print-to-PDF amb el mateix contingut gràfic",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "street_address_struct",
+   "municipality",
+   "building_type",
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "caixetí, cel·la 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.95,
+   "note": "coincideix amb el nom de la carpeta del projecte (3001621 CASTELLAR DEL VALLES)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells, Nº 18A-18B-20, Castellar del Vallès (Barcelona)",
+   "location": "caixetí, títol del projecte",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Arbrells",
+    "nom_via_alternatives": [],
+    "portals": [
+     "18A",
+     "18B",
+     "20"
+    ],
+    "municipi": "Castellar del Vallès",
+    "municipi_alternatives": [
+     "CASTELLAR DEL VALLES"
+    ]
+   },
+   "location": "caixetí, títol del projecte",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.9,
+   "note": "objecte extra (Pas 3), no és cap dels 15 camps"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "caixetí, títol del projecte",
+   "quote": "CASTELLAR DEL VALLÈS  (BARCELONA)",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, títol del projecte",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "LLEGENDA, requadre superior",
+   "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "confidence": 0.7,
+   "note": "la llegenda numera només 1 nivell; 'Terreny Vegetal' és cobertura sense número (Pas 3b) i no compta"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "mapa de situació (requadre superior esquerre) i capçaleres del perfil",
+   "quote": "P-1, P-2, P-3, P-4 (símbol 'Assaig de penetració dinàmica DPSH' de la llegenda del mapa)",
+   "confidence": 0.55,
+   "note": "corrobora el recompte gràficament; NO és la font d'autoritat (mana l'Excel DPSH amb fulls executats)"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2025",
+   "location": "caixetí, cel·la 'Data:'",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.2,
+   "note": "data del document/mes de redacció del tall, NO data de camp; candidat feble, mai preferent sobre fitxa F38 / annex DPSH / albarà TPS"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Terreny Vegetal (cobertura, sense número)",
+    "litologia": "Llims argilosos de color marró fosc amb graves i algunes arrels.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   },
+   {
+    "nom": "Nivell 1",
+    "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   }
+  ],
+  "__nota": "Fondàries de transició (de/a) no impreses numèricament al tall (només posició gràfica de la línia de contacte); nom i litologia segons LLEGENDA (Pas 3b, capa de cobertura sense número)"
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "num_floors",
+  "superficie_parcela",
+  "field_date (real, de camp)",
+  "cota_referencia",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "text_ok=false (FreeHand -> Acrobat Distiller 15.0, sense ToUnicode): text de pàgina brossa, lectura íntegrament visual. Llegit amb page-1.png (150 dpi) i 3 clips amb scripts/render_clip.py a 300-500 dpi: llegenda (0.24,0.17,0.6,0.28), caixetí (0.0,0.9,1.0,1.0) i mapa de situació (0.02,0.06,0.22,0.28). Els valors 'Nb=' i 'Nb=R'/'N=R' del perfil són colpeigs a la línia de contacte, no fondàries ni cotes; no s'ha estimat cap valor numèric per posició de píxel (eix msnm 569-572 sense etiquetes de cota per punt)."
+}

@@ -1,0 +1,53 @@
+{
+ "source_path": "ANNEXES/3001621_DPSH.xls",
+ "source_md5": "0389af31b3b165e13338709a568cf130",
+ "kind": "excel",
+ "generated": "2026-09-03T16:04:59",
+ "elapsed_s": 0.06,
+ "dir": "annexes_3001621_dpsh",
+ "files": [
+  "annexes_3001621_dpsh/sheet-0.csv",
+  "annexes_3001621_dpsh/sheet-0.cells.txt",
+  "annexes_3001621_dpsh/sheet-0.colors.txt",
+  "annexes_3001621_dpsh/sheet-1.csv",
+  "annexes_3001621_dpsh/sheet-1.cells.txt",
+  "annexes_3001621_dpsh/sheet-1.colors.txt",
+  "annexes_3001621_dpsh/sheet-2.csv",
+  "annexes_3001621_dpsh/sheet-2.cells.txt",
+  "annexes_3001621_dpsh/sheet-2.colors.txt",
+  "annexes_3001621_dpsh/sheet-3.csv",
+  "annexes_3001621_dpsh/sheet-3.cells.txt",
+  "annexes_3001621_dpsh/sheet-3.colors.txt"
+ ],
+ "sheets": [
+  {
+   "index": 0,
+   "name": "P-1",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 95
+  },
+  {
+   "index": 1,
+   "name": "P-2",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 92
+  },
+  {
+   "index": 2,
+   "name": "P-3",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 96
+  },
+  {
+   "index": 3,
+   "name": "P-4",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 97
+  }
+ ],
+ "colors": true
+}

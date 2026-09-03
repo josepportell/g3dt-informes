@@ -1,0 +1,152 @@
+{
+ "source_path": "4687-GTL-25 Castellar del Vallés.pdf",
+ "source_md5": "ed8a07b662f237b3c9db0b752d54a300",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL) de TPS per a la mostra MA1 S1 (sòl alterat) de l'obra de Castellar del Vallès: assaig de contingut en ió sulfat",
+ "issuer": "TPS, Prospecció del Subsòl, SL (B64803075)",
+ "date": "19/11/2025 (data d'expedició)",
+ "pages_or_sheets": "5 pàgines",
+ "context": {
+  "who_made_it": "TPS, Prospecció del Subsòl, SL — laboratori subcontractat per G3 per als assaigs d'aquest projecte",
+  "for_whom": "G3 Desenvolupament Territorial, SL, que ha encarregat l'assaig al laboratori",
+  "why": "Informar el resultat de l'assaig de contingut en ió sulfat sobre la mostra alterada MA1 S1, extreta a l'obra de Castellar del Vallès (carrer Arbrells), per a l'estudi geotècnic",
+  "expected_fields": [
+   "mostra (tipus, cota d'extracció)",
+   "material assajat",
+   "resultat de l'assaig de sulfats",
+   "situació/obra",
+   "data d'expedició",
+   "data d'extracció",
+   "signatures dels tècnics"
+  ],
+  "not_expected": [
+   "promotor",
+   "arquitecte",
+   "plantes",
+   "superfície de parcel·la",
+   "coordenades UTM",
+   "referència cadastral"
+  ],
+  "relation_to_others": "'DADES DEL CLIENT'/'DADES DEL SOL.LICITANT: G3 Desenvolupament Territorial, SL' es refereix a la relació TPS→G3 (encàrrec del laboratori), no al client de l'obra — G3 mai és client (regla del sistema, Pas 3). 'Referència/es del laboratori: GTL-8230-25' és un identificador intern del laboratori diferent de 'Número d'informe: 4687-GTL-25' (que coincideix amb el nom del fitxer). L'etiqueta de mostra 'MA1 S1' pot ser substituïda per l'annex de sondeig de l'Eva si existeix (prioritat annex > GTL, no llegit en aquesta crida).",
+  "authority_for": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient",
+   "municipality",
+   "street_address",
+   "field_date"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.2, bloc DADES INICIALS, camp 'Obra / Projecte'",
+   "quote": "Castellar del Vallés. Carrer Arbrells. 3001621",
+   "confidence": 0.75,
+   "note": "coincideix amb el nom de la carpeta del projecte; el número va enganxat al final de la línia 'Obra/Projecte', no en una casella pròpia"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallés",
+   "location": "p.1 i p.5, camp 'Situació:'",
+   "quote": "Castellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.7,
+   "note": "grafia del document (accent obert, sense forma oficial normalitzada); confirmar contra el padró de municipis"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells",
+   "location": "p.1 i p.5, camp 'Situació:'",
+   "quote": "Castellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.5,
+   "note": "sense número de portal; el bloc 'Situació' del GTL és una font més feble que el caixetí del plànol o la comanda de laboratori"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/2025",
+   "location": "p.2, bloc OBERTURA, PREPARACIÓ I DESCRIPCIÓ DE LA MOSTRA (camps 'Data recepció:', 'Data extracció:', 'Data obertura:')",
+   "quote": "Data extracció: ... 24/10/2025",
+   "confidence": 0.35,
+   "note": "és la data d'extracció/recepció/obertura de LA MOSTRA MA1 S1 al laboratori, no necessàriament el primer dia de camp del projecte; candidat secundari. L'ordre del text extret barreja etiquetes i valors (típic d'aquest export m4PRO/Acrobat PDFMaker), però les tres etiquetes de data comparteixen el mateix valor '24/10/2025', cosa que en dona seguretat de l'aparellament"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+   "location": "peu de totes les pàgines",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.95,
+   "note": "emissor del GTL (banda amb registre mercantil); no confondre amb G3, que hi surt com a 'DADES DEL CLIENT'/'DADES DEL SOL.LICITANT' del laboratori"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "MA1 S1",
+   "location": "p.2 i p.4, camp 'Mostra:'",
+   "quote": "MA1 S1",
+   "confidence": 0.6,
+   "note": "GTL; segons la regla del sistema l'etiqueta final de l'informe surt de l'annex de sondeig de l'Eva si existeix (prioritat annex > GTL > comanda); aquesta crida només llegeix el GTL"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 - 1,2",
+   "location": "p.2 i p.4, camp 'Cota d'extracció (m):'",
+   "quote": "1,0 - 1,2",
+   "confidence": 0.85,
+   "note": "el GTL és font prioritària per a la profunditat de la mostra"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S1",
+   "location": "p.2 i p.4, camp 'Mostra: MA1 S1'",
+   "quote": "MA1 S1",
+   "confidence": 0.45,
+   "note": "derivat del segon token de l'etiqueta de mostra ('MA1 S1' -> punt S1); no hi ha una casella pròpia de punt d'assaig en aquest document"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL",
+   "location": "p.1, p.2 i p.5, camp 'DADES DEL CLIENT:' / 'DADES DEL SOL.LICITANT:'",
+   "quote": "G3 Desenvolupament Territorial, SL",
+   "confidence": 0.0,
+   "note": "G3 (NIF B25364589) és el client DEL LABORATORI (qui encarrega l'assaig), mai el client de l'informe geotècnic — descartat per regla del sistema (Pas 3)"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [],
+  "sondeig_tests": [],
+  "spt_ma_tests": [
+   {
+    "id": "MA1",
+    "punt": "S1",
+    "profunditat": "1,0 - 1,2",
+    "litologia": "Grava amb llims",
+    "n30": null,
+    "location": "p.2, blocs 'Tipus de mostra'/'Cota d'extracció'/'DESCRIPCIÓ DEL MATERIAL'",
+    "quote": "Tipus de mostra: Alterada ... Cota d'extracció (m): 1,0 - 1,2 ... DESCRIPCIÓ DEL MATERIAL: Grava amb llims"
+   }
+  ],
+  "soil_levels": [],
+  "__nota": "MA1 S1 és una mostra alterada (MA), sense colpeig imprès al GTL — n30 no aplica (regla Pas 3b: MA sense colpeig -> n30 no_trobat, l'Eva hi escriu '--'). La litologia 'Grava amb llims' és la redacció d'aquest document; pot ser re-redactada a l'informe."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Les 5 pàgines tenen text_ok=true a meta.json; llegides directament de page-N.txt sense necessitat de renderitzar ni fer clips. L'ordre del text extret pel PDF (Adobe PDF Library / Acrobat PDFMaker per a Excel) barreja etiquetes i valors de manera no visual (típic d'aquest export m4PRO): l'aparellament etiqueta-valor s'ha reconstruït per proximitat i per repetició del mateix valor entre pàgines (p.1 i p.5 comparteixen el mateix bloc de capçalera; p.2 i p.4 el mateix bloc de mostra). No s'ha executat fitz/xlrd/etc.; cap execució de codi més enllà d'aquesta escriptura."
+}

@@ -1,0 +1,11 @@
+NOU      architect_company      prod=no_trobat
+CAUTELA  building_type          or segur, prod candidats (bo dins): 'habitatges unifamiliars aïllats (grup de 3, entramat lleuger de fusta)'
+CAUTELA  cte_sol                candidats disjunts: or=['C0 (< 300 m² i < 4 plantes: 120 m², PB+1)'] prod=['T-1']
+CAUTELA  lab_sample_id          or segur, prod candidats (bo dins): 'MA-1 (S1)'
+CAUTELA  num_floors             or segur, prod candidats (bo dins): 'PB+1 (sense soterrani)'
+FORA     referencia_catastral   fora de la carpeta: '3298012DG2039N + 3298013DG2039N + 3298014DG2039N' (Cadastre (Callejero DNPLOC + WFS INSPIRE), portals 18A+18B+20)
+CAUTELA  street_address         or segur, prod candidats (bo dins): 'Carrer Arbrells, 18A, 18B i 20'
+FORA     superficie_parcela     fora de la carpeta: '1284' (Cadastre (Callejero DNPLOC + WFS INSPIRE), portals 18A+18B+20 = 3298012+3298013+3298014 DG2039N (441+423+420 m²))
+ERR      utm_x                  segur discrepant: or='423182' prod='423167.0'
+ERR      utm_y                  segur discrepant: or='4609623' prod='4609608.0'
+TOTALS: {'NOU': 1, 'OK': 12, 'CAUTELA': 5, 'FORA': 2, 'ERR': 2}

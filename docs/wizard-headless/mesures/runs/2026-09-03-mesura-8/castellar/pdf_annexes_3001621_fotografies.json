@@ -1,0 +1,81 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_fotografies.pdf",
+ "source_md5": "73cea90d5c4d74a91bd2c88a56fe1970",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Full de fotografies de camp (2 pàgines, plantilla G3) mostrant la màquina DPSH a l'emplaçament dels 4 punts d'assaig P-1 a P-4.",
+ "issuer": "G3 (plantilla pròpia amb logo G3, capçalera 'Fotografies - pàgina N')",
+ "date": null,
+ "pages_or_sheets": "2 pàgines (Fotografies - pàgina 1: F-1/F-2 = P-1/P-2; pàgina 2: F-3/F-4 = P-3/P-4)",
+ "context": {
+  "who_made_it": "G3 (Eva), compilant fotos de camp del propi assaig en plantilla pròpia",
+  "for_whom": "Annex de l'informe geotècnic — registre visual per al lector de l'informe",
+  "why": "Documentar visualment l'emplaçament i l'execució de cada assaig DPSH sobre el terreny",
+  "expected_fields": [
+   "expedient (capçalera de pàgina)",
+   "num_dpsh_tests (corroboració pel nombre de punts fotografiats)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Corrobora visualment els mateixos 4 punts DPSH (P-1..P-4) que l'Excel ANNEXES/3001621_DPSH.xls i l'annex PENETROS; no aporta cap dada de nivell A que aquests documents no donin ja amb més autoritat.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "capçalera de p.1 i p.2 ('Fotografies - pàgina N | 3001621')",
+   "quote": "3001621",
+   "confidence": 0.6,
+   "note": "Coincideix amb el nom de la carpeta; document no llistat com a font d'autoritat per a expedient (Pas 3), es dona com a corroboració."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "peus de foto p.1 ('P-1 i P-2, respectivament') i p.2 ('P-3 i P-4, respectivament')",
+   "quote": "Fotografia 1-2: Detall de l'emplaçament de la màquina realitzant l'assaig de penetració dinàmica DPSH, P-1 i P-2, respectivament. / Fotografia 3-4: ... P-3 i P-4, respectivament.",
+   "confidence": 0.55,
+   "note": "Corroboració visual de 4 punts (P-1..P-4) fotografiats; NO és font prioritària per aquest camp (regla Pas 3: Excel DPSH executats > albarà TPS > pressupost previstos > fitxa)."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF FreeHand→Distiller amb text brossa a les 2 pàgines (text_ok=false); llegit visualment amb les pàgines senceres (page-1.png, page-2.png), no ha calgut usar les meitats. Metadades PDF: creationDate/modDate 2025-11-03 — és la data de compilació de l'annex, no una data de camp fiable, per això NO s'ha emès com a candidat de field_date."
+}

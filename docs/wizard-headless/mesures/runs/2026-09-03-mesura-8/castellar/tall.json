@@ -1,0 +1,161 @@
+{
+ "source_path": "tall.pdf",
+ "source_md5": "a4512806fd21fe5f6efc6b4e6dd15f69",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geotècnic (perfil A-A') de G3 amb la ubicació dels 4 punts DPSH i el sondeig S-1, llegenda amb 2 unitats (terreny vegetal + Nivell 1) i la cota de fonamentació recomanada",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (Eva)",
+ "date": "Octubre 2025 (caixetí); metadada PDF creationDate/modDate 2025-11-03T16:27:44+01:00 (Microsoft: Print To PDF)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva), com a síntesi pròpia del tall geotècnic a partir dels 4 DPSH i el sondeig S-1 del projecte",
+  "for_whom": "el mateix informe geotècnic (annex intern, no un document de tercers)",
+  "why": "mostrar gràficament la correlació litològica entre els punts d'assaig i marcar la cota de fonamentació recomanada",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_soil_levels",
+   "num_dpsh_tests (corroboració)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date real de camp",
+   "superficie_parcela",
+   "cota_referencia numèrica per punt",
+   "referencia_catastral",
+   "lab",
+   "cte",
+   "num_floors"
+  ],
+  "relation_to_others": "Còpia 'Microsoft: Print To PDF' del MATEIX dibuix ja llegit en aquesta carpeta com a 'PDF/ANNEXES/3001621_tall de correlació.pdf' (md5 e77496626419bcc0e372d33f59609cd5, exportació Distiller/PScript5 amb text brossa): mateix caixetí, llegenda, perfil i punts; NO és font independent d'aquell document, és el mateix contingut re-exportat amb text net. El bessó FreeHand original (ANNEXES/3001621_tall de correlació.FH11, md5 1a991d9ffde4c4fa4de2c290e2ccd5) és el 'no llegible' font de tots dos PDF.",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "street_address_struct",
+   "municipality",
+   "building_type",
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "caixetí, cel·la 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.95,
+   "note": "coincideix amb el nom de la carpeta del projecte (3001621 CASTELLAR DEL VALLES) i amb l'expedient llegit al bessó PDF/ANNEXES; text net (Print To PDF), no visual"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells, Nº 18A-18B-20, Castellar del Vallès (Barcelona)",
+   "location": "caixetí, títol del projecte",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Arbrells",
+    "nom_via_alternatives": [],
+    "portals": [
+     "18A",
+     "18B",
+     "20"
+    ],
+    "municipi": "Castellar del Vallès",
+    "municipi_alternatives": [
+     "CASTELLAR DEL VALLES"
+    ]
+   },
+   "location": "caixetí, títol del projecte",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.9,
+   "note": "objecte extra (Pas 3), no és cap dels 15 camps"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "caixetí, títol del projecte",
+   "quote": "CASTELLAR DEL VALLÈS  (BARCELONA)",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, títol del projecte",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "LLEGENDA, requadre superior",
+   "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "confidence": 0.7,
+   "note": "la llegenda numera només 1 nivell; 'Terreny Vegetal' és cobertura sense número (Pas 3b) i no compta"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "perfil del tall (etiquetes P-1, P-2, P-4, P-3 sobre el corte)",
+   "quote": "P-1 / P-2 / S-1 / P-4 / P-3",
+   "confidence": 0.55,
+   "note": "corrobora el recompte gràficament (4 DPSH + 1 sondeig S-1); NO és la font d'autoritat (mana l'Excel DPSH amb fulls executats)"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2025",
+   "location": "caixetí, cel·la 'Data:'",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.2,
+   "note": "data del document/mes de redacció del tall, NO data de camp; candidat feble, mai preferent sobre fitxa F38 / annex DPSH / albarà TPS"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Terreny Vegetal (cobertura, sense número)",
+    "litologia": "Llims argilosos de color marró fosc amb graves i algunes arrels.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   },
+   {
+    "nom": "Nivell 1",
+    "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   }
+  ],
+  "__nota": "Fondàries de transició (de/a) no impreses numèricament al tall (només posició gràfica de la línia de contacte i cota msnm a l'eix, sense etiquetes de cota per punt); nom i litologia segons LLEGENDA (Pas 3b, capa de cobertura sense número). Idèntic al bessó PDF/ANNEXES ja llegit."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "num_floors",
+  "superficie_parcela",
+  "field_date (real, de camp)",
+  "cota_referencia",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "text_ok=true (Microsoft: Print To PDF; creationDate/modDate 2025-11-03T16:27:44+01:00): text net extret directament de page-1.txt i confirmat amb page-1.png (150 dpi) sense necessitat de clips ni render_clip.py, a diferència del bessó FreeHand->Distiller (PDF/ANNEXES/3001621_tall de correlació.pdf, ja llegit en aquesta carpeta) que va requerir lectura 100% visual. Contingut gràfic idèntic a aquell bessó: mateix caixetí, llegenda, mapa de situació (miniatura rasteritzada, no llegida com a font pròpia), perfil amb 4 punts DPSH (P-1,P-2,P-4,P-3) i sondeig S-1, i cota de fonamentació recomanada (línia discontínua vermella sense valor numèric imprès). Els valors 'Nb=' i 'N=R' al llarg del contacte terreny vegetal/nivell 1 (Nb=16/R, Nb=18/R, N=R a S-1, Nb=10/33/R a P-4, Nb=19/R a P-3) són colpeigs de rebuig a la línia de contacte, no fondàries ni cotes; no s'han transcrit com a dades del nivell A ni s'ha estimat cap valor per posició de píxel (eix msnm 569-572 sense etiquetes de cota per punt), coherent amb el bessó."
+}
