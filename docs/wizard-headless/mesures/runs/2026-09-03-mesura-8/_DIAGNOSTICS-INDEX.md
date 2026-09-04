@@ -17,6 +17,9 @@ un diagnòstic de causes arrel de tot el que no és OK. **Sempre contrastar els 
 | **F1** | Font d'Eva inconsistent amb ella mateixa (comanda 1,4 vs GTL 1,2; annex p.2 +212 vs +212,50) | regla «qui mana» del skill al consolidador; coherència entre files |
 | **D1** | Cadastre només «als forats»: un valor del tipus equivocat (Polígon/Parcel·la) tapa el forat de la RC; i a l'inrevés, una RC declarada d'una sola font no es creua amb el Cadastre | `consolidate.py` ~1788 (gate per format de RC) |
 | **D2** | **Bug de dates al consolidador**: una data sense dia («Octubre 2025») fa de pont transitiu entre dies diferents (`keys_compatible` + union-find), el representant es tria per `len(str(k))` i `_iso_date` sobreescriu el valor del candidat 0 → una lectura de conf 0,35 surt «segur» (Linyola `field_date` 10/10 per 01/10) | `consolidate.py` l. 266-275, 364, 502-506 |
+| **R6** | Taules: l'absència als docs A (columna N.F. buida → «No detectat») guanya l'evidència positiva d'un doc no-A (tall «Aigua», full de camp «Humit») perquè a les cel·les de taula només bloquegen els A (Vilanova P-3, ERR) | `decide(table_cell=True)`: senyal positiu de `nivell_freatic` bloqueja |
+| **D3** | **Forma visible del municipi triada per `len(v)`** (`_prefer_form`) en lloc de la grafia oficial del padró que `municipis.lookup` ja retorna: «Vilanova **del** Segrià» segur (Vilanova, ERR). Família de D2 | `consolidate._prefer_form` / `decide` per a `municipality` |
+| **D4** | Runner: 3 docs perduts (rc=1 als 2 intents, tall de xarxa) i consolida amb 11/14 → `degraded=False`, `decisions=OK`. El flag només mira la consolidació LLM | `runner.py` (`degraded` / `docs_failed`) |
 | **L1** | Forat de lector: el full SPT manuscrit (PENETROS p.3) no emet `n30` | skill / lector de PENETROS |
 | **L2** | Manuscrit il·legible → candidat honest «[il·legible] marró» (comportament desitjat; falta el derivat «litologia del nivell de la mostra») | derivats del consolidador |
 | **T1** | Operació: `claude -p` penjat sense cap stdout fins al timeout de 600 s (PENETROS, Alcoletge); reintent OK. PENETROS és el doc més lent (382-511 s) | `runner.py` (detecció de penjada / topall per doc) |
@@ -32,26 +35,31 @@ un diagnòstic de causes arrel de tot el que no és OK. **Sempre contrastar els 
 | 3 | Rubí | `rubi/_NOTES.md` | `rubi/_DIAGNOSTIC.md` | **1** (cota P-2, F1) | R1, R4 ×2, R5, F1 ×2, D1, C ×2, G ×2 |
 | 4 | Linyola | `linyola/_NOTES.md` | `linyola/_DIAGNOSTIC.md` | **1** (`field_date`, **D2 bug**) | D2, R1 ×4 (`building_type`, `architect_name` persona/despatx, `lab_location`, `street_address`), R2 ×2 (z GPS a cota; msnm vs fondària als nivells), R5 ×2 (RC i superfície del projecte de l'arquitecte, font única), F1 ×2 (`lab_depth` camp vs lab; errata «argilsoso»), C ×3, G (or persona vs signat despatx), L1 (`n30`) |
 | 5 | Alcoletge | `alcoletge/_NOTES.md` | `alcoletge/_DIAGNOSTIC.md` | 0 (l'ERR cru d'adreça és C: Cadastre 1167 = signat) | R1 (`building_type`), R2 ×2 (z GPS anòmala 198,9; msnm vs fondària), R4 ×2, R5 (RC del correu, font única; Cadastre la confirma i no es creua), G (`fora_carpeta`), C ×3 (adreça, `nivell_freatic`, nivells), L2, T1 (timeout 600 s PENETROS) |
-| 6 | Vilanova | | | | **entra al titular** des del 2026-09-04: informe signat `.docx` trobat (castellà); `_eva_truth/vilanova.json` transcrit del cos |
+| 6 | Vilanova | `vilanova/_NOTES.md` | `vilanova/_DIAGNOSTIC.md` | **2** (`municipality` **D3**; `nivell_freatic` P-3 **R6**) | D3, R6, D4 (11/14 docs i `degraded=False`), R1 ×2 (client, adreça), R4 ×2, R5, F1 ×2 (**SPT P-1/P-3 creuats al signat vs annex+tall**; litologia N2 re-redactada), G (`fora_carpeta` 406), C ×4 (SPT alineació per índex, `profunditat` sense espais, `lab`/`nom` dialecte). Entra al titular des d'avui (signat `.docx` trobat, castellà) |
 | 7 | Anciles | | | | |
 | 8 | Tulipa | | | | (sense veritat: executabilitat + latència) |
 
 ## Recompte transversal (actualitzar a cada projecte)
 
-| Causa | Castellar | Bell-lloc | Rubí | Linyola | Alcoletge | Total |
-|---|---|---|---|---|---|---|
-| R1 | 2 | 4 | 1 (+1 eix via, per disseny) | 4 | 1 | 12 |
-| R2 | 0 | 2 | 0 | 2 | 2 | 6 |
-| R3 | 0 (legítim) | 1 | 0 | 0 | 0 | 1 |
-| R4 | 0 (derivat) | 2 | 2 | 0 (sense línia CTE) | 2 | 6 |
-| R5 | 1 | 1 | 1 | 2 | 1 | 6 |
-| F1 | 1 | 0 | 2 | 2 | 0 | 5 |
-| D1 | 0 | 0 | 1 | (1, cara inversa) | (1, cara inversa) | 1 (+2) |
-| D2 | 0 | 0 | 0 | **1 (ERR)** | 0 | 1 |
-| L1/L2 | 0 | 0 | 0 | 1 | 1 | 2 |
-| C (falsos ERR/ALERTA) | 1 | 0 | 2 | 3 | 3 | 9 |
-| G | 1 | 0 | 2 | 1 | 1 | 5 |
-| T1 | 0 | 0 | 0 | 0 | 1 | 1 |
+| Causa | Castellar | Bell-lloc | Rubí | Linyola | Alcoletge | Vilanova | Total |
+|---|---|---|---|---|---|---|---|
+| R1 | 2 | 4 | 1 (+1 eix via, per disseny) | 4 | 1 | 2 | 14 |
+| R2 | 0 | 2 | 0 | 2 | 2 | 0 | 6 |
+| R3 | 0 (legítim) | 1 | 0 | 0 | 0 | 0 | 1 |
+| R4 | 0 (derivat) | 2 | 2 | 0 (sense línia CTE) | 2 | 2 | 8 |
+| R5 | 1 | 1 | 1 | 2 | 1 | 1 | 7 |
+| R6 | 0 | 0 | 0 | 0 | 0 | **1 (ERR)** | 1 |
+| F1 | 1 | 0 | 2 | 2 | 0 | 2 (SPT creuat!) | 7 |
+| D1 | 0 | 0 | 1 | (1, cara inversa) | (1, cara inversa) | 0 | 1 (+2) |
+| D2 | 0 | 0 | 0 | **1 (ERR)** | 0 | 0 | 1 |
+| D3 | 0 | 0 | 0 | 0 | 0 | **1 (ERR)** | 1 |
+| D4 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
+| L1/L2 | 0 | 0 | 0 | 1 | 1 | 0 | 2 |
+| C (falsos ERR/ALERTA) | 1 | 0 | 2 | 3 | 3 | 4 | 13 |
+| G | 1 | 0 | 2 | 1 | 1 | 1 | 6 |
+| T1 | 0 | 0 | 0 | 0 | 1 | 0 (tall de xarxa, no timeout) | 1 |
 
-**ERR de sistema acumulat (5/8): 2** — Rubí cota P-2 (F1, font d'Eva) i Linyola `field_date` (D2, bug). L'ERR cru
-d'Alcoletge és del comparador (C).
+**ERR de sistema acumulat (6/8): 4** — Rubí cota P-2 (F1, font d'Eva), Linyola `field_date` (D2, bug), Vilanova
+`municipality` (D3, bug) i `nivell_freatic` P-3 (R6, política). **3 dels 4 són el mateix patró: un desempat mecànic
+(`len(str)`, «només A bloqueja») decideix contra informació que el propi `_decisions.json` ja té.** Els ERR crus
+d'Alcoletge (adreça) i Vilanova (SPT ×4) són del comparador (C).

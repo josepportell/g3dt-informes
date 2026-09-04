@@ -1,0 +1,687 @@
+{
+ "generated": "2026-09-04T18:40:29",
+ "project": "4001671 VILANOVA DE SEGRIA",
+ "files": [
+  {
+   "path": "26.0050/1.0.pdf",
+   "size": 211554,
+   "md5": "8af7e4a33e71f95d9f31fbc8d5d25880",
+   "mtime": "2026-01-27T11:19:34",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_1_0",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_1_0/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_1_0/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_1_0/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "26.0050/DADES PER ANAR A CAMP_v1.xlsx",
+   "size": 16553,
+   "md5": "99bf3026a748e718bf3fca15c20eafea",
+   "mtime": "2024-02-14T10:08:34",
+   "route": "python",
+   "doc_type_hint": "fitxa_camp_g3",
+   "priority": 0
+  },
+  {
+   "path": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+   "size": 112014,
+   "md5": "ba9f919cdad2302de4a438e72f295bde",
+   "mtime": "2026-01-27T13:33:00",
+   "route": "python",
+   "doc_type_hint": "plan_cost_g3",
+   "priority": 0
+  },
+  {
+   "path": "26.0050/PRESSUPOST LLEIDA.msg",
+   "size": 293888,
+   "md5": "718b7dfb4c9850cc66475b12886a112c",
+   "mtime": "2026-01-27T15:47:50",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_pressupost_lleida",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_pressupost_lleida/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_pressupost_lleida/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+   "size": 429492,
+   "md5": "69d8daec3cf0fa9932cbcf086097c5ab",
+   "mtime": "2026-01-27T15:58:48",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/page-7.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_presupuesto_geotec_vilanova_de_segria/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+   "size": 255488,
+   "md5": "3c86d23fdbb33f07a741a3612d6901e5",
+   "mtime": "2026-01-27T15:45:16",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_re_pressupost_lleida",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_re_pressupost_lleida/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/26_0050_re_pressupost_lleida/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "26.0050/Thumbs.db",
+   "size": 8192,
+   "md5": "bbfc1cb8cee6364d74c62b534d40eca8",
+   "mtime": "2026-03-02T09:19:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+   "size": 660157,
+   "md5": "e64d879a463376dfca7744570a0a430d",
+   "mtime": "2026-01-28T10:41:52",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/page-7.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/aceptacion_castellano_presupuesto_geotec_vilanova_de_segria_signed/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACEPTACION CASTELLANO/Thumbs.db",
+   "size": 8192,
+   "md5": "54927f594a2a59dff0a2222985776978",
+   "mtime": "2026-03-02T08:42:12",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/4001671_DPSH.xls",
+   "size": 118272,
+   "md5": "3c4c238463813d38ce0533740a807467",
+   "mtime": "2026-03-16T09:50:40",
+   "route": "claude",
+   "doc_type_hint": "dpsh_excel",
+   "priority": 3,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh",
+    "kind": "excel",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh/sheet-0.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh/sheet-0.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh/sheet-0.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh/sheet-1.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh/sheet-1.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh/sheet-1.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh/sheet-2.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh/sheet-2.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh/sheet-2.colors.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/anexos_4001671_dpsh/meta.json",
+    "pages": null,
+    "sheets": [
+     {
+      "index": 0,
+      "name": "P-1",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 100
+     },
+     {
+      "index": 1,
+      "name": "P-2",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 100
+     },
+     {
+      "index": 2,
+      "name": "P-3",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 111
+     }
+    ],
+    "error": null
+   }
+  },
+  {
+   "path": "ANEXOS/4001671_corte de correlación.FH11",
+   "size": 250877,
+   "md5": "6c8ad187e8d0ffc978136b7d19a0eb20",
+   "mtime": "2026-03-16T10:45:52",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/4001671_fotografías.FH11",
+   "size": 2193964,
+   "md5": "370cd1176b920726a3b3c5a134a3fa69",
+   "mtime": "2026-03-16T09:53:34",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/4001671_plano de situación.FH11",
+   "size": 1685728,
+   "md5": "adf0c28555d73ec1f679f9b5ec4c88da",
+   "mtime": "2026-03-16T10:15:14",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/OTROS/6_mapa Geol_CAT_ - CAST.FH11",
+   "size": 219313,
+   "md5": "a7183c95058de30861e51f47426935c5",
+   "mtime": "2026-03-02T11:58:56",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/OTROS/F1 SIT.png",
+   "size": 1854253,
+   "md5": "b3ca6b3e2632e2c8c9daec3a642a672c",
+   "mtime": "2026-03-02T09:48:22",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/OTROS/F2 PUNTS.png",
+   "size": 698060,
+   "md5": "9a2ba7575b71a38e5227d68f538d8704",
+   "mtime": "2026-03-02T09:58:44",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/OTROS/F4 MGEOL.png",
+   "size": 80803,
+   "md5": "7ea9373870b6fdcd676f2fd17795df24",
+   "mtime": "2026-03-02T11:58:36",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/OTROS/M1.png",
+   "size": 993693,
+   "md5": "3c282ea7a8073977dff34b12e5247bd4",
+   "mtime": "2026-03-02T09:23:40",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/OTROS/M2.png",
+   "size": 594197,
+   "md5": "a232c9d182eeb6cf40ca5f335d232c2f",
+   "mtime": "2026-03-02T09:25:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/OTROS/M22.png",
+   "size": 720982,
+   "md5": "01852df93af2194266e639729c81444d",
+   "mtime": "2026-03-02T09:28:26",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/OTROS/M3.png",
+   "size": 824721,
+   "md5": "f4c8c5755006a3e60a92d696813b245a",
+   "mtime": "2026-03-02T09:29:38",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/OTROS/Thumbs.db",
+   "size": 53760,
+   "md5": "642fa59521a05cfa8b0c9bf1c1a44007",
+   "mtime": "2026-03-02T10:50:26",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "ANEXOS/OTROS/m4.png",
+   "size": 24292,
+   "md5": "a396d244d13bf6b7325c9221ac860642",
+   "mtime": "2026-03-02T11:43:52",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "DTE.txt",
+   "size": 76,
+   "md5": "c7c0cd77a6706834f566989d63c4a582",
+   "mtime": "2026-02-23T11:49:00",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DES DE DARRERA.jpeg",
+   "size": 296796,
+   "md5": "3db9a42b61a0f869b9a403148ea27d3a",
+   "mtime": "2026-02-24T18:26:02",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DES DEL CARRER.jpeg",
+   "size": 250108,
+   "md5": "1fc5d8dd179a05517a193d770c18df0b",
+   "mtime": "2026-02-24T18:26:14",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/INTERIOR.jpeg",
+   "size": 350574,
+   "md5": "d3fb1a96960941cf969a489d8032a5cb",
+   "mtime": "2026-02-24T18:26:22",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P1.jpeg",
+   "size": 312706,
+   "md5": "c7980d3b9c568b393486185848f67f48",
+   "mtime": "2026-02-24T18:27:16",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P2.jpeg",
+   "size": 319926,
+   "md5": "a21e2e5b27007626dfe8f753eaf4e0e5",
+   "mtime": "2026-02-24T18:27:06",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P3.jpeg",
+   "size": 278959,
+   "md5": "46fd4ff0f9cdba1c3b5f9036f9fc710d",
+   "mtime": "2026-02-24T18:27:00",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SPT 1 P-1.jpeg",
+   "size": 262220,
+   "md5": "5d33c9411a095b1dfacd973520bc3ebb",
+   "mtime": "2026-02-24T18:25:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SPT A P3.jpeg",
+   "size": 334616,
+   "md5": "19c4db5ed58f1a923d8c118a1c09d29f",
+   "mtime": "2026-03-02T09:03:44",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Thumbs.db",
+   "size": 49152,
+   "md5": "9607be04ccfa8cc1ad15f20810515dfa",
+   "mtime": "2026-03-02T09:03:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/WhatsApp Image 2026-02-19 at 10.28.45.jpeg",
+   "size": 198767,
+   "md5": "ddabc004c4ea7dcaab9db625aae112a8",
+   "mtime": "2026-02-24T18:26:52",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/ZONA P3.jpeg",
+   "size": 300569,
+   "md5": "44e0cb53b363c2b25b80caa05a0e5a2e",
+   "mtime": "2026-02-24T18:26:30",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "MULTICA_61.pdf",
+   "size": 136908,
+   "md5": "cf607558b055f32005bbbbe9298324bb",
+   "mtime": "2026-03-02T13:11:12",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/multica_61",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/multica_61/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/multica_61/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/multica_61/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "MULTICA_61.xls",
+   "size": 14340096,
+   "md5": "66f520c33703d7fbcb64c46955008405",
+   "mtime": "2026-03-02T13:12:02",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "PDF/4001671_informe.pdf",
+   "size": 948029,
+   "md5": "01dc396f1eb68999c39375bf630d4154",
+   "mtime": "2026-03-16T17:09:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "PDF/ANEJOS/4001671_DPSH.pdf",
+   "size": 134725,
+   "md5": "10be2963762ff8cc625bb3c0b025b54f",
+   "mtime": "2026-03-16T17:01:30",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_dpsh",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_dpsh/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_dpsh/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_dpsh/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_dpsh/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_dpsh/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_dpsh/page-3.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_dpsh/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANEJOS/4001671_corte de correlación.pdf",
+   "size": 55092,
+   "md5": "731970b4753d1443ff0ecc1ef41a89d2",
+   "mtime": "2026-03-16T17:00:58",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_corte_de_correlaci_n",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_corte_de_correlaci_n/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_corte_de_correlaci_n/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_corte_de_correlaci_n/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_corte_de_correlaci_n/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_corte_de_correlaci_n/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANEJOS/4001671_fotografías.pdf",
+   "size": 452677,
+   "md5": "3e6c4615c7c8c5fe5e807d276943d92c",
+   "mtime": "2026-03-16T17:03:04",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-2-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-3-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-3-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-4-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/page-4-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_fotograf_as/meta.json",
+    "pages": 4,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANEJOS/4001671_plano de situación.pdf",
+   "size": 230654,
+   "md5": "4aba9a8270ab2dda29e226d5e2d3f3cc",
+   "mtime": "2026-03-16T17:03:56",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_plano_de_situaci_n",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_plano_de_situaci_n/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_plano_de_situaci_n/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_plano_de_situaci_n/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_plano_de_situaci_n/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pdf_anejos_4001671_plano_de_situaci_n/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/LETRA/4001671_portada.pdf",
+   "size": 30295,
+   "md5": "385fec1dd20ed9ed988d3ca00d8afdb8",
+   "mtime": "2026-03-16T16:59:24",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:PORTADA",
+   "priority": 0
+  },
+  {
+   "path": "PENETROS.pdf",
+   "size": 352700,
+   "md5": "55c3e985b1e9f697790a6282ca0139b2",
+   "mtime": "2026-02-20T09:27:48",
+   "route": "claude",
+   "doc_type_hint": "camp_penetros",
+   "priority": 7,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-2-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-3-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/page-3-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/penetros/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+   "size": 470528,
+   "md5": "f1da99f9225768ee3fe9f39d7ab25e6a",
+   "mtime": "2026-02-27T08:27:36",
+   "route": "python",
+   "doc_type_hint": "comanda_lab_g3",
+   "priority": 0
+  },
+  {
+   "path": "pl situació.pdf",
+   "size": 6148700,
+   "md5": "5d7b9d737ac4e00bd49228eb9a057d03",
+   "mtime": "2026-03-16T10:15:12",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pl_situaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pl_situaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pl_situaci/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/pl_situaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "tall.pdf",
+   "size": 819425,
+   "md5": "6827ce7c40783908ec326a24f3127a7c",
+   "mtime": "2026-03-16T10:45:48",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/tall",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/tall/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/tall/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext/tall/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  }
+ ],
+ "duplicates": [],
+ "preext": {
+  "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext",
+  "n_docs": 14,
+  "n_errors": 0,
+  "elapsed_s": 0.025
+ }
+}

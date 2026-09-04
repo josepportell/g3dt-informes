@@ -1,0 +1,135 @@
+{
+ "source_path": "PDF/ANEJOS/4001671_plano de situación.pdf",
+ "source_md5": "4aba9a8270ab2dda29e226d5e2d3f3cc",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Esquema de situació de G3 (dibuix FreeHand->PDF): mapa de localització, ortofoto amb la zona d'estudi, i plànol de la parcel·la amb els 3 punts DPSH (P-1, P-2, P-3) i cotes de replanteig.",
+ "issuer": "G3 Desenvolupament Territorial (logo G3, plantilla pròpia)",
+ "date": "Marzo 2025 (data del document, caixetí Fecha)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva) - dibuix FreeHand convertit a PDF via Acrobat Distiller/PScript5.dll, plantilla pròpia d'esquema de situació",
+  "for_whom": "annex de l'informe geotècnic; qui el llegeixi (client final via l'informe)",
+  "why": "situar geogràficament la parcel·la/zona d'estudi i mostrar la ubicació dels 3 assaigs DPSH (P-1, P-2, P-3) respecte als límits de la parcel·la i el carrer",
+  "expected_fields": [
+   "municipality",
+   "street_address",
+   "expedient",
+   "num_dpsh_tests",
+   "building_type"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "num_floors",
+   "cota_referencia",
+   "num_soil_levels",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "superficie_parcela (nomes cotes de costat, no area calculada)"
+  ],
+  "relation_to_others": "possible parell 'Print To PDF' net a l'arrel del projecte ('pl situació.pdf', no llegit en aquesta crida); l'FH11 original (ANEXOS/4001671_plano de situación.FH11) no és llegible i queda exclos",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001671",
+   "location": "caixetí inferior, cel·la Exp",
+   "quote": "Exp: 4001671",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Calle Santa Gemma nº4",
+   "location": "caixetí inferior, cel·la TÍTULO DEL PROYECTO",
+   "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ",
+   "confidence": 0.7,
+   "note": "el rètol del carrer al plànol diu 'CARRER DE SANTA GEMMA' (catala) sense numero; mateixa via"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Santa Gemma",
+    "nom_via_alternatives": [],
+    "portals": [
+     "4"
+    ],
+    "municipi": "Vilanova de Segrià",
+    "municipi_alternatives": [
+     "VILANOVA DE SEGRIA"
+    ]
+   },
+   "location": "caixetí inferior + rètol del carrer al plànol",
+   "quote": "CALLE SANTA GEMMA Nº4 / CARRER DE SANTA GEMMA",
+   "confidence": 0.7,
+   "note": "portal nomes surt al text del caixeti, no al rotol del plànol"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Vilanova de Segrià",
+   "location": "caixetí inferior, cel·la TÍTULO DEL PROYECTO",
+   "quote": "DEL MUNICIPIO DE VILANOVA DE SEGRIÀ",
+   "confidence": 0.8,
+   "note": "coincideix amb el nom de la carpeta (sense accent)"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "vivienda unifamiliar",
+   "location": "caixetí inferior, cel·la TÍTULO DEL PROYECTO",
+   "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR",
+   "confidence": 0.65,
+   "note": "redaccio generica, sense detall de plantes"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "plànol principal, llegenda + marques P-1/P-2/P-3",
+   "quote": "P-1, P-2, P-3 - Ensayo de penetración dinámica DPSH (llegenda)",
+   "confidence": 0.55,
+   "note": "recompte de punts assenyalats al plànol; no és la font primaria (mana l'Excel DPSH executats)"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Marzo 2025",
+   "location": "caixetí inferior, cel·la Fecha",
+   "quote": "Fecha: Marzo 2025",
+   "confidence": 0.15,
+   "note": "data d'emissio del plànol/esquema, no necessariament el primer dia de camp; candidat molt feble, nomes mes/any"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "text_ok=false (PScript5.dll/Distiller, FreeHand): lectura 100% visual. page-1.png sencera llegible per al conjunt; halves left/right (220dpi) usades per confirmar amb precisio les cotes de marge (0,55/2,80/5,20/17,85/1,60/7,70), els costats de parcel·la (21,62/18,80/22,86) i el text del caixeti. Cap clip addicional necessari."
+}

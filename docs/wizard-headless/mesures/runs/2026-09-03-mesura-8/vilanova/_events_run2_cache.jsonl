@@ -1,0 +1,36 @@
+{"t": 0.2, "ev": "lectura_preext", "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/vilanova/_preext", "n_docs": 14, "n_errors": 0, "elapsed_s": 0.025}
+{"t": 0.2, "ev": "lectura_inventari", "n_files": 47}
+{"t": 2.7, "ev": "templates_fields", "n_documents": 6}
+{"t": 2.7, "ev": "lectura_inici", "n_claude": 14, "n_python": 3}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "ANEXOS/4001671_DPSH.xls"}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "tall.pdf"}
+{"t": 2.7, "ev": "lectura_doc", "doc": "ANEXOS/4001671_DPSH.xls", "cached": true}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "26.0050/1.0.pdf"}
+{"t": 2.7, "ev": "lectura_doc", "doc": "tall.pdf", "cached": true}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf"}
+{"t": 2.7, "ev": "lectura_doc", "doc": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf", "cached": true}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf"}
+{"t": 2.7, "ev": "lectura_doc", "doc": "26.0050/1.0.pdf", "cached": true}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "MULTICA_61.pdf"}
+{"t": 2.7, "ev": "lectura_doc", "doc": "MULTICA_61.pdf", "cached": true}
+{"t": 2.7, "ev": "lectura_doc", "doc": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf", "cached": true}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "PDF/ANEJOS/4001671_DPSH.pdf"}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "PDF/ANEJOS/4001671_corte de correlación.pdf"}
+{"t": 2.7, "ev": "lectura_doc", "doc": "PDF/ANEJOS/4001671_corte de correlación.pdf", "cached": true}
+{"t": 2.7, "ev": "lectura_doc", "doc": "PDF/ANEJOS/4001671_DPSH.pdf", "cached": true}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "PDF/ANEJOS/4001671_fotografías.pdf"}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "PENETROS.pdf"}
+{"t": 2.7, "ev": "lectura_doc", "doc": "PENETROS.pdf", "cached": true}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "26.0050/PRESSUPOST LLEIDA.msg"}
+{"t": 2.7, "ev": "lectura_doc", "doc": "PDF/ANEJOS/4001671_fotografías.pdf", "cached": true}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "26.0050/RE_ PRESSUPOST LLEIDA.msg"}
+{"t": 2.7, "ev": "lectura_doc", "doc": "26.0050/PRESSUPOST LLEIDA.msg", "cached": true}
+{"t": 2.7, "ev": "lectura_doc_inici", "doc": "PDF/ANEJOS/4001671_plano de situación.pdf"}
+{"t": 170.0, "ev": "lectura_doc", "doc": "PDF/ANEJOS/4001671_plano de situación.pdf", "cached": false, "attempt": 1}
+{"t": 170.0, "ev": "lectura_doc_inici", "doc": "pl situació.pdf"}
+{"t": 208.6, "ev": "lectura_doc", "doc": "26.0050/RE_ PRESSUPOST LLEIDA.msg", "cached": false, "attempt": 1}
+{"t": 292.5, "ev": "lectura_doc", "doc": "pl situació.pdf", "cached": false, "attempt": 1}
+{"t": 292.5, "ev": "consolidacio_inici", "consolidator": "python"}
+{"t": 571.5, "ev": "decisions", "cached": false, "consolidator": "python", "n_conflicts": 2, "elapsed_s": 264.32}
+{"t": 571.5, "ev": "lectura_fi", "n_docs": 14, "elapsed_s_total": 473.133828699, "degraded": false}
+DONE 4001671 VILANOVA DE SEGRIA: 9.5 min, degraded=False, mode=document, decisions=OK, docs=14

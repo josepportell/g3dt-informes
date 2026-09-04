@@ -1,0 +1,28 @@
+{
+ "source_path": "26.0050/1.0.pdf",
+ "source_md5": "8af7e4a33e71f95d9f31fbc8d5d25880",
+ "kind": "pdf",
+ "generated": "2026-09-04T16:36:22",
+ "elapsed_s": 2.119,
+ "dir": "26_0050_1_0",
+ "files": [
+  "26_0050_1_0/page-1.txt",
+  "26_0050_1_0/page-1.png"
+ ],
+ "pages": 1,
+ "page_sizes_pt": [
+  [
+   1191.0,
+   842.0
+  ]
+ ],
+ "producer": "pdfplot17.bundle 17.00.100.00416",
+ "creator": "AutoCAD 2025 (25.0s (LMS Tech))",
+ "creationDate": "D:20260127110024",
+ "modDate": "D:20260127110024",
+ "text_ok": {
+  "1": true
+ },
+ "pages_truncated": false,
+ "halves_pages": []
+}

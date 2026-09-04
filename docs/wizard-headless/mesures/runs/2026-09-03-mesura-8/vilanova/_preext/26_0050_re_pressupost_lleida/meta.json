@@ -1,0 +1,24 @@
+{
+ "source_path": "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+ "source_md5": "3c86d23fdbb33f07a741a3612d6901e5",
+ "kind": "msg",
+ "generated": "2026-09-04T16:36:24",
+ "elapsed_s": 0.051,
+ "dir": "26_0050_re_pressupost_lleida",
+ "files": [
+  "26_0050_re_pressupost_lleida/body.txt"
+ ],
+ "subject": "RE: PRESSUPOST LLEIDA",
+ "from": "Eva Vazquez <eva@g3dt.com>",
+ "to": "Dolors Maqueda <dolors@g3dt.com>",
+ "date": "2026-01-27 13:32:47+01:00",
+ "attachments": [
+  {
+   "name": "plan_cost_vilanova_de_segri.xlsx",
+   "size": 112014,
+   "md5": "ba9f919cdad2302de4a438e72f295bde",
+   "already_in_folder": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+   "preext_dir": null
+  }
+ ]
+}

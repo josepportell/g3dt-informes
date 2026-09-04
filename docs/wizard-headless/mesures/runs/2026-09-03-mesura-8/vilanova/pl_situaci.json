@@ -1,0 +1,127 @@
+{
+ "source_path": "pl situació.pdf",
+ "source_md5": "5d7b9d737ac4e00bd49228eb9a057d03",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Esquema de situació del projecte: plànol amb mapa de localització, ortofoto de la parcel·la, geometria acotada del solar i els 3 punts DPSH assajats (P-1, P-2, P-3); és la còpia 'Microsoft: Print To PDF' (text net) del dibuix FreeHand de l'Eva.",
+ "issuer": "G3 Desenvolupament Territorial (logo G3 al peu del plànol)",
+ "date": "Marzo 2025",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva), com a annex gràfic propi del projecte (esquema de situació)",
+  "for_whom": "l'informe geotècnic (annex) i per situar el solar respecte al carrer i al municipi",
+  "why": "mostrar la ubicació del solar dins el municipi, els 3 punts d'assaig DPSH (P-1, P-2, P-3) i les dimensions del perímetre de la parcel·la",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "expedient",
+   "building_type",
+   "num_dpsh_tests"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "cota_referencia",
+   "num_soil_levels",
+   "superficie_parcela (numèrica)",
+   "field_date (data de camp exacta)"
+  ],
+  "relation_to_others": "Print-to-PDF (producer='Microsoft: Print To PDF') del mateix dibuix que 'ANEXOS/4001671_plano de situación.FH11' (text brossa, exclòs de l'inventari) i probablement del mateix contingut que 'PDF/ANEJOS/4001671_plano de situación.pdf' (FreeHand→Distiller); aquest document arrel és la còpia amb text net, prioritzar-lo per a lectura textual.",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "expedient",
+   "building_type",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001671",
+   "location": "caixetí, cel·la 'Exp:'",
+   "quote": "Exp: 4001671",
+   "confidence": 0.95,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Calle Santa Gemma nº4",
+   "location": "peu del plànol, bloc TÍTULO DEL PROYECTO",
+   "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+   "confidence": 0.85,
+   "note": "corroborat pel rètol al mateix plànol 'CARRER DE SANTA GEMMA' (sense número, al costat del carrer davant la parcel·la)"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Santa Gemma",
+    "nom_via_alternatives": [
+     "Calle Santa Gemma"
+    ],
+    "portals": [
+     "4"
+    ],
+    "municipi": "Vilanova de Segrià",
+    "municipi_alternatives": [
+     "VILANOVA DE SEGRIA"
+    ]
+   },
+   "location": "peu del plànol (títol) + rètol al dibuix",
+   "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+   "confidence": 0.85,
+   "note": "nom_via_alternatives = grafia castellana del títol; municipi_alternatives = grafia sense accent (com el nom de la carpeta '4001671 VILANOVA DE SEGRIA')"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Vilanova de Segrià",
+   "location": "peu del plànol, bloc TÍTULO DEL PROYECTO",
+   "quote": "DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+   "confidence": 0.9,
+   "note": "grafia amb accent; la carpeta del projecte usa 'VILANOVA DE SEGRIA' sense accent (mateixa font)"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "vivienda unifamiliar",
+   "location": "peu del plànol, bloc TÍTULO DEL PROYECTO",
+   "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR",
+   "confidence": 0.85,
+   "note": "redacció en castellà; l'informe en català sol dir 'habitatge unifamiliar' — comparació CLOSE, no MISMATCH"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "cos del plànol, llegenda 'Ensayo de penetración dinámica DPSH' + 3 marcadors etiquetats al dibuix",
+   "quote": "Leyenda: Ensayo de penetración dinámica DPSH",
+   "confidence": 0.7,
+   "note": "comptat visualment (marcadors P-1, P-2, P-3 al dibuix); aquest document no és font d'autoritat primària per a aquest camp (mana l'Excel DPSH, no llegit en aquesta crida) però corrobora el mateix nombre"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Marzo 2025",
+   "location": "caixetí, cel·la 'Fecha:'",
+   "quote": "Fecha: Marzo 2025",
+   "confidence": 0.3,
+   "note": "és la data d'elaboració del plànol (dibuix de l'Eva), NO necessàriament el primer dia de camp; no seguir com a font primària de field_date (manen fitxa/annex DPSH/albarà/fotos, cap dels quals és aquest document)"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "cota_referencia",
+  "num_soil_levels",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "num_floors",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pàgina única, text net (producer 'Microsoft: Print To PDF'; text_ok=true), sense necessitat de meitats. Llegit page-1.txt + page-1.png sencera (150 dpi), prou resolució per al caixetí i les llegendes. No s'ha calculat cap superfície a partir dels costats acotats al dibuix (21.62 / 22.86 / 18.80 / 5.20 / 17.85 / 7.70 m, etc.): són cotes de geometria/replanteig dels punts DPSH, no una xifra d'àrea impresa — cap valor de superficie_parcela emès des d'aquest document."
+}

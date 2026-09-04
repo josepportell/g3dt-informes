@@ -38,7 +38,10 @@
 
 ## La feina següent, per ordre
 
-1. **Continuar la mesura (3 projectes: Vilanova, Anciles, Tulipa)** — Alcoletge FET (`alcoletge/_DIAGNOSTIC.md`: ERR 0; l'ERR cru
+1. **Continuar la mesura (2 projectes: Anciles, Tulipa)** — Vilanova FET (`vilanova/_DIAGNOSTIC.md`: **ERR 2** = D3 «Vilanova
+   del Segrià» per `len(v)` + R6 humitat P-3 tapada per columna buida; D4 runner `degraded=False` amb 11/14 docs; F1 SPT
+   P-1/P-3 creuats al signat vs annex+tall → pregunta a Eva; temps compost 22+9,5 min per tall de xarxa + reinici).
+   El signat de Vilanova existia (`.docx` castellà a AI-pipeline/reference-material) → 7 comparables. Alcoletge FET (`alcoletge/_DIAGNOSTIC.md`: ERR 0; l'ERR cru
    d'adreça és del comparador; T1 = timeout 600 s a PENETROS sense stdout, reintent OK) — seqüencial, mai dos alhora:
    ```bash
    cd ~/projects/claudecode-job/clients/g3dt-prod

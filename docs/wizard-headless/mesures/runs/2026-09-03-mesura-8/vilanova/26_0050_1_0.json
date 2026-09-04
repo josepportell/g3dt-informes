@@ -1,0 +1,114 @@
+{
+ "source_path": "26.0050/1.0.pdf",
+ "source_md5": "8af7e4a33e71f95d9f31fbc8d5d25880",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol d'emplaçament de l'avantprojecte (AutoCAD), full únic '1.0 EMPLAÇAMENT', escala 1/200",
+ "issuer": "ROCAR arquitectura i enginyeria — Jordi Carner (arquitecte tècnic / enginyer d'edificació)",
+ "date": "24.01.2026",
+ "pages_or_sheets": "1 pàgina (full '1.0')",
+ "context": {
+  "who_made_it": "ROCAR arquitectura i enginyeria (Jordi Carner, arquitecte tècnic / enginyer d'edificació), redactors de l'avantprojecte",
+  "for_whom": "Grupo CUENCA GUERRERO, promotor de l'obra",
+  "why": "Situar la parcel·la i les seves dimensions dins la urbanització per a l'avantprojecte d'un habitatge unifamiliar aïllat",
+  "expected_fields": [
+   "client_name (Promotor)",
+   "street_address (Emplaçament)",
+   "municipality",
+   "architect_name (redactor del plànol)",
+   "building_type"
+  ],
+  "not_expected": [
+   "expedient G3",
+   "dades de camp (DPSH/sondeig)",
+   "referencia_catastral",
+   "cota_referencia",
+   "num_floors explícit"
+  ],
+  "relation_to_others": "Arxivat dins la carpeta comercial '26.0050' juntament amb els pressupostos G3 (PRESSUPOST/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA) i els correus 'PRESSUPOST LLEIDA' / 'RE_ PRESSUPOST LLEIDA' — sembla el plànol de l'arquitecte referenciat en l'encàrrec del geotècnic; no s'ha llegit el correu en aquesta crida per confirmar-ho.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "street_address_struct"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Grupo CUENCA GUERRERO",
+   "location": "p.1 caixetí, cel·la 'Promotor'",
+   "quote": "Promotor: Grupo CUENCA GUERRERO",
+   "confidence": 0.9,
+   "note": "caixetí del plànol amb etiqueta Promotor — font de màxima prioritat per client_name segons el Pas 3"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C. Santa Gemma, 4 Urb. La Serra",
+   "location": "p.1 caixetí, cel·la 'Emplaçament', línia 1",
+   "quote": "Emplaçament: C. Santa Gemma, 4 Urb. La Serra",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Santa Gemma",
+    "nom_via_alternatives": [],
+    "portals": [
+     "4"
+    ],
+    "municipi": "Vilanova del Segrià",
+    "municipi_alternatives": []
+   },
+   "location": "p.1 caixetí, cel·la 'Emplaçament'",
+   "quote": "C. Santa Gemma, 4 Urb. La Serra / Vilanova del Segrià",
+   "confidence": 0.9,
+   "note": "el qualificador 'Urb. La Serra' no té camp propi a l'esquema struct; queda al text lliure de street_address"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Vilanova del Segrià",
+   "location": "p.1 caixetí, cel·la 'Emplaçament', línia 2",
+   "quote": "Vilanova del Segrià",
+   "confidence": 0.9,
+   "note": "forma oficial llarga"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Jordi Carner",
+   "location": "p.1 caixetí, bloc d'autoria (sota el logo ROCAR)",
+   "quote": "jordi carner / arquitecte tècnic / enginyer d'edificació",
+   "confidence": 0.55,
+   "note": "l'etiqueta és 'arquitecte tècnic / enginyer d'edificació', no 'Arquitecte'; el skill documenta que a Vilanova el nom de l'arquitecte que apareix a l'informe final no consta a cap document de la carpeta — candidat, mai segur"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "p.1 caixetí, bloc de títol (cantonada inferior esquerra)",
+   "quote": "AVANTPROJECTE D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.8,
+   "note": "fase avantprojecte (full 1.0); podria variar respecte al projecte executiu"
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "E2557",
+   "location": "p.1 caixetí, cel·la de codi de full",
+   "quote": "1.0 / E2557",
+   "confidence": 0.9,
+   "note": "codi de projecte intern de l'arquitecte (ROCAR), no l'expedient G3 — mateix patró que EXP25.34/SET.25 esmentat al Pas 3 del skill"
+  }
+ ],
+ "not_present": [
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "cota_referencia"
+ ],
+ "reading_notes": "Text de page-1.txt complet i llegible (text_ok=true) però en ordre no lineal; confirmat contra page-1.png (150 dpi, prou resolució) per fixar la posició real de cada cel·la del caixetí. Les cotes de la parcel·la (21.62, 18.80, 22.86, 17.85, 7.70, 5.20, 2.80, 1.60, 0.55) són dimensions lineals de dibuix, no una superfície calculada — no se n'ha derivat cap valor de superficie_parcela. Sense necessitat de render_clip."
+}

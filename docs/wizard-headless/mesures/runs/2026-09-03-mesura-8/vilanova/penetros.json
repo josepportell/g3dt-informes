@@ -1,0 +1,270 @@
+{
+ "source_path": "PENETROS.pdf",
+ "source_md5": "55c3e985b1e9f697790a6282ca0139b2",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Recull manuscrit de camp de TPS (3 pàgines escanejades, NAPS2, sense text): p.1 Albarà d'obra, p.2 Full de Camp Penetròmetre Dinàmic (Fitxa 01, 3 punts DPSH), p.3 Full de assaig SPT/MI/Mostra alterada (2 assaigs).",
+ "issuer": "TPS - Prospecció del Subsòl (operari PC-KRM)",
+ "date": "19-2-26 (2026-02-19)",
+ "pages_or_sheets": "3 pàgines: p.1 Albarà; p.2 Full de Camp Penetròmetre Dinàmic; p.3 Full de assaig SPT/MI/Mostra alterada",
+ "context": {
+  "who_made_it": "TPS (subcontractista de penetròmetres/sondeigs), operari de camp PC-KRM, in situ a l'obra",
+  "for_whom": "G3 (Eva), que ha encarregat a TPS els assaigs DPSH i SPT d'aquest projecte",
+  "why": "Documentar l'execució de camp: 3 penetròmetres dinàmics (P-1, P-2, P-3) i 2 assaigs SPT/mostra alterada, com a base per a l'informe geotècnic",
+  "expected_fields": [
+   "field_date",
+   "num_dpsh_tests",
+   "N20 per fondària i punt",
+   "fondària de rebuig per punt",
+   "nota de nivell freàtic/humitat",
+   "lab_sample_id/lab_depth (SPT)"
+  ],
+  "not_expected": [
+   "client_name (promotor real)",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "cota_referencia absoluta (msnm)",
+   "expedient"
+  ],
+  "relation_to_others": "Manuscrit de camp; l'Excel ANEXOS/4001671_DPSH.xls (no llegit en aquesta crida --only) n'és la transcripció digital i sol manar per als valors N20 i la fondària exacta de rebuig (peu 'Rebuig a'). El GTL de laboratori, si n'hi ha, complementa lab_depth/lab_sample_id per a les mostres SPT.",
+  "authority_for": [
+   "field_date",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "2026-02-19",
+   "location": "p.1 Albarà, camp Data; confirmat p.2 i p.3, camp Data",
+   "quote": "19.2.26",
+   "confidence": 0.85,
+   "note": "Mateixa data escrita a les 3 pàgines del mateix full de camp; no són fonts independents entre elles."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Vilanova de Segrià",
+   "location": "p.1 Albarà, DADES OBRA > Població; p.2 Adreça de l'obra",
+   "quote": "VILANOVA SEGRIA / VILANOVA SEGLIA",
+   "confidence": 0.6,
+   "note": "Grafia manuscrita abreujada sense guionet ni 'de'; coincideix amb el nom de la carpeta del projecte (4001671 VILANOVA DE SEGRIA)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "El Secà - Carrer Santa Gemma",
+   "location": "p.1 Albarà, DADES OBRA > Adreça; p.2 Adreça de l'obra",
+   "quote": "EL SECA - C/STA GEMMA",
+   "confidence": 0.4,
+   "note": "Manuscrit de difícil lectura. 'El Secà' sembla un topònim/partida davant del nom de carrer, no el propi carrer. Candidat feble; confirmar amb plànol/comanda/pressupost (no llegits en aquesta crida)."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Santa Gemma",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Vilanova de Segrià",
+    "municipi_alternatives": [
+     "VILANOVA SEGRIA"
+    ]
+   },
+   "location": "p.1 Albarà, DADES OBRA > Adreça; p.2 Adreça de l'obra",
+   "quote": "EL SECA - C/STA GEMMA . VILANOVA SEGRIA",
+   "confidence": 0.5,
+   "note": "'El Secà' tractat com a topònim previ, no com a part del nom de la via. Cap número de portal enlloc del document."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "p.1 Albarà > CONCEPTES > ML DE PERFORACIÓ > 'Nº de penetròmetres realitzats'",
+   "quote": "3",
+   "confidence": 0.8,
+   "note": "Coincideix amb els 3 punts (1, 2, 3) del full de camp p.2. L'Excel DPSH (no llegit en aquesta crida) hauria de confirmar-ho com a font preferent."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1 (P-3)",
+   "location": "p.3, primer bloc, 'Assaig de referència'",
+   "quote": "SPT1 P3",
+   "confidence": 0.55,
+   "note": "Casella SPT marcada amb X en aquest bloc. Lletra ambigua entre 'SPT1' i 'SPTI'."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1 (P-1)",
+   "location": "p.3, segon bloc, 'Assaig de referència'",
+   "quote": "SPT1 P1",
+   "confidence": 0.4,
+   "note": "Cap casella SPT/MI/MA marcada en aquest bloc: el tipus d'assaig no queda determinat visualment. Referència també ambigua."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,80 m - 1,40 m",
+   "location": "p.3, ambdós blocs, 'Cota d'extracció: de la cota de / fins a la cota'",
+   "quote": "de la cota de: 0'8 / fins a la cota: 1'4",
+   "confidence": 0.65,
+   "note": "Mateix interval de fondària escrit als dos assaigs (P-3 i P-1)."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 / Eva",
+   "location": "p.1 Albarà > DADES CLIENT (Empresa / Responsable)",
+   "quote": "Empresa: G3 ; Responsable: Eva",
+   "confidence": 0.9,
+   "note": "Descartat com a client_name per la regla 'G3 mai és client': és el client del subcontractista TPS (l'encàrrec de l'albarà), no el promotor de l'obra."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-0,3 (respecte al carrer, punt 0 = 'CARRER')",
+    "profunditat_assolida": "-1,48",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2, columna de punt 1 (encerclat), full de camp DPSH",
+    "quote": "Cota Inici: -0,3 ... R-1'48",
+    "note": "Lectura manuscrita de columna densa; sèrie N20 intermèdia (extra.n20_llegit) amb confiança baixa, especialment els valors de dos dígits.",
+    "extra": {
+     "n20_llegit": {
+      "-0,4": "6",
+      "-0,6": "7",
+      "-0,8": "8",
+      "-1,0": "18(?)",
+      "-1,2": "24",
+      "-1,4": "27(?)",
+      "-1,6": "100"
+     },
+     "reading_confidence": "baixa (manuscrit, digitalització NAPS2 sense text)"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-0,3 (respecte al carrer, punt 0 = 'CARRER')",
+    "profunditat_assolida": "-2,48",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2, columna de punt 2, full de camp DPSH",
+    "quote": "Cota Inici: -0,3 ... R-2'48",
+    "note": "Simetria sospitosa amb el rebuig de P-1 (ambdós acaben en ',48'); verificar contra Excel DPSH.",
+    "extra": {
+     "n20_llegit": {
+      "-0,4": "4",
+      "-0,6": "7",
+      "-0,8": "8(?)",
+      "-1,0": "12",
+      "-1,2": "10",
+      "-1,4": "12(?)",
+      "-1,6": "13",
+      "-1,8": "30(?)",
+      "-2,0": "96",
+      "-2,2": "130(?)"
+     },
+     "reading_confidence": "baixa (manuscrit, digitalització NAPS2 sense text)"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-0,2 (respecte al carrer, punt 0 = 'CARRER')",
+    "profunditat_assolida": "-3,78(?)",
+    "rebuig": "Si",
+    "nivell_freatic": "Humit",
+    "matis": "humitat",
+    "location": "p.2, columna de punt 3, full de camp DPSH; nota 'NIVELL FREÀTIC' al peu de p.2",
+    "quote": "Cota Inici: -0,2 ... R-3178(?) ; 'Hi ha nivell freàtic? HUMIT A P3'",
+    "note": "Fondària de rebuig molt il·legible (podria no ser exactament -3,78). Nota de peu de pàgina confirma humitat a P-3 sense fondària concreta; matís 'humitat', no aigua franca.",
+    "extra": {
+     "n20_llegit": {
+      "-0,4": "3",
+      "-0,6": "4",
+      "-0,8": "7",
+      "-1,0": "5",
+      "-1,2": "4",
+      "-1,4": "6",
+      "-1,6": "6",
+      "-1,8": "10",
+      "-2,0": "8",
+      "-2,2": "13",
+      "-2,4": "9",
+      "-2,6": "12",
+      "-2,8": "26",
+      "-3,0": "37(?)",
+      "-3,2": "40",
+      "-3,4": "13",
+      "-3,6": "25",
+      "-3,8": "100(?)"
+     },
+     "reading_confidence": "baixa (columna més llarga i amb ratlles diagonals superposades d'origen incert)"
+    }
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "P-3",
+    "profunditat": "0,80-1,40",
+    "litologia": "Argila limosa i sorrenca, amb algunes graves",
+    "n30": {
+     "registre": [
+      "3",
+      "4",
+      "6",
+      "5"
+     ],
+     "candidates_suma": [
+      {
+       "value": 10,
+       "note": "suma dels 2 trams centrals (4+6), criteri habitual d'Eva (vegeu memòria de projecte)"
+      }
+     ]
+    },
+    "location": "p.3, primer bloc",
+    "quote": "Assaig tipus: SPT (marcat) ; Assaig de referència: SPT1 P3 ; Colpeig: 3/4/6/5 ; Descripció: 'ARGILA LIMOSA I SORRENCA, AMB ALGUNES GRAVES.'"
+   },
+   {
+    "id": "SPT-1(?)",
+    "punt": "P-1",
+    "profunditat": "0,80-1,40",
+    "litologia": "Sorra fina-mitja, compacta (fragment entre parèntesis il·legible)",
+    "n30": {
+     "registre": [
+      "13",
+      "10",
+      "14",
+      "24"
+     ],
+     "candidates_suma": [
+      {
+       "value": 24,
+       "note": "suma dels 2 trams centrals (10+14)"
+      }
+     ]
+    },
+    "location": "p.3, segon bloc",
+    "quote": "Assaig tipus: cap casella marcada ; Assaig de referència: SPT1 P1 ; Colpeig: 13/10/14/24 ; Descripció: 'SORRA FINA-MITJA, COMPACTA (...)'",
+    "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu."
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia (valor absolut msnm — només es dona 'punt 0 = carrer' com a referència relativa)",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "cte_edificacio",
+  "cte_sol",
+  "lab_testing_company",
+  "lab_location"
+ ],
+ "reading_notes": "Document escanejat amb NAPS2, `text_ok` fals a les 3 pàgines (cap capa de text). Lectura íntegrament visual amb les mitges pàgines (top/bottom) a 220 dpi. Handwriting de densitat alta a la graella N20 de p.2: molts valors de dos dígits (18, 27, 30, 130, 37, 100...) tenen lectura incerta, marcats amb '(?)'. Les fondàries de rebuig (R-1,48 / R-2,48 / R-3,78) són candidates, no segures, per la mateixa raó — i haurien de contrastar-se amb el peu 'Rebuig a' de l'Excel DPSH (fora d'abast d'aquesta crida --only). El segon bloc SPT de p.3 no té cap casella de tipus marcada (SPT/MI/MA en blanc). G3/Eva descartats com a client_name (regla estàndard)."
+}

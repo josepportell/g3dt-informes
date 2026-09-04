@@ -1,0 +1,152 @@
+{
+ "source_path": "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+ "source_md5": "3c86d23fdbb33f07a741a3612d6901e5",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern G3 (cadena RE:) que trasllada l'encàrrec verbal/telefònic del client a Eva perquè en calculi el pressupost; el missatge de resposta (aquest fitxer) no afegeix text nou, només adjunta el PLAN_COST ja calculat.",
+ "issuer": "Missatge original: Dolors Maqueda (Dept. Administració G3). Resposta RE: (aquest fitxer): Eva Vázquez Marcet (Responsable Dept. Geologia G3).",
+ "date": "2026-01-27 13:32:47+01:00 (RE:, aquest fitxer) — cita el missatge original de 2026-01-27 11:38 (dimarts, 27 de gener de 2026)",
+ "pages_or_sheets": null,
+ "context": {
+  "who_made_it": "Dolors Maqueda (administració G3) escriu el missatge original amb les dades de l'encàrrec tal com les hi ha donat el client per telèfon; Eva Vázquez (geòloga, Dept. Geologia G3) hi respon (RE:) sense text nou, adjuntant el PLAN_COST que ja ha calculat a partir d'aquestes dades.",
+  "for_whom": "Comunicació interna G3 (Dolors → Eva → Dolors), no dirigida al client ni a l'arquitecte.",
+  "why": "Traspassar a Eva les dades d'un nou encàrrec (client, adreça d'obra, arquitecte, tipus d'edifici, superfície aproximada) perquè pugui preparar el pressupost/PLAN_COST. És anterior a qualsevol feina de camp.",
+  "expected_fields": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_construida"
+  ],
+  "not_expected": [
+   "field_date de camp",
+   "cota_referencia",
+   "num_soil_levels",
+   "dades de laboratori",
+   "UTM",
+   "referencia_catastral"
+  ],
+  "relation_to_others": "Correu d'encàrrec original que precedeix el pressupost G3 i tota la resta de documents del projecte (mateix origen que el CLIENT: del pressupost/fitxa: no és font independent d'aquests). L'adjunt plan_cost_vilanova_de_segri.xlsx ja és present solt a la carpeta com PLAN_COST_VILANOVA DE SEGRIÀ.xlsx (mateix md5 ba9f919c...; dedup, no re-llegit aquí).",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "street_address_struct",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_construida"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Grupo Cuenca Guerrero SL",
+   "location": "missatge original (Dolors→Eva, 27/1 11:38) dins la cadena RE:, bloc CLIENT:",
+   "quote": "CLIENT:\n\nGrupo Cuenca guerrero sl \n\nCalle Merce rodureda número 9 \n\nVilanova del segria \n\n25133 \n\nLleida \n\nNIF B26604942",
+   "confidence": 0.45,
+   "note": "El CLIENT: d'un correu d'encàrrec pot ser el sol·licitant, no necessàriament el promotor final (regla Pas 0/3). Aquí el nom no conté 'ARQUITECT' i hi ha un bloc ARQUITECTE: separat amb un altre nom, cosa que fa plausible que sigui el promotor real — però és font única (mateix origen que el CLIENT: del pressupost): cal confirmar amb plànol/acceptació. NIF B26604942 citat per si ajuda a creuar amb altres documents."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C. Santa Gemma, 4, Urb. La Serra, Vilanova del Segrià",
+   "location": "missatge original, bloc DREÇA OBRA: > Emplaçament",
+   "quote": "DREÇA OBRA:\n\nEmplaçament\n\nD'UN HABITATGE UNIFAMILIAR AÏLLAT C. Santa Gemma, 4 Urb. La Serra Vilanova del Segrià",
+   "confidence": 0.7,
+   "note": "Bloc etiquetat com a obra ('DREÇA OBRA', probablement 'ADREÇA OBRA' amb la primera lletra tallada en copiar), autoritat vàlida per a l'adreça de l'obra (Pas 3)."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Santa Gemma",
+    "nom_via_alternatives": [],
+    "portals": [
+     "4"
+    ],
+    "municipi": "Vilanova del Segrià",
+    "municipi_alternatives": [
+     "Vilanova del segria",
+     "VILANOVA DE SEGRIA"
+    ]
+   },
+   "location": "missatge original, bloc DREÇA OBRA: > Emplaçament",
+   "quote": "C. Santa Gemma, 4 Urb. La Serra Vilanova del Segrià",
+   "confidence": 0.65,
+   "note": "'Urb. La Serra' és el nom de la urbanització, no encaixa a cap clau de l'schema (tipus_via no inclou 'urbanització'); es deixa fora de l'objecte estructurat, però consta a street_address en text lliure."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Vilanova del Segrià",
+   "location": "missatge original, bloc DREÇA OBRA: > Emplaçament",
+   "quote": "Vilanova del Segrià",
+   "confidence": 0.55,
+   "note": "Grafia amb accent al bloc d'obra; el bloc CLIENT: del mateix correu porta la grafia sense accent 'Vilanova del segria' (mateixa font, no independent). Nom curt de carpeta: 'VILANOVA DE SEGRIA'."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Jordi Carner",
+   "location": "missatge original, bloc ARQUITECTE: (persona)",
+   "quote": "ARQUITECTE:\n\njordi carner\n\narquitecte tècnic rocar arquitectura i enginyeria\n\nwww.rocarassociats.com",
+   "confidence": 0.5,
+   "note": "Persona (arquitecte tècnic). Despatx associat: 'Rocar Arquitectura i Enginyeria' (candidat separat, mateix bloc). Nota: no consta si aquest nom coincideix amb el que finalment porta l'informe signat — confirmar en consolidació."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Rocar Arquitectura i Enginyeria",
+   "location": "missatge original, bloc ARQUITECTE: (despatx)",
+   "quote": "arquitecte tècnic rocar arquitectura i enginyeria",
+   "confidence": 0.4,
+   "note": "Despatx. Persona associada: 'Jordi Carner' (candidat separat, mateix bloc)."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "missatge original, bloc DREÇA OBRA: > Emplaçament",
+   "quote": "D'UN HABITATGE UNIFAMILIAR AÏLLAT C. Santa Gemma, 4 Urb. La Serra Vilanova del Segrià",
+   "confidence": 0.6,
+   "note": "L'informe sol redactar-ho com 'un habitatge unifamiliar' (comparació CLOSE esperada)."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB (planta baixa, 1 planta)",
+   "location": "missatge original, nota final (fora de bloc, informació verbal transcrita)",
+   "quote": "El client Toni 625298919 diu que serà pb 100m2, començen fen una pero tenen en men fer-ne 7 mès.",
+   "confidence": 0.35,
+   "note": "Informació verbal de segona mà (contacte 'Toni', tel. 625298919) transcrita per Dolors, anterior al pressupost/plànol. 'PB' interpretat com a planta baixa únicament. 'Tenen en ment fer-ne 7 més' es refereix a futurs encàrrecs, no afecta aquest expedient — no confondre amb el cas Tulipa d'un sol expedient amb diverses cases."
+  }
+ ],
+ "tables": {
+  "superficie_construida": [
+   {
+    "components": [
+     "100"
+    ],
+    "total": "100",
+    "etiqueta_font": "informació verbal del client (contacte Toni, 625298919), transcrita per correu intern — no és plànol ni pressupost",
+    "mostra_del_nivell": false
+   }
+  ],
+  "__nota": "Única fila ve d'informació verbal transcrita, no d'un document mètric (plànol/projecte); tractar com a candidat feble."
+ },
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "superficie_parcela",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Fitxer .msg amb cadena de dos missatges: la resposta d'Eva (RE:, 27/1 13:32) no porta text nou, només signatura i peu legal; el contingut rellevant és el missatge original de Dolors (27/1 11:38, 'PRESSUPOST LLEIDA') citat a sota. Adjunt plan_cost_vilanova_de_segri.xlsx marcat 'already_in_folder' (md5 coincident amb PLAN_COST_VILANOVA DE SEGRIÀ.xlsx solt a la carpeta): no re-llegit. Llegit del preext body.txt (pre-extracció, sense extract_msg manual)."
+}

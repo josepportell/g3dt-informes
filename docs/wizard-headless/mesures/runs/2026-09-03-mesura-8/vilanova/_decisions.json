@@ -1,0 +1,2693 @@
+{
+ "schema_version": 1,
+ "project": "4001671 VILANOVA DE SEGRIA",
+ "generated": "2026-09-04T18:45:24",
+ "skill_version": "1.6",
+ "consolidation": {
+  "consolidator": "python-1.0",
+  "elapsed_s": 1.228,
+  "n_docs": 14,
+  "n_conflicts": 2,
+  "docs_skill_versions": [
+   "1.6"
+  ],
+  "llm_only_fields": {
+   "requested": [
+    "fields.building_type",
+    "fields.street_address"
+   ],
+   "applied": [
+    "fields.building_type",
+    "fields.street_address"
+   ],
+   "elapsed_s": 263.1,
+   "rc": 0,
+   "timeout": false,
+   "json_valid": true
+  }
+ },
+ "fields": {
+  "architect_company": {
+   "estat": "no_trobat",
+   "value": null,
+   "sources_checked": [
+    "ANEXOS/4001671_DPSH.xls",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "tall.pdf"
+   ]
+  },
+  "architect_name": {
+   "estat": "candidats",
+   "value": "Jordi Carner",
+   "candidates": [
+    {
+     "value": "Jordi Carner",
+     "font": "26.0050/PRESSUPOST LLEIDA.msg cos del correu, bloc 'ARQUITECTE:' (body.txt L35-41)",
+     "quote": "ARQUITECTE:\n\njordi carner\n\narquitecte tècnic rocar arquitectura i enginyeria\n\nwww.rocarassociats.com",
+     "note": "Candidat, no segur (correu d'encàrrec, no independent). És 'arquitecte tècnic', no 'arquitecte superior'. Despatx associat: Rocar Arquitectura i Enginyeria (rocarassociats.com) -- persona preferida sobre despatx segons el Pas 3."
+    },
+    {
+     "value": "Rocar Arquitectura i Enginyeria",
+     "font": "26.0050/RE_ PRESSUPOST LLEIDA.msg missatge original, bloc ARQUITECTE: (despatx)",
+     "quote": "arquitecte tècnic rocar arquitectura i enginyeria",
+     "note": "Despatx. Persona associada: 'Jordi Carner' (candidat separat, mateix bloc)."
+    }
+   ],
+   "rule": "contradiccio: Rocar Arquitectura i Enginyeria (1 doc, conf max 0.40)",
+   "altres": [
+    {
+     "value": "Jordi Carner",
+     "font": "26.0050/1.0.pdf p.1 caixetí, bloc d'autoria (sota el logo ROCAR)",
+     "quote": "jordi carner / arquitecte tècnic / enginyer d'edificació",
+     "note": "l'etiqueta és 'arquitecte tècnic / enginyer d'edificació', no 'Arquitecte'; el skill documenta que a Vilanova el nom de l'arquitecte que apareix a l'informe final no consta a cap document de la carpeta — candidat, mai segur"
+    },
+    {
+     "value": "Jordi Carner",
+     "font": "26.0050/RE_ PRESSUPOST LLEIDA.msg missatge original, bloc ARQUITECTE: (persona)",
+     "quote": "ARQUITECTE:\n\njordi carner\n\narquitecte tècnic rocar arquitectura i enginyeria\n\nwww.rocarassociats.com",
+     "note": "Persona (arquitecte tècnic). Despatx associat: 'Rocar Arquitectura i Enginyeria' (candidat separat, mateix bloc). Nota: no consta si aquest nom coincideix amb el que finalment porta l'informe signat — confirmar en consolidació."
+    }
+   ],
+   "sources_checked": [
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf",
+    "26.0050/1.0.pdf",
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg"
+   ],
+   "note": "l'etiqueta és 'arquitecte tècnic / enginyer d'edificació', no 'Arquitecte'; el skill documenta que a Vilanova el nom de l'arquitecte que apareix a l'informe final no consta a cap document de la carpeta — candidat, mai segur"
+  },
+  "building_type": {
+   "estat": "candidats",
+   "value": "Habitatge unifamiliar aïllat",
+   "candidates": [
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "26.0050/1.0.pdf p.1 caixetí, bloc de títol (cantonada inferior esquerra)",
+     "quote": "AVANTPROJECTE D'UN HABITATGE UNIFAMILIAR AÏLLAT"
+    },
+    {
+     "value": "Vivienda unifamiliar",
+     "font": "PDF/ANEJOS/4001671_plano de situación.pdf caixetí inferior / pl situació.pdf peu del plànol / PDF/ANEJOS/4001671_corte de correlación.pdf caixetí — mateixa frase de plantilla de TPS repetida idènticament als 3-4 annexos (no fonts independents entre elles)",
+     "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR"
+    },
+    {
+     "value": "CONSTR HAB UNIF",
+     "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR HAB UNIF"
+    }
+   ],
+   "rule": "Pas 3 building_type: títol del projecte/plànol mana. El caixetí de l'avantprojecte de l'arquitecte (26.0050/1.0.pdf) és la font més autoritativa per a la tipologia real de l'edifici, per davant de la frase de plantilla que TPS repeteix idèntica als seus propis annexos geotècnics (corte de correlación / plano de situación / pl situació / tall — un sol origen redaccional, no fonts independents) i per davant de la comanda de laboratori.",
+   "note": "Corroborat pels 2 correus d'encàrrec (26.0050/PRESSUPOST LLEIDA.msg i RE_ PRESSUPOST LLEIDA.msg) que citen literalment la mateixa frase del caixetí de l'arquitecte ('D'UN HABITATGE UNIFAMILIAR AÏLLAT'). Comparació amb la redacció final de l'informe serà CLOSE per als dos primers candidats (aïllat / unifamiliar); mai segur perquè hi ha contradicció real entre la font de l'arquitecte i la de TPS.",
+   "llm_only_fields": true,
+   "altres": [
+    {
+     "value": "EG VILANOVA SEGRIÀ",
+     "font": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx 'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG VILANOVA SEGRIÀ",
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    },
+    {
+     "value": "Vivienda unifamiliar",
+     "font": "PDF/ANEJOS/4001671_corte de correlación.pdf caixetí, títol del projecte (1a línia)",
+     "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR",
+     "note": "redacció del títol, no una casella dedicada; comparació CLOSE amb la redacció final de l'informe"
+    },
+    {
+     "value": "vivienda unifamiliar",
+     "font": "PDF/ANEJOS/4001671_plano de situación.pdf caixetí inferior, cel·la TÍTULO DEL PROYECTO",
+     "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR",
+     "note": "redaccio generica, sense detall de plantes"
+    },
+    {
+     "value": "Vivienda unifamiliar",
+     "font": "tall.pdf p.1 bloc TÍTULO DEL PROYECTO",
+     "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR",
+     "note": "redacció del títol; comparació CLOSE esperada amb la redacció final de l'informe"
+    },
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "26.0050/PRESSUPOST LLEIDA.msg cos del correu, bloc 'DREÇA OBRA:' (body.txt L49)",
+     "quote": "D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+     "note": "Candidat (correu d'encàrrec, no independent)."
+    },
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "26.0050/RE_ PRESSUPOST LLEIDA.msg missatge original, bloc DREÇA OBRA: > Emplaçament",
+     "quote": "D'UN HABITATGE UNIFAMILIAR AÏLLAT C. Santa Gemma, 4 Urb. La Serra Vilanova del Segrià",
+     "note": "L'informe sol redactar-ho com 'un habitatge unifamiliar' (comparació CLOSE esperada)."
+    }
+   ]
+  },
+  "client_name": {
+   "estat": "candidats",
+   "value": "Grupo Cuenca Guerrero SL",
+   "candidates": [
+    {
+     "value": "Grupo Cuenca Guerrero SL",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.5 formulari 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' → NOMBRE Y APELLIDO",
+     "quote": "NOMBRE Y APELLIDO: Grupo Cuenca Guerrero SL",
+     "note": "coincideix amb el bloc CLIENTE: de p.1 (mateix document, no independent); NIF B26604942 confirma que és la societat, no el contacte Antonio Cuenca Lara"
+    },
+    {
+     "value": "Grupo Cuenca Guerrero SL.",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.1 bloc CLIENTE",
+     "quote": "CLIENTE: GRUPO CUENCA GUERRERO SL.",
+     "note": "corrobora p.5 dins del mateix document; no és font independent"
+    },
+    {
+     "value": "Grupo CUENCA GUERRERO",
+     "font": "26.0050/1.0.pdf p.1 caixetí, cel·la 'Promotor'",
+     "quote": "Promotor: Grupo CUENCA GUERRERO",
+     "note": "caixetí del plànol amb etiqueta Promotor — font de màxima prioritat per client_name segons el Pas 3"
+    }
+   ],
+   "rule": "formes diferents entre fonts A (compatibles per prefix): candidats amb totes les formes",
+   "altres": [
+    {
+     "value": "GRUPO CUENCA GUERRERO SL.",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 bloc CLIENT (y,x)",
+     "quote": "GRUPO CUENCA GUERRERO SL. / C/MERCE RODOREDA 9 / 25133 VILANOVA DE SEGRIA",
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "value": "GRUPO CUENCA GUERRERO SL.",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.1 bloc CLIENT (y,x)",
+     "quote": "GRUPO CUENCA GUERRERO SL. / C/MERCE RODOREDA 9 / 25133 VILANOVA DE SEGRIA",
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "value": "Grupo Cuenca Guerrero SL",
+     "font": "26.0050/PRESSUPOST LLEIDA.msg cos del correu, bloc 'CLIENT:' (body.txt L19-31)",
+     "quote": "CLIENT:\n\nGrupo Cuenca guerrero sl \n\nCalle Merce rodureda número 9 \n\nVilanova del segria \n\n25133 \n\nLleida \n\nNIF B26604942",
+     "note": "Candidat, no segur: bloc CLIENT d'un correu d'encàrrec deriva del mateix encàrrec que pressupost/fitxa, no és font independent. El nom NO conté 'ARQUITECT' (l'arquitecte hi surt en bloc separat), així que és candidat vàlid per client_name segons el Pas 3. NIF B26604942 (context, no és el concepte demanat). L'adreça d'aquest bloc és la del client (fiscal), no la de l'obra."
+    },
+    {
+     "value": "GRUPO CUENCA GUERRERO SL.",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 bloc CLIENTE",
+     "quote": "CLIENTE:\nGRUPO CUENCA GUERRERO SL. \nC/MERCE RODOREDA 9 \n25133    VILANOVA DE SEGRIA \nTel: 625298919",
+     "note": "Bloc 'CLIENTE' del pressupost = sol·licitant (regla Pas 3), no promotor confirmat. Cap bloc de promotor/arquitecte en aquest document; en projectes sense arquitecte l'Eva sol posar el client també com a arquitecte (a confirmar en consolidació)."
+    },
+    {
+     "value": "Grupo Cuenca Guerrero SL",
+     "font": "26.0050/RE_ PRESSUPOST LLEIDA.msg missatge original (Dolors→Eva, 27/1 11:38) dins la cadena RE:, bloc CLIENT:",
+     "quote": "CLIENT:\n\nGrupo Cuenca guerrero sl \n\nCalle Merce rodureda número 9 \n\nVilanova del segria \n\n25133 \n\nLleida \n\nNIF B26604942",
+     "note": "El CLIENT: d'un correu d'encàrrec pot ser el sol·licitant, no necessàriament el promotor final (regla Pas 0/3). Aquí el nom no conté 'ARQUITECT' i hi ha un bloc ARQUITECTE: separat amb un altre nom, cosa que fa plausible que sigui el promotor real — però és font única (mateix origen que el CLIENT: del pressupost): cal confirmar amb plànol/acceptació. NIF B26604942 citat per si ajuda a creuar amb altres documents."
+    }
+   ],
+   "sources_checked": [
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "pl situació.pdf",
+    "tall.pdf",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "26.0050/1.0.pdf",
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg"
+   ],
+   "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+   "descartats": [
+    {
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    },
+    {
+     "value": "Antonio Cuenca Lara",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.5 bloc 'PERSONAS Y/O EMPRESAS QUE PUEDEN RECIBIR INFORMACIÓN'",
+     "quote": "PERSONAS Y/O EMPRESAS QUE PUEDEN RECIBIR INFORMACIÓN: ANTONIO CUENCA LARA",
+     "note": "administrador/contacte de Grupo Cuenca Guerrero SL i destinatari addicional d'informació — no és el client_name; l'entitat que signa i consta amb NIF és Grupo Cuenca Guerrero SL (B26604942)"
+    },
+    {
+     "value": "G3 / Eva",
+     "font": "PENETROS.pdf p.1 Albarà > DADES CLIENT (Empresa / Responsable)",
+     "quote": "Empresa: G3 ; Responsable: Eva",
+     "note": "Descartat com a client_name per la regla 'G3 mai és client': és el client del subcontractista TPS (l'encàrrec de l'albarà), no el promotor de l'obra."
+    }
+   ]
+  },
+  "cota_referencia": {
+   "estat": "segur",
+   "value": "+321,69 msnm según el visor ICGC",
+   "candidates": [
+    {
+     "value": "+321,69 msnm según el visor ICGC",
+     "font": "PDF/ANEJOS/4001671_DPSH.pdf capçalera p.1/2/3",
+     "quote": "Cota inicio: +321,69 msnm según el visor ICGC",
+     "note": "mateixa cota per als 3 punts (parcel·la sense pendent apreciable o cota única d'implantació)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "sources_checked": [
+    "26.0050/1.0.pdf",
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "pl situació.pdf",
+    "tall.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf"
+   ],
+   "note": "mateixa cota per als 3 punts (parcel·la sense pendent apreciable o cota única d'implantació)"
+  },
+  "cte_edificacio": {
+   "estat": "candidats",
+   "value": "C0",
+   "candidates": [
+    {
+     "value": "C0",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.2",
+     "quote": "Tipo de Edificio. C0"
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "altres": [
+    {
+     "value": "C0",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.2",
+     "quote": "Tipo de Edificio. C0"
+    },
+    {
+     "value": "C0",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.2 bloc 'Clasificación CTE'",
+     "quote": "Clasificación CTE \n\nTipo de Edificio. C0"
+    },
+    {
+     "value": "C0",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.2 bloc 'Clasificación CTE'",
+     "quote": "Tipo de Edificio. C0"
+    }
+   ],
+   "sources_checked": [
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf"
+   ]
+  },
+  "cte_sol": {
+   "estat": "candidats",
+   "value": "T1",
+   "candidates": [
+    {
+     "value": "T1",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.2",
+     "quote": "Tipo de terreno: T1"
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "altres": [
+    {
+     "value": "T1",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.2",
+     "quote": "Tipo de terreno: T1"
+    },
+    {
+     "value": "T1",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.2 bloc 'Clasificación CTE'",
+     "quote": "Tipo de terreno: T1"
+    },
+    {
+     "value": "T1",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.2 bloc 'Clasificación CTE'",
+     "quote": "Tipo de terreno: T1"
+    }
+   ],
+   "sources_checked": [
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf"
+   ]
+  },
+  "expedient": {
+   "estat": "segur",
+   "value": "4001671",
+   "candidates": [
+    {
+     "value": "4001671",
+     "font": "pl situació.pdf caixetí, cel·la 'Exp:'",
+     "quote": "Exp: 4001671",
+     "note": "coincideix amb el nom de la carpeta del projecte"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "4001671",
+     "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "4001671.0"
+    },
+    {
+     "value": "4001671",
+     "font": "ANEXOS/4001671_DPSH.xls nom del fitxer",
+     "quote": "4001671_DPSH.xls"
+    },
+    {
+     "value": "4001671",
+     "font": "PDF/ANEJOS/4001671_corte de correlación.pdf caixetí, cel·la 'Exp:'",
+     "quote": "Exp: 4001671",
+     "note": "coincideix amb el nom de la carpeta del projecte"
+    },
+    {
+     "value": "4001671",
+     "font": "PDF/ANEJOS/4001671_DPSH.pdf peu de cada pàgina (p.1, p.2, p.3)",
+     "quote": "NÚMERO DE INFORME: 4001671",
+     "note": "idèntic a les 3 pàgines"
+    },
+    {
+     "value": "4001671",
+     "font": "PDF/ANEJOS/4001671_fotografías.pdf capçalera de cada pàgina (banda dreta, 'Reportaje fotográfico - Página N')",
+     "quote": "4001671",
+     "note": "coincideix amb el nom de la carpeta del projecte; document de baixa autoritat (fotos), corrobora però no és font primària"
+    },
+    {
+     "value": "4001671",
+     "font": "PDF/ANEJOS/4001671_plano de situación.pdf caixetí inferior, cel·la Exp",
+     "quote": "Exp: 4001671",
+     "note": "coincideix amb el nom de la carpeta del projecte"
+    },
+    {
+     "value": "4001671",
+     "font": "tall.pdf p.1 caixetí, camp 'Exp:'",
+     "quote": "Exp: 4001671",
+     "note": "coincideix amb el nom de la carpeta del projecte"
+    },
+    {
+     "value": "4001671",
+     "font": "nom de la carpeta del projecte",
+     "quote": "4001671 VILANOVA DE SEGRIA",
+     "note": "regla Pas 3: nom de la carpeta = NNNNNNN MUNICIPI"
+    }
+   ],
+   "sources_checked": [
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PENETROS.pdf",
+    "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "pl situació.pdf",
+    "tall.pdf",
+    "(carpeta)"
+   ],
+   "note": "coincideix amb el nom de la carpeta del projecte",
+   "descartats": [
+    {
+     "value": "E2557",
+     "font": "26.0050/1.0.pdf p.1 caixetí, cel·la de codi de full",
+     "quote": "1.0 / E2557",
+     "note": "codi de projecte intern de l'arquitecte (ROCAR), no l'expedient G3 — mateix patró que EXP25.34/SET.25 esmentat al Pas 3 del skill"
+    },
+    {
+     "value": "26·0050",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1, p.4 i p.5 (capçalera/peu)",
+     "quote": "26·0050\nP#",
+     "note": "Codi comercial de G3, NO és l'expedient del projecte (regla Pas 3). L'expedient (4001671) no apareix en aquest document."
+    }
+   ]
+  },
+  "field_date": {
+   "estat": "segur",
+   "value": "2026-02-19",
+   "candidates": [
+    {
+     "value": "2026-02-19",
+     "font": "PENETROS.pdf p.1 Albarà, camp Data; confirmat p.2 i p.3, camp Data",
+     "quote": "19.2.26",
+     "note": "Mateixa data escrita a les 3 pàgines del mateix full de camp; no són fonts independents entre elles."
+    },
+    {
+     "value": "19/02/2026",
+     "font": "PDF/ANEJOS/4001671_DPSH.pdf capçalera p.1/2/3, camp FECHA",
+     "quote": "FECHA: 19/02/2026",
+     "note": "font 'annex DPSH DATA' (Pas 3): candidata a field_date si la fitxa de camp no en té una de pròpia; idèntica a les 3 pàgines"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "2026-02-19",
+     "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!N23 (DATA DE PRESA)",
+     "quote": "46072.0",
+     "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    },
+    {
+     "value": "Marzo 2025",
+     "font": "pl situació.pdf caixetí, cel·la 'Fecha:'",
+     "quote": "Fecha: Marzo 2025",
+     "note": "és la data d'elaboració del plànol (dibuix de l'Eva), NO necessàriament el primer dia de camp; no seguir com a font primària de field_date (manen fitxa/annex DPSH/albarà/fotos, cap dels quals és aquest document)"
+    },
+    {
+     "value": "Marzo 2025",
+     "font": "tall.pdf p.1 caixetí, camp 'Fecha:'",
+     "quote": "Fecha: Marzo 2025",
+     "note": "data del document/tall (només mes), no és una de les fonts autoritzades per field_date (fitxa/annex DPSH/albarà/foto); probablement la data de redacció de l'annex/informe, no necessàriament el primer dia de camp"
+    },
+    {
+     "value": "Marzo 2025",
+     "font": "PDF/ANEJOS/4001671_plano de situación.pdf caixetí inferior, cel·la Fecha",
+     "quote": "Fecha: Marzo 2025",
+     "note": "data d'emissio del plànol/esquema, no necessariament el primer dia de camp; candidat molt feble, nomes mes/any"
+    }
+   ],
+   "sources_checked": [
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf"
+   ],
+   "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp",
+   "descartats": [
+    {
+     "value": "27/01/26",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 i p.5",
+     "quote": "FECHA: 27/01/26",
+     "note": "Data d'emissió del pressupost, no data de camp (regla Pas 3: mai la data del pressupost com a field_date)."
+    }
+   ]
+  },
+  "lab_depth": {
+   "estat": "candidats",
+   "value": "0.8 - 1.4",
+   "candidates": [
+    {
+     "value": "0.8 - 1.4",
+     "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!J35/L35",
+     "quote": "INICIAL 0.8 / FINAL 1.4",
+     "note": "el GTL mana si discrepa"
+    },
+    {
+     "value": "0,80 m - 1,40 m",
+     "font": "PENETROS.pdf p.3, ambdós blocs, 'Cota d'extracció: de la cota de / fins a la cota'",
+     "quote": "de la cota de: 0'8 / fins a la cota: 1'4",
+     "note": "Mateix interval de fondària escrit als dos assaigs (P-3 i P-1)."
+    },
+    {
+     "value": "0,80-1,40m",
+     "font": "PDF/ANEJOS/4001671_DPSH.pdf p.1, columna MEDIDA DE PAR, punt P-1",
+     "quote": "SPT1 / 0,80-1,40m / 13/10/14/24",
+     "note": "assaig SPT embegut al DPSH al punt P-1, etiquetat 'SPT1' (sense guionet)"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "altres": [
+    {
+     "value": "0.80-1,40m",
+     "font": "PDF/ANEJOS/4001671_DPSH.pdf p.3, columna MEDIDA DE PAR, punt P-3",
+     "quote": "SPT-1 / 0.80-1,40m / 3/4/6/5",
+     "note": "assaig SPT embegut al DPSH al punt P-3, etiquetat 'SPT-1' (amb guionet). AMBIGÜITAT: dos assaigs SPT amb pràcticament el mateix nom ('SPT1' vs 'SPT-1') a punts diferents (P-1 i P-3) amb registres de cops DIFERENTS (13/10/14/24 vs 3/4/6/5) — no es pot saber sense l'annex de sondeig/GTL quin és 'el' SPT-1 citat a l'informe, o si són dues mostres reals"
+    }
+   ],
+   "sources_checked": [
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "pl situació.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PENETROS.pdf"
+   ],
+   "note": "el GTL mana si discrepa"
+  },
+  "lab_location": {
+   "estat": "candidats",
+   "value": "P3",
+   "candidates": [
+    {
+     "value": "P3",
+     "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!C35 (parèntesi)",
+     "quote": "SPT1 (P3)"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls"
+   ]
+  },
+  "lab_sample_id": {
+   "estat": "candidats",
+   "value": "SPT1 (P3)",
+   "candidates": [
+    {
+     "value": "SPT1 (P3)",
+     "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!C35",
+     "quote": "SPT1 (P3)",
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    },
+    {
+     "value": "SPT-1 (P-3)",
+     "font": "PENETROS.pdf p.3, primer bloc, 'Assaig de referència'",
+     "quote": "SPT1 P3",
+     "note": "Casella SPT marcada amb X en aquest bloc. Lletra ambigua entre 'SPT1' i 'SPTI'."
+    },
+    {
+     "value": "SPT-1 (P-1)",
+     "font": "PENETROS.pdf p.3, segon bloc, 'Assaig de referència'",
+     "quote": "SPT1 P1",
+     "note": "Cap casella SPT/MI/MA marcada en aquest bloc: el tipus d'assaig no queda determinat visualment. Referència també ambigua."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "altres": [
+    {
+     "value": "SPT-1",
+     "font": "PDF/ANEJOS/4001671_fotografías.pdf peu de foto p.3 (Fotografía 6)",
+     "quote": "Detalle del material recuperado en el ensayo SPT-1 (P-1).",
+     "note": "etiqueta 'SPT-1' associada al punt P-1 en aquest document; candidat feble, creuar amb GTL/annex de sondeig per a l'etiqueta definitiva"
+    },
+    {
+     "value": "SPT-1",
+     "font": "PDF/ANEJOS/4001671_fotografías.pdf peu de foto p.4 (Fotografía 7)",
+     "quote": "Fotografía 7. Detalle del material recuperado en el ensayo SPT-1 (P-3).",
+     "note": "la mateixa etiqueta 'SPT-1' torna a aparèixer aquí associada al punt P-3 (possible ús genèric de 'SPT-1' per punt, no ID únic de projecte); NO assumir mostra única — aquesta ambigüitat s'ha d'anotar i resoldre amb el GTL/comanda de laboratori"
+    }
+   ],
+   "sources_checked": [
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "pl situació.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PENETROS.pdf"
+   ],
+   "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+  },
+  "lab_testing_company": {
+   "estat": "candidats",
+   "value": "TPS",
+   "candidates": [
+    {
+     "value": "TPS",
+     "font": "(coneixement previ: G3 treballa amb TPS; el GTL no es a la carpeta)",
+     "quote": "",
+     "note": "sense GTL: candidat de coneixement previ, no lectura"
+    }
+   ],
+   "rule": "nomes candidats derivats/coneixement previ",
+   "sources_checked": [
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf"
+   ],
+   "note": "sense GTL: candidat de coneixement previ, no lectura"
+  },
+  "municipality": {
+   "estat": "segur",
+   "value": "Vilanova del Segrià",
+   "candidates": [
+    {
+     "value": "Vilanova del Segrià",
+     "font": "26.0050/1.0.pdf p.1 caixetí, cel·la 'Emplaçament', línia 2",
+     "quote": "Vilanova del Segrià",
+     "note": "forma oficial llarga"
+    },
+    {
+     "value": "Vilanova de Segria",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.1 bloc OBRA (3a línia); coincideix amb p.1 bloc CLIENTE i amb p.5 CP Y POBLACIÓN",
+     "quote": "VILANOVA DE SEGRIA",
+     "note": "grafia del document sense accent; forma oficial 'Vilanova de Segrià' (a validar contra el padró de municipis al consolidador)"
+    },
+    {
+     "value": "Vilanova de Segrià",
+     "font": "pl situació.pdf peu del plànol, bloc TÍTULO DEL PROYECTO",
+     "quote": "DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+     "note": "grafia amb accent; la carpeta del projecte usa 'VILANOVA DE SEGRIA' sense accent (mateixa font)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "VILANOVA SEGRIÀ",
+     "font": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx 'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG VILANOVA SEGRIÀ",
+     "note": "«VILANOVA SEGRIÀ» és, sense les preposicions, «Vilanova de Segrià» segons el padró de municipis; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "VILANOVA DE SEGRIÀ",
+     "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "VILANOVA DE SEGRIÀ"
+    },
+    {
+     "value": "VILANOVA DE SEGRIA",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC",
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "VILANOVA DE SEGRIA",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC",
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "Vilanova del Segrià",
+     "font": "26.0050/PRESSUPOST LLEIDA.msg cos del correu, bloc 'DREÇA OBRA:' (body.txt L49)",
+     "quote": "D'UN HABITATGE UNIFAMILIAR AÏLLAT C. Santa Gemma, 4 Urb. La Serra Vilanova del Segrià",
+     "note": "Extret del mateix bloc DREÇA OBRA que street_address. El bloc CLIENT (body.txt L25) també diu 'Vilanova del segria' però és el municipi FISCAL del client, no corrobora independentment la ubicació de l'obra -- coincideixen per casualitat (el client viu al mateix municipi on construeix)."
+    },
+    {
+     "value": "Vilanova de Segrià",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 bloc OBRA",
+     "quote": "VILANOVA DE SEGRIA",
+     "note": "Grafia G3 sense accent; apareix igual al bloc CLIENTE (municipi del sol·licitant, coincident)."
+    },
+    {
+     "value": "Vilanova del Segrià",
+     "font": "26.0050/RE_ PRESSUPOST LLEIDA.msg missatge original, bloc DREÇA OBRA: > Emplaçament",
+     "quote": "Vilanova del Segrià",
+     "note": "Grafia amb accent al bloc d'obra; el bloc CLIENT: del mateix correu porta la grafia sense accent 'Vilanova del segria' (mateixa font, no independent). Nom curt de carpeta: 'VILANOVA DE SEGRIA'."
+    },
+    {
+     "value": "Vilanova de Segrià",
+     "font": "PDF/ANEJOS/4001671_corte de correlación.pdf caixetí, títol del projecte (2a línia)",
+     "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+     "note": "font secundària (redacció del títol, no una casella dedicada de municipi); comanda/pressupost/PLAN_COST manen per aquest camp"
+    },
+    {
+     "value": "VILANOVA DE SEGRIA",
+     "font": "PDF/ANEJOS/4001671_DPSH.pdf capçalera p.1/2/3, bloc POBLACIÓN",
+     "quote": "POBLACIÓN: VILANOVA DE SEGRIA",
+     "note": "grafia G3 sense accent/dièresi; forma oficial probablement 'Vilanova de Segrià'"
+    },
+    {
+     "value": "Vilanova de Segrià",
+     "font": "PDF/ANEJOS/4001671_plano de situación.pdf caixetí inferior, cel·la TÍTULO DEL PROYECTO",
+     "quote": "DEL MUNICIPIO DE VILANOVA DE SEGRIÀ",
+     "note": "coincideix amb el nom de la carpeta (sense accent)"
+    },
+    {
+     "value": "Vilanova de Segrià",
+     "font": "PENETROS.pdf p.1 Albarà, DADES OBRA > Població; p.2 Adreça de l'obra",
+     "quote": "VILANOVA SEGRIA / VILANOVA SEGLIA",
+     "note": "Grafia manuscrita abreujada sense guionet ni 'de'; coincideix amb el nom de la carpeta del projecte (4001671 VILANOVA DE SEGRIA)."
+    },
+    {
+     "value": "Vilanova de Segrià",
+     "font": "tall.pdf p.1 bloc TÍTULO DEL PROYECTO",
+     "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+     "note": "forma tal com surt al títol; comparar amb la forma oficial llarga d'altres fonts (comanda/pressupost/PLAN_COST)"
+    }
+   ],
+   "sources_checked": [
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+    "26.0050/1.0.pdf",
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf"
+   ],
+   "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+  },
+  "num_dpsh_tests": {
+   "estat": "segur",
+   "value": 3,
+   "candidates": [
+    {
+     "value": 3,
+     "font": "ANEXOS/4001671_DPSH.xls fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1', 'P-2', 'P-3']",
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": 3,
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.2 campanya",
+     "quote": "3 ensayos de penetración dinámica",
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "value": 3,
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.2 campanya",
+     "quote": "3 ensayos de penetración dinámica",
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "value": 3,
+     "font": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx OFERTA!B21",
+     "quote": "3",
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "value": 3,
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.2 (redacció) i p.4 (taula VALORACIÓN, ref 001.001)",
+     "quote": "3 ensayos de penetración dinámica DPSH / UNIDADES DE ENSAYO DE PENETRACION DINAMICA DPSH 3,00",
+     "note": "Previstos al pressupost; regla Pas 3: manen els executats de l'Excel DPSH si hi ha discrepància."
+    },
+    {
+     "value": 3,
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.2 'PLAN DE TRABAJO' i p.4 taula VALORACIÓN línia 001.001",
+     "quote": "3 ensayos de penetración dinámica DPSH (p.2) / UNIDADES DE ENSAYO DE PENETRACION DINAMICA DPSH 3,00 (p.4)",
+     "note": "previstos al pressupost, no executats; confirmar amb ANEXOS/4001671_DPSH.xls si discrepen"
+    },
+    {
+     "value": 3,
+     "font": "ANEXOS/4001671_DPSH.xls noms dels 3 fulls del llibre",
+     "quote": "fulls 'P-1', 'P-2', 'P-3', cadascun amb dades executades a la columna 'Golpeo DPSH' (C17:C36 segons full)",
+     "note": "3 fulls amb golpeig executat; Excel DPSH és la font de màxima prioritat per aquest concepte (Pas 3); sense contradicció interna"
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANEJOS/4001671_corte de correlación.pdf capçaleres del tall",
+     "quote": "P-1 / P-2 / P-3",
+     "note": "confirma 3 punts DPSH per correlació visual; l'Excel DPSH és l'autoritat per al recompte (executats)"
+    },
+    {
+     "value": "3",
+     "font": "PDF/ANEJOS/4001671_DPSH.pdf capçaleres p.1/2/3",
+     "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P-1 / P-2 / P-3",
+     "note": "3 punts amb lectures completes (P-1, P-2, P-3) dins d'aquest PDF; pendent de confirmar amb l'Excel DPSH.xls (no llegit en aquesta crida)"
+    },
+    {
+     "value": "3",
+     "font": "PDF/ANEJOS/4001671_fotografías.pdf peus de foto p.2 (F-3/F-4) i p.3 (F-5)",
+     "quote": "Fotografía 3 y 4. Vista del emplazamiento de la máquina durante la realización del ensayo de penetración dinámica DPSH P-1 y P-2, respectivamente. / Fotografía 5 y 6. Vista del emplazamiento de la máquina durante la realización del ensayo de penetración dinámica DPSH P-3 y Detalle del material recuperado en el ensayo SPT-1 (P-1).",
+     "note": "corroboració visual de 3 punts DPSH (P-1, P-2, P-3); l'Excel DPSH (ANEXOS/4001671_DPSH.xls, 3 fulls P-1/P-2/P-3) és la font d'autoritat per aquest camp, aquest document només ho confirma"
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANEJOS/4001671_plano de situación.pdf plànol principal, llegenda + marques P-1/P-2/P-3",
+     "quote": "P-1, P-2, P-3 - Ensayo de penetración dinámica DPSH (llegenda)",
+     "note": "recompte de punts assenyalats al plànol; no és la font primaria (mana l'Excel DPSH executats)"
+    },
+    {
+     "value": 3,
+     "font": "PENETROS.pdf p.1 Albarà > CONCEPTES > ML DE PERFORACIÓ > 'Nº de penetròmetres realitzats'",
+     "quote": "3",
+     "note": "Coincideix amb els 3 punts (1, 2, 3) del full de camp p.2. L'Excel DPSH (no llegit en aquesta crida) hauria de confirmar-ho com a font preferent."
+    },
+    {
+     "value": 3,
+     "font": "pl situació.pdf cos del plànol, llegenda 'Ensayo de penetración dinámica DPSH' + 3 marcadors etiquetats al dibuix",
+     "quote": "Leyenda: Ensayo de penetración dinámica DPSH",
+     "note": "comptat visualment (marcadors P-1, P-2, P-3 al dibuix); aquest document no és font d'autoritat primària per a aquest camp (mana l'Excel DPSH, no llegit en aquesta crida) però corrobora el mateix nombre"
+    },
+    {
+     "value": 3,
+     "font": "tall.pdf p.1 gràfic (columnes verticals P-1, P-2, P-3)",
+     "quote": "P-1 / P-2 / P-3",
+     "note": "recompte visual de punts al tall de correlació; corroborar amb l'Excel DPSH (fulls executats), font primària"
+    }
+   ],
+   "sources_checked": [
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "MULTICA_61.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf"
+   ],
+   "note": "EXECUTATS (autoritat sobre els previstos)"
+  },
+  "num_floors": {
+   "estat": "candidats",
+   "value": "PB (planta baixa, 1 planta)",
+   "candidates": [
+    {
+     "value": "PB (planta baixa, 1 planta)",
+     "font": "26.0050/RE_ PRESSUPOST LLEIDA.msg missatge original, nota final (fora de bloc, informació verbal transcrita)",
+     "quote": "El client Toni 625298919 diu que serà pb 100m2, començen fen una pero tenen en men fer-ne 7 mès.",
+     "note": "Informació verbal de segona mà (contacte 'Toni', tel. 625298919) transcrita per Dolors, anterior al pressupost/plànol. 'PB' interpretat com a planta baixa únicament. 'Tenen en ment fer-ne 7 més' es refereix a futurs encàrrecs, no afecta aquest expedient — no confondre amb el cas Tulipa d'un sol expedient amb diverses cases."
+    },
+    {
+     "value": "1 (PB)",
+     "font": "26.0050/PRESSUPOST LLEIDA.msg cos del correu, paràgraf final (body.txt L53)",
+     "quote": "El client Toni 625298919 diu que serà pb 100m2, començen fen una pero tenen en men fer-ne 7 mès.",
+     "note": "Nota informal telefònica (contacte 'Toni'), no una taula de planejament: només esmenta PB de 100 m2, no queda clar si hi haurà planta pis. Rellevant per a l'interpretació del projecte: el client té previst construir 7 habitatges més en el futur (aquest n'és el primer) -- context estructural, no és un camp del nivell A d'aquest expedient."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "26.0050/1.0.pdf",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf",
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg"
+   ],
+   "note": "Informació verbal de segona mà (contacte 'Toni', tel. 625298919) transcrita per Dolors, anterior al pressupost/plànol. 'PB' interpretat com a planta baixa únicament. 'Tenen en ment fer-ne 7 més' es refereix a futurs encàrrecs, no afecta aquest expedient — no confondre amb el cas Tulipa d'un sol expedient amb diverses cases."
+  },
+  "num_soil_levels": {
+   "estat": "segur",
+   "value": 2,
+   "candidates": [
+    {
+     "value": 2,
+     "font": "PDF/ANEJOS/4001671_corte de correlación.pdf LEYENDA",
+     "quote": "Nivel 1 : Arcilla limosa y arenosa con algunas gravas. / Nivel 2: Arenas finas-medias, carbonatadas.",
+     "note": "aquest document és el TALL de correlació: mana per al NOMBRE de nivells (regla existent). Sense annex de sondeig en aquest projecte (no n'hi ha cap), és l'única font."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": 2,
+     "font": "ANEXOS/4001671_DPSH.xls llegenda de colors, fila 79 de cada full (C79/F79) + columna G 'Niveles'",
+     "quote": "C79: \"Nivel 1\"; F79: \"Nivel 2\" (rosa #FF8080 = Nivel 1, groc #FFFF99 = Nivel 2, consistent als 3 fulls)",
+     "note": "Senyal INDIRECTE i feble: els 3 punts DPSH marquen per color 2 nivells a la columna 'Niveles', de forma consistent (P-1 transició ~-1,0/-1,2 m; P-2 ~-1,6/-1,8 m; P-3 ~-2,2/-2,4 m). Aquest projecte no té annex de sondeig al FileScanner (només 'corte de correlación' FH11/PDF); la font primària per a num_soil_levels és el tall (annex_tall / PDF/ANEJOS/4001671_corte de correlación.pdf), no llegit en aquesta crida. No pujar a segur amb només aquest senyal."
+    },
+    {
+     "value": "2",
+     "font": "PDF/ANEJOS/4001671_DPSH.pdf llegenda sota la taula, p.1/2/3",
+     "quote": "Nivel 1 / Nivel 2",
+     "note": "llegenda de colors consistent als 3 gràfics DPSH (mai més de 2 nivells marcats); NO és l'annex de sondeig (autoritat real per aquest camp) — confirmar amb corte de correlación / tall.pdf"
+    },
+    {
+     "value": 2,
+     "font": "tall.pdf p.1 LEYENDA",
+     "quote": "Nivel 1 : Arcilla limosa y arenosa con algunas gravas. / Nivel 2: Arenas finas-medias, carbonatadas.",
+     "note": "única font d'aquest projecte (no hi ha annex de sondeig a la carpeta, només tall); llegenda explícita amb 2 nivells numerats, sense contradicció"
+    }
+   ],
+   "sources_checked": [
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "pl situació.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "tall.pdf"
+   ],
+   "note": "Senyal INDIRECTE i feble: els 3 punts DPSH marquen per color 2 nivells a la columna 'Niveles', de forma consistent (P-1 transició ~-1,0/-1,2 m; P-2 ~-1,6/-1,8 m; P-3 ~-2,2/-2,4 m). Aquest projecte no té annex de sondeig al FileScanner (només 'corte de correlación' FH11/PDF); la font primària per a num_soil_levels és el tall (annex_tall / PDF/ANEJOS/4001671_corte de correlación.pdf), no llegit en aquesta crida. No pujar a segur amb només aquest senyal."
+  },
+  "referencia_catastral": {
+   "estat": "candidats",
+   "value": "8606709CG9280N",
+   "candidates": [
+    {
+     "value": "8606709CG9280N",
+     "font": "(Cadastre: 4 = 8606709CG9280N)",
+     "quote": "",
+     "note": "suma de les parcel·les cadastrals dels portals de l'adreça llegida (consulta HTTP, no lectura d'un document de la carpeta); la fila de l'informe diu \"segons plànols cadastrals\"; confirmar si el projecte abasta més o menys portals dels que diu l'adreça"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "26.0050/1.0.pdf",
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf"
+   ],
+   "note": "suma de les parcel·les cadastrals dels portals de l'adreça llegida (consulta HTTP, no lectura d'un document de la carpeta); la fila de l'informe diu \"segons plànols cadastrals\"; confirmar si el projecte abasta més o menys portals dels que diu l'adreça"
+  },
+  "street_address": {
+   "estat": "candidats",
+   "value": "C. Santa Gemma, 4 Urb. La Serra",
+   "candidates": [
+    {
+     "value": "C. Santa Gemma, 4 Urb. La Serra",
+     "font": "26.0050/1.0.pdf p.1 caixetí, cel·la 'Emplaçament', línia 1",
+     "quote": "Emplaçament: C. Santa Gemma, 4 Urb. La Serra"
+    },
+    {
+     "value": "C/ STA. GEMMA 4, URB.LA SERRA",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 bloc OBRA (= ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.1 bloc OBRA; corroborat per comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!N20 bloc OBRA: 'C/ STA GEMMA')",
+     "quote": "OBRA:\nESTUDI GEOTECNIC\nC/ STA. GEMMA 4, URB.LA SERRA\nVILANOVA DE SEGRIA"
+    },
+    {
+     "value": "CALLE SANTA GEMMA Nº4",
+     "font": "PDF/ANEJOS/4001671_DPSH.pdf capçalera p.1/2/3, bloc OBRA",
+     "quote": "OBRA: CALLE SANTA GEMMA Nº4"
+    }
+   ],
+   "rule": "Pas 3 street_address: només de blocs etiquetats OBRA/ADREÇA OBRA/Emplaçament. El caixetí 'Emplaçament' de l'avantprojecte de l'arquitecte i 3 documents propis de G3 (pressupost, acceptació signada, comanda de laboratori) coincideixen que l'adreça inclou 'Urb. La Serra'; només l'encapçalament de l'annex DPSH (mateix camp OBRA repetit a les 3 pàgines del mateix document — no 3 fonts independents) l'omet, probablement per truncament del camp de la plantilla del DPSH.",
+   "note": "'Urb. La Serra' no competeix amb 'Calle Santa Gemma Nº4': és la mateixa via amb l'afegit del nom de la urbanització, no dues adreces vertaderes de cantonada. Candidat manuscrit feble 'El Secà - Carrer Santa Gemma' (PENETROS.pdf, confiança 0,40, lectura dificultosa) exclòs dels 3 principals.",
+   "llm_only_fields": true,
+   "altres": [
+    {
+     "value": "El Secà - Carrer Santa Gemma",
+     "font": "PENETROS.pdf p.1 Albarà, DADES OBRA > Adreça; p.2 Adreça de l'obra",
+     "quote": "EL SECA - C/STA GEMMA",
+     "note": "Manuscrit de difícil lectura. 'El Secà' sembla un topònim/partida davant del nom de carrer, no el propi carrer. Candidat feble; confirmar amb plànol/comanda/pressupost (no llegits en aquesta crida)."
+    },
+    {
+     "value": "C. Santa Gemma, 4, Urb. La Serra, Vilanova del Segrià",
+     "font": "26.0050/RE_ PRESSUPOST LLEIDA.msg missatge original, bloc DREÇA OBRA: > Emplaçament",
+     "quote": "DREÇA OBRA:\n\nEmplaçament\n\nD'UN HABITATGE UNIFAMILIAR AÏLLAT C. Santa Gemma, 4 Urb. La Serra Vilanova del Segrià",
+     "note": "Bloc etiquetat com a obra ('DREÇA OBRA', probablement 'ADREÇA OBRA' amb la primera lletra tallada en copiar), autoritat vàlida per a l'adreça de l'obra (Pas 3)."
+    },
+    {
+     "value": "C. Santa Gemma, 4 (Urb. La Serra)",
+     "font": "26.0050/PRESSUPOST LLEIDA.msg cos del correu, bloc 'DREÇA OBRA:' (body.txt L45-49)",
+     "quote": "DREÇA OBRA:\n\nEmplaçament\n\nD'UN HABITATGE UNIFAMILIAR AÏLLAT C. Santa Gemma, 4 Urb. La Serra Vilanova del Segrià",
+     "note": "Etiqueta 'DREÇA OBRA' (typo de 'ADREÇA OBRA'), autoritat vàlida (Pas 3). Adreça i municipi en una sola frase sense puntuació clara -- separació pròpia entre carrer/urbanització i municipi."
+    },
+    {
+     "value": "Calle Santa Gemma, nº 4",
+     "font": "PDF/ANEJOS/4001671_corte de correlación.pdf caixetí, títol del projecte (2a línia) + planta de situació (text vertical vora el carrer)",
+     "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ. / \"CARRER DE SANTA GEMMA\" (planta)",
+     "note": "el títol ho diu en castellà ('calle'), la planta en català ('carrer'); mateix carrer, candidat, no és la casella OBRA/ADREÇA d'una plantilla G3"
+    },
+    {
+     "value": "C/ Sta. Gemma 4, Urb. La Serra",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.1 bloc OBRA",
+     "quote": "OBRA: ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA"
+    },
+    {
+     "value": "C/ STA GEMMA",
+     "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+     "quote": "C/ STA GEMMA"
+    },
+    {
+     "value": "Calle Santa Gemma nº4",
+     "font": "PDF/ANEJOS/4001671_plano de situación.pdf caixetí inferior, cel·la TÍTULO DEL PROYECTO",
+     "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ",
+     "note": "el rètol del carrer al plànol diu 'CARRER DE SANTA GEMMA' (catala) sense numero; mateixa via"
+    },
+    {
+     "value": "Calle Santa Gemma nº4",
+     "font": "pl situació.pdf peu del plànol, bloc TÍTULO DEL PROYECTO",
+     "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+     "note": "corroborat pel rètol al mateix plànol 'CARRER DE SANTA GEMMA' (sense número, al costat del carrer davant la parcel·la)"
+    },
+    {
+     "value": "Calle Santa Gemma Nº4",
+     "font": "tall.pdf p.1 bloc TÍTULO DEL PROYECTO; corroborat pel rètol 'CARRER DE SANTA GEMMA' al plànol de situació inclòs a la mateixa pàgina",
+     "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+     "note": "extret del títol narratiu del projecte, no d'un bloc OBRA/ADREÇA dedicat"
+    },
+    {
+     "value": "C/ STA. GEMMA 4, URB.LA SERRA",
+     "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC"
+    },
+    {
+     "value": "C/ Sta. Gemma 4, Urb. La Serra",
+     "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 bloc OBRA",
+     "quote": "OBRA:\nESTUDI GEOTECNIC\nC/ STA. GEMMA 4, URB.LA SERRA\nVILANOVA DE SEGRIA",
+     "note": "Bloc OBRA (adreça de l'obra, no del client)."
+    }
+   ]
+  },
+  "superficie_parcela": {
+   "estat": "candidats",
+   "value": "406",
+   "candidates": [
+    {
+     "value": "406",
+     "font": "(Cadastre: 4 = 8606709CG9280N, 406 m²)",
+     "quote": "",
+     "note": "suma de les parcel·les cadastrals dels portals de l'adreça llegida (consulta HTTP, no lectura d'un document de la carpeta); la fila de l'informe diu \"segons plànols cadastrals\"; confirmar si el projecte abasta més o menys portals dels que diu l'adreça"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "26.0050/1.0.pdf",
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf"
+   ],
+   "note": "suma de les parcel·les cadastrals dels portals de l'adreça llegida (consulta HTTP, no lectura d'un document de la carpeta); la fila de l'informe diu \"segons plànols cadastrals\"; confirmar si el projecte abasta més o menys portals dels que diu l'adreça"
+  },
+  "utm_x": {
+   "estat": "no_trobat",
+   "value": null,
+   "sources_checked": [
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "tall.pdf"
+   ]
+  },
+  "utm_y": {
+   "estat": "no_trobat",
+   "value": null,
+   "sources_checked": [
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "tall.pdf"
+   ]
+  }
+ },
+ "tables": {
+  "dpsh_tests": {
+   "estat_bloc": "segur",
+   "rows": [
+    {
+     "punt": "P-1",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+321,69",
+      "candidates": [
+       {
+        "value": "+321,69",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.1",
+        "quote": "Rechazo a la penetración: -1,48 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-0,3 (respecte al carrer, punt 0 = 'CARRER')",
+        "font": "PENETROS.pdf p.2, columna de punt 1 (encerclat), full de camp DPSH",
+        "quote": "Cota Inici: -0,3 ... R-1'48",
+        "note": "Lectura manuscrita de columna densa; sèrie N20 intermèdia (extra.n20_llegit) amb confiança baixa, especialment els valors de dos dígits."
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-1,48 m",
+      "candidates": [
+       {
+        "value": "-1,48 m",
+        "font": "ANEXOS/4001671_DPSH.xls full P-1, peu B80 (cota_inici: no present, comprovat text i colors de la columna F, buida)",
+        "quote": "B80: \"Rechazo a la penetración: -1,48 m\""
+       },
+       {
+        "value": "-1,48",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.1",
+        "quote": "Rechazo a la penetración: -1,48 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-1,48",
+        "font": "PENETROS.pdf p.2, columna de punt 1 (encerclat), full de camp DPSH",
+        "quote": "Cota Inici: -0,3 ... R-1'48",
+        "note": "Lectura manuscrita de columna densa; sèrie N20 intermèdia (extra.n20_llegit) amb confiança baixa, especialment els valors de dos dígits."
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Lectura manuscrita de columna densa; sèrie N20 intermèdia (extra.n20_llegit) amb confiança baixa, especialment els valors de dos dígits."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANEXOS/4001671_DPSH.xls full P-1, peu B80 (cota_inici: no present, comprovat text i colors de la columna F, buida)",
+        "quote": "B80: \"Rechazo a la penetración: -1,48 m\""
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANEJOS/4001671_corte de correlación.pdf tall, columna P-1",
+        "quote": "Nb=8 / Nb=25 / Nb=R"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.1",
+        "quote": "Rechazo a la penetración: -1,48 m"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2, columna de punt 1 (encerclat), full de camp DPSH",
+        "quote": "Cota Inici: -0,3 ... R-1'48",
+        "note": "Lectura manuscrita de columna densa; sèrie N20 intermèdia (extra.n20_llegit) amb confiança baixa, especialment els valors de dos dígits."
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Lectura manuscrita de columna densa; sèrie N20 intermèdia (extra.n20_llegit) amb confiança baixa, especialment els valors de dos dígits."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANEXOS/4001671_DPSH.xls full P-1, peu B80 (cota_inici: no present, comprovat text i colors de la columna F, buida)",
+        "quote": "B80: \"Rechazo a la penetración: -1,48 m\"",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PDF/ANEJOS/4001671_corte de correlación.pdf tall, columna P-1",
+        "quote": "Nb=8 / Nb=25 / Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.1",
+        "quote": "Rechazo a la penetración: -1,48 m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PENETROS.pdf p.2, columna de punt 1 (encerclat), full de camp DPSH",
+        "quote": "Cota Inici: -0,3 ... R-1'48",
+        "note": "Lectura manuscrita de columna densa; sèrie N20 intermèdia (extra.n20_llegit) amb confiança baixa, especialment els valors de dos dígits.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Lectura manuscrita de columna densa; sèrie N20 intermèdia (extra.n20_llegit) amb confiança baixa, especialment els valors de dos dígits.",
+      "matis": null
+     },
+     "extra": {
+      "PDF/ANEJOS/4001671_corte de correlación.pdf": {
+       "nb_readings": [
+        "Nb=8 (Nivel 1, prop de superfície)",
+        "Nb=25 (Nivel 1, prop del contacte amb Nivel 2)",
+        "Nb=R (Nivel 2, rebuig)"
+       ],
+       "nota": "cap marca de 'Cota de nivel freático' (línia blava discontínua) en aquesta columna"
+      },
+      "PDF/ANEJOS/4001671_DPSH.pdf": {
+       "nivells_grafic": "Nivell 1 (color) fins -1,2m; Nivell 2 (color) de -1,4 a -1,6m (rebuig) — llegit de les bandes de color de la columna 'Niveles', no de text; transició no confirmada amb annex de sondeig"
+      },
+      "PENETROS.pdf": {
+       "n20_llegit": {
+        "-0,4": "6",
+        "-0,6": "7",
+        "-0,8": "8",
+        "-1,0": "18(?)",
+        "-1,2": "24",
+        "-1,4": "27(?)",
+        "-1,6": "100"
+       },
+       "reading_confidence": "baixa (manuscrit, digitalització NAPS2 sense text)"
+      }
+     }
+    },
+    {
+     "punt": "P-2",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+321,69",
+      "candidates": [
+       {
+        "value": "+321,69",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.2",
+        "quote": "Rechazo a la penetración: -2,18 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-0,3 (respecte al carrer, punt 0 = 'CARRER')",
+        "font": "PENETROS.pdf p.2, columna de punt 2, full de camp DPSH",
+        "quote": "Cota Inici: -0,3 ... R-2'48",
+        "note": "Simetria sospitosa amb el rebuig de P-1 (ambdós acaben en ',48'); verificar contra Excel DPSH."
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-2,18 m",
+      "candidates": [
+       {
+        "value": "-2,18 m",
+        "font": "ANEXOS/4001671_DPSH.xls full P-2, peu B80 (columna F buida, sense marca de color)",
+        "quote": "B80: \"Rechazo a la penetración: -2,18 m\""
+       },
+       {
+        "value": "-2,18",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.2",
+        "quote": "Rechazo a la penetración: -2,18 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-2,48",
+        "font": "PENETROS.pdf p.2, columna de punt 2, full de camp DPSH",
+        "quote": "Cota Inici: -0,3 ... R-2'48",
+        "note": "Simetria sospitosa amb el rebuig de P-1 (ambdós acaben en ',48'); verificar contra Excel DPSH."
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANEXOS/4001671_DPSH.xls full P-2, peu B80 (columna F buida, sense marca de color)",
+        "quote": "B80: \"Rechazo a la penetración: -2,18 m\""
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANEJOS/4001671_corte de correlación.pdf tall, columna P-2",
+        "quote": "Nb=11 / Nb=46 / Nb=R"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.2",
+        "quote": "Rechazo a la penetración: -2,18 m"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2, columna de punt 2, full de camp DPSH",
+        "quote": "Cota Inici: -0,3 ... R-2'48",
+        "note": "Simetria sospitosa amb el rebuig de P-1 (ambdós acaben en ',48'); verificar contra Excel DPSH."
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Simetria sospitosa amb el rebuig de P-1 (ambdós acaben en ',48'); verificar contra Excel DPSH."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANEXOS/4001671_DPSH.xls full P-2, peu B80 (columna F buida, sense marca de color)",
+        "quote": "B80: \"Rechazo a la penetración: -2,18 m\"",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PDF/ANEJOS/4001671_corte de correlación.pdf tall, columna P-2",
+        "quote": "Nb=11 / Nb=46 / Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.2",
+        "quote": "Rechazo a la penetración: -2,18 m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PENETROS.pdf p.2, columna de punt 2, full de camp DPSH",
+        "quote": "Cota Inici: -0,3 ... R-2'48",
+        "note": "Simetria sospitosa amb el rebuig de P-1 (ambdós acaben en ',48'); verificar contra Excel DPSH.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Simetria sospitosa amb el rebuig de P-1 (ambdós acaben en ',48'); verificar contra Excel DPSH.",
+      "matis": null
+     },
+     "extra": {
+      "PDF/ANEJOS/4001671_corte de correlación.pdf": {
+       "nb_readings": [
+        "Nb=11 (Nivel 1, prop de superfície)",
+        "Nb=46 (Nivel 1, molt prop del contacte amb Nivel 2)",
+        "Nb=R (Nivel 2, rebuig)"
+       ],
+       "nota": "cap marca de 'Cota de nivel freático' en aquesta columna"
+      },
+      "PDF/ANEJOS/4001671_DPSH.pdf": {
+       "nivells_grafic": "Nivell 1 (color) fins -1,6m; Nivell 2 (color) de -1,8 a -2,2m (rebuig) — llegit de bandes de color, no confirmat"
+      },
+      "PENETROS.pdf": {
+       "n20_llegit": {
+        "-0,4": "4",
+        "-0,6": "7",
+        "-0,8": "8(?)",
+        "-1,0": "12",
+        "-1,2": "10",
+        "-1,4": "12(?)",
+        "-1,6": "13",
+        "-1,8": "30(?)",
+        "-2,0": "96",
+        "-2,2": "130(?)"
+       },
+       "reading_confidence": "baixa (manuscrit, digitalització NAPS2 sense text)"
+      }
+     }
+    },
+    {
+     "punt": "P-3",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+321,69",
+      "candidates": [
+       {
+        "value": "+321,69",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.3",
+        "quote": "Rechazo a la penetración: -3,78 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-0,2 (respecte al carrer, punt 0 = 'CARRER')",
+        "font": "PENETROS.pdf p.2, columna de punt 3, full de camp DPSH; nota 'NIVELL FREÀTIC' al peu de p.2",
+        "quote": "Cota Inici: -0,2 ... R-3178(?) ; 'Hi ha nivell freàtic? HUMIT A P3'",
+        "note": "Fondària de rebuig molt il·legible (podria no ser exactament -3,78). Nota de peu de pàgina confirma humitat a P-3 sense fondària concreta; matís 'humitat', no aigua franca."
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-3,78 m",
+      "candidates": [
+       {
+        "value": "-3,78 m",
+        "font": "ANEXOS/4001671_DPSH.xls full P-3, peu B80 (columna F buida, sense marca de color)",
+        "quote": "B80: \"Rechazo a la penetración: -3,78 m\""
+       },
+       {
+        "value": "-3,78",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.3",
+        "quote": "Rechazo a la penetración: -3,78 m"
+       },
+       {
+        "value": "-3,78(?)",
+        "font": "PENETROS.pdf p.2, columna de punt 3, full de camp DPSH; nota 'NIVELL FREÀTIC' al peu de p.2",
+        "quote": "Cota Inici: -0,2 ... R-3178(?) ; 'Hi ha nivell freàtic? HUMIT A P3'",
+        "note": "Fondària de rebuig molt il·legible (podria no ser exactament -3,78). Nota de peu de pàgina confirma humitat a P-3 sense fondària concreta; matís 'humitat', no aigua franca."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Fondària de rebuig molt il·legible (podria no ser exactament -3,78). Nota de peu de pàgina confirma humitat a P-3 sense fondària concreta; matís 'humitat', no aigua franca."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANEXOS/4001671_DPSH.xls full P-3, peu B80 (columna F buida, sense marca de color)",
+        "quote": "B80: \"Rechazo a la penetración: -3,78 m\""
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANEJOS/4001671_corte de correlación.pdf tall, columna P-3",
+        "quote": "Nb=8 (coincidint amb la línia blava discontínua 'Cota de nivel freático') / Nb=28 / Nb=R"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.3",
+        "quote": "Rechazo a la penetración: -3,78 m"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2, columna de punt 3, full de camp DPSH; nota 'NIVELL FREÀTIC' al peu de p.2",
+        "quote": "Cota Inici: -0,2 ... R-3178(?) ; 'Hi ha nivell freàtic? HUMIT A P3'",
+        "note": "Fondària de rebuig molt il·legible (podria no ser exactament -3,78). Nota de peu de pàgina confirma humitat a P-3 sense fondària concreta; matís 'humitat', no aigua franca."
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Fondària de rebuig molt il·legible (podria no ser exactament -3,78). Nota de peu de pàgina confirma humitat a P-3 sense fondària concreta; matís 'humitat', no aigua franca."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANEXOS/4001671_DPSH.xls full P-3, peu B80 (columna F buida, sense marca de color)",
+        "quote": "B80: \"Rechazo a la penetración: -3,78 m\"",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf p.3",
+        "quote": "Rechazo a la penetración: -3,78 m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "Aigua",
+        "font": "PDF/ANEJOS/4001671_corte de correlación.pdf tall, columna P-3",
+        "quote": "Nb=8 (coincidint amb la línia blava discontínua 'Cota de nivel freático') / Nb=28 / Nb=R",
+        "extra": {
+         "matis": null
+        }
+       },
+       {
+        "value": "Humit",
+        "font": "PENETROS.pdf p.2, columna de punt 3, full de camp DPSH; nota 'NIVELL FREÀTIC' al peu de p.2",
+        "quote": "Cota Inici: -0,2 ... R-3178(?) ; 'Hi ha nivell freàtic? HUMIT A P3'",
+        "note": "Fondària de rebuig molt il·legible (podria no ser exactament -3,78). Nota de peu de pàgina confirma humitat a P-3 sense fondària concreta; matís 'humitat', no aigua franca.",
+        "extra": {
+         "matis": "humitat"
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "matis": null
+     },
+     "extra": {
+      "PDF/ANEJOS/4001671_corte de correlación.pdf": {
+       "nb_readings": [
+        "Nb=8 (Nivel 1, a la mateixa alçada que la marca de nivell freàtic)",
+        "Nb=28 (Nivel 2)",
+        "Nb=R (Nivel 2, rebuig, al fons del tall)"
+       ],
+       "matis": "aigua",
+       "nota": "única columna amb la marca blava discontínua de la llegenda ('Cota de nivel freático'); no hi ha xifra de cota impresa, només la posició gràfica coincident amb la lectura Nb=8"
+      },
+      "PDF/ANEJOS/4001671_DPSH.pdf": {
+       "nivells_grafic": "Nivell 1 (color) fins -2,2m; Nivell 2 (color) de -2,4 a -3,8m (rebuig) — llegit de bandes de color, no confirmat"
+      },
+      "PENETROS.pdf": {
+       "n20_llegit": {
+        "-0,4": "3",
+        "-0,6": "4",
+        "-0,8": "7",
+        "-1,0": "5",
+        "-1,2": "4",
+        "-1,4": "6",
+        "-1,6": "6",
+        "-1,8": "10",
+        "-2,0": "8",
+        "-2,2": "13",
+        "-2,4": "9",
+        "-2,6": "12",
+        "-2,8": "26",
+        "-3,0": "37(?)",
+        "-3,2": "40",
+        "-3,4": "13",
+        "-3,6": "25",
+        "-3,8": "100(?)"
+       },
+       "reading_confidence": "baixa (columna més llarga i amb ratlles diagonals superposades d'origen incert)"
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "ANEXOS/4001671_DPSH.xls",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PENETROS.pdf"
+   ]
+  },
+  "sondeig_tests": {
+   "estat_bloc": "no_trobat",
+   "rows": [],
+   "sources_checked": [
+    "26.0050/1.0.pdf",
+    "26.0050/PRESSUPOST LLEIDA.msg",
+    "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+    "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "ANEXOS/4001671_DPSH.xls",
+    "MULTICA_61.pdf",
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PDF/ANEJOS/4001671_fotografías.pdf",
+    "PDF/ANEJOS/4001671_plano de situación.pdf",
+    "PENETROS.pdf",
+    "pl situació.pdf",
+    "tall.pdf"
+   ]
+  },
+  "spt_ma_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "id": {
+      "estat": "segur",
+      "value": "SPT1",
+      "candidates": [
+       {
+        "value": "SPT1",
+        "font": "ANEXOS/4001671_DPSH.xls full P-1, E21:E23",
+        "quote": "E21: \"SPT1\"; E22: \"0,80-1,40m\"; E23: \"13/10/14/24\""
+       },
+       {
+        "value": "SPT-1(?)",
+        "font": "PENETROS.pdf p.3, segon bloc",
+        "quote": "Assaig tipus: cap casella marcada ; Assaig de referència: SPT1 P1 ; Colpeig: 13/10/14/24 ; Descripció: 'SORRA FINA-MITJA, COMPACTA (...)'",
+        "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "SPT1",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf",
+        "quote": ""
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu."
+     },
+     "punt": {
+      "estat": "segur",
+      "value": "P-1",
+      "candidates": [
+       {
+        "value": "P-1",
+        "font": "ANEXOS/4001671_DPSH.xls full P-1, E21:E23",
+        "quote": "E21: \"SPT1\"; E22: \"0,80-1,40m\"; E23: \"13/10/14/24\""
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "P-1",
+        "font": "PENETROS.pdf p.3, segon bloc",
+        "quote": "Assaig tipus: cap casella marcada ; Assaig de referència: SPT1 P1 ; Colpeig: 13/10/14/24 ; Descripció: 'SORRA FINA-MITJA, COMPACTA (...)'",
+        "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu."
+       },
+       {
+        "value": "P-1",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf",
+        "quote": ""
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu."
+     },
+     "profunditat": {
+      "estat": "segur",
+      "value": "0,80-1,40m",
+      "candidates": [
+       {
+        "value": "0,80-1,40m",
+        "font": "ANEXOS/4001671_DPSH.xls full P-1, E21:E23",
+        "quote": "E21: \"SPT1\"; E22: \"0,80-1,40m\"; E23: \"13/10/14/24\""
+       },
+       {
+        "value": "0,80-1,40",
+        "font": "PENETROS.pdf p.3, segon bloc",
+        "quote": "Assaig tipus: cap casella marcada ; Assaig de referència: SPT1 P1 ; Colpeig: 13/10/14/24 ; Descripció: 'SORRA FINA-MITJA, COMPACTA (...)'",
+        "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "0,80-1,40m",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf",
+        "quote": ""
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu."
+     },
+     "litologia": {
+      "estat": "candidats",
+      "value": "Sorra fina-mitja, compacta (fragment entre parèntesis il·legible)",
+      "candidates": [
+       {
+        "value": "Sorra fina-mitja, compacta (fragment entre parèntesis il·legible)",
+        "font": "PENETROS.pdf p.3, segon bloc",
+        "quote": "Assaig tipus: cap casella marcada ; Assaig de referència: SPT1 P1 ; Colpeig: 13/10/14/24 ; Descripció: 'SORRA FINA-MITJA, COMPACTA (...)'",
+        "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu."
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu."
+     },
+     "n30": {
+      "estat": "candidats",
+      "value": 24,
+      "candidates": [
+       {
+        "value": 24,
+        "font": "ANEXOS/4001671_DPSH.xls full P-1, E21:E23",
+        "quote": "E21: \"SPT1\"; E22: \"0,80-1,40m\"; E23: \"13/10/14/24\"",
+        "extra": {
+         "registre": [
+          13,
+          10,
+          14,
+          24
+         ]
+        }
+       },
+       {
+        "value": 61,
+        "font": "ANEXOS/4001671_DPSH.xls full P-1, E21:E23",
+        "quote": "E21: \"SPT1\"; E22: \"0,80-1,40m\"; E23: \"13/10/14/24\"",
+        "extra": {
+         "registre": [
+          13,
+          10,
+          14,
+          24
+         ]
+        }
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": 24,
+        "font": "PENETROS.pdf p.3, segon bloc",
+        "quote": "Assaig tipus: cap casella marcada ; Assaig de referència: SPT1 P1 ; Colpeig: 13/10/14/24 ; Descripció: 'SORRA FINA-MITJA, COMPACTA (...)'",
+        "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu.",
+        "extra": {
+         "registre": [
+          "13",
+          "10",
+          "14",
+          "24"
+         ]
+        }
+       },
+       {
+        "value": "24",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf",
+        "quote": "",
+        "extra": {
+         "registre": {
+          "estat": "segur",
+          "value": "13/10/14/24",
+          "font": "PDF/ANEJOS/4001671_DPSH.pdf p.1 columna MEDIDA DE PAR",
+          "quote": "13/10/14/24"
+         }
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "Cap de les caselles SPT/MI/MA està marcada en aquest bloc: el tipus d'assaig queda ambigu.",
+      "registre": {
+       "estat": "candidats",
+       "value": [
+        13,
+        10,
+        14,
+        24
+       ],
+       "candidates": [
+        {
+         "value": [
+          13,
+          10,
+          14,
+          24
+         ],
+         "font": "ANEXOS/4001671_DPSH.xls full P-1, E21:E23",
+         "quote": "E21: \"SPT1\"; E22: \"0,80-1,40m\"; E23: \"13/10/14/24\""
+        },
+        {
+         "value": [
+          "13",
+          "10",
+          "14",
+          "24"
+         ],
+         "font": "PENETROS.pdf p.3, segon bloc",
+         "quote": ""
+        },
+        {
+         "value": {
+          "estat": "segur",
+          "value": "13/10/14/24",
+          "font": "PDF/ANEJOS/4001671_DPSH.pdf p.1 columna MEDIDA DE PAR",
+          "quote": "13/10/14/24"
+         },
+         "font": "PDF/ANEJOS/4001671_DPSH.pdf",
+         "quote": ""
+        }
+       ],
+       "sources_checked": [
+        "ANEXOS/4001671_DPSH.xls",
+        "PDF/ANEJOS/4001671_DPSH.pdf",
+        "PENETROS.pdf"
+       ],
+       "rule": "registre de cops per tram de 15 cm (Pas 3b)"
+      }
+     }
+    },
+    {
+     "id": {
+      "estat": "segur",
+      "value": "SPT-1",
+      "candidates": [
+       {
+        "value": "SPT-1",
+        "font": "ANEXOS/4001671_DPSH.xls full P-3, E21:E23",
+        "quote": "E21: \"SPT-1\"; E22: \"0.80-1,40m\"; E23: \"3/4/6/5\""
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "SPT-1",
+        "font": "PENETROS.pdf p.3, primer bloc",
+        "quote": "Assaig tipus: SPT (marcat) ; Assaig de referència: SPT1 P3 ; Colpeig: 3/4/6/5 ; Descripció: 'ARGILA LIMOSA I SORRENCA, AMB ALGUNES GRAVES.'"
+       },
+       {
+        "value": "SPT-1",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf",
+        "quote": ""
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "punt": {
+      "estat": "segur",
+      "value": "P-3",
+      "candidates": [
+       {
+        "value": "P-3",
+        "font": "ANEXOS/4001671_DPSH.xls full P-3, E21:E23",
+        "quote": "E21: \"SPT-1\"; E22: \"0.80-1,40m\"; E23: \"3/4/6/5\""
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "P-3",
+        "font": "PENETROS.pdf p.3, primer bloc",
+        "quote": "Assaig tipus: SPT (marcat) ; Assaig de referència: SPT1 P3 ; Colpeig: 3/4/6/5 ; Descripció: 'ARGILA LIMOSA I SORRENCA, AMB ALGUNES GRAVES.'"
+       },
+       {
+        "value": "P-3",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf",
+        "quote": ""
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat": {
+      "estat": "segur",
+      "value": "0.80-1,40m",
+      "candidates": [
+       {
+        "value": "0.80-1,40m",
+        "font": "ANEXOS/4001671_DPSH.xls full P-3, E21:E23",
+        "quote": "E21: \"SPT-1\"; E22: \"0.80-1,40m\"; E23: \"3/4/6/5\""
+       },
+       {
+        "value": "0,80-1,40",
+        "font": "PENETROS.pdf p.3, primer bloc",
+        "quote": "Assaig tipus: SPT (marcat) ; Assaig de referència: SPT1 P3 ; Colpeig: 3/4/6/5 ; Descripció: 'ARGILA LIMOSA I SORRENCA, AMB ALGUNES GRAVES.'"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "0.80-1,40m",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf",
+        "quote": ""
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "litologia": {
+      "estat": "candidats",
+      "value": "Argila limosa i sorrenca, amb algunes graves",
+      "candidates": [
+       {
+        "value": "Argila limosa i sorrenca, amb algunes graves",
+        "font": "PENETROS.pdf p.3, primer bloc",
+        "quote": "Assaig tipus: SPT (marcat) ; Assaig de referència: SPT1 P3 ; Colpeig: 3/4/6/5 ; Descripció: 'ARGILA LIMOSA I SORRENCA, AMB ALGUNES GRAVES.'"
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "n30": {
+      "estat": "candidats",
+      "value": 10,
+      "candidates": [
+       {
+        "value": 10,
+        "font": "ANEXOS/4001671_DPSH.xls full P-3, E21:E23",
+        "quote": "E21: \"SPT-1\"; E22: \"0.80-1,40m\"; E23: \"3/4/6/5\"",
+        "extra": {
+         "registre": [
+          3,
+          4,
+          6,
+          5
+         ]
+        }
+       },
+       {
+        "value": 18,
+        "font": "ANEXOS/4001671_DPSH.xls full P-3, E21:E23",
+        "quote": "E21: \"SPT-1\"; E22: \"0.80-1,40m\"; E23: \"3/4/6/5\"",
+        "extra": {
+         "registre": [
+          3,
+          4,
+          6,
+          5
+         ]
+        }
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": 10,
+        "font": "PENETROS.pdf p.3, primer bloc",
+        "quote": "Assaig tipus: SPT (marcat) ; Assaig de referència: SPT1 P3 ; Colpeig: 3/4/6/5 ; Descripció: 'ARGILA LIMOSA I SORRENCA, AMB ALGUNES GRAVES.'",
+        "extra": {
+         "registre": [
+          "3",
+          "4",
+          "6",
+          "5"
+         ]
+        }
+       },
+       {
+        "value": "10",
+        "font": "PDF/ANEJOS/4001671_DPSH.pdf",
+        "quote": "",
+        "extra": {
+         "registre": {
+          "estat": "segur",
+          "value": "3/4/6/5",
+          "font": "PDF/ANEJOS/4001671_DPSH.pdf p.3 columna MEDIDA DE PAR",
+          "quote": "3/4/6/5"
+         }
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEXOS/4001671_DPSH.xls",
+       "PDF/ANEJOS/4001671_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "registre": {
+       "estat": "candidats",
+       "value": [
+        3,
+        4,
+        6,
+        5
+       ],
+       "candidates": [
+        {
+         "value": [
+          3,
+          4,
+          6,
+          5
+         ],
+         "font": "ANEXOS/4001671_DPSH.xls full P-3, E21:E23",
+         "quote": "E21: \"SPT-1\"; E22: \"0.80-1,40m\"; E23: \"3/4/6/5\""
+        },
+        {
+         "value": [
+          "3",
+          "4",
+          "6",
+          "5"
+         ],
+         "font": "PENETROS.pdf p.3, primer bloc",
+         "quote": ""
+        },
+        {
+         "value": {
+          "estat": "segur",
+          "value": "3/4/6/5",
+          "font": "PDF/ANEJOS/4001671_DPSH.pdf p.3 columna MEDIDA DE PAR",
+          "quote": "3/4/6/5"
+         },
+         "font": "PDF/ANEJOS/4001671_DPSH.pdf",
+         "quote": ""
+        }
+       ],
+       "sources_checked": [
+        "ANEXOS/4001671_DPSH.xls",
+        "PDF/ANEJOS/4001671_DPSH.pdf",
+        "PENETROS.pdf"
+       ],
+       "rule": "registre de cops per tram de 15 cm (Pas 3b)"
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "ANEXOS/4001671_DPSH.xls",
+    "PDF/ANEJOS/4001671_DPSH.pdf",
+    "PENETROS.pdf"
+   ]
+  },
+  "soil_levels": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "nom": "1er nivell",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Arcilla limosa y arenosa con algunas gravas.",
+      "candidates": [
+       {
+        "value": "Arcilla limosa y arenosa con algunas gravas.",
+        "font": "tall.pdf",
+        "quote": ""
+       },
+       {
+        "value": "Arenas finas-medias, carbonatadas.",
+        "font": "PDF/ANEJOS/4001671_corte de correlación.pdf",
+        "quote": ""
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "Arcilla limosa y arenosa con algunas gravas.",
+        "font": "PDF/ANEJOS/4001671_corte de correlación.pdf",
+        "quote": ""
+       }
+      ],
+      "sources_checked": [
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "tall.pdf"
+      ]
+     },
+     "de": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "tall.pdf"
+      ]
+     },
+     "a": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "tall.pdf"
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "tall.pdf"
+      ]
+     },
+     "extra": {
+      "PDF/ANEJOS/4001671_corte de correlación.pdf": {
+       "nota": "el contacte Nivel 1/Nivel 2 és una línia inclinada, diferent cota (msnm) a cada punt (~321 msnm prop de P-1 baixant fins a ~319,5 msnm prop de P-3, llegit del gràfic, aproximat). No s'imprimeix cap xifra de fondària (de/a); no s'ha mesurat per píxels, per això de/a queden null."
+      }
+     }
+    },
+    {
+     "nom": "2on nivell",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Arenas finas-medias, carbonatadas.",
+      "candidates": [
+       {
+        "value": "Arenas finas-medias, carbonatadas.",
+        "font": "tall.pdf",
+        "quote": ""
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "tall.pdf"
+      ]
+     },
+     "de": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "tall.pdf"
+      ]
+     },
+     "a": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "tall.pdf"
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANEJOS/4001671_corte de correlación.pdf",
+       "tall.pdf"
+      ]
+     }
+    }
+   ],
+   "sources_checked": [
+    "PDF/ANEJOS/4001671_corte de correlación.pdf",
+    "tall.pdf"
+   ]
+  },
+  "superficie_construida": {
+   "estat": "candidats",
+   "value": "100",
+   "candidates": [
+    {
+     "value": "100",
+     "font": "26.0050/PRESSUPOST LLEIDA.msg",
+     "quote": "",
+     "extra": {
+      "components": [
+       "100 (PB, segons nota telefònica)"
+      ],
+      "etiqueta_font": "nota informal telefònica transmesa per Loli Maqueda (no taula de planejament)"
+     }
+    }
+   ],
+   "rule": "Pas 3b: l'Eva escriu de vegades la suma i de vegades els sumands; multi-habitatge pot ser per casa → sempre candidats",
+   "altres": [
+    {
+     "value": "100",
+     "font": "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+     "quote": "",
+     "extra": {
+      "components": [
+       "100"
+      ],
+      "etiqueta_font": "informació verbal del client (contacte Toni, 625298919), transcrita per correu intern — no és plànol ni pressupost"
+     }
+    }
+   ],
+   "sources_checked": [
+    "26.0050/RE_ PRESSUPOST LLEIDA.msg"
+   ],
+   "components": [
+    {
+     "doc": "26.0050/PRESSUPOST LLEIDA.msg",
+     "components": [
+      "100 (PB, segons nota telefònica)"
+     ],
+     "total": "100"
+    },
+    {
+     "doc": "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+     "components": [
+      "100"
+     ],
+     "total": "100"
+    }
+   ],
+   "etiqueta_font": "nota informal telefònica transmesa per Loli Maqueda (no taula de planejament)"
+  }
+ },
+ "conflicts": [
+  {
+   "path": "fields.building_type",
+   "why": "dues fonts d'autoritat A discrepen",
+   "clusters": [
+    {
+     "value": "Vivienda unifamiliar",
+     "fonts": [
+      "PDF/ANEJOS/4001671_corte de correlación.pdf caixetí, títol del projecte (1a línia)",
+      "PDF/ANEJOS/4001671_plano de situación.pdf caixetí inferior, cel·la TÍTULO DEL PROYECTO",
+      "pl situació.pdf peu del plànol, bloc TÍTULO DEL PROYECTO"
+     ]
+    },
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "fonts": [
+      "26.0050/1.0.pdf p.1 caixetí, bloc de títol (cantonada inferior esquerra)",
+      "26.0050/PRESSUPOST LLEIDA.msg cos del correu, bloc 'DREÇA OBRA:' (body.txt L49)",
+      "26.0050/RE_ PRESSUPOST LLEIDA.msg missatge original, bloc DREÇA OBRA: > Emplaçament"
+     ]
+    }
+   ]
+  },
+  {
+   "path": "fields.street_address",
+   "why": "dues fonts d'autoritat A discrepen",
+   "clusters": [
+    {
+     "value": "CALLE SANTA GEMMA Nº4",
+     "fonts": [
+      "PDF/ANEJOS/4001671_DPSH.pdf capçalera p.1/2/3, bloc OBRA",
+      "PDF/ANEJOS/4001671_plano de situación.pdf caixetí inferior, cel·la TÍTULO DEL PROYECTO",
+      "pl situació.pdf peu del plànol, bloc TÍTULO DEL PROYECTO"
+     ]
+    },
+    {
+     "value": "C. Santa Gemma, 4 Urb. La Serra",
+     "fonts": [
+      "26.0050/1.0.pdf p.1 caixetí, cel·la 'Emplaçament', línia 1",
+      "26.0050/PRESSUPOST LLEIDA.msg cos del correu, bloc 'DREÇA OBRA:' (body.txt L45-49)",
+      "26.0050/RE_ PRESSUPOST LLEIDA.msg missatge original, bloc DREÇA OBRA: > Emplaçament"
+     ]
+    },
+    {
+     "value": "C/ STA. GEMMA 4, URB.LA SERRA",
+     "fonts": [
+      "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 bloc OBRA",
+      "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.1 bloc OBRA",
+      "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!N20 (G20 ADREÇA, bloc OBRA)"
+     ]
+    }
+   ]
+  }
+ ],
+ "extra_concepts": {
+  "contact_phone": [
+   {
+    "value": "TEL.",
+    "font": "26.0050/DADES PER ANAR A CAMP_v1.xlsx fitxa!F8",
+    "quote": "TEL.",
+    "doc": "26.0050/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "value": "PENETROS I MOSTRA",
+    "font": "26.0050/DADES PER ANAR A CAMP_v1.xlsx fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I MOSTRA",
+    "doc": "26.0050/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "edificacio_existent": [
+   {
+    "value": "SI",
+    "font": "26.0050/DADES PER ANAR A CAMP_v1.xlsx fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+    "quote": "SI",
+    "doc": "26.0050/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "value": "TPS ERUGA",
+    "font": "26.0050/DADES PER ANAR A CAMP_v1.xlsx fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "doc": "26.0050/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "tecnic": [
+   {
+    "value": "Eva Vázquez Marcet",
+    "font": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx 'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "doc": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "value": "TPS",
+    "font": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx OFERTA!G3",
+    "quote": "TPS",
+    "note": "plantilla: mai senyal fort",
+    "doc": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx"
+   },
+   {
+    "value": "SOIL-ASSAIG",
+    "font": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "note": "plantilla: mai senyal fort",
+    "doc": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx"
+   }
+  ],
+  "expedient_comercial": [
+   {
+    "value": "26·0050",
+    "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 peu / capçaleres",
+    "quote": "26·0050",
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "doc": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf"
+   },
+   {
+    "value": "26·0050",
+    "font": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.1 peu / capçaleres",
+    "quote": "26·0050",
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "doc": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf"
+   }
+  ],
+  "dpsh_refusal": [
+   {
+    "value": "Rechazo a la penetración: -1,48 m",
+    "font": "ANEXOS/4001671_DPSH.xls P-1!B80",
+    "quote": "Rechazo a la penetración: -1,48 m",
+    "doc": "ANEXOS/4001671_DPSH.xls"
+   },
+   {
+    "value": "Rechazo a la penetración: -2,18 m",
+    "font": "ANEXOS/4001671_DPSH.xls P-2!B80",
+    "quote": "Rechazo a la penetración: -2,18 m",
+    "doc": "ANEXOS/4001671_DPSH.xls"
+   },
+   {
+    "value": "Rechazo a la penetración: -3,78 m",
+    "font": "ANEXOS/4001671_DPSH.xls P-3!B80",
+    "quote": "Rechazo a la penetración: -3,78 m",
+    "doc": "ANEXOS/4001671_DPSH.xls"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "value": "2026-02-27",
+    "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!AH23",
+    "quote": "46080.0",
+    "doc": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "value": "NOMÉS SULFATS",
+    "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "doc": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls"
+   }
+  ],
+  "street_address_struct": [
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Santa Gemma",
+     "nom_via_alternatives": [],
+     "portals": [
+      "4"
+     ],
+     "municipi": "Vilanova del Segrià",
+     "municipi_alternatives": []
+    },
+    "font": "26.0050/1.0.pdf p.1 caixetí, cel·la 'Emplaçament'",
+    "quote": "C. Santa Gemma, 4 Urb. La Serra / Vilanova del Segrià",
+    "note": "el qualificador 'Urb. La Serra' no té camp propi a l'esquema struct; queda al text lliure de street_address",
+    "doc": "26.0050/1.0.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Santa Gemma",
+     "nom_via_alternatives": [
+      "Sta. Gemma"
+     ],
+     "portals": [
+      "4"
+     ],
+     "municipi": "Vilanova de Segrià",
+     "municipi_alternatives": [
+      "VILANOVA DE SEGRIA"
+     ]
+    },
+    "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 bloc OBRA",
+    "quote": "C/ STA. GEMMA 4, URB.LA SERRA VILANOVA DE SEGRIA",
+    "note": "Urbanització 'La Serra' no inclosa a l'struct (sense camp per urbanització al schema); portal '4' és l'únic número imprès.",
+    "doc": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Santa Gemma",
+     "nom_via_alternatives": [],
+     "portals": [
+      "4"
+     ],
+     "municipi": "Vilanova del Segrià",
+     "municipi_alternatives": [
+      "Vilanova del segria",
+      "VILANOVA DE SEGRIA"
+     ]
+    },
+    "font": "26.0050/RE_ PRESSUPOST LLEIDA.msg missatge original, bloc DREÇA OBRA: > Emplaçament",
+    "quote": "C. Santa Gemma, 4 Urb. La Serra Vilanova del Segrià",
+    "note": "'Urb. La Serra' és el nom de la urbanització, no encaixa a cap clau de l'schema (tipus_via no inclou 'urbanització'); es deixa fora de l'objecte estructurat, però consta a street_address en text lliure.",
+    "doc": "26.0050/RE_ PRESSUPOST LLEIDA.msg"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Santa Gemma",
+     "nom_via_alternatives": [],
+     "portals": [
+      "4"
+     ],
+     "municipi": "Vilanova de Segrià",
+     "municipi_alternatives": []
+    },
+    "font": "PDF/ANEJOS/4001671_corte de correlación.pdf caixetí, títol del projecte + planta de situació",
+    "quote": "CALLE SANTA GEMMA Nº4 / CARRER DE SANTA GEMMA",
+    "note": "concepte extra (address_struct), no és cap dels 15 camps",
+    "doc": "PDF/ANEJOS/4001671_corte de correlación.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Santa Gemma",
+     "nom_via_alternatives": [],
+     "portals": [
+      "4"
+     ],
+     "municipi": "Vilanova de Segrià",
+     "municipi_alternatives": [
+      "VILANOVA DE SEGRIA"
+     ]
+    },
+    "font": "PDF/ANEJOS/4001671_plano de situación.pdf caixetí inferior + rètol del carrer al plànol",
+    "quote": "CALLE SANTA GEMMA Nº4 / CARRER DE SANTA GEMMA",
+    "note": "portal nomes surt al text del caixeti, no al rotol del plànol",
+    "doc": "PDF/ANEJOS/4001671_plano de situación.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Santa Gemma",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Vilanova de Segrià",
+     "municipi_alternatives": [
+      "VILANOVA SEGRIA"
+     ]
+    },
+    "font": "PENETROS.pdf p.1 Albarà, DADES OBRA > Adreça; p.2 Adreça de l'obra",
+    "quote": "EL SECA - C/STA GEMMA . VILANOVA SEGRIA",
+    "note": "'El Secà' tractat com a topònim previ, no com a part del nom de la via. Cap número de portal enlloc del document.",
+    "doc": "PENETROS.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Santa Gemma",
+     "nom_via_alternatives": [
+      "Calle Santa Gemma"
+     ],
+     "portals": [
+      "4"
+     ],
+     "municipi": "Vilanova de Segrià",
+     "municipi_alternatives": [
+      "VILANOVA DE SEGRIA"
+     ]
+    },
+    "font": "pl situació.pdf peu del plànol (títol) + rètol al dibuix",
+    "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+    "note": "nom_via_alternatives = grafia castellana del títol; municipi_alternatives = grafia sense accent (com el nom de la carpeta '4001671 VILANOVA DE SEGRIA')",
+    "doc": "pl situació.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Santa Gemma",
+     "nom_via_alternatives": [],
+     "portals": [
+      "4"
+     ],
+     "municipi": "Vilanova de Segrià",
+     "municipi_alternatives": [
+      "VILANOVA DE SEGRIÀ"
+     ]
+    },
+    "font": "tall.pdf p.1 bloc TÍTULO DEL PROYECTO",
+    "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+    "note": "concepte extra (Pas 3), no és un dels 15 camps",
+    "doc": "tall.pdf"
+   }
+  ]
+ },
+ "sources_read": [
+  "_g3_templates.json",
+  "26.0050/1.0.pdf",
+  "26.0050/PRESSUPOST LLEIDA.msg",
+  "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+  "26.0050/RE_ PRESSUPOST LLEIDA.msg",
+  "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+  "ANEXOS/4001671_DPSH.xls",
+  "MULTICA_61.pdf",
+  "PDF/ANEJOS/4001671_corte de correlación.pdf",
+  "PDF/ANEJOS/4001671_DPSH.pdf",
+  "PDF/ANEJOS/4001671_fotografías.pdf",
+  "PDF/ANEJOS/4001671_plano de situación.pdf",
+  "PENETROS.pdf",
+  "pl situació.pdf",
+  "tall.pdf"
+ ],
+ "notes_estructurals": [
+  "_decisions.json generat per consolidacio Python-first (Fase 12, python-1.0): 14 documents llegits, 6 plantilles G3, 2 conflictes A-vs-A"
+ ]
+}
