@@ -1,0 +1,1115 @@
+{
+ "project": "3001706 C.TULIPA CERDANYOLA",
+ "read_on": "2026-09-04T22:42:45",
+ "reader": "automation.g3_templates (Fase 4a, determinista)",
+ "documents": [
+  {
+   "document_type": "fitxa_camp_g3",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "ALEIX SUBIRA FELIP",
+     "location": "fitxa!C6 (CLIENT)",
+     "quote": "ALEIX SUBIRA FELIP",
+     "confidence": 0.3,
+     "note": "= sol·licitant (regla G3); NO autoritat de client_name"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/TULIPA 3 CERDANYOLA DEL VALLES",
+     "location": "fitxa!C7 (ADREÇA OBRA)",
+     "quote": "C/TULIPA 3 CERDANYOLA DEL VALLES",
+     "confidence": 0.8,
+     "note": "C7 porta adreça + municipi a la mateixa cel·la"
+    },
+    {
+     "concept_id": "contact_person",
+     "value": "ALEIX SUBIRA",
+     "location": "fitxa!C8 (PERSONA DE CONTACTE)",
+     "quote": "ALEIX SUBIRA",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "contact_phone",
+     "value": "TEL.626056350",
+     "location": "fitxa!F8",
+     "quote": "TEL.626056350",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "previsio_camp",
+     "value": "PENETROS I SONDEIG PETIT",
+     "location": "fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+     "quote": "PENETROS I SONDEIG PETIT",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "lab_field_company",
+     "value": "TPS ERUGA",
+     "location": "fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+     "quote": "TPS ERUGA",
+     "confidence": 0.8
+    }
+   ],
+   "warnings": [
+    "F38 (data de camp) buit: usar annex DPSH / comanda / albarà / fotos"
+   ],
+   "source_path": "26.0254/DADES PER ANAR A CAMP_v1.xlsx"
+  },
+  {
+   "document_type": "plan_cost_g3",
+   "tier_a": [
+    {
+     "concept_id": "building_type",
+     "value": "EG HAB UNIF CERDANYOLA",
+     "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG HAB UNIF CERDANYOLA",
+     "confidence": 0.6,
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    },
+    {
+     "concept_id": "municipality",
+     "value": "CERDANYOLA",
+     "location": "'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG HAB UNIF CERDANYOLA",
+     "confidence": 0.6,
+     "note": "«CERDANYOLA» és la forma curta de «Cerdanyola del Vallès» segons el padró de municipis; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "tecnic",
+     "value": "Eva Vázquez Marcet",
+     "location": "'Plan Cost'!E21",
+     "quote": "Eva Vázquez Marcet",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 2,
+     "location": "OFERTA!B21",
+     "quote": "2",
+     "confidence": 0.6,
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "concept_id": "sondeig_ml",
+     "value": 5,
+     "location": "OFERTA!B6",
+     "quote": "5",
+     "confidence": 0.6,
+     "note": "ml de perforació"
+    },
+    {
+     "concept_id": "num_spt",
+     "value": 3,
+     "location": "OFERTA!B14",
+     "quote": "3",
+     "confidence": 0.6,
+     "note": "assaigs SPT previstos"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "TPS",
+     "location": "OFERTA!G3",
+     "quote": "TPS",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "SOIL-ASSAIG",
+     "location": "OFERTA!G27",
+     "quote": "SOIL-ASSAIG",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    }
+   ],
+   "warnings": [],
+   "source_path": "26.0254/PLAN_COST_CERDANYOLA.xlsx"
+  },
+  {
+   "document_type": "plan_cost_g3",
+   "tier_a": [
+    {
+     "concept_id": "building_type",
+     "value": "EG HAB UNIF CERDANYOLA",
+     "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG HAB UNIF CERDANYOLA",
+     "confidence": 0.6,
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    },
+    {
+     "concept_id": "municipality",
+     "value": "CERDANYOLA",
+     "location": "'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG HAB UNIF CERDANYOLA",
+     "confidence": 0.6,
+     "note": "«CERDANYOLA» és la forma curta de «Cerdanyola del Vallès» segons el padró de municipis; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "tecnic",
+     "value": "Eva Vázquez Marcet",
+     "location": "'Plan Cost'!E21",
+     "quote": "Eva Vázquez Marcet",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 2,
+     "location": "OFERTA!B21",
+     "quote": "2",
+     "confidence": 0.6,
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "concept_id": "sondeig_ml",
+     "value": 5,
+     "location": "OFERTA!B6",
+     "quote": "5",
+     "confidence": 0.6,
+     "note": "ml de perforació"
+    },
+    {
+     "concept_id": "num_spt",
+     "value": 3,
+     "location": "OFERTA!B14",
+     "quote": "3",
+     "confidence": 0.6,
+     "note": "assaigs SPT previstos"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "TPS",
+     "location": "OFERTA!G3",
+     "quote": "TPS",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "SOIL-ASSAIG",
+     "location": "OFERTA!G27",
+     "quote": "SOIL-ASSAIG",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    }
+   ],
+   "warnings": [],
+   "source_path": "26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20260429171235+02'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "VUA, VISUALIZING UNBUILT ARCHITECTURE",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "VUA, VISUALIZING UNBUILT ARCHITECTURE / Tel:",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/TULIPA 3",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES / PRESSUPOST GEOTECNIC MODF.",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "CERDANYOLA DEL VALLES",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES / PRESSUPOST GEOTECNIC MODF.",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "26·0254",
+     "location": "p.1 peu / capçaleres",
+     "quote": "26·0254",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "cte_edificacio",
+     "value": "C1",
+     "location": "p.2",
+     "quote": "Tipus d’edifici: C1",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "cte_sol",
+     "value": "T1",
+     "location": "p.2",
+     "quote": "Tipus de Terreny : T1",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 4,
+     "location": "p.2 campanya",
+     "quote": "4 assaigs de penetració dinàmica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "concept_id": "num_sondeigs",
+     "value": 1,
+     "location": "p.2 campanya",
+     "quote": "1Sondeig a rotació",
+     "confidence": 0.7,
+     "note": "previstos"
+    }
+   ],
+   "warnings": [],
+   "source_path": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20260326120429+01'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "VUA, VISUALIZING UNBUILT ARCHITECTURE",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "VUA, VISUALIZING UNBUILT ARCHITECTURE / Tel:",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/TULIPA 3",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES / PRESSUPOST GEOTECNIC",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "CERDANYOLA DEL VALLES",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES / PRESSUPOST GEOTECNIC",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "26·0254",
+     "location": "p.1 peu / capçaleres",
+     "quote": "26·0254",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "cte_edificacio",
+     "value": "C1",
+     "location": "p.2",
+     "quote": "Tipus d’edifici: C1",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "cte_sol",
+     "value": "T1",
+     "location": "p.2",
+     "quote": "Tipus de Terreny : T1",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 2,
+     "location": "p.2 campanya",
+     "quote": "2 assaigs de penetració dinàmica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "concept_id": "num_sondeigs",
+     "value": 1,
+     "location": "p.2 campanya",
+     "quote": "1Sondeig a rotació",
+     "confidence": 0.7,
+     "note": "previstos"
+    }
+   ],
+   "warnings": [],
+   "source_path": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf"
+  },
+  {
+   "document_type": "dpsh_excel",
+   "tier_a": [
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 2,
+     "location": "fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1.1', 'P-1.2']",
+     "confidence": 0.95,
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    },
+    {
+     "concept_id": "expedient",
+     "value": "3001706",
+     "location": "nom del fitxer",
+     "quote": "3001706_DPSH_CASA 1.xls",
+     "confidence": 0.7
+    }
+   ],
+   "warnings": [],
+   "source_path": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_DPSH_CASA 1.xls"
+  },
+  {
+   "document_type": "dpsh_excel",
+   "tier_a": [
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 2,
+     "location": "fulls amb dades a la columna C",
+     "quote": "sheets: ['P-2.1', 'P-2.2']",
+     "confidence": 0.95,
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    },
+    {
+     "concept_id": "expedient",
+     "value": "3001706",
+     "location": "nom del fitxer",
+     "quote": "3001706_DPSH_CASA 2.xls",
+     "confidence": 0.7
+    }
+   ],
+   "warnings": [],
+   "source_path": "CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_DPSH_CASA 2.xls"
+  },
+  {
+   "document_type": "comanda_lab_g3",
+   "tier_a": [
+    {
+     "concept_id": "expedient",
+     "value": "3001706",
+     "location": "Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "3001706.0",
+     "confidence": 0.95
+    },
+    {
+     "concept_id": "building_type",
+     "value": "CONSTR DOS NOUS HAB AÏLLATS",
+     "location": "Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR DOS NOUS HAB AÏLLATS",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C TULIPA",
+     "location": "Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+     "quote": "C TULIPA",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "CERDANYOLA DEL VALLÈS",
+     "location": "Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "CERDANYOLA DEL VALLÈS",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "field_date",
+     "value": "2026-05-07",
+     "location": "Hoja1!N23 (DATA DE PRESA)",
+     "quote": "46149.0",
+     "confidence": 0.7,
+     "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    },
+    {
+     "concept_id": "data_sollicitud_lab",
+     "value": "2026-06-01",
+     "location": "Hoja1!AH23",
+     "quote": "46174.0",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "lab_sample_id",
+     "value": "SPT 1 (S1)",
+     "location": "Hoja1!C35",
+     "quote": "SPT 1 (S1)",
+     "confidence": 0.7,
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    },
+    {
+     "concept_id": "lab_depth",
+     "value": "1.0 - 1.6",
+     "location": "Hoja1!J35/L35",
+     "quote": "INICIAL 1.0 / FINAL 1.6",
+     "confidence": 0.7,
+     "note": "el GTL mana si discrepa"
+    },
+    {
+     "concept_id": "lab_location",
+     "value": "S1",
+     "location": "Hoja1!C35 (parèntesi)",
+     "quote": "SPT 1 (S1)",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "lab_tests_note",
+     "value": "NOMÉS SULFATS",
+     "location": "Hoja1!AD35",
+     "quote": "NOMÉS SULFATS",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "lab_sample_id",
+     "value": "SPT2 (S1)",
+     "location": "Hoja1!C36",
+     "quote": "SPT2 (S1)",
+     "confidence": 0.7,
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    },
+    {
+     "concept_id": "lab_depth",
+     "value": "3.0 - 3.6",
+     "location": "Hoja1!J36/L36",
+     "quote": "INICIAL 3.0 / FINAL 3.6",
+     "confidence": 0.7,
+     "note": "el GTL mana si discrepa"
+    },
+    {
+     "concept_id": "lab_location",
+     "value": "S1",
+     "location": "Hoja1!C36 (parèntesi)",
+     "quote": "SPT2 (S1)",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "lab_tests_note",
+     "value": "NOMÉS SULFATS",
+     "location": "Hoja1!AD36",
+     "quote": "NOMÉS SULFATS",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "NOT_client_name",
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "confidence": 1.0,
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    }
+   ],
+   "warnings": [],
+   "source_path": "comanda laboratori_3001706_CERDANYOLA.xls"
+  }
+ ],
+ "concepts": {
+  "client_name": [
+   {
+    "concept_id": "client_name",
+    "value": "VUA, VISUALIZING UNBUILT ARCHITECTURE",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "VUA, VISUALIZING UNBUILT ARCHITECTURE / Tel:",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260429171235+02'00'"
+   },
+   {
+    "concept_id": "client_name",
+    "value": "VUA, VISUALIZING UNBUILT ARCHITECTURE",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "VUA, VISUALIZING UNBUILT ARCHITECTURE / Tel:",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260326120429+01'00'"
+   },
+   {
+    "concept_id": "client_name",
+    "value": "ALEIX SUBIRA FELIP",
+    "location": "fitxa!C6 (CLIENT)",
+    "quote": "ALEIX SUBIRA FELIP",
+    "confidence": 0.3,
+    "note": "= sol·licitant (regla G3); NO autoritat de client_name",
+    "source": "26.0254/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "street_address": [
+   {
+    "concept_id": "street_address",
+    "value": "C/TULIPA 3",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES / PRESSUPOST GEOTECNIC MODF.",
+    "confidence": 0.9,
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260429171235+02'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/TULIPA 3",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES / PRESSUPOST GEOTECNIC",
+    "confidence": 0.9,
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260326120429+01'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/TULIPA 3 CERDANYOLA DEL VALLES",
+    "location": "fitxa!C7 (ADREÇA OBRA)",
+    "quote": "C/TULIPA 3 CERDANYOLA DEL VALLES",
+    "confidence": 0.8,
+    "note": "C7 porta adreça + municipi a la mateixa cel·la",
+    "source": "26.0254/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C TULIPA",
+    "location": "Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+    "quote": "C TULIPA",
+    "confidence": 0.9,
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "contact_person": [
+   {
+    "concept_id": "contact_person",
+    "value": "ALEIX SUBIRA",
+    "location": "fitxa!C8 (PERSONA DE CONTACTE)",
+    "quote": "ALEIX SUBIRA",
+    "confidence": 0.8,
+    "source": "26.0254/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "contact_phone": [
+   {
+    "concept_id": "contact_phone",
+    "value": "TEL.626056350",
+    "location": "fitxa!F8",
+    "quote": "TEL.626056350",
+    "confidence": 0.8,
+    "source": "26.0254/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "concept_id": "previsio_camp",
+    "value": "PENETROS I SONDEIG PETIT",
+    "location": "fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I SONDEIG PETIT",
+    "confidence": 0.7,
+    "source": "26.0254/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "concept_id": "lab_field_company",
+    "value": "TPS ERUGA",
+    "location": "fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "confidence": 0.8,
+    "source": "26.0254/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "building_type": [
+   {
+    "concept_id": "building_type",
+    "value": "CONSTR DOS NOUS HAB AÏLLATS",
+    "location": "Hoja1!N18 (G18 OBRA)",
+    "quote": "CONSTR DOS NOUS HAB AÏLLATS",
+    "confidence": 0.7,
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "building_type",
+    "value": "EG HAB UNIF CERDANYOLA",
+    "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+    "quote": "EG HAB UNIF CERDANYOLA",
+    "confidence": 0.6,
+    "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi",
+    "source": "26.0254/PLAN_COST_CERDANYOLA.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "building_type",
+    "value": "EG HAB UNIF CERDANYOLA",
+    "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+    "quote": "EG HAB UNIF CERDANYOLA",
+    "confidence": 0.6,
+    "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi",
+    "source": "26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "municipality": [
+   {
+    "concept_id": "municipality",
+    "value": "CERDANYOLA DEL VALLÈS",
+    "location": "Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+    "quote": "CERDANYOLA DEL VALLÈS",
+    "confidence": 0.9,
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "CERDANYOLA DEL VALLES",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES / PRESSUPOST GEOTECNIC MODF.",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260429171235+02'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "CERDANYOLA DEL VALLES",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES / PRESSUPOST GEOTECNIC",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260326120429+01'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "CERDANYOLA",
+    "location": "'Plan Cost'!E9 (rere el tipus de projecte)",
+    "quote": "EG HAB UNIF CERDANYOLA",
+    "confidence": 0.6,
+    "note": "«CERDANYOLA» és la forma curta de «Cerdanyola del Vallès» segons el padró de municipis; la forma oficial llarga mana (regla municipi)",
+    "source": "26.0254/PLAN_COST_CERDANYOLA.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "CERDANYOLA",
+    "location": "'Plan Cost'!E9 (rere el tipus de projecte)",
+    "quote": "EG HAB UNIF CERDANYOLA",
+    "confidence": 0.6,
+    "note": "«CERDANYOLA» és la forma curta de «Cerdanyola del Vallès» segons el padró de municipis; la forma oficial llarga mana (regla municipi)",
+    "source": "26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "tecnic": [
+   {
+    "concept_id": "tecnic",
+    "value": "Eva Vázquez Marcet",
+    "location": "'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "confidence": 0.6,
+    "source": "26.0254/PLAN_COST_CERDANYOLA.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "tecnic",
+    "value": "Eva Vázquez Marcet",
+    "location": "'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "confidence": 0.6,
+    "source": "26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "num_dpsh_tests": [
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 2,
+    "location": "fulls amb dades a la columna C",
+    "quote": "sheets: ['P-1.1', 'P-1.2']",
+    "confidence": 0.95,
+    "note": "EXECUTATS (autoritat sobre els previstos)",
+    "source": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_DPSH_CASA 1.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 2,
+    "location": "fulls amb dades a la columna C",
+    "quote": "sheets: ['P-2.1', 'P-2.2']",
+    "confidence": 0.95,
+    "note": "EXECUTATS (autoritat sobre els previstos)",
+    "source": "CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_DPSH_CASA 2.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 4,
+    "location": "p.2 campanya",
+    "quote": "4 assaigs de penetració dinàmica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260429171235+02'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 2,
+    "location": "p.2 campanya",
+    "quote": "2 assaigs de penetració dinàmica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260326120429+01'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 2,
+    "location": "OFERTA!B21",
+    "quote": "2",
+    "confidence": 0.6,
+    "note": "unitats DPSH ofertades (previstes)",
+    "source": "26.0254/PLAN_COST_CERDANYOLA.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 2,
+    "location": "OFERTA!B21",
+    "quote": "2",
+    "confidence": 0.6,
+    "note": "unitats DPSH ofertades (previstes)",
+    "source": "26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "sondeig_ml": [
+   {
+    "concept_id": "sondeig_ml",
+    "value": 5,
+    "location": "OFERTA!B6",
+    "quote": "5",
+    "confidence": 0.6,
+    "note": "ml de perforació",
+    "source": "26.0254/PLAN_COST_CERDANYOLA.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "sondeig_ml",
+    "value": 5,
+    "location": "OFERTA!B6",
+    "quote": "5",
+    "confidence": 0.6,
+    "note": "ml de perforació",
+    "source": "26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "num_spt": [
+   {
+    "concept_id": "num_spt",
+    "value": 3,
+    "location": "OFERTA!B14",
+    "quote": "3",
+    "confidence": 0.6,
+    "note": "assaigs SPT previstos",
+    "source": "26.0254/PLAN_COST_CERDANYOLA.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "num_spt",
+    "value": 3,
+    "location": "OFERTA!B14",
+    "quote": "3",
+    "confidence": 0.6,
+    "note": "assaigs SPT previstos",
+    "source": "26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "TPS",
+    "location": "OFERTA!G3",
+    "quote": "TPS",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "26.0254/PLAN_COST_CERDANYOLA.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "SOIL-ASSAIG",
+    "location": "OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "26.0254/PLAN_COST_CERDANYOLA.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "TPS",
+    "location": "OFERTA!G3",
+    "quote": "TPS",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "SOIL-ASSAIG",
+    "location": "OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "expedient_comercial": [
+   {
+    "concept_id": "expedient_comercial",
+    "value": "26·0254",
+    "location": "p.1 peu / capçaleres",
+    "quote": "26·0254",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260429171235+02'00'"
+   },
+   {
+    "concept_id": "expedient_comercial",
+    "value": "26·0254",
+    "location": "p.1 peu / capçaleres",
+    "quote": "26·0254",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260326120429+01'00'"
+   }
+  ],
+  "cte_edificacio": [
+   {
+    "concept_id": "cte_edificacio",
+    "value": "C1",
+    "location": "p.2",
+    "quote": "Tipus d’edifici: C1",
+    "confidence": 0.9,
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260429171235+02'00'"
+   },
+   {
+    "concept_id": "cte_edificacio",
+    "value": "C1",
+    "location": "p.2",
+    "quote": "Tipus d’edifici: C1",
+    "confidence": 0.9,
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260326120429+01'00'"
+   }
+  ],
+  "cte_sol": [
+   {
+    "concept_id": "cte_sol",
+    "value": "T1",
+    "location": "p.2",
+    "quote": "Tipus de Terreny : T1",
+    "confidence": 0.9,
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260429171235+02'00'"
+   },
+   {
+    "concept_id": "cte_sol",
+    "value": "T1",
+    "location": "p.2",
+    "quote": "Tipus de Terreny : T1",
+    "confidence": 0.9,
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260326120429+01'00'"
+   }
+  ],
+  "num_sondeigs": [
+   {
+    "concept_id": "num_sondeigs",
+    "value": 1,
+    "location": "p.2 campanya",
+    "quote": "1Sondeig a rotació",
+    "confidence": 0.7,
+    "note": "previstos",
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260429171235+02'00'"
+   },
+   {
+    "concept_id": "num_sondeigs",
+    "value": 1,
+    "location": "p.2 campanya",
+    "quote": "1Sondeig a rotació",
+    "confidence": 0.7,
+    "note": "previstos",
+    "source": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260326120429+01'00'"
+   }
+  ],
+  "expedient": [
+   {
+    "concept_id": "expedient",
+    "value": "3001706",
+    "location": "Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+    "quote": "3001706.0",
+    "confidence": 0.95,
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "expedient",
+    "value": "3001706",
+    "location": "nom del fitxer",
+    "quote": "3001706_DPSH_CASA 1.xls",
+    "confidence": 0.7,
+    "source": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_DPSH_CASA 1.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "expedient",
+    "value": "3001706",
+    "location": "nom del fitxer",
+    "quote": "3001706_DPSH_CASA 2.xls",
+    "confidence": 0.7,
+    "source": "CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_DPSH_CASA 2.xls",
+    "document_type": "dpsh_excel"
+   }
+  ],
+  "field_date": [
+   {
+    "concept_id": "field_date",
+    "value": "2026-05-07",
+    "location": "Hoja1!N23 (DATA DE PRESA)",
+    "quote": "46149.0",
+    "confidence": 0.7,
+    "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp",
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "concept_id": "data_sollicitud_lab",
+    "value": "2026-06-01",
+    "location": "Hoja1!AH23",
+    "quote": "46174.0",
+    "confidence": 0.6,
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_sample_id": [
+   {
+    "concept_id": "lab_sample_id",
+    "value": "SPT 1 (S1)",
+    "location": "Hoja1!C35",
+    "quote": "SPT 1 (S1)",
+    "confidence": 0.7,
+    "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe",
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "lab_sample_id",
+    "value": "SPT2 (S1)",
+    "location": "Hoja1!C36",
+    "quote": "SPT2 (S1)",
+    "confidence": 0.7,
+    "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe",
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_depth": [
+   {
+    "concept_id": "lab_depth",
+    "value": "1.0 - 1.6",
+    "location": "Hoja1!J35/L35",
+    "quote": "INICIAL 1.0 / FINAL 1.6",
+    "confidence": 0.7,
+    "note": "el GTL mana si discrepa",
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "lab_depth",
+    "value": "3.0 - 3.6",
+    "location": "Hoja1!J36/L36",
+    "quote": "INICIAL 3.0 / FINAL 3.6",
+    "confidence": 0.7,
+    "note": "el GTL mana si discrepa",
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_location": [
+   {
+    "concept_id": "lab_location",
+    "value": "S1",
+    "location": "Hoja1!C35 (parèntesi)",
+    "quote": "SPT 1 (S1)",
+    "confidence": 0.7,
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "lab_location",
+    "value": "S1",
+    "location": "Hoja1!C36 (parèntesi)",
+    "quote": "SPT2 (S1)",
+    "confidence": 0.7,
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "concept_id": "lab_tests_note",
+    "value": "NOMÉS SULFATS",
+    "location": "Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "confidence": 0.6,
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "lab_tests_note",
+    "value": "NOMÉS SULFATS",
+    "location": "Hoja1!AD36",
+    "quote": "NOMÉS SULFATS",
+    "confidence": 0.6,
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "NOT_client_name": [
+   {
+    "concept_id": "NOT_client_name",
+    "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+    "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+    "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+    "confidence": 1.0,
+    "note": "G3 = sol·licitant del laboratori, mai client",
+    "source": "comanda laboratori_3001706_CERDANYOLA.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ]
+ }
+}

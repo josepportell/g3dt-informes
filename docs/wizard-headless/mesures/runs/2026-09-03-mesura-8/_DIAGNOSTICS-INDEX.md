@@ -22,6 +22,9 @@ un diagnòstic de causes arrel de tot el que no és OK. **Sempre contrastar els 
 | **D4** | Runner: 3 docs perduts (rc=1 als 2 intents, tall de xarxa) i consolida amb 11/14 → `degraded=False`, `decisions=OK`. El flag només mira la consolidació LLM | `runner.py` (`degraded` / `docs_failed`) |
 | **I1** | Inventari: `PDF_V0/` s'exclou com a «versió anterior» encara que sigui l'ÚNICA carpeta d'annexos (Anciles: sense `PDF/`, `.FH11` il·legible) → 9 cotes en blanc | `inventory.py` l. 12-17/150 (llegir `PDF_V0` si no hi ha `PDF/`) |
 | **D5** | Derivació CTE amb la superfície d'UNA tipologia (186 m²) en lloc del total de N unitats (1.264 m²) → «C0» per «C1» (Anciles) | `derived_field_signals` / `_superficie_construida` (factor N unitats) |
+| **D6** | Runner: `X.dwg` i `X.pdf` (mateix stem) → mateix JSON; una lectura sobreescriu l'altra (Tulipa, 317 s + 1,25 USD; «lectura fallida») | `runner.py` l. 112 (nom amb extensió) |
+| **T2** | Latència: passada LLM de consolidació de 523 s (28 % del run) per 6 conflictes A-vs-A, 3 aplicats (Tulipa) | `consolidate` (abast de `llm_only_fields`) |
+| **S1** | Estructura: expedient multi-casa (Tulipa) consolidat com UN projecte; la casa 2 queda en contradiccions; 2 de 4 DPSH | disseny (or per casa ja existeix) |
 | **L1** | Forat de lector: el full SPT manuscrit (PENETROS p.3) no emet `n30` | skill / lector de PENETROS |
 | **L3** | Brossa dins del valor: telèfon enganxat a `client_name` (fitxa C6), N30 «2» en una MA (signat «--») | skill / normalitzadors |
 | **L2** | Manuscrit il·legible → candidat honest «[il·legible] marró» (comportament desitjat; falta el derivat «litologia del nivell de la mostra») | derivats del consolidador |
@@ -40,7 +43,7 @@ un diagnòstic de causes arrel de tot el que no és OK. **Sempre contrastar els 
 | 5 | Alcoletge | `alcoletge/_NOTES.md` | `alcoletge/_DIAGNOSTIC.md` | 0 (l'ERR cru d'adreça és C: Cadastre 1167 = signat) | R1 (`building_type`), R2 ×2 (z GPS anòmala 198,9; msnm vs fondària), R4 ×2, R5 (RC del correu, font única; Cadastre la confirma i no es creua), G (`fora_carpeta`), C ×3 (adreça, `nivell_freatic`, nivells), L2, T1 (timeout 600 s PENETROS) |
 | 6 | Vilanova | `vilanova/_NOTES.md` | `vilanova/_DIAGNOSTIC.md` | **2** (`municipality` **D3**; `nivell_freatic` P-3 **R6**) | D3, R6, D4 (11/14 docs i `degraded=False`), R1 ×2 (client, adreça), R4 ×2, R5, F1 ×2 (**SPT P-1/P-3 creuats al signat vs annex+tall**; litologia N2 re-redactada), G (`fora_carpeta` 406), C ×4 (SPT alineació per índex, `profunditat` sense espais, `lab`/`nom` dialecte). Entra al titular des d'avui (signat `.docx` trobat, castellà) |
 | 7 | Anciles | `anciles/_NOTES.md` | `anciles/_DIAGNOSTIC.md` | 0 | **I1 (9 cotes en blanc)**, D5 (CTE C0 per C1), R1 (`building_type`, 7/7), R5 ×12 (projecte de l'arquitecte ×3; sondeigs/SPT manuscrits ×9), L3 ×2, C ×5 (ca/es, formats, `lab` compartit, 7 columnes del fixture) |
-| 8 | Tulipa | | | | (sense veritat: executabilitat + latència) |
+| 8 | Tulipa | `tulipa/_NOTES.md` | `tulipa/_DIAGNOSTIC.md` | n/a (sense veritat) | executable (43,5 min, 0 reintents), **S1** multi-casa no modelat, **T2** LLM 12 min, **D6** dwg/pdf col·lisió, R1 (8/8), R4 |
 
 ## Recompte transversal (actualitzar a cada projecte)
 
@@ -64,7 +67,7 @@ un diagnòstic de causes arrel de tot el que no és OK. **Sempre contrastar els 
 | G | 1 | 0 | 2 | 1 | 1 | 1 | 0 | 6 |
 | T1 | 0 | 0 | 0 | 0 | 1 | 0 (tall de xarxa, no timeout) | 0 | 1 |
 
-**ERR de sistema acumulat (7/8): 4** (Anciles 0) — Rubí cota P-2 (F1, font d'Eva), Linyola `field_date` (D2, bug), Vilanova
+**ERR de sistema FINAL (8/8; 7 comparables): 4** (Anciles 0; Tulipa n/a). **Agregat: `_AGREGAT-8.md`.** — Rubí cota P-2 (F1, font d'Eva), Linyola `field_date` (D2, bug), Vilanova
 `municipality` (D3, bug) i `nivell_freatic` P-3 (R6, política). **3 dels 4 són el mateix patró: un desempat mecànic
 (`len(str)`, «només A bloqueja») decideix contra informació que el propi `_decisions.json` ja té.** Els ERR crus
 d'Alcoletge (adreça) i Vilanova (SPT ×4) són del comparador (C).

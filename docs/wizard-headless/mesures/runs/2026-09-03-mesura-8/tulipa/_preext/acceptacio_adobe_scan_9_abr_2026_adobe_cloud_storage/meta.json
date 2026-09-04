@@ -1,0 +1,70 @@
+{
+ "source_path": "ACCEPTACIO/Adobe Scan 9 abr 2026 - Adobe cloud storage.pdf",
+ "source_md5": "7b5043283ac6aef9658cd7a4d3b697be",
+ "kind": "pdf",
+ "generated": "2026-09-04T22:42:33",
+ "elapsed_s": 2.561,
+ "dir": "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage",
+ "files": [
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-1.txt",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-1.png",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-2.txt",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-2.png",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-3.txt",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-3.png",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-4.txt",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-4.png",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-5.txt",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-5.png",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-6.txt",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-6.png",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-7.txt",
+  "acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-7.png"
+ ],
+ "pages": 7,
+ "page_sizes_pt": [
+  [
+   585.0,
+   842.0
+  ],
+  [
+   587.0,
+   842.0
+  ],
+  [
+   575.0,
+   842.0
+  ],
+  [
+   585.0,
+   843.0
+  ],
+  [
+   595.0,
+   840.0
+  ],
+  [
+   593.0,
+   842.0
+  ],
+  [
+   595.0,
+   838.0
+  ]
+ ],
+ "producer": "PDFium",
+ "creator": "PDFium",
+ "creationDate": "D:20260410082007",
+ "modDate": "",
+ "text_ok": {
+  "1": true,
+  "2": true,
+  "3": true,
+  "4": true,
+  "5": true,
+  "6": true,
+  "7": true
+ },
+ "pages_truncated": false,
+ "halves_pages": []
+}

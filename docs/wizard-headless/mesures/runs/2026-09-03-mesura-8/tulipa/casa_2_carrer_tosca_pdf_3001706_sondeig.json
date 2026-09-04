@@ -1,0 +1,259 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf",
+ "source_md5": "0ea6fbbd966b7988ff487fdb24ce47b4",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_sondeig",
+ "what_it_is": "Annex tècnic G3 del sondeig a rotació amb bateria contínua S-1: fitxa amb columna litològica interpretada (3 nivells), taula de mostres SPT in-situ (SPT-1, SPT-2) i pàgina de fotografies del sondeig.",
+ "issuer": "Eva Vázquez Marcet (G3, geòloga col. 4302), a partir del treball de camp de TPS, S.L. (Sr. Daniel Fernandez, sondista)",
+ "date": "07/05/2026",
+ "pages_or_sheets": "2 pàgines: p.1 fitxa tècnica + taula de sondeig; p.2 fotografies del sondeig S-1",
+ "context": {
+  "who_made_it": "G3 (Eva, geòloga) redacta l'annex a partir del testimoni recuperat per TPS S.L. al sondeig a rotació S-1",
+  "for_whom": "Ús intern de G3 com a font per a la redacció de l'informe geotècnic (nivells, litologies, mostres)",
+  "why": "Documentar el sondeig a rotació S-1: litologia per nivell, cota d'origen, i assaigs SPT realitzats",
+  "expected_fields": [
+   "cota_referencia",
+   "num_soil_levels",
+   "litologia per nivell (soil_levels)",
+   "dades de sondeig (sondeig_tests)",
+   "mostres SPT (spt_ma_tests)",
+   "data del sondeig"
+  ],
+  "not_expected": [
+   "adreça fiable de l'obra (el caixetí pot portar text de plantilla no actualitzat)",
+   "num_dpsh_tests",
+   "superficie_parcela",
+   "referencia_catastral",
+   "num_floors",
+   "building_type"
+  ],
+  "relation_to_others": "Document propi de la carpeta CASA 2_ CARRER TOSCA, però el camp 'Obra:' del caixetí diu 'Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipa nº3 de Cerdanyola del Vallès' — adreça de CASA 1 (Carrer Tulipa), no de Carrer Tosca. Coincideix amb el patró d'error de còpia ja conegut en aquest projecte (plànol de situació de Casa 2 amb el mateix problema, veure lliçons estructurals del skill 'Tulipa'). Md5 (0ea6fbbd...) i mida (350 KB) diferents de l'annex de sondeig de Casa 1 (4b2f3e24..., 5,4 MB), per tant NO és un duplicat literal del mateix fitxer — però el contingut del caixetí sembla una còpia no actualitzada de la plantilla de Casa 1. No es pot confirmar sense comparar amb l'altre annex (fora d'abast d'aquesta crida --only).",
+  "authority_for": [
+   "cota_referencia",
+   "num_soil_levels",
+   "field_date"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "+199.0 msnm",
+   "location": "p.1 caixetí, bloc Cota / Z",
+   "quote": "Z: +199.0 msnm (segons el plànol ICGC)",
+   "confidence": 0.6,
+   "note": "Cota d'origen del sondeig S-1 segons ICGC. No es pot determinar si el sistema de cotes del projecte és absolut o relatiu sense creuar amb l'Excel/annex DPSH de Casa 2 (regla d'or Castellar: la taula ha de seguir el sistema del projecte)."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 3,
+   "location": "p.1 columna 'Unitat litològica'",
+   "quote": "NIVELL 1 / NIVELL 2 / NIVELL 3",
+   "confidence": 0.9,
+   "note": "3 nivells clarament delimitats a la columna litològica; sense capa de cobertura sense número (el 'Sòl vegetal' 0.00-0.10 queda inclòs dins la clau de NIVELL 1, no és una fila pròpia)."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "07/05/2026",
+   "location": "p.1 caixetí, Data d'inici / Data de fi",
+   "quote": "Data d'inici: 07/05/2026 · Data de fi: 07/05/2026",
+   "confidence": 0.5,
+   "note": "Dia del sondeig S-1 (candidat 2 segons regla field_date: pot no coincidir amb el primer dia de camp del DPSH; comparar amb la fitxa de camp / Excel DPSH de Casa 2)."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "SR.ALEIX SUBIÀ FELIP",
+   "location": "p.1 caixetí, Client:",
+   "quote": "Client: SR.ALEIX SUBIÀ FELIP",
+   "confidence": 0.25,
+   "note": "Camp 'Client:' d'un annex de sondeig = sol·licitant, no necessàriament el promotor (regla Pas 3). A més, el caixetí sencer d'aquest document sembla arrossegar text de Casa 1 (veure relation_to_others), per tant dubtós que aquest nom correspongui realment al client de Casa 2/Carrer Tosca. Candidat feble, creuar amb pressupost/acceptació de Casa 2."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tulipa nº3, Cerdanyola del Vallès",
+   "location": "p.1 caixetí, Obra:",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipa nº3 de Cerdanyola del Vallès",
+   "confidence": 0.1,
+   "note": "Adreça de CASA 1 (Carrer Tulipa), no de Carrer Tosca — document dins la carpeta CASA 2_ CARRER TOSCA. Molt probablement caixetí no actualitzat (còpia de la plantilla de Casa 1). NO fer servir com a candidat fiable per a l'adreça de Casa 2 sense confirmació d'altres fonts pròpies de Casa 2 (plànol, pressupost, comanda)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "p.1 caixetí, Obra:",
+   "quote": "...de Cerdanyola del Vallès",
+   "confidence": 0.55,
+   "note": "El municipi coincideix amb el nom del projecte (3001706 C.TULIPA CERDANYOLA) i és compartit per ambdues cases encara que el carrer difereixi; menys sospitós de ser un error de còpia que el carrer/número."
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, S.L.",
+   "location": "p.1 caixetí, Empresa:",
+   "quote": "Empresa: TPS, S.L.",
+   "confidence": 0.6,
+   "note": "Empresa perforista/sondista del sondeig S-1. Coincideix amb la identitat coneguda del laboratori TPS (B64803075) d'aquest projecte."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.1 taula 'Mostres i assaigs in-situ'",
+   "quote": "SPT-1",
+   "confidence": 0.4,
+   "note": "Dues mostres SPT al mateix sondeig S-1 (SPT-1 i SPT-2); sense GTL en aquesta crida no es pot determinar quina és la mostra portada a assaigs de laboratori (sulfats/agressivitat). Veure també spt_ma_tests."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-2",
+   "location": "p.1 taula 'Mostres i assaigs in-situ'",
+   "quote": "SPT-2",
+   "confidence": 0.4,
+   "note": "Segona mostra SPT del mateix sondeig S-1. Mateixa nota que SPT-1: cal creuar amb GTL per saber quina mostra es porta a laboratori."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-1.00 a -1.60",
+   "location": "p.1 taula, fila SPT-1, columna 'Prof. de extracció (m)'",
+   "quote": "-1.00 a -1.60",
+   "confidence": 0.5,
+   "note": "Fondària d'extracció de la mostra SPT-1."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-3.00 a -3.54",
+   "location": "p.1 taula, fila SPT-2, columna 'Prof. de extracció (m)'",
+   "quote": "-3.00 a -3.54",
+   "confidence": 0.5,
+   "note": "Fondària d'extracció de la mostra SPT-2 (coincideix amb el final del sondeig, -3.54 m)."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.1 caixetí, Sondeig nº",
+   "quote": "Sondeig nº: S-1",
+   "confidence": 0.6,
+   "note": "Totes les mostres d'aquest document (SPT-1, SPT-2) provenen del sondeig S-1."
+  }
+ ],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "+199.0",
+    "profunditat_assolida": "-3.54",
+    "spt_ma": {
+     "n_spt": 2,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": "No detectat",
+    "location": "p.1 caixetí (Z) + taula sondeig",
+    "quote": "Z: +199.0 msnm (segons el plànol ICGC); columna 'Nivell freàtic' en blanc a tota la fondària assolida (0 a -3.54 m); taula amb 2 mostres SPT"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1.00 a -1.60",
+    "litologia_candidats": [
+     "NIVELL 2: Llims argilosos coheisus amb indicis de precipitat de calci",
+     "NIVELL 1: Sorres llimoses disgregades amb graves i restes d'arrels"
+    ],
+    "n30": {
+     "registre": {
+      "value": [
+       6,
+       9,
+       9,
+       9
+      ],
+      "location": "p.1 taula, fila SPT-1, columna Registre",
+      "quote": "6 / 9 / 9 / 9",
+      "confidence": 0.85,
+      "note": null
+     },
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": 18,
+       "font": "suma dels 2 trams centrals (9+9)",
+       "quote": "6 / 9 / 9 / 9"
+      },
+      {
+       "value": 27,
+       "font": "suma dels 3 últims trams (9+9+9)",
+       "quote": "6 / 9 / 9 / 9"
+      }
+     ],
+     "note": "Interval -1.00/-1.60 a cavall de la transició NIVELL1/NIVELL2 (-1.10m): litologia i n30 amb candidats, mai segur."
+    }
+   },
+   {
+    "id": "SPT-2",
+    "punt": "S-1",
+    "profunditat": "-3.00 a -3.54",
+    "litologia_candidats": [
+     "NIVELL 3: Lutites i sorrenques menys alterades (-2.80 a -3.54 m)"
+    ],
+    "n30": {
+     "registre": {
+      "value": [
+       19,
+       31,
+       33,
+       "50R"
+      ],
+      "location": "p.1 taula, fila SPT-2, columna Registre",
+      "quote": "19 / 31 / 33 / 50R",
+      "confidence": 0.85,
+      "note": "Rebuig (R) al 4t i últim tram, no al primer — no aplica la regla de 'R al primer tram = segur'."
+     },
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": 64,
+       "font": "suma dels 2 trams centrals (31+33)",
+       "quote": "19 / 31 / 33 / 50R"
+      }
+     ],
+     "note": "Rebuig al darrer tram (50R) a -3.54 m, coincident amb el final del sondeig; assaig sencer dins NIVELL 3, sense ambigüitat de litologia."
+    }
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "1er nivell (NIVELL 1)",
+    "litologia": "0.00 a -0.10 m: Sòl vegetal. -0.10 a -1.10 m: Sorres llimoses disgregades amb graves i restes d'arrels.",
+    "de": "0.00",
+    "a": "-1.10",
+    "mostra_del_nivell": false
+   },
+   {
+    "nom": "2on nivell (NIVELL 2)",
+    "litologia": "-1.10 a -2.20 m: Llims argilosos coheisus amb indicis de precipitat de calci.",
+    "de": "-1.10",
+    "a": "-2.20",
+    "mostra_del_nivell": false
+   },
+   {
+    "nom": "3er nivell (NIVELL 3)",
+    "litologia": "-2.20 a -2.80 m: Lutites i sorrenques molt alterades. -2.80 a -3.54 m: Lutites i sorrenques menys alterades.",
+    "de": "-2.20",
+    "a": "-3.54",
+    "mostra_del_nivell": true
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text incrustat brossa (PScript5.dll/Acrobat Distiller, FreeHand d'origen) — lectura íntegrament visual: pàgina sencera (150dpi) + clips a 400-500dpi (capçalera, columna litològica/unitat, columna registre SPT, columna nivell freàtic). Cap execució de fitz/altres eines; només render_clip.py per zoom. p.2 només aporta fotografies de confirmació (emplaçament + material recuperat SPT-1/SPT-2), sense dades noves de nivell A."
+}

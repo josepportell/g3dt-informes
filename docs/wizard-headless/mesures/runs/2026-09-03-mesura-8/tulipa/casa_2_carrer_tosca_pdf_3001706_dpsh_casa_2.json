@@ -1,0 +1,146 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_DPSH_CASA 2.pdf",
+ "source_md5": "960114b1585350fc3a2f0907891f83b0",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Full gràfic G3 (exportat des de l'Excel DPSH_CASA 2.xls) de dos assaigs de penetració dinàmica DPSH executats a la CASA 2: P-2.1 (p.1) i P-2.2 (p.2), amb cota d'inici per punt, colpeig per fondària, rebuig, columna N.F. i llegenda de nivells per color.",
+ "issuer": "G3 (Eva), a partir de dades de camp de TPS",
+ "date": "07/05/2026 (data de camp dels dos punts)",
+ "pages_or_sheets": "2 pàgines (p.1 = P-2.1, p.2 = P-2.2)",
+ "context": {
+  "who_made_it": "G3 (Eva), a partir de l'Excel de camp '3001706_DPSH_CASA 2.xls' (dades preses per TPS a l'obra)",
+  "for_whom": "l'informe geotècnic de la CASA 2 d'aquest expedient (Tulipa 2 cases)",
+  "why": "documentar gràficament els dos assaigs DPSH: colpeig per fondària, fondària de rebuig, nivell freàtic i nivells litològics per color",
+  "expected_fields": [
+   "cota_referencia (per punt)",
+   "dpsh_tests[].cota_inici",
+   "dpsh_tests[].profunditat_assolida",
+   "dpsh_tests[].rebuig",
+   "dpsh_tests[].nivell_freatic",
+   "street_address",
+   "municipality",
+   "field_date",
+   "expedient (sub-CASA)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "lab",
+   "cte"
+  ],
+  "relation_to_others": "germà de '3001706_DPSH_CASA 1.pdf' (mateixa plantilla, per a la CASA 1); deriva de l'Excel '3001706_DPSH_CASA 2.xls' (route=python a l'inventari, processat per Python, no llegit per aquest skill); el NÚMERO D'INFORME '3001706_CASA 2' és el sub-identificador de la CASA 2 dins l'expedient principal de carpeta '3001706 C.TULIPA CERDANYOLA'",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "field_date",
+   "expedient",
+   "cota_referencia",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "C/TOSCA 16",
+   "location": "p.1 i p.2, bloc OBRA",
+   "quote": "OBRA: C/TOSCA 16",
+   "confidence": 0.7,
+   "note": "casa 2; creuar amb el plànol de situació i PLANTA I SECCIO del mateix subprojecte"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CERDANYOLA DEL VALLÈS",
+   "location": "p.1 i p.2, bloc POBLACIÓ",
+   "quote": "POBLACIÓ: CERDANYOLA DEL VALLÈS",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "field_date",
+   "value": "07/05/2026",
+   "location": "p.1 i p.2, DATA:",
+   "quote": "DATA: 07/05/2026",
+   "confidence": 0.75,
+   "note": "data dels DPSH; candidat fort per field_date, per davant si la fitxa de camp F38 no està omplerta"
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001706_CASA 2",
+   "location": "p.1 i p.2, NÚMERO D´INFORME",
+   "quote": "NÚMERO D´INFORME: 3001706_CASA 2",
+   "confidence": 0.65,
+   "note": "sub-identificador de la CASA 2; l'expedient de carpeta és '3001706 C.TULIPA CERDANYOLA' — mateix prefix numèric 3001706, sufix '_CASA 2' propi del bloc de decisions d'aquesta casa"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "201,25",
+   "location": "p.1, capçalera ASSAIG DE PENETRACIÓ DINÀMICA P-2.1",
+   "quote": "Cota inici: 201,25 msnm segons el plànol topogràfic ICGC",
+   "confidence": 0.5,
+   "note": "cota PER PUNT (P-2.1); parcel·la possiblement en pendent (difereix de P-2.2) — no triar com a segura sense creuar amb l'annex de sondeig/plànol"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "202,85",
+   "location": "p.2, capçalera ASSAIG DE PENETRACIÓ DINÀMICA P-2.2",
+   "quote": "Cota inici: 202,85 msnm segons el plànol topogràfic ICGC",
+   "confidence": 0.5,
+   "note": "cota PER PUNT (P-2.2); veure nota de P-2.1 — dues cotes d'inici diferents, candidats, mai una segura"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "p.1 i p.2 (un per punt: P-2.1, P-2.2)",
+   "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-2.1 / ASSAIG DE PENETRACIÓ DINÀMICA: P-2.2",
+   "confidence": 0.55,
+   "note": "recompte d'aquest document gràfic, només CASA 2; l'Excel '3001706_DPSH_CASA 2.xls' (route=python) és la font executada primària per al pipeline"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-2.1",
+    "cota_inici": "201,25",
+    "profunditat_assolida": "-4,13",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.1",
+    "quote": "Rebuig a -4,13  m",
+    "note": "columna N.F. buida (text i color); llegenda de colors 'Nivells' mostra 3 bandes (Nivell 1 ~-0,4 a -1,6; Nivell 2 ~-1,8 a -3,4; Nivell 3 ~-3,6 a -4,2) — senyal feble, no és l'annex de sondeig"
+   },
+   {
+    "punt": "P-2.2",
+    "cota_inici": "202,85",
+    "profunditat_assolida": "-5,11",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2",
+    "quote": "Rebuig a -5,11  m",
+    "note": "columna N.F. buida (text i color); llegenda de colors 'Nivells' mostra 3 bandes (Nivell 1 ~-0,4 a -1,8; Nivell 2 ~-2,0 a -3,4; Nivell 3 ~-3,6 a -5,2) — senyal feble, no és l'annex de sondeig"
+   }
+  ],
+  "__nota": "aporta files de dpsh_tests (Pas 3b); la llegenda de colors 'Nivells' (3 nivells per punt) és senyal feble/corroboratiu, l'autoritat per a num_soil_levels és l'annex de sondeig de la CASA 2, no aquest document"
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "text_ok=true a les 2 pàgines (producer Acrobat Distiller / PScript5, export net des d'Excel) — llegit directament del .txt de pre-extracció, sense render_clip. Inspecció visual de page-1.png i page-2.png per confirmar la columna N.F. buida (sense text ni color) i llegir la llegenda de colors 'Nivells' (3 bandes per punt), que no es podia deduir de l'ordre del text pla. Cap plantilla G3 d'identitat (pressupost/fitxa/comanda) en aquest document — només els 15 camps que toca l'annex DPSH."
+}

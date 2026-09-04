@@ -1,0 +1,70 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_fotografies_CASA 2.pdf",
+ "source_md5": "dd5a81037a7bb967f6bb3ced12e00921",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Annex fotogràfic de G3 (Eva) amb 2 fotos (F-1, F-2) de l'emplaçament de la màquina de penetració dinàmica als punts DPSH P-2.1 i P-2.2 de la Casa 2",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (Eva)",
+ "date": "2026-06-04 (metadada de creació del PDF; NO citada com a font de field_date, vegeu reading_notes)",
+ "pages_or_sheets": "1 pàgina (Fotografies 1-2)",
+ "context": {
+  "who_made_it": "G3 (Eva), com a annex fotogràfic de camp per adjuntar a l'informe de la Casa 2",
+  "for_whom": "L'informe geotècnic de la Casa 2 (evidència visual del treball de camp)",
+  "why": "Documentar visualment on es va situar la màquina de DPSH per als punts P-2.1 i P-2.2 de la Casa 2",
+  "expected_fields": [
+   "codi de pàgina/expedient al peu de pàgina",
+   "noms dels punts d'assaig fotografiats (peu de foto)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date exacte",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_*",
+   "cte_*",
+   "utm_x_utm_y",
+   "referencia_catastral"
+  ],
+  "relation_to_others": "Annex complementari del DPSH de la Casa 2 (mateix expedient de carpeta 3001706, subcarpeta CASA 2_ CARRER TOSCA); no és font independent d'identitat de projecte — només corrobora la numeració dels punts DPSH d'aquesta casa (paral·lel a P-1.1/P-1.2 de la Casa 1).",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001706",
+   "location": "capçalera de la pàgina 1, cantonada superior dreta",
+   "quote": "3001706_2",
+   "confidence": 0.3,
+   "note": "Codi de pàgina de l'annex fotogràfic (numeració pròpia de l'annex: {expedient}_{pàgina}), no és el número d'expedient de la comanda ni de l'annex DPSH. Coincideix amb el nom de la carpeta del projecte (3001706) — candidat feble, només corroboració, mai segur amb aquesta font sola."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text del PDF és brossa (FreeHand->Acrobat Distiller, text_ok=false a page-1); lectura íntegrament visual sobre page-1.png (les meitats page-1-top.png/page-1-bottom.png no calien, contingut prou llegible a la sencera). Document purament fotogràfic (2 fotos F-1/F-2, logo G3), sense cap caixetí de projecte (sense client/adreça/municipi/arquitecte). Peu de foto literal: 'Fotografies 1 i 2: Vista de l'emplaçament de la màquina per a la realització dels assaigs de penetració dinàmica DPSH P-2.1 i P-2.2, respectvament.' (typo 'respectvament' del document original, transcrit literal). Aquest peu confirma que a la Casa 2 els punts DPSH també es numeren amb subíndex (P-2.1, P-2.2), igual que a la Casa 1 (P-1.1, P-1.2) — útil per fer coincidir les files de dpsh_tests d'aquesta casa amb l'Excel/annex DPSH corresponent, però no aporta cap cel·la de cota_inici/profunditat_assolida/rebuig/nivell_freatic per si mateix ni compta com a font de num_dpsh_tests (per això no s'emet bloc tables i num_dpsh_tests resta a not_present). La metadada creationDate del PDF (2026-06-04) és la data de creació de l'annex per l'Eva, no necessàriament el dia de camp: no s'ha usat com a font de field_date. Sense duplicats al md5 segons _inventory.json."
+}

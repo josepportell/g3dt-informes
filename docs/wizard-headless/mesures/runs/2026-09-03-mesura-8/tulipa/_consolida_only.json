@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "fields": {
+    "cota_referencia": {
+      "estat": "candidats",
+      "value": "198 msnm segons el plànol topogràfic ICGC",
+      "candidates": [
+        {
+          "value": "198 msnm segons el plànol topogràfic ICGC",
+          "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_DPSH_CASA 1.pdf p.1 i p.2, capçalera Cota inici",
+          "quote": "Cota inici: 198 msnm segons el plànol topogràfic ICGC"
+        },
+        {
+          "value": "+199.0 msnm",
+          "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf p.1 caixetí, camp 'Cota: Z:'",
+          "quote": "Z: +199.0 msnm (segons el plànol ICGC)"
+        }
+      ],
+      "rule": "Pas 3: annex DPSH 'Cota inici' i annex sondeig 'Z' son el mateix criteri de l'Eva (ICGC) i haurien de coincidir, pero discrepen en 1 m dins la mateixa Casa 1; ordre empiric 'annex DPSH primer' (4/4 projectes previs: Bell-lloc, Castellar, Vilanova, Anciles).",
+      "note": "Projecte multi-casa (Casa 1 Tulipa / Casa 2 Tosca 16): aquesta cel·la barreja senyals de les dues cases sense separar-les — Casa 2 aporta el mateix +199.0 msnm de sondeig pero cotes DPSH per punt molt diferents (201,25 / 202,85, parcel·la en pendent). El consolidador hauria d'emetre cota_referencia PER CASA (regla estructural 'un expedient, N informes'); es manté candidats perque la discrepancia d'1 m dins de Casa 1 no es pot resoldre amb els documents disponibles."
+    },
+    "expedient": {
+      "estat": "segur",
+      "value": "3001706",
+      "candidates": [
+        {
+          "value": "3001706",
+          "font": "comanda laboratori_3001706_CERDANYOLA.xls Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+          "quote": "3001706.0"
+        },
+        {
+          "value": "3001706",
+          "font": "nom de la carpeta del projecte",
+          "quote": "3001706 C.TULIPA CERDANYOLA"
+        },
+        {
+          "value": "3001706",
+          "font": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_DPSH_CASA 1.xls nom del fitxer",
+          "quote": "3001706_DPSH_CASA 1.xls"
+        }
+      ],
+      "rule": "Pas 3: expedient = nom de la carpeta = comanda N19 = prefix numeric dels Excel DPSH executats de totes dues cases. Els sufixos '_CASA 1'/'_CASA 2' que apareixen al caixeti dels planols de situacio i al 'NUMERO D'INFORME' dels DPSH impresos son l'identificador de cada INFORME individual (projecte multi-casa, un expedient amb N informes), no valors alternatius de l'expedient del projecte — no es una contradiccio real, es un concepte diferent.",
+      "note": "Els candidats '3001706_CASA 1' / '3001706_CASA 2' corresponen al numero d'informe de cada casa, no a l'expedient."
+    },
+    "num_dpsh_tests": {
+      "estat": "candidats",
+      "value": 2,
+      "candidates": [
+        {
+          "value": 2,
+          "font": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_DPSH_CASA 1.xls fulls amb dades a la columna C",
+          "quote": "sheets: ['P-1.1', 'P-1.2']",
+          "note": "executats, Casa 1"
+        },
+        {
+          "value": 2,
+          "font": "CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_DPSH_CASA 2.xls fulls amb dades a la columna C",
+          "quote": "sheets: ['P-2.1', 'P-2.2']",
+          "note": "executats, Casa 2"
+        },
+        {
+          "value": 4,
+          "font": "PENETROS + SONDEIG.pdf p.1 ALBARÀ DPSH, camp 'Nº de penetròmetres realitzats'",
+          "quote": "4",
+          "note": "total del projecte (2 cases x 2 punts en una sola visita de camp), no el valor per informe"
+        }
+      ],
+      "rule": "Pas 3: Excel DPSH executat mana sobre el previst; projecte multi-casa (un expedient, N informes) — cada Excel executat en dona 2 (P-x.1/P-x.2) PER CASA. '4' es el recompte total de l'albara de camp de la visita conjunta, no el valor que ha d'anar a l'informe de cada casa.",
+      "note": "Aquesta cel·la barreja Casa 1 i Casa 2 en un sol camp escalar; el valor correcte per a l'informe de CADA casa es 2. El consolidador hauria d'emetre num_dpsh_tests PER CASA (regla estructural existent); es manté candidats perque un sol valor global no pot representar-les totes dues correctament."
+    }
+  },
+  "tables": {
+    "soil_levels": {
+      "rows": [
+        {
+          "nom": "nivell1",
+          "de": {
+            "estat": "segur",
+            "value": "-0.10",
+            "candidates": [
+              {
+                "value": "-0.10",
+                "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf p.1 columna 'Unitat litològica' + 'Descripció dels materials'",
+                "quote": "-0.10 a -1.10 m: Sorres llimoses disgregades amb graves i restes d'arrels."
+              }
+            ],
+            "rule": "Pas 3b: la capa de cobertura ('Sòl vegetal', 0.00 a -0.10 m) es una fila propia SENSE numero (ja emesa com a 'Sòl vegetal (cobertura, sense número)' en aquest mateix _decisions.json); el NIVELL 1 numerat comença on acaba la cobertura, a -0.10.",
+            "note": "El valor '0.00' de Casa 2 i de la taula resum de PENETROS+SONDEIG es un artefacte de no separar la cobertura en fila propia: el propi text llegit de Casa 2 ('0.00 a -0.10 m: Sòl vegetal. -0.10 a -1.10 m: Sorres...') conté la mateixa transicio a -0.10, nomes que aquella lectura no la va desglossar en dues files."
+          },
+          "mostra_del_nivell": {
+            "estat": "candidats",
+            "value": true,
+            "candidates": [
+              {
+                "value": true,
+                "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf p.1 columna 'Unitat litològica' + 'Descripció dels materials'",
+                "quote": "-0.10 a -1.10 m: Sorres llimoses disgregades amb graves i restes d'arrels.",
+                "note": "SPT-1 (-1.00 a -1.60) cavalca la transició a -1.10 m amb NIVELL 2"
+              },
+              {
+                "value": false,
+                "font": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf",
+                "quote": ""
+              }
+            ],
+            "rule": "Pas 3b: mostra que cavalca una transició de nivell → candidats amb els DOS nivells, mai una tria única; SPT-1 (-1.00 a -1.60) cavalca -1.10 m, per tant tant nivell1 com nivell2 son candidats=true.",
+            "note": "La lectura de Casa 2 (sense cita) marca False sense justificació textual; sembla una lectura menys acurada del mateix sondeig (litologia gairebé idèntica a la de Casa 1) que no va identificar el xevalcament de SPT-1. Es manté candidats seguint la regla de mostres a cavall de nivell."
+          }
+        },
+        {
+          "nom": "nivell2",
+          "mostra_del_nivell": {
+            "estat": "candidats",
+            "value": true,
+            "candidates": [
+              {
+                "value": true,
+                "font": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf p.1 columna 'Unitat litològica' + 'Descripció dels materials'",
+                "quote": "-1.10 a -2.20 m: Argiles coheives amb indicis de precipitat de calci.",
+                "note": "SPT-1 (-1.00 a -1.60) cavalca la transició a -1.10 m amb NIVELL 1"
+              },
+              {
+                "value": false,
+                "font": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf",
+                "quote": ""
+              }
+            ],
+            "rule": "Pas 3b: mateix raonament que nivell1 — SPT-1 cavalca la transició -1.10 m, candidats amb els DOS nivells.",
+            "note": "Mateix raonament que nivell1: la lectura de Casa 2 (sense cita) no reflecteix el xevalcament de SPT-1; es manté candidats."
+          }
+        }
+      ]
+    }
+  },
+  "notes": [
+    "Projecte 3001706 C.TULIPA CERDANYOLA té 2 informes (Casa 1 - Tulipa / Casa 2 - Carrer Tosca 16) amb documentació i sondeigs independents per casa; els camps escalars fields.cota_referencia i fields.num_dpsh_tests que arriben a aquesta crida barregen senyals de les dues cases en un sol valor de projecte — es resolen aquí tal com arriben (candidats), pero la solucio de fons es separar-los per casa al consolidador Python (regla estructural existent 'un expedient, N informes').",
+    "fields.expedient es resol segur: '_CASA 1'/'_CASA 2' identifiquen l'informe de cada casa, no l'expedient.",
+    "tables.soil_levels[nivell1].de es resol segur: '0.00' es un artefacte de no separar la capa de cobertura en la lectura de Casa 2 / taula resum PENETROS+SONDEIG.",
+    "tables.soil_levels[nivell1/nivell2].mostra_del_nivell: SPT-1 cavalca la transicio -1.10 m entre NIVELL 1 i NIVELL 2; es marquen candidats=true als dos nivells (regla de mostres a cavall de transicio), la lectura False de Casa 2 sembla incompleta (quotes buides)."
+  ]
+}

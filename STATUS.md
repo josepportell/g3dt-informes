@@ -1,6 +1,9 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-04 — **Mesura dels 8: 7/8 FETS** (codi intacte, pre P0-P4). Falta Tulipa (sense veritat: només
-executabilitat + latència). **Vilanova ha entrat al titular** (el Josep ha trobat el `.docx` signat, en castellà, a
+Last updated: 2026-09-04 (nit) — **MESURA DELS 8 FETA** (codi intacte, pre P0-P4). **Agregat:**
+`docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/_AGREGAT-8.md`. Titular (7 comparables, sobre el signat):
+escalars **94 OK (64 %) / 50 CAND (34 %) / 2 ERR**; taules **133 OK (67 %) / 33 CAND / 31 blancs / 2 ERR**. Llindars
+(OK ≥ 80, CAND ≤ 20, ERR 0): **cap complert**; però cap ERR de lectura — R1+R3+D3 sols → ~75 % OK, +R5+R2 → ~85 %.
+Cost 121,75 USD; temps net 26-43 min. Tulipa: executable, multi-casa no modelat (S1), LLM 12 min (T2), dwg/pdf (D6). **Vilanova ha entrat al titular** (el Josep ha trobat el `.docx` signat, en castellà, a
 `AI-pipeline/reference-material`; `_eva_truth/vilanova.json` ja no és stub) → **7 comparables**.
 **ERR de sistema acumulat: 4** — Rubí cota P-2 (F1: annex d'Eva +212 vs informe +212,50), Linyola `field_date` (**D2**:
 bug de clustering de dates, «Octubre 2025» fa de pont i `len(str)` tria el dia 10), Vilanova `municipality` (**D3**: la

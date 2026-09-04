@@ -1,0 +1,31 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/geotecnic  carrer Tosca 16.msg",
+ "source_md5": "7411da943ecf64a87db72bf76b672d31",
+ "kind": "msg",
+ "generated": "2026-09-04T22:42:39",
+ "elapsed_s": 0.009,
+ "dir": "casa_2_carrer_tosca_geotecnic_carrer_tosca_16",
+ "files": [
+  "casa_2_carrer_tosca_geotecnic_carrer_tosca_16/body.txt"
+ ],
+ "subject": "geotecnic  carrer Tosca 16",
+ "from": "factoria@factoriarquitectura.com",
+ "to": "Eva <Eva@g3dt.com>",
+ "date": "2026-05-06 10:50:49+02:00",
+ "attachments": [
+  {
+   "name": "planta_i_seccio.dwg",
+   "size": 504041,
+   "md5": "20a70032d1ae5868eb692fcaf316ee73",
+   "already_in_folder": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.dwg",
+   "preext_dir": null
+  },
+  {
+   "name": "planta_i_seccio.pdf",
+   "size": 347426,
+   "md5": "f3c6c2e8ceef2e0d20dcba361712d748",
+   "already_in_folder": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.pdf",
+   "preext_dir": null
+  }
+ ]
+}

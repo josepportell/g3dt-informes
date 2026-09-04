@@ -1,0 +1,43 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf",
+ "source_md5": "0ea6fbbd966b7988ff487fdb24ce47b4",
+ "kind": "pdf",
+ "generated": "2026-09-04T22:42:37",
+ "elapsed_s": 1.294,
+ "dir": "casa_2_carrer_tosca_pdf_3001706_sondeig",
+ "files": [
+  "casa_2_carrer_tosca_pdf_3001706_sondeig/page-1.txt",
+  "casa_2_carrer_tosca_pdf_3001706_sondeig/page-1.png",
+  "casa_2_carrer_tosca_pdf_3001706_sondeig/page-1-left.png",
+  "casa_2_carrer_tosca_pdf_3001706_sondeig/page-1-right.png",
+  "casa_2_carrer_tosca_pdf_3001706_sondeig/page-2.txt",
+  "casa_2_carrer_tosca_pdf_3001706_sondeig/page-2.png",
+  "casa_2_carrer_tosca_pdf_3001706_sondeig/page-2-left.png",
+  "casa_2_carrer_tosca_pdf_3001706_sondeig/page-2-right.png"
+ ],
+ "pages": 2,
+ "page_sizes_pt": [
+  [
+   1191.0,
+   842.0
+  ],
+  [
+   1191.0,
+   842.0
+  ]
+ ],
+ "producer": "Acrobat Distiller 15.0 (Windows)",
+ "creator": "PScript5.dll Version 5.2.2",
+ "creationDate": "D:20260604152450+02'00'",
+ "modDate": "D:20260604152450+02'00'",
+ "text_ok": {
+  "1": false,
+  "2": false
+ },
+ "pages_truncated": false,
+ "halves_pages": [
+  1,
+  2
+ ],
+ "text_suspect_reason": "producer: Acrobat Distiller 15.0 (Windows)"
+}

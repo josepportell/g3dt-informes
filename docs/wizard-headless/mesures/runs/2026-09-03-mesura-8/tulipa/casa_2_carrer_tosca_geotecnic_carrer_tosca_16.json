@@ -1,0 +1,99 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/geotecnic  carrer Tosca 16.msg",
+ "source_md5": "7411da943ecf64a87db72bf76b672d31",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu de l'arquitectura (Factoria) a Eva (G3DT) amb instruccions d'accés a la parcel·la de Tosca 16 abans de la visita de camp de l'endemà, adjuntant el plànol amb el topogràfic i l'edificació projectada.",
+ "issuer": "Fina (FACTORIA D'ARQUITECTURA SLP) via factoria@factoriarquitectura.com",
+ "date": "2026-05-06 10:50:49+02:00",
+ "pages_or_sheets": "1 correu + 2 adjunts (dwg/pdf, ja solts a la carpeta com a 'PLANTA I SECCIO')",
+ "context": {
+  "who_made_it": "Fina, del despatx FACTORIA D'ARQUITECTURA SLP (arquitectura del projecte de CASA 2 / carrer Tosca 16)",
+  "for_whom": "Eva (G3DT), que ha d'anar a fer el geotècnic de camp l'endemà",
+  "why": "Avisar Eva de com accedir a la parcel·la (entrada pel Camí Antic, baixant per la part dreta) abans de la visita de camp, i adjuntar el plànol amb el topogràfic i l'edificació projectada amb les cotes d'implantació",
+  "expected_fields": [
+   "street_address",
+   "field_date (implícit, 'demà')",
+   "architect_company"
+  ],
+  "not_expected": [
+   "expedient",
+   "client_name",
+   "municipality",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab",
+   "cte"
+  ],
+  "relation_to_others": "Correu operatiu previ a la visita de camp de CASA 2 (Tosca 16). Els adjunts (planta_i_seccio.dwg/.pdf) ja són solts a la carpeta com 'CASA 2_ CARRER TOSCA/PLANTA I SECCIO.dwg' i '.pdf' (mateix md5, camp already_in_folder del preext) — no es llegeixen aquí, són document(s) separat(s); el plànol adjunt és la font real de les cotes d'implantació esmentades al text, no aquest correu.",
+  "authority_for": [
+   "street_address",
+   "field_date",
+   "architect_company",
+   "architect_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tosca 16",
+   "location": "assumpte + cos del correu, l.7-8",
+   "quote": "Respecte el geotecnic que heyu d'anar a fer dema al carrer Tosca 16 i a la parcel·la veïna",
+   "confidence": 0.75,
+   "note": "Correu operatiu, no bloc OBRA/ADREÇA etiquetat, però coincideix amb l'assumpte ('geotecnic  carrer Tosca 16'). Esmenta també 'la parcel·la veïna' (accés) sense donar-ne l'adreça pròpia: no és una segona adreça documentada, només una nota d'accés."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2026-05-07",
+   "location": "cos del correu, l.7 (relatiu a la data del correu, 2026-05-06 10:50)",
+   "quote": "Respecte el geotecnic que heyu d'anar a fer dema al carrer Tosca 16",
+   "confidence": 0.55,
+   "note": "Inferit de 'demà' respecte la data d'enviament del correu. Candidat secundari (correu, no fitxa/annex/albarà). L'inventari del projecte llista fotos WhatsApp datades 2026-05-07 a FOTOGRAFIA/ com a possible corroboració externa (no llegides des d'aquest document)."
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "FACTORIA D'ARQUITECTURA SLP",
+   "location": "signatura del correu, l.16",
+   "quote": "FACTORIA D'ARQUITECTURA SLP",
+   "confidence": 0.75,
+   "note": "El domini del remitent (factoriarquitectura.com) coincideix amb el despatx signant."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Fina",
+   "location": "signatura del correu, l.15",
+   "quote": "Fina",
+   "confidence": 0.25,
+   "note": "Només nom de pila, sense cognoms ni número de col·legiat; podria ser personal administratiu del despatx i no la persona arquitecta redactora del projecte. Candidat feble; preferir caixetí del plànol o signatura amb col·legiat si n'hi ha en altres documents."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "client_name",
+  "municipality",
+  "architect_name (persona amb cognoms/col·legiat)",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura via pre-extracció (body.txt del .msg, sense necessitat de render). Els 2 adjunts (dwg/pdf) ja són solts a la carpeta (mateix md5 al meta.json, already_in_folder) i es llegeixen com a documents separats. No s'emet street_address_struct: aquest correu no dona el municipi (regla dura del Pas 3 — nom_via i municipi són obligatoris, sense un dels dos val més no emetre l'objecte)."
+}

@@ -1,4 +1,4 @@
-# FOR NEW YOU — 2026-09-03/04 — Mesura 7/8 feta (ERR sistema 4, tots diagnosticats); queda Tulipa; Vilanova al titular
+# FOR NEW YOU — 2026-09-03/04 — MESURA DELS 8 FETA (ERR sistema 4, tots diagnosticats; agregat a `_AGREGAT-8.md`)
 
 **Escrit:** 2026-09-03, tancament abrupte (tall de connexió del Josep). Arbre net, tot committejat, branca
 `experiment/nivell-a-2026-08` **ahead 8 d'origin — SENSE push** (el Josep no el va demanar; pregunta-li).
@@ -38,7 +38,8 @@
 
 ## La feina següent, per ordre
 
-1. **Continuar la mesura (1 projecte: Tulipa, sense veritat → executabilitat + latència)** — Anciles FET (`anciles/_DIAGNOSTIC.md`:
+1. ~~Continuar la mesura~~ **FETA 8/8** — Tulipa FET (`tulipa/_DIAGNOSTIC.md`: S1 multi-casa, T2, D6). **Agregat:**
+   `runs/2026-09-03-mesura-8/_AGREGAT-8.md` (números contrastats; l'agregat mecànic espera el comparador). Anciles FET (`anciles/_DIAGNOSTIC.md`:
    ERR 0; **I1** = `PDF_V0/` exclòs tot i ser l'única carpeta d'annexos → 9 cotes en blanc; D5 = CTE derivat amb la
    superfície d'una tipologia; 28,3 min net). Vilanova FET (`vilanova/_DIAGNOSTIC.md`: **ERR 2** = D3 «Vilanova
    del Segrià» per `len(v)` + R6 humitat P-3 tapada per columna buida; D4 runner `degraded=False` amb 11/14 docs; F1 SPT

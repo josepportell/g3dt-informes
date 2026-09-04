@@ -2044,3 +2044,54 @@ cel·les Nb, N, E (i γ/c/φ a Rubí) tenen causes de MISMATCH conegudes. Despr�
 
 *Fi entrada 2026-09-03. N20: càlcul sa, entrada fràgil; E: criteri per modelar; el marc «criteris, no
 fórmules» ja no depèn de la memòria de ningú.*
+
+## 2026-09-04 — Mesura dels 8 (línia base pre-P0-P4) tancada: 4 ERR (3 de consolidador), 64 % OK, la confiança es perd després de llegir
+
+### Context
+Tasca 1 del handoff del 09-02/03: mesurar la lectura de nivell A i les 11 taules als 8 projectes amb el codi intacte,
+criteris escrits abans (`docs/wizard-headless/mesures/CRITERIS-MESURA-2026-09-03.md`), un projecte per run, veritat =
+informe signat. Executada 2026-09-03 (Castellar) i 2026-09-04 (els 7 restants). Resultats i diagnòstics per projecte a
+`docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/` (`{slug}/_NOTES.md`, `_DIAGNOSTIC.md`, `_DIAGNOSTICS-INDEX.md`,
+`_AGREGAT-8.md`).
+
+### Decisions clau
+1. **Els veredictes del comparador es contrasten cel·la a cel·la amb el signat abans de comptar-los.** Why: 18 falsos
+   ERR/ALERTA del comparador (adreces amb CP/urbanització, ids duplicats «SPT-1», ca/es, columnes de fixture) haurien
+   inflat el titular; i l'or de lectura és de vegades més cautelós que el signat (esborranys) o menys anotat
+   (`fora_carpeta`). Alternativa rebutjada: agregat mecànic ara — s'ajorna fins a arreglar `compare_consolida.py`.
+2. **Vilanova entra al titular** (esmena datada als criteris): el Josep troba el `.docx` signat original (castellà);
+   `_eva_truth/vilanova.json` transcrit del cos. 7 comparables, no 6. Why: l'stub anterior era circular (annexos).
+3. **Runs desacoblats de la sessió** (`setsid nohup` + Monitor) i **represa per cache md5** quan un run mor (Bell-lloc,
+   Vilanova): lectura íntegra, temps marcat com a compost. Why: dos talls de connexió en dos dies; un run del harness
+   mor amb la sessió.
+4. **Cap fix durant la mesura.** Tots els defectes trobats (D2-D6, R6, I1, S1, T1-T2) queden a la fila 0b del PLA,
+   pendents de prioritzar. Why: la línia base només val si el codi no es mou.
+
+### Validació empírica (7 comparables, sobre el signat)
+- Escalars (147 cel·les): **94 OK (64 %) / 50 CAND (34 %) / 1 blanc / 2 ERR**. Taules (199): **133 OK (67 %) / 33 CAND /
+  31 blancs / 2 ERR**. Llindars pactats (OK ≥ 80 %, CAND ≤ 20 %, ERR 0): **cap complert.**
+- **ERR 4:** Rubí cota P-2 (F1, annex d'Eva ≠ informe); Linyola `field_date` (D2, bug de clustering de dates); Vilanova
+  `municipality` (D3, forma visible per `len(v)` en lloc del padró) i `nivell_freatic` P-3 (R6, columna buida A tapa
+  evidència positiva no-A). **Cap ERR de lectura per document: els 4 són decisions del consolidador o de la font.**
+- On es perd la confiança: R5 font única 19 cel·les, R1 formes de la mateixa entitat 15 (abreviatures G3 a
+  `building_type` 8/8), R4 CTE 9, R2 concepte veí 6, F1 fonts d'Eva inconsistents 7 (SPT P-1/P-3 creuats a Vilanova).
+- Cobertura: I1 (Anciles, `PDF_V0/` exclosa → 9 cotes en blanc); alternativa provada: `.FH11` via libfreehand.
+- Temps net 26-43 min/projecte (Linyola 42,9 vs base 41,9: +2 %); cost API 121,75 USD als 8.
+
+### Limitacions conegudes
+Agregat mecànic pendent del comparador; Tulipa sense veritat (multi-casa no modelat, S1); 2 temps compostos;
+`eva_reference_values` de Vilanova/Anciles en castellà (extractor desalineat en alguns camps); or amb 3 `fora_carpeta`
+absents; les preguntes a Eva (E, N20, T pressupost, persona/despatx, SPT Vilanova) no enviades.
+
+### GO/NO-GO
+- ✅ Línia base vàlida i reproduïble (criteris, driver versionat, runs desacoblats, diagnòstics per projecte).
+- ✅ Diagnòstic complet: cada cel·la no-OK té causa i codi; 3 dels 4 ERR comparteixen patró («desempat mecànic contra
+  informació que `_decisions.json` ja té»).
+- ⏳ Llindars: no assolits amb codi intacte. Estimació sense tocar criteris d'Eva: R1+R3+D3 → ~75 % OK; +R5+R2 → ~85 %.
+- ⏳ Fila 0b del PLA (fixes) i comparador: pendent de prioritzar (Josep).
+
+### Següents passos
+Prioritzar 0b; arreglar comparador i regenerar l'agregat mecànic; corregir l'or (`fora_carpeta`); paquet de preguntes
+a Eva; després, P0/P2a → M341 (pla). Vegeu `PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md` §Ordre.
+
+*Fi entrada 2026-09-04. Mesura dels 8: el sistema llegeix bé i decideix malament; els 4 ERR i les 50 CAND tenen nom.*

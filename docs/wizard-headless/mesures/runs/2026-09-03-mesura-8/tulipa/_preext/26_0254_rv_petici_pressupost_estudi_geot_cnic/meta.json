@@ -1,0 +1,24 @@
+{
+ "source_path": "26.0254/RV_ PETICIÓ PRESSUPOST ESTUDI GEOTÈCNIC.msg",
+ "source_md5": "0064e047232d64825e8d6668b7408ae8",
+ "kind": "msg",
+ "generated": "2026-09-04T22:42:30",
+ "elapsed_s": 0.562,
+ "dir": "26_0254_rv_petici_pressupost_estudi_geot_cnic",
+ "files": [
+  "26_0254_rv_petici_pressupost_estudi_geot_cnic/body.txt"
+ ],
+ "subject": "RV: PETICIÓ PRESSUPOST ESTUDI GEOTÈCNIC",
+ "from": "Eva Vazquez <eva@g3dt.com>",
+ "to": "Dolors Maqueda <dolors@g3dt.com>",
+ "date": "2026-03-26 07:37:46+01:00",
+ "attachments": [
+  {
+   "name": "plan_cost_cerdanyola.xlsx",
+   "size": 113166,
+   "md5": "03176387f70efd95124d03d549cbe7a1",
+   "already_in_folder": "26.0254/PLAN_COST_CERDANYOLA.xlsx",
+   "preext_dir": null
+  }
+ ]
+}

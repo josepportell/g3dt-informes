@@ -1,0 +1,310 @@
+{
+ "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+ "source_md5": "4b2f3e24c7a99af2a35d6b59bebe7b82",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_sondeig",
+ "what_it_is": "Fitxa d'annex de sondeig a rotació amb bateria contínua S-1 (plantilla G3), amb litologia, mostres SPT i fotografies del material recuperat",
+ "issuer": "TPS, S.L. (execució de camp) / Eva Vázquez Marcet, geòloga G3 (redacció)",
+ "date": "07/05/2026",
+ "pages_or_sheets": "2 pàgines (p.1 fitxa+taula, p.2 fotografies 1-4,6)",
+ "context": {
+  "who_made_it": "TPS, S.L. (empresa de sondeigs, Sr. Daniel Fernandez sondista) executa el sondeig; Eva Vázquez Marcet (geòloga col. 4302, G3) el redacta com a annex tècnic",
+  "for_whom": "G3, per incorporar-lo com a annex de l'informe geotècnic de CASA 1 (Carrer Tulipa nº3, Cerdanyola del Vallès)",
+  "why": "documentar el sondeig a rotació S-1: litologia per nivells, mostres SPT amb registre de colpeig, cota de referència i nivell freàtic",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "building_type",
+   "cota_referencia",
+   "num_soil_levels",
+   "field_date (del sondeig)",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "soil_levels",
+   "sondeig_tests",
+   "spt_ma_tests"
+  ],
+  "not_expected": [
+   "client_name (promotor)",
+   "num_floors",
+   "superficie_parcela",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Existeix l'original FreeHand '3001706_sondeig.FH11' (text brossa, no llegible); aquest PDF és la còpia 'Microsoft: Print To PDF' del mateix document, amb text net (confirmat al meta: producer='Microsoft: Print To PDF', text_ok=true totes dues pàgines). És l'annex de CASA 1 dins un expedient amb 2 cases (situació estructural 'un expedient, N informes'); CASA 2 té el seu propi sondeig/annexos independents no llegits en aquesta crida.",
+  "authority_for": [
+   "cota_referencia",
+   "num_soil_levels",
+   "street_address",
+   "municipality",
+   "building_type",
+   "field_date",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tulipa nº3",
+   "location": "p.1 bloc Obra (caixetí)",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipa nº3 de Cerdanyola del Vallès",
+   "confidence": 0.75,
+   "note": "adreça dins la redacció del títol 'Obra'; és l'adreça de CASA 1 (aquest annex), no necessàriament la de CASA 2"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Tulipa",
+    "nom_via_alternatives": [
+     "Tulipam"
+    ],
+    "portals": [
+     "3"
+    ],
+    "municipi": "Cerdanyola del Vallès",
+    "municipi_alternatives": []
+   },
+   "location": "p.1 bloc Obra (caixetí) + p.2 etiqueta manuscrita caixa de mostres",
+   "quote": "Carrer Tulipa nº3 de Cerdanyola del Vallès / (foto p.2) 'Sondeo Nº S-1 Obra C/Tulipam - Cerdanyola'",
+   "confidence": 0.7,
+   "note": "'Tulipam' és grafia manuscrita abreujada a l'etiqueta de la caixa de mostres, coherent amb 'Tulipa' del caixetí imprès"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "p.1 bloc Obra (caixetí)",
+   "quote": "d'un habitatge unifamiliar al Carrer Tulipa nº3 de Cerdanyola del Vallès",
+   "confidence": 0.85,
+   "note": "forma oficial llarga, dins la redacció del títol Obra"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "p.1 bloc Obra (caixetí)",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipa nº3 de Cerdanyola del Vallès",
+   "confidence": 0.8,
+   "note": null
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Aleix Subià Felip",
+   "location": "p.1 caixetí, camp 'Client:'",
+   "quote": "Client: SR.ALEIX SUBIÀ FELIP",
+   "confidence": 0.25,
+   "note": "camp CLIENT: de l'annex de sondeig = sol·licitant (regla Pas 0/3); el nom NO conté 'ARQUITECTE' així que podria ser el client final o l'arquitecte sense títol explícit — cal creuar amb pressupost/plànol/ACCEPTACIO d'aquest expedient (no llegits en aquesta crida) per determinar el rol; NO assumir client_name segur"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "07/05/2026",
+   "location": "p.1 caixetí, camps 'Data d'inici' i 'Data de fi'",
+   "quote": "Data d'inici: 07/05/2026 / Data de fi: 07/05/2026",
+   "confidence": 0.5,
+   "note": "data del SONDEIG (candidat 2 per regla Pas 3, no necessàriament el primer dia de camp — sol ser el DPSH); inici i fi coincideixen (sondeig fet en un sol dia)"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+199.0 msnm",
+   "location": "p.1 caixetí, camp 'Cota: Z:'",
+   "quote": "Z: +199.0 msnm (segons el plànol ICGC)",
+   "confidence": 0.85,
+   "note": "cota absoluta segons plànol ICGC (criteri de l'Eva); no hi ha indicació de sistema relatiu en aquest document — creuar amb l'annex DPSH per confirmar el sistema de cotes del projecte (regla de l'ERR Castellar)"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 3,
+   "location": "p.1 columna 'Unitat litològica'",
+   "quote": "NIVELL 1 / NIVELL 2 / NIVELL 3",
+   "confidence": 0.9,
+   "note": "3 unitats litològiques etiquetades; la capa superficial 'Sòl vegetal' (0.00 a -0.10 m) NO té número de nivell (cobertura) i no compta"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, S.L.",
+   "location": "p.1 caixetí, camp 'Empresa:'",
+   "quote": "Empresa: TPS, S.L.",
+   "confidence": 0.7,
+   "note": "empresa executora del sondeig/mostres; coherent amb TPS com a laboratori/sondista habitual de G3 (NIF B64803075)"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.1 taula 'Mostres i assaigs in-situ', columna 'Tipus de mostra'",
+   "quote": "SPT-1",
+   "confidence": 0.6,
+   "note": "primera de 2 mostres SPT d'aquest sondeig (SPT-1, SPT-2); el camp escalar lab_sample_id de l'informe pot referir-se a una mostra concreta enviada a laboratori (GTL) — sense el GTL d'aquest expedient no es pot confirmar quina"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-2",
+   "location": "p.1 taula 'Mostres i assaigs in-situ', columna 'Tipus de mostra'",
+   "quote": "SPT-2",
+   "confidence": 0.6,
+   "note": "segona de 2 mostres SPT d'aquest sondeig; vegeu nota de SPT-1"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-1.00 a -1.60 m",
+   "location": "p.1 taula 'Mostres i assaigs in-situ', fila SPT-1, columna 'Prof. de extracció'",
+   "quote": "-1.00 a -1.60",
+   "confidence": 0.7,
+   "note": "fondària d'extracció de SPT-1"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-3.00 a -3.54 m",
+   "location": "p.1 taula 'Mostres i assaigs in-situ', fila SPT-2, columna 'Prof. de extracció'",
+   "quote": "-3.00 a -3.54",
+   "confidence": 0.7,
+   "note": "fondària d'extracció de SPT-2; el sondeig s'atura en aquesta cota (rebuig, vegeu n30=50R)"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.1 caixetí, camp 'Sondeig nº'",
+   "quote": "Sondeig nº: S-1",
+   "confidence": 0.6,
+   "note": "punt d'assaig d'on surten SPT-1 i SPT-2"
+  }
+ ],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "+199.0",
+    "profunditat_assolida": "-3.54",
+    "spt_ma": {
+     "n_spt": 2,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": "No detectat",
+    "location": "p.1 caixetí + columna litologia (fondària final) + columna 'Nivell freàtic' (buida)",
+    "quote": "Z: +199.0 msnm (segons el plànol ICGC); columna litològica fins a -3.54 m; columna 'Nivell freàtic' sense marca a cap fondària",
+    "note": "cota absoluta (msnm ICGC) tal com apareix en aquest document; verificar sistema (absolut/relatiu) contra l'annex DPSH d'aquest mateix expedient abans de donar-la per segura (regla de l'ERR Castellar); profunditat assolida = darrera fondària amb dades (-3.54 m), coincident amb el rebuig de SPT-2 (50R)"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1.00 a -1.60",
+    "litologia_candidats": [
+     "NIVELL 1: Sorres llimoses disgregades amb graves i restes d'arrels (-0.10 a -1.10)",
+     "NIVELL 2: Argiles coheives amb indicis de precipitat de calci (-1.10 a -2.20)"
+    ],
+    "n30": {
+     "registre": [
+      6,
+      9,
+      9,
+      9
+     ],
+     "candidates": [
+      {
+       "value": 18,
+       "note": "suma dels 2 trams centrals (9+9), criteri majoritari del corpus"
+      },
+      {
+       "value": 27,
+       "note": "suma dels 3 últims trams (9+9+9)"
+      }
+     ]
+    },
+    "location": "p.1 taula 'Mostres i assaigs in-situ', fila SPT-1",
+    "quote": "SPT-1 / -1.00 a -1.60 / Registre: 6 9 9 9",
+    "note": "l'interval -1.00/-1.60 cavalca la transició NIVELL 1 -> NIVELL 2 a -1.10 m: litologia és candidats, mai segur"
+   },
+   {
+    "id": "SPT-2",
+    "punt": "S-1",
+    "profunditat": "-3.00 a -3.54",
+    "litologia_candidats": [
+     "NIVELL 3: Lutites i sorrenques menys alterades (-2.80 a -3.54)"
+    ],
+    "n30": {
+     "registre": [
+      19,
+      31,
+      33,
+      "50R"
+     ],
+     "candidates": [
+      {
+       "value": 64,
+       "note": "suma dels 2 trams centrals (31+33)"
+      }
+     ]
+    },
+    "location": "p.1 taula 'Mostres i assaigs in-situ', fila SPT-2",
+    "quote": "SPT-2 / -3.00 a -3.54 / Registre: 19 31 33 50R",
+    "note": "darrer tram amb rebuig (50R); el sondeig s'atura en aquesta fondària; interval dins d'un sol nivell (NIVELL 3, subtram menys alterat)"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Sòl vegetal (cobertura, sense número)",
+    "litologia": "Sòl vegetal",
+    "de": "0.00",
+    "a": "-0.10",
+    "mostra_del_nivell": false,
+    "location": "p.1 bloc 'Descripció dels materials'",
+    "quote": "0.00 a -0.10 m: Sòl vegetal.",
+    "note": "sense número de nivell a la columna 'Unitat litològica' (banda superior dins el bloc gràfic NIVELL 1, però la Descripció dels materials la separa explícitament); no compta a num_soil_levels"
+   },
+   {
+    "nom": "NIVELL 1",
+    "litologia": "Sorres llimoses disgregades amb graves i restes d'arrels.",
+    "de": "-0.10",
+    "a": "-1.10",
+    "mostra_del_nivell": true,
+    "location": "p.1 columna 'Unitat litològica' + 'Descripció dels materials'",
+    "quote": "-0.10 a -1.10 m: Sorres llimoses disgregades amb graves i restes d'arrels.",
+    "note": "SPT-1 (-1.00 a -1.60) cavalca la transició a -1.10 m: candidat de mostra compartit amb NIVELL 2"
+   },
+   {
+    "nom": "NIVELL 2",
+    "litologia": "Argiles coheives amb indicis de precipitat de calci.",
+    "de": "-1.10",
+    "a": "-2.20",
+    "mostra_del_nivell": true,
+    "location": "p.1 columna 'Unitat litològica' + 'Descripció dels materials'",
+    "quote": "-1.10 a -2.20 m: Argiles coheives amb indicis de precipitat de calci.",
+    "note": "SPT-1 (-1.00 a -1.60) cavalca la transició a -1.10 m: candidat de mostra compartit amb NIVELL 1"
+   },
+   {
+    "nom": "NIVELL 3",
+    "litologia_candidats": [
+     "Lutites i sorrenques molt alterades (-2.20 a -2.80 m) i lutites i sorrenques menys alterades (-2.80 a -3.54 m)"
+    ],
+    "de": "-2.20",
+    "a": "-3.54",
+    "mostra_del_nivell": true,
+    "location": "p.1 columna 'Unitat litològica' + 'Descripció dels materials'",
+    "quote": "-2.20 a -2.80 m: Lutites i sorrenques molt alterades. / -2.80 a -3.54 m: Lutites i sorrenques menys alterades.",
+    "note": "un sol NIVELL 3 a la columna gràfica però amb 2 sub-descripcions per grau d'alteració (línia divisòria interna a -2.80 sense canvi de número); SPT-2 (-3.00 a -3.54) cau al subtram menys alterat"
+   }
+  ]
+ },
+ "not_present": [
+  "expedient (cap número imprès en aquest document; el 3001706 només apareix al nom de fitxer/carpeta)",
+  "num_floors",
+  "superficie_parcela",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol",
+  "architect_name (no hi ha camp ni títol 'arquitecte' explícit en aquest document)"
+ ],
+ "reading_notes": "Text net (producer 'Microsoft: Print To PDF'); text_ok=true a les 2 pàgines però l'ordre d'extracció ve barrejat (matriu/taula), així que la lectura s'ha fet sobre la imatge renderitzada (page-1.png) i 2 clips amb scripts/render_clip.py a 400-450 dpi: (1) columnes 'Nivell freàtic'+'Columna litològica' per confirmar que NF és buit a totes les fondàries i que la banda 'Sòl vegetal' 0.00-0.10 és una sub-banda sense número dins el bloc gràfic NIVELL 1 (però Descripció dels materials la tracta com a entrada pròpia); (2) taula 'Mostres i assaigs in-situ' per llegir amb precisió els 4 valors de Registre de SPT-1 i SPT-2. Pàgina 2 = fotografies 1-4 i 6 (numeració salta de 4 a 6, no hi ha Fotografia 5 al document); confirma S-1, dates i cota però no aporta dades noves de nivell A. No s'ha llegit cap altre document d'aquest expedient en aquesta crida (mode --only): els candidats de client_name/architect_name i el sistema de cotes (relatiu/absolut) queden pendents de creuar amb pressupost, ACCEPTACIO i annex DPSH de CASA 1."
+}

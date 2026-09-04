@@ -1,0 +1,163 @@
+{
+ "source_path": "26.0254/RV_ PETICIÓ PRESSUPOST ESTUDI GEOTÈCNIC.msg",
+ "source_md5": "0064e047232d64825e8d6668b7408ae8",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu de l'arquitecte (vua visuals) a G3 sol·licitant pressupost per a un estudi geotècnic d'una casa a Cerdanyola del Vallès; reenviat internament dins de G3 (Eva -> Dolors).",
+ "issuer": "vua visuals / Aleix Subirà Felip (correu original); reenviat internament per Eva Vázquez (G3)",
+ "date": "2026-03-25 18:57 (correu original de vua visuals); reenviat 2026-03-26 07:37:46+01:00 (Eva -> Dolors)",
+ "pages_or_sheets": "1 cos de correu (body.txt), sense adjunts nous a llegir",
+ "context": {
+  "who_made_it": "Aleix Subirà Felip, arquitecte de vua visuals (despatx d'arquitectura), redactant en nom del projecte d'una casa",
+  "for_whom": "Eva Vázquez (G3 - Dept. Geologia), per demanar pressupost d'un estudi geotècnic; reenviat internament a Dolors Maqueda",
+  "why": "Sol·licitar pressupost d'un estudi geotècnic per a una parcel·la on es projecta una casa (PSOT+PB+P1, encara en definició)",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_floors (aproximat)",
+   "superficie_construida (aproximada)",
+   "architect_name",
+   "architect_company"
+  ],
+  "not_expected": [
+   "expedient",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_*",
+   "field_date",
+   "cte_*"
+  ],
+  "relation_to_others": "Correu d'encàrrec inicial, previ als pressupostos G3 de la carpeta (PRESSUPOST GEOTEC.CERDANYOLA.pdf i .-2CASES.pdf). És un reenviament 'RV:' sense text nou per sobre del primer 'De:': tot el contingut és el correu original de vua visuals de 25/03/2026. Correspon a CASA 1 (C. Tulipa, 3) segons l'arquitecte remitent; l'expedient globalment cobreix 2 cases.",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "architect_name",
+   "architect_company",
+   "building_type",
+   "num_floors"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "C. Tulipa, 3",
+   "location": "body.txt, correu original de vua visuals (25/03/2026)",
+   "quote": "La direcció és C. Tulipa, 3 (Cerdanyola del Vallès)",
+   "confidence": 0.75,
+   "note": "Frase en text lliure, no bloc etiquetat OBRA/ADREÇA OBRA; correu d'encàrrec, no autoritat A per si sol."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Tulipa",
+    "nom_via_alternatives": [],
+    "portals": [
+     "3"
+    ],
+    "municipi": "Cerdanyola del Vallès",
+    "municipi_alternatives": []
+   },
+   "location": "body.txt, correu original de vua visuals (25/03/2026)",
+   "quote": "La direcció és C. Tulipa, 3 (Cerdanyola del Vallès)",
+   "confidence": 0.75,
+   "note": "Concepte extra (Pas 3), no toca variables de l'informe."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "body.txt, correu original de vua visuals (25/03/2026)",
+   "quote": "La direcció és C. Tulipa, 3 (Cerdanyola del Vallès)",
+   "confidence": 0.7,
+   "note": "Correu, no és cap de les 3 fonts canòniques (comanda/pressupost/PLAN_COST); creuar."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Aleix Subirà Felip",
+   "location": "body.txt, signatura del correu original",
+   "quote": "A l e i x  S u b i r à  F e l i p / arquitecte & co-founder / aqte. col·legiat 74829-3",
+   "confidence": 0.55,
+   "note": "Signatura de correu amb núm. de col·legiat (74829-3): candidat, mai segur per si sol (Pas 3)."
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "vua visuals",
+   "location": "body.txt, capçalera i signatura del correu original",
+   "quote": "De: vua visuals <info.vuavisuals@gmail.com> ... W. www.vuavisuals.com",
+   "confidence": 0.55,
+   "note": "Nom del despatx; candidat, la persona (architect_name) és preferible quan coincideixen."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "casa",
+   "location": "body.txt, correu original de vua visuals (25/03/2026)",
+   "quote": "estem fent un projecte per a una casa que tindria PSOT, PB I PPis",
+   "confidence": 0.4,
+   "note": "Text genèric 'una casa', no diu explícitament 'unifamiliar'; candidat feble."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1 (PSOT sense comptar) | PSOT+PB+1 (comptant soterrani)",
+   "location": "body.txt, correu original de vua visuals (25/03/2026)",
+   "quote": "tindria PSOT, PB I PPis(tot i que encara s'esta definint)",
+   "confidence": 0.3,
+   "note": "El mateix correu diu explícitament que encara s'està definint; dues lectures possibles segons si el soterrani compta com a planta."
+  }
+ ],
+ "tables": {
+  "superficie_construida": [
+   {
+    "components": [
+     {
+      "label": "PB",
+      "value": 135.26
+     },
+     {
+      "label": "P1",
+      "value": 107.66
+     },
+     {
+      "label": "PSOT",
+      "value": 65
+     }
+    ],
+    "total_candidates": [
+     {
+      "total": 242.92,
+      "label": "PB+P1 (sense PSOT)"
+     },
+     {
+      "total": 307.92,
+      "label": "PB+P1+PSOT"
+     }
+    ],
+    "etiqueta_font": "segons correu d'encàrrec (provisional, 'encara s'esta definint')",
+    "location": "body.txt, correu original de vua visuals (25/03/2026)",
+    "quote": "Les superfícies construides son: PB: 135.26m2 / P1: 107.66m2 / PSOT: 65m2"
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Correu 'RV:' (reenviament) sense text nou per sobre del primer 'De:': tot el contingut rellevant és el correu original de vua visuals a Eva (25/03/2026), llegit des de body.txt de la pre-extracció --only (sense extract_msg directe). L'únic adjunt del missatge (plan_cost_cerdanyola.xlsx) ja és solt a la carpeta (already_in_folder al meta.json), no s'ha re-llegit aquí. CC del correu original: 'Subirà Bertran <subirabertran@gmail.com>' — cognom coincident amb l'arquitecte remitent (Subirà Felip), però sense cap etiqueta de client/propietari al text; no s'assumeix parentiu ni rol de promotor (client_name queda no_trobat en aquest document; a confirmar amb ACCEPTACIO o caixetí del plànol). Aquest correu i les seves dades corresponen a CASA 1 (C. Tulipa, 3), no al conjunt -2CASES."
+}

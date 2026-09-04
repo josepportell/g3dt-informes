@@ -1,0 +1,72 @@
+{
+ "source_path": "PENETROS + SONDEIG.pdf",
+ "source_md5": "d0c3e6d42431ca65f5c5940cb4dad5c7",
+ "kind": "pdf",
+ "generated": "2026-09-04T22:42:42",
+ "elapsed_s": 3.672,
+ "dir": "penetros_sondeig",
+ "files": [
+  "penetros_sondeig/page-1.txt",
+  "penetros_sondeig/page-1.png",
+  "penetros_sondeig/page-1-top.png",
+  "penetros_sondeig/page-1-bottom.png",
+  "penetros_sondeig/page-2.txt",
+  "penetros_sondeig/page-2.png",
+  "penetros_sondeig/page-2-top.png",
+  "penetros_sondeig/page-2-bottom.png",
+  "penetros_sondeig/page-3.txt",
+  "penetros_sondeig/page-3.png",
+  "penetros_sondeig/page-3-top.png",
+  "penetros_sondeig/page-3-bottom.png",
+  "penetros_sondeig/page-4.txt",
+  "penetros_sondeig/page-4.png",
+  "penetros_sondeig/page-4-top.png",
+  "penetros_sondeig/page-4-bottom.png",
+  "penetros_sondeig/page-5.txt",
+  "penetros_sondeig/page-5.png",
+  "penetros_sondeig/page-5-left.png",
+  "penetros_sondeig/page-5-right.png"
+ ],
+ "pages": 5,
+ "page_sizes_pt": [
+  [
+   595.28,
+   841.89
+  ],
+  [
+   595.28,
+   841.89
+  ],
+  [
+   595.28,
+   841.89
+  ],
+  [
+   595.28,
+   841.89
+  ],
+  [
+   841.89,
+   595.28
+  ]
+ ],
+ "producer": "Microsoft: Print To PDF",
+ "creator": "",
+ "creationDate": "D:20260507160456+02'00'",
+ "modDate": "D:20260507160622+02'00'",
+ "text_ok": {
+  "1": false,
+  "2": false,
+  "3": false,
+  "4": false,
+  "5": false
+ },
+ "pages_truncated": false,
+ "halves_pages": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ]
+}

@@ -1,0 +1,103 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_plànol de situació_CASA 2.pdf",
+ "source_md5": "5918491e5fa9cc6121120954dc64f426",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació G3 que combina un mapa cadastral/topogràfic amb la ubicació dels punts d'assaig d'AMBDUES cases (groc=CASA 1 amb P-1.1/P-1.2/S-1, vermell=CASA 2 amb P-2.1/P-2.2), més dos mapes d'ubicació (comarcal i foto aèria) i el caixetí G3 amb Exp: 3001706_CASA 2.",
+ "issuer": "G3",
+ "date": "Maig 2026",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva), plantilla estàndard de 'Plànol de situació' que combina el mapa cadastral/topogràfic amb la ubicació dels punts d'assaig i dos mapes d'ubicació (comarcal + foto aèria)",
+  "for_whom": "l'informe geotècnic (annex visual que situa DPSH i sondeig sobre el mapa i el context geogràfic)",
+  "why": "situar gràficament els punts d'assaig de CASA 2 (P-2.1, P-2.2) i el sondeig compartit (S-1, prop de CASA 1) dins de la parcel·la, i donar context d'ubicació general (comarca, foto aèria)",
+  "expected_fields": [
+   "municipality",
+   "expedient",
+   "num_dpsh_tests (recompte visual)",
+   "street_address (caixetí, amb risc de còpia)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "field_date (dia exacte)",
+   "cota_referencia",
+   "num_soil_levels",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "lab",
+   "cte"
+  ],
+  "relation_to_others": "Mateixa família de plantilla que el 'plànol de situació' de CASA 1 (no llegit en aquesta crida --only); el mapa principal mostra AMBDUES parcel·les (groc=CASA 1, vermell=CASA 2), és a dir és un document a nivell d'EXPEDIENT encara que classificat dins la carpeta de CASA 2 amb 'Exp: 3001706_CASA 2' imprès. El caixetí arrossega la mateixa frase-títol de CASA 1 ('Carrer Tulipà nº3'), el mateix error de còpia ja detectat a l'annex de sondeig de CASA 2 ('3001706_sondeig.pdf', ja llegit: Client/Obra amb text de Casa 1). Corrobora num_dpsh_tests=2 de CASA 2, ja establert amb més confiança per 'PDF/3001706_DPSH_CASA 2.pdf' (ja llegit).",
+  "authority_for": [
+   "expedient",
+   "municipality",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001706_CASA 2",
+   "location": "caixetí, cel·la Exp:",
+   "quote": "Exp: 3001706_CASA 2",
+   "confidence": 0.75,
+   "note": "camp imprès net del caixetí (no la frase-títol arrossegada); coincideix amb el NÚMERO D'INFORME de l'annex DPSH_CASA 2 ja llegit ('3001706_CASA 2')"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "mapa d'ubicació comarcal, requadre superior esquerre (etiqueta del mapa base, no el caixetí)",
+   "quote": "Cerdanyola del Vallès",
+   "confidence": 0.6,
+   "note": "aparició independent del mapa d'ubicació, no arrossegada de la frase-títol errònia del caixetí (que també diu '...de Cerdanyola del Vallès', coincident); corrobora POBLACIÓ: CERDANYOLA DEL VALLÈS de l'annex DPSH_CASA 2 ja llegit"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "mapa cadastral principal, dins el perímetre vermell etiquetat CASA 2",
+   "quote": "P-2.1 / P-2.2",
+   "confidence": 0.45,
+   "note": "recompte visual dels símbols blaus DPSH dins el perímetre de CASA 2; purament corroboratiu de l'annex DPSH_CASA 2.pdf ja llegit (2 punts, mateixos noms P-2.1/P-2.2), no és font més forta que aquell"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Maig 2026",
+   "location": "caixetí, cel·la Data:",
+   "quote": "Data: Maig 2026",
+   "confidence": 0.3,
+   "note": "només mes/any (plantilla del plànol, no data de camp real); coincideix amb el mes de 07/05/2026 ja trobat a l'annex DPSH de CASA 2 amb molta més precisió i confiança — purament corroboratiu, no autoritat"
+  },
+  {
+   "concept_id": "NOT_street_address",
+   "value": "Carrer Tulipà nº3, Cerdanyola del Vallès",
+   "location": "caixetí, TÍTOL DEL PROJECTE",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipà nº3 de Cerdanyola del Vallès",
+   "confidence": 0.1,
+   "note": "Adreça de CASA 1 (Carrer Tulipa), copiada per error al caixetí d'aquest plànol de CASA 2 (Exp: 3001706_CASA 2, dins la carpeta 'CASA 2_ CARRER TOSCA'). Mateix patró d'error de còpia ja detectat a l'annex de sondeig de CASA 2 (bloc Obra: amb el mateix text de Casa 1). Descartat com a font per a street_address; l'adreça real de CASA 2 ('C/TOSCA 16') ve d'altres documents propis d'aquesta casa (annex DPSH_CASA 2, PLANTA I SECCIO — ambdós ja llegits)."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pàgina amb text_ok=false (meta.json: producer='Acrobat Distiller 15.0 (Windows)', creator='PScript5.dll' — mateix patró FreeHand→PDF brossa que la resta d'annexos d'aquest projecte). Llegit visualment: page-1.png sencer (150dpi) per identificar l'estructura completa (mapa cadastral principal amb els dos perímetres i punts d'assaig, 2 mapes d'ubicació a l'esquerra —comarcal i foto aèria—, llegenda DPSH/Sondeig, caixetí G3). Confirmat el text exacte del caixetí amb scripts/render_clip.py a 350dpi sobre la franja inferior (TÍTOL DEL PROJECTE / Data / Exp / 'Plànol de situació' / Pàgina 1/1). No ha calgut recórrer a les meitats esquerra/dreta (page-1-left/right.png): la pàgina sencera a 150dpi ja era prou llegible per a tot el text rellevant. El marcador S-1 (sondeig, vermell) apareix situat a tocar del cantó del perímetre groc de CASA 1, no dins del perímetre vermell de CASA 2 — coherent amb un sondeig compartit entre les dues cases (patró conegut d'aquest expedient), encara que CASA 2 tingui el seu propi document 'annex de sondeig' ('3001706_sondeig.pdf', ja llegit) amb cota pròpia (+199,0 msnm segons ICGC). Números de parcel·la veïna visibles al mapa base cadastral (17, 1, 75, vora els edificis adjacents) — no són referències cadastrals completes (format NNNNNNNCGNNNNS0001XX), no s'extreuen com a candidats de referencia_catastral. Cotes topogràfiques disperses al mapa base (195,90 a 204,19) no s'han associat a cap punt DPSH concret (no hi ha etiqueta explícita 'cota inici' en aquest document) — no extretes com a cota_referencia per evitar un candidat inventat."
+}
