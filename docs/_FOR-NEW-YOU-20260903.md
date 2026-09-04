@@ -48,8 +48,11 @@
    ```
    Després de cada projecte: `compare_consolida.py escalars|taules "<run>/_decisions.json" "<CARPETA OR>"`
    (la carpeta or és el NOM sota `docs/golden-read/`), desar `_compare_*.txt` + `_NOTES.md`, grep DNS, commit.
-2. ~~Corregir l'or de Castellar~~ FET (sessió 2). Nou: **diagnosticar la infraconfiança de Bell-lloc** (10 CAUTELA)
-   abans d'agregar els 8 — pot ser el mateix mecanisme a altres projectes.
+2. ~~Corregir l'or de Castellar~~ FET (sessió 2). ~~Diagnosticar la infraconfiança de Bell-lloc~~ FET (2026-09-04):
+   `runs/2026-09-03-mesura-8/bell-lloc/_DIAGNOSTIC-INFRACONFIANCA.md` — **cap dels 10 és error de lectura; tot és
+   política de `consolidate.decide()`** (5 causes R1-R5: formes de la mateixa entitat com a contradicció ×4, concepte
+   veí bloquejant ×2, bug substring `"1 de"` al guard de `num_floors`, `_NEVER_SEGUR_FIELDS` sobregeneralitzat ×2,
+   convergència amb lectors humils ×1). R1+R3 sols → 16/21. NO aplicar fins acabar la mesura dels 8.
 3. **P0** (columna N = SPT N30) i **P2a** (col·lapse Rubí) — després que la mesura estigui completa.
 4. **M341** (mesura de les 341 variables) — vegeu pla.
 5. **Paquet de preguntes a Eva**: criteri de l'E (R ho fa imprescindible), regla N20 mono-nivell, `.doc` de
