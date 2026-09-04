@@ -1,0 +1,28 @@
+{
+ "source_path": "tall.pdf",
+ "source_md5": "329e9d17752d2ea1ee57a02a860d8db7",
+ "kind": "pdf",
+ "generated": "2026-09-04T15:41:29",
+ "elapsed_s": 0.127,
+ "dir": "tall",
+ "files": [
+  "tall/page-1.txt",
+  "tall/page-1.png"
+ ],
+ "pages": 1,
+ "page_sizes_pt": [
+  [
+   841.92,
+   595.32
+  ]
+ ],
+ "producer": "Microsoft: Print To PDF",
+ "creator": "",
+ "creationDate": "D:20260316130502+01'00'",
+ "modDate": "D:20260316130502+01'00'",
+ "text_ok": {
+  "1": true
+ },
+ "pages_truncated": false,
+ "halves_pages": []
+}

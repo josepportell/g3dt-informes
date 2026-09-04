@@ -1,0 +1,143 @@
+{
+ "source_path": "26.0049/planol-1.pdf",
+ "source_md5": "ed1aaf8235a817a17be1f154bbcd3bfa",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol full 1 (Situació i Emplaçament) d'un projecte de tancament de porxo en casa unifamiliar, redactat per l'arquitecte tècnic David Graus Robinat (despatx GRAUS) per al promotor Albert Sans Bonvehí, al Carrer Girasols nº7, Alcoletge (25660).",
+ "issuer": "David Graus Robinat, Arquitecte Tècnic Col·legiat Nº 699 / Enginyer de l'Edificació (despatx GRAUS, Avinguda del Canal Nº 8 B, Baixos, 25230 Mollerussa)",
+ "date": "Juny 2022",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "David Graus Robinat, arquitecte tècnic col·legiat núm. 699 / enginyer de l'edificació, despatx GRAUS (Mollerussa)",
+  "for_whom": "Albert Sans Bonvehí, promotor del projecte de tancament de porxo",
+  "why": "Plànol de situació i emplaçament (full 1 d'un joc de plànols) del projecte d'ampliació/tancament de porxo d'un habitatge unifamiliar existent; correspon a l'assumpte del correu de la carpeta 'RE: geotècnic Ampliació Albert Sans municipi d'Alcoletge'",
+  "expected_fields": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "architect_company",
+   "building_type"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "superficie_parcela",
+   "num_floors"
+  ],
+  "relation_to_others": "Full 1 d'un joc de plànols del mateix projecte arquitectònic: 26.0049/A.01.pdf i 26.0049/PLANO 2.pdf són el mateix fitxer (md5 idèntic, probable full 2) i 26.0049/planol 3.pdf és un altre full (md5 propi, probable full 3). Mateixa autoria (David Graus Robinat) i promotor esperables als tres.",
+  "authority_for": [
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "street_address",
+   "municipality",
+   "building_type",
+   "street_address_struct"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Albert Sans Bonvehí",
+   "location": "caixetí, bloc 'Promotor:'",
+   "quote": "Promotor: ALBERT SANS BONVEHI",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "David Graus Robinat",
+   "location": "caixetí, bloc inferior esquerre",
+   "quote": "DAVID GRAUS ROBINAT / ARQUITECTE TÈCNIC COL·LEGIAT Nº 699 / ENGINYER DE LA EDIFICACIÓ",
+   "confidence": 0.85,
+   "note": "Titulació: arquitecte tècnic / enginyer de l'edificació (no 'arquitecte superior')"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "GRAUS (oficina tècnica de David Graus Robinat)",
+   "location": "caixetí, logotip inferior dret",
+   "quote": "GRAUS oficina tecnica_serveis integrals d'obra nova_reformes",
+   "confidence": 0.7,
+   "note": null
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols nº7",
+   "location": "caixetí, bloc 'Situació:', segona línia",
+   "quote": "Carrer Girasols nº7",
+   "confidence": 0.85,
+   "note": "Forma curta sense article 'dels'; a la fotografia aèria de la mateixa pàgina el rètol del carrer diu 'Carrer dels Gira[sols]' (tallat pel marge) — mateixa via"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge (25660)",
+   "location": "caixetí, bloc 'Situació:', primera línia",
+   "quote": "Situació: Alcoletge (25660)",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
+   "location": "caixetí, bloc superior esquerre (títol del projecte)",
+   "quote": "PROJECTE DE TANCAMENT DE PORXO EN CASA UNIFAMILIAR",
+   "confidence": 0.85,
+   "note": "És una ampliació/tancament de porxo d'un habitatge unifamiliar EXISTENT, no obra nova; coherent amb l'assumpte del correu 'Ampliació Albert Sans'"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Girasols",
+    "nom_via_alternatives": [
+     "Girasols dels"
+    ],
+    "portals": [
+     "7"
+    ],
+    "municipi": "Alcoletge",
+    "municipi_alternatives": []
+   },
+   "location": "caixetí + fotografia aèria",
+   "quote": "Carrer Girasols nº7 / Situació: Alcoletge (25660) / [rètol aeri] Carrer dels Gira…",
+   "confidence": 0.7,
+   "note": "L'alternativa 'dels' ve del rètol de carrer visible a la fotografia aèria de la mateixa pàgina, no d'un document de text"
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "98417",
+   "location": "plànol cadastral superior de la pàgina, etiqueta magenta al costat de la parcel·la ressaltada en blau",
+   "quote": "98417",
+   "confidence": 0.15,
+   "note": "NO té el format estàndard de referència cadastral (20 caràcters); sembla un número de parcel·la/lot intern de la subdivisió urbanística mostrada al plànol, no una referència cadastral oficial. Creuar amb una consulta del Cadastre si n'hi ha a la carpeta abans d'usar-lo."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text de pàgina llegible (meta.text_ok=true), sense necessitat de meitats ni clip: lectura del page-1.txt (etiquetes del caixetí, desordenades respecte als valors) creuada amb page-1.png sencera (150dpi) per associar cada etiqueta amb el seu valor. El plànol conté dues imatges addicionals (retall cadastral/urbanístic superior amb parcel·les numerades i ortofoto inferior amb la parcel·la ressaltada en blau) que no aporten cap dada de text nova més enllà de l'etiqueta '98417' (vegeu candidat de baixa confiança a referencia_catastral) i els rètols de carrer de l'ortofoto (Carrer dels Girasols / Carrer dels Bonsais / Avinguda de Bellvís — aquest darrer i Bonsais són carrers veïns, no documentats enlloc com a adreça de l'obra, per tant no s'han emès com a candidats d'adreça)."
+}

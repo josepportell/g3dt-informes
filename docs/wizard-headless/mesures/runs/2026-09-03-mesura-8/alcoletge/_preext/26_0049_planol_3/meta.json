@@ -1,0 +1,33 @@
+{
+ "source_path": "26.0049/planol 3.pdf",
+ "source_md5": "209583ad1d729716a53e81ca2b27a0c9",
+ "kind": "pdf",
+ "generated": "2026-09-04T15:41:13",
+ "elapsed_s": 1.708,
+ "dir": "26_0049_planol_3",
+ "files": [
+  "26_0049_planol_3/page-1.txt",
+  "26_0049_planol_3/page-1.png",
+  "26_0049_planol_3/page-1-left.png",
+  "26_0049_planol_3/page-1-right.png"
+ ],
+ "pages": 1,
+ "page_sizes_pt": [
+  [
+   1191.0,
+   842.0
+  ]
+ ],
+ "producer": "Acrobat Distiller 10.1.4 (Windows)",
+ "creator": "PScript5.dll Version 5.2.2",
+ "creationDate": "D:20260121094623+01'00'",
+ "modDate": "D:20260121094631+01'00'",
+ "text_ok": {
+  "1": false
+ },
+ "pages_truncated": false,
+ "halves_pages": [
+  1
+ ],
+ "text_suspect_reason": "producer: Acrobat Distiller 10.1.4 (Windows)"
+}

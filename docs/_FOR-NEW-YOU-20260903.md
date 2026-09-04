@@ -38,7 +38,8 @@
 
 ## La feina següent, per ordre
 
-1. **Continuar la mesura (4 projectes: Alcoletge, Vilanova, Anciles, Tulipa)** — seqüencial, mai dos alhora:
+1. **Continuar la mesura (3 projectes: Vilanova, Anciles, Tulipa)** — Alcoletge FET (`alcoletge/_DIAGNOSTIC.md`: ERR 0; l'ERR cru
+   d'adreça és del comparador; T1 = timeout 600 s a PENETROS sense stdout, reintent OK) — seqüencial, mai dos alhora:
    ```bash
    cd ~/projects/claudecode-job/clients/g3dt-prod
    PYTHONPATH=$PWD G3DT_CACHE_DIR=/home/josep/g3dt-prod-cache \

@@ -1,0 +1,621 @@
+{
+ "generated": "2026-09-04T15:41:06",
+ "project": "4001670 ALCOLETGE",
+ "files": [
+  {
+   "path": "26.0049/A.01.pdf",
+   "size": 77163,
+   "md5": "68e0df362820f293092e4a06439c4395",
+   "mtime": "2026-01-26T19:06:00",
+   "route": "claude",
+   "doc_type_hint": "planol",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_a_01",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_a_01/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_a_01/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_a_01/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_a_01/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_a_01/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "26.0049/DADES PER ANAR A CAMP_v1.xlsx",
+   "size": 16553,
+   "md5": "99bf3026a748e718bf3fca15c20eafea",
+   "mtime": "2024-02-14T10:08:34",
+   "route": "python",
+   "doc_type_hint": "fitxa_camp_g3",
+   "priority": 0
+  },
+  {
+   "path": "26.0049/PLANO 2.pdf",
+   "size": 77163,
+   "md5": "68e0df362820f293092e4a06439c4395",
+   "mtime": "2026-01-26T19:06:00",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_plano_2",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_plano_2/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_plano_2/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_plano_2/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_plano_2/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_plano_2/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "26.0049/PLAN_COST_ALCOLETGE.xlsx",
+   "size": 112018,
+   "md5": "4aa20587ab22da5b90c7b8bd3f954522",
+   "mtime": "2026-01-27T07:19:00",
+   "route": "python",
+   "doc_type_hint": "plan_cost_g3",
+   "priority": 0
+  },
+  {
+   "path": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf",
+   "size": 358597,
+   "md5": "91c68545f5765ba5e5910e9f30ebb123",
+   "mtime": "2026-01-27T09:15:18",
+   "route": "python",
+   "doc_type_hint": "pressupost_g3",
+   "priority": 0
+  },
+  {
+   "path": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+   "size": 360448,
+   "md5": "f386b34c21a0aa702e7f6a39c715564c",
+   "mtime": "2026-01-27T09:16:10",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/body.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/attachments/image011.jpg",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/attachments/image011.jpg.preext/image.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+   "size": 532480,
+   "md5": "286d601c42f4e747aea41e9e7a54ca79",
+   "mtime": "2026-01-27T09:16:16",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/body.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/attachments/image008.jpg",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/attachments/image008.jpg.preext/image.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "26.0049/planol 3.pdf",
+   "size": 31008,
+   "md5": "209583ad1d729716a53e81ca2b27a0c9",
+   "mtime": "2026-01-26T19:06:00",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_planol_3",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_planol_3/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_planol_3/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_planol_3/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_planol_3/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_planol_3/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "26.0049/planol-1.pdf",
+   "size": 201207,
+   "md5": "ed1aaf8235a817a17be1f154bbcd3bfa",
+   "mtime": "2026-01-26T19:06:00",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_planol_1",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_planol_1/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_planol_1/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/26_0049_planol_1/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "4001670_informe.doc",
+   "size": 3913216,
+   "md5": "eb54efc4020f27737d53f3d83bf42078",
+   "mtime": "2026-03-16T13:08:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "4001670_portada.doc",
+   "size": 172544,
+   "md5": "234daf1a82254e1c0c73f00aa810534f",
+   "mtime": "2026-03-16T16:52:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:PORTADA",
+   "priority": 0
+  },
+  {
+   "path": "A.01.pdf",
+   "size": 77163,
+   "md5": "68e0df362820f293092e4a06439c4395",
+   "mtime": "2026-01-26T19:06:00",
+   "route": "claude",
+   "doc_type_hint": "planol",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/a_01",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/a_01/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/a_01/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/a_01/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/a_01/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/a_01/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+   "size": 3100607,
+   "md5": "be6505f9233ac7ba1bde074c863ece46",
+   "mtime": "2026-01-29T08:05:06",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-2-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-3-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-3-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-4-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-4-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-5-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-5-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-6-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-6-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-7.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-7-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/page-7-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/acceptacio_pressupost_geotec_alcoletge_signat_scan/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/Thumbs.db",
+   "size": 8192,
+   "md5": "7ae8fd9bf9947dc0d8d7197cf9ee8092",
+   "mtime": "2026-02-23T16:23:34",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/4001670_DPSH.xls",
+   "size": 106496,
+   "md5": "aceb14c002c47df476efc008cc11b63f",
+   "mtime": "2026-03-16T16:48:40",
+   "route": "claude",
+   "doc_type_hint": "dpsh_excel",
+   "priority": 3,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh",
+    "kind": "excel",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh/sheet-0.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh/sheet-0.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh/sheet-0.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh/sheet-1.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh/sheet-1.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh/sheet-1.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh/sheet-2.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh/sheet-2.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh/sheet-2.colors.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/annexes_4001670_dpsh/meta.json",
+    "pages": null,
+    "sheets": [
+     {
+      "index": 0,
+      "name": "P-1",
+      "rows": 81,
+      "cols": 7,
+      "colored_cells": 108
+     },
+     {
+      "index": 1,
+      "name": "P-3",
+      "rows": 81,
+      "cols": 7,
+      "colored_cells": 113
+     },
+     {
+      "index": 2,
+      "name": "P-2",
+      "rows": 81,
+      "cols": 7,
+      "colored_cells": 106
+     }
+    ],
+    "error": null
+   }
+  },
+  {
+   "path": "ANNEXES/4001670_fotografies.FH11",
+   "size": 2335271,
+   "md5": "d19e74eb799bf2b91aff7f67acd71646",
+   "mtime": "2026-03-16T12:32:58",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/4001670_plànol de situació.FH11",
+   "size": 2152828,
+   "md5": "ba5da5c8a6917b27fb265729bba632b4",
+   "mtime": "2026-03-13T09:47:18",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/4001670_tall de correlació.FH11",
+   "size": 98676,
+   "md5": "23e80f4001166b201ccbfffdd5eea182",
+   "mtime": "2026-03-16T13:05:10",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/COORDENADES.txt",
+   "size": 64,
+   "md5": "800e62ac8f9a09067d07869fb8d25b12",
+   "mtime": "2026-03-16T18:49:36",
+   "route": "python",
+   "doc_type_hint": "coordenades_gps",
+   "priority": 0
+  },
+  {
+   "path": "DTE.txt",
+   "size": 76,
+   "md5": "b4c42792a6aa4ab1306e26ee4b9135e7",
+   "mtime": "2026-03-02T13:46:00",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "FOTOS DE CAMP + PLANOL PUNTS/CROQUIS.jpeg",
+   "size": 73980,
+   "md5": "3d843974cf5cbbe7dd61d9bceffb9da8",
+   "mtime": "2026-02-16T16:37:04",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOS DE CAMP + PLANOL PUNTS/P1 - ALCOLETGE.jpeg",
+   "size": 224484,
+   "md5": "c0762017bb552490e6242f363a7ed7df",
+   "mtime": "2026-02-16T16:36:42",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOS DE CAMP + PLANOL PUNTS/P2 - ALCOLETGE.jpeg",
+   "size": 196168,
+   "md5": "9eacf1b2671a28f98bafae227c94654b",
+   "mtime": "2026-02-16T16:36:40",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOS DE CAMP + PLANOL PUNTS/P3 - ALCOLETGE.jpeg",
+   "size": 228418,
+   "md5": "ced50e8707896a698c8d4acfb8781591",
+   "mtime": "2026-02-16T16:36:38",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOS DE CAMP + PLANOL PUNTS/PENETROS.jpeg",
+   "size": 90302,
+   "md5": "8b3c3b566d60595ba2b67ce6bcffb513",
+   "mtime": "2026-02-16T16:37:12",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOS DE CAMP + PLANOL PUNTS/Thumbs.db",
+   "size": 78336,
+   "md5": "493b2f7c379452ba66b9ccacbc732222",
+   "mtime": "2026-03-13T09:07:18",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "FOTOS DE CAMP + PLANOL PUNTS/ampliació habitatge v2.png",
+   "size": 143511,
+   "md5": "911677cd6377ea84cc290ee8bf85dd35",
+   "mtime": "2026-02-16T16:28:26",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOS DE CAMP + PLANOL PUNTS/spt alcoletge.png",
+   "size": 1653600,
+   "md5": "dedb83af5848efd6f08b8c879ad04efc",
+   "mtime": "2026-02-16T16:32:30",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "PDF/4001670_informe.pdf",
+   "size": 688197,
+   "md5": "0b3c391bd2088e8914533c418c7ed8c3",
+   "mtime": "2026-03-16T16:55:18",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "PDF/ANNEXES/4001670_DPSH.pdf",
+   "size": 213809,
+   "md5": "d9c1e8a743a010ae892a621cd7a02b26",
+   "mtime": "2026-03-16T16:49:10",
+   "route": "claude",
+   "doc_type_hint": "annex_dpsh",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_dpsh",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_dpsh/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_dpsh/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_dpsh/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_dpsh/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_dpsh/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_dpsh/page-3.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_dpsh/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/4001670_fotografies.pdf",
+   "size": 197704,
+   "md5": "a4cea6a5792bd51b1b230b1a162d3982",
+   "mtime": "2026-03-16T16:50:18",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_fotografies",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_fotografies/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_fotografies/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_fotografies/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_fotografies/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_fotografies/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_fotografies/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_fotografies/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_fotografies/page-2-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_fotografies/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/4001670_plànol de situació.pdf",
+   "size": 230099,
+   "md5": "8b280d876defc8420b6aa789af286934",
+   "mtime": "2026-03-16T16:51:10",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_pl_nol_de_situaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_pl_nol_de_situaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_pl_nol_de_situaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_pl_nol_de_situaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_pl_nol_de_situaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_pl_nol_de_situaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/4001670_tall de correlació.pdf",
+   "size": 60412,
+   "md5": "1bb46bc31fd5f0d6976733585cf0a2e1",
+   "mtime": "2026-03-16T16:51:42",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_tall_de_correlaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_tall_de_correlaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_tall_de_correlaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_tall_de_correlaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_tall_de_correlaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/pdf_annexes_4001670_tall_de_correlaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/LLETRA/4001670_portada.pdf",
+   "size": 32022,
+   "md5": "99d04b23a90a8df7625458964b202df7",
+   "mtime": "2026-03-16T16:52:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PENETROS.pdf",
+   "size": 360122,
+   "md5": "fd3905035df74092620137831e822c78",
+   "mtime": "2026-02-26T17:08:02",
+   "route": "claude",
+   "doc_type_hint": "camp_penetros",
+   "priority": 7,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-2-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-3-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/page-3-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/penetros/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "comanda laboratori_4001670_ALCOLETGE.xls",
+   "size": 470528,
+   "md5": "3d565ac38971e59560f064700e73dab6",
+   "mtime": "2026-02-27T08:24:34",
+   "route": "python",
+   "doc_type_hint": "comanda_lab_g3",
+   "priority": 0
+  },
+  {
+   "path": "tall.pdf",
+   "size": 853520,
+   "md5": "329e9d17752d2ea1ee57a02a860d8db7",
+   "mtime": "2026-03-16T13:05:04",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/tall",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/tall/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/tall/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext/tall/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  }
+ ],
+ "duplicates": [
+  [
+   "26.0049/A.01.pdf",
+   "26.0049/PLANO 2.pdf",
+   "A.01.pdf"
+  ]
+ ],
+ "preext": {
+  "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext",
+  "n_docs": 15,
+  "n_errors": 0,
+  "elapsed_s": 22.408
+ }
+}

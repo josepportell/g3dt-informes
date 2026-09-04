@@ -1,0 +1,229 @@
+{
+ "source_path": "PDF/ANNEXES/4001670_DPSH.pdf",
+ "source_md5": "d9c1e8a743a010ae892a621cd7a02b26",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Full de resultats de l'assaig de penetració dinàmica DPSH, un full per punt (P-1, P-2, P-3), exportat des de l'Excel DPSH",
+ "issuer": "G3 (Eva)",
+ "date": "16/02/2026 (data de camp declarada); modDate PDF 2026-03-16",
+ "pages_or_sheets": "3 pàgines (P-1, P-2, P-3)",
+ "context": {
+  "who_made_it": "G3 (Eva) — imprès des de l'Excel DPSH (ANNEXES/4001670_DPSH.xls) a PDF (Acrobat Distiller/PScript5.dll), un full per punt",
+  "for_whom": "l'informe geotècnic final (annex de resultats DPSH) i l'arxiu de G3",
+  "why": "documentar els resultats de l'assaig DPSH per punt: colpeig N20/NB, fondària de rebuig, nivell freàtic/humitat i nivells de sòl per color",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "cota_referencia",
+   "num_dpsh_tests",
+   "dpsh_tests (cota_inici, profunditat_assolida, rebuig, nivell_freatic)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "mateixa font de dades que ANNEXES/4001670_DPSH.xls (Excel, no llegit en aquesta crida) — exportació a PDF del mateix Excel, no és font independent d'aquell fitxer; útil perquè el text és net (a diferència dels annexos FreeHand) i perquè mostra visualment les bandes de color de N.F./Nivells",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "cota_referencia",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001670",
+   "location": "p.1-3 capçalera 'NÚMERO D´INFORME'",
+   "quote": "NÚMERO D´INFORME: 4001670",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte (4001670 ALCOLETGE)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols, Nº7",
+   "location": "p.1-3 capçalera bloc OBRA",
+   "quote": "OBRA: CARRER GIRASOLS Nº7",
+   "confidence": 0.85,
+   "note": "etiqueta OBRA, idèntica a les 3 pàgines (P-1/P-2/P-3)"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Girasols",
+    "nom_via_alternatives": [],
+    "portals": [
+     "7"
+    ],
+    "municipi": "Alcoletge",
+    "municipi_alternatives": []
+   },
+   "location": "p.1 capçalera OBRA/POBLACIÓ",
+   "quote": "OBRA: CARRER GIRASOLS Nº7                                            POBLACIÓ:  ALCOLETGE",
+   "confidence": 0.85,
+   "note": "extra concept, no és cap dels 15 camps del nivell A"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "p.1-3 capçalera POBLACIÓ",
+   "quote": "POBLACIÓ:  ALCOLETGE",
+   "confidence": 0.85
+  },
+  {
+   "concept_id": "field_date",
+   "value": "16/02/2026",
+   "location": "p.1-3 capçalera DATA",
+   "quote": "DATA: 16/02/2026",
+   "confidence": 0.7,
+   "note": "candidat; la fitxa de camp (DADES PER ANAR A CAMP_v1.xlsx, F38) no s'ha llegit en aquesta crida i té prioritat superior segons el Pas 3"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+188,20 msnm",
+   "location": "p.1-3 capçalera 'Cota inici'",
+   "quote": "Cota inici:  +188,20 msnm segons el plànol topogràfic de l'ICGC.",
+   "confidence": 0.85,
+   "note": "mateixa cota per als 3 punts (P-1, P-2, P-3); origen declarat = plànol topogràfic ICGC"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "p.1-3 capçaleres 'ASSAIG DE PENETRACIÓ DINÀMICA: P-1 / P-2 / P-3'",
+   "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1 (p.1) / P-2 (p.2) / P-3 (p.3)",
+   "confidence": 0.75,
+   "note": "3 pàgines = 3 punts amb dades executades; document derivat de l'Excel DPSH (ANNEXES/4001670_DPSH.xls), no llegit en aquesta crida"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.3, columna 'MESURA DE PAR', fila fondària -1,2 (punt P-3)",
+   "quote": "SPT-1",
+   "confidence": 0.35,
+   "note": "mostra SPT integrada al DPSH P-3; no és el document GTL/comanda de laboratori; candidat feble, confirmar amb GTL/comanda"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P-3",
+   "location": "p.3, mateixa fila que 'SPT-1'",
+   "quote": "SPT-1",
+   "confidence": 0.35,
+   "note": "punt DPSH on es va prendre la mostra SPT-1"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,80 a 1,40",
+   "location": "p.3, columna 'MESURA DE PAR', fondàries -1,2/-1,4",
+   "quote": "0,80 a 1,40",
+   "confidence": 0.4
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "p.1-3 llegenda de colors de la columna 'Nivells' (Nivell 1 / Nivell 2 / Humitat)",
+   "quote": "Nivell 1 | Nivell 2 | Humitat",
+   "confidence": 0.4,
+   "note": "senyal feble: derivat de les bandes de color de cada assaig DPSH; el projecte no té annex de sondeig a rotació — confirmar amb tall.pdf (no llegit en aquesta crida)"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "+188,20",
+    "profunditat_assolida": "-1,60",
+    "rebuig": "Si",
+    "nivell_freatic": "Humitat",
+    "location": "p.1, peu de taula + columna N.F./Nivells",
+    "quote": "Rebuig a la cota de  -1,60 m",
+    "extra": {
+     "matis": "humitat",
+     "nivell_freatic_profunditat": "-1,00 a -1,20",
+     "color_nivells": "taronja (Nivell 1) de 0 a -1,40; groc (Nivell 2) a -1,60"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "+188,20",
+    "profunditat_assolida": "-1,30",
+    "rebuig": "Si",
+    "nivell_freatic": "Humitat",
+    "location": "p.2, peu de taula + columna N.F./Nivells",
+    "quote": "Rebuig a la cota de  -1,30 m",
+    "extra": {
+     "matis": "humitat",
+     "nivell_freatic_profunditat": "-1,00",
+     "color_nivells": "taronja (Nivell 1) de 0 a -0,80; groc (Nivell 2) a -1,20"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "+188,20",
+    "profunditat_assolida": "-1,69",
+    "rebuig": "Si",
+    "nivell_freatic": "Humitat",
+    "location": "p.3, peu de taula + columna N.F./Nivells",
+    "quote": "Rebuig a la cota de  -1,69 m",
+    "extra": {
+     "matis": "humitat",
+     "nivell_freatic_profunditat": "-1,00 a -1,40",
+     "color_nivells": "taronja (Nivell 1) de 0 a -0,80; groc (Nivell 2) de -1,60 a -1,80",
+     "spt_integrat": "SPT-1, 0,80 a 1,40 m, registre 5/9/11/33"
+    }
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "P-3",
+    "profunditat": "0,80-1,40",
+    "litologia": null,
+    "n30": {
+     "registre": [
+      5,
+      9,
+      11,
+      33
+     ],
+     "estat": "candidats",
+     "candidates_suma": [
+      {
+       "value": 20,
+       "rule": "suma dels 2 trams centrals (9+11)"
+      }
+     ]
+    },
+    "location": "p.3, columna 'MESURA DE PAR'",
+    "quote": "SPT-1 / 0,80 a 1,40 / 5/9/11/33"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text net (producer Acrobat Distiller/PScript5, text_ok=true a les 3 pàgines) però les columnes N.F./Nivells són bandes de color sense text — s'ha inspeccionat visualment page-1/2/3.png per confirmar la llegenda (taronja=Nivell 1, groc=Nivell 2, blau=Humitat) i la seva posició per fondària a cada punt, ja que el text pla no distingeix quina cel·la té color. P-3 porta una mostra SPT-1 integrada a la columna 'MESURA DE PAR' (fondària 0,80-1,40 m, registre 5/9/11/33); no hi ha annex de sondeig ni GTL en aquesta crida --only per confirmar-la de forma independent."
+}

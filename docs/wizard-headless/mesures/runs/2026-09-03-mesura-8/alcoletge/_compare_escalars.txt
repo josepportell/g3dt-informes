@@ -1,0 +1,9 @@
+NOU      architect_company      prod=candidats
+CAUTELA  building_type          or segur, prod candidats (bo dins): "ampliació d'un edifici (habitatge unifamiliar)"
+CAUTELA  cota_referencia        or segur, prod candidats (bo dins): '+188,20'
+CAUTELA  cte_edificacio         or segur, prod candidats (bo dins): 'C-0'
+CAUTELA  cte_sol                or segur, prod candidats (bo dins): 'T-1'
+CAUTELA  referencia_catastral   or segur, prod candidats (bo dins): '8841701CG0184S0001HH'
+ERR      street_address         segur discrepant: or='Carrer Girasols, 7 (Urb. El Roser)' prod='Carrer Girasols, Nº7, Urbanització el Roser'
+ALERTA   superficie_parcela     estat or=no_trobat prod=candidats (or value=None)
+TOTALS: {'NOU': 1, 'OK': 14, 'CAUTELA': 5, 'ERR': 1, 'ALERTA': 1}

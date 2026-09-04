@@ -1,0 +1,173 @@
+{
+ "source_path": "PDF/ANNEXES/4001670_tall de correlació.pdf",
+ "source_md5": "1bb46bc31fd5f0d6976733585cf0a2e1",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geotècnica (secció A-A') que relaciona els 3 punts DPSH (P-1, P-3, P-2), amb llegenda de nivells de sòl i cotes en msnm.",
+ "issuer": "G3 (Eva)",
+ "date": "Febrer 2026 (imprès al peu de plànol); metadades PDF: creationDate/modDate 2026-03-16",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 / Eva, síntesi pròpia (dibuix FreeHand) del tall estratigràfic del projecte",
+  "for_whom": "Ús intern de G3 per redactar l'informe geotècnic (secció de nivells del sòl)",
+  "why": "Correlacionar els 3 punts DPSH (P-1, P-3, P-2) mostrant els nivells de sòl, el contacte entre nivells, la humitat detectada i la cota de fonamentació recomanada",
+  "expected_fields": [
+   "num_soil_levels",
+   "litologia per nivell",
+   "contacte entre nivells (cotes msnm)",
+   "nivell_freatic/humitat per punt DPSH",
+   "rebuig per punt DPSH",
+   "expedient",
+   "adreça/municipi/tipus d'edifici (redacció del títol del projecte al peu de plànol)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date exacte (dia)",
+   "dades de laboratori",
+   "cte_edificacio/cte_sol",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "Mateix dibuix que 'tall.pdf' (arrel del projecte, Microsoft Print To PDF, text net, md5 329e9d17752d2ea1ee57a02a860d8db7): aquest fitxer és la versió FreeHand->Acrobat Distiller (text brossa) del mateix tall de correlació. Contingut visualment idèntic: mateix caixetí (Exp 4001670, Data Febrer 2026), mateixa llegenda, mateixos punts P-1/P-3/P-2 i valors Nb/N. No compten com a fonts independents entre elles.",
+  "authority_for": [
+   "expedient",
+   "municipality",
+   "street_address",
+   "building_type",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "field_date"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001670",
+   "location": "peu de plànol, cel·la 'Exp:'",
+   "quote": "Exp: 4001670",
+   "confidence": 0.9,
+   "note": "Coincideix amb el nom de la carpeta del projecte (4001670 ALCOLETGE)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols Nº7, Urbanització El Roser",
+   "location": "peu de plànol, bloc TÍTOL DEL PROJECTE",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+   "confidence": 0.6,
+   "note": "Adreça dins la redacció del títol del projecte, no en un camp etiquetat 'OBRA'/'Situació'; tractar com a candidat, a confirmar amb comanda/pressupost/fitxa de camp."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "peu de plànol, bloc TÍTOL DEL PROJECTE (final de la frase)",
+   "quote": "D'ALCOLETGE",
+   "confidence": 0.7,
+   "note": "Coincideix amb el nom de la carpeta del projecte (...ALCOLETGE)."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Ampliació d'un edifici",
+   "location": "peu de plànol, bloc TÍTOL DEL PROJECTE",
+   "quote": "L'AMPLIACIÓ D'UN EDIFICI",
+   "confidence": 0.5,
+   "note": "Redacció genèrica ('un edifici'); el plànol de situació inclòs en aquest mateix document mostra una planta d'habitatge amb una zona ratllada etiquetada 'Ampliació'. Confirmar el tipus exacte (habitatge unifamiliar, etc.) amb pressupost/PLAN_COST/fitxa."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "quadre LLEGENDA",
+   "quote": "Nivell 1: Rebliment antròpic. / Nivell 2: Lutites, substrat.",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "planta de situació (cantonada superior esquerra) i tall A-A'",
+   "quote": "P-1 / P-3 / P-2",
+   "confidence": 0.65,
+   "note": "Nombre de punts DPSH representats al tall i a la planta de situació; confirmar el recompte d'assaigs 'executats' amb l'Excel DPSH (ANNEXES/4001670_DPSH.xls)."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Febrer 2026",
+   "location": "peu de plànol, cel·la 'Data:'",
+   "quote": "Data: Febrer 2026",
+   "confidence": 0.25,
+   "note": "Data de redacció/còpia del tall (síntesi de l'Eva), no necessàriament el primer dia de camp; només mes i any, sense dia concret. La metadada del PDF (creationDate/modDate) marca 2026-03-16, posterior -- probablement data d'exportació a Acrobat Distiller, no data de camp."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": "~187,2 msnm (matís: humitat -- línia 'Augment de la humitat detectada'; no arriba a ser nivell freàtic franc). Lectura gràfica sobre l'eix (186-189 msnm), no hi ha xifra impresa.",
+    "location": "tall A-A', columna del punt P-1",
+    "quote": "Nb=R"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": "~187,0 msnm (matís: humitat; en aquest punt la línia de humitat coincideix pràcticament amb el contacte Nivell 1/Nivell 2). Lectura gràfica, no hi ha xifra impresa.",
+    "location": "tall A-A', columna del punt P-3",
+    "quote": "Nb=R"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": "~186,9-187,0 msnm (matís: humitat; coincideix pràcticament amb el contacte Nivell 1/Nivell 2 en aquest punt). Lectura gràfica, no hi ha xifra impresa.",
+    "location": "tall A-A', columna del punt P-2",
+    "quote": "Nb=R"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [
+     "Rebliment antròpic"
+    ],
+    "de": null,
+    "a": "~186,8 a ~187,0 msnm segons el punt (contacte amb el Nivell 2: ~186,8 a P-1, ~187,0 a P-3, ~186,9-187,0 a P-2). Lectura gràfica sobre l'eix imprès (186-189 msnm), sense xifra impresa de la cota de contacte; precisió aprox. ±0,1-0,2 m.",
+    "mostra_del_nivell": false,
+    "location": "llegenda + tall A-A'",
+    "quote": "Nivell 1: Rebliment antròpic."
+   },
+   {
+    "nom": "Nivell 2",
+    "litologia_candidats": [
+     "Lutites, substrat"
+    ],
+    "de": "~186,8 a ~187,0 msnm segons el punt (mateix contacte que el Nivell 1, vegeu nota d'aquell nivell)",
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "llegenda + tall A-A'",
+    "quote": "Nivell 2: Lutites, substrat."
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "superficie_parcela",
+  "cota_referencia (cap xifra numèrica impresa)",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text de la pàgina brossa (text_ok=false, producer Acrobat Distiller 15.0 / PScript5.dll): lectura íntegrament visual. Primer page-1.png (150dpi) per situar-se; després render_clip.py a 350-500dpi per llegir amb precisió el peu de plànol (caixetí), la planta de situació (cantonada superior esquerra, amb la zona 'Ampliació' ratllada) i cadascun dels 3 punts DPSH del tall A-A' (P-1, P-3, P-2) contra l'eix imprès en msnm (186-189). Els valors de cota de contacte entre nivells i de la línia d'humitat són lectures gràfiques aproximades referenciades als graons impresos de l'eix (no xifres impreses): confiança baixa, candidates per al consolidador, no 'segur'. També apareix una etiqueta 'N=20' sobre la línia vermella 'Cota de fonamentació recomanada' al punt P-3 -- sembla un valor de disseny (N emprat per al càlcul a la cota de fonamentació), fora de l'abast del nivell A (Tier B); no s'ha inclòs com a candidat de cap concepte. Duplicat: aquest document és la mateixa làmina que 'tall.pdf' (arrel del projecte), exportada amb un altre driver (FreeHand->Distiller aquí, Microsoft Print To PDF allà); no compten com a fonts independents."
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "fields": {
+    "street_address": {
+      "estat": "segur",
+      "value": "Carrer Girasols, Nº7, Urbanització el Roser",
+      "candidates": [
+        {
+          "value": "Carrer Girasols, Nº7, Urbanització el Roser",
+          "font": "A.01.pdf caixetí, bloc 'Situació:' (arquitecte; duplicat md5 amb 26.0049/A.01.pdf i 26.0049/PLANO 2.pdf)",
+          "quote": "Situació: CARRER GIRASOLS, Nº7 Urbanització el Roser, (25660) ALCOLETGE",
+          "note": "Bloc etiquetat 'Situació' — autoritat A"
+        },
+        {
+          "value": "Carrer Girasols, Nº7",
+          "font": "PDF/ANNEXES/4001670_DPSH.pdf capçalera bloc OBRA (p.1-3, idèntic a P-1/P-2/P-3)",
+          "quote": "OBRA: CARRER GIRASOLS Nº7",
+          "note": "Annex determinista de camp de G3, origen independent de l'arquitecte i del pressupost comercial"
+        },
+        {
+          "value": "C/GIRASOLS 7, URB.EL ROSER",
+          "font": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf p.1 bloc OBRA (plantilla G3 determinista)",
+          "quote": "ESTUDI GEOTECNIC / C/GIRASOLS 7, URB.EL ROSER / ALCOLETGE / PRESSUPOST GEOTECNIC",
+          "note": "Coincideix amb la còpia signada a ACCEPTACIO/…SIGNAT-SCAN.pdf (mateix document comercial, no és font independent addicional)"
+        }
+      ],
+      "rule": "street_address només de blocs etiquetats OBRA/ADREÇA OBRA/Situació (Pas 3); mai l'adreça del client/sol·licitant.",
+      "note": "≥5 fonts independents coincideixen sense contradicció: A.01.pdf i 26.0049/planol-1.pdf (arquitecte, bloc 'Situació:'), PDF/ANNEXES/4001670_DPSH.pdf (annex de camp G3), el pressupost G3 (plantilla determinista) i el correu de César Morillas 2026-01-26 (\"OBRA: CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660)\"). Sense escenari de cantonada: una sola adreça a tot el corpus. Variants de grafia no competidores, totes de la mateixa via/portal: 'Nº7'/'nº7'/'7'/'Nº 7'; 'Girasols'/'dels Gira-sols' (article, acceptació pressupost p.5); 'C/'/'Carrer'. Descartats com a NO fonts independents: 26.0049/A.01.pdf i 26.0049/PLANO 2.pdf (mateix md5 que A.01.pdf arrel, verificat a _inventory.json); ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf (mateix pressupost signat, no aporta font nova); tall.pdf i PDF/ANNEXES/4001670_tall de correlació.pdf (mateix contingut entre si — redacció de títol del projecte, no bloc OBRA/Situació etiquetat, conf. 0.6-0.65 als propis {doc}.json — no compten per elevar a segur, tot i coincidir en valor)."
+    }
+  },
+  "notes": [
+    "Mode --consolida --only-fields fields.street_address (Pas 5b), SENSE _decisions.json previ del consolidador Python en aquest --out: entrada = {doc}.json ja escrits (a_01, 26_0049_planol_1, 26_0049_planol_3, pdf_annexes_4001670_pl_nol_de_situaci, pdf_annexes_4001670_dpsh, annexes_4001670_dpsh, acceptacio_pressupost_geotec_alcoletge_signat_scan, 26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge, 26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge, tall, pdf_annexes_4001670_tall_de_correlaci, penetros) + _g3_templates.json + _inventory.json (per a dedup per md5). Cap document del projecte obert."
+  ]
+}

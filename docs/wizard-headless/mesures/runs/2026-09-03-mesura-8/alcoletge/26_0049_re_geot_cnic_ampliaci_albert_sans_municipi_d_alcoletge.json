@@ -1,0 +1,165 @@
+{
+ "source_path": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+ "source_md5": "f386b34c21a0aa702e7f6a39c715564c",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Cadena de correu intern G3 amb l'encàrrec del geotècnic per a l'ampliació d'un habitatge unifamiliar a Alcoletge",
+ "issuer": "David Graus (extern) / César Morillas (G3) / Eva Vázquez (G3)",
+ "date": "2026-01-27 07:18 (aquest missatge); cadena citada des de 2026-01-21",
+ "pages_or_sheets": "correu (3 missatges citats en cadena) + 1 adjunt d'imatge (plànol d'ampliació)",
+ "context": {
+  "who_made_it": "David Graus (extern, davidgraus.com, sense càrrec explícit) envia l'encàrrec original amb plànols a César Morillas (Dir. Dept. Assessor, G3) el 2026-01-21; César el reenvia i el resumeix a Eva Vázquez i Dolors Maqueda (G3) el 2026-01-26; Eva respon als mateixos el 2026-01-27 (només signatura, sense contingut nou).",
+  "for_whom": "Ús intern de G3 (Eva/César/Dolors) per obrir l'expedient i preparar el pressupost del client.",
+  "why": "Encàrrec d'un estudi geotècnic per a l'ampliació d'un habitatge unifamiliar (client Albert Sans Bonvehí) a la part posterior de l'edificació existent, Alcoletge.",
+  "expected_fields": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "referencia_catastral",
+   "building_type"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "utm_x_utm_y"
+  ],
+  "relation_to_others": "Mateixa cadena que '26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg' (sense 'RE_'): aquell és el missatge de César sense la resposta d'Eva afegida a sobre. El contingut NOU d'aquest fitxer (resposta d'Eva, 2026-01-27) no aporta cap dada -- és només signatura. Tota la informació substantiva prové de la mateixa cadena citada als dos fitxers: no compten com a dues fonts independents entre elles.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "referencia_catastral",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Albert Sans Bonvehi",
+   "location": "cos del missatge original de David Graus (2026-01-21), bloc de signatura del client",
+   "quote": "ALBERT SANS BONVEHI        \nDNI    47690689-M\nCARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida(25660)\nTELF: 675639431",
+   "confidence": 0.7,
+   "note": "Etiquetat 'CLIENT:' al missatge de César (sol·licitant per definició de regla); cap Promotor/Propietat separat apareix enlloc del document -- encàrrec directe d'un particular per a casa pròpia (sense arquitecte visible), coherent amb el patró d'Alcoletge (client = arquitecte/sol·licitant a la pràctica de l'Eva). No segur: font única (aquesta cadena), no creuada encara amb pressupost/acceptació."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Albert Sans Bonvehi",
+   "location": "cos del missatge de César Morillas (2026-01-26), línia 'CLIENT:'",
+   "quote": "CLIENT: ALBERT SANS BONVEHI tel. 675639431 - etesnob91@gmail.com",
+   "confidence": 0.7,
+   "note": "Mateixa persona que la signatura de David Graus; no és font independent (deriva del mateix encàrrec)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols, 7 (Urbanització El Roser), Alcoletge, Lleida (25660)",
+   "location": "cos del missatge de César Morillas (2026-01-26), línia 'OBRA:'",
+   "quote": "OBRA: CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660) bon accés",
+   "confidence": 0.85,
+   "note": "Etiqueta explícita OBRA -- font forta dins d'aquest document."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols, 7 (Urbanització El Roser), Alcoletge, Lleida (25660)",
+   "location": "cos del missatge original de David Graus (2026-01-21), bloc de signatura del client",
+   "quote": "CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida(25660)",
+   "confidence": 0.6,
+   "note": "Adreça del client, no explícitament etiquetada OBRA aquí -- però coincideix amb l'ampliació és a casa pròpia del client, mateixa adreça. No independent de l'entrada anterior (mateixa cadena)."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Girasols",
+    "nom_via_alternatives": [],
+    "portals": [
+     "7"
+    ],
+    "municipi": "Alcoletge",
+    "municipi_alternatives": []
+   },
+   "location": "cos del missatge de César Morillas (2026-01-26), línia 'OBRA:'",
+   "quote": "OBRA: CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660) bon accés",
+   "confidence": 0.75,
+   "note": "'Urbanització El Roser' queda fora de l'objecte estructurat (no és tipus_via); grafia tal com surt en aquest document (sense accent, una sola s)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "cos del missatge de César Morillas (2026-01-26), línia 'OBRA:'",
+   "quote": "OBRA: CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660) bon accés",
+   "confidence": 0.85,
+   "note": "Coincideix amb la mateixa dada al bloc de signatura de David Graus."
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "8841701CG0184S0001HH",
+   "location": "cos del missatge original de David Graus (2026-01-21)",
+   "quote": "Referencia Catastral: 8841701CG0184S0001HH",
+   "confidence": 0.6,
+   "note": "Font única en aquest document (cap consulta de Cadastre adjunta aquí); candidat, no segur -- pendent creuar amb altres fonts del projecte."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Ampliació d'habitatge unifamiliar",
+   "location": "cos del missatge original de David Graus (2026-01-21)",
+   "quote": "adjunto documentació per passar pressupost al client, es ampliació d'un habitatge, adjunto plànol situació, plànol estat actual i plànol ampliació.",
+   "confidence": 0.75,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Ampliació d'habitatge unifamiliar",
+   "location": "cos del missatge de César Morillas (2026-01-26), línia 'GEO:'",
+   "quote": "GEO: És un ampliació d'uns 100 m a la part posterior de l'edificació existent ( mirar plànols)",
+   "confidence": 0.75,
+   "note": "Confirma el mateix tipus que el missatge de David Graus; no és font independent."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "David Graus (rol no confirmat: podria ser arquitecte/delineant -- remet els plànols del projecte)",
+   "location": "capçalera i signatura del missatge original (2026-01-21), adreça david@davidgraus.com",
+   "quote": "De: david@davidgraus.com <mailto:david@davidgraus.com>  <david@davidgraus.com <mailto:david@davidgraus.com> > \nEnviado el: miércoles, 21 de enero de 2026 9:59\nPara: Cesar Morillas <cesar@g3dt.com <mailto:cesar@g3dt.com> >\nAsunto: geotècnic Albert Sans municipi d'Alcoletge\n\nBones, Cesar\n\nadjunto documentació per passar pressupost al client, es ampliació d'un habitatge, adjunto plànol situació, plànol estat actual i plànol ampliació.",
+   "confidence": 0.25,
+   "note": "Cap títol explícit d'arquitecte enlloc del document; envia els tres plànols de l'encàrrec (situació, estat actual, ampliació), comportament típic d'un tècnic/arquitecte. Únic candidat trobat en aquest document -- confiança baixa, cal creuar amb el plànol A.01 i el pressupost."
+  }
+ ],
+ "tables": {
+  "superficie_construida": {
+   "components": [
+    "ampliació: uns 100 m (xifra aproximada, unitat no explicitada -- probablement m²)"
+   ],
+   "total": "uns 100 m² (ampliació, aproximat)",
+   "etiqueta_font": "segons correu d'encàrrec (xifra aproximada, pendent confirmar amb plànol/pressupost)",
+   "location": "cos del missatge de César Morillas (2026-01-26), línia 'GEO:'",
+   "quote": "GEO: És un ampliació d'uns 100 m a la part posterior de l'edificació existent ( mirar plànols)",
+   "confidence": 0.4,
+   "note": "'uns 100 m' -- xifra aproximada i unitat no explícita en aquest document; l'adjunt image011.jpg mostra la zona d'ampliació ('ampliació habitatge', taques vermelles) però sense cotes de superfície impreses, només mides parcials (2,50 i 3,00)."
+  }
+ },
+ "not_present": [
+  "expedient",
+  "architect_company",
+  "num_floors",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "superficie_parcela",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit body.txt (cadena completa de 3 missatges citats) + adjunt image011.jpg (renderitzat a PNG per la pre-extracció; 55 KB, no és signatura -- és el plànol d'ampliació, s'ha llegit visualment). L'adjunt plan_cost_alcoletge.xlsx ja és solt a la carpeta (26.0049/PLAN_COST_ALCOLETGE.xlsx, already_in_folder=true segons meta.json) -- no re-llegit des d'aquí. L'enllaç de Google Maps del missatge de César (coordenades lat/lon aproximades) NO s'ha usat per a utm_x_utm_y -- regla explícita del skill: geocodificar no és tasca d'aquesta lectura. Aquest document és anterior a la campanya de camp (data 2026-01-21/27); no conté cap dada de nivell A relacionada amb DPSH, sondeig, laboratori o cotes."
+}

@@ -1,0 +1,28 @@
+{
+ "source_path": "26.0049/planol-1.pdf",
+ "source_md5": "ed1aaf8235a817a17be1f154bbcd3bfa",
+ "kind": "pdf",
+ "generated": "2026-09-04T15:41:13",
+ "elapsed_s": 0.221,
+ "dir": "26_0049_planol_1",
+ "files": [
+  "26_0049_planol_1/page-1.txt",
+  "26_0049_planol_1/page-1.png"
+ ],
+ "pages": 1,
+ "page_sizes_pt": [
+  [
+   595.0,
+   842.0
+  ]
+ ],
+ "producer": "pdfplot12.hdi 12.01.049.000",
+ "creator": "AutoCAD 2016 - Español (Spanish) 2016 (20.1s (LMS Tech))",
+ "creationDate": "D:20220526103406",
+ "modDate": "D:20220526103406",
+ "text_ok": {
+  "1": true
+ },
+ "pages_truncated": false,
+ "halves_pages": []
+}

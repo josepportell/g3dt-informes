@@ -18,7 +18,9 @@ un diagnòstic de causes arrel de tot el que no és OK. **Sempre contrastar els 
 | **D1** | Cadastre només «als forats»: un valor del tipus equivocat (Polígon/Parcel·la) tapa el forat de la RC; i a l'inrevés, una RC declarada d'una sola font no es creua amb el Cadastre | `consolidate.py` ~1788 (gate per format de RC) |
 | **D2** | **Bug de dates al consolidador**: una data sense dia («Octubre 2025») fa de pont transitiu entre dies diferents (`keys_compatible` + union-find), el representant es tria per `len(str(k))` i `_iso_date` sobreescriu el valor del candidat 0 → una lectura de conf 0,35 surt «segur» (Linyola `field_date` 10/10 per 01/10) | `consolidate.py` l. 266-275, 364, 502-506 |
 | **L1** | Forat de lector: el full SPT manuscrit (PENETROS p.3) no emet `n30` | skill / lector de PENETROS |
-| **C** | Comparador: `close()` text («en el» vs «de l'»), `norm_floors` (porxada/porxo), candidats de `cte` compartits entre subclaus | `compare_consolida.py` |
+| **L2** | Manuscrit il·legible → candidat honest «[il·legible] marró» (comportament desitjat; falta el derivat «litologia del nivell de la mostra») | derivats del consolidador |
+| **T1** | Operació: `claude -p` penjat sense cap stdout fins al timeout de 600 s (PENETROS, Alcoletge); reintent OK. PENETROS és el doc més lent (382-511 s) | `runner.py` (detecció de penjada / topall per doc) |
+| **C** | Comparador: `close()` text («en el» vs «de l'»), `norm_floors` (porxada/porxo), candidats de `cte` compartits entre subclaus, **`parse_address`: CP com a portal, «C.» no reconegut, sufix d'urbanització dins la via (3 falsos ERR/ALERTA d'adreça a Linyola i Alcoletge)**, textos llargs de `nivell_freatic` | `compare_consolida.py` — **arreglar abans d'agregar** |
 | **G** | Or: sense `fora_carpeta` (Rubí superfície), utm S-1 en lloc de P-1 (Castellar, corregit), candidats per esborranys (Rubí) | `docs/golden-read*/` |
 
 ## Projectes
@@ -29,23 +31,27 @@ un diagnòstic de causes arrel de tot el que no és OK. **Sempre contrastar els 
 | 2 | Bell-lloc | `bell-lloc/_NOTES.md` | `bell-lloc/_DIAGNOSTIC-INFRACONFIANCA.md` | 0 | R1 ×4, R2 ×2, R3, R4 ×2, R5 |
 | 3 | Rubí | `rubi/_NOTES.md` | `rubi/_DIAGNOSTIC.md` | **1** (cota P-2, F1) | R1, R4 ×2, R5, F1 ×2, D1, C ×2, G ×2 |
 | 4 | Linyola | `linyola/_NOTES.md` | `linyola/_DIAGNOSTIC.md` | **1** (`field_date`, **D2 bug**) | D2, R1 ×4 (`building_type`, `architect_name` persona/despatx, `lab_location`, `street_address`), R2 ×2 (z GPS a cota; msnm vs fondària als nivells), R5 ×2 (RC i superfície del projecte de l'arquitecte, font única), F1 ×2 (`lab_depth` camp vs lab; errata «argilsoso»), C ×3, G (or persona vs signat despatx), L1 (`n30`) |
-| 5 | Alcoletge | | | | |
+| 5 | Alcoletge | `alcoletge/_NOTES.md` | `alcoletge/_DIAGNOSTIC.md` | 0 (l'ERR cru d'adreça és C: Cadastre 1167 = signat) | R1 (`building_type`), R2 ×2 (z GPS anòmala 198,9; msnm vs fondària), R4 ×2, R5 (RC del correu, font única; Cadastre la confirma i no es creua), G (`fora_carpeta`), C ×3 (adreça, `nivell_freatic`, nivells), L2, T1 (timeout 600 s PENETROS) |
 | 6 | Vilanova | | | | (circular: només consistència) |
 | 7 | Anciles | | | | |
 | 8 | Tulipa | | | | (sense veritat: executabilitat + latència) |
 
 ## Recompte transversal (actualitzar a cada projecte)
 
-| Causa | Castellar | Bell-lloc | Rubí | Linyola | Total |
-|---|---|---|---|---|---|
-| R1 | 2 | 4 | 1 (+1 eix via, per disseny) | 4 | 11 |
-| R2 | 0 | 2 | 0 | 2 | 4 |
-| R3 | 0 (legítim) | 1 | 0 | 0 | 1 |
-| R4 | 0 (derivat) | 2 | 2 | 0 (sense línia CTE) | 4 |
-| R5 | 1 | 1 | 1 | 2 | 5 |
-| F1 | 1 | 0 | 2 | 2 | 5 |
-| D1 | 0 | 0 | 1 | (1, cara inversa) | 1 |
-| D2 | 0 | 0 | 0 | **1 (ERR)** | 1 |
-| L1 | 0 | 0 | 0 | 1 | 1 |
+| Causa | Castellar | Bell-lloc | Rubí | Linyola | Alcoletge | Total |
+|---|---|---|---|---|---|---|
+| R1 | 2 | 4 | 1 (+1 eix via, per disseny) | 4 | 1 | 12 |
+| R2 | 0 | 2 | 0 | 2 | 2 | 6 |
+| R3 | 0 (legítim) | 1 | 0 | 0 | 0 | 1 |
+| R4 | 0 (derivat) | 2 | 2 | 0 (sense línia CTE) | 2 | 6 |
+| R5 | 1 | 1 | 1 | 2 | 1 | 6 |
+| F1 | 1 | 0 | 2 | 2 | 0 | 5 |
+| D1 | 0 | 0 | 1 | (1, cara inversa) | (1, cara inversa) | 1 (+2) |
+| D2 | 0 | 0 | 0 | **1 (ERR)** | 0 | 1 |
+| L1/L2 | 0 | 0 | 0 | 1 | 1 | 2 |
+| C (falsos ERR/ALERTA) | 1 | 0 | 2 | 3 | 3 | 9 |
+| G | 1 | 0 | 2 | 1 | 1 | 5 |
+| T1 | 0 | 0 | 0 | 0 | 1 | 1 |
 
-**ERR de sistema acumulat (4/8): 2** — Rubí cota P-2 (F1, font d'Eva) i Linyola `field_date` (D2, bug).
+**ERR de sistema acumulat (5/8): 2** — Rubí cota P-2 (F1, font d'Eva) i Linyola `field_date` (D2, bug). L'ERR cru
+d'Alcoletge és del comparador (C).

@@ -1,0 +1,75 @@
+{
+ "source_path": "26.0049/planol 3.pdf",
+ "source_md5": "209583ad1d729716a53e81ca2b27a0c9",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol de planta existent + zona d'ampliació de l'habitatge, acotada, sobre l'esquema de la parcel·la; full 3 (\"planol 3.pdf\") del joc de plànols de l'arquitecte.",
+ "issuer": "Arquitecte del projecte (mateixa carpeta 26.0049 que A.01.pdf i planol-1.pdf; sense identificació pròpia d'autor en aquest full)",
+ "date": "metadada PDF creationDate 2026-01-21 (D:20260121094623+01'00'); no hi ha cap data impresa al full",
+ "pages_or_sheets": "1 pàgina, A3 apaïsat (1191x842 pt)",
+ "context": {
+  "who_made_it": "L'arquitecte del projecte d'ampliació d'habitatge",
+  "for_whom": "G3, com a document de context de l'obra (no porta cap casella 'client')",
+  "why": "Situar sobre la parcel·la la zona d'ampliació de l'habitatge existent, amb dues cotes locals",
+  "expected_fields": [
+   "building_type"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Mateixa carpeta 26.0049 que A.01.pdf (planol amb caixetí complet, duplicat 3 cops a l'inventari: 26.0049/A.01.pdf, 26.0049/PLANO 2.pdf, A.01.pdf) i planol-1.pdf (altre full, md5 diferent). La numeració \"planol 3\" suggereix que forma part del mateix joc de l'arquitecte, però aquest full concret no porta caixetí ni signatura pròpia: no és font independent de client/arquitecte/adreça, només del títol del full.",
+  "authority_for": [
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "ampliació d'habitatge",
+   "location": "requadre de títol, cantonada inferior dreta",
+   "quote": "ampliació habitatge",
+   "confidence": 0.65,
+   "note": "Única font dins d'aquest document (sense caixetí complet que la corrobori aquí); coherent amb l'assumpte del correu \"RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge\" i amb la resta de plantilles G3 del projecte. Candidat, no segur, fins a creuar amb altres documents al Pas 5b."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text natiu és brossa (producer \"Acrobat Distiller 10.1.4 (Windows)\", creator \"PScript5.dll\": text_ok=false, típic de plànols FreeHand/AutoCAD exportats) — llegit visualment (pàgina sencera + meitats esquerra/dreta a 220 dpi; no calen clips addicionals, no hi ha text petit als marges). El full només conté: contorn de la planta existent (traç gruixut), la zona d'ampliació ratllada en vermell amb l'etiqueta \"ampliació habitatge\", dues cotes locals de l'ampliació (\"3,00\" al costat SO, \"2,50 (existent)\" al costat E) sense àrea calculada impresa, parcel·les/edificacions veïnes en traç fi sense cap etiqueta, i el requadre de títol \"ampliació habitatge\". Cap caixetí amb promotor, arquitecte, adreça, escala o data impresa en aquest full concret."
+}

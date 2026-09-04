@@ -1,0 +1,173 @@
+{
+ "source_path": "PENETROS.pdf",
+ "source_md5": "fd3905035df74092620137831e822c78",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Albarà + full de camp manuscrit escanejat de TPS: 3 penetròmetres dinàmics (P1, P2, P3) i un assaig SPT (a P3), obra d'Alcoletge",
+ "issuer": "TPS Prospecció del Subsòl (operaris Azzi - Cesar)",
+ "date": "16/02/2026",
+ "pages_or_sheets": "3 p.: p.1 ALBARÀ, p.2 Full de Camp Penetròmetre Dinàmic (Fitxa 01), p.3 Full d'assaig SPT/MI/Mostra alterada",
+ "context": {
+  "who_made_it": "TPS (subcontractista de sondeigs/penetròmetres de G3), operaris Azzi - Cesar, equip ML60A",
+  "for_whom": "G3 (responsable Eva), que ha encarregat els 3 DPSH i l'assaig SPT d'aquest projecte",
+  "why": "Registre de camp del dia dels assaigs: penetròmetres dinàmics P1/P2/P3 fins a rebuig i un assaig SPT a P3",
+  "expected_fields": [
+   "field_date",
+   "num_dpsh_tests",
+   "profunditat de rebuig per punt",
+   "nivell freàtic",
+   "assaig SPT: interval i colpeig"
+  ],
+  "not_expected": [
+   "expedient",
+   "client real de l'informe",
+   "arquitecte",
+   "promotor",
+   "adreça amb carrer",
+   "cota de referència absoluta",
+   "plantes",
+   "superfície"
+  ],
+  "relation_to_others": "Versió manuscrita de camp; existeix versió digital revisada per l'Eva a ANNEXES/4001670_DPSH.xls (fulls P-1, P-2, P-3) que mana pels valors N20 definitius, i PDF/ANNEXES/4001670_DPSH.pdf (annex net amb cota inici impresa per punt). Aquest document es llegeix pel que l'Excel no té: data de camp real, anotació de camp de la profunditat de rebuig, resposta de nivell freàtic, i la descripció de materials de l'assaig SPT.",
+  "authority_for": [
+   "field_date",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "16/02/2026",
+   "location": "p.2 Full de Camp Penetròmetre Dinàmic, camp 'Data'",
+   "quote": "Data: 16-2-26",
+   "confidence": 0.85,
+   "note": "Coincideix amb p.1 ALBARÀ ('Data: 16/02/26') i p.3 Full d'assaig ('Data: 16/09/2026' llegit com 16/02/2026 — el '2' del mes es dibuixa amb un floreig que s'assembla a un '9', però és el mateix traç que el '2' final de l'any '2026' de la mateixa mà). Les tres dates del mateix document coincideixen entre elles; no és una font independent addicional."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "p.1 ALBARÀ, bloc 'ML DE PERFORACIÓ' → 'Nº de penetròmetres realitzats'",
+   "quote": "Nº de penetròmetres realitzats: 3",
+   "confidence": 0.8,
+   "note": "Coherent amb els 3 punts P1/P2/P3 omplerts a p.2. Font 'executats' (albarà), no 'previstos'; per sota en prioritat de l'Excel DPSH si discrepen (regla existent)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "p.2 Full de Camp Penetròmetre Dinàmic, camp 'Adreça de l'obra'",
+   "quote": "Adreça de l'obra: ALCOLETGE",
+   "confidence": 0.45,
+   "note": "El camp diu 'Adreça' però només s'hi escriu el nom del municipi, sense carrer ni número — no és font de street_address. Grafia variant a p.1 ALBARÀ ('Adreça: ALOLETGE', falta la C) i a p.3 ('ALCOLETGE'). Document de camp de TPS, no plantilla G3: candidat feble, no font d'autoritat forta."
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS",
+   "location": "p.1-3 capçalera (logotip 'tps prospecció del subsòl')",
+   "quote": "tps — prospecció del subsòl",
+   "confidence": 0.3,
+   "note": "Identifica l'empresa que executa l'assaig SPT de camp, però aquest full NO és el GTL de laboratori (sense NIF ni banda de registre mercantil): candidat feble per lab_testing_company, l'autoritat és el GTL (Pas 3)."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT P3",
+   "location": "p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Assaig de referència'",
+   "quote": "Assaig de referència: SPT   P3",
+   "confidence": 0.6,
+   "note": "Únic assaig SPT/MI registrat en aquest full (el segon bloc 'Assaig tipus' de p.3 és buit)."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,80 - 1,40 m",
+   "location": "p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Cota d'extracció'",
+   "quote": "de la cota de: 0,8 / fins a la cota: 1,4",
+   "confidence": 0.6,
+   "note": "Interval del mateix assaig SPT P3."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P3",
+   "location": "p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Assaig de referència'",
+   "quote": "SPT   P3",
+   "confidence": 0.6,
+   "note": "Punt d'assaig del qual surt la mostra."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 / Eva",
+   "location": "p.1 ALBARÀ, bloc 'DADES CLIENT'",
+   "quote": "DADES CLIENT: Empresa: G3 / Responsable: EVA",
+   "confidence": 0.0,
+   "note": "Descartat expressament: és el client de TPS (subcontractista), no el client de l'informe geotècnic (regla Pas 0/Pas 3 — G3 mai és client)."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,6 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 Full de Camp Penetròmetre Dinàmic, columna P1",
+    "quote": "col. 100 (fila -1,6) amb ratlla de tall i fondària final envoltada '1,6'"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,3 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 Full de Camp Penetròmetre Dinàmic, columna P2",
+    "quote": "col. 100 (fila -1,4) amb ratlla de tall i fondària final envoltada '1,3'"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,69 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 Full de Camp Penetròmetre Dinàmic, columna P3",
+    "quote": "col. 100 (fila -1,8/-2) amb fondària final envoltada '169'"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-P3",
+    "punt": "P3",
+    "profunditat": "0,80 - 1,40 m",
+    "litologia": "[primera paraula il·legible] marró",
+    "n30": {
+     "value": null,
+     "registre": [
+      "5",
+      "9",
+      "21",
+      "33"
+     ],
+     "location": "p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Colpeig 15/30/45/60'",
+     "quote": "Colpeig: 5 | 9 | 21 | 33"
+    },
+    "location": "p.3 Full d'assaig SPT/MI/Mostra alterada",
+    "quote": "Assaig de referència: SPT P3; Descripció dels materials: '[il·legible] MARRÓ'"
+   }
+  ],
+  "__nota": "nivell_freatic per punt basat en columna N.F. buida a les 11 files -0,2..-2,2 de p.2; el text lliure 'Hi ha nivell freàtic?' de p.2 és il·legible (transliteració aproximada, no fiable) i no s'ha pogut confirmar que digui 'No' — vegeu reading_notes."
+ },
+ "not_present": [
+  "expedient",
+  "client_name (de l'informe)",
+  "street_address (carrer)",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Escanejat NAPS2, text_ok=false a les 3 pàgines (brossa OCR); lectura 100% visual amb render_clip.py a 500-1200dpi. Data de camp '16/02/2026' llegida amb zoom alt perquè el '2' del mes s'assembla a un '9' en cursiva (comparat amb el mateix traç del '2' final de l'any, mateixa mà) — confirmat coherent a les 3 pàgines. Profunditats de rebuig preses dels números envoltats amb cercle al peu de cada columna P1/P2/P3 (1,6 / 1,3 / 1,69 m), acompanyats d'un '100' (rebuig) i una ratlla diagonal de tall. Es veuen marques diagonals sense interpretar a les files -1,0/-1,2/-1,4 de les 3 columnes (possible marca de canvi de vareta, no de nivell freàtic — no se n'ha trobat una lectura seguraa). La casella 'Descriure punt 0 o cota referència' de p.2 és buida: no dona cota absoluta ni relativa per punt. Primera paraula de 'Descripció dels materials' de p.3 il·legible pese a varis intents de zoom (900-1200dpi); 'MARRÓ' sí és clarament llegible."
+}

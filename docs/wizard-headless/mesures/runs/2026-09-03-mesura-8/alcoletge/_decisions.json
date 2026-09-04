@@ -1,0 +1,2338 @@
+{
+ "schema_version": 1,
+ "project": "4001670 ALCOLETGE",
+ "generated": "2026-09-04T16:18:35",
+ "skill_version": "1.6",
+ "consolidation": {
+  "consolidator": "python-1.0",
+  "elapsed_s": 4.726,
+  "n_docs": 13,
+  "n_conflicts": 1,
+  "docs_skill_versions": [
+   "1.0",
+   "1.6"
+  ],
+  "llm_only_fields": {
+   "requested": [
+    "fields.street_address"
+   ],
+   "applied": [
+    "fields.street_address"
+   ],
+   "elapsed_s": 200.3,
+   "rc": 0,
+   "timeout": false,
+   "json_valid": true
+  }
+ },
+ "fields": {
+  "architect_company": {
+   "estat": "candidats",
+   "value": "2 Graus",
+   "candidates": [
+    {
+     "value": "2 Graus",
+     "font": "A.01.pdf caixetí, logotip inferior dret del bloc d'autoria",
+     "quote": "2 GRAUS",
+     "note": "Nom comercial/logotip del despatx de David Graus Robinat"
+    },
+    {
+     "value": "GRAUS (oficina tècnica de David Graus Robinat)",
+     "font": "26.0049/planol-1.pdf caixetí, logotip inferior dret",
+     "quote": "GRAUS oficina tecnica_serveis integrals d'obra nova_reformes"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "26.0049/planol-1.pdf",
+    "A.01.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "Nom comercial/logotip del despatx de David Graus Robinat"
+  },
+  "architect_name": {
+   "estat": "candidats",
+   "value": "David Graus Robinat",
+   "candidates": [
+    {
+     "value": "David Graus Robinat",
+     "font": "26.0049/planol-1.pdf caixetí, bloc inferior esquerre",
+     "quote": "DAVID GRAUS ROBINAT / ARQUITECTE TÈCNIC COL·LEGIAT Nº 699 / ENGINYER DE LA EDIFICACIÓ",
+     "note": "Titulació: arquitecte tècnic / enginyer de l'edificació (no 'arquitecte superior')"
+    },
+    {
+     "value": "Albert Sans Bonvehí",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.5, checkboxes 'PERSONES I/O EMPRESES QUE PODEN REBRE INFORMACIÓ SOBRE L'INFORME' — cap casella marcada (ni ARQUITECTE ni ALTRES)",
+     "quote": "[ ] ARQUITECTE ... [ ] ALTRES ...",
+     "note": "Cap arquitecte declarat enlloc del document (particular que encarrega directament). Candidat pel patró conegut d'Eva a Alcoletge: escriure el client al camp arquitecte de l'informe. Mai segur — regla explícita del Pas 3 per aquest cas."
+    },
+    {
+     "value": "David Graus (rol no confirmat: podria ser arquitecte/delineant -- remet els plànols del projecte)",
+     "font": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg capçalera i signatura del missatge original (2026-01-21), adreça david@davidgraus.com",
+     "quote": "De: david@davidgraus.com <mailto:david@davidgraus.com>  <david@davidgraus.com <mailto:david@davidgraus.com> > \nEnviado el: miércoles, 21 de enero de 2026 9:59\nPara: Cesar Morillas <cesar@g3dt.com <mailto:cesar@g3dt.com> >\nAsunto: geotècnic Albert Sans municipi d'Alcoletge\n\nBones, Cesar\n\nadjunto documentació per passar pressupost al client, es ampliació d'un habitatge, adjunto plànol situació, plànol estat actual i plànol ampliació.",
+     "note": "Cap títol explícit d'arquitecte enlloc del document; envia els tres plànols de l'encàrrec (situació, estat actual, ampliació), comportament típic d'un tècnic/arquitecte. Únic candidat trobat en aquest document -- confiança baixa, cal creuar amb el plànol A.01 i el pressupost."
+    }
+   ],
+   "rule": "guard: persona i despatx a la vegada (Pas 3): mai segur",
+   "altres": [
+    {
+     "value": "David Graus Robinat",
+     "font": "A.01.pdf caixetí, bloc d'autoria (inferior esquerre)",
+     "quote": "DAVID GRAUS ROBINAT ARQUITECTE TÈCNIC COL.LEGIAT  Nº 699",
+     "note": "És 'Arquitecte Tècnic' (no 'Arquitecte' superior) — matís anotat; despatx '2 Graus', Avinguda del Canal Nº8B Baixos, Mollerussa, tel. 649158020, david@davidgraus.com"
+    }
+   ],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol 3.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf",
+    "26.0049/planol-1.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "Titulació: arquitecte tècnic / enginyer de l'edificació (no 'arquitecte superior')"
+  },
+  "building_type": {
+   "estat": "candidats",
+   "value": "Tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
+   "candidates": [
+    {
+     "value": "Tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
+     "font": "26.0049/planol-1.pdf caixetí, bloc superior esquerre (títol del projecte)",
+     "quote": "PROJECTE DE TANCAMENT DE PORXO EN CASA UNIFAMILIAR",
+     "note": "És una ampliació/tancament de porxo d'un habitatge unifamiliar EXISTENT, no obra nova; coherent amb l'assumpte del correu 'Ampliació Albert Sans'"
+    },
+    {
+     "value": "Ampliació d'habitatge unifamiliar",
+     "font": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge original de David Graus (2026-01-21)",
+     "quote": "adjunto documentació per passar pressupost al client, es ampliació d'un habitatge, adjunto plànol situació, plànol estat actual i plànol ampliació."
+    },
+    {
+     "value": "Ampliació d'un edifici (habitatge)",
+     "font": "PDF/ANNEXES/4001670_plànol de situació.pdf caixetí (títol) + etiqueta a la zona ampliada de la planta",
+     "quote": "AMPLIACIÓ D'UN EDIFICI SITUAT AL... / \"Ampliació\" / \"ampliació habitatge\"",
+     "note": "la redacció exacta de l'informe pot variar"
+    }
+   ],
+   "rule": "contradiccio: Ampliació d'habitatge unifamiliar (3 doc, conf max 0.75); Ampliació d'un edifici (habitatge) (3 doc, conf max 0.75); CONSTR HAB UNIF (1 doc, conf max 0.70)",
+   "altres": [
+    {
+     "value": "CONSTR HAB UNIF",
+     "font": "comanda laboratori_4001670_ALCOLETGE.xls Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR HAB UNIF"
+    },
+    {
+     "value": "Projecte de tancament de porxo en habitatge unifamiliar",
+     "font": "A.01.pdf caixetí, bloc 'Projecte:'",
+     "quote": "PROJECTE DE TANCAMENT DE PORXO EN HABITATGE UNIFAMILIAR.",
+     "note": "Redacció pròpia d'aquest plànol (tancament/ampliació sobre habitatge EXISTENT, no obra nova); l'informe sol redactar només 'habitatge unifamiliar' — comparació CLOSE, candidat"
+    },
+    {
+     "value": "EG AMPL ALCOLETGE",
+     "font": "26.0049/PLAN_COST_ALCOLETGE.xlsx 'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG AMPL ALCOLETGE",
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    },
+    {
+     "value": "ampliació d'habitatge",
+     "font": "26.0049/planol 3.pdf requadre de títol, cantonada inferior dreta",
+     "quote": "ampliació habitatge",
+     "note": "Única font dins d'aquest document (sense caixetí complet que la corrobori aquí); coherent amb l'assumpte del correu \"RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge\" i amb la resta de plantilles G3 del projecte. Candidat, no segur, fins a creuar amb altres documents al Pas 5b."
+    },
+    {
+     "value": "Ampliació d'un edifici",
+     "font": "tall.pdf pàgina 1, capçalera TÍTOL DEL PROJECTE; també etiqueta \"Ampliació\" al plànol de planta",
+     "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL",
+     "note": "El títol diu només 'un edifici' (no especifica habitatge unifamiliar); el croquis de planta mostra una ampliació annexa a un edifici existent. Confirmar amb plànol/projecte de l'arquitecte."
+    },
+    {
+     "value": "Ampliació d'habitatge unifamiliar",
+     "font": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del correu, bloc \"GEO:\" (missatge de César) i text del missatge citat de David Graus; corroborat per l'adjunt image008.jpg",
+     "quote": "GEO: És un ampliació d'uns 100 m a la part posterior de l'edificació existent ( mirar plànols) | \"adjunto documentació per passar pressupost al client, es ampliació d'un habitatge\"",
+     "note": "L'adjunt image008.jpg (croquis) etiqueta la zona nova com \"ampliació habitatge\" en vermell, a la part posterior de l'edificació existent — corrobora visualment el text."
+    },
+    {
+     "value": "Ampliació d'habitatge unifamiliar",
+     "font": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge de César Morillas (2026-01-26), línia 'GEO:'",
+     "quote": "GEO: És un ampliació d'uns 100 m a la part posterior de l'edificació existent ( mirar plànols)",
+     "note": "Confirma el mateix tipus que el missatge de David Graus; no és font independent."
+    },
+    {
+     "value": "Ampliació d'un edifici",
+     "font": "PDF/ANNEXES/4001670_tall de correlació.pdf peu de plànol, bloc TÍTOL DEL PROJECTE",
+     "quote": "L'AMPLIACIÓ D'UN EDIFICI",
+     "note": "Redacció genèrica ('un edifici'); el plànol de situació inclòs en aquest mateix document mostra una planta d'habitatge amb una zona ratllada etiquetada 'Ampliació'. Confirmar el tipus exacte (habitatge unifamiliar, etc.) amb pressupost/PLAN_COST/fitxa."
+    }
+   ],
+   "sources_checked": [
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PENETROS.pdf",
+    "comanda laboratori_4001670_ALCOLETGE.xls",
+    "26.0049/PLAN_COST_ALCOLETGE.xlsx",
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "tall.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "És una ampliació/tancament de porxo d'un habitatge unifamiliar EXISTENT, no obra nova; coherent amb l'assumpte del correu 'Ampliació Albert Sans'"
+  },
+  "client_name": {
+   "estat": "segur",
+   "value": "Albert Sans Bonvehí",
+   "candidates": [
+    {
+     "value": "Albert Sans Bonvehí",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.5 (Pàg. 2 de 2 del pressupost) bloc 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME'",
+     "quote": "NOM I COGNOMS: ALBERT SANS BONVEHÍ",
+     "note": "Formulari autoritat A (Pas 3). Coincideix amb el bloc CLIENT: de la portada ('SANS BONVEHI, ALBERT') i amb la signatura manuscrita 'Albert Sans'. NIF 47690689M. És també el sol·licitant (particular, sense arquitecte) — coherent amb el patró conegut d'Alcoletge."
+    },
+    {
+     "value": "Albert Sans Bonvehi",
+     "font": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del correu, bloc \"CLIENT:\" (missatge de César) i bloc d'identificació del client (missatge citat de David Graus)",
+     "quote": "CLIENT: ALBERT SANS BONVEHI tel. 675639431 - etesnob91@gmail.com | ALBERT SANS BONVEHI / DNI 47690689-M / CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida(25660) / TELF: 675639431",
+     "note": "No apareix cap arquitecte enlloc d'aquest correu (ni al bloc CLIENT ni a la resta del text); el nom ve acompanyat de DNI, telèfon i adreça pròpia, propi d'un client que encarrega directament (particular), no d'un sol·licitant intermediari. Coherent amb el patró conegut d'Alcoletge (sense arquitecte). Ambdues aparicions són dins del mateix fil de correu, no fonts independents entre elles."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "Albert Sans Bonvehí",
+     "font": "26.0049/planol-1.pdf caixetí, bloc 'Promotor:'",
+     "quote": "Promotor: ALBERT SANS BONVEHI"
+    },
+    {
+     "value": "Albert Sans Bonvehi",
+     "font": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge original de David Graus (2026-01-21), bloc de signatura del client",
+     "quote": "ALBERT SANS BONVEHI        \nDNI    47690689-M\nCARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida(25660)\nTELF: 675639431",
+     "note": "Etiquetat 'CLIENT:' al missatge de César (sol·licitant per definició de regla); cap Promotor/Propietat separat apareix enlloc del document -- encàrrec directe d'un particular per a casa pròpia (sense arquitecte visible), coherent amb el patró d'Alcoletge (client = arquitecte/sol·licitant a la pràctica de l'Eva). No segur: font única (aquesta cadena), no creuada encara amb pressupost/acceptació."
+    },
+    {
+     "value": "Albert Sans Bonvehi",
+     "font": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge de César Morillas (2026-01-26), línia 'CLIENT:'",
+     "quote": "CLIENT: ALBERT SANS BONVEHI tel. 675639431 - etesnob91@gmail.com",
+     "note": "Mateixa persona que la signatura de David Graus; no és font independent (deriva del mateix encàrrec)."
+    },
+    {
+     "value": "Albert Sans Bonvehí",
+     "font": "A.01.pdf caixetí, bloc 'Promotor:'",
+     "quote": "Promotor: ALBERT SANS BONVEHI",
+     "note": "Etiqueta 'Promotor' = client de l'informe; coincideix amb l'assumpte del correu 'Ampliació Albert Sans'"
+    },
+    {
+     "value": "SANS BONVEHI, ALBERT",
+     "font": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf p.1 bloc CLIENT (y,x)",
+     "quote": "SANS BONVEHI, ALBERT / C/GIRASOLS 7, URB.EL ROSER / 25660 ALCOLETGE",
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    }
+   ],
+   "sources_checked": [
+    "26.0049/planol 3.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "tall.pdf",
+    "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf",
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "No apareix cap arquitecte enlloc d'aquest correu (ni al bloc CLIENT ni a la resta del text); el nom ve acompanyat de DNI, telèfon i adreça pròpia, propi d'un client que encarrega directament (particular), no d'un sol·licitant intermediari. Coherent amb el patró conegut d'Alcoletge (sense arquitecte). Ambdues aparicions són dins del mateix fil de correu, no fonts independents entre elles.",
+   "descartats": [
+    {
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "font": "comanda laboratori_4001670_ALCOLETGE.xls Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    },
+    {
+     "value": "G3 / Eva",
+     "font": "PENETROS.pdf p.1 ALBARÀ, bloc 'DADES CLIENT'",
+     "quote": "DADES CLIENT: Empresa: G3 / Responsable: EVA",
+     "note": "Descartat expressament: és el client de TPS (subcontractista), no el client de l'informe geotècnic (regla Pas 0/Pas 3 — G3 mai és client)."
+    }
+   ]
+  },
+  "cota_referencia": {
+   "estat": "candidats",
+   "value": "+188,20 msnm",
+   "candidates": [
+    {
+     "value": "+188,20 msnm",
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1-3 capçalera 'Cota inici'",
+     "quote": "Cota inici:  +188,20 msnm segons el plànol topogràfic de l'ICGC.",
+     "note": "mateixa cota per als 3 punts (P-1, P-2, P-3); origen declarat = plànol topogràfic ICGC"
+    },
+    {
+     "value": "198.9",
+     "font": "ANNEXES/COORDENADES.txt (P-1 z)",
+     "quote": "P-1: 308781,86 ; 4613950.63 ; 198.9",
+     "note": "GPS de camp: l'Eva no l'usa com a cota de referencia (~0,6 m de diferencia amb l'ICGC)"
+    }
+   ],
+   "rule": "contradiccio: 198.9 (1 doc, conf max 0.50)",
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "ANNEXES/COORDENADES.txt",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "mateixa cota per als 3 punts (P-1, P-2, P-3); origen declarat = plànol topogràfic ICGC"
+  },
+  "cte_edificacio": {
+   "estat": "candidats",
+   "value": "C0",
+   "candidates": [
+    {
+     "value": "C0",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.2, sota 'Aquesta proposta s'ha elaborat...'",
+     "quote": "Tipus d'edifici: C0",
+     "note": "Camp explícit del pressupost G3, sense contradicció dins del document."
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "altres": [
+    {
+     "value": "C0",
+     "font": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf p.2",
+     "quote": "Tipus d’edifici: C0"
+    }
+   ],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf",
+    "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "Camp explícit del pressupost G3, sense contradicció dins del document."
+  },
+  "cte_sol": {
+   "estat": "candidats",
+   "value": "T1",
+   "candidates": [
+    {
+     "value": "T1",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.2, sota 'Tipus d'edifici: C0'",
+     "quote": "Tipus de Terreny : T1",
+     "note": "Camp explícit del pressupost G3, sense contradicció dins del document."
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "altres": [
+    {
+     "value": "T1",
+     "font": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf p.2",
+     "quote": "Tipus de Terreny : T1"
+    }
+   ],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf",
+    "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "Camp explícit del pressupost G3, sense contradicció dins del document."
+  },
+  "expedient": {
+   "estat": "segur",
+   "value": "4001670",
+   "candidates": [
+    {
+     "value": "4001670",
+     "font": "comanda laboratori_4001670_ALCOLETGE.xls Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "4001670.0"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "4001670",
+     "font": "ANNEXES/4001670_DPSH.xls nom del fitxer",
+     "quote": "4001670_DPSH.xls"
+    },
+    {
+     "value": "4001670",
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1-3 capçalera 'NÚMERO D´INFORME'",
+     "quote": "NÚMERO D´INFORME: 4001670",
+     "note": "coincideix amb el nom de la carpeta del projecte (4001670 ALCOLETGE)"
+    },
+    {
+     "value": "4001670",
+     "font": "PDF/ANNEXES/4001670_fotografies.pdf capçalera p.1 i p.2, extrem dret (\"Fotografies - pàgina N\" | codi)",
+     "quote": "4001670",
+     "note": "capçalera de la plantilla G3 fotogràfica, coincident amb el nom de carpeta; confirmació, no font primària (comanda/annex DPSH/GTL)"
+    },
+    {
+     "value": "4001670",
+     "font": "PDF/ANNEXES/4001670_plànol de situació.pdf caixetí inferior dret, cel·la 'Exp:'",
+     "quote": "Exp: 4001670",
+     "note": "coincideix amb el nom de la carpeta del projecte"
+    },
+    {
+     "value": "4001670",
+     "font": "PDF/ANNEXES/4001670_tall de correlació.pdf peu de plànol, cel·la 'Exp:'",
+     "quote": "Exp: 4001670",
+     "note": "Coincideix amb el nom de la carpeta del projecte (4001670 ALCOLETGE)."
+    },
+    {
+     "value": "4001670",
+     "font": "tall.pdf pàgina 1, requadre inferior dret del peu de plànol",
+     "quote": "Exp: 4001670",
+     "note": "Coincideix amb el nom de la carpeta del projecte."
+    },
+    {
+     "value": "4001670",
+     "font": "nom de la carpeta del projecte",
+     "quote": "4001670 ALCOLETGE",
+     "note": "regla Pas 3: nom de la carpeta = NNNNNNN MUNICIPI"
+    }
+   ],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PENETROS.pdf",
+    "comanda laboratori_4001670_ALCOLETGE.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "tall.pdf",
+    "(carpeta)",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "coincideix amb el nom de la carpeta del projecte (4001670 ALCOLETGE)",
+   "descartats": [
+    {
+     "value": "26.0049 P#",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.2 i p.5, capçalera 'PRESSUPOST GEOTECNIC' / 'PRESSUPOST'",
+     "quote": "PRESSUPOST GEOTECNIC 26·0049 P# DATA: 27/01/26",
+     "note": "Codi COMERCIAL del pressupost (regla Pas 3: '25·NNNN P#' = codi comercial, NO expedient). Descartat explícitament com a font d'expedient; l'expedient real és el nom de carpeta '4001670'."
+    }
+   ]
+  },
+  "field_date": {
+   "estat": "segur",
+   "value": "2026-02-16",
+   "candidates": [
+    {
+     "value": "2026-02-16",
+     "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, camp 'Data'",
+     "quote": "Data: 16-2-26",
+     "note": "Coincideix amb p.1 ALBARÀ ('Data: 16/02/26') i p.3 Full d'assaig ('Data: 16/09/2026' llegit com 16/02/2026 — el '2' del mes es dibuixa amb un floreig que s'assembla a un '9', però és el mateix traç que el '2' final de l'any '2026' de la mateixa mà). Les tres dates del mateix document coincideixen entre elles; no és una font independent addicional."
+    },
+    {
+     "value": "2026-02-16",
+     "font": "comanda laboratori_4001670_ALCOLETGE.xls Hoja1!N23 (DATA DE PRESA)",
+     "quote": "46069.0",
+     "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    },
+    {
+     "value": "Febrer 2026",
+     "font": "PDF/ANNEXES/4001670_tall de correlació.pdf peu de plànol, cel·la 'Data:'",
+     "quote": "Data: Febrer 2026",
+     "note": "Data de redacció/còpia del tall (síntesi de l'Eva), no necessàriament el primer dia de camp; només mes i any, sense dia concret. La metadada del PDF (creationDate/modDate) marca 2026-03-16, posterior -- probablement data d'exportació a Acrobat Distiller, no data de camp."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "16/02/2026",
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1-3 capçalera DATA",
+     "quote": "DATA: 16/02/2026",
+     "note": "candidat; la fitxa de camp (DADES PER ANAR A CAMP_v1.xlsx, F38) no s'ha llegit en aquesta crida i té prioritat superior segons el Pas 3"
+    }
+   ],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001670_ALCOLETGE.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp",
+   "descartats": [
+    {
+     "value": "27/01/26",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.2 i p.5, camp 'DATA'",
+     "quote": "DATA: 27/01/26",
+     "note": "Data del PRESSUPOST (emissió), no de camp. Regla explícita del Pas 3: mai la data del pressupost ni de l'acceptació per a field_date. Descartat."
+    }
+   ]
+  },
+  "lab_depth": {
+   "estat": "candidats",
+   "value": "0.8 - 1.4",
+   "candidates": [
+    {
+     "value": "0.8 - 1.4",
+     "font": "comanda laboratori_4001670_ALCOLETGE.xls Hoja1!J35/L35",
+     "quote": "INICIAL 0.8 / FINAL 1.4",
+     "note": "el GTL mana si discrepa"
+    },
+    {
+     "value": "0,80 - 1,40 m",
+     "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Cota d'extracció'",
+     "quote": "de la cota de: 0,8 / fins a la cota: 1,4",
+     "note": "Interval del mateix assaig SPT P3."
+    },
+    {
+     "value": "0,80 a 1,40",
+     "font": "ANNEXES/4001670_DPSH.xls Full P-3 (index 1), cel·la E23",
+     "quote": "E23: '0,80 a 1,40'",
+     "note": "Candidat: Pas 3 diu 'GTL > Excel DPSH/annex sondeig > comanda per a lab_depth' -- l'Excel és font vàlida però no la primera prioritat si hi ha GTL."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "altres": [
+    {
+     "value": "0,80 a 1,40",
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, columna 'MESURA DE PAR', fondàries -1,2/-1,4",
+     "quote": "0,80 a 1,40"
+    }
+   ],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001670_ALCOLETGE.xls",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PENETROS.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "el GTL mana si discrepa"
+  },
+  "lab_location": {
+   "estat": "candidats",
+   "value": "P3",
+   "candidates": [
+    {
+     "value": "P3",
+     "font": "comanda laboratori_4001670_ALCOLETGE.xls Hoja1!C35 (parèntesi)",
+     "quote": "SPT -1 (P3)"
+    },
+    {
+     "value": "P-3",
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, mateixa fila que 'SPT-1'",
+     "quote": "SPT-1",
+     "note": "punt DPSH on es va prendre la mostra SPT-1"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "altres": [
+    {
+     "value": "P3",
+     "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Assaig de referència'",
+     "quote": "SPT   P3",
+     "note": "Punt d'assaig del qual surt la mostra."
+    }
+   ],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001670_ALCOLETGE.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PENETROS.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "punt DPSH on es va prendre la mostra SPT-1"
+  },
+  "lab_sample_id": {
+   "estat": "candidats",
+   "value": "SPT -1 (P3)",
+   "candidates": [
+    {
+     "value": "SPT -1 (P3)",
+     "font": "comanda laboratori_4001670_ALCOLETGE.xls Hoja1!C35",
+     "quote": "SPT -1 (P3)",
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    },
+    {
+     "value": "SPT P3",
+     "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Assaig de referència'",
+     "quote": "Assaig de referència: SPT   P3",
+     "note": "Únic assaig SPT/MI registrat en aquest full (el segon bloc 'Assaig tipus' de p.3 és buit)."
+    },
+    {
+     "value": "SPT-1",
+     "font": "PDF/ANNEXES/4001670_fotografies.pdf peu de foto F-4, p.2",
+     "quote": "detall dels materials recuperats en l'assaig SPT-1, respectivament",
+     "note": "confirma l'etiqueta SPT-1 de la mostra recuperada; no dona fondària ni cota (regla: annex de l'Eva mana per a l'etiqueta, GTL/Excel per a la profunditat)"
+    }
+   ],
+   "rule": "contradiccio: SPT P3 (1 doc, conf max 0.60)",
+   "altres": [
+    {
+     "value": "SPT-1",
+     "font": "ANNEXES/4001670_DPSH.xls Full P-3 (index 1), cel·la E22",
+     "quote": "E22: 'SPT-1'",
+     "note": "Candidat feble: aquest Excel DPSH no és l'annex de l'Eva ni el GTL del laboratori (autoritat preferent per a l'etiqueta de mostra); és una anotació incrustada dins del full de colpeig del punt P-3."
+    },
+    {
+     "value": "SPT-1",
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, columna 'MESURA DE PAR', fila fondària -1,2 (punt P-3)",
+     "quote": "SPT-1",
+     "note": "mostra SPT integrada al DPSH P-3; no és el document GTL/comanda de laboratori; candidat feble, confirmar amb GTL/comanda"
+    }
+   ],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001670_ALCOLETGE.xls",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PENETROS.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+  },
+  "lab_testing_company": {
+   "estat": "candidats",
+   "value": "TPS",
+   "candidates": [
+    {
+     "value": "TPS",
+     "font": "PENETROS.pdf p.1-3 capçalera (logotip 'tps prospecció del subsòl')",
+     "quote": "tps — prospecció del subsòl",
+     "note": "Identifica l'empresa que executa l'assaig SPT de camp, però aquest full NO és el GTL de laboratori (sense NIF ni banda de registre mercantil): candidat feble per lab_testing_company, l'autoritat és el GTL (Pas 3)."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "tall.pdf",
+    "PENETROS.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "Identifica l'empresa que executa l'assaig SPT de camp, però aquest full NO és el GTL de laboratori (sense NIF ni banda de registre mercantil): candidat feble per lab_testing_company, l'autoritat és el GTL (Pas 3)."
+  },
+  "municipality": {
+   "estat": "segur",
+   "value": "Alcoletge",
+   "candidates": [
+    {
+     "value": "Alcoletge",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.1 bloc OBRA ('25660 ALCOLETGE') i p.5 bloc DADES FACTURA ('CP I POBLACIÓ: 25.660 - ALCOLETGE')",
+     "quote": "25660 ALCOLETGE / 25.660 - ALCOLETGE",
+     "note": "Dues aparicions dins del mateix document (OBRA i factura), coincideixen entre elles i amb el nom de la carpeta del projecte."
+    },
+    {
+     "value": "Alcoletge (25660)",
+     "font": "26.0049/planol-1.pdf caixetí, bloc 'Situació:', primera línia",
+     "quote": "Situació: Alcoletge (25660)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "ALCOLETGE",
+     "font": "comanda laboratori_4001670_ALCOLETGE.xls Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "ALCOLETGE"
+    },
+    {
+     "value": "ALCOLETGE",
+     "font": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/GIRASOLS 7, URB.EL ROSER / ALCOLETGE / PRESSUPOST GEOTECNIC",
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "ALCOLETGE",
+     "font": "26.0049/PLAN_COST_ALCOLETGE.xlsx 'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG AMPL ALCOLETGE"
+    },
+    {
+     "value": "Alcoletge",
+     "font": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del correu, dins el bloc OBRA i el bloc d'identificació del client",
+     "quote": "Alcoletge, Lleida (25660)",
+     "note": "Forma curta, coincideix amb el nom de la carpeta del projecte (4001670 ALCOLETGE)."
+    },
+    {
+     "value": "Alcoletge",
+     "font": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge de César Morillas (2026-01-26), línia 'OBRA:'",
+     "quote": "OBRA: CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660) bon accés",
+     "note": "Coincideix amb la mateixa dada al bloc de signatura de David Graus."
+    },
+    {
+     "value": "Alcoletge",
+     "font": "A.01.pdf caixetí, bloc 'Situació:'",
+     "quote": "(25660) ALCOLETGE",
+     "note": "Codi postal 25660 + nom en majúscules; normalitzat a 'Alcoletge'"
+    },
+    {
+     "value": "Alcoletge",
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1-3 capçalera POBLACIÓ",
+     "quote": "POBLACIÓ:  ALCOLETGE"
+    },
+    {
+     "value": "Alcoletge",
+     "font": "PDF/ANNEXES/4001670_plànol de situació.pdf caixetí (títol) + rètol del mapa de localització (superior esquerra)",
+     "quote": "D'ALCOLETGE / Alcoletge (rètol al mapa)"
+    },
+    {
+     "value": "Alcoletge",
+     "font": "PDF/ANNEXES/4001670_tall de correlació.pdf peu de plànol, bloc TÍTOL DEL PROJECTE (final de la frase)",
+     "quote": "D'ALCOLETGE",
+     "note": "Coincideix amb el nom de la carpeta del projecte (...ALCOLETGE)."
+    },
+    {
+     "value": "Alcoletge",
+     "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, camp 'Adreça de l'obra'",
+     "quote": "Adreça de l'obra: ALCOLETGE",
+     "note": "El camp diu 'Adreça' però només s'hi escriu el nom del municipi, sense carrer ni número — no és font de street_address. Grafia variant a p.1 ALBARÀ ('Adreça: ALOLETGE', falta la C) i a p.3 ('ALCOLETGE'). Document de camp de TPS, no plantilla G3: candidat feble, no font d'autoritat forta."
+    },
+    {
+     "value": "Alcoletge",
+     "font": "tall.pdf pàgina 1, capçalera TÍTOL DEL PROJECTE",
+     "quote": "D'ALCOLETGE",
+     "note": "Coincideix amb el nom de la carpeta (ALCOLETGE, forma curta/majúscula)."
+    }
+   ],
+   "sources_checked": [
+    "26.0049/planol 3.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "comanda laboratori_4001670_ALCOLETGE.xls",
+    "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf",
+    "26.0049/PLAN_COST_ALCOLETGE.xlsx",
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+  },
+  "num_dpsh_tests": {
+   "estat": "segur",
+   "value": 3,
+   "candidates": [
+    {
+     "value": 3,
+     "font": "ANNEXES/4001670_DPSH.xls fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1', 'P-3', 'P-2']",
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": 3,
+     "font": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf p.2 campanya",
+     "quote": "3 assaigs de penetració dinàmica",
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "value": 3,
+     "font": "26.0049/PLAN_COST_ALCOLETGE.xlsx OFERTA!B21",
+     "quote": "3",
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "value": 3,
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.2 'campanya de camp' i p.4 (Ag.001, Pàg 1 de 3) taula VALORACIÓ",
+     "quote": "3 assaigs de penetració dinàmica DPSH / UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH ... 3,00",
+     "note": "PREVISTOS al pressupost, no executats. Per la regla del Pas 3, l'Excel DPSH (executats) mana sobre el pressupost si discrepen; aquest valor és candidat de menor prioritat."
+    },
+    {
+     "value": "3",
+     "font": "ANNEXES/4001670_DPSH.xls Llibre sencer: fulls P-1, P-3, P-2 (index 0,1,2)",
+     "quote": "3 fulls anomenats P-1, P-3, P-2, cadascun amb la columna C (Colpeig DPSH) omplerta des de C17 fins a la fila de rebuig",
+     "note": "Font única (Excel DPSH) sense contradicció interna -> regla del Pas 3b: l'Excel DPSH (executats) mana per al nombre de penetròmetres executats."
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1-3 capçaleres 'ASSAIG DE PENETRACIÓ DINÀMICA: P-1 / P-2 / P-3'",
+     "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1 (p.1) / P-2 (p.2) / P-3 (p.3)",
+     "note": "3 pàgines = 3 punts amb dades executades; document derivat de l'Excel DPSH (ANNEXES/4001670_DPSH.xls), no llegit en aquesta crida"
+    },
+    {
+     "value": "3",
+     "font": "PDF/ANNEXES/4001670_fotografies.pdf peus de foto p.1 (\"Fotografies 1 i 2\") i p.2 (\"Fotografies 3 i 4\")",
+     "quote": "assaigs de penetració dinàmica DPSH P-1 i P-2 ... assaig de penetració dinàmica DPSH P-3",
+     "note": "confirma l'existència de P-1, P-2, P-3 (coincident amb els 3 fulls de l'Excel DPSH: P-1, P-2, P-3); no és la font primària de recompte, només confirmació visual"
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANNEXES/4001670_plànol de situació.pdf planta, 3 marcadors P-1/P-2/P-3 amb llegenda 'Assaig de penetració dinàmica DPSH'",
+     "quote": "P-1, P-2, P-3 — llegenda: Assaig de penetració dinàmica DPSH",
+     "note": "font corroborant (recompte visual de marcadors al plànol), no és la font d'autoritat primària (Excel DPSH); coincideix amb els 3 fulls P-1/P-3/P-2 de l'Excel DPSH del projecte"
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANNEXES/4001670_tall de correlació.pdf planta de situació (cantonada superior esquerra) i tall A-A'",
+     "quote": "P-1 / P-3 / P-2",
+     "note": "Nombre de punts DPSH representats al tall i a la planta de situació; confirmar el recompte d'assaigs 'executats' amb l'Excel DPSH (ANNEXES/4001670_DPSH.xls)."
+    },
+    {
+     "value": 3,
+     "font": "PENETROS.pdf p.1 ALBARÀ, bloc 'ML DE PERFORACIÓ' → 'Nº de penetròmetres realitzats'",
+     "quote": "Nº de penetròmetres realitzats: 3",
+     "note": "Coherent amb els 3 punts P1/P2/P3 omplerts a p.2. Font 'executats' (albarà), no 'previstos'; per sota en prioritat de l'Excel DPSH si discrepen (regla existent)."
+    },
+    {
+     "value": 3,
+     "font": "tall.pdf pàgina 1, etiquetes sobre el perfil A-A' i sobre el plànol de planta",
+     "quote": "P-1 ... P-3 ... P-2",
+     "note": "Tres punts DPSH diferenciats i etiquetats; corroborar amb l'Excel DPSH (executats) que mana per aquest camp."
+    }
+   ],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf",
+    "26.0049/PLAN_COST_ALCOLETGE.xlsx",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "EXECUTATS (autoritat sobre els previstos)"
+  },
+  "num_floors": {
+   "estat": "no_trobat",
+   "value": null,
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ]
+  },
+  "num_soil_levels": {
+   "estat": "segur",
+   "value": 2,
+   "candidates": [
+    {
+     "value": 2,
+     "font": "PDF/ANNEXES/4001670_tall de correlació.pdf quadre LLEGENDA",
+     "quote": "Nivell 1: Rebliment antròpic. / Nivell 2: Lutites, substrat."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "2",
+     "font": "ANNEXES/4001670_DPSH.xls Full P-1 (i P-2, P-3), columna G 'Nivells' (color) + llegenda files 79-80",
+     "quote": "C79='Nivell 1' (cel·la de mostra B79 en vermell #FF8080); F79='Nivell 2' (cel·la de mostra E79 en groc #FFFF99). A cada full, la columna G comença en vermell i canvia a groc abans del rebuig; cap tercera color apareix.",
+     "note": "Candidat, no segur: aquest projecte no té annex de sondeig (no hi ha *_sondeig.pdf a la carpeta), que és la font preferent per a num_soil_levels. El senyal ve només de la llegenda de colors d'aquest Excel DPSH. Pas 3b: 'Sense annex -> candidats amb el nombre de trams i nota confirmar'."
+    },
+    {
+     "value": 2,
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1-3 llegenda de colors de la columna 'Nivells' (Nivell 1 / Nivell 2 / Humitat)",
+     "quote": "Nivell 1 | Nivell 2 | Humitat",
+     "note": "senyal feble: derivat de les bandes de color de cada assaig DPSH; el projecte no té annex de sondeig a rotació — confirmar amb tall.pdf (no llegit en aquesta crida)"
+    },
+    {
+     "value": 2,
+     "font": "tall.pdf pàgina 1, LLEGENDA",
+     "quote": "Nivell 1: Rebliment antròpic. / Nivell 2:  Lutites, substrat.",
+     "note": "El tall mana pel NOMBRE de nivells (regla existent); sense annex de sondeig en aquest projecte (només DPSH), aquesta és la font principal."
+    }
+   ],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PENETROS.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "tall.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "Candidat, no segur: aquest projecte no té annex de sondeig (no hi ha *_sondeig.pdf a la carpeta), que és la font preferent per a num_soil_levels. El senyal ve només de la llegenda de colors d'aquest Excel DPSH. Pas 3b: 'Sense annex -> candidats amb el nombre de trams i nota confirmar'."
+  },
+  "referencia_catastral": {
+   "estat": "candidats",
+   "value": "8841701CG0184S0001HH",
+   "candidates": [
+    {
+     "value": "8841701CG0184S0001HH",
+     "font": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge citat de David Graus (21/01/2026), sota les dades del client",
+     "quote": "Referencia Catastral: 8841701CG0184S0001HH",
+     "note": "Única font d'aquest correu; no s'ha creuat encara amb cap consulta del Cadastre del projecte."
+    },
+    {
+     "value": "98417",
+     "font": "26.0049/planol-1.pdf plànol cadastral superior de la pàgina, etiqueta magenta al costat de la parcel·la ressaltada en blau",
+     "quote": "98417",
+     "note": "NO té el format estàndard de referència cadastral (20 caràcters); sembla un número de parcel·la/lot intern de la subdivisió urbanística mostrada al plànol, no una referència cadastral oficial. Creuar amb una consulta del Cadastre si n'hi ha a la carpeta abans d'usar-lo."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "altres": [
+    {
+     "value": "8841701CG0184S0001HH",
+     "font": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge original de David Graus (2026-01-21)",
+     "quote": "Referencia Catastral: 8841701CG0184S0001HH",
+     "note": "Font única en aquest document (cap consulta de Cadastre adjunta aquí); candidat, no segur -- pendent creuar amb altres fonts del projecte."
+    }
+   ],
+   "sources_checked": [
+    "26.0049/planol 3.pdf",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf",
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "Única font d'aquest correu; no s'ha creuat encara amb cap consulta del Cadastre del projecte."
+  },
+  "street_address": {
+   "estat": "segur",
+   "value": "Carrer Girasols, Nº7, Urbanització el Roser",
+   "candidates": [
+    {
+     "value": "Carrer Girasols, Nº7, Urbanització el Roser",
+     "font": "A.01.pdf caixetí, bloc 'Situació:' (arquitecte; duplicat md5 amb 26.0049/A.01.pdf i 26.0049/PLANO 2.pdf)",
+     "quote": "Situació: CARRER GIRASOLS, Nº7 Urbanització el Roser, (25660) ALCOLETGE",
+     "note": "Bloc etiquetat 'Situació' — autoritat A"
+    },
+    {
+     "value": "Carrer Girasols, Nº7",
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf capçalera bloc OBRA (p.1-3, idèntic a P-1/P-2/P-3)",
+     "quote": "OBRA: CARRER GIRASOLS Nº7",
+     "note": "Annex determinista de camp de G3, origen independent de l'arquitecte i del pressupost comercial"
+    },
+    {
+     "value": "C/GIRASOLS 7, URB.EL ROSER",
+     "font": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf p.1 bloc OBRA (plantilla G3 determinista)",
+     "quote": "ESTUDI GEOTECNIC / C/GIRASOLS 7, URB.EL ROSER / ALCOLETGE / PRESSUPOST GEOTECNIC",
+     "note": "Coincideix amb la còpia signada a ACCEPTACIO/…SIGNAT-SCAN.pdf (mateix document comercial, no és font independent addicional)"
+    }
+   ],
+   "rule": "street_address només de blocs etiquetats OBRA/ADREÇA OBRA/Situació (Pas 3); mai l'adreça del client/sol·licitant.",
+   "note": "≥5 fonts independents coincideixen sense contradicció: A.01.pdf i 26.0049/planol-1.pdf (arquitecte, bloc 'Situació:'), PDF/ANNEXES/4001670_DPSH.pdf (annex de camp G3), el pressupost G3 (plantilla determinista) i el correu de César Morillas 2026-01-26 (\"OBRA: CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660)\"). Sense escenari de cantonada: una sola adreça a tot el corpus. Variants de grafia no competidores, totes de la mateixa via/portal: 'Nº7'/'nº7'/'7'/'Nº 7'; 'Girasols'/'dels Gira-sols' (article, acceptació pressupost p.5); 'C/'/'Carrer'. Descartats com a NO fonts independents: 26.0049/A.01.pdf i 26.0049/PLANO 2.pdf (mateix md5 que A.01.pdf arrel, verificat a _inventory.json); ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf (mateix pressupost signat, no aporta font nova); tall.pdf i PDF/ANNEXES/4001670_tall de correlació.pdf (mateix contingut entre si — redacció de títol del projecte, no bloc OBRA/Situació etiquetat, conf. 0.6-0.65 als propis {doc}.json — no compten per elevar a segur, tot i coincidir en valor).",
+   "llm_only_fields": true,
+   "altres": [
+    {
+     "value": "Carrer Girasols, Nº 7, Urbanització El Roser, Alcoletge",
+     "font": "tall.pdf pàgina 1, capçalera TÍTOL DEL PROJECTE (i repetit al peu de plànol)",
+     "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+     "note": "Redacció de títol (frase de l'informe), no bloc OBRA/ADREÇA etiquetat; candidat, creuar amb comanda/pressupost/PLAN_COST."
+    },
+    {
+     "value": "Carrer Girasols Nº7, Urbanització El Roser",
+     "font": "PDF/ANNEXES/4001670_tall de correlació.pdf peu de plànol, bloc TÍTOL DEL PROJECTE",
+     "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+     "note": "Adreça dins la redacció del títol del projecte, no en un camp etiquetat 'OBRA'/'Situació'; tractar com a candidat, a confirmar amb comanda/pressupost/fitxa de camp."
+    },
+    {
+     "value": "Carrer Girasols, Nº7",
+     "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1-3 capçalera bloc OBRA",
+     "quote": "OBRA: CARRER GIRASOLS Nº7",
+     "note": "etiqueta OBRA, idèntica a les 3 pàgines (P-1/P-2/P-3)"
+    },
+    {
+     "value": "Carrer Girasols nº7",
+     "font": "26.0049/planol-1.pdf caixetí, bloc 'Situació:', segona línia",
+     "quote": "Carrer Girasols nº7",
+     "note": "Forma curta sense article 'dels'; a la fotografia aèria de la mateixa pàgina el rètol del carrer diu 'Carrer dels Gira[sols]' (tallat pel marge) — mateixa via"
+    },
+    {
+     "value": "Carrer Girasols 7 (Urbanització El Roser), Alcoletge, Lleida (25660)",
+     "font": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del correu, bloc \"OBRA:\" (missatge de César) i bloc d'identificació del client (missatge citat de David Graus)",
+     "quote": "OBRA: CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660) bon accés",
+     "note": "Coincideix literalment (llevat de l'espai abans del parèntesi del CP) a les dues aparicions dins d'aquest mateix correu."
+    },
+    {
+     "value": "Carrer Girasols, 7 (Urbanització El Roser), Alcoletge",
+     "font": "PDF/ANNEXES/4001670_plànol de situació.pdf caixetí inferior, títol del projecte",
+     "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+     "note": "document etiquetat 'Plànol de situació'; una sola font en aquest document"
+    },
+    {
+     "value": "Carrer Girasols, 7 (Urbanització El Roser), Alcoletge, Lleida (25660)",
+     "font": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge original de David Graus (2026-01-21), bloc de signatura del client",
+     "quote": "CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida(25660)",
+     "note": "Adreça del client, no explícitament etiquetada OBRA aquí -- però coincideix amb l'ampliació és a casa pròpia del client, mateixa adreça. No independent de l'entrada anterior (mateixa cadena)."
+    },
+    {
+     "value": "C/GIRASOLS 7, URB.EL ROSER",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.1 (portada) bloc 'OBRA:'",
+     "quote": "OBRA:\nESTUDI GEOTECNIC\nC/GIRASOLS 7, URB.EL ROSER\nALCOLETGE",
+     "note": "Bloc OBRA (autoritat per a adreça de l'obra, no la del client). Grafia alternativa al bloc de factura (p.5): 'C/DELS GIRA-SOLS, 7 (CASA)' — mateix carrer, mateix número; com que el client és el propietari de l'obra, l'adreça del client i la de l'obra coincideixen."
+    }
+   ]
+  },
+  "superficie_parcela": {
+   "estat": "candidats",
+   "value": "1167",
+   "candidates": [
+    {
+     "value": "1167",
+     "font": "(Cadastre: 7 = 8841701CG0184S, 1167 m²)",
+     "quote": "",
+     "note": "suma de les parcel·les cadastrals dels portals de l'adreça llegida (consulta HTTP, no lectura d'un document de la carpeta); la fila de l'informe diu \"segons plànols cadastrals\"; confirmar si el projecte abasta més o menys portals dels que diu l'adreça; 1/1 punts d'assaig dins de la unio"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "suma de les parcel·les cadastrals dels portals de l'adreça llegida (consulta HTTP, no lectura d'un document de la carpeta); la fila de l'informe diu \"segons plànols cadastrals\"; confirmar si el projecte abasta més o menys portals dels que diu l'adreça; 1/1 punts d'assaig dins de la unio"
+  },
+  "utm_x": {
+   "estat": "segur",
+   "value": "308781,86",
+   "candidates": [
+    {
+     "value": "308781,86",
+     "font": "ANNEXES/COORDENADES.txt (P-1)",
+     "quote": "P-1: 308781,86 ; 4613950.63 ; 198.9",
+     "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 308781,86/4613950.63",
+     "extra": {
+      "punts": [
+       {
+        "punt": "P-1",
+        "x": "308781,86",
+        "y": "4613950.63",
+        "z": "198.9",
+        "raw": "P-1: 308781,86 ; 4613950.63 ; 198.9"
+       }
+      ]
+     }
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "sources_checked": [
+    "26.0049/planol-1.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "tall.pdf",
+    "ANNEXES/COORDENADES.txt",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 308781,86/4613950.63"
+  },
+  "utm_y": {
+   "estat": "segur",
+   "value": "4613950.63",
+   "candidates": [
+    {
+     "value": "4613950.63",
+     "font": "ANNEXES/COORDENADES.txt (P-1)",
+     "quote": "P-1: 308781,86 ; 4613950.63 ; 198.9",
+     "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 308781,86/4613950.63",
+     "extra": {
+      "punts": [
+       {
+        "punt": "P-1",
+        "x": "308781,86",
+        "y": "4613950.63",
+        "z": "198.9",
+        "raw": "P-1: 308781,86 ; 4613950.63 ; 198.9"
+       }
+      ]
+     }
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "sources_checked": [
+    "26.0049/planol-1.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "tall.pdf",
+    "ANNEXES/COORDENADES.txt",
+    "lectura fallida: 26.0049/A.01.pdf",
+    "lectura fallida: 26.0049/PLANO 2.pdf"
+   ],
+   "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 308781,86/4613950.63"
+  }
+ },
+ "tables": {
+  "dpsh_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "punt": "P-1",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+188,20",
+      "candidates": [
+       {
+        "value": "+188,20",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,60 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-1,60",
+      "candidates": [
+       {
+        "value": "-1,60",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-1: peu B81; columna F files 22-24; llegenda E80/F80",
+        "quote": "B81: 'Rebuig a la cota de  -1,60 m'. F22,F23,F24: bg=#A6CAF0 sense text. E80: bg=#A6CAF0 (mostra de color) al costat de F80: 'Humitat'."
+       },
+       {
+        "value": "-1,6 m",
+        "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, columna P1",
+        "quote": "col. 100 (fila -1,6) amb ratlla de tall i fondària final envoltada '1,6'"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-1,60",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,60 m"
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-1: peu B81; columna F files 22-24; llegenda E80/F80",
+        "quote": "B81: 'Rebuig a la cota de  -1,60 m'. F22,F23,F24: bg=#A6CAF0 sense text. E80: bg=#A6CAF0 (mostra de color) al costat de F80: 'Humitat'."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,60 m"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001670_tall de correlació.pdf tall A-A', columna del punt P-1",
+        "quote": "Nb=R"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, columna P1",
+        "quote": "col. 100 (fila -1,6) amb ratlla de tall i fondària final envoltada '1,6'"
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "nivell_freatic": {
+      "estat": "candidats",
+      "value": "Humitat (candidat, sense text: cel·les F22-F24 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,40 m",
+      "candidates": [
+       {
+        "value": "Humitat (candidat, sense text: cel·les F22-F24 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,40 m",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-1: peu B81; columna F files 22-24; llegenda E80/F80",
+        "quote": "B81: 'Rebuig a la cota de  -1,60 m'. F22,F23,F24: bg=#A6CAF0 sense text. E80: bg=#A6CAF0 (mostra de color) al costat de F80: 'Humitat'.",
+        "extra": {
+         "matis": "humitat"
+        }
+       },
+       {
+        "value": "~187,2 msnm (matís: humitat -- línia 'Augment de la humitat detectada'; no arriba a ser nivell freàtic franc). Lectura gràfica sobre l'eix (186-189 msnm), no hi ha xifra impresa.",
+        "font": "PDF/ANNEXES/4001670_tall de correlació.pdf tall A-A', columna del punt P-1",
+        "quote": "Nb=R",
+        "extra": {
+         "matis": null
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, columna P1",
+        "quote": "col. 100 (fila -1,6) amb ratlla de tall i fondària final envoltada '1,6'",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "formes diferents entre fonts A (compatibles per prefix): candidats amb totes les formes",
+      "altres": [
+       {
+        "value": "Humitat",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,60 m",
+        "extra": {
+         "matis": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ],
+      "matis": "humitat"
+     },
+     "extra": {
+      "PDF/ANNEXES/4001670_DPSH.pdf": {
+       "matis": "humitat",
+       "nivell_freatic_profunditat": "-1,00 a -1,20",
+       "color_nivells": "taronja (Nivell 1) de 0 a -1,40; groc (Nivell 2) a -1,60"
+      }
+     }
+    },
+    {
+     "punt": "P-2",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+188,20",
+      "candidates": [
+       {
+        "value": "+188,20",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.2, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,30 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-1,30",
+      "candidates": [
+       {
+        "value": "-1,30",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-2: peu B81; columna F files 22-24; llegenda E80/F80",
+        "quote": "B81: 'Rebuig a la cota de  -1,30 m'. F22,F23,F24: bg=#A6CAF0 sense text."
+       },
+       {
+        "value": "-1,3 m",
+        "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, columna P2",
+        "quote": "col. 100 (fila -1,4) amb ratlla de tall i fondària final envoltada '1,3'"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-1,30",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.2, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,30 m"
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-2: peu B81; columna F files 22-24; llegenda E80/F80",
+        "quote": "B81: 'Rebuig a la cota de  -1,30 m'. F22,F23,F24: bg=#A6CAF0 sense text."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.2, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,30 m"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001670_tall de correlació.pdf tall A-A', columna del punt P-2",
+        "quote": "Nb=R"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, columna P2",
+        "quote": "col. 100 (fila -1,4) amb ratlla de tall i fondària final envoltada '1,3'"
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "nivell_freatic": {
+      "estat": "candidats",
+      "value": "Humitat (candidat, sense text: cel·les F22-F24 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,40 m",
+      "candidates": [
+       {
+        "value": "Humitat (candidat, sense text: cel·les F22-F24 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,40 m",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-2: peu B81; columna F files 22-24; llegenda E80/F80",
+        "quote": "B81: 'Rebuig a la cota de  -1,30 m'. F22,F23,F24: bg=#A6CAF0 sense text.",
+        "extra": {
+         "matis": "humitat"
+        }
+       },
+       {
+        "value": "~186,9-187,0 msnm (matís: humitat; coincideix pràcticament amb el contacte Nivell 1/Nivell 2 en aquest punt). Lectura gràfica, no hi ha xifra impresa.",
+        "font": "PDF/ANNEXES/4001670_tall de correlació.pdf tall A-A', columna del punt P-2",
+        "quote": "Nb=R",
+        "extra": {
+         "matis": null
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, columna P2",
+        "quote": "col. 100 (fila -1,4) amb ratlla de tall i fondària final envoltada '1,3'",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "formes diferents entre fonts A (compatibles per prefix): candidats amb totes les formes",
+      "altres": [
+       {
+        "value": "Humitat",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.2, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,30 m",
+        "extra": {
+         "matis": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ],
+      "matis": "humitat"
+     },
+     "extra": {
+      "PDF/ANNEXES/4001670_DPSH.pdf": {
+       "matis": "humitat",
+       "nivell_freatic_profunditat": "-1,00",
+       "color_nivells": "taronja (Nivell 1) de 0 a -0,80; groc (Nivell 2) a -1,20"
+      }
+     }
+    },
+    {
+     "punt": "P-3",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+188,20",
+      "candidates": [
+       {
+        "value": "+188,20",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,69 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-1,69",
+      "candidates": [
+       {
+        "value": "-1,69",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-3: peu B81; columna F files 22-26; llegenda E80/F80; mostra SPT-1 a E22-E24",
+        "quote": "B81: 'Rebuig a la cota de  -1,69 m'. F22-F26: bg=#A6CAF0 sense text."
+       },
+       {
+        "value": "-1,69 m",
+        "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, columna P3",
+        "quote": "col. 100 (fila -1,8/-2) amb fondària final envoltada '169'"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-1,69",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,69 m"
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-3: peu B81; columna F files 22-26; llegenda E80/F80; mostra SPT-1 a E22-E24",
+        "quote": "B81: 'Rebuig a la cota de  -1,69 m'. F22-F26: bg=#A6CAF0 sense text."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,69 m"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001670_tall de correlació.pdf tall A-A', columna del punt P-3",
+        "quote": "Nb=R"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, columna P3",
+        "quote": "col. 100 (fila -1,8/-2) amb fondària final envoltada '169'"
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "nivell_freatic": {
+      "estat": "candidats",
+      "value": "Humitat (candidat, sense text: cel·les F22-F26 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,80 m",
+      "candidates": [
+       {
+        "value": "Humitat (candidat, sense text: cel·les F22-F26 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,80 m",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-3: peu B81; columna F files 22-26; llegenda E80/F80; mostra SPT-1 a E22-E24",
+        "quote": "B81: 'Rebuig a la cota de  -1,69 m'. F22-F26: bg=#A6CAF0 sense text.",
+        "extra": {
+         "matis": "humitat"
+        }
+       },
+       {
+        "value": "~187,0 msnm (matís: humitat; en aquest punt la línia de humitat coincideix pràcticament amb el contacte Nivell 1/Nivell 2). Lectura gràfica, no hi ha xifra impresa.",
+        "font": "PDF/ANNEXES/4001670_tall de correlació.pdf tall A-A', columna del punt P-3",
+        "quote": "Nb=R",
+        "extra": {
+         "matis": null
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, columna P3",
+        "quote": "col. 100 (fila -1,8/-2) amb fondària final envoltada '169'",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "formes diferents entre fonts A (compatibles per prefix): candidats amb totes les formes",
+      "altres": [
+       {
+        "value": "Humitat",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, peu de taula + columna N.F./Nivells",
+        "quote": "Rebuig a la cota de  -1,69 m",
+        "extra": {
+         "matis": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "PENETROS.pdf"
+      ],
+      "matis": "humitat"
+     },
+     "extra": {
+      "PDF/ANNEXES/4001670_DPSH.pdf": {
+       "matis": "humitat",
+       "nivell_freatic_profunditat": "-1,00 a -1,40",
+       "color_nivells": "taronja (Nivell 1) de 0 a -0,80; groc (Nivell 2) de -1,60 a -1,80",
+       "spt_integrat": "SPT-1, 0,80 a 1,40 m, registre 5/9/11/33"
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf"
+   ]
+  },
+  "sondeig_tests": {
+   "estat_bloc": "no_trobat",
+   "rows": [],
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf"
+   ]
+  },
+  "spt_ma_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "id": {
+      "estat": "segur",
+      "value": "SPT-1",
+      "candidates": [
+       {
+        "value": "SPT-1",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-3 (index 1): E22 (id), E23 (profunditat), E24 (registre)",
+        "quote": "E22: 'SPT-1'; E23: '0,80 a 1,40'; E24: '5/9/11/33'"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "SPT-1",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, columna 'MESURA DE PAR'",
+        "quote": "SPT-1 / 0,80 a 1,40 / 5/9/11/33"
+       },
+       {
+        "value": "SPT-P3",
+        "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada",
+        "quote": "Assaig de referència: SPT P3; Descripció dels materials: '[il·legible] MARRÓ'"
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "punt": {
+      "estat": "segur",
+      "value": "P-3",
+      "candidates": [
+       {
+        "value": "P-3",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-3 (index 1): E22 (id), E23 (profunditat), E24 (registre)",
+        "quote": "E22: 'SPT-1'; E23: '0,80 a 1,40'; E24: '5/9/11/33'"
+       },
+       {
+        "value": "P3",
+        "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada",
+        "quote": "Assaig de referència: SPT P3; Descripció dels materials: '[il·legible] MARRÓ'"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "P-3",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, columna 'MESURA DE PAR'",
+        "quote": "SPT-1 / 0,80 a 1,40 / 5/9/11/33"
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat": {
+      "estat": "segur",
+      "value": "0,80 a 1,40",
+      "candidates": [
+       {
+        "value": "0,80 a 1,40",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-3 (index 1): E22 (id), E23 (profunditat), E24 (registre)",
+        "quote": "E22: 'SPT-1'; E23: '0,80 a 1,40'; E24: '5/9/11/33'"
+       },
+       {
+        "value": "0,80 - 1,40 m",
+        "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada",
+        "quote": "Assaig de referència: SPT P3; Descripció dels materials: '[il·legible] MARRÓ'"
+       },
+       {
+        "value": "0,80-1,40",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, columna 'MESURA DE PAR'",
+        "quote": "SPT-1 / 0,80 a 1,40 / 5/9/11/33"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "litologia": {
+      "estat": "candidats",
+      "value": "[primera paraula il·legible] marró",
+      "candidates": [
+       {
+        "value": "[primera paraula il·legible] marró",
+        "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada",
+        "quote": "Assaig de referència: SPT P3; Descripció dels materials: '[il·legible] MARRÓ'"
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "n30": {
+      "estat": "candidats",
+      "value": "20",
+      "candidates": [
+       {
+        "value": "20",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-3 (index 1): E22 (id), E23 (profunditat), E24 (registre)",
+        "quote": "E22: 'SPT-1'; E23: '0,80 a 1,40'; E24: '5/9/11/33'",
+        "extra": {
+         "registre": [
+          5,
+          9,
+          11,
+          33
+         ]
+        }
+       },
+       {
+        "value": "58",
+        "font": "ANNEXES/4001670_DPSH.xls Full P-3 (index 1): E22 (id), E23 (profunditat), E24 (registre)",
+        "quote": "E22: 'SPT-1'; E23: '0,80 a 1,40'; E24: '5/9/11/33'",
+        "extra": {
+         "registre": [
+          5,
+          9,
+          11,
+          33
+         ]
+        }
+       },
+       {
+        "value": 30,
+        "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada",
+        "quote": "Assaig de referència: SPT P3; Descripció dels materials: '[il·legible] MARRÓ'",
+        "note": "(derivat: suma dels 2 trams centrals del registre — criteri majoritari d'Eva, PREGUNTA OBERTA Bell-lloc)",
+        "extra": {
+         "registre": [
+          "5",
+          "9",
+          "21",
+          "33"
+         ]
+        }
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": 20,
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3, columna 'MESURA DE PAR'",
+        "quote": "SPT-1 / 0,80 a 1,40 / 5/9/11/33",
+        "note": "suma dels 2 trams centrals (9+11)",
+        "extra": {
+         "registre": [
+          5,
+          9,
+          11,
+          33
+         ]
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001670_DPSH.xls",
+       "PDF/ANNEXES/4001670_DPSH.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "suma dels 2 trams centrals (9+11)",
+      "registre": {
+       "estat": "candidats",
+       "value": [
+        5,
+        9,
+        11,
+        33
+       ],
+       "candidates": [
+        {
+         "value": [
+          5,
+          9,
+          11,
+          33
+         ],
+         "font": "ANNEXES/4001670_DPSH.xls Full P-3 (index 1): E22 (id), E23 (profunditat), E24 (registre)",
+         "quote": "E22: 'SPT-1'; E23: '0,80 a 1,40'; E24: '5/9/11/33'"
+        },
+        {
+         "value": [
+          "5",
+          "9",
+          "21",
+          "33"
+         ],
+         "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada",
+         "quote": ""
+        }
+       ],
+       "sources_checked": [
+        "ANNEXES/4001670_DPSH.xls",
+        "PDF/ANNEXES/4001670_DPSH.pdf",
+        "PENETROS.pdf"
+       ],
+       "rule": "registre de cops per tram de 15 cm (Pas 3b)"
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PENETROS.pdf"
+   ]
+  },
+  "soil_levels": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "nom": "Nivell 1",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Rebliment antròpic",
+      "candidates": [
+       {
+        "value": "Rebliment antròpic",
+        "font": "PDF/ANNEXES/4001670_tall de correlació.pdf llegenda + tall A-A'",
+        "quote": "Nivell 1: Rebliment antròpic."
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "Rebliment antròpic",
+        "font": "tall.pdf pàgina 1, LLEGENDA",
+        "quote": "Nivell 1: Rebliment antròpic."
+       }
+      ],
+      "sources_checked": [
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "de": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "a": {
+      "estat": "candidats",
+      "value": "~186,8 a ~187,0 msnm segons el punt (contacte amb el Nivell 2: ~186,8 a P-1, ~187,0 a P-3, ~186,9-187,0 a P-2). Lectura gràfica sobre l'eix imprès (186-189 msnm), sense xifra impresa de la cota de contacte; precisió aprox. ±0,1-0,2 m.",
+      "candidates": [
+       {
+        "value": "~186,8 a ~187,0 msnm segons el punt (contacte amb el Nivell 2: ~186,8 a P-1, ~187,0 a P-3, ~186,9-187,0 a P-2). Lectura gràfica sobre l'eix imprès (186-189 msnm), sense xifra impresa de la cota de contacte; precisió aprox. ±0,1-0,2 m.",
+        "font": "PDF/ANNEXES/4001670_tall de correlació.pdf llegenda + tall A-A'",
+        "quote": "Nivell 1: Rebliment antròpic."
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     }
+    },
+    {
+     "nom": "Nivell 2",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Lutites, substrat",
+      "candidates": [
+       {
+        "value": "Lutites, substrat",
+        "font": "PDF/ANNEXES/4001670_tall de correlació.pdf llegenda + tall A-A'",
+        "quote": "Nivell 2: Lutites, substrat."
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "Lutites, substrat",
+        "font": "tall.pdf pàgina 1, LLEGENDA",
+        "quote": "Nivell 2:  Lutites, substrat."
+       }
+      ],
+      "sources_checked": [
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "de": {
+      "estat": "candidats",
+      "value": "~186,8 a ~187,0 msnm segons el punt (mateix contacte que el Nivell 1, vegeu nota d'aquell nivell)",
+      "candidates": [
+       {
+        "value": "~186,8 a ~187,0 msnm segons el punt (mateix contacte que el Nivell 1, vegeu nota d'aquell nivell)",
+        "font": "PDF/ANNEXES/4001670_tall de correlació.pdf llegenda + tall A-A'",
+        "quote": "Nivell 2: Lutites, substrat."
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "a": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/4001670_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     }
+    }
+   ],
+   "sources_checked": [
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "tall.pdf"
+   ]
+  },
+  "superficie_construida": {
+   "estat": "candidats",
+   "value": "~100",
+   "candidates": [
+    {
+     "value": "~100",
+     "font": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del correu, bloc GEO: (missatge de César)",
+     "quote": "GEO: És un ampliació d'uns 100 m a la part posterior de l'edificació existent",
+     "note": "Xifra aproximada (\"uns 100 m\") i sense unitat explícita (m vs m²); no confirmar com a valor exacte. Falta la superfície de l'edificació EXISTENT (no s'esmenta en aquest correu).",
+     "extra": {
+      "components": [
+       "~100 (ampliació, part posterior)"
+      ],
+      "etiqueta_font": "segons correu d'encàrrec (aproximat, \"uns 100 m\")"
+     }
+    },
+    {
+     "value": "uns 100 m² (ampliació, aproximat)",
+     "font": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge de César Morillas (2026-01-26), línia 'GEO:'",
+     "quote": "GEO: És un ampliació d'uns 100 m a la part posterior de l'edificació existent ( mirar plànols)",
+     "note": "'uns 100 m' -- xifra aproximada i unitat no explícita en aquest document; l'adjunt image011.jpg mostra la zona d'ampliació ('ampliació habitatge', taques vermelles) però sense cotes de superfície impreses, només mides parcials (2,50 i 3,00).",
+     "extra": {
+      "components": [
+       "ampliació: uns 100 m (xifra aproximada, unitat no explicitada -- probablement m²)"
+      ],
+      "etiqueta_font": "segons correu d'encàrrec (xifra aproximada, pendent confirmar amb plànol/pressupost)"
+     }
+    }
+   ],
+   "rule": "Pas 3b: l'Eva escriu de vegades la suma i de vegades els sumands; multi-habitatge pot ser per casa → sempre candidats",
+   "sources_checked": [
+    "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "26.0049/planol-1.pdf",
+    "26.0049/planol 3.pdf",
+    "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+    "A.01.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+    "ANNEXES/4001670_DPSH.xls",
+    "PDF/ANNEXES/4001670_DPSH.pdf",
+    "PDF/ANNEXES/4001670_fotografies.pdf",
+    "PDF/ANNEXES/4001670_plànol de situació.pdf",
+    "PDF/ANNEXES/4001670_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "tall.pdf"
+   ],
+   "note": "Xifra aproximada (\"uns 100 m\") i sense unitat explícita (m vs m²); no confirmar com a valor exacte. Falta la superfície de l'edificació EXISTENT (no s'esmenta en aquest correu).",
+   "components": [
+    {
+     "doc": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+     "components": [
+      "~100 (ampliació, part posterior)"
+     ],
+     "total": "~100"
+    },
+    {
+     "doc": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+     "components": [
+      "ampliació: uns 100 m (xifra aproximada, unitat no explicitada -- probablement m²)"
+     ],
+     "total": "uns 100 m² (ampliació, aproximat)"
+    }
+   ],
+   "etiqueta_font": "segons correu d'encàrrec (aproximat, \"uns 100 m\")"
+  }
+ },
+ "conflicts": [
+  {
+   "path": "fields.street_address",
+   "why": "dues fonts d'autoritat A discrepen",
+   "clusters": [
+    {
+     "value": "Carrer Girasols nº7",
+     "fonts": [
+      "26.0049/planol-1.pdf caixetí, bloc 'Situació:', segona línia",
+      "A.01.pdf caixetí, bloc 'Situació:'",
+      "PDF/ANNEXES/4001670_DPSH.pdf p.1-3 capçalera bloc OBRA"
+     ]
+    },
+    {
+     "value": "Carrer Girasols 7 (Urbanització El Rose…",
+     "fonts": [
+      "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del correu, bloc \"OBRA:\" (missatge de César) i bloc d'identificació del client (missatge citat de David Graus)",
+      "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge de César Morillas (2026-01-26), línia 'OBRA:'",
+      "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge original de David Graus (2026-01-21), bloc de signatura del client"
+     ]
+    },
+    {
+     "value": "C/GIRASOLS 7, URB.EL ROSER",
+     "fonts": [
+      "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf p.1 bloc OBRA",
+      "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.1 (portada) bloc 'OBRA:'"
+     ]
+    }
+   ]
+  }
+ ],
+ "extra_concepts": {
+  "contact_phone": [
+   {
+    "value": "TEL.",
+    "font": "26.0049/DADES PER ANAR A CAMP_v1.xlsx fitxa!F8",
+    "quote": "TEL.",
+    "doc": "26.0049/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "value": "PENETROS I MOSTRA",
+    "font": "26.0049/DADES PER ANAR A CAMP_v1.xlsx fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I MOSTRA",
+    "doc": "26.0049/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "edificacio_existent": [
+   {
+    "value": "SI",
+    "font": "26.0049/DADES PER ANAR A CAMP_v1.xlsx fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+    "quote": "SI",
+    "doc": "26.0049/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "value": "TPS ERUGA",
+    "font": "26.0049/DADES PER ANAR A CAMP_v1.xlsx fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "doc": "26.0049/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "tecnic": [
+   {
+    "value": "Eva Vázquez Marcet",
+    "font": "26.0049/PLAN_COST_ALCOLETGE.xlsx 'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "doc": "26.0049/PLAN_COST_ALCOLETGE.xlsx"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "value": "TPS",
+    "font": "26.0049/PLAN_COST_ALCOLETGE.xlsx OFERTA!G3",
+    "quote": "TPS",
+    "note": "plantilla: mai senyal fort",
+    "doc": "26.0049/PLAN_COST_ALCOLETGE.xlsx"
+   },
+   {
+    "value": "SOIL-ASSAIG",
+    "font": "26.0049/PLAN_COST_ALCOLETGE.xlsx OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "note": "plantilla: mai senyal fort",
+    "doc": "26.0049/PLAN_COST_ALCOLETGE.xlsx"
+   }
+  ],
+  "expedient_comercial": [
+   {
+    "value": "26·0049",
+    "font": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf p.1 peu / capçaleres",
+    "quote": "26·0049",
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "doc": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "value": "2026-02-27",
+    "font": "comanda laboratori_4001670_ALCOLETGE.xls Hoja1!AH23",
+    "quote": "46080.0",
+    "doc": "comanda laboratori_4001670_ALCOLETGE.xls"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "value": "NOMÉS SULFATS",
+    "font": "comanda laboratori_4001670_ALCOLETGE.xls Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "doc": "comanda laboratori_4001670_ALCOLETGE.xls"
+   }
+  ],
+  "street_address_struct": [
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Girasols",
+     "nom_via_alternatives": [
+      "Girasols dels"
+     ],
+     "portals": [
+      "7"
+     ],
+     "municipi": "Alcoletge",
+     "municipi_alternatives": []
+    },
+    "font": "26.0049/planol-1.pdf caixetí + fotografia aèria",
+    "quote": "Carrer Girasols nº7 / Situació: Alcoletge (25660) / [rètol aeri] Carrer dels Gira…",
+    "note": "L'alternativa 'dels' ve del rètol de carrer visible a la fotografia aèria de la mateixa pàgina, no d'un document de text",
+    "doc": "26.0049/planol-1.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Girasols",
+     "nom_via_alternatives": [],
+     "portals": [
+      "7"
+     ],
+     "municipi": "Alcoletge",
+     "municipi_alternatives": []
+    },
+    "font": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg cos del missatge de César Morillas (2026-01-26), línia 'OBRA:'",
+    "quote": "OBRA: CARRER GIRASOLS 7, (URBANITZACIÓ EL ROSER), Alcoletge, Lleida (25660) bon accés",
+    "note": "'Urbanització El Roser' queda fora de l'objecte estructurat (no és tipus_via); grafia tal com surt en aquest document (sense accent, una sola s).",
+    "doc": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Girasols",
+     "nom_via_alternatives": [],
+     "portals": [
+      "7"
+     ],
+     "municipi": "Alcoletge",
+     "municipi_alternatives": []
+    },
+    "font": "A.01.pdf caixetí, bloc 'Situació:'",
+    "quote": "CARRER GIRASOLS, Nº7 Urbanització el Roser, (25660) ALCOLETGE",
+    "note": "extra_concept (no és un dels 15 camps de nivell A)",
+    "doc": "A.01.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Girasols",
+     "nom_via_alternatives": [
+      "Gira-sols",
+      "dels Gira-sols"
+     ],
+     "portals": [
+      "7"
+     ],
+     "municipi": "Alcoletge",
+     "municipi_alternatives": [
+      "ALCOLETGE"
+     ]
+    },
+    "font": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf p.1 bloc OBRA + p.5 bloc DADES FACTURA",
+    "quote": "C/GIRASOLS 7, URB.EL ROSER / C/DELS GIRA-SOLS, 7 (CASA)",
+    "note": "Extra concept, no és cap dels 15 camps.",
+    "doc": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Girasols",
+     "nom_via_alternatives": [],
+     "portals": [
+      "7"
+     ],
+     "municipi": "Alcoletge",
+     "municipi_alternatives": []
+    },
+    "font": "PDF/ANNEXES/4001670_DPSH.pdf p.1 capçalera OBRA/POBLACIÓ",
+    "quote": "OBRA: CARRER GIRASOLS Nº7                                            POBLACIÓ:  ALCOLETGE",
+    "note": "extra concept, no és cap dels 15 camps del nivell A",
+    "doc": "PDF/ANNEXES/4001670_DPSH.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Girasols",
+     "nom_via_alternatives": [],
+     "portals": [
+      "7"
+     ],
+     "municipi": "Alcoletge",
+     "municipi_alternatives": []
+    },
+    "font": "PDF/ANNEXES/4001670_plànol de situació.pdf caixetí (títol del projecte)",
+    "quote": "CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+    "note": "concepte extra (Pas 3), no és cap dels 15 camps",
+    "doc": "PDF/ANNEXES/4001670_plànol de situació.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Girasols",
+     "nom_via_alternatives": [],
+     "portals": [
+      "7"
+     ],
+     "municipi": "Alcoletge",
+     "municipi_alternatives": []
+    },
+    "font": "tall.pdf pàgina 1, capçalera TÍTOL DEL PROJECTE",
+    "quote": "CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+    "note": "Mateixa font que street_address; només aquest document (encara no creuat amb altres grafies).",
+    "doc": "tall.pdf"
+   }
+  ]
+ },
+ "sources_read": [
+  "_g3_templates.json",
+  "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+  "26.0049/planol-1.pdf",
+  "26.0049/planol 3.pdf",
+  "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+  "A.01.pdf",
+  "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+  "ANNEXES/4001670_DPSH.xls",
+  "PDF/ANNEXES/4001670_DPSH.pdf",
+  "PDF/ANNEXES/4001670_fotografies.pdf",
+  "PDF/ANNEXES/4001670_plànol de situació.pdf",
+  "PDF/ANNEXES/4001670_tall de correlació.pdf",
+  "PENETROS.pdf",
+  "tall.pdf"
+ ],
+ "notes_estructurals": [
+  "_decisions.json generat per consolidacio Python-first (Fase 12, python-1.0): 13 documents llegits, 5 plantilles G3, 1 conflictes A-vs-A",
+  "lectura fallida (sense {doc}.json): 26.0049/A.01.pdf, 26.0049/PLANO 2.pdf"
+ ]
+}
