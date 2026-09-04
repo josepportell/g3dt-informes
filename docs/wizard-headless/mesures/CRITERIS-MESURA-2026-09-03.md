@@ -28,6 +28,12 @@ comparador; taules de l'informe → `scripts/compare_tables_vs_eva.py` contra el
   denominador del titular. Pregunta a Eva pel `.doc` pendent.
 - **Tulipa**: sense veritat (0 fitxer a `_eva_truth/`). Mesura **executabilitat + latència** només.
 - **Titular comparable: 6 projectes.**
+- **Esmena 2026-09-04 (Josep, durant el run de Vilanova):** el Josep troba l'informe signat de Vilanova a
+  `C:\claude\g3dt\AI-pipeline\reference-material\4001671 VILANOVA DE SEGRIA\4001671_informe.docx` (Word original de G3:
+  autora Vanessa Serrano, modificat per Dolors Maqueda 2026-03-16, signat Eva Vázquez 16/03/2026, 25 p., 12 taules,
+  **en castellà**). L'stub circular se substitueix per la transcripció del cos (`_eva_truth/vilanova.json`, tipus
+  assignats a mà). **Vilanova ENTRA al titular → 7 projectes comparables.** El run en curs no canvia (l'agent exclou
+  `*_informe*`). Tulipa segueix sense veritat.
 
 ## Taules vs signats: MISMATCH de causa coneguda, marcats no re-diagnosticats
 

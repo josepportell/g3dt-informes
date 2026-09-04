@@ -32,7 +32,7 @@ un diagnòstic de causes arrel de tot el que no és OK. **Sempre contrastar els 
 | 3 | Rubí | `rubi/_NOTES.md` | `rubi/_DIAGNOSTIC.md` | **1** (cota P-2, F1) | R1, R4 ×2, R5, F1 ×2, D1, C ×2, G ×2 |
 | 4 | Linyola | `linyola/_NOTES.md` | `linyola/_DIAGNOSTIC.md` | **1** (`field_date`, **D2 bug**) | D2, R1 ×4 (`building_type`, `architect_name` persona/despatx, `lab_location`, `street_address`), R2 ×2 (z GPS a cota; msnm vs fondària als nivells), R5 ×2 (RC i superfície del projecte de l'arquitecte, font única), F1 ×2 (`lab_depth` camp vs lab; errata «argilsoso»), C ×3, G (or persona vs signat despatx), L1 (`n30`) |
 | 5 | Alcoletge | `alcoletge/_NOTES.md` | `alcoletge/_DIAGNOSTIC.md` | 0 (l'ERR cru d'adreça és C: Cadastre 1167 = signat) | R1 (`building_type`), R2 ×2 (z GPS anòmala 198,9; msnm vs fondària), R4 ×2, R5 (RC del correu, font única; Cadastre la confirma i no es creua), G (`fora_carpeta`), C ×3 (adreça, `nivell_freatic`, nivells), L2, T1 (timeout 600 s PENETROS) |
-| 6 | Vilanova | | | | (circular: només consistència) |
+| 6 | Vilanova | | | | **entra al titular** des del 2026-09-04: informe signat `.docx` trobat (castellà); `_eva_truth/vilanova.json` transcrit del cos |
 | 7 | Anciles | | | | |
 | 8 | Tulipa | | | | (sense veritat: executabilitat + latència) |
 
