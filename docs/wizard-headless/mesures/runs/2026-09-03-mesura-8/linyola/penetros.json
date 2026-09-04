@@ -1,0 +1,197 @@
+{
+ "source_path": "PENETROS.pdf",
+ "source_md5": "2bc914934f482f98dffa7725545b8be2",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Quadern de camp manuscrit de TPS (escanejat): p.1 albarà de feina feta, p.2 full de camp del penetròmetre dinàmic (Fitxa 01) amb la graella N20 dels 3 punts P-1/P-2/P-3, p.3 full d'assaig SPT/MI/mostra alterada per a la mostra extreta a P-3",
+ "issuer": "TPS (prospecció del subsòl), operari Siny",
+ "date": "01-10-2025",
+ "pages_or_sheets": "3 pàgines: p.1 ALBARÀ; p.2 Full de Camp Penetròmetre Dinàmic (Fitxa 01); p.3 Full d'assaig SPT/MI/Mostra alterada",
+ "context": {
+  "who_made_it": "TPS (subcontractista de penetròmetres/sondeigs), operari Siny, en camp el 01-10-2025",
+  "for_whom": "G3 (Eva), que ha encarregat els 3 penetròmetres DPSH d'aquest projecte a TPS",
+  "why": "Justificant de feina feta (albarà, per facturació TPS→G3) + registre manuscrit de camp dels colpejos DPSH (N20) per punt + full d'assaig de la mostra SPT extreta al punt P-3",
+  "expected_fields": [
+   "field_date",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests",
+   "tables.dpsh_tests[].cota_inici",
+   "tables.dpsh_tests[].profunditat_assolida",
+   "tables.dpsh_tests[].rebuig",
+   "tables.dpsh_tests[].nivell_freatic",
+   "lab_sample_id",
+   "lab_location",
+   "lab_depth"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia (absoluta, msnm)",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "expedient"
+  ],
+  "relation_to_others": "Full de camp manuscrit; té versió digital derivada a ANNEXES/4001607_DPSH.xls i a PDF/ANNEXES/4001607_DPSH.pdf (annex DPSH imprès amb capçalera 'Cota inici' i peu 'Rebuig a -X,XX m' per punt) — aquests dos manen per als valors numèrics N20 i la fondària exacta de rebuig; aquest document es llegeix pel que aporti que l'Excel/annex no tinguin explícitament (esquema de situació dels punts, hora d'assaig, resposta explícita 'NO' a nivell freàtic, i el full d'assaig SPT/MI de la mostra P-3 amb la seva cota d'extracció i descripció de materials)",
+  "authority_for": [
+   "tables.dpsh_tests[].nivell_freatic",
+   "lab_sample_id",
+   "lab_location",
+   "lab_depth"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-01",
+   "location": "p.1 ALBARÀ, bloc DADES OBRA, camp 'Data:'",
+   "quote": "1-10-25",
+   "confidence": 0.7,
+   "note": "Coincideix a les 3 pàgines del document ('01-10-25' a p.2 i p.3). Segons la jerarquia del Pas 3, la fitxa de camp G3 (F38) hauria de manar si conté data; aquí és candidat, no segur."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-01",
+   "location": "p.2 Full de Camp Penetròmetre Dinàmic, camp 'Data:'",
+   "quote": "01-10-25",
+   "confidence": 0.7,
+   "note": "Mateixa data que p.1 i p.3."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna",
+   "location": "p.1 ALBARÀ, bloc DADES OBRA, camp 'Adreça:'",
+   "quote": "Carrer clot de La Llacuna",
+   "confidence": 0.6,
+   "note": "Bloc OBRA (no client), font vàlida. Sense número de portal en aquest document."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna",
+   "location": "p.2 Full de Camp, camp 'Descriure punt 0 o cota referència'",
+   "quote": "Carrer clot de la Llacuna",
+   "confidence": 0.55,
+   "note": "Aquest camp és la descripció del punt 0/cota de referència, no un camp 'adreça' pròpiament, però nomena el mateix carrer que p.1 — corroboració."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "p.1 ALBARÀ, bloc DADES OBRA, camp 'Població:'",
+   "quote": "LINYOLA",
+   "confidence": 0.85,
+   "note": "Corroborat també a p.2 i p.3, camp 'Adreça de l'obra: LINYOLA'."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "p.1 DADES OBRA / p.2 Descriure punt 0 o cota referència",
+   "quote": "Carrer clot de La Llacuna / LINYOLA",
+   "confidence": 0.6,
+   "note": "Cap número de portal escrit en aquest document; l'esquema de situació de p.2 dona distàncies entre punts i a 'Casa Veïna', no un número de carrer."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "p.1 ALBARÀ, bloc CONCEPTES, 'Nº de penetròmetres realitzats'",
+   "quote": "3",
+   "confidence": 0.85,
+   "note": "Corroborat per les 3 columnes P-1/P-2/P-3 de la graella de p.2 (executats, no previstos: el camp 'MI previs perforació per assaig SPT o MI' de p.1 és un altre concepte)."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT1",
+   "location": "p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Assaig de referència'",
+   "quote": "SPT1  P3",
+   "confidence": 0.5,
+   "note": "Etiqueta manuscrita; segons el Pas 3 l'annex de sondeig de l'Eva (si n'hi ha) o el GTL del laboratori manen per a l'etiqueta final. Aquí és l'única font vista en aquest document."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P3",
+   "location": "p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Assaig de referència'",
+   "quote": "SPT1  P3",
+   "confidence": 0.5,
+   "note": "El punt d'assaig d'on surt la mostra (P-3), llegit del mateix camp que l'etiqueta."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,00 a 1,75 m",
+   "location": "p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Cota d'extracció'",
+   "quote": "de la cota de: 1,0 / fins a la cota: 1,75",
+   "confidence": 0.55,
+   "note": "Coincideix amb la fondària de rebuig anotada a P-3 a la graella de p.2 (R 1,75), és a dir la mostra es va prendre fins al rebuig del penetròmetre a P-3."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": null,
+   "location": "p.1 ALBARÀ, bloc DADES CLIENT",
+   "quote": "Empresa: G3 / Responsable: Eva",
+   "confidence": 0.0,
+   "note": "Descartat com a client_name: és la relació TPS (subcontractista) → G3 (el seu client), no el client/promotor de l'obra (regla del Pas 0/3 per a albarans TPS)."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-0,15",
+    "profunditat_assolida": "-3,20 m (aprox.)",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.2, columna P1, graella N20",
+    "quote": "Cota Inici -0,15; darrer registre a -3,2: 'R  29'",
+    "confidence": 0.45,
+    "note": "Rebuig marcat amb 'R' a la fila -3,2 i valor '29' sense coma decimal (a diferència de P-2 'R 2,15' i P-3 'R 1,75', que sí porten fondària exacta en decimals). És ambigu si '29' és un recompte de cops parcial abans del rebuig o una fondària mal transcrita — candidat, no segur. La fondària exacta de rebuig la dona l'Excel/annex DPSH ('Rebuig a -X,XX m'), font d'autoritat superior per aquest camp."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-0,15",
+    "profunditat_assolida": "-2,15 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.2, columna P2, graella N20, fila -2,4",
+    "quote": "R  2,15",
+    "confidence": 0.6,
+    "note": "Fondària de rebuig escrita explícitament en decimals pel tècnic, més precisa que la graella de 0,2 m. Candidat (no segur): la fondària exacta de l'Excel/annex DPSH mana."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-0,15",
+    "profunditat_assolida": "-1,75 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.2, columna P3, graella N20, fila -2",
+    "quote": "R  1,75",
+    "confidence": 0.6,
+    "note": "Coincideix amb la cota 'fins a la cota: 1,75' del full d'assaig SPT de p.3 per a la mostra SPT1 P3 — corroboració interna del mateix document. Candidat (no segur): l'Excel/annex DPSH mana per a la fondària exacta."
+   }
+  ],
+  "__nota": "nivell_freatic identic per als 3 punts: p.2 respon 'NO' a 'Hi ha nivell freàtic?' (bloc únic per a tot el full, no per punt); columna N.F. de la graella buida als 3 punts, coherent amb la resposta."
+ },
+ "not_present": [
+  "expedient (camp 'Informe:' de p.2 i p.3 en blanc)",
+  "client_name (només apareix G3/Eva, descartat — vegeu NOT_client_name)",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia (absoluta, msnm — aquest document només dona 'Cota Inici -0,15' relativa per punt i una descripció textual del punt 0)",
+  "referencia_catastral",
+  "utm_x_utm_y (l'esquema de p.2 dona distàncies relatives entre punts, no coordenades)"
+ ],
+ "reading_notes": "PDF escanejat amb NAPS2, text_ok=false a les 3 pàgines (halves_pages 1,2,3 al meta): lectura íntegrament visual. Zoom amb scripts/render_clip.py (500-700 dpi) per confirmar les cel·les de rebuig 'R' + valor a P1/P2/P3 i la descripció de materials manuscrita de p.3. Una cel·la de la graella N20 de P1 (fila -1,2) és il·legible (un traç cursiu, ni clarament un dígit); no s'ha transcrit perquè no alimenta cap dels 15 camps ni les cel·les de tables.dpsh_tests requerides (la graella N20 completa és Tier B / correspon a l'skill /g3dt-validar-penetros, no a aquest nivell A). La descripció de materials de p.3 ('WTIM MARIS I TRAM D'ARGILA AMB GRAVES') és una lectura de millor esforç d'una lletra cursiva molt estilitzada; probablement 'ÚLTIM METRE I TRAM D'ARGILA AMB GRAVES' ('darrer metre i tram d'argila amb graves'), no inclosa com a tier_a perquè no correspon a cap dels 15 camps ni a les cel·les de taula requerides en aquest nivell A."
+}

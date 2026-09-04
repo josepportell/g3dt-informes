@@ -38,7 +38,7 @@
 
 ## La feina següent, per ordre
 
-1. **Continuar la mesura (6 projectes: Rubí primer)** — seqüencial, mai dos alhora:
+1. **Continuar la mesura (4 projectes: Alcoletge, Vilanova, Anciles, Tulipa)** — seqüencial, mai dos alhora:
    ```bash
    cd ~/projects/claudecode-job/clients/g3dt-prod
    PYTHONPATH=$PWD G3DT_CACHE_DIR=/home/josep/g3dt-prod-cache \
@@ -54,7 +54,9 @@
    veí bloquejant ×2, bug substring `"1 de"` al guard de `num_floors`, `_NEVER_SEGUR_FIELDS` sobregeneralitzat ×2,
    convergència amb lectors humils ×1). R1+R3 sols → 16/21. NO aplicar fins acabar la mesura dels 8.
    **Índex de diagnòstics dels 8 (taxonomia R1-R5/F1/D1/C/G + recompte transversal):**
-   `runs/2026-09-03-mesura-8/_DIAGNOSTICS-INDEX.md` — Rubí: `rubi/_DIAGNOSTIC.md` (1 ERR = F1, cota P-2).
+   `runs/2026-09-03-mesura-8/_DIAGNOSTICS-INDEX.md` — Rubí: `rubi/_DIAGNOSTIC.md` (1 ERR = F1, cota P-2);
+   Linyola: `linyola/_DIAGNOSTIC.md` (1 ERR = **D2, bug de dates del consolidador**: «Octubre 2025» fa de pont,
+   clau per `len(str)`, `_iso_date` sobreescriu el candidat → 10/10 «segur» per 01/10). 42,9 min vs base 41,9.
 3. **P0** (columna N = SPT N30) i **P2a** (col·lapse Rubí) — després que la mesura estigui completa.
 4. **M341** (mesura de les 341 variables) — vegeu pla.
 5. **Paquet de preguntes a Eva**: criteri de l'E (R ho fa imprescindible), regla N20 mono-nivell, `.doc` de

@@ -1,0 +1,24 @@
+{
+ "source_path": "RV_ Realització geotècnic.msg",
+ "source_md5": "5c43c5b52be9af08377bacd459b1fb4a",
+ "kind": "msg",
+ "generated": "2026-09-04T14:20:32",
+ "elapsed_s": 0.01,
+ "dir": "rv_realitzaci_geot_cnic",
+ "files": [
+  "rv_realitzaci_geot_cnic/body.txt"
+ ],
+ "subject": "RV: Realització geotècnic",
+ "from": "G3 DT <g3@g3dt.com>",
+ "to": "Eva Vazquez <eva@g3dt.com>; Cesar Morillas <cesar@g3dt.com>; \"Dolors Maqueda\" <dolors@g3dt.com>",
+ "date": "2025-09-30 10:24:08+02:00",
+ "attachments": [
+  {
+   "name": "punts_de_sondeig_silvia_jaume_1.pdf",
+   "size": 149307,
+   "md5": "296c5aa75d57fe64ec2f5cbfb96fe57f",
+   "already_in_folder": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+   "preext_dir": null
+  }
+ ]
+}

@@ -1,0 +1,77 @@
+{
+ "source_path": "RV_ Realització geotècnic.msg",
+ "source_md5": "5c43c5b52be9af08377bacd459b1fb4a",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu reenviat internament per G3 (RV) a Eva/Cesar/Dolors amb la cadena completa de correus entre Sílvia Eroles (clienta) i G3, sobre l'acceptació del pressupost i el reajustament de la posició de dos punts de sondeig abans de la visita de camp.",
+ "issuer": "G3 DT (reenviament intern del departament d'administració); cadena original de Sílvia Eroles",
+ "date": "2025-09-30 10:24:08+02:00",
+ "pages_or_sheets": "1 missatge (cos de text, cadena de 4 correus imbricats des de 2025-09-19 fins 2025-09-30); 1 adjunt",
+ "context": {
+  "who_made_it": "G3 (administració) reenvia internament la cadena de correus amb la clienta Sílvia Eroles",
+  "for_whom": "equip intern de G3 (Eva Vazquez, Cesar Morillas, Dolors Maqueda)",
+  "why": "coordinar la realització dels treballs de camp: confirmar que el dia de camp és l'endemà del correu i comunicar un ajust de posició de 2 punts de DPSH demanat per l'arquitecte",
+  "expected_fields": [
+   "field_date (candidat via 'demà')",
+   "client_name (candidat, corrobora noms)"
+  ],
+  "not_expected": [
+   "expedient (només hi surt el codi comercial '25·0616 P#', no l'expedient)",
+   "architect_name (nomenat només com 'l'arquitecte', sense nom propi)",
+   "street_address",
+   "municipality",
+   "superficie_parcela",
+   "building_type",
+   "num_floors",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "dades de laboratori",
+   "cte"
+  ],
+  "relation_to_others": "conté un adjunt duplicat (punts_de_sondeig_silvia_jaume_1.pdf, md5 296c5aa75d57fe64ec2f5cbfb96fe57f) ja present solt a la carpeta com '25.0616/Punts de Sondeig_Silvia_Jaume.pdf' (llegit per separat, already_in_folder=true, no re-llegit aquí); és una cadena diferent de '25.0616/RV_ pressupost geotècnic.msg' (aquell tracta del pressupost, aquest de la coordinació del camp) i de 'ACCEPTACIO/RV_ Realització geotècnic.msg' (còpia del mateix assumpte dins la carpeta ACCEPTACIO, llegida per separat)",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-01",
+   "location": "cos del correu, primer bloc citat (email de Sílvia Eroles, 2025-09-30 10:16)",
+   "quote": "No sé si vaig parlar amb tu ahir. Li vaig comentar a l'arquitecte que venieu demà i em va dir que ja us havia enviat els punts de sondeig",
+   "confidence": 0.4,
+   "note": "'demà' és relatiu a la data del correu citat (2025-09-30) → dia de camp previst 2025-10-01. És correu, no fitxa de camp ni annex de camp: candidat, mai segur en solitari."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles i Jaume Nadal Andreu",
+   "location": "capçalera del correu citat (De/CC) i signatura",
+   "quote": "De: Silvia Eroles <serolesba@gmail.com> ... CC: jaume nadal andreu <jume_540@hotmail.com> ... Moltes gràcies, Sílvia",
+   "confidence": 0.35,
+   "note": "Corrobora el nom del client (parella promotora, coherent amb altres fitxers del projecte etiquetats 'silvia_jaume'), però és correspondència, no el formulari d'acceptació (p.5) ni el caixetí del plànol: mai segur com a font única."
+  }
+ ],
+ "not_present": [
+  "expedient (només hi surt el codi comercial '25·0616 P#' de Silvia, que NO és l'expedient)",
+  "architect_name (esmentat només com 'l'arquitecte', sense nom propi)",
+  "street_address",
+  "municipality",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Cadena RE/RV completa; el bloc per sobre del primer 'De:' (línies 1-9) és buit, per tant el text 'nou' d'aquest reenviament intern és el primer correu citat (Sílvia Eroles, 2025-09-30). Adjunt duplicat (md5 coincident amb 25.0616/Punts de Sondeig_Silvia_Jaume.pdf) no re-llegit (already_in_folder). 'Laia' (tel. 628 577 224) esmentada com a contacte de l'arquitecte per a dubtes, sense cognom ni etiqueta explícita 'arquitecte': no s'ha considerat candidat a architect_name."
+}

@@ -1,0 +1,127 @@
+{
+ "source_path": "PDF/ANNEXES/4001607_plànol de situació.pdf",
+ "source_md5": "a08feb2ffa73cefe2933a2fd9ce8ab55",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació (annex gràfic G3): ubicació del municipi, plànol cadastral/urbà de la parcel·la i planta de l'edifici amb els 3 punts d'assaig DPSH (P-1, P-2, P-3).",
+ "issuer": "G3 (Eva) — plantilla d'annex G3, logo G3 al peu",
+ "date": "Octubre 2025 (caixetí; metadada PDF creationDate 2025-10-28)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva), com a annex gràfic de l'estudi geotècnic",
+  "for_whom": "per incloure's a l'informe geotècnic, per situar el projecte i els punts d'assaig",
+  "why": "localitzar el projecte dins el municipi i mostrar la ubicació exacta dels 3 assaigs DPSH sobre la planta de l'edifici",
+  "expected_fields": [
+   "expedient",
+   "municipality",
+   "street_address",
+   "num_dpsh_tests",
+   "building_type"
+  ],
+  "not_expected": [
+   "field_date (dia exacte)",
+   "architect_name",
+   "client_name",
+   "num_floors",
+   "cota_referencia",
+   "referencia_catastral (codi)",
+   "utm_x_utm_y",
+   "lab_*",
+   "cte_*",
+   "num_soil_levels"
+  ],
+  "relation_to_others": "Correspon a l'annex FreeHand original ANNEXES/4001607_plànol de situació.FH11 (text brossa, no llegible directament; aquest PDF n'és l'exportació via Acrobat Distiller amb el mateix contingut). Pot existir també 'pl situ.pdf' (Print To PDF) a la carpeta arrel — no llegit en aquesta crida (--only).",
+  "authority_for": [
+   "expedient",
+   "municipality",
+   "street_address",
+   "num_dpsh_tests",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001607",
+   "location": "caixetí, cel·la 'Exp:'",
+   "quote": "Exp: 4001607",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "TÍTOL DEL PROJECTE (caixetí) + mapa d'ubicació (inset esquerre, etiqueta 'Linyola')",
+   "quote": "…construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.8,
+   "note": "confirmat dues vegades DINS del mateix document (text del títol + etiqueta al mapa OSM); és una sola font documental, no dues d'independents"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna nº16",
+   "location": "TÍTOL DEL PROJECTE (caixetí)",
+   "quote": "…construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.75,
+   "note": "el nom del carrer es confirma visualment al mapa cadastral zoom ('CLOT DE LA LLACUNA'); el número de parcel·la etiquetat dins el requadre vermell al mapa (llegible aprox. '44'/'46') no coincideix amb el nº16 del text i és massa il·legible per fer-ne un candidat fiable — no s'inclou com a contradicció, només s'anota"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [
+     "16"
+    ],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "TÍTOL DEL PROJECTE (caixetí) + mapa cadastral zoom",
+   "quote": "…al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.75,
+   "note": "estructura derivada del mateix text del títol; nom del carrer corroborat visualment al mapa"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "plànol de planta, punts marcats P-1, P-2, P-3 amb llegenda",
+   "quote": "P-1 / P-2 / P-3 — llegenda: 'Assaig de penetració dinàmica DPSH'",
+   "confidence": 0.8,
+   "note": "recompte visual dels punts marcats al plànol; corrobora però no substitueix el recompte de l'Excel DPSH (executats), que és font prioritària"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge",
+   "location": "TÍTOL DEL PROJECTE (caixetí)",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.6,
+   "note": "el títol només diu 'un habitatge', no especifica 'unifamiliar'; no s'amplia el valor per no fabricar informació no impresa"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2025",
+   "location": "caixetí, cel·la 'Data:'",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.2,
+   "note": "és la data de redacció del plànol (mes i any, sense dia exacte), no una font prioritària per field_date segons el Pas 3 (fitxa F38 / annex DPSH DATA / albarà TPS / fotos manen); candidat feble només a falta d'una font amb dia exacte"
+  }
+ ],
+ "not_present": [
+  "referencia_catastral (codi alfanumèric — el mapa cadastral zoom només mostra números de parcel·la visuals, il·legibles amb confiança, no cap codi RC)",
+  "utm_x_utm_y (cap coordenada numèrica impresa)",
+  "architect_name",
+  "client_name",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "text_ok=false (producer Acrobat Distiller 15.0 / PScript5.dll → text brossa, patró conegut dels annexos FreeHand de l'Eva); llegit visualment amb page-1.png sencera i clips amb scripts/render_clip.py a 300-600 dpi sobre: els dos mapes d'ubicació (municipi + cadastral zoom), el requadre del títol/caixetí, i la planta amb els 3 punts DPSH. 'CARRER FONT' apareix rotulat al costat esquerre del solar (carrer veí visible al dibuix) sense cap document que l'anomeni com a adreça de l'obra — no s'ha afegit com a candidat de cantonada (regla del Pas 3: calen dues adreces DOCUMENTADES, no un rètol de carrer veí sol)."
+}

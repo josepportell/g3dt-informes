@@ -1,0 +1,160 @@
+{
+ "source_path": "tall.pdf",
+ "source_md5": "d64143c8f9ad8606583d17ce048a3ba8",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geotècnica (perfils AA' i BB') que correlaciona els punts DPSH P-1, P-2 i P-3 en dues seccions, amb llegenda de 2 nivells litològics i línia de fonamentació proposada.",
+ "issuer": "G3 (plantilla pròpia, logo G3 al peu de pàgina)",
+ "date": "Octubre 2023 (imprès al tall); metadades PDF: creationDate/modDate 2025-10-27 (data d'exportació 'Print To PDF', posterior)",
+ "pages_or_sheets": "1/1",
+ "context": {
+  "who_made_it": "G3 (Eva), amb la plantilla pròpia de 'Tall de correlació'",
+  "for_whom": "figura/annex interna de l'informe geotècnic del projecte",
+  "why": "correlacionar els resultats de 3 punts DPSH (P-1, P-2, P-3) en dues seccions (AA': P-1-P-3; BB': P-1-P-2) per mostrar l'estratigrafia en 2 nivells i la fondària de fonamentació proposada",
+  "expected_fields": [
+   "num_soil_levels",
+   "litologia per nivell (candidata, sense annex de sondeig en aquest projecte)",
+   "street_address/municipality (via el títol del projecte)",
+   "expedient",
+   "num_dpsh_tests (punts mostrats als perfils)",
+   "cotes de transició entre nivells (gràfic, msnm, no com a xifra impresa única)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "dades de laboratori",
+   "UTM",
+   "referència cadastral",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia com a xifra única impresa"
+  ],
+  "relation_to_others": "Producer PDF = 'Microsoft: Print To PDF' (text_ok=true, net). Segons l'inventari (no obert), hi ha una altra còpia amb el mateix doc_type_hint 'annex_tall' a PDF/ANNEXES/4001607_tall de correlació.pdf (49.274 B, molt més petita) que probablement prové directament del FreeHand (ANNEXES/4001607_tall de correlació.FH11, exclòs per no-llegible) amb text brossa. Aquest tall.pdf és, doncs, la còpia neta 'Print To PDF' del mateix dibuix. Regla de prioritat del skill: PDF/ANNEXES/*.pdf > tall.pdf (Print To PDF) si discrepen — no comparat en aquesta crida (--only tall.pdf).",
+  "authority_for": [
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001607",
+   "location": "peu de pàgina, taula 'TÍTOL DEL PROJECTE', cel·la 'Exp:'",
+   "quote": "Exp: 4001607",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte (4001607 LINYOLA)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna nº16",
+   "location": "peu de pàgina, taula 'TÍTOL DEL PROJECTE', subtítol del projecte",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.55,
+   "note": "redactat dins la frase del títol, no un camp 'ADREÇA OBRA' etiquetat; candidat, no segur en solitari"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "peu de pàgina, taula 'TÍTOL DEL PROJECTE', subtítol del projecte (mateixa frase que street_address)",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.55,
+   "note": "forma curta (topònim sol); no és font independent de street_address (mateixa frase)"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge",
+   "location": "peu de pàgina, taula 'TÍTOL DEL PROJECTE', subtítol del projecte",
+   "quote": "la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.45,
+   "note": "redacció genèrica 'habitatge', sense especificar unifamiliar/plurifamiliar; candidat feble"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "requadre de llegenda, superior dret",
+   "quote": "Nivell 1: Llims argilsoso i sorrencs. / Nivell 2: Lutites i sorrenques, Substrat.",
+   "confidence": 0.85,
+   "note": "el tall mana pel nombre de nivells (regla del skill); 2 nivells amb color i litologia diferenciats a la llegenda"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "plànol de situació (cantonada superior esquerra) i etiquetes blaves als perfils AA'/BB'",
+   "quote": "P-1, P-3 (secció AA'); P-1, P-2 (secció BB'); P-1/P-2/P-3 al plànol de situació",
+   "confidence": 0.5,
+   "note": "el tall mostra 3 punts DPSH correlacionats; l'Excel DPSH és la font d'autoritat pel recompte (executats), no llegit en aquesta crida (--only tall.pdf)"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2023",
+   "location": "peu de pàgina, taula 'TÍTOL DEL PROJECTE', cel·la 'Data:'",
+   "quote": "Data: Octubre 2023",
+   "confidence": 0.2,
+   "note": "és la data de redacció/emissió d'aquest annex de tall (mes i any, sense dia), no necessàriament el primer dia de camp del DPSH; la fitxa de camp (F38) o l'annex DPSH manen per field_date"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [
+     "16"
+    ],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "peu de pàgina, taula 'TÍTOL DEL PROJECTE', subtítol del projecte",
+   "quote": "Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.55,
+   "note": "extret de la mateixa frase que street_address/municipality; no és font independent"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "1er nivell",
+    "litologia_candidats": [
+     "Llims argilsoso i sorrencs"
+    ],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "llegenda, requadre superior dret",
+    "quote": "Nivell 1: Llims argilsoso i sorrencs.",
+    "confidence": 0.55,
+    "note": "text del tall (única font en aquest projecte: no hi ha annex de sondeig a la carpeta); l'Eva sol re-redactar el text a l'informe. La cota de transició nivell1/nivell2 NO és plana al gràfic: ~243,4-243,5 msnm a P-1 (igual a AA' i BB'), ~243,6-243,7 msnm a P-3, i puja fins a ~244,6-244,7 msnm a P-2 (secció BB', límit inclinat). No es fixa un únic 'de'/'a' perquè el límit depèn del punt i és una lectura gràfica (graella d'1 m, 241-245 msnm), no una xifra impresa; cal creuar amb cota_referencia + Excel DPSH per convertir a fondària."
+   },
+   {
+    "nom": "2on nivell",
+    "litologia_candidats": [
+     "Lutites i sorrenques, Substrat"
+    ],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "llegenda, requadre superior dret",
+    "quote": "Nivell 2: Lutites i sorrenques, Substrat.",
+    "confidence": 0.55,
+    "note": "text del tall (única font); vegeu la nota del 1er nivell sobre la variabilitat de la cota de transició per punt. Als tres punts apareix 'Nb=R' prop o poc després del límit nivell1/nivell2 (P-1: Nb=R uns 242 msnm, després de Nb=38; P-3: Nb=R uns 243 msnm, molt a prop del límit, amb 'N=R' just al límit; P-2: Nb=R uns 243,6 msnm, molt a prop del límit) — possible indici de rebuig DPSH proper a l'inici del substrat, NO verificat contra el peu 'Rebuig a' de l'Excel DPSH (fora d'abast d'aquesta lectura)."
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "cota_referencia",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "superficie_parcela",
+  "num_floors"
+ ],
+ "reading_notes": "Inventari llegit abans del document (Pas 0). Meta.json: producer='Microsoft: Print To PDF', text_ok=[1]=true → text net, sense necessitat de render_clip. Llegit page-1.txt (text pla, sense posicions) i page-1.png sencera (150dpi) per interpretar el layout espacial: 2 perfils (AA': P-1-P-3; BB': P-1-P-2), graella d'elevació 241-245 msnm cada 1m, línia de fonamentació (vermella discontínua) i etiquetes Nb (colpeig/rebuig) per punt. No calen les meitats (halves_pages buit) ni cap clip addicional: la resolució de la pàgina sencera n'hi ha prou per llegir totes les etiquetes. El petit plànol de situació (cantonada superior esquerra) mostra cotes de distància (0.70/0.90/3.20/8.90/12.2/11.4) per ubicar P-1/P-2/P-3 dins la parcel·la/edifici futur — no s'ha interpretat com a superficie_parcela (no és una mesura de parcel·la, són distàncies de replanteig)."
+}

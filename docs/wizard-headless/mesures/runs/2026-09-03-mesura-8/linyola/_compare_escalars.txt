@@ -1,0 +1,11 @@
+NOU      architect_company      prod=segur
+CAUTELA  architect_name         or segur, prod candidats (bo dins): 'Josep Bunyesc Palacín'
+CAUTELA  building_type          or segur, prod candidats (bo dins): 'habitatge unifamiliar aïllat'
+CAUTELA  cota_referencia        or segur, prod candidats (bo dins): '+245'
+ERR      field_date             segur discrepant: or='2025-10-01' prod='2025-10-10'
+CAUTELA  lab_depth              or segur, prod candidats (bo dins): '1,0 - 1,15 m'
+CAUTELA  lab_location           or segur, prod candidats (bo dins): 'P-3'
+CAUTELA  referencia_catastral   or segur, prod candidats (bo dins): '5098344CG2159N0000US'
+ALERTA   street_address         or segur 'Carrer Clot de la Llacuna, 16' NO entre candidats ['C/ Clot de la Llacuna, 16, Linyola (25240)', 'Clot de la Llacuna, 16, Linyola (CP 25240)', 'C. Clot de la Llacuna, 16']
+CAUTELA  superficie_parcela     or segur, prod candidats (bo dins): '571 m²'
+TOTALS: {'NOU': 1, 'CAUTELA': 7, 'OK': 12, 'ERR': 1, 'ALERTA': 1}
