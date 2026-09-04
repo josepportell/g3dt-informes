@@ -1,0 +1,70 @@
+{
+ "source_path": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+ "source_md5": "2106e5f08cc221715f167c958193adce",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pagina 2 de 2 del pressupost geotecnic 25-0794 (05/11/25), fotografiada via WhatsApp un cop omplerta i signada — formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' + acceptacio del contracte-pressupost.",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (plantilla); dades i signatura omplertes per la clienta",
+ "date": "05/11/25 (data del pressupost, no data de camp)",
+ "pages_or_sheets": "1 fotografia (pagina 2 de 2 del pressupost 25-0794)",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial fa la plantilla del pressupost; el bloc de dades i la signatura els omple i signa la clienta en acceptar l'encarrec",
+  "for_whom": "G3, com a acceptacio formal del contracte-pressupost i declaracio de les dades que han de constar a la factura i a l'informe",
+  "why": "Formalitzar l'acceptacio del pressupost 25-0794 i fixar nom/NIF/adreca de qui ha de constar a la factura i a l'informe, mes la persona/adreca a qui s'ha d'enviar l'informe un cop fet",
+  "expected_fields": [
+   "client_name (nom i cognoms + NIF de qui consta a la factura i a l'informe)",
+   "contacte/destinatari de l'informe"
+  ],
+  "not_expected": [
+   "adreca de l'obra",
+   "municipi de l'obra",
+   "dades tecniques del projecte (plantes, superficie, tipus d'edifici)",
+   "data de camp",
+   "expedient real del projecte"
+  ],
+  "relation_to_others": "Mateixa pagina 2/2 que '25.0794/PRESSUPOST GEOTEC.RUBI.pdf' (mateix pressupost comercial 25-0794, 05/11/25), pero aquesta es la copia FOTOGRAFIADA i SIGNADA (acceptacio), amb el bloc de dades ja omplert a ma — funcio equivalent a 'ACCEPTACIO/DADES CLIENT.txt' d'altres projectes.",
+  "authority_for": [
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Joana Martínez",
+   "location": "bloc 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME', camp NOM I COGNOMS",
+   "quote": "NOM I COGNOMS: Joana Martínez",
+   "confidence": 0.75,
+   "note": "Formulari d'acceptacio signat, funcio equivalent a ACCEPTACIO/DADES CLIENT.txt (autoritat A per client_name). Porta tambe N.I.F. 38540702Q, TELF. 696040077 i adreca personal a Calle Juan Carlos Ferrero 41A, 03370 Redovan (Alacant) — aquesta adreca es la del CLIENT, no la de l'obra (Rubi), i no s'ha d'usar com a street_address. Font unica en aquest document; per la jerarquia del Pas 3 aquest formulari va per sota d'un caixeti de planol amb Promotor/Propietat si n'hi ha al projecte."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Albert Coll",
+   "location": "bloc 'ADREÇA ON S'HA D'ENVIAR L'INFORME', camp NOM I COGNOMS",
+   "quote": "NOM I COGNOMS: ALBERT COLL / ADREÇA: COLLBASSAS@gmail.com / CP I POBLACIÓ: 08172 - St. Cugat del Vallès / TELÈFON 689325558",
+   "confidence": 0.2,
+   "note": "Aquest bloc nomes indica qui ha de REBRE l'informe un cop generat; el document no etiqueta explicitament el rol (arquitecte, gestor, familiar...). Candidat feble a architect_name per practica habitual (l'informe sovint es tramet a l'arquitecte), sense corroboracio en aquest document. No confondre amb el bloc de client."
+  }
+ ],
+ "not_present": [
+  "expedient (real; nomes hi ha el codi comercial 25-0794, que NO es l'expedient)",
+  "street_address (obra)",
+  "municipality (obra)",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Imatge JPEG apaisada (1574x1185px, orientacio original girada 90°); rotada digitalment (PIL) per a lectura vertical. Text imprès net; camps manuscrits (nom, NIF, adreces, telefons) llegibles directament sobre la imatge sencera un cop rotada, sense necessitat de retall addicional. Cap casella marcada (format d'informe, destinataris addicionals)."
+}

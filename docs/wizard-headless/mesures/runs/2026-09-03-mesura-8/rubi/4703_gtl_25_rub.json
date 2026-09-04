@@ -1,0 +1,169 @@
+{
+ "source_path": "4703-GTL-25 Rubí.pdf",
+ "source_md5": "721c81ea9bcaa2188d30b4c5b9a90ca5",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL-8270-25 / Núm. informe 4703-GTL-25) de TPS sobre la mostra SPT1 P3 del projecte 3001631 Rubí: granulometria, límits d'Atterberg, classificació SUCS i contingut en ió sulfat.",
+ "issuer": "TPS, Prospecció del Subsòl, SL (marca comercial \"Soilassaig\"), laboratori NIF B64803075",
+ "date": "17/12/2025 (Data d'expedició)",
+ "pages_or_sheets": "8 pàgines",
+ "context": {
+  "who_made_it": "TPS, Prospecció del Subsòl SL (laboratori de sòls subcontractat, marca comercial 'Soilassaig' al capçal, però l'entitat amb registre mercantil a peu de pàgina és TPS B64803075)",
+  "for_whom": "G3 Desenvolupament Territorial SL, que figura com a 'DADES DEL SOL·LICITANT'/'DADES DEL CLIENT' del laboratori",
+  "why": "Reportar els resultats dels assaigs de laboratori (granulometria, límits d'Atterberg, classificació SUCS, sulfats) fets sobre la mostra SPT1 extreta al punt P3 del projecte",
+  "expected_fields": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient",
+   "street_address",
+   "municipality"
+  ],
+  "not_expected": [
+   "architect_name",
+   "client_name (promotor)",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Document d'assaig de laboratori independent, emès després de la comanda de laboratori (comanda laboratori_3001631_RUBI.xls, no llegida en aquesta crida). El bloc 'DADES DEL SOL·LICITANT'/'DADES DEL CLIENT' és G3 (client del laboratori, no de l'informe geotècnic): es descarta per a client_name (regla Pas 3, G3 mai és client). 'Mostra: SPT1 P3' i 'Cota d'extracció (m): 0,6 - 1,2' són l'etiqueta i la fondària de referència per a la taula spt_ma_tests.",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "p.2 camp 'Obra / Projecte:' (bloc DADES INICIALS)",
+   "quote": "Rubí. Carrer Miranda. 3001631",
+   "confidence": 0.85,
+   "note": "GTL 'Obra / Projecte' és una de les fonts llistades per a expedient (Pas 3); coincideix amb el nom de la carpeta del projecte."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Miranda",
+   "location": "p.1/p.8 camp 'Situació:'; p.2 camp 'Obra / Projecte:'",
+   "quote": "Rubí. Carrer Miranda.",
+   "confidence": 0.6,
+   "note": "El GTL no dona número de portal ni confirmació de cantonada; candidat, no font principal per a l'adreça de l'obra."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí",
+   "location": "p.1/p.8 camp 'Situació:'; p.2 camp 'Obra / Projecte:'",
+   "quote": "Rubí. Carrer Miranda.",
+   "confidence": 0.75,
+   "note": "Forma curta; no és cap de les 3 fonts 'sempre' (comanda/pressupost/PLAN_COST) però coincideix amb el nom de la carpeta."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Miranda",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Rubí",
+    "municipi_alternatives": []
+   },
+   "location": "p.1/p.2/p.8 camp 'Situació:' / 'Obra / Projecte:'",
+   "quote": "Rubí. Carrer Miranda.",
+   "confidence": 0.6,
+   "note": "Cap portal imprès en aquest document."
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+   "location": "peu de totes les pàgines; p.8 bloc de signatures digitals",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.95,
+   "note": "Emissor real (banda amb registre mercantil), no la marca comercial 'Soilassaig' del capçal ni 'DADES DEL CLIENT' (=G3)."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT1 P3",
+   "location": "p.2 camp 'Mostra:' (bloc DADES INICIALS); p.7 'Referència del client'",
+   "quote": "Mostra: SPT1 P3",
+   "confidence": 0.85,
+   "note": "Etiqueta de l'assaig SPT segons el laboratori; per regla, l'annex de l'Eva (si existeix) tindria prioritat sobre el GTL per a l'etiqueta."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,6 - 1,2",
+   "location": "p.2 camp 'Cota d'extracció (m):'; p.7 resum",
+   "quote": "Cota d'extracció (m): 0,6 - 1,2",
+   "confidence": 0.9,
+   "note": "GTL és la font d'autoritat principal per a lab_depth (regla Pas 3)."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P3",
+   "location": "derivat de p.2 camp 'Mostra: SPT1 P3'",
+   "quote": "Mostra: SPT1 P3",
+   "confidence": 0.6,
+   "note": "Punt d'assaig derivat del text de la mostra; el GTL no porta un camp separat de punt/localització."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "14/11/2025",
+   "location": "p.2 camp 'Data extracció:' (bloc Dimensions de la mostra)",
+   "quote": "Data extracció: 14/11/2025",
+   "confidence": 0.45,
+   "note": "Candidat 2 per regla (GTL dona el dia de la mostra/sondeig, no necessàriament el primer dia de camp DPSH); confirmat visualment (render de la pàgina) perquè l'ordre d'extracció de text barrejava aquesta data amb 'Data recepció' (18/11/2025) i 'Data obertura' (18/11/2025)."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL",
+   "location": "p.1/p.2/p.8 bloc 'DADES DEL SOL·LICITANT:' / 'DADES DEL CLIENT:'",
+   "quote": "DADES DEL SOL.LICITANT: Nom: G3 Desenvolupament Territorial, SL / NIF: B25364589",
+   "confidence": 0.95,
+   "note": "G3 mai és client (regla Pas 3): és el sol·licitant dels assaigs al laboratori, no el promotor/client de l'informe geotècnic. Descartat explícitament."
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT1",
+    "punt": "P3",
+    "profunditat": "0,6 - 1,2",
+    "litologia_candidats": [
+     "Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)"
+    ],
+    "n30": null,
+    "location": "p.2 DADES INICIALS + DESCRIPCIÓ DEL MATERIAL; p.5 CLASSIFICACIÓ DEL MATERIAL; p.7 RESUM DELS RESULTATS",
+    "quote": "Mostra: SPT1 P3; Cota d'extracció (m): 0,6 - 1,2; Descripció del material: Sorres i graves; Descripció: Sorres llimoses amb graves; SM"
+   }
+  ],
+  "__nota": "Aquest document és un informe de laboratori (assaigs sobre mostra ja extreta): no porta el registre de cops (n30) de l'assaig SPT en camp — aquest prové del full de camp / annex de sondeig, no llegits en aquesta crida. litologia_candidats ve de la classificació de laboratori (SUCS), no de la 'Descripció dels materials' de l'annex de sondeig (regla Pas 3b: quan existeixi l'annex, aquest mana)."
+ },
+ "not_present": [
+  "client_name (promotor)",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció v1.4: text net (Adobe PDFMaker des d'Excel), text_ok a totes les 8 pàgines, halves_pages buit. Lectura directa dels page-N.txt. L'ordre d'extracció de text de la p.2 barrejava les etiquetes 'Data extracció/recepció/obertura' amb els seus valors (03 dates seguides fora d'ordre visual); es va renderitzar page-2.png per confirmar l'aparellament etiqueta-valor correcte abans d'emetre field_date. Cap altre clip ni render necessari."
+}

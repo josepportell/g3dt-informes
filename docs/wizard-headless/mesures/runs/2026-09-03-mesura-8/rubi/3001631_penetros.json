@@ -1,0 +1,191 @@
+{
+ "source_path": "3001631 - PENETROS.pdf",
+ "source_md5": "addfe9cd751987285c9c63b05b24f9e5",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Albarà TPS (p.1) + fulls de camp manuscrits dels 3 penetròmetres dinàmics DPSH P-1/P-2/P-3 (p.2) i d'un assaig SPT a P3 (p.3), obra C/ de la Miranda, Rubí",
+ "issuer": "TPS, Prospecció del Subsòl SL (operari Daniel Fernández)",
+ "date": "2025-11-14",
+ "pages_or_sheets": "3 pàgines: p.1 ALBARÀ (facturació TPS), p.2 Full de Camp Penetròmetre Dinàmic (P1/P2/P3, Fitxa 01), p.3 Full de assaig SPT/MI/Mostra alterada (P3)",
+ "context": {
+  "who_made_it": "TPS (Prospecció del Subsòl, SL), subcontractista de sondeigs/penetròmetres de G3",
+  "for_whom": "G3 (bloc DADES CLIENT de l'albarà: Empresa: G3, Responsable: Eva) — és el client de TPS, no el promotor de l'obra",
+  "why": "Registrar el treball de camp fet el 14-11-2025: 3 penetròmetres dinàmics DPSH (P1, P2, P3) i 1 assaig SPT (a P3), per a facturació de TPS i com a font manuscrita de les dades que Eva transcriu després a l'Excel DPSH",
+  "expected_fields": [
+   "field_date",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests",
+   "taula dpsh_tests (N20 per profunditat, rebuig, nivell freàtic)",
+   "taula spt_ma_tests (registre/colpeig, cota d'extracció, punt de referència)"
+  ],
+  "not_expected": [
+   "client_name (promotor)",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia (msnm)",
+   "referencia_catastral",
+   "expedient",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Font manuscrita primària que Eva transcriu a ANNEXES/3001631_DPSH.xls (3 fulls P-1/P-2/P-3, presents a l'inventari amb 80 files i cel·les de color); precedeix PDF/ANNEXES/3001631_DPSH.pdf (versió amb capçalera 'Cota inici' en msnm, no present en aquest document, que aquí només descriu el punt 0 com 'C/ de la Miranda', sense valor numèric)",
+  "authority_for": [
+   "field_date",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "2025-11-14",
+   "location": "p.1 Data / p.2 Data / p.3 Data",
+   "quote": "14-11-2025",
+   "confidence": 0.9,
+   "note": "consistent i clar a les 3 pàgines"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer de la Miranda",
+   "location": "p.2 'Adreça de l'obra' i 'Descriure punt 0 o cota referencia'; p.3 'Adreça de l'obra'",
+   "quote": "C/de la Miranda - Rubí",
+   "confidence": 0.8,
+   "note": "grafia clara i repetida 3 cops (2x p.2, 1x p.3) amb 'i' punt; forma majoritària del document"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer de la Moranda",
+   "location": "p.1 ALBARÀ, bloc DADES OBRA, Adreça",
+   "quote": "C / de la Moranda",
+   "confidence": 0.3,
+   "note": "cursiva ambigua a l'albarà (p.1); zoom 400dpi no en resol el dubte, podria ser la mateixa 'Miranda' mal cal·ligrafiada; candidats, no descartar"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí",
+   "location": "p.1 Població; p.2 'Adreça de l'obra'; p.3 'Adreça de l'obra'",
+   "quote": "Rubí",
+   "confidence": 0.95,
+   "note": "consistent i clar a les 3 pàgines"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "p.1 bloc CONCEPTES / ML DE PERFORACIÓ, 'Nº de penetròmetres realitzats'",
+   "quote": "3",
+   "confidence": 0.9,
+   "note": "coincideix amb les 3 columnes P1/P2/P3 del full de camp (p.2)"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS (Prospecció del Subsòl, SL)",
+   "location": "p.1 caixetí/logo",
+   "quote": "tps · prospecció del subsòl · ALBARÀ",
+   "confidence": 0.65,
+   "note": "emissor del document (empresa de camp/laboratori habitual de G3, memòria prèvia); cap NIF imprès en aquest full concret"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "P3",
+   "location": "p.3 'Assaig de referència'",
+   "quote": "P3",
+   "confidence": 0.85
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,60 - 1,20",
+   "location": "p.3 'Cota d'extracció'",
+   "quote": "de la cota de: 0,60 / fins a la cota: 1,20",
+   "confidence": 0.85
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P3",
+   "location": "p.3 'Assaig de referència'",
+   "quote": "P3",
+   "confidence": 0.8
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "0,00 (relatiu, +/-0)",
+    "profunditat_assolida": "-4,55",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.2, columna P1: fila 'Cota Inici' (+/-0) i fila -4,8 (R)",
+    "quote": "+/-0 … R:4,55"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "0,00 (relatiu, +/-0)",
+    "profunditat_assolida": "-3,58",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.2, columna P2: fila 'Cota Inici' (+/-0) i fila -3,8 (R)",
+    "quote": "+/-0 … R: 3,58"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "0,00 (relatiu, +/-0)",
+    "profunditat_assolida": "-3,13",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.2, columna P3: fila 'Cota Inici' (+/-0) i fila -3,4 (R)",
+    "quote": "+/-0 … R:3,13"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "P3",
+    "profunditat": "0,60-1,20",
+    "litologia": null,
+    "n30": {
+     "registre": [
+      16,
+      20,
+      20,
+      24
+     ],
+     "candidates_suma": [
+      40
+     ],
+     "note": "suma dels 2 trams centrals (20+20); mai segur, regla Pas 3b"
+    },
+    "location": "p.3, bloc 'Assaig tipus' (SPT marcat), 'Assaig de referència: P3', 'Colpeig'",
+    "quote": "SPT ☑ · Assaig de referència: P3 · Colpeig: 16 20 20 24"
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF escanejat/fotografiat (Producer: Microsoft: Print To PDF), text_ok=false a les 3 pàgines → lectura 100% visual amb les meitats top/bottom (halves_pages=[1,2,3]) i clips addicionals amb render_clip.py a 300-500dpi per confirmar: (1) grafia de l'adreça a p.1 vs p.2/p.3 (ambigüitat Moranda/Miranda no resolta del tot), (2) les 3 fondàries de rebuig (P1 4,55 / P2 3,58 / P3 3,13) i que no hi ha cap marca a les columnes N.F./Par en tot el rang de profunditat (nivell_freatic='No detectat' confirmat també pel quadre 'NIVELL FREÀTIC' en blanc a p.2), (3) el registre de colpeig SPT (16/20/20/24) a p.3."
+}

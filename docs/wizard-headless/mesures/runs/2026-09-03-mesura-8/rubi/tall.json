@@ -1,0 +1,215 @@
+{
+ "source_path": "tall.pdf",
+ "source_md5": "a265cc5813c654dc1a43014b0f98bbb6",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geològica entre els tres punts DPSH (P-1, P-2, P-3), amb llegenda de nivells i cota de fonamentació recomanada",
+ "issuer": "G3 (Eva)",
+ "date": "Desembre 2025 (data del document; no necessàriament data de camp)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial (Eva), a partir dels tres assaigs DPSH del projecte",
+  "for_whom": "l'informe geotècnic 3001631 (Rubí) — figura del cos de l'informe",
+  "why": "correlacionar visualment els tres punts DPSH per determinar el nombre i la naturalesa dels nivells del sòl, i mostrar la cota de fonamentació recomanada",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "soil_levels litologia",
+   "field_date (mes/any)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "dades de laboratori",
+   "referencia_catastral completa",
+   "utm_x_utm_y",
+   "cte_edificacio/cte_sol"
+  ],
+  "relation_to_others": "Còpia 'Microsoft: Print To PDF' (creationDate 2025-12-17), text net (text_ok=true). L'inventari llista també 'PDF/ANNEXES/3001631_tall de correlació.pdf' (md5 diferent, mateix concepte aparent) i l'original FreeHand 'ANNEXES/3001631_tall de correlació.FH11' (no llegible, brossa); cap dels dos s'ha obert en aquesta crida (--only tall.pdf). Sense annex de sondeig en aquest projecte (només DPSH): aquest tall és l'única font de litologia/nivells.",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "peu, cel·la 'Exp:'",
+   "quote": "Exp: 3001631",
+   "confidence": 0.75,
+   "note": "coincideix amb el nom de la carpeta (3001631 RUBI)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer de la Miranda, 39",
+   "location": "bloc TÍTOL DEL PROJECTE (peu), línia 2",
+   "quote": "AL CARRERDE LA MIRANDA Nº 39,  PARC. 6-105 B, RUBÍ (BARCELONA)",
+   "confidence": 0.7,
+   "note": "redacció del títol de l'informe (no bloc OBRA explícit); typo del document 'CARRERDE'→'CARRER DE'; porta també referència de parcel·la '6-105 B' (possible notació polígon-parcel·la, no format RC urbà)"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "de la Miranda",
+    "nom_via_alternatives": [
+     "Miranda"
+    ],
+    "portals": [
+     "39"
+    ],
+    "municipi": "Rubí",
+    "municipi_alternatives": [
+     "RUBÍ"
+    ]
+   },
+   "location": "bloc TÍTOL DEL PROJECTE (peu)",
+   "quote": "AL CARRERDE LA MIRANDA Nº 39, ... RUBÍ (BARCELONA)",
+   "confidence": 0.7,
+   "note": "extra concept per Cadastre; typo 'CARRERDE' normalitzat a 'carrer'"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí",
+   "location": "bloc TÍTOL DEL PROJECTE (peu), línia 2 + ortofotoplànol",
+   "quote": "RUBÍ (BARCELONA)",
+   "confidence": 0.85,
+   "note": "coincideix amb el nom de la carpeta"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "bloc TÍTOL DEL PROJECTE (peu), línia 1",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.7,
+   "note": "redacció; comparació CLOSE amb l'informe"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Desembre 2025",
+   "location": "peu, cel·la 'Data:'",
+   "quote": "Data: Desembre 2025",
+   "confidence": 0.2,
+   "note": "data del DOCUMENT (tall), no de camp; només mes/any sense dia; les fotos de la carpeta són 'IMG-20251104-WA...' (novembre 2025) — possible desfasament entre camp i redacció del tall, no contradicció necessàriament"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "LLEGENDA",
+   "quote": "Nivell 1 : Graves i sorres. Carbonatat.",
+   "confidence": 0.8,
+   "note": "un sol nivell numerat a la llegenda, a més de 'Sòls superficials' (cobertura sense número, no compta); sense annex de sondeig en aquest projecte, el tall és font única"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "gràfic, capçaleres de columna",
+   "quote": "P-1 / P-2 / P-3",
+   "confidence": 0.55,
+   "note": "punts DPSH correlacionats al tall (executats, presumiblement); font primària és l'Excel DPSH, no obert en aquesta crida"
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "6-105 B",
+   "location": "bloc TÍTOL DEL PROJECTE (peu), línia 2",
+   "quote": "PARC. 6-105 B",
+   "confidence": 0.15,
+   "note": "notació polígon-parcel·la (probablement rústega), NO format de referència cadastral urbana (20 car.); creuar amb consultes del Cadastre de la carpeta abans d'usar-lo com a candidat real"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "gràfic, extrem inferior de la columna P-1",
+    "quote": "Nb=R",
+    "extra": {
+     "nb_readings": [
+      "Nb=40",
+      "Nb=77",
+      "Nb=45",
+      "Nb=R"
+     ]
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "gràfic, extrem inferior de la columna P-2",
+    "quote": "Nb=R",
+    "extra": {
+     "nb_readings": [
+      "Nb=48",
+      "Nb=R"
+     ]
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "gràfic, extrem inferior de la columna P-3",
+    "quote": "Nb=R",
+    "extra": {
+     "nb_readings": [
+      "Nb=47",
+      "Nb=R"
+     ]
+    }
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Sòls superficials (cobertura, sense número)",
+    "litologia": "Sòls superficials",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "LLEGENDA + secció gràfica (franja superior marró fosc)",
+    "quote": "Sòls superficials"
+   },
+   {
+    "nom": "Nivell 1",
+    "litologia": "Graves i sorres. Carbonatat.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "LLEGENDA",
+    "quote": "Nivell 1 : Graves i sorres. Carbonatat."
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "superficie_parcela",
+  "cota_referencia",
+  "utm_x_utm_y",
+  "num_floors",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text net (Print To PDF), llegit directament de page-1.txt; secció gràfica (columna msnm 208-213, punts P-1/P-2/P-3 amb valors Nb) llegida visualment a page-1.png. No s'han estimat fondàries de nivell ni cotes d'inici/rebuig per posició de píxel al gràfic (regla del Pas 3b): cota_inici i profunditat_assolida de dpsh_tests queden null, pendents de l'Excel DPSH / annex DPSH PDF (no oberts en aquesta crida). El nivell freàtic no té llegenda ni marca en aquest document; queda null (no 'No detectat', reservat a l'Excel). La 'Cota de fonamentació recomanada' (línia vermella discontínua) no porta valor numèric imprès, no s'ha llegit."
+}

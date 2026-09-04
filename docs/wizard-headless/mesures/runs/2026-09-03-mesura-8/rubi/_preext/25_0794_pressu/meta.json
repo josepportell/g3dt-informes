@@ -1,0 +1,33 @@
+{
+ "source_path": "25.0794/PRESSU.msg",
+ "source_md5": "5e4dc0f39ea61c31b80d78bb6d463944",
+ "kind": "msg",
+ "generated": "2026-09-04T13:28:03",
+ "elapsed_s": 1.444,
+ "dir": "25_0794_pressu",
+ "files": [
+  "25_0794_pressu/body.txt",
+  "25_0794_pressu/attachments/img_20251104_wa0016.jpg",
+  "25_0794_pressu/attachments/img_20251104_wa0016.jpg.preext/image.png"
+ ],
+ "subject": "PRESSU",
+ "from": "Eva Roig <eroig@g3dt.com>",
+ "to": "Eva Vazquez <eva@g3dt.com>",
+ "date": "2025-11-05 09:33:51+01:00",
+ "attachments": [
+  {
+   "name": "img_20251104_wa0015.jpg",
+   "size": 259796,
+   "md5": "435eb44ea05e3e618bb701357fdc2960",
+   "already_in_folder": "25.0794/IMG-20251104-WA0015.jpg",
+   "preext_dir": null
+  },
+  {
+   "name": "img_20251104_wa0016.jpg",
+   "size": 251548,
+   "md5": "36553ca0bfb08d2a1411bf62ecf05327",
+   "already_in_folder": null,
+   "preext_dir": "25_0794_pressu/attachments/img_20251104_wa0016.jpg.preext"
+  }
+ ]
+}

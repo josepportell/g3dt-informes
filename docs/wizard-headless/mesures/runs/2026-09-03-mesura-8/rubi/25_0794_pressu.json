@@ -1,0 +1,125 @@
+{
+ "source_path": "25.0794/PRESSU.msg",
+ "source_md5": "5e4dc0f39ea61c31b80d78bb6d463944",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern de G3 (Eva Roig, Administració, a Eva Vazquez) que reenvia una foto rebuda del contacte de l'obra (Joana Martinez) amb el plànol de fonamentació d'un model de casa modular, per preparar l'enviament del pressupost per WhatsApp.",
+ "issuer": "Eva Roig (G3, Dep. Administració)",
+ "date": "2025-11-05",
+ "pages_or_sheets": "cos del correu + 1 adjunt rellevant (img_20251104_wa0016.jpg)",
+ "context": {
+  "who_made_it": "Eva Roig, Departament d'Administració de G3, correu intern a Eva Vazquez",
+  "for_whom": "Eva Vazquez (tècnica G3) — ús intern, no correspondència amb el client",
+  "why": "Fer arribar la informació/foto que el contacte de l'obra (Joana Martinez) ha passat, i demanar que el pressupost es passi per WhatsApp perquè el contacte no té correu",
+  "expected_fields": [
+   "building_type (model de casa modular)",
+   "superficie_construida",
+   "num_floors",
+   "contacte del client"
+  ],
+  "not_expected": [
+   "street_address",
+   "municipality",
+   "expedient",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "field_date",
+   "lab",
+   "cte"
+  ],
+  "relation_to_others": "L'adjunt img_20251104_wa0016.jpg d'aquest correu (md5 36553ca0bfb08d2a1411bf62ecf05327) NO és el mateix fitxer que 25.0794/IMG-20251104-WA0016.jpg solt a la carpeta (md5 6e31533951c7caeec9322d0672655d28) tot i tenir el mateix nom — contingut diferent, no és un duplicat. L'altre adjunt del correu (img_20251104_wa0015.jpg) sí que és idèntic (mateix md5) al fitxer solt 25.0794/IMG-20251104-WA0015.jpg, per això no s'ha tornat a obrir.",
+  "authority_for": [
+   "superficie_construida",
+   "num_floors",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "superficie_construida",
+   "value": "72 m² (vivenda) + 20 m² (porxada)",
+   "location": "adjunt img_20251104_wa0016.jpg — caixetí del plànol de fonamentació",
+   "quote": "PLANO DE CIMENTACION MODELO MEDITERRANEO ESCALA 1: 0'50 - 72 m2 + 20 de Porchada",
+   "confidence": 0.5,
+   "note": "Sumands impresos al plànol del fabricant; el total (92) NO hi és imprès — coincideix amb el patró conegut de l'Eva a Rubí ('72+20 porxada' → informe '92', Pas 3b del skill). Confirmar amb pressupost/informe."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB (planta baixa) + porxada, sense pis superior",
+   "location": "adjunt img_20251104_wa0016.jpg — plànol de fonamentació",
+   "quote": "PLANO DE CIMENTACION MODELO MEDITERRANEO ... 72 m2 + 20 de Porchada",
+   "confidence": 0.4,
+   "note": "Derivat estructuralment (únic plànol de fonamentació d'una planta + porxada); no hi ha text explícit de nombre de plantes. Regla: plànols de catàleg de fabricant → num_floors = PB (+ Porxo)."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Vivenda modular, model 'Mediterráneo' (fabricant Viviendas Modulares)",
+   "location": "adjunt img_20251104_wa0016.jpg — títol i segell del plànol",
+   "quote": "PLANO DE CIMENTACION MODELO MEDITERRANEO ... VIVIENDAS MODULARES",
+   "confidence": 0.45,
+   "note": "Única font (plànol de catàleg del fabricant): candidat, mai segur amb una sola font."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Joana Martinez",
+   "location": "cos del correu",
+   "quote": "Adjunto la info que m'ha passat JOANA MARTINEZ – 696 04 00 77",
+   "confidence": 0.3,
+   "note": "Rol no etiquetat explícitament ('CLIENT'/'Promotor'); és qui ha passat la informació i no té correu (comunicació per WhatsApp). Candidat feble."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Joana Martinez",
+   "location": "cos del correu",
+   "quote": "JOANA MARTINEZ – 696 04 00 77",
+   "confidence": 0.25,
+   "note": "(pràctica Eva: client) — Rubí és un dels projectes citats explícitament al skill on, sense arquitecte identificat, l'Eva hi escriu el client. Mai segur."
+  },
+  {
+   "concept_id": "NOT_architect_name",
+   "value": "VIVIENDAS MODULARES (fabricant, segell del catàleg)",
+   "location": "adjunt img_20251104_wa0016.jpg — segell inferior del plànol",
+   "quote": "VIVIENDAS MODULARES ... 12360 MONFORTE DEL CID (Alic...)",
+   "confidence": 0.9,
+   "note": "Descartat explícitament com a arquitecte: és el fabricant de la casa modular, no un arquitecte (regla Pas 3)."
+  }
+ ],
+ "tables": {
+  "superficie_construida": {
+   "components": [
+    {
+     "value": "72",
+     "label": "vivenda",
+     "quote": "72 m2"
+    },
+    {
+     "value": "20",
+     "label": "porxada",
+     "quote": "20 de Porchada"
+    }
+   ],
+   "total": "92",
+   "etiqueta_font": "plànol de fonamentació del fabricant (Viviendas Modulares), adjunt al correu",
+   "note": "Total 92 calculat per suma dels components impresos (72+20); no apareix imprès com a tal en aquest document — coincideix amb el patró conegut de l'informe de Rubí citat al skill."
+  }
+ },
+ "not_present": [
+  "expedient",
+  "street_address",
+  "municipality",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Cos del correu llegit de body.txt. Únic adjunt amb contingut rellevant (img_20251104_wa0016.jpg) revisat visualment via preext image.png (foto rotada 90°, full de paper amb plànol de fonamentació de fabricant de cases modulars). L'altre adjunt (wa0015) ja és present solt a la carpeta amb el mateix md5, no s'ha tornat a obrir."
+}

@@ -1,0 +1,13 @@
+NOU      architect_company      prod=no_trobat
+ALERTA   architect_name         estat or=no_trobat prod=candidats (or value='VIVIENDAS MODULARES (fabricant, NO arquitecte)')
+CAUTELA  building_type          or segur, prod candidats (bo dins): 'habitatge unifamiliar aïllat (casa modular)'
+CAUTELA  client_name            or segur, prod candidats (bo dins): 'Joana Martínez'
+CAUTELA  cte_edificacio         or segur, prod candidats (bo dins): 'C-0'
+CAUTELA  cte_sol                or segur, prod candidats (bo dins): 'T-1'
+CAUTELA  lab_depth              or segur, prod candidats (bo dins): '0,6 - 1,2 m'
+CAUTELA  num_floors             candidats disjunts: or=['1 (planta baixa)'] prod=['PB (planta baixa) + porxada, sense pis superior']
+ALERTA   num_soil_levels        prod puja a segur (1); or candidats
+ALERTA   referencia_catastral   estat or=no_trobat prod=candidats (or value="PARC. 6-105 B (identificador d'urbanització, NO ref. cadastral)")
+CAUTELA  street_address         or segur, prod candidats (bo dins): 'Carrer de la Miranda, 39'
+ALERTA   superficie_parcela     estat or=no_trobat prod=candidats (or value=None)
+TOTALS: {'NOU': 1, 'ALERTA': 4, 'CAUTELA': 7, 'OK': 10}

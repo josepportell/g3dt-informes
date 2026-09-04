@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "fields": {
+    "lab_sample_id": {
+      "estat": "segur",
+      "value": "SPT-1",
+      "candidates": [
+        {
+          "value": "SPT-1",
+          "font": "PDF/ANNEXES/3001631_DPSH.pdf p.3 taula, columna MOSTRA, files -1/-1,2/-1,4",
+          "quote": "SPT-1"
+        },
+        {
+          "value": "SPT1 P3",
+          "font": "4703-GTL-25 Rubí.pdf p.2 camp 'Mostra:' (bloc DADES INICIALS); p.7 'Referència del client'",
+          "quote": "Mostra: SPT1 P3"
+        },
+        {
+          "value": "SPT1 (P3)",
+          "font": "comanda laboratori_3001631_RUBI.xls Hoja1!C35",
+          "quote": "SPT1 (P3)"
+        }
+      ],
+      "rule": "Annex de l'Eva (DPSH) > GTL > comanda per a l'etiqueta (Pas 3); mateix patró verificat a Castellar (annex 'SPT-1' + GTL 'MA1' -> informe 'SPT-1') i Anciles (comanda/annex 'MA' -> informe 'MA-1').",
+      "note": "GTL i comanda s'autodeclaren subordinats a l'annex ('l'annex de l'Eva mana per a l'etiqueta de l'informe', nota pròpia de tots dos documents llegits). LAB-SIG és duplicat literal del GTL (mateix informe, versió signada) i no compta com a font independent. PENETROS (full de camp manuscrit) només dona 'P3' -- el punt DPSH d'on surt la mostra, no una etiqueta de mostra pròpia -- i no és font d'autoritat per a l'etiqueta."
+    }
+  },
+  "notes": [
+    "Cel·la resolta amb Pas 3 (regla lab_sample_id: annex > GTL > comanda); Python (consolidate_python) l'havia deixat en conflicte perquè el clustering literal no agrupa 'SPT-1' / 'SPT1 P3' / 'SPT1 (P3)' com la mateixa etiqueta."
+  ]
+}

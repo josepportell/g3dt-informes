@@ -1,0 +1,32 @@
+{"t": 12.7, "ev": "lectura_preext", "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext", "n_docs": 12, "n_errors": 0, "elapsed_s": 10.284}
+{"t": 12.7, "ev": "lectura_inventari", "n_files": 48}
+{"t": 14.8, "ev": "templates_fields", "n_documents": 5}
+{"t": 14.8, "ev": "lectura_inici", "n_claude": 12, "n_python": 4}
+{"t": 14.8, "ev": "lectura_doc_inici", "doc": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg"}
+{"t": 14.8, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/3001631_DPSH.pdf"}
+{"t": 240.4, "ev": "lectura_doc", "doc": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg", "cached": false, "attempt": 1}
+{"t": 240.4, "ev": "lectura_doc_inici", "doc": "ANNEXES/3001631_DPSH.xls"}
+{"t": 243.2, "ev": "lectura_doc", "doc": "PDF/ANNEXES/3001631_DPSH.pdf", "cached": false, "attempt": 1}
+{"t": 243.2, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/3001631_tall de correlació.pdf"}
+{"t": 479.1, "ev": "lectura_doc", "doc": "ANNEXES/3001631_DPSH.xls", "cached": false, "attempt": 1}
+{"t": 479.1, "ev": "lectura_doc_inici", "doc": "tall.pdf"}
+{"t": 568.8, "ev": "lectura_doc", "doc": "PDF/ANNEXES/3001631_tall de correlació.pdf", "cached": false, "attempt": 1}
+{"t": 568.8, "ev": "lectura_doc_inici", "doc": "4703-GTL-25 Rubí.pdf"}
+{"t": 709.8, "ev": "lectura_doc", "doc": "tall.pdf", "cached": false, "attempt": 1}
+{"t": 709.8, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/3001631_fotografies.pdf"}
+{"t": 785.7, "ev": "lectura_doc", "doc": "4703-GTL-25 Rubí.pdf", "cached": false, "attempt": 1}
+{"t": 785.7, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/LAB-SIG.pdf"}
+{"t": 809.9, "ev": "lectura_doc", "doc": "PDF/ANNEXES/3001631_fotografies.pdf", "cached": false, "attempt": 1}
+{"t": 809.9, "ev": "lectura_doc_inici", "doc": "3001631 - PENETROS.pdf"}
+{"t": 931.3, "ev": "lectura_doc", "doc": "PDF/ANNEXES/LAB-SIG.pdf", "cached": false, "attempt": 1}
+{"t": 931.3, "ev": "lectura_doc_inici", "doc": "25.0794/PRESSU.msg"}
+{"t": 1110.9, "ev": "lectura_doc", "doc": "25.0794/PRESSU.msg", "cached": false, "attempt": 1}
+{"t": 1110.9, "ev": "lectura_doc_inici", "doc": "25.0794/RE_ PRESSU.msg"}
+{"t": 1208.4, "ev": "lectura_doc", "doc": "3001631 - PENETROS.pdf", "cached": false, "attempt": 1}
+{"t": 1208.4, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/3001631_plànol de situació.pdf"}
+{"t": 1217.0, "ev": "lectura_doc", "doc": "25.0794/RE_ PRESSU.msg", "cached": false, "attempt": 1}
+{"t": 1395.1, "ev": "lectura_doc", "doc": "PDF/ANNEXES/3001631_plànol de situació.pdf", "cached": false, "attempt": 1}
+{"t": 1395.2, "ev": "consolidacio_inici", "consolidator": "python"}
+{"t": 1612.2, "ev": "decisions", "cached": false, "consolidator": "python", "n_conflicts": 1, "elapsed_s": 209.564}
+{"t": 1612.2, "ev": "lectura_fi", "n_docs": 12, "elapsed_s_total": 2484.851453292882, "degraded": false}
+DONE 3001631 RUBI: 26.9 min, degraded=False, mode=document, decisions=OK, docs=12
