@@ -1,10 +1,21 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-03 — Tasca 0 TANCADA: el test vermell de N20 (Bell-lloc) és **deriva de fixture de visió,
-no regressió de càlcul** (mateix codi: fixture antic→49,8, actual→34,3; geometria real→25,1 ≈ «25-R» signat).
-Es queda vermell (decisió Josep) fins a P4. Marc «criteris, no fórmules» persistit (CLAUDE.md, METODOLOGIA-EVA §0,
-memòria, DECISION-LOG 2026-09-03); anàlisi N20+E: `docs/ANALISI-CALCUL-N20-E-2026-09-02.md`; retocs planificats
-P0–P4 (columna N, cel·la Nb, estrat-on-recolza/Rubí-roca, E per criteris, regla N20): `docs/PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md`
-— tots DESPRÉS de la mesura. **Castellar 1/8 FET (33,4 min, ERR 0, or utm corregit → 14/5/2/1) i Bell-lloc 2/8 FET (ERR 0; escalars 11 OK/10 CAND = infraconfiança, temps compost 48 min per run matat) i repàs R FET (P1 descartada, P3 cal Eva, Anciles capgirat). Següent: Rubí i els 5 restants** (criteris escrits: `docs/wizard-headless/mesures/CRITERIS-MESURA-2026-09-03.md`; Castellar llançat 2026-09-03, driver versionat `run_mesura.py`).
+Last updated: 2026-09-04 — **Mesura dels 8: 7/8 FETS** (codi intacte, pre P0-P4). Falta Tulipa (sense veritat: només
+executabilitat + latència). **Vilanova ha entrat al titular** (el Josep ha trobat el `.docx` signat, en castellà, a
+`AI-pipeline/reference-material`; `_eva_truth/vilanova.json` ja no és stub) → **7 comparables**.
+**ERR de sistema acumulat: 4** — Rubí cota P-2 (F1: annex d'Eva +212 vs informe +212,50), Linyola `field_date` (**D2**:
+bug de clustering de dates, «Octubre 2025» fa de pont i `len(str)` tria el dia 10), Vilanova `municipality` (**D3**: la
+forma «del Segrià» guanya per `len(v)` en lloc del padró) i `nivell_freatic` P-3 (**R6**: columna buida A tapa «Aigua»
+del tall). **3 dels 4 són el mateix patró: un desempat mecànic decideix contra informació que `_decisions.json` ja té.**
+OK/CAND per projecte (sobre el signat, 21 camps): Castellar 14/5, Bell-lloc 11/10, Rubí 12/9, Linyola 13/7, Alcoletge
+16/5, Vilanova 14/6, Anciles 12/8 → **cap arriba al 80 % d'OK; cap ERR de lectura: tota la confiança es perd al
+consolidador** (R1 abreviatures G3 7/7, R4 CTE imprès, R5 font única, R2 z GPS). Cobertura: **I1** (Anciles: `PDF_V0/`
+exclòs tot i ser l'única carpeta d'annexos → 9 cotes en blanc). Operació: T1 (timeout 600 s a PENETROS), D4 (runner
+`degraded=False` amb 3 docs perduts). Comparador: 18 falsos ERR/ALERTA (adreces, ids duplicats, ca/es) → arreglar
+`compare_consolida.py` ABANS d'agregar. Tot a `docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/_DIAGNOSTICS-INDEX.md`
+(taxonomia R1-R6, F1, D1-D5, I1, L1-L3, T1, C, G + recompte transversal) i `{slug}/_NOTES.md` + `_DIAGNOSTIC.md`.
+Temps: Linyola 42,9 vs base 41,9 (el +5,6 de Castellar era l'agent R en paral·lel). Branca ahead 21 d'origin, sense push.
+Preguntes a Eva acumulades (no enviades): E (P3), N20 (P4), T del pressupost = T de l'informe (R4), persona/despatx a
+`architect_name` (Linyola), **SPT P-1/P-3 creuats a Vilanova** (signat vs annex+tall), `.doc` de Vilanova ja no cal.
 **Seqüència pactada (Josep 2026-09-03):** mesura dels 8 → **R** (repàs dels informes signats buscant els criteris
 que l'Eva HI DESCRIU a la narrativa — pot resoldre P1/P3/P4 sense preguntar-li; ABANS de tots els P0–P4) →
 P0/P1/P2a → **M341** (mesura completa de les 341 variables — «l'estat de tot»; l'últim global és el 59 % del

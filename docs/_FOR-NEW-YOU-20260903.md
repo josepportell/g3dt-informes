@@ -1,4 +1,4 @@
-# FOR NEW YOU — 2026-09-03 — Castellar 1/8 i Bell-lloc 2/8 fets, or Castellar corregit; queden 6 projectes de mesura
+# FOR NEW YOU — 2026-09-03/04 — Mesura 7/8 feta (ERR sistema 4, tots diagnosticats); queda Tulipa; Vilanova al titular
 
 **Escrit:** 2026-09-03, tancament abrupte (tall de connexió del Josep). Arbre net, tot committejat, branca
 `experiment/nivell-a-2026-08` **ahead 8 d'origin — SENSE push** (el Josep no el va demanar; pregunta-li).
