@@ -53,6 +53,8 @@
    política de `consolidate.decide()`** (5 causes R1-R5: formes de la mateixa entitat com a contradicció ×4, concepte
    veí bloquejant ×2, bug substring `"1 de"` al guard de `num_floors`, `_NEVER_SEGUR_FIELDS` sobregeneralitzat ×2,
    convergència amb lectors humils ×1). R1+R3 sols → 16/21. NO aplicar fins acabar la mesura dels 8.
+   **Índex de diagnòstics dels 8 (taxonomia R1-R5/F1/D1/C/G + recompte transversal):**
+   `runs/2026-09-03-mesura-8/_DIAGNOSTICS-INDEX.md` — Rubí: `rubi/_DIAGNOSTIC.md` (1 ERR = F1, cota P-2).
 3. **P0** (columna N = SPT N30) i **P2a** (col·lapse Rubí) — després que la mesura estigui completa.
 4. **M341** (mesura de les 341 variables) — vegeu pla.
 5. **Paquet de preguntes a Eva**: criteri de l'E (R ho fa imprescindible), regla N20 mono-nivell, `.doc` de
