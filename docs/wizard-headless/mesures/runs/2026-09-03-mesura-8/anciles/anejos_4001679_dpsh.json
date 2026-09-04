@@ -1,0 +1,113 @@
+{
+ "source_path": "ANEJOS/4001679_DPSH.xls",
+ "source_md5": "8bb47684eaee80b0ec1976c4e054b6f6",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Full Excel amb el registre de colpeig DPSH de 6 punts (P-1..P-6): fondària cada 20 cm, colpeig, N30/NB corregit, N.F. i columna de nivells per color.",
+ "issuer": "Eva (G3) transcriu al PC els valors presos a camp per TPS",
+ "date": null,
+ "pages_or_sheets": "6 fulls: P-1, P-2, P-3, P-4, P-5, P-6 (80 files x 7 columnes cadascun)",
+ "context": {
+  "who_made_it": "Eva (G3) transcriu la lectura de camp del penetròmetre DPSH; l'assaig el fa TPS (subcontractista de sondeigs)",
+  "for_whom": "El propi expedient G3 — és la font numèrica de la taula 'Penetròmetres dinàmics DPSH' de l'informe",
+  "why": "Registrar colpeig cada 20 cm per a cada punt DPSH i la fondària de rebuig, base del càlcul N20/N30 i de la taula de l'informe",
+  "expected_fields": [
+   "num_dpsh_tests",
+   "dpsh_tests[].profunditat_assolida",
+   "dpsh_tests[].rebuig",
+   "dpsh_tests[].nivell_freatic"
+  ],
+  "not_expected": [
+   "client_name",
+   "municipality",
+   "architect_name",
+   "street_address",
+   "cota_referencia",
+   "field_date (aquest full no porta 'DATA:', només el PDF derivat 'PDF_V0/ANEJOS/4001679_DPSH.pdf' -exclòs- la porta)"
+  ],
+  "relation_to_others": "Font dels valors del PDF derivat 'PDF_V0/ANEJOS/4001679_DPSH.pdf' (exclòs per estar a la carpeta PDF_V0): mateixes dades de colpeig; aquell PDF hi afegeix la capçalera 'Cota inicio' per punt que aquest Excel NO porta. Segons la regla del Pas 0, l'Excel mana per als valors (el PDF és una còpia impresa).",
+  "authority_for": [
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 6,
+   "location": "Noms de full P-1..P-6, cadascun amb dades a la columna C (Golpeo DPSH) files 17-77",
+   "quote": "fulls 'P-1','P-2','P-3','P-4','P-5','P-6', tots amb valors a la columna C fins al golpeig 100 (rebuig)",
+   "confidence": 0.9,
+   "note": "6 fulls, els 6 amb dades executades (columna C no buida). P-5 i P-6 porten a C17 el text 'Sondeo S-2'/'Sondeo S-1' en lloc d'un colpeig a fondària 0 -- són punts DPSH associats a un sondeig a rotació del mateix projecte (S-1, S-2); el colpeig hi comença més avall (-2,6/-3,2 m) però compten igualment com a assaig executat."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-3,58 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full 'P-1', peu B80; columna G 'Niveles' files 17-35",
+    "quote": "Rechazo a la penetración: -3,58 m",
+    "note": "Columna N.F. (F) buida en text i en color a tot el full -> 'No detectat' comprovat. Columna G colorejada: vermell #FF8080 ('Nivel 1', llegenda C79) files 17-26 (fondària 0 a -1,8 m), groc #FFFF99 ('Nivel 2', llegenda F79) files 27-35 (-2,0 a -3,6 m) -> transició de nivell entre -1,8 i -2,0 m. Evidència NO autoritativa (ve del full DPSH, no de l'annex de sondeig ni del tall): candidat feble per a num_soil_levels/soil_levels, a creuar amb altres documents."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-4,59 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full 'P-2', peu B80; columna G 'Niveles' files 17-40",
+    "quote": "Rechazo a la penetración: -4,59 m",
+    "note": "N.F. buida (text+color). Columna G: vermell files 17-26 (0 a -1,8 m), groc files 27-40 (-2,0 a -4,6 m) -> transició -1,8/-2,0 m. Mateix matís que P-1: evidència feble, no autoritativa."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-3,77 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full 'P-3', peu B80; columna G 'Niveles' files 17-36",
+    "quote": "Rechazo a la penetración: -3,77 m",
+    "note": "N.F. buida (text+color). Columna G: vermell files 17-29 (0 a -2,4 m), groc files 30-36 (-2,6 a -3,8 m) -> transició -2,4/-2,6 m. Evidència feble, no autoritativa."
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": "-5,92 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full 'P-4', peu B80; columna G 'Niveles' files 17-47",
+    "quote": "Rechazo a la penetración: -5,92 m",
+    "note": "N.F. buida (text+color). Columna G: vermell files 17-27 (0 a -2,0 m), groc files 28-47 (-2,2 a -6,0 m) -> transició -2,0/-2,2 m. Evidència feble, no autoritativa."
+   },
+   {
+    "punt": "P-5",
+    "cota_inici": null,
+    "profunditat_assolida": "-4,18 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full 'P-5', C17 (etiqueta), peu B80; columna C files 33-38; columna G files 33-38",
+    "quote": "C17: 'Sondeo S-2' | B80: 'Rechazo a la penetración: -4,18 m'",
+    "note": "A diferència de P-1..P-4, la columna C (Golpeo DPSH) NO porta dades des de fondària 0: està buida de -0,2 a -3,0 m i comença a -3,2 m (C33=18) fins al rebuig a -4,2 m (C38=100). N.F. buida. Columna G només colorejada de groc (#FFFF99, 'Nivel 2') a files 33-38 (-3,2 a -4,2 m); no hi ha cap fila vermella ('Nivel 1') colorejada per a aquest punt -- pot ser que el tram superior no s'hagi acolorit (dada no introduïda) més que absència real del Nivell 1. No treure conclusió de nivells d'aquest punt sol."
+   },
+   {
+    "punt": "P-6",
+    "cota_inici": null,
+    "profunditat_assolida": "-5,70 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full 'P-6', C17 (etiqueta), peu B80; columna C files 30-46; columna G files 17-46",
+    "quote": "C17: 'Sondeo S-1' | B80: 'Rechazo a la penetración: -5,70 m'",
+    "note": "Igual que P-5, la columna C no porta dades des de fondària 0: buida de -0,2 a -2,4 m, comença a -2,6 m (C30=28) fins a -5,8 m (C46=100; el peu diu -5,70 m, que mana). N.F. buida. Columna G SÍ colorejada des de fondària 0: vermell files 17-37 (0 a -4,0 m), groc files 38-46 (-4,2 a -5,8 m) -> transició -4,0/-4,2 m, molt més profunda que als altres 4 punts (que transicionen entre -1,8 i -2,6 m). Discrepància notable a creuar amb l'annex de sondeig/tall si n'hi ha."
+   }
+  ]
+ },
+ "not_present": [
+  "cota_inici (per punt) -- aquest Excel no porta capçalera de cota; viu al PDF derivat 'PDF_V0/ANEJOS/4001679_DPSH.pdf' (exclòs de lectura)",
+  "field_date -- aquest full no porta cap etiqueta 'DATA:'"
+ ],
+ "reading_notes": "Llegit via pre-extracció (--only, v1.4): sheet-{0..5}.cells.txt + sheet-{0..5}.colors.txt de _preext/anejos_4001679_dpsh/, sense executar openpyxl/xlrd. Mapa de fulls per index (meta.json de l'inventari): 0=P-1, 1=P-2, 2=P-3, 3=P-4, 4=P-5, 5=P-6. Files 1-14 buides a tots els fulls; D15=0.83 és el factor d'energia DPSH->N20 (NB = colpeig / 0,83), no una cota ni una data -- aquest full no porta CAP metadada de projecte (expedient, client, adreça), consistent amb el Pas 2 del skill. Columna F (N.F.) comprovada buida en text I en color (formatting_info) a les 6 fulles -> 'No detectat' amb comprovació explícita del color, no només del text. Columna G ('Niveles') porta colors per fila a totes les fulles (vermell #FF8080 = 'Nivel 1', groc #FFFF99 = 'Nivel 2', llegenda a C79/F79 de cada full) -- és una dada rellevant per a num_soil_levels/soil_levels però NO és font d'autoritat A per aquest concepte segons el Pas 3 (mana l'annex de sondeig / la llegenda del tall); s'ha anotat com a candidat feble per fila. Cap fitxer 'annex_sondeig' (PDF) és present a l'inventari d'aquest projecte fora de la carpeta exclosa PDF_V0 -- si cap altre document del projecte no en porta, aquesta evidència DPSH pot acabar sent la millor pista disponible per a num_soil_levels; consolidar amb cura."
+}

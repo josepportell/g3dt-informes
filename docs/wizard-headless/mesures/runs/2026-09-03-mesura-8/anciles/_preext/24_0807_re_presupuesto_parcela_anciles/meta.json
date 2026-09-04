@@ -1,0 +1,24 @@
+{
+ "source_path": "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+ "source_md5": "aba73c482bf502623e5326504d48d051",
+ "kind": "msg",
+ "generated": "2026-09-04T19:09:32",
+ "elapsed_s": 0.004,
+ "dir": "24_0807_re_presupuesto_parcela_anciles",
+ "files": [
+  "24_0807_re_presupuesto_parcela_anciles/body.txt"
+ ],
+ "subject": "RE: Presupuesto Parcela Anciles",
+ "from": "<eva@g3dt.com>",
+ "to": "\"'Dolors_G3'\" <dolors@g3dt.com>",
+ "date": "2024-11-18 15:37:41+01:00",
+ "attachments": [
+  {
+   "name": "plan_cost_v03_rev_anciles.xlsx",
+   "size": 114135,
+   "md5": "dd809401a5f579c01320c6351d8f1af3",
+   "already_in_folder": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+   "preext_dir": null
+  }
+ ]
+}

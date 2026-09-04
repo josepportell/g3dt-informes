@@ -38,7 +38,9 @@
 
 ## La feina següent, per ordre
 
-1. **Continuar la mesura (2 projectes: Anciles, Tulipa)** — Vilanova FET (`vilanova/_DIAGNOSTIC.md`: **ERR 2** = D3 «Vilanova
+1. **Continuar la mesura (1 projecte: Tulipa, sense veritat → executabilitat + latència)** — Anciles FET (`anciles/_DIAGNOSTIC.md`:
+   ERR 0; **I1** = `PDF_V0/` exclòs tot i ser l'única carpeta d'annexos → 9 cotes en blanc; D5 = CTE derivat amb la
+   superfície d'una tipologia; 28,3 min net). Vilanova FET (`vilanova/_DIAGNOSTIC.md`: **ERR 2** = D3 «Vilanova
    del Segrià» per `len(v)` + R6 humitat P-3 tapada per columna buida; D4 runner `degraded=False` amb 11/14 docs; F1 SPT
    P-1/P-3 creuats al signat vs annex+tall → pregunta a Eva; temps compost 22+9,5 min per tall de xarxa + reinici).
    El signat de Vilanova existia (`.docx` castellà a AI-pipeline/reference-material) → 7 comparables. Alcoletge FET (`alcoletge/_DIAGNOSTIC.md`: ERR 0; l'ERR cru

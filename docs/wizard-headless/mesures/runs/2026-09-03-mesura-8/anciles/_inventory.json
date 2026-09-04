@@ -1,0 +1,755 @@
+{
+ "generated": "2026-09-04T19:09:26",
+ "project": "4001679 ANCILES",
+ "files": [
+  {
+   "path": "24.0807/.~lock.DADES PER ANAR A CAMP_v1.xlsx#",
+   "size": 105,
+   "md5": "8aacd4ae27d2c5e01acb57eb4dcfaba0",
+   "mtime": "2026-03-21T13:48:25",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "24.0807/A01_TIPOL.pdf",
+   "size": 353244,
+   "md5": "681a81ff02e7b63db89c99e5ad30caad",
+   "mtime": "2024-11-18T17:37:32",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_a01_tipol",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_a01_tipol/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_a01_tipol/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_a01_tipol/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+   "size": 156542,
+   "md5": "c9c81814f5b50ad0d4dec2b8b67be6e0",
+   "mtime": "2026-02-17T16:03:26",
+   "route": "python",
+   "doc_type_hint": "fitxa_camp_g3",
+   "priority": 0
+  },
+  {
+   "path": "24.0807/IV_PLANOS.pdf",
+   "size": 43347742,
+   "md5": "3846459e4b0a44df929b24fbb8caed91",
+   "mtime": "2026-02-09T08:27:52",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-7.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-8.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-8.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-9.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-9.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-10.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-10.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-11.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-11.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-12.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-12.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-13.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-14.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-15.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-16.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-17.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-18.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-19.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-20.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-21.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-22.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-23.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-24.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-25.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-26.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-27.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-28.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-29.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-30.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-31.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-32.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-33.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-34.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/page-35.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_iv_planos/meta.json",
+    "pages": 35,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+   "size": 114135,
+   "md5": "dd809401a5f579c01320c6351d8f1af3",
+   "mtime": "2024-11-18T17:37:04",
+   "route": "python",
+   "doc_type_hint": "plan_cost_g3",
+   "priority": 0
+  },
+  {
+   "path": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+   "size": 448868,
+   "md5": "6068a4e989126135944946e5a76ec0d2",
+   "mtime": "2024-11-18T17:35:38",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/page-7.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_geotec_anciles/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "24.0807/Presupuesto Parcela Anciles.msg",
+   "size": 5882880,
+   "md5": "3e25c13127b56859205a8d13f53d1340",
+   "mtime": "2024-11-18T17:36:46",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_parcela_anciles",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_parcela_anciles/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_presupuesto_parcela_anciles/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+   "size": 179200,
+   "md5": "aba73c482bf502623e5326504d48d051",
+   "mtime": "2024-11-18T17:36:54",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_re_presupuesto_parcela_anciles",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_re_presupuesto_parcela_anciles/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_re_presupuesto_parcela_anciles/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+   "size": 152576,
+   "md5": "06679f22ededacfbfeb7fb0e3959528a",
+   "mtime": "2026-02-09T08:28:20",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_re_presupuesto_geotecnico_anciles",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_re_presupuesto_geotecnico_anciles/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_re_presupuesto_geotecnico_anciles/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "24.0807/SITE_prop A.pdf",
+   "size": 5446337,
+   "md5": "4b5ae667d7469439a4e543d3c8970fef",
+   "mtime": "2024-11-18T17:37:32",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_site_prop_a",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_site_prop_a/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_site_prop_a/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/24_0807_site_prop_a/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+   "size": 527672,
+   "md5": "facc75f307f41e899566791f2272b75d",
+   "mtime": "2026-02-05T23:51:00",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/page-7.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_presupuesto_g3_anciles/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+   "size": 680960,
+   "md5": "02a50f46b757e4bf72b368d1643ea3c7",
+   "mtime": "2026-02-09T08:27:00",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_re_presupuesto_geotecnico_anciles",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_re_presupuesto_geotecnico_anciles/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/acceptacio_re_presupuesto_geotecnico_anciles/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ANEJOS/4001679_DPSH.xls",
+   "size": 190976,
+   "md5": "8bb47684eaee80b0ec1976c4e054b6f6",
+   "mtime": "2026-03-16T07:57:50",
+   "route": "claude",
+   "doc_type_hint": "dpsh_excel",
+   "priority": 3,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh",
+    "kind": "excel",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-0.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-0.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-0.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-1.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-1.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-1.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-2.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-2.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-2.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-3.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-3.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-3.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-4.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-4.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-4.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-5.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-5.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/sheet-5.colors.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/anejos_4001679_dpsh/meta.json",
+    "pages": null,
+    "sheets": [
+     {
+      "index": 0,
+      "name": "P-1",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 107
+     },
+     {
+      "index": 1,
+      "name": "P-2",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 112
+     },
+     {
+      "index": 2,
+      "name": "P-3",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 108
+     },
+     {
+      "index": 3,
+      "name": "P-4",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 119
+     },
+     {
+      "index": 4,
+      "name": "P-5",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 94
+     },
+     {
+      "index": 5,
+      "name": "P-6",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 118
+     }
+    ],
+    "error": null
+   }
+  },
+  {
+   "path": "ANEJOS/4001679_corte de correlación.FH11",
+   "size": 332086,
+   "md5": "4d3f80d2719d41d23d6821ba7d150d76",
+   "mtime": "2026-03-16T08:27:32",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANEJOS/4001679_fotografías.FH11",
+   "size": 2288995,
+   "md5": "3807516941d23a1e5c16201bbe7e7855",
+   "mtime": "2026-03-16T07:58:18",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANEJOS/4001679_plano de situación.FH11",
+   "size": 1769851,
+   "md5": "07e20d340eabdb6387edf28c3705b5a3",
+   "mtime": "2026-03-16T08:07:58",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANEJOS/4001679_sondeos.FH11",
+   "size": 4700030,
+   "md5": "90678d3f99ba9912282e63a2a1aba704",
+   "mtime": "2026-03-16T16:19:30",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "Confirmación visita jueves 19 y plano.msg",
+   "size": 374784,
+   "md5": "87f5b442944655b6fd77a693318c401f",
+   "mtime": "2026-02-17T15:41:02",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/confirmaci_n_visita_jueves_19_y_plano",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/confirmaci_n_visita_jueves_19_y_plano/body.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/confirmaci_n_visita_jueves_19_y_plano/attachments/pie_egt_con_pacific_instruments.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/confirmaci_n_visita_jueves_19_y_plano/attachments/pie_egt_con_pacific_instruments.png.preext/image.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/confirmaci_n_visita_jueves_19_y_plano/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "DTE.txt",
+   "size": 76,
+   "md5": "59c12d437b8d6214d817befab4b4206b",
+   "mtime": "2026-02-23T11:35:04",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DETALL SPT1 S1.jpeg",
+   "size": 326034,
+   "md5": "810b210ec847b82fabe6587f061bf3a8",
+   "mtime": "2026-02-27T07:38:12",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DETALL SPT1 S2.jpeg",
+   "size": 333673,
+   "md5": "dec663a8fe2373af6b7cc230a548a9cd",
+   "mtime": "2026-02-27T07:39:04",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/EMPL S1.jpeg",
+   "size": 635681,
+   "md5": "d693b4ce267b67f63939e14ea6a6ddd9",
+   "mtime": "2026-02-27T07:37:34",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/EMPL S2.jpeg",
+   "size": 630705,
+   "md5": "6eac55337c2ecac3828daa064aa3752d",
+   "mtime": "2026-02-27T07:38:32",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P1.jpeg",
+   "size": 551244,
+   "md5": "632058785778002567f0760a19a6e25e",
+   "mtime": "2026-02-27T07:39:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P2.jpeg",
+   "size": 594817,
+   "md5": "35d570575f7bef9fd4118b0585f21a1e",
+   "mtime": "2026-02-27T07:39:40",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P3.jpeg",
+   "size": 545812,
+   "md5": "dda4f403edf371442f15fbd777ddc6b4",
+   "mtime": "2026-02-27T07:39:28",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P4.jpeg",
+   "size": 564229,
+   "md5": "93519c2e0c73116492264682d2855892",
+   "mtime": "2026-02-27T07:39:22",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S1.jpeg",
+   "size": 496416,
+   "md5": "ecd04d9debc12c922a9408c45ac4cb87",
+   "mtime": "2026-02-27T07:37:56",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S2.jpeg",
+   "size": 453809,
+   "md5": "0adf08eecce4aa65b3fa50b520c4b057",
+   "mtime": "2026-02-27T07:38:02",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S2_0-3.jpeg",
+   "size": 467282,
+   "md5": "f8ab682bca388e5b88e17a8d513ce6f2",
+   "mtime": "2026-02-27T07:38:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SPT1 S1.jpeg",
+   "size": 402791,
+   "md5": "2f13cfa25f305e6a34f7cb9bfdec3511",
+   "mtime": "2026-02-27T07:38:20",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SPT1 S2.jpeg",
+   "size": 376976,
+   "md5": "47cf38f7827bcbe60ee144bca73417c3",
+   "mtime": "2026-02-27T07:39:14",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Thumbs.db",
+   "size": 251904,
+   "md5": "06de13aa73f2293b7aa85e5fbd2c2e1d",
+   "mtime": "2026-03-16T16:07:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/WhatsApp Image 2026-02-19 at 12.16.31.jpeg",
+   "size": 415837,
+   "md5": "6c97db2b9b16629960b2bf52c4a4b321",
+   "mtime": "2026-02-27T07:39:34",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/WhatsApp Image 2026-02-19 at 16.35.43.jpeg",
+   "size": 318413,
+   "md5": "b8f8a8724b4574923928122ce3451453",
+   "mtime": "2026-02-27T07:37:42",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "PDF_V0/4001679_informe_V0.pdf",
+   "size": 2515786,
+   "md5": "fb83deaf08a95d91949b8b91dda5e3bc",
+   "mtime": "2026-03-16T16:35:26",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF_V0/ANEJOS/4001679_DPSH.pdf",
+   "size": 272619,
+   "md5": "1f744b7d9abf6bcc67e629f8e6880d17",
+   "mtime": "2026-03-16T16:02:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF_V0/ANEJOS/4001679_corte de correlación.pdf",
+   "size": 68993,
+   "md5": "64c187d7046d3715441f67a283d33a0d",
+   "mtime": "2026-03-16T16:00:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF_V0/ANEJOS/4001679_fotografías.pdf",
+   "size": 289547,
+   "md5": "ddafe260fe7d152952065122381d15fa",
+   "mtime": "2026-03-16T16:04:34",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF_V0/ANEJOS/4001679_plano de situación.pdf",
+   "size": 320680,
+   "md5": "ecd73dd4b5466a5f6176123119e699b2",
+   "mtime": "2026-03-16T16:05:42",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF_V0/ANEJOS/4001679_sondeos.pdf",
+   "size": 464517,
+   "md5": "30012d7ecd82b395274cc5011d721ae6",
+   "mtime": "2026-03-16T16:19:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF_V0/LETRA/4001679_informe_V0.pdf",
+   "size": 1163236,
+   "md5": "ce9c4a8dd900afaa1e8f45e95c5c78b5",
+   "mtime": "2026-03-16T16:31:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF_V0/LETRA/4001679_portada_V0.pdf",
+   "size": 33177,
+   "md5": "cdb74739a9ff68964d0cad6f8ae2bd58",
+   "mtime": "2026-03-16T16:27:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PENETROS + SONDEIGS.pdf",
+   "size": 2302986,
+   "md5": "fb66391f0ee776d8c0e7e3dd877b1a35",
+   "mtime": "2026-02-20T08:54:50",
+   "route": "claude",
+   "doc_type_hint": "camp_penetros",
+   "priority": 7,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-2-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-3-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-3-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-4-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-4-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-5-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-5-right.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-6-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-6-right.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-7.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-7-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/page-7-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/penetros_sondeigs/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "comanda laboratori_4001679_ANCILES.xls",
+   "size": 470528,
+   "md5": "f7c17b533aaf5cb9dadeb4fe4b7a745d",
+   "mtime": "2026-02-27T08:53:24",
+   "route": "python",
+   "doc_type_hint": "comanda_lab_g3",
+   "priority": 0
+  },
+  {
+   "path": "pl situ.pdf",
+   "size": 5491543,
+   "md5": "63db6493fdf5145ea7a27220d3927ad0",
+   "mtime": "2026-03-16T08:06:18",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/pl_situ",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/pl_situ/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/pl_situ/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/pl_situ/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "tall.pdf",
+   "size": 745483,
+   "md5": "539cdef6e4d29459cc20a5d0204e13a7",
+   "mtime": "2026-03-16T08:27:30",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/tall",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/tall/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/tall/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext/tall/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  }
+ ],
+ "duplicates": [],
+ "preext": {
+  "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext",
+  "n_docs": 14,
+  "n_errors": 0,
+  "elapsed_s": 11.006
+ }
+}

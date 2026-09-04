@@ -1,0 +1,31 @@
+{
+ "source_path": "24.0807/Presupuesto Parcela Anciles.msg",
+ "source_md5": "3e25c13127b56859205a8d13f53d1340",
+ "kind": "msg",
+ "generated": "2026-09-04T19:09:32",
+ "elapsed_s": 0.304,
+ "dir": "24_0807_presupuesto_parcela_anciles",
+ "files": [
+  "24_0807_presupuesto_parcela_anciles/body.txt"
+ ],
+ "subject": "Presupuesto Parcela Anciles",
+ "from": "Alba Barrau <abarrau@retrateria.com>",
+ "to": "Dolors_G3 <dolors@g3dt.com>",
+ "date": "2024-11-18 13:30:15+01:00",
+ "attachments": [
+  {
+   "name": "a01_tipol.pdf",
+   "size": 353244,
+   "md5": "681a81ff02e7b63db89c99e5ad30caad",
+   "already_in_folder": "24.0807/A01_TIPOL.pdf",
+   "preext_dir": null
+  },
+  {
+   "name": "site_prop_a.pdf",
+   "size": 5446337,
+   "md5": "4b5ae667d7469439a4e543d3c8970fef",
+   "already_in_folder": "24.0807/SITE_prop A.pdf",
+   "preext_dir": null
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+NOU      architect_company      prod=candidats
+CAUTELA  architect_name         candidats disjunts: or=['ALBA BARRAU (nºCol. 6.408) i MIRIAM CASTEL (nºCol. 6.703) — A+M Arquitectura', 'MARIA ALBA BARRAU CASTÁN (Retratería)'] prod=['ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703', 'RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA', 'ANDRÉS AMAT y ENRIQUE M. GARDETA (ESTUDIO DE DETALLE)']
+ALERTA   building_type          or segur '7 habitatges unifamiliars adossats (7 viviendas adosadas)' NO entre candidats ['vivienda adosada (7 unitats)', '7 adosados (residencial), PB+1PP+BC', 'CONSTR GRUPO DE VIVIENDAS']
+ALERTA   client_name            or segur 'Alba Maria Barrau Castán' NO entre candidats ['MARIA ALBA BARRAU CASTÁN 616523792', 'RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA', 'ANDRÉS AMAT y ENRIQUE M. GARDETA']
+BUIT     cota_referencia        (or=candidats '+1106,40 (P-1)'; prod no_trobat)
+CAUTELA  cte_edificacio         candidats disjunts: or=['C-1 (1.264 m² totals > 300, < 4 plantes)', 'T-1 (per defecte del patró)'] prod=['C0']
+CAUTELA  lab_testing_company    candidats disjunts: or=['MA (S-2) 2,8-3,0', 'TPS (coneixement previ)'] prod=['TPS, Prospecció del Subsòl, SL']
+ALERTA   num_soil_levels        prod puja a segur ('2'); or candidats
+CAUTELA  referencia_catastral   or segur, prod candidats (bo dins): '6184504BH9158N0000SS'
+CAUTELA  street_address         or segur, prod candidats (bo dins): 'C/ General Ferraz, 20'
+CAUTELA  superficie_parcela     or segur, prod candidats (bo dins): '1.655,01 m²'
+TOTALS: {'NOU': 1, 'CAUTELA': 6, 'ALERTA': 3, 'BUIT': 1, 'OK': 11}
