@@ -1,5 +1,12 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-05 (tarda) — **Fila 0b TANCADA** (S1 en disseny). Tarda: G, R6, I1, R1, D5, D4, D6, T1, T2, cada
+Last updated: 2026-09-05 (nit) — **Bloc 1.1 R5 FET** («font única del proveïdor»: autoritat de camp al consolidador,
+`_FIELD_AUTHORITY`; skill v1.7). Reconsolidació dels 7 a cost 0 (`_reconsolida-2026-09-05-r5` vs `-r2`): **8 cel·les
+CAND → OK (= or), cap altra es mou, 0 regressions**. Escalars **112 OK (76 %) / 29 CAND (20 %) / 5 ALERTA / 1 blanc /
+0 ERR**; taules 137/21/8/31/0 idèntic. Llindars: ERR 0 ✅ · **CAND ≤ 20 % ✅ (primer cop)** · OK 80 % ⏳. Queda de R5 a
+posta: `num_floors` Castellar/Vilanova (lector a 0,3-0,4) i 9 taules d'Anciles (manuscrit únic + V0). **Següent: 1.2 R2.**
+Detall: DECISION-LOG 2026-09-05 (nit), `_AGREGAT-8.md` §nit.
+
+Anterior (tarda) — **Fila 0b TANCADA** (S1 en disseny). Tarda: G, R6, I1, R1, D5, D4, D6, T1, T2, cada
 un amb test i mesurat per reconsolidació (cost 0; `mesures/reconsolida_mesura.py`). Agregat mecànic sobre l'or:
 escalars **104 OK (71 %) / 37 CAND / 5 ALERTA / 1 blanc / 0 ERR** (matí 93; 09-04 86); taules **137 / 21 / 8 / 31 / 0**.
 Sobre el signat: escalars 104/42/1/**0 ERR**; taules **1 ERR real** (Rubí cota P-2, font d'Eva) — dels 4 ERR del 09-04

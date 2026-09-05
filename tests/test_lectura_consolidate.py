@@ -33,10 +33,11 @@ PERDOC_SETS = [p for p in sorted(RUNS.glob("*/perdoc")) if any(p.glob("*.json"))
 
 
 def _doc(out_dir: Path, name: str, source_path: str, doc_type: str, tier_a: list[dict], *, tables: dict | None = None,
-         md5: str | None = None, not_present: list[str] | None = None, skill_version: str = "1.4") -> None:
+         md5: str | None = None, not_present: list[str] | None = None, skill_version: str = "1.4",
+         authority_for: list[str] | None = None) -> None:
     payload = {
         "source_path": source_path, "source_md5": md5 or f"md5-{name}", "skill_version": skill_version,
-        "schema_version": 1, "document_type": doc_type, "context": {"authority_for": []},
+        "schema_version": 1, "document_type": doc_type, "context": {"authority_for": list(authority_for or [])},
         "tier_a": tier_a, "not_present": not_present or [],
     }
     if tables:
@@ -454,6 +455,139 @@ def test_D5_detached_dwellings_keep_per_unit_surface():
     assert C.derived_field_signals("cte_edificacio", {}, None) == []
 
 
+# ---------------------------------------------------------------------------
+# R5 (2026-09-05, mesura dels 8): autoritat de camp — «font unica del proveidor» (19 cel·les en CAND, 8 escalars)
+# ---------------------------------------------------------------------------
+
+
+def _decl(concept, value, conf, doc="d1", doc_type="correu", font=None):
+    """Senyal que el lector ha marcat a `context.authority_for` del document (R5)."""
+    s = _sig(concept, value, conf, doc=doc, doc_type=doc_type)
+    s.declares = True
+    if font:
+        s.font = font
+    return s
+
+
+def test_R5_provider_declaration_is_field_authority_only_when_declared_and_confident():
+    """Linyola: la RC impresa al projecte de l'arquitecte (0,6, `authority_for`) → segur (l'or: «el projecte mana»).
+    Sense `authority_for`, o amb la confianca per sota de 0,5 (el lector mateix dubta: Castellar/Vilanova «informacio
+    verbal», Rubi «derivat estructuralment» d'una foto de cataleg), es queda en candidats."""
+    guard = C._guard_for_field("referencia_catastral", {})
+    cell = C.decide([_decl("referencia_catastral", "5098344CG2159N0000US", 0.6, doc="projecte", doc_type="projecte_arquitecte")],
+                    sources_checked=["projecte"], field_name="referencia_catastral", segur_requires=guard)
+    assert cell["estat"] == "segur" and cell["rule"].startswith("autoritat de camp (R5): projecte_arquitecte")
+    undeclared = C.decide([_sig("referencia_catastral", "5098344CG2159N0000US", 0.6, doc="projecte", doc_type="projecte_arquitecte")],
+                          sources_checked=["projecte"], field_name="referencia_catastral", segur_requires=guard)
+    assert undeclared["estat"] == "candidats"
+    doubtful = C.decide([_decl("num_floors", "PB+1", 0.4, doc="correu")], sources_checked=["correu"], field_name="num_floors")
+    assert doubtful["estat"] == "candidats"
+    declared = C.decide([_decl("num_floors", "PB+1", 0.6, doc="correu")], sources_checked=["correu"], field_name="num_floors")
+    assert declared["estat"] == "segur"
+    # un tipus de document que no declara el camp (albara TPS, fitxa) no hi entra encara que el lector ho marqui
+    other = C.decide([_decl("num_floors", "PB+1", 0.7, doc="albara", doc_type="full_camp_manuscrit")],
+                     sources_checked=["albara"], field_name="num_floors")
+    assert other["estat"] == "candidats"
+
+
+def test_R5_declared_rc_must_be_complete_poligon_parcela_or_map_fragment_never_segur():
+    """Rubi: «Poligon 6, Parcel·la 105-B» (annex, 0,85 = A) no es una referencia cadastral; Alcoletge: el fragment
+    «98417» d'un mapa tampoc. Anciles: la RC sencera del correu d'encarrec (0,85) sense consulta del Cadastre → segur
+    (or: «regla Alcoletge»); el fragment «61845» al costat no la contradiu (conf 0,2)."""
+    guard = C._guard_for_field("referencia_catastral", {})
+    rubi = C.decide([_sig("referencia_catastral", "Polígon 6, Parcel·la 105-B", 0.85, doc="pl_situ", doc_type="annex_planol_situacio")],
+                    sources_checked=["pl_situ"], field_name="referencia_catastral", segur_requires=guard)
+    assert rubi["estat"] == "candidats" and "forma de referencia completa" in rubi["rule"]
+    frag = C.decide([_decl("referencia_catastral", "98417", 0.9, doc="planol", doc_type="planol")],
+                    sources_checked=["planol"], field_name="referencia_catastral", segur_requires=guard)
+    assert frag["estat"] == "candidats"
+    anciles = C.decide([_sig("referencia_catastral", "6184504BH9158N0000SS", 0.85, doc="correu", doc_type="correu"),
+                        _sig("referencia_catastral", "61845", 0.2, doc="pl_situ", doc_type="annex_planol_situacio")],
+                       sources_checked=["correu"], field_name="referencia_catastral", segur_requires=guard)
+    assert anciles["estat"] == "segur" and anciles["value"] == "6184504BH9158N0000SS"
+
+
+def test_R5_parcela_guard_counts_complete_cadastral_references_only():
+    """Anciles: RC sencera + fragment «61845» d'un mapa = UNA parcel·la → la superficie del projecte (A) es segur;
+    Bell-lloc: dues RC senceres = dues parcel·les → candidats (regla Pas 3 de sempre). Els «…N+…N+…N» del Cadastre
+    compten com a tres."""
+    guard_one = C._guard_for_field("superficie_parcela", {"referencia_catastral": {"candidates": [
+        {"value": "6184504BH9158N0000SS"}, {"value": "61845"}]}})
+    one = C.decide([_sig("superficie_parcela", "1655.01 m²", 0.8, doc="iv_planos", doc_type="projecte_arquitecte")],
+                   sources_checked=["iv_planos"], field_name="superficie_parcela", segur_requires=guard_one)
+    assert one["estat"] == "segur"
+    guard_two = C._guard_for_field("superficie_parcela", {"referencia_catastral": {"candidates": [
+        {"value": "4613172CG1141S0001SU (núm. 15)"}, {"value": "4613173CG1141S0001ZU"}]}})
+    two = C.decide([_sig("superficie_parcela", "995,00 m2", 0.85, doc="a01", doc_type="planol")],
+                   sources_checked=["a01"], field_name="superficie_parcela", segur_requires=guard_two)
+    assert two["estat"] == "candidats" and "2+ referencies" in two["rule"]
+    assert C._rc_parcels(["3298012DG2039N+3298013DG2039N+3298014DG2039N"]) == {"3298012DG2039N", "3298013DG2039N", "3298014DG2039N"}
+    assert C._rc_parcels(["25120A002000340000XX"]) == {"25120A00200034"}   # rustica
+
+
+def test_R5_num_soil_levels_needs_two_eva_syntheses_tall_and_annex_sondeig():
+    """Bell-lloc: tall 0,75 + tall annex 0,70 + annex sondeig 0,55, tots «1», cap contradiccio: cap arriba a 0,8
+    perque cada lector diu «creuar amb l'altre». Els dos TIPUS (tall + sondeig) coincidint = segur. Dos talls sols
+    (el mateix dibuix imprès dues vegades) no en son dos."""
+    guard = C._guard_for_field("num_soil_levels", {})
+    both = C.decide([_decl("num_soil_levels", 1, 0.75, doc="tall.pdf", doc_type="annex_tall"),
+                     _decl("num_soil_levels", 1, 0.7, doc="PDF/ANNEXES/tall.pdf", doc_type="annex_tall"),
+                     _decl("num_soil_levels", "1", 0.55, doc="PDF/ANNEXES/sondeig.pdf", doc_type="annex_sondeig"),
+                     _sig("num_soil_levels", 1, 0.3, doc="DPSH.xls", doc_type="dpsh_excel")],
+                    sources_checked=["tall.pdf"], field_name="num_soil_levels", segur_requires=guard)
+    assert both["estat"] == "segur" and both["value"] == 1 and "annex_sondeig + annex_tall" in both["rule"]
+    tall_only = C.decide([_decl("num_soil_levels", 1, 0.75, doc="tall.pdf", doc_type="annex_tall"),
+                          _decl("num_soil_levels", 1, 0.7, doc="PDF/ANNEXES/tall.pdf", doc_type="annex_tall")],
+                         sources_checked=["tall.pdf"], field_name="num_soil_levels", segur_requires=guard)
+    assert tall_only["estat"] == "candidats"
+
+
+def test_R5_two_declared_rcs_stay_candidats_without_llm_conflict():
+    """Bell-lloc: el correu d'encarrec porta DUES RC (dues parcel·les), totes dues declarades a 0,6: contradiccio
+    → candidats, i cap conflicte A-vs-A (una declaracio a 0,6 no ha de disparar la passada LLM)."""
+    conflicts: list[dict] = []
+    cell = C.decide([_decl("referencia_catastral", "4613173CG1141S0001ZU", 0.6, doc="correu"),
+                     _decl("referencia_catastral", "4613172CG1141S0001SU", 0.6, doc="correu")],
+                    sources_checked=["correu"], field_name="referencia_catastral", conflicts=conflicts,
+                    path="fields.referencia_catastral", segur_requires=C._guard_for_field("referencia_catastral", {}))
+    assert cell["estat"] == "candidats" and cell["rule"].startswith("contradiccio") and conflicts == []
+
+
+def test_R5_client_name_p5_form_is_authority_and_its_form_is_the_visible_value():
+    """Rubi/Anciles: el formulari p.5 («DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME») llegit a 0,75 (foto
+    WhatsApp; castella) es autoritat A pel skill. La seva forma es la visible, no la de la fitxa amb el telefon
+    enganxat (L3). El bloc CLIENT de la p.1 del mateix pressupost NO declara el client (sol·licitant, Pas 3)."""
+    p5 = _decl("client_name", "Maria Alba Barrau Castán", 0.75, doc="pressupost", doc_type="pressupost_g3",
+               font="ACCEPTACIO/PRESUPUESTO.pdf p.5 bloc 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME'")
+    fitxa = _sig("client_name", "MARIA ALBA BARRAU CASTÁN 616523792", 0.3, doc="fitxa", doc_type="fitxa_camp_g3", origin="g3_templates")
+    cell = C.decide([fitxa, p5], sources_checked=["pressupost"], field_name="client_name",
+                    segur_requires=C._guard_for_field("client_name", {}))
+    assert cell["estat"] == "segur" and cell["value"] == "Maria Alba Barrau Castán"
+    assert cell["candidates"][0]["font"].startswith("ACCEPTACIO/PRESUPUESTO.pdf p.5")
+    p1 = _decl("client_name", "RETRATERIA, ALBA BARRAU, ARQUITECTA", 0.7, doc="pressupost", doc_type="pressupost_g3",
+               font="PRESUPUESTO.pdf p.1 bloc CLIENT")
+    cell = C.decide([p1], sources_checked=["pressupost"], field_name="client_name", segur_requires=C._guard_for_field("client_name", {}))
+    assert cell["estat"] == "candidats"
+
+
+def test_R5_authority_for_from_the_document_context_reaches_the_consolidator(tmp_path: Path):
+    """El cablatge: `context.authority_for` del `{doc}.json` → `Signal.declares`. Linyola en miniatura: projecte de
+    l'arquitecte a 0,6/0,75 amb `authority_for` → RC i superficie segur. Un document V0 mai declara (I1): un
+    annex de sondeig V0 no fa de segon tipus per als nivells."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "projecte", "25.0616/2_02B.pdf", "projecte_arquitecte",
+         [_ta("referencia_catastral", "5098344CG2159N0000US", 0.6), _ta("superficie_parcela", "571 m²", 0.75)],
+         authority_for=["referencia_catastral", "superficie_parcela"])
+    dec = C.consolidate_python(out, None, project_name="X")
+    assert dec["fields"]["referencia_catastral"]["estat"] == "segur"
+    assert dec["fields"]["superficie_parcela"]["estat"] == "segur"
+    _doc(out, "v0", "PDF_V0/ANEJOS/x_sondeos.pdf", "annex_sondeig", [_ta("num_soil_levels", "3", 0.9)], authority_for=["num_soil_levels"])
+    _doc(out, "tall", "tall.pdf", "annex_tall", [_ta("num_soil_levels", "3", 0.7)], authority_for=["num_soil_levels"])
+    dec = C.consolidate_python(out, None, project_name="X")
+    assert dec["fields"]["num_soil_levels"]["estat"] == "candidats"
+
+
 def test_I1_v0_documents_propose_but_never_rule_nor_contradict(tmp_path: Path):
     """Anciles: sense `PDF/`, l'inventari llegeix `PDF_V0/ANEJOS/*.pdf`. A la V0 les graves eren NIVEL 1; al signat son
     el 2n nivell. Un senyal de V0: mai A, confianca sota el llindar de contradiccio, nota «versio anterior»."""
@@ -573,7 +707,7 @@ def test_synthetic_project_contract_clean_and_fields(synth):
     assert f["lab_sample_id"]["estat"] == "candidats"  # annex SPT-1 vs GTL MA1 S1 → candidats (Pas 3)
     assert f["lab_location"]["estat"] == "segur"  # convergencia GTL + annex + ... (S1 == S-1)
     assert f["num_soil_levels"]["estat"] == "candidats"  # manuscrit diu 2 (0.45)
-    assert f["referencia_catastral"]["estat"] == "candidats"  # sense consulta del Cadastre: mai segur
+    assert f["referencia_catastral"]["estat"] == "candidats"  # 0,6 sense `authority_for`: cap autoritat de camp (R5)
     assert f["superficie_parcela"]["estat"] == "segur"  # unica font, 1 RC
     assert f["cte_edificacio"]["estat"] == "no_trobat" and f["cte_sol"]["estat"] == "candidats"
     assert f["cte_sol"]["candidates"][0]["font"].startswith("(coneixement previ")

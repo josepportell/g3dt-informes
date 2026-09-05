@@ -1,4 +1,4 @@
-# FOR NEW YOU — 2026-09-05 — Fila 0b, primer paquet fet (C, D2, D3, R3); queda la resta de 0b
+# FOR NEW YOU — 2026-09-05 — Fila 0b tancada + bloc 1.1 R5 fet (nit); següent 1.2 R2
 
 **Escrit:** 2026-09-05. Substitueix `_FOR-NEW-YOU-20260904.md` (conserva'l: hi ha les trampes i les decisions del Josep).
 Branca `experiment/nivell-a-2026-08`, pushada al matí a `7bdbcde`; **els canvis d'avui poden estar sense commit**:
@@ -109,3 +109,20 @@ qualitat, la branca actual queda intacta. Freqüència: 1 de 8 al corpus; cap al
 - **Desplegament**: Claude Code a l'ordinador de l'Eva (via A com a lector de producció) i tier de subscripció
   (memòria `project_eva_subscription_model_tier`); merge cap a `production/g3dt-eva-v1` quan ella permeti pull.
   Via B: només confirmar amb l'Eva els 3 fixes pendents (Tulipa render, sondeig refús, None depth); no tocar-la més.
+
+## Actualització (nit): bloc 1.1 R5 FET — punt de partida nou
+
+Sessió de nit: **R5** implementat com a *autoritat de camp* (`consolidate._FIELD_AUTHORITY`, `Signal.declares` de
+`context.authority_for`, conf ≥ 0,5, sense contradicció; nivells = tall + annex; client = només formulari p.5; RC amb forma
+completa i parcel·les comptades per 14 caràcters). Skill v1.7 (Pas 3 RC alineat amb l'or; cache intacta). Reconsolidació
+`_reconsolida-2026-09-05-r5` vs `-r2`: **8 cel·les CAND → OK (= or), cap altra es mou, 0 regressions, conflictes idèntics.**
+
+**Punt de partida ara: escalars 112 OK (76 %) / 29 CAND (20 %) / 5 ALERTA / 1 blanc / 0 ERR; taules 137/21/8/31/0.**
+CAND ≤ 20 % ✅ per primer cop; OK 80 % ⏳. Referència per a la propera reconsolidació: `_reconsolida-2026-09-05-r5`.
+
+Del R5 queden 11 cel·les A POSTA: `num_floors` de Castellar i Vilanova (el lector hi posa 0,3-0,4 amb notes de dubte
+real; pujar el llindar a 0,3 faria segur el `num_floors` de Rubí, que l'or vol candidats) i les 9 cel·les de taula
+d'Anciles (font única manuscrita; la V0 no és autoritat per decisió I1). No tornar-hi sense una raó nova.
+
+**Següent peça: 1.2 R2** (taula del bloc 1). Commit dels canvis de nit: no fet («commit only when the user asks»).
+Detall: DECISION-LOG 2026-09-05 (nit), `_AGREGAT-8.md` §nit, `_DIAGNOSTICS-INDEX.md` §nit, sessió §Nit.

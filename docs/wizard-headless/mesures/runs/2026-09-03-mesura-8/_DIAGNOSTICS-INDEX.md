@@ -99,3 +99,10 @@ Reconsolidació dels 7 amb el codi nou (sense re-run, lectures cachejades): `{sl
 | **T1** | ✅ parcial | `runner.doc_timeout` (`G3DT_LECTURA_TIMEOUT_SLOW`=900 per a fulls de camp), `timeout_s` a telemetria | `test_T1_*`; la penjada segueix costant el topall (el CLI no escriu res fins al final) |
 | **T2** | ✅ parcial | `runner.llm_conflict_paths` (només `fields.*`; topall `G3DT_LECTURA_LLM_MAX_CONFLICTS`=8) | `test_T2_*`; observació: 200-290 s per passada fins i tot amb 1 conflicte → decidir si es manté |
 | **S1** | 📝 disseny | — | `_AGREGAT-8.md` §Runner i operació |
+
+### Estat dels fixes — nit (2026-09-05, bloc 1 del handoff: lectura i decisió)
+
+| Codi | Estat | On | Evidència |
+|---|---|---|---|
+| **R5** | ✅ (8 de 19 cel·les; +Anciles `client_name`) | `consolidate._FIELD_AUTHORITY` + `Signal.declares` (de `context.authority_for`) + `decide` (`field_auth`) + guards `cadastre` (forma completa, `_RC_RE`) i `parcela` (`_rc_parcels`); skill v1.7 (Pas 3 RC); `test_R5_*` ×7 | `_reconsolida-2026-09-05-r5/`: 8 cel·les CAND → OK, cap altra es mou; escalars 104 → 112 OK / 29 CAND (20 %); taules idèntiques. Queden: `num_floors` Castellar/Vilanova (conf 0,3-0,4, a posta) i 9 taules d'Anciles (manuscrit únic + V0) |
+| R2, F1, derivats, L1/L3, T2 (decisió), R4 + persona/despatx (Eva) | ⏳ | — | ordre del handoff §Bloc 1 |

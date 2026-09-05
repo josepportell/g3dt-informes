@@ -85,6 +85,34 @@ _NEVER_SEGUR_FIELDS = frozenset({"cte_edificacio", "cte_sol"})
 #: Camps numerics on el signe no compta (fondaries).
 _ABS_FIELDS = frozenset({"lab_depth"})
 
+# R5 (2026-09-05, mesura dels 8: «font unica del proveidor», 19 cel·les en CAND). AUTORITAT DE CAMP.
+# El skill (Pas 3) diu, per a cada camp, quin tipus de document el DECLARA (la RC, la superficie i les plantes les
+# declara el proveidor: correu d'encarrec, projecte de l'arquitecte, caixeti del planol — l'Eva les copia «segons
+# informacio aportada»; el nombre de nivells el declaren les dues sintesis de l'Eva: annex de sondeig i tall; el
+# client el declara el formulari p.5 del pressupost signat). Un lector sol rarament arriba a 0,8 en aquests camps
+# perque se li demana humilitat («creuar amb els altres») i, sense 0,8, `decide` no en treia `segur` encara que cap
+# document ho contradigues. El consolidador, que veu tot el corpus, honora la declaracio quan (1) el propi lector
+# l'ha marcada a `context.authority_for`, (2) hi posa una confianca ≥ FIELD_AUTHORITY_CONF (per sota, el lector
+# mateix dubta: «informacio verbal de segona ma», «derivat estructuralment» — es queda en candidats), (3) hi ha
+# `min_types` TIPUS de document diferents que coincideixen, i (4) cap altre senyal la contradiu (blockers de sempre).
+# Els documents V0 no declaren mai (I1). Cap altre camp s'hi acull: `client_name` de correus i caixetins a 0,5-0,7
+# faria conflictes A-vs-A on avui hi ha `segur` (Linyola).
+FIELD_AUTHORITY_CONF = 0.5
+_PROVIDER_DOC_TYPES = frozenset({"correu", "projecte_arquitecte", "planol"})
+_FIELD_AUTHORITY: dict[str, tuple[frozenset[str], int]] = {
+    "referencia_catastral": (_PROVIDER_DOC_TYPES, 1),
+    "superficie_parcela": (_PROVIDER_DOC_TYPES, 1),
+    "num_floors": (_PROVIDER_DOC_TYPES, 1),
+    "num_soil_levels": (frozenset({"annex_sondeig", "annex_tall"}), 2),
+    "client_name": (frozenset({"pressupost_g3"}), 1),   # nomes el formulari p.5 (`_P5_FORM_RE` sobre la font)
+}
+#: «DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME» (p.5 del pressupost signat; tambe en castella).
+_P5_FORM_RE = re.compile(r"han de constar|factura", re.IGNORECASE)
+#: Referencia cadastral COMPLETA: parcel·la urbana (7 digits + 2 lletres + 4 digits + lletra) o rustica
+#: (5 digits + lletra + 8 digits), amb o sense el carrec (4 digits + 2 lletres). Un fragment de mapa («98417»)
+#: o «Poligon 6, Parcel·la 105-B» no ho son.
+_RC_RE = re.compile(r"(?<![0-9A-Z])(\d{7}[A-Z]{2}\d{4}[A-Z]|\d{5}[A-Z]\d{8})(\d{4}[A-Z]{2})?(?![0-9A-Z])")
+
 _STOPWORDS = frozenset({
     "de", "del", "dels", "la", "el", "els", "les", "i", "y", "a", "en", "al", "d", "l", "s", "n", "c", "cl", "cr",
     "carrer", "calle", "c/", "av", "avinguda", "avda", "num", "no", "nº", "n°", "numero", "número", "the",
@@ -172,6 +200,8 @@ class Signal:
     is_a: bool = False
     independent: bool = True
     extra: dict = field(default_factory=dict)
+    #: R5: el lector ha llistat el concepte a `context.authority_for` del document (mai per a documents V0).
+    declares: bool = False
 
     def as_candidate(self) -> dict:
         c = {"value": self.value, "font": self.font, "quote": self.quote or ""}
@@ -198,6 +228,31 @@ def _is_a(origin: str, confidence: float, forced: bool | None = None) -> bool:
     if origin == "claude":
         return confidence >= A_CONF_CLAUDE
     return False
+
+
+def _declares_field(s: Signal, field_name: str | None) -> bool:
+    """R5: el senyal es una DECLARACIO del camp per un document del tipus que el skill hi reconeix com a autoritat."""
+    spec = _FIELD_AUTHORITY.get(field_name or "")
+    if not spec or not s.declares or s.origin != "claude" or s.confidence < FIELD_AUTHORITY_CONF:
+        return False
+    if s.doc_type not in spec[0]:
+        return False
+    if field_name == "client_name" and not _P5_FORM_RE.search(s.font or ""):
+        return False   # el bloc CLIENT de la p.1 es el sol·licitant (Pas 3); nomes el formulari p.5 declara el client
+    return True
+
+
+def _field_authority_types(signals: list, field_name: str | None) -> set[str]:
+    return {s.doc_type for s in signals if _declares_field(s, field_name)}
+
+
+def _rc_parcels(values: Any) -> set[str]:
+    """Parcel·les (14 caracters) de les referencies cadastrals COMPLETES que hi ha dins d'un o mes textos."""
+    out: set[str] = set()
+    for v in values:
+        for m in _RC_RE.finditer(str(v or "").upper()):
+            out.add(m.group(1))
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -552,8 +607,11 @@ def _distinct_candidates(cluster_order: list[Cluster], limit: int = MAX_CANDIDAT
         by_key: dict[tuple, list[Signal]] = {}
         for s in c.signals:
             by_key.setdefault(value_key(s.value, abs_numbers=abs_numbers, field_name=field_name), []).append(s)
-        keys = sorted(by_key, key=lambda k: (any(s.is_a for s in by_key[k]), k[0] == "date" and k[3] is not None,
-                                             len(str(k))), reverse=True)
+        # R5: la forma del document que DECLARA el camp va abans que una forma mes llarga d'un document que no
+        # (fitxa C6 «MARIA ALBA BARRAU CASTAN 616523792» vs formulari p.5 «Maria Alba Barrau Castan»)
+        keys = sorted(by_key, key=lambda k: (any(s.is_a for s in by_key[k]),
+                                             any(_declares_field(s, field_name) for s in by_key[k]),
+                                             k[0] == "date" and k[3] is not None, len(str(k))), reverse=True)
         out: list[Signal] = []
         for k in keys:
             out.extend(sorted(by_key[k], key=_prefer_form, reverse=True))
@@ -635,12 +693,17 @@ def decide(
             strong_docs = {("(encarrec)" if s.doc_type in _ENCARREC_DOC_TYPES or s.origin == "g3_templates" else s.doc)
                            for s in top.signals if s.confidence >= CONV_CONF or s.is_a}
         converge = len(strong_docs) >= CONV_MIN_DOCS
-        if top.has_a or converge:
+        spec = None if table_cell else _FIELD_AUTHORITY.get(field_name or "")
+        auth_types = _field_authority_types(top.signals, field_name) if spec else set()
+        field_auth = bool(spec) and len(auth_types) >= spec[1]
+        if top.has_a or converge or field_auth:
             guard = segur_requires(top) if segur_requires else True
             if guard is True or guard is None:
                 estat = "segur"
                 reasons.append("1 font A sense contradiccio" if top.has_a else
-                               f"convergencia de {len(strong_docs)} documents independents (conf ≥ {CONV_CONF})")
+                               f"convergencia de {len(strong_docs)} documents independents (conf ≥ {CONV_CONF})" if converge else
+                               f"autoritat de camp (R5): {' + '.join(sorted(auth_types))} declara el valor "
+                               f"(conf ≥ {FIELD_AUTHORITY_CONF}) sense contradiccio")
             else:
                 reasons.append(f"guard: {guard}" if isinstance(guard, str) else "guard de camp")
         else:
@@ -876,7 +939,7 @@ def collect_field_signals(corpus: Corpus, project_path: Path | None) -> tuple[di
             extra.setdefault(concept, []).append(sig.as_candidate() | {"doc": sig.doc})
 
     def add_entry(concept: str, value: Any, font: str, quote: str, conf: float, doc: str, doc_type: str,
-                  origin: str, note: str | None, forced_a: bool | None = None) -> None:
+                  origin: str, note: str | None, forced_a: bool | None = None, declares: bool = False) -> None:
         if not concept:
             return
         if concept.startswith("NOT_"):
@@ -887,14 +950,17 @@ def collect_field_signals(corpus: Corpus, project_path: Path | None) -> tuple[di
             if pair:
                 for k, v in zip(("utm_x", "utm_y"), pair):
                     if v is not None:
-                        add(k, Signal(k, v, font, quote, conf, doc, doc_type, origin, note, _is_a(origin, conf, forced_a)))
+                        add(k, Signal(k, v, font, quote, conf, doc, doc_type, origin, note, _is_a(origin, conf, forced_a),
+                                      declares=declares))
                 return
         if concept in ("lab", "cte") and isinstance(value, dict):
             for k in (_LAB_SUBKEYS if concept == "lab" else _CTE_SUBKEYS):
                 if value.get(k) is not None:
-                    add(k, Signal(k, value[k], font, quote, conf, doc, doc_type, origin, note, _is_a(origin, conf, forced_a)))
+                    add(k, Signal(k, value[k], font, quote, conf, doc, doc_type, origin, note, _is_a(origin, conf, forced_a),
+                                  declares=declares))
             return
-        add(concept, Signal(concept, value, font, quote, conf, doc, doc_type, origin, note, _is_a(origin, conf, forced_a)))
+        add(concept, Signal(concept, value, font, quote, conf, doc, doc_type, origin, note, _is_a(origin, conf, forced_a),
+                            declares=declares))
 
     # 1. _g3_templates.json
     if corpus.g3:
@@ -912,6 +978,8 @@ def collect_field_signals(corpus: Corpus, project_path: Path | None) -> tuple[di
         src = d.get("source_path", "?")
         dtype = d.get("document_type", "altre")
         v0 = _is_v0_source(src)
+        ctx = d.get("context") if isinstance(d.get("context"), dict) else {}
+        authority_for = {a for a in (ctx.get("authority_for") or []) if isinstance(a, str)}
         for e in d.get("tier_a") or []:
             if not isinstance(e, dict):
                 continue
@@ -921,7 +989,8 @@ def collect_field_signals(corpus: Corpus, project_path: Path | None) -> tuple[di
                 conf = _v0_conf(conf)
                 note = f"{_V0_NOTE}; {note}" if note else _V0_NOTE
             add_entry(e.get("concept_id"), e.get("value"), f"{src} {e.get('location', '')}".strip(),
-                      e.get("quote", "") or "", conf, src, dtype, "claude", note, False if v0 else None)
+                      e.get("quote", "") or "", conf, src, dtype, "claude", note, False if v0 else None,
+                      declares=(not v0) and e.get("concept_id") in authority_for)
         for k in d.get("not_present") or []:
             if isinstance(k, str) and k in not_present:
                 not_present[k].append(src)
@@ -1010,10 +1079,16 @@ def _guard_for_field(key: str, decided: dict[str, dict]) -> Any:
         return True
 
     def cadastre(top: Cluster) -> Any:
-        if not any(s.doc_type == "consulta_cadastre" or "cadastr" in s.doc.lower() or "catastr" in s.doc.lower()
-                   for s in top.signals):
-            return "sense consulta del Cadastre a la carpeta (Pas 3): mai segur"
-        return True
+        if any(s.doc_type == "consulta_cadastre" or "cadastr" in s.doc.lower() or "catastr" in s.doc.lower()
+               for s in top.signals):
+            return True
+        # R5: una referencia COMPLETA declarada pel proveidor (correu d'encarrec, projecte de l'arquitecte) es la
+        # que l'Eva copia (or: Linyola, Alcoletge, Anciles). Sense consulta a la carpeta, nomes val si TOTES les
+        # formes del cluster tenen forma de RC sencera: «Poligon 6, Parcel·la 105-B» (Rubi) o el fragment «98417»
+        # d'un mapa (Alcoletge) no ho son.
+        if top.signals and all(_rc_parcels([s.value]) for s in top.signals):
+            return True
+        return "sense consulta del Cadastre a la carpeta i valor sense forma de referencia completa (Pas 3): mai segur"
 
     def soil_levels(top: Cluster) -> Any:
         if not any(s.doc_type in ("annex_sondeig", "annex_tall") for s in top.signals):
@@ -1030,8 +1105,10 @@ def _guard_for_field(key: str, decided: dict[str, dict]) -> Any:
 
     def parcela(top: Cluster) -> Any:
         rc = decided.get("referencia_catastral", {})
-        rc_vals = {str(c.get("value")) for c in (rc.get("candidates") or []) + (rc.get("altres") or []) if c.get("value")}
-        if len(rc_vals) >= 2:
+        # R5: nomes compten les referencies COMPLETES (parcel·la de 14 caracters): el fragment «61845» d'un mapa al
+        # costat de «6184504BH9158N0000SS» (Anciles) no es una segona parcel·la; «…N+…N+…N» del Cadastre en son tres.
+        parcels = _rc_parcels(c.get("value") for c in (rc.get("candidates") or []) + (rc.get("altres") or []))
+        if len(parcels) >= 2:
             return "2+ referencies cadastrals a la carpeta (parcel·les contigues, Pas 3): candidats"
         return True
 

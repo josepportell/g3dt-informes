@@ -252,3 +252,37 @@ toca). Els 7 restants: **0 cel·les canvien** amb la regla V0 (no en tenen).
 
 Amb I1, l'agregat mecànic d'escalars dels 7 és **105 OK / 37 CAND / 5 ALERTA / 0 blanc / 0 ERR** i el de taules
 **137 OK / 37 CAND / 9 ALERTA / 20 blanc / 0 ERR** (Anciles: OK 22, CAND 9 → 19, blanc 14 → 3).
+
+---
+
+## Agregat MECÀNIC (2026-09-05, nit) — bloc 1.1: R5 «font única del proveïdor» (autoritat de camp)
+
+**Decisió del Josep (vespre):** bloc 1 sencer abans de càlculs i multi-casa; primera peça R5. Regla nova al consolidador
+(`_FIELD_AUTHORITY`): un document del tipus que el skill reconeix com a autoritat del camp (RC/superfície/plantes →
+correu, projecte de l'arquitecte, plànol; nivells → tall + annex de sondeig, els dos tipus; client → formulari p.5), que
+el lector ha llistat a `authority_for`, amb conf ≥ 0,5 i sense contradicció → segur. Guards: RC ha de tenir forma
+completa; el guard de parcel·les compta parcel·les (14 caràcters), no cadenes. Skill alineat (v1.7). Reconsolidació:
+`{slug}/_reconsolida-2026-09-05-r5/` respecte de `-r2`. DECISION-LOG 2026-09-05 (nit).
+
+| Escalars (147) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| tarda (r2, amb I1) | 104 | 37 | 5 | 1 | 0 | — |
+| + **R5** (r5) | **112** | **29** | 5 | 1 | 0 | 8, totes CAND → OK (= or): Bell-lloc `num_soil_levels` 1; Rubí `client_name`; Linyola `referencia_catastral` + `superficie_parcela`; Alcoletge `referencia_catastral`; Anciles `client_name` (forma del p.5, sense telèfon) + `referencia_catastral` + `superficie_parcela` |
+
+Taules: **137 / 21 / 8 / 31 / 0, idèntic** (cap cel·la de taula es mou). Conflictes A-vs-A per projecte: idèntics.
+
+| Projecte | Escalars OK / CAND / ALERTA / Blanc / ERR (r5) | Δ OK |
+|---|---|--:|
+| Castellar | 17 / 4 / 0 / 0 / 0 | 0 |
+| Bell-lloc | 15 / 6 / 0 / 0 / 0 | +1 |
+| Rubí | 13 / 5 / 3 / 0 / 0 | +1 |
+| Linyola | 17 / 4 / 0 / 0 / 0 | +2 |
+| Alcoletge | 17 / 4 / 0 / 0 / 0 | +1 |
+| Vilanova | 15 / 5 / 1 / 0 / 0 | 0 |
+| Anciles | 18 / 1 / 1 / 1 / 0 | +3 |
+| **Total** | **112 (76 %) / 29 (20 %) / 5 / 1 / 0** | **+8** |
+
+**Llindars:** ERR 0 ✅ · **CAND 20 % ✅ (primer cop)** · OK 76 % ⏳ (80). **R5 que queda (11 de 19):** Castellar i Vilanova
+`num_floors` (el lector hi posa 0,3-0,4: «informació verbal de segona mà», «pot no representar les 3 unitats»; pujar-los
+faria pujar també Rubí, que l'or vol candidats) i les 9 cel·les de taula d'Anciles (font única manuscrita; la V0 no és
+autoritat per I1). **Següent:** 1.2 R2 (concepte veí).

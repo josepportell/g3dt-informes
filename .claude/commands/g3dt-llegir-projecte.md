@@ -6,6 +6,7 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
+v1.7 (2026-09-05): `referencia_catastral` completa declarada pel proveïdor → `segur` (Pas 3; abans «mai segur sense consulta del Cadastre»). Cap canvi de lectura: el consolidador (R5, `_FIELD_AUTHORITY`) honora `context.authority_for` a conf ≥ 0,5 per a RC, superfície, plantes, nivells (tall + annex) i client (formulari p.5).
 v1.6 (2026-08-31): fila de cobertura des de la llegenda del tall / annex de sondeig, sense fondàries si no estan impreses (Pas 3b, bloc «Nivells del sòl»).
 Versió 1.5 (2026-08-25, Fase 12) — consolidació Python-first: en producció el runner consolida SEMPRE amb Python (`automation/lectura/consolidate.py`: cada `tier_a` esdevé candidat, `_g3_templates.json` = autoritat A, guards del contracte, sistema de cotes, cap candidat inventat) i NOMÉS crida aquest skill amb `--consolida --only-fields a,b` per als camps en conflicte real (dues fonts A que discrepen). Mode nou al Pas 5b. Vocabulari: `nivell_freatic` absent → `No detectat` (Pas 3b).
 Versió 1.3 (2026-08-24) — claus CANÒNIQUES de les files de `tables` (E2E Castellar: el productor va escriure `prof_extraccio`, `punt`/`cota_inici` al sondeig… i l'or `profunditat`, `sondeig`/`cota`; la UI i el generador necessiten un sol nom). Llista al Pas 5.
@@ -215,7 +216,9 @@ plànols AutoCAD = text vectorial al caixetí i cotes, però **taules de planeja
   redacció dels annexos anteriors → candidat 1 amb nota.
 - **`referencia_catastral`**: consultes del Cadastre a la carpeta (`title`/nom `NNNNNNNCGNNNNS0001XX`) o als adjunts dels `.msg` (els noms
   dels adjunts ja la porten). Dues parcel·les → `candidats` amb les dues. Mai inferir-la d'una adreça. Impresa al plànol/projecte de
-  l'arquitecte = font vàlida però única → `candidats`, mai segur sense consulta del Cadastre.
+  l'arquitecte o escrita al correu d'encàrrec, COMPLETA (14/20 caràcters) i sense contradicció → `segur` amb nota «única font del
+  proveïdor» (or: Linyola, Alcoletge, Anciles; consolidador R5 2026-09-05). Fragments de mapa («98417») o «Polígon 6, Parcel·la 105-B»
+  no són referències → mai segur.
 - **`utm_x_utm_y`**: `ANNEXES/ALTRES/COORDENADES.txt` (`X ; Y ; Z` per punt) > caselles x/y de l'annex de sondeig > res (no geocodificar aquí).
 - **`lab`**: laboratori = emissor del GTL (banda amb registre mercantil; TPS B64803075), mai el "client" del GTL. Mostra/cota: comanda
   fila 35 (`SPT 1 (S1)`, J/L) = GTL `Mostra:` / `Cota d'extracció` = annex sondeig. Sense GTL (arriba setmanes després): la comanda basta.

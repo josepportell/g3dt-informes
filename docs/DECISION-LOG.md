@@ -2291,3 +2291,95 @@ R5 («el projecte de l'arquitecte mana») i R2 (z GPS, msnm→fondària) són el
 quan hi hagi un segon multi-casa. Després, la seqüència pactada (R → P0/P1/P2a → M341).
 
 *Fi entrada 2026-09-05 (tarda). Fila 0b: del «decideix malament» al «decideix bé i dubta del que ha de dubtar».*
+
+## 2026-09-05 (nit) — Bloc 1.1, R5 «font única del proveïdor»: autoritat de camp al consolidador — escalars 104 → 112 OK sobre l'or, CAND 29 % → 20 %
+
+### Context
+Handoff del vespre (`_FOR-NEW-YOU-20260905.md` §Decisions del Josep al tancament): bloc 1 = lectura i decisió, peça 1.1 =
+**R5** (19 cel·les en CAND: el projecte de l'arquitecte o el correu del tècnic declaren la RC, la superfície o les plantes i
+cap lector sol arriba a 0,8; a Bell-lloc 5 documents diuen «1 nivell» i cap passa de 0,75; el formulari p.5 llegit a 0,75
+en una foto). Mateix mètode del dia: línia base reproduïda ABANS de tocar codi (agregat r2 = 104/37/5/1/0), test per
+regla, reconsolidació dels 7 a cost 0 (`mesures/reconsolida_mesura.py _reconsolida-2026-09-05-r5 _reconsolida-2026-09-05-r2`)
+i llista de TOTES les cel·les que canvien.
+
+### Decisions arquitectòniques clau
+1. **Autoritat DE CAMP (`_FIELD_AUTHORITY`), no un llindar d'A més baix.** Per a cada camp, el skill (Pas 3) diu quin TIPUS de
+   document el declara: RC / superfície / plantes → correu d'encàrrec, projecte de l'arquitecte, caixetí del plànol (l'Eva
+   ho copia «segons informació aportada»); nivells → annex de sondeig + tall (dues síntesis de l'Eva); client → formulari
+   p.5 del pressupost signat. Un senyal d'aquest tipus, que el propi lector ha llistat a `context.authority_for`, amb
+   confiança ≥ 0,5 i sense cap contradicció, fa `segur`; els nivells demanen DOS tipus coincidents (tall + sondeig). Why:
+   la confiança del lector és humilitat per document («creuar amb els altres»), no l'autoritat del camp; qui veu tot el
+   corpus és el consolidador. Alternatives rebutjades: (a) abaixar `A_CONF_CLAUDE` a 0,6 → tots els correus i caixetins
+   de `client_name` a 0,6-0,7 serien A i Linyola (4 correus + 2 plànols amb dues persones) passaria de segur a conflicte
+   A-vs-A; (b) regla genèrica «`authority_for` + conf ≥ 0,5 → A a qualsevol camp» → mateix problema (Anciles: promotor
+   d'IV_PLANOS 0,5 contra el p.5); (c) «≥ 4 documents de ≥ 3 tipus amb conf ≥ 0,5» (proposta del diagnòstic de Bell-lloc)
+   → a Bell-lloc només 3 documents passen de 0,5, i comptar documents premia el mateix dibuix imprès dues vegades
+   (`tall.pdf` + `PDF/ANNEXES/…tall`). Es compta per TIPUS.
+2. **Llindar 0,5 i no 0,3: el dubte del lector es respecta.** Castellar `num_floors` 0,4 («pot no representar les 3 unitats
+   finals»), Vilanova 0,3-0,35 («informació verbal de segona mà»), Rubí 0,4 («derivat estructuralment» d'una foto de
+   catàleg, i l'or el vol candidats). Amb 0,3, Rubí pujaria a segur contra l'or; amb 0,5, Castellar i Vilanova queden CAND
+   (2 cel·les que l'or té segur «amb nota»). Trade-off acceptat: un `segur` fals costa un informe; un CAND, dos segons.
+3. **La RC completa declarada pel proveïdor és segura; el skill s'alinea amb l'or.** El skill deia «impresa al projecte →
+   candidats, mai segur sense consulta del Cadastre»; l'or (Linyola «el projecte mana», Alcoletge i Anciles «regla
+   Alcoletge») la dona segura, i és el que l'Eva copia. S'edita el skill (Pas 3 + capçalera v1.7) sense cost: la cache de
+   lectures va per md5 del document, no pel text del skill. Gate de forma: `_RC_RE` (urbana 7+2+4+1, rústica 5+1+8,
+   càrrec opcional): «Polígon 6, Parcel·la 105-B» (Rubí) i «98417» (Alcoletge) queden fora encara que vinguin d'una font A.
+   El guard `parcela` compta PARCEL·LES (14 caràcters) i no cadenes: el fragment «61845» d'un mapa (Anciles) ja no fa de
+   segona parcel·la; «…N+…N+…N» del Cadastre (Castellar) continua comptant com a tres.
+4. **Client: només el formulari p.5, identificat per la font.** `_P5_FORM_RE` («han de constar | factura») sobre `font`;
+   el bloc CLIENT de la p.1 és el sol·licitant (Pas 3) i no declara. La forma del document que declara va primera dins
+   del clúster (`ordered_forms`, mateix criteri que «representant per autoritat» del D2): Anciles mostra «Maria Alba
+   Barrau Castán» i no «… 616523792» (L3 continua pendent, però ja no és el valor visible).
+5. **Cap conflicte A-vs-A nou.** L'autoritat de camp és una propietat del clúster dins de `decide`, no un `is_a` del
+   senyal: una declaració a 0,6 no dispara la passada LLM (Bell-lloc: dues RC al mateix correu → candidats i
+   `conflicts == []`). Conflictes per projecte idèntics a r2. Why: T2 (200-290 s per passada) no es pot pagar per una
+   regla de confiança.
+6. **Els documents V0 no declaren mai** (`declares=False`), coherent amb I1 («proposa, mai autoritat»).
+
+### Implementació
+- `automation/lectura/consolidate.py` (+~75 LOC): `FIELD_AUTHORITY_CONF`, `_FIELD_AUTHORITY`, `_P5_FORM_RE`, `_RC_RE`;
+  `Signal.declares`; `_declares_field`, `_field_authority_types`, `_rc_parcels`; `decide` (`field_auth`, raó «autoritat
+  de camp (R5)»); `_distinct_candidates.ordered_forms`; `collect_field_signals` (`context.authority_for` → `declares`);
+  guards `cadastre` i `parcela`. Cap dependència nova.
+- `.claude/commands/g3dt-llegir-projecte.md`: Pas 3 `referencia_catastral` + línia v1.7 (cap canvi de lectura).
+- `tests/test_lectura_consolidate.py`: `_doc(authority_for=)`, helper `_decl`, 7 tests `test_R5_*`.
+- Artefactes: `runs/2026-09-03-mesura-8/{slug}/_reconsolida-2026-09-05-r5/`.
+
+### Validació empírica (reconsolidació dels 7, cost 0; comparador v4 sobre l'or)
+- **8 cel·les canvien, totes de candidats a segur amb el valor de l'or; cap altra cel·la, escalar ni de taula, es mou;
+  0 regressions.** Bell-lloc `num_soil_levels` 1 (tall + annex sondeig); Rubí `client_name` (formulari p.5, foto WhatsApp
+  0,75); Linyola RC i superfície (projecte 0,6 / 0,75); Alcoletge RC (correu 0,75; és la mateixa que el Cadastre calcula
+  per al portal 7); Anciles `client_name` (p.5 0,75, forma sense telèfon), RC (correu 0,85, ja A: el guard la bloquejava)
+  i superfície (IV_PLANOS 0,8, ja A: el fragment «61845» comptava com a segona parcel·la).
+- Escalars: **104 → 112 OK (76 %) / 37 → 29 CAND (20 %) / 5 ALERTA / 1 blanc / 0 ERR**. Taules 137 / 21 / 8 / 31 / 0
+  (idèntic). Conflictes A-vs-A per projecte: idèntics a r2.
+- Contrast amb el signat (notes per projecte): Linyola superfície 571 («segons informació aportada»), Anciles client
+  «SRA. ALBA MARIA BARRAU CASTÁN» i Bell-lloc 1 nivell coincideixen; les altres 5 són el valor de l'or (el signat no s'ha
+  tornat a mirar per a les RC ni per a Rubí).
+- Llindars: ERR 0 ✅ · **CAND 20 % ✅ (primer cop)** · OK 76 % ⏳ (80).
+- R5 restant (11 de 19): Castellar i Vilanova `num_floors` (decisió 2) i les 9 cel·les de taula d'Anciles (font única
+  manuscrita + V0 no-autoritat per I1: CAND honest; en producció l'Eva dibuixa l'annex abans d'obrir el wizard).
+
+### Tests
++7 `test_R5_*`; consolidador 137 → 144 verds (el test sintètic conserva `referencia_catastral` en candidats: 0,6 sense
+`authority_for`). Suite sencera: vegeu la sessió.
+
+### Latència / cost
+0 USD: reconsolidació i comparador locals, cap lectura nova.
+
+### Limitacions conegudes
+- `authority_for` depèn del lector: si no llista el camp, no hi ha autoritat de camp encara que el tipus de document sigui
+  el bo (per disseny: el lector és qui veu si és declaració o inferència).
+- D1 (creuar la RC declarada amb la que el Cadastre calcula per portal) no fet: seria corroboració, no canvia cap estat.
+- L3 (telèfon enganxat a la fitxa C6) segueix pendent: ara és candidat 2, no el valor.
+- Els 2 `num_floors` a 0,3-0,4 i les 9 cel·les de taula d'Anciles queden CAND a posta.
+
+### GO/NO-GO
+- ✅ 8 cel·les cap a l'or, 0 regressions, test per regla, conflictes idèntics, skill alineat.
+- ✅ CAND ≤ 20 % assolit. ⏳ OK ≥ 80 %: 1.2 R2 (6 cel·les + 3 de taula), 1.3 F1 (7), 1.4 derivats (~8 blancs).
+
+### Següents passos
+1.2 R2 (z GPS bloqueja la cota de l'annex; data del sondeig bloqueja la de camp; msnm → fondària als nivells), després
+1.3 F1 i 1.4 derivats, segons l'ordre pactat del vespre.
+
+*Fi entrada 2026-09-05 (nit). R5: el consolidador honora la declaració del proveïdor que el lector ja havia marcat; CAND baixa al 20 %.*
