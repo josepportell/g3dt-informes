@@ -101,3 +101,81 @@ Franja neta: **26-43 min**, ~2-3 min per document Claude a c2; PENETROS és semp
 2. Or: `fora_carpeta` a Rubí/Alcoletge/Vilanova; Castellar `utm` ja corregit.
 3. Preguntes a Eva (STATUS): E, N20, T del pressupost, persona/despatx, **SPT Vilanova**.
 4. Prioritzar la fila 0b del PLA (fixes de consolidador/inventari/runner) — decisió del Josep.
+
+---
+
+## Agregat MECÀNIC (2026-09-05) — comparador v4 + fixes C, D2, D3, R3
+
+**Què s'ha fet (decisió del Josep 2026-09-05: «endavant amb C, D2, D3, R3»):** `compare_consolida.py` v4 (codi C: els 18
+falsos veredictes), `consolidate.py` D2 (dates sense dia no fan de pont; representant per autoritat; ISO només del propi
+candidat), D3 (`municipality` = grafia oficial del padró quan totes les formes resolen al mateix registre) i R3 (guard
+`"1 de N"` amb límit de paraula). Cada fix amb test (`tests/test_compare_consolida.py`, `tests/test_lectura_consolidate.py`).
+**Agregador:** `docs/wizard-headless/mesures/agrega_mesura.py` (`ledger.py` no serveix: espera un run per carpeta amb
+`meta.json`). **Reconsolidació** dels 7 amb el consolidador nou a partir de les lectures cachejades del run (+ la passada
+LLM `_consolida_only.json` ja existent, mateixos conflictes): `{slug}/_reconsolida-2026-09-05/` — **cost 0, sense
+re-run**. Els `_compare_*.txt` de `{slug}/` s'han regenerat amb el v4 sobre els `_decisions.json` ORIGINALS (consolidador
+antic): aïllen l'efecte del comparador.
+
+### Tres columnes: què mou cada cosa
+
+| Escalars (147) | OK | CAND | ALERTA | Blanc | ERR |
+|---|--:|--:|--:|--:|--:|
+| comparador v3 · consolidador antic (cru, 09-04) | 86 | 46 | 11 | 1 | 3 |
+| **comparador v4** · consolidador antic (`{slug}/_compare_*.txt`) | 90 | 46 | 8 | 1 | 2 |
+| comparador v4 · **consolidador nou** (`_reconsolida-2026-09-05/`) | **93** | **45** | **8** | **1** | **0** |
+
+| Taules (197 + 2 ABSENT Rubí + 11 NOMES-OR) | OK | CAND | ALERTA | Blanc | ERR |
+|---|--:|--:|--:|--:|--:|
+| comparador v3 · consolidador antic | 127 | 26 | 9 | 31 | 4 |
+| **comparador v4** · consolidador antic | 136 | 21 | 9 | 31 | 0 |
+| comparador v4 · consolidador nou | 136 | 21 | 9 | 31 | 0 |
+
+- **C (comparador):** +4 OK escalars, +9 OK taules, −4 ERR taules (Vilanova SPT punt/profunditat ×4 = alineació per
+  `punt` + unitat enganxada), −1 ERR escalars (Alcoletge adreça), −3 ALERTA (Linyola adreça; Anciles `building_type`
+  ca/es i `client_name` telèfon), −5 CAUTELA falses (Rubí `num_floors` porxada; Alcoletge `nivell_freatic` ×3; Anciles
+  `architect_name` col·legiat, `lab_testing_company`). Cap veredicte nou fals: les 6 cel·les que canvien a Vilanova/Anciles
+  s'han contrastat una per una. Les 11 columnes només del fixture (`lab`, `nom`, `id_estat`, `litologia_del_nivell`,
+  `assaig_encarregat`) surten com a `NOMES-OR` i no compten (abans ABSENT).
+- **D2 + D3 + R3 (consolidador):** exactament 3 cel·les escalars canvien als 7 projectes, cap de taula: Linyola
+  `field_date` 2025-10-10 → **2025-10-01** (segur, font fitxa F38, cita `datetime(2025, 10, 1)`), Vilanova
+  `municipality` «del Segrià» → **«Vilanova de Segrià»** (INE 25251; la forma del document queda a la cita), Bell-lloc
+  `num_floors` candidats → **segur «PB+PP»** (5 fonts; el guard ja no dispara amb «P1 de 86 m2»). **ERR de codi: 3 → 0.**
+
+### Per projecte (comparador v4 · consolidador nou)
+
+| Projecte | Escalars OK / CAND / ALERTA / Blanc / ERR | Taules OK / CAND / ALERTA / Blanc / ERR |
+|---|---|---|
+| Castellar | 16 / 5 / 0 / 0 / 0 | 28 / 1 / 0 / 0 / 0 |
+| Bell-lloc | 12 / 9 / 0 / 0 / 0 | 17 / 3 / 0 / 1 / 0 |
+| Rubí | 11 / 6 / 4 / 0 / 0 | 14 / 0 / 4 / 3 / 0 (+2 ABSENT: fila `soil_levels[1]` que prod no té) |
+| Linyola | 13 / 8 / 0 / 0 / 0 | 16 / 4 / 1 / 4 / 0 |
+| Alcoletge | 15 / 5 / 1 / 0 / 0 | 19 / 3 / 0 / 3 / 0 |
+| Vilanova | 13 / 6 / 2 / 0 / 0 | 20 / 1 / 3 / 6 / 0 (+4 NOMES-OR) |
+| Anciles | 13 / 6 / 1 / 1 / 0 | 22 / 9 / 1 / 14 / 0 (+7 NOMES-OR) |
+| **Total** | **93 (63 %) / 45 (31 %) / 8 / 1 / 0** | **136 (69 %) / 21 / 9 / 31 / 0** |
+
+### Com es llegeix respecte del titular contrastat a mà (§Titular)
+
+El comparador mesura contra **l'or de lectura**; el titular del 09-04 mesura contra **el signat**. Les diferències són
+les esperades i tenen nom:
+
+1. **ALERTA = prod més confiat que l'or.** És on s'amaguen els ERR de veritat quan l'or era prudent: dels 9 ALERTA de
+   taules, **2 són els ERR reals** que queden (Rubí cota P-2, F1; Vilanova `nivell_freatic` P-3, R6) i els altres 7 són OK
+   o CAND sobre el signat (Rubí cota ×2 i `soil_levels[2].de`, Vilanova `id` ×2, Linyola msnm, Anciles `n30`). Dels 8
+   ALERTA d'escalars, 3 serien OK-fora amb el `fora_carpeta` que falta a l'or (**G**: `superficie_parcela` de Rubí,
+   Alcoletge i Vilanova) i 5 són CAND. **Amb G fet, l'agregat mecànic d'escalars seria 96 OK / 50 CAND / 1 / 0** = el
+   titular del 09-04 (94/50/1/2) amb els dos ERR de codi passats a OK.
+2. **CAND de taules 21 vs 33:** el recompte manual va comptar com a CAND cel·les on or i prod són tots dos `candidats`
+   i solapen (Alcoletge `nivell_freatic` ×3, Vilanova `n30`/`litologia` ×4 amb el signat creuat, Anciles) perquè el
+   signat hi té un valor únic; el comparador les compta OK (prod fa el que l'or diu). Cap de les dues és falsa: són
+   dues preguntes («coincideix amb l'or?» / «l'Eva ho hauria de tocar?»). L'ERR de veritat no depèn d'aquesta
+   diferència.
+3. **±1 cel·la a Linyola, Vilanova i Anciles** entre el recompte manual i el mecànic (el diagnòstic de Linyola diu
+   «ALERTA → CAND» a la taula i compta 13 OK al resum). **Des d'avui el mecànic mana**; el titular del 09-04 queda com
+   a història amb els seus números.
+
+### Què queda (fila 0b, ordre proposat, no decidit)
+
+G (`fora_carpeta` a 3 ors: converteix 3 ALERTA en OK-fora) · R6 (`nivell_freatic` en taules: 1 ERR real) · I1 (`PDF_V0`:
+9 blancs d'Anciles) · R1 (equivalències: 15 CAND) · D5 · D4/D6 · T1/T2 · S1. Els tres ERR sobre el signat que
+quedaven (Rubí P-2 F1, Vilanova P-3 R6) són 2: el de Rubí és de la font d'Eva.

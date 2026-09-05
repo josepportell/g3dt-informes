@@ -44,6 +44,7 @@ from pathlib import Path
 from typing import Any
 
 from automation.lectura.contract import ALLOWED_FIELD_KEYS, TABLE_ROW_GROUPS, VALID_ESTATS
+from automation.municipis import lookup as _municipi_lookup
 from automation.lectura.normalize import (
     COMPONENT_VALUE_KEY,
     ROW_KEY_ALIASES,
@@ -111,6 +112,8 @@ _POINT_RE = re.compile(r"([PS])\s*[-_. ]?\s*(\d+)", re.IGNORECASE)
 # identificador que es NOMES un numero ("3", "núm. 4", "nº 4"): l'unic cas on es pot
 # posar-hi la lletra del bloc sense inventar-se el punt (vegeu `_point_key`)
 _BARE_NUM_ID_RE = re.compile(r"(?:n[uú]m\.?|n[º°]\.?)?\s*(\d+)", re.IGNORECASE)
+#: R3 (2026-09-05): «1 de 3 habitatges» (una unitat de N) si, «PB de 280 m2 + P1 de 86 m2» (Bell-lloc) no.
+_UNIT_OF_N_RE = re.compile(r"(?<![a-z0-9])1\s+de(?:ls?)?\s+(?:les\s+|els\s+)?(\d+)")
 _LEVEL_RE = re.compile(r"nivell\s*(\d+)|(\d+)\s*(?:er|on|n|r|è|a|º)?\s*nivell", re.IGNORECASE)
 _COVER_RE = re.compile(r"vegetal|cobertura|reblert|relleno|terra vegetal|s[oò]ls?\s+vegetals?", re.IGNORECASE)
 _NF_ABSENT_RE = re.compile(
@@ -328,8 +331,21 @@ class Cluster:
         return all(s.origin == "derivat" for s in self.signals)
 
 
+def _dayless(k: tuple) -> bool:
+    """Clau de data sense dia («Octubre 2025»): compatible amb qualsevol dia del mes."""
+    return k[0] == "date" and k[3] is None
+
+
 def cluster_signals(sigs: list[Signal], *, abs_numbers: bool = False, field_name: str | None = None) -> list[Cluster]:
-    """Agrupa senyals per compatibilitat (union-find) i ordena els clusters per pes."""
+    """Agrupa senyals per compatibilitat (union-find) i ordena els clusters per pes.
+
+    D2 (2026-09-05, mesura dels 8, Linyola `field_date`): una data SENSE dia («Octubre 2025», caixeti del planol,
+    conf 0,2-0,3) es compatible amb TOTS els dies del mes, i com que la compatibilitat del union-find es transitiva
+    feia de pont entre dos dies diferents (01/10 de la fitxa A 0,95 i 10/10 d'un lab-sig 0,35): un sol cluster,
+    «1 font A sense contradiccio», segur amb el dia equivocat. Ara les claus sense dia no uneixen res: s'adjunten
+    DESPRES al cluster amb dia mes fort que hi sigui compatible (corroboracio, no aresta) o formen cluster propi.
+    El representant d'un cluster de dates es la clau amb dia de la font de mes autoritat, mai la cadena mes llarga
+    (`('date', 2025, 10, 10)` guanyava a `('date', 2025, 10, 1)` per un caracter)."""
     keys = [value_key(s.value, abs_numbers=abs_numbers, field_name=field_name) for s in sigs]
     parent = list(range(len(sigs)))
 
@@ -340,13 +356,21 @@ def cluster_signals(sigs: list[Signal], *, abs_numbers: bool = False, field_name
         return i
 
     for i in range(len(sigs)):
+        if keys[i][0] == "none" or _dayless(keys[i]):
+            continue
         for j in range(i + 1, len(sigs)):
-            if keys[i][0] != "none" and keys_compatible(keys[i], keys[j]):
+            if keys[j][0] == "none" or _dayless(keys[j]):
+                continue
+            if keys_compatible(keys[i], keys[j]):
                 parent[find(i)] = find(j)
 
     groups: dict[int, Cluster] = {}
+    partial: dict[tuple, Cluster] = {}
     for i, s in enumerate(sigs):
         if keys[i][0] == "none":
+            continue
+        if _dayless(keys[i]):
+            partial.setdefault(keys[i], Cluster(key=keys[i])).signals.append(s)
             continue
         r = find(i)
         if r not in groups:
@@ -354,12 +378,28 @@ def cluster_signals(sigs: list[Signal], *, abs_numbers: bool = False, field_name
         groups[r].signals.append(s)
     clusters = list(groups.values())
     family = field_name in _ENCARREC_FAMILY_FIELDS
-    clusters.sort(key=lambda c: (c.has_a, c.n_docs(family), c.sum_conf, c.max_conf), reverse=True)
+
+    def weight(c: Cluster) -> tuple:
+        return (c.has_a, c.n_docs(family), c.sum_conf, c.max_conf)
+
+    for pc in partial.values():
+        targets = [c for c in clusters if keys_compatible(c.key, pc.key)]
+        if targets:
+            max(targets, key=weight).signals.extend(pc.signals)
+        else:
+            clusters.append(pc)
+    clusters.sort(key=weight, reverse=True)
     for c in clusters:
-        # representant de la clau = la clau mes completa (data amb dia, text mes llarg)
-        best = max((value_key(s.value, abs_numbers=abs_numbers, field_name=field_name) for s in c.signals),
-                   key=lambda k: (k[0] == "date" and k[3] is not None, len(str(k))))
-        c.key = best
+        ks = [(value_key(s.value, abs_numbers=abs_numbers, field_name=field_name), s) for s in c.signals]
+        if c.key[0] == "date":
+            with_day = [(k, s) for k, s in ks if k[3] is not None]
+            if with_day:
+                # totes les claus amb dia d'un cluster son identiques (nomes uneixen dies iguals); el representant
+                # es declara per autoritat, no per longitud
+                c.key = max(with_day, key=lambda ks_: (ks_[1].is_a, ks_[1].confidence))[0]
+            continue
+        # representant de la clau = la clau mes completa (text mes llarg: les curtes son lectures parcials)
+        c.key = max((k for k, _ in ks), key=lambda k: len(str(k)))
     return clusters
 
 
@@ -391,7 +431,8 @@ def _distinct_candidates(cluster_order: list[Cluster], limit: int = MAX_CANDIDAT
         by_key: dict[tuple, list[Signal]] = {}
         for s in c.signals:
             by_key.setdefault(value_key(s.value, abs_numbers=abs_numbers, field_name=field_name), []).append(s)
-        keys = sorted(by_key, key=lambda k: (any(s.is_a for s in by_key[k]), len(str(k))), reverse=True)
+        keys = sorted(by_key, key=lambda k: (any(s.is_a for s in by_key[k]), k[0] == "date" and k[3] is not None,
+                                             len(str(k))), reverse=True)
         out: list[Signal] = []
         for k in keys:
             out.extend(sorted(by_key[k], key=_prefer_form, reverse=True))
@@ -499,9 +540,15 @@ def decide(
     else:
         candidates, altres = _distinct_candidates(clusters, abs_numbers=abs_numbers, field_name=field_name)
     value = candidates[0]["value"]
-    iso = _iso_date(top.key)
-    if iso and estat == "segur":
-        # canonicalitzacio de FORMAT (no de contingut): la data en ISO, la cita conserva la forma original
+    iso = None
+    if estat == "segur":
+        # canonicalitzacio de FORMAT (no de contingut): la data en ISO, la cita conserva la forma original.
+        # D2: la ISO surt de la clau del PROPI candidat 0 (mai de `top.key`): un candidat «Octubre 2025» no es
+        # reescriu amb un dia que la seva cita no diu, ni un 01/10 amb el 10/10 d'un altre senyal del cluster.
+        k0 = value_key(value, abs_numbers=abs_numbers, field_name=field_name)
+        if keys_compatible(k0, top.key):
+            iso = _iso_date(k0)
+    if iso:
         value = iso
         candidates[0]["value"] = iso
     cell: dict[str, Any] = {"estat": estat, "value": value, "candidates": candidates}
@@ -841,8 +888,11 @@ def _guard_for_field(key: str, decided: dict[str, dict]) -> Any:
         return True
 
     def num_floors(top: Cluster) -> Any:
-        if any("1 de" in (s.note or "").lower() or "unitat" in (s.note or "").lower() for s in top.signals):
-            return "descripcio d'una sola unitat de N (Pas 3)"
+        for s in top.signals:
+            note = (s.note or "").lower()
+            m = _UNIT_OF_N_RE.search(note)
+            if (m and int(m.group(1)) >= 2) or "unitat" in note:
+                return "descripcio d'una sola unitat de N (Pas 3)"
         return True
 
     def parcela(top: Cluster) -> Any:
@@ -1801,6 +1851,8 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
         )
         if key == "street_address":
             _promote_entre_carrers(cell)
+        if key == "municipality":
+            _canonical_municipality(cell)
         if key in descartats:
             cell["descartats"] = descartats[key]
         fields[key] = cell
@@ -1852,6 +1904,29 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
 
 
 _ENTRE_RE = re.compile(r"^\s*(situat\s+)?entre\s+el\s+carrer\b", re.IGNORECASE)
+
+
+def _canonical_municipality(cell: dict) -> None:
+    """D3 (2026-09-05, mesura dels 8, Vilanova): el valor visible del municipi es la grafia oficial del padro
+    (`municipis.lookup().name_ine`) quan TOTES les formes candidates resolen al mateix registre; la forma del
+    document queda a la cita (mateix patro que la ISO de les dates). Abans el desempat entre «Vilanova del Segria»
+    i «Vilanova de Segria» (mateix cluster, tres fonts A a 0,90) el feia `_prefer_form` per longitud de la cadena.
+    Si alguna forma no resol al padro (Anciles, fora de Catalunya) o resolen a municipis diferents, no es toca res."""
+    if cell.get("estat") not in ("segur", "candidats"):
+        return
+    cands = cell.get("candidates") or []
+    forms = [c["value"] for c in cands if isinstance(c.get("value"), str) and c["value"].strip()]
+    if not forms:
+        return
+    hits = [_municipi_lookup(f) for f in forms]
+    if any(h is None for h in hits) or len({h.ine_code for h in hits}) != 1:
+        return
+    official = hits[0].name_ine
+    if cell.get("value") == official and cands[0].get("value") == official:
+        return
+    cell["value"] = official
+    cands[0]["value"] = official
+    cell["rule"] = (cell.get("rule") or "") + f"; D3: grafia oficial del padro (INE {hits[0].ine_code}); la forma del document, a la cita"
 
 
 def _promote_entre_carrers(cell: dict) -> None:

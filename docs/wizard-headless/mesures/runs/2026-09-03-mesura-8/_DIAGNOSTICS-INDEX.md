@@ -71,3 +71,16 @@ un diagnòstic de causes arrel de tot el que no és OK. **Sempre contrastar els 
 `municipality` (D3, bug) i `nivell_freatic` P-3 (R6, política). **3 dels 4 són el mateix patró: un desempat mecànic
 (`len(str)`, «només A bloqueja») decideix contra informació que el propi `_decisions.json` ja té.** Els ERR crus
 d'Alcoletge (adreça) i Vilanova (SPT ×4) són del comparador (C).
+
+## Estat dels fixes (2026-09-05)
+
+| Codi | Estat | On | Evidència |
+|---|---|---|---|
+| **C** | ✅ v4 | `fase0-acceptacio/compare_consolida.py` (docstring v4: 10 canvis) + 30 casos nous a `tests/test_compare_consolida.py` | `{slug}/_compare_*.txt` regenerats sobre els `_decisions.json` originals: 18 falsos fora, cap de nou; `_AGREGAT-8.md` §Agregat mecànic |
+| **D2** | ✅ | `consolidate.cluster_signals` (claus sense dia no uneixen; representant per autoritat), `_distinct_candidates.ordered_forms` (formes amb dia primer), `decide` (ISO del propi candidat 0) | Linyola `field_date` → 2025-10-01; 3 tests `test_D2_*` |
+| **D3** | ✅ | `consolidate._canonical_municipality` (padró `name_ine` si totes les formes resolen al mateix INE), cridat a `consolidate_python` per a `municipality` | Vilanova → «Vilanova de Segrià»; 2 tests `test_D3_*` |
+| **R3** | ✅ | `consolidate._UNIT_OF_N_RE` (`(?<![a-z0-9])1\s+de(?:ls?)?\s+(les|els)?\s*N`, N ≥ 2) + «unitat» | Bell-lloc `num_floors` → segur PB+PP; Castellar («unitats») continua sota guard; `test_R3_*` |
+| G, R6, I1, R1, D5, D4, D6, T1, T2, S1 | ⏳ | — | pendents de prioritzar (Josep) |
+
+Reconsolidació dels 7 amb el codi nou (sense re-run, lectures cachejades): `{slug}/_reconsolida-2026-09-05/`
+(`_decisions.json` + `_compare_*.txt`). Agregador: `mesures/agrega_mesura.py [--sub _reconsolida-2026-09-05]`.

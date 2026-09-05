@@ -32,6 +32,25 @@ de producció contra un or amb valor és ara `BUIT` (rang 1, "no hem trobat res"
 `no_trobat` de l'or contra un `candidats` de producció és `FORA` (rang 0) quan l'or porta una anotació `fora_carpeta`
 (un valor mesurat fora dels documents del projecte, p. ex. una consulta HTTP) que coincideix amb el primer candidat, o
 `CAUTELA "fora, no coincideix"` si no hi coincideix; sense `fora_carpeta` es manté `ALERTA` (igual que abans).
+v4 (2026-09-05, codi C de `mesures/runs/2026-09-03-mesura-8/_DIAGNOSTICS-INDEX.md`): 18 falsos ERR/ALERTA/CAUTELA
+als 7 comparables de la mesura dels 8, tots de format del comparador, cap del sistema. (1) `parse_address`: el nom de
+la via son NOMES els tokens abans del primer portal (el municipi/CP/urbanitzacio que ve despres no forma part de la
+via: «C/ Clot de la Llacuna, 16, Linyola (25240)» = «Carrer Clot de la Llacuna, 16»; «Carrer Girasols, Nº7,
+Urbanització el Roser» = «Carrer Girasols, 7 (Urb. El Roser)»), «C.» es reconeix com a tipus de via (el `\b` darrere
+del punt no casava mai), el tipus de via es opcional si hi ha nom i portal, un numero de 5 xifres no es un portal
+(CP) i `sta`/`st` = `santa`/`sant`. (2) `parse_numbers`: una unitat enganxada al numero («0,80-1,40m») i una nota
+darrere d'una coma («+212,50 msnm, segons plànol en el ICGC») ja no trenquen la lectura numerica. (3) `close()` text:
+contencio tambe despres de treure anotacions (≥ 3 caracters: `TPS (coneixement previ)` ⊂ `TPS, Prospecció del
+Subsòl, SL`); les particules NO s'ignoren («Vilanova del Segrià» ≠ «Vilanova de Segrià» es un ERR real, D3). (4) `nivell_freatic`: un valor numeric = un text llarg
+de humitat/aigua si la PRIMERA fondaria del text es aquell valor. (5) `num_floors`: porxo/porxada no es una planta;
+«1 (planta baixa)» = «PB». (6) `building_type`: castella → catala (adosada/aislada/viviendas…), `unitat(s)` fora.
+(7) `architect_name`/`client_name`: conjunt de noms, sense num. de col·legiat, telefon, honorific ni sufix « — despatx»
+(igualtat estricta del conjunt: persona ≠ despatx continua sent diferent). (8) `flat_gold_scalars`: els candidats
+compartits del camp niuat `cte` es reparteixen per subclau (C→`cte_edificacio`, T→`cte_sol`; els del `lab` es queden
+sencers), i un or `candidats` sense valor ni candidats per a la subclau es `CAUTELA or sense valor`.
+(9) `spt_ma_tests` s'alineen per `punt` quan es unic als dos costats (Vilanova: dos «SPT-1» a P-1 i P-3 creuats per
+index). (10) Les columnes d'una taula que l'or te i prod NO emet a cap fila (`lab`, `id_estat`, `nom` pla…) es
+llisten un cop com a `NOMES-OR` i no compten (abans, ABSENT per cel·la). `TOTALS` conserva les claus de sempre.
 Independent del consolidador (`automation/lectura/consolidate.py`): no en comparteix codi a posta — l'instrument
 d'acceptació no ha d'heretar els errors de l'objecte que mesura. Sortida idèntica a la v1 (la llegeixen
 `mesures/ledger.py` i `fase12-consolida/harness.py`).
@@ -49,6 +68,7 @@ REPO = S.parents[2]
 DEFAULT_PROJ = "4001612 BELL-LLOC"
 
 ADDRESS_FIELDS = frozenset({"street_address"})
+PERSON_FIELDS = frozenset({"architect_name", "client_name"})
 # fondàries: el signe és convenció d'escriptura (Eva: "-1.00 a -1.20"; GTL: "1,0 - 1,2"), no informació
 ABS_FIELDS = frozenset({"lab_depth", "profunditat", "profunditat_assolida", "de", "a", "nivell_freatic"})
 _UNITS = frozenset({"m", "ml", "msnm", "msn", "m2", "cm", "mm", "mts", "metres", "metros", "aprox", "ca", "a", "i",
@@ -117,11 +137,15 @@ def dates_compatible(a: tuple, b: tuple) -> bool:
 _NUM_RE = re.compile(r"(?<![A-Za-z0-9])[-+]?\d+(?:[.,]\d+)?(?![A-Za-z0-9])")
 _RANGE_DASH_RE = re.compile(r"(?<=\d)\s*-\s*(?=\d)")
 _THOUSANDS_RE = re.compile(r"(?<![\d.,])\d{1,3}(?:\.\d{3})+,\d+(?![\d.,])")
+_TRAILING_NOTE_RE = re.compile(r",\s+(?=[a-z])")   # `+212,50 msnm, segons plànol en el ICGC` → la nota no es valor
+_GLUED_UNIT_RE = re.compile(r"(?<=\d)(?=[a-z])")    # `1,40m` → `1,40 m` (abans `_NUM_RE` hi llegia «1»)
 
 
 def parse_numbers(s, absolute: bool = False) -> tuple | None:
     """Tupla de nombres si el valor és 'numèric' (comença per un nombre i la resta són unitats/partícules)."""
     t = _ascii(strip_annot(s)).lower()
+    t = _TRAILING_NOTE_RE.split(t, maxsplit=1)[0]
+    t = _GLUED_UNIT_RE.sub(" ", t)
     t = _THOUSANDS_RE.sub(lambda m: m.group(0).replace(".", ""), t)   # `1.655,01` → `1655,01`
     t = _RANGE_DASH_RE.sub(" ", t)           # `1,0-1,2` / `1,0 - 1,2` → interval, no signe
     t = re.sub(r"^[\s~<>+]+", "", t)          # ≈ ≤ ≥ ja han caigut amb l'ASCII
@@ -138,16 +162,21 @@ def parse_numbers(s, absolute: bool = False) -> tuple | None:
 
 
 # --- adreces ------------------------------------------------------------------------------------------------------
-_STREET_RE = re.compile(
-    r"^\s*(?:situat\s+(?:a|al)\s+)?(?:carrer|c/|c\.|cl\.?|calle|av\.?|avinguda|avda\.?|avenida|pl\.?|placa|plaza|"
-    r"ctra\.?|carretera|cami|passeig|pg\.?|ronda|rda\.?|travessera|trav\.?|rambla|poligon(?:\s+industrial)?|pol\.?\s*ind\.?|"
-    r"partida|paratge|urbanitzacio|urb\.?|nau)\b\.?/?\s*(.*)$")
+_STREET_TYPES = (r"carrer|calle|cl|av|avinguda|avda|avenida|pl|placa|plaza|ctra|carretera|cami|camino|passeig|pg|paseo|"
+                 r"ronda|rda|travessera|trav|rambla|poligon(?:\s+industrial)?|pol\.?\s*ind|partida|paratge|"
+                 r"urbanitzacio|urbanizacion|urb|nau")
+# «c.» i «c/» no acaben en lletra: el `\b` que hi havia darrere del punt no casava mai («C. Clot de la Llacuna»)
+_STREET_RE = re.compile(r"^\s*(?:situat\s+(?:a|al)\s+)?(?:(?:" + _STREET_TYPES + r")(?![a-z])\.?/?|c/|c\.)?\s*(.*)$")
 _ADDR_STOP = frozenset({"de", "del", "dels", "d", "l", "la", "el", "els", "les", "i", "y", "e"})
-_NUM_PORTAL_RE = re.compile(r"\d+(?:\s?[a-z](?![a-z]))?")
+_ADDR_ABBR = {"sta": "santa", "st": "sant"}
+_NUM_PORTAL_RE = re.compile(r"(?<!\d)\d{1,4}(?:\s?[a-z](?![a-z]))?(?!\d)")   # 5 xifres = codi postal, no portal
 
 
 def parse_address(s) -> tuple | None:
-    """(tokens del nom del carrer, conjunt de portals) si sembla 'tipus de via + nom + números'; si no, None."""
+    """(tokens del nom del carrer, conjunt de portals) si sembla '[tipus de via] nom + números'; si no, None.
+
+    El nom de la via son els tokens ABANS del primer portal: el que ve despres (municipi, CP, urbanitzacio, pis)
+    no forma part de la via i abans feia «vies diferents» de la mateixa adreca (Linyola, Alcoletge)."""
     t = _ascii(strip_annot(s)).lower()
     t = re.sub(r"\bn(?:[o°]|um(?:ero)?)?\.?\s*(?=\d)", " ", t)   # nº / num. / n. davant del número
     t = re.sub(r"^\s*c/", "carrer ", t)
@@ -155,8 +184,11 @@ def parse_address(s) -> tuple | None:
     if not m:
         return None
     rest = m.group(1)
+    first = _NUM_PORTAL_RE.search(rest)
+    if not first:
+        return None
     portals = frozenset(re.sub(r"\s", "", x) for x in _NUM_PORTAL_RE.findall(rest))
-    name = tuple(w for w in re.findall(r"[a-z]+", _NUM_PORTAL_RE.sub(" ", rest)) if w not in _ADDR_STOP)
+    name = tuple(_ADDR_ABBR.get(w, w) for w in re.findall(r"[a-z]+", rest[:first.start()]) if w not in _ADDR_STOP)
     if not portals or not name:
         return None
     return (name, portals)
@@ -193,16 +225,28 @@ def norm_floors(s) -> tuple[str, str | None]:
     primera coma i fora d'anotacions; l'indicador es llegeix a TOTA la cadena (`PB+2, amb soterrani` ≠ `PB+2 (sense soterrani)`)."""
     full = _ascii(s).lower()
     core = re.sub(r"[^a-z0-9]+", "", _ascii(strip_annot(s)).lower().split(",", 1)[0])
-    core = core.replace("pbpp", "pb1").replace("pbp1", "pb1")
+    core = re.sub(r"porx(?:o|os|ada|ades)|porche", "", core)   # un porxo no es una planta (Rubí «PB + porxada»)
+    core = core.replace("plantabaixa", "pb").replace("pbpp", "pb1").replace("pbp1", "pb1")
     core = re.sub(r"pp$", "1", core)
+    if core == "1" and re.search(r"planta\s*baixa|planta\s*baja|\bpb\b", full):
+        core = "pb"   # «1 (planta baixa)» = una planta = PB
     flag = "sense" if _NO_BASEMENT_RE.search(full) else ("amb" if _BASEMENT_RE.search(full) else None)
     return core, flag
 
 
 _BT_STOP = frozenset({"de", "del", "dels", "d", "l", "la", "el", "els", "les", "un", "una", "uns", "unes", "i", "y",
-                      "amb", "per", "a", "en", "the", "construccio", "constr", "edificacio", "edificio", "vivienda"})
+                      "amb", "per", "a", "en", "the", "construccio", "constr", "edificacio", "edificio", "vivienda",
+                      "unitat", "unitats", "unidad", "unidades"})
 _BT_ABBR = {"hab": "habitatge", "habit": "habitatge", "vivienda": "habitatge", "viviendas": "habitatge",
-            "unif": "unifamiliar", "unifam": "unifamiliar", "aill": "aillat", "plurif": "plurifamiliar"}
+            "unif": "unifamiliar", "unifam": "unifamiliar", "aill": "aillat", "plurif": "plurifamiliar",
+            # castella → catala (Vilanova, Anciles: informes en castella)
+            "adosada": "adossat", "adosado": "adossat", "adosadas": "adossat", "adosados": "adossat",
+            "adossada": "adossat", "adossades": "adossat", "adossats": "adossat",
+            "aislada": "aillat", "aislado": "aillat", "aisladas": "aillat", "aislados": "aillat",
+            "aillada": "aillat", "aillades": "aillat", "aillats": "aillat",
+            "unifamiliares": "unifamiliar", "plurifamiliares": "plurifamiliar",
+            "pareada": "aparellat", "pareado": "aparellat", "aparellada": "aparellat",
+            "medianeras": "mitgera", "mitgeres": "mitgera"}
 
 
 def building_tokens(s) -> frozenset:
@@ -214,6 +258,32 @@ def building_tokens(s) -> frozenset:
         if w not in _BT_STOP:
             out.add(w)
     return frozenset(out)
+
+
+# --- persones (architect_name, client_name) -----------------------------------------------------------------------
+_HONORIFICS = frozenset({"sr", "sra", "srta", "sres", "d", "dna", "don", "dona", "mr", "mrs", "ms"})
+_COLLEGIATE_RE = re.compile(r"\bn(?:o|um\.?)?\s*\.?\s*col(?:\.|legiat|legiada|legiado)?\s*[\d.]+")   # nºCol. 6.408
+_PHONE_RE = re.compile(r"(?<!\d)\d{9}(?!\d)")
+_DASH_SUFFIX_RE = re.compile(r"\s-\s")   # « — A+M Arquitectura» (els guions llargs ja son «-» despres de `_ascii`)
+
+
+def person_tokens(s) -> frozenset:
+    """Conjunt de noms d'una persona o llista de persones: sense anotacions, num. de col·legiat, telefon,
+    honorifics, particules ni el sufix « — despatx». Igualtat ESTRICTA del conjunt (persona ≠ despatx)."""
+    t = _DASH_SUFFIX_RE.split(_ascii(strip_annot(s)).lower(), maxsplit=1)[0]
+    t = _PHONE_RE.sub(" ", _COLLEGIATE_RE.sub(" ", t))
+    return frozenset(w for w in re.findall(r"[a-z]+", t) if w not in _HONORIFICS and w not in _ADDR_STOP)
+
+
+# --- nivell freatic -------------------------------------------------------------------------------------------------
+_WATER_RE = re.compile(r"humit|humid|aigua|agua|freatic|nivell|nivel|\bn\.?f\b")
+
+
+def first_depth(s) -> float | None:
+    """Primera fondaria (valor absolut) dins d'un text llarg de nivell freatic; None si no n'hi ha cap."""
+    t = _GLUED_UNIT_RE.sub(" ", _ascii(strip_annot(s)).lower())
+    m = _NUM_RE.search(t)
+    return abs(float(m.group(0).replace(",", "."))) if m else None
 
 
 # --- close --------------------------------------------------------------------------------------------------------
@@ -242,6 +312,11 @@ def close(a, b, field: str | None = None) -> bool:
     na, nb = parse_numbers(A, absolute=f in ABS_FIELDS), parse_numbers(B, absolute=f in ABS_FIELDS)
     if na and nb:
         return na == nb
+    if f == "nivell_freatic" and (na is None) != (nb is None):
+        # «-1,00 m (humitat)» = «Humitat (…) — fondària de primera aparició -1,00 m; abast pintat fins a -1,40 m»
+        num, txt = (na, B) if na is not None else (nb, A)
+        if len(num) == 1 and _WATER_RE.search(_ascii(txt).lower()) and first_depth(txt) == num[0]:
+            return True
     if f == "num_floors":
         (ca, ga), (cb, gb) = norm_floors(A), norm_floors(B)
         return bool(ca) and ca == cb and (ga == gb or ga is None or gb is None)
@@ -252,22 +327,43 @@ def close(a, b, field: str | None = None) -> bool:
     if la == lb or (la and lb and (la in lb or lb in la)):
         return True
     sa, sb = norm(strip_annot(A)), norm(strip_annot(B))
-    return bool(sa) and sa == sb
+    if sa and sa == sb:
+        return True
+    if len(sa) >= 3 and len(sb) >= 3 and (sa in sb or sb in sa):
+        return True   # `TPS (coneixement previ)` ⊂ `TPS, Prospecció del Subsòl, SL`
+    if f in PERSON_FIELDS:
+        ta, tb = person_tokens(A), person_tokens(B)
+        return bool(ta) and ta == tb
+    return False
 
 
 # --- or -----------------------------------------------------------------------------------------------------------
+_CTE_SUBKEY_RE = {"cte_edificacio": re.compile(r"(?<![a-z0-9])c-?\d", re.I), "cte_sol": re.compile(r"(?<![a-z0-9])t-?\d", re.I)}
+
+
+def subkey_candidates(field: str, sk: str, cands: list) -> list:
+    """Reparteix la llista de candidats compartida d'un camp niuat entre les subclaus. Nomes `cte` (C→`cte_edificacio`,
+    T→`cte_sol`): abans `cte_sol` de Castellar heretava el candidat «C0 (…)» i sortia «candidats disjunts». La del `lab`
+    es queda sencera: les seves formes («MA (S-2) 2,8-3,0», «TPS (coneixement previ)») son lectures del mateix bloc del
+    document i repartir-les pel valor de la subclau feia perdre solapaments legitims (`lab_sample_id` d'Anciles)."""
+    if field != "cte":
+        return cands
+    rx = _CTE_SUBKEY_RE.get(sk)
+    return [c for c in cands if rx is None or rx.search(str(c.get("value", "")))]
+
+
 def flat_gold_scalars(proj: str) -> dict:
     d = json.load(open(REPO / "docs/golden-read" / proj / "_decisions.json", encoding="utf-8"))["decisions"]
     out = {}
     for k, v in d.items():
         st = v.get("status") or v.get("estat")
         if k in ("lab", "cte") and isinstance(v.get("value"), dict):
-            # candidats no van per subclau al fixture (una sola llista per al camp niuat sencer): es comparteix
-            # tal com ja fa `contract._flatten_nested_field` (còpia de l'entrada sencera, `value` sobreescrit).
+            # candidats no van per subclau al fixture (una sola llista per al camp niuat sencer): es reparteixen
+            # per subclau (v4); `contract._flatten_nested_field` els copia sencers, aqui es filtren.
             for sk, sv in v["value"].items():
                 out[sk] = {"estat": st, "value": sv}
                 if isinstance(v.get("candidates"), list):
-                    out[sk]["candidates"] = v["candidates"]
+                    out[sk]["candidates"] = subkey_candidates(k, sk, v["candidates"])
         elif k == "utm_x_utm_y":
             m = re.search(r"X\s*([\d.]+)\s*;\s*Y\s*([\d.]+)", str(v.get("value", "")))
             out["utm_x"] = {"estat": st, "value": m.group(1) if m else v.get("value")}
@@ -331,7 +427,12 @@ def row_key(block: str, row: dict) -> str | None:
         if _COVER_WEAK_RE.search(t):
             return "cover"
         return None
-    return None  # spt_ma_tests: per índex (etiquetes SPT-1/MA1 massa variables; l'or té una fila)
+    if block == "spt_ma_tests":
+        # per punt quan es unic als dos costats (Vilanova: dos «SPT-1», a P-1 i a P-3, creuats per index);
+        # les etiquetes SPT-1/MA1 son massa variables per alinear-hi
+        v = _plain(row.get("punt"))
+        return norm(v) or None
+    return None
 
 
 def align_rows(block: str, grows: list, prows: list) -> tuple[list[tuple[dict, dict]], bool]:
@@ -361,6 +462,8 @@ def verdict(gold, prod, field: str | None = None):
         if ge == "candidats":
             gc = cand_values(gold) or ([gv] if gv is not None else [])
             pc = cand_values(prod) or ([pv] if pv is not None else [])
+            if not gc:
+                return "CAUTELA", f"or sense valor ni candidats per a la subclau; prod={pc!r}"
             if not (gc and pc and any(close(g, p, field) for g in gc for p in pc)):
                 return "CAUTELA", f"candidats disjunts: or={gc!r} prod={pc!r}"
         return "OK", ""
@@ -422,10 +525,19 @@ def compare_taules(prod_path: Path, proj: str) -> tuple[list[str], dict]:
         prows = p if isinstance(p, list) else (p.get("rows") or [])
         pairs, by_key = align_rows(block, grows, prows)
         lines.append(f"-- {block}: or {len(grows)} files / prod {len(prows)} files" + (" · alineades per clau" if by_key else ""))
+        grows_x = [_expand_de_a(r) if block == "soil_levels" else r for r in grows]
+        # columnes que l'or te com a cel·la i prod no emet a CAP fila (dialecte del fixture: `lab`, `id_estat`,
+        # `nom` pla…): no es mesuren; es llisten un cop. Una fila sencera que falta continua sent ABSENT.
+        prod_cols = {c for r in prows for c, v in r.items() if isinstance(v, dict) and "estat" in v}
+        only_gold = sorted({c for r in grows_x for c, v in r.items() if isinstance(v, dict) and "estat" in v} - prod_cols) if prows else []
+        if only_gold:
+            n_only = sum(1 for r in grows_x for c in only_gold if isinstance(r.get(c), dict))
+            lines.append(f"NOMES-OR {block}: {', '.join(only_gold)} ({n_only} cel·les de l'or que prod no emet a cap fila: no compten)")
+            counts["NOMES_OR"] = counts.get("NOMES_OR", 0) + n_only
         for i, (gr, pr) in enumerate(pairs):
             gr = _expand_de_a(gr) if block == "soil_levels" else gr
             for cell, gv in gr.items():
-                if not isinstance(gv, dict) or "estat" not in gv:
+                if not isinstance(gv, dict) or "estat" not in gv or cell in only_gold:
                     continue
                 pv = pr.get(cell)
                 if not isinstance(pv, dict):

@@ -133,7 +133,7 @@ regla N20 de P4), i val més llegir-ho abans de tocar res.
 | Ordre | Peça | Esforç | Estat / bloquejada per |
 |---|---|---|---|
 | 0 | **Mesura dels 8** (tasca 1 handoff) | — | **7/8 FETS** (2026-09-04); queda Tulipa. ERR sistema 4 (1 font, 3 consolidador). Vilanova al titular (signat trobat) |
-| 0b | **Fixes de consolidador/inventari sortits de la mesura** (D2 dates, D3 padró, R6 taules, I1 `PDF_V0`, R1 abreviatures G3, R3 `"1 de"`, D5 CTE N unitats, comparador C) | ~1-2 dies | **pendent de prioritzar amb el Josep** després de Tulipa i de l'agregat; vegeu `_DIAGNOSTICS-INDEX.md` |
+| 0b | **Fixes de consolidador/inventari sortits de la mesura** — ✅ **C, D2, D3, R3 fets 2026-09-05** (comparador v4, dates, padró, guard `"1 de"`; ERR de codi 3 → 0 a la reconsolidació dels 7, cost 0). ⏳ G (`fora_carpeta` a 3 ors), R6 taules, I1 `PDF_V0`, R1 abreviatures G3, D5 CTE N unitats, D4/D6 runner, T1/T2, S1 | ~1 dia més | **pendent de prioritzar amb el Josep**; vegeu `_DIAGNOSTICS-INDEX.md` §Estat dels fixes i `_AGREGAT-8.md` §Agregat mecànic |
 | 1 | **R** repàs criteris als informes | ~½ dia | **FETA 2026-09-03** |
 | 2 | P0 columna N | ~1 h | mesura feta (R la confirma: N=SPT, «--»/«R»; regla N30 textual a Bell-lloc p10) |
 | 3 | ~~P1 cel·la Nb~~ | — | **DESCARTADA per R** (el /0,83 és correcte; la qüestió viva és P4) |

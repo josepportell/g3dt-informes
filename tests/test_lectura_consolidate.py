@@ -237,6 +237,80 @@ def test_segur_date_is_canonical_iso_but_quote_keeps_original():
     assert cell["candidates"][0]["quote"] == "24/10/2025"
 
 
+# --- D2 / D3 / R3 (2026-09-05, fila 0b de la mesura dels 8) ------------------------------------------------------
+
+def test_D2_month_only_date_does_not_bridge_two_different_days():
+    """Linyola `field_date`: «Octubre 2025» (planol, 0,25) feia de pont entre 01/10 (fitxa A 0,95 + 6 docs) i 10/10
+    (lab-sig 0,35, etiqueta mal aparellada) → un sol cluster «sense contradiccio», representant per `len(str)` → segur
+    2025-10-10 amb la font i la cita del 01/10. Ara: segur 2025-10-01, el 10/10 queda a `altres` (conf < 0,4)."""
+    sigs = [_sig("field_date", "2025-10-01", 0.95, doc="fitxa"), _sig("field_date", "01/10/2025", 0.8, doc="annex_dpsh"),
+            _sig("field_date", "10/10/2025", 0.35, doc="lab-sig"), _sig("field_date", "Octubre 2025", 0.25, doc="planol")]
+    cell = C.decide(sigs, sources_checked=["fitxa"], field_name="field_date")
+    assert cell["estat"] == "segur" and cell["value"] == "2025-10-01"
+    assert cell["candidates"][0]["value"] == "2025-10-01" and cell["candidates"][0]["font"].startswith("fitxa")
+    assert "10/10/2025" in [c["value"] for c in cell["altres"]]
+    clusters = C.cluster_signals(sigs, field_name="field_date")
+    assert [c.key for c in clusters][:2] == [("date", 2025, 10, 1), ("date", 2025, 10, 10)]
+    assert {s.value for s in clusters[0].signals} == {"2025-10-01", "01/10/2025", "Octubre 2025"}
+
+
+def test_D2_month_only_date_with_A_confidence_still_blocks_a_different_day_as_contradiction():
+    """Un 10/10 a 0,6 (≥ llindar 0,4) es una contradiccio real: candidats, no segur."""
+    sigs = [_sig("field_date", "01/10/2025", 0.9, doc="fitxa"), _sig("field_date", "10/10/2025", 0.6, doc="lab"),
+            _sig("field_date", "Octubre 2025", 0.85, doc="planol")]
+    cell = C.decide(sigs, sources_checked=["fitxa"], field_name="field_date")
+    assert cell["estat"] == "candidats"
+    # forma amb dia primer (no «Octubre 2025» per ser A); sense ISO perque nomes es canonicalitza el `segur`
+    assert cell["candidates"][0]["value"] == "01/10/2025" and cell["candidates"][0]["quote"] == "01/10/2025"
+    assert [c["value"] for c in cell["candidates"]][1:] == ["10/10/2025", "Octubre 2025"]
+
+
+def test_D2_month_only_dates_alone_stay_month_only_and_are_not_rewritten():
+    cell = C.decide([_sig("field_date", "Octubre 2025", 0.9, doc="planol"), _sig("field_date", "octubre de 2025", 0.5, doc="tall")],
+                    sources_checked=["planol"], field_name="field_date")
+    assert cell["estat"] == "segur" and cell["value"] == "Octubre 2025"
+
+
+def test_R3_num_floors_guard_needs_word_boundary_before_1_de_N():
+    guard = C._guard_for_field("num_floors", {})
+    top = C.Cluster(key=("text", "pb1"), signals=[
+        _sig("num_floors", "PB+1 (2 plantes)", 0.7, doc="correu", note="PB de 280 m2 + P1 de 86 m2; citat de l'email")])
+    assert guard(top) is True                                     # Bell-lloc: «P1 de 86» no es «1 de N»
+    top = C.Cluster(key=("text", "pb1"), signals=[_sig("num_floors", "PB+1", 0.7, doc="pressupost", note="1 de 3 habitatges")])
+    assert isinstance(guard(top), str)                            # Castellar: una unitat de N
+    top = C.Cluster(key=("text", "pb1"), signals=[_sig("num_floors", "PB+1", 0.7, doc="p", note="descriu 1 dels 3 habitatges")])
+    assert isinstance(guard(top), str)
+    top = C.Cluster(key=("text", "pb1"), signals=[_sig("num_floors", "PB+1", 0.7, doc="p", note="una unitat del conjunt")])
+    assert isinstance(guard(top), str)
+
+
+def test_D3_municipality_visible_form_is_padro_official_spelling():
+    """Vilanova: tres fonts A a 0,90 amb «Vilanova del Segrià» / «Vilanova de Segria» / «Vilanova de Segrià» (mateix
+    cluster); `_prefer_form` triava «del» per longitud. Ara: `name_ine` del padro; la forma del document, a la cita."""
+    cell = C.decide([_sig("municipality", "Vilanova del Segrià", 0.9, doc="planol"),
+                     _sig("municipality", "Vilanova de Segria", 0.9, doc="acceptacio"),
+                     _sig("municipality", "Vilanova de Segrià", 0.9, doc="pl_situacio"),
+                     _sig("municipality", "VILANOVA SEGRIÀ", 0.7, doc="g3", origin="g3_templates")],
+                    sources_checked=["planol"], field_name="municipality")
+    assert cell["estat"] == "segur" and cell["value"] == "Vilanova del Segrià"
+    C._canonical_municipality(cell)
+    assert cell["value"] == "Vilanova de Segrià" and cell["candidates"][0]["value"] == "Vilanova de Segrià"
+    assert cell["candidates"][0]["quote"] == "Vilanova del Segrià" and "D3" in cell["rule"]
+
+
+def test_D3_municipality_untouched_when_a_form_is_not_in_padro_or_forms_disagree():
+    cell = C.decide([_sig("municipality", "Anciles", 0.9, doc="planol")], sources_checked=["planol"], field_name="municipality")
+    before = json.dumps(cell, sort_keys=True)
+    C._canonical_municipality(cell)
+    assert json.dumps(cell, sort_keys=True) == before          # fora de Catalunya: el padro no hi diu res
+    cell = C.decide([_sig("municipality", "Linyola", 0.9, doc="a"), _sig("municipality", "Bellpuig", 0.9, doc="b")],
+                    sources_checked=["a"], field_name="municipality")
+    assert cell["estat"] == "candidats"
+    before = json.dumps(cell, sort_keys=True)
+    C._canonical_municipality(cell)
+    assert json.dumps(cell, sort_keys=True) == before          # dos municipis diferents: no es tria
+
+
 def test_candidates_capped_at_three_rest_in_altres_nothing_lost():
     sigs = [_sig("x", f"v{i}", 0.5, doc=f"d{i}") for i in range(6)]
     cell = C.decide(sigs, sources_checked=["d"])

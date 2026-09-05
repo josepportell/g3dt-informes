@@ -1,4 +1,16 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
+Last updated: 2026-09-05 — **Fila 0b, primer paquet FET (decisió Josep: C, D2, D3, R3).** Comparador
+`compare_consolida.py` **v4** (18 falsos veredictes fora, cap de nou); consolidador: **D2** (dates sense dia no fan de
+pont; ISO del propi candidat), **D3** (`municipality` = grafia del padró), **R3** (guard «1 de N» amb límit de paraula).
+Reconsolidació dels 7 amb el codi nou, sense re-run (cost 0): **3 cel·les canvien, totes cap a la veritat** (Linyola
+`field_date` 2025-10-01, Vilanova «Vilanova de Segrià», Bell-lloc `num_floors` segur PB+PP) → **ERR de codi 3 → 0**.
+Agregat mecànic (`mesures/agrega_mesura.py`): escalars **93 OK / 45 CAND / 8 ALERTA / 1 blanc / 0 ERR**; taules 136 /
+21 / 9 / 31 / 0 (contra l'or; els 2 ERR de veritat que queden, Rubí P-2 F1 i Vilanova P-3 R6, són ALERTA de taula).
+Amb G (`fora_carpeta` a 3 ors) els escalars serien 96 / 50 / 1 / 0. Detall: `_AGREGAT-8.md` §Agregat mecànic,
+`_DIAGNOSTICS-INDEX.md` §Estat dels fixes, DECISION-LOG 2026-09-05. Branca pushada al matí (`7bdbcde`); els canvis
+d'avui **sense commit** (decisió del Josep). **Pendent 0b:** G, R6, I1, R1, D5, D4/D6, T1/T2, S1 (proposta d'ordre:
+G → R6 → I1 → R1). Preguntes a Eva: sense canvis.
+
 Last updated: 2026-09-04 (nit) — **MESURA DELS 8 FETA** (codi intacte, pre P0-P4). **Agregat:**
 `docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/_AGREGAT-8.md`. Titular (7 comparables, sobre el signat):
 escalars **94 OK (64 %) / 50 CAND (34 %) / 2 ERR**; taules **133 OK (67 %) / 33 CAND / 31 blancs / 2 ERR**. Llindars

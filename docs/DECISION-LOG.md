@@ -2095,3 +2095,99 @@ Prioritzar 0b; arreglar comparador i regenerar l'agregat mecànic; corregir l'or
 a Eva; després, P0/P2a → M341 (pla). Vegeu `PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md` §Ordre.
 
 *Fi entrada 2026-09-04. Mesura dels 8: el sistema llegeix bé i decideix malament; els 4 ERR i les 50 CAND tenen nom.*
+
+## 2026-09-05 — Fila 0b, primer paquet: comparador v4 (C) + D2 dates, D3 padró, R3 guard «1 de N» — ERR de codi 3 → 0 sense re-run
+
+### Context
+Decisió del Josep (2026-09-05, després de llegir el handoff del 09-04 i la traducció dels codis): «endavant amb C, D2, D3,
+R3». Els tres bugs de consolidador tenien línia de codi al diagnòstic (`_DIAGNOSTICS-INDEX.md`, `linyola/_DIAGNOSTIC.md`
+§D2, `vilanova/_DIAGNOSTIC.md` §D3, `bell-lloc/_DIAGNOSTIC-INFRACONFIANCA.md` fila 7); el comparador tenia 18 falsos
+veredictes catalogats. Ordre executat: línia base (comparador intacte regenera els 14 `_compare_*.txt` idèntics; suite
+31 vermells / 2001 verds) → comparador → bugs, un test cadascun → reconsolidació dels 7 → agregat mecànic.
+
+### Decisions arquitectòniques clau
+1. **El comparador no ignora partícules.** La primera versió del v4 igualava «Vilanova del Segrià» amb «Vilanova de
+   Segrià» (regla «sense partícules» pensada per a «plànol en el ICGC» / «plànol de l'ICGC») i feia desaparèixer el D3 del
+   propi comparador. Why: l'instrument no pot perdonar l'error que ha de mesurar. El cas de Rubí es resol per la via
+   numèrica (nota darrere de coma = anotació), no per la textual. Alternativa rebutjada: mantenir-la i afegir excepcions
+   per camp.
+2. **Els candidats compartits d'un camp niuat es reparteixen només a `cte`** (C→`cte_edificacio`, T→`cte_sol`, regex).
+   Repartir també els del `lab` pel valor de la subclau creava una CAUTELA nova a Anciles (`lab_sample_id`: «MA (S-2)
+   2,8-3,0» s'assignava a `lab_location` per contenció de «S-2»). Why: les formes del `lab` són lectures del mateix bloc
+   del document; la contenció ≥ 3 caràcters després de treure anotacions ja resol «TPS (coneixement previ)».
+3. **D2 en tres peces, cap de sola.** (a) Una data sense dia no és aresta del union-find: s'adjunta després al cluster
+   amb dia més fort compatible, o fa cluster propi. (b) Representant d'un cluster de dates = clau amb dia del senyal de
+   més autoritat (`is_a`, `confidence`), mai `len(str(k))`. (c) La ISO es calcula de la clau del PROPI candidat 0 i només
+   si és compatible amb la del cluster: un candidat «Octubre 2025» no es reescriu amb un dia que la seva cita no diu.
+   També: dins d'un cluster, les formes amb dia van abans que les sense dia. Why: amb només (a), «Octubre 2025» A i un
+   dia no-A haurien deixat el candidat 0 sense dia; amb només (b), la cita continuaria dient una cosa i el valor una
+   altra.
+4. **D3 com a post-procés, no dins de `decide`.** `_canonical_municipality(cell)` després de decidir: si TOTES les formes
+   candidates resolen al mateix `ine_code` del padró, valor i candidat 0 = `name_ine`, la forma del document queda a la
+   cita (mateix patró que la ISO). Si alguna no resol (Anciles) o resolen a municipis diferents, no es toca res. Why:
+   `decide` és genèric per camp; el padró és coneixement de `municipality`, com `_promote_entre_carrers` ho és
+   d'`street_address`.
+5. **R3: límit de paraula i N ≥ 2**, «1 de / del / dels [les|els] N»; «unitat» es manté. Why: «P1 de 86 m2» no és «una
+   unitat de N»; «1 dels 3 habitatges» sí. (Primera versió amb `dels?` només casava «del/dels»: el test ho ha caçat.)
+6. **Agregador propi (`agrega_mesura.py`)** en lloc d'adaptar `ledger.py`. Why: el llibre espera un run per carpeta
+   amb `meta.json`; la mesura són 8 subcarpetes d'un run. Mapa explícit veredicte → columna; ALERTA a part.
+7. **Reconsolidació en lloc de re-run.** El consolidador és determinista sobre les lectures cachejades del run; la
+   passada LLM existent (`_consolida_only.json`) es fusiona amb `merge_only_fields` sobre els mateixos conflictes.
+   Why: mesura l'efecte dels tres fixes a cost 0 i sense soroll de lector; un re-run de Linyola i Vilanova (~30 USD,
+   ~75 min) només afegiria variància de lectura, no informació sobre el consolidador. Els artefactes queden a
+   `{slug}/_reconsolida-2026-09-05/` sense tocar els `_decisions.json` originals de la mesura.
+
+### Implementació
+- `docs/wizard-headless/fase0-acceptacio/compare_consolida.py` v4 (+~90 LOC): `parse_address` (via = tokens abans del
+  primer portal, «C.», tipus opcional, CP no és portal, sta/st), `parse_numbers` (unitat enganxada, nota darrere de
+  coma), `close` (contenció post-anotacions ≥ 3, persones per conjunt de noms, `nivell_freatic` primera fondària),
+  `norm_floors` (porxo, «1 (planta baixa)» = PB), `building_tokens` (es→ca, `unitat` fora), `subkey_candidates`,
+  `verdict` («or sense valor»), `row_key` spt per `punt`, `NOMES-OR` a `compare_taules`.
+- `automation/lectura/consolidate.py` (+~70 LOC): `_dayless`, `cluster_signals` en dues passades, `ordered_forms`,
+  `decide` (ISO), `_UNIT_OF_N_RE` + guard `num_floors`, `_canonical_municipality` + crida; import de `municipis.lookup`.
+- `docs/wizard-headless/mesures/agrega_mesura.py` (nou, ~80 LOC). Cap dependència nova.
+- Docs: `_AGREGAT-8.md` §Agregat mecànic, `_DIAGNOSTICS-INDEX.md` §Estat dels fixes, PLA fila 0b, STATUS, sessió.
+
+### Validació empírica
+- Comparador v4 sobre els `_decisions.json` ORIGINALS (aïlla C): escalars 86 → 90 OK, ALERTA 11 → 8, ERR 3 → 2; taules
+  127 → 136 OK, CAND 26 → 21, ERR 4 → 0. Les 18 cel·les que canvien són exactament les catalogades com a C; cap altra
+  línia es mou (diff complet a la sessió).
+- Consolidador nou (reconsolidació dels 7): **3 cel·les escalars canvien, 0 de taula**: Linyola `field_date`
+  2025-10-10 → 2025-10-01 (segur), Vilanova `municipality` → «Vilanova de Segrià» (segur), Bell-lloc `num_floors`
+  candidats → segur «PB+PP». Escalars: **93 OK / 45 CAND / 8 ALERTA / 1 blanc / 0 ERR**; taules 136 / 21 / 9 / 31 / 0.
+- Contra el titular del 09-04 (94/50/1/2 sobre el signat): amb G (3 `fora_carpeta`) l'agregat mecànic seria 96/50/1/0.
+  Els 2 ERR de veritat que queden viuen a la columna ALERTA de taules (Rubí P-2 F1, Vilanova P-3 R6).
+
+### Tests
+- Comparador: +30 casos a `CLOSE_CASES` (parells reals dels `_compare_*.txt`), +5 assercions a `test_parsers`,
+  +5 tests (subclaus `cte`, Castellar `cte_sol`, alineació spt per punt, integracions Vilanova i Alcoletge sobre el run
+  versionat). `test_row_key_other_blocks` actualitzat (spt per punt).
+- Consolidador: +6 tests (`test_D2_*` ×3, `test_R3_*`, `test_D3_*` ×2). Els dos mòduls: 270 verds.
+- Suite sencera: vegeu la sessió (abans 31 vermells / 2001 verds; després, mateixos noms vermells esperats: SmartScan
+  sense dades locals + `test_bell_lloc_bearing_idx_and_n20` a posta).
+
+### Latència / cost
+Cap crida LLM nova: comparador i reconsolidació són locals (HTTP cachejat a `G3DT_CACHE_DIR`). 0 USD.
+
+### Limitacions conegudes
+- El comparador continua mesurant contra l'or de lectura, no contra el signat: les cel·les on prod és més confiat que
+  l'or surten ALERTA i s'han de llegir a mà (2 de 9 són ERR reals a taules). L'or necessita G (`fora_carpeta`).
+- CAND de taules: or i prod tots dos `candidats` i solapant = OK per al comparador; el recompte manual del 09-04 ho
+  comptava CAND quan el signat té valor únic. Dues preguntes diferents; cap de les dues és falsa.
+- D3 no toca les formes de `street_address` (R1) ni les de `client_name`; només `municipality`.
+- Vilanova `litologia[0]` queda CAUTELA per «llimosa» / «limosa» (ca/es de litologia): no s'ha afegit un diccionari de
+  litologies al comparador (fora de C).
+- `classify_table` castellà a `compare_tables_vs_eva.py` (harness d'informe, no de lectura): no tocat.
+
+### GO/NO-GO
+- ✅ 18 falsos veredictes fora, cap de nou (6 cel·les de Vilanova/Anciles contrastades una per una).
+- ✅ ERR de codi 3 → 0 a la reconsolidació; 3 cel·les canvien, totes cap a la veritat.
+- ✅ Cada fix amb test; els dos mòduls verds; agregat reproduïble amb un script.
+- ⏳ G, R6, I1, R1, D5, D4/D6, T1/T2, S1: sense decisió.
+- ⏳ Re-run real de Linyola/Vilanova: no cal per validar el consolidador; només si es vol soroll de lector.
+
+### Següents passos
+Prioritzar la resta de 0b (proposta: G → R6 → I1 → R1). Paquet de preguntes a Eva sense enviar. Després, seqüència
+pactada del 09-03 (R → P0/P1/P2a → M341).
+
+*Fi entrada 2026-09-05. Comparador v4 + D2/D3/R3: el sistema ja no decideix contra el que sap; els dos ERR que queden són de font (Rubí) i de política (R6).*

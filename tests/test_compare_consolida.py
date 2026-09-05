@@ -107,6 +107,40 @@ CLOSE_CASES = [
     (True, "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz", "situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz (Bell-lloc)", "street_address"),
     # decisió documentada (memòria feedback_building_type_close_match): lectura parcial d'un qualificatiu = CLOSE
     (True, "habitatge unifamiliar entre mitgeres", "habitatge unifamiliar", "building_type"),
+    # v4 (2026-09-05, codi C de la mesura dels 8): parells REALS dels `_compare_*.txt` que eren falsos ERR/ALERTA/CAUTELA
+    (True, "Carrer Clot de la Llacuna, 16", "C/ Clot de la Llacuna, 16, Linyola (25240)", "street_address"),          # Linyola
+    (True, "Carrer Clot de la Llacuna, 16", "Clot de la Llacuna, 16, Linyola (CP 25240)", "street_address"),
+    (True, "Carrer Clot de la Llacuna, 16", "C. Clot de la Llacuna, 16", "street_address"),
+    (True, "Carrer Girasols, 7 (Urb. El Roser)", "Carrer Girasols, Nº7, Urbanització el Roser", "street_address"),   # Alcoletge
+    (True, "C/ Santa Gemma, 4 (Urb. La Serra)", "C/ STA. GEMMA 4, URB.LA SERRA", "street_address"),                  # Vilanova
+    (False, "Carrer Clot de la Llacuna, 16", "Carrer Clot de la Llacuna, 18", "street_address"),
+    (False, "Carrer Clot de la Llacuna, 16", "Carrer de la Font, 16, Linyola", "street_address"),
+    (True, "0,80 - 1,40 m", "0,80-1,40m", "profunditat"),                                                             # Vilanova
+    (True, "0,80 - 1,40 m", "0.80-1,40m", "profunditat"),
+    (False, "0,80 - 1,40 m", "0,80-1,20m", "profunditat"),
+    (True, "+212,50 msnm (segons plànol de l'ICGC)", "+212,50 msnm, segons plànol en el ICGC", "cota_inici"),         # Rubí
+    (False, "+212 msnm (segons el plànol de l'ICGC)", "+212,50 msnm, segons plànol en el ICGC", "cota_inici"),
+    (True, "1 (planta baixa)", "PB (planta baixa) + porxada, sense pis superior", "num_floors"),                      # Rubí
+    (False, "PB+1", "PB (planta baixa) + porxada, sense pis superior", "num_floors"),
+    (True, "-1,00 m (humitat)",                                                                                      # Alcoletge
+     "Humitat (candidat, sense text: cel·les F22-F24 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,40 m",
+     "nivell_freatic"),
+    (False, "-0,80 m (humitat)",
+     "Humitat (candidat, sense text: cel·les F22-F24 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,40 m",
+     "nivell_freatic"),
+    (False, "-1,00 m (humitat)", "~187,2 msnm (matís: humitat; lectura gràfica)", "nivell_freatic"),                # msnm ≠ fondària (R2)
+    (False, "-1,00 m (humitat)", "No detectat", "nivell_freatic"),
+    (True, "7 habitatges unifamiliars adossats (7 viviendas adosadas)", "vivienda adosada (7 unitats)", "building_type"),  # Anciles
+    (True, "habitatge unifamiliar aïllat", "vivienda unifamiliar aislada", "building_type"),
+    (True, "Alba Maria Barrau Castán", "MARIA ALBA BARRAU CASTÁN 616523792", "client_name"),                          # Anciles
+    (True, "ALBA BARRAU (nºCol. 6.408) i MIRIAM CASTEL (nºCol. 6.703) — A+M Arquitectura",
+     "ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703", "architect_name"),
+    (False, "Josep Bunyesc Palacín", "BUNYESC ARQUITECTURA EFICIENT, SLP", "architect_name"),                        # persona ≠ despatx (R1)
+    (False, "Alba Maria Barrau Castán", "RETRATERIA, ALBA BARRAU CASTAN, ARQUITECTA", "client_name"),
+    (True, "TPS PROSPECCIÓ DEL SUBSÒL SL (cap GTL a la carpeta)", "TPS (coneixement previ)", "lab_testing_company"),  # Anciles
+    (True, "TPS (coneixement previ)", "TPS, Prospecció del Subsòl, SL", "lab_testing_company"),
+    (False, "Vilanova de Segrià", "Vilanova del Segrià", "municipality"),                                              # D3 es un ERR real
+    (True, "P-3", "SPT1 P3", "lab_location"),                                                                         # regla històrica de contenció (ja era així)
 ]
 
 
@@ -176,6 +210,16 @@ def test_parsers():
     assert cc.parse_numbers("4 (P1, P2, P3, P4) + S1") == (4.0,)
     assert cc.parse_address("C/ARBRELLS 18A-18B-20") == (("arbrells",), frozenset({"18a", "18b", "20"}))
     assert cc.parse_address("Carrer Arbrells") is None
+    # v4: via = tokens abans del primer portal; «C.» reconegut; CP no es portal; sta → santa; tipus de via opcional
+    assert cc.parse_address("C/ Clot de la Llacuna, 16, Linyola (25240)") == (("clot", "llacuna"), frozenset({"16"}))
+    assert cc.parse_address("Clot de la Llacuna, 16, Linyola 25240") == (("clot", "llacuna"), frozenset({"16"}))
+    assert cc.parse_address("C. Clot de la Llacuna, 16") == (("clot", "llacuna"), frozenset({"16"}))
+    assert cc.parse_address("C/ STA. GEMMA 4, URB.LA SERRA") == (("santa", "gemma"), frozenset({"4"}))
+    assert cc.parse_numbers("0,80-1,40m", absolute=True) == (0.8, 1.4)
+    assert cc.parse_numbers("+212,50 msnm, segons plànol en el ICGC") == (212.5,)
+    assert cc.first_depth("Humitat — fondària de primera aparició -1,00 m; abast fins a -1,40 m") == 1.0
+    assert cc.person_tokens("ALBA BARRAU (nºCol. 6.408) i MIRIAM CASTEL (nºCol. 6.703) — A+M Arquitectura") == frozenset({"alba", "barrau", "miriam", "castel"})
+    assert cc.person_tokens("Sra. MARIA ALBA BARRAU CASTÁN 616523792") == frozenset({"maria", "alba", "barrau", "castan"})
     assert cc.parse_spt_ma("1/--") == (1, None, 0)
     assert cc.parse_spt_ma({"n_spt": 1, "n_tp": 0, "n_ma": 0}) == (1, 0, 0)
     assert cc.building_tokens("Grup d'habitatges unifamiliars") == frozenset({"grup", "habitatge", "unifamiliar"})
@@ -205,7 +249,8 @@ def test_row_key_other_blocks():
     assert cc.row_key("dpsh_tests", {"punt": {"estat": "segur", "value": "P-1"}}) == "p1"
     assert cc.row_key("sondeig_tests", {"sondeig": "S-1"}) == "s1"
     assert cc.row_key("sondeig_tests", {"punt": "S-1"}) == "s1"
-    assert cc.row_key("spt_ma_tests", {"id": "SPT-1", "punt": "S-1"}) is None
+    assert cc.row_key("spt_ma_tests", {"id": "SPT-1", "punt": "S-1"}) == "s1"   # v4: per punt (Vilanova, dos «SPT-1»)
+    assert cc.row_key("spt_ma_tests", {"id": "SPT-1"}) is None
 
 
 def test_align_rows_by_key_and_fallback():
@@ -263,3 +308,61 @@ def test_integration_state_differences_survive():
     assert any(l.startswith("ALERTA   cota_referencia") and "prod puja a segur" in l for l in lines)
     lines, tau = _counts("taules", "2026-08-24-sonnet-c2")
     assert any(l.startswith("ALERTA   sondeig_tests[0].spt_ma") and "prod puja a segur" in l and "fora dels candidats" not in l for l in lines)
+
+
+# --- v4 (2026-09-05): candidats compartits de `cte` per subclau, `NOMES-OR`, spt per punt ------------------------
+
+def test_subkey_candidates_split_cte_and_keep_lab():
+    cands = [{"value": "C0 (< 300 m² i < 4 plantes)"}, {"value": "T-1 (per defecte del patró)"}]
+    assert cc.subkey_candidates("cte", "cte_edificacio", cands) == [cands[0]]
+    assert cc.subkey_candidates("cte", "cte_sol", cands) == [cands[1]]
+    lab = [{"value": "MA (S-2) 2,8-3,0"}, {"value": "TPS (coneixement previ)"}]
+    assert cc.subkey_candidates("lab", "lab_sample_id", lab) == lab
+
+
+def test_castellar_cte_sol_gold_has_no_value_nor_candidates():
+    """Abans `cte_sol` de Castellar heretava «C0 (…)» de la llista compartida i sortia «candidats disjunts»."""
+    gold = cc.flat_gold_scalars(CASTELLAR)
+    assert gold["cte_sol"]["value"] is None and gold["cte_sol"]["candidates"] == []
+    assert [c["value"] for c in gold["cte_edificacio"]["candidates"]] == ["C0 (< 300 m² i < 4 plantes: 120 m², PB+1)"]
+    v, msg = cc.verdict(gold["cte_sol"], {"estat": "candidats", "value": "T-1", "candidates": [{"value": "T-1"}]}, "cte_sol")
+    assert v == "CAUTELA" and msg.startswith("or sense valor")
+
+
+def test_align_spt_rows_by_punt_when_unique():
+    """Vilanova: els dos SPT es diuen «SPT-1»; per index es creuaven P-1/P-3."""
+    gold = [{"punt": {"estat": "segur", "candidates": [{"value": "P-3"}]}, "id": {"estat": "candidats", "candidates": [{"value": "SPT-1 (P-3)"}]}},
+            {"punt": {"estat": "segur", "candidates": [{"value": "P-1"}]}, "id": {"estat": "candidats", "candidates": [{"value": "SPT-1 (P-1)"}]}}]
+    prod = [{"punt": {"estat": "segur", "value": "P-1"}, "id": {"estat": "segur", "value": "SPT1"}},
+            {"punt": {"estat": "segur", "value": "P-3"}, "id": {"estat": "segur", "value": "SPT-1"}}]
+    pairs, by_key = cc.align_rows("spt_ma_tests", gold, prod)
+    assert by_key and pairs[0][1]["punt"]["value"] == "P-3" and pairs[1][1]["punt"]["value"] == "P-1"
+    # punts duplicats (Anciles: S-1, S-2, S-2) → per index, com abans
+    prod_dup = [{"punt": {"estat": "candidats", "value": "S-2"}}, {"punt": {"estat": "candidats", "value": "S-2"}}]
+    _, by_key = cc.align_rows("spt_ma_tests", gold, prod_dup)
+    assert not by_key
+
+
+def test_integration_vilanova_v4_no_false_err_and_fixture_only_columns_do_not_count():
+    """Sobre el `_decisions.json` versionat de la mesura (consolidador ANTIC): els 4 ERR de spt (punt/profunditat) eren
+    del comparador; `lab` i `nom` son columnes nomes de l'or (NOMES-OR, no compten). El D3 de `municipality` es un ERR
+    real del consolidador i el comparador l'ha de continuar veient."""
+    run = RUNS / "2026-09-03-mesura-8" / "vilanova" / "_decisions.json"
+    if not run.exists():
+        pytest.skip("run de la mesura no versionat")
+    lines, counts = cc.compare_taules(run, "4001671 VILANOVA DE SEGRIA")
+    assert counts.get("ERR", 0) == 0 and counts.get("ABSENT", 0) == 0
+    assert counts.get("NOMES_OR") == 4 and any(l.startswith("NOMES-OR spt_ma_tests: lab") for l in lines)
+    lines, counts = cc.compare_escalars(run, "4001671 VILANOVA DE SEGRIA")
+    assert counts.get("ERR") == 1 and any(l.startswith("ERR      municipality") for l in lines)
+
+
+def test_integration_alcoletge_v4_street_address_is_not_err():
+    run = RUNS / "2026-09-03-mesura-8" / "alcoletge" / "_decisions.json"
+    if not run.exists():
+        pytest.skip("run de la mesura no versionat")
+    lines, counts = cc.compare_escalars(run, "4001670 ALCOLETGE")
+    assert counts.get("ERR", 0) == 0 and not any("street_address" in l for l in lines)
+    _, counts = cc.compare_taules(run, "4001670 ALCOLETGE")
+    assert counts.get("CAUTELA", 0) == 3   # les 3 `nivell_freatic` (text llarg = -1,00) ja son OK
+
