@@ -55,3 +55,21 @@ traducció i la llista de rutes.
 - **No afegir al comparador regles que perdonin el que ha de mesurar** (partícules, ca/es de litologies): la primera
   versió del v4 va amagar D3.
 - Les d'ahir segueixen vigents (`_FOR-NEW-YOU-20260904.md` §Trampes).
+
+## Decisions del Josep al tancament (2026-09-05, vespre) — PER ON COMENÇAR LA SESSIÓ SEGÜENT
+
+1. **S1 (multi-casa) en dues fases.** (a) **Capa intermèdia a la branca actual** (`experiment/nivell-a-2026-08`, mig
+   dia): detectar carpetes amb subcarpetes «CASA n» amb annexos propis (inventari), avís clar al wizard («2 cases: el
+   sistema encara no les separa; revisa client, punts i nivells») i etiqueta de casa a cada fila de taula i candidat.
+   Aquesta branca és la **salvaguarda**: si l'Eva permet fer pull abans d'acabar, es fa pull d'aquí. (b) **S1 sencer
+   en una branca nova** (des d'aquesta), 3-4 dies: inventari amb eix casa → selector al wizard → consolidació per casa
+   (el risc és repartir el full de camp manuscrit compartit, on cada casa té el seu P-1/S-1) → informe per casa →
+   mesura contra l'or per casa de Tulipa. Si el multi-casa fa baixar la qualitat dels resultats actuals, la branca
+   actual queda intacta.
+2. **Llista de millores pendents** (resposta al Josep, ordenada per valor esperat; detall al missatge de tancament de
+   la sessió i a `STATUS.md`): via A — R5, R2, F1, derivats, L1/L3, persona/despatx (Eva), R4 (Eva), T2 decisió, T1;
+   criteris de càlcul — P0, P2a, M341, P2b, P3 (Eva), P4 (Eva); desplegament — instal·lar Claude Code a l'ordinador
+   de l'Eva (via A com a lector de producció), tier de subscripció, merge cap a `production/g3dt-eva-v1`; via B —
+   només confirmar amb l'Eva els 3 fixes pendents (Tulipa render, sondeig refús, None depth) i deixar de tocar-la.
+3. **Preguntes a Eva**: `docs/PREGUNTES-EVA-PENDENTS.md` + les d'aquesta setmana (T pressupost, persona/despatx, SPT
+   creuats Vilanova, cota P-2 Rubí, E, regla N20). Sense elles, el CAND (29 %) no baixa gaire.
