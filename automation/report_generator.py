@@ -792,6 +792,12 @@ class ReportGenerator:
                 except (ImportError, Exception) as e:
                     self.warnings.append(f"Could not extract dates from DPSH PDF: {e}")
             context['data_camp_text'] = self.report_data.field_work_dates_text or ''
+            # Primera ranura de la plantilla («El dia {{ data_camp_inici_text }}, es va visitar l'obra»): nomes el
+            # primer dia; la segona («s'ha realitzat el dia {{ data_camp_text }}») porta tots els dies (Josep 2026-09-05;
+            # els signats de Bell-lloc: «El dia 1 d'octubre» / «el dia 1 i 6 d'octubre»).
+            from .dpsh_extractor import first_field_day_text
+            context['data_camp_inici_text'] = first_field_day_text(
+                self.report_data.field_work_dates, self.report_data.field_work_dates_text)
             d = self.report_data.report_date
             mes = self.MESOS_CAT.get(d.month, d.strftime('%B'))
             context['data_signatura_text'] = f"{d.day:02d} de {mes} de {d.year}"

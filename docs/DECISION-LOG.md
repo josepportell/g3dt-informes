@@ -2475,3 +2475,79 @@ reconsolidació dels 7 a cost 0 (`_reconsolida-2026-09-05-vei` vs `-r5`), llista
 amb pregunta a Eva), després 1.4 derivats.
 
 *Fi entrada 2026-09-05 (nit, 2). R2: els veïns corroboren, no bloquegen; els nivells parlen en el sistema de l'informe.*
+
+## 2026-09-05 (nit, 3) — Bloc 1.3, F1 «fonts d'Eva inconsistents»: precedència GTL > annex > comanda i capçalera coherent de l'annex DPSH — escalars 116 → 118 OK (80 %), l'últim ERR real sobre el signat cau; data doble de la campanya a l'informe (decisió del Josep)
+
+### Context
+Tercera peça del bloc 1: **F1**, l'Eva discrepa d'ella mateixa dins de la carpeta. Set cel·les al diagnòstic: `lab_depth`
+de Rubí (comanda 0,6-1,4 vs GTL 0,6-1,2; signat 0,6-1,2) i de Linyola (Excel DPSH 1,0-1,5 i full de camp 1,00-1,75 vs GTL
+1,0-1,15; signat 1,0-1,15); la cota P-2 de l'annex DPSH de Rubí (p.2 «+212» vs p.1/p.3 «+212,50»; signat +212,50: l'únic
+ERR real que quedava sobre el signat); i quatre que no es poden resoldre amb documents (Castellar `lab_sample_id` MA-1 vs
+SPT-1; Linyola errata «argilsoso» del tall; Vilanova SPT P-1/P-3 creuats al signat ×2 i litologia re-redactada). Línia
+base = vei (116/25/5/1/0). A mig camí, el Josep decideix la data doble (vegeu decisió 4).
+
+### Decisions arquitectòniques clau
+1. **`_FIELD_BLOCKER_DOC_TYPES` (R2) es generalitza a `_FIELD_PRECEDENCE`: nivells de «qui mana» per camp.** Un clúster
+   només contradiu el guanyador si el seu millor document és del mateix nivell o d'un de superior; fora de la llista =
+   veí, mai bloqueja. `cota_referencia`: (annexos); `lab_depth`: (GTL) > (annex de sondeig) > (comanda). Why: el skill
+   ja diu «el GTL mana si discrepa» i el propi senyal de la comanda ho anota; el full de camp i l'Excel DPSH escriuen el
+   tram PREVIST i el laboratori la mostra real. Un GTL sí que contradiu un altre GTL (test). Alternativa rebutjada:
+   llegir la nota del senyal («el GTL mana») → depèn del text del lector; la precedència és del skill.
+2. **Capçalera de l'annex DPSH sense decimals entre germanes amb decimals = truncament d'impressió → candidats
+   [coherent, literal], mai segur** (`_dpsh_cota_header_coherence`, post-files de `dpsh_tests`). Condicions: mateix
+   document, mateixa part entera, |diferència| < 1 m, ≥ 2 germanes amb el mateix valor decimal. Why aquesta forma i no
+   «diferència < 1 m entre punts»: les cotes per punt discrepen legítimament en terreny inclinat (Anciles +1106,40/30/
+   42/65; Castellar −4,0/−4,2 amb decimals explícits); només el literal sense decimals és sospitós. La coherent va
+   primera perquè és el que l'Eva va signar i el que diuen dues pàgines de tres; el literal queda visible; la pregunta a
+   l'Eva continua al paquet. Marxa enrere en calent: la primera regex feia «+212,50» ↔ «+21» per retrocés i no
+   disparava; cal `(?![0-9.,])`.
+3. **Castellar `lab_sample_id` (or MA-1, skill «annex de l'Eva mana per l'etiqueta» → candidats SPT-1) NO es toca:** or i
+   skill discrepen sobre un criteri (la mostra analitzada és la MA del GTL, l'etiqueta de l'annex és l'SPT) → pregunta
+   a l'Eva, no una regla. Vilanova ×3 i l'errata de Linyola: fonts del signat / de l'Eva; el sistema fa bé de dubtar.
+4. **Data doble de la campanya a l'informe (Josep, 2026-09-05):** la plantilla tenia les dues ranures amb la mateixa
+   variable (`data_camp_text`); els signats diuen «El dia 1 d'octubre de 2025, es va visitar l'obra» i «la campanya de
+   camp, que s'ha realitzat el dia 1 i 6 d'octubre de 2025». Nova variable **`data_camp_inici_text`** (primer dia) a la
+   primera ranura; `data_camp_text` (tots els dies) a la segona. `first_field_day_text(dates, text)` al generador: de la
+   llista ISO si n'hi ha, si no del text ja formatat («1 i 6 d'octubre de 2025» → «1 d'octubre de 2025»; un sol dia,
+   intacte). I la lectura ALIMENTA les dates del wizard: `fields.field_date` segur → `merged.field_work_dates`
+   (`extra.dies_de_camp` o el dia sol) + `field_work_dates_text` (`_overlay_field_dates`); en candidats no toca res (la
+   via B ja llegeix les dates dels PDF); Eva mana sempre. `field_date` continua sent el primer dia (or; R2): és el que
+   demanava el Josep un cop vist que hi ha dues ranures («si cal crear una variable específica, fem-ho»).
+
+### Implementació
+- `automation/lectura/consolidate.py` (+~60 LOC): `_FIELD_PRECEDENCE` + `_precedence_tier` (substitueix
+  `_FIELD_BLOCKER_DOC_TYPES`), `_INT_COTA_RE`, `_dpsh_cota_header_coherence` (cridat a `consolidate_tables`).
+- `automation/dpsh_extractor.py`: `first_field_day_text`. `automation/report_generator.py`: `context['data_camp_inici_text']`.
+  `web/lectura_service.py`: `_overlay_field_dates`. `templates/g3dt-jinja-template.docx`: primera ranura →
+  `{{ data_camp_inici_text }}` (render comprovat: «El dia 1 d'octubre de 2025» / «el dia 1 i 6 d'octubre de 2025»).
+- Tests: `test_F1_*` ×2 (consolidador), `test_overlay_field_date_segur_writes_dates_list_and_catalan_text`
+  (`test_lectura_service.py`), `tests/test_field_dates_text.py` (nou: helper ×7, formatador, plantilla).
+- Artefactes: `{slug}/_reconsolida-2026-09-05-f1/`.
+
+### Validació empírica (reconsolidació dels 7, cost 0; comparador v4 sobre l'or)
+- **3 cel·les canvien, cap altra; conflictes A-vs-A idèntics.** Rubí i Linyola `lab_depth` → segur (= or i signat); Rubí
+  `dpsh_tests[P-2].cota_inici` segur «+212» → candidats «+212,50» primer (= signat; ALERTA → OK).
+- Escalars: **116 → 118 OK (80 %) / 25 → 23 CAND (16 %) / 5 ALERTA / 1 blanc / 0 ERR.** Taules: **138 → 139 OK / 21 /
+  7 → 6 ALERTA / 31 / 0.** Sobre el signat: **0 ERR també a les taules** (l'últim, Rubí P-2, era aquest).
+- Llindars: **ERR 0 ✅ · CAND 16 % ✅ · OK 80 % ✅** — els tres per primer cop (escalars sobre l'or).
+- Suite: consolidador 150, lectura_service i field_dates: 204 verds als tres mòduls; suite sencera a la sessió.
+
+### Latència / cost
+0 USD.
+
+### Limitacions conegudes
+- F1 que queda: Castellar `lab_sample_id` (criteri, pregunta a l'Eva), Linyola «argilsoso» (errata del tall; litologia
+  sempre candidats), Vilanova SPT creuats ×2 i litologia re-redactada (signat).
+- `_dpsh_cota_header_coherence` només mira la cel·la `cota_inici` de l'annex DPSH; la mateixa forma en un altre bloc no
+  hi és (no s'ha vist).
+- La data doble: el generador ja té les dues ranures; el wizard no mostra encara la llista de dies (només la frase).
+
+### GO/NO-GO
+- ✅ 3 cel·les cap a l'or/signat, 0 regressions, tests, conflictes idèntics. ✅ Tres llindars assolits (escalars).
+- ⏳ Taules: OK 71 % (31 blancs: 1.4 derivats), 6 ALERTA (5 OK per veritat + Linyola msnm R2 resolt? vegeu agregat).
+
+### Següents passos
+1.4 derivats del consolidador (`a` de l'últim nivell, `mostra_del_nivell`, litologia del nivell de la mostra, «mateix
+contacte» → `de` del nivell N = `a` del N−1), després 1.5 L1/L3 i 1.6 T2.
+
+*Fi entrada 2026-09-05 (nit, 3). F1: qui mana, mana; i l'informe diu «El dia 1» i «el dia 1 i 6».*

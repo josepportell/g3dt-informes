@@ -417,6 +417,35 @@ def test_overlay_writes_segur_and_candidats_when_not_locked():
     assert "field_date" not in merged
 
 
+def test_overlay_field_date_segur_writes_dates_list_and_catalan_text():
+    """R2 + decisió del Josep (2026-09-05): una `field_date` segura amb `extra.dies_de_camp` (Bell-lloc: DPSH l'1/10,
+    sondeig el 6/10) escriu la llista i la frase («1 i 6 d'octubre de 2025»); sense `extra`, el dia sol. En candidats
+    no toca res (la via B ja llegeix les dates dels PDF); Eva mana sempre."""
+    decisions = _load_escalars_fixture()
+    decisions["fields"]["field_date"] = {"estat": "segur", "value": "2025-10-01", "candidates": [{"value": "2025-10-01", "font": "fitxa!F38", "quote": ""}],
+                                        "rule": "x", "extra": {"dies_de_camp": ["2025-10-01", "2025-10-06"]}}
+    merged: dict = {"field_work_dates_text": {"value": "1 d'octubre de 2025", "source": "auto"}}
+    lectura_service._apply_lectura_overlay(merged, decisions)
+    assert merged["field_work_dates"] == {"value": ["2025-10-01", "2025-10-06"], "source": "lectura"}
+    assert merged["field_work_dates_text"] == {"value": "1 i 6 d'octubre de 2025", "source": "lectura"}
+    assert "field_date" not in merged
+
+    decisions["fields"]["field_date"].pop("extra")
+    merged = {}
+    lectura_service._apply_lectura_overlay(merged, decisions)
+    assert merged["field_work_dates"]["value"] == ["2025-10-01"] and merged["field_work_dates_text"]["value"] == "1 d'octubre de 2025"
+
+    decisions["fields"]["field_date"]["estat"] = "candidats"
+    merged = {}
+    lectura_service._apply_lectura_overlay(merged, decisions)
+    assert "field_work_dates" not in merged
+
+    decisions["fields"]["field_date"]["estat"] = "segur"
+    merged = {"field_work_dates_text": {"value": "EVA", "source": "user"}}
+    lectura_service._apply_lectura_overlay(merged, decisions)
+    assert merged["field_work_dates_text"] == {"value": "EVA", "source": "user"} and "field_work_dates" not in merged
+
+
 def test_overlay_no_trobat_never_writes_value():
     decisions = _load_escalars_fixture()
     decisions["fields"]["client_name"] = {

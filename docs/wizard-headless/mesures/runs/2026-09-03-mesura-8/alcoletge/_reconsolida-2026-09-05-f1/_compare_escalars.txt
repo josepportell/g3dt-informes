@@ -1,0 +1,6 @@
+NOU      architect_company      prod=candidats
+CAUTELA  building_type          or segur, prod candidats (bo dins): "ampliació d'un edifici (habitatge unifamiliar)"
+CAUTELA  cte_edificacio         or segur, prod candidats (bo dins): 'C-0'
+CAUTELA  cte_sol                or segur, prod candidats (bo dins): 'T-1'
+FORA     superficie_parcela     fora de la carpeta: '1167' (Cadastre (Callejero DNPLOC + WFS INSPIRE), portal 7 = 8841701CG0184S (1167 m²))
+TOTALS: {'NOU': 1, 'OK': 17, 'CAUTELA': 3, 'FORA': 1}

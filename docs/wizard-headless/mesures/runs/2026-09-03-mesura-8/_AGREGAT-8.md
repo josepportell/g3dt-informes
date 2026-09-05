@@ -322,3 +322,25 @@ Conflictes A-vs-A per projecte: idèntics. Castellar `cota_referencia`: mateix e
 | **Total** | **116 (79 %) / 25 (17 %) / 5 / 1 / 0** | **+4** |
 
 **Llindars:** ERR 0 ✅ · CAND 17 % ✅ · OK 79 % ⏳ (80: a una cel·la). **Següent:** 1.3 F1, 1.4 derivats.
+
+---
+
+## Agregat MECÀNIC (2026-09-05, nit, 3) — bloc 1.3: F1 «fonts d'Eva inconsistents»
+
+Regles (DECISION-LOG 2026-09-05 nit, 3): `_FIELD_PRECEDENCE` (GTL > annex de sondeig > comanda per a `lab_depth`; els
+annexos per a la cota) i `_dpsh_cota_header_coherence` (capçalera sense decimals entre germanes amb decimals →
+candidats, coherent primer). Reconsolidació `{slug}/_reconsolida-2026-09-05-f1/` respecte de `-vei`.
+
+| Escalars (147) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| nit 2 (vei, R2) | 116 | 25 | 5 | 1 | 0 | — |
+| + **F1** (f1) | **118** | **23** | 5 | 1 | 0 | 2: Rubí `lab_depth` 0,6-1,2 i Linyola `lab_depth` 1,0-1,15 → segur (= or i signat) |
+
+| Taules (197) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| nit 2 (vei) | 138 | 21 | 7 | 31 | 0 | — |
+| + **F1** (f1) | **139** | 21 | **6** | 31 | 0 | 1: Rubí `dpsh_tests[P-2].cota_inici` segur «+212» → candidats «+212,50» primer (ALERTA → OK; era l'únic ERR real sobre el signat) |
+
+Conflictes A-vs-A: idèntics. **Llindars (escalars sobre l'or): ERR 0 ✅ · CAND 16 % ✅ · OK 80 % ✅ — tots tres per primer
+cop.** Sobre el signat: 0 ERR a escalars i a taules. F1 que queda (criteri/Eva): Castellar `lab_sample_id`, Linyola
+«argilsoso», Vilanova SPT creuats ×2 + litologia. **Següent:** 1.4 derivats (31 blancs de taula).

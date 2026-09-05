@@ -114,11 +114,17 @@ _P5_FORM_RE = re.compile(r"han de constar|factura", re.IGNORECASE)
 _RC_RE = re.compile(r"(?<![0-9A-Z])(\d{7}[A-Z]{2}\d{4}[A-Z]|\d{5}[A-Z]\d{8})(\d{4}[A-Z]{2})?(?![0-9A-Z])")
 
 # R2 (2026-09-05, mesura dels 8: «un concepte vei entra com a bloquejador», 6 cel·les + 3 de taula).
-#: `cota_referencia`: nomes els annexos de l'Eva poden contradir la cota. La z GPS de `COORDENADES.txt` («l'Eva no
-#: l'usa», ~0,6 m; a Alcoletge 10,7 m d'anomalia), el datum relatiu del full de camp («±0,00 respecte el carrer») i
-#: l'ICGC son conceptes veins: corroboren o fan de recanvi, mai bloquegen (Bell-lloc, Linyola, Alcoletge).
-_FIELD_BLOCKER_DOC_TYPES: dict[str, frozenset[str]] = {
-    "cota_referencia": frozenset({"annex_dpsh", "annex_sondeig", "annex_tall"}),
+#: PRECEDENCIA per camp («qui mana» per parella de documents, R2 + F1): nivells de tipus de document, del que mana al
+#: que no. Un cluster nomes contradiu el guanyador si el seu millor document es del mateix nivell o d'un de superior;
+#: els documents fora de la llista son conceptes veins o fonts de recanvi: corroboren, mai bloquegen.
+#: - `cota_referencia` (R2): nomes els annexos de l'Eva. La z GPS de `COORDENADES.txt` («l'Eva no l'usa», ~0,6 m; a
+#:   Alcoletge 10,7 m d'anomalia), el datum relatiu del full de camp i l'ICGC no bloquegen (Bell-lloc, Linyola, Alcoletge).
+#: - `lab_depth` (F1): GTL > annex de sondeig > comanda de laboratori (skill Pas 3: «el GTL mana si discrepa»; el propi
+#:   senyal de la comanda ho anota). El full de camp i l'Excel DPSH anoten el tram PREVIST; el laboratori, la mostra real
+#:   (Rubi: comanda 0,6-1,4 vs GTL 0,6-1,2; Linyola: camp 1,0-1,75 vs GTL 1,0-1,15).
+_FIELD_PRECEDENCE: dict[str, tuple[frozenset[str], ...]] = {
+    "cota_referencia": (frozenset({"annex_dpsh", "annex_sondeig", "annex_tall"}),),
+    "lab_depth": (frozenset({"informe_laboratori"}), frozenset({"annex_sondeig"}), frozenset({"comanda_lab_g3"})),
 }
 #: «+199,50 msnm segons el planol topografic ICGC (-0,15 carrer)» i «199,50 m» son el mateix valor: la clau es el nombre.
 _LEADING_COTA_RE = re.compile(r"^\s*([+\-−]?\d{2,4}(?:[.,]\d+)?)\s*(?:m\b|msnm)", re.IGNORECASE)
@@ -276,6 +282,19 @@ def _rc_parcels(values: Any) -> set[str]:
         for m in _RC_RE.finditer(str(v or "").upper()):
             out.add(m.group(1))
     return out
+
+
+def _precedence_tier(c: "Cluster", field_name: str | None) -> int:
+    """Nivell de precedencia del millor document del cluster per a `field_name` (0 = mana mes; fora de la llista =
+    el darrer nivell, mai contradiu els de la llista)."""
+    tiers = _FIELD_PRECEDENCE.get(field_name or "", ())
+    best = len(tiers)
+    for s in c.signals:
+        for i, types in enumerate(tiers):
+            if s.doc_type in types:
+                best = min(best, i)
+                break
+    return best
 
 
 def _is_other_field_day(c: "Cluster", top: "Cluster") -> bool:
@@ -713,10 +732,10 @@ def decide(
     else:
         thr = _BLOCK_CONF_BY_FIELD.get(field_name or "", CONTRADICTION_CONF)
         blockers = [c for c in clusters[1:] if (c.has_a or c.max_conf >= thr) and not c.is_derived_only]
-    if not table_cell and field_name in _FIELD_BLOCKER_DOC_TYPES:
-        # R2: nomes els documents que porten AQUEST concepte contradiuen; la resta son conceptes veins (corroboren)
-        types = _FIELD_BLOCKER_DOC_TYPES[field_name]
-        blockers = [c for c in blockers if any(s.doc_type in types for s in c.signals)]
+    if not table_cell and field_name in _FIELD_PRECEDENCE:
+        # R2/F1: nomes contradiu qui mana igual o mes que el guanyador; la resta corrobora o fa de recanvi
+        top_tier = _precedence_tier(top, field_name)
+        blockers = [c for c in blockers if _precedence_tier(c, field_name) <= top_tier]
     other_days: list[Cluster] = []
     if not table_cell and field_name == "field_date":
         other_days = [c for c in blockers if _is_other_field_day(c, top)]
@@ -1805,6 +1824,8 @@ def consolidate_tables(corpus: Corpus, conflicts: list[dict], superficie: dict |
             if extras:
                 row_out["extra"] = extras
             rows_out.append(row_out)
+        if block == "dpsh_tests":
+            _dpsh_cota_header_coherence(rows_out)
         estats = [c.get("estat") for r in rows_out for k, c in r.items() if isinstance(c, dict) and "estat" in c]
         if not rows_out:
             estat_bloc = "no_trobat"
@@ -1901,6 +1922,44 @@ def _decide_sondeig_cota(sigs: list[Signal], dpsh_cells: dict, srcs: list[str], 
         conflicts.append({"path": path, "why": "sistema de cotes mixt sense cota relativa documentada per al sondeig (relativa DPSH + z absoluta de l'annex)",
                           "clusters": [{"value": _short(s.value), "fonts": [s.font]} for s in (ordered[:1] + absolute[:1])]})
     return cell
+
+
+_INT_COTA_RE = re.compile(r"^\s*[+\-−]?\d{2,4}(?![0-9.,])")   # «+212 msnm» si; «+212,50 msnm» no (sense retrocedir a «21»)
+
+
+def _dpsh_cota_header_coherence(rows_out: list[dict]) -> None:
+    """F1 (2026-09-05, Rubi): la capçalera de l'annex DPSH imprimeix la cota d'inici per pagina; la p.2 diu «+212 msnm»
+    i la p.1/p.3 «+212,50 msnm» (el signat: +212,50 als tres punts). Un literal SENSE decimals entre germans del
+    mateix document que comparteixen la part entera i porten decimals es un truncament d'impressio, no una altra
+    mesura → candidats [cota coherent dels altres punts, literal propi], mai segur. No toca cotes amb decimals
+    explicits (Castellar -4,0 / -4,2) ni fulls on tots els punts coincideixen (Linyola +245 ×3)."""
+    cells = [(r, r.get("cota_inici")) for r in rows_out if isinstance(r.get("cota_inici"), dict)]
+    decided = [(r, c) for r, c in cells if c.get("estat") == "segur" and isinstance(c.get("value"), str) and _numbers(c["value"])]
+    for r, c in decided:
+        v = c["value"]
+        if not _INT_COTA_RE.match(v):
+            continue
+        n = _numbers(v)[0]
+        font0 = str((c.get("candidates") or [{}])[0].get("font", ""))
+        doc0 = font0.split(" p.")[0]
+        siblings = [(r2, c2) for r2, c2 in decided if c2 is not c and not _INT_COTA_RE.match(c2["value"])
+                    and int(_numbers(c2["value"])[0]) == int(n) and abs(_numbers(c2["value"])[0] - n) < 1
+                    and str((c2.get("candidates") or [{}])[0].get("font", "")).split(" p.")[0] == doc0]
+        if len(siblings) < 2:
+            continue
+        sib_vals = {c2["value"] for _, c2 in siblings}
+        if len({round(_numbers(x)[0], 3) for x in sib_vals}) != 1:
+            continue
+        r2, c2 = siblings[0]
+        pts = "/".join(str(x.get("punt", {}).get("value") if isinstance(x.get("punt"), dict) else x.get("punt")) for x, _ in siblings)
+        coherent = {"value": c2["value"], "font": f"(capçalera coherent: {pts} del mateix annex) ← {(c2.get('candidates') or [{}])[0].get('font', '')}",
+                    "quote": (c2.get("candidates") or [{}])[0].get("quote", ""),
+                    "note": f"F1: la capçalera d'aquesta pagina imprimeix «{v}» sense decimals; les de {pts} diuen «{c2['value']}» → possible truncament, confirmar amb l'Eva"}
+        c["estat"] = "candidats"
+        c["candidates"] = ([coherent] + list(c.get("candidates") or []))[:MAX_CANDIDATES]
+        c["value"] = coherent["value"]
+        c["rule"] = (f"F1: capçalera de la pagina sense decimals («{v}») vs {pts} del mateix annex («{c2['value']}»): "
+                     "possible truncament d'impressio → candidats, mai segur; " + str(c.get("rule") or ""))
 
 
 def _spt_interval(r: dict) -> tuple[float, float] | None:

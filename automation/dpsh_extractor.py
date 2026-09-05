@@ -21,6 +21,7 @@ Date: 2026-02-02
 import json
 import sys
 from dataclasses import dataclass, field, asdict
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -593,6 +594,34 @@ def extract_field_dates(project_path: str | Path) -> list[str]:
             break
 
     return sorted(dates)
+
+
+_FIRST_DAY_SAME_MONTH_RE = re.compile(r"^\s*(\d{1,2})(?:\s*,\s*\d{1,2})*\s+i\s+\d{1,2}\s+(d['’]\s*|de\s+)(\w+)\s+de\s+(\d{4})\s*$")
+_FIRST_DAY_MULTI_MONTH_RE = re.compile(r"^\s*(\d{1,2}\s+(?:d['’]\s*|de\s+)\w+)\s*(?:,|\s+i\s+).*?\s+de\s+(\d{4})\s*$")
+
+
+def first_field_day_text(dates: list[str] | None, text: str | None) -> str:
+    """Text catala del PRIMER dia de camp, per a la primera ranura de l'informe («El dia 1 d'octubre de 2025, es va
+    visitar l'obra»); la segona ranura («la campanya de camp, que s'ha realitzat el dia 1 i 6 d'octubre de 2025») porta
+    tots els dies (`format_dates_catalan`). Decisio del Josep 2026-09-05: els informes signats (Bell-lloc) ho fan aixi.
+
+    Amb la llista de dates ISO, es formata la mes antiga; sense llista, es deriva del text ja formatat («1 i 6
+    d'octubre de 2025» → «1 d'octubre de 2025»; «1 d'octubre i 15 de novembre de 2025» → «1 d'octubre de 2025»); si el
+    text no te aquesta forma, es torna tal qual (mai buit si hi havia text)."""
+    if dates:
+        try:
+            return format_dates_catalan([sorted(str(d) for d in dates)[0]])
+        except (ValueError, IndexError):
+            pass
+    text = (text or "").strip()
+    m = _FIRST_DAY_SAME_MONTH_RE.match(text)
+    if m:
+        prefix = "d'" if m.group(2).strip().startswith(("d'", "d\u2019")) else "de "
+        return f"{m.group(1)} {prefix}{m.group(3)} de {m.group(4)}"
+    m = _FIRST_DAY_MULTI_MONTH_RE.match(text)
+    if m:
+        return f"{m.group(1)} de {m.group(2)}"
+    return text
 
 
 def format_dates_catalan(dates: list[str]) -> str:

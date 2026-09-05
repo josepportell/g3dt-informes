@@ -1,5 +1,13 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-05 (nit, 2) — **Bloc 1.2 R2 FET** («concepte veí»: la z GPS i el datum relatiu no bloquegen la
+Last updated: 2026-09-05 (nit, 3) — **Bloc 1.3 F1 FET** (precedència GTL > annex > comanda per la fondària de mostra;
+capçalera de l'annex DPSH sense decimals → candidats). Reconsolidació `_reconsolida-2026-09-05-f1` vs `-vei`: 3 cel·les,
+cap altra, 0 regressions. Escalars **118 OK (80 %) / 23 CAND (16 %) / 5 / 1 / 0**: **els tres llindars assolits per
+primer cop**; taules 139/21/6/31/0 i **0 ERR sobre el signat** (Rubí P-2 resolt). **Data doble (decisió Josep):** plantilla
+amb `data_camp_inici_text` (primer dia) i `data_camp_text` (tots els dies); la lectura alimenta les dates del wizard.
+Commits: R5 `4001dde`, R2 `6fb47c6`; F1 + data doble sense commit. **Següent: 1.4 derivats.**
+Detall: DECISION-LOG 2026-09-05 (nit, 3), `_AGREGAT-8.md` §nit 3.
+
+Anterior (nit, 2) — **Bloc 1.2 R2 FET** («concepte veí»: la z GPS i el datum relatiu no bloquegen la
 cota de l'annex; el dia del sondeig és un segon dia de camp, no una contradicció; nivells i freàtic en msnm convertits a
 fondària amb la cota segura, un candidat per punt). Reconsolidació `_reconsolida-2026-09-05-vei` vs `-r5`: **9 cel·les
 canvien, cap altra, 0 regressions, conflictes idèntics**. Escalars **116 OK (79 %) / 25 CAND (17 %) / 5 / 1 / 0 ERR**;

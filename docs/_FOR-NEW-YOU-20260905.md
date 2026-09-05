@@ -1,4 +1,4 @@
-# FOR NEW YOU — 2026-09-05 — Fila 0b tancada + bloc 1.1 R5 i 1.2 R2 fets (nit); següent 1.3 F1
+# FOR NEW YOU — 2026-09-05 — Fila 0b tancada + bloc 1.1 R5, 1.2 R2, 1.3 F1 fets (nit); llindars assolits; següent 1.4 derivats
 
 **Escrit:** 2026-09-05. Substitueix `_FOR-NEW-YOU-20260904.md` (conserva'l: hi ha les trampes i les decisions del Josep).
 Branca `experiment/nivell-a-2026-08`, pushada al matí a `7bdbcde`; **els canvis d'avui poden estar sense commit**:
@@ -145,3 +145,26 @@ Linyola `[1].de` («mateix contacte que 'a' del nivell 1»: derivat 1.4).
 
 **Següent peça: 1.3 F1** (fonts d'Eva inconsistents: GTL > comanda per `lab_depth`; capçalera coherent entre pàgines
 per la cota de Rubí; SPT creuats de Vilanova = pregunta a Eva). R2 sense commit (R5 sí: `4001dde`).
+
+## Actualització (nit, 3): bloc 1.3 F1 FET + data doble decidida — punt de partida nou
+
+F1 (DECISION-LOG 2026-09-05 nit, 3): precedència per camp (`_FIELD_PRECEDENCE`: GTL > annex de sondeig > comanda per
+`lab_depth`; els annexos per a la cota) i capçalera de l'annex DPSH sense decimals entre germanes amb decimals →
+candidats amb la coherent primera (`_dpsh_cota_header_coherence`). Reconsolidació `_reconsolida-2026-09-05-f1` vs
+`-vei`: **3 cel·les, cap altra, conflictes idèntics.**
+
+**Punt de partida ara: escalars 118 OK (80 %) / 23 CAND (16 %) / 5 ALERTA / 1 blanc / 0 ERR — els tres llindars
+assolits; taules 139/21/6/31/0; 0 ERR sobre el signat.** Referència per a la propera reconsolidació:
+`_reconsolida-2026-09-05-f1`.
+
+**Data doble (decisió del Josep, nit):** «1 i 6 d'octubre» a l'informe, però a la segona ranura; la primera («El dia …,
+es va visitar l'obra») porta el primer dia, com als signats. Fet: `{{ data_camp_inici_text }}` a la plantilla,
+`first_field_day_text` al generador, `_overlay_field_dates` a `web/lectura_service.py` (la lectura segura alimenta
+`field_work_dates` + frase). `fields.field_date` = primer dia + `extra.dies_de_camp` (sense canvis al contracte).
+
+F1 que queda és de criteri o de font: Castellar `lab_sample_id` (or MA-1 vs skill «annex mana» SPT-1 → pregunta a
+l'Eva), Linyola «argilsoso» (errata del tall), Vilanova SPT creuats ×2 + litologia (signat). No tornar-hi sense l'Eva.
+
+**Següent peça: 1.4 derivats del consolidador** (`a` de l'últim nivell = fins al fons d'investigació; `mostra_del_nivell`
+= nivell que conté `lab_depth`; litologia del nivell de la mostra; «mateix contacte» → `de` del nivell N = `a` del N−1;
+són la majoria dels 31 blancs de taula). F1 + data doble sense commit.

@@ -689,6 +689,65 @@ def test_R2_msnm_levels_and_water_table_are_converted_to_depth_with_the_secure_c
     assert dec["tables"]["soil_levels"]["rows"][0]["a"]["value"].startswith("≈243,6 msnm")
 
 
+# ---------------------------------------------------------------------------
+# F1 (2026-09-05, mesura dels 8): fonts d'Eva inconsistents entre elles — «qui mana» per parella de documents
+# ---------------------------------------------------------------------------
+
+
+def test_F1_lab_depth_precedence_gtl_over_comanda_and_field_sheets():
+    """Rubi: GTL 0,6-1,2 (A) vs comanda 0,6-1,4 (0,7) → el GTL mana (el propi senyal de la comanda ho anota). Linyola:
+    GTL 1,0-1,15 (A) vs Excel DPSH 1,0-1,5 (0,5) i full de camp 1,00-1,75 (0,55): el camp anota el tram previst, el
+    laboratori la mostra real → segur. Sense GTL, l'annex de l'Eva mana sobre la comanda; dues fonts febles sense cap
+    de les dues → candidats com sempre."""
+    rubi = C.decide([_sig("lab_depth", "0,6 - 1,2", 0.9, doc="gtl", doc_type="informe_laboratori"),
+                     _sig("lab_depth", "0,6 a 1,2", 0.75, doc="dpsh", doc_type="annex_dpsh"),
+                     _sig("lab_depth", "0.6 - 1.4", 0.7, doc="comanda", doc_type="comanda_lab_g3", origin="g3_templates")],
+                    sources_checked=["gtl"], field_name="lab_depth", abs_numbers=True)
+    assert rubi["estat"] == "segur" and rubi["value"] == "0,6 - 1,2"
+    assert any("1.4" in str(c["value"]) for c in rubi["altres"])
+    linyola = C.decide([_sig("lab_depth", "1,0 - 1,15", 0.85, doc="gtl", doc_type="informe_laboratori"),
+                        _sig("lab_depth", "1,0 a 1,5 m", 0.5, doc="xls", doc_type="dpsh_excel"),
+                        _sig("lab_depth", "1,00 a 1,75 m", 0.55, doc="penetros", doc_type="full_camp_manuscrit")],
+                       sources_checked=["gtl"], field_name="lab_depth", abs_numbers=True)
+    assert linyola["estat"] == "segur" and linyola["value"] == "1,0 - 1,15"
+    annex = C.decide([_sig("lab_depth", "-1,00 a -1,60 m", 0.85, doc="sondeig", doc_type="annex_sondeig"),
+                      _sig("lab_depth", "1.0 - 1.4", 0.7, doc="comanda", doc_type="comanda_lab_g3", origin="g3_templates")],
+                     sources_checked=["sondeig"], field_name="lab_depth", abs_numbers=True)
+    assert annex["estat"] == "segur"
+    weak = C.decide([_sig("lab_depth", "0.8 - 1.4", 0.7, doc="comanda", doc_type="comanda_lab_g3", origin="g3_templates"),
+                     _sig("lab_depth", "0,80 - 1,60 m", 0.6, doc="penetros", doc_type="full_camp_manuscrit")],
+                    sources_checked=["comanda"], field_name="lab_depth", abs_numbers=True)
+    assert weak["estat"] == "candidats"
+    # i el GTL SI que es contradit per un altre GTL (mateix nivell)
+    two = C.decide([_sig("lab_depth", "0,6 - 1,2", 0.9, doc="gtl", doc_type="informe_laboratori"),
+                    _sig("lab_depth", "0,6 - 1,4", 0.9, doc="gtl2", doc_type="informe_laboratori")],
+                   sources_checked=["gtl"], field_name="lab_depth", abs_numbers=True)
+    assert two["estat"] == "candidats"
+
+
+def test_F1_dpsh_cota_header_without_decimals_among_decimal_siblings_is_candidats():
+    """Rubi: la capçalera de la p.2 de l'annex DPSH diu «+212 msnm» i les de p.1/p.3 «+212,50 msnm» (signat: +212,50 als
+    tres punts) → candidats [coherent, literal]. Castellar (-4,0 / -4,2, decimals explicits) i Linyola (+245 ×3) no es toquen."""
+    def cell(v, page):
+        return {"estat": "segur", "value": v, "candidates": [{"value": v, "font": f"PDF/ANNEXES/x_DPSH.pdf p.{page} taula", "quote": ""}], "rule": "1 font A"}
+    rows = [{"punt": {"value": "P-1"}, "cota_inici": cell("+212,50 msnm, segons el planol del ICGC.", 1)},
+            {"punt": {"value": "P-2"}, "cota_inici": cell("+212 msnm, segons el plànol del ICGC", 2)},
+            {"punt": {"value": "P-3"}, "cota_inici": cell("+212,50 msnm, segons plànol en el ICGC", 3)}]
+    C._dpsh_cota_header_coherence(rows)
+    p2 = rows[1]["cota_inici"]
+    assert p2["estat"] == "candidats" and p2["value"].startswith("+212,50") and p2["candidates"][1]["value"].startswith("+212 msnm")
+    assert "P-1/P-3" in p2["candidates"][0]["font"] and p2["rule"].startswith("F1")
+    assert rows[0]["cota_inici"]["estat"] == "segur" and rows[2]["cota_inici"]["estat"] == "segur"
+    castellar = [{"punt": {"value": "P-1"}, "cota_inici": cell("-4,0 m (respecte el carrer)", 1)},
+                 {"punt": {"value": "P-2"}, "cota_inici": cell("-4,2 m (respecte el carrer)", 2)},
+                 {"punt": {"value": "P-3"}, "cota_inici": cell("-4,0 m (respecte el carrer)", 3)}]
+    C._dpsh_cota_header_coherence(castellar)
+    assert all(r["cota_inici"]["estat"] == "segur" for r in castellar)
+    linyola = [{"punt": {"value": f"P-{i}"}, "cota_inici": cell("+245 msnm segons plànol topogràfic del ICGC", i)} for i in (1, 2, 3)]
+    C._dpsh_cota_header_coherence(linyola)
+    assert all(r["cota_inici"]["estat"] == "segur" for r in linyola)
+
+
 def test_I1_v0_documents_propose_but_never_rule_nor_contradict(tmp_path: Path):
     """Anciles: sense `PDF/`, l'inventari llegeix `PDF_V0/ANEJOS/*.pdf`. A la V0 les graves eren NIVEL 1; al signat son
     el 2n nivell. Un senyal de V0: mai A, confianca sota el llindar de contradiccio, nota «versio anterior»."""

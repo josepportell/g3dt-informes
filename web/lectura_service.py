@@ -133,7 +133,11 @@ MAPPING_DECISIONS_WIZARD: dict[str, str | None] = {
     # `field_date`: `merged` només té `field_work_dates` (llista) i
     # `field_work_dates_text` (frase ja formatada en català/castellà) —
     # semàntica diferent (llista de dates vs data única): no es força la
-    # coincidència de nom.
+    # coincidència de nom. Des del 2026-09-05 (R2 + decisió del Josep sobre la
+    # data doble) `_apply_lectura_overlay` ho tracta a part: una lectura
+    # `segur` escriu la llista (`extra.dies_de_camp`, o el valor sol) i la
+    # frase catalana; el generador en treu el primer dia per a la primera
+    # ranura de l'informe i tots els dies per a la segona.
     "field_date": None,
     # `num_dpsh_tests`: la clau EXISTEIX a `merged`
     # (wizard_service._compute_narrative_prefills, ~L.951/958) però hi conté
@@ -198,6 +202,30 @@ def _apply_lectura_overlay(merged: dict[str, Any], decisions: dict[str, Any]) ->
                     "source": "lectura_candidats",
                 }
         # "no_trobat" -> mai escriu valor (regla 4, §4.3).
+    _overlay_field_dates(merged, fields.get("field_date"))
+
+
+def _overlay_field_dates(merged: dict[str, Any], cell: Any) -> None:
+    """`fields.field_date` segur → `merged['field_work_dates']` (llista ISO: `extra.dies_de_camp` si la campanya va
+    tenir mes d'un dia, si no el valor sol) + `merged['field_work_dates_text']` (frase catalana). Nomes `segur`: en
+    candidats, la via B (dates dels PDF DPSH/laboratori) ja es prou bona i no es trepitja. Eva mana sempre."""
+    if not isinstance(cell, dict) or cell.get("estat") != "segur" or not cell.get("value"):
+        return
+    for key in ("field_work_dates", "field_work_dates_text"):
+        existing = merged.get(key)
+        if isinstance(existing, dict) and existing.get("source") in _INTOCABLE_SOURCES:
+            return
+    extra = cell.get("extra") if isinstance(cell.get("extra"), dict) else {}
+    days = [str(d) for d in (extra.get("dies_de_camp") or []) if d] or [str(cell["value"])]
+    days = sorted(dict.fromkeys(days))
+    try:
+        from automation.dpsh_extractor import format_dates_catalan
+        text = format_dates_catalan(days)
+    except Exception:
+        text = ""
+    merged["field_work_dates"] = {"value": days, "source": "lectura"}
+    if text:
+        merged["field_work_dates_text"] = {"value": text, "source": "lectura"}
 
 
 # ---------------------------------------------------------------------------
