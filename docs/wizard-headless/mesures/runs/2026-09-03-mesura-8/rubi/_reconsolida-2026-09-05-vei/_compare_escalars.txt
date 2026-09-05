@@ -1,0 +1,11 @@
+NOU      architect_company      prod=no_trobat
+ALERTA   architect_name         estat or=no_trobat prod=candidats (or value='VIVIENDAS MODULARES (fabricant, NO arquitecte)')
+CAUTELA  building_type          or segur, prod candidats (bo dins): 'habitatge unifamiliar aïllat (casa modular)'
+CAUTELA  cte_edificacio         or segur, prod candidats (bo dins): 'C-0'
+CAUTELA  cte_sol                or segur, prod candidats (bo dins): 'T-1'
+CAUTELA  lab_depth              or segur, prod candidats (bo dins): '0,6 - 1,2 m'
+ALERTA   num_soil_levels        prod puja a segur (1); or candidats
+ALERTA   referencia_catastral   estat or=no_trobat prod=candidats (or value="PARC. 6-105 B (identificador d'urbanització, NO ref. cadastral)")
+CAUTELA  street_address         or segur, prod candidats (bo dins): 'Carrer de la Miranda, 39'
+FORA     superficie_parcela     fora de la carpeta: '951' (Cadastre (Callejero DNPLOC + WFS INSPIRE), portal 39 = 8259027DF1985N (951 m²))
+TOTALS: {'NOU': 1, 'ALERTA': 3, 'CAUTELA': 5, 'OK': 12, 'FORA': 1}

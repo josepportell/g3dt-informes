@@ -2383,3 +2383,95 @@ i llista de TOTES les cel·les que canvien.
 1.3 F1 i 1.4 derivats, segons l'ordre pactat del vespre.
 
 *Fi entrada 2026-09-05 (nit). R5: el consolidador honora la declaració del proveïdor que el lector ja havia marcat; CAND baixa al 20 %.*
+
+## 2026-09-05 (nit, 2) — Bloc 1.2, R2 «concepte veí»: cota, data de camp i nivells en msnm — escalars 112 → 116 OK (79 %), CAND 17 %
+
+### Context
+Segona peça del bloc 1 (handoff §Decisions del Josep al tancament): **R2**, «un concepte veí entra com a bloquejador».
+Tres cares, totes a la mesura dels 8: (a) la z GPS de `COORDENADES.txt` (0,5) i el datum relatiu del full de camp
+(«±0,00 respecte el carrer», 0,6) bloquejaven la cota de l'annex a Bell-lloc, Linyola i Alcoletge (a Alcoletge la GPS
+té 10,7 m d'anomalia); a Bell-lloc, a més, «+199,50 msnm segons el plànol topogràfic ICGC» i «199,50 m» eren dos
+clústers; (b) a Bell-lloc la data del sondeig (6/10: comanda DATA DE PRESA 0,7, annex sondeig 0,5, full manuscrit
+0,55) bloquejava la de camp (1/10, fitxa F38 = A); (c) a Linyola i Alcoletge el lector copia l'escala msnm del tall als
+nivells i al freàtic i l'informe vol fondàries. Mateix mètode: línia base = r5 (112/29/5/1/0), test per regla,
+reconsolidació dels 7 a cost 0 (`_reconsolida-2026-09-05-vei` vs `-r5`), llista de totes les cel·les que canvien.
+
+### Decisions arquitectòniques clau
+1. **Cota: només els annexos de l'Eva contradiuen** (`_FIELD_BLOCKER_DOC_TYPES["cota_referencia"]` = annex DPSH,
+   sondeig, tall). La z GPS, el datum relatiu del full de camp i l'ICGC són conceptes veïns: corroboren o fan de
+   recanvi, van a `altres`. Why: el skill (Pas 3) ja diu «annex DPSH = annex sondeig z > COORDENADES z (l'Eva no l'usa)
+   > ICGC»; el que faltava era que la prioritat no fos un bloqueig. Alternativa rebutjada: abaixar la confiança de la z
+   GPS a 0,3 → Alcoletge (anomalia de 10,7 m) hauria continuat sortint com a candidat de la mateixa mida; i no resol
+   el datum relatiu (0,6, lector Claude). **Rubí no canvia** (F1): les dues capçaleres de l'annex DPSH (+212,50 / +212)
+   són del tipus que sí que contradiu.
+2. **La clau de `cota_referencia` és el nombre** (`_LEADING_COTA_RE`: «+199,50 msnm segons…» = «199,50 m»). Why: R1
+   per a cotes; sense això la forma llarga de l'annex DPSH feia de contradicció de la curta del sondeig (Bell-lloc).
+3. **Castellar: sistema relatiu → candidats, com a post-procés** (`_cota_relative_system`). Amb (1) sola, Castellar
+   pujava a segur (570,90) i l'or el vol candidats perquè l'annex DPSH treballa «respecte el carrer» (−4,0) i el signat
+   va usar la relativa (`_LESSONS`). Es demota després de consolidar les taules, quan la cel·la `cota_inici` (segura,
+   annex DPSH) és relativa: candidats [absoluta, relativa (annex DPSH, sistema relatiu)]. Why post-procés: el
+   consolidador de camps no veu les taules; és el mateix patró que `_decide_sondeig_cota` (Pas 3b) al revés.
+4. **Data de camp: el dia del sondeig és un altre dia, no una contradicció** (`_is_other_field_day`): data completa,
+   a ≤ 30 dies de la guanyadora, amb tots els senyals forts (≥ 0,4 o A) de documents de la campanya (sondeig, presa de
+   mostra, laboratori, fitxa, DPSH). Valor = primer dia (segur), l'altre dia com a candidat anotat («altre dia de camp;
+   regla d'Eva: posar els dos dies») i `extra.dies_de_camp`. Why aquesta forma i no «1 i 6 d'octubre» com a valor: és
+   exactament el que fa l'or de Bell-lloc (segur 2025-10-01, candidat «2025-10-06 (sondeig)») i el skill («dia del
+   sondeig, candidat 2 de field_date»); el text de l'informe és feina del generador (M341), que ara té els dos dies.
+   **El Josep pot capgirar-ho** (era «decisió Josep» al handoff): és un canvi d'una línia. Una data d'un plànol o d'un
+   tall, o a més de 30 dies, continua bloquejant (test).
+5. **msnm → fondària: conversió determinista amb la cota SEGURA del mateix `_decisions.json`, un candidat per punt**
+   (`_depths_from_msnm`, `_depth_candidates`): «≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2» → «≈-1,4 m a P-1
+   (contacte ≈243,6 msnm)», «≈-1,4 m a P-3 (…)», «≈-0,4/-0,3 m a P-2 (…)»; sense punts, conversió en el lloc + «(cota …
+   msnm)». Font «(derivat: fondària = cota +245 − 243,6 msnm) ← tall», lectura original a la nota. Why per punt: és la
+   granularitat de l'or («candidats per punt, mai un únic valor segur») i el que l'Eva tria. Cap candidat nou: els
+   mateixos, en el sistema de l'informe. Només amb cota segura i absoluta (Castellar, candidats, no converteix;
+   Bell-lloc, ja en fondàries, no es toca). Cel·les: `soil_levels.de/a`, `dpsh_tests/sondeig_tests.nivell_freatic`.
+6. **Primera versió de la superfície descartada en calent:** «0,0 m / +245 msnm» (les dues escales) igualava el
+   candidat de l'or però no el seu VALOR («0,0 m (superfície, cota +245 msnm)») i deixava la cel·la en ALERTA; la forma
+   en el lloc («0,0 m (superfície, escala del tall) (cota 245 msnm)») és més simple i és la que mesura bé.
+
+### Implementació
+- `automation/lectura/consolidate.py` (+~190 LOC): constants R2 (`_FIELD_BLOCKER_DOC_TYPES`, `_LEADING_COTA_RE`,
+  `_CAMPAIGN_DOC_TYPES`, `CAMPAIGN_WINDOW_DAYS`, `_MSNM_POINT_RE`, `_MSNM_NUM_RE`, `_MSNM_CELLS`); `value_key`
+  (cota); `decide` (blockers per tipus, `other_days`, candidat anotat, `extra`); `_is_other_field_day`;
+  post-processos `_cota_relative_system`, `_depths_from_msnm` (+ `_is_rel_cota`, `_fmt_depth`, `_decimals`,
+  `_msnm_scale`, `_depth_candidates`) cridats a `consolidate_python` després de `consolidate_tables`.
+- `tests/test_lectura_consolidate.py`: +4 `test_R2_*`; el test sintètic passa de «GPS contradiu → candidats» a «GPS a
+  `altres` → segur» (era la regla vella codificada).
+- Skill: cap canvi (Pas 3 ja ho deia així). Artefactes: `{slug}/_reconsolida-2026-09-05-vei/`.
+
+### Validació empírica (reconsolidació dels 7, cost 0; comparador v4 sobre l'or)
+- **9 cel·les canvien de valor o estat, cap altra; 0 regressions; conflictes A-vs-A idèntics.** Bell-lloc
+  `cota_referencia` 199,50 → segur i `field_date` 2025-10-01 → segur (candidat «2025-10-06» anotat, `extra.dies_de_camp`);
+  Linyola i Alcoletge `cota_referencia` → segur; Linyola `soil_levels[0].de` «0,0 m (…)», `[0].a` un candidat per punt
+  (P-1 −1,4 = or), `[1].de` en el lloc; Alcoletge `[0].a` per punt, `[1].de` en el lloc. A més, els 3 `nivell_freatic`
+  d'Alcoletge tenen el candidat del tall en fondària («~-1,0 m (matís: humitat…)»; ja eren OK pel comparador v4).
+  Castellar: mateix estat (candidats) amb la regla nova i la relativa com a candidat 2.
+- Escalars: **112 → 116 OK (79 %) / 29 → 25 CAND (17 %) / 5 ALERTA / 1 blanc / 0 ERR.** Taules: **137 → 138 OK / 21 CAND /
+  8 → 7 ALERTA / 31 blanc / 0 ERR** (Linyola `[0].a` CAUTELA → OK; `[0].de` ALERTA → CAUTELA «bo dins»).
+- Contrast amb el signat (diagnòstics): Linyola +245,0 i Alcoletge +188,20 = signat; Bell-lloc 199,50 = or.
+- Llindars: ERR 0 ✅ · CAND 17 % ✅ · OK 79 % ⏳ (80: a una cel·la).
+
+### Tests
++4 `test_R2_*` i 1 actualitzat; consolidador 148 verds. Suite sencera: vegeu la sessió.
+
+### Latència / cost
+0 USD.
+
+### Limitacions conegudes
+- Alcoletge `soil_levels[0].a`/`[1].de` i Linyola `[1].de` queden CAND: el contingut és correcte (−1,4 / −1,2) però l'or
+  d'Alcoletge agrupa punts per fondària («-1,4 m (P-1 i P-3) / -1,2 m (P-2)») i el comparador compara tuples de nombres
+  (els «P-1» inclosos): és una limitació del comparador amb cel·les per punt (C), no de la lectura. Linyola `[1].de`
+  («mateix contacte que 'a' del nivell 1») és el derivat 1.4 (`de` del nivell N = `a` del nivell N−1).
+- `_is_other_field_day` depèn del tipus de document: una data del sondeig llegida en un `correu` bloquejaria.
+- El text «1 i 6 d'octubre» a l'informe no existeix encara: el generador té `extra.dies_de_camp` (M341).
+
+### GO/NO-GO
+- ✅ 9 cel·les cap a l'or, 0 regressions, 4 tests, conflictes idèntics, Castellar intacte. ✅ CAND ≤ 20 %.
+- ⏳ OK ≥ 80 % (79): 1.3 F1 (7 cel·les), 1.4 derivats (~8 blancs de taula + Linyola `[1].de`).
+
+### Següents passos
+1.3 F1 («qui mana» per parella de documents: GTL > comanda; capçalera coherent entre pàgines; SPT creuats de Vilanova
+amb pregunta a Eva), després 1.4 derivats.
+
+*Fi entrada 2026-09-05 (nit, 2). R2: els veïns corroboren, no bloquegen; els nivells parlen en el sistema de l'informe.*

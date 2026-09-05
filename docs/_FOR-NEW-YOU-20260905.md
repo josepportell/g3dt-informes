@@ -1,4 +1,4 @@
-# FOR NEW YOU — 2026-09-05 — Fila 0b tancada + bloc 1.1 R5 fet (nit); següent 1.2 R2
+# FOR NEW YOU — 2026-09-05 — Fila 0b tancada + bloc 1.1 R5 i 1.2 R2 fets (nit); següent 1.3 F1
 
 **Escrit:** 2026-09-05. Substitueix `_FOR-NEW-YOU-20260904.md` (conserva'l: hi ha les trampes i les decisions del Josep).
 Branca `experiment/nivell-a-2026-08`, pushada al matí a `7bdbcde`; **els canvis d'avui poden estar sense commit**:
@@ -126,3 +126,22 @@ d'Anciles (font única manuscrita; la V0 no és autoritat per decisió I1). No t
 
 **Següent peça: 1.2 R2** (taula del bloc 1). Commit dels canvis de nit: no fet («commit only when the user asks»).
 Detall: DECISION-LOG 2026-09-05 (nit), `_AGREGAT-8.md` §nit, `_DIAGNOSTICS-INDEX.md` §nit, sessió §Nit.
+
+## Actualització (nit, 2): bloc 1.2 R2 FET — punt de partida nou
+
+R2 «concepte veí» implementat (DECISION-LOG 2026-09-05 nit, 2): la z GPS i el datum relatiu del full de camp no
+bloquegen la cota de l'annex (només els annexos contradiuen; clau numèrica); Castellar es queda en candidats pel
+sistema relatiu de l'annex DPSH (post-procés `_cota_relative_system`); el dia del sondeig és un segon dia de camp
+(candidat anotat + `extra.dies_de_camp`; valor = primer dia, com l'or; el Josep pot capgirar-ho); nivells i freàtic en
+msnm convertits a fondària amb la cota segura, un candidat per punt (`_depths_from_msnm`). Reconsolidació
+`_reconsolida-2026-09-05-vei` vs `-r5`: **9 cel·les canvien, cap altra, 0 regressions, conflictes idèntics.**
+
+**Punt de partida ara: escalars 116 OK (79 %) / 25 CAND (17 %) / 5 ALERTA / 1 blanc / 0 ERR; taules 138/21/7/31/0.**
+Referència per a la propera reconsolidació: `_reconsolida-2026-09-05-vei`. OK 80 % a una cel·la.
+
+Queden CAND a posta: Alcoletge `soil_levels[0].a`/`[1].de` (contingut −1,4/−1,2 = or; l'or agrupa punts per fondària
+i el comparador compara tuples de nombres amb els «P-1» dins: limitació del comparador amb cel·les per punt, C) i
+Linyola `[1].de` («mateix contacte que 'a' del nivell 1»: derivat 1.4).
+
+**Següent peça: 1.3 F1** (fonts d'Eva inconsistents: GTL > comanda per `lab_depth`; capçalera coherent entre pàgines
+per la cota de Rubí; SPT creuats de Vilanova = pregunta a Eva). R2 sense commit (R5 sí: `4001dde`).

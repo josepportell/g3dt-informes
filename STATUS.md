@@ -1,5 +1,12 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-05 (nit) — **Bloc 1.1 R5 FET** («font única del proveïdor»: autoritat de camp al consolidador,
+Last updated: 2026-09-05 (nit, 2) — **Bloc 1.2 R2 FET** («concepte veí»: la z GPS i el datum relatiu no bloquegen la
+cota de l'annex; el dia del sondeig és un segon dia de camp, no una contradicció; nivells i freàtic en msnm convertits a
+fondària amb la cota segura, un candidat per punt). Reconsolidació `_reconsolida-2026-09-05-vei` vs `-r5`: **9 cel·les
+canvien, cap altra, 0 regressions, conflictes idèntics**. Escalars **116 OK (79 %) / 25 CAND (17 %) / 5 / 1 / 0 ERR**;
+taules **138 / 21 / 7 / 31 / 0**. OK 80 % ⏳ a una cel·la. Commit de R5: `4001dde`; R2 sense commit. **Següent: 1.3 F1.**
+Detall: DECISION-LOG 2026-09-05 (nit, 2), `_AGREGAT-8.md` §nit 2.
+
+Anterior (nit) — **Bloc 1.1 R5 FET** («font única del proveïdor»: autoritat de camp al consolidador,
 `_FIELD_AUTHORITY`; skill v1.7). Reconsolidació dels 7 a cost 0 (`_reconsolida-2026-09-05-r5` vs `-r2`): **8 cel·les
 CAND → OK (= or), cap altra es mou, 0 regressions**. Escalars **112 OK (76 %) / 29 CAND (20 %) / 5 ALERTA / 1 blanc /
 0 ERR**; taules 137/21/8/31/0 idèntic. Llindars: ERR 0 ✅ · **CAND ≤ 20 % ✅ (primer cop)** · OK 80 % ⏳. Queda de R5 a

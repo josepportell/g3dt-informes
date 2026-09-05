@@ -286,3 +286,39 @@ Taules: **137 / 21 / 8 / 31 / 0, idèntic** (cap cel·la de taula es mou). Confl
 `num_floors` (el lector hi posa 0,3-0,4: «informació verbal de segona mà», «pot no representar les 3 unitats»; pujar-los
 faria pujar també Rubí, que l'or vol candidats) i les 9 cel·les de taula d'Anciles (font única manuscrita; la V0 no és
 autoritat per I1). **Següent:** 1.2 R2 (concepte veí).
+
+---
+
+## Agregat MECÀNIC (2026-09-05, nit, 2) — bloc 1.2: R2 «concepte veí» (cota, data de camp, msnm → fondària)
+
+Regles noves al consolidador (DECISION-LOG 2026-09-05 nit, 2): (a) `cota_referencia`: només els annexos de l'Eva
+contradiuen (z GPS, datum relatiu del full de camp i ICGC van a `altres`) i la clau és el nombre («+199,50 msnm
+segons…» = «199,50 m»); Castellar (annex DPSH relatiu) queda en candidats per post-procés; (b) `field_date`: el dia del
+sondeig és un altre dia de camp (candidat anotat + `extra.dies_de_camp`), no una contradicció; (c) nivells i freàtic
+en msnm convertits a fondària amb la cota segura, un candidat per punt, lectura original a la nota.
+Reconsolidació: `{slug}/_reconsolida-2026-09-05-vei/` respecte de `-r5`.
+
+| Escalars (147) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| nit (r5, R5) | 112 | 29 | 5 | 1 | 0 | — |
+| + **R2** (vei) | **116** | **25** | 5 | 1 | 0 | 4, totes CAND → OK (= or): Bell-lloc `cota_referencia` 199,50 i `field_date` 2025-10-01 (+ «2025-10-06» anotat); Linyola `cota_referencia` +245; Alcoletge `cota_referencia` +188,20 |
+
+| Taules (197) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| nit (r5) | 137 | 21 | 8 | 31 | 0 | — |
+| + **R2** (vei) | **138** | **21** | **7** | 31 | 0 | Linyola `soil_levels[0].a` CAUTELA → OK (per punt: −1,4 a P-1 = or), `[0].de` ALERTA → CAUTELA («0,0 m (superfície…)», or segur); `[1].de` i Alcoletge `[0].a`/`[1].de` convertides (−1,4/−1,2 = or) però CAUTELA pel format per punt vs agrupat de l'or (comparador, C) |
+
+Conflictes A-vs-A per projecte: idèntics. Castellar `cota_referencia`: mateix estat, regla nova (sistemes diferents).
+
+| Projecte | Escalars OK / CAND / ALERTA / Blanc / ERR (vei) | Δ OK |
+|---|---|--:|
+| Castellar | 17 / 4 / 0 / 0 / 0 | 0 |
+| Bell-lloc | 17 / 4 / 0 / 0 / 0 | +2 |
+| Rubí | 13 / 5 / 3 / 0 / 0 | 0 |
+| Linyola | 18 / 3 / 0 / 0 / 0 | +1 |
+| Alcoletge | 18 / 3 / 0 / 0 / 0 | +1 |
+| Vilanova | 15 / 5 / 1 / 0 / 0 | 0 |
+| Anciles | 18 / 1 / 1 / 1 / 0 | 0 |
+| **Total** | **116 (79 %) / 25 (17 %) / 5 / 1 / 0** | **+4** |
+
+**Llindars:** ERR 0 ✅ · CAND 17 % ✅ · OK 79 % ⏳ (80: a una cel·la). **Següent:** 1.3 F1, 1.4 derivats.

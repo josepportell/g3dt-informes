@@ -588,6 +588,107 @@ def test_R5_authority_for_from_the_document_context_reaches_the_consolidator(tmp
     assert dec["fields"]["num_soil_levels"]["estat"] == "candidats"
 
 
+# ---------------------------------------------------------------------------
+# R2 (2026-09-05, mesura dels 8): «un concepte vei entra com a bloquejador» — cota, data de camp, msnm → fondaria
+# ---------------------------------------------------------------------------
+
+
+def test_R2_gps_z_and_relative_datum_do_not_block_the_annex_cota():
+    """Bell-lloc: annex sondeig «199,50 m» (A) + annex DPSH «+199,50 msnm segons el planol topografic ICGC» (0,75, mateix
+    valor, forma diferent) eren dos clusters, i la z GPS 198,9 (0,5) i el datum relatiu del full de camp (0,6) bloquejaven.
+    Ara: mateixa clau numerica, i nomes els annexos contradiuen → segur; GPS i datum a `altres`."""
+    assert C.value_key("+199,50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)", field_name="cota_referencia") == \
+        C.value_key("199,50 m", field_name="cota_referencia") == ("num", (199.5,))
+    cell = C.decide([_sig("cota_referencia", "199,50 m", 0.85, doc="sondeig", doc_type="annex_sondeig"),
+                     _sig("cota_referencia", "+199,50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)", 0.75, doc="dpsh", doc_type="annex_dpsh"),
+                     _sig("cota_referencia", "+/-0,00 respecte C/Antoni Bellet (cota relativa)", 0.6, doc="SONDEIG.pdf", doc_type="full_camp_manuscrit"),
+                     C.Signal("cota_referencia", "198.9", "COORDENADES.txt (P-1 z)", "", 0.5, "COORDENADES.txt", "coordenades_gps", "python")],
+                    sources_checked=["sondeig"], field_name="cota_referencia")
+    assert cell["estat"] == "segur" and cell["value"] == "199,50 m"
+    assert {str(c["value"])[:5] for c in cell["altres"]} >= {"198.9", "+/-0,"}
+    # Rubi: dues capçaleres de l'annex DPSH discrepen (+212,50 vs +212): l'annex SI que contradiu → candidats (F1, no R2)
+    rubi = C.decide([_sig("cota_referencia", "+212,50 msnm", 0.75, doc="dpsh", doc_type="annex_dpsh"),
+                     _sig("cota_referencia", "+212 msnm", 0.7, doc="dpsh", doc_type="annex_dpsh")],
+                    sources_checked=["dpsh"], field_name="cota_referencia")
+    assert rubi["estat"] == "candidats" and rubi["rule"].startswith("contradiccio")
+
+
+def test_R2_second_field_day_from_campaign_documents_is_a_candidate_not_a_contradiction():
+    """Bell-lloc: DPSH l'1/10 (fitxa F38 = A) i sondeig el 6/10 (comanda DATA DE PRESA 0,7, annex sondeig 0,5). Regla
+    d'Eva: «si la data del sondeig no es igual, posar els dos dies» → segur el primer dia, l'altre dia com a candidat
+    anotat i a `extra.dies_de_camp`. Una data d'un document que NO es de la campanya, o massa lluny, continua bloquejant."""
+    cell = C.decide([_sig("field_date", "2025-10-01", 0.95, doc="fitxa", doc_type="fitxa_camp_g3", origin="g3_templates"),
+                     _sig("field_date", "2025-10-06", 0.7, doc="comanda", doc_type="comanda_lab_g3", origin="g3_templates"),
+                     _sig("field_date", "6/10/2025", 0.5, doc="sondeig", doc_type="annex_sondeig")],
+                    sources_checked=["fitxa"], field_name="field_date")
+    assert cell["estat"] == "segur" and cell["value"] == "2025-10-01"
+    assert cell["extra"] == {"dies_de_camp": ["2025-10-01", "2025-10-06"]}
+    assert any(c["value"] == "2025-10-06" and "altre dia de camp" in c.get("note", "") for c in cell["candidates"])
+    assert "campanya de 2 dies" in cell["rule"]
+    planol = C.decide([_sig("field_date", "2025-10-01", 0.95, doc="fitxa", doc_type="fitxa_camp_g3", origin="g3_templates"),
+                       _sig("field_date", "2025-10-06", 0.5, doc="planol", doc_type="planol")],
+                      sources_checked=["fitxa"], field_name="field_date")
+    assert planol["estat"] == "candidats"
+    far = C.decide([_sig("field_date", "2025-10-01", 0.95, doc="fitxa", doc_type="fitxa_camp_g3", origin="g3_templates"),
+                    _sig("field_date", "2025-12-15", 0.5, doc="sondeig", doc_type="annex_sondeig")],
+                   sources_checked=["fitxa"], field_name="field_date")
+    assert far["estat"] == "candidats"
+
+
+def test_R2_relative_dpsh_system_keeps_the_absolute_cota_in_candidats(tmp_path: Path):
+    """Castellar: annex sondeig «570,90 msnm» (A, sola) seria segur, pero l'annex DPSH treballa «respecte el carrer»
+    (-4,0): dues sortides de l'Eva amb sistemes diferents → candidats [absoluta, relativa] (or; el signat va usar -4,0).
+    Amb l'annex DPSH en absolut, no es toca res."""
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "sondeig", "PDF/ANNEXES/x_sondeig.pdf", "annex_sondeig", [_ta("cota_referencia", "570,90 msnm (segons el plànol ICGC)", 0.9)])
+    _doc(out, "dpsh", "PDF/ANNEXES/x_DPSH.pdf", "annex_dpsh", [], tables={"dpsh_tests": [
+        {"punt": "P-1", "cota_inici": "-4,0 m (respecte el carrer)", "profunditat_assolida": "-1,35 m", "rebuig": "Si", "nivell_freatic": None, "location": "p.1", "quote": "Cota inici: -4 m"}]})
+    dec = C.consolidate_python(out, None, project_name="X")
+    c = dec["fields"]["cota_referencia"]
+    assert c["estat"] == "candidats" and c["value"].startswith("570,90") and "sistema relatiu" in c["candidates"][1]["value"]
+    assert validate_decisions(dec) == []
+    _doc(out, "dpsh", "PDF/ANNEXES/x_DPSH.pdf", "annex_dpsh", [], tables={"dpsh_tests": [
+        {"punt": "P-1", "cota_inici": "+570,90 msnm", "profunditat_assolida": "-1,35 m", "rebuig": "Si", "nivell_freatic": None, "location": "p.1", "quote": ""}]})
+    dec = C.consolidate_python(out, None, project_name="X")
+    assert dec["fields"]["cota_referencia"]["estat"] == "segur"
+
+
+def test_R2_msnm_levels_and_water_table_are_converted_to_depth_with_the_secure_cota(tmp_path: Path):
+    """Linyola/Alcoletge: el lector copia l'escala msnm del tall («≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2»);
+    l'informe vol fondaries. Amb la cota de referencia segura (+245) es converteix: un candidat per punt, la lectura
+    original a la nota. Sense cota segura, no es toca res; les fondaries («-1,80») tampoc."""
+    assert C._depth_candidates("245 msnm (superfície, escala del tall)", 245.0, "+245") == \
+        [("0,0 m (superfície, escala del tall) (cota 245 msnm)", "245")]
+    assert [v for v, _ in C._depth_candidates("≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2 (contacte)", 245.0, "+245")] == \
+        ["≈-1,4 m a P-1 (contacte ≈243,6 msnm)", "≈-1,4 m a P-3 (contacte ≈243,6 msnm)", "≈-0,4/-0,3 m a P-2 (contacte ≈244,6-244,7 msnm)"]
+    assert C._depth_candidates("~187,2 msnm (matís: humitat)", 188.2, "+188,20")[0][0].startswith("~-1,0 m (matís: humitat)")
+    assert C._depth_candidates("-1,80", 245.0, "+245") == [] and C._depth_candidates("0,00", 245.0, "+245") == []
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "dpsh", "PDF/ANNEXES/x_DPSH.pdf", "annex_dpsh", [_ta("cota_referencia", "+245 msnm segons plànol topogràfic del ICGC", 0.85)],
+         tables={"dpsh_tests": [{"punt": "P-1", "cota_inici": "+245 msnm", "profunditat_assolida": "-2,90 m", "rebuig": "Si",
+                                 "nivell_freatic": "~244,0 msnm (humitat)", "matis": "humitat", "location": "p.1", "quote": ""}]})
+    _doc(out, "tall", "tall.pdf", "annex_tall", [], tables={"soil_levels": [
+        {"nom": "Nivell 1", "litologia": "Llims", "de": "245 msnm (superfície, escala del tall)", "a": "≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2", "mostra_del_nivell": None},
+        {"nom": "Nivell 2", "litologia": "Lutites", "de": "≈243,6 a ≈244,7 msnm segons el punt", "a": None, "mostra_del_nivell": None}]})
+    dec = C.consolidate_python(out, None, project_name="X")
+    assert dec["fields"]["cota_referencia"]["estat"] == "segur"
+    rows = dec["tables"]["soil_levels"]["rows"]
+    a0 = rows[0]["a"]
+    assert a0["value"] == "≈-1,4 m a P-1 (contacte ≈243,6 msnm)" and len(a0["candidates"]) == 3
+    assert a0["candidates"][0]["font"].startswith("(derivat: fondaria = cota +245 − 243,6 msnm)") and "msnm" in a0["candidates"][0]["note"]
+    assert rows[0]["de"]["value"].startswith("0,0 m") and rows[1]["de"]["value"].startswith("≈-1,4 m a ≈-0,3 m")
+    nf = dec["tables"]["dpsh_tests"]["rows"][0]["nivell_freatic"]
+    assert nf["value"].startswith("~-1,0 m") and nf["matis"] == "humitat"
+    assert validate_decisions(dec) == []
+    # sense cota segura (dues cotes que discrepen als annexos) no es converteix res
+    _doc(out, "dpsh2", "PDF/ANNEXES/y_DPSH.pdf", "annex_dpsh", [_ta("cota_referencia", "+247 msnm", 0.8)])
+    dec = C.consolidate_python(out, None, project_name="X")
+    assert dec["fields"]["cota_referencia"]["estat"] == "candidats"
+    assert dec["tables"]["soil_levels"]["rows"][0]["a"]["value"].startswith("≈243,6 msnm")
+
+
 def test_I1_v0_documents_propose_but_never_rule_nor_contradict(tmp_path: Path):
     """Anciles: sense `PDF/`, l'inventari llegeix `PDF_V0/ANEJOS/*.pdf`. A la V0 les graves eren NIVEL 1; al signat son
     el 2n nivell. Un senyal de V0: mai A, confianca sota el llindar de contradiccio, nota «versio anterior»."""
@@ -714,8 +815,10 @@ def test_synthetic_project_contract_clean_and_fields(synth):
     # UTM: COORDENADES P-1 (python, A) vs annex sondeig S-1 (0.6) → candidats amb P-1 primer
     assert f["utm_x"]["estat"] == "candidats" and f["utm_x"]["value"] == "300000.0"
     assert "COORDENADES.txt" in f["utm_x"]["candidates"][0]["font"]
-    # cota_referencia: annex DPSH +250,00 (A) = sondeig 250.00 = COORDENADES z 250.5? no: 250.5 ≠ 250.0 → contradiccio B (0.5) → candidats
-    assert f["cota_referencia"]["estat"] == "candidats"
+    # cota_referencia: annex DPSH +250,00 (A) = sondeig 250.00; la z GPS 250.5 de COORDENADES es un concepte vei (R2):
+    # corrobora o fa de recanvi, mai bloqueja → segur, i la z queda a `altres`
+    assert f["cota_referencia"]["estat"] == "segur"
+    assert any("COORDENADES" in c["font"] for c in f["cota_referencia"].get("altres", []))
     # lectura fallida i duplicats anotats
     assert any("lectura fallida" in s for s in f["field_date"]["sources_checked"])
     assert "comanda copia.xls" in dec["notes_estructurals"][1]

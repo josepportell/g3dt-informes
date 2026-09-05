@@ -1,0 +1,5 @@
+NOU      architect_company      prod=segur
+CAUTELA  architect_name         or segur, prod candidats (bo dins): 'Josep Bunyesc Palacín'
+CAUTELA  lab_depth              or segur, prod candidats (bo dins): '1,0 - 1,15 m'
+CAUTELA  street_address         or segur, prod candidats (bo dins): 'Carrer Clot de la Llacuna, 16'
+TOTALS: {'NOU': 1, 'CAUTELA': 3, 'OK': 18}

@@ -113,6 +113,29 @@ _P5_FORM_RE = re.compile(r"han de constar|factura", re.IGNORECASE)
 #: o «Poligon 6, Parcel·la 105-B» no ho son.
 _RC_RE = re.compile(r"(?<![0-9A-Z])(\d{7}[A-Z]{2}\d{4}[A-Z]|\d{5}[A-Z]\d{8})(\d{4}[A-Z]{2})?(?![0-9A-Z])")
 
+# R2 (2026-09-05, mesura dels 8: «un concepte vei entra com a bloquejador», 6 cel·les + 3 de taula).
+#: `cota_referencia`: nomes els annexos de l'Eva poden contradir la cota. La z GPS de `COORDENADES.txt` («l'Eva no
+#: l'usa», ~0,6 m; a Alcoletge 10,7 m d'anomalia), el datum relatiu del full de camp («±0,00 respecte el carrer») i
+#: l'ICGC son conceptes veins: corroboren o fan de recanvi, mai bloquegen (Bell-lloc, Linyola, Alcoletge).
+_FIELD_BLOCKER_DOC_TYPES: dict[str, frozenset[str]] = {
+    "cota_referencia": frozenset({"annex_dpsh", "annex_sondeig", "annex_tall"}),
+}
+#: «+199,50 msnm segons el planol topografic ICGC (-0,15 carrer)» i «199,50 m» son el mateix valor: la clau es el nombre.
+_LEADING_COTA_RE = re.compile(r"^\s*([+\-−]?\d{2,4}(?:[.,]\d+)?)\s*(?:m\b|msnm)", re.IGNORECASE)
+#: `field_date`: documents que registren la campanya. Una segona data d'un d'aquests dins de la finestra es un ALTRE
+#: DIA DE CAMP (sondeig, presa de mostra), no una contradiccio: regla d'Eva «si la data del sondeig no es igual, posar
+#: els dos dies»; skill Pas 3: «dia del sondeig, candidat 2 de field_date». El valor continua sent el primer dia (or).
+_CAMPAIGN_DOC_TYPES = frozenset({"annex_sondeig", "annex_dpsh", "dpsh_excel", "full_camp_manuscrit", "comanda_lab_g3",
+                                 "informe_laboratori", "fitxa_camp_g3", "annex_fotografies"})
+CAMPAIGN_WINDOW_DAYS = 30
+#: Nivells i freatic en msnm (lectura de l'escala del tall) quan l'informe vol fondaria: es converteixen amb la cota
+#: de referencia SEGURA del mateix `_decisions.json` (fondaria = cota − msnm). Un candidat per punt quan el text els
+#: dona («≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2»); la lectura original queda a la nota.
+_MSNM_POINT_RE = re.compile(r"([≈~]?)\s*(\d{2,4}(?:[.,]\d+)?)(?:\s*[-–/]\s*[≈~]?(\d{2,4}(?:[.,]\d+)?))?\s*(?:msnm)?\s+a\s+"
+                            r"((?:[PS]-?\d+)(?:\s*/\s*[PS]-?\d+)*)")
+_MSNM_NUM_RE = re.compile(r"([≈~]?)\s*(?<![\d,.])(\d{2,4}(?:[.,]\d+)?)(?:\s*[-–]\s*[≈~]?(\d{2,4}(?:[.,]\d+)?))?(\s*msnm)?")
+_MSNM_CELLS = (("soil_levels", "de"), ("soil_levels", "a"), ("dpsh_tests", "nivell_freatic"), ("sondeig_tests", "nivell_freatic"))
+
 _STOPWORDS = frozenset({
     "de", "del", "dels", "la", "el", "els", "les", "i", "y", "a", "en", "al", "d", "l", "s", "n", "c", "cl", "cr",
     "carrer", "calle", "c/", "av", "avinguda", "avda", "num", "no", "nº", "n°", "numero", "número", "the",
@@ -255,6 +278,21 @@ def _rc_parcels(values: Any) -> set[str]:
     return out
 
 
+def _is_other_field_day(c: "Cluster", top: "Cluster") -> bool:
+    """R2 (`field_date`): un cluster amb data completa, a ≤ CAMPAIGN_WINDOW_DAYS del guanyador, els senyals forts del
+    qual venen tots de documents de la campanya (sondeig, presa de mostra, laboratori, fitxa) es un altre dia de camp."""
+    if top.key[0] != "date" or c.key[0] != "date" or top.key[3] is None or c.key[3] is None:
+        return False
+    try:
+        delta = abs((datetime(top.key[1], top.key[2], top.key[3]) - datetime(c.key[1], c.key[2], c.key[3])).days)
+    except ValueError:
+        return False
+    if delta == 0 or delta > CAMPAIGN_WINDOW_DAYS:
+        return False
+    strong = [s for s in c.signals if s.is_a or s.confidence >= CONTRADICTION_CONF]
+    return bool(strong) and all(s.doc_type in _CAMPAIGN_DOC_TYPES for s in strong)
+
+
 # ---------------------------------------------------------------------------
 # Normalitzacio de valors (claus de compatibilitat)
 # ---------------------------------------------------------------------------
@@ -382,6 +420,10 @@ def value_key(value: Any, *, abs_numbers: bool = False, field_name: str | None =
         pk = _point_key(s, default_letter="")
         if pk:
             return ("text", pk.replace("-", "").lower())
+    if field_name == "cota_referencia":
+        m = _LEADING_COTA_RE.match(s)
+        if m:
+            return ("num", (round(float(m.group(1).replace("−", "-").replace(",", ".")), 3),))
     d = _parse_date(s)
     if d:
         return d
@@ -671,6 +713,15 @@ def decide(
     else:
         thr = _BLOCK_CONF_BY_FIELD.get(field_name or "", CONTRADICTION_CONF)
         blockers = [c for c in clusters[1:] if (c.has_a or c.max_conf >= thr) and not c.is_derived_only]
+    if not table_cell and field_name in _FIELD_BLOCKER_DOC_TYPES:
+        # R2: nomes els documents que porten AQUEST concepte contradiuen; la resta son conceptes veins (corroboren)
+        types = _FIELD_BLOCKER_DOC_TYPES[field_name]
+        blockers = [c for c in blockers if any(s.doc_type in types for s in c.signals)]
+    other_days: list[Cluster] = []
+    if not table_cell and field_name == "field_date":
+        other_days = [c for c in blockers if _is_other_field_day(c, top)]
+        other_ids = {id(c) for c in other_days}
+        blockers = [c for c in blockers if id(c) not in other_ids]
     # conflicte real = dues fonts A de DOCUMENTS DIFERENTS discrepen (dues alternatives del mateix document son una cautela del lector)
     top_a_docs = {s.doc for s in clusters[0].signals if s.is_a}
     a_conflict = [c for c in blockers if c.has_a and not ({s.doc for s in c.signals if s.is_a} & top_a_docs)]
@@ -715,14 +766,33 @@ def decide(
             "clusters": [{"value": _short(c.signals[0].value), "fonts": [s.font for s in c.signals][:3]} for c in [top] + a_conflict],
         })
 
+    other_ids = {id(c) for c in other_days}
     if estat == "segur":
         # segur: els candidats son les formes del cluster guanyador (d'on surt el valor); les alternatives
         # no bloquejants (conf < llindar) van a `altres`, perque la UI no mostri "segur" amb un valor diferent al costat
         candidates, altres = _distinct_candidates([top], abs_numbers=abs_numbers, field_name=field_name)
         for c in clusters[1:]:
+            if id(c) in other_ids:
+                continue
             altres.extend(s.as_candidate() for s in sorted(c.signals, key=_prefer_form, reverse=True))
     else:
         candidates, altres = _distinct_candidates(clusters, abs_numbers=abs_numbers, field_name=field_name)
+    extra_cell: dict | None = None
+    if other_days and estat == "segur":
+        # R2: els altres dies de camp queden VISIBLES (candidat anotat, com a l'or: «2025-10-06 (sondeig)») i a `extra`
+        days = [_iso_date(top.key)] if _iso_date(top.key) else []
+        for c in other_days:
+            best = max(c.signals, key=_prefer_form)
+            cand = best.as_candidate()
+            cand["value"] = _iso_date(c.key) or cand["value"]
+            cand["note"] = ("altre dia de camp (sondeig / presa de mostra); regla d'Eva: «si la data del sondeig no es "
+                            "igual, posar els dos dies»" + (f"; {best.note}" if best.note else ""))
+            candidates = (candidates + [cand]) if len(candidates) < MAX_CANDIDATES else candidates[:MAX_CANDIDATES - 1] + [cand]
+            if _iso_date(c.key):
+                days.append(_iso_date(c.key))
+        days = sorted(dict.fromkeys(days))
+        extra_cell = {"dies_de_camp": days}
+        reasons.append(f"campanya de {len(days)} dies ({', '.join(days)}): la data del sondeig no contradiu la de camp (R2)")
     value = candidates[0]["value"]
     iso = None
     if estat == "segur":
@@ -746,6 +816,8 @@ def decide(
     if estat == "candidats":
         cell["value"] = candidates[0]["value"]
     cell["rule"] = "; ".join(reasons)
+    if extra_cell:
+        cell["extra"] = extra_cell
     if altres:
         cell["altres"] = altres
     cell["sources_checked"] = list(sources_checked)
@@ -2156,6 +2228,8 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
     fields = {k: fields[k] for k in sorted(fields)}
 
     tables = consolidate_tables(corpus, conflicts, superficie=sc)
+    _cota_relative_system(fields, tables)
+    _depths_from_msnm(fields, tables)
 
     notes = [
         f"_decisions.json generat per consolidacio Python-first (Fase 12, {CONSOLIDATOR_VERSION}): "
@@ -2201,6 +2275,133 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
 
 
 _ENTRE_RE = re.compile(r"^\s*(situat\s+)?entre\s+el\s+carrer\b", re.IGNORECASE)
+
+
+def _is_rel_cota(v: Any) -> bool:
+    t = str(v or "").lower()
+    n = _numbers(t)
+    return "respecte" in t or "relati" in t or (bool(n) and abs(n[0]) < 50)
+
+
+def _cota_relative_system(fields: dict[str, dict], tables: dict[str, Any]) -> None:
+    """R2 / Pas 3b (Castellar): la cota de referencia absoluta (annex sondeig, z ICGC) es segura per si sola, pero si
+    l'annex DPSH treballa en sistema RELATIU («-4,0 m respecte el carrer», cel·la `cota_inici` segura), l'Eva te dues
+    sortides amb sistemes diferents i l'informe pot usar l'una o l'altra → candidats [absoluta, relativa] (or de
+    Castellar; `_LESSONS`: l'informe signat de Castellar diu -4,0). No toca res quan l'annex DPSH ja es absolut."""
+    cell = fields.get("cota_referencia") or {}
+    if cell.get("estat") != "segur" or _is_rel_cota(cell.get("value")):
+        return
+    rows = ((tables.get("dpsh_tests") or {}).get("rows") or [])
+    rel: dict | None = None
+    for r in rows:
+        c = r.get("cota_inici") if isinstance(r, dict) else None
+        if isinstance(c, dict) and c.get("estat") == "segur" and _is_rel_cota(c.get("value")):
+            rel = c
+            break
+    if rel is None:
+        return
+    c0 = (rel.get("candidates") or [{}])[0]
+    cand = {"value": f"{rel.get('value')} (annex DPSH, sistema relatiu)", "font": c0.get("font", "annex DPSH cota_inici"),
+            "quote": c0.get("quote", ""),
+            "note": "l'annex DPSH treballa en cotes relatives al carrer; l'informe de Castellar les va usar (Pas 3b)"}
+    cell["estat"] = "candidats"
+    cell["candidates"] = ([cell["candidates"][0]] + [cand] + cell["candidates"][1:])[:MAX_CANDIDATES]
+    cell["rule"] = ("Pas 3b: dues sortides de l'Eva amb sistemes diferents (annex sondeig absoluta vs annex DPSH relativa "
+                    "'respecte el carrer'): l'informe pot usar l'una o l'altra → candidats (R2); " + str(cell.get("rule") or ""))
+
+
+def _fmt_depth(cota: float, n: float, decimals: int) -> str:
+    d = round(cota - n, decimals)
+    if abs(d) < 10 ** (-decimals) / 2:
+        return "0," + "0" * decimals
+    txt = f"{abs(d):.{decimals}f}".replace(".", ",")
+    return ("-" if d > 0 else "+") + txt
+
+
+def _decimals(txt: str) -> int:
+    return max(1, len(txt.split(",")[1]) if "," in txt else (len(txt.split(".")[1]) if "." in txt else 0))
+
+
+def _msnm_scale(n: float, cota: float) -> bool:
+    return n >= 100 and cota - 30 <= n <= cota + 5
+
+
+def _depth_candidates(text: str, cota: float, cota_txt: str) -> list[tuple[str, str]]:
+    """`[(valor en fondaria, cota original), …]`: un per punt quan el text els dona; si no, la conversio en el lloc.
+    Buit si el text no porta cap nombre a l'escala de la cota."""
+    per_point: list[tuple[str, str]] = []
+    for m in _MSNM_POINT_RE.finditer(text):
+        n1 = float(m.group(2).replace(",", "."))
+        n2 = float(m.group(3).replace(",", ".")) if m.group(3) else None
+        if not _msnm_scale(n1, cota) or (n2 is not None and not _msnm_scale(n2, cota)):
+            continue
+        dec = max(_decimals(m.group(2)), _decimals(m.group(3)) if m.group(3) else 1)
+        depth = _fmt_depth(cota, n1, dec) + (("/" + _fmt_depth(cota, n2, dec)) if n2 is not None else "")
+        orig = m.group(2) + (("-" + m.group(3)) if m.group(3) else "")
+        for pt in re.split(r"\s*/\s*", m.group(4)):
+            pk = _point_key(pt, default_letter="P") or pt
+            per_point.append((f"{m.group(1)}{depth} m a {pk} (contacte {m.group(1)}{orig} msnm)", orig))
+    if per_point:
+        return per_point
+    originals: list[str] = []
+
+    def sub(m: "re.Match") -> str:
+        n1 = float(m.group(2).replace(",", "."))
+        n2 = float(m.group(3).replace(",", ".")) if m.group(3) else None
+        if not _msnm_scale(n1, cota) or (n2 is not None and not _msnm_scale(n2, cota)):
+            return m.group(0)
+        dec = max(_decimals(m.group(2)), _decimals(m.group(3)) if m.group(3) else 1)
+        originals.append(m.group(2) + (("-" + m.group(3)) if m.group(3) else ""))
+        depth = _fmt_depth(cota, n1, dec) + (("/" + _fmt_depth(cota, n2, dec)) if n2 is not None else "")
+        return f"{m.group(1)}{depth} m"
+
+    out = _MSNM_NUM_RE.sub(sub, text)
+    if not originals:
+        return []
+    return [(f"{out} (cota {', '.join(originals)} msnm)", ", ".join(originals))]
+
+
+def _depths_from_msnm(fields: dict[str, dict], tables: dict[str, Any]) -> None:
+    """R2 (Linyola, Alcoletge): el lector copia l'escala msnm del tall als nivells i al freatic; l'informe vol
+    fondaries. Conversio determinista amb la cota de referencia SEGURA del mateix `_decisions.json`; cada candidat en
+    msnm es reemplaça pel seu valor en fondaria (font «(derivat: fondaria = cota − msnm) ← …», la lectura original a
+    la nota i a la cita). Cap candidat nou: els mateixos, en el sistema de l'informe."""
+    cell = fields.get("cota_referencia") or {}
+    m = _LEADING_COTA_RE.match(str(cell.get("value") or ""))
+    if cell.get("estat") != "segur" or not m:
+        return
+    cota = float(m.group(1).replace("−", "-").replace(",", "."))
+    if cota < 100:
+        return
+    cota_txt = m.group(1).replace("−", "-")
+    for block, cellname in _MSNM_CELLS:
+        for row in ((tables.get(block) or {}).get("rows") or []):
+            c = row.get(cellname) if isinstance(row, dict) else None
+            if not isinstance(c, dict) or c.get("estat") not in ("segur", "candidats"):
+                continue
+            new_cands: list[dict] = []
+            changed = False
+            for cand in c.get("candidates") or []:
+                v = cand.get("value")
+                conv = _depth_candidates(str(v), cota, cota_txt) if isinstance(v, str) and "msnm" in v.lower() or (
+                    isinstance(v, str) and any(_msnm_scale(n, cota) for n in _numbers(v))) else []
+                if not conv:
+                    new_cands.append(cand)
+                    continue
+                changed = True
+                for depth_txt, orig in conv:
+                    d = dict(cand)
+                    d["value"] = depth_txt
+                    d["font"] = f"(derivat: fondaria = cota {cota_txt} − {orig} msnm) ← {cand.get('font', '')}"
+                    d["note"] = f"R2: lectura original en msnm «{v}»" + (f"; {cand['note']}" if cand.get("note") else "")
+                    new_cands.append(d)
+            if not changed:
+                continue
+            c["candidates"] = new_cands[:MAX_CANDIDATES]
+            if len(new_cands) > MAX_CANDIDATES:
+                c["altres"] = new_cands[MAX_CANDIDATES:] + list(c.get("altres") or [])
+            c["value"] = new_cands[0]["value"]
+            c["rule"] = f"R2: convertit a fondaria amb la cota de referencia {cota_txt} msnm (sistema de l'informe); " + str(c.get("rule") or "")
 
 
 def _canonical_municipality(cell: dict) -> None:
