@@ -1,0 +1,903 @@
+{
+ "project": "4001679 ANCILES",
+ "read_on": "2026-09-05T14:30:30",
+ "reader": "automation.g3_templates (Fase 4a, determinista)",
+ "documents": [
+  {
+   "document_type": "fitxa_camp_g3",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "MARIA ALBA BARRAU CASTÁN 616523792",
+     "location": "fitxa!C6 (CLIENT)",
+     "quote": "MARIA ALBA BARRAU CASTÁN 616523792",
+     "confidence": 0.3,
+     "note": "= sol·licitant (regla G3); NO autoritat de client_name"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/GENERAL FERRAZ 20 ANCILES (HUESCA)",
+     "location": "fitxa!C7 (ADREÇA OBRA)",
+     "quote": "C/GENERAL FERRAZ 20 ANCILES (HUESCA)",
+     "confidence": 0.8,
+     "note": "C7 porta adreça + municipi a la mateixa cel·la"
+    },
+    {
+     "concept_id": "contact_person",
+     "value": "ENRIQUE",
+     "location": "fitxa!C8 (PERSONA DE CONTACTE)",
+     "quote": "ENRIQUE",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "contact_phone",
+     "value": "TEL.608333896",
+     "location": "fitxa!F8",
+     "quote": "TEL.608333896",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "previsio_camp",
+     "value": "PENETROS I SONDEIG PETIT",
+     "location": "fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+     "quote": "PENETROS I SONDEIG PETIT",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "lab_field_company",
+     "value": "TPS ERUGA",
+     "location": "fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+     "quote": "TPS ERUGA",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "field_date",
+     "value": "2026-02-19",
+     "location": "fitxa!F38 (E38 'dies de camp')",
+     "quote": "datetime.datetime(2026, 2, 19, 0, 0)",
+     "confidence": 0.95,
+     "note": "primer dia de camp (autoritat A)"
+    }
+   ],
+   "warnings": [],
+   "source_path": "24.0807/DADES PER ANAR A CAMP_v1.xlsx"
+  },
+  {
+   "document_type": "plan_cost_g3",
+   "tier_a": [
+    {
+     "concept_id": "building_type",
+     "value": "EG 7 VIVIENDAS ANCILES",
+     "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG 7 VIVIENDAS ANCILES",
+     "confidence": 0.6,
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    },
+    {
+     "concept_id": "municipality",
+     "value": "ANCILES",
+     "location": "'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG 7 VIVIENDAS ANCILES",
+     "confidence": 0.5,
+     "note": "«ANCILES» no consta al padró de municipis de Catalunya: o és de fora de Catalunya, o no és un municipi (pot ser un llogaret o una entitat): verificar"
+    },
+    {
+     "concept_id": "tecnic",
+     "value": "Eva Vázquez Marcet",
+     "location": "'Plan Cost'!E21",
+     "quote": "Eva Vázquez Marcet",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 5,
+     "location": "OFERTA!B21",
+     "quote": "5",
+     "confidence": 0.6,
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "concept_id": "sondeig_ml",
+     "value": 10,
+     "location": "OFERTA!B6",
+     "quote": "10",
+     "confidence": 0.6,
+     "note": "ml de perforació"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "TPS",
+     "location": "OFERTA!G3",
+     "quote": "TPS",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "SOIL-ASSAIG",
+     "location": "OFERTA!G27",
+     "quote": "SOIL-ASSAIG",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    }
+   ],
+   "warnings": [],
+   "source_path": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20241118173536+01'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA / C/SAN SEBASTIAN 6 / 22440 BENASQUE",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "architect_name",
+     "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "location": "p.1 bloc CLIENT",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "confidence": 0.5,
+     "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/GENERAL FERRAZ 20",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "ANCILES (HUESCA)",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "24·0807",
+     "location": "p.1 peu / capçaleres",
+     "quote": "24·0807",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 5,
+     "location": "p.2 campanya",
+     "quote": "5 ensayos de penetración dinámica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "concept_id": "num_sondeigs",
+     "value": 2,
+     "location": "p.2 campanya",
+     "quote": "2 sondeo a rotación",
+     "confidence": 0.7,
+     "note": "previstos"
+    }
+   ],
+   "warnings": [],
+   "source_path": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20260205234717+01'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA / C/SAN SEBASTIAN 6 / 22440 BENASQUE",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "architect_name",
+     "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "location": "p.1 bloc CLIENT",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "confidence": 0.5,
+     "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/GENERAL FERRAZ 20",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "ANCILES (HUESCA)",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "24·0807",
+     "location": "p.1 peu / capçaleres",
+     "quote": "24·0807",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 5,
+     "location": "p.2 campanya",
+     "quote": "5 ensayos de penetración dinámica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "concept_id": "num_sondeigs",
+     "value": 2,
+     "location": "p.2 campanya",
+     "quote": "2 sondeo a rotación",
+     "confidence": 0.7,
+     "note": "previstos"
+    }
+   ],
+   "warnings": [],
+   "source_path": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf"
+  },
+  {
+   "document_type": "dpsh_excel",
+   "tier_a": [
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 6,
+     "location": "fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1', 'P-2', 'P-3', 'P-4', 'P-5', 'P-6']",
+     "confidence": 0.95,
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rechazo a la penetración: -3,58 m",
+     "location": "P-1!B80",
+     "quote": "Rechazo a la penetración: -3,58 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rechazo a la penetración: -4,59 m",
+     "location": "P-2!B80",
+     "quote": "Rechazo a la penetración: -4,59 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rechazo a la penetración: -3,77 m",
+     "location": "P-3!B80",
+     "quote": "Rechazo a la penetración: -3,77 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rechazo a la penetración: -5,92 m",
+     "location": "P-4!B80",
+     "quote": "Rechazo a la penetración: -5,92 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rechazo a la penetración: -4,18 m",
+     "location": "P-5!B80",
+     "quote": "Rechazo a la penetración: -4,18 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rechazo a la penetración: -5,70 m",
+     "location": "P-6!B80",
+     "quote": "Rechazo a la penetración: -5,70 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "expedient",
+     "value": "4001679",
+     "location": "nom del fitxer",
+     "quote": "4001679_DPSH.xls",
+     "confidence": 0.7
+    }
+   ],
+   "warnings": [],
+   "source_path": "ANEJOS/4001679_DPSH.xls"
+  },
+  {
+   "document_type": "comanda_lab_g3",
+   "tier_a": [
+    {
+     "concept_id": "expedient",
+     "value": "4001679",
+     "location": "Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "4001679.0",
+     "confidence": 0.95
+    },
+    {
+     "concept_id": "building_type",
+     "value": "CONSTR GRUPO DE VIVIENDAS",
+     "location": "Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR GRUPO DE VIVIENDAS",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "municipality",
+     "value": "ANCILES",
+     "location": "Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "ANCILES",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "field_date",
+     "value": "2026-02-19",
+     "location": "Hoja1!N23 (DATA DE PRESA)",
+     "quote": "46072.0",
+     "confidence": 0.7,
+     "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    },
+    {
+     "concept_id": "data_sollicitud_lab",
+     "value": "2026-02-27",
+     "location": "Hoja1!AH23",
+     "quote": "46080.0",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "lab_sample_id",
+     "value": "MA (S-2)",
+     "location": "Hoja1!C35",
+     "quote": "MA (S-2)",
+     "confidence": 0.7,
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    },
+    {
+     "concept_id": "lab_depth",
+     "value": "2.8 - 3.0",
+     "location": "Hoja1!J35/L35",
+     "quote": "INICIAL 2.8 / FINAL 3.0",
+     "confidence": 0.7,
+     "note": "el GTL mana si discrepa"
+    },
+    {
+     "concept_id": "lab_location",
+     "value": "S-2",
+     "location": "Hoja1!C35 (parèntesi)",
+     "quote": "MA (S-2)",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "lab_tests_note",
+     "value": "NOMÉS SULFATS",
+     "location": "Hoja1!AD35",
+     "quote": "NOMÉS SULFATS",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "NOT_client_name",
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "confidence": 1.0,
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    }
+   ],
+   "warnings": [],
+   "source_path": "comanda laboratori_4001679_ANCILES.xls"
+  }
+ ],
+ "concepts": {
+  "client_name": [
+   {
+    "concept_id": "client_name",
+    "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA / C/SAN SEBASTIAN 6 / 22440 BENASQUE",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260205234717+01'00'"
+   },
+   {
+    "concept_id": "client_name",
+    "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA / C/SAN SEBASTIAN 6 / 22440 BENASQUE",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20241118173536+01'00'"
+   },
+   {
+    "concept_id": "client_name",
+    "value": "MARIA ALBA BARRAU CASTÁN 616523792",
+    "location": "fitxa!C6 (CLIENT)",
+    "quote": "MARIA ALBA BARRAU CASTÁN 616523792",
+    "confidence": 0.3,
+    "note": "= sol·licitant (regla G3); NO autoritat de client_name",
+    "source": "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "street_address": [
+   {
+    "concept_id": "street_address",
+    "value": "C/GENERAL FERRAZ 20",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO",
+    "confidence": 0.9,
+    "source": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260205234717+01'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/GENERAL FERRAZ 20",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO",
+    "confidence": 0.9,
+    "source": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20241118173536+01'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/GENERAL FERRAZ 20 ANCILES (HUESCA)",
+    "location": "fitxa!C7 (ADREÇA OBRA)",
+    "quote": "C/GENERAL FERRAZ 20 ANCILES (HUESCA)",
+    "confidence": 0.8,
+    "note": "C7 porta adreça + municipi a la mateixa cel·la",
+    "source": "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "contact_person": [
+   {
+    "concept_id": "contact_person",
+    "value": "ENRIQUE",
+    "location": "fitxa!C8 (PERSONA DE CONTACTE)",
+    "quote": "ENRIQUE",
+    "confidence": 0.8,
+    "source": "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "contact_phone": [
+   {
+    "concept_id": "contact_phone",
+    "value": "TEL.608333896",
+    "location": "fitxa!F8",
+    "quote": "TEL.608333896",
+    "confidence": 0.8,
+    "source": "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "concept_id": "previsio_camp",
+    "value": "PENETROS I SONDEIG PETIT",
+    "location": "fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I SONDEIG PETIT",
+    "confidence": 0.7,
+    "source": "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "concept_id": "lab_field_company",
+    "value": "TPS ERUGA",
+    "location": "fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "confidence": 0.8,
+    "source": "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "field_date": [
+   {
+    "concept_id": "field_date",
+    "value": "2026-02-19",
+    "location": "fitxa!F38 (E38 'dies de camp')",
+    "quote": "datetime.datetime(2026, 2, 19, 0, 0)",
+    "confidence": 0.95,
+    "note": "primer dia de camp (autoritat A)",
+    "source": "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   },
+   {
+    "concept_id": "field_date",
+    "value": "2026-02-19",
+    "location": "Hoja1!N23 (DATA DE PRESA)",
+    "quote": "46072.0",
+    "confidence": 0.7,
+    "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp",
+    "source": "comanda laboratori_4001679_ANCILES.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "building_type": [
+   {
+    "concept_id": "building_type",
+    "value": "CONSTR GRUPO DE VIVIENDAS",
+    "location": "Hoja1!N18 (G18 OBRA)",
+    "quote": "CONSTR GRUPO DE VIVIENDAS",
+    "confidence": 0.7,
+    "source": "comanda laboratori_4001679_ANCILES.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "building_type",
+    "value": "EG 7 VIVIENDAS ANCILES",
+    "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+    "quote": "EG 7 VIVIENDAS ANCILES",
+    "confidence": 0.6,
+    "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi",
+    "source": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "municipality": [
+   {
+    "concept_id": "municipality",
+    "value": "ANCILES",
+    "location": "Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+    "quote": "ANCILES",
+    "confidence": 0.9,
+    "source": "comanda laboratori_4001679_ANCILES.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "ANCILES (HUESCA)",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260205234717+01'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "ANCILES (HUESCA)",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20241118173536+01'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "ANCILES",
+    "location": "'Plan Cost'!E9 (rere el tipus de projecte)",
+    "quote": "EG 7 VIVIENDAS ANCILES",
+    "confidence": 0.5,
+    "note": "«ANCILES» no consta al padró de municipis de Catalunya: o és de fora de Catalunya, o no és un municipi (pot ser un llogaret o una entitat): verificar",
+    "source": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "tecnic": [
+   {
+    "concept_id": "tecnic",
+    "value": "Eva Vázquez Marcet",
+    "location": "'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "confidence": 0.6,
+    "source": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "num_dpsh_tests": [
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 6,
+    "location": "fulls amb dades a la columna C",
+    "quote": "sheets: ['P-1', 'P-2', 'P-3', 'P-4', 'P-5', 'P-6']",
+    "confidence": 0.95,
+    "note": "EXECUTATS (autoritat sobre els previstos)",
+    "source": "ANEJOS/4001679_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 5,
+    "location": "p.2 campanya",
+    "quote": "5 ensayos de penetración dinámica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260205234717+01'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 5,
+    "location": "p.2 campanya",
+    "quote": "5 ensayos de penetración dinámica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20241118173536+01'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 5,
+    "location": "OFERTA!B21",
+    "quote": "5",
+    "confidence": 0.6,
+    "note": "unitats DPSH ofertades (previstes)",
+    "source": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "sondeig_ml": [
+   {
+    "concept_id": "sondeig_ml",
+    "value": 10,
+    "location": "OFERTA!B6",
+    "quote": "10",
+    "confidence": 0.6,
+    "note": "ml de perforació",
+    "source": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "TPS",
+    "location": "OFERTA!G3",
+    "quote": "TPS",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "SOIL-ASSAIG",
+    "location": "OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "architect_name": [
+   {
+    "concept_id": "architect_name",
+    "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+    "location": "p.1 bloc CLIENT",
+    "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+    "confidence": 0.5,
+    "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)",
+    "source": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260205234717+01'00'"
+   },
+   {
+    "concept_id": "architect_name",
+    "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+    "location": "p.1 bloc CLIENT",
+    "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+    "confidence": 0.5,
+    "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)",
+    "source": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20241118173536+01'00'"
+   }
+  ],
+  "expedient_comercial": [
+   {
+    "concept_id": "expedient_comercial",
+    "value": "24·0807",
+    "location": "p.1 peu / capçaleres",
+    "quote": "24·0807",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260205234717+01'00'"
+   },
+   {
+    "concept_id": "expedient_comercial",
+    "value": "24·0807",
+    "location": "p.1 peu / capçaleres",
+    "quote": "24·0807",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20241118173536+01'00'"
+   }
+  ],
+  "num_sondeigs": [
+   {
+    "concept_id": "num_sondeigs",
+    "value": 2,
+    "location": "p.2 campanya",
+    "quote": "2 sondeo a rotación",
+    "confidence": 0.7,
+    "note": "previstos",
+    "source": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260205234717+01'00'"
+   },
+   {
+    "concept_id": "num_sondeigs",
+    "value": 2,
+    "location": "p.2 campanya",
+    "quote": "2 sondeo a rotación",
+    "confidence": 0.7,
+    "note": "previstos",
+    "source": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20241118173536+01'00'"
+   }
+  ],
+  "dpsh_refusal": [
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rechazo a la penetración: -3,58 m",
+    "location": "P-1!B80",
+    "quote": "Rechazo a la penetración: -3,58 m",
+    "confidence": 0.8,
+    "source": "ANEJOS/4001679_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rechazo a la penetración: -4,59 m",
+    "location": "P-2!B80",
+    "quote": "Rechazo a la penetración: -4,59 m",
+    "confidence": 0.8,
+    "source": "ANEJOS/4001679_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rechazo a la penetración: -3,77 m",
+    "location": "P-3!B80",
+    "quote": "Rechazo a la penetración: -3,77 m",
+    "confidence": 0.8,
+    "source": "ANEJOS/4001679_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rechazo a la penetración: -5,92 m",
+    "location": "P-4!B80",
+    "quote": "Rechazo a la penetración: -5,92 m",
+    "confidence": 0.8,
+    "source": "ANEJOS/4001679_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rechazo a la penetración: -4,18 m",
+    "location": "P-5!B80",
+    "quote": "Rechazo a la penetración: -4,18 m",
+    "confidence": 0.8,
+    "source": "ANEJOS/4001679_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rechazo a la penetración: -5,70 m",
+    "location": "P-6!B80",
+    "quote": "Rechazo a la penetración: -5,70 m",
+    "confidence": 0.8,
+    "source": "ANEJOS/4001679_DPSH.xls",
+    "document_type": "dpsh_excel"
+   }
+  ],
+  "expedient": [
+   {
+    "concept_id": "expedient",
+    "value": "4001679",
+    "location": "Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+    "quote": "4001679.0",
+    "confidence": 0.95,
+    "source": "comanda laboratori_4001679_ANCILES.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "expedient",
+    "value": "4001679",
+    "location": "nom del fitxer",
+    "quote": "4001679_DPSH.xls",
+    "confidence": 0.7,
+    "source": "ANEJOS/4001679_DPSH.xls",
+    "document_type": "dpsh_excel"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "concept_id": "data_sollicitud_lab",
+    "value": "2026-02-27",
+    "location": "Hoja1!AH23",
+    "quote": "46080.0",
+    "confidence": 0.6,
+    "source": "comanda laboratori_4001679_ANCILES.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_sample_id": [
+   {
+    "concept_id": "lab_sample_id",
+    "value": "MA (S-2)",
+    "location": "Hoja1!C35",
+    "quote": "MA (S-2)",
+    "confidence": 0.7,
+    "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe",
+    "source": "comanda laboratori_4001679_ANCILES.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_depth": [
+   {
+    "concept_id": "lab_depth",
+    "value": "2.8 - 3.0",
+    "location": "Hoja1!J35/L35",
+    "quote": "INICIAL 2.8 / FINAL 3.0",
+    "confidence": 0.7,
+    "note": "el GTL mana si discrepa",
+    "source": "comanda laboratori_4001679_ANCILES.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_location": [
+   {
+    "concept_id": "lab_location",
+    "value": "S-2",
+    "location": "Hoja1!C35 (parèntesi)",
+    "quote": "MA (S-2)",
+    "confidence": 0.7,
+    "source": "comanda laboratori_4001679_ANCILES.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "concept_id": "lab_tests_note",
+    "value": "NOMÉS SULFATS",
+    "location": "Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "confidence": 0.6,
+    "source": "comanda laboratori_4001679_ANCILES.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "NOT_client_name": [
+   {
+    "concept_id": "NOT_client_name",
+    "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+    "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+    "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+    "confidence": 1.0,
+    "note": "G3 = sol·licitant del laboratori, mai client",
+    "source": "comanda laboratori_4001679_ANCILES.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ]
+ }
+}

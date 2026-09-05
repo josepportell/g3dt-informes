@@ -1,0 +1,11 @@
+-- dpsh_tests: or 3 files / prod 3 files · alineades per clau
+-- sondeig_tests: or 0 files / prod 0 files
+-- spt_ma_tests: or 1 files / prod 1 files · alineades per clau
+CAUTELA  spt_ma_tests[0].litologia candidats disjunts: or=['Lutites (Nivell 2)', 'Rebliment antròpic (Nivell 1)'] prod=['[primera paraula il·legible] marró']
+-- soil_levels: or 2 files / prod 2 files · alineades per clau
+BUIT     soil_levels[0].de (or=segur '0,00 m (cota +188,20 msnm)'; prod no_trobat)
+CAUTELA  soil_levels[0].a candidats disjunts: or=['-1,4 m (P-1 i P-3) / -1,2 m (P-2)', '~ -1,1 a -1,3 m (límit ondulant a +186,9/+187,1 msnm)'] prod=["~186,8 a ~187,0 msnm segons el punt (contacte amb el Nivell 2: ~186,8 a P-1, ~187,0 a P-3, ~186,9-187,0 a P-2). Lectura gràfica sobre l'eix imprès (186-189 msnm), sense xifra impresa de la cota de contacte; precisió aprox. ±0,1-0,2 m."]
+BUIT     soil_levels[0].mostra_del_nivell (or=candidats 'possible (interval SPT 0,8-1,4 dins N1 per fondàries)'; prod no_trobat)
+CAUTELA  soil_levels[1].de candidats disjunts: or=['-1,4 m (P-1/P-3) / -1,2 m (P-2)', '~ -1,1 a -1,3 m'] prod=["~186,8 a ~187,0 msnm segons el punt (mateix contacte que el Nivell 1, vegeu nota d'aquell nivell)"]
+BUIT     soil_levels[1].mostra_del_nivell (or=candidats "probable (lutita marró recuperada a l'SPT)"; prod no_trobat)
+TOTALS: {'OK': 19, 'CAUTELA': 3, 'BUIT': 3}

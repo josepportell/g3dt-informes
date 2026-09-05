@@ -80,6 +80,12 @@ from automation.g3_templates import EXCLUDE_DIRS, EXCLUDE_NAME_PARTS
 # Exclusions de nom que ni el skill Pas 1 ni g3_templates cobreixen totes dues.
 _EXTRA_EXCLUDE_NAME_PARTS = ("EXPLICACI", "Thumbs.db")
 _SKIP_EXTENSIONS = {".fh11"}
+#: I1 (2026-09-05, mesura dels 8, Anciles): les carpetes «versio 0» s'exclouen com a versio anterior NOMES si hi ha
+#: una carpeta `PDF/` vigent al projecte. Anciles no en te (els annexos vigents son `.FH11`, il·legibles, i la unica
+#: copia PDF viu a `PDF_V0/ANEJOS/`): amb l'exclusio cega es quedava sense cap cota (9 cel·les en blanc que l'or omple
+#: d'aquests mateixos PDF). Les entrades llegides des d'una V0 porten `"version": "V0"`.
+_V0_DIRS = frozenset({"PDF-V0", "PDF V0", "PDF_V0"})
+_CURRENT_PDF_DIR = "PDF"
 _IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png"}
 _FALLBACK_CLAUDE_EXTENSIONS = {".pdf", ".dwg"}
 
@@ -120,9 +126,12 @@ _RE_DPSH_EXCEL = re.compile(r".*_DPSH\.xls$", re.I)
 _RE_CADASTRE_RC = re.compile(r"^\d{7}[A-Z0-9-]{6,}\.pdf$", re.I)
 _CERTIFICACIO_SUBSTR = "certificaci"
 
-_RE_ANNEX_SONDEIG = re.compile(r".*_sondeig\.pdf$", re.I)
+# I1 (2026-09-05): variants en castella dels annexos de l'Eva (Vilanova, Anciles: `ANEJOS/`, `_sondeos.pdf`,
+# `corte de correlación.pdf`) — nomes canvien el `doc_type_hint` (prioritat de cua); el tipus real el decideix el lector.
+_RE_ANNEX_SONDEIG = re.compile(r".*_sonde(?:ig|os)\.pdf$", re.I)
 _RE_ANNEX_DPSH_PDF = re.compile(r".*_DPSH\.pdf$", re.I)
-_RE_ANNEX_TALL = re.compile(r"^tall\.pdf$|tall\s*de\s*correlaci.*\.pdf$", re.I)
+_ANNEX_DIR_NAMES = frozenset({"ANNEXES", "ANEJOS", "ANNEXOS"})
+_RE_ANNEX_TALL = re.compile(r"^tall\.pdf$|tall\s*de\s*correlaci.*\.pdf$|corte\s*de\s*correlaci.*\.pdf$", re.I)
 _RE_ANNEX_PLANOL_SITUACIO = re.compile(r"pl.*situaci.*\.pdf$", re.I)
 _RE_PENETROS = re.compile(r"penetros", re.I)
 _RE_SONDEIG_MANUSCRIT = re.compile(r"^SONDEIG\.pdf$", re.I)
@@ -138,15 +147,17 @@ def _md5_of(path: Path) -> str:
     return h.hexdigest()
 
 
-def _classify(rel: PurePosixPath) -> tuple[str, str]:
-    """Retorna (route, doc_type_hint) per a un path relatiu (separador '/')."""
+def _classify(rel: PurePosixPath, *, v0_fallback: bool = False) -> tuple[str, str]:
+    """Retorna (route, doc_type_hint) per a un path relatiu (separador '/').
+
+    `v0_fallback`: el projecte no te cap carpeta `PDF/` vigent → les carpetes V0 (`_V0_DIRS`) NO s'exclouen (I1)."""
     parts = rel.parts
     name = rel.name
     lname = name.lower()
     suffix = rel.suffix.lower()
 
     # -- 1. Exclusions dures (skip), en ordre --------------------------------
-    if any(part in EXCLUDE_DIRS for part in parts):
+    if any(part in EXCLUDE_DIRS and not (v0_fallback and part in _V0_DIRS) for part in parts):
         return "skip", "exclos_carpeta"
     for token in EXCLUDE_NAME_PARTS:
         if token.lower() in lname:
@@ -182,7 +193,7 @@ def _classify(rel: PurePosixPath) -> tuple[str, str]:
     # -- 5. Annexos de l'Eva (route claude) -----------------------------------
     if _RE_ANNEX_SONDEIG.match(name):
         return "claude", "annex_sondeig"
-    if _RE_ANNEX_DPSH_PDF.match(name) and any(p.upper() == "ANNEXES" for p in parts):
+    if _RE_ANNEX_DPSH_PDF.match(name) and any(p.upper() in _ANNEX_DIR_NAMES for p in parts):
         return "claude", "annex_dpsh"
     if _RE_ANNEX_TALL.search(name):
         return "claude", "annex_tall"
@@ -219,6 +230,17 @@ def _classify(rel: PurePosixPath) -> tuple[str, str]:
     return "skip", "no_classificat"
 
 
+def has_current_pdf_dir(project_path: Path) -> bool:
+    """Hi ha una carpeta `PDF/` vigent (a qualsevol nivell, fora de les V0 i de les excloses)?"""
+    for d in Path(project_path).rglob("*"):
+        if not d.is_dir() or d.name.upper() != _CURRENT_PDF_DIR:
+            continue
+        rel_parts = PurePosixPath(d.relative_to(project_path).as_posix()).parts
+        if not any(part in EXCLUDE_DIRS for part in rel_parts[:-1]):
+            return True
+    return False
+
+
 def build_inventory(project_path: Path) -> dict:
     """Escaneja `project_path` i retorna l'estructura d'inventari (disseny §3.2).
 
@@ -226,15 +248,16 @@ def build_inventory(project_path: Path) -> dict:
     de sortida estan ordenats per `path`.
     """
     project_path = Path(project_path)
+    v0_fallback = not has_current_pdf_dir(project_path)
     entries: list[dict] = []
     for p in project_path.rglob("*"):
         if not p.is_file():
             continue
         rel = PurePosixPath(p.relative_to(project_path).as_posix())
-        route, doc_type_hint = _classify(rel)
+        route, doc_type_hint = _classify(rel, v0_fallback=v0_fallback)
         priority = _PRIORITY_BY_HINT.get(doc_type_hint, 0) if route == "claude" else 0
         st = p.stat()
-        entries.append({
+        entry = {
             "path": str(rel),
             "size": st.st_size,
             "md5": _md5_of(p),
@@ -242,7 +265,10 @@ def build_inventory(project_path: Path) -> dict:
             "route": route,
             "doc_type_hint": doc_type_hint,
             "priority": priority,
-        })
+        }
+        if v0_fallback and route != "skip" and any(part in _V0_DIRS for part in rel.parts):
+            entry["version"] = "V0"
+        entries.append(entry)
     entries.sort(key=lambda e: e["path"])
 
     md5_groups: dict[str, list[str]] = {}

@@ -1,0 +1,126 @@
+{
+ "source_path": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+ "source_md5": "6068a4e989126135944946e5a76ec0d2",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost comercial de G3 per a l'estudi geotècnic de l'obra d'Ancilés (Osca): còpia de treball a l'arrel del projecte (24.0807/), sense el full 5 (facturació) omplert.",
+ "issuer": "G3 Desenvolupament Territorial, S.L.",
+ "date": "2024-11-18",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. (creator del PDF i peu de pàgina p.5)",
+  "for_whom": "El sol·licitant indicat al bloc CLIENTE: de p.1 ('RETRATERIA, ALBA BARRAU CASTAN, ARQUITECTA'), no necessàriament el promotor/propietari real de l'obra",
+  "why": "Proposta econòmica i d'abast (DPSH + sondeig + laboratori + redacció) per a l'estudi geotècnic de l'obra al C/General Ferraz 20, Anciles (Huesca), pendent d'acceptació i firma",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "num_dpsh_tests (previstos)",
+   "building/obra title",
+   "preu"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company/lab_sample_id/lab_depth/lab_location",
+   "num_floors",
+   "superficie_parcela",
+   "num_soil_levels"
+  ],
+  "relation_to_others": "Existeix una altra còpia amb md5 diferent a ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf (facc75f307f41e899566791f2272b75d), no oberta en aquesta crida; si aquella porta el full 5 (DATOS QUE HAN DE CONSTAR EN LA FACTURA...) omplert, té autoritat superior per a client_name. En aquesta còpia el full 5 és en blanc (només signatura de G3/Eva, cap dada del client).",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "num_dpsh_tests",
+   "architect_name",
+   "architect_company",
+   "cte_edificacio",
+   "cte_sol"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "C/General Ferraz 20",
+   "location": "p.1, bloc OBRA:",
+   "quote": "C/GENERAL FERRAZ 20",
+   "confidence": 0.75,
+   "note": "Bloc OBRA (adreça de l'obra), no del client/sol·licitant"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Anciles (Huesca)",
+   "location": "p.1, bloc OBRA:",
+   "quote": "ANCILES (HUESCA)",
+   "confidence": 0.75,
+   "note": "Forma del document en majúscules sense accent; possible forma oficial 'Ancilés' (Vall de Benasc, Osca) — confirmar amb padró/Cadastre"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Alba Barrau Castán",
+   "location": "p.1, bloc CLIENTE:",
+   "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+   "confidence": 0.55,
+   "note": "Bloc CLIENTE: del pressupost = sol·licitant, no promotor (Pas 0/3). El nom conté 'ARQUITECTA' → candidat a architect_name, mai a client_name"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "Retratería",
+   "location": "p.1, bloc CLIENTE:",
+   "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+   "confidence": 0.25,
+   "note": "Paraula que precedeix el nom de l'arquitecta al mateix bloc; podria ser el nom del despatx/estudi o un error de transcripció. Sense confirmació creuada en aquest document"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "5",
+   "location": "p.2 (Plan de trabajo) i p.4 (Valoración, partida 001.001)",
+   "quote": "5 ensayos de penetración dinámica DPSH",
+   "confidence": 0.5,
+   "note": "Previstos al pressupost, no executats. L'Excel DPSH (ANEJOS/4001679_DPSH.xls, no llegit en aquesta crida) mana si difereix"
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": null,
+   "location": "p.2, sota l'epígraf 'Clasificación CTE'",
+   "quote": "Clasificación CTE",
+   "confidence": 0.0,
+   "note": "Etiqueta present però sense cap valor darrere (comprovat visualment a page-2.png): aquest pressupost NO porta la línia de classificació CTE omplerta (Tipus d'edifici / Tipus de Terreny). Camp buit, no candidat"
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": null,
+   "location": "p.2, sota l'epígraf 'Clasificación CTE'",
+   "quote": "Clasificación CTE",
+   "confidence": 0.0,
+   "note": "Mateixa etiqueta buida que cte_edificacio; ambdós camps absents en aquest document"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "Alba Barrau Castán (Retratería), sol·licitant",
+   "location": "p.1, bloc CLIENTE:",
+   "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+   "confidence": 0.0,
+   "note": "Descartat com client_name: és el sol·licitant/arquitecta que demana el pressupost (nom conté ARQUITECTA), no el promotor/propietari de l'obra. Regla Pas 3"
+  }
+ ],
+ "not_present": [
+  "expedient (aquest document només porta el codi comercial '24·0807 P#', no l'expedient del projecte)",
+  "client_name (només consta el sol·licitant/arquitecta, vegeu NOT_client_name)",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date (només consta la data del pressupost, 18/11/24, no la data de camp)",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location"
+ ],
+ "reading_notes": "Document en castellà (client d'Osca, fora de Ponent). Pre-extracció completa (7 pàgines, text_ok totes): llegides les 7 page-N.txt; page-1.png i page-2.png renderitzades per confirmar el layout dels blocs CLIENTE/OBRA i que l'epígraf 'Clasificación CTE' (p.2) no porta cap valor darrere (ni text ni taula/imatge). page-5.png confirmada per verificar que el full de facturació d'aquesta còpia concreta és en blanc (només signatura de G3), distingint-la de la còpia d'ACCEPTACIO amb md5 diferent. p.3, p.6 i p.7 són condicions/temporització sense dades del nivell A; p.4 és la valoració econòmica (confirma el recompte de 5 DPSH i 2 sondejos previstos, aquest darrer no correspon a cap dels 15 camps)."
+}

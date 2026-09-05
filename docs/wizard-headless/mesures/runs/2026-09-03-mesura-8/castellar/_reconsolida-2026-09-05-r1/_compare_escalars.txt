@@ -1,0 +1,8 @@
+NOU      architect_company      prod=no_trobat
+CAUTELA  cte_sol                or sense valor ni candidats per a la subclau; prod=['T-1']
+CAUTELA  lab_sample_id          or segur, prod candidats (bo dins): 'MA-1 (S1)'
+CAUTELA  num_floors             or segur, prod candidats (bo dins): 'PB+1 (sense soterrani)'
+FORA     referencia_catastral   fora de la carpeta: '3298012DG2039N + 3298013DG2039N + 3298014DG2039N' (Cadastre (Callejero DNPLOC + WFS INSPIRE), portals 18A+18B+20)
+CAUTELA  street_address         or segur, prod candidats (bo dins): 'Carrer Arbrells, 18A, 18B i 20'
+FORA     superficie_parcela     fora de la carpeta: '1284' (Cadastre (Callejero DNPLOC + WFS INSPIRE), portals 18A+18B+20 = 3298012+3298013+3298014 DG2039N (441+423+420 m²))
+TOTALS: {'NOU': 1, 'OK': 15, 'CAUTELA': 4, 'FORA': 2}

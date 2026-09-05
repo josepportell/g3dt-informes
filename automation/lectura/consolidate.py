@@ -93,6 +93,34 @@ _UNIT_TOKENS = frozenset({
     "m", "ml", "msnm", "m2", "cm", "mm", "mts", "metres", "metros", "aprox", "ca", "msn", "e", "x", "y", "n", "z",
 })
 
+# R1 (2026-09-05, mesura dels 8: «mateixa entitat, formes diferents, tractades com a contradiccio», 15 cel·les):
+# equivalencies PER CAMP dins de `value_key`. Cap d'elles inventa res: nomes declaren que dues grafies son el mateix.
+#: forma juridica al final del nom (client, despatx, laboratori): «TPS, S.L.» = «TPS, Prospeccio del Subsol, SL»
+_LEGAL_SUFFIX_FIELDS = frozenset({"client_name", "architect_company", "lab_testing_company"})
+_LEGAL_SUFFIX_TOKENS = frozenset({"sl", "sa", "slu", "slp", "scp", "sll", "sccl", "slne", "sau", "coop", "ltd", "inc", "llc", "gmbh"})
+#: tipus d'edifici: abreviatures de les plantilles G3 (`EG HAB UNIF LINYOLA`, `CONSTR 3 HAB UNIF`) i castella → catala
+_BT_MAP = {"hab": "habitatge", "habit": "habitatge", "habitatges": "habitatge", "vivienda": "habitatge", "viviendas": "habitatge",
+           "casa": "habitatge", "cases": "habitatge", "casas": "habitatge",
+           "unif": "unifamiliar", "uni": "unifamiliar", "unifam": "unifamiliar", "unifamiliars": "unifamiliar", "unifamiliares": "unifamiliar",
+           "aill": "aillat", "aillats": "aillat", "aillada": "aillat", "aillades": "aillat", "aislada": "aillat", "aislado": "aillat",
+           "aisladas": "aillat", "aislados": "aillat",
+           "adosada": "adossat", "adosado": "adossat", "adosadas": "adossat", "adosados": "adossat", "adossada": "adossat",
+           "adossades": "adossat", "adossats": "adossat",
+           "plurif": "plurifamiliar", "plurifamiliars": "plurifamiliar", "plurifamiliares": "plurifamiliar",
+           "pareada": "aparellat", "pareado": "aparellat", "aparellada": "aparellat", "medianeras": "mitgera", "mitgeres": "mitgera"}
+_BT_STOP = frozenset({"constr", "construccio", "construcció", "eg", "estudi", "estudio", "geologic", "geotecnic", "geotecnico",
+                      "per", "para", "un", "una", "uns", "unes", "grup", "grupo", "edificacio", "edificio", "d", "l", "de", "del",
+                      "la", "el", "en", "amb", "con", "nou", "nova", "nueva", "nuevo", "projecte", "proyecto", "obra", "unitat",
+                      "unitats", "unidad", "unidades"})
+#: via: abreviatures habituals als caixetins i pressupostos
+_VIA_ABBR = {"sta": "santa", "st": "sant", "gral": "general", "avda": "avinguda", "av": "avinguda", "ctra": "carretera",
+             "pg": "passeig", "pl": "placa", "rda": "ronda"}
+#: I1 (2026-09-05, Anciles): un document llegit d'una carpeta «versio 0» (`PDF_V0/`, nomes quan no hi ha `PDF/`
+#: vigent llegible) es una versio ANTERIOR de l'Eva: a Anciles la V0 posava les graves dins del NIVEL 1 i el signat en
+#: fa el 2n nivell. Els seus senyals proposen i corroboren, pero mai son autoritat A ni contradiuen (confianca per sota
+#: del llindar de contradiccio): les 9 cotes que hi ha surten com a candidats amb el valor bo primer, no com a «segur».
+_V0_DIR_PARTS = frozenset({"PDF-V0", "PDF V0", "PDF_V0"})
+_V0_NOTE = "versio anterior (carpeta V0, cap annex vigent llegible): mai autoritat, mai contradiccio"
 _NUM_RE = re.compile(r"[-+]?\d+(?:[.,]\d+)?")
 _PAREN_RE = re.compile(r"\([^)]*\)")
 _DATE_ISO_RE = re.compile(r"\b(\d{4})-(\d{1,2})(?:-(\d{1,2}))?\b")
@@ -152,6 +180,14 @@ class Signal:
         if self.extra:
             c["extra"] = copy.deepcopy(self.extra)
         return c
+
+
+def _is_v0_source(source_path: Any) -> bool:
+    return any(part in _V0_DIR_PARTS for part in str(source_path or "").replace("\\", "/").split("/"))
+
+
+def _v0_conf(confidence: float) -> float:
+    return min(float(confidence), CONTRADICTION_CONF - 0.01)
 
 
 def _is_a(origin: str, confidence: float, forced: bool | None = None) -> bool:
@@ -230,6 +266,37 @@ def _is_numeric_like(s: str) -> bool:
     return bool(nums) and all(re.fullmatch(r"\d+(?:[.,]\d+)?", w) or w in _UNIT_TOKENS or len(w) <= 4 for w in toks)
 
 
+def _building_type_tokens(s: str) -> frozenset:
+    """Conjunt de paraules d'un tipus d'edifici: sense anotacions, sense el municipi final (padro), sense les paraules
+    de les plantilles G3 (`EG`, `CONSTR`, `HAB UNIF`…) ni xifres; castella → catala. `{}` si no en queda cap."""
+    words = _strip_parens(s).split()
+    for n in (3, 2, 1):
+        if len(words) > n and _municipi_lookup(" ".join(words[-n:])) is not None:
+            words = words[:-n]
+            break
+    out = set()
+    for w in _text_tokens(" ".join(words)):
+        w = _BT_MAP.get(w, w)
+        if w in _BT_STOP or w.isdigit():
+            continue
+        out.add(w)
+    return frozenset(out)
+
+
+def _address_key(s: str) -> tuple | None:
+    """`("addr", via, {portals})` si l'adreca porta via i almenys un portal; si no, None (clau de text de sempre).
+    «C/ Clot de la Llacuna, 16, Linyola (25240)», «Clot de la Llacuna, 16, Linyola (CP 25240)» i «C. Clot de la
+    Llacuna, 16» donen la mateixa clau: el municipi/CP/urbanitzacio despres del portal no forma part de la via."""
+    from automation.lectura.cadastre_reader import portals_from_address
+    street, portals = portals_from_address(s)
+    if not portals:
+        return None
+    via = "".join(_VIA_ABBR.get(w, w) for w in _text_tokens(street))
+    if not via:
+        return None
+    return ("addr", via, frozenset(f"{n}{l}".lower() for n, l in portals))
+
+
 def value_key(value: Any, *, abs_numbers: bool = False, field_name: str | None = None) -> tuple:
     """Clau de compatibilitat d'un valor: ("none",) | ("bool", b) | ("date", y, m, d) |
     ("num", (n, ...)) | ("text", "cadena")."""
@@ -247,6 +314,19 @@ def value_key(value: Any, *, abs_numbers: bool = False, field_name: str | None =
     s = str(value).strip()
     if not s:
         return ("none",)
+    # R1: equivalencies per camp (abans de dates/numeros: cap d'aquests camps es una data ni un nombre)
+    if field_name == "building_type":
+        toks = _building_type_tokens(s)
+        if toks:
+            return ("btset", toks)
+    if field_name == "street_address":
+        ak = _address_key(s)
+        if ak:
+            return ak
+    if field_name == "lab_location":
+        pk = _point_key(s, default_letter="")
+        if pk:
+            return ("text", pk.replace("-", "").lower())
     d = _parse_date(s)
     if d:
         return d
@@ -255,7 +335,11 @@ def value_key(value: Any, *, abs_numbers: bool = False, field_name: str | None =
         if abs_numbers:
             nums = tuple(abs(n) for n in nums)
         return ("num", nums)
-    txt = "".join(_text_tokens(s))
+    toks = _text_tokens(s)
+    if field_name in _LEGAL_SUFFIX_FIELDS:
+        while len(toks) > 1 and toks[-1] in _LEGAL_SUFFIX_TOKENS:
+            toks.pop()
+    txt = "".join(toks)
     if field_name == "num_floors":
         txt = txt.replace("pbpp", "pb1").replace("pp", "1")
     if field_name in ("rebuig",):
@@ -269,8 +353,17 @@ def value_key(value: Any, *, abs_numbers: bool = False, field_name: str | None =
 def keys_compatible(a: tuple, b: tuple) -> bool:
     if a == b:
         return True
+    if a[0] == "btset" and b[0] == "btset":
+        # un conjunt dins de l'altre = lectura parcial del mateix tipus («habitatge unifamiliar» ⊂ «… aillat»)
+        return a[1] <= b[1] or b[1] <= a[1]
+    if {a[0], b[0]} == {"addr", "text"}:
+        # una lectura sense portal («C/ DE LA MIRANDA») es parcial de la que en porta, si la via coincideix
+        addr, txt = (a, b) if a[0] == "addr" else (b, a)
+        return txt[1] == addr[1]
     if a[0] != b[0]:
         return False
+    if a[0] == "addr":
+        return False   # mateixa via, portals diferents = adreces diferents (18A i 18B son edificis diferents)
     if a[0] == "date":
         if a[1] != b[1] or a[2] != b[2]:
             return False
@@ -336,6 +429,24 @@ def _dayless(k: tuple) -> bool:
     return k[0] == "date" and k[3] is None
 
 
+def _attach_only(k: tuple, field_name: str | None) -> bool:
+    """Claus que NO fan d'aresta del union-find (s'adjunten despres al cluster compatible mes fort, sense
+    transitivitat): dates sense dia (D2), conjunts de paraules de `building_type` (un subconjunt no ha d'unir
+    «aillat» amb «entre mitgeres») i lectures d'adreca sense portal (R1)."""
+    return _dayless(k) or k[0] == "btset" or (k[0] == "text" and field_name == "street_address")
+
+
+def _more_complete(a: tuple, b: tuple) -> tuple:
+    """La clau mes completa de dues compatibles: data amb dia, conjunt mes gran, adreca amb portal, text mes llarg."""
+    if a[0] == "date" and b[0] == "date":
+        return a if a[3] is not None else b
+    if a[0] == "btset" and b[0] == "btset":
+        return a if len(a[1]) >= len(b[1]) else b
+    if a[0] == "addr" or b[0] == "addr":
+        return a if a[0] == "addr" else b
+    return a if len(str(a)) >= len(str(b)) else b
+
+
 def cluster_signals(sigs: list[Signal], *, abs_numbers: bool = False, field_name: str | None = None) -> list[Cluster]:
     """Agrupa senyals per compatibilitat (union-find) i ordena els clusters per pes.
 
@@ -356,10 +467,10 @@ def cluster_signals(sigs: list[Signal], *, abs_numbers: bool = False, field_name
         return i
 
     for i in range(len(sigs)):
-        if keys[i][0] == "none" or _dayless(keys[i]):
+        if keys[i][0] == "none" or _attach_only(keys[i], field_name):
             continue
         for j in range(i + 1, len(sigs)):
-            if keys[j][0] == "none" or _dayless(keys[j]):
+            if keys[j][0] == "none" or _attach_only(keys[j], field_name):
                 continue
             if keys_compatible(keys[i], keys[j]):
                 parent[find(i)] = find(j)
@@ -369,7 +480,7 @@ def cluster_signals(sigs: list[Signal], *, abs_numbers: bool = False, field_name
     for i, s in enumerate(sigs):
         if keys[i][0] == "none":
             continue
-        if _dayless(keys[i]):
+        if _attach_only(keys[i], field_name):
             partial.setdefault(keys[i], Cluster(key=keys[i])).signals.append(s)
             continue
         r = find(i)
@@ -382,10 +493,14 @@ def cluster_signals(sigs: list[Signal], *, abs_numbers: bool = False, field_name
     def weight(c: Cluster) -> tuple:
         return (c.has_a, c.n_docs(family), c.sum_conf, c.max_conf)
 
-    for pc in partial.values():
+    # les claus «nomes adjuntar» s'adjunten per ordre de pes al cluster compatible mes fort ja col·locat (la clau
+    # del cluster es va mantenint com la mes completa, perque un subconjunt col·locat primer no faci de pont)
+    for pc in sorted(partial.values(), key=weight, reverse=True):
         targets = [c for c in clusters if keys_compatible(c.key, pc.key)]
         if targets:
-            max(targets, key=weight).signals.extend(pc.signals)
+            best = max(targets, key=weight)
+            best.signals.extend(pc.signals)
+            best.key = _more_complete(best.key, pc.key)
         else:
             clusters.append(pc)
     clusters.sort(key=weight, reverse=True)
@@ -397,6 +512,12 @@ def cluster_signals(sigs: list[Signal], *, abs_numbers: bool = False, field_name
                 # totes les claus amb dia d'un cluster son identiques (nomes uneixen dies iguals); el representant
                 # es declara per autoritat, no per longitud
                 c.key = max(with_day, key=lambda ks_: (ks_[1].is_a, ks_[1].confidence))[0]
+            continue
+        if c.key[0] == "btset":
+            c.key = max((k for k, _ in ks if k[0] == "btset"), key=lambda k: len(k[1]))
+            continue
+        if any(k[0] == "addr" for k, _ in ks):
+            c.key = next(k for k, _ in ks if k[0] == "addr")
             continue
         # representant de la clau = la clau mes completa (text mes llarg: les curtes son lectures parcials)
         c.key = max((k for k, _ in ks), key=lambda k: len(str(k)))
@@ -506,7 +627,7 @@ def decide(
     elif blockers:
         reasons.append("contradiccio: " + "; ".join(
             f"{_short(c.signals[0].value)} ({c.n_docs(family)} doc, conf max {c.max_conf:.2f})" for c in blockers[:3]))
-    elif len(a_keys) > 1:
+    elif len(a_keys) > 1 and top.key[0] != "btset":
         reasons.append("formes diferents entre fonts A (compatibles per prefix): candidats amb totes les formes")
     else:
         strong_docs = {s.doc for s in top.signals if s.confidence >= CONV_CONF or s.is_a}
@@ -551,6 +672,13 @@ def decide(
     if iso:
         value = iso
         candidates[0]["value"] = iso
+    if field_name == "lab_location" and estat == "segur":
+        # R1: canonicalitzacio de FORMAT del punt («SPT1 P3», «P3» → «P-3», la forma del signat); la cita conserva
+        # la forma original. Sense aixo, entre formes equivalents `_prefer_form` triava la mes llarga.
+        pk = _point_key(value, default_letter="")
+        if pk:
+            value = pk
+            candidates[0]["value"] = pk
     cell: dict[str, Any] = {"estat": estat, "value": value, "candidates": candidates}
     if estat == "candidats":
         cell["value"] = candidates[0]["value"]
@@ -783,12 +911,17 @@ def collect_field_signals(corpus: Corpus, project_path: Path | None) -> tuple[di
     for d in corpus.docs:
         src = d.get("source_path", "?")
         dtype = d.get("document_type", "altre")
+        v0 = _is_v0_source(src)
         for e in d.get("tier_a") or []:
             if not isinstance(e, dict):
                 continue
             conf = float(e.get("confidence") or 0.0)
+            note = e.get("note")
+            if v0:
+                conf = _v0_conf(conf)
+                note = f"{_V0_NOTE}; {note}" if note else _V0_NOTE
             add_entry(e.get("concept_id"), e.get("value"), f"{src} {e.get('location', '')}".strip(),
-                      e.get("quote", "") or "", conf, src, dtype, "claude", e.get("note"))
+                      e.get("quote", "") or "", conf, src, dtype, "claude", note, False if v0 else None)
         for k in d.get("not_present") or []:
             if isinstance(k, str) and k in not_present:
                 not_present[k].append(src)
@@ -1045,9 +1178,48 @@ def http_field_signals(key: str, project_path: Path | None) -> list[Signal]:
                    _HTTP_NOTES.get(label))]
 
 
-def derived_field_signals(key: str, decided: dict[str, dict], sc_total: Any, sc_font: str | None) -> list[Signal]:
-    """Derivacions que el skill sanciona explicitament (Pas 3). Sempre `origin=derivat`, mai segur."""
+_ATTACHED_RE = re.compile(r"adossa|adosad|mitger|medianer|plurifam|pareja|apparell|aparell|bloc\b|bloque", re.IGNORECASE)
+_UNITS_RE = re.compile(r"(\d+)\s*(?:hab|viv|cas|adosad|adossat|unitat|unidad|xalet|chalet)", re.IGNORECASE)
+
+
+def _cte_surface(sc: dict | None, decided: dict[str, dict]) -> tuple[Any, str | None, str | None]:
+    """Superficie sobre la qual es deriva el CTE (D5, 2026-09-05, Anciles): `(total, font, nota)`.
+
+    El CTE (C0 < 300 m² i < 4 plantes) es classifica PER EDIFICI. Un grup d'habitatges adossats/plurifamiliar es un sol
+    edifici → compta la superficie TOTAL de l'encarrec (Anciles: 7 adossats, 1.264 m² → C1; el candidat 1 de la taula era
+    una tipologia de 186 m² → C0). Habitatges aillats son edificis separats → per unitat (Castellar: 3 aillats de 120 m²
+    → C0, com l'Eva). Sense senyal d'adossament, es fa el de sempre: el candidat 1."""
+    if not sc:
+        return None, None, None
+    cands = list(sc.get("candidates") or []) + list(sc.get("altres") or [])
+    totals: list[tuple[float, str]] = []
+    for c in cands:
+        nums = _numbers(str(c.get("value"))) if c.get("value") is not None else ()
+        if nums:
+            totals.append((nums[0], str(c.get("font") or "")))
+    if not totals:
+        return None, None, None
+    first_total, first_font = totals[0]
+    bt = decided.get("building_type") or {}
+    forms = " ".join(str(c.get("value")) for c in (bt.get("candidates") or []) if c.get("value")) + " " + str(bt.get("value") or "")
+    if not _ATTACHED_RE.search(forms):
+        return sc.get("value"), first_font, None
+    best_total, best_font = max(totals)
+    note = (f"D5: edificacio adossada/plurifamiliar = un sol edifici → superficie TOTAL de l'encarrec "
+            f"({best_total} m², {best_font}); el candidat 1 de la taula ({first_total} m²) es per unitat/tipologia")
+    m = _UNITS_RE.search(forms)
+    n_units = int(m.group(1)) if m else None
+    if best_total <= 300 and n_units and n_units >= 2 and n_units * first_total > 300:
+        best_total, best_font = n_units * first_total, f"{n_units} unitats × {first_total} m² ({first_font})"
+        note += f"; cap total del conjunt a la carpeta: {n_units} unitats × {first_total} = {best_total} m²"
+    return best_total, best_font, note
+
+
+def derived_field_signals(key: str, decided: dict[str, dict], sc: dict | None) -> list[Signal]:
+    """Derivacions que el skill sanciona explicitament (Pas 3). Sempre `origin=derivat`, mai segur.
+    `sc` es la cel·la `tables.superficie_construida` sencera (D5: la derivacio del CTE tria la superficie)."""
     out: list[Signal] = []
+    sc_total, sc_font, sc_note = _cte_surface(sc, decided)
     if key == "architect_name":
         c = decided.get("client_name", {})
         if c.get("estat") in ("segur", "candidats") and c.get("value"):
@@ -1063,9 +1235,11 @@ def derived_field_signals(key: str, decided: dict[str, dict], sc_total: Any, sc_
             total = nums[0]
             many_floors = any(n >= 4 for n in fl_nums)
             val = "C2" if many_floors else ("C1" if total > 300 else "C0")
+            note = "derivat de la superficie construida, no llegit (Pas 3): sempre candidats"
+            if sc_note:
+                note += "; " + sc_note
             out.append(Signal(key, val, f"(derivat: regla Eva C0 < 300 m² / C1 > 300 m² sobre superficie construida {sc_total} m²) ← {sc_font or ''}",
-                              str(sc_total), 0.5, "(derivat)", "derivat", "derivat",
-                              "derivat de la superficie construida, no llegit (Pas 3): sempre candidats"))
+                              str(sc_total), 0.5, "(derivat)", "derivat", "derivat", note))
     elif key == "cte_sol":
         out.append(Signal(key, "T-1", "(coneixement previ: T-1 a tots els pressupostos G3 que porten la linia CTE)", "",
                           0.3, "(coneixement previ)", "derivat", "derivat", "cap document de la carpeta ho diu: confirmar"))
@@ -1189,6 +1363,10 @@ def _cell_signals(doc: dict, row: dict, block: str, cell: str) -> list[Signal]:
     conf = _row_conf(doc, row, block, cell)
     a_types = _CELL_A_DOC_TYPES.get((block, cell), frozenset())
     is_a = dtype in a_types
+    if _is_v0_source(src):
+        is_a = False
+        conf = _v0_conf(conf)
+        note = f"{_V0_NOTE}; {note}" if note else _V0_NOTE
     sigs: list[Signal] = []
 
     def mk(value: Any, f: str = font, q: str = quote, c: float = conf, n: str | None = note, extra: dict | None = None) -> Signal:
@@ -1320,6 +1498,47 @@ def _cell_signals(doc: dict, row: dict, block: str, cell: str) -> list[Signal]:
     return [mk(v, n=n or note) for v, n in vals]
 
 
+def _nf_positive_over_absence(cell_out: dict, sigs: list[Signal]) -> None:
+    """R6 (2026-09-05, mesura dels 8, Vilanova P-3): a `nivell_freatic` una columna N.F. BUIDA als documents A (Excel
+    DPSH, annex DPSH) es absencia d'anotacio, no una mesura de «no»; una marca al tall («Aigua») o al full de camp
+    («Humit») es evidencia positiva encara que el document no sigui A de la cel·la. Com que a les cel·les de taula nomes
+    els A contradiuen (Pas 3b), «No detectat» sortia segur amb el positiu a `altres` (signat: «P-3 Humedad -1.00»).
+    Regla: si el candidat 1 es l'absencia i hi ha cap senyal positiu, la cel·la passa a candidats amb el positiu primer
+    (el tall es sintesi de l'Eva; despres full de camp; despres la resta per confianca) i «No detectat» a continuacio.
+    L'or de lectura ja ho feia aixi («tall primer»). No toca les cel·les on l'absencia es unanime."""
+    cands = cell_out.get("candidates") or []
+    if not cands or "absent_literal" not in (cands[0].get("extra") or {}):
+        return
+    positives = [s for s in sigs if s is not None and "absent_literal" not in s.extra and value_key(s.value)[0] != "none"]
+    if not positives:
+        return
+    rank = {"annex_tall": 3, "camp_penetros": 2, "annex_sondeig": 2}
+    positives.sort(key=lambda s: (rank.get(s.doc_type, 1), s.is_a, s.confidence), reverse=True)
+    pos_ids = {id(s) for s in positives}
+    absents = [s for s in sigs if s is not None and id(s) not in pos_ids]
+    absents.sort(key=_prefer_form, reverse=True)
+    chosen: list[Signal] = [positives[0]] + absents[:1] + positives[1:]
+    seen: set[str] = set()
+    ordered: list[Signal] = []
+    for s in chosen + absents[1:]:
+        k = str(s.value).strip().lower()
+        if k in seen:
+            continue
+        seen.add(k)
+        ordered.append(s)
+    cell_out["estat"] = "candidats"
+    cell_out["candidates"] = [s.as_candidate() for s in ordered[:MAX_CANDIDATES]]
+    rest = [s.as_candidate() for s in ordered[MAX_CANDIDATES:]] + [s.as_candidate() for s in sigs if s is not None and s not in ordered]
+    if rest:
+        cell_out["altres"] = rest
+    else:
+        cell_out.pop("altres", None)
+    cell_out["value"] = ordered[0].value
+    cell_out["rule"] = (cell_out.get("rule") or "") + (
+        f"; R6: columna N.F. buida als documents A = absencia d'anotacio; evidencia positiva a "
+        f"{positives[0].doc} ({positives[0].doc_type}) → candidats, positiu primer, «No detectat» despres")
+
+
 def _nf_is_absent(raw: str) -> bool:
     """Un nivell freatic DETECTAT porta sempre una fondaria (digits); sense digits i amb vocabulari d'absencia = absent."""
     t = _ascii(_PAREN_RE.sub(" ", raw)).strip().lower()
@@ -1419,6 +1638,7 @@ def consolidate_tables(corpus: Corpus, conflicts: list[dict], superficie: dict |
                 if (block, cell) == ("spt_ma_tests", "id") and cell_out.get("estat") == "candidats":
                     cell_out["rule"] = "Pas 3: annex de l'Eva > GTL > comanda per a l'etiqueta; si discrepen, candidats (annex primer), mai segur"
                 if cell == "nivell_freatic":
+                    _nf_positive_over_absence(cell_out, sigs)
                     top = (cell_out.get("candidates") or [{}])[0]
                     cell_out["matis"] = (top.get("extra") or {}).get("matis")
                 if cell == "n30":
@@ -1843,7 +2063,7 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
                 from automation.lectura.cadastre_reader import cadastre_portal_signals
                 sigs += cadastre_portal_signals(key, fields, project_path, extra_concepts)
             sigs += http_field_signals(key, project_path)
-            sigs += derived_field_signals(key, fields, sc.get("value"), (sc.get("candidates") or [{}])[0].get("font"))
+            sigs += derived_field_signals(key, fields, sc)
         cell = decide(
             sigs, sources_checked=sources_for(key), field_name=key, abs_numbers=key in _ABS_FIELDS,
             never_segur=key in _NEVER_SEGUR_FIELDS, segur_requires=_guard_for_field(key, fields),

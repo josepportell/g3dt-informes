@@ -7,5 +7,5 @@ ERR      municipality           segur discrepant: or='Vilanova de Segrià' prod=
 CAUTELA  num_floors             or segur, prod candidats (bo dins): 'PB (~100 m²)'
 ALERTA   referencia_catastral   estat or=no_trobat prod=candidats (or value='mançana 86067 (parcial)')
 CAUTELA  street_address         or segur, prod candidats (bo dins): 'C/ Santa Gemma, 4 (Urb. La Serra)'
-ALERTA   superficie_parcela     estat or=no_trobat prod=candidats (or value='≈ 405-410 m² (càlcul de cotes del plànol, NO declarat)')
-TOTALS: {'NOU': 1, 'OK': 12, 'CAUTELA': 6, 'ERR': 1, 'ALERTA': 2}
+FORA     superficie_parcela     fora de la carpeta: '406' (Cadastre (Callejero DNPLOC + WFS INSPIRE), portal 4 = 8606709CG9280N (406 m²))
+TOTALS: {'NOU': 1, 'OK': 12, 'CAUTELA': 6, 'ERR': 1, 'ALERTA': 1, 'FORA': 1}

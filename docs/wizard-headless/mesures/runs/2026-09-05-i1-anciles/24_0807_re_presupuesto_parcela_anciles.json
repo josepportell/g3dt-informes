@@ -1,0 +1,112 @@
+{
+ "source_path": "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+ "source_md5": "aba73c482bf502623e5326504d48d051",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Cadena de correu (RE:/RV:) que reenvia a Eva la sol·licitud original de pressupost de l'arquitecta Alba Barrau (RETRATERIA, Benasque) a G3 per a l'estudi geotècnic d'una obra nova de 7 adossats a la parcel·la d'Anciles.",
+ "issuer": "Contingut substantiu: Alba Barrau Castán (arquitecta, RETRATERIA). Reenviaments: Dolors_G3 -> eva@g3dt.com -> (aquest missatge) Eva -> Dolors_G3, sense text nou a la part superior.",
+ "date": "2024-11-18T15:37:41+01:00",
+ "pages_or_sheets": "cos de correu (cadena de 3 missatges); 1 adjunt (plan_cost_v03_rev_anciles.xlsx, ja solt a la carpeta)",
+ "context": {
+  "who_made_it": "L'arquitecta Alba Barrau Castán (despatx RETRATERIA, Benasque, Osca) escriu la sol·licitud original (2024-11-18 13:30) a Dolors_G3; Dolors la reenvia a Eva (13:55); Eva respon a Dolors (15:37, aquest missatge) sense afegir text nou, només signatura i clàusules de protecció de dades.",
+  "for_whom": "G3 (Dolors i Eva), per preparar el pressupost i la disponibilitat de l'estudi geotècnic",
+  "why": "Sol·licitud inicial (encàrrec) de pressupost per a l'estudi geotècnic d'una obra nova de 7 habitatges adossats a la parcel·la d'Anciles",
+  "expected_fields": [
+   "architect_name",
+   "referencia_catastral",
+   "building_type",
+   "num_floors",
+   "municipality"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_dpsh_tests",
+   "num_soil_levels",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "utm_x_utm_y",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Missatge mare de l'encàrrec: precedeix el pressupost G3 i tots els annexos de camp del projecte. Alba diu adjuntar 'plano de emplazamiento' i 'planos de tipologías del anteproyecto', pero aquest .msg concret NOMÉS conserva com a adjunt plan_cost_v03_rev_anciles.xlsx (ja solt a la carpeta, afegit per Eva en aquest punt de la cadena, no ve d'Alba); els plànols que Alba esmenta probablement corresponen als fitxers 'SITE_prop A.pdf' i 'A01_TIPOL.pdf'/'IV_PLANOS.pdf' ja presents com a fitxers solts a la carpeta del projecte -- no verificat en aquesta lectura (--only). Bessons no llegits en aquesta crida: 'Presupuesto Parcela Anciles.msg' (missatge original sense la capa RE:) i 'Re_ PRESUPUESTO GEOTECNICO ANCILES.msg' (cadena posterior, 2026-02-09).",
+  "authority_for": [
+   "architect_name",
+   "referencia_catastral",
+   "building_type",
+   "num_floors",
+   "municipality",
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "architect_name",
+   "value": "Alba Barrau Castán",
+   "location": "signatura del correu original d'Alba Barrau (línia 119, sota 'Un saludo')",
+   "quote": "Alba Barrau Castán, arquitecta.",
+   "confidence": 0.6,
+   "note": "Signatura de correu amb despatx (RETRATERIA) i telèfons, però SENSE número de col·legiat -- prioritat més baixa que caixetí de plànol o signatura amb col·legiat. Candidat, no segur amb aquesta única font."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Alba Barrau Castán",
+   "location": "mateixa signatura; és qui sol·licita el pressupost ('CLIENT:' implícit de l'encàrrec)",
+   "quote": "quería pedir si me podéis hacer un presupuesto y dar disponibilidad para el estudio geotécnico para una obra nueva en una parcela en Anciles. [...] Alba Barrau Castán, arquitecta.",
+   "confidence": 0.2,
+   "note": "Regla Pas 3: el sol·licitant d'un correu d'encàrrec és candidat a client_name pero MAI segur si el nom conté 'arquitecta' -- aquí ho conté explícitament. Requereix creuar amb ACCEPTACIO/p.5 i el caixetí de IV_PLANOS (no llegits en aquesta crida) per resoldre si és promotora autopromotora o merament sol·licitant."
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "6184504BH9158N0000SS",
+   "location": "cos de la sol·licitud original d'Alba Barrau, línia 'Datos:'",
+   "quote": "Referencia catastral: 6184504BH9158N0000SS",
+   "confidence": 0.55,
+   "note": "Única font (aportada per l'arquitecta al correu d'encàrrec, no consulta pròpia del Cadastre) -- candidat, mai segur sense consulta del Cadastre."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "7 ADOSADOS (RESIDENCIAL)",
+   "location": "cos de la sol·licitud original, línia 'Tipo edificio'",
+   "quote": "Tipo edificio: 7 ADOSADOS (RESIDENCIAL)",
+   "confidence": 0.55,
+   "note": "Instrucció del client en el correu d'encàrrec (font primerenca, anterior a tots els annexos). Candidat 1."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1PP amb dos semisòtans",
+   "location": "cos de la sol·licitud original",
+   "quote": "El proyecto consiste en 7 adosados de PB+1PP+BC. Habría dos semisótanos. [...] Plantas: SÓTANO, PLANTA BAJA y PLANTA 1 [...] Sótano: SÍ",
+   "confidence": 0.5,
+   "note": "Dues formulacions dins el mateix correu ('PB+1PP+BC' amb 2 semisòtans, i més avall 'SÓTANO, PLANTA BAJA y PLANTA 1' amb 'Sótano: SÍ') -- no del tot coherents (semisòtan vs sòtan). Candidat, cal creuar amb caixetí del plànol/projecte de l'arquitecte."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Anciles",
+   "location": "cos de la sol·licitud original",
+   "quote": "para el estudio geotécnico para una obra nueva en una parcela en Anciles",
+   "confidence": 0.4,
+   "note": "Únic esment de municipi/localitat en aquest document; forma curta, no confirmada com a forma oficial. Candidat, creuar amb comanda/pressupost/PLAN_COST."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "street_address",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "superficie_parcela"
+ ],
+ "reading_notes": "Missatge llegit directament de preext/body.txt (text net, extret amb extract_msg). Cadena de 3 nivells (Eva->Dolors / Dolors->Eva / Alba->Dolors); només la capa inferior (sol·licitud original d'Alba Barrau) porta text substantiu -- les capes superiors només afegeixen signatura i clàusules RGPD. L'únic adjunt reportat al meta.json (plan_cost_v03_rev_anciles.xlsx) ja existeix solt a la carpeta (duplicat per md5, no compta com a font independent)."
+}

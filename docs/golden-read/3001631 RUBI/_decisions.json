@@ -207,7 +207,12 @@
     "g3_02",
     "correu_08",
     "lab_06"
-   ]
+   ],
+   "fora_carpeta": {
+    "value": "951",
+    "font": "Cadastre (Callejero DNPLOC + WFS INSPIRE), portal 39 = 8259027DF1985N (951 m²)",
+    "note": "no és lectura de la carpeta; mesurat 2026-09-04 (mesura dels 8); signat: 951"
+   }
   },
   "field_date": {
    "status": "segur",

@@ -223,3 +223,54 @@ def test_write_inventory_does_not_touch_project_path(tmp_path):
     write_inventory(BELL_LLOC, out_dir)
     after = {p.relative_to(BELL_LLOC) for p in BELL_LLOC.rglob("*")}
     assert before == after, "write_inventory no ha d'escriure res dins project_path"
+
+
+# ---------------------------------------------------------------------------
+# I1 (2026-09-05): `PDF_V0/` nomes s'exclou si hi ha un `PDF/` vigent (Anciles)
+# ---------------------------------------------------------------------------
+
+def _touch(root: Path, rel: str) -> None:
+    p = root / rel
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_bytes(b"%PDF-1.4 " + rel.encode())
+
+
+def test_v0_folder_is_read_when_there_is_no_current_pdf_dir(tmp_path):
+    """Anciles: sense `PDF/`, els annexos DPSH/sondeos nomes son a `PDF_V0/ANEJOS/` (l'original es `.FH11`)."""
+    proj = tmp_path / "4001679 ANCILES"
+    for rel in ("PDF_V0/ANEJOS/4001679_DPSH.pdf", "PDF_V0/ANEJOS/4001679_sondeos.pdf", "PDF_V0/ANEJOS/4001679_corte de correlación.pdf",
+                "PDF_V0/LETRA/4001679_informe_V0.pdf", "PDF_V0/LETRA/4001679_portada_V0.pdf", "ANEJOS/4001679_sondeos.FH11",
+                "PENETROS + SONDEIGS.pdf"):
+        _touch(proj, rel)
+    inv = _by_path(build_inventory(proj))
+    assert inv["PDF_V0/ANEJOS/4001679_DPSH.pdf"]["route"] == "claude"
+    assert inv["PDF_V0/ANEJOS/4001679_DPSH.pdf"]["doc_type_hint"] == "annex_dpsh"
+    assert inv["PDF_V0/ANEJOS/4001679_DPSH.pdf"]["version"] == "V0"
+    assert inv["PDF_V0/ANEJOS/4001679_sondeos.pdf"]["route"] == "claude"
+    assert inv["PDF_V0/ANEJOS/4001679_corte de correlación.pdf"]["route"] == "claude"
+    # l'informe i la portada V0 continuen exclosos pel nom; el FreeHand pel sufix
+    assert inv["PDF_V0/LETRA/4001679_informe_V0.pdf"]["route"] == "skip"
+    assert inv["PDF_V0/LETRA/4001679_portada_V0.pdf"]["route"] == "skip"
+    assert inv["ANEJOS/4001679_sondeos.FH11"]["route"] == "skip"
+    assert "version" not in inv["PENETROS + SONDEIGS.pdf"]
+
+
+def test_v0_folder_is_still_skipped_when_a_current_pdf_dir_exists(tmp_path):
+    """Bell-lloc/Linyola: `PDF/ANNEXES/` vigent → `PDF_V0/` es versio anterior (comportament de sempre)."""
+    proj = tmp_path / "4001612 BELL-LLOC"
+    _touch(proj, "PDF/ANNEXES/4001612_DPSH.pdf")
+    _touch(proj, "PDF_V0/ANNEXES/4001612_DPSH.pdf")
+    _touch(proj, "PDF V0/ANNEXES/4001612_sondeig.pdf")
+    inv = _by_path(build_inventory(proj))
+    assert inv["PDF/ANNEXES/4001612_DPSH.pdf"]["route"] == "claude"
+    assert inv["PDF_V0/ANNEXES/4001612_DPSH.pdf"] == inv["PDF_V0/ANNEXES/4001612_DPSH.pdf"] | {"route": "skip", "doc_type_hint": "exclos_carpeta"}
+    assert inv["PDF V0/ANNEXES/4001612_sondeig.pdf"]["route"] == "skip"
+    assert not any("version" in e for e in inv.values())
+
+
+@pytest.mark.parametrize("project", [BELL_LLOC, RUBI])
+def test_real_projects_have_current_pdf_dir_so_v0_rule_is_inert(project):
+    from automation.lectura.inventory import has_current_pdf_dir
+    assert has_current_pdf_dir(project)
+    assert not any("version" in e for e in build_inventory(project)["files"])
+

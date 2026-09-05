@@ -311,6 +311,168 @@ def test_D3_municipality_untouched_when_a_form_is_not_in_padro_or_forms_disagree
     assert json.dumps(cell, sort_keys=True) == before          # dos municipis diferents: no es tria
 
 
+def test_R6_nivell_freatic_positive_non_A_signal_blocks_absence():
+    """Vilanova P-3: Excel i annex DPSH (A) amb la columna N.F. buida → «No detectat»; el tall diu «Aigua» i el full de
+    camp «Humit» (no-A). Abans: segur «No detectat» (nomes els A contradiuen a les taules). Ara: candidats, tall primer."""
+    def absent(doc, dtype, conf, is_a):
+        s = _sig("nivell_freatic", "No detectat", conf, doc=doc, doc_type=dtype, is_a=is_a)
+        s.extra["absent_literal"] = None
+        return s
+    sigs = [absent("DPSH.xls", "dpsh_excel", 0.8, True), absent("annex_DPSH.pdf", "annex_dpsh", 0.8, True),
+            _sig("nivell_freatic", "Humit", 0.3, doc="PENETROS.pdf", doc_type="camp_penetros", is_a=False),
+            _sig("nivell_freatic", "Aigua", 0.3, doc="tall.pdf", doc_type="annex_tall", is_a=False)]
+    cell = C.decide(sigs, sources_checked=["DPSH.xls"], field_name="nivell_freatic", table_cell=True)
+    assert cell["estat"] == "segur" and cell["value"] == "No detectat"      # el que feia abans de R6
+    C._nf_positive_over_absence(cell, sigs)
+    assert cell["estat"] == "candidats" and cell["value"] == "Aigua" and "R6" in cell["rule"]
+    assert [c["value"] for c in cell["candidates"]] == ["Aigua", "No detectat", "Humit"]
+    assert cell["candidates"][0]["font"].startswith("tall.pdf")
+    # absencia unanime: no es toca
+    sigs = [absent("DPSH.xls", "dpsh_excel", 0.8, True), absent("tall.pdf", "annex_tall", 0.3, False)]
+    cell = C.decide(sigs, sources_checked=["DPSH.xls"], field_name="nivell_freatic", table_cell=True)
+    C._nf_positive_over_absence(cell, sigs)
+    assert cell["estat"] == "segur" and cell["value"] == "No detectat" and "R6" not in cell["rule"]
+    # positiu ja guanyador (Excel amb color, A): no es toca
+    sigs = [_sig("nivell_freatic", "-1,00 m (humitat)", 0.8, doc="DPSH.xls", doc_type="dpsh_excel", is_a=True),
+            absent("annex_DPSH.pdf", "annex_dpsh", 0.8, True)]
+    cell = C.decide(sigs, sources_checked=["DPSH.xls"], field_name="nivell_freatic", table_cell=True)
+    before = json.dumps(cell, sort_keys=True)
+    C._nf_positive_over_absence(cell, sigs)
+    assert json.dumps(cell, sort_keys=True) == before
+
+
+# --- R1 (2026-09-05): mateixa entitat, formes diferents ------------------------------------------------------------
+
+def test_R1_building_type_g3_abbreviations_join_the_A_reading():
+    """Bell-lloc/Rubi/Linyola/Vilanova: «EG HAB UNIF <municipi>» (PLAN_COST, 0,6) i «CONSTR HAB UNIF» (comanda, 0,7)
+    bloquejaven «Habitatge unifamiliar aillat» (caixeti A 0,85) a 8/8 projectes. Son la mateixa cosa, abreujada."""
+    cell = C.decide([_sig("building_type", "Habitatge unifamiliar aïllat", 0.85, doc="caixeti"),
+                     _sig("building_type", "EG HAB UNIF BELL-LLOC", 0.6, doc="plan_cost", origin="g3_templates"),
+                     _sig("building_type", "CONSTR HABITATGE UNI", 0.7, doc="comanda", origin="g3_templates"),
+                     _sig("building_type", "habitatge unifamiliar", 0.65, doc="correu")],
+                    sources_checked=["caixeti"], field_name="building_type")
+    assert cell["estat"] == "segur" and cell["value"] == "Habitatge unifamiliar aïllat"
+    assert cell["candidates"][0]["font"].startswith("caixeti")
+
+
+def test_R1_building_type_subset_does_not_bridge_two_real_alternatives():
+    """«habitatge unifamiliar» (parcial) NO ha d'unir «aillat» amb «entre mitgeres»: son dues lectures diferents."""
+    cell = C.decide([_sig("building_type", "Habitatge unifamiliar aïllat", 0.85, doc="caixeti"),
+                     _sig("building_type", "habitatge unifamiliar entre mitgeres", 0.7, doc="correu"),
+                     _sig("building_type", "HAB UNIF", 0.6, doc="comanda", origin="g3_templates")],
+                    sources_checked=["caixeti"], field_name="building_type")
+    assert cell["estat"] == "candidats" and cell["rule"].startswith("contradiccio")
+    clusters = C.cluster_signals([_sig("building_type", "HAB UNIF", 0.9, doc="a"),
+                                  _sig("building_type", "Habitatge unifamiliar aïllat", 0.85, doc="b"),
+                                  _sig("building_type", "habitatge unifamiliar entre mitgeres", 0.8, doc="c")], field_name="building_type")
+    assert len(clusters) == 2   # el parcial s'adjunta a un, no fa de pont
+
+
+def test_R1_street_address_same_via_and_portals_is_one_key_regardless_of_suffix():
+    """Linyola: tres fonts A amb el mateix portal 16 i sufixos de municipi/CP diferents → «formes diferents entre fonts
+    A» → candidats. Ara: una sola clau (via + portals) → segur."""
+    cell = C.decide([_sig("street_address", "C/ Clot de la Llacuna, 16, Linyola (25240)", 0.85, doc="projecte"),
+                     _sig("street_address", "Clot de la Llacuna, 16, Linyola (CP 25240)", 0.85, doc="acceptacio"),
+                     _sig("street_address", "C. Clot de la Llacuna, 16", 0.8, doc="punts")],
+                    sources_checked=["projecte"], field_name="street_address")
+    assert cell["estat"] == "segur" and cell["value"] == "C/ Clot de la Llacuna, 16, Linyola (25240)"
+    # portals diferents = adreces diferents (mai equivalents a l'eix portal)
+    assert not C.keys_compatible(C.value_key("Carrer Clot de la Llacuna, 16", field_name="street_address"),
+                                 C.value_key("Carrer Clot de la Llacuna, 18", field_name="street_address"))
+
+
+def test_R1_street_address_without_portal_is_partial_and_keeps_candidats():
+    """Rubi: «C/ DE LA MIRANDA» (A, sense portal) i «Carrer de la Miranda, 39» (A): lectura parcial → candidats
+    (regla «formes diferents entre fonts A» de sempre), sense conflicte A-vs-A ni pont entre portals."""
+    conflicts: list[dict] = []
+    cell = C.decide([_sig("street_address", "Carrer de la Miranda, 39", 0.8, doc="planol"),
+                     _sig("street_address", "C/ DE LA MIRANDA", 0.8, doc="acceptacio"),
+                     _sig("street_address", "Carrer de la Miranda", 0.8, doc="tall"),
+                     _sig("street_address", "Carrer de la Moranda", 0.3, doc="albara")],
+                    sources_checked=["planol"], field_name="street_address", conflicts=conflicts, path="x")
+    assert cell["estat"] == "candidats" and "formes diferents entre fonts A" in cell["rule"] and conflicts == []
+    assert cell["candidates"][0]["value"] == "Carrer de la Miranda, 39"
+    clusters = C.cluster_signals([_sig("street_address", "Carrer de la Miranda, 39", 0.8, doc="a"),
+                                  _sig("street_address", "Carrer de la Miranda", 0.8, doc="b"),
+                                  _sig("street_address", "Carrer de la Miranda, 41", 0.8, doc="c")], field_name="street_address")
+    assert len(clusters) == 2   # el sense portal s'adjunta al 39, no uneix 39 amb 41
+
+
+def test_R1_legal_form_suffix_and_lab_point_are_equivalent_forms():
+    cell = C.decide([_sig("lab_testing_company", "TPS, Prospecció del Subsòl, SL (NIF B64803075)", 0.9, doc="gtl"),
+                     _sig("lab_testing_company", "TPS, S.L.", 0.6, doc="annex_sondeig")],
+                    sources_checked=["gtl"], field_name="lab_testing_company")
+    assert cell["estat"] == "segur" and cell["value"].startswith("TPS, Prospecció")
+    cell = C.decide([_sig("client_name", "Grupo Cuenca Guerrero SL", 0.85, doc="acceptacio"),
+                     _sig("client_name", "Grupo Cuenca Guerrero SL.", 0.85, doc="pressupost"),
+                     _sig("client_name", "Grupo CUENCA GUERRERO", 0.85, doc="caixeti")],
+                    sources_checked=["acceptacio"], field_name="client_name")
+    assert cell["estat"] == "segur" and cell["value"].startswith("Grupo Cuenca Guerrero SL")
+    cell = C.decide([_sig("lab_location", "P-3", 0.9, doc="gtl"), _sig("lab_location", "SPT1 P3", 0.75, doc="lab-sig"),
+                     _sig("lab_location", "P3", 0.7, doc="comanda", origin="g3_templates")],
+                    sources_checked=["gtl"], field_name="lab_location")
+    assert cell["estat"] == "segur" and cell["value"] == "P-3"
+    # Linyola real: cap font A, convergencia de 3 docs a 0,7-0,75 → segur; la forma visible es la canonica «P-3»,
+    # no la mes llarga («SPT1 P3»); la cita conserva l'original
+    cell = C.decide([_sig("lab_location", "SPT1 P3", 0.75, doc="lab-sig"), _sig("lab_location", "P-3", 0.75, doc="gtl"),
+                     _sig("lab_location", "P3", 0.7, doc="comanda", origin="g3_templates")],
+                    sources_checked=["gtl"], field_name="lab_location")
+    assert cell["estat"] == "segur" and cell["value"] == "P-3" and cell["candidates"][0]["value"] == "P-3"
+    assert cell["candidates"][0]["quote"] == "SPT1 P3"
+    assert not C.keys_compatible(C.value_key("P-3", field_name="lab_location"), C.value_key("S-2", field_name="lab_location"))
+    assert not C.keys_compatible(C.value_key("WOOD COMFORT SLU", field_name="client_name"), C.value_key("GRUP ALMA SL", field_name="client_name"))
+
+
+# --- D5 (2026-09-05): CTE amb la superficie del conjunt quan l'edificacio es adossada ------------------------------
+
+def _sc_cell(*totals):
+    cands = [{"value": v, "font": f} for v, f in totals]
+    return {"estat": "candidats", "value": totals[0][0], "candidates": cands[:3], "altres": cands[3:]}
+
+
+def test_D5_attached_dwellings_derive_cte_from_project_total():
+    """Anciles: 7 adossats; la taula de superficie te 7 tipologies (169-199 m²) primer i el total d'IV_PLANOS
+    (1.165,84 m²) al final → abans C0 (186 m²), l'or i el signat diuen C-1 (1.264 m² > 300)."""
+    sc = _sc_cell((186.18, "A01_TIPOL p.1"), (187.37, "A01_TIPOL p.2"), (169.5, "A01_TIPOL p.3"), (1165.84, "IV_PLANOS resum"))
+    decided = {"building_type": {"estat": "candidats", "value": "vivienda adosada (7 unitats)",
+                                 "candidates": [{"value": "vivienda adosada (7 unitats)"}, {"value": "7 adosados (residencial), PB+1PP+BC"}]}}
+    sigs = C.derived_field_signals("cte_edificacio", decided, sc)
+    assert len(sigs) == 1 and sigs[0].value == "C1" and "D5" in (sigs[0].note or "") and "1165.84" in sigs[0].font
+    # sense cap total del conjunt a la carpeta: N unitats × tipologia
+    sc = _sc_cell((186.18, "A01_TIPOL p.1"), (187.37, "A01_TIPOL p.2"))
+    sigs = C.derived_field_signals("cte_edificacio", decided, sc)
+    assert sigs[0].value == "C1" and "7 unitats × 186.18" in (sigs[0].note or "")
+
+
+def test_D5_detached_dwellings_keep_per_unit_surface():
+    """Castellar: 3 habitatges aillats de 120 m² son 3 edificis → C0 per unitat (com l'Eva)."""
+    sc = _sc_cell((120, "correu"), (360, "suma de 3"))
+    decided = {"building_type": {"estat": "segur", "value": "habitatges unifamiliars aïllats (grup de 3)",
+                                 "candidates": [{"value": "habitatges unifamiliars aïllats (grup de 3)"}]}}
+    sigs = C.derived_field_signals("cte_edificacio", decided, sc)
+    assert sigs[0].value == "C0" and "D5" not in (sigs[0].note or "")
+    assert C.derived_field_signals("cte_edificacio", {}, None) == []
+
+
+def test_I1_v0_documents_propose_but_never_rule_nor_contradict(tmp_path: Path):
+    """Anciles: sense `PDF/`, l'inventari llegeix `PDF_V0/ANEJOS/*.pdf`. A la V0 les graves eren NIVEL 1; al signat son
+    el 2n nivell. Un senyal de V0: mai A, confianca sota el llindar de contradiccio, nota «versio anterior»."""
+    out = tmp_path / "out"; out.mkdir()
+    _doc(out, "v0_sondeos", "PDF_V0/ANEJOS/4001679_sondeos.pdf", "annex_sondeig",
+         [_ta("num_soil_levels", 1, 0.9), _ta("cota_referencia", "+1106,42 msnm", 0.9)],
+         tables={"soil_levels": [{"nom": "1er nivell", "mostra_del_nivell": True, "de": "0,00", "confidence": 0.9}]})
+    _doc(out, "tall", "tall.pdf", "annex_tall", [_ta("num_soil_levels", 2, 0.85)])   # A: la V0 (0,9 → 0,39) no la contradiu
+    d = C.consolidate_python(out, project_path=None)
+    f = d["fields"]
+    assert f["num_soil_levels"]["estat"] == "segur" and f["num_soil_levels"]["value"] == 2   # la V0 no contradiu
+    assert f["cota_referencia"]["estat"] == "candidats" and f["cota_referencia"]["value"] == "+1106,42 msnm"   # proposa, mai segur
+    assert C._V0_NOTE in (f["cota_referencia"]["candidates"][0].get("note") or "")
+    rows = d["tables"]["soil_levels"]["rows"]
+    cell = rows[0]["mostra_del_nivell"]
+    assert cell["estat"] == "candidats" and cell["value"] is True and C._V0_NOTE in (cell["candidates"][0].get("note") or "")
+    assert not C._is_v0_source("PDF/ANNEXES/4001612_DPSH.pdf") and C._is_v0_source("PDF V0/ANEJOS/x.pdf")
+
+
 def test_candidates_capped_at_three_rest_in_altres_nothing_lost():
     sigs = [_sig("x", f"v{i}", 0.5, doc=f"d{i}") for i in range(6)]
     cell = C.decide(sigs, sources_checked=["d"])

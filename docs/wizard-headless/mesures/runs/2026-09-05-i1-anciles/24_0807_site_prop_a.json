@@ -1,0 +1,128 @@
+{
+ "source_path": "24.0807/SITE_prop A.pdf",
+ "source_md5": "4b5ae667d7469439a4e543d3c8970fef",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol d'integració urbana (Estudi de Detall) del projecte 'Casa Grande HCS - Anciles', amb delimitació catastral de la parcel·la 'Huerto Casa Sort' sobre trama urbana d'Anciles (Benasque).",
+ "issuer": "A+M Arquitectura (AutoCAD 2021 - Español)",
+ "date": "Noviembre 2023",
+ "pages_or_sheets": "1 pàgina (A3, escala 1/1000)",
+ "context": {
+  "who_made_it": "A+M Arquitectura (caixetí, camp 'Arquitectura': Alba Barrau nºCol. 6.408 i Miriam Castel nºCol. 6.703, ambdues amb número de col·legiat)",
+  "for_whom": "el promotor de l'Estudi de Detall, camp 'Promotor': Andrés Amat y Enrique M. Gardeta (sense número de col·legiat)",
+  "why": "definir la integració urbana i la delimitació catastral de la parcel·la 'Huerto Casa Sort' (projecte 'Casa Grande HCS') dins la trama urbana d'Anciles, com a Estudi de Detall (instrument de planejament urbanístic), no com a plànol constructiu de l'obra ni com a document de camp",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "client_name (Promotor)",
+   "architect_name (Arquitectura)",
+   "nom del projecte",
+   "delimitació catastral gràfica"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "dades de laboratori",
+   "num_floors",
+   "superficie_parcela numèrica",
+   "referencia_catastral (codi)",
+   "utm_x_utm_y"
+  ],
+  "relation_to_others": "document d'urbanisme (Estudi de Detall) diferent de A01_TIPOL.pdf (plànol de tipologia) i IV_PLANOS.pdf (plànol principal del projecte), tots dos presents a la mateixa carpeta 24.0807/ segons l'inventari; no llegits en aquesta crida (--only), no es pot confirmar si comparteixen redactor o promotor amb aquest document",
+  "authority_for": [
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+   "location": "caixetí, camp 'Situación'",
+   "quote": "Situación / C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.75,
+   "note": "etiqueta 'Situación' explícita (autoritat A per street_address, Pas 3); únic document llegit en aquesta crida --only, sense contrastar amb altres fonts del projecte"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "General Ferraz",
+    "nom_via_alternatives": [],
+    "portals": [
+     "20"
+    ],
+    "municipi": "Anciles",
+    "municipi_alternatives": []
+   },
+   "location": "caixetí, camp 'Situación'",
+   "quote": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.7,
+   "note": "municipi normalitzat a 'Anciles' (coincideix amb el nom de la carpeta de l'expedient '4001679 ANCILES'); el document original escriu 'ANCILES - BENASQUE (HUESCA)' — vegeu el tier_a de 'municipality' per al matís nucli/terme municipal"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "ANCILES - BENASQUE (HUESCA)",
+   "location": "caixetí, camp 'Situación'",
+   "quote": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.55,
+   "note": "el document escriu 'ANCILES - BENASQUE (HUESCA)': Anciles sembla ser el nucli/entitat de població i Benasque el terme municipal que l'engloba (Anciles és un nucli del municipi de Benasque, Osca). El nom de l'expedient és '4001679 ANCILES' (forma curta del nucli). Candidat, no segur: cal contrastar amb comanda/pressupost/PLAN_COST per veure quina forma fa servir G3"
+  },
+  {
+   "concept_id": "client_name",
+   "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA",
+   "location": "caixetí, camp 'Promotor'",
+   "quote": "Promotor / ANDRÉS AMAT y ENRIQUE M. GARDETA",
+   "confidence": 0.55,
+   "note": "etiqueta explícita 'Promotor', sense número de col·legiat (a diferència dels noms sota 'Arquitectura'), coherent amb ser els promotors/clients. ATENCIÓ lectura: l'ordre del text pla extret del PDF (page-1.txt) barreja aquest bloc amb el d''Arquitectura' — el renderitzat visual (page-1.png) és la font correcta usada aquí per aparellar etiqueta i valor (vegeu reading_notes). No contrastat amb altres documents del projecte en aquesta crida --only"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703",
+   "location": "caixetí, camp 'Arquitectura'",
+   "quote": "Arquitectura / ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703",
+   "confidence": 0.8,
+   "note": "etiqueta explícita 'Arquitectura' amb número de col·legiat per a totes dues persones — el senyal més fort d'aquest document per a architect_name. Dues firmants; no hi ha manera de triar-ne només una amb aquest document sol. El logo 'A+M ARQUITECTURA' al peu probablement és el despatx conjunt (candidat per a architect_company)"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "A+M ARQUITECTURA",
+   "location": "logo, cantonada inferior dreta del caixetí",
+   "quote": "A + M ARQUITECTURA",
+   "confidence": 0.4,
+   "note": "només logo gràfic, sense etiqueta de text explícita; candidat feble per a architect_company"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "CASA GRANDE HCS - ANCILES",
+   "location": "títol del plànol / caixetí",
+   "quote": "C A S A  G R A N D E  H C S  -  A N C I L E S",
+   "confidence": 0.3,
+   "note": "és el NOM del projecte/estudi de detall, no una descripció de tipus d'edifici (no diu 'vivienda unifamiliar' ni similar); candidat molt feble per a building_type, útil sobretot com a identificador del projecte. 'HCS' probablement 'Huerto Casa Sort' (nom de la parcel·la, vegeu llegenda 'PARCELA: HUERTO CASA SORT')"
+  }
+ ],
+ "tables": {
+  "__nota": "document sense files de taula del nivell A (plànol urbanístic, no porta dades DPSH/sondeig/nivells de sòl)"
+ },
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "superficie_parcela",
+  "num_floors",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF AutoCAD amb text_ok=true (no ha calgut render_clip). PERÒ l'ordre del text pla (page-1.txt) NO respecta l'ordre visual del caixetí: extreu 'Promotor' seguit de 'MIRIAM CASTEL, nºCol. 6.703' i 'ALBA BARRAU, nºCol. 6.408', el que semblaria assignar aquests noms a 'Promotor' — INCORRECTE. El renderitzat page-1.png mostra l'ordre visual real: Situación → Promotor: ANDRÉS AMAT y ENRIQUE M. GARDETA → Arquitectura: ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703. S'ha confiat en la imatge, no en l'ordre del text pla, per a l'assignació etiqueta-valor (Pas 2: 'ordena els blocs per y,x'). També s'ha revisat la llegenda superior dreta (REFERENCIAS GRAFICAS) i inferior esquerra (SITUACIÓN: parcel·la 'Huerto Casa Sort', delimitació catastral) — sense referència cadastral numèrica ni coordenades UTM enlloc del full; només numeració de parcel·les de context urbanístic (1-35), no codis RC."
+}

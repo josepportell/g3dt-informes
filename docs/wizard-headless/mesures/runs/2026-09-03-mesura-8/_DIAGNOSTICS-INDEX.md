@@ -84,3 +84,18 @@ d'Alcoletge (adreça) i Vilanova (SPT ×4) són del comparador (C).
 
 Reconsolidació dels 7 amb el codi nou (sense re-run, lectures cachejades): `{slug}/_reconsolida-2026-09-05/`
 (`_decisions.json` + `_compare_*.txt`). Agregador: `mesures/agrega_mesura.py [--sub _reconsolida-2026-09-05]`.
+
+### Estat dels fixes — tarda (2026-09-05, resta de la fila 0b)
+
+| Codi | Estat | On | Evidència |
+|---|---|---|---|
+| **G** | ✅ | `docs/golden-read/{Rubí,Alcoletge,Vilanova}/_decisions.json` `superficie_parcela.fora_carpeta` | 3 ALERTA → FORA (= signat) |
+| **R6** | ✅ | `consolidate._nf_positive_over_absence` (post-`decide` a `consolidate_tables`) + `test_R6_*` | reconsolidació: 1 cel·la canvia (Vilanova P-3 → candidats, Aigua primer), cap altra |
+| **I1** | ✅ (mesurat; + regla «V0 mai autoritat») | `inventory.has_current_pdf_dir` + `_V0_DIRS` (V0 llegida només si no hi ha `PDF/`), variants ES dels annexos (`ANEJOS`, `_sondeos`, `corte de correlación`) + 3 tests | run parcial `runs/2026-09-05-i1-anciles/` (5 PDF nous), vegeu `_AGREGAT-8.md` §I1 |
+| **R1** | ✅ (4 de 5 equivalències) | `consolidate.value_key` (`btset` building_type, `addr` via+portals, sufix jurídic, punt de lab) + `_attach_only`/`_more_complete` a `cluster_signals` + `test_R1_*` ×5 | 7 cel·les → segur (totes = or/signat), 0 regressions. Persona/despatx (`architect_name`): NO, pregunta a Eva |
+| **D5** | ✅ | `consolidate._cte_surface` (adossat/plurifamiliar = un edifici → total; aïllat = per unitat) + `test_D5_*` | Anciles C0 → C1 (= or), cap altra cel·la |
+| **D4** | ✅ | `runner.LecturaResult.docs_failed`, `degraded |= docs_failed` | `test_timeout_then_retry_doc_failed_rest_continues` |
+| **D6** | ✅ | `runner.assign_doc_names` + `os.replace` del JSON al nom esperat | `test_D6_*` ×2 (unitari + integració dwg/pdf amb cache) |
+| **T1** | ✅ parcial | `runner.doc_timeout` (`G3DT_LECTURA_TIMEOUT_SLOW`=900 per a fulls de camp), `timeout_s` a telemetria | `test_T1_*`; la penjada segueix costant el topall (el CLI no escriu res fins al final) |
+| **T2** | ✅ parcial | `runner.llm_conflict_paths` (només `fields.*`; topall `G3DT_LECTURA_LLM_MAX_CONFLICTS`=8) | `test_T2_*`; observació: 200-290 s per passada fins i tot amb 1 conflicte → decidir si es manté |
+| **S1** | 📝 disseny | — | `_AGREGAT-8.md` §Runner i operació |

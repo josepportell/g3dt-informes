@@ -1,0 +1,247 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_DPSH.pdf",
+ "source_md5": "1f744b7d9abf6bcc67e629f8e6880d17",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH (assaigs de penetració dinàmica) del projecte, versió PDF impresa a l'informe — plantilla G3 amb 6 fitxes (P-1 a P-6), una per punt, taula de golpeig N20/NB per fondària i gràfica.",
+ "issuer": "G3 (plantilla pròpia, dades de camp preses per TPS)",
+ "date": "19/02/2026 (data de camp, capçalera de cada pàgina); PDF generat/imprès 2026-03-16 segons metadades del fitxer (creationDate/modDate)",
+ "pages_or_sheets": "6 pàgines (P-1, P-2, P-3, P-4, P-5 (S2), P-6 (S1))",
+ "context": {
+  "who_made_it": "G3 (Eva), compilant a la plantilla pròpia 'ENSAYO DE PENETRACIÓN DINÁMICA' les lectures de camp preses per TPS (empresa de penetròmetres subcontractada)",
+  "for_whom": "l'informe geotècnic mateix — aquest PDF és l'annex tal com s'imprimeix dins de l'informe (carpeta PDF_V0/ANEJOS)",
+  "why": "documentar el golpeig N20 (DPSH) i NB per fondària de cada assaig, la cota d'inici, la fondària de rebuig i si hi ha nivell freàtic, com a suport de la capacitat portant i dels nivells geotècnics",
+  "expected_fields": [
+   "profunditat_de_penetracio",
+   "golpeo_dpsh_n20",
+   "golpeo_nb",
+   "cota_inici_per_punt",
+   "rebuig",
+   "nivell_freatic",
+   "obra",
+   "poblacion",
+   "fecha",
+   "numero_de_informe",
+   "classificacio_de_color_nivell_1_2_per_punt"
+  ],
+  "not_expected": [
+   "nom del client/promotor",
+   "arquitecte",
+   "dades de l'edifici (plantes, superfície)",
+   "resultats de laboratori",
+   "coordenades UTM",
+   "referència cadastral"
+  ],
+  "relation_to_others": "versió PDF ('Print to PDF' / Acrobat Distiller) de ANEJOS/4001679_DPSH.xls (mateixa dada font, mateix expedient); compila el full de camp manuscrit 'PENETROS + SONDEIGS.pdf' (TPS). P-5 (S2) i P-6 (S1) són continuació dels sondeigs a rotació S-2 i S-1 (ANEJOS/4001679_sondeos.FH11, no llegible; PDF_V0/ANEJOS/4001679_sondeos.pdf no llegit en aquesta crida --only).",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "field_date",
+   "cota_referencia",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001679",
+   "location": "capçalera de cada pàgina (p.1-6), camp 'NÚMERO DE INFORME'",
+   "quote": "NÚMERO DE INFORME: 4001679",
+   "confidence": 0.85,
+   "note": "consistent a les 6 pàgines; coincideix amb el nom de la carpeta del projecte (4001679 ANCILES)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "CALLE GRAL FERRAZ 20",
+   "location": "capçalera de cada pàgina (p.1-6), camp 'OBRA'",
+   "quote": "OBRA: CALLE GRAL FERRAZ 20",
+   "confidence": 0.75,
+   "note": "consistent a les 6 pàgines; 'GRAL' és abreviatura de 'GENERAL' sense desenvolupar al document"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "ANCILES, BENASQUE",
+   "location": "capçalera de cada pàgina (p.1-6), camp 'POBLACIÓN'",
+   "quote": "POBLACIÓN: ANCILES, BENASQUE",
+   "confidence": 0.55,
+   "note": "Anciles és una entitat de població/barri dins del terme municipal de Benasque (Osca, Aragó); el municipi administratiu real probablement és 'Benasque', no 'Anciles' (que és el nom de la carpeta/expedient). Projecte fora de Catalunya: el padró de 947 municipis (automation/municipis.py, via A adreces) NO cobreix aquesta zona — no és font d'autoritat, candidat feble."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "19/02/2026",
+   "location": "capçalera de cada pàgina (p.1-6), camp 'FECHA'",
+   "quote": "FECHA: 19/02/2026",
+   "confidence": 0.7,
+   "note": "candidat de segon nivell (annex DPSH); si existeix fitxa de camp amb data (F38), aquella té prioritat"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+1106,40 msnm",
+   "location": "p.1, capçalera 'ENSAYO DE PENETRACIÓN DINÁMICA: P-1'",
+   "quote": "Cota inicio: +1106,40 msnm según el topográfico proporcionado.",
+   "confidence": 0.5,
+   "note": "candidat PER PUNT (P-1); parcel·la en pendent — 6 cotes d'inici lleugerament diferents (1106,30 a 1106,65), mai triar-ne una com a segur"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+1106,30 msnm",
+   "location": "p.2, capçalera 'ENSAYO DE PENETRACIÓN DINÁMICA: P-2'",
+   "quote": "Cota inicio: +1106,30 msnm según el topográfico proporcionado.",
+   "confidence": 0.5,
+   "note": "candidat PER PUNT (P-2); vegeu nota a la candidatura de P-1"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+1106,40 msnm",
+   "location": "p.3, capçalera 'ENSAYO DE PENETRACIÓN DINÁMICA: P-3'",
+   "quote": "Cota inicio: +1106,40 msnm según el topográfico proporcionado.",
+   "confidence": 0.5,
+   "note": "candidat PER PUNT (P-3); vegeu nota a la candidatura de P-1"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+1106,30 msnm",
+   "location": "p.4, capçalera 'ENSAYO DE PENETRACIÓN DINÁMICA: P-4'",
+   "quote": "Cota inicio: +1106,30 msnm según el topográfico proporcionado.",
+   "confidence": 0.5,
+   "note": "candidat PER PUNT (P-4); vegeu nota a la candidatura de P-1"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+1106,42 msnm",
+   "location": "p.5, capçalera 'ENSAYO DE PENETRACIÓN DINÁMICA: P-5 (S2)'",
+   "quote": "Cota inicio: +1106,42 msnm según el topográfico proporcionado.",
+   "confidence": 0.5,
+   "note": "candidat PER PUNT (P-5, continuació del Sondeig S-2); vegeu nota a la candidatura de P-1"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+1106,65 msnm",
+   "location": "p.6, capçalera 'ENSAYO DE PENETRACIÓN DINÁMICA: P-6 (S1)'",
+   "quote": "Cota inicio: +1106,65 msnm según el topográfico proporcionado.",
+   "confidence": 0.5,
+   "note": "candidat PER PUNT (P-6, continuació del Sondeig S-1); vegeu nota a la candidatura de P-1. És la cota més alta de les 6 (parcel·la en pendent)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 6,
+   "location": "recompte de fitxes 'ENSAYO DE PENETRACIÓN DINÁMICA' del document (p.1-6)",
+   "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P‐1 / P‐2 / P‐3 / P‐4 / P‐5 (S2) / P‐6 (S1)",
+   "confidence": 0.85,
+   "note": "6 assaigs executats i tots amb rebuig registrat; P-1 a P-4 són punts DPSH independents, P-5 continua el Sondeig S-2 i P-6 continua el Sondeig S-1"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "columna 'Niveles' (colors taronja/groc) de cada fitxa DPSH, p.1-6",
+   "quote": "Nivel 1 / Nivel 2 (llegenda de colors, peu de cada fitxa)",
+   "confidence": 0.2,
+   "note": "senyal feble i indirecta: cada assaig DPSH només distingeix 2 zones de color per canvi de duresa del golpeig, NO és la classificació litològica de l'annex de sondeig/tall (autoritat real d'aquest camp segons el Pas 3). No confirmis num_soil_levels amb aquest document tot sol."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "+1106,40 msnm según el topográfico proporcionado",
+    "profunditat_assolida": "-3,58 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.1",
+    "quote": "Rechazo a la penetración: -3,58 m",
+    "extra": {
+     "nivell_color_transicio": "Nivel 1 (taronja) 0 a -1,8 m; Nivel 2 (groc) -2,0 a -3,6 m",
+     "ultim_valor_registrat": "N20=100 / NB=120 a -3,6 m (rebuig)"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "+1106,30 msnm según el topográfico proporcionado",
+    "profunditat_assolida": "-4,59 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2",
+    "quote": "Rechazo a la penetración: -4,59 m",
+    "extra": {
+     "nivell_color_transicio": "Nivel 1 (taronja) 0 a -2,4 m; Nivel 2 (groc) -2,6 a -4,6 m",
+     "ultim_valor_registrat": "N20=100 / NB=120 a -4,6 m (rebuig)"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "+1106,40 msnm según el topográfico proporcionado",
+    "profunditat_assolida": "-3,77 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.3",
+    "quote": "Rechazo a la penetración: -3,77 m",
+    "extra": {
+     "nivell_color_transicio": "Nivel 1 (taronja) 0 a -2,4 m; Nivel 2 (groc) -2,6 a -3,8 m",
+     "ultim_valor_registrat": "N20=100 / NB=120 a -3,8 m (rebuig)"
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "+1106,30 msnm según el topográfico proporcionado",
+    "profunditat_assolida": "-5,92 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.4",
+    "quote": "Rechazo a la penetración: -5,92 m",
+    "extra": {
+     "nivell_color_transicio": "Nivel 1 (taronja) 0 a -1,8 m; Nivel 2 (groc) -2,0 a -6,0 m",
+     "ultim_valor_registrat": "N20=100 / NB=120 a -6,0 m (rebuig)"
+    }
+   },
+   {
+    "punt": "P-5",
+    "cota_inici": "+1106,42 msnm según el topográfico proporcionado",
+    "profunditat_assolida": "-4,18 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.5",
+    "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P‐5 (S2) ... Rechazo a la penetración: -4,18 m",
+    "extra": {
+     "sondeig_associat": "S-2",
+     "nota_fondaria": "0 a -3,00 m cobert pel Sondeig S-2 (cel·la 'Sondeo S-2', sense dades DPSH ni color de nivell); dades DPSH només de -3,2 a -4,2 m",
+     "nivell_color_transicio": "sense color 0 a -3,0 m (tram del sondeig); Nivel 2 (groc) -3,2 a -4,2 m",
+     "ultim_valor_registrat": "N20=100 / NB=120 a -4,2 m (rebuig)"
+    }
+   },
+   {
+    "punt": "P-6",
+    "cota_inici": "+1106,65 msnm según el topográfico proporcionado",
+    "profunditat_assolida": "-5,70 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.6",
+    "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P‐6 (S1) ... Rechazo a la penetración: -5,70 m",
+    "extra": {
+     "sondeig_associat": "S-1",
+     "nota_fondaria": "0 a -2,40 m cobert pel Sondeig S-1 (cel·la 'Sondeo S-1', color Nivel 1/taronja però sense dades DPSH); dades DPSH de -2,6 a -5,8 m",
+     "nivell_color_transicio": "Nivel 1 (taronja) 0 a -4,0 m (inclou el tram del sondeig); Nivel 2 (groc) -4,2 a -5,8 m",
+     "ultim_valor_registrat": "N20=100 / NB=120 a -5,8 m (rebuig)"
+    }
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura via pre-extracció (--inventory): text de les 6 pàgines llegit de page-N.txt (text_ok=true totes); cap pàgina necessitava halves ni render_clip. Columnes 'N.F.' i 'Niveles' del document són color-codificades (com als Excel del corpus) i el text extret NO les captura — s'ha inspeccionat visualment page-N.png (150 dpi) de les 6 pàgines per confirmar: 'N.F.' en blanc (sense marca) a les 6 fitxes -> 'No detectat'; 'Niveles' amb 2 colors (taronja=Nivel 1, groc=Nivel 2) amb transicions diferents per punt (vegeu tables.dpsh_tests[].extra). P-5 i P-6 tenen un tram inicial (0 a -3,0 m i 0 a -2,4 m respectivament) marcat 'Sondeo S-2'/'Sondeo S-1' sense dades DPSH pròpies (continuació d'un sondeig a rotació ja existent)."
+}

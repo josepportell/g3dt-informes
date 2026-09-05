@@ -1,0 +1,36 @@
+{"t": 11.3, "ev": "lectura_preext", "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/anciles/_preext", "n_docs": 14, "n_errors": 0, "elapsed_s": 11.006}
+{"t": 11.3, "ev": "lectura_inventari", "n_files": 47}
+{"t": 12.2, "ev": "templates_fields", "n_documents": 6}
+{"t": 12.2, "ev": "lectura_inici", "n_claude": 14, "n_python": 3}
+{"t": 12.2, "ev": "lectura_doc_inici", "doc": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf"}
+{"t": 12.2, "ev": "lectura_doc_inici", "doc": "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg"}
+{"t": 118.2, "ev": "lectura_doc", "doc": "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg", "cached": false, "attempt": 1}
+{"t": 118.2, "ev": "lectura_doc_inici", "doc": "ANEJOS/4001679_DPSH.xls"}
+{"t": 217.0, "ev": "lectura_doc", "doc": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf", "cached": false, "attempt": 1}
+{"t": 217.0, "ev": "lectura_doc_inici", "doc": "tall.pdf"}
+{"t": 364.9, "ev": "lectura_doc", "doc": "ANEJOS/4001679_DPSH.xls", "cached": false, "attempt": 1}
+{"t": 364.9, "ev": "lectura_doc_inici", "doc": "24.0807/A01_TIPOL.pdf"}
+{"t": 456.7, "ev": "lectura_doc", "doc": "tall.pdf", "cached": false, "attempt": 1}
+{"t": 456.7, "ev": "lectura_doc_inici", "doc": "24.0807/IV_PLANOS.pdf"}
+{"t": 668.9, "ev": "lectura_doc", "doc": "24.0807/A01_TIPOL.pdf", "cached": false, "attempt": 1}
+{"t": 668.9, "ev": "lectura_doc_inici", "doc": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf"}
+{"t": 867.3, "ev": "lectura_doc", "doc": "24.0807/IV_PLANOS.pdf", "cached": false, "attempt": 1}
+{"t": 867.3, "ev": "lectura_doc_inici", "doc": "24.0807/SITE_prop A.pdf"}
+{"t": 889.0, "ev": "lectura_doc", "doc": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf", "cached": false, "attempt": 1}
+{"t": 889.0, "ev": "lectura_doc_inici", "doc": "pl situ.pdf"}
+{"t": 1109.1, "ev": "lectura_doc", "doc": "pl situ.pdf", "cached": false, "attempt": 1}
+{"t": 1109.1, "ev": "lectura_doc_inici", "doc": "PENETROS + SONDEIGS.pdf"}
+{"t": 1118.8, "ev": "lectura_doc", "doc": "24.0807/SITE_prop A.pdf", "cached": false, "attempt": 1}
+{"t": 1118.8, "ev": "lectura_doc_inici", "doc": "24.0807/Presupuesto Parcela Anciles.msg"}
+{"t": 1276.6, "ev": "lectura_doc", "doc": "24.0807/Presupuesto Parcela Anciles.msg", "cached": false, "attempt": 1}
+{"t": 1276.6, "ev": "lectura_doc_inici", "doc": "24.0807/RE_ Presupuesto Parcela Anciles.msg"}
+{"t": 1453.2, "ev": "lectura_doc", "doc": "24.0807/RE_ Presupuesto Parcela Anciles.msg", "cached": false, "attempt": 1}
+{"t": 1453.2, "ev": "lectura_doc_inici", "doc": "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg"}
+{"t": 1572.1, "ev": "lectura_doc", "doc": "PENETROS + SONDEIGS.pdf", "cached": false, "attempt": 1}
+{"t": 1572.1, "ev": "lectura_doc_inici", "doc": "Confirmación visita jueves 19 y plano.msg"}
+{"t": 1586.4, "ev": "lectura_doc", "doc": "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg", "cached": false, "attempt": 1}
+{"t": 1697.7, "ev": "lectura_doc", "doc": "Confirmación visita jueves 19 y plano.msg", "cached": false, "attempt": 1}
+{"t": 1697.7, "ev": "consolidacio_inici", "consolidator": "python"}
+{"t": 1697.7, "ev": "decisions", "cached": false, "consolidator": "python", "n_conflicts": 0, "elapsed_s": 0.031}
+{"t": 1697.7, "ev": "lectura_fi", "n_docs": 14, "elapsed_s_total": 3097.2003598349993, "degraded": false}
+DONE 4001679 ANCILES: 28.3 min, degraded=False, mode=document, decisions=OK, docs=14

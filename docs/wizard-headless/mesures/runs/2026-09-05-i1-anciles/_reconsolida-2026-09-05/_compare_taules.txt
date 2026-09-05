@@ -1,0 +1,30 @@
+-- dpsh_tests: or 6 files / prod 6 files · alineades per clau
+CAUTELA  dpsh_tests[0].cota_inici or segur, prod candidats (bo dins): '+1106,40 msnm'
+CAUTELA  dpsh_tests[1].cota_inici or segur, prod candidats (bo dins): '+1106,30 msnm'
+CAUTELA  dpsh_tests[2].cota_inici or segur, prod candidats (bo dins): '+1106,40 msnm'
+CAUTELA  dpsh_tests[3].cota_inici or segur, prod candidats (bo dins): '+1106,30 msnm'
+CAUTELA  dpsh_tests[4].cota_inici or segur, prod candidats (bo dins): '+1106,42 msnm'
+CAUTELA  dpsh_tests[5].cota_inici or segur, prod candidats (bo dins): '+1106,65 msnm'
+-- sondeig_tests: or 2 files / prod 2 files · alineades per clau
+CAUTELA  sondeig_tests[0].profunditat_assolida or segur, prod candidats (bo dins): '-2,40 m'
+CAUTELA  sondeig_tests[0].spt_ma or segur, prod candidats (bo dins): '1/0'
+CAUTELA  sondeig_tests[0].nivell_freatic or segur, prod candidats (bo dins): 'No detectat'
+CAUTELA  sondeig_tests[0].cota or segur, prod candidats (bo dins): '+1106,65 msnm'
+CAUTELA  sondeig_tests[1].profunditat_assolida or segur, prod candidats (bo dins): '-3,00 m'
+CAUTELA  sondeig_tests[1].spt_ma or segur, prod candidats (bo dins): '1/1'
+CAUTELA  sondeig_tests[1].nivell_freatic or segur, prod candidats (bo dins): 'No detectat'
+CAUTELA  sondeig_tests[1].cota or segur, prod candidats (bo dins): '+1106,42 msnm'
+-- spt_ma_tests: or 3 files / prod 3 files
+NOMES-OR spt_ma_tests: assaig_encarregat, id_estat, litologia_del_nivell (7 cel·les de l'or que prod no emet a cap fila: no compten)
+CAUTELA  spt_ma_tests[0].profunditat or segur, prod candidats (bo dins): '-1,00 a -1,60 m'
+CAUTELA  spt_ma_tests[1].profunditat or segur, prod candidats (bo dins): '-1,00 a -1,60 m'
+CAUTELA  spt_ma_tests[2].profunditat or segur, prod candidats (bo dins): '-2,80 a -3,00 m'
+ALERTA   spt_ma_tests[2].n30 estat or=no_trobat prod=candidats (or value=None)
+-- soil_levels: or 2 files / prod 2 files · alineades per clau
+CAUTELA  soil_levels[0].de or segur, prod candidats (bo dins): '0,00 m (superfície)'
+CAUTELA  soil_levels[0].a candidats disjunts: or=['~-2,55/-2,60 m (a S-2)', 'sostre del 2n nivell entre ~+1103,9 i ~+1104,8 msnm segons punt (≈1,7 a 2,6 m sota superfície)', "salt de Nb a l'Excel entre ~-1,8 i -2,6 segons punt"] prod=['-3,00']
+ALERTA   soil_levels[0].mostra_del_nivell or segur 'false' NO entre candidats [True]
+BUIT     soil_levels[1].de (or=candidats '~-2,55/-2,60 m (S-2)'; prod no_trobat)
+BUIT     soil_levels[1].a (or=candidats 'fons reconegut: -3,00 m a S-2 (sondeig) i fins -5,92 m als DPSH (P-4)'; prod no_trobat)
+BUIT     soil_levels[1].mostra_del_nivell (or=segur 'true'; prod no_trobat)
+TOTALS: {'CAUTELA': 19, 'OK': 22, 'NOMES_OR': 7, 'ALERTA': 2, 'BUIT': 3}

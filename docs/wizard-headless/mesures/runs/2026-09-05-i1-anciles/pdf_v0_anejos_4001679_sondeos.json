@@ -1,0 +1,349 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_sondeos.pdf",
+ "source_md5": "30012d7ecd82b395274cc5011d721ae6",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_sondeig",
+ "what_it_is": "Fitxa de camp del sondeig a rotació amb bateria contínua (plantilla G3), un full per punt assajat (S-1, S-2) amb la seva pàgina de fotografies del testimoni.",
+ "issuer": "TPS, S.L. (sondista Sr. Daniel Fernández; tècnica Ariadna Salla M., Geóloga, que signa/redacta la fitxa)",
+ "date": "19/02/2026 (Fecha incio i Fecha final, idèntiques a S-1 i S-2)",
+ "pages_or_sheets": "4 pàgines: p.1 matriu S-1, p.2 fotografies S-1, p.3 matriu S-2, p.4 fotografies S-2",
+ "context": {
+  "who_made_it": "TPS, S.L. (subcontractista de sondeigs de G3): el sondista Sr. Daniel Fernández fa la perforació; la tècnica Ariadna Salla M. (Geóloga) signa/redacta la fitxa.",
+  "for_whom": "G3 Desenvolupament Territorial, que ha encarregat el sondeig per a l'estudi geotècnic del projecte de la Sra. Alba Maria Barrau Castán.",
+  "why": "Registrar les dades de camp del sondeig a rotació amb bateria contínua (litologia, mostres SPT/MA, nivell freàtic, cota) per als dos punts assajats (S-1, S-2).",
+  "expected_fields": [
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "field_date"
+  ],
+  "not_expected": [
+   "superficie_parcela",
+   "num_floors",
+   "architect_name",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Versió 'Print To PDF' (Acrobat Distiller 15.0 / PScript5.dll) del FreeHand original ANEJOS/4001679_sondeos.FH11 (route skip, no llegible al pipeline; mateix contingut, Pas 0). Complementa el tall de correlació (PDF_V0/ANEJOS/4001679_corte de correlación.pdf) i el DPSH (PDF_V0/ANEJOS/4001679_DPSH.pdf). Segons el Pas 3b, l'Eva re-redacta la litologia d'aquest annex a l'informe.",
+  "authority_for": [
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "field_date",
+   "client_name",
+   "street_address",
+   "municipality",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Sra. Alba Maria Barrau Castán",
+   "location": "p.1 i p.3, caixetí superior, camp 'Cliente'",
+   "quote": "Cliente: SRA. ALBA MARIA BARRAU CASTÁN",
+   "confidence": 0.5,
+   "note": "La casella 'Cliente' d'un annex de sondeig és el sol·licitant per regla general (Pas 3) — candidat, mai segur des d'aquest sol document. El nom no conté 'ARQUITECT'."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Calle Gral Ferraz 20",
+   "location": "p.1 i p.3, caixetí, camp 'Obra'",
+   "quote": "Estudio Geológico / Geotécnico para la construcción de 7 viviendas adosadas en la Calle Gral Ferraz 20 de Anciles, Benasque",
+   "confidence": 0.55,
+   "note": "Redacció de l'encàrrec (no etiqueta 'ADREÇA OBRA' explícita). La mateixa frase esmenta dues entitats de lloc ('Anciles' i 'Benasque') — vegeu els dos candidats de municipality."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Anciles",
+   "location": "p.1 i p.3, caixetí, camp 'Obra'",
+   "quote": "...en la Calle Gral Ferraz 20 de Anciles, Benasque",
+   "confidence": 0.5,
+   "note": "Coincideix amb el nom curt de la carpeta de l'expedient ('4001679 ANCILES'). Podria ser el nucli/localitat, no el municipi administratiu."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Benasque",
+   "location": "p.1 i p.3, caixetí, camp 'Obra'",
+   "quote": "...en la Calle Gral Ferraz 20 de Anciles, Benasque",
+   "confidence": 0.55,
+   "note": "Apareix com a segon topònim, després d'Anciles, a la mateixa frase. Candidat al municipi administratiu (Anciles com a nucli de Benasque); verificar amb altres documents del projecte."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "vivienda adosada (7 unitats)",
+   "location": "p.1 i p.3, caixetí, camp 'Obra'",
+   "quote": "Estudio Geológico / Geotécnico para la construcción de 7 viviendas adosadas...",
+   "confidence": 0.45,
+   "note": "Redacció de l'encàrrec dins la casella Obra; candidat feble, contrastar amb pressupost/PLAN_COST/plànol."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "19/02/2026",
+   "location": "p.1 i p.3, camps 'Fecha incio' / 'Fecha final.'",
+   "quote": "Fecha incio: 19/02/2026 · Fecha final.: 19/02/2026",
+   "confidence": 0.6,
+   "note": "Data del sondeig (candidat 2 de field_date; la fitxa de camp/annex DPSH manen si en discrepen). Idèntica a S-1 i S-2."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+1106,65 msnm",
+   "location": "p.1, quadre 'Cota inicio según plano topográfico proporcionado'",
+   "quote": "Cota inicio según plano topográfico proporcionado: Z: +1106.65 msnm",
+   "confidence": 0.7,
+   "note": "Cota del punt S-1. Parcel·la en pendent — S-2 dona una cota diferent (+1106,42); no triar-ne una com a única cota_referencia sense confirmar quin punt correspon a la implantació."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+1106,42 msnm",
+   "location": "p.3, quadre 'Cota inicio según plano topográfico proporcionado'",
+   "quote": "Cota inicio según plano topográfico proporcionado: Z: +1106.42 msnm",
+   "confidence": 0.7,
+   "note": "Cota del punt S-2. Vegeu nota de S-1 (parcel·la en pendent)."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "p.1 i p.3, columna 'Unidad litológica'",
+   "quote": "NIVEL 1",
+   "confidence": 0.45,
+   "note": "Aquest annex (el 'log') només etiqueta NIVEL 1 als dos sondeigs. S-2 mostra gràficament un segon material ('Bolos y gravas de granito en matriz arenosa y arcillosa') a partir d'aprox. -1,6/-2,8 m, sense número de nivell propi. Per Pas 3b el TALL de correlació sol manar pel nombre final i pot donar 2 nivells — aquest document és candidat 'log', no consolidar-ho aquí."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.1, bloc 'Muestras y ensayos in situ'",
+   "quote": "SPT-1 · -1.00 a -1.60",
+   "confidence": 0.6,
+   "note": "Mostra del sondeig S-1."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.3, bloc 'Muestras y ensayos in situ'",
+   "quote": "SPT-1 · -1.00 a -1.60",
+   "confidence": 0.6,
+   "note": "Mostra del sondeig S-2."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "MA-1",
+   "location": "p.3, bloc 'Muestras y ensayos in situ'",
+   "quote": "MA-1 · -2.80 -3.00",
+   "confidence": 0.6,
+   "note": "Mostra alterada del sondeig S-2."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-1,00 a -1,60",
+   "location": "p.1, columna 'Prof. de extracción (m)'",
+   "quote": "-1.00 a -1.60",
+   "confidence": 0.65,
+   "note": "Profunditat de l'SPT-1, sondeig S-1."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-1,00 a -1,60",
+   "location": "p.3, columna 'Prof. de extracción (m)'",
+   "quote": "-1.00 a -1.60",
+   "confidence": 0.65,
+   "note": "Profunditat de l'SPT-1, sondeig S-2."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-2,80 a -3,00",
+   "location": "p.3, columna 'Prof. de extracción (m)'",
+   "quote": "-2.80 -3.00",
+   "confidence": 0.65,
+   "note": "Profunditat de l'MA-1, sondeig S-2."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.1, caixetí 'Sondeo nº'",
+   "quote": "Sondeo nº: S-1",
+   "confidence": 0.6,
+   "note": "Punt d'assaig de l'SPT-1."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-2",
+   "location": "p.3, caixetí 'Sondeo nº'",
+   "quote": "Sondeo nº: S-2",
+   "confidence": 0.6,
+   "note": "Punt d'assaig de l'SPT-1 i l'MA-1."
+  }
+ ],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "+1106,65 msnm",
+    "profunditat_assolida": "-2,40",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": "No detectat",
+    "location": "p.1",
+    "quote": "Sondeo nº: S-1 · Fecha incio: 19/02/2026 · Fecha final.: 19/02/2026",
+    "confidence": 0.55,
+    "extra": {
+     "empresa": "TPS, S.L.",
+     "sondista": "Sr. Daniel Fernández",
+     "tecnic": "Ariadna Salla M., Geóloga",
+     "maquina": "ML-76A",
+     "profunditat_assolida_font": "Fotografía 2 (p.2): '...en el sondeo S-1 entre las cotas de 0.00 a -2.40 metros de profundidad'; el traçat de columna litológica també s'atura cap a aquesta fondària sense xifra impresa a la matriu.",
+     "nivell_freatic_font": "Columna 'Nivel freático (N.F.)' comprovada per zoom (500dpi): en blanc de dalt a baix, sense marca ni color."
+    }
+   },
+   {
+    "sondeig": "S-2",
+    "cota": "+1106,42 msnm",
+    "profunditat_assolida": "-3,00",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 1
+    },
+    "nivell_freatic": "No detectat",
+    "location": "p.3",
+    "quote": "Sondeo nº: S-2 · Fecha incio: 19/02/2026 · Fecha final.: 19/02/2026",
+    "confidence": 0.55,
+    "extra": {
+     "empresa": "TPS, S.L.",
+     "sondista": "Sr. Daniel Fernández",
+     "tecnic": "Ariadna Salla M., Geóloga",
+     "maquina": "ML-76A",
+     "profunditat_assolida_font": "Fotografía 2 (p.4): '...en el sondeo S-2 entre las cotas de 0.00 a -3.00 metros de profundidad'.",
+     "nivell_freatic_font": "Columna 'Nivel freático (N.F.)' comprovada per zoom (500dpi): en blanc de dalt a baix, sense marca ni color."
+    }
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1,00 a -1,60",
+    "litologia": "Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito. (NIVEL 1)",
+    "n30": {
+     "registre": {
+      "value": [
+       "2",
+       "3",
+       "3"
+      ],
+      "location": "p.1, columna 'Registro'",
+      "quote": "2 3 3",
+      "confidence": 0.6,
+      "note": "Només 3 valors enregistrats (no 4 com al patró habitual d'altres projectes del corpus); ordre de dalt a baix, sense etiqueta de tram explícita."
+     },
+     "estat": "candidats",
+     "note": "Sense prou valors (calen 4) per aplicar la regla de suma dels 2 trams centrals — mai segur."
+    },
+    "location": "p.1",
+    "quote": "SPT-1 · -1.00 a -1.60 · Registro 2/3/3",
+    "confidence": 0.55
+   },
+   {
+    "id": "SPT-1",
+    "punt": "S-2",
+    "profunditat": "-1,00 a -1,60",
+    "litologia": "Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito. (NIVEL 1, part superior)",
+    "n30": {
+     "registre": {
+      "value": [
+       "2",
+       "3",
+       "3"
+      ],
+      "location": "p.3, columna 'Registro'",
+      "quote": "2 3 3",
+      "confidence": 0.6,
+      "note": "Idèntic al registre de l'SPT-1 de S-1; només 3 valors, no 4."
+     },
+     "estat": "candidats",
+     "note": "Sense prou valors (calen 4) per aplicar la regla de suma dels 2 trams centrals — mai segur."
+    },
+    "location": "p.3",
+    "quote": "SPT-1 · -1.00 a -1.60 · Registro 2/3/3",
+    "confidence": 0.55
+   },
+   {
+    "id": "MA-1",
+    "punt": "S-2",
+    "profunditat": "-2,80 a -3,00",
+    "litologia": "Bolos y gravas de granito en matriz arenosa y arcillosa. (NIVEL 1, part inferior, sense número propi)",
+    "n30": {
+     "registre": null,
+     "estat": "no_trobat",
+     "note": "Mostra alterada (MA), sense colpeig imprès — cel·la 'Registro' en blanc per a aquesta fila."
+    },
+    "location": "p.3",
+    "quote": "MA-1 · -2.80 -3.00",
+    "confidence": 0.55
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "NIVEL 1 (S-1)",
+    "litologia_candidats": [
+     "Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito."
+    ],
+    "de": "0,00",
+    "a": null,
+    "mostra_del_nivell": true,
+    "location": "p.1, columnes 'Unidad litológica' + 'Descripción de los materiales'",
+    "quote": "NIVEL 1 / Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito.",
+    "confidence": 0.5,
+    "note": "Únic nivell etiquetat a S-1. La columna gràfica s'atura cap a -2,40 m (vegeu profunditat_assolida) sense xifra de fondària impresa a la matriu; 'a' es deixa null per no inventar-la per píxels. SPT-1 (-1,00 a -1,60) hi cau dins."
+   },
+   {
+    "nom": "NIVEL 1 (S-2, part superior)",
+    "litologia_candidats": [
+     "Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito."
+    ],
+    "de": "0,00",
+    "a": null,
+    "mostra_del_nivell": true,
+    "location": "p.3, columnes 'Unidad litológica' + 'Descripción de los materiales'",
+    "quote": "NIVEL 1 / Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito.",
+    "confidence": 0.45,
+    "note": "Part alta del NIVEL 1 a S-2 (mateixa litologia que S-1). Transició visual cap a un segon material entre aprox. -1,6 i -2,8 m, sense xifra impresa: 'a' es deixa null (no mesurat per píxels). SPT-1 hi cau dins."
+   },
+   {
+    "nom": "NIVEL 1 (S-2, part inferior, sense número propi)",
+    "litologia_candidats": [
+     "Bolos y gravas de granito en matriz arenosa y arcillosa."
+    ],
+    "de": null,
+    "a": "-3,00",
+    "mostra_del_nivell": true,
+    "location": "p.3, columnes 'Unidad litológica' + 'Descripción de los materiales'",
+    "quote": "NIVEL 1 / Bolos y gravas de granito en matriz arenosa y arcillosa.",
+    "confidence": 0.45,
+    "note": "Segon material visible a la columna litològica de S-2 (textura de graves), però la 'Unidad litológica' segueix dient NIVEL 1 (sense NIVEL 2 imprès) — coherent amb la memòria de projecte que situa aquest log en 1 nivell davant del tall en 2. MA-1 (-2,80 a -3,00) hi cau dins; 'a' pres de profunditat_assolida (caption fotografia), 'de' null (transició sense xifra)."
+   }
+  ]
+ },
+ "not_present": [
+  "expedient (només 'Sondeo nº' S-1/S-2, cap número d'expedient imprès)",
+  "utm_x_utm_y (només Z per punt; sense X/Y)",
+  "referencia_catastral",
+  "num_dpsh_tests",
+  "superficie_parcela",
+  "num_floors (només '7 viviendas', sense plantes)",
+  "architect_name",
+  "cte_edificacio",
+  "cte_sol",
+  "lab_testing_company (Empresa=TPS és el sondista d'aquesta fitxa de camp, no un informe de laboratori GTL)"
+ ],
+ "reading_notes": "Les 4 pàgines tenen text brossa (producer 'Acrobat Distiller 15.0 (Windows)', creator 'PScript5.dll' — exportació FreeHand): lectura íntegrament visual, text_ok=false a totes. Vistes primer les page-N.png senceres (150dpi). Per confirmar dos punts dubtosos s'han fet clips amb scripts/render_clip.py (400-500dpi): (1) zona de transició de material a S-2 cap a -2,5/-3,0 m — confirma que 'Unidad litológica' només diu NIVEL 1, sense NIVEL 2 imprès, tot i el canvi clar de textura gràfica (arcilles → graves); (2) cel·la 'Registro' de l'SPT-1 a S-1 i S-2 — confirma 3 valors '2/3/3' (no 4 com al patró habitual d'altres projectes del corpus); (3) columna 'Nivel freático (N.F.)' sencera de dalt a baix per a S-1 i S-2 — confirma que és en blanc, sense marca ni color, a totes dues fitxes. La fondària assolida de cada sondeig no és una xifra impresa a la matriu (el traçat gràfic s'atura sense etiqueta numèrica): s'ha pres de la llegenda mecanografiada de les fotografies (p.2/p.4)."
+}

@@ -1,0 +1,74 @@
+{
+ "source_path": "Confirmación visita jueves 19 y plano.msg",
+ "source_md5": "87f5b442944655b6fd77a693318c401f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu de coordinació logística confirmant una visita a la parcel·la d'Anciles el dijous 19 per obrir i assistir el tècnic, amb promesa d'enviar el plànol l'endemà (no adjunt en aquest correu).",
+ "issuer": "+D comercial <comercial@masde.net> (signatura: Ing. D. Enrique Gardeta Torrodellas)",
+ "date": "2026-02-17 15:37:31+01:00",
+ "pages_or_sheets": "cos del correu + 1 adjunt (imatge de signatura corporativa)",
+ "context": {
+  "who_made_it": "'+D comercial' (comercial@masde.net), signat per Enrique Gardeta Torrodellas; la seva signatura corporativa anuncia una empresa de sensòrica/instrumentació (Pacific Instruments, DTS, Akamina, Hi-Tec) sota la marca 'masde.net · fabricamos soluciones' — no sembla relacionada amb el geotècnic; en aquest fil actua com a persona de contacte/gestió de la parcel·la.",
+  "for_whom": "dolors@g3dt.com (G3), Alba Barrau <abarrau@retrateria.com>, Miriam Castel <miriamcastel.c@gmail.com>, Andrés Amat <infoamat@gmail.com>",
+  "why": "Confirmar dia i hora (dijous 19, a partir de les 09:30) per obrir la parcel·la d'Anciles i assistir el tècnic que hi ha de treballar, i avisar que el plànol s'enviarà per correu l'endemà.",
+  "expected_fields": [
+   "field_date (data de la visita/obertura de la parcel·la)"
+  ],
+  "not_expected": [
+   "municipality",
+   "street_address",
+   "architect_name",
+   "client_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "expedient"
+  ],
+  "relation_to_others": "Correu de logística de visita, independent dels documents tècnics; el 'plano' que promet NO és l'adjunt d'aquest correu (l'adjunt real és una imatge de signatura corporativa, 'pie_egt_con_pacific_instruments.png', 638x218 px aprox., logos +D/Akamina/DTS/Pacific Instruments/Hi-Tec — no és un plànol del projecte, es descarta). Alba Barrau hi apareix com a destinatària (coincideix amb el nom que consta com a client a la p.5 del pressupost acceptat d'altres documents), però aquest correu no ho declara explícitament, així que no es dona com a candidat de client_name des d'aquí.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "2026-02-19",
+   "location": "cos del correu",
+   "quote": "Te confirmo que estaré a partir de las 0930 en la parcela de Anciles con plano ... para abrir y asistir al técnico.",
+   "confidence": 0.25,
+   "note": "Correu de coordinació d'obertura de parcel·la, NO fitxa de camp ni albarà ni Excel DPSH (fonts d'autoritat per a field_date). 'Jueves 19' interpretat com 2026-02-19 (dijous més proper al 19, mateix mes que la data del correu 2026-02-17); no queda declarat si aquesta visita és el primer dia de camp (DPSH) o una altra activitat (p. ex. sondeig). Candidat feble, mai segur."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit body.txt (pre-extret) + adjunt únic (pie_egt_con_pacific_instruments.png) visualitzat: és una imatge de signatura/peu de correu corporativa (logos +D, Akamina, DTS, Pacific Instruments, Hi-Tec), no un plànol del projecte — descartada com a font de dades (regla d'imatges de signatura, Pas 1.2), tot i pesar 137 KB (per sobre del llindar de mida però confirmada visualment com a signatura). El 'plano' promès al text no és a aquest correu."
+}

@@ -1,0 +1,8 @@
+NOU      architect_company      prod=candidats
+CAUTELA  building_type          or segur, prod candidats (bo dins): '7 habitatges unifamiliars adossats (7 viviendas adosadas)'
+CAUTELA  client_name            or segur, prod candidats (bo dins): 'Alba Maria Barrau Castán'
+BUIT     cota_referencia        (or=candidats '+1106,40 (P-1)'; prod no_trobat)
+ALERTA   num_soil_levels        prod puja a segur ('2'); or candidats
+CAUTELA  referencia_catastral   or segur, prod candidats (bo dins): '6184504BH9158N0000SS'
+CAUTELA  superficie_parcela     or segur, prod candidats (bo dins): '1.655,01 m²'
+TOTALS: {'NOU': 1, 'OK': 15, 'CAUTELA': 4, 'BUIT': 1, 'ALERTA': 1}

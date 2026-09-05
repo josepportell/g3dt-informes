@@ -12,6 +12,14 @@ Branca `experiment/nivell-a-2026-08`, pushada al matí a `7bdbcde`; **els canvis
 3. `…/_DIAGNOSTICS-INDEX.md` §Estat dels fixes — què és ✅ i on, què és ⏳.
 4. `docs/DECISION-LOG.md` entrada 2026-09-05 (7 decisions, dues marxes enrere).
 
+## Actualització (tarda): fila 0b TANCADA
+
+Josep ha dit «seguim amb la resta de la fila 0b, amb la teva proposta d'ordre tal qual»: G, R6, I1, R1, D5, D4, D6, T1,
+T2 fets amb test i mesurats per reconsolidació (`mesures/reconsolida_mesura.py <sub_nou> <sub_ref>`); S1 en disseny.
+Escalars sobre l'or 104 OK / 37 CAND / 5 ALERTA / 0 ERR; taules 137 / 21 / 8 / 0. Sobre el signat: 1 ERR real (Rubí
+cota P-2, font d'Eva). Llegeix `_AGREGAT-8.md` §tarda i el DECISION-LOG 2026-09-05 (tarda). El que queda: preguntes a
+Eva (R4, persona/despatx, SPT Vilanova, cota Rubí), R5/R2, decisió sobre la passada LLM (T2), S1.
+
 ## Estat en una frase
 
 Els tres ERR de codi de la mesura (Linyola data, Vilanova municipi, Bell-lloc plantes) són OK amb el consolidador nou,

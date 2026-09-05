@@ -1,4 +1,16 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
+Last updated: 2026-09-05 (tarda) — **Fila 0b TANCADA** (S1 en disseny). Tarda: G, R6, I1, R1, D5, D4, D6, T1, T2, cada
+un amb test i mesurat per reconsolidació (cost 0; `mesures/reconsolida_mesura.py`). Agregat mecànic sobre l'or:
+escalars **104 OK (71 %) / 37 CAND / 5 ALERTA / 1 blanc / 0 ERR** (matí 93; 09-04 86); taules **137 / 21 / 8 / 31 / 0**.
+Sobre el signat: escalars 104/42/1/**0 ERR**; taules **1 ERR real** (Rubí cota P-2, font d'Eva) — dels 4 ERR del 09-04
+en queda 1 i és de font. 0 regressions (totes les cel·les mogudes llistades a `_reconsolida-2026-09-05-r{6,1,2}/`).
+I1: run parcial Anciles (`runs/2026-09-05-i1-anciles/`, 5 PDF de `PDF_V0`, 20,3 min, 5,87 USD): les 9 cotes en blanc
+surten com a candidats amb el valor del signat primer; **regla nova: un document V0 proposa però mai és autoritat ni
+contradiu** (la V0 posava les graves al nivell 1; el signat al 2n). Amb I1: escalars 105/37/5/0/0, taules 137/37/9/20/0.
+Llindars: ERR 0 ✅; OK 71 % ⏳ (80); CAND 29 % ⏳ (20): la resta és R5 (font única), R4 (pregunta a Eva), R2, F1.
+**Observació T2 per decidir:** la passada LLM `--only-fields` costa 200-290 s i 14-23 torns fins i tot amb 1 conflicte.
+Detall: `_AGREGAT-8.md` §Agregat mecànic (tarda), `_DIAGNOSTICS-INDEX.md` §Estat dels fixes (tarda), DECISION-LOG.
+
 Last updated: 2026-09-05 — **Fila 0b, primer paquet FET (decisió Josep: C, D2, D3, R3).** Comparador
 `compare_consolida.py` **v4** (18 falsos veredictes fora, cap de nou); consolidador: **D2** (dates sense dia no fan de
 pont; ISO del propi candidat), **D3** (`municipality` = grafia del padró), **R3** (guard «1 de N» amb límit de paraula).

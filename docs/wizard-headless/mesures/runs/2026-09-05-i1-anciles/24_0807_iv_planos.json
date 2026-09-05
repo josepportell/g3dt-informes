@@ -1,0 +1,187 @@
+{
+ "source_path": "24.0807/IV_PLANOS.pdf",
+ "source_md5": "3846459e4b0a44df929b24fbb8caed91",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "projecte_arquitecte",
+ "what_it_is": "Joc complet de plànols (35 pàgines) del Projecte Bàsic Revisat 'Casa Grande / Huerto de Casa Sort' a Anciles-Benasque: situació/emplaçament, normativa PEPRI, topografia de parcel·la, tipologies de vivenda, plantes, seccions, alçats i infografies.",
+ "issuer": "A+M Arquitectos (Alba Barrau, nº Col. 6.408, i Miriam Castel, nº Col. 6.703)",
+ "date": "Octubre 2025 (caixetí); metadades PDF creationDate 2025-11-06",
+ "pages_or_sheets": "35 pàgines, mida A4/A3 mixta",
+ "context": {
+  "who_made_it": "El despatx d'arquitectura A+M Arquitectos (Alba Barrau i Miriam Castel), autor del projecte bàsic",
+  "for_whom": "PICO DE OLA ARQUITECTURA Y PROMOCION S.L., promotor de la promoció de 7 vivendes",
+  "why": "Documentació gràfica completa del Projecte Bàsic Revisat per a la promoció residencial 'Huerto Casa Sort' (parcel·la 28 del PEPRI d'Anciles): situació, normativa urbanística, topografia, tipologies, plantes, seccions, alçats i infografies",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "architect_name",
+   "client_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "superficie_construida"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Document tècnic propi de l'arquitecte (no de G3); caixetí idèntic a les 35 pàgines. Complementa A01_TIPOL.pdf, SITE_prop A.pdf i el pressupost/comandes de G3 del mateix projecte; no és una còpia ni una versió d'un altre fitxer de la carpeta.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "PICO DE OLA ARQUITECTURA Y PROMOCION S.L.",
+   "location": "Caixetí, camp 'Promotor' (totes les pàgines, p.ex. p.1/gO1 i p.7/gO5)",
+   "quote": "Promotor  PICO DE OLA ARQUITECTURA Y PROMOCION S.L.",
+   "confidence": 0.5,
+   "note": "El text-layer del PDF surt desordenat (l'extracció posa els noms dels arquitectes just després de l'etiqueta 'Promotor'); confirmat visualment amb render de p.3 i p.7 que el valor real del camp 'Promotor' és 'PICO DE OLA ARQUITECTURA Y PROMOCION S.L.'. Regla del Pas 3 dona autoritat A al caixetí 'Promotor', però per aquest projecte concret (Anciles) el formulari p.5 de l'acceptació ha manat en revisions prèvies (Alba Barrau) — deixar com a candidat, mai segur amb aquesta sola font, i creuar amb ACCEPTACIO al consolidat."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+   "location": "Caixetí, camp 'Situación' (totes les pàgines, p.ex. p.1/gO1)",
+   "quote": "Situación  C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.75,
+   "note": "Única font dins d'aquest document, repetida idènticament a les 35 pàgines. Falta creuar amb comanda/pressupost per confirmar segur."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "General Ferraz",
+    "nom_via_alternatives": [],
+    "portals": [
+     "20"
+    ],
+    "municipi": "Benasque",
+    "municipi_alternatives": []
+   },
+   "location": "Caixetí, camp 'Situación' (totes les pàgines)",
+   "quote": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.55,
+   "note": "municipi fixat a 'Benasque' (municipi legal segons el mapa comarcal de p.3/gO1); 'Anciles' és el nucli/entitat menor annexionat, no una grafia alternativa del mateix municipi, per això NO s'inclou a municipi_alternatives (regla: alternatives només per llocs idèntics). Projecte a Osca/Aragó: el padró intern de 947 municipis (Catalunya) no cobreix aquesta zona — vegeu nota de 'municipality'."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Benasque (Huesca)",
+   "location": "Caixetí 'Situación' + mapa comarcal p.3/gO1 ('EMPLAZAMIENTO. ANCILES (Valle de Benasque)')",
+   "quote": "ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.5,
+   "note": "Benasque és el municipi legal/administratiu; Anciles n'és un nucli/entitat menor annexionat (com es veu a l'ortofoto p.3: 'ANCILES CASCO ANTIGUO' dins del terme de Benasque). Candidat pel municipi oficial (Cadastre/registre)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Anciles",
+   "location": "Caixetí 'Situación'; ortofoto p.3/gO1 ('ANCILES CASCO ANTIGUO'); nom de carpeta del projecte '4001679 ANCILES'",
+   "quote": "ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.45,
+   "note": "Nom del nucli/poble on se situa la parcel·la; candidat si l'informe reporta el nucli en lloc del municipi legal (pràctica habitual d'Eva de citar el poble)."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "ALBA BARRAU, nºCol. 6.408",
+   "location": "Caixetí, camp 'Arquitectura' (totes les pàgines, p.ex. p.1/gO1)",
+   "quote": "Arquitectura  ALBA BARRAU, nºCol. 6.408  MIRIAM CASTEL, nºCol. 6.703",
+   "confidence": 0.7,
+   "note": "Dues arquitectes co-signants (A+M Arquitectos); Alba Barrau apareix primera al caixetí visual (confirmat amb render de p.3 i p.7). El text-layer del PDF les etiqueta erròniament com si fossin el 'Promotor' — vegeu nota de client_name."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "MIRIAM CASTEL, nºCol. 6.703",
+   "location": "Caixetí, camp 'Arquitectura' (totes les pàgines)",
+   "quote": "Arquitectura  ALBA BARRAU, nºCol. 6.408  MIRIAM CASTEL, nºCol. 6.703",
+   "confidence": 0.6,
+   "note": "Segona arquitecta co-signant; si el camp de l'informe admet un sol nom, Alba Barrau sembla la principal per l'ordre visual del caixetí."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Conjunt de 7 vivendes (Tipologia 1, 2 i 3) en filera — promoció 'CASA GRANDE / HUERTO DE CASA SORT'",
+   "location": "p.1 (portada), p.2 (índex), p.9/AO1 'Tipologías Viviendas Propuestas'",
+   "quote": "PROYECTO BÁSICO REVISADO / CASA GRANDE / HUERTO DE CASA SORT – ANCILES ... TIPOLOGÍAS VIVIENDAS PROPUESTAS ... vivienda 1 TIPO 2 / vivienda 2 TIPO 3 / vivienda 3 TIPO 1 / vivienda 4 TIPO 1 / vivienda 5 TIPO 1 / vivienda 6 TIPO 2 / vivienda 7 TIPO 2",
+   "confidence": 0.45,
+   "note": "No hi ha cap etiqueta explícita 'tipo de edificio'. És un conjunt residencial de 7 vivendes en filera amb 3 tipologies constructives (adossades), no una vivenda unifamiliar aïllada — divergeix del patró habitual dels projectes G3 d'una sola casa."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "Volum de planta variable: PB+P1+APBC (planta baixa+primera+sotacoberta) en un tram; PB+APBC (planta baixa+sotacoberta) en un altre tram; Planta Sòtan (98,42 m², no computable) sota part de l'edifici",
+   "location": "p.7/gO5 'Justificación Ordenación Propuesta' (etiquetes 'PB+P1+APBC', 'PB+APBC', 'PLANTA SÓTANO ... no computa'); índex p.2 (A02 Planta Semisótano, A03 Planta Baja, A04 Planta Primera, A05 Planta Bajo Cubierta, A06 Planta Cubierta)",
+   "quote": "PLANTA SÓTANO 98.42 m2 (no computa) / EDIFICABILIDAD PLANTA BAJA 522.61 m2 / EDIFICABILIDAD PLANTA PRIMERA 454.70 m2 / EDIFICABILIDAD PLANTA BAJO CUBIERTA 188.53 m2 (solo computa altura > 1,50 m)",
+   "confidence": 0.4,
+   "note": "L'alçada del conjunt NO és uniforme (part PB+P1+APBC, part només PB+APBC, a més d'un sòtan parcial no computable) — mai segur com un únic nombre de plantes; el generador hauria de triar el màxim (PB+1+APBC) amb nota o desglossar per tram."
+  },
+  {
+   "concept_id": "superficie_parcela",
+   "value": "1655.01 m²",
+   "location": "p.5/gO3 'Topográfico Parcela' (rètol 'Superfície Finca'); p.7/gO5 taula 'Parámetros Parcela 28 Huerto Casa Sort', fila 'TOTAL PARCELA', columnes PEPRI i PROPUESTA",
+   "quote": "Superfície Finca = 1655.01 m² ... TOTAL PARCELA 1655.01 1655.01",
+   "confidence": 0.8,
+   "note": "Dues aparicions internes coincidents dins del mateix document (aixecament topogràfic + taula normativa); és una única font externa (el projecte) sense contradicció interna — falta creuar amb Cadastre per confirmar segur."
+  }
+ ],
+ "tables": {
+  "superficie_construida": {
+   "components": [
+    {
+     "planta": "Sótano",
+     "superficie_m2": 98.42,
+     "computa": false,
+     "nota": "no computa edificabilitat; 20% ocupación"
+    },
+    {
+     "planta": "Baja",
+     "superficie_m2": 522.61,
+     "computa": true
+    },
+    {
+     "planta": "Primera",
+     "superficie_m2": 454.7,
+     "computa": true
+    },
+    {
+     "planta": "Bajo Cubierta",
+     "superficie_m2": 188.53,
+     "computa": true,
+     "nota": "només computa l'àrea amb alçada > 1,50 m"
+    }
+   ],
+   "total": 1165.84,
+   "etiqueta_font": "Edificabilitat per plantes (columna PROPUESTA), plànol p.7/gO5 'Justificación Ordenación Propuesta', taula 'EDIFICABILIDAD PARCELA 28 HUERTO CASA SORT'",
+   "note": "Total = suma de Baja+Primera+Bajo Cubierta (98.42 del sòtan queda fora perquè 'no computa'); la mateixa taula dona un total PEPRI de referència de 1173.04 m² (no aplicable, és el màxim normatiu, no la proposta)."
+  }
+ },
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Preextracció OK: 35/35 pàgines amb text_ok=true (page-N.txt), PNG sencer només a pàgines 1-13 (pages_truncated=true; halves_pages buit). Llegit el .txt de les 35 pàgines (barat). El text-layer del caixetí surt DESORDENAT respecte a l'ordre visual (l'etiqueta 'Promotor' precedeix en el flux de text els noms dels arquitectes, no el nom real del promotor) — renderitzades i inspeccionades visualment les pàgines 3, 4 i 7 (page-N.png) per confirmar la correspondència real etiqueta→valor: Situación=adreça, Promotor=PICO DE OLA ARQUITECTURA Y PROMOCION S.L., Arquitectura=Alba Barrau/Miriam Castel. Pàgina 4 (GO2, delimitació catastral) inspeccionada visualment: només mostra numeració de parcel·les PEPRI (1-35, la nostra és la '28') i la línia 'DELIMITACIÓN CATASTRAL', sense cap codi de referència cadastral imprès -> referencia_catastral queda not_present. Pàgina 7 (GO5) inspeccionada visualment per llegir la taula d'edificabilitat i els rètols PB+P1+APBC / PB+APBC. Pàgines 6, 8, 10-35 (seccions, alçats, plantes de detall zona A/B/C, infografies) només llegides per .txt: repeteixen el mateix caixetí sense dades noves de nivell A més enllà de les ja capturades a p.1-2-3-4-5-7-9; no s'ha renderitzat el PNG de cap d'aquestes per no aportar informació addicional. No s'ha executat cap ordre de fitz/openpyxl/etc., només lectura dels .txt/.png de preextracció i render_clip no ha calgut (la resolució de page-N.png ja permetia llegir el caixetí)."
+}

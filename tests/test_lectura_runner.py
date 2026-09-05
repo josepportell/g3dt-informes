@@ -369,6 +369,8 @@ def test_timeout_then_retry_doc_failed_rest_continues(synth_project, base_env, m
     # pipeline continua i produeix decisions vàlides tot i el doc fallit.
     assert result.decisions is not None
     assert validate_decisions(result.decisions) == []
+    # D4 (2026-09-05, Vilanova): un document perdut es un forat de lectura → `degraded` i `docs_failed` ho diuen
+    assert result.degraded is True and result.docs_failed == ["annex_a.pdf"]
 
     lines = [json.loads(l) for l in result.telemetry_path.read_text(encoding="utf-8").splitlines() if l.strip()]
     a_lines = [l for l in lines if l["doc"] == "annex_a.pdf"]
@@ -979,3 +981,57 @@ def test_a_new_python_route_source_invalidates_the_cache(synth_project, base_env
     lectura_runner.run_lectura(synth_project, out_dir=out_dir)
 
     assert _spawn_kinds(base_env)[n_first:] == ["consolida"]
+
+
+# ---------------------------------------------------------------------------
+# Fila 0b (2026-09-05): D6 col·lisio de nom, T1 topall per document, T2 abast de la passada LLM
+# ---------------------------------------------------------------------------
+
+def test_D6_assign_doc_names_adds_extension_only_on_stem_collision():
+    entries = [{"path": "casa 2/planta i seccio.dwg"}, {"path": "casa 2/planta i seccio.pdf"}, {"path": "annex_b.pdf"}]
+    lectura_runner.assign_doc_names(entries)
+    assert [e["doc_name"] for e in entries] == ["casa_2_planta_i_seccio_dwg", "casa_2_planta_i_seccio_pdf", "annex_b"]
+
+
+def test_D6_same_stem_dwg_and_pdf_get_separate_json_and_both_survive(tmp_path, base_env, monkeypatch):
+    """Tulipa: `X.dwg` i `X.pdf` → el mateix `{doc}.json`; una lectura sobreescrivia l'altra. El skill continua
+    escrivint `{safe_doc_name}.json`; el runner el mou al nom esperat (`x_pdf.json` / `x_dwg.json`)."""
+    monkeypatch.setenv("G3DT_LECTURA_CONCURRENCY", "1")
+    proj = tmp_path / "proj2"
+    proj.mkdir()
+    (proj / "planta.pdf").write_bytes(b"%PDF-1.4 planta pdf content")
+    (proj / "planta.dwg").write_bytes(b"AC1027 planta dwg content, different")
+    out_dir = proj / "validation" / "lectura"
+    result = lectura_runner.run_lectura(proj, out_dir=out_dir)
+    statuses = {d["doc"]: d["status"] for d in result.per_doc}
+    assert statuses == {"planta.pdf": "ok", "planta.dwg": "ok"}
+    assert (out_dir / "planta_pdf.json").exists() and (out_dir / "planta_dwg.json").exists()
+    assert not (out_dir / "planta.json").exists()
+    assert json.loads((out_dir / "planta_pdf.json").read_text(encoding="utf-8"))["source_path"] == "planta.pdf"
+    assert json.loads((out_dir / "planta_dwg.json").read_text(encoding="utf-8"))["source_path"] == "planta.dwg"
+    # segona execucio: cache per als dos (cap spawn nou)
+    before = len(_spawn_lines(base_env))
+    result2 = lectura_runner.run_lectura(proj, out_dir=out_dir)
+    assert {d["status"] for d in result2.per_doc} == {"cached"}
+    assert len([l for l in _spawn_lines(base_env)[before:] if l.startswith("only\t")]) == 0
+
+
+def test_T1_doc_timeout_uses_slow_cap_for_field_sheets(monkeypatch):
+    monkeypatch.setenv("G3DT_LECTURA_TIMEOUT", "600")
+    monkeypatch.setenv("G3DT_LECTURA_TIMEOUT_SLOW", "900")
+    cfg = lectura_runner._load_config()
+    assert lectura_runner.doc_timeout(cfg, {"path": "PENETROS.pdf", "doc_type_hint": "camp_penetros"}) == 900
+    assert lectura_runner.doc_timeout(cfg, {"path": "SONDEIG.pdf", "doc_type_hint": "full_camp_manuscrit"}) == 900
+    assert lectura_runner.doc_timeout(cfg, {"path": "tall.pdf", "doc_type_hint": "annex_tall"}) == 600
+    monkeypatch.delenv("G3DT_LECTURA_TIMEOUT_SLOW")
+    assert lectura_runner._load_config()["timeout_slow"] == 900
+
+
+def test_T2_llm_pass_gets_only_field_conflicts_and_is_skipped_over_the_cap():
+    cfg = {"llm_max_conflicts": 8}
+    paths = ["fields.cota_referencia", "fields.expedient", "tables.soil_levels[nivell1].de", "tables.soil_levels[nivell1].mostra_del_nivell"]
+    assert lectura_runner.llm_conflict_paths(paths, cfg) == (["fields.cota_referencia", "fields.expedient"], None)
+    assert lectura_runner.llm_conflict_paths(["tables.soil_levels[nivell1].de"], cfg) == ([], None)
+    sent, why = lectura_runner.llm_conflict_paths([f"fields.f{i}" for i in range(9)], cfg)
+    assert sent == [] and "topall 8" in why
+

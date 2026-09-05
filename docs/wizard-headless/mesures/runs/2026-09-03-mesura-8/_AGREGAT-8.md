@@ -179,3 +179,76 @@ les esperades i tenen nom:
 G (`fora_carpeta` a 3 ors: converteix 3 ALERTA en OK-fora) · R6 (`nivell_freatic` en taules: 1 ERR real) · I1 (`PDF_V0`:
 9 blancs d'Anciles) · R1 (equivalències: 15 CAND) · D5 · D4/D6 · T1/T2 · S1. Els tres ERR sobre el signat que
 quedaven (Rubí P-2 F1, Vilanova P-3 R6) són 2: el de Rubí és de la font d'Eva.
+
+---
+
+## Agregat MECÀNIC (2026-09-05, tarda) — resta de la fila 0b: G, R6, I1, R1, D5, D4, D6, T1, T2
+
+**Decisió del Josep (2026-09-05):** «seguim amb la resta de la fila 0b, amb la teva proposta d'ordre tal qual» (G → R6 →
+I1 → R1, després D5, D4/D6, T1/T2; S1 = disseny). Mateix mètode: cada fix es mesura reconsolidant els 7 amb les lectures
+cachejades (`mesures/reconsolida_mesura.py <sub_nou> <sub_referència>`), cost 0, i es llisten TOTES les cel·les que
+canvien. Subcarpetes: `_reconsolida-2026-09-05-r6` (R6), `-r1` (R1), `-r2` (D5). I1 necessita lectures noves (5 PDF de
+`PDF_V0/ANEJOS` d'Anciles): run parcial `runs/2026-09-05-i1-anciles/` (vegeu §I1 més avall).
+
+| Escalars (147) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| matí (C + D2 + D3 + R3) | 93 | 45 | 8 | 1 | 0 | — |
+| + **G** (3 `fora_carpeta` a l'or) | 96 | 45 | 5 | 1 | 0 | 3 ALERTA → OK-fora (`superficie_parcela` Rubí 951, Alcoletge 1167, Vilanova 406 = signat) |
+| + **R6** (taules, no toca escalars) | 96 | 45 | 5 | 1 | 0 | 0 escalars; 1 taula (sota) |
+| + **R1** (equivalències) | 103 | 38 | 5 | 1 | 0 | 7: `building_type` Castellar/Bell-lloc/Linyola → segur «Habitatge unifamiliar aïllat»; `lab_testing_company` Bell-lloc → segur TPS; `lab_location` Linyola → segur «P-3» (Rubí «P3» → «P-3»); `client_name` Vilanova → segur; `street_address` Anciles → segur |
+| + **D5** (CTE per edifici) | 104 | 37 | 5 | 1 | 0 | 1: Anciles `cte_edificacio` C0 → **C1** (candidats; = or i signat) |
+
+| Taules (197) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| matí | 136 | 21 | 9 | 31 | 0 | — |
+| + **R6** | 137 | 21 | 8 | 31 | 0 | 1: Vilanova `dpsh[P-3].nivell_freatic` segur «No detectat» → **candidats [Aigua (tall), No detectat, Humit (camp)]** (or: candidats, tall primer; signat «Humedad −1,00») — l'ERR de veritat R6 desapareix |
+| + R1, D5 | 137 | 21 | 8 | 31 | 0 | 0 |
+
+**Sobre el signat (lectura a mà de les 5 + 8 ALERTA):** escalars → 104 OK (71 %) / 42 CAND (29 %) / 1 blanc / **0 ERR**;
+taules → els 8 ALERTA són 5 OK per veritat (Rubí cota P-1/P-3, Vilanova `id` ×2, Rubí `soil_levels[2].de`), 2 CAND (Linyola
+msnm R2, Anciles `n30`) i **1 ERR real: Rubí cota P-2 (+212 literal de l'annex vs +212,50 del signat, F1 = font d'Eva)**.
+Dels 4 ERR del titular del 09-04 en queda 1, i és de font, no de codi. Llindars: ERR 0 ✅ als escalars; OK 71 % (⏳ 80);
+CAND 29 % (⏳ 20). El que queda en CAND té nom: R5 (font única, 19), R4 (CTE imprès, 9: pregunta a Eva), R2 (concepte
+veí, 6), F1 (7), persona/despatx (pregunta a Eva).
+
+**Regressions:** cap. Cada reconsolidació llista totes les cel·les que canvien d'estat o de valor; totes les llistades
+van cap a l'or o al signat, i cap OK anterior s'ha perdut (les llistes de no-OK per projecte són a `_reconsolida-*/`).
+
+### Runner i operació (D4, D6, T1, T2), sense efecte sobre l'agregat
+
+- **D4:** `LecturaResult.docs_failed` + `degraded=True` quan un document acaba sense JSON vàlid després dels reintents
+  (Vilanova run 1: 11/14 docs i `degraded=False`). Esdeveniment `lectura_fi` porta `docs_failed`.
+- **D6:** `assign_doc_names`: dos fitxers de la cua amb el mateix `safe_doc_name` (`X.dwg`/`X.pdf`, Tulipa) reben
+  `x_dwg.json`/`x_pdf.json`; el skill continua escrivint `x.json` i el runner el mou al nom esperat (cache intacta).
+- **T1:** `G3DT_LECTURA_TIMEOUT_SLOW` (900 s) per als fulls de camp (`camp_penetros`, `full_camp_manuscrit`); `timeout_s`
+  a la telemetria. La penjada no es pot detectar abans: el CLI no escriu res fins al final (`--output-format json`).
+- **T2:** la passada LLM `--only-fields` rep només conflictes `fields.*` (als 7 runs cap `tables.*` s'ha aplicat mai) i
+  s'omet per sobre de `G3DT_LECTURA_LLM_MAX_CONFLICTS` (8). **Observació per decidir:** la passada costa 200-290 s i
+  14-23 torns fins i tot amb UN conflicte (Alcoletge 200 s, Bell-lloc 224 s, Rubí 206 s): mesurar si els valors que aplica
+  són millors que els candidats Python abans de mantenir-la.
+- **S1 (disseny, no implementat):** eix «casa» — l'inventari agrupa per subcarpeta de casa (`Casa 1 - Tulipa/`, `Casa 2 -
+  Carrer Tosca/`), consolidació i `_decisions.json` per casa, taules per casa; l'or per casa ja existeix. Fins llavors,
+  Tulipa queda fora del titular.
+
+### I1 — resultat del run parcial d'Anciles (`runs/2026-09-05-i1-anciles/`)
+
+Còpia del run d'Anciles (lectures cachejades) + inventari nou: **5 PDF de `PDF_V0/ANEJOS/` llegits** (DPSH 335 s,
+corte de correlación 318 s, fotografías 109 s, sondeos **600 s timeout al 1r intent** → 414 s al 2n (T1 en viu),
+plano de situación 354 s). **20,3 min, 5,87 USD**, 0 contaminació DNS, consolidació Python sense conflictes.
+Reconsolidat amb el codi final a `_reconsolida-2026-09-05/` (script `measure_i1.py` de la sessió).
+
+**Primera passada (V0 com a font A): 30 cel·les canvien, i apareix un ERR nou** — `soil_levels[0].mostra_del_nivell`
+segur `True` (annex V0: les graves són «NIVEL 1, part inferior») contra l'or i el signat (`false`: al signat les graves
+són el **2n nivell**, i la MA-1 hi és). És exactament el que vol dir «versió anterior»: les cotes no han canviat entre
+V0 i signat, l'estructura de nivells sí. **Regla afegida (consolidador):** un document d'una carpeta V0 **proposa i
+corrobora, mai és autoritat ni contradiu** (`is_a=False`, confiança < llindar de contradicció, nota «versió anterior»).
+
+**Resultat final (V0 no-A): 21 cel·les canvien respecte de r2, cap ERR.** Anciles escalars 15 → **16 OK / 4 CAND /
+1 ALERTA / 0 blanc** (`cota_referencia` no_trobat → candidats «+1106,42 msnm»); taules **blancs 14 → 3**: les 6
+`cota_inici` DPSH (+1106,40/30/40/30/42/65 = signat) i les 2 `cota` de sondeig (+1106,65 / +1106,42 = signat) surten
+com a **candidats amb el valor del signat primer** (CAUTELA «bo dins»), `soil_levels[0].de/a/mostra` omplerts com a
+candidats, `mostra_del_nivell` del nivell 1 = **ALERTA** (proposta `True` de la V0 contra l'or `false`: és el dubte que
+toca). Els 7 restants: **0 cel·les canvien** amb la regla V0 (no en tenen).
+
+Amb I1, l'agregat mecànic d'escalars dels 7 és **105 OK / 37 CAND / 5 ALERTA / 0 blanc / 0 ERR** i el de taules
+**137 OK / 37 CAND / 9 ALERTA / 20 blanc / 0 ERR** (Anciles: OK 22, CAND 9 → 19, blanc 14 → 3).

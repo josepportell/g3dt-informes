@@ -1,0 +1,304 @@
+{
+ "source_path": "24.0807/A01_TIPOL.pdf",
+ "source_md5": "681a81ff02e7b63db89c99e5ad30caad",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Full AutoCAD (AO1) d'un 'Estudio de Detalle - Avance' amb les tipologies d'habitatge proposades per al projecte 'Casa Grande HCS - Anciles'.",
+ "issuer": "Estudio de detalle: Andrés Amat y Enrique M. Gardeta; signants amb nºCol.: Miriam Castel (6.703) i Alba Barrau (6.408)",
+ "date": "Març 2024",
+ "pages_or_sheets": "1 pàgina (full AO1)",
+ "context": {
+  "who_made_it": "Un estudi de disseny (Andrés Amat y Enrique M. Gardeta) amb dos arquitectes col·legiats (Miriam Castel, Alba Barrau) que apareixen al caixetí",
+  "for_whom": "El promotor del desenvolupament 'Casa Grande HCS - Anciles', en fase d'avanç (Estudio de Detalle)",
+  "why": "Presentar tres tipologies d'habitatge (T1, T2, T3, cadascuna amb variants a/b/c) proposades per a la parcel·la, amb superfícies per planta, abans del projecte executiu",
+  "expected_fields": [
+   "street_address (bloc Situación)",
+   "client_name/promotor (bloc Promotor)",
+   "building_type (títol del full)",
+   "superfícies per planta i tipologia"
+  ],
+  "not_expected": [
+   "dades geotècniques",
+   "field_date real de camp",
+   "expedient G3",
+   "referència cadastral",
+   "UTM"
+  ],
+  "relation_to_others": "Document preliminar (fase 'Avance'); proposa 9 variants d'habitatge (T1.a/b/c, T2.a/b, T3.a/b) sobre la mateixa parcel·la — no queda clar des d'aquest full sol quina variant és la que correspon a l'habitatge concret de l'informe geotècnic de G3. El bloc etiquetat 'Promotor' conté dos noms amb 'nºCol.' (número de col·legiat), propi d'arquitectes, no de promotors: probable intercanvi d'etiquetes al caixetí o reaprofitament d'un bloc d'un altre full.",
+  "authority_for": [
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "C/ General Ferraz 20",
+   "location": "caixetí, bloc 'Situación'",
+   "quote": "Situación C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.85,
+   "note": "Etiqueta 'Situación' = ubicació de l'obra segons la regla del skill; única font dins d'aquest document, sense contradicció interna."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "General Ferraz",
+    "nom_via_alternatives": [],
+    "portals": [
+     "20"
+    ],
+    "municipi": "Benasque",
+    "municipi_alternatives": [
+     "Anciles"
+    ]
+   },
+   "location": "caixetí, bloc 'Situación'",
+   "quote": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.8,
+   "note": "Municipi oficial candidat: Benasque (terme municipal). 'Anciles' és el nucli/pedania citat al mateix bloc i coincideix amb el nom de la carpeta del projecte — alternativa, no lloc diferent."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Benasque (Huesca)",
+   "location": "caixetí, bloc 'Situación'",
+   "quote": "ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.7,
+   "note": "El text uneix el nucli 'Anciles' i el terme municipal 'Benasque'. Candidat principal per ser el municipi oficial."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Anciles",
+   "location": "caixetí, bloc 'Situación'",
+   "quote": "ANCILES - BENASQUE (HUESCA)",
+   "confidence": 0.4,
+   "note": "Nucli de població, no municipi oficial en si; coincideix amb el nom de la carpeta/expedient del projecte (4001679 ANCILES)."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "MIRIAM CASTEL",
+   "location": "caixetí, bloc 'Promotor'",
+   "quote": "Promotor MIRIAM CASTEL, nºCol. 6.703",
+   "confidence": 0.3,
+   "note": "El camp diu 'Promotor' però el nom porta 'nºCol.' (número de col·legiat), propi d'arquitecte, no de promotor — possible anomalia/reaprofitament del bloc del caixetí. Candidat feble; cal contrastar amb el formulari d'acceptació (p.5) o altres fonts, no llegides en aquesta crida."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "ALBA BARRAU",
+   "location": "caixetí, bloc 'Promotor'",
+   "quote": "ALBA BARRAU, nºCol. 6.408",
+   "confidence": 0.3,
+   "note": "Mateixa anomalia que Miriam Castel: nºCol. sota l'etiqueta 'Promotor'."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "MIRIAM CASTEL",
+   "location": "caixetí, bloc 'Promotor' (però amb nºCol. d'arquitecte)",
+   "quote": "MIRIAM CASTEL, nºCol. 6.703",
+   "confidence": 0.35,
+   "note": "El 'nºCol.' és típic d'arquitecte col·legiat. Hipòtesi principal: el caixetí ha intercanviat les etiquetes 'Promotor'/'Arquitecte'. No hi ha cap camp separat etiquetat 'Arquitecte' en aquest full."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "ALBA BARRAU",
+   "location": "caixetí, bloc 'Promotor' (però amb nºCol. d'arquitecte)",
+   "quote": "ALBA BARRAU, nºCol. 6.408",
+   "confidence": 0.35,
+   "note": "Mateixa anomalia que Miriam Castel."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA (ESTUDIO DE DETALLE)",
+   "location": "marge esquerre, text vertical 'ESTUDIO DE DETALLE'",
+   "quote": "ESTUDIO DE DETALLE / ANDRÉS AMAT y ENRIQUE M. GARDETA",
+   "confidence": 0.25,
+   "note": "Nom del despatx/estudi redactor d'aquest 'Estudio de Detalle - Avance'; no porta nºCol., pot ser l'estudi redactor del document i no necessàriament l'arquitecte oficial del projecte."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatges — 'Tipologías Viviendas Propuestas' (projecte 'Casa Grande HCS - Anciles')",
+   "location": "títol del full / bloc 'Plano'",
+   "quote": "AO1 TIPOLOGÍAS VIVIENDAS PROPUESTAS ... Arquitectura ... C A S A  G R A N D E  H C S  -  A N C I L E S",
+   "confidence": 0.3,
+   "note": "Document d'avanç que proposa 3 tipologies (T1, T2, T3, amb variants a/b/c = 9 unitats) per a la mateixa parcel·la; no queda clar quina tipologia concreta és la de l'habitatge de l'informe geotècnic. Candidat feble i genèric."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "Fins a 4 nivells segons tipologia: Planta Semisótano, Planta Baja, Planta Primera, Planta Bajo Cubierta (no totes les tipologies tenen els 4)",
+   "location": "llegenda de plantes del full",
+   "quote": "N PLANTA SEMISÓTANO / PLANTA BAJA / PLANTA PRIMERA / PLANTA BAJO CUBIERTA",
+   "confidence": 0.25,
+   "note": "Llegenda de nivells dibuixats al full, compartida per les 3 tipologies. De les àrees per planta es dedueix que T1 (a/b/c) no té Ps, T2 (a/b) no té P1, T3 (a/b) no té Ps — el nombre de plantes real depèn de quina tipologia és la construïda. No es pot fixar un valor únic sense saber quina tipologia és la del projecte concret."
+  }
+ ],
+ "tables": {
+  "superficie_construida": [
+   {
+    "components": [
+     {
+      "planta": "Pbc",
+      "m2": 40.04
+     },
+     {
+      "planta": "P1",
+      "m2": 73.07
+     },
+     {
+      "planta": "Pb",
+      "m2": 73.07
+     }
+    ],
+    "total": 186.18,
+    "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)",
+    "extra": {
+     "tipologia": "T1.a"
+    }
+   },
+   {
+    "components": [
+     {
+      "planta": "Pbc",
+      "m2": 40.04
+     },
+     {
+      "planta": "P1",
+      "m2": 73.66
+     },
+     {
+      "planta": "Pb",
+      "m2": 73.67
+     }
+    ],
+    "total": 187.37,
+    "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)",
+    "extra": {
+     "tipologia": "T1.b"
+    }
+   },
+   {
+    "components": [
+     {
+      "planta": "Pbc",
+      "m2": 40.04
+     },
+     {
+      "planta": "P1",
+      "m2": 73.67
+     },
+     {
+      "planta": "Pb",
+      "m2": 73.67
+     }
+    ],
+    "total": 187.38,
+    "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)",
+    "extra": {
+     "tipologia": "T1.c"
+    }
+   },
+   {
+    "components": [
+     {
+      "planta": "Pbc",
+      "m2": 17.34
+     },
+     {
+      "planta": "Pb",
+      "m2": 102.21
+     },
+     {
+      "planta": "Ps",
+      "m2": 49.95
+     }
+    ],
+    "total": 169.5,
+    "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)",
+    "extra": {
+     "tipologia": "T2.a"
+    }
+   },
+   {
+    "components": [
+     {
+      "planta": "Pbc",
+      "m2": 40.43
+     },
+     {
+      "planta": "Pb",
+      "m2": 109.32
+     },
+     {
+      "planta": "Ps",
+      "m2": 49.59
+     }
+    ],
+    "total": 199.34,
+    "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)",
+    "extra": {
+     "tipologia": "T2.b"
+    }
+   },
+   {
+    "components": [
+     {
+      "planta": "P1",
+      "m2": 89.66
+     },
+     {
+      "planta": "Pbc",
+      "m2": 42.0
+     },
+     {
+      "planta": "Pb",
+      "m2": 38.03
+     }
+    ],
+    "total": 169.69,
+    "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)",
+    "extra": {
+     "tipologia": "T3.a"
+    }
+   },
+   {
+    "components": [
+     {
+      "planta": "P1",
+      "m2": 92.39
+     },
+     {
+      "planta": "Pbc",
+      "m2": 42.0
+     },
+     {
+      "planta": "Pb",
+      "m2": 39.96
+     }
+    ],
+    "total": 174.35,
+    "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)",
+    "extra": {
+     "tipologia": "T3.b"
+    }
+   }
+  ],
+  "__nota": "Superfícies construïdes llegides per tipologia/variant (9 unitats: T1.a/b/c, T2.a/b, T3.a/b), no hi ha un total de projecte imprès. No se sap des d'aquest document quina variant correspon a l'habitatge concret objecte de l'informe geotècnic — cal creuar amb la fitxa de camp o el pressupost. No hi ha dades de sondeigs, DPSH, nivells de sòl ni laboratori en aquest document."
+ },
+ "not_present": [
+  "expedient",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Mode --only amb pre-extracció: llegit únicament page-1.txt (text net, AutoCAD amb ToUnicode; text_ok=true), sense necessitat de render_clip. Un sol full, sense meitats. Troballa estructural: el camp del caixetí etiquetat 'Promotor' conté dos noms amb 'nºCol.' (número de col·legiat d'arquitecte) — anomalia notable, tractada com a candidat feble tant per client_name com per architect_name, mai segur. Segona troballa: el full proposa 9 variants d'habitatge (3 tipologies × 3 variants) sobre la mateixa parcel·la; building_type, num_floors i superficie_construida són candidats febles perquè no és clar quina variant és la de l'informe concret."
+}

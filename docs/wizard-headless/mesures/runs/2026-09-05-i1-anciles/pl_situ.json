@@ -1,0 +1,141 @@
+{
+ "source_path": "pl situ.pdf",
+ "source_md5": "63db6493fdf5145ea7a27220d3927ad0",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Esquema de situació de l'obra (1 pàgina): mapa cadastral rústic + ortofoto amb la parcel·la marcada, i plànol de planta amb la ubicació dels 6 punts DPSH (P-1 a P-6) i 2 sondeigs (S-1, S-2).",
+ "issuer": "G3 (redibuixat/exportat des de FreeHand, còpia neta via 'Microsoft: Print To PDF')",
+ "date": "Febrero 2026 (data del plànol, capçalera)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (mateix caixetí que la resta d'annexos del projecte)",
+  "for_whom": "annex intern de l'estudi geotècnic, per situar espacialment els assaigs de camp",
+  "why": "documentar on s'han fet els DPSH i els sondeigs dins la parcel·la, i situar la parcel·la dins el nucli d'Anciles",
+  "expected_fields": [
+   "expedient",
+   "street_address (via el títol)",
+   "municipality (via el títol i el mapa base)",
+   "building_type (via el títol)",
+   "num_dpsh_tests (recompte visual)",
+   "referencia_catastral (número al mapa base, feble)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date exacte",
+   "cota_referencia",
+   "lab_*",
+   "cte_*",
+   "num_floors detallat"
+  ],
+  "relation_to_others": "és la còpia neta ('Microsoft: Print To PDF') de l'original FreeHand 'ANEJOS/4001679_plano de situación.FH11' (route=skip, no llegible, mateix contingut) i duplicat de 'PDF_V0/ANEJOS/4001679_plano de situación.pdf' (route=skip, exclòs per carpeta PDF_V0). No compten com a fonts independents addicionals.",
+  "authority_for": [
+   "expedient",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001679",
+   "location": "capçalera del plànol i requadre de títol, cantonada inferior esquerra",
+   "quote": "Exp: 4001679",
+   "confidence": 0.85,
+   "note": "coincideix amb el nom de la carpeta '4001679 ANCILES'"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Calle General Ferraz nº 20",
+   "location": "requadre de títol / capçalera del plànol",
+   "quote": "CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+   "confidence": 0.55,
+   "note": "font secundària (títol del plànol, no un bloc OBRA/ADREÇA dedicat); el nom del carrer es confirma visualment al mapa cadastral base com 'CALLE GENERAL FERRAZ'"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "calle",
+    "nom_via": "General Ferraz",
+    "nom_via_alternatives": [
+     "Gral Ferraz"
+    ],
+    "portals": [
+     "20"
+    ],
+    "municipi": "Benasque",
+    "municipi_alternatives": []
+   },
+   "location": "títol + mapa cadastral base (clip 0.02,0.08,0.34,0.42 @400dpi)",
+   "quote": "CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE / 'CALLE GENERAL FERRAZ' (rètol del mapa)",
+   "confidence": 0.55,
+   "note": "portal 20 només consta al text del títol, no s'ha pogut confirmar sobre el mapa"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Benasque",
+   "location": "requadre de títol",
+   "quote": "DE ARCILES, BENASQUE",
+   "confidence": 0.5,
+   "note": "Benasque és el municipi oficial; 'ARCILES' del mateix títol és amb tota probabilitat un error tipogràfic de 'ANCILES', el nucli/entitat de població dins Benasque on és la parcel·la (vegeu candidat separat)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Anciles",
+   "location": "mapa cadastral base i ortofoto, rètols del nucli (clip 0.02,0.08,0.34,0.42 @400dpi)",
+   "quote": "Anciles / ANCILES",
+   "confidence": 0.45,
+   "note": "coincideix amb el nom de la carpeta del projecte ('4001679 ANCILES', pràctica G3 de nomenar per nucli/localitat); el títol del mateix document l'escriu 'ARCILES' (typo) i dona 'BENASQUE' com a terme municipal — dues formes reals, no variants ortogràfiques del mateix nivell administratiu, per això van com a candidats separats i no com a alternatives"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "7 viviendas adosadas",
+   "location": "requadre de títol",
+   "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE 7 VIVIENDAS ADOSADAS",
+   "confidence": 0.55,
+   "note": "font secundària (títol del plànol); no hi ha PLAN_COST ni comanda llegits encara en aquesta crida per contrastar"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 6,
+   "location": "plànol de planta, llegenda blava 'Ensayo de penetración dinámica DPSH'",
+   "quote": "P-1, P-2, P-3, P-4, P-5, P-6 (6 marcadors blaus)",
+   "confidence": 0.5,
+   "note": "recompte visual de punts marcats al plànol; no distingeix previstos vs. executats (per això mana l'Excel DPSH, no aquest document)"
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "61845",
+   "location": "mapa cadastral rústic (base), etiqueta lila sobre la parcel·la marcada en taronja (clip 0.02,0.08,0.34,0.42 @400dpi)",
+   "quote": "61845",
+   "confidence": 0.2,
+   "note": "és un número curt de parcel·la del mapa base (cadastre rústic/SIGPAC), NO el format complet de referència cadastral (20 caràcters alfanumèrics amb dígits de control); necessita consulta oficial del Cadastre per confirmar-se, mai segur amb aquesta sola font"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Febrero 2026",
+   "location": "requadre de títol",
+   "quote": "Fecha: Febrero 2026",
+   "confidence": 0.2,
+   "note": "només mes/any (sense dia); és la data d'emissió del plànol, no necessàriament el primer dia de camp"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Document net (producer 'Microsoft: Print To PDF', text_ok=true, sense necessitat de meitats). Llegit page-1.txt (títol) i page-1.png sencera; zoom amb render_clip.py sobre el mapa cadastral base (--clip 0.02,0.08,0.34,0.42 --dpi 400) per confirmar el rètol 'ANCILES'/'Anciles' i el número de parcel·la '61845'; zoom sobre el plànol de planta (--clip 0.38,0.1,1.0,0.85 --dpi 250) per confirmar recompte i etiquetes dels punts P-1..P-6 i S-1/S-2. Subdivisions '26.1'/'26.2'/'26.3' amb superfícies parcials (només '719,07 m²' de 26.2 llegible; 26.1 i 26.3 surten '######', típic de camps AutoCAD/FreeHand no renderitzats) — no s'han emès com a candidat de superficie_parcela perquè no queda clar si són lots interns o àrees de l'edificació, no la parcel·la total. No s'ha llegit cap coordenada UTM impresa al plànol (només cotes internes de l'edificació en metres)."
+}

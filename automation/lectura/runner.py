@@ -76,6 +76,14 @@ _SAFE_NAME_RE = re.compile(r"[^A-Za-z0-9]+")
 
 #: 1 intent + 1 reintent (disseny §5, fila "Retry").
 _MAX_ATTEMPTS = 2
+#: T1: documents amb topall propi (`G3DT_LECTURA_TIMEOUT_SLOW`).
+_SLOW_HINTS = frozenset({"camp_penetros", "full_camp_manuscrit"})
+#: T2 (2026-09-05, Tulipa): la passada LLM `--only-fields` nomes rep conflictes de CAMPS (`fields.*`): als 7 runs de
+#: la mesura cap conflicte de cel·la de taula (`tables.*`) ha estat mai aplicat pel LLM (Tulipa: 3 demanats, 0
+#: aplicats, 523 s / 30 torns), i les cel·les de taula tenen les seves regles Python. Amb mes conflictes que
+#: `G3DT_LECTURA_LLM_MAX_CONFLICTS` (8) la passada s'omet sencera (S1: multi-casa, el LLM no hi pot fer res).
+#: Observacio pendent de decisio: la passada costa 200-290 s i 14-23 torns fins i tot amb UN sol conflicte.
+_LLM_CONFLICT_PREFIX = "fields."
 
 _telemetry_lock = threading.Lock()
 
@@ -92,6 +100,9 @@ class LecturaResult:
     degraded: bool = False
     mode: str = "document"
     telemetry_path: Path | None = None
+    #: D4 (2026-09-05, Vilanova): documents que han acabat SENSE JSON valid despres dels reintents. Abans `degraded`
+    #: nomes reflectia la consolidacio LLM i un run amb 11/14 documents tancava «OK» amb forats invisibles.
+    docs_failed: list[str] = field(default_factory=list)
 
 
 # ---------------------------------------------------------------------------
@@ -178,6 +189,8 @@ def _load_config() -> dict[str, Any]:
         "consolida": consolida,
         "claude_path": claude_path,
         "timeout": _env_int("G3DT_LECTURA_TIMEOUT", 600),
+        "timeout_slow": _env_int("G3DT_LECTURA_TIMEOUT_SLOW", 900),
+        "llm_max_conflicts": _env_int("G3DT_LECTURA_LLM_MAX_CONFLICTS", 8),
         "consolida_timeout": _env_int("G3DT_LECTURA_CONSOLIDA_TIMEOUT", 900),
         "concurrency": max(1, _env_int("G3DT_LECTURA_CONCURRENCY", 2)),
         "mode": mode,
@@ -423,6 +436,23 @@ def _capture_claude_version(claude_path: str) -> str | None:
 # ---------------------------------------------------------------------------
 
 
+def assign_doc_names(entries: list[dict]) -> None:
+    """D6 (2026-09-05, Tulipa): `X.dwg` i `X.pdf` donaven el mateix `safe_doc_name` → el mateix `{doc}.json`, i una
+    lectura sobreescrivia l'altra (317 s + 1,25 USD perduts, nota «lectura fallida»). Quan dos fitxers de la cua
+    comparteixen el nom, TOTS dos porten l'extensio (`x_dwg.json`, `x_pdf.json`); la resta conserva el nom de sempre
+    (cache dels runs existents intacta). Escriu `entry["doc_name"]`."""
+    by_name: dict[str, list[dict]] = {}
+    for e in entries:
+        by_name.setdefault(safe_doc_name(e["path"]), []).append(e)
+    for name, group in by_name.items():
+        for e in group:
+            if len(group) == 1:
+                e["doc_name"] = name
+            else:
+                ext = PurePosixPath(e["path"]).suffix.lstrip(".").lower() or "noext"
+                e["doc_name"] = f"{name}_{ext}"
+
+
 def _build_queue(inventory: dict) -> tuple[list[dict], list[dict]]:
     """Retorna `(cua, saltats_per_duplicat)`: fitxers `route == "claude"`
     ordenats per `priority` (i despres per `path`, per determinisme), amb els
@@ -444,6 +474,7 @@ def _build_queue(inventory: dict) -> tuple[list[dict], list[dict]]:
         (f for f in claude_files if f["path"] not in skip_paths),
         key=lambda f: (f.get("priority", 0), f["path"]),
     )
+    assign_doc_names(queue_entries)
     skipped_entries = [f for f in claude_files if f["path"] in skip_paths]
     return queue_entries, skipped_entries
 
@@ -509,8 +540,12 @@ def _process_one_doc(
     claude_version: str | None,
 ) -> dict:
     rel_path = entry["path"]
-    name = safe_doc_name(rel_path)
+    name = entry.get("doc_name") or safe_doc_name(rel_path)
     doc_json_path = out_dir / f"{name}.json"
+    # T1 (2026-09-05, Alcoletge): PENETROS es el document mes lent a 4/5 projectes (380-520 s) i el topall de 600 s
+    # hi queda a tocar; els fulls de camp tenen el seu propi topall (`G3DT_LECTURA_TIMEOUT_SLOW`, 900 s). El CLI no
+    # escriu res a stdout/stderr fins al final (`--output-format json`): una penjada no es pot detectar abans.
+    timeout = doc_timeout(cfg, entry)
 
     _emit(on_event, "lectura_doc_inici", {"doc": rel_path})
 
@@ -539,7 +574,7 @@ def _process_one_doc(
         )
         log_path = Path(tempfile.gettempdir()) / f"g3dt-lectura-{project_path.name}-{name}-{attempt}.log"
         call = _run_claude(
-            claude_path=cfg["claude_path"], prompt=prompt, timeout=cfg["timeout"],
+            claude_path=cfg["claude_path"], prompt=prompt, timeout=timeout,
             log_path=log_path, should_cancel=should_cancel, model=cfg["model"], effort=cfg["effort"],
         )
         last_elapsed = call["elapsed_s"]
@@ -556,14 +591,19 @@ def _process_one_doc(
             })
             return {"doc": rel_path, "status": "cancelled", "attempts": attempt, "elapsed_s": last_elapsed}
 
-        json_valid, _found = _check_doc_output(
+        json_valid, found = _check_doc_output(
             doc_json_path, out_dir, existing_before, call_start_wall, rel_path,
         )
+        if json_valid and found is not None and found != doc_json_path:
+            # D6: el skill escriu `{safe_doc_name}.json`; si el runner n'esperava un altre (col·lisio de stem), el
+            # mou al nom esperat perque la cache (md5) el trobi a la propera execucio
+            with contextlib.suppress(OSError):
+                os.replace(found, doc_json_path)
 
         _write_telemetry(telemetry_path, {
             "ts_start": ts_start, "ts_end": ts_end, "doc": rel_path, "mode": "only",
             "rc": call["rc"], "timeout": call["timeout"], "json_valid": json_valid,
-            "attempt": attempt, "cached": False, "elapsed_s": call["elapsed_s"],
+            "attempt": attempt, "cached": False, "elapsed_s": call["elapsed_s"], "timeout_s": timeout,
             "log_path": str(log_path), "claude_version": claude_version,
             "model": cfg["model"], "effort": cfg["effort"], "skill": cfg["skill"], "preext": cfg["preext"],
             **call.get("cli", {"cli_json_ok": False}),
@@ -738,6 +778,21 @@ def _consolidate_uncached(
     return degraded, True
 
 
+def llm_conflict_paths(paths: list[str], cfg: dict) -> tuple[list[str], str | None]:
+    """T2: `(camins que van al LLM, motiu si s'omet la passada)`. Nomes `fields.*`; buit si no n'hi ha cap;
+    tot omes si superen el topall."""
+    fields_only = [p for p in paths if p.startswith(_LLM_CONFLICT_PREFIX)]
+    cap = int(cfg.get("llm_max_conflicts", 8) or 8)
+    if len(paths) > cap:
+        return [], f"{len(paths)} conflictes > topall {cap} (G3DT_LECTURA_LLM_MAX_CONFLICTS): carpeta multi-casa o lectura incoherent, el LLM no hi pot fer res"
+    return fields_only, None
+
+
+def doc_timeout(cfg: dict, entry: dict) -> int:
+    """T1: topall de temps d'un document segons el `doc_type_hint` (fulls de camp: `timeout_slow`)."""
+    return int(cfg.get("timeout_slow", cfg["timeout"])) if entry.get("doc_type_hint") in _SLOW_HINTS else int(cfg["timeout"])
+
+
 def _consolidate_python_first(
     *,
     project_path: Path,
@@ -777,9 +832,14 @@ def _consolidate_python_first(
         _write_json_atomic(decisions_path, minimal)
         return minimal, True
 
-    paths = conflict_paths(decisions)
+    all_paths = conflict_paths(decisions)
+    paths, llm_skip = llm_conflict_paths(all_paths, cfg)
     applied: list[str] = []
-    if paths and cfg.get("consolida") == "auto" and not _cancelled(should_cancel):
+    if all_paths and cfg.get("consolida") == "auto" and llm_skip:
+        decisions.setdefault("consolidation", {})["llm_only_fields"] = {"requested": all_paths, "applied": [], "skipped": llm_skip}
+        decisions.setdefault("notes_estructurals", []).append(f"passada LLM --only-fields omesa (T2): {llm_skip}")
+        _emit(on_event, "consolidacio_llm_omesa", {"n_conflicts": len(all_paths), "why": llm_skip})
+    if paths and cfg.get("consolida") == "auto" and not llm_skip and not _cancelled(should_cancel):
         with contextlib.suppress(OSError):
             only_path.unlink()
         prompt = f"/{cfg['skill']} {project_path} --consolida --only-fields {','.join(paths)} --out {out_dir}"
@@ -1148,5 +1208,9 @@ def run_lectura(
         telemetry_path=telemetry_path, claude_version=claude_version,
     )
 
-    _emit(on_event, "lectura_fi", _aggregate(per_doc, degraded))
-    return LecturaResult(decisions=decisions, per_doc=per_doc, degraded=degraded, mode=mode, telemetry_path=telemetry_path)
+    # D4: un document sense JSON valid despres dels reintents es un forat de lectura, no un detall de telemetria
+    docs_failed = sorted(d["doc"] for d in per_doc if d.get("status") == "failed")
+    degraded = degraded or bool(docs_failed)
+    _emit(on_event, "lectura_fi", _aggregate(per_doc, degraded) | {"docs_failed": docs_failed})
+    return LecturaResult(decisions=decisions, per_doc=per_doc, degraded=degraded, mode=mode, telemetry_path=telemetry_path,
+                         docs_failed=docs_failed)

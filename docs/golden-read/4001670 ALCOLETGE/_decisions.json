@@ -170,7 +170,12 @@
     "correu_07",
     "planol_17",
     "foto_16"
-   ]
+   ],
+   "fora_carpeta": {
+    "value": "1167",
+    "font": "Cadastre (Callejero DNPLOC + WFS INSPIRE), portal 7 = 8841701CG0184S (1167 m²)",
+    "note": "no és lectura de la carpeta; mesurat 2026-09-04 (mesura dels 8); signat: 1167 «segons cadastre»"
+   }
   },
   "field_date": {
    "status": "segur",

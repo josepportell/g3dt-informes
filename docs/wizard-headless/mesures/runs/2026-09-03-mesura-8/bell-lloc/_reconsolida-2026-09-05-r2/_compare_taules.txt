@@ -1,0 +1,9 @@
+-- dpsh_tests: or 2 files / prod 2 files · alineades per clau
+-- sondeig_tests: or 1 files / prod 1 files · alineades per clau
+CAUTELA  sondeig_tests[0].spt_ma or segur, prod candidats (bo dins): '1/0'
+-- spt_ma_tests: or 1 files / prod 1 files · alineades per clau
+CAUTELA  spt_ma_tests[0].id or segur, prod candidats (bo dins): 'SPT-1'
+-- soil_levels: or 2 files / prod 2 files · alineades per clau
+BUIT     soil_levels[0].a (or=candidats '-0,30 m (±0,05)'; prod no_trobat)
+CAUTELA  soil_levels[1].de candidats disjunts: or=['-0,30 m (±0,05)', '-0,4 m'] prod=['0,00']
+TOTALS: {'OK': 17, 'CAUTELA': 3, 'BUIT': 1}

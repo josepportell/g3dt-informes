@@ -2191,3 +2191,103 @@ Prioritzar la resta de 0b (proposta: G → R6 → I1 → R1). Paquet de pregunte
 pactada del 09-03 (R → P0/P1/P2a → M341).
 
 *Fi entrada 2026-09-05. Comparador v4 + D2/D3/R3: el sistema ja no decideix contra el que sap; els dos ERR que queden són de font (Rubí) i de política (R6).*
+
+## 2026-09-05 (tarda) — Fila 0b, resta: G, R6, I1, R1, D5, D4, D6, T1, T2 (S1 en disseny) — escalars 86 → 104 OK sobre l'or, ERR de codi 0
+
+### Context
+Josep (2026-09-05, després del commit `386a8a5`): «commit i push; seguim amb la resta de la fila 0b, amb la teva proposta
+d'ordre tal qual» (G → R6 → I1 → R1, després D5, D4/D6, T1/T2, S1). Mateix mètode que al matí: cada fix amb test i
+mesurat reconsolidant els 7 comparables a cost 0 (`mesures/reconsolida_mesura.py`, nou, versionat), llistant TOTES les
+cel·les que canvien. Excepció: I1 canvia l'inventari (documents nous) → run parcial real d'Anciles (5 PDF).
+
+### Decisions arquitectòniques clau
+1. **G a l'or, no al comparador.** `fora_carpeta` per a `superficie_parcela` de Rubí (951), Alcoletge (1167) i Vilanova
+   (406), amb font Cadastre i nota «signat: …». Why: el valor és correcte i mesurat fora dels documents; el comparador ja
+   té el veredicte FORA per a aquest cas (v3). No s'ha tocat `referencia_catastral` de Rubí/Vilanova: no consta que el
+   signat la imprimeixi (zero fabrication).
+2. **R6 com a post-decisió de cel·la, no com a canvi de `decide(table_cell=True)`.** `_nf_positive_over_absence`: si el
+   candidat 1 és l'absència («No detectat», `absent_literal`) i hi ha cap senyal positiu, candidats amb el positiu primer
+   (tall > full de camp > resta per confiança) i «No detectat» després. Why: la regla «només els A contradiuen» de les
+   taules és bona en general (Pas 3b); el que és específic del nivell freàtic és que una columna buida és absència
+   d'anotació, no una mesura. Alternativa rebutjada: fer que els positius no-A siguin bloquejadors genèrics (mouria
+   totes les cel·les de taula). Mesura: 1 sola cel·la canvia als 7 (Vilanova P-3).
+3. **I1: la V0 només si no hi ha `PDF/` vigent**, i marcada (`"version": "V0"` a l'inventari). Why: a Bell-lloc/Linyola
+   la V0 és versió anterior de debò; a Anciles és l'única còpia llegible (els vigents són `.FH11`). També: variants en
+   castellà dels annexos (`ANEJOS/`, `_sondeos.pdf`, `corte de correlación.pdf`) per al `doc_type_hint` (prioritat de
+   cua; el tipus real el decideix el lector). Vilanova ja llegia `PDF/ANEJOS/*_DPSH.pdf` com a «altre» per això.
+4. **R1: equivalències PER CAMP dins de `value_key`, i clustering sense ponts.** (a) `building_type` → conjunt de
+   paraules (`btset`: abreviatures G3, es→ca, municipi final fora via padró, xifres i mots buits fora) i compatibilitat
+   per inclusió; (b) `street_address` → `("addr", via, {portals})` via `cadastre_reader.portals_from_address` (mateixa
+   via i mateixos portals = mateixa clau; sense portal = lectura parcial, compatible només si la via coincideix);
+   (c) `client_name`/`architect_company`/`lab_testing_company` → sufix de forma jurídica fora; (d) `lab_location` →
+   clau de punt (`_point_key`) i forma visible canònica «P-3». Why «sense ponts»: un subconjunt (`HAB UNIF`) o una
+   lectura sense portal («C/ DE LA MIRANDA») és compatible amb DUES alternatives reals («aïllat»/«entre mitgeres»;
+   portal 39/41) i el union-find les fusionaria; s'apliquen com les dates sense dia del D2 (`_attach_only`: s'adjunten
+   al cluster compatible més fort, la clau del cluster es manté com la més completa). Alternativa rebutjada:
+   equivalències al comparador (mesurarien millor sense decidir millor). **Persona/despatx NO es toca** (pregunta a Eva).
+5. **R1 té una regla que NO aplica als conjunts:** «formes diferents entre fonts A → candidats» es manté per a
+   adreces (amb/sense portal) però s'exceptua per a `btset`: un subconjunt d'un tipus d'edifici és el mateix tipus
+   menys un adjectiu (memòria `feedback_building_type_close_match`).
+6. **D5: el CTE es classifica per edifici.** Adossat/plurifamiliar → superfície TOTAL de l'encàrrec (el màxim dels
+   candidats de la taula; si cap total, N unitats × tipologia); aïllat → per unitat (com fins ara). Why: és el que fan
+   l'or i el signat als dos casos que tenim (Anciles 7 adossats 1.264 m² → C-1; Castellar 3 aïllats de 120 m² → C0).
+   Continua sent candidats (R4).
+7. **T2 sense heurística de «multi-expedient».** La primera versió ometia la passada LLM quan hi havia conflicte a
+   `fields.expedient`; a Tulipa els dos valors comparteixen el número (`3001706` / `3001706_CASA 1`) i el test
+   sintètic de conflicte també usa `expedient`. Substituït per: només `fields.*` (cap `tables.*` s'ha aplicat mai als
+   7 runs) + topall de conflictes. **Observació que demana decisió:** la passada costa 200-290 s i 14-23 torns fins i
+   tot amb un sol conflicte.
+8. **T1 honest:** el CLI no escriu res a stdout ni stderr fins al final (`--output-format json`; comprovat en viu al
+   run d'Anciles: logs de 0 bytes durant 6 min); una penjada no es pot distingir d'una lectura lenta. Es fa l'únic que
+   es pot fer sense canviar de format: topall propi per als fulls de camp (900 s) i `timeout_s` a la telemetria.
+
+### Implementació
+- `automation/lectura/consolidate.py` (+~200 LOC): `_nf_positive_over_absence`, `_attach_only`, `_more_complete`,
+  `_building_type_tokens`, `_address_key`, `_cte_surface`, constants R1 (`_BT_MAP`, `_BT_STOP`, `_VIA_ABBR`,
+  `_LEGAL_SUFFIX_*`), `value_key`/`keys_compatible`/`cluster_signals`/`decide` ampliats; `derived_field_signals(key,
+  decided, sc)` (signatura nova).
+- `automation/lectura/inventory.py`: `has_current_pdf_dir`, `_V0_DIRS`, `version: V0`, regexos ES.
+- `automation/lectura/runner.py`: `LecturaResult.docs_failed`, `assign_doc_names`, `doc_timeout`, `llm_conflict_paths`,
+  config `timeout_slow`/`llm_max_conflicts`, `os.replace` del JSON trobat al nom esperat.
+- `docs/golden-read/{3 projectes}/_decisions.json`: `fora_carpeta`.
+- `docs/wizard-headless/mesures/reconsolida_mesura.py` (nou). Cap dependència nova.
+
+### Validació empírica (reconsolidació dels 7, cost 0; agregat mecànic sobre l'or)
+- Escalars: 93 (matí) → **104 OK / 37 CAND / 5 ALERTA / 1 blanc / 0 ERR** (71 %). Cel·les mogudes: G 3, R1 7, D5 1;
+  totes cap a l'or/signat; 0 regressions. Taules: 136 → **137 OK / 21 / 8 ALERTA / 31 / 0 ERR**; R6 mou 1 cel·la.
+- Sobre el signat: escalars 104 OK (71 %) / 42 CAND (29 %) / 1 blanc / **0 ERR**; taules: **1 ERR real** (Rubí cota
+  P-2, font d'Eva). Dels 4 ERR del 09-04 en queda 1, de font.
+- Runner: 202 tests verds als tres mòduls tocats (runner 43, consolidador 135, inventari 24). Suite sencera: vegeu la
+  sessió.
+- **I1 — resultat** (run parcial d'Anciles, 5 PDF de `PDF_V0`, 20,3 min, 5,87 USD, un timeout de 600 s a `sondeos.pdf`
+  = T1 en viu): primera passada amb la V0 com a font A → 30 cel·les canvien i **1 ERR nou** (`mostra_del_nivell` del
+  nivell 1 segur `True`: a la V0 les graves eren NIVEL 1; al signat són el 2n nivell). Regla afegida: **un document V0
+  proposa i corrobora, mai és autoritat ni contradiu** (`_is_v0_source`, `is_a=False`, confiança < 0,4, nota). Resultat:
+  21 cel·les canvien, **0 ERR**: les 9 cotes en blanc surten com a candidats amb el valor del signat primer, la mostra del
+  nivell 1 queda en ALERTA (dubte honest). Els 7 restants: 0 cel·les. Agregat amb I1: escalars 105/37/5/0/0, taules
+  137/37/9/20/0 (Anciles blancs 14 → 3). Vegeu `_AGREGAT-8.md` §I1.
+
+### Tests
++2 D5, +1 R6, +5 R1 (consolidador); +3 I1 (inventari); +4 (D6 ×2, T1, T2) i D4 dins del test de timeout (runner).
+
+### Latència / cost
+Reconsolidacions: 0 USD. Run parcial I1 d'Anciles: 5 lectures Claude (sonnet, xhigh, c2): 20,3 min, 5,87 USD (1,28 +
+1,07 + 0,63 + 1,48 + 1,40; el timeout del 1r intent de `sondeos.pdf` no factura).
+
+### Limitacions conegudes
+- R1 no cobreix persona/despatx (`architect_name`, Linyola: el signat escriu el despatx) ni les grafies de
+  `client_name` que no són forma jurídica; R5/R4/R2 continuen sent la massa del CAND (37).
+- El comparador continua contra l'or: els ALERTA (5 + 8) s'han llegit a mà una vegada més.
+- T1 no detecta penjades; T2 no elimina el cost fix de la passada LLM.
+- S1 no implementat (disseny a `_AGREGAT-8.md`).
+
+### GO/NO-GO
+- ✅ Fila 0b tancada (S1 en disseny). ✅ 0 ERR de codi (I1 inclòs, amb la regla V0). ✅ 0 regressions mesurades.
+  ⏳ OK 71 % (< 80), CAND 29 % (> 20): el que queda és R5/R4/R2/F1 i les preguntes a Eva.
+
+### Següents passos
+Paquet de preguntes a Eva (R4, persona/despatx, SPT Vilanova, cota Rubí); decidir si la passada LLM es manté (T2);
+R5 («el projecte de l'arquitecte mana») i R2 (z GPS, msnm→fondària) són els següents guanys sense tocar criteris; S1
+quan hi hagi un segon multi-casa. Després, la seqüència pactada (R → P0/P1/P2a → M341).
+
+*Fi entrada 2026-09-05 (tarda). Fila 0b: del «decideix malament» al «decideix bé i dubta del que ha de dubtar».*
