@@ -9,6 +9,9 @@ surten com a candidats amb el valor del signat primer; **regla nova: un document
 contradiu** (la V0 posava les graves al nivell 1; el signat al 2n). Amb I1: escalars 105/37/5/0/0, taules 137/37/9/20/0.
 Llindars: ERR 0 ✅; OK 71 % ⏳ (80); CAND 29 % ⏳ (20): la resta és R5 (font única), R4 (pregunta a Eva), R2, F1.
 **Observació T2 per decidir:** la passada LLM `--only-fields` costa 200-290 s i 14-23 torns fins i tot amb 1 conflicte.
+**Ordre pactat (Josep, 2026-09-05 vespre):** bloc 1 = totes les millores de lectura/decisió (R5, R2, F1, derivats,
+L1/L3, T2 decisió; R4 i persona/despatx amb Eva) → bloc 2 = càlculs i informe (P0, P2a, P2b, M341; P3/P4 amb Eva) →
+bloc 3 = multi-casa S1 (capa intermèdia a aquesta branca, després branca nova). Detall: `docs/_FOR-NEW-YOU-20260905.md` §final.
 Detall: `_AGREGAT-8.md` §Agregat mecànic (tarda), `_DIAGNOSTICS-INDEX.md` §Estat dels fixes (tarda), DECISION-LOG.
 
 Last updated: 2026-09-05 — **Fila 0b, primer paquet FET (decisió Josep: C, D2, D3, R3).** Comparador

@@ -56,20 +56,56 @@ traducció i la llista de rutes.
   versió del v4 va amagar D3.
 - Les d'ahir segueixen vigents (`_FOR-NEW-YOU-20260904.md` §Trampes).
 
-## Decisions del Josep al tancament (2026-09-05, vespre) — PER ON COMENÇAR LA SESSIÓ SEGÜENT
+## Decisions del Josep al tancament (2026-09-05, vespre) — ORDRE DE TREBALL DE LES SESSIONS SEGÜENTS
 
-1. **S1 (multi-casa) en dues fases.** (a) **Capa intermèdia a la branca actual** (`experiment/nivell-a-2026-08`, mig
-   dia): detectar carpetes amb subcarpetes «CASA n» amb annexos propis (inventari), avís clar al wizard («2 cases: el
-   sistema encara no les separa; revisa client, punts i nivells») i etiqueta de casa a cada fila de taula i candidat.
-   Aquesta branca és la **salvaguarda**: si l'Eva permet fer pull abans d'acabar, es fa pull d'aquí. (b) **S1 sencer
-   en una branca nova** (des d'aquesta), 3-4 dies: inventari amb eix casa → selector al wizard → consolidació per casa
-   (el risc és repartir el full de camp manuscrit compartit, on cada casa té el seu P-1/S-1) → informe per casa →
-   mesura contra l'or per casa de Tulipa. Si el multi-casa fa baixar la qualitat dels resultats actuals, la branca
-   actual queda intacta.
-2. **Llista de millores pendents** (resposta al Josep, ordenada per valor esperat; detall al missatge de tancament de
-   la sessió i a `STATUS.md`): via A — R5, R2, F1, derivats, L1/L3, persona/despatx (Eva), R4 (Eva), T2 decisió, T1;
-   criteris de càlcul — P0, P2a, M341, P2b, P3 (Eva), P4 (Eva); desplegament — instal·lar Claude Code a l'ordinador
-   de l'Eva (via A com a lector de producció), tier de subscripció, merge cap a `production/g3dt-eva-v1`; via B —
-   només confirmar amb l'Eva els 3 fixes pendents (Tulipa render, sondeig refús, None depth) i deixar de tocar-la.
-3. **Preguntes a Eva**: `docs/PREGUNTES-EVA-PENDENTS.md` + les d'aquesta setmana (T pressupost, persona/despatx, SPT
-   creuats Vilanova, cota P-2 Rubí, E, regla N20). Sense elles, el CAND (29 %) no baixa gaire.
+**Principi (Josep):** «encara tenim recorregut de millora de qualitat dels informes, que prioritzaria abans que
+multi-casa». Primer TOTES les millores de lectura i decisió, després càlculs i informe (com a mínim P0, P2a, P2b i
+M341), i només llavors el multi-casa (S1). Cada peça amb el mètode d'avui: test + reconsolidació dels 7 a cost 0
+(`mesures/reconsolida_mesura.py <sub_nou> <sub_ref>`; referència actual: `_reconsolida-2026-09-05-r2`) i llista de
+TOTES les cel·les que canvien. Punt de partida: escalars 105 OK / 37 CAND / 5 ALERTA / 0 ERR sobre l'or.
+
+### Bloc 1 — Lectura i decisió (via A). Fer-les totes, en aquest ordre
+
+| # | Peça | Què és, en paraules | Cel·les | Esforç | Necessita Eva? |
+|---|---|---|---|---|---|
+| 1.1 | **R5 font única del proveïdor** | El projecte de l'arquitecte o el correu del tècnic diuen la RC, la superfície o el nombre de plantes i el sistema no diu «segur» perquè cap lector sol arriba a 0,8. L'or aplica «el projecte de l'arquitecte mana»; també: ≥ 4 documents de ≥ 3 tipus coincidents amb conf ≥ 0,5 → segur; annex de sondeig com a A per als nivells | 19 | ½ dia | No |
+| 1.2 | **R2 concepte veí** | La z GPS de `COORDENADES.txt` bloqueja la cota de l'annex (z de l'annex mana; la GPS va a `altres`); la data del sondeig bloqueja la de camp (regla d'Eva «1 i 6 d'octubre» o candidats amb nota: decisió Josep); nivells en msnm quan l'informe vol fondària (conversió determinista amb `cota_inici`, ja segura al mateix `_decisions.json`) | 6 (+3 taules) | 1 dia | Només la data doble |
+| 1.3 | **F1 fonts d'Eva inconsistents** | Comanda 1,4 vs GTL 1,2; annex p.2 +212 vs p.1/p.3 +212,50; SPT creuats a Vilanova. Regla «qui mana» per parella de documents (el skill ja la descriu: GTL > comanda; capçalera coherent entre pàgines) | 7 | ½ dia | Sí per a Vilanova i Rubí (veure §Preguntes) |
+| 1.4 | **Derivats del consolidador** | `a` del darrer nivell = «fins al fons d'investigació»; `mostra_del_nivell` = el nivell que conté `lab_depth`; litologia del nivell de la mostra | ~8 blancs de taula | ½ dia | No |
+| 1.5 | **L1/L3 forats de lector** | El full SPT manuscrit (PENETROS p.3) no emet `n30` («R, 50 cops al primer tram»); telèfon enganxat a `client_name` (fitxa C6); N30 «2» en una MA. Toca el skill `g3dt-llegir-projecte` i els normalitzadors → cal re-llegir els docs afectats (cost: 1-2 lectures per projecte) | 4 | 1 dia | No |
+| 1.6 | **T2 decisió sobre la passada LLM** | Costa 200-290 s i 14-23 torns fins i tot amb 1 conflicte. Mesurar, als 7 runs, si els valors que ha aplicat (`_consolida_only.json`) són millors que els candidats Python contra el signat. Si no: `G3DT_LECTURA_CONSOLIDA=python` per defecte | temps, no cel·les | 2 h | No |
+| 1.7 | **R4 CTE imprès** i **persona/despatx** | `cte_*` mai segur encara que el pressupost imprimeixi C1/T1 (9 cel·les); `architect_name` persona vs despatx (Linyola: el signat escriu el despatx) | 9 + 2 | 2 h un cop respost | **Sí** (T del pressupost = T de l'informe? despatx o persona?) |
+
+Bloc 1 sense Eva (1.1-1.6): estimació ≈ +25-30 cel·les → escalars ~85 % OK, CAND ~15 %: els dos llindars pactats.
+
+### Bloc 2 — Càlculs i informe (el que l'Eva signa)
+
+| # | Peça | Què és | Esforç | Necessita Eva? |
+|---|---|---|---|---|
+| 2.1 | **P0 columna N** | N = SPT, «--»/«R» segons R (repàs dels signats); regla N30 textual a Bell-lloc p.10 | 1 h | No |
+| 2.2 | **P2a col·lapse de nivells** (Rubí) | mesura feta | 2 h | No |
+| 2.3 | **P2b fondària de sabata** | decisió d'input (G.1); font nova: la frase del Qa del signat declara el nivell (encastament 20-40 cm) | ½ dia | No (decisió Josep) |
+| 2.4 | **M341 mesura completa** | les 341 variables de l'informe generat vs signat (`scripts/compare_tables_vs_eva.py` + `_eva_truth`): «l'estat de tot». Últim global: 59 % del 23-ago, pre-correccions. **Abans, la línia base amb el codi actual** (memòria `feedback_measure_baseline_before_coding`) | 1-2 dies | No |
+| 2.5 | P3 E per criteris, P4 regla N20 | després de M341 | 1 dia + 2 h | **Sí** (E; N20) |
+
+Detall i estat de cada peça: `docs/PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md` §Ordre (files 2-8).
+
+### Bloc 3 — Multi-casa (S1), NOMÉS després dels blocs 1 i 2
+
+(a) **Capa intermèdia a la branca actual** (½ dia): detectar subcarpetes «CASA n» amb annexos propis, avís al wizard
+(«2 cases: el sistema encara no les separa; revisa client, punts i nivells»), etiqueta de casa a cada fila i candidat.
+És la salvaguarda: si l'Eva permet pull abans d'acabar S1, es fa pull d'aquesta branca. Es pot avançar en qualsevol
+moment si un pull es fa imminent (decisió Josep). (b) **S1 sencer en una branca nova** des d'aquesta (3-4 dies):
+inventari amb eix casa → selector al wizard → consolidació per casa (risc: repartir el full de camp manuscrit
+compartit, cada casa té el seu P-1/S-1) → informe per casa → mesura contra l'or per casa de Tulipa. Si fa baixar la
+qualitat, la branca actual queda intacta. Freqüència: 1 de 8 al corpus; cap als 16 projectes reals de maig-juliol.
+
+### En paral·lel, sense esperar cap bloc
+
+- **Preguntes a Eva** (`docs/PREGUNTES-EVA-PENDENTS.md` + d'aquesta setmana): T del pressupost = T de l'informe (R4),
+  persona o despatx a `architect_name` (Linyola), SPT P-1/P-3 creuats a Vilanova (signat vs annex+tall), cota P-2 de
+  Rubí (+212 vs +212,50), E (P3), regla N20 (P4), «`de` del nivell 1 = base de la capa vegetal». Sense elles, ~20
+  cel·les no baixen de CAND.
+- **Desplegament**: Claude Code a l'ordinador de l'Eva (via A com a lector de producció) i tier de subscripció
+  (memòria `project_eva_subscription_model_tier`); merge cap a `production/g3dt-eva-v1` quan ella permeti pull.
+  Via B: només confirmar amb l'Eva els 3 fixes pendents (Tulipa render, sondeig refús, None depth); no tocar-la més.
