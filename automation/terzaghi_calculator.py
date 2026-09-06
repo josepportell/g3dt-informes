@@ -42,7 +42,7 @@ References:
 
 import math
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional, Literal
 from enum import Enum
 
@@ -112,6 +112,13 @@ class BearingCapacityResult:
     qa_governs: str = "terzaghi"  # Which method governs: "terzaghi" or "terzaghi_peck"
     qa_cap_reason: Optional[str] = None  # Diagnostic only: "rock" | "dense_granular" | "soil"
 
+    # Assentament per criteri (automation/settlement_criteria.py, 2026-09-06): omplert pel generador/wizard
+    settlement_generic: bool = False      # frase genèrica «menyspreables o bé inferiors a 1.0 cm»
+    settlement_regime: str = ""           # granular | roca | cohesiu
+    Es_source: str = ""                   # procedència de l'Es del defecte
+    Es_candidates: list = field(default_factory=list)   # [{value, display, source, settlement_cm}, …]
+    settlement_sentence: str = ""         # la frase impresa (plantilla: {{ settlement_sentence }})
+
     def to_dict(self) -> dict:
         return {
             'inputs': {
@@ -151,7 +158,9 @@ class BearingCapacityResult:
         return f"Qa= {self.Qa:.1f} Kg/cm²  amb un factor de seguretat inclòs de F={int(self.safety_factor)}"
 
     def format_settlement_for_report(self) -> str:
-        """Format settlement as it appears in G3DT reports."""
+        """Format settlement as it appears in G3DT reports (frase per criteri si el generador l'ha calculada)."""
+        if self.settlement_sentence:
+            return self.settlement_sentence
         if self.settlement_cm is None:
             return ""
         return (

@@ -6989,6 +6989,12 @@
                     const s_m = C1 * Qa * Iz_integral / Es;
                     settlement = (s_m * 100).toFixed(2);
                     settlGov = 'Schmertmann';
+                    // Criteri (2026-09-06): roca/cohesiu o < 1,0 cm → frase genèrica «menyspreables o bé inferiors a 1.0 cm»
+                    const regimeS = ((wizardPrefills._calc_settlement_regime || {}).value) || (c >= 0.5 ? 'roca' : 'granular');
+                    if (regimeS !== 'granular' || parseFloat(settlement) < 1.0) {
+                        settlement = '< 1,0';
+                        settlGov = 'frase genèrica (' + regimeS + ')';
+                    }
                 }
             }
 

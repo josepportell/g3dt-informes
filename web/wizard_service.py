@@ -864,8 +864,44 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
         _set('qa_value', f"{tr.Qa:.2f}", 'Terzaghi-Peck')
         if tr.qa_cap_reason is not None:
             _set('qa_cap_reason', tr.qa_cap_reason, 'Terzaghi-Peck')
-        if tr.settlement_cm is not None:
-            _set('settlement', f"{tr.settlement_cm:.2f}", 'Schmertmann')
+
+        # Assentament per CRITERI (2026-09-06, mateix mòdul que el generador): règim del nivell portant
+        # (granular → valor; roca/cohesiu o < 1,0 → frase genèrica) i Es amb candidats (badge «+N»).
+        from automation.settlement_criteria import (
+            settlement_by_criteria, settlement_regime, parse_spt_n, calc_note,
+            alternatives_for_wizard as _es_alternatives,
+        )
+        from automation.geotech_criteria import _classify, lith_flags
+        from automation.spt_n_column import assign_spt_n30
+        _klass = _classify(soil_type, lith_flags(description), cohesion >= 0.5)
+        _regime = settlement_regime(_klass, cohesion, crit.regime)
+        _levels = [{'level_number': i + 1, 'description': l.get('description', ''),
+                    'depth_from_m': l.get('depth_from_m'), 'depth_to_m': l.get('depth_to_m')}
+                   for i, l in enumerate(sondeig_layers)] or [{'level_number': 1, 'description': description,
+                                                                'depth_from_m': 0.0, 'depth_to_m': None}]
+        _v = lambda k: (merged.get(k) or {}).get('value') if isinstance(merged.get(k), dict) else merged.get(k)
+        _spt_rows = [{'test_id': _v('spt_test_id'), 'location': _v('spt_location'), 'depth_range': _v('spt_depth_range'),
+                      'n30': _v('spt_n30'), 'lithology': _v('spt_lithology')}] if _v('spt_n30') else []
+        try:
+            _n_by_level, _ = assign_spt_n30(_spt_rows, _levels)
+        except Exception:
+            _n_by_level = {}
+        _n_spt = parse_spt_n(_n_by_level.get((bearing_idx + 1) if sondeig_layers else 1))
+        sc = settlement_by_criteria(q_net=tr.Qa, B=B, Df=Df, gamma=gamma, nb=nb, n_spt=_n_spt, E=E,
+                                    regime=_regime, Es_override=Es_override)
+        if sc.settlement_cm is not None:
+            _set('settlement', f"{sc.settlement_cm:.2f}", sc.Es_source or 'Schmertmann')
+        _set('settlement_sentence', sc.sentence, 'system')
+        _set('_calc_settlement_regime', sc.regime, 'system')
+        _s_note, _es_note = calc_note(sc, B)
+        _set('_calc_settlement', _s_note, 'system')
+        _set('_calc_Es', _es_note, 'system')
+        _es_alts = _es_alternatives(sc)
+        if _es_alts:
+            existing_alts = merged.get('_alternatives')
+            alt_map = dict(existing_alts.get('value') or {}) if isinstance(existing_alts, dict) else {}
+            alt_map.setdefault('Es_settlement', []).extend(_es_alts)
+            merged['_alternatives'] = {'value': alt_map, 'source': 'system'}
 
         # K30 ballast coefficient
         if cohesion and cohesion > 0:
@@ -888,21 +924,6 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
                 _set('_calc_qa', f"{formula} = {tr.Qa_uncapped:.2f} | Cap: {tr.Qa:.2f} ({ranges['Qa_cap']})", 'system')
             else:
                 _set('_calc_qa', f"{formula} = {tr.Qa:.2f} | Rang Eva: {ranges['Qa_cap']}", 'system')
-
-        # Settlement transparency with sensitivity
-        if tr.settlement_cm and tr.Es_used:
-            Es = tr.Es_used
-            base = tr.settlement_cm
-            Es_low = Es * 0.75
-            Es_high = Es * 1.25
-            s_low = base * Es / Es_high
-            s_high = base * Es / Es_low
-            _set('_calc_settlement',
-                 f"Schmertmann Es={Es:.0f}, B={B}m \u2192 {base:.2f} cm"
-                 f" | Si Es={Es_low:.0f}: {s_high:.2f} cm"
-                 f" | Si Es={Es_high:.0f}: {s_low:.2f} cm",
-                 'system')
-            _set('_calc_Es', f"Es={Es:.0f} (2.5\u00d7Nb) | \u00b125%: {Es_low:.0f}-{Es_high:.0f}", 'system')
 
     except Exception as exc:
         logger.warning("Geotech prefill calc failed: %s", exc)

@@ -1,0 +1,45 @@
+{
+ "Df_user": 1,
+ "num_soil_levels_user": 1,
+ "soil_types_user": [
+  "granular"
+ ],
+ "dpsh_overall_n20": 34.68,
+ "bearing_layer_idx": 0,
+ "bearing_layer_description": "Graves i sorres (Nivell 1)",
+ "soil_levels": [
+  {
+   "n": 1,
+   "desc": "Graves i sorres. Carbonatat.",
+   "from": 0.0,
+   "to": 4.6,
+   "n20_avg": 34.8,
+   "Nb": 41.9,
+   "soil_type": "granular"
+  }
+ ],
+ "geotechnical_params": {
+  "gamma": 2,
+  "cohesion": 0,
+  "phi": 37.1,
+  "E": 469
+ },
+ "terzaghi": {
+  "phi": 37.1,
+  "cohesion": 0,
+  "gamma": 2,
+  "B": 1.0,
+  "Df": 1,
+  "qu": 15.742600000000007,
+  "safety_factor": 3.0,
+  "Qa": 3.5,
+  "settlement_cm": 1.7,
+  "settlement_type": "immediat",
+  "Es_used": 104,
+  "qa_terzaghi_peck": 2.749337857076504,
+  "Qa_uncapped": 5.247533333333336,
+  "Fw": 1.6900000000000002,
+  "Fd_tp": 1.33,
+  "qa_governs": "cap"
+ }
+}

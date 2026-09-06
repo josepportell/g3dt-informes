@@ -1,0 +1,45 @@
+{
+ "Df_user": 0.3,
+ "num_soil_levels_user": 1,
+ "soil_types_user": [
+  "limo"
+ ],
+ "dpsh_overall_n20": 18.72,
+ "bearing_layer_idx": 1,
+ "bearing_layer_description": "Roca / material dur (roca pochimada / fora pochimada)",
+ "soil_levels": [
+  {
+   "n": 1,
+   "desc": "Roca / material dur (roca pochimada / fora pochimada)",
+   "from": 0.0,
+   "to": 1.6,
+   "n20_avg": 22.56,
+   "Nb": 27.2,
+   "soil_type": "limo"
+  }
+ ],
+ "geotechnical_params": {
+  "gamma": 2.2,
+  "cohesion": 1.0,
+  "phi": 35,
+  "E": 500
+ },
+ "terzaghi": {
+  "phi": 35,
+  "cohesion": 1.0,
+  "gamma": 2.2,
+  "B": 1.0,
+  "Df": 0.3,
+  "qu": 81.6036,
+  "safety_factor": 3.0,
+  "Qa": 3.0,
+  "settlement_cm": 2.8,
+  "settlement_type": "diferit",
+  "Es_used": 56,
+  "qa_terzaghi_peck": null,
+  "Qa_uncapped": 27.2012,
+  "Fw": null,
+  "Fd_tp": null,
+  "qa_governs": "cap"
+ }
+}

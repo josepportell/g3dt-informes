@@ -1429,6 +1429,7 @@ class ReportGenerator:
 
             # Table 9: Geotechnical parameters rows (one per soil level)
             context['geotech_rows'] = []
+            spt_n_by_level: dict[int, str] = {}
             if dpsh and dpsh.tests:
                 all_readings = [r for test in dpsh.tests for r in test.readings]
                 # P0 (2026-09-06): la columna «N» és l'N30 de l'SPT del nivell, mai la
@@ -1591,10 +1592,49 @@ class ReportGenerator:
             if self.report_data.terzaghi_result:
                 tr = self.report_data.terzaghi_result
                 context['qa_value'] = f"{tr.Qa:.2f}"
-                context['settlement'] = f"{tr.settlement_cm:.2f}" if tr.settlement_cm else ''
                 # Calculation transparency notes
                 B = self.user_data.get('footing_width_m', 1.0)
                 Df = self.user_data.get('foundation_depth_m', 0.8)
+                # Assentament per CRITERI (2026-09-06, `automation/settlement_criteria.py`): frase per
+                # règim del nivell portant (granular → valor; roca/cohesiu o < 1,0 → genèrica) i Es amb
+                # candidats (2,5×N SPT del nivell → 2,5×Nb del nivell → E). Substitueix el 2,5×Nb global
+                # del càlcul inicial; l'«Es assentament» escrit al wizard mana.
+                try:
+                    from .settlement_criteria import settlement_by_criteria, settlement_regime, parse_spt_n, calc_note
+                    from .geotech_criteria import _classify, lith_flags
+                    _rd = self.report_data
+                    _bnum = getattr(_rd, 'bearing_level_number', None)
+                    _blev = next((l for l in soil_levels if l.level_number == _bnum), soil_levels[-1] if soil_levels else None)
+                    _gp = _rd.geotechnical_params
+                    _coh = float(_gp.cohesion) if _gp else 0.0
+                    _crit_b = level_criteria.get(_bnum) if _bnum is not None else None
+                    _klass = _classify(_blev.soil_type if _blev else 'granular',
+                                       lith_flags(_blev.description if _blev else ''), _coh >= 0.5)
+                    _regime = settlement_regime(_klass, _coh, _crit_b.regime if _crit_b is not None else None)
+                    _nb_level = (_blev.n20_average / 0.83) if _blev and _blev.n20_average else None
+                    _n_spt = parse_spt_n(spt_n_by_level.get(_bnum)) if _bnum is not None else None
+                    _es_ud = self.user_data.get('Es_settlement')
+                    try:
+                        _es_ud = float(_es_ud) if _es_ud not in (None, '') else None
+                    except (TypeError, ValueError):
+                        _es_ud = None
+                    sc = settlement_by_criteria(
+                        q_net=tr.Qa, B=float(B or 1.0), Df=float(Df or 0.8), gamma=tr.gamma, nb=_nb_level,
+                        n_spt=_n_spt, E=(_gp.E if _gp else None), regime=_regime, Es_override=_es_ud,
+                    )
+                    tr.settlement_cm, tr.Es_used, tr.settlement_generic = sc.settlement_cm, sc.Es, sc.generic
+                    tr.settlement_regime, tr.Es_source, tr.settlement_sentence = sc.regime, sc.Es_source, sc.sentence
+                    tr.Es_candidates = [c.__dict__ for c in sc.candidates]
+                    tr.settlement_type = 'immediat' if sc.regime == 'granular' else 'diferit'
+                    context['settlement_sentence'] = sc.sentence
+                    context['_calc_settlement'], context['_calc_Es'] = calc_note(sc, float(B or 1.0))
+                    for _n in sc.notes:
+                        if _n.startswith('⚠'):
+                            self.warnings.append(f"Assentament: {_n}")
+                except Exception as exc:
+                    self.warnings.append(f"Assentament per criteri: {exc}")
+                    context['settlement_sentence'] = tr.format_settlement_for_report()
+                context['settlement'] = f"{tr.settlement_cm:.2f}" if tr.settlement_cm else ''
                 avg_n20 = self.report_data.dpsh.overall_average_n20 if self.report_data.dpsh else None
                 nb = avg_n20 / 0.83 if avg_n20 else None
                 # Soil category for Eva's Qa cap range (uses shared soil_cat/ranges)
@@ -1611,26 +1651,12 @@ class ReportGenerator:
                         context['_calc_qa'] = f"{formula} = {tr.Qa:.2f} | Rang Eva: {ranges['Qa_cap']}"
                 else:
                     context['_calc_qa'] = ""
-                # Settlement note with sensitivity +/-25% Es
-                if tr.settlement_cm and tr.Es_used:
-                    Es = tr.Es_used
-                    base = tr.settlement_cm
-                    Es_low = Es * 0.75
-                    Es_high = Es * 1.25
-                    s_low = base * Es / Es_high
-                    s_high = base * Es / Es_low
-                    context['_calc_settlement'] = (
-                        f"Schmertmann Es={Es:.0f}, B={B}m \u2192 {base:.2f} cm"
-                        f" | Si Es={Es_low:.0f}: {s_high:.2f} cm"
-                        f" | Si Es={Es_high:.0f}: {s_low:.2f} cm"
-                    )
-                    context['_calc_Es'] = f"Es={Es:.0f} (2.5\u00d7Nb) | \u00b125%: {Es_low:.0f}-{Es_high:.0f}"
-                else:
-                    context['_calc_settlement'] = ""
-                    context['_calc_Es'] = ""
+                context.setdefault('_calc_settlement', "")
+                context.setdefault('_calc_Es', "")
             else:
                 context['qa_value'] = ''
                 context['settlement'] = ''
+                context['settlement_sentence'] = ''
                 context['_calc_qa'] = ''
                 context['_calc_settlement'] = ''
                 context['_calc_Es'] = ''

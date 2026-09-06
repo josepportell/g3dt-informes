@@ -254,6 +254,8 @@ class ReportData:
     foundation_depth_is_default: bool = False
     # P3: candidats amb procedència de γ/c/φ/E del nivell portant (geotech_criteria.GeotechCriteria.to_dict)
     geotech_criteria: dict | None = None
+    # nivell de l'INFORME (level_number) que fa de portant (assentament per criteri, 2026-09-06)
+    bearing_level_number: int | None = None
 
     # Override ICGC unit (from 1:25k manual lookup)
     icgc_unit_code: str = ""
@@ -507,6 +509,7 @@ def build_report_data(
         )
     bearing_layer_idx: int | None = None
     geotech_criteria_dict: dict | None = None
+    bearing_level_number: int | None = None
     soil_levels: list[SoilLevel] = []
     if dpsh_data and dpsh_data.tests:
         # Auto-fill from sondeig_extracted.json when user_data has no layers
@@ -585,6 +588,7 @@ def build_report_data(
                 _bearing_stratum_has_refusal(dpsh_data, sondeig_layers, soil_types_list, foundation_depth)
             crit = geotech_by_criteria(avg_nb, avg_n20, soil_type, rock_description, bearing_refusal)
             geotech_criteria_dict = crit.to_dict()
+            bearing_level_number = getattr(_bearing_level, 'level_number', None)
             if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
                 gamma = geomech.get('gamma') or crit.gamma
                 phi = geomech.get('phi') or crit.phi
@@ -690,6 +694,7 @@ def build_report_data(
         foundation_depth_used_m=foundation_depth,
         foundation_depth_is_default=df_is_default,
         geotech_criteria=geotech_criteria_dict,
+        bearing_level_number=bearing_level_number,
         terzaghi_result=terzaghi_result,
         # Override ICGC unit (manual 1:25k lookup)
         icgc_unit_code=user_data.get('icgc_unit_code', ''),

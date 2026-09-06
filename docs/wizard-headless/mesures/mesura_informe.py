@@ -102,6 +102,9 @@ def _user_data(slug: str, variant: str, lectura_sub: str) -> dict:
     ud = copy.deepcopy(ud)
     if variant in ("calc", "t2", "viab"):
         ud.pop("geomech_params", None)
+        # `Es_settlement` dels user_data d'abril = 2,5 × Nb global desat pel wizard (76/104/56), no judici de l'Eva:
+        # tapa l'assentament per criteri (2026-09-06) igual que `geomech_params` tapa γ/c/φ/E.
+        ud.pop("Es_settlement", None)
     if variant in ("8b", "calc"):
         ud["lectura_tables"] = _gold_tables(name)
     elif variant == "t2":
@@ -130,7 +133,8 @@ def _calc_summary(gen, ud: dict) -> dict:
         return {}
     tr = rd.terzaghi_result
     keep = ("phi", "cohesion", "gamma", "B", "Df", "qu", "safety_factor", "Qa", "settlement_cm", "settlement_type",
-            "Es_used", "qa_terzaghi_peck", "Qa_uncapped", "Fw", "Fd_tp", "qa_governs")
+            "Es_used", "qa_terzaghi_peck", "Qa_uncapped", "Fw", "Fd_tp", "qa_governs",
+            "settlement_generic", "settlement_regime", "Es_source", "Es_candidates", "settlement_sentence")
     return {
         "Df_user": ud.get("foundation_depth_m"),
         "num_soil_levels_user": ud.get("num_soil_levels"),
@@ -145,6 +149,18 @@ def _calc_summary(gen, ud: dict) -> dict:
         "geotechnical_params": asdict(rd.geotechnical_params) if rd.geotechnical_params else None,
         "terzaghi": {k: v for k, v in asdict(tr).items() if k in keep} if tr else None,
     }
+
+
+def _settle_cell(tz: dict, signed: str | None) -> str:
+    """Com s'imprimeix l'assentament («<1,0» genèrica o «1,20») i ✓/✗ contra el signat (mateixa forma)."""
+    if not tz or tz.get("settlement_cm") is None:
+        return ""
+    shown = "<1,0" if tz.get("settlement_generic") else f"{tz['settlement_cm']:.2f}".replace(".", ",")
+    if signed is None:
+        return shown
+    sg = str(signed).replace(".", ",")
+    ok = (shown == "<1,0" and sg.startswith("<")) or (shown != "<1,0" and not sg.startswith("<") and float(shown.replace(",", ".")) == float(sg.replace(",", ".")))
+    return f"{shown} {'✓' if ok else '✗'}"
 
 
 def _generate(slug: str, ud: dict, out_docx: Path) -> dict:
@@ -261,12 +277,15 @@ def _agregat(run: str, results: dict[str, dict[str, dict]], variants: list[str],
     L.append("Nb = N20 mitjà del nivell únic / 0,83 (el que imprimeix la cel·la, sense la «-R»). Qa = Terzaghi amb topalls; "
              "`gov` = qui mana (terzaghi / terzaghi-peck / cap). Signat: `docs/CRITERIS-CALCUL-EVA.md` §5.")
     L.append("")
-    L.append("| projecte | variant | Df | nivell portant (idx: descripció) | N20 | Nb | φ | γ | c | E | Qa (uncapped, gov) | assent. cm |")
-    L.append("|---|---|--:|---|--:|--:|--:|--:|--:|--:|---|--:|")
+    L.append("Assent.: valor calculat i com s'imprimeix (frase genèrica «<1,0» en roca/cohesiu o < 1,0 cm; ✓ = mateixa forma que el signat); "
+             "`Es` = defecte (2,5×N SPT del nivell → 2,5×Nb → E) + nombre de candidats.")
+    L.append("")
+    L.append("| projecte | variant | Df | nivell portant (idx: descripció) | N20 | Nb | φ | γ | c | E | Qa (uncapped, gov) | assent. cm | imprès | Es |")
+    L.append("|---|---|--:|---|--:|--:|--:|--:|--:|--:|---|--:|---|---|")
     for slug in results:
         sg = SIGNAT_CALC.get(slug, {})
         L.append(f"| **{slug}** | *signat* | | | | {sg.get('Nb', '')} | {sg.get('phi', '')} | {sg.get('gamma', '')} | "
-                 f"{sg.get('c', '')} | {sg.get('E', '')} | **{sg.get('Qa', '')}** | {sg.get('assentament', '')} |")
+                 f"{sg.get('c', '')} | {sg.get('E', '')} | **{sg.get('Qa', '')}** | | **{sg.get('assentament', '')}** | |")
         for v in variants:
             c = ((results[slug].get(v) or {}).get("gen") or {}).get("calc") or {}
             gp = c.get("geotechnical_params") or {}
@@ -281,7 +300,9 @@ def _agregat(run: str, results: dict[str, dict[str, dict]], variants: list[str],
                      f"{last.get('n20_avg', '')} | {last.get('Nb', '')} | {gp.get('phi', '')} | {gp.get('gamma', '')} | "
                      f"{gp.get('cohesion', '')} | {gp.get('E', '')} | "
                      f"{'' if qa is None else f'{qa:.2f}'} ({'' if unc is None else f'{unc:.2f}'}, {tz.get('qa_governs', '')}) | "
-                     f"{'' if tz.get('settlement_cm') is None else f'{tz.get('settlement_cm'):.2f}'} |")
+                     f"{'' if tz.get('settlement_cm') is None else f'{tz.get('settlement_cm'):.2f}'} | "
+                     f"{_settle_cell(tz, sg.get('assentament'))} | "
+                     f"{(tz.get('Es_used') and f'{tz.get('Es_used'):.0f}') or ''} ({len(tz.get('Es_candidates') or [])} cand.) |")
     L.append("")
     L.append("## Avisos del generador")
     L.append("")
