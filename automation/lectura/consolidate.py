@@ -2581,6 +2581,9 @@ def _depths_from_msnm(fields: dict[str, dict], tables: dict[str, Any]) -> None:
 #       d'investigacio (rebuig DPSH per punt, fondaria del sondeig). El signat l'usa com a gruix sismic (Bell-lloc
 #       2,45 = rebuig P-2, no el -1,80 del log del sondeig; Rubi 4,55; Linyola 1,60 + 1,30 = 2,90);
 #   D4  `mostra_del_nivell` = el nivell que conte la mostra de laboratori (`lab_depth`, al punt `lab_location`);
+#   D4b (2026-09-06) si la litologia llegida de la mostra (`spt_ma_tests`, GTL) es la d'UN altre nivell que el de
+#       l'interval, els dos candidats amb el del material primer (Linyola: l'Eva posa els sulfats al 2n nivell
+#       perque la mostra es lutita; pregunta 13 a l'Eva);
 #   D5  la litologia de la mostra (`spt_ma_tests`) porta com a candidat la del nivell que la conte.
 # Fonts sempre «(derivat: …) ← font original» (garantia 2); `segur` nomes D1 (definicio geometrica, com E2b).
 # Cap re-lectura: tot surt del mateix `_decisions.json` (fase 12, cost 0).
@@ -2840,11 +2843,76 @@ def _fons_at(fons: list[tuple[str, float, str | None, str, str]], pt: str | None
     return next((f[1] for f in fons if pt and f[0] == pt), None)
 
 
+#: Vocabulari litologic (ca/es, sense accents): prefix → classe. Nomes la PRIMERA litologia del text compta (el nom;
+#: els adjectius «sorrenc», «argilos» venen despres): «Lutita gresosa» → lutita; «Llims argilosos i sorrencs» → llim.
+_LITH_STEMS: tuple[tuple[str, str], ...] = (
+    ("lutit", "lutita"), ("argil", "argila"), ("arcill", "argila"), ("llim", "llim"), ("limo", "llim"),
+    ("sorr", "sorra"), ("aren", "sorra"), ("grav", "grava"), ("gres", "gres"), ("calc", "calcaria"), ("caliz", "calcaria"),
+    ("bretx", "bretxa"), ("brech", "bretxa"), ("marg", "marga"), ("bolo", "bolos"), ("conglomer", "conglomerat"),
+    ("pissarr", "pissarra"), ("esquist", "pissarra"), ("guix", "guix"), ("saul", "saulo"),
+    ("rebl", "rebliment"), ("rellen", "rebliment"), ("antrop", "rebliment"), ("vegetal", "vegetal"), ("roc", "roca"),
+)
+
+
+def _lith_class(text: Any) -> str | None:
+    """Classe de la primera litologia reconeguda d'una descripcio (`_LITH_STEMS`); None si cap."""
+    for tok in re.findall(r"[a-z]+", _ascii(_strip_parens(str(text or ""))).lower()):
+        for stem, cls in _LITH_STEMS:
+            if tok.startswith(stem):
+                return cls
+    return None
+
+
+def _first_value(cell: Any) -> Any:
+    if not isinstance(cell, dict):
+        return cell
+    c0 = (cell.get("candidates") or [{}])[0]
+    return c0.get("value") if c0.get("value") is not None else cell.get("value")
+
+
+def _sample_lithology(tables: dict[str, Any], iv: tuple[float, float], pt: str | None) -> tuple[str, str] | None:
+    """Litologia LLEGIDA de la mostra: la fila de `spt_ma_tests` del mateix punt amb un tram que solapa `lab_depth`
+    (GTL «Lutita gresosa»); (valor, font) del primer candidat. D5 encara no hi ha afegit res (ordre D4 → D5)."""
+    for r in (tables.get("spt_ma_tests") or {}).get("rows") or []:
+        if not isinstance(r, dict):
+            continue
+        riv = _interval_of(r.get("profunditat"))
+        if riv is None or riv[1] < iv[0] - _DERIV_TOL or riv[0] > iv[1] + _DERIV_TOL:
+            continue
+        rpt = _single_point(r.get("punt"))
+        if pt and rpt and rpt != pt:
+            continue
+        lit = r.get("litologia")
+        if not isinstance(lit, dict) or lit.get("estat") not in ("segur", "candidats"):
+            continue
+        v = _first_value(lit)
+        if v:
+            c0 = (lit.get("candidates") or [{}])[0]
+            return str(v), str(c0.get("font") or "")
+    return None
+
+
+def _material_level(rows: list[dict], sample_lith: str, members: list[tuple]) -> int | None:
+    """D4b: l'unic nivell amb la mateixa classe litologica que la mostra, i nomes si la geometria el dona «fora»
+    (material i interval es contradiuen). Cap classe, cap nivell o mes d'un → None (l'interval mana sol)."""
+    cls = _lith_class(sample_lith)
+    if not cls:
+        return None
+    hits = [i for i, row in enumerate(rows) if _lith_class(_first_value(row.get("litologia"))) == cls]
+    if len(hits) != 1:
+        return None
+    verdict = next((m[1] for m in members if m[0] == hits[0]), None)
+    return hits[0] if verdict == "fora" else None
+
+
 def _derive_sample_level(rows: list[dict], fields: dict[str, dict], tables: dict[str, Any]) -> None:
-    """D4: `mostra_del_nivell` = el nivell que conte `lab_depth` al punt `lab_location` (interval, no judici de
-    material). Dins → True; fora → False; a cavall del contacte → els dos candidats (el de mes part de l'interval
-    primer). Omple nomes `no_trobat`; els documents no-A no afirmen False (`_cell_signals`), el derivat si, amb la
-    font «(derivat: … cau fora …)». Mai segur."""
+    """D4: `mostra_del_nivell` = el nivell que conte `lab_depth` al punt `lab_location` (interval). Dins → True; fora →
+    False; a cavall del contacte → els dos candidats (el de mes part de l'interval primer). Omple nomes `no_trobat`;
+    els documents no-A no afirmen False (`_cell_signals`), el derivat si, amb la font «(derivat: … cau fora …)».
+    D4b (2026-09-06, STATUS §Pendents 2): si la litologia llegida de la mostra (`spt_ma_tests`, GTL) es la d'UN altre
+    nivell que el de l'interval, els dos candidats a tots dos nivells amb EL DEL MATERIAL PRIMER (Linyola: «Lutita
+    gresosa» 1,0-1,15 a P-3 cau al nivell 1 per fondaria, l'Eva la posa al 2n; or: «No (pel material)» / «Si per
+    interval»). Pregunta 13 a l'Eva. Mai segur."""
     lab = fields.get("lab_depth") or {}
     iv = _interval_of(lab)
     if iv is None:
@@ -2853,25 +2921,17 @@ def _derive_sample_level(rows: list[dict], fields: dict[str, dict], tables: dict
     fons_pt = _fons_at(_fons_rows(tables), pt)
     c0 = (lab.get("candidates") or [{}])[0]
     where = f"{_fmt_iv(iv)} m" + (f" a {pt}" if pt else "")
-    for i, verdict, share, bounds in _level_membership(rows, iv, pt, fons_pt):
+    members = _level_membership(rows, iv, pt, fons_pt)
+    sample = _sample_lithology(tables, iv, pt)
+    mat_idx = _material_level(rows, sample[0], members) if sample else None
+    mat_note = ("1.4/D4b: la litologia llegida de la mostra és la d'un altre nivell que el de l'interval; l'Eva assigna la mostra "
+                "pel material (pregunta 13), el del material primer i l'interval darrere")
+    for i, verdict, share, bounds in members:
         cell = rows[i].get("mostra_del_nivell")
         if not isinstance(cell, dict) or cell.get("estat") not in ("no_trobat", "candidats"):
             continue
-        if cell.get("estat") == "candidats":
-            # Lectura d'un document no-A (annex DPSH: «la mostra cavalca la transició», amb el tram nominal 1,0-1,5): si la
-            # geometria (tram real del GTL al punt) diu una altra cosa, el derivat s'hi afegeix; el llegit continua primer.
-            have = {c.get("value") for c in cell.get("candidates") or []}
-            derived = True if verdict == "dins" else False if verdict == "fora" else None
-            if derived is None or derived in have or len(cell.get("candidates") or []) >= MAX_CANDIDATES:
-                continue
-            why = "cau dins" if derived else "cau fora"
-            cell["candidates"].append({
-                "value": derived,
-                "font": f"(derivat: la mostra de laboratori {where} {why} del nivell {_fmt_bounds(bounds)}) ← {c0.get('font', '')}",
-                "quote": str(c0.get("quote", "")),
-                "note": "1.4/D4: la geometria (tram real de la mostra vs sostre/base al punt) no coincideix amb el que afirma el document"})
-            cell["rule"] = str(cell.get("rule") or "") + "; 1.4/D4: afegit el derivat geomètric que contradiu la lectura (candidats, l'Eva decideix)"
-            continue
+        mat_here = mat_idx is not None and i == mat_idx
+        mat_other = mat_idx is not None and verdict == "dins"
 
         def mk(val: bool, why: str) -> dict:
             return {"value": val,
@@ -2879,7 +2939,43 @@ def _derive_sample_level(rows: list[dict], fields: dict[str, dict], tables: dict
                     "quote": str(c0.get("quote", "")),
                     "note": "1.4/D4: interval de la mostra vs sostre/base del nivell al punt de la mostra; no jutja el material"}
 
-        if verdict == "dins":
+        def mk_mat(val: bool) -> dict:
+            lith, lith_font = sample  # type: ignore[misc]
+            if val:
+                why = (f"la litologia de la mostra «{lith}» és la d'aquest nivell «{rows[i].get('nom')}», encara que el tram "
+                       f"{where} cau fora per fondària {_fmt_bounds(bounds)}")
+            else:
+                why = (f"el tram {where} cau dins per fondària {_fmt_bounds(bounds)}, però la litologia de la mostra «{lith}» "
+                       f"és la del nivell «{rows[mat_idx].get('nom')}»")
+            return {"value": val, "font": f"(derivat: {why}) ← {lith_font}", "quote": str(c0.get("quote", "")), "note": mat_note}
+
+        if cell.get("estat") == "candidats":
+            # Lectura d'un document no-A (annex DPSH: «la mostra cavalca la transició», amb el tram nominal 1,0-1,5): si la
+            # geometria (tram real del GTL al punt) o el material diuen una altra cosa, el derivat s'hi afegeix; el llegit
+            # continua primer.
+            have = {c.get("value") for c in cell.get("candidates") or []}
+            derived_geo = True if verdict == "dins" else False if verdict == "fora" else None
+            extra: list[dict] = []
+            if mat_here or mat_other:
+                extra.append(mk_mat(bool(mat_here)))
+            if derived_geo is not None:
+                extra.append(mk(derived_geo, "cau dins" if derived_geo else "cau fora"))
+            added = False
+            for d in extra:
+                if d["value"] in have or len(cell.get("candidates") or []) >= MAX_CANDIDATES:
+                    continue
+                cell["candidates"].append(d)
+                have.add(d["value"])
+                added = True
+            if added:
+                cell["rule"] = str(cell.get("rule") or "") + "; 1.4/D4: afegit el derivat que contradiu la lectura (candidats, l'Eva decideix)"
+            continue
+
+        if mat_here:
+            cands = [mk_mat(True), mk(False, "cau fora")]
+        elif mat_other:
+            cands = [mk_mat(False), mk(True, "cau dins")]
+        elif verdict == "dins":
             cands = [mk(True, "cau dins")]
         elif verdict == "fora":
             cands = [mk(False, "cau fora")]
@@ -2888,9 +2984,11 @@ def _derive_sample_level(rows: list[dict], fields: dict[str, dict], tables: dict
             first, second = (True, False) if share >= 0.5 else (False, True)
             cands = [mk(first, f"cau a cavall del contacte ({pct_in} % dins)"),
                      mk(second, f"cau a cavall del contacte ({100 - pct_in} % fora)")]
-        cell.update({"estat": "candidats", "value": cands[0]["value"], "candidates": cands,
-                     "rule": "1.4/D4: mostra_del_nivell = el nivell que conté lab_depth (interval al punt de la mostra); "
-                             "a cavall del contacte → els dos candidats; derivat, mai segur"})
+        rule = ("1.4/D4b: la litologia de la mostra contradiu l'interval → els dos candidats, el del material primer (pregunta 13 a l'Eva); derivat, mai segur"
+                if (mat_here or mat_other) else
+                "1.4/D4: mostra_del_nivell = el nivell que conté lab_depth (interval al punt de la mostra); "
+                "a cavall del contacte → els dos candidats; derivat, mai segur")
+        cell.update({"estat": "candidats", "value": cands[0]["value"], "candidates": cands, "rule": rule})
 
 
 def _same_lithology(a: Any, b: Any) -> bool:

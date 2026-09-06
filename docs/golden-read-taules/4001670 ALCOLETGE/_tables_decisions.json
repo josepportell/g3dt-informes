@@ -384,14 +384,21 @@
       "rule": "Mateixa transició que el sostre del nivell 1."
      },
      "a": {
-      "estat": "no_trobat",
-      "candidates": [],
-      "rule": "El substrat no es perfora: els 3 DPSH aturen per rebuig dins el nivell 2; potència no determinada per cap document.",
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "fins al fons d'investigació (rebuig DPSH: -1,60/-1,30/-1,69 m per punt)",
+        "font": "ANNEXES/4001670_DPSH.xls fulls P-1/P-2/P-3, peu B81 (derivat: la base de l'últim nivell és el fons d'investigació)",
+        "cita": "B81: 'Rebuig a la cota de -1,60 m' (P-1) / '-1,30 m' (P-2) / '-1,69 m' (P-3)"
+       }
+      ],
+      "rule": "El substrat no es perfora: els 3 DPSH aturen per rebuig dins el nivell 2; cap document en dona la base → el límit conegut és el fons d'investigació per punt (candidats, mai segur), com Linyola/Vilanova/Rubí/Anciles. El signat usa el fons: gruix sísmic del nivell 2 = 0,29* → base a -1,69 (rebuig P-3).",
       "sources_checked": [
        "Excel DPSH (rebuig a -1,30/-1,60/-1,69)",
        "tall.pdf (dibuix fins a +186 sense base)",
        "cap sondeig a rotació al projecte"
-      ]
+      ],
+      "note": "Revisió 2026-09-06 (STATUS §Pendents de revisió, punt 1; DECISION-LOG 2026-09-05 (nit, 4) decisió 7): abans `no_trobat` («potència no determinada per cap document»), incoherent amb els altres quatre ors i amb el signat."
      },
      "mostra_del_nivell": {
       "estat": "candidats",

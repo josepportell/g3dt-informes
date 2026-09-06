@@ -2079,16 +2079,26 @@ def test_D14_sample_level_from_the_lab_depth_interval(tmp_path: Path):
     _d14_corpus(a, tall_rows=[
         _lvl("Nivell 1", "Llims argilosos i sorrencs", "245 msnm (superfície, escala del tall)", "≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2"),
         _lvl("Nivell 2", "Lutites i sorrenques, Substrat", None, None)])
+    # (D4b, 2026-09-06) la mostra es «Lutita gresosa» = litologia del nivell 2 → material primer, interval darrere
     dec = C.consolidate_python(a, None, project_name="X")
     rows = _soil(dec)
     m1, m2 = rows[0]["mostra_del_nivell"], rows[1]["mostra_del_nivell"]
-    assert m1["estat"] == "candidats" and [c["value"] for c in m1["candidates"]] == [True]
-    assert "la mostra de laboratori 1,00-1,15 m a P-3 cau dins del nivell [-0,00; -1,40] m" in m1["candidates"][0]["font"]
-    assert m1["candidates"][0]["font"].endswith("← 4672-GTL-25.pdf p.1") and m1["candidates"][0]["quote"] == "Cota d'extracció (m): 1,0 - 1,15"
-    assert m2["estat"] == "candidats" and [c["value"] for c in m2["candidates"]] == [False]
-    assert "[-1,40; -1,75] m" in m2["candidates"][0]["font"], "sostre = base del nivell 1 a P-3; base = fons a P-3"
+    assert m1["estat"] == "candidats" and [c["value"] for c in m1["candidates"]] == [False, True]
+    assert "la mostra de laboratori 1,00-1,15 m a P-3 cau dins del nivell [-0,00; -1,40] m" in m1["candidates"][1]["font"]
+    assert m1["candidates"][1]["font"].endswith("← 4672-GTL-25.pdf p.1") and m1["candidates"][1]["quote"] == "Cota d'extracció (m): 1,0 - 1,15"
+    assert m2["estat"] == "candidats" and [c["value"] for c in m2["candidates"]] == [True, False]
+    assert "[-1,40; -1,75] m" in m2["candidates"][1]["font"], "sostre = base del nivell 1 a P-3; base = fons a P-3"
     assert rows[1]["de"]["value"].startswith("≈-1,4 m a P-1"), "D2 sobre les `a` ja convertides per punt (R2)"
     assert validate_decisions(dec) == []
+    # sense contradiccio de material (la mostra es un llim = nivell 1), l'interval mana sol: com abans de D4b
+    a2 = tmp_path / "a2"
+    a2.mkdir()
+    _d14_corpus(a2, tall_rows=[
+        _lvl("Nivell 1", "Llims argilosos i sorrencs", "245 msnm (superfície, escala del tall)", "≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2"),
+        _lvl("Nivell 2", "Lutites i sorrenques, Substrat", None, None)], spt_litologia="Llim marró i tram d'argila amb graves")
+    rows = _soil(C.consolidate_python(a2, None, project_name="X"))
+    assert [c["value"] for c in rows[0]["mostra_del_nivell"]["candidates"]] == [True]
+    assert [c["value"] for c in rows[1]["mostra_del_nivell"]["candidates"]] == [False]
     b = tmp_path / "b"
     b.mkdir()
     rows = _soil(_alcoletge_like(b))
@@ -2241,7 +2251,47 @@ def test_D14_sample_level_claimed_by_a_weak_document_gets_the_geometric_alternat
     m2 = rows[1]["mostra_del_nivell"]
     assert m2["estat"] == "candidats" and [c["value"] for c in m2["candidates"]] == [True, False]
     assert m2["candidates"][1]["font"].startswith("(derivat: la mostra de laboratori 1,00-1,15 m a P-3 cau fora del nivell")
+    # (D4b) el material (lutita) diu True al nivell 2: ja hi es (lectura) → no es duplica; al nivell 1, material primer
+    assert [c["value"] for c in rows[0]["mostra_del_nivell"]["candidates"]] == [False, True]
+
+
+def test_D14b_sample_level_by_material_contradicting_the_interval(tmp_path: Path):
+    """D4b (STATUS §Pendents 2, or de Linyola): la mostra SPT1 «Lutita gresosa» (GTL) 1,0-1,15 a P-3 cau al nivell 1 per
+    fondaria (contacte ≈-1,4) pero es la litologia del nivell 2; l'Eva la posa al 2n (fila de sulfats). Els dos nivells
+    porten els dos candidats amb el del MATERIAL primer i la font que ho diu. Sense litologia llegida, amb una litologia
+    que no es de cap nivell (roca) o que es de dos nivells, l'interval mana sol; a cavall del contacte no es toca."""
+    lin = [_lvl("Nivell 1", "Llims argilosos i sorrencs", "245 msnm (superfície, escala del tall)", "≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2"),
+           _lvl("Nivell 2", "Lutites i sorrenques, Substrat", None, None)]
+    a = tmp_path / "a"
+    a.mkdir()
+    _d14_corpus(a, tall_rows=lin, spt_litologia="Lutita gresosa")
+    dec = C.consolidate_python(a, None, project_name="X")
+    rows = _soil(dec)
+    m1, m2 = rows[0]["mostra_del_nivell"], rows[1]["mostra_del_nivell"]
+    assert [c["value"] for c in m1["candidates"]] == [False, True] and m1["value"] is False
+    assert m1["candidates"][0]["font"].startswith("(derivat: el tram 1,00-1,15 m a P-3 cau dins per fondària [-0,00; -1,40] m, "
+                                                  "però la litologia de la mostra «Lutita gresosa» és la del nivell «Nivell 2») ← 4672-GTL-25.pdf")
+    assert "1.4/D4b" in m1["rule"] and "pregunta 13" in m1["candidates"][0]["note"]
+    assert [c["value"] for c in m2["candidates"]] == [True, False] and m2["value"] is True
+    assert m2["candidates"][0]["font"].startswith("(derivat: la litologia de la mostra «Lutita gresosa» és la d'aquest nivell «Nivell 2», "
+                                                  "encara que el tram 1,00-1,15 m a P-3 cau fora per fondària [-1,40; -1,75] m)")
+    assert validate_decisions(dec) == []
+    for name, lit in (("b", None), ("c", "Roca"), ("d", "Llims amb lutites")):
+        d = tmp_path / name
+        d.mkdir()
+        _d14_corpus(d, tall_rows=lin, spt_litologia=lit)
+        rows = _soil(C.consolidate_python(d, None, project_name="X"))
+        assert [c["value"] for c in rows[0]["mostra_del_nivell"]["candidates"]] == [True], (name, lit)
+        assert [c["value"] for c in rows[1]["mostra_del_nivell"]["candidates"]] == [False], (name, lit)
+    # dos nivells de la mateixa classe que la mostra → ambigu, l'interval mana sol
+    e = tmp_path / "e"
+    e.mkdir()
+    _d14_corpus(e, tall_rows=[_lvl("Nivell 1", "Lutites alterades", "245 msnm (superfície, escala del tall)", "≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2"),
+                              _lvl("Nivell 2", "Lutites sanes", None, None)], spt_litologia="Lutita gresosa")
+    rows = _soil(C.consolidate_python(e, None, project_name="X"))
     assert [c["value"] for c in rows[0]["mostra_del_nivell"]["candidates"]] == [True]
+    assert C._lith_class("Graves en matriu sorrenca carbonatades") == "grava" and C._lith_class("Arcillas arenosas") == "argila"
+    assert C._lith_class("Substrat rocós. Bretxes amb lutites") == "roca" and C._lith_class("Nivell 2") is None
 
 
 # ---------------------------------------------------------------------------

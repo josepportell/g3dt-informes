@@ -51,6 +51,8 @@ sencers), i un or `candidats` sense valor ni candidats per a la subclau es `CAUT
 (9) `spt_ma_tests` s'alineen per `punt` quan es unic als dos costats (Vilanova: dos «SPT-1» a P-1 i P-3 creuats per
 index). (10) Les columnes d'una taula que l'or te i prod NO emet a cap fila (`lab`, `id_estat`, `nom` pla…) es
 llisten un cop com a `NOMES-OR` i no compten (abans, ABSENT per cel·la). `TOTALS` conserva les claus de sempre.
+v5 (2026-09-06, STATUS §Pendents 2): `mostra_del_nivell` es compara com a booleà: el text de l'or «No (…)» / «Si …» =
+False / True del consolidador (abans, «candidats disjunts» per format entre booleans i text).
 Independent del consolidador (`automation/lectura/consolidate.py`): no en comparteix codi a posta — l'instrument
 d'acceptació no ha d'heretar els errors de l'objecte que mesura. Sortida idèntica a la v1 (la llegeixen
 `mesures/ledger.py` i `fase12-consolida/harness.py`).
@@ -286,6 +288,20 @@ def first_depth(s) -> float | None:
     return abs(float(m.group(0).replace(",", "."))) if m else None
 
 
+_YESNO_RE = re.compile(r"^(si|yes|true|no|false)(?![a-z])")
+
+
+def yes_no(v) -> bool | None:
+    """Booleà d'una cel·la `mostra_del_nivell`: True/False, o un text que comença per Sí/Si/No (sense anotacions):
+    «No (la mostra s'assigna al 2on nivell pel material)» → False; «Si per interval estricte (…)» → True. Altrament None."""
+    if isinstance(v, bool):
+        return v
+    m = _YESNO_RE.match(_ascii(strip_annot(v)).lower().strip())
+    if not m:
+        return None
+    return m.group(1) in ("si", "yes", "true")
+
+
 # --- close --------------------------------------------------------------------------------------------------------
 def close(a, b, field: str | None = None) -> bool:
     if a is None or b is None:
@@ -323,6 +339,10 @@ def close(a, b, field: str | None = None) -> bool:
     if f == "building_type":
         ta, tb = building_tokens(A), building_tokens(B)
         return bool(ta and tb) and (ta <= tb or tb <= ta)
+    if f == "mostra_del_nivell":
+        ya, yb = yes_no(a), yes_no(b)
+        if ya is not None and yb is not None:
+            return ya == yb   # v5: «No (pel material)» de l'or = False del consolidador
     la, lb = norm(A), norm(B)
     if la == lb or (la and lb and (la in lb or lb in la)):
         return True

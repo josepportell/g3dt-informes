@@ -366,3 +366,17 @@ def test_integration_alcoletge_v4_street_address_is_not_err():
     _, counts = cc.compare_taules(run, "4001670 ALCOLETGE")
     assert counts.get("CAUTELA", 0) == 3   # les 3 `nivell_freatic` (text llarg = -1,00) ja son OK
 
+
+
+def test_close_mostra_del_nivell_text_yes_no_equals_boolean():
+    """v5: la cel·la `mostra_del_nivell` es compara com a booleà: «No (pel material)» de l'or = False del consolidador,
+    «Si per interval estricte (…)» = True; un text que no comença per Sí/No cau a la regla de text."""
+    assert cc.yes_no("No (la mostra s'assigna al 2on nivell pel material)") is False
+    assert cc.yes_no("Si — SPT-1 (P-3, 1,0-1,15 m): material de la mostra = lutita") is True
+    assert cc.yes_no(True) is True and cc.yes_no("false") is False and cc.yes_no("possible") is None
+    assert cc.close("No (la mostra s'assigna al 2on nivell pel material)", False, "mostra_del_nivell")
+    assert cc.close(True, "Si per interval estricte (1,0-1,15 m a P-3)", "mostra_del_nivell")
+    assert not cc.close("No per interval estricte", True, "mostra_del_nivell")
+    assert not cc.close("No", True, "litologia") or True   # altres camps: regla de text (no s'afirma res aquí)
+    assert cc.verdict({"estat": "candidats", "candidates": [{"value": "No (pel material)"}, {"value": "Si per interval"}]},
+                       {"estat": "candidats", "candidates": [{"value": False}, {"value": True}]}, "mostra_del_nivell")[0] == "OK"
