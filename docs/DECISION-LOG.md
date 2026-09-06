@@ -3471,3 +3471,197 @@ Mesura d'informe ≈ 1 min; M341 ≈ 5 min (7 projectes + 3 variants `t2`); suit
 5. Re-mesurar M341 després de cada peça (`mesura_341.py <run>`; diff de `_compare_341.txt` per projecte, no titulars).
 
 *Fi entrada 2026-09-06 (vespre). Pendents de lectura tancats, P2b UI, assentament per criteri i M341 v1 (58 % / 78 %) amb P5 i P6 al davant.*
+
+## 2026-09-06 (nit) — Narrativa per CRITERI: mesura forat-contra-forat (peça 0), fórmules de l'Eva i plantilla (peça 1), adjacents i accés des de la parcel·la del projecte (peça 2): narrativa 30 % → 23 % (mesura honesta) → 54 % → 62 % (català 65 %)
+
+### Context
+
+El handoff del vespre (`_FOR-NEW-YOU-20260907-1810.md`) fixava que la sessió següent comencés per l'ANÀLISI de la narrativa (30 % a
+M341, el grup més fluix) i no per codi. L'anàlisi és `docs/ANALISI-NARRATIVA-2026-09-06.md`: el 30 % barreja quatre causes (artefacte
+de mesura, fórmules de l'Eva no codificades, dades mal cablejades, idioma castellà de 2 signats). El Josep ha donat GO a les peces
+0 (mesura) i 1 (fórmules) juntes i després a la 2 (adjacents i accés). Aquesta entrada documenta les tres. La peça 3 (estat del
+solar, laboratori, fotos) i la decisió del castellà queden a la cua.
+
+### Decisions arquitectòniques clau
+
+**A. La narrativa es puntua FORAT CONTRA FORAT (`mesura_341.narr_status`), no per similitud global.** El comparador antic
+confrontava el valor del context («pla») amb el paràgraf sencer del signat (X segur) i, si s'hagués renderitzat la frase, la cua
+fixa llarga hauria donat MATCH falsos («solar pla» ≈ «solar antropitzat» a 0,93). Ara: es renderitza el paràgraf de la plantilla amb
+el valor generat, es treu a les dues bandes el text comú als extrems (paraules, sense accents: «un sòl nivell» de l'Eva = «un sol
+nivell») i es puntuen els residus (iguals → MATCH; un residu buit → CLOSE, «res del que escrivim és fals, però falta o sobra
+text»; similitud ≥ 0,92 / ≥ 0,6 / MISMATCH). `csn_radon_text` fora de la mesura (el paràgraf del CSN ja és text fix de la plantilla,
+p474: el generador l'imprimia DUES vegades). Idioma del signat per projecte a l'agregat (les cel·les ES són sostre, no error). Els
+costats agrupats dels adjacents es comparen amb la frase agrupada, no NO_DATA. **Trade-off acceptat:** el número BAIXA abans de
+tocar cap text (30 % → 23 %): és el baseline honest (memòria `feedback_measure_baseline_before_coding`). Limitació coneguda:
+«Com que… pla» ↔ «Degut a que… antropitzat» encara surt CLOSE (comparteixen el mig «es tracta d'un solar»).
+
+**B. L'extractor de referència alinea per PREFIX i per POSICIÓ, amb ÀNCORA per als paràgrafs que són només una variable; el
+refresc de la veritat és QUIRÚRGIC.** (`automation/reference_extractor.py`) Abans triava el paràgraf del signat per similitud de
+l'esquelet: «L'edificació que es preveu construir es situarà {{ }}.» s'alineava amb «…presentarà les següents característiques:»
+(7/7) i deixava el paràgraf sencer amb confiança 0,2-0,3 (la signatura de l'artefacte). Ara: (1) mana el paràgraf que CONTÉ el
+prefix fix (o el seu cap de 5 paraules: «d'estructures» ≠ «d'una estructura»), el que hi COMENÇA abans que el que només el
+conté, i en empat el més proper en posició relativa (la frase de l'estructura surt a 3.5 i a 4.3); (2) apòstrofs tipogràfics
+1:1; (3) sufix curt («.») = primera ocurrència (abans l'última: en un bloc de cinc frases el forat s'enduia les quatre següents);
+(4) sense esquelet («{{ site_condition }}», «{{ radon_sentence }}») o sense cap semblant, ÀNCORA = el paràgraf fix immediatament
+anterior de la plantilla localitzat al signat, veritat = el paràgraf següent si NO és capçalera; marcat `paragraph_anchor` i MAI
+guanya a una veritat externa (`intelligent_analysis`, d'on ve la majoria de la narrativa del JSON); (5) `location_sentence`
+queda ABSENT si el prefix no hi és (l'Eva omet la frase a 6/7) en comptes d'un paràgraf equivocat. **Per què quirúrgic:** una
+re-extracció sencera mou coses que no són narrativa (`spt_*` cauen a None, dates canvien de clau per la segona variable de data,
+`geomech_*` d'Alcoletge/Vilanova canvien de fila, `settlement` → `settlement_sentence`): `refresh_eva_narrativa.py` aplica només
+la llista blanca (grup `narr` + `location_sentence`) i informa de la resta sense tocar-la. **Alternativa rebutjada:** àncora
+general per a tot forat (primer intent): trepitjava veritats bones amb capçaleres («2.1. DESCRIPCIÓ…», «4.1. GEOLOGIA», «Qa=
+3,50…») → acotada a àncora adjacent + filtre de capçalera + prioritat de l'extern.
+
+**C. Les fórmules de l'Eva són CRITERIS en un mòdul pur (`automation/narrative_criteria.py`), la plantilla té la frase sencera
+al forat, i l'única implementació la comparteixen generador i wizard.** Literals dels 5 signats CA (i ES on n'hi ha):
+`materials_intro` («A partir dels assaigs in situ realitzats, s'ha establert {un sol nivell | dos nivells} de materials…»),
+`conclusions_levels_detected`, `conclusions_aggressivity_statement` («…a priori, es presenten NO AGRESSIUS al formigó.»),
+`radon_sentence` (zona 0 → «no pertany a cap municipi amb concentracions inadequades…» (Linyola); municipi del padró en
+majúscules amb «de/d'»: «d'ALCOLETGE»; la variant de Rubí com a candidat), `site_condition` (frase SENCERA; criteri del wizard
+2026-04: pendent > 10 % → «Tot i no ser un solar pla», antropitzat → «Degut a que…», pendent i explícitament no antropitzat →
+«Es tracta d'un solar no antropitzat», si no «Com que es tracta d'un solar pla»; els altres tres caps com a candidats; nota
+quan «antropitzat» no té font), `building_structure_desc` (CLÀUSULA sencera després de «…construcció d'una estructura »: (a)
+«en planta baixa[ i porxo], i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació,
+i per a la implantació dels elements de fonamentació.» / (b) «sense nivell de soterrani, i per tant, únicament es preveu el
+sanejament, anivellació, i l'excavació fins a la cota de fonamentació.» / (c) soterrani; defecte (a) si només PB, (b) si té pis,
+(c) si soterrani; l'Eva NO tria per plantes (Linyola PB → b, Bell-lloc Pb+1Pp → a) → l'altra com a candidat, pregunta 18),
+`empentes_paragraph` (el nivell més desfavorable: φ mínima; sense Ka/Kp, que l'Eva no escriu), `csn_radon_text = ''`. Plantilla:
+`site_condition` (×2) i `radon_sentence` passen a paràgraf sol, `building_structure_desc` (×2) només conserva la capçalera fixa,
+el paràgraf `csn_radon_text` desapareix (regla 2026-09-05: grep dels signats fet a l'anàlisi §4). **Troballa de pas:** el
+generador NO llegia mai `site_condition` ni `building_structure_desc` del `user_data` (les edicions de l'Eva al wizard no
+arribaven a l'informe; el generador tenia una segona implementació que discrepava del wizard i a Alcoletge imprimia el
+`building_type` sencer dins la frase): ara `user_data` mana, els valors curts antics («en planta baixa», «pla») es mapegen a la
+clàusula/frase, i el wizard delega al mateix mòdul (`candidates` al prefill). Idioma: `language_for_report` (municipi ES conegut,
+marcadors castellans, o `report_language` explícit a `user_data`/`ReportData`; Vilanova no es detecta per les dades, el plànol
+és català: decisió a part). **Errates de l'Eva no reproduïdes** («un sòl nivel», «del murs», «més desfavorables»). **Alternativa
+rebutjada:** síntesi LLM de la prosa (`wizard_service` Fase B): les frases són fórmules; un LLM hi afegeix variància i cost sense
+cap cel·la nova.
+
+**D. Els adjacents es sondegen des de la PARCEL·LA DEL PROJECTE (referències llegides pel portal), les plantes del veí es
+compten bé, i la redacció és el vocabulari tancat de l'Eva amb agrupació de costats.** (1) `web/lectura_service` mapa
+`referencia_catastral` → `cadastral_refs` (abans `None`: «cap ocurrència»; 6/7 projectes en tenen: Castellar 3 portals,
+Bell-lloc 1 de 20 caràcters, Rubí «Polígon 6, Parcel·la 105-B» no és RC). `parcel_context.parse_rc_list` → llista de 14;
+`cadastre_adjacents.get_adjacent_parcels(rc14=llista)`: polígon UNIÓ (Shapely), sondeig des de les arestes de la unió, «la nostra
+parcel·la» = conjunt de referències (`_is_ours`), UTM opcional (centroide), cache per referències. Bell-lloc: l'UTM de COORDENADES
+resolia «CL VIA FERREA 57» (parcel·la equivocada, 1/4 costats); amb la referència llegida, 4/4 tipus i «Carrer Mestre Ramon Ortiz»
+exacte. Rubí, Vilanova, Anciles (sense UTM) ja tenen adjacents (Vilanova/Anciles per RC). (2) `_query_building_data` llegia
+`<stl>` (SUPERFÍCIE) esperant-hi «PLANTA»: mai comptava plantes → sempre «parcel·la amb construcció». La planta és `<pt>` («00»,
+«01», «-1», «SM»); `<lcd>` DEPORTIVO/PISCINA → piscina. Verificat en viu (DNPRC de Bell-lloc). Ara: «parcel·la amb una construcció
+aïllada de fins a dos plantes sobre rasant, amb soterrani i piscina» / «parcel·la on existeix un edifici aïllat en planta baixa»
+(literals d'Alcoletge i Bell-lloc). (3) `adjacent_formatter` reescrit: ordre N, S, E, O; «I finalment, per la part X, amb …» a
+l'ÚLTIMA frase; dos o més costats amb el mateix contingut (no carrer) en UNA frase en plural al forat del primer («Per la part
+nord, sud i est amb parcel·les buides.»), l'altre forat buit; les frases de l'Eva/síntesi (fonts fiables) no s'agrupen i compten
+per a «l'última»; castellà amb el vocabulari traduït («con la calle STA. GEMMA», «edificio de hasta 4 plantas»). (4)
+`access_street_from_adjacents`: el costat que és carrer (el de la via de l'adreça; «entre X i Y» → X; si no, el primer en N, S, E,
+O) → defecte «carrer adjacent situat al {costat}» (Castellar, Linyola) i candidats «Carrer existent al {costat}» (Alcoletge) i
+«carrer {Nom}» (Rubí). (5) `location_sentence_from_streets`: «(Situat) entre X i Y» de la lectura tal qual (abans «entre el Situat
+entre…»), carrers duplicats pel nom normalitzat fora («Carrer Arbrells» ≡ «Carrer dels Arbrells»), municipi del padró
+(«Bell-lloc d'Urgell», «d'Alcoletge»). (6) `adjacent_intro` (7/7 signats, no era cap variable): «La parcel·la objecte d'estudi es
+situa al {nord} del municipi de {Municipi}, pren una morfologia {quasi rectangular} i limita:» — posició per rosa de 8 vents des
+del centre del municipi (Nominatim, cache 90 dies), forma per àrea / rectangle mínim del polígon (≥ 0,92 rectangular, ≥ 0,78
+quasi), `site_position`/`parcel_shape` del wizard manen. Castellar: «nord» + «quasi rectangular» = signat. (7) **Defecte de
+plantilla trobat i arreglat:** p111 i p114 eren forats sobrers (`adjacent_east_fmt` ABANS de la capçalera 2.1.1 i
+`adjacent_south_fmt` just després): tots els informes generats des de l'abril duien dues frases repetides i els faltaven la
+capçalera «2.1. DESCRIPCIÓ DE LA ZONA D'ESTUDI» i la frase d'introducció. **La plantilla instal·lada a l'Eva (`production/g3dt-eva-v1`)
+té el mateix defecte.** Ara: capçalera (estil de la 2.2), `{{ adjacent_intro }}`, i els 4 forats dins de `{%p if %}` /
+`{%p endif %}` en paràgrafs propis (docxtpl exigeix l'etiqueta sola al paràgraf: el primer intent en línia va fer fallar el
+render de tots els projectes, `TemplateSyntaxError: unknown tag 'endif'`). **Alternatives rebutjades:** parcel·la rústica de
+Rubí via `Consulta_DNPPP` (el Cadastre no troba «polígon 6, parcel·la 105»); geometria per intersecció de dos carrers per a
+adreces sense portal (no cal: Bell-lloc porta la RC als documents).
+
+### Implementació
+
+| Peça | Fitxers | Notes |
+|---|---|---|
+| 0 | `docs/wizard-headless/mesures/mesura_341.py` (`narr_status`, `residues`, `template_slots`, `lang_of_eva`, `_grouped_adjacent`, `NARR_EXCLUDED`, `NARR_SLOT_EXTRA`, agregat per idioma), `docs/wizard-headless/mesures/refresh_eva_narrativa.py` (nou, 96 LOC), `automation/reference_extractor.py` (`_single_var_prefix`, `_anchor_paragraph`, `_looks_like_heading`, `_ap_lower`, `_ABSENT_IF_PREFIX_MISSING`, `paragraph_anchor` a `_OWN_EXTRACTION_METHODS`, prioritat de l'extern a `_merge_with_prior`), 7 × `reference-material/*/validation/eva_reference_values.json` (només claus narratives: `location_sentence` ×7, `access_street` ×5, `site_condition` ×7, `building_structure_desc` ×2, `radon_sentence` ×7, `adjacent_intro` ×7; `radon_zone_description` i `csn_radon_text` eliminades) | signats d'Alcoletge i Anciles copiats a `reference-material/` (ignorats pel git) |
+| 1 | `automation/narrative_criteria.py` (nou, 441 LOC), `automation/report_generator.py` (estructura, estat del solar després de la pendent, radó, `csn = ''`, nivells detectats, `report_language`), `automation/sections/section3_geologia.py`, `automation/sections/section4_conclusions.py`, `web/wizard_service.py` (delega: −60 LOC), `automation/report_data.py` (`report_language`), `templates/g3dt-jinja-template.docx` (p342, p559 → `{{ site_condition }}`; p404, p570 → `…estructura {{ building_structure_desc }}`; p497 → `{{ radon_sentence }}`; p498 eliminat) | `mesura_341.GROUPS` narr + `radon_sentence` |
+| 2 | `automation/parcel_context.py` (nou, 164 LOC), `automation/cadastre_adjacents.py` (`_is_ours`, `project_polygon`, rc list/unió/UTM opcional/cache per RC, `_query_building_data` `pt`+piscina, `_describe_neighbor`), `automation/adjacent_formatter.py` (reescrit, 305 LOC: agrupació, plural, ES, `access_street_from_adjacents`, `_norm_street`), `automation/report_generator.py` (bloc d'adjacents amb RC, `access_street`, `adjacent_intro`, `location_sentence_from_streets`), `automation/narrative_criteria.py` (`municipality_proper`, `location_sentence_from_streets`), `web/lectura_service.py` (`referencia_catastral` → `cadastral_refs`), `automation/auto_extractor.py` (`_phase3_adjacents` amb RC llegides), plantilla 2.1.1 (capçalera, `{{ adjacent_intro }}`, 4 × `{%p if %}`) | `mesura_341.GROUPS` narr + `adjacent_intro` |
+
+`git diff --stat`: 22 fitxers, +1129 / −663, més 4 fitxers nous de codi/tests i el document d'anàlisi. Cap dependència nova (Shapely
+ja hi era). `geocode_coordinates.py` (via B) només es llegeix (`nominatim_geocode`, `_wgs84_to_utm31n`).
+
+### Validació empírica
+
+Runs (`docs/wizard-headless/mesures/runs/`), variant `viaA`, 7 projectes, narrativa M · C · X · ND → % ((M+C)/(M+C+X)):
+
+| Run | Què | narrativa | CA | ES | escalars+narr total | taules |
+|---|---|---|---|---|---|---|
+| `2026-09-06-m341` (ahir) | comparador antic | 8 · 18 · 61 · 22 → **30 %** | — | — | 156/38/141/47 → 58 % | 265/98/100 → 78 % |
+| `2026-09-06-m341-mesura` | peça 0 (mesura, veritats refrescades, codi d'ahir) | 3 · 16 · 64 · 19 → **23 %** | 30 % | 5 % | 58 % | 78 % |
+| `2026-09-06-m341-narr1` | + peça 1 (fórmules, plantilla) | 22 · 22 · 38 · 20 → **54 %** | 57 % | 43 % | 170/43/111/45 → 66 % | 78 % |
+| `2026-09-06-m341-narr2c` | + peça 2 (adjacents, accés, ubicació, introducció) | 29 · 29 · 36 · 15 → **62 %** | **65 %** | 52 % | 178/49/109/40 → **68 %** | 78 % (t2 84 %) |
+
+Per projecte (escalars+narrativa, ahir → avui): Castellar 68 → 77 %, Rubí 60 → 71 %, Bell-lloc 68 → 79 %, Linyola 68 → 72 %,
+Alcoletge 52 → 62 %, Vilanova 40 → 53 %, Anciles 40 → 51 %. Grup A 69 → 74 % (la ubicació de Bell-lloc MATCH; les 6 «veritats»
+inexistents fora). `mesura_informe.py` (`2026-09-06-informe-narr1`, `-narr2`): les 11 taules IDÈNTIQUES a `-final` als 3 projectes ×
+4 variants (`diff` buit).
+
+Per variable després de la peça 2 (M · C · X · ND de 7): `site_condition` 4·2·1·0 (Castellar «Tot i no ser…», Linyola i Alcoletge
+«Com que…» MATCH; Bell-lloc «antropitzat» sense font i Rubí sense UTM + cinquè cap «Al solar,» = candidats), `radon_sentence`
+4·3·0 (Rubí variant = candidat; ES), `materials_intro` 3·4·0 i `conclusions_levels_detected` 4·3·0 (els CLOSE són el recompte de
+nivells de Rubí/Linyola = P5, i l'errata «nivel» de Castellar), `adjacent_intro` 2·5·0 (Castellar i Bell-lloc exactes; Rubí
+sense polígon, Alcoletge «est» vs «nord-est»), `location_sentence` 1·0·0 (Bell-lloc exacte; 6 absents al signat),
+`building_structure_desc` 2·1·3 (Bell-lloc i Linyola: l'Eva tria l'altra variant → candidat), `conclusions_aggressivity_statement`
+2·1·3 (Bell-lloc «xxxx» de l'Eva; Alcoletge sense laboratori cablejat; Rubí sense «a priori»), `access_street` 2·0·3·2
+(Castellar i Linyola exactes; Bell-lloc «de la del Carrer existent al sud» amb errata; Alcoletge «camí» privat invisible al
+Cadastre), adjacents N 1·0·6 · S 1·2·4 · E 1·1·5 · O 0·2·5 pel comparador estricte (residus); per TIPUS de costat: Bell-lloc 4/4
+(abans 1/4), Castellar 3/4 (piscina de l'est encertada), Linyola 3/4, Alcoletge 2/4 (camí privat i «solar buit» vs «parcel·la
+buida»), Vilanova i Anciles amb valors (abans «sense informació»). Verificacions en viu: DNPRC (`pt` = planta, `stl` =
+superfície), Bell-lloc RC 4613173CG1141S → E «Carrer Mestre Ramon Ortiz», O «construcció aïllada de fins a dos plantes» (signat);
+Castellar 3 RC → posició «nord», forma «quasi rectangular» (signat). `.docx` de Bell-lloc renderitzat: capçalera 2.1, introducció,
+4 costats, accés «carrer adjacent situat al sud».
+
+### Tests
+
+Nous: `tests/test_narrative_criteria.py` (10: fórmules vs literals signats, criteri de l'estat del solar 5/5 caps, estructura
+i valors antics, radó zones 0/1/2 i «d'», idioma, plantilla), `tests/test_adjacents_narrative.py` (12: RC, unió/centroide/forma,
+rosa de vents, introducció, DNPRC `pt` amb XML de mostra, `_is_ours`, agrupació i última frase, castellà, precedència de l'Eva,
+accés, ubicació, plantilla 2.1.1). Adaptats: cap (els 2 vermells del primer intent d'agrupació eren la precedència de l'Eva:
+`fixed_sides`). Dirigits: 689 verds (peça 1) i 38 (peça 2). Suite sencera: **31 vermells idèntics als esperats / 2258 verds / 5
+omesos** (dues passades, la final després de l'últim retoc: idèntic).
+
+### Latència / cost
+
+Cost LLM 0 (tot determinista). Xarxa nova per informe: WFS del Cadastre per referència (memo per procés), DNPRC per veí (ja hi
+era), Nominatim del centre del municipi (1 crida, cache 90 dies). M341 dels 7: ~5 min, com abans.
+
+### Limitacions conegudes
+
+- **Castellà:** Vilanova i Anciles (30 cel·les de narrativa) segueixen amb la plantilla catalana; `report_language` existeix
+  (`user_data`/`ReportData`) però no hi ha plantilla ES ni camp al wizard. Decisió del Josep i de l'Eva (pregunta 19).
+- **Rubí sense adjacents a `viaA`:** RC rústica no resoluble, sense UTM; al wizard `_fill_missing_adjacents` geocodifica l'adreça.
+- **Judici de la visita:** «amb herbes altes i arbres», «construïda amb piscina», «camí d'accés» (via privada d'urbanització),
+  «solar buit» vs «parcel·la buida»: el Cadastre dona el TIPUS; el detall és de l'Eva (wizard). Comparador estricte → CLOSE/X.
+- **Antropitzat** sense font (Bell-lloc) i tria (a)/(b) de l'estructura: candidats; preguntes 17 i 18.
+- **Veritats fora de la narrativa que l'extractor mou i NO s'han aplicat** (per aïllar): `spt_*` → None (deriva de la taula SPT),
+  `data_camp_inici_text` (nova, correcta), `geomech_*` d'Alcoletge/Vilanova (canvien de fila), `settlement` → `settlement_sentence`,
+  `num_dpsh_tests` (número sol). Pendent: arreglar l'extractor i re-extreure els grups A/calc amb la mateixa disciplina de diff.
+- **Comparador:** «Com que… pla» ↔ «Degut a que… antropitzat» surt CLOSE (mig compartit); acceptat.
+- **Producció:** la plantilla instal·lada a l'Eva té el defecte 2.1.1 (dues frases repetides, sense capçalera 2.1 ni introducció).
+  Cap pull/merge proposat (memòria `feedback_no_pull_eva_success_criterion`); ho decideix el Josep.
+- `reference-material/4001607 LINYOLA/validation/photo_selection.json`: artefacte del generador durant els runs (no versionar).
+- Peça 3 NO feta: `site_description` (estat del solar per criteri), `lab_tests_text` (llista del GTL), bloc de fotos condicional.
+
+### GO/NO-GO
+
+- ✅ Peça 0: mesura honesta, veritats narratives refrescades (només llista blanca), extractor amb prefix/posició/àncora.
+- ✅ Peça 1: 7 fórmules per criteri, 3 variables de plantilla a frase sencera, una sola implementació generador+wizard, el
+  `user_data` de l'Eva torna a manar.
+- ✅ Peça 2: adjacents des de la parcel·la del projecte, plantes del veí, vocabulari i agrupació, accés, ubicació, introducció,
+  plantilla 2.1.1 arreglada.
+- ✅ 11 taules intactes; suite amb els 31 vermells esperats.
+- ⏳ Commit: decisió del Josep (partició suggerida: 0 mesura+extractor+veritats · 1 fórmules+plantilla · 2 adjacents+plantilla · docs).
+
+### Següents passos
+
+1. Peça 3 (§3.2 de l'anàlisi): `site_description` per criteri editable (Cadastre parcel·la pròpia + pendent ICGC + vocabulari
+   tancat), `lab_tests_text` del GTL (vocabulari de 4-5 assaigs), bloc de fotos «vistes generals» condicional.
+2. Wizard: mostrar els candidats («+N») de `site_condition`, `building_structure_desc`, `access_street` (ja són al prefill
+   `candidates` i al context `_narr_*`); camp «Idioma de l'informe» si es decideix el castellà.
+3. Preguntes 16-19 a l'Eva (dilluns) amb les 13-15.
+4. P5/P6 (recompte de nivells: arregla `materials_intro`/`levels_detected` de Rubí i Linyola) i cablejat del laboratori
+   (agressivitat d'Alcoletge, Vilanova, Anciles).
+5. Extractor: deriva `spt_*` / dates / `geomech_*` / `settlement_sentence` → re-extracció controlada dels grups A i calc.
+6. Producció: decidir quan i com arriba a l'Eva la plantilla arreglada (2.1.1 + frases senceres).
+
+*Fi entrada 2026-09-06 (nit). Narrativa per criteri: mesura forat-contra-forat, fórmules de l'Eva, adjacents des de la parcel·la del projecte; 30 % → 62 % (català 65 %), taules intactes.*
