@@ -2988,3 +2988,104 @@ Consolidador 163 verds (+2); runner +1. Suite sencera: **31 vermells / 2094 verd
 codificar). Referència per a la propera reconsolidació: **`_reconsolida-2026-09-06-t2`**.
 
 *Fi entrada 2026-09-06. T2: abans d'apagar una passada, mesurar-la de debò; les dues regles que valia la pena tenir ja són Python.*
+
+## 2026-09-06 (tarda) — Bloc 2 obert: línia base de QUALITAT D'INFORME (3 projectes × 4 variants, cost 0) i peça P0 (columna «N» = N30 de l'SPT): 2 cel·les a MATCH, cap altra moguda
+
+### Context
+Bloc 1 tancat al matí (T2 = `676070b`). El pla del bloc 2 (`PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md`) exigeix la línia
+base amb l'ALTRE harness abans de codificar: `scripts/compare_tables_vs_eva.py` (informe generat vs signat, 11 taules), no
+el comparador de lectura (`compare_consolida.py`). L'única mesura d'informe existent era la de la Fase 8b (2026-08-26:
+Castellar 78 %, Rubí 82 %, Bell-lloc 75 %) i la seva recepta no estava escrita enlloc en forma executable. S'ha reconstruït
+(`_user_data_prev.json` + bloc `lectura_tables` de l'or de taules via `adapt_legacy` + `ReportGenerator.generate` +
+comparador contra `_eva_truth/<slug>.json`) i s'ha guardat com a script: `docs/wizard-headless/mesures/mesura_informe.py`.
+La rèplica quadra **exacta** (39·12·14 / 37·8·10 / 35·6·14): la recepta és la bona.
+
+### Decisions arquitectòniques clau
+1. **Quatre variants per informe, no una.** Els tres `_user_data_prev.json` porten `geomech_params` manuals (γ/c/φ/E de
+   l'Eva, de l'abril): la mesura de la Fase 8b tenia les cel·les de càlcul TAPADES. Variants: `8b` (rèplica), `calc` (or de
+   taules SENSE `geomech_params`: la columna que el bloc 2 ha de moure), `t2` (lectura real `_reconsolida-2026-09-06-t2`
+   sense `geomech_params`: el que sortiria a producció amb la via A), `viab` (cap taula llegida: només Excel + visió + càlcul).
+   **Alternativa rebutjada:** generar els 7 projectes via prefills del wizard (com `collect_readiness.py`): arrossega la via B
+   sencera (Groq, xarxa, minuts) i és justament la unificació de semàntica que M341 ha de fer; avui, 3 projectes i prou.
+2. **La línia base ja és la primera troballa del bloc 2:** P2a (Rubí «vestit de roca») **només es veu a `viab`** (7/7 cel·les
+   de la taula geotècnica: nom «Gresos… (Nivell 2)», γ 2,20, c 1,00, φ 35°, E 500 contra 2,0/0,05/39°/450 signats). Amb
+   lectura (`8b`/`calc`/`t2`), `_apply_lectura_soil_levels` posa la litologia llegida («Graves i sorres…») a
+   `level.description` ABANS que el generador cridi `is_rock`, i els paràmetres surten de sòl granular: φ i γ coincideixen
+   amb el signat i només queden Nb «52-R» (vs 47-R) i E 469 (vs 450). El pla deia «6 cel·les» sense dir amb quina font.
+3. **P0: la font de la columna «N» són les files de la taula SPT/MA TAL COM S'IMPRIMEIXEN al mateix informe**
+   (`context['spt_ma_tests']`: lectura via A si n'hi ha, fila única de la via B si no), no una lectura directa de
+   `sondeig_extracted.json` com deia el pla. **Per què:** les dues taules del mateix informe han de dir el mateix número, i
+   les files llegides són les que l'Eva ha validat al wizard. Amb la lectura directa, Bell-lloc imprimiria 58 a la taula
+   SPT i 34 (DPSH) o el `n_spt` de la visió a la geotècnica.
+4. **Assignació SPT → nivell: litologia primer, fondària després, un sol nivell, i si no «--» amb avís.** Evidència:
+   Vilanova té dos SPT a la MATEIXA fondària (-0,80 a -1,40) a P-1 i P-3 que l'Eva posa a nivells diferents («Arcilla
+   limosa…» → nivell 1 = 10; «Arena fina-media» → nivell 2 = 24): la fondària sola els posaria tots dos al nivell 1. Arrels de
+   5 lletres dels mots de ≥ 4 (sense accents: `arcilla/arcillas`, `arenosa/arenosas`, `arena/arenas` coincideixen;
+   `areniscas` no), llista curta d'arrels genèriques excloses (`nivel`, `matri`, `inter`, `color`…). Les mostres sense N30
+   (MA, «--») no compten (Anciles: 6/--). Diversos SPT al mateix nivell: el primer, i avís si difereixen. `geomech_params.N`
+   (override expert) continua manant. **Alternativa rebutjada:** fondària primer — reprodueix 6/7 signats però no Vilanova.
+5. **La cel·la «Nb» no es toca** (P4: quines lectures entren a la mitjana; pregunta a l'Eva).
+
+### Implementació
+- `automation/spt_n_column.py` (nou, pur, 150 línies): `n30_display`, `parse_depth_range`, `lithology_overlap`,
+  `assign_spt_n30(spt_rows, levels) -> ({level_number: «N»}, avisos)`.
+- `automation/report_generator.py`: abans del bucle de la taula 9 es crida `assign_spt_n30(context['spt_ma_tests'],
+  soil_levels)`; `n_display = geomech.get('N') or spt_n_by_level.get(level.level_number, NO_SPT)`. Els avisos van a
+  `self.warnings` i al log. Res més del generador canvia.
+- `docs/wizard-headless/mesures/mesura_informe.py` (nou, 290 línies): genera els `.docx` (a `~/g3dt-e2e/informes-mesura/<run>/`,
+  fora del repositori: 7-10 MB cadascun), compara, i escriu `runs/<run>/<slug>/<variant>/_compare_informe.{txt,json}` +
+  `_user_data_usat.json` + `_AGREGAT.md` (titulars, per taula, i la llista de cel·les no-MATCH de les taules del bloc 2).
+- `tests/test_spt_n_column.py` (33 tests): els 7 signats com a fixtures (files SPT/MA → columna N esperada, amb les
+  descripcions de la taula geotècnica I de la taula de nivells), més contorn (sense SPT → «--», empat de litologia →
+  fondària, no assignable → avís i cap valor, valors diferents → primer + avís, fondàries numèriques de la via B, nivells
+  com a objectes).
+
+### Validació empírica
+Línia base (codi intacte, `runs/2026-09-06-informe-bloc2-base`) → després de P0 (`runs/2026-09-06-informe-p0`), M · C · X → %:
+
+| projecte | `8b` | `calc` | `t2` | `viab` |
+|---|---|---|---|---|
+| Castellar | 39·12·14 → 78 % ⇒ 40·12·13 → **80 %** | 42·13·10 → 85 % ⇒ 43·13·9 → **86 %** | 42·13·10 → 85 % ⇒ 43·13·9 → **86 %** | 29·10·26 → 60 % (igual) |
+| Rubí | 37·8·10 → 82 % ⇒ 38·8·9 → **84 %** | 38·8·9 → 84 % ⇒ 39·8·8 → **85 %** | 39·7·9 → 84 % ⇒ 40·7·8 → **85 %** | 30·4·21 → 62 % (igual) |
+| Bell-lloc | 35·6·14 → 75 % (igual) | 36·6·13 → 76 % (igual) | 35·6·14 → 75 % (igual) | 37·6·12 → 78 % (igual) |
+
+Diff cel·la a cel·la dels 12 informes (`_compare_informe.txt` base vs p0): **només canvia la cel·la N de la taula geotècnica**,
+cap altra taula ni cel·la:
+- Castellar `8b`/`calc`/`t2`: «22» → «R» (MISMATCH → MATCH). `viab`: «22» → «--» (segueix MISMATCH: la via B no té cap SPT
+  llegit a Castellar, `spt_results` buit; «--» és honest, «22» era el DPSH).
+- Rubí `8b`/`calc`/`t2`: «43» → «40» (→ MATCH). `viab`: «43» → «36» (MISMATCH: el `spt_in_dpsh` de la visió suma 36 d'un
+  registre 16/20/20/24; els dos trams centrals donen 40 = signat → criteri de suma de l'N30, pregunta 1 de
+  `PREGUNTES-EVA-PENDENTS.md`, lectura, no P0).
+- Bell-lloc totes: «34» → «58» (`t2`: «62»); signat **54**. Segueix MISMATCH però ara coincideix amb la fila SPT/MA del mateix
+  informe (58 or / 62 lectura t2, també MISMATCH vs 54 des de la Fase 8b). El 54 no és cap suma del registre 24/34/28/30
+  (pregunta 1, oberta des del 2026-08-24); 58 i 62 són dues sumes diferents del mateix registre (lectura).
+
+### Tests
+33 nous (`test_spt_n_column.py`), tots verds. Fitxers del generador (`test_adjacent_wiring`, `test_lectura_tables_report`):
+77 verds. Suite sencera a fitxer: **31 vermells, noms idèntics a `suite-vermells-esperats.txt` / 2127 verds / 5 omesos**
+(227 s). Cost de la sessió: 0 USD (cap lectura).
+
+### Limitacions conegudes
+- L'assignació multinivell (litologia → fondària) només està provada als tests: els 3 projectes generables són d'un sol
+  nivell. Linyola, Alcoletge, Vilanova i Anciles no es poden generar fins a M341.
+- Castellar `viab` queda «--» on el signat diu «R»: la via B no llegeix l'SPT del full manuscrit de Castellar. No és de P0.
+- La narrativa (§3 de l'informe) no s'ha tocat; només la cel·la de la taula.
+- Observació de pas (no tractada): Castellar sísmica «Tipus III / 1,60 / 1,6» vs «Tipus II / 1,15* / 1,3» — gruix i N20 del
+  nivell únic (capa de 0,5 m + roca): territori de P2/P4.
+
+### GO/NO-GO
+- ✅ P0: la cel·la es mou només on toca, 0 regressions cel·la a cel·la als 12 informes, suite idèntica → GO.
+- ✅ Línia base d'informe reproduïble amb un sol comandament; referència per al bloc 2: **`runs/2026-09-06-informe-p0`**.
+- ⏳ P2a/P2b: NO-GO fins a decisió del Josep sobre la regla de tria d'estrat (vegeu Següents passos). Cap commit fet.
+
+### Següents passos
+1. **P2a + P2b com una sola peça** (la regla és la mateixa). Estat del codi: `foundation_depth_m` **ja és un camp del wizard**
+   (`review.html:2766`, prefill 0,3 «default estandard») però NO arriba a `_select_bearing_layer_idx` (`report_data.py:468`
+   hi passa el 0,8 fix), i la funció tria «el competent més profund» (itera del fons cap amunt): a Rubí, els gresos. Proposta
+   a decidir: nivell portant = **el primer nivell competent que la sabata assoleix** a Df + encastament (0,2-0,4 m, la frase
+   del Qa dels signats), mai més profund; Df del wizard, amb avís si és el prefill. Impacte: `bearing_idx` alimenta
+   `_bearing_stratum_n20` → Nb → φ → Qa (cadena validada 6/7): cal mesurar Qa abans/després (no és a les 11 taules del
+   comparador; `scripts/qa_hypothesis_tester.py` / `CRITERIS-CALCUL-EVA.md`).
+2. M341 després (les 341 variables; desbloqueja els 4 projectes sense `_user_data_prev.json`).
+
+*Fi entrada 2026-09-06 (tarda). Bloc 2: línia base d'informe amb les cel·les de càlcul destapades; P0 dona a la columna N l'SPT que li tocava.*

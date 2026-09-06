@@ -19,6 +19,9 @@ el diagnòstic del test vermell va confirmar que el càlcul no s'ha mogut, per t
 Els P0–P2 canvien cel·les que `compare_tables_vs_eva.py` puntua: fer-los abans destruiria la línia base.
 Després de cada peça: re-run dirigit del comparador i **delta per cel·la**, no titulars de sweep
 (`project_judge_noise_band`).
+**Comandament (2026-09-06):** `PYTHONPATH=$PWD G3DT_CACHE_DIR=/home/josep/g3dt-prod-cache .venv/bin/python
+docs/wizard-headless/mesures/mesura_informe.py <run>` i `diff` dels `_compare_informe.txt` per projecte i variant contra
+`runs/2026-09-06-informe-p0` (recepta al capçal del script).
 
 ## Les peces
 
@@ -134,12 +137,13 @@ regla N20 de P4), i val més llegir-ho abans de tocar res.
 |---|---|---|---|
 | 0 | **Mesura dels 8** (tasca 1 handoff) | — | **7/8 FETS** (2026-09-04); queda Tulipa. ERR sistema 4 (1 font, 3 consolidador). Vilanova al titular (signat trobat) |
 | 0b | **Fixes de consolidador/inventari sortits de la mesura** — ✅ **FETA 2026-09-05** (matí: C, D2, D3, R3; tarda: G, R6, I1, R1, D5, D4, D6, T1, T2; S1 = disseny). Escalars sobre l'or 86 → 104 OK, ERR 3 → 0; taules ERR 4 → 0; l'únic ERR real que queda sobre el signat és de font (Rubí cota P-2). Queden R4 (pregunta a Eva), persona/despatx (pregunta a Eva), S1; **R5 ✅ 2026-09-05 nit** (bloc 1.1: 8 cel·les → OK, escalars 112/29/5/1/0); **R2 ✅ 2026-09-05 nit** (bloc 1.2: 9 cel·les, escalars 116/25/5/1/0, taules 138/21/7/31/0); **F1 ✅ 2026-09-05 nit** (bloc 1.3: 3 cel·les, escalars 118/23/5/1/0 = OK 80 %, taules 139/21/6/31/0, 0 ERR sobre el signat); **1.4 derivats ✅ 2026-09-05 nit** (13 cel·les, taules 143/27/7/20/0, blancs 31 → 20; 1 ALERTA formal: or d'Alcoletge `[1].a`); **1.5 L3 + L1 ✅ 2026-09-05 nit** (Anciles MA n30 → or; Linyola n30 «R» amb re-lectura d'1 doc, 1,63 USD; taules 144/28/6/19/0); **1.6 T2 ✅ 2026-09-06** (regles `utm`/`lab_sample_id` en Python, passada LLM apagada: escalars 119/22/5/1/0, conflictes 7 → 3, −1 USD i −4 min per projecte) | — | ✅ vegeu `_DIAGNOSTICS-INDEX.md` §Estat dels fixes i `_AGREGAT-8.md` §Agregat mecànic (matí i tarda) |
+| 0c | **Línia base d'INFORME** (`mesura_informe.py`: 3 projectes × 4 variants, `compare_tables_vs_eva.py`) | — | ✅ **FETA 2026-09-06** (`runs/2026-09-06-informe-bloc2-base`; referència viva `-p0`). La `8b` replica la Fase 8b exacta; `calc` és la columna del bloc 2 |
 | 1 | **R** repàs criteris als informes | ~½ dia | **FETA 2026-09-03** |
-| 2 | P0 columna N | ~1 h | mesura feta (R la confirma: N=SPT, «--»/«R»; regla N30 textual a Bell-lloc p10) |
+| 2 | P0 columna N | ~1 h | ✅ **FETA 2026-09-06** (`automation/spt_n_column.py`, 33 tests): N = N30 de l'SPT del nivell tal com surt a la taula SPT/MA del mateix informe; litologia → fondària → «--». Castellar «22»→«R», Rubí «43»→«40» (MATCH), Bell-lloc «34»→«58» (signat 54, pregunta 1); cap altra cel·la moguda. DECISION-LOG 2026-09-06 (tarda) |
 | 3 | ~~P1 cel·la Nb~~ | — | **DESCARTADA per R** (el /0,83 és correcte; la qüestió viva és P4) |
-| 4 | P2a col·lapse (Rubí) | ~2 h | mesura feta |
+| 4 | P2a col·lapse (Rubí) | ~2 h | mesura feta; **línia base d'informe 2026-09-06:** visible NOMÉS a la variant `viab` (sense lectura): 7/7 cel·les (nom «Gresos… (Nivell 2)», γ 2,20 / c 1,00 / φ 35 / E 500). Amb lectura, `_apply_lectura_soil_levels` tapa la descripció abans d'`is_rock` i només queden Nb «52-R» i E 469. **Acoblada a P2b** (mateixa regla) |
 | 5 | **M341** mesura completa (341 vars) | ~1-2 dies | mesura dels 8 + P0/P2a |
-| 6 | P2b fondària sabata | ~½ dia | decisió input (G.1); nova font: la frase del Qa del signat declara el nivell |
+| 6 | P2b fondària sabata | ~½ dia | decisió input (G.1); nova font: la frase del Qa del signat declara el nivell. **Estat 2026-09-06:** `foundation_depth_m` JA és al wizard (prefill 0,3) però `report_data.py:468` passa el 0,8 fix a `_select_bearing_layer_idx`, que tria «el competent més profund». Proposta: «el primer competent que la sabata assoleix (Df + 0,2-0,4)», mai més profund; mesurar Qa abans/després |
 | 7 | P3 E per criteris | ~1 dia | **pregunta a Eva imprescindible** (R negatiu) |
 | 8 | P4 regla N20 + test | ~2 h | pregunta a Eva o decisió Josep (R dona patró parcial + exigeix tolerància) |
 

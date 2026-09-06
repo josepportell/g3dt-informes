@@ -1,5 +1,15 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-06 — **Peça 1.6 T2 FETA (cost 0): la passada LLM de conflictes s'apaga** (`G3DT_LECTURA_CONSOLIDA=python`
+Last updated: 2026-09-06 (tarda) — **Bloc 2 obert: línia base de QUALITAT D'INFORME + P0 (columna «N») FETA, cost 0.** Nou script
+`docs/wizard-headless/mesures/mesura_informe.py` (3 projectes generables × 4 variants; la `8b` replica la Fase 8b exacta: 78/82/75 %).
+Troballa: els `_user_data_prev.json` porten γ/c/φ/E manuals → la variant `calc` (sense) és la que el bloc 2 ha de moure; P2a (Rubí
+«vestit de roca») **només es veu sense lectura** (`viab`), la litologia llegida el tapa. P0: N = N30 de l'SPT del nivell tal com surt a la
+taula SPT/MA del mateix informe (`automation/spt_n_column.py`, 33 tests): Castellar «22»→«R», Rubí «43»→«40» (MATCH); Bell-lloc
+«34»→«58» (signat 54: pregunta 1). **Cap altra cel·la moguda als 12 informes.** `calc`: Castellar 85→86 %, Rubí 84→85 %. Suite 31
+vermells idèntics / 2127 verds. **Referència d'informe: `runs/2026-09-06-informe-p0`.** Sense commit. **Següent: decisió del Josep
+sobre la regla de tria d'estrat (P2a+P2b: `foundation_depth_m` ja és al wizard, no arriba al codi; «competent més profund» →
+«el que la sabata assoleix»), després M341.** Detall: DECISION-LOG 2026-09-06 (tarda).
+
+Anterior (2026-09-06, matí) — **Peça 1.6 T2 FETA (cost 0): la passada LLM de conflictes s'apaga** (`G3DT_LECTURA_CONSOLIDA=python`
 per defecte) després de codificar en Python les dues regles que aplicava: `utm_x`/`utm_y` → `COORDENADES.txt` mana (el caixetí
 de l'annex de sondeig de Castellar és el punt S-1, anotat), `lab_sample_id` → GTL > annexos de l'Eva (4/4 signats amb GTL; el
 «P3» del manuscrit és el punt, no l'etiqueta). La comprovació d'obertura ha desmentit el handoff («9/9 iguals»): sense l'LLM

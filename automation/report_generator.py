@@ -36,6 +36,7 @@ import sys
 from .formatting import format_floor_notation
 from .project_extractor import ProjectExtractor
 from .report_data import ReportData, build_report_data, to_dict as report_data_to_dict
+from .spt_n_column import NO_SPT, assign_spt_n30
 from .terzaghi_calculator import TerzaghiCalculator, FootingShape
 from .vision_normalizer import load_dpsh_json, load_sondeig_json
 from .sections import (
@@ -1410,6 +1411,16 @@ class ReportGenerator:
             context['geotech_rows'] = []
             if dpsh and dpsh.tests:
                 all_readings = [r for test in dpsh.tests for r in test.readings]
+                # P0 (2026-09-06): la columna «N» és l'N30 de l'SPT del nivell, mai la
+                # mitjana N20 del DPSH (7/7 signats). Font: les files de la taula SPT/MA
+                # tal com s'imprimeixen en aquest mateix informe (lectura via A si n'hi
+                # ha, si no la fila de la via B), perquè les dues taules diguin el mateix.
+                spt_n_by_level, spt_n_notes = assign_spt_n30(
+                    context.get('spt_ma_tests') or [], soil_levels,
+                )
+                for note in spt_n_notes:
+                    self.warnings.append(f"Columna N (SPT): {note}")
+                    logger.warning("Columna N (SPT): %s", note)
                 for level in soil_levels:
                     avg_n20 = level.n20_average
                     # Filter readings by depth range from sondeig_layers
@@ -1471,8 +1482,9 @@ class ReportGenerator:
                         E = nspt_to_E_kg_cm2(avg_n20)
                         cohesion = soil_type_to_cohesion(level_soil_type)
 
-                    # N display: G3DT may write "R" (refusal) instead of numeric
-                    n_display = geomech.get('N') or (str(int(avg_n20)) if avg_n20 else '')
+                    # N display: N30 de l'SPT del nivell («R» si rebutja, «--» si al
+                    # nivell no hi ha SPT). L'override expert `geomech_params.N` mana.
+                    n_display = geomech.get('N') or spt_n_by_level.get(level.level_number, NO_SPT)
                     # Nb override
                     if geomech.get('Nb'):
                         nb_display = geomech['Nb']
