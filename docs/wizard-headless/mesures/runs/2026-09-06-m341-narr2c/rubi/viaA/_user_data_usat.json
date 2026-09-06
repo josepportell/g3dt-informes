@@ -1,0 +1,86 @@
+{
+ "client_name": "Joana Martínez",
+ "street_address": "Carrer de la Miranda, 39",
+ "site_municipality": "Rubí",
+ "architect_name": "Joana Martínez",
+ "building_type": "habitatge unifamiliar aïllat",
+ "num_floors": "PB (planta baixa) + porxada, sense pis superior",
+ "superficie_parcela_m2": 951.0,
+ "cota_referencia": "+212,50 msnm",
+ "num_soil_levels": 2,
+ "lab_testing_company": "TPS, Prospecció del Subsòl, SL (B64803075)",
+ "lab_sample_id": "SPT1 P3",
+ "lab_depth": "0,6 - 1,2",
+ "lab_location": "P-3",
+ "cte_edificacio": "C0",
+ "cte_sol": "T1",
+ "cadastral_refs": "Polígon 6, Parcel·la 105-B",
+ "field_work_dates": [
+  "2025-11-14"
+ ],
+ "field_work_dates_text": "14 de novembre de 2025",
+ "lectura_tables": {
+  "dpsh_tests": [
+   {
+    "test_id": "P-1",
+    "cota": "+212.50",
+    "depth": "-4.55",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-2",
+    "cota": "+212.50",
+    "depth": "-3.58",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-3",
+    "cota": "+212.50",
+    "depth": "-3.13",
+    "refusal": "Si",
+    "water": "No detectat"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "test_id": "SPT-1",
+    "location": "P-3",
+    "depth_range": "-0.60 a -1.20",
+    "n30": "40",
+    "lithology": "Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)"
+   }
+  ],
+  "soil_levels": [
+   {
+    "name": "Sòls superficials (cobertura, sense número)",
+    "litologia": "Sòls superficials",
+    "de": "0,00",
+    "a": null
+   },
+   {
+    "name": "Nivell 1",
+    "litologia": "Graves i sorres. Carbonatat.",
+    "de": null,
+    "a": "fins al fons d'investigació (rebuig DPSH: -4,55/-3,58/-3,13 m per punt)"
+   }
+  ],
+  "superficie_construida": "92",
+  "lab": {
+   "sample_id": "SPT1 P3",
+   "location": "P-3",
+   "depth": "0,6 - 1,2"
+  }
+ },
+ "soil_types": [
+  "granular",
+  "grava"
+ ],
+ "foundation_depth_m": 1.0,
+ "expedient": "3001631",
+ "_metadata": {
+  "origen": "mesura_341 viaA: lectura + Df del signat",
+  "Df_assumida": 1.0
+ }
+}

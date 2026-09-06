@@ -1,0 +1,79 @@
+{
+ "Df_user": 1.0,
+ "num_soil_levels_user": 2,
+ "soil_types_user": [
+  "granular",
+  "granular"
+ ],
+ "dpsh_overall_n20": 7.77,
+ "bearing_layer_idx": 1,
+ "bearing_layer_description": "",
+ "soil_levels": [
+  {
+   "n": 1,
+   "desc": "Rebliment antròpic",
+   "from": 0.0,
+   "to": 1.0,
+   "n20_avg": 4.93,
+   "Nb": 5.9,
+   "soil_type": "granular"
+  },
+  {
+   "n": 2,
+   "desc": "Lutites, substrat",
+   "from": 1.0,
+   "to": null,
+   "n20_avg": 17.88,
+   "Nb": 21.5,
+   "soil_type": "granular"
+  }
+ ],
+ "geotechnical_params": {
+  "gamma": 2.0,
+  "cohesion": 0.0,
+  "phi": 38,
+  "E": 450
+ },
+ "terzaghi": {
+  "phi": 38,
+  "cohesion": 0.0,
+  "gamma": 2.0,
+  "B": 1.0,
+  "Df": 1.0,
+  "qu": 17.692,
+  "safety_factor": 3.0,
+  "Qa": 3.0,
+  "settlement_cm": 3.0,
+  "settlement_type": "diferit",
+  "Es_used": 50.0,
+  "qa_terzaghi_peck": 0.6140538485302155,
+  "Qa_uncapped": 5.897333333333333,
+  "Fw": 1.6900000000000002,
+  "Fd_tp": 1.33,
+  "qa_governs": "cap",
+  "settlement_generic": true,
+  "settlement_regime": "roca",
+  "Es_source": "2,5 × colpeig (Nspt del nivell, columna «N»; text dels 7 informes)",
+  "Es_candidates": [
+   {
+    "value": 50.0,
+    "display": "Es=50 (2.5×N SPT 20)",
+    "source": "2,5 × colpeig (Nspt del nivell, columna «N»; text dels 7 informes)",
+    "settlement_cm": 3.0
+   },
+   {
+    "value": 53.84036144578314,
+    "display": "Es=54 (2.5×Nb 21.5)",
+    "source": "2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat)",
+    "settlement_cm": 2.8
+   },
+   {
+    "value": 450.0,
+    "display": "Es=450 (E del criteri)",
+    "source": "E de la taula geotècnica com a Es",
+    "settlement_cm": 0.3
+   }
+  ],
+  "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm."
+ }
+}

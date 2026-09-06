@@ -911,16 +911,22 @@ class ReportGenerator:
             any_still_empty = any(
                 not adj.get(d) for d in ('north', 'south', 'east', 'west')
             )
-            if any_still_empty and self.report_data.utm_x and self.report_data.utm_y:
+            # Referències cadastrals del PROJECTE (lectura, pel portal: `cadastral_refs`; 2026-09-06, peça 2):
+            # manen sobre l'UTM del punt de màquina i permeten adjacents sense UTM (Rubí, Vilanova, Anciles).
+            from .parcel_context import parse_rc_list
+            _rc_list = parse_rc_list(self.user_data.get('cadastral_refs') or getattr(self.report_data, 'cadastral_ref', None))
+            context['_parcel_rcs'] = _rc_list
+            _has_utm = bool(self.report_data.utm_x and self.report_data.utm_y)
+            if any_still_empty and (_rc_list or _has_utm):
                 try:
                     from .cadastre_adjacents import get_adjacent_parcels, CadastreError
                     from .report_data import _eval_numeric
                     superficie = _eval_numeric(self.report_data.superficie_parcela) or 600.0
-                    rc14 = getattr(self.report_data, 'cadastral_ref', None)
+                    rc14 = _rc_list or getattr(self.report_data, 'cadastral_ref', None)
                     municipality = self.report_data.municipality
                     auto_adj = get_adjacent_parcels(
-                        self.report_data.utm_x,
-                        self.report_data.utm_y,
+                        self.report_data.utm_x if _has_utm else None,
+                        self.report_data.utm_y if _has_utm else None,
                         superficie,
                         rc14=rc14,
                         municipality=municipality,
@@ -973,26 +979,12 @@ class ReportGenerator:
                 return 'el '
 
             municipality = self.report_data.municipality or ''
-            muni_suffix = f" de {municipality}" if municipality else ''
-            st1 = context.get('street_1', '')
-            if street_1_lower and second_street:
-                art1 = _street_article(st1)
-                art2 = _street_article(second_street)
-                context['location_sentence'] = f"entre {art1}{st1} i {art2}{second_street}{muni_suffix}"
-            elif street_1_lower:
-                art = _street_article(st1)
-                # Catalan preposition "a" + article: al (a+el), a la, a l'
-                if art == "l'":
-                    loc_prep = "a l'"
-                elif art == 'la ':
-                    loc_prep = "a la "
-                else:
-                    loc_prep = "al "  # a + el contraction
-                context['location_sentence'] = f"{loc_prep}{st1}{muni_suffix}"
-            elif municipality:
-                context['location_sentence'] = f"al terme municipal de {municipality}"
-            else:
-                context['location_sentence'] = "en una ubicació no especificada"
+            # 2026-09-06 (peça 2): «Situat entre X i Y» de la lectura tal qual, carrers duplicats pel nom normalitzat
+            # fora («Carrer Arbrells» ≡ «Carrer dels Arbrells»), municipi del padró («Bell-lloc d'Urgell»).
+            from .narrative_criteria import location_sentence_from_streets
+            context['location_sentence'] = location_sentence_from_streets(
+                context.get('street_1', ''), second_street, municipality, _lang,
+            )
 
             # Adjacent formatting with bilingual support (Catalan/Spanish).
             # Priority per direction (see resolve_adjacent_fmt):
@@ -1020,13 +1012,36 @@ class ReportGenerator:
                 access, re.IGNORECASE,
             )
             context['access_street'] = access_match.group(1).strip() if access_match else access
+            if not context['access_street']:
+                # 2026-09-06 (peça 2): el costat que és carrer → «carrer adjacent situat al sud» (+ candidats)
+                from .adjacent_formatter import access_street_from_adjacents
+                _acc, _acc_cands = access_street_from_adjacents(adj, context.get('street_1', ''), _lang)
+                context['access_street'] = _acc
+                context['_narr_access'] = {'value': _acc, 'candidates': _acc_cands}
 
-            # Site condition
-            is_anthropized = getattr(self.report_data, 'is_anthropized', None)
-            if is_anthropized is None:
-                context['site_condition'] = 'pla'
-            else:
-                context['site_condition'] = 'antropitzat' if is_anthropized else 'no antropitzat'
+            # Introducció dels adjacents (2.1.1, 7/7 signats): «La parcel·la objecte d'estudi es situa al {nord} del
+            # municipi de {Municipi}, pren una morfologia {rectangular} i limita:» — posició des del centre del municipi
+            # (Nominatim, cache) i forma pel polígon del Cadastre; `site_position`/`parcel_shape` del wizard manen.
+            try:
+                from .narrative_criteria import municipality_proper
+                from .parcel_context import (adjacent_intro, centroid, municipality_centre_utm,
+                                             position_in_municipality, shape_word)
+                _poly: list = []
+                if _rc_list:
+                    from .cadastre_adjacents import project_polygon
+                    _poly = project_polygon(_rc_list)
+                _cen = centroid(_poly) if _poly else (
+                    (self.report_data.utm_x, self.report_data.utm_y) if _has_utm else None)
+                _pos = (self.user_data.get('site_position') or '').strip() or None
+                if not _pos and _cen and municipality:
+                    _pos = position_in_municipality(
+                        _cen, municipality_centre_utm(municipality, self.user_data.get('province', '') or ''), _lang)
+                _shape = (self.user_data.get('parcel_shape') or '').strip() or shape_word(_poly, _lang)
+                context['adjacent_intro'] = adjacent_intro(_pos, municipality_proper(municipality), _shape, _lang)
+                context['_narr_parcel'] = {'position': _pos, 'shape': _shape, 'centroid': _cen, 'rcs': _rc_list}
+            except Exception as e:
+                self.warnings.append(f"Introducció dels adjacents: {e}")
+                context.setdefault('adjacent_intro', '')
 
             # Auto-fill is_sloped from ICGC MDT slope analysis
             if self.report_data.utm_x and self.report_data.utm_y:

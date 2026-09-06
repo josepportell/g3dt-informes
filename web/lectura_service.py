@@ -148,9 +148,11 @@ MAPPING_DECISIONS_WIZARD: dict[str, str | None] = {
     # EXCLÒS deliberadament (erroni-amb-confiança=0). El valor de la lectura
     # hi és igualment, dins `_lectura`.
     "num_dpsh_tests": None,
-    # `referencia_catastral`: cap ocurrència enlloc del codebase (ni prefill,
-    # ni WIZARD_FIELDS, ni report_generator) — no hi ha clau amb què comparar.
-    "referencia_catastral": None,
+    # `referencia_catastral` → `cadastral_refs` (2026-09-06, peça 2 de la narrativa): «rc+rc+rc» dels portals
+    # llegits (Castellar 3, Bell-lloc 1 de 20 caràcters). El generador i `auto_extractor._phase3_adjacents` en fan
+    # la llista de referències del PROJECTE per sondejar els adjacents (`parcel_context.parse_rc_list`), en
+    # comptes de l'UTM del punt de màquina. No és cap clau de la plantilla: no es compara.
+    "referencia_catastral": "cadastral_refs",
 }
 
 #: Valors REALS de `source` que `save_wizard`/`_load_existing_user_data`

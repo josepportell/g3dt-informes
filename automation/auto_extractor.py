@@ -1605,7 +1605,11 @@ def _phase3_adjacents(
                     )
                     break
 
-        rc14 = result.prefills.get('cadastral_ref')
+        from .parcel_context import parse_rc_list
+        rc_list = parse_rc_list((existing_user_data or {}).get('cadastral_refs'))
+        rc14 = rc_list or result.prefills.get('cadastral_ref')
+        if rc_list:
+            adj_source = f"referències llegides {'+'.join(rc_list)}"
         adjacents = get_adjacent_parcels(
             adj_x, adj_y, superficie, rc14=rc14, municipality=municipality,
         )

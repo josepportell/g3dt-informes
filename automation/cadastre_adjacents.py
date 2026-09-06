@@ -522,47 +522,47 @@ def _query_building_data(ref: str) -> dict | None:
         response_text = _fetch_xml(url)
         root = ET.fromstring(response_text)
 
-        # Extract construction elements
-        lcons_elems = _find_all_elements(root, "lcons")
-
-        if not lcons_elems:
+        # Unitats constructives: <lcons><cons><lcd>VIVIENDA</lcd><dt><lourb><loint><pt>00</pt>…</loint></lourb></dt>
+        # <dfcons><stl>162</stl></dfcons></cons>…</lcons>. La PLANTA és <pt> («00» baixa, «01» pis, «-1»/«SM» soterrani);
+        # <stl> és la SUPERFÍCIE (2026-09-06: abans es llegia <stl> esperant-hi «PLANTA» i mai es comptava cap planta).
+        cons_elems = _find_all_elements(root, "cons")
+        if not cons_elems:
             return {
                 'num_floors_above': 0,
                 'num_floors_below': 0,
                 'total_built_m2': 0.0,
                 'primary_use': '',
                 'has_building': False,
+                'has_pool': False,
             }
 
         seen_above: set[str] = set()
         seen_below: set[str] = set()
         total_m2 = 0.0
         primary_use = ''
+        has_pool = False
+        luso_elems = _find_all_elements(root, "luso")
+        if luso_elems and luso_elems[0].text:
+            primary_use = luso_elems[0].text.strip()
 
-        for lcons in lcons_elems:
-            # Floor type — deduplicate by stl value to avoid overcounting
-            # multi-unit buildings (multiple lcons with same floor identifier)
-            stl_elems = _find_all_elements(lcons, "stl")
-            stl = stl_elems[0].text.strip().upper() if stl_elems and stl_elems[0].text else ''
-
-            if 'SOTANO' in stl or 'SÓTANO' in stl:
-                seen_below.add(stl)
-            elif 'PLANTA' in stl or 'SUELO' in stl:
-                seen_above.add(stl)
-
-            # Surface
-            sfc_elems = _find_all_elements(lcons, "sfc")
-            if sfc_elems and sfc_elems[0].text:
+        for cons in cons_elems:
+            lcd_elems = _find_all_elements(cons, "lcd")
+            lcd = lcd_elems[0].text.strip().upper() if lcd_elems and lcd_elems[0].text else ''
+            if 'DEPORTIVO' in lcd or 'PISCINA' in lcd:
+                has_pool = True
+            pt_elems = _find_all_elements(cons, "pt")
+            pt = pt_elems[0].text.strip().upper() if pt_elems and pt_elems[0].text else ''
+            if pt:
+                if pt.startswith('-') or pt in ('SM', 'ST', 'SS', 'SO', 'SOT'):
+                    seen_below.add(pt)
+                elif pt.lstrip('+').isdigit() or pt in ('BJ', 'PB'):
+                    seen_above.add(pt.lstrip('+'))
+            stl_elems = _find_all_elements(cons, "stl")
+            if stl_elems and stl_elems[0].text:
                 try:
-                    total_m2 += float(sfc_elems[0].text.strip())
+                    total_m2 += float(stl_elems[0].text.strip())
                 except ValueError:
                     pass
-
-            # Primary use (first occurrence)
-            if not primary_use:
-                luso_elems = _find_all_elements(lcons, "luso")
-                if luso_elems and luso_elems[0].text:
-                    primary_use = luso_elems[0].text.strip()
 
         return {
             'num_floors_above': len(seen_above),
@@ -570,6 +570,7 @@ def _query_building_data(ref: str) -> dict | None:
             'total_built_m2': total_m2,
             'primary_use': primary_use,
             'has_building': True,
+            'has_pool': has_pool,
         }
 
     except Exception as e:
@@ -586,6 +587,14 @@ _CATALAN_NUMBERS = {
 def _num_to_catalan(n: int) -> str:
     """Convert small integer to Catalan word."""
     return _CATALAN_NUMBERS.get(n, str(n))
+
+
+def _is_ours(ref: str | None, our_ref: str | set[str] | None) -> bool:
+    """True si `ref` (14 primers caràcters) és una de les referències del projecte (str o conjunt)."""
+    if not ref or not our_ref:
+        return False
+    ours = {our_ref} if isinstance(our_ref, str) else set(our_ref)
+    return ref[:14] in {r[:14] for r in ours if r}
 
 
 def _describe_neighbor(ref: str) -> str:
@@ -622,26 +631,24 @@ def _describe_neighbor(ref: str) -> str:
     if 'ALMACEN' in use or 'ALMACÉN' in use:
         return "magatzem"
 
-    # Residential/generic building description
+    # Residential/generic building description — vocabulari dels signats (2026-09-06):
+    #   Bell-lloc  «amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant»
+    #   Alcoletge  «amb una parcel·la on existeix un edifici aïllat en planta baixa» · «una amb soterrani i piscina»
+    # (l'article «una» el posa `adjacent_formatter`).
     floors = data['num_floors_above']
     if floors <= 0:
-        return "parcel·la amb construcció"
-
-    basement = data['num_floors_below'] > 0
-
-    if floors == 1:
-        desc = "parcel·la amb construcció aïllada d'una planta sobre rasant"
-    elif floors == 2:
-        desc = "parcel·la amb construcció aïllada de fins a dos plantes sobre rasant"
+        desc = "parcel·la amb construcció"
+    elif floors == 1:
+        desc = "parcel·la on existeix un edifici aïllat en planta baixa"
     else:
         desc = (
-            f"parcel·la amb construcció aïllada de fins a "
+            f"parcel·la amb una construcció aïllada de fins a "
             f"{_num_to_catalan(floors)} plantes sobre rasant"
         )
-
-    if basement:
-        desc += " i soterrani"
-
+    extras = [x for x in (("soterrani" if data['num_floors_below'] > 0 else None),
+                          ("piscina" if data.get('has_pool') else None)) if x]
+    if extras:
+        desc += ", amb " + " i ".join(extras)
     return desc
 
 
@@ -1041,7 +1048,7 @@ def _classify_edges_by_direction(
 def _probe_from_edge(
     midpoint: tuple[float, float],
     normal: tuple[float, float],
-    our_ref: str,
+    our_ref: str | set[str],
     municipality: str | None = None,
     max_distance: float = 30.0,
     step: float = 2.0,
@@ -1083,7 +1090,7 @@ def _probe_from_edge(
             street_null_points.append((probe_x, probe_y))
             continue
 
-        if ref[:14] == our_ref[:14]:
+        if _is_ours(ref, our_ref):
             logger.debug(f"Still on our parcel at distance {distance:.1f}m")
             continue
 
@@ -1141,7 +1148,7 @@ def _compute_bounding_box(
 def _probe_direction(
     utm_x: float,
     utm_y: float,
-    our_ref: str,
+    our_ref: str | set[str],
     dx: int,
     dy: int,
     superficie: float,
@@ -1217,7 +1224,7 @@ def _probe_direction(
             continue
 
         # Compare first 14 chars (parcel+plot) to handle pc2 variations
-        if ref[:14] == our_ref[:14]:
+        if _is_ours(ref, our_ref):
             # Still on our parcel, keep scanning
             logger.debug(f"Still on our parcel at distance {distance:.1f}m")
             continue
@@ -1268,13 +1275,33 @@ def _probe_direction(
 
 # === Main Entry Point ===
 
+_GEOMETRY_MEMO: dict[str, list[tuple[float, float]]] = {}
+
+
+def project_polygon(rc_list: list[str]) -> list[tuple[float, float]]:
+    """Polígon (UTM 25831) de la unió de les parcel·les del projecte; [] si cap geometria. Memo per procés."""
+    from .parcel_context import union_polygon
+    polys = []
+    for rc in rc_list:
+        rc = rc[:14]
+        if rc not in _GEOMETRY_MEMO:
+            try:
+                _GEOMETRY_MEMO[rc] = get_parcel_geometry_utm(rc) or []
+            except CadastreError as e:
+                logger.warning(f"project_polygon: sense geometria per a {rc}: {e}")
+                _GEOMETRY_MEMO[rc] = []
+        if _GEOMETRY_MEMO[rc]:
+            polys.append(_GEOMETRY_MEMO[rc])
+    return union_polygon(polys)
+
+
 def get_adjacent_parcels(
-    utm_x: float,
-    utm_y: float,
+    utm_x: float | None,
+    utm_y: float | None,
     superficie: float,
     use_cache: bool = True,
     municipality: str | None = None,
-    rc14: str | None = None,
+    rc14: str | list[str] | None = None,
 ) -> dict[str, str]:
     """
     Detect adjacent parcels and streets around a cadastral parcel.
@@ -1297,44 +1324,68 @@ def get_adjacent_parcels(
         CadastreParseError: If response cannot be parsed
         CadastreNoDataError: If our own parcel cannot be identified
     """
+    # Referències del PROJECTE (2026-09-06): la lectura les dona pel portal (`cadastral_refs`, «rc+rc+rc» a Castellar);
+    # manen sobre l'UTM (punt de màquina: Bell-lloc resolia «CL VIA FERREA 57»). Amb referències, el polígon és la
+    # unió dels portals, el sondeig surt de les seves arestes i l'UTM (si falta) és el centroide.
+    from .parcel_context import centroid as _centroid, parse_rc_list
+    rc_list = parse_rc_list(rc14)
+
     # Check cache first
-    if use_cache:
-        cached = _load_from_cache(utm_x, utm_y)
+    if use_cache and (rc_list or (utm_x and utm_y)):
+        cached = _load_from_cache(utm_x or 0.0, utm_y or 0.0, rcs=rc_list or None)
         if cached is not None:
-            logger.debug(f"Cache hit for adjacents at ({utm_x}, {utm_y})")
+            logger.debug(f"Cache hit for adjacents ({rc_list or (utm_x, utm_y)})")
             return cached
 
-    # Query our own cadastral reference
+    polygon = None
+    our_refs: set[str] = set(rc_list)
+    if rc_list:
+        polygon = project_polygon(rc_list)
+        if polygon and len(polygon) >= 3:
+            logger.info(f"Using geometry-based probing on {len(rc_list)} parcel(s) ({len(polygon)} vertices)")
+            if not (utm_x and utm_y):
+                utm_x, utm_y = _centroid(polygon)
+        else:
+            polygon = None
+    if not (utm_x and utm_y):
+        raise CadastreNoDataError("Adjacents: cap UTM ni cap referència cadastral amb geometria")
+
+    # Query our own cadastral reference (name of our street for the fallback; may be a neighbour when rc_list is set)
     our_ref, our_ldt = _query_ref_by_coords(utm_x, utm_y)
-    if our_ref is None:
+    if our_ref is None and not rc_list:
         raise CadastreNoDataError(
             f"Could not determine cadastral reference at ({utm_x}, {utm_y})"
         )
-    logger.info(f"Our cadastral ref: {our_ref} ({our_ldt})")
+    if our_ref:
+        logger.info(f"Cadastral ref at UTM: {our_ref} ({our_ldt})")
+        if not rc_list:
+            our_refs.add(our_ref)
+        elif not _is_ours(our_ref, our_refs):
+            our_ldt = None      # l'LDT d'una altra parcel·la no serveix per anomenar el nostre carrer
 
-    # Fase 1: Try geometry-based probing using parcel polygon
-    # Use provided rc14, or fall back to our_ref from the coordinate query
-    effective_rc14 = rc14 or our_ref
-    polygon = None
-    if effective_rc14 and len(effective_rc14) >= 14:
-        try:
-            polygon = get_parcel_geometry_utm(effective_rc14[:14])
-            if polygon and len(polygon) >= 3:
-                logger.info(
-                    f"Using geometry-based probing ({len(polygon)} vertices)"
-                )
-            else:
+    # Fase 1: Try geometry-based probing using parcel polygon (own ref from coords when no rc_list)
+    if polygon is None:
+        effective_rc14 = our_ref
+        if effective_rc14 and len(effective_rc14) >= 14:
+            try:
+                polygon = get_parcel_geometry_utm(effective_rc14[:14])
+                if polygon and len(polygon) >= 3:
+                    logger.info(
+                        f"Using geometry-based probing ({len(polygon)} vertices)"
+                    )
+                else:
+                    logger.warning(
+                        f"Polygon too small ({len(polygon) if polygon else 0} vertices), "
+                        "falling back to centroid-based probing"
+                    )
+                    polygon = None
+            except CadastreError as e:
                 logger.warning(
-                    f"Polygon too small ({len(polygon) if polygon else 0} vertices), "
-                    "falling back to centroid-based probing"
+                    f"Could not get parcel geometry for {effective_rc14[:14]}: {e}. "
+                    "Falling back to centroid-based probing"
                 )
                 polygon = None
-        except CadastreError as e:
-            logger.warning(
-                f"Could not get parcel geometry for {rc14[:14]}: {e}. "
-                "Falling back to centroid-based probing"
-            )
-            polygon = None
+    our_ref = our_refs if len(our_refs) > 1 else (next(iter(our_refs)) if our_refs else our_ref)
 
     result: dict[str, str] = {}
     bbox = _compute_bounding_box(polygon) if polygon else None
@@ -1377,32 +1428,32 @@ def get_adjacent_parcels(
 
     # Cache the result
     if use_cache:
-        _save_to_cache(utm_x, utm_y, result)
+        _save_to_cache(utm_x, utm_y, result, rcs=rc_list or None)
 
     return result
 
 
 # === Caching Functions ===
 
-def _get_cache_key(utm_x: float, utm_y: float) -> str:
-    """Generate cache key from coordinates."""
-    key_str = f"v2_adj_{round(utm_x)}_{round(utm_y)}"
+def _get_cache_key(utm_x: float, utm_y: float, rcs: list[str] | None = None) -> str:
+    """Generate cache key from the project parcel references (preferred) or the coordinates."""
+    key_str = f"v3_adj_rc_{'+'.join(rcs)}" if rcs else f"v2_adj_{round(utm_x)}_{round(utm_y)}"
     return hashlib.sha256(key_str.encode()).hexdigest()[:12]
 
 
-def _get_cache_path(utm_x: float, utm_y: float) -> Path:
-    """Get path to cache file for given coordinates."""
-    cache_key = _get_cache_key(utm_x, utm_y)
+def _get_cache_path(utm_x: float, utm_y: float, rcs: list[str] | None = None) -> Path:
+    """Get path to cache file for given coordinates / references."""
+    cache_key = _get_cache_key(utm_x, utm_y, rcs)
     return CACHE_DIR / f"{cache_key}.json"
 
 
-def _load_from_cache(utm_x: float, utm_y: float) -> dict[str, str] | None:
+def _load_from_cache(utm_x: float, utm_y: float, rcs: list[str] | None = None) -> dict[str, str] | None:
     """
     Load adjacents result from cache if available and not expired.
 
     Returns None if not cached or expired.
     """
-    cache_path = _get_cache_path(utm_x, utm_y)
+    cache_path = _get_cache_path(utm_x, utm_y, rcs)
 
     if not cache_path.exists():
         return None
@@ -1425,10 +1476,10 @@ def _load_from_cache(utm_x: float, utm_y: float) -> dict[str, str] | None:
         return None
 
 
-def _save_to_cache(utm_x: float, utm_y: float, adjacents: dict[str, str]) -> None:
+def _save_to_cache(utm_x: float, utm_y: float, adjacents: dict[str, str], rcs: list[str] | None = None) -> None:
     """Save adjacents result to cache using atomic write."""
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    cache_path = _get_cache_path(utm_x, utm_y)
+    cache_path = _get_cache_path(utm_x, utm_y, rcs)
 
     data = {
         'cached_at': datetime.now().isoformat(),
