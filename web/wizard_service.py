@@ -520,28 +520,28 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
             if _get_val('access_description'):
                 break
 
-    # Site description: generate from shape, area, anthropized state
+    # Estat del solar per CRITERI (peça 3, 2026-09-07): la mateixa implementació que el generador
+    # (`narrative_criteria.site_description_sentence`): construcció pròpia al Cadastre (DNPRC de les referències del
+    # projecte) + pendent ICGC → «El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del
+    # carrer.» / «…Topogràficament, el solar presenta pendent.» / «El solar està actualment ocupat per una zona explanada
+    # i un edifici en planta baixa.», amb les variants dels signats com a candidats. Abans: «parcel·la de forma rectangular
+    # amb superfície de 571 m2» («plantilla generada»), text que l'Eva no escriu mai.
     if not _get_val('site_description'):
-        parts = []
-        shape = _get_val('parcel_shape') or 'rectangular'
-        area = _get_val('superficie_parcela_m2') or _get_val('superficie_cadastral_m2')
-        if area:
-            try:
-                parts.append(
-                    f"parcel\u00b7la de forma {shape} amb superf\u00edcie de {int(float(area))} m2"
-                )
-            except (ValueError, TypeError):
-                parts.append(f"parcel\u00b7la de forma {shape}")
-
-        is_anthropized = _get_val('is_anthropized')
-        if is_anthropized and is_anthropized.lower() not in ('false', '0', ''):
-            parts.append("El terreny es presenta antropitzat")
-
-        if parts:
-            merged['site_description'] = {
-                'value': '. '.join(parts),
-                'source': 'plantilla generada',
-            }
+        from automation.narrative_criteria import site_description_sentence
+        from automation.parcel_context import own_parcel_buildings
+        lang = _get_project_language(merged)
+        own = None
+        try:
+            own = own_parcel_buildings(_get_val('cadastral_refs') or _get_val('cadastral_ref') or None)
+        except Exception as e:
+            logger.debug("DNPRC parcel·la pròpia: %s", e)
+        choice = site_description_sentence(_get_val('slope_percent'), own, lang)
+        merged['site_description'] = {
+            'value': choice.value,
+            'source': f'computed ({choice.source})',
+            'candidates': [c.value for c in choice.candidates],
+            'candidate_sources': [c.source for c in choice.candidates],
+        }
 
     # Site condition: erosion observation sentence
     # Uses slope (ICGC) + adjacents (Cadastre) to determine qualifier.
@@ -1013,6 +1013,65 @@ def _compute_narrative_prefills(
         entry = merged.get('building_structure_desc')
         if isinstance(entry, dict):
             entry['candidates'] = [c.value for c in choice.candidates]
+            entry['candidate_sources'] = [c.source for c in choice.candidates]
+
+    # --- access_street (peça 3, 2026-09-07): el costat que és carrer, com el generador ---
+    from automation.adjacent_formatter import access_street_from_adjacents
+    adj = {d: _get_val(f'adjacent_{d}') for d in ('north', 'south', 'east', 'west')}
+    street_1 = _get_val('street_address').split(',', 1)[0].strip()
+    acc_default, acc_cands = access_street_from_adjacents(adj, street_1, lang)
+    if acc_default:
+        _set('access_street', acc_default, 'computed (costat carrer dels adjacents)')
+        entry = merged.get('access_street')
+        if isinstance(entry, dict) and entry.get('source') != 'user':
+            entry['candidates'] = acc_cands
+            entry['candidate_sources'] = ['defecte (Castellar, Linyola)', 'variant «Carrer existent al…» (Alcoletge)',
+                                          'nom de la via (Rubí)'][:len(acc_cands)]
+
+    # --- lab_tests_text (peça 3): el bloc «ASSAIGS REALITZATS» del GTL amb el vocabulari de l'Eva ---
+    lab_entry = merged.get('lab_tests_text')
+    lab_raw = _get_val('lab_tests_text')
+    lab_source = lab_entry.get('source', '') if isinstance(lab_entry, dict) else ''
+    if lab_raw and lab_source != 'user' and not lab_source.startswith('computed'):
+        from automation.narrative_criteria import lab_tests_lines
+        choice = lab_tests_lines(lab_raw, lang)
+        if choice.value:
+            merged['lab_tests_text'] = {
+                'value': choice.value,
+                'source': f'computed (GTL: {choice.source})',
+                'candidates': [c.value for c in choice.candidates],
+                'candidate_sources': [c.source for c in choice.candidates],
+            }
+
+    # --- num_site_photos (peça 3): vistes generals només si l'Eva les ha triat a la pestanya de fotos ---
+    n_site = 0
+    sel_path = project_path / 'validation' / 'photo_selection.json'
+    if sel_path.exists():
+        try:
+            sel = json.loads(sel_path.read_text(encoding='utf-8'))
+            if isinstance(sel, dict) and sel.get('source') == 'user':
+                n_site = sum(1 for k in ('site_1', 'site_2') if sel.get(k))
+        except Exception:
+            n_site = 0
+    _set('num_site_photos', n_site, 'computed (fotos triades)' if n_site else 'default (sense vistes generals: 4/7 signats)')
+
+    # --- Candidats narratius → «+N» del wizard (mateix mecanisme que FileMiner i els geotècnics) ---
+    alt_map: dict[str, list[dict]] = {}
+    for key in ('site_condition', 'building_structure_desc', 'access_street', 'lab_tests_text', 'site_description'):
+        entry = merged.get(key)
+        if not isinstance(entry, dict) or entry.get('source') == 'user':
+            continue
+        cands = [c for c in (entry.get('candidates') or []) if c and c != entry.get('value')]
+        srcs = entry.get('candidate_sources') or []
+        if cands:
+            src_of = {v: srcs[i] for i, v in enumerate(entry.get('candidates') or []) if i < len(srcs)}
+            alt_map[key] = [{'value': c, 'source': src_of.get(c, 'criteri'), 'confidence': 0.5} for c in cands]
+    if alt_map:
+        existing_alts = merged.get('_alternatives')
+        cur = dict(existing_alts.get('value') or {}) if isinstance(existing_alts, dict) else {}
+        for k, v in alt_map.items():
+            cur[k] = v
+        merged['_alternatives'] = {'value': cur, 'source': 'system'}
 
 
 def _compute_lookup_prefills(merged: dict[str, Any], auto_result: Any) -> None:

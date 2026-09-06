@@ -48,6 +48,8 @@ WIZARD_FIELDS = [
     'is_anthropized', 'num_soil_levels', 'soil_types', 'foundation_depth_m',
     'cota_referencia', 'has_basement', 'has_retaining_walls',
     'utm_x', 'utm_y',
+    # Narrativa per criteri (peça 3, 2026-09-07): frases senceres editables amb candidats «+N»
+    'site_condition', 'building_structure_desc', 'access_street', 'lab_tests_text', 'num_site_photos',
 ]
 
 # Expert override fields (optional, for when auto-detection gives wrong results)

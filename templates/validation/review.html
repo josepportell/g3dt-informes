@@ -2730,6 +2730,38 @@
                             </div>
                         </div>
 
+                        <!-- Group 2b: Narrativa per criteri (peça 3, 2026-09-07): frases senceres editables amb candidats «+N» -->
+                        <div class="wizard-group">
+                            <div class="wizard-group-header">Narrativa (frases de l'informe)</div>
+                            <div class="wizard-group-body">
+                                <div class="wizard-field full-width">
+                                    <label>Acces al solar («…a traves del ___.») <span class="source-badge" id="src-access_street"></span></label>
+                                    <input type="text" id="wiz-access_street" data-field="access_street" placeholder="carrer adjacent situat al sud" onchange="markWizardDirty(event)">
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Estat del solar (2.1.2, frase sencera) <span class="source-badge" id="src-site_condition"></span></label>
+                                    <textarea id="wiz-site_condition" data-field="site_condition" onchange="markWizardDirty(event)"></textarea>
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Estructura prevista («…construccio d'una estructura ___») <span class="source-badge" id="src-building_structure_desc"></span></label>
+                                    <textarea id="wiz-building_structure_desc" data-field="building_structure_desc" onchange="markWizardDirty(event)"></textarea>
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Assaigs de laboratori realitzats (una linia per assaig) <span class="source-badge" id="src-lab_tests_text"></span></label>
+                                    <textarea id="wiz-lab_tests_text" data-field="lab_tests_text" onchange="markWizardDirty(event)"></textarea>
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Fotografies de vista general <span class="source-badge" id="src-num_site_photos"></span></label>
+                                    <select id="wiz-num_site_photos" data-field="num_site_photos" onchange="markWizardDirty(event)">
+                                        <option value="0">0 — sense bloc de vistes generals (la Fotografia 1 es la maquina)</option>
+                                        <option value="1">1 — «Fotografia 1. Vista general de la zona d'estudi.»</option>
+                                        <option value="2">2 — «Fotografia 1 i Fotografia 2. Vistes generals…»</option>
+                                    </select>
+                                    <div style="font-size:11px;color:#6b7280;margin-top:2px">Les fotos son les de la pestanya Fotos (vista general 1 i 2).</div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Group 3: Parametres -->
                         <div class="wizard-group">
                             <div class="wizard-group-header">Parametres</div>
@@ -5928,9 +5960,12 @@
             alts.forEach(alt => {
                 const item = document.createElement('div');
                 item.className = 'alt-item';
-                const valStr = String(alt.value || '').substring(0, 60);
+                const full = String(alt.value || '');
+                const valStr = full.length > 220 ? full.substring(0, 217) + '…' : full;
                 const srcStr = (alt.source || '').split('/').pop();
-                item.innerHTML = `<div class="alt-value">${valStr}</div><div class="alt-source">${srcStr} (conf: ${(alt.confidence || 0).toFixed(2)})</div>`;
+                const confStr = (typeof alt.confidence === 'number' && alt.confidence !== 0.5) ? ` (conf: ${alt.confidence.toFixed(2)})` : '';
+                item.innerHTML = `<div class="alt-value" style="white-space:pre-wrap">${valStr.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div><div class="alt-source">${srcStr}${confStr}</div>`;
+                item.title = full;
                 item.onclick = () => {
                     // Apply this alternative value to the field
                     const el = document.getElementById(`wiz-${field}`);
@@ -5939,7 +5974,12 @@
                 };
                 dd.appendChild(item);
             });
-            // Position relative to anchor
+            // Position relative to anchor (frases senceres → desplegable ample)
+            const target = document.getElementById(`wiz-${field}`);
+            if (target && (target.tagName === 'TEXTAREA' || (alts[0] && String(alts[0].value || '').length > 60))) {
+                dd.style.maxWidth = '640px';
+                dd.style.minWidth = '420px';
+            }
             anchor.style.position = 'relative';
             anchor.parentNode.style.position = 'relative';
             anchor.parentNode.appendChild(dd);
@@ -5961,6 +6001,7 @@
                 'adjacent_north_fmt', 'adjacent_south_fmt', 'adjacent_east_fmt', 'adjacent_west_fmt',
                 'foundation_depth_m', 'cota_referencia',
                 'utm_x', 'utm_y',
+                'access_street', 'site_condition', 'building_structure_desc', 'lab_tests_text', 'num_site_photos',
             ];
             textFields.forEach(field => {
                 const { value, source } = getWizardValue(field);
@@ -7149,10 +7190,14 @@
              'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
              'adjacent_north_fmt', 'adjacent_south_fmt', 'adjacent_east_fmt', 'adjacent_west_fmt',
              'cota_referencia',
+             'access_street', 'site_condition', 'building_structure_desc', 'lab_tests_text',
             ].forEach(field => {
                 const el = document.getElementById(`wiz-${field}`);
                 if (el) fields[field] = el.value;
             });
+            // Vistes generals (0/1/2): enter
+            const nsp = document.getElementById('wiz-num_site_photos');
+            if (nsp) fields.num_site_photos = parseInt(nsp.value) || 0;
 
             // Numeric fields
             ['foundation_depth_m', 'utm_x', 'utm_y'].forEach(field => {
