@@ -551,60 +551,23 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
     # "Pla" = default when flat and no special condition observed.
     # Spanish projects get a simpler fixed sentence.
     if not _get_val('site_condition'):
+        # Una sola implementació del criteri (2026-09-06): `narrative_criteria.site_condition_sentence`, la mateixa que
+        # fa servir el generador. `is_anthropized` només compta si ve d'una font real (no del defecte).
+        from automation.narrative_criteria import site_condition_sentence
         lang = _get_project_language(merged)
-        if lang == 'es':
-            site_cond = (
-                "En la zona de estudio no se han detectado marcas de inicios "
-                "de procesos de erosión relacionados con la escorrentía "
-                "hídrica superficial."
-            )
-            source = 'computed (ES template)'
-        else:
-            slope_pct = _get_val('slope_percent')
-            try:
-                slope_val = float(slope_pct) if slope_pct else 0.0
-            except (ValueError, TypeError):
-                slope_val = 0.0
-
-            is_anthro_entry = merged.get('is_anthropized', {})
-            anthro_source = is_anthro_entry.get('source', '') if isinstance(is_anthro_entry, dict) else ''
-
-            # Only trust is_anthropized if it comes from a REAL source (not default)
-            if 'default' in anthro_source:
-                # Don't use default — determine from slope only
-                if slope_val > 10:
-                    qualifier = "Tot i no ser un solar pla"
-                else:
-                    qualifier = "Com que es tracta d'un solar pla"
-            else:
-                # We have real anthropization data (from ortho, user, etc.)
-                is_anthro = _get_val('is_anthropized')
-                if not is_anthro or is_anthro.lower() in ('none', ''):
-                    # No decision made — use slope only
-                    if slope_val > 10:
-                        qualifier = "Tot i no ser un solar pla"
-                    else:
-                        qualifier = "Com que es tracta d'un solar pla"
-                else:
-                    anthro = str(is_anthro).lower() not in ('false', '0')
-                    if slope_val > 10 and not anthro:
-                        qualifier = "Es tracta d'un solar no antropitzat"
-                    elif slope_val > 10:
-                        qualifier = "Tot i no ser un solar pla"
-                    elif anthro:
-                        qualifier = "Degut a que es tracta d'un solar antropitzat"
-                    else:
-                        qualifier = "Com que es tracta d'un solar pla"
-
-            site_cond = (
-                f"{qualifier}, no s'han detectat marques i/o indicis de processos "
-                f"d'erosió relacionats amb l'escolament hídric superficial, "
-                f"ni es preveu que apareguin."
-            )
-            source = f'computed (slope {slope_val:.0f}%)'
+        slope_pct = _get_val('slope_percent')
+        try:
+            slope_val = float(slope_pct) if slope_pct else 0.0
+        except (ValueError, TypeError):
+            slope_val = 0.0
+        is_anthro_entry = merged.get('is_anthropized', {})
+        anthro_source = is_anthro_entry.get('source', '') if isinstance(is_anthro_entry, dict) else ''
+        is_anthro = None if 'default' in anthro_source else (_get_val('is_anthropized') or None)
+        choice = site_condition_sentence(slope_val, is_anthro, lang)
         merged['site_condition'] = {
-            'value': site_cond,
-            'source': source,
+            'value': choice.value,
+            'source': 'computed (ES template)' if lang == 'es' else f'computed (slope {slope_val:.0f}%)',
+            'candidates': [c.value for c in choice.candidates],
         }
 
 
@@ -1041,24 +1004,15 @@ def _compute_narrative_prefills(
         bval = has_basement_entry.get('value') if isinstance(has_basement_entry, dict) else has_basement_entry
         has_basement = str(bval).lower() in ('true', '1', 'yes', 'sí', 'si')
 
-    # Detect basement from num_floors notation (Ps / PS = planta soterrani)
-    import re
+    # Clàusula sencera per criteri (2026-09-06): `narrative_criteria.building_structure_clause`, la mateixa que el
+    # generador (abans el wizard deia «en planta baixa» i la plantilla hi afegia una cua fixa que no sempre era la de l'Eva).
     if num_floors:
-        if re.search(r'\bP[Ss]\b', num_floors):
-            has_basement = True
-        # Ground-floor only: "Pb" or "PB" with no upper floors (no "Pp")
-        is_ground_only = bool(
-            re.search(r'\bP[Bb]\b', num_floors)
-        ) and not re.search(r'\bP[Pp]\b', num_floors) and not re.search(r'\d+\s*P[Pp]', num_floors, re.IGNORECASE)
-
-        if has_basement:
-            desc = 'con nivel de sótano' if lang == 'es' else 'amb nivell de soterrani'
-        elif is_ground_only:
-            desc = 'en planta baja' if lang == 'es' else 'en planta baixa'
-        else:
-            desc = 'sin nivel de sótano' if lang == 'es' else 'sense nivell de soterrani'
-
-        _set('building_structure_desc', desc, 'computed')
+        from automation.narrative_criteria import building_structure_clause
+        choice = building_structure_clause(num_floors, has_basement, lang)
+        _set('building_structure_desc', choice.value, 'computed')
+        entry = merged.get('building_structure_desc')
+        if isinstance(entry, dict):
+            entry['candidates'] = [c.value for c in choice.candidates]
 
 
 def _compute_lookup_prefills(merged: dict[str, Any], auto_result: Any) -> None:

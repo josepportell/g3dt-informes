@@ -814,16 +814,20 @@ class ReportGenerator:
             context['building_type_lower'] = (self.report_data.building_type or '').lower()
             context['num_floors'] = format_floor_notation(self.report_data.num_floors or '')
 
-            # Building structure description from num_floors
-            # "en planta baixa" when foundation starts at ground level (PB, PB+P1, etc.)
-            # "de soterrani" when there's a basement (PS, etc.)
-            num_floors_raw = (self.report_data.num_floors or '').upper()
-            if num_floors_raw.startswith('PB'):
-                context['building_structure_desc'] = 'en planta baixa'
-            elif num_floors_raw.startswith('PS'):
-                context['building_structure_desc'] = 'de soterrani'
-            else:
-                context['building_structure_desc'] = self.report_data.building_type or 'en planta baixa'
+            # Building structure: clàusula sencera després de «…construcció d'una estructura » per criteri
+            # (`narrative_criteria.building_structure_clause`, 2026-09-06): PB sol → (a) «en planta baixa, i per tant…»;
+            # amb pis → (b) «sense nivell de soterrani, i per tant…»; soterrani → (c). El valor del wizard (Eva) mana;
+            # els valors curts antics («en planta baixa») es mapegen a la clàusula. Abans: `building_type` sencer dins
+            # la frase quan les plantes eren buides (Alcoletge).
+            from .narrative_criteria import building_structure_clause, language_for_report
+            _lang = language_for_report(self.report_data, self.user_data)
+            context['report_language'] = _lang
+            _bsd = building_structure_clause(
+                self.report_data.num_floors, getattr(self.report_data, 'has_basement', None), _lang,
+                current=self.user_data.get('building_structure_desc'),
+            )
+            context['building_structure_desc'] = _bsd.value
+            context['_narr_building_structure'] = _bsd.to_dict()
 
             # Municipality uppercase
             context['municipality_upper'] = (self.report_data.municipality or '').upper()
@@ -1045,6 +1049,20 @@ class ReportGenerator:
                     self.warnings.append(f"Could not calculate slope from ICGC MDT: {e}")
                     context['is_sloped'] = getattr(self.report_data, 'is_sloped', False)
 
+            # Site condition: FRASE SENCERA per criteri (`narrative_criteria.site_condition_sentence`, 2026-09-06):
+            # pendent > 10 % → «Tot i no ser un solar pla…»; antropitzat → «Degut a que…»; si no «Com que es tracta
+            # d'un solar pla…». La plantilla ja no porta la capçalera fixa «Degut a que es tracta d'un solar {{ }}».
+            # El valor del wizard (Eva o `computed`) mana si és una frase; els valors curts antics («pla») es recalculen.
+            from .narrative_criteria import site_condition_sentence
+            _slope_pct = context.get('slope_percent') or getattr(self.report_data, 'slope_percent', None)
+            _sc = site_condition_sentence(_slope_pct, getattr(self.report_data, 'is_anthropized', None), _lang)
+            _sc_user = str(self.user_data.get('site_condition') or '').strip()
+            if len(_sc_user.split()) >= 4:
+                context['site_condition'] = _sc_user
+            else:
+                context['site_condition'] = _sc.value
+            context['_narr_site_condition'] = _sc.to_dict()
+
             # Conditional sections - Sondeig
             has_sondeig = getattr(self.report_data, 'has_sondeig', False)
             context['has_sondeig'] = has_sondeig
@@ -1194,6 +1212,7 @@ class ReportGenerator:
             context['seismic_ab_text'] = ''
             context['radon_zone'] = '1'
             context['radon_zone_description'] = ''
+            context['radon_sentence'] = ''
             context['csn_radon_text'] = ''
             for i in range(6):
                 context[f'geology_para_{i+1}'] = ''
@@ -1249,30 +1268,18 @@ class ReportGenerator:
                             f"Reviseu manualment."
                         )
                     context['radon_zone'] = str(radon_info.zone)
-                    if radon_info.zone == 0:
-                        context['radon_zone_description'] = ', municipi amb baixes concentracions de gas radó.'
-                    elif radon_info.zone == 1:
-                        context['radon_zone_description'] = (
-                            ', municipi amb concentracions mitjanes de gas radó en edificis tancats. '
-                            'Es recomana la implementació de mesures bàsiques de protecció.'
-                        )
-                    else:  # zone == 2
-                        context['radon_zone_description'] = (
-                            ', municipi amb concentracions potencialment elevades de gas radó en edificis tancats. '
-                            'És obligatòria la implementació de mesures de protecció segons CTE DB HS6.'
-                        )
+                    # Frase sencera del radó per criteri (`narrative_criteria.radon_sentence`, 2026-09-06): zona 0 →
+                    # «no pertany a cap municipi…» (Linyola), municipi en majúscules amb «de/d'». La cua antiga
+                    # («, municipi amb concentracions mitjanes… Es recomana…») no és de cap signat: buida.
+                    from .narrative_criteria import radon_sentence
+                    _rs = radon_sentence(radon_info.zone, municipality, _lang)
+                    context['radon_sentence'] = _rs.value
+                    context['_narr_radon'] = _rs.to_dict()
+                    context['radon_zone_description'] = ''
 
-                utm_x = self.report_data.utm_x
-                utm_y = self.report_data.utm_y
-                if utm_x and utm_y:
-                    try:
-                        from .csn_radon import get_radon_potential_text
-                        csn_text = get_radon_potential_text(utm_x, utm_y)
-                        if csn_text:
-                            context['csn_radon_text'] = csn_text
-                    except Exception as e:
-                        import logging
-                        logging.getLogger(__name__).warning(f"Could not get CSN radon potential: {e}")
+                # `csn_radon_text` (cartografia CSN per coordenades) NO s'emet: el paràgraf del CSN ja és text fix de la
+                # plantilla (p474) i el generador l'imprimia dues vegades. Cap signat porta el text de coordenades.
+                context['csn_radon_text'] = ''
 
             # Section-derived text variables
             context['materials_depth_text'] = ''
@@ -1309,10 +1316,8 @@ class ReportGenerator:
 
             # Conclusions geology intro (dynamic level count)
             num_levels = len(self.report_data.soil_levels) if self.report_data.soil_levels else 1
-            if num_levels == 1:
-                context['conclusions_levels_detected'] = "Es detecta un sol nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
-            else:
-                context['conclusions_levels_detected'] = f"Es detecten {num_levels} nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
+            from .narrative_criteria import levels_detected
+            context['conclusions_levels_detected'] = levels_detected(num_levels, context.get('report_language', 'ca'))
 
             # === Multi-level table context ===
             from .dpsh_extractor import GeotechCorrelations

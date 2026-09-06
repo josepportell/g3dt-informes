@@ -702,12 +702,9 @@ class Section3Generator:
             Introduction text with level count from DPSH interpretation
         """
         num_levels = len(self.data.soil_levels) if self.data.soil_levels else 1
-
-        return self.MATERIALS_INTRO_TEMPLATE.format(
-            num_levels=num_levels,
-            nivell_word=self._pluralize(num_levels, "nivell", "nivells"),
-            plural="" if num_levels == 1 else "s",
-        )
+        # Fórmula literal de l'Eva (5/5 CA, 2/2 ES): `narrative_criteria.materials_intro` (2026-09-06).
+        from ..narrative_criteria import language_for_report, materials_intro
+        return materials_intro(num_levels, language_for_report(self.data))
 
     def _get_n20_classification(self, n20: float) -> tuple[str, str, str]:
         """

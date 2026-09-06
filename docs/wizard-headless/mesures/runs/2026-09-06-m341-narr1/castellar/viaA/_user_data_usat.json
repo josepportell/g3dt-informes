@@ -1,0 +1,103 @@
+{
+ "client_name": "WOOD COMFORT PROMOCIONS SLU",
+ "street_address": "Carrer Arbrells, Nº 18A-18B-20, Castellar del Vallès (Barcelona)",
+ "site_municipality": "Castellar del Vallès",
+ "architect_name": "WOOD COMFORT PROMOCIONS SLU",
+ "building_type": "Habitatge unifamiliar aïllat",
+ "num_floors": "PB+1",
+ "superficie_parcela_m2": 1284.0,
+ "cota_referencia": "570,90 msnm (segons el plànol ICGC)",
+ "num_soil_levels": 2,
+ "utm_x": 423167.0,
+ "utm_y": 4609608.0,
+ "lab_testing_company": "TPS, Prospecció del Subsòl, SL (B64803075)",
+ "lab_sample_id": "MA1 S1",
+ "lab_depth": "-1,00 a -1,20 m",
+ "lab_location": "S-1",
+ "cte_edificacio": "C0",
+ "cte_sol": "T-1",
+ "field_work_dates": [
+  "2025-10-24"
+ ],
+ "field_work_dates_text": "24 d'octubre de 2025",
+ "lectura_tables": {
+  "dpsh_tests": [
+   {
+    "test_id": "P-1",
+    "cota": "-4.00",
+    "depth": "-1.08",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-2",
+    "cota": "-4.20",
+    "depth": "-0.48",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-3",
+    "cota": "-4.00",
+    "depth": "-0.76",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-4",
+    "cota": "-4.00",
+    "depth": "-1.55",
+    "refusal": "Si",
+    "water": "No detectat"
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "test_id": "S-1",
+    "cota": "-4.00",
+    "depth": "-1.20",
+    "spt_ma": "1/0",
+    "water": "No detectat"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "test_id": "SPT-1",
+    "location": "S-1",
+    "depth_range": "-1.00 a -1.20",
+    "n30": "R",
+    "lithology": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (NIVELL 1)"
+   }
+  ],
+  "soil_levels": [
+   {
+    "name": "Terreny Vegetal (cobertura, sense número)",
+    "litologia": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
+    "de": "0,00",
+    "a": "0,50"
+   },
+   {
+    "name": "NIVELL 1",
+    "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "de": "0,50",
+    "a": "fins al fons d'investigació (rebuig DPSH: -1,08/-0,48/-0,76/-1,55 m per punt; sondeig S-1: -1,20 m)"
+   }
+  ],
+  "superficie_construida": "120",
+  "lab": {
+   "sample_id": "MA1 S1",
+   "location": "S-1",
+   "depth": "-1,00 a -1,20 m"
+  }
+ },
+ "soil_types": [
+  "limo",
+  "rock"
+ ],
+ "foundation_depth_m": 0.3,
+ "expedient": "3001621",
+ "_metadata": {
+  "origen": "mesura_341 viaA: lectura + Df del signat",
+  "Df_assumida": 0.3
+ }
+}

@@ -203,6 +203,7 @@ class ReportData:
 
     # Descripcions del solar i treballs de camp
     site_description: str = ""
+    report_language: str = ""   # «ca» | «es» fixat per l'Eva al wizard; buit = detecció automàtica
     access_description: str = ""
     cota_referencia: str = ""
     field_work_dates: list[str] = field(default_factory=list)
@@ -657,6 +658,7 @@ def build_report_data(
         utm_y=user_data.get('utm_y'),
         # Descripcions
         site_description=user_data.get('site_description', ''),
+        report_language=str(user_data.get('report_language', '') or ''),
         access_description=user_data.get('access_description', ''),
         cota_referencia=user_data.get('cota_referencia', ''),
         field_work_dates=user_data.get('field_work_dates', []),
