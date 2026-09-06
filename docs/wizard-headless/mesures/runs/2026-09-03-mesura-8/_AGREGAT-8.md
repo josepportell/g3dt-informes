@@ -411,3 +411,18 @@ primer» i D4 «afirmació no-A contradita per la geometria → derivat afegit»
 | + **v1.9 + D3/D4** (v19) | 144 | 28 | 6 | 19 | 0 | 3 de VALOR, 0 de veredicte: Castellar i Bell-lloc `soil_levels[1].a` → «fins al fons d'investigació (…)» primer (les bases llegides 1,20 / -1,80 són la fondària del sondeig); Linyola `soil_levels[1].mostra_del_nivell` → [True (annex DPSH), False (derivat)] |
 
 Escalars idèntics (118/23/5/1/0); conflictes idèntics. **Referència per a la propera reconsolidació: `_reconsolida-2026-09-05-v19`.**
+
+## Agregat MECÀNIC (2026-09-06) — peça 1.6 T2: regles `utm_x/utm_y` i `lab_sample_id` en Python; passada LLM apagada (defecte `python`)
+
+Comprovació prèvia (Python sol, sense fusionar la `_consolida_only.json`, no versionada): la passada LLM canviava l'estat de 3
+escalars (Castellar `utm_x`/`utm_y`, Rubí `lab_sample_id`: candidats → segur, tots bons) → 115/26/5/1/0 en `python`. Amb les
+dues regles codificades (`_FIELD_PRECEDENCE`: `coordenades_gps` mana; GTL > annexos), reconsolidació
+`{slug}/_reconsolida-2026-09-06-t2/` respecte de `-v19`, **sense fusió LLM** (`reconsolida_mesura.py` ja no la fa per defecte).
+
+| Escalars (147) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| nit 8 (v19, amb LLM fusionat) | 118 | 23 | 5 | 1 | 0 | — |
+| + **T2** (t2, Python sol) | **119** | 22 | 5 | 1 | 0 | Castellar `lab_sample_id` candidats «SPT-1» → segur «MA1 S1» (or «MA-1 (S1)»: CAND → OK); Rubí `lab_sample_id` segur «SPT-1» → segur «SPT1 P3» (OK igual) |
+
+Taules idèntiques (144/28/6/19/0). Conflictes A-vs-A: Castellar 4 → 1, Rubí 1 → 0, Bell-lloc 1, Vilanova 1 (tots
+`street_address`). Cost 0. **Referència per a la propera reconsolidació: `_reconsolida-2026-09-06-t2`.**

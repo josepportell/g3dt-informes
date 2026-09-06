@@ -1,0 +1,6 @@
+NOU      architect_company      prod=segur
+CAUTELA  architect_name         or segur, prod candidats (bo dins): 'Jordi Bosch Novell'
+CAUTELA  cte_edificacio         or segur, prod candidats (bo dins): 'C-1'
+CAUTELA  cte_sol                or segur, prod candidats (bo dins): 'T-1'
+CAUTELA  municipality           or segur, prod candidats (bo dins): "Bell-lloc d'Urgell"
+TOTALS: {'NOU': 1, 'CAUTELA': 4, 'OK': 17}

@@ -2903,3 +2903,88 @@ on la lectura 1.6 va deixar `n30: null` amb la «R» a la cita. Permís del Jose
 1.6 T2. Referència per a la propera reconsolidació: `_reconsolida-2026-09-05-v19`.
 
 *Fi entrada 2026-09-05 (nit, 8). Un document més (1,09 USD): la regla funciona i el lector veu colors que abans no mirava.*
+
+## 2026-09-06 — Peça 1.6 T2: la passada LLM de conflictes s'apaga (defecte `python`) després de codificar en Python les dues regles que aplicava; escalars 118 → 119 OK, conflictes A-vs-A 7 → 3, cost 0
+
+### Context
+El handoff del 05 (23:15) deia que la passada `claude -p --consolida --only-fields` «no ha canviat cap valor» (9 de 9 cel·les
+iguals) i demanava només decidir el defecte. En obrir la sessió s'ha repetit la comprovació de debò (consolidació Python
+SENSE fusionar la `_consolida_only.json` cachejada, que la v19 ja portava dins: la comparació d'ahir era tautològica, la trampa
+que el mateix handoff avisava): la passada SÍ que canviava l'estat de 3 cel·les d'escalars, totes de `candidats` a `segur` i
+totes correctes contra l'or — Castellar `utm_x`/`utm_y` (423167/4609608) i Rubí `lab_sample_id` («SPT-1»). En mode `python`
+el marcador queia a **115 OK (78 %) / 26 CAND**, sota el llindar del 80 %. Cost de la passada, de la telemetria: 205-264 s i
+0,94-1,08 USD per projecte, Tulipa 523 s i 1,95 USD, un primer intent penjat (Vilanova, 292 s, rc=1). El Josep ha triat
+l'opció 1: codificar primer les dues regles, després apagar la passada.
+
+### Decisions arquitectòniques clau
+1. **`utm_x`/`utm_y`: `COORDENADES.txt` mana (precedència per camp, `_FIELD_PRECEDENCE`, nivell únic `coordenades_gps`).**
+   És la regla Pas 3 que el propi senyal Python ja declarava («UTM de l'informe = P-1 de COORDENADES.txt»). El caixetí de
+   l'annex de sondeig de Castellar (423182/4609623) és exactament l'entrada S-1 del mateix fitxer: no contradiu P-1, és un
+   altre punt. `_annotate_utm_other_points` ho anota a `altres` («= punt S-1 de COORDENADES.txt (…), no P-1: corroboració»,
+   ±1 m sobre l'eix del camp). **Alternativa rebutjada:** descartar només els valors que coincideixin amb un altre punt (els
+   dos eixos) — més codi per al mateix resultat, i el criteri és «el fitxer de camp mana», no «coincideix per casualitat»;
+   la nota conserva l'explicació. Sense el fitxer, els lectors competeixen com sempre (test).
+2. **`lab_sample_id`: GTL > annexos de l'Eva (sondeig, DPSH); comanda i full manuscrit fora de la llista.** Evidència als
+   4 signats amb GTL: Castellar «MA-1 (S1)» = GTL «MA1 S1» (NO l'annex «SPT-1»), Bell-lloc «SPT1 S1» = GTL, Rubí i Linyola
+   «SPT-1 (P3)» = GTL «SPT1 P3». La regla del skill (Pas 3: «l'annex de l'Eva mana per l'etiqueta») i la resposta de l'LLM
+   (annex > GTL, candidats amb «SPT-1» primer a Castellar) contradiuen el signat de Castellar. El «P3» del manuscrit («Assaig
+   de referència») és el PUNT, no l'etiqueta: fora de la llista, corrobora i no bloqueja (era l'únic bloquejador de Rubí).
+   **Alternativa rebutjada:** la comanda com a tercer nivell, com a `lab_depth` (F1) — sense GTL ni annex (Alcoletge,
+   Vilanova, Anciles) la cel·la pujaria a `segur` des de la comanda sola i els tres ors són `candidats`: el comparador ho
+   marca ALERTA «prod puja a segur». Es queden en candidats, com l'or. **Pregunta 12 a l'Eva continua oberta** (tipus de
+   mostra SPT/MA a Castellar): si l'annex ha de manar, s'inverteixen els dos nivells (una línia).
+3. **Defecte del runner `G3DT_LECTURA_CONSOLIDA=python`** (`runner._load_config`; el mode invàlid també hi cau). `auto` i
+   `llm` continuen disponibles per variable d'entorn per a mesures. Efecte per a l'Eva: 3-5 min menys per projecte i un
+   punt de fallada menys; els conflictes que quedin es veuen com a `candidats` amb tots els candidats, que és exactament
+   el que l'LLM tornava per a `street_address`.
+4. **El script de mesura fa el mateix que el runner:** `reconsolida_mesura.py` ja NO fusiona la `_consolida_only.json`
+   cachejada; `--amb-llm` ho fa (les mesures fins a `-v19` la porten dins, `llm_only_fields: True`).
+5. **No fet, a posta:** reordenar els clústers per nivell de precedència (si dos caixetins coincidissin en S-1 i
+   superessin en recompte el fitxer, P-1 no manaria). Cap cas al corpus; queda com a limitació apuntada, no com a codi.
+
+### Implementació
+- `automation/lectura/consolidate.py`: `_FIELD_PRECEDENCE` (+3 entrades amb el racional), `_annotate_utm_other_points`
+  (cridada a la branca `segur` de `decide`). ~40 línies.
+- `automation/lectura/runner.py`: defecte `python` + comentari (5 línies).
+- `docs/wizard-headless/mesures/reconsolida_mesura.py`: `--amb-llm`, docstring.
+- Tests: `test_T2_utm_coordenades_p1_wins_over_annex_caixeti_and_notes_the_other_point`,
+  `test_T2_lab_sample_id_gtl_wins_over_eva_annex_and_manuscript_reference_test`; runner
+  `test_default_consolida_mode_is_python_no_llm_pass` (nou) i `test_invalid_consolida_mode_falls_back_to_python` (rebatejat);
+  2 assercions del test sintètic (`test_synthetic_project_contract_clean_and_fields`) codificaven la regla antiga
+  («annex SPT-1 vs GTL MA1 S1 → candidats»; «P-1 vs S-1 → candidats») i s'han girat al comportament nou.
+
+### Validació empírica (reconsolidació dels 7, `_reconsolida-2026-09-06-t2` vs `-v19`, SENSE fusió LLM)
+- **2 cel·les canvien, cap regressió:** Castellar `lab_sample_id` candidats «SPT-1» → **segur «MA1 S1»** (CAND → OK; or
+  «MA-1 (S1)»); Rubí `lab_sample_id` segur «SPT-1» (LLM) → segur «SPT1 P3» (GTL; OK igual). Castellar `utm_x`/`utm_y`
+  conserven `segur` sense l'LLM.
+- Escalars **118/23/5/1/0 → 119 OK (81 %) / 22 CAND (15 %) / 5 ALERTA / 1 blanc / 0 ERR**; taules **144/28/6/19/0**
+  idèntiques. Sense les regles, en `python`: 115/26/5/1/0 (mesurat al scratch, no versionat).
+- Conflictes A-vs-A: Castellar 4 → 1, Rubí 1 → 0, Bell-lloc 1, Vilanova 1 (els tres que queden són `street_address`);
+  total 7 → 3. Ni tan sols en mode `auto` es cridaria l'LLM a Rubí.
+
+### Tests
+Consolidador 163 verds (+2); runner +1. Suite sencera: **31 vermells / 2094 verds / 5 omesos**, noms IDÈNTICS a
+`suite-vermells-esperats.txt` (234 s).
+
+### Latència / cost
+0 USD (cap lectura). Per projecte nou de l'Eva: −205…−264 s (−523 s a Tulipa) i −1 USD de subscripció.
+
+### Limitacions conegudes
+- La precedència filtra qui bloqueja, no qui és primer: si el clúster de P-1 no fos el primer per recompte, no manaria
+  (decisió 5). Cap cas al corpus.
+- `_annotate_utm_other_points` compara un sol eix a ±1 m; el camp `utm_x` no sap si `utm_y` coincideix també.
+- `street_address` amb dues fonts A discrepants (Castellar 18A vs 18A-18B-20; Bell-lloc dues vies de cantonada; Vilanova
+  amb/sense número) es queda en `candidats`: l'LLM tampoc ho resolia (tornava candidats). És l'entrada de la via A
+  d'adreces (`docs/DISSENY-ADRECES-I-MUNICIPI-2026-09-01.md`), no d'aquesta peça.
+- Sense GTL ni annex, `lab_sample_id` es queda en candidats (Alcoletge, Vilanova, Anciles = or).
+
+### GO/NO-GO
+- ✅ Les dues regles reprodueixen (i milloren) el que feia la passada LLM: +1 OK, 0 regressions, taules intactes.
+- ✅ Defecte `python`, tests del defecte i del mode invàlid; ✅ suite idèntica.
+- ⏳ Commit (decisió del Josep). ⏳ Pregunta 12 (Eva) pot invertir els nivells de `lab_sample_id`.
+
+### Següents passos
+1.7 amb l'Eva (R4 CTE imprès, persona/despatx; preguntes 11-13) i bloc 2 (P0, P2a, P2b, M341 amb línia base abans de
+codificar). Referència per a la propera reconsolidació: **`_reconsolida-2026-09-06-t2`**.
+
+*Fi entrada 2026-09-06. T2: abans d'apagar una passada, mesurar-la de debò; les dues regles que valia la pena tenir ja són Python.*

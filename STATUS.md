@@ -1,5 +1,16 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-05 (nit, 8) — **Skill v1.9 validat** (re-lectura de l'annex DPSH de Linyola, 1,09 USD: la «R» impresa surt
+Last updated: 2026-09-06 — **Peça 1.6 T2 FETA (cost 0): la passada LLM de conflictes s'apaga** (`G3DT_LECTURA_CONSOLIDA=python`
+per defecte) després de codificar en Python les dues regles que aplicava: `utm_x`/`utm_y` → `COORDENADES.txt` mana (el caixetí
+de l'annex de sondeig de Castellar és el punt S-1, anotat), `lab_sample_id` → GTL > annexos de l'Eva (4/4 signats amb GTL; el
+«P3» del manuscrit és el punt, no l'etiqueta). La comprovació d'obertura ha desmentit el handoff («9/9 iguals»): sense l'LLM
+queien 3 cel·les (115 OK, 78 %). Reconsolidació `_reconsolida-2026-09-06-t2` vs v19, sense fusió LLM: **2 cel·les, 0
+regressions**; escalars **119 OK (81 %) / 22 CAND / 5 / 1 / 0**, taules **144/28/6/19/0** idèntiques; conflictes A-vs-A 7 → 3
+(tots `street_address`). Per a l'Eva: 3-5 min i ~1 USD menys per projecte, un punt de fallada menys. Suite: 31 vermells
+idèntics / 2094 verds. Commits del matí: `4c0e60d` (1.4), `19d6ca1` (1.5 + v1.9); T2 sense commit. **Referència:
+`_reconsolida-2026-09-06-t2`.** **Següent: 1.7 (Eva: R4, persona/despatx, preguntes 11-13) i bloc 2.** Detall: DECISION-LOG
+2026-09-06.
+
+Anterior (nit, 8) — **Skill v1.9 validat** (re-lectura de l'annex DPSH de Linyola, 1,09 USD: la «R» impresa surt
 com a valor «sense registre»). El lector 1.9 llegeix també la columna de colors «Nivells» de l'annex DPSH (nivells per punt): D3
 ara posa «fins al fons d'investigació» primer quan les bases llegides són fondàries de rebuig/sondeig (Linyola, Bell-lloc,
 Castellar), D4 afegeix el derivat geomètric quan un document no-A afirma el contrari (Linyola nivell 2: [Sí annex, No derivat]).

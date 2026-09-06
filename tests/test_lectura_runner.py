@@ -886,9 +886,16 @@ def test_auto_second_run_uses_cached_decisions(synth_project, base_env, monkeypa
     assert result.decisions["fields"]["expedient"]["value"] == "EXP1"
 
 
-def test_invalid_consolida_mode_falls_back_to_auto(monkeypatch):
+def test_invalid_consolida_mode_falls_back_to_python(monkeypatch):
     monkeypatch.setenv("G3DT_LECTURA_CONSOLIDA", "whatever")
-    assert lectura_runner._load_config()["consolida"] == "auto"
+    assert lectura_runner._load_config()["consolida"] == "python"
+
+
+def test_default_consolida_mode_is_python_no_llm_pass(monkeypatch):
+    """T2 (2026-09-06): sense variable d'entorn el runner consolida NOMES amb Python (cap crida `--only-fields`);
+    `auto` i `llm` continuen disponibles per a mesures."""
+    monkeypatch.delenv("G3DT_LECTURA_CONSOLIDA", raising=False)
+    assert lectura_runner._load_config()["consolida"] == "python"
 
 
 # ---------------------------------------------------------------------------

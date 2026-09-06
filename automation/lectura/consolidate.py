@@ -144,6 +144,21 @@ _RC_RE = re.compile(r"(?<![0-9A-Z])(\d{7}[A-Z]{2}\d{4}[A-Z]|\d{5}[A-Z]\d{8})(\d{
 _FIELD_PRECEDENCE: dict[str, tuple[frozenset[str], ...]] = {
     "cota_referencia": (frozenset({"annex_dpsh", "annex_sondeig", "annex_tall"}),),
     "lab_depth": (frozenset({"informe_laboratori"}), frozenset({"annex_sondeig"}), frozenset({"comanda_lab_g3"})),
+    # T2 (2026-09-06, peca 1.6): les dues regles que la passada LLM `--only-fields` aplicava a la mesura dels 8 (Castellar
+    # utm_x/utm_y, Rubi lab_sample_id: 3 cel·les OK → CAND en mode `python`), codificades perque el defecte del runner
+    # pugui ser `python` sense perdua.
+    # - `utm_x` / `utm_y`: `COORDENADES.txt` (GPS de camp de l'Eva; P-1 per regla Pas 3) mana sobre qualsevol caixeti. El
+    #   de l'annex de sondeig dona la UTM del punt S-1 (coincideix amb l'entrada S-1 del fitxer: `_annotate_utm_other_points`
+    #   ho anota), no una contradiccio de P-1. Sense el fitxer, els lectors competeixen com sempre.
+    # - `lab_sample_id`: GTL > annexos de l'Eva (sondeig, DPSH). Signats: Castellar «MA-1 (S1)» = GTL «MA1 S1» (no l'annex
+    #   «SPT-1»); Rubi i Linyola «SPT-1 (P3)» = GTL «SPT1 P3»; Bell-lloc «SPT1 S1» = GTL. El full manuscrit («Assaig de
+    #   referencia» = el PUNT: «P3», Rubi) i la comanda (etiqueta prevista) queden fora de la llista: corroboren, mai
+    #   bloquegen. La comanda NO hi es a posta: sense GTL ni annex (Alcoletge, Vilanova, Anciles) la cel·la es queda en
+    #   candidats, com l'or (el comparador marca ALERTA si prod puja a segur on l'or te candidats). Pregunta 12 a l'Eva
+    #   (tipus de mostra SPT/MA a Castellar) continua oberta: si l'annex ha de manar, s'inverteixen els dos nivells.
+    "utm_x": (frozenset({"coordenades_gps"}),),
+    "utm_y": (frozenset({"coordenades_gps"}),),
+    "lab_sample_id": (frozenset({"informe_laboratori"}), frozenset({"annex_sondeig", "annex_dpsh"})),
 }
 #: «+199,50 msnm segons el planol topografic ICGC (-0,15 carrer)» i «199,50 m» son el mateix valor: la clau es el nombre.
 _LEADING_COTA_RE = re.compile(r"^\s*([+\-−]?\d{2,4}(?:[.,]\d+)?)\s*(?:m\b|msnm)", re.IGNORECASE)
@@ -314,6 +329,34 @@ def _precedence_tier(c: "Cluster", field_name: str | None) -> int:
                 best = min(best, i)
                 break
     return best
+
+
+def _annotate_utm_other_points(top: "Cluster", altres: list[dict], field_name: str | None) -> None:
+    """T2: un valor UTM d'un altre document que coincideix (±1 m) amb un ALTRE punt de `COORDENADES.txt` es la coordenada
+    d'aquell punt (Castellar: el caixeti de l'annex de sondeig dona S-1), no una contradiccio de P-1: s'anota a `altres`."""
+    if field_name not in ("utm_x", "utm_y"):
+        return
+    axis = "x" if field_name == "utm_x" else "y"
+    punts = next((s.extra.get("punts") for s in top.signals if s.doc_type == "coordenades_gps" and s.extra.get("punts")), None)
+    if not punts:
+        return
+    first = next((p for p in punts if str(p.get("punt", "")).upper() in ("P-1", "P1")), punts[0])
+    for c in altres:
+        try:
+            v = float(str(c.get("value", "")).replace(",", "."))
+        except ValueError:
+            continue
+        for p in punts:
+            if p is first:
+                continue
+            try:
+                hit = abs(float(str(p.get(axis)).replace(",", ".")) - v) <= 1.0
+            except (TypeError, ValueError):
+                continue
+            if hit:
+                c["note"] = (f"= punt {p.get('punt')} de COORDENADES.txt ({p.get('x')}/{p.get('y')}), no P-1: corroboracio, "
+                             f"no contradiccio (T2)" + (f"; {c['note']}" if c.get("note") else ""))
+                break
 
 
 def _is_other_field_day(c: "Cluster", top: "Cluster") -> bool:
@@ -813,6 +856,7 @@ def decide(
             if id(c) in other_ids:
                 continue
             altres.extend(s.as_candidate() for s in sorted(c.signals, key=_prefer_form, reverse=True))
+        _annotate_utm_other_points(top, altres, field_name)
     else:
         candidates, altres = _distinct_candidates(clusters, abs_numbers=abs_numbers, field_name=field_name)
     extra_cell: dict | None = None

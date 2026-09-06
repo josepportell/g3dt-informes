@@ -866,16 +866,20 @@ def test_synthetic_project_contract_clean_and_fields(synth):
     assert f["num_dpsh_tests"]["estat"] == "segur" and str(f["num_dpsh_tests"]["value"]) == "2"
     assert f["lab_depth"]["estat"] == "segur" and f["lab_depth"]["value"] == "1,0 - 1,6 m"  # GTL (A 0.9) mana sobre l'annex
     assert f["lab_testing_company"]["estat"] == "segur"
-    assert f["lab_sample_id"]["estat"] == "candidats"  # annex SPT-1 vs GTL MA1 S1 → candidats (Pas 3)
+    # T2 (2026-09-06): el GTL mana sobre l'annex per a l'etiqueta (signat Castellar «MA-1 (S1)»); l'annex SPT-1 queda a altres
+    assert f["lab_sample_id"]["estat"] == "segur" and f["lab_sample_id"]["value"] == "MA1 S1"
+    assert any(c["value"] == "SPT-1" for c in f["lab_sample_id"]["altres"])
     assert f["lab_location"]["estat"] == "segur"  # convergencia GTL + annex + ... (S1 == S-1)
     assert f["num_soil_levels"]["estat"] == "candidats"  # manuscrit diu 2 (0.45)
     assert f["referencia_catastral"]["estat"] == "candidats"  # 0,6 sense `authority_for`: cap autoritat de camp (R5)
     assert f["superficie_parcela"]["estat"] == "segur"  # unica font, 1 RC
     assert f["cte_edificacio"]["estat"] == "no_trobat" and f["cte_sol"]["estat"] == "candidats"
     assert f["cte_sol"]["candidates"][0]["font"].startswith("(coneixement previ")
-    # UTM: COORDENADES P-1 (python, A) vs annex sondeig S-1 (0.6) → candidats amb P-1 primer
-    assert f["utm_x"]["estat"] == "candidats" and f["utm_x"]["value"] == "300000.0"
+    # UTM: COORDENADES P-1 (python, A) vs annex sondeig S-1 (0.6) → T2: el fitxer mana → segur P-1; el valor de l'annex
+    # es exactament el punt S-1 del mateix fitxer i queda a `altres` amb la nota
+    assert f["utm_x"]["estat"] == "segur" and f["utm_x"]["value"] == "300000.0"
     assert "COORDENADES.txt" in f["utm_x"]["candidates"][0]["font"]
+    assert any(str(c["value"]) == "300010.0" and c.get("note", "").startswith("= punt S-1") for c in f["utm_x"]["altres"])
     # cota_referencia: annex DPSH +250,00 (A) = sondeig 250.00; la z GPS 250.5 de COORDENADES es un concepte vei (R2):
     # corrobora o fa de recanvi, mai bloqueja → segur, i la z queda a `altres`
     assert f["cota_referencia"]["estat"] == "segur"
@@ -2238,3 +2242,69 @@ def test_D14_sample_level_claimed_by_a_weak_document_gets_the_geometric_alternat
     assert m2["estat"] == "candidats" and [c["value"] for c in m2["candidates"]] == [True, False]
     assert m2["candidates"][1]["font"].startswith("(derivat: la mostra de laboratori 1,00-1,15 m a P-3 cau fora del nivell")
     assert [c["value"] for c in rows[0]["mostra_del_nivell"]["candidates"]] == [True]
+
+
+# ---------------------------------------------------------------------------
+# T2 (2026-09-06, peça 1.6): les dues regles que la passada LLM `--only-fields` aplicava, codificades com a precedència
+# per camp (`_FIELD_PRECEDENCE`), perquè el defecte del runner sigui `python` sense pèrdua.
+# ---------------------------------------------------------------------------
+
+
+def _gps_signal(field: str, value: str, punts: list[dict]) -> "C.Signal":
+    return C.Signal(field, value, "ANNEXES/ALTRES/COORDENADES.txt (P-1)", punts[0]["raw"], 0.9,
+                    "ANNEXES/ALTRES/COORDENADES.txt", "coordenades_gps", "python",
+                    "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt", is_a=True, extra={"punts": punts})
+
+
+def test_T2_utm_coordenades_p1_wins_over_annex_caixeti_and_notes_the_other_point():
+    """Castellar: COORDENADES.txt P-1 423167/4609608 (A, Python) vs caixetí de l'annex de sondeig 423182/4609623 (A, 0,85),
+    que és exactament el punt S-1 del mateix fitxer → segur P-1; el valor de l'annex queda a `altres` amb la nota «= punt
+    S-1». Sense el fitxer, dos caixetins discrepants → candidats com sempre."""
+    punts = [{"punt": "P-1", "x": "423167.0", "y": "4609608.0", "z": "571.5", "raw": "P-1: 423167.0 ; 4609608.0 ; 571.5"},
+             {"punt": "S-1", "x": "423182.0", "y": "4609623.0", "z": "570.0", "raw": "S-1: 423182.0 ; 4609623.0 ; 570.0"},
+             {"punt": "P-3", "x": "423195.0", "y": "4609636.0", "z": "569.0", "raw": "P-3: 423195.0 ; 4609636.0 ; 569.0"}]
+    for field, p1, s1 in (("utm_x", "423167.0", "423182.0"), ("utm_y", "4609608.0", "4609623.0")):
+        cell = C.decide([_gps_signal(field, p1, punts), _sig(field, s1, 0.85, doc="sondeig", doc_type="annex_sondeig")],
+                        sources_checked=["coordenades", "sondeig"], field_name=field)
+        assert cell["estat"] == "segur" and cell["value"] == p1, cell
+        alt = [c for c in cell["altres"] if str(c["value"]) == s1]
+        assert alt and alt[0]["note"].startswith("= punt S-1 de COORDENADES.txt"), cell["altres"]
+    # un valor que no és cap punt del fitxer tampoc bloqueja (el fitxer mana), però no porta la nota
+    other = C.decide([_gps_signal("utm_x", "423167.0", punts), _sig("utm_x", "423300.0", 0.85, doc="planol", doc_type="annex_planol_situacio")],
+                     sources_checked=["coordenades"], field_name="utm_x")
+    assert other["estat"] == "segur" and not any("COORDENADES" in c.get("note", "") for c in other["altres"])
+    two = C.decide([_sig("utm_x", "423182.0", 0.85, doc="sondeig", doc_type="annex_sondeig"),
+                    _sig("utm_x", "423300.0", 0.85, doc="planol", doc_type="annex_planol_situacio")],
+                   sources_checked=["sondeig"], field_name="utm_x")
+    assert two["estat"] == "candidats"
+
+
+def test_T2_lab_sample_id_gtl_wins_over_eva_annex_and_manuscript_reference_test():
+    """Castellar: GTL + LAB-SIG «MA1 S1» (A) vs annex de sondeig «SPT-1» (A) vs comanda «MA (S1)» → segur «MA1 S1» (signat:
+    «MA-1 (S1)»), l'annex a `altres`. Rubí: GTL «SPT1 P3» vs full manuscrit «P3» («Assaig de referència» = el punt) → segur.
+    Sense GTL, l'annex de l'Eva mana sobre el full de camp; comanda vs full de camp sols → candidats (Alcoletge, Vilanova:
+    l'or també). Dos GTL discrepants es contradiuen (mateix nivell)."""
+    castellar = C.decide([_sig("lab_sample_id", "MA1 S1", 0.9, doc="gtl", doc_type="informe_laboratori"),
+                          _sig("lab_sample_id", "MA1 S1", 0.85, doc="lab-sig", doc_type="informe_laboratori"),
+                          _sig("lab_sample_id", "SPT-1", 0.85, doc="sondeig", doc_type="annex_sondeig"),
+                          _sig("lab_sample_id", "MA (S1)", 0.7, doc="comanda", doc_type="comanda_lab_g3", origin="g3_templates")],
+                         sources_checked=["gtl"], field_name="lab_sample_id")
+    assert castellar["estat"] == "segur" and castellar["value"] == "MA1 S1", castellar
+    assert any(c["value"] == "SPT-1" for c in castellar["altres"])
+    rubi = C.decide([_sig("lab_sample_id", "SPT1 P3", 0.9, doc="gtl", doc_type="informe_laboratori"),
+                     _sig("lab_sample_id", "P3", 0.85, doc="penetros", doc_type="full_camp_manuscrit"),
+                     _sig("lab_sample_id", "SPT-1", 0.6, doc="dpsh", doc_type="annex_dpsh")],
+                    sources_checked=["gtl"], field_name="lab_sample_id")
+    assert rubi["estat"] == "segur" and rubi["value"] == "SPT1 P3", rubi
+    annex = C.decide([_sig("lab_sample_id", "SPT-1", 0.85, doc="sondeig", doc_type="annex_sondeig"),
+                      _sig("lab_sample_id", "P3", 0.85, doc="penetros", doc_type="full_camp_manuscrit")],
+                     sources_checked=["sondeig"], field_name="lab_sample_id")
+    assert annex["estat"] == "segur" and annex["value"] == "SPT-1"
+    weak = C.decide([_sig("lab_sample_id", "SPT -1 (P3)", 0.9, doc="comanda", doc_type="comanda_lab_g3", origin="g3_templates"),
+                     _sig("lab_sample_id", "SPT P3", 0.85, doc="penetros", doc_type="full_camp_manuscrit")],
+                    sources_checked=["comanda"], field_name="lab_sample_id")
+    assert weak["estat"] == "candidats"
+    two = C.decide([_sig("lab_sample_id", "MA1 S1", 0.9, doc="gtl", doc_type="informe_laboratori"),
+                    _sig("lab_sample_id", "SPT1 S1", 0.9, doc="gtl2", doc_type="informe_laboratori")],
+                   sources_checked=["gtl"], field_name="lab_sample_id")
+    assert two["estat"] == "candidats"

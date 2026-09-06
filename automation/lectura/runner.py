@@ -169,14 +169,16 @@ def _load_config() -> dict[str, Any]:
             effort, _VALID_EFFORTS,
         )
         effort = "xhigh"
-    # Fase 12: consolidacio Python-first. `auto` = Python + crida LLM `--only-fields` NOMES si hi ha
-    # conflictes A-vs-A; `python` = mai LLM (els conflictes queden `candidats`); `llm` = crida
-    # `--consolida` sencera (comportament de les Fases 3-11, per mesurar o com a pla B).
-    consolida = os.getenv("G3DT_LECTURA_CONSOLIDA", "auto").strip().lower() or "auto"
+    # Fase 12: consolidacio Python-first. `python` (DEFECTE des de T2, 2026-09-06) = mai LLM: els conflictes A-vs-A
+    # queden `candidats` amb tots els candidats visibles; `auto` = Python + crida LLM `--only-fields` NOMES si hi ha
+    # conflictes A-vs-A (a la mesura dels 8 costava 200-290 s i ~1 USD per projecte i nomes aportava dues regles, ara
+    # codificades a `consolidate._FIELD_PRECEDENCE`: utm_x/utm_y i lab_sample_id); `llm` = crida `--consolida` sencera
+    # (comportament de les Fases 3-11, per mesurar o com a pla B).
+    consolida = os.getenv("G3DT_LECTURA_CONSOLIDA", "python").strip().lower() or "python"
     if consolida not in _VALID_CONSOLIDA_MODES:
-        logger.warning("G3DT_LECTURA_CONSOLIDA=%r invalid (valors valids: %s); fent servir auto",
+        logger.warning("G3DT_LECTURA_CONSOLIDA=%r invalid (valors valids: %s); fent servir python",
                        consolida, _VALID_CONSOLIDA_MODES)
-        consolida = "auto"
+        consolida = "python"
     # `shutil.which` honora PATHEXT: a Windows amb `npm install -g
     # @anthropic-ai/claude-code` nomes hi ha `claude.cmd`, i `CreateProcess` no
     # sap executar el nom pelat "claude" (`FileNotFoundError` a cada document,
