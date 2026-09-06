@@ -1,5 +1,8 @@
 # FOR NEW YOU — 2026-09-07 — Bloc 1 tancat en codi (1.1 → 1.6), tot commitejat (T2 = `676070b`); següent 1.7 (Eva) i bloc 2
 
+> **Substituït el mateix dia (17:05) per `_FOR-NEW-YOU-20260907-1705.md`** (bloc 2 fet i commitejat). Aquest document continua vigent per al costat de LECTURA (bloc 1).
+
+
 **Escrit:** 2026-09-06, 13:50 (retocat 14:05: T2 commitejat). Per a la sessió següent (1.7 amb l'Eva; bloc 2).
 Substitueix `_FOR-NEW-YOU-20260905-2315.md` com a punt d'entrada; conserva'l (§Regles d'interpretació, §Invariants dels
 derivats, §Procediments de re-lectura parcial continuen vigents i no es repeteixen aquí). Branca `experiment/nivell-a-2026-08`,
