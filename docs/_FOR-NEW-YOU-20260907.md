@@ -1,6 +1,6 @@
-# FOR NEW YOU — 2026-09-07 — Bloc 1 tancat en codi (1.1 → 1.6): T2 fet i sense commit; següent 1.7 (Eva) i bloc 2
+# FOR NEW YOU — 2026-09-07 — Bloc 1 tancat en codi (1.1 → 1.6), tot commitejat (T2 = `676070b`); següent 1.7 (Eva) i bloc 2
 
-**Escrit:** 2026-09-06, 13:50. Per a la sessió següent (commit de T2 si el Josep ho diu; 1.7 amb l'Eva; bloc 2).
+**Escrit:** 2026-09-06, 13:50 (retocat 14:05: T2 commitejat). Per a la sessió següent (1.7 amb l'Eva; bloc 2).
 Substitueix `_FOR-NEW-YOU-20260905-2315.md` com a punt d'entrada; conserva'l (§Regles d'interpretació, §Invariants dels
 derivats, §Procediments de re-lectura parcial continuen vigents i no es repeteixen aquí). Branca `experiment/nivell-a-2026-08`,
 in-place a `g3dt-prod/` (estat esperat).
@@ -8,7 +8,7 @@ in-place a `g3dt-prod/` (estat esperat).
 **En una frase:** el matí ha commitejat 1.4 i 1.5 (`4c0e60d`, `19d6ca1`) i ha fet la peça 1.6 T2 a cost 0: la passada LLM de
 conflictes (`claude -p --consolida --only-fields`) queda apagada per defecte després de codificar en Python les dues regles
 que aportava; escalars **118/23/5/1/0 → 119 OK (81 %) / 22 CAND / 5 / 1 / 0**, taules **144/28/6/19/0** intactes, conflictes
-A-vs-A 7 → 3, suite 31 vermells idèntics. **T2 NO està commitejat** (11 fitxers modificats + `_reconsolida-2026-09-06-t2/` ×7).
+A-vs-A 7 → 3, suite 31 vermells idèntics. **T2 commitejat: `676070b`** (33 fitxers: codi, tests, docs, `_reconsolida-2026-09-06-t2/` ×7, sessió). Arbre net.
 
 ## Ordre de lectura (15 min)
 
@@ -95,12 +95,9 @@ rm -f docs/diagnostics/ai_pipeline_demo-project_$(date +%Y%m%d).md   # la suite 
 
 ## Seqüència d'obertura suggerida
 
-1. `git branch --show-current` + `git status --short` (esperat: 11 modificats + 7 `_reconsolida-2026-09-06-t2/` + la sessió
-   del 06 si no s'ha commitejat; res més). Si hi ha altres coses, atura't.
-2. **Pregunta al Josep si commiteja T2** (un sol commit: codi + tests + docs + `-t2/` ×7 + sessió). Missatge proposat:
-   «peça 1.6 T2: regles `utm_x/utm_y` (COORDENADES.txt mana) i `lab_sample_id` (GTL > annexos) a `_FIELD_PRECEDENCE`,
-   passada LLM apagada (defecte `python`), `reconsolida_mesura.py --amb-llm` — escalars 118→119 OK (81 %), taules idèntiques,
-   conflictes 7→3, cost 0».
+1. `git branch --show-current` + `git status --short` (esperat: arbre NET; `git log --oneline -4` = `676070b` T2,
+   `1040591` handoff, `19d6ca1` 1.5, `4c0e60d` 1.4). Si hi ha canvis pendents, atura't i pregunta.
+2. `git show --stat 676070b` si vols veure exactament què és T2 (33 fitxers).
 3. Reprodueix la línia base t2 amb `agrega_mesura.py` (119/22/5/1/0; 144/28/6/19/0). Si no coincideix, atura't.
 4. Tests dels 4 mòduls (verd) abans de tocar res.
 5. Decideix amb el Josep l'ordre: 1.7 necessita l'Eva (R4 CTE imprès: 9 cel·les `cte_*`; persona/despatx `architect_name`
@@ -122,7 +119,6 @@ rm -f docs/diagnostics/ai_pipeline_demo-project_$(date +%Y%m%d).md   # la suite 
 
 ## Tasques obertes
 
-- **Commit de T2** (decisió del Josep; obertura 2).
 - **1.7 (amb l'Eva):** R4 CTE imprès, persona/despatx; preguntes 11-13 de `docs/PREGUNTES-EVA-PENDENTS.md`. La 12 (SPT-1 vs
   MA-1 a Castellar) decideix si `lab_sample_id` es queda GTL > annex (ara) o s'inverteix (una línia a `_FIELD_PRECEDENCE`).
 - **Pendents de revisió del Josep** (`STATUS.md` §): or d'Alcoletge `soil_levels[1].a` (`no_trobat` vs «fins al fons»);

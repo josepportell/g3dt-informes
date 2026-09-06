@@ -6,7 +6,7 @@ de l'annex de sondeig de Castellar és el punt S-1, anotat), `lab_sample_id` →
 queien 3 cel·les (115 OK, 78 %). Reconsolidació `_reconsolida-2026-09-06-t2` vs v19, sense fusió LLM: **2 cel·les, 0
 regressions**; escalars **119 OK (81 %) / 22 CAND / 5 / 1 / 0**, taules **144/28/6/19/0** idèntiques; conflictes A-vs-A 7 → 3
 (tots `street_address`). Per a l'Eva: 3-5 min i ~1 USD menys per projecte, un punt de fallada menys. Suite: 31 vermells
-idèntics / 2094 verds. Commits del matí: `4c0e60d` (1.4), `19d6ca1` (1.5 + v1.9); T2 sense commit. **Referència:
+idèntics / 2094 verds. Commits: `4c0e60d` (1.4), `19d6ca1` (1.5 + v1.9), `676070b` (T2); arbre net. **Referència:
 `_reconsolida-2026-09-06-t2`.** **Següent: 1.7 (Eva: R4, persona/despatx, preguntes 11-13) i bloc 2.** Detall: DECISION-LOG
 2026-09-06.
 
