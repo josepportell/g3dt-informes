@@ -6,6 +6,8 @@ escriu `_decisions.json` amb tres estats per camp: `segur` / `candidats` / `no_t
 
 <command-name>g3dt-llegir-projecte</command-name>
 
+v1.9 (2026-09-05, nit): un N30 IMPRÈS («R» o un número) sense registre de cops és una lectura, no una inferència: candidat amb nota «sense registre». Linyola: la «R» era a 3 documents (annex DPSH p.3 «SPT-1 / 1,0 a 1,5 / R», tall «N=R» al contacte de P-3, full manuscrit «50» al primer tram) i el lector 1.6 va deixar el valor buit per «sempre registre».
+v1.8 (2026-09-05, L1): el «Full d'assaig SPT/MI/Mostra alterada» del manuscrit TPS (PENETROS p.3) emet SEMPRE una fila `spt_ma_tests` amb `n30.registre` (les 4 caselles de Colpeig 15/30/45/60); és l'únic registre de cops quan no hi ha annex de sondeig. Linyola: el lector 1.6 va llegir la cota i l'etiqueta de la mostra d'aquest full però no la fila de l'assaig (n30 en blanc; l'or i el signat diuen R).
 v1.7 (2026-09-05): `referencia_catastral` completa declarada pel proveïdor → `segur` (Pas 3; abans «mai segur sense consulta del Cadastre»). Cap canvi de lectura: el consolidador (R5, `_FIELD_AUTHORITY`) honora `context.authority_for` a conf ≥ 0,5 per a RC, superfície, plantes, nivells (tall + annex) i client (formulari p.5).
 v1.6 (2026-08-31): fila de cobertura des de la llegenda del tall / annex de sondeig, sense fondàries si no estan impreses (Pas 3b, bloc «Nivells del sòl»).
 Versió 1.5 (2026-08-25, Fase 12) — consolidació Python-first: en producció el runner consolida SEMPRE amb Python (`automation/lectura/consolidate.py`: cada `tier_a` esdevé candidat, `_g3_templates.json` = autoritat A, guards del contracte, sistema de cotes, cap candidat inventat) i NOMÉS crida aquest skill amb `--consolida --only-fields a,b` per als camps en conflicte real (dues fonts A que discrepen). Mode nou al Pas 5b. Vocabulari: `nivell_freatic` absent → `No detectat` (Pas 3b).
@@ -82,7 +84,8 @@ espera trobar**. Fes-ho explícit per a cada fitxer, ABANS de buscar-hi res, i e
   camp; una fitxa de camp porta contacte, previsió i data — no porta plantes; un GTL porta mostra, cota i resultats — no porta
   el promotor. Un valor trobat on **no s'espera** (municipi en una foto, client en un albarà) té confiança baixa per construcció.
 - `relation_to_others`: un full de camp manuscrit de TPS té versió digital a l'Excel DPSH **revisada per l'Eva** → l'Excel mana
-  per als valors, el manuscrit es llegeix per si porta alguna cosa que l'Excel no té (punt 0, N.F., croquis, data). Un annex
+  per als valors, el manuscrit es llegeix per si porta alguna cosa que l'Excel no té (punt 0, N.F., croquis, data **i el full
+  d'assaig SPT/MI/MA de la p.3: el colpeig per trams NO és a l'Excel, vegeu la taula «Assaigs SPT / MA»**). Un annex
   FreeHand i el seu `Print To PDF` són el mateix dibuix. Un pressupost `-2CASES` amb `modDate` posterior substitueix el primer.
   Un `RE:`/`RV:` només aporta el text nou i els adjunts nous.
 - `authority_for`: per a quins camps del nivell A aquest document és autoritat (p. ex. comanda → expedient, municipi, mostra;
@@ -309,11 +312,22 @@ Derivades de comparar les taules dels 7 informes signats amb els documents de le
 l'Eva mana per l'etiqueta). `litologia` = la del nivell d'on surt la mostra (vegeu `soil_levels`); si l'interval cau a cavall
 d'una transició (Bell-lloc SPT a -1,00/-1,60 amb límit a -1,10; Alcoletge material recuperat del N2 amb interval al N1) →
 candidats amb els dos nivells. Per a MA (mostra alterada) sense colpeig, `n30` = no_trobat amb nota (l'Eva escriu "--").
+- **El «Full d'assaig SPT/MI/Mostra alterada» del manuscrit TPS (PENETROS p.3, un bloc per assaig) emet SEMPRE una fila** amb `id`
+  (`Assaig de referència`), `punt`, `profunditat` (`de la cota de / fins a la cota`), `litologia` (`Descripció dels materials`) i
+  `n30.registre` = les 4 caselles `Colpeig 15/30/45/60` tal com són (buides = null). Sense annex de sondeig és l'ÚNIC registre de
+  cops del projecte (Linyola, Alcoletge, Rubí, Vilanova): que l'Excel DPSH mani per als N20 no vol dir que aquest full no aporti
+  res. Una sola casella amb ≥ 50 i la resta buides = rebuig al primer tram → `n30` candidats «R» amb nota «50 cops al primer
+  tram de 15 cm» (Linyola: signat N30 = R). Si la mostra és MA, vegeu la regla anterior (`--`).
 - **`n30` MAI segur — sempre `registre` (segur, els cops per tram de 15 cm) + candidats de la suma.** El criteri de suma de
   l'Eva NO és estable: Rubí (16/20/20/24→40), Alcoletge (5/9/11/33→20) i Anciles (2/3/3/3→6) usen els 2 trams centrals, però
   l'informe de Bell-lloc diu 54 amb registre 24/34/28/30 (centrals=62; el TALL de la mateixa Eva diu 58) — incoherència
   interna d'Eva, PREGUNTA OBERTA. Candidats: [suma trams centrals | el N imprès al tall si hi és | R si rebuig]. Un R al
   primer tram (colpeig 50) → n30 = "R" pot ser segur (Castellar, Linyola).
+- **«Sempre registre» NO vol dir «sense registre, sense valor».** Si el document imprimeix directament l'N30 —una «R» o un
+  número— sense el colpeig per trams (annex DPSH, columna «Mesura de par»: «SPT-1 / 1,0 a 1,5 / R»; tall: «N=R» al contacte;
+  GTL o comanda amb un N escrit), **escriu-lo com a candidat de `n30` amb la nota «sense registre»**: és una lectura literal,
+  no una inferència, i el consolidador la necessita per no deixar la cel·la en blanc. Linyola (2026-09-05): la «R» era a tres
+  documents i el lector la va posar només a la cita, amb el valor buit; la fila va quedar en blanc fins a re-llegir el manuscrit.
 
 **L'ANNEX DE SONDEIG — anatomia (la font principal de nivells i litologies quan existeix):** plantilla G3 «Sondeig a rotació
 amb batería contínua» — `PDF/ANNEXES/{exp}_sondeig.pdf` (o `ANEJOS/{exp}_sondeos.pdf` en castellà). FreeHand → **text brossa:

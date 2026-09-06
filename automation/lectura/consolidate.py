@@ -77,6 +77,25 @@ _ENCARREC_DOC_TYPES = frozenset({
 })
 
 #: Llindar de contradiccio per camp (Pas 3: el formulari p.5 de l'acceptacio MANA sobre sol·licitants i versions velles).
+
+#: L3 (1.5, 2026-09-05): telefon enganxat darrere d'un nom («MARIA ALBA BARRAU CASTÁN 616523792», fitxa!C6 de la fitxa de
+#: camp G3): el nom es el valor, el telefon va a la nota. Nomes camps de persona/empresa; cal que quedin ≥ 2 lletres davant.
+_PERSON_LIKE_FIELDS = frozenset({"client_name", "architect_name", "architect_company", "lab_testing_company"})
+_PHONE_TAIL_RE = re.compile(r"[\s,;/·-]*(?:\(?\+?34\)?[\s.-]?)?([6-9](?:[\s.-]?\d){8})\s*$")
+
+
+def _strip_phone_tail(value: Any) -> tuple[Any, str | None]:
+    """`("MARIA ALBA BARRAU CASTÁN", "616523792")` per a «MARIA ALBA BARRAU CASTÁN 616523792»; `(value, None)` si no hi ha
+    cap telefon al final o si sense ell no queda cap nom (≥ 2 lletres)."""
+    if not isinstance(value, str):
+        return value, None
+    m = _PHONE_TAIL_RE.search(value)
+    if not m:
+        return value, None
+    head = value[:m.start()].strip()
+    if sum(ch.isalpha() for ch in head) < 2:
+        return value, None
+    return head, re.sub(r"[\s.-]", "", m.group(1))
 _BLOCK_CONF_BY_FIELD = {"client_name": 0.6}
 
 #: Camps que MAI son `segur` (Pas 3 / Pas 5).
@@ -1050,6 +1069,12 @@ def collect_field_signals(corpus: Corpus, project_path: Path | None) -> tuple[di
                     add(k, Signal(k, value[k], font, quote, conf, doc, doc_type, origin, note, _is_a(origin, conf, forced_a),
                                   declares=declares))
             return
+        if concept in _PERSON_LIKE_FIELDS:
+            value, phone = _strip_phone_tail(value)
+            if phone:
+                # L3: la cita conserva la cadena original; el telefon queda visible a la nota
+                quote = quote or f"{value} {phone}"
+                note = f"telèfon {phone} separat del nom (L3)" + (f"; {note}" if note else "")
         add(concept, Signal(concept, value, font, quote, conf, doc, doc_type, origin, note, _is_a(origin, conf, forced_a),
                             declares=declares))
 
@@ -1442,6 +1467,10 @@ _CELL_A_DOC_TYPES: dict[tuple[str, str], frozenset[str]] = {
 }
 #: Cel·les on la discrepancia entre fonts A es una regla CONEGUDA del skill (candidats, sense crida LLM).
 _KNOWN_DISCREPANCY_CELLS = frozenset({("spt_ma_tests", "id")})
+#: L3 (1.5): etiqueta de mostra alterada. Una MA no te N30 a l'informe (l'Eva escriu «--», Anciles MA-1 amb colpeig 1/1/1/1
+#: anotat al full); el colpeig, si n'hi ha, queda al `registre`. Nomes si TOTES les etiquetes de la fila son MA (Castellar
+#: «SPT-1» de l'annex vs «MA1» del GTL es una discrepancia d'etiqueta, pregunta 12 a l'Eva: no es toca).
+_MA_ID_RE = re.compile(r"(?<![A-Za-z])M\.?\s?A(?![A-Za-z])|mostra\s+alterada|muestra\s+alterada", re.IGNORECASE)
 _NEVER_SEGUR_CELLS = frozenset({("spt_ma_tests", "n30"), ("spt_ma_tests", "litologia"), ("soil_levels", "litologia"),
                                 ("sondeig_tests", "spt_ma")})
 _ABS_CELLS = frozenset({("dpsh_tests", "profunditat_assolida"), ("sondeig_tests", "profunditat_assolida"),
@@ -1589,7 +1618,9 @@ def _cell_signals(doc: dict, row: dict, block: str, cell: str) -> list[Signal]:
         cands_suma: list = []
         if isinstance(raw, dict):
             registre = raw.get("registre", registre)
-            for k in ("candidats_suma", "candidates_suma", "candidates", "candidats"):
+            # dialectes del lector (productor cec): `value_candidates` (Linyola, skill 1.8), `valor_candidats`…
+            for k in ("candidats_suma", "candidates_suma", "candidates", "candidats", "value_candidates",
+                      "valor_candidats", "candidats_valor", "n30_candidats"):
                 v = raw.get(k)
                 if isinstance(v, list):
                     cands_suma = v
@@ -1619,6 +1650,12 @@ def _cell_signals(doc: dict, row: dict, block: str, cell: str) -> list[Signal]:
                                   extra={"registre": reg}))
                 except (TypeError, ValueError):
                     pass
+            if not out and isinstance(reg, list):
+                # L1 (Pas 3b): un tram amb ≥ 50 cops es rebuig; les caselles seguents queden buides (Linyola: «50, -, -, -»)
+                nums = [_numbers(str(x)) for x in reg if x not in (None, "", [])]
+                if nums and any(n and n[0] >= 50 for n in nums):
+                    out.append(mk("R", n="(derivat: ≥ 50 cops en un tram de 15 cm = rebuig; la resta de caselles buides — Pas 3b)",
+                                  extra={"registre": reg}))
         if not out and isinstance(row.get("n30_candidat_tall"), (int, float, str)):
             out.append(mk(row["n30_candidat_tall"], n="valor N imprès al tall"))
         return out
@@ -1817,6 +1854,8 @@ def consolidate_tables(corpus: Corpus, conflicts: list[dict], superficie: dict |
                     if counts:
                         cell_out["counts"] = counts[0]
                 row_out[cell] = cell_out
+            if block == "spt_ma_tests":
+                _ma_sample_has_no_n30(row_out)
             extras = {}
             for doc, r in rows:
                 if isinstance(r.get("extra"), dict):
@@ -1866,6 +1905,31 @@ def consolidate_tables(corpus: Corpus, conflicts: list[dict], superficie: dict |
     # (crida directa des d'un test), es recalcula — la funcio es idempotent.
     tables["superficie_construida"] = superficie if superficie is not None else _superficie_construida(corpus)
     return tables
+
+
+def _ma_sample_has_no_n30(row_out: dict) -> None:
+    """L3 (1.5): si totes les etiquetes de la fila son de mostra alterada (MA), `n30` passa a `no_trobat` amb el motiu a la
+    nota; els candidats llegits (un colpeig anotat al full) van a `altres` (garantia 1) i el `registre` es conserva."""
+    idc = row_out.get("id")
+    n30 = row_out.get("n30")
+    if not isinstance(idc, dict) or not isinstance(n30, dict) or n30.get("estat") != "candidats":
+        return
+    labels = [c.get("value") for c in (idc.get("candidates") or [])] or [idc.get("value")]
+    labels = [str(v) for v in labels if v is not None]
+    if not labels or not all(_MA_ID_RE.search(v) for v in labels):
+        return
+    reg = n30.get("registre") if isinstance(n30.get("registre"), dict) else None
+    colpeig = reg.get("value") if reg and reg.get("estat") != "no_trobat" else None
+    old_cands = list(n30.get("candidates") or [])
+    note = "mostra alterada (MA): sense N30 a l'informe (l'Eva escriu «--»)"
+    if colpeig:
+        note += f"; colpeig anotat al full ({'/'.join(str(x) for x in colpeig) if isinstance(colpeig, list) else colpeig}) conservat a `registre`"
+    n30["estat"] = "no_trobat"
+    n30["value"] = None
+    n30.pop("candidates", None)
+    n30["altres"] = old_cands + list(n30.get("altres") or [])
+    n30["note"] = note
+    n30["rule"] = "L3 (Pas 3b): per a MA, n30 = no_trobat amb nota; el generador escriu «--»"
 
 
 def _registre_cell(regs: list, sigs: list[Signal], srcs: list[str]) -> dict:

@@ -1,0 +1,141 @@
+{
+ "source_path": "25.0616/RV_ pressupost geotècnic.msg",
+ "source_md5": "c7aab4db68fe4c3da4679d5ec7579d4b",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern de G3 (Loli Maqueda, Administració) que reenvia (RV:) el correu original de l'arquitecta Laia Alarcón (Bunyesc Arquitectura Eficient) demanant pressupost d'estudi geotècnic per a un habitatge unifamiliar de Sílvia Eroles Balagueró al Carrer Clot de la Llacuna, 16, Linyola.",
+ "issuer": "Dolors ('Loli') Maqueda (G3, Dep. Administració) — reenviament; autora del text substantiu citat: Laia Alarcón (arquitecta, Bunyesc Arquitectura Eficient)",
+ "date": "2025-08-20 11:31:44+02:00 (reenviament intern); correu original citat: 2025-08-19 15:25",
+ "pages_or_sheets": null,
+ "context": {
+  "who_made_it": "Loli Maqueda (G3, administració) reenvia internament a Eva Vazquez i Eva Roig el correu que l'arquitecta Laia Alarcón havia enviat el dia abans a Dolors Maqueda demanant pressupost.",
+  "for_whom": "Eva Vazquez i Eva Roig (tècniques de G3), per iniciar el pressupost/expedient.",
+  "why": "Encàrrec inicial del projecte: l'arquitecta demana pressupost d'estudi geotècnic per a un habitatge unifamiliar a Linyola, per compte de la seva clienta Sílvia Eroles Balagueró.",
+  "expected_fields": [
+   "client_name (bloc 'Dades Clienta')",
+   "architect_name",
+   "architect_company",
+   "street_address",
+   "municipality",
+   "building_type"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "num_floors",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "Reenviament (RV:) intern de Loli Maqueda del MATEIX correu original de Laia Alarcón (19/08/2025, 'pressupost geotècnic') que ja apareix citat a 25_0616_re_pressupost_geot_cnic.json (cadena RE:, ja llegida). El text per sobre del primer 'De:' és només la salutació/signatura de Loli Maqueda — no aporta cap dada nova del nivell A. Per tant NO és font independent d'aquell correu: mateix contingut, mateixa cita. Els adjunts 'punts_de_sondeig_silvia_jaume.pdf' i '2_02B_DG_Silvia_Jaume.pdf' ja són solts a la carpeta (already_in_folder) i es llegeixen com a documents propis, no aquí.",
+  "authority_for": [
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "street_address",
+   "municipality",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles Balagueró",
+   "location": "cos del correu, correu original citat de Laia Alarcón (19/08/2025), bloc 'Dades Clienta'",
+   "quote": "Dades Clienta:\n\tSílvia Eroles Balagueró.\n\tdni: 47697437Z\n\tdirecció facturació: C/ Llibertat 13, 1r 2a -25240-  LINYOLA\n\ttelf: 618 10 86 12\n\tcorreu: serolesba@gmail.com",
+   "confidence": 0.7,
+   "note": "Correu que etiqueta explícitament 'Dades Clienta' (regla Pas 3: correus que ho diguin). No és font independent (mateix original que 25_0616_re_pressupost_geot_cnic.json). Coincideix amb l'autoritat superior acceptacio_g3dt_silvia_jaume_signat.json (formulari p.5 signat: 'NOM I COGNOMS: SÍLVIA EROLES BALAGUERÓ')."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Laia Alarcón",
+   "location": "cos del correu, signatura de l'arquitecta al correu original citat (19/08/2025)",
+   "quote": "Laia Alarcón\narquitecta\n+34 628 57 72 24\n+34 973 15 75 19\nlaia.alarcon@bunyesc.com",
+   "confidence": 0.65,
+   "note": "Persona (no despatx). No és font independent (mateix original que 25_0616_re_pressupost_geot_cnic.json). Coexisteix amb la forma despatx (architect_company) al mateix correu: segons regla Pas 3 ('architect_name amb persona I despatx' — cas Linyola explícitament citat al skill), candidats [persona | despatx], mai segur."
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "Bunyesc Arquitectura Eficient",
+   "location": "cos del correu, peu legal del correu original citat + logotip adjunt (image.png)",
+   "quote": "Dades identificatives: Bunyesc Arquitectura Eficient Slp, B25828922, Carrer Arboretum 17,25199, Lleida.",
+   "confidence": 0.6,
+   "note": "Forma despatx, alternativa a la persona (architect_name). Corroborat pel logotip adjunt image.png ('BUNYESC ARQUITECTES / ARQUITECTURA EFICIENT'), decoratiu (signatura de Laia Alarcón), sense dades noves. No és font independent del correu original ja citat a 25_0616_re_pressupost_geot_cnic.json."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna, 16",
+   "location": "cos del correu, correu original citat de Laia Alarcón (19/08/2025)",
+   "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.65,
+   "note": "Bloc 'OBRA' implícit (adreça de l'obra, no de facturació de la clienta). No és font independent (mateix original que 25_0616_re_pressupost_geot_cnic.json); coincideix amb acceptacio_g3dt_silvia_jaume_signat.json ('OBRA: Clot de la Llacuna, 16 -25240- Linyola')."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [
+     "16"
+    ],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "cos del correu, correu original citat de Laia Alarcón (19/08/2025)",
+   "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.65,
+   "note": "Concepte extra (Pas 3); no toca cap variable de l'informe directament."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "cos del correu, correu original citat de Laia Alarcón (19/08/2025)",
+   "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.65,
+   "note": "No és font independent (mateix original que 25_0616_re_pressupost_geot_cnic.json); coincideix amb acceptacio_g3dt_silvia_jaume_signat.json ('-25240- Linyola')."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "cos del correu, correu original citat de Laia Alarcón (19/08/2025)",
+   "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.",
+   "confidence": 0.6,
+   "note": "No és font independent (mateix original que 25_0616_re_pressupost_geot_cnic.json)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "cos del correu, llista d'adjunts del correu original citat de Laia Alarcón (19/08/2025)",
+   "quote": "adjuntem:\n\tplànols del projecte bàsic\n\tplànol dels 3 punts de sondeig.",
+   "confidence": 0.25,
+   "note": "AMBIGU: 'punts de sondeig' aquí és previsió de l'arquitecta abans de l'encàrrec, no necessàriament el nombre de DPSH executats, i el terme podria referir-se genèricament a punts d'assaig (no específicament DPSH). L'adjunt esmentat ('punts_de_sondeig_silvia_jaume.pdf') ja és solt a la carpeta i es llegeix com a document propi; l'Excel DPSH executat (si existeix) hauria de manar sobre aquesta previsió. Candidat feble, mai segur amb aquesta única font."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "num_floors",
+  "superficie_parcela"
+ ],
+ "reading_notes": "Llegit des de pre-extracció (body.txt del .msg). Només el text per sobre del primer 'De:' (reenviament de Loli Maqueda) és nou i no aporta cap dada del nivell A — totes les dades venen del correu original citat de Laia Alarcón (19/08/2025), que és el MATEIX text ja citat a 25_0616_re_pressupost_geot_cnic.json (relació de duplicat, no font independent). Adjunt image.png (31.575 B, lleugerament per sobre del llindar de 25 KB de 'signatura, ignora') revisat visualment: logotip 'BUNYESC ARQUITECTES / ARQUITECTURA EFICIENT', decoratiu, part de la signatura de Laia Alarcón — corrobora architect_company sense aportar dades noves. Adjunts PDF (punts_de_sondeig_silvia_jaume.pdf, 2_02B_DG_Silvia_Jaume.pdf) ja solts a la carpeta (already_in_folder a meta.json) — no rellegits aquí."
+}

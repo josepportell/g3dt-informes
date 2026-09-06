@@ -10,6 +10,44 @@ les cel·les que canvien»; escalars sobre l'or **118 OK (80 %) / 23 CAND (16 %)
 llindars pactats, per primer cop; el 05 al matí era 86/46/11/1/3); taules **139 / 21 / 6 / 31 / 0**; **0 ERR sobre el
 signat** també a taules. Queda la peça 1.4 (derivats: la majoria dels 31 blancs de taula), després 1.5, 1.6, 1.7.
 
+## Actualització (2026-09-05, nit, 8) — v1.9 validada; referència nova `_reconsolida-2026-09-05-v19`
+
+- Annex DPSH de Linyola re-llegit amb el skill v1.9 (`runs/2026-09-05-v19-linyola-dpsh/`, 1,09 USD): `n30: "R"` imprès amb la
+  nota «sense registre». Lectura copiada al run mare; la 1.6 a `…/_anterior-skill-1.6/`.
+- El lector 1.9 emet `soil_levels` PER PUNT de la columna de colors «Nivells» de l'annex DPSH (6 files amb `punt`). Legítim (or
+  d'Alcoletge des de l'Excel). Ha destapat dues febleses dels derivats, arreglades amb test: D3 «bases llegides = rebuigs →
+  el fons primer» i D4 «afirmació d'un document no-A contradita per la geometria → derivat afegit». 3 cel·les de valor, 0 de
+  veredicte (taules 144/28/6/19/0). Peça futura possible: la banda de color com a font explícita de la transició per punt.
+- **Per a la propera reconsolidació, compara amb `_reconsolida-2026-09-05-v19`** (no l1). Cost de la nit: 2,72 USD.
+
+## Actualització (2026-09-05, nit, 6) — Peça 1.5 FETA (L1 re-llegit amb permís del Josep); següent 1.6 T2
+
+- **L1 fet:** run parcial `runs/2026-09-05-l1-linyola/` (1 document, 1,63 USD, 463 s). El lector 1.8 emet la fila SPT però
+  amb `value_candidates` (clau nova) i `registre` [50, null, null, null]: el consolidador ara accepta els alies i deriva «R»
+  quan un tram té ≥ 50 cops (`_cell_signals`, branca n30; `test_L1_*`). Lectura nova copiada al run mare
+  (`linyola/penetros.json`, skill 1.8); la 1.6 a `…/_anterior-skill-1.6/`. **Referència nova per a la propera
+  reconsolidació: `{slug}/_reconsolida-2026-09-05-l1/`.** Taules 144/28/6/19/0; escalars idèntics; conflictes idèntics.
+- **Esmena (nit, 7), pregunta del Josep:** la «R» NO s'infereix: era impresa a l'annex DPSH p.3 («SPT-1 / 1,0 a 1,5 / R», el
+  lector 1.6 la va deixar a la cita amb `n30: null` per «sempre registre»), al tall («N=R» al contacte, només a notes) i al
+  manuscrit («50»). Skill **v1.9**: un N30 imprès sense registre s'escriu com a candidat «sense registre». DECISION-LOG (nit, 7).
+- Lliçó: el lector és un productor cec també a `n30`; si estrena una altra clau, la cel·la tornarà a quedar en blanc
+  (limitació apuntada al DECISION-LOG nit 6: estendre el rastre de dialectes de `notes_estructurals` a `n30`).
+- Queden 19 blancs de taula: 8 cotes d'Anciles (I1, carpeta `runs/2026-09-05-i1-anciles/`) + 11 lectures gràfiques del tall.
+- **Sense commit** (cap de les peces 1.4, 1.5). El Josep decideix quan.
+
+## Actualització (2026-09-05, nit, 5) — Peça 1.5 a mig fer: L3 FET, L1 preparat (pendent del Josep)
+
+- **L3 fet, cost 0:** `_strip_phone_tail` (telèfon darrere del nom → nota) i `_ma_sample_has_no_n30` (MA → `n30` no_trobat,
+  colpeig al `registre`, lectura a `altres`; només si totes les etiquetes són MA — Castellar SPT-1/MA1 intacte). Referència
+  per a la propera reconsolidació: **`{slug}/_reconsolida-2026-09-05-l3/`**. Taules 144/27/6/20/0; escalars idèntics.
+- **L1 preparat, NO llançat:** skill v1.8 (el full d'assaig SPT p.3 del manuscrit emet sempre la fila amb `registre`);
+  carpeta `docs/wizard-headless/mesures/runs/2026-09-05-l1-linyola/` = run mare de Linyola sense `penetros.json` → el runner
+  només re-llegirà `PENETROS.pdf`. Comanda a la seva `_NOTES.md`. Cost ≈ 2 USD (al run mare 2,07 USD, 480 s), quota de la
+  subscripció (`login`), no crèdits. Després: comparar `spt_ma_tests[0].n30` amb l'or («R»), copiar `penetros.json` al run
+  mare si és bo, reconsolidar. Si el lector torna a no emetre la fila: `--only` sobre la p.3 o fallback (DECISION-LOG nit 5).
+- Cost per document (Sonnet 5, xhigh): correu 0,6-0,7 · PDF senzill 0,8-0,9 · annex de diverses pàgines 1,2-1,5 · manuscrit
+  PENETROS 1,5-2,1. Projecte sencer ≈ 18 USD; els 7 ≈ 125 USD.
+
 ## Actualització (2026-09-05, nit, 4) — Peça 1.4 FETA; següent 1.5
 
 **Fet:** `_derive_soil_levels` a `consolidate.py` (post-procés rere `_depths_from_msnm`), 5 regles: D1 primer nivell a 0,00

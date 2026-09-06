@@ -1,0 +1,154 @@
+{
+ "source_path": "ANNEXES/4001607_DPSH.xls",
+ "source_md5": "2e751d7f7b9d453898d93408984dafb2",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Full de càlcul Excel amb la transcripció de l'Eva dels valors de colpeig DPSH per a cada punt d'assaig (P-1, P-2, P-3): profunditat cada 20 cm, colpeig DPSH i colpeig normalitzat (NB), columna de nivells marcada per color de cel·la, peu de rebuig per punt i, a P-3, una mostra SPT presa dins l'assaig.",
+ "issuer": "G3 / Eva (transcripció pròpia a partir del full de camp PENETROS.pdf de TPS)",
+ "date": "Sense data explícita al document (full de càlcul de valors de camp, sense camp de data)",
+ "pages_or_sheets": "3 fulls (P-1, P-2, P-3)",
+ "context": {
+  "who_made_it": "Eva (G3), transcripció digital del full de camp manuscrit PENETROS.pdf omplert per TPS al camp",
+  "for_whom": "Ús intern de G3: base del càlcul (N30/NB) i font primària de la taula DPSH de l'informe",
+  "why": "Registrar el colpeig cada 20 cm de cada punt DPSH, calcular el colpeig normalitzat, marcar el rebuig, el nivell freàtic i els canvis de nivell per color de cel·la",
+  "expected_fields": [
+   "num_dpsh_tests (nombre de fulls executats)",
+   "dpsh_tests[] (profunditat_assolida/rebuig/nivell_freatic per punt, Pas 3b)",
+   "num_soil_levels (candidat, via colors de la columna Nivells)",
+   "lab_sample_id/lab_depth/lab_location (candidat, si hi ha mostra SPT dins d'algun punt)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "expedient",
+   "field_date",
+   "cota_referencia (absoluta)",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cte"
+  ],
+  "relation_to_others": "Versió digital, revisada per l'Eva, del full de camp manuscrit PENETROS.pdf (mateix projecte): per als valors de colpeig mana aquest Excel (Pas 0), el manuscrit es llegeix per si aporta punt 0, N.F. o croquis que aquí no hi són. És la font EXECUTADA de num_dpsh_tests, per davant del previst del pressupost (3,00 a la taula VALORACIÓ del pressupost signat, ja llegit en un altre document d'aquest projecte).",
+  "authority_for": [
+   "num_dpsh_tests",
+   "num_soil_levels",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "Noms de full: P-1, P-2, P-3, cadascun amb colpeig registrat a la columna C des de C17 fins al rebuig",
+   "quote": "P-1 / P-2 / P-3",
+   "confidence": 0.9,
+   "note": "Executat (Pas 3: mana sobre el previst del pressupost). Els 3 fulls tenen dades reals de colpeig i peu de rebuig propi."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "Columna G ('Nivells'), files 17-32 de cada full (color de cel·la) + llegenda C79/F79",
+   "quote": "Nivell 1 / Nivell 2 (llegenda C79/F79); color vermell #FF8080 i groc #FFFF99 a la columna G",
+   "confidence": 0.5,
+   "note": "Candidat: només 2 colors (vermell/groc) apareixen als 3 fulls, sense tercer color — consistent amb 2 nivells, però la fondària de transició NO és la mateixa als 3 punts (P-1 entre -1,6/-1,8 m; P-2 entre -0,2/-0,4 m; P-3 entre -1,2/-1,4 m), i aquest full no dona cap litologia. No emeto files a tables.soil_levels des d'aquest document (falta litologia i la fondària varia per punt); confirmar amb PDF/ANNEXES/4001607_tall de correlació.pdf (aquest projecte no té sondeig a rotació al corpus)."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "P-3!E23",
+   "quote": "SPT-1",
+   "confidence": 0.5,
+   "note": "Mostra SPT presa dins l'assaig DPSH del punt P-3 (única mostra marcada als 3 fulls; P-1 i P-2 no en porten). Candidat: confirmar etiqueta amb l'annex de l'Eva / GTL 4672-GTL-25 Linyola.pdf (Pas 3: l'etiqueta de l'informe és la de l'annex, aquest Excel és font secundària)."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 a 1,5 m",
+   "location": "P-3!E24",
+   "quote": "1,0 a 1,5",
+   "confidence": 0.5,
+   "note": "Profunditat de la mostra SPT-1. Candidat: confirmar amb GTL 4672-GTL-25 Linyola.pdf (Pas 3: GTL mana per a la PROFUNDITAT)."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P-3",
+   "location": "Nom del full P-3",
+   "quote": "P-3",
+   "confidence": 0.55,
+   "note": "Punt d'assaig d'on surt la mostra SPT-1 — el mateix DPSH P-3, no un sondeig separat (aquest projecte no té sondeig a rotació al corpus). La cel·la E25 marca 'R' (rebuig) al tram final de la mostra."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-2,90 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "P-1!B80 (peu); columna F (N.F.) buida P-1!F17:F77",
+    "quote": "Rebuig a la cota de -2,90 m",
+    "extra": {
+     "colpeig_max": "100 cops a -3,00 m (P-1!C32); l'última fila amb colpeig (-3,00 m) NO coincideix amb la cota de rebuig del peu (-2,90 m) — s'usa el peu per ser autoritat (Pas 3b)",
+     "nivells_color": "vermell (Nivell 1) P-1!G17:G25 (0 a -1,6 m); groc (Nivell 2) P-1!G26:G32 (-1,8 a -3,0 m) — transició entre -1,6 i -1,8 m"
+    },
+    "note": "cota_inici (elevació absoluta) no consta en aquest document — només profunditat relativa des de 0; consultar PDF/ANNEXES/4001607_DPSH.pdf. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-2,15 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "P-2!B80 (peu); columna F (N.F.) buida P-2!F17:F77",
+    "quote": "Rebuig a la cota de -2,15 m",
+    "extra": {
+     "colpeig_max": "100 cops a -2,20 m (P-2!C28); l'última fila amb colpeig (-2,20 m) NO coincideix exactament amb la cota de rebuig del peu (-2,15 m) — s'usa el peu per ser autoritat (Pas 3b)",
+     "nivells_color": "vermell (Nivell 1) P-2!G17:G18 (0 a -0,2 m); groc (Nivell 2) P-2!G19:G28 (-0,4 a -2,2 m) — transició entre -0,2 i -0,4 m"
+    },
+    "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,75 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "P-3!B80 (peu); columna F (N.F.) buida P-3!F17:F77",
+    "quote": "Rebuig a la cota de -1,75 m",
+    "extra": {
+     "colpeig_max": "100 cops a -1,80 m (P-3!C26); l'última fila amb colpeig (-1,80 m) NO coincideix exactament amb la cota de rebuig del peu (-1,75 m) — s'usa el peu per ser autoritat (Pas 3b)",
+     "nivells_color": "vermell (Nivell 1) P-3!G17:G23 (0 a -1,2 m); groc (Nivell 2) P-3!G24:G26 (-1,4 a -1,8 m) — transició entre -1,2 i -1,4 m",
+     "mostra_spt": "SPT-1, 1,0 a 1,5 m, marca 'R' al tram final (P-3!E23:E25) — vegeu tier_a lab_sample_id/lab_depth/lab_location"
+    },
+    "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit des de la pre-extracció (sheet-N.cells.txt + sheet-N.colors.txt amb formatting_info=True), sense obrir l'Excel directament (sense xlrd/openpyxl). Comprovats els 3 fulls (P-1, P-2, P-3): colpeig DPSH (columna C), colpeig normalitzat NB (columna D = C/0,83, factor a D15, no és cap dels 15 camps), columna 'Nivells' (G) per color (vermell/groc, cap tercer color als 3 fulls), columna N.F. (F) buida de text I de color als 3 fulls (comprovació de colors del Pas 3b feta). Peu de rebuig llegit a B80 de cada full (zona B79-B82 comprovada; B80 coincideix als 3). P-3 porta una mostra SPT (SPT-1, 1,0 a 1,5 m, rebuig R) a les cel·les E23:E25, absent a P-1 i P-2. Cap capçalera de projecte (expedient, cota, adreça) a les files 1-15 dels 3 fulls (revisat sheet-N.csv)."
+}

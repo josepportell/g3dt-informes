@@ -1,0 +1,100 @@
+{
+ "source_path": "PDF/ANNEXES/4001607_fotografies.pdf",
+ "source_md5": "b46fe0d4f4f0977e19e5707d10dd37c5",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Reportatge fotogràfic (2 pàgines, 4 fotos F-1 a F-4) del treball de camp: emplaçament de la maquinària de penetració dinàmica als punts P-1, P-2 i P-3, i materials recuperats de l'assaig SPT.",
+ "issuer": "G3 (plantilla amb logo G3, mateix producer/creator FreeHand→Distiller que els altres annexos de l'Eva)",
+ "date": null,
+ "pages_or_sheets": "2 pàgines",
+ "context": {
+  "who_made_it": "G3 / Eva, a partir de fotos del tècnic de camp, muntades a la plantilla 'Reportatge fotogràfic'",
+  "for_whom": "annex intern de suport visual a l'informe geotècnic",
+  "why": "documentar visualment on i com s'han fet els DPSH i la recuperació de mostra SPT",
+  "expected_fields": [
+   "expedient (capçalera de cada pàgina)",
+   "confirmació visual del nombre i identificació dels punts DPSH (P-1, P-2, P-3)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date (imprès)",
+   "cota_referencia",
+   "num_soil_levels",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "cte"
+  ],
+  "relation_to_others": "Les captions 'DPSH P-1 i P-2' / 'DPSH P-3' coincideixen amb els 3 fulls P-1/P-2/P-3 de ANNEXES/4001607_DPSH.xls (corrobora num_dpsh_tests=3, no és font independent nova). La mostra SPT de F-4 porta una etiqueta manuscrita TPS (logo 'tp') amb camps Obra/Localitat/Punt/Mostra/Data/Profunditat, però la foto està desenfocada i no s'ha pogut llegir amb garanties malgrat zoom a 350/400/500/600/900 dpi -- no es dona com a font de lab_sample_id/lab_depth/lab_location.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001607",
+   "location": "capçalera de p.1 i p.2, cel·la dreta de 'Reportatge fotogràfic'",
+   "quote": "Reportatge fotogràfic | 4001607",
+   "confidence": 0.55,
+   "note": "imprès net (text_ok fals per al cos del document, però la capçalera/caixa és llegible visualment); coincideix amb el nom de la carpeta del projecte. Document de baixa autoritat per aquest camp (Pas 2 no el llista); tractar com a corroboració, no com a font primària."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "p.1, foto F-1/F-2, peu 'Fotografies 1 i 2'",
+    "quote": "Vista general de la parcel·la, i vista de l'emplaçament de la maquinària durant la realització de l'assaig de penetració dinàmica DPSH P-1 i P-2."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "p.1, foto F-1/F-2, peu 'Fotografies 1 i 2'",
+    "quote": "Vista general de la parcel·la, i vista de l'emplaçament de la maquinària durant la realització de l'assaig de penetració dinàmica DPSH P-1 i P-2."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "p.2, foto F-3/F-4, peu 'Fotografies 3 i 4'",
+    "quote": "Vista de l'emplaçament de la maquinària durant la realització de l'assaig de penetració dinàmica DPSH P-3. A sota, materials recuperats de l'assaig SPT realitzat."
+   }
+  ],
+  "__nota": "Les 3 files només aporten identificació del punt (evidència visual que P-1/P-2/P-3 es van executar); cap valor numèric és llegible a les fotos. No es dona cap fila de spt_ma_tests: l'etiqueta manuscrita de la mostra (F-4) és il·legible per desenfocament (vegeu context.relation_to_others)."
+ },
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "text_ok fals a les 2 pàgines (FreeHand->Distiller, brossa); llegit visualment amb page-N.png (150dpi) per al contingut general. Zoom amb render_clip.py a la mostra de l'etiqueta manuscrita de F-4 (350, 400, 500, 600 i 900 dpi): la foto font està desenfocada/moguda i no millora amb resolució -- es pot intuir l'estructura (logo TPS 'tp', camps Obra/Localitat/Punt/Mostra/Data/Profunditat/Empresa) però cap caràcter individual és llegible amb prou confiança per citar-lo; es descarta com a font per evitar falsa confiança."
+}

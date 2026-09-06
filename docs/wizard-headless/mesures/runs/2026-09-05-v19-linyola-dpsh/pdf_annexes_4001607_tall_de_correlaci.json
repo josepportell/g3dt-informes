@@ -1,0 +1,155 @@
+{
+ "source_path": "PDF/ANNEXES/4001607_tall de correlació.pdf",
+ "source_md5": "9e23b4e41034c5993ac390a4079c37a7",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació estratigràfica (dues seccions A-A' i B-B') que correlaciona els nivells del sòl entre els punts DPSH P-1, P-2 i P-3, amb la línia de fonamentació superposada.",
+ "issuer": "G3 (Eva) — annex propi, plantilla pròpia FreeHand",
+ "date": "Octubre 2023 (data impresa al peu; granularitat de mes, no dia)",
+ "pages_or_sheets": "1 pàgina (Pàgina 1/1)",
+ "context": {
+  "who_made_it": "G3/Eva, síntesi pròpia del geotècnic a partir dels DPSH de camp",
+  "for_whom": "per a redactar el bloc de nivells del sòl / correlació estratigràfica de l'informe",
+  "why": "correlacionar els nivells del sòl entre els punts DPSH (P-1, P-2, P-3) al llarg de dues línies de tall (A-A' i B-B') i situar la fonamentació respecte als nivells",
+  "expected_fields": [
+   "num_soil_levels",
+   "litologia dels nivells",
+   "cotes de contacte entre nivells",
+   "expedient",
+   "adreça/municipi (títol narratiu del peu)",
+   "relació N-fondària (Nb) per punt DPSH"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "lab_*",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte_*",
+   "field_date exacta (dia)"
+  ],
+  "relation_to_others": "Còpia FreeHand→Acrobat Distiller (text brossa, text_ok=false) de l'original 'ANNEXES/4001607_tall de correlació.FH11' (no llegible, exclòs de l'inventari). Existeix una bessona 'tall.pdf' a l'arrel del projecte (mateix doc_type_hint annex_tall, probablement còpia Print To PDF amb text net) — NO llegida en aquesta crida (--only limitat a aquest fitxer); si es llegeix, prioritzar aquest PDF/ANNEXES/ per sobre de tall.pdf en cas de discrepància, per regla del Pas 0/3b.",
+  "authority_for": [
+   "num_soil_levels",
+   "expedient"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001607",
+   "location": "peu, cel·la 'Exp:'",
+   "quote": "Exp: 4001607",
+   "confidence": 0.85,
+   "note": "coincideix amb el nom de la carpeta del projecte (4001607 LINYOLA)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna nº16",
+   "location": "peu, bloc 'TÍTOL DEL PROJECTE'",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.55,
+   "note": "narrativa del títol del projecte (plantilla G3 de l'annex), no un bloc OBRA/ADREÇA dedicat; única font en aquest document — candidat, no segur"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "peu, bloc 'TÍTOL DEL PROJECTE'",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.55,
+   "note": "mateixa frase narrativa; única font en aquest document"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge",
+   "location": "peu, bloc 'TÍTOL DEL PROJECTE'",
+   "quote": "la construcció d'un habitatge",
+   "confidence": 0.45,
+   "note": "no especifica unifamiliar/plurifamiliar; candidat feble"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "llegenda, part superior dreta del full",
+   "quote": "Nivell 1: Llims argilsoso i sorrencs. / Nivell 2: Lutites i sorrenques, Substrat.",
+   "confidence": 0.85,
+   "note": "el projecte no té annex de sondeig a rotació; el tall és l'única font documental dels nivells (regla Pas 3: llegenda del tall com a font quan no hi ha annex sondeig)"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "octubre 2023",
+   "location": "peu, cel·la 'Data:'",
+   "quote": "Data: Octubre 2023",
+   "confidence": 0.15,
+   "note": "data del document/plànol (mes, sense dia), no necessàriament la data de camp; fora de l'ordre de prioritat del Pas 3 (fitxa F38 / annex DPSH / albarà / fotos) — candidat molt feble, només per contrast"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "3 punts representats a les dues seccions del tall",
+   "quote": "P-1, P-3 (secció A-A'); P-1, P-2 (secció B-B')",
+   "confidence": 0.4,
+   "note": "recompte de punts DPSH distints representats al tall (P-1, P-2, P-3); no és la font canònica (Excel DPSH), només corroboració"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [
+     "16"
+    ],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "peu, bloc 'TÍTOL DEL PROJECTE'",
+   "quote": "Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.55,
+   "note": "derivat de la mateixa frase narrativa del títol; concepte extra, no toca cap variable de l'informe directament"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [
+     "Llims argilsoso i sorrencs"
+    ],
+    "de": "245 msnm (superfície, escala del tall)",
+    "a": "≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2 (contacte Nivell 1/Nivell 2, s'aprima cap a P-2)",
+    "mostra_del_nivell": false
+   },
+   {
+    "nom": "Nivell 2",
+    "litologia_candidats": [
+     "Lutites i sorrenques, Substrat."
+    ],
+    "de": "mateix contacte que 'a' del Nivell 1 (≈243,6 a ≈244,7 msnm segons el punt)",
+    "a": null,
+    "mostra_del_nivell": false
+   }
+  ],
+  "__nota": "Cotes de contacte llegides gràficament sobre l'escala impresa (msnm) del tall, NO són valors impresos com a text — precisió limitada a ~0,1 m per interpolació visual entre línies de quadrícula (241-245 msnm, cada 1 m). No es tracta de fondàries (profunditat des de superfície) sinó de cotes absolutes; caldria cota_referencia per convertir. Confirmar amb la columna 'Nivell' de l'Excel DPSH (ANNEXES/4001607_DPSH.xls), no llegit en aquesta crida. Els valors Nb (DPSH) i el traçat de refús (Nb=R) mostrats (P-1: Nb=11→Nb=38→Nb=R; P-3: Nb=15→N=R al contacte→Nb=R; P-2: Nb=24→Nb=R) no s'han bolcat a dpsh_tests perquè la font canònica de cota_inici/profunditat_assolida/rebuig és l'Excel/PDF DPSH, no aquest tall."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "cota_referencia",
+  "superficie_parcela",
+  "num_floors",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text natiu és brossa (FreeHand→Acrobat Distiller 15.0, PScript5.dll; text_ok=false); llegit visualment amb la imatge sencera (150 dpi) i clips ampliats (350 dpi, render_clip.py) de cadascuna de les dues seccions (A-A' i B-B') per confirmar els valors Nb i les cotes de contacte. Existeix una bessona 'tall.pdf' a l'arrel del projecte (probable Print To PDF amb text net) i l'original FH11 no llegible — cap dels dos llegit en aquesta crida (--only limitat a aquest fitxer)."
+}

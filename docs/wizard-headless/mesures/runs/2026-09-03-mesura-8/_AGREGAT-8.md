@@ -368,3 +368,46 @@ Sense canvi de veredicte: Bell-lloc i Castellar `[últim].a` reben el fons com a
 A-vs-A idèntics; contracte net als 7. Dels **20 blancs** que queden: 9 d'altres peces, 11 lectura gràfica del tall
 (transicions inclinades de Vilanova/Anciles, franja superficial de Rubí, base de la cobertura de Bell-lloc). **7 ALERTA:**
 els 6 d'abans (tots OK per veritat o CAND) + Alcoletge `[1].a` (decisió del Josep sobre l'or). **Següent:** 1.5 L1/L3.
+
+## Agregat MECÀNIC (2026-09-05, nit, 5) — peça 1.5, part 1: L3 (telèfon fora del nom; cap N30 a una MA)
+
+Regles (DECISION-LOG 2026-09-05 nit, 5): `_strip_phone_tail` a l'entrada de senyals de persona/empresa;
+`_ma_sample_has_no_n30` a les files SPT/MA. Reconsolidació `{slug}/_reconsolida-2026-09-05-l3/` respecte de `-d14`.
+
+| Taules (197) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| nit 4 (d14) | 143 | 27 | 7 | 20 | 0 | — |
+| + **L3** (l3) | **144** | 27 | **6** | 20 | 0 | 1: Anciles `spt_ma_tests[2].n30` (MA-1) candidats «2» → `no_trobat` = or i signat «--» (ALERTA → OK) |
+
+Escalars idèntics (118/23/5/1/0; Anciles `client_name` canvia només la forma d'un candidat: «MARIA ALBA BARRAU CASTÁN»
+sense el telèfon, que passa a la nota). Conflictes A-vs-A idèntics. **L1 (Linyola `spt_ma_tests[0].n30`) queda BUIT fins
+a la re-lectura d'un document** (`runs/2026-09-05-l1-linyola/`, preparat; ≈ 2 USD de subscripció, pendent del Josep).
+
+## Agregat MECÀNIC (2026-09-05, nit, 6) — peça 1.5, part 2: L1 (re-lectura del PENETROS de Linyola, skill v1.8)
+
+Run parcial `runs/2026-09-05-l1-linyola/` (1 document llegit, 19 en cache; 463 s, 45 torns, **1,63 USD**); la lectura nova
+substitueix la vella al run mare (`linyola/penetros.json`, skill 1.8; la 1.6 queda a `…/_anterior-skill-1.6/`). Consolidador:
+alies `value_candidates` i «≥ 50 cops → R» (DECISION-LOG nit, 6). Reconsolidació `{slug}/_reconsolida-2026-09-05-l1/`
+respecte de `-l3`.
+
+| Taules (197) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| nit 5 (l3) | 144 | 27 | 6 | 20 | 0 | — |
+| + **L1** (l1) | 144 | **28** | 6 | **19** | 0 | 1: Linyola `spt_ma_tests[0].n30` no_trobat → candidats «R» (or segur «R (rebuig; registre: 50 cops al primer tram)», signat R): BUIT → CAND, n30 mai segur |
+
+Escalars idèntics (118/23/5/1/0); conflictes idèntics. **Balanç de la nit (1.4 + 1.5):** taules 139/21/6/31 → 144/28/6/19;
+els 19 blancs: 8 cotes d'Anciles (I1, carpeta a part) + 11 lectures gràfiques del tall. **Següent:** 1.6 T2.
+
+## Agregat MECÀNIC (2026-09-05, nit, 8) — validació v1.9 (annex DPSH de Linyola re-llegit) + D3/D4 amb els nivells per punt
+
+Run parcial `runs/2026-09-05-v19-linyola-dpsh/` (1 document, 281 s, **1,09 USD**): la «R» impresa surt com a valor (v1.9 ✅).
+El lector 1.9 emet també `soil_levels` per punt de la columna de colors de l'annex DPSH → D3 «bases llegides = fons → el fons
+primer» i D4 «afirmació no-A contradita per la geometria → derivat afegit» (DECISION-LOG nit, 8). Reconsolidació
+`{slug}/_reconsolida-2026-09-05-v19/` respecte de `-l1`.
+
+| Taules (197) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| nit 6 (l1) | 144 | 28 | 6 | 19 | 0 | — |
+| + **v1.9 + D3/D4** (v19) | 144 | 28 | 6 | 19 | 0 | 3 de VALOR, 0 de veredicte: Castellar i Bell-lloc `soil_levels[1].a` → «fins al fons d'investigació (…)» primer (les bases llegides 1,20 / -1,80 són la fondària del sondeig); Linyola `soil_levels[1].mostra_del_nivell` → [True (annex DPSH), False (derivat)] |
+
+Escalars idèntics (118/23/5/1/0); conflictes idèntics. **Referència per a la propera reconsolidació: `_reconsolida-2026-09-05-v19`.**

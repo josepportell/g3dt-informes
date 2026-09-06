@@ -2663,3 +2663,243 @@ profund (Bell-lloc 2,45 = P-2, no el −1,80 del log del sondeig; Rubí 4,55; Li
 sobre l'or d'Alcoletge `[1].a`. Els 11 blancs gràfics només cauen amb lectura del tall calibrat.
 
 *Fi entrada 2026-09-05 (nit, 4). Derivats: el que el perfil implica, amb font; el que el tall dibuixa, encara no.*
+
+## 2026-09-05 (nit, 5) — Peça 1.5 (L1/L3), part 1: telèfon fora del nom del client i cap N30 a una mostra alterada (cost 0, 1 ALERTA cau); skill v1.8 per a l'SPT del full manuscrit, re-lectura d'UN document preparada i pendent del vist-i-plau (cost)
+
+### Context
+Cinquena peça del bloc 1 (handoff `_FOR-NEW-YOU-20260905.md` §Bloc 1, fila 1.5: «L1/L3 forats de lector», 4 cel·les,
+«cal re-llegir els docs afectats»). Diagnòstic previ sobre els artefactes, no sobre el pressupòsit: **dos dels tres forats
+no necessiten cap re-lectura** — són brossa dins d'un valor ja llegit (L3) i es resolen al consolidador; només el tercer
+(L1) és una lectura que falta. El Josep pregunta si els 5-6 USD del handoff són per projecte: no, eren el run parcial
+d'Anciles (5 PDF, 5,87 USD); vegeu decisió 4.
+
+### Decisions arquitectòniques clau
+1. **L3a — telèfon enganxat al nom (`fitxa!C6` de la fitxa de camp G3, «MARIA ALBA BARRAU CASTÁN 616523792»): el nom és el
+   valor, el telèfon va a la nota, la cita conserva l'original.** Normalitzador `_strip_phone_tail` a `add_entry`
+   (`collect_field_signals`), només per a `_PERSON_LIKE_FIELDS` (client, arquitecte, despatx, laboratori) i només si
+   davant del telèfon queden ≥ 2 lletres (un telèfon sol, o «2025», no es toquen). Why aquí i no al lector de plantilles
+   G3: és l'únic punt per on passen TOTS els senyals de camp (LLM, plantilles, Python), i el telèfon es un patró tancat
+   (9 xifres, 6-9 davant, +34 opcional). Efecte: la forma de la fitxa cau al mateix clúster que el nom del formulari p.5.
+2. **L3b — una mostra alterada (MA) no té N30: `n30` → `no_trobat` amb nota, el colpeig anotat es conserva al `registre`,
+   la lectura va a `altres`** (`_ma_sample_has_no_n30`, post-fila de `spt_ma_tests`). Dispara NOMÉS si totes les etiquetes
+   de la fila són MA: a Castellar l'annex diu «SPT-1» i el GTL «MA1» per a la mateixa mostra (pregunta 12 a l'Eva) i el seu
+   «R» no es toca (test). Why `no_trobat` i no candidats «--»: és el que diu l'or d'Anciles i el que el contracte permet
+   (el generador ja escriu «--» quan no hi ha valor); un candidat «--» seria un valor inventat.
+3. **L1 — el lector 1.6 de Linyola va llegir del «Full d'assaig SPT/MI/Mostra alterada» (PENETROS p.3) la cota i l'etiqueta
+   de la mostra (`lab_*`) però NO la fila de l'assaig** (`tables.spt_ma_tests` absent), mentre que els lectors d'Alcoletge,
+   Rubí i Vilanova, amb el mateix skill, sí la van emetre amb `n30.registre`. Variança del lector sobre un text que deia
+   «l'Excel mana per als valors, el manuscrit es llegeix per si porta alguna cosa que l'Excel no té». **Skill v1.8:** el
+   full d'assaig SPT emet SEMPRE una fila amb el registre de les 4 caselles; sense annex de sondeig és l'únic registre de
+   cops del projecte; una sola casella ≥ 50 = rebuig al primer tram → «R». Cap canvi al consolidador: la regla «n30 mai
+   segur» ja hi és, i «R» amb 50 al primer tram ja era al Pas 3b.
+4. **Cost i comptabilitat de les lectures.** El runner llança `claude -p` amb `G3DT_LECTURA_AUTH=login` per defecte: treu
+   la clau API de l'entorn del fill i el fill fa servir la sessió de claude.ai (la clau del `.env` no té crèdit; E2E
+   2026-08-24). El `cost_usd` del `_telemetry.jsonl` és el que el CLI reporta (`total_cost_usd`), no un càrrec a crèdits:
+   consumeix quota de la subscripció. Ordre de magnitud (Sonnet 5, esforç xhigh): 0,6-0,7 USD un correu, 0,8-0,9 un PDF
+   senzill, 1,2-1,5 un annex de diverses pàgines, **2,07 USD el PENETROS.pdf de Linyola al run mare** (480 s, 52 torns: el
+   document més car del projecte). Un projecte sencer (19-22 documents) ≈ 18 USD; els 7 ≈ 125 USD. **1.5 necessita UNA
+   lectura** (Linyola PENETROS.pdf, ≈ 2 USD, 8 min): la resta és Python a cost 0.
+5. **No es llança cap lectura sense el vist-i-plau del Josep** (handoff: «si una peça necessita re-llegir documents … cal
+   dir-ho abans»; el Josep ha preguntat pel cost). Preparat i documentat: `runs/2026-09-05-l1-linyola/` (còpia del run
+   mare sense `penetros.json` → el runner només re-llegeix aquest document per md5) amb la comanda a `_NOTES.md`.
+
+### Implementació
+- `automation/lectura/consolidate.py`: `_PERSON_LIKE_FIELDS`, `_PHONE_TAIL_RE`, `_strip_phone_tail` (+ crida a `add_entry`);
+  `_MA_ID_RE`, `_ma_sample_has_no_n30` (cridat a `consolidate_tables`, bloc `spt_ma_tests`).
+- `.claude/commands/g3dt-llegir-projecte.md` v1.8: línia de versió, `relation_to_others` (el full d'assaig SPT p.3 sí que
+  aporta), bloc «Taula Assaigs SPT / MA» (regla nova). La cache de lectures va per md5: editar el skill no invalida res.
+- Tests: `test_L3_phone_glued_to_a_person_name_goes_to_the_note`, `test_L3_altered_sample_has_no_n30` (Anciles + Castellar
+  intacte). Consolidador 158 verds; els tres mòduls 212.
+- Artefactes: `{slug}/_reconsolida-2026-09-05-l3/` (7 projectes); `runs/2026-09-05-l1-linyola/` preparat (no llançat).
+
+### Validació empírica (reconsolidació dels 7, cost 0; comparador v4 sobre l'or)
+- **1 cel·la canvia d'estat, cap altra; conflictes idèntics.** Anciles `spt_ma_tests[2].n30` (MA-1) candidats «2» →
+  `no_trobat` = or (**ALERTA → OK**; el signat escriu «--»). Anciles `client_name`: mateix estat i valor (segur «Maria Alba
+  Barrau Castán»); la forma de la fitxa surt ara «MARIA ALBA BARRAU CASTÁN» amb «telèfon 616523792 separat del nom» a la
+  nota (sense canvi de veredicte).
+- Taules: **143 → 144 OK / 27 / 7 → 6 ALERTA / 20 / 0.** Escalars idèntics (118/23/5/1/0). Dels 6 ALERTA que queden: 5
+  «OK per veritat» del handoff + Alcoletge `[1].a` (STATUS §Pendents de revisió, 1).
+
+### Latència / cost
+0 USD fins aquí. L1: ≈ 2 USD (subscripció), ≈ 8 min, pendent del Josep.
+
+### Limitacions conegudes
+- `_strip_phone_tail` només treu un telèfon AL FINAL del valor; un telèfon al mig («Alba 616523792 Barrau») no es toca (no
+  s'ha vist).
+- L3b no dispara si alguna etiqueta de la fila és SPT (Castellar): correcte mentre la pregunta 12 sigui oberta.
+- L1 sense mesurar: la fila de Linyola surt del lector, i el lector és variable; si la re-lectura torna a no emetre la
+  fila, caldrà el mode `--only` sobre la p.3 o un fallback Python (les 4 caselles són text? no: manuscrit → visió).
+
+### GO/NO-GO
+- ✅ L3: 1 cel·la cap a l'or, 0 regressions, tests, conflictes idèntics. ⏳ L1: skill v1.8 escrit, carpeta preparada,
+  lectura pendent del vist-i-plau.
+
+### Següents passos
+Si el Josep diu que sí: llançar `runs/2026-09-05-l1-linyola/` (comanda a `_NOTES.md`), comparar `spt_ma_tests[0].n30` amb
+l'or, copiar `penetros.json` al run mare si és bo i reconsolidar. Després 1.6 T2.
+
+*Fi entrada 2026-09-05 (nit, 5). L3 sense cost; L1 costa un document i es diu abans.*
+
+## 2026-09-05 (nit, 6) — Peça 1.5, part 2: re-lectura d'UN document (Linyola PENETROS.pdf, skill v1.8): el lector emet la fila SPT però amb un dialecte nou; el consolidador l'accepta i deriva «R» del registre — 1 cel·la, blanc → candidats = or i signat; 1,63 USD
+
+### Context
+Amb el permís del Josep («permís per consumir crèdits per llançar la re-lectura de PENETROS de Linyola») s'ha llançat el run
+parcial preparat a (nit, 5): `runs/2026-09-05-l1-linyola/` = run mare sense `penetros.json` → el runner ha saltat 19
+documents per md5 i n'ha llegit 1. Resultat de la lectura (skill 1.8): la fila `spt_ma_tests` HI ÉS («SPT1», P3, 1,00 a 1,75,
+`registre` [50, null, null, null], candidat «R», nota «una sola casella amb 50 cops i la resta buides = rebuig al primer
+tram»). Però el consolidador la deixava en blanc.
+
+### Decisions arquitectòniques clau
+1. **El lector és un productor cec també en les claus de `n30`:** ha escrit els candidats a `value_candidates`, i el
+   consolidador només coneixia `candidats_suma` / `candidates_suma` / `candidates` / `candidats`. S'afegeixen
+   `value_candidates`, `valor_candidats`, `candidats_valor`, `n30_candidats`. Why no «arreglar el lector»: el skill no fixa
+   el nom d'aquesta clau (només `registre`); el consolidador ha de llegir per forma, com fa amb els sumands de superfície.
+2. **Rebuig derivat del registre:** un `registre` amb un tram ≥ 50 cops i la resta buides feia petar la suma dels trams
+   centrals (`int(None)`) i no deixava cap senyal. Ara, si cap candidat escrit, ≥ 50 en un tram → candidat «R» amb nota
+   «(derivat: ≥ 50 cops en un tram de 15 cm = rebuig — Pas 3b)», el registre conservat. Mai segur (guard existent).
+3. **La lectura nova substitueix la vella al run mare** (`runs/2026-09-03-mesura-8/linyola/penetros.json`, skill 1.8); la
+   vella (skill 1.6, sense fila SPT) queda a `runs/2026-09-05-l1-linyola/_anterior-skill-1.6/penetros.json` (subcarpeta:
+   `load_corpus` només mira els JSON del primer nivell). Why: és el que s'ha pactat amb el Josep («si surt bé copio la
+   lectura al run mare i reconsolido») i evita la trampa d'Anciles/I1 (dues carpetes de run per al mateix projecte).
+4. **Variança del lector, comprovada:** mateix document, mateix model i esforç; 1.6 no va emetre la fila, 1.8 sí. La
+   litologia manuscrita ha sortit «Llim marró…» (l'or de taules llegí «Lutita marró…»): candidats, com sempre.
+
+### Implementació
+- `automation/lectura/consolidate.py` `_cell_signals` (branca `n30`): alies de claus de candidats; regla «≥ 50 → R».
+- `tests/test_lectura_consolidate.py`: `test_L1_manuscript_spt_sheet_refusal_at_first_tram_and_reader_dialect` (dialecte
+  del lector + derivat sense candidat escrit). Consolidador 159 verds; els tres mòduls 213.
+- Artefactes: `runs/2026-09-05-l1-linyola/` (lectura, `_telemetry.jsonl` del run aïllat, `_reconsolida-2026-09-05-l1/` amb
+  `_decisions.json` i `_compare_*.txt`, `_anterior-skill-1.6/`); `{slug}/_reconsolida-2026-09-05-l1/` (7 projectes).
+
+### Validació empírica
+- Run parcial: 8,6 min totals; **PENETROS.pdf 463 s, 45 torns, 1,63 USD** (run mare: 480 s, 52 torns, 2,07 USD); cap
+  timeout; consolidació Python 0,06 s; 0 conflictes; contracte net.
+- Reconsolidació dels 7 (l1 vs l3): **1 cel·la canvia, cap altra; conflictes idèntics.** Linyola `spt_ma_tests[0].n30`
+  `no_trobat` → `candidats` «R» (or segur «R (rebuig; registre: 50 cops al primer tram de 15 cm)»; signat N30 = R): **BUIT
+  → CAND** («bo dins»; n30 no pot ser segur per contracte). `registre` [50, null, null, null] conservat.
+- Taules: **144 OK / 27 → 28 CAND / 6 ALERTA / 20 → 19 blancs / 0 ERR.** Escalars idèntics (118/23/5/1/0).
+- **Peça 1.5 tancada:** de les 4 cel·les del handoff, 3 mogudes (L3 ×2 a Anciles, L1 a Linyola) i la quarta (telèfon)
+  era la mateixa cel·la que L3a. Blancs de taula 31 → 19 al llarg de la nit (1.4 + 1.5).
+
+### Latència / cost
+1,63 USD (quota de subscripció, `login`), 8,6 min de rellotge.
+
+### Limitacions conegudes
+- La regla «≥ 50 → R» només s'aplica quan el lector no ha escrit cap candidat; si n'escriu un de diferent, mana el lector
+  (candidats, mai segur).
+- Els alies de claus són una llista tancada: un lector que n'estreni una altra tornarà a deixar la cel·la en blanc. El
+  rastre de dialectes (`notes_estructurals`) només cobreix els sumands de superfície; caldria estendre'l a `n30`.
+- Vilanova SPT creuats i litologies re-redactades (F1) continuen fora de 1.5: són del signat / de l'Eva.
+
+### GO/NO-GO
+- ✅ 1 cel·la cap a l'or i el signat, 0 regressions, test, conflictes idèntics, cost dit abans i autoritzat.
+- ⏳ Suite sencera: a la sessió.
+
+### Següents passos
+1.6 T2 (decidir si la passada LLM de conflictes es manté: mesurar als 7 runs si els valors de `_consolida_only.json` són
+millors que els candidats Python contra el signat), després 1.7 (amb l'Eva) i bloc 2.
+
+*Fi entrada 2026-09-05 (nit, 6). Un document, 1,63 USD, una cel·la; i el consolidador que llegeix per forma, no per clau.*
+
+## 2026-09-05 (nit, 7) — Esmena a (nit, 6) arran d'una pregunta del Josep: la «R» de l'N30 de Linyola NO s'infereix, era impresa a tres documents; el lector la va deixar al text de la cita per «sempre registre» — skill v1.9
+
+### Context
+El Josep, en llegir (nit, 6): «el valor R està sempre a algun document (fins i tot a més d'un, en diversos formats): per què,
+o què, calculem?». Comprovat sobre les lectures del run mare de Linyola (`runs/2026-09-03-mesura-8/linyola/`): té raó.
+
+### Decisions arquitectòniques clau
+1. **On era la «R», literalment, abans de cap re-lectura:** (a) `pdf_annexes_4001607_dpsh.json` (annex DPSH p.3, columna
+   «Mesura de par»): fila `spt_ma_tests` amb cita «SPT-1 / 1,0 a 1,5 / R» i **`n30: null`**, nota «"R" indica rebuig però no
+   hi ha registre de cops»; (b) les dues lectures del tall: «N=R just al límit» a P-3, només a les notes del document, no a
+   cap taula; (c) el full manuscrit: «50» a la primera casella del colpeig (= rebuig, per la pràctica de l'Eva ja recollida
+   al Pas 3b). **La causa arrel no és de lectura sinó de redacció del skill:** «n30 MAI segur — sempre `registre` + candidats
+   de la suma» es va entendre com «sense registre, no posis valor». Un N30 imprès és una lectura literal.
+2. **Skill v1.9:** regla explícita al bloc «Taula Assaigs SPT / MA»: un N30 imprès («R» o número) sense registre s'escriu
+   com a candidat amb la nota «sense registre». Cap re-lectura ara (la cel·la de Linyola ja diu «R» pel manuscrit); vigent
+   per als projectes següents. La cache de lectures va per md5: editar el skill no invalida res.
+3. **La regla «≥ 50 cops en un tram → R» del consolidador (nit, 6) es manté**, reetiquetada mentalment com el que és: una
+   convenció de transcripció (la del propi full: 50 i la resta buides), no un càlcul, i només s'aplica quan el lector dona
+   el registre sense cap valor. El Josep no ha demanat treure-la; queda dit que és una línia si un dia molesta.
+4. **Les «R» de l'Excel DPSH i dels peus de l'annex («Rebuig a la cota de -1,75 m») són del penetròmetre**, no de l'SPT: la
+   columna N30 de la taula d'assaigs no les ha de prendre. Coincideixen al mateix punt a Linyola però són dos assaigs.
+
+### Implementació
+- `.claude/commands/g3dt-llegir-projecte.md` v1.9 (línia de versió + regla nova al bloc SPT/MA). Cap canvi de codi ni de
+  tests; cap mesura nova (no canvia cap `_decisions.json`).
+
+### Limitacions conegudes
+- La «N=R» del tall continua sense camí cap a `n30` (el lector la deixa a les notes): el skill ja preveu `n30_candidat_tall`
+  per al N imprès al tall; caldria comprovar en el proper run si el lector l'omple quan el tall marca «N=R».
+
+### Següents passos
+Cap. Entrada d'esmena; (nit, 6) queda tal com és, amb aquesta lectura correcta al costat.
+
+*Fi entrada 2026-09-05 (nit, 7). Llegir, no inferir: la R ja hi era.*
+
+## 2026-09-05 (nit, 8) — Validació del skill v1.9 amb la re-lectura de l'annex DPSH de Linyola (1,09 USD): la «R» impresa surt com a valor; efecte col·lateral, el lector llegeix la columna de colors «Nivells» per punt i destapa dues febleses dels derivats (D3, D4), arreglades
+
+### Context
+El Josep pregunta si val la pena re-llegir el PENETROS per validar la v1.9; resposta: no (la v1.9 parla d'un N30 imprès
+SENSE registre; el manuscrit en té). El document que la posa a prova és l'annex DPSH imprès (`PDF/ANNEXES/4001607_DPSH.pdf`),
+on la lectura 1.6 va deixar `n30: null` amb la «R» a la cita. Permís del Josep («Sí, llança l'annex DPSH»). Run parcial
+`runs/2026-09-05-v19-linyola-dpsh/` (còpia del run mare sense aquesta lectura): 5,3 min totals, el document 281 s, 16 torns,
+**1,09 USD** (1.6: 0,97 USD, 261 s).
+
+### Decisions arquitectòniques clau
+1. **La v1.9 funciona a la primera:** `"n30": "R"` amb la nota «N30 imprès directament com a 'R' sense colpeig per trams de 15
+   cm — sense registre (regla v1.9); candidat, mai segur». Al consolidat, «R» té ara dues fonts documentals (manuscrit i
+   annex); la UI en mostra una (formes idèntiques es fusionen), és el comportament de sempre.
+2. **Efecte col·lateral, legítim:** el lector 1.9 ha llegit també la **columna de colors «Nivells»** de l'annex DPSH (taronja =
+   Nivell 1, groc = Nivell 2) i n'ha emès `soil_levels` PER PUNT (6 files, amb `punt`): P-1 0,00-1,60 / 1,80-2,90; P-2
+   0,00-0,00 / 0,20-2,15; P-3 0,00-1,00 / 1,20-1,75. Són els colors de l'Eva: l'or d'Alcoletge usa exactament aquesta font
+   des de l'Excel («columna G (Nivells), canvi color 29→43»). `_group_soil_levels` les fusiona per nom de nivell (última
+   prioritat, `_SOIL_PRIMARY_ORDER`); les fondàries queden com a candidats darrere de les del tall (o a `altres`).
+3. **Feblesa 1 (D3):** la base del nivell 2 passava de «fins al fons d'investigació (rebuig DPSH: -2,90/-2,15/-1,75 m per
+   punt)» a «-2,90» perquè ara hi havia una base LLEGIDA (la banda de color acaba on acaba l'assaig) i D3 només omplia
+   blancs o afegia el fons si era més profund. **Regla nova:** si TOTES les bases llegides de l'últim nivell coincideixen
+   (±5 cm) amb fondàries de rebuig / del sondeig, no són transicions sinó el final del reconeixement → el text del fons
+   va primer, les lectures darrere. Efecte també a Bell-lloc (-1,80 = sondeig S-1) i Castellar (1,20 = S-1): el fons
+   primer, per punt; veredictes intactes (solapament amb l'or).
+4. **Feblesa 2 (D4):** `mostra_del_nivell` del nivell 2 passava de «False» (derivat geomètric) a «True» perquè l'annex
+   ho afirma («la mostra SPT-1 (interval 1,0 a 1,5) cavalca la transició»: amb el tram NOMINAL de l'annex, no el real del
+   GTL 1,0-1,15) i D4 només omplia blancs. **Regla nova:** si una lectura no-A (candidats) afirma un booleà i la geometria
+   (tram real del GTL al punt) diu el contrari, el derivat s'afegeix com a segon candidat; el llegit continua primer. Un
+   `segur` (annex de sondeig) no es toca. L'Eva veu la discrepància en lloc d'una afirmació sola.
+5. **La lectura 1.9 substitueix la 1.6 al run mare** (`linyola/pdf_annexes_4001607_dpsh.json`); la 1.6 a
+   `runs/2026-09-05-v19-linyola-dpsh/_anterior-skill-1.6/`. Mateix criteri que (nit, 6).
+
+### Implementació
+- `automation/lectura/consolidate.py`: `_derive_last_level_base` (bases llegides = fons → text primer),
+  `_derive_sample_level` (candidats no-A contradits per la geometria → derivat afegit).
+- Tests: `test_D14_read_base_equal_to_refusal_depths_is_the_investigation_bottom`,
+  `test_D14_sample_level_claimed_by_a_weak_document_gets_the_geometric_alternative`; 1 assert de
+  `test_D14_last_level_base_is_the_investigation_depth` actualitzat (Bell-lloc: el fons primer). Consolidador 161 verds; els
+  tres mòduls 215.
+- Artefactes: `runs/2026-09-05-v19-linyola-dpsh/` (lectura, telemetria aïllada, `_decisions.json` del runner,
+  `_anterior-skill-1.6/`); `{slug}/_reconsolida-2026-09-05-v19/` (7 projectes).
+
+### Validació empírica (reconsolidació dels 7, v19 vs l1)
+- **3 cel·les canvien de VALOR, cap d'estat; cap veredicte canvia; conflictes idèntics.** Castellar i Bell-lloc
+  `soil_levels[1].a`: el fons primer (or candidats amb -1,20 / -1,80 i -2,45: solapament, OK com abans). Linyola
+  `soil_levels[1].mostra_del_nivell`: [True (annex DPSH), False (derivat)] — CAND com abans (l'or té textos). Linyola
+  `soil_levels[1].a` conserva el text del fons (regla 3). Linyola `[1].de` guanya candidats -1,80/-0,20 de l'annex (CAND igual).
+- Taules **144 / 28 / 6 / 19 / 0**; escalars **118 / 23 / 5 / 1 / 0**: idèntics a l1.
+
+### Latència / cost
+1,09 USD (subscripció), 5,3 min de rellotge; 0 USD la resta.
+
+### Limitacions conegudes
+- Els nivells per punt de l'annex DPSH (banda de color) entren com a candidats de segona fila; no s'usen encara per a la
+  `a` per punt del nivell 1 quan el tall no la dona (Vilanova no té aquesta columna llegida: caldria re-llegir el seu annex
+  amb la v1.9 per saber si hi és). Possible peça futura: «banda de color de l'annex DPSH = transició per punt» com a font
+  explícita (l'or d'Alcoletge ho fa).
+- La «N=R» del tall continua a les notes del document (fil obert de (nit, 7)).
+
+### GO/NO-GO
+- ✅ v1.9 validada sobre el cas que la va motivar; ✅ 0 regressions de veredicte, 3 cel·les amb millor contingut; tests.
+- ⏳ Suite sencera: a la sessió.
+
+### Següents passos
+1.6 T2. Referència per a la propera reconsolidació: `_reconsolida-2026-09-05-v19`.
+
+*Fi entrada 2026-09-05 (nit, 8). Un document més (1,09 USD): la regla funciona i el lector veu colors que abans no mirava.*

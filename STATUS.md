@@ -1,5 +1,28 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-05 (nit, 4) — **Bloc 1.4 derivats FET** (post-procés `_derive_soil_levels`: el primer nivell a 0,00 per
+Last updated: 2026-09-05 (nit, 8) — **Skill v1.9 validat** (re-lectura de l'annex DPSH de Linyola, 1,09 USD: la «R» impresa surt
+com a valor «sense registre»). El lector 1.9 llegeix també la columna de colors «Nivells» de l'annex DPSH (nivells per punt): D3
+ara posa «fins al fons d'investigació» primer quan les bases llegides són fondàries de rebuig/sondeig (Linyola, Bell-lloc,
+Castellar), D4 afegeix el derivat geomètric quan un document no-A afirma el contrari (Linyola nivell 2: [Sí annex, No derivat]).
+Reconsolidació v19 vs l1: 3 cel·les de valor, **0 de veredicte**; taules **144/28/6/19/0**, escalars idèntics. Esmena (nit, 7): la
+«R» de l'N30 era impresa a 3 documents, no s'infereix; el skill ho diu ara (v1.9). **Referència: `_reconsolida-2026-09-05-v19`.**
+Cost total de la nit: 1,63 + 1,09 = 2,72 USD (subscripció). **Següent: 1.6 T2.** Detall: DECISION-LOG (nit, 7 i 8).
+
+Anterior (nit, 6) — **Peça 1.5 (L1/L3) FETA.** L1: re-lectura d'UN document (Linyola PENETROS.pdf, skill v1.8;
+463 s, 1,63 USD de subscripció, autoritzada pel Josep): el lector ara emet la fila SPT (registre 50/-/-/-) però amb la clau
+`value_candidates`; el consolidador l'accepta i deriva «R» (≥ 50 cops = rebuig). Reconsolidació l1 vs l3: **1 cel·la** (Linyola
+`n30` blanc → candidats «R» = or i signat), cap altra. Taules **144 / 28 / 6 / 19 / 0**; escalars idèntics. Lectura nova al run
+mare; la vella a `runs/2026-09-05-l1-linyola/_anterior-skill-1.6/`. Balanç de la nit (1.4 + 1.5): blancs de taula 31 → 19
+(8 cotes d'Anciles = I1, 11 lectures gràfiques del tall). **Següent: 1.6 T2.** Detall: DECISION-LOG (nit, 6), `_AGREGAT-8.md` §nit 6.
+
+Anterior (nit, 5) — **Peça 1.5 (L1/L3) a mig fer: L3 FET (cost 0), L1 preparat (1 lectura, ≈ 2 USD, pendent
+del Josep).** L3: telèfon fora del nom del client (`_strip_phone_tail`) i cap N30 a una mostra alterada (`_ma_sample_has_no_n30`):
+1 cel·la (Anciles MA-1 `n30` → `no_trobat` = or i signat «--»), ALERTA → OK; taules **144 / 27 / 6 / 20 / 0**; escalars idèntics.
+L1: el lector de Linyola no va emetre la fila SPT del full manuscrit (els d'Alcoletge/Rubí/Vilanova sí); skill **v1.8** ho fa
+explícit; carpeta `runs/2026-09-05-l1-linyola/` preparada (només re-llegirà `PENETROS.pdf`; al run mare va costar 2,07 USD,
+480 s). **Cost:** el runner usa la sessió de claude.ai (`G3DT_LECTURA_AUTH=login`), no crèdits API; 5,87 USD = els 5 PDF d'I1;
+un projecte sencer ≈ 18 USD; els 7 ≈ 125 USD. Detall: DECISION-LOG 2026-09-05 (nit, 5), `_AGREGAT-8.md` §nit 5.
+
+Anterior (nit, 4) — **Bloc 1.4 derivats FET** (post-procés `_derive_soil_levels`: el primer nivell a 0,00 per
 definició, sostre = base de l'anterior, base de l'últim nivell = fons d'investigació, `mostra_del_nivell` per interval al punt de
 la mostra, litologia del nivell que conté la mostra). Reconsolidació `_reconsolida-2026-09-05-d14` vs `-f1`: **13 cel·les**, cap
 altra, conflictes idèntics, contracte net. Taules **139 → 143 OK (73 %) / 27 CAND / 7 ALERTA / 31 → 20 blancs / 0 ERR**; escalars

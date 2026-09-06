@@ -1,0 +1,164 @@
+{
+ "source_path": "PDF/ANNEXES/lab-sig.pdf",
+ "source_md5": "2a8fe0c0ff1efbec2205dc40f3cbe815",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL núm. 4672-GTL-25, versió signada digitalment) de TPS per a la mostra de roca SPT1 P3 del projecte 4001607 Linyola.",
+ "issuer": "TPS, Prospecció del Subsòl, SL",
+ "date": "30/10/2025",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "TPS, Prospecció del Subsòl, SL (laboratori subcontractat, emissor del GTL)",
+  "for_whom": "G3 Desenvolupament Territorial, SL — el 'client'/'sol·licitant' d'aquest document és G3, que ha encarregat els assaigs de laboratori sobre la mostra extreta al projecte",
+  "why": "Certificar els resultats dels assaigs de laboratori (límits d'Atterberg, contingut en sulfats, assaig Lambe/expansivitat) realitzats sobre la mostra de roca SPT1 P3 del sondeig/DPSH del projecte",
+  "expected_fields": [
+   "expedient (Obra/Projecte)",
+   "municipi + carrer (Situació)",
+   "referència de mostra",
+   "tipus de material",
+   "cota d'extracció",
+   "resultats numèrics d'assaig"
+  ],
+  "not_expected": [
+   "promotor/client de l'obra",
+   "arquitecte",
+   "número de plantes",
+   "superfície de parcel·la",
+   "UTM",
+   "referència cadastral",
+   "data de camp DPSH"
+  ],
+  "relation_to_others": "Mateix núm. d'informe (4672-GTL-25) i mateixa referència de laboratori (GTL-8200-25) que '4672-GTL-25 Linyola.pdf' de la carpeta arrel del projecte — probablement la mateixa emissió; aquesta versió porta signatura digital (p.7: Pere Cervós Flinch, Pere Farrés Bori, 2025-10-30), possiblement la còpia final signada davant d'un esborrany sense signar. No s'ha llegit l'altre fitxer en aquesta crida (--only); segons l'inventari té un md5 diferent, per tant no és un duplicat exacte de bytes.",
+  "authority_for": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+   "location": "capçalera de totes les pàgines (p.1-p.7)",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.95,
+   "note": "emissor del GTL (banda superior), repetit idènticament a les 7 pàgines; mai el 'client'/'sol·licitant' del GTL (regla Pas 3)"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT1 P3",
+   "location": "p.2 bloc 'Mostra:' / p.6 taula resum 'Referència del client'",
+   "quote": "SPT1 P3",
+   "confidence": 0.85,
+   "note": "referència del client per a la mostra; coincideix p.2 i p.6 (taula resum dels resultats)"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 - 1,15",
+   "location": "p.2 i p.6 'Cota d'extracció (m):'",
+   "quote": "Cota d'extracció (m): 1,0 - 1,15",
+   "confidence": 0.85,
+   "note": "cota d'extracció en metres, format inici-fi, coincident a p.2 i a la taula resum p.6"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "SPT1 P3",
+   "location": "p.2 'Mostra:'",
+   "quote": "Mostra: SPT1 P3",
+   "confidence": 0.75,
+   "note": "punt d'assaig (SPT1 al punt P3); el document no desglossa un camp 'punt' separat de l'etiqueta de mostra"
+  },
+  {
+   "concept_id": "expedient",
+   "value": "4001607",
+   "location": "p.2 'Obra / Projecte:'",
+   "quote": "Linyola. Carrer Clot de la Llacuna. 4001607",
+   "confidence": 0.85,
+   "note": "únic camp del document amb el número d'expedient explícit"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "p.1 'Situació:' / p.2 'Obra / Projecte:'",
+   "quote": "Linyola. Carrer Clot de la Llacuna.",
+   "confidence": 0.6,
+   "note": "forma curta; frase combinada municipi+carrer, sense font d'autoritat A pròpia d'aquest document (regla: municipality mana comanda+pressupost+PLAN_COST)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna",
+   "location": "p.1 'Situació:' / p.2 'Obra / Projecte:'",
+   "quote": "Linyola. Carrer Clot de la Llacuna.",
+   "confidence": 0.5,
+   "note": "sense número de portal en aquest document; candidat feble, no és font d'autoritat A per a street_address (regla: blocs OBRA/ADREÇA OBRA/Situació de documents del projecte)"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "p.1 'Situació:' / p.2 'Obra / Projecte:'",
+   "quote": "Linyola. Carrer Clot de la Llacuna.",
+   "confidence": 0.5,
+   "note": "concepte extra (Pas 3); sense portal imprès en aquest document"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "10/10/2025",
+   "location": "p.2 'Data extracció:'",
+   "quote": "Data extracció: ... 10/10/2025",
+   "confidence": 0.35,
+   "note": "data d'extracció de la mostra SPT1 P3 al camp — probablement el dia del sondeig, no necessàriament el primer dia de camp DPSH (regla: comanda/annex sondeig/GTL donen el dia del sondeig, candidat 2, mai segur); disseny en columnes del PDF fa que etiqueta i valor no estiguin garantidament aparellats a la mateixa línia del text extret"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL (B25364589)",
+   "location": "p.1/p.7 'DADES DEL CLIENT:' i p.2 'DADES DEL SOL.LICITANT:'",
+   "quote": "DADES DEL CLIENT: ... Nom: G3 Desenvolupament Territorial, SL ... NIF: B25364589 ... Adreça: C/ Vallbona núm. 22 - 25268 Els Omells de Na Gaia (Lleida)",
+   "confidence": 0.9,
+   "note": "G3 és el client DEL LABORATORI (qui encarrega l'assaig), no el client/promotor de l'obra de l'informe geotècnic — regla 'G3 mai és client' (Pas 3). Descartat explícitament, no és candidat de client_name."
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT1 P3",
+    "punt": "P3",
+    "profunditat": "1,0 - 1,15",
+    "litologia_candidats": [
+     "Lutita gresosa",
+     "Roca"
+    ],
+    "n30": null,
+    "location": "p.1-p.2 i p.6 GTL: 'Tipus de mostra/es: Roca', 'DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa', 'Mostra: SPT1 P3', 'Cota d'extracció (m): 1,0 - 1,15'",
+    "quote": "Tipus de mostra/es: Roca / DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa / Mostra: SPT1 P3 / Cota d'extracció (m): 1,0 - 1,15"
+   }
+  ],
+  "__nota": "GTL de laboratori: aporta tipus de material i cota d'extracció puntual de la mostra assajada; NO aporta n30 (colpeig SPT, ve de l'annex de sondeig) ni fondàries de transició de nivell."
+ },
+ "not_present": [
+  "client_name (promotor de l'obra)",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text net a les 7 pàgines (text_ok=true a totes, tot i que meta.text_suspect_reason apunta al producer Acrobat Distiller); el disseny en columnes fa que etiqueta i valor sovint no coincideixin de línia al .txt extret — creuat amb el disseny estàndard GTL après al Pas 2 del skill (DADES DEL CLIENT=G3, DADES DEL SOL·LICITANT=G3, banda superior TPS=emissor/lab_testing_company) per assignar correctament els valors. Cap render_clip necessari; cap pàgina amb halves."
+}

@@ -2125,6 +2125,79 @@ def test_D14_sample_lithology_gets_the_containing_level(tmp_path: Path):
     assert [c["value"] for c in lit["candidates"]] == ["Graves amb sorres (NIVELL 1)"], "ja hi era: no es duplica"
 
 
+# ---------------------------------------------------------------------------
+# L3 (2026-09-05, peça 1.5): brossa dins del valor — telefon enganxat al nom (fitxa C6) i N30 en una mostra alterada
+# ---------------------------------------------------------------------------
+
+
+def test_L3_phone_glued_to_a_person_name_goes_to_the_note(tmp_path: Path):
+    """Anciles: la fitxa de camp G3 (`fitxa!C6`) diu «MARIA ALBA BARRAU CASTÁN 616523792»; el nom es el valor, el telefon
+    la nota, la cita conserva l'original. Un numero que no es un telefon, o un telefon sol, no es toca."""
+    assert C._strip_phone_tail("MARIA ALBA BARRAU CASTÁN 616523792") == ("MARIA ALBA BARRAU CASTÁN", "616523792")
+    assert C._strip_phone_tail("Josep Roca, +34 600 11 22 33") == ("Josep Roca", "600112233")
+    assert C._strip_phone_tail("RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA") == ("RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA", None)
+    assert C._strip_phone_tail("687838596") == ("687838596", None) and C._strip_phone_tail("G3 Geotècnia 2025") == ("G3 Geotècnia 2025", None)
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _g3(out, {"client_name": [("MARIA ALBA BARRAU CASTÁN 616523792", 0.3, "24.0807/DADES PER ANAR A CAMP_v1.xlsx", "fitxa_camp_g3")]})
+    _doc(out, "acc", "ACCEPTACIO/PRESUPUESTO.pdf", "pressupost_g3", [_ta("client_name", "Maria Alba Barrau Castán", 0.9)])
+    dec = C.consolidate_python(out, None, project_name="X")
+    cell = dec["fields"]["client_name"]
+    assert cell["estat"] == "segur" and cell["value"] == "Maria Alba Barrau Castán"
+    fitxa = next(c for c in cell["candidates"] + cell.get("altres", []) if "fitxa" in c["font"].lower() or "xlsx" in c["font"])
+    assert fitxa["value"] == "MARIA ALBA BARRAU CASTÁN" and "616523792" in fitxa["quote"] and "telèfon 616523792" in fitxa["note"]
+    assert validate_decisions(dec) == []
+
+
+def test_L3_altered_sample_has_no_n30(tmp_path: Path):
+    """Anciles MA-1 (S-2, 2,80-3,00): el full de camp anota un colpeig 1/1/1/1 i el lector en treu N30 = 2; el signat escriu
+    «--» (una MA no te N30). → `no_trobat` amb nota, colpeig al `registre`, lectura a `altres`. Castellar: l'annex diu
+    «SPT-1» i el GTL «MA1» per a la mateixa mostra (discrepancia d'etiqueta, pregunta 12): el n30 «R» no es toca."""
+    out = tmp_path / "a"
+    out.mkdir()
+    _doc(out, "camp", "PENETROS + SONDEIGS.pdf", "full_camp_manuscrit", [], tables={"spt_ma_tests": [
+        {"id": "MA-1", "punt": "S-2", "profunditat": "2,80 a 3,00 m", "litologia": "Graves",
+         "n30": {"registre": [1, 1, 1, 1], "candidats_suma": [2]}, "location": "p.6", "quote": "Prof 2,80,3,00; tipus M.A-1; Colpeig 1 1 1 1"}]})
+    dec = C.consolidate_python(out, None, project_name="X")
+    row = dec["tables"]["spt_ma_tests"]["rows"][0]
+    assert row["n30"]["estat"] == "no_trobat" and row["n30"]["value"] is None
+    assert "mostra alterada" in row["n30"]["note"] and "1/1/1/1" in row["n30"]["note"]
+    assert row["n30"]["registre"]["value"] == [1, 1, 1, 1] and [c["value"] for c in row["n30"]["altres"]] == [2]
+    assert validate_decisions(dec) == []
+    b = tmp_path / "b"
+    b.mkdir()
+    _doc(b, "annex", "PDF/ANNEXES/x_sondeig.pdf", "annex_sondeig", [], tables={"spt_ma_tests": [
+        {"id": "SPT-1", "punt": "S-1", "profunditat": "-1,00 a -1,20 m", "litologia": "Substrat rocós",
+         "n30": {"value": "R", "registre": [50]}, "location": "p.1", "quote": "SPT-1 R"}]})
+    _doc(b, "gtl", "GTL.pdf", "informe_laboratori", [], tables={"spt_ma_tests": [
+        {"id": "MA1", "punt": "S1", "profunditat": "1,0 - 1,2", "litologia": "Grava amb llims", "n30": None, "location": "p.2", "quote": "MA1 S1"}]})
+    row = C.consolidate_python(b, None, project_name="X")["tables"]["spt_ma_tests"]["rows"][0]
+    assert row["n30"]["estat"] == "candidats" and row["n30"]["value"] == "R"
+
+
+def test_L1_manuscript_spt_sheet_refusal_at_first_tram_and_reader_dialect(tmp_path: Path):
+    """L1 (Linyola, skill 1.8): el full d'assaig SPT del manuscrit dona `registre` [50, null, null, null] i els candidats
+    amb la clau `value_candidates` (dialecte nou del lector). Abans: cap senyal (clau desconeguda; la suma dels trams
+    centrals peta amb els null) → n30 i registre en blanc. Ara: candidats «R» (mai segur), registre conservat. I sense cap
+    candidat escrit, ≥ 50 cops en un tram tambe es «R» derivat."""
+    out = tmp_path / "a"
+    out.mkdir()
+    _doc(out, "penetros", "PENETROS.pdf", "full_camp_manuscrit", [], tables={"spt_ma_tests": [
+        {"id": "SPT1", "punt": "P3", "profunditat": "1,00 a 1,75", "litologia": "Llim marró",
+         "n30": {"registre": [50, None, None, None], "value_candidates": ["R"], "note": "50 cops al primer tram"},
+         "location": "p.3", "quote": "Colpeig: 50 [buit] [buit] [buit]"}]})
+    row = C.consolidate_python(out, None, project_name="X")["tables"]["spt_ma_tests"]["rows"][0]
+    assert row["n30"]["estat"] == "candidats" and row["n30"]["value"] == "R"
+    assert row["n30"]["registre"]["estat"] != "no_trobat" and row["n30"]["registre"]["value"] == [50, None, None, None]
+    b = tmp_path / "b"
+    b.mkdir()
+    _doc(b, "penetros", "PENETROS.pdf", "full_camp_manuscrit", [], tables={"spt_ma_tests": [
+        {"id": "SPT1", "punt": "P3", "profunditat": "1,00 a 1,15", "litologia": None,
+         "n30": {"registre": [50, None, None, None]}, "location": "p.3", "quote": "Colpeig: 50"}]})
+    row = C.consolidate_python(b, None, project_name="X")["tables"]["spt_ma_tests"]["rows"][0]
+    assert row["n30"]["estat"] == "candidats" and row["n30"]["value"] == "R" and "rebuig" in row["n30"]["candidates"][0]["note"]
+
+
 def test_D14_read_base_equal_to_refusal_depths_is_the_investigation_bottom(tmp_path: Path):
     """Linyola amb l'annex DPSH v1.9: la banda de color del nivell 2 acaba a -2,90/-2,15/-1,75 per punt = els rebuigs → no son
     transicions, es el fons: el text «fins al fons d'investigació…» va primer i les lectures darrere. Bell-lloc: -1,80 llegit =

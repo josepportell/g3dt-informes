@@ -1,0 +1,144 @@
+{
+ "source_path": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+ "source_md5": "296c5aa75d57fe64ec2f5cbfb96fe57f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol d'arquitectura (planta general, full 03, A3 1:100) amb els 3 punts de sondeig DPSH marcats en vermell sobre la planta de l'habitatge, dins la carpeta d'encàrrec 25.0616",
+ "issuer": "BUNYESC ARQUITECTURA EFICIENT, S.L.P — Josep Bunyesc Palacín, Dr. Arquitecte",
+ "date": "Agost 2025 (data del plànol, no data de camp)",
+ "pages_or_sheets": "1 pàgina (full 03)",
+ "context": {
+  "who_made_it": "Bunyesc Arquitectura Eficient, despatx d'arquitectura redactor del projecte bàsic de l'habitatge",
+  "for_whom": "G3, com a indicació de l'arquitecte sobre on situar els 3 punts de sondeig (DPSH) de l'encàrrec geotècnic",
+  "why": "Marcar sobre la planta general de la parcel·la la ubicació proposada dels 3 punts de sondeig, com a annex de la sol·licitud/encàrrec (viu a la carpeta 25.0616 amb el pressupost i la fitxa de camp)",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "building_type",
+   "num_dpsh_tests (previstos)"
+  ],
+  "not_expected": [
+   "field_date de camp real",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_*",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte_*"
+  ],
+  "relation_to_others": "Duplicat exacte (mateix md5 296c5aa75d57fe64ec2f5cbfb96fe57f, mateixa mida 149307 B) de 25.0616/Punts de Sondeig_Silvia_Jaume.pdf: aquesta és una còpia solta a l'arrel del projecte, no és una font independent. Existeix també Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf (md5 diferent, no llegit en aquesta crida --only) — probablement una versió redibuixada/anotada del mateix plànol per l'Eva.",
+  "authority_for": [
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles Balagueró",
+   "location": "peu de plànol, bloc PROMOTORS",
+   "quote": "SÍLVIA EROLES BALAGUERÓ",
+   "confidence": 0.7,
+   "note": "Projecte amb 2 promotors (Linyola); l'etiqueta PROMOTORS del caixetí és font d'autoritat A però no decideix per si sola quin dels dos consta com a client de l'informe (depèn de qui signa l'acceptació, no llegida en aquesta crida)."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Jaume Nadal Andreu",
+   "location": "peu de plànol, bloc PROMOTORS",
+   "quote": "JAUME NADAL ANDREU",
+   "confidence": 0.7,
+   "note": "Segon promotor, mateix bloc PROMOTORS; vegeu nota del primer candidat."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Josep Bunyesc Palacín",
+   "location": "peu de plànol, bloc REDACTOR/S",
+   "quote": "JOSEP BUNYESC PALACÍN - Dr. Arquitecte",
+   "confidence": 0.8,
+   "note": "Persona redactora, 'representat per' el despatx."
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "Bunyesc Arquitectura Eficient, S.L.P",
+   "location": "peu de plànol, bloc REDACTOR/S",
+   "quote": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+   "confidence": 0.85,
+   "note": "Despatx redactor; coexisteix amb el nom de la persona (Josep Bunyesc Palacín)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C. Clot de la Llacuna, 16",
+   "location": "peu de plànol, bloc EMPLAÇAMENT",
+   "quote": "C. Clot de la Llacuna, 16",
+   "confidence": 0.85,
+   "note": "Bloc EMPLAÇAMENT del caixetí, autoritat A."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "peu de plànol, bloc EMPLAÇAMENT",
+   "quote": "Linyola  (25240)",
+   "confidence": 0.85,
+   "note": "Mateix bloc EMPLAÇAMENT que l'adreça."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [
+     "16"
+    ],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "peu de plànol, bloc EMPLAÇAMENT",
+   "quote": "C. Clot de la Llacuna, 16 / Linyola  (25240)",
+   "confidence": 0.85,
+   "note": "Concepte extra per creuament d'adreça amb el Cadastre."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "peu de plànol, bloc TÍTOL DEL PROJECTE",
+   "quote": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.7,
+   "note": "Redacció del títol del projecte de l'arquitecte."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "planta general, 3 etiquetes en vermell sobre el dibuix",
+   "quote": "1r PUNT SONDEIG / 2n PUNT SONDEIG / 3r PUNT SONDEIG",
+   "confidence": 0.5,
+   "note": "Punts PROPOSATS per l'arquitecte al plànol (previstos), no confirma quants es van executar realment. Prioritat per sobre d'aquest document: Excel DPSH (executats) > albarà TPS > pressupost (previstos) > aquest plànol."
+  }
+ ],
+ "not_present": [
+  "expedient (el caixetí porta 'EXPEDIENT: 13/52/04', que és el codi intern de l'arquitecte, no el de G3 — exclòs explícitament pel Pas 3)",
+  "field_date (només 'DATA: AGOST 2025', data del plànol, no data de camp)",
+  "cota_referencia",
+  "num_soil_levels",
+  "superficie_parcela (només cotes de la construcció, no de la parcel·la)",
+  "num_floors (només es mostra una planta general; no es pot confirmar el nombre total de plantes des d'aquest full)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura del text natiu del PDF (AutoCAD 2022 / pdfplot16, ToUnicode net, page-1.txt complet) + revisió visual de page-1.png sencera per localitzar les 3 etiquetes 'PUNT SONDEIG' en vermell sobre la planta. Duplicat exacte per md5 de 25.0616/Punts de Sondeig_Silvia_Jaume.pdf (no re-llegit); existeix a més una versió _REDIBUIX.pdf amb md5 diferent, no llegida en aquesta crida --only. El codi 'EXPEDIENT: 13/52/04' del caixetí és el codi intern de l'arquitecte (format tipus EXP.../SET..., exclòs pel Pas 3), no l'expedient de G3 (4001607)."
+}
