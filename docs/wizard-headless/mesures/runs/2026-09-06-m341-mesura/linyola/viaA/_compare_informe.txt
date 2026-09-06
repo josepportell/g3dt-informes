@@ -1,0 +1,18 @@
+
+## linyola/viaA
+| taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
+|---|--:|--:|--:|---|---|
+| plantes | 4 | 2 | 0 |  | fila0[1] CLOS «PB (planta baixa, 1 nivell)»↔«Pb»; fila1[0] CLOS «Superfície de la parcel·la segons plànols cadastrals  (m2)»↔«Superfície de la parcel·la segons informació aportada  (m2)» |
+| cte_edificacio | 3 | 0 | 1 |  | fila1[1] MISM «T-2»↔«T-1» |
+| dpsh | 15 | 0 | 0 |  |  |
+| spt_ma | 3 | 2 | 0 |  | fila0[0] CLOS «SPT1 P3»↔«SPT-1»; fila0[4] CLOS «Lutita gresosa»↔«Lutites» |
+| mostra_lab | 3 | 1 | 1 |  | fila0[2] CLOS «Profunditat: -1.0 a -1.15»↔«Profunditat:  -1.00  a -1.15 m»; fila1[1] MISM «Contingut en sulfats solubles UNE 83963:2008»↔«Assaig de Límits d’Atterberg UNE 103103/94 – 104/93
+Assaig d’expansivitat Lambe UNE 103500/94
+Assaig de contingut en sulfats UNE 83963 : 2008» |
+| soil_levels | 1 | 1 | 0 | −1 absents | 1r[0] CLOS «1er nivell.»↔«1er nivell»; 2n[*] ROW_ «»↔«2on nivell | Lutites i sorrenques alterades, substrat.» |
+| permeabilitat | 2 | 1 | 0 | −1 absents | 1r[1] CLOS «10^-5 a 10^-7»↔«10-3 – 10-5»; 2n[*] ROW_ «»↔«2on nivell | 10-6 – 10-8 | Lutites i sorrenques» |
+| sulfats | 0 | 0 | 0 | +1 extra, −1 absents | 1r[*] ROW_ «1er nivell | 0.0 | --- | No Agressius»↔«»; 2n[*] ROW_ «»↔«2on nivell | 0.0 | -- | No agressius» |
+| sismica | 1 | 1 | 2 | −1 absents | 1[1] CLOS «Tipus II»↔«Tipus IV»; 1[2] MISM «3.00»↔«1.60»; 1[3] MISM «1.3»↔«2.0»; 2[*] ROW_ «»↔«2 | Tipus II | 1.30* | 1.3» |
+| geotecnica | 3 | 2 | 2 | −1 absents | 1r[0] CLOS «1er nivell. Llims argilsoso i sorrencs.»↔«1er nivell: Llims argilosos i sorrencs»; 1r[1] MISM «23-R»↔«13»; 1r[2] MISM «R»↔«--»; 1r[5] CLOS «28°»↔«28»; 2n[*] ROW_ «»↔«2on nivell: Lutites i sorrenques | 31-R | R | 2.20 | 1.0 | 30 | >800» |
+
+**linyola/viaA: 35 MATCH · 10 CLOSE · 6 MISMATCH · 1 files extra · 5 files absents → 88 % (M+C)/comparables**

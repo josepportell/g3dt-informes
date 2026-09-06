@@ -28,9 +28,9 @@
   "variables": {
     "access_street": {
       "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del Carrer existent al sud.",
-      "position": "p115",
-      "position_description": "Body paragraph 115",
-      "confidence": 0.257,
+      "position": "p123",
+      "position_description": "Body paragraph 123",
+      "confidence": 0.2571428571428571,
       "extraction_method": "paragraph_single",
       "template_text": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del {{ access_street }}.",
       "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del Carrer existent al sud."
@@ -151,15 +151,6 @@
       "extraction_method": "table_flatten",
       "template_text": "",
       "reference_text": "+199.50"
-    },
-    "csn_radon_text": {
-      "value": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
-      "position": "p322",
-      "position_description": "Body paragraph 322",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edi..."
     },
     "cte_edificacio": {
       "value": "C-1",
@@ -367,13 +358,13 @@
       "reference_text": "1 assaig de contingut en sulfats UNE 83963 : 2008"
     },
     "location_sentence": {
-      "value": "L’edificació que es preveu construir presentarà les següents característiques:",
+      "value": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d’Urgell",
       "position": "p066",
       "position_description": "Body paragraph 66",
-      "confidence": 0.208,
+      "confidence": 0.49,
       "extraction_method": "paragraph_single",
       "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
-      "reference_text": "L’edificació que es preveu construir presentarà les següents característiques:"
+      "reference_text": "L’edificació que es preveu construir es situarà entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d’Urgell."
     },
     "materials_intro": {
       "value": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
@@ -453,15 +444,6 @@
       "template_text": "",
       "reference_text": "1"
     },
-    "radon_zone_description": {
-      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de BELL-LLOC D’URGELL i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
-      "position": "p349",
-      "position_description": "Body paragraph 349",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de BELL-LLOC D’URGELL i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1."
-    },
     "seismic_ab_text": {
       "value": "0,04",
       "position": "p342",
@@ -495,15 +477,6 @@
       "extraction_method": "paragraph_single",
       "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
       "reference_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran inferiors a 1.20 cm, immediats en el temps donat el comportament granular dels materials."
-    },
-    "site_condition": {
-      "value": "Degut a que es tracta d’un solar antropitzat, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
-      "position": "p284",
-      "position_description": "Body paragraph 284",
-      "confidence": 0.291,
-      "extraction_method": "paragraph_single",
-      "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
-      "reference_text": "Degut a que es tracta d’un solar antropitzat, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin."
     },
     "site_description": {
       "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del Carrer existent al sud.\nLa parcel·la, que es troba delimitada tanques de parcel·les veïnes, està anivellada a la rasant del carrer, només uns 15 cm per sota, sense pavimentar, i amb vegetació de petita alçada.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
@@ -656,6 +629,33 @@
       "extraction_method": "intelligent_analysis",
       "template_text": "",
       "reference_text": "P-1\n314418.9 ; 4611117.6 ; 198.9"
+    },
+    "radon_sentence": {
+      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de BELL-LLOC D’URGELL i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ radon_sentence }}",
+      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de BELL-LLOC D’URGELL i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1."
+    },
+    "site_condition": {
+      "value": "Degut a que es tracta d’un solar antropitzat, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+      "position": "p284",
+      "position_description": "Body paragraph 284",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ site_condition }}",
+      "reference_text": "Degut a que es tracta d’un solar antropitzat, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin."
+    },
+    "adjacent_intro": {
+      "value": "La parcel·la objecte d’estudi es situa al oest del municipi de Bell-Lloc d’Urgell, pren una morfologia rectangular i limita:",
+      "position": "p106",
+      "position_description": "Body paragraph 106",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ adjacent_intro }}",
+      "reference_text": "La parcel·la objecte d’estudi es situa al oest del municipi de Bell-Lloc d’Urgell, pren una morfologia rectangular i limita:"
     }
   },
   "warnings": [
@@ -681,5 +681,12 @@
     "p469: Variable 'estabilitat_paragraph' has no static context for matching",
     "Loop table t8 (soil_level_rows): no matching reference table",
     "Merged 24 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, architect_company, architect_name_upper, building_type_lower, client..."
+  ],
+  "notes": [
+    "refresh_eva_narrativa.py 2026-09-06: 2 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
+    "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)"
   ]
 }

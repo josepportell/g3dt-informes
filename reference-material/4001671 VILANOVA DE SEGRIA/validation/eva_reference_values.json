@@ -71,15 +71,6 @@
       "template_text": "",
       "reference_text": "JUAN JOSÉ TORRES POVEDANO"
     },
-    "building_structure_desc": {
-      "value": "Según el proyecto ejecutivo se prevé la construcción de una estructura de planta baja, y por tanto no se prevé ninguna excavación importante, únicamente la excavación para el saneamiento, la nivelación y para la implantación de los elementos de cimentación.",
-      "position": "p327",
-      "position_description": "Body paragraph 327",
-      "confidence": 0.236,
-      "extraction_method": "paragraph_single",
-      "template_text": "Segons el projecte executiu es preveu la construcció d’una estructura {{ building_structure_desc }}, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació",
-      "reference_text": "Según el proyecto ejecutivo se prevé la construcción de una estructura de planta baja, y por tanto no se prevé ninguna excavación importante, únicamente la excavación para el saneamiento, la nivelació"
-    },
     "building_type_lower": {
       "value": "una vivienda unifamiliar aislada",
       "position": "p063",
@@ -124,15 +115,6 @@
       "extraction_method": "table_flatten",
       "template_text": "",
       "reference_text": "+321.00"
-    },
-    "csn_radon_text": {
-      "value": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de que los edificios construidos en la zona sin soluciones específicas de protección frente al radón presenten concentraciones de radón superiores al nivel de referencia.",
-      "position": "p375",
-      "position_description": "Body paragraph 375",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de..."
     },
     "cte_edificacio": {
       "value": "C-0",
@@ -355,15 +337,6 @@
       "template_text": "{{ lab_tests_text }}",
       "reference_text": "Determinación del contenido en ion sulfato en suelos UNE 83963 / 08"
     },
-    "location_sentence": {
-      "value": "La edificación que se prevé construir presentará las siguientes características:",
-      "position": "p066",
-      "position_description": "Body paragraph 66",
-      "confidence": 0.191,
-      "extraction_method": "paragraph_single",
-      "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
-      "reference_text": "La edificación que se prevé construir presentará las siguientes características:"
-    },
     "materials_intro": {
       "value": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
       "position": "p234",
@@ -447,15 +420,6 @@
       "template_text": "",
       "reference_text": "1"
     },
-    "radon_zone_description": {
-      "value": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentraciones inadecuadas de Gas Radón procedente del terreno en el interior de los locales habitables.",
-      "position": "p397",
-      "position_description": "Body paragraph 397",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentracione..."
-    },
     "seismic_ab_text": {
       "value": "AB < 0,04 g (siento g el valor de la gravedad)",
       "position": "p342",
@@ -495,15 +459,6 @@
       "extraction_method": "paragraph_single",
       "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
       "reference_text": "Los asientos máximos previstos para la carga recomendada anteriormente serán menospreciables o inferiores a 1.0 cm."
-    },
-    "site_condition": {
-      "value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
-      "position": "p284",
-      "position_description": "Body paragraph 284",
-      "confidence": 0.198,
-      "extraction_method": "paragraph_single",
-      "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
-      "reference_text": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial."
     },
     "site_description": {
       "value": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la calle se encuentra sin ningún tipo de valla o muro, se encuentra expuesta directamente a la calle.\nLa zona de entrada se encuentra y el patio, se encuentran sin pavimentar y con vegetación de tamaño pequeño. A excepción, del extremo Oeste, se encuentra una franja pavimentada y con vallado.",
@@ -603,6 +558,42 @@
       "extraction_method": "paragraph_single",
       "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
       "reference_text": "Tabla 3 y 4. Resumen de los ensayos in situ realizados."
+    },
+    "access_street": {
+      "value": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la calle se encuentra sin ningún tipo de valla o muro, se encuentra expuesta directamente a la calle.",
+      "position": "p115",
+      "position_description": "Body paragraph 115",
+      "confidence": 0.15,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del {{ access_street }}.",
+      "reference_text": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la cal"
+    },
+    "radon_sentence": {
+      "value": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentraciones inadecuadas de Gas Radón procedente del terreno en el interior de los locales habitables.",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ radon_sentence }}",
+      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentracione"
+    },
+    "site_condition": {
+      "value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+      "position": "p284",
+      "position_description": "Body paragraph 284",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ site_condition }}",
+      "reference_text": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial."
+    },
+    "adjacent_intro": {
+      "value": "La parcela objeto de estudio se sitúa al sureste del municipio de VILANOVA DE SEGRIÀ, tiene una morfología cuadrada y limita:",
+      "position": "p106",
+      "position_description": "Body paragraph 106",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ adjacent_intro }}",
+      "reference_text": "La parcela objeto de estudio se sitúa al sureste del municipio de VILANOVA DE SEGRIÀ, tiene una morfología cuadrada y limita:"
     }
   },
   "warnings": [
@@ -629,5 +620,11 @@
     "Loop table t5 (sondeig_tests): no matching reference table",
     "Loop table t8 (soil_level_rows): no matching reference table",
     "Merged 20 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, architect_name_upper, building_type_lower, client, conclusions_levels_detected..."
+  ],
+  "notes": [
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 4 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
+    "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)"
   ]
 }

@@ -264,6 +264,16 @@ def _get_table_cell_text(table, row_idx: int, col_idx: int) -> str | None:
         return None
 
 
+#: Forats que l'Eva pot ometre del tot: si el prefix fix no hi és, val més cap valor que un paràgraf equivocat.
+_ABSENT_IF_PREFIX_MISSING = frozenset({"location_sentence"})
+
+
+def _ap_lower(text: str) -> str:
+    """Minúscules amb apòstrofs i cometes tipogràfiques normalitzades, mateixa longitud que l'original."""
+    return (text.replace('\u2019', "'").replace('\u2018', "'")
+                .replace('\u201c', '"').replace('\u201d', '"').lower())
+
+
 def _extract_single_var(template_text: str, var_name: str,
                         ref_text: str) -> tuple[str | None, float]:
     """Extract a single variable value from a reference paragraph.
@@ -285,24 +295,28 @@ def _extract_single_var(template_text: str, var_name: str,
 
     value = ref_text
     if prefix_tmpl:
-        idx = ref_text.find(prefix_tmpl)
+        # Apòstrofs tipogràfics (’ al signat, ' a la plantilla): comparació 1:1 en minúscules, tall sobre l'original
+        idx = _ap_lower(ref_text).find(_ap_lower(prefix_tmpl))
         if idx >= 0:
             value = value[idx + len(prefix_tmpl):]
         else:
-            idx_lower = ref_text.lower().find(prefix_tmpl.lower())
-            if idx_lower >= 0:
-                value = value[idx_lower + len(prefix_tmpl):]
-            else:
-                return value.strip() or None, 0.3
+            # Prefix absent: la veritat és el paràgraf sencer amb confiança 0,3 (capçalera diferent, variant de
+            # l'Eva, castellà…). Excepció: les variables on l'Eva OMET la frase sencera (`location_sentence`, 6/7
+            # signats): sense prefix ni sufix no trivial, absent, no un paràgraf equivocat («…presentarà les
+            # següents característiques:»).
+            if var_name in _ABSENT_IF_PREFIX_MISSING and not (
+                len(suffix_tmpl) > 2 and _ap_lower(suffix_tmpl) in _ap_lower(ref_text)
+            ):
+                return None, 0.0
+            return value.strip() or None, 0.3
 
     if suffix_tmpl:
-        idx = value.rfind(suffix_tmpl)
+        # Sufix curt («.»): la PRIMERA ocurrència després del prefix (abans, l'última: en un paràgraf de cinc frases
+        # el forat s'enduia les quatre frases següents). Sufix llarg: l'última, com sempre.
+        hay, needle = _ap_lower(value), _ap_lower(suffix_tmpl)
+        idx = hay.find(needle) if len(suffix_tmpl) <= 2 else hay.rfind(needle)
         if idx >= 0:
             value = value[:idx]
-        else:
-            idx_lower = value.lower().rfind(suffix_tmpl.lower())
-            if idx_lower >= 0:
-                value = value[:idx_lower]
 
     value = value.strip()
     if not value:
@@ -499,6 +513,66 @@ def match_tables(template_doc, ref_doc) -> dict[int, int]:
     return mapping
 
 
+def _single_var_prefix(template_text: str, active_vars: list[str]) -> str:
+    """Text fix (≥ 3 paraules) davant de l'únic forat del paràgraf; '' si no n'hi ha."""
+    if len(active_vars) != 1:
+        return ""
+    pattern = re.compile(
+        r'\{\{[-\s]*' + re.escape(active_vars[0]) + r'\s*(?:\|[^}]*)?\s*\}\}'
+    )
+    parts = pattern.split(template_text, maxsplit=1)
+    if len(parts) != 2:
+        return ""
+    prefix = JINJA_ANY_RE.sub('', parts[0]).strip()
+    return prefix if len(prefix.split()) >= 3 else ""
+
+
+def _anchor_paragraph(tp: TemplateParagraph, tmpl_paras: list[TemplateParagraph], ref_body: list[str],
+                      tmpl_body_count: int) -> int | None:
+    """Índex a `ref_body` del paràgraf que segueix l'àncora (el paràgraf fix anterior de la plantilla, ≥ 3 paraules,
+    trobat al signat amb similitud ≥ 0,6 i, en empat, el més proper en posició relativa). None si no hi ha àncora."""
+    anchor_text = ""
+    for prev in reversed(tmpl_paras[:tp.idx]):
+        if prev.idx >= tmpl_body_count:
+            continue
+        if not prev.text.strip():
+            continue                       # blancs entremig: d'acord
+        txt = JINJA_ANY_RE.sub('', prev.text).strip()
+        if prev.is_static and len(txt.split()) >= 3:
+            anchor_text = txt
+        break                              # el primer paràgraf no buit ha de ser l'àncora; si no, no n'hi ha
+    if not anchor_text:
+        return None
+    pos_t = tp.idx / max(1, tmpl_body_count)
+    scored = [(text_similarity(anchor_text, rt), -abs(ri / max(1, len(ref_body)) - pos_t), ri)
+              for ri, rt in enumerate(ref_body) if rt]
+    if not scored:
+        return None
+    score, _, ri = max(scored)
+    if score < 0.6:
+        return None
+    for nxt in range(ri + 1, min(ri + 6, len(ref_body))):
+        txt = (ref_body[nxt] or "").strip()
+        if not txt:
+            continue
+        # el següent paràgraf ha de ser una FRASE, no una capçalera («2.1. DESCRIPCIÓ…», «4.1. GEOLOGIA»)
+        return None if _looks_like_heading(txt) else nxt
+    return None
+
+
+_HEADING_RE = re.compile(r"^\d+(\.\d+)*\.?\s+\S")
+
+
+def _looks_like_heading(text: str) -> bool:
+    t = text.strip()
+    if len(t.split()) < 4:
+        return True
+    if _HEADING_RE.match(t) and len(t.split()) <= 8:
+        return True
+    letters = [c for c in t if c.isalpha()]
+    return bool(letters) and sum(c.isupper() for c in letters) / len(letters) > 0.8
+
+
 def extract_body_variables(
     tmpl_paras: list[TemplateParagraph],
     ref_paras: list[str],
@@ -526,25 +600,57 @@ def extract_body_variables(
             continue
 
         skeleton = JINJA_ANY_RE.sub('', tp.text).strip()
-        if not skeleton:
-            for v in active_vars:
-                if v not in variables:
-                    warnings.append(
-                        f"p{tp.idx:03d}: Variable '{v}' has no static context for matching"
-                    )
-            continue
-
+        pos_t = tp.idx / max(1, tmpl_body_count)
+        by_anchor = False
         best_score = 0.0
         best_ref_idx = -1
         best_ref_text = ""
-        for ri, rt in enumerate(ref_body):
-            if not rt:
-                continue
-            score = text_similarity(skeleton, rt)
-            if score > best_score:
-                best_score = score
-                best_ref_idx = ri
-                best_ref_text = rt
+        if skeleton:
+            # Prefix primer (2026-09-06, `docs/ANALISI-NARRATIVA-2026-09-06.md` §2.2): si el paràgraf de la plantilla té
+            # un sol forat amb text fix al davant, el paràgraf del signat que CONTÉ aquest prefix mana sobre la similitud
+            # de l'esquelet; si n'hi ha més d'un (la frase de l'estructura surt a 3.5 i a 4.3), el més proper en POSICIÓ
+            # relativa dins del document. Abans, «L'edificació que es preveu construir es situarà {{ location_sentence }}.»
+            # s'alineava amb «…presentarà les següents característiques:» (7/7 projectes) amb confiança 0,2.
+            candidates = list(range(len(ref_body)))
+            prefix_tmpl = _single_var_prefix(tp.text, active_vars)
+            by_prefix = False
+            if prefix_tmpl:
+                with_prefix = [ri for ri, rt in enumerate(ref_body)
+                               if rt and normalize_text(prefix_tmpl) in normalize_text(rt)]
+                if not with_prefix and len(prefix_tmpl.split()) > 5:
+                    head = " ".join(prefix_tmpl.split()[:5])     # «Segons el projecte executiu es preveu» (d'estructures)
+                    with_prefix = [ri for ri, rt in enumerate(ref_body)
+                                   if rt and normalize_text(head) in normalize_text(rt)]
+                if with_prefix:
+                    by_prefix = True
+                    # primer els paràgrafs que COMENCEN pel prefix (o pel seu cap), després el més proper en posició
+                    _needle = normalize_text(prefix_tmpl if any(
+                        normalize_text(prefix_tmpl) in normalize_text(ref_body[ri]) for ri in with_prefix)
+                        else " ".join(prefix_tmpl.split()[:5]))
+                    candidates = [min(with_prefix, key=lambda ri: (
+                        0 if normalize_text(ref_body[ri]).startswith(_needle) else 1,
+                        abs(ri / max(1, len(ref_body)) - pos_t)))]
+            for ri in candidates:
+                rt = ref_body[ri]
+                if not rt:
+                    continue
+                score = text_similarity(skeleton, rt)
+                if score > best_score:
+                    best_score = score
+                    best_ref_idx = ri
+                    best_ref_text = rt
+            if by_prefix and best_ref_idx >= 0:
+                # el prefix hi és: el paràgraf pot ser molt més llarg que l'esquelet (bloc de la descripció del solar)
+                best_score = max(best_score, 0.5)
+
+        if best_score < 0.5 and len(active_vars) == 1:
+            # Sense esquelet («{{ site_condition }}», «{{ radon_sentence }}», «{{ settlement_sentence }}») o sense cap
+            # paràgraf prou semblant: ÀNCORA = el paràgraf fix anterior de la plantilla, localitzat al signat; la
+            # veritat és el paràgraf no buit que el segueix (2026-09-06).
+            anchored = _anchor_paragraph(tp, tmpl_paras, ref_body, tmpl_body_count)
+            if anchored is not None:
+                best_ref_idx, best_ref_text, best_score = anchored, ref_body[anchored], max(best_score, 0.5)
+                by_anchor = True
 
         if best_score < 0.5:
             for v in active_vars:
@@ -566,7 +672,7 @@ def extract_body_variables(
                     position=elem_id,
                     position_description=f"Body paragraph {tp.idx}",
                     confidence=confidence * best_score,
-                    extraction_method="paragraph_single",
+                    extraction_method="paragraph_anchor" if by_anchor else "paragraph_single",
                     template_text=tp.text[:200],
                     reference_text=best_ref_text[:200],
                 )
@@ -1108,7 +1214,8 @@ def _guard_architect_client_conflation(result: ExtractionResult) -> None:
 # prior entry uses one of these and the current run no longer emits the key,
 # the prior entry is dropped (we deliberately stopped emitting it).
 _OWN_EXTRACTION_METHODS = frozenset({
-    "paragraph_single", "paragraph_multi",
+    "paragraph_single",
+    "paragraph_anchor", "paragraph_multi",
     "table_cell", "table_cell_multi",
     "loop_table", "table_flatten",
 })
@@ -1131,7 +1238,9 @@ def _merge_with_prior(new_result: ExtractionResult, prior_path: Path) -> None:
     external `intelligent_analysis` pass and must round-trip across runs.
 
     Rules:
-    - If the new run emitted the same key, NEW WINS (fresher positional data).
+    - If the new run emitted the same key, NEW WINS (fresher positional data) — except when the new entry comes
+      from the anchor fallback (`paragraph_anchor`, 2026-09-06) and the prior is external: the anchor is a weaker
+      signal than an `intelligent_analysis` value, so the prior wins.
     - If the new run did NOT emit the key AND prior method is external,
       preserve verbatim.
     - If the new run did NOT emit the key AND prior method is one of OUR own
@@ -1161,7 +1270,11 @@ def _merge_with_prior(new_result: ExtractionResult, prior_path: Path) -> None:
     preserved_keys: list[str] = []
     for k, entry in prior_vars.items():
         if k in new_result.variables:
-            continue
+            new_method = new_result.variables[k].extraction_method
+            prior_method = entry.get("extraction_method") if isinstance(entry, dict) else None
+            if new_method != "paragraph_anchor" or prior_method not in _EXTERNAL_EXTRACTION_METHODS:
+                continue
+            # àncora contra extern: l'extern mana (cau al bloc de preservació de sota)
         if not isinstance(entry, dict):
             continue
         method = entry.get("extraction_method", "")

@@ -27,10 +27,10 @@
   },
   "variables": {
     "access_street": {
-      "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.",
+      "value": "carrer adjacent situat al sud",
       "position": "p115",
       "position_description": "Body paragraph 115",
-      "confidence": 0.256,
+      "confidence": 0.76751269035533,
       "extraction_method": "paragraph_single",
       "template_text": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del {{ access_street }}.",
       "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud."
@@ -70,15 +70,6 @@
       "extraction_method": "intelligent_analysis",
       "template_text": "",
       "reference_text": "I finalment, per la part oest, amb parcel·les sense construir amb herbes altes i arbres."
-    },
-    "building_structure_desc": {
-      "value": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
-      "position": "p327",
-      "position_description": "Body paragraph 327",
-      "confidence": 0.214,
-      "extraction_method": "paragraph_single",
-      "template_text": "Segons el projecte executiu es preveu la construcció d’una estructura {{ building_structure_desc }}, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació",
-      "reference_text": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació."
     },
     "building_type_lower": {
       "value": "3 habitatges unifamiliars d’estructura lleugera, fusta",
@@ -133,15 +124,6 @@
       "extraction_method": "table_flatten",
       "template_text": "",
       "reference_text": "-4.0"
-    },
-    "csn_radon_text": {
-      "value": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
-      "position": "p342",
-      "position_description": "Body paragraph 342",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edi..."
     },
     "cte_edificacio": {
       "value": "C-1",
@@ -389,15 +371,6 @@
       "template_text": "{{ lab_tests_text }}",
       "reference_text": "1 assaig de contingut en sulfats UNE 83963 : 2008"
     },
-    "location_sentence": {
-      "value": "L’edificació que es preveu construir presentarà les següents característiques:",
-      "position": "p066",
-      "position_description": "Body paragraph 66",
-      "confidence": 0.208,
-      "extraction_method": "paragraph_single",
-      "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
-      "reference_text": "L’edificació que es preveu construir presentarà les següents característiques:"
-    },
     "materials_intro": {
       "value": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
       "position": "p223",
@@ -467,15 +440,6 @@
       "template_text": "",
       "reference_text": "1"
     },
-    "radon_zone_description": {
-      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
-      "position": "p367",
-      "position_description": "Body paragraph 367",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1."
-    },
     "seismic_ab_text": {
       "value": "AB  = 0,04 g  (essent g el valor de la gravetat)",
       "position": "p342",
@@ -509,15 +473,6 @@
       "extraction_method": "paragraph_single",
       "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
       "reference_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm."
-    },
-    "site_condition": {
-      "value": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
-      "position": "p284",
-      "position_description": "Body paragraph 284",
-      "confidence": 0.273,
-      "extraction_method": "paragraph_single",
-      "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
-      "reference_text": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin."
     },
     "site_description": {
       "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.\nEl solar es localitza sense construccions ni pavimentacions, s’ha realitzat un desbroç de la zona de treball i s’ha adequat un accés a la zona de treball.\nTopogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina, situada aproximadament 4.0 metres respecte el carrer.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
@@ -670,6 +625,42 @@
       "extraction_method": "intelligent_analysis",
       "template_text": "",
       "reference_text": "P-1\n423167.0 ; 4609608.0 ; 571.5"
+    },
+    "building_structure_desc": {
+      "value": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
+      "position": "p327",
+      "position_description": "Body paragraph 327",
+      "confidence": 0.15,
+      "extraction_method": "paragraph_single",
+      "template_text": "Segons el projecte executiu es preveu la construcció d’una estructura {{ building_structure_desc }}",
+      "reference_text": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació."
+    },
+    "radon_sentence": {
+      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ radon_sentence }}",
+      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1."
+    },
+    "site_condition": {
+      "value": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+      "position": "p284",
+      "position_description": "Body paragraph 284",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ site_condition }}",
+      "reference_text": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin."
+    },
+    "adjacent_intro": {
+      "value": "La parcel·la objecte d’estudi es situa al nord del municipi de Castellar del Vallès, pren una morfologia quasi rectangular, i limita:",
+      "position": "p106",
+      "position_description": "Body paragraph 106",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ adjacent_intro }}",
+      "reference_text": "La parcel·la objecte d’estudi es situa al nord del municipi de Castellar del Vallès, pren una morfologia quasi rectangular, i limita:"
     }
   },
   "warnings": [
@@ -694,5 +685,11 @@
     "p469: Variable 'estabilitat_paragraph' has no static context for matching",
     "Loop table t8 (soil_level_rows): no matching reference table",
     "Merged 23 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, building_type_lower, client, conclusions_aggressivity_statement, conclusions_levels_detected..."
+  ],
+  "notes": [
+    "refresh_eva_narrativa.py 2026-09-06: 2 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 4 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
+    "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)"
   ]
 }

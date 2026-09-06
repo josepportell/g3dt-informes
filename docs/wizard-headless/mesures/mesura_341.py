@@ -31,6 +31,14 @@ Variants:
 Sortida: `runs/<nom-run>/<slug>/<variant>/_compare_341.{txt,json}` (escalars + narrativa per grup), `_compare_informe.*`
 (11 taules), `_calc.json`, `_user_data_usat.json`, `_context_usat.json` (sense imatges), i `<nom-run>/_AGREGAT-341.md`.
 Els `.docx` van FORA del repositori. Cost: 0 (cap LLM).
+
+Narrativa (peça 0, 2026-09-06 nit, `docs/ANALISI-NARRATIVA-2026-09-06.md` §5): les variables del grup `narr` (i les que són
+l'únic forat d'un paràgraf de la plantilla, com `location_sentence`) es puntuen FORAT CONTRA FORAT (`narr_status`): es
+renderitza el paràgraf de la plantilla amb el valor generat, es treu a les dues bandes el text comú als extrems (paraules) i
+es puntuen els residus (iguals → MATCH; un residu buit → CLOSE, «res del que escrivim és fals, però falta o sobra text»;
+similitud ≥ 0,92 MATCH, ≥ 0,6 CLOSE, si no MISMATCH). Abans, «pla» es comparava amb el paràgraf sencer del signat (X segur).
+`csn_radon_text` queda FORA (el paràgraf de l'Eva ja és text fix de la plantilla, p474). L'idioma del signat (ca/es) surt
+per projecte a l'agregat: les cel·les ES són un sostre de la plantilla catalana, no un error de narrativa.
 """
 from __future__ import annotations
 
@@ -85,7 +93,7 @@ GROUPS = {
              "site_description", "site_condition", "building_structure_desc", "lab_tests_text", "materials_intro",
              "conclusions_level_1", "conclusions_levels_detected", "conclusions_water_statement",
              "conclusions_aggressivity_statement", "geology_paragraphs", "empentes_paragraph", "estabilitat_paragraph",
-             "photo_site_text", "csn_radon_text", "radon_zone_description"},
+             "photo_site_text", "csn_radon_text", "radon_zone_description", "radon_sentence", "adjacent_intro"},
     "taula": {"dpsh_tests", "sondeig_tests", "spt_ma_tests", "soil_levels", "soil_level_rows", "perm_rows", "seismic_rows",
               "geotech_rows"},
 }
@@ -98,6 +106,127 @@ def group_of(var: str) -> str:
     if var.startswith(("fig_", "photo_", "section_", "table_")) or var.endswith(("_num", "_image")):
         return "fix"
     return "resta"
+
+
+# --- Narrativa: forat contra forat -------------------------------------------------------------------------------
+#: Paràgraf fix de la plantilla (p474): el generador l'afegia per segon cop a p498. Fora de la mesura.
+NARR_EXCLUDED = {"csn_radon_text"}
+#: Variables d'altres grups que també són l'únic forat d'un paràgraf amb text fix i es puntuen forat contra forat.
+NARR_SLOT_EXTRA = {"location_sentence"}
+#: Frases fixes del bloc «Descripció del solar» que la veritat de l'extractor inclou dins `site_description` (p122, p126, p127
+#: de la plantilla): es treuen de la veritat abans de comparar amb el forat (només l'estat del solar).
+_SITE_DESC_FIXED_PREFIXES = (
+    "el dia dels treballs de camp es realitza l'entrada", "en solars propers existeixen construccions",
+    "destacar que no es poden veure aflorar",
+    "el día de los trabajos de campo se realiza la entrada", "en solares próximos existen construcciones",
+    "dada la geomorfología de la zona",
+)
+_ES_MARKERS = ("por la parte", "ensayo", "en la zona de estudio", "según el proyecto", "la parcela concreta")
+_SLOTS: dict[str, str] | None = None
+
+
+def template_slots() -> dict[str, str]:
+    """var → text del paràgraf de la plantilla on la variable és l'ÚNIC forat i hi ha text fix al voltant."""
+    global _SLOTS
+    if _SLOTS is None:
+        from automation.intelligent_audit import JINJA_ANY_RE, extract_template_paragraphs
+        from automation.reference_extractor import DEFAULT_TEMPLATE
+        paras, _ = extract_template_paragraphs(DEFAULT_TEMPLATE)
+        slots: dict[str, str] = {}
+        for tp in paras:
+            if tp.is_static or len(tp.variables) != 1 or tp.variables[0] in slots:
+                continue
+            var = tp.variables[0]
+            parts = re.split(r"\{\{[-\s]*" + re.escape(var) + r"\s*(?:\|[^}]*)?\s*\}\}", tp.text, maxsplit=1)
+            if len(parts) != 2:
+                continue
+            if (JINJA_ANY_RE.sub("", parts[0]).strip() or JINJA_ANY_RE.sub("", parts[1]).strip()):
+                slots[var] = tp.text
+        _SLOTS = slots
+    return _SLOTS
+
+
+def _slot_parts(var: str) -> tuple[str, str, str] | None:
+    """(text sencer, prefix fix, sufix fix) del forat `var`, sense etiquetes Jinja."""
+    from automation.intelligent_audit import JINJA_ANY_RE
+    text = template_slots().get(var)
+    if text is None:
+        return None
+    parts = re.split(r"\{\{[-\s]*" + re.escape(var) + r"\s*(?:\|[^}]*)?\s*\}\}", text, maxsplit=1)
+    return text, JINJA_ANY_RE.sub("", parts[0]).strip(), JINJA_ANY_RE.sub("", parts[1]).strip()
+
+
+def _render_slot(var: str, gen: str) -> str:
+    from automation.intelligent_audit import JINJA_ANY_RE
+    text = template_slots()[var]
+    return JINJA_ANY_RE.sub("", re.sub(r"\{\{[-\s]*" + re.escape(var) + r"\s*(?:\|[^}]*)?\s*\}\}", lambda _m: gen, text, count=1)).strip()
+
+
+def _norm_narr(s: str) -> str:
+    """Minúscules, apòstrofs i cometes rectes, SENSE accents («un sòl nivell» de l'Eva = «un sol nivell»), espais normals."""
+    import unicodedata
+    s = str(s).lower().replace("\u2019", "'").replace("\u2018", "'").replace("\u201c", '"').replace("\u201d", '"')
+    s = "".join(ch for ch in unicodedata.normalize("NFD", s) if unicodedata.category(ch) != "Mn")
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def _tokens(s: str) -> list[str]:
+    return re.findall(r"\w+", _norm_narr(s))
+
+
+def residues(a: str, b: str) -> tuple[str, str]:
+    """Els dos textos sense les paraules comunes als extrems (el «forat» de cadascun)."""
+    wa, wb = _tokens(a), _tokens(b)
+    i = 0
+    while i < min(len(wa), len(wb)) and wa[i] == wb[i]:
+        i += 1
+    j = 0
+    while j < min(len(wa), len(wb)) - i and wa[-1 - j] == wb[-1 - j]:
+        j += 1
+    return " ".join(wa[i:len(wa) - j]), " ".join(wb[i:len(wb) - j])
+
+
+def _strip_site_desc_fixed(eva: str) -> str:
+    keep = []
+    for line in re.split(r"[\n\r]+", str(eva)):
+        n = _norm_narr(line)
+        if n and not n.startswith(_SITE_DESC_FIXED_PREFIXES):
+            keep.append(line.strip())
+    return "\n".join(keep)
+
+
+def narr_status(var: str, eva, gen) -> str:
+    """MATCH / CLOSE / MISMATCH forat contra forat (vegeu la capçalera). `gen` i `eva` no buits."""
+    from difflib import SequenceMatcher
+    e, g = str(eva).strip(), str(gen).strip()
+    if var == "site_description":
+        e = _strip_site_desc_fixed(e) or e
+    parts = _slot_parts(var)
+    if parts is not None:
+        _text, pre, suf = parts
+        pre_in = bool(pre) and _norm_narr(pre) in _norm_narr(e)
+        suf_in = len(suf) >= 3 and _norm_narr(suf) in _norm_narr(e)
+        if pre_in or suf_in:            # la veritat és el paràgraf sencer → comparem la frase renderitzada
+            g = _render_slot(var, g)
+        # si no: la veritat ja és el forat (l'extractor va trobar el prefix) → forat contra forat directe
+    ra, rb = residues(g, e)
+    if not ra and not rb:
+        return "MATCH"
+    if not ra or not rb:
+        return "CLOSE"
+    r = SequenceMatcher(None, ra, rb, autojunk=False).ratio()
+    return "MATCH" if r >= 0.92 else ("CLOSE" if r >= 0.6 else "MISMATCH")
+
+
+def lang_of_eva(eva: dict) -> str:
+    """Idioma del signat (ca/es) pels textos narratius de la veritat."""
+    for var, info in eva.items():
+        if group_of(var) != "narr":
+            continue
+        v = info.get("value") if isinstance(info, dict) else info
+        if isinstance(v, str) and any(m in v.lower() for m in _ES_MARKERS):
+            return "es"
+    return "ca"
 
 
 def _load(path: Path, name: str):
@@ -201,9 +330,30 @@ def _generate(project_path: Path, ud: dict, out_docx: Path) -> tuple[dict, dict,
             "calc": MI._calc_summary(gen, ud)}, ctx, gen
 
 
+_ADJ_WORDS = {"north": ("nord", "norte"), "south": ("sud", "sur"), "east": ("est", "este"), "west": ("oest", "oeste")}
+
+
+def _grouped_adjacent(var: str, ctx: dict):
+    """Costat agrupat (peça 2): el seu forat és buit i la frase és al forat d'un altre costat («Per la part nord, sud i
+    est amb parcel·les buides.»). Es compara aquella frase, no NO_DATA: l'informe SÍ que ho diu."""
+    d = var[len("adjacent_"):-len("_fmt")]
+    if d not in _ADJ_WORDS:
+        return None
+    for other in ("north", "south", "east", "west"):
+        if other == d:
+            continue
+        sent = str(ctx.get(f"adjacent_{other}_fmt") or "")
+        head = sent.split(" amb ")[0].split(", con ")[0].split(" con ")[0].lower()
+        if any(re.search(rf"\b{w}\b", head) for w in _ADJ_WORDS[d]):
+            return sent
+    return None
+
+
 def _gen_value(var: str, ctx: dict, ud: dict, calc: dict, eva=None):
     if var == "settlement" and isinstance(eva, str) and "assentaments" in eva.lower():
         return ctx.get("settlement_sentence") or ctx.get("settlement")   # el signat porta la frase sencera
+    if var.startswith("adjacent_") and var.endswith("_fmt") and not ctx.get(var):
+        return _grouped_adjacent(var, ctx)
     if var in ctx:
         return ctx[var]
     gp = (calc or {}).get("geotechnical_params") or {}
@@ -231,6 +381,8 @@ def compare_scalars(eva: dict, ctx: dict, ud: dict, calc: dict) -> list[dict]:
             continue
         if ev is None or str(ev).strip() in ("", "---"):
             continue
+        if var in NARR_EXCLUDED:
+            continue
         gv = _gen_value(var, ctx, ud, calc, ev)
         if isinstance(gv, (list, dict)):
             rows.append({"var": var, "grup": g, "eva": ev, "gen": "<llista>", "status": "NO_DATA"})
@@ -238,7 +390,7 @@ def compare_scalars(eva: dict, ctx: dict, ud: dict, calc: dict) -> list[dict]:
         if gv is None or str(gv).strip() == "":
             rows.append({"var": var, "grup": g, "eva": ev, "gen": None, "status": "NO_DATA"})
             continue
-        st = CPE.status_for(var, ev, gv)
+        st = narr_status(var, ev, gv) if (g == "narr" or var in NARR_SLOT_EXTRA) else CPE.status_for(var, ev, gv)
         rows.append({"var": var, "grup": g, "eva": ev, "gen": gv, "status": st,
                      "method": (info.get("extraction_method") if isinstance(info, dict) else "")})
     return rows
@@ -278,6 +430,8 @@ def _agregat(run: str, results: dict, variants: list[str], sub: str) -> str:
     tot_t = {v: Counter() for v in variants}
     for slug, per in results.items():
         cells_s, cells_t = [], []
+        lang = next((r.get("lang") for r in per.values() if r.get("lang")), "ca")
+        slug = f"{slug} ({lang})" if lang != "ca" else slug
         for v in variants:
             r = per.get(v)
             if not r or not r["gen"]["success"]:
@@ -311,6 +465,27 @@ def _agregat(run: str, results: dict, variants: list[str], sub: str) -> str:
             c = by.get(g)
             if c:
                 L.append(f"| `{v}` | {g} | {c['MATCH']} | {c['CLOSE']} | {c['MISMATCH']} | {c['NO_DATA']} | {MI._pct(c)} |")
+    L.append("")
+    L.append("## Narrativa per IDIOMA del signat (viaA): les cel·les ES són el sostre de la plantilla catalana, no un error")
+    L.append("")
+    L.append("| idioma | projectes | MATCH | CLOSE | MISMATCH | NO_DATA | % |")
+    L.append("|---|---|--:|--:|--:|--:|--:|")
+    bylang: dict[str, Counter] = defaultdict(Counter)
+    projs: dict[str, list[str]] = defaultdict(list)
+    for slug, per in results.items():
+        r = per.get("viaA")
+        if r and r["gen"]["success"]:
+            lg = r.get("lang", "ca")
+            projs[lg].append(slug)
+            for x in r["scalars"]:
+                if x["grup"] == "narr":
+                    bylang[lg][x["status"]] += 1
+    for lg in ("ca", "es"):
+        c = bylang.get(lg)
+        if c:
+            L.append(f"| {lg} | {', '.join(projs[lg])} | {c['MATCH']} | {c['CLOSE']} | {c['MISMATCH']} | {c['NO_DATA']} | {MI._pct(c)} |")
+    L.append("")
+    L.append(f"`{', '.join(sorted(NARR_EXCLUDED))}` fora de la mesura (text fix de la plantilla). Narrativa puntuada forat contra forat (`narr_status`).")
     L.append("")
     L.append("## Per VARIABLE (viaA): en quants projectes és MATCH / CLOSE / MISMATCH / NO_DATA")
     L.append("")
@@ -394,7 +569,7 @@ def main() -> int:
             (out / "_user_data_usat.json").write_text(json.dumps(ud, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
             docx = docx_dir / f"{slug}_{v}.docx"
             gen, ctx, _ = _generate(project_path, ud, docx)
-            entry: dict = {"gen": gen, "docx": str(docx)}
+            entry: dict = {"gen": gen, "docx": str(docx), "lang": lang_of_eva(eva)}
             (out / "_calc.json").write_text(json.dumps(gen.get("calc") or {}, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
             if gen["success"]:
                 (out / "_context_usat.json").write_text(json.dumps(_jsonable(ctx), ensure_ascii=False, indent=1), encoding="utf-8")

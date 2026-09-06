@@ -143,15 +143,6 @@
       "template_text": "",
       "reference_text": "+1106.40"
     },
-    "csn_radon_text": {
-      "value": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de que los edificios construidos en la zona sin soluciones específicas de protección frente al radón presenten concentraciones de radón superiores al nivel de referencia.",
-      "position": "p385",
-      "position_description": "Body paragraph 385",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de..."
-    },
     "data_camp_text": {
       "value": "El día 19 de febrero de 2026, se visitó la obra para:",
       "position": "p095",
@@ -376,15 +367,6 @@
       "template_text": "{{ lab_tests_text }}",
       "reference_text": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08"
     },
-    "location_sentence": {
-      "value": "La edificación que se prevé construir presentará las siguientes características:",
-      "position": "p066",
-      "position_description": "Body paragraph 66",
-      "confidence": 0.191,
-      "extraction_method": "paragraph_single",
-      "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
-      "reference_text": "La edificación que se prevé construir presentará las siguientes características:"
-    },
     "materials_intro": {
       "value": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
       "position": "p248",
@@ -454,15 +436,6 @@
       "template_text": "",
       "reference_text": "2"
     },
-    "radon_zone_description": {
-      "value": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
-      "position": "p407",
-      "position_description": "Body paragraph 407",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2."
-    },
     "seismic_ab_text": {
       "value": "AB = 0.05 g (siento g el valor de la gravedad)",
       "position": "p342",
@@ -502,15 +475,6 @@
       "extraction_method": "paragraph_single",
       "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
       "reference_text": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm."
-    },
-    "site_condition": {
-      "value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
-      "position": "p284",
-      "position_description": "Body paragraph 284",
-      "confidence": 0.198,
-      "extraction_method": "paragraph_single",
-      "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
-      "reference_text": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial."
     },
     "site_description": {
       "value": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual.\nEn solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles.\nDada la geomorfología de la zona y su urbanización no se pueden observar en la zona ningún tipo de afloramiento de los materiales que serán atravesados por los ensayos previstos.",
@@ -625,6 +589,33 @@
       "extraction_method": "paragraph_single",
       "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
       "reference_text": "Tabla 3, 4 y 5. Resumen de los ensayos in situ realizados."
+    },
+    "radon_sentence": {
+      "value": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ radon_sentence }}",
+      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2."
+    },
+    "site_condition": {
+      "value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+      "position": "p284",
+      "position_description": "Body paragraph 284",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ site_condition }}",
+      "reference_text": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial."
+    },
+    "adjacent_intro": {
+      "value": "La parcela objeto de estudio se sitúa en el norte del municipio de Anciles, tiene una morfología rectangular y limita:",
+      "position": "p106",
+      "position_description": "Body paragraph 106",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ adjacent_intro }}",
+      "reference_text": "La parcela objeto de estudio se sitúa en el norte del municipio de Anciles, tiene una morfología rectangular y limita:"
     }
   },
   "warnings": [
@@ -655,5 +646,11 @@
     "t2_r1_c1: No matching ref table for 'cte_sol'",
     "Loop table t8 (soil_level_rows): no matching reference table",
     "Merged 22 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, architect_name_upper, building_structure_desc, building_type_lower, client..."
+  ],
+  "notes": [
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
+    "refresh_eva_narrativa.py 2026-09-06: 2 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)"
   ]
 }
