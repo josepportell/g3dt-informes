@@ -622,6 +622,25 @@ def _clear_stale_user_data(project_path: Path) -> None:
         logger.info("Backed up stale user_data.json -> _user_data_prev.json")
 
 
+def bearing_note(bearing_idx: int | None, description: str, n_layers: int, df: float, df_source: str | None) -> str:
+    """Text del wizard (P2b UI, 2026-09-06): quin nivell portant s'ha triat i amb quina Df.
+
+    «Nivell portant: 1/2 «Graves carbonatades» · Df = 0,30 m» + avís quan la Df és el prefill per defecte (l'Eva no
+    l'ha escrita: la regla «primer competent que la sabata assoleix a Df + 0,2 m» depèn d'aquest valor; Linyola/Anciles
+    amb pous només encerten el 2n nivell si l'Eva hi posa la Df dels pous). Mateixa Df que Qa (`_df_for_bearing`).
+    """
+    df_txt = f"{df:.2f}".replace(".", ",")
+    if bearing_idx is None or n_layers <= 0:
+        return f"Nivell portant: únic (sense capes de sondeig) · Df = {df_txt} m"
+    desc = (description or "").strip()
+    desc = (desc[:70] + "…") if len(desc) > 70 else desc
+    txt = f"Nivell portant: {bearing_idx + 1}/{n_layers} «{desc}» · Df = {df_txt} m (primer competent que la sabata assoleix a Df + 0,2 m)"
+    src = (df_source or "").lower()
+    if not src or "default" in src or "estandard" in src or "defecte" in src:
+        txt += " · ⚠ Df per defecte: escriu la fondària real de la sabata o del pou i torna a carregar els prefills"
+    return txt
+
+
 def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any) -> None:
     """Add geotech params + calc transparency notes to wizard prefills.
 
@@ -791,6 +810,12 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     # _format_calc_trace to surface the bicapa pick + Crespo fines branch
     # that drove the qa_value computation.
     _set('_calc_bearing_idx', bearing_idx, 'system')
+    # P2b UI (2026-09-06): nivell portant i Df visibles al wizard (badge sota «Profunditat fonamentacio»)
+    _df_src = _df_entry.get('source') if isinstance(_df_entry, dict) else None
+    _set('_calc_bearing', bearing_note(
+        bearing_idx if sondeig_layers else None,
+        (sondeig_layers[bearing_idx].get('description', '') if sondeig_layers and bearing_idx < len(sondeig_layers) else ''),
+        len(sondeig_layers), _df_for_bearing, _df_src), 'system')
     # Stash bearing-filtered N20 so _compute_lookup_prefills (cte_sol) can
     # consume it without re-deriving. Underscore prefix keeps it out of the
     # diagnostic variable comparison loop.

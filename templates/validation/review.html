@@ -2764,6 +2764,7 @@
                                 <div class="wizard-field">
                                     <label>Profunditat fonamentacio (m) <span class="source-badge" id="src-foundation_depth_m"></span></label>
                                     <input type="number" step="0.1" id="wiz-foundation_depth_m" data-field="foundation_depth_m" oninput="recalcGeomech('Df')" onchange="markWizardDirty(event)">
+                                    <small class="calc-note" id="calc-bearing" style="color:#888;font-size:11px;display:block"></small>
                                 </div>
                                 <div class="wizard-field">
                                     <label>Cota referencia <span class="source-badge" id="src-cota_referencia"></span></label>
@@ -2806,6 +2807,7 @@
                                     <label>phi angle friccio (graus) <span class="source-badge" id="src-geomech_phi"></span></label>
                                     <input type="number" step="0.1" id="wiz-geomech_phi" placeholder="ex: 35" oninput="recalcGeomech('phi')" onchange="markWizardDirty(event)">
                                     <small class="calc-note" id="calc-phi" style="color:#888;font-size:11px;display:block"></small>
+                                    <small class="calc-note" id="calc-regime" style="color:#888;font-size:11px;display:block"></small>
                                     <div class="geomech-dep-hint">&#8594; afecta Qa (Nc, Nq, N&#947;)</div>
                                 </div>
                                 <div class="wizard-field">
@@ -6064,12 +6066,22 @@
             const calcNoteKeys = {
                 'gamma': '_calc_gamma', 'phi': '_calc_phi', 'E': '_calc_E',
                 'cohesion': '_calc_cohesion', 'Es': '_calc_Es',
+                'bearing': '_calc_bearing', 'regime': '_calc_regime',  // P2b UI: nivell portant + Df; règim + sísmica
             };
             Object.entries(calcNoteKeys).forEach(([field, key]) => {
                 const pf = wizardPrefills[key];
                 const note = pf ? (typeof pf === 'object' ? pf.value : pf) : '';
                 const el = document.getElementById(`calc-${field}`);
-                if (el && note) el.textContent = note;
+                if (el && note) {
+                    el.textContent = note;
+                    // Df per defecte → avís en ambre (la tria del nivell portant depèn de la Df)
+                    if (field === 'bearing') el.style.color = note.includes('\u26a0') ? '#b45309' : '#888';
+                    // Es del defecte com a placeholder del camp (l'Eva el veu sense escriure'l)
+                    if (field === 'Es') {
+                        const esInput = document.getElementById('wiz-Es_settlement');
+                        if (esInput) esInput.placeholder = 'auto: ' + note.split(' · ')[0];
+                    }
+                }
             });
             // Results panel (Qa, K30, settlement)
             const resultNotes = [
