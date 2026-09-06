@@ -114,11 +114,45 @@ def _user_data(slug: str, variant: str, lectura_sub: str) -> dict:
     return ud
 
 
+# Valors SIGNATS de càlcul (taula geotècnica + frase del Qa), `docs/CRITERIS-CALCUL-EVA.md` §5.
+SIGNAT_CALC = {
+    "castellar": {"Nb": "17-R", "phi": 35, "gamma": 2.20, "c": 1.0, "E": ">500", "Qa": 3.0, "assentament": "<1,0"},
+    "rubi": {"Nb": "47-R", "phi": 39, "gamma": 2.0, "c": 0.05, "E": 450, "Qa": 3.5, "assentament": "1,50"},
+    "bell-lloc": {"Nb": "25-R", "phi": 38, "gamma": 2.0, "c": 0.0, "E": 650, "Qa": 3.0, "assentament": "<1,20"},
+}
+
+
+def _calc_summary(gen, ud: dict) -> dict:
+    """Bolcat del càlcul (Qa no és a cap de les 11 taules del comparador)."""
+    from dataclasses import asdict
+    rd = gen.report_data
+    if rd is None:
+        return {}
+    tr = rd.terzaghi_result
+    keep = ("phi", "cohesion", "gamma", "B", "Df", "qu", "safety_factor", "Qa", "settlement_cm", "settlement_type",
+            "Es_used", "qa_terzaghi_peck", "Qa_uncapped", "Fw", "Fd_tp", "qa_governs")
+    return {
+        "Df_user": ud.get("foundation_depth_m"),
+        "num_soil_levels_user": ud.get("num_soil_levels"),
+        "soil_types_user": ud.get("soil_types"),
+        "dpsh_overall_n20": round(rd.dpsh.overall_average_n20, 2) if rd.dpsh else None,
+        "bearing_layer_idx": getattr(rd, "bearing_layer_idx", None),
+        "bearing_layer_description": getattr(rd, "bearing_layer_description", ""),
+        "soil_levels": [{
+            "n": l.level_number, "desc": (l.description or "")[:90], "from": l.depth_from_m, "to": l.depth_to_m,
+            "n20_avg": round(l.n20_average, 2), "Nb": round(l.n20_average / 0.83, 1), "soil_type": l.soil_type,
+        } for l in (rd.soil_levels or [])],
+        "geotechnical_params": asdict(rd.geotechnical_params) if rd.geotechnical_params else None,
+        "terzaghi": {k: v for k, v in asdict(tr).items() if k in keep} if tr else None,
+    }
+
+
 def _generate(slug: str, ud: dict, out_docx: Path) -> dict:
     from automation.report_generator import ReportGenerator
     gen = ReportGenerator(project_path=REPO / "reference-material" / NAMES[slug], user_data=ud)
     res = gen.generate(out_docx)
-    return {"success": res.success, "errors": list(res.errors), "warnings": list(res.warnings)}
+    return {"success": res.success, "errors": list(res.errors), "warnings": list(res.warnings),
+            "calc": _calc_summary(gen, ud)}
 
 
 def _compare(cmp_mod, gen_docx: Path, slug: str, tag: str, out_json: Path) -> str:
@@ -222,6 +256,33 @@ def _agregat(run: str, results: dict[str, dict[str, dict]], variants: list[str],
             L.extend(lines or ["- (cap)"])
             L.append("")
 
+    L.append("## Càlcul (no és a cap de les 11 taules): nivell portant, Nb, φ, γ, c, E, Qa — per variant vs signat")
+    L.append("")
+    L.append("Nb = N20 mitjà del nivell únic / 0,83 (el que imprimeix la cel·la, sense la «-R»). Qa = Terzaghi amb topalls; "
+             "`gov` = qui mana (terzaghi / terzaghi-peck / cap). Signat: `docs/CRITERIS-CALCUL-EVA.md` §5.")
+    L.append("")
+    L.append("| projecte | variant | Df | nivell portant (idx: descripció) | N20 | Nb | φ | γ | c | E | Qa (uncapped, gov) | assent. cm |")
+    L.append("|---|---|--:|---|--:|--:|--:|--:|--:|--:|---|--:|")
+    for slug in results:
+        sg = SIGNAT_CALC.get(slug, {})
+        L.append(f"| **{slug}** | *signat* | | | | {sg.get('Nb', '')} | {sg.get('phi', '')} | {sg.get('gamma', '')} | "
+                 f"{sg.get('c', '')} | {sg.get('E', '')} | **{sg.get('Qa', '')}** | {sg.get('assentament', '')} |")
+        for v in variants:
+            c = ((results[slug].get(v) or {}).get("gen") or {}).get("calc") or {}
+            gp = c.get("geotechnical_params") or {}
+            tz = c.get("terzaghi") or {}
+            lv = c.get("soil_levels") or []
+            last = lv[-1] if lv else {}
+            bidx = c.get("bearing_layer_idx")
+            bdesc = (c.get("bearing_layer_description") or "")[:45]
+            qa = tz.get("Qa")
+            unc = tz.get("Qa_uncapped")
+            L.append(f"| {slug} | `{v}` | {c.get('Df_user', '')} | {'' if bidx is None else bidx}: {bdesc} | "
+                     f"{last.get('n20_avg', '')} | {last.get('Nb', '')} | {gp.get('phi', '')} | {gp.get('gamma', '')} | "
+                     f"{gp.get('cohesion', '')} | {gp.get('E', '')} | "
+                     f"{'' if qa is None else f'{qa:.2f}'} ({'' if unc is None else f'{unc:.2f}'}, {tz.get('qa_governs', '')}) | "
+                     f"{'' if tz.get('settlement_cm') is None else f'{tz.get('settlement_cm'):.2f}'} |")
+    L.append("")
     L.append("## Avisos del generador")
     L.append("")
     for slug in results:
@@ -272,6 +333,8 @@ def main() -> int:
             (out / "_user_data_usat.json").write_text(json.dumps(ud, ensure_ascii=False, indent=1), encoding="utf-8")
             gen = _generate(slug, ud, docx)
             entry: dict = {"gen": gen, "docx": str(docx)}
+            (out / "_calc.json").write_text(json.dumps(gen.get("calc") or {}, ensure_ascii=False, indent=1, default=str),
+                                            encoding="utf-8")
             if gen["success"]:
                 txt = _compare(cmp_mod, docx, slug, f"{slug}/{v}", out / "_compare_informe.json")
                 (out / "_compare_informe.txt").write_text(txt, encoding="utf-8")

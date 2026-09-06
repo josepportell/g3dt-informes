@@ -37,6 +37,73 @@ logger = logging.getLogger(__name__)
 from .terzaghi_calculator import BearingCapacityResult, FootingShape
 
 
+# --- Nivell portant (P2a+P2b, 2026-09-06) ---------------------------------------
+# Criteri de l'Eva (7/7 signats, `docs/RECERCA-CRITERIS-DESCRITS-ALS-INFORMES-2026-09-03.md`):
+# la frase del Qa declara SEMPRE el nivell portant amb l'encastament: «encastada entre
+# 20-40 cm en els materials del <n-èsim> nivell sanejat». El nivell portant és el que la
+# sabata (o el pou) ASSOLEIX a la fondària de fonamentació, no «el competent més profund»
+# (Rubí: graves, no els gresos de sota; Vilanova: argiles, no les sorrenques). Quan la
+# fonamentació baixa a un segon nivell (pous: Linyola, Anciles) és una DECISIÓ de l'Eva
+# que entra pel camp `foundation_depth_m` del wizard: el codi no ho endevina.
+EMBEDMENT_MIN_M = 0.2          # encastament mínim al nivell portant («20-40 cm»)
+DEFAULT_FOUNDATION_DEPTH_M = 0.8  # defecte històric del càlcul (Terzaghi) quan el wizard no diu res
+
+
+def foundation_depth_from_user_data(user_data: dict | None) -> tuple[float, bool]:
+    """(Df en m, és_el_defecte). Accepta «1,0», 1, «0.3 m». Df ≤ 0 o absent → defecte."""
+    raw = (user_data or {}).get('foundation_depth_m')
+    try:
+        if raw is None or raw == '':
+            return DEFAULT_FOUNDATION_DEPTH_M, True
+        if isinstance(raw, str):
+            raw = raw.replace(',', '.').replace('m', '').strip()
+        df = float(raw)
+    except (TypeError, ValueError):
+        return DEFAULT_FOUNDATION_DEPTH_M, True
+    if df <= 0:
+        return DEFAULT_FOUNDATION_DEPTH_M, True
+    return df, False
+
+
+def _bearing_soil_type(
+    soil_types: list[str] | None,
+    soil_levels: list,
+    sondeig_layers: list[dict],
+    bearing_idx: int,
+    description: str,
+) -> str:
+    """Tipus de sòl del nivell portant.
+
+    Els `soil_types` del wizard són PER NIVELL DE L'INFORME (`soil_type_level_{i}`),
+    no per capa del sondeig: només s'apliquen quan n'hi ha tants com nivells
+    generats (llavors, el del nivell que conté el sostre de la capa portant). Si
+    la llista ve d'una altra estructura de nivells (p. ex. un `user_data` antic
+    amb 2 nivells «limo/grava» quan avui l'informe en té 1), es detecta per la
+    descripció de la capa portant. Bell-lloc 2026-09-06: «limo» s'aplicava a les
+    graves carbonatades i Qa queia de 3,0 a 2,0.
+    """
+    from .cte_geomech import detect_soil_type
+    types = [t for t in (soil_types or [])]
+    if types and soil_levels and len(types) == len(soil_levels):
+        top = 0.0
+        if sondeig_layers and 0 <= bearing_idx < len(sondeig_layers):
+            top = float(sondeig_layers[bearing_idx].get('depth_from_m') or 0.0)
+        k = None
+        for i, lv in enumerate(soil_levels):
+            lo = float(getattr(lv, 'depth_from_m', 0.0) or 0.0)
+            hi = getattr(lv, 'depth_to_m', None)
+            if lo <= top and (hi is None or top < float(hi)):
+                k = i
+                break
+        if k is None:
+            k = min(bearing_idx, len(soil_levels) - 1)
+        if types[k]:
+            return types[k]
+    if types and len(types) == 1 and len(soil_levels) <= 1 and types[0]:
+        return types[0]
+    return detect_soil_type(description) if description else 'granular'
+
+
 def _eval_numeric(val: Any) -> float:
     """Evaluate a numeric value or simple arithmetic expression (e.g. '70+20' → 90.0).
 
@@ -179,6 +246,12 @@ class ReportData:
 
     # Resultat Terzaghi (de terzaghi_calculator)
     terzaghi_result: BearingCapacityResult | None = None
+
+    # Nivell portant triat (P2a+P2b, 2026-09-06): traçabilitat del càlcul
+    bearing_layer_idx: int | None = None
+    bearing_layer_description: str = ""
+    foundation_depth_used_m: float | None = None
+    foundation_depth_is_default: bool = False
 
     # Override ICGC unit (from 1:25k manual lookup)
     icgc_unit_code: str = ""
@@ -424,6 +497,14 @@ def build_report_data(
     geotechnical_params = None
     geomech = user_data.get('geomech_params', {})
     sondeig_layers: list[dict] = user_data.get('sondeig_layers') or []
+    foundation_depth, df_is_default = foundation_depth_from_user_data(user_data)
+    if df_is_default:
+        logger.warning(
+            "foundation_depth_m absent del wizard: nivell portant triat amb Df=%.1f m per defecte "
+            "(confirmar la fondària de fonamentació).", foundation_depth,
+        )
+    bearing_layer_idx: int | None = None
+    soil_levels: list[SoilLevel] = []
     if dpsh_data and dpsh_data.tests:
         # Auto-fill from sondeig_extracted.json when user_data has no layers
         # (defense-in-depth: report_generator also does this, but
@@ -448,7 +529,16 @@ def build_report_data(
                     len(sondeig_layers),
                 )
         soil_types_list = user_data.get('soil_types', [])
-        avg_n20 = _bearing_stratum_n20(dpsh_data, sondeig_layers, soil_types_list)
+        # Nivells de l'informe (abans dels paràmetres: el tipus de sòl del portant
+        # s'alinea per nivell de l'informe, no per capa del sondeig)
+        soil_levels = _generate_soil_levels(
+            dpsh_data,
+            user_data.get('num_soil_levels', 1),
+            sondeig_layers or None,
+            user_data.get('soil_types'),
+            foundation_depth,
+        )
+        avg_n20 = _bearing_stratum_n20(dpsh_data, sondeig_layers, soil_types_list, foundation_depth)
         # Convert N20 → Nb (Borrows) for all correlations.
         # DPSH has more energy than Borrows; dividing by 0.83 corrects
         # for the energy difference.  Eva confirmed this is essential.
@@ -465,7 +555,8 @@ def build_report_data(
             # deepest ≡ competent (most G3DT projects), this matches the
             # legacy "always last" behaviour; for fill-over-competent
             # profiles (Alcoletge), it correctly skips the fill.
-            bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types_list) if sondeig_layers else 0
+            bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types_list, foundation_depth) if sondeig_layers else 0
+            bearing_layer_idx = bearing_idx if sondeig_layers else None
             # Build description for rock detection — use bearing stratum.
             # IMPORTANT: Only use sondeig layer descriptions (field observations),
             # NOT icgc_unit_description (regional geology). ICGC describes the
@@ -475,17 +566,10 @@ def build_report_data(
             if sondeig_layers:
                 rock_description = sondeig_layers[bearing_idx].get('description', '')
 
-            # Determine soil type: align with bearing layer index
-            from .cte_geomech import detect_soil_type
-            if soil_types_list:
-                if len(soil_types_list) > bearing_idx:
-                    soil_type = soil_types_list[bearing_idx]
-                else:
-                    soil_type = soil_types_list[-1] if len(soil_types_list) > 1 else soil_types_list[0]
-            elif rock_description:
-                soil_type = detect_soil_type(rock_description)
-            else:
-                soil_type = 'granular'
+            # Tipus de sòl del nivell portant: per nivell de l'informe (vegeu _bearing_soil_type)
+            soil_type = _bearing_soil_type(
+                soil_types_list, soil_levels, sondeig_layers, bearing_idx, rock_description,
+            )
 
             if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
                 gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20, soil_type)
@@ -510,15 +594,7 @@ def build_report_data(
             gamma=gamma, cohesion=cohesion, phi=phi, E=E,
         )
 
-    # Genera nivells de sol basics. Pass the possibly-synthesized
-    # sondeig_layers so _generate_soil_levels sees the same structure
-    # as _bearing_stratum_n20 did.
-    soil_levels = _generate_soil_levels(
-        dpsh_data,
-        user_data.get('num_soil_levels', 1),
-        sondeig_layers or None,
-        user_data.get('soil_types'),
-    )
+    # (els nivells de sòl ja s'han generat a dalt, amb els mateixos sondeig_layers)
 
     # Merge levels if Eva has flagged it
     if user_data.get('merge_to_single_level', False) and len(soil_levels) > 1:
@@ -601,6 +677,10 @@ def build_report_data(
         cte_soil_class=cte_soil_class,
         soil_levels=soil_levels,
         geotechnical_params=geotechnical_params,
+        bearing_layer_idx=bearing_layer_idx,
+        bearing_layer_description=(sondeig_layers[bearing_layer_idx].get('description', '') if bearing_layer_idx is not None else ''),
+        foundation_depth_used_m=foundation_depth,
+        foundation_depth_is_default=df_is_default,
         terzaghi_result=terzaghi_result,
         # Override ICGC unit (manual 1:25k lookup)
         icgc_unit_code=user_data.get('icgc_unit_code', ''),
@@ -968,17 +1048,22 @@ def _reconstruct_terzaghi_from_dict(data: dict) -> BearingCapacityResult:
 def _select_bearing_layer_idx(
     sondeig_layers: list[dict],
     soil_types: list[str] | None = None,
-    foundation_depth: float = 0.8,
+    foundation_depth: float = DEFAULT_FOUNDATION_DEPTH_M,
 ) -> int:
-    """Pick the bearing-layer index using Eva's skip-soft-top rule.
+    """Índex del nivell portant: el PRIMER competent que la sabata assoleix.
 
-    Wraps `automation.bicapa.select_bearing_layer` so callers can keep
-    working with the sondeig_layer dicts they already have, without
-    constructing SoilLayer objects. Returns the index of the first
-    competent layer. Falls back to len-1 (deepest) on any failure — this
-    preserves the pre-existing behaviour for legacy profiles.
+    Embolcalla `automation.bicapa.select_bearing_layer` (recorre de dalt a
+    baix; salta les capes que acaben per sobre de `Df + EMBEDMENT_MIN_M`, les
+    de rebliment/terra vegetal i les massa fluixes) sobre els dicts de capa
+    del sondeig. `foundation_depth` és la Df real (`foundation_depth_m` del
+    wizard); l'encastament mínim s'hi suma aquí perquè tots els cridants
+    apliquin el mateix criteri. Si cap capa és competent, cau a la més
+    profunda (proxy segur) amb avís.
 
-    Ref: `docs/METODOLOGIA-EVA.md` §5.9, Alcoletge informe.
+    Fins al 2026-09-06 recorria les capes INVERTIDES («el competent més
+    profund», Df fix 0,8): Rubí sortia vestit de roca (gresos a 3,35 m amb
+    la sabata a 1,0). Evidència signada i alternatives: DECISION-LOG
+    2026-09-06 (tarda, 2). Ref: `docs/METODOLOGIA-EVA.md` §5.9 (Alcoletge).
     """
     if not sondeig_layers:
         return 0
@@ -1027,30 +1112,25 @@ def _select_bearing_layer_idx(
                 description=desc,
             ))
 
-        # Iterate from DEEPEST to shallowest so we pick the deepest competent
-        # layer (bearing stratum under the footing), not the shallowest. For
-        # all-competent multi-layer profiles (Bell-Lloc, Castellar, Rubí,
-        # Linyola) this yields idx=len-1 — matching Eva's convention. For
-        # soft-top profiles (Alcoletge: rebliment + lutites) bicapa still
-        # correctly skips the weak top and picks the competent layer below.
+        # De dalt a baix: el primer nivell competent que la sabata assoleix
+        # (Df + encastament mínim). Les capes que acaben per sobre no carreguen;
+        # rebliment / terra vegetal / massa fluix se salten (sanejat).
         try:
-            _, reversed_idx = select_bearing_layer(
-                built[::-1], foundation_depth=foundation_depth,
+            _, idx = select_bearing_layer(
+                built, foundation_depth=round(foundation_depth + EMBEDMENT_MIN_M, 3),  # 1,4 + 0,2 = 1,5999…
             )
         except ValueError:
-            # All layers weak — fall back to deepest (safest single-layer proxy)
+            # All layers weak or above Df — fall back to deepest (safest proxy)
             logger.warning(
-                "_select_bearing_layer_idx: no competent layer found; "
-                "falling back to deepest.",
+                "_select_bearing_layer_idx: no competent layer at Df=%.2f m; "
+                "falling back to deepest.", foundation_depth,
             )
             return len(sondeig_layers) - 1
 
-        idx = len(built) - 1 - reversed_idx
         if idx != len(sondeig_layers) - 1:
             logger.info(
-                "Bearing-layer pick differs from deepest: idx=%d (deepest=%d). "
-                "Applying Eva's skip-soft-top rule per bicapa.select_bearing_layer.",
-                idx, len(sondeig_layers) - 1,
+                "Nivell portant: idx=%d (no el més profund, %d) amb Df=%.2f m + %.1f m d'encastament.",
+                idx, len(sondeig_layers) - 1, foundation_depth, EMBEDMENT_MIN_M,
             )
         return idx
     except (TypeError, KeyError) as exc:
@@ -1065,6 +1145,7 @@ def _bearing_stratum_n20(
     dpsh_data: DPSHData,
     sondeig_layers: list[dict],
     soil_types: list[str] | None = None,
+    foundation_depth: float = DEFAULT_FOUNDATION_DEPTH_M,
 ) -> float:
     """Get average N20 for the bearing stratum per Eva's skip-soft-top rule.
 
@@ -1081,7 +1162,7 @@ def _bearing_stratum_n20(
     if not sondeig_layers or len(sondeig_layers) < 2:
         return dpsh_data.overall_average_n20
 
-    bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types)
+    bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types, foundation_depth)
     bearing = sondeig_layers[bearing_idx]
     depth_from = bearing.get('depth_from_m', 0.0)
     depth_to = bearing.get('depth_to_m')
@@ -1147,6 +1228,7 @@ def _generate_soil_levels(
     num_levels: int,
     sondeig_layers: list[dict] | None = None,
     soil_types: list[str] | None = None,
+    foundation_depth: float = DEFAULT_FOUNDATION_DEPTH_M,
 ) -> list[SoilLevel]:
     """
     Genera nivells de sòl a partir de les capes del sondeig i lectures DPSH.
@@ -1166,19 +1248,27 @@ def _generate_soil_levels(
     # If we have sondeig layer boundaries, split readings by depth range
     if sondeig_layers and len(sondeig_layers) > 1:
         def _collapse_to_single() -> list[SoilLevel]:
-            # Single merged level: use bearing stratum N20 + deepest layer's description
-            # (the bearing stratum is the deeper layer, not necessarily the thickest)
+            # Nivell únic: descripció, tipus de sòl i N20 del NIVELL PORTANT (el que
+            # la sabata assoleix a Df), no de la capa més profunda. Rubí: l'Eva
+            # descriu i parametritza les graves, no els gresos de sota (P2a).
             max_depth = max((abs(r.depth_m) for r in all_readings), default=0)
-            # Pick deepest (last) layer for description — this is the bearing material
-            deepest = sondeig_layers[-1]
-            desc = deepest.get('description', 'Nivell principal')
-            st = soil_types[-1] if soil_types else detect_soil_type(desc)
-            # Filter N20 to bearing stratum (deepest layer) depth range
-            bearing_avg = _bearing_stratum_n20(dpsh_data, sondeig_layers, soil_types)
-            depth_from = deepest.get('depth_from_m', 0.0)
+            bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types, foundation_depth)
+            bearing = sondeig_layers[bearing_idx]
+            desc = bearing.get('description', 'Nivell principal')
+            if soil_types and len(soil_types) == 1 and soil_types[0]:
+                st = soil_types[0]  # l'usuari ha declarat 1 nivell: el seu tipus és el del nivell únic
+            else:
+                st = detect_soil_type(desc)  # llista d'una altra estructura de nivells: no s'indexa per capa
+            # N20 del nivell portant (mateix criteri que _bearing_stratum_n20: sense
+            # límit superior només quan el portant és la capa més profunda)
+            bearing_avg = _bearing_stratum_n20(dpsh_data, sondeig_layers, soil_types, foundation_depth)
+            depth_from = bearing.get('depth_from_m', 0.0)
+            depth_to = bearing.get('depth_to_m')
+            apply_upper = bearing_idx != len(sondeig_layers) - 1 and depth_to is not None
             bearing_n20 = [
                 r.n20 for r in all_readings
                 if abs(r.depth_m) >= depth_from and r.n20 < 100
+                and (not apply_upper or abs(r.depth_m) <= depth_to)
             ]
             all_n20 = bearing_n20 if bearing_n20 else [r.n20 for r in all_readings if r.n20 < 100]
             return [SoilLevel(

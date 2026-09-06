@@ -78,7 +78,8 @@ class SoilLayer:
 # Keyword markers Eva uses for soft surface layers she discards.
 _WEAK_TOP_KEYWORDS = (
     "rebliment", "relleno", "rebliments", "rellenos",
-    "terra vegetal", "tierra vegetal",
+    "terra vegetal", "tierra vegetal", "terreny vegetal", "sòl vegetal", "sòls vegetals",
+    "suelo vegetal", "capa vegetal", "sòls superficials", "suelos superficiales",
     "alterat superficial", "alterado superficial",
     "sòl natural feble", "suelo natural débil",
 )

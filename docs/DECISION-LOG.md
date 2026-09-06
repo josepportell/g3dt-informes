@@ -3089,3 +3089,104 @@ cap altra taula ni cel·la:
 2. M341 després (les 341 variables; desbloqueja els 4 projectes sense `_user_data_prev.json`).
 
 *Fi entrada 2026-09-06 (tarda). Bloc 2: línia base d'informe amb les cel·les de càlcul destapades; P0 dona a la columna N l'SPT que li tocava.*
+
+## 2026-09-06 (tarda, 2) — P2a+P2b implementades i MESURADES (Qa abans/després, 3 projectes × 4 variants): el nivell portant és el que la sabata assoleix a Df + 0,2 m; Rubí Qa 3,0 → 3,5 = signat, Castellar 3,0 = signat, Bell-lloc 2,5 → 1,5 (el forat és φ/E per criteri, P3, no la capa). Pendent de GO del Josep
+
+### Context
+Després de P0 (entrada anterior), el Josep ha demanat «mesurem Qa abans i després i analitzem». Qa no és a cap de les 11 taules
+del comparador: s'ha afegit al script de mesura un bolcat de càlcul (`_calc.json` per variant: Df, nivell portant, N20/Nb del
+nivell, γ/c/φ/E, Terzaghi complet) i una secció «Càlcul» a `_AGREGAT.md` amb el signat de `CRITERIS-CALCUL-EVA.md` §5. Abans
+(referència `runs/2026-09-06-informe-p0`, codi de P0): Castellar Qa 3,00 (signat 3,0) amb roca; **Rubí 3,00 (signat 3,5)** amb
+els gresos de 3,35 m com a portant (γ 2,2 / c 1,0 / φ 35 / E 500, topall roca); **Bell-lloc 2,50 (signat 3,0)** amb la capa
+1,0-1,8 m (N20 34,3 → φ 37,0, c 0, uncapped 2,65).
+
+### Decisions arquitectòniques clau
+1. **Nivell portant = el primer competent que la sabata ASSOLEIX a Df + 0,2 m (encastament mínim), mai més profund.**
+   `bicapa.select_bearing_layer` ja feia exactament això (de dalt a baix; salta les capes que acaben per sobre de Df, el
+   rebliment i el massa fluix); `_select_bearing_layer_idx` la cridava amb les capes INVERTIDES («el competent més profund»)
+   i un Df fix de 0,8. Ara: capes en ordre, `Df = foundation_depth_m` del wizard (`foundation_depth_from_user_data`: «1,0»,
+   «0.3 m», 0 → defecte), llindar `round(Df + 0,2, 3)` (1,4 + 0,2 = 1,5999… trencava el ≤). Evidència: la frase del Qa dels 7
+   signats — Bell-lloc, Rubí, Castellar i Vilanova al primer nivell («un cop sanejat el tram superficial»; Rubí «encastada entre
+   30-40 cm»); Linyola i Anciles al segon amb POUS («encastats 20-40 cm en els materials del segon nivell sanejat»); Alcoletge al
+   segon (rebliment). **Alternativa rebutjada:** «competent més profund» (el que hi havia): 5/7 per casualitat (Rubí i Vilanova
+   malament), i a Bell-lloc encertava el Qa amb lectures de la zona de rebuig que no són les de la sabata.
+2. **Quan la fonamentació baixa a un segon nivell (pous), és una decisió de l'Eva que entra pel wizard.** Amb el prefill 0,3,
+   Linyola i Anciles es queden al primer nivell (test explícit): cap regla sense Df pot encertar els 7, perquè «sabates vs pous»
+   no és a les dades de camp. `foundation_depth_m` JA és al wizard; ara arriba al càlcul (generador i prefills: mateix Df a
+   `_bearing_stratum_n20`, `_select_bearing_layer_idx` i `_generate_soil_levels`). Sense Df: 0,8 (defecte històric de Terzaghi) i
+   avís al log. Pendent (P2b, UI): fer visible al wizard «nivell portant triat: … amb Df = …» i avisar quan Df és el prefill.
+3. **El col·lapse a un nivell pren el nivell portant, no la capa més profunda** (`_collapse_to_single`): descripció, tipus i N20
+   (amb límit superior quan el portant no és l'última capa, mateix criteri que `_bearing_stratum_n20`). Rubí deixa d'anar
+   «vestit de roca» també a la via B.
+4. **Els `soil_types` del wizard són PER NIVELL DE L'INFORME, no per capa del sondeig** (`_bearing_soil_type`). Trobat a la
+   primera mesura «després»: Bell-lloc té `soil_types = ["limo", "grava"]` (dos nivells de l'abril: cobertura + graves) i dues
+   capes de sondeig (graves / graves); amb el portant a l'índex 0, `soil_types[0]` = «limo» s'aplicava a les graves i Qa queia a
+   2,0. Ara la llista només s'aplica si té tants elements com nivells generats (llavors, el del nivell que conté el sostre de la
+   capa portant); si no, detecció per la descripció. Els nivells es generen ABANS dels paràmetres per poder-ho fer.
+   **Limitació apuntada:** la branca multigrup de `_generate_soil_levels` (`soil_types[idxs[-1]]`) encara indexa per capa.
+5. **Paraules clau de cobertura en català** a `bicapa._WEAK_TOP_KEYWORDS` («terreny vegetal», «sòls superficials»…): la
+   cobertura de Castellar (0-0,5) ja se saltava per fondària (0,3 + 0,2 = 0,5), les de l'or ara també pel nom.
+
+### Implementació
+- `automation/report_data.py`: `EMBEDMENT_MIN_M`, `DEFAULT_FOUNDATION_DEPTH_M`, `foundation_depth_from_user_data`,
+  `_bearing_soil_type`; `_select_bearing_layer_idx` (ordre directe, llindar), `_bearing_stratum_n20` i `_generate_soil_levels`
+  (paràmetre `foundation_depth`), `_collapse_to_single` (portant), `build_report_data` (Df, nivells abans dels paràmetres,
+  camps nous a `ReportData`: `bearing_layer_idx`, `bearing_layer_description`, `foundation_depth_used_m`,
+  `foundation_depth_is_default`; `to_dict`/`from_dict` no es toquen).
+- `automation/report_generator.py` (Df a `_bearing_stratum_n20` de Terzaghi-Peck), `web/wizard_service.py` (Df dels prefills
+  a les dues crides), `automation/bicapa.py` (paraules clau).
+- `docs/wizard-headless/mesures/mesura_informe.py`: `_calc.json` + secció «Càlcul» (`SIGNAT_CALC`).
+- Tests: `tests/test_bearing_layer_rule.py` (19: Df del wizard, els 7 signats amb la Df que cada informe implica, col·lapse,
+  N20 del portant, defecte, tot per sobre de Df); adaptats 3 que fixaven «el més profund» (`test_bicapa_wire` ×2 amb el nou
+  criteri i els dos Df, `test_soil_levels_grouping::test_generate_override_collapses_to_one` amb Df 4,5) i 1 (`…single_level…`).
+
+### Validació empírica
+Variant `calc` (or de taules, sense `geomech_params`), `runs/2026-09-06-informe-p0` → `runs/2026-09-06-informe-p2`:
+
+| | Castellar (signat) | Rubí (signat) | Bell-lloc (signat) |
+|---|---|---|---|
+| nivell portant | roca 0,5-1,2 = | gresos 3,35-4,55 → **graves 0-3,35** | graves 1,0-1,8 → **graves carbonatades 0-1,0** |
+| N20 → Nb | 22,6 → 27,2 = (17-R) | 43,3 → 52,2 ⇒ 34,8 → **41,9** (47-R) | 34,3 → 41,3 ⇒ 18,8 → **22,6** (25-R) |
+| φ / γ / c / E | 35 / 2,2 / 1,0 / 500 = (35 / 2,2 / 1,0 / >500) | 35 / 2,2 / 1,0 / 500 ⇒ **37 / 2,0 / 0,0 / 469** (39 / 2,0 / 0,05 / 450) | 37 / 2,0 / 0,0 / 469 ⇒ **33 / 2,0 / 0,0 / 114** (38 / 2,0 / 0,0 / 650) |
+| **Qa** | 3,00 = ✅ (3,0) | 3,00 ⇒ **3,50 ✅** (3,5; uncapped 5,30, topall granular dens) | 2,50 ⇒ **1,50 ❌** (3,0; uncapped 1,47, Terzaghi) |
+| assentament | 2,80 = (<1,0) | 1,50 ⇒ 1,70 (1,50) | 1,70 ⇒ **1,00** (<1,20) |
+
+Taules (M·C·X → %), p0 ⇒ p2, cel·la a cel·la: Castellar idèntic a les 4 variants. Rubí `calc` 39·8·8 (85 %) ⇒ 38·8·9 (84 %):
+l'única cel·la que canvia d'estat és φ «39°» → «37°» (abans coincidia amb el signat per casualitat: era la correlació granular
+aplicada a les lectures de la zona de roca, N20 43); Nb «52-R» → «42-R» (segueix X, més a prop de 47). Rubí `viab` 62 % ⇒
+**69 %** (nom, γ, litologia de nivells i permeabilitat deixen de ser gresos). Bell-lloc totes les variants −2 pp: sísmica «Tipus
+II / 1,3» → «Tipus III / 1,6» (N20 18,8 < 30) i φ/E canvien de valor però ja eren X (37→33 vs 38; 469→114 vs 650); Nb «41» →
+«23» (X, però a 2 dels 25-R signats). Cap altra taula es mou.
+
+**Anàlisi.** (1) Rubí: la regla fa exactament el que diu el signat i la cadena Qa (topalls) ho recull: 3,5. (2) Castellar:
+insensible (la cobertura se salta per fondària i per nom). (3) Bell-lloc: la capa és la bona (l'Nb passa de 41 a 23 contra els
+25-R signats, i l'assentament de 1,70 a 1,00 contra «<1,20»), però φ 33 i E 114 surten de les correlacions amb N20 18,8 on
+l'Eva escriu 38° i 650 per **criteri litològic** (graves denses amb rebuig a 1,0-1,6 m; «carbonatades» → E amunt): és P3,
+i els informes no ho descriuen (repàs R negatiu, pregunta a l'Eva imprescindible). El 2,5 d'abans era un artefacte: lectures de
+la zona de rebuig (N20 34) inflaven φ a 37. (4) Comprovació P4 només per a l'anàlisi (sense tocar codi): comptar les lectures
+des de la base de la sabata en lloc del sostre de la capa mou Rubí Nb 41,9 → 44,3 (P-3 sol: 51,6) i no mou Bell-lloc (22,6)
+ni Castellar (27,2; el 17-R signat no es reprodueix amb cap subconjunt: P-1 20,3 / P-4 19,2 / P-3 46 amb una sola lectura).
+
+### Tests
+19 nous (`test_bearing_layer_rule.py`) + 4 adaptats; blocs dirigits (`test_bearing_layer_rule`, `test_bicapa`, `test_bicapa_wire`,
+`test_soil_levels_grouping`, `test_spt_n_column`) 92 verds. Suite sencera a fitxer: **31 vermells, noms idèntics a
+`suite-vermells-esperats.txt` / 2146 verds / 5 omesos** (229 s; `test_bell_lloc_bearing_idx_and_n20` ja hi era, deriva del fixture). Cost: 0 USD.
+
+### Limitacions conegudes
+- Linyola i Anciles només encerten el segon nivell si l'Eva posa la Df dels pous al wizard: sense UI que ho faci visible, el
+  prefill 0,3 els deixa al primer nivell (abans, «el més profund» els encertava per casualitat i fallava Rubí i Vilanova).
+- La branca multigrup de `_generate_soil_levels` encara indexa `soil_types` per capa (cap dels 3 generables hi passa).
+- Bell-lloc: Qa 1,5 fins a P3 (φ/E per criteri) — el número que ara surt és el de les correlacions amb les lectures de la
+  sabata, no el de l'Eva. Si el GO és «regla sí», cal dir-ho a l'Eva o prioritzar P3 de seguida.
+- 3 projectes mesurables; Vilanova (el segon testimoni de la regla) només al test unitari.
+
+### GO/NO-GO
+- ✅ La regla reprodueix el nivell portant declarat als 7 signats quan Df és la de l'informe (tests) i Qa de Rubí i Castellar.
+- ⏳ **Decisió del Josep:** (a) mantenir la regla i passar a P3 (φ/E per criteris, candidats amb procedència; Bell-lloc és el
+  cas) — recomanat, perquè el 2,5 d'abans no era encert sinó soroll de lectures; o (b) desactivar-la fins a P3. Cap commit.
+
+### Següents passos
+P3 (E i φ per criteri: preguntes a l'Eva ja redactades a `CALCUL-E-MODUL-DEFORMACIO.md` §8 + pregunta 6); P2b UI (nivell
+portant i Df visibles al wizard); M341. Referència viva d'informe: **`runs/2026-09-06-informe-p2`** (si GO) o `-p0` (si no).
+
+*Fi entrada 2026-09-06 (tarda, 2). El nivell portant és on recolza la sabata; el que queda a Bell-lloc és criteri de φ/E, no de capa.*

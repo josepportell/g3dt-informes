@@ -1,0 +1,46 @@
+{
+ "Df_user": 0.3,
+ "num_soil_levels_user": 2,
+ "soil_types_user": [
+  "limo",
+  "grava"
+ ],
+ "dpsh_overall_n20": 25.12,
+ "bearing_layer_idx": null,
+ "bearing_layer_description": "",
+ "soil_levels": [
+  {
+   "n": 1,
+   "desc": "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares",
+   "from": 0.0,
+   "to": 2.6,
+   "n20_avg": 34.3,
+   "Nb": 41.3,
+   "soil_type": "grava"
+  }
+ ],
+ "geotechnical_params": {
+  "gamma": 2,
+  "cohesion": 0.05,
+  "phi": 34.6,
+  "E": 467
+ },
+ "terzaghi": {
+  "phi": 34.6,
+  "cohesion": 0.05,
+  "gamma": 2,
+  "B": 1.0,
+  "Df": 0.3,
+  "qu": 9.175400000000002,
+  "safety_factor": 3.0,
+  "Qa": 3.0,
+  "settlement_cm": 2.1,
+  "settlement_type": "immediat",
+  "Es_used": 76,
+  "qa_terzaghi_peck": 2.2394726836339434,
+  "Qa_uncapped": 3.0584666666666673,
+  "Fw": 1.6900000000000002,
+  "Fd_tp": 1.099,
+  "qa_governs": "cap"
+ }
+}

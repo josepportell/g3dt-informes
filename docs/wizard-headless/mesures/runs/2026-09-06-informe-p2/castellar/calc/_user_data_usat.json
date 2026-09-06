@@ -1,0 +1,183 @@
+{
+ "architect_name": "",
+ "architect_company": "WOOD COMFORT PROMOCIONS SLU",
+ "client_name": "gfjdgfd",
+ "street_address": "C/ Arbrell",
+ "site_municipality": "Castellar del Vallès",
+ "building_type": "CONSTR 3 HAB UNIF",
+ "num_floors": "",
+ "superficie_construida_m2": "",
+ "superficie_parcela_m2": "",
+ "superficie_cadastral_m2": "440",
+ "building_height_m": "",
+ "site_description": "5555",
+ "access_description": "777yyy",
+ "adjacent_north": "parcel·la amb construcció",
+ "adjacent_south": "Carrer dels Arbrells",
+ "adjacent_east": "parcel·la amb construcció",
+ "adjacent_west": "parcel·la buida",
+ "is_anthropized": false,
+ "num_soil_levels": 1,
+ "soil_types": [
+  "limo"
+ ],
+ "foundation_depth_m": 0.3,
+ "cota_referencia": "+570.90",
+ "has_basement": false,
+ "has_retaining_walls": false,
+ "utm_x": 423181.4,
+ "utm_y": 4609622.18,
+ "icgc_unit_code": "PEcg",
+ "icgc_unit_description": "Conglomerats heteromètrics",
+ "icgc_unit_epoch": "Eocè",
+ "Es_settlement": 56,
+ "_sources": {
+  "site_address": "docs intel (PRESSUPOST text)",
+  "client_name": "user",
+  "contact_name": "contingut:25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+  "access_url": "contingut:25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+  "utm_x": "user",
+  "utm_y": "user",
+  "utm_points": "contingut:ANNEXES/ALTRES/COORDENADES.txt",
+  "architect_company": "user",
+  "historia_geologica_template": "Eva template: 'Castellar del Vallès' (tier 1)",
+  "street_address": "user",
+  "client_phone": "fileminer:25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+  "client_email": "fileminer:25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+  "client_nif": "fileminer:25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+  "field_date": "fileminer:4687-GTL-25 Castellar del Vallés.pdf",
+  "utm_coordinates": "fileminer:ANNEXES/ALTRES/COORDENADES.txt",
+  "building_type": "user",
+  "municipality": "fileminer:comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+  "lab_company": "groq_llm:25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+  "client_address": "groq_llm:25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+  "expedient": "groq_llm:tall.pdf",
+  "report_date": "groq_llm:tall.pdf",
+  "province": "groq_llm:tall.pdf",
+  "Es_settlement": "user",
+  "field_work_dates": "DPSH/Lab PDF",
+  "field_work_dates_text": "DPSH/Lab PDF",
+  "sulfate_mg_kg": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/PDF/ANNEXES/LAB-SIG.pdf",
+  "lab_tests": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/PDF/ANNEXES/LAB-SIG.pdf",
+  "lab_depth": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/4687-GTL-25 Castellar del Vallés.pdf",
+  "lab_tests_text": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/3001621 CASTELLAR DEL VALLES/4687-GTL-25 Castellar del Vallés.pdf",
+  "lab_field_company": "constant",
+  "lab_testing_company": "constant",
+  "lab_field_description": "constant",
+  "lab_testing_description": "constant",
+  "icgc_unit_code": "user",
+  "icgc_unit_description": "user",
+  "icgc_unit_epoch": "user",
+  "cota_referencia": "user",
+  "is_sloped": "ICGC MDT (36% NW)",
+  "slope_percent": "ICGC MDT 2m",
+  "slope_direction": "ICGC MDT 2m",
+  "superficie_cadastral_m2": "user",
+  "adjacent_north": "user",
+  "adjacent_south": "user",
+  "adjacent_east": "user",
+  "adjacent_west": "user",
+  "has_basement": "default estandard",
+  "has_retaining_walls": "default estandard",
+  "foundation_depth_m": "user",
+  "num_soil_levels": "user",
+  "soil_type_level_1": "sondeig descripció",
+  "site_municipality": "user",
+  "num_planned_dpsh": "docs intel (PRESSUPOST text)",
+  "num_planned_sondeig": "docs intel (PRESSUPOST text)",
+  "adjacent_north_fmt": "formatted from Cadastre",
+  "adjacent_south_fmt": "formatted from Cadastre",
+  "adjacent_east_fmt": "formatted from Cadastre",
+  "adjacent_west_fmt": "formatted from Cadastre",
+  "access_description": "user",
+  "site_description": "user",
+  "site_condition": "computed (slope 36%)",
+  "geomech_gamma": "user",
+  "geomech_cohesion": "user",
+  "geomech_phi": "user",
+  "geomech_E": "user",
+  "qa_value": "Terzaghi-Peck",
+  "settlement": "Schmertmann",
+  "k30_value": "Winkler",
+  "sulfate_classification": "RD 470/2021",
+  "sulfate_baumann": "RD 470/2021",
+  "sulfate_level_name": "default",
+  "num_dpsh_tests": "computed",
+  "table_dpsh_range": "computed",
+  "cte_edificacio": "CTE DB SE-C (CONSTR 3 HAB UNIF)",
+  "cte_sol": "CTE DB SE-C (N20=19)",
+  "seismic_ab_text": "NCSE-02 (Castellar del Vallès)",
+  "radon_zone": "CTE DB HS6 (Castellar del Vallès)",
+  "location_sentence": "llm_synthesis",
+  "soil_types": "user"
+ },
+ "_metadata": {
+  "generated_at": "2026-04-12T19:45:58",
+  "wizard_used": true
+ },
+ "lectura_tables": {
+  "dpsh_tests": [
+   {
+    "test_id": "P-1",
+    "cota": "-4.00",
+    "depth": "-1.08",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-2",
+    "cota": "-4.20",
+    "depth": "-0.48",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-3",
+    "cota": "-4.00",
+    "depth": "-0.76",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-4",
+    "cota": "-4.00",
+    "depth": "-1.55",
+    "refusal": "Si",
+    "water": "No detectat"
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "test_id": "S-1",
+    "cota": "-4.00",
+    "depth": "-1.20",
+    "spt_ma": "1/0",
+    "water": "No detectat"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "test_id": "SPT-1",
+    "location": "S-1",
+    "depth_range": "-1.00 a -1.20",
+    "n30": "R",
+    "lithology": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+   }
+  ],
+  "soil_levels": [
+   {
+    "name": "Terreny Vegetal (capa superficial, SENSE numeració de nivell)",
+    "litologia": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
+    "de": "0,00",
+    "a": "-0,50"
+   },
+   {
+    "name": "Nivell 1 (1er i únic nivell)",
+    "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "de": "-0,50",
+    "a": "-1,20"
+   }
+  ],
+  "superficie_construida": "120"
+ }
+}

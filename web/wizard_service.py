@@ -690,10 +690,16 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
         _v = (_e['value'] if isinstance(_e, dict) else _e) or ''
         soil_types_list.append(str(_v).lower())
 
+    # Df per triar el nivell portant (mateix camp que Terzaghi més avall)
+    from automation.report_data import foundation_depth_from_user_data
+    _df_entry = merged.get('foundation_depth_m')
+    _df_for_bearing, _ = foundation_depth_from_user_data(
+        {'foundation_depth_m': (_df_entry['value'] if isinstance(_df_entry, dict) else _df_entry)}
+    )
     try:
         from automation.report_data import _bearing_stratum_n20
         if sondeig_layers:
-            avg_n20 = _bearing_stratum_n20(dpsh, sondeig_layers, soil_types_list)
+            avg_n20 = _bearing_stratum_n20(dpsh, sondeig_layers, soil_types_list, _df_for_bearing)
         else:
             avg_n20 = getattr(dpsh, 'overall_average_n20', None)
     except Exception:
@@ -709,7 +715,7 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     # bicapa picks a middle layer or num_levels was user-merged.
     try:
         from automation.report_data import _select_bearing_layer_idx
-        bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types_list) if sondeig_layers else 0
+        bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types_list, _df_for_bearing) if sondeig_layers else 0
     except Exception:
         bearing_idx = max(0, len(sondeig_layers) - 1) if sondeig_layers else 0
 

@@ -1,0 +1,45 @@
+{
+ "Df_user": 0.3,
+ "num_soil_levels_user": 1,
+ "soil_types_user": [
+  "limo"
+ ],
+ "dpsh_overall_n20": 18.72,
+ "bearing_layer_idx": null,
+ "bearing_layer_description": "",
+ "soil_levels": [
+  {
+   "n": 1,
+   "desc": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "from": 0.0,
+   "to": 1.6,
+   "n20_avg": 22.56,
+   "Nb": 27.2,
+   "soil_type": "limo"
+  }
+ ],
+ "geotechnical_params": {
+  "gamma": 1.9,
+  "cohesion": 0.05,
+  "phi": 30.5,
+  "E": 114
+ },
+ "terzaghi": {
+  "phi": 30.5,
+  "cohesion": 0.05,
+  "gamma": 1.9,
+  "B": 1.0,
+  "Df": 0.3,
+  "qu": 5.532400000000001,
+  "safety_factor": 3.0,
+  "Qa": 2.0,
+  "settlement_cm": 1.8,
+  "settlement_type": "immediat",
+  "Es_used": 56,
+  "qa_terzaghi_peck": 1.4726691116867208,
+  "Qa_uncapped": 1.8441333333333336,
+  "Fw": 1.6900000000000002,
+  "Fd_tp": 1.099,
+  "qa_governs": "terzaghi"
+ }
+}

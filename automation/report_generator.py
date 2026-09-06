@@ -419,6 +419,7 @@ class ReportGenerator:
                     if self.report_data.dpsh and sondeig_layers:
                         avg_n20 = _bearing_stratum_n20(
                             self.report_data.dpsh, sondeig_layers, soil_types_list,
+                            foundation_depth=float(Df) if Df else 0.8,
                         )
                     else:
                         avg_n20 = self.report_data.dpsh.overall_average_n20 if self.report_data.dpsh else None

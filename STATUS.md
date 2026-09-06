@@ -1,5 +1,13 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-06 (tarda) — **Bloc 2 obert: línia base de QUALITAT D'INFORME + P0 (columna «N») FETA, cost 0.** Nou script
+Last updated: 2026-09-06 (tarda, 2) — **P2a+P2b implementades i mesurades (Qa abans/després), pendents de GO.** Regla: nivell portant =
+primer competent que la sabata assoleix a Df + 0,2 m (Df del wizard; abans «el més profund» amb 0,8 fix). Variant `calc`: **Rubí Qa 3,0 → 3,5 =
+signat** (graves, no gresos), Castellar 3,0 = signat, **Bell-lloc 2,5 → 1,5** (capa bona: Nb 41 → 23 vs 25-R, assentament 1,7 → 1,0; però φ 33 /
+E 114 per correlació on l'Eva posa 38 / 650 per criteri litològic = **P3**; el 2,5 d'abans era soroll de la zona de rebuig). Trobada: `soil_types`
+del wizard són per nivell de l'informe, no per capa (`_bearing_soil_type`). Linyola/Anciles (pous) necessiten la Df de l'Eva al wizard. 19 tests
+nous + 4 adaptats; 92 verds dirigits. **Referència: `runs/2026-09-06-informe-p2`.** Sense commit. **Decisió del Josep: mantenir la regla i
+anar a P3 (recomanat) o desactivar-la fins a P3.** Detall: DECISION-LOG 2026-09-06 (tarda, 2).
+
+Anterior (2026-09-06, tarda) — **Bloc 2 obert: línia base de QUALITAT D'INFORME + P0 (columna «N») FETA, cost 0.** Nou script
 `docs/wizard-headless/mesures/mesura_informe.py` (3 projectes generables × 4 variants; la `8b` replica la Fase 8b exacta: 78/82/75 %).
 Troballa: els `_user_data_prev.json` porten γ/c/φ/E manuals → la variant `calc` (sense) és la que el bloc 2 ha de moure; P2a (Rubí
 «vestit de roca») **només es veu sense lectura** (`viab`), la litologia llegida el tapa. P0: N = N30 de l'SPT del nivell tal com surt a la
