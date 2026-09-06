@@ -3286,3 +3286,188 @@ Pregunta 14 a l'Eva (criteris d'E per litologia: carbonatades, lutites, bolos, a
 (nivell portant i Df visibles); assentament vs E; M341. Referència viva d'informe: **`runs/2026-09-06-informe-p3`**.
 
 *Fi entrada 2026-09-06 (tarda, 3). P3: els paràmetres per criteri, amb la font a la vista; el Qa dels tres signats, exacte.*
+## 2026-09-06 (vespre) — Pendents de lectura TANCATS (or d'Alcoletge, D4b material-vs-interval), P2b UI, assentament per CRITERI (frase i Es amb candidats), i M341 v1: la mesura COMPLETA dels 7 projectes generats només amb la lectura
+
+### Context
+
+Diumenge, l'Eva descansa (cap pregunta fins dilluns). El Josep: «seguim amb la resta (2, 3 i 4 suggerits), i els dos pendents de
+l'STATUS». Punt de partida: `a6eb0b8` (bloc 2 commitejat), reproductibilitat verificada (`runs/2026-09-06-informe-repro` = `-p3`
+cel·la a cel·la, Qa 3,0 / 3,5 / 3,0). Cinc peces, totes a cost 0 (cap crida LLM), en aquest ordre: (A) or d'Alcoletge, (B) D4b,
+(C) P2b UI, (D) assentament, (E) M341. Tot **sense commit** (partició proposada al final).
+
+### Decisions arquitectòniques clau
+
+1. **(A) L'or d'Alcoletge `[1].a` s'alinea amb els altres quatre ors i amb el signat** (`candidats` «fins al fons d'investigació
+   (rebuig DPSH: -1,60/-1,30/-1,69 m per punt)», dialecte `valor/font/cita` del fitxer, `note` de revisió). **Why:** el signat usa
+   el fons (gruix sísmic 0,29* → −1,69 = rebuig P-3), Linyola és `segur` amb la mateixa frase i Vilanova/Rubí/Anciles `candidats`;
+   no hi havia cap criteri que separés Alcoletge (decisió 7 del 09-05). *Alternativa (b) rebutjada:* comptar l'ALERTA com a «OK per
+   veritat» deixava una excepció permanent al comparador per un or incoherent. És l'única edició de l'or del dia i es fa sobre un
+   fitxer que ja tenia la regla escrita en text («el substrat no es perfora»).
+
+2. **(B) D4b — «material vs interval» al consolidador, els dos candidats i el del material PRIMER.** `_sample_lithology`
+   (la fila de `spt_ma_tests` del mateix punt amb tram que solapa `lab_depth`: GTL «Lutita gresosa»), `_lith_class` (vocabulari
+   de prefixos ca/es, NOMÉS la primera litologia del text: «Lutita gresosa» → lutita, «Llims argilosos i sorrencs» → llim; els
+   adjectius no compten) i `_material_level` (l'únic nivell de la mateixa classe, i només si la geometria el dona «fora»). Al
+   nivell del material: [Sí pel material, No per interval]; al de l'interval: [No pel material, Sí per interval]. **Why:** és
+   exactament l'ordre de l'or de Linyola i el que l'Eva fa (sulfats al 2n nivell). *Alternatives rebutjades:* (i) «sempre els dos
+   quan la mostra és a < 0,3 m del contacte»: afegeix candidats sense cap document que ho digui; (ii) comparar litologies per
+   contenció de cadenes (`_same_lithology`): «Lutita» ⊄ «Lutites» — calia classe, no substring. Límits: dos nivells de la mateixa
+   classe → ambigu → l'interval mana sol; sense geometria al punt no es deriva res (com D4); a cavall no es toca.
+   **Comparador v5:** `mostra_del_nivell` es compara com a booleà (`yes_no`: «No (pel material)» = False). *Why:* els 2 CAUTELA de
+   Linyola eren format (booleà vs text), no sistema (mateix cas que els 18 falsos de la v4).
+
+3. **(C) P2b UI sense canviar l'arquitectura del wizard:** nova nota `_calc_bearing` (text de `wizard_service.bearing_note`)
+   sota «Profunditat fonamentacio» («Nivell portant: 1/2 «Graves carbonatades» · Df = 0,30 m (primer competent que la sabata
+   assoleix a Df + 0,2 m)»), en ambre amb «⚠ Df per defecte» quan la font del prefill és `default`/`estandard`; `_calc_regime`
+   (que ja s'emetia i no es mostrava) apareix sota φ. **Why:** el mateix mecanisme de les notes `_calc_*` (cap element nou de
+   formulari, cap canvi d'API); la Df és l'única entrada del càlcul que només l'Eva coneix (pous de Linyola/Anciles).
+
+4. **(D) Assentament per CRITERI, no per fórmula (`automation/settlement_criteria.py`), mateix patró que `geotech_criteria`.**
+   Els criteris que els 7 signats DESCRIUEN: (i) **frase per règim del nivell portant**: granular → valor («iguals o inferiors a
+   1.50 cm, immediats… granular»), roca/cohesiu → genèrica «menyspreables o bé inferiors a 1.0 cm» (Castellar, Linyola L2,
+   Alcoletge L2, Vilanova); (ii) **< 1,0 cm → genèrica**; (iii) arrodoniment a 0,1, dos decimals; (iv) topall de servei 2,54 cm
+   → avís. (v) **Es**: l'Eva escriu «2,5 × colpeig estàtic, de l'Nspt» i diu que l'agafa «com a criteri»; cap fórmula reprodueix
+   els tres signats (abril: 12 hipòtesis) → **defecte + candidats amb procedència**: 2,5×N SPT del nivell (columna «N» de P0) →
+   2,5×Nb del nivell → E del criteri; «Es assentament» del wizard mana; badge «+N». **Why el defecte és l'SPT:** és l'N que el text
+   signat anomena (Bell-lloc N 54 → 135 → 1,16 → «1,20» exacte); Rubí però encaixa amb Nb (47 → 1,52). Cap dels dos ordres encerta
+   els dos: pregunta 15 a l'Eva. *Rebutjat:* fer que el defecte fos «el que encerta cada projecte» (max(N, Nb)): ad hoc, 2 punts.
+   **La plantilla tenia la frase FIXA** («…iguals o inferiors a {{ settlement }} cm, immediats… granular»): ara imprimeix
+   `{{ settlement_sentence }}` (un sol node `w:t`, reemplaçat amb `zipfile`; `feedback_check_signed_phrasing_before_template_change`:
+   les tres formes signades es van citar abans, la forma «iguals o inferiors» és la de Rubí i la de la plantilla, Bell-lloc diu
+   «inferiors»). El càlcul es fa al `build_context` (després de P0, perquè l'N SPT del nivell portant ve de `assign_spt_n30`) i
+   sobreescriu el `settlement_cm`/`Es_used` del càlcul inicial (2,5×Nb global). `ReportData.bearing_level_number` nou (el nivell
+   de l'INFORME que fa de portant) per no re-derivar-lo. Trobada: els `Es_settlement` dels `user_data` d'abril (76/104/56) són el
+   2,5×Nb global desat pel wizard, no judici de l'Eva → el harness els treu a `calc`/`t2`/`viab`.
+
+5. **(E) M341 v1 — la mesura completa, amb tres unificacions i cap veritat nova.** (i) **Veritat**: `eva_reference_values.json`
+   (56-65 variables per projecte, nom de plantilla, extractor de referència sobre el signat: posicional + `intelligent_analysis`)
+   per als escalars i la narrativa; `_eva_truth/<slug>.json` per a les 11 taules. (ii) **Camps**: el CONTEXT Jinja real
+   (`_build_template_context`, capturat embolcallant `render_template`): `context[X]` vs la variable `X` del signat — sense
+   re-extreure el `.docx` generat (l'extractor posicional només recupera ~35 de 65 i les 24 `intelligent_analysis` són d'una
+   passada LLM d'un sol cop). (iii) **Semàntica**: `status_for` del comparador escalar (tolerància per variable) i el comparador
+   de taules. **Variant `viaA`** = els 7 projectes generats NOMÉS amb la lectura (`_apply_lectura_overlay`, la mateixa
+   superposició del wizard; `build_report_tables`; Excel DPSH; JSON de visió de `reference-material/` on n'hi ha) + **una
+   assumpció**: la Df del signat (`DF_SIGNAT`: pous Linyola 1,7 / Anciles 2,9). **Why viaA i no el wizard headless:** és «el que
+   el sistema faria sol» sense les correccions manuals de l'Eva; `t2` (3 projectes) mostra què aporten. Grups v1: A (lectura) /
+   calc / narr / fix / resta per nom de variable (`GROUPS`).
+   Correccions de mesura fetes pel camí: tipus numèrics dels UTM i la superfície (com fa el wizard en desar), la frase
+   d'assentament comparada com a frase, apòstrof tipogràfic a `_norm_date`/`_norm_text` («1 d ‘octubre» = «1 d'octubre»),
+   Fase 0 amb SmartScan nivell 1 (regex, cap LLM) als projectes sense `file_mapping.json` (Vilanova `ANEXOS/`, Anciles `ANEJOS/`:
+   l'inventari antic només mira `ANNEXES/`). **Un bug real destapat i arreglat:** `_generate_soil_levels` (branca per capa)
+   comparava `depth_to_m: None` (última capa oberta del segmentador DPSH) com a número → TypeError (Alcoletge); ara «fins al fons».
+
+### Implementació
+
+| Peça | Fitxers | Què |
+|---|---|---|
+| A | `docs/golden-read-taules/4001670 ALCOLETGE/_tables_decisions.json` | `rows[1].a`: `no_trobat` → `candidats` (1 candidat, `rule` reescrita, `note` de revisió, `sources_checked` intactes) |
+| B | `automation/lectura/consolidate.py` (+~90 LOC: `_LITH_STEMS`, `_lith_class`, `_first_value`, `_sample_lithology`, `_material_level`, `_derive_sample_level` reescrita; capçalera D4b) · `docs/wizard-headless/fase0-acceptacio/compare_consolida.py` (`yes_no`, `close()` per `mostra_del_nivell`, docstring v5) | D4b + comparador v5 |
+| C | `web/wizard_service.py` (`bearing_note`, `_calc_bearing`) · `templates/validation/review.html` (`calc-bearing`, `calc-regime`, `calcNoteKeys`) | P2b UI |
+| D | `automation/settlement_criteria.py` (nou, ~150 LOC) · `automation/terzaghi_calculator.py` (5 camps nous a `BearingCapacityResult`, `format_settlement_for_report`) · `automation/report_data.py` (`bearing_level_number`) · `automation/report_generator.py` (bloc d'assentament al `build_context`, `settlement_sentence`, notes) · `web/wizard_service.py` (règim, N SPT del portant via `assign_spt_n30`, candidats `Es_settlement`, `_calc_settlement_regime`) · `templates/validation/review.html` (frase genèrica al recàlcul en viu, placeholder de l'Es) · `templates/g3dt-jinja-template.docx` (`{{ settlement_sentence }}`) · `docs/wizard-headless/mesures/mesura_informe.py` (`Es_settlement` fora a `calc`/`t2`/`viab`, columnes «imprès»/«Es», `_settle_cell`) · `docs/PREGUNTES-EVA-PENDENTS.md` (15) | assentament per criteri |
+| E | `docs/wizard-headless/mesures/mesura_341.py` (nou, ~430 LOC) · `automation/report_data.py` (guarda `depth_to_m None`) · `automation/spt_n_column.py` (`_TALLY_RE`: «1/1/1/1» no és N30) · `scripts/compare_prefills_vs_eva.py` (apòstrof) | M341 v1 |
+
+Cap dependència nova. `rtk proxy git diff --stat`: 19 fitxers, +437/−87 (sense els runs).
+
+### Validació empírica
+
+**Lectura (A+B), reconsolidació `_reconsolida-2026-09-06-pend` vs `-t2` (7 projectes, cost 0):** 1 cel·la canvia (Linyola
+`soil_levels[0].mostra_del_nivell`: True → False primer), cap altra a cap projecte. Comparador sobre l'or: taules **144 → 147 OK /
+28 → 26 CAND / 6 → 5 ALERTA / 19 blancs / 0 ERR** (Alcoletge ALERTA → OK; Linyola 2 CAUTELA → OK); escalars **idèntics 119 / 22 /
+5 / 1 / 0 (81 %)**.
+
+**Informe (D), `runs/2026-09-06-informe-assent` vs `-repro` (= `-p3`):** les 12 comparacions de les 11 taules **idèntiques cel·la a
+cel·la**; el que canvia és la frase del §4 i el bolcat de càlcul:
+
+| projecte | signat | `calc` abans | `calc` ara | Es ara |
+|---|---|---|---|---|
+| Castellar | «menyspreables o bé inferiors a 1.0 cm» | «inferiors a 2.80 cm, diferits» | **frase genèrica ✓** (roca) | 68 (2,5×Nb; sense SPT) |
+| Rubí | «iguals o inferiors a 1.50 cm» | 1,70 | 1,80 (2,5×N SPT 40); Nb 47 → 1,52 | 100, 3 candidats |
+| Bell-lloc | «inferiors a 1.20 cm» | 2,10 | 1,10 (`calc`, N 58) / 1,00 (`t2`, N 62); N 54 → 1,20 | 145 / 155 |
+
+`runs/2026-09-06-informe-final` (després de TOTS els canvis, guarda inclosa) = `-assent` cel·la a cel·la i `_calc.json`.
+
+**M341 v1, `runs/2026-09-06-m341` (7 projectes `viaA`, 3 `t2`; cost 0):**
+
+| variant | escalars + narrativa (M · C · X · ND → %) | taules (M · C · X → %) |
+|---|---|---|
+| `viaA` (7) | **156 · 38 · 141 · 47 → 58 %** | **265 · 98 · 100 → 78 %** |
+| `t2` (3) | 90 · 9 · 64 · 10 → 61 % | 123 · 24 · 28 → 84 % |
+
+Per grup (`viaA`): **A (lectura) 69 %** (80/11/40/16), **calc 66 %** (57/5/32/2), **narrativa 30 %** (8/18/61/22), resta 65 %.
+Per projecte (`viaA`, escalars / taules): Castellar 68 / 88, Rubí 60 / 89, Bell-lloc 68 / 82, Linyola 68 / 88, Alcoletge 52 / 73,
+Vilanova 40 / 64, Anciles 40 / 74. Referència anterior: 59 % global del diagnòstic 2026-08-23 (prefills vs signat, 341 variables,
+8 projectes) — no és la mateixa mètrica (prefills vs informe generat; 7 vs 8), però és el mateix ordre de magnitud: el que ha pujat
+és la lectura (A 69 %) i les taules (78 %); la narrativa no s'ha tocat.
+
+**Troballes de M341 (les que canvien el que fem després):**
+1. **Sense sondeig, la geometria de nivells surt del segmentador DPSH, no de la taula de nivells llegida del tall.** Linyola
+   (Df 1,7, pous): col·lapsa a UN nivell «Llims» 0-3,0 i el tracta per descripció buida → grava densa (φ 38, c 0, E 450) on el
+   signat calcula amb les lutites (30 / 1,0 / >800). Alcoletge queia (bug de la capa oberta, arreglat). Vilanova: L1 «Arcilla
+   limosa» detectada com a `grava` → c 0 → Qa 1,0 (signat 2,5 amb c 0,05, φ 28). La taula `soil_levels` de la via A (de/a per
+   nivell, litologia) només s'usa per sobreescriure descripcions (Fase 8b). **→ P5: capes des de la lectura quan no hi ha sondeig.**
+2. **`cte_geomech.detect_soil_type` classifica malament les litologies llegides:** «Rebliment antròpic» / «Lutites, substrat» →
+   granular; «Arcillas limosas y arenosas con puntualmente gravitas» / «Arcilla limosa y arenosa con algunas gravas» → grava
+   (per «grav»). És el que alimenta `soil_types` quan l'Eva no els escriu. `geotech_criteria._classify` ja ho fa bé (rebliment /
+   argila / transicional): **→ P6: un sol classificador.**
+3. **El topall 3,5 (granular dens) només dispara amb `soil_type == 'granular'` literal** (`terzaghi_calculator.calculate_qa`):
+   Rubí `viaA` (tipus `grava` pel detector) es queda a 3,0 (signat 3,5); amb l'`['granular']` d'abril, 3,5. `GRANULAR_TYPES` de
+   `geotech_criteria` inclou grava/arena: **→ mateixa peça P6.**
+4. **La columna «N» (P0) prenia el recompte per tram d'una mostra alterada com a N30** (Anciles MA-1 «1/1/1/1» → N=1 → Es 2,5 →
+   assentament 57 cm). Arreglat a `n30_display` (`_TALLY_RE`); Anciles ara 2,20 cm (Es 66 = 2,5×Nb 26,3).
+5. **Narrativa al 30 %:** adjacents (`adjacent_*_fmt` X 3-5/7), `site_description`/`site_condition`/`building_structure_desc`/
+   `materials_intro`/`radon_zone_description` (X 7/7): el text generat no és el de l'Eva (redacció lliure, cap font llegida). És
+   el grup on hi ha més marge i on menys hem treballat. `data_signatura_text` X 7/7 = data de generació (esperat).
+6. **NO_DATA 47 (`viaA`):** `location_sentence` (7), `architect_name_upper`/`building_type_lower` (5: la lectura no dona el
+   camp o el generador el vol en una altra clau), `cte_sol` (5), `csn_radon_text` (4): forats de cablejat lectura → context, no
+   de lectura. Llista completa per variable a l'`_AGREGAT-341.md` §«Per VARIABLE».
+
+### Tests
+
+Nous: `tests/test_settlement_criteria.py` (8), `tests/test_wizard_bearing_note.py` (3), `tests/test_soil_levels_open_bottom.py` (1),
+`test_D14b_sample_level_by_material_contradicting_the_interval` (consolidador), `test_close_mostra_del_nivell_text_yes_no_equals_boolean`
+(comparador), 2 casos a `test_n30_display`. Adaptats al criteri nou: `test_D14_sample_level_from_the_lab_depth_interval`,
+`test_D14_sample_level_claimed_by_a_weak_document_gets_the_geometric_alternative`. Dirigits: 650 verds. Suite sencera: **31 vermells
+amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2236 verds / 5 omesos** (164 s, segona passada amb el codi final; la primera, abans de la correcció del
+recompte per tram, 2234).
+
+### Latència / cost
+
+Tot el dia a cost 0: cap crida LLM (reconsolidació des de lectures cachejades; generació local; SmartScan nivell 1 = regex).
+Mesura d'informe ≈ 1 min; M341 ≈ 5 min (7 projectes + 3 variants `t2`); suite 2,8 min.
+
+### Limitacions conegudes
+
+- D4b depèn de la PRIMERA litologia del text i d'una classe única: «Sorres i graves» vs «Graves i sorres» són classes diferents
+  (sorra / grava); dos nivells de la mateixa classe → ambigu → l'interval mana sol. Vocabulari `_LITH_STEMS` tancat (ca/es).
+- L'Es de l'assentament té defecte SPT-del-nivell: Bell-lloc depèn de quin N (54 signat / 58 tall / 62 lectura: pregunta 1) i Rubí
+  encaixa amb Nb, no amb l'SPT (pregunta 15). Cap ordre encerta els dos.
+- El càlcul inicial de `generate()` continua fent Terzaghi-Peck amb l'N20 GLOBAL quan `user_data` no porta `sondeig_layers`
+  (`nb_for_tp`); només l'assentament s'ha re-ancorat al nivell de l'informe. La cel·la Nb i la Qa del generable coincideixen amb
+  el signat perquè el topall mana; a un projecte sense topall divergirien.
+- M341 v1: `DF_SIGNAT` és una assumpció per projecte (l'única dada que només l'Eva posa); grups per nom de variable (v1); la
+  narrativa es compara per similitud (≥ 0,92 MATCH, ≥ 0,6 CLOSE), no per contingut; `t2` només als 3 amb `_user_data_prev.json`.
+- El wizard mostra el nivell portant i la Df però no re-tria el nivell en viu quan l'Eva canvia la Df (cal recarregar prefills).
+- `_norm_date`/`_norm_text` del comparador escalar no tenen test propi (no hi havia fitxer de tests); cobert pel run.
+
+### GO/NO-GO
+
+- ✅ Pendents 1 i 2 de l'STATUS tancats (1 cel·la, 0 regressions, ALERTA 6 → 5).
+- ✅ P2b UI: nota del nivell portant i Df visibles, avís en ambre.
+- ✅ Assentament: criteri de frase 7/7 signats (forma), plantilla amb variable; Es com a candidats; Castellar ✓.
+- ✅ M341 v1 reproduïble (`mesura_341.py`), 7 projectes, per grup; 2 bugs reals arreglats pel camí (capa oberta, N30 «1/1/1/1»).
+- ⏳ GO del Josep per commitejar (partició proposada: (1) lectura A+B, (2) P2b UI, (3) assentament, (4) M341 + guardes;
+  `wizard_service.py`, `review.html` i `report_data.py` porten hunks de dues peces → `git apply --cached` per hunk).
+- ⏳ Preguntes 13, 14, 15 (i 1.7) a l'Eva dilluns.
+
+### Següents passos
+
+1. **P5 — geometria de nivells des de la lectura quan no hi ha sondeig** (`de`/`a` de `soil_levels` llegits → `sondeig_layers`;
+   «fins al fons» = obert): desbloqueja Linyola, Alcoletge, Vilanova, Anciles al càlcul (nivell portant, roca, règim).
+2. **P6 — un sol classificador de sòl** (`_classify` de `geotech_criteria` també per a `soil_types`/`detect_soil_type`) i el
+   topall 3,5 per a tot `GRANULAR_TYPES`.
+3. Cablejat lectura → context de les 6 variables NO_DATA sistemàtiques (`location_sentence`, `architect_name_upper`,
+   `building_type_lower`, `cte_sol`, `csn_radon_text`, `superficie_construida`).
+4. Narrativa (30 %): decidir amb el Josep si es modela (adjacents: la lectura ja té `street_address`; `site_description`).
+5. Re-mesurar M341 després de cada peça (`mesura_341.py <run>`; diff de `_compare_341.txt` per projecte, no titulars).
+
+*Fi entrada 2026-09-06 (vespre). Pendents de lectura tancats, P2b UI, assentament per criteri i M341 v1 (58 % / 78 %) amb P5 i P6 al davant.*

@@ -1,5 +1,18 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-06 (tarda, 3) — **GO del Josep a P2 (nivell portant); P3 FETA: γ/c/φ/E i tipus sísmic per CRITERI com a
+Last updated: 2026-09-06 (vespre) — **Pendents de lectura TANCATS (or d'Alcoletge, D4b material-vs-interval), P2b UI, ASSENTAMENT per
+CRITERI i M341 v1 (mesura COMPLETA dels 7 projectes generats només amb la lectura).** Lectura: 1 cel·la (Linyola), taules **144 → 147 OK**,
+ALERTA 6 → 5, escalars intactes 119/22/5/1/0 (`_reconsolida-2026-09-06-pend`). Assentament (`automation/settlement_criteria.py`): frase per
+règim (roca/cohesiu o < 1,0 → «menyspreables o bé inferiors a 1.0 cm»; granular → valor), plantilla amb `{{ settlement_sentence }}` (la frase era
+FIXA), Es = defecte + candidats (2,5×N SPT del nivell → 2,5×Nb → E; pregunta 15); 11 taules intactes; **Castellar frase genèrica ✓**, Rubí 1,80 /
+Bell-lloc 1,10 contra 1,50 / 1,20 (quin N). Wizard: nota «Nivell portant: i/n «…» · Df = x m» (ambre si Df per defecte). **M341 v1**
+(`docs/wizard-headless/mesures/mesura_341.py`, `runs/2026-09-06-m341`): context de plantilla vs `eva_reference_values.json` per grup + 11 taules;
+`viaA` (7 projectes, lectura + via B + Df del signat): **escalars 156/38/141/47 → 58 %**, **taules 265/98/100 → 78 %**; grup A 69 %, calc 66 %,
+narrativa 30 %. Destapa **P5** (sense sondeig la geometria surt del segmentador DPSH, no del tall llegit: Linyola/Alcoletge/Vilanova/Anciles) i
+**P6** (`detect_soil_type` diu grava/granular a argiles, lutites i rebliment; topall 3,5 només amb `'granular'` literal); 2 bugs arreglats (capa oberta
+`None`, «1/1/1/1» com a N30). Suite 31 vermells idèntics / 2236 verds. Commitejat en 5 (vegeu `git log`).
+**GO del Josep (18:20): commits en 5 (lectura · P2b UI · assentament · M341 · docs). Següent (sessió nova, decisió del Josep): ANÀLISI de la NARRATIVA en dos grups — (1) adjacents i descripcions de solar, (2) la resta —; després dilluns preguntes 13/14/15 a l'Eva; P5, P6 i el cablejat de les 6 NO_DATA queden a la cua.** Detall: DECISION-LOG 2026-09-06 (vespre).
+
+Anterior (2026-09-06, tarda, 3) — **GO del Josep a P2 (nivell portant); P3 FETA: γ/c/φ/E i tipus sísmic per CRITERI com a
 candidats amb procedència** (`automation/geotech_criteria.py`, cablejat a Qa, taula i prefills; candidats al wizard pel badge «+N»).
 Rebuig mirat al NIVELL de l'informe (cel·la «25-R»), φ per litologia amb Crespo (11/11 signats), E per D.23 amb sòl 50, rebuig ⇒ «medios»,
 «>» en roca i arrodoniment 10/50; sísmica pel règim. Variant `calc` p2 ⇒ p3: **Qa 3,0 / 3,5 / 3,0 = signat als 3**; Castellar 86 → 88 %,
@@ -69,7 +82,10 @@ Alcoletge `soil_levels[1].a` — l'or diu `no_trobat`, els altres 4 ors i el sig
 l'or o acceptar-la). Commits: R5 `4001dde`, R2 `6fb47c6`, F1 `f678508`; 1.4 sense commit. **Següent: 1.5 L1/L3.**
 Detall: DECISION-LOG 2026-09-05 (nit, 4), `_AGREGAT-8.md` §nit 4.
 
-## ⏳ Pendents de revisió (anotats 2026-09-05, nit, 4, a petició del Josep) — tornar-hi d'aquí a uns dies
+## ✅ Pendents de revisió (anotats 2026-09-05, nit, 4) — TANCATS 2026-09-06 (vespre)
+
+**Resolució (Josep, 2026-09-06: «seguim amb els dos pendents»):** (1) or d'Alcoletge `[1].a` alineat amb els altres quatre → `candidats` «fins al fons d'investigació (rebuig DPSH: -1,60/-1,30/-1,69 m per punt)» (dialecte `valor/font/cita` del mateix fitxer, nota de revisió); l'ALERTA desapareix. (2) «material vs interval» codificat com a **D4b** a `consolidate.py` (`_lith_class`, `_sample_lithology`, `_material_level`): si la litologia llegida de la mostra (GTL) és la d'UN altre nivell que el de l'interval, els dos candidats amb el del material primer (Linyola: `[0]` = [No pel material, Sí per interval], `[1]` = [Sí (annex), No per interval]); comparador v5 `yes_no` (text «No (…)»/«Si …» = booleà). Reconsolidació `_reconsolida-2026-09-06-pend` vs `-t2`: **1 cel·la** (Linyola `[0].mostra_del_nivell` True → False primer), cap altra; taules **144 → 147 OK / 28 → 26 CAND / 6 → 5 ALERTA / 19 / 0**, escalars intactes 119/22/5/1/0. Pregunta 13 continua oberta (l'Eva confirma el criteri). Text original dels pendents a sota, per referència.
+
 
 1. **Or d'Alcoletge, base del nivell 2 (`soil_levels[1].a`): l'or diu `no_trobat`, els altres quatre ors i el signat diuen
    «fins al fons».** On és: `docs/golden-read-taules/4001670 ALCOLETGE/_tables_decisions.json` → `tables.soil_levels.rows[1].a`
