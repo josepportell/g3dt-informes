@@ -3190,3 +3190,99 @@ P3 (E i φ per criteri: preguntes a l'Eva ja redactades a `CALCUL-E-MODUL-DEFORM
 portant i Df visibles al wizard); M341. Referència viva d'informe: **`runs/2026-09-06-informe-p2`** (si GO) o `-p0` (si no).
 
 *Fi entrada 2026-09-06 (tarda, 2). El nivell portant és on recolza la sabata; el que queda a Bell-lloc és criteri de φ/E, no de capa.*
+
+## 2026-09-06 (tarda, 3) — GO del Josep a la regla del nivell portant; P3 FETA: γ/c/φ/E i tipus sísmic per CRITERI com a candidats amb procedència (`automation/geotech_criteria.py`); Qa dels 3 generables = signat (3,0 / 3,5 / 3,0); 35/44 cel·les signades exactes i les 9 restants com a candidat
+
+### Context
+El Josep ha donat el GO a la regla del nivell portant (entrada anterior) i ha demanat passar a P3. El pla deia: substituir
+el punt únic «E_min + 10 %» pel criteri real dels nivells signats, i fer-ho **com a candidats amb procedència, no com a
+fórmula nova**, perquè l'E és el paràmetre que l'Eva declara de judici i el repàs R no va trobar cap frase que el
+justifiqués. La mesura d'avui (tarda, 2) havia deixat Bell-lloc a Qa 1,5 amb la capa bona: φ 33 / E 114 per correlació on
+l'Eva signa 38 / 650. Amb les 11 files signades de la taula geotècnica (7 informes) i les fonts que ella declara (Crespo
+per c/φ; CTE D.23 «agafa la taula, ja ho ajustarem» per E), el criteri es podia escriure sense preguntar-li res més que
+els punts on els seus propis informes no coincideixen entre ells.
+
+### Decisions arquitectòniques clau
+1. **Un mòdul pur de criteris que retorna candidats ordenats, el primer és el defecte, cadascun amb la font**
+   (`geotech_by_criteria(nb, n20, soil_type, description, refusal) → GeotechCriteria`). Els tres punts que abans
+   calculaven γ/c/φ/E per separat (paràmetres de Qa a `report_data`, files de la taula al generador, prefills del wizard) ara
+   criden el mateix mòdul; l'override expert (`geomech_params`) mana per camp. **Alternativa rebutjada:** la «v2» de
+   febrer (escalar dins de la banda D.23): empitjora els fluixos (N=5 → 4) i no és un criteri sinó un refinament de fórmula.
+2. **El règim el fixen Nb i el REBUIG, i el rebuig es mira al nivell de l'informe, no a la capa.** El «-R» de la cel·la Nb
+   signada pertany al nivell («25-R» a Bell-lloc amb la sabata a 0,3 sobre graves 0-1,0 i el rebuig a 1,0-1,6, mateix nivell
+   geològic). Amb el rebuig només dins de la capa portant, Bell-lloc quedava «mitjà» (φ 33, E 100, Qa 1,5). Rebuig en un
+   nivell granular ⇒ compacitat densa encara que la mitjana pre-rebuig sigui baixa (`_level_has_refusal`,
+   `_report_level_for_layer`; el generador usa el mateix rebuig per a la «-R» de la cel·la Nb: Bell-lloc «23» → «23-R»).
+3. **φ per litologia amb Crespo com a font declarada (7/7 informes), no la correlació CTE 4.1 + Schmertmann.** Graves denses
+   (rebuig o Nb ≥ 31) 38, 39 a la meitat alta de la banda (Nb ≥ 41): Bell-lloc 38 (25-R), Rubí 39 (47-R), Anciles 2 38
+   (15-R); transicionals (llims, sorres/argiles amb l'altre component) 28 (àncora Tabla 11.2 «muy floja», memòria
+   `project_crespo_tabla_11_2`); argila llimosa 25 (Vilanova 1; nota de Crespo −3°); roca 35 bretxes / 30 lutites / 34
+   gresos. **11/11 φ signats exactes.** La correlació anterior queda com a candidat.
+4. **E: taula D.23 banda baixa als trams mitjos, mínim 50, rebuig granular ⇒ banda «medios», roca «>500», arrodoniment a
+   10/50.** L'ajust litològic ↑ per «carbonatades» (Bell-lloc 650) és **candidat, no defecte**: Rubí també és carbonatat i
+   signa 450 (pregunta 6b, ja pendent). Els valors de roca per litologia (lutites >400 / >800, gresos 550, bolos >350)
+   són candidats amb el projecte signat com a font: judici per projecte, com diu el pla. Cap valor s'inventa.
+5. **Tipus de terreny sísmic pel règim, no pels llindars d'N20:** roca i granular dens → Tipus II (C 1,3), granular
+   mitjà → III, cohesius/transicionals no densos i fluixos → IV (Linyola 1 amb Nb 13 signa IV). Castellar (roca, N20 22)
+   sortia III. Mateix criteri de règim que φ i E: per això va dins de P3.
+6. **c i γ com fins ara (9/11 cadascun)** amb candidats on l'Eva divergeix (c 0,05 granular carbonatat = Rubí; 0,50 roca
+   tova = Vilanova 2; γ 2,00 roca alterada = Alcoletge 2; γ 1,80 rebliment ara defecte per la senyal «rebliment»).
+7. **Els candidats arriben al wizard pel mecanisme que ja hi ha** (`_alternatives` → badge «+N» amb desplegable que
+   aplica el valor): cap canvi d'UI. Les notes `_calc_*` porten règim, font del defecte i candidats.
+
+### Implementació
+- `automation/geotech_criteria.py` (nou, 330 línies): `lith_flags`, `round_E`, `regime_for`, `seismic_type_for`,
+  `rock_kind`, `d23_band_E`, `geotech_by_criteria`, `alternatives_for_wizard`; dataclasses `Candidate`, `GeotechCriteria`.
+- `automation/report_data.py`: `_report_level_for_layer`, `_level_has_refusal`, `_bearing_stratum_has_refusal`; el bloc de
+  paràmetres crida el criteri; `ReportData.geotech_criteria` (dict) per traçabilitat.
+- `automation/report_generator.py`: criteris per nivell calculats un cop (taula sísmica i geotècnica); cel·la E amb
+  `E_display` («>500»); «-R» de la cel·la Nb pel mateix rebuig de nivell.
+- `web/wizard_service.py`: prefills `geomech_*` del criteri amb la seva font; `_alternatives` per als candidats;
+  notes `_calc_*` i `_calc_regime`.
+- Tests: `tests/test_geotech_criteria.py` (66: les 11 files signades × 4 cel·les amb `KNOWN_MISSES` explícit —
+  «o el defecte encerta, o el signat és candidat amb font»; règim; sísmica; arrodoniment; sòl mínim; rebuig ⇒ medios;
+  «>» en roca; candidat carbonatades = punt 40 % de la banda; φ per litologia; senyals; alternatives del wizard).
+
+### Validació empírica
+Variant `calc`, `runs/2026-09-06-informe-p2` (després del nivell portant) ⇒ `runs/2026-09-06-informe-p3`:
+
+| | Castellar (signat) | Rubí (signat) | Bell-lloc (signat) |
+|---|---|---|---|
+| φ / γ / c / E | 35 / 2,2 / 1,0 / «500» ⇒ 35 / 2,2 / 1,0 / **«>500»** (35 / 2,2 / 1,0 / >500) | 37 / 2,0 / 0,0 / 469 ⇒ **39** / 2,0 / 0,0 / **450** (39 / 2,0 / 0,05 / 450) | 33 / 2,0 / 0,0 / 114 ⇒ **38** / 2,0 / 0,0 / **450** (38 / 2,0 / 0,0 / 650) |
+| Nb cel·la | 27-R (17-R) | 42-R (47-R) | 23 ⇒ **23-R** (25-R) |
+| sísmica | III / 1,6 ⇒ **II / 1,3** (II / 1,3) | II / 1,3 = | III / 1,6 ⇒ **II / 1,3** (II / 1,3) |
+| **Qa** | 3,00 = ✅ | 3,50 = ✅ (uncapped 7,00, topall) | 1,50 ⇒ **3,00 ✅** (uncapped 3,03, topall) |
+| assentament | 2,80 (<1,0) | 1,70 (1,50) | 1,00 ⇒ 2,10 (<1,20) |
+
+Titulars (M·C·X → %), p2 ⇒ p3: Castellar `calc` 43·13·9 (86 %) ⇒ **46·11·8 (88 %)**, `viab` 60 ⇒ 62 %; Rubí `calc` 38·8·9
+(84 %) ⇒ **40·8·7 (87 %)**, `viab` 69 ⇒ 73 %; Bell-lloc `calc` 34·7·14 (75 %) ⇒ **37·6·12 (78 %)**, `viab` 76 ⇒ 80 %; `8b`
+(amb els manuals de l'Eva) també puja per la sísmica i el «>». Cel·la a cel·la, només es mouen la taula geotècnica i la
+sísmica: Castellar E «500»→«>500» (C→M), sísmica III→II i 1,6→1,3 (2 cel·les →M); Rubí φ 37→39 i E 469→450 (→M); Bell-lloc
+φ 33→38 (→M), sísmica (2 →M), E 114→450 (X, més a prop de 650), Nb «23»→«23-R» (X, forma del signat). Cap altra cel·la.
+Assentament de Bell-lloc: 1,00 ⇒ 2,10 perquè l'Es de Schmertmann segueix E (camí a part, «<1,20» signat): pendent.
+
+Sobre les 11 files signades (test): **35/44 cel·les exactes** (φ 11/11, γ 10/11, c 9/11, E 5/11) i **les 9 restants tenen el
+signat com a candidat amb font** (0 fora). Abans (correlacions): φ 3/11, E 1/11.
+
+### Tests
+66 nous (`test_geotech_criteria.py`); blocs dirigits (criteris, nivell portant, bicapa, grouping, columna N, Crespo, taules
+de lectura, adjacents) **287 verds**. Suite sencera a fitxer: **31 vermells, noms idèntics a `suite-vermells-esperats.txt` /
+2220 verds / 5 omesos** (266 s). Cost: 0 USD.
+
+### Limitacions conegudes
+- L'E de Bell-lloc (650) i els de roca per projecte (>400/>800/550/>350) són candidats, no defecte: l'Eva els tria al wizard
+  («+N») o respon la pregunta 6b/14. El defecte imprimeix 450 / «>500».
+- L'assentament (Schmertmann, Es=2,5×Nb) no s'ha tocat: Bell-lloc 2,10 vs «<1,20».
+- El wizard no mostra encara `_calc_regime` (no hi ha element); els candidats sí (badge «+N» dels camps `geomech_*`).
+- Només 3 projectes generables; Linyola, Alcoletge, Vilanova i Anciles queden al test unitari (M341).
+- La cel·la Nb (P4: quines lectures) no es toca: Castellar 27-R vs 17-R, Rubí 42-R vs 47-R, Bell-lloc 23-R vs 25-R.
+
+### GO/NO-GO
+- ✅ P2a+P2b: GO del Josep (2026-09-06, tarda). ✅ P3: Qa 3/3 = signat, 0 regressions cel·la a cel·la, 287 verds dirigits.
+- ⏳ GO del Josep sobre P3 i decisió de commit (tot el dia sense commit: P0, P2, P3, mesura).
+
+### Següents passos
+Pregunta 14 a l'Eva (criteris d'E per litologia: carbonatades, lutites, bolos, argiles; c granular carbonatat); P2b UI
+(nivell portant i Df visibles); assentament vs E; M341. Referència viva d'informe: **`runs/2026-09-06-informe-p3`**.
+
+*Fi entrada 2026-09-06 (tarda, 3). P3: els paràmetres per criteri, amb la font a la vista; el Qa dels tres signats, exacte.*

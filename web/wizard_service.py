@@ -740,15 +740,16 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     desc_entry = merged.get(desc_key, merged.get('sondeig_layer_desc_1'))
     description = (desc_entry['value'] if isinstance(desc_entry, dict) else (desc_entry or '')) if desc_entry else ''
 
-    # Compute geomech params (same logic as report_generator)
-    if soil_type == 'rock' or is_rock(avg_n20, description):
-        rock = rock_params_default()
-        gamma, phi, E, cohesion = rock['gamma'], rock['phi'], rock['E'], rock['cohesion']
-    else:
-        gamma = nspt_to_gamma_g_cm3(avg_n20, soil_type)
-        phi = nspt_to_phi(nb, soil_type)
-        E = nspt_to_E_kg_cm2(avg_n20)
-        cohesion = soil_type_to_cohesion(soil_type)
+    # P3 (2026-09-06): paràmetres per criteri amb candidats (mateix mòdul que el generador)
+    from automation.geotech_criteria import geotech_by_criteria, alternatives_for_wizard
+    from automation.report_data import _bearing_stratum_has_refusal
+    try:
+        _refusal = _bearing_stratum_has_refusal(dpsh, sondeig_layers, soil_types_list, _df_for_bearing) \
+            if sondeig_layers else any(r.n20 >= 100 for t in dpsh.tests for r in t.readings)
+    except Exception:
+        _refusal = False
+    crit = geotech_by_criteria(nb, avg_n20, soil_type, description, _refusal)
+    gamma, phi, E, cohesion = crit.gamma, crit.phi, crit.E, crit.cohesion
 
     is_granular = cohesion < 0.5
     soil_cat = 'rock' if cohesion >= 0.5 else ('cohesive' if soil_type == 'cohesive' else 'granular')
@@ -761,18 +762,29 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
             return
         merged[key] = {'value': value, 'source': source}
 
-    # Geomech prefills (populate expert override fields)
-    _set('geomech_gamma', gamma, f'CTE D.27 ({soil_type})')
-    _set('geomech_cohesion', cohesion, f'soil_type={soil_type}')
-    _set('geomech_phi', round(phi, 1), f'Schmertmann Nb={nb:.0f}')
-    _set('geomech_E', round(E), f'CTE D.23 N20={avg_n20:.0f}')
+    # Geomech prefills (populate expert override fields) — defecte de cada criteri, amb la seva font
+    _src = {k: v[0].source for k, v in crit.candidates.items() if v}
+    _set('geomech_gamma', gamma, _src.get('gamma', f'CTE D.27 ({soil_type})'))
+    _set('geomech_cohesion', cohesion, _src.get('cohesion', f'soil_type={soil_type}'))
+    _set('geomech_phi', round(phi, 1), _src.get('phi', f'Schmertmann Nb={nb:.0f}'))
+    _set('geomech_E', round(E), _src.get('E', f'CTE D.23 N20={avg_n20:.0f}'))
+    # Candidats que no són el defecte → badge «+N» del wizard (mateix mecanisme que FileMiner)
+    _alts = alternatives_for_wizard(crit)
+    if _alts:
+        existing_alts = merged.get('_alternatives')
+        alt_map = dict(existing_alts.get('value') or {}) if isinstance(existing_alts, dict) else {}
+        for k, v in _alts.items():
+            alt_map.setdefault(k, []).extend(v)
+        merged['_alternatives'] = {'value': alt_map, 'source': 'system'}
 
-    # Calc transparency notes
+    # Calc transparency notes (règim + procedència del defecte + candidats)
     n20_src = f"N20={avg_n20:.0f}"
-    _set('_calc_gamma', f"CTE D.27 {soil_type} | Rang Eva: {ranges['gamma']}", 'system')
-    _set('_calc_phi', f"Schmertmann Nb={nb:.0f} | Rang Eva: {ranges['phi']}", 'system')
-    _set('_calc_E', f"CTE D.23 {n20_src} | Rang Eva: {ranges['E']}", 'system')
-    _set('_calc_cohesion', f"Rang Eva: {ranges['c']}", 'system')
+    _cands = lambda k: ' | alt: ' + ', '.join(c.display for c in crit.candidates.get(k, [])[1:]) if len(crit.candidates.get(k, [])) > 1 else ''
+    _set('_calc_gamma', f"{_src.get('gamma', 'CTE D.27')} | Rang Eva: {ranges['gamma']}{_cands('gamma')}", 'system')
+    _set('_calc_phi', f"règim {crit.regime}, Nb={nb:.0f} · {_src.get('phi', '')} | Rang Eva: {ranges['phi']}{_cands('phi')}", 'system')
+    _set('_calc_E', f"{_src.get('E', 'CTE D.23')} ({n20_src}) | Rang Eva: {ranges['E']}{_cands('E')}", 'system')
+    _set('_calc_cohesion', f"{_src.get('cohesion', '')} | Rang Eva: {ranges['c']}{_cands('cohesion')}", 'system')
+    _set('_calc_regime', f"{crit.regime} · sísmic {crit.seismic_type} (C={crit.seismic_C})" + (f" · rebuig al portant" if _refusal else ''), 'system')
 
     # Diagnostic-only stamps (underscore prefix => filtered out of variable
     # comparison loop in scripts/diagnostic_trace.py:363). Used by

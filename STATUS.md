@@ -1,5 +1,13 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-06 (tarda, 2) — **P2a+P2b implementades i mesurades (Qa abans/després), pendents de GO.** Regla: nivell portant =
+Last updated: 2026-09-06 (tarda, 3) — **GO del Josep a P2 (nivell portant); P3 FETA: γ/c/φ/E i tipus sísmic per CRITERI com a
+candidats amb procedència** (`automation/geotech_criteria.py`, cablejat a Qa, taula i prefills; candidats al wizard pel badge «+N»).
+Rebuig mirat al NIVELL de l'informe (cel·la «25-R»), φ per litologia amb Crespo (11/11 signats), E per D.23 amb sòl 50, rebuig ⇒ «medios»,
+«>» en roca i arrodoniment 10/50; sísmica pel règim. Variant `calc` p2 ⇒ p3: **Qa 3,0 / 3,5 / 3,0 = signat als 3**; Castellar 86 → 88 %,
+Rubí 84 → 87 %, Bell-lloc 75 → 78 % (φ 38, sísmica II; E 450 amb 650 com a candidat). 11 files signades: 35/44 exactes, 9 com a
+candidat, 0 fora. 66 tests nous, 287 verds dirigits. **Referència: `runs/2026-09-06-informe-p3`.** Sense commit. **Següent: GO P3 +
+commit; pregunta 14 a l'Eva; P2b UI; M341.** Detall: DECISION-LOG 2026-09-06 (tarda, 3).
+
+Anterior (2026-09-06, tarda, 2) — **P2a+P2b implementades i mesurades (Qa abans/després), pendents de GO.** Regla: nivell portant =
 primer competent que la sabata assoleix a Df + 0,2 m (Df del wizard; abans «el més profund» amb 0,8 fix). Variant `calc`: **Rubí Qa 3,0 → 3,5 =
 signat** (graves, no gresos), Castellar 3,0 = signat, **Bell-lloc 2,5 → 1,5** (capa bona: Nb 41 → 23 vs 25-R, assentament 1,7 → 1,0; però φ 33 /
 E 114 per correlació on l'Eva posa 38 / 650 per criteri litològic = **P3**; el 2,5 d'abans era soroll de la zona de rebuig). Trobada: `soil_types`

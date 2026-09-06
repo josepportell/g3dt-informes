@@ -1382,23 +1382,42 @@ class ReportGenerator:
                 else ''
             )
 
+            # P3 (2026-09-06): criteris per nivell (règim per Nb i rebuig, litologia) — es
+            # calculen un cop i serveixen la taula sísmica (8) i la geotècnica (9).
+            from .geotech_criteria import geotech_by_criteria
+            level_criteria: dict[int, Any] = {}
+            level_refusal: dict[int, bool] = {}
+            if dpsh and dpsh.tests:
+                from .report_data import _level_has_refusal
+                for level in soil_levels:
+                    # Rebuig dins del rang del NIVELL de l'informe (criteri de la cel·la «Nb»: «25-R»)
+                    _ref = _level_has_refusal(dpsh, level)
+                    level_refusal[level.level_number] = _ref
+                    _n20 = level.n20_average or 0
+                    level_criteria[level.level_number] = geotech_by_criteria(
+                        _n20 / 0.83 if _n20 else 0, _n20, level.soil_type, level.description, _ref,
+                    )
+
             # Table 8: Seismic rows (one per soil level)
             context['seismic_rows'] = []
             for level in soil_levels:
                 avg_n20 = level.n20_average
-                # Terrain type based on N20
-                if avg_n20 >= 30:
-                    terrain_type = 'Tipus II'
-                elif avg_n20 >= 10:
-                    terrain_type = 'Tipus III'
+                crit = level_criteria.get(level.level_number)
+                if crit is not None:
+                    # Tipus NCSE-02 per règim (roca/dens II, mitjà III, fluix IV)
+                    terrain_type, c_coeff = crit.seismic_type, crit.seismic_C
                 else:
-                    terrain_type = 'Tipus IV'
+                    if avg_n20 >= 30:
+                        terrain_type = 'Tipus II'
+                    elif avg_n20 >= 10:
+                        terrain_type = 'Tipus III'
+                    else:
+                        terrain_type = 'Tipus IV'
+                    c_coeff = {
+                        'Tipus I': '1.0', 'Tipus II': '1.3',
+                        'Tipus III': '1.6', 'Tipus IV': '2.0',
+                    }.get(terrain_type, '1.3')
                 thickness = f"{level.thickness_m:.2f}" if level.thickness_m else ''
-                # C coefficient based on terrain type
-                c_coeff = {
-                    'Tipus I': '1.0', 'Tipus II': '1.3',
-                    'Tipus III': '1.6', 'Tipus IV': '2.0',
-                }.get(terrain_type, '1.3')
                 context['seismic_rows'].append({
                     'num': str(level.level_number),
                     'terrain_type': terrain_type,
@@ -1450,7 +1469,8 @@ class ReportGenerator:
                         else:
                             # Use level's bearing stratum N20 average, convert to Nb
                             avg_nb_display = avg_n20 / 0.83 if avg_n20 else 0
-                            has_refusal = any(r.n20 >= 100 for r in level_readings)
+                            # «-R» si el DPSH rebutja dins del NIVELL (mateix criteri que el règim)
+                            has_refusal = level_refusal.get(level.level_number, any(r.n20 >= 100 for r in level_readings))
                             nb_display = f"{avg_nb_display:.0f}-R" if has_refusal else f"{avg_nb_display:.0f}"
                     else:
                         nb_display = ''
@@ -1463,25 +1483,23 @@ class ReportGenerator:
                     # Determine soil type from level description
                     level_soil_type = level.soil_type
 
+                    # P3: criteri del nivell (candidats amb procedència); l'override mana per camp
+                    crit = level_criteria.get(level.level_number)
+                    if crit is None:
+                        crit = geotech_by_criteria(avg_nb, avg_n20, level_soil_type, level.description,
+                                                   level_refusal.get(level.level_number,
+                                                                     any(r.n20 >= 100 for r in level_readings)))
+                    E_display = crit.E_display
                     if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
                         # Manual override — use exactly what G3DT specified
-                        gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20, level_soil_type)
-                        phi = geomech.get('phi') or nspt_to_phi(avg_nb, level_soil_type)
-                        E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
+                        gamma = geomech.get('gamma') or crit.gamma
+                        phi = geomech.get('phi') or crit.phi
+                        E = geomech.get('E') or crit.E
+                        if geomech.get('E'):
+                            E_display = str(geomech.get('E'))
                         cohesion = geomech.get('cohesion', 0.0)
-                    elif is_rock(avg_n20, level.description):
-                        # Rock detected — use CTE rock defaults
-                        rock = rock_params_default()
-                        gamma = rock['gamma']
-                        phi = rock['phi']
-                        E = rock['E']
-                        cohesion = rock['cohesion']
                     else:
-                        # CTE correlations for soil
-                        gamma = nspt_to_gamma_g_cm3(avg_n20, level_soil_type)
-                        phi = nspt_to_phi(avg_nb, level_soil_type)
-                        E = nspt_to_E_kg_cm2(avg_n20)
-                        cohesion = soil_type_to_cohesion(level_soil_type)
+                        gamma, phi, E, cohesion = crit.gamma, crit.phi, crit.E, crit.cohesion
 
                     # N display: N30 de l'SPT del nivell («R» si rebutja, «--» si al
                     # nivell no hi ha SPT). L'override expert `geomech_params.N` mana.
@@ -1498,7 +1516,7 @@ class ReportGenerator:
                         'density': f"{gamma:.2f}",
                         'cohesion': f"{cohesion:.2f}",
                         'phi': f"{phi:.0f}\u00b0",
-                        'E': f"{E:.0f}" if isinstance(E, (int, float)) else str(E),
+                        'E': E_display if E_display else (f"{E:.0f}" if isinstance(E, (int, float)) else str(E)),
                     })
             if not context['geotech_rows']:
                 context['geotech_rows'] = [{'name': '', 'material_short': '', 'nb': '', 'n': '', 'density': '', 'cohesion': '', 'phi': '', 'E': ''}]

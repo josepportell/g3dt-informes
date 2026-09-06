@@ -252,6 +252,8 @@ class ReportData:
     bearing_layer_description: str = ""
     foundation_depth_used_m: float | None = None
     foundation_depth_is_default: bool = False
+    # P3: candidats amb procedència de γ/c/φ/E del nivell portant (geotech_criteria.GeotechCriteria.to_dict)
+    geotech_criteria: dict | None = None
 
     # Override ICGC unit (from 1:25k manual lookup)
     icgc_unit_code: str = ""
@@ -504,6 +506,7 @@ def build_report_data(
             "(confirmar la fondària de fonamentació).", foundation_depth,
         )
     bearing_layer_idx: int | None = None
+    geotech_criteria_dict: dict | None = None
     soil_levels: list[SoilLevel] = []
     if dpsh_data and dpsh_data.tests:
         # Auto-fill from sondeig_extracted.json when user_data has no layers
@@ -571,19 +574,24 @@ def build_report_data(
                 soil_types_list, soil_levels, sondeig_layers, bearing_idx, rock_description,
             )
 
+            # P3 (2026-09-06): paràmetres per CRITERI amb candidats i procedència
+            # (`automation/geotech_criteria.py`); l'override expert mana per camp.
+            from .geotech_criteria import geotech_by_criteria
+            # Rebuig: al NIVELL de l'informe que conté la capa portant (criteri de la cel·la «Nb»
+            # signada, «25-R»); si no hi ha nivells, al rang de la capa.
+            _bearing_level = _report_level_for_layer(soil_levels, sondeig_layers, bearing_idx) if sondeig_layers else (
+                soil_levels[0] if soil_levels else None)
+            bearing_refusal = _level_has_refusal(dpsh_data, _bearing_level) if _bearing_level is not None else \
+                _bearing_stratum_has_refusal(dpsh_data, sondeig_layers, soil_types_list, foundation_depth)
+            crit = geotech_by_criteria(avg_nb, avg_n20, soil_type, rock_description, bearing_refusal)
+            geotech_criteria_dict = crit.to_dict()
             if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
-                gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20, soil_type)
-                phi = geomech.get('phi') or nspt_to_phi(avg_nb, soil_type)
-                E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
+                gamma = geomech.get('gamma') or crit.gamma
+                phi = geomech.get('phi') or crit.phi
+                E = geomech.get('E') or crit.E
                 cohesion = geomech.get('cohesion', 0.0)
-            elif soil_type == 'rock' or is_rock(avg_n20, rock_description):
-                rock = rock_params_default()
-                gamma, phi, E, cohesion = rock['gamma'], rock['phi'], rock['E'], rock['cohesion']
             else:
-                gamma = nspt_to_gamma_g_cm3(avg_n20, soil_type)
-                phi = nspt_to_phi(avg_nb, soil_type)
-                E = nspt_to_E_kg_cm2(avg_n20)
-                cohesion = soil_type_to_cohesion(soil_type)
+                gamma, phi, E, cohesion = crit.gamma, crit.phi, crit.E, crit.cohesion
         except ImportError:
             # Fallback to old Peck/Hanson if cte_geomech not available
             gamma = geomech.get('gamma') or GeotechCorrelations.n_to_density(avg_n20)
@@ -681,6 +689,7 @@ def build_report_data(
         bearing_layer_description=(sondeig_layers[bearing_layer_idx].get('description', '') if bearing_layer_idx is not None else ''),
         foundation_depth_used_m=foundation_depth,
         foundation_depth_is_default=df_is_default,
+        geotech_criteria=geotech_criteria_dict,
         terzaghi_result=terzaghi_result,
         # Override ICGC unit (manual 1:25k lookup)
         icgc_unit_code=user_data.get('icgc_unit_code', ''),
@@ -1139,6 +1148,64 @@ def _select_bearing_layer_idx(
             "_select_bearing_layer_idx falling back to deepest layer: %s", exc,
         )
         return len(sondeig_layers) - 1
+
+
+def _report_level_for_layer(soil_levels: list, sondeig_layers: list[dict], layer_idx: int):
+    """Nivell de l'informe (SoilLevel) que conté el sostre de la capa `layer_idx`; None si no n'hi ha."""
+    if not soil_levels:
+        return None
+    top = 0.0
+    if sondeig_layers and 0 <= layer_idx < len(sondeig_layers):
+        top = float(sondeig_layers[layer_idx].get('depth_from_m') or 0.0)
+    for lv in soil_levels:
+        lo = float(getattr(lv, 'depth_from_m', 0.0) or 0.0)
+        hi = getattr(lv, 'depth_to_m', None)
+        if lo <= top and (hi is None or top < float(hi)):
+            return lv
+    return soil_levels[min(layer_idx, len(soil_levels) - 1)]
+
+
+def _level_has_refusal(dpsh_data: DPSHData, level) -> bool:
+    """El DPSH rebutja (N20 ≥ 100) dins del rang de fondàries del nivell de l'informe.
+
+    És el criteri de la cel·la «Nb» signada («25-R»): el rebuig pertany al NIVELL, encara que
+    caigui just sota la capa portant (Bell-lloc: sabata a 0,3 m sobre les graves 0-1,0; rebuig
+    a 1,0-1,6 dins del mateix nivell geològic)."""
+    if not dpsh_data or not dpsh_data.tests or level is None:
+        return False
+    lo = float(getattr(level, 'depth_from_m', 0.0) or 0.0)
+    hi = getattr(level, 'depth_to_m', None)
+    hi = float('inf') if hi is None else float(hi)
+    return any(
+        lo <= abs(r.depth_m) <= hi and r.n20 >= 100
+        for t in dpsh_data.tests for r in t.readings if r.depth_m is not None
+    )
+
+
+def _bearing_stratum_has_refusal(
+    dpsh_data: DPSHData,
+    sondeig_layers: list[dict],
+    soil_types: list[str] | None = None,
+    foundation_depth: float = DEFAULT_FOUNDATION_DEPTH_M,
+) -> bool:
+    """El DPSH rebutja (N20 ≥ 100) dins del nivell portant (mateix rang que `_bearing_stratum_n20`)."""
+    if not dpsh_data or not dpsh_data.tests:
+        return False
+    if not sondeig_layers or len(sondeig_layers) < 2:
+        return any(r.n20 >= 100 for t in dpsh_data.tests for r in t.readings)
+    bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types, foundation_depth)
+    bearing = sondeig_layers[bearing_idx]
+    depth_from = bearing.get('depth_from_m', 0.0) or 0.0
+    depth_to = bearing.get('depth_to_m')
+    apply_upper = bearing_idx != len(sondeig_layers) - 1 and depth_to is not None
+    for test in dpsh_data.tests:
+        for r in test.readings:
+            d = abs(r.depth_m)
+            if d < depth_from or (apply_upper and d > depth_to):
+                continue
+            if r.n20 >= 100:
+                return True
+    return False
 
 
 def _bearing_stratum_n20(
