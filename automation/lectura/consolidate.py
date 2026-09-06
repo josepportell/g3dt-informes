@@ -2289,6 +2289,7 @@ def consolidate_python(out_dir: Path, project_path: Path | None = None, *, proje
     tables = consolidate_tables(corpus, conflicts, superficie=sc)
     _cota_relative_system(fields, tables)
     _depths_from_msnm(fields, tables)
+    _derive_soil_levels(fields, tables)
 
     notes = [
         f"_decisions.json generat per consolidacio Python-first (Fase 12, {CONSOLIDATOR_VERSION}): "
@@ -2461,6 +2462,392 @@ def _depths_from_msnm(fields: dict[str, dict], tables: dict[str, Any]) -> None:
                 c["altres"] = new_cands[MAX_CANDIDATES:] + list(c.get("altres") or [])
             c["value"] = new_cands[0]["value"]
             c["rule"] = f"R2: convertit a fondaria amb la cota de referencia {cota_txt} msnm (sistema de l'informe); " + str(c.get("rule") or "")
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# 1.4 (bloc 1, 2026-09-06): derivats geometrics de `soil_levels` — regles de l'or (`_tables_decisions.json`, camp
+# `rule`) que cap lector emet perque no son lectures sino consequencies del perfil:
+#   D1  el primer nivell (sense capa de cobertura) arrenca a 0,00 per definicio (E2b ja ho fa per a la cobertura);
+#   D2  el sostre del nivell N es la base del nivell N-1 (mateixa transicio);
+#   D3  la base de l'ultim nivell no la dona cap document (el substrat no es travessa): el limit conegut es el fons
+#       d'investigacio (rebuig DPSH per punt, fondaria del sondeig). El signat l'usa com a gruix sismic (Bell-lloc
+#       2,45 = rebuig P-2, no el -1,80 del log del sondeig; Rubi 4,55; Linyola 1,60 + 1,30 = 2,90);
+#   D4  `mostra_del_nivell` = el nivell que conte la mostra de laboratori (`lab_depth`, al punt `lab_location`);
+#   D5  la litologia de la mostra (`spt_ma_tests`) porta com a candidat la del nivell que la conte.
+# Fonts sempre «(derivat: …) ← font original» (garantia 2); `segur` nomes D1 (definicio geometrica, com E2b).
+# Cap re-lectura: tot surt del mateix `_decisions.json` (fase 12, cost 0).
+# ---------------------------------------------------------------------------------------------------------------
+
+#: Fondaria dins d'un text de cel·la: cal decimal («-1,4», «0,00») o «m» darrere («-4 m»); «Nivell 1» no ho es.
+_DEPTH_NUM_RE = re.compile(r"(?<![\d,.\w])[-+−]?(?:\d+[,.]\d+|\d+(?=\s*m\b))")
+_FONS_PREFIX = "fins al fons d'investigació"
+#: Tolerancia (m) de les comparacions geometriques dels derivats (lectures a 5 cm).
+_DERIV_TOL = 0.05
+
+
+def _depth_nums(text: Any) -> list[float]:
+    """Fondaries (valor absolut) d'un text de cel·la `de`/`a`/`profunditat`, fora dels parentesis d'observacio.
+    Buit si no n'hi ha cap, si el text es un derivat D3 («fins al fons…») o si es en msnm (≥ 50 m)."""
+    t = _strip_parens(str(text))
+    if t.strip().lower().startswith(_FONS_PREFIX):
+        return []
+    nums = [abs(float(n.replace("−", "-").replace(",", "."))) for n in _DEPTH_NUM_RE.findall(t)]
+    return [] if not nums or any(n >= 50 for n in nums) else nums
+
+
+def _fmt_m(d: float) -> str:
+    return f"-{d:.2f}".replace(".", ",")
+
+
+def _fmt_iv(iv: tuple[float, float]) -> str:
+    return f"{iv[0]:.2f}-{iv[1]:.2f}".replace(".", ",")
+
+
+def _cell_depths(cell: Any, pt: str | None) -> tuple[float, float, bool] | None:
+    """`(min, max, del_punt)` d'una cel·la `de`/`a`: prefereix les clausules que anomenen el punt `pt` («≈-1,4 m a
+    P-3»); si no n'hi ha, les que no anomenen cap punt («-1,80»); None si cap candidat es una fondaria."""
+    if not isinstance(cell, dict) or cell.get("estat") not in ("segur", "candidats"):
+        return None
+    at_pt: list[float] = []
+    generic: list[float] = []
+    for cand in cell.get("candidates") or []:
+        v = cand.get("value")
+        if v is None or isinstance(v, bool):
+            continue
+        # un candidat pot dur diversos punts separats per «;» («~-1,4 m a P-1; ~-1,2 m a P-3»): una clausula per punt
+        for clause in _strip_parens(str(v)).split(";"):
+            nums = _depth_nums(clause)
+            if not nums:
+                continue
+            pk = _point_key(clause, default_letter="")
+            if pk is None:
+                generic.extend(nums)
+            elif pt and pk == pt:
+                at_pt.extend(nums)
+    if at_pt:
+        return (min(at_pt), max(at_pt), True)
+    if generic:
+        return (min(generic), max(generic), False)
+    return None
+
+
+def _best_bound(*opts: tuple[float, float, bool] | None) -> tuple[float, float, bool] | None:
+    found = [o for o in opts if o is not None]
+    return next((o for o in found if o[2]), found[0] if found else None)
+
+
+def _interval_of(cell: Any) -> tuple[float, float] | None:
+    """Interval (inici, fi) en fondaria absoluta d'una cel·la de tram («1,0 - 1,15», «-1,00 a -1,60 m»): el valor si es
+    segur; si es candidats, nomes quan tots coincideixen numericament (formes diferents del mateix tram)."""
+    if not isinstance(cell, dict) or cell.get("estat") not in ("segur", "candidats"):
+        return None
+    vals = [cell.get("value")] if cell["estat"] == "segur" else [c.get("value") for c in cell.get("candidates") or []]
+    ivs = set()
+    for v in vals:
+        nums = _depth_nums(v)
+        if len(nums) == 2:
+            ivs.add((round(min(nums), 2), round(max(nums), 2)))
+    return next(iter(ivs)) if len(ivs) == 1 else None
+
+
+def _single_point(cell: Any, default_letter: str = "") -> str | None:
+    if not isinstance(cell, dict) or cell.get("estat") not in ("segur", "candidats"):
+        return None
+    vals = [cell.get("value")] if cell["estat"] == "segur" else [c.get("value") for c in cell.get("candidates") or []]
+    pks = {_point_key(str(v), default_letter=default_letter) for v in vals if v is not None} - {None}
+    return pks.pop() if len(pks) == 1 else None
+
+
+def _fons_rows(tables: dict[str, Any]) -> list[tuple[str, float, str | None, str, str]]:
+    """`(id, fondaria, rebuig|None, font, quote)` de cada DPSH i sondeig amb `profunditat_assolida` llegida (DPSH primer,
+    en l'ordre de les files; els sondeigs porten `rebuig=None`)."""
+    out: list[tuple[str, float, str | None, str, str]] = []
+    for block, idkey, letter in (("dpsh_tests", "punt", "P"), ("sondeig_tests", "sondeig", "S")):
+        for r in (tables.get(block) or {}).get("rows") or []:
+            c = r.get("profunditat_assolida") if isinstance(r, dict) else None
+            if not isinstance(c, dict) or c.get("estat") not in ("segur", "candidats"):
+                continue
+            nums = _depth_nums(c.get("value"))
+            if not nums:
+                continue
+            c0 = (c.get("candidates") or [{}])[0]
+            reb = r.get("rebuig") if isinstance(r.get("rebuig"), dict) else None
+            pk = _point_key(r.get(idkey), letter) or str(r.get(idkey))
+            out.append((pk, nums[0], (str(reb.get("value") or "?") if block == "dpsh_tests" else None),
+                        str(c0.get("font", "")), str(c0.get("quote", ""))))
+    return out
+
+
+def _fons_text(fons: list[tuple[str, float, str | None, str, str]]) -> str:
+    dpsh = [f for f in fons if f[2] is not None]
+    sond = [f for f in fons if f[2] is None]
+    parts: list[str] = []
+    if dpsh:
+        label = "rebuig DPSH" if all(_YES_RE.match(f[2] or "") for f in dpsh) else "profunditat assolida DPSH"
+        if len(dpsh) == 1:
+            parts.append(f"{label}: {_fmt_m(dpsh[0][1])} m ({dpsh[0][0]})")
+        else:
+            parts.append(f"{label}: " + "/".join(_fmt_m(f[1]) for f in dpsh) + " m per punt")
+    if sond:
+        parts.append(("sondeig " if len(sond) == 1 else "sondeigs ") + ", ".join(f"{f[0]}: {_fmt_m(f[1])} m" for f in sond))
+    return f"{_FONS_PREFIX} ({'; '.join(parts)})"
+
+
+def _is_cover_row(row: dict) -> bool:
+    return bool(_COVER_RE.search(str(row.get("nom") or "")))
+
+
+def _derive_first_level_top(rows: list[dict]) -> None:
+    """D1: sense capa de cobertura, el primer nivell arrenca a la superficie (0,00) per definicio geometrica — com la
+    cobertura a E2b. Omple el `no_trobat`; puja a segur un `candidats` que ja diu 0,00 (Linyola: el tall, conf < 0,8).
+    Si hi ha cobertura, el `de` del nivell 1 el resol D2 (base de la cobertura) o E2 (no documentada)."""
+    if not rows or _is_cover_row(rows[0]):
+        return
+    de = rows[0].get("de")
+    if not isinstance(de, dict):
+        return
+    definition = {"value": "0,00", "font": "(definició: el primer nivell arrenca a la superfície)", "quote": ""}
+    if de.get("estat") == "no_trobat":
+        de.update({"estat": "segur", "value": "0,00", "candidates": [definition],
+                   "rule": "1.4/D1: sense capa de cobertura, el primer nivell comença a 0,00 per definició (precedent E2b)"})
+    elif de.get("estat") == "candidats":
+        nums = [_depth_nums(c.get("value")) for c in de.get("candidates") or []]
+        if nums and all(n and max(n) <= _SURFACE_TOL for n in nums):
+            rest = list(de["candidates"])
+            de["candidates"] = ([definition] + rest)[:MAX_CANDIDATES]
+            if len(rest) + 1 > MAX_CANDIDATES:
+                de["altres"] = rest[MAX_CANDIDATES - 1:] + list(de.get("altres") or [])
+            de["estat"] = "segur"
+            de["value"] = "0,00"
+            de["rule"] = "1.4/D1: la lectura (0,00) coincideix amb la definició geomètrica del primer nivell → segur; " + str(de.get("rule") or "")
+
+
+def _derive_level_tops(rows: list[dict]) -> None:
+    """D2: el sostre del nivell N es la base del nivell N-1 (mateixa transicio; l'or de Linyola: «mateix contacte que
+    'a' del Nivell 1»). Nomes omple `no_trobat`; mai a l'inversa (la base de la cobertura NO es el 0,00 que l'annex
+    dona al nivell 1, E2)."""
+    for i in range(1, len(rows)):
+        de, prev_a = rows[i].get("de"), rows[i - 1].get("a")
+        if not (isinstance(de, dict) and de.get("estat") == "no_trobat"):
+            continue
+        if not (isinstance(prev_a, dict) and prev_a.get("estat") in ("segur", "candidats")):
+            continue
+        cands = [c for c in prev_a.get("candidates") or []
+                 if not str(c.get("value") or "").lower().startswith(_FONS_PREFIX)]
+        if not cands:
+            continue
+        prev_nom = rows[i - 1].get("nom")
+        new = []
+        for c in cands:
+            d = dict(c)
+            d["font"] = f"(derivat: mateix contacte que 'a' del nivell anterior «{prev_nom}») ← {c.get('font', '')}"
+            d["note"] = "1.4/D2: el sostre d'un nivell és la base de l'anterior (mateixa transició)" + (f"; {c['note']}" if c.get("note") else "")
+            new.append(d)
+        de.update({"estat": "candidats", "value": new[0]["value"], "candidates": new[:MAX_CANDIDATES],
+                   "rule": f"1.4/D2: `de` no llegit → la base del nivell anterior («{prev_nom}»), candidats (derivat, mai segur)"})
+        if len(new) > MAX_CANDIDATES:
+            de["altres"] = new[MAX_CANDIDATES:] + list(de.get("altres") or [])
+
+
+def _derive_last_level_base(rows: list[dict], tables: dict[str, Any]) -> None:
+    """D3: la base de l'ultim nivell es el fons d'investigacio. Omple el `no_trobat` (Linyola, Rubi, Vilanova, Anciles);
+    si ja hi ha una base llegida (log del sondeig, Pas 3b la deixa en candidats) i el reconeixement arriba mes avall,
+    afegeix el fons com a candidat (Bell-lloc: log -1,80 vs rebuig P-2 -2,45; el signat posa 2,45)."""
+    fons = _fons_rows(tables)
+    if not rows or not fons:
+        return
+    a = rows[-1].get("a")
+    if not isinstance(a, dict):
+        return
+    fonts = list(dict.fromkeys(f[3] for f in fons if f[3]))
+    cand = {"value": _fons_text(fons),
+            "font": "(derivat: la base de l'últim nivell és el fons d'investigació) ← " + "; ".join(fonts[:3]) + (" …" if len(fonts) > 3 else ""),
+            "quote": next((f[4] for f in fons if f[4]), ""),
+            "note": "1.4/D3: cap document dona la base de l'últim nivell (el substrat no es travessa): el límit conegut és fins on arriba el reconeixement"}
+    deepest = max(f[1] for f in fons)
+    if a.get("estat") == "no_trobat":
+        a.update({"estat": "candidats", "value": cand["value"], "candidates": [cand],
+                  "rule": "1.4/D3: la base de l'últim nivell no la dona cap document → el fons d'investigació (rebuig DPSH per punt / fondària del sondeig), candidats, mai segur"})
+        return
+    if a.get("estat") != "candidats":
+        return
+    existing = a.get("candidates") or []
+    if any(str(c.get("value") or "").lower().startswith(_FONS_PREFIX) for c in existing):
+        return
+    read = [n for c in existing for n in _depth_nums(c.get("value"))]
+    depths = [f[1] for f in fons]
+    if read and all(any(abs(r - d) <= _DERIV_TOL for d in depths) for r in read):
+        # Les bases llegides SON les fondaries de rebuig / del sondeig (annex DPSH: la banda de color de l'ultim nivell
+        # acaba on acaba l'assaig; log del sondeig): final del reconeixement, no una transicio → el fons, primer.
+        cands = [cand] + existing
+        a["candidates"] = cands[:MAX_CANDIDATES]
+        if len(cands) > MAX_CANDIDATES:
+            a["altres"] = cands[MAX_CANDIDATES:] + list(a.get("altres") or [])
+        a["value"] = cand["value"]
+        a["rule"] = str(a.get("rule") or "") + "; 1.4/D3: la base llegida coincideix amb el fons d'investigació (rebuig DPSH / fondària del sondeig): és el final del reconeixement, no una transició → el fons primer, per punt"
+        return
+    if read and deepest > max(read) + _DERIV_TOL:
+        if len(existing) < MAX_CANDIDATES:
+            existing.append(cand)
+        else:
+            a["altres"] = [cand] + list(a.get("altres") or [])
+        a["rule"] = str(a.get("rule") or "") + "; 1.4/D3: el reconeixement (DPSH/sondeig) arriba més avall que la base llegida: el nivell continua com a mínim fins al fons d'investigació"
+
+
+def _level_membership(rows: list[dict], iv: tuple[float, float], pt: str | None, fons_pt: float | None
+                      ) -> list[tuple[int, str, float, tuple[float, float, float, float]]]:
+    """Per a cada nivell amb sostre i base coneguts al punt `pt`: `(i, 'dins'|'fora'|'cavall', part de l'interval dins,
+    (sostre_min, sostre_max, base_min, base_max))`. El sostre es el `de` propi o la `a` de l'anterior; la base es la `a`
+    propia, el `de` del seguent o, a l'ultim nivell, el fons d'investigacio al punt. Un nivell de gruix nul (el 0,00 que
+    l'annex dona al nivell 1 sota una cobertura sense base, E2) no es cap interval."""
+    s0, s1 = iv
+    n = len(rows)
+    out = []
+    for i, row in enumerate(rows):
+        top = _best_bound(_cell_depths(row.get("de"), pt), _cell_depths(rows[i - 1].get("a"), pt) if i else None)
+        bot = _best_bound(_cell_depths(row.get("a"), pt), _cell_depths(rows[i + 1].get("de"), pt) if i + 1 < n else None)
+        if bot is None and i == n - 1 and fons_pt is not None:
+            bot = (fons_pt, fons_pt, True)
+        if top is None or bot is None or bot[1] <= top[0] + _DERIV_TOL:
+            continue
+        t_lo, t_hi, b_lo, b_hi = top[0], top[1], bot[0], bot[1]
+        if s0 >= t_hi - _DERIV_TOL and s1 <= b_lo + _DERIV_TOL:
+            out.append((i, "dins", 1.0, (t_lo, t_hi, b_lo, b_hi)))
+        elif s1 <= t_lo + _DERIV_TOL or s0 >= b_hi - _DERIV_TOL:
+            out.append((i, "fora", 0.0, (t_lo, t_hi, b_lo, b_hi)))
+        else:
+            t_mid, b_mid = (t_lo + t_hi) / 2, (b_lo + b_hi) / 2
+            share = max(0.0, min(s1, b_mid) - max(s0, t_mid)) / max(s1 - s0, 0.01)
+            out.append((i, "cavall", round(share, 2), (t_lo, t_hi, b_lo, b_hi)))
+    return out
+
+
+def _fmt_bounds(b: tuple[float, float, float, float]) -> str:
+    top = _fmt_m(b[0]) if abs(b[0] - b[1]) < _DERIV_TOL else f"{_fmt_m(b[0])} a {_fmt_m(b[1])}"
+    bot = _fmt_m(b[2]) if abs(b[2] - b[3]) < _DERIV_TOL else f"{_fmt_m(b[2])} a {_fmt_m(b[3])}"
+    return f"[{top}; {bot}] m"
+
+
+def _fons_at(fons: list[tuple[str, float, str | None, str, str]], pt: str | None) -> float | None:
+    return next((f[1] for f in fons if pt and f[0] == pt), None)
+
+
+def _derive_sample_level(rows: list[dict], fields: dict[str, dict], tables: dict[str, Any]) -> None:
+    """D4: `mostra_del_nivell` = el nivell que conte `lab_depth` al punt `lab_location` (interval, no judici de
+    material). Dins → True; fora → False; a cavall del contacte → els dos candidats (el de mes part de l'interval
+    primer). Omple nomes `no_trobat`; els documents no-A no afirmen False (`_cell_signals`), el derivat si, amb la
+    font «(derivat: … cau fora …)». Mai segur."""
+    lab = fields.get("lab_depth") or {}
+    iv = _interval_of(lab)
+    if iv is None:
+        return
+    pt = _single_point(fields.get("lab_location"))
+    fons_pt = _fons_at(_fons_rows(tables), pt)
+    c0 = (lab.get("candidates") or [{}])[0]
+    where = f"{_fmt_iv(iv)} m" + (f" a {pt}" if pt else "")
+    for i, verdict, share, bounds in _level_membership(rows, iv, pt, fons_pt):
+        cell = rows[i].get("mostra_del_nivell")
+        if not isinstance(cell, dict) or cell.get("estat") not in ("no_trobat", "candidats"):
+            continue
+        if cell.get("estat") == "candidats":
+            # Lectura d'un document no-A (annex DPSH: «la mostra cavalca la transició», amb el tram nominal 1,0-1,5): si la
+            # geometria (tram real del GTL al punt) diu una altra cosa, el derivat s'hi afegeix; el llegit continua primer.
+            have = {c.get("value") for c in cell.get("candidates") or []}
+            derived = True if verdict == "dins" else False if verdict == "fora" else None
+            if derived is None or derived in have or len(cell.get("candidates") or []) >= MAX_CANDIDATES:
+                continue
+            why = "cau dins" if derived else "cau fora"
+            cell["candidates"].append({
+                "value": derived,
+                "font": f"(derivat: la mostra de laboratori {where} {why} del nivell {_fmt_bounds(bounds)}) ← {c0.get('font', '')}",
+                "quote": str(c0.get("quote", "")),
+                "note": "1.4/D4: la geometria (tram real de la mostra vs sostre/base al punt) no coincideix amb el que afirma el document"})
+            cell["rule"] = str(cell.get("rule") or "") + "; 1.4/D4: afegit el derivat geomètric que contradiu la lectura (candidats, l'Eva decideix)"
+            continue
+
+        def mk(val: bool, why: str) -> dict:
+            return {"value": val,
+                    "font": f"(derivat: la mostra de laboratori {where} {why} del nivell {_fmt_bounds(bounds)}) ← {c0.get('font', '')}",
+                    "quote": str(c0.get("quote", "")),
+                    "note": "1.4/D4: interval de la mostra vs sostre/base del nivell al punt de la mostra; no jutja el material"}
+
+        if verdict == "dins":
+            cands = [mk(True, "cau dins")]
+        elif verdict == "fora":
+            cands = [mk(False, "cau fora")]
+        else:
+            pct_in = int(round(share * 100))
+            first, second = (True, False) if share >= 0.5 else (False, True)
+            cands = [mk(first, f"cau a cavall del contacte ({pct_in} % dins)"),
+                     mk(second, f"cau a cavall del contacte ({100 - pct_in} % fora)")]
+        cell.update({"estat": "candidats", "value": cands[0]["value"], "candidates": cands,
+                     "rule": "1.4/D4: mostra_del_nivell = el nivell que conté lab_depth (interval al punt de la mostra); "
+                             "a cavall del contacte → els dos candidats; derivat, mai segur"})
+
+
+def _same_lithology(a: Any, b: Any) -> bool:
+    x, y = _ascii(_strip_parens(str(a))).lower().strip(" ."), _ascii(_strip_parens(str(b))).lower().strip(" .")
+    return bool(x and y) and (x == y or x in y or y in x)
+
+
+def _derive_sample_lithology(rows: list[dict], tables: dict[str, Any]) -> None:
+    """D5: la litologia de cada mostra/assaig (`spt_ma_tests[*].litologia`) porta com a candidat la litologia del
+    nivell que conte el seu tram al seu punt (l'or d'Alcoletge: «Lutites (Nivell 2)», «Rebliment antròpic (Nivell 1)»).
+    Sempre candidats (`_NEVER_SEGUR_CELLS`); no duplica una redaccio que ja hi es."""
+    fons = _fons_rows(tables)
+    for r in (tables.get("spt_ma_tests") or {}).get("rows") or []:
+        if not isinstance(r, dict):
+            continue
+        iv = _interval_of(r.get("profunditat"))
+        if iv is None:
+            continue
+        pt = _single_point(r.get("punt"))
+        lit = r.get("litologia")
+        if not isinstance(lit, dict) or lit.get("estat") not in ("no_trobat", "candidats"):
+            continue
+        members = [m for m in _level_membership(rows, iv, pt, _fons_at(fons, pt)) if m[1] != "fora"]
+        members.sort(key=lambda m: -m[2])
+        added = []
+        for i, verdict, share, bounds in members:
+            lvl = rows[i].get("litologia")
+            if not isinstance(lvl, dict) or lvl.get("estat") not in ("segur", "candidats"):
+                continue
+            l0 = (lvl.get("candidates") or [{}])[0]
+            value = f"{l0.get('value')} ({rows[i].get('nom')})"
+            if any(_same_lithology(l0.get("value"), c.get("value")) for c in (lit.get("candidates") or []) + added):
+                continue
+            why = "conté el tram de la mostra" if verdict == "dins" else f"el tram de la mostra el travessa ({int(round(share * 100))} % dins)"
+            added.append({"value": value,
+                          "font": f"(derivat: litologia del nivell que {why}, {_fmt_bounds(bounds)} a {pt or '?'}) ← {l0.get('font', '')}",
+                          "quote": str(l0.get("quote", "")),
+                          "note": "1.4/D5: la litologia del nivell que conté la mostra per interval; l'Eva re-redacta"})
+        if not added:
+            continue
+        cands = list(lit.get("candidates") or []) + added
+        lit["candidates"] = cands[:MAX_CANDIDATES]
+        if len(cands) > MAX_CANDIDATES:
+            lit["altres"] = cands[MAX_CANDIDATES:] + list(lit.get("altres") or [])
+        lit["estat"] = "candidats"
+        lit["value"] = lit["candidates"][0]["value"]
+        lit["rule"] = (str(lit.get("rule") or "") + "; " if lit.get("rule") else "") + "1.4/D5: + litologia del nivell que conté la mostra (derivat, candidats)"
+
+
+def _derive_soil_levels(fields: dict[str, dict], tables: dict[str, Any]) -> None:
+    """Post-proces 1.4 (despres de `_cota_relative_system` i `_depths_from_msnm`: cal tenir les `a` en fondaria).
+    Ordre: D1 → D2 → D3 → D4 → D5 (D4/D5 necessiten sostres i bases)."""
+    rows = [r for r in ((tables.get("soil_levels") or {}).get("rows") or []) if isinstance(r, dict)]
+    if not rows:
+        return
+    _derive_first_level_top(rows)
+    _derive_level_tops(rows)
+    _derive_last_level_base(rows, tables)
+    _derive_sample_level(rows, fields, tables)
+    _derive_sample_lithology(rows, tables)
+    blk = tables.get("soil_levels") or {}
+    estats = [c.get("estat") for r in rows for c in r.values() if isinstance(c, dict) and "estat" in c]
+    if estats and blk.get("estat_bloc") != "no_trobat":
+        blk["estat_bloc"] = "segur" if all(e == "segur" for e in estats) else "candidats"
+
 
 
 def _canonical_municipality(cell: dict) -> None:

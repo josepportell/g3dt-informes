@@ -1,0 +1,5 @@
+NOU      architect_company      prod=candidats
+CAUTELA  building_type          or segur, prod candidats (bo dins): '7 habitatges unifamiliars adossats (7 viviendas adosadas)'
+BUIT     cota_referencia        (or=candidats '+1106,40 (P-1)'; prod no_trobat)
+ALERTA   num_soil_levels        prod puja a segur ('2'); or candidats
+TOTALS: {'NOU': 1, 'OK': 18, 'CAUTELA': 1, 'BUIT': 1, 'ALERTA': 1}

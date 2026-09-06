@@ -10,6 +10,27 @@ les cel·les que canvien»; escalars sobre l'or **118 OK (80 %) / 23 CAND (16 %)
 llindars pactats, per primer cop; el 05 al matí era 86/46/11/1/3); taules **139 / 21 / 6 / 31 / 0**; **0 ERR sobre el
 signat** també a taules. Queda la peça 1.4 (derivats: la majoria dels 31 blancs de taula), després 1.5, 1.6, 1.7.
 
+## Actualització (2026-09-05, nit, 4) — Peça 1.4 FETA; següent 1.5
+
+**Fet:** `_derive_soil_levels` a `consolidate.py` (post-procés rere `_depths_from_msnm`), 5 regles: D1 primer nivell a 0,00
+per definició (segur, com E2b; també puja a segur un 0,00 llegit), D2 sostre = base de l'anterior (0 cel·les al corpus),
+D3 base de l'últim nivell = fons d'investigació (omple; afegeix si el reconeixement passa de la base llegida), D4
+`mostra_del_nivell` per interval al punt de la mostra (a cavall → dos candidats), D5 litologia del nivell a la mostra.
+Referència nova per a la propera reconsolidació: **`{slug}/_reconsolida-2026-09-05-d14/`** (no `-06-d`: era dia 5).
+Taules **143 / 27 / 7 / 20 / 0** (f1: 139/21/6/31/0); escalars idèntics. Tests `test_D14_*` ×6; consolidador 156.
+DECISION-LOG (nit, 4); `_AGREGAT-8.md` §nit 4. **Sense commit.**
+
+**Què queda de 1.4 A POSTA i per què no tornar-hi:**
+- **11 blancs de lectura gràfica** (Vilanova `[0].a`/`[1].de` + 2 `mostra`, Anciles `[0].a`/`[1].de` + 2 `mostra`, Rubí
+  franja superficial ×2, Bell-lloc base de la cobertura): cap número al `_decisions.json`; només un skill que llegeixi el
+  tall calibrat els omple (candidat a 1.5 L3). Els 9 restants són I1 (8 cotes d'Anciles) i L1 (`n30` Linyola).
+- **Alcoletge `soil_levels[1].a` = ALERTA formal:** l'or el té `no_trobat` («potència no determinada per cap document»),
+  els altres 4 ors (Linyola segur, Vilanova/Rubí/Anciles candidats) i el signat (0,29* → −1,69) diuen «fins al fons».
+  **No s'ha tocat l'or ni s'ha posat cap excepció al codi.** Decisió del Josep: alinear l'or d'Alcoletge o acceptar l'ALERTA.
+- **Linyola `mostra_del_nivell`:** l'interval (1,0-1,15 dins del nivell 1 a P-3) i el material (lutita = nivell 2) es
+  contradiuen; el derivat és per interval i queda en candidats. «Material vs interval» és feina futura (comparar litologies).
+- El test R2 de msnm té 1 assert canviat (D1): no és una regressió de R2.
+
 ## Ordre de lectura (15 min)
 
 1. Aquest document.
@@ -177,4 +198,8 @@ mètode; si una peça necessita re-llegir documents (1.5 L1/L3 toca el skill), �
   MA-1/SPT-1 de Castellar) + les del handoff del 05 (T del pressupost R4, persona/despatx, SPT Vilanova, E, N20).
 - 1.5 L1/L3 (skill + re-lectura parcial), 1.6 T2 (decidir si la passada LLM es manté: 200-290 s per passada),
   1.7 R4 + persona/despatx (amb l'Eva). Després bloc 2 (P0, P2a, P2b, M341) i bloc 3 (S1 multi-casa).
+- **Dos pendents de revisió anotats (Josep, nit 4), detall complet a `STATUS.md` §«Pendents de revisió»:** (1) or d'Alcoletge
+  `soil_levels[1].a` `no_trobat` vs «fins al fons» dels altres 4 ors i del signat (1 ALERTA formal; alinear l'or o acceptar-la);
+  (2) Linyola `mostra_del_nivell`: interval → nivell 1, Eva → nivell 2 pel material (prod candidats en ordre contrari;
+  «material vs interval» pendent; pregunta 13 a l'Eva).
 - Commits fets, cap push. El Josep decideix quan.

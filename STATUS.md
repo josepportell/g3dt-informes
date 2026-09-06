@@ -1,5 +1,46 @@
 # G3DT — Automatització d'Informes Geotècnics — Status
-Last updated: 2026-09-05 (nit, 3) — **Bloc 1.3 F1 FET** (precedència GTL > annex > comanda per la fondària de mostra;
+Last updated: 2026-09-05 (nit, 4) — **Bloc 1.4 derivats FET** (post-procés `_derive_soil_levels`: el primer nivell a 0,00 per
+definició, sostre = base de l'anterior, base de l'últim nivell = fons d'investigació, `mostra_del_nivell` per interval al punt de
+la mostra, litologia del nivell que conté la mostra). Reconsolidació `_reconsolida-2026-09-05-d14` vs `-f1`: **13 cel·les**, cap
+altra, conflictes idèntics, contracte net. Taules **139 → 143 OK (73 %) / 27 CAND / 7 ALERTA / 31 → 20 blancs / 0 ERR**; escalars
+idèntics (118/23/5/1/0). Dels 20 blancs: 9 d'altres peces (I1, L1), 11 lectura gràfica del tall. **1 ALERTA formal nova:**
+Alcoletge `soil_levels[1].a` — l'or diu `no_trobat`, els altres 4 ors i el signat diuen «fins al fons» (decisió Josep: alinear
+l'or o acceptar-la). Commits: R5 `4001dde`, R2 `6fb47c6`, F1 `f678508`; 1.4 sense commit. **Següent: 1.5 L1/L3.**
+Detall: DECISION-LOG 2026-09-05 (nit, 4), `_AGREGAT-8.md` §nit 4.
+
+## ⏳ Pendents de revisió (anotats 2026-09-05, nit, 4, a petició del Josep) — tornar-hi d'aquí a uns dies
+
+1. **Or d'Alcoletge, base del nivell 2 (`soil_levels[1].a`): l'or diu `no_trobat`, els altres quatre ors i el signat diuen
+   «fins al fons».** On és: `docs/golden-read-taules/4001670 ALCOLETGE/_tables_decisions.json` → `tables.soil_levels.rows[1].a`
+   (`estat: no_trobat`, rule «El substrat no es perfora: els 3 DPSH aturen per rebuig dins el nivell 2; potència no
+   determinada per cap document», `sources_checked` «Excel DPSH (rebuig a -1,30/-1,60/-1,69)»). Els altres ors: Linyola
+   `rows[1].a` **segur** «fins al fons d'investigació (rebuig DPSH: -2,90/-2,15/-1,75 m per punt)»; Vilanova, Rubí, Anciles
+   `candidats` amb la mateixa idea («fins a la profunditat investigada…», «fins a la base investigada…», «fons reconegut…»).
+   El signat d'Alcoletge (`docs/golden-read-taules/_eva_truth/alcoletge.json`, taula sísmica) dona gruix del nivell 2 =
+   0,29* → base a −1,69 = rebuig del P-3: l'Eva usa el fons. Prod (regla D3): `docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_reconsolida-2026-09-05-d14/_decisions.json`
+   → `candidats` «fins al fons d'investigació (rebuig DPSH: -1,60/-1,30/-1,69 m per punt)»; el comparador ho marca a
+   `…/alcoletge/_reconsolida-2026-09-05-d14/_compare_taules.txt`: «ALERTA soil_levels[1].a estat or=no_trobat prod=candidats».
+   És l'únic ALERTA nou de 1.4 (taules 6 → 7). **Decisió pendent:** (a) alinear l'or d'Alcoletge amb els altres quatre
+   (`candidats` amb la frase del fons, com Vilanova) → l'ALERTA desapareix; (b) deixar l'or i comptar-la com a ALERTA
+   coneguda «OK per veritat». Codi: `automation/lectura/consolidate.py` → `_derive_last_level_base`. Raonament: DECISION-LOG
+   2026-09-05 (nit, 4), decisió 7.
+2. **Linyola, `mostra_del_nivell`: per fondària la mostra és del nivell 1; l'Eva l'assigna al 2 pel material.** La mostra:
+   SPT1 a P-3, 1,0-1,15 m (GTL `4672-GTL-25 Linyola.pdf` p.2, «Cota d'extracció (m): 1,0 - 1,15», material «Lutita gresosa»;
+   manuscrit PENETROS p.3 «LUTITA MARRÓ I TRAM D'ARGILA AMB GRAVES»). El contacte nivell 1/2 a P-3 és a ≈ −1,35/−1,4 m (tall,
+   lectura gràfica, N=R marcat al contacte). Per interval → nivell 1 («Llims argilosos i sorrencs»); pel material → nivell
+   2 («Lutites i sorrenques, Substrat»); el signat posa la fila de sulfats al «2on nivell» (`docs/golden-read-taules/_eva_truth/linyola.json`,
+   taula sulfats). L'or ho té en candidats amb la contradicció explícita: `docs/golden-read-taules/4001607 LINYOLA/_tables_decisions.json`
+   `rows[0].mostra_del_nivell` [«No (la mostra s'assigna al 2on nivell pel material)», «Si per interval estricte…»] i
+   `rows[1].mostra_del_nivell` [«Si — SPT-1 … lutita (litologia del nivell 2)», «No per interval estricte…»]. Prod (regla D4,
+   només interval): `…/linyola/_reconsolida-2026-09-05-d14/_decisions.json` `rows[0].mostra_del_nivell` candidats [True] i
+   `rows[1]` [False] — **l'ordre contrari al de l'Eva**; el comparador els dona CAND («candidats disjunts», booleans vs
+   textos), no ERR, perquè són candidats. **Què caldria:** «material vs interval» = comparar la litologia de la mostra
+   (`tables.spt_ma_tests[0].litologia`: GTL, manuscrit) amb la dels nivells i, si coincideix amb un nivell diferent del de
+   l'interval, emetre els dos booleans amb el del material primer (o sempre els dos quan la mostra és a < 0,3 m del
+   contacte). També és la pregunta 13 a l'Eva (`docs/PREGUNTES-EVA-PENDENTS.md`). Codi: `consolidate._derive_sample_level`
+   i `_level_membership`. Raonament: DECISION-LOG 2026-09-05 (nit, 4), decisió 4 i «Limitacions conegudes».
+
+Anterior (nit, 3) — **Bloc 1.3 F1 FET** (precedència GTL > annex > comanda per la fondària de mostra;
 capçalera de l'annex DPSH sense decimals → candidats). Reconsolidació `_reconsolida-2026-09-05-f1` vs `-vei`: 3 cel·les,
 cap altra, 0 regressions. Escalars **118 OK (80 %) / 23 CAND (16 %) / 5 / 1 / 0**: **els tres llindars assolits per
 primer cop**; taules 139/21/6/31/0 i **0 ERR sobre el signat** (Rubí P-2 resolt). **Data doble (decisió Josep):** plantilla

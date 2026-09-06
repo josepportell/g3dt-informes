@@ -678,7 +678,9 @@ def test_R2_msnm_levels_and_water_table_are_converted_to_depth_with_the_secure_c
     a0 = rows[0]["a"]
     assert a0["value"] == "≈-1,4 m a P-1 (contacte ≈243,6 msnm)" and len(a0["candidates"]) == 3
     assert a0["candidates"][0]["font"].startswith("(derivat: fondaria = cota +245 − 243,6 msnm)") and "msnm" in a0["candidates"][0]["note"]
-    assert rows[0]["de"]["value"].startswith("0,0 m") and rows[1]["de"]["value"].startswith("≈-1,4 m a ≈-0,3 m")
+    # 1.4/D1: la lectura «0,0 m» del tall coincideix amb la definicio geometrica → segur «0,00», la lectura convertida darrere
+    assert rows[0]["de"]["estat"] == "segur" and rows[0]["de"]["value"] == "0,00"
+    assert rows[0]["de"]["candidates"][1]["value"].startswith("0,0 m") and rows[1]["de"]["value"].startswith("≈-1,4 m a ≈-0,3 m")
     nf = dec["tables"]["dpsh_tests"]["rows"][0]["nivell_freatic"]
     assert nf["value"].startswith("~-1,0 m") and nf["matis"] == "humitat"
     assert validate_decisions(dec) == []
@@ -1926,3 +1928,240 @@ def test_inventory_path_separator_and_case_do_not_make_an_orphan(tmp_path: Path)
     corpus = C.load_corpus(out)
     assert [d["source_path"] for d in corpus.docs] == ["PDF/ANNEXES/3009999_sondeig.pdf"]
     assert corpus.orfes == []
+
+
+# ---------------------------------------------------------------------------
+# 1.4 (2026-09-05, bloc 1, derivats): D1 primer nivell a 0,00 · D2 sostre = base anterior · D3 base de l'ultim nivell =
+# fons d'investigacio · D4 mostra_del_nivell per interval · D5 litologia del nivell que conte la mostra
+# ---------------------------------------------------------------------------
+
+
+def _d14_corpus(out: Path, *, tall_rows: list[dict],
+                dpsh: tuple = (("P-1", "-2,90 m"), ("P-2", "-2,15 m"), ("P-3", "-1,75 m")),
+                sondeig: tuple = (), lab: tuple[str, str] | None = ("1,0 - 1,15", "P-3"),
+                spt_litologia: str | None = "Lutita gresosa",
+                cota: str = "+245 msnm segons plànol topogràfic del ICGC") -> None:
+    """Linyola per defecte: 3 DPSH amb rebuig, GTL amb la mostra SPT1 a P-3 (1,0-1,15) i un tall amb dos nivells."""
+    rows = [{"punt": p, "cota_inici": cota.split(" segons")[0], "profunditat_assolida": d, "rebuig": "Si",
+             "nivell_freatic": None, "location": f"p.{i + 1}", "quote": f"Rebuig a la cota de {d}"} for i, (p, d) in enumerate(dpsh)]
+    _doc(out, "dpsh", "PDF/ANNEXES/x_DPSH.pdf", "annex_dpsh", [_ta("cota_referencia", cota, 0.85)], tables={"dpsh_tests": rows})
+    if sondeig:
+        _doc(out, "sondeig", "PDF/ANNEXES/x_sondeig.pdf", "annex_sondeig", [], tables={"sondeig_tests": [
+            {"sondeig": s, "cota": None, "profunditat_assolida": d, "spt_ma": None, "nivell_freatic": None,
+             "location": "p.1", "quote": f"Profunditat {d}"} for s, d in sondeig]})
+    if lab:
+        depth, punt = lab
+        _doc(out, "gtl", "4672-GTL-25.pdf", "informe_laboratori",
+             [_ta("lab_depth", depth, 0.9, quote=f"Cota d'extracció (m): {depth}"), _ta("lab_location", punt, 0.9)],
+             tables={"spt_ma_tests": [{"id": "SPT1", "punt": punt, "profunditat": depth, "litologia": spt_litologia,
+                                       "n30": None, "location": "p.2", "quote": ""}]})
+    _doc(out, "tall", "tall.pdf", "annex_tall", [], tables={"soil_levels": tall_rows})
+
+
+def _lvl(nom: str, lit: str, de, a) -> dict:
+    return {"nom": nom, "litologia": lit, "de": de, "a": a, "mostra_del_nivell": None}
+
+
+def _soil(dec: dict) -> list[dict]:
+    return dec["tables"]["soil_levels"]["rows"]
+
+
+def test_D14_depth_nums_reads_depths_not_level_numbers_nor_msnm():
+    assert C._depth_nums("mateix contacte que 'a' del Nivell 1 (≈-1,4 m a ≈-0,3 m segons el punt)") == []
+    assert C._depth_nums("≈-0,4/-0,3 m a P-2 (contacte ≈244,6-244,7 msnm)") == [0.4, 0.3]
+    assert C._depth_nums("0,0 m (superfície, escala del tall) (cota 245 msnm)") == [0.0]
+    assert C._depth_nums("-4 m") == [4.0] and C._depth_nums("0,80-1,40m") == [0.8, 1.4]
+    assert C._depth_nums("-1,00 a -1,60 m") == [1.0, 1.6] and C._depth_nums("1,20") == [1.2]
+    assert C._depth_nums("≈243,6 msnm a P-1") == [] and C._depth_nums("fins al fons d'investigació (rebuig DPSH: -2,90 m)") == []
+    assert C._fons_text([("P-1", 2.9, "Si", "f", "q"), ("P-2", 2.15, "Si", "f", "q"), ("S-1", 1.8, None, "f", "")]) == \
+        "fins al fons d'investigació (rebuig DPSH: -2,90/-2,15 m per punt; sondeig S-1: -1,80 m)"
+    assert C._fons_text([("P-1", 1.35, "No", "f", "q")]) == "fins al fons d'investigació (profunditat assolida DPSH: -1,35 m (P-1))"
+    cell = {"estat": "candidats", "candidates": [{"value": "~-1,4 m a P-1; ~-1,2 m a P-3"}, {"value": "-1,80"}]}
+    assert C._cell_depths(cell, "P-3") == (1.2, 1.2, True) and C._cell_depths(cell, "P-9") == (1.8, 1.8, False)
+
+
+def test_D14_first_level_starts_at_surface_by_definition(tmp_path: Path):
+    """D1 (Alcoletge, Vilanova, Anciles: or segur «0,00 m»): sense capa de cobertura, el primer nivell arrenca a 0,00 per
+    definicio geometrica (com la cobertura a E2b). Linyola: el tall el llegeix «0,0 m» (conf < 0,8) → la definicio el puja
+    a segur. Una lectura que no es la superficie no es toca; amb cobertura primera, D1 no hi entra (E2b/E2 manen)."""
+    a = tmp_path / "a"
+    a.mkdir()
+    _d14_corpus(a, tall_rows=[_lvl("Nivell 1", "Llims", None, "-1,40"), _lvl("Nivell 2", "Lutites", None, None)], lab=None)
+    de = _soil(C.consolidate_python(a, None, project_name="X"))[0]["de"]
+    assert de["estat"] == "segur" and de["value"] == "0,00" and de["candidates"][0]["font"].startswith("(definició")
+    b = tmp_path / "b"
+    b.mkdir()
+    _d14_corpus(b, tall_rows=[_lvl("Nivell 1", "Llims", "0,0 m (superfície)", "-1,40"), _lvl("Nivell 2", "Lutites", None, None)], lab=None)
+    dec = C.consolidate_python(b, None, project_name="X")
+    de = _soil(dec)[0]["de"]
+    assert de["estat"] == "segur" and de["value"] == "0,00" and de["candidates"][1]["value"] == "0,0 m (superfície)"
+    assert validate_decisions(dec) == []
+    c = tmp_path / "c"
+    c.mkdir()
+    _d14_corpus(c, tall_rows=[_lvl("Nivell 1", "Llims", "-0,30", "-1,40"), _lvl("Nivell 2", "Lutites", None, None)], lab=None)
+    de = _soil(C.consolidate_python(c, None, project_name="X"))[0]["de"]
+    assert de["estat"] == "candidats" and de["value"] == "-0,30"
+    d = tmp_path / "d"
+    d.mkdir()
+    _d14_corpus(d, tall_rows=[_lvl("Terreny vegetal (sense número)", "Llims", None, None), _lvl("Nivell 1", "Roca", None, "-1,40")], lab=None)
+    rows = _soil(C.consolidate_python(d, None, project_name="X"))
+    assert rows[0]["de"]["value"] == "0,00" and "E2b" not in rows[0]["de"].get("rule", "") or rows[0]["de"]["rule"].startswith("Pas 3b")
+    assert rows[1]["de"]["estat"] == "no_trobat", "la base de la cobertura no esta documentada: cap 0,00 per al nivell 1"
+
+
+def test_D14_level_top_is_the_previous_level_base(tmp_path: Path):
+    """D2 (or de Linyola: «mateix contacte que 'a' del Nivell 1»): el sostre no llegit del nivell N es la base del N-1,
+    candidats amb font derivada. Mai a l'inversa (E2: el 0,00 que l'annex dona al nivell 1 no es la base de la cobertura)."""
+    a = tmp_path / "a"
+    a.mkdir()
+    _d14_corpus(a, tall_rows=[_lvl("Nivell 1", "Llims", "0,00", "-1,40"), _lvl("Nivell 2", "Lutites", None, None)], lab=None)
+    dec = C.consolidate_python(a, None, project_name="X")
+    de2 = _soil(dec)[1]["de"]
+    assert de2["estat"] == "candidats" and de2["value"] == "-1,40"
+    assert de2["candidates"][0]["font"].startswith("(derivat: mateix contacte que 'a' del nivell anterior «Nivell 1») ← tall.pdf")
+    assert "1.4/D2" in de2["rule"] and validate_decisions(dec) == []
+    b = tmp_path / "b"
+    b.mkdir()
+    _d14_corpus(b, tall_rows=[_lvl("Nivell 1", "Llims", "0,00", None), _lvl("Nivell 2", "Lutites", "-1,40", None)], lab=None)
+    rows = _soil(C.consolidate_python(b, None, project_name="X"))
+    assert rows[0]["a"]["estat"] == "no_trobat" and rows[1]["de"]["value"] == "-1,40"
+
+
+def test_D14_last_level_base_is_the_investigation_depth(tmp_path: Path):
+    """D3 (or de Linyola, segur: «fins al fons d'investigació (rebuig DPSH: -2,90/-2,15/-1,75 m per punt)»): cap document
+    dona la base del substrat; el limit conegut es fins on arriba el reconeixement → candidats, mai segur. Bell-lloc: el
+    log del sondeig acaba a -1,80 pero el DPSH P-2 arriba a -2,45 (el signat posa 2,45 de gruix) → el fons s'afegeix
+    com a candidat; si el reconeixement no passa de la base llegida, res."""
+    a = tmp_path / "a"
+    a.mkdir()
+    _d14_corpus(a, tall_rows=[_lvl("Nivell 1", "Llims", "0,00", "-1,40"), _lvl("Nivell 2", "Lutites", None, None)], lab=None)
+    dec = C.consolidate_python(a, None, project_name="X")
+    a2 = _soil(dec)[1]["a"]
+    assert a2["estat"] == "candidats"
+    assert a2["value"] == "fins al fons d'investigació (rebuig DPSH: -2,90/-2,15/-1,75 m per punt)"
+    assert a2["candidates"][0]["font"].startswith("(derivat: la base de l'últim nivell és el fons d'investigació) ← PDF/ANNEXES/x_DPSH.pdf")
+    assert a2["candidates"][0]["quote"] == "Rebuig a la cota de -2,90 m" and validate_decisions(dec) == []
+    b = tmp_path / "b"
+    b.mkdir()
+    _d14_corpus(b, tall_rows=[_lvl("NIVELL 1", "Graves", "0,00", "-1,80")], dpsh=(("P-1", "-1,35 m"), ("P-2", "-2,45 m")),
+                sondeig=(("S-1", "-1,80 m"),), lab=None)
+    a1 = _soil(C.consolidate_python(b, None, project_name="X"))[0]["a"]
+    # (nit, 8) la base llegida -1,80 ES la fondaria del sondeig → el fons va primer (vegeu test_D14_read_base_equal_…)
+    assert a1["estat"] == "candidats"
+    assert a1["value"] == "fins al fons d'investigació (rebuig DPSH: -1,35/-2,45 m per punt; sondeig S-1: -1,80 m)"
+    assert a1["candidates"][1]["value"] == "-1,80" and "1.4/D3" in a1["rule"]
+    c = tmp_path / "c"
+    c.mkdir()
+    _d14_corpus(c, tall_rows=[_lvl("NIVELL 1", "Graves", "0,00", "-1,80")], dpsh=(("P-1", "-1,35 m"),), lab=None)
+    assert [x["value"] for x in _soil(C.consolidate_python(c, None, project_name="X"))[0]["a"]["candidates"]] == ["-1,80"]
+
+
+def _alcoletge_like(out: Path) -> dict:
+    _d14_corpus(out, tall_rows=[
+        _lvl("Nivell 1", "Rebliment antròpic", "0,00", "~186,8 msnm a P-1; ~187,0 msnm a P-3; ~186,9-187,0 msnm a P-2"),
+        _lvl("Nivell 2", "Lutites, substrat", None, None)],
+        dpsh=(("P-1", "-1,60"), ("P-2", "-1,30"), ("P-3", "-1,69")), lab=("0,80 - 1,40", "P-3"),
+        spt_litologia="Lutita marró", cota="+188,20 msnm")
+    return C.consolidate_python(out, None, project_name="X")
+
+
+def test_D14_sample_level_from_the_lab_depth_interval(tmp_path: Path):
+    """D4: `mostra_del_nivell` = el nivell que conte `lab_depth` al punt de la mostra. Linyola: 1,0-1,15 a P-3 dins del
+    nivell 1 (fins ≈-1,4 a P-3) → True; nivell 2 (≈-1,4 → fons -1,75) → False. Alcoletge: 0,8-1,4 a P-3 travessa el
+    contacte ~-1,2 → a cavall: els dos candidats a cada nivell, el de mes part de l'interval primer (or: «possible» /
+    «probable»). Sense sostre o base coneguts al punt, o amb `lab_depth` en candidats que discrepen, no es deriva res."""
+    a = tmp_path / "a"
+    a.mkdir()
+    _d14_corpus(a, tall_rows=[
+        _lvl("Nivell 1", "Llims argilosos i sorrencs", "245 msnm (superfície, escala del tall)", "≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2"),
+        _lvl("Nivell 2", "Lutites i sorrenques, Substrat", None, None)])
+    dec = C.consolidate_python(a, None, project_name="X")
+    rows = _soil(dec)
+    m1, m2 = rows[0]["mostra_del_nivell"], rows[1]["mostra_del_nivell"]
+    assert m1["estat"] == "candidats" and [c["value"] for c in m1["candidates"]] == [True]
+    assert "la mostra de laboratori 1,00-1,15 m a P-3 cau dins del nivell [-0,00; -1,40] m" in m1["candidates"][0]["font"]
+    assert m1["candidates"][0]["font"].endswith("← 4672-GTL-25.pdf p.1") and m1["candidates"][0]["quote"] == "Cota d'extracció (m): 1,0 - 1,15"
+    assert m2["estat"] == "candidats" and [c["value"] for c in m2["candidates"]] == [False]
+    assert "[-1,40; -1,75] m" in m2["candidates"][0]["font"], "sostre = base del nivell 1 a P-3; base = fons a P-3"
+    assert rows[1]["de"]["value"].startswith("≈-1,4 m a P-1"), "D2 sobre les `a` ja convertides per punt (R2)"
+    assert validate_decisions(dec) == []
+    b = tmp_path / "b"
+    b.mkdir()
+    rows = _soil(_alcoletge_like(b))
+    m1, m2 = rows[0]["mostra_del_nivell"], rows[1]["mostra_del_nivell"]
+    assert [c["value"] for c in m1["candidates"]] == [True, False] and "a cavall del contacte (67 % dins)" in m1["candidates"][0]["font"]
+    assert [c["value"] for c in m2["candidates"]] == [False, True] and "[-1,20; -1,69] m" in m2["candidates"][0]["font"]
+    c = tmp_path / "c"
+    c.mkdir()
+    _d14_corpus(c, tall_rows=[_lvl("Nivell 1", "Argila", None, None), _lvl("Nivell 2", "Sorres", None, None)], lab=("0,80 - 1,40", "P-3"))
+    rows = _soil(C.consolidate_python(c, None, project_name="X"))
+    assert rows[0]["mostra_del_nivell"]["estat"] == "no_trobat" and rows[1]["mostra_del_nivell"]["estat"] == "no_trobat"
+    d = tmp_path / "d"
+    d.mkdir()
+    _d14_corpus(d, tall_rows=[_lvl("Nivell 1", "Llims", "0,00", "-1,40"), _lvl("Nivell 2", "Lutites", None, None)], lab=None)
+    _doc(d, "comanda", "comanda.xls", "comanda_lab_g3", [_ta("lab_depth", "0.8 - 1.4", 0.7), _ta("lab_location", "P-3", 0.7)])
+    _doc(d, "penetros", "PENETROS.pdf", "full_camp_manuscrit", [_ta("lab_depth", "0,80 - 1,60", 0.6)])
+    dec = C.consolidate_python(d, None, project_name="X")
+    assert dec["fields"]["lab_depth"]["estat"] == "candidats"
+    assert all(r["mostra_del_nivell"]["estat"] == "no_trobat" for r in _soil(dec)), "dos trams que discrepen: cap interval fiable"
+
+
+def test_D14_sample_lithology_gets_the_containing_level(tmp_path: Path):
+    """D5 (or d'Alcoletge: «Lutites (Nivell 2)», «Rebliment antròpic (Nivell 1)»): la litologia de la mostra porta com a
+    candidats la dels nivells que el seu tram toca al seu punt; mai segur; no duplica una redaccio que ja hi es."""
+    a = tmp_path / "a"
+    a.mkdir()
+    dec = _alcoletge_like(a)
+    lit = dec["tables"]["spt_ma_tests"]["rows"][0]["litologia"]
+    assert lit["estat"] == "candidats"
+    assert [c["value"] for c in lit["candidates"]] == ["Lutita marró", "Rebliment antròpic (Nivell 1)", "Lutites, substrat (Nivell 2)"]
+    assert lit["candidates"][1]["font"].startswith("(derivat: litologia del nivell que el tram de la mostra el travessa (67 % dins), [-0,00; -1,20] m a P-3) ← tall.pdf")
+    assert validate_decisions(dec) == []
+    b = tmp_path / "b"
+    b.mkdir()
+    _d14_corpus(b, tall_rows=[_lvl("NIVELL 1", "Graves amb sorres", "0,00", "-1,80")], dpsh=(("P-1", "-2,45 m"),),
+                lab=("-1,00 a -1,60 m", "P-1"), spt_litologia="Graves amb sorres (NIVELL 1)")
+    lit = C.consolidate_python(b, None, project_name="X")["tables"]["spt_ma_tests"]["rows"][0]["litologia"]
+    assert [c["value"] for c in lit["candidates"]] == ["Graves amb sorres (NIVELL 1)"], "ja hi era: no es duplica"
+
+
+def test_D14_read_base_equal_to_refusal_depths_is_the_investigation_bottom(tmp_path: Path):
+    """Linyola amb l'annex DPSH v1.9: la banda de color del nivell 2 acaba a -2,90/-2,15/-1,75 per punt = els rebuigs → no son
+    transicions, es el fons: el text «fins al fons d'investigació…» va primer i les lectures darrere. Bell-lloc: -1,80 llegit =
+    fondaria del sondeig → idem, amb el DPSH mes avall dins del mateix text."""
+    a = tmp_path / "a"
+    a.mkdir()
+    _d14_corpus(a, tall_rows=[_lvl("Nivell 1", "Llims", "0,00", "-1,40"), _lvl("Nivell 2", "Lutites", "-1,40", None)], lab=None)
+    _doc(a, "annexdpsh", "PDF/ANNEXES/x2_DPSH.pdf", "annex_dpsh", [], tables={"soil_levels": [
+        {"nom": "Nivell 2", "litologia": None, "de": "-1,80", "a": "-2,90", "mostra_del_nivell": False, "punt": "P-1", "location": "p.1"},
+        {"nom": "Nivell 2", "litologia": None, "de": "-0,20", "a": "-2,15", "mostra_del_nivell": False, "punt": "P-2", "location": "p.2"},
+        {"nom": "Nivell 2", "litologia": None, "de": "-1,20", "a": "-1,75", "mostra_del_nivell": False, "punt": "P-3", "location": "p.3"}]})
+    a2 = _soil(C.consolidate_python(a, None, project_name="X"))[1]["a"]
+    assert a2["estat"] == "candidats" and a2["value"] == "fins al fons d'investigació (rebuig DPSH: -2,90/-2,15/-1,75 m per punt)"
+    assert [c["value"] for c in a2["candidates"][1:]] == ["-2,90", "-2,15"] and [x["value"] for x in a2["altres"]] == ["-1,75"]
+    b = tmp_path / "b"
+    b.mkdir()
+    _d14_corpus(b, tall_rows=[_lvl("NIVELL 1", "Graves", "0,00", "-1,80")], dpsh=(("P-1", "-1,35 m"), ("P-2", "-2,45 m")),
+                sondeig=(("S-1", "-1,80 m"),), lab=None)
+    a1 = _soil(C.consolidate_python(b, None, project_name="X"))[0]["a"]
+    assert a1["value"].startswith("fins al fons d'investigació (rebuig DPSH: -1,35/-2,45 m per punt; sondeig S-1: -1,80 m)")
+    assert a1["candidates"][1]["value"] == "-1,80"
+
+
+def test_D14_sample_level_claimed_by_a_weak_document_gets_the_geometric_alternative(tmp_path: Path):
+    """Linyola v1.9: l'annex DPSH afirma `mostra_del_nivell: true` per al nivell 2 («cavalca la transició», amb el tram nominal
+    1,0-1,5); el tram real del GTL (1,0-1,15) a P-3 cau al nivell 1 (contacte ≈-1,4). La lectura queda primera (candidats) i el
+    derivat «False» s'hi afegeix; al nivell 1 la lectura no diu res → derivat sol. Un `segur` no es toca."""
+    a = tmp_path / "a"
+    a.mkdir()
+    _d14_corpus(a, tall_rows=[
+        _lvl("Nivell 1", "Llims argilosos i sorrencs", "245 msnm (superfície, escala del tall)", "≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2"),
+        _lvl("Nivell 2", "Lutites i sorrenques, Substrat", None, None)])
+    _doc(a, "annexdpsh", "PDF/ANNEXES/x2_DPSH.pdf", "annex_dpsh", [], tables={"soil_levels": [
+        {"nom": "Nivell 2", "litologia": None, "de": "-1,20", "a": "-1,75", "mostra_del_nivell": True, "punt": "P-3", "location": "p.3",
+         "note": "la mostra SPT-1 (interval 1,0 a 1,5) cavalca la transició"}]})
+    rows = _soil(C.consolidate_python(a, None, project_name="X"))
+    m2 = rows[1]["mostra_del_nivell"]
+    assert m2["estat"] == "candidats" and [c["value"] for c in m2["candidates"]] == [True, False]
+    assert m2["candidates"][1]["font"].startswith("(derivat: la mostra de laboratori 1,00-1,15 m a P-3 cau fora del nivell")
+    assert [c["value"] for c in rows[0]["mostra_del_nivell"]["candidates"]] == [True]

@@ -344,3 +344,27 @@ candidats, coherent primer). Reconsolidació `{slug}/_reconsolida-2026-09-05-f1/
 Conflictes A-vs-A: idèntics. **Llindars (escalars sobre l'or): ERR 0 ✅ · CAND 16 % ✅ · OK 80 % ✅ — tots tres per primer
 cop.** Sobre el signat: 0 ERR a escalars i a taules. F1 que queda (criteri/Eva): Castellar `lab_sample_id`, Linyola
 «argilsoso», Vilanova SPT creuats ×2 + litologia. **Següent:** 1.4 derivats (31 blancs de taula).
+
+## Agregat MECÀNIC (2026-09-05, nit, 4) — bloc 1.4: derivats geomètrics de `soil_levels`
+
+Regles (DECISION-LOG 2026-09-05 nit, 4): post-procés `_derive_soil_levels` (D1 primer nivell a 0,00 per definició · D2
+sostre = base de l'anterior · D3 base de l'últim nivell = fons d'investigació · D4 `mostra_del_nivell` per interval al punt
+de la mostra · D5 litologia del nivell que conté la mostra). Reconsolidació `{slug}/_reconsolida-2026-09-05-d14/` respecte
+de `-f1`. Triage previ dels 31 blancs: 9 d'altres peces (8 cotes d'Anciles = I1, `n30` Linyola = L1), 12 lectura gràfica no
+emesa, 10 derivables.
+
+| Escalars (147) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| nit 3 (f1) | 118 | 23 | 5 | 1 | 0 | — |
+| + **1.4** (d14) | 118 | 23 | 5 | 1 | 0 | cap (els derivats són de taula) |
+
+| Taules (197) | OK | CAND | ALERTA | Blanc | ERR | Cel·les que mou |
+|---|--:|--:|--:|--:|--:|---|
+| nit 3 (f1) | 139 | 21 | 6 | 31 | 0 | — |
+| + **1.4** (d14) | **143** | **27** | **7** | **20** | 0 | 13: D1 `[0].de` → segur 0,00 a Alcoletge/Vilanova/Anciles (BUIT → OK) i Linyola (CAND → OK); D3 `[últim].a` «fins al fons d'investigació (…)» a Linyola (BUIT → CAND, bo dins de l'or segur), Rubí/Vilanova/Anciles (BUIT → CAND, frase de l'or diferent) i **Alcoletge (OK → ALERTA formal: l'or el té `no_trobat`, els altres 4 ors i el signat no)**; D4 `mostra_del_nivell` Linyola ×2 i Alcoletge ×2 (BUIT → CAND: booleans vs textos de l'or); D5 Alcoletge `spt[0].litologia` (CAUTELA → OK) |
+
+Sense canvi de veredicte: Bell-lloc i Castellar `[últim].a` reben el fons com a candidat afegit (signat Bell-lloc: gruix
+2,45 = rebuig P-2, no el −1,80 del log); Linyola i Bell-lloc `spt[0].litologia` reben la litologia del nivell. Conflictes
+A-vs-A idèntics; contracte net als 7. Dels **20 blancs** que queden: 9 d'altres peces, 11 lectura gràfica del tall
+(transicions inclinades de Vilanova/Anciles, franja superficial de Rubí, base de la cobertura de Bell-lloc). **7 ALERTA:**
+els 6 d'abans (tots OK per veritat o CAND) + Alcoletge `[1].a` (decisió del Josep sobre l'or). **Següent:** 1.5 L1/L3.

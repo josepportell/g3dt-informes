@@ -2551,3 +2551,115 @@ base = vei (116/25/5/1/0). A mig camí, el Josep decideix la data doble (vegeu d
 contacte» → `de` del nivell N = `a` del N−1), després 1.5 L1/L3 i 1.6 T2.
 
 *Fi entrada 2026-09-05 (nit, 3). F1: qui mana, mana; i l'informe diu «El dia 1» i «el dia 1 i 6».*
+
+## 2026-09-05 (nit, 4) — Bloc 1.4, derivats geomètrics de `soil_levels`: 0,00 del primer nivell, sostre = base de l'anterior, base de l'últim nivell = fons d'investigació, `mostra_del_nivell` per interval, litologia del nivell de la mostra — taules 139 → 143 OK, blancs 31 → 20, 13 cel·les mogudes, cap re-lectura
+
+### Context
+Quarta peça del bloc 1 (handoff `_FOR-NEW-YOU-20260906.md` §Peça 1.4). Línia base f1 reproduïda exactament abans de
+tocar res (escalars 118/23/5/1/0; taules 139/21/6/31/0). Triage dels **31 blancs de taula** contra l'or (`_tables_decisions.json`,
+camp `rule`) ABANS de codificar: **9 són d'altres peces** (8 cotes d'Anciles = I1, les lectures de `PDF_V0` no són a la
+carpeta del run; `n30` de Linyola = L1); **12 no són derivables** amb el que hi ha al `_decisions.json` (la transició és
+una lectura gràfica del tall que el lector no ha emès: Vilanova `[0].a`/`[1].de` i les dues `mostra`, Anciles `[0].a`/
+`[1].de` i les dues `mostra`, la franja de sòls superficials de Rubí ×2, la base de la cobertura de Bell-lloc); **10 sí**.
+El signat confirma la regla de la base de l'últim nivell: el gruix de la taula sísmica és sempre el rebuig DPSH més
+profund (Bell-lloc 2,45 = P-2, no el −1,80 del log del sondeig; Rubí 4,55; Linyola 1,60 + 1,30 = 2,90; Alcoletge
+1,40 + 0,29 = 1,69; Anciles «potencia máxima detectada 3,92» = 5,92 − 2,00).
+
+### Decisions arquitectòniques clau
+1. **Un sol post-procés `_derive_soil_levels(fields, tables)` a `consolidate_python`, DESPRÉS de `_cota_relative_system`
+   i `_depths_from_msnm`.** Why: les regles necessiten les `a` en fondària i per punt, i això només existeix després de
+   la conversió msnm → fondària (R2). Alternativa rebutjada: dins de `consolidate_tables` al costat de E2/E2b (Pas 3b) →
+   allà Linyola encara diu «245 msnm» i cap derivat geomètric hi quadra. Ordre intern D1 → D2 → D3 → D4 → D5 perquè D4/D5
+   consumeixen els sostres i bases que D1-D3 acaben de posar.
+2. **D1 — el primer nivell sense capa de cobertura arrenca a 0,00, `segur`, font «(definició: …)».** És l'única excepció
+   al «cap derivat puja a segur» (garantia 2), pel mateix motiu que E2b a la cobertura: és una definició geomètrica, no
+   una lectura. Or: Alcoletge, Vilanova, Anciles `segur "0,00 m (…)"`. També PUJA a segur una lectura que ja diu 0,00
+   (Linyola: el tall, conf < 0,8; la definició va primera, la lectura darrere com a corroboració). No toca res si la
+   primera fila és cobertura (E2b/E2 manen: el 0,00 de l'annex sota una cobertura sense base NO és cap transició) ni si
+   la lectura no és la superfície.
+3. **D3 — la base de l'últim nivell no la dona cap document; el límit conegut és el fons d'investigació → `candidats`,
+   mai segur.** Forma canònica = la frase de l'or de Linyola («fins al fons d'investigació (rebuig DPSH: −2,90/−2,15/−1,75 m
+   per punt)»), amb «; sondeig S-1: −1,80 m» quan hi ha sondeigs i «profunditat assolida DPSH» si algun punt no arriba al
+   rebuig. Omple el `no_trobat` (Linyola, Rubí, Vilanova, Anciles) i, si ja hi ha una base llegida (log del sondeig, Pas 3b
+   la deixa en candidats) però el reconeixement arriba més avall, **afegeix** el fons com a candidat (Bell-lloc −1,80 vs
+   −2,45; Castellar 1,20 vs 1,55). Why afegir: és el que l'Eva fa al signat (Bell-lloc 2,45). Font: «(derivat: la base de
+   l'últim nivell és el fons d'investigació) ← fonts de `profunditat_assolida`» (fins a 3), cita del primer punt.
+4. **D4 — `mostra_del_nivell` = el nivell que conté `lab_depth` al punt `lab_location`; interval, no judici de material.**
+   Sostre = `de` propi o `a` de l'anterior; base = `a` pròpia, `de` del següent o, a l'últim nivell, el fons al punt. Es
+   prefereixen les clàusules que anomenen el punt de la mostra (R2 les produeix; «~-1,4 m a P-1; ~-1,2 m a P-3» es parteix
+   per «;»). Dins → `True`; fora → `False`; **a cavall del contacte → els dos candidats**, el de més part de l'interval
+   primer (Alcoletge: 0,8-1,4 vs contacte ~1,2 a P-3 → 67 %/33 %; l'or: «possible» / «possible que no»). Valors booleans,
+   com les lectures de l'annex (contracte i UI). Un derivat sí que pot dir `False` (els documents no-A no, `_cell_signals`).
+   No deriva res si falta sostre o base al punt, si els candidats de `lab_depth` discrepen numèricament (Vilanova/Alcoletge
+   tenen 3 formes del mateix tram → sí), o si la cel·la ja està llegida. Mai segur. **Límit acceptat:** Linyola: la
+   mostra 1,0-1,15 cau dins del nivell 1 per interval (contacte ≈1,4 a P-3) però l'Eva l'assigna al 2n pel material
+   (lutita); el derivat diu `True`/`False` en candidats i l'Eva decideix. Codificar «material vs interval» demana comparar
+   litologies (LLM o tokens): fora de 1.4, apuntat.
+5. **D5 — `spt_ma_tests[*].litologia` rep com a candidats la litologia dels nivells que el seu tram toca al seu punt**
+   («Lutites, substrat (Nivell 2)»), font «(derivat: litologia del nivell que conté el tram de la mostra / el travessa
+   (67 % dins), [sostre; base] a P-3) ← font del nivell». Mai segur (`_NEVER_SEGUR_CELLS`); no duplica una redacció que ja
+   hi és (Castellar: l'annex ja escriu la litologia del nivell a la mostra); el 4t va a `altres`. Or d'Alcoletge:
+   exactament aquests dos candidats → CAUTELA → OK.
+6. **D2 — el sostre no llegit del nivell N és la base del N−1**, candidats amb font «(derivat: mateix contacte que 'a' del
+   nivell anterior «…») ← …». Implementat i testat però **mou 0 cel·les al corpus**: allà on falta el `de` també falta
+   l'`a` anterior (Vilanova, Anciles, Rubí). **Sense regla inversa** (`a` de N−1 des del `de` de N): Bell-lloc la faria
+   fallar (el 0,00 que l'annex dona al nivell 1 no és la base de la cobertura, E2).
+7. **Or d'Alcoletge `[1].a` = `no_trobat` («potència no determinada per cap document») vs Linyola `segur` i Vilanova/Rubí/
+   Anciles `candidats` amb la mateixa frase «fins al fons».** Amb D3, Alcoletge surt candidats → el comparador marca
+   **ALERTA formal** (or `no_trobat`, prod `candidats`). El contingut coincideix amb els altres quatre ors i amb el signat
+   (0,29* = fins a −1,69). **No es toca l'or** (és la vara de mesurar; decisió del Josep: alinear l'or d'Alcoletge amb els
+   altres quatre, o acceptar l'ALERTA com a coneguda). Tampoc s'afegeix cap excepció al codi: no hi ha criteri que separi
+   Alcoletge de Linyola.
+8. **Test R2 actualitzat** (1 assert): el `de` del nivell 1 de Linyola ja no és «0,0 m…» candidats sinó «0,00» segur amb
+   la lectura convertida al 2n candidat (D1). Canvi d'expectativa, no de comportament de R2.
+
+### Implementació
+- `automation/lectura/consolidate.py` (+~330 LOC, 2578 → 2937): bloc «1.4» abans de `_canonical_municipality`:
+  `_DEPTH_NUM_RE`/`_depth_nums` (cal decimal o «m»: «Nivell 1» no és una fondària; ≥ 50 = msnm, es descarta), `_cell_depths`
+  (per punt, clàusules per «;»), `_interval_of`, `_single_point`, `_fons_rows`/`_fons_text`/`_fons_at`,
+  `_derive_first_level_top` (D1), `_derive_level_tops` (D2), `_derive_last_level_base` (D3), `_level_membership` +
+  `_derive_sample_level` (D4), `_same_lithology` + `_derive_sample_lithology` (D5), `_derive_soil_levels` (orquestra i
+  recalcula `estat_bloc`). Crida a `consolidate_python` rere `_depths_from_msnm`.
+- `tests/test_lectura_consolidate.py`: `_d14_corpus` (Linyola per defecte, parametritzable), `_alcoletge_like`; 6 tests
+  `test_D14_*` (una regla per test + `_depth_nums`/`_fons_text`/`_cell_depths`); `test_R2_msnm_…` 1 assert.
+- Artefactes: `{slug}/_reconsolida-2026-09-05-d14/` (7 projectes; el nom `-2026-09-06-d` del handoff no s'ha usat:
+  encara és dia 5).
+
+### Validació empírica (reconsolidació dels 7, cost 0; comparador v4 sobre l'or)
+- **13 cel·les canvien d'estat/valor, cap altra; conflictes A-vs-A idèntics (4/1/0/1/1/0/0); contracte NET als 7.**
+  - D1: Alcoletge/Vilanova/Anciles `[0].de` no_trobat → segur 0,00 (**BUIT → OK ×3**); Linyola `[0].de` candidats → segur
+    (**CAND → OK**).
+  - D3: Linyola `[1].a` (**BUIT → CAND**, «bo dins» de l'or segur), Rubí `[1].a` = or `[0].a`, Vilanova `[1].a`, Anciles
+    `[1].a` (**BUIT → CAND** disjunts: mateixa cosa, frase de l'or diferent); Alcoletge `[1].a` (**OK → ALERTA formal**,
+    decisió 7). Afegits sense canvi de veredicte: Bell-lloc i Castellar `[1].a`.
+  - D4: Linyola `[0].mostra` True / `[1].mostra` False; Alcoletge `[0].mostra` [True, False] / `[1].mostra` [False, True]
+    (**BUIT → CAND ×4**; l'or té textos «possible/probable», el comparador no els casa amb booleans).
+  - D5: Alcoletge `spt_ma_tests[0].litologia` **CAUTELA → OK**; Linyola i Bell-lloc reben la litologia del nivell (sense
+    canvi de veredicte).
+- Escalars: **118 / 23 / 5 / 1 / 0 (idèntics).** Taules: **139 → 143 OK (73 %) / 21 → 27 CAND / 6 → 7 ALERTA / 31 → 20
+  blancs / 0 ERR.** Dels 20 blancs: 9 d'altres peces, 11 lectura gràfica no emesa.
+- Tests: consolidador 150 → 156 verds; els tres mòduls 210. Suite sencera: vegeu la sessió.
+
+### Latència / cost
+0 USD (cap crida LLM; reconsolidació ~1 min).
+
+### Limitacions conegudes
+- 11 blancs de taula són lectura gràfica del tall que el lector no emet (transicions inclinades, franges superficials):
+  només un skill que llegeixi el tall calibrat (1.5 L3?) els omple.
+- D4 és interval pur: Linyola (material ≠ interval) queda `True`/`False` en candidats amb la resposta de l'Eva a l'altre
+  costat; el comparador dona CAND igualment. «Material vs interval» = feina futura (comparar litologies).
+- D2 no mou res al corpus; l'or de Linyola `[1].de` ja el resolia R2 (el lector va escriure «mateix contacte…»).
+- Or d'Alcoletge `[1].a` incoherent amb els altres quatre (decisió 7): 1 ALERTA formal fins que el Josep decideixi.
+- `_fons_text` enumera els punts en l'ordre de les files (P-1, P-2, …); la font del candidat només cita 3 documents.
+
+### GO/NO-GO
+- ✅ 12 cel·les cap a l'or o sense canvi de veredicte; +4 OK, +7 CAND (de blanc), −1 CAND (→ OK); 0 regressions de
+  contingut; tests; conflictes idèntics; contracte net.
+- ⚠ 1 ALERTA formal (Alcoletge `[1].a`) per incoherència de l'or, no del sistema — decisió del Josep.
+- ⏳ Suite sencera (diff de noms contra `suite-vermells-esperats.txt`): a la sessió.
+
+### Següents passos
+1.5 L1/L3 (skill + re-lectura parcial: cost real, dir-ho abans), 1.6 T2, 1.7 R4 + persona/despatx (Eva). Decisió del Josep
+sobre l'or d'Alcoletge `[1].a`. Els 11 blancs gràfics només cauen amb lectura del tall calibrat.
+
+*Fi entrada 2026-09-05 (nit, 4). Derivats: el que el perfil implica, amb font; el que el tall dibuixa, encara no.*
