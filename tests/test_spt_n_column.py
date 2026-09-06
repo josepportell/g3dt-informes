@@ -35,7 +35,9 @@ def _column(levels, rows):
     ("54", "54"), (54, "54"), ("R", "R"), ("r", "R"), ("R (rebuig)", "R"),
     ("40 (suma dels trams centrals 20+20)", "40"), ("--", None), ("", None), (None, None),
     ("MA", None), ("sense registre", None), ("007", "7"),
-])
+        ("1/1/1/1", None),   # recompte per tram (MA-1 Anciles), no un N30
+        ("30 (12/14/16)", "30"),
+    ])
 def test_n30_display(raw, expected):
     assert n30_display(raw) == expected
 

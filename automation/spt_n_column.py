@@ -34,6 +34,7 @@ from typing import Any, Iterable
 NO_SPT = "--"
 
 _N30_RE = re.compile(r"^\s*(R|\d{1,3})\b", re.IGNORECASE)
+_TALLY_RE = re.compile(r"^\s*\d{1,3}\s*/\s*\d")
 _NUM_RE = re.compile(r"[+-]?\d+(?:[.,]\d+)?")
 _WORD_RE = re.compile(r"[a-z]+")
 # Arrels (5 lletres) massa genèriques per decidir un nivell: apareixen a qualsevol descripció.
@@ -50,6 +51,10 @@ def n30_display(value: Any) -> str | None:
         return None
     text = str(value).strip()
     if not text or text == NO_SPT:
+        return None
+    # «1/1/1/1» (recompte per tram d'una mostra alterada, Anciles MA-1) no és cap N30: M341 2026-09-06 en feia
+    # N=1 → Es 2,5 → assentament 57 cm.
+    if _TALLY_RE.match(text):
         return None
     m = _N30_RE.match(text)
     if not m:

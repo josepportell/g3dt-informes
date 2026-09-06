@@ -94,7 +94,8 @@ _CA_MONTHS = {"gener": 1, "febrer": 2, "març": 3, "abril": 4, "maig": 5, "juny"
 
 
 def _norm_date(s: str) -> str:
-    s = str(s).strip().lower()
+    # apòstrof tipogràfic i espai després de la «d» («1 d ‘octubre de 2025» = «1 d'octubre de 2025»), M341 2026-09-06
+    s = re.sub(r"\bd\s*['‘’`´]\s*", "d'", str(s).strip().lower().replace("’", "'").replace("‘", "'"))
     m = re.search(r"(\d{1,2})\s+d[e']\s*(\w+)\s+(?:de\s+)?(\d{4})", s)
     if m and m.group(2) in _CA_MONTHS:
         return f"{int(m.group(3)):04d}-{_CA_MONTHS[m.group(2)]:02d}-{int(m.group(1)):02d}"
@@ -108,7 +109,8 @@ def _norm_date(s: str) -> str:
 
 
 def _norm_text(s: str) -> str:
-    s = str(s).lower().replace("’", "'").replace("l·l", "ll")
+    s = str(s).lower().replace("’", "'").replace("‘", "'").replace("l·l", "ll")
+    s = re.sub(r"\bd\s+'", "d'", s)
     s = re.sub(r"[^\w\s]", " ", s)
     return re.sub(r"\s+", " ", s).strip()
 

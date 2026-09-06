@@ -1,0 +1,39 @@
+# linyola/viaA — escalars i narrativa vs signat (`eva_reference_values.json`)
+
+| grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
+|---|--:|--:|--:|--:|--:|
+| A | 14 | 3 | 3 | 0 | 85 % |
+| calc | 9 | 1 | 5 | 0 | 67 % |
+| narr | 1 | 5 | 7 | 2 | 46 % |
+| resta | 3 | 0 | 2 | 1 | 60 % |
+
+- [narr] `access_street` **NO_DATA** gen=«None» ↔ eva=«El dia 1 d ‘octubre de 2025, es va visitar l’obra per tal de:»
+- [narr] `adjacent_east_fmt` **CLOSE** gen=«Per la part est amb una parcel·la buida.» ↔ eva=«Per la part est i pel sud amb parcel·les buides.»
+- [narr] `adjacent_north_fmt` **CLOSE** gen=«Per la part nord amb una parcel·la buida.» ↔ eva=«Per la part nord amb una parcel·la ocupada per una habitatge unifamiliar.»
+- [narr] `adjacent_south_fmt` **CLOSE** gen=«Per la part sud amb una parcel·la buida.» ↔ eva=«Per la part est i pel sud amb parcel·les buides.»
+- [narr] `adjacent_west_fmt` **CLOSE** gen=«I finalment, per la part oest amb el Carrer Clot de la Llacuna.» ↔ eva=«I finalment, per la part oest, amb el carrer per on es realitza l’entrada.»
+- [A] `architect_company` **CLOSE** gen=«BUNYESC ARQUITECTURA EFICIENT, S.L.P» ↔ eva=«BUNYESC ARQUITECTURA EFICIENT»
+- [resta] `architect_name` **MISMATCH** gen=«Josep Bunyesc Palacín» ↔ eva=«Bunyesc Arquitectura Eficient»
+- [A] `architect_name_upper` **MISMATCH** gen=«JOSEP BUNYESC PALACÍN» ↔ eva=«BUNYESC ARQUITECTURA EFICIENT»
+- [narr] `building_structure_desc` **MISMATCH** gen=«en planta baixa» ↔ eva=«sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l»
+- [A] `building_type_lower` **MISMATCH** gen=«habitatge unifamiliar aïllat» ↔ eva=«un nou habitatge unifamiliar»
+- [A] `client` **CLOSE** gen=«SÍLVIA EROLES BALAGUERÓ» ↔ eva=«SRA. SÍLVIA EROLES BALAGUERÓ»
+- [narr] `conclusions_aggressivity_statement` **MISMATCH** gen=«El contingut en sulfats del terreny es de 0 mg/kg. El terreny es classifica com a NO AGRES» ↔ eva=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on»
+- [narr] `conclusions_water_statement` **CLOSE** gen=«En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detect» ↔ eva=«En data de la realització dels treballs de camp, i fins la cota assajada no es va detectar»
+- [narr] `csn_radon_text` **MISMATCH** gen=«Addicionalment, segons la cartografia del potencial de radó del Consell de Seguretat Nucle» ↔ eva=«En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitz»
+- [calc] `cte_sol` **MISMATCH** gen=«T-2» ↔ eva=«T-1»
+- [resta] `data_signatura_text` **MISMATCH** gen=«06 de setembre de 2026» ↔ eva=«29 d’octubre de 2025»
+- [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar c»
+- [calc] `geomech_E` **MISMATCH** gen=«450» ↔ eva=«>800»
+- [calc] `geomech_cohesion` **MISMATCH** gen=«0.0» ↔ eva=«1.0»
+- [calc] `geomech_gamma` **CLOSE** gen=«2.0» ↔ eva=«2.20»
+- [calc] `geomech_phi` **MISMATCH** gen=«38» ↔ eva=«30»
+- [narr] `lab_tests_text` **MISMATCH** gen=«Contingut en sulfats solubles UNE 83963:2008» ↔ eva=«Assaig de Límits d’Atterberg UNE 103103/94 – 104/93
+Assaig d’expansivitat Lambe UNE 103500»
+- [A] `location_sentence` **MISMATCH** gen=«entre el C/ Clot de la Llacuna i el Carrer Clot de la Llacuna de Linyola» ↔ eva=«L’edificació que es preveu construir presentarà les següents característiques:»
+- [narr] `materials_intro` **MISMATCH** gen=«A partir dels resultats dels assaigs de penetracio dinamica realitzats, s'han identificat » ↔ eva=«A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del »
+- [A] `plantes` **CLOSE** gen=«PB (planta baixa, 1 nivell)» ↔ eva=«Pb»
+- [narr] `radon_zone_description` **MISMATCH** gen=«, municipi amb baixes concentracions de gas radó.» ↔ eva=«La parcel·la concreta d’estudi es localitza al terme municipal de LINYOLA i, segons la tau»
+- [narr] `site_condition` **MISMATCH** gen=«pla» ↔ eva=«Com que es tracta d’un solar pla, no s’han detectat marques i/o indicis de processos d’ero»
+- [narr] `site_description` **NO_DATA** gen=«None» ↔ eva=«El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer »
+- [calc] `sulfate_level_name` **MISMATCH** gen=«1er nivell» ↔ eva=«2on nivell»

@@ -1409,8 +1409,11 @@ def _generate_soil_levels(
 
         levels = []
         for i, layer in enumerate(sondeig_layers):
-            depth_from = layer.get('depth_from_m', 0.0)
-            depth_to = layer.get('depth_to_m', 0.0)
+            depth_from = layer.get('depth_from_m', 0.0) or 0.0
+            # L'última capa pot venir SENSE base (`depth_to_m: None`: segmentador DPSH, lectura «fins al fons
+            # d'investigació»): oberta fins al fons, no 0,0 (M341 2026-09-06: Alcoletge queia aquí amb TypeError).
+            depth_to = layer.get('depth_to_m')
+            depth_hi = float('inf') if depth_to is None else depth_to
             description = layer.get('description', f'Nivell {i + 1}')
 
             # Filter DPSH readings within this layer's depth range
@@ -1418,10 +1421,10 @@ def _generate_soil_levels(
             # Exclude refusal values (N20 >= 100)
             layer_n20 = [
                 r.n20 for r in all_readings
-                if depth_from <= abs(r.depth_m) <= depth_to and r.n20 < 100
+                if depth_from <= abs(r.depth_m) <= depth_hi and r.n20 < 100
             ]
             avg_n20 = sum(layer_n20) / len(layer_n20) if layer_n20 else dpsh_data.overall_average_n20
-            thickness = depth_to - depth_from if depth_to > depth_from else None
+            thickness = depth_to - depth_from if depth_to is not None and depth_to > depth_from else None
 
             # Compute min/max N20 for Nb column
             n20_min = min(layer_n20) if layer_n20 else None
@@ -1436,7 +1439,7 @@ def _generate_soil_levels(
                 thickness_m=thickness,
                 n20_average=avg_n20,
                 depth_from_m=depth_from,
-                depth_to_m=depth_to if depth_to > 0 else None,
+                depth_to_m=depth_to if depth_to is not None and depth_to > 0 else None,
                 n20_min=n20_min,
                 n20_max=n20_max,
                 soil_type=st,
