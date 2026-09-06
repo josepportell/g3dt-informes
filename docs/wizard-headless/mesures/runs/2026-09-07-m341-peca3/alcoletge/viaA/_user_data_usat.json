@@ -1,0 +1,88 @@
+{
+ "client_name": "Albert Sans Bonvehí",
+ "street_address": "Carrer Girasols, Nº7, Urbanització el Roser",
+ "site_municipality": "Alcoletge",
+ "architect_name": "David Graus Robinat",
+ "architect_company": "2 Graus",
+ "building_type": "Tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
+ "superficie_parcela_m2": 1167.0,
+ "cota_referencia": "+188,20 msnm",
+ "num_soil_levels": 2,
+ "utm_x": 308781.86,
+ "utm_y": 4613950.63,
+ "lab_testing_company": "TPS",
+ "lab_sample_id": "SPT -1 (P3)",
+ "lab_depth": "0.8 - 1.4",
+ "lab_location": "P3",
+ "cte_edificacio": "C0",
+ "cte_sol": "T1",
+ "cadastral_refs": "8841701CG0184S0001HH",
+ "field_work_dates": [
+  "2026-02-16"
+ ],
+ "field_work_dates_text": "16 de febrer de 2026",
+ "lectura_tables": {
+  "dpsh_tests": [
+   {
+    "test_id": "P-1",
+    "cota": "+188.20",
+    "depth": "-1.60",
+    "refusal": "Si",
+    "water": "-22.00"
+   },
+   {
+    "test_id": "P-2",
+    "cota": "+188.20",
+    "depth": "-1.30",
+    "refusal": "Si",
+    "water": "-22.00"
+   },
+   {
+    "test_id": "P-3",
+    "cota": "+188.20",
+    "depth": "-1.69",
+    "refusal": "Si",
+    "water": "-22.00"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "test_id": "SPT-1",
+    "location": "P-3",
+    "depth_range": "-0.80 a -1.40",
+    "n30": "20",
+    "lithology": "[primera paraula il·legible] marró"
+   }
+  ],
+  "soil_levels": [
+   {
+    "name": "Nivell 1",
+    "litologia": "Rebliment antròpic",
+    "de": "0,00",
+    "a": "~-1,4 m a P-1 (contacte ~186,8 msnm)"
+   },
+   {
+    "name": "Nivell 2",
+    "litologia": "Lutites, substrat",
+    "de": "~-1,4 m a ~-1,2 m segons el punt (mateix contacte que el Nivell 1, vegeu nota d'aquell nivell) (cota 186,8, 187,0 msnm)",
+    "a": "fins al fons d'investigació (rebuig DPSH: -1,60/-1,30/-1,69 m per punt)"
+   }
+  ],
+  "superficie_construida": "100",
+  "lab": {
+   "sample_id": "SPT -1 (P3)",
+   "location": "P3",
+   "depth": "0.8 - 1.4"
+  }
+ },
+ "soil_types": [
+  "granular",
+  "granular"
+ ],
+ "foundation_depth_m": 1.0,
+ "expedient": "4001670",
+ "_metadata": {
+  "origen": "mesura_341 viaA: lectura + Df del signat",
+  "Df_assumida": 1.0
+ }
+}

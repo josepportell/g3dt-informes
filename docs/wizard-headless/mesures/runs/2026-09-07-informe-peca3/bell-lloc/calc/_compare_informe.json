@@ -1,0 +1,408 @@
+{
+ "tag": "bell-lloc/calc",
+ "generated": "/home/josep/g3dt-e2e/informes-mesura/2026-09-07-informe-peca3/bell-lloc_calc.docx",
+ "eva": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/golden-read-taules/_eva_truth/bell-lloc.json",
+ "tables": {
+  "plantes": {
+   "counts": {
+    "MATCH": 3,
+    "MISMATCH": 3
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Pb+1Pp"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "607",
+     "eva": "995"
+    },
+    {
+     "row": "fila2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila2",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "297",
+     "eva": "280+86"
+    }
+   ]
+  },
+  "cte_edificacio": {
+   "counts": {
+    "MATCH": 2,
+    "MISMATCH": 2
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "C-0",
+     "eva": "C-1"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "T-2",
+     "eva": "T-1"
+    }
+   ]
+  },
+  "dpsh": {
+   "counts": {
+    "MATCH": 10
+   },
+   "cells": [
+    {
+     "row": "p-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 4,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "sondeig": {
+   "counts": {
+    "MATCH": 4,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "s-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "s-1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "s-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "s-1",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "1/0",
+     "eva": "1/--"
+    },
+    {
+     "row": "s-1",
+     "col": 4,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "spt_ma": {
+   "counts": {
+    "MATCH": 3,
+    "MISMATCH": 2
+   },
+   "cells": [
+    {
+     "row": "spt-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "58",
+     "eva": "54"
+    },
+    {
+     "row": "spt-1",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares",
+     "eva": "Graves en matriu sorrenca"
+    }
+   ]
+  },
+  "mostra_lab": {
+   "counts": {
+    "MATCH": 4,
+    "CLOSE": 1
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "Profunditat: -1.0 a -1.6",
+     "eva": "Profunditat:  -1.0  a -1.60 m"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "soil_levels": {
+   "counts": {
+    "MATCH": 1,
+    "CLOSE": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares",
+     "eva": "Graves en matriu sorrenca carbonatades"
+    }
+   ]
+  },
+  "permeabilitat": {
+   "counts": {
+    "MATCH": 1,
+    "CLOSE": 2
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "10^-2 a 10^-4",
+     "eva": "10 – 10-2"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares",
+     "eva": "Graves en matriu sorrenca carbonatades"
+    }
+   ]
+  },
+  "sulfats": {
+   "counts": {
+    "MATCH": 4
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 3,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "sismica": {
+   "counts": {
+    "MATCH": 3,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "2.60",
+     "eva": "2.45"
+    },
+    {
+     "row": "1",
+     "col": 3,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "geotecnica": {
+   "counts": {
+    "CLOSE": 1,
+    "MISMATCH": 3,
+    "MATCH": 3
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell. Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares.",
+     "eva": "1er nivell. Graves en matriu sorrenca"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "23-R",
+     "eva": "25-R"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "58",
+     "eva": "54"
+    },
+    {
+     "row": "1r",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 5,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 6,
+     "estat": "MISMATCH",
+     "gen": "450",
+     "eva": "650"
+    }
+   ]
+  }
+ },
+ "totals": {
+  "MATCH": 38,
+  "MISMATCH": 12,
+  "CLOSE": 5
+ }
+}

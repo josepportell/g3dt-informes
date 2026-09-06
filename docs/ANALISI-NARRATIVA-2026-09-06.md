@@ -273,6 +273,7 @@ l'any? Fins que no es decideixi, les 30 cel·les ES no compten com a error de na
 | `-mesura` (peça 0) | 3 · 16 · 64 · 19 → **23 %** | 30 % | 5 % | 58 % | 78 % |
 | `-narr1` (peça 1) | 22 · 22 · 38 · 20 → **54 %** | 57 % | 43 % | 66 % | 78 % |
 | `-narr2c` (peça 2) | 29 · 29 · 36 · 15 → **62 %** | **65 %** | 52 % | **68 %** | 78 % |
+| `2026-09-07-m341-peca3` (peça 3) | 32 · 30 · 39 · 8 → **61 %** | 65 % | 50 % | 67 % | **79 %** |
 
 Les estimacions de §7 (peça 1 → ≈ 70 %, peça 2 → ≈ 80 % CA) eren optimistes: el comparador forat-contra-forat és més estricte que
 l'antic (un detall de la visita al veí → MISMATCH, no CLOSE) i el recompte de nivells de Rubí i Linyola (P5) frena `materials_intro`
@@ -280,4 +281,14 @@ i `conclusions_levels_detected`. Detall complet, limitacions i següents passos:
 la plantilla (també la de producció) imprimia dos adjacents sobrers i li faltaven la capçalera 2.1 i la frase d'introducció; el
 generador ignorava `site_condition` i `building_structure_desc` del `user_data` de l'Eva; el DNPRC llegia la superfície com a planta.
 
-*Fi §9. Peces 0-2 fetes; peça 3 i castellà a la cua.*
+*Fi §9. Peces 0-2 fetes; peça 3 a §10; castellà a la cua (decisió del Josep 2026-09-07: sí, però no avui).*
+
+## 10. Peça 3 feta (2026-09-07) — el número BAIXA un punt i és el resultat honest
+
+`site_description` (7 NO_DATA → 0·1·6·0), `lab_tests_text` (0·2·2·3 → 2·2·0·3), `photo_site_text` (0·1·2 → 1·0·0·2), `access_street`
+(2·0·3·2 → 3·0·4·0): 8 cel·les que abans no comptaven (NO_DATA) entren al denominador i 6 hi entren com a MISMATCH — l'estat del solar és
+judici de la visita (§3.2) i el criteri només escriu el que el Cadastre (construcció pròpia) i l'ICGC (pendent) saben: cap frase falsa,
+cap MATCH possible sense l'Eva. Per això la narrativa passa de 62 % a 61 % mentre les cel·les MATCH pugen de 29 a 32 (Castellar i Bell-lloc
+laboratori exacte, Rubí «carrer de la Miranda» exacte) i les CLOSE de 29 a 30; les 11 taules pugen de 78 % a 79 % (la cel·la «Assaigs
+realitzats» de la taula del laboratori, única moguda als 12 informes de `mesura_informe.py`). Detall: DECISION-LOG 2026-09-06 (nit, 2).
+

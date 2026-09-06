@@ -1,0 +1,17 @@
+
+## anciles/viaA
+| taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
+|---|--:|--:|--:|---|---|
+| plantes | | | | **absent a Eva** | |
+| cte_edificacio | | | | **absent a Eva** | |
+| dpsh | 18 | 6 | 6 |  | p-1[1] MISM «»↔«+1106.40»; p-1[4] CLOS «No detectat»↔«No detectado»; p-2[1] MISM «»↔«+1106.30»; p-2[4] CLOS «No detectat»↔«No detectado»; p-3[1] MISM «»↔«+1106.40»; p-3[4] CLOS «No detectat»↔«No detectado»; p-4[1] MISM «»↔«+1106.30»; p-4[4] CLOS «No detectat»↔«No detectado»; p-5[1] MISM «»↔«+1106.42»; p-5[4] CLOS «No detectat»↔«No detectado»; p-6[1] MISM «»↔«+1106.65»; p-6[4] CLOS «No detectat»↔«N |
+| sondeig | 4 | 4 | 2 |  | s-1[1] MISM «»↔«+1106.65»; s-1[3] CLOS «1/0»↔«1/0/0»; s-1[4] CLOS «No detectat»↔«No detectado»; s-2[1] MISM «»↔«+1106.42»; s-2[3] CLOS «1/1»↔«1/0/1»; s-2[4] CLOS «No detectat»↔«No detectado» |
+| spt_ma | 11 | 0 | 4 |  | fila0[4] MISM «»↔«Arcilla arenosa con gravitas»; fila1[4] MISM «»↔«Arcilla arenosa con gravitas»; fila2[3] MISM «1/1/1/1»↔«--»; fila2[4] MISM «Graves»↔«Bolos y gravas en matriz arenosa arcillosa» |
+| mostra_lab | 0 | 2 | 3 |  | fila0[0] MISM «Mostra :»↔«Muestra: MA-1»; fila0[1] CLOS «Punt:»↔«Punto:  S-2»; fila0[2] MISM «Profunditat:»↔«Profundidad: -2.80 a -3.00 m»; fila1[0] CLOS «Assaigs realitzats»↔«Ensayos realizados»; fila1[1] MISM «»↔«Determinación del contenido en ión sulfato en suelos UNE 83963 / 08» |
+| soil_levels | 0 | 4 | 0 |  | fila0[0] CLOS «1er nivell.»↔«1er nivel.»; fila0[1] CLOS «Arcillas arenosas con puntualmente bolos»↔«Arcillas arenosas con gravitas y puntualmente bolos de granito, de coloraciones marrones»; fila1[0] CLOS «2n nivell.»↔«2do nivel.»; fila1[1] CLOS «Bolos y gravas en matriz arenosa y arcillosa»↔«Bolos y gravas de granito en matriz arenosa y arcillosa, de coloraciones grisáceos» |
+| permeabilitat | 0 | 6 | 0 |  | fila0[0] CLOS «1er nivell»↔«1er nivel»; fila0[1] CLOS «10^-3 a 10^-5»↔«10-3 – 10-7»; fila0[2] CLOS «Arcillas arenosas con puntualmente bolos»↔«Arcillas arenosas»; fila1[0] CLOS «2n nivell»↔«2do nivel»; fila1[1] CLOS «10^-2 a 10^-4»↔«10 – 10-1»; fila1[2] CLOS «Bolos y gravas en matriz arenosa y arcillosa»↔«Bolos y gravas con arenas arcillosas» |
+| sulfats | 1 | 1 | 2 |  | fila0[0] CLOS «1er nivell»↔«2do nivel»; fila0[1] MISM «»↔«(no llegible al flux de text del V0)»; fila0[3] MISM «»↔«(no llegible)» |
+| sismica | 3 | 2 | 3 |  | 1[1] CLOS «Tipus IV»↔«Tipo IV»; 1[2] MISM «2.20»↔«4.00»; 2[1] CLOS «Tipus II»↔«Tipo IV»; 2[2] MISM «»↔«3.92*»; 2[3] MISM «1.3»↔«2.00» |
+| geotecnica | 7 | 2 | 5 |  | fila0[0] CLOS «1er nivell. Arcillas arenosas con puntualmente bolos.»↔«1er nivel. Arcillas arenosas»; fila0[1] MISM «7»↔«5»; fila0[4] MISM «0.05»↔«0.10»; fila0[6] MISM «50»↔«90»; fila1[0] CLOS «2n nivell. Bolos y gravas en matriz arenosa y arcillosa.»↔«2do nivel. Bolos y gravas en matriz areno-arcillosa»; fila1[1] MISM «26-R»↔«15-R»; fila1[6] MISM «450»↔«>350» |
+
+**anciles/viaA: 44 MATCH · 27 CLOSE · 25 MISMATCH · 0 files extra · 0 files absents → 74 % (M+C)/comparables**

@@ -3665,3 +3665,147 @@ era), Nominatim del centre del municipi (1 crida, cache 90 dies). M341 dels 7: ~
 6. Producció: decidir quan i com arriba a l'Eva la plantilla arreglada (2.1.1 + frases senceres).
 
 *Fi entrada 2026-09-06 (nit). Narrativa per criteri: mesura forat-contra-forat, fórmules de l'Eva, adjacents des de la parcel·la del projecte; 30 % → 62 % (català 65 %), taules intactes.*
+
+## 2026-09-06 (nit, 2) — Peça 3 de la narrativa (estat del solar, assaigs del GTL, vistes generals condicionals), candidats «+N» al wizard i plantilla de PRODUCCIÓ arreglada: narrativa 62 → 61 % (honest: 8 NO_DATA entren, 6 com a X), MATCH 29 → 32, taules 78 → 79 %
+
+### Context
+
+Continuació de l'entrada 2026-09-06 (nit): el Josep demana (2026-09-07) seguir amb la peça 3 de `docs/ANALISI-NARRATIVA-2026-09-06.md`
+§3.2 (estat del solar, assaigs de laboratori, fotos), després fer visibles al wizard els candidats narratius, i corregir la plantilla de
+producció «tal com s'ha descobert que cal». Decisió del Josep sobre el castellà: **s'implementarà, però no avui** (molta feina; primer la
+resta). Cap LLM: tot criteri i vocabulari tancat dels signats.
+
+### Decisions arquitectòniques clau
+
+**A. L'estat del solar es redacta NOMÉS amb el que sabem (Cadastre propi + pendent ICGC); la resta és candidat.**
+(`narrative_criteria.site_description_sentence`) La veritat de l'extractor per a `site_description` és tot el bloc 2.1.2; la mesura ja
+en treu les tres frases fixes (peça 0) i queda l'estat del solar: judici de la visita (§3.2). El criteri escriu (a) «El solar està
+actualment ocupat per una zona explanada i un edifici en planta baixa.» si la parcel·la del projecte té edifici al DNPRC
+(`parcel_context.own_parcel_buildings`: agregat de `_query_building_data` sobre les RC llegides, cache `dnprc/` 90 dies; Alcoletge:
+1 planta, 89 m² → literal del signat); (b) «…sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.» si la
+pendent ICGC > 10 % (Castellar 33,6 %); (c) «…, anivellat a la rasant del carrer.» si és plana (Bell-lloc, Linyola); (d) **sense UTM ni RC
+(Rubí) cap afirmació topogràfica**: «El solar es localitza sense construccions ni pavimentacions.» + nota «sense font». Vegetació,
+tanques, «15 cm per sota del carrer», desbroç i plataforma de treball: candidats amb la font (Bell-lloc, Linyola, Rubí, Castellar), mai al
+defecte. El text de l'Eva al wizard mana (≥ 4 paraules) i el criteri baixa a candidat. **Trade-off acceptat:** contra el text de l'Eva
+surt MISMATCH a 6/7 (el comparador de residus no sap que el nostre és un subconjunt factual del seu) i CLOSE a Alcoletge; abans era
+NO_DATA (paràgraf buit a l'informe). Res fals abans que un número. **Alternativa rebutjada:** `site_text_generator` (síntesi
+d'ortofoto, `G3DT_ORTHO_ENRICHMENT`): repeteix la frase d'accés i les dues fixes (duplicaria el bloc) i afirma vegetació/tanques per
+visió; queda apagat. El wizard deixa de generar «parcel·la de forma rectangular amb superfície de 571 m2» («plantilla generada»).
+
+**B. Els assaigs de laboratori surten del bloc «ASSAIGS REALITZATS:» del GTL amb el vocabulari de l'Eva, en ordre canònic.**
+(`narrative_criteria.parse_gtl_tests` + `lab_tests_lines`; `lab_extractor._read_pdf_text(sort=True)`) El bloc ja s'extreia
+(`_extract_tests_text`) però el generador imprimia el `type` del primer assaig («Contingut en sulfats solubles UNE 83963:2008», que
+l'Eva no escriu mai) i a Linyola l'ordre intern del PDF posava dues de les quatre línies ABANS del títol del bloc (només se'n veien
+dues): ara el GTL es llegeix també en ordre de lectura. Fórmules: sulfats sol → «1 assaig de contingut en sulfats UNE 83963 : 2008»
+(Castellar, Bell-lloc: exacte); llista → granulometria («Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95»), Atterberg
+(«Assaig de Límits d'Atterberg UNE 103103/94 – 104/93», Linyola; la forma de Rubí «Determinació de Límits d'Atterberg d'un sòl…» com a
+candidat; els dos límits del GTL s'ajunten en una línia), Lambe («Assaig d'expansivitat Lambe UNE 103600/96»: Linyola signat diu
+«UNE 103500/94», errata — la norma del Lambe és la que cita el GTL; no es reprodueix), sulfats. Castellà: la línia literal del GTL
+(Vilanova, Anciles) o traducció si el GTL és català. Text sobreposat del peu («PROSPECCIÓ», «TPS,») fora. Sense bloc → buit (Alcoletge,
+Vilanova, Anciles no tenen GTL a la carpeta: pregunta 20c).
+
+**C. El bloc de vistes generals és CONDICIONAL i el seu defecte és el que l'Eva ha triat, no el que la IA troba.**
+(`narrative_criteria.photo_site_caption`; plantilla p130 `{%p if photo_site_text %}` · p131 `{{ photo_site_text }}` peu SENCER · p132
+`{%p endif %}`, la taula de dues fotos queda dins) 4/7 signats no porten el bloc (la Fotografia 1 és la màquina); Bell-lloc 2, Rubí 1
+(Google Earth), Vilanova 1. El generador assumia «Eva always places 2 side-by-side photos» i la selecció IA de fotos sempre omple
+`site_1`/`site_2`: tots els informes generats des de l'abril duien dues fotos i la numeració de la màquina i dels materials corria +2.
+Ara `num_site_photos` = camp del wizard (0/1/2); defecte = fotos de vista general triades per l'Eva a la pestanya de fotos
+(`photo_selection.json` amb `source=user`: Bell-lloc en té 2 = signat); sense tria explícita, 0. Les imatges que el peu no anuncia es
+buiden al render (`_num_site_photos`). Peu 1 foto: «Fotografia 1. Vista general de la zona d'estudi.» (la cua «(Google Earth, Agost
+2024)» és de l'Eva). Veritats: `refresh_eva_narrativa.py` informa 0 diferències (les de `photo_site_text` ja eren el paràgraf sencer).
+
+**D. Els candidats narratius arriben al wizard pel mecanisme «+N» que ja existia, amb cinc camps nous.**
+(`web/wizard_service._compute_narrative_prefills`, `automation/wizard.WIZARD_FIELDS`, `templates/validation/review.html` grup «Narrativa»)
+`site_condition`, `building_structure_desc`, `access_street`, `lab_tests_text` i `num_site_photos` no tenien camp al wizard (els candidats
+eren al prefill però l'Eva no els veia ni els podia canviar; `save_wizard_data` té llista blanca i els hauria descartat). Ara: camp
+propi amb badge de font, candidats a `merged['_alternatives']` (el mateix que FileMiner i els geotècnics) amb la seva procedència
+(«variant (b) dels signats», «nom de la via (Rubí)»…), desplegable ample per a frases senceres (abans 60 caràcters), i el generador
+llegeix `user_data['access_street']` i `['lab_tests_text']` (abans només els derivava). `access_street` al wizard es calcula com al
+generador (`access_street_from_adjacents`) i, sense cap costat carrer al Cadastre, cau al nom de la via llegida («carrer de la
+Miranda» = Rubí signat; Alcoletge «carrer Girasols» contra «Carrer existent al nord»: el camí és privat i el Cadastre no el veu).
+**Alternativa rebutjada:** camp «Idioma de l'informe» i plantilla ES — va amb la decisió del castellà, un altre dia.
+
+**E. La plantilla de producció es corregeix a la seva branca, sense cap variable nova i sense push.**
+(`production/g3dt-eva-v1`, commit `c46bc69`, fet en un worktree temporal) Defecte confirmat: la capçalera «2.1. DESCRIPCIÓ DE LA ZONA
+D'ESTUDI» (Heading 2, p102) contenia `{{ adjacent_east_fmt }}` en comptes del seu text, i p106 era un `{{ adjacent_south_fmt }}`
+repetit abans dels quatre forats: cada informe de l'Eva duia la frase de l'est com a títol de secció i la del sud dues vegades. Fix:
+text de la capçalera restaurat (mateix estil), paràgraf sobrer eliminat; els 4 forats queden com estaven (sense `{%p if %}`: el
+generador de producció no té `adjacent_intro` ni la peça 2, i un canvi més gran és una decisió de fusió, no de plantilla). Verificat:
+render docxtpl amb N-S-E-O sota la capçalera; `tests/test_reference_extractor.py` 21/21 a la branca. **Cap push, cap pull proposat a
+l'Eva** (memòria `feedback_no_pull_eva_success_criterion`): el Josep decideix quan.
+
+### Implementació
+
+| Peça | Fitxers | Notes |
+|---|---|---|
+| A | `automation/narrative_criteria.py` (`site_description_sentence`, taules CA/ES + variants), `automation/parcel_context.py` (`own_parcel_buildings`, cache `dnprc/`), `automation/report_generator.py` (bloc després de `site_condition`; `_own_parcel_building` al context), `web/wizard_service.py` (`_generate_template_prefills_from_merged`) | DNPRC en viu: Bell-lloc sense edifici, Castellar 3 RC sense, Alcoletge 1 planta 89 m² |
+| B | `automation/narrative_criteria.py` (`parse_gtl_tests`, `lab_tests_lines`, `_une_short`), `automation/lab_extractor.py` (`_read_pdf_text(sort=)`, `gtl_text_sorted`), `automation/report_generator.py` (una sola `extract_lab_results`; `_narr_lab_tests`) | tolerant amb lectors substituïts als tests (`TypeError`) |
+| C | `automation/narrative_criteria.py` (`photo_site_caption`), `automation/report_generator.py` (numeració, `_site_photos_from_user_selection`, buidat d'imatges al render), `templates/g3dt-jinja-template.docx` (p130-p132) | `mesura_341` ja compara `photo_site_text` forat contra forat (deixa de ser slot) |
+| D | `web/wizard_service.py` (`_compute_narrative_prefills`: accés, laboratori, fotos, `_alternatives`), `automation/wizard.py` (`WIZARD_FIELDS` +5), `templates/validation/review.html` (grup «Narrativa», `renderWizardForm`, `collectWizardFields`, `showAlternatives`), `automation/adjacent_formatter.py` (`access_street_from_adjacents` sense costat carrer), `automation/report_generator.py` (`user_data['access_street']`) | |
+| E | `production/g3dt-eva-v1`: `templates/g3dt-jinja-template.docx` (commit `c46bc69`) | worktree temporal esborrat després del commit |
+
+`git diff --stat` (experiment): 10 fitxers modificats + `tests/test_narrative_wizard_prefills.py` nou. Cap dependència nova.
+
+### Validació empírica
+
+Runs `viaA` (7 projectes), narrativa M · C · X · ND → % ((M+C)/(M+C+X)):
+
+| Run | narrativa | CA | ES | escalars+narr | taules |
+|---|---|---|---|---|---|
+| `2026-09-06-m341-narr2c` (peça 2) | 29 · 29 · 36 · 15 → 62 % | 65 % | 52 % | 178/49/109/40 → 68 % | 265/98/100 → 78 % |
+| `2026-09-07-m341-peca3` (peça 3) | 32 · 30 · 39 · 8 → **61 %** | 65 % | 50 % | 181/50/112/33 → 67 % | 267/97/99 → **79 %** |
+
+Per variable (7): `site_description` 0·0·0·7 → **0·1·6·0** (Alcoletge CLOSE: «…un edifici en planta baixa» contra «…a la meitat
+nord»; la resta X: judici de la visita); `lab_tests_text` 0·2·2·3 → **2·2·0·3** (Castellar i Bell-lloc exactes; Rubí i Linyola CLOSE
+per la forma d'Atterberg / la norma del Lambe; 3 sense GTL); `photo_site_text` 0·1·2·(4 absents) → **1·0·0·2** (Bell-lloc exacte;
+Rubí i Vilanova sense tria = bloc absent); `access_street` 2·0·3·2 → **3·0·4·0** (Rubí «carrer de la Miranda» exacte; Alcoletge
+«carrer Girasols» X). Cap altra variable es mou (`diff` dels `_compare_341.txt` amb `-narr2c`). `mesura_informe.py`
+(`2026-09-07-informe-peca3` vs `-narr2`, 3 projectes × 4 variants): l'ÚNICA cel·la moguda a les 11 taules és «Assaigs realitzats» de
+la taula del laboratori (Castellar i Bell-lloc CLOSE → MATCH, Rubí MISMATCH → CLOSE); tota la resta idèntica. `.docx` de Bell-lloc,
+Castellar, Alcoletge i Rubí inspeccionats: bloc 2.1.2 amb accés + estat + les dues fixes; Bell-lloc amb el peu de dues fotos i la
+màquina a la Fotografia 3, Castellar sense bloc i la màquina a la Fotografia 1 (com al signat).
+
+### Tests
+
+Nous: `tests/test_narrative_criteria.py` +4 (estat del solar 4 casos + text de l'Eva + ES; assaigs Rubí/Linyola/sol/ES; peu 0/1/2;
+plantilla condicional), `tests/test_narrative_wizard_prefills.py` (3: llista blanca, candidats «+N» i precedència de l'Eva, fotos
+triades → 1). Adaptats: cap. Dirigits: 83 verds. **Suite sencera: 31 vermells idèntics als esperats / 2265 verds / 5 omesos.**
+
+### Latència / cost
+
+Cost LLM 0. Xarxa nova per informe: DNPRC de les RC pròpies (1 crida per referència, cache 90 dies). M341 dels 7: ~2 min amb
+caches calentes.
+
+### Limitacions conegudes
+
+- `site_description`: 6/7 MISMATCH és el resultat honest del criteri factual contra un text de visita; MATCH només amb l'Eva
+  (pregunta 21). El wizard ho mostra amb els candidats de les 4 formes signades.
+- `lab_tests_text`: Alcoletge, Vilanova i Anciles sense GTL a la carpeta (pregunta 20c); la forma d'Atterberg i la norma del Lambe
+  (pregunta 20a-b).
+- `photo_site_text`: sense tria de l'Eva el bloc no hi és (Rubí i Vilanova en tenien 1 al signat): és l'assumpció menys falsa,
+  no una lectura.
+- `access_street` d'Alcoletge («Carrer existent al nord»): el camí d'accés és privat i no és cap costat del Cadastre.
+- Producció: la introducció 2.1.1 i les frases senceres (peça 1) NO són a `production/g3dt-eva-v1` (només la plantilla del 2.1.1);
+  el commit `c46bc69` no està pujat.
+- Castellà: pendent (decisió del Josep: sí, més endavant).
+- `reference-material/4001607 LINYOLA/validation/photo_selection.json` (artefacte de la selecció IA durant els runs): no versionar.
+
+### GO/NO-GO
+
+- ✅ Peça 3: estat del solar, assaigs i vistes generals per criteri; generador i wizard amb una implementació.
+- ✅ Candidats «+N» visibles i editables al wizard (5 camps nous, desats a `user_data`).
+- ✅ Plantilla de producció corregida i commitejada a la seva branca (`c46bc69`); sense push.
+- ✅ 11 taules: només la cel·la del laboratori mou, a millor; suite amb els 31 vermells esperats.
+- ⏳ Commit a `experiment/nivell-a-2026-08`: decisió del Josep (partició suggerida: 3a estat del solar + accés · 3b laboratori ·
+  3c fotos + plantilla · wizard «+N» · docs).
+- ⏳ Push de `production/g3dt-eva-v1`: decisió del Josep.
+
+### Següents passos
+
+1. Preguntes 20-21 (i 16-19) a l'Eva.
+2. Castellà (plantilla ES + camp «Idioma de l'informe»; `report_language` ja existeix).
+3. P5/P6 (recompte de nivells) i cablejat del laboratori dels 3 projectes sense GTL.
+4. Deriva de l'extractor fora de la narrativa (`spt_*`, dates, `geomech_*`).
+5. Producció: decidir si i quan la peça 1 + 2 + 3 arriben a l'Eva.
+
+*Fi entrada 2026-09-06 (nit, 2). Peça 3 de la narrativa, candidats al wizard i plantilla de producció; 61 % honest, taules 79 %.*
