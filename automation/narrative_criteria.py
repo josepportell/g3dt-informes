@@ -439,3 +439,230 @@ def empentes_paragraph(level_number: int = 1, lang: str = "ca") -> str:
             f"paràmetres geomecànics dels materials del {ordinal(level_number)} nivell que es considera el més desfavorable.\n"
             "Cal tenir en compte que en el trasdós del mur, caldrà instal·lar un correcte drenatge per a evitar que s'acumuli "
             "aigua i es produeixi una sobrecàrrega en el seu trasdós.")
+
+
+# --- Peça 3 (2026-09-07): estat del solar, assaigs de laboratori, peu de les vistes generals ---------------------
+
+#: Vocabulari tancat de l'ESTAT DEL SOLAR (bloc 2 de «2.1.2. Descripció del solar»; `docs/ANALISI-NARRATIVA-2026-09-06.md`
+#: §3.2). La frase d'entrada (accés), «En solars propers…» i «Destacar que no es poden veure aflorar…» ja són text fix de
+#: la plantilla: aquí NOMÉS l'estat. Fets que tenim: construcció pròpia (Cadastre DNPRC de la parcel·la del projecte) i
+#: pendent (ICGC MDT). Vegetació, tanques, desnivell exacte i plataforma de treball són judici de la visita (candidats).
+_SITE_DESC_CA = {
+    "buit_pla": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+    "buit_pendent": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+    "buit": "El solar es localitza sense construccions ni pavimentacions.",   # pendent desconeguda (sense UTM): cap afirmació
+    "construit": "El solar està actualment ocupat per una zona explanada i {edifici}.",
+}
+_SITE_DESC_VARIANTS_CA = {
+    "buit_pla": [
+        ("El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer, i amb vegetació de "
+         "petita alçada.", "variant amb vegetació (Bell-lloc)"),
+        ("La parcel·la es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.",
+         "variant «explanada» (Linyola)"),
+    ],
+    "buit_pendent": [
+        ("El solar es localitza sense construccions ni pavimentacions. Topogràficament, fa una lleugera baixada, tot i que "
+         "la zona de treball es mostra totalment plana.", "variant «lleugera baixada» (Rubí)"),
+        ("El solar es localitza sense construccions ni pavimentacions, s'ha realitzat un desbroç de la zona de treball i "
+         "s'ha adequat un accés a la zona de treball. Topogràficament, el solar presenta pendent, amb una plataforma de "
+         "treball, la única on es pot emplaçar la màquina.", "variant «plataforma de treball» (Castellar)"),
+    ],
+    "construit": [],
+}
+_SITE_DESC_ES = {
+    "buit_pla": "La parcela se localiza sin construcciones ni pavimentaciones, nivelada a la rasante de la calle.",
+    "buit_pendent": "La parcela se localiza sin construcciones ni pavimentaciones. Topográficamente, la parcela presenta pendiente.",
+    "buit": "La parcela se localiza sin construcciones ni pavimentaciones.",
+    "construit": "La parcela está actualmente ocupada por una zona explanada y {edifici}.",
+}
+_SITE_DESC_VARIANTS_ES = {
+    "buit_pla": [
+        ("El interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña "
+         "envergadura.", "variant «explanada» (Anciles)"),
+    ],
+    "buit_pendent": [],
+    "construit": [],
+}
+
+
+_PLANTES_CA = {2: "dues", 3: "tres", 4: "quatre", 5: "cinc", 6: "sis"}
+
+
+def _building_phrase(own_building: dict[str, Any] | None, lang: str) -> str:
+    n = int((own_building or {}).get("num_floors_above") or 0)
+    if lang == "es":
+        return "un edificio de planta baja" if n <= 1 else f"un edificio de {n} plantas"
+    if n <= 1:
+        return "un edifici en planta baixa"
+    return f"un edifici de {_PLANTES_CA.get(n, str(n))} plantes"
+
+
+def site_description_sentence(slope_percent: Any = None, own_building: dict[str, Any] | None = None, lang: str = "ca",
+                              current: str | None = None) -> NarrativeChoice:
+    """Estat del solar (paràgraf `{{ site_description }}`, només el bloc 2 de §3.2) per criteri:
+
+    - parcel·la pròpia amb edifici al Cadastre (DNPRC: `has_building` i plantes sobre rasant) → «El solar està actualment
+      ocupat per una zona explanada i un edifici en planta baixa.» (Alcoletge);
+    - pendent ICGC > `SLOPE_THRESHOLD_PCT` → «…sense construccions ni pavimentacions. Topogràficament, el solar presenta
+      pendent.» (Castellar, Rubí);
+    - si no → «…sense construccions ni pavimentacions, anivellat a la rasant del carrer.» (Bell-lloc, Linyola).
+    `current` (text de l'Eva al wizard, ≥ 4 paraules) mana i el criteri queda com a candidat. `own_building` None =
+    Cadastre no consultat: es suposa sense construccions i s'anota."""
+    table = _SITE_DESC_ES if lang == "es" else _SITE_DESC_CA
+    variants = _SITE_DESC_VARIANTS_ES if lang == "es" else _SITE_DESC_VARIANTS_CA
+    try:
+        slope = float(slope_percent) if slope_percent not in (None, "") else None
+    except (TypeError, ValueError):
+        slope = None
+    built = bool((own_building or {}).get("has_building")) and int((own_building or {}).get("num_floors_above") or 0) >= 1
+    if built:
+        key, why = "construit", "parcel·la pròpia amb edifici al Cadastre (Alcoletge)"
+    elif slope is None:
+        key, why = "buit", "sense edifici al Cadastre; pendent desconeguda (sense UTM): cap afirmació topogràfica"
+    elif slope > SLOPE_THRESHOLD_PCT:
+        key, why = "buit_pendent", f"sense edifici al Cadastre i pendent {slope:.0f} % > {SLOPE_THRESHOLD_PCT:.0f} % (Castellar, Rubí)"
+    else:
+        key, why = "buit_pla", f"sense edifici al Cadastre i pendent {slope:.0f} % (Bell-lloc, Linyola)"
+    default = table[key].format(edifici=_building_phrase(own_building, lang))
+    cands = [Candidate(default, why)]
+    cands += [Candidate(v, src) for v, src in variants.get(key, [])]
+    for k in ("buit_pla", "buit_pendent", "construit"):
+        if k != key:
+            cands.append(Candidate(table[k].format(edifici=_building_phrase(own_building, lang)), f"cap «{k.replace('_', ' ')}»"))
+    notes: list[str] = []
+    if own_building is None:
+        notes.append("construcció pròpia sense font (Cadastre DNPRC no consultat): es suposa sense construccions")
+    notes.append("vegetació, tanques, desnivell respecte el carrer i plataforma de treball: judici de la visita")
+    cur = (current or "").strip()
+    if len(cur.split()) >= 4:
+        return NarrativeChoice(cur, "text del wizard (Eva)", [Candidate(cur, "wizard")] + cands, notes)
+    return NarrativeChoice(default, why, cands, notes)
+
+
+# Assaigs de laboratori (cel·la «Assaigs realitzats» de la taula del laboratori, `{{ lab_tests_text }}`). Font: el bloc
+# «ASSAIGS REALITZATS:» de l'informe GTL (una línia per assaig amb la norma UNE). Fórmules de l'Eva (signats CA):
+#   sulfats sol   «1 assaig de contingut en sulfats UNE 83963 : 2008»            (Castellar, Bell-lloc)
+#   en llista     «Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95»   (Rubí)
+#                 «Assaig de Límits d'Atterberg UNE 103103/94 – 104/93»           (Linyola; Rubí «Determinació de Límits
+#                 d'Atterberg d'un sòl UNE 103103/94-104/93», Alcoletge «Assaig de plasticitat de Límits d'Atterberg…»)
+#                 «Assaig d'expansivitat Lambe UNE 103600/96»                     (Linyola escriu «UNE 103500/94»: errata,
+#                 la norma del Lambe és la UNE 103600:1996 que cita el GTL; no es reprodueix)
+#                 «Assaig de contingut en sulfats UNE 83963 : 2008»               (Rubí, Linyola)
+# Ordre canònic (3/3 llistes signades): granulometria, Atterberg, Lambe, sulfats, la resta. ES: la línia literal del GTL
+# («Determinación del contenido en ión sulfato en suelos UNE 83963 / 08», Vilanova i Anciles).
+_GTL_KINDS = (
+    ("granulometria", re.compile(r"(?i)granulom")),
+    ("atterberg", re.compile(r"(?i)atterberg|l[ií]mit\s+l[ií]quid|l[ií]mit\s+pl[aà]stic|plasticit")),
+    ("lambe", re.compile(r"(?i)lambe|expansiv")),
+    ("sulfats", re.compile(r"(?i)sulfat")),
+    ("humitat", re.compile(r"(?i)humitat|humedad")),
+)
+_UNE_RE = re.compile(r"UNE(?:-EN)?\s*\d{4,6}(?:\s*[:/]\s*\d{2,4})?")
+_KIND_ORDER = ("granulometria", "atterberg", "lambe", "sulfats", "humitat", "altres")
+
+
+def parse_gtl_tests(block: str | None) -> list[dict[str, str]]:
+    """Línies del bloc «ASSAIGS REALITZATS:» del GTL → [{'kind', 'une', 'literal'}], una entrada per assaig (els dos
+    límits d'Atterberg s'ajunten en una). Text sobreposat del peu («PROSPECCIÓ», «TPS,») fora."""
+    out: list[dict[str, str]] = []
+    for raw in re.split(r"[\n\r]+", block or ""):
+        line = re.sub(r"\s+", " ", raw).strip()
+        line = re.sub(r"\b(PROSPECCI[ÓO]|TPS,?|DEL SUBS[ÒO]L,?|SL)\b", "", line).strip(" ,")
+        if not line:
+            continue
+        une = _UNE_RE.search(line)
+        kind = next((k for k, rx in _GTL_KINDS if rx.search(line)), None)
+        if kind is None and une is None:
+            continue
+        kind = kind or "altres"
+        une_txt = re.sub(r"\s+", " ", une.group(0)).strip() if une else ""
+        literal = re.sub(r"\s*UNE.*$", "", line).strip()
+        prev = next((e for e in out if e["kind"] == kind and kind == "atterberg"), None)
+        if prev is not None:
+            if une_txt and une_txt not in prev["une"]:
+                prev["une"] = f"{prev['une']} – {une_txt}" if prev["une"] else une_txt
+            prev["literal"] += "\n" + literal + (f" {une_txt}" if une_txt else "")
+            continue
+        out.append({"kind": kind, "une": une_txt, "literal": literal + (f" {une_txt}" if une_txt else "")})
+    out.sort(key=lambda e: _KIND_ORDER.index(e["kind"]) if e["kind"] in _KIND_ORDER else len(_KIND_ORDER))
+    return out
+
+
+def _une_short(une: str) -> str:
+    """«UNE 103101 / 95» → «103101/95»; «UNE 103103 / 94 – UNE 103104 / 93» → «103103/94 – 104/93»."""
+    parts = [re.sub(r"\s", "", p.replace("UNE", "")) for p in re.split(r"\s*–\s*", une) if p.strip()]
+    if not parts:
+        return ""
+    if len(parts) == 2 and parts[0][:3] == parts[1][:3]:
+        return f"{parts[0]} – {parts[1][3:]}"
+    return " – ".join(parts)
+
+
+def lab_tests_lines(block: str | None, lang: str = "ca") -> NarrativeChoice:
+    """Cel·la «Assaigs realitzats» per criteri a partir del bloc del GTL. Sense bloc → buit (cap assaig inventat)."""
+    tests = parse_gtl_tests(block)
+    if not tests:
+        return NarrativeChoice("", "sense bloc «ASSAIGS REALITZATS» del GTL", [], ["laboratori: cap llista d'assaigs llegida"])
+    literal = "\n".join(t["literal"] for t in tests)
+    if lang == "es":
+        _ES = {
+            "granulometria": "Análisis granulométrico de un suelo por tamizado UNE 103101 / 95",
+            "atterberg": "Determinación de los límites de Atterberg UNE 103103 / 94 – 104 / 93",
+            "lambe": "Ensayo de expansividad Lambe UNE 103600 / 96",
+            "sulfats": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08",
+        }
+        gtl_is_es = any(re.search(r"(?i)determinaci[óo]n|ensayo|suelos", t["literal"]) for t in tests)
+        value = literal if gtl_is_es else "\n".join(_ES.get(t["kind"], t["literal"]) for t in tests)
+        cands = [Candidate(value, "línia literal del GTL (Vilanova, Anciles)" if gtl_is_es else "GTL en català traduït")]
+        if value != literal:
+            cands.append(Candidate(literal, "línies literals del GTL"))
+        return NarrativeChoice(value, cands[0].source, cands)
+    lines: list[str] = []
+    rubi: list[str] = []
+    only_sulfats = len(tests) == 1 and tests[0]["kind"] == "sulfats"
+    for t in tests:
+        k, une = t["kind"], _une_short(t["une"])
+        if k == "sulfats":
+            line = ("1 assaig de contingut en sulfats" if only_sulfats else "Assaig de contingut en sulfats") + " UNE 83963 : 2008"
+            lines.append(line); rubi.append(line)
+        elif k == "granulometria":
+            line = f"Anàlisi granulomètrica d'un sòl per tamissat UNE {une or '103101/95'}"
+            lines.append(line); rubi.append(line)
+        elif k == "atterberg":
+            u = une or "103103/94 – 104/93"
+            lines.append(f"Assaig de Límits d'Atterberg UNE {u}")
+            rubi.append(f"Determinació de Límits d'Atterberg d'un sòl UNE {u.replace(' – ', '-')}")
+        elif k == "lambe":
+            line = f"Assaig d'expansivitat Lambe UNE {une or '103600/96'}"
+            lines.append(line); rubi.append(line)
+        elif k == "humitat":
+            line = f"Determinació de la humitat d'un sòl UNE {une}".strip()
+            lines.append(line); rubi.append(line)
+        else:
+            lines.append(t["literal"]); rubi.append(t["literal"])
+    value = "\n".join(lines)
+    why = "sulfats sol: «1 assaig de…» (Castellar, Bell-lloc)" if only_sulfats else "llista en ordre canònic (Rubí, Linyola)"
+    cands = [Candidate(value, why)]
+    if "\n".join(rubi) != value:
+        cands.append(Candidate("\n".join(rubi), "variant «Determinació de Límits d'Atterberg d'un sòl» (Rubí)"))
+    if literal != value:
+        cands.append(Candidate(literal, "línies literals del GTL"))
+    notes = ["Lambe: norma del GTL (UNE 103600/96); Linyola signat «UNE 103500/94» és errata"] if any(t["kind"] == "lambe" for t in tests) else []
+    return NarrativeChoice(value, why, cands, notes)
+
+
+def photo_site_caption(num_site_photos: int, lang: str = "ca") -> str:
+    """Peu sencer del bloc «vistes generals» (paràgraf `{{ photo_site_text }}`, condicional). 0 → '' (el bloc desapareix:
+    Castellar, Linyola, Alcoletge, Anciles; la Fotografia 1 és la màquina). Bell-lloc: «Fotografia 1 i Fotografia 2. Vistes
+    generals de la zona d'estudi.»; Rubí: «Fotografia 1. Vista general de la zona d'estudi (Google Earth, Agost 2024).»"""
+    try:
+        n = int(num_site_photos or 0)
+    except (TypeError, ValueError):
+        n = 0
+    if n <= 0:
+        return ""
+    if lang == "es":
+        return ("Fotografía 1 y Fotografía 2. Vistas generales de la zona de estudio." if n >= 2
+                else "Fotografía 1. Vista general de la zona de estudio.")
+    return ("Fotografia 1 i Fotografia 2. Vistes generals de la zona d'estudi." if n >= 2
+            else "Fotografia 1. Vista general de la zona d'estudi.")

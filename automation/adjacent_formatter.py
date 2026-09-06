@@ -277,7 +277,16 @@ def access_street_from_adjacents(adjacents: dict[str, str], address_street: str 
     Sense cap costat carrer: ('', [])."""
     streets = {d: adjacents.get(d, '') for d in _ORDER if is_street(adjacents.get(d))}
     if not streets:
-        return '', []
+        # Cap costat carrer al Cadastre (Alcoletge: camí privat d'urbanització) → el nom de la via de l'adreça llegida,
+        # forma «carrer de la Miranda» (Rubí); res d'inventar-hi un costat (peça 3, 2026-09-07).
+        name = re.sub(r"(?i)^(situat\s+|situada\s+)?entre\s+(.+?)\s+(?:i|y)\s+.*$", r"\2", (address_street or '').strip())
+        name = re.sub(r",.*$", "", name).strip().rstrip('.')
+        name = re.sub(r"(?i)^(el|la|els|les|l')\s*", "", name).strip()    # «el carrer Antoni Bellet» → «carrer Antoni Bellet»
+        name = re.sub(r"\s+\d+\s*[A-Za-z]?$", "", name).strip()          # «Carrer Nou 14» → «Carrer Nou»
+        if not name or not re.match(r"(?i)^(carrer|c/|c\.|camí|cami|passeig|avinguda|av\.|plaça|ronda|travessia|calle|camino|paseo|avenida|plaza)\b", name):
+            return '', []
+        named = name[0].lower() + name[1:] if lang != 'es' or name.lower().startswith(('calle', 'camino', 'paseo', 'avenida', 'plaza')) else name
+        return named, [named]
     side = None
     if address_street:
         m = re.match(r"(?i)^\s*(?:situat\s+|situada\s+)?entre\s+(.+?)\s+(?:i|y)\s+", address_street)

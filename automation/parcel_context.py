@@ -162,3 +162,56 @@ def adjacent_intro(position: str | None, municipality_proper: str, shape: str = 
     else:
         pos = "al municipi"
     return f"La parcel·la objecte d'estudi es situa {pos} de {municipality_proper}, pren una morfologia {shape} i limita:"
+
+
+def _dnprc_cache_dir() -> Path:
+    from . import config
+    return config.cache_dir("dnprc")
+
+
+def own_parcel_buildings(rc_list: list[str] | None) -> dict | None:
+    """Construccions de la PARCEL·LA DEL PROJECTE (Cadastre DNPRC per referència, cache 90 dies; peça 3, 2026-09-07):
+    {'has_building', 'num_floors_above', 'num_floors_below', 'has_pool', 'total_built_m2', 'refs'} agregat sobre les
+    referències (màxim de plantes, qualsevol edifici). None si no hi ha referències o cap consulta ha respost
+    («sense font», no «sense edifici»). És l'entrada de `narrative_criteria.site_description_sentence` (Alcoletge:
+    «El solar està actualment ocupat per … un edifici en planta baixa»)."""
+    rcs = parse_rc_list(rc_list)
+    if not rcs:
+        return None
+    from .cadastre_adjacents import _query_building_data
+    agg = {"has_building": False, "num_floors_above": 0, "num_floors_below": 0, "has_pool": False,
+           "total_built_m2": 0.0, "refs": []}
+    answered = False
+    for rc in rcs:
+        data = None
+        cache = _dnprc_cache_dir() / f"{rc}.json"
+        try:
+            if cache.exists():
+                raw = json.loads(cache.read_text(encoding="utf-8"))
+                if datetime.now() - datetime.fromisoformat(raw["cached_at"]) < timedelta(days=CACHE_TTL_DAYS):
+                    data = raw["data"]
+        except Exception:
+            data = None
+        if data is None:
+            try:
+                data = _query_building_data(rc)
+            except Exception as e:  # xarxa: sense font
+                logger.debug("DNPRC %s: %s", rc, e)
+                data = None
+            if data is not None:
+                try:
+                    cache.parent.mkdir(parents=True, exist_ok=True)
+                    cache.write_text(json.dumps({"cached_at": datetime.now().isoformat(), "rc": rc, "data": data}),
+                                     encoding="utf-8")
+                except Exception:
+                    pass
+        if data is None:
+            continue
+        answered = True
+        agg["refs"].append(rc)
+        agg["has_building"] = agg["has_building"] or bool(data.get("has_building"))
+        agg["num_floors_above"] = max(agg["num_floors_above"], int(data.get("num_floors_above") or 0))
+        agg["num_floors_below"] = max(agg["num_floors_below"], int(data.get("num_floors_below") or 0))
+        agg["has_pool"] = agg["has_pool"] or bool(data.get("has_pool"))
+        agg["total_built_m2"] += float(data.get("total_built_m2") or 0.0)
+    return agg if answered else None

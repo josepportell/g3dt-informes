@@ -110,3 +110,63 @@ def test_template_slots_are_whole_sentence_variables():
     assert sum(p.endswith("estructura {{ building_structure_desc }}") for p in paras) == 2
     assert "csn_radon_text" not in xml and "radon_zone_description" not in xml
     assert not any("Degut a que es tracta d'un solar {{" in p or "Degut a que es tracta d’un solar {{" in p for p in paras)
+
+
+# --- Peça 3 (2026-09-07): estat del solar, assaigs del GTL, peu de les vistes generals ---------------------------
+
+def test_site_description_criterion_built_sloped_flat_and_eva_text():
+    from automation.narrative_criteria import site_description_sentence
+    flat = site_description_sentence(3.3, {"has_building": False, "num_floors_above": 0})
+    assert flat.value == "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer."
+    assert any("vegetació de petita alçada" in c.value for c in flat.candidates)          # Bell-lloc / Linyola
+    sloped = site_description_sentence("33.6", {"has_building": False, "num_floors_above": 0})
+    assert sloped.value.endswith("Topogràficament, el solar presenta pendent.")            # Castellar
+    assert any("lleugera baixada" in c.value for c in sloped.candidates)                 # Rubí
+    built = site_description_sentence(4.5, {"has_building": True, "num_floors_above": 1})
+    assert built.value == "El solar està actualment ocupat per una zona explanada i un edifici en planta baixa."   # Alcoletge
+    assert "dues plantes" in site_description_sentence(0, {"has_building": True, "num_floors_above": 2}).value
+    unknown = site_description_sentence(None, None)                                       # Rubí: sense UTM ni RC
+    assert unknown.value == "El solar es localitza sense construccions ni pavimentacions."
+    assert any("sense font" in n for n in unknown.notes) and any(c.value == flat.value for c in unknown.candidates)
+    eva = site_description_sentence(0, None, current="La parcel·la es troba uns 15 cm per sota del nivell del carrer.")
+    assert eva.value.startswith("La parcel·la es troba") and eva.candidates[1].value == flat.value
+    assert site_description_sentence(0, None, lang="es").value.startswith("La parcela se localiza sin construcciones")
+
+
+def test_lab_tests_lines_eva_vocabulary_from_gtl_block():
+    from automation.narrative_criteria import lab_tests_lines, parse_gtl_tests
+    only = "Determinació del contingut en ió sulfat en sòls   UNE 83963 / 08PROSPECCIÓ\nTPS,"
+    assert lab_tests_lines(only).value == "1 assaig de contingut en sulfats UNE 83963 : 2008"       # Castellar, Bell-lloc
+    rubi = ("Anàlisi granulomètrica d'un sòl per tamissat    UNE 103101 / 95\n"
+            "   Determinació del límit líquid d'un sòl    UNE 103103 / 94PROSPECCIÓ\n"
+            "   Determinació del límit plàstic d'un sòl    UNE 103104 / 93\n"
+            "TPS,   Determinació del contingut en ió sulfat en sòls   UNE 83963 / 08")
+    r = lab_tests_lines(rubi)
+    assert r.value.split("\n") == ["Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95",
+                                   "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93",
+                                   "Assaig de contingut en sulfats UNE 83963 : 2008"]
+    assert "Determinació de Límits d'Atterberg d'un sòl UNE 103103/94-104/93" in r.candidates[1].value   # forma de Rubí
+    assert r.candidates[2].value.count("\n") == 3                                                     # 4 línies literals
+    linyola = ("Determinació del límit líquid d'un sòl    UNE 103103 / 94\nDeterminació del límit plàstic d'un sòl    UNE 103104 / 93\n"
+               "Determinació del contingut en ió sulfat en sòls   UNE 83963 / 08\nAssaig Lambe    UNE 103600 / 96")
+    ly = lab_tests_lines(linyola)
+    assert ly.value.split("\n")[1] == "Assaig d'expansivitat Lambe UNE 103600/96" and ly.value.endswith("UNE 83963 : 2008")
+    assert [t["kind"] for t in parse_gtl_tests(linyola)] == ["atterberg", "lambe", "sulfats"]         # ordre canònic
+    assert lab_tests_lines("").value == "" and not lab_tests_lines(None).candidates
+    assert lab_tests_lines(only, "es").value == "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08"
+
+
+def test_photo_site_caption_conditional():
+    from automation.narrative_criteria import photo_site_caption
+    assert photo_site_caption(0) == "" and photo_site_caption(None) == ""
+    assert photo_site_caption(2) == "Fotografia 1 i Fotografia 2. Vistes generals de la zona d'estudi."   # Bell-lloc
+    assert photo_site_caption(1) == "Fotografia 1. Vista general de la zona d'estudi."                  # Rubí (sense «Google Earth»)
+    assert photo_site_caption(1, "es") == "Fotografía 1. Vista general de la zona de estudio."
+
+
+def test_template_site_photo_block_is_conditional():
+    xml = zipfile.ZipFile(REPO / "templates" / "g3dt-jinja-template.docx").read("word/document.xml").decode("utf8")
+    assert xml.count("{%p if photo_site_text %}") == 1 and xml.count("{{ photo_site_text }}") == 1
+    assert "{{ photo_site_text }}. Vistes generals" not in xml
+    i, j = xml.index("{%p if photo_site_text %}"), xml.index("{{ photo_site_text }}")
+    assert "photo_site_image_1" in xml[i:j] and "{%p endif %}" in xml[j:j + 4000]

@@ -659,21 +659,21 @@ class ReportGenerator:
         # === PHOTO NUMBERING ===
         photo_counter = 0
 
-        # Site view(s) - auto-detect from FOTOGRAFIES/ if not explicitly set
-        num_site_photos = self.user_data.get('num_site_photos', 0)
-        if num_site_photos == 0:
-            # Auto-detect: count vista_general_* files in FOTOGRAFIES/
-            foto_dir = self.project_path / 'FOTOGRAFIES'
-            if foto_dir.exists():
-                site_photos = sorted(foto_dir.glob('vista_general_*'))
-                num_site_photos = min(len(site_photos), 2)
-            if num_site_photos == 0:
-                num_site_photos = 2  # Eva always places 2 side-by-side photos
+        # Vistes generals (peça 3, 2026-09-07): el bloc (taula de 2 fotos + peu) és CONDICIONAL. 4/7 signats no el
+        # porten (la Fotografia 1 hi és la màquina); Bell-lloc 2 fotos, Rubí 1 (Google Earth), Vilanova 1. Defecte: les
+        # fotos de vista general que l'Eva ha triat a la pestanya de fotos (`photo_selection.json` amb source=user); si
+        # no, 0. `num_site_photos` del wizard mana. Abans: sempre 2 («Eva always places 2 side-by-side photos», fals a
+        # 4/7) i la numeració de la màquina i dels materials arrossegava +2.
+        from .narrative_criteria import language_for_report, photo_site_caption
+        num_site_photos = self.user_data.get('num_site_photos')
+        if num_site_photos in (None, ''):
+            num_site_photos = self._site_photos_from_user_selection()
+        try:
+            num_site_photos = max(0, min(2, int(num_site_photos or 0)))
+        except (TypeError, ValueError):
+            num_site_photos = 0
         photo_counter += num_site_photos
-        if num_site_photos == 1:
-            photo_site_text = "Fotografia 1"
-        else:
-            photo_site_text = "Fotografia 1 i Fotografia 2"
+        photo_site_text = photo_site_caption(num_site_photos, language_for_report(self.report_data, self.user_data))
 
         # DPSH machine photo
         photo_counter += 1
@@ -744,6 +744,7 @@ class ReportGenerator:
             'fig_building_num': fig_main_plan_num,
             # Photo numbers
             'photo_site_text': photo_site_text,
+            '_num_site_photos': num_site_photos,
             'photo_dpsh_num': photo_dpsh_num,
             'photo_sondeig_num': photo_sondeig_num if photo_sondeig_num else '',
             'photo_materials_num': photo_materials_num,
@@ -755,6 +756,21 @@ class ReportGenerator:
             'table_seismic_num': table_seismic_num,
             'table_soil_chars_num': table_soil_chars_num,
         }
+
+    def _site_photos_from_user_selection(self) -> int:
+        """Fotos de vista general triades per l'Eva a la pestanya de fotos (`validation/photo_selection.json`,
+        source=user: `site_1`/`site_2` no nuls). Cap tria explícita → 0 (la selecció automàtica/IA sempre omple els dos
+        forats i no diu res del que l'Eva vol imprimir)."""
+        sel_path = self.project_path / 'validation' / 'photo_selection.json'
+        if not sel_path.exists():
+            return 0
+        try:
+            data = json.loads(sel_path.read_text(encoding='utf-8'))
+        except Exception:
+            return 0
+        if not isinstance(data, dict) or data.get('source') != 'user':
+            return 0
+        return sum(1 for k in ('site_1', 'site_2') if data.get(k))
 
     def _build_template_context(self, sections: dict[str, Any]) -> dict[str, Any]:
         """
@@ -1012,6 +1028,9 @@ class ReportGenerator:
                 access, re.IGNORECASE,
             )
             context['access_street'] = access_match.group(1).strip() if access_match else access
+            _acc_user = str(self.user_data.get('access_street') or '').strip()   # camp del wizard (peça 3)
+            if _acc_user:
+                context['access_street'] = _acc_user
             if not context['access_street']:
                 # 2026-09-06 (peça 2): el costat que és carrer → «carrer adjacent situat al sud» (+ candidats)
                 from .adjacent_formatter import access_street_from_adjacents
@@ -1077,6 +1096,22 @@ class ReportGenerator:
             else:
                 context['site_condition'] = _sc.value
             context['_narr_site_condition'] = _sc.to_dict()
+
+            # Estat del solar per criteri (peça 3, 2026-09-07; `narrative_criteria.site_description_sentence`): NOMÉS el
+            # bloc 2 de «2.1.2» (l'accés, «En solars propers…» i «Destacar…» ja són text fix de la plantilla). Fets:
+            # construcció pròpia al Cadastre (DNPRC de les referències del projecte) i pendent ICGC. El text de l'Eva
+            # al wizard mana. Abans: `site_description` buit a la via A (7/7 NO_DATA).
+            from .narrative_criteria import site_description_sentence
+            _own = None
+            try:
+                from .parcel_context import own_parcel_buildings
+                _own = own_parcel_buildings(context.get('_parcel_rcs') or [])
+            except Exception as e:
+                self.warnings.append(f"Construccions de la parcel·la pròpia (DNPRC): {e}")
+            _sd = site_description_sentence(_slope_pct, _own, _lang, current=self.report_data.site_description)
+            context['site_description'] = _sd.value
+            context['_narr_site_description'] = _sd.to_dict()
+            context['_own_parcel_building'] = _own
 
             # Conditional sections - Sondeig
             has_sondeig = getattr(self.report_data, 'has_sondeig', False)
@@ -1201,11 +1236,17 @@ class ReportGenerator:
             # exacta del peu "Rebuig a", que es el que Eva escriu a l'informe.
             self._apply_lectura_tables(context)
 
-            # Lab data - auto-fill from lab PDF if not provided
-            if not self.report_data.lab_tests:
+            # Lab data - auto-fill from lab PDF if not provided (una sola lectura del GTL: també dona el bloc
+            # «ASSAIGS REALITZATS» per a `lab_tests_text`, peça 3)
+            _lab_results = None
+            try:
+                from .lab_extractor import extract_lab_results
+                _lab_results = extract_lab_results(self.project_path)
+            except (ImportError, Exception) as e:
+                self.warnings.append(f"Could not extract lab results from PDF: {e}")
+            if not self.report_data.lab_tests and _lab_results is not None:
                 try:
-                    from .lab_extractor import extract_lab_results
-                    lab_results = extract_lab_results(self.project_path)
+                    lab_results = _lab_results
                     if lab_results.tests:
                         self.report_data.lab_tests = [t.to_dict() for t in lab_results.tests]
                         logger.info(f"Auto-filled lab_tests from {lab_results.source_file}")
@@ -1219,7 +1260,15 @@ class ReportGenerator:
             context['lab_sample_id'] = lab.get('sample_id', '')
             context['lab_location'] = lab.get('location', '')
             context['lab_depth'] = lab.get('depth', '')
-            context['lab_tests_text'] = lab.get('type', '')
+            # Assaigs realitzats per criteri (peça 3, 2026-09-07; `narrative_criteria.lab_tests_lines`): la llista del
+            # bloc «ASSAIGS REALITZATS» del GTL amb el vocabulari de l'Eva («1 assaig de contingut en sulfats UNE 83963 :
+            # 2008» sol; llista granulometria → Atterberg → Lambe → sulfats). Abans: el `type` del primer assaig
+            # («Contingut en sulfats solubles UNE 83963:2008», que l'Eva no escriu mai). El wizard mana.
+            from .narrative_criteria import lab_tests_lines
+            _lab_user = str(self.user_data.get('lab_tests_text') or '').strip()
+            _lt = lab_tests_lines(getattr(_lab_results, 'lab_tests_text', '') if _lab_results else '', _lang)
+            context['lab_tests_text'] = _lab_user or _lt.value or lab.get('type', '')
+            context['_narr_lab_tests'] = _lt.to_dict()
 
             # Geology paragraphs from section 3
             context['materials_level_1'] = ''
@@ -1744,6 +1793,13 @@ class ReportGenerator:
             context.update(image_ctx)
         except Exception as e:
             self.warnings.append(f"Image insertion failed (report will have placeholders): {e}")
+        # Vistes generals: només les que el peu anuncia (peça 3); el bloc sencer cau si `photo_site_text` és buit
+        _n_site = context.get('_num_site_photos')
+        if _n_site is not None:
+            if int(_n_site) < 2:
+                context['photo_site_image_2'] = ''
+            if int(_n_site) < 1:
+                context['photo_site_image_1'] = ''
 
         doc.render(context)
         doc.save(str(output_path))
