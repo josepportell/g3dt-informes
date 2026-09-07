@@ -4964,3 +4964,59 @@ taules 82 % idèntiques, grup `fix` intacte, presència igual.
 - Peces 5 (situació), 6 (geològic) i 7 (projecte + bloc de figures variable, que mou el grup `fix`).
 
 *Fi entrada 2026-09-07 (nit). Peça 3: el tall es retalla amb la geometria del PDF; 3 de 7 idèntics al de l'Eva, cap error nou.*
+
+## 2026-09-07 (nit, 2) — Correcció de l'addenda de la peça 2: el senyal de la caixa blava NO és exclusiu de les fotos de sondeig, i **no hi ha cap objecte vermell o taronja col·locat** a cap de les 7 fotos de DPSH dels signats
+
+### Context
+
+L'addenda de la peça 2 (commit `f9d88c2`) afirmava que la caixa de testimonis blava «hi és a les 3 fotos de sondeig i a
+cap de les 7 de DPSH». Ho havia mirat a ull sobre miniatures. El Josep va preguntar per l'altra meitat del que recordava
+de l'Eva (un objecte **vermell o taronja** per a l'altra màquina), i la comprovació acurada desmenteix part de l'afirmació.
+
+### Mesura
+
+Fracció de píxels saturats per to, **només a la meitat inferior** de la imatge (a la meitat superior el blau és el cel i
+contamina la mesura: la primera passada donava «7,4 % de blau» a la DPSH de Linyola, que és cel), més la lectura visual
+de les 10 fotos retallades:
+
+| foto | blau (terra) | vermell/taronja (terra) | què és |
+|---|--:|--:|---|
+| castellar DPSH | 5,14 % | 0,05 % | **objecte blanc i blau a terra** (paper o plàstic) |
+| rubi DPSH | 0,00 % | 0,40 % | res |
+| linyola DPSH | 0,07 % | 3,66 % | **la carrosseria vermella de la màquina**, i una furgoneta blava al fons |
+| bell-lloc DPSH | 0,06 % | 0,34 % | res |
+| alcoletge DPSH | 0,08 % | 1,77 % | **la carrosseria vermella de la màquina** |
+| vilanova DPSH | 0,00 % | 0,54 % | res |
+| anciles DPSH | 0,01 % | 0,06 % | **vareta amb la punta verda** a terra |
+| castellar sondeig | 0,92 % | 0,73 % | caixa blava a terra |
+| bell-lloc sondeig | 1,02 % | 0,37 % | caixa de testimonis blava a terra |
+| anciles sondeig | 0,59 % | 0,09 % | caixa blava i blanca a terra |
+
+### Conclusions
+
+1. **Cap objecte vermell o taronja col·locat a cap de les 7 fotos de DPSH.** El vermell de Linyola i Alcoletge és la
+   pintura de la màquina (totes dues són el mateix model vermell); les altres cinc són grogues o negres.
+2. **La caixa blava a terra hi és a 3/3 sondeigs, però el blau no és exclusiu**: la DPSH de Castellar porta un objecte
+   blanc i blau a terra i la d'Anciles una vareta de punta verda.
+3. Per tant el senyal útil **no és el color sinó què és l'objecte** (una caixa de testimonis amb els nuclis i el cartell
+   del sondeig). El skill ho diu així ara: «bona pista, no és una prova».
+
+### Implementació
+
+- `.claude/commands/g3dt-llegir-fotos.md`: el paràgraf del senyal, corregit i matisat amb els dos contraexemples.
+- `docs/PREGUNTES-EVA-PENDENTS.md`: la pregunta 39 reescrita amb el que hem vist de veritat (i preguntant explícitament
+  pel vermell/taronja, que no trobem). Totes dues coses ja commitejades a `e130c9b`.
+- Cap canvi de codi ni de mesura: el re-run `-peca2d` ja havia mostrat que aquest senyal no movia cap tria.
+
+### Limitacions conegudes
+
+- L'anàlisi és sobre 10 fotos de 7 projectes. Si l'Eva confirma que sí que hi posa un objecte, caldrà mirar l'annex de
+  fotografies sencer (hi ha més fotos de màquina que les que van a l'informe), no només les triades.
+- La mesura per to és orientativa: el cel, la pintura de les màquines i les ombres la mouen. La lectura visual mana.
+
+### GO/NO-GO
+
+- ✅ Correcció aplicada al skill i a la pregunta; l'afirmació errònia queda documentada aquí.
+- ⏳ Pregunta 39 a l'Eva.
+
+*Fi entrada 2026-09-07 (nit, 2). Correcció: el blau no és exclusiu del sondeig i no hi ha cap objecte vermell o taronja col·locat.*
