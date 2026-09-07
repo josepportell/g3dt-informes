@@ -5,33 +5,27 @@
  "dpsh": "FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
  "sondeig": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
  "materials": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg",
- "materials_per_punt": [
-  {
-   "punt": "S-1",
-   "rel": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg"
-  }
- ],
  "_lector": {
-  "data": "2026-09-07 18:38",
+  "data": "2026-09-07 19:02",
   "model": "sonnet",
   "effort": "medium",
-  "elapsed_s": 51.9,
+  "elapsed_s": 51.1,
   "exclude_slug": "castellar",
   "raons": {
-   "dpsh": "màquina DPSH sencera i neta al solar, és la foto F-1 de l'annex («detall de l'emplaçament de la màquina realitzant l'assaig DPSH, P-1»); equivalent a #2 i #3 (P-2, P-3), es tria la primera de l'annex",
-   "sondeig": "màquina compacta sobre erugues amb mastil vertical i operari al costat; carpeta S1/ i àlies explícit SONDEIG/maquina_sondeig.jpg (no és cap dels punts P1-P4 de DPSH); coincideix amb els exemplars de màquina de sondeig (anciles, bell-lloc)",
-   "materials": "caixa de testimonis blava amb el cartell «Sondeig S-1, Prof. 0,00-1,20, Caixa Nº 1» i els nuclis ben visibles, sense la bossa de mostra a dins (com a Castellar), coincideix amb els exemplars de caixa de testimonis"
+   "dpsh": "màquina DPSH sencera, neta, primera foto de l'annex (F-1, 'P-1'); les 4 fotos de l'annex (1,6,2,3) són equivalents, tria la primera",
+   "sondeig": "màquina compacta amb operari dret al costat i pal elèctric al fons, carpeta SONDEIG/ i àlies maquina_sondeig.jpg; no és cap dels punts DPSH (P1-P4) i no és a l'annex de l'Eva, com als exemplars (Anciles, Bell-lloc)",
+   "materials": "caixa de testimonis S-1 0,00-1,20 amb el cartell ben llegible; segons la nota del criteri, a Castellar l'Eva va triar la caixa SENSE la bossa de mostra a dins (candidat 8 en té, descartat)"
   },
   "confianca": {
-   "dpsh": 0.9,
+   "dpsh": 0.7,
    "sondeig": 0.85,
-   "materials": 0.8
+   "materials": 0.9
   },
   "cap_font": [
    "site_1",
    "site_2"
   ],
-  "notes": "L'annex de fotografies de l'Eva (F-1 a F-4) només conté les 4 fotos de la màquina DPSH (P-1 a P-4); no hi ha cap foto de sondeig, materials ni vista general del solar a l'annex, així que aquests forats s'han decidit per criteri i comparació amb exemplars. Els fulls de camp (#4, #5) i les fotos de context sense màquina (#6, vista amb la casa) no s'han considerat per a materials/site perquè no compleixen el criteri estricte de 'vista general feta per mostrar el solar'; #6 té la màquina DPSH visible de fons, així que no és una vista neta del solar i no s'ha triat per site_1/site_2.",
+  "notes": "L'annex de fotografies de l'Eva (F-1 a F-4) només conté les 4 fotos de la màquina DPSH (P-1 a P-4), aparellades amb els candidats 1, 6, 2 i 3; cap foto de sondeig, materials ni vista general hi surt. Candidats 4 i 5 són fulls de camp escrits a mà (no van a l'informe).",
   "warnings": []
  }
 }
