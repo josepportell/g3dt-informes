@@ -1189,9 +1189,15 @@ class ImageManager:
             if tall_pdf is None:
                 tall_pdf = self._find_project_pdf(['tall.pdf', 'tall*.pdf'])
             if tall_pdf:
-                cached = self._cache_name("tall", tall_pdf)
+                # Peça 3 (2026-09-07): l'Eva retalla la secció del tall (sense caixetí, llegenda ni logo): 7/7 signats.
+                # Prefix propi (`tall_crop`) perquè no xoqui amb la pàgina sencera que hi hagi a la cau.
+                cached = self._cache_name("tall_crop", tall_pdf)
                 if not cached.exists():
-                    self._render_pdf_to_image(tall_pdf, cached)
+                    from .imatges.retall import crop_drawing
+                    if crop_drawing(tall_pdf, cached) is None:      # sense dibuix detectat: pàgina sencera, com abans
+                        cached = self._cache_name("tall", tall_pdf)
+                        if not cached.exists():
+                            self._render_pdf_to_image(tall_pdf, cached)
                 if cached.exists():
                     img = self._safe_inline_image(
                         str(cached), width=Mm(IMAGE_WIDTH_LOCATION)
