@@ -4744,3 +4744,128 @@ amb python-docx, docxtpl (`get_undeclared_template_variables`) i 5 tests sobre l
 - Peça 7 (bloc de figures variable) és la que mou el grup `fix`.
 
 *Fi entrada 2026-09-07 (tarda-5). Peça 1: aèria fora, materials una vegada, pastís i media morts fora; numeració net 0 com s'havia previst; informes −8,5 MB.*
+
+## 2026-09-07 (vespre) — Imatges pas 3, peça 2: el LECTOR DE FOTOS és Claude Code (skill `g3dt-llegir-fotos` + full de contacte + annex de fotografies de l'Eva + exemplars dels signats amb leave-one-out), amb precedència Eva > lector > cau IA > patrons: imatges 12 M · 5 C · 25 X · 14 ND → **14 · 5 · 24 · 13** (40 → 44 %); materials 6/9 → **7/9 sense cap X**, sondeig 1/3 → 2/3, vistes 1/4 → 2/4; DPSH 4/7 → 3/7 i la vista de Vilanova ND → X (empats sense criteri: preguntes 37 i 38)
+
+### Context
+
+- Pas 2, D5-D7 i D13: les fotos són la primera peça de contingut perquè el pas 1 hi va veure 4 imatges errònies (Alcoletge full de camp
+  com a màquina, Anciles caixa com a màquina de sondeig, Bell-lloc vista 2 i sondeig) i perquè «la tria és trivial amb Claude mirant».
+- Peça 1 (referència `2026-09-07-m341-peca1b`): imatges 12 M · 5 C · 25 X · 14 ND → 40 %; fotos DPSH 4/7, sondeig 1/3, materials 6/9, vistes 1/4.
+- Avui la tria la fa `select_photos_ai` (graella de miniatures + `claude -p` des de `/tmp`, sense skill, fallback Groq) o, si no, patrons de
+  noms de fitxer; la cau `photo_selection.json` sense `source` es reutilitza sense mirar res.
+
+### Decisions arquitectòniques clau
+
+**D1. El lector és un skill de Claude Code amb el runner de la lectura de text, no una crida solta.** `automation/imatges/lector_fotos.py`
+crida `automation.lectura.runner._run_claude` (el mateix `claude -p --permission-mode bypassPermissions --model … --effort … --output-format
+json`, amb timeout i kill de grup). Per què reutilitzar-lo: ja resol l'autenticació (`G3DT_LECTURA_AUTH`: la sessió de claude.ai o la clau),
+l'esforç pinnat (memòria `reference_claude_p_inherits_effort_xhigh`), els zombis i el parseig de l'envolupant JSON. Alternativa rebutjada:
+ampliar `select_photos_ai` (`subprocess.run` amb `cwd=/tmp`, sense skill ni exemplars): no té contracte, no es pot mesurar i el prompt viu
+dins una constant de Python.
+
+**D2. El contracte de sortida és el dels candidats del nivell A: font + raó + confiança, i «cap font» explícit.** El skill escriu un JSON per
+ranura (`site_1`, `site_2`, `dpsh`, `sondeig`, `materials`, opcional `materials_per_punt`) amb `raons`, `confianca`, `cap_font` i `notes`.
+Python valida contra l'inventari (índex o camí; una foto per ranura; el que no és candidat cau a `null` amb avís). Mai en blanc silenciós:
+`cap_font` diu per què (Rubí: la vista general de l'Eva és una captura de Google Earth que no és a la carpeta de fotos → correctament ND).
+
+**D3. Precedència: Eva (`user`) > lector (`lector`) > cau IA antiga > patrons.** `photo_selection.json` guanya un `source: "lector"` i tres
+punts del codi l'accepten com a tria explícita (`ImageManager._load_user_photo_selection`, `ReportGenerator._site_photos_from_user_selection`,
+`wizard_service`), de manera que **les vistes generals només s'imprimeixen si algú les ha triades** (peça 3 de la narrativa) i ara el lector
+també compta. La tria de l'Eva al wizard continua manant sempre. La selecció anterior es desa a `photo_selection.abans-lector.json`.
+
+**D4. Tres pistes, per ordre de força: l'annex de fotografies de l'Eva, els exemplars dels signats, els rols de SmartScan.** L'annex
+(`*_fotografies.pdf`/`.FH11`, existeix abans del wizard: memòria `eva_workflow_annexes_before_wizard`) és la SEVA selecció amb peu; Python
+n'extreu les fotos incrustades (logo de 138×138 fora), les aparella amb els candidats per phash i escriu «annex p2 foto #1» al costat de cada
+candidat, i renderitza les pàgines perquè el lector en llegeixi els peus. Els exemplars són les fotos dels 7 signats per ranura
+(`docs/imatges/veritat/`), **amb leave-one-out**: el projecte mesurat mai veu els seus. Els rols de SmartScan van al prompt marcats com a
+orientatius (a Castellar, `photo_site_overview` és una màquina DPSH).
+
+**D5. Un candidat per contingut (md5), i el canònic és el de la subcarpeta.** Castellar té 9 fitxers que són 4 imatges (còpies renombrades de
+març: `maquina_dpsh.jpg` = `P1.jpg`…). A la primera passada el lector va gastar 22 torns i 234 s comprovant hashes amb Bash. Ara l'inventari
+deduplica i el prompt diu «el mateix fitxer també com a …»; el canònic és el camí amb més carpetes (`FOTOGRAFIES/SONDEIG/x.jpg` abans que
+`FOTOGRAFIES/x.jpg`) perquè **el nom de la carpeta és la pista que distingeix la màquina del sondeig de la DPSH** quan les dues són compactes
+(Bell-lloc, Anciles). El skill diu explícitament: només Read i Write, no Bash. Castellar: 234 → 52 s.
+
+**D6. `has_sondeig` entra al prompt.** Sense saber-ho, el lector deia «no hi ha cap torre de sondeig» a Bell-lloc i Anciles (les seves màquines
+de sondeig són compactes i s'assemblen a la DPSH). El corpus el treu del context del run de referència; en producció, del `ReportData`.
+
+**D7. Model `sonnet`, esforç `medium`, una crida per projecte.** 25-75 s i ≈ 0,3 $ per projecte. No es puja a `xhigh`: el pas 1 va mostrar que
+la dificultat no és el raonament sinó tenir les pistes (annex, carpeta, `has_sondeig`); i l'Eva és l'única usuària
+(memòria `feedback_no_volume_reasoning`), o sigui que el cost no és l'argument, la latència del wizard sí.
+
+**D8. La mesura del lector és a part de M341.** `docs/wizard-headless/mesures/llegir_fotos_corpus.py` passa els 7 projectes i puntua cada
+tria contra la veritat del pas 1 per phash (= Eva / ≠ Eva / ND / sobrant), sense generar cap informe; M341 mesura l'efecte a l'informe.
+El runner accepta lots (`--projects`) i refà la taula des dels JSON del run: el segon pla talla als 10 minuts i els 7 projectes en són 8-9.
+
+### Implementació
+
+- `automation/imatges/` (nou, `__init__.py` buit com `ai_pipeline`) + `lector_fotos.py` (≈ 330 línies): inventari amb dedupe i EXIF, annex
+  (FH11 → PDF amb soffice, cau per md5; fotos incrustades; render de pàgines), fulls de contacte, exemplars leave-one-out, prompt, crida,
+  validació, escriptura amb còpia de seguretat.
+- `.claude/commands/g3dt-llegir-fotos.md` (nou): rol, criteri per ranura amb el que diuen els 7 signats, què no va mai a l'informe, les tres
+  pistes, procediment (només Read i Write) i el JSON de sortida.
+- Precedència: `automation/image_manager.py`, `automation/report_generator.py`, `web/wizard_service.py` (una línia cadascun).
+- `docs/wizard-headless/mesures/llegir_fotos_corpus.py` (nou). `.gitignore`: la carpeta de treball `validation/_lector_fotos/`.
+- `tests/test_peca2_lector_fotos.py` (8): aparellament amb l'annex, full i prompt, validació (índex/camí/duplicat/repetit/inexistent),
+  escriptura amb còpia, `ImageManager` accepta `lector` i rebutja la cau IA, vistes generals amb el lector, exemplars leave-one-out.
+
+### Validació empírica
+
+Run del lector `2026-09-07-lector-fotos-peca2c` (sonnet/medium, leave-one-out; `peca2` = primera passada, conservada):
+
+| projecte | site_1 | site_2 | dpsh | sondeig | materials | s |
+|---|---|---|---|---|---|--:|
+| castellar | — | — | ≠ (ph 20) | **= Eva** | **= Eva** | 52 |
+| rubi | ND | ND | ≠ (ph 28) | — | = Eva | 33 |
+| bell-lloc | **= Eva** | **= Eva** | = Eva | **= Eva** | = Eva | 65 |
+| linyola | — | — | ≠ (ph 32) | — | = Eva | 31 |
+| alcoletge | — | — | ≠ (ph 32) | — | = Eva | 25 |
+| vilanova | ≠ (ph 30) | ≠ (ph 32) | = Eva | — | = Eva | 48 |
+| anciles | — | — | = Eva | ≠ (ph 30) | **= Eva** | 58 |
+
+M341 `peca2` vs `peca1b`: **imatges 12 · 5 · 25 · 14 → 14 · 5 · 24 · 13 (40 → 44 %)**; per ranura `foto_materials` 6/9 → **7/9 i cap X**
+(100 % dels forats amb foto), `foto_sondeig` 1/3 → 2/3, `foto_vista` 1/4 → 2/4, `foto_dpsh` 4/7 → 3/7. Escalars: **una sola cel·la es mou**
+(`photo_site_text` de Vilanova, ND → X: ara imprimim dues vistes generals i el signat en porta una altra), total 74 % igual (308 · 43 · 124 · 32);
+taules 82 % idèntiques; grup `fix` idèntic (74 M · 25 X); sobrants 0 (Vilanova en té 1: la 2a vista que l'Eva no posa).
+
+Les 4 imatges errònies del pas 1: Alcoletge (full de camp com a màquina) i Anciles (caixa com a màquina de sondeig) resoltes pel lector;
+Bell-lloc vista 2 i sondeig resoltes; queda la de Rubí, que no és de fotos (és el «plànol», peça 4).
+
+### Tests
+
+- +8 (`tests/test_peca2_lector_fotos.py`). Suite sencera: 31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2473 verds / 5 omesos (179 s)
+
+### Latència / cost
+
+- Lector: 25-65 s i 0,29-0,40 $ per projecte (sonnet, medium, 5-9 torns). Una crida per projecte, no per foto. La primera passada de Castellar
+  (22 torns, 234 s, 0,80 $) era el lector comprovant md5 amb Bash: resolt amb el dedupe i la prohibició de Bash al skill.
+
+### Limitacions conegudes
+
+- **Empats sense criteri** (les dues pèrdues, al registre): quina foto de la DPSH quan n'hi ha una per punt (pregunta 37; el lector agafa la
+  primera de l'annex, l'Eva 3 vegades la primera i 3 l'última) i quina vista general (pregunta 38; a Vilanova l'Eva en posa una que NO és a
+  l'annex). Fins que l'Eva no respongui no s'hi toca res.
+- Anciles `foto_sondeig`: el lector tria `EMPL S1`, el signat porta `EMPL S2` (el mateix equip a l'altre sondeig): mateix tipus d'empat.
+- Rubí `foto_vista`: la de l'Eva és una captura de Google Earth desada a `ANNEXES/Altres/F3 VG.png`, fora de la carpeta de fotos. El lector
+  només mira la carpeta de fotos: ampliar-lo als PNG d'ALTRES és feina de la peça 5 (situació), que ja els ha de llegir.
+- `materials_per_punt` s'escriu però encara no s'imprimeix (una foto per punt: pregunta 33 i plantilla).
+- El lector no retalla res (Vilanova retalla la seva vista; Rubí i Vilanova retallen la foto de materials): els retalls són les peces 3-5.
+- A l'ordinador de l'Eva cal Claude Code instal·lat (via A, decisió del 2026-08-23); sense ell, el sistema cau a la cau IA i als patrons.
+
+### GO/NO-GO
+
+- ✅ 4 forats guanyats (materials d'Anciles i Castellar exacte, sondeig i vistes de Bell-lloc), 2 perduts i registrats, tots dos per empat.
+- ✅ Escalars, taules i numeració intactes fora de la cel·la de Vilanova.
+- ✅ Suite: 31 vermells esperats / 2473 verds.
+- ⏳ Preguntes 37 i 38 a l'Eva (al registre, no enviades).
+- ⏳ Commit (GO del Josep): proposta en 3 — lector + skill + precedència + tests · runner del corpus + `.gitignore` + seleccions del corpus ·
+  runs i docs.
+
+### Següents passos
+
+- **Peça 3 (tall retallat)**: `detect_drawing_region` de l'MCP plànols sobre `tall.pdf`; esperat `fig_tall` 5 C + 2 X → M.
+- Peça 4 (assaigs: retall del dibuix amb punts), peça 5 (situació), peça 6 (geològic), peça 7 (projecte + bloc variable, que mou el grup `fix`).
+- Quan l'Eva respongui la 37 i la 38, revisar el desempat del lector (una línia del skill).
+
+*Fi entrada 2026-09-07 (vespre). Peça 2: el lector de fotos de Claude Code amb l'annex de l'Eva i exemplars leave-one-out; imatges 40 → 44 %, materials 100 %.*

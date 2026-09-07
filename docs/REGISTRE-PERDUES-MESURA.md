@@ -89,3 +89,27 @@ Sense veritat comparable per text; el que s'ha vist als 7 `.docx` generats abans
 i al DECISION-LOG 2026-09-07 (vespre)). Els defectes de contingut que queden oberts (tria de foto, pàgina del plànol, retall de
 situació) no són cel·les de M341: el test de presència només diu «hi és / pendent / absent».
 
+## 2026-09-07 — Pas 3 d'imatges, peces 1 i 2 — runs `2026-09-07-m341-peca1b` → `2026-09-07-m341-peca2`
+
+Mesura nova d'aquest bloc: **imatges «mateixa font que l'Eva» per figura** (peça 0, `imatges_font.py`). La peça 1 (plantilla)
+no mou cap cel·la fora del grup `fix` (+9 −9 = net 0, previst). La peça 2 (lector de fotos) mou 6 cel·les d'imatge i 1 de
+narrativa; guanys i pèrdues per separat.
+
+### Guanys (peça 2)
+
+| Projecte · ranura | Abans → ara | Per què |
+|---|---|---|
+| Bell-lloc · `foto_sondeig` | X → **M** | La selecció `user` del corpus posava la DPSH P-2 com a màquina de sondeig; el lector tria la de `FOTOGRAFIES/SONDEIG/`. |
+| Bell-lloc · `foto_vista` (2) | M + X → **M + M** | La selecció `user` posava la màquina del sondeig com a 2a vista general. |
+| Anciles · `foto_materials` | X + ND → **M + ND** | El lector tria `S1.jpeg` (caixa de testimonis del sondeig S-1); abans, un detall de la mostra SPT. |
+| Castellar · `foto_materials` | M → M (phash 12 → 0) | Mateixa caixa, ara exactament la del signat. |
+
+### Pèrdues acceptades (peça 2)
+
+| Projecte · variable | Sistema (signat) | Per què | On es reobre | Estat |
+|---|---|---|---|---|
+| Rubí · `foto_dpsh` | `P1.jpg` (`P3.jpg`) | L'annex de l'Eva porta una foto de la DPSH per punt (P-1…P-3) i el signat en porta una, sense criteri conegut: 3 signats agafen la primera de l'annex, 3 l'última, 1 la segona. El lector desempata amb «la primera de l'annex» (4/7). Abans, els patrons encertaven Rubí per casualitat (agafaven l'última). | pregunta 37 a l'Eva | oberta |
+| Vilanova · `foto_vista` + `photo_site_text` | `DES DE DARRERA.jpeg` (`DES DEL CARRER.jpeg`); ND → X al peu | L'annex de fotografies de Vilanova porta DUES «vistas generales de la parcela» (des de darrere i interior) i el signat en porta UNA de diferent, des del carrer, que no és a l'annex. El lector segueix l'annex. Abans no s'imprimia cap vista (cap tria explícita) i la cel·la era ND. | pregunta 38 a l'Eva | oberta |
+
+Les dues pèrdues són el mateix tipus: **empat sense criteri conegut** entre fotos equivalents. No s'inventa cap regla; van a
+l'Eva. La segona canvia una cel·la de ND a X: el sistema ara diu una cosa (imprimeix dues vistes) on abans callava.

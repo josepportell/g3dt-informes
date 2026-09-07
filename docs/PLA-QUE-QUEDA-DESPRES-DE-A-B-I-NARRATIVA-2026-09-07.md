@@ -107,7 +107,9 @@ Peces del pas 3, en ordre, cada una amb baseline (`peca0b`) i mesura a M341:
 0. ✅ mesura per figura «mateixa font que l'Eva» (phash/NCC contra `veritat/`) — S
 1. ✅ plantilla petita: aèria fora, materials una vegada, pastís i media morts fora — S (tarda-5: `fix` net 0 com previst, imatges intactes,
    sobrants 0, informes −8,5 MB; **referència ara `2026-09-07-m341-peca1b`**; la numeració la mou la peça 7)
-2. fotos amb el lector d'imatges (skill + exemplars leave-one-out + annex de fotografies) — M (inclou el skill)
+2. ✅ fotos amb el lector d'imatges (skill `g3dt-llegir-fotos` + exemplars leave-one-out + annex de fotografies) — M (vespre: imatges
+   40 → 44 %, materials 7/9 sense cap X, sondeig 2/3, vistes 2/4; DPSH 3/7 i vista de Vilanova = empats sense criteri, preguntes 37-38;
+   **referència ara `2026-09-07-m341-peca2`**)
 3. tall retallat (`detect_drawing_region`) — S
 4. assaigs: retall del dibuix amb punts — M
 5. situació: PNG → annex recompost → insets → ICGC — M

@@ -1,0 +1,52 @@
+{
+ "project": "/home/josep/g3dt-e2e/projectes/4001670 ALCOLETGE",
+ "n_candidats": 7,
+ "annex": "/home/josep/g3dt-e2e/projectes/4001670 ALCOLETGE/PDF/ANNEXES/4001670_fotografies.pdf",
+ "exemplars": {
+  "dpsh": 6,
+  "sondeig": 3,
+  "materials": 9,
+  "vistes": 4
+ },
+ "warnings": [],
+ "rc": 0,
+ "timeout": false,
+ "elapsed_s": 31.6,
+ "model": "sonnet",
+ "effort": "medium",
+ "cli": {
+  "cli_json_ok": true,
+  "num_turns": 5,
+  "duration_ms": 26337,
+  "duration_api_ms": 27154,
+  "cost_usd": 0.2930902,
+  "is_error": false,
+  "subtype": "success",
+  "usage": {
+   "input_tokens": 6,
+   "output_tokens": 2394,
+   "cache_creation_input_tokens": 58138,
+   "cache_read_input_tokens": 165021
+  },
+  "models": [
+   "claude-haiku-4-5-20251001",
+   "claude-sonnet-5"
+  ]
+ },
+ "selection": {
+  "site_1": null,
+  "site_2": null,
+  "dpsh": "FOTOS DE CAMP + PLANOL PUNTS/P1 - ALCOLETGE.jpeg",
+  "sondeig": null,
+  "materials": "FOTOS DE CAMP + PLANOL PUNTS/spt alcoletge.png"
+ },
+ "path": "/home/josep/g3dt-e2e/projectes/4001670 ALCOLETGE/validation/photo_selection.json",
+ "slug": "alcoletge",
+ "score": {
+  "site_1": "—",
+  "site_2": "—",
+  "dpsh": "≠ Eva (ph 32)",
+  "sondeig": "—",
+  "materials": "= Eva (ph 0)"
+ }
+}
