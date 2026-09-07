@@ -1,7 +1,32 @@
 {
-  "site_1": 3,
-  "site_2": 4,
-  "dpsh": 5,
-  "sondeig": null,
-  "materials": 6
+ "source": "lector",
+ "site_1": null,
+ "site_2": null,
+ "dpsh": "FOTOGRAFIES/P1.jpg",
+ "sondeig": null,
+ "materials": "FOTOGRAFIES/SPT1.jpg",
+ "_lector": {
+  "data": "2026-09-07 18:39",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 33.2,
+  "exclude_slug": "rubi",
+  "raons": {
+   "dpsh": "màquina DPSH sencera al solar, assaig P-1 = F-1, primera foto de l'annex de l'Eva; P-1/P-2/P-3 són equivalents (mateixa màquina, diferents punts) i l'Eva no té regla fixa, així que es tria F-1",
+   "materials": "SPT1.jpg = F-4 de l'annex, peu exacte «detall dels materials recuperats en l'assaig SPT»",
+   "sondeig": "el projecte no té sondeig a rotació"
+  },
+  "confianca": {
+   "dpsh": 0.85,
+   "sondeig": 1.0,
+   "materials": 0.95
+  },
+  "cap_font": [
+   "sondeig",
+   "site_1",
+   "site_2"
+  ],
+  "notes": "El projecte no té sondeig a rotació (sondeig=null no és error). Idx1 (Imatge WhatsApp ...11.17.54) és la llibreta/full de camp amb el full PENETROS escrit a mà, no va a l'informe. Idx2 (Imatge WhatsApp ...11.49.21) és un altre tub de mostra similar a SPT1 però no apareix a l'annex de l'Eva (F-4 ja cobreix materials amb SPT1.jpg), es descarta. Cap candidat és una vista general del solar sense màquina, per això site_1 i site_2 queden null.",
+  "warnings": []
+ }
 }

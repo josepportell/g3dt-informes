@@ -78,3 +78,6 @@ reference-material/**/PDF V0/
 # 97 MB dels 98. El TEXT sí que es versiona (~1,3 MB): les lectures per document, els
 # `_decisions.json` (que són el corpus de no-regressió del 0-diff), els logs i les mesures.
 docs/wizard-headless/mesures/runs/**/*.png
+
+# peça 2 (2026-09-07): carpeta de treball del lector de fotos (graelles, annex renderitzat, exemplars, prompt, log)
+reference-material/*/validation/_lector_fotos/

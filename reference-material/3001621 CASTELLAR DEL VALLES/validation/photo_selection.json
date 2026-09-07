@@ -1,7 +1,37 @@
 {
-  "site_1": 16,
-  "site_2": 7,
-  "dpsh": 1,
-  "sondeig": 13,
-  "materials": 14
+ "source": "lector",
+ "site_1": null,
+ "site_2": null,
+ "dpsh": "FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
+ "sondeig": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
+ "materials": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg",
+ "materials_per_punt": [
+  {
+   "punt": "S-1",
+   "rel": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg"
+  }
+ ],
+ "_lector": {
+  "data": "2026-09-07 18:38",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 51.9,
+  "exclude_slug": "castellar",
+  "raons": {
+   "dpsh": "màquina DPSH sencera i neta al solar, és la foto F-1 de l'annex («detall de l'emplaçament de la màquina realitzant l'assaig DPSH, P-1»); equivalent a #2 i #3 (P-2, P-3), es tria la primera de l'annex",
+   "sondeig": "màquina compacta sobre erugues amb mastil vertical i operari al costat; carpeta S1/ i àlies explícit SONDEIG/maquina_sondeig.jpg (no és cap dels punts P1-P4 de DPSH); coincideix amb els exemplars de màquina de sondeig (anciles, bell-lloc)",
+   "materials": "caixa de testimonis blava amb el cartell «Sondeig S-1, Prof. 0,00-1,20, Caixa Nº 1» i els nuclis ben visibles, sense la bossa de mostra a dins (com a Castellar), coincideix amb els exemplars de caixa de testimonis"
+  },
+  "confianca": {
+   "dpsh": 0.9,
+   "sondeig": 0.85,
+   "materials": 0.8
+  },
+  "cap_font": [
+   "site_1",
+   "site_2"
+  ],
+  "notes": "L'annex de fotografies de l'Eva (F-1 a F-4) només conté les 4 fotos de la màquina DPSH (P-1 a P-4); no hi ha cap foto de sondeig, materials ni vista general del solar a l'annex, així que aquests forats s'han decidit per criteri i comparació amb exemplars. Els fulls de camp (#4, #5) i les fotos de context sense màquina (#6, vista amb la casa) no s'han considerat per a materials/site perquè no compleixen el criteri estricte de 'vista general feta per mostrar el solar'; #6 té la màquina DPSH visible de fons, així que no és una vista neta del solar i no s'ha triat per site_1/site_2.",
+  "warnings": []
+ }
 }

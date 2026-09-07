@@ -1,8 +1,38 @@
 {
-  "source": "user",
-  "site_1": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.55.21_2f75bf2a.jpg",
-  "site_2": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
-  "dpsh": "FOTOGRAFIES/DPSH/P1.jpg",
-  "sondeig": "FOTOGRAFIES/DPSH/P2.jpg",
-  "materials": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.53.10_6b9bc5f4.jpg"
+ "source": "lector",
+ "site_1": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.54.41_ccbf024a.jpg",
+ "site_2": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.55.21_2f75bf2a.jpg",
+ "dpsh": "FOTOGRAFIES/DPSH/P1.jpg",
+ "sondeig": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
+ "materials": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.53.10_6b9bc5f4.jpg",
+ "materials_per_punt": [
+  {
+   "punt": "S-1",
+   "rel": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.53.10_6b9bc5f4.jpg"
+  }
+ ],
+ "_lector": {
+  "data": "2026-09-07 18:40",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 65.0,
+  "exclude_slug": "bell-lloc",
+  "raons": {
+   "site_1": "vista general de la parcel·la sense màquina, és F-3 de l'annex de l'Eva",
+   "site_2": "vista general de la parcel·la sense màquina (amb pas de vianants), és F-4 de l'annex de l'Eva",
+   "dpsh": "màquina DPSH sencera al solar, F-1 de l'annex (P1.jpg); empatada amb F-2/P2.jpg del mateix tipus, es tria la primera per criteri de desempat",
+   "sondeig": "màquina compacta sobre erugues amb mastil de perforació, dins la carpeta SONDEIG/, coincideix amb l'exemplar d'Anciles (màquina de sondeig compacta, no torre alta)",
+   "materials": "caixa de testimonis blava amb els nuclis i el cartell del sondeig (Sondeig S-1, c/Antoni Ballús - Bell-lloc, Profunditat 0.00-1.80, Caixa 1), coincideix amb els exemplars de caixa de testimonis"
+  },
+  "confianca": {
+   "site_1": 0.85,
+   "site_2": 0.85,
+   "dpsh": 0.85,
+   "sondeig": 0.85,
+   "materials": 0.9
+  },
+  "cap_font": [],
+  "notes": "idx1 és el full de camp escrit a mà (PENETROS), exclòs. idx3 (P2.jpg, F-2) és equivalent a idx2 per a 'dpsh' però no s'ha triat perquè el criteri de desempat és la primera de l'annex. idx5 és una altra vista general sense màquina, no usada perquè l'annex ja en dona dues (F-3, F-4) que cobreixen site_1/site_2. idx8 i idx9 són detalls de tub/mostra SPT embolicada amb cartell, no la caixa de testimonis; idx10 hi correspon millor segons els exemplars.",
+  "warnings": []
+ }
 }
