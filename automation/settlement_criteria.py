@@ -32,6 +32,9 @@ from typing import Any
 SENTENCE_HEAD = "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran "
 SENTENCE_GENERIC = SENTENCE_HEAD + "menyspreables o bé inferiors a 1.0 cm."
 SENTENCE_GRANULAR = SENTENCE_HEAD + "iguals o inferiors a {s} cm, immediats en el temps donat el comportament granular dels materials."
+#: Variant signada a Bell-lloc («seran inferiors a 1.20 cm»): mateix criteri, sense «iguals o». Candidat, no defecte
+#: (Rubí i Anciles signen «iguals o inferiors»). Bloc 1, 2026-09-07.
+SENTENCE_GRANULAR_ALT = SENTENCE_HEAD + "inferiors a {s} cm, immediats en el temps donat el comportament granular dels materials."
 SERVICE_CAP_FOOTING_CM = 2.54   # 1 polzada (Terzaghi), sabates
 SERVICE_CAP_SLAB_CM = 5.0       # 2 polzades, llosa
 GENERIC_THRESHOLD_CM = 1.0
@@ -61,6 +64,7 @@ class SettlementCriteria:
     sentence: str
     candidates: list[EsCandidate] = field(default_factory=list)   # [defecte, alternatives…]
     notes: list[str] = field(default_factory=list)
+    sentence_candidates: list[str] = field(default_factory=list)  # [defecte, variant «inferiors a» (Bell-lloc)]
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -134,9 +138,10 @@ def settlement_by_criteria(
     if s_cm is not None and s_cm > SERVICE_CAP_FOOTING_CM:
         notes.append(f"⚠ {s_cm:.2f} cm supera el topall de servei de {SERVICE_CAP_FOOTING_CM} cm (1 polzada) per a sabates")
     sentence = SENTENCE_GENERIC if generic else SENTENCE_GRANULAR.format(s=f"{s_cm:.2f}")
+    sentence_cands = [sentence] if generic else [sentence, SENTENCE_GRANULAR_ALT.format(s=f"{s_cm:.2f}")]
     return SettlementCriteria(regime=regime, Es=default.value if default else None,
                               Es_source=default.source if default else "", settlement_cm=s_cm, generic=generic,
-                              sentence=sentence, candidates=cands, notes=notes)
+                              sentence=sentence, candidates=cands, notes=notes, sentence_candidates=sentence_cands)
 
 
 def alternatives_for_wizard(sc: SettlementCriteria) -> list[dict[str, Any]]:
@@ -157,5 +162,7 @@ def calc_note(sc: SettlementCriteria, B: float) -> tuple[str, str]:
         if d.settlement_cm is not None else f"Schmertmann {d.display} · règim {sc.regime}"
     if sc.notes:
         s_txt += " · " + "; ".join(sc.notes)
+    if len(sc.sentence_candidates) > 1:
+        s_txt += " · variant signada (Bell-lloc): «inferiors a» sense «iguals o»"
     es_txt = f"{d.display} · {d.source}{alts}"
     return s_txt, es_txt

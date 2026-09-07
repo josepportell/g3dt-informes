@@ -2613,6 +2613,10 @@
                                     <input type="text" id="wiz-num_floors" data-field="num_floors" onchange="markWizardDirty(event)">
                                 </div>
                                 <div class="wizard-field">
+                                    <label>Data de signatura <span class="source-badge" id="src-data_signatura"></span></label>
+                                    <input type="date" id="wiz-data_signatura" data-field="data_signatura" onchange="markWizardDirty(event)">
+                                </div>
+                                <div class="wizard-field">
                                     <label>Superficie construida (m2) <span class="source-badge" id="src-superficie_construida_m2"></span></label>
                                     <input type="text" inputmode="decimal" id="wiz-superficie_construida_m2" data-field="superficie_construida_m2" placeholder="Ex: 90 o 70+20" onchange="markWizardDirty(event)">
                                 </div>
@@ -6002,6 +6006,7 @@
                 'foundation_depth_m', 'cota_referencia',
                 'utm_x', 'utm_y',
                 'access_street', 'site_condition', 'building_structure_desc', 'lab_tests_text', 'num_site_photos',
+                'data_signatura',
             ];
             textFields.forEach(field => {
                 const { value, source } = getWizardValue(field);
@@ -7191,6 +7196,7 @@
              'adjacent_north_fmt', 'adjacent_south_fmt', 'adjacent_east_fmt', 'adjacent_west_fmt',
              'cota_referencia',
              'access_street', 'site_condition', 'building_structure_desc', 'lab_tests_text',
+             'data_signatura',
             ].forEach(field => {
                 const el = document.getElementById(`wiz-${field}`);
                 if (el) fields[field] = el.value;

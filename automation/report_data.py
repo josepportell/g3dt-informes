@@ -1652,16 +1652,11 @@ def _determine_soil_class(dpsh_data: DPSHData | None) -> str:
     - T-2: Terrenys intermedis
     - T-3: Terrenys desfavorables
     """
-    if not dpsh_data or not dpsh_data.tests:
-        return "T-2"  # Per defecte, intermedi
-
-    avg_n20 = dpsh_data.overall_average_n20
-
-    if avg_n20 >= 30:
-        return "T-1"  # Favorable (dens)
-    if avg_n20 >= 10:
-        return "T-2"  # Intermedi
-    return "T-3"  # Desfavorable (fluix)
+    # Criteri de l'Eva (2026-09-07): T-1 a 6/6 signats amb taula CTE, també amb rebliment i N20 < 10.
+    # Un sol lloc decideix (`cte_classifier.classify_soil`); abans aquí hi havia una còpia per N20 global
+    # (T-2 a Linyola/Vilanova/Castellar/Bell-lloc, T-3 a Alcoletge: `cte_sol` 1/6).
+    from .cte_classifier import classify_soil
+    return classify_soil(dpsh_data)
 
 
 # === CLI per a testing ===

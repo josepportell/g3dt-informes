@@ -50,6 +50,8 @@ WIZARD_FIELDS = [
     'utm_x', 'utm_y',
     # Narrativa per criteri (peça 3, 2026-09-07): frases senceres editables amb candidats «+N»
     'site_condition', 'building_structure_desc', 'access_street', 'lab_tests_text', 'num_site_photos',
+    # Data de signatura (bloc 1, 2026-09-07): la que l'Eva signa (ISO `YYYY-MM-DD`); defecte avui
+    'data_signatura',
 ]
 
 # Expert override fields (optional, for when auto-detection gives wrong results)

@@ -1000,13 +1000,14 @@ def _compute_narrative_prefills(
                 'computed',
             )
 
-        # table_dpsh_range: table numbering depends on test count
-        if num_tests <= 2:
-            range_str = '3 y 4' if lang == 'es' else '3 i 4'
-        else:
-            range_str = '3, 4 y 5' if lang == 'es' else '3, 4 i 5'
-
-        _set('table_dpsh_range', range_str, 'computed')
+        # table_dpsh_range: l'Eva compta TAULES (DPSH + sondeig si n'hi ha + SPT/MA), no assaigs (7/7 signats)
+        from automation.report_generator import insitu_table_range
+        _hs = merged.get('has_sondeig')
+        has_sondeig = bool(_hs.get('value') if isinstance(_hs, dict) else _hs) or \
+            bool(getattr(auto_result, 'has_sondeig', False)) or \
+            (project_path / 'validation' / 'sondeig_extracted.json').exists()
+        range_str, _ = insitu_table_range(has_sondeig, lang=lang)
+        _set('table_dpsh_range', range_str, 'computed (taules: DPSH + sondeig + SPT)')
 
     # --- building_structure_desc ---
     num_floors = _get_val('num_floors').strip()
@@ -1066,6 +1067,10 @@ def _compute_narrative_prefills(
         except Exception:
             n_site = 0
     _set('num_site_photos', n_site, 'computed (fotos triades)' if n_site else 'default (sense vistes generals: 4/7 signats)')
+
+    # --- data_signatura (bloc 1, 2026-09-07): la data que l'Eva signa; defecte avui, editable al wizard ---
+    from datetime import date as _date
+    _set('data_signatura', _date.today().isoformat(), 'default (avui)')
 
     # --- Candidats narratius → «+N» del wizard (mateix mecanisme que FileMiner i els geotècnics) ---
     alt_map: dict[str, list[dict]] = {}

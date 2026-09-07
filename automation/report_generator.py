@@ -113,6 +113,19 @@ class GenerationResult:
     warnings: list[str] = field(default_factory=list)
 
 
+def insitu_table_range(has_sondeig: bool, first: int = 3, has_spt_table: bool = True, lang: str = 'ca') -> tuple[str, int]:
+    """(«3 i 4» / «3, 4 i 5», última taula) del bloc d'assaigs in situ: DPSH + sondeig (si n'hi ha) + SPT/MA.
+
+    L'Eva numera TAULES (7/7 signats): «Taula 3 i 4» sense sondeig, «Taula 3, 4 i 5» amb sondeig. `lang='es'`
+    → «3 y 4». Compartit pel generador (`_build_numbering_context`) i el wizard (`_compute_narrative_prefills`).
+    """
+    n = 1 + (1 if has_sondeig else 0) + (1 if has_spt_table else 0)
+    nums = [str(first + i) for i in range(n)]
+    conj = 'y' if lang == 'es' else 'i'
+    text = nums[0] if n == 1 else f"{', '.join(nums[:-1])} {conj} {nums[-1]}"
+    return text, first + n - 1
+
+
 class ReportGenerator:
     """
     Main orchestrator for report generation.
@@ -723,22 +736,12 @@ class ReportGenerator:
         # Tables 1-2 are always: Building summary, CTE classification
         table_counter = 2
 
-        # In-situ test tables: DPSH + sondeig combined in one range
-        # Pattern from samples:
-        # - 2 DPSH tests (no sondeig) = "Taula 3 i 4"
-        # - 2 DPSH + 1 sondeig = "Taula 3, 4 i 5"
-        # - 3 DPSH tests (no sondeig) = "Taula 3, 4 i 5"
-        total_insitu_tables = num_dpsh_tests + (1 if has_sondeig else 0)
-        table_dpsh_start = table_counter + 1  # Usually 3
-
-        if total_insitu_tables <= 2:
-            table_dpsh_end = table_dpsh_start + 1  # "3 i 4"
-            table_dpsh_range = f"{table_dpsh_start} i {table_dpsh_end}"
-            table_counter = table_dpsh_end
-        else:
-            table_dpsh_end = table_dpsh_start + 2  # "3, 4 i 5"
-            table_dpsh_range = f"{table_dpsh_start}, {table_dpsh_start + 1} i {table_dpsh_end}"
-            table_counter = table_dpsh_end
+        # In-situ test tables («Taula 3 i 4. Resum dels assaigs in situ realitzats»): l'Eva compta TAULES,
+        # no assaigs (7/7 signats, 2026-09-07): DPSH (1) + sondeig (1 si n'hi ha) + SPT/MA (1, la plantilla
+        # la imprimeix sempre) → «3 i 4» sense sondeig (Rubí, Linyola, Alcoletge, Vilanova), «3, 4 i 5» amb
+        # sondeig (Castellar, Bell-lloc, Anciles). Abans: nombre d'assaigs DPSH (3 DPSH → «3, 4 i 5», 4/7 X).
+        table_dpsh_range, table_counter = insitu_table_range(has_sondeig, first=table_counter + 1)
+        _ = num_dpsh_tests  # no decideix la numeració
 
         # Lab results table
         table_counter += 1
@@ -805,6 +808,21 @@ class ReportGenerator:
             if getattr(lv, 'thickness_open', False) and reached > lv.depth_from_m:
                 lv.thickness_m = round(reached - lv.depth_from_m, 2)
 
+    def _signature_date(self):
+        """`user_data['data_signatura']` (ISO `YYYY-MM-DD` o `DD/MM/YYYY`) si és vàlida; si no, `report_date`."""
+        from datetime import date, datetime
+        raw = self.user_data.get('data_signatura')
+        if raw not in (None, ''):
+            text = str(raw).strip()
+            for fmt in ('%Y-%m-%d', '%d/%m/%Y', '%d-%m-%Y'):
+                try:
+                    return datetime.strptime(text[:10], fmt).date()
+                except ValueError:
+                    continue
+            self.warnings.append(f"Data de signatura no reconeguda («{text}»): s'usa la data d'avui")
+        rd = getattr(self.report_data, 'report_date', None)
+        return rd or date.today()
+
     def _site_photos_from_user_selection(self) -> int:
         """Fotos de vista general triades per l'Eva a la pestanya de fotos (`validation/photo_selection.json`,
         source=user: `site_1`/`site_2` no nuls). Cap tria explícita → 0 (la selecció automàtica/IA sempre omple els dos
@@ -864,9 +882,12 @@ class ReportGenerator:
             from .dpsh_extractor import first_field_day_text
             context['data_camp_inici_text'] = first_field_day_text(
                 self.report_data.field_work_dates, self.report_data.field_work_dates_text)
-            d = self.report_data.report_date
-            mes = self.MESOS_CAT.get(d.month, d.strftime('%B'))
-            context['data_signatura_text'] = f"{d.day:02d} de {mes} de {d.year}"
+            # Data de signatura (bloc 1, 2026-09-07): la que l'Eva escriu al wizard (`data_signatura`, ISO);
+            # si no, la data de l'informe (avui). Mateix format que la data de camp («29 d'octubre de 2025»:
+            # «d'» davant vocal, dia sense zero), que és com la signa (0/7 abans: «06 de setembre de 2026»).
+            from .dpsh_extractor import format_dates_catalan
+            d = self._signature_date()
+            context['data_signatura_text'] = format_dates_catalan([d.isoformat()])
 
             # Architect
             context['architect_name'] = self.report_data.architect_name or ''
