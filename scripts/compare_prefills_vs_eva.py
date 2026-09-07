@@ -66,7 +66,7 @@ NUMERIC_VARS = {
     "superficie_parcela": 5.0, "superficie_construida": 5.0, "cota_referencia": 0.5,
     "sulfate_value": 5.0, "qa_value": 5.0, "settlement": 10.0, "k30_value": 10.0,
     "geomech_E": 10.0, "geomech_cohesion": 10.0, "geomech_gamma": 5.0, "geomech_phi": 3.0,
-    "utm_x": 0.05, "utm_y": 0.005, "num_dpsh_tests": 0.0, "radon_zone": 0.0, "spt_n30": 0.0,
+    "utm_x": 0.05, "utm_y": 0.005, "num_dpsh_tests": 0.0, "radon_zone": 0.0, "spt_n30": 0.0, "bearing_layer_idx": 0.0,
 }
 
 NARRATIVE_VARS = {
@@ -165,7 +165,7 @@ def status_for(var: str, eva, pipe) -> str:
                 return "MATCH" if en == pn else "MISMATCH"
             _, st = compare_numeric(en, pn, NUMERIC_VARS[var])
             return st
-    if var == "data_camp_text":
+    if var in ("data_camp_text", "data_camp_inici_text"):
         return "MATCH" if _norm_date(e) == _norm_date(p) else "MISMATCH"
     if var == "plantes":
         return "MATCH" if _norm_floors(e) == _norm_floors(p) else ("CLOSE" if _norm_floors(e) in _norm_floors(p) or _norm_floors(p) in _norm_floors(e) else "MISMATCH")

@@ -76,7 +76,11 @@ VARIANTS = ("viaA", "t2")
 #: sabates encastades 20-40 cm al primer nivell sanejat (0,3), Rubí sabata a 1,0, pous a Linyola (L2 a 1,4 → 1,7)
 #: i Anciles (L2 a 2,6 → 2,9), Alcoletge sota el rebliment (1,0). ASSUMPCIÓ documentada: és l'única dada que al
 #: wizard posa l'Eva i que cap document llegit dona.
-DF_SIGNAT = {"castellar": 0.3, "rubi": 1.0, "bell-lloc": 0.3, "linyola": 1.7, "alcoletge": 1.0, "vilanova": 0.3, "anciles": 2.9}
+#: Vilanova (bloc 3, 2026-09-07): el signat diu «cimentación superficial mediante zapatas … combinada con pozos de cimentación,
+#: apoyada en los materiales del 2do nivel saneado» (veritat `bearing_layer_idx` = 1); abans 0,3 (sabata al 1r nivell) era
+#: una lectura equivocada del signat. Com a Linyola/Anciles: contacte del 2n nivell a la geometria del sistema (segmentador
+#: DPSH: 0,8; el signat, Tabla 6, dona 1,0 / 1,6 / 2,2 per punt) + 0,3 = 1,1.
+DF_SIGNAT = {"castellar": 0.3, "rubi": 1.0, "bell-lloc": 0.3, "linyola": 1.7, "alcoletge": 1.0, "vilanova": 1.1, "anciles": 2.9}
 
 #: Grup de cada variable de la plantilla (v1, 2026-09-06). A = nivell A (lectura de documents); calc = criteris de
 #: càlcul; narr = narrativa generada; taula = llistes (comparador de taules); fix = text fix / numeració / figures.
@@ -88,7 +92,7 @@ GROUPS = {
           "spt_n30", "spt_lithology", "location_sentence", "has_sondeig", "num_soil_levels"},
     "calc": {"qa_value", "settlement", "settlement_sentence", "k30_value", "geomech_E", "geomech_cohesion", "geomech_gamma",
              "geomech_phi", "cte_edificacio", "cte_sol", "seismic_ab_text", "radon_zone", "table_dpsh_range",
-             "sulfate_value", "sulfate_baumann", "sulfate_classification", "sulfate_level_name", "show_granulometric",
+             "sulfate_value", "sulfate_baumann", "sulfate_classification", "sulfate_level_name", "show_granulometric", "bearing_layer_idx",
              "include_earth_pressure", "include_expansivity", "include_slope_stability"},
     "narr": {"adjacent_east_fmt", "adjacent_north_fmt", "adjacent_south_fmt", "adjacent_west_fmt", "access_street",
              "site_description", "site_condition", "building_structure_desc", "lab_tests_text", "materials_intro",
@@ -377,6 +381,8 @@ def _gen_value(var: str, ctx: dict, ud: dict, calc: dict, eva=None):
     if var in ctx:
         return ctx[var]
     gp = (calc or {}).get("geotechnical_params") or {}
+    if var == "bearing_layer_idx":                      # veritat del bloc 3 (`bearing_rule`): fila portant 0-based
+        return (calc or {}).get("bearing_layer_idx")
     if var == "geomech_E":
         return gp.get("E")
     if var == "geomech_cohesion":
@@ -410,7 +416,10 @@ def compare_scalars(eva: dict, ctx: dict, ud: dict, calc: dict) -> list[dict]:
         if gv is None or str(gv).strip() == "":
             rows.append({"var": var, "grup": g, "eva": ev, "gen": None, "status": "NO_DATA"})
             continue
-        st = narr_status(var, ev, gv) if (g == "narr" or var in NARR_SLOT_EXTRA) else CPE.status_for(var, ev, gv)
+        # `settlement_sentence` (veritat del bloc 3) es puntua com `settlement`: pel NÚMERO de la frase (tolerància 10 %),
+        # no pel text — «inferiors a 1.80 cm» i «inferiors a 1.50 cm» s'assemblen un 97 % i són una X (registre #1).
+        cmp_var = "settlement" if var == "settlement_sentence" else var
+        st = narr_status(var, ev, gv) if (g == "narr" or var in NARR_SLOT_EXTRA) else CPE.status_for(cmp_var, ev, gv)
         rows.append({"var": var, "grup": g, "eva": ev, "gen": gv, "status": st,
                      "method": (info.get("extraction_method") if isinstance(info, dict) else "")})
     return rows
