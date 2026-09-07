@@ -550,14 +550,16 @@ class ReportGenerator:
         spt_rows = tables.get('spt_ma_tests') or []
         if spt_rows:
             first = spt_rows[0]
-            context['spt_test_id'] = first.get('test_id', '')
+            from .formatting import format_spt_id
+            context['spt_test_id'] = format_spt_id(first.get('test_id', ''))
             context['spt_location'] = first.get('location', '')
             context['spt_depth_range'] = first.get('depth_range', '')
             context['spt_n30'] = first.get('n30', '')
             context['spt_lithology'] = first.get('lithology', '')
         superficie = tables.get('superficie_construida')
         if superficie and not context.get('superficie_construida'):
-            context['superficie_construida'] = superficie
+            from .formatting import format_area
+            context['superficie_construida'] = format_area(superficie)
             applied.append('superficie_construida')
         lab = tables.get('lab') or {}
         for ctx_key, lab_key in (
@@ -856,14 +858,25 @@ class ReportGenerator:
         # Map to current template's expected flat variables
         if self.report_data:
             # Basic project info
+            from .narrative_criteria import (language_for_report, municipality_proper, municipality_de,
+                                             building_type_with_article, de_building_type)
+            from .honorifics import with_honorific, de_party
+            _lang = language_for_report(self.report_data, self.user_data)
             client_name = self.report_data.client.company_name or ''
             # Format company suffix: SL -> S.L., SLU -> S.L.U.
             client_name = re.sub(r'\bSLU\b', 'S.L.U.', client_name)
             client_name = re.sub(r'\bSL\b', 'S.L.', client_name)
-            context['client'] = client_name.upper()
+            # Bloc 2 (2026-09-07): «SR./SRA.» davant d'una persona (4/4 signats), res davant d'una empresa (3/3);
+            # `client_de` és el forat «en nom {{ client_de }}» («de la SRA. …» / «del SR. …» / «de RAMON MITJANA S.L.»).
+            context['client'] = with_honorific(client_name.upper(), _lang)
+            context['client_de'] = de_party(context['client'], _lang)
             context['expedient'] = self.report_data.expedient or ''
             context['street_address'] = self.report_data.street_address or ''
-            context['municipality'] = self.report_data.municipality or ''
+            # Bloc 2: nom del padró a la impressió («BELL.LLOC D'URGELL (Lleida)» → «Bell-lloc d'Urgell»; el wizard
+            # conserva el llegit) i «en el municipi {{ municipality_de }}» («d'Alcoletge», signat; abans «de Alcoletge»).
+            _muni_raw = self.report_data.municipality or ''
+            context['municipality'] = municipality_proper(_muni_raw) or _muni_raw
+            context['municipality_de'] = municipality_de(_muni_raw)
 
             # Dates - auto-fill from DPSH PDF if not provided
             if not self.report_data.field_work_dates_text:
@@ -892,11 +905,20 @@ class ReportGenerator:
             # Architect
             context['architect_name'] = self.report_data.architect_name or ''
             context['architect_company'] = self.report_data.architect_company or ''
+            # Bloc 2: «el SR. X{{ architect_company_de }}, en nom …» = «, de l'ARQUITECTURA BOSCH NOVELL» (signat) / «, de 2 Graus»
+            # / «, d'ABN …» / res si no hi ha despatx (abans «de l'» fix: «de l'2 Graus», «de l', en nom»).
+            _ac_de = de_party(self.report_data.architect_company or '', _lang)
+            context['architect_company_de'] = f", {_ac_de}" if _ac_de else ''
             context['architect_name_upper'] = (self.report_data.architect_name or '').upper()
 
             # Building
             context['building_type'] = self.report_data.building_type or ''
-            context['building_type_lower'] = (self.report_data.building_type or '').lower()
+            # Bloc 2: article pel gènere/nombre del cap («un habitatge…», «3 habitatges…», «l'ampliació…»); la frase
+            # dels antecedents porta «la construcció {{ building_type_de }}» («d'un …», «de 3 …», «de l'…»): la
+            # plantilla tenia «d'un» fix i l'Eva hi escriu «de 3 habitatges» (Castellar) i «de l'ampliació» (Alcoletge).
+            _bt_lower = (self.report_data.building_type or '').lower()
+            context['building_type_lower'] = building_type_with_article(_bt_lower, _lang)
+            context['building_type_de'] = de_building_type(_bt_lower, _lang)
             context['num_floors'] = format_floor_notation(self.report_data.num_floors or '')
 
             # Building structure: clàusula sencera després de «…construcció d'una estructura » per criteri
@@ -904,8 +926,7 @@ class ReportGenerator:
             # amb pis → (b) «sense nivell de soterrani, i per tant…»; soterrani → (c). El valor del wizard (Eva) mana;
             # els valors curts antics («en planta baixa») es mapegen a la clàusula. Abans: `building_type` sencer dins
             # la frase quan les plantes eren buides (Alcoletge).
-            from .narrative_criteria import building_structure_clause, language_for_report
-            _lang = language_for_report(self.report_data, self.user_data)
+            from .narrative_criteria import building_structure_clause
             context['report_language'] = _lang
             _bsd = building_structure_clause(
                 self.report_data.num_floors, getattr(self.report_data, 'has_basement', None), _lang,
@@ -938,14 +959,16 @@ class ReportGenerator:
             context['plantes'] = format_floor_notation(self.report_data.num_floors or '')
             # Prefer cadastral surface for Taula 1 (official parcel area)
             # Fall back to planol surface if cadastral not available
-            context['superficie_parcela'] = (
+            # Bloc 2 (2026-09-07): superfícies com a la Taula 1 de l'Eva («1.284», «250,91»; abans «1284.0»).
+            from .formatting import format_area, format_cota
+            context['superficie_parcela'] = format_area(
                 self.report_data.superficie_cadastral
                 or self.report_data.superficie_parcela
                 or ''
             )
-            context['superficie_cadastral'] = self.report_data.superficie_cadastral or ''
-            context['superficie_parcela_planol'] = self.report_data.superficie_parcela or ''
-            context['superficie_construida'] = self.report_data.superficie_construida or ''
+            context['superficie_cadastral'] = format_area(self.report_data.superficie_cadastral or '')
+            context['superficie_parcela_planol'] = format_area(self.report_data.superficie_parcela or '')
+            context['superficie_construida'] = format_area(self.report_data.superficie_construida or '')
 
             # Descriptions
             context['access_description'] = self.report_data.access_description or ''
@@ -970,7 +993,8 @@ class ReportGenerator:
                 except ICGCError as e:
                     self.warnings.append(f"Could not auto-fill cota_referencia from ICGC MDT: {e}")
 
-            context['cota_referencia'] = self.report_data.cota_referencia or ''
+            # Bloc 2: «+188.20» (signat) i no el text llegit sencer («+188,20 msnm», «+245 msnm segons plànol…»).
+            context['cota_referencia'] = format_cota(self.report_data.cota_referencia or '')
 
             # Location details
             context['street_address'] = self.report_data.street_address or ''
@@ -1283,7 +1307,8 @@ class ReportGenerator:
             if not spt and self.report_data.has_spt:
                 spt = self._extract_spt_from_sondeig()
             spt = spt or {}
-            context['spt_test_id'] = spt.get('test_id', '')
+            from .formatting import format_spt_id
+            context['spt_test_id'] = format_spt_id(spt.get('test_id', ''))   # «SPT1 S1» → «SPT-1» (bloc 2)
             context['spt_location'] = spt.get('location', '')
             context['spt_depth_range'] = spt.get('depth_range', '')
             context['spt_n30'] = str(spt.get('n30', ''))
