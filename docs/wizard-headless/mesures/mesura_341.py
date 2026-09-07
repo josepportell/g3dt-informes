@@ -82,7 +82,7 @@ DF_SIGNAT = {"castellar": 0.3, "rubi": 1.0, "bell-lloc": 0.3, "linyola": 1.7, "a
 #: càlcul; narr = narrativa generada; taula = llistes (comparador de taules); fix = text fix / numeració / figures.
 GROUPS = {
     "A": {"architect_company", "architect_name_upper", "building_type_lower", "client", "plantes", "expedient",
-          "municipality", "municipality_upper", "superficie_parcela", "superficie_construida", "data_camp_text",
+          "municipality", "municipality_upper", "municipality_de", "client_de", "building_type_de", "architect_company_de", "superficie_parcela", "superficie_construida", "data_camp_text",
           "data_camp_inici_text", "num_dpsh_tests", "lab_depth", "lab_location", "lab_sample_id", "lab_testing_company",
           "lab_field_company", "cota_referencia", "utm_x", "utm_y", "spt_test_id", "spt_location", "spt_depth_range",
           "spt_n30", "spt_lithology", "location_sentence", "has_sondeig", "num_soil_levels"},

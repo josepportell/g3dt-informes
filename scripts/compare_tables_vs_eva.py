@@ -103,9 +103,15 @@ def _norm(s: str) -> str:
 
 
 _NUM_RX = re.compile(r"^[+-]?\d+(?:[.,]\d+)?$")
+#: «1.284» / «1.655,01» (Taula 1, superfícies): milers amb punt i decimals amb coma (bloc 2, 2026-09-07). Abans «1.167»
+#: (imprès) contra «1167» (signat) es llegia 1,167 ≠ 1167 → MISMATCH. Només grups de tres xifres exactes.
+_THOUSANDS_RX = re.compile(r"^[+-]?\d{1,3}(?:\.\d{3})+(?:,\d+)?$")
 
 
 def _as_num(s: str):
+    s = s.strip()
+    if _THOUSANDS_RX.match(s):
+        s = s.replace(".", "")
     s = s.replace(",", ".").replace("+", "").strip()
     if _NUM_RX.match(s):
         try:

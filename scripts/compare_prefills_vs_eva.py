@@ -139,10 +139,22 @@ def _nums(s: str) -> list[float]:
     return [round(float(x.replace(",", ".")), 2) for x in re.findall(r"-?\d+(?:[.,]\d+)?", str(s).replace("−", "-"))]
 
 
+_THOUSANDS_RE = re.compile(r"^[+-]?\d{1,3}(?:\.\d{3})+(?:,\d+)?$")
+
+
+def _norm_thousands(s: str) -> str:
+    """«1.284» m² és mil dos-cents vuitanta-quatre (Castellar signat), no 1,284: milers amb punt, decimals amb coma
+    (bloc 2, 2026-09-07). Només per a les superfícies, on un valor amb tres decimals no existeix."""
+    s = str(s).strip()
+    return s.replace(".", "").replace(",", ".") if _THOUSANDS_RE.match(s) else s
+
+
 def status_for(var: str, eva, pipe) -> str:
     e, p = str(eva).strip(), str(pipe).strip()
     if not e or not p:
         return "NO_DATA"
+    if var.startswith("superficie"):
+        e, p = _norm_thousands(e), _norm_thousands(p)
     if var in NUMERIC_VARS:
         en, pn = _first_num(e), _first_num(p)
         if var == "num_dpsh_tests":
