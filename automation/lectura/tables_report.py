@@ -32,6 +32,7 @@ import re
 from pathlib import Path
 from typing import Any, Mapping
 
+from automation.formatting import format_spt_id
 from automation.lectura.normalize import (
     COMPONENT_VALUE_KEY,
     UNIT_M2_RE,
@@ -472,7 +473,7 @@ def build_report_tables(
         n30_chosen = _selected(selections, "spt_ma_tests", i, "n30")
         n30 = n30_chosen if n30_chosen is not None else _n30_value(_cell(row, ("n30",)))
         spt.append({
-            "test_id": fmt_text(_pick(row, selections, "spt_ma_tests", i, "id", ("id", "mostra"))),
+            "test_id": format_spt_id(fmt_text(_pick(row, selections, "spt_ma_tests", i, "id", ("id", "mostra")))),
             "location": fmt_text(_pick(row, selections, "spt_ma_tests", i, "punt", ("punt", "sondeig"))),
             "depth_range": fmt_depth_range(_pick(row, selections, "spt_ma_tests", i, "profunditat",
                                                  ("profunditat", "fondaria", "prof_extraccio"))),

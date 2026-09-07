@@ -205,6 +205,83 @@ def de_municipality(municipality_upper_name: str) -> str:
     return f"de {name}"
 
 
+def municipality_de(municipality: str | None) -> str:
+    """Forat «en el municipi {{ municipality_de }}» (bloc 2, 2026-09-07): «d'Alcoletge» (signat), «de Rubí»,
+    «de Bell-lloc d'Urgell». Abans la plantilla tenia «de » fix i imprimia «de Alcoletge». Buit → «»."""
+    muni = municipality_proper(municipality)
+    return de_municipality(muni) if muni else ""
+
+
+# --- Tipus d'edificació amb article (bloc 2, 2026-09-07) -------------------------------------------------------
+# Als signats el forat és el text DESPRÉS de «…es preveu la construcció »: «d'un habitatge unifamiliar aïllat modular»
+# (Rubí), «d'un habitatge unifamiliar» (Bell-lloc), «d'un nou habitatge unifamiliar» (Linyola), «de 3 habitatges
+# unifamiliars d'estructura lleugera, fusta» (Castellar), «de l'ampliació d'un edifici en planta baixa» (Alcoletge),
+# ES «de una vivienda unifamiliar aislada», «de 7 viviendas unifamiliares adosadas». La plantilla tenia «d'un» FIX:
+# ara el forat és `{{ building_type_de }}` i l'article surt del gènere/nombre del cap del sintagma llegit.
+_FEM_HEADS = frozenset({
+    "casa", "caseta", "nau", "nave", "vivenda", "vivienda", "planta", "piscina", "pergola", "torre", "masia", "granja",
+    "fabrica", "escola", "escuela", "llar", "residencia", "estacio", "estacion", "promocio", "promocion", "estructura",
+    "coberta", "cubierta", "terrassa", "terraza", "bassa", "balsa", "reforma", "obra", "cabana", "cabaña", "borda",
+    "ampliacio", "ampliacion", "rehabilitacio", "rehabilitacion", "construccio", "construccion", "instal·lacio",
+    "instalacion", "urbanitzacio", "urbanizacion", "legalitzacio", "legalizacion", "adequacio", "adecuacion",
+    "consolidacio", "consolidacion", "substitucio", "sustitucion", "reparacio", "reparacion", "demolicio", "demolicion",
+})
+_INTERVENTION_HEADS = frozenset({
+    "ampliacio", "ampliacion", "reforma", "rehabilitacio", "rehabilitacion", "tancament", "cerramiento", "canvi", "cambio",
+    "substitucio", "sustitucion", "enderroc", "derribo", "demolicio", "demolicion", "legalitzacio", "legalizacion",
+    "adequacio", "adecuacion", "consolidacio", "consolidacion", "reparacio", "reparacion", "instal·lacio", "instalacion",
+    "urbanitzacio", "urbanizacion", "construccio", "construccion", "reconstruccio", "reconstruccion", "condicionament",
+    "acondicionamiento", "reforç", "refuerzo", "adequacio",
+})
+_NUMBER_START_RE = re.compile(r"^(\d+|dos|dues|tres|quatre|cuatro|cinc|cinco|sis|seis|set|siete|vuit|ocho|nou|nueve|deu|diez)\b")
+_ARTICLE_START_RE = re.compile(r"^(un|una|uns|unes|unos|unas|el|la|els|les|los|las)\s|^l'")
+
+
+def _strip_accents_lower(s: str) -> str:
+    import unicodedata
+    return "".join(ch for ch in unicodedata.normalize("NFD", s) if unicodedata.category(ch) != "Mn").lower()
+
+
+def building_type_with_article(building_type: str | None, lang: str = "ca") -> str:
+    """«habitatge unifamiliar aïllat» → «un habitatge unifamiliar aïllat»; «3 habitatges…» → tal qual; «ampliació
+    d'habitatge» → «l'ampliació d'habitatge»; «tancament de porxo…» → «el tancament de porxo…»; ES «vivienda…» →
+    «una vivienda…». Un text que ja porta article o número surt tal qual; buit → «»."""
+    t = re.sub(r"\s+", " ", (building_type or "").strip())
+    if not t:
+        return ""
+    low = _strip_accents_lower(t)
+    if _NUMBER_START_RE.match(low) or _ARTICLE_START_RE.match(low):
+        return t
+    head = re.sub(r"[^\w·]", "", low.split()[0])
+    fem = head in _FEM_HEADS or head.endswith(("cio", "cion", "sio", "sion", "tat", "dad"))
+    vowel = low[0] in "aeiouh"
+    if head in _INTERVENTION_HEADS:
+        if lang == "ca" and vowel:
+            return f"l'{t}"
+        return ("la " if fem else "el ") + t
+    return ("una " if fem else "un ") + t
+
+
+def de_building_type(building_type: str | None, lang: str = "ca") -> str:
+    """Forat «…es preveu la construcció {{ building_type_de }}.»: «d'un habitatge unifamiliar aïllat», «de 3 habitatges
+    …», «de l'ampliació …», «del tancament …»; ES «de una vivienda …», «de 7 viviendas …». Buit → «»."""
+    form = building_type_with_article(building_type, lang)
+    if not form:
+        return ""
+    low = _strip_accents_lower(form)
+    if lang == "ca":
+        if low.startswith(("un ", "una ", "uns ", "unes ")):
+            return f"d'{form}"
+        if low.startswith("el "):
+            return "del " + form[3:]
+        if low.startswith("els "):
+            return "dels " + form[4:]
+        return f"de {form}"
+    if low.startswith("el "):
+        return "del " + form[3:]
+    return f"de {form}"
+
+
 # --- Fórmules ---------------------------------------------------------------------------------------------------
 
 def materials_intro(num_levels: int, lang: str = "ca") -> str:
