@@ -15,6 +15,10 @@ def test_open_bottom_last_layer_is_counted_to_the_end_and_does_not_crash():
     dpsh = _dpsh([(0.4, 3), (0.8, 4), (1.2, 5), (1.6, 20), (2.0, 30), (2.4, 110)])
     levels = _generate_soil_levels(dpsh, 2, layers, ["granular", "granular"], foundation_depth=1.0)
     assert [l.level_number for l in levels] == [1, 2]
-    assert levels[1].depth_to_m is None and levels[1].thickness_m is None
+    # P5 (2026-09-07): la base queda oberta però el gruix és «fins a la fondària investigada» (2,4 − 1,4),
+    # marcat `thickness_open` perquè la taula sísmica l'imprimeixi amb asterisc (Alcoletge signat «0.29*»).
+    assert levels[1].depth_to_m is None
+    assert levels[1].thickness_m == 1.0 and levels[1].thickness_open is True
+    assert levels[0].thickness_open is False
     assert abs(levels[1].n20_average - 25.0) < 0.01, "lectures 1,6-2,0 (el rebuig 110 exclòs), fins al fons"
     assert levels[0].depth_to_m == 1.4 and abs(levels[0].n20_average - 4.0) < 0.01

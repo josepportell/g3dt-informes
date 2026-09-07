@@ -637,6 +637,18 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     except Exception:
         pass
 
+    # P5 (2026-09-07): sense sondeig, primer la geometria del tall LLEGIT (`soil_levels` de/a de la via A),
+    # com fa `build_report_data`; el segmentador només si la lectura no dona contactes.
+    if not sondeig_layers and getattr(dpsh, 'tests', None):
+        try:
+            from automation.report_data import lectura_sondeig_layers
+            sondeig_layers = lectura_sondeig_layers({}, project_path, dpsh)
+            if sondeig_layers:
+                logger.info("P5 (wizard): %d sondeig_layers des de la lectura.", len(sondeig_layers))
+        except Exception as exc:
+            logger.warning("P5 (wizard) lectura layers failed: %s", exc)
+            sondeig_layers = []
+
     # Fallback: no sondeig file or empty extraction → synthesize layers from
     # DPSH N20 step-change (mirrors build_report_data's Fix α fallback so the
     # wizard prefill path and the report-generation path stay aligned).

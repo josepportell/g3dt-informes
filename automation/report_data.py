@@ -104,6 +104,75 @@ def _bearing_soil_type(
     return detect_soil_type(description) if description else 'granular'
 
 
+def lectura_sondeig_layers(
+    user_data: dict,
+    project_path: str | Path | None,
+    dpsh_data: DPSHData | None = None,
+    tables: dict | None = None,
+) -> list[dict]:
+    """P5 (2026-09-07): capes de nivell des de la taula `soil_levels` LLEGIDA (via A) quan no hi ha sondeig.
+
+    Fins ara, sense `sondeig_extracted.json`, `sondeig_layers` sortia del segmentador DPSH (un canvi de
+    pendent de l'N20), no del tall de correlació que l'Eva dibuixa abans d'obrir el wizard: Linyola
+    col·lapsava a un sol nivell «Llims» 0-3,0 i el càlcul es feia sobre grava densa on el signat calcula
+    amb les lutites del segon nivell. La geometria `de`/`a` per nivell ja arribava al generador dins
+    `user_data['lectura_tables']` i només s'usava per sobreescriure descripcions (Fase 8b).
+
+    Ordre de fonts: `tables` (ja carregades) > `user_data['lectura_tables']` (el que l'Eva va desar) >
+    `validation/lectura/_decisions.json` del projecte. Amb `dpsh_data`, cada capa porta `n20_average`
+    (mitjana de les lectures dins el rang, sense rebuig) perquè `_select_bearing_layer_idx` pugui
+    aplicar la regla de capa fluixa. `[]` si la lectura no dona geometria (Vilanova, Anciles: el tall
+    no imprimeix el contacte) → el consumidor cau al segmentador com abans.
+    """
+    from .lectura.tables_report import load_project_tables, sondeig_layers_from_levels
+    if not isinstance(tables, dict) or not tables:
+        tables = user_data.get('lectura_tables') if isinstance(user_data, dict) else None
+    if (not isinstance(tables, dict) or not tables) and project_path:
+        try:
+            tables = load_project_tables(project_path, (user_data or {}).get('lectura_selections'))
+        except Exception:
+            tables = {}
+    layers = sondeig_layers_from_levels((tables or {}).get('soil_levels'))
+    if layers and dpsh_data is not None:
+        _fill_lectura_layer_n20(layers, dpsh_data)
+    return layers
+
+
+def _annotate_layers_with_lectura_lithology(layers: list[dict], user_data: dict, project_path: str | Path | None) -> None:
+    """Descripció de cada capa del segmentador = litologia llegida del nivell (1..N), si la lectura té N nivells."""
+    from .lectura.tables_report import levels_by_number, load_project_tables
+    tables = user_data.get('lectura_tables') if isinstance(user_data, dict) else None
+    if (not isinstance(tables, dict) or not tables) and project_path:
+        try:
+            tables = load_project_tables(project_path, (user_data or {}).get('lectura_selections'))
+        except Exception:
+            tables = {}
+    by_number = levels_by_number((tables or {}).get('soil_levels'))
+    if len(by_number) != len(layers) or sorted(by_number) != list(range(1, len(layers) + 1)):
+        return
+    for i, layer in enumerate(layers):
+        lit = str(by_number[i + 1].get('litologia') or '').strip()
+        if lit:
+            layer['description'] = lit
+            layer['description_source'] = 'lectura'
+    logger.info("P5b: %d capes del segmentador amb la litologia llegida", len(layers))
+
+
+def _fill_lectura_layer_n20(layers: list[dict], dpsh_data: DPSHData | None) -> None:
+    """N20 mitjà de cada capa `source == "lectura"` que no en porti (lectures dins [sostre, base], sense rebuig)."""
+    if not dpsh_data or not dpsh_data.tests:
+        return
+    readings = [(abs(r.depth_m), r.n20) for t in dpsh_data.tests for r in t.readings if r.depth_m is not None]
+    for layer in layers:
+        if layer.get('source') != 'lectura' or layer.get('n20_average') is not None:
+            continue
+        lo = float(layer.get('depth_from_m') or 0.0)
+        hi = layer.get('depth_to_m')
+        hi_f = float('inf') if hi is None else float(hi)
+        vals = [n for d, n in readings if lo <= d <= hi_f and n < 100]
+        layer['n20_average'] = (sum(vals) / len(vals)) if vals else None
+
+
 def _eval_numeric(val: Any) -> float:
     """Evaluate a numeric value or simple arithmetic expression (e.g. '70+20' → 90.0).
 
@@ -157,6 +226,9 @@ class SoilLevel:
     # Fase 8b: la descripcio ve de la lectura (via A) i ja es la redaccio que
     # Eva ha triat -> a les cel·les de taula hi va LITERAL, sense escurçar.
     description_verbatim: bool = False
+    # P5 (2026-09-07): últim nivell SENSE base coneguda: el gruix és «fins a la fondària investigada»
+    # (fons del DPSH − sostre) i l'Eva l'imprimeix amb asterisc («1.30*», «0.29*», «1.58*»: 3/4 signats).
+    thickness_open: bool = False
 
 
 @dataclass
@@ -257,6 +329,10 @@ class ReportData:
     geotech_criteria: dict | None = None
     # nivell de l'INFORME (level_number) que fa de portant (assentament per criteri, 2026-09-06)
     bearing_level_number: int | None = None
+    # P5 (2026-09-07): les capes que el càlcul ha fet servir (sondeig, lectura o segmentador) perquè el generador
+    # faci Terzaghi-Peck i les files de la taula geotècnica amb la MATEIXA geometria (abans: N20 global si
+    # `user_data` no portava `sondeig_layers`)
+    sondeig_layers_used: list | None = None
 
     # Override ICGC unit (from 1:25k manual lookup)
     icgc_unit_code: str = ""
@@ -526,6 +602,13 @@ def build_report_data(
                     logger.info("Auto-filled sondeig_layers from sondeig data in build_report_data")
             except Exception:
                 pass
+        # P5 (2026-09-07): sense sondeig, la geometria surt del tall LLEGIT abans que del segmentador
+        if not sondeig_layers:
+            sondeig_layers = lectura_sondeig_layers(user_data, project_path, dpsh_data)
+            if sondeig_layers:
+                logger.info("P5: %d sondeig_layers des de la taula soil_levels llegida (via A).", len(sondeig_layers))
+        elif any(l.get('source') == 'lectura' and l.get('n20_average') is None for l in sondeig_layers):
+            _fill_lectura_layer_n20(sondeig_layers, dpsh_data)
         if not sondeig_layers:
             from .dpsh_segmenter import segment_by_n20_step
             sondeig_layers = segment_by_n20_step(dpsh_data)
@@ -535,6 +618,11 @@ def build_report_data(
                     "(no sondeig file or empty sondeig extraction).",
                     len(sondeig_layers),
                 )
+            # P5b: el segmentador no sap de litologies (descripció buida → cap senyal: Vilanova «Arcilla limosa»
+            # sortia φ 28 en lloc dels 25 de l'argila llimosa). Si la lectura té tants nivells com capes, la
+            # litologia llegida és la descripció de la capa (el text que la Fase 8b posarà a les taules).
+            if sondeig_layers and all(not (l.get('description') or '').strip() for l in sondeig_layers):
+                _annotate_layers_with_lectura_lithology(sondeig_layers, user_data, project_path)
         soil_types_list = user_data.get('soil_types', [])
         # Nivells de l'informe (abans dels paràmetres: el tipus de sòl del portant
         # s'alinea per nivell de l'informe, no per capa del sondeig)
@@ -693,6 +781,7 @@ def build_report_data(
         geotechnical_params=geotechnical_params,
         bearing_layer_idx=bearing_layer_idx,
         bearing_layer_description=(sondeig_layers[bearing_layer_idx].get('description', '') if bearing_layer_idx is not None else ''),
+        sondeig_layers_used=(list(sondeig_layers) if sondeig_layers else None),
         foundation_depth_used_m=foundation_depth,
         foundation_depth_is_default=df_is_default,
         geotech_criteria=geotech_criteria_dict,
@@ -802,6 +891,7 @@ def to_dict(report_data: ReportData) -> dict[str, Any]:
                 'level_number': level.level_number,
                 'description': level.description,
                 'thickness_m': level.thickness_m,
+                'thickness_open': level.thickness_open,
                 'n20_average': level.n20_average,  # Full precision for serialization
                 'depth_from_m': level.depth_from_m,
                 'depth_to_m': level.depth_to_m,
@@ -886,6 +976,7 @@ def from_dict(data: dict[str, Any]) -> ReportData:
             n20_min=sl.get('n20_min'),
             n20_max=sl.get('n20_max'),
             soil_type=sl.get('soil_type', 'granular'),
+            thickness_open=bool(sl.get('thickness_open', False)),
         )
         for sl in data.get('soil_levels', [])
     ]
@@ -1427,6 +1518,14 @@ def _generate_soil_levels(
             ]
             avg_n20 = sum(layer_n20) / len(layer_n20) if layer_n20 else dpsh_data.overall_average_n20
             thickness = depth_to - depth_from if depth_to is not None and depth_to > depth_from else None
+            # P5: l'ÚLTIMA capa oberta té gruix «fins a la fondària investigada» (fons del DPSH − sostre),
+            # imprès amb asterisc (Linyola 1.30*, Alcoletge 0.29*, Vilanova 1.58*: signats).
+            thickness_open = False
+            if depth_to is None and i == len(sondeig_layers) - 1:
+                max_depth = max((abs(r.depth_m) for r in all_readings), default=0.0)
+                if max_depth > depth_from:
+                    thickness = round(max_depth - depth_from, 2)
+                    thickness_open = True
 
             # Compute min/max N20 for Nb column
             n20_min = min(layer_n20) if layer_n20 else None
@@ -1445,6 +1544,7 @@ def _generate_soil_levels(
                 n20_min=n20_min,
                 n20_max=n20_max,
                 soil_type=st,
+                thickness_open=thickness_open,
             ))
 
         return levels

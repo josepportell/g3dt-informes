@@ -581,6 +581,87 @@ def _level_number(name: Any) -> int | None:
     return None
 
 
+#: Base «oberta» de l'últim nivell: la lectura escriu «fins al fons d'investigació (rebuig DPSH: -2,90/…)»;
+#: el número que hi ha dins NO és un contacte.
+_OPEN_BOTTOM_RE = re.compile(r"fins al f|hasta el f|fons d|fondo d|final de la investigaci|indefinid|continua", re.I)
+#: Sanity: cap contacte de nivell per sota de 60 m (un «243,6 msnm» mal capturat no és una fondària).
+_MAX_LEVEL_DEPTH_M = 60.0
+
+
+def depth_from_cell(value: Any) -> float | None:
+    """Fondària (m, positiva) d'una cel·la `de`/`a` de `soil_levels` llegida; None si no és un contacte.
+
+    `"0,00"` -> 0.0 · `"≈-1,4 m a P-1 (contacte ≈243,6 msnm)"` -> 1.4 (el PRIMER número, com `_num`) ·
+    `"fins al fons d'investigació (rebuig DPSH: -2,90/-2,15 m)"` -> None (capa oberta) · `"243,6 msnm"` -> None.
+    """
+    if value is None:
+        return None
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        n = abs(float(value))
+        return n if n <= _MAX_LEVEL_DEPTH_M else None
+    text = str(value)
+    if _OPEN_BOTTOM_RE.search(text):
+        return None
+    n = _num(text)
+    if n is None:
+        return None
+    n = abs(n)
+    return n if n <= _MAX_LEVEL_DEPTH_M else None
+
+
+def sondeig_layers_from_levels(levels: list[Mapping[str, Any]] | None) -> list[dict]:
+    """Capes (`sondeig_layers`) des de les files `soil_levels` llegides — P5 (2026-09-07).
+
+    Sense annex de sondeig, fins ara la geometria de nivells sortia del segmentador DPSH (Linyola col·lapsava a
+    un sol nivell; les potències de la taula sísmica no eren les del tall). El tall de correlació llegit ja porta
+    `de`/`a` per nivell: aquí es converteix a la forma que el càlcul ja entén (`depth_from_m`, `depth_to_m`,
+    `description`), amb `source: "lectura"` perquè el consumidor hi afegeixi l'N20 mitjà del DPSH.
+
+    Regles (les de la fila 1.4, DECISION-LOG 2026-09-05 (nit, 4)): el nivell 1 comença a 0,00; el sostre d'un
+    nivell és la base de l'anterior si li falta; la base de l'últim és `None` (oberta, «fins al fons»). Cap contacte
+    s'inventa: si un contacte INTERIOR no es pot fixar per cap dels dos costats, o els nivells no són 1..N, torna
+    `[]` (el consumidor cau al segmentador, com abans). Amb un sol nivell numerat també `[]` (no hi ha geometria).
+    """
+    by_number = levels_by_number(levels)
+    numbers = sorted(by_number)
+    if len(numbers) < 2 or numbers != list(range(1, len(numbers) + 1)):
+        return []
+    tops: list[float | None] = []
+    bottoms: list[float | None] = []
+    for n in numbers:
+        row = by_number[n]
+        tops.append(depth_from_cell(row.get("de")))
+        bottoms.append(depth_from_cell(row.get("a")))
+    if tops[0] is None:
+        tops[0] = 0.0
+    k = len(numbers)
+    for i in range(1, k):
+        if tops[i] is None:
+            tops[i] = bottoms[i - 1]
+    for i in range(k - 1):
+        if bottoms[i] is None:
+            bottoms[i] = tops[i + 1]
+        elif tops[i + 1] is not None and abs(tops[i + 1] - bottoms[i]) > 1e-6:
+            tops[i + 1] = bottoms[i]  # un sol contacte: la base del nivell de sobre mana
+    if any(t is None for t in tops) or any(b is None for b in bottoms[:-1]):
+        return []
+    for i in range(k):
+        lo, hi = tops[i], bottoms[i]
+        if hi is not None and hi <= lo:  # type: ignore[operator]
+            return []
+    out: list[dict] = []
+    for i, n in enumerate(numbers):
+        lit = by_number[n].get("litologia")
+        out.append({
+            "depth_from_m": float(tops[i]),  # type: ignore[arg-type]
+            "depth_to_m": (None if bottoms[i] is None else float(bottoms[i])),
+            "description": str(lit or "").strip(),
+            "soil_type": None,
+            "source": "lectura",
+        })
+    return out
+
+
 def levels_by_number(levels: list[Mapping[str, Any]] | None) -> dict[int, dict]:
     """`soil_levels` del bloc, indexats per número de nivell.
 

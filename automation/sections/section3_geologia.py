@@ -800,8 +800,12 @@ class Section3Generator:
                 prev_level = self.data.soil_levels[i - 1]
                 depth_start = f"a partir de {prev_level.depth_to_m:.2f} m"
 
-            if level.thickness_m:
+            if level.thickness_m and level.depth_to_m is not None:
                 depth_range = f"{depth_start} i fins a {level.depth_to_m:.2f} m, amb un gruix de {level.thickness_m:.2f} m"
+            elif level.thickness_m:
+                # P5: últim nivell obert amb gruix «fins a la fondària investigada» (base desconeguda)
+                depth_range = (f"{depth_start} i fins a la cota de finalització dels assaigs, "
+                               f"amb un gruix estudiat de {level.thickness_m:.2f} m")
             else:
                 depth_range = f"{depth_start} i fins a la cota de finalització dels assaigs"
 
@@ -895,8 +899,12 @@ class Section3Generator:
                     "fins a la cota de finalització de tots els assaigs"
                 )
 
-            # Thickness note
-            if level.thickness_m is not None:
+            # Thickness note (P5: obert = «com a mínim», la base no es coneix)
+            if level.thickness_m is not None and getattr(level, 'thickness_open', False):
+                thickness_note = (
+                    f", amb potències estudiades de com a mínim {level.thickness_m:.2f} metres"
+                )
+            elif level.thickness_m is not None:
                 thickness_note = (
                     f", amb potències estudiades de {level.thickness_m:.2f} metres"
                 )
@@ -1254,7 +1262,8 @@ class Section3Generator:
         deeper_text = " ".join(deeper_assessments) if deeper_assessments else ""
 
         result += self.EXCAVABILITAT_MULTI_TEMPLATE.format(
-            depth=first_level.depth_to_m if first_level.thickness_m else 1.5,
+            depth=(first_level.depth_to_m if first_level.thickness_m and first_level.depth_to_m is not None
+                   else (first_level.depth_from_m + first_level.thickness_m) if first_level.thickness_m else 1.5),
             material_type_1=material_desc_1,
             deeper_assessment=deeper_text,
         )

@@ -359,6 +359,23 @@ class ReportGenerator:
             except Exception as e:
                 self.warnings.append(f"Could not auto-fill from sondeig_extracted.json: {e}")
 
+            # P5 (2026-09-07): sense sondeig, les capes surten de la taula `soil_levels` LLEGIDA (tall de
+            # correlació, via A), no del segmentador DPSH. Es posen a `user_data` com les del sondeig perquè
+            # el càlcul inicial (Terzaghi-Peck del nivell portant) i les files de la taula geotècnica vegin la
+            # mateixa geometria que `build_report_data`. L'N20 per capa l'omple `build_report_data` (té el DPSH).
+            if not self.user_data.get('sondeig_layers'):
+                try:
+                    from .report_data import lectura_sondeig_layers
+                    lectura_layers = lectura_sondeig_layers(self.user_data, self.project_path, tables=self.lectura_tables)
+                    if lectura_layers:
+                        self.user_data['sondeig_layers'] = lectura_layers
+                        if 'num_soil_levels' not in self.user_data:
+                            self.user_data['num_soil_levels'] = len(lectura_layers)
+                        logger.info("P5: %d capes des de la lectura (soil_levels de/a): %s", len(lectura_layers),
+                                    [(l['depth_from_m'], l['depth_to_m']) for l in lectura_layers])
+                except Exception as e:
+                    self.warnings.append(f"P5: no s'han pogut derivar les capes de la lectura: {e}")
+
             # Auto-fill annotated refusal depths from dpsh_extracted.json
             # (handwritten "R:" annotation is more accurate than Excel last-row depth)
             try:
@@ -399,6 +416,18 @@ class ReportGenerator:
                             test.test_id, abs(test.max_depth),
                             abs(test.refusal_depth_annotated),
                         )
+
+            # P5: la geometria que ha usat el càlcul (sondeig, lectura o segmentador) també per a Terzaghi-Peck
+            # i les files de la taula geotècnica. Abans, sense `sondeig_layers` a `user_data`, el Qa imprès
+            # sortia amb l'N20 GLOBAL (limitació coneguda del DECISION-LOG 2026-09-06 (vespre)): Anciles amb
+            # pous a 2,9 usava Nb 17,6 (global) en lloc dels 26,3 de les graves portants.
+            if not self.user_data.get('sondeig_layers') and getattr(self.report_data, 'sondeig_layers_used', None):
+                self.user_data['sondeig_layers'] = list(self.report_data.sondeig_layers_used)
+
+            # P5: gruix «fins a la fondària investigada» amb la fondària de rebuig IMPRESA en aquest informe
+            # (files DPSH llegides «-1.69»; si no, l'anotació «R:» del full de camp; l'Excel arrodoneix al tram
+            # de 0,20 → 1,80): Alcoletge 1,69 − 1,40 = 0,29* com el signat.
+            self._refresh_open_thickness()
 
             # Calculate Terzaghi AFTER build_report_data (needs correct cohesion for rock cap)
             if self.report_data.geotechnical_params:
@@ -756,6 +785,25 @@ class ReportGenerator:
             'table_seismic_num': table_seismic_num,
             'table_soil_chars_num': table_soil_chars_num,
         }
+
+    def _refresh_open_thickness(self) -> None:
+        """Recalcula `thickness_m` dels nivells `thickness_open` amb la fondària màxima assolida IMPRESA."""
+        rd = self.report_data
+        if not rd or not rd.soil_levels or not any(getattr(lv, 'thickness_open', False) for lv in rd.soil_levels):
+            return
+        reached = 0.0
+        for row in (self.lectura_tables or {}).get('dpsh_tests') or []:
+            try:
+                reached = max(reached, abs(float(str(row.get('depth', '')).replace(',', '.'))))
+            except (TypeError, ValueError):
+                continue
+        if reached <= 0 and rd.dpsh and rd.dpsh.tests:
+            reached = max((t.depth_reached for t in rd.dpsh.tests), default=0.0)
+        if reached <= 0:
+            return
+        for lv in rd.soil_levels:
+            if getattr(lv, 'thickness_open', False) and reached > lv.depth_from_m:
+                lv.thickness_m = round(reached - lv.depth_from_m, 2)
 
     def _site_photos_from_user_selection(self) -> int:
         """Fotos de vista general triades per l'Eva a la pestanya de fotos (`validation/photo_selection.json`,
@@ -1487,6 +1535,8 @@ class ReportGenerator:
                         'Tipus III': '1.6', 'Tipus IV': '2.0',
                     }.get(terrain_type, '1.3')
                 thickness = f"{level.thickness_m:.2f}" if level.thickness_m else ''
+                if thickness and getattr(level, 'thickness_open', False):
+                    thickness += '*'  # «fins a la fondària investigada» (P5: Linyola 1.30*, Alcoletge 0.29*)
                 context['seismic_rows'].append({
                     'num': str(level.level_number),
                     'terrain_type': terrain_type,
