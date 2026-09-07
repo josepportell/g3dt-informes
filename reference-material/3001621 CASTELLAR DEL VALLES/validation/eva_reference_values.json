@@ -380,20 +380,11 @@
       "template_text": "",
       "reference_text": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):"
     },
-    "municipality": {
-      "value": "Castellar del Vallès",
-      "position": "p340",
-      "position_description": "Body paragraph 340",
-      "confidence": 0.806,
-      "extraction_method": "paragraph_single",
-      "template_text": "A la zona d’estudi, en el municipi de {{ municipality }}, s’estableix una acceleració sísmica bàsica de:",
-      "reference_text": "A la zona d’estudi, en el municipi de Castellar del Vallès, s’estableix una acceleració sísmica bàsica de:"
-    },
     "num_dpsh_tests": {
-      "value": "4 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
-      "position": "p130",
-      "position_description": "Body paragraph 130",
-      "confidence": 0.889,
+      "value": "4",
+      "position": "p138",
+      "position_description": "Body paragraph 138",
+      "confidence": 0.8894117647058825,
       "extraction_method": "paragraph_single",
       "template_text": "{{ num_dpsh_tests }} assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\").",
       "reference_text": "4 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”)."
@@ -464,15 +455,6 @@
       "extraction_method": "loop_table",
       "template_text": "Loop: ['num', 'terrain_type', 'thickness', 'c_coeff']",
       "reference_text": "1 data rows"
-    },
-    "settlement": {
-      "value": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
-      "position": "p460",
-      "position_description": "Body paragraph 460",
-      "confidence": 0.208,
-      "extraction_method": "paragraph_single",
-      "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
-      "reference_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm."
     },
     "site_description": {
       "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.\nEl solar es localitza sense construccions ni pavimentacions, s’ha realitzat un desbroç de la zona de treball i s’ha adequat un accés a la zona de treball.\nTopogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina, situada aproximadament 4.0 metres respecte el carrer.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
@@ -661,6 +643,59 @@
       "extraction_method": "paragraph_anchor",
       "template_text": "{{ adjacent_intro }}",
       "reference_text": "La parcel·la objecte d’estudi es situa al nord del municipi de Castellar del Vallès, pren una morfologia quasi rectangular, i limita:"
+    },
+    "bearing_layer_idx": {
+      "value": 0,
+      "position": "t12.row0",
+      "position_description": "Nivell portant declarat a la frase de la tensió admissible/de treball del signat",
+      "confidence": 0.9,
+      "extraction_method": "bearing_rule",
+      "template_text": "",
+      "reference_text": "Per una fonamentació superficial mitjançant sabates, ja sigui aïllades com corregudes, encastada entre 20-30 cm en els materials de substrat, un cop superats els materials superficials, es podrà adopt"
+    },
+    "data_camp_inici_text": {
+      "value": "24 de octubre de 2025",
+      "position": "p095",
+      "position_description": "Body paragraph 95",
+      "confidence": 0.7165048543689321,
+      "extraction_method": "paragraph_single",
+      "template_text": "El dia {{ data_camp_inici_text }}, es va visitar l’obra per tal de:",
+      "reference_text": "El dia 24 de octubre de 2025, es va visitar l’obra per tal de:"
+    },
+    "municipality_de": {
+      "value": "de Castellar del Vallès",
+      "position": "p348",
+      "position_description": "Body paragraph 348",
+      "confidence": 0.7904761904761904,
+      "extraction_method": "paragraph_single",
+      "template_text": "A la zona d’estudi, en el municipi {{ municipality_de }}, s’estableix una acceleració sísmica bàsica de:",
+      "reference_text": "A la zona d’estudi, en el municipi de Castellar del Vallès, s’estableix una acceleració sísmica bàsica de:"
+    },
+    "settlement_sentence": {
+      "value": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+      "position": "p467",
+      "position_description": "Body paragraph 467",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ settlement_sentence }}",
+      "reference_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm."
+    },
+    "spt_ma_tests": {
+      "value": [
+        {
+          "test_id": "SPT-1",
+          "location": "S-1",
+          "depth_range": "-1.00 a -1.20",
+          "n30": "R",
+          "lithology": "Limolites i bretxes"
+        }
+      ],
+      "position": "t6",
+      "position_description": "Loop table 6 (spt_ma_tests)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['test_id', 'location', 'depth_range', 'n30', 'lithology']",
+      "reference_text": "1 data rows"
     }
   },
   "warnings": [
@@ -690,6 +725,7 @@
     "refresh_eva_narrativa.py 2026-09-06: 2 claus narratives re-extretes (prefix primer)",
     "refresh_eva_narrativa.py 2026-09-06: 4 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
     "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer)",
-    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)"
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 8 claus re-extretes: bearing_layer_idx, data_camp_inici_text, municipality, municipality_de, num_dpsh_tests, settlement, settlement_sentence, spt_ma_tests"
   ]
 }

@@ -373,20 +373,11 @@
       "template_text": "",
       "reference_text": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):"
     },
-    "municipality": {
-      "value": "Rubí (Barcelona)",
-      "position": "p340",
-      "position_description": "Body paragraph 340",
-      "confidence": 0.823,
-      "extraction_method": "paragraph_single",
-      "template_text": "A la zona d’estudi, en el municipi de {{ municipality }}, s’estableix una acceleració sísmica bàsica de:",
-      "reference_text": "A la zona d’estudi, en el municipi de Rubí (Barcelona), s’estableix una acceleració sísmica bàsica de:"
-    },
     "num_dpsh_tests": {
-      "value": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
-      "position": "p130",
-      "position_description": "Body paragraph 130",
-      "confidence": 0.889,
+      "value": "3",
+      "position": "p138",
+      "position_description": "Body paragraph 138",
+      "confidence": 0.8894117647058825,
       "extraction_method": "paragraph_single",
       "template_text": "{{ num_dpsh_tests }} assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\").",
       "reference_text": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”)."
@@ -467,15 +458,6 @@
       "template_text": "Loop: ['num', 'terrain_type', 'thickness', 'c_coeff']",
       "reference_text": "1 data rows"
     },
-    "settlement": {
-      "value": "1.50",
-      "position": "p460",
-      "position_description": "Body paragraph 460",
-      "confidence": 0.887,
-      "extraction_method": "paragraph_single",
-      "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
-      "reference_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.50 cm, immediats en el temps donat el comportament granular dels materials."
-    },
     "site_description": {
       "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.\nEl solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera baixada, de sudoest a nord-est, es troba una diferència de cota d'uns 13.20 metres, des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m. respectivament, tot i que la zona de treball es mostra totalment plana. La pendent comença la zona posterior (a la meitat del fons ).\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
       "position": "p076",
@@ -484,23 +466,6 @@
       "extraction_method": "intelligent_analysis",
       "template_text": "",
       "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.\nEl solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera ba..."
-    },
-    "sondeig_tests": {
-      "value": [
-        {
-          "test_id": "SPT-1",
-          "cota": "P-3",
-          "depth": "-0.60 a -1.20",
-          "spt_ma": "40",
-          "water": "Graves i sorres"
-        }
-      ],
-      "position": "t5",
-      "position_description": "Loop table 5 (sondeig_tests)",
-      "confidence": 0.85,
-      "extraction_method": "loop_table",
-      "template_text": "Loop: ['test_id', 'cota', 'depth', 'spt_ma', 'water']",
-      "reference_text": "1 data rows"
     },
     "sulfate_baumann": {
       "value": "---",
@@ -609,6 +574,104 @@
       "extraction_method": "paragraph_anchor",
       "template_text": "{{ adjacent_intro }}",
       "reference_text": "La parcel·la objecte d’estudi es situa al sud-oest del municipi de Rubí, pren una morfologia rectangular, i limita:"
+    },
+    "bearing_layer_idx": {
+      "value": 0,
+      "position": "t12.row0",
+      "position_description": "Nivell portant declarat a la frase de la tensió admissible/de treball del signat",
+      "confidence": 0.9,
+      "extraction_method": "bearing_rule",
+      "template_text": "",
+      "reference_text": "Per una fonamentació mitjançant sabates o bé llosa, encastada entre 30-40 cm en els materials del primer nivell sanejat un cop extret el tram superficial, es podrà adoptar una tensió admissible de:"
+    },
+    "data_camp_inici_text": {
+      "value": "14 de novembre de 2025",
+      "position": "p095",
+      "position_description": "Body paragraph 95",
+      "confidence": 0.7096153846153846,
+      "extraction_method": "paragraph_single",
+      "template_text": "El dia {{ data_camp_inici_text }}, es va visitar l’obra per tal de:",
+      "reference_text": "El dia 14 de novembre de 2025, es va visitar l’obra per tal de:"
+    },
+    "municipality_de": {
+      "value": "de Rubí (Barcelona)",
+      "position": "p348",
+      "position_description": "Body paragraph 348",
+      "confidence": 0.8075675675675676,
+      "extraction_method": "paragraph_single",
+      "template_text": "A la zona d’estudi, en el municipi {{ municipality_de }}, s’estableix una acceleració sísmica bàsica de:",
+      "reference_text": "A la zona d’estudi, en el municipi de Rubí (Barcelona), s’estableix una acceleració sísmica bàsica de:"
+    },
+    "settlement_sentence": {
+      "value": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.50 cm, immediats en el temps donat el comportament granular dels materials.",
+      "position": "p467",
+      "position_description": "Body paragraph 467",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ settlement_sentence }}",
+      "reference_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.50 cm, immediats en el temps donat el comportament granular dels materials."
+    },
+    "spt_depth_range": {
+      "value": "-0.60 a -1.20",
+      "position": "t6.row0.depth_range",
+      "position_description": "Flattened from first SPT/MA row",
+      "confidence": 0.9,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "-0.60 a -1.20"
+    },
+    "spt_lithology": {
+      "value": "Graves i sorres",
+      "position": "t6.row0.lithology",
+      "position_description": "Flattened from first SPT/MA row",
+      "confidence": 0.9,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "Graves i sorres"
+    },
+    "spt_location": {
+      "value": "P-3",
+      "position": "t6.row0.location",
+      "position_description": "Flattened from first SPT/MA row",
+      "confidence": 0.9,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "P-3"
+    },
+    "spt_ma_tests": {
+      "value": [
+        {
+          "test_id": "SPT-1",
+          "location": "P-3",
+          "depth_range": "-0.60 a -1.20",
+          "n30": "40",
+          "lithology": "Graves i sorres"
+        }
+      ],
+      "position": "t6",
+      "position_description": "Loop table 6 (spt_ma_tests)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['test_id', 'location', 'depth_range', 'n30', 'lithology']",
+      "reference_text": "1 data rows"
+    },
+    "spt_n30": {
+      "value": "40",
+      "position": "t6.row0.n30",
+      "position_description": "Flattened from first SPT/MA row",
+      "confidence": 0.9,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "40"
+    },
+    "spt_test_id": {
+      "value": "SPT-1",
+      "position": "t6.row0.test_id",
+      "position_description": "Flattened from first SPT/MA row",
+      "confidence": 0.9,
+      "extraction_method": "table_flatten",
+      "template_text": "",
+      "reference_text": "SPT-1"
     }
   },
   "warnings": [
@@ -643,6 +706,7 @@
     "refresh_eva_narrativa.py 2026-09-06: 2 claus narratives re-extretes (prefix primer)",
     "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
     "refresh_eva_narrativa.py 2026-09-06: 2 claus narratives re-extretes (prefix primer)",
-    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)"
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 14 claus re-extretes: bearing_layer_idx, data_camp_inici_text, municipality, municipality_de, num_dpsh_tests, settlement, settlement_sentence, sondeig_tests, spt_depth_range, spt_lithology, spt_location, spt_ma_tests, spt_n30, spt_test_id"
   ]
 }

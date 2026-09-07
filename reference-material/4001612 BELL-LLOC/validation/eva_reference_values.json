@@ -171,13 +171,13 @@
       "reference_text": "T-1"
     },
     "data_camp_text": {
-      "value": "1 d’octubre de 2025",
-      "position": "p095",
-      "position_description": "Body paragraph 95",
-      "confidence": 0.731,
+      "value": "1 i 6 d’octubre de 2025",
+      "position": "p136",
+      "position_description": "Body paragraph 136",
+      "confidence": 0.7904761904761904,
       "extraction_method": "paragraph_single",
-      "template_text": "El dia {{ data_camp_text }}, es va visitar l’obra per tal de:",
-      "reference_text": "El dia 1 d’octubre de 2025, es va visitar l’obra per tal de:"
+      "template_text": "La campanya de camp, que s’ha realitzat el dia {{ data_camp_text }}, ha consistit en la realització de:",
+      "reference_text": "La campanya de camp, que s’ha realitzat el dia 1 i 6 d’octubre de 2025, ha consistit en la realització de:"
     },
     "data_signatura_text": {
       "value": "27 d’octubre de 2025",
@@ -375,20 +375,11 @@
       "template_text": "",
       "reference_text": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):"
     },
-    "municipality": {
-      "value": "Bell-lloc d’Urgell",
-      "position": "p340",
-      "position_description": "Body paragraph 340",
-      "confidence": 0.815,
-      "extraction_method": "paragraph_single",
-      "template_text": "A la zona d’estudi, en el municipi de {{ municipality }}, s’estableix una acceleració sísmica bàsica de:",
-      "reference_text": "A la zona d’estudi, en el municipi de Bell-lloc d’Urgell, s’estableix una acceleració sísmica bàsica de:"
-    },
     "num_dpsh_tests": {
-      "value": "2 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
-      "position": "p130",
-      "position_description": "Body paragraph 130",
-      "confidence": 0.889,
+      "value": "2",
+      "position": "p138",
+      "position_description": "Body paragraph 138",
+      "confidence": 0.8894117647058825,
       "extraction_method": "paragraph_single",
       "template_text": "{{ num_dpsh_tests }} assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\").",
       "reference_text": "2 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”)."
@@ -468,15 +459,6 @@
       "extraction_method": "loop_table",
       "template_text": "Loop: ['num', 'terrain_type', 'thickness', 'c_coeff']",
       "reference_text": "1 data rows"
-    },
-    "settlement": {
-      "value": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran inferiors a 1.20 cm, immediats en el temps donat el comportament granular dels materials.",
-      "position": "p460",
-      "position_description": "Body paragraph 460",
-      "confidence": 0.288,
-      "extraction_method": "paragraph_single",
-      "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
-      "reference_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran inferiors a 1.20 cm, immediats en el temps donat el comportament granular dels materials."
     },
     "site_description": {
       "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del Carrer existent al sud.\nLa parcel·la, que es troba delimitada tanques de parcel·les veïnes, està anivellada a la rasant del carrer, només uns 15 cm per sota, sense pavimentar, i amb vegetació de petita alçada.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
@@ -656,6 +638,59 @@
       "extraction_method": "paragraph_anchor",
       "template_text": "{{ adjacent_intro }}",
       "reference_text": "La parcel·la objecte d’estudi es situa al oest del municipi de Bell-Lloc d’Urgell, pren una morfologia rectangular i limita:"
+    },
+    "bearing_layer_idx": {
+      "value": 0,
+      "position": "t12.row0",
+      "position_description": "Nivell portant declarat a la frase de la tensió admissible/de treball del signat",
+      "confidence": 0.9,
+      "extraction_method": "bearing_rule",
+      "template_text": "",
+      "reference_text": "Per una fonamentació superficial mitjançant sabates, ja sigui aïllades com corregudes, o bé llosa, recolzada en els materials del primer nivell un cop sanejat el tram superficial, es podrà adoptar una"
+    },
+    "data_camp_inici_text": {
+      "value": "1 d’octubre de 2025",
+      "position": "p095",
+      "position_description": "Body paragraph 95",
+      "confidence": 0.7306930693069308,
+      "extraction_method": "paragraph_single",
+      "template_text": "El dia {{ data_camp_inici_text }}, es va visitar l’obra per tal de:",
+      "reference_text": "El dia 1 d’octubre de 2025, es va visitar l’obra per tal de:"
+    },
+    "municipality_de": {
+      "value": "de Bell-lloc d’Urgell",
+      "position": "p348",
+      "position_description": "Body paragraph 348",
+      "confidence": 0.7989304812834225,
+      "extraction_method": "paragraph_single",
+      "template_text": "A la zona d’estudi, en el municipi {{ municipality_de }}, s’estableix una acceleració sísmica bàsica de:",
+      "reference_text": "A la zona d’estudi, en el municipi de Bell-lloc d’Urgell, s’estableix una acceleració sísmica bàsica de:"
+    },
+    "settlement_sentence": {
+      "value": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran inferiors a 1.20 cm, immediats en el temps donat el comportament granular dels materials.",
+      "position": "p467",
+      "position_description": "Body paragraph 467",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ settlement_sentence }}",
+      "reference_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran inferiors a 1.20 cm, immediats en el temps donat el comportament granular dels materials."
+    },
+    "spt_ma_tests": {
+      "value": [
+        {
+          "test_id": "SPT-1",
+          "location": "S-1",
+          "depth_range": "-1.00 a 1.60",
+          "n30": "54",
+          "lithology": "Graves en matriu sorrenca"
+        }
+      ],
+      "position": "t6",
+      "position_description": "Loop table 6 (spt_ma_tests)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['test_id', 'location', 'depth_range', 'n30', 'lithology']",
+      "reference_text": "1 data rows"
     }
   },
   "warnings": [
@@ -687,6 +722,7 @@
     "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
     "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer)",
     "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
-    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)"
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 9 claus re-extretes: bearing_layer_idx, data_camp_inici_text, data_camp_text, municipality, municipality_de, num_dpsh_tests, settlement, settlement_sentence, spt_ma_tests"
   ]
 }
