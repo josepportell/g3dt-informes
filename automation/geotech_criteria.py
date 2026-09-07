@@ -102,6 +102,7 @@ class GeotechCriteria:
     regime: str
     seismic_type: str
     seismic_C: str
+    klass: str = ""   # roca | rebliment | grava | sorra | transicional | argila (bloc 1, 2026-09-07)
     flags: dict[str, bool] = field(default_factory=dict)
     candidates: dict[str, list[Candidate]] = field(default_factory=dict)
     notes: list[str] = field(default_factory=list)
@@ -224,9 +225,14 @@ def geotech_by_criteria(
     n20 = float(n20 or 0.0)
     flags = lith_flags(description)
     rock = (soil_type or "").lower() == "rock" or is_rock(n20, description or "")
-    regime = regime_for(nb, refusal, rock)
     klass = _classify(soil_type, flags, rock)
     notes: list[str] = []
+    if klass == "rebliment" and refusal:
+        # Un rebliment mai és «dens» per un rebuig: el rebuig dins del seu rang és el contacte amb el substrat
+        # (Alcoletge: P-2 rebutja a 1,30 amb el contacte a 1,2-1,4 segons el punt; signat Tipus IV, «5-0», sense R).
+        refusal = False
+        notes.append("rebliment: el rebuig dins del rang és el substrat de sota, no fa el nivell dens")
+    regime = regime_for(nb, refusal, rock)
     st = (soil_type or "granular").lower()
     if st == "cohesive":
         st = "limo"
@@ -361,7 +367,7 @@ def geotech_by_criteria(
     seismic_type, seismic_C = seismic_type_for(regime, klass)
     return GeotechCriteria(
         gamma=g_c[0].value, cohesion=c_c[0].value, phi=phi_c[0].value, E=e_c[0].value, E_display=e_c[0].display,
-        regime=regime, seismic_type=seismic_type, seismic_C=seismic_C, flags=flags,
+        regime=regime, seismic_type=seismic_type, seismic_C=seismic_C, klass=klass, flags=flags,
         candidates={"gamma": g_c, "cohesion": c_c, "phi": phi_c, "E": e_c}, notes=notes,
     )
 

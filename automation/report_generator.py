@@ -1589,8 +1589,12 @@ class ReportGenerator:
                         else:
                             # Use level's bearing stratum N20 average, convert to Nb
                             avg_nb_display = avg_n20 / 0.83 if avg_n20 else 0
-                            # «-R» si el DPSH rebutja dins del NIVELL (mateix criteri que el règim)
+                            # «-R» si el DPSH rebutja dins del NIVELL (mateix criteri que el règim); mai en un
+                            # rebliment (el rebuig hi és el substrat: Alcoletge signat «5-0», sense R)
                             has_refusal = level_refusal.get(level.level_number, any(r.n20 >= 100 for r in level_readings))
+                            _crit_lv = level_criteria.get(level.level_number)
+                            if _crit_lv is not None and getattr(_crit_lv, 'klass', '') == 'rebliment':
+                                has_refusal = False
                             nb_display = f"{avg_nb_display:.0f}-R" if has_refusal else f"{avg_nb_display:.0f}"
                     else:
                         nb_display = ''
