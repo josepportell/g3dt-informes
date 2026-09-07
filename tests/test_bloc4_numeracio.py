@@ -225,11 +225,11 @@ def test_image_presence_amb_inline_image_viu():
 
     class InlineImage:            # mateix nom de classe que docxtpl; `str()` hi petaria
         def __str__(self): raise AssertionError("str() sobre InlineImage")
-    ctx = {"fig_cadastre_image": InlineImage(), "fig_aerea_image": "[Imatge pendent]", "fig_main_plan_image": InlineImage(),
+    ctx = {"fig_cadastre_image": InlineImage(), "fig_main_plan_image": "[Imatge pendent]",
            "fig_spt_cullera_image": InlineImage(), "fig_geological_image": InlineImage(), "fig_correlation_image": InlineImage(),
            "photo_dpsh_image": InlineImage(), "photo_sondeig_image": "[Imatge pendent]", "photo_materials_image": InlineImage(),
            "photo_site_image_1": "", "photo_site_image_2": "", "has_sondeig": False}
     p = M.image_presence(ctx)
-    assert p["pendent"] == ["fig_aerea_image"]
+    assert p["pendent"] == ["fig_main_plan_image"]      # peça 1: `fig_aerea_image` ja no és cap forat
     assert p["absent"] == ["photo_sondeig_image", "photo_site_image_1", "photo_site_image_2"]
-    assert len(p["present"]) == 7
+    assert len(p["present"]) == 6

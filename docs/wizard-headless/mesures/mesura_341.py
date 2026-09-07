@@ -399,8 +399,8 @@ def _gen_value(var: str, ctx: dict, ud: dict, calc: dict, eva=None):
     return None
 
 
-#: Forats d'imatge de la plantilla (bloc 4, 2026-09-07): 6 figures + 3 fotos + 2 vistes generals (condicionals).
-IMAGE_SLOTS = ("fig_cadastre_image", "fig_aerea_image", "fig_main_plan_image", "fig_spt_cullera_image",
+#: Forats d'imatge de la plantilla (bloc 4, 2026-09-07; peça 1: `fig_aerea_image` fora): 5 figures + 3 fotos + 2 vistes (condicionals).
+IMAGE_SLOTS = ("fig_cadastre_image", "fig_main_plan_image", "fig_spt_cullera_image",
                "fig_geological_image", "fig_correlation_image", "photo_dpsh_image", "photo_sondeig_image",
                "photo_materials_image", "photo_site_image_1", "photo_site_image_2")
 IMAGE_PLACEHOLDER = "[Imatge pendent]"

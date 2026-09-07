@@ -1041,8 +1041,9 @@ class ImageManager:
         points_pdf, points_clips = self._find_architect_plan_with_points()
         if points_pdf and points_clips:
             for region_name, var_name, width in [
+                # Peça 1 (2026-09-07, D2): la ranura «aèria» no existeix als signats. L'amplada es queda a 70 mm mentre la
+                # font sigui el retall vertical de l'annex; la peça 5 (composició horitzontal) la posa a tota amplada.
                 ('cadastre', 'fig_cadastre_image', IMAGE_WIDTH_SIDE_BY_SIDE),
-                ('aerea', 'fig_aerea_image', IMAGE_WIDTH_SIDE_BY_SIDE),
             ]:
                 if region_name in points_clips:
                     clip_rect = points_clips[region_name]
@@ -1074,7 +1075,6 @@ class ImageManager:
                         has_plan_crops = True
 
         context.setdefault('fig_cadastre_image', PLACEHOLDER_TEXT)
-        context.setdefault('fig_aerea_image', PLACEHOLDER_TEXT)
 
         # 3b. Main plan from architect_plan (WITHOUT dots — punt de partida)
         base_plan_pdf = None
@@ -1159,27 +1159,8 @@ class ImageManager:
         else:
             context['fig_geological_image'] = PLACEHOLDER_TEXT
 
-        # Fallback: if fig_aerea_image is still a placeholder, use parcel orthophoto
-        if context.get('fig_aerea_image') == PLACEHOLDER_TEXT:
-            if 'orthophoto_parcel' in icgc_images:
-                img = self._safe_inline_image(
-                    str(icgc_images['orthophoto_parcel']),
-                    width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
-                )
-                if img:
-                    context['fig_aerea_image'] = img
-                    context['fig_location_image'] = context['fig_aerea_image']
-                    source = "Google satellite" if "google_sat" in str(icgc_images['orthophoto_parcel']) else "ICGC orthophoto"
-                    logger.info(f"Using {source} with parcel outline as fig_aerea_image")
-            elif 'orthophoto_parcel_plain' in icgc_images:
-                img = self._safe_inline_image(
-                    str(icgc_images['orthophoto_parcel_plain']),
-                    width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
-                )
-                if img:
-                    context['fig_aerea_image'] = img
-                    context['fig_location_image'] = context['fig_aerea_image']
-                    logger.info("Using plain ICGC orthophoto as fig_aerea_image (parcel outline unavailable)")
+        # Peça 1 (2026-09-07, D2): l'ortofoto amb la parcel·la ja no va a cap forat («aèria» fora); les capes ICGC
+        # per UTM es reprenen a la peça 5 (situació B: topogràfic + ortofoto amb rectangle taronja).
 
         # ── SmartScan figure roles (Phase 6) ──
         # If SmartScan classified images as figure roles, use them directly.

@@ -680,9 +680,8 @@ class ReportGenerator:
         fig_counter += 1
         fig_cadastre_num = fig_counter
 
-        # Aerial view (from architect plan crops)
-        fig_counter += 1
-        fig_aerea_num = fig_counter
+        # Peça 1 (2026-09-07, D2 del pas 2): la ranura «aèria» NO existeix a cap dels 7 signats (l'ortofoto va
+        # dins la figura de situació o dins la d'assaigs); fora de la plantilla i de la numeració.
 
         # Main architect plan with building layout
         fig_counter += 1
@@ -709,6 +708,7 @@ class ReportGenerator:
         # no, 0. `num_site_photos` del wizard mana. Abans: sempre 2 («Eva always places 2 side-by-side photos», fals a
         # 4/7) i la numeració de la màquina i dels materials arrossegava +2.
         from .narrative_criteria import language_for_report, photo_site_caption
+        lang = language_for_report(self.report_data, self.user_data)
         num_site_photos = self.user_data.get('num_site_photos')
         if num_site_photos in (None, ''):
             num_site_photos = self._site_photos_from_user_selection()
@@ -717,7 +717,7 @@ class ReportGenerator:
         except (TypeError, ValueError):
             num_site_photos = 0
         photo_counter += num_site_photos
-        photo_site_text = photo_site_caption(num_site_photos, language_for_report(self.report_data, self.user_data))
+        photo_site_text = photo_site_caption(num_site_photos, lang)
 
         # DPSH machine photo
         photo_counter += 1
@@ -733,6 +733,12 @@ class ReportGenerator:
         # Materials detail photo
         photo_counter += 1
         photo_materials_num = photo_counter
+        # Peça 1 (D7 del pas 2): UNA foto de materials per informe, dins el 1r nivell (posició dels signats: Castellar,
+        # Bell-lloc), amb la font al peu («…recuperats durant la realització del sondeig S-1» / «…de l'assaig SPT-1»).
+        if lang == 'es':
+            photo_materials_source = 'del sondeo' if has_sondeig else 'del ensayo SPT'
+        else:
+            photo_materials_source = 'del sondeig' if has_sondeig else "de l'assaig SPT"
 
         # === TABLE NUMBERING ===
         # Tables 1-2 are always: Building summary, CTE classification
@@ -768,7 +774,6 @@ class ReportGenerator:
         return {
             # Figure numbers
             'fig_cadastre_num': fig_cadastre_num,
-            'fig_aerea_num': fig_aerea_num,
             'fig_main_plan_num': fig_main_plan_num,
             'fig_spt_cullera_num': fig_spt_cullera_num,
             'fig_geological_num': fig_geological_num,
@@ -782,6 +787,7 @@ class ReportGenerator:
             'photo_dpsh_num': photo_dpsh_num,
             'photo_sondeig_num': photo_sondeig_num if photo_sondeig_num else '',
             'photo_materials_num': photo_materials_num,
+            'photo_materials_source': photo_materials_source,
             # Table numbers
             'table_dpsh_range': table_dpsh_range,
             'table_lab_num': table_lab_num,

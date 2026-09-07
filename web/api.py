@@ -1023,8 +1023,6 @@ _CACHE_PREFIX_TO_SLOT: list[tuple[str, str, str]] = [
     # (glob prefix, slot_key, human source label)
     ("cadastre_sitplan_*", "fig_cadastre", "PDF crop situation plan"),
     ("cadastre_*", "fig_cadastre", "Architect plan crop"),
-    ("google_sat_parcel_*", "fig_aerea", "Google satellite"),
-    ("orthophoto_parcel_*", "fig_aerea", "ICGC orthophoto"),
     ("main_plan_*", "fig_main_plan", "Architect plan crop"),
     ("planol_*", "fig_main_plan", "Full plan render"),
     ("geological_composite_*", "fig_geological", "ICGC geological composite"),
