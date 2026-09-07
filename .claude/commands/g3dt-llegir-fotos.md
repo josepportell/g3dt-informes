@@ -22,10 +22,11 @@ forat, el forat queda `null` i ho dius a `cap_font`. **Mai** una foto que no sig
   **Compte**: pot ser una màquina compacta sobre erugues molt semblant a la DPSH (Anciles, Bell-lloc), no sempre una
   torre alta amb operari. El que la distingeix és el context, no la mida: el nom del fitxer (`S1`, `S2`, `EMPL S…`,
   carpeta `SONDEIG/`), que NO sigui cap dels punts DPSH (`P1`…`Pn`), i que sovint no és a l'annex de fotografies.
-  **Bona pista: el material del sondeig a terra dins la mateixa foto** — la caixa de testimonis blava, o els tubs i les
-  varilles al costat de la màquina. Als 3 signats amb sondeig hi surt sempre. **No és una prova**: a la foto de DPSH de
-  Castellar també hi ha un objecte blanc i blau a terra (un paper o un plàstic), i a la d'Anciles una vareta amb la
-  punta verda. El color d'un objecte sol no decideix res; el que compta és què és l'objecte. **Els noms de carpeta i els àlies del mateix fitxer (la llista diu «el mateix
+  **El senyal que hi posa l'Eva (confirmat per ella, 2026-09-07): una CAIXA BLAVA DE MOCADORS de paper, a terra, dins
+  l'enquadrament de la foto de la màquina de sondeig.** És petita i rectangular, blava (sovint amb blanc), i es veu a
+  les 3 fotos de sondeig dels signats. **La foto del penetròmetre no porta cap objecte identificatiu**: si hi veus un
+  paper, un plàstic o una vareta a terra, no volen dir res. També ajuden els tubs i les varilles del sondeig al costat
+  de la màquina. **Els noms de carpeta i els àlies del mateix fitxer (la llista diu «el mateix
   fitxer també com a …») són pistes fortes: una foto de màquina que és a `SONDEIG/` o es diu `S1`/`EMPL S1` és la del
   sondeig, encara que la màquina s'assembli a la DPSH.** **Si el projecte té sondeig, hi ha d'haver una foto de la seva màquina:
   busca-la entre les fotos de màquina que no són cap P-n.** Si el projecte no té sondeig, `null` (no és cap error).
