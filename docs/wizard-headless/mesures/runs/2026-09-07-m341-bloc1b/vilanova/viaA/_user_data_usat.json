@@ -1,0 +1,95 @@
+{
+ "client_name": "Grupo Cuenca Guerrero SL",
+ "street_address": "C. Santa Gemma, 4 Urb. La Serra",
+ "site_municipality": "Vilanova de Segrià",
+ "architect_name": "Jordi Carner",
+ "building_type": "Habitatge unifamiliar aïllat",
+ "num_floors": "PB (planta baixa, 1 planta)",
+ "superficie_parcela_m2": 406.0,
+ "cota_referencia": "+321,69 msnm según el visor ICGC",
+ "num_soil_levels": 2,
+ "lab_testing_company": "TPS",
+ "lab_sample_id": "SPT1 (P3)",
+ "lab_depth": "0.8 - 1.4",
+ "lab_location": "P3",
+ "cte_edificacio": "C0",
+ "cte_sol": "T1",
+ "cadastral_refs": "8606709CG9280N",
+ "field_work_dates": [
+  "2026-02-19"
+ ],
+ "field_work_dates_text": "19 de febrer de 2026",
+ "lectura_tables": {
+  "dpsh_tests": [
+   {
+    "test_id": "P-1",
+    "cota": "+321.69",
+    "depth": "-1.48",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-2",
+    "cota": "+321.69",
+    "depth": "-2.18",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-3",
+    "cota": "+321.69",
+    "depth": "-3.78",
+    "refusal": "Si",
+    "water": "Aigua"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "test_id": "SPT1",
+    "location": "P-1",
+    "depth_range": "-0.80 a -1.40",
+    "n30": "24",
+    "lithology": "Sorra fina-mitja, compacta (fragment entre parèntesis il·legible)"
+   },
+   {
+    "test_id": "SPT-1",
+    "location": "P-3",
+    "depth_range": "-0.80 a -1.40",
+    "n30": "10",
+    "lithology": "Argila limosa i sorrenca, amb algunes graves"
+   }
+  ],
+  "soil_levels": [
+   {
+    "name": "1er nivell",
+    "litologia": "Arcilla limosa y arenosa con algunas gravas.",
+    "de": "0,00",
+    "a": null
+   },
+   {
+    "name": "2on nivell",
+    "litologia": "Arenas finas-medias, carbonatadas.",
+    "de": null,
+    "a": "fins al fons d'investigació (rebuig DPSH: -1,48/-2,18/-3,78 m per punt)"
+   }
+  ],
+  "superficie_construida": "100",
+  "lab": {
+   "sample_id": "SPT1 (P3)",
+   "location": "P3",
+   "depth": "0.8 - 1.4"
+  }
+ },
+ "soil_types": [
+  "arcilla",
+  "arena"
+ ],
+ "foundation_depth_m": 0.3,
+ "expedient": "4001671",
+ "_metadata": {
+  "origen": "mesura_341 viaA: lectura + Df del signat",
+  "Df_assumida": 0.3,
+  "data_signatura_assumida": "2026-03-16"
+ },
+ "data_signatura": "2026-03-16"
+}

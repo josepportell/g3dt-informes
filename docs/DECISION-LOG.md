@@ -3809,3 +3809,158 @@ caches calentes.
 5. Producció: decidir si i quan la peça 1 + 2 + 3 arriben a l'Eva.
 
 *Fi entrada 2026-09-06 (nit, 2). Peça 3 de la narrativa, candidats al wizard i plantilla de producció; 61 % honest, taules 79 %.*
+
+## 2026-09-07 — Bloc 1 del PLA: càlcul i taules dels projectes SENSE sondeig (P5 geometria des de la lectura, P6 un sol classificador de sòl, CTE T-1, rang de taules per TAULES, data de signatura, variant d'assentament): calc 66 → 76 %, total 67 → 71 %, taules 79 → 81 %
+
+### Context
+
+Primer bloc del `docs/PLA-QUE-QUEDA-DESPRES-DE-A-B-I-NARRATIVA-2026-09-07.md` (ordre acceptat pel Josep en demanar el handoff
+`_FOR-NEW-YOU-20260907-2230.md`). Les troballes 1-3 de M341 (DECISION-LOG 2026-09-06 (vespre)) deien que els 4 projectes sense
+sondeig (Linyola, Alcoletge, Vilanova, Anciles) calculaven sobre una geometria del segmentador DPSH i un classificador de sòl que
+no llegia castellà ni lutites. Referència de mesura: `2026-09-07-m341-peca3` (M341) i `2026-09-07-informe-peca3` (11 taules).
+Tot el dia a cost 0 (cap crida LLM).
+
+### Decisions arquitectòniques clau
+
+**A. P5 — sense sondeig, la geometria dels nivells surt del tall LLEGIT, no del segmentador.**
+`automation/lectura/tables_report.sondeig_layers_from_levels` converteix les files `soil_levels` llegides (de/a per nivell, ja al
+`user_data['lectura_tables']` des de la Fase 8b) en `sondeig_layers` (`depth_from_m`, `depth_to_m`, `description`, `source: lectura`).
+Regles de la fila 1.4 (2026-09-05, nit 4): nivell 1 des de 0,00; sostre = base de l'anterior si falta; base de l'últim = `None`
+(«fins al fons d'investigació» es reconeix abans de llegir cap número: el «-2,90» de dins NO és un contacte); un contacte interior
+sense cap dels dos costats → `[]` (mai s'inventa: Vilanova i Anciles cauen al segmentador com abans). `report_data.lectura_sondeig_layers`
+(precedència `tables` > `user_data['lectura_tables']` > `_decisions.json`) hi afegeix l'N20 mitjà del DPSH per capa (la regla de capa
+fluixa de `bicapa` el necessita). Cablejat als TRES llocs que sintetitzaven capes: `build_report_data`, `ReportGenerator.build_report_data`
+(a `user_data['sondeig_layers']` com les del sondeig, perquè Terzaghi-Peck i les files de la taula vegin la mateixa geometria) i
+`wizard_service._compute_geotech_prefills`. **Why:** Linyola col·lapsava a un sol «Llims» 0-3,0 i calculava grava densa (φ 38 / c 0 /
+E 450) on el signat calcula amb les lutites del 2n nivell (30 / 1,0 / >800). Alternativa rebutjada: millorar el segmentador (un
+canvi de pendent de l'N20 no és el contacte que l'Eva dibuixa; el tall ja el diu).
+
+**B. P5, gruix de l'últim nivell obert = fondària investigada − sostre, imprès amb asterisc.** `SoilLevel.thickness_open` (nou);
+`_generate_soil_levels` posa `thickness = fons − sostre` a l'última capa sense base; la taula sísmica imprimeix «0.29*». La fondària
+és la IMPRESA en aquest informe (files DPSH llegides «-1.69»; si no, l'anotació «R:» del full; l'Excel arrodoneix al tram de 0,20:
+1,80) — `ReportGenerator._refresh_open_thickness` després del pegat de rebuig. **Evidència:** Linyola 1.30* = 2,90 − 1,60, Alcoletge
+0.29* = 1,69 − 1,40, Vilanova 1.58* = 3,78 − 2,20 (3/4; Anciles 3.92* = 5,92 − 2,00 amb un 1r nivell «4.00» que no quadra: errata
+del signat). Abans la cel·la era buida. Els nivells únics (Castellar 1.15*, Rubí 4.55, Bell-lloc 2.45, tres convencions diferents) no
+es toquen.
+
+**C. P6 — un sol classificador de sòl: `cte_geomech.detect_soil_type` delega a `geotech_criteria._classify`.** `lith_flags`
+(ca/es sense accents) + `is_rock` + el primer material del text (`_first_material_stem`: l'ordre d'aparició mana) → classe del
+criteri → vocabulari del wizard (`rock | grava | arena | arena_limosa | limo | arcilla | granular`). `is_rock` llegeix castellà
+(`areniscas`, `sustrato`, `brecha`, `caliza`, `lutitas`, `margas`, `pizarra`) i exclou les margues toves. **Why:** «Arcilla limosa y
+arenosa con algunas gravas» → `grava` (per «grav»), «Lutites, substrat» i «Rebliment antròpic» → `granular`, «Arcillas arenosas» →
+`granular`: el detector antic només sabia català i sense accents normalitzats; alimentava `soil_types` (wizard i mesura), el nivell
+portant, el topall de Qa i les files de la taula. Canvi de vocabulari deliberat: «Sorres argiloses» → `arena_limosa` (transicional,
+l'àncora de 28°), no `arena` neta. **Topall 3,5 per a tot `GRANULAR_TYPES`** (`terzaghi_calculator.calculate_qa`): Rubí «Graves i
+sorres» és `grava` i el topall no disparava (3,0; signat 3,5).
+
+**D. P5b — les capes del segmentador prenen la litologia llegida quan hi ha tants nivells com capes.** Vilanova: descripció buida
+→ cap senyal «llim» → φ 28 en lloc dels 25 de l'argila llimosa (la taula per nivell ja ho feia bé via Fase 8b; l'escalar del
+portant no). `_annotate_layers_with_lectura_lithology` (només si totes les descripcions són buides i 1..N casa).
+
+**E. La geometria usada pel càlcul també per a Terzaghi-Peck i les files (`ReportData.sondeig_layers_used`).** Tanca la «limitació
+coneguda» del 2026-09-06 (vespre): sense `sondeig_layers` a `user_data`, el Qa imprès sortia amb l'N20 GLOBAL (Anciles amb pous a
+2,9: Nb 17,6 en lloc dels 26,3 de les graves; ara 3,5 pel topall — el signat 2,0 és l'outlier de judici de `CRITERIS-CALCUL-EVA` §6).
+
+**F. Un rebliment mai és «dens» per un rebuig.** Alcoletge: P-2 rebutja a 1,30 amb el contacte rebliment/lutites a 1,2-1,4 segons
+el punt; amb la geometria nova (contacte 1,40) el rebuig queia dins del 1r nivell → règim «dens» → Tipus II i «7-R» (signat Tipus IV,
+«5-0»). `geotech_by_criteria`: classe abans que règim; `klass == rebliment` anul·la el rebuig (nota) i la cel·la Nb no porta «-R».
+`GeotechCriteria.klass` nou (traçabilitat).
+
+**G. CTE sòl = T-1 per defecte; CTE edificació llegeix «PB+1»; rang de taules per TAULES; data de signatura del wizard; variant
+d'assentament.** (1) `classify_soil` torna T-1 sempre (6/6 signats amb taula CTE, també amb rebliment i N20 < 10; la classe de
+terreny és una decisió de reconeixement, no un resultat del DPSH); `_determine_soil_class` hi delega (abans dues còpies per N20:
+`cte_sol` 1/6). T-2/T-3 requeriran un camp al wizard (avui `cte_sol` només és a la llista compacta de lectura). (2) `parse_floor_count`:
+«Pb+1» = 2 plantes (Castellar: el plànol llegit diu «PB+1», l'Eva «Pb+1Pp», signat C-1). (3) `insitu_table_range` (compartit generador +
+wizard): DPSH + sondeig si n'hi ha + SPT/MA (la plantilla la imprimeix sempre) → «3 i 4» / «3, 4 i 5»; abans comptava assaigs DPSH
+(3 → «3, 4 i 5», 4/7 X). Verificat als `.doc` signats: Rubí, Alcoletge i Linyola tenen exactament DUES taules i tres DPSH; Rubí i
+Alcoletge «3 i 4», **Linyola «3, 4 i 5» (incoherència del signat, pregunta 23)**. (4) `data_signatura` (ISO) a `WIZARD_FIELDS`,
+`review.html` (input date, càrrega i desat), prefill «avui» a `wizard_service`; el generador la formata com la data de camp
+(«29 d'octubre de 2025»: «d'» davant vocal, sense zero; abans «06 de setembre de 2026», 0/7). A M341 és la SEGONA assumpció
+documentada (`_metadata.data_signatura_assumida`, del signat, com la Df). (5) `settlement_criteria.SENTENCE_GRANULAR_ALT`
+(«inferiors a», Bell-lloc) com a `sentence_candidates[1]`; visible a `_calc_settlement`.
+
+### Implementació
+
+`automation/cte_geomech.py` (`is_rock` ca/es + margues toves; `detect_soil_type` reescrit, `_first_material_stem`),
+`automation/geotech_criteria.py` (`klass`, rebliment sense rebuig), `automation/terzaghi_calculator.py` (topall `GRANULAR_TYPES`),
+`automation/lectura/tables_report.py` (`depth_from_cell`, `sondeig_layers_from_levels`), `automation/report_data.py`
+(`lectura_sondeig_layers`, `_fill_lectura_layer_n20`, `_annotate_layers_with_lectura_lithology`, `SoilLevel.thickness_open`,
+`ReportData.sondeig_layers_used`, `_determine_soil_class` → `classify_soil`), `automation/report_generator.py` (autofill P5,
+propagació de capes, `_refresh_open_thickness`, asterisc, `insitu_table_range`, `_signature_date`, Nb sense «-R» en rebliment),
+`automation/sections/section3_geologia.py` (últim nivell obert amb gruix conegut: «com a mínim»), `automation/cte_classifier.py`,
+`automation/settlement_criteria.py`, `automation/wizard.py`, `web/wizard_service.py` (P5 abans del segmentador, rang per taules,
+`data_signatura` defecte), `templates/validation/review.html`, `docs/wizard-headless/mesures/mesura_341.py` (`signature_date_iso`).
+~480 línies afegides / 180 tretes; cap dependència nova.
+
+### Validació empírica
+
+Dues mesures. **`bloc1a`** (primera passada) va destapar tres efectes secundaris que la mesura `bloc1b` tanca: (1) Secció 3 petava a
+4/7 («unsupported format string passed to NoneType.__format__»: gruix conegut amb base `None`) i s'enduia permeabilitat, radó i
+sísmica; (2) el gruix obert amb el fons de l'Excel (Alcoletge 0.40* per 0.29*); (3) el rebliment «dens» (F).
+
+`viaA`, 7 projectes, `2026-09-07-m341-peca3` → `2026-09-07-m341-bloc1b` (diff de `_compare_341.txt` per projecte, no titulars):
+
+| | peca3 | bloc1b |
+|---|---|---|
+| escalars+narrativa (M·C·X·ND) | 181 · 50 · 112 · 33 → 67 % | **200 · 45 · 98 · 33 → 71 %** |
+| grup calc | 57 · 5 · 32 · 2 → 66 % | **69 · 2 · 23 · 2 → 76 %** |
+| grup resta (`data_signatura_text`) | 11 · 4 · 8 · 7 → 65 % | 16 · 4 · 3 · 7 → 87 % |
+| grups A i narr | 74 % / 61 % | 74 % / 61 % (intactes) |
+| taules (7 projectes) | 267 · 97 · 99 → 79 % | **286 · 103 · 90 → 81 %** |
+
+Per projecte (escalars / taules): Castellar 76 → 81 / 88 → 91, Rubí 73 → 76 / 91 = , Bell-lloc 78 → 81 / 82 → 84, Linyola 72 → 78 /
+88 → 91, Alcoletge 61 → 66 / 73 → 75, Vilanova 53 → 60 / 64 → 69, Anciles 50 = / 74 → 75. `mesura_informe` (3 × 4 variants): només
+`cte_edificacio` fila «sòl» mou (T-2 → T-1), a millor als 12 informes.
+
+Cel·les que cauen a MATCH: `cte_sol` 5, `data_signatura_text` 5 (les 2 ES queden X: castellà), `table_dpsh_range` Rubí i Alcoletge,
+`cte_edificacio` Castellar, `qa_value` Rubí (3,5), Linyola `geomech_phi` 30 / `geomech_cohesion` 1,0 / `geomech_gamma` 2,20,
+Vilanova `geomech_cohesion` 0,10 / `geomech_gamma` 1,90 (φ 25 CLOSE contra «25º»), Anciles c 0,10; taules: sísmica Linyola 1 → 6
+MATCH (files, tipus i C), Alcoletge 4 → 6, `geotecnica` Linyola 3 → 7, Vilanova 3 → 6.
+
+**Cel·les que es perden (honestes; registre per revisar-les: `docs/REGISTRE-PERDUES-MESURA.md`, petició del Josep):** Rubí `settlement` 1,50 → 1,80 X (amb la Qa signada 3,5 el 2,5×Nb d'abril ja no dona 1,50:
+la calibració d'abril era sobre la Qa equivocada, pregunta 24); Linyola `table_dpsh_range` («3, 4 i 5» amb dues taules: pregunta 23);
+Alcoletge `geomech_*` escalars (la veritat de l'extractor és la fila 1, rebliment; el portant ara és la fila 2: bloc 3) i la columna N
+(l'SPT-1 de 0,80-1,40 cau per fondària al rebliment amb el contacte a 1,40; l'Eva el posa a les lutites pel material: pregunta 25b).
+
+### Tests
+
+Nous: `tests/test_bloc1_calc_taules.py` (59: classificador 24 casos, `is_rock` ES, topall per tipus, `depth_from_cell`, geometria
+Linyola/Vilanova/forats/contacte discrepant, N20 per capa i portant a Df 1,7, gruix obert, T-1, plantes, rang, data, variant, rebliment,
+`_refresh_open_thickness`, litologia al segmentador, Secció 3 sense petar). Adaptat: `test_soil_levels_open_bottom` (gruix obert
+conegut). Dirigits: 216 verds. Suite sencera: **31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2324 verds / 5
+omesos** (244 s; abans 2265 verds).
+
+### Latència / cost
+
+Cost 0 (cap LLM). M341 ≈ 4 min; `mesura_informe` ≈ 1 min; suite ≈ 3 min.
+
+### Limitacions conegudes
+
+- Vilanova i Anciles: el tall llegit no dona el contacte (`de`/`a` buits) → segmentador (0,8 i 2,2 contra 2,20 i 4,00 de l'Eva);
+  les potències i els Nb per nivell d'aquests dos continuen X. Només una re-lectura amb la cota del contacte ho mouria.
+- Qa: Vilanova 1,5 (φ 25, c 0,10 → Terzaghi) contra 2,5; Anciles 3,5 (topall grava densa) contra 2,0; Alcoletge 3,0 (roca) contra
+  3,5. Els tres són judici de l'Eva sobre la fórmula (pregunta 25a; `CRITERIS-CALCUL-EVA` §6).
+- E de la roca: defecte «>500» (Linyola signat «>800», Alcoletge «>400» són candidats, no defecte). Tipus sísmic «I» d'Alcoletge i
+  «IV» de les graves d'Anciles: judici; no modelat.
+- Alcoletge C-0: sense plantes enlloc el defecte és C-1 (pregunta 22). T-2/T-3 sense camp al wizard.
+- El castellà (dates «16 de marzo», «Tabla 3 y 4») continua sent el sostre de Vilanova i Anciles (bloc 5).
+- El wizard mostra `data_signatura` com a input `date`; no s'ha provat en viu al navegador (cap servidor aixecat avui).
+
+### GO/NO-GO
+
+- ✅ P5 + P6 + CTE + rang + data + variant implementats amb una sola implementació per peça (generador i wizard).
+- ✅ Mesurat cel·la a cel·la: 10 punts de calc, 4 de total, 2 de taules; A i narrativa intactes; cap crash.
+- ✅ 59 tests nous, 216 dirigits verds.
+- ✅ Suite sencera: 31 vermells idèntics / 2324 verds.
+- ✅ Commitejat en 4 (GO del Josep 09:35, «anotem les pèrdues amb l'explicació»): `6d2d79b` (P5+P5b+E) · `eb1c2a4` (P6+topall+F) ·
+  `375b7c9` (CTE+rang+data+variant+wizard) · docs, tests i runs (hunks partits amb `git apply --cached`; els tres commits de codi
+  verificats en worktrees temporals amb els tests dirigits).
+
+### Següents passos
+
+1. Preguntes 22-25 a l'Eva (amb 13, 14, 15 i 1.7).
+2. Bloc 2 del PLA (cua d'A: format de milers, plantes, honorífic, article, litologia curta de l'SPT).
+3. Bloc 3 (extractor de referència: `geomech_*` d'Alcoletge/Vilanova per fila, municipi, superfícies).
+4. Camp `cte_sol` editable al wizard (T-2/T-3) quan l'Eva ho demani.
+
+*Fi entrada 2026-09-07. Bloc 1: P5/P6/CTE/rang/data; calc 76 %, total 71 %, taules 81 %.*

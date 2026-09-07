@@ -17,8 +17,9 @@ Variants:
   viaA  Els 7 projectes generats NOMÉS amb la via A + via B (carpeta amb Fase 0 feta: `reference-material/` on hi és,
         amb els JSON de visió de producció; si no, el corpus de lectura amb SmartScan nivell 1): escalars de `_decisions.json` (superposició
         `web/lectura_service._apply_lectura_overlay`, la mateixa del wizard), taules llegides
-        (`automation/lectura/tables_report.build_report_tables`), Excel DPSH del projecte, i UNA assumpció per
-        projecte: la Df (`DF_SIGNAT`, la fonamentació que l'Eva descriu al signat: pous a Linyola i Anciles). Cap
+        (`automation/lectura/tables_report.build_report_tables`), Excel DPSH del projecte, i DUES assumpcions per
+        projecte que cap document dona: la Df (`DF_SIGNAT`, pous a Linyola i Anciles) i la data de signatura
+        (`data_signatura`: al wizard és el dia que l'Eva signa; aquí la del signat, bloc 1 2026-09-07). Cap
         `_user_data_prev.json`, cap `geomech_params`, cap `Es_settlement`. És «el que el sistema faria sol».
   t2    Només els 3 amb `_user_data_prev.json` (Castellar, Rubí, Bell-lloc): mateixa variant que `mesura_informe.py`
         (escalars d'abril de l'Eva + taules de la lectura), per veure què aporten els escalars manuals.
@@ -254,7 +255,7 @@ def _lith_text(row: dict) -> str:
     return ""
 
 
-def user_data_from_lectura(slug: str, decisions: dict) -> dict:
+def user_data_from_lectura(slug: str, decisions: dict, signature_date: str | None = None) -> dict:
     """`user_data` de la via A sola: escalars per la superposició del wizard, taules llegides, Df del signat."""
     from web.lectura_service import _apply_lectura_overlay
     from automation.lectura.tables_report import build_report_tables
@@ -282,7 +283,26 @@ def user_data_from_lectura(slug: str, decisions: dict) -> dict:
     ud["foundation_depth_m"] = DF_SIGNAT[slug]
     ud["expedient"] = NAMES[slug].split()[0]
     ud["_metadata"] = {"origen": "mesura_341 viaA: lectura + Df del signat", "Df_assumida": DF_SIGNAT[slug]}
+    # Segona ASSUMPCIÓ documentada (bloc 1, 2026-09-07): la data de signatura és la que l'Eva escriu al wizard el dia
+    # que signa (camp `data_signatura`, defecte avui); no és a cap document. Es pren del signat, com la Df.
+    if signature_date:
+        ud["data_signatura"] = signature_date
+        ud["_metadata"]["data_signatura_assumida"] = signature_date
     return ud
+
+
+_MONTHS = {"gener": 1, "febrer": 2, "març": 3, "marc": 3, "abril": 4, "maig": 5, "juny": 6, "juliol": 7, "agost": 8,
+           "setembre": 9, "octubre": 10, "novembre": 11, "desembre": 12,
+           "enero": 1, "febrero": 2, "marzo": 3, "mayo": 5, "junio": 6, "julio": 7, "septiembre": 9, "diciembre": 12}
+
+
+def signature_date_iso(eva_text) -> str | None:
+    """«29 d'octubre de 2025» / «Els Omells de Na Gaia, 16 de marzo de 2026» → `2025-10-29` / `2026-03-16`; None si no."""
+    m = re.search(r"(\d{1,2})\s+d[e'’]\s*([A-Za-zçÇ]+)\s+de\s+(\d{4})", str(eva_text or ""))
+    if not m:
+        return None
+    month = _MONTHS.get(m.group(2).lower())
+    return f"{int(m.group(3)):04d}-{month:02d}-{int(m.group(1)):02d}" if month else None
 
 
 def _project_path(name: str, projectes: Path) -> Path:
@@ -559,7 +579,9 @@ def main() -> int:
             if v == "t2" and slug not in WITH_PREV:
                 continue
             if v == "viaA":
-                ud = user_data_from_lectura(slug, _decisions(slug, args.lectura_sub))
+                _sig = eva.get("data_signatura_text")
+                ud = user_data_from_lectura(slug, _decisions(slug, args.lectura_sub),
+                                            signature_date_iso(_sig.get("value") if isinstance(_sig, dict) else _sig))
                 project_path = _project_path(name, projectes)
             else:
                 ud = MI._user_data(slug, "t2", args.lectura_sub)

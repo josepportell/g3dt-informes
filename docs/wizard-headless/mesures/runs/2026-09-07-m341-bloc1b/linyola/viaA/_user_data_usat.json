@@ -1,0 +1,91 @@
+{
+ "client_name": "Sílvia Eroles Balagueró",
+ "street_address": "C/ Clot de la Llacuna, 16, Linyola (25240)",
+ "site_municipality": "Linyola",
+ "architect_name": "Josep Bunyesc Palacín",
+ "architect_company": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+ "building_type": "Habitatge unifamiliar aïllat",
+ "num_floors": "PB (planta baixa, 1 nivell)",
+ "superficie_parcela_m2": 571.0,
+ "cota_referencia": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+ "num_soil_levels": 2,
+ "utm_x": 324935.0,
+ "utm_y": 4619561.0,
+ "lab_testing_company": "TPS, Prospecció del Subsòl, SL (B64803075)",
+ "lab_sample_id": "SPT1 P3",
+ "lab_depth": "1,0 - 1,15",
+ "lab_location": "P-3",
+ "cte_edificacio": "C0",
+ "cte_sol": "T-1",
+ "cadastral_refs": "5098344CG2159N0000US",
+ "field_work_dates": [
+  "2025-10-01"
+ ],
+ "field_work_dates_text": "1 d'octubre de 2025",
+ "lectura_tables": {
+  "dpsh_tests": [
+   {
+    "test_id": "P-1",
+    "cota": "+245.00",
+    "depth": "-2.90",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-2",
+    "cota": "+245.00",
+    "depth": "-2.15",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-3",
+    "cota": "+245.00",
+    "depth": "-1.75",
+    "refusal": "Si",
+    "water": "No detectat"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "test_id": "SPT1 P3",
+    "location": "P-3",
+    "depth_range": "-1.00 a -1.15",
+    "n30": "R",
+    "lithology": "Lutita gresosa"
+   }
+  ],
+  "soil_levels": [
+   {
+    "name": "Nivell 1",
+    "litologia": "Llims argilsoso i sorrencs",
+    "de": "0,00",
+    "a": "≈-1,4 m a P-1 (contacte ≈243,6 msnm)"
+   },
+   {
+    "name": "Nivell 2",
+    "litologia": "Lutites i sorrenques, Substrat",
+    "de": "mateix contacte que 'a' del Nivell 1 (≈-1,4 m a ≈-0,3 m segons el punt) (cota 243,6, 244,7 msnm)",
+    "a": "fins al fons d'investigació (rebuig DPSH: -2,90/-2,15/-1,75 m per punt)"
+   }
+  ],
+  "superficie_construida": "250.91",
+  "lab": {
+   "sample_id": "SPT1 P3",
+   "location": "P-3",
+   "depth": "1,0 - 1,15"
+  }
+ },
+ "soil_types": [
+  "limo",
+  "rock"
+ ],
+ "foundation_depth_m": 1.7,
+ "expedient": "4001607",
+ "_metadata": {
+  "origen": "mesura_341 viaA: lectura + Df del signat",
+  "Df_assumida": 1.7,
+  "data_signatura_assumida": "2025-10-29"
+ },
+ "data_signatura": "2025-10-29"
+}

@@ -1,0 +1,875 @@
+{
+ "fig_cadastre_num": 1,
+ "fig_aerea_num": 2,
+ "fig_main_plan_num": 3,
+ "fig_spt_cullera_num": 4,
+ "fig_geological_num": 5,
+ "fig_correlation_num": 6,
+ "fig_location_num": 1,
+ "fig_building_num": 3,
+ "photo_site_text": "",
+ "_num_site_photos": 0,
+ "photo_dpsh_num": 1,
+ "photo_sondeig_num": "",
+ "photo_materials_num": 2,
+ "table_dpsh_range": "3 i 4",
+ "table_lab_num": 5,
+ "table_permeability_num": 6,
+ "table_lab_values_num": 7,
+ "table_seismic_num": 8,
+ "table_soil_chars_num": 9,
+ "section1": "<Section1Content>",
+ "section2": "<Section2Content>",
+ "section3": null,
+ "section4": "<Section4Content>",
+ "client": "GRUPO CUENCA GUERRERO S.L.",
+ "expedient": "4001671",
+ "street_address": "C. Santa Gemma, 4 Urb. La Serra",
+ "municipality": "Vilanova de Segrià",
+ "data_camp_text": "19 de febrer de 2026",
+ "data_camp_inici_text": "19 de febrer de 2026",
+ "data_signatura_text": "16 de març de 2026",
+ "architect_name": "Jordi Carner",
+ "architect_company": "",
+ "architect_name_upper": "JORDI CARNER",
+ "building_type": "Habitatge unifamiliar aïllat",
+ "building_type_lower": "habitatge unifamiliar aïllat",
+ "num_floors": "PB (planta baixa, 1 planta)",
+ "report_language": "ca",
+ "building_structure_desc": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+ "_narr_building_structure": {
+  "value": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+  "source": "només planta baixa (Rubí, Bell-lloc)",
+  "candidates": [
+   {
+    "value": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+    "source": "només planta baixa (Rubí, Bell-lloc)"
+   },
+   {
+    "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+    "source": "variant (b) dels signats"
+   },
+   {
+    "value": "amb nivell de soterrani, i per tant, es preveu una excavació general fins a la cota de fonamentació del soterrani, a més del sanejament i l'anivellació.",
+    "source": "amb soterrani"
+   }
+  ],
+  "notes": []
+ },
+ "municipality_upper": "VILANOVA DE SEGRIÀ",
+ "street_1": "C. Santa Gemma",
+ "street_2": "Urb. La Serra",
+ "cte_building_class": "C-0",
+ "cte_soil_class": "T-1",
+ "cte_edificacio": "C-0",
+ "cte_sol": "T-1",
+ "plantes": "PB (planta baixa, 1 planta)",
+ "superficie_parcela": "406.0",
+ "superficie_cadastral": "",
+ "superficie_parcela_planol": "406.0",
+ "superficie_construida": "100",
+ "access_description": "",
+ "site_description": "El solar es localitza sense construccions ni pavimentacions.",
+ "lab_field_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_field_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_testing_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "cota_referencia": "+321,69 msnm según el visor ICGC",
+ "_parcel_rcs": [
+  "8606709CG9280N"
+ ],
+ "adjacent_north": "magatzem",
+ "adjacent_south": "parcel·la buida",
+ "adjacent_east": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant, amb piscina",
+ "adjacent_west": "Carrer Santa Gemma",
+ "adjacent_nearest_street": "Carrer Santa Gemma",
+ "location_sentence": "entre el C. Santa Gemma i el Carrer Santa Gemma de Vilanova de Segrià",
+ "adjacent_north_fmt": "Per la part nord amb un magatzem.",
+ "adjacent_south_fmt": "Per la part sud amb una parcel·la buida.",
+ "adjacent_east_fmt": "Per la part est amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant, amb piscina.",
+ "adjacent_west_fmt": "I finalment, per la part oest, amb el Carrer Santa Gemma.",
+ "access_street": "carrer adjacent situat al oest",
+ "_narr_access": {
+  "value": "carrer adjacent situat al oest",
+  "candidates": [
+   "carrer adjacent situat al oest",
+   "Carrer existent al oest",
+   "carrer Santa Gemma"
+  ]
+ },
+ "adjacent_intro": "La parcel·la objecte d'estudi es situa al oest del municipi de Vilanova de Segrià, pren una morfologia rectangular i limita:",
+ "_narr_parcel": {
+  "position": "oest",
+  "shape": "rectangular",
+  "centroid": [
+   298591.8592291443,
+   4620389.388037626
+  ],
+  "rcs": [
+   "8606709CG9280N"
+  ]
+ },
+ "site_condition": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+ "_narr_site_condition": {
+  "value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "source": "pendent 0 % ≤ 10 %, no antropitzat (Linyola, Alcoletge)",
+  "candidates": [
+   {
+    "value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Com que es tracta d'un solar pla»"
+   },
+   {
+    "value": "Tot i no ser un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Tot i no ser un solar pla»"
+   },
+   {
+    "value": "Degut a que es tracta d'un solar antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Degut a que es tracta d'un solar antropitzat»"
+   },
+   {
+    "value": "Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Es tracta d'un solar no antropitzat»"
+   }
+  ],
+  "notes": [
+   "antropitzat sense font (no derivable del Cadastre ni de l'ICGC): revisar"
+  ]
+ },
+ "_narr_site_description": {
+  "value": "El solar es localitza sense construccions ni pavimentacions.",
+  "source": "sense edifici al Cadastre; pendent desconeguda (sense UTM): cap afirmació topogràfica",
+  "candidates": [
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions.",
+    "source": "sense edifici al Cadastre; pendent desconeguda (sense UTM): cap afirmació topogràfica"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+    "source": "cap «buit pla»"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+    "source": "cap «buit pendent»"
+   },
+   {
+    "value": "El solar està actualment ocupat per una zona explanada i un edifici en planta baixa.",
+    "source": "cap «construit»"
+   }
+  ],
+  "notes": [
+   "vegetació, tanques, desnivell respecte el carrer i plataforma de treball: judici de la visita"
+  ]
+ },
+ "_own_parcel_building": {
+  "has_building": false,
+  "num_floors_above": 0,
+  "num_floors_below": 0,
+  "has_pool": false,
+  "total_built_m2": 0.0,
+  "refs": [
+   "8606709CG9280N"
+  ]
+ },
+ "has_sondeig": false,
+ "section_sondeig_num": "",
+ "section_spt_num": "2.4.2",
+ "section_resum_num": "2.4.3",
+ "include_geothermal": false,
+ "include_expansivity": false,
+ "include_earth_pressure": false,
+ "include_slope_stability": false,
+ "show_granulometric": false,
+ "section_excavabilitat_num": "3.5",
+ "section_sismica_num": "3.6",
+ "section_rado_num": "3.7",
+ "section_fonamentacio_num": "4.3",
+ "section_empentes_num": "",
+ "section_estabilitat_num": "",
+ "num_dpsh_tests": 3,
+ "dpsh_test_ids": "P-1,P-2,P-3",
+ "dpsh_avg_n20": "22",
+ "dpsh_tests": [
+  {
+   "test_id": "P-1",
+   "cota": "+321.69",
+   "depth": "-1.48",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-2",
+   "cota": "+321.69",
+   "depth": "-2.18",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-3",
+   "cota": "+321.69",
+   "depth": "-3.78",
+   "refusal": "Si",
+   "water": "Aigua"
+  }
+ ],
+ "sondeig_tests": [],
+ "spt_test_id": "SPT1",
+ "spt_location": "P-1",
+ "spt_depth_range": "-0.80 a -1.40",
+ "spt_n30": "24",
+ "spt_lithology": "Sorra fina-mitja, compacta (fragment entre parèntesis il·legible)",
+ "spt_ma_tests": [
+  {
+   "test_id": "SPT1",
+   "location": "P-1",
+   "depth_range": "-0.80 a -1.40",
+   "n30": "24",
+   "lithology": "Sorra fina-mitja, compacta (fragment entre parèntesis il·legible)"
+  },
+  {
+   "test_id": "SPT-1",
+   "location": "P-3",
+   "depth_range": "-0.80 a -1.40",
+   "n30": "10",
+   "lithology": "Argila limosa i sorrenca, amb algunes graves"
+  }
+ ],
+ "lab_sample_id": "",
+ "lab_location": "",
+ "lab_depth": "",
+ "lab_tests_text": "",
+ "_narr_lab_tests": {
+  "value": "",
+  "source": "sense bloc «ASSAIGS REALITZATS» del GTL",
+  "candidates": [],
+  "notes": [
+   "laboratori: cap llista d'assaigs llegida"
+  ]
+ },
+ "materials_level_1": "",
+ "materials_intro": "",
+ "seismic_ab_text": "",
+ "radon_zone": "1",
+ "radon_zone_description": "",
+ "radon_sentence": "",
+ "csn_radon_text": "",
+ "geology_para_1": "",
+ "geology_para_2": "",
+ "geology_para_3": "",
+ "geology_para_4": "",
+ "geology_para_5": "",
+ "geology_para_6": "",
+ "geology_paragraphs": [],
+ "materials_depth_text": "",
+ "materials_geomech_text": "",
+ "conclusions_level_1": "",
+ "soil_levels": [
+  {
+   "description": "Arcilla limosa y arenosa con algunas gravas.",
+   "description_short": "Arcilla limosa y arenosa con algunas gravas.",
+   "ordinal": "1er",
+   "materials_text": "",
+   "depth_text": "",
+   "geomech_text": ""
+  },
+  {
+   "description": "Arenas finas-medias, carbonatadas.",
+   "description_short": "Arenas finas-medias, carbonatadas.",
+   "ordinal": "2n",
+   "materials_text": "",
+   "depth_text": "",
+   "geomech_text": ""
+  }
+ ],
+ "conclusions_levels_detected": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+ "soil_level_rows": [
+  {
+   "name": "1er nivell.",
+   "material": "Arcilla limosa y arenosa con algunas gravas.",
+   "material_short": "Arcilla limosa y arenosa con algunas gravas."
+  },
+  {
+   "name": "2n nivell.",
+   "material": "Arenas finas-medias, carbonatadas.",
+   "material_short": "Arenas finas-medias, carbonatadas."
+  }
+ ],
+ "perm_rows": [
+  {
+   "name": "1er nivell",
+   "k_value": "",
+   "material": "Arcilla limosa y arenosa con algunas gravas.",
+   "material_short": "Arcilla limosa y arenosa con algunas gravas."
+  },
+  {
+   "name": "2n nivell",
+   "k_value": "",
+   "material": "Arenas finas-medias, carbonatadas.",
+   "material_short": "Arenas finas-medias, carbonatadas."
+  }
+ ],
+ "sulfate_level_name": "1er nivell",
+ "sulfate_value": "",
+ "sulfate_baumann": "---",
+ "sulfate_classification": "",
+ "seismic_rows": [
+  {
+   "num": "1",
+   "terrain_type": "Tipus IV",
+   "thickness": "0.80",
+   "c_coeff": "2.0"
+  },
+  {
+   "num": "2",
+   "terrain_type": "Tipus II",
+   "thickness": "3.00*",
+   "c_coeff": "1.3"
+  }
+ ],
+ "geotech_rows": [
+  {
+   "name": "1er nivell. Arcilla limosa y arenosa con algunas gravas.",
+   "material_short": "Arcilla limosa y arenosa con algunas gravas.",
+   "nb": "7",
+   "n": "10",
+   "density": "1.90",
+   "cohesion": "0.10",
+   "phi": "25°",
+   "E": "50"
+  },
+  {
+   "name": "2n nivell. Arenas finas-medias, carbonatadas.",
+   "material_short": "Arenas finas-medias, carbonatadas.",
+   "nb": "22-R",
+   "n": "24",
+   "density": "2.00",
+   "cohesion": "0.00",
+   "phi": "38°",
+   "E": "450"
+  }
+ ],
+ "geotech_level_name": "2n nivell. Arenas finas-medias, carbonatadas.",
+ "geotech_nb": "22-R",
+ "geotech_n": "24",
+ "geotech_density": "2.00",
+ "geotech_cohesion": "0.00",
+ "geotech_phi": "38°",
+ "geotech_E": "450",
+ "_calc_E": "CTE D.23 N20=18 | Rang Eva: 450-650",
+ "_calc_phi": "Schmertmann Nb=22 | Rang Eva: 38-39",
+ "_calc_gamma": "CTE D.27 arena | Rang Eva: 2.0",
+ "_calc_cohesion": "Rang Eva: 0.0-0.05",
+ "soil_level_name": "1er nivell.",
+ "soil_level_material": "Arcilla limosa y arenosa con algunas gravas.",
+ "perm_level_name": "1er nivell",
+ "perm_k_value": "",
+ "perm_material": "Arcilla limosa y arenosa con algunas gravas.",
+ "k30_value": "1.0",
+ "_calc_k30": "E/60 = 50/60 (roca, c=0.1)",
+ "qa_value": "2.00",
+ "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+ "_calc_settlement": "Schmertmann Es=25 (2.5×N SPT 10), B=1 m → 4.10 cm · règim cohesiu → frase genèrica «menyspreables o bé inferiors a 1.0 cm» | alt: Es=18 (2.5×Nb 7.2) → 5.70 cm, Es=50 (E del criteri) → 2.10 cm · nivell portant cohesiu: Schmertmann és per a granulars → frase genèrica (7/7 signats); ⚠ 4.10 cm supera el topall de servei de 2.54 cm (1 polzada) per a sabates",
+ "_calc_Es": "Es=25 (2.5×N SPT 10) · 2,5 × colpeig (Nspt del nivell, columna «N»; text dels 7 informes) | alt: Es=18 (2.5×Nb 7.2) → 5.70 cm, Es=50 (E del criteri) → 2.10 cm",
+ "settlement": "4.10",
+ "_calc_qa": "Nb/12=16/12=1.36 / Fw=1.69 x Fd=1.10 = 2.08 | Cap: 2.00 (3.0)",
+ "conclusions_geologia_summary": "Segons els resultats dels assaigs de penetració realitzats, s'han identificat 2 nivells geotècnics diferenciats:\n\n- Nivell 1: Arcilla limosa y arenosa con algunas gravas. (de 0.80 m de gruix, N20 mitjà = 6)\n- Nivell 2: Arenas finas-medias, carbonatadas. (de 3.00 m de gruix, N20 mitjà = 18)",
+ "conclusions_water_statement": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+ "conclusions_aggressivity_statement": "No s'han realitzat assaigs de laboratori per determinar l'agressivitat dels materials del subsòl al formigó.",
+ "empentes_paragraph": "",
+ "ka_value": "",
+ "kp_value": "",
+ "estabilitat_paragraph": "",
+ "expansivitat_paragraph": "",
+ "project": {
+  "project": {
+   "expedient": "4001671",
+   "municipality": "Vilanova de Segrià",
+   "report_date": "2026-09-07"
+  },
+  "client": {
+   "company_name": "Grupo Cuenca Guerrero SL",
+   "contact_name": "",
+   "nif": "",
+   "address": null
+  },
+  "architect": {
+   "name": "Jordi Carner",
+   "company": ""
+  },
+  "building": {
+   "type": "Habitatge unifamiliar aïllat",
+   "num_floors": "PB (planta baixa, 1 planta)",
+   "superficie_parcela_m2": "406.0",
+   "superficie_cadastral_m2": "",
+   "superficie_construida_m2": "",
+   "has_basement": false,
+   "has_retaining_walls": false
+  },
+  "location": {
+   "street_address": "C. Santa Gemma, 4 Urb. La Serra",
+   "utm_x": null,
+   "utm_y": null
+  },
+  "descriptions": {
+   "site_description": "",
+   "access_description": "",
+   "cota_referencia": "+321,69 msnm según el visor ICGC",
+   "field_work_dates": [
+    "2026-02-19"
+   ],
+   "field_work_dates_text": "19 de febrer de 2026",
+   "lab_company": "",
+   "lab_company_alias": "",
+   "lab_description": ""
+  },
+  "sondeig_tests": null,
+  "spt_data": null,
+  "lab_tests": [],
+  "site": {
+   "adjacent_parcels": {
+    "north": "magatzem",
+    "south": "parcel·la buida",
+    "east": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant, amb piscina",
+    "west": "Carrer Santa Gemma"
+   },
+   "position": "centre",
+   "shape": "rectangular",
+   "is_urban": true,
+   "is_sloped": false,
+   "slope_percent": null,
+   "slope_direction": null,
+   "slope_height_m": null,
+   "is_anthropized": null
+  },
+  "tests": {
+   "has_dpsh": true,
+   "num_dpsh_tests": 3,
+   "has_sondeig": false,
+   "has_spt": false,
+   "water_detected": false
+  },
+  "lab": {
+   "sulfate_mg_kg": null,
+   "aggressivity_class": ""
+  },
+  "cte": {
+   "building_class": "C-0",
+   "soil_class": "T-1"
+  },
+  "soil_levels": [
+   {
+    "level_number": 1,
+    "description": "Arcilla limosa y arenosa con algunas gravas.",
+    "thickness_m": 0.8,
+    "thickness_open": false,
+    "n20_average": 6.0,
+    "depth_from_m": 0.0,
+    "depth_to_m": 0.8,
+    "n20_min": 3,
+    "n20_max": 8,
+    "soil_type": "arcilla"
+   },
+   {
+    "level_number": 2,
+    "description": "Arenas finas-medias, carbonatadas.",
+    "thickness_m": 3.0,
+    "thickness_open": true,
+    "n20_average": 18.423076923076923,
+    "depth_from_m": 0.8,
+    "depth_to_m": null,
+    "n20_min": 4,
+    "n20_max": 77,
+    "soil_type": "arena"
+   }
+  ],
+  "geotechnical_params": {
+   "gamma_g_cm3": 1.9,
+   "cohesion_kg_cm2": 0.1,
+   "phi_deg": 28,
+   "E_kg_cm2": 50
+  },
+  "terzaghi": {
+   "inputs": {
+    "phi_deg": 28,
+    "cohesion_kg_cm2": 0.1,
+    "gamma_g_cm3": 1.9,
+    "B_m": 1.0,
+    "Df_m": 0.3,
+    "L_m": null,
+    "shape": "square"
+   },
+   "factors": {
+    "Nc": 31.6,
+    "Nq": 17.8,
+    "Ngamma": 14.6,
+    "sc": 1.3,
+    "sq": 1.0,
+    "sgamma": 0.8
+   },
+   "results": {
+    "qu_kg_cm2": 6.232,
+    "safety_factor": 3.0,
+    "Qa_kg_cm2": 2.0,
+    "Qa_uncapped_kg_cm2": 2.08,
+    "settlement_cm": 4.1,
+    "settlement_type": "diferit",
+    "Es_used_kg_cm2": 25.0,
+    "qa_terzaghi_peck_kg_cm2": 0.88,
+    "Fw": 1.69,
+    "Fd_tp": 1.099,
+    "qa_governs": "terzaghi"
+   }
+  },
+  "conditional_sections": {
+   "include_expansivity": false,
+   "include_earth_pressure": false,
+   "include_slope_stability": false,
+   "include_geothermal": false,
+   "show_granulometric": false
+  },
+  "dpsh": {
+   "expedient": "4001671",
+   "source_file": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA/ANEXOS/4001671_DPSH.xls",
+   "num_tests": 3,
+   "test_ids": [
+    "P-1",
+    "P-2",
+    "P-3"
+   ],
+   "overall_average_n20": 13.55,
+   "any_water_detected": false,
+   "tests": [
+    {
+     "test_id": "P-1",
+     "correction_factor": 0.83,
+     "depth_reached_m": 1.6,
+     "average_n20": 34.29,
+     "refusal_reached": true,
+     "refusal_depth_m": 1.6,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 7,
+       "nb": 8.43,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 8,
+       "nb": 9.64,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 18,
+       "nb": 21.69,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 24,
+       "nb": 28.92,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 77,
+       "nb": 92.77,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-2",
+     "correction_factor": 0.83,
+     "depth_reached_m": 2.2,
+     "average_n20": 24.2,
+     "refusal_reached": true,
+     "refusal_depth_m": 2.2,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 7,
+       "nb": 8.43,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 8,
+       "nb": 9.64,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 10,
+       "nb": 12.05,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 30,
+       "nb": 36.14,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 46,
+       "nb": 55.42,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-3",
+     "correction_factor": 0.83,
+     "depth_reached_m": 3.8,
+     "average_n20": 18.22,
+     "refusal_reached": true,
+     "refusal_depth_m": 3.8,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 3,
+       "nb": 3.61,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 7,
+       "nb": 8.43,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 10,
+       "nb": 12.05,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 8,
+       "nb": 9.64,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.4,
+       "n20": 9,
+       "nb": 10.84,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.6,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.8,
+       "n20": 26,
+       "nb": 31.33,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.0,
+       "n20": 37,
+       "nb": 44.58,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.2,
+       "n20": 40,
+       "nb": 48.19,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.4,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.6,
+       "n20": 25,
+       "nb": 30.12,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.8,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "fig_spt_cullera_image": "<InlineImage>",
+ "photo_site_image_1": "",
+ "photo_site_image_2": "",
+ "photo_dpsh_image": "<InlineImage>",
+ "photo_sondeig_image": "[Imatge pendent]",
+ "photo_materials_image": "<InlineImage>",
+ "fig_cadastre_image": "<InlineImage>",
+ "fig_aerea_image": "[Imatge pendent]",
+ "fig_main_plan_image": "[Imatge pendent]",
+ "has_plan_crops": true,
+ "fig_location_image": "<InlineImage>",
+ "fig_building_image": "[Imatge pendent]",
+ "fig_geological_image": "[Imatge pendent]",
+ "fig_test_points_image": "<InlineImage>",
+ "fig_correlation_image": "<InlineImage>"
+}
