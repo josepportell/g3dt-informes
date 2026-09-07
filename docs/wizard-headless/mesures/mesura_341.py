@@ -398,6 +398,39 @@ def _gen_value(var: str, ctx: dict, ud: dict, calc: dict, eva=None):
     return None
 
 
+#: Forats d'imatge de la plantilla (bloc 4, 2026-09-07): 6 figures + 3 fotos + 2 vistes generals (condicionals).
+IMAGE_SLOTS = ("fig_cadastre_image", "fig_aerea_image", "fig_main_plan_image", "fig_spt_cullera_image",
+               "fig_geological_image", "fig_correlation_image", "photo_dpsh_image", "photo_sondeig_image",
+               "photo_materials_image", "photo_site_image_1", "photo_site_image_2")
+IMAGE_PLACEHOLDER = "[Imatge pendent]"
+
+
+def image_presence(ctx: dict) -> dict:
+    """Test de presència de les imatges (bloc 4): per forat, «present» (InlineImage), «pendent» (el text
+    `[Imatge pendent]` de `image_manager`) o «absent» (buit: foto de vista general no triada, sondeig que no hi és).
+    No jutja si la imatge és la correcta ni el retall: això és el full de control visual (`_IMATGES.md` del run)."""
+    out = {"present": [], "pendent": [], "absent": []}
+    for k in IMAGE_SLOTS:
+        v = ctx.get(k)
+        # Un `InlineImage` viu no es pot passar per `str()` (docxtpl intenta inserir-lo); `_jsonable` el desa
+        # com a «<InlineImage>» a `_context_usat.json`.
+        sv = "<InlineImage>" if type(v).__name__ == "InlineImage" else ("" if v is None else str(v))
+        if k == "photo_sondeig_image" and not ctx.get("has_sondeig"):
+            out["absent"].append(k)             # el bloc és dins de `{%p if has_sondeig %}`: no s'imprimeix
+        elif not sv.strip():
+            out["absent"].append(k)
+        elif IMAGE_PLACEHOLDER in sv:
+            out["pendent"].append(k)
+        else:
+            out["present"].append(k)
+    return out
+
+
+def _norm_numbering(v) -> str:
+    """«3» / 3 / «3.» → «3»; «2.4.2.» → «2.4.2»; None / '' → ''."""
+    return "" if v is None else str(v).strip().rstrip(".")
+
+
 def compare_scalars(eva: dict, ctx: dict, ud: dict, calc: dict) -> list[dict]:
     rows = []
     for var, info in sorted(eva.items()):
@@ -412,6 +445,14 @@ def compare_scalars(eva: dict, ctx: dict, ud: dict, calc: dict) -> list[dict]:
         gv = _gen_value(var, ctx, ud, calc, ev)
         if isinstance(gv, (list, dict)):
             rows.append({"var": var, "grup": g, "eva": ev, "gen": "<llista>", "status": "NO_DATA"})
+            continue
+        if g == "fix":
+            # Bloc 4 (2026-09-07): la numeració és text EXACTE («2.4.3» ≠ «2.4.4», «3» ≠ «4»; cap CLOSE) i el buit del
+            # generador amb veritat al signat és una X, no un NO_DATA: és la secció o la foto que el signat té i el
+            # generador decideix no imprimir (`section_empentes_num` = '' sense empentes).
+            st = "MATCH" if _norm_numbering(ev) == _norm_numbering(gv) else "MISMATCH"
+            rows.append({"var": var, "grup": g, "eva": ev, "gen": gv, "status": st,
+                         "method": (info.get("extraction_method") if isinstance(info, dict) else "")})
             continue
         if gv is None or str(gv).strip() == "":
             rows.append({"var": var, "grup": g, "eva": ev, "gen": None, "status": "NO_DATA"})
@@ -516,6 +557,22 @@ def _agregat(run: str, results: dict, variants: list[str], sub: str) -> str:
     L.append("")
     L.append(f"`{', '.join(sorted(NARR_EXCLUDED))}` fora de la mesura (text fix de la plantilla). Narrativa puntuada forat contra forat (`narr_status`).")
     L.append("")
+    L.append("## Imatges (viaA): presència per forat — present · pendent («[Imatge pendent]») · absent (buit)")
+    L.append("")
+    L.append("| projecte | present | pendent | absent | forats pendents |")
+    L.append("|---|--:|--:|--:|---|")
+    for slug, per in results.items():
+        r = per.get("viaA")
+        im = (r or {}).get("images")
+        if not im:
+            continue
+        L.append(f"| {slug} | {len(im['present'])} | {len(im['pendent'])} | {len(im['absent'])} | "
+                 f"{', '.join(f'`{k}`' for k in im['pendent']) or '—'} |")
+    L.append("")
+    L.append("Absent = vistes generals no triades (`photo_site_image_*`) o foto del sondeig sense sondeig: no és cap defecte. "
+             "Pendent = `image_manager` no ha trobat o no ha pogut baixar la imatge. La correcció del contingut es mira al full "
+             "de control visual (`_IMATGES.md`, una vegada a mà).")
+    L.append("")
     L.append("## Per VARIABLE (viaA): en quants projectes és MATCH / CLOSE / MISMATCH / NO_DATA")
     L.append("")
     byvar = defaultdict(Counter)
@@ -606,6 +663,7 @@ def main() -> int:
                 (out / "_context_usat.json").write_text(json.dumps(_jsonable(ctx), ensure_ascii=False, indent=1), encoding="utf-8")
                 rows = compare_scalars(eva, ctx, ud, gen.get("calc") or {})
                 entry["scalars"] = rows
+                entry["images"] = image_presence(ctx)
                 (out / "_compare_341.json").write_text(json.dumps(rows, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
                 (out / "_compare_341.txt").write_text(_fmt_rows(rows, f"{slug}/{v}"), encoding="utf-8")
                 try:

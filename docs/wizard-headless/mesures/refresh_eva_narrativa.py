@@ -40,7 +40,7 @@ def _val(e):
 
 
 def refresh(slug: str, apply: bool, all_keys: bool, drop: set[str],
-            keys: set[str] | None = None) -> list[tuple[str, object, object, bool]]:
+            keys: set[str] | None = None, label: str = "") -> list[tuple[str, object, object, bool]]:
     allow_all = keys is not None and "all" in keys
     allow = ALLOW | (keys or set())
     project = REPO / "reference-material" / M.NAMES[slug]
@@ -75,7 +75,7 @@ def refresh(slug: str, apply: bool, all_keys: bool, drop: set[str],
         if changed:
             applied = sorted(k for k, _a, _b, ok in diffs if ok)
             old.setdefault("notes", []).append(
-                (f"refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): {changed} claus re-extretes: {', '.join(applied)}"
+                (f"refresh_eva_narrativa.py {label} (--keys): {changed} claus re-extretes: {', '.join(applied)}"
                  if keys else f"refresh_eva_narrativa.py 2026-09-06: {changed} claus narratives re-extretes (prefix primer)")
                 + (f"; eliminades {sorted(drop)}" if drop else ""))
             out_file.write_text(json.dumps(old, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -89,11 +89,12 @@ def main() -> int:
     ap.add_argument("--projects", default=",".join(M.NAMES))
     ap.add_argument("--drop", default="", help="claus a eliminar del JSON (p. ex. les que la plantilla ja no té)")
     ap.add_argument("--keys", default="", help="amplia la llista blanca: `all` o claus separades per comes (bloc 3)")
+    ap.add_argument("--label", default="2026-09-07 (bloc 3)", help="etiqueta de la nota al JSON quan s'aplica amb --keys")
     args = ap.parse_args()
     logging.basicConfig(level=logging.ERROR)
     for slug in [s.strip() for s in args.projects.split(",") if s.strip()]:
         diffs = refresh(slug, args.apply, args.all_keys, {k.strip() for k in args.drop.split(",") if k.strip()},
-                        keys={k.strip() for k in args.keys.split(",") if k.strip()} or None)
+                        keys={k.strip() for k in args.keys.split(",") if k.strip()} or None, label=args.label)
         print(f"=== {slug}: {len(diffs)} diferència(es){' APLICADES (llista blanca)' if args.apply else ''}")
         for k, a, b, allowed in diffs:
             tag = "aplicable" if allowed else "ALTRES (no s'aplica)"

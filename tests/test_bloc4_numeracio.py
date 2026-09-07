@@ -180,6 +180,41 @@ def test_should_skip_deixa_passar_la_numeracio_i_no_les_imatges():
     assert RE._is_numbering("table_lab_num") and not RE._is_numbering("table_dpsh_range")
 
 
+def test_mesura_fix_es_text_exacte_i_buit_es_x():
+    import importlib.util, sys
+    from pathlib import Path
+    path = Path(__file__).resolve().parent.parent / "docs" / "wizard-headless" / "mesures" / "mesura_341.py"
+    spec = importlib.util.spec_from_file_location("mesura_341", path)
+    M = importlib.util.module_from_spec(spec)
+    sys.modules["mesura_341"] = M
+    spec.loader.exec_module(M)
+    eva = {"section_resum_num": {"value": "2.4.4"}, "photo_materials_num": {"value": "4"},
+           "section_empentes_num": {"value": "4.4"}, "table_lab_num": {"value": "6"}}
+    ctx = {"section_resum_num": "2.4.4", "photo_materials_num": 3, "section_empentes_num": "", "table_lab_num": 6}
+    rows = {r["var"]: r["status"] for r in M.compare_scalars(eva, ctx, {}, {})}
+    assert rows == {"section_resum_num": "MATCH", "photo_materials_num": "MISMATCH",
+                    "section_empentes_num": "MISMATCH", "table_lab_num": "MATCH"}
+    assert all(M.group_of(k) == "fix" for k in eva)
+
+
 # ---------------------------------------------------------------------------------------------------------------
 # Imatges (bloc 4): clau de la memòria cau amb hash del contingut, i test de presència
 # ---------------------------------------------------------------------------------------------------------------
+
+def test_image_presence_amb_inline_image_viu():
+    import importlib.util, sys
+    from pathlib import Path
+    path = Path(__file__).resolve().parent.parent / "docs" / "wizard-headless" / "mesures" / "mesura_341.py"
+    spec = importlib.util.spec_from_file_location("mesura_341", path)
+    M = importlib.util.module_from_spec(spec); sys.modules["mesura_341"] = M; spec.loader.exec_module(M)
+
+    class InlineImage:            # mateix nom de classe que docxtpl; `str()` hi petaria
+        def __str__(self): raise AssertionError("str() sobre InlineImage")
+    ctx = {"fig_cadastre_image": InlineImage(), "fig_aerea_image": "[Imatge pendent]", "fig_main_plan_image": InlineImage(),
+           "fig_spt_cullera_image": InlineImage(), "fig_geological_image": InlineImage(), "fig_correlation_image": InlineImage(),
+           "photo_dpsh_image": InlineImage(), "photo_sondeig_image": "[Imatge pendent]", "photo_materials_image": InlineImage(),
+           "photo_site_image_1": "", "photo_site_image_2": "", "has_sondeig": False}
+    p = M.image_presence(ctx)
+    assert p["pendent"] == ["fig_aerea_image"]
+    assert p["absent"] == ["photo_sondeig_image", "photo_site_image_1", "photo_site_image_2"]
+    assert len(p["present"]) == 7
