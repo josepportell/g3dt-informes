@@ -1,0 +1,151 @@
+{
+ "rows": [
+  {
+   "n": 1,
+   "slot_eva": "fig_situacio",
+   "caption": "Figura 1. Situació de la zona d’estudi, amb color taronja. (mapes topogràfic i ortofoto, I",
+   "file_eva": "01_fig_situacio_figura-1-situacio-de-la-zona-d-estudi-am.png",
+   "ours_slot": "fig_aerea_image",
+   "file_ours": "orthophoto_parcel_418215_4595658.png",
+   "status": "MISMATCH",
+   "phash_d": 32,
+   "ncc": 0.295,
+   "psr": 2.8,
+   "ncc_raw": 0.632,
+   "scale": 0.225,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 2,
+   "slot_eva": "foto_vista",
+   "caption": "Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).",
+   "file_eva": "02_foto_vista_fotografia-1-vista-general-de-la-zona-d.png",
+   "ours_slot": null,
+   "file_ours": null,
+   "status": "NO_DATA",
+   "phash_d": null,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": null
+  },
+  {
+   "n": 3,
+   "slot_eva": "fig_assaigs",
+   "caption": "Figura 2. Situació de l’estructura projectada i els assaigs realitzats.",
+   "file_eva": "03_fig_assaigs_figura-2-situacio-de-l-estructura-projec.png",
+   "ours_slot": "fig_main_plan_image",
+   "file_ours": "planol_IMG-20251104-WA0015_435eb44ea0.jpg",
+   "status": "MISMATCH",
+   "phash_d": 28,
+   "ncc": 0.344,
+   "psr": 3.8,
+   "ncc_raw": 0.543,
+   "scale": 0.225,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 4,
+   "slot_eva": "foto_dpsh",
+   "caption": "Fotografia 2. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica DPS",
+   "file_eva": "04_foto_dpsh_fotografia-2-vista-de-la-maquina-utilitz.jpeg",
+   "ours_slot": "photo_dpsh_image",
+   "file_ours": "P3.jpg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 6,
+   "slot_eva": "fig_geologic",
+   "caption": "Figura 4. Mapa geològic a escala 1:50.000 de la zona en estudi, (Font: ICGC, modificat).",
+   "file_eva": "06_fig_geologic_figura-4-mapa-geologic-a-escala-1-50-000.png",
+   "ours_slot": "fig_geological_image",
+   "file_ours": "geological_composite_418215_4595658.png",
+   "status": "MISMATCH",
+   "phash_d": 26,
+   "ncc": 0.419,
+   "psr": 5.5,
+   "ncc_raw": 0.457,
+   "scale": 0.225,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 7,
+   "slot_eva": "foto_materials",
+   "caption": "Fotografia 3. Detall dels materials del primer nivell.",
+   "file_eva": "07_foto_materials_fotografia-3-detall-dels-materials-del-p.jpeg",
+   "ours_slot": "photo_materials_image",
+   "file_ours": "SPT1.jpg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 9,
+   "slot_eva": "fig_tall",
+   "caption": "Figura 5. Detall del tall de correlació que s’adjunta als annexes.",
+   "file_eva": "09_fig_tall_figura-5-detall-del-tall-de-correlacio-q.png",
+   "ours_slot": "fig_correlation_image",
+   "file_ours": "F5 TALL.png",
+   "status": "MISMATCH",
+   "phash_d": 20,
+   "ncc": 0.581,
+   "psr": 99.0,
+   "ncc_raw": 0.581,
+   "scale": 1.0,
+   "dir": "veritat dins nostra"
+  }
+ ],
+ "sobrants": [
+  {
+   "ours_slot": "fig_cadastre_image",
+   "file_ours": "cadastre_sitplan_3001631_plànol de situació_114b0a5148.jpg"
+  }
+ ],
+ "sobrants_n": 1,
+ "totals": {
+  "MISMATCH": 4,
+  "NO_DATA": 1,
+  "MATCH": 2,
+  "CLOSE": 0
+ },
+ "by_slot": {
+  "fig_situacio": {
+   "MISMATCH": 1
+  },
+  "foto_vista": {
+   "NO_DATA": 1
+  },
+  "fig_assaigs": {
+   "MISMATCH": 1
+  },
+  "foto_dpsh": {
+   "MATCH": 1
+  },
+  "fig_geologic": {
+   "MISMATCH": 1
+  },
+  "foto_materials": {
+   "MATCH": 1
+  },
+  "fig_tall": {
+   "MISMATCH": 1
+  }
+ },
+ "ours_paths": {
+  "fig_cadastre_image": "/home/josep/g3dt-prod-cache/images/cadastre_sitplan_3001631_plànol de situació_114b0a5148.jpg",
+  "fig_aerea_image": "/home/josep/g3dt-prod-cache/images/orthophoto_parcel_418215_4595658.png",
+  "fig_main_plan_image": "/home/josep/g3dt-prod-cache/images/planol_IMG-20251104-WA0015_435eb44ea0.jpg",
+  "fig_geological_image": "/home/josep/g3dt-prod-cache/images/geological_composite_418215_4595658.png",
+  "fig_correlation_image": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/3001631 RUBI/ANNEXES/Altres/F5 TALL.png",
+  "photo_dpsh_image": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/3001631 RUBI/FOTOGRAFIES/P3.jpg",
+  "photo_materials_image": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/3001631 RUBI/FOTOGRAFIES/SPT1.jpg"
+ }
+}

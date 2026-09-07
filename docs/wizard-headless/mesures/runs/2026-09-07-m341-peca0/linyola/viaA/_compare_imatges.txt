@@ -1,0 +1,13 @@
+# Imatges «mateixa font que l'Eva» — linyola/viaA
+
+| # | ranura Eva | peu | nostre forat | estat | phash | ncc | psr | escala | direcció |
+|--:|---|---|---|---|--:|--:|--:|--:|---|
+| 1 | `fig_situacio` | Figura 1. Ubicació de la parcel·la en estudi. | `fig_aerea_image` | **MISMATCH** | 34 | 0.373 | 4.7 | 0.493 | veritat dins nostra |
+| 2 | `fig_assaigs` | Figura 2. Detall de l’edificació projectada i els assaigs re | — | **NO_DATA** | — | — | — | — | — |
+| 3 | `fig_projecte` | Figura 3. Detall del perfil de l’habitatge projectat. | `fig_main_plan_image` | **MISMATCH** | 32 | 0.609 | 6.2 | 0.421 | veritat dins nostra |
+| 4 | `foto_dpsh` | Fotografia 1. Vista de la màquina utilitzada en un dels assa | `photo_dpsh_image` | **MISMATCH** | 32 | 0.292 | 3.3 | 0.675 | veritat dins nostra |
+| 6 | `fig_geologic` | Figura 5. Mapa geològic a escala 1:50.000 de la zona en estu | `fig_geological_image` | **MISMATCH** | 30 | 0.366 | 4.2 | 0.192 | nostra dins veritat |
+| 7 | `foto_materials` | Fotografia 2. Detall dels materials recuperats durant la rea | `photo_materials_image` | **MATCH** | 0 | — | — | — | sencera |
+| 8 | `fig_tall` | Figura 6. Tall de correlació. | `fig_correlation_image` | **MISMATCH** | 30 | 0.643 | 4.6 | 0.924 | veritat dins nostra |
+
+Totals: 1 M · 0 C · 5 X · 1 ND → 17 %; sobrants (nostres sense figura de l'Eva): 1 `fig_cadastre_image`

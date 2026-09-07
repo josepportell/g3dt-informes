@@ -4505,3 +4505,127 @@ test 1/1 verd (0,5 s).
 Handoff: `docs/_FOR-NEW-YOU-20260907-1450.md`.
 
 *Fi entrada 2026-09-07 (tarda-3). Imatges pas 2: decisions per tipus (A = el que l'Eva ja té, lector = Claude Code), plantilla variable i materials una vegada, `_cache_name` a producció.*
+
+## 2026-09-07 (tarda-4) — Imatges pas 3, peça 0: mesura per figura «MATEIXA FONT que l'Eva» a M341 (M · C · X · ND per figura del signat, assignació un a un, sobrants; EXIF i rotació; `--remeasure` sense regenerar) i baseline amb el codi de generació quiet: 12 M · 5 C · 26 X · 13 ND → 40 % (figures compostes 0 %, tall 71 % en C, fotos 57-86 %); escalars, taules i presència idèntics a `-bloc4b`
+
+### Context
+
+- Pas 2 (tarda-3, D13): la primera peça del pas 3 és la MESURA, amb el codi de generació quiet (`feedback_measure_baseline_before_coding`).
+  Fins avui M341 només deia si el forat era present / pendent / absent (bloc 4: 53 · 8 · 16); «és la correcta» era un full de control a mà.
+- El pas 1 ja tenia la veritat per figura (`docs/imatges/veritat/<slug>/index.json` + imatges a mida real a `~/g3dt-e2e/imatges/veritat/`) i un
+  kit d'aparellament calibrat (`docs/imatges/scripts/match.py`: phash + NCC multiescala + PSR; idèntic 1,00, retall 0,90, no relacionat 0,34-0,47).
+
+### Decisions arquitectòniques clau
+
+**D1. La unitat de mesura és cada figura o foto que l'Eva posa al signat, no el forat de la plantilla.** 56 als 7 signats (63 menys les 7 culleres,
+les 3 «extra» sense ranura (estabilitat de Castellar, signatura d'Anciles: D10 del pas 2) i la Fotografia 2 duplicada de Vilanova, mateix media).
+Per què: la plantilla canviarà (D11: figures variables) i la mesura ha de sobreviure-hi; i mesura el que ella fa, no el que nosaltres imprimim.
+
+**D2. Quatre estats amb la semàntica de M341.** M = la mateixa imatge sencera (phash ≤ 10, orientació EXIF aplicada abans); C = la mateixa font
+amb un altre retall o composició (NCC · min(1, PSR/6) ≥ 0,7, veritat dins la nostra i, per a figures, la nostra dins la veritat, escala nativa
+inclosa) o la mateixa foto girada 90/180/270; X = una altra font; ND = no posem res (forat absent o «[Imatge pendent]»): res fals imprès, com
+als escalars. Percentatge (M + C) / (M + C + X) com `mesura_informe._pct`; l'ND es veu a la seva columna. Els llindars són els del pas 1 (no
+s'abaixen: les parelles no relacionades donen 0,34-0,47).
+
+**D3. Assignació un a un, la millor parella primer; les nostres imatges sense figura de l'Eva són «sobrants».** Una imatge nostra no pot
+«valer» dues figures (Bell-lloc: dues de situació contra cadastre + aèria; Vilanova: dues fotos de materials contra una nostra → una puntuada, l'altra
+ND). Els sobrants no penalitzen el %: s'informen (avui 3: `fig_aerea` a Castellar i Alcoletge, `fig_cadastre` a Linyola, on l'aèria s'ha
+emportat l'assignació de situació) perquè són els que desquadren la numeració (bloc 4: 10 X).
+
+**D4. Orientació EXIF abans del phash, i rotacions com a C «rotada».** La foto de materials de Rubí sortia C al primer run (i «RETALL/COMPOSICIÓ»
+al pas 1) i és M amb phash 0 quan s'aplica l'orientació del fitxer de camp: era un artefacte d'orientació, no un retall. Una foto girada és la
+mateixa font mal presentada: C, no X.
+
+**D5. La mesura viu a M341 i es pot repetir sense regenerar.** Mòdul `docs/wizard-headless/mesures/imatges_font.py` carregat com
+`mesura_informe`; per projecte `_compare_imatges.{json,txt}` amb els camins de les nostres imatges (`ours_paths`, trets de l'`InlineImage` viu
+del context, mai `str()`); `imatges_font.py --remeasure <run>` re-puntua un run sencer (verificat: sortida idèntica). Per què: iterar el
+mesurador costa segons, regenerar costa 10 min.
+
+**D6. Els tres càlculs (`load_gray`, `ncc_max`, `best_scaled`) són còpia literal de `match.py`, no import.** El script del pas 1 porta camins
+absoluts d'un scratchpad; el mòdul de mesura ha de viure sol al repo. Cap dels quatre punts calibrats es toca (penalització PSR, `psr = 99`,
+escala nativa, `alpha_composite` sobre blanc).
+
+**D7. Cap canvi a `automation/` ni a la plantilla.** Baseline = codi quiet: el run ha de ser idèntic a `-bloc4b` en tot menys la columna nova.
+
+### Implementació
+
+- `docs/wizard-headless/mesures/imatges_font.py` (nou, ≈ 230 línies): `truth_figures`, `our_images`, `score_pair`, `compare_images`,
+  `compare_project`, `format_rows`, `agregat_section`, `remeasure_run`, CLI.
+- `docs/wizard-headless/mesures/mesura_341.py` (+ 15): càrrega del mòdul, crida per projecte dins `if gen["success"]` (amb `try`: la veritat és
+  fora del repo), línia «imatges» al terminal, secció «MATEIXA FONT» a `_AGREGAT-341.md` darrere de la de presència.
+- `tests/test_peca0_imatges_font.py` (9 tests, fixtures amb estructura gran + soroll: reescalat → M, retall → C, font diferent → X, res → ND, un a un
+  i sobrants, condicionals de `our_images` (`has_sondeig`, `photo_site_text`, pendent, fitxer absent), exclusions de la veritat, girada → C, EXIF
+  Orientation=6 → M, i la veritat real de Castellar contra ella mateixa → tot M).
+- Runs: `2026-09-07-m341-peca0` (primera passada: sense EXIF, rotació ni camins; conservat) i **`2026-09-07-m341-peca0b` = REFERÈNCIA per a les
+  peces 1-7** (mòdul definitiu). Cost 0 LLM, ≈ 10 min per run (viaA + t2).
+
+### Validació empírica
+
+- **Identitat amb `-bloc4b`** (codi quiet): escalars viaA idèntics als 7 (diff buit), total 308 · 43 · 123 · 33 → 74 %, t2 76 %, taules 82 %
+  idèntiques per projecte, presència idèntica (8 files), els mateixos 2 avisos.
+- **Imatges (`peca0b`, viaA), per figura de l'Eva:**
+
+| projecte | M | C | X | ND | % | sobrants |
+|---|--:|--:|--:|--:|--:|--:|
+| castellar | 2 | 1 | 3 | 1 | 50 % | 1 |
+| rubi | 2 | 0 | 3 | 2 | 40 % | 0 |
+| bell-lloc | 3 | 1 | 6 | 0 | 40 % | 0 |
+| linyola | 1 | 0 | 5 | 1 | 17 % | 1 |
+| alcoletge | 1 | 1 | 4 | 0 | 33 % | 1 |
+| vilanova | 2 | 1 | 1 | 5 | 75 % | 0 |
+| anciles | 1 | 1 | 4 | 4 | 33 % | 0 |
+| **total** | **12** | **5** | **26** | **13** | **40 %** | 3 |
+
+| ranura de l'Eva | M | C | X | ND | % |
+|---|--:|--:|--:|--:|--:|
+| `fig_situacio` | 0 | 0 | 8 | 0 | 0 % |
+| `fig_assaigs` | 0 | 0 | 3 | 3 | 0 % |
+| `fig_projecte` | 0 | 0 | 2 | 3 | 0 % |
+| `fig_geologic` | 0 | 0 | 4 | 3 | 0 % |
+| `fig_tall` | 0 | 5 | 2 | 0 | 71 % |
+| `foto_dpsh` | 4 | 0 | 3 | 0 | 57 % |
+| `foto_sondeig` | 1 | 0 | 2 | 0 | 33 % |
+| `foto_materials` | 6 | 0 | 1 | 2 | 86 % |
+| `foto_vista` | 1 | 0 | 1 | 2 | 50 % |
+
+- **Coherència amb el pas 1** (§0.9 del document): fotos idèntiques 12/23 → 12 M de fotos (DPSH 4, materials 6, sondeig 1, vista 1); figures
+  compostes cap (situació 0/8, assaigs 0/6, geològic 0/7, projecte 0/5); tall «7/7 mateixa font, 0/7 mateix retall» → 5 C + 2 X (Rubí 0,58 i
+  Linyola 0,64 queden sota 0,7 per línia fina). Els 13 ND: 6 pendents (sense UTM: geològic de Rubí, Vilanova, Anciles; sense rol: assaigs de
+  Castellar, Linyola, Vilanova), 5 sense ranura nostra (projecte a Vilanova i Anciles ×2, vista a Rubí i Vilanova), 2 segona foto de materials
+  (Vilanova, Anciles).
+- `peca0` → `peca0b`: una sola fila canvia (Rubí `foto_materials` C → M, D4). `--remeasure` sobre `peca0b`: idèntic.
+
+### Tests
+
+- +9 (`tests/test_peca0_imatges_font.py`, 17 s). Suite sencera: 31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2460 verds / 5 omesos (235 s, amb el run `peca0b` en paral·lel)
+
+### Latència / cost
+
+- Mesura d'imatges: segons per projecte (≤ 12 parelles a 360 px, 16 escales). Run M341 sencer ≈ 10 min (generació), 0 LLM.
+
+### Limitacions conegudes
+
+- **Línia fina (CAD)**: Linyola projecte 0,61 (PSR 6,2), Linyola tall 0,64, Rubí tall 0,58 són la mateixa font a ull i X per mesura. El llindar
+  no s'abaixa; la peça 3 (retall de la secció) els ha de portar a M per phash, i això és la prova que la mesura val.
+- **Mateix tipus, extensió diferent**: el geològic ICGC per UTM (Linyola, Bell-lloc, Alcoletge) és la mateixa capa que l'Eva amb un altre zoom →
+  X (0,31-0,37). La mesura no té l'estat «mateix tipus»; és a posta (la figura de l'informe no és la de l'Eva).
+- Cap rotació ni mirall al NCC (només al phash). Cap mesura de retall i mida dins la pàgina (això és al full de control).
+- La cullera i les figures extra queden fora; la numeració continua al grup `fix`.
+- Els sobrants no entren al %: si la peça 1 treu `fig_aerea`, el % d'imatges no es mou (ho farà el grup `fix`).
+
+### GO/NO-GO
+
+- ✅ Mesura operativa i coherent amb la lectura visual del pas 1.
+- ✅ Baseline amb el codi quiet idèntic a `-bloc4b` (escalars, taules, presència).
+- ⏳ Suite sencera (suite: 31 vermells esperats / 2460 verds).
+- ⏳ Commit (GO del Josep): proposta en 2 — `imatges_font.py` + M341 + test · runs `peca0`/`peca0b` + docs.
+
+### Següents passos
+
+- **Peça 1 (plantilla petita, D2/D7/D10/D11 del pas 2)**: `fig_aerea` fora, materials una vegada fora del bucle, pastís de Rubí i 8 media morts
+  fora, numeració per presència. Esperat contra `peca0b`: sobrants 3 → 1 (queda el `fig_cadastre` de Linyola fins a la peça 5), imatges M/C/X/ND
+  intactes (la plantilla no canvia cap font), grup `fix` ↑ (les 10 X «nombre de figures» del bloc 4 haurien de baixar), pes dels `.docx` −8,9 MB.
+  Abans: `feedback_check_signed_phrasing_before_template_change`.
+- Peça 2 (fotos amb el lector): esperat `foto_dpsh` 4 → 7, `foto_sondeig` 1 → 3, `foto_vista` ↑.
+
+*Fi entrada 2026-09-07 (tarda-4). Peça 0: mesura per figura «mateixa font que l'Eva» dins M341 i baseline quiet 12 · 5 · 26 · 13 → 40 %.*

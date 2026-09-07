@@ -1,0 +1,16 @@
+# Imatges «mateixa font que l'Eva» — anciles/viaA
+
+| # | ranura Eva | peu | nostre forat | estat | phash | ncc | psr | escala | direcció |
+|--:|---|---|---|---|--:|--:|--:|--:|---|
+| 1 | `fig_situacio` | Figura 1. Vista de la zona en estudio. Fuente: Sede electrón | `fig_cadastre_image` | **MISMATCH** | 28 | 0.235 | 2.4 | 0.493 | veritat dins nostra |
+| 2 | `fig_projecte` | Figura 2. Detalle del plano topográfico del emplazamiento fa | — | **NO_DATA** | — | — | — | — | — |
+| 3 | `fig_projecte` | Figura 3. Detalle de las viviendas prevista. Fuente: Proyect | — | **NO_DATA** | — | — | — | — | — |
+| 4 | `fig_assaigs` | Figura 4. Situación de los ensayos realizados. | `fig_main_plan_image` | **MISMATCH** | 38 | 0.425 | 7.1 | 0.12 | nostra dins veritat |
+| 5 | `foto_dpsh` | Fotografía 1. Detalle del emplazamiento de la máquina realiz | `photo_dpsh_image` | **MATCH** | 0 | — | — | — | sencera |
+| 6 | `foto_sondeig` | Fotografía 2. Detalle del emplazamiento de la máquina realiz | `photo_sondeig_image` | **MISMATCH** | 28 | 0.22 | 2.6 | 0.192 | veritat dins nostra |
+| 8 | `fig_geologic` | Figura 6. Mapa geológico a escala 1:1.000.000 de la zona de  | — | **NO_DATA** | — | — | — | — | — |
+| 9 | `foto_materials` | Fotografía 3. Detalle de los materiales recuperados durante  | — | **NO_DATA** | — | — | — | — | — |
+| 10 | `foto_materials` | Fotografía 4. Detalle de los materiales recuperados durante  | `photo_materials_image` | **MISMATCH** | 28 | 0.283 | 4.5 | 0.421 | veritat dins nostra |
+| 11 | `fig_tall` | Figura 7. Corte de correlación de los materiales descritos e | `fig_correlation_image` | **CLOSE** | 36 | 0.914 | 7.4 | 0.675 | veritat dins nostra |
+
+Totals: 1 M · 1 C · 4 X · 4 ND → 33 %; sobrants (nostres sense figura de l'Eva): 0 

@@ -98,8 +98,13 @@ Sense això, una part del 26 % vermell d'A és soroll de la mesura, no del siste
 > amb figures variables (1-2 situació, 0-1 assaigs, 0-2 projecte, geològic, tall), `fig_aerea` fora, materials una vegada; `_cache_name` a producció
 > (`123b4f2`). Pastís de Rubí: fora (gràfic per dades del projecte quan el GTL doni percentatges). Preguntes 30-34 i 36 (35 dins la 19a).
 
-Peces del pas 3, en ordre, cada una amb baseline (`-bloc4b`) i mesura a M341:
-0. mesura per figura «mateixa font que l'Eva» (phash/NCC contra `veritat/`) — S
+> **Peça 0 FETA (tarda-4)** (DECISION-LOG 2026-09-07 (tarda-4)): M341 mesura ara cada figura del signat contra la nostra (M · C · X · ND, un a un,
+> sobrants; `imatges_font.py`, `--remeasure`). **Referència per a les peces 1-7: `2026-09-07-m341-peca0b`** = 12 M · 5 C · 26 X · 13 ND → 40 %
+> (situació 0/8, assaigs 0/6, projecte 0/5, geològic 0/7, tall 5 C + 2 X, fotos DPSH 4/7, sondeig 1/3, materials 6/9, vista 1/4); escalars 74 %,
+> taules 82 % i presència idèntics a `-bloc4b`.
+
+Peces del pas 3, en ordre, cada una amb baseline (`peca0b`) i mesura a M341:
+0. ✅ mesura per figura «mateixa font que l'Eva» (phash/NCC contra `veritat/`) — S
 1. plantilla petita: aèria fora, materials una vegada, numeració per presència, pastís i media morts fora — S
 2. fotos amb el lector d'imatges (skill + exemplars leave-one-out + annex de fotografies) — M (inclou el skill)
 3. tall retallat (`detect_drawing_region`) — S
