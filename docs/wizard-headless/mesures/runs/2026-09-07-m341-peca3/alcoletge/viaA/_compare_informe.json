@@ -50,8 +50,8 @@
   },
   "cte_edificacio": {
    "counts": {
-    "MATCH": 2,
-    "MISMATCH": 2
+    "MATCH": 3,
+    "MISMATCH": 1
    },
    "cells": [
     {
@@ -74,9 +74,7 @@
     {
      "row": "fila1",
      "col": 1,
-     "estat": "MISMATCH",
-     "gen": "T-3",
-     "eva": "T-1"
+     "estat": "MATCH"
     }
    ]
   },
@@ -352,9 +350,9 @@
   },
   "sismica": {
    "counts": {
-    "MATCH": 4,
-    "MISMATCH": 3,
-    "CLOSE": 1
+    "MATCH": 6,
+    "CLOSE": 1,
+    "MISMATCH": 1
    },
    "cells": [
     {
@@ -370,9 +368,7 @@
     {
      "row": "1",
      "col": 2,
-     "estat": "MISMATCH",
-     "gen": "1.00",
-     "eva": "1.40"
+     "estat": "MATCH"
     },
     {
      "row": "1",
@@ -394,9 +390,7 @@
     {
      "row": "2",
      "col": 2,
-     "estat": "MISMATCH",
-     "gen": "",
-     "eva": "0.29*"
+     "estat": "MATCH"
     },
     {
      "row": "2",
@@ -410,8 +404,8 @@
   "geotecnica": {
    "counts": {
     "CLOSE": 3,
-    "MISMATCH": 3,
-    "MATCH": 8
+    "MISMATCH": 5,
+    "MATCH": 6
    },
    "cells": [
     {
@@ -425,13 +419,15 @@
      "row": "1r",
      "col": 1,
      "estat": "MISMATCH",
-     "gen": "6",
+     "gen": "7",
      "eva": "5-0"
     },
     {
      "row": "1r",
      "col": 2,
-     "estat": "MATCH"
+     "estat": "MISMATCH",
+     "gen": "20",
+     "eva": "--"
     },
     {
      "row": "1r",
@@ -464,13 +460,15 @@
      "row": "2n",
      "col": 1,
      "estat": "CLOSE",
-     "gen": "22-R",
+     "gen": "39-R",
      "eva": "R"
     },
     {
      "row": "2n",
      "col": 2,
-     "estat": "MATCH"
+     "estat": "MISMATCH",
+     "gen": "--",
+     "eva": "20"
     },
     {
      "row": "2n",
@@ -500,8 +498,8 @@
   }
  },
  "totals": {
-  "MATCH": 36,
-  "MISMATCH": 18,
+  "MATCH": 37,
+  "MISMATCH": 17,
   "CLOSE": 13,
   "ROW_EXTRA": 1,
   "ROW_MISSING": 1

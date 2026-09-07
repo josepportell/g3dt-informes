@@ -3,10 +3,10 @@
 | taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
 |---|--:|--:|--:|---|---|
 | plantes | 3 | 0 | 3 |  | fila0[1] MISM «»↔«Pb+1Pp»; fila1[1] MISM «607»↔«995»; fila2[1] MISM «297»↔«280+86» |
-| cte_edificacio | 2 | 0 | 2 |  | fila0[1] MISM «C-0»↔«C-1»; fila1[1] MISM «T-2»↔«T-1» |
+| cte_edificacio | 3 | 0 | 1 |  | fila0[1] MISM «C-0»↔«C-1» |
 | dpsh | 10 | 0 | 0 |  |  |
 | sondeig | 4 | 0 | 1 |  | s-1[3] MISM «1/0»↔«1/--» |
-| spt_ma | 2 | 2 | 1 |  | fila0[0] CLOS «SPT1 S1»↔«SPT-1»; fila0[3] MISM «62»↔«54»; fila0[4] CLOS «Grava amb matriu sorrenca»↔«Graves en matriu sorrenca» |
+| spt_ma | 3 | 1 | 1 |  | spt-1[3] MISM «62»↔«54»; spt-1[4] CLOS «Grava amb matriu sorrenca»↔«Graves en matriu sorrenca» |
 | mostra_lab | 4 | 1 | 0 |  | fila0[2] CLOS «Profunditat: -1.0 a -1.6»↔«Profunditat:  -1.0  a -1.60 m» |
 | soil_levels | 1 | 0 | 1 |  | 1r[1] MISM «Graves amb sorres»↔«Graves en matriu sorrenca carbonatades» |
 | permeabilitat | 1 | 1 | 1 |  | 1r[1] CLOS «10^-2 a 10^-4»↔«10 – 10-2»; 1r[2] MISM «Graves amb sorres»↔«Graves en matriu sorrenca carbonatades» |
@@ -14,4 +14,4 @@
 | sismica | 3 | 0 | 1 |  | 1[2] MISM «2.60»↔«2.45» |
 | geotecnica | 3 | 1 | 3 |  | 1r[0] CLOS «1er nivell. Graves amb sorres.»↔«1er nivell. Graves en matriu sorrenca»; 1r[1] MISM «23-R»↔«25-R»; 1r[2] MISM «62»↔«54»; 1r[6] MISM «450»↔«650» |
 
-**bell-lloc/t2: 37 MATCH · 5 CLOSE · 13 MISMATCH · 0 files extra · 0 files absents → 76 % (M+C)/comparables**
+**bell-lloc/t2: 39 MATCH · 4 CLOSE · 12 MISMATCH · 0 files extra · 0 files absents → 78 % (M+C)/comparables**

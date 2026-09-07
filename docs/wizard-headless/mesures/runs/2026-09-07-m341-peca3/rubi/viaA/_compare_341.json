@@ -56,6 +56,14 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "bearing_layer_idx",
+  "grup": "calc",
+  "eva": 0,
+  "gen": 0,
+  "status": "MATCH",
+  "method": "bearing_rule"
+ },
+ {
   "var": "building_structure_desc",
   "grup": "narr",
   "eva": "en planta baixa i porxo, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
@@ -67,7 +75,7 @@
   "var": "building_type_lower",
   "grup": "A",
   "eva": "un habitatge unifamiliar aïllat modular",
-  "gen": "habitatge unifamiliar aïllat",
+  "gen": "un habitatge unifamiliar aïllat",
   "status": "CLOSE",
   "method": "intelligent_analysis"
  },
@@ -75,7 +83,7 @@
   "var": "client",
   "grup": "A",
   "eva": "SRA. JOANA MARTINEZ",
-  "gen": "JOANA MARTÍNEZ",
+  "gen": "SRA. JOANA MARTÍNEZ",
   "status": "MISMATCH",
   "method": "intelligent_analysis"
  },
@@ -128,6 +136,14 @@
   "method": "table_cell"
  },
  {
+  "var": "data_camp_inici_text",
+  "grup": "A",
+  "eva": "14 de novembre de 2025",
+  "gen": "14 de novembre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
   "var": "data_camp_text",
   "grup": "A",
   "eva": "14 de novembre de 2025",
@@ -139,8 +155,8 @@
   "var": "data_signatura_text",
   "grup": "resta",
   "eva": "17 de desembre de 2025",
-  "gen": "06 de setembre de 2026",
-  "status": "MISMATCH",
+  "gen": "17 de desembre de 2025",
+  "status": "MATCH",
   "method": "paragraph_single"
  },
  {
@@ -150,6 +166,30 @@
   "gen": "3001631",
   "status": "MATCH",
   "method": "paragraph_single"
+ },
+ {
+  "var": "fig_correlation_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 5,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_geological_num",
+  "grup": "fix",
+  "eva": "4",
+  "gen": 4,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_spt_cullera_num",
+  "grup": "fix",
+  "eva": "3",
+  "gen": 3,
+  "status": "MATCH",
+  "method": "numbering"
  },
  {
   "var": "geo_p",
@@ -271,20 +311,36 @@
   "method": "intelligent_analysis"
  },
  {
-  "var": "municipality",
+  "var": "municipality_de",
   "grup": "A",
-  "eva": "Rubí (Barcelona)",
-  "gen": "Rubí",
+  "eva": "de Rubí (Barcelona)",
+  "gen": "de Rubí",
   "status": "CLOSE",
   "method": "paragraph_single"
  },
  {
   "var": "num_dpsh_tests",
   "grup": "A",
-  "eva": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+  "eva": "3",
   "gen": 3,
   "status": "MATCH",
   "method": "paragraph_single"
+ },
+ {
+  "var": "photo_dpsh_num",
+  "grup": "fix",
+  "eva": "2",
+  "gen": 1,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "photo_materials_num",
+  "grup": "fix",
+  "eva": "3",
+  "gen": 2,
+  "status": "MISMATCH",
+  "method": "numbering"
  },
  {
   "var": "photo_site_text",
@@ -297,16 +353,16 @@
   "var": "plantes",
   "grup": "A",
   "eva": "PB + Porxo",
-  "gen": "PB (planta baixa)+porxada, sense pis superior",
-  "status": "MISMATCH",
+  "gen": "Pb+Porxo",
+  "status": "MATCH",
   "method": "table_cell"
  },
  {
   "var": "qa_value",
   "grup": "calc",
   "eva": "3.50",
-  "gen": "3.00",
-  "status": "CLOSE",
+  "gen": "3.50",
+  "status": "MATCH",
   "method": "paragraph_single"
  },
  {
@@ -326,6 +382,46 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "section_excavabilitat_num",
+  "grup": "fix",
+  "eva": "3.5",
+  "gen": "3.5",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_rado_num",
+  "grup": "fix",
+  "eva": "3.7",
+  "gen": "3.7",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_resum_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.3",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sismica_num",
+  "grup": "fix",
+  "eva": "3.6",
+  "gen": "3.6",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_spt_num",
+  "grup": "fix",
+  "eva": "2.4.2",
+  "gen": "2.4.2",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
   "var": "seismic_ab_text",
   "grup": "calc",
   "eva": "AB  =0,08 g  (essent g el valor de la gravetat)",
@@ -334,12 +430,12 @@
   "method": "paragraph_single"
  },
  {
-  "var": "settlement",
+  "var": "settlement_sentence",
   "grup": "calc",
-  "eva": "1.50",
-  "gen": "1.50",
-  "status": "MATCH",
-  "method": "paragraph_single"
+  "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.50 cm, immediats en el temps donat el comportament granular dels materials.",
+  "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.80 cm, immediats en el temps donat el comportament granular dels materials.",
+  "status": "MISMATCH",
+  "method": "paragraph_anchor"
  },
  {
   "var": "site_condition",
@@ -356,6 +452,46 @@
   "gen": "El solar es localitza sense construccions ni pavimentacions.",
   "status": "MISMATCH",
   "method": "intelligent_analysis"
+ },
+ {
+  "var": "spt_depth_range",
+  "grup": "A",
+  "eva": "-0.60 a -1.20",
+  "gen": "-0.60 a -1.20",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_lithology",
+  "grup": "A",
+  "eva": "Graves i sorres",
+  "gen": "Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)",
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_location",
+  "grup": "A",
+  "eva": "P-3",
+  "gen": "P-3",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_n30",
+  "grup": "A",
+  "eva": "40",
+  "gen": "40",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_test_id",
+  "grup": "A",
+  "eva": "SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_flatten"
  },
  {
   "var": "sulfate_classification",
@@ -393,7 +529,7 @@
   "var": "superficie_parcela",
   "grup": "A",
   "eva": "951",
-  "gen": "951.0",
+  "gen": "951",
   "status": "MATCH",
   "method": "table_cell"
  },
@@ -401,9 +537,49 @@
   "var": "table_dpsh_range",
   "grup": "calc",
   "eva": "3 i 4",
-  "gen": "3, 4 i 5",
-  "status": "MISMATCH",
+  "gen": "3 i 4",
+  "status": "MATCH",
   "method": "paragraph_single"
+ },
+ {
+  "var": "table_lab_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 5,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_lab_values_num",
+  "grup": "fix",
+  "eva": "7",
+  "gen": 7,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_permeability_num",
+  "grup": "fix",
+  "eva": "6",
+  "gen": 6,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_seismic_num",
+  "grup": "fix",
+  "eva": "8",
+  "gen": 8,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_soil_chars_num",
+  "grup": "fix",
+  "eva": "9",
+  "gen": 9,
+  "status": "MATCH",
+  "method": "numbering"
  },
  {
   "var": "utm_x",

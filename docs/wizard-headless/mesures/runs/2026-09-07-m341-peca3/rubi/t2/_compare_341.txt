@@ -2,9 +2,10 @@
 
 | grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
 |---|--:|--:|--:|--:|--:|
-| A | 11 | 2 | 4 | 1 | 76 % |
-| calc | 11 | 0 | 4 | 0 | 73 % |
+| A | 16 | 3 | 4 | 1 | 83 % |
+| calc | 13 | 0 | 3 | 0 | 81 % |
 | narr | 3 | 4 | 8 | 1 | 47 % |
+| fix | 13 | 0 | 2 | 0 | 87 % |
 | resta | 2 | 0 | 1 | 1 | 67 % |
 
 - [narr] `access_street` **MISMATCH** gen=«S'accedeix pel nord.» ↔ eva=«carrer de la Miranda»
@@ -18,20 +19,22 @@
 - [A] `building_type_lower` **CLOSE** gen=«un habitatge unifamiliar» ↔ eva=«un habitatge unifamiliar aïllat modular»
 - [A] `client` **NO_DATA** gen=«None» ↔ eva=«SRA. JOANA MARTINEZ»
 - [narr] `conclusions_aggressivity_statement` **CLOSE** gen=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on» ↔ eva=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on»
-- [resta] `data_signatura_text` **MISMATCH** gen=«06 de setembre de 2026» ↔ eva=«17 de desembre de 2025»
+- [resta] `data_signatura_text` **MISMATCH** gen=«7 de setembre de 2026» ↔ eva=«17 de desembre de 2025»
 - [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo,»
 - [calc] `geomech_cohesion` **MISMATCH** gen=«0.0» ↔ eva=«0.05»
 - [narr] `lab_tests_text` **CLOSE** gen=«Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95
 Assaig de Límits d'Atterberg UN» ↔ eva=«Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95
 Determinació de Límits d’Atterb»
-- [A] `municipality` **MISMATCH** gen=«Rubi» ↔ eva=«Rubí (Barcelona)»
+- [A] `municipality_de` **CLOSE** gen=«de Rubí» ↔ eva=«de Rubí (Barcelona)»
+- [fix] `photo_dpsh_num` **MISMATCH** gen=«1» ↔ eva=«2»
+- [fix] `photo_materials_num` **MISMATCH** gen=«2» ↔ eva=«3»
 - [narr] `photo_site_text` **NO_DATA** gen=«None» ↔ eva=«Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).»
 - [A] `plantes` **CLOSE** gen=«Pb» ↔ eva=«PB + Porxo»
 - [narr] `radon_sentence` **CLOSE** gen=«La parcel·la concreta d'estudi es localitza al terme municipal de RUBÍ i, segons la taula » ↔ eva=«La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula »
 - [calc] `seismic_ab_text` **MISMATCH** gen=«0,04» ↔ eva=«AB  =0,08 g  (essent g el valor de la gravetat)»
-- [calc] `settlement` **MISMATCH** gen=«1.80» ↔ eva=«1.50»
+- [calc] `settlement_sentence` **MISMATCH** gen=«Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o in» ↔ eva=«Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o in»
 - [narr] `site_condition` **MISMATCH** gen=«Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'» ↔ eva=«Al solar, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’es»
 - [narr] `site_description` **MISMATCH** gen=«El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar pre» ↔ eva=«El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer »
+- [A] `spt_lithology` **MISMATCH** gen=«Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)» ↔ eva=«Graves i sorres»
 - [A] `superficie_construida` **MISMATCH** gen=«64» ↔ eva=«92»
-- [A] `superficie_parcela` **MISMATCH** gen=«1414» ↔ eva=«951»
-- [calc] `table_dpsh_range` **MISMATCH** gen=«3, 4 i 5» ↔ eva=«3 i 4»
+- [A] `superficie_parcela` **MISMATCH** gen=«1.414» ↔ eva=«951»

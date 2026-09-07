@@ -77,12 +77,14 @@
  },
  "soil_types": [
   "granular",
-  "granular"
+  "rock"
  ],
  "foundation_depth_m": 1.0,
  "expedient": "4001670",
  "_metadata": {
   "origen": "mesura_341 viaA: lectura + Df del signat",
-  "Df_assumida": 1.0
- }
+  "Df_assumida": 1.0,
+  "data_signatura_assumida": "2026-03-16"
+ },
+ "data_signatura": "2026-03-16"
 }

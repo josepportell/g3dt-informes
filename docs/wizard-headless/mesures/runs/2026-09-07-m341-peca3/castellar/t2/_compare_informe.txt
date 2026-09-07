@@ -3,7 +3,7 @@
 | taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
 |---|--:|--:|--:|---|---|
 | plantes | 2 | 2 | 2 |  | fila0[1] MISM «»↔«Pb+1Pp»; fila1[0] CLOS «Superfície de la parcel·la segons plànols cadastrals  (m2)»↔«Superfície de la parcel·la (m2)»; fila1[1] MISM «440»↔«1.284»; fila2[1] CLOS «120»↔«120 m2» |
-| cte_edificacio | 3 | 0 | 1 |  | fila1[1] MISM «T-2»↔«T-1» |
+| cte_edificacio | 4 | 0 | 0 |  |  |
 | dpsh | 20 | 0 | 0 |  |  |
 | sondeig | 4 | 0 | 1 |  | s-1[1] MISM «-4.00»↔«-4.20» |
 | spt_ma | 4 | 0 | 1 |  | spt-1[4] MISM «Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (NIVELL 1)»↔«Limolites i bretxes» |
@@ -14,4 +14,4 @@
 | sismica | 3 | 0 | 1 |  | 1[2] MISM «1.60»↔«1.15*» |
 | geotecnica | 5 | 1 | 1 |  | 1r[0] CLOS «1er nivell. Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.»↔«1er nivell: Bretxes amb intercalacions de lutites i gresos»; 1r[1] MISM «27-R»↔«17-R» |
 
-**castellar/t2: 47 MATCH · 10 CLOSE · 8 MISMATCH · 0 files extra · 0 files absents → 88 % (M+C)/comparables**
+**castellar/t2: 48 MATCH · 10 CLOSE · 7 MISMATCH · 0 files extra · 0 files absents → 89 % (M+C)/comparables**

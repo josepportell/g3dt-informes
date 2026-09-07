@@ -56,6 +56,14 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "bearing_layer_idx",
+  "grup": "calc",
+  "eva": 1,
+  "gen": 1,
+  "status": "MATCH",
+  "method": "bearing_rule"
+ },
+ {
   "var": "building_structure_desc",
   "grup": "narr",
   "eva": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
@@ -67,7 +75,7 @@
   "var": "building_type_lower",
   "grup": "A",
   "eva": "l'ampliació d'un edifici en planta baixa",
-  "gen": "tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
+  "gen": "el tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
   "status": "MISMATCH",
   "method": "intelligent_analysis"
  },
@@ -75,7 +83,7 @@
   "var": "client",
   "grup": "A",
   "eva": "SR. ALBERT SANS BONVEHI",
-  "gen": "ALBERT SANS BONVEHÍ",
+  "gen": "SR. ALBERT SANS BONVEHÍ",
   "status": "MISMATCH",
   "method": "intelligent_analysis"
  },
@@ -107,7 +115,7 @@
   "var": "cota_referencia",
   "grup": "A",
   "eva": "+188.20",
-  "gen": "+188,20 msnm",
+  "gen": "+188.20",
   "status": "MATCH",
   "method": "table_flatten"
  },
@@ -123,9 +131,17 @@
   "var": "cte_sol",
   "grup": "calc",
   "eva": "T-1",
-  "gen": "T-3",
-  "status": "MISMATCH",
+  "gen": "T-1",
+  "status": "MATCH",
   "method": "table_cell"
+ },
+ {
+  "var": "data_camp_inici_text",
+  "grup": "A",
+  "eva": "16 de febrer de 2026",
+  "gen": "16 de febrer de 2026",
+  "status": "MATCH",
+  "method": "paragraph_single"
  },
  {
   "var": "data_camp_text",
@@ -139,8 +155,8 @@
   "var": "data_signatura_text",
   "grup": "resta",
   "eva": "16 de març de 2026",
-  "gen": "06 de setembre de 2026",
-  "status": "MISMATCH",
+  "gen": "16 de març de 2026",
+  "status": "MATCH",
   "method": "paragraph_single"
  },
  {
@@ -152,6 +168,38 @@
   "method": "paragraph_single"
  },
  {
+  "var": "fig_cadastre_num",
+  "grup": "fix",
+  "eva": "1",
+  "gen": 1,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_correlation_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 5,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_geological_num",
+  "grup": "fix",
+  "eva": "4",
+  "gen": 4,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_spt_cullera_num",
+  "grup": "fix",
+  "eva": "3",
+  "gen": 3,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
   "var": "geo_p",
   "grup": "resta",
   "eva": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
@@ -161,33 +209,33 @@
  {
   "var": "geomech_E",
   "grup": "calc",
-  "eva": "50",
-  "gen": 450,
+  "eva": ">400",
+  "gen": 500,
   "status": "MISMATCH",
   "method": "table_flatten"
  },
  {
   "var": "geomech_cohesion",
   "grup": "calc",
-  "eva": "0.00",
-  "gen": 0.0,
+  "eva": "1.00",
+  "gen": 1.0,
   "status": "MATCH",
   "method": "table_flatten"
  },
  {
   "var": "geomech_gamma",
   "grup": "calc",
-  "eva": "1.80",
-  "gen": 2.0,
+  "eva": "2.00",
+  "gen": 2.2,
   "status": "CLOSE",
   "method": "table_flatten"
  },
  {
   "var": "geomech_phi",
   "grup": "calc",
-  "eva": "28",
-  "gen": 38,
-  "status": "MISMATCH",
+  "eva": "30",
+  "gen": 30,
+  "status": "MATCH",
   "method": "table_flatten"
  },
  {
@@ -259,20 +307,36 @@
   "method": "intelligent_analysis"
  },
  {
-  "var": "municipality",
+  "var": "municipality_de",
   "grup": "A",
-  "eva": "A la zona d’estudi, en el municipi d’Alcoletge, s’estableix una acceleració sísmica bàsica de:",
-  "gen": "Alcoletge",
-  "status": "MISMATCH",
+  "eva": "d’Alcoletge",
+  "gen": "d'Alcoletge",
+  "status": "MATCH",
   "method": "paragraph_single"
  },
  {
   "var": "num_dpsh_tests",
   "grup": "A",
-  "eva": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+  "eva": "3",
   "gen": 3,
   "status": "MATCH",
   "method": "paragraph_single"
+ },
+ {
+  "var": "photo_dpsh_num",
+  "grup": "fix",
+  "eva": "1",
+  "gen": 1,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "photo_materials_num",
+  "grup": "fix",
+  "eva": "2",
+  "gen": 2,
+  "status": "MATCH",
+  "method": "numbering"
  },
  {
   "var": "plantes",
@@ -306,6 +370,46 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "section_excavabilitat_num",
+  "grup": "fix",
+  "eva": "3.5",
+  "gen": "3.5",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_rado_num",
+  "grup": "fix",
+  "eva": "3.8",
+  "gen": "3.7",
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_resum_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.3",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sismica_num",
+  "grup": "fix",
+  "eva": "3.7",
+  "gen": "3.6",
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_spt_num",
+  "grup": "fix",
+  "eva": "2.4.2",
+  "gen": "2.4.2",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
   "var": "seismic_ab_text",
   "grup": "calc",
   "eva": "0,04",
@@ -314,12 +418,12 @@
   "method": "paragraph_single"
  },
  {
-  "var": "settlement",
+  "var": "settlement_sentence",
   "grup": "calc",
   "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreable o bé menors a 1.0 cm.",
   "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
   "status": "MATCH",
-  "method": "paragraph_single"
+  "method": "paragraph_anchor"
  },
  {
   "var": "site_condition",
@@ -336,6 +440,46 @@
   "gen": "El solar està actualment ocupat per una zona explanada i un edifici en planta baixa.",
   "status": "CLOSE",
   "method": "intelligent_analysis"
+ },
+ {
+  "var": "spt_depth_range",
+  "grup": "A",
+  "eva": "-0.80 a -1.40",
+  "gen": "-0.80 a -1.40",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_lithology",
+  "grup": "A",
+  "eva": "Llims compactes, lutites alterades",
+  "gen": "[primera paraula il·legible] marró",
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_location",
+  "grup": "A",
+  "eva": "P-3",
+  "gen": "P-3",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_n30",
+  "grup": "A",
+  "eva": "20",
+  "gen": "20",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_test_id",
+  "grup": "A",
+  "eva": "SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_flatten"
  },
  {
   "var": "sulfate_classification",
@@ -371,7 +515,7 @@
   "var": "superficie_parcela",
   "grup": "A",
   "eva": "1167",
-  "gen": "1167.0",
+  "gen": "1.167",
   "status": "MATCH",
   "method": "table_cell"
  },
@@ -379,8 +523,48 @@
   "var": "table_dpsh_range",
   "grup": "calc",
   "eva": "3 i 4",
-  "gen": "3, 4 i 5",
-  "status": "MISMATCH",
+  "gen": "3 i 4",
+  "status": "MATCH",
   "method": "paragraph_single"
+ },
+ {
+  "var": "table_lab_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 5,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_lab_values_num",
+  "grup": "fix",
+  "eva": "7",
+  "gen": 7,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_permeability_num",
+  "grup": "fix",
+  "eva": "6",
+  "gen": 6,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_seismic_num",
+  "grup": "fix",
+  "eva": "8",
+  "gen": 8,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_soil_chars_num",
+  "grup": "fix",
+  "eva": "9",
+  "gen": 9,
+  "status": "MATCH",
+  "method": "numbering"
  }
 ]

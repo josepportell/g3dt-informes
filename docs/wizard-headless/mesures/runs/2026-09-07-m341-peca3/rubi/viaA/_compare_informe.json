@@ -6,8 +6,7 @@
   "plantes": {
    "counts": {
     "MATCH": 4,
-    "MISMATCH": 1,
-    "CLOSE": 1
+    "CLOSE": 2
    },
    "cells": [
     {
@@ -18,8 +17,8 @@
     {
      "row": "fila0",
      "col": 1,
-     "estat": "MISMATCH",
-     "gen": "PB (planta baixa)+porxada, sense pis superior",
+     "estat": "CLOSE",
+     "gen": "Pb+Porxo",
      "eva": "PB + Porxo"
     },
     {
@@ -412,8 +411,8 @@
  },
  "totals": {
   "MATCH": 43,
-  "MISMATCH": 5,
-  "CLOSE": 7,
+  "CLOSE": 8,
+  "MISMATCH": 4,
   "ROW_EXTRA": 4
  }
 }

@@ -125,13 +125,15 @@
   }
  },
  "soil_types": [
-  "granular",
+  "arcilla",
   "grava"
  ],
  "foundation_depth_m": 2.9,
  "expedient": "4001679",
  "_metadata": {
   "origen": "mesura_341 viaA: lectura + Df del signat",
-  "Df_assumida": 2.9
- }
+  "Df_assumida": 2.9,
+  "data_signatura_assumida": "2026-03-16"
+ },
+ "data_signatura": "2026-03-16"
 }

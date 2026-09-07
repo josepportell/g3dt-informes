@@ -1,13 +1,13 @@
 {
- "Df_user": 0.3,
+ "Df_user": 1.1,
  "num_soil_levels_user": 2,
  "soil_types_user": [
-  "grava",
+  "arcilla",
   "arena"
  ],
  "dpsh_overall_n20": 13.55,
- "bearing_layer_idx": 0,
- "bearing_layer_description": "",
+ "bearing_layer_idx": 1,
+ "bearing_layer_description": "Arenas finas-medias, carbonatadas.",
  "soil_levels": [
   {
    "n": 1,
@@ -16,7 +16,7 @@
    "to": 0.8,
    "n20_avg": 6.0,
    "Nb": 7.2,
-   "soil_type": "grava"
+   "soil_type": "arcilla"
   },
   {
    "n": 2,
@@ -31,49 +31,49 @@
  "geotechnical_params": {
   "gamma": 2.0,
   "cohesion": 0.0,
-  "phi": 29,
-  "E": 50
+  "phi": 38,
+  "E": 450
  },
  "terzaghi": {
-  "phi": 29,
+  "phi": 38,
   "cohesion": 0.0,
   "gamma": 2.0,
   "B": 1.0,
-  "Df": 0.3,
-  "qu": 2.5809999999999995,
+  "Df": 1.1,
+  "qu": 18.922000000000004,
   "safety_factor": 3.0,
-  "Qa": 1.0,
-  "settlement_cm": 2.0,
+  "Qa": 3.0,
+  "settlement_cm": 2.5,
   "settlement_type": "immediat",
-  "Es_used": 25.0,
-  "qa_terzaghi_peck": 0.8848980208887923,
-  "Qa_uncapped": 0.8603333333333332,
+  "Es_used": 60.0,
+  "qa_terzaghi_peck": 1.4556861949390645,
+  "Qa_uncapped": 6.307333333333335,
   "Fw": 1.6900000000000002,
-  "Fd_tp": 1.099,
-  "qa_governs": "terzaghi",
+  "Fd_tp": 1.33,
+  "qa_governs": "cap",
   "settlement_generic": false,
   "settlement_regime": "granular",
   "Es_source": "2,5 × colpeig (Nspt del nivell, columna «N»; text dels 7 informes)",
   "Es_candidates": [
    {
-    "value": 25.0,
-    "display": "Es=25 (2.5×N SPT 10)",
+    "value": 60.0,
+    "display": "Es=60 (2.5×N SPT 24)",
     "source": "2,5 × colpeig (Nspt del nivell, columna «N»; text dels 7 informes)",
-    "settlement_cm": 2.0
+    "settlement_cm": 2.5
    },
    {
-    "value": 18.072289156626507,
-    "display": "Es=18 (2.5×Nb 7.2)",
+    "value": 55.49119555143652,
+    "display": "Es=55 (2.5×Nb 22.2)",
     "source": "2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat)",
-    "settlement_cm": 2.8
+    "settlement_cm": 2.7
    },
    {
-    "value": 50.0,
-    "display": "Es=50 (E del criteri)",
+    "value": 450.0,
+    "display": "Es=450 (E del criteri)",
     "source": "E de la taula geotècnica com a Es",
-    "settlement_cm": 1.0
+    "settlement_cm": 0.3
    }
   ],
-  "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 2.00 cm, immediats en el temps donat el comportament granular dels materials."
+  "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 2.50 cm, immediats en el temps donat el comportament granular dels materials."
  }
 }

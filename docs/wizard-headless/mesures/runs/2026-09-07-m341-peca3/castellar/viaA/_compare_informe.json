@@ -5,9 +5,8 @@
  "tables": {
   "plantes": {
    "counts": {
-    "MATCH": 2,
-    "CLOSE": 3,
-    "MISMATCH": 1
+    "MATCH": 4,
+    "CLOSE": 2
    },
    "cells": [
     {
@@ -18,9 +17,7 @@
     {
      "row": "fila0",
      "col": 1,
-     "estat": "CLOSE",
-     "gen": "Pb+1",
-     "eva": "Pb+1Pp"
+     "estat": "MATCH"
     },
     {
      "row": "fila1",
@@ -32,9 +29,7 @@
     {
      "row": "fila1",
      "col": 1,
-     "estat": "MISMATCH",
-     "gen": "1284.0",
-     "eva": "1.284"
+     "estat": "MATCH"
     },
     {
      "row": "fila2",
@@ -52,8 +47,7 @@
   },
   "cte_edificacio": {
    "counts": {
-    "MATCH": 2,
-    "MISMATCH": 2
+    "MATCH": 4
    },
    "cells": [
     {
@@ -64,9 +58,7 @@
     {
      "row": "fila0",
      "col": 1,
-     "estat": "MISMATCH",
-     "gen": "C-0",
-     "eva": "C-1"
+     "estat": "MATCH"
     },
     {
      "row": "fila1",
@@ -76,9 +68,7 @@
     {
      "row": "fila1",
      "col": 1,
-     "estat": "MISMATCH",
-     "gen": "T-2",
-     "eva": "T-1"
+     "estat": "MATCH"
     }
    ]
   },
@@ -457,8 +447,8 @@
   }
  },
  "totals": {
-  "MATCH": 46,
-  "CLOSE": 11,
-  "MISMATCH": 8
+  "MATCH": 50,
+  "CLOSE": 10,
+  "MISMATCH": 5
  }
 }

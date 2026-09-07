@@ -2,10 +2,11 @@
 
 | grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
 |---|--:|--:|--:|--:|--:|
-| A | 8 | 0 | 4 | 4 | 67 % |
-| calc | 4 | 2 | 6 | 2 | 50 % |
+| A | 14 | 0 | 4 | 4 | 78 % |
+| calc | 8 | 2 | 3 | 2 | 77 % |
 | narr | 6 | 3 | 5 | 1 | 64 % |
-| resta | 2 | 0 | 1 | 1 | 67 % |
+| fix | 14 | 0 | 2 | 0 | 88 % |
+| resta | 3 | 0 | 0 | 1 | 100 % |
 
 - [narr] `access_street` **MISMATCH** gen=«carrer Girasols» ↔ eva=«Carrer existent al nord»
 - [narr] `adjacent_east_fmt` **MISMATCH** gen=«Per la part est amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre » ↔ eva=«Per la part est amb tres parcel·les ocupades per edificis aïllats de fins a dos plantes so»
@@ -13,27 +14,25 @@
 - [narr] `adjacent_north_fmt` **MISMATCH** gen=«Per la part nord amb una parcel·la on existeix un edifici aïllat en planta baixa, amb sote» ↔ eva=«Per la part nord amb el camí d’accés.»
 - [narr] `adjacent_west_fmt` **MISMATCH** gen=«I finalment, per la part oest, amb una parcel·la buida.» ↔ eva=«I finalment, per la part oest, amb un solar buit.»
 - [A] `architect_name_upper` **MISMATCH** gen=«DAVID GRAUS ROBINAT» ↔ eva=«ALBERT SANS BONVEHI»
-- [A] `building_type_lower` **MISMATCH** gen=«tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)» ↔ eva=«l'ampliació d'un edifici en planta baixa»
-- [A] `client` **MISMATCH** gen=«ALBERT SANS BONVEHÍ» ↔ eva=«SR. ALBERT SANS BONVEHI»
+- [A] `building_type_lower` **MISMATCH** gen=«el tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)» ↔ eva=«l'ampliació d'un edifici en planta baixa»
+- [A] `client` **MISMATCH** gen=«SR. ALBERT SANS BONVEHÍ» ↔ eva=«SR. ALBERT SANS BONVEHI»
 - [narr] `conclusions_aggressivity_statement` **MISMATCH** gen=«No s'han realitzat assaigs de laboratori per determinar l'agressivitat dels materials del » ↔ eva=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on»
 - [narr] `conclusions_water_statement` **CLOSE** gen=«En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detect» ↔ eva=«En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detect»
 - [calc] `cte_edificacio` **MISMATCH** gen=«C-1» ↔ eva=«C-0»
-- [calc] `cte_sol` **MISMATCH** gen=«T-3» ↔ eva=«T-1»
-- [resta] `data_signatura_text` **MISMATCH** gen=«06 de setembre de 2026» ↔ eva=«16 de març de 2026»
 - [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar c»
-- [calc] `geomech_E` **MISMATCH** gen=«450» ↔ eva=«50»
-- [calc] `geomech_gamma` **CLOSE** gen=«2.0» ↔ eva=«1.80»
-- [calc] `geomech_phi` **MISMATCH** gen=«38» ↔ eva=«28»
+- [calc] `geomech_E` **MISMATCH** gen=«500» ↔ eva=«>400»
+- [calc] `geomech_gamma` **CLOSE** gen=«2.2» ↔ eva=«2.00»
 - [A] `lab_depth` **NO_DATA** gen=«None» ↔ eva=«Profunditat:  -0.80  a -1.40 m»
 - [A] `lab_location` **NO_DATA** gen=«None» ↔ eva=«Punt: P-3»
 - [A] `lab_sample_id` **NO_DATA** gen=«None» ↔ eva=«Mostra : SPT-1»
 - [narr] `lab_tests_text` **NO_DATA** gen=«None» ↔ eva=«Assaig de plasticitat de Límits d’Atterberg UNE 103103/94-104/93
 Contingut en sulfats solu»
-- [A] `municipality` **MISMATCH** gen=«Alcoletge» ↔ eva=«A la zona d’estudi, en el municipi d’Alcoletge, s’estableix una acceleració sísmica bàsica»
 - [A] `plantes` **NO_DATA** gen=«None» ↔ eva=«Pb»
 - [calc] `qa_value` **CLOSE** gen=«3.00» ↔ eva=«3.50»
+- [fix] `section_rado_num` **MISMATCH** gen=«3.7» ↔ eva=«3.8»
+- [fix] `section_sismica_num` **MISMATCH** gen=«3.6» ↔ eva=«3.7»
 - [narr] `site_description` **CLOSE** gen=«El solar està actualment ocupat per una zona explanada i un edifici en planta baixa.» ↔ eva=«El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer »
+- [A] `spt_lithology` **MISMATCH** gen=«[primera paraula il·legible] marró» ↔ eva=«Llims compactes, lutites alterades»
 - [calc] `sulfate_classification` **NO_DATA** gen=«None» ↔ eva=«No Agressius»
 - [calc] `sulfate_level_name` **MISMATCH** gen=«1er nivell» ↔ eva=«2on nivell»
 - [calc] `sulfate_value` **NO_DATA** gen=«None» ↔ eva=«297.9»
-- [calc] `table_dpsh_range` **MISMATCH** gen=«3, 4 i 5» ↔ eva=«3 i 4»

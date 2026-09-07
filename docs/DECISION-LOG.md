@@ -4869,3 +4869,98 @@ Bell-lloc vista 2 i sondeig resoltes; queda la de Rubí, que no és de fotos (é
 - Quan l'Eva respongui la 37 i la 38, revisar el desempat del lector (una línia del skill).
 
 *Fi entrada 2026-09-07 (vespre). Peça 2: el lector de fotos de Claude Code amb l'annex de l'Eva i exemplars leave-one-out; imatges 40 → 44 %, materials 100 %.*
+
+## 2026-09-07 (nit) — Imatges pas 3, peça 3: el TALL DE CORRELACIÓ es retalla (només el dibuix, sense caixetí, llegenda ni mapa), amb el contingut vectorial del PDF i un creixement que s'atura al blanc: `fig_tall` 0 M · 5 C · 2 X → **3 M · 3 C · 1 X (0 → 86 %)**, imatges 14 · 5 · 24 · 13 → **17 · 3 · 23 · 13 (44 → 47 %)**; cap altra cel·la moguda
+
+### Context
+
+- Pas 1: als 7 signats el tall és **mateixa font 7/7 i mateix retall 0/7** — posem la pàgina sencera de `tall.pdf` (amb el
+  mapa de situació, la llegenda, la barra d'escala, el logo de G3 i el caixetí) i l'Eva hi posa només la secció.
+- Pas 2 (D9) i D13: el tall és la peça següent perquè és una sola figura, la font ja és correcta i el guany és el retall.
+- Referència: `2026-09-07-m341-peca2` (imatges 14 M · 5 C · 24 X · 13 ND → 44 %; `fig_tall` 0 M · 5 C · 2 X).
+
+### Decisions arquitectòniques clau
+
+**D1. El retall surt del CONTINGUT VECTORIAL del PDF, no de píxels ni de l'MCP plànols.** `automation/imatges/retall.py`
+(`detect_section_region`): (1) **nucli** = els farciments amples (> 25 % de la pàgina) i de color (els estrats; el blanc
+es descarta perquè és la caixa de la llegenda); (2) **finestra** = el nucli eixamplat (esquerra 25 % per a l'eix de
+cotes, dreta 15 %, amunt 75 % de l'alçada per a les etiquetes «P-1»/«A'», avall 20 %); (3) **creixement fins al blanc**:
+dins la finestra s'hi afegeix el que toca el que ja tenim, amb una tolerància del 5 % de l'alçada del nucli, fins que no
+queda res contigu. Límits durs: la franja del caixetí (per sobre del primer «TÍTOL/TÍTULO/Data/Fecha/Exp/Pàgina») i les
+imatges incrustades (mapa i logo). Per què no l'MCP plànols (`detect_drawing_region`, previst al pas 2): és un servidor
+de RV4 amb poppler i PIL que caldria empaquetar per a l'ordinador de l'Eva, i la seva detecció és per llindar de píxels
+foscos, més fràgil amb els estrats de color; aquí el PDF ja porta la geometria. Per què no un llindar de píxels: el marc
+del full i les línies de guia són negres i sempre entrarien.
+
+**D2. El creixement s'atura al blanc, i això és el que separa la secció de la llegenda.** Provades quatre regles i
+mesurades contra els 7 signats: pàgina sencera (0 M, ph mitjà 27), finestra fixa amb tot el text (2 M, 16,6), creixement
+sense finestra (2 M, 17,7) i **creixement dins la finestra (3 M, 14,6)**. Amb el creixement, les heurístiques per
+detectar la llegenda (la paraula «LLEGENDA/LEYENDA», les files «Nivell N:») no canvien cap resultat i s'han tret: menys
+codi i menys maneres de fallar.
+
+**D3. Sense nucli, la pàgina sencera; mai un retall inventat.** `crop_drawing` retorna `None` i `image_manager` cau al
+comportament d'abans. La cau porta un prefix propi (`tall_crop_…`) per no xocar amb les pàgines senceres ja guardades.
+
+**D4. Els rectangles degenerats es tracten a mà.** Les línies verticals de les etiquetes «P-1» tenen amplada 0: a
+PyMuPDF `box |= r` les **ignora** i `Rect.contains(r)` no s'hi comporta com esperaríem. Per això la unió, la contenció i
+el contacte es fan amb coordenades (`_union`, `_inside`, `_touches`). Descobert per un test sintètic, no pels 7 signats
+(on les línies tenen gruix): el test valia precisament per això.
+
+### Implementació
+
+- `automation/imatges/retall.py` (nou, ≈ 120 línies): `detect_section_region`, `crop_drawing`, i els tres ajudants de
+  geometria. `automation/image_manager.py`: la branca del tall prova el retall i, si no n'hi ha, la pàgina sencera.
+- `tests/test_peca3_retall_tall.py` (4): full sintètic amb mapa, llegenda, secció i caixetí (el retall els deixa fora i
+  agafa les etiquetes «P-n»), pàgina sense estrats (`None`), escriptura de la imatge, full sense caixetí ni llegenda.
+- Run: **`2026-09-07-m341-peca3`** (REFERÈNCIA per a les peces 4-7).
+
+### Validació empírica
+
+| projecte | abans | ara | phash |
+|---|---|---|--:|
+| bell-lloc | CLOSE | **MATCH** | 8 |
+| alcoletge | CLOSE | **MATCH** | 10 |
+| anciles | CLOSE | **MATCH** | 4 |
+| linyola | MISMATCH | **CLOSE** | 30 |
+| castellar | CLOSE | CLOSE | 12 |
+| vilanova | CLOSE | CLOSE | 32 |
+| rubi | MISMATCH | MISMATCH | 20 |
+
+`fig_tall` **0 M · 5 C · 2 X → 3 M · 3 C · 1 X (0 → 86 %)**; total d'imatges 14 · 5 · 24 · 13 → **17 · 3 · 23 · 13
+(44 → 47 %)**. **Cap altra cel·la es mou**: escalars idèntics als 7 (diff buit), total 308 · 43 · 124 · 32 → 74 %,
+taules 82 % idèntiques, grup `fix` intacte, presència igual.
+
+### Tests
+
+- +4 (`tests/test_peca3_retall_tall.py`). Suite sencera: 31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2477 verds / 5 omesos (163 s)
+
+### Latència / cost
+
+- El retall és geometria del PDF: mil·lisegons, 0 LLM. La imatge es cacheja per contingut com la resta.
+
+### Limitacions conegudes
+
+- **Rubí no passa pel retall**: SmartScan li assigna el rol `figure_correlation` a `ANNEXES/Altres/F5 TALL.png` (un PNG
+  que l'Eva ja va compondre) i el rol mana sobre el PDF. Aquell PNG és una versió més ampla que la del signat → X (ncc
+  0,58). Retallar un PNG és una altra feina (bbox de píxels no blancs): queda per a la peça 5, que ja ha de llegir els
+  PNG d'`ALTRES`.
+- Castellar (ph 12) i Vilanova (ph 32) queden a CLOSE: el retall inclou la barra d'escala i, a Vilanova, una mica més de
+  marge del que l'Eva deixa. No s'hi toca: l'Eva mateixa la inclou a 2 dels 7 signats.
+- El mòdul només serveix per a plànols **vectorials**. Un `tall.pdf` escanejat no tindria nucli i cauria a la pàgina
+  sencera (comportament d'avui, sense regressió).
+- Els paràmetres (25 %, 15 %, 75 %, 20 %, 5 %) surten d'un escombrat sobre 7 documents del mateix estudi: són el format
+  de G3, no una llei. Si l'Eva canvia de plantilla de plànol, s'han de tornar a mesurar.
+
+### GO/NO-GO
+
+- ✅ `fig_tall` 0 → 3 exactes i cap error nou; la resta de la mesura intacta.
+- ✅ Suite: 31 vermells esperats / 2477 verds.
+- ⏳ Commit (GO del Josep): proposta en 2 — mòdul + `image_manager` + tests · run i docs.
+
+### Següents passos
+
+- **Peça 4 (assaigs)**: retallar el dibuix amb els punts que l'Eva ja té (PNG `*PUNTS*` o l'annex de situació). El mateix
+  `detect_section_region` no hi val (allà el nucli no són estrats): caldrà una variant per a plantes, o el lector.
+- Peces 5 (situació), 6 (geològic) i 7 (projecte + bloc de figures variable, que mou el grup `fix`).
+
+*Fi entrada 2026-09-07 (nit). Peça 3: el tall es retalla amb la geometria del PDF; 3 de 7 idèntics al de l'Eva, cap error nou.*

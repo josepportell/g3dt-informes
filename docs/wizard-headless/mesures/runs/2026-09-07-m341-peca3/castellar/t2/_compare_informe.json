@@ -52,8 +52,7 @@
   },
   "cte_edificacio": {
    "counts": {
-    "MATCH": 3,
-    "MISMATCH": 1
+    "MATCH": 4
    },
    "cells": [
     {
@@ -74,9 +73,7 @@
     {
      "row": "fila1",
      "col": 1,
-     "estat": "MISMATCH",
-     "gen": "T-2",
-     "eva": "T-1"
+     "estat": "MATCH"
     }
    ]
   },
@@ -455,8 +452,8 @@
   }
  },
  "totals": {
-  "MATCH": 47,
-  "MISMATCH": 8,
+  "MATCH": 48,
+  "MISMATCH": 7,
   "CLOSE": 10
  }
 }

@@ -45,7 +45,7 @@
   ],
   "spt_ma_tests": [
    {
-    "test_id": "SPT1",
+    "test_id": "SPT-1",
     "location": "P-1",
     "depth_range": "-0.80 a -1.40",
     "n30": "24",
@@ -81,13 +81,15 @@
   }
  },
  "soil_types": [
-  "grava",
+  "arcilla",
   "arena"
  ],
- "foundation_depth_m": 0.3,
+ "foundation_depth_m": 1.1,
  "expedient": "4001671",
  "_metadata": {
   "origen": "mesura_341 viaA: lectura + Df del signat",
-  "Df_assumida": 0.3
- }
+  "Df_assumida": 1.1,
+  "data_signatura_assumida": "2026-03-16"
+ },
+ "data_signatura": "2026-03-16"
 }

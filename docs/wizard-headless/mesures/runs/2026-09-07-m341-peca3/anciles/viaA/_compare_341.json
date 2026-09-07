@@ -56,6 +56,14 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "bearing_layer_idx",
+  "grup": "calc",
+  "eva": 1,
+  "gen": 1,
+  "status": "MATCH",
+  "method": "bearing_rule"
+ },
+ {
   "var": "building_structure_desc",
   "grup": "narr",
   "eva": "un semisótano en dos de las siete viviendas previstas",
@@ -67,7 +75,7 @@
   "var": "building_type_lower",
   "grup": "A",
   "eva": "7 viviendas unifamiliares adosadas",
-  "gen": "vivienda adosada (7 unitats)",
+  "gen": "una vivienda adosada (7 unitats)",
   "status": "MATCH",
   "method": "intelligent_analysis"
  },
@@ -75,7 +83,7 @@
   "var": "client",
   "grup": "A",
   "eva": "SRA. ALBA MARIA BARRAU CASTÁN",
-  "gen": "MARIA ALBA BARRAU CASTÁN",
+  "gen": "SRA. MARIA ALBA BARRAU CASTÁN",
   "status": "MISMATCH",
   "method": "intelligent_analysis"
  },
@@ -111,9 +119,33 @@
   "status": "NO_DATA"
  },
  {
-  "var": "data_camp_text",
+  "var": "cte_edificacio",
+  "grup": "calc",
+  "eva": "C-1",
+  "gen": "C-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "cte_sol",
+  "grup": "calc",
+  "eva": "T-1",
+  "gen": "T-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "data_camp_inici_text",
   "grup": "A",
   "eva": "El día 19 de febrero de 2026, se visitó la obra para:",
+  "gen": "19 de febrer de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_camp_text",
+  "grup": "A",
+  "eva": "La campaña de campo, que se ha realizado el día 19 de febrero de 2026, ha consistido en la realización de:",
   "gen": "19 de febrer de 2026",
   "status": "MISMATCH",
   "method": "paragraph_single"
@@ -122,7 +154,7 @@
   "var": "data_signatura_text",
   "grup": "resta",
   "eva": "Els Omells de Na Gaia, 16 de marzo de 2026",
-  "gen": "06 de setembre de 2026",
+  "gen": "16 de març de 2026",
   "status": "MISMATCH",
   "method": "paragraph_single"
  },
@@ -140,6 +172,14 @@
   "gen": "4001679",
   "status": "CLOSE",
   "method": "paragraph_single"
+ },
+ {
+  "var": "fig_spt_cullera_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 3,
+  "status": "MISMATCH",
+  "method": "numbering"
  },
  {
   "var": "geo_p",
@@ -249,10 +289,10 @@
   "method": "intelligent_analysis"
  },
  {
-  "var": "municipality",
+  "var": "municipality_de",
   "grup": "A",
   "eva": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:",
-  "gen": "ANCILES",
+  "gen": "d'ANCILES",
   "status": "MISMATCH",
   "method": "paragraph_single"
  },
@@ -267,8 +307,8 @@
  {
   "var": "plantes",
   "grup": "A",
-  "eva": "C-1",
-  "gen": "Pb+1PP amb dos semisòtans",
+  "eva": "5 viviendas con Pb + 1Pp + Bc\n2 viviendas con Ss + Pb + 1Pp + Bc",
+  "gen": "2Ps+Pb+1Pp",
   "status": "MISMATCH",
   "method": "table_cell"
  },
@@ -276,7 +316,7 @@
   "var": "qa_value",
   "grup": "calc",
   "eva": "2.0 Kg/cm2 con un factor de seguridad incluido de F=3",
-  "gen": "3.00",
+  "gen": "3.50",
   "status": "MISMATCH",
   "method": "paragraph_single"
  },
@@ -297,6 +337,62 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "section_empentes_num",
+  "grup": "fix",
+  "eva": "4.4",
+  "gen": "",
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_excavabilitat_num",
+  "grup": "fix",
+  "eva": "3.5",
+  "gen": "3.5",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_rado_num",
+  "grup": "fix",
+  "eva": "3.7",
+  "gen": "3.7",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_resum_num",
+  "grup": "fix",
+  "eva": "2.4.4",
+  "gen": "2.4.4",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sismica_num",
+  "grup": "fix",
+  "eva": "3.6",
+  "gen": "3.6",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sondeig_num",
+  "grup": "fix",
+  "eva": "2.4.2",
+  "gen": "2.4.2",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_spt_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.3",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
   "var": "seismic_ab_text",
   "grup": "calc",
   "eva": "AB = 0.05 g (siento g el valor de la gravedad)",
@@ -305,12 +401,12 @@
   "method": "paragraph_single"
  },
  {
-  "var": "settlement",
+  "var": "settlement_sentence",
   "grup": "calc",
   "eva": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm.",
-  "gen": "2.20",
+  "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 2.60 cm, immediats en el temps donat el comportament granular dels materials.",
   "status": "MISMATCH",
-  "method": "paragraph_single"
+  "method": "paragraph_anchor"
  },
  {
   "var": "site_condition",
@@ -376,11 +472,19 @@
   "method": "table_cell"
  },
  {
+  "var": "superficie_construida",
+  "grup": "A",
+  "eva": "1273.79",
+  "gen": "186,18",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
   "var": "superficie_parcela",
   "grup": "A",
-  "eva": "T-1",
-  "gen": "1655.01",
-  "status": "MISMATCH",
+  "eva": "1655.01",
+  "gen": "1.655,01",
+  "status": "MATCH",
   "method": "table_cell"
  },
  {

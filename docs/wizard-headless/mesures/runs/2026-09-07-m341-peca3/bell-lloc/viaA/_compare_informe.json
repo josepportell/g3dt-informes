@@ -45,8 +45,7 @@
   },
   "cte_edificacio": {
    "counts": {
-    "MATCH": 3,
-    "MISMATCH": 1
+    "MATCH": 4
    },
    "cells": [
     {
@@ -67,9 +66,7 @@
     {
      "row": "fila1",
      "col": 1,
-     "estat": "MISMATCH",
-     "gen": "T-2",
-     "eva": "T-1"
+     "estat": "MATCH"
     }
    ]
   },
@@ -167,37 +164,35 @@
   },
   "spt_ma": {
    "counts": {
-    "CLOSE": 2,
-    "MATCH": 2,
-    "MISMATCH": 1
+    "MATCH": 3,
+    "MISMATCH": 1,
+    "CLOSE": 1
    },
    "cells": [
     {
-     "row": "fila0",
+     "row": "spt-1",
      "col": 0,
-     "estat": "CLOSE",
-     "gen": "SPT1 S1",
-     "eva": "SPT-1"
+     "estat": "MATCH"
     },
     {
-     "row": "fila0",
+     "row": "spt-1",
      "col": 1,
      "estat": "MATCH"
     },
     {
-     "row": "fila0",
+     "row": "spt-1",
      "col": 2,
      "estat": "MATCH"
     },
     {
-     "row": "fila0",
+     "row": "spt-1",
      "col": 3,
      "estat": "MISMATCH",
      "gen": "62",
      "eva": "54"
     },
     {
-     "row": "fila0",
+     "row": "spt-1",
      "col": 4,
      "estat": "CLOSE",
      "gen": "Grava amb matriu sorrenca",
@@ -399,8 +394,8 @@
   }
  },
  "totals": {
-  "MATCH": 40,
-  "MISMATCH": 10,
-  "CLOSE": 5
+  "MATCH": 42,
+  "MISMATCH": 9,
+  "CLOSE": 4
  }
 }

@@ -3,7 +3,7 @@
 | taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
 |---|--:|--:|--:|---|---|
 | plantes | 3 | 2 | 1 |  | fila0[1] MISM «»↔«Pb»; fila1[0] CLOS «Superfície de la parcel·la segons plànols cadastrals  (m2)»↔«Superfície de la parcel·la segons cadastre (m2)»; fila2[0] CLOS «Superfície construïda total (m2)»↔«Superfície construïda ampliació  (m2)» |
-| cte_edificacio | 2 | 0 | 2 |  | fila0[1] MISM «C-1»↔«C-0»; fila1[1] MISM «T-3»↔«T-1» |
+| cte_edificacio | 3 | 0 | 1 |  | fila0[1] MISM «C-1»↔«C-0» |
 | dpsh | 12 | 0 | 3 |  | p-1[4] MISM «-22.00»↔«-1.00»; p-2[4] MISM «-22.00»↔«-1.00»; p-3[4] MISM «-22.00»↔«-1.00» |
 | spt_ma | 4 | 0 | 1 |  | spt-1[4] MISM «[primera paraula il·legible] marró»↔«Llims compactes, lutites alterades» |
 | mostra_lab | 1 | 3 | 1 |  | fila0[0] CLOS «Mostra :»↔«Mostra : SPT-1»; fila0[1] CLOS «Punt:»↔«Punt: P-3»; fila0[2] CLOS «Profunditat:»↔«Profunditat:  -0.80  a -1.40 m»; fila1[1] MISM «»↔«Assaig de plasticitat de Límits d’Atterberg UNE 103103/94-104/93
@@ -11,7 +11,7 @@ Contingut en sulfats solubles dels sòl UNE 83963/08» |
 | soil_levels | 1 | 1 | 2 |  | 1r[1] MISM «Rebliment antròpic»↔«Reblert superficial»; 2n[0] CLOS «2n nivell.»↔«2on nivell.»; 2n[1] MISM «Lutites, substrat»↔«Lutites amb intercalacions de sorrenca.» |
 | permeabilitat | 1 | 3 | 2 |  | 1r[1] CLOS «10^-3 a 10^-5»↔«10-1 – 10-3»; 1r[2] MISM «Rebliment antròpic»↔«Sorres argiloses antròpiques»; 2n[0] CLOS «2n nivell»↔«2on nivell»; 2n[1] CLOS «10^-3 a 10^-5»↔«10-5 – 10-7»; 2n[2] MISM «Lutites, substrat»↔«Lutites i sorrenques del substrat Oligocè» |
 | sulfats | 0 | 0 | 0 | +1 extra, −1 absents | 1r[*] ROW_ «1er nivell |  | --- | »↔«»; 2n[*] ROW_ «»↔«2on nivell | 297.9 | --- | No Agressius» |
-| sismica | 4 | 1 | 3 |  | 1[2] MISM «1.00»↔«1.40»; 2[1] CLOS «Tipus II»↔«Tipus I»; 2[2] MISM «»↔«0.29*»; 2[3] MISM «1.3»↔«1.0» |
-| geotecnica | 8 | 3 | 3 |  | 1r[0] CLOS «1er nivell. Rebliment antròpic.»↔«1er nivell. Sorres argiloses de rebliment»; 1r[1] MISM «6»↔«5-0»; 2n[0] CLOS «2n nivell. Lutites, substrat.»↔«2on nivell. Lutites i sorrenques alterades»; 2n[1] CLOS «22-R»↔«R»; 2n[3] MISM «2.20»↔«2.00»; 2n[6] MISM «>500»↔«>400» |
+| sismica | 6 | 1 | 1 |  | 2[1] CLOS «Tipus II»↔«Tipus I»; 2[3] MISM «1.3»↔«1.0» |
+| geotecnica | 6 | 3 | 5 |  | 1r[0] CLOS «1er nivell. Rebliment antròpic.»↔«1er nivell. Sorres argiloses de rebliment»; 1r[1] MISM «7»↔«5-0»; 1r[2] MISM «20»↔«--»; 2n[0] CLOS «2n nivell. Lutites, substrat.»↔«2on nivell. Lutites i sorrenques alterades»; 2n[1] CLOS «39-R»↔«R»; 2n[2] MISM «--»↔«20»; 2n[3] MISM «2.20»↔«2.00»; 2n[6] MISM «>500»↔«>400» |
 
-**alcoletge/viaA: 36 MATCH · 13 CLOSE · 18 MISMATCH · 1 files extra · 1 files absents → 73 % (M+C)/comparables**
+**alcoletge/viaA: 37 MATCH · 13 CLOSE · 17 MISMATCH · 1 files extra · 1 files absents → 75 % (M+C)/comparables**

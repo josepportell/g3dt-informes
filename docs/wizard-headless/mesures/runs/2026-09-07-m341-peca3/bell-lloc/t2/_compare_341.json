@@ -64,6 +64,14 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "bearing_layer_idx",
+  "grup": "calc",
+  "eva": 0,
+  "gen": 0,
+  "status": "MATCH",
+  "method": "bearing_rule"
+ },
+ {
   "var": "building_structure_desc",
   "grup": "narr",
   "eva": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
@@ -75,8 +83,8 @@
   "var": "building_type_lower",
   "grup": "A",
   "eva": "un habitatge unifamiliar",
-  "gen": "habitatge unifamiliar aïllat",
-  "status": "MISMATCH",
+  "gen": "un habitatge unifamiliar aïllat",
+  "status": "CLOSE",
   "method": "intelligent_analysis"
  },
  {
@@ -131,23 +139,31 @@
   "var": "cte_sol",
   "grup": "calc",
   "eva": "T-1",
-  "gen": "T-2",
-  "status": "MISMATCH",
+  "gen": "T-1",
+  "status": "MATCH",
   "method": "table_cell"
+ },
+ {
+  "var": "data_camp_inici_text",
+  "grup": "A",
+  "eva": "1 d’octubre de 2025",
+  "gen": "1 d'octubre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
  },
  {
   "var": "data_camp_text",
   "grup": "A",
-  "eva": "1 d’octubre de 2025",
+  "eva": "1 i 6 d’octubre de 2025",
   "gen": "1 i 6 d'octubre de 2025",
-  "status": "MISMATCH",
+  "status": "MATCH",
   "method": "paragraph_single"
  },
  {
   "var": "data_signatura_text",
   "grup": "resta",
   "eva": "27 d’octubre de 2025",
-  "gen": "06 de setembre de 2026",
+  "gen": "7 de setembre de 2026",
   "status": "MISMATCH",
   "method": "paragraph_single"
  },
@@ -158,6 +174,46 @@
   "gen": "4001612",
   "status": "MATCH",
   "method": "paragraph_single"
+ },
+ {
+  "var": "fig_cadastre_num",
+  "grup": "fix",
+  "eva": "1",
+  "gen": 1,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_correlation_num",
+  "grup": "fix",
+  "eva": "6",
+  "gen": 5,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_geological_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 4,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_main_plan_num",
+  "grup": "fix",
+  "eva": "3",
+  "gen": 2,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_spt_cullera_num",
+  "grup": "fix",
+  "eva": "4",
+  "gen": 3,
+  "status": "MISMATCH",
+  "method": "numbering"
  },
  {
   "var": "geo_p",
@@ -279,20 +335,36 @@
   "method": "intelligent_analysis"
  },
  {
-  "var": "municipality",
+  "var": "municipality_de",
   "grup": "A",
-  "eva": "Bell-lloc d’Urgell",
-  "gen": "Bell-Lloc d'Urgell",
+  "eva": "de Bell-lloc d’Urgell",
+  "gen": "de Bell-lloc d'Urgell",
   "status": "MATCH",
   "method": "paragraph_single"
  },
  {
   "var": "num_dpsh_tests",
   "grup": "A",
-  "eva": "2 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+  "eva": "2",
   "gen": 2,
   "status": "MATCH",
   "method": "paragraph_single"
+ },
+ {
+  "var": "photo_dpsh_num",
+  "grup": "fix",
+  "eva": "3",
+  "gen": 3,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "photo_materials_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 5,
+  "status": "MATCH",
+  "method": "numbering"
  },
  {
   "var": "photo_site_text",
@@ -301,6 +373,14 @@
   "gen": "Fotografia 1 i Fotografia 2. Vistes generals de la zona d'estudi.",
   "status": "MATCH",
   "method": "intelligent_analysis"
+ },
+ {
+  "var": "photo_sondeig_num",
+  "grup": "fix",
+  "eva": "4",
+  "gen": 4,
+  "status": "MATCH",
+  "method": "numbering"
  },
  {
   "var": "plantes",
@@ -334,6 +414,54 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "section_excavabilitat_num",
+  "grup": "fix",
+  "eva": "3.5",
+  "gen": "3.5",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_rado_num",
+  "grup": "fix",
+  "eva": "3.7",
+  "gen": "3.7",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_resum_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.4",
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sismica_num",
+  "grup": "fix",
+  "eva": "3.6",
+  "gen": "3.6",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sondeig_num",
+  "grup": "fix",
+  "eva": "2.4.2",
+  "gen": "2.4.2",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_spt_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.3",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
   "var": "seismic_ab_text",
   "grup": "calc",
   "eva": "0,04",
@@ -342,12 +470,12 @@
   "method": "paragraph_single"
  },
  {
-  "var": "settlement",
+  "var": "settlement_sentence",
   "grup": "calc",
   "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran inferiors a 1.20 cm, immediats en el temps donat el comportament granular dels materials.",
   "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.00 cm, immediats en el temps donat el comportament granular dels materials.",
   "status": "MISMATCH",
-  "method": "paragraph_single"
+  "method": "paragraph_anchor"
  },
  {
   "var": "site_condition",
@@ -401,8 +529,8 @@
   "var": "spt_test_id",
   "grup": "A",
   "eva": "SPT-1",
-  "gen": "SPT1 S1",
-  "status": "MISMATCH",
+  "gen": "SPT-1",
+  "status": "MATCH",
   "method": "table_cell"
  },
  {
@@ -452,6 +580,46 @@
   "gen": "3, 4 i 5",
   "status": "MATCH",
   "method": "paragraph_single"
+ },
+ {
+  "var": "table_lab_num",
+  "grup": "fix",
+  "eva": "6",
+  "gen": 6,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_lab_values_num",
+  "grup": "fix",
+  "eva": "8",
+  "gen": 8,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_permeability_num",
+  "grup": "fix",
+  "eva": "7",
+  "gen": 7,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_seismic_num",
+  "grup": "fix",
+  "eva": "9",
+  "gen": 9,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_soil_chars_num",
+  "grup": "fix",
+  "eva": "10",
+  "gen": 10,
+  "status": "MATCH",
+  "method": "numbering"
  },
  {
   "var": "utm_x",

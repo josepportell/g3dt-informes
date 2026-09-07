@@ -48,7 +48,7 @@
   ],
   "spt_ma_tests": [
    {
-    "test_id": "SPT1 P3",
+    "test_id": "SPT-1",
     "location": "P-3",
     "depth_range": "-1.00 a -1.15",
     "n30": "R",
@@ -78,12 +78,14 @@
  },
  "soil_types": [
   "limo",
-  "arena"
+  "rock"
  ],
  "foundation_depth_m": 1.7,
  "expedient": "4001607",
  "_metadata": {
   "origen": "mesura_341 viaA: lectura + Df del signat",
-  "Df_assumida": 1.7
- }
+  "Df_assumida": 1.7,
+  "data_signatura_assumida": "2025-10-29"
+ },
+ "data_signatura": "2025-10-29"
 }

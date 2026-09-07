@@ -2,7 +2,7 @@
 ## rubi/t2
 | taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
 |---|--:|--:|--:|---|---|
-| plantes | 2 | 2 | 2 |  | fila0[1] CLOS «Pb»↔«PB + Porxo»; fila1[0] CLOS «Superfície de la parcel·la segons plànols cadastrals  (m2)»↔«Superfície de la parcel·la (m2)»; fila1[1] MISM «1414»↔«951»; fila2[1] MISM «64»↔«92» |
+| plantes | 2 | 2 | 2 |  | fila0[1] CLOS «Pb»↔«PB + Porxo»; fila1[0] CLOS «Superfície de la parcel·la segons plànols cadastrals  (m2)»↔«Superfície de la parcel·la (m2)»; fila1[1] MISM «1.414»↔«951»; fila2[1] MISM «64»↔«92» |
 | cte_edificacio | 4 | 0 | 0 |  |  |
 | dpsh | 15 | 0 | 0 |  |  |
 | spt_ma | 4 | 0 | 1 |  | spt-1[4] MISM «Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)»↔«Graves i sorres» |

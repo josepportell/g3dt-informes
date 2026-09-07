@@ -56,10 +56,18 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "bearing_layer_idx",
+  "grup": "calc",
+  "eva": 1,
+  "gen": 1,
+  "status": "MATCH",
+  "method": "bearing_rule"
+ },
+ {
   "var": "building_type_lower",
   "grup": "A",
   "eva": "una vivienda unifamiliar aislada",
-  "gen": "habitatge unifamiliar aïllat",
+  "gen": "un habitatge unifamiliar aïllat",
   "status": "MISMATCH",
   "method": "intelligent_analysis"
  },
@@ -91,7 +99,7 @@
   "var": "cota_referencia",
   "grup": "A",
   "eva": "+321.00",
-  "gen": "+321,69 msnm según el visor ICGC",
+  "gen": "+321.69",
   "status": "MATCH",
   "method": "table_flatten"
  },
@@ -107,14 +115,22 @@
   "var": "cte_sol",
   "grup": "calc",
   "eva": "T-1",
-  "gen": "T-2",
-  "status": "MISMATCH",
+  "gen": "T-1",
+  "status": "MATCH",
   "method": "table_cell"
+ },
+ {
+  "var": "data_camp_inici_text",
+  "grup": "A",
+  "eva": "El día 19 de febrero de 2026, se visitó la obra para:",
+  "gen": "19 de febrer de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
  },
  {
   "var": "data_camp_text",
   "grup": "A",
-  "eva": "El día 19 de febrero de 2026, se visitó la obra para:",
+  "eva": "La campaña de campo, que se ha realizado el día 19 de febrero de 2026, ha consistido en la realización de:",
   "gen": "19 de febrer de 2026",
   "status": "MISMATCH",
   "method": "paragraph_single"
@@ -123,7 +139,7 @@
   "var": "data_signatura_text",
   "grup": "resta",
   "eva": "Els Omells de Na Gaia, 16 de marzo de 2026",
-  "gen": "06 de setembre de 2026",
+  "gen": "16 de març de 2026",
   "status": "MISMATCH",
   "method": "paragraph_single"
  },
@@ -136,6 +152,22 @@
   "method": "paragraph_single"
  },
  {
+  "var": "fig_geological_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 4,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_spt_cullera_num",
+  "grup": "fix",
+  "eva": "4",
+  "gen": 3,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
   "var": "geo_p",
   "grup": "resta",
   "eva": "Desde finales del Oligoceno hasta la actualidad, la depresión del Ebro ha dejado de actuar como cuenca sedimentaria y se ha convertido en una cubeta donde el agente predominante ha sido la erosión. Localmente, en algunos puntos de la cuenca, existen depósitos del Terciario superior y principalmente del Cuaternario. Estos corresponden a materiales subconsolidados que aparecen entre las rocas sedimentarias y la superficie, formados por arenas, limos y arcillas, donde abundan las costras carbonatadas.",
@@ -145,15 +177,15 @@
  {
   "var": "geomech_E",
   "grup": "calc",
-  "eva": "50",
-  "gen": 50,
-  "status": "MATCH",
+  "eva": "550",
+  "gen": 450,
+  "status": "MISMATCH",
   "method": "table_flatten"
  },
  {
   "var": "geomech_cohesion",
   "grup": "calc",
-  "eva": "0.10",
+  "eva": "0.50",
   "gen": 0.0,
   "status": "MISMATCH",
   "method": "table_flatten"
@@ -161,7 +193,7 @@
  {
   "var": "geomech_gamma",
   "grup": "calc",
-  "eva": "1.90",
+  "eva": "2.20",
   "gen": 2.0,
   "status": "CLOSE",
   "method": "table_flatten"
@@ -169,9 +201,9 @@
  {
   "var": "geomech_phi",
   "grup": "calc",
-  "eva": "25",
-  "gen": 29,
-  "status": "MISMATCH",
+  "eva": "34",
+  "gen": 38,
+  "status": "CLOSE",
   "method": "table_flatten"
  },
  {
@@ -243,10 +275,10 @@
   "method": "intelligent_analysis"
  },
  {
-  "var": "municipality",
+  "var": "municipality_de",
   "grup": "A",
   "eva": "En la zona en estudio, en la población de VILANOVA DE SEGRIÀ, se establece una aceleración sísmica básica de:",
-  "gen": "Vilanova de Segrià",
+  "gen": "de Vilanova de Segrià",
   "status": "MISMATCH",
   "method": "paragraph_single"
  },
@@ -262,22 +294,23 @@
   "var": "photo_site_text",
   "grup": "narr",
   "eva": "Fotografía 1. Detalle de la parcela de estudio.",
-  "gen": null,
-  "status": "NO_DATA"
+  "gen": "Fotografia 1 i Fotografia 2. Vistes generals de la zona d'estudi.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
  },
  {
   "var": "plantes",
   "grup": "A",
   "eva": "Pb",
-  "gen": "PB (planta baixa, 1 planta)",
-  "status": "CLOSE",
+  "gen": "Pb",
+  "status": "MATCH",
   "method": "table_cell"
  },
  {
   "var": "qa_value",
   "grup": "calc",
   "eva": "2.50 Kg/cm2 con un factor de seguridad incluido de F=3",
-  "gen": "1.00",
+  "gen": "3.00",
   "status": "MISMATCH",
   "method": "paragraph_single"
  },
@@ -298,6 +331,46 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "section_excavabilitat_num",
+  "grup": "fix",
+  "eva": "3.5",
+  "gen": "3.5",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_rado_num",
+  "grup": "fix",
+  "eva": "3.7",
+  "gen": "3.7",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_resum_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.3",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sismica_num",
+  "grup": "fix",
+  "eva": "3.6",
+  "gen": "3.6",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_spt_num",
+  "grup": "fix",
+  "eva": "2.4.2",
+  "gen": "2.4.2",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
   "var": "seismic_ab_text",
   "grup": "calc",
   "eva": "AB < 0,04 g (siento g el valor de la gravedad)",
@@ -306,12 +379,12 @@
   "method": "paragraph_single"
  },
  {
-  "var": "settlement",
+  "var": "settlement_sentence",
   "grup": "calc",
   "eva": "Los asientos máximos previstos para la carga recomendada anteriormente serán menospreciables o inferiores a 1.0 cm.",
-  "gen": "2.00",
+  "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 2.50 cm, immediats en el temps donat el comportament granular dels materials.",
   "status": "MISMATCH",
-  "method": "paragraph_single"
+  "method": "paragraph_anchor"
  },
  {
   "var": "site_condition",
@@ -365,7 +438,7 @@
   "var": "spt_test_id",
   "grup": "A",
   "eva": "SPT-1",
-  "gen": "SPT1",
+  "gen": "SPT-1",
   "status": "MATCH",
   "method": "table_cell"
  },
@@ -389,7 +462,7 @@
   "var": "superficie_parcela",
   "grup": "A",
   "eva": "100",
-  "gen": "406.0",
+  "gen": "406",
   "status": "MISMATCH",
   "method": "table_cell"
  },
@@ -397,7 +470,7 @@
   "var": "table_dpsh_range",
   "grup": "calc",
   "eva": "Tabla 3 y 4. Resumen de los ensayos in situ realizados.",
-  "gen": "3, 4 i 5",
+  "gen": "3 i 4",
   "status": "MISMATCH",
   "method": "paragraph_single"
  }

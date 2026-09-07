@@ -72,6 +72,14 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "bearing_layer_idx",
+  "grup": "calc",
+  "eva": 1,
+  "gen": 1,
+  "status": "MATCH",
+  "method": "bearing_rule"
+ },
+ {
   "var": "building_structure_desc",
   "grup": "narr",
   "eva": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
@@ -83,7 +91,7 @@
   "var": "building_type_lower",
   "grup": "A",
   "eva": "un nou habitatge unifamiliar",
-  "gen": "habitatge unifamiliar aïllat",
+  "gen": "un habitatge unifamiliar aïllat",
   "status": "MISMATCH",
   "method": "intelligent_analysis"
  },
@@ -91,8 +99,8 @@
   "var": "client",
   "grup": "A",
   "eva": "SRA. SÍLVIA EROLES BALAGUERÓ",
-  "gen": "SÍLVIA EROLES BALAGUERÓ",
-  "status": "CLOSE",
+  "gen": "SRA. SÍLVIA EROLES BALAGUERÓ",
+  "status": "MATCH",
   "method": "intelligent_analysis"
  },
  {
@@ -115,8 +123,8 @@
   "var": "conclusions_levels_detected",
   "grup": "narr",
   "eva": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
-  "gen": "Es detecta un sol nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
-  "status": "CLOSE",
+  "gen": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "status": "MATCH",
   "method": "intelligent_analysis"
  },
  {
@@ -131,7 +139,7 @@
   "var": "cota_referencia",
   "grup": "A",
   "eva": "+245.0",
-  "gen": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+  "gen": "+245.00",
   "status": "MATCH",
   "method": "table_flatten"
  },
@@ -147,14 +155,22 @@
   "var": "cte_sol",
   "grup": "calc",
   "eva": "T-1",
-  "gen": "T-2",
-  "status": "MISMATCH",
+  "gen": "T-1",
+  "status": "MATCH",
   "method": "table_cell"
+ },
+ {
+  "var": "data_camp_inici_text",
+  "grup": "A",
+  "eva": "1 d ‘octubre de 2025",
+  "gen": "1 d'octubre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
  },
  {
   "var": "data_camp_text",
   "grup": "A",
-  "eva": "1 d ‘octubre de 2025",
+  "eva": "1 d’octubre de 2025",
   "gen": "1 d'octubre de 2025",
   "status": "MATCH",
   "method": "paragraph_single"
@@ -163,8 +179,8 @@
   "var": "data_signatura_text",
   "grup": "resta",
   "eva": "29 d’octubre de 2025",
-  "gen": "06 de setembre de 2026",
-  "status": "MISMATCH",
+  "gen": "29 d'octubre de 2025",
+  "status": "MATCH",
   "method": "paragraph_single"
  },
  {
@@ -174,6 +190,30 @@
   "gen": "4001607",
   "status": "MATCH",
   "method": "paragraph_single"
+ },
+ {
+  "var": "fig_correlation_num",
+  "grup": "fix",
+  "eva": "6",
+  "gen": 5,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_geological_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 4,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_spt_cullera_num",
+  "grup": "fix",
+  "eva": "4",
+  "gen": 3,
+  "status": "MISMATCH",
+  "method": "numbering"
  },
  {
   "var": "geo_p",
@@ -186,7 +226,7 @@
   "var": "geomech_E",
   "grup": "calc",
   "eva": ">800",
-  "gen": 450,
+  "gen": 500,
   "status": "MISMATCH",
   "method": "table_flatten"
  },
@@ -194,24 +234,24 @@
   "var": "geomech_cohesion",
   "grup": "calc",
   "eva": "1.0",
-  "gen": 0.0,
-  "status": "MISMATCH",
+  "gen": 1.0,
+  "status": "MATCH",
   "method": "table_flatten"
  },
  {
   "var": "geomech_gamma",
   "grup": "calc",
   "eva": "2.20",
-  "gen": 2.0,
-  "status": "CLOSE",
+  "gen": 2.2,
+  "status": "MATCH",
   "method": "table_flatten"
  },
  {
   "var": "geomech_phi",
   "grup": "calc",
   "eva": "30",
-  "gen": 38,
-  "status": "MISMATCH",
+  "gen": 30,
+  "status": "MATCH",
   "method": "table_flatten"
  },
  {
@@ -282,32 +322,48 @@
   "var": "materials_intro",
   "grup": "narr",
   "eva": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
-  "gen": "A partir dels assaigs in situ realitzats, s'ha establert un sol nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
-  "status": "CLOSE",
+  "gen": "A partir dels assaigs in situ realitzats, s'ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "status": "MATCH",
   "method": "intelligent_analysis"
  },
  {
-  "var": "municipality",
+  "var": "municipality_de",
   "grup": "A",
-  "eva": "Linyola",
-  "gen": "Linyola",
+  "eva": "de Linyola",
+  "gen": "de Linyola",
   "status": "MATCH",
   "method": "paragraph_single"
  },
  {
   "var": "num_dpsh_tests",
   "grup": "A",
-  "eva": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+  "eva": "3",
   "gen": 3,
   "status": "MATCH",
   "method": "paragraph_single"
  },
  {
+  "var": "photo_dpsh_num",
+  "grup": "fix",
+  "eva": "1",
+  "gen": 1,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "photo_materials_num",
+  "grup": "fix",
+  "eva": "2",
+  "gen": 2,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
   "var": "plantes",
   "grup": "A",
   "eva": "Pb",
-  "gen": "PB (planta baixa, 1 nivell)",
-  "status": "CLOSE",
+  "gen": "Pb",
+  "status": "MATCH",
   "method": "table_cell"
  },
  {
@@ -335,6 +391,46 @@
   "method": "intelligent_analysis"
  },
  {
+  "var": "section_excavabilitat_num",
+  "grup": "fix",
+  "eva": "3.6",
+  "gen": "3.5",
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_rado_num",
+  "grup": "fix",
+  "eva": "3.8",
+  "gen": "3.7",
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_resum_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.3",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sismica_num",
+  "grup": "fix",
+  "eva": "3.7",
+  "gen": "3.6",
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_spt_num",
+  "grup": "fix",
+  "eva": "2.4.2",
+  "gen": "2.4.2",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
   "var": "seismic_ab_text",
   "grup": "calc",
   "eva": "0,04",
@@ -343,12 +439,12 @@
   "method": "paragraph_single"
  },
  {
-  "var": "settlement",
+  "var": "settlement_sentence",
   "grup": "calc",
   "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
   "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
   "status": "MATCH",
-  "method": "paragraph_single"
+  "method": "paragraph_anchor"
  },
  {
   "var": "site_condition",
@@ -365,6 +461,46 @@
   "gen": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
   "status": "MISMATCH",
   "method": "intelligent_analysis"
+ },
+ {
+  "var": "spt_depth_range",
+  "grup": "A",
+  "eva": "-1.00 a -1.15",
+  "gen": "-1.00 a -1.15",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_lithology",
+  "grup": "A",
+  "eva": "Lutites",
+  "gen": "Lutita gresosa",
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_location",
+  "grup": "A",
+  "eva": "P-3",
+  "gen": "P-3",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_n30",
+  "grup": "A",
+  "eva": "R",
+  "gen": "R",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_test_id",
+  "grup": "A",
+  "eva": "SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_flatten"
  },
  {
   "var": "sulfate_baumann",
@@ -402,7 +538,7 @@
   "var": "superficie_construida",
   "grup": "A",
   "eva": "250.91",
-  "gen": "250.91",
+  "gen": "250,91",
   "status": "MATCH",
   "method": "table_cell"
  },
@@ -410,7 +546,7 @@
   "var": "superficie_parcela",
   "grup": "A",
   "eva": "571",
-  "gen": "571.0",
+  "gen": "571",
   "status": "MATCH",
   "method": "table_cell"
  },
@@ -418,9 +554,49 @@
   "var": "table_dpsh_range",
   "grup": "calc",
   "eva": "3, 4 i 5",
-  "gen": "3, 4 i 5",
-  "status": "MATCH",
+  "gen": "3 i 4",
+  "status": "MISMATCH",
   "method": "paragraph_single"
+ },
+ {
+  "var": "table_lab_num",
+  "grup": "fix",
+  "eva": "6",
+  "gen": 5,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_lab_values_num",
+  "grup": "fix",
+  "eva": "8",
+  "gen": 7,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_permeability_num",
+  "grup": "fix",
+  "eva": "7",
+  "gen": 6,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_seismic_num",
+  "grup": "fix",
+  "eva": "9",
+  "gen": 8,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_soil_chars_num",
+  "grup": "fix",
+  "eva": "10",
+  "gen": 9,
+  "status": "MISMATCH",
+  "method": "numbering"
  },
  {
   "var": "utm_x",
