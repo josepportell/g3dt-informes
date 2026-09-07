@@ -227,16 +227,206 @@ class ExtractionResult:
 # ---------------------------------------------------------------------------
 
 def _should_skip_variable(var_name: str) -> bool:
-    """Return True if the variable should be skipped (images, numbering)."""
+    """Return True if the variable should be skipped (images, loop vars).
+
+    Bloc 4 (2026-09-07): la NUMERACIÓ (`fig_*_num`, `photo_*_num`, `table_*_num`, `section_*_num`; 22 forats de la
+    plantilla) ja NO es salta: és l'únic grup de la plantilla que mai s'havia comptat contra els 7 signats. El valor
+    es redueix al primer token numèric del peu o de la capçalera (`_numbering_token`). Les imatges (`*_image`) i les
+    variables de bucle (amb punt) segueixen fora.
+    """
+    if "." in var_name:
+        return True
+    if var_name.endswith("_num"):
+        return False
     for prefix in SKIP_PREFIXES:
         if var_name.startswith(prefix):
             return True
     for suffix in SKIP_SUFFIXES:
         if var_name.endswith(suffix):
             return True
-    if "." in var_name:
-        return True
     return False
+
+
+#: Peu o capçalera del signat → el seu NÚMERO: «Fotografia 3. Vista…» → «3», «Figura 1 i Figura 2…» → «1» (el 2n forat
+#: va pel multi-forat), «3.5. EXCAVABILITAT» → «3.5», «4.4. EMPENTES DE TERRES\t45» (entrada de l'índex) → «4.4».
+#: La paraula del peu és opcional i insensible a majúscules i accents (ES «Fotografía», «Tabla»).
+_NUM_TOKEN_RE = re.compile(
+    r"^\W*(?:(?:figura|fotografia|fotografía|foto|taula|tabla|fig)\.?\s*)?(\d+(?:\.\d+)*)(?![\d,])", re.IGNORECASE)
+
+
+def _numbering_token(value: str | None) -> str | None:
+    """Primer token numèric d'un valor de numeració («3», «2.4.2»); None si el text no comença per un número."""
+    if not value:
+        return None
+    m = _NUM_TOKEN_RE.match(str(value))
+    return m.group(1) if m else None
+
+
+def _is_numbering(var_name: str) -> bool:
+    """`fig_*_num`, `photo_*_num`, `table_*_num`, `section_*_num`: van per `extract_numbering_variables`."""
+    return var_name.endswith("_num") and "." not in var_name
+
+
+#: Peu del signat o de la plantilla: paraula (CA/ES), número, opcional «i/y Figura N» (peu de dues figures), resta.
+_CAPTION_RE = re.compile(
+    r"^\s*(figura|fotografia|fotografía|foto|taula|tabla)\.?\s*(\d+)?"
+    r"(?:\s*(?:i|y)\s*(?:figura|fotografia|fotografía)\s*(\d+)?)?\s*[.:\-–]?\s*(.*)$", re.IGNORECASE | re.DOTALL)
+_CAPTION_KIND = {"figura": "figura", "fotografia": "fotografia", "fotografía": "fotografia", "foto": "fotografia",
+                 "taula": "taula", "tabla": "taula"}
+#: Capçalera numerada del signat («3.5. EXCAVABILITAT», «2.4.2 Sondeig…», entrada de l'índex «4.4. EMPENTES DE TERRES\t45»).
+_HEADING_NUM_RE = re.compile(r"^\s*(\d+(?:\.\d+)+)\.?\s+(\S.*?)\s*(?:\t.*)?$")
+_STOP_TOKENS = frozenset({"de", "del", "dels", "la", "el", "els", "les", "en", "un", "una", "amb", "per", "que", "als",
+                          "al", "los", "las", "con", "para", "i", "y", "a", "es", "se", "the", "of"})
+#: Llindars (mesurats sobre els 7 signats, 2026-09-07): peus bons ≥ 0,52 de ratio i ≥ 0,67 de contenció; el peu de la
+#: màquina del sondeig contra el de la DPSH (fals) dona 0,59-0,62 de ratio però 0,50 de contenció. Capçaleres bones
+#: ≥ 0,74 (ES «EMPUJE DE TIERRAS»), falses ≤ 0,65 («RECONEIXEMENT DEL TERRENY» per «EMPENTES DE TERRES»).
+NUM_CAPTION_RATIO = 0.5
+NUM_CAPTION_CONTAINMENT = 0.6
+NUM_HEADING_RATIO = 0.70
+NUM_TIE_EPS = 0.01
+
+
+def _content_tokens(text: str) -> set[str]:
+    """Paraules de contingut (≥ 3 lletres, sense accents ni mots buits) per a la contenció entre peus."""
+    import unicodedata
+    t = "".join(c for c in unicodedata.normalize("NFD", text.lower()) if unicodedata.category(c) != "Mn")
+    return {w for w in re.findall(r"[a-z0-9][a-z0-9:.']*[a-z0-9]|[a-z0-9]", t)
+            if len(w) >= 3 and w not in _STOP_TOKENS}
+
+
+def _containment(a: str, b: str) -> float:
+    ta, tb = _content_tokens(a), _content_tokens(b)
+    if not ta or not tb:
+        return 0.0
+    return len(ta & tb) / min(len(ta), len(tb))
+
+
+def _numbering_slot(tp: TemplateParagraph) -> tuple[str, str, list[str]] | None:
+    """(tipus, text fix sense número, forats `_num`) d'un paràgraf de la plantilla amb numeració; None si no en té.
+
+    Tipus: «figura» / «fotografia» / «taula» (peu) o «heading» («{{ section_x_num }}. EXCAVABILITAT»)."""
+    nums = [v for v in tp.variables if _is_numbering(v)]
+    if not nums:
+        return None
+    skeleton = JINJA_ANY_RE.sub('', tp.text).strip()
+    m = _CAPTION_RE.match(skeleton)
+    if m and m.group(1):
+        return _CAPTION_KIND[m.group(1).lower()], re.sub(r"\s+", " ", m.group(4)).strip(), nums
+    if skeleton.startswith("."):
+        return "heading", skeleton.lstrip(". ").strip(), nums
+    return None
+
+
+def _numbering_candidates(ref_body: list[str]) -> list[tuple[int, str, list[str], str]]:
+    """(índex, tipus, números, text fix) de cada paràgraf del signat que és un peu o una capçalera numerada."""
+    out = []
+    for ri, rt in enumerate(ref_body):
+        t = (rt or "").strip()
+        if not t:
+            continue
+        m = _CAPTION_RE.match(t)
+        if m and m.group(2):
+            nums = [m.group(2)] + ([m.group(3)] if m.group(3) else [])
+            out.append((ri, _CAPTION_KIND[m.group(1).lower()], nums, re.sub(r"\s+", " ", m.group(4)).strip()))
+            continue
+        m = _HEADING_NUM_RE.match(t)
+        if m and len(t.split()) <= 9:
+            out.append((ri, "heading", [m.group(1)], m.group(2).strip()))
+    return out
+
+
+def extract_numbering_variables(
+    tmpl_paras: list[TemplateParagraph],
+    ref_paras: list[str],
+    tmpl_body_count: int,
+    ref_body_count: int,
+) -> tuple[dict[str, ExtractedVariable], list[str]]:
+    """Bloc 4 (2026-09-07): la NUMERACIÓ del signat (peus «Fotografia 3. …», «Taula 6. …», «Figura 1 i Figura 2. …»,
+    capçaleres «3.5. EXCAVABILITAT»), que l'extractor saltava des del principi.
+
+    Regles (les del bloc 3 per a les taules, aplicades als peus): (1) només s'aparellen paràgrafs del MATEIX tipus
+    (Figura ↔ Figura, Fotografia ↔ Fotografia, Taula ↔ Taula, capçalera ↔ capçalera) i es puntua el text SENSE el
+    número; (2) peus: ratio ≥ 0,5 I contenció de paraules de contingut ≥ 0,6 (el ratio sol confon la foto de la
+    màquina del sondeig amb la de la DPSH); capçaleres: ratio ≥ 0,70 («RECONEIXEMENT DEL TERRENY» ↔ «EMPENTES DE
+    TERRES» dona 0,65 i és fals); (3) assignació GLOBAL un-a-un per puntuació descendent (cada peu del signat serveix
+    un sol forat); (4) empat = blanc (les tres fotos de materials de Vilanova); (5) sense àncora ni prefix: un forat de
+    numeració sense peu al signat queda en blanc (secció o foto que el signat no té), mai «el paràgraf que segueix».
+    El peu de dues figures («Figura X i Figura Y») només s'omple si el signat també en porta dues.
+    """
+    variables: dict[str, ExtractedVariable] = {}
+    warnings: list[str] = []
+    ref_body = ref_paras[:ref_body_count]
+    cands = _numbering_candidates(ref_body)
+
+    slots: list[tuple[TemplateParagraph, str, str, list[str]]] = []
+    seen: set[str] = set()
+    for tp in tmpl_paras:
+        if tp.idx >= tmpl_body_count:
+            break
+        slot = _numbering_slot(tp)
+        if slot is None:
+            continue
+        kind, text, nums = slot
+        if any(v in seen for v in nums):        # l'índex (p035) i la capçalera (p471) porten el mateix forat
+            continue
+        seen.update(nums)
+        slots.append((tp, kind, text, nums))
+
+    # puntuació de cada (forat, candidat) del mateix tipus; empat al capdavant = forat en blanc
+    pairs: list[tuple[float, int, int]] = []
+    for si, (tp, kind, text, nums) in enumerate(slots):
+        scored = []
+        for ci, (ri, ckind, cnums, ctext) in enumerate(cands):
+            if ckind != kind:
+                continue
+            if kind == "heading":
+                ratio = text_similarity(text, ctext)
+                if ratio < NUM_HEADING_RATIO:
+                    continue
+            else:
+                ratio = text_similarity(text, ctext)
+                if ratio < NUM_CAPTION_RATIO or _containment(text, ctext) < NUM_CAPTION_CONTAINMENT:
+                    continue
+            scored.append((ratio, ci))
+        scored.sort(reverse=True)
+        # Empat = blanc, però només si els empatats porten números DIFERENTS: l'entrada de l'índex («2.4.2. Ensayo
+        # tipo S.P.T.») i la capçalera diuen el mateix número i no són cap ambigüitat.
+        tied = [ci for r, ci in scored if scored and scored[0][0] - r < NUM_TIE_EPS]
+        if len({tuple(cands[ci][2]) for ci in tied}) > 1:
+            warnings.append(f"p{tp.idx:03d}: numeració '{','.join(nums)}' en empat ({scored[0][0]:.2f}): "
+                            f"'{cands[tied[0]][3][:40]}' / '{cands[tied[1]][3][:40]}' → en blanc")
+            continue
+        pairs.extend((ratio, si, ci) for ratio, ci in scored)
+
+    pairs.sort(key=lambda x: (-x[0], x[1], x[2]))
+    used_slots: set[int] = set()
+    used_cands: set[int] = set()
+    for ratio, si, ci in pairs:
+        if si in used_slots or ci in used_cands:
+            continue
+        tp, kind, text, nums = slots[si]
+        ri, ckind, cnums, ctext = cands[ci]
+        if len(nums) > len(cnums):
+            warnings.append(f"p{tp.idx:03d}: el peu de la plantilla té {len(nums)} números i el del signat "
+                            f"{len(cnums)} ('{ref_body[ri][:50]}') → en blanc")
+            used_slots.add(si)
+            continue
+        used_slots.add(si)
+        used_cands.add(ci)
+        for var_name, value in zip(nums, cnums):
+            variables[var_name] = ExtractedVariable(
+                value=value,
+                position=f"p{tp.idx:03d}",
+                position_description=f"Body paragraph {tp.idx}",
+                confidence=round(ratio, 3),
+                extraction_method="numbering",
+                template_text=tp.text[:200],
+                reference_text=ref_body[ri][:200],
+            )
+    for si, (tp, kind, text, nums) in enumerate(slots):
+        if si not in used_slots:
+            warnings.append(f"p{tp.idx:03d}: numeració '{','.join(nums)}' sense {kind} al signat ('{text[:40]}')")
+    return variables, warnings
 
 
 def _table_fingerprint(table) -> str:
@@ -626,7 +816,7 @@ def extract_body_variables(
         if tp.is_static or not tp.variables:
             continue
 
-        active_vars = [v for v in tp.variables if not _should_skip_variable(v)]
+        active_vars = [v for v in tp.variables if not _should_skip_variable(v) and not _is_numbering(v)]
         if not active_vars:
             continue
 
@@ -1003,6 +1193,11 @@ def extract_reference_values(
     )
     result.variables.update(body_vars)
     result.warnings.extend(body_warns)
+
+    # 5b. Numeració (bloc 4): peus i capçaleres, per tipus i un-a-un
+    num_vars, num_warns = extract_numbering_variables(tmpl_paras, ref_paras, tmpl_body_count, ref_body_count)
+    result.variables.update(num_vars)
+    result.warnings.extend(num_warns)
 
     # 6. Extract table cell variables
     table_vars, table_warns = extract_table_variables(
