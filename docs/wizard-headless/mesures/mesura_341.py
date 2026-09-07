@@ -242,6 +242,7 @@ def _load(path: Path, name: str):
 
 
 MI = _load(HERE / "mesura_informe.py", "mesura_informe")
+IF = _load(HERE / "imatges_font.py", "imatges_font")   # peça 0 (pas 3 d'imatges): mateixa font que l'Eva
 CPE = _load(REPO / "scripts" / "compare_prefills_vs_eva.py", "compare_prefills_vs_eva")
 
 
@@ -573,6 +574,7 @@ def _agregat(run: str, results: dict, variants: list[str], sub: str) -> str:
              "Pendent = `image_manager` no ha trobat o no ha pogut baixar la imatge. La correcció del contingut es mira al full "
              "de control visual (`_IMATGES.md`, una vegada a mà).")
     L.append("")
+    L.extend(IF.agregat_section(results))
     L.append("## Per VARIABLE (viaA): en quants projectes és MATCH / CLOSE / MISMATCH / NO_DATA")
     L.append("")
     byvar = defaultdict(Counter)
@@ -664,6 +666,13 @@ def main() -> int:
                 rows = compare_scalars(eva, ctx, ud, gen.get("calc") or {})
                 entry["scalars"] = rows
                 entry["images"] = image_presence(ctx)
+                try:
+                    entry["images_font"] = IF.compare_project(slug, ctx)
+                    (out / "_compare_imatges.json").write_text(json.dumps(entry["images_font"], ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+                    (out / "_compare_imatges.txt").write_text(IF.format_rows(entry["images_font"], f"{slug}/{v}"), encoding="utf-8")
+                except Exception as exc:  # la veritat d'imatges pot faltar (fora del repo)
+                    entry["images_font"] = None
+                    gen["warnings"].append(f"imatges: {exc}")
                 (out / "_compare_341.json").write_text(json.dumps(rows, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
                 (out / "_compare_341.txt").write_text(_fmt_rows(rows, f"{slug}/{v}"), encoding="utf-8")
                 try:
@@ -678,6 +687,11 @@ def main() -> int:
                 print(f"{slug:10s} {v:5s} escalars {c['MATCH']:3d} M · {c['CLOSE']:2d} C · {c['MISMATCH']:2d} X · {c['NO_DATA']:2d} ND → {MI._pct(c)}"
                       f" | taules {t.get('MATCH', 0)} M · {t.get('CLOSE', 0)} C · {t.get('MISMATCH', 0)} X → {MI._pct(t) if t else '—'}"
                       + (f"   [{len(gen['warnings'])} avisos]" if gen["warnings"] else ""), flush=True)
+                imf = entry.get("images_font")
+                if imf:
+                    cf = imf["totals"]
+                    print(f"{'':10s} {'':5s} imatges  {cf['MATCH']:3d} M · {cf['CLOSE']:2d} C · {cf['MISMATCH']:2d} X · {cf['NO_DATA']:2d} ND → {IF.pct(cf)}"
+                          f"   (sobrants {imf['sobrants_n']})", flush=True)
             else:
                 entry["scalars"] = []
                 print(f"{slug:10s} {v:5s} ERR generació: {gen['errors']}", flush=True)
