@@ -4375,3 +4375,133 @@ pendents); tria de fotos i pàgina del plànol (4 imatges errònies); bloc 5 (ca
 
 *Fi entrada 2026-09-07 (vespre). Bloc 4: numeració mesurada (75 %, cap error de comptar) i imatges controlades; la cau compartia el tall de correlació de Bell-lloc amb 5 projectes.*
 
+## 2026-09-07 (tarda-3) — Imatges, pas 2: decisions per tipus de figura sobre l'evidència dels 7 signats (A = el que l'Eva ja té al projecte, lector = Claude Code, B només amb UTM i de reserva, mai dibuixem punts), 4 decisions de plantilla del bloc 4 (figures variables, materials una vegada, pastís de Rubí fora, `_cache_name` a producció `123b4f2`); cap codi a experiment
+
+### Context
+
+- Pas 1 (tarda-2, `d041cd8` · `7163f7b`): veritat des dels 7 signats (63 figures/fotos amb peu i ranura), inventari de 291 candidats (FH11 inclosos),
+  aparellament phash + NCC i 7 fulls Eva | nosaltres | candidats (`docs/imatges/INVENTARI-I-VERITAT-2026-09-07.md`). El §7 deixava per tipus les opcions
+  A (reutilitzar el que l'Eva fa abans del wizard) / B (compondre nosaltres) / C (preguntar-li).
+- Pas 2 = revisió amb el Josep, sense codi (handoff `_FOR-NEW-YOU-20260907-1330.md` §5). Feta sobre els 7 fulls i §6-§8. El Josep ha donat GO explícit
+  a les decisions de plantilla (b), (c) i (d), ha decidit la (a) tot seguit (pastís fora, gràfic per dades quan n'hi hagi) i no ha esmenat cap fila del repàs per tipus.
+- Marc: `feedback_tier_a_extraction_first` (mai en blanc, mai fals: candidats amb font), `feedback_no_pull_eva_success_criterion`, principi del Josep
+  (2026-09-07): el pipeline el controla Claude Code, que mira i interpreta les imatges; Python renderitza, retalla i compon.
+
+### Decisions arquitectòniques clau
+
+**D0. Principi: la font és el que l'Eva ja té al projecte; el lector és Claude Code; nosaltres no inventem cap traç.**
+Per què: als 7 signats, cada figura (llevat de les fonts externes: ICGC no desat, Google Earth, Sede del Catastro, IGME, llibres) surt d'un fitxer que ja
+és a la carpeta abans d'obrir el wizard: PNG compostos a `ANNEXES/ALTRES|OTROS` (Castellar, Rubí, Vilanova: hash idèntic), annexos FH11/PDF (situació,
+tall, fotografies) o pàgines del projecte de l'arquitecte. Els punts d'assaig els dibuixa ella sempre (6/7) abans del wizard (memòria
+`eva_workflow_annexes_before_wizard`). Alternativa rebutjada: compondre-ho tot per UTM (B primer): 3/7 projectes de la via A no tenen UTM, cap composició
+nostra reprodueix la seva (municipi + ampliat, taronja), i dibuixar punts nosaltres sobre un plànol sense georeferència és un risc de fabricació.
+Trade-off: depenem del que l'Eva deixa a la carpeta; quan no hi és, «cap font» visible al wizard (mai un placeholder callat).
+
+**D1. `fig_situacio` (7/7): A amb B de reserva; ranura d'1 o 2 imatges.** Ordre de preferència del lector: (1) PNG d'ALTRES amb els dos mapes (3/7
+idèntics: `m7.png`, `F1 UBI.png`, `F1 SIT.png`); (2) els dos mapes retallats de l'annex «plànol de situació» (PDF o FH11 → PDF) recompostos en horitzontal
+(Linyola 0,82; a Alcoletge i Anciles la figura només hi viu); (3) insets del plànol de l'arquitecte (Bell-lloc: dues imatges, 0,79); (4) B: ICGC
+topogràfic + ortofoto per UTM amb rectangle taronja i llegenda «Zona d'estudi». Es retira `_render_situation_plan_left` (retall del 38 % esquerre: 0/7).
+
+**D2. `fig_aerea`: la ranura s'elimina.** 0/7 signats; l'ortofoto va dins situació o dins assaigs. Alternativa «segona imatge de situació»: només
+Bell-lloc, i ja ho cobreix D1 (1 o 2 imatges).
+
+**D3. `fig_assaigs` (6/7): A. Retall del dibuix amb punts que l'Eva ja té; mai dibuixem punts.** Fonts vistes als fulls: `m8.png` / `F2 UBI PUNTS.png`
+(1,00), Alcoletge `AMP + PLANOL PUNTS/ampliació habitatge v2.png` (planta amb P-1/P-3/P-2: hash feble per línia fina, a ull inequívoc), Linyola
+`Punts de Sondeig_Silvia_Jaume.pdf`, Vilanova retall de `pl situació.pdf` (0,98), Anciles inset del corte (0,88). Si hi ha orto-amb-punts i
+planta-amb-punts (Vilanova `F2 PUNTS.png` vs. la planta): planta (4/6 signats). Sense cap dibuix amb punts → cap figura (Bell-lloc; però hi té
+`A.01 amb punts.pdf` sense usar: pregunta 31). B (punts per UTM sobre el plànol) rebutjada: el PDF no té georeferència i és feina que ella ja fa.
+
+**D4. `fig_projecte` (0-2): Claude tria; retall al dibuix, mai la pàgina sencera.** Secció (Linyola p4 de `2_02B_DG…`), emplaçament sense punts
+(Bell-lloc, Vilanova: mateix annex que D3), topogràfic i tipologies (Anciles `IV_PLANOS.pdf` p5, p19-22). Retall amb `detect_drawing_region` /
+`crop_to_label` (MCP plànols). Sense candidat clar → 0 figures. Substitueix `fig_main_plan_image` (avui: `A.01.pdf` sencer amb caixetí, una foto d'un
+paper a Rubí, la portada a Anciles). Cap regla fixa als 7: pregunta 32.
+
+**D5. `foto_vista` (0-2): A + Claude.** Annex de fotografies (la selecció de l'Eva) → `FOTOGRAFIES/` → PNG d'ALTRES (Rubí: la «vista Google Earth» ÉS
+`F3 VG.png`, dins el projecte). Bloc condicional ja existent (peça 3). Criteri: pregunta 19a ampliada.
+
+**D6. `foto_dpsh` / `foto_sondeig`: Claude mira, amb l'annex de fotografies com a pista** (peu «màquina…», 7/7). Tanca les 4 errònies (Alcoletge full
+de camp, Anciles caixa de testimonis, Bell-lloc ×2). Sense pregunta.
+
+**D7. `foto_materials`: UNA per informe, fora del bucle de nivells (decisió (c), GO Josep); una per sondeig/punt quan n'hi ha diversos** (Anciles
+S-1/S-2, Vilanova P-3 i P-1). Mai per nivell (la plantilla p254-262 avui la repeteix amb el mateix número). Pregunta 33.
+
+**D8. `fig_geologic` (7/7): PNG `*MGEOL*` si hi és (3/7 idèntic) → ICGC WMS per UTM (ja fet; mateix tipus que Linyola/Bell-lloc/Alcoletge) → fora de
+Catalunya IGME** (comprovar WMS al pas 3; si no n'hi ha, «cap font», no «pendent»). Llegenda: pregunta 34.
+
+**D9. `fig_tall` (7/7): A, retall de la secció de `tall.pdf`** amb `detect_drawing_region` (mateixa font 7/7, retall 0/7).
+
+**D10. Extres: fora de les ranures; pastís de Rubí FORA de la plantilla (decisió (a), GO Josep, mateixa tarda).** Estabilitat (Castellar,
+llibre) només amb dades pròpies → avui cap. El bloc `{%p if show_granulometric %}` de la plantilla porta la IMATGE de Rubí (graves 50,3 / sorres
+31,5 / fins 18,2) i també el TEXT de Rubí («NO PLÀSTICS», «tipus SM»): es treu la imatge estàtica i el bloc passa a ser per dades del projecte:
+gràfic generat (matplotlib) dels percentatges llegits del GTL del projecte, text (plasticitat, classe SUCS) dels seus resultats, al mateix lloc
+(dins la descripció del nivell, peu «Gràfic 1. Distribució granulomètrica…»). Fins que el lector del GTL no doni els percentatges, el bloc no
+s'imprimeix mai (com avui). Els 8 media morts (8,9 MB per informe) també fora. Alternativa rebutjada: deixar la imatge i confiar que
+`show_granulometric` no s'activi: és un risc de fabricació latent en un fitxer que l'Eva pot tocar.
+
+**D11. Plantilla: nombre de figures variable (decisió (b), GO Josep).** Situació 1-2 + assaigs 0-1 + projecte 0-2 + geològic + tall; numeració per
+presència (avui 3 fixes: cadastre, aèria, plànol; signats 2/2/3/3/2/3/4).
+
+**D12. `_cache_name` a producció (decisió (d), GO Josep): FET, `production/g3dt-eva-v1` @ `123b4f2`, sense push.** Cherry-pick de `4afcc80` en un
+worktree temporal; el codi ha aplicat net (7 punts `.stem` → `_cache_name`); el test anava dins `tests/test_bloc4_numeracio.py`, que no existeix a
+producció → test propi `tests/test_image_cache_name.py`. Per què ara: la cau global per nom de fitxer podia posar el tall, el plànol o el retall de
+situació d'un projecte anterior a l'informe de l'Eva (verificat per md5 al bloc 4). Arriba a l'ordinador de l'Eva a la propera instal·lació (mai pull).
+
+**D13. Ordre del pas 3: plantilla petita abans de les fotos.** Esmena a §8.5 del document: `fig_aerea` fora + materials una vegada + numeració per
+presència són canvis petits que tanquen X de numeració sols; van primer. Després fotos → tall → assaigs → situació → geològic → projecte + bloc variable.
+
+**D14. Preguntes a l'Eva: 30-34 i 36 al registre; la 35 (vistes) fusionada dins la 19a.** No s'envia res sense el Josep.
+
+### Implementació
+
+- Experiment (`experiment/nivell-a-2026-08`): **cap canvi a `automation/` ni a la plantilla.** Només docs: aquesta entrada, PLA (bloc 4-bis),
+  `PREGUNTES-EVA-PENDENTS.md` (30-36, 19a), nota a §7 del document, STATUS, sessió, handoff `_FOR-NEW-YOU-20260907-1450.md`.
+- Producció: `123b4f2` (`automation/image_manager.py` +30/−7; `tests/test_image_cache_name.py` +17). Worktree temporal retirat.
+- Eines per al pas 3 ja disponibles: MCP plànols (`clients/RV4.eu/tools/mcp-planols`, activat en aquesta sessió): `render_page(crop)`,
+  `detect_drawing_region`, `list_pages_with_drawings`, `find_text`, `crop_to_label`, `extract_lines`, `extract_tables`, `read_title_block`.
+
+### Validació empírica
+
+Tot ve del pas 1 (cap mesura nova): situació PNG idèntic 3/7; assaigs amb punts 6/7 (orto 2, planta 4) i font al projecte 6/6; projecte 0-2 (5 figures
+en 4 signats); vistes Rubí 1, Vilanova 1, Bell-lloc 2, resta 0; DPSH igual 4/7, sondeig 1/3, materials 6/9, 4 errònies; geològic PNG idèntic 3/7, mateix
+tipus 3/7, IGME 1/7; tall mateixa font 7/7, retall 0/7; aèria 0/7. Producció: punts `.stem` a la cau 7 → 0 (l'únic que queda és dins `_cache_name`);
+test 1/1 verd (0,5 s).
+
+### Tests
+
+- Producció: +1 (`tests/test_image_cache_name.py`). Experiment: sense canvi (bloc 4: 31 vermells esperats / 2451 verds).
+
+### Limitacions conegudes
+
+- D1-D9 són la proposta del repàs acceptada sense esmenes; les respostes de l'Eva (30-36) poden capgirar-ne alguna (sobretot D3 a Bell-lloc i D7):
+  entrada nova que la substitueixi, no edició.
+- Res del pas 3 està mesurat: baseline sobre `-bloc4b` amb el codi quiet abans de tocar res (`feedback_measure_baseline_before_coding`); la mesura per
+  figura («mateixa font que l'Eva») encara no existeix a M341.
+- Fonts externes (ICGC no desat, Google Earth fora d'ALTRES, Sede del Catastro, IGME, llibres): «cap font» al wizard; res no s'inventa.
+- MCP plànols és una eina de RV4 (poppler + PIL): a l'ordinador de l'Eva (Windows natiu, sense Claude Code avui) caldria empaquetar-lo o portar les
+  3 funcions que usem a `automation/`; decisió del pas 3, no d'aquest.
+- FH11 → PDF via soffice (3-14 s per fitxer): a producció cal soffice o un render previ; cau per md5 com les imatges.
+
+### GO/NO-GO
+
+- ✅ Pas 2 tancat: D0-D14 (GO explícit del Josep a (b), (c), (d); files 1-10 sense esmenes).
+- ✅ Producció `123b4f2` (test verd, sense push).
+- ✅ (a) pastís de Rubí: fora de la plantilla; bloc granulomètric per dades del projecte (peça 1 del pas 3, part de la generació quan hi hagi percentatges llegits).
+- ⏳ Preguntes 30-34 i 36: al registre, no enviades.
+- ⏳ Pas 3: pendent de baseline i de la peça 0 (mesura per figura).
+
+### Següents passos (pas 3, cada peça mesurable sola, baseline abans)
+
+0. **Mesura per figura a M341**: cel·la «mateixa font que l'Eva» (phash ≤ 10 o NCC ≥ 0,7 contra `docs/imatges/veritat/`) en lloc de presència; reaprofitar
+   `docs/imatges/scripts/match.py`; baseline sobre `2026-09-07-m341-bloc4b`.
+1. **Plantilla petita** (D11, D7, D2, D10): `fig_aerea` fora, materials una vegada, numeració per presència, pastís i 8 media morts fora
+   (el gràfic generat per dades i el text del bloc per resultats, quan el lector del GTL doni percentatges i plasticitat).
+2. **Fotos** (D5, D6, D7): skill lector d'imatges + llibreria d'exemplars (`veritat/` + descripció textual + `--exclude` leave-one-out) + annex de
+   fotografies com a pista.
+3. **Tall** (D9): `detect_drawing_region` sobre `tall.pdf`.
+4. **Assaigs** (D3): PNG `*PUNTS*` → planta amb punts → retall de l'annex/inset.
+5. **Situació** (D1): PNG → dos mapes de l'annex → insets → ICGC per UTM; retirar `_render_situation_plan_left`.
+6. **Geològic** (D8): PNG → ICGC → IGME (comprovar WMS).
+7. **Projecte** (D4) + bloc de figures variable a la plantilla.
+Handoff: `docs/_FOR-NEW-YOU-20260907-1450.md`.
+
+*Fi entrada 2026-09-07 (tarda-3). Imatges pas 2: decisions per tipus (A = el que l'Eva ja té, lector = Claude Code), plantilla variable i materials una vegada, `_cache_name` a producció.*

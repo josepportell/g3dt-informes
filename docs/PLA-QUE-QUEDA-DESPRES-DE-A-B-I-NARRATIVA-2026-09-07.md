@@ -90,6 +90,24 @@ Sense això, una part del 26 % vermell d'A és soroll de la mesura, no del siste
   retall i mida) fet UNA vegada a mà a partir dels `.docx` de `~/g3dt-e2e/informes-mesura/`; després, un test de presència (la
   imatge existeix, no és el `PLACEHOLDER`) a M341. Esforç M la primera vegada, S després.
 
+### Bloc 4-bis — Imatges figura a figura — *pas 1 i pas 2 FETS; pas 3 = 8 peces mesurables*
+
+> **Estat 2026-09-07 (tarda-3).** Pas 1 (`7163f7b`): veritat des dels 7 signats, inventari de 291 candidats (FH11), aparellament, 7 fulls
+> (`docs/imatges/INVENTARI-I-VERITAT-2026-09-07.md`). Pas 2 (DECISION-LOG 2026-09-07 (tarda-3), D0-D14): la font és el que l'Eva ja té al projecte
+> (PNG d'ALTRES, annexos FH11/PDF, pàgines del projecte), el lector és Claude Code, B (ICGC per UTM) només de reserva, mai dibuixem punts; plantilla
+> amb figures variables (1-2 situació, 0-1 assaigs, 0-2 projecte, geològic, tall), `fig_aerea` fora, materials una vegada; `_cache_name` a producció
+> (`123b4f2`). Pastís de Rubí: fora (gràfic per dades del projecte quan el GTL doni percentatges). Preguntes 30-34 i 36 (35 dins la 19a).
+
+Peces del pas 3, en ordre, cada una amb baseline (`-bloc4b`) i mesura a M341:
+0. mesura per figura «mateixa font que l'Eva» (phash/NCC contra `veritat/`) — S
+1. plantilla petita: aèria fora, materials una vegada, numeració per presència, pastís i media morts fora — S
+2. fotos amb el lector d'imatges (skill + exemplars leave-one-out + annex de fotografies) — M (inclou el skill)
+3. tall retallat (`detect_drawing_region`) — S
+4. assaigs: retall del dibuix amb punts — M
+5. situació: PNG → annex recompost → insets → ICGC — M
+6. geològic: PNG → ICGC → IGME — S
+7. projecte 0-2 + bloc variable a la plantilla — M
+
 ### Bloc 5 — Castellà — *L, 2-3 dies; decisió del Josep: sí, més endavant*
 
 Vilanova i Anciles són el sostre de tots els grups (narrativa ES 50 %, taules 64-74 % amb «Tipus IV»↔«Tipo IV» com a CLOSE).

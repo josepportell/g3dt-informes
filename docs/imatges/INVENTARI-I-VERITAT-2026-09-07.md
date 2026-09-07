@@ -625,6 +625,8 @@ Per a cada tipus: què fa l'Eva (evidència als 7), on és la font dins el proje
 
 ## 7. Preparació del pas 2: opcions A/B/C per tipus i preguntes candidates a l'Eva
 
+> **Pas 2 fet (2026-09-07, tarda-3, amb el Josep):** decisions D0-D14 al DECISION-LOG `2026-09-07 (tarda-3)`; les preguntes 30-34 i 36 són al registre `PREGUNTES-EVA-PENDENTS.md` (la 35 dins la 19a). Aquesta secció queda com a evidència de partida.
+
 Opcions per tipus: **(A)** reutilitzar el que l'Eva ja fa abans del wizard (annexos FH11/PDF, PNG d'ALTRES); **(B)** compondre nosaltres (ICGC/Cadastre
 per UTM + retalls del projecte + punts); **(C)** demanar-ho a l'Eva (criteri o fitxer). La recomanació és la que surt de l'evidència del pas 1; la decisió
 és del Josep i de l'Eva.
