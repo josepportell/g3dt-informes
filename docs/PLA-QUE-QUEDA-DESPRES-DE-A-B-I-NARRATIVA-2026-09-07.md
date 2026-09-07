@@ -103,6 +103,9 @@ Sense això, una part del 26 % vermell d'A és soroll de la mesura, no del siste
 > (situació 0/8, assaigs 0/6, projecte 0/5, geològic 0/7, tall 5 C + 2 X, fotos DPSH 4/7, sondeig 1/3, materials 6/9, vista 1/4); escalars 74 %,
 > taules 82 % i presència idèntics a `-bloc4b`.
 
+**Inventari complet del que queda d'imatges: `docs/imatges/PENDENTS-IMATGES.md`** (estat per ranura, les 4 peces que queden amb el que
+necessita cadascuna, 6 pendents que no són cap peça, 4 bloqueigs de fons, 9 preguntes obertes i l'ordre recomanat).
+
 Peces del pas 3, en ordre, cada una amb baseline (`peca0b`) i mesura a M341:
 0. ✅ mesura per figura «mateixa font que l'Eva» (phash/NCC contra `veritat/`) — S
 1. ✅ plantilla petita: aèria fora, materials una vegada, pastís i media morts fora — S (tarda-5: `fix` net 0 com previst, imatges intactes,

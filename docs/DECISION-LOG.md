@@ -5020,3 +5020,21 @@ de les 10 fotos retallades:
 - ⏳ Pregunta 39 a l'Eva.
 
 *Fi entrada 2026-09-07 (nit, 2). Correcció: el blau no és exclusiu del sondeig i no hi ha cap objecte vermell o taronja col·locat.*
+
+## 2026-09-07 (nit, 3) — Resposta de l'Eva a la pregunta 39: el senyal de la foto de la màquina de sondeig és una **caixa blava de mocadors** a terra; la del penetròmetre no en porta cap
+
+L'Eva (via el Josep) confirma el que buscàvem a la correcció anterior: **hi posa a propòsit una caixa blava de mocadors
+de paper dins l'enquadrament de la foto de la màquina de SONDEIG**, i la foto del penetròmetre **no porta cap objecte
+identificatiu**. Això explica els números de l'entrada (nit, 2) i corregeix la meva lectura: el que jo llegia com a
+«caixa de testimonis» a les fotos de màquina és aquesta caixa de mocadors (les caixes de testimonis són les safates
+blaves grans i surten a les fotos de MATERIALS, no a les de màquina). També aclareix per què no trobàvem res vermell ni
+taronja: no n'hi ha.
+
+**Aplicat:** el paràgraf del senyal a `.claude/commands/g3dt-llegir-fotos.md` diu ara exactament què s'ha de buscar
+(caixa blava petita i rectangular a terra) i que els altres objectes de color (el paper blanc i blau de la DPSH de
+Castellar, la vareta de punta verda d'Anciles) no volen dir res. Pregunta 39 tancada al registre amb la resposta.
+
+**Sense re-mesura:** el re-run `-peca2d` ja havia mostrat que aquest senyal no movia cap tria del lector (les úniques X
+de fotos són empats entre punts, preguntes 37 i 38). Es tornarà a passar amb la peça següent que toqui el lector.
+
+*Fi entrada 2026-09-07 (nit, 3). El senyal del sondeig és una caixa blava de mocadors; el penetròmetre no en porta cap.*
