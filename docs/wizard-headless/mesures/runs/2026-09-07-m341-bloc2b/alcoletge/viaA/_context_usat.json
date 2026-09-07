@@ -1,0 +1,800 @@
+{
+ "fig_cadastre_num": 1,
+ "fig_aerea_num": 2,
+ "fig_main_plan_num": 3,
+ "fig_spt_cullera_num": 4,
+ "fig_geological_num": 5,
+ "fig_correlation_num": 6,
+ "fig_location_num": 1,
+ "fig_building_num": 3,
+ "photo_site_text": "",
+ "_num_site_photos": 0,
+ "photo_dpsh_num": 1,
+ "photo_sondeig_num": "",
+ "photo_materials_num": 2,
+ "table_dpsh_range": "3 i 4",
+ "table_lab_num": 5,
+ "table_permeability_num": 6,
+ "table_lab_values_num": 7,
+ "table_seismic_num": 8,
+ "table_soil_chars_num": 9,
+ "section1": "<Section1Content>",
+ "section2": "<Section2Content>",
+ "section3": "<Section3Content>",
+ "section4": "<Section4Content>",
+ "client": "SR. ALBERT SANS BONVEHÍ",
+ "client_de": "del SR. ALBERT SANS BONVEHÍ",
+ "expedient": "4001670",
+ "street_address": "Carrer Girasols, Nº7, Urbanització el Roser",
+ "municipality": "Alcoletge",
+ "municipality_de": "d'Alcoletge",
+ "data_camp_text": "16 de febrer de 2026",
+ "data_camp_inici_text": "16 de febrer de 2026",
+ "data_signatura_text": "16 de març de 2026",
+ "architect_name": "David Graus Robinat",
+ "architect_company": "2 Graus",
+ "architect_company_de": ", de 2 Graus",
+ "architect_name_upper": "DAVID GRAUS ROBINAT",
+ "building_type": "Tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
+ "building_type_lower": "el tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
+ "building_type_de": "del tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
+ "num_floors": "",
+ "report_language": "ca",
+ "building_structure_desc": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+ "_narr_building_structure": {
+  "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+  "source": "amb pis i sense soterrani (Castellar, Linyola, Alcoletge)",
+  "candidates": [
+   {
+    "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+    "source": "amb pis i sense soterrani (Castellar, Linyola, Alcoletge)"
+   },
+   {
+    "value": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+    "source": "variant (a) dels signats"
+   },
+   {
+    "value": "amb nivell de soterrani, i per tant, es preveu una excavació general fins a la cota de fonamentació del soterrani, a més del sanejament i l'anivellació.",
+    "source": "amb soterrani"
+   }
+  ],
+  "notes": [
+   "plantes desconegudes: defecte «sense nivell de soterrani»"
+  ]
+ },
+ "municipality_upper": "ALCOLETGE",
+ "street_1": "Carrer Girasols",
+ "street_2": "Nº7, Urbanització el Roser",
+ "cte_building_class": "C-1",
+ "cte_soil_class": "T-1",
+ "cte_edificacio": "C-1",
+ "cte_sol": "T-1",
+ "plantes": "",
+ "superficie_parcela": "1.167",
+ "superficie_cadastral": "",
+ "superficie_parcela_planol": "1.167",
+ "superficie_construida": "100",
+ "access_description": "",
+ "site_description": "El solar està actualment ocupat per una zona explanada i un edifici en planta baixa.",
+ "lab_field_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_field_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_testing_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "cota_referencia": "+188.20",
+ "_parcel_rcs": [
+  "8841701CG0184S"
+ ],
+ "adjacent_north": "parcel·la on existeix un edifici aïllat en planta baixa, amb soterrani i piscina",
+ "adjacent_south": "parcel·la on existeix un edifici aïllat en planta baixa",
+ "adjacent_east": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant",
+ "adjacent_west": "parcel·la buida",
+ "adjacent_nearest_street": "",
+ "location_sentence": "al Carrer Girasols d'Alcoletge",
+ "adjacent_north_fmt": "Per la part nord amb una parcel·la on existeix un edifici aïllat en planta baixa, amb soterrani i piscina.",
+ "adjacent_south_fmt": "Per la part sud amb una parcel·la on existeix un edifici aïllat en planta baixa.",
+ "adjacent_east_fmt": "Per la part est amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant.",
+ "adjacent_west_fmt": "I finalment, per la part oest, amb una parcel·la buida.",
+ "access_street": "carrer Girasols",
+ "_narr_access": {
+  "value": "carrer Girasols",
+  "candidates": [
+   "carrer Girasols"
+  ]
+ },
+ "adjacent_intro": "La parcel·la objecte d'estudi es situa al est del municipi de Alcoletge, pren una morfologia quasi rectangular i limita:",
+ "_narr_parcel": {
+  "position": "est",
+  "shape": "quasi rectangular",
+  "centroid": [
+   308784.3548418747,
+   4613947.731958042
+  ],
+  "rcs": [
+   "8841701CG0184S"
+  ]
+ },
+ "is_sloped": false,
+ "slope_percent": "4.5",
+ "slope_direction": "W",
+ "site_condition": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+ "_narr_site_condition": {
+  "value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "source": "pendent 4 % ≤ 10 %, no antropitzat (Linyola, Alcoletge)",
+  "candidates": [
+   {
+    "value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Com que es tracta d'un solar pla»"
+   },
+   {
+    "value": "Tot i no ser un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Tot i no ser un solar pla»"
+   },
+   {
+    "value": "Degut a que es tracta d'un solar antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Degut a que es tracta d'un solar antropitzat»"
+   },
+   {
+    "value": "Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Es tracta d'un solar no antropitzat»"
+   }
+  ],
+  "notes": [
+   "antropitzat sense font (no derivable del Cadastre ni de l'ICGC): revisar"
+  ]
+ },
+ "_narr_site_description": {
+  "value": "El solar està actualment ocupat per una zona explanada i un edifici en planta baixa.",
+  "source": "parcel·la pròpia amb edifici al Cadastre (Alcoletge)",
+  "candidates": [
+   {
+    "value": "El solar està actualment ocupat per una zona explanada i un edifici en planta baixa.",
+    "source": "parcel·la pròpia amb edifici al Cadastre (Alcoletge)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+    "source": "cap «buit pla»"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+    "source": "cap «buit pendent»"
+   }
+  ],
+  "notes": [
+   "vegetació, tanques, desnivell respecte el carrer i plataforma de treball: judici de la visita"
+  ]
+ },
+ "_own_parcel_building": {
+  "has_building": true,
+  "num_floors_above": 1,
+  "num_floors_below": 0,
+  "has_pool": false,
+  "total_built_m2": 89.0,
+  "refs": [
+   "8841701CG0184S"
+  ]
+ },
+ "has_sondeig": false,
+ "section_sondeig_num": "",
+ "section_spt_num": "2.4.2",
+ "section_resum_num": "2.4.3",
+ "include_geothermal": false,
+ "include_expansivity": false,
+ "include_earth_pressure": false,
+ "include_slope_stability": false,
+ "show_granulometric": false,
+ "section_excavabilitat_num": "3.5",
+ "section_sismica_num": "3.6",
+ "section_rado_num": "3.7",
+ "section_fonamentacio_num": "4.3",
+ "section_empentes_num": "",
+ "section_estabilitat_num": "",
+ "num_dpsh_tests": 3,
+ "dpsh_test_ids": "P-1,P-3,P-2",
+ "dpsh_avg_n20": "39",
+ "dpsh_tests": [
+  {
+   "test_id": "P-1",
+   "cota": "+188.20",
+   "depth": "-1.60",
+   "refusal": "Si",
+   "water": "-22.00"
+  },
+  {
+   "test_id": "P-2",
+   "cota": "+188.20",
+   "depth": "-1.30",
+   "refusal": "Si",
+   "water": "-22.00"
+  },
+  {
+   "test_id": "P-3",
+   "cota": "+188.20",
+   "depth": "-1.69",
+   "refusal": "Si",
+   "water": "-22.00"
+  }
+ ],
+ "sondeig_tests": [],
+ "spt_test_id": "SPT-1",
+ "spt_location": "P-3",
+ "spt_depth_range": "-0.80 a -1.40",
+ "spt_n30": "20",
+ "spt_lithology": "[primera paraula il·legible] marró",
+ "spt_ma_tests": [
+  {
+   "test_id": "SPT-1",
+   "location": "P-3",
+   "depth_range": "-0.80 a -1.40",
+   "n30": "20",
+   "lithology": "[primera paraula il·legible] marró"
+  }
+ ],
+ "lab_sample_id": "",
+ "lab_location": "",
+ "lab_depth": "",
+ "lab_tests_text": "",
+ "_narr_lab_tests": {
+  "value": "",
+  "source": "sense bloc «ASSAIGS REALITZATS» del GTL",
+  "candidates": [],
+  "notes": [
+   "laboratori: cap llista d'assaigs llegida"
+  ]
+ },
+ "materials_level_1": "El nivell 1 està format per rebliment antròpic, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials oligocè, unitat POmgc4 segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.40 m, amb un gruix de 1.40 m. Aquests materials presenten un valor mitjà de N20 de 6 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant baixa a mitja. Dels assaigs de penetració dinàmica es dedueix una consistència fluixa.",
+ "materials_intro": "A partir dels assaigs in situ realitzats, s'ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+ "seismic_ab_text": "0,04",
+ "radon_zone": "1",
+ "radon_zone_description": "",
+ "radon_sentence": "La parcel·la concreta d'estudi es localitza al terme municipal d'ALCOLETGE i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+ "csn_radon_text": "",
+ "geology_para_1": "En primer lloc s’ha procedit a la consulta de les diferents cartografies geològiques existents sobre la zona:",
+ "geology_para_2": "Full 33: Segrià, del Mapa geològic comarcal de Catalunya, 1:50000 de l’ICC, 2006.",
+ "geology_para_3": "Hoja 388: Lleida; Hoja 358: Balaguer, del Mapa geológico de España, 1:50000 de l’IGME, 1998.",
+ "geology_para_4": "La zona que engloba aquest estudi es troba situada dins la Depressió de l’Ebre, en el seu extrem oriental, que rep el nom de Depressió Central Catalana. Aquesta és una unitat morfoestructural que forma l’avantpaís del Pirineus, i alhora és una conca sedimentària d’edat terciària. Està delimitada al N pels Pirineus, i al S per la Cadena Costanera Catalana o Catalànids.",
+ "geology_para_5": "La conca de l’Ebre està relacionada amb l’evolució de l’orogen pirinenc i es desenvolupa com a resposta de l’apropament de la placa Ibèrica sota la placa Europea, amb inici de subducció de la primera respecte la segona. D’aquesta manera, aquesta conca esdevé una cubeta sedimentària durant el Terciari, actuant com a centre de deposició dels materials, primer marins, durant el Terciari inferior i mig, i posteriorment continentals, procedents del desmantellament de les serralades circumdants.",
+ "geology_para_6": "Durant l’Eocè, la conca de l’Ebre estava connectada amb l’oceà Atlàntic per l’oest. Fruit de la col·lisió entre les dues plaques tectòniques, s’inicia la col·locació de làmines encavalcants o mantells de corriment, d’origen pirinenc, empeses cap al sud. L’emplaçament d’aquests mantells va reduir considerablement l’espai que inicialment ocupava la Conca de l’Ebre, i va fer perdre la comunicació amb el mar obert.",
+ "geology_paragraphs": [
+  "En primer lloc s’ha procedit a la consulta de les diferents cartografies geològiques existents sobre la zona:",
+  "Full 33: Segrià, del Mapa geològic comarcal de Catalunya, 1:50000 de l’ICC, 2006.",
+  "Hoja 388: Lleida; Hoja 358: Balaguer, del Mapa geológico de España, 1:50000 de l’IGME, 1998.",
+  "La zona que engloba aquest estudi es troba situada dins la Depressió de l’Ebre, en el seu extrem oriental, que rep el nom de Depressió Central Catalana. Aquesta és una unitat morfoestructural que forma l’avantpaís del Pirineus, i alhora és una conca sedimentària d’edat terciària. Està delimitada al N pels Pirineus, i al S per la Cadena Costanera Catalana o Catalànids.",
+  "La conca de l’Ebre està relacionada amb l’evolució de l’orogen pirinenc i es desenvolupa com a resposta de l’apropament de la placa Ibèrica sota la placa Europea, amb inici de subducció de la primera respecte la segona. D’aquesta manera, aquesta conca esdevé una cubeta sedimentària durant el Terciari, actuant com a centre de deposició dels materials, primer marins, durant el Terciari inferior i mig, i posteriorment continentals, procedents del desmantellament de les serralades circumdants.",
+  "Durant l’Eocè, la conca de l’Ebre estava connectada amb l’oceà Atlàntic per l’oest. Fruit de la col·lisió entre les dues plaques tectòniques, s’inicia la col·locació de làmines encavalcants o mantells de corriment, d’origen pirinenc, empeses cap al sud. L’emplaçament d’aquests mantells va reduir considerablement l’espai que inicialment ocupava la Conca de l’Ebre, i va fer perdre la comunicació amb el mar obert.",
+  "A partir de finals de l’Eocè i durant tot l’Oligocè, la conca de l’Ebre actua com a conca endorreica, tancada, on la sedimentació que es produeix és d’origen continental. Els sediments continentals tenen diversos orígens, entre els que cal destacar els dipòsits de torrenteres, de rius més o menys ben desenvolupats, de dipòsits de plana d’inundació, i finalment, dipòsits d'origen lacustre o palustre. Cada un d’aquests dipòsits donarà origen a diferents tipus de roques sedimentàries que són les que es troben a sota aquestes contrades.  Així apareixen conglomerats, gresos i argiles d’origen tant fluvial, com al·luvial, com lacustre, i també nivells de carbonats d’origen lacustre.",
+  "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
+  "El present estudi s’ha realitzat principalment sobre ventalls al·luvials del Plistocè superior, caracteritzats per nivells d’argiles, sorres i graves.",
+  "En concret, i segons l'Institut Cartogràfic i Geològic de Catalunya (ICGC), afloren els materials de la unitat POmgc4, corresponents a lutites amb intercalacions de gresos del Oligocè."
+ ],
+ "_narr_radon": {
+  "value": "La parcel·la concreta d'estudi es localitza al terme municipal d'ALCOLETGE i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "source": "zona 1 (RD 732/2019, apèndix B)",
+  "candidates": [
+   {
+    "value": "La parcel·la concreta d'estudi es localitza al terme municipal d'ALCOLETGE i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+    "source": "signat: Castellar, Bell-lloc, Alcoletge"
+   },
+   {
+    "value": "La parcel·la concreta d'estudi es localitza al terme municipal d'ALCOLETGE i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas radó en edificis tancats.",
+    "source": "signat: Rubí"
+   }
+  ],
+  "notes": []
+ },
+ "materials_depth_text": "",
+ "materials_geomech_text": "",
+ "conclusions_level_1": "El nivell 1 està format per rebliment antròpic, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials oligocè, unitat POmgc4 segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.40 m, amb un gruix de 1.40 m. Aquests materials presenten un valor mitjà de N20 de 6 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant baixa a mitja. Dels assaigs de penetració dinàmica es dedueix una consistència fluixa.",
+ "soil_levels": [
+  {
+   "description": "Rebliment antròpic",
+   "description_short": "Rebliment antròpic",
+   "ordinal": "1er",
+   "materials_text": "El nivell 1 està format per rebliment antròpic, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials oligocè, unitat POmgc4 segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.40 m, amb un gruix de 1.40 m. Aquests materials presenten un valor mitjà de N20 de 6 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant baixa a mitja. Dels assaigs de penetració dinàmica es dedueix una consistència fluixa.",
+   "depth_text": "A partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.40 m de profunditat, amb potències estudiades de 1.40 metres.",
+   "geomech_text": "Des del punt de vista geomecànic es tracta d'uns materials de caràcter granular, amb una densitat i una capacitat portant baixa a mitja. Dels assaigs de penetració dinàmica DPSH s'obté un valor de Nb mig de 6 cops."
+  },
+  {
+   "description": "Lutites, substrat",
+   "description_short": "Lutites, substrat",
+   "ordinal": "2n",
+   "materials_text": "El nivell 2 està format per lutites, substrat, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. \n\nAquest nivell s'ha identificat com a materials oligocè, unitat POmgc4 segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta a partir de 1.40 m i fins a la cota de finalització dels assaigs, amb un gruix estudiat de 0.29 m. Aquests materials presenten un valor mitjà de N20 de 33 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica es dedueix una consistència compacta.",
+   "depth_text": "A partir dels assaigs realitzats, aquest nivell es detecta a partir de 1.40 m i fins a la cota de finalització dels assaigs (rebuig a la penetració), amb potències estudiades de com a mínim 0.29 metres.",
+   "geomech_text": "Des del punt de vista geomecànic es tracta d'uns materials de caràcter granular, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica DPSH s'obté un valor de Nb mig de 33 cops, assolint rebuig a la penetració pels trams més profunds."
+  }
+ ],
+ "conclusions_levels_detected": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+ "soil_level_rows": [
+  {
+   "name": "1er nivell.",
+   "material": "Rebliment antròpic",
+   "material_short": "Rebliment antròpic"
+  },
+  {
+   "name": "2n nivell.",
+   "material": "Lutites, substrat",
+   "material_short": "Lutites, substrat"
+  }
+ ],
+ "perm_rows": [
+  {
+   "name": "1er nivell",
+   "k_value": "10^-3 a 10^-5",
+   "material": "Rebliment antròpic",
+   "material_short": "Rebliment antròpic"
+  },
+  {
+   "name": "2n nivell",
+   "k_value": "10^-3 a 10^-5",
+   "material": "Lutites, substrat",
+   "material_short": "Lutites, substrat"
+  }
+ ],
+ "sulfate_level_name": "1er nivell",
+ "sulfate_value": "",
+ "sulfate_baumann": "---",
+ "sulfate_classification": "",
+ "seismic_rows": [
+  {
+   "num": "1",
+   "terrain_type": "Tipus IV",
+   "thickness": "1.40",
+   "c_coeff": "2.0"
+  },
+  {
+   "num": "2",
+   "terrain_type": "Tipus II",
+   "thickness": "0.29*",
+   "c_coeff": "1.3"
+  }
+ ],
+ "geotech_rows": [
+  {
+   "name": "1er nivell. Rebliment antròpic.",
+   "material_short": "Rebliment antròpic",
+   "nb": "7",
+   "n": "20",
+   "density": "1.80",
+   "cohesion": "0.00",
+   "phi": "28°",
+   "E": "50"
+  },
+  {
+   "name": "2n nivell. Lutites, substrat.",
+   "material_short": "Lutites, substrat",
+   "nb": "39-R",
+   "n": "--",
+   "density": "2.20",
+   "cohesion": "1.00",
+   "phi": "30°",
+   "E": ">500"
+  }
+ ],
+ "geotech_level_name": "2n nivell. Lutites, substrat.",
+ "geotech_nb": "39-R",
+ "geotech_n": "--",
+ "geotech_density": "2.20",
+ "geotech_cohesion": "1.00",
+ "geotech_phi": "30°",
+ "geotech_E": ">500",
+ "_calc_E": "CTE D.23 N20=33 | Rang Eva: >500-800",
+ "_calc_phi": "Schmertmann Nb=39 | Rang Eva: 30-35",
+ "_calc_gamma": "CTE D.27 rock | Rang Eva: 2.20",
+ "_calc_cohesion": "Rang Eva: 1.0",
+ "soil_level_name": "1er nivell.",
+ "soil_level_material": "Rebliment antròpic",
+ "perm_level_name": "1er nivell",
+ "perm_k_value": "10^-3 a 10^-5",
+ "perm_material": "Rebliment antròpic",
+ "k30_value": "8.0",
+ "_calc_k30": "E/60 = 500/60 (roca, c=1.0)",
+ "qa_value": "3.00",
+ "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+ "_calc_settlement": "Schmertmann Es=98 (2.5×Nb 39.4), B=1 m → 1.50 cm · règim roca → frase genèrica «menyspreables o bé inferiors a 1.0 cm» | alt: Es=500 (E del criteri) → 0.30 cm · nivell portant roca: Schmertmann és per a granulars → frase genèrica (7/7 signats)",
+ "_calc_Es": "Es=98 (2.5×Nb 39.4) · 2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat) | alt: Es=500 (E del criteri) → 0.30 cm",
+ "settlement": "1.50",
+ "_calc_qa": "Nb/12=9/12=0.78 = 18.35 | Cap: 3.00 (4.0-4.5)",
+ "conclusions_geologia_summary": "Segons els resultats dels assaigs de penetració realitzats, s'han identificat 2 nivells geotècnics diferenciats:\n\n- Nivell 1: Rebliment antròpic (de 1.40 m de gruix, N20 mitjà = 6)\n- Nivell 2: Lutites, substrat (de 0.29 m de gruix, N20 mitjà = 33)",
+ "conclusions_water_statement": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+ "conclusions_aggressivity_statement": "No s'han realitzat assaigs de laboratori per determinar l'agressivitat dels materials del subsòl al formigó.",
+ "empentes_paragraph": "",
+ "ka_value": "",
+ "kp_value": "",
+ "estabilitat_paragraph": "",
+ "expansivitat_paragraph": "",
+ "project": {
+  "project": {
+   "expedient": "4001670",
+   "municipality": "Alcoletge",
+   "report_date": "2026-09-07"
+  },
+  "client": {
+   "company_name": "Albert Sans Bonvehí",
+   "contact_name": "",
+   "nif": "",
+   "address": null
+  },
+  "architect": {
+   "name": "David Graus Robinat",
+   "company": "2 Graus"
+  },
+  "building": {
+   "type": "Tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
+   "num_floors": "",
+   "superficie_parcela_m2": "1167.0",
+   "superficie_cadastral_m2": "",
+   "superficie_construida_m2": "",
+   "has_basement": false,
+   "has_retaining_walls": false
+  },
+  "location": {
+   "street_address": "Carrer Girasols, Nº7, Urbanització el Roser",
+   "utm_x": 308781.86,
+   "utm_y": 4613950.63
+  },
+  "descriptions": {
+   "site_description": "",
+   "access_description": "",
+   "cota_referencia": "+188,20 msnm",
+   "field_work_dates": [
+    "2026-02-16"
+   ],
+   "field_work_dates_text": "16 de febrer de 2026",
+   "lab_company": "",
+   "lab_company_alias": "",
+   "lab_description": ""
+  },
+  "sondeig_tests": null,
+  "spt_data": null,
+  "lab_tests": [],
+  "site": {
+   "adjacent_parcels": {
+    "north": "parcel·la on existeix un edifici aïllat en planta baixa, amb soterrani i piscina",
+    "south": "parcel·la on existeix un edifici aïllat en planta baixa",
+    "east": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant",
+    "west": "parcel·la buida"
+   },
+   "position": "centre",
+   "shape": "rectangular",
+   "is_urban": true,
+   "is_sloped": false,
+   "slope_percent": null,
+   "slope_direction": null,
+   "slope_height_m": null,
+   "is_anthropized": null
+  },
+  "tests": {
+   "has_dpsh": true,
+   "num_dpsh_tests": 3,
+   "has_sondeig": false,
+   "has_spt": false,
+   "water_detected": false
+  },
+  "lab": {
+   "sulfate_mg_kg": null,
+   "aggressivity_class": ""
+  },
+  "cte": {
+   "building_class": "C-1",
+   "soil_class": "T-1"
+  },
+  "soil_levels": [
+   {
+    "level_number": 1,
+    "description": "Rebliment antròpic",
+    "thickness_m": 1.4,
+    "thickness_open": false,
+    "n20_average": 6.0,
+    "depth_from_m": 0.0,
+    "depth_to_m": 1.4,
+    "n20_min": 1,
+    "n20_max": 14,
+    "soil_type": "granular"
+   },
+   {
+    "level_number": 2,
+    "description": "Lutites, substrat",
+    "thickness_m": 0.29,
+    "thickness_open": true,
+    "n20_average": 32.666666666666664,
+    "depth_from_m": 1.4,
+    "depth_to_m": null,
+    "n20_min": 1,
+    "n20_max": 84,
+    "soil_type": "rock"
+   }
+  ],
+  "geotechnical_params": {
+   "gamma_g_cm3": 2.2,
+   "cohesion_kg_cm2": 1.0,
+   "phi_deg": 30,
+   "E_kg_cm2": 500
+  },
+  "terzaghi": {
+   "inputs": {
+    "phi_deg": 30,
+    "cohesion_kg_cm2": 1.0,
+    "gamma_g_cm3": 2.2,
+    "B_m": 1.0,
+    "Df_m": 1.0,
+    "L_m": null,
+    "shape": "square"
+   },
+   "factors": {
+    "Nc": 37.2,
+    "Nq": 22.5,
+    "Ngamma": 19.7,
+    "sc": 1.3,
+    "sq": 1.0,
+    "sgamma": 0.8
+   },
+   "results": {
+    "qu_kg_cm2": 55.044,
+    "safety_factor": 3.0,
+    "Qa_kg_cm2": 3.0,
+    "Qa_uncapped_kg_cm2": 18.35,
+    "settlement_cm": 1.5,
+    "settlement_type": "diferit",
+    "Es_used_kg_cm2": 98.4,
+    "qa_terzaghi_peck_kg_cm2": null,
+    "Fw": null,
+    "Fd_tp": null,
+    "qa_governs": "cap"
+   }
+  },
+  "conditional_sections": {
+   "include_expansivity": false,
+   "include_earth_pressure": false,
+   "include_slope_stability": false,
+   "include_geothermal": false,
+   "show_granulometric": false
+  },
+  "dpsh": {
+   "expedient": "4001670",
+   "source_file": "/home/josep/g3dt-e2e/projectes/4001670 ALCOLETGE/ANNEXES/4001670_DPSH.xls",
+   "num_tests": 3,
+   "test_ids": [
+    "P-1",
+    "P-3",
+    "P-2"
+   ],
+   "overall_average_n20": 7.77,
+   "any_water_detected": false,
+   "tests": [
+    {
+     "test_id": "P-1",
+     "correction_factor": 0.83,
+     "depth_reached_m": 1.6,
+     "average_n20": 17.29,
+     "refusal_reached": true,
+     "refusal_depth_m": 1.6,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.2,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.4,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 3,
+       "nb": 3.61,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 1,
+       "nb": 1.2,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 1,
+       "nb": 1.2,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-3",
+     "correction_factor": 0.83,
+     "depth_reached_m": 1.8,
+     "average_n20": 26.22,
+     "refusal_reached": true,
+     "refusal_depth_m": 1.8,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.2,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.4,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 2,
+       "nb": 2.41,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 9,
+       "nb": 10.84,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 14,
+       "nb": 16.87,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 84,
+       "nb": 101.2,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-2",
+     "correction_factor": 0.83,
+     "depth_reached_m": 1.4,
+     "average_n20": 20.14,
+     "refusal_reached": true,
+     "refusal_depth_m": 1.4,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.2,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.4,
+       "n20": 2,
+       "nb": 2.41,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 9,
+       "nb": 10.84,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 9,
+       "nb": 10.84,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "fig_spt_cullera_image": "<InlineImage>",
+ "photo_site_image_1": "",
+ "photo_site_image_2": "",
+ "photo_dpsh_image": "<InlineImage>",
+ "photo_sondeig_image": "[Imatge pendent]",
+ "photo_materials_image": "<InlineImage>",
+ "fig_cadastre_image": "<InlineImage>",
+ "fig_aerea_image": "<InlineImage>",
+ "fig_main_plan_image": "<InlineImage>",
+ "has_plan_crops": true,
+ "fig_location_image": "<InlineImage>",
+ "fig_building_image": "<InlineImage>",
+ "fig_geological_image": "<InlineImage>",
+ "fig_correlation_image": "<InlineImage>"
+}

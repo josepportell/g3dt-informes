@@ -1,0 +1,28 @@
+# linyola/viaA — escalars i narrativa vs signat (`eva_reference_values.json`)
+
+| grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
+|---|--:|--:|--:|--:|--:|
+| A | 16 | 1 | 2 | 0 | 89 % |
+| calc | 12 | 0 | 3 | 0 | 80 % |
+| narr | 6 | 3 | 6 | 0 | 60 % |
+| resta | 4 | 0 | 1 | 1 | 80 % |
+
+- [narr] `adjacent_east_fmt` **MISMATCH** gen=«Per la part nord, sud i est amb parcel·les buides.» ↔ eva=«Per la part est i pel sud amb parcel·les buides.»
+- [narr] `adjacent_intro` **CLOSE** gen=«La parcel·la objecte d'estudi es situa al oest del municipi de Linyola, pren una morfologi» ↔ eva=«La parcel·la objecte d’estudi es situa al oest del municipi de Linyola, pren una morfologi»
+- [narr] `adjacent_north_fmt` **MISMATCH** gen=«Per la part nord, sud i est amb parcel·les buides.» ↔ eva=«Per la part nord amb una parcel·la ocupada per una habitatge unifamiliar.»
+- [narr] `adjacent_south_fmt` **MISMATCH** gen=«Per la part nord, sud i est amb parcel·les buides.» ↔ eva=«Per la part est i pel sud amb parcel·les buides.»
+- [narr] `adjacent_west_fmt` **MISMATCH** gen=«I finalment, per la part oest, amb el Carrer Clot de la Llacuna.» ↔ eva=«I finalment, per la part oest, amb el carrer per on es realitza l’entrada.»
+- [A] `architect_company` **CLOSE** gen=«BUNYESC ARQUITECTURA EFICIENT, S.L.P» ↔ eva=«BUNYESC ARQUITECTURA EFICIENT»
+- [resta] `architect_name` **MISMATCH** gen=«Josep Bunyesc Palacín» ↔ eva=«Bunyesc Arquitectura Eficient»
+- [A] `architect_name_upper` **MISMATCH** gen=«JOSEP BUNYESC PALACÍN» ↔ eva=«BUNYESC ARQUITECTURA EFICIENT»
+- [narr] `building_structure_desc` **MISMATCH** gen=«en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació p» ↔ eva=«sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l»
+- [A] `building_type_lower` **MISMATCH** gen=«un habitatge unifamiliar aïllat» ↔ eva=«un nou habitatge unifamiliar»
+- [narr] `conclusions_water_statement` **CLOSE** gen=«En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detect» ↔ eva=«En data de la realització dels treballs de camp, i fins la cota assajada no es va detectar»
+- [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar c»
+- [calc] `geomech_E` **MISMATCH** gen=«500» ↔ eva=«>800»
+- [narr] `lab_tests_text` **CLOSE** gen=«Assaig de Límits d'Atterberg UNE 103103/94 – 104/93
+Assaig d'expansivitat Lambe UNE 103600» ↔ eva=«Assaig de Límits d’Atterberg UNE 103103/94 – 104/93
+Assaig d’expansivitat Lambe UNE 103500»
+- [narr] `site_description` **MISMATCH** gen=«El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del car» ↔ eva=«El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer »
+- [calc] `sulfate_level_name` **MISMATCH** gen=«1er nivell» ↔ eva=«2on nivell»
+- [calc] `table_dpsh_range` **MISMATCH** gen=«3 i 4» ↔ eva=«3, 4 i 5»

@@ -3964,3 +3964,155 @@ Cost 0 (cap LLM). M341 ≈ 4 min; `mesura_informe` ≈ 1 min; suite ≈ 3 min.
 4. Camp `cte_sol` editable al wizard (T-2/T-3) quan l'Eva ho demani.
 
 *Fi entrada 2026-09-07. Bloc 1: P5/P6/CTE/rang/data; calc 76 %, total 71 %, taules 81 %.*
+
+## 2026-09-07 (migdia) — Bloc 2 del PLA: la cua del grup A és FORMAT, no lectura (plantes, honorífic, article del tipus d'edificació, milers, cota, id SPT, municipi del padró; 4 forats de la plantilla amb la preposició dins el valor): A 74 → 77 %, total 71 → 73 %, taules 81 → 82 %, cap pèrdua
+
+### Context
+
+Segon bloc del `docs/PLA-QUE-QUEDA-DESPRES-DE-A-B-I-NARRATIVA-2026-09-07.md` (handoff `_FOR-NEW-YOU-20260907-0930.md`; Josep: «seguim
+amb el bloc 2»). El PLA deia que de les 33 X del grup A ≈ 20 eren format (milers, plantes, honorífic, article, litologia curta) i cada
+regla tancaria 3-5 cel·les. Referència de mesura: `2026-09-07-m341-bloc1b` (M341) i `2026-09-07-informe-bloc1b` (11 taules). Abans de
+tocar cap forat de la plantilla, els 7 signats convertits a text (`soffice --headless --convert-to txt:Text`) i el text exacte al voltant
+de cada forat verificat (memòria `feedback_check_signed_phrasing_before_template_change`). Tot el bloc a cost 0 (cap crida LLM).
+
+### Decisions arquitectòniques clau
+
+**Regla comuna: el wizard conserva el text LLEGIT; el generador imprimeix la forma de l'Eva.** Les funcions noves són idempotents (un
+valor ja formatat surt igual) i mai inventen (un text que no es reconeix surt tal qual). **Why:** l'Eva ha de veure sencer el que s'ha
+llegit («+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)») per jutjar-lo; l'informe ha de dir «+245.00». Alternativa
+rebutjada: formatar al consolidador o a l'overlay del wizard (perdria la font i la nota que la lectura porta).
+
+**A. Plantes: `format_floor_notation` entén el text llegit** (`automation/formatting.py`). Parèntesis = glossa («(planta baixa, 1
+nivell)»), «sense …» = negació, número sol després de PB = plantes pis («PB+1» → «Pb+1Pp», Castellar signat), «porxo/porxada» → «Porxo»
+(Rubí signat «PB + Porxo»), soterranis/semisòtans → «Ps» amb compte, castellà («SÓTANO, PLANTA BAJA y PLANTA 1» → «Ps+Pb+1Pp»). Ordre
+Ps+Pb+NPp+Porxo. Sense cap component reconegut → tal qual («3», «1 (PB)»). `parse_floor_count` (CTE) no canvia: compta sobre el text del
+wizard i dona el mateix sobre la forma impresa (test). **Why:** 5 cel·les CLOSE/X eren la mateixa dada amb la notació del lector.
+
+**B. Honorífic del client (`automation/honorifics.py`, nou).** Portada «A petició de:» i frase dels antecedents: «SR./SRA.» davant d'una
+persona (4/4 signats: Rubí, Linyola, Alcoletge, Anciles), res davant d'una empresa (3/3: Castellar, Bell-lloc, Vilanova). Empresa per
+forma jurídica (S.L., SLU, S.A., SCP…), vocabulari (promocions, grupo, arquitectura, ajuntament…), xifres, «&» o dues persones «X i Y».
+Gènere pel NOM DE PILA: llista de noms catalans i castellans (≈ 450) + terminació «-a» com a fallback; nom desconegut sense «-a» → **cap
+honorífic** (val més el nom sol que un tractament equivocat en un informe signat). `de_party` fa el forat «en nom {{ client_de }}»:
+«de la SRA. …» (Linyola signat), «del SR. …», «de RAMON MITJANA S.L.», ca «d'ABN …». **Why:** 3 cel·les CLOSE/X pel tractament; és una
+regla de l'Eva sense excepció als 7. Alternativa rebutjada: LLM (el prompt `llm_synthesis` de la via B ja ho demanava: no determinista).
+
+**C. Article del tipus d'edificació i forat `{{ building_type_de }}`.** Als signats el text després de «…es preveu la construcció » és
+«d'un habitatge unifamiliar aïllat modular» (Rubí), «d'un habitatge unifamiliar» (Bell-lloc), «d'un nou habitatge unifamiliar» (Linyola),
+«de 3 habitatges unifamiliars d'estructura lleugera, fusta» (Castellar), «de l'ampliació d'un edifici en planta baixa» (Alcoletge), ES
+«de una vivienda…», «de 7 viviendas…». La plantilla tenia «d'un» FIX: l'Eva no podia escriure-hi «de 3 habitatges» ni «de l'ampliació»
+sense tocar text fix. Ara `building_type_with_article` (gènere pel cap del sintagma: habitatge/edifici m, casa/nau/vivienda f; «-ció»
+f; intervencions «ampliació/reforma/tancament…» amb article definit; número o article ja present → tal qual) i `de_building_type`
+(«d'un», «d'una», «de l'», «del», «de 3»; ES «de un/una»). `building_type_lower` (mesurat) porta l'article; la plantilla imprimeix
+`{{ building_type_de }}`. **Why:** la veritat de l'extractor inclou l'article (és el que hi ha després de «construcció »); sense la
+plantilla nova, posar-hi l'article donava «d'un un habitatge».
+
+**D. Superfícies «1.284» i comparadors que llegeixen milers.** `format_area`: milers amb punt, decimals amb coma, enters sense «.0»
+(«1284.0» → «1.284» = Castellar signat; «250.91» → «250,91»; «280+86»/«120 m2» tal qual). L'Eva escriu «1.284» a Castellar i «1167» a
+Alcoletge (1/2 amb separador): el format imprès és el català normatiu i la mesura ha de comparar NÚMEROS. Els dos comparadors llegien
+«1.167» com a 1,167: el run `-bloc2` va guanyar Castellar i perdre Alcoletge (taules 3·2·1 → 2·2·2). `_norm_thousands` (escalars, només
+`superficie_*`) i `_as_num` (taules, grups exactes de tres xifres) arreglats → `-bloc2b`. **Why:** un comparador que llegeix «1.284 m²»
+com a 1,284 m² mesura una cosa que no existeix. Registrat a `REGISTRE-PERDUES-MESURA.md` (#5, resolta) perquè quedi la traça.
+
+**E. Cota «+188.20».** `format_cota`: signe, punt decimal, dos decimals, primer número del text llegit («+188,20 msnm», «199,50 m»,
+«+245 msnm segons … (-0,15m carrer)» → «+245.00»; «-4,0 m (respecte el carrer)» → «-4.00»). Abans Alcoletge, Linyola i Vilanova
+imprimien el text sencer a la Taula 1 (MATCH numèric al comparador, però il·legible a l'informe). **Cota d'Anciles NO feta:** el PLA
+deia «+1106.40 hi és», però `_NOTES.md` del run 8 documenta que **cap document llegit porta cap cota** (causa I1: els annexos són a
+`PDF_V0/ANEJOS/` i la regla «PDF V0 = versió anterior → exclòs» els salta). És lectura (inventari), no format.
+
+**F. Id SPT «SPT-1».** `format_spt_id` a `tables_report` (la lectura → files) i al context de la via B: «SPT1 S1» / «SPT1 P3» / «SPT1» →
+«SPT-1», «MA1 S1» → «MA-1» (el punt té la seva columna). 4/4 signats amb SPT escriuen «SPT-1». **Why:** 1 escalar + 3 cel·les de taula.
+
+**G. Municipi del padró i «en el municipi {{ municipality_de }}».** `context['municipality'] = municipality_proper(llegit)`
+(«BELL.LLOC D'URGELL (Lleida)» → «Bell-lloc d'Urgell» = signat); el forat de la sísmica porta ara la preposició («d'Alcoletge» signat;
+abans la plantilla imprimia «de Alcoletge»). Rubí «Rubí (Barcelona)» queda CLOSE (l'Eva hi posa la província a Rubí però no a Castellar).
+**H. `{{ architect_company_de }}`** (mateix paràgraf): «, de l'ARQUITECTURA BOSCH NOVELL» (signat) / «, de 2 Graus» / «, d'ABN …» / res
+si no hi ha despatx; abans «de l'{{ architect_company }}» fix imprimia «de l'2 Graus», «de l'BUNYESC …» i «de l', en nom» (Castellar,
+Rubí). Fora d'aquest bloc: la frase sencera dels antecedents té tres formes als signats (arquitecte en nom del client / client mateix /
+empresa; pregunta 26 i 1.7).
+
+**Descartat amb motiu: `spt_lithology` (S-M al PLA).** La forma curta de l'Eva no és derivable del text llegit: «Limolites i bretxes» ←
+«Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells»; «Graves en matriu sorrenca» ← «Grava amb matriu sorrenca»
+(paraules seves); Vilanova imprimeix l'SPT de P-1 i l'Eva el de P-3 (pregunta 7); Anciles en castellà. Cap regla que no sigui un LLM:
+0 cel·les. Es queda com a candidat futur del wizard.
+
+### Implementació
+
+- `automation/formatting.py` (+130 LOC): `format_floor_notation` reescrit (compatible amb els 5 exemples antics), `format_area`,
+  `format_cota`, `format_spt_id`.
+- `automation/honorifics.py` (nou, ≈ 150 LOC): `is_company`, `first_name_gender`, `honorific`, `with_honorific`, `de_party`.
+- `automation/narrative_criteria.py` (+77): `municipality_de`, `building_type_with_article`, `de_building_type`, taules de caps femenins
+  i d'intervencions.
+- `automation/report_generator.py` (+30/−10): context `client`, `client_de`, `municipality` (padró), `municipality_de`,
+  `building_type_lower` (article), `building_type_de`, `architect_company_de`, superfícies (`format_area`, també a
+  `_apply_lectura_tables`), `cota_referencia` (`format_cota`), `spt_test_id` (`format_spt_id`, via A i via B); `_lang` es calcula al
+  començament del bloc (abans a mig context).
+- `automation/lectura/tables_report.py` (+2): id SPT formatat en construir les files.
+- `templates/g3dt-jinja-template.docx` (plantilla del repo; **la de producció `c46bc69` no es toca**): p60 «el SR. {{ architect_name_upper
+  }}{{ architect_company_de }}, en nom {{ client_de }}, … la construcció {{ building_type_de }}.»; p348 «en el municipi {{ municipality_de
+  }},». Editada amb python-docx sobre els runs (p60 un sol run; p348 runs 0 i 1), verificada rellegint.
+- `scripts/compare_prefills_vs_eva.py` (+12), `scripts/compare_tables_vs_eva.py` (+6): milers.
+- `docs/wizard-headless/mesures/mesura_341.py`: grup A += `municipality_de`, `client_de`, `building_type_de`, `architect_company_de`.
+- Cap dependència nova.
+
+### Validació empírica
+
+Runs `2026-09-07-m341-bloc2b` (M341, `viaA`, 7 projectes) i `2026-09-07-informe-bloc2b` (12 informes), contra `-bloc1b`:
+
+| | bloc1b | bloc2b |
+|---|---|---|
+| A (M·C·X·ND) | 81 · 11 · 33 · 16 → 74 % | **89 · 7 · 29 · 16 → 77 %** |
+| calc / narr / resta | 69·2·23·2 (76) / 34·28·39·8 (61) / 16·4·3·7 (87) | idèntics |
+| total escalars+narrativa | 200 · 45 · 98 · 33 → 71 % | **208 · 41 · 94 · 33 → 73 %** |
+| 11 taules (dins M341) | 286 · 103 · 90 → 81 % | **292 · 99 · 88 → 82 %** |
+| 12 informes (`mesura_informe`) | 127 · 23 · 25 → 86 % | 128 · 22 · 25 → 86 % (Bell-lloc t2 SPT id C → M; Rubí «1414» → «1.414» X → X) |
+
+Cel·la a cel·la (escalars, 10 moviments, tots a millor): Castellar `plantes` C → M, `superficie_parcela` X → M (A 80 → 85 %); Rubí
+`plantes` X → M (81 → 88); Bell-lloc `building_type_lower` X → C, `municipality` C → M, `spt_test_id` X → M (80 → 88); Linyola `client`
+C → M, `plantes` C → M (M 14 → 16); Vilanova `plantes` C → M. Taules: Castellar «plantes» 2·3·1 → 4·2·0, Rubí 4·1·1 → 4·2·0 («Pb+Porxo»
+↔ «PB + Porxo» CLOSE pel comparador de text), Bell-lloc i Linyola SPT id C → M, Linyola i Vilanova «plantes» C → M. **Cap cel·la
+perduda** (la provisional d'Alcoletge «1.167» resolta dins el bloc). Text imprès verificat als `.docx`: «A petició de: SR. ALBERT SANS
+BONVEHÍ», «en nom de la SRA. SÍLVIA EROLES BALAGUERÓ», «en el municipi d'Alcoletge», «Pb+Porxo», «1.284», «250,91».
+
+Què queda a A (29 X): 9 castellà o veritat-frase de l'extractor (Vilanova/Anciles `municipality`, `data_camp_text`, `expedient`,
+`num_dpsh_tests`, `superficie_parcela`/`plantes` d'Anciles: blocs 3 i 5), 8 preguntes a l'Eva (N30 1, cota relativa 2, superfícies
+9, data doble, «nou habitatge», «3 habitatges … fusta», tipus d'Alcoletge, `spt_lithology` 7), 5 laboratori sense GTL (bloc 6), 4
+arquitecte (1.7 / 26), 3 tipografia del signat (MARTINEZ/BONVEHI sense accent, «(Barcelona)»).
+
+### Tests
+
+`tests/test_bloc2_format_a.py`: 91 (plantes 10 + 4 crus + CTE invariant; àrea 13; cota 10; comparadors ×2; SPT id 9 + `tables_report`;
+honorífic 13 + empresa/gènere + `de_party` 7 + `architect_company_de` 4; article 9; municipi 6; plantilla). Dirigits verds: bloc 1
+(190), narrativa/taules/consolidate (263), extractor/wizard/plantilles (101). Suite sencera: **31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2415 verds / 5 omesos (238 s)**.
+
+### Latència / cost
+
+0 crides LLM. M341 ≈ 3 min per run (7 projectes); dues passades (`bloc2`, `bloc2b`).
+
+### Limitacions conegudes
+
+- L'honorífic no cobreix noms fora de la llista que no acaben en «-a» (surt sense tractament, mai equivocat). «Andrea» es tracta
+  com a femení (ús del país). El nom de la portada segueix l'ordre del document llegit (Anciles «Maria Alba» ↔ signat «Alba Maria»).
+- La frase dels antecedents té tres formes als signats; el sistema n'imprimeix una (pregunta 26). «el SR.» de l'arquitecte és text fix.
+- `municipality_proper` deixa tal qual un municipi fora del padró («ANCILES» → «d'ANCILES»).
+- `format_cota` pren el PRIMER número del text: un text «cota 0 = carrer» donaria «+0.00».
+- La plantilla de producció (`c46bc69`) no porta els 4 forats nous: el dia que es fusioni, el generador nou amb la plantilla vella
+  imprimiria «d'un un habitatge» (el context porta l'article). Fusionar codi i plantilla junts.
+- El bloc 3 (re-extracció) capturarà claus noves (`client_de`, `building_type_de`, `municipality_de`, `architect_company_de`) i
+  deixarà de capturar `client` a la frase (la portada la conserva), `building_type_lower` i `municipality` en aquests forats.
+
+### GO/NO-GO
+
+- ✅ Cap cel·la perduda; calc, narrativa i resta idèntics; 12 informes idèntics o millor.
+- ✅ Plantilla verificada contra els 7 signats abans i després; text imprès llegit als `.docx`.
+- ⏳ GO del Josep al commit (partició suggerida: (1) formatting + honorifics + narrative_criteria + generador + tables_report + tests;
+  (2) plantilla; (3) comparadors + M341 grup A; (4) docs i runs).
+
+### Següents passos
+
+Bloc 3 del PLA (deriva de l'extractor: veritats-frase de `municipality`/`data_camp_text` ES, `superficie_parcela` i `plantes`
+d'Anciles, `geomech_*` per fila; re-extreure amb els forats `*_de`), preguntes 22-26 a l'Eva, bloc 4 (numeració), castellà quan el
+Josep digui.
+
+**Decisió del Josep (2026-09-07, 12:45) sobre la frase dels antecedents:** les tres formes (arquitecte en nom del client / client mateix / empresa) es poden mirar d'inferir del CONTINGUT dels correus (cossos) i dels documents de tipus pressupost (qui demana, qui signa, en nom de qui); serà feina d'LLM, amb poques probabilitats d'encertar-ho sols, i **es farà més endavant** (no ara). Mentrestant, pregunta 26 a l'Eva.
+
+*Fi entrada 2026-09-07 (migdia). Bloc 2: format de la cua d'A, cap pèrdua, A 77 %.*

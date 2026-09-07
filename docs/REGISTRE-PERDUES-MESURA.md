@@ -24,3 +24,21 @@ Convenció: **abans → ara** són els valors impresos pel sistema (gen) i **sig
 | Vilanova · `qa_value` | 1,00 → 1,50 (signat 2,5) | P6: L1 «Arcilla limosa» és argila (c 0,10, φ 25, γ 1,90 = fila signada) → Terzaghi 1,5. Els paràmetres coincideixen amb l'Eva; la Qa no: judici. | Pregunta 25a |
 | Alcoletge · `qa_value` | 3,00 → 3,00 (signat 3,5) | Ara és roca (lutites, c 1,00) amb topall 3,0; el handoff esperava 3,5 via el topall granular, però les lutites NO són granulars (Linyola i Castellar signen 3,0 amb els mateixos paràmetres). | Pregunta 25a |
 | Alcoletge · taula geotècnica, Nb fila 1 | «6» → «7» (signat «5-0») | Mitjana N20 de 0-1,40 en lloc de 0-1,0 (contacte llegit). El «5-0» del signat és estrany en si mateix. | — |
+
+## 2026-09-07 — Bloc 2 (format de la cua d'A) — runs `2026-09-07-m341-bloc1b` → `2026-09-07-m341-bloc2b`
+
+**Cap cel·la perduda** (escalars: 10 moviments, tots a millor; 11 taules dins M341: 6 M / −4 C / −2 X; els 12 informes de
+`mesura_informe`: només Bell-lloc t2 SPT id C → M). Una pèrdua **provisional** detectada i resolta dins el mateix bloc:
+
+| # | Projecte · variable | Abans → ara (signat) | Per què s'ha perdut | Com es reobre | Estat |
+|---|---|---|---|---|---|
+| 5 | Alcoletge · taula «plantes», superfície de la parcel·la | «1167.0» MATCH → «1.167» X (signat «1167») al run `-bloc2` | El comparador de taules llegia «1.167» com a 1,167 (decimal), no com a mil cent seixanta-set. L'Eva escriu «1.284» a Castellar i «1167» a Alcoletge: el format imprès és el català (milers amb punt) i el comparador ha de comparar NÚMEROS. | Arreglat al mateix bloc: `_as_num` de `compare_tables_vs_eva.py` i `_norm_thousands` de `compare_prefills_vs_eva.py` llegeixen els grups de tres xifres com a milers (tests `test_*_reads_thousands_as_thousands`). | resolta (`2026-09-07-m341-bloc2b`) |
+
+### Moviments sense canvi d'estat (X → X)
+
+| Projecte · variable | Abans → ara (signat) | Per què s'ha mogut | On es reobre |
+|---|---|---|---|
+| Rubí · `client` / Alcoletge · `client` | «JOANA MARTÍNEZ» → «SRA. JOANA MARTÍNEZ» (signat «SRA. JOANA MARTINEZ»); «ALBERT SANS BONVEHÍ» → «SR. ALBERT SANS BONVEHÍ» (signat «SR. ALBERT SANS BONVEHI») | L'honorífic ja hi és (com al signat); la cel·la segueix X només per l'ACCENT que l'Eva no escriu en majúscules (però sí a «SÍLVIA EROLES BALAGUERÓ»). El comparador d'escalars distingeix accents; el de narrativa no. No es toca: el nom llegit porta l'accent que té al document. | — (tipografia del signat) |
+| Anciles · `client` | «MARIA ALBA BARRAU CASTÁN» → «SRA. MARIA ALBA BARRAU CASTÁN» (signat «SRA. ALBA MARIA BARRAU CASTÁN») | Ordre dels noms de pila: el pressupost signat diu «Maria Alba»; l'Eva escriu «Alba Maria» (com signa ella els correus). | Pregunta 26 (quin nom va a la portada). |
+| Rubí · 12 informes (`8b`/`calc`/`t2`/`viab`), taula «plantes» | «1414» → «1.414» (signat «951») | Només format: el valor d'abril del wizard (1414, tres parcel·les) segueix sent el que és. | Pregunta 10 / user_data d'abril. |
+
