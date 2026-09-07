@@ -691,6 +691,186 @@
       "extraction_method": "loop_table",
       "template_text": "Loop: ['test_id', 'location', 'depth_range', 'n30', 'lithology']",
       "reference_text": "1 data rows"
+    },
+    "fig_aerea_num": {
+      "value": "2",
+      "position": "p068",
+      "position_description": "Body paragraph 68",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_cadastre_num }} i Figura {{ fig_aerea_num }}. Detall de la ubicació de la parcel·la en estudi. Font: Projecte.",
+      "reference_text": "Figura 1 i Figura 2. Detall de la ubicació de la parcel·la en estudi. Font: Projecte."
+    },
+    "fig_cadastre_num": {
+      "value": "1",
+      "position": "p068",
+      "position_description": "Body paragraph 68",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_cadastre_num }} i Figura {{ fig_aerea_num }}. Detall de la ubicació de la parcel·la en estudi. Font: Projecte.",
+      "reference_text": "Figura 1 i Figura 2. Detall de la ubicació de la parcel·la en estudi. Font: Projecte."
+    },
+    "fig_correlation_num": {
+      "value": "6",
+      "position": "p429",
+      "position_description": "Body paragraph 429",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_correlation_num }}. Detall del tall de correlació que s’adjunta als annexes.",
+      "reference_text": "Figura 6. Detall del tall de correlació que s’adjunta als annexes."
+    },
+    "fig_geological_num": {
+      "value": "5",
+      "position": "p241",
+      "position_description": "Body paragraph 241",
+      "confidence": 0.917,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_geological_num }}. Mapa geològic a escala 1:50.000 de la zona en estudi, (Font: ICGC, modificat).",
+      "reference_text": "Figura 5. Mapa geològic a escala 1:50.000 de la zona en estudi (Font: ICGC)."
+    },
+    "fig_main_plan_num": {
+      "value": "3",
+      "position": "p070",
+      "position_description": "Body paragraph 70",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_main_plan_num }}. Ubicació de l'habitatge a l'interior de la parcel·la. Font: Projecte.",
+      "reference_text": "Figura 3. Ubicació de l’habitatge a l’interior de la parcel·la. Font: Projecte."
+    },
+    "fig_spt_cullera_num": {
+      "value": "4",
+      "position": "p190",
+      "position_description": "Body paragraph 190",
+      "confidence": 0.996,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_spt_cullera_num }}. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez).",
+      "reference_text": "Figura 4. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez)"
+    },
+    "photo_dpsh_num": {
+      "value": "3",
+      "position": "p170",
+      "position_description": "Body paragraph 170",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Fotografia {{ photo_dpsh_num }}. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica DPSH.",
+      "reference_text": "Fotografia 3. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica DPSH."
+    },
+    "photo_materials_num": {
+      "value": "5",
+      "position": "p262",
+      "position_description": "Body paragraph 262",
+      "confidence": 0.523,
+      "extraction_method": "numbering",
+      "template_text": "Fotografia {{ photo_materials_num }}. Detall dels materials del {{ level.ordinal }} nivell.",
+      "reference_text": "Fotografia 5. Detall dels materials recuperats en el sondeig a rotació amb bateria continua."
+    },
+    "photo_sondeig_num": {
+      "value": "4",
+      "position": "p183",
+      "position_description": "Body paragraph 183",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Fotografia {{ photo_sondeig_num }}. Vista de la màquina utilitzada per a la realització del sondeig a rotació.",
+      "reference_text": "Fotografia 4. Vista de la màquina utilitzada per a la realització del sondeig a rotació."
+    },
+    "section_excavabilitat_num": {
+      "value": "3.5",
+      "position": "p333",
+      "position_description": "Body paragraph 333",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_excavabilitat_num }}. EXCAVABILITAT",
+      "reference_text": "3.5. EXCAVABILITAT"
+    },
+    "section_rado_num": {
+      "value": "3.7",
+      "position": "p381",
+      "position_description": "Body paragraph 381",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_rado_num }}. EXPOSICIÓ AL GAS RADÓ",
+      "reference_text": "3.7. EXPOSICIÓ AL GAS RADÓ"
+    },
+    "section_resum_num": {
+      "value": "2.4.3",
+      "position": "p194",
+      "position_description": "Body paragraph 194",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_resum_num }}. Resum dels assaigs in-situ realitzats",
+      "reference_text": "2.4.3. Resum dels assaigs in-situ realitzats"
+    },
+    "section_sismica_num": {
+      "value": "3.6",
+      "position": "p342",
+      "position_description": "Body paragraph 342",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_sismica_num }}. ACCELERACIÓ SISMICA DE REFERÈNCIA",
+      "reference_text": "3.6. ACCELERACIÓ SISMICA DE REFERÈNCIA"
+    },
+    "section_sondeig_num": {
+      "value": "2.4.2",
+      "position": "p175",
+      "position_description": "Body paragraph 175",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_sondeig_num }}. Sondeig a rotació amb bateria continua",
+      "reference_text": "2.4.2. Sondeig a rotació amb bateria continua"
+    },
+    "section_spt_num": {
+      "value": "2.4.3",
+      "position": "p186",
+      "position_description": "Body paragraph 186",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_spt_num }}. Assaig tipus S.P.T. (“Standard Penetration Test”)",
+      "reference_text": "2.4.3. Assaig tipus S.P.T. (“Standard Penetration Test”)"
+    },
+    "table_lab_num": {
+      "value": "6",
+      "position": "p212",
+      "position_description": "Body paragraph 212",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Taula {{ table_lab_num }}. Resum dels assaigs de laboratori realitzats.",
+      "reference_text": "Taula 6. Resum dels assaigs de laboratori realitzats."
+    },
+    "table_lab_values_num": {
+      "value": "8",
+      "position": "p312",
+      "position_description": "Body paragraph 312",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Taula {{ table_lab_values_num }}. Valors obtinguts dels assaigs de laboratori.",
+      "reference_text": "Taula 8. Valors obtinguts dels assaigs de laboratori."
+    },
+    "table_permeability_num": {
+      "value": "7",
+      "position": "p304",
+      "position_description": "Body paragraph 304",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Taula {{ table_permeability_num }}. Resum del coeficient de permeabilitat dels materials del subsòl.",
+      "reference_text": "Taula 7. Resum del coeficient de permeabilitat dels materials del subsòl."
+    },
+    "table_seismic_num": {
+      "value": "9",
+      "position": "p375",
+      "position_description": "Body paragraph 375",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Taula {{ table_seismic_num }}. Valors de la potencia i coeficient C pel càlcul de l’acceleració sísmica.",
+      "reference_text": "Taula 9. Valors de la potencia i coeficient C pel càlcul de l’acceleració sísmica."
+    },
+    "table_soil_chars_num": {
+      "value": "10",
+      "position": "p438",
+      "position_description": "Body paragraph 438",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Taula {{ table_soil_chars_num }}. Característiques geològiques i geotècnics dels materials del subsol.",
+      "reference_text": "Taula 10. Característiques geològiques i geotècnics dels materials del subsol."
     }
   },
   "warnings": [
@@ -723,6 +903,7 @@
     "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer)",
     "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
     "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
-    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 9 claus re-extretes: bearing_layer_idx, data_camp_inici_text, data_camp_text, municipality, municipality_de, num_dpsh_tests, settlement, settlement_sentence, spt_ma_tests"
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 9 claus re-extretes: bearing_layer_idx, data_camp_inici_text, data_camp_text, municipality, municipality_de, num_dpsh_tests, settlement, settlement_sentence, spt_ma_tests",
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 4, numeració) (--keys): 20 claus re-extretes: fig_aerea_num, fig_cadastre_num, fig_correlation_num, fig_geological_num, fig_main_plan_num, fig_spt_cullera_num, photo_dpsh_num, photo_materials_num, photo_sondeig_num, section_excavabilitat_num, section_rado_num, section_resum_num, section_sismica_num, section_sondeig_num, section_spt_num, table_lab_num, table_lab_values_num, table_permeability_num, table_seismic_num, table_soil_chars_num"
   ]
 }

@@ -701,6 +701,78 @@
       "extraction_method": "table_cell",
       "template_text": "{{ superficie_construida }}",
       "reference_text": "1273.79"
+    },
+    "fig_spt_cullera_num": {
+      "value": "5",
+      "position": "p190",
+      "position_description": "Body paragraph 190",
+      "confidence": 0.94,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_spt_cullera_num }}. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez).",
+      "reference_text": "Figura 5. Cuchara normalizada. Gráfico extraído de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez)."
+    },
+    "section_empentes_num": {
+      "value": "4.4",
+      "position": "p035",
+      "position_description": "Body paragraph 35",
+      "confidence": 0.743,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_empentes_num }}. EMPENTES DE TERRES",
+      "reference_text": "4.4. EMPUJE DE TIERRAS"
+    },
+    "section_excavabilitat_num": {
+      "value": "3.5",
+      "position": "p333",
+      "position_description": "Body paragraph 333",
+      "confidence": 0.846,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_excavabilitat_num }}. EXCAVABILITAT",
+      "reference_text": "3.5. EXCAVABILIDAD"
+    },
+    "section_rado_num": {
+      "value": "3.7",
+      "position": "p381",
+      "position_description": "Body paragraph 381",
+      "confidence": 0.955,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_rado_num }}. EXPOSICIÓ AL GAS RADÓ",
+      "reference_text": "3.7. EXPOSICIÓN AL GAS RADÓN"
+    },
+    "section_resum_num": {
+      "value": "2.4.4",
+      "position": "p194",
+      "position_description": "Body paragraph 194",
+      "confidence": 0.795,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_resum_num }}. Resum dels assaigs in-situ realitzats",
+      "reference_text": "2.4.4. Resumen de los ensayos in-situ realizados"
+    },
+    "section_sismica_num": {
+      "value": "3.6",
+      "position": "p342",
+      "position_description": "Body paragraph 342",
+      "confidence": 0.97,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_sismica_num }}. ACCELERACIÓ SISMICA DE REFERÈNCIA",
+      "reference_text": "3.6. ACCELERACIÓ SISMICA DE REFERÉNCIA"
+    },
+    "section_sondeig_num": {
+      "value": "2.4.2",
+      "position": "p175",
+      "position_description": "Body paragraph 175",
+      "confidence": 0.842,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_sondeig_num }}. Sondeig a rotació amb bateria continua",
+      "reference_text": "2.4.2. Sondeo a rotación con batería continua"
+    },
+    "section_spt_num": {
+      "value": "2.4.3",
+      "position": "p186",
+      "position_description": "Body paragraph 186",
+      "confidence": 0.887,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_spt_num }}. Assaig tipus S.P.T. (“Standard Penetration Test”)",
+      "reference_text": "2.4.3. Ensayo tipo S.P.T. (“Standard Penetration Test”)"
     }
   },
   "warnings": [
@@ -737,6 +809,7 @@
     "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
     "refresh_eva_narrativa.py 2026-09-06: 2 claus narratives re-extretes (prefix primer)",
     "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
-    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 14 claus re-extretes: bearing_layer_idx, cte_edificacio, cte_sol, data_camp_inici_text, data_camp_text, geotech_rows, municipality, municipality_de, plantes, settlement, settlement_sentence, spt_ma_tests, superficie_construida, superficie_parcela"
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 14 claus re-extretes: bearing_layer_idx, cte_edificacio, cte_sol, data_camp_inici_text, data_camp_text, geotech_rows, municipality, municipality_de, plantes, settlement, settlement_sentence, spt_ma_tests, superficie_construida, superficie_parcela",
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 4, numeració) (--keys): 8 claus re-extretes: fig_spt_cullera_num, section_empentes_num, section_excavabilitat_num, section_rado_num, section_resum_num, section_sismica_num, section_sondeig_num, section_spt_num"
   ]
 }

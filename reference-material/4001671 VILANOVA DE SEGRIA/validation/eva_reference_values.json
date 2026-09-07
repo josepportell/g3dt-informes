@@ -636,6 +636,69 @@
       "extraction_method": "loop_table",
       "template_text": "Loop: ['test_id', 'location', 'depth_range', 'n30', 'lithology']",
       "reference_text": "2 data rows"
+    },
+    "fig_geological_num": {
+      "value": "5",
+      "position": "p241",
+      "position_description": "Body paragraph 241",
+      "confidence": 0.816,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_geological_num }}. Mapa geològic a escala 1:50.000 de la zona en estudi, (Font: ICGC, modificat).",
+      "reference_text": "Figura 5. Mapa geológico a escala 1:50.000 de la zona de estudio. (ICGC, 2026)."
+    },
+    "fig_spt_cullera_num": {
+      "value": "4",
+      "position": "p190",
+      "position_description": "Body paragraph 190",
+      "confidence": 0.94,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_spt_cullera_num }}. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez).",
+      "reference_text": "Figura 4. Cuchara normalizada. Gráfico extraído de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez)."
+    },
+    "section_excavabilitat_num": {
+      "value": "3.5",
+      "position": "p333",
+      "position_description": "Body paragraph 333",
+      "confidence": 0.846,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_excavabilitat_num }}. EXCAVABILITAT",
+      "reference_text": "3.5. EXCAVABILIDAD\t19"
+    },
+    "section_rado_num": {
+      "value": "3.7",
+      "position": "p381",
+      "position_description": "Body paragraph 381",
+      "confidence": 0.955,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_rado_num }}. EXPOSICIÓ AL GAS RADÓ",
+      "reference_text": "3.7. EXPOSICIÓN AL GAS RADÓN\t21"
+    },
+    "section_resum_num": {
+      "value": "2.4.3",
+      "position": "p194",
+      "position_description": "Body paragraph 194",
+      "confidence": 0.795,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_resum_num }}. Resum dels assaigs in-situ realitzats",
+      "reference_text": "2.4.3. Resumen de los ensayos in-situ realizados\t12"
+    },
+    "section_sismica_num": {
+      "value": "3.6",
+      "position": "p342",
+      "position_description": "Body paragraph 342",
+      "confidence": 0.97,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_sismica_num }}. ACCELERACIÓ SISMICA DE REFERÈNCIA",
+      "reference_text": "3.6. ACCELERACIÓ SISMICA DE REFERÉNCIA\t20"
+    },
+    "section_spt_num": {
+      "value": "2.4.2",
+      "position": "p186",
+      "position_description": "Body paragraph 186",
+      "confidence": 0.887,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_spt_num }}. Assaig tipus S.P.T. (“Standard Penetration Test”)",
+      "reference_text": "2.4.2. Ensayo tipo S.P.T. (“Standard Penetration Test”)\t10"
     }
   },
   "warnings": [
@@ -668,6 +731,7 @@
     "refresh_eva_narrativa.py 2026-09-06: 4 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
     "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer)",
     "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
-    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 12 claus re-extretes: bearing_layer_idx, data_camp_inici_text, data_camp_text, geomech_E, geomech_cohesion, geomech_gamma, geomech_phi, municipality, municipality_de, settlement, settlement_sentence, spt_ma_tests"
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 12 claus re-extretes: bearing_layer_idx, data_camp_inici_text, data_camp_text, geomech_E, geomech_cohesion, geomech_gamma, geomech_phi, municipality, municipality_de, settlement, settlement_sentence, spt_ma_tests",
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 4, numeració) (--keys): 7 claus re-extretes: fig_geological_num, fig_spt_cullera_num, section_excavabilitat_num, section_rado_num, section_resum_num, section_sismica_num, section_spt_num"
   ]
 }
