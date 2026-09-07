@@ -71,6 +71,7 @@ SKIP_PREFIXES = (
 # only flag a ROW as header when MULTIPLE cells match these phrases.
 _HEADER_ROW_PHRASES = frozenset({
     "nº assaig", "n° assaig", "n. assaig", "nº  assaig",
+    "nº ensayo", "n° ensayo", "n.º ensayo", "punto", "prof. extracción (m)", "prof. extraccion (m)", "litología",   # ES (bloc 3)
     "punt",
     "prof. extracció (m)", "prof. extraccio (m)",
     "prof. extracció", "prof. extraccio",
@@ -92,6 +93,7 @@ _HEADER_CELL_PHRASES = frozenset({
     "prof. extracció (m)", "prof. extraccio (m)",
     "prof. extracció", "prof. extraccio",
     "litologia",
+    "nº ensayo", "n° ensayo", "n.º ensayo", "prof. extracción (m)", "litología",   # ES (bloc 3)
 })
 
 # Backwards-compat alias retained for any external imports/tests.
@@ -162,6 +164,13 @@ LOOP_TABLES = {
     5: {
         "name": "sondeig_tests",
         "cols": ["test_id", "cota", "depth", "spt_ma", "water"],
+        "header_rows": 2,
+    },
+    # Bloc 3 (2026-09-07): la taula SPT/MA és un bucle des de la Fase 8b (2026-08-26); sense aquesta entrada les cel·les
+    # `{{ test.* }}` es saltaven (punt al nom) i `spt_*` queien a None a la re-extracció.
+    6: {
+        "name": "spt_ma_tests",
+        "cols": ["test_id", "location", "depth_range", "n30", "lithology"],
         "header_rows": 2,
     },
     8: {
@@ -474,42 +483,59 @@ def convert_doc_to_docx(doc_path: Path) -> Path:
     return converted
 
 
+def _table_label_fingerprint(table) -> str:
+    """Primera cel·la (l'ETIQUETA) de les tres primeres files amb contingut, sense Jinja (bloc 3, 2026-09-07).
+
+    La fila sencera barreja etiqueta i VALOR: a Anciles «n.º de plantas previstas | 5 viviendas con pb + 1pp + bc …»
+    s'assemblava menys a «nº de plantes per habitatge | » que la taula CTE («tipo de edificación considerada: | c-1»),
+    i `superficie_parcela` valia «T-1» i `plantes` «C-1». Les etiquetes soles («n.º de plantas previstas | superficie
+    de la parcela (m2) | superficie construida total (m2)») s'assemblen a les de la plantilla en qualsevol idioma.
+    """
+    labels = []
+    for row in table.rows:
+        if not row.cells:
+            continue
+        text = JINJA_ANY_RE.sub('', row.cells[0].text).strip()
+        if text:
+            labels.append(normalize_text(text))
+        if len(labels) == 3:
+            break
+    return " | ".join(labels)
+
+
 def match_tables(template_doc, ref_doc) -> dict[int, int]:
     """Match template tables to reference tables by header fingerprint similarity.
 
-    Returns {template_table_idx: reference_table_idx}.
+    Puntuació = màxim entre la primera fila sencera (com sempre) i les etiquetes de la primera columna
+    (`_table_label_fingerprint`, bloc 3). Returns {template_table_idx: reference_table_idx}.
     """
-    tmpl_fps = []
-    for t in template_doc.tables:
-        tmpl_fps.append(_table_fingerprint(t))
-
-    ref_fps = []
-    for t in ref_doc.tables:
-        ref_fps.append(_table_fingerprint(t))
-
-    mapping: dict[int, int] = {}
-    used_ref: set[int] = set()
-
-    for ti, tfp in enumerate(tmpl_fps):
+    tmpl_fps = [(_table_fingerprint(t), _table_label_fingerprint(t)) for t in template_doc.tables]
+    ref_fps = [(_table_fingerprint(t), _table_label_fingerprint(t)) for t in ref_doc.tables]
+    # Assignació GLOBAL per puntuació descendent (bloc 3, 2026-09-07), no cobdiciosa en ordre de plantilla: abans t5
+    # (sondeig) s'enduia la taula SPT dels projectes sense sondeig (Rubí, Linyola, Alcoletge: 0,33) i t6 quedava sense o
+    # agafava la de signatures; a Vilanova t5 prenia la geotècnica. Llindar 0,4 (era 0,3): els aparellaments bons
+    # puntuen ≥ 0,66; els dolents ≤ 0,38.
+    pairs = []
+    for ti, (tfp, tlab) in enumerate(tmpl_fps):
         if not tfp:
             continue
-        best_score = 0.0
-        best_ri = -1
-        for ri, rfp in enumerate(ref_fps):
-            if ri in used_ref or not rfp:
+        for ri, (rfp, rlab) in enumerate(ref_fps):
+            if not rfp:
                 continue
             score = text_similarity(tfp, rfp)
-            if score > best_score:
-                best_score = score
-                best_ri = ri
-        if best_ri >= 0 and best_score >= 0.3:
-            mapping[ti] = best_ri
-            used_ref.add(best_ri)
-            logger.debug(
-                "Table match: tmpl t%d → ref t%d (score=%.2f)",
-                ti, best_ri, best_score,
-            )
-
+            if tlab and rlab:
+                score = max(score, text_similarity(tlab, rlab))
+            pairs.append((score, ti, ri))
+    mapping: dict[int, int] = {}
+    used_ref: set[int] = set()
+    for score, ti, ri in sorted(pairs, key=lambda p: (-p[0], p[1], p[2])):
+        if score < 0.4:
+            break
+        if ti in mapping or ri in used_ref:
+            continue
+        mapping[ti] = ri
+        used_ref.add(ri)
+        logger.debug("Table match: tmpl t%d → ref t%d (score=%.2f)", ti, ri, score)
     return mapping
 
 
@@ -538,8 +564,13 @@ def _anchor_paragraph(tp: TemplateParagraph, tmpl_paras: list[TemplateParagraph]
         if not prev.text.strip():
             continue                       # blancs entremig: d'acord
         txt = JINJA_ANY_RE.sub('', prev.text).strip()
+        # Bloc 3 (2026-09-07): l'àncora pot ser un paràgraf AMB forat si el seu esquelet té ≥ 3 paraules («Qa=
+        # {{ qa_value }} Kg/cm2 amb un factor de seguretat inclòs de F=3» precedeix «{{ settlement_sentence }}»,
+        # que queia a None). L'esquelet es localitza al signat per similitud com un paràgraf fix.
         if prev.is_static and len(txt.split()) >= 3:
             anchor_text = txt
+        elif len(txt.split()) >= 6 and not _looks_like_heading(txt):
+            anchor_text = txt              # («{{ section_empentes_num }}. EMPENTES DE TERRES» NO és àncora)
         break                              # el primer paràgraf no buit ha de ser l'àncora; si no, no n'hi ha
     if not anchor_text:
         return None
@@ -803,13 +834,16 @@ def _detect_header_rows(ref_table, col_names: list[str]) -> int:
             cells.append(text)
         if not any(cells):
             continue
+        # Notacions de les taules de l'Eva que SÓN dades (bloc 3, 2026-09-07): «15-R», «38º», «>350», «--». Abans, la fila
+        # «2do nivel | 15-R | -- | 2.00 | 0.00 | 38º | >350» d'Anciles comptava 2/7 numèrics (< 30 %) i l'escaneig
+        # s'aturava: capçalera = 2 files i la taula geotècnica es quedava amb una sola fila (la del 1er nivell fora).
         numeric_count = sum(
             1 for c in cells
-            if c and re.match(r'^[+-]?\d[\d.,/\-\s]*$', c)
+            if c and (re.match(r'^[<>]?[+-]?\d[\d.,/\-\s]*(?:-?R|º|°)?$', c) or c in ("--", "-", "R"))
         )
         id_like = sum(
             1 for c in cells
-            if c and re.match(r'^[A-Z]+-?\d+$|^P-\d+$|^S-\d+$|^SPT', c)
+            if c and re.match(r'^(?:P|S|SPT|MA|TP|MI)-?\d+$', c)   # «N30» de la capçalera NO és un id (bloc 3)
         )
         has_parenthetical = sum(
             1 for c in cells
@@ -1015,7 +1049,7 @@ def extract_reference_values(
     # 8.5. Flatten nested loop-table rows to top-level concept_ids
     # (e.g. geotech_rows[0].E -> geomech_E). Positional extraction wins;
     # this only fills gaps. Must run BEFORE statistics so by_method counts.
-    _flatten_loop_table_concepts(result)
+    _flatten_loop_table_concepts(result, ref_paras)
 
     # Re-tally statistics so flatten contributions are reflected.
     extracted_count = len(result.variables)
@@ -1064,7 +1098,7 @@ def _clean_phi_value(val: Any) -> Any:
     return cleaned if cleaned else val
 
 
-def _flatten_loop_table_concepts(result: ExtractionResult) -> None:
+def _flatten_loop_table_concepts(result: ExtractionResult, ref_paras: list[str] | None = None) -> None:
     """Derive flat concept_ids from the bearing row of nested loop tables.
 
     Adds (when not already present):
@@ -1084,7 +1118,22 @@ def _flatten_loop_table_concepts(result: ExtractionResult) -> None:
     #    is the LAST row. For single-layer profiles row[-1] == row[0].
     geotech_ev = variables.get("geotech_rows")
     if geotech_ev is not None and isinstance(geotech_ev.value, list) and geotech_ev.value:
-        bearing_idx = len(geotech_ev.value) - 1
+        n_rows = len(geotech_ev.value)
+        # Bloc 3 (2026-09-07): la fila portant és la que el signat DECLARA a la frase de la tensió («…recolzada sobre
+        # els materials del segon nivell sanejat, es podrà adoptar una tensió de treball de:»); abans, l'última fila
+        # (Vilanova recolza al 2n de 2: bé; però la regla no ho SABIA) o la primera (veritats d'abril: Alcoletge X).
+        rule_idx = bearing_row_from_text(ref_paras or [], n_rows)
+        bearing_idx = rule_idx if rule_idx is not None else n_rows - 1
+        if rule_idx is not None and "bearing_layer_idx" not in variables:
+            variables["bearing_layer_idx"] = ExtractedVariable(
+                value=rule_idx,
+                position=f"{geotech_ev.position}.row{rule_idx}",
+                position_description="Nivell portant declarat a la frase de la tensió admissible/de treball del signat",
+                confidence=0.9,
+                extraction_method="bearing_rule",
+                template_text="",
+                reference_text=_bearing_sentence(ref_paras or [])[:200],
+            )
         bearing_row = geotech_ev.value[bearing_idx]
         if isinstance(bearing_row, dict) and not _is_table_header_row(bearing_row):
             for flat_concept, src_col in _GEOTECH_FLATTEN:
@@ -1140,6 +1189,62 @@ def _flatten_loop_table_concepts(result: ExtractionResult) -> None:
                     template_text="",
                     reference_text=str(cota),
                 )
+
+    # 3. Bloc 3 (2026-09-07): `spt_ma_tests[0]` → `spt_test_id`, `spt_location`, `spt_depth_range`, `spt_n30`,
+    #    `spt_lithology` (la fila que el generador imprimeix com a escalars; abans eren cel·les soles de la plantilla).
+    spt_ev = variables.get("spt_ma_tests")
+    if spt_ev is not None and isinstance(spt_ev.value, list) and spt_ev.value:
+        first_spt = spt_ev.value[0]
+        if isinstance(first_spt, dict) and not _is_table_header_row(first_spt):
+            for col in ("test_id", "location", "depth_range", "n30", "lithology"):
+                key = f"spt_{col}"
+                raw = first_spt.get(col)
+                if key in variables or not isinstance(raw, str) or not raw.strip() or _is_strict_header_cell(raw):
+                    continue
+                variables[key] = ExtractedVariable(
+                    value=raw.strip(),
+                    position=f"{spt_ev.position}.row0.{col}",
+                    position_description="Flattened from first SPT/MA row",
+                    confidence=0.9,
+                    extraction_method="table_flatten",
+                    template_text="",
+                    reference_text=raw,
+                )
+
+
+_TENSION_RE = re.compile(r"tensi[oó]n?\s+(?:de\s+treball|admissible|de\s+trabajo|admisible)\s+de\s*:", re.I)
+_ORDINAL_LEVEL_RE = re.compile(
+    r"\b(primer|1er|1r|segon|2on|2n|segundo|2do|2º|tercer|3er|3r|tercero|quart|4t|cuarto|4to)\s+nivell?\b", re.I)
+_ORDINALS = {"primer": 1, "1er": 1, "1r": 1, "segon": 2, "2on": 2, "2n": 2, "segundo": 2, "2do": 2, "2º": 2,
+             "tercer": 3, "3er": 3, "3r": 3, "tercero": 3, "quart": 4, "4t": 4, "cuarto": 4, "4to": 4}
+
+
+def _bearing_sentence(ref_paras: list[str]) -> str:
+    """El paràgraf del signat que acaba amb «…tensió de treball/admissible de:» (7/7 signats en porten un)."""
+    for p in ref_paras:
+        if p and _TENSION_RE.search(p):
+            return p
+    return ""
+
+
+def bearing_row_from_text(ref_paras: list[str], n_rows: int) -> int | None:
+    """Índex (0-based) de la fila de la taula geotècnica on recolza la fonamentació segons el signat, o None.
+
+    Regla (bloc 3, 2026-09-07; verificada als 7 signats): a la frase de la tensió, l'ÚLTIM ordinal de nivell mana
+    («un cop superats els materials del primer nivell … recolzada sobre els materials del segon nivell sanejat» → 2);
+    sense ordinal, «substrat/sustrato» = l'última fila (Castellar: «encastada … en els materials de substrat»).
+    Fora de rang (ordinal > files) → None (mai s'inventa una fila).
+    """
+    sent = _bearing_sentence(ref_paras)
+    if not sent or n_rows <= 0:
+        return None
+    ords = [_ORDINALS[m.group(1).lower()] for m in _ORDINAL_LEVEL_RE.finditer(sent)]
+    if ords:
+        idx = ords[-1] - 1
+        return idx if 0 <= idx < n_rows else None
+    if re.search(r"substrat|sustrato", sent, re.I):
+        return n_rows - 1
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -1217,7 +1322,7 @@ _OWN_EXTRACTION_METHODS = frozenset({
     "paragraph_single",
     "paragraph_anchor", "paragraph_multi",
     "table_cell", "table_cell_multi",
-    "loop_table", "table_flatten",
+    "loop_table", "table_flatten", "bearing_rule",
 })
 
 # Methods produced by external tools we don't control (e.g. a one-off LLM pass
