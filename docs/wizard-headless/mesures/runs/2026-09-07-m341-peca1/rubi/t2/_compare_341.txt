@@ -1,0 +1,40 @@
+# rubi/t2 — escalars i narrativa vs signat (`eva_reference_values.json`)
+
+| grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
+|---|--:|--:|--:|--:|--:|
+| A | 16 | 3 | 4 | 1 | 83 % |
+| calc | 13 | 0 | 3 | 0 | 81 % |
+| narr | 3 | 4 | 8 | 1 | 47 % |
+| fix | 13 | 0 | 2 | 0 | 87 % |
+| resta | 2 | 0 | 1 | 1 | 67 % |
+
+- [narr] `access_street` **MISMATCH** gen=«S'accedeix pel nord.» ↔ eva=«carrer de la Miranda»
+- [narr] `adjacent_east_fmt` **MISMATCH** gen=«Per la part sud i est amb parcel·les amb construcció.» ↔ eva=«Finalment, Per la part est i oest, amb construccions de característiques similars.»
+- [narr] `adjacent_intro` **MISMATCH** gen=«La parcel·la objecte d'estudi es situa al nord-oest del municipi de Rubí, pren una morfolo» ↔ eva=«La parcel·la objecte d’estudi es situa al sud-oest del municipi de Rubí, pren una morfolog»
+- [narr] `adjacent_north_fmt` **MISMATCH** gen=«Per la part nord amb el Passeig Miranda.» ↔ eva=«Per la part nord, amb parcel·les sense edificacions i amb vegetació de petita alçada i arb»
+- [narr] `adjacent_south_fmt` **MISMATCH** gen=«Per la part sud i est amb parcel·les amb construcció.» ↔ eva=«Per la part sud, amb el carrer de la Miranda»
+- [narr] `adjacent_west_fmt` **MISMATCH** gen=«I finalment, per la part oest, amb la Avinguda Can Tapis.» ↔ eva=«Finalment, Per la part est i oest, amb construccions de característiques similars.»
+- [A] `architect_name_upper` **MISMATCH** gen=«SR.» ↔ eva=«JOANA MARTINEZ»
+- [narr] `building_structure_desc` **CLOSE** gen=«en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació p» ↔ eva=«en planta baixa i porxo, i per tant, no es preveu cap excavació important, únicament l’exc»
+- [A] `building_type_lower` **CLOSE** gen=«un habitatge unifamiliar» ↔ eva=«un habitatge unifamiliar aïllat modular»
+- [A] `client` **NO_DATA** gen=«None» ↔ eva=«SRA. JOANA MARTINEZ»
+- [narr] `conclusions_aggressivity_statement` **CLOSE** gen=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on» ↔ eva=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on»
+- [resta] `data_signatura_text` **MISMATCH** gen=«7 de setembre de 2026» ↔ eva=«17 de desembre de 2025»
+- [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo,»
+- [calc] `geomech_cohesion` **MISMATCH** gen=«0.0» ↔ eva=«0.05»
+- [narr] `lab_tests_text` **CLOSE** gen=«Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95
+Assaig de Límits d'Atterberg UN» ↔ eva=«Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95
+Determinació de Límits d’Atterb»
+- [A] `municipality_de` **CLOSE** gen=«de Rubí» ↔ eva=«de Rubí (Barcelona)»
+- [fix] `photo_dpsh_num` **MISMATCH** gen=«1» ↔ eva=«2»
+- [fix] `photo_materials_num` **MISMATCH** gen=«2» ↔ eva=«3»
+- [narr] `photo_site_text` **NO_DATA** gen=«None» ↔ eva=«Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).»
+- [A] `plantes` **CLOSE** gen=«Pb» ↔ eva=«PB + Porxo»
+- [narr] `radon_sentence` **CLOSE** gen=«La parcel·la concreta d'estudi es localitza al terme municipal de RUBÍ i, segons la taula » ↔ eva=«La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula »
+- [calc] `seismic_ab_text` **MISMATCH** gen=«0,04» ↔ eva=«AB  =0,08 g  (essent g el valor de la gravetat)»
+- [calc] `settlement_sentence` **MISMATCH** gen=«Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o in» ↔ eva=«Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o in»
+- [narr] `site_condition` **MISMATCH** gen=«Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'» ↔ eva=«Al solar, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’es»
+- [narr] `site_description` **MISMATCH** gen=«El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar pre» ↔ eva=«El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer »
+- [A] `spt_lithology` **MISMATCH** gen=«Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)» ↔ eva=«Graves i sorres»
+- [A] `superficie_construida` **MISMATCH** gen=«64» ↔ eva=«92»
+- [A] `superficie_parcela` **MISMATCH** gen=«1.414» ↔ eva=«951»

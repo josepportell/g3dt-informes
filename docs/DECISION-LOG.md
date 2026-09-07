@@ -4629,3 +4629,118 @@ escala nativa, `alpha_composite` sobre blanc).
 - Peça 2 (fotos amb el lector): esperat `foto_dpsh` 4 → 7, `foto_sondeig` 1 → 3, `foto_vista` ↑.
 
 *Fi entrada 2026-09-07 (tarda-4). Peça 0: mesura per figura «mateixa font que l'Eva» dins M341 i baseline quiet 12 · 5 · 26 · 13 → 40 %.*
+
+## 2026-09-07 (tarda-5) — Imatges pas 3, peça 1: plantilla petita — `fig_aerea` fora (taula de situació d'una cel·la, peu «Situació de la zona d'estudi»), foto de materials UNA vegada dins el 1r nivell amb la font al peu, bloc granulomètric per dades del projecte (pastís de Rubí fora), 8 media morts fora (plantilla 7,4 MB → 119 KB, informes −8,5 MB); numeració sense l'aèria: grup `fix` 74 M · 25 X → 74 M · 25 X (+9 −9, net 0, com s'havia previst), total 74 % intacte, imatges idèntiques (X 26 → 25, ND 13 → 14), sobrants 3 → 0, pendents 8 → 5
+
+### Context
+
+- Pas 2: D2 (`fig_aerea` fora), D7 (materials una vegada), D10 (pastís fora, bloc per dades), D11 (figures variables: peça 7), D13 (plantilla petita abans
+  de les fotos). Peça 0: referència `2026-09-07-m341-peca0b` (imatges 12 · 5 · 26 · 13, sobrants 3, fix 74 M · 25 X).
+- `feedback_check_signed_phrasing_before_template_change`: peus de situació i de materials llegits als 7 signats (índexs del pas 1) i posició de la foto de
+  materials verificada als signats convertits (Castellar, Bell-lloc: dins el 1r nivell, després de la descripció litològica; Vilanova: una per punt).
+
+### Decisions arquitectòniques clau
+
+**D1. La situació es queda com a TAULA d'una sola cel·la, no com a paràgraf.** Primer intent: taula → paràgraf. El refresc en sec de les veritats
+(`refresh_eva_narrativa.py --all-keys`) donava 24-27 diferències per projecte als 7, TOTES de claus de taula (`dpsh_tests`, `spt_*`, `sulfate_*`,
+`geomech_*`, `seismic_rows`, `perm_rows`, `cota_referencia`, `bearing_layer_idx`): l'extractor de referència aparella les taules de la plantilla amb les
+del signat per ORDRE (`match_tables`), i treure la primera taula les desplaçava totes. Amb la cel·la única (segona cel·la i `gridCol` fora, la primera a
+8504 dxa): 0 diferències fora de les 2 esperades. Regla per a la peça 7: no canviar el nombre de taules de la plantilla sense el refresc en sec.
+
+**D2. Peu de situació: «Figura N. Situació de la zona d'estudi.»** Literal a 3/7 (Castellar, Rubí, Alcoletge); Linyola «Ubicació de la parcel·la en
+estudi», Bell-lloc «Figura 1 i Figura 2. Detall de la ubicació… Font: Projecte», Vilanova/Anciles en castellà. La cua amb la font («(mapes topogràfic i
+ortofoto, ICGC 2025, modificat)», «Fuente: Sede electrónica del Catastro») arriba amb la peça 5, quan la font sigui coneguda. Efecte a la veritat:
+Alcoletge guanya `fig_cadastre_num` = 1; Castellar i Rubí no s'aparellen (ratio de text < 0,5 per la cua llarga entre parèntesis): límit de l'extractor
+(bloc 4), no d'aquesta peça.
+
+**D3. Foto de materials: `{%p if loop.first %}` … `{%p endif %}` al voltant de la imatge i el peu, DINS el bucle de nivells.** Per què no fora del bucle:
+la posició de l'Eva és dins el 1r nivell, després de la litologia i abans d'«Aquests materials han estat caracteritzats…» (Castellar p234, Bell-lloc
+p213). Peu: «Fotografia N. Detall dels materials recuperats durant la realització {{ photo_materials_source }}.» amb `photo_materials_source` =
+«del sondeig» / «de l'assaig SPT» (ES «del sondeo» / «del ensayo SPT») del generador. Per què un forat i no un `{% if %}` inline: l'extractor de
+numeració llegeix el peu de la plantilla sense forats per aparellar-lo amb el signat; el text fix «Detall dels materials recuperats durant la realització»
+queda dins 6/7 peus de l'Eva (contenció ≥ 0,6). Una foto per punt/sondeig (Vilanova P-3 i P-1, Anciles S-1 i S-2): D7 del pas 2, a la peça de fotos.
+
+**D4. Bloc granulomètric per dades del projecte.** Fora la imatge de Rubí (`image8.png`, VML `rId15`) i les frases de Rubí («NO PLÀSTICS», «tipus SM»);
+ara `{{ level.granulometric_chart if level.granulometric_chart is defined }}` i `{{ level.granulometric_text … }}`. `show_granulometric` continua sent
+`False` sempre (el wizard web no l'exposa): el bloc no s'imprimeix fins que el lector del GTL doni percentatges i plasticitat i el generador faci el gràfic.
+
+**D5. 8 media morts i les seves relacions fora del docx.** Queden `image10.jpeg` (segell G3, final del document) i `image11.jpeg` (logo de capçalera).
+Plantilla 7,4 MB → 119 KB; informes generats 11,4 → 3,0 MB (Castellar), 10,8 → 2,6 (Linyola), 9,9 → 2,7 (Anciles).
+
+**D6. Numeració: `fig_aerea_num` fora del generador i de la veritat (`--drop`); les figures posteriors −1.** Predicció escrita ABANS del run, a partir de
+les cel·les de `peca0b`: +3 M a Castellar, Rubí i Alcoletge (l'aèria hi sobrava), −3 a Linyola, −4 a Bell-lloc i −2 a Vilanova (l'aèria hi compensava la
+figura del projecte que no posem), Anciles 0, més Alcoletge +1 (peu de situació) i Bell-lloc −1 (la veritat `fig_aerea_num` desapareix): **net 0**.
+Resultat: exacte (18 cel·les mogudes, 74 M · 25 X → 74 M · 25 X). Lliçó: el grup `fix` no pot pujar fins que la plantilla imprimeixi el mateix NOMBRE de
+figures que l'Eva (situació 1-2, assaigs 0-1, projecte 0-2): és la peça 7 (D11). La peça 1 treu les coincidències falses.
+
+**D7. Amplada de la situació: 70 mm, com abans.** A 150 mm (provat al run `peca1`) el retall vertical del 38 % de l'annex omple una pàgina sencera. La
+peça 5 la posa a tota amplada quan la font sigui la composició horitzontal. El run de referència (`peca1b`) porta els 70 mm; cap cel·la mesurada depèn de
+l'amplada (la mesura d'imatges compara fitxers).
+
+**D8. Wizard: `fig_aerea` fora de la vista prèvia** (`review.html` `REPORT_SLOTS`, `web/api.py` `_CACHE_PREFIX_TO_SLOT`); l'ortofoto amb parcel·la es
+continua baixant a `_download_icgc_images` (cau; la peça 5 la reutilitza).
+
+**D9. Edició del docx amb lxml, no amb expressions regulars.** El paràgraf del pastís porta un quadre de text VML amb paràgrafs a dins; el primer intent
+(regex `<w:p…</w:p>`) va deixar l'XML trencat («Opening and ending tag mismatch»). Script d'un sol ús al scratchpad (no versionat); el resultat es verifica
+amb python-docx, docxtpl (`get_undeclared_template_variables`) i 5 tests sobre l'estructura.
+
+### Implementació
+
+- `templates/g3dt-jinja-template.docx` (binari: taula de situació d'1 cel·la, peu, `loop.first` + peu de materials amb forat, bloc granulomètric, rels i
+  media). `automation/report_generator.py` (+12: `fig_aerea_num` fora, `lang` una vegada, `photo_materials_source`). `automation/image_manager.py`
+  (−22: entrada `aerea`, `setdefault`, bloc de reserva de l'ortofoto). `docs/wizard-headless/mesures/mesura_341.py` (`IMAGE_SLOTS` sense aèria).
+  `templates/validation/review.html`, `web/api.py`. `tests/test_peca1_plantilla.py` (5), `tests/test_bloc4_numeracio.py` (1 asserció adaptada).
+- Veritats: `refresh_eva_narrativa.py --apply --keys fig_cadastre_num --drop fig_aerea_num` → Bell-lloc (−`fig_aerea_num`), Alcoletge (+`fig_cadastre_num`).
+- Runs: `2026-09-07-m341-peca1` (situació a 150 mm) i **`2026-09-07-m341-peca1b` (70 mm) = REFERÈNCIA per a les peces 2-7**.
+
+### Validació empírica
+
+- Refresc en sec: intent 1 (paràgraf) 25 · 25 · 25 · 26 · 27 · 24 · 24 diferències, totes de taules; definitiu 0 · 0 · 1 · 0 · 1 · 0 · 0 (les esperades).
+- M341 `peca1` vs `peca0b`: 18 cel·les mogudes, TOTES del grup `fix` (cullera/geològic/tall ×3 a Castellar, Rubí, Alcoletge: X → M; a Linyola ×3,
+  Bell-lloc ×4 (amb el plànol), Vilanova ×2: M → X). Total 308 · 43 · 123 · 33 → 74 % IDÈNTIC; A 78 %, calc 77 %, narr 61 %, resta 87 % idèntics;
+  taules 292 · 99 · 88 → 82 % idèntiques; t2 156 · 14 · 55 · 11 → 157 · 14 · 53 · 11.
+
+| numeració (gen/eva) | cadastre | plànol | cullera | geològic | tall |
+|---|---|---|---|---|---|
+| castellar | — | — | 4/3 X → **3/3 M** | 5/4 X → **4/4 M** | 6/5 X → **5/5 M** |
+| rubi | — | — | X → **M** | X → **M** | X → **M** |
+| alcoletge | — → **1/1 M** | — | X → **M** | X → **M** | X → **M** |
+| linyola | — | — | 4/4 M → 3/4 X | 5/5 M → 4/5 X | 6/6 M → 5/6 X |
+| bell-lloc | 1/1 M | 3/3 M → 2/3 X | M → 3/4 X | M → 4/5 X | M → 5/6 X |
+| vilanova | — | — | M → 3/4 X | M → 4/5 X | — |
+| anciles | — | — | 4/5 X → 3/5 X | — | — |
+
+- Imatges: 12 M · 5 C · 26 X · 13 ND → **12 · 5 · 25 · 14** (l'única fila que canvia: la 2a figura de situació de Bell-lloc, abans X contra l'aèria, ara
+  ND perquè només posem una imatge); **sobrants 3 → 0**; presència sobre 10 forats: 49 present · 5 pendents (`fig_main_plan` a Castellar i Vilanova,
+  `fig_geological` a Rubí, Vilanova, Anciles) · 16 absents.
+- Informes generats: peus de materials per informe 1-2 (segons nivells) → 1 als 7; render (Castellar p15, Linyola p15): una foto dins el 1r nivell,
+  peu «…del sondeig.» / «…de l'assaig SPT.»; figures 1 situació · 2 plànol · 3 cullera · 4 geològic · 5 tall (= l'Eva a Castellar, Rubí, Alcoletge).
+
+### Tests
+
+- +5 (`tests/test_peca1_plantilla.py`), 1 adaptada. Suite sencera: 31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2465 verds / 5 omesos (187 s, amb el run `peca1` en paral·lel)
+
+### Limitacions conegudes
+
+- **La numeració no puja (net 0) fins a la peça 7**: cal el nombre de figures de l'Eva (situació 1-2, assaigs 0-1, projecte 0-2).
+- Peu de situació sense la font; Castellar i Rubí sense `fig_cadastre_num` a la veritat (ratio de l'extractor < 0,5 amb la cua llarga).
+- **Text fix de Rubí que encara s'imprimeix a tots els projectes** (vist al render): «Aquest materials s'associa als materials de la unitat NMgo, amb un
+  tram superficial alterat…» (dins el bucle de nivells, p330) — Linyola diu «NMgo». Risc de fabricació de la mateixa família que el pastís: a tractar
+  amb la geologia llegida (narrativa per criteri), fora d'aquesta peça.
+- Materials: una per punt/sondeig (Vilanova, Anciles) no fet; `level.granulometric_*` no es generen (el bloc no s'imprimeix).
+- La plantilla de producció (`production/g3dt-eva-v1`) no es toca.
+
+### GO/NO-GO
+
+- ✅ Predicció de numeració complerta cel·la a cel·la; total i taules intactes; imatges intactes; sobrants 0.
+- ✅ Suite: 31 vermells esperats / 2465 verds.
+- ✅ `peca1b` (70 mm) idèntic a `peca1` en tot el mesurat (escalars viaA i t2, imatges, taules, 7 projectes).
+- ⏳ Commit (GO del Josep): proposta en 2 — plantilla + generador + image manager + wizard + M341 + tests + 2 veritats · runs + docs.
+
+### Següents passos
+
+- **Peça 2 (fotos amb el lector)**: skill lector d'imatges + llibreria d'exemplars (`docs/imatges/veritat/` + descripció textual, `--exclude`) + annex de
+  fotografies com a pista. Esperat contra `peca1b`: `foto_dpsh` 4 → 7 M, `foto_sondeig` 1 → 3, `foto_materials` X d'Anciles → M i una per punt, vistes ↑.
+- Peça 7 (bloc de figures variable) és la que mou el grup `fix`.
+
+*Fi entrada 2026-09-07 (tarda-5). Peça 1: aèria fora, materials una vegada, pastís i media morts fora; numeració net 0 com s'havia previst; informes −8,5 MB.*

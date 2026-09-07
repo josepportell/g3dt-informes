@@ -105,7 +105,8 @@ Sense això, una part del 26 % vermell d'A és soroll de la mesura, no del siste
 
 Peces del pas 3, en ordre, cada una amb baseline (`peca0b`) i mesura a M341:
 0. ✅ mesura per figura «mateixa font que l'Eva» (phash/NCC contra `veritat/`) — S
-1. plantilla petita: aèria fora, materials una vegada, numeració per presència, pastís i media morts fora — S
+1. ✅ plantilla petita: aèria fora, materials una vegada, pastís i media morts fora — S (tarda-5: `fix` net 0 com previst, imatges intactes,
+   sobrants 0, informes −8,5 MB; **referència ara `2026-09-07-m341-peca1b`**; la numeració la mou la peça 7)
 2. fotos amb el lector d'imatges (skill + exemplars leave-one-out + annex de fotografies) — M (inclou el skill)
 3. tall retallat (`detect_drawing_region`) — S
 4. assaigs: retall del dibuix amb punts — M
