@@ -4238,3 +4238,140 @@ Suite: Suite sencera: **31 vermells amb els mateixos NOMS que `suite-vermells-es
 Bloc 4 (numeració i imatges, mai mesurats), preguntes 22-27 a l'Eva, castellà (bloc 5: plantilla ES + prefixos ES a l'extractor).
 
 *Fi entrada 2026-09-07 (tarda). Bloc 3: veritats re-extretes amb l'extractor arreglat; Alcoletge 66 → 75, Vilanova honest 55.*
+
+## 2026-09-07 (vespre) — Bloc 4 del PLA: numeració i imatges, mesurats per primera vegada (99 veritats `*_num` als 7 signats → grup `fix` 74 M · 25 X → 75 %, cap X és un error de comptar; full de control visual de 7 × 11 imatges; la cau d'imatges compartia el tall de correlació de Bell-lloc amb 5 projectes → clau per contingut)
+
+### Context
+
+Quart bloc del `docs/PLA-QUE-QUEDA-DESPRES-DE-A-B-I-NARRATIVA-2026-09-07.md` (handoff `_FOR-NEW-YOU-20260907-1015.md`; Josep: «seguim
+amb el bloc 4 (numeració i imatges)»). La plantilla té 22 forats de numeració (`fig_*_num`, `photo_*_num`, `table_*_num`,
+`section_*_num`) que `reference_extractor.py` saltava des del principi (`SKIP_PREFIXES` / `SKIP_SUFFIXES`): cap número s'havia
+comptat mai contra els 7 signats; la numeració era una creença. Les imatges: 11 forats, cap veritat comparable per text. Referència:
+`2026-09-07-m341-bloc3b` (234 · 43 · 98 · 33 → 74 %; taules 82 %). Cost 0 (cap crida LLM; tot determinista).
+
+### Decisions arquitectòniques clau
+
+**A. La numeració s'extreu amb una funció pròpia, per TIPUS i un-a-un, no pel bucle genèric de paràgrafs.** Primer intent: deixar
+de saltar `*_num` i tallar el valor amb `_extract_single_var`. A Bell-lloc, 22/22 correctes; però aparellaments FALSOS on el signat
+NO té la secció o la foto: `section_empentes_num` = «2.2. RECONEIXEMENT DEL TERRENY» (similitud 0,65) a 5 projectes,
+`section_estabilitat_num` = «3.3.3. Permeabilitat dels materials» (0,60) a 4, `photo_sondeig_num` = la foto de la màquina DPSH (0,59)
+als 3 sense sondeig, i la via d'àncora («el paràgraf que segueix») amb confiança 0,15-0,27 a Vilanova i Anciles. Mesurades les
+similituds de totes les parelles bones i falses als 7 signats: capçaleres bones ≥ 0,74 (la pitjor, ES «EMPUJE DE TIERRAS») i falses
+≤ 0,65 → llindar 0,70 sobre el text SENSE número; als peus el ratio de caràcters no separa «màquina del sondeig» de «màquina DPSH»
+(0,59-0,62 fals contra 0,52-0,56 de peus bons com «Detall dels materials recuperats durant la realització del sondeig S-1») → s'hi
+afegeix la contenció de paraules de contingut ≥ 0,6 (el fals dona 0,50; els bons 0,67-1,0). Només s'aparellen paràgrafs del mateix
+tipus (Figura ↔ Figura, Fotografia ↔ Fotografia, Taula ↔ Taula, capçalera ↔ capçalera), assignació global un-a-un per puntuació
+descendent (la regla del bloc 3 per a les taules) i SENSE àncora ni prefix: un forat sense peu al signat queda en blanc. Alternativa
+rebutjada: pujar el ratio a 0,7 (perdia «Figura 5. Tall de correlació.» 0,51 i les fotos de materials 0,52-0,56, totes bones).
+
+**B. Empat = blanc, però només si els empatats porten números DIFERENTS.** A Vilanova i Anciles l'índex («2.4.2. Ensayo tipo
+S.P.T.\t10») i la capçalera empaten amb el mateix número: no és cap ambigüitat. Amb la regla estricta Vilanova quedava a 2 veritats;
+corregida, 7. L'empat real (les tres «Detalle de los materiales recuperados…» de Vilanova al mateix ratio) segueix en blanc.
+
+**C. El valor és el primer token numèric del peu o de la capçalera** (`_numbering_token`: «Fotografia 3. Vista…» → «3»; «4.4.
+EMPENTES DE TERRES\t45» → «4.4»; «3, 4 i 5» → None: això és `table_dpsh_range`, no un `_num`). El peu de dues figures («Figura X i
+Figura Y») només s'omple si el signat també porta dos números: Castellar, Rubí i Alcoletge tenen UNA figura de situació (topogràfic
+i ortofoto juntes) → en blanc, honest.
+
+**D. A M341 la numeració és text EXACTE i el buit del generador amb veritat al signat és una X.** `compare_scalars`, grup `fix`:
+«2.4.3» ≠ «2.4.4», «3» ≠ «4», cap CLOSE; `section_empentes_num` = '' amb signat «4.4» (Anciles) és X, no NO_DATA: és la secció que el
+signat té i el generador decideix no imprimir.
+
+**E. Test de presència d'imatges a M341** (`image_presence`: present / pendent «[Imatge pendent]» / absent), amb la foto del sondeig
+sense sondeig i les vistes generals no triades com a absents (no s'imprimeixen). El primer intent feia `str()` d'un `InlineImage`
+viu → docxtpl intenta inserir-lo fora de renderització → `AttributeError: 'Part' object has no attribute 'new_pic_inline'` (la
+mesura `-bloc4b` va petar al primer projecte); es detecta pel nom de la classe.
+
+**F. La cau d'imatges es clau pel CONTINGUT del PDF** (`ImageManager._cache_name`: `<prefix>_<nom>_<md5 del fitxer>.jpg`, als 7
+punts que abans usaven només `.stem`). Descobert pel full de control visual, no per cap mesura: per md5 dels `word/media/*` dels 7
+`.docx` de `-bloc4-num`, **6 dels 7 informes duien el tall de correlació de Bell-lloc** (el primer projecte que va renderitzar un
+`tall.pdf` → `tall_tall.jpg`), Alcoletge duia el plànol `A.01.pdf` de Bell-lloc (`planol_A.01.jpg`) i Anciles el retall de situació
+de Linyola (`cadastre_sitplan_pl situ.jpg`). `tall.pdf`, `A.01.pdf` i `pl situ.pdf` són noms habituals de l'Eva
+(`reference-material/*` els té) i la cau és global (`~/.g3dt/cache/images/`): **`production/g3dt-eva-v1` porta el mateix codi (6
+punts)** → a l'ordinador de l'Eva el segon projecte amb `tall.pdf` hereta el tall del primer. Alternativa considerada: clau per
+expedient → no invalida quan l'Eva refà el PDF; el hash sí (i dos projectes amb el mateix PDF comparteixen imatge, que és correcte).
+
+**G. Res del generador de numeració s'ha tocat, i la plantilla tampoc.** Les 25 X classificades una a una no són errors de comptar:
+donada l'estructura que el generador imprimeix, el número és el que toca. Causes (registre de pèrdues, bloc 4): **10** nombre de
+figures del projecte (la plantilla n'imprimeix sempre 3: cadastre + aèria + plànol; els signats en tenen 2 — Castellar, Rubí,
+Alcoletge — o 4 — Anciles; `num_project_figures` només en pot afegir), **5** taules de Linyola (= registre #2, «Taula 3, 4 i 5» amb
+dues taules; pregunta 23), **5** expansivitat (`include_expansivity` és sempre False — «Determinat per tipus de sol», mai derivat —
+i Alcoletge la posa DESPRÉS de l'excavabilitat mentre Linyola i la plantilla la posen abans; pregunta 28), **2** vistes generals de
+Rubí (1 foto Google Earth triada per l'Eva; la via A no en tria), **1** empentes d'Anciles (semisoterrani; `has_basement` és del
+wizard; pregunta 29), **2** incoherències del signat (Castellar salta la Fotografia 3; Bell-lloc numera «2.4.3» dues vegades).
+Regla del handoff respectada: cap número s'ha pujat tocant narrativa, criteris ni plantilla.
+
+### Implementació
+
+- `automation/reference_extractor.py`: `_should_skip_variable` deixa passar `*_num`; `_is_numbering`, `_numbering_token`,
+  `_CAPTION_RE` (CA/ES, «i/y Figura N»), `_HEADING_NUM_RE` (accepta l'entrada de l'índex amb tabulador), `_content_tokens` /
+  `_containment`, `_numbering_slot`, `_numbering_candidates`, `extract_numbering_variables` (pas 5b d'`extract_reference_values`);
+  els bucles genèrics exclouen `_num`. ≈ 160 LOC.
+- `docs/wizard-headless/mesures/mesura_341.py`: `_norm_numbering` + branca `fix` exacta a `compare_scalars`; `IMAGE_SLOTS`,
+  `image_presence`, `entry["images"]`, taula «Imatges» a `_AGREGAT-341.md`.
+- `docs/wizard-headless/mesures/refresh_eva_narrativa.py`: `--label` (nota del JSON per bloc).
+- `automation/image_manager.py`: `_cache_name` + 7 substitucions (`{region}_`, `cadastre_sitplan_`, `main_plan_`,
+  `main_plan_crop_`, `planol_` ×2, `tall_`).
+- Veritats: els 7 `eva_reference_values.json` (+99 claus `_num`; nota «2026-09-07 (bloc 4, numeració)»).
+- `tests/test_bloc4_numeracio.py` (20).
+- Runs: `2026-09-07-m341-bloc4-num` (veritats noves, generador intacte), `2026-09-07-m341-bloc4b` (cau per contingut; referència
+  nova; `_IMATGES.md` + `imatges/*.jpg`, 7 fulls de control), `2026-09-07-informe-bloc4b`.
+
+### Validació empírica
+
+- Dry-run `refresh_eva_narrativa.py --all-keys` abans d'aplicar: només mouen claus `_num` (Castellar 19, Rubí 15, Bell-lloc 20,
+  Linyola 15, Alcoletge 15, Vilanova 7, Anciles 8 = 99); cap altra clau.
+- Cel·la a cel·la: `-bloc3b` → `-bloc4-num` → `-bloc4b`: **0 moviments fora del grup `fix`**; taules 292 · 99 · 88 → 82 % intactes;
+  els 12 informes de `-informe-bloc4b` idèntics a `-bloc2b`.
+- Grup `fix` (viaA): **74 M · 0 C · 25 X · 0 ND → 75 %**; per projecte M/X: Castellar 15/4, Rubí 10/5, Bell-lloc 19/1, Linyola 7/8,
+  Alcoletge 10/5, Vilanova 7/0, Anciles 6/2. Total viaA 308 · 43 · 123 · 33 → 74 % (el % no es mou: entren 74 M i 25 X).
+- Castellà: capçaleres sí (Vilanova 5, Anciles 7 amb «EMPUJE DE TIERRAS» 0,74 i «Sondeo a rotación» 0,84); peus «Fotografía» /
+  «Tabla» no (contenció CA/ES) → bloc 5.
+- Imatges (presència): 53 present · 8 pendents · 16 absents; els 8 pendents = 6 ICGC sense `utm_x/utm_y` a `user_data` (Rubí,
+  Vilanova, Anciles) + 2 sense rol `architect_plan` a `file_mapping.json` (Castellar, Vilanova). Duplicats entre projectes per
+  md5: 3 → 0.
+- Suite: 31 vermells amb els mateixos noms que `suite-vermells-esperats.txt` / 2449 verds (run abans dels 2 tests d'imatges;
+  2451 esperats).
+
+### Tests
+
+`tests/test_bloc4_numeracio.py` (20): Rubí sense sondeig ni empentes → en blanc (no la foto DPSH ni «2.2»); Castellar amb sondeig,
+empentes 4.4 / 4.5, Fotografia 4 i «Tall de correlació.»; peu de dues figures només amb dos números; índex + capçalera amb el
+mateix número no és empat; empat amb números diferents és blanc; un-a-un; tipus no es barregen («Taula 3 i 4» no omple
+`table_lab_num`); capçaleres ES passen i peus ES no; `_numbering_token` ×8; `_should_skip_variable`; mesura `fix` exacta i buit = X;
+`_cache_name` (mateix nom, contingut diferent → claus diferents; PDF canviat → clau nova); `image_presence` amb `InlineImage` viu.
+
+### Latència / cost
+
+0 crides LLM. Extracció de numeració: < 0,1 s per signat (la conversió `.doc` → `.docx` amb soffice domina). Mesures: ≈ 3-4 min cada
+una; suite ≈ 4 min.
+
+### Limitacions conegudes
+
+- Peus en castellà en blanc fins al bloc 5 (paraula del peu i contenció CA/ES).
+- La mesura compara NÚMEROS: no veu que la foto de materials surti dues vegades amb el mateix número («Fotografia 2. … del 1er
+  nivell.» / «… del 2n nivell.», mateixa imatge) als 5 projectes amb 2 nivells: la plantilla la té dins de `{%p for level in
+  soil_levels %}` (p254-262). Els signats en porten una (o una per sondeig a Anciles). Decisió del Josep (plantilla).
+- El full de control és manual i d'una vegada; el test de presència no jutja contingut ni retall. Obert: Linyola retall de situació
+  en tira (PDF A4 apaïsat 842×595 amb una altra maquetació; el 38 % esquerre és per a l'A3 1191×842), Alcoletge «màquina DPSH» = foto
+  del full de camp, Anciles «màquina del sondeig» = caixes de testimonis i «plànol» = portada d'`IV_PLANOS.pdf` (pàgina 1), Rubí
+  «plànol» = foto d'un paper imprès.
+- `num_project_figures` només afegeix; la plantilla imprimeix sempre 3 figures del projecte.
+- La cau antiga (`tall_tall.jpg`, `planol_A.01.jpg`, …) queda al disc sense que cap codi hi apunti; es pot esborrar.
+
+### GO/NO-GO
+
+- ✅ Cada X de numeració té causa (7 causes, 25 cel·les); cap sense. Registre de pèrdues (bloc 4) i preguntes 28-29.
+- ✅ Res es mou fora del grup `fix`; taules i 12 informes intactes.
+- ✅ Bug de cau verificat per md5 (3 → 0 duplicats). **Afecta producció**: cal portar `_cache_name` a `production/g3dt-eva-v1`
+  quan el Josep decideixi (mai pull a l'Eva).
+- ⏳ Commit: GO del Josep, proposta en 4 (extractor + tests · mesura + refresc · veritats · cau d'imatges) + docs i runs.
+
+### Següents passos
+
+Preguntes 23, 28 i 29 a l'Eva (11 cel·les); decisió del Josep sobre el bloc de figures del projecte (10 cel·les) i la foto de
+materials per nivell (plantilla); UTM a la via A per a Rubí/Vilanova/Anciles i rol `architect_plan` a Castellar/Vilanova (8 imatges
+pendents); tria de fotos i pàgina del plànol (4 imatges errònies); bloc 5 (castellà: peus ES + plantilla ES).
+
+*Fi entrada 2026-09-07 (vespre). Bloc 4: numeració mesurada (75 %, cap error de comptar) i imatges controlades; la cau compartia el tall de correlació de Bell-lloc amb 5 projectes.*
+

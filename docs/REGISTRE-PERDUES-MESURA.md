@@ -61,3 +61,31 @@ Les cel·les que cauen aquí no les fa caure el sistema: cau la VERITAT antiga q
 | Anciles · `superficie_construida` (nova) | — → 186,18 X (signat 1273,79) | El signat porta el TOTAL de les 7 cases; la lectura, una casa. | Pregunta 27b. |
 | Vilanova / Anciles · `data_camp_inici_text`, `municipality_de` (noves) | — → X | Castellà: el prefix català no hi és i la veritat és el paràgraf sencer. | Bloc 5 (plantilla ES + prefixos ES a l'extractor). |
 
+## 2026-09-07 — Bloc 4 (numeració i imatges, mai mesurats) — runs `2026-09-07-m341-bloc3b` → `2026-09-07-m341-bloc4-num` (veritats de numeració) → `2026-09-07-m341-bloc4b` (cau d'imatges per contingut)
+
+**Cap cel·la perduda**: els grups A, calc, narrativa, resta i les 11 taules són idèntics cel·la a cel·la a `-bloc3b`. Entren 99 veritats
+noves de numeració (`*_num`, grup `fix`): **74 MATCH · 25 X → 75 %**. Cap X és un error de comptar del generador: donada l'estructura
+que imprimeix, el número és el que toca. Les 25 X són, per causa:
+
+### Claus noves de numeració que entren en X (25)
+
+| Projecte · variable | Sistema (signat) | Per què | On es reobre | Estat |
+|---|---|---|---|---|
+| Castellar · `fig_spt_cullera_num` / `fig_geological_num` / `fig_correlation_num` | 4 / 5 / 6 (3 / 4 / 5) | El signat té **2** figures del projecte: Fig. 1 = situació amb topogràfic i ortofoto en UNA figura, Fig. 2 = emplaçament + assaigs. La plantilla n'imprimeix sempre **3** («Figura X i Figura Y» + plànol). `num_project_figures` només en pot AFEGIR. | Plantilla: bloc de figures del projecte variable (2 / 3 / 4). Decisió del Josep (bloc 7). | oberta |
+| Rubí · idem (3) | 4 / 5 / 6 (3 / 4 / 5) | Mateixa causa (Fig. 1 situació, Fig. 2 estructura + assaigs). | idem | oberta |
+| Alcoletge · idem (3) | 4 / 5 / 6 (3 / 4 / 5) | Mateixa causa. | idem | oberta |
+| Anciles · `fig_spt_cullera_num` | 4 (5) | El signat té **4** figures del projecte (catastro, topográfico, viviendas, ensayos). Les altres dues figures ES no s'extreuen (bloc 5). | idem | oberta |
+| Rubí · `photo_dpsh_num` / `photo_materials_num` | 1 / 2 (2 / 3) | El signat porta **1** foto de vista general («Google Earth, agost 2024») triada per l'Eva; la via A no en tria cap (`_num_site_photos` 0; Bell-lloc en té 2 perquè `photo_selection.json` porta `source=user`). | Pestanya de fotos del wizard (pregunta 19a). | oberta |
+| Castellar · `photo_materials_num` | 3 (4) | El signat **salta la Fotografia 3** (1, 2, 4; comprovat al `.doc` i al `document.xml`). | — | acceptada |
+| Bell-lloc · `section_resum_num` | 2.4.4 (2.4.3) | El signat numera **2.4.3 dues vegades** (S.P.T. i Resum). | — | acceptada |
+| Linyola · `section_excavabilitat_num` / `section_sismica_num` / `section_rado_num` | 3.5 / 3.6 / 3.7 (3.6 / 3.7 / 3.8) | El signat té «3.5 EXPANSIVITAT DELS MATERIALS» (i «4.3 EXPANSIVITAT»); `include_expansivity` és sempre False (`report_data.py`: «Determinat per tipus de sol», mai derivat). Linyola té assaig Lambe al GTL. | Pregunta 28 (criteri). | oberta |
+| Alcoletge · `section_sismica_num` / `section_rado_num` | 3.6 / 3.7 (3.7 / 3.8) | Idem, però el signat posa l'expansivitat a **3.6, després** de l'excavabilitat (Linyola: abans, com la plantilla). Amb `include_expansivity` la plantilla donaria 3.6 / 3.7 / 3.8 → l'excavabilitat (avui MATCH) passaria a X. Sense Lambe al GTL. | Pregunta 28 (posició). | oberta |
+| Linyola · `table_lab_num` / `table_permeability_num` / `table_lab_values_num` / `table_seismic_num` / `table_soil_chars_num` | 5-9 (6-10) | Mateixa causa que el registre **#2** (`table_dpsh_range` «3, 4 i 5» amb dues taules): el signat compta una taula in situ de més i arrossega les cinc següents. | Pregunta 23. | oberta |
+| Anciles · `section_empentes_num` | '' (4.4) | El signat té «4.4 EMPUJE DE TIERRAS» («muros del sótano»: semisoterrani a 2 dels 7 habitatges). `include_earth_pressure` només s'activa amb `has_basement` / `has_retaining_walls` (wizard) o amb pendent ICGC; la via A no ho omple. La lectura diu plantes «2Ps+Pb+1Pp». | Pregunta 29; prefill de `has_basement` des de les plantes (Ps/Ss). | oberta |
+
+### Imatges (full de control visual `runs/2026-09-07-m341-bloc4b/_IMATGES.md`)
+
+Sense veritat comparable per text; el que s'ha vist als 7 `.docx` generats abans i després d'arreglar la cau (detall a `_IMATGES.md`
+i al DECISION-LOG 2026-09-07 (vespre)). Els defectes de contingut que queden oberts (tria de foto, pàgina del plànol, retall de
+situació) no són cel·les de M341: el test de presència només diu «hi és / pendent / absent».
+
