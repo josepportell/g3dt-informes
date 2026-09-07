@@ -679,6 +679,22 @@ class ImageManager:
             logger.warning(f"Could not read role_files from file_mapping.json: {e}")
             return None
 
+    def _cache_name(self, prefix: str, source: Path, ext: str = "jpg") -> Path:
+        """Nom a la memòria cau d'imatges: `<prefix>_<nom>_<hash del contingut>.<ext>`.
+
+        Bloc 4 (2026-09-07): la clau era només el nom del PDF (`tall_tall.jpg`, `planol_A.01.jpg`,
+        `cadastre_sitplan_pl situ.jpg`) i la cau és GLOBAL (`~/.g3dt/cache/images`): el tall de correlació
+        de 6 dels 7 projectes mesurats era el MATEIX fitxer (el primer que l'havia renderitzat), el plànol
+        d'Alcoletge era el de Bell-lloc i el retall de situació d'Anciles el de Linyola. El hash del contingut
+        separa projectes amb el mateix nom de fitxer i invalida la imatge quan el PDF canvia.
+        """
+        import hashlib
+        try:
+            digest = hashlib.md5(source.read_bytes()).hexdigest()[:10]
+        except OSError:
+            digest = "nohash"
+        return self._cache_dir / f"{prefix}_{source.stem}_{digest}.{ext}"
+
     def _render_pdf_to_image(self, pdf_path: Path, output_path: Path, dpi: int = 150) -> Path | None:
         """Render first page of PDF to JPEG using pymupdf."""
         try:
@@ -1032,7 +1048,7 @@ class ImageManager:
                     if not (isinstance(clip_rect, (list, tuple)) and len(clip_rect) == 4):
                         logger.warning(f"Invalid clip_rect for {region_name}: {clip_rect}")
                         continue
-                    cached = self._cache_dir / f"{region_name}_{points_pdf.stem}.jpg"
+                    cached = self._cache_name(region_name, points_pdf)
                     if not cached.exists():
                         self._render_pdf_region(points_pdf, cached, tuple(clip_rect))
                     if cached.exists():
@@ -1045,7 +1061,7 @@ class ImageManager:
         if 'fig_cadastre_image' not in context:
             sit_plan_pdf = self._find_situation_plan(roles)
             if sit_plan_pdf:
-                cached = self._cache_dir / f"cadastre_sitplan_{sit_plan_pdf.stem}.jpg"
+                cached = self._cache_name("cadastre_sitplan", sit_plan_pdf)
                 if not cached.exists():
                     self._render_situation_plan_left(sit_plan_pdf, cached)
                 if cached.exists():
@@ -1072,7 +1088,7 @@ class ImageManager:
         if base_plan_pdf and base_clip_regions and 'main_plan' in base_clip_regions:
             clip_rect = base_clip_regions['main_plan']
             if isinstance(clip_rect, (list, tuple)) and len(clip_rect) == 4:
-                cached = self._cache_dir / f"main_plan_{base_plan_pdf.stem}.jpg"
+                cached = self._cache_name("main_plan", base_plan_pdf)
                 if not cached.exists():
                     self._render_pdf_region(base_plan_pdf, cached, tuple(clip_rect))
                 if cached.exists():
@@ -1086,7 +1102,7 @@ class ImageManager:
             # Priority 2: vision-detected floor_plan_bbox from planol_extracted.json
             bbox_clip = self._get_planol_bbox_clip(base_plan_pdf)
             if bbox_clip:
-                cached = self._cache_dir / f"main_plan_crop_{base_plan_pdf.stem}.jpg"
+                cached = self._cache_name("main_plan_crop", base_plan_pdf)
                 # Invalidate if planol_extracted.json is newer than cached image
                 planol_json = self.project_path / 'validation' / 'planol_extracted.json'
                 if cached.exists() and planol_json.exists() and planol_json.stat().st_mtime > cached.stat().st_mtime:
@@ -1103,7 +1119,7 @@ class ImageManager:
                         has_plan_crops = True
             else:
                 # Priority 3: full page render (no bbox available)
-                cached = self._cache_dir / f"planol_{base_plan_pdf.stem}.jpg"
+                cached = self._cache_name("planol", base_plan_pdf)
                 if not cached.exists():
                     self._render_pdf_to_image(base_plan_pdf, cached)
                 if cached.exists():
@@ -1116,7 +1132,7 @@ class ImageManager:
             # Fallback: no base plan, try "amb punts" or glob
             fallback_pdf = points_pdf or self._find_project_pdf(['A.01.pdf', 'A.*.pdf'])
             if fallback_pdf:
-                cached = self._cache_dir / f"planol_{fallback_pdf.stem}.jpg"
+                cached = self._cache_name("planol", fallback_pdf)
                 if not cached.exists():
                     self._render_pdf_to_image(fallback_pdf, cached)
                 if cached.exists():
@@ -1189,7 +1205,7 @@ class ImageManager:
             if tall_pdf is None:
                 tall_pdf = self._find_project_pdf(['tall.pdf', 'tall*.pdf'])
             if tall_pdf:
-                cached = self._cache_dir / f"tall_{tall_pdf.stem}.jpg"
+                cached = self._cache_name("tall", tall_pdf)
                 if not cached.exists():
                     self._render_pdf_to_image(tall_pdf, cached)
                 if cached.exists():
