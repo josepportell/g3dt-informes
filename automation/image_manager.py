@@ -304,7 +304,9 @@ class ImageManager:
         except Exception:
             return None
 
-        if data.get('source') != 'user':
+        # Peça 2 (2026-09-07): `lector` = tria del lector de fotos de Claude Code (`automation/imatges/lector_fotos.py`);
+        # el wizard la sobreescriu amb `user` quan l'Eva tria. Eva > lector > cau IA antiga > patrons.
+        if data.get('source') not in ('user', 'lector'):
             return None
 
         result: dict[str, list[Path]] = {
@@ -329,7 +331,7 @@ class ImageManager:
 
         if any(result.values()):
             logger.info(
-                "User photo selection loaded: %s",
+                "Photo selection (%s) loaded: %s", data.get('source'),
                 {k: [p.name for p in v] for k, v in result.items() if v},
             )
             return result

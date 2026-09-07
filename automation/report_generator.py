@@ -842,7 +842,7 @@ class ReportGenerator:
             data = json.loads(sel_path.read_text(encoding='utf-8'))
         except Exception:
             return 0
-        if not isinstance(data, dict) or data.get('source') != 'user':
+        if not isinstance(data, dict) or data.get('source') not in ('user', 'lector'):   # peça 2: el lector compta com a tria
             return 0
         return sum(1 for k in ('site_1', 'site_2') if data.get(k))
 

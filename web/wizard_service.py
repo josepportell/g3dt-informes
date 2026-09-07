@@ -1062,7 +1062,7 @@ def _compute_narrative_prefills(
     if sel_path.exists():
         try:
             sel = json.loads(sel_path.read_text(encoding='utf-8'))
-            if isinstance(sel, dict) and sel.get('source') == 'user':
+            if isinstance(sel, dict) and sel.get('source') in ('user', 'lector'):   # peça 2: el lector compta com a tria
                 n_site = sum(1 for k in ('site_1', 'site_2') if sel.get(k))
         except Exception:
             n_site = 0
