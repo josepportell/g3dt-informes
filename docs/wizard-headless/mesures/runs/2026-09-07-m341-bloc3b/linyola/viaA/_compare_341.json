@@ -1,0 +1,497 @@
+[
+ {
+  "var": "access_street",
+  "grup": "narr",
+  "eva": "carrer adjacent situat al oest",
+  "gen": "carrer adjacent situat al oest",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "adjacent_east_fmt",
+  "grup": "narr",
+  "eva": "Per la part est i pel sud amb parcel·les buides.",
+  "gen": "Per la part nord, sud i est amb parcel·les buides.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_intro",
+  "grup": "narr",
+  "eva": "La parcel·la objecte d’estudi es situa al oest del municipi de Linyola, pren una morfologia bastant rectangular, i limita:",
+  "gen": "La parcel·la objecte d'estudi es situa al oest del municipi de Linyola, pren una morfologia rectangular i limita:",
+  "status": "CLOSE",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "adjacent_north_fmt",
+  "grup": "narr",
+  "eva": "Per la part nord amb una parcel·la ocupada per una habitatge unifamiliar.",
+  "gen": "Per la part nord, sud i est amb parcel·les buides.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_south_fmt",
+  "grup": "narr",
+  "eva": "Per la part est i pel sud amb parcel·les buides.",
+  "gen": "Per la part nord, sud i est amb parcel·les buides.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_west_fmt",
+  "grup": "narr",
+  "eva": "I finalment, per la part oest, amb el carrer per on es realitza l’entrada.",
+  "gen": "I finalment, per la part oest, amb el Carrer Clot de la Llacuna.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "architect_company",
+  "grup": "A",
+  "eva": "BUNYESC ARQUITECTURA EFICIENT",
+  "gen": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "architect_name",
+  "grup": "resta",
+  "eva": "Bunyesc Arquitectura Eficient",
+  "gen": "Josep Bunyesc Palacín",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "architect_name_upper",
+  "grup": "A",
+  "eva": "BUNYESC ARQUITECTURA EFICIENT",
+  "gen": "JOSEP BUNYESC PALACÍN",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "bearing_layer_idx",
+  "grup": "calc",
+  "eva": 1,
+  "gen": 1,
+  "status": "MATCH",
+  "method": "bearing_rule"
+ },
+ {
+  "var": "building_structure_desc",
+  "grup": "narr",
+  "eva": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
+  "gen": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "building_type_lower",
+  "grup": "A",
+  "eva": "un nou habitatge unifamiliar",
+  "gen": "un habitatge unifamiliar aïllat",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "client",
+  "grup": "A",
+  "eva": "SRA. SÍLVIA EROLES BALAGUERÓ",
+  "gen": "SRA. SÍLVIA EROLES BALAGUERÓ",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "client_name",
+  "grup": "resta",
+  "eva": "Sílvia Eroles Balagueró",
+  "gen": "Sílvia Eroles Balagueró",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_aggressivity_statement",
+  "grup": "narr",
+  "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+  "gen": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_levels_detected",
+  "grup": "narr",
+  "eva": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "gen": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_water_statement",
+  "grup": "narr",
+  "eva": "En data de la realització dels treballs de camp, i fins la cota assajada no es va detectar presència de nivell freàtic en tots els assaigs realitzats.",
+  "gen": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "cota_referencia",
+  "grup": "A",
+  "eva": "+245.0",
+  "gen": "+245.00",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "cte_edificacio",
+  "grup": "calc",
+  "eva": "C-0",
+  "gen": "C-0",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "cte_sol",
+  "grup": "calc",
+  "eva": "T-1",
+  "gen": "T-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "data_camp_inici_text",
+  "grup": "A",
+  "eva": "1 d ‘octubre de 2025",
+  "gen": "1 d'octubre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_camp_text",
+  "grup": "A",
+  "eva": "1 d’octubre de 2025",
+  "gen": "1 d'octubre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_signatura_text",
+  "grup": "resta",
+  "eva": "29 d’octubre de 2025",
+  "gen": "29 d'octubre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "expedient",
+  "grup": "A",
+  "eva": "4001607",
+  "gen": "4001607",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "geo_p",
+  "grup": "resta",
+  "eva": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "geomech_E",
+  "grup": "calc",
+  "eva": ">800",
+  "gen": 500,
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_cohesion",
+  "grup": "calc",
+  "eva": "1.0",
+  "gen": 1.0,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_gamma",
+  "grup": "calc",
+  "eva": "2.20",
+  "gen": 2.2,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_phi",
+  "grup": "calc",
+  "eva": "30",
+  "gen": 30,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "lab_depth",
+  "grup": "A",
+  "eva": "Profunditat:  -1.00  a -1.15 m",
+  "gen": "-1.0 a -1.15",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "lab_field_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_field_description",
+  "grup": "resta",
+  "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_location",
+  "grup": "A",
+  "eva": "Punt: P-3",
+  "gen": "P-3",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "lab_sample_id",
+  "grup": "A",
+  "eva": "Mostra : SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "lab_testing_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_testing_description",
+  "grup": "resta",
+  "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_tests_text",
+  "grup": "narr",
+  "eva": "Assaig de Límits d’Atterberg UNE 103103/94 – 104/93\nAssaig d’expansivitat Lambe UNE 103500/94\nAssaig de contingut en sulfats UNE 83963 : 2008",
+  "gen": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93\nAssaig d'expansivitat Lambe UNE 103600/96\nAssaig de contingut en sulfats UNE 83963 : 2008",
+  "status": "CLOSE",
+  "method": "table_cell"
+ },
+ {
+  "var": "materials_intro",
+  "grup": "narr",
+  "eva": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "gen": "A partir dels assaigs in situ realitzats, s'ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "municipality_de",
+  "grup": "A",
+  "eva": "de Linyola",
+  "gen": "de Linyola",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "num_dpsh_tests",
+  "grup": "A",
+  "eva": "3",
+  "gen": 3,
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "plantes",
+  "grup": "A",
+  "eva": "Pb",
+  "gen": "Pb",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "qa_value",
+  "grup": "calc",
+  "eva": "3.0",
+  "gen": "3.00",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "radon_sentence",
+  "grup": "narr",
+  "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l’apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas radó en edificis tancats.",
+  "gen": "La parcel·la concreta d'estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l'apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas radó en edificis tancats.",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "radon_zone",
+  "grup": "calc",
+  "eva": "0",
+  "gen": "0",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "seismic_ab_text",
+  "grup": "calc",
+  "eva": "0,04",
+  "gen": "0,04",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "settlement_sentence",
+  "grup": "calc",
+  "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+  "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_condition",
+  "grup": "narr",
+  "eva": "Com que es tracta d’un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+  "gen": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_description",
+  "grup": "narr",
+  "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al oest. La parcel·la es troba uns 15 cm per sota del nivell del carrer, es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
+  "gen": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "spt_depth_range",
+  "grup": "A",
+  "eva": "-1.00 a -1.15",
+  "gen": "-1.00 a -1.15",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_lithology",
+  "grup": "A",
+  "eva": "Lutites",
+  "gen": "Lutita gresosa",
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_location",
+  "grup": "A",
+  "eva": "P-3",
+  "gen": "P-3",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_n30",
+  "grup": "A",
+  "eva": "R",
+  "gen": "R",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_test_id",
+  "grup": "A",
+  "eva": "SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "sulfate_baumann",
+  "grup": "calc",
+  "eva": "--",
+  "gen": "---",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_classification",
+  "grup": "calc",
+  "eva": "No agressius",
+  "gen": "No Agressius",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_level_name",
+  "grup": "calc",
+  "eva": "2on nivell",
+  "gen": "1er nivell",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_value",
+  "grup": "calc",
+  "eva": "0.0",
+  "gen": "0.0",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_construida",
+  "grup": "A",
+  "eva": "250.91",
+  "gen": "250,91",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_parcela",
+  "grup": "A",
+  "eva": "571",
+  "gen": "571",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "table_dpsh_range",
+  "grup": "calc",
+  "eva": "3, 4 i 5",
+  "gen": "3 i 4",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "utm_x",
+  "grup": "A",
+  "eva": "324935",
+  "gen": 324935.0,
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "utm_y",
+  "grup": "A",
+  "eva": "4619561",
+  "gen": 4619561.0,
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ }
+]

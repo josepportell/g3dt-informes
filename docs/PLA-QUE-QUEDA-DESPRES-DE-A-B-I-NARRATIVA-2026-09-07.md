@@ -68,6 +68,8 @@ Alcoletge pugen de 64 / 73 % (és on són les X). **Dependències:** cap de l'Ev
 
 ### Bloc 3 — Deriva de l'extractor de referència (veritats fora de la narrativa) — *S-M, ½ dia*
 
+> **Estat 2026-09-07 (tarda): FET i mesurat** (DECISION-LOG 2026-09-07 (tarda); runs `2026-09-07-m341-bloc3-veritats` (només veritats) i `2026-09-07-m341-bloc3b` (+ `bearing_layer_idx`, Df Vilanova 1,1)). Extractor arreglat per clau abans d'aplicar: taula SPT com a bucle (+ `spt_*` de la 1a fila; Rubí/Linyola/Alcoletge la tenien i t5 «sondeig» se l'enduia), fila portant pel que DIU el signat (`bearing_row_from_text` → `bearing_layer_idx`, 6/7 M), taules per etiqueta i assignació global (Anciles «T-1»/«C-1» → 1655,01 / plantes reals, `cte_*`), capçaleres ES, notacions «15-R»/«38º»/«>350», àncora sobre «Qa= {{ qa_value }} …» (`settlement_sentence` 7/7). Veritats re-extretes a TOTES les claus (`--keys all`). **Total 73 → 74 %, A 77 → 78 %, calc 76 → 77 %, taules 82 % intactes; Alcoletge 66 → 75 (registre #3 resolt), Bell-lloc 84 → 87 (`data_camp_text` era la 1a ranura), Vilanova 60 → 55 (honest: la veritat d'abril tenia la fila 1; el signat recolza al 2n nivell amb pous).** No fet: p60 multi-forat (`*_de` no s'extreuen; pregunta 26), castellà (bloc 5). Preguntes 27 (Vilanova SPT P-1/P-3; Anciles construïda total).
+
 `refresh_eva_narrativa.py --all-keys` ja diu què mouria una re-extracció sencera: `spt_*` cauen a None, les dates canvien de clau
 (segona variable de data), `geomech_*` d'Alcoletge/Vilanova canvien de fila, `settlement` → `settlement_sentence`, `num_dpsh_tests`
 (número sol). A més, veritats equivocades vistes al run: `municipality` (3 projectes: paràgraf de la sísmica), `superficie_parcela`

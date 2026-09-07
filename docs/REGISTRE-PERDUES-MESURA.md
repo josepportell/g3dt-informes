@@ -42,3 +42,22 @@ Convenció: **abans → ara** són els valors impresos pel sistema (gen) i **sig
 | Anciles · `client` | «MARIA ALBA BARRAU CASTÁN» → «SRA. MARIA ALBA BARRAU CASTÁN» (signat «SRA. ALBA MARIA BARRAU CASTÁN») | Ordre dels noms de pila: el pressupost signat diu «Maria Alba»; l'Eva escriu «Alba Maria» (com signa ella els correus). | Pregunta 26 (quin nom va a la portada). |
 | Rubí · 12 informes (`8b`/`calc`/`t2`/`viab`), taula «plantes» | «1414» → «1.414» (signat «951») | Només format: el valor d'abril del wizard (1414, tres parcel·les) segueix sent el que és. | Pregunta 10 / user_data d'abril. |
 
+## 2026-09-07 — Bloc 3 (veritats re-extretes) — runs `2026-09-07-m341-bloc2b` → `2026-09-07-m341-bloc3b`
+
+Les cel·les que cauen aquí no les fa caure el sistema: cau la VERITAT antiga que l'afavoria, o l'assumpció de Df que la contradeia.
+
+| # | Projecte · variable | Abans → ara (signat) | Per què s'ha perdut | Com es reobre | Estat |
+|---|---|---|---|---|---|
+| 6 | Vilanova · `geomech_E` / `geomech_cohesion` / `geomech_gamma` / `geomech_phi` | 50 / 0,10 / 1,90 / 25 MATCH×4 (veritat d'abril = fila 1) → 450 X / 0,0 X / 2,0 C / 38 C (veritat = fila 2: 550 / 0,50 / 2,20 / 34) | El signat recolza els pous al **2n nivell** («apoyada en los materiales del 2do nivel saneado»); la veritat d'abril tenia la fila 1 i el sistema (Df 0,3) hi coincidia per un error compartit. Ara la veritat és la fila portant declarada (`bearing_layer_idx` 1) i el sistema calcula al 2n nivell (Df 1,1): el classificador diu sorra (φ 38, c 0) on l'Eva escriu «areniscas, arenas, sustrato» (φ 34, c 0,50, E 550). | Pregunta 14/25a (criteris de roca tova / sorres cimentades); P6 amb «areniscas» com a roca tova. | oberta |
+| 7 | Vilanova · `settlement_sentence` | «…menyspreables o bé inferiors a 1.0 cm» MATCH (numèric 1,0 = 1,0) → «iguals o inferiors a X cm» X (signat «menospreciables o inferiores a 1.0») | Amb Df 1,1 el nivell portant és el 2n (sorra → règim granular → valor de Schmertmann); l'Eva el tracta com a roca/cohesiu (frase genèrica). Mateixa arrel que #6. | Mateixa que #6. | oberta |
+
+### Moviments sense canvi d'estat (X → X) o claus noves que entren en X
+
+| Projecte · variable | Abans → ara (signat) | Per què | On es reobre |
+|---|---|---|---|
+| Vilanova · `qa_value` | 1,50 → 3,00 (signat 2,5) | Df 1,1: 2n nivell sorra densa → topall 3,5? no: Terzaghi 3,0 amb φ 38. Més a prop, encara X. | #6 |
+| Castellar · `bearing_layer_idx` (nova) | — → 1 X (signat 0) | El signat té UNA fila geotècnica (bretxes); el sistema en modela dues (superficial + roca). Índex ≠ paràmetres: els de la roca coincideixen. | Recompte de nivells de Castellar (criteri «Unitat litològica»). |
+| Rubí / Linyola / Alcoletge · `spt_lithology` (noves) | — → X | Vocabulari curt de l'Eva («Graves i sorres», «Lutites», «Llims compactes, lutites alterades») contra la lectura del full de camp. Mateix cas que el bloc 2 va descartar. | Candidat al wizard, no fórmula. |
+| Anciles · `superficie_construida` (nova) | — → 186,18 X (signat 1273,79) | El signat porta el TOTAL de les 7 cases; la lectura, una casa. | Pregunta 27b. |
+| Vilanova / Anciles · `data_camp_inici_text`, `municipality_de` (noves) | — → X | Castellà: el prefix català no hi és i la veritat és el paràgraf sencer. | Bloc 5 (plantilla ES + prefixos ES a l'extractor). |
+

@@ -4116,3 +4116,125 @@ Josep digui.
 **Decisió del Josep (2026-09-07, 12:45) sobre la frase dels antecedents:** les tres formes (arquitecte en nom del client / client mateix / empresa) es poden mirar d'inferir del CONTINGUT dels correus (cossos) i dels documents de tipus pressupost (qui demana, qui signa, en nom de qui); serà feina d'LLM, amb poques probabilitats d'encertar-ho sols, i **es farà més endavant** (no ara). Mentrestant, pregunta 26 a l'Eva.
 
 *Fi entrada 2026-09-07 (migdia). Bloc 2: format de la cua d'A, cap pèrdua, A 77 %.*
+
+## 2026-09-07 (tarda) — Bloc 3 del PLA: deriva de l'extractor de referència (taula SPT com a bucle, fila portant pel que DIU el signat, taules per etiqueta i assignació global, capçaleres castellanes, àncora sobre paràgraf amb forat) i veritats re-extretes a TOTES les claus dels 7 signats: total 73 → 74 %, A 77 → 78 %, calc 76 → 77 %, Vilanova 60 → 55 % (honest)
+
+### Context
+
+Tercer bloc del `docs/PLA-QUE-QUEDA-DESPRES-DE-A-B-I-NARRATIVA-2026-09-07.md` (Josep, 12:45: «Seguim amb bloc 3»). Les veritats
+(`reference-material/*/validation/eva_reference_values.json`) s'havien extret l'abril del 2026 amb una plantilla que ja no és la
+d'avui: des de llavors la taula SPT/MA és un bucle (Fase 8b), la frase de l'assentament és `{{ settlement_sentence }}`, la data de
+camp té dues variables i, des d'avui (bloc 2), quatre forats porten la preposició (`*_de`). El 2026-09-06 el refresc va ser
+quirúrgic (només narrativa) precisament perquè una re-extracció sencera movia els grups A i calc sense que ningú n'hagués mirat el
+perquè. Avui s'ha mirat: `refresh_eva_narrativa.py --all-keys` (65 diferències en 7 projectes) → cada clau que movia s'ha classificat
+(plantilla nova / extractor equivocat / castellà) i l'extractor s'ha arreglat per clau abans d'aplicar res. Referència: `-bloc2b`.
+Tot a cost 0 (cap crida LLM).
+
+### Decisions arquitectòniques clau
+
+**A. La taula SPT/MA és un bucle també per a l'extractor** (`LOOP_TABLES[6] = spt_ma_tests`, columnes test_id/location/depth_range/
+n30/lithology) i la primera fila es projecta a `spt_test_id`, `spt_location`, `spt_depth_range`, `spt_n30`, `spt_lithology`
+(`table_flatten`, com `geomech_*`). **Why:** les cel·les `{{ test.* }}` (punt al nom) es saltaven i els cinc `spt_*` queien a None
+a la re-extracció (4 projectes × 5 cel·les). Efecte lateral trobat: a Rubí, Linyola i Alcoletge la taula SPT del signat NO era a la
+veritat perquè t5 «sondeig» (que aquests projectes no tenen) se l'enduia (decisió C); ara hi són (+15 cel·les d'A).
+
+**B. La fila portant és la que el signat DECLARA, no «l'última».** `bearing_row_from_text`: a la frase que acaba amb «…tensió de
+treball/admissible de:» / «…tensión de trabajo de:» (7/7 signats), l'ÚLTIM ordinal de nivell mana («un cop superats els materials
+del primer nivell … recolzada sobre els materials del segon nivell sanejat» → 2); sense ordinal, «substrat/sustrato» = última fila;
+fora de rang → None (mai s'inventa). `geomech_*` = aquesta fila i **`bearing_layer_idx`** (0-based) entra a la veritat (mètode
+`bearing_rule`, grup calc de M341, gen = `_calc.json`). Resultat: Rubí/Bell-lloc 0, Linyola/Alcoletge/Vilanova/Anciles 1: **6/7
+MATCH** contra el generador (P2b); Castellar X perquè el signat té UNA fila (bretxes) i el sistema en modela dues. **Why:** la
+veritat d'abril tenia la fila 1 (Alcoletge: rebliment; registre de pèrdues #3) i la regla del codi «row[-1]» encertava Alcoletge per
+casualitat i hauria fallat a qualsevol projecte que recolzi al primer de dos. Descobert de passada: **Vilanova recolza al 2n nivell
+amb pous** («apoyada en los materiales del 2do nivel saneado»), no al primer amb sabates (decisió F).
+
+**C. Aparellament de taules per ETIQUETA i per puntuació global.** `_table_label_fingerprint` (primera cel·la de les tres primeres
+files, sense Jinja) puntua a més de la primera fila sencera; l'assignació és global per puntuació descendent (no cobdiciosa en ordre
+de plantilla) amb llindar 0,4 (era 0,3). **Why:** a Anciles la fila sencera «n.º de plantas previstas | 5 viviendas con pb + 1pp + bc
+…» s'assemblava més a la taula CTE que a la Taula 1, i `superficie_parcela` valia «T-1» i `plantes` «C-1» (i `cte_*` es quedaven
+sense); t5 «sondeig» prenia la SPT als tres projectes sense sondeig i la geotècnica a Vilanova. Verificat: els 7 mapes nous coincideixen
+amb la simulació (Castellar i Bell-lloc idèntics; aparellaments bons ≥ 0,66, dolents ≤ 0,38).
+
+**D. Capçaleres castellanes i notacions de l'Eva.** «Nº ensayo», «Punto», «Prof. extracción (m)», «Litología» són capçalera
+(`_HEADER_ROW_PHRASES`/`_HEADER_CELL_PHRASES`); «N30» NO és un identificador d'assaig (`_detect_header_rows`: ids = P/S/SPT/MA/TP/MI
++ número); «15-R», «--», «38º», «>350» SÓN dades. **Why:** Vilanova/Anciles treien la capçalera com a primera fila SPT, i la
+geotècnica d'Anciles perdia el 1er nivell (la fila «2do nivel | 15-R | -- | 2.00 | 0.00 | 38º | >350» comptava 2/7 numèrics).
+
+**E. L'àncora pot ser un paràgraf AMB forat** si l'esquelet té ≥ 6 paraules i no sembla capçalera: «Qa= {{ qa_value }} Kg/cm2 amb un
+factor de seguretat inclòs de F=3» ancora `{{ settlement_sentence }}` (queia a None: 7 cel·les de calc). Primer intent (≥ 3 paraules)
+enganxava «{{ section_empentes_num }}. EMPENTES DE TERRES» i `empentes_paragraph` prenia la frase de la campanya: corregit abans
+d'aplicar. `settlement_sentence` es puntua a M341 pel NÚMERO (com `settlement`): «inferiors a 1.80» i «1.50» s'assemblen un 97 % i
+són una X (registre #1).
+
+**F. Assumpció de M341 corregida: Df de Vilanova 0,3 → 1,1.** El signat recolza els pous al 2n nivell (B); com a Linyola/Anciles,
+contacte del 2n nivell a la geometria del sistema (segmentador: 0,8; el signat, Tabla 6, dona 1,0/1,6/2,2 per punt) + 0,3. Efecte:
+`geomech_phi` 25 → 38 contra 34 (CLOSE), Qa 1,5 → 3,0 contra 2,5 (X, més a prop), `settlement_sentence` M → X (el sistema tracta el
+2n nivell com a granular «iguals o inferiors a X cm»; l'Eva «menospreciables o inferiores a 1.0»): registre de pèrdues #7.
+
+**G. `refresh_eva_narrativa.py --keys all|k1,k2`**: la llista blanca s'amplia a totes les claus (o a les indicades); la nota del JSON
+diu quines s'han re-extret. Aplicat a les 7 veritats (8/14/9/15/18/12/14 claus). Els forats nous del bloc 2 (`client_de`,
+`building_type_de`, `architect_company_de`) NO s'extreuen: p60 és multi-forat amb dos forats adjacents (`{{ architect_name_upper
+}}{{ architect_company_de }}`) i apòstrofs tipogràfics que `_extract_multi_vars` no normalitza; `client`, `architect_name_upper` i
+`building_type_lower` es conserven de l'anàlisi externa (`intelligent_analysis`). Es deixa: només Bell-lloc té la frase amb l'esquema
+de la plantilla (pregunta 26).
+
+**Castellà (bloc 5), documentat i no tocat:** amb el prefix català absent, `municipality_de`, `data_camp_text`, `data_camp_inici_text`,
+`num_dpsh_tests` i `expedient` de Vilanova/Anciles són el paràgraf sencer (X). Un diccionari de prefixos CA→ES a l'extractor és la
+via quan es faci la plantilla ES.
+
+### Implementació
+
+- `automation/reference_extractor.py` (+171/−45): `LOOP_TABLES[6]`, `_table_label_fingerprint`, `match_tables` global,
+  `_anchor_paragraph` (esquelet), `_detect_header_rows` (regex numèric + ids), capçaleres ES, `_flatten_loop_table_concepts(result,
+  ref_paras)` (fila portant + `spt_*`), `bearing_row_from_text`, `_bearing_sentence`, `_TENSION_RE`, `_ORDINAL_LEVEL_RE`, mètode propi
+  `bearing_rule`.
+- `scripts/compare_prefills_vs_eva.py`: `data_camp_inici_text` per data; `bearing_layer_idx` numèric exacte.
+- `docs/wizard-headless/mesures/mesura_341.py`: `bearing_layer_idx` al grup calc i a `_gen_value` (de `_calc.json`);
+  `settlement_sentence` puntuada com `settlement`; `DF_SIGNAT["vilanova"] = 1.1` amb la cita del signat.
+- `docs/wizard-headless/mesures/refresh_eva_narrativa.py`: `--keys`.
+- 7 × `reference-material/*/validation/eva_reference_values.json` re-extrets (nota per fitxer amb les claus).
+- `tests/test_bloc3_extractor.py` (16): fila portant als 7 signats + fora de rang, capçaleres Anciles/ES, bucle SPT, etiqueta,
+  aparellament global (sondeig sense equivalent, Anciles per etiqueta), àncora amb forat i no capçalera, claus noves als comparadors.
+
+### Validació empírica
+
+Tres runs, cada un aïlla una causa (codi del generador INTACTE des de `-bloc2b`):
+
+| run | què canvia | escalars (M·C·X·ND → %) | A | calc | taules |
+|---|---|---|---|---|---|
+| `2026-09-07-m341-bloc2b` | referència | 208 · 41 · 94 · 33 → 73 % | 89·7·29·16 → 77 % | 69·2·23·2 → 76 % | 292·99·88 → 82 % |
+| `-bloc3-veritats` | només veritats | 229 · 42 · 97 · 40 → 74 % | 109·7·32·16 → 78 % | 70·3·23·9 → 76 % | idèntiques |
+| `-bloc3b` | + `bearing_layer_idx` al gen, Df Vilanova 1,1 | **234 · 43 · 98 · 33 → 74 %** | **109·7·32·16 → 78 %** | **75·4·24·2 → 77 %** | idèntiques |
+
+Per projecte (bloc2b → bloc3b): Castellar 83 → 82 (bearing X: el signat té 1 nivell), Rubí 78 → 79, Bell-lloc 84 → **87**
+(`data_camp_text` X → M: la veritat era la 1a ranura; la 2a diu «1 i 6 d'octubre», com el sistema — el PLA s'equivocava), Linyola
+78 → 79, Alcoletge 66 → **75** (`geomech_*` de la fila portant: c 1,00 M, φ 30 M, γ 2,20 C; registre #3 RESOLT), Vilanova 60 → **55**
+(la veritat d'abril tenia la fila 1 i el sistema hi coincidia per un error compartit; ara la fila 2: E 450↔550, c 0↔0,50, γ C, φ C),
+Anciles 50 → 53 (`superficie_parcela` 1655,01 M, `cte_edificacio`/`cte_sol` M, `superficie_construida` 186,18↔1273,79 X: pregunta 27).
+Claus noves: `data_camp_inici_text` 5 M + 2 X (ES), `spt_*` de Rubí/Linyola/Alcoletge 12 M + 3 X (`spt_lithology`: «Sorres llimoses
+amb graves (SUCS…)»↔«Graves i sorres», «Lutita gresosa»↔«Lutites», «[il·legible] marró»↔«Llims compactes, lutites alterades»),
+`bearing_layer_idx` 6 M + 1 X, `municipality_de` (Alcoletge «d'Alcoletge» M; Rubí C; ES X), `settlement_sentence` (numèric:
+Rubí/Bell-lloc X com abans, Vilanova M → X per la Df). 12 informes de `mesura_informe`: idèntics (no llegeixen les veritats).
+Suite: Suite sencera: **31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2431 verds / 5 omesos (333 s, amb les mesures en paral·lel)**.
+
+### Limitacions conegudes
+
+- `bearing_row_from_text` llegeix la PRIMERA frase de tensió; un informe amb dues valoracions (sabates i llosa a nivells diferents)
+  prendria la primera.
+- La fila portant de la veritat i la del sistema es comparen per ÍNDEX: si el sistema modela més nivells que el signat (Castellar),
+  la cel·la és X encara que els paràmetres coincideixin.
+- p60 multi-forat no s'extreu (G). Castellà (bloc 5).
+- Vilanova SPT: el signat diu P-1 = 10 / P-3 = 24 i la lectura el contrari (pregunta 27a); la Df 1,1 és una assumpció (com totes).
+
+### GO/NO-GO
+
+- ✅ Cada moviment de cel·la explicat per una de tres causes (plantilla nova, extractor arreglat, assumpció de Df); cap moviment
+  sense causa. Pèrdues al registre (#6 Vilanova `geomech_*`, #7 Vilanova `settlement_sentence`).
+- ✅ Taules intactes; 12 informes idèntics.
+- ✅ Commitejat en 4 (GO del Josep): `229aef6` (extractor + tests) · `f3e977c` (comparadors + M341 + refresc) · `953eec4` (7 veritats) · docs i runs.
+
+### Següents passos
+
+Bloc 4 (numeració i imatges, mai mesurats), preguntes 22-27 a l'Eva, castellà (bloc 5: plantilla ES + prefixos ES a l'extractor).
+
+*Fi entrada 2026-09-07 (tarda). Bloc 3: veritats re-extretes amb l'extractor arreglat; Alcoletge 66 → 75, Vilanova honest 55.*
