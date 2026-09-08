@@ -7,6 +7,32 @@ i fotos que l'Eva posa als 7 informes signats. Font de la veritat: `docs/imatges
 **Com es mesura:** `docs/wizard-headless/mesures/imatges_font.py` dins M341 (peça 0): M = la mateixa imatge (phash ≤ 10),
 C = la mateixa font amb un altre retall, X = una altra font, ND = no posem res.
 
+## 0. Descobriments que valen per a les peces que queden
+
+Recollits el 2026-09-08 en fer les peces 4 i 6. **Tots són mesurats**, no vistos a ull.
+
+1. **Els rols de FIGURA de SmartScan no són de fiar.** Sis casos verificats: `figure_correlation` → un dibuix diferent
+   (Rubí), `figure_geological_map` → `M1.png` (Castellar) i una imatge minada d'un correu (Linyola), `situation_plan`
+   → el PDF de l'arrel en 4 de 7, `architect_plan` sense rol a Castellar i Vilanova, `photo_site_overview` → una
+   màquina (Castellar). **Una regla determinista pel nom o per l'estructura del fitxer ha guanyat el rol 3 de 3
+   vegades.** Abans de deixar que un rol mani sobre un forat d'imatge, mesura'l contra la veritat; si és l'única font,
+   posa'l d'últim recurs. *(Val per a `figure_situation_map` a la peça 5: a Rubí apunta a `F1 UBI.png`, que **sí** és
+   la figura del signat, però no s'hi arriba perquè `fig_cadastre_image` s'omple abans.)*
+2. **Els fulls d'annex de l'Eva són A3 VERTICAL girats 270°.** `get_images`, `get_drawings` i `get_text` donen
+   coordenades **sense girar**; `page.rect` les dona girades. Fes la geometria amb `page.mediabox` i passa el
+   rectangle final per `page.rotation_matrix`. Els `tall.pdf` NO van girats (per això la peça 3 no ho notava).
+3. **El `pl situ.pdf` de l'arrel no serveix per retallar-ne res**: és l'export «imprimible» del FreeHand amb el raster
+   tallat en centenars de tires (Vilanova: 1.119 imatges, la més gran de 739×51). El de `PDF/ANNEXES/` porta cada
+   imatge sencera. Filtra per àrea (≥ 15 % de la pàgina) i el descartaràs sol.
+4. **Els PNG d'`ALTRES` no tenen marge blanc** (2-6 %) i **retallar-los empitjora**: `m7.png`, `F1 UBI.png` i
+   `F1 SIT.png` són MATCH amb **phash 0 crus** i phash 2 retallats. No escriguis cap retall de blanc.
+5. **La recepta ICGC aprovada per l'Eva no es toca, i moure-la no guanyaria res:** cap buffer de 150 a 1.000 m acosta
+   Linyola, Bell-lloc ni Alcoletge al que ella va enganxar (NCC 0,31-0,52 a tot arreu). La diferència **no és el
+   zoom** sinó la vista del visor. Pregunta 34.
+6. **Una ranura de plantilla només pot servir UNA figura de l'Eva.** A Vilanova el mateix dibuix li fa de Figura 2
+   (emplaçament, retall ample) i de Figura 3 (assaigs, retall estret); amb un sol forat només se n'omple una. És el
+   motiu de fons de la peça 7.
+
 ## 1. On som, ranura per ranura
 
 | ranura de l'Eva | M | C | X | ND | estat |
