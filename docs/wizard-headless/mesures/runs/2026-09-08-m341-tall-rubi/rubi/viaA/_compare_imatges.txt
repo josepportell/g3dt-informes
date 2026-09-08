@@ -1,0 +1,13 @@
+# Imatges «mateixa font que l'Eva» — rubi/viaA
+
+| # | ranura Eva | peu | nostre forat | estat | phash | ncc | psr | escala | direcció |
+|--:|---|---|---|---|--:|--:|--:|--:|---|
+| 1 | `fig_situacio` | Figura 1. Situació de la zona d’estudi, amb color taronja. ( | `fig_cadastre_image` | **MISMATCH** | 34 | 0.235 | 2.6 | 0.493 | veritat dins nostra |
+| 2 | `foto_vista` | Fotografia 1. Vista general de la zona d’estudi (Google Eart | — | **NO_DATA** | — | — | — | — | — |
+| 3 | `fig_assaigs` | Figura 2. Situació de l’estructura projectada i els assaigs  | `fig_main_plan_image` | **MATCH** | 6 | — | — | — | sencera |
+| 4 | `foto_dpsh` | Fotografia 2. Vista de la màquina utilitzada en un dels assa | `photo_dpsh_image` | **MISMATCH** | 28 | 0.203 | 3.1 | 0.192 | veritat dins nostra |
+| 6 | `fig_geologic` | Figura 4. Mapa geològic a escala 1:50.000 de la zona en estu | — | **NO_DATA** | — | — | — | — | — |
+| 7 | `foto_materials` | Fotografia 3. Detall dels materials del primer nivell. | `photo_materials_image` | **MATCH** | 0 | — | — | — | sencera |
+| 9 | `fig_tall` | Figura 5. Detall del tall de correlació que s’adjunta als an | `fig_correlation_image` | **CLOSE** | 28 | 0.913 | 99.0 | 1.0 | nostra dins veritat |
+
+Totals: 2 M · 1 C · 2 X · 2 ND → 60 %; sobrants (nostres sense figura de l'Eva): 0 

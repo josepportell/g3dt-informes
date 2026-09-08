@@ -5182,3 +5182,85 @@ Rubí) → **peça 6** (geològic; 3 dels 7 amb el PNG `*MGEOL*` sense tocar les
 (`_FOR-NEW-YOU-20260907-2000` §4.1) continuen desbloquejant la 6 i part de la 5.
 
 *Fi entrada 2026-09-08. La figura dels assaigs surt del full de situació de l'Eva, retallat pel dibuix: 0 % → 100 %.*
+
+---
+
+## 2026-09-08 (2) — El «retall de PNG» del pendent 2 no calia: els PNG ja vénen sense marge, i el forat de Rubí era una precedència de rol (`fig_tall` 86 % → 100 %)
+
+### Context
+
+`PENDENTS-IMATGES.md` §3 tenia com a pendent 2 un **retall de PNG** («bbox de píxels no blancs») amb la nota «el
+necessiten la peça 5 i el tall de Rubí (`F5 TALL.png`, avui X)», i el `_FOR-NEW-YOU-20260907-2000` §3 el posava com a
+segona tasca, just després de la peça 4. Abans d'escriure'l s'ha mesurat si feia falta
+(`feedback_measure_baseline_before_coding`). **No fa falta, i el forat que havia de tapar tenia una altra causa.**
+
+### Decisions arquitectòniques clau
+
+**1. El retall de blanc dels PNG d'`ALTRES` NO s'escriu.** Els PNG d'`ALTRES` dels 7 projectes tenen entre el 2 i el
+6 % de marge blanc, i el retall no canvia cap veredicte de la mesura. Les tres imatges que la peça 5 vol fer servir en
+primer lloc — `m7.png` (Castellar), `F1 UBI.png` (Rubí), `F1 SIT.png` (Vilanova) — ja són **MATCH amb phash 0 tal com
+són**, i retallades passen a phash 2 (segueixen MATCH, però una mica pitjor). Escriure l'eina hauria estat codi mort
+que empitjora tres cel·les.
+**Per què la nota deia el contrari:** el pas 2 va inferir el marge blanc mirant els fulls, sense mesurar-lo. Queda
+corregit al document.
+
+**2. El forat del tall de Rubí no era un marge: `F5 TALL.png` és un DIBUIX DIFERENT del signat.** Vist a ull i
+confirmat per la mesura: el PNG té **dos nivells** (N1 graves i sorres / N2 gresos) amb llegenda i barra d'escala, de
+204 a 212 m; el que l'Eva va signar té un **nivell únic marró amb la cota de fonamentació en vermell discontinu**, de
+208 a 213 m, i valors de Nb diferents (P-2: Nb=48 al signat, Nb=46/57 al PNG). Cap retall de blanc pot convertir l'un
+en l'altre.
+
+**3. La causa real és la precedència de rols, i s'arregla invertint-la.** El bloc «SmartScan figure roles» corria
+**abans** que el de correlació, i `ROLE_TO_FIGURE_VAR` hi tenia `figure_correlation → fig_correlation_image`. A Rubí
+aquest rol apunta a `ANNEXES/Altres/F5 TALL.png` i per això el `tall.pdf` no s'arribava a retallar mai. Rubí és
+**l'únic dels 7 amb aquest rol**; tots set tenen `correlation_section → tall.pdf`. Ara `figure_correlation` surt de
+`ROLE_TO_FIGURE_VAR` i es prova **al final** del bloc de correlació, com a últim recurs quan no hi ha cap `tall.pdf`
+per retallar: no es perd la capacitat, només l'ordre.
+**Alternativa rebutjada: canviar SmartScan** perquè no assigni el rol. El rol no és fals — el PNG existeix i és un tall
+de correlació; el que era fals era donar-li prioritat sobre el document que l'Eva retalla als 7 signats (peça 3, D9).
+Tocar SmartScan hauria mogut `file_mapping.json` i els seus tests, i el problema no és seu.
+
+### Implementació
+
+`automation/image_manager.py`: `figure_correlation` fora de `ROLE_TO_FIGURE_VAR` (amb el perquè al costat) i provat
+com a últim recurs dins el bloc de correlació (+10 línies). 1 test nou a `tests/test_peca4_retall_planta.py`.
+
+### Validació empírica
+
+Run `2026-09-08-m341-tall-rubi` contra `2026-09-08-m341-peca4` (peça 4):
+
+| | abans | després |
+|---|---|---|
+| `fig_tall` | 3 M · 3 C · 1 X → 86 % | 3 M · **4 C** · **0 X** → **100 %** |
+| rubi | 2 M · 0 C · 3 X · 2 ND → 40 % | 2 M · 1 C · 2 X · 2 ND → **60 %** |
+| **total imatges** | 23 · 3 · 19 · 11 → 58 % | 23 · **4** · **18** · 11 → **60 %** |
+
+Rubí: NCC 0,581 (X) → **0,913 (C)**. Cap altra cel·la moguda: `diff` dels escalars buit als 7, agregat idèntic llevat
+del nom del run. `fig_tall` és la primera ranura sense cap X als 7 projectes.
+
+Mesura del retall de blanc (probe, no s'ha desat codi): marges del 2-6 % als 12 PNG de Castellar, 10 de Rubí i 8 de
+Vilanova; cap canvi de veredicte; `m7.png` / `F1 UBI.png` / `F1 SIT.png` MATCH ph=0 crus i ph=0-2 retallats.
+
+### Tests
+
+1 de nou (`figure_correlation` fora del mapa de rols, la resta del mapa intacta). Suite sencera: **2484 verds, 31
+vermells amb els mateixos noms** que `suite-vermells-esperats.txt`.
+
+### Limitacions conegudes
+
+- El rol `figure_situation_map` de Rubí apunta a `F1 UBI.png`, que **és** la figura de situació del signat (phash 0),
+  però avui no s'hi arriba perquè `fig_cadastre_image` ja està ple abans. És la peça 5, no aquesta entrada.
+- Si algun dia un projecte no té `tall.pdf` i sí un PNG compost, s'imprimirà el PNG sense retallar: cap dels 7 hi cau.
+
+### GO/NO-GO
+
+- ✅ Mesurat que el pendent 2 no calia, abans d'escriure'l.
+- ✅ La causa real trobada i arreglada; `fig_tall` queda a 100 % (0 X).
+- ✅ Cap escalar, taula ni numeració moguts; suite amb els vermells esperats.
+
+### Següents passos
+
+`PENDENTS-IMATGES.md` §6 queda: **peça 6** (geològic) → **peça 5** (situació) → **peça 7** (projecte, peu i numeració).
+El pendent 2 es tanca com a «no calia».
+
+*Fi entrada 2026-09-08 (2). El retall de PNG no calia; el tall de Rubí era una precedència de rol: `fig_tall` 100 %.*
