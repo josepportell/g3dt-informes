@@ -752,6 +752,29 @@ class ImageManager:
                     return matches[0]
         return None
 
+    def _find_composed_geological_map(self) -> Path | None:
+        """Mapa geològic que l'Eva ja ha compost, si el té al projecte (peça 6).
+
+        Als 7 signats la figura del mapa geològic és sempre un retall de l'ICGC 1:50.000, però a Castellar, Rubí i
+        Vilanova l'Eva hi afegeix la llegenda de les unitats i el desa com a PNG al costat dels annexos
+        (`m12 mgeol.png`, `F4 MGEOL.png`): allà la seva imatge i la nostra no s'assemblen, són **la mateixa**
+        (phash 0). Als altres quatre no hi ha cap fitxer d'aquests i es fa servir la recepta ICGC de sempre.
+
+        La regla és el NOM: un fitxer d'imatge que porti «geol». Als 7 projectes dona exactament un candidat als tres
+        que en tenen i cap als altres quatre. El rol `figure_geological_map` de SmartScan **no** serveix aquí: encerta
+        a Rubí i Vilanova però a Castellar apunta a `M1.png` i a Linyola a una imatge extreta d'un correu, i cap dels
+        dos és el mapa geològic (2 de 4 errònies contra 3 de 3 bones pel nom).
+        """
+        exts = {'.png', '.jpg', '.jpeg'}
+        hits = [p for p in self.project_path.rglob('*')
+                if p.is_file() and p.suffix.lower() in exts and 'geol' in p.name.lower()]
+        if not hits:
+            return None
+        # les figures compostes viuen a la carpeta «altres» del costat dels annexos; empat → ordre alfabètic estable
+        hits.sort(key=lambda p: (not any(part.lower() in ('altres', 'otros', 'others') for part in p.parts), str(p)))
+        logger.info(f"Mapa geològic compost de l'Eva: {hits[0].name}")
+        return hits[0]
+
     def _situation_plan_candidates(self, roles: dict | None) -> list[Path]:
         """Fulls «plànol de situació» candidats, en ordre de preferència per al retall del dibuix amb punts (peça 4).
 
@@ -1204,14 +1227,24 @@ class ImageManager:
         context['fig_location_image'] = context.get('fig_cadastre_image', PLACEHOLDER_TEXT)
         context['fig_building_image'] = context.get('fig_main_plan_image', PLACEHOLDER_TEXT)
 
-        # ICGC images: geological map + orthophoto with parcel outline as aerea fallback
-        icgc_images = self._download_icgc_images()
-        if 'geological_map' in icgc_images:
+        # Mapa geològic (peça 6, 2026-09-08, D8 del pas 2): primer el que l'Eva ja ha compost al projecte, i només
+        # si no n'hi ha cap, la recepta ICGC (`get_geological_map_with_terrain`, la que ella va aprovar: base
+        # topogràfica + `unitats-geologiques-50000` al 0,65, buffer 700 m, punt vermell). Els seus paràmetres NO es
+        # toquen: mesurat als tres signats que la fan servir (Linyola, Bell-lloc, Alcoletge), cap buffer de 150 a
+        # 1.000 m els acosta al que ella va enganxar (NCC 0,31-0,52 a tot arreu) — la diferència no és el zoom.
+        geo_composed = self._find_composed_geological_map()
+        if geo_composed:
             context['fig_geological_image'] = self._safe_inline_image(
-                str(icgc_images['geological_map']), width=Mm(IMAGE_WIDTH_GEOLOGICAL)
+                str(geo_composed), width=Mm(IMAGE_WIDTH_GEOLOGICAL)
             ) or PLACEHOLDER_TEXT
         else:
-            context['fig_geological_image'] = PLACEHOLDER_TEXT
+            icgc_images = self._download_icgc_images()
+            if 'geological_map' in icgc_images:
+                context['fig_geological_image'] = self._safe_inline_image(
+                    str(icgc_images['geological_map']), width=Mm(IMAGE_WIDTH_GEOLOGICAL)
+                ) or PLACEHOLDER_TEXT
+            else:
+                context['fig_geological_image'] = PLACEHOLDER_TEXT
 
         # Peça 1 (2026-09-07, D2): l'ortofoto amb la parcel·la ja no va a cap forat («aèria» fora); les capes ICGC
         # per UTM es reprenen a la peça 5 (situació B: topogràfic + ortofoto amb rectangle taronja).
