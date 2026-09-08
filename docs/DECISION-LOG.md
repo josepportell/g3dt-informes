@@ -5038,3 +5038,147 @@ Castellar, la vareta de punta verda d'Anciles) no volen dir res. Pregunta 39 tan
 de fotos són empats entre punts, preguntes 37 i 38). Es tornarà a passar amb la peça següent que toqui el lector.
 
 *Fi entrada 2026-09-07 (nit, 3). El senyal del sondeig és una caixa blava de mocadors; el penetròmetre no en porta cap.*
+
+---
+
+## 2026-09-08 — IMATGES pas 3, peça 4: la figura dels assaigs surt del full de situació de l'Eva, retallat pel dibuix (0 % → 100 %)
+
+### Context
+
+Quarta peça del pas 3 d'imatges (pla a `docs/imatges/PENDENTS-IMATGES.md` §2, ordre de §6; peces 0-3 als DECISION-LOG
+de 2026-09-07 tarda-4, tarda-5, vespre i nit). De les quatre ranures que quedaven obertes, la dels **assaigs**
+(`fig_assaigs`, la figura del capítol 2.2 «…i els assaigs realitzats») era la primera per tres raons: 6 dels 7 signats
+en porten una, la font existeix als 7 projectes, i era 0 M · 0 C · 3 X · 3 ND — l'única ranura de figura amb forats a
+tots els projectes que en tenen.
+
+Baseline (codi quiet): run `2026-09-07-m341-peca3`, imatges 17 M · 3 C · 23 X · 13 ND → 47 %
+(`feedback_measure_baseline_before_coding`).
+
+### Decisions arquitectòniques clau
+
+**1. La font és el full «plànol de situació» de l'Eva, no el plànol de l'arquitecte.** El pas 1 ja ho havia dit
+(`INVENTARI-I-VERITAT-2026-09-07` §6.3) i D3 del pas 2 ho havia decidit; el que faltava era comprovar-ho amb la mesura.
+Ho és: aquell full és l'únic document del projecte que porta els punts d'assaig, i l'Eva el dibuixa **abans** d'obrir el
+wizard (memòria `eva_workflow_annexes_before_wizard`). El que hi havia fins ara a `fig_main_plan_image` — la pàgina
+sencera de l'`A.01.pdf` amb caixetí, una foto d'un plànol imprès a Rubí, la portada d'`IV_PLANOS.pdf` a Anciles — no
+era la figura de l'Eva a cap dels 7.
+**Alternativa rebutjada (B de D3): dibuixar els punts nosaltres sobre el plànol de l'arquitecte per UTM.** El PDF no té
+georeferència, i sobretot és feina que l'Eva ja fa i que ja tenim feta al projecte. D3 hi és explícit: mai dibuixem
+punts.
+
+**2. El nucli del retall és la imatge incrustada més gran, no els farciments.** `detect_section_region` (peça 3) busca
+els farciments amples i de color: en un tall de correlació són els estrats, però en una planta no n'hi ha cap. Els
+fulls de situació de l'Eva, en canvi, tenen sempre la mateixa estructura — dos mapes petits a dalt, **el dibuix gran a
+sota** (36-47 % de la pàgina), la fletxa de nord, el logo i el caixetí — i el dibuix gran és sempre una imatge
+incrustada. Per això `detect_plan_region` pren la imatge més gran com a nucli i hi aplica el **mateix creixement fins
+al blanc** de la peça 3: hi entren les cotes vermelles i les etiquetes «P-1» que l'Eva dibuixa **a fora** de la imatge,
+i en queden fora els mapes, el nord i el logo (zones excloses) i el caixetí (límit dur).
+**Que el creixement hi sigui no és cosmètic:** sense créixer, Vilanova es queda a NCC 0,687 (per sota del llindar 0,70)
+i amb creixement és **idèntica** al signat (phash 6). L'Eva retalla incloent-hi les cotes que ella mateixa hi ha posat.
+
+**3. Tolerància del creixement 1 %, no 5 %.** A la peça 3 la tolerància és el 5 % de l'alçada del nucli, però allà el
+nucli és una franja d'estrats; aquí és el dibuix sencer, i el mateix percentatge dona una tolerància molt més gran en
+punts. Mesurat als 7 projectes: **0,5 %, 1 % i 2 % donen exactament el mateix resultat** (6 M); al 5 % el creixement
+salta a la llegenda d'Anciles (M → X) i al 10 % també als mapes de Castellar i Rubí (M → X). L'1 % és el mig d'un
+altiplà, no una vora.
+
+**4. Ordre de candidats propi, amb la carpeta d'annexos abans que l'arrel.** `_find_situation_plan` (que serveix la
+ranura de cadastre) prova l'arrel abans que `PDF/ANNEXES/`, i no s'ha tocat: la peça 5 la reescriurà sencera i
+qualsevol canvi ara mouria `fig_situacio`. La peça 4 fa servir una llista pròpia (`_situation_plan_candidates`) amb
+l'ordre invers, perquè el `pl situ.pdf` de l'arrel és l'export «imprimible» del FreeHand, **amb el raster tallat en
+centenars de tires** (Vilanova: 1.119 imatges, la més gran de 739×51), mentre que el de `PDF/ANNEXES/` porta cada
+imatge sencera. Amb el de l'arrel no hi ha nucli i `detect_plan_region` retorna `None`, de manera que el filtre d'àrea
+(≥ 15 % de la pàgina) ja tria bé tot sol; l'ordre només estalvia feina. **A 4 dels 7, el rol `situation_plan` de
+SmartScan apunta justament al fitxer de l'arrel**: passa al següent candidat sol, sense tocar SmartScan.
+
+**5. Res de reader ni de patrons de nom.** La peça 2 va necessitar Claude Code perquè triar entre 30 fotos és un judici.
+Aquí no: la regla «la imatge més gran del full de situació» és determinista i no falla enlloc. Els PNG compostos
+d'`ALTRES` (Castellar `m8.png`, Rubí `F2 UBI PUNTS.png`) donen el mateix resultat però **no tenen cap patró de nom
+comú** (`m8` no diu res) i a Vilanova el PNG equivalent (`F2 PUNTS.png`) és una ortofoto que l'Eva **no** va fer servir:
+una regla per nom hi encertaria per sort a dos projectes i s'equivocaria al tercer. La pregunta 36 a l'Eva (deixa sempre
+els PNG a `ALTRES`?) queda oberta però ja no bloqueja aquesta peça.
+
+### Implementació
+
+| Fitxer | Què |
+|---|---|
+| `automation/imatges/retall.py` | `detect_plan_region(page)` + `crop_plan(pdf, out)`, +105 línies. Comparteix `_touches`, `_inside`, `_union`, `_covered` i `TITLE_BLOCK_WORDS` amb la peça 3 |
+| `automation/image_manager.py` | `_situation_plan_candidates(roles)` (llista ordenada) i bloc `3b-0` abans de la via antiga, que passa a `elif`. +50 línies |
+| `tests/test_peca4_retall_planta.py` | 6 tests nous amb fulls sintètics |
+
+**Gotcha nou i important: els fulls de l'Eva són A3 VERTICAL girats 270°.** `page.rect` els dona girats (1191×842) però
+`get_images`, `get_drawings` i `get_text` donen coordenades **sense girar** (842×1191). Tota la geometria de
+`detect_plan_region` es fa sense girar (amb `page.mediabox`) i el rectangle final es passa per `page.rotation_matrix`.
+El primer intent, fet amb `page.rect` com fa la peça 3, retallava una franja qualsevol. `detect_section_region` **no
+s'ha tocat**: els `tall.pdf` no van girats i qualsevol canvi allà mouria les 3 M · 3 C de `fig_tall`.
+
+### Validació empírica
+
+Run de referència: `2026-09-08-m341-peca4` (viaA, 7 projectes), contra `2026-09-07-m341-peca3`.
+
+| ranura | abans | després |
+|---|---|---|
+| `fig_assaigs` | 0 M · 0 C · 3 X · 3 ND → **0 %** | **4 M** · 0 C · 0 X · 2 ND → **100 %** |
+| `fig_projecte` | 0 M · 0 C · 2 X · 3 ND → **0 %** | **2 M** · 0 C · 1 X · 2 ND → **67 %** |
+| **total imatges** | 17 M · 3 C · 23 X · 13 ND → **47 %** | **23 M** · 3 C · 19 X · 11 ND → **58 %** |
+
+Per projecte: Castellar 50 → 57 %, Rubí 20 → 40 %, Bell-lloc 67 → 78 %, Alcoletge 33 → 50 %, Vilanova 60 → 67 %,
+Anciles 50 → 67 %; Linyola 33 % sense moure's.
+
+Els 6 encerts són **phash ≤ 10, la mateixa imatge**: Castellar, Rubí, Alcoletge i Anciles a `fig_assaigs`; Bell-lloc i
+Vilanova a `fig_projecte`. Que dos vagin a `fig_projecte` no és cap accident de la mesura: Bell-lloc **no té** figura
+d'assaigs (D3) i la seva Figura 3 és aquest mateix dibuix, i a Vilanova l'Eva fa servir dos retalls del mateix dibuix —
+la Figura 2 «Situación del emplazamiento» (el retall ample, amb les cotes: el nostre) i la Figura 3 «Situación de los
+ensayos» (un retall més estret). Amb una sola ranura a la plantilla només se'n pot omplir una.
+
+**Cap altra cel·la s'ha mogut.** El `diff` dels escalars per projecte és buit als 7, i les 28 primeres línies de
+l'agregat (escalars per projecte, per grup, taules, idioma) són idèntiques caràcter a caràcter llevat del nom del run:
+escalars 74 %, taules 82 %, `fix` 74 M · 25 X sense canvi. La numeració no es mou perquè compta ranures, no contingut.
+
+### Tests
+
+6 nous (`tests/test_peca4_retall_planta.py`): el retall és el dibuix amb les cotes de l'Eva; els mapes, el nord i el
+logo queden fora; **un full girat 270° dona el mateix rectangle que el mateix full dret, passat per la matriu**;
+l'export amb el raster en tires no dona retall; sense imatges tampoc; `crop_plan` escriu la imatge.
+Suite sencera: **2483 passats, 31 vermells amb exactament els mateixos noms** que
+`docs/wizard-headless/mesures/suite-vermells-esperats.txt` (`feedback_compare_test_names_not_counts`).
+
+### Latència / cost
+
+0 LLM. El retall és PyMuPDF sobre una pàgina: mil·lisegons, i queda a la cau (`plan_crop_<nom>_<md5>.jpg`, prefix propi
+perquè no xoqui amb el `cadastre_sitplan` del mateix PDF).
+
+### Limitacions conegudes
+
+1. **El peu de la figura encara és el de Bell-lloc.** La plantilla diu «Figura N. Ubicació de l'habitatge a l'interior
+   de la parcel·la. Font: Projecte», que és exactament el peu del signat de Bell-lloc (i el de Vilanova traduït) però
+   **no** el dels quatre on ara hi posem la figura d'assaigs («…i els assaigs realitzats»); a Castellar i Rubí, a més,
+   la imatge és una ortofoto i «Font: Projecte» no hi escau. Amb una sola ranura no es pot arreglar sense trencar els
+   dos on el peu SÍ que és correcte: **ho arregla la peça 7** (D11, nombre de figures variable), que és qui parteix la
+   ranura en `assaigs` i `projecte`. Queda anotat a `PENDENTS-IMATGES.md`.
+2. **Linyola.** L'Eva no va fer servir el seu propi annex sinó la planta del projecte de l'arquitecte
+   (`Punts de Sondeig_Silvia_Jaume.pdf`) amb icones de punt petites. Els dos dibuixos existeixen al projecte i cap
+   senyal determinista els distingeix; el que ara hi posem és la planta amb punts del seu annex — el contingut correcte,
+   una altra font. Amb el llindar de la mesura és X (0,575). Candidat clar per al lector de la peça 7.
+3. **`fig_assaigs` a Vilanova segueix ND** (2 ND de la ranura: Vilanova i Linyola): la nostra única imatge se n'ha anat
+   a `fig_projecte`, que puntua més alt. Es resol amb la peça 7, no abans.
+4. **Fulls només en `.FH11`.** Als 7 del corpus l'export PDF hi és sempre. Si a producció l'Eva no exporta el PDF, cal
+   `soffice` (bloqueig de fons 4 de `PENDENTS-IMATGES.md`); avui es cau a la via antiga sense avisar.
+
+### GO/NO-GO
+
+- ✅ La font és la que l'Eva fa servir, verificada figura a figura contra els 7 signats (phash, no «a ull»).
+- ✅ 6 de 7 projectes guanyen una figura idèntica; cap projecte en perd cap.
+- ✅ Cap escalar, cap taula, cap cel·la de narrativa i cap número de figura s'han mogut.
+- ✅ Suite amb els mateixos vermells esperats.
+- ⏳ Peu de la figura i partició de la ranura: peça 7.
+- ⏳ Linyola: lector, també a la peça 7.
+
+### Següents passos
+
+Segons l'ordre de `PENDENTS-IMATGES.md` §6: **retall de PNG** (pendent 2, petit, el necessiten la peça 5 i el tall de
+Rubí) → **peça 6** (geològic; 3 dels 7 amb el PNG `*MGEOL*` sense tocar les UTM) → **peça 5** (situació) → **peça 7**
+(figures del projecte, peu i numeració variable). Les UTM des de la referència cadastral
+(`_FOR-NEW-YOU-20260907-2000` §4.1) continuen desbloquejant la 6 i part de la 5.
+
+*Fi entrada 2026-09-08. La figura dels assaigs surt del full de situació de l'Eva, retallat pel dibuix: 0 % → 100 %.*

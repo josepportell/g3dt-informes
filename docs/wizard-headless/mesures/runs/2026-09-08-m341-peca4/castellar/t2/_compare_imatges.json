@@ -1,0 +1,146 @@
+{
+ "rows": [
+  {
+   "n": 1,
+   "slot_eva": "fig_situacio",
+   "caption": "Figura 1. Situació de la zona d’estudi, amb color taronja. (mapes topogràfic i ortofoto, I",
+   "file_eva": "01_fig_situacio_figura-1-situacio-de-la-zona-d-estudi-am.png",
+   "ours_slot": "fig_cadastre_image",
+   "file_ours": "cadastre_sitplan_3001621_plànol de situació_7d495516ac.jpg",
+   "status": "MISMATCH",
+   "phash_d": 34,
+   "ncc": 0.432,
+   "psr": 5.3,
+   "ncc_raw": 0.489,
+   "scale": 0.12,
+   "dir": "nostra dins veritat"
+  },
+  {
+   "n": 2,
+   "slot_eva": "fig_assaigs",
+   "caption": "Figura 2. Emplaçament de l’habitatge projecte i els assaigs realitzats.",
+   "file_eva": "02_fig_assaigs_figura-2-emplacament-de-l-habitatge-proj.png",
+   "ours_slot": "fig_main_plan_image",
+   "file_ours": "plan_crop_3001621_plànol de situació_7d495516ac.jpg",
+   "status": "MATCH",
+   "phash_d": 6,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 3,
+   "slot_eva": "foto_dpsh",
+   "caption": "Fotografia 1. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica rea",
+   "file_eva": "03_foto_dpsh_fotografia-1-vista-de-la-maquina-utilitz.jpeg",
+   "ours_slot": "photo_dpsh_image",
+   "file_ours": "maquina_dpsh.jpg",
+   "status": "MISMATCH",
+   "phash_d": 20,
+   "ncc": 0.624,
+   "psr": 13.3,
+   "ncc_raw": 0.624,
+   "scale": 0.79,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 4,
+   "slot_eva": "foto_sondeig",
+   "caption": "Fotografia 2. Vista de la màquina utilitzada per a la realització del sondeig a rotació.",
+   "file_eva": "04_foto_sondeig_fotografia-2-vista-de-la-maquina-utilitz.jpeg",
+   "ours_slot": "photo_sondeig_image",
+   "file_ours": "Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 6,
+   "slot_eva": "fig_geologic",
+   "caption": "Figura 4. Mapa geològic a escala 1:25.000 de la zona en estudi (ICGC, modificat).",
+   "file_eva": "06_fig_geologic_figura-4-mapa-geologic-a-escala-1-25-000.png",
+   "ours_slot": "fig_geological_image",
+   "file_ours": "geological_composite_423181_4609622.png",
+   "status": "MISMATCH",
+   "phash_d": 26,
+   "ncc": 0.628,
+   "psr": 4.5,
+   "ncc_raw": 0.837,
+   "scale": 0.192,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 7,
+   "slot_eva": "foto_materials",
+   "caption": "Fotografia 4. Detall dels materials recuperats durant la realització del sondeig S-1.",
+   "file_eva": "07_foto_materials_fotografia-4-detall-dels-materials-recup.jpeg",
+   "ours_slot": "photo_materials_image",
+   "file_ours": "Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 8,
+   "slot_eva": "fig_tall",
+   "caption": "Figura 5. Tall de correlació.",
+   "file_eva": "08_fig_tall_figura-5-tall-de-correlacio.png",
+   "ours_slot": "fig_correlation_image",
+   "file_ours": "tall_crop_tall_a4512806fd.jpg",
+   "status": "CLOSE",
+   "phash_d": 12,
+   "ncc": 0.96,
+   "psr": 99.0,
+   "ncc_raw": 0.96,
+   "scale": 1.0,
+   "dir": "nostra dins veritat"
+  }
+ ],
+ "sobrants": [],
+ "sobrants_n": 0,
+ "totals": {
+  "MISMATCH": 3,
+  "MATCH": 3,
+  "CLOSE": 1,
+  "NO_DATA": 0
+ },
+ "by_slot": {
+  "fig_situacio": {
+   "MISMATCH": 1
+  },
+  "fig_assaigs": {
+   "MATCH": 1
+  },
+  "foto_dpsh": {
+   "MISMATCH": 1
+  },
+  "foto_sondeig": {
+   "MATCH": 1
+  },
+  "fig_geologic": {
+   "MISMATCH": 1
+  },
+  "foto_materials": {
+   "MATCH": 1
+  },
+  "fig_tall": {
+   "CLOSE": 1
+  }
+ },
+ "ours_paths": {
+  "fig_cadastre_image": "/home/josep/g3dt-prod-cache/images/cadastre_sitplan_3001621_plànol de situació_7d495516ac.jpg",
+  "fig_main_plan_image": "/home/josep/g3dt-prod-cache/images/plan_crop_3001621_plànol de situació_7d495516ac.jpg",
+  "fig_geological_image": "/home/josep/g3dt-prod-cache/images/geological_composite_423181_4609622.png",
+  "fig_correlation_image": "/home/josep/g3dt-prod-cache/images/tall_crop_tall_a4512806fd.jpg",
+  "photo_dpsh_image": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/3001621 CASTELLAR DEL VALLES/FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
+  "photo_sondeig_image": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/3001621 CASTELLAR DEL VALLES/FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
+  "photo_materials_image": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/3001621 CASTELLAR DEL VALLES/FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg"
+ }
+}

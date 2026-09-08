@@ -1,7 +1,8 @@
 # Imatges de l'informe: tot el que queda pendent
 
 **Escrit:** 2026-09-07 (nit), a petició del Josep, en acabar la peça 3 del pas 3.
-**Estat de partida:** run de referència `2026-09-07-m341-peca3`. **17 M · 3 C · 23 X · 13 ND → 47 %** de les 56 figures
+**Actualitzat:** 2026-09-08, en acabar la **peça 4** (DECISION-LOG 2026-09-08).
+**Estat de partida:** run de referència `2026-09-08-m341-peca4`. **23 M · 3 C · 19 X · 11 ND → 58 %** de les 56 figures
 i fotos que l'Eva posa als 7 informes signats. Font de la veritat: `docs/imatges/veritat/<slug>/index.json` (pas 1).
 **Com es mesura:** `docs/wizard-headless/mesures/imatges_font.py` dins M341 (peça 0): M = la mateixa imatge (phash ≤ 10),
 C = la mateixa font amb un altre retall, X = una altra font, ND = no posem res.
@@ -15,29 +16,31 @@ C = la mateixa font amb un altre retall, X = una altra font, ND = no posem res.
 | `foto_sondeig` | 2 | 0 | 1 | 0 | ✅ peça 2 (1 empat) |
 | `foto_vista` | 2 | 0 | 1 | 1 | ✅ peça 2 (1 empat) |
 | `foto_dpsh` | 3 | 0 | 4 | 0 | ✅ peça 2 (4 empats) |
+| `fig_assaigs` | 4 | 0 | 0 | 2 | ✅ peça 4 (2 ND: la ranura única se n'ha anat a `fig_projecte`) |
+| `fig_projecte` | 2 | 0 | 1 | 2 | ⏳ **peça 7** (peu i partició de la ranura) |
 | `fig_situacio` | 0 | 0 | 7 | 1 | ⏳ **peça 5** |
-| `fig_assaigs` | 0 | 0 | 3 | 3 | ⏳ **peça 4** |
 | `fig_geologic` | 0 | 0 | 4 | 3 | ⏳ **peça 6** |
-| `fig_projecte` | 0 | 0 | 2 | 3 | ⏳ **peça 7** |
 
-Les quatre ranures pendents són **totes de figures compostes o retallades**; les fotos ja estan.
+Les tres ranures pendents són **totes de figures compostes**; les fotos i el dibuix amb punts ja estan.
 
-## 2. Les quatre peces que queden
+## 2. Les peces que queden
 
-### Peça 4 — Figura dels assaigs (el dibuix amb els punts) — *M*
+### Peça 4 — Figura dels assaigs (el dibuix amb els punts) — ✅ FETA (2026-09-08)
 
 - **Què fa l'Eva:** 6 dels 7 signats porten al capítol 2.2 el plànol de l'arquitecte (Linyola, Alcoletge, Vilanova,
-  Anciles) o l'ortofoto ampliada (Castellar, Rubí) **amb els punts d'assaig que ella hi dibuixa** (DPSH en blau,
-  sondeig en vermell, llegenda i escala). Bell-lloc no en porta cap.
-- **On és la font:** el seu **annex «plànol de situació»** existeix als 7 projectes (`PDF/ANNEXES/*plànol de
-  situació.pdf`, `pl situació.pdf`, `.FH11`), i a Castellar, Rubí i Vilanova també com a PNG compost a `ALTRES`
-  (`m8.png`, `F2 UBI PUNTS.png`, `F2 PUNTS.png`).
-- **Què cal fer:** (a) triar el fitxer correcte — el lector ho pot mirar, o es pot provar la regla determinista
-  «l'annex de situació sempre»; (b) **retallar-ne el dibuix**: `detect_section_region` de la peça 3 NO hi serveix (allà
-  el nucli són els estrats; en una planta no n'hi ha), cal una variant per a plantes o el lector amb un rectangle.
-- **Decisió ja presa (pas 2, D3):** mai dibuixem els punts nosaltres. Sense dibuix amb punts, cap figura.
-- **Guany esperat:** 6 forats (0/6 → objectiu 4-6). És la figura més important del capítol 2.
-- **Obert amb l'Eva:** pregunta 31 (vol sempre els punts? quin fons prefereix quan té orto i planta?).
+  Anciles) o l'ortofoto ampliada (Castellar, Rubí) **amb els punts d'assaig que ella hi dibuixa**. Bell-lloc no en
+  porta cap.
+- **Què s'ha fet:** `detect_plan_region` / `crop_plan` (`automation/imatges/retall.py`) retallen el dibuix del seu full
+  «plànol de situació»: nucli = la imatge incrustada més gran, i creixement fins al blanc per agafar-hi les cotes i les
+  etiquetes «P-n» que ella dibuixa a fora. `_situation_plan_candidates` tria el full (carpeta d'annexos abans que
+  l'arrel: el `pl situ.pdf` de l'arrel porta el raster en tires i no té nucli).
+- **Resultat:** `fig_assaigs` 0 % → **100 %** (4 M) i `fig_projecte` 0 % → **67 %** (2 M, Bell-lloc i Vilanova, que
+  fan servir el mateix dibuix per a la figura del projecte). Total imatges 47 % → **58 %**. Cap altra cel·la moguda.
+- **Què queda d'aquesta ranura** (tot a la peça 7): el **peu** encara diu «Ubicació de l'habitatge a l'interior de la
+  parcel·la. Font: Projecte» (correcte a Bell-lloc i Vilanova, no als quatre d'assaigs; i a Castellar i Rubí la imatge
+  és una ortofoto, no «Projecte»); **Linyola**, on l'Eva va fer servir la planta del projecte i no el seu annex; i
+  **Vilanova**, on amb una sola ranura només se'n pot omplir una de les dues.
+- **Obert amb l'Eva:** pregunta 31 (vol sempre els punts? quin fons prefereix quan té orto i planta?) — ja no bloqueja.
 
 ### Peça 5 — Figura de situació — *M*
 
@@ -63,13 +66,16 @@ Les quatre ranures pendents són **totes de figures compostes o retallades**; le
 - **Guany esperat:** 7 forats, dels quals 3 avui són «pendent» per manca d'UTM.
 - **Obert amb l'Eva:** pregunta 34 (llegenda sí o no; font a l'Aragó).
 
-### Peça 7 — Figures del projecte i bloc de figures variable — *M*
+### Peça 7 — Figures del projecte, peu i bloc de figures variable — *M*
 
 - **Què fa l'Eva:** 0-2 figures «Font: Projecte» tretes del projecte de l'arquitecte (secció a Linyola, emplaçament
   sense punts a Bell-lloc i Vilanova, topogràfic i tipologies a Anciles), sempre **retallades al dibuix**, sense
   caixetí. No hi ha regla fixa: depèn del que l'arquitecte enviï.
 - **Què cal fer:** que Claude triï la pàgina (és el cas més clar de «mira i tria») i la retalli; i **que la plantilla
   imprimeixi el nombre de figures que toca** (situació 1-2 + assaigs 0-1 + projecte 0-2 + geològic + tall).
+- **Hereta de la peça 4** (2026-09-08): partir `fig_main_plan_image` en dues ranures amb **peus propis** — avui la
+  ranura única imprimeix el peu de Bell-lloc sobre la figura d'assaigs de quatre projectes — i triar, a Linyola, entre
+  la planta del projecte (la que l'Eva va fer servir) i el seu propi annex.
 - **Per què importa més del que sembla:** és **l'única peça que mou el grup `fix` de la numeració** (avui 74 M · 25 X;
   10 d'aquelles X són «nombre de figures del projecte»). Les peces 1-6 no el mouen.
 - **Obert amb l'Eva:** pregunta 32 (quan hi afegeix figures del projecte).
@@ -115,12 +121,12 @@ Les quatre ranures pendents són **totes de figures compostes o retallades**; le
 
 ## 6. Ordre recomanat
 
-1. **Peça 4** (assaigs): 6 forats, la figura més visible, i la font existeix als 7 projectes.
+1. ~~**Peça 4** (assaigs)~~ — ✅ feta el 2026-09-08.
 2. **Pendent 2** (retall de PNG): és petit i el necessiten la 5 i el tall de Rubí.
 3. **Peça 6** (geològic): 3 forats es resolen amb el PNG sense tocar les UTM.
 4. **Peça 5** (situació): 8 forats, la més llarga; depèn del retall de PNG i, en part, de les UTM.
-5. **Peça 7** (projecte + bloc variable): l'única que mou la numeració.
+5. **Peça 7** (projecte + peu + bloc variable): l'única que mou la numeració.
 6. **Pendent 1** (materials per punt) i **pendent 4** (text fix de Rubí), quan toqui plantilla.
 
-Cada peça: baseline amb el codi quiet, canvi, mesura contra `2026-09-07-m341-peca3`, entrada al DECISION-LOG i, si
+Cada peça: baseline amb el codi quiet, canvi, mesura contra `2026-09-08-m341-peca4`, entrada al DECISION-LOG i, si
 perd alguna cel·la, al `REGISTRE-PERDUES-MESURA.md`.
