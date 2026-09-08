@@ -748,6 +748,33 @@ class ImageManager:
                     return matches[0]
         return None
 
+    def _situation_plan_candidates(self, roles: dict | None) -> list[Path]:
+        """Fulls «plànol de situació» candidats, en ordre de preferència per al retall del dibuix amb punts (peça 4).
+
+        L'ordre NO és el de `_find_situation_plan` (que serveix la ranura de cadastre i es queda com està fins a la
+        peça 5): allà l'arrel va abans que la carpeta d'annexos, i aquí ha d'anar al revés. El `pl situ.pdf` de
+        l'arrel és l'export «imprimible» del FreeHand, amb el raster tallat en centenars de tires horitzontals; el de
+        `PDF/ANNEXES/` porta cada imatge sencera. Amb el de l'arrel no hi ha cap nucli i `crop_plan` retorna `None`,
+        de manera que l'ordre només estalvia feina — però és l'ordre correcte i deixa-ho dit.
+        """
+        out: list[Path] = []
+
+        def add(p: Path):
+            if p.exists() and p.is_file() and p not in out:
+                out.append(p)
+
+        if roles and 'situation_plan' in roles:
+            add(self.project_path / roles['situation_plan']['path'])
+        # carpetes d'annexos: `PDF/ANNEXES` abans que `PDF V0` / `PDF_V0` (sorted: l'espai i el guió van després)
+        for pattern in ('PDF*/ANNEXES/*situaci*.pdf', 'PDF*/ANEJOS/*situac*.pdf',
+                        'ANNEXES/*situaci*.pdf', 'ANEJOS/*situac*.pdf', 'ANEXOS/*situac*.pdf'):
+            for m in sorted(self.project_path.glob(pattern)):
+                add(m)
+        for pattern in ('pl*situ*.pdf', '*plànol*situació*.pdf', '*planol*situacio*.pdf', '*plano*situacion*.pdf'):
+            for m in sorted(self.project_path.glob(pattern)):
+                add(m)
+        return out
+
     def _render_situation_plan_left(self, pdf_path: Path, output_path: Path, dpi: int = 200) -> Path | None:
         """Render left ~38% of situation plan page (cadastral maps area)."""
         try:
@@ -1078,6 +1105,25 @@ class ImageManager:
 
         context.setdefault('fig_cadastre_image', PLACEHOLDER_TEXT)
 
+        # 3b-0. Peça 4 (2026-09-08): el dibuix AMB PUNTS del full de situació de l'Eva, retallat.
+        #
+        # És la figura del capítol 2.2 («…i els assaigs realitzats»): 6 dels 7 signats en porten una, i l'única font
+        # que du els punts d'assaig és el full que l'Eva dibuixa al FreeHand abans d'obrir el wizard (D3 del pas 2:
+        # els punts no els dibuixem mai nosaltres). El que hi havia fins ara — la pàgina sencera de l'`A.01.pdf` de
+        # l'arquitecte, sense punts i amb caixetí — no és mai la figura de l'Eva. Prefix propi (`plan_crop`) perquè
+        # no xoqui amb el `cadastre_sitplan` del mateix PDF.
+        for sit_pdf in self._situation_plan_candidates(roles):
+            cached = self._cache_name("plan_crop", sit_pdf)
+            if not cached.exists():
+                from .imatges.retall import crop_plan
+                if crop_plan(sit_pdf, cached) is None:
+                    continue                       # full sense dibuix gran (export imprimible): candidat següent
+            img = self._safe_inline_image(str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN))
+            if img:
+                context['fig_main_plan_image'] = img
+                has_plan_crops = True
+                break
+
         # 3b. Main plan from architect_plan (WITHOUT dots — punt de partida)
         base_plan_pdf = None
         base_clip_regions = None
@@ -1088,7 +1134,9 @@ class ImageManager:
                 base_plan_pdf = candidate
                 base_clip_regions = role.get('clip_regions')
 
-        if base_plan_pdf and base_clip_regions and 'main_plan' in base_clip_regions:
+        if 'fig_main_plan_image' in context:
+            pass                                   # ja resolt pel retall del full de situació (3b-0)
+        elif base_plan_pdf and base_clip_regions and 'main_plan' in base_clip_regions:
             clip_rect = base_clip_regions['main_plan']
             if isinstance(clip_rect, (list, tuple)) and len(clip_rect) == 4:
                 cached = self._cache_name("main_plan", base_plan_pdf)

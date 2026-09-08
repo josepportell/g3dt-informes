@@ -151,3 +151,108 @@ def crop_drawing(pdf_path: Path, output_path: Path, *, page_number: int = 0, dpi
     except Exception as exc:
         log.warning("No s'ha pogut retallar el dibuix de %s: %s", pdf_path.name, exc)
         return None
+
+
+# --------------------------------------------------------------------------------------------------------------
+# Peça 4 del pas 3 (2026-09-08): el DIBUIX AMB PUNTS del full «plànol de situació» de l'Eva.
+#
+# La figura del capítol 2.2 («…i els assaigs realitzats», 6/7 signats) i la del projecte a Bell-lloc i Vilanova
+# surten totes del mateix lloc: el full d'annex que l'Eva dibuixa al FreeHand ABANS d'obrir el wizard (memòria
+# `eva_workflow_annexes_before_wizard`). Aquell full és sempre igual: dos mapes de situació petits a dalt, el
+# plànol o l'ortofoto GRAN a sota amb els punts d'assaig que ella hi posa, la fletxa de nord, el logo de G3 i el
+# caixetí. El dibuix que va a l'informe és la imatge gran, amb les cotes i les etiquetes que hi ha dibuixat a sobre.
+#
+# Per això aquí el nucli NO són els farciments (`detect_section_region`, que serveix per al tall): és la imatge
+# incrustada més gran de la pàgina. Al voltant s'hi afegeix, com a la peça 3, el que la toca fins a trobar blanc —
+# les cotes vermelles i les etiquetes «P-1» que l'Eva dibuixa a fora de la imatge. Les altres imatges (els dos
+# mapes, el nord, el logo) són zones excloses, i el caixetí és un límit dur.
+#
+# Dues diferències de mecànica respecte de la peça 3, totes dues per la mateixa raó — aquests fulls són A3
+# VERTICAL girats 270°:
+#   * `get_images` / `get_drawings` / `get_text` donen coordenades SENSE girar, i `page.rect` les dona girades.
+#     Tota la geometria es fa sense girar i el rectangle final es passa per `page.rotation_matrix`.
+#   * la tolerància del creixement és 1 % de l'alçada del nucli, no 5 %: aquí el nucli és el dibuix sencer (40 %
+#     de la pàgina) i no una franja d'estrats. Mesurat: 0,5 %, 1 % i 2 % donen el mateix resultat als 7 projectes;
+#     a partir del 5 % el creixement salta a la llegenda d'Anciles i al 10 % als mapes de Castellar i Rubí.
+#
+# Mesurat sobre els 7 signats (peça 4): 6 retalls idèntics als de l'Eva (phash ≤ 10) — Castellar, Rubí, Alcoletge
+# i Anciles a la figura d'assaigs, Bell-lloc i Vilanova a la del projecte — i 1 de font diferent (Linyola, que va
+# fer servir la planta del projecte de l'arquitecte i no el seu propi annex).
+
+PLAN_CORE_MIN_AREA = 0.15   # àrea mínima de la imatge gran, en fracció de la pàgina: descarta els fulls «impresos»
+PLAN_GAP = 0.01             # tolerància del creixement, en fracció de l'alçada del nucli
+PLAN_WINDOW = 0.15          # finestra al voltant del nucli: res de més enllà no hi entra mai
+
+
+def detect_plan_region(page, *, gap: float = PLAN_GAP, window: float = PLAN_WINDOW):
+    """Rectangle del dibuix amb punts dins la pàgina, ja girat com `page.rect`.
+
+    `None` si la pàgina no té cap imatge incrustada prou gran (els `pl situ.pdf` de l'arrel són exports de
+    FreeHand amb el raster tallat en centenars de tires: cap d'elles és el dibuix). Qui crida ha de provar el
+    candidat següent; mai s'inventa un retall.
+    """
+    import fitz
+
+    W, H = page.mediabox.width, page.mediabox.height        # espai SENSE girar
+    rects = [fitz.Rect(r) for im in page.get_images(full=True) for r in page.get_image_rects(im[0])]
+    if not rects:
+        return None
+    core = max(rects, key=lambda r: abs(r.get_area()))
+    if abs(core.get_area()) < PLAN_CORE_MIN_AREA * W * H:
+        return None
+    others = [r for r in rects if r != core]
+
+    words = page.get_text("words")
+    ys = [w[1] for w in words if w[4].lower().strip(":.") in TITLE_BLOCK_WORDS and w[1] > core.y0]
+    y_bottom = min(ys) if ys else H
+    page_box = fitz.Rect(0, 0, W, y_bottom)
+    box = fitz.Rect(core) & page_box
+
+    win = fitz.Rect(max(0, core.x0 - window * core.width), max(0, core.y0 - window * core.height),
+                    min(W, core.x1 + window * core.width), min(y_bottom, core.y1 + window * core.height))
+    items = []
+    for d in page.get_drawings():
+        r = fitz.Rect(d["rect"])
+        if r.width < 0.97 * W and r.height < 0.97 * H and _inside(win, r) and not _covered(r, others):
+            items.append(r)
+    for w in words:
+        r = fitz.Rect(w[0], w[1], w[2], w[3])
+        if _inside(win, r) and not _covered(r, others):
+            items.append(r)
+
+    tol = gap * core.height
+    changed = True
+    while changed:                       # creix mentre hi hagi contingut contigu; s'atura al blanc
+        changed = False
+        rest = []
+        for r in items:
+            if _touches(box, r, tol):
+                box = _union(box, r)
+                changed = True
+            else:
+                rest.append(r)
+        items = rest
+
+    return (box & page_box) * page.rotation_matrix
+
+
+def crop_plan(pdf_path: Path, output_path: Path, *, page_number: int = 0, dpi: int = 200) -> Path | None:
+    """Renderitza NOMÉS el dibuix amb punts del full de situació. `None` si no s'hi troba (proveu el candidat següent)."""
+    try:
+        import fitz
+        doc = fitz.open(str(pdf_path))
+        page = doc[page_number]
+        clip = detect_plan_region(page)
+        if clip is None or clip.width < 20 or clip.height < 20:
+            doc.close()
+            log.info("Sense dibuix amb punts a %s p%d", pdf_path.name, page_number + 1)
+            return None
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        page.get_pixmap(dpi=dpi, clip=clip).save(str(output_path))
+        doc.close()
+        log.info("Retall del dibuix amb punts de %s → %s (%.0f×%.0f pt)", pdf_path.name, output_path.name,
+                 clip.width, clip.height)
+        return output_path
+    except Exception as exc:
+        log.warning("No s'ha pogut retallar el dibuix amb punts de %s: %s", pdf_path.name, exc)
+        return None
