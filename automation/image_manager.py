@@ -78,7 +78,11 @@ ROLE_TO_FIGURE_VAR = {
     'figure_situation_map': 'fig_cadastre_image',
     'figure_geological_map': 'fig_geological_image',
     'figure_test_points': 'fig_test_points_image',
-    'figure_correlation': 'fig_correlation_image',
+    # `figure_correlation` NO hi és des del 2026-09-08: aquest rol dona el PNG compost que hi hagi a `ALTRES`, i
+    # passava davant del `tall.pdf`. L'Eva retalla la secció del `tall.pdf` als 7 signats (peça 3), i a Rubí el PNG
+    # (`F5 TALL.png`) és un DIBUIX DIFERENT del signat: dos nivells amb llegenda i escala, 204-212, contra el nivell
+    # únic amb la cota de fonamentació vermella, 208-213, del que ella va signar. Ara el rol es prova al final del
+    # bloc de correlació, quan no hi ha cap `tall.pdf` a retallar.
 }
 
 
@@ -1236,6 +1240,14 @@ class ImageManager:
                     tall_pdf = candidate
             if tall_pdf is None:
                 tall_pdf = self._find_project_pdf(['tall.pdf', 'tall*.pdf'])
+            if tall_pdf is None and roles and 'figure_correlation' in roles:
+                # últim recurs: el PNG compost de l'Eva, quan no hi ha cap `tall.pdf` per retallar
+                fig_path = self.project_path / roles['figure_correlation']['path']
+                if fig_path.exists():
+                    img = self._safe_inline_image(str(fig_path), width=Mm(IMAGE_WIDTH_LOCATION))
+                    if img:
+                        context['fig_correlation_image'] = img
+                        logger.info(f"Tall de correlació des del rol figure_correlation: {fig_path.name}")
             if tall_pdf:
                 # Peça 3 (2026-09-07): l'Eva retalla la secció del tall (sense caixetí, llegenda ni logo): 7/7 signats.
                 # Prefix propi (`tall_crop`) perquè no xoqui amb la pàgina sencera que hi hagi a la cau.

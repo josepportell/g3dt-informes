@@ -94,3 +94,20 @@ def test_crop_plan_escriu_la_imatge(tmp_path):
     from PIL import Image
     im = Image.open(out)
     assert im.width > 300 and im.height > 300
+
+
+# --------------------------------------------------------------------------------------------------------------
+# Precedència del tall de correlació (2026-09-08, mateixa sessió que la peça 4)
+
+def test_el_rol_figure_correlation_no_passa_davant_del_tall_pdf():
+    """El PNG compost d'`ALTRES` no ha de pre-empar el retall del `tall.pdf`.
+
+    A Rubí el rol `figure_correlation` apunta a `ANNEXES/Altres/F5 TALL.png`, que és un dibuix DIFERENT del que ella
+    va signar (dos nivells amb llegenda i escala, 204-212, contra el nivell únic amb la cota de fonamentació vermella,
+    208-213). L'Eva retalla la secció del `tall.pdf` als 7 signats: mesurat, el PNG dona X (NCC 0,58) i el retall del
+    `tall.pdf`, C (0,91).
+    """
+    from automation.image_manager import ROLE_TO_FIGURE_VAR
+    assert 'figure_correlation' not in ROLE_TO_FIGURE_VAR
+    assert ROLE_TO_FIGURE_VAR['figure_situation_map'] == 'fig_cadastre_image'   # els altres rols no s'han tocat
+    assert ROLE_TO_FIGURE_VAR['figure_geological_map'] == 'fig_geological_image'
