@@ -1,8 +1,9 @@
 # Imatges de l'informe: tot el que queda pendent
 
 **Escrit:** 2026-09-07 (nit), a petició del Josep, en acabar la peça 3 del pas 3.
-**Actualitzat:** 2026-09-08, en acabar les peces **4** i **6** i el pendent 2 (DECISION-LOG 2026-09-08, (2) i (3)).
-**Estat de partida:** run de referència `2026-09-08-m341-peca6`. **26 M · 4 C · 17 X · 9 ND → 64 %** de les 56 figures
+**Actualitzat:** 2026-09-08, en acabar les peces **4**, **6** i **5** i el pendent 2 (DECISION-LOG 2026-09-08, (2),
+(3) i (4)). **Només queda la peça 7.**
+**Estat de partida:** run de referència `2026-09-08-m341-peca5`. **31 M · 4 C · 12 X · 9 ND → 74 %** de les 56 figures
 i fotos que l'Eva posa als 7 informes signats. Font de la veritat: `docs/imatges/veritat/<slug>/index.json` (pas 1).
 **Com es mesura:** `docs/wizard-headless/mesures/imatges_font.py` dins M341 (peça 0): M = la mateixa imatge (phash ≤ 10),
 C = la mateixa font amb un altre retall, X = una altra font, ND = no posem res.
@@ -45,10 +46,10 @@ Recollits el 2026-09-08 en fer les peces 4 i 6. **Tots són mesurats**, no visto
 | `fig_assaigs` | 4 | 0 | 0 | 2 | ✅ peça 4 (2 ND: la ranura única se n'ha anat a `fig_projecte`) |
 | `fig_projecte` | 2 | 0 | 1 | 2 | ⏳ **peça 7** (peu i partició de la ranura) |
 | `fig_geologic` | 3 | 0 | 3 | 1 | ✅ peça 6 (3 X = la vista ICGC de l'Eva, pregunta 34; 1 ND = Anciles, Aragó) |
-| `fig_situacio` | 0 | 0 | 7 | 1 | ⏳ **peça 5** |
+| `fig_situacio` | 5 | 0 | 2 | 1 | ✅ peça 5 (2 X = Linyola i Bell-lloc; 1 ND = la 2a de Bell-lloc, ranura única) |
 
-Queden **la situació** (peça 5) i **el peu i la numeració** (peça 7); les fotos, el dibuix amb punts i el mapa
-geològic compost ja estan.
+**Només queda la peça 7**: el peu de cada figura, la partició de les ranures i la numeració variable. Les fotos, el
+dibuix amb punts, el mapa geològic i la situació ja estan.
 
 ## 2. Les peces que queden
 
@@ -69,20 +70,23 @@ geològic compost ja estan.
   **Vilanova**, on amb una sola ranura només se'n pot omplir una de les dues.
 - **Obert amb l'Eva:** pregunta 31 (vol sempre els punts? quin fons prefereix quan té orto i planta?) — ja no bloqueja.
 
-### Peça 5 — Figura de situació — *M*
+### Peça 5 — Figura de situació — ✅ FETA (2026-09-08)
 
-- **Què fa l'Eva:** 7/7, sempre dos mapes costat a costat (topogràfic ICGC del municipi + ortofoto o topogràfic
-  ampliat) amb la zona en taronja. Excepcions: Bell-lloc (dos insets del plànol de l'arquitecte, «Font: Projecte») i
-  Anciles (Sede del Catastro, perquè és Aragó).
-- **Ordre de fonts decidit (pas 2, D1):** PNG d'`ALTRES` si hi és (3/7 idèntic: `m7.png`, `F1 UBI.png`, `F1 SIT.png`) →
-  retallar els dos mapes de l'annex de situació i **recompondre'ls en horitzontal** → insets del plànol → ICGC
-  topogràfic + ortofoto per UTM amb rectangle taronja.
-- **Què cal fer a més:** **retirar `_render_situation_plan_left`** (el retall del 38 % esquerre, que no coincideix amb
-  cap signat). El «retall de PNG» que aquí hi havia **no cal**: els tres PNG ja són MATCH phash 0 crus (pendent 2).
-  A Rubí, a més, el rol `figure_situation_map` ja apunta a `F1 UBI.png` — la figura del signat — però no s'hi arriba
-  perquè `fig_cadastre_image` s'omple abans: **la precedència de rols també s'ha de mirar aquí**.
-- **Guany esperat:** 8 forats (0/8). Bloquejat en part per les UTM (§4).
-- **Obert amb l'Eva:** preguntes 30 (composició per defecte) i 36 (deixa sempre els PNG a `ALTRES`?).
+- **Què fa l'Eva:** 7/7, sempre dos mapes de costat (topogràfic ICGC del municipi + ortofoto o topogràfic ampliat) amb
+  la zona en taronja. Excepcions: Bell-lloc (dos retalls del plànol de l'arquitecte, «Font: Projecte») i Anciles (Sede
+  del Catastro, perquè és Aragó).
+- **Què s'ha fet:** els dos mapes són els que ja hi ha a dalt del seu full «plànol de situació», sobre el dibuix de la
+  peça 4. `detect_situation_maps` / `compose_situation` els retallen amb el mateix creixement fins al blanc i els posen
+  de costat a la mateixa alçada. Si SmartScan té `figure_situation_map` i la imatge és **ampla** (relació ≥ 1,5), es fa
+  servir la seva sencera: encerta 2 de 2 amb phash 0. `_render_situation_plan_left` (el retall del 38 % esquerre) ha
+  desaparegut, amb un test que li barra la tornada.
+- **L'ordre dels dos mapes es decideix ABANS de créixer.** Amb els rectangles ja crescuts, Castellar cau de phash 10 a
+  36 i Rubí de 6 a 32: el creixement d'un mapa li pot moure la vora per davant de l'altre i els inverteix.
+- **Resultat:** `fig_situacio` 0 % → **71 %** (5 M). Total imatges 64 % → **74 %**. Castellar 86 %, Rubí 83 %,
+  Vilanova 86 %, Anciles 83 %, Alcoletge 67 %. Cap altra cel·la moguda.
+- **Què queda:** **Linyola** (phash 18: la mateixa figura amb un pèl més de marge vertical; provat, cap marge fix
+  serveix per als tres alhora) i **Bell-lloc**, que hi posa dos retalls del plànol de l'arquitecte i **dues** figures
+  on la plantilla només té una ranura → peça 7.
 
 ### Peça 6 — Mapa geològic — ✅ FETA (2026-09-08)
 
@@ -162,9 +166,8 @@ geològic compost ja estan.
 1. ~~**Peça 4** (assaigs)~~ — ✅ feta el 2026-09-08.
 2. ~~**Pendent 2** (retall de PNG)~~ — ❌ tancat el 2026-09-08: no calia (vegeu §3).
 3. ~~**Peça 6** (geològic)~~ — ✅ feta el 2026-09-08 (3 M; els 3 restants depenen de la pregunta 34).
-4. **Peça 5** (situació): 8 forats, la més llarga; els tres PNG ja hi són MATCH crus, i cal mirar-hi la precedència de
-   rols (`figure_situation_map` a Rubí) i les UTM.
-5. **Peça 7** (projecte + peu + bloc variable): l'única que mou la numeració.
+4. ~~**Peça 5** (situació)~~ — ✅ feta el 2026-09-08 (5 M de 8).
+5. **Peça 7** (projecte + peu + bloc variable): **l'única que queda**, i l'única que mou la numeració.
 6. **Pendent 1** (materials per punt) i **pendent 4** (text fix de Rubí), quan toqui plantilla.
 
 Cada peça: baseline amb el codi quiet, canvi, mesura contra `2026-09-08-m341-peca6`, entrada al DECISION-LOG i, si

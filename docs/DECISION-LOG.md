@@ -5371,3 +5371,105 @@ peça 5, mirar-hi la precedència del rol `figure_situation_map` (a Rubí apunta
 signat) i recordar que els tres PNG de situació ja són MATCH crus.
 
 *Fi entrada 2026-09-08 (3). El mapa geològic compost de l'Eva va primer: 0 % → 50 %, i la recepta ICGC no es toca.*
+
+---
+
+## 2026-09-08 (4) — IMATGES pas 3, peça 5: la figura de situació són els dos mapes del full de l'Eva, de costat (0 % → 71 %)
+
+### Context
+
+Cinquena peça del pas 3 i la ranura amb més forats que quedava: `fig_situacio` era **0 M · 0 C · 7 X · 1 ND → 0 %**,
+i és la Figura 1 de tots els informes. Baseline: `2026-09-08-m341-peca6`, imatges 26 M · 4 C · 17 X · 9 ND → 64 %.
+
+### Decisions arquitectòniques clau
+
+**1. Els dos mapes ja són al full que fa servir la peça 4.** L'Eva obre l'informe amb dos mapes de costat (topogràfic
+del municipi amb el punt vermell + ortofoto o topogràfic ampliat amb la zona en taronja), i són exactament els dos
+mapes petits que hi ha a dalt del seu full «plànol de situació», sobre el dibuix amb punts. Es retallen amb el mateix
+mecanisme de la peça 4 —nucli = la imatge incrustada, creixement fins al blanc per agafar el marc i el que ella hi
+dibuixa a sobre, les altres imatges com a zones excloses— i es posen de costat a la mateixa alçada sobre blanc, amb
+una separació del 2 %.
+
+**2. L'ordre es decideix amb els rectangles ORIGINALS, abans de créixer.** És l'única cosa d'aquesta peça que es va
+haver de mesurar dues vegades. Ordenar els rectangles **ja crescuts** sembla equivalent i no ho és: el creixement d'un
+mapa li pot moure la vora per davant de l'altre i els inverteix. Amb l'ordre pres abans de créixer, **4 projectes**
+donen la imatge idèntica al signat; amb l'ordre pres després, **2** (Castellar cau de phash 10 a 36, Rubí de 6 a 32).
+L'ordre és el de lectura del full: d'esquerra a dreta i, quan tots dos són a la mateixa columna, de dalt a baix — a
+Castellar i Alcoletge queden l'un sobre l'altre al full i ella els posa de costat, el de dalt a l'esquerra.
+
+**3. El PNG que l'Eva ja ha compost va primer, amb un guard de forma.** Quan SmartScan troba `figure_situation_map`,
+es fa servir sencer **si la imatge és ampla (relació ≥ 1,5)**: una figura de situació són dos mapes de costat. Aquí el
+rol encerta 2 de 2 (`F1 UBI.png` a Rubí i `F1 SIT.png` a Vilanova, tots dos **phash 0**) i és millor que la composició
+(Rubí phash 6, Vilanova 30, perquè la seva composició de Vilanova no són aquests dos mapes). El guard hi és perquè
+aquests rols han fallat tres vegades en dos dies (DECISION-LOG 2026-09-08 (2) i (3)) i la forma és la comprovació més
+barata que descarta la família d'errors vista: un mapa quadrat o una foto.
+**Alternativa rebutjada: trobar el PNG pel nom, com al geològic.** No hi ha cap patró: `m7.png` (Castellar),
+`F1 UBI.png` (Rubí), `F1 SIT.png` (Vilanova). Provat també aparellar els PNG d'`ALTRES` contra la nostra pròpia
+composició: escull el candidat equivocat a 2 de 3 (un mapa solt correlaciona molt bé dins d'una composició). El nom no
+serveix aquí i la mesura ho diu.
+
+**4. `_render_situation_plan_left` FORA.** El retall del 38 % esquerre del full no coincidia amb cap dels 7 signats
+(7 X). Ja no el crida ningú i s'ha esborrat; hi ha un test que comprova que no torni.
+
+**5. El filtre del «dibuix gran» també fa falta aquí.** Sense ell, la composició tirava endavant amb el `pl situ.pdf`
+de l'arrel (l'export imprimible del FreeHand): algunes de les seves tires de raster passen del 3 % de la pàgina i es
+feien passar per mapes (Bell-lloc i Anciles hi queien, phash 30). Exigint que la imatge més gran del full ocupi ≥ 15 %
+de la pàgina —el mateix llindar de la peça 4— el full imprimible es descarta i es passa al candidat següent.
+
+### Implementació
+
+| Fitxer | Què |
+|---|---|
+| `automation/imatges/retall.py` | `detect_situation_maps(page)`, `compose_situation(pdf, out)` i `_grow_to_white()` compartit, +110 línies |
+| `automation/image_manager.py` | bloc `3a-bis` (rol amb guard → composició), `_is_wide_image()`, i `_render_situation_plan_left` esborrat |
+| `tests/test_peca5_situacio.py` | 7 tests nous |
+
+### Validació empírica
+
+Run `2026-09-08-m341-peca5` contra `2026-09-08-m341-peca6`:
+
+| | abans | després |
+|---|---|---|
+| `fig_situacio` | 0 M · 0 C · 7 X · 1 ND → **0 %** | **5 M** · 0 C · 2 X · 1 ND → **71 %** |
+| **total imatges** | 26 · 4 · 17 · 9 → 64 % | **31 M** · 4 C · **12 X** · 9 ND → **74 %** |
+
+Per projecte: Castellar 71 → **86 %**, Rubí 67 → **83 %**, Vilanova 71 → **86 %**, Anciles 67 → **83 %**, Alcoletge
+50 → **67 %**. Els cinc encerts són phash ≤ 10 (Rubí i Vilanova, phash 0). Cap altra cel·la moguda: `diff` dels
+escalars buit als 7, agregat idèntic llevat del nom del run.
+
+### Tests
+
+7 nous: troba els dos mapes i deixa fora el dibuix, el nord i el logo; l'ordre és el de lectura del full un cop girat
+(amb la geometria de Castellar, que els té a la mateixa columna); sense segon mapa no hi ha figura; sense dibuix gran
+no és el full net; la composició queda apaïsada; `_is_wide_image` accepta `F1 UBI.png` i rebutja `F2 UBI PUNTS.png`;
+i `_render_situation_plan_left` ja no existeix. Suite: **2496 verds, 31 vermells amb els mateixos noms**.
+
+### Limitacions conegudes
+
+1. **Linyola** queda a phash 18 (X). A ull és la mateixa figura —els mateixos dos mapes, la mateixa fletxa vermella
+   entre ells— però els seus dos retalls porten un pèl més de marge vertical. Provat: un marge fix del 4 % la converteix
+   en MATCH però trenca Alcoletge i Anciles (phash 4→38 i 10→38), fins i tot retallant el marge perquè no entri a cap
+   altra imatge. No hi ha cap valor que serveixi per als tres: es deixa com està i s'anota.
+2. **Bell-lloc** fa una altra cosa: la seva Figura 1 i Figura 2 són **dos retalls del plànol de l'arquitecte**
+   («Font: Projecte»), no els mapes del full. A més són **dues** figures i la plantilla només té una ranura de
+   situació — el mateix motiu de fons que a Vilanova amb la d'assaigs. Ho hereta la peça 7.
+3. **El rol amb guard de forma** és una aposta calculada: si a un projecte nou `figure_situation_map` apuntés a una
+   imatge ampla que no fos la figura de situació, l'imprimiríem. La composició del full és la xarxa de seguretat quan
+   el rol no hi és, no quan és dolent.
+
+### GO/NO-GO
+
+- ✅ 5 de 8 figures de situació idèntiques al signat, amb la mateixa mecànica que les peces 3 i 4.
+- ✅ El retall del 38 % que no coincidia amb res ha desaparegut, amb un test que li barra la tornada.
+- ✅ Cap escalar, taula ni numeració moguts; suite amb els vermells esperats.
+- ⏳ Linyola (marge) i Bell-lloc (dues figures del projecte, una sola ranura): peça 7.
+
+### Següents passos
+
+Queda la **peça 7**, l'última: partir la ranura única en `situació` / `assaigs` / `projecte` amb **peus propis**,
+imprimir el nombre de figures que toca (D11) i triar les figures del projecte. És també l'única que mou el grup `fix`
+de la numeració (avui 74 M · 25 X, 10 de les quals són «nombre de figures del projecte»), i la que recull els tres
+casos que les peces 4 i 5 han deixat oberts: el peu de la figura d'assaigs, `fig_assaigs` de Vilanova i les dues
+figures de situació de Bell-lloc.
+
+*Fi entrada 2026-09-08 (4). La figura de situació són els dos mapes del full de l'Eva, de costat: 0 % → 71 %.*
