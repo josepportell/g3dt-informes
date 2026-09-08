@@ -1,8 +1,8 @@
 # Imatges de l'informe: tot el que queda pendent
 
 **Escrit:** 2026-09-07 (nit), a petició del Josep, en acabar la peça 3 del pas 3.
-**Actualitzat:** 2026-09-08, en acabar la **peça 4** i el pendent 2 (DECISION-LOG 2026-09-08 i 2026-09-08 (2)).
-**Estat de partida:** run de referència `2026-09-08-m341-tall-rubi`. **23 M · 4 C · 18 X · 11 ND → 60 %** de les 56 figures
+**Actualitzat:** 2026-09-08, en acabar les peces **4** i **6** i el pendent 2 (DECISION-LOG 2026-09-08, (2) i (3)).
+**Estat de partida:** run de referència `2026-09-08-m341-peca6`. **26 M · 4 C · 17 X · 9 ND → 64 %** de les 56 figures
 i fotos que l'Eva posa als 7 informes signats. Font de la veritat: `docs/imatges/veritat/<slug>/index.json` (pas 1).
 **Com es mesura:** `docs/wizard-headless/mesures/imatges_font.py` dins M341 (peça 0): M = la mateixa imatge (phash ≤ 10),
 C = la mateixa font amb un altre retall, X = una altra font, ND = no posem res.
@@ -18,10 +18,11 @@ C = la mateixa font amb un altre retall, X = una altra font, ND = no posem res.
 | `foto_dpsh` | 3 | 0 | 4 | 0 | ✅ peça 2 (4 empats) |
 | `fig_assaigs` | 4 | 0 | 0 | 2 | ✅ peça 4 (2 ND: la ranura única se n'ha anat a `fig_projecte`) |
 | `fig_projecte` | 2 | 0 | 1 | 2 | ⏳ **peça 7** (peu i partició de la ranura) |
+| `fig_geologic` | 3 | 0 | 3 | 1 | ✅ peça 6 (3 X = la vista ICGC de l'Eva, pregunta 34; 1 ND = Anciles, Aragó) |
 | `fig_situacio` | 0 | 0 | 7 | 1 | ⏳ **peça 5** |
-| `fig_geologic` | 0 | 0 | 4 | 3 | ⏳ **peça 6** |
 
-Les tres ranures pendents són **totes de figures compostes**; les fotos i el dibuix amb punts ja estan.
+Queden **la situació** (peça 5) i **el peu i la numeració** (peça 7); les fotos, el dibuix amb punts i el mapa
+geològic compost ja estan.
 
 ## 2. Les peces que queden
 
@@ -57,15 +58,23 @@ Les tres ranures pendents són **totes de figures compostes**; les fotos i el di
 - **Guany esperat:** 8 forats (0/8). Bloquejat en part per les UTM (§4).
 - **Obert amb l'Eva:** preguntes 30 (composició per defecte) i 36 (deixa sempre els PNG a `ALTRES`?).
 
-### Peça 6 — Mapa geològic — *S*
+### Peça 6 — Mapa geològic — ✅ FETA (2026-09-08)
 
 - **Què fa l'Eva:** 7/7, retall del mapa geològic ICGC 1:50.000 (1:25.000 a Castellar); amb llegenda composta a
   Castellar, Rubí i Vilanova (PNG `*MGEOL*`), sense llegenda i amb punt vermell a Linyola, Bell-lloc i Alcoletge;
   IGME 1:1.000.000 a Anciles (Aragó).
-- **Ordre decidit (pas 2, D8):** PNG `*MGEOL*` si hi és → ICGC WMS per UTM (ja el sabem baixar; és el mateix tipus de
-  figura a 3/7) → fora de Catalunya, IGME (comprovar si té WMS; si no, «cap font», mai inventar).
-- **Guany esperat:** 7 forats, dels quals 3 avui són «pendent» per manca d'UTM.
-- **Obert amb l'Eva:** pregunta 34 (llegenda sí o no; font a l'Aragó).
+- **Què s'ha fet:** `_find_composed_geological_map()` — un fitxer d'imatge amb «geol» al nom — va **abans** de la
+  recepta ICGC. Als 7 projectes dona exactament un candidat als tres que en tenen i cap als altres quatre. El rol
+  `figure_geological_map` de SmartScan **no** serveix: encerta a Rubí i Vilanova, però a Castellar apunta a `M1.png` i
+  a Linyola a una imatge extreta d'un correu.
+- **Resultat:** `fig_geologic` 0 % → **50 %** (3 M, phash 0). Total imatges 60 % → **64 %**. Rubí i Vilanova es queden
+  sense cap forat d'imatge pendent. Cap altra cel·la moguda.
+- **Què queda:** **Linyola, Bell-lloc i Alcoletge en X** — tenim el tipus de figura i les coordenades correctes, però
+  no la vista del visor que ella fa servir. Mesurat: **cap buffer de 150 a 1.000 m els acosta** (NCC 0,31-0,52 a tot
+  arreu), o sigui que la diferència **no és el zoom** i no hi ha res a provar per codi. Ho desbloqueja la **pregunta
+  34** a l'Eva. **Anciles** és ND honest: Aragó (IGME), i sense UTM.
+- **No tocar:** els paràmetres de `get_geological_map_with_terrain` (base topogràfica + `unitats-geologiques-50000` al
+  0,65 amb `alpha_composite`, buffer 700 m, 800×600, EPSG:25831, punt vermell r=10) — és la imatge que l'Eva va aprovar.
 
 ### Peça 7 — Figures del projecte, peu i bloc de figures variable — *M*
 
@@ -115,7 +124,7 @@ Les tres ranures pendents són **totes de figures compostes**; les fotos i el di
 | 31 | Punts a la figura d'assaigs | peça 4 |
 | 32 | Quan posa figures del projecte | peça 7 |
 | 33 | Una foto de materials o una per punt | pendent 1 |
-| 34 | Llegenda al mapa geològic; font a l'Aragó | peça 6 |
+| 34 | Llegenda al mapa geològic; **quina vista del visor ICGC fa servir**; font a l'Aragó | els 3 X que queden de `fig_geologic` (Linyola, Bell-lloc, Alcoletge) |
 | 36 | Deixa sempre els PNG a `ANNEXES/ALTRES`? | peces 4, 5 i 6 (canvia la primera opció de totes tres) |
 | 37 | Quina foto de la DPSH quan n'hi ha una per punt | 4 X de `foto_dpsh` |
 | 38 | Quina vista general, i quantes | 1 X de `foto_vista` |
@@ -126,11 +135,11 @@ Les tres ranures pendents són **totes de figures compostes**; les fotos i el di
 
 1. ~~**Peça 4** (assaigs)~~ — ✅ feta el 2026-09-08.
 2. ~~**Pendent 2** (retall de PNG)~~ — ❌ tancat el 2026-09-08: no calia (vegeu §3).
-3. **Peça 6** (geològic): 3 forats es resolen amb el PNG sense tocar les UTM.
+3. ~~**Peça 6** (geològic)~~ — ✅ feta el 2026-09-08 (3 M; els 3 restants depenen de la pregunta 34).
 4. **Peça 5** (situació): 8 forats, la més llarga; els tres PNG ja hi són MATCH crus, i cal mirar-hi la precedència de
    rols (`figure_situation_map` a Rubí) i les UTM.
 5. **Peça 7** (projecte + peu + bloc variable): l'única que mou la numeració.
 6. **Pendent 1** (materials per punt) i **pendent 4** (text fix de Rubí), quan toqui plantilla.
 
-Cada peça: baseline amb el codi quiet, canvi, mesura contra `2026-09-08-m341-tall-rubi`, entrada al DECISION-LOG i, si
+Cada peça: baseline amb el codi quiet, canvi, mesura contra `2026-09-08-m341-peca6`, entrada al DECISION-LOG i, si
 perd alguna cel·la, al `REGISTRE-PERDUES-MESURA.md`.

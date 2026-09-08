@@ -5264,3 +5264,110 @@ vermells amb els mateixos noms** que `suite-vermells-esperats.txt`.
 El pendent 2 es tanca com a «no calia».
 
 *Fi entrada 2026-09-08 (2). El retall de PNG no calia; el tall de Rubí era una precedència de rol: `fig_tall` 100 %.*
+
+---
+
+## 2026-09-08 (3) — IMATGES pas 3, peça 6: el mapa geològic que l'Eva ja ha compost va primer (0 % → 50 %); la recepta ICGC no es toca, i queda mesurat per què
+
+### Context
+
+Sisena peça del pas 3 (ordre de `PENDENTS-IMATGES.md` §6, ara que el pendent 2 s'ha tancat com a «no calia»,
+DECISION-LOG 2026-09-08 (2)). `fig_geologic` era la ranura amb més forats de totes: 0 M · 0 C · 4 X · 3 ND → **0 %**,
+i l'única figura que surt als 7 signats sense encertar-ne cap.
+
+Baseline: `2026-09-08-m341-tall-rubi`, imatges 23 M · 4 C · 18 X · 11 ND → 60 %.
+
+### Decisions arquitectòniques clau
+
+**1. Si l'Eva ja té el mapa compost al projecte, és aquell.** A Castellar, Rubí i Vilanova desa el retall de l'ICGC
+**amb la llegenda de les unitats** com a PNG al costat dels annexos (`m12 mgeol.png`, `F4 MGEOL.png`), i no s'assembla
+al que ella va signar: **és el mateix, phash 0**. És la mateixa forma que ja tenien la peça 2 (l'annex de fotografies
+és la seva selecció) i la peça 4 (el full de situació és el seu dibuix): D0 del pas 2, «la font és el que l'Eva ja té».
+
+**2. La regla és el NOM del fitxer, no el rol de SmartScan.** Un fitxer d'imatge que porti «geol» (sense distingir
+majúscules). Als 7 projectes dona **exactament un candidat als tres que en tenen i cap als altres quatre**; els `.FH11`
+(la font FreeHand del mateix dibuix) no compten perquè no són inseribles.
+**El rol `figure_geological_map` s'ha provat i NO serveix:** encerta a Rubí i Vilanova, però a Castellar apunta a
+`M1.png` i a Linyola a una imatge extreta d'un correu (`validation/msg_attachments/…/2_02B_DG_Silvia_Jaume_img0.jpeg`)
+— 2 errònies de 4, contra 3 de 3 bones pel nom. És el tercer cop en dos dies que un rol de figura de SmartScan porta
+a una imatge que no és la del signat (vegeu `figure_correlation` a l'entrada 2026-09-08 (2)).
+
+**3. Els paràmetres de la recepta ICGC NO es toquen, i ara se sap per què no serveix de res tocar-los.** El Josep va
+demanar reproduir exactament `get_geological_map_with_terrain` (base topogràfica + `unitats-geologiques-50000` al 0,65
+amb `alpha_composite`, buffer 700 m, 800×600, EPSG:25831, punt vermell de radi 10 px) perquè és la imatge que l'Eva va
+aprovar. S'ha mesurat, només per saber-ho, què passaria movent el buffer als tres signats que fan servir aquest tipus
+de figura — Linyola, Bell-lloc i Alcoletge:
+
+| buffer | linyola | bell-lloc | alcoletge |
+|---|--:|--:|--:|
+| 150 m | 0,34 | 0,31 | 0,31 |
+| 250 m | 0,39 | 0,39 | 0,38 |
+| 350 m | 0,33 | 0,41 | 0,39 |
+| 500 m | 0,33 | 0,48 | 0,33 |
+| **700 m (avui)** | **0,37** | **0,31** | **0,52** |
+| 1.000 m | 0,34 | 0,32 | 0,50 |
+
+**Cap valor s'acosta al llindar de 0,70: la diferència no és el zoom.** El que ella hi va enganxar surt d'una vista
+diferent del visor (a Linyola s'hi veuen les plantes dels edificis i les cotes puntuals de la base topogràfica
+1:5.000). Tocar el buffer no guanyaria res i trencaria una figura que ella ja ha validat: **es queda com està**, i el
+que cal per als altres tres és saber quina vista fa servir — pregunta a l'Eva, no codi.
+
+**4. Correcció al handoff `_FOR-NEW-YOU-20260907-2000` §4.2.** Deia «el forat d'aquells 3 projectes [Linyola,
+Bell-lloc, Alcoletge] no és la recepta, és que no tenim UTM». **Els tres sense UTM són Rubí, Vilanova i Anciles**;
+Linyola, Bell-lloc i Alcoletge sí que en tenen i per això generen la imatge (i queden en X). La confusió no ha tingut
+conseqüències perquè dos dels tres sense UTM (Rubí i Vilanova) es resolen precisament amb el PNG.
+
+**5. Anciles es queda sense figura, i està bé.** És Aragó: l'Eva hi posa el mapa de l'IGME 1:1.000.000, l'ICGC no hi
+arriba i tampoc no en tenim UTM. Sense font, cap figura (D8: mai inventar). Queda com l'únic ND de la ranura.
+
+### Implementació
+
+`automation/image_manager.py`: `_find_composed_geological_map()` (+22 línies amb el raonament) i el bloc del mapa
+geològic passa a provar-lo abans de la recepta ICGC. Efecte lateral volgut: als tres projectes amb PNG ja no es crida
+`_download_icgc_images()`, que avui baixa també l'ortofoto i consulta el Cadastre per a res (la ranura «aèria» va
+desaparèixer a la peça 1) — menys espera al wizard. La peça 5 tornarà a necessitar les capes ICGC i les demanarà ella.
+`tests/test_peca6_mapa_geologic.py`: 5 tests.
+
+### Validació empírica
+
+Run `2026-09-08-m341-peca6` contra `2026-09-08-m341-tall-rubi`:
+
+| | abans | després |
+|---|---|---|
+| `fig_geologic` | 0 M · 0 C · 4 X · 3 ND → **0 %** | **3 M** · 0 C · 3 X · 1 ND → **50 %** |
+| **total imatges** | 23 · 4 · 18 · 11 → 60 % | **26 M** · 4 C · 17 X · **9 ND** → **64 %** |
+
+Castellar 57 → 71 %, Rubí 60 → 67 %, Vilanova 67 → 71 %. Els tres encerts són **phash 0**: la mateixa imatge, bit a
+bit. Rubí i Vilanova es queden **sense cap forat d'imatge pendent** a la taula de presència.
+Cap altra cel·la moguda: `diff` dels escalars buit als 7, agregat idèntic llevat del nom del run.
+
+### Tests
+
+5 nous: troba el PNG pel nom i no es queda amb `M1.png`; reconeix les variants de grafia i de carpeta (`ANEXOS/OTROS`);
+sense cap fitxer «geol» no hi ha candidat (amb la imatge minada del correu de Linyola com a contraexemple); el `.FH11`
+no compta; la carpeta «altres» mana sobre la resta. Suite sencera: **2489 verds, 31 vermells amb els mateixos noms**.
+
+### Limitacions conegudes
+
+1. **Linyola, Bell-lloc i Alcoletge segueixen en X.** Tenim el tipus de figura correcte i les coordenades correctes,
+   però no la vista del visor que ella fa servir. **Pregunta 34 a l'Eva** (quina vista i si vol la llegenda) és el que
+   ho desbloqueja; no hi ha res a provar per codi mentre no es respongui.
+2. **Anciles: cap font.** Aragó (IGME) i sense UTM. Si algun dia es deriven les UTM de la referència cadastral
+   (`_FOR-NEW-YOU-20260907-2000` §4.1), caldria comprovar si l'IGME té WMS; avui, ND honest.
+3. **Només PNG/JPG.** Si l'Eva no exporta el PNG i només deixa el `.FH11`, es cau a la recepta ICGC sense avisar
+   (bloqueig de fons 4: `soffice` a producció).
+
+### GO/NO-GO
+
+- ✅ 3 figures idèntiques (phash 0) amb una regla determinista d'una línia.
+- ✅ La recepta ICGC aprovada per l'Eva es queda intacta, i ara està mesurat que moure-la no guanyaria res.
+- ✅ Cap escalar, taula ni numeració moguts; suite amb els vermells esperats.
+- ⏳ Pregunta 34 a l'Eva per als tres d'ICGC; Anciles bloquejat per les UTM.
+
+### Següents passos
+
+`PENDENTS-IMATGES.md` §6: **peça 5** (situació) → **peça 7** (figures del projecte, peu i numeració variable). A la
+peça 5, mirar-hi la precedència del rol `figure_situation_map` (a Rubí apunta a `F1 UBI.png`, que ÉS la figura del
+signat) i recordar que els tres PNG de situació ja són MATCH crus.
+
+*Fi entrada 2026-09-08 (3). El mapa geològic compost de l'Eva va primer: 0 % → 50 %, i la recepta ICGC no es toca.*
