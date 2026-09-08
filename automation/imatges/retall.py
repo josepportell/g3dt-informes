@@ -256,3 +256,140 @@ def crop_plan(pdf_path: Path, output_path: Path, *, page_number: int = 0, dpi: i
     except Exception as exc:
         log.warning("No s'ha pogut retallar el dibuix amb punts de %s: %s", pdf_path.name, exc)
         return None
+
+
+# --------------------------------------------------------------------------------------------------------------
+# Peça 5 del pas 3 (2026-09-08): la FIGURA DE SITUACIÓ, els dos mapes del mateix full, recomposats.
+#
+# L'Eva obre l'informe amb dos mapes de costat: el topogràfic del municipi amb el punt vermell i, a la dreta,
+# l'ortofoto o el topogràfic ampliat amb la zona en taronja (7/7 signats; a Bell-lloc són dos retalls del plànol de
+# l'arquitecte i a Anciles la Sede del Catastro). Aquells dos mapes són exactament els dos que ja té a dalt del full
+# «plànol de situació», sobre el dibuix amb punts que fa servir la peça 4.
+#
+# El nucli de cada mapa és una imatge incrustada; el creixement fins al blanc hi afegeix el marc i el que ella hi
+# dibuixa a sobre (la fletxa que uneix els dos mapes, el rectangle de la zona). Les altres imatges del full —l'altre
+# mapa, el dibuix gran, la fletxa de nord, el logo— són zones excloses, i el caixetí, límit dur.
+#
+# **L'ordre es decideix amb els rectangles ORIGINALS, abans de créixer.** És l'única cosa d'aquesta peça que es va
+# haver de mesurar dues vegades: ordenar els rectangles ja crescuts sembla igual i no ho és, perquè el creixement d'un
+# mapa li pot moure la vora esquerra per davant de l'altre i els inverteix. Amb l'ordre pres abans de créixer, els
+# quatre projectes que hi encerten donen la mateixa imatge que el signat; amb l'ordre pres després, només dos.
+#
+# Mesurat sobre els 7 signats (peça 5): Castellar (phash 10), Rubí (6), Alcoletge (4) i Anciles (10) idèntics al
+# signat. Linyola queda a 18 (la mateixa figura a ull: els seus dos retalls porten una mica més de marge vertical) i
+# Bell-lloc fa una altra cosa (dos retalls del plànol de l'arquitecte, «Font: Projecte»).
+
+SIT_MAP_MIN_AREA = 0.03    # àrea mínima per ser un «mapa» i no la fletxa de nord ni el logo
+SIT_GAP = 0.01             # tolerància del creixement, en fracció de l'alçada del mapa
+SIT_WINDOW = 0.10          # finestra al voltant del mapa
+SIT_SEPARATION = 0.02      # separació blanca entre els dos mapes, en fracció de l'alçada
+
+
+def _grow_to_white(page, core, others, y_bottom, gap: float, window: float):
+    """El rectangle del mapa amb el que el toca, fins a trobar blanc. Coordenades sense girar."""
+    import fitz
+
+    W, H = page.mediabox.width, page.mediabox.height
+    box = fitz.Rect(core)
+    win = fitz.Rect(max(0, core.x0 - window * core.width), max(0, core.y0 - window * core.height),
+                    min(W, core.x1 + window * core.width), min(H, core.y1 + window * core.height))
+    items = []
+    for d in page.get_drawings():
+        r = fitz.Rect(d["rect"])
+        if r.width < 0.97 * W and r.height < 0.97 * H and _inside(win, r) and not _covered(r, others):
+            items.append(r)
+    for w in page.get_text("words"):
+        r = fitz.Rect(w[0], w[1], w[2], w[3])
+        if _inside(win, r) and not _covered(r, others):
+            items.append(r)
+    tol = gap * core.height
+    changed = True
+    while changed:
+        changed = False
+        rest = []
+        for r in items:
+            if _touches(box, r, tol):
+                box = _union(box, r)
+                changed = True
+            else:
+                rest.append(r)
+        items = rest
+    return box & fitz.Rect(0, 0, W, y_bottom)
+
+
+def detect_situation_maps(page, *, gap: float = SIT_GAP, window: float = SIT_WINDOW):
+    """Els dos mapes de situació del full, en ordre de lectura (esquerra→dreta, dalt→baix) i girats com `page.rect`.
+
+    `None` si el full no en té dos de prou grans (aleshores no hi ha figura de situació: mai se n'inventa una).
+    """
+    import fitz
+
+    W, H = page.mediabox.width, page.mediabox.height
+    rects = [fitz.Rect(r) for im in page.get_images(full=True) for r in page.get_image_rects(im[0])]
+    if len(rects) < 3:                       # el dibuix gran + dos mapes com a mínim
+        return None
+    rects.sort(key=lambda r: abs(r.get_area()), reverse=True)
+    if abs(rects[0].get_area()) < PLAN_CORE_MIN_AREA * W * H:
+        return None                          # cap dibuix gran: no és el full net sinó l'export imprimible del
+                                             # FreeHand, amb el raster en tires (algunes passen del 3 % de la pàgina
+                                             # i es farien passar per mapes). Mateix filtre que la peça 4.
+    maps = [r for r in rects[1:] if abs(r.get_area()) >= SIT_MAP_MIN_AREA * W * H][:2]
+    if len(maps) < 2:
+        return None
+    # ORDRE DE LECTURA del full amb els rectangles originals (vegeu la nota de dalt): d'esquerra a dreta i, quan
+    # tots dos són a la mateixa columna, de dalt a baix — a Castellar i Alcoletge els dos mapes queden l'un sobre
+    # l'altre al full i l'Eva els posa de costat, el de dalt a l'esquerra.
+    maps.sort(key=lambda r: (lambda q: (round(q.x0, 1), round(q.y0, 1)))(r * page.rotation_matrix))
+
+    words = page.get_text("words")
+    ys = [w[1] for w in words if w[4].lower().strip(":.") in TITLE_BLOCK_WORDS]
+    y_bottom = min(ys) if ys else H
+    out = []
+    for core in maps:
+        others = [r for r in rects if r is not core]
+        out.append((_grow_to_white(page, core, others, y_bottom, gap, window) * page.rotation_matrix) & page.rect)
+    return out
+
+
+def compose_situation(pdf_path: Path, output_path: Path, *, page_number: int = 0, dpi: int = 200,
+                      separation: float = SIT_SEPARATION) -> Path | None:
+    """Renderitza els dos mapes del full i els posa de costat, a la mateixa alçada, sobre blanc.
+
+    `None` si el full no té dos mapes (qui crida no imprimeix cap figura de situació).
+    """
+    try:
+        import fitz
+        from PIL import Image
+
+        doc = fitz.open(str(pdf_path))
+        page = doc[page_number]
+        clips = detect_situation_maps(page)
+        if not clips:
+            doc.close()
+            log.info("Sense dos mapes de situació a %s p%d", pdf_path.name, page_number + 1)
+            return None
+        tiles = []
+        for clip in clips:
+            if clip.width < 20 or clip.height < 20:
+                doc.close()
+                return None
+            pix = page.get_pixmap(dpi=dpi, clip=clip)
+            tiles.append(Image.frombytes("RGB", (pix.width, pix.height), pix.samples))
+        doc.close()
+
+        h = max(t.height for t in tiles)
+        tiles = [t if t.height == h else t.resize((max(1, round(t.width * h / t.height)), h), Image.LANCZOS)
+                 for t in tiles]
+        sep = round(separation * h)
+        comp = Image.new("RGB", (sum(t.width for t in tiles) + sep * (len(tiles) - 1), h), (255, 255, 255))
+        x = 0
+        for t in tiles:
+            comp.paste(t, (x, 0))
+            x += t.width + sep
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        comp.save(str(output_path))
+        log.info("Figura de situació de %s → %s (%d×%d)", pdf_path.name, output_path.name, comp.width, comp.height)
+        return output_path
+    except Exception as exc:
+        log.warning("No s'ha pogut compondre la figura de situació de %s: %s", pdf_path.name, exc)
+        return None

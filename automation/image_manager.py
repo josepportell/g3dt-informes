@@ -775,6 +775,16 @@ class ImageManager:
         logger.info(f"Mapa geològic compost de l'Eva: {hits[0].name}")
         return hits[0]
 
+    def _is_wide_image(self, path: Path, min_ratio: float = 1.5) -> bool:
+        """La imatge és apaïsada com una figura de situació (dos mapes de costat). Peça 5."""
+        try:
+            from PIL import Image
+            with Image.open(path) as im:
+                return im.height > 0 and im.width / im.height >= min_ratio
+        except Exception as exc:
+            logger.warning(f"No s'ha pogut mesurar {path.name}: {exc}")
+            return False
+
     def _situation_plan_candidates(self, roles: dict | None) -> list[Path]:
         """Fulls «plànol de situació» candidats, en ordre de preferència per al retall del dibuix amb punts (peça 4).
 
@@ -801,24 +811,6 @@ class ImageManager:
             for m in sorted(self.project_path.glob(pattern)):
                 add(m)
         return out
-
-    def _render_situation_plan_left(self, pdf_path: Path, output_path: Path, dpi: int = 200) -> Path | None:
-        """Render left ~38% of situation plan page (cadastral maps area)."""
-        try:
-            import fitz
-            doc = fitz.open(str(pdf_path))
-            page = doc[0]
-            r = page.rect
-            # Situation plans have cadastral maps on the left ~38% of the page
-            left_clip = fitz.Rect(r.x0, r.y0, r.x0 + r.width * 0.38, r.y1)
-            pix = page.get_pixmap(dpi=dpi, clip=left_clip)
-            pix.save(str(output_path))
-            doc.close()
-            logger.info(f"Rendered situation plan left crop: {pdf_path.name} -> {output_path.name}")
-            return output_path
-        except Exception as e:
-            logger.warning(f"Failed to render situation plan crop {pdf_path.name}: {e}")
-            return None
 
     def _find_architect_plan_with_points(self) -> tuple[Path | None, dict | None]:
         """
@@ -1115,20 +1107,34 @@ class ImageManager:
                             context[var_name] = img
                             has_plan_crops = True
 
-        # 3a-fallback. Cadastre from situation_plan: crop left ~38% (cadastral maps)
+        # 3a-bis. Peça 5 (2026-09-08): la figura de situació són els DOS MAPES del full de l'Eva, de costat.
+        #
+        # Substitueix el retall del 38 % esquerre del full (`_render_situation_plan_left`, ara fora), que no
+        # coincidia amb cap dels 7 signats (7 X). Primer, si SmartScan ha trobat el PNG que ella mateixa ha compost
+        # (`figure_situation_map`), es fa servir sencer — però només si és ample (relació ≥ 1,5): una figura de
+        # situació són dos mapes de costat, i el guard evita la família d'errors d'aquests rols, que sovint apunten a
+        # una imatge que no toca (DECISION-LOG 2026-09-08 (2) i (3)). Aquí el rol encerta 2 de 2 i dona la imatge
+        # idèntica (phash 0) a Rubí i Vilanova. Si no hi és, es componen els dos mapes del full.
+        if 'fig_cadastre_image' not in context and roles and 'figure_situation_map' in roles:
+            cand = self.project_path / roles['figure_situation_map']['path']
+            if cand.exists() and self._is_wide_image(cand):
+                img = self._safe_inline_image(str(cand), width=Mm(IMAGE_WIDTH_LOCATION))
+                if img:
+                    context['fig_cadastre_image'] = img
+                    has_plan_crops = True
+                    logger.info(f"Figura de situació composta per l'Eva: {cand.name}")
+
         if 'fig_cadastre_image' not in context:
-            sit_plan_pdf = self._find_situation_plan(roles)
-            if sit_plan_pdf:
-                cached = self._cache_name("cadastre_sitplan", sit_plan_pdf)
-                if not cached.exists():
-                    self._render_situation_plan_left(sit_plan_pdf, cached)
-                if cached.exists():
-                    img = self._safe_inline_image(
-                        str(cached), width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
-                    )
-                    if img:
-                        context['fig_cadastre_image'] = img
-                        has_plan_crops = True
+            from .imatges.retall import compose_situation
+            for sit_pdf in self._situation_plan_candidates(roles):
+                cached = self._cache_name("situacio", sit_pdf, ext="png")
+                if not cached.exists() and compose_situation(sit_pdf, cached) is None:
+                    continue                   # full sense dos mapes: candidat següent
+                img = self._safe_inline_image(str(cached), width=Mm(IMAGE_WIDTH_LOCATION))
+                if img:
+                    context['fig_cadastre_image'] = img
+                    has_plan_crops = True
+                    break
 
         context.setdefault('fig_cadastre_image', PLACEHOLDER_TEXT)
 
