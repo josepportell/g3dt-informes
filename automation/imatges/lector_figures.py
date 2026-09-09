@@ -30,7 +30,7 @@ from pathlib import Path
 from PIL import Image, ImageChops, ImageDraw, ImageOps
 
 from automation.imatges.lector_fotos import (  # noqa: F401  (reutilitzats: mateixa mecànica que el lector de fotos)
-    SLUG_KEYS, TRUTH_IDX, TRUTH_IMG, _fonts, _norm, _roles, grid, parse_json_text, slug_of,
+    EVA_PNG_DIRS, SLUG_KEYS, TRUTH_IDX, TRUTH_IMG, _fonts, _norm, _roles, grid, parse_json_text, slug_of,
 )
 
 log = logging.getLogger(__name__)
@@ -53,7 +53,6 @@ G3_NAME_RE = re.compile(r"pressupost|presupuesto|informe|portada|gtl|lab-?sig|pe
                         r"|pl\.? ?situ|plànol de situaci|plano de situaci|thumbs\.db", re.I)
 G3_IN_EXPEDIENT_RE = re.compile(r"pressupost|presupuesto|informe|portada|thumbs\.db", re.I)
 G3_DIR_PREFIXES = ("PDF", "ANNEX", "ANEJ", "ANEX", "ACCEPT", "ACEPT", "FOTO", "VALIDATION", "_")
-EVA_PNG_DIRS = ("ALTRES", "OTROS")
 ARCHITECT_ROLES = ("architect_plan", "architect_plan_with_points", "architect_project", "figure_test_points")
 MAX_PAGES_PER_PDF = 40
 MAX_CANDIDATES = 60

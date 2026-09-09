@@ -1203,8 +1203,23 @@ def list_photos(project_name: str):
                 photos.append({
                     "filename": f.name,
                     "relative_path": rel,
+                    "kind": "foto",
                     "thumbnail_url": f"/api/thumbnail/{quote(project_name, safe='')}?file={quote(rel, safe='/')}",
                 })
+    # PNG de l'Eva (`ALTRES`/`OTROS`): els mateixos candidats que veu el lector de fotos (2026-09-09, acció 1 de
+    # l'anàlisi de discrepàncies). Una vista del solar d'un visor (Google Earth) hi pot ser «Fotografia 1».
+    from automation.imatges.lector_fotos import list_eva_pngs
+    seen = {p["relative_path"] for p in photos}
+    for f in list_eva_pngs(project_path):
+        rel = str(f.relative_to(project_path))
+        if rel in seen:
+            continue
+        photos.append({
+            "filename": f.name,
+            "relative_path": rel,
+            "kind": "eva_png",
+            "thumbnail_url": f"/api/thumbnail/{quote(project_name, safe='')}?file={quote(rel, safe='/')}",
+        })
 
     # Load current selection
     sel_path = project_path / 'validation' / 'photo_selection.json'

@@ -7711,7 +7711,8 @@
                     html += `<span style="color:#95a5a6; font-size:12px; margin-left:8px;">${escapeHtml(slot.size)}</span>`;
                     html += `</div>`;
                     if (selectedPhoto) {
-                        html += `<span style="color:#27ae60; font-size:12px;">${escapeHtml(selectedPhoto.filename)}</span>`;
+                        const evaTag = selectedPhoto.kind === 'eva_png' ? ' (PNG de l\'Eva, ALTRES)' : '';
+                        html += `<span style="color:#27ae60; font-size:12px;">${escapeHtml(selectedPhoto.filename + evaTag)}</span>`;
                     } else {
                         html += `<span style="color:#e74c3c; font-size:12px;">Cap foto seleccionada</span>`;
                     }
@@ -7746,7 +7747,8 @@
 
                             html += `<div style="cursor:pointer; border:${border}; border-radius:4px; opacity:${opacity}; transition:all 0.15s; position:relative;" `;
                             html += `onclick="selectPhotoForSlot('${escapeHtml(slot.key)}', '${escapeHtml(photo.relative_path)}')" `;
-                            html += `title="${escapeHtml(photo.filename)}${usedInKey ? ' (usat a ' + escapeHtml(usedLabel) + ')' : ''}">`;
+                            const evaAlt = photo.kind === 'eva_png' ? ' (PNG de l\'Eva, ALTRES)' : '';
+                            html += `title="${escapeHtml(photo.filename + evaAlt)}${usedInKey ? ' (usat a ' + escapeHtml(usedLabel) + ')' : ''}">`;
                             html += `<img src="${escapeHtml(photo.thumbnail_url)}" style="height:70px; width:90px; object-fit:cover; border-radius:3px; display:block;" loading="lazy" alt="${escapeHtml(photo.filename)}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding:15px;text-align:center;color:#aaa;font-size:9px\\'>Error</div>'">`;
                             if (usedInKey) {
                                 html += `<div style="position:absolute; bottom:2px; left:2px; background:rgba(0,0,0,0.6); color:white; font-size:9px; padding:1px 4px; border-radius:2px;">${escapeHtml(usedLabel)}</div>`;

@@ -4,7 +4,8 @@ Què fa (D5-D7 del pas 2): per a cada forat de foto de l'informe (vistes general
 materials) tria la foto del projecte que l'Eva posaria, MIRANT-LES: Claude Code rep un full de contacte numerat amb
 totes les imatges de la carpeta de fotos, l'annex de fotografies de l'Eva renderitzat (la seva pròpia selecció amb peu,
 existeix abans del wizard) i, per forat, els exemplars dels signats d'ALTRES projectes (leave-one-out). Python fa la part
-determinista: inventari, orientació EXIF, aparellament foto ↔ annex per phash, fulls de contacte, prompt, crida
+determinista: inventari (la carpeta de fotos + els PNG que l'Eva desa a `ALTRES`/`OTROS`, marcats «PNG de l'Eva»:
+2026-09-09, acció 1 de l'anàlisi de discrepàncies), orientació EXIF, aparellament foto ↔ annex per phash, fulls de contacte, prompt, crida
 `claude -p` (el mateix runner que la lectura de text), validació i escriptura de `validation/photo_selection.json` amb
 `source: "lector"` (precedència al generador: Eva `user` > `lector` > cau IA antiga > patrons).
 
@@ -43,6 +44,8 @@ EXEMPLAR_SLOTS = {"foto_dpsh": "dpsh", "foto_sondeig": "sondeig", "foto_material
 SLUG_KEYS = {"castellar": "CASTELLAR", "rubi": "RUBI", "linyola": "LINYOLA", "bell-lloc": "BELL-LLOC",
              "alcoletge": "ALCOLETGE", "vilanova": "VILANOVA", "anciles": "ANCILES"}
 PHASH_MAX = 10
+PHASH_SAME = 2                # la mateixa imatge re-desada (JPG → PNG): un sol candidat
+EVA_PNG_DIRS = ("ALTRES", "OTROS")   # la carpeta on l'Eva desa les seves composicions (també el lector de figures)
 MIN_ANNEX_SIDE = 300          # el logo de l'annex fa 138×138
 SUBDIR = "_lector_fotos"      # dins `validation/`
 SELECTION = "photo_selection.json"
@@ -105,6 +108,26 @@ def list_candidates(photos_dir: Path) -> list[Path]:
             if f.is_file() and f.suffix.lower() in IMG_EXTS and f.name != "Thumbs.db" and not f.name.startswith("_")]
 
 
+def is_eva_png(rel: Path) -> bool:
+    """Una imatge dins una carpeta `ALTRES`/`OTROS` (a qualsevol nivell): `ANNEXES/ALTRES/m7.png`, `ANEXOS/OTROS/F1 SIT.png`."""
+    return len(rel.parts) >= 2 and rel.suffix.lower() in IMG_EXTS and any(p.upper() in EVA_PNG_DIRS for p in rel.parts[:-1])
+
+
+def list_eva_pngs(project: Path) -> list[Path]:
+    """Les imatges que l'Eva desa a `ALTRES`/`OTROS`: les seves composicions per a les figures (mapes, plànol amb punts,
+    tall, peces) i, de vegades, una vista del solar presa d'un visor (Google Earth, Street View) que al signat fa de
+    «Fotografia 1». Van al full de contacte marcades «PNG de l'Eva»: el skill diu quines poden anar a un forat de foto."""
+    out = []
+    for f in sorted(project.rglob("*")):
+        if not f.is_file() or f.name == "Thumbs.db" or f.name.startswith("_"):
+            continue
+        rel = f.relative_to(project)
+        if "validation" in rel.parts or not is_eva_png(rel):
+            continue
+        out.append(f)
+    return out
+
+
 def find_annex_fotografies(project: Path) -> Path | None:
     """L'annex de fotografies de l'Eva (`*_fotografies.pdf` / `*_fotografías.pdf` / `.FH11`): PDF primer."""
     hits = [p for p in project.rglob("*") if p.is_file() and "fotograf" in _norm(p.name)
@@ -140,8 +163,13 @@ def fh11_to_pdf(fh11: Path) -> Path | None:
     return out
 
 
+ROTATIONS = (0, 90, 180, 270)
+
+
 def annex_images(pdf: Path) -> list[dict]:
-    """Fotos incrustades a l'annex, per pàgina i ordre de lectura (dalt→baix), amb phash; el logo (138×138) fora."""
+    """Fotos incrustades a l'annex, per pàgina i ordre de lectura (dalt→baix), amb phash; el logo (138×138) fora.
+    `phashes` porta el hash de la imatge girada 0/90/180/270°: l'Eva incrusta la foto vertical de la cullera SPT girada
+    90° (mesurat 2026-09-09: 2 de 31 imatges d'annex als 7 projectes només s'aparellen girades)."""
     import fitz
     out = []
     doc = fitz.open(pdf)
@@ -156,9 +184,10 @@ def annex_images(pdf: Path) -> list[dict]:
                 rects = page.get_image_rects(xref)
                 y0, x0 = (rects[0].y0, rects[0].x0) if rects else (0.0, 0.0)
                 import io
-                ph = str(imagehash.phash(Image.open(io.BytesIO(info["image"])).convert("RGB")))
-                found.append({"page": pno, "y": round(float(y0), 1), "x": round(float(x0), 1), "phash": ph,
-                              "w": info["width"], "h": info["height"]})
+                im = Image.open(io.BytesIO(info["image"])).convert("RGB")
+                phs = {r: str(imagehash.phash(im.rotate(r, expand=True))) for r in ROTATIONS}
+                found.append({"page": pno, "y": round(float(y0), 1), "x": round(float(x0), 1), "phash": phs[0],
+                              "phashes": phs, "w": info["width"], "h": info["height"]})
             except Exception as exc:  # una imatge corrupta no atura l'inventari
                 log.debug("annex %s p%d xref %s: %s", pdf.name, pno, xref, exc)
         found.sort(key=lambda r: (r["y"], r["x"]))
@@ -187,19 +216,27 @@ def inventory(project: Path, work: Path) -> dict:
     cands: list[dict] = []
     roles = _roles(project)
     duplicates: dict[str, list[str]] = {}
+    # Fonts: la carpeta de fotos (kind `foto`) i els PNG d'`ALTRES`/`OTROS` de l'Eva (kind `eva_png`, després de les fotos).
+    sources: list[tuple[Path, str]] = []
     if photos_dir:
-        # el mateix fitxer amb dos noms (còpies renombrades): un sol candidat. Canònic = el camí dins una subcarpeta
-        # (`SONDEIG/`, `DPSH/`, `S1/`: el nom de la carpeta és una pista que el lector fa servir), si no el primer.
-        groups: dict[str, list[Path]] = {}
-        for f in list_candidates(photos_dir):
-            groups.setdefault(hashlib.md5(f.read_bytes()).hexdigest(), []).append(f)
-        ordered: list[tuple[Path, str, list[Path]]] = []
+        sources += [(f, "foto") for f in list_candidates(photos_dir)]
+    else:
+        warnings.append("cap carpeta de fotos")
+    seen = {f for f, _ in sources}
+    sources += [(f, "eva_png") for f in list_eva_pngs(project) if f not in seen]
+    if sources:
+        # el mateix fitxer amb dos noms (còpies renombrades): un sol candidat. Canònic = la foto abans que el PNG de
+        # l'Eva; després el camí dins una subcarpeta (`SONDEIG/`, `DPSH/`, `S1/`: el nom de la carpeta és una pista que
+        # el lector fa servir), si no el primer.
+        groups: dict[str, list[tuple[Path, str]]] = {}
+        for f, kind in sources:
+            groups.setdefault(hashlib.md5(f.read_bytes()).hexdigest(), []).append((f, kind))
+        ordered: list[tuple[Path, str, str, list[Path]]] = []
         for md5, files in groups.items():
-            canon = sorted(files, key=lambda x: (-len(x.relative_to(photos_dir).parts), x.as_posix()))[0]
-            ordered.append((canon, md5, [x for x in files if x != canon]))
-        ordered.sort(key=lambda t: t[0].as_posix())
-        k = 0
-        for f, md5, others in ordered:
+            canon, kind = sorted(files, key=lambda x: (x[1] != "foto", -len(x[0].relative_to(project).parts), x[0].as_posix()))[0]
+            ordered.append((canon, kind, md5, [x for x, _ in files if x != canon]))
+        ordered.sort(key=lambda t: (t[1] != "foto", t[0].as_posix()))
+        for f, kind, md5, others in ordered:
             rel = f.relative_to(project).as_posix()
             try:
                 im = ImageOps.exif_transpose(Image.open(f)).convert("RGB")
@@ -207,17 +244,24 @@ def inventory(project: Path, work: Path) -> dict:
             except Exception as exc:
                 warnings.append(f"{rel}: no es pot obrir ({exc})")
                 continue
-            k += 1
             dups = [x.relative_to(project).as_posix() for x in others]
+            # la mateixa foto re-desada com a PNG a `ALTRES` (md5 diferent, phash igual): un sol candidat, la foto
+            same = None
+            if kind == "eva_png":
+                same = next((c for c in cands if c["kind"] == "foto"
+                             and imagehash.hex_to_hash(c["phash"]) - imagehash.hex_to_hash(ph) <= PHASH_SAME), None)
+            if same is not None:
+                same["duplicates"] += [rel] + dups
+                same["roles"] = sorted(set(same["roles"]) | set(roles.get(rel, [])))
+                duplicates[same["rel"]] = same["duplicates"]
+                continue
             duplicates[rel] = dups
             rs = set(roles.get(rel, []))
             for d in dups:
                 rs |= set(roles.get(d, []))
-            cands.append({"idx": k, "rel": rel, "path": str(f), "dims": dims, "phash": ph, "md5": md5,
+            cands.append({"idx": len(cands) + 1, "kind": kind, "rel": rel, "path": str(f), "dims": dims, "phash": ph, "md5": md5,
                           "roles": sorted(rs), "annex": None, "duplicates": dups})
         duplicates = {k: v for k, v in duplicates.items() if v}
-    else:
-        warnings.append("cap carpeta de fotos")
     annex = find_annex_fotografies(project)
     annex_pdf = None
     if annex and annex.suffix.lower() == ".fh11":
@@ -234,11 +278,12 @@ def inventory(project: Path, work: Path) -> dict:
         for c in cands:
             best = None
             for a in annex_imgs:
-                d = imagehash.hex_to_hash(c["phash"]) - imagehash.hex_to_hash(a["phash"])
-                if d <= PHASH_MAX and (best is None or d < best[0]):
-                    best = (d, a)
+                for rot, h in (a.get("phashes") or {0: a["phash"]}).items():
+                    d = imagehash.hex_to_hash(c["phash"]) - imagehash.hex_to_hash(h)
+                    if d <= PHASH_MAX and (best is None or d < best[0]):
+                        best = (d, a, int(rot))
             if best:
-                c["annex"] = {"page": best[1]["page"], "ordinal": best[1]["ordinal"], "phash_d": int(best[0])}
+                c["annex"] = {"page": best[1]["page"], "ordinal": best[1]["ordinal"], "phash_d": int(best[0]), "rot": best[2]}
     return {"project": str(project), "photos_dir": str(photos_dir) if photos_dir else None,
             "annex": str(annex) if annex else None, "annex_pdf": str(annex_pdf) if annex_pdf else None,
             "annex_pages": [str(p) for p in pages], "annex_images": annex_imgs, "candidates": cands, "warnings": warnings,
@@ -278,10 +323,13 @@ def grid(cells: list[tuple[str, str]], out: Path, W: int = 360, H: int = 270, co
 def contact_sheet(inv: dict, out: Path) -> Path:
     cells = []
     for c in inv["candidates"]:
-        tag = f" · annex p{c['annex']['page']} #{c['annex']['ordinal']}" if c.get("annex") else ""
+        tag = (f" · annex p{c['annex']['page']} #{c['annex']['ordinal']}" + (f" (girada {c['annex']['rot']}°)" if c['annex'].get('rot') else "")) if c.get("annex") else ""
         rol = f" · rol {','.join(c['roles'])}" if c.get("roles") else ""
-        cells.append((f"{c['idx']}. {Path(c['rel']).name} [{c['dims'][0]}×{c['dims'][1]}]{tag}{rol}", c["path"]))
-    return grid(cells, out, title=f"FOTOS DEL PROJECTE {Path(inv['project']).name} — {len(cells)} candidats (número = índex)")
+        eva = " · PNG de l'Eva (ALTRES)" if c.get("kind") == "eva_png" else ""
+        cells.append((f"{c['idx']}. {Path(c['rel']).name} [{c['dims'][0]}×{c['dims'][1]}]{eva}{tag}{rol}", c["path"]))
+    n_eva = sum(1 for c in inv["candidates"] if c.get("kind") == "eva_png")
+    parts = f"{len(cells) - n_eva} fotos + {n_eva} PNG de l'Eva" if n_eva else f"{len(cells)} candidats"
+    return grid(cells, out, title=f"FOTOS DEL PROJECTE {Path(inv['project']).name} — {parts} (número = índex)")
 
 
 def exemplar_sheets(exclude_slug: str | None, out_dir: Path) -> dict:
@@ -324,8 +372,9 @@ def build_prompt(inv: dict, sheet: Path, exemplars: dict, out_json: Path, has_so
     L.append(f"- Sondeig a rotació al projecte: {'sí' if has_sondeig else ('no' if has_sondeig is False else 'desconegut (mira les fotos)')}")
     L += ["", "### Candidats (índex · fitxer · mides · aparellament amb l'annex · rol SmartScan)", ""]
     for c in inv["candidates"]:
-        tag = f"annex p{c['annex']['page']} foto #{c['annex']['ordinal']}" if c.get("annex") else "no és a l'annex"
-        L.append(f"{c['idx']}. `{c['rel']}` · {c['dims'][0]}×{c['dims'][1]} · {tag}" + (f" · rol {','.join(c['roles'])}" if c.get("roles") else "")
+        tag = (f"annex p{c['annex']['page']} foto #{c['annex']['ordinal']}" + (f" (hi és girada {c['annex']['rot']}°)" if c['annex'].get('rot') else "")) if c.get("annex") else "no és a l'annex"
+        eva = " · **PNG de l'Eva** (carpeta ALTRES/OTROS, no és de la carpeta de fotos)" if c.get("kind") == "eva_png" else ""
+        L.append(f"{c['idx']}. `{c['rel']}` · {c['dims'][0]}×{c['dims'][1]} · {tag}{eva}" + (f" · rol {','.join(c['roles'])}" if c.get("roles") else "")
                  + (f" · el mateix fitxer també com a {', '.join('`' + d + '`' for d in c['duplicates'])}" if c.get("duplicates") else ""))
     if inv.get("warnings"):
         L += ["", "Avisos de l'inventari: " + "; ".join(inv["warnings"])]
@@ -349,10 +398,12 @@ def parse_json_text(text: str) -> dict | None:
 def validate_selection(sel: dict, cands: list[dict]) -> tuple[dict, list[str]]:
     """Índex (1-based) o camí relatiu → camí relatiu existent; una foto per forat (la primera guanya); avisos."""
     by_idx = {c["idx"]: c for c in cands}; by_rel = {c["rel"]: c for c in cands}
-    by_name = {Path(c["rel"]).name: c for c in cands}
+    names: dict[str, list[dict]] = {}
     for c in cands:
+        names.setdefault(Path(c["rel"]).name, []).append(c)
         for d in c.get("duplicates") or []:
-            by_rel.setdefault(d, c); by_name.setdefault(Path(d).name, c)
+            by_rel.setdefault(d, c); names.setdefault(Path(d).name, []).append(c)
+    by_name = {n: cs[0] for n, cs in names.items() if len({id(c) for c in cs}) == 1}   # `m1.png` pot ser a dues carpetes
     clean: dict[str, str | None] = {}; used: set[str] = set(); warnings: list[str] = []
 
     def resolve(v):
@@ -413,7 +464,8 @@ def run(project: Path, *, exclude_slug: str | None = None, model: str | None = N
     out_json = work / RESULT
     prompt = build_prompt(inv, sheet, exemplars, out_json, has_sondeig)
     (work / "prompt.md").write_text(prompt, encoding="utf-8")
-    summary = {"project": str(project), "n_candidats": len(inv["candidates"]), "annex": inv.get("annex"),
+    summary = {"project": str(project), "n_candidats": len(inv["candidates"]),
+               "n_eva_png": sum(1 for c in inv["candidates"] if c.get("kind") == "eva_png"), "annex": inv.get("annex"),
                "exemplars": {k: v["n"] for k, v in exemplars.items()}, "warnings": list(inv["warnings"])}
     if dry_run or not inv["candidates"]:
         summary["skipped"] = "dry_run" if dry_run else "sense candidats"

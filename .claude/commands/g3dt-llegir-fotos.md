@@ -39,11 +39,17 @@ forat, el forat queda `null` i ho dius a `cap_font`. **Mai** una foto que no sig
 - **`site_1`, `site_2`** (0, 1 o 2): vistes generals del solar SENSE màquina, fetes com a panoràmica (des del carrer,
   des de dins del solar, amb les cases veïnes). L'Eva en posa a 3 de 7 informes (2, 1 i 1). Criteri estricte: només si
   la foto és clarament una vista del solar feta per mostrar-lo. Si totes les fotos són de màquines, mostres o detalls,
-  cap (`null`). En cas de dubte, cap.
+  cap (`null`). En cas de dubte, cap. **Els PNG de l'Eva (la llista els marca) també compten** si el que s'hi veu
+  és una vista del solar (carrer, tanca, parcel·la, cases veïnes, cel: sembla una fotografia): quan no té cap vista
+  de camp, l'Eva hi desa una captura de Google Earth o Street View i la posa com a «Fotografia 1». No cal endevinar
+  d'on surt la imatge: si és una vista del solar, va a `site_1`; si és un mapa, un plànol o un tall, no. Aquestes
+  captures no són mai a l'annex de fotografies (l'annex només recull les fotos de camp): que no hi sigui no és cap
+  contraindicació.
 
-**Mai** van a l'informe: fulls de camp escrits a mà (PENETROS, full de sondeig), croquis, plànols o captures (PNG del
-plànol amb punts), fotos de documents o de pantalles, primers plans de persones, fotos mogudes o fosques si n'hi ha
-una de millor del mateix motiu.
+**Mai** van a l'informe: fulls de camp escrits a mà (PENETROS, full de sondeig), croquis, plànols, mapes (topogràfic,
+geològic, ortofoto amb punts) o el tall, fotos de documents o de pantalles d'un programa, primers plans de persones,
+fotos mogudes o fosques si n'hi ha una de millor del mateix motiu. Una captura d'un visor (Google Earth, Street View)
+que mostra el solar com ho faria una foto SÍ que val (vegeu `site_1`).
 
 ## Pistes que tens
 
@@ -57,6 +63,12 @@ una de millor del mateix motiu.
    Serveixen per reconèixer el tipus de foto (com és una màquina DPSH, una caixa de testimonis…), no per copiar-les.
 4. **Rols de SmartScan** (`photo_spt_sample`, `photo_sondeig_equipment`, `field_croquis`…): orientatius, poden estar
    equivocats.
+5. **PNG de l'Eva** (carpeta `ALTRES`/`OTROS` dels annexos, marcats així a la llista i al full): les imatges que ella
+   prepara per a les FIGURES de l'informe (mapa topogràfic, mapa geològic, ortofoto o plànol amb els punts, tall,
+   peces intermèdies). Un mapa, un plànol, un tall o una ortofoto no va mai a un forat de foto. Però si un d'aquests
+   PNG mostra el solar com una fotografia (vista des del carrer o des de l'aire en obliqua: tanques, cases, terreny,
+   cel), és una vista general vàlida → `site_1`/`site_2`, encara que no sigui a l'annex de fotografies. Decideix pel
+   que s'hi veu, no per la carpeta ni pel format.
 
 ## Procediment
 
