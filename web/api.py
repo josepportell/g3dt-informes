@@ -1021,6 +1021,9 @@ _G3DT_ROOT = Path(__file__).resolve().parent.parent
 # Prefix patterns in cache dir → figure slot key
 _CACHE_PREFIX_TO_SLOT: list[tuple[str, str, str]] = [
     # (glob prefix, slot_key, human source label)
+    # Peça 5 / 4 (2026-09-08): els dos mapes del full de situació i el retall del dibuix amb punts (peça 7a: al 2.2)
+    ("situacio_*", "fig_cadastre", "Dos mapes del full de situació"),
+    ("plan_crop_*", "fig_main_plan", "Retall del dibuix amb punts (figura d'assaigs, 2.2)"),
     ("cadastre_sitplan_*", "fig_cadastre", "PDF crop situation plan"),
     ("cadastre_*", "fig_cadastre", "Architect plan crop"),
     ("main_plan_*", "fig_main_plan", "Architect plan crop"),

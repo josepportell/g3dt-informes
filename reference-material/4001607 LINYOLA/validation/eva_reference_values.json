@@ -828,6 +828,15 @@
       "extraction_method": "numbering",
       "template_text": "Taula {{ table_soil_chars_num }}. Característiques geològiques i geotècnics dels materials del subsol.",
       "reference_text": "Taula 10. Característiques geològiques i geotècnics dels materials del subsol."
+    },
+    "fig_assaigs_num": {
+      "value": "2",
+      "position": "p158",
+      "position_description": "Body paragraph 158",
+      "confidence": 0.8,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_assaigs_num }}. Situació de l'estructura projectada i els assaigs realitzats.",
+      "reference_text": "Figura 2. Detall de l’edificació projectada i els assaigs realitzats."
     }
   },
   "warnings": [
@@ -865,6 +874,7 @@
     "refresh_eva_narrativa.py 2026-09-06: 2 claus narratives re-extretes (prefix primer)",
     "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
     "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 15 claus re-extretes: bearing_layer_idx, data_camp_inici_text, data_camp_text, municipality, municipality_de, num_dpsh_tests, settlement, settlement_sentence, sondeig_tests, spt_depth_range, spt_lithology, spt_location, spt_ma_tests, spt_n30, spt_test_id",
-    "refresh_eva_narrativa.py 2026-09-07 (bloc 4, numeració) (--keys): 15 claus re-extretes: fig_correlation_num, fig_geological_num, fig_spt_cullera_num, photo_dpsh_num, photo_materials_num, section_excavabilitat_num, section_rado_num, section_resum_num, section_sismica_num, section_spt_num, table_lab_num, table_lab_values_num, table_permeability_num, table_seismic_num, table_soil_chars_num"
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 4, numeració) (--keys): 15 claus re-extretes: fig_correlation_num, fig_geological_num, fig_spt_cullera_num, photo_dpsh_num, photo_materials_num, section_excavabilitat_num, section_rado_num, section_resum_num, section_sismica_num, section_spt_num, table_lab_num, table_lab_values_num, table_permeability_num, table_seismic_num, table_soil_chars_num",
+    "refresh_eva_narrativa.py 2026-09-08 (peça 7a) (--keys): 1 claus re-extretes: fig_assaigs_num; eliminades ['fig_cadastre_num', 'fig_main_plan_num']"
   ]
 }

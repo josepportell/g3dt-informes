@@ -399,8 +399,10 @@ def _gen_value(var: str, ctx: dict, ud: dict, calc: dict, eva=None):
     return None
 
 
-#: Forats d'imatge de la plantilla (bloc 4, 2026-09-07; peça 1: `fig_aerea_image` fora): 5 figures + 3 fotos + 2 vistes (condicionals).
-IMAGE_SLOTS = ("fig_cadastre_image", "fig_main_plan_image", "fig_spt_cullera_image",
+#: Forats d'imatge de la plantilla (bloc 4, 2026-09-07; peça 1: `fig_aerea_image` fora; peça 7a, 2026-09-08: situació 1-2,
+#: projecte 0-2 i assaigs 0-1 en blocs condicionals): 8 figures (5 condicionals) + 3 fotos + 2 vistes (condicionals).
+IMAGE_SLOTS = ("fig_situacio_image_1", "fig_situacio_image_2", "fig_projecte_image_1", "fig_projecte_image_2",
+               "fig_assaigs_image", "fig_spt_cullera_image",
                "fig_geological_image", "fig_correlation_image", "photo_dpsh_image", "photo_sondeig_image",
                "photo_materials_image", "photo_site_image_1", "photo_site_image_2")
 IMAGE_PLACEHOLDER = "[Imatge pendent]"
@@ -570,7 +572,7 @@ def _agregat(run: str, results: dict, variants: list[str], sub: str) -> str:
         L.append(f"| {slug} | {len(im['present'])} | {len(im['pendent'])} | {len(im['absent'])} | "
                  f"{', '.join(f'`{k}`' for k in im['pendent']) or '—'} |")
     L.append("")
-    L.append("Absent = vistes generals no triades (`photo_site_image_*`) o foto del sondeig sense sondeig: no és cap defecte. "
+    L.append("Absent = vistes generals no triades (`photo_site_image_*`), foto del sondeig sense sondeig, 2a imatge de situació, figures del projecte o d'assaigs que no hi són (blocs condicionals, peça 7a): no és cap defecte. "
              "Pendent = `image_manager` no ha trobat o no ha pogut baixar la imatge. La correcció del contingut es mira al full "
              "de control visual (`_IMATGES.md`, una vegada a mà).")
     L.append("")

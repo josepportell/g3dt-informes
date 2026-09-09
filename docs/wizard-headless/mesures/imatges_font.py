@@ -48,9 +48,13 @@ NCC_MIN = 0.70     # score efectiu = ncc · min(1, psr / 6): «fort» = ncc ≥ 
 
 #: Forat de la plantilla → ranures de l'Eva amb què es compara (pas 2, D1-D9).
 SLOT_MAP = {
-    "fig_cadastre_image": ("fig_situacio",),
-    "fig_aerea_image": ("fig_situacio",),           # 0/7 signats; només pot coincidir amb la 2a imatge de situació
-    "fig_main_plan_image": ("fig_assaigs", "fig_projecte"),
+    # Peça 7a (2026-09-08): tres blocs amb peu propi; cada forat només contra la SEVA ranura de l'Eva (abans
+    # `fig_main_plan_image` valia per assaigs i projecte: amagava el peu equivocat).
+    "fig_situacio_image_1": ("fig_situacio",),
+    "fig_situacio_image_2": ("fig_situacio",),      # dos retalls del projecte (Bell-lloc)
+    "fig_assaigs_image": ("fig_assaigs",),
+    "fig_projecte_image_1": ("fig_projecte",),
+    "fig_projecte_image_2": ("fig_projecte",),
     "fig_geological_image": ("fig_geologic",),
     "fig_correlation_image": ("fig_tall",),
     "photo_dpsh_image": ("foto_dpsh",),
