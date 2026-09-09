@@ -367,7 +367,11 @@ def extract_numbering_variables(
         if slot is None:
             continue
         kind, text, nums = slot
-        if any(v in seen for v in nums):        # l'índex (p035) i la capçalera (p471) porten el mateix forat
+        # L'índex (p035) i la capçalera (p471) porten el mateix forat: només la primera. Els PEUS sí que poden
+        # repetir un forat (peça 7a, 2026-09-08): la figura de situació té dos peus —«Figura N. Situació de la zona
+        # d'estudi.» i «Figura N i Figura N+1. Detall de la ubicació…» (Bell-lloc)— amb el mateix `fig_situacio_num`;
+        # cada peu s'aparella pel seu text i, si tots dos trobessin peu al signat, mana el de més puntuació.
+        if kind == "heading" and any(v in seen for v in nums):
             continue
         seen.update(nums)
         slots.append((tp, kind, text, nums))
@@ -414,6 +418,10 @@ def extract_numbering_variables(
         used_slots.add(si)
         used_cands.add(ci)
         for var_name, value in zip(nums, cnums):
+            if var_name in variables:            # dos peus amb el mateix forat: el primer (més puntuació) mana
+                warnings.append(f"p{tp.idx:03d}: '{var_name}' ja assignat per un altre peu; s'ignora "
+                                f"'{ref_body[ri][:40]}'")
+                continue
             variables[var_name] = ExtractedVariable(
                 value=value,
                 position=f"p{tp.idx:03d}",

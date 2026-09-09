@@ -68,14 +68,14 @@ def test_font_diferent_es_mismatch_i_res_es_no_data(tmp_path):
 
 
 def test_assignacio_un_a_un_i_sobrants(tmp_path):
-    """Dues fotos de materials de l'Eva i una nostra → una puntuada, l'altra ND; `fig_aerea` sense figura de l'Eva → sobrant."""
+    """Dues fotos de materials de l'Eva i una nostra → una puntuada, l'altra ND; figura del projecte sense figura de l'Eva → sobrant."""
     a, b = _structured(6), _structured(7)
     idx, img = _truth(tmp_path, "p", [(1, "foto_materials", a), (2, "foto_materials", b)])
-    ours = {"photo_materials_image": _ours(tmp_path, "mat.png", b), "fig_aerea_image": _ours(tmp_path, "aer.png", _structured(8))}
+    ours = {"photo_materials_image": _ours(tmp_path, "mat.png", b), "fig_projecte_image_1": _ours(tmp_path, "proj.png", _structured(8))}
     res = IF.compare_images(IF.truth_figures("p", idx, img), ours)
     by_n = {r["n"]: r["status"] for r in res["rows"]}
     assert by_n == {1: "NO_DATA", 2: "MATCH"}
-    assert res["sobrants_n"] == 1 and res["sobrants"][0]["ours_slot"] == "fig_aerea_image"
+    assert res["sobrants_n"] == 1 and res["sobrants"][0]["ours_slot"] == "fig_projecte_image_1"
 
 
 def test_our_images_respecta_condicionals_i_pendents():
@@ -101,7 +101,7 @@ def test_veritat_exclou_estatiques_extra_i_duplicats(tmp_path):
 def test_veritat_real_contra_ella_mateixa_es_match():
     """Cada figura de l'Eva (Castellar) posada al nostre forat corresponent ha de donar MATCH: valida càrrega, mapa i llindar."""
     truths = IF.truth_figures("castellar")
-    inv = {v: k for k, vs in IF.SLOT_MAP.items() for v in vs if k != "fig_aerea_image"}
+    inv = {v: k for k, vs in IF.SLOT_MAP.items() for v in vs if not k.endswith("_2")}   # un forat per ranura de l'Eva
     ours = {inv[t["slot"]]: str(t["path"]) for t in truths if t["slot"] in inv}
     res = IF.compare_images(truths, ours)
     assert res["totals"]["MATCH"] == len(ours) and res["totals"]["MISMATCH"] == 0

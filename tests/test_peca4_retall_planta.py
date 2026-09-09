@@ -109,5 +109,5 @@ def test_el_rol_figure_correlation_no_passa_davant_del_tall_pdf():
     """
     from automation.image_manager import ROLE_TO_FIGURE_VAR
     assert 'figure_correlation' not in ROLE_TO_FIGURE_VAR
-    assert ROLE_TO_FIGURE_VAR['figure_situation_map'] == 'fig_cadastre_image'   # els altres rols no s'han tocat
+    assert ROLE_TO_FIGURE_VAR['figure_situation_map'] == 'fig_situacio_image_1'   # els altres rols no s'han tocat (peça 7a: nom nou)
     assert ROLE_TO_FIGURE_VAR['figure_geological_map'] == 'fig_geological_image'

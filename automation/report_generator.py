@@ -126,6 +126,67 @@ def insitu_table_range(has_sondeig: bool, first: int = 3, has_spt_table: bool = 
     return text, first + n - 1
 
 
+
+def _is_image(v: Any) -> bool:
+    """Un `InlineImage` viu (o un camí) compta; el buit i el text «[Imatge pendent]» no."""
+    if v is None:
+        return False
+    if isinstance(v, str):
+        return bool(v.strip()) and 'pendent' not in v.lower()
+    return True
+
+
+def figure_numbers(n_situacio: int = 1, n_projecte: int = 0, has_assaigs: bool = True) -> dict[str, Any]:
+    """Peça 7a (2026-09-08, D11 del pas 2): numeració de les figures PER PRESÈNCIA, en l'ordre dels signats.
+
+    Ordre: situació (1 o 2: Bell-lloc en té dues) → figures del projecte (0-2, a l'1.1) → assaigs (0-1, al 2.2, on la
+    posen 5 dels 6 signats que en tenen) → cullera SPT → mapa geològic → tall de correlació. Els 7 signats: 2/2/3/3/2/3/4
+    figures abans de la cullera. Linyola posa la del projecte DESPRÉS de la d'assaigs (totes dues a l'1.1): els seus
+    dos números queden creuats i s'accepta (1 de 7). Les ranures que no hi són donen '' (el bloc de la plantilla no
+    s'imprimeix). Els noms antics (`fig_cadastre_num`, `fig_main_plan_num`, `fig_location_num`, `fig_building_num`)
+    queden com a àlies.
+    """
+    n_situacio = max(1, min(2, int(n_situacio or 1)))
+    n_projecte = max(0, min(2, int(n_projecte or 0)))
+    out: dict[str, Any] = {}
+    n = 1
+    out['fig_situacio_num'] = n
+    if n_situacio == 2:
+        n += 1
+        out['fig_situacio_2_num'] = n
+    else:
+        out['fig_situacio_2_num'] = ''
+    for i in (1, 2):
+        if i <= n_projecte:
+            n += 1
+            out[f'fig_projecte_{i}_num'] = n
+        else:
+            out[f'fig_projecte_{i}_num'] = ''
+    if has_assaigs:
+        n += 1
+        out['fig_assaigs_num'] = n
+    else:
+        out['fig_assaigs_num'] = ''
+    n += 1
+    out['fig_spt_cullera_num'] = n
+    n += 1
+    out['fig_geological_num'] = n
+    n += 1
+    out['fig_correlation_num'] = n
+    out['fig_cadastre_num'] = out['fig_location_num'] = out['fig_situacio_num']
+    out['fig_main_plan_num'] = out['fig_building_num'] = out['fig_assaigs_num'] or out['fig_projecte_1_num']
+    return out
+
+
+def figure_numbers_from_context(context: dict[str, Any]) -> dict[str, Any]:
+    """La numeració que toca a les imatges que el context porta de debò (`ImageManager.build_context`)."""
+    return figure_numbers(
+        n_situacio=2 if _is_image(context.get('fig_situacio_image_2')) else 1,
+        n_projecte=sum(1 for i in (1, 2) if _is_image(context.get(f'fig_projecte_image_{i}'))),
+        has_assaigs=_is_image(context.get('fig_assaigs_image')),
+    )
+
+
 class ReportGenerator:
     """
     Main orchestrator for report generation.
@@ -658,7 +719,9 @@ class ReportGenerator:
         Build dynamic numbering for figures, photos, and tables.
 
         Numbering depends on:
-        - num_project_figures: Project-specific figures from user (0-3)
+        - figures: per PRESÈNCIA (peça 7a, 2026-09-08): situació 1-2, projecte 0-2, assaigs 0-1, cullera,
+          geològic, tall. Aquí van amb els valors per defecte (1 / 0 / 1); `render_template` els torna a calcular
+          quan ja sap quines imatges hi ha (`figure_numbers`). `num_project_figures` del `user_data` ja no mana.
         - has_sondeig: Adds one photo for sondeig machine
         - num_dpsh_tests: Affects table range for DPSH results
 
@@ -667,37 +730,11 @@ class ReportGenerator:
         if not self.report_data:
             return {}
 
-        # Get configuration from user_data
-        num_project_figures = self.user_data.get('num_project_figures', 0)
         has_sondeig = self.report_data.has_sondeig
         num_dpsh_tests = self.report_data.num_dpsh_tests
 
-        # === FIGURE NUMBERING ===
-        # Project figures come first (from architect's project)
-        fig_counter = num_project_figures
-
-        # Cadastre map (from architect plan crops)
-        fig_counter += 1
-        fig_cadastre_num = fig_counter
-
-        # Peça 1 (2026-09-07, D2 del pas 2): la ranura «aèria» NO existeix a cap dels 7 signats (l'ortofoto va
-        # dins la figura de situació o dins la d'assaigs); fora de la plantilla i de la numeració.
-
-        # Main architect plan with building layout
-        fig_counter += 1
-        fig_main_plan_num = fig_counter
-
-        # SPT spoon diagram (if present in section 2.4)
-        fig_counter += 1
-        fig_spt_cullera_num = fig_counter
-
-        # Geological map
-        fig_counter += 1
-        fig_geological_num = fig_counter
-
-        # Correlation section
-        fig_counter += 1
-        fig_correlation_num = fig_counter
+        # === FIGURE NUMBERING === (per defecte; es refà a `render_template` amb les imatges reals)
+        fig_nums = figure_numbers()
 
         # === PHOTO NUMBERING ===
         photo_counter = 0
@@ -772,15 +809,8 @@ class ReportGenerator:
         table_soil_chars_num = table_counter
 
         return {
-            # Figure numbers
-            'fig_cadastre_num': fig_cadastre_num,
-            'fig_main_plan_num': fig_main_plan_num,
-            'fig_spt_cullera_num': fig_spt_cullera_num,
-            'fig_geological_num': fig_geological_num,
-            'fig_correlation_num': fig_correlation_num,
-            # Backward-compat aliases
-            'fig_location_num': fig_cadastre_num,
-            'fig_building_num': fig_main_plan_num,
+            # Figure numbers (incl. àlies `fig_cadastre_num`, `fig_main_plan_num`, `fig_location_num`, `fig_building_num`)
+            **fig_nums,
             # Photo numbers
             'photo_site_text': photo_site_text,
             '_num_site_photos': num_site_photos,
@@ -1899,6 +1929,8 @@ class ReportGenerator:
             context.update(image_ctx)
         except Exception as e:
             self.warnings.append(f"Image insertion failed (report will have placeholders): {e}")
+        # Peça 7a: la numeració de les figures va per presència; ara ja sabem quines imatges hi ha
+        context.update(figure_numbers_from_context(context))
         # Vistes generals: només les que el peu anuncia (peça 3); el bloc sencer cau si `photo_site_text` és buit
         _n_site = context.get('_num_site_photos')
         if _n_site is not None:

@@ -29,8 +29,8 @@ def test_plantilla_sense_aerea_ni_media_morts():
 
 def test_situacio_un_sol_paragraf_i_peu():
     ps = _paras()
-    i = ps.index("{{ fig_cadastre_image }}")
-    assert ps[i + 1] == "Figura {{ fig_cadastre_num }}. Situació de la zona d'estudi."
+    i = ps.index("{{ fig_situacio_image_1 }}")          # peça 7a: abans `fig_cadastre_image`
+    assert ps[i + 1] == "Figura {{ fig_situacio_num }}. Situació de la zona d'estudi."
     assert "{{ fig_aerea_image }}" not in ps
 
 
@@ -66,7 +66,9 @@ def _numbering(has_sondeig, lang=None, user_data=None):
 def test_numeracio_sense_aerea():
     n = _numbering(True)
     assert "fig_aerea_num" not in n
-    assert [n[k] for k in ("fig_cadastre_num", "fig_main_plan_num", "fig_spt_cullera_num", "fig_geological_num", "fig_correlation_num")] == [1, 2, 3, 4, 5]
+    # peça 7a: per defecte situació 1 + assaigs 1 (els àlies `fig_cadastre_num` / `fig_main_plan_num` segueixen)
+    assert [n[k] for k in ("fig_situacio_num", "fig_assaigs_num", "fig_spt_cullera_num", "fig_geological_num", "fig_correlation_num")] == [1, 2, 3, 4, 5]
+    assert (n["fig_cadastre_num"], n["fig_main_plan_num"], n["fig_projecte_1_num"], n["fig_situacio_2_num"]) == (1, 2, "", "")
     assert (n["photo_dpsh_num"], n["photo_sondeig_num"], n["photo_materials_num"]) == (1, 2, 3)
     assert n["photo_materials_source"] == "del sondeig"
     assert _numbering(False)["photo_materials_source"] == "de l'assaig SPT"
