@@ -5747,3 +5747,109 @@ cap taula. Les dues X noves d'imatges són figures del projecte que existeixen i
 - **Bloc 5 del PLA (castellà)** i els pendents de plantilla del §3 de `PENDENTS-IMATGES.md`.
 
 *Fi entrada 2026-09-09. Peça 7b: el lector de figures amb el skill neutre; `fix` 77 → 79 M, imatges 69 % honest; pas 3 d'imatges tancat.*
+
+## 2026-09-09 (2) — IMATGES, acció 1 de l'anàlisi de discrepàncies: els PNG d'`ALTRES`/`OTROS` de l'Eva són candidats del lector de fotos (vista de Rubí ND → M, `fix` 79 → 81 M) i, de pas, l'aparellament amb l'annex és invariant a la rotació
+
+### Context
+
+- `docs/imatges/ANALISI-DISCREPANCIES-2026-09-09.md` §2.3 i §3 (acció 1, cost XS): a Rubí la «Fotografia 1» del signat
+  és una captura de Street View que l'Eva desa a `ANNEXES/Altres/F3 VG.png`; el lector de fotos (peça 2) només mirava
+  la carpeta de fotos i el forat quedava ND. SmartScan ja li dona el rol `photo_site_overview`.
+- Decisió del Josep (tarda, handoff `_FOR-NEW-YOU-20260909-1430.md` §3): fer (1) abans que (3) i (4).
+- Baseline: `2026-09-09-m341-peca7b` (imatges 29 M · 4 C · 15 X · 8 ND, `fix` 79 M · 23 X, escalars 313 M).
+
+### Decisions arquitectòniques clau
+
+**D1. Els PNG d'`ALTRES`/`OTROS` entren al full de contacte DESPRÉS de les fotos, marcats «PNG de l'Eva».**
+`list_eva_pngs()` (qualsevol imatge dins una carpeta `ALTRES`/`OTROS`, a qualsevol nivell, `validation/` fora) i
+`kind: foto | eva_png` a cada candidat. Els índexs de les fotos no es mouen (1..n com abans); els PNG van al final.
+Dedupe: md5 (com abans) **i phash ≤ 2 només entre un PNG de l'Eva i una foto** (la mateixa foto re-desada com a
+PNG seria dos candidats i podria anar a dos forats). Alternativa descartada: filtrar els PNG per rol o per nom
+(«VG», «vista») — un rol de SmartScan no mana sobre un forat d'imatge sense mesura (PENDENTS §0 #1), i els noms
+no tenen patró. El lector els veu tots i decideix; a Castellar (12 PNG) i Vilanova (8) els ignora tots, 3 de 3 passades.
+
+**D2. El criteri del skill és pel que S'HI VEU, no per la procedència.** Primera redacció: «una vista del solar presa
+d'un visor (Google Earth, Street View)». El lector va identificar `F3 VG.png` com a «vista» i la va descartar perquè
+«no és una captura de visor» (una captura de Street View sembla una foto: la procedència no es veu), i va fer servir
+l'absència a l'annex de fotografies com a prova en contra. Redacció final: si mostra el solar com una fotografia
+(carrer, tanca, cases, cel) va a `site_1`; mapa, plànol, tall o ortofoto, mai; l'annex només recull fotos de camp, que
+no hi sigui no diu res. Cap nom de projecte al skill (`grep` = 0). PENDENTS §0 #11.
+
+**D3. L'aparellament foto ↔ annex prova 0/90/180/270°.** Per què: a la segona passada el lector va canviar `materials`
+de `SPT1.jpg` (= Eva) a una foto de WhatsApp del mateix motiu (≠), amb els mateixos candidats: un empat visual
+resolt a l'atzar. La pista determinista que l'hauria tancat («SPT1.jpg és l'annex F-4») no hi era perquè l'Eva
+incrusta la foto vertical de la cullera girada 90° (436×775) i el phash no és invariant a la rotació. **Mesurat als 7
+projectes abans de tocar res: 2 de 31 imatges d'annex només s'aparellen girades** (Rubí `SPT1.jpg` ph 24 → 4;
+Vilanova `SPT A P3.jpeg` ph 26 → 0). Dos projectes, mateix motiu: mecanisme, no cas únic. `annex_images` desa
+`phashes` per rotació; la pista al prompt diu «(hi és girada 90°)». PENDENTS §0 #10.
+
+**D4. La pestanya de fotos del wizard veu els mateixos candidats.** `GET /api/photos/{p}` afegeix els PNG de l'Eva
+amb `kind: eva_png` (etiqueta «PNG de l'Eva, ALTRES» al títol i a la foto triada); si no, la tria del lector d'un
+fitxer d'`ALTRES` no sortiria a la pestanya i l'Eva no la podria veure ni canviar. Preparació mínima de l'acció 4.
+
+**D5. Tres passades del lector, cadascuna després d'un canvi de mecanisme, no «fins que surti bé».** `altres`
+(criteri de procedència: Rubí vista ND), `altres-b` (criteri corregit: vista M, materials M → X per variància),
+`altres-c` (pista de l'annex girat: vista M, materials M). Les tres runs queden com a evidència. Si a la tercera el
+lector hagués tornat a triar la foto de WhatsApp, quedava com a empat per al wizard (acció 4), sense més passades.
+
+### Implementació
+
+- `automation/imatges/lector_fotos.py`: `EVA_PNG_DIRS`, `is_eva_png`, `list_eva_pngs`, `PHASH_SAME`, `ROTATIONS`;
+  `inventory` (dues fonts, `kind`, dedupe md5 + phash, rotació), `annex_images` (`phashes`), `contact_sheet` i
+  `build_prompt` (marca i «girada»), `validate_selection` (el nom de fitxer sol només resol si és únic: `m1.png` pot
+  ser a dues carpetes), `run` (`n_eva_png`). `lector_figures.py` importa `EVA_PNG_DIRS` d'aquí (una sola definició).
+- `.claude/commands/g3dt-llegir-fotos.md`: `site_1`/`site_2`, «Mai van a l'informe», pista 5 «PNG de l'Eva».
+- `web/api.py` `list_photos` (+ `kind`, PNG de l'Eva); `templates/validation/review.html` (etiqueta, 2 línies).
+- Cap canvi a `image_manager.py` (`_load_user_photo_selection` ja resol camins relatius al projecte) ni al generador.
+
+### Validació empírica
+
+Run de referència **`2026-09-09-m341-altres-b`** (vs `2026-09-09-m341-peca7b`), 7 projectes via A:
+
+| mesura | peca7b | altres-b |
+|---|---|---|
+| imatges (M · C · X · ND) | 29 · 4 · 15 · 8 → 69 % | **30 · 4 · 15 · 7 → 69 %** |
+| `foto_vista` | 2 · 0 · 1 · 1 | **3 · 0 · 1 · 0** (Rubí ND → M, phash 0) |
+| Rubí imatges | 4 · 1 · 1 · 1 → 83 % | 5 · 1 · 1 · 0 → 86 % |
+| escalars+narrativa | 313 · 43 · 122 · 32 → 74 % | **315 · 44 · 120 · 31 → 75 %** |
+| `fix` | 79 M · 23 X → 77 % | **81 M · 21 X → 79 %** (Rubí `photo_dpsh_num`, `photo_materials_num` X → M: la Fotografia 1 és la vista) |
+| `narr` | 34 · 28 · 40 · 7 | 34 · 29 · 40 · 6 (Rubí `photo_site_text` ND → CLOSE) |
+| taules | 292 · 99 · 88 → 82 % | idèntic |
+
+**Cap altra cel·la moguda** als altres 6 projectes (els tres `diff` només toquen Rubí). Lector: Castellar i Vilanova
+trien exactament el mateix a les 3 passades amb 12 i 8 mapes de més al full (cap regressió per soroll de candidats).
+Runs del lector: `2026-09-09-lector-fotos-altres` · `-b` · `-c` (`_LECTOR-FOTOS.md`).
+
+### Tests
+
+5 nous: `tests/test_peca2_lector_fotos.py` (+3: inventari amb ALTRES/OTROS, ordre, `kind`, rol, dedupe md5 i phash,
+prompt, validació i `ImageManager`; sense carpeta de fotos; nom de fitxer ambigu; +1: aparellament girat 90°),
+`tests/test_photos_api_eva_png.py` (+1: l'endpoint). Suite: 31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2523 verds / 5 omesos (224 s).
+
+### Latència / cost
+
+Lector: Castellar 102 → 58 s, Rubí 36-59 s, Vilanova 51-66 s (sonnet/medium, 1 crida); 12 i 8 candidats més al full
+no canvien la tria. 3 passades × 2-3 projectes ≈ 8 crides. M341: 0 LLM, ~4 min.
+
+### Limitacions conegudes
+
+- Guany in-sample N=7: +1 cel·la d'imatge, +2 de `fix`. Un sol projecte del corpus té una vista a `ALTRES`; el
+  criteri (vista del solar sí, mapa no) és general però només s'ha provat contra aquest cas i contra 20 mapes que
+  el lector ha ignorat bé.
+- `foto_dpsh` de Rubí segueix X (empat entre P1/P2/P3, pregunta 37). El dedupe per phash ≤ 2 és només foto ↔ PNG.
+- La pestanya de fotos mostra els PNG barrejats amb les fotos (només l'etiqueta els distingeix): l'acció 4 la refà.
+- El full de contacte creix (21 cel·les a Castellar): per sobre de ~40 caldria paginar-lo; cap projecte del corpus hi arriba.
+
+### GO/NO-GO
+
+- ✅ Rubí `foto_vista` ND → M; `fix` +2; cap pèrdua a cap projecte; taules intactes.
+- ✅ Skill neutre (`grep` dels 7 noms = 0); cap regla d'un sol cas (rotació: 2 projectes; PNG: el lector decideix).
+- ✅ Suite amb els mateixos vermells. ⏳ Commit pendent de GO del Josep.
+
+### Següents passos
+
+- Acció (3): estudi del retall del tall als 7 signats (0 tokens). Acció (4): wizard amb alternatives visibles
+  (els lectors han d'escriure 2-3 candidats per ranura; ara `raons`/`confianca` n'hi ha un).
+- Preguntes 30-34, 36-38 amb el Josep; workflow `ALTRES` amb l'Eva (geològic).
+
+*Fi entrada 2026-09-09 (2). Acció 1: PNG d'ALTRES al lector de fotos; Rubí vista ND → M, `fix` 79 → 81 M; aparellament amb l'annex invariant a la rotació.*

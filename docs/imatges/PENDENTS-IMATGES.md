@@ -49,6 +49,16 @@ Recollits el 2026-09-08 en fer les peces 4 i 6. **Tots són mesurats**, no visto
    Anciles passa de 2 figures amb els peus exactes de l'Eva a 1 de diferent. Regla: `grep` dels 7 noms sobre el
    skill = 0; una regla amb un sol cas a favor és una pregunta a l'Eva o una opció al wizard; el % de M341 és
    in-sample amb N=7.
+10. **L'Eva incrusta la foto vertical de la cullera SPT GIRADA 90° a l'annex de fotografies** (2026-09-09, acció 1).
+    Mesurat als 7 projectes: 2 de 31 imatges d'annex només s'aparellen amb la foto de la carpeta si es gira (Rubí
+    `SPT1.jpg`, ph 24 → 4; Vilanova `SPT A P3.jpeg`, ph 26 → 0). Sense la pista «annex p2 foto #2» el lector queda
+    davant d'un empat visual (la mateixa cullera en dos enquadraments) i el resol a l'atzar entre passades: M → X → M.
+    L'aparellament del lector de fotos prova 0/90/180/270° (`annex_images`, `phashes`). **Qualsevol aparellament
+    per phash contra imatges incrustades d'un PDF de l'Eva ha de ser invariant a la rotació.**
+11. **Un criteri que demana al lector la PROCEDÈNCIA d'una imatge no es pot decidir mirant-la** (2026-09-09, acció
+    1). «Només si és una captura de visor» va fer que descartés la captura de Street View de Rubí perquè «sembla una
+    foto, no una captura». El criteri bo és pel que s'hi veu (vista del solar sí, mapa no), i l'absència a l'annex
+    no és cap contraindicació (l'annex només recull fotos de camp).
 
 ## 1. On som, ranura per ranura
 
@@ -57,7 +67,7 @@ Recollits el 2026-09-08 en fer les peces 4 i 6. **Tots són mesurats**, no visto
 | `foto_materials` | 7 | 0 | 0 | 2 | ✅ peça 2 |
 | `fig_tall` | 3 | 4 | 0 | 0 | ✅ peça 3 + precedència de rol (2026-09-08) |
 | `foto_sondeig` | 2 | 0 | 1 | 0 | ✅ peça 2 (1 empat) |
-| `foto_vista` | 2 | 0 | 1 | 1 | ✅ peça 2 (1 empat) |
+| `foto_vista` | 3 | 0 | 1 | 0 | ✅ peça 2 (1 empat) + acció 1 (2026-09-09: PNG d'`ALTRES`, Rubí Street View ND → M) |
 | `foto_dpsh` | 3 | 0 | 4 | 0 | ✅ peça 2 (4 empats) |
 | `fig_assaigs` | 4 | 0 | 2 | 0 | ✅ peça 4 + 7a + 7b (2 X = Linyola, planta acolorida amb icones de l'Eva, irreproduïble; Vilanova, ncc 0,683 vs llindar 0,70; Bell-lloc sobrant: pregunta 31) |
 | `fig_projecte` | 0 | 0 | 2 | 3 | ✅ peça 7b (lector amb skill neutre: tria una figura defensable a Linyola i Anciles, no la de l'Eva; Bell-lloc, Vilanova i la 2a d'Anciles ND: pregunta 32) |
@@ -68,6 +78,11 @@ Recollits el 2026-09-08 en fer les peces 4 i 6. **Tots són mesurats**, no visto
 peu propi, numeració per presència, i el lector de figures amb skill NEUTRE. Estat final del pas 3: **imatges 29 M · 4 C
 · 15 X · 8 ND → 69 %** (in-sample, N=7), `fix` 79 M · 23 X → 77 %. **El pas 3 queda tancat en el que és mecànica**: el
 que resta és judici de l'Eva (preguntes 30-32, 34, 37, 38) i opcions al wizard, no cap peça.
+
+**Acció 1 de l'anàlisi de discrepàncies FETA (2026-09-09 tarda, DECISION-LOG 2026-09-09 (2)):** els PNG d'`ALTRES`/
+`OTROS` són candidats del lector de fotos i l'aparellament amb l'annex és invariant a la rotació (§0 #10-#11). Run
+**`2026-09-09-m341-altres-b`**: imatges **30 M · 4 C · 15 X · 7 ND → 69 %**, `fix` 81 M · 21 X → 79 %, escalars 315 M
+(75 %), taules intactes; cap altra cel·la moguda.
 
 ## 2. Les peces que queden
 
