@@ -19,7 +19,7 @@ forat, el forat queda `null` i ho dius a `cap_font`. **Mai** una foto que no sig
   més neta i sencera de la màquina (no el detall del martell, no l'operari d'esquena); **si totes són equivalents,
   la primera de l'annex (F-1)**, encara que el peu d'una altra digui «DPSH» més explícitament.
 - **`sondeig`** (només si el projecte té sondeig a rotació; el prompt t'ho diu): la màquina del sondeig treballant.
-  **Compte**: pot ser una màquina compacta sobre erugues molt semblant a la DPSH (Anciles, Bell-lloc), no sempre una
+  **Compte**: pot ser una màquina compacta sobre erugues molt semblant a la DPSH (2 dels 3 signats amb sondeig), no sempre una
   torre alta amb operari. El que la distingeix és el context, no la mida: el nom del fitxer (`S1`, `S2`, `EMPL S…`,
   carpeta `SONDEIG/`), que NO sigui cap dels punts DPSH (`P1`…`Pn`), i que sovint no és a l'annex de fotografies.
   **El senyal que hi posa l'Eva (confirmat per ella, 2026-09-07): una CAIXA BLAVA DE MOCADORS de paper, a terra, dins
@@ -33,7 +33,7 @@ forat, el forat queda `null` i ho dius a `cap_font`. **Mai** una foto que no sig
 - **`materials`** (sempre, UNA): el detall a prop dels materials recuperats: amb sondeig, la **caixa de testimonis**
   (caixes de plàstic blau amb els nuclis i el cartell del sondeig); sense sondeig, la **cullera SPT oberta** amb la
   mostra a dins (a vegades amb la bossa de mostra al costat). Entre diverses fotos de la mateixa caixa, la que
-  ensenya millor els testimonis i el cartell (l'Eva no té cap regla més: a Castellar va triar la caixa sense la bossa
+  ensenya millor els testimonis i el cartell (l'Eva no té cap regla més: en un signat va triar la caixa sense la bossa
   a dins). Quan hi ha diversos punts o sondeigs amb foto
   pròpia (S-1 i S-2; P-1 i P-3), posa la millor a `materials` i llista totes a `materials_per_punt` amb el punt.
 - **`site_1`, `site_2`** (0, 1 o 2): vistes generals del solar SENSE màquina, fetes com a panoràmica (des del carrer,

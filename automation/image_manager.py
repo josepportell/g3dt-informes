@@ -1172,6 +1172,25 @@ class ImageManager:
             context.setdefault(f'fig_projecte_image_{i}', '')
             context.setdefault(f'fig_projecte_caption_{i}', '')
 
+        # Peça 7b (2026-09-09): la SELECCIÓ del lector de figures (o de l'Eva) mana sobre el camí determinista.
+        # `validation/figure_selection.json` (`source` user > lector): la figura d'assaigs (retall triat), les figures
+        # del projecte (0-2, amb peu) i, només al cas de Bell-lloc, les dues imatges de situació. Els retalls es
+        # renderitzen a la cau d'imatges (`figsel_*`, per md5 i rectangle) i entren aquí com a InlineImage.
+        try:
+            from .imatges.lector_figures import apply_selection
+            for key, val in apply_selection(self.project_path, self._cache_dir).items():
+                if '_caption_' in key or val in (None, ''):
+                    context[key] = val or ''          # la selecció també buida: «cap figura d'assaigs» mana
+                    continue
+                # situació doble (les dues alhora): 70 mm de costat; assaigs i projecte: tota l'amplada
+                width = IMAGE_WIDTH_SIDE_BY_SIDE if key.startswith('fig_situacio_image_') else IMAGE_WIDTH_MAIN_PLAN
+                img = self._safe_inline_image(str(val), width=Mm(width))
+                if img:
+                    context[key] = img
+                    has_plan_crops = True
+        except Exception as exc:
+            logger.warning(f"figure_selection: {exc}")
+
         context['has_plan_crops'] = has_plan_crops
 
         # Àlies dels noms antics (plantilla anterior a la peça 7a, tests, calaix del wizard)
