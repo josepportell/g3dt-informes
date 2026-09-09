@@ -59,13 +59,23 @@ Recollits el 2026-09-08 en fer les peces 4 i 6. **Tots són mesurats**, no visto
     1). «Només si és una captura de visor» va fer que descartés la captura de Street View de Rubí perquè «sembla una
     foto, no una captura». El criteri bo és pel que s'hi veu (vista del solar sí, mapa no), i l'absència a l'annex
     no és cap contraindicació (l'annex només recull fotos de camp).
+12. **Un traç del FreeHand pot ser un grup de línies separades amb una caixa que abasta mig full** (2026-09-09, acció
+    3). A Linyola un sol traç conté la línia superior de la caixa de la llegenda i la línia del terreny de la secció
+    (caixa 145 × 53 mm, tinta 2 ratlles de 0,7 mm); a Vilanova les dues línies de la llegenda; a Alcoletge llegenda →
+    terreny → caixetí. `d["rect"]` passava el filtre d'«estrat» (ample, ple, negre) i portava la llegenda i el plànol
+    al retall (49-73 mm de més). **Mira la tinta (`items`), no la caixa** (`_ink_rects` a `retall.py`).
+13. **Les distàncies del full són absolutes, no proporcionals a la secció** (2026-09-09, acció 3): números de l'eix a
+    0,4-3,7 mm de la barra, llegenda mai a menys de 16 mm de la secció, etiquetes «P-n»/«A-A'» 15-32 mm sobre els
+    estrats, marge blanc superior de l'Eva 3-13 mm (sense regla). «Blanc» = 5 mm; finestra amunt ≥ 40 mm. Un llindar
+    relatiu a l'alçada del nucli (5 %, 75 %) fallava a les seccions curtes (Alcoletge, 30 mm) i encertava per casualitat
+    a les altres.
 
 ## 1. On som, ranura per ranura
 
 | ranura de l'Eva | M | C | X | ND | estat |
 |---|--:|--:|--:|--:|---|
 | `foto_materials` | 7 | 0 | 0 | 2 | ✅ peça 2 |
-| `fig_tall` | 3 | 4 | 0 | 0 | ✅ peça 3 + precedència de rol (2026-09-08) |
+| `fig_tall` | 4 | 3 | 0 | 0 | ✅ peça 3 + precedència de rol (2026-09-08) + acció 3 (2026-09-09: tinta dels traços, blanc 5 mm; 3 C = marge blanc de l'Eva a Castellar i Rubí, «(msnm)» sencer a Bell-lloc: estètic, sempre igual) |
 | `foto_sondeig` | 2 | 0 | 1 | 0 | ✅ peça 2 (1 empat) |
 | `foto_vista` | 3 | 0 | 1 | 0 | ✅ peça 2 (1 empat) + acció 1 (2026-09-09: PNG d'`ALTRES`, Rubí Street View ND → M) |
 | `foto_dpsh` | 3 | 0 | 4 | 0 | ✅ peça 2 (4 empats) |
@@ -83,6 +93,11 @@ que resta és judici de l'Eva (preguntes 30-32, 34, 37, 38) i opcions al wizard,
 `OTROS` són candidats del lector de fotos i l'aparellament amb l'annex és invariant a la rotació (§0 #10-#11). Run
 **`2026-09-09-m341-altres-b`**: imatges **30 M · 4 C · 15 X · 7 ND → 69 %**, `fix` 81 M · 21 X → 79 %, escalars 315 M
 (75 %), taules intactes; cap altra cel·la moguda.
+
+**Acció 3 FETA (2026-09-09 tarda, DECISION-LOG 2026-09-09 (3)):** estudi del retall del tall als 7 (rectangle de
+l'Eva per NCC vs el nostre, mm a mm): 2 C estètiques (marge blanc) i 2 defectes nostres (§0 #12-#13). Run
+**`2026-09-09-m341-tall`**: `fig_tall` 3 M · 4 C → **4 M · 3 C**, imatges **31 M · 3 C · 15 X · 7 ND (69 %)**; escalars
+només mouen `adjacent_intro` ×2 per l'avaria del Cadastre (referència d'escalars: `altres-b`).
 
 ## 2. Les peces que queden
 
@@ -194,7 +209,7 @@ que resta és judici de l'Eva (preguntes 30-32, 34, 37, 38) i opcions al wizard,
 | 2 | ~~**Retall de PNG**~~ | ❌ **TANCAT 2026-09-08: no calia** (DECISION-LOG 2026-09-08 (2)). Mesurat: els PNG d'`ALTRES` tenen 2-6 % de marge i el retall no canvia cap veredicte; `m7.png`, `F1 UBI.png` i `F1 SIT.png` ja són MATCH **phash 0 crus** (retallats, ph 2: pitjor). I el tall de Rubí no era un marge — `F5 TALL.png` és un **dibuix diferent** del signat; la causa era que el rol `figure_correlation` passava davant del `tall.pdf`. Arreglat: `fig_tall` 86 → **100 %** (0 X). | — |
 | 3 | **Descripció textual dels exemplars** | La llibreria `docs/imatges/veritat/` té les imatges i el peu, però no la descripció per exemplar que el pas 2 va decidir (què s'hi veu, com està compost). El lector de fotos ja funciona sense, però les figures compostes la necessitaran. | S |
 | 4 | **Text fix de Rubí a la plantilla** | Dins el bucle de nivells s'imprimeix a TOTS els projectes: «Aquest materials s'associa als materials de la unitat **NMgo**, amb un tram superficial alterat…». És la mateixa família de risc que el pastís de granulometria (ja tret): text d'un projecte imprès a tots. No és una imatge, però va sortir mirant-les. | S |
-| 5 | **Barra d'escala al tall** | L'Eva la inclou a 2 dels 7 signats i el nostre retall la inclou sempre. Diferència petita, no s'hi toca fins que hi hagi criteri. | — |
+| 5 | **Barra d'escala al tall** | Mesurat 2026-09-09 (acció 3): la figura de l'Eva arriba a la barra només a Vilanova (+6,7 mm a baix); el nostre retall no la inclou mai (és a més de 5 mm de la secció). Estètic: sempre igual. | — |
 | 6 | **`fig_situacio_num` a la veritat** (abans `fig_cadastre_num`) | A Castellar i Rubí l'extractor de numeració no aparella el peu de la situació (ratio < 0,5 per la cua entre parèntesis amb la font). Límit de l'extractor del bloc 4, no de les imatges. Igual amb els noms de la peça 7a. | S |
 
 ## 4. Bloqueigs de fons

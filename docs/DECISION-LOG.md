@@ -5853,3 +5853,122 @@ no canvien la tria. 3 passades × 2-3 projectes ≈ 8 crides. M341: 0 LLM, ~4 mi
 - Preguntes 30-34, 36-38 amb el Josep; workflow `ALTRES` amb l'Eva (geològic).
 
 *Fi entrada 2026-09-09 (2). Acció 1: PNG d'ALTRES al lector de fotos; Rubí vista ND → M, `fix` 79 → 81 M; aparellament amb l'annex invariant a la rotació.*
+
+## 2026-09-09 (3) — IMATGES, acció 3: estudi del retall del tall als 7 signats; dues diferències eren estètiques (marge blanc) i dues un defecte nostre (un traç multi-rectangle del FreeHand feia de pont amb la llegenda); `fig_tall` 3 M · 4 C → 4 M · 3 C, i l'eix de cotes ja no surt tallat
+
+### Context
+
+- Acció 3 de `docs/imatges/ANALISI-DISCREPANCIES-2026-09-09.md` §3 (cost M, 0 tokens): `fig_tall` és mateixa font 7/7 amb
+  4 C; mesurar el rectangle de l'Eva dins `tall.pdf` i comparar-lo amb el nostre. Handoff 1430 §3 (3): no tocar
+  `detect_section_region` sense baseline ni els tres `diff`.
+- **Pregunta del Josep a mig camí:** «aquestes diferències són importants o només estètiques? Si només són estètiques,
+  si nosaltres ho fem sempre igual ja estarà bé; si hi ha alguna raó per fer-ho diferent segons el cas, analitzem-la.»
+- Baseline: `2026-09-09-m341-altres-b` (`fig_tall` 3 M · 4 C; imatges 30 · 4 · 15 · 7).
+
+### Decisions arquitectòniques clau
+
+**D1. Primer mesurar, amb nom per a cada mil·límetre.** Script d'estudi (scratchpad, 0 tokens): la figura de l'Eva es
+localitza dins la pàgina renderitzada per NCC multiescala (0,956-0,997 als 7), es passa a mm de pàgina i es compara
+costat a costat amb el nostre rectangle; les paraules i traços del PDF que cauen a cada franja de diferència diuen QUÈ
+hi ha. Resultat (esquerra · dalt · dreta · baix, + = l'Eva agafa més):
+
+| projecte | abans (mm) | què hi havia a la franja | estat |
+|---|---|---|---|
+| Castellar | +3,6 · **+10,5** · −0,6 · +0,9 | res: blanc | C (estètic) |
+| Rubí | −1,4 · **+9,4** · +1,9 · −0,5 | res: blanc | C (estètic) |
+| Linyola | −2,4 · **−49,1** · −0,7 · +0,1 | la llegenda i el plànol (nostres) | C (defecte) |
+| Vilanova | −6,4 · **−73,3** · +1,0 · +1,6 | la llegenda i el plànol (nostres) | C (defecte) |
+| Bell-lloc | **+13,0** · +6,0 · −0,4 · +3,1 | els números de l'eix i «(msnm)» (seus, nosaltres els tallàvem) | M però lleig |
+| Alcoletge | +1,7 · +0,4 · −0,2 · −2,7 | — | M |
+| Anciles | +0,4 · +1,9 · +1,4 · +2,0 | — | M |
+
+**Resposta a la pregunta:** 2 de 4 són només estètiques (el marge blanc que l'Eva deixa sobre les etiquetes: 11-13 mm
+a Castellar i Rubí, 3-9 als altres cinc, sense contingut ni regla; nosaltres 2,5 mm sempre) i 2 són un defecte
+nostre (imprimíem la llegenda i el plànol, que l'Eva no posa mai, 7/7). Cap raó per fer-ho diferent segons el cas:
+l'Eva és consistent en el contingut (llegenda fora 7/7, eix de cotes dins 7/7); només varia el marge, sense motiu.
+
+**D2. Un traç són tants objectes com rectangles (`_ink_rects`).** El pont de Linyola i Vilanova no era cap tolerància:
+el FreeHand exporta com a UN SOL traç un grup de línies separades (a Linyola la línia superior de la caixa de la
+llegenda i la línia del terreny de la secció, 145 × 53 mm de caixa amb dues ratlles de 0,7 mm de tinta; a Vilanova les
+dues línies de la caixa de la llegenda), i `d["rect"]` n'és la caixa englobant: ample, ple i negre, passava el filtre
+d'«estrat» i entrava al nucli; després tot el que hi ha a sobre venia enganxat. Alcoletge en té un d'igual (llegenda →
+terreny → caixetí) que no feia mal per sort. Regla general de geometria PDF, no de cap cas: si tots els items d'un
+traç són rectangles, cada rectangle és un objecte (nucli i creixement); si no (polígons dels estrats), la caixa.
+Alternatives descartades: excloure els farciments negres (el terreny de Rubí és un traç negre de dos rectangles que sí
+que va a la figura); detectar la llegenda per paraules (ja provat a la peça 3: no canviava res, perquè el pont era
+al nucli).
+
+**D3. «Blanc» són 5 mm en absolut, no el 5 % de l'alçada del nucli.** Mesurat als 7: els números de l'eix de cotes són
+a 0,4-3,7 mm de la barra (l'Eva els posa 7/7; a Bell-lloc, 3,7 mm, quedaven fora amb el 5 % = 2,1 mm i el retall
+tallava «(msnm)» per la meitat) i la llegenda mai és a menys de 16 mm de la secció (22-102 mm, Rubí la més propera).
+Un llindar relatiu a l'alçada del nucli no té sentit: la distància eix-barra i la distància llegenda-secció són
+convencions del full, no de l'alçada del terreny.
+
+**D4. La finestra puja com a mínim 40 mm.** Amb el nucli net (només estrats) Alcoletge va perdre «(msnm)» i «A»/«A'»
+(T +14): la seva secció fa 30 mm i la finestra del 75 % (22 mm) no arribava a les etiquetes, que als 7 signats pengen
+15-32 mm sobre els estrats. Abans hi arribava per casualitat (el traç multi-rectangle inflava el nucli). El mínim
+absolut ve de la mesura; la llegenda no hi entra igualment, perquè la para la contigüitat de 5 mm (D3).
+
+**D5. El marge blanc no es toca i «(msnm)» va sencer.** Les dues C que queden (Castellar, Rubí) són el marge de captura
+de l'Eva; Bell-lloc passa de M a C perquè ara incloem «(msnm)» sencer (7,8 mm més a l'esquerra) i ella el talla —
+ho fa a 3 de 7 (Bell-lloc, Linyola, Vilanova) i el deixa sencer a 4. «Sempre igual» (Josep): sencer, és la unitat de
+l'eix. Registre de pèrdues #14. La barra d'escala: l'Eva la inclou només a Vilanova (B +6,7); nosaltres mai.
+
+### Implementació
+
+- `automation/imatges/retall.py`: `_ink_rects`, `GAP_MM = 5.0` (substitueix `GAP = 0.05`; `gap_mm` a la signatura),
+  `PAD_UP_MIN_MM = 40.0`; docstring del mòdul amb les mesures. `automation/image_manager.py`: prefix de cau
+  `tall_crop2` (els retalls `tall_crop_*` antics de qualsevol cau, la de l'Eva inclosa, no valen).
+- `tests/test_peca3_retall_tall.py` (+3: traç de dos rectangles que uneix llegenda i terreny; números de l'eix a 3-5
+  mm dins i «ESCALA» a 18 mm fora; secció curta amb les etiquetes 32 mm a sobre).
+- Estudi: scratchpad (`estudi_tall.py`, superposicions PNG); no entra al repo. Runs: `2026-09-09-m341-tall`.
+
+### Validació empírica
+
+| projecte | ara (mm) | `fig_tall` abans → ara (phash) |
+|---|---|---|
+| Castellar | +3,6 · +10,5 · −0,6 · +0,9 | C 12 → C 12 (marge blanc) |
+| Rubí | −1,4 · +9,4 · +1,9 · −0,5 | C 28 → C 28 (marge blanc) |
+| Bell-lloc | −7,8 · +0,4 · −0,6 · +0,5 | M 8 → **C 12** («(msnm)» sencer; registre #14) |
+| Linyola | −2,4 · +1,2 · −0,7 · +0,1 | C 30 → **M 6** |
+| Alcoletge | +1,7 · +0,4 · −0,2 · −2,7 | M 10 → M 10 |
+| Vilanova | −0,9 · +2,8 · +1,0 · +6,7 | C 32 → **M 4** |
+| Anciles | +0,4 · +1,9 · +1,4 · +2,0 | M 4 → M 4 |
+
+`fig_tall` **3 M · 4 C → 4 M · 3 C** (100 % mateixa font, com abans); imatges **30 · 4 · 15 · 7 → 31 M · 3 C · 15 X · 7 ND
+(69 %)**. Escalars: l'únic moviment és `adjacent_intro` a Castellar (M → C) i Alcoletge (C → X), i és **contaminació
+del Cadastre**: el servei `ConsultaMunicipio` respon «problemas tecnicos. Tiempo estimado desde las 15.15H hasta las 19.00H» (avaria anunciada, verificada amb
+`curl` a les 17 h; a les 13:44, run `altres-b`, funcionava), els adjacents es resolen sense i la frase canvia. Les taules són
+idèntiques (292 · 99 · 88). Per als escalars, la referència continua sent `altres-b` fins a una re-mesura amb el
+Cadastre viu; per a les imatges, `2026-09-09-m341-tall`.
+
+### Tests
+
++3 (`test_peca3_retall_tall.py`, 7 en total). Suite: 31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt`
+**+ 21 de `test_cadastre_progressive.py`** (servei en viu, la mateixa avaria; els 7 municipis × 3 proves) / 2505 verds
+/ 5 omesos (235 s). Repetits sols amb el Cadastre caigut: 21 vermells igual. Cal repetir-los quan el servei torni.
+
+### Latència / cost
+
+0 tokens en tota l'acció. Estudi ≈ 90 s per passada (NCC a 100 dpi, 7 projectes); retall, mil·lisegons.
+
+### Limitacions conegudes
+
+- Els 5 mm i els 40 mm surten dels 7 fulls del mateix estudi (in-sample): distàncies de la plantilla de G3 (eix,
+  línies de les etiquetes), no una llei. Si l'Eva canvia de plantilla de plànol, tornar-ho a mesurar amb l'estudi.
+- Un traç amb items barrejats (`re` + `l`) continua valorant-se per la caixa: cap dels 7 en té.
+- El marge blanc superior (Castellar, Rubí) i «(msnm)» tallat (Bell-lloc) queden a C per decisió: sempre igual.
+- `adjacent_intro` de Castellar i Alcoletge: pendent de confirmar amb el Cadastre viu que tornen a M i C.
+
+### GO/NO-GO
+
+- ✅ Linyola i Vilanova sense llegenda ni plànol; Bell-lloc amb l'eix sencer; Alcoletge recuperat (T +0,4).
+- ✅ Cap altra cel·la d'imatge moguda; taules idèntiques; suite amb els mateixos vermells + els 21 del Cadastre caigut.
+- ⏳ Commit pendent de GO del Josep. ⏳ Re-mesura d'escalars i els 21 tests quan el Cadastre torni.
+
+### Següents passos
+
+- Acció 4: wizard amb les alternatives visibles (els lectors escriuen 2-3 candidats per ranura).
+- Preguntes 30-34, 36-38 amb el Josep; workflow `ALTRES` amb l'Eva.
+
+*Fi entrada 2026-09-09 (3). Acció 3: estudi del retall del tall; `_ink_rects`, blanc = 5 mm, finestra ≥ 40 mm; `fig_tall` 3 → 4 M; dues C estètiques es queden.*

@@ -132,3 +132,9 @@ Les tres són el mateix moviment: la mesura ha deixat de deixar passar una imatg
 | 11 | Linyola · `fig_projecte` (Figura 3, secció p11) | ND → X (p2, emplaçament) | El lector tria una figura defensable amb els criteris genèrics; l'Eva hi va posar la secció. En una passada anterior l'havia encertada (C, 0,787): variància del lector. | Pregunta 32 (quan i quina figura del projecte); tria al wizard. | oberta |
 | 12 | Anciles · `fig_projecte` (Figura 2 topogràfic + Figura 3 tipologies) | ND, ND → X (secció p25), ND | Idem: una figura en lloc de dues, i no les seves. Amb el skill que citava Anciles pel nom sortien les dues amb els peus exactes: per això no val. | Pregunta 32. | oberta |
 | 13 | Linyola · `fig_assaigs_num` | 2 M → 3 X (signat 2) | L'Eva posa la figura del projecte DESPRÉS de la d'assaigs (totes dues a l'1.1); la plantilla les posa a l'inrevés (5 de 6 signats). Contrapartida: cullera, geològic i tall passen a M. | Només si l'Eva ho vol així: decisió de plantilla. | acceptada |
+
+## 2026-09-09 — Imatges acció 3 (retall del tall: tinta dels traços, blanc = 5 mm, finestra ≥ 40 mm) — runs `2026-09-09-m341-altres-b` → `2026-09-09-m341-tall`
+
+| # | Projecte · variable | Abans → ara (signat) | Per què s'ha perdut | Com es reobre | Estat |
+|---|---|---|---|---|---|
+| 14 | Bell-lloc · `fig_tall` (Figura 6) | M (phash 8) → C (phash 12) | Ara el retall inclou l'eix de cotes sencer, «(msnm)» inclòs (abans el tallava per la meitat: lleig però M); l'Eva talla «(msnm)» a 3 de 7 signats i el deixa sencer a 4. Decisió del Josep: si és estètic, sempre igual. Contrapartida: Linyola i Vilanova C → M. | Només si l'Eva vol «(msnm)» fora: pregunta, no regla. | acceptada |
