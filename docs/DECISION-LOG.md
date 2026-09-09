@@ -5964,7 +5964,7 @@ Cadastre viu; per a les imatges, `2026-09-09-m341-tall`.
 
 - ✅ Linyola i Vilanova sense llegenda ni plànol; Bell-lloc amb l'eix sencer; Alcoletge recuperat (T +0,4).
 - ✅ Cap altra cel·la d'imatge moguda; taules idèntiques; suite amb els mateixos vermells + els 21 del Cadastre caigut.
-- ⏳ Commit pendent de GO del Josep. ⏳ Re-mesura d'escalars i els 21 tests quan el Cadastre torni.
+- ✅ Commitejat `92bd384` (codi) · `04e9c52` (mesura) · `949e12a` (docs), GO del Josep. ⏳ Re-mesura d'escalars i els 21 tests quan el Cadastre torni.
 
 ### Següents passos
 
